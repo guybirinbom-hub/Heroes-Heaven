@@ -32,6 +32,7 @@
  *   node scripts/readable-record-check.mjs --list    # every record with nothing to read
  */
 import { readFileSync, existsSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -59,13 +60,20 @@ const astIndex = read('public/ast-index.json');
  * files and were never per-bucket. A strict check would open a 1,574-record red on a false premise.
  * Closing it properly needs the ast index to carry each entry's bucket, which is a data-stage change.
  */
+/* The tracked, shipped tree is `public/ast/<bucket>.json.gz`; the raw `.json` beside it is gitignored
+ * importer output. Reading the raw file first made the verdict depend on what the last local regen
+ * left behind (2026-09-12: a regen that was never committed made 12 records "readable" here and
+ * nowhere else), so the .gz is read first and the raw file only stands in where no .gz exists. */
 const astCache = {};
 const hasAst = (id) => {
   const file = astIndex[id];
   if (!file) return false;
   if (!(file in astCache)) {
-    const p = join(ROOT, 'public/ast', `${file}.json`);
-    astCache[file] = existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : {};
+    const gz = join(ROOT, 'public/ast', `${file}.json.gz`);
+    const raw = join(ROOT, 'public/ast', `${file}.json`);
+    astCache[file] = existsSync(gz)
+      ? JSON.parse(gunzipSync(readFileSync(gz)).toString('utf8'))
+      : existsSync(raw) ? JSON.parse(readFileSync(raw, 'utf8')) : {};
   }
   return Boolean(astCache[file][id]);
 };

@@ -84,6 +84,23 @@ const REF_SKIP = new Set([
   'creature', 'npc', 'hazard', 'weather-hazard', 'creature-ability', 'creature-family',
   'eidolon', 'article', 'class-sample',
   'warfare-army', 'warfare-tactic', 'cult-activity',
+  /*
+   * runesmith-rune was one of FOUR categories the archive had never scraped (with follower,
+   * grim-fascination and fatal-method), so HH's 44 runes are hand-authored `create: true` rows in
+   * scripts/data/effect-backfill.json and exist nowhere else — not in core.foundry-backup.json,
+   * which is what this importer rebuilds every bucket from.
+   *
+   * The 2026-09-07 archive delta added the category (44 documents, the same count). The moment
+   * runesmith-rune.json appears in the export, the auto-create below would classify it as a
+   * REFERENCE bucket and replace all 44 full records with {id, name, edition} stubs. Those stubs
+   * carry no `level`, runesmithRuneOptions filters on `level <= character level`, and so every
+   * character would silently see an empty rune list — while the importer reported them as "added".
+   *
+   * Skipped so the authored records survive. Promoting them to a real CAT_BUCKET sourced from the
+   * archive is the right end state now that the documents exist, but that is a deliberate mapping
+   * with its own verification, not a silent side effect of the category appearing.
+   */
+  'runesmith-rune',
 ]);
 // campsite-meal lands in `items` rather than a bucket of its own (the owner's ruling), so it is a
 // CAT_BUCKET entry, not a reference bucket.

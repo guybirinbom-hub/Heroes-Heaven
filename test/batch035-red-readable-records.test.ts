@@ -106,9 +106,20 @@ describe('batch 035 — readable-record-check: the prose rows', () => {
     for (const r of rows) expect(db[r.category]?.[r.id], `${r.category}/${r.id}`).toBeTruthy();
   });
 
-  /* The four whose bare id also keys someone else's ast tree — see the premise above. Listed so the
-   * stripped half of each row's test states the instrument's real verdict instead of skipping it. */
-  const FOREIGN_AST = new Set(['follower/medic', 'follower/scout', 'grimFascination/bone', 'grimFascination/spirit']);
+  /* The records whose stripped copy still reads, through an ast tree — the instrument's real verdict,
+   * stated so the stripped half of each row's test is not skipped. Two families, measured against the
+   * TRACKED .gz trees (the guard reads those since 2026-09-12; the raw .json beside them is gitignored):
+   *   - the four whose bare id also keys someone else's tree — see the premise above;
+   *   - the eight in the follower, grimFascination and fatalMethod buckets, whose own trees were
+   *     tracked in 7da5f92 and became reachable when public/ast-index.json gained their rows on
+   *     2026-09-12. The arcaneSchool, hybridStudy and sidebar rows still have no tracked tree entry,
+   *     so their prose row is the only text the record has. */
+  const READS_BY_TREE = new Set([
+    'follower/medic', 'follower/scout', 'grimFascination/bone', 'grimFascination/spirit',
+    'fatalMethod/puppeteer', 'fatalMethod/reaper',
+    'follower/berserker', 'follower/sharpshooter', 'follower/shieldbearer', 'follower/adept',
+    'grimFascination/blood', 'grimFascination/flesh',
+  ]);
 
   for (const r of rows) {
     // batch 035 premise: sidebar-3750 "This means feats like the listed ones use the base damage value, not the boosted one!"
@@ -116,7 +127,7 @@ describe('batch 035 — readable-record-check: the prose rows', () => {
       // mutation-proof — stunts the very field the row supplies (`description`) on a copy of the
       // record, so the "reads" half is proved by the row's own text and nothing else.
       const stripped = { ...(db[r.category]?.[r.id] ?? {}), description: '', note: '' };
-      expect(readable(r.category, r.id, stripped, NO_DESCS)).toBe(FOREIGN_AST.has(`${r.category}/${r.id}`));
+      expect(readable(r.category, r.id, stripped, NO_DESCS)).toBe(READS_BY_TREE.has(`${r.category}/${r.id}`));
 
       const patched = { ...stripped, description: r.value };
       expect(readable(r.category, r.id, patched, NO_DESCS)).toBe(true);
@@ -196,9 +207,12 @@ describe('batch 035 — readable-record-check: itemBonus is a synthetic carrier 
     const withParent = { items: { 'lookouts-spyglass': { description: 'This brass and wood spyglass…' } } };
     expect(exempt('itemBonus', {}, 'lookouts-spyglass', withParent, NO_DESCS)).toContain('parent item');
 
-    const bareParent = { items: { 'lookouts-spyglass': { name: "Lookout's Spyglass" } } };
-    expect(exempt('itemBonus', {}, 'lookouts-spyglass', bareParent, NO_DESCS)).toBeNull();
-    expect(exempt('itemBonus', {}, 'lookouts-spyglass', { items: {} }, NO_DESCS)).toBeNull();
+    // The bare and missing legs use an id no ast tree knows: since public/ast-index.json gained the
+    // refresh's rows (2026-09-12) a bare `lookouts-spyglass` reads through the items tree, which is the
+    // rule working — the legs below are about a parent with NO text on any surface.
+    const bareParent = { items: { 'zz-spyglass-with-no-tree': { name: 'Spyglass With No Tree' } } };
+    expect(exempt('itemBonus', {}, 'zz-spyglass-with-no-tree', bareParent, NO_DESCS)).toBeNull();
+    expect(exempt('itemBonus', {}, 'zz-spyglass-with-no-tree', { items: {} }, NO_DESCS)).toBeNull();
   });
 
   // batch 035 premise: equipment-5220 "Etching a weapon property rune onto the _Azlanti Diamond_ is free—it never costs money to etch a rune onto this artifact."

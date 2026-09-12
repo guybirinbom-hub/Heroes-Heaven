@@ -1,11 +1,11 @@
 {
  "tally": {
-  "doc": 24926,
-  "subblock": 572,
-  "drop": 145,
+  "doc": 24997,
+  "subblock": 573,
+  "drop": 143,
+  "authored": 951,
   "table": 21,
   "scraped": 1,
-  "authored": 910,
   "derived": 22
  },
  "map": {
@@ -980,6 +980,12 @@
     "name": "Unsealing of Secrets",
     "status": "doc",
     "docId": "ritual-271",
+    "how": "importer:the doc this record was built from"
+   },
+   "beckon-the-blasphemous-brethren": {
+    "name": "Beckon the Blasphemous Brethren",
+    "status": "doc",
+    "docId": "ritual-275",
     "how": "importer:the doc this record was built from"
    },
    "abyssal-plague": {
@@ -12185,6 +12191,11 @@
     "status": "doc",
     "docId": "ritual-95",
     "how": "slug-noparen"
+   },
+   "commune-with-nature": {
+    "name": "Commune with Nature",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
    }
   },
   "items": {
@@ -48660,6 +48671,157 @@
     "docId": "equipment-5209",
     "how": "importer:the doc this record was built from"
    },
+   "aeon-stone-eastern-star": {
+    "name": "Aeon Stone (Eastern Star)",
+    "status": "doc",
+    "docId": "equipment-3055-4734",
+    "how": "importer:the doc this record was built from"
+   },
+   "throneglass-shard": {
+    "name": "Throneglass Shard",
+    "status": "doc",
+    "docId": "equipment-5212-4727",
+    "how": "importer:the doc this record was built from"
+   },
+   "throneglass-plate": {
+    "name": "Throneglass Plate",
+    "status": "doc",
+    "docId": "equipment-5212-4728",
+    "how": "importer:the doc this record was built from"
+   },
+   "low-grade-throneglass-object": {
+    "name": "Low-grade Throneglass Object",
+    "status": "doc",
+    "docId": "equipment-5212-4730",
+    "how": "importer:the doc this record was built from"
+   },
+   "standard-grade-throneglass-object": {
+    "name": "Standard-grade Throneglass Object",
+    "status": "doc",
+    "docId": "equipment-5212-4731",
+    "how": "importer:the doc this record was built from"
+   },
+   "high-grade-throneglass-object": {
+    "name": "High-grade Throneglass Object",
+    "status": "doc",
+    "docId": "equipment-5212-4733",
+    "how": "importer:the doc this record was built from"
+   },
+   "throneglass": {
+    "name": "Throneglass",
+    "status": "doc",
+    "docId": "equipment-5212",
+    "how": "importer:the doc this record was built from"
+   },
+   "aeon-armor": {
+    "name": "Aeon Armor",
+    "status": "doc",
+    "docId": "equipment-5213",
+    "how": "importer:the doc this record was built from"
+   },
+   "chimeras-claw": {
+    "name": "Chimera's Claw",
+    "status": "doc",
+    "docId": "equipment-5214",
+    "how": "importer:the doc this record was built from"
+   },
+   "destiny-blade": {
+    "name": "Destiny Blade",
+    "status": "doc",
+    "docId": "equipment-5215",
+    "how": "importer:the doc this record was built from"
+   },
+   "toilers-gruel": {
+    "name": "Toiler's Gruel",
+    "status": "doc",
+    "docId": "equipment-5216",
+    "how": "importer:the doc this record was built from"
+   },
+   "deravons-helm": {
+    "name": "Deravon's Helm",
+    "status": "doc",
+    "docId": "equipment-5217",
+    "how": "importer:the doc this record was built from"
+   },
+   "lookouts-spyglass": {
+    "name": "Lookout's Spyglass",
+    "status": "doc",
+    "docId": "equipment-5218",
+    "how": "importer:the doc this record was built from"
+   },
+   "mantle-of-far-horizons": {
+    "name": "Mantle of Far Horizons",
+    "status": "doc",
+    "docId": "equipment-5219",
+    "how": "importer:the doc this record was built from"
+   },
+   "azlanti-diamond": {
+    "name": "Azlanti Diamond",
+    "status": "doc",
+    "docId": "equipment-5220",
+    "how": "importer:the doc this record was built from"
+   },
+   "flame-of-the-radiant-spark": {
+    "name": "Flame of the Radiant Spark",
+    "status": "doc",
+    "docId": "equipment-5221",
+    "how": "importer:the doc this record was built from"
+   },
+   "heart-of-sarnax": {
+    "name": "Heart of Sarnax",
+    "status": "doc",
+    "docId": "equipment-5222",
+    "how": "importer:the doc this record was built from"
+   },
+   "meloths-lifedrinker-improved": {
+    "name": "Meloth's Lifedrinker (Improved)",
+    "status": "doc",
+    "docId": "equipment-5223-4736",
+    "how": "importer:the doc this record was built from"
+   },
+   "meloths-lifedrinker": {
+    "name": "Meloth's Lifedrinker",
+    "status": "doc",
+    "docId": "equipment-5223-4737",
+    "how": "importer:the doc this record was built from"
+   },
+   "apocalypse-seed": {
+    "name": "Apocalypse Seed",
+    "status": "drop",
+    "how": "absent from the Archives (user decision)"
+   },
+   "belimariuss-invidious-halberd": {
+    "name": "Belimarius's Invidious Halberd",
+    "status": "drop",
+    "how": "absent from the Archives (user decision)"
+   },
+   "runewell-of-lust": {
+    "name": "Runewell Of Lust",
+    "status": "doc",
+    "docId": "equipment-5226",
+    "how": "importer:the doc this record was built from"
+   },
+   "sorshens-scintillating-garment": {
+    "name": "Sorshen's Scintillating Garment",
+    "status": "drop",
+    "how": "absent from the Archives (user decision)"
+   },
+   "sorshens-sinuous-guisarme": {
+    "name": "Sorshen's Sinuous Guisarme",
+    "status": "drop",
+    "how": "absent from the Archives (user decision)"
+   },
+   "robes-of-xin-edasseril": {
+    "name": "Robes Of Xin-edasseril",
+    "status": "doc",
+    "docId": "equipment-5229",
+    "how": "importer:the doc this record was built from"
+   },
+   "timeflaying-blade": {
+    "name": "Timeflaying Blade",
+    "status": "drop",
+    "how": "absent from the Archives (user decision)"
+   },
    "breath-of-dragons": {
     "name": "Breath of Dragons",
     "status": "doc",
@@ -51635,11 +51797,6 @@
     "docId": "equipment-3747",
     "how": "slug-noparen"
    },
-   "apocalypse-seed": {
-    "name": "Apocalypse Seed",
-    "status": "drop",
-    "how": "absent from the Archives (user decision)"
-   },
    "aquamarine": {
     "name": "Aquamarine",
     "status": "subblock",
@@ -51808,11 +51965,6 @@
     "status": "subblock",
     "parentDocId": "action-1476",
     "how": "fts"
-   },
-   "belimariuss-invidious-halberd": {
-    "name": "Belimarius's Invidious Halberd",
-    "status": "drop",
-    "how": "absent from the Archives (user decision)"
    },
    "belkzen-deadsmasher-greater": {
     "name": "Belkzen Deadsmasher (Greater)",
@@ -54599,11 +54751,6 @@
     "status": "drop",
     "how": "adventure loot (user decision)"
    },
-   "robes-of-xin-edasseril": {
-    "name": "Robes of Xin-Edasseril",
-    "status": "drop",
-    "how": "absent from the Archives (user decision)"
-   },
    "roc-shaft-arrow-greater": {
     "name": "Roc-Shaft Arrow (Greater)",
     "status": "doc",
@@ -54873,11 +55020,6 @@
     "status": "doc",
     "docId": "equipment-999",
     "how": "slug-noparen"
-   },
-   "runewell-of-lust": {
-    "name": "Runewell of Lust",
-    "status": "drop",
-    "how": "absent from the Archives (user decision)"
    },
    "sack-of-hydras-teeth": {
     "name": "Sack of Hydra's Teeth",
@@ -55231,16 +55373,6 @@
     "status": "subblock",
     "parentDocId": "rules-3229",
     "how": "fts"
-   },
-   "sorshens-scintillating-garment": {
-    "name": "Sorshen's Scintillating Garment",
-    "status": "drop",
-    "how": "absent from the Archives (user decision)"
-   },
-   "sorshens-sinuous-guisarme": {
-    "name": "Sorshen's Sinuous Guisarme",
-    "status": "drop",
-    "how": "absent from the Archives (user decision)"
    },
    "soulcutter-heroic": {
     "name": "Soulcutter (Heroic)",
@@ -55687,11 +55819,6 @@
     "status": "subblock",
     "parentDocId": "action-3342",
     "how": "fts"
-   },
-   "timeflaying-blade": {
-    "name": "Timeflaying Blade",
-    "status": "drop",
-    "how": "absent from the Archives (user decision)"
    },
    "timepiece-standard-major": {
     "name": "Timepiece Standard (Major)",
@@ -59197,6 +59324,36 @@
    },
    "spirit-dwelling": {
     "name": "Spirit Dwelling",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "jelly-body-space": {
+    "name": "Jelly Body",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "pistol-wand-stock": {
+    "name": "Pistol Wand (Melee)",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "wooden-stake-and-mallet": {
+    "name": "Wooden Stake and Mallet",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "coral-athamaru-armor": {
+    "name": "Coral Athamaru Armor",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "spined-shield-spikes": {
+    "name": "Spined Shield Spikes",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "spined-shield-fire-spine": {
+    "name": "Fire Spine (Spined Shield)",
     "status": "authored",
     "how": "overlay-created record with no archive page"
    }
@@ -65218,12 +65375,6 @@
     "parentDocId": "feat-4190",
     "how": "fts"
    },
-   "nudging-whisper": {
-    "name": "Nudging Whisper",
-    "status": "subblock",
-    "parentDocId": "heritage-384",
-    "how": "fts"
-   },
    "calculate-threats": {
     "name": "Calculate Threats",
     "status": "doc",
@@ -65516,6 +65667,82 @@
     "name": "Reaper",
     "status": "doc",
     "docId": "fatal-method-2",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "witch-familiar-ability": {
+    "name": "Familiar Ability",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "contained-shrapnel": {
+    "name": "Contained Shrapnel",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "enhanced-shrapnel": {
+    "name": "Enhanced Shrapnel",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "spring-loaded": {
+    "name": "Spring-Loaded",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "blanching-chamber": {
+    "name": "Blanching Chamber",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "earthbreaker": {
+    "name": "Earthbreaker",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "narrow-blast": {
+    "name": "Narrow Blast",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "enhanced-damage-mortar": {
+    "name": "Enhanced Damage",
+    "status": "subblock",
+    "parentDocId": "rules-2739",
+    "how": "fts"
+   },
+   "impossible-alloy-mortar": {
+    "name": "Impossible Alloy",
+    "status": "subblock",
+    "parentDocId": "innovation-4",
+    "how": "fts"
+   },
+   "precise-blast": {
+    "name": "Precise Blast",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "school-of-breathtaking-influence": {
+    "name": "School of Breathtaking Influence",
+    "status": "doc",
+    "docId": "arcane-school-31",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "school-of-keen-inquiry": {
+    "name": "School of Keen Inquiry",
+    "status": "doc",
+    "docId": "arcane-school-32",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "school-of-nexian-spaces": {
+    "name": "School of Nexian Spaces",
+    "status": "doc",
+    "docId": "arcane-school-33",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "school-of-quantic-control": {
+    "name": "School of Quantic Control",
+    "status": "doc",
+    "docId": "arcane-school-34",
     "how": "record carries its own aonId (targeted merge)"
    },
    "necromancer-spellcasting": {
@@ -103740,6 +103967,18 @@
     "docId": "feat-9418",
     "how": "importer:the doc this record was built from"
    },
+   "asp-stance": {
+    "name": "Asp Stance",
+    "status": "doc",
+    "docId": "feat-9419",
+    "how": "importer:the doc this record was built from"
+   },
+   "incredible-familiar-animist": {
+    "name": "Incredible Familiar",
+    "status": "doc",
+    "docId": "feat-5004",
+    "how": "importer:the doc this record was built from"
+   },
    "camouflage-coat": {
     "name": "Camouflage Coat",
     "status": "doc",
@@ -104254,12 +104493,6 @@
     "status": "doc",
     "docId": "feat-100",
     "how": "slug"
-   },
-   "incredible-familiar-animist": {
-    "name": "Incredible Familiar (Animist)",
-    "status": "doc",
-    "docId": "feat-5004",
-    "how": "slug-noparen"
    },
    "whispers-of-warning": {
     "name": "Whispers of Warning",
@@ -113141,7 +113374,7 @@
     "how": "slug-noparen"
    },
    "chinostes": {
-    "name": "Chinostes",
+    "name": "Chinostes (Redeemer)",
     "status": "doc",
     "docId": "deity-700",
     "how": "slug-noparen"
@@ -113196,6 +113429,12 @@
     "name": "Surveyors of the Deep",
     "status": "doc",
     "docId": "deity-731",
+    "how": "importer:the doc this record was built from"
+   },
+   "chinostes-nightwarden": {
+    "name": "Chinostes (Nightwarden)",
+    "status": "doc",
+    "docId": "deity-701",
     "how": "importer:the doc this record was built from"
    }
   },
@@ -119191,6 +119430,77 @@
     "name": "Shift Spell",
     "status": "authored",
     "how": "overlay-created record with no archive page"
+   },
+   "change-shape-kitsune": {
+    "name": "Change Shape",
+    "status": "doc",
+    "docId": "action-701",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "change-shape-yaoguai": {
+    "name": "Change Shape",
+    "status": "doc",
+    "docId": "ancestry-93",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "change-shape-tanuki": {
+    "name": "Change Shape",
+    "status": "doc",
+    "docId": "ancestry-90",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "seasonal-boon": {
+    "name": "Seasonal Boon",
+    "status": "doc",
+    "docId": "background-398",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "merge-with-ward": {
+    "name": "Merge with Ward",
+    "status": "doc",
+    "docId": "background-487",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "seasonal-boon-folklore": {
+    "name": "Seasonal Boon (Folklore)",
+    "status": "doc",
+    "docId": "background-394",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "seasonal-boon-southbank": {
+    "name": "Seasonal Boon (Southbank)",
+    "status": "doc",
+    "docId": "background-397",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "seasonal-boon-outskirt": {
+    "name": "Seasonal Boon (Outskirt Dweller)",
+    "status": "doc",
+    "docId": "background-396",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "seasonal-boon-northridge": {
+    "name": "Seasonal Boon (Northridge)",
+    "status": "doc",
+    "docId": "background-395",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "seasonal-boon-close-ties": {
+    "name": "Seasonal Boon (Close Ties)",
+    "status": "doc",
+    "docId": "background-393",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "change-shape-beastkin": {
+    "name": "Change Shape",
+    "status": "doc",
+    "docId": "action-700",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "reinforcing-network": {
+    "name": "Reinforcing Network",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
    }
   },
   "conditions": {
@@ -122696,6 +123006,30 @@
     "name": "School of Magical Technologies",
     "status": "doc",
     "docId": "arcane-school-29",
+    "how": "importer:the doc this record was built from"
+   },
+   "school-of-breathtaking-influence": {
+    "name": "School of Breathtaking Influence",
+    "status": "doc",
+    "docId": "arcane-school-31",
+    "how": "importer:the doc this record was built from"
+   },
+   "school-of-keen-inquiry": {
+    "name": "School of Keen Inquiry",
+    "status": "doc",
+    "docId": "arcane-school-32",
+    "how": "importer:the doc this record was built from"
+   },
+   "school-of-nexian-spaces": {
+    "name": "School of Nexian Spaces",
+    "status": "doc",
+    "docId": "arcane-school-33",
+    "how": "importer:the doc this record was built from"
+   },
+   "school-of-quantic-control": {
+    "name": "School of Quantic Control",
+    "status": "doc",
+    "docId": "arcane-school-34",
     "how": "importer:the doc this record was built from"
    }
   },
@@ -127837,6 +128171,84 @@
     "how": "importer:the doc this record was built from"
    }
   },
+  "fatalMethod": {
+   "puppeteer": {
+    "name": "Puppeteer",
+    "status": "doc",
+    "docId": "fatal-method-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "reaper": {
+    "name": "Reaper",
+    "status": "doc",
+    "docId": "fatal-method-2",
+    "how": "importer:the doc this record was built from"
+   }
+  },
+  "follower": {
+   "berserker": {
+    "name": "Berserker",
+    "status": "doc",
+    "docId": "follower-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "medic": {
+    "name": "Medic",
+    "status": "doc",
+    "docId": "follower-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "scout": {
+    "name": "Scout",
+    "status": "doc",
+    "docId": "follower-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "sharpshooter": {
+    "name": "Sharpshooter",
+    "status": "doc",
+    "docId": "follower-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "shieldbearer": {
+    "name": "Shieldbearer",
+    "status": "doc",
+    "docId": "follower-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "adept": {
+    "name": "Adept",
+    "status": "doc",
+    "docId": "follower-6",
+    "how": "importer:the doc this record was built from"
+   }
+  },
+  "grimFascination": {
+   "blood": {
+    "name": "Blood",
+    "status": "doc",
+    "docId": "grim-fascination-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "bone": {
+    "name": "Bone",
+    "status": "doc",
+    "docId": "grim-fascination-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "flesh": {
+    "name": "Flesh",
+    "status": "doc",
+    "docId": "grim-fascination-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "spirit": {
+    "name": "Spirit",
+    "status": "doc",
+    "docId": "grim-fascination-4",
+    "how": "importer:the doc this record was built from"
+   }
+  },
   "hellknightOrder": {
    "order-of-the-chain": {
     "name": "Order of the Chain",
@@ -127954,6 +128366,18 @@
     "name": "Resurgent Maelstrom",
     "status": "doc",
     "docId": "hybrid-study-9",
+    "how": "importer:the doc this record was built from"
+   },
+   "twofold-tine": {
+    "name": "Twofold Tine",
+    "status": "doc",
+    "docId": "hybrid-study-15",
+    "how": "importer:the doc this record was built from"
+   },
+   "volatile-spark": {
+    "name": "Volatile Spark",
+    "status": "doc",
+    "docId": "hybrid-study-16",
     "how": "importer:the doc this record was built from"
    }
   },
@@ -132536,6 +132960,42 @@
     "name": "Runic Skullcap",
     "status": "doc",
     "docId": "equipment-5208-bonus-1714",
+    "how": "importer:the doc this record was built from"
+   },
+   "aeon-stone-eastern-star": {
+    "name": "Aeon Stone (Eastern Star)",
+    "status": "doc",
+    "docId": "equipment-3055-4734-bonus-1716",
+    "how": "importer:the doc this record was built from"
+   },
+   "aeon-stone-western-star": {
+    "name": "Aeon Stone (Western Star)",
+    "status": "doc",
+    "docId": "equipment-3055-4735-bonus-1717",
+    "how": "importer:the doc this record was built from"
+   },
+   "deravons-helm": {
+    "name": "Deravon's Helm",
+    "status": "doc",
+    "docId": "equipment-5217-bonus-1718",
+    "how": "importer:the doc this record was built from"
+   },
+   "lookouts-spyglass": {
+    "name": "Lookout's Spyglass",
+    "status": "doc",
+    "docId": "equipment-5218-bonus-1719",
+    "how": "importer:the doc this record was built from"
+   },
+   "mantle-of-far-horizons": {
+    "name": "Mantle of Far Horizons",
+    "status": "doc",
+    "docId": "equipment-5219-bonus-1730",
+    "how": "importer:the doc this record was built from"
+   },
+   "azlanti-diamond": {
+    "name": "Azlanti Diamond",
+    "status": "doc",
+    "docId": "equipment-5220-bonus-1721",
     "how": "importer:the doc this record was built from"
    }
   },
@@ -148363,6 +148823,42 @@
     "status": "doc",
     "docId": "sidebar-3746",
     "how": "importer:the doc this record was built from"
+   },
+   "arcane-cascade-damage": {
+    "name": "Arcane Cascade Damage",
+    "status": "doc",
+    "docId": "sidebar-3750",
+    "how": "importer:the doc this record was built from"
+   },
+   "runic-phrases": {
+    "name": "Runic Phrases",
+    "status": "doc",
+    "docId": "sidebar-3753",
+    "how": "importer:the doc this record was built from"
+   },
+   "motion-sense": {
+    "name": "Motion Sense",
+    "status": "doc",
+    "docId": "sidebar-3756",
+    "how": "importer:the doc this record was built from"
+   },
+   "jotunborn-adventurers": {
+    "name": "Jotunborn Adventurers",
+    "status": "doc",
+    "docId": "sidebar-3758",
+    "how": "importer:the doc this record was built from"
+   },
+   "jotunborn-enclaves": {
+    "name": "Jotunborn Enclaves",
+    "status": "doc",
+    "docId": "sidebar-3759",
+    "how": "importer:the doc this record was built from"
+   },
+   "on-jotuns": {
+    "name": "On Jotuns",
+    "status": "doc",
+    "docId": "sidebar-3760",
+    "how": "importer:the doc this record was built from"
    }
   },
   "skillGeneralAction": {
@@ -150180,6 +150676,18 @@
     "name": "YOU CAN PLAY WITH JIMOTHY NOW",
     "status": "doc",
     "docId": "source-369",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-dead-gods-hand": {
+    "name": "The Dead God's Hand",
+    "status": "doc",
+    "docId": "source-370",
+    "how": "importer:the doc this record was built from"
+   },
+   "pathfinder-221-into-the-apocalypse-archive": {
+    "name": "Pathfinder #221: Into the Apocalypse Archive",
+    "status": "doc",
+    "docId": "source-371",
     "how": "importer:the doc this record was built from"
    }
   },
@@ -154726,6 +155234,16 @@
     "name": "Wombat Style",
     "status": "authored",
     "how": "hand-authored bucket"
+   },
+   "clinging-shadows-stance": {
+    "name": "Clinging Shadows Stance",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "wild-winds-stance": {
+    "name": "Wild Winds Stance",
+    "status": "authored",
+    "how": "hand-authored bucket"
    }
   },
   "runes": {
@@ -155521,6 +156039,11 @@
    },
    "wounding": {
     "name": "Wounding",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "sinister-knight": {
+    "name": "Sinister Knight",
     "status": "authored",
     "how": "hand-authored bucket"
    }
@@ -156889,6 +157412,41 @@
    },
    "item-sea-touch-elixir-greater": {
     "name": "Sea Touch (Greater)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-phantom-roll": {
+    "name": "Phantom Roll",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-gas-mask-of-clean-air": {
+    "name": "Breathe Clean",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-eagle-eye-elixir-lesser": {
+    "name": "Eagle-Eye Elixir",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-eagle-eye-elixir-moderate": {
+    "name": "Eagle-Eye Elixir",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-eagle-eye-elixir-greater": {
+    "name": "Eagle-Eye Elixir",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-eagle-eye-elixir-major": {
+    "name": "Eagle-Eye Elixir",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-resolute-mind-wrap": {
+    "name": "Shield Thoughts",
     "status": "authored",
     "how": "hand-authored bucket"
    },
@@ -158289,6 +158847,81 @@
    },
    "were-werewolf-hybrid": {
     "name": "Hybrid Shape (Werewolf)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-hunters-brooch": {
+    "name": "Erastil's Steadying Hand",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-camouflaging-chromatophores-lesser": {
+    "name": "Background Adaptation",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-camouflaging-chromatophores-greater": {
+    "name": "Background Adaptation",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-camouflaging-chromatophores": {
+    "name": "Background Adaptation",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-underbrush-cloak": {
+    "name": "One with the Woods",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-obsidian-goggles": {
+    "name": "Obsidian Goggles",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-darkvision-scope": {
+    "name": "See Through Night",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-arachnid-harness": {
+    "name": "Spider Limbs",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-arachnid-harness-greater": {
+    "name": "Spider Limbs",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "awful-scab-sealed-outfit": {
+    "name": "Sealed Outfit",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "jotunborn-iivlar-weaving": {
+    "name": "Iivlar Weaving",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "harrow-chosen-partial-match": {
+    "name": "Harrow: Partial Match",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "harrow-chosen-unmatched": {
+    "name": "Harrow: Unmatched",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-umbral-wings": {
+    "name": "Umbral Wings",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-energy-robe-cold": {
+    "name": "Flash-Frozen Footing",
     "status": "authored",
     "how": "hand-authored bucket"
    }

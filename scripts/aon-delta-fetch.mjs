@@ -19,11 +19,19 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-const MIRROR = 'C:/wonderers guide/aon-2e-archive/data/by-category';
 const ES = 'https://elasticsearch.aonprd.com';
 const DRY = process.argv.includes('--dry');
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const has = (k) => process.argv.includes(k);
+
+/* The mirror to top up. Defaults to the wonderers-guide pristine master, but the ARCHIVES the app
+ * actually builds from is a SEPARATE tree — C:/trying ai 2/Archives of GuyB/data/by-category, whose
+ * raw/docs.ndjson.xz feeds aon.db. Writing into the wrong one looks like it worked and changes
+ * nothing downstream, so the target is explicit:
+ *     node scripts/aon-delta-fetch.mjs --mirror "C:/trying ai 2/Archives of GuyB/data/by-category"
+ * Declared AFTER arg() on purpose: a const read from above its declaration is a TDZ throw, and this
+ * file's siblings have been bitten by exactly that three times. */
+const MIRROR = arg('--mirror', 'C:/wonderers guide/aon-2e-archive/data/by-category');
 
 /*
  * Categories to pull.

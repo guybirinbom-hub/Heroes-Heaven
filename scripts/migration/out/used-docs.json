@@ -162,6 +162,7 @@
   "still-life-storage": "ritual-269",
   "uncouple-memory": "ritual-270",
   "unsealing-of-secrets": "ritual-271",
+  "beckon-the-blasphemous-brethren": "ritual-275",
   "abyssal-plague": "spell-1",
   "air-walk": "spell-6",
   "anathematic-reprisal": "spell-9",
@@ -8061,6 +8062,32 @@
   "fate-tempters-ring": "equipment-5207",
   "runic-skullcap": "equipment-5208-bonus-1715",
   "spindle-key": "equipment-5209",
+  "aeon-stone-eastern-star": "equipment-3055-4734",
+  "throneglass-shard": "equipment-5212-4727",
+  "throneglass-plate": "equipment-5212-4728",
+  "low-grade-throneglass-object": "equipment-5212-4730",
+  "standard-grade-throneglass-object": "equipment-5212-4731",
+  "high-grade-throneglass-object": "equipment-5212-4733",
+  "throneglass": "equipment-5212",
+  "aeon-armor": "equipment-5213",
+  "chimeras-claw": "equipment-5214",
+  "destiny-blade": "equipment-5215",
+  "toilers-gruel": "equipment-5216",
+  "deravons-helm": "equipment-5217",
+  "lookouts-spyglass": "equipment-5218",
+  "mantle-of-far-horizons": "equipment-5219",
+  "azlanti-diamond": "equipment-5220",
+  "flame-of-the-radiant-spark": "equipment-5221",
+  "heart-of-sarnax": "equipment-5222",
+  "meloths-lifedrinker-improved": "equipment-5223-4736",
+  "meloths-lifedrinker": "equipment-5223-4737",
+  "apocalypse-seed": "equipment-5224",
+  "belimariuss-invidious-halberd": "equipment-5225",
+  "runewell-of-lust": "equipment-5226",
+  "sorshens-scintillating-garment": "equipment-5227",
+  "sorshens-sinuous-guisarme": "equipment-5228",
+  "robes-of-xin-edasseril": "equipment-5229",
+  "timeflaying-blade": "equipment-5230",
   "breath-of-dragons": "relic-73",
   "draconic-resistance": "relic-74",
   "dragon-strike": "relic-75",
@@ -15311,7 +15338,9 @@
   "avenger-of-lust": "feat-9414",
   "avenger-of-sloth": "feat-9415",
   "avenger-of-wrath": "feat-9416",
-  "runic-expertise": "feat-9418"
+  "runic-expertise": "feat-9418",
+  "asp-stance": "feat-9419",
+  "incredible-familiar-animist": "feat-5004"
  },
  "ancestries": {
   "shoony": "ancestry-16",
@@ -16234,7 +16263,13 @@
   "horizon-hunters": "background-663",
   "radiant-oath": "background-664",
   "verdant-wheel": "background-665",
-  "vigilant-seal": "background-667"
+  "vigilant-seal": "background-667",
+  "absalom-street-preacher": "background-673",
+  "ambitious-knave": "background-674",
+  "destined-for-greatness": "background-675",
+  "esoteric-bookworm": "background-676",
+  "mystery-adept": "background-677",
+  "puddles-carny": "background-678"
  },
  "deities": {
   "maat": "deity-518",
@@ -17788,7 +17823,10 @@
   "concentrate-shadow-spellshape": "action-4433",
   "emotion-fear-manipulation-mental": "action-4458",
   "divine-manipulate": "action-4459",
-  "tumbling-swipe": "action-4482"
+  "tumbling-swipe": "action-4482",
+  "death-divine-void": "action-4493",
+  "concentrate-death-emotion-fear-mental": "action-4494",
+  "arcane-aura-visual": "action-4498"
  },
  "conditions": {
   "concealed-army": "condition-44",
@@ -17855,6 +17893,7 @@
   "savage": "animal-companion-advanced-8",
   "unseen": "animal-companion-advanced-9",
   "fiery-leopard": "animal-companion-unique-1",
+  "jimothy": "animal-companion-131",
   "camel": "animal-companion-9",
   "hyena": "animal-companion-10",
   "vulture": "animal-companion-11",
@@ -17950,8 +17989,7 @@
   "cephalopod": "animal-companion-127",
   "iridescent-salamander": "animal-companion-128",
   "pufferfish": "animal-companion-129",
-  "silt-frog": "animal-companion-130",
-  "jimothy": "animal-companion-131"
+  "silt-frog": "animal-companion-130"
  },
  "companionSpecializations": {
   "deep-diver": "animal-companion-specialization-7",
@@ -18234,7 +18272,8 @@
   "the-dark-prince": "vehicle-147",
   "smugglers-speronara": "vehicle-148",
   "undersurf-boat": "vehicle-149",
-  "yellow-sailed-schooner": "vehicle-150"
+  "yellow-sailed-schooner": "vehicle-150",
+  "provarion": "vehicle-151"
  },
  "siegeWeapons": {
   "ballista": "siege-weapon-69",
@@ -18339,7 +18378,11 @@
   "school-of-the-reclamation": "arcane-school-26",
   "school-of-kalistrade": "arcane-school-27",
   "school-of-gates": "arcane-school-28",
-  "school-of-magical-technologies": "arcane-school-29"
+  "school-of-magical-technologies": "arcane-school-29",
+  "school-of-breathtaking-influence": "arcane-school-31",
+  "school-of-keen-inquiry": "arcane-school-32",
+  "school-of-nexian-spaces": "arcane-school-33",
+  "school-of-quantic-control": "arcane-school-34"
  },
  "arcaneThesis": {
   "experimental-spellshaping": "arcane-thesis-6",
@@ -19230,6 +19273,24 @@
   "plunderer-of-the-hives-riches": "epithet-17",
   "trespasser-in-deaths-realm": "epithet-18"
  },
+ "fatalMethod": {
+  "puppeteer": "fatal-method-1",
+  "reaper": "fatal-method-2"
+ },
+ "follower": {
+  "berserker": "follower-1",
+  "medic": "follower-2",
+  "scout": "follower-3",
+  "sharpshooter": "follower-4",
+  "shieldbearer": "follower-5",
+  "adept": "follower-6"
+ },
+ "grimFascination": {
+  "blood": "grim-fascination-1",
+  "bone": "grim-fascination-2",
+  "flesh": "grim-fascination-3",
+  "spirit": "grim-fascination-4"
+ },
  "hellknightOrder": {
   "order-of-the-chain": "hellknight-order-8",
   "order-of-the-gate": "hellknight-order-9",
@@ -19253,7 +19314,9 @@
   "twisting-tree": "hybrid-study-5",
   "aloof-firmament": "hybrid-study-7",
   "unfurling-brocade": "hybrid-study-8",
-  "resurgent-maelstrom": "hybrid-study-9"
+  "resurgent-maelstrom": "hybrid-study-9",
+  "twofold-tine": "hybrid-study-15",
+  "volatile-spark": "hybrid-study-16"
  },
  "ikon": {
   "bands-of-imprisonment": "ikon-1",
@@ -20026,7 +20089,13 @@
   "graverose-garland": "equipment-5198-bonus-1709",
   "illusionists-hat": "equipment-5201-bonus-1711",
   "dream-hunters-lodge": "equipment-5205-bonus-1713",
-  "runic-skullcap": "equipment-5208-bonus-1714"
+  "runic-skullcap": "equipment-5208-bonus-1714",
+  "aeon-stone-eastern-star": "equipment-3055-4734-bonus-1716",
+  "aeon-stone-western-star": "equipment-3055-4735-bonus-1717",
+  "deravons-helm": "equipment-5217-bonus-1718",
+  "lookouts-spyglass": "equipment-5218-bonus-1719",
+  "mantle-of-far-horizons": "equipment-5219-bonus-1730",
+  "azlanti-diamond": "equipment-5220-bonus-1721"
  },
  "kingdomEvent": {
   "archaeological-find": "kingdom-event-1",
@@ -22687,7 +22756,13 @@
   "milanis-edicts-and-anathema": "sidebar-3697",
   "arming-a-ship": "sidebar-3744",
   "switching-modes": "sidebar-3745",
-  "using-nets": "sidebar-3746"
+  "using-nets": "sidebar-3746",
+  "arcane-cascade-damage": "sidebar-3750",
+  "runic-phrases": "sidebar-3753",
+  "motion-sense": "sidebar-3756",
+  "jotunborn-adventurers": "sidebar-3758",
+  "jotunborn-enclaves": "sidebar-3759",
+  "on-jotuns": "sidebar-3760"
  },
  "skillGeneralAction": {
   "tap-ley-line": "skill-general-action-7",
@@ -22995,7 +23070,9 @@
   "pathfinder-224-bastion-of-blasphemies": "source-357",
   "bastion-of-blasphemies-players-guide": "source-367",
   "pathfinder-society-clockwork-mystery-players-guide": "source-368",
-  "you-can-play-with-jimothy-now": "source-369"
+  "you-can-play-with-jimothy-now": "source-369",
+  "the-dead-gods-hand": "source-370",
+  "pathfinder-221-into-the-apocalypse-archive": "source-371"
  },
  "style": {
   "battledancer": "style-7",
