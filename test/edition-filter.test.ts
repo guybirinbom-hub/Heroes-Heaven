@@ -20,10 +20,18 @@ describe('applyEditionFilter (Hide legacy data)', () => {
     // a legacy record survives when the toggle is off
     const legacyFeat = Object.values(c.feats).find(isLegacy) as { id: string };
     expect(off.feats[legacyFeat.id]).toBeTruthy();
-    // superseded records (e.g. ray-of-frost, replaced by frostbite) are hidden even with the toggle off
-    const supersededSpell = Object.entries(c.spells).find(([, s]) => (s as { edition?: string }).edition === 'superseded');
-    expect(supersededSpell, 'fixture should contain a superseded record').toBeTruthy();
-    expect(off.spells[supersededSpell![0]]).toBeUndefined();
+    /*
+     * desk 158: this probe reads FEATS, not spells, and that is not arbitrary. The owner's ruling of
+     * 2026-09-12 re-marked every record whose reprint already ships beside it — 104 of the corpus's
+     * 106 `superseded` records, including all 27 superseded SPELLS (ray-of-frost, acid-splash,
+     * ghost-sound) — as `legacy` + `remasteredAs`, so the hide-legacy toggle owns the pre/post axis
+     * and an always-hide no longer applies to them. Probing spells would leave this case searching an
+     * empty set. `superseded` itself is unchanged and still always hidden; the two soulsight feats
+     * pinned by test/batch031-data.test.ts are what it now means.
+     */
+    const supersededFeat = Object.entries(c.feats).find(([, f]) => (f as { edition?: string }).edition === 'superseded');
+    expect(supersededFeat, 'fixture should contain a superseded record').toBeTruthy();
+    expect(off.feats[supersededFeat![0]]).toBeUndefined();
   });
 
   it('on = every legacy/legacy-era entry is hidden, remaster/neutral kept', () => {

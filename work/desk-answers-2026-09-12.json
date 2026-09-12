@@ -1,0 +1,57 @@
+{
+  "_": "Guy's desk answers of 2026-09-12 (the reprint lane, questions #158–#161, then #151–#155). Same shape as work/desk-answers-2026-09-10.json so scripts/rule-owner-questions.mjs can move them open → ruled. Fixes are applied AFTER the whole pass, per his standing instruction (\"you will first hear the solution I offer and when I finish going over the file then you will fix them all\").",
+  "answers": [
+    {
+      "ns": [158],
+      "answer": "yes — keep both, mark the old one legacy, add a 'remastered as …' link",
+      "rule": "R12 (refined 2026-09-12: the pre-/post-remaster axis is chosen by the hide-legacy filter, not by the reprint join)",
+      "note": "The Archives keep both pages cross-linked (Specialist's Ring ↔ Accolade Robe; Necklace of Fireballs → Frozen Lava + Eternal Eruption; Alter Reality → Manifestation). So: the 182 old records stay, get edition legacy (hide-legacy hides them from new characters; existing characters keep what they hold), and carry a note + link 'remastered as <name>' from the export's remaster_id/remaster_name. Nothing deleted, nothing merged. His words: 'yes' after asking whether the Archives still have the legacy versions."
+    },
+    {
+      "ns": [159],
+      "answer": "same as the Archives of Nethys — keep the reprint page's trait list as shipped; nothing changes",
+      "rule": "the Archives are the authority (standing); R12",
+      "note": "Checked the LIVE Archives (elasticsearch.aonprd.com) for all eight reprint pages: trait facet and the page's own trait row both print the reduced lists (feat-9323/9325 Archetype only; feat-9083 Magus; spell-2683 no metal; equipment-4983 no force; equipment-5087 holy not good, no splash; equipment-5020 Divine only; equipment-5008 no invested). Foundry's Rage of Elements copy of Draw the Lightning keeps 'metal', but the Impossible Magic reprint page does not, and his ruling is the Archives. His words: 'i want it the same as the archuves if nethsy'. No overlay rows; the desk entry closes."
+    },
+    {
+      "ns": [160],
+      "answer": "Soulforger Dedication: NO prerequisite (the live page prints none — the ' or ability to cast divine spells' fragment is junk in the Archives' search facet). Dimensional Disappearance: keep both prerequisites, drop the stray comma.",
+      "rule": "the Archives PAGE is the authority, not its search facet, when the two disagree",
+      "note": "Guy pasted a screenshot of https://2e.aonprd.com/Feats.aspx?ID=9350 (Impossible Magic pg. 98): traits Uncommon / Archetype / Dedication, Source, Archetype Soulforger, then the body — no Prerequisites line. His words: 'there isnt a prerequisite'. So feats/soulforger-dedication.prerequisites → [] by overlay row citing feat-9350 and the screenshot. feats/dimensional-disappearance.prerequisites → ['dimensional assault focus spell', 'laughing shadow hybrid study'] (the live page renders 'focus spell,; laughing shadow' — punctuation only). ⚠ LESSON for the importer: a prerequisite facet that starts with ' or ' is a broken facet — treat as absent, prefer the page's Prerequisites line."
+    },
+    {
+      "ns": [161],
+      "answer": "same as the live Archives page: Spell Parry (feat-9049, Impossible Magic pg. 18) shows NO action icon → no action cost (passive). Remove the 1-action pin the verifier added.",
+      "rule": "the live Archives page is the authority; check it before asking",
+      "note": "Guy pasted a screenshot of https://2e.aonprd.com/Feats.aspx?ID=9049: title 'Spell Parry' with no glyph, trait Magus, Requirements 'You have one or more hands free', text 'You raise your guard, gaining a +1 circumstance bonus to AC and to saving throws against spells that target you until the start of your next turn, as long as you continue to meet the requirements.' His words: 'alot of these could just be solved if you checkd the archives of nethys'. Consequence he accepts: the feat no longer appears in the encounter action list. The 'bare badge = scrape damage' rule (scripts/actioncost-vs-aon.mjs header) yields to the owner's page-is-authority rule for this record; note it in that header and re-pin test/action-costs.test.ts to passive."
+    },
+    {
+      "ns": [151],
+      "answer": "yes — (a) the major's text becomes the Archives' own block (drop the flattened '+2 greater striking' sentence); (b) builtInRunes on all three: base {potency 1, striking 1}, greater {potency 2, striking 2}, major {potency 2, striking 2} (a higher grade inherits the previous grade's runes unless it restates them)",
+      "rule": "same as the Archives page (live equipment-1169 checked 2026-09-12: base sentence, greater sentence, major block DC 37 / 50-foot with no rune sentence); higher-grade-inherits convention for the mechanics",
+      "note": "Rows: items/screech-shooter-major description (path row) = the Archives' major block; items/screech-shooter, -greater, -major builtInRunes per the answer, why citing equipment-1169 / -1109 / -1110. Also fix the same flattening for desk #72's family if it is still open there."
+    },
+    {
+      "ns": [152],
+      "answer": "yes — (a) the marked line lives in the SHEET, not in a description field: the popup prints 'The book prints no rules text for this item' whenever a description is empty; (b) scope: all 244 empty-description items at once, by rule",
+      "rule": "supersedes the description-row form of ruling #17 (2026-09-10); no data rows, no guard allowance",
+      "note": "One component change where DescBody / the item popup renders an empty description (find the empty-description branch); keep the printed price/hands/bulk line merchants-scale already ships. Add a test that an item with description '' and no ast renders the marker, and that an item WITH text does not. The line must be visually marked as ours (not printed text)."
+    },
+    {
+      "ns": [154],
+      "answer": "yes — build the conditional half now: while panache is on, EVERY Speed gets the +10 status bonus in place of the +5; back to +5 when panache ends",
+      "rule": "print (feat-6238 verbatim); his words: 'so eveey speed will get the bonus while panash is on? if yes tehn its good'",
+      "note": "Engine lane: a mode-conditional Speed grant that is TYPED (status) and PLURAL (all Speeds) — src/rules/modes.ts + derive.ts beside speedBonusAllSpeeds; the with-panache value REPLACES the without-panache value (same status type, does not stack). THREE RECORDS, per his follow-up quoting Vivacious Speed: (1) classFeatures/stylish-combatant (L1, class-feature-1007): +5 status to Speeds while panache — app has NOTHING today; (2) classFeatures/vivacious-speed (L3, class-feature-1017): with panache +10, +15 at 7, +20 at 11, +25 at 15, +30 at 19, to ALL Speeds; without panache HALF rounded down to the nearest 5 ft (5/5/10/10/15) — app today has only the halved value and only on land (landSpeedBonus formula '5+5*min(2,floor((@actor.level-3)/8))', speedBonusType status); (3) feats/swashbucklers-speed (L8 archetype feat, feat-6238): fixed +5 all Speeds, +10 with panache, NO scaling (live page checked) — app has the +5 only. Stylish combatant's +5 and vivacious speed's ladder are the same bonus upgraded (vivacious says 'increase the status bonus … from stylish combatant'), so a swashbuckler with panache gets ONE status bonus: 5 (L1–2), 10 (L3–6), 15 (7–10), 20 (11–14), 25 (15–18), 30 (19+); without panache from L3: half rounded down to 5-ft. Blast radius: every stance/mode that touches Speed — tests (swashbuckler at 1/3/7/8 with and without panache, land + fly; the archetype feat on a non-swashbuckler; a non-swashbuckler mode unchanged) and a guard; register the lane in scripts/data/trust-lanes.json. Data: panache mode grants on the three records (the carrier the lane defines), each `why` citing the live page."
+    },
+    {
+      "ns": [155],
+      "answer": "yes — build the combined shape: a spellbook caster (wizard, witch via familiar, magus) keeps the spellbook and the curriculum/restricted slots and prepares the flat collection OUT OF THE SPELLBOOK; slots cap at 2 per rank (Table 5-1); cantrips: class −2, dedication +1 at 2nd and +1 at 4th (3 → 4 → 5); at least one 1st-rank spell; restricted-slot spells do not count toward the collection",
+      "rule": "archetype-99 (Secrets of Magic pg. 209, live page read 2026-09-12): 'You learn spells as normal for your class (a wizard uses a spellbook, a witch teaches spells to their familiar, and so on)'; 'Select these spells from the same source as normal, such as from a spellbook for a wizard'; 'Extra spell slots … like the wizard's specialist school spells … don't change … nor do such spells count toward the number of spells you place in your spell collection'",
+      "note": "Engine: src/rules/build.ts caster branch — the spellbook branch (sp.spellbook || wizard || witch) must also apply archSpellMods.spellCollection instead of skipping it; keep restrictedSlots (curriculum) built inside the book branch; the collection picker in src/builder/Builder.tsx lists only spellbook spells for a book caster (cleric/druid keep the full-list picker). Magus qualifies by the prerequisite text (prepares spells in slots, same number per day). Tests: wizard L2/L4/L8, witch, magus with the dedication — collection size per Table 5-1, curriculum slot untouched and not counted, cantrip counts 3/4/5, picker limited to the spellbook; test/bare-feat-lanes.test.ts 'leaves the wizard curriculum slot alone' stays green. His words: 'yes'. Desk #155 closes."
+    }
+  ],
+  "held_for_later_by_level": {
+    "151": "ruled yes (see answers) but items are level 9/13/17 — build later; Guy: 'lets take car if the ones that are lv 8 and dowan for now'",
+    "153": "not asked to decide yet — level 12 mythic feat; stays open"
+  }
+}

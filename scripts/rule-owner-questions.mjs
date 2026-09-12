@@ -26,6 +26,11 @@
  *   node scripts/rule-owner-questions.mjs --write            # move the entries + add the exceptions
  *   node scripts/rule-owner-questions.mjs --reverdict --write # also write the re-verdict bulk file
  *   [--answers <path>] [--desk <path>] [--out <path>]        # for the test's temp copies
+ *   [--source <label>] [--approvals <path>]                  # a LATER desk pass — see SOURCE below
+ *
+ * The 2026-09-12 pass:
+ *   node scripts/rule-owner-questions.mjs --answers work/desk-answers-2026-09-12.json \
+ *     --source "desk pass 2026-09-12, work/desk-answers-2026-09-12.json" [--write]
  *
  * --reverdict writes work/.desk-reverdict-2026-09-11.json: one row per (batch, record) whose parity
  * verdict is still OWNER-QUEUED and whose question he has now answered, in the shape
@@ -40,7 +45,6 @@ import { appendQuestions } from './add-owner-question.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ARRAYS = ['open', 'deferred', 'ruled', 'authorisedExceptions'];
-const SOURCE = 'desk pass 2026-09-10, work/desk-answers-2026-09-10.json';
 
 const argv = process.argv.slice(2);
 const WRITE = argv.includes('--write');
@@ -50,9 +54,30 @@ const flag = (k, dflt) => {
   const v = i >= 0 ? argv[i + 1] : null;
   return v ? (isAbsolute(v) ? v : join(ROOT, v)) : join(ROOT, dflt);
 };
+const raw = (k, dflt) => {
+  const i = argv.indexOf(k);
+  return i >= 0 && argv[i + 1] ? argv[i + 1] : dflt;
+};
 const ANSWERS = flag('--answers', 'work/desk-answers-2026-09-10.json');
 const DESK = flag('--desk', 'work/owner-questions.json');
 const OUT = flag('--out', 'work/.desk-reverdict-2026-09-11.json');
+const APPROVALS = flag('--approvals', 'scripts/data/trust-approvals.json');
+/*
+ * WHICH PASS THIS IS. `rulingSource` is stamped on every entry moved, and the script's own
+ * "already applied" check compares against it — so a SECOND desk pass run under the first pass's
+ * label would read as a re-run of the first and be refused. He went down the desk again on
+ * 2026-09-12 (work/desk-answers-2026-09-12.json, #158-#161 plus #151/#152/#154/#155), which is what
+ * this flag is for; the default is unchanged, so every existing invocation means what it did.
+ */
+const SOURCE = raw('--source', 'desk pass 2026-09-10, work/desk-answers-2026-09-10.json');
+/*
+ * WHEN HE RULED, read from the answers file's own name rather than hard-coded. The date used to be
+ * the literal '2026-09-10' with a bump to '2026-09-11' for a note that named it; pointed at a later
+ * answers file that silently back-dated every ruling by two days. A note naming a LATER date still
+ * wins (he carried on ruling into the next day), an earlier one does not — today's notes cite
+ * 2026-09-10 when they supersede an older ruling, and that is a citation, not a date of ruling.
+ */
+const BASE_DATE = /(\d{4}-\d{2}-\d{2})/.exec(ANSWERS.replace(/\\/g, '/').split('/').pop() ?? '')?.[1] ?? '2026-09-10';
 
 /**
  * The two divergences from Wanderer's Guide he authorised in this pass. They are NOT questions — they
@@ -103,7 +128,7 @@ for (const entry of answersDoc.answers ?? []) {
       answer: String(entry.answer ?? '').trim(),
       note,
       /* He carried on ruling into the next day; the note is where that shows. */
-      ruledOn: /2026-09-11/.test(note) ? '2026-09-11' : '2026-09-10',
+      ruledOn: [...note.matchAll(/\d{4}-\d{2}-\d{2}/g)].map((m) => m[0]).filter((d) => d > BASE_DATE).sort().pop() ?? BASE_DATE,
     });
   }
 }
@@ -188,6 +213,61 @@ for (const src of EXCEPTIONS) {
   if (e && e.quote !== src.quote) { e.quote = src.quote; requoted.push(e.n); }
 }
 
+/*
+ * ================================================================================================= *
+ *  …and the SAME MOVE in scripts/data/trust-approvals.json.
+ * ================================================================================================= *
+ *
+ * The approvals roster carries an `unruled` entry for every desk number the answers file does not
+ * speak for, and each one repeats the desk array it came from as `status`. test/trust-approvals.test.ts
+ * asserts those two agree ("an unruled entry carries the id and status work/owner-questions.json
+ * holds"), so a number moved open -> ruled here and not there turns the test red — and the repair is
+ * exactly the hand edit of a numbered file that this script exists to prevent. One writer, both files.
+ *
+ * `unruled` MEMBERSHIP is not touched: it means "the 2026-09-10 answers file does not speak for this
+ * number", which a later pass does not change. Only the disposition moves.
+ *
+ * ⚠ EDITED AS TEXT, NOT RE-SERIALISED. The file is hand-curated and its `unruled` entries are one
+ * readable line each; `JSON.stringify(…, null, 1)` explodes every one of them and turns an 8-status
+ * change into a 992-line diff that hides what actually changed. The parse below is the CHECK — the
+ * entry must exist, sit in `unruled`, and end up holding what was intended — and the write is a
+ * replacement scoped to that entry's own braces inside the `unruled` array.
+ *
+ * The set is "every number this pass speaks for that is now ruled", not "moved on this run", so a
+ * second run converges instead of leaving the two files out of step — the same re-runnability the
+ * desk half already has.
+ */
+let approvalsMoved = [];
+let approvalsText = null;
+if (existsSync(APPROVALS)) {
+  try {
+    const wantRuled = new Set([...toRule.keys(), ...already]);
+    let text = readFileSync(APPROVALS, 'utf8');
+    const at = text.indexOf('"unruled"');
+    const doc = JSON.parse(text);
+    for (const e of doc.unruled ?? []) {
+      const n = Number(e.n);
+      if (!wantRuled.has(n) || e.status === 'ruled') continue;
+      const head = text.slice(0, at);
+      const body = text.slice(at);
+      const re = new RegExp(`(\\{[^{}]*"n"\\s*:\\s*${n}\\s*,[^{}]*"status"\\s*:\\s*)"${e.status}"`);
+      if (!re.test(body)) { console.error(`REFUSED — ${APPROVALS}: no unruled entry for #${n} to rewrite.`); process.exit(2); }
+      text = head + body.replace(re, '$1"ruled"');
+      approvalsMoved.push(n);
+    }
+    if (approvalsMoved.length) {
+      const after = JSON.parse(text);
+      for (const n of approvalsMoved) {
+        if (after.unruled.find((x) => Number(x.n) === n)?.status !== 'ruled') {
+          console.error(`REFUSED — ${APPROVALS}: the rewrite did not land on #${n}.`);
+          process.exit(2);
+        }
+      }
+      approvalsText = text;
+    }
+  } catch { approvalsText = null; approvalsMoved = []; }
+}
+
 /* ================================================================================================= *
  *  The re-verdict rows for scripts/record-parity-verdict.mjs --bulk.
  * ================================================================================================= */
@@ -223,9 +303,15 @@ console.log(`ruled now:  ${count('ruled')}`);
 console.log(`deferred:   ${count('deferred')} (untouched)`);
 console.log(`exceptions: ${count('authorisedExceptions')}${addedExceptions.length ? ` (+${addedExceptions.length}: #${addedExceptions.map((e) => e.n).join(', #')})` : ''}${requoted.length ? ` (re-quoted: #${requoted.join(', #')})` : ''}`);
 console.log(`max n:      ${Math.max(...ARRAYS.flatMap((a) => desk[a].map((e) => Number(e.n))))}`);
+console.log(`source:     ${SOURCE}  (ruledOn base ${BASE_DATE})`);
+console.log(`approvals:  ${approvalsMoved.length} unruled entr(ies) -> status "ruled"${approvalsMoved.length ? ` (#${approvalsMoved.join(', #')})` : ''}`);
 if (REVERDICT) console.log(`re-verdict: ${rows.length} row(s) over ${new Set(rows.map((r) => r.batch)).size} batch file(s) -> ${OUT}`);
 
 if (!WRITE) { console.log('\n(report only — pass --write)'); process.exit(0); }
 writeFileSync(DESK, `${JSON.stringify(desk, null, 1)}\n`);
 console.log(`\nwritten: ${DESK}`);
+if (approvalsText) {
+  writeFileSync(APPROVALS, approvalsText);
+  console.log(`written: ${APPROVALS}`);
+}
 if (REVERDICT) { writeFileSync(OUT, `${JSON.stringify(rows, null, 1)}\n`); console.log(`written: ${OUT}`); }

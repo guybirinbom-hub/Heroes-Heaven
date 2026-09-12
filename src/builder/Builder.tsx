@@ -419,7 +419,13 @@ export function Builder({
    * a wizard or witch record without the field keeps the book it has always had.
    */
   const bookSpec = casting?.spellbook;
-  const isWizardBook = !!casting && isPrepared && (!!bookSpec || casterCls?.id === 'wizard' || casterCls?.id === 'witch');
+  /* desk 155: flexible-book-casters — the CLASS's own casting type, not `isPrepared` (which is the
+   * archetype-modified `castType`). A book is a property of the class — *"You learn spells as normal
+   * for your class (a wizard uses a spellbook, a witch teaches spells to their familiar, and so on)"*
+   * (archetype-99) — and Flexible Spellcaster flips `castType` to spontaneous, so reading it here took
+   * the book away from every flexible wizard, witch and magus: their rail became the collection's, and
+   * the level-4 page offered a 4-spell "collection" where the book holds eleven. */
+  const isWizardBook = !!casting && casting.type === 'prepared' && (!!bookSpec || casterCls?.id === 'wizard' || casterCls?.id === 'witch');
   // Wizard School of Unified Magical Theory (Player Core): "you add one 1st-rank spell of your choice
   // to your spellbook" — a larger initial spellbook. Applies as a flat +1 to the across-rank budget.
   const isUmtBook = casterCls?.id === 'wizard' && subOption?.id === 'school-of-unified-magical-theory';
@@ -429,8 +435,13 @@ export function Builder({
    * ranks (*"equals the total number of spell slots you get each day"*, archetype-99), the same shape
    * the spellbook rail already draws, so it rides that rail instead of the per-rank caps. Without it
    * the picker offered one rank's slots at a time — the shape print does not print, and the shape the
-   * sheet no longer keeps. `isWizardBook` cannot cover it: a collection casts SPONTANEOUS. */
-  const isFlexCollection = !!casting && archMods.spellCollection;
+   * sheet no longer keeps. `isWizardBook` cannot cover it: a collection casts SPONTANEOUS.
+   *
+   * desk 155: flexible-book-casters — …but a BOOK caster's rail is still the book. The collection is
+   * a daily preparation *"from the same source as normal, such as from a spellbook for a wizard"*
+   * (archetype-99), so what the builder chooses is the book and the sheet draws the collection out of
+   * it — one rail, the one the player is actually spending. */
+  const isFlexCollection = !!casting && archMods.spellCollection && !isWizardBook;
   /* Known-beyond-slots for an archetype pool (the halcyon "2 common 1st-rank spells" over one slot,
    * Shattered Sacrament's extra known). The BUILDER's per-rank counts are pick caps, not the slot
    * pool, so they must include these or the sheet keeps spells the player was never given a picker

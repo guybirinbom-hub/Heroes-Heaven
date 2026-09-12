@@ -23,15 +23,25 @@ const SCRIPT = path.join(ROOT, 'scripts/rule-owner-questions.mjs');
 const ARRAYS = ['open', 'deferred', 'ruled', 'authorisedExceptions'] as const;
 
 type Entry = { n?: number; id?: string; ruling?: string; ruledOn?: string; rulingSource?: string; what?: string; records?: string[]; quote?: string };
+type Unruled = { n: number; id: string | null; status: string };
 type Desk = Record<string, Entry[]>;
 type Answers = { answers: { ns: number[]; answer: string; note?: string }[] };
 
 const DESK_SRC = JSON.parse(readFileSync(path.join(ROOT, 'work/owner-questions.json'), 'utf8')) as Desk;
 const ANSWERS_SRC = JSON.parse(readFileSync(path.join(ROOT, 'work/desk-answers-2026-09-10.json'), 'utf8')) as Answers;
-/** The desk as it stood BEFORE the pass, so the cases read the same however often the script has run. */
+/**
+ * The desk as it stood BEFORE the pass, so the cases read the same however often the script has run.
+ *
+ * EVERY desk pass is reverted, not just 2026-09-10's: the owner went down the desk again on
+ * 2026-09-12 (#151/#152/#154/#155 and #158-#161), and a filter naming one pass would leave those eight
+ * entries sitting in `ruled` while this file's fixture only feeds the script the 2026-09-10 answers —
+ * so "what is still open afterwards" would be measured against a desk that had already moved. The
+ * numbers ruled by passes that are NOT desk passes stay where they are, which is what the refusal case
+ * below reads.
+ */
 const BEFORE: Desk = (() => {
   const d = JSON.parse(JSON.stringify(DESK_SRC)) as Desk;
-  const back = (d.ruled ?? []).filter((e) => e.rulingSource?.startsWith('desk pass 2026-09-10'));
+  const back = (d.ruled ?? []).filter((e) => /^desk pass \d{4}-\d{2}-\d{2}/.test(e.rulingSource ?? ''));
   if (back.length) {
     d.ruled = (d.ruled ?? []).filter((e) => !back.includes(e));
     for (const e of back) { delete e.ruling; delete e.ruledOn; delete e.rulingSource; }
@@ -72,7 +82,11 @@ function fixture(desk: Desk = BEFORE, answers: Answers = ANSWERS_SRC, withParity
 }
 
 function run(root: string, args: string[] = []) {
-  const argv = [SCRIPT, '--answers', path.join(root, 'answers.json'), '--desk', path.join(root, 'desk.json'), '--out', path.join(root, 'out.json'), ...args];
+  return runRaw([SCRIPT, '--answers', path.join(root, 'answers.json'), '--desk', path.join(root, 'desk.json'), '--out', path.join(root, 'out.json'), ...args]);
+}
+
+/** The whole argv, for the case that supplies its own --answers (the flag parser takes the first). */
+function runRaw(argv: string[]) {
   try {
     return { code: 0, out: execFileSync(process.execPath, argv, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }) };
   } catch (e) {
@@ -185,6 +199,48 @@ describe('rule-owner-questions.mjs applies the desk pass', () => {
     expect(after.quote).toBe(realQuote);
     expect(after.n).toBe(before.n);
     expect(after.what).toBe(before.what);
+  });
+
+  /*
+   * desk 158/160/161/152: a SECOND desk pass, under its own label.
+   *
+   * `rulingSource` is what the script's "already applied" check compares against, so running the
+   * 2026-09-12 answers under the 2026-09-10 label would read as a re-run of the first pass and move
+   * nothing. `--source` is the label; the ruling DATE comes from the answers file's own name, because
+   * it used to be the hard-coded string '2026-09-10' and would have back-dated every ruling by two
+   * days. `--approvals` moves the same numbers in scripts/data/trust-approvals.json, whose `unruled`
+   * entries repeat the desk array each number sits in — one writer for both files, or
+   * test/trust-approvals.test.ts goes red and the repair is the hand edit this script prevents.
+   */
+  it('--source labels a later pass, dates it from the answers file, and moves the approvals roster with it', () => {
+    const root = fixture();
+    const later = { answers: [{ ns: [153], answer: 'yes', note: 'ruled on the second pass' }] };
+    writeFileSync(path.join(root, 'answers-2026-09-12.json'), `${JSON.stringify(later, null, 1)}\n`);
+    writeFileSync(
+      path.join(root, 'approvals.json'),
+      `${JSON.stringify({ unruled: [{ n: 153, id: 'timewracked-dedication-speed-clause', status: 'open' }, { n: 1, id: 'x', status: 'ruled' }] }, null, 1)}\n`,
+    );
+    const r = runRaw([
+      SCRIPT,
+      '--answers', path.join(root, 'answers-2026-09-12.json'),
+      '--desk', path.join(root, 'desk.json'),
+      '--out', path.join(root, 'out.json'),
+      '--source', 'desk pass 2026-09-12, work/desk-answers-2026-09-12.json',
+      '--approvals', path.join(root, 'approvals.json'),
+      '--write',
+    ]);
+    expect(r.code).toBe(0);
+    const e = (readDesk(root).ruled ?? []).find((x) => Number(x.n) === 153)!;
+    expect(e, '#153 moved to ruled').toBeTruthy();
+    expect(e.rulingSource).toBe('desk pass 2026-09-12, work/desk-answers-2026-09-12.json');
+    expect(e.ruledOn, 'dated from the answers file, not from the 2026-09-10 default').toBe('2026-09-12');
+
+    const approvals = JSON.parse(readFileSync(path.join(root, 'approvals.json'), 'utf8')) as { unruled: Unruled[] };
+    expect(approvals.unruled.find((u) => u.n === 153)!.status).toBe('ruled');
+    /* MEMBERSHIP is untouched — `unruled` means "the answers file does not speak for this number",
+     * which a later pass does not change — and a number this pass did not name keeps its disposition. */
+    expect(approvals.unruled.map((u) => u.n)).toEqual([153, 1]);
+    expect(approvals.unruled.find((u) => u.n === 1)!.status).toBe('ruled');
   });
 
   it('is safe to run twice: the second run moves nothing and adds no second copy', () => {

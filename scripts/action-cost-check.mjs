@@ -85,10 +85,14 @@ for (const [id, rec] of Object.entries(db.feats ?? {})) {
    * of Magic text UNCHANGED, Requirements line and all, and only its badge is missing — which is the
    * scrape damage the sibling check's header describes, not a rewrite. The repoint DID derive
    * `passive` from that empty badge (feat-2851 printed Single Action, and our record carried 1 from
-   * HEAD to this change), so the record is pinned back to Single Action by an overlay row in
-   * scripts/data/effect-backfill.json and by test/action-costs.test.ts; desk #161 asks the owner what
-   * the book shows. The reprint page cannot settle it either way, so it is a desk question, not
-   * something this comparison should answer from a superseded twin's badge.
+   * HEAD to this change), so the record was pinned back to Single Action by an overlay row while desk
+   * #161 asked the owner what the book shows.
+   *
+   * HE ANSWERED on 2026-09-12: "same as the live Archives page" — feat-9049 carries no glyph, so the
+   * feat is PASSIVE, and he accepts that it leaves the encounter action list. The overlay row and
+   * test/action-costs.test.ts now say `{type:'passive'}`. THE POINT FOR THIS FILE IS UNCHANGED: this
+   * comparison must still never answer the question from a superseded twin's badge — the reprint page
+   * could not settle it either way, which is exactly why it was a desk question and not an inference.
    */
   const own = rec.aonId ? candidates.filter((m) => m.id === rec.aonId) : [];
   const scoped = own.length ? own : candidates;

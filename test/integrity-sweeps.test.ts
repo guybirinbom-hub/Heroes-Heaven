@@ -325,6 +325,13 @@ describe('a cantrip grant that quietly grants slots', () => {
     for (const cat of ['feats', 'classFeatures', 'items', 'heritages'] as const) {
       for (const [id, rec] of Object.entries(db[cat] ?? {})) {
         const b = (rec as { spellSlotBonus?: Record<string, unknown> }).spellSlotBonus;
+        /* desk 155: flexible-book-casters — a CLASS ARCHETYPE reshapes the slot table from its own
+         * `classArchetype` field (Flexible Spellcaster's `slotCap: 2`, and the collection that moves
+         * the counts onto `slots`), which is not this sweep's subject: the question here is whether a
+         * cantrips-only `spellSlotBonus` leaks slots. Flexible Spellcaster passed only while the
+         * archetype was broken on a wizard — it built no `slots` at all — so leaving it in would pin
+         * the bug rather than the rule. */
+        if ((rec as { classArchetype?: unknown }).classArchetype) continue;
         if (b?.cantrips && !b.byRank && !b.byRankAt && b.perRank === undefined && !b.highestOnly && !b.restricted) cantripsOnly.push(id);
       }
     }

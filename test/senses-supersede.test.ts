@@ -90,7 +90,31 @@ describe('Principle C — a state card says what entering the state grants', () 
     expect(stateGrantSummary(barb(1), db, 'rage').map((x) => x.from)).toEqual(['Acute Vision']);
   });
   it('a state nothing modifies summarises to nothing, so the card renders no extra block', () => {
-    expect(stateGrantSummary(build('swashbuckler', 5, { ancestryId: 'human' }), db, 'panache')).toEqual([]);
+    // A fighter owns no panache record at all — the empty branch, which the swashbuckler case below
+    // stopped covering once panache actually started granting something.
+    expect(stateGrantSummary(build('fighter', 5, { ancestryId: 'human' }), db, 'panache')).toEqual([]);
+  });
+
+  /*
+   * desk 154: panache is a state that grants a SPEED BONUS, and the card has to say so.
+   *
+   * Re-pinned from `[]`. The owner ruled on 2026-09-12 that while panache is on every Speed takes the
+   * full status bonus in place of the halved one, and the lane put that on two class features and one
+   * archetype feat as `whileActive` clauses. A level-5 swashbuckler owns both halves of the ladder:
+   * Stylish Combatant (class-feature-1007, 1st level, +5 status to all Speeds) and Vivacious Speed
+   * (class-feature-1017, 3rd level, which "increases the status bonus … from stylish combatant").
+   *
+   * BOTH are listed because this summary is an index of the RECORDS that modify the state, the same
+   * way the Rage card names each instinct and feat separately. They are one bonus, not two: same
+   * status type, so the higher replaces the lower, and the resolved single number with its breakdown
+   * is on the Speeds row — which is exactly why the header says this names effects without resolving
+   * them. Vivacious Speed's value is a formula, so it is named without a number.
+   */
+  it('names both halves of the panache Speed ladder, without resolving the number', () => {
+    const g = stateGrantSummary(build('swashbuckler', 5, { ancestryId: 'human' }), db, 'panache');
+    expect(g.map((x) => x.from).sort()).toEqual(['Stylish Combatant', 'Vivacious Speed']);
+    expect(g.find((x) => x.from === 'Stylish Combatant')?.other).toEqual(['+5 ft status bonus to all Speeds']);
+    expect(g.find((x) => x.from === 'Vivacious Speed')?.other).toEqual(['status bonus to all Speeds']);
   });
 });
 

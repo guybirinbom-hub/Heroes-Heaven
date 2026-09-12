@@ -147,15 +147,29 @@ describe("swashbucklers-speed splits its floor from its panache remainder", () =
     expect(`${sum} ft`, 'the parts still add up to the total').toBe(e.totalText);
   });
 
+  /*
+   * desk 154: RE-PINNED — the star states the printed +10, with no caveat about the floor.
+   *
+   * Batch 031 split feat-6238's clause: the always-on +5 became a real `landSpeedBonus` (still pinned
+   * by the case above) and the star kept only the panache remainder, worded "the +5-foot floor is
+   * always on and already in your Speed". That caveat was about the ENGINE — nothing applied the
+   * with-panache value, so repeating the printed "+10-foot status" would have promised feet no
+   * character ever got.
+   *
+   * The owner ruled on 2026-09-12 (desk #154) that while panache is on EVERY Speed takes the full
+   * status bonus in place of the halved one, and the lane built it: the record's `whileActive` clause
+   * replaces the +5 with the +10, same status type so they do not stack. The caveat would now be
+   * describing a gap that is closed, on the one surface a player reads to find out what panache does.
+   */
   // batch 031: swashbucklers-speed
-  it('the star is trimmed to the panache remainder and says the floor is already paid', () => {
+  it('the star states the printed +10, with no caveat about the floor', () => {
     const c = withFeats(['swashbucklers-speed'], 'fighter', 8);
     const l = lines(c, { kind: 'speed' }, 'swashbucklers-speed');
     expect(l.length).toBe(1);
     expect(l[0]).toContain('panache');
-    expect(l[0]).toContain('+10-foot status');
-    expect(l[0]).toContain('already in your Speed');
-    // The old wording promised the +5 as something still to be applied; that is now the number.
+    expect(l[0]).toContain('+10 status to your Speeds');
+    expect(l[0], 'no caveat about the floor, and no "instead"').not.toMatch(/already in your Speed|floor|instead/i);
+    // The pre-batch-031 wording promised the +5 as something still to be applied; that is the number.
     expect(l[0]).not.toContain('without panache you still get');
   });
 });

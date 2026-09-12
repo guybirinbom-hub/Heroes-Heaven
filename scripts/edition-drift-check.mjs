@@ -52,6 +52,11 @@ for (const [bucket, recs] of Object.entries(core)) {
   if (!recs || typeof recs !== 'object') continue;
   for (const [id, rec] of Object.entries(recs)) {
     if (!rec || typeof rec !== 'object' || !rec.aonId) continue;
+    /* A shipped twin is hidden as legacy BY A RULING (desk #158: "keep both, mark the old one
+     * legacy"), the same way `superseded` is a deliberate marker and not a mistake — see the ⚠ in the
+     * header. Its document is the old printing, so this check would not fire anyway for the 181
+     * measured on 2026-09-12; skipping it says why rather than relying on that. */
+    if (rec.remasteredAs) continue;
     if (!HIDDEN.has(String(rec.edition))) continue;
     const doc = docFor(rec.aonId);
     if (!doc || !CURRENT.has(String(doc.edition))) continue;

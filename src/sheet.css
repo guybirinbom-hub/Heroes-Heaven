@@ -11902,3 +11902,21 @@ button.strike-name:hover {
   background: var(--app-surface);
   font-weight: 600;
 }
+
+/* ---- Lines the APP says, inside a popup otherwise made of printed text ----------------------------
+ * Owner, desk #152 (2026-09-12): the empty-description line "must be visually marked as ours (not
+ * printed text)". Same treatment for the desk-#158 "Remastered as …" link, which is equally ours.
+ * It borrows the accent rail `.sd-desc.applies` already uses for app-added commentary, so the sheet
+ * keeps one visual language for "we are talking, not the book". */
+.sd-ours {
+  font-size: 12px;
+  line-height: 1.5;
+  font-style: italic;
+  margin: 0 0 9px;
+  padding: 4px 0 4px 9px;
+  border-left: 2px solid var(--app-accent);
+  color: var(--app-muted);
+}
+.sd-ours .ref-link {
+  font-style: normal;
+}

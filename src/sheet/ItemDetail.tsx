@@ -9,7 +9,7 @@ import { confirmDialog } from './confirm';
 import { chargesFor, itemCounters } from '../rules/itemUses';
 import { traitDesc, traitLabel } from '../rules/glossary';
 import { InfoTerm } from './InfoTerm';
-import { DescBody } from './DescBody';
+import { DescBody, type RemasteredAs } from './DescBody';
 import { CritSpecText } from './CritSpecText';
 import { critSpec } from '../rules/critSpec';
 import { PinStar } from './PinStar';
@@ -709,7 +709,19 @@ export function ItemDetail({
               <span className="sd-uses-hint">These effects apply to this item while it's wielded/worn.</span>
             </div>
           )}
-          <DescBody description={item.description} descRefs={item.descRefs} onExit={onClose} astKey="items" astId={item.id} />
+          {/* desk #158 / #152 — the two marked lines the popup owns: the link to the reprint that
+            * ships beside a legacy item, and (for an item the book gives no rules text and no archive
+            * page) a line saying so rather than a blank space. The casts go away when `remasteredAs`
+            * can be declared in src/rules/types.ts; see DescBody.tsx. */}
+          <DescBody
+            description={item.description}
+            descRefs={item.descRefs}
+            onExit={onClose}
+            astKey="items"
+            astId={item.id}
+            remasteredAs={(item as { remasteredAs?: RemasteredAs }).remasteredAs}
+            emptyNote="The book prints no rules text for this item."
+          />
         </div>
         {/* Remove: a PHONE-only bar, and deliberately a sibling of .sd-body rather than the last thing
          * inside it. As part of the scrolling panel it sat below the item's full description — a long

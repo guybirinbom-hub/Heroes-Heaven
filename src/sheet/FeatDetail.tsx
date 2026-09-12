@@ -1,6 +1,6 @@
 import type { ActionCost, DescRef, LimitedUses } from '../rules/types';
 import { ActionGlyph, isActionCost } from './widgets';
-import { DescBody } from './DescBody';
+import { DescBody, remasteredAsOf } from './DescBody';
 import { InfoTerm } from './InfoTerm';
 import { PinStar } from './PinStar';
 import { TrustMarker } from './TrustMarker';
@@ -129,7 +129,17 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
               </div>
             </div>
           ) : null}
-          <DescBody description={entry.description} descRefs={entry.descRefs} onExit={onClose} astKey={entry.isFeature ? 'classFeatures' : 'feats'} astId={astSlug(entry.name)} />
+          {/* desk #158: read the link off the record this row is showing, via the SAME ref TrustMarker
+              above already resolves — a FeatEntry is a view model built in a dozen places, and
+              threading one more field through all of them would be a far bigger change than a lookup. */}
+          <DescBody
+            description={entry.description}
+            descRefs={entry.descRefs}
+            onExit={onClose}
+            astKey={entry.isFeature ? 'classFeatures' : 'feats'}
+            astId={astSlug(entry.name)}
+            remasteredAs={remasteredAsOf(content, trustRefOf(entry))}
+          />
         </div>
       </div>
     </div>

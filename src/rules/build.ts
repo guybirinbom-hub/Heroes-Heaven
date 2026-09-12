@@ -2480,6 +2480,60 @@ export function flexibleCollectionSize(slotCounts: Record<number, number>): numb
 }
 
 /**
+ * desk 155: flexible-book-casters — TURN a built entry into a Flexible Spellcaster's collection.
+ *
+ * Extracted from the collection branch so the BOOK branch can call it too. A wizard, witch or magus
+ * who takes the archetype *"learn[s] spells as normal for your class (a wizard uses a spellbook, a
+ * witch teaches spells to their familiar, and so on)"* and *"select[s] these spells from the same
+ * source as normal, such as from a spellbook for a wizard"* (archetype-99), so the book, its granted
+ * entries and the curriculum's restricted slots are built first and the collection is drawn OUT of
+ * them — one function, so the two callers cannot size or floor the pool differently.
+ *
+ * `picks` is where the player's selections live for that caster: `build.spells` for a cleric or
+ * druid, the assembled SPELLBOOK for a book caster. `granted` rides ON TOP of the pool, which is only
+ * ever right for the first: a book caster's granted spells (a witch's patron spell, a magus's
+ * studious spells) are already IN the book and must compete for its places like every other entry,
+ * so that caller passes none.
+ */
+function fillSpellCollection(
+  entry: SpellcastingEntry,
+  slotCounts: Record<number, number>,
+  picks: Record<number, string[] | undefined>,
+  granted: Record<number, string[]>,
+): void {
+  entry.type = 'spontaneous';
+  entry.slots = {};
+  entry.repertoire = {};
+  const floorHeld = (slotCounts[1] ?? 0) > 0 && !(picks[1] ?? []).length ? 1 : 0;
+  let collectionLeft = flexibleCollectionSize(slotCounts) - floorHeld;
+  for (const rank of Object.keys(slotCounts).map(Number).sort((a, b) => a - b)) {
+    entry.slots[rank] = { max: slotCounts[rank], used: 0 };
+    const outside = rank > 9;
+    const collected = (picks[rank] ?? []).slice(0, outside ? slotCounts[rank] : Math.max(0, collectionLeft));
+    if (!outside) collectionLeft -= collected.length;
+    entry.repertoire[rank] = [...new Set([...collected, ...(granted[rank] ?? [])])];
+    if (granted[rank]?.length) (entry.grantedRepertoire ??= {})[rank] = [...granted[rank]];
+  }
+  if (Object.keys(slotCounts).some((r) => Number(r) >= 2)) {
+    entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
+    entry.signatureFixed = [...entry.signature];
+  }
+  /*
+   * THE POOL SIZE, STAMPED ONCE — the sheet's add gate needs it and must not recompute it.
+   *
+   * ManageSpells caps an add at `entry.slots[rank].max`, which is the PF2e repertoire rule and exactly
+   * wrong for a flat collection: a 4th-level flexible wizard with four 1st-rank spells collected was
+   * told "Repertoire full (2 known)" while the pool still had room, so ruling #102's one flat pool was
+   * unreachable from the sheet. The alternative — deriving the size in SpellsTab.tsx from `slots` —
+   * would be a second copy of `flexibleCollectionSize`, including its ranks-1-9 carve-out for the
+   * capstone slot, and the b037 note on that function says why a second copy of Table 5-1 is the thing
+   * to avoid. Its PRESENCE is also the marker that this entry is a collection at all; nothing else on
+   * a spontaneous entry says so (`signatureFixed` is absent below 3rd level, where there is no rank 2).
+   */
+  entry.spellCollection = flexibleCollectionSize(slotCounts);
+}
+
+/**
  * The CLASS ARCHETYPE a character is running, resolved ONCE from the build — which class features it
  * removes, which it adds, and the carriers that said so.
  *
@@ -4531,7 +4585,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         !isUmt &&
         ((cls.features ?? []).some((f) => f.featureId === 'arcane-school' || f.featureId === 'arcane-thesis') || !!subOption);
       entry.spellbook = {};
-      entry.prepared = {};
+      /* desk 155: flexible-book-casters — a book caster who took Flexible Spellcaster prepares a
+       * COLLECTION out of the book instead of nailing one spell into each slot, so the per-slot
+       * preparation is not built at all (an empty `prepared` would still take the font's rank away
+       * from `entry.slots`). Everything else in this branch is unchanged and that is the ruling:
+       * *"You learn spells as normal for your class"*, and *"Extra spell slots you gain that have
+       * additional restrictions, like the wizard's specialist school spells … don't change due to
+       * this archetype, nor do such spells count toward the number of spells you place in your spell
+       * collection"* (archetype-99) — book, patron grants and curriculum slots all stand. */
+      const flexBook = archSpellMods.spellCollection;
+      /** What the collection is drawn from: the assembled book, player's own picks first. */
+      const bookFill: Record<number, string[]> = {};
+      if (!flexBook) entry.prepared = {};
       // The curriculum slot is RESTRICTED, not an extra ordinary slot. "You can prepare one spell from
       // your school's curriculum" — filling it from the whole spellbook, which is what a plain +1 did,
       // hands a wizard a free general slot at every rank. The list is the school's own, cumulative to
@@ -4552,7 +4617,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
          * never says it stands prepared — and filling from the granted head pushed the player's own
          * picks out of their own slots the moment a grant arrived. */
         const fill = [...new Set([...(build.spells[rank] ?? []), ...learned])];
-        entry.prepared[rank] = Array.from({ length: count }, (_, i) => ({ spellId: fill[i] ?? null, expended: false }));
+        bookFill[rank] = fill;
+        if (entry.prepared) entry.prepared[rank] = Array.from({ length: count }, (_, i) => ({ spellId: fill[i] ?? null, expended: false }));
         if (hasSchool && rank > 0) {
           const allowed: string[] = [];
           for (let r = 1; r <= rank; r++) for (const id of curriculum?.[String(r)] ?? []) if (content.spells[id]) allowed.push(id);
@@ -4575,6 +4641,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         const rank = Number(rankStr);
         if (rank > 0 && !entry.spellbook[rank]) entry.spellbook[rank] = [...ids];
       }
+      /* desk 155: flexible-book-casters — the collection, sized by Table 5-1 over the (already capped)
+       * class slots and drawn from the book: *"Select these spells from the same source as normal,
+       * such as from a spellbook for a wizard"*. No `granted` on top — those entries are already in
+       * `bookFill` and compete for the pool's places like every other spell in the book. The
+       * curriculum's restricted slots were pushed above and are untouched: they neither gain a
+       * collection place nor spend one. */
+      if (flexBook) fillSpellCollection(entry, slotCounts, bookFill, {});
     } else if (archSpellMods.spellCollection) {
       // FLEXIBLE SPELLCASTER: "you prepare a spell collection rather than preparing spells into
       // each spell slot individually … you can cast any of the spells in your collection by using
@@ -4585,9 +4658,6 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // signatureFixed so the archetype's stars cannot be un-clicked. Before this branch the
       // engine charged the archetype's prices (slotCap, cantripDelta) and still nailed one spell
       // into one slot, withholding the entire benefit.
-      entry.type = 'spontaneous';
-      entry.slots = {};
-      entry.repertoire = {};
       /* batch 037: flexible-spellcaster#collection-shape — *"The number of spells in your spell
        * collection each day equals the TOTAL number of spell slots you get each day from your class
        * spells"* (archetype-99). The SLOTS stay per rank (you still cast a collected spell with a slot
@@ -4606,29 +4676,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * so the picker and the sheet hold the same place. Held only where a 1st-rank slot exists for
        * that spell to be cast from, and read off the player's own picks because print says *"you must
        * SELECT"* — a granted repertoire spell is not a selection, and the builder cannot see one
-       * anyway, so exempting it here would hand the sheet a place the picker never offers. */
-      const floorHeld = (slotCounts[1] ?? 0) > 0 && !(build.spells[1] ?? []).length ? 1 : 0;
-      let collectionLeft = flexibleCollectionSize(slotCounts) - floorHeld;
-      for (const rank of Object.keys(slotCounts).map(Number).sort((a, b) => a - b)) {
-        entry.slots[rank] = { max: slotCounts[rank], used: 0 };
-        /* batch 037: flexible-spellcaster#capstone-outside-collection — rank 10 is OUTSIDE the pool on
-         * BOTH sides of the sum. `flexibleCollectionSize` stops counting at 9, but this loop still walked
-         * rank 10, so a 19th-level flexible caster's capstone pick competed for the 18 places and was
-         * silently sliced away (`slice(0, 0)`) once the lower ranks had filled them. Print carves the slot
-         * out whole — *"Your class most likely has a class feature that gives you a single 10th level spell
-         * slot that works a bit differently from other slots. If so, flexible spellcaster doesn't change the
-         * way that spell works"* (archetype-99) — so it keeps its own pick, capped by its own slot count,
-         * exactly as the per-rank path did before the flat pool, and never charges the collection. */
-        const outside = rank > 9;
-        const collected = (build.spells[rank] ?? []).slice(0, outside ? slotCounts[rank] : Math.max(0, collectionLeft));
-        if (!outside) collectionLeft -= collected.length;
-        entry.repertoire[rank] = [...new Set([...collected, ...(grantedByRank[rank] ?? [])])];
-        if (grantedByRank[rank]?.length) (entry.grantedRepertoire ??= {})[rank] = [...grantedByRank[rank]];
-      }
-      if (Object.keys(slotCounts).some((r) => Number(r) >= 2)) {
-        entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
-        entry.signatureFixed = [...entry.signature];
-      }
+       * anyway, so exempting it here would hand the sheet a place the picker never offers.
+       *
+       * …and *"batch 037: flexible-spellcaster#capstone-outside-collection"* — rank 10 is OUTSIDE the
+       * pool on BOTH sides of the sum. Both rules, and the whole loop, now live in
+       * `fillSpellCollection`, which the BOOK branch above calls with the spellbook (desk 155). */
+      fillSpellCollection(entry, slotCounts, build.spells, grantedByRank);
     } else {
       // Cleric/druid: prepare from the whole tradition list each day.
       entry.prepared = {};

@@ -1,0 +1,82 @@
+{
+  "findings": [
+    {
+      "id": "desk-158#twin-edition-rows-yield-to-the-ruling",
+      "note": "DESK #158 (owner, 2026-09-12): \"keep both, mark the old one legacy, add a 'remastered as …' link\". The 181 records whose reprint already ships are now stamped `edition: 'legacy'` + `remasteredAs` by the chain (scripts/lib/reprint.mjs shippedTwin -> scripts/migration/build-map.mjs -> stamp-aonid.mjs), which runs AFTER the overlay is applied. Nine of those records still carried an older overlay row saying `legacy-era`, authored before the ruling existed. Both values are hidden by the same hide-legacy toggle, so nothing a player sees changes — but the row no longer describes the shipped artefact, and scripts/regen-durability-check.mjs is right to call that out: \"14482 rows — 9 NOT baked … every one of those rows is authored and inert, and no other guard will say so\". An inert row is the shape this project keeps finding late, and leaving nine of them as a known exception is how the check stops being read. So the rows are re-stated at the ruling's value: the overlay and the stamp now agree, the bake check goes green, and replaying the overlay alone (scripts/apply-backfill-now.mjs) can no longer put the pair out of step. Seven are the Rune of Sin family, whose reprint ships as items/rune-of-sin; the other two are the `aon-` scrape twins of Fulu of Concealment and Master Summoner Spellcasting.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "rune-of-sin-envy",
+          "field": "edition",
+          "value": "legacy",
+          "supersedes": true,
+          "why": "equipment-999 — the record is the older printing of a rune whose reprint ships as items/rune-of-sin, so desk #158 marks it `legacy` (hidden by the hide-legacy toggle) rather than `legacy-era`. Stamped by the chain; this row is restated so the overlay says the same thing and regen-durability-check's bake comparison holds."
+        },
+        {
+          "category": "items",
+          "id": "rune-of-sin-gluttony",
+          "field": "edition",
+          "value": "legacy",
+          "supersedes": true,
+          "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
+        },
+        {
+          "category": "items",
+          "id": "rune-of-sin-greed",
+          "field": "edition",
+          "value": "legacy",
+          "supersedes": true,
+          "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
+        },
+        {
+          "category": "items",
+          "id": "rune-of-sin-lust",
+          "field": "edition",
+          "value": "legacy",
+          "supersedes": true,
+          "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
+        },
+        {
+          "category": "items",
+          "id": "rune-of-sin-pride",
+          "field": "edition",
+          "value": "legacy",
+          "supersedes": true,
+          "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
+        },
+        {
+          "category": "items",
+          "id": "rune-of-sin-sloth",
+          "field": "edition",
+          "value": "legacy",
+          "supersedes": true,
+          "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
+        },
+        {
+          "category": "items",
+          "id": "rune-of-sin-wrath",
+          "field": "edition",
+          "value": "legacy",
+          "supersedes": true,
+          "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
+        },
+        {
+          "category": "items",
+          "id": "aon-fulus-of-concealment",
+          "field": "edition",
+          "value": "legacy",
+          "supersedes": true,
+          "why": "equipment-973 — the scrape twin of the older printing, whose reprint ships as items/fulu-of-concealment. Desk #158 marks it `legacy`; the row is restated to match the stamp so no overlay row is left inert."
+        },
+        {
+          "category": "feats",
+          "id": "aon-master-summoner-spellcasting",
+          "field": "edition",
+          "value": "legacy",
+          "supersedes": true,
+          "why": "feat-2961 — the scrape twin of the older printing, whose reprint ships as feats/master-summoner-spellcasting. Desk #158 marks it `legacy`; the row is restated to match the stamp so no overlay row is left inert."
+        }
+      ]
+    }
+  ]
+}

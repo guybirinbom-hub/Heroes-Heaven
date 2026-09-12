@@ -20,6 +20,15 @@
  * archive is known to hold ~829 docs with damaged markup, and this is what that damage looks like from
  * here. Reporting those 100 would have been reporting a scraper defect as a data defect.
  *
+ * ⚠ AND THE OWNER OUTRANKS IT, PER RECORD. This is a rule about what THIS SCRIPT may infer from a
+ * missing glyph, not a claim about the book — so when the owner reads the page himself, his reading
+ * is the answer and the inference yields. That has happened once, and on the very record quoted
+ * above: desk #161 (2026-09-12), feats/spell-parry. He pasted https://2e.aonprd.com/Feats.aspx?ID=9049
+ * and ruled "same as the live Archives page" — no glyph, therefore no action cost, Requirements line
+ * notwithstanding; `feats/spell-parry.actionCost` is `{type:'passive'}` by overlay row and
+ * test/action-costs.test.ts pins it there. His words: "alot of these could just be solved if you
+ * checkd the archives of nethys". The rule above still stands for every record he has not read.
+ *
  * So this reports the sound direction only:
  *   · WE SAY NONE, AoN SAYS ACTION — an action a player can never find on their turn (the defect
  *     test/action-costs.test.ts was written for; 58 records had it).

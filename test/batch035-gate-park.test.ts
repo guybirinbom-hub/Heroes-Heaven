@@ -76,13 +76,20 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
   // batch 035: animal-instinct#spider-web
   // batch 037: screech-shooter-major#grade-numbers
   it('queuedFor("screech-shooter-major") resolves to the desk id screech-shooter-major-rune-grade, and the answered animal-instinct parks nothing', () => {
-    expect(queuedFor('screech-shooter-major')).toBe('screech-shooter-major-rune-grade');
     /* The desk really is keyed that way, and the record really is not — which is the defect in one
      * line: the old `ownerQueued.has('<record>')` was false against this file. */
     const desk = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));
-    const ids = [...desk.open, ...desk.deferred].map((q: { id: string }) => q.id);
-    expect(ids).toContain('screech-shooter-major-rune-grade');
-    expect(ids).not.toContain('screech-shooter-major');
+    const arrayOf = (id: string) =>
+      (['open', 'deferred', 'ruled', 'authorisedExceptions'] as const).find((a) =>
+        ((desk[a] ?? []) as { id?: string }[]).some((q) => q.id === id));
+    expect(arrayOf('screech-shooter-major-rune-grade'), 'the desk holds the question under record#aspect').toBeTruthy();
+    expect(arrayOf('screech-shooter-major'), 'and never under the bare record id').toBeUndefined();
+    /* …and the resolver parks the record for exactly as long as the question is unanswered. Read from
+     * the desk rather than written as a literal: #151 is ruled but held for a later batch (its items
+     * are level 9+), and the day it moves to `ruled` the park correctly stops — a literal here would
+     * report the desk working as a regression. The PAIRING above is what this case pins. */
+    const parked = ['open', 'deferred'].includes(arrayOf('screech-shooter-major-rune-grade')!);
+    expect(queuedFor('screech-shooter-major')).toBe(parked ? 'screech-shooter-major-rune-grade' : '');
     /* The original fixture, asserted where it now lives: ruled, therefore not parked. If #145 is ever
      * dropped from the file altogether — rather than answered — this is what says so. */
     expect((desk.ruled ?? []).map((q: { id: string }) => q.id)).toContain('animal-instinct-spider-web');
@@ -111,8 +118,17 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
      */
     const rel = `work/.b035gp-desk-${tag()}.json`;
     const desk = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));
-    desk.open = desk.open.filter((q: { id: string }) => q.id !== 'screech-shooter-major-rune-grade');
-    expect(desk.open.length).toBe(JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, '')).open.length - 1);
+    /* Deleted from BOTH unanswered arrays, and the copy is then asserted to hold the entry nowhere.
+     * It used to be filtered out of `open` alone with a length check — which silently stopped deleting
+     * anything the day the owner answered #151 (desk pass 2026-09-12: the entry moved to `ruled`, so
+     * the filter removed nothing and the case proved a park was gone that the real desk had already
+     * ended). What the case is FOR is that the park follows the entry, wherever the entry lives. */
+    const gone = (q: { id: string }) => q.id !== 'screech-shooter-major-rune-grade';
+    for (const arr of ['open', 'deferred'] as const) desk[arr] = (desk[arr] ?? []).filter(gone);
+    expect(
+      [...(desk.open ?? []), ...(desk.deferred ?? [])].some((q: { id: string }) => q.id === 'screech-shooter-major-rune-grade'),
+      'the copy the gate is pointed at holds no unanswered entry for that record',
+    ).toBe(false);
     writeFileSync(join(CLI_ROOT, rel), JSON.stringify(desk));
     try {
       expect(queuedFor('screech-shooter-major', rel)).toBe('');
@@ -204,14 +220,23 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
      */
     // batch 037: screech-shooter-major#grade-numbers
     // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
-    expect(widened()).toEqual({
+    /* The six pairs are the pin: nothing may widen past them silently. WHICH of them is still parked
+     * is the desk's business, so the expectation drops a pair the moment its question is answered —
+     * the same thing the header records happening twice already (#145, dream-magic), written once
+     * instead of re-edited every desk pass. An UNKNOWN pair still fails: it is not in this table. */
+    const PARKS: Record<string, string> = {
       'flexible-spellcaster': 'flexible-spellcaster-book-casters',
       'screech-shooter-major': 'screech-shooter-major-rune-grade',
       'timewracked-dedication': 'timewracked-dedication-speed-clause',
       speed: 'speed-plural-while-a-state-is-on',
       'spell-parry': 'spell-parry-badge',
       relic: 'relic-gift-family-skysunder-sparkwarden-uniter-adamantine',
-    });
+    };
+    const deskNow = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));
+    const unanswered = new Set(
+      (['open', 'deferred'] as const).flatMap((a) => ((deskNow[a] ?? []) as { id?: string }[]).map((q) => q.id)),
+    );
+    expect(widened()).toEqual(Object.fromEntries(Object.entries(PARKS).filter(([, q]) => unanswered.has(q))));
     expect(queuedFor('flexible')).toBe('');
     /* Answered 2026-09-10, so parked no longer — asserted rather than deleted, because a record that
      * silently stopped being parked for any OTHER reason is exactly the bug this file watches for. */

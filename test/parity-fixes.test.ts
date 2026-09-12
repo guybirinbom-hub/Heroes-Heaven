@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
 import { deriveStrikes, deriveMaxHp, deriveSave } from '../src/rules/derive';
-import type { BuildState } from '../src/rules/build';
+import { applyEditionFilter, type BuildState } from '../src/rules/build';
 import { CLASS_RESOURCES } from '../src/rules/classResources';
 import { PROFICIENCY_RANKS as RANKS } from '../src/rules/types';
 
@@ -48,9 +48,15 @@ describe("both branches of the kineticist's Gate's Threshold grant a feat", () =
 
 describe('grants that pointed at the wrong record', () => {
   it('Elemental Wrath casts the current spell, not the superseded one', () => {
-    /* Our `acid-splash` is stamped edition 'superseded' — the legacy single-target spell attack. The
-     * current printing is Caustic Blast, a 5-foot burst. A player was casting the wrong spell. */
-    expect((db.spells['acid-splash'] as { edition?: string }).edition).toBe('superseded');
+    /* Our `acid-splash` is the legacy single-target spell attack. The current printing is Caustic
+     * Blast, a 5-foot burst. A player was casting the wrong spell.
+     *
+     * desk 158: asserted through the FILTER rather than through the `edition` string. The owner's
+     * 2026-09-12 ruling re-marks a record whose reprint already ships from `superseded` (always
+     * hidden) to `legacy` + `remasteredAs` (hidden by the hide-legacy toggle), so the string changes
+     * and the guarantee does not — a remaster-only character never sees the old printing either way,
+     * which is the thing this case is actually about. */
+    expect(applyEditionFilter(db, { hideLegacy: true }, new Set()).spells['acid-splash']).toBeUndefined();
     expect(db.feats['elemental-wrath'].innateSpells?.[0]?.spellId).toBe('caustic-blast');
 
     /* BOTH carriers, or the player gets two different cantrips. The record holds a flat grant and a

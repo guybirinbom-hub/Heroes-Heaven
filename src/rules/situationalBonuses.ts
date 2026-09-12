@@ -1579,13 +1579,20 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
    * this batch. Nothing is left over: unlike vivacious-speed there is no second, unseeable condition.
    * 'incredible-movement' is in the handEdited set of scripts/apply-situational-lane.mjs so the
    * generated lane does not restore it. */
-  "stylish-combatant": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on skill checks with the bravado trait, while in a combat encounter", bonus: "+1 circumstance" }, { targets: [{ kind: 'speed' }], when: "while you have panache", bonus: "+5 status" }],
-  /* Split, per the owner's rule that a Speed is a real number only when it is ALWAYS on. The
-   * without-panache half IS always on and is now a real `landSpeedBonus` on the record, so this star
-   * covers only the panache-dependent remainder — and says the floor is already counted, in the
-   * wording the clarity-goggles-greater / mirror-goggles stars established. Repeating "+10 status"
-   * without that clause would state the same feet twice on one sheet. */
-  "vivacious-speed": [{ targets: [{ kind: 'speed' }], when: "while you have panache", bonus: "+10 status, increasing by 5 feet at 7th, 11th, 15th and 19th level (half of it, rounded down to the nearest 5 feet, is always on and already in your Speed)" }],
+  "stylish-combatant": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on skill checks with the bravado trait, while in a combat encounter", bonus: "+1 circumstance" }, { targets: [{ kind: 'speed' }], when: "while you have panache", bonus: "+5 status to your Speeds" }],
+  /*
+   * desk #154 (owner, 2026-09-12) — THE WHOLE BONUS IS NOW APPLIED WHILE PANACHE IS ON.
+   *
+   * This star used to say the panache half was only a remainder ("half of it … is always on and
+   * already in your Speed"), because the engine carried only the halved, always-on number and the
+   * with-panache value reached nothing. The lane built the conditional half: the record's
+   * `whileActive` clause replaces the halved value with the full one, typed status and across ALL
+   * Speeds, the moment panache is on. So the star states the printed rule plainly — the parenthetical
+   * would now be describing an engine limitation that no longer exists, on the one surface a player
+   * reads to find out what panache does. The always-on halved floor is still a real number on the
+   * Speed and is still pinned by test/vivacious-speed-floor.test.ts.
+   */
+  "vivacious-speed": [{ targets: [{ kind: 'speed' }], when: "while you have panache", bonus: "+10 status to your Speeds, increasing by 5 feet at 7th, 11th, 15th and 19th level" }],
   "exemplary-finisher": [{ targets: [{ kind: 'strikeDamage' }], when: "Gymnast style only: when a Strike you make as part of a finisher hits a foe that is grabbed, restrained, or prone", bonus: "circumstance bonus equal to double your number of weapon damage dice" }],
   "swashbuckler-expertise": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on skill checks with the bravado trait, while in a combat encounter", bonus: "+2 circumstance (up from +1)" }],
   "continuous-flair": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on skill checks with the bravado trait in exploration mode, not just in a combat encounter", bonus: "+1 circumstance (+2 with Swashbuckler Expertise)" }],
@@ -3451,11 +3458,15 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "staff-of-elemental-power-major": [{ targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'lore:*' }], when: "to identify elemental creatures, while wielding the staff", bonus: "+2 circumstance" }],
   /* AoN feat-6238: *"You gain a +5-foot status bonus to your Speeds; this increases to a +10-foot
    * status bonus while you have panache."* The +5 floor is ALWAYS ON, so it belongs in the Speed
-   * number, not in a star — it now rides feats/swashbucklers-speed.landSpeedBonus (read at derive.ts
+   * number, not in a star — it rides feats/swashbucklers-speed.landSpeedBonus (read at derive.ts
    * `landBonusOf(db.feats[f.featId]?.landSpeedBonus)`), exactly as classFeatures/vivacious-speed
-   * carries its own always-on half. What is left for the star is the panache REMAINDER, worded as
-   * vivacious-speed words it so the player is not told the floor twice. (batch 031) */
-  "swashbucklers-speed": [{ targets: [{ kind: 'speed' }], when: "while you have panache", bonus: "+10-foot status instead (the +5-foot floor is always on and already in your Speed)" }],
+   * carries its own always-on half. (batch 031)
+   *
+   * desk #154 (2026-09-12): the star states the printed +10 plainly. It used to call it a REMAINDER
+   * ("the +5-foot floor is always on and already in your Speed") because nothing applied the
+   * with-panache value; the record's `whileActive` clause now replaces the +5 with the +10 — same
+   * status type, so they do not stack — and the caveat would only be describing a gap that is closed. */
+  "swashbucklers-speed": [{ targets: [{ kind: 'speed' }], when: "while you have panache", bonus: "+10 status to your Speeds" }],
   "the-lens-of-the-outreaching-eye": [{ targets: [{ kind: 'spell', detail: 'all' }, { kind: 'skill', detail: 'all' }], when: "on any check made to resolve a divination effect", bonus: "+3 item" }],
   "thieves-tools-concealable": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "on Stealth checks to Conceal these tools", bonus: "+1 item" }],
   "unifying-emblem-skoan-quah": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "on Diplomacy checks you make while speaking Shoanti to someone who understands it - only…", bonus: "+1 item" }],

@@ -16,8 +16,10 @@
  *     a `create` row) in scripts/data/effect-backfill.json. stamp-aonid.mjs re-applies those last, so
  *     the ruling is the answer; they are listed, not failed.
  *   • a SHIPPED TWIN: the reprint already ships as a record of its own, so repointing would collapse
- *     two records onto one page — a merge decision for the owner, not a data repair. Listed, not
- *     failed (e.g. spells/acid-splash, whose reprint spell-1461 ships as spells/caustic-blast).
+ *     two records onto one page — a merge decision, and the owner made it (desk #158, 2026-09-12):
+ *     "keep both, mark the old one legacy, add a 'remastered as …' link". So the twin is not repointed
+ *     — but it MUST carry `edition: "legacy"` and a `remasteredAs` naming a record that exists, or
+ *     this exits 1 (e.g. spells/acid-splash -> spells/caustic-blast). Both are stamped by the chain.
  *
  * Anything else is a failure: re-run `npm run data`, whose chain applies the rule in
  * scripts/lib/reprint.mjs (the importer's join + the AST writer, and build-map.mjs so the stamp
@@ -29,7 +31,7 @@
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadReprintIndex, repointDoc, slugify } from './lib/reprint.mjs';
+import { loadReprintIndex, repointDoc, shippedTwin, slugify } from './lib/reprint.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CORE = process.env.CORE_JSON || join(ROOT, 'public/core.json');
@@ -94,6 +96,8 @@ const bad = [];
 const staleBook = [];
 const byRuling = [];
 const byTwin = [];
+const twinOnCurrentDoc = [];
+const unmarked = [];
 
 for (const [bucket, records] of Object.entries(core)) {
   if (!records || typeof records !== 'object' || Array.isArray(records)) continue;
@@ -118,8 +122,36 @@ for (const [bucket, records] of Object.entries(core)) {
     if (!R) {
       // Not repointable — but say WHY when a reprint exists, so the exceptions stay visible.
       const any = repointDoc(index, D, key, () => false);
-      if (any && pinned.has(where)) byRuling.push(`${where}  pinned at ${D}; the reprint is ${any}`);
-      else if (any) byTwin.push(`${where}  ${D} -> ${any} "${index.docs.get(any)?.name}" already ships as ${bucket}/${slugify(index.docs.get(any)?.name ?? '')}`);
+      if (any && pinned.has(where)) { byRuling.push(`${where}  pinned at ${D}; the reprint is ${any}`); continue; }
+      if (!any) continue;
+      /*
+       * CHECK 3 — THE SHIPPED TWIN CARRIES THE OWNER'S RULING (desk #158, 2026-09-12).
+       *
+       * "keep both, mark the old one legacy, add a 'remastered as …' link". Both halves are stamped
+       * in the pipeline (build-map.mjs computes the pairing, stamp-aonid.mjs writes it), so a regen
+       * reproduces them and no overlay row is involved. This is what makes that a guarantee rather
+       * than a run that happened to work:
+       *   · `edition` must be exactly 'legacy' — NOT 'superseded' (always hidden, which the ruling
+       *     overturns) and not the doc's own 'legacy-era';
+       *   · `remasteredAs` must name this bucket and a record that really exists, because the popup
+       *     renders it as a link and a dangling one is a dead end on the player's screen.
+       * A record whose OWN document is a current printing is not this case — see shippedTwin().
+       */
+      const twin = shippedTwin(index, D, key, hasSlug);
+      const rname = index.docs.get(any)?.name ?? '';
+      if (!twin) { twinOnCurrentDoc.push(`${where}  ${D} -> ${any} "${rname}" — ${D} is itself a current printing, so it is not marked legacy`); continue; }
+      byTwin.push(`${where}  ${D} -> ${any} "${rname}" already ships as ${bucket}/${slugify(rname)}`);
+      const ra = rec.remasteredAs;
+      if (rec.edition !== 'legacy') unmarked.push(`${where}  edition is ${JSON.stringify(rec.edition ?? null)}, must be "legacy" (desk #158)`);
+      if (!ra) unmarked.push(`${where}  has no remasteredAs; it should name ${bucket}/${twin.id} "${twin.name}"`);
+      else if (ra.bucket !== bucket || ra.id !== twin.id) unmarked.push(`${where}  remasteredAs is ${JSON.stringify(ra)}, must be ${JSON.stringify({ bucket, id: twin.id, name: twin.name })}`);
+      else if (!records[ra.id]) unmarked.push(`${where}  remasteredAs points at ${bucket}/${ra.id}, which no record answers to`);
+      /* …and the LABEL must be the title of the record the link opens. The popup renders this string
+       * and the click opens that record, so a label that disagrees is a defect the player sees. Seven
+       * rows shipped as "Rune Of Sin" against a record named "Rune of Sin" — the export document's
+       * title, stale where the live Archives page and the record agree — before build-map.mjs was
+       * changed to take the record's own name. */
+      else if (records[ra.id].name !== ra.name) unmarked.push(`${where}  remasteredAs is labelled ${JSON.stringify(ra.name)}, but ${bucket}/${ra.id} is named ${JSON.stringify(records[ra.id].name)}`);
       continue;
     }
     if (pinned.has(where)) { byRuling.push(`${where}  pinned at ${D}; the reprint is ${R}`); continue; }
@@ -135,6 +167,9 @@ if (byTwin.length) {
   console.log(`   owner merge decision (first 10 of ${byTwin.length}):`);
   for (const r of byTwin.slice(0, 10)) console.log(`      ${r}`);
 }
+for (const r of twinOnCurrentDoc) console.log(`   not marked (own document is current): ${r}`);
+const unmarkedRecords = new Set(unmarked.map((u) => u.split('  ')[0]));
+console.log(`${byTwin.length - unmarkedRecords.size} of ${byTwin.length} shipped twin(s) carry edition legacy + remasteredAs (desk #158).`);
 
 console.log(`${staleBook.length} record(s) whose source.book stayed on the printing their document replaced.`);
 
@@ -145,6 +180,17 @@ if (staleBook.length) {
   if (staleBook.length > 40) console.error(`   … and ${staleBook.length - 40} more`);
   console.error('   Repair: a `source` overlay row per record through scripts/apply-parity-fixes.mjs,');
   console.error('   citing the reprint doc id (see work/.reprint-source-book.json for the 20 already done).');
+  process.exit(1);
+}
+
+if (unmarked.length) {
+  console.error(`\nreprint-check: FAIL — ${unmarkedRecords.size} shipped twin(s) do not carry the owner's ruling (desk #158):`);
+  console.error('   the old page stays, marked `edition: "legacy"` (hide-legacy hides it; `superseded` would');
+  console.error('   always hide it) and carrying `remasteredAs` so the popup can link to the reprint.');
+  for (const u of unmarked.slice(0, 40)) console.error('   ' + u);
+  if (unmarked.length > 40) console.error(`   … and ${unmarked.length - 40} more`);
+  console.error('   Repair: re-run the chain — `npm run data` (build-map.mjs computes the pairing,');
+  console.error('   stamp-aonid.mjs writes it; the predicate is shippedTwin() in scripts/lib/reprint.mjs).');
   process.exit(1);
 }
 

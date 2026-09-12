@@ -1,0 +1,27 @@
+{
+  "findings": [
+    {
+      "id": "desk-160#prerequisites-the-page-beats-the-facet",
+      "note": "DESK #160 (owner, 2026-09-12). His rule: \"the Archives PAGE is the authority, not its search facet, when the two disagree\" — he read both pages off the live site and pasted the screenshot of https://2e.aonprd.com/Feats.aspx?ID=9350. TWO RECORDS, one defect each, both in the export's `data.prerequisite` facet rather than in anything Heroes Heaven derived: (1) feat-9350 Soulforger Dedication carries the facet \" or ability to cast divine spells\" — a fragment beginning with a connector, i.e. the first half of the clause is simply gone — while the printed page (Impossible Magic pg. 98: traits Uncommon / Archetype / Dedication, Source, Archetype Soulforger, then the body) prints NO Prerequisites line at all; his words, \"there isnt a prerequisite\". So the record's prerequisites become []. (2) feat-9073 Dimensional Disappearance carries \"_dimensional assault_ focus spell,; laughing shadow hybrid study\" — AoN's own separator came out as \",;\", so our splitter kept the stray comma on the end of the first clause and shipped \"dimensional assault focus spell,\". Both prerequisites are real and stay; only the punctuation goes. ⚠ THIS IS NOT DISPLAY TEXT: checkPrerequisites() in src/rules/build.ts parses each clause with anchored patterns, so a trailing comma is a gate that never matches and an invented clause is a feat a legal character cannot take. ⚠ THE IMPORTER RULE HE ASKED FOR IS NOT IN THIS SPEC. Measured over the whole export (45,500 docs) before wiring it: a facet that STARTS with a connector is exactly 2 documents — feat-9350 and archetype-393 (the Soulforger archetype page, which repeats the same broken facet and ships as archetype/soulforger); a clause left with a TRAILING comma is exactly 2 more — feat-9073 and feat-7287 (Mythic Counterspell, \"Quick Recognition; ability to cast spells from spell slots,; Sage's Calling\", shipping as feats/mythic-counterspell). Four records, two of which the owner did not rule on, so the change to scripts/lib/aon-facets.mjs prerequisitesFrom() is held for the orchestrator's go and only these two rows ship. The two rows are the fix either way: the overlay is applied after the importer, so it wins whether or not the parser is changed.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "soulforger-dedication",
+          "field": "prerequisites",
+          "value": [],
+          "why": "feat-9350 (Soulforger Dedication, Impossible Magic pg. 98). The live Archives page prints Uncommon / Archetype / Dedication, Source, \"Archetype Soulforger\" and then the feat's body, with NO Prerequisites line — the owner pasted the screenshot on 2026-09-12 and ruled \"there isnt a prerequisite\". The export's search facet for the same document is the fragment \" or ability to cast divine spells\", which begins with a connector: the first half of the clause is missing upstream, so the facet is damage, not a rule. Desk #160; his standing rule is that the page beats its own facet when the two disagree."
+        },
+        {
+          "category": "feats",
+          "id": "dimensional-disappearance",
+          "field": "prerequisites",
+          "value": [
+            "dimensional assault focus spell",
+            "laughing shadow hybrid study"
+          ],
+          "why": "feat-9073 (Dimensional Disappearance). The page prints two prerequisites and both are kept — only the punctuation changes. The export's facet is \"_dimensional assault_ focus spell,; laughing shadow hybrid study\": AoN wrote its clause separator as \",;\", and prerequisitesFrom() splits on ';' alone, so the first clause shipped as \"dimensional assault focus spell,\" with a trailing comma. checkPrerequisites() (src/rules/build.ts) matches clauses with anchored patterns, so that comma silently switched the gate off. Owner ruling 2026-09-12, desk #160: \"keep both prerequisites, drop the stray comma\"."
+        }
+      ]
+    }
+  ]
+}

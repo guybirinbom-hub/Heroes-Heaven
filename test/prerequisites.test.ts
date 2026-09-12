@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { checkPrerequisites } from '../src/rules/build';
 import type { Character } from '../src/rules/types';
 import { content, build } from './_content';
+import { prerequisitesFrom } from '../scripts/lib/aon-facets.mjs';
 
 describe('checkPrerequisites', () => {
   it('never throws across every imported feat', () => {
@@ -172,5 +173,64 @@ describe('choice answers as eligibility tokens', () => {
       expect(t, t).not.toMatch(/^(strength|dexterity|constitution|intelligence|wisdom|charisma) \d+$/);
       expect(t, t).not.toMatch(/^(trained|expert|master|legendary) /);
     }
+  });
+});
+
+/*
+ * desk 158/160/161/152: the importer's own reading of the Archives' prerequisite facet.
+ *
+ * The owner ruled on 2026-09-12 that "the Archives PAGE is the authority, not its search facet, when
+ * the two disagree", after reading feat-9350's page and finding no Prerequisites line at all while its
+ * facet said " or ability to cast divine spells". A clause gated on a fragment is a feat a legal
+ * character cannot take, so this pins the parser rule as well as the two records it lands on.
+ */
+describe('prerequisitesFrom — a facet beginning with a connector is damage (desk #160)', () => {
+  const from = (prerequisite: string) => prerequisitesFrom({ data: { prerequisite } } as never);
+
+  // desk 160: feat-9350 / archetype-393
+  it('returns [] for the leading-connector fragment, not the fragment itself', () => {
+    expect(from(' or ability to cast divine spells')).toEqual([]);
+    expect(from(', laughing shadow hybrid study')).toEqual([]);
+  });
+
+  /* EMPTY, not null: null means "the Archives say nothing, keep what you have", which would leave the
+   * invented clause on the record. The distinction is the whole fix. */
+  it('distinguishes "the page prints none" from "the Archives said nothing at all"', () => {
+    expect(from('')).toBeNull();
+    expect(prerequisitesFrom({ data: {} } as never)).toBeNull();
+  });
+
+  /* An ordinary facet is untouched — including one that merely CONTAINS " or ", which is how most
+   * real alternatives are written and must keep parsing. */
+  it('leaves a well-formed facet alone', () => {
+    expect(from('trained in Deception or trained in Diplomacy')).toEqual(['trained in Deception or Diplomacy']);
+    expect(from('_dimensional assault_ focus spell; laughing shadow hybrid study')).toEqual([
+      'dimensional assault focus spell',
+      'laughing shadow hybrid study',
+    ]);
+  });
+
+  /* ⚠ THE SIBLING DEFECT IS NOT FIXED, and this pins that on purpose. AoN writes its separator as
+   * ",;" in two documents, leaving a clause ending in a comma — but the LIVE page for feat-7287 prints
+   * that comma itself ("ability to cast spells from spell slots,; Sage's Calling", read from
+   * elasticsearch.aonprd.com on 2026-09-12), so the page does not contradict its facet and the page is
+   * the authority. feats/dimensional-disappearance lost its comma by an explicit per-record ruling
+   * (overlay row, desk #160), never by a rule. If that ever becomes a rule, this case is what says so. */
+  it('does NOT strip a trailing comma the printed page also shows', () => {
+    expect(from('Quick Recognition; ability to cast spells from spell slots,; Sage\'s Calling')).toEqual([
+      'Quick Recognition',
+      'ability to cast spells from spell slots,',
+      "Sage's Calling",
+    ]);
+  });
+
+  // desk 160: the two records the owner ruled on, as they ship
+  it('the shipped records carry the owner\'s ruling', () => {
+    const db = content();
+    expect(db.feats['soulforger-dedication'].prerequisites ?? []).toEqual([]);
+    expect(db.feats['dimensional-disappearance'].prerequisites).toEqual([
+      'dimensional assault focus spell',
+      'laughing shadow hybrid study',
+    ]);
   });
 });

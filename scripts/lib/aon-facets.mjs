@@ -210,6 +210,36 @@ export function prerequisitesFrom(rec) {
   const raw = rec?.data?.prerequisite;
   if (!raw) return null;
 
+  /*
+   * A FACET THAT BEGINS WITH A CONNECTOR IS DAMAGE, NOT A PREREQUISITE — desk #160, 2026-09-12.
+   *
+   * Owner's rule: "the Archives PAGE is the authority, not its search facet, when the two disagree."
+   * Two documents carry a facet whose first clause is simply gone upstream, leaving the tail:
+   *
+   *   feat-9350      Soulforger Dedication   " or ability to cast divine spells"
+   *   archetype-393  Soulforger              " or ability to cast divine spells"
+   *
+   * Read off the LIVE Archives (elasticsearch.aonprd.com, index aon-20260902-190924) before this went
+   * in: archetype-393's page markdown contains the string "Prerequisit" ZERO times and "divine spells"
+   * zero times — it prints the title, one Uncommon trait, "Source Impossible Magic pg. 98", a PFS
+   * note and the archetype's prose, and nothing else. feat-9350's page is the same, which is the
+   * screenshot the owner pasted ("there isnt a prerequisite"). So the page states no prerequisite and
+   * the facet is a fragment of one.
+   *
+   * EMPTY, not null: null means "the Archives say nothing, keep what you have", which would leave the
+   * invented clause in place. `checkPrerequisites()` (src/rules/build.ts) parses these with anchored
+   * patterns, so a fragment is a gate that keeps a legal character out of a feat the book lets them
+   * take.
+   *
+   * ⚠ THE SIBLING DEFECT IS NOT FIXED HERE, deliberately. AoN also writes its clause separator as
+   * ",;" in two documents (feat-9073 Dimensional Disappearance, feat-7287 Mythic Counterspell),
+   * leaving a clause ending in a comma. That is NOT the same case: the live page for feat-7287 prints
+   * the comma itself — "ability to cast spells from spell slots,; Sage's Calling" — so the page does
+   * not contradict its facet and the page is the authority. feat-9073's comma was dropped by an
+   * explicit per-record ruling (desk #160, overlay row), not by a rule.
+   */
+  if (/^\s*(?:or\b|,)/i.test(String(raw))) return [];
+
   return String(raw)
     .replace(/\r/g, '')
     .split(/[;\n]/)                       // ';' is the only separator — verified never inside parens

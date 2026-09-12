@@ -1222,6 +1222,21 @@ export function stateGrantSummary(
     for (const t of wa.immunities ?? []) other.push(`immunity to ${t}`);
     for (const k of Object.keys(wa.speeds ?? {})) other.push(`${k} Speed`);
     if (wa.speedPenalty) other.push(`${wa.speedPenalty} ft Speed penalty`);
+    /*
+     * A state-gated Speed BONUS — the panache lane's carrier (desk #154). `speeds` above names a NEW
+     * movement type; this is a faster version of the ones you have, and without it a swashbuckler
+     * deciding whether to spend panache saw nothing on the card about the thing panache most visibly
+     * does. Same blindness Acute Vision and Raging Resistance had, one field over.
+     *
+     * NAMED, NOT RESOLVED, like every other line here: Vivacious Speed's value is the formula
+     * "10+5*min(4,floor((@actor.level-3)/4))", and the resolved number with its full breakdown already
+     * lives on the Speeds rows. This is the index.
+     */
+    if (wa.landSpeedBonus !== undefined) {
+      const scope = wa.speedBonusAllSpeeds ? 'all Speeds' : 'Land Speed';
+      const kind = wa.speedBonusType ? `${wa.speedBonusType} bonus` : 'bonus';
+      other.push(typeof wa.landSpeedBonus === 'number' ? `+${wa.landSpeedBonus} ft ${kind} to ${scope}` : `${kind} to ${scope}`);
+    }
     // A state-gated grant that only fires IF you already hold a named sense (Nocturnal Senses) has no
     // entry in `senses`, so without this the Rage card listed nothing for it — the exact blindness this
     // summary was written to remove. Named, not resolved, like every other line here.
@@ -5341,7 +5356,7 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
    * ever moved. Same-type bonuses now take the HIGHEST; untyped ones (and the leshy's −5 penalty)
    * still stack, which is RAW. Owner ruling 2026-09-10 #127: follow print on both halves. */
   const speedBonuses: { value: number; type?: string; allSpeeds?: boolean }[] = [];
-  const pushSpeedBonus = (src: DefenseGrants | undefined) => {
+  const pushSpeedBonus = (src: Pick<DefenseGrants, 'landSpeedBonus' | 'speedBonusType' | 'speedBonusAllSpeeds'> | undefined) => {
     const value = landBonusOf(src?.landSpeedBonus);
     if (!value) return;
     speedBonuses.push({ value, type: src!.speedBonusType, allSpeeds: src!.speedBonusAllSpeeds });
@@ -5349,6 +5364,12 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   for (const f of c.feats) pushSpeedBonus(db.feats[f.featId]);
   for (const fid of ownedFeatureIds(c, db)) pushSpeedBonus(db.classFeatures[fid]);
   for (const h of heritageRecords(c, db)) pushSpeedBonus(h);
+  /* desk 154: panache-speed — the same three fields behind the STATE gate. *"While you have panache,
+   * you gain a +5-foot status bonus to your Speeds"* (class-feature-1007), raised by Vivacious Speed
+   * (class-feature-1017) and printed again on Swashbuckler's Speed (feat-6238). They join the same
+   * pool, so `stackSpeedBonuses` makes the with-panache value REPLACE the standing without-panache
+   * half — one status bonus, the highest — rather than adding a second one to it. */
+  for (const wa of activeStateGrants(c, db)) pushSpeedBonus(wa);
   const stackSpeedBonuses = (rows: typeof speedBonuses) => {
     let total = 0;
     const best: Record<string, number> = {};

@@ -59,12 +59,24 @@ describe('Vivacious Speed pays its always-on half as a real number', () => {
     }
   });
 
-  it('the star no longer states the floor a second time', () => {
-    /* Two carriers for one clause is the shape that makes a sheet contradict itself: a number in the
-     * Speed and prose beside it claiming the same feet again. */
+  /*
+   * desk 154: the star states the PRINTED rule, because the printed rule is now what happens.
+   *
+   * It used to have to say "half of it … is always on and already in your Speed" — a caveat about the
+   * ENGINE, not about the book: only the halved value was carried and the with-panache value reached
+   * nothing, so repeating "+10 status" would have promised feet no character ever got. The lane built
+   * the conditional half (the record's `whileActive` clause replaces the halved value with the full
+   * one, typed status, across all Speeds), so the caveat would now describe a gap that is closed —
+   * on the one surface a player reads to find out what panache does.
+   *
+   * The always-on floor is unchanged and still pinned by the level table above; what this case now
+   * guards is that the star does not drift back to describing a limitation.
+   */
+  it('the star states the printed +10, with no caveat about the floor', () => {
     const star = FEAT_SITUATIONAL['vivacious-speed']!.find((s) => s.targets.some((t) => t.kind === 'speed'))!;
     expect(star.when).toBe('while you have panache');
-    expect(star.bonus).toMatch(/already in your Speed/i);
+    expect(star.bonus).toBe('+10 status to your Speeds, increasing by 5 feet at 7th, 11th, 15th and 19th level');
+    expect(star.bonus).not.toMatch(/already in your Speed|half of it|instead/i);
   });
 
   it("…and stylish combatant's own speed bonus stays a star, because it is NOT always on", () => {
@@ -74,5 +86,13 @@ describe('Vivacious Speed pays its always-on half as a real number', () => {
     expect(db.classFeatures['stylish-combatant']?.landSpeedBonus).toBeUndefined();
     const star = FEAT_SITUATIONAL['stylish-combatant']!.find((s) => s.targets.some((t) => t.kind === 'speed'))!;
     expect(star.when).toMatch(/while you have panache/i);
+    expect(star.bonus).toBe('+5 status to your Speeds');
+  });
+
+  /* The archetype copy of the same clause (feat-6238), reworded for the same reason. */
+  it("the swashbuckler's speed archetype feat states its printed +10 too", () => {
+    const star = FEAT_SITUATIONAL['swashbucklers-speed']!.find((s) => s.targets.some((t) => t.kind === 'speed'))!;
+    expect(star.when).toBe('while you have panache');
+    expect(star.bonus).toBe('+10 status to your Speeds');
   });
 });

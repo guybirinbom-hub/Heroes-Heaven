@@ -22,7 +22,42 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const core = JSON.parse(readFileSync(join(ROOT, 'public/core.json'), 'utf8'));
 
-const isSuperseded = (id) => core.spells?.[id]?.edition === 'superseded';
+/*
+ * ⚠ TWO SPELLINGS OF THE SAME FACT, and the second one is why this line is not `=== 'superseded'`.
+ *
+ * Desk #158 (2026-09-12) re-marked every record whose reprint already ships beside it from
+ * `superseded` to `edition: 'legacy'` + `remasteredAs`, so the hide-legacy toggle owns the pre/post
+ * axis. That moved 27 of the corpus's 27 superseded SPELLS — acid-splash, ghost-sound, ray-of-frost,
+ * the lot — out of the value this guard used to key on, which would have left it passing on an empty
+ * set while every route it was written to catch went unprotected. `remasteredAs` is the durable
+ * statement of "this is the old printing and the new one ships"; it is what the guard reads now.
+ */
+const isSuperseded = (id) => {
+  const s = core.spells?.[id];
+  return !!s && (s.edition === 'superseded' || !!s.remasteredAs);
+};
+
+/*
+ * …AND ONE FIELD IS EXEMPT FROM THE WIDER HALF: `heldSpells`.
+ *
+ * A staff's or talisman's held spell is the item's OWN PRINTED LINE, copied from its page — not a
+ * route we chose. Read from the live Archives on 2026-09-12, the REMASTERED printing of Judgement
+ * Thurible (Major), equipment-2232-1952, Treasure Vault (Remastered) pg. 126:
+ *
+ *     **Activate** Cast a Spell; **Frequency** once per day;
+ *     **Effect** You cast [_summon deific herald_](/Spells.aspx?ID=1007).
+ *
+ * A remaster page, naming the legacy spell and linking spell-1007 outright. Six routes read that way
+ * (the Ghostcaller's Planchette, Wyrm Spindle, Wyrm Claw and Dragonprism Staff families with it), and
+ * repointing them at the Incarnate reprints would make the record contradict the page — against the
+ * owner's standing rule that the live page is the authority. `superseded` stays refused even here,
+ * because those records the app hides unconditionally, so a printed line pointing at one is still a
+ * dead end on the player's screen.
+ *
+ * The thirteen pick-list options and the outright feat grant this guard was written for are in the
+ * other fields, and they keep the full desk-158 set.
+ */
+const refuses = (field, id) => (field === 'heldSpells' ? core.spells?.[id]?.edition === 'superseded' : isSuperseded(id));
 /* Some of these fields hold a map or a single object rather than a list — `heldSpells` on an item is
  * keyed by rank, and a lone grant is sometimes written bare. Normalising here keeps the walk honest
  * instead of throwing on the first record that uses a different shape. */
@@ -37,7 +72,7 @@ for (const bucket of Object.keys(core)) {
     for (const f of SPELL_FIELDS) {
       for (const g of asList(rec[f])) {
         const sid = typeof g === 'string' ? g : g?.spellId;
-        if (sid && isSuperseded(sid)) bad.push(`${bucket}/${id}.${f} → ${sid}`);
+        if (sid && refuses(f, sid)) bad.push(`${bucket}/${id}.${f} → ${sid}`);
       }
     }
     /* 2. …and the same fields nested under an effect-choice option's grant. */
@@ -46,7 +81,7 @@ for (const bucket of Object.keys(core)) {
         for (const f of SPELL_FIELDS) {
           for (const g of asList(o?.grant?.[f])) {
             const sid = typeof g === 'string' ? g : g?.spellId;
-            if (sid && isSuperseded(sid)) bad.push(`${bucket}/${id}.effectChoices[${ec.id}].${o.value}.${f} → ${sid}`);
+            if (sid && refuses(f, sid)) bad.push(`${bucket}/${id}.effectChoices[${ec.id}].${o.value}.${f} → ${sid}`);
           }
         }
       }
@@ -56,7 +91,7 @@ for (const bucket of Object.keys(core)) {
       for (const f of SPELL_FIELDS) {
         for (const g of asList(o?.grant?.[f])) {
           const sid = typeof g === 'string' ? g : g?.spellId;
-          if (sid && isSuperseded(sid)) bad.push(`${bucket}/${id}.choice.${o.value}.${f} → ${sid}`);
+          if (sid && refuses(f, sid)) bad.push(`${bucket}/${id}.choice.${o.value}.${f} → ${sid}`);
         }
       }
     }
@@ -71,8 +106,8 @@ for (const m of src.matchAll(/^\s*'([a-z0-9-]+)':\s*\{[^\n]*options:\s*\[([^\]]*
   }
 }
 
-const supersededCount = Object.values(core.spells ?? {}).filter((s) => s.edition === 'superseded').length;
-console.log(`${supersededCount} superseded spell record(s) in the corpus.`);
+const supersededCount = Object.values(core.spells ?? {}).filter((s) => s.edition === 'superseded' || s.remasteredAs).length;
+console.log(`${supersededCount} legacy-printing spell record(s) in the corpus (edition 'superseded', or 'legacy' + remasteredAs).`);
 if (!bad.length) {
   console.log('superseded-grant: ok — nothing grants or offers one.');
   process.exit(0);

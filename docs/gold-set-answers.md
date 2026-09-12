@@ -694,8 +694,12 @@ match; two different *Zombie Horde* feats exist): a record whose document was re
 reprint — page, text, traits, numbers, edition — and keeps its id. Two things are NOT this rule: legacy
 content that was never reprinted stays as it is (the pre-/post-remaster axis is chosen by the "hide legacy"
 filter, not here), and an overlay `aonId` ruling of his still wins. A reprint whose own slug already ships
-as a separate record is a merge decision for the desk. Guard: `scripts/reprint-check.mjs` in
-`npm run verify`.
+as a separate record (181 of them: the nine Specialist's Rings that became one Accolade Robe, Necklace of
+Fireballs → Frozen Lava, Alter Reality → Manifestation…) is NOT merged — desk #158, his words after seeing
+that the Archives keep both pages cross-linked: *"yes"* to keep both, mark the old one **legacy** (so "hide
+legacy" hides it, never an always-hide) and give it a **"Remastered as …"** link that opens the reprint.
+The pipeline stamps it (build-map + stamp-aonid) and `scripts/reprint-check.mjs` in `npm run verify`
+guards both halves and the label.
 
 ### R13 · "either X or Y" / "your choice of X or Y" is ONE pick
 

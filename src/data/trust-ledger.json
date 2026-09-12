@@ -1,5 +1,5 @@
 {
- "coreSha": "4d331450d77d712a84809b930f20d833b6be5bfc24943e5a388441f306b9c378",
+ "coreSha": "363a52e70fe2e6d2c68547c0078ad3faa9dcacb89284733d1525e3bc1ee2c347",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -7481,5 +7481,5 @@
    "passiveEffects.resistances"
   ]
  },
- "wgSha": "cfdeff269580e0b627e58fea7df58def5f0118afb1109e35fcd3913564569a94"
+ "wgSha": "ab48b293992622642ffe6b405955b95bf2e82966ad9f521ff780baee49c8c307"
 }

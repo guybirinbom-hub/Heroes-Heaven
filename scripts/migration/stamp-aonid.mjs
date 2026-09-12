@@ -11,6 +11,8 @@
  *   aonParentId  the document this record is a section of   (status subblock | table | derived)
  *   aonSection   the section's label inside that parent, when extract.mjs found one
  *   aonOrigin    'authored' for hand-written HH content with no archive source
+ *   remasteredAs {bucket,id,name} of the reprint that ships beside this record (desk #158), with
+ *                `edition` forced to 'legacy' — see the doc/scraped branch below
  *
  * A record gets exactly ONE of aonId / aonParentId / aonOrigin. Records the user chose to drop are
  * reported but not touched — dropping them is a separate, deliberate step.
@@ -75,8 +77,11 @@ for (const [bucket, records] of Object.entries(core)) {
     if (!m) { unmapped.push(`${bucket}|${key}`); bump('NOT IN THE MAP'); continue; }
 
     // Clear any stamp from a previous run so this script stays idempotent and never leaves a stale
-    // pairing behind when a record is reclassified between runs.
+    // pairing behind when a record is reclassified between runs. `remasteredAs` is cleared with them
+    // for the same reason: it is derived from the map, so a record that stops being a shipped twin
+    // must not keep pointing a player at a reprint that is no longer its reprint.
     delete rec.aonId; delete rec.aonParentId; delete rec.aonSection; delete rec.aonOrigin;
+    delete rec.remasteredAs;
 
     switch (m.status) {
       case 'doc':
@@ -84,6 +89,22 @@ for (const [bucket, records] of Object.entries(core)) {
         if (!m.docId) { bump('doc WITHOUT AN ID'); break; }
         if (!plausibleDoc(bucket, key, m.docId)) { bump(`${m.status} — WRONG KIND OF PAGE, not stamped`); break; }
         rec.aonId = m.docId; bump(m.status);
+        /*
+         * DESK #158 — the old page whose reprint already ships as its own record. build-map.mjs
+         * computed the pairing from the export (scripts/lib/reprint.mjs shippedTwin); this writes it
+         * onto the record, which is the only place the app can read it.
+         *
+         * `legacy`, deliberately NOT `superseded`: the owner ruled the pre/post-remaster axis is
+         * chosen by the hide-legacy toggle, not by an always-hide, so a player who plays legacy
+         * content keeps Acid Splash and a remaster-only character does not see it
+         * (applyEditionFilter, src/rules/build.ts). scripts/reprint-check.mjs fails the build if the
+         * pair is missing; scripts/edition-drift-check.mjs leaves it alone because it is a ruling.
+         */
+        if (m.remasteredAs) {
+          rec.remasteredAs = { ...m.remasteredAs };
+          rec.edition = 'legacy';
+          bump('remastered-as (edition legacy, desk #158)');
+        }
         break;
       case 'subblock':
       case 'table': {

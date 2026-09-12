@@ -457,16 +457,16 @@
   { "n": 124, "id": null, "status": "authorisedException" },
   { "n": 125, "id": null, "status": "authorisedException" },
   { "n": 126, "id": null, "status": "authorisedException" },
-  { "n": 151, "id": "screech-shooter-major-rune-grade", "status": "open" },
-  { "n": 152, "id": "empty-description-marker-line", "status": "open" },
+  { "n": 151, "id": "screech-shooter-major-rune-grade", "status": "ruled" },
+  { "n": 152, "id": "empty-description-marker-line", "status": "ruled" },
   { "n": 153, "id": "timewracked-dedication-speed-clause", "status": "open" },
-  { "n": 154, "id": "speed-plural-while-a-state-is-on", "status": "open" },
-  { "n": 155, "id": "flexible-spellcaster-book-casters", "status": "open" },
+  { "n": 154, "id": "speed-plural-while-a-state-is-on", "status": "ruled" },
+  { "n": 155, "id": "flexible-spellcaster-book-casters", "status": "ruled" },
   { "n": 156, "id": null, "status": "authorisedException" },
   { "n": 157, "id": null, "status": "authorisedException" },
-  { "n": 158, "id": "reprint-twins-merge", "status": "open" },
-  { "n": 159, "id": "reprint-lost-traits", "status": "open" },
-  { "n": 160, "id": "reprint-damaged-pages", "status": "open" },
-  { "n": 161, "id": "spell-parry-badge", "status": "open" }
+  { "n": 158, "id": "reprint-twins-merge", "status": "ruled" },
+  { "n": 159, "id": "reprint-lost-traits", "status": "ruled" },
+  { "n": 160, "id": "reprint-damaged-pages", "status": "ruled" },
+  { "n": 161, "id": "spell-parry-badge", "status": "ruled" }
  ]
 }

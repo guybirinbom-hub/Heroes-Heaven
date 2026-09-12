@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { buildReprintMap, newestPrinting, repointDoc, slugify } from '../scripts/lib/reprint.mjs';
+import { buildReprintMap, newestPrinting, repointDoc, shippedTwin, slugify } from '../scripts/lib/reprint.mjs';
 
 /**
  * WHY THIS FILE EXISTS.
@@ -29,10 +29,10 @@ import { buildReprintMap, newestPrinting, repointDoc, slugify } from '../scripts
  *     scripts/data/effect-backfill.json, which assert the shipped spellings directly.
  */
 
-type Doc = { id: string; category: string; name?: string; release_date?: string; data?: { legacy_id?: string[]; remaster_id?: string[] } };
+type Doc = { id: string; category: string; name?: string; edition?: string; release_date?: string; data?: { legacy_id?: string[]; remaster_id?: string[] } };
 
 const doc = (id: string, category: string, extra: Partial<Doc> = {}): [string, Doc] =>
-  [id, { id, category, name: extra.name ?? id, release_date: extra.release_date ?? '2020-01-01', data: extra.data ?? {} }];
+  [id, { id, category, name: extra.name ?? id, edition: extra.edition ?? 'legacy', release_date: extra.release_date ?? '2020-01-01', data: extra.data ?? {} }];
 
 /** The reprint names what it replaces — the direction action-4260 uses (`legacy_id: ['action-755']`). */
 const reprintOf = (id: string, category: string, replaces: string[], release_date: string, name?: string) =>
@@ -139,6 +139,72 @@ describe('reprint.mjs — the newest printing wins', () => {
   it('slugify matches the record keys the exception is tested against', () => {
     expect(slugify("The World's a Stage")).toBe('the-worlds-a-stage');
     expect(slugify('Five-Feather Wreath')).toBe('five-feather-wreath');
+  });
+
+  /*
+   * desk 158/160/161/152: shippedTwin
+   *
+   * The owner ruled exception 2 on 2026-09-12 — "keep both, mark the old one legacy, add a
+   * 'remastered as …' link" — so the case now needs a NAME, shared by the stamp
+   * (build-map.mjs -> stamp-aonid.mjs) and the guard (reprint-check.mjs). Spelling it twice is how the
+   * two drift apart and the guard starts asserting something the stamp never writes.
+   */
+  describe('shippedTwin — exception 2, named for the stamp and the guard to share', () => {
+    const acidSplash = () =>
+      buildReprintMap([
+        doc('t-1', 'spell', { name: 'Acid Splash' }),
+        reprintOf('t-2', 'spell', ['t-1'], '2023-11-15', 'Caustic Blast'),
+      ]);
+    const ships = (k: string) => k === 'caustic-blast';
+
+    it('names the reprint record the old page should link to', () => {
+      expect(shippedTwin(acidSplash(), 't-1', 'acid-splash', ships)).toEqual({
+        id: 'caustic-blast',
+        name: 'Caustic Blast',
+        docId: 't-2',
+      });
+    });
+
+    it('is null exactly where repointDoc DOES repoint — the two cases cannot both fire', () => {
+      const index = acidSplash();
+      // nothing ships as caustic-blast: the record takes the reprint, so there is no twin to link to
+      expect(repointDoc(index, 't-1', 'acid-splash', never)).toBe('t-2');
+      expect(shippedTwin(index, 't-1', 'acid-splash', never)).toBeNull();
+    });
+
+    it('is null when the reprint kept the record\'s own slug (Spellstrike)', () => {
+      const index = buildReprintMap([
+        doc('u-1', 'action', { name: 'Spellstrike' }),
+        reprintOf('u-2', 'action', ['u-1'], '2026-07-30', 'Spellstrike'),
+      ]);
+      expect(shippedTwin(index, 'u-1', 'spellstrike', (k) => k === 'spellstrike')).toBeNull();
+    });
+
+    it('is null for a document with no reprint at all (legacy content nobody reprinted)', () => {
+      const index = buildReprintMap([doc('l-1', 'equipment'), doc('l-2', 'equipment')]);
+      expect(shippedTwin(index, 'l-1', 'anything', never)).toBeNull();
+      expect(shippedTwin(index, '', 'anything', never)).toBeNull();
+    });
+
+    /*
+     * THE ONE RECORD THIS EXCLUDES, and the reason the edition is read at all. Measured over the
+     * shipped artefact on 2026-09-12: 182 records take exception 2 and 181 sit on a legacy document.
+     * The odd one is items/rounds-dragon-mouth-pistol, whose own document (weapon-200) is itself a
+     * `remaster` printing carrying an Archives link to the pistol's page. Marking that legacy would
+     * hide CURRENT content from a remaster-only character — the exact harm edition-drift-check.mjs
+     * exists to prevent — so a record already on a current printing is never marked.
+     */
+    it('refuses to call a CURRENT printing the old page', () => {
+      const index = buildReprintMap([
+        doc('w-200', 'weapon', { name: 'Rounds, Dragon-Mouth Pistol', edition: 'remaster' }),
+        reprintOf('w-519', 'weapon', ['w-200'], '2026-07-30', 'Dragon-Mouth Pistol'),
+      ]);
+      const shipsPistol = (k: string) => k === 'dragon-mouth-pistol';
+      // repointDoc still blocks (the twin ships), so the record keeps its own page …
+      expect(repointDoc(index, 'w-200', 'rounds-dragon-mouth-pistol', shipsPistol)).toBeNull();
+      // … but it is not marked legacy and carries no link.
+      expect(shippedTwin(index, 'w-200', 'rounds-dragon-mouth-pistol', shipsPistol)).toBeNull();
+    });
   });
 
   it('EXCEPTION 1 lives in the callers, and both readers still spell a pin the same way', () => {

@@ -18,7 +18,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
 import { join as pjoin } from 'node:path';
-import { loadReprintIndex, repointDoc } from '../lib/reprint.mjs';
+import { loadReprintIndex, repointDoc, shippedTwin } from '../lib/reprint.mjs';
 
 const OUT = 'scripts/migration/out';
 const read = (f) => JSON.parse(readFileSync(pjoin(OUT, f), 'utf8'));
@@ -228,6 +228,7 @@ const tally = {};
 const open = [];
 const reprints = loadReprintIndex();
 let repointed = 0;
+let twinned = 0;
 
 for (const [bucket, records] of Object.entries(core)) {
   if (!records || typeof records !== 'object' || Array.isArray(records)) continue;
@@ -312,10 +313,29 @@ for (const [bucket, records] of Object.entries(core)) {
      * its own record) is the `records` lookup, which is core.json's own keys for this bucket.
      */
     if ((entry.status === 'doc' || entry.status === 'scraped') && entry.docId && !AON_PINNED.has(id)) {
-      const R = repointDoc(reprints, String(entry.docId), key, (k) => !!records[k]);
+      const hasSlug = (k) => !!records[k];
+      const R = repointDoc(reprints, String(entry.docId), key, hasSlug);
       if (R) {
         entry = { ...entry, docId: R, how: `${entry.how} -> newest printing (was ${entry.docId})` };
         repointed++;
+      } else {
+        /*
+         * …and when the repoint is BLOCKED because the reprint already ships as its own record
+         * (exception 2), say so in the map instead of losing the fact. Owner, desk #158: "keep both,
+         * mark the old one legacy, add a 'remastered as …' link". stamp-aonid.mjs turns this into the
+         * record's `remasteredAs` + `edition: 'legacy'`, which is what makes the pair a FIXED POINT:
+         * the link is recomputed from the export on every regen, never hand-written into 182 rows.
+         */
+        const twin = shippedTwin(reprints, String(entry.docId), key, hasSlug);
+        /*
+         * The LABEL is the reprint RECORD's own name, not the export document's. They are the same
+         * string for 174 of the 181 pairs, and where they differ the mirror is the stale half:
+         * equipment-5180's document is named "Rune Of Sin" while the live Archives page and the
+         * shipped record both print "Rune of Sin" (checked 2026-09-12). The popup renders this string
+         * and clicking it opens that record, so a label that disagrees with the title it opens is a
+         * defect by construction — taking the record's name closes the class, not the seven rows.
+         */
+        if (twin) { entry = { ...entry, remasteredAs: { bucket, id: twin.id, name: records[twin.id]?.name ?? twin.name } }; twinned++; }
       }
     }
     (map[bucket] ??= {})[key] = { name, ...entry };
@@ -334,6 +354,7 @@ for (const [k, v] of Object.entries(tally).sort((a, b) => b[1] - a[1])) {
 }
 console.log(`  ${'TOTAL'.padEnd(10)} ${String(total).padStart(6)}`);
 console.log(`  ${repointed} link(s) moved to the newest printing (R12 — see scripts/lib/reprint.mjs)`);
+console.log(`  ${twinned} record(s) carry a "remastered as" link instead — the reprint already ships (desk #158)`);
 if (open.length) {
   console.log(`\n${open.length} STILL OPEN — stage 2 must not proceed past extraction until this is 0:`);
   for (const o of open.slice(0, 25)) console.log(`   ${o.bucket.padEnd(16)} ${o.name}`);

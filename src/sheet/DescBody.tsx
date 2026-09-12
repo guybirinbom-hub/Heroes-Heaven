@@ -25,6 +25,24 @@ const HTML_TAG = /<(a|strong|em|b|i|u|s|h[1-6]|ul|ol|li|blockquote|span|br|div|p
 const isRichHtml = (s: string, dirAuto?: boolean) => HTML_TAG.test(s) || (!!dirAuto && /<table\b/i.test(s));
 
 /**
+ * desk #158 — the reprint that ships beside a record built from the older printing.
+ *
+ * Written by the data chain (scripts/lib/reprint.mjs shippedTwin -> build-map.mjs -> stamp-aonid.mjs),
+ * never by hand, and guarded by scripts/reprint-check.mjs.
+ *
+ * ⚠ DECLARED HERE, NOT IN src/rules/types.ts, only because that file is being edited in another lane
+ * right now. It belongs beside the record types — move it there when they are free, and drop the casts
+ * at the three call sites (ItemDetail, FeatDetail, SpellsTab).
+ */
+export type RemasteredAs = { bucket: string; id: string; name: string };
+
+/** Read that link off a record when the caller holds a view model rather than the record itself. */
+export function remasteredAsOf(content: unknown, ref: { bucket?: string; id?: string }): RemasteredAs | undefined {
+  if (!ref.bucket || !ref.id) return undefined;
+  return (content as Record<string, Record<string, { remasteredAs?: RemasteredAs }> | undefined> | null)?.[ref.bucket]?.[ref.id]?.remasteredAs;
+}
+
+/**
  * Renders an inline description with its cross-references linkified; clicking a link opens the
  * recursive description popup (with Back). Drop-in replacement for `<p>{description}</p>` in
  * detail views. Accepts both curated markdown and user-authored rich HTML.
@@ -37,10 +55,19 @@ export function DescBody({
   astKey,
   astId,
   dirAuto,
+  remasteredAs,
+  emptyNote,
 }: {
   description?: string;
   descRefs?: DescRef[];
   className?: string;
+  /** desk #158: this record is the older printing and its reprint ships as its own record — the popup
+   *  says so and links to it. */
+  remasteredAs?: RemasteredAs;
+  /** desk #152: what to print when the record has no rules text AND no archive page, instead of
+   *  rendering nothing at all. Marked as ours, so nobody reads it as printed text. Opt-in per call
+   *  site: an empty NOTE or an empty spell heightening is silence on purpose, not a blank book entry. */
+  emptyNote?: string;
   /** Give each block its own reading direction (see autoDir.ts). For content the USER wrote, which can
    *  be in a right-to-left language; imported game text is always English, so this is opt-in. */
   dirAuto?: boolean;
@@ -57,6 +84,25 @@ export function DescBody({
   const content = useContent();
   const [node, setNode] = useState<DescNode | null>(null);
   const { node: ast, bucket: astBucket, loading: astLoading } = useAstNode(astKey, astId);
+  /** Open another record's description in the recursive popup — what a .ref-link click does. */
+  const openRecord = (bucket: string, slug: string) => {
+    const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[slug];
+    if (rec) setNode({ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug });
+  };
+  /* desk #158 — "Remastered as <name>", on every branch below, because a legacy record usually DOES
+   * have text. Marked `sd-ours`: the book never printed this line, we did. */
+  const remastered = remasteredAs ? (
+    <p className="sd-ours sd-remastered">
+      Remastered as{' '}
+      <a
+        className="ref-link"
+        href="#"
+        onClick={(e) => { e.preventDefault(); openRecord(remasteredAs.bucket, remasteredAs.id); }}
+      >
+        {remasteredAs.name}
+      </a>
+    </p>
+  ) : null;
   // Sanitizing (and, for notes, direction-tagging) parses the whole string, so do it once per value
   // rather than on every render — a long note re-renders on each keystroke of its title. Skipped
   // entirely unless the rich-HTML branch below is the one that will run.
@@ -73,14 +119,11 @@ export function DescBody({
 
   // Ast path — the new-data description prose (meta hidden; links open the recursive ast popup).
   if (ast && astId) {
-    const openRef = (bucket: string, slug: string) => {
-      const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[slug];
-      if (rec) setNode({ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug });
-    };
     return (
       <>
         <div className={className}>
-          <AstRenderer node={ast} bodyOnly hideMeta selfRef={`${astBucket}:${astId}`} onOpenRef={openRef} />
+          <AstRenderer node={ast} bodyOnly hideMeta selfRef={`${astBucket}:${astId}`} onOpenRef={openRecord} />
+          {remastered}
         </div>
         {node && <DescriptionModal root={node} onClose={() => setNode(null)} onExit={onExit} backToSource={!!onExit} />}
       </>
@@ -91,7 +134,25 @@ export function DescBody({
   // fallback (which, for armor/weapons, prints the stat line as prose and looks like a duplicate stat block).
   if (astLoading && astId) return <div className={className + ' ast-loading'} aria-busy="true" />;
 
-  if (!description) return null;
+  /*
+   * desk #152 — NO RULES TEXT AND NO PAGE. Owner, 2026-09-12: the popup says so, "the marked line
+   * lives in the SHEET, not in a description field … all 244 empty-description items at once, by
+   * rule". Measured on the shipped artefact: 243 items carry no description, 89 of them still render
+   * an archive page above, so 154 popups reach this line. The printed price / Bulk / Hands line items
+   * merchants-scale already ships is untouched — it is rendered by ItemDetail, not here.
+   */
+  if (!description) {
+    if (!emptyNote && !remastered) return null;
+    return (
+      <>
+        <div className={className}>
+          {emptyNote ? <p className="sd-ours sd-unprinted">{emptyNote}</p> : null}
+          {remastered}
+        </div>
+        {node && <DescriptionModal root={node} onClose={() => setNode(null)} onExit={onExit} backToSource={!!onExit} />}
+      </>
+    );
+  }
 
   // Rich-HTML path: render the authored HTML directly, with .ref-link anchors made clickable
   // (each carries data-ref-key/data-ref-id pointing at a content entry to pop up).
@@ -114,6 +175,7 @@ export function DescBody({
             }
           }}
         />
+        {remastered}
         {node && <DescriptionModal root={node} onClose={() => setNode(null)} onExit={onExit} backToSource={!!onExit} />}
       </>
     );
@@ -131,6 +193,7 @@ export function DescBody({
             if (n) setNode(n);
           }}
         />
+        {remastered}
       </div>
       {node && <DescriptionModal root={node} onClose={() => setNode(null)} onExit={onExit} backToSource={!!onExit} />}
     </>

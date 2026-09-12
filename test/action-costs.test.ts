@@ -25,15 +25,22 @@ describe('feat action costs', () => {
      */
     ['blood-frenzy', 'free'],
     /*
-     * The OTHER side of the same repoint, and the reason this line exists: feat-9049 reprints
-     * feat-2851's Spell Parry text unchanged, Requirements line and all, but its action badge is
-     * empty (`<actions string="" />`), so the importer derived `passive` and the feat left the
-     * encounter action list. A bare badge is scrape damage, not a printed "no cost" — this record is
-     * the worked example in the header of scripts/actioncost-vs-aon.mjs — so it is pinned back to the
-     * Single Action both printings' text describes (overlay row in scripts/data/effect-backfill.json,
-     * desk #161 asks the owner what the book shows).
+     * desk 158/160/161/152: spell-parry — PASSIVE, by the owner's own reading of the page.
+     *
+     * feat-9049 reprints feat-2851's Spell Parry text unchanged, Requirements line and all, but its
+     * action badge is empty (`<actions string="" />`), so the newest-printing repoint derived
+     * `passive` and the feat left the encounter action list. That was pinned back to 1 action under
+     * the standing "a bare badge is scrape damage, not a printed absence" rule (the header of
+     * scripts/actioncost-vs-aon.mjs, which uses this very record as its worked example) while desk
+     * #161 asked the owner what the book shows.
+     *
+     * He answered on 2026-09-12, from the live page: no glyph, therefore no action cost. "alot of
+     * these could just be solved if you checkd the archives of nethys". THE CONSEQUENCE HE ACCEPTS is
+     * that the feat is no longer in the encounter action list. The bare-badge rule is unchanged
+     * everywhere else — it governs what an INSTRUMENT may infer, and a person reading the page
+     * outranks an inference; both script headers now say so.
      */
-    ['spell-parry', 1],
+    ['spell-parry', 'passive'],
     ['merciless-rend', 1],
     /*
      * Mercy and Cruelty are PASSIVE, and were listed here as single actions because their LEGACY

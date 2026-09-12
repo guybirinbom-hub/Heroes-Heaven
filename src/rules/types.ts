@@ -1240,6 +1240,31 @@ export interface DefenseGrants {
      * gate everything else in this clause sits behind.
      */
     bulkLimitBonus?: number;
+    /**
+     * desk 154 — a Speed bonus that exists only while the state is on, TYPED and (with
+     * `speedBonusAllSpeeds`) PLURAL. The same three fields as the standing top-level ones, read by the
+     * same `pushSpeedBonus` in deriveSpeeds, so the state-gated value competes by TYPE with the
+     * standing one instead of adding to it.
+     *
+     * Stylish Combatant (class-feature-1007): *"While you have panache, you gain a +5-foot status
+     * bonus to your Speeds."* Vivacious Speed (class-feature-1017): *"Increase the status bonus to
+     * your Speeds from stylish combatant to a +10-foot status bonus; this bonus increases by 5 feet at
+     * 7th, 11th, 15th, and 19th levels. When you don't have panache, you still get half this status
+     * bonus to your Speed, rounded down to the nearest 5-foot increment."* Swashbuckler's Speed
+     * (feat-6238): *"a +5-foot status bonus to your Speeds; this increases to a +10-foot status bonus
+     * while you have panache."*
+     *
+     * The sibling `speeds` above could not say any of it: it GRANTS a movement type (additive on land,
+     * max() elsewhere) and carries no bonus type, so the with-panache value would have stacked on top
+     * of the standing half rather than replacing it. Owner ruling 2026-09-12 #154: *"while panache is
+     * on, EVERY Speed gets the +10 status bonus in place of the +5; back to +5 when panache ends."*
+     */
+    landSpeedBonus?: number | string;
+    /** The bonus type of this clause's `landSpeedBonus` — two of the same named type take the highest,
+     *  which is what makes the with-panache value REPLACE the without-panache one. */
+    speedBonusType?: 'status' | 'item' | 'circumstance';
+    /** The clause raises EVERY Speed the character has, not land alone — *"to your SpeedS"*. */
+    speedBonusAllSpeeds?: true;
     /** The character level this clause starts at. Raging Resistance is a 9th-level class feature
      *  whose damage types are printed on an INSTINCT chosen at 1st — so without a gate the instinct
      *  would hand a 1st-level barbarian a 9th-level defence. */
@@ -5739,6 +5764,13 @@ export interface SpellcastingEntry {
    * any the record gained later from a data fix or a level-up. Populated in applyPlayState.
    */
   signatureFixed?: string[];
+  /**
+   * Flexible Spellcaster: the size of the FLAT spell collection, and by its presence the fact that
+   * this entry holds one (owner ruling #102 — one pool sized by total 1st-9th-rank slots, not a
+   * per-rank repertoire). Written by `fillSpellCollection` from `flexibleCollectionSize`, so the
+   * sheet's add gate never has to re-derive Table 5-1's arithmetic. Absent on every other entry.
+   */
+  spellCollection?: number;
   /** Wizard: learned spells per rank (the daily preparation is drawn from this). */
   spellbook?: Record<number, string[]>;
   /**

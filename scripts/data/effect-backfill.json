@@ -100342,10 +100342,9 @@
   "id": "spell-parry",
   "field": "actionCost",
   "value": {
-   "type": "actions",
-   "value": 1
+   "type": "passive"
   },
-  "why": "feat-9049 (Impossible Magic, the reprint of feat-2851) prints the Secrets of Magic text UNCHANGED — Requirements line included — and only its action badge is empty (`<actions string=\"\" />`), while feat-2851 prints \"Single Action\". A bare badge is scrape damage, not the Archives stating \"no cost\" (the rule, and this very record as its worked example, is the header of scripts/actioncost-vs-aon.mjs), so the newest-printing repoint must not turn the feat passive. Pinned at the printed cost until desk #161 settles what the book shows."
+  "why": "feat-9049 (Spell Parry, Impossible Magic pg. 18) — the record's own document since the newest-printing repoint. Its page title carries no action glyph, and the owner read that page on 2026-09-12 and ruled it as printed: no action cost. This replaces the 1-action row written earlier the same day, which pinned the cost of feat-2851 (the Secrets of Magic printing feat-9049 replaces) on the standing rule that a bare action badge is scrape damage rather than a stated absence. That rule still holds for every record the owner has not read; here he read it. Desk #161."
  },
  {
   "category": "feats",
@@ -112072,43 +112071,50 @@
   "category": "items",
   "id": "rune-of-sin-envy",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "equipment-999 — the record is the older printing of a rune whose reprint ships as items/rune-of-sin, so desk #158 marks it `legacy` (hidden by the hide-legacy toggle) rather than `legacy-era`. Stamped by the chain; this row is restated so the overlay says the same thing and regen-durability-check's bake comparison holds."
  },
  {
   "category": "items",
   "id": "rune-of-sin-gluttony",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
  },
  {
   "category": "items",
   "id": "rune-of-sin-greed",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
  },
  {
   "category": "items",
   "id": "rune-of-sin-lust",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
  },
  {
   "category": "items",
   "id": "rune-of-sin-pride",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
  },
  {
   "category": "items",
   "id": "rune-of-sin-sloth",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
  },
  {
   "category": "items",
   "id": "rune-of-sin-wrath",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "equipment-999 — same family, same ruling: desk #158 marks the older printing of a reprinted rune `legacy`, and the overlay row is restated to match what stamp-aonid.mjs writes."
  },
  {
   "category": "items",
@@ -113506,7 +113512,8 @@
   "category": "items",
   "id": "aon-fulus-of-concealment",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "equipment-973 — the scrape twin of the older printing, whose reprint ships as items/fulu-of-concealment. Desk #158 marks it `legacy`; the row is restated to match the stamp so no overlay row is left inert."
  },
  {
   "category": "items",
@@ -119501,7 +119508,8 @@
   "category": "feats",
   "id": "aon-master-summoner-spellcasting",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "feat-2961 — the scrape twin of the older printing, whose reprint ships as feats/master-summoner-spellcasting. Desk #158 marks it `legacy`; the row is restated to match the stamp so no overlay row is left inert."
  },
  {
   "category": "feats",
@@ -187005,8 +187013,8 @@
    "classArchetype"
   ],
   "field": "note",
-  "value": "Flexible Spellcaster: you prepare a spell COLLECTION rather than filling each slot, and can cast any spell in it using any slot of an appropriate rank. The collection is ONE pool, not a list per rank: it holds as many spells as the total spell slots you get each day from your class, in any mix of ranks, and at least one of them must be 1st rank. That total counts your 1st- to 9th-rank slots only: a single 10th-rank slot from a class feature stays OUTSIDE the collection and works just as it always did, so the spell you choose for it is not one of the collection's spells and does not use up one of its places. In exchange your slots per rank never advance past 2, and you learn 2 fewer class cantrips. Restricted slots (a wizard curriculum slot, a cleric divine font) are unaffected and their spells do not count toward the collection.",
-  "why": "AoN archetype-99, the footnote to Table 5-1: \"Your class most likely has a class feature that gives you a single 10th level spell slot that works a bit differently from other slots. If so, flexible spellcaster doesn't change the way that spell works.\" The same table prints Collection 18 at 17th, 18th, 19th and 20th while its 10th-rank column turns from an em dash to that footnote mark at 19th - so the capstone slot enlarges nothing. The shipped note said the collection equals \"the total spell slots you get each day from your class\" with no carve-out, which reads as 19 places at 19th level and contradicts both the footnote and the printed column. Owner ruling 2026-09-10 #102."
+  "value": "Flexible Spellcaster: you prepare a spell COLLECTION rather than filling each slot, and can cast any spell in it using any slot of an appropriate rank. The collection is ONE pool, not a list per rank: it holds as many spells as the total spell slots you get each day from your class, in any mix of ranks, and at least one of them must be 1st rank. That total counts your 1st- to 9th-rank slots only: a single 10th-rank slot from a class feature stays OUTSIDE the collection and works just as it always did, so the spell you choose for it is not one of the collection's spells and does not use up one of its places. You learn spells as normal for your class and select the collection from that same source — a wizard or magus still learns a spellbook and prepares the collection out of it, a witch still teaches spells to their familiar — so nothing changes about how you get spells, only how you prepare them. In exchange your slots per rank never advance past 2, and you learn 2 fewer class cantrips. Restricted slots (a wizard curriculum slot, a cleric divine font) are unaffected and their spells do not count toward the collection.",
+  "why": "AoN archetype-99 (Secrets of Magic pg. 209): \"You learn spells as normal for your class (a wizard uses a spellbook, a witch teaches spells to their familiar, and so on), but you prepare them differently\" and \"Select these spells from the same source as normal, such as from a spellbook for a wizard.\" The shipped note named the pool's size, its 1st-rank floor, the capstone carve-out and the restricted-slot exemption but never its SOURCE, so a wizard, witch or magus reading their own sheet was told they now hold a collection and not told it comes out of the book they still keep — the one sentence desk #155 is about. The cantrip half of the same feat (feat-2994, \"four cantrips per day instead of three. At 4th level, five instead of four\") is already carried by this record's spellSlotBonus ladder and needs no row. Owner ruling 2026-09-12, desk #155."
  },
  {
   "category": "feats",
@@ -187418,5 +187426,64 @@
    "license": "ORC"
   },
   "why": "familiar-specific-52 prints [\"Rival Academies\"]; the record still named \"Pathfinder PFS Guide\", which is the book of familiar-specific-5 — the printing familiar-specific-52 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "stylish-combatant",
+  "field": "whileActive",
+  "value": [
+   {
+    "state": "panache",
+    "landSpeedBonus": 5,
+    "speedBonusType": "status",
+    "speedBonusAllSpeeds": true
+   }
+  ],
+  "why": "AoN class-feature-1007 (Player Core 2, swashbuckler): \"You gain a +1 circumstance bonus to skill checks with the bravado trait while in a combat encounter. While you have panache, you gain a +5-foot status bonus to your Speeds.\" The record carried NOTHING for the second sentence - measured, a 1st-level swashbuckler read land 25 / fly 25 with panache on and with it off - so the whole clause was a star in src/rules/situationalBonuses.ts and no number ever moved. `state: 'panache'` is the toggle the sheet already tracks (character.classResources.panache, the Panache card on the vitals rail); `speedBonusType: 'status'` is the printed type, which is what makes Vivacious Speed's larger bonus REPLACE this one rather than add to it; `speedBonusAllSpeeds: true` is the printed plural \"to your Speeds\". Owner ruling 2026-09-12 #154."
+ },
+ {
+  "category": "classFeatures",
+  "id": "vivacious-speed",
+  "field": "whileActive",
+  "value": [
+   {
+    "state": "panache",
+    "landSpeedBonus": "10+5*min(4,floor((@actor.level-3)/4))",
+    "speedBonusType": "status",
+    "speedBonusAllSpeeds": true
+   }
+  ],
+  "why": "AoN class-feature-1017 (Player Core 2, swashbuckler 3rd): \"When you've made an impression, you move even faster than normal, darting about the battlefield with incredible speed. Increase the status bonus to your Speeds from stylish combatant to a +10-foot status bonus; this bonus increases by 5 feet at 7th, 11th, 15th, and 19th levels. When you don't have panache, you still get half this status bonus to your Speed, rounded down to the nearest 5-foot increment.\" The record shipped ONLY the halved without-panache value, and only on land (landSpeedBonus \"5+5*min(2,floor((@actor.level-3)/8))\", speedBonusType status) - the WITH-panache value the sentence is actually about had no carrier at all. The formula here is the printed ladder itself: 10 at 3rd, +5 at each of 7th/11th/15th/19th, so min(4,floor((@actor.level-3)/4)) counts the thresholds reached and caps at four - 10 / 10 / 15 / 20 / 25 / 30 for levels 3-6 / 7-10 / 11-14 / 15-18 / 19-20. Halving it and rounding down to a 5-foot step reproduces the shipped standing formula exactly (5/5/10/10/15), which is the arithmetic check that the two halves are one bonus and not two. Same `status` type as the standing half, so a swashbuckler with panache gets the larger number, never their sum; same type again as feats/swashbucklers-speed, so an archetype feat can never stack on top of the class feature. Owner ruling 2026-09-12 #154."
+ },
+ {
+  "category": "feats",
+  "id": "swashbucklers-speed",
+  "field": "whileActive",
+  "value": [
+   {
+    "state": "panache",
+    "landSpeedBonus": 10,
+    "speedBonusType": "status",
+    "speedBonusAllSpeeds": true
+   }
+  ],
+  "why": "AoN feat-6238 (Player Core 2 p.182, swashbuckler archetype, 8th): \"You move with a swashbuckler's speed and grace. You gain a +5-foot status bonus to your Speeds; this increases to a +10-foot status bonus while you have panache.\" Batch 037 authored the always-on half (landSpeedBonus 5, speedBonusType status, speedBonusAllSpeeds true) and left the panache step as a star; measured, a fighter holding Swashbuckler Dedication and this feat read land 30 / fly 30 whether panache was on or off. NO level scaling on this record - the printed sentence names none - so the value is the flat 10, not a formula. Because it is the same `status` type as the +5 beside it, the with-panache value replaces rather than adds (30 -> 35 on a 25-foot Speed, not 40), which is the whole reason the type is on both. Owner ruling 2026-09-12 #154."
+ },
+ {
+  "category": "feats",
+  "id": "soulforger-dedication",
+  "field": "prerequisites",
+  "value": [],
+  "why": "feat-9350 (Soulforger Dedication, Impossible Magic pg. 98). The live Archives page prints Uncommon / Archetype / Dedication, Source, \"Archetype Soulforger\" and then the feat's body, with NO Prerequisites line — the owner pasted the screenshot on 2026-09-12 and ruled \"there isnt a prerequisite\". The export's search facet for the same document is the fragment \" or ability to cast divine spells\", which begins with a connector: the first half of the clause is missing upstream, so the facet is damage, not a rule. Desk #160; his standing rule is that the page beats its own facet when the two disagree."
+ },
+ {
+  "category": "feats",
+  "id": "dimensional-disappearance",
+  "field": "prerequisites",
+  "value": [
+   "dimensional assault focus spell",
+   "laughing shadow hybrid study"
+  ],
+  "why": "feat-9073 (Dimensional Disappearance). The page prints two prerequisites and both are kept — only the punctuation changes. The export's facet is \"_dimensional assault_ focus spell,; laughing shadow hybrid study\": AoN wrote its clause separator as \",;\", and prerequisitesFrom() splits on ';' alone, so the first clause shipped as \"dimensional assault focus spell,\" with a trailing comma. checkPrerequisites() (src/rules/build.ts) matches clauses with anchored patterns, so that comma silently switched the gate off. Owner ruling 2026-09-12, desk #160: \"keep both prerequisites, drop the stray comma\"."
  }
 ]

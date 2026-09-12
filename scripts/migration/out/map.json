@@ -2828,7 +2828,12 @@
     "name": "Summon Archmage",
     "status": "doc",
     "docId": "spell-1005",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "incarnate-archmage",
+     "name": "Incarnate Archmage"
+    }
    },
    "summon-axiom": {
     "name": "Summon Axiom",
@@ -2840,19 +2845,34 @@
     "name": "Summon Deific Herald",
     "status": "doc",
     "docId": "spell-1007",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "incarnate-deific-herald",
+     "name": "Incarnate Deific Herald"
+    }
    },
    "summon-draconic-legion": {
     "name": "Summon Draconic Legion",
     "status": "doc",
     "docId": "spell-1008",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "incarnate-draconic-legion",
+     "name": "Incarnate Draconic Legion"
+    }
    },
    "summon-kaiju": {
     "name": "Summon Kaiju",
     "status": "doc",
     "docId": "spell-1009",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "incarnate-kaiju",
+     "name": "Incarnate Kaiju"
+    }
    },
    "summoners-precaution": {
     "name": "Summoner's Precaution",
@@ -2882,7 +2902,12 @@
     "name": "Tempest of Shades",
     "status": "doc",
     "docId": "spell-1015",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "incarnate-tempest-of-shades",
+     "name": "Incarnate Tempest of Shades"
+    }
    },
    "temporary-glyph": {
     "name": "Temporary Glyph",
@@ -11894,13 +11919,23 @@
     "name": "Call of the Grave",
     "status": "doc",
     "docId": "spell-522",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "scramble-body",
+     "name": "Scramble Body"
+    }
    },
    "darkened-eyes": {
     "name": "Darkened Eyes",
     "status": "doc",
     "docId": "spell-411",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "darkened-sight",
+     "name": "Darkened Sight"
+    }
    },
    "discomfiting-whispers": {
     "name": "Discomfiting Whisper",
@@ -11912,7 +11947,12 @@
     "name": "Forced Quiet",
     "status": "doc",
     "docId": "spell-424",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "whispering-quiet",
+     "name": "Whispering Quiet"
+    }
    },
    "vindicators-judgment": {
     "name": "Vindicator's Judgment",
@@ -11956,145 +11996,265 @@
     "name": "Acid Splash",
     "status": "doc",
     "docId": "spell-3",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "caustic-blast",
+     "name": "Caustic Blast"
+    }
    },
    "ghost-sound": {
     "name": "Ghost Sound",
     "status": "doc",
     "docId": "spell-132",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "figment",
+     "name": "Figment"
+    }
    },
    "ray-of-frost": {
     "name": "Ray of Frost",
     "status": "doc",
     "docId": "spell-245",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "frostbite",
+     "name": "Frostbite"
+    }
    },
    "shocking-grasp": {
     "name": "Shocking Grasp",
     "status": "doc",
     "docId": "spell-283",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "thunderstrike",
+     "name": "Thunderstrike"
+    }
    },
    "alter-reality": {
     "name": "Alter Reality",
     "status": "doc",
     "docId": "spell-8",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "manifestation",
+     "name": "Manifestation"
+    }
    },
    "miracle": {
     "name": "Miracle",
     "status": "doc",
     "docId": "spell-196",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "manifestation",
+     "name": "Manifestation"
+    }
    },
    "primal-phenomenon": {
     "name": "Primal Phenomenon",
     "status": "doc",
     "docId": "spell-231",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "manifestation",
+     "name": "Manifestation"
+    }
    },
    "acid-arrow": {
     "name": "Acid Arrow",
     "status": "doc",
     "docId": "spell-2",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "acid-grip",
+     "name": "Acid Grip"
+    }
    },
    "faerie-fire": {
     "name": "Faerie Fire",
     "status": "doc",
     "docId": "spell-107",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "revealing-light",
+     "name": "Revealing Light"
+    }
    },
    "spiritual-weapon": {
     "name": "Spiritual Weapon",
     "status": "doc",
     "docId": "spell-306",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "spiritual-armament",
+     "name": "Spiritual Armament"
+    }
    },
    "enervation": {
     "name": "Enervation",
     "status": "doc",
     "docId": "spell-687",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "whispers-of-the-void",
+     "name": "Whispers of the Void"
+    }
    },
    "phantasmal-killer": {
     "name": "Phantasmal Killer",
     "status": "doc",
     "docId": "spell-219",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "vision-of-death",
+     "name": "Vision of Death"
+    }
    },
    "rope-trick": {
     "name": "Rope Trick",
     "status": "doc",
     "docId": "spell-264",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "liminal-doorway",
+     "name": "Liminal Doorway"
+    }
    },
    "black-tentacles": {
     "name": "Black Tentacles",
     "status": "doc",
     "docId": "spell-23",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "slither",
+     "name": "Slither"
+    }
    },
    "cone-of-cold": {
     "name": "Cone of Cold",
     "status": "doc",
     "docId": "spell-47",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "howling-blizzard",
+     "name": "Howling Blizzard"
+    }
    },
    "flame-strike": {
     "name": "Flame Strike",
     "status": "doc",
     "docId": "spell-120",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "divine-immolation",
+     "name": "Divine Immolation"
+    }
    },
    "secret-chest": {
     "name": "Secret Chest",
     "status": "doc",
     "docId": "spell-716",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "imaginary-lockbox",
+     "name": "Imaginary Lockbox"
+    }
    },
    "blade-barrier": {
     "name": "Blade Barrier",
     "status": "doc",
     "docId": "spell-24",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "blessed-boundary",
+     "name": "Blessed Boundary"
+    }
    },
    "fire-seeds": {
     "name": "Fire Seeds",
     "status": "doc",
     "docId": "spell-117",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "tree-of-seasons",
+     "name": "Tree of Seasons"
+    }
    },
    "spell-turning": {
     "name": "Spell Turning",
     "status": "doc",
     "docId": "spell-297",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "spell-riposte",
+     "name": "Spell Riposte"
+    }
    },
    "polar-ray": {
     "name": "Polar Ray",
     "status": "doc",
     "docId": "spell-224",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "arctic-rift",
+     "name": "Arctic Rift"
+    }
    },
    "disjunction": {
     "name": "Disjunction",
     "status": "doc",
     "docId": "spell-77",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "detonate-magic",
+     "name": "Detonate Magic"
+    }
    },
    "storm-of-vengeance": {
     "name": "Storm of Vengeance",
     "status": "doc",
     "docId": "spell-313",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "wrathful-storm",
+     "name": "Wrathful Storm"
+    }
    },
    "weird": {
     "name": "Weird",
     "status": "doc",
     "docId": "spell-375",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "spells",
+     "id": "phantasmagoria",
+     "name": "Phantasmagoria"
+    }
    },
    "aon-detect-alignment": {
     "name": "Detect Alignment",
@@ -16865,7 +17025,12 @@
     "name": "Fulus of Concealment",
     "status": "doc",
     "docId": "equipment-973",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "fulu-of-concealment",
+     "name": "Fulu Of Concealment"
+    }
    },
    "fulu-of-the-drunken-monkey": {
     "name": "Fulu of the Drunken Monkey",
@@ -17009,7 +17174,12 @@
     "name": "Instructions for Lasting Agony",
     "status": "doc",
     "docId": "equipment-993",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "grudge-journal",
+     "name": "Grudge Journal"
+    }
    },
    "spellbook-of-redundant-enchantment": {
     "name": "Spellbook of Redundant Enchantment",
@@ -51608,7 +51778,12 @@
     "name": "Aeon Stone (Gold Nodule)",
     "status": "doc",
     "docId": "equipment-407-487",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "aeon-stone",
+     "name": "Aeon Stone"
+    }
    },
    "aerekostes": {
     "name": "Aerekostes",
@@ -51692,7 +51867,12 @@
     "name": "Alghollthu Lash",
     "status": "doc",
     "docId": "equipment-4414",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "alghollthu-whip",
+     "name": "Alghollthu Whip"
+    }
    },
    "alloy-orb-exquisite-high-grade": {
     "name": "Alloy Orb (Exquisite High-Grade)",
@@ -51759,7 +51939,12 @@
     "name": "Anklets of Alacrity",
     "status": "doc",
     "docId": "equipment-397",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "cloak-of-swiftness",
+     "name": "Cloak of Swiftness"
+    }
    },
    "anti-dragon-barding-greater": {
     "name": "Anti-Dragon Barding (Greater)",
@@ -51867,21 +52052,36 @@
     "how": "reclass:paren-variant",
     "status": "doc",
     "docId": "equipment-4293-3865",
-    "archiveName": "Awakened Metal Shot (Awakened Adamantine Shot)"
+    "archiveName": "Awakened Metal Shot (Awakened Adamantine Shot)",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "awakened-metal-shot",
+     "name": "Awakened Metal Shot"
+    }
    },
    "awakened-cold-iron-shot": {
     "name": "Awakened Cold Iron Shot",
     "how": "reclass:paren-variant",
     "status": "doc",
     "docId": "equipment-4293-3866",
-    "archiveName": "Awakened Metal Shot (Awakened Cold Iron Shot)"
+    "archiveName": "Awakened Metal Shot (Awakened Cold Iron Shot)",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "awakened-metal-shot",
+     "name": "Awakened Metal Shot"
+    }
    },
    "awakened-silver-shot": {
     "name": "Awakened Silver Shot",
     "how": "reclass:paren-variant",
     "status": "doc",
     "docId": "equipment-4293-3867",
-    "archiveName": "Awakened Metal Shot (Awakened Silver Shot)"
+    "archiveName": "Awakened Metal Shot (Awakened Silver Shot)",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "awakened-metal-shot",
+     "name": "Awakened Metal Shot"
+    }
    },
    "axe-musket": {
     "name": "Axe Musket",
@@ -51977,7 +52177,12 @@
     "name": "Belt of Giant Strength",
     "status": "doc",
     "docId": "equipment-398",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "bracers-of-strength",
+     "name": "Bracers of Strength"
+    }
    },
    "black-ash-greater": {
     "name": "Black Ash (Greater)",
@@ -52102,13 +52307,23 @@
     "name": "Boots of Elvenkind (Greater)",
     "status": "doc",
     "docId": "equipment-413-503",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "arboreal-boots",
+     "name": "Arboreal Boots"
+    }
    },
    "boots-of-elvenkind": {
     "name": "Boots of Elvenkind",
     "status": "doc",
     "docId": "equipment-413",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "arboreal-boots",
+     "name": "Arboreal Boots"
+    }
    },
    "boots-of-the-secret-blade-greater": {
     "name": "Boots of the Secret Blade (Greater)",
@@ -52150,7 +52365,12 @@
     "name": "Bound Guardian",
     "status": "doc",
     "docId": "equipment-4739",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "fauna-guardian",
+     "name": "Fauna Guardian"
+    }
    },
    "bow-staff": {
     "name": "Bow Staff",
@@ -52204,13 +52424,23 @@
     "name": "Bravery Baldric (Restoration, Greater)",
     "status": "doc",
     "docId": "equipment-4841-4459",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "bravery-baldric",
+     "name": "Bravery Baldric"
+    }
    },
    "bravery-baldric-restoration": {
     "name": "Bravery Baldric (Restoration)",
     "status": "doc",
     "docId": "equipment-4841-4458",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "bravery-baldric",
+     "name": "Bravery Baldric"
+    }
    },
    "bronze-bowl-with-wave-imagery": {
     "name": "Bronze bowl with wave imagery",
@@ -52300,7 +52530,12 @@
     "name": "Cassock of Devotion",
     "status": "doc",
     "docId": "equipment-420",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "devoted-vestments",
+     "name": "Devoted Vestments"
+    }
    },
    "cavalry-commanders-lance": {
     "name": "Cavalry Commander's Lance",
@@ -52386,7 +52621,12 @@
     "name": "Circlet of Persuasion",
     "status": "doc",
     "docId": "equipment-400",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "necklace-of-allure",
+     "name": "Necklace of Allure"
+    }
    },
    "citrine": {
     "name": "Citrine",
@@ -52422,13 +52662,23 @@
     "name": "Cloak of Elvenkind (Greater)",
     "status": "doc",
     "docId": "equipment-424-514",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "cloak-of-illusions",
+     "name": "Cloak of Illusions"
+    }
    },
    "cloak-of-elvenkind": {
     "name": "Cloak of Elvenkind",
     "status": "doc",
     "docId": "equipment-424",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "cloak-of-illusions",
+     "name": "Cloak of Illusions"
+    }
    },
    "colorful-pastoral-tapestry": {
     "name": "Colorful pastoral tapestry",
@@ -52679,7 +52929,12 @@
     "name": "Dragon Throat Scale",
     "status": "doc",
     "docId": "equipment-4555",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "dragon-breath-scale",
+     "name": "Dragon Breath Scale"
+    }
    },
    "dragons-tongue-greater": {
     "name": "Dragon's Tongue (Greater)",
@@ -52697,13 +52952,23 @@
     "name": "Dragonscale Staff",
     "status": "doc",
     "docId": "equipment-4417",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "dragonscale-bo-staff",
+     "name": "Dragonscale Bo Staff"
+    }
    },
    "dragontooth-club": {
     "name": "Dragontooth Club",
     "status": "doc",
     "docId": "equipment-4418",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "dragontooth-leiomano",
+     "name": "Dragontooth Leiomano"
+    }
    },
    "drake-rifle-acid": {
     "name": "Drake Rifle (Acid)",
@@ -52768,7 +53033,12 @@
     "name": "Dwarven War Axe",
     "status": "doc",
     "docId": "weapon-62",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "dwarven-waraxe",
+     "name": "Dwarven Waraxe"
+    }
    },
    "earplugs-pfs-guide": {
     "name": "Earplugs (PFS Guide)",
@@ -53119,7 +53389,12 @@
     "name": "Fearcracker",
     "status": "doc",
     "docId": "equipment-4557",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "ghostcracker",
+     "name": "Ghostcracker"
+    }
    },
    "feather-of-unfounded-bravado": {
     "name": "Feather of Unfounded Bravado",
@@ -53131,7 +53406,12 @@
     "name": "Feather Token (Chest) (Ammunition)",
     "status": "doc",
     "docId": "equipment-244-244",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "marvelous-miniature",
+     "name": "Marvelous Miniature"
+    }
    },
    "feather-token-holly-bush-ammunition": {
     "name": "Feather Token (Holly Bush) (Ammunition)",
@@ -53143,13 +53423,23 @@
     "name": "Feather Token (Ladder) (Ammunition)",
     "status": "doc",
     "docId": "equipment-244-247",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "marvelous-miniature",
+     "name": "Marvelous Miniature"
+    }
    },
    "feather-token-swan-boat-ammunition": {
     "name": "Feather Token (Swan Boat) (Ammunition)",
     "status": "doc",
     "docId": "equipment-244-248",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "marvelous-miniature",
+     "name": "Marvelous Miniature"
+    }
    },
    "feather-token-tree-ammunition": {
     "name": "Feather Token (Tree) (Ammunition)",
@@ -53256,7 +53546,12 @@
     "name": "Frost Brand",
     "status": "doc",
     "docId": "equipment-387",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "icicle",
+     "name": "Icicle"
+    }
    },
    "games-loaded-dice": {
     "name": "Games (Loaded Dice)",
@@ -53298,7 +53593,12 @@
     "name": "Ghast Stiletto",
     "status": "doc",
     "docId": "equipment-4419",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "ghoul-stiletto",
+     "name": "Ghoul Stiletto"
+    }
    },
    "gilded-ceremonial-armor": {
     "name": "Gilded ceremonial armor",
@@ -53447,7 +53747,12 @@
     "name": "Hand of the Mage",
     "status": "doc",
     "docId": "equipment-440",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "charlatans-gloves",
+     "name": "Charlatan's Gloves"
+    }
    },
    "hardshell-surki-carapace": {
     "name": "Hardshell Surki Carapace",
@@ -53706,19 +54011,34 @@
     "name": "Judgment Thurible (Greater)",
     "status": "doc",
     "docId": "equipment-4766-4258",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "judgement-thurible",
+     "name": "Judgement Thurible"
+    }
    },
    "judgment-thurible-major": {
     "name": "Judgment Thurible (Major)",
     "status": "doc",
     "docId": "equipment-4766-4257",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "judgement-thurible",
+     "name": "Judgement Thurible"
+    }
    },
    "judgment-thurible": {
     "name": "Judgment Thurible",
     "status": "doc",
     "docId": "equipment-4766-4256",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "judgement-thurible",
+     "name": "Judgement Thurible"
+    }
    },
    "ka-stone": {
     "name": "Ka Stone",
@@ -53774,7 +54094,12 @@
     "how": "reclass:suffix:implement",
     "status": "doc",
     "docId": "implement-4",
-    "archiveName": "Lantern"
+    "archiveName": "Lantern",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "lantern",
+     "name": "Lantern"
+    }
    },
    "lapis-lazuli-pendant": {
     "name": "Lapis lazuli pendant",
@@ -53810,7 +54135,12 @@
     "name": "Lich Soul Cage",
     "status": "doc",
     "docId": "equipment-488",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "soul-cage",
+     "name": "Soul Cage"
+    }
    },
    "life-size-sculpture-by-an-expert": {
     "name": "Life‑size sculpture by an expert",
@@ -53974,7 +54304,12 @@
     "how": "reclass:suffix:implement",
     "status": "doc",
     "docId": "implement-5",
-    "archiveName": "Mirror"
+    "archiveName": "Mirror",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "mirror",
+     "name": "Mirror"
+    }
    },
    "mitigation-mail-greater": {
     "name": "Mitigation Mail (Greater)",
@@ -54054,43 +54389,78 @@
     "name": "Necklace of Fireballs I",
     "status": "doc",
     "docId": "equipment-449-548",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "frozen-lava",
+     "name": "Frozen Lava"
+    }
    },
    "necklace-of-fireballs-ii": {
     "name": "Necklace of Fireballs II",
     "status": "doc",
     "docId": "equipment-449-549",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "frozen-lava",
+     "name": "Frozen Lava"
+    }
    },
    "necklace-of-fireballs-iii": {
     "name": "Necklace of Fireballs III",
     "status": "doc",
     "docId": "equipment-449-550",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "frozen-lava",
+     "name": "Frozen Lava"
+    }
    },
    "necklace-of-fireballs-iv": {
     "name": "Necklace of Fireballs IV",
     "status": "doc",
     "docId": "equipment-449-551",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "frozen-lava",
+     "name": "Frozen Lava"
+    }
    },
    "necklace-of-fireballs-v": {
     "name": "Necklace of Fireballs V",
     "status": "doc",
     "docId": "equipment-449-552",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "frozen-lava",
+     "name": "Frozen Lava"
+    }
    },
    "necklace-of-fireballs-vi": {
     "name": "Necklace of Fireballs VI",
     "status": "doc",
     "docId": "equipment-449-553",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "frozen-lava",
+     "name": "Frozen Lava"
+    }
    },
    "necklace-of-fireballs-vii": {
     "name": "Necklace of Fireballs VII",
     "status": "doc",
     "docId": "equipment-449-554",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "frozen-lava",
+     "name": "Frozen Lava"
+    }
    },
    "necrotic-cap-greater": {
     "name": "Necrotic Cap (Greater)",
@@ -54120,7 +54490,12 @@
     "name": "Oathbow",
     "status": "doc",
     "docId": "equipment-392",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "hunters-anthem",
+     "name": "Hunter's Anthem"
+    }
    },
    "obsidian": {
     "name": "Obsidian",
@@ -54240,13 +54615,23 @@
     "name": "Pickled Demon Tongue (Greater)",
     "status": "doc",
     "docId": "equipment-2414-2218",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "pickled-demon-tongue",
+     "name": "Pickled Demon Tongue"
+    }
    },
    "pickled-demon-tongue-major": {
     "name": "Pickled Demon Tongue (Major)",
     "status": "doc",
     "docId": "equipment-2414-2219",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "pickled-demon-tongue",
+     "name": "Pickled Demon Tongue"
+    }
    },
    "piercing-wind": {
     "name": "Piercing Wind",
@@ -54270,7 +54655,12 @@
     "name": "Plate Armor of the Deep",
     "status": "doc",
     "docId": "equipment-157",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "tideplate",
+     "name": "Tideplate"
+    }
    },
    "plate-of-yled-greater": {
     "name": "Plate of Yled (Greater)",
@@ -54323,13 +54713,23 @@
     "name": "Polished Demon Horn (Greater)",
     "status": "doc",
     "docId": "equipment-2415-2221",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "polished-demon-horn",
+     "name": "Polished Demon Horn"
+    }
    },
    "polished-demon-horn-major": {
     "name": "Polished Demon Horn (Major)",
     "status": "doc",
     "docId": "equipment-2415-2222",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "polished-demon-horn",
+     "name": "Polished Demon Horn"
+    }
    },
    "porcelain-doll-with-amber-eyes": {
     "name": "Porcelain doll with amber eyes",
@@ -54767,7 +55167,12 @@
     "name": "Rod of Wonder",
     "status": "doc",
     "docId": "equipment-265",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "madcap-top",
+     "name": "Madcap Top"
+    }
    },
    "rounds-arquebus": {
     "name": "Rounds (Arquebus)",
@@ -54977,43 +55382,78 @@
     "name": "Rune of Sin (Envy)",
     "status": "doc",
     "docId": "equipment-999",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "rune-of-sin",
+     "name": "Rune of Sin"
+    }
    },
    "rune-of-sin-gluttony": {
     "name": "Rune of Sin (Gluttony)",
     "status": "doc",
     "docId": "equipment-999",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "rune-of-sin",
+     "name": "Rune of Sin"
+    }
    },
    "rune-of-sin-greed": {
     "name": "Rune of Sin (Greed)",
     "status": "doc",
     "docId": "equipment-999",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "rune-of-sin",
+     "name": "Rune of Sin"
+    }
    },
    "rune-of-sin-lust": {
     "name": "Rune of Sin (Lust)",
     "status": "doc",
     "docId": "equipment-999",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "rune-of-sin",
+     "name": "Rune of Sin"
+    }
    },
    "rune-of-sin-pride": {
     "name": "Rune of Sin (Pride)",
     "status": "doc",
     "docId": "equipment-999",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "rune-of-sin",
+     "name": "Rune of Sin"
+    }
    },
    "rune-of-sin-sloth": {
     "name": "Rune of Sin (Sloth)",
     "status": "doc",
     "docId": "equipment-999",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "rune-of-sin",
+     "name": "Rune of Sin"
+    }
    },
    "rune-of-sin-wrath": {
     "name": "Rune of Sin (Wrath)",
     "status": "doc",
     "docId": "equipment-999",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "rune-of-sin",
+     "name": "Rune of Sin"
+    }
    },
    "sack-of-hydras-teeth": {
     "name": "Sack of Hydra's Teeth",
@@ -55252,13 +55692,23 @@
     "name": "Silversoul Bomb (Greater)",
     "status": "doc",
     "docId": "equipment-3153-3069",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "silversoul-bomb",
+     "name": "Silversoul Bomb"
+    }
    },
    "silversoul-bomb-major": {
     "name": "Silversoul Bomb (Major)",
     "status": "doc",
     "docId": "equipment-3153-3070",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "silversoul-bomb",
+     "name": "Silversoul Bomb"
+    }
    },
    "simple-painting": {
     "name": "Simple painting",
@@ -55311,7 +55761,12 @@
     "name": "Slippers of Spider Climbing",
     "status": "doc",
     "docId": "equipment-465",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "clawed-bracers",
+     "name": "Clawed Bracers"
+    }
    },
    "slithermaws-bane-heroic": {
     "name": "Slithermaw's Bane (Heroic)",
@@ -55390,55 +55845,100 @@
     "name": "Specialist's Ring (Abjuration)",
     "status": "doc",
     "docId": "equipment-1077",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "accolade-robe",
+     "name": "Accolade Robe"
+    }
    },
    "specialists-ring-conjuration": {
     "name": "Specialist's Ring (Conjuration)",
     "status": "doc",
     "docId": "equipment-1077",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "accolade-robe",
+     "name": "Accolade Robe"
+    }
    },
    "specialists-ring-divination": {
     "name": "Specialist's Ring (Divination)",
     "status": "doc",
     "docId": "equipment-1077",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "accolade-robe",
+     "name": "Accolade Robe"
+    }
    },
    "specialists-ring-enchantment": {
     "name": "Specialist's Ring (Enchantment)",
     "status": "doc",
     "docId": "equipment-1077",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "accolade-robe",
+     "name": "Accolade Robe"
+    }
    },
    "specialists-ring-evocation": {
     "name": "Specialist's Ring (Evocation)",
     "status": "doc",
     "docId": "equipment-1077",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "accolade-robe",
+     "name": "Accolade Robe"
+    }
    },
    "specialists-ring-illusion": {
     "name": "Specialist's Ring (Illusion)",
     "status": "doc",
     "docId": "equipment-1077",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "accolade-robe",
+     "name": "Accolade Robe"
+    }
    },
    "specialists-ring-necromancy": {
     "name": "Specialist's Ring (Necromancy)",
     "status": "doc",
     "docId": "equipment-1077",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "accolade-robe",
+     "name": "Accolade Robe"
+    }
    },
    "specialists-ring-transmutation": {
     "name": "Specialist's Ring (Transmutation)",
     "status": "doc",
     "docId": "equipment-1077",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "accolade-robe",
+     "name": "Accolade Robe"
+    }
    },
    "specialists-ring": {
     "name": "Specialist's Ring",
     "status": "doc",
     "docId": "equipment-1077",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "accolade-robe",
+     "name": "Accolade Robe"
+    }
    },
    "spectral-dagger": {
     "name": "Spectral Dagger",
@@ -55561,19 +56061,34 @@
     "name": "Staff of Power",
     "status": "doc",
     "docId": "equipment-361",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "staff-of-arcane-might",
+     "name": "Staff of Arcane Might"
+    }
    },
    "stalk-goggles-greater": {
     "name": "Stalk Goggles (Greater)",
     "status": "doc",
     "docId": "equipment-1821-1589",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "stalk-goggles",
+     "name": "Stalk Goggles"
+    }
    },
    "stalk-goggles-major": {
     "name": "Stalk Goggles (Major)",
     "status": "doc",
     "docId": "equipment-1821-1590",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "stalk-goggles",
+     "name": "Stalk Goggles"
+    }
    },
    "stalwarts-banner-greater": {
     "name": "Stalwart's Banner (Greater)",
@@ -55776,13 +56291,23 @@
     "name": "Thieves' Tools (Concealable Picks)",
     "status": "doc",
     "docId": "equipment-58",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "thieves-toolkit",
+     "name": "Thieves' Toolkit"
+    }
    },
    "thieves-tools-concealable": {
     "name": "Thieves' Tools (Concealable)",
     "status": "doc",
     "docId": "equipment-58",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "thieves-toolkit",
+     "name": "Thieves' Toolkit"
+    }
    },
    "thought-lens-of-astral-essence": {
     "name": "Thought Lens of Astral Essence",
@@ -56496,7 +57021,12 @@
     "name": "Wand of Shattering Images",
     "status": "doc",
     "docId": "equipment-4824",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "wand-of-shocking-haze",
+     "name": "Wand of Shocking Haze"
+    }
    },
    "wand-of-spiritual-warfare-2nd-rank-spell": {
     "name": "Wand of Spiritual Warfare (2nd-Rank Spell)",
@@ -56657,7 +57187,12 @@
     "name": "Waterproof Firearm Carrying Case",
     "status": "doc",
     "docId": "equipment-4312",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "waterproof-carrying-case",
+     "name": "Waterproof Carrying Case"
+    }
    },
    "wayfinderfinder": {
     "name": "Wayfinderfinder",
@@ -56729,37 +57264,67 @@
     "name": "Wyrm Claw (Greater)",
     "status": "doc",
     "docId": "equipment-4777-4289",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "wyrm-spindle",
+     "name": "Wyrm Spindle"
+    }
    },
    "wyrm-claw-major": {
     "name": "Wyrm Claw (Major)",
     "status": "doc",
     "docId": "equipment-4777-4290",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "wyrm-spindle",
+     "name": "Wyrm Spindle"
+    }
    },
    "wyrm-claw": {
     "name": "Wyrm Claw",
     "status": "doc",
     "docId": "equipment-4777",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "wyrm-spindle",
+     "name": "Wyrm Spindle"
+    }
    },
    "wyrm-on-the-wing-greater": {
     "name": "Wyrm on the Wing (Greater)",
     "status": "doc",
     "docId": "equipment-4759-4237",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "wyrms-wingspan",
+     "name": "Wyrm's Wingspan"
+    }
    },
    "wyrm-on-the-wing-major": {
     "name": "Wyrm on the Wing (Major)",
     "status": "doc",
     "docId": "equipment-4759-4238",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "wyrms-wingspan",
+     "name": "Wyrm's Wingspan"
+    }
    },
    "wyrm-on-the-wing": {
     "name": "Wyrm on the Wing",
     "status": "doc",
     "docId": "equipment-4759",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "wyrms-wingspan",
+     "name": "Wyrm's Wingspan"
+    }
    },
    "yellow-musk-poison": {
     "name": "Yellow Musk Poison",
@@ -57016,7 +57581,12 @@
     "name": "Fulus of Concealment",
     "status": "doc",
     "docId": "equipment-973",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "items",
+     "id": "fulu-of-concealment",
+     "name": "Fulu Of Concealment"
+    }
    },
    "aon-the-old-mage-deck": {
     "name": "The Old Mage Deck",
@@ -61506,37 +62076,67 @@
     "name": "Adept Benefit (Amulet)",
     "status": "doc",
     "docId": "implement-1",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "amulet",
+     "name": "Amulet"
+    }
    },
    "adept-benefit-bell": {
     "name": "Adept Benefit (Bell)",
     "status": "doc",
     "docId": "implement-2",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "bell",
+     "name": "Bell"
+    }
    },
    "adept-benefit-chalice": {
     "name": "Adept Benefit (Chalice)",
     "status": "doc",
     "docId": "implement-3",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "chalice",
+     "name": "Chalice"
+    }
    },
    "adept-benefit-lantern": {
     "name": "Adept Benefit (Lantern)",
     "status": "doc",
     "docId": "implement-4",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "lantern",
+     "name": "Lantern"
+    }
    },
    "adept-benefit-mirror": {
     "name": "Adept Benefit (Mirror)",
     "status": "doc",
     "docId": "implement-5",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "mirror",
+     "name": "Mirror"
+    }
    },
    "adept-benefit-regalia": {
     "name": "Adept Benefit (Regalia)",
     "status": "doc",
     "docId": "implement-6",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "regalia",
+     "name": "Regalia"
+    }
    },
    "adept-benefit-shield": {
     "name": "Adept Benefit (Shield)",
@@ -61548,19 +62148,34 @@
     "name": "Adept Benefit (Tome)",
     "status": "doc",
     "docId": "implement-7",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "tome",
+     "name": "Tome"
+    }
    },
    "adept-benefit-wand": {
     "name": "Adept Benefit (Wand)",
     "status": "doc",
     "docId": "implement-8",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "wand",
+     "name": "Wand"
+    }
    },
    "adept-benefit-weapon": {
     "name": "Adept Benefit (Weapon)",
     "status": "doc",
     "docId": "implement-9",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "weapon",
+     "name": "Weapon"
+    }
    },
    "advanced-alchemy": {
     "name": "Advanced Alchemy",
@@ -62862,37 +63477,67 @@
     "name": "Initiate Benefit (Amulet)",
     "status": "doc",
     "docId": "implement-1",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "amulet",
+     "name": "Amulet"
+    }
    },
    "initiate-benefit-bell": {
     "name": "Initiate Benefit (Bell)",
     "status": "doc",
     "docId": "implement-2",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "bell",
+     "name": "Bell"
+    }
    },
    "initiate-benefit-chalice": {
     "name": "Initiate Benefit (Chalice)",
     "status": "doc",
     "docId": "implement-3",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "chalice",
+     "name": "Chalice"
+    }
    },
    "initiate-benefit-lantern": {
     "name": "Initiate Benefit (Lantern)",
     "status": "doc",
     "docId": "implement-4",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "lantern",
+     "name": "Lantern"
+    }
    },
    "initiate-benefit-mirror": {
     "name": "Initiate Benefit (Mirror)",
     "status": "doc",
     "docId": "implement-5",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "mirror",
+     "name": "Mirror"
+    }
    },
    "initiate-benefit-regalia": {
     "name": "Initiate Benefit (Regalia)",
     "status": "doc",
     "docId": "implement-6",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "regalia",
+     "name": "Regalia"
+    }
    },
    "initiate-benefit-shield": {
     "name": "Initiate Benefit (Shield)",
@@ -62904,19 +63549,34 @@
     "name": "Initiate Benefit (Tome)",
     "status": "doc",
     "docId": "implement-7",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "tome",
+     "name": "Tome"
+    }
    },
    "initiate-benefit-wand": {
     "name": "Initiate Benefit (Wand)",
     "status": "doc",
     "docId": "implement-8",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "wand",
+     "name": "Wand"
+    }
    },
    "initiate-benefit-weapon": {
     "name": "Initiate Benefit (Weapon)",
     "status": "doc",
     "docId": "implement-9",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "weapon",
+     "name": "Weapon"
+    }
    },
    "integrated-gauntlet": {
     "name": "Integrated Gauntlet",
@@ -63488,37 +64148,67 @@
     "name": "Paragon Benefit (Amulet)",
     "status": "doc",
     "docId": "implement-1",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "amulet",
+     "name": "Amulet"
+    }
    },
    "paragon-benefit-bell": {
     "name": "Paragon Benefit (Bell)",
     "status": "doc",
     "docId": "implement-2",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "bell",
+     "name": "Bell"
+    }
    },
    "paragon-benefit-chalice": {
     "name": "Paragon Benefit (Chalice)",
     "status": "doc",
     "docId": "implement-3",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "chalice",
+     "name": "Chalice"
+    }
    },
    "paragon-benefit-lantern": {
     "name": "Paragon Benefit (Lantern)",
     "status": "doc",
     "docId": "implement-4",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "lantern",
+     "name": "Lantern"
+    }
    },
    "paragon-benefit-mirror": {
     "name": "Paragon Benefit (Mirror)",
     "status": "doc",
     "docId": "implement-5",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "mirror",
+     "name": "Mirror"
+    }
    },
    "paragon-benefit-regalia": {
     "name": "Paragon Benefit (Regalia)",
     "status": "doc",
     "docId": "implement-6",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "regalia",
+     "name": "Regalia"
+    }
    },
    "paragon-benefit-shield": {
     "name": "Paragon Benefit (Shield)",
@@ -63530,19 +64220,34 @@
     "name": "Paragon Benefit (Tome)",
     "status": "doc",
     "docId": "implement-7",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "tome",
+     "name": "Tome"
+    }
    },
    "paragon-benefit-wand": {
     "name": "Paragon Benefit (Wand)",
     "status": "doc",
     "docId": "implement-8",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "wand",
+     "name": "Wand"
+    }
    },
    "paragon-benefit-weapon": {
     "name": "Paragon Benefit (Weapon)",
     "status": "doc",
     "docId": "implement-9",
-    "how": "paren-only"
+    "how": "paren-only",
+    "remasteredAs": {
+     "bucket": "classFeatures",
+     "id": "weapon",
+     "name": "Weapon"
+    }
    },
    "patron-theme": {
     "name": "Patron Theme",
@@ -72338,7 +73043,12 @@
     "name": "Eidolon's Opportunity",
     "status": "doc",
     "docId": "feat-2910",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "eidolons-retort",
+     "name": "Eidolon's Retort"
+    }
    },
    "eidolons-wrath": {
     "name": "Eidolon's Wrath",
@@ -72428,7 +73138,12 @@
     "name": "Pushing Attack",
     "status": "doc",
     "docId": "feat-2925",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "weighty-impact",
+     "name": "Weighty Impact"
+    }
    },
    "transpose": {
     "name": "Transpose",
@@ -72506,7 +73221,12 @@
     "name": "Trample (Summoner)",
     "status": "doc",
     "docId": "feat-2938",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "eidolons-trample",
+     "name": "Eidolon's Trample"
+    }
    },
    "link-wellspring": {
     "name": "Link Wellspring",
@@ -104108,7 +104828,12 @@
     "name": "Tree Climber (Elf)",
     "status": "doc",
     "docId": "feat-1413",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "tree-climber",
+     "name": "Tree Climber"
+    }
    },
    "deep-vision": {
     "name": "Deep Vision",
@@ -104120,7 +104845,12 @@
     "name": "Reckless Abandon",
     "status": "doc",
     "docId": "feat-173",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "desperate-wrath",
+     "name": "Desperate Wrath"
+    }
    },
    "roll-with-it": {
     "name": "Roll with It",
@@ -104162,7 +104892,12 @@
     "name": "Quick Stow (Ratfolk)",
     "status": "doc",
     "docId": "feat-1304",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "quick-stow",
+     "name": "Quick Stow"
+    }
    },
    "trample-sarangay": {
     "name": "Trample (Sarangay)",
@@ -104174,7 +104909,12 @@
     "name": "Harbinger's Caw",
     "status": "doc",
     "docId": "feat-2442",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "harbingers-claw",
+     "name": "Harbinger's Claw"
+    }
    },
    "breath-of-the-dragon-dragonblood": {
     "name": "Breath of the Dragon (Dragonblood)",
@@ -104211,7 +104951,12 @@
     "name": "Internal Cohesion",
     "status": "doc",
     "docId": "feat-2477",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "aeonbound",
+     "name": "Aeonbound"
+    }
    },
    "irrepressible-nephilim": {
     "name": "Irrepressible (Nephilim)",
@@ -104223,7 +104968,12 @@
     "name": "Smashing Tail",
     "status": "doc",
     "docId": "feat-2535",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "bestial-manifestation",
+     "name": "Bestial Manifestation"
+    }
    },
    "quick-recovery": {
     "name": "Quick Recovery",
@@ -104306,7 +105056,12 @@
     "name": "Improved Familiar (Familiar Master)",
     "status": "doc",
     "docId": "feat-1973",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "improved-familiar",
+     "name": "Improved Familiar"
+    }
    },
    "orators-filibuster": {
     "name": "Orator's Filibuster",
@@ -104434,7 +105189,12 @@
     "name": "Master Spotter (Investigator)",
     "status": "doc",
     "docId": "feat-1850",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "master-spotter",
+     "name": "Master Spotter"
+    }
    },
    "guarded-advance-knight-vigilante": {
     "name": "Guarded Advance (Knight Vigilante)",
@@ -104476,7 +105236,12 @@
     "name": "Snap Out of It! (Marshal)",
     "status": "doc",
     "docId": "feat-2008",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "snap-out-of-it",
+     "name": "Snap Out of It!"
+    }
    },
    "flash-of-omnipotence": {
     "name": "Flash of Omnipotence",
@@ -104544,7 +105309,12 @@
     "name": "Empathic Envoy",
     "status": "doc",
     "docId": "feat-4115",
-    "how": "manual:spelling"
+    "how": "manual:spelling",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "empathetic-envoy",
+     "name": "Empathetic Envoy"
+    }
    },
    "necromantic-resistance-undead-slayer": {
     "name": "Necromantic Resistance (Undead Slayer)",
@@ -104580,7 +105350,12 @@
     "name": "Startling Appearance (Vigilante)",
     "status": "doc",
     "docId": "feat-2088",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "startling-appearance",
+     "name": "Startling Appearance"
+    }
    },
    "vindicators-judgment": {
     "name": "Vindicator's Judgment",
@@ -104599,7 +105374,12 @@
     "name": "Efficient Alchemy (Alchemist)",
     "status": "doc",
     "docId": "feat-100",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "efficient-alchemy",
+     "name": "Efficient Alchemy"
+    }
    },
    "whispers-of-warning": {
     "name": "Whispers of Warning",
@@ -104617,13 +105397,23 @@
     "name": "Anchoring Aura",
     "status": "doc",
     "docId": "feat-249",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "aura-of-righteousness",
+     "name": "Aura of Righteousness"
+    }
    },
    "vengeful-oath": {
     "name": "Vengeful Oath",
     "status": "doc",
     "docId": "feat-222",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "oath-of-the-avenger",
+     "name": "Oath of The Avenger"
+    }
    },
    "armored-regiment-training": {
     "name": "Armored Regiment Training",
@@ -104641,7 +105431,12 @@
     "name": "Green Empathy",
     "status": "doc",
     "docId": "feat-326",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "plant-empathy",
+     "name": "Plant Empathy"
+    }
    },
    "dueling-parry": {
     "name": "Dueling Parry",
@@ -104671,7 +105466,12 @@
     "name": "Implausible Purchase (Investigator)",
     "status": "doc",
     "docId": "feat-1477",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "implausible-purchase",
+     "name": "Implausible Purchase"
+    }
    },
    "certain-stratagem": {
     "name": "Certain Stratagem",
@@ -104683,7 +105483,12 @@
     "name": "Predictive Purchase (Investigator)",
     "status": "doc",
     "docId": "feat-1463",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "predictive-purchase",
+     "name": "Predictive Purchase"
+    }
    },
    "flashforge": {
     "name": "Flashforge",
@@ -104713,7 +105518,12 @@
     "name": "Timeless Body",
     "status": "doc",
     "docId": "feat-476",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "peerless-form",
+     "name": "Peerless Form"
+    }
    },
    "inner-fire-monk": {
     "name": "Inner Fire (Monk)",
@@ -104784,7 +105594,12 @@
     "name": "Guardian's Deflection (Swashbuckler)",
     "status": "doc",
     "docId": "feat-1528",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "guardians-deflection",
+     "name": "Guardian's Deflection"
+    }
    },
    "knowledge-is-power-wizard": {
     "name": "Knowledge is Power (Wizard)",
@@ -104796,13 +105611,23 @@
     "name": "Criminal Connections",
     "status": "doc",
     "docId": "feat-2119",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "leverage-connections",
+     "name": "Leverage Connections"
+    }
    },
    "quick-contacts": {
     "name": "Quick Contacts",
     "status": "doc",
     "docId": "feat-2144",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "leverage-connections",
+     "name": "Leverage Connections"
+    }
    },
    "aon-litany-against-wrath": {
     "name": "Litany Against Wrath",
@@ -105018,7 +105843,12 @@
     "name": "Master Summoner Spellcasting",
     "status": "doc",
     "docId": "feat-2961",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "feats",
+     "id": "master-summoner-spellcasting",
+     "name": "Master Summoner Spellcasting"
+    }
    },
    "aon-polearm-tricks": {
     "name": "Polearm Tricks",
@@ -107563,13 +108393,23 @@
     "name": "Half-Elf",
     "status": "doc",
     "docId": "ancestry-7",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "heritages",
+     "id": "aiuvarin",
+     "name": "Aiuvarin"
+    }
    },
    "aon-half-orc": {
     "name": "Half-Orc",
     "status": "doc",
     "docId": "ancestry-8",
-    "how": "slug-noparen"
+    "how": "slug-noparen",
+    "remasteredAs": {
+     "bucket": "heritages",
+     "id": "dromaar",
+     "name": "Dromaar"
+    }
    },
    "aon-aasimar": {
     "name": "Aasimar",
@@ -117618,7 +118458,12 @@
     "name": "Mark for Death",
     "status": "doc",
     "docId": "action-565",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "actions",
+     "id": "mark-for-death-concentrate",
+     "name": "Mark For Death (concentrate)"
+    }
    },
    "enter-runewell": {
     "name": "Enter Runewell",
@@ -118667,7 +119512,12 @@
     "name": "Pistolero's Retort",
     "status": "doc",
     "docId": "action-3681",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "actions",
+     "id": "pistolers-retort",
+     "name": "Pistoler's Retort"
+    }
    },
    "pacifying-infusion": {
     "name": "Pacifying Infusion",
@@ -118895,7 +119745,12 @@
     "name": "Drive",
     "status": "doc",
     "docId": "action-483",
-    "how": "slug"
+    "how": "slug",
+    "remasteredAs": {
+     "bucket": "actions",
+     "id": "drive-varies",
+     "name": "Drive (Varies)"
+    }
    },
    "aon-abandon-hex": {
     "name": "Abandon Hex",
@@ -121341,7 +122196,12 @@
     "name": "Extra Reagents",
     "status": "doc",
     "docId": "familiar-ability-14",
-    "how": "record carries its own aonId (targeted merge)"
+    "how": "record carries its own aonId (targeted merge)",
+    "remasteredAs": {
+     "bucket": "familiarAbilities",
+     "id": "extra-alchemy",
+     "name": "Extra Alchemy"
+    }
    },
    "aeon-stone-reservoir": {
     "name": "Aeon Stone Reservoir",
@@ -121659,7 +122519,12 @@
     "name": "Faerie Dragon",
     "status": "doc",
     "docId": "familiar-specific-1",
-    "how": "record carries its own aonId (targeted merge)"
+    "how": "record carries its own aonId (targeted merge)",
+    "remasteredAs": {
+     "bucket": "familiarAbilities",
+     "id": "fey-dragonet",
+     "name": "Fey Dragonet"
+    }
    },
    "elemental-wisp": {
     "name": "Elemental Wisp",
@@ -136661,7 +137526,12 @@
     "name": "Soulforged Armaments",
     "status": "doc",
     "docId": "rules-1560",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "rules",
+     "id": "soulforger",
+     "name": "Soulforger"
+    }
    },
    "binding-an-armament": {
     "name": "Binding an Armament",
@@ -136691,7 +137561,12 @@
     "name": "Upgrading, Reshaping, Restoring",
     "status": "doc",
     "docId": "rules-1565",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "rules",
+     "id": "upgrading-reshaping-and-restoring",
+     "name": "Upgrading, Reshaping, and Restoring"
+    }
    },
    "essence-powers": {
     "name": "Essence Powers",
@@ -136793,7 +137668,12 @@
     "name": "Ability Scores",
     "status": "doc",
     "docId": "rules-1583",
-    "how": "importer:the doc this record was built from"
+    "how": "importer:the doc this record was built from",
+    "remasteredAs": {
+     "bucket": "rules",
+     "id": "attribute-modifiers-and-defenses",
+     "name": "Attribute Modifiers and Defenses"
+    }
    },
    "unarmed-attacks": {
     "name": "Unarmed Attacks",
@@ -154501,13 +155381,23 @@
     "name": "Negative",
     "status": "doc",
     "docId": "trait-118",
-    "how": "slug-any"
+    "how": "slug-any",
+    "remasteredAs": {
+     "bucket": "trait",
+     "id": "void",
+     "name": "Void"
+    }
    },
    "positive": {
     "name": "Positive",
     "status": "doc",
     "docId": "trait-128",
-    "how": "slug-any"
+    "how": "slug-any",
+    "remasteredAs": {
+     "bucket": "trait",
+     "id": "vitality",
+     "name": "Vitality"
+    }
    },
    "metamagic": {
     "name": "Metamagic",
@@ -154519,19 +155409,34 @@
     "name": "Half-Elf",
     "status": "doc",
     "docId": "ancestry-7",
-    "how": "slug-any"
+    "how": "slug-any",
+    "remasteredAs": {
+     "bucket": "trait",
+     "id": "aiuvarin",
+     "name": "Aiuvarin"
+    }
    },
    "half-orc": {
     "name": "Half-Orc",
     "status": "doc",
     "docId": "ancestry-8",
-    "how": "slug-any"
+    "how": "slug-any",
+    "remasteredAs": {
+     "bucket": "trait",
+     "id": "dromaar",
+     "name": "Dromaar"
+    }
    },
    "gnoll": {
     "name": "Gnoll",
     "status": "doc",
     "docId": "ancestry-44",
-    "how": "slug-any"
+    "how": "slug-any",
+    "remasteredAs": {
+     "bucket": "trait",
+     "id": "kholo",
+     "name": "Kholo"
+    }
    },
    "tiny": {
     "name": "Tiny",

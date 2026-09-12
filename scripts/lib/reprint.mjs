@@ -32,12 +32,17 @@
  *      collapse two records onto one page, which is a merge decision for the owner, not a repair.
  *      That is `hasKey` below (measured 2026-09-12: 182 such records, e.g. spells/acid-splash, whose
  *      reprint spell-1461 "Caustic Blast" ships as spells/caustic-blast in its own right).
+ *      The owner answered that on the same day (desk #158): both records stay, the old one is marked
+ *      `edition: 'legacy'` — hidden by the hide-legacy toggle, NOT always hidden like `superseded` —
+ *      and carries `remasteredAs` pointing at the reprint's record. `shippedTwin()` below is that
+ *      case named once, for the stamp and the guard to share.
  *
  * Readers: scripts/import-core-v2.mjs (the join + the AST writer), scripts/migration/build-map.mjs
  * (so stamp-aonid stamps R and the regen is a fixed point), scripts/reprint-check.mjs (the guard).
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { CURRENT } from './edition.mjs';
 
 export const EXPORT_DIR = process.env.AON_EXPORT || 'C:/trying ai 2/hh-data-export/without-images/data';
 
@@ -93,6 +98,9 @@ export function loadReprintIndex(exportDir = EXPORT_DIR) {
         // this list, so taking the first would report a correct record as stale.
         books: [...new Set([d?.book, ...(d?.data?.source ?? [])].map((x) => String(x ?? '').trim()).filter(Boolean))],
         release_date: d?.release_date ?? d?.data?.release_date ?? '',
+        // shippedTwin() below refuses to call a CURRENT printing "the old page", so the edition has to
+        // survive the slimming — it is one short string per document.
+        edition: d?.edition ?? d?.data?.edition ?? '',
         data: { legacy_id: d?.data?.legacy_id, remaster_id: d?.data?.remaster_id },
       });
     }
@@ -130,4 +138,32 @@ export function repointDoc(index, docId, key, hasKey) {
   const s = slugify(index.docs.get(R)?.name ?? '');
   if (s && s !== key && hasKey?.(s)) return null;
   return R;
+}
+
+/**
+ * EXCEPTION 2, NAMED: the record IS the old page, and its reprint ships beside it as its own record.
+ *
+ * Owner ruling, desk #158 (2026-09-12): "keep both, mark the old one legacy, add a 'remastered as …'
+ * link". Both halves need the same answer — the stamp that writes the link
+ * (scripts/migration/build-map.mjs -> stamp-aonid.mjs) and the guard that insists on it
+ * (scripts/reprint-check.mjs) — so the predicate lives here once instead of being spelled twice.
+ *
+ * Returns `{ id, name, docId }` for the reprint's record, or null when this is not that case.
+ *
+ * ⚠ A RECORD ON A CURRENT PRINTING IS NEVER MARKED. Measured 2026-09-12 over the shipped artefact:
+ * 182 records take exception 2, and 181 of them sit on a legacy/legacy-era document. The one that does
+ * not is items/rounds-dragon-mouth-pistol, whose own document (weapon-200) is itself `remaster` and
+ * merely carries an Archives link to the pistol's page. Stamping that one legacy would HIDE current
+ * content from a player who hides legacy — which is the exact harm scripts/edition-drift-check.mjs
+ * exists to prevent — so the edition of the record's OWN document decides.
+ */
+export function shippedTwin(index, docId, key, hasKey) {
+  if (!docId || repointDoc(index, docId, key, hasKey)) return null;
+  const R = repointDoc(index, docId, key, () => false);
+  if (!R) return null;
+  const doc = index.docs.get(R);
+  const id = slugify(doc?.name ?? '');
+  if (!id || id === key || !hasKey?.(id)) return null;
+  if (CURRENT.has(String(index.docs.get(String(docId))?.edition ?? ''))) return null;
+  return { id, name: String(doc.name ?? ''), docId: R };
 }

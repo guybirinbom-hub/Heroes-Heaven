@@ -40,7 +40,7 @@ import { useIsMobile } from './useIsMobile';
 import { confirmDialog } from './confirm';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
-import { DescBody } from './DescBody';
+import { DescBody, type RemasteredAs } from './DescBody';
 import { DescriptionModal } from './DescriptionModal';
 import type { DescNode } from './descref';
 import { InfoTerm } from './InfoTerm';
@@ -223,7 +223,14 @@ function SpellDetail({
               <span className="sd-rank-chip on sd-rank-static">{ord(r)}</span>
             </div>
           ) : null}
-          {shownBase && <DescBody description={shownBase} descRefs={spell.descRefs} onExit={onClose} />}
+          {/* desk #158 — the `shownBase &&` guard was dropped so a spell whose text is empty can still
+              show the "Remastered as …" line; DescBody still renders nothing when there is neither. */}
+          <DescBody
+            description={shownBase}
+            descRefs={spell.descRefs}
+            onExit={onClose}
+            remasteredAs={(spell as { remasteredAs?: RemasteredAs }).remasteredAs}
+          />
           {heightening.length > 0 && (
             <div className="sd-heighten">
               <div className="sd-heighten-h">Heightening</div>
@@ -661,23 +668,75 @@ function ManageSpellsModal({
         .filter((s): s is Spell => !!s && s.rank <= ceiling)
         .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
     }
-    if (spontaneous) {
-      const known = new Set(entry.repertoire?.[rank] ?? []);
-      const pool = ceiling === 0 ? traditionSpellsByRank.byRank[0] ?? [] : traditionSpellsByRank.upTo[ceiling] ?? [];
-      return pool.filter((s) => !known.has(s.id));
-    }
-    if (entry.spellbook) {
+    /* desk 155: flexible-book-casters — a caster WITH A BOOK offers the book and nothing else, whether
+     * the entry prepares into slots or holds a collection. A flexible wizard, witch or magus casts
+     * spontaneous-shaped, and print is explicit that the source does not change: *"Select these spells
+     * from the same source as normal, such as from a spellbook for a wizard"* (archetype-99). Before
+     * this the spontaneous branch ran first and offered the whole tradition, so the collection could be
+     * stocked with spells that are in no spellbook the character owns. */
+    const fromBook = (): Spell[] | null => {
+      if (!entry.spellbook) return null;
       if (ceiling === 0) return (entry.spellbook[0] ?? []).map((id) => content.spells[id]).filter(Boolean) as Spell[];
       const out: Spell[] = [];
       for (let r = 1; r <= ceiling; r++) for (const id of entry.spellbook[r] ?? []) { const sp = content.spells[id]; if (sp) out.push(sp); }
       return out;
+    };
+    if (spontaneous) {
+      const known = new Set(entry.repertoire?.[rank] ?? []);
+      const pool = fromBook() ?? (ceiling === 0 ? traditionSpellsByRank.byRank[0] ?? [] : traditionSpellsByRank.upTo[ceiling] ?? []);
+      return pool.filter((s) => !known.has(s.id));
     }
+    const book = fromBook();
+    if (book) return book;
     return ceiling === 0 ? traditionSpellsByRank.byRank[0] ?? [] : traditionSpellsByRank.upTo[ceiling] ?? [];
+  };
+
+  /** Player-chosen spells at a rank — granted ones (bloodline, patron, conscious mind) never count. */
+  const chosenAt = (rank: number) => {
+    const granted = entry.grantedRepertoire?.[rank] ?? [];
+    return (entry.repertoire?.[rank] ?? []).filter((id) => !granted.includes(id)).length;
+  };
+
+  /*
+   * desk 155 / ruling #102 — A FLEXIBLE COLLECTION IS ONE FLAT POOL, NOT A REPERTOIRE PER RANK.
+   *
+   * `entry.spellCollection` is the pool size, stamped by fillSpellCollection (src/rules/build.ts); its
+   * presence is what says this entry is a collection. Capping an add at the rank's own slot count is
+   * the PF2e repertoire rule and is exactly wrong here: a 4th-level flexible wizard holding four
+   * 1st-rank spells was told "Repertoire full (2 known)" while the pool still had two places, so the
+   * ruling was unreachable from the sheet even though the engine had built it.
+   *
+   * Two carve-outs, both already modelled by the engine and mirrored rather than re-decided:
+   *   · THE 1ST-RANK FLOOR — *"you must select at least one 1st-level spell for your collection each
+   *     time you prepare"* (archetype-99). While no 1st-rank spell is collected, one place is reserved
+   *     and cannot be spent on a higher rank.
+   *   · THE 10TH-RANK CAPSTONE — that slot is a class feature's, not one of "the spell slots you get
+   *     each day from your class spells", and flexibleCollectionSize() already excludes it. Rank 10
+   *     keeps its own slot cap.
+   */
+  const collectionSize = entry.spellCollection;
+  const collectionUsed = () => {
+    let n = 0;
+    for (let r = 1; r <= 9; r++) n += chosenAt(r);
+    return n;
   };
 
   // A spontaneous caster knows at most as many spells per rank as they have slots of that
   // rank (the PF2e repertoire cap). Infinity if the rank has no slot pool (shouldn't happen).
-  const repCap = (rank: number) => entry.slots?.[rank]?.max ?? Infinity;
+  const repCap = (rank: number) => {
+    if (collectionSize !== undefined && rank >= 1 && rank <= 9) {
+      const floorHeld = chosenAt(1) === 0 && rank !== 1 ? 1 : 0;
+      // The cap is expressed per rank because every caller compares it against this rank's count:
+      // what this rank already holds, plus whatever is left in the shared pool.
+      return chosenAt(rank) + Math.max(0, collectionSize - collectionUsed() - floorHeld);
+    }
+    return entry.slots?.[rank]?.max ?? Infinity;
+  };
+  /** What a refused add is called — a collection is full as a POOL, not at a rank. */
+  const capNote = (rank: number) =>
+    collectionSize !== undefined && rank >= 1 && rank <= 9
+      ? `Collection full (${collectionUsed()} of ${collectionSize})`
+      : `Repertoire full (${repCap(rank)} known)`;
 
   const pick = (spellId: string | null) => {
     if (picking) {
@@ -806,7 +865,9 @@ function ManageSpellsModal({
                     alreadyKnown
                       ? 'Already in your repertoire at this rank.'
                       : rankFull
-                        ? `Your ${ord(picking.rank)}-rank repertoire is full (${repCap(picking.rank)} known).`
+                        ? collectionSize !== undefined && picking.rank >= 1 && picking.rank <= 9
+                          ? `Your spell collection is full (${collectionUsed()} of ${collectionSize})${chosenAt(1) === 0 && picking.rank !== 1 ? ' — one place is held for a 1st-rank spell.' : '.'}`
+                          : `Your ${ord(picking.rank)}-rank repertoire is full (${repCap(picking.rank)} known).`
                         : undefined
                   }
                   onSelect={() => pick(s.id)}
@@ -910,7 +971,7 @@ function ManageSpellsModal({
                       <i className="ti ti-plus" aria-hidden="true" /> Add {ord(rank)}-rank spell
                     </button>
                   ) : (
-                    <div className="ms-cap-note">Repertoire full ({repCap(rank)} known)</div>
+                    <div className="ms-cap-note">{capNote(rank)}</div>
                   )}
                 </div>
                   );

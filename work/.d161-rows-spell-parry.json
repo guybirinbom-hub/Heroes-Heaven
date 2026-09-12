@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "id": "desk-161#spell-parry-is-passive",
+      "note": "DESK #161 (owner, 2026-09-12). He pasted the screenshot of https://2e.aonprd.com/Feats.aspx?ID=9049 and ruled \"same as the live Archives page\": the title 'Spell Parry' carries NO action glyph, the trait row is Magus, Requirements is \"You have one or more hands free\", and the text is \"You raise your guard, gaining a +1 circumstance bonus to AC and to saving throws against spells that target you until the start of your next turn, as long as you continue to meet the requirements.\" So the feat is PASSIVE. His words: \"alot of these could just be solved if you checkd the archives of nethys\". THE CONSEQUENCE HE ACCEPTS: the feat no longer appears in the encounter action list — the list is built from records whose actionCost is 1-3 actions, a reaction or a free action. THIS SUPERSEDES A ROW WRITTEN EARLIER THE SAME DAY: the newest-printing repoint moved feats/spell-parry from feat-2851 (Secrets of Magic, which printed Single Action) to feat-9049 (Impossible Magic, whose action badge is the empty `<actions string=\"\" />`), the importer derived `passive`, and the verifier pinned it back to 1 action under the standing \"a bare badge is scrape damage, not a printed absence\" rule (header of scripts/actioncost-vs-aon.mjs) while asking the owner what the book shows. He has now answered: for THIS record the page is the authority and the bare badge is the answer. The bare-badge rule is unchanged everywhere else — it is a rule about what an instrument may INFER, and an owner reading the page outranks an inference. Both script headers now say so, and test/action-costs.test.ts is re-pinned to passive.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "spell-parry",
+          "field": "actionCost",
+          "value": { "type": "passive" },
+          "supersedes": true,
+          "why": "feat-9049 (Spell Parry, Impossible Magic pg. 18) — the record's own document since the newest-printing repoint. Its page title carries no action glyph, and the owner read that page on 2026-09-12 and ruled it as printed: no action cost. This replaces the 1-action row written earlier the same day, which pinned the cost of feat-2851 (the Secrets of Magic printing feat-9049 replaces) on the standing rule that a bare action badge is scrape damage rather than a stated absence. That rule still holds for every record the owner has not read; here he read it. Desk #161."
+        }
+      ]
+    }
+  ]
+}

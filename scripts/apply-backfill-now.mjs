@@ -13,6 +13,13 @@
  * ⚠ It is NOT a substitute for `npm run data`. It cannot add records, re-stamp aonIds, or rebuild
  * prose — it only replays the overlay. Run the real chain before believing a batch is finished.
  *
+ * ⚠ AND IT CAN UNDO A STAMP THE CHAIN PUTS ON TOP OF THE OVERLAY. Desk #158 marks the 181 records
+ * whose reprint already ships with `edition: 'legacy'` + `remasteredAs`, written by stamp-aonid.mjs
+ * AFTER the overlay is applied; 9 of those records also carry an older overlay `edition` row saying
+ * `legacy-era`, so replaying the overlay here puts that back and the pair no longer agrees.
+ * scripts/reprint-check.mjs fails on exactly that and says to re-run the chain. Nothing is lost — but
+ * do not read a red reprint-check after this script as a data defect.
+ *
  * ⚠ PROSE ROWS DO NOT GO INTO core.json, and this is the whole reason the script needs a comment. In
  * the pipeline the overlay is applied BEFORE `split-descriptions.mjs`, which then moves prose out of
  * core.json and into core-descriptions.json. Replaying every row against the finished core.json put
