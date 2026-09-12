@@ -183,7 +183,10 @@ for (const { cat, bucket, kind } of PLAN) {
     }
 
     core[bucket][id] = rec;
-    if (doc.ast) ast[id] = resolveAst(doc.ast);
+    if (doc.ast) {
+      ast[id] = resolveAst(doc.ast);
+      ast[id].aon = doc.id ?? docId; // provenance — see scripts/ast-provenance-check.mjs
+    }
     added++;
   }
   report.push({ cat, bucket, total: Object.keys(docs).length, added, skipped, existed, renormalised, filled });

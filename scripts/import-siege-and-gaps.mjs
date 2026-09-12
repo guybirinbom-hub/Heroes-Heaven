@@ -777,6 +777,16 @@ const OWNED_IDS = {
 };
 const ownsSlug = (bucket, s) => (bucket === 'siegeWeapons' ? !CURATED_SIEGE_IDS.has(s) : OWNED_IDS[bucket].has(s));
 
+/** The verified join, read the same way import-core-v2.mjs reads it. Absent file = no opinion. */
+const mapDocFor = (() => {
+  let mig = null;
+  try { mig = JSON.parse(readFileSync('scripts/migration/out/map.json', 'utf8')).map ?? {}; } catch { return () => null; }
+  return (bucket, s) => {
+    const m = mig[bucket]?.[s];
+    return m && (m.status === 'doc' || m.status === 'scraped') ? m.docId : null;
+  };
+})();
+
 function writeAst() {
   if (!existsSync(EXPORT)) { notes.push(`ast SKIPPED: no export at ${EXPORT} (records fall back to their plain description)`); return; }
   const idMap = existsSync('public/idmap.json') ? JSON.parse(readFileSync('public/idmap.json', 'utf8')) : {};
@@ -815,12 +825,32 @@ function writeAst() {
     }
     const astPath = `public/ast/${bucket}.json`;
     const existing = existsSync(astPath) ? JSON.parse(readFileSync(astPath, 'utf8')) : {};
+    /*
+     * THE RECORD'S OWN DOCUMENT BEATS THE EDITION-RANK PICK — the same rule, for the same reason, as
+     * scripts/import-core-v2.mjs. The loop below OVERWRITES the full importer's page for every slug
+     * this script authored, so picking by edition rank here put the page back on the wrong document
+     * after the importer had already put it on the right one: all 18 Guns & Gears siege weapons
+     * rendered the REMASTERED page (siege-weapon-2…20) while the record is the original printing
+     * (siege-weapon-69…90) — the book its own source line names — and four familiar abilities did the
+     * same.
+     *
+     * `core` here is the IN-FLIGHT core.json: stage 1 has already rewritten it and stamp-aonid has not
+     * reached it yet, so its `aonId` is absent or self-assigned and cannot be trusted at this point in
+     * the chain. In order: the provenance stamp the importer just wrote, then the verified join
+     * (scripts/migration/out/map.json, which is what stamp-aonid will read), then whatever aonId the
+     * record does carry. Guarded by scripts/ast-provenance-check.mjs.
+     */
+    for (const s of [...bySlug.keys()]) {
+      const own = docs[String(existing[s]?.aon ?? mapDocFor(bucket, s) ?? core[bucket]?.[s]?.aonId ?? '')];
+      if (own?.ast) bySlug.set(s, own);
+    }
     const out = { ...existing };
     let addedAst = 0;
     for (const [s, d] of bySlug) {
       if (!ownsSlug(bucket, s) && s in existing) continue; // never rewrite the full importer's ast
       if (!(s in existing)) addedAst++;
       out[s] = resolveAst(d.ast);
+      if (d.id) out[s].aon = d.id; // provenance — see scripts/ast-provenance-check.mjs
     }
     const ordered = {};
     for (const s of Object.keys(out).sort()) ordered[s] = out[s];

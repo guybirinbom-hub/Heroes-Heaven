@@ -104,8 +104,15 @@ for (const [bucket, recs] of Object.entries(core)) {
     if (!full) { noDoc++; continue; }
 
     if (!ast[id]) {
-      if (full.ast) { ast[id] = resolveAst(full.ast); bAst++; astAdded++; }
-      else docNoAst++;
+      if (full.ast) {
+        ast[id] = resolveAst(full.ast);
+        /* Provenance — see scripts/ast-provenance-check.mjs. `via` is what resolveDoc actually found:
+         * usually rec.aonId itself, but for a graded/synthetic id it is the BASE page the tree really
+         * came from (equipment-5194-4715 -> equipment-5194). The guard accepts the base because every
+         * resolveDoc candidate is a prefix of the id asked for. */
+        ast[id].aon = via;
+        bAst++; astAdded++;
+      } else docNoAst++;
     }
     if (!rec.edition && full.edition && !hasRow(bucket, id, 'edition')) {
       rows.push({ category: bucket, id, field: 'edition', value: full.edition });

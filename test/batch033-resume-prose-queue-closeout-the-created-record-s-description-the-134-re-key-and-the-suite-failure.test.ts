@@ -60,9 +60,14 @@ describe('classFeatures/arcane-bond-school-of-unified-magical-theory — the cre
     const rec = (db.classFeatures as unknown as Record<string, Record<string, unknown>>)[REC];
     expect(rec).toBeTruthy();
     // The ast fallback is the load-bearing half of "draws nothing": a record with an ast display tree
-    // reads perfectly well on an empty description. This one has no ast entry, and a backfill row never
-    // makes one, so prose is the ONLY surface it can ever have.
-    expect(astIndex()[REC]).toBeUndefined();
+    // reads perfectly well on an empty description. This record had NO ast entry when batch 033
+    // measured it. The 2026-09-12 regen gave it one: its authored aonId is `arcane-school-21` — the
+    // very School of Unified Magical Theory page this file reads its rule text from (MIRROR above) —
+    // and scripts/backfill-ast-edition.mjs pulls the tree for any record whose aonId resolves. The
+    // page's provenance stamp in public/ast/classFeatures.json.gz names that document, which
+    // scripts/ast-provenance-check.mjs asserts. Prose is therefore no longer the only surface; the
+    // created row below is still what gives the record prose of its OWN.
+    expect(astIndex()[REC]).toBe('classFeatures');
 
     // A STRIPPED copy — the shape the create row alone produces. True before and after the row lands.
     const stripped = { ...rec, description: undefined, note: undefined };

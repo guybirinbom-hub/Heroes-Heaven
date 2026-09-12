@@ -211,6 +211,7 @@ function refreshAst(bucket, id, aonId) {
     astDirty.set(bucket, cur);
   }
   astDirty.get(bucket)[id] = resolveAst(tree);
+  astDirty.get(bucket)[id].aon = aonId; // provenance — see scripts/ast-provenance-check.mjs
   return null;
 }
 

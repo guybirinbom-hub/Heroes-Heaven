@@ -776,10 +776,37 @@ function resolveAst(node) {
 }
 mkdirSync('public/ast', { recursive: true });
 const astStats = {};
+/*
+ * THE SHIPPED ARTEFACT, read for its `aonId` stamps only.
+ *
+ * `cur` (the transcription reference, public/core.foundry-backup.json) is PRE-ARCHIVE: it carries no
+ * aon* field on any of its 17,772 records, and it never can — `aonId` is written by
+ * scripts/migration/stamp-aonid.mjs, a LATER stage of `npm run data`, from scripts/migration/out/map.json.
+ * So `db[bucket][s].aonId` below is undefined for every record except the 66 authored `aonId` overlay
+ * rows applyBackfill() just wrote, and the guard that reads it fired for almost nobody.
+ *
+ * public/core.json is the previous run's FINAL, stamped output. It is not overwritten until the end of
+ * this file, so reading it here gives the provenance the chain last agreed on.
+ */
+const shippedCore = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : {};
 // preference order when a slug has ast in several buckets (a description-opener with only a title
 // resolves to the first bucket here that carries it).
 const BUCKET_PRIORITY = ['conditions', 'actions', 'feats', 'classFeatures', 'spells', 'items', 'deities',
   'ancestries', 'heritages', 'backgrounds', 'languages', 'familiarAbilities', 'animalCompanions', 'companionSpecializations', 'vehicles', 'siegeWeapons'];
+/*
+ * …and the other end of the same list: buckets that may claim a slug only when NOBODY else does.
+ *
+ * Everything not named in either list falls in the middle in export-directory order, which is
+ * alphabetical — so a category that arrives late in the alphabet loses every shared slug to one that
+ * arrives early, for no reason but its name. The 2026-09-07 export added grim-fascination, whose four
+ * pages are Blood / Bone / Flesh / SPIRIT: alphabetically it beats `instinct`, and "spirit" — the
+ * barbarian instinct, and the common link target — would have moved to a necromancer's fascination.
+ * Its own page is still reachable, by its explicit "grimFascination" key.
+ *
+ * These three are the right buckets to demote: 12 pages between them, every one a class sub-option
+ * that content links to by its full name, never by the bare word.
+ */
+const BUCKET_LAST = ['grimFascination', 'fatalMethod', 'follower'];
 const astIndex = {}; // slug -> preferred bucket
 for (const bucket of AON_BUCKETS) {
   const newMap = bestByBucket[bucket] || {};
@@ -787,14 +814,31 @@ for (const bucket of AON_BUCKETS) {
   for (const s in newMap) {
     if (!(s in (db[bucket] || {}))) continue;
     /* The AST must be the SHIPPED record's OWN page. bestByBucket picks per-slug by edition rank,
-     * but the record pipeline can ship a DIFFERENT same-name doc (pickByArchetype, a REF carry) —
-     * the two feats named "Zombie Horde" were the case: the shipped Clockwork Reanimator record
-     * (feat-3654, L20) rendered the Necromancer feat's page (feat-9122, L6) in full. When the
-     * shipped record's aonId names one of the slug's candidates, that candidate's ast wins. */
-    const shippedAon = db[bucket][s]?.aonId;
-    const own = shippedAon ? (allByBucket[bucket]?.[s] ?? []).find((r) => r.id === shippedAon) : null;
+     * but the record pipeline ships a DIFFERENT same-name doc whenever the migration map, an
+     * archetype match or preferBase() says so — and then the wrong page renders under the right
+     * name. Measured on the tracked artefact: items/dragon-pearl is equipment-4011 (Draconic Codex,
+     * 9,000 gp, level 16) and shipped the Tian Xia Character Guide page (equipment-3482, 180 gp,
+     * level 10); feats/zombie-horde (feat-3654, L20) and feats/death-from-above (feat-7610, L8) are
+     * one export refresh away from the same fate.
+     *
+     * Resolution order, most-authoritative first:
+     *   1. the aonId already on the assembled record — only the authored overlay rows
+     *      (scripts/data/effect-backfill.json, applied above) can put one there, and an authored row
+     *      is a ruling: fix-aonid-collisions.mjs re-applies exactly these at the end of the chain.
+     *   2. the aonId on the SHIPPED public/core.json — the provenance the last full chain agreed on.
+     *   3. usedDocs — the doc THIS run built the record from. That is mapDocFor() (the verified join,
+     *      scripts/migration/out/map.json) after preferBase, pickByArchetype and the hidden-doc guard
+     *      have corrected it, recorded a few hundred lines above; build-map.mjs reads the same file
+     *      first, so this is what stamp-aonid.mjs will stamp as aonId later in this very run.
+     *   4. nothing known -> the old edition-rank pick, unchanged.
+     */
+    const ownId = db[bucket][s]?.aonId ?? shippedCore[bucket]?.[s]?.aonId ?? usedDocs[bucket]?.[s];
+    const own = ownId ? docById.get(String(ownId)) : null;
     const rec = (own?.ast ? own : null) ?? newMap[s].rec;
-    if (rec.ast) astOut[s] = resolveAst(rec.ast);
+    // PROVENANCE: the archive document this page was built from, so a guard can be exact rather than
+    // fuzzy (scripts/ast-provenance-check.mjs). Unknown keys on a tree root are ignored by the
+    // renderer (src/sheet/AstRenderer.tsx switches on `t`) and preserved by every resolveAst copy.
+    if (rec.ast) { astOut[s] = resolveAst(rec.ast); if (rec.id) astOut[s].aon = rec.id; }
   }
   const json = JSON.stringify(astOut);
   writeFileSync('public/ast/' + bucket + '.json', json);
@@ -804,7 +848,12 @@ for (const bucket of AON_BUCKETS) {
   writeFileSync('public/ast/' + bucket + '.json.gz', gz);
   astStats[bucket] = { records: Object.keys(astOut).length, mb: (json.length / 1e6).toFixed(1), gzMb: (gz.length / 1e6).toFixed(2) };
 }
-for (const bucket of [...BUCKET_PRIORITY, ...AON_BUCKETS.filter((b) => !BUCKET_PRIORITY.includes(b))]) {
+const INDEX_ORDER = [
+  ...BUCKET_PRIORITY,
+  ...AON_BUCKETS.filter((b) => !BUCKET_PRIORITY.includes(b) && !BUCKET_LAST.includes(b)),
+  ...BUCKET_LAST.filter((b) => AON_BUCKETS.includes(b)),
+];
+for (const bucket of INDEX_ORDER) {
   const newMap = bestByBucket[bucket] || {};
   for (const s in newMap) {
     if (!(s in astIndex) && newMap[s].rec.ast && (s in (db[bucket] || {}))) astIndex[s] = bucket;

@@ -112,13 +112,29 @@ describe('batch 035 — readable-record-check: the prose rows', () => {
    *   - the four whose bare id also keys someone else's tree — see the premise above;
    *   - the eight in the follower, grimFascination and fatalMethod buckets, whose own trees were
    *     tracked in 7da5f92 and became reachable when public/ast-index.json gained their rows on
-   *     2026-09-12. The arcaneSchool, hybridStudy and sidebar rows still have no tracked tree entry,
-   *     so their prose row is the only text the record has. */
+   *     2026-09-12;
+   *   - the twelve arcaneSchool / hybridStudy / sidebar rows, which had no tracked tree when this
+   *     batch measured them and gained one in the 2026-09-12 regen. Each now ships the archive page
+   *     its own record points at, and the page's provenance stamp names it (the id in brackets, from
+   *     public/ast/<bucket>.json.gz, asserted by scripts/ast-provenance-check.mjs). The prose row is
+   *     still what this batch authored, and the second half of each test below still proves it. */
   const READS_BY_TREE = new Set([
     'follower/medic', 'follower/scout', 'grimFascination/bone', 'grimFascination/spirit',
     'fatalMethod/puppeteer', 'fatalMethod/reaper',
     'follower/berserker', 'follower/sharpshooter', 'follower/shieldbearer', 'follower/adept',
     'grimFascination/blood', 'grimFascination/flesh',
+    'arcaneSchool/school-of-breathtaking-influence',  // arcane-school-31
+    'arcaneSchool/school-of-keen-inquiry',            // arcane-school-32
+    'arcaneSchool/school-of-nexian-spaces',           // arcane-school-33
+    'arcaneSchool/school-of-quantic-control',         // arcane-school-34
+    'hybridStudy/twofold-tine',                       // hybrid-study-15
+    'hybridStudy/volatile-spark',                     // hybrid-study-16
+    'sidebar/arcane-cascade-damage',                  // sidebar-3750
+    'sidebar/runic-phrases',                          // sidebar-3753
+    'sidebar/motion-sense',                           // sidebar-3756
+    'sidebar/jotunborn-adventurers',                  // sidebar-3758
+    'sidebar/jotunborn-enclaves',                     // sidebar-3759
+    'sidebar/on-jotuns',                              // sidebar-3760
   ]);
 
   for (const r of rows) {

@@ -231,7 +231,11 @@ function writeDescriptionsAndAst(list) {
       refs.push({ label, key: bucket });
     }
     if (text) { descs.classes[cls.id] = refs.length ? { d: text, r: refs } : { d: text }; wroteDesc++; }
-    if (doc.ast) { ast[cls.id] = resolveAst(doc.ast); index[cls.id] = 'classes'; wroteAst++; }
+    if (doc.ast) {
+      ast[cls.id] = resolveAst(doc.ast);
+      ast[cls.id].aon = doc.id ?? String(cls.aonId); // provenance — see scripts/ast-provenance-check.mjs
+      index[cls.id] = 'classes'; wroteAst++;
+    }
   }
 
   /*
