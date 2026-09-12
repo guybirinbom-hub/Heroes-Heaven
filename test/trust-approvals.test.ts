@@ -92,11 +92,21 @@ describe('trust-approvals.json — completeness', () => {
    * both are `unruled` here: `unruled` means "the answers file does not speak for this number", NOT
    * "the owner has not ruled". Roster 155 -> 157.
    */
+  /*
+   * Then the newest-printing repoint of 2026-09-12 filed FOUR, none of them from a WG batch: #158
+   * reprint-twins-merge (182 records whose reprint already ships as its own record, so following the
+   * reprint would collapse two records onto one page — a merge decision, not a repair), #159
+   * reprint-lost-traits (eight records whose reprint page does not print a trait the legacy printing
+   * carried, spellshape among them), #160 reprint-damaged-pages (two reprint pages whose own text is
+   * damaged upstream) and #161 spell-parry-badge (a reprint that reproduces its predecessor's text
+   * unchanged but carries no action badge on either printing). All four are `open`, so all four are
+   * `unruled` below — which, as above, means the answers file does not speak for them. Roster 157 -> 161.
+   */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
-  it('the desk roster is every number in work/owner-questions.json — 157: 155 batch-filed questions plus the two 2026-09-11 authorised exceptions — with no gaps or repeats', () => {
+  it('the desk roster is every number in work/owner-questions.json — 161: 155 batch-filed questions, the two 2026-09-11 authorised exceptions and the four filed by the 2026-09-12 reprint lane — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
-    expect(deskNumbers.length).toBe(157);
+    expect(deskNumbers.length).toBe(161);
   });
 
   it('every desk number has exactly one disposition', () => {

@@ -91,8 +91,9 @@ describe('rule-owner-questions.mjs applies the desk pass', () => {
 
     const stillOpen = (after.open ?? []).map((e) => Number(e.n)).sort((a, b) => a - b);
     expect(stillOpen).toEqual((BEFORE.open ?? []).map((e) => Number(e.n)).filter((n) => !ANSWERED.has(n)).sort((a, b) => a - b));
-    /* The five batch-037 questions the owner has NOT seen stay on the desk. */
-    expect(stillOpen).toEqual([151, 152, 153, 154, 155]);
+    /* The five batch-037 questions the owner has NOT seen stay on the desk, and so do the four the
+     * 2026-09-12 newest-printing repoint filed after the desk pass closed (#158-#161). */
+    expect(stillOpen).toEqual([151, 152, 153, 154, 155, 158, 159, 160, 161]);
     expect((after.ruled ?? []).length).toBe((BEFORE.ruled ?? []).length + ANSWERED.size);
 
     for (const n of ANSWERED) {
@@ -110,8 +111,12 @@ describe('rule-owner-questions.mjs applies the desk pass', () => {
     const before = flat(BEFORE);
     const after = flat(readDesk(root));
 
-    /* Nothing lost: every id and every number that went in comes out. */
-    expect(after.filter((e) => e.n! < 156).length).toBe(before.length);
+    /* Nothing lost: every id and every number that went in comes out.
+     * Counted against the numbers that actually WENT IN rather than a `< 156` ceiling: that constant
+     * meant "everything on the desk when this was written" and silently rotted the moment the desk
+     * grew past it (the 2026-09-12 reprint lane filed #158-#161). The set cannot rot. */
+    const wentIn = new Set(before.map((e) => e.n));
+    expect(after.filter((e) => wentIn.has(e.n)).length).toBe(before.length);
     for (const e of before) {
       const now = after.find((x) => (e.id ? x.id === e.id : x.n === e.n));
       expect(now, `${e.id ?? `#${e.n}`} vanished from the desk`).toBeTruthy();

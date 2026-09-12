@@ -95,6 +95,42 @@
    "theirs": "Out of scope for the comparison: Wanderer's Guide carries no ability_block row for this record at all, so there is no encoding to compare. The finding is print-read, riding in the batch-037 read file.",
    "ours": "Batch 037 built the collection as ONE flat pool sized by total daily class slots (finding flexible-spellcaster#collection-shape, src/rules/build.ts `flexibleCollectionSize` + the across-rank rail in src/builder/Builder.tsx), on your 2026-09-10 ruling #102. It reaches only the classes that fall THROUGH to the collection branch — cleric, druid, animist. src/rules/build.ts tests `else if (sp.spellbook || cls.id === 'wizard' || cls.id === 'witch')` BEFORE `else if (archSpellMods.spellCollection)`, so a flexible wizard, witch or magus never reaches it: measured here, a 6th-level flexible wizard builds a `prepared` entry with no `slots` and no `repertoire` at all. A bare reorder is the wrong fix and also breaks test/bare-feat-lanes.test.ts \"leaves the wizard curriculum slot alone\", because `restrictedSlots` (the curriculum lane) is built only inside the book branch.",
    "question": "The right shape is a COMBINED branch — a book caster who takes Flexible Spellcaster keeps the spellbook and the curriculum slots AND gets the flat collection prepared from it — which is an engine-shape change to the caster branch in build.ts plus one expectation in a test file this round could not edit. Do you want that built as its own lane, or should the archetype stay unavailable to book casters until then? (It is currently neither: they can take it and silently get nothing.)"
+  },
+  {
+   "n": 158,
+   "id": "reprint-twins-merge",
+   "batch": 0,
+   "printed": "Reprint lane, 2026-09-12 (not a WG batch). 182 records point at an Archives page that was reprinted, but the reprint ALREADY ships as its own record, so the rule 'follow the reprint' would collapse two records onto one page. 122 distinct reprints; 28 of them are claimed by more than one old record: the 9 specialists-ring-* all reprinted as one 'Accolade Robe' (equipment-3054); 7 necklace-of-fireballs-* as 'Frozen Lava' (equipment-3000); 7 rune-of-sin-* as 'Rune Of Sin' (equipment-5180); alter-reality / miracle / primal-phenomenon as 'Manifestation' (spell-1592); 3 each onto Awakened Metal Shot, Marvelous Miniature, Judgement Thurible, Wyrm Spindle. By bucket: items 83, spells 32, classFeatures 27, feats 25, trait 5, actions 3, rules 3, heritages 2, familiarAbilities 2. scripts/reprint-check.mjs lists all 182 every run.",
+   "theirs": "Not a Wanderer's Guide question.",
+   "ours": "Both records kept: the old record still on its legacy page, the reprint as its own record. Nothing merged.",
+   "question": "For these 182: merge each old record into its reprint (a character holding the old one gets the new record), keep both as they are, or decide group by group? Many are several-into-one (the nine specialist rings become one robe), so this cannot be automated without your call."
+  },
+  {
+   "n": 159,
+   "id": "reprint-lost-traits",
+   "batch": 0,
+   "printed": "Reprint lane, 2026-09-12. Eight records moved to their reprint page and LOST a trait the legacy printing carried, because the reprint page does not print it: feats/effortless-captivation and feats/look-again lost [metamagic, spellshape] (feat-9323 / feat-9325 list only 'Archetype'); feats/arcane-shroud lost [concentrate]; spells/draw-the-lightning lost [metal]; items/rebounding-breastplate lost [force]; items/fu-water lost [splash]; items/hundred-moth-caress lost [void]; items/staff-storing-shield lost [invested]. Ours now matches the reprint page in every case.",
+   "theirs": "Not a Wanderer's Guide question.",
+   "ours": "The reprint page's trait list, verbatim (the traits are gone). spellshape is a live mechanic lane in the app.",
+   "question": "Are the new Archives pages incomplete (put the traits back by overlay, citing the reprint's own text), or did the reprint really drop them (keep as is)? The printed Impossible Magic book settles it; I cannot read it."
+  },
+  {
+   "n": 160,
+   "id": "reprint-damaged-pages",
+   "batch": 0,
+   "printed": "Reprint lane, 2026-09-12. Two reprint pages carry damaged text that the app now reproduces faithfully: feats/soulforger-dedication prerequisites read ['or ability to cast divine spells'] (feat-9350 lost the 'Wisdom +2' half of the sentence); feats/dimensional-disappearance prerequisites read ['dimensional assault focus spell,', ...] (feat-9073 prints a stray comma). Archives page defects, in the known damaged-markup class.",
+   "theirs": "Not a Wanderer's Guide question.",
+   "ours": "The damaged text as the Archives page prints it.",
+   "question": "Patch these two by overlay with the printed book's sentence (needs the book wording from you), or leave them until the Archives fix the pages?"
+  },
+  {
+   "n": 161,
+   "id": "spell-parry-badge",
+   "batch": 0,
+   "printed": "Reprint lane, 2026-09-12. feats/spell-parry moved to feat-9049 (Impossible Magic), which reproduces the Secrets of Magic text unchanged, Requirements line included, but whose action badge is EMPTY (<actions string=\"\" />) where feat-2851 printed 'Single Action'. The importer derived 'passive' from that empty badge and the feat left the encounter action list; under the standing rule 'a bare badge is scrape damage, not evidence of no cost' (the header of scripts/actioncost-vs-aon.mjs, which uses this very record as its worked example) it was pinned back to Single Action by an overlay row citing feat-9049, and by test/action-costs.test.ts.",
+   "theirs": "Not a Wanderer's Guide question.",
+   "ours": "Single Action, as both printings' text describes and as feat-2851's badge states — unchanged from before this lane.",
+   "question": "What action cost does the printed book give Spell Parry? If it is an action or a reaction, say which and I pin it by overlay citing feat-9049."
   }
  ],
  "deferred": [

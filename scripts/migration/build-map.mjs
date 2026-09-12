@@ -18,6 +18,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
 import { join as pjoin } from 'node:path';
+import { loadReprintIndex, repointDoc } from '../lib/reprint.mjs';
 
 const OUT = 'scripts/migration/out';
 const read = (f) => JSON.parse(readFileSync(pjoin(OUT, f), 'utf8'));
@@ -66,6 +67,23 @@ const OVERLAY_CREATED = (() => {
   try {
     for (const r of JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8'))) {
       if (r?.create && r.category && r.id) out.add(`${r.category}|${r.id}`);
+    }
+  } catch { /* the overlay is optional to this script */ }
+  return out;
+})();
+
+/**
+ * `<bucket>|<id>` of every record whose archive link is an OWNER RULING (`field: "aonId"` in
+ * effect-backfill.json, or an `aonId` inside a `create` row). stamp-aonid.mjs re-applies those last,
+ * so the newest-printing hop below must not move them either — a map that disagreed with the stamped
+ * artefact would make `npm run data` stop being a fixed point.
+ */
+const AON_PINNED = (() => {
+  const out = new Set();
+  try {
+    for (const r of JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8'))) {
+      if (!r || r.path?.length || !r.category || !r.id) continue;
+      if (r.field === 'aonId' || (r.create && r.value?.aonId !== undefined)) out.add(`${r.category}|${r.id}`);
     }
   } catch { /* the overlay is optional to this script */ }
   return out;
@@ -208,6 +226,8 @@ const dropped = new Set((dropLoot.records ?? []).map((r) => `items|${r.name}`));
 const map = {};
 const tally = {};
 const open = [];
+const reprints = loadReprintIndex();
+let repointed = 0;
 
 for (const [bucket, records] of Object.entries(core)) {
   if (!records || typeof records !== 'object' || Array.isArray(records)) continue;
@@ -282,6 +302,22 @@ for (const [bucket, records] of Object.entries(core)) {
       open.push({ bucket, key, name, book: (rec.source || {}).book || '' });
     }
 
+    /*
+     * THE NEWEST PRINTING WINS — the last thing that happens to a document link, so every branch above
+     * gets it. Owner, 2026-09-12: "we cant be using old data (not to be confused with pre remaster and
+     * after remster data)" (gold-set R12). The pairing is stated by the export's own `data.legacy_id` /
+     * `data.remaster_id` — see scripts/lib/reprint.mjs. This is what makes stamp-aonid.mjs stamp the
+     * REPRINT rather than the doc the join found, so the regen is a fixed point: re-running it changes
+     * nothing. Exception 1 (an owner ruling) is AON_PINNED; exception 2 (the reprint already ships as
+     * its own record) is the `records` lookup, which is core.json's own keys for this bucket.
+     */
+    if ((entry.status === 'doc' || entry.status === 'scraped') && entry.docId && !AON_PINNED.has(id)) {
+      const R = repointDoc(reprints, String(entry.docId), key, (k) => !!records[k]);
+      if (R) {
+        entry = { ...entry, docId: R, how: `${entry.how} -> newest printing (was ${entry.docId})` };
+        repointed++;
+      }
+    }
     (map[bucket] ??= {})[key] = { name, ...entry };
     tally[entry.status] = (tally[entry.status] ?? 0) + 1;
   }
@@ -297,6 +333,7 @@ for (const [k, v] of Object.entries(tally).sort((a, b) => b[1] - a[1])) {
   console.log(`  ${k.padEnd(10)} ${String(v).padStart(6)}  ${((v / total) * 100).toFixed(1)}%`);
 }
 console.log(`  ${'TOTAL'.padEnd(10)} ${String(total).padStart(6)}`);
+console.log(`  ${repointed} link(s) moved to the newest printing (R12 — see scripts/lib/reprint.mjs)`);
 if (open.length) {
   console.log(`\n${open.length} STILL OPEN — stage 2 must not proceed past extraction until this is 0:`);
   for (const o of open.slice(0, 25)) console.log(`   ${o.bucket.padEnd(16)} ${o.name}`);

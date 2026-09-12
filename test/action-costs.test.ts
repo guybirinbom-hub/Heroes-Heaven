@@ -18,7 +18,22 @@ describe('feat action costs', () => {
     ['reflexive-catch', 'reaction'],
     ['banishing-blow', 'free'],
     ['educated-assessment', 1],
-    ['blood-frenzy', 1],
+    /*
+     * Re-pinned to the NEWEST printing (gold-set R12): feat-9244, Impossible Magic pg. 81, prints
+     * "Blood Frenzy Free Action". The 1 here came from feat-2909, the Secrets of Magic printing it
+     * replaces, which printed Single Action.
+     */
+    ['blood-frenzy', 'free'],
+    /*
+     * The OTHER side of the same repoint, and the reason this line exists: feat-9049 reprints
+     * feat-2851's Spell Parry text unchanged, Requirements line and all, but its action badge is
+     * empty (`<actions string="" />`), so the importer derived `passive` and the feat left the
+     * encounter action list. A bare badge is scrape damage, not a printed "no cost" — this record is
+     * the worked example in the header of scripts/actioncost-vs-aon.mjs — so it is pinned back to the
+     * Single Action both printings' text describes (overlay row in scripts/data/effect-backfill.json,
+     * desk #161 asks the owner what the book shows).
+     */
+    ['spell-parry', 1],
     ['merciless-rend', 1],
     /*
      * Mercy and Cruelty are PASSIVE, and were listed here as single actions because their LEGACY

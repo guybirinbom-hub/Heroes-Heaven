@@ -463,6 +463,10 @@
   { "n": 154, "id": "speed-plural-while-a-state-is-on", "status": "open" },
   { "n": 155, "id": "flexible-spellcaster-book-casters", "status": "open" },
   { "n": 156, "id": null, "status": "authorisedException" },
-  { "n": 157, "id": null, "status": "authorisedException" }
+  { "n": 157, "id": null, "status": "authorisedException" },
+  { "n": 158, "id": "reprint-twins-merge", "status": "open" },
+  { "n": 159, "id": "reprint-lost-traits", "status": "open" },
+  { "n": 160, "id": "reprint-damaged-pages", "status": "open" },
+  { "n": 161, "id": "spell-parry-badge", "status": "open" }
  ]
 }

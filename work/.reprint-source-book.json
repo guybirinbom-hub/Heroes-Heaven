@@ -1,0 +1,207 @@
+{
+  "findings": [
+    {
+      "id": "reprint-source-book",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "chalice-implement",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Dark Archive (Remastered)",
+            "license": "OGL"
+          },
+          "why": "implement-19 prints [\"Dark Archives (Remastered)\"]; the record still named \"Pathfinder Dark Archive\", which is the book of implement-3 — the printing implement-19 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "items",
+          "id": "lucky-keepsake",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Player Core",
+            "license": "OGL"
+          },
+          "why": "feat-4505 prints [\"Player Core\"]; the record still named \"Pathfinder Lost Omens Character Guide\", which is the book of feat-1048 — the printing feat-4505 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "act-together",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Impossible Magic",
+            "license": "OGL"
+          },
+          "why": "action-4268 prints [\"Impossible Magic\"]; the record still named \"Pathfinder Secrets of Magic\", which is the book of action-758 — the printing action-4268 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "manifest-eidolon",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Impossible Magic",
+            "license": "OGL"
+          },
+          "why": "action-4267 prints [\"Impossible Magic\"]; the record still named \"Pathfinder Secrets of Magic\", which is the book of action-757 — the printing action-4267 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "share-senses",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Impossible Magic",
+            "license": "OGL"
+          },
+          "why": "action-4269 prints [\"Impossible Magic\"]; the record still named \"Pathfinder Secrets of Magic\", which is the book of action-759 — the printing action-4269 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "feats",
+          "id": "keep-up-the-good-fight-knight-vigilant",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Battlecry!",
+            "license": "OGL"
+          },
+          "why": "feat-7875 prints [\"Battlecry!\"]; the record still named \"Pathfinder Lost Omens Knights of Lastwall\", which is the book of feat-3586 — the printing feat-7875 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "feats",
+          "id": "magic-sense-magus",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Player Core",
+            "license": "OGL"
+          },
+          "why": "feat-5044 prints [\"Player Core\",\"Player Core 2\"]; the record still named \"Pathfinder Secrets of Magic\", which is the book of feat-622 — the printing feat-5044 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "feats",
+          "id": "signature-spell-expansion-psychic",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Player Core 2",
+            "license": "ORC"
+          },
+          "why": "feat-6109 prints [\"Player Core 2\"]; the record still named \"Pathfinder Dark Archive (Remastered)\", which is the book of feat-1823 — the printing feat-6109 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "feats",
+          "id": "counterspell-spontaneous",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Player Core",
+            "license": "OGL"
+          },
+          "why": "feat-4994 prints [\"Player Core\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of feat-633 — the printing feat-4994 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "feats",
+          "id": "soulsight-sorcerer",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Player Core",
+            "license": "OGL"
+          },
+          "why": "feat-4609 prints [\"Player Core\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of feat-1647 — the printing feat-4609 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "deities",
+          "id": "aon-atheism",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Lost Omens Divine Mysteries",
+            "license": "OGL"
+          },
+          "why": "deity-297 prints [\"Divine Mysteries\"]; the record still named \"Pathfinder Core Rulebook\", which is the book of deity-21 — the printing deity-297 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "deities",
+          "id": "aon-followers-of-fate",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Lost Omens Divine Mysteries Web Supplement",
+            "license": "OGL"
+          },
+          "why": "deity-322 prints [\"Divine Mysteries Web Supplement\"]; the record still named \"Pathfinder Bestiary 2\", which is the book of deity-210 — the printing deity-322 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "actions",
+          "id": "rampaging-ferocity",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Player Core",
+            "license": "OGL"
+          },
+          "why": "feat-4529 prints [\"Player Core\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of feat-1294 — the printing feat-4529 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "actions",
+          "id": "soaring-flight",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Player Core 2",
+            "license": "OGL"
+          },
+          "why": "feat-5684 prints [\"Player Core 2\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of feat-1320 — the printing feat-5684 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "familiarAbilities",
+          "id": "elemental-wisp",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Rage of Elements"
+          },
+          "why": "familiar-specific-26 prints [\"Rage of Elements\"]; the record still named \"Pathfinder Grand Bazaar\", which is the book of familiar-specific-10 — the printing familiar-specific-26 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "familiarAbilities",
+          "id": "pipefox",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Player Core 2"
+          },
+          "why": "familiar-specific-38 prints [\"Player Core 2\"]; the record still named \"Pathfinder Grand Bazaar\", which is the book of familiar-specific-12 — the printing familiar-specific-38 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "familiarAbilities",
+          "id": "imp",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Player Core 2",
+            "license": "OGL"
+          },
+          "why": "familiar-specific-37 prints [\"Player Core 2\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of familiar-specific-2 — the printing familiar-specific-37 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "familiarAbilities",
+          "id": "spirit-guide",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Adventure Path: Gatewalkers"
+          },
+          "why": "familiar-specific-56 prints [\"Gatewalkers (Hardcover)\"]; the record still named \"Pathfinder #188: They Watched the Stars\", which is the book of familiar-specific-23 — the printing familiar-specific-56 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "familiarAbilities",
+          "id": "spellslime",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Player Core 2",
+            "license": "OGL"
+          },
+          "why": "familiar-specific-40 prints [\"Player Core 2\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of familiar-specific-3 — the printing familiar-specific-40 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        },
+        {
+          "category": "familiarAbilities",
+          "id": "calligraphy-wyrm",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Lost Omens Rival Academies",
+            "license": "ORC"
+          },
+          "why": "familiar-specific-52 prints [\"Rival Academies\"]; the record still named \"Pathfinder PFS Guide\", which is the book of familiar-specific-5 — the printing familiar-specific-52 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+        }
+      ],
+      "note": "20 records whose archive document is a reprint while source.book still names the printing it replaced. Four are the 2026-09-12 newest-printing repoint (classFeatures/act-together, manifest-eidolon, share-senses and items/chalice-implement — all stamp-only records the importer's overlayContent never runs for, so aonId and edition moved and the facets did not). The rest are the same shape from earlier stamp repoints. Guarded by scripts/reprint-check.mjs from here on."
+    }
+  ]
+}

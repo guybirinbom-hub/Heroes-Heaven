@@ -79,19 +79,19 @@
    "asmodean-wager": {
     "name": "Asmodean Wager",
     "status": "doc",
-    "docId": "ritual-52",
+    "docId": "ritual-244",
     "how": "importer:the doc this record was built from"
    },
    "awaken-object": {
     "name": "Awaken Object",
     "status": "doc",
-    "docId": "ritual-53",
+    "docId": "ritual-245",
     "how": "importer:the doc this record was built from"
    },
    "bathe-in-blood": {
     "name": "Bathe in Blood",
     "status": "doc",
-    "docId": "ritual-54",
+    "docId": "ritual-246",
     "how": "importer:the doc this record was built from"
    },
    "concealments-curtain": {
@@ -103,55 +103,55 @@
    "dread-ambience": {
     "name": "Dread Ambience",
     "status": "doc",
-    "docId": "ritual-56",
+    "docId": "ritual-251",
     "how": "importer:the doc this record was built from"
    },
    "elemental-sentinel": {
     "name": "Elemental Sentinel",
     "status": "doc",
-    "docId": "ritual-57",
+    "docId": "ritual-252",
     "how": "importer:the doc this record was built from"
    },
    "garden-of-death": {
     "name": "Garden of Death",
     "status": "doc",
-    "docId": "ritual-58",
+    "docId": "ritual-253",
     "how": "importer:the doc this record was built from"
    },
    "guardians-aegis": {
     "name": "Guardian's Aegis",
     "status": "doc",
-    "docId": "ritual-59",
+    "docId": "ritual-255",
     "how": "importer:the doc this record was built from"
    },
    "ideal-mimicry": {
     "name": "Ideal Mimicry",
     "status": "doc",
-    "docId": "ritual-60",
+    "docId": "ritual-257",
     "how": "importer:the doc this record was built from"
    },
    "mind-swap": {
     "name": "Mind Swap",
     "status": "doc",
-    "docId": "ritual-61",
+    "docId": "ritual-259",
     "how": "importer:the doc this record was built from"
    },
    "mystic-carriage": {
     "name": "Mystic Carriage",
     "status": "doc",
-    "docId": "ritual-62",
+    "docId": "ritual-260",
     "how": "importer:the doc this record was built from"
    },
    "portrait-of-spite": {
     "name": "Portrait of Spite",
     "status": "doc",
-    "docId": "ritual-63",
+    "docId": "ritual-262",
     "how": "importer:the doc this record was built from"
    },
    "the-worlds-a-stage": {
     "name": "The World's a Stage",
     "status": "doc",
-    "docId": "ritual-64",
+    "docId": "ritual-272",
     "how": "importer:the doc this record was built from"
    },
    "empower-ley-line": {
@@ -169,7 +169,7 @@
    "purify-soul-path": {
     "name": "Purify Soul Path",
     "status": "doc",
-    "docId": "ritual-67",
+    "docId": "ritual-243",
     "how": "importer:the doc this record was built from"
    },
    "community-repair": {
@@ -2065,31 +2065,31 @@
    "aberrant-form": {
     "name": "Aberrant Form",
     "status": "doc",
-    "docId": "spell-861",
+    "docId": "spell-2627",
     "how": "importer:the doc this record was built from"
    },
    "angel-form": {
     "name": "Angel Form",
     "status": "doc",
-    "docId": "spell-862",
+    "docId": "spell-2629",
     "how": "importer:the doc this record was built from"
    },
    "animal-allies": {
     "name": "Animal Allies",
     "status": "doc",
-    "docId": "spell-863",
+    "docId": "spell-2630",
     "how": "importer:the doc this record was built from"
    },
    "approximate": {
     "name": "Approximate",
     "status": "doc",
-    "docId": "spell-864",
+    "docId": "spell-2631",
     "how": "importer:the doc this record was built from"
    },
    "ash-cloud": {
     "name": "Ash Cloud",
     "status": "doc",
-    "docId": "spell-865",
+    "docId": "spell-2633",
     "how": "importer:the doc this record was built from"
    },
    "bandits-doom": {
@@ -2101,43 +2101,43 @@
    "befitting-attire": {
     "name": "Befitting Attire",
     "status": "doc",
-    "docId": "spell-867",
+    "docId": "spell-2634",
     "how": "importer:the doc this record was built from"
    },
    "biting-words": {
     "name": "Biting Words",
     "status": "doc",
-    "docId": "spell-868",
+    "docId": "spell-2636",
     "how": "importer:the doc this record was built from"
    },
    "blazing-dive": {
     "name": "Blazing Dive",
     "status": "doc",
-    "docId": "spell-869",
+    "docId": "spell-2637",
     "how": "importer:the doc this record was built from"
    },
    "blazing-fissure": {
     "name": "Blazing Fissure",
     "status": "doc",
-    "docId": "spell-870",
+    "docId": "spell-2638",
     "how": "importer:the doc this record was built from"
    },
    "blessing-of-defiance": {
     "name": "Blessing of Defiance",
     "status": "doc",
-    "docId": "spell-871",
+    "docId": "spell-2639",
     "how": "importer:the doc this record was built from"
    },
    "blink-charge": {
     "name": "Blink Charge",
     "status": "doc",
-    "docId": "spell-872",
+    "docId": "spell-2641",
     "how": "importer:the doc this record was built from"
    },
    "bloodspray-curse": {
     "name": "Bloodspray Curse",
     "status": "doc",
-    "docId": "spell-873",
+    "docId": "spell-2644",
     "how": "importer:the doc this record was built from"
    },
    "boil-blood": {
@@ -2149,25 +2149,25 @@
    "bottomless-stomach": {
     "name": "Bottomless Stomach",
     "status": "doc",
-    "docId": "spell-875",
+    "docId": "spell-2648",
     "how": "importer:the doc this record was built from"
    },
    "breadcrumbs": {
     "name": "Breadcrumbs",
     "status": "doc",
-    "docId": "spell-876",
+    "docId": "spell-2649",
     "how": "importer:the doc this record was built from"
    },
    "burning-blossoms": {
     "name": "Burning Blossoms",
     "status": "doc",
-    "docId": "spell-878",
+    "docId": "spell-2650",
     "how": "importer:the doc this record was built from"
    },
    "cast-into-time": {
     "name": "Cast into Time",
     "status": "doc",
-    "docId": "spell-880",
+    "docId": "spell-2653",
     "how": "importer:the doc this record was built from"
    },
    "chromatic-armor": {
@@ -2191,19 +2191,19 @@
    "claim-curse": {
     "name": "Claim Curse",
     "status": "doc",
-    "docId": "spell-884",
+    "docId": "spell-2656",
     "how": "importer:the doc this record was built from"
    },
    "clone-companion": {
     "name": "Clone Companion",
     "status": "doc",
-    "docId": "spell-885",
+    "docId": "spell-2657",
     "how": "importer:the doc this record was built from"
    },
    "coral-eruption": {
     "name": "Coral Eruption",
     "status": "doc",
-    "docId": "spell-887",
+    "docId": "spell-2660",
     "how": "importer:the doc this record was built from"
    },
    "corrosive-body": {
@@ -2215,37 +2215,37 @@
    "cosmic-form": {
     "name": "Cosmic Form",
     "status": "doc",
-    "docId": "spell-889",
+    "docId": "spell-2662",
     "how": "importer:the doc this record was built from"
    },
    "daemon-form": {
     "name": "Daemon Form",
     "status": "doc",
-    "docId": "spell-890",
+    "docId": "spell-2668",
     "how": "importer:the doc this record was built from"
    },
    "days-weight": {
     "name": "Day's Weight",
     "status": "doc",
-    "docId": "spell-891",
+    "docId": "spell-2669",
     "how": "importer:the doc this record was built from"
    },
    "deitys-strike": {
     "name": "Deity's Strike",
     "status": "doc",
-    "docId": "spell-892",
+    "docId": "spell-2673",
     "how": "importer:the doc this record was built from"
    },
    "demon-form": {
     "name": "Demon Form",
     "status": "doc",
-    "docId": "spell-893",
+    "docId": "spell-2674",
     "how": "importer:the doc this record was built from"
    },
    "devil-form": {
     "name": "Devil Form",
     "status": "doc",
-    "docId": "spell-894",
+    "docId": "spell-2675",
     "how": "importer:the doc this record was built from"
    },
    "distracting-chatter": {
@@ -2257,7 +2257,7 @@
    "divine-armageddon": {
     "name": "Divine Armageddon",
     "status": "doc",
-    "docId": "spell-896",
+    "docId": "spell-2679",
     "how": "importer:the doc this record was built from"
    },
    "draw-ire": {
@@ -2269,25 +2269,25 @@
    "draw-the-lightning": {
     "name": "Draw the Lightning",
     "status": "doc",
-    "docId": "spell-898",
+    "docId": "spell-2683",
     "how": "importer:the doc this record was built from"
    },
    "echoing-weapon": {
     "name": "Echoing Weapon",
     "status": "doc",
-    "docId": "spell-899",
+    "docId": "spell-2685",
     "how": "importer:the doc this record was built from"
    },
    "element-embodied": {
     "name": "Element Embodied",
     "status": "doc",
-    "docId": "spell-900",
+    "docId": "spell-2687",
     "how": "importer:the doc this record was built from"
    },
    "elemental-absorption": {
     "name": "Elemental Absorption",
     "status": "doc",
-    "docId": "spell-901",
+    "docId": "spell-2688",
     "how": "importer:the doc this record was built from"
    },
    "elemental-annihilation-wave": {
@@ -2299,25 +2299,25 @@
    "elemental-confluence": {
     "name": "Elemental Confluence",
     "status": "doc",
-    "docId": "spell-903",
+    "docId": "spell-2689",
     "how": "importer:the doc this record was built from"
    },
    "elemental-gift": {
     "name": "Elemental Gift",
     "status": "doc",
-    "docId": "spell-904",
+    "docId": "spell-2690",
     "how": "importer:the doc this record was built from"
    },
    "elemental-zone": {
     "name": "Elemental Zone",
     "status": "doc",
-    "docId": "spell-905",
+    "docId": "spell-2691",
     "how": "importer:the doc this record was built from"
    },
    "envenom-companion": {
     "name": "Envenom Companion",
     "status": "doc",
-    "docId": "spell-906",
+    "docId": "spell-2693",
     "how": "importer:the doc this record was built from"
    },
    "extract-poison": {
@@ -2329,31 +2329,31 @@
    "fated-confrontation": {
     "name": "Fated Confrontation",
     "status": "doc",
-    "docId": "spell-908",
+    "docId": "spell-2699",
     "how": "importer:the doc this record was built from"
    },
    "feral-shades": {
     "name": "Feral Shades",
     "status": "doc",
-    "docId": "spell-909",
+    "docId": "spell-2700",
     "how": "importer:the doc this record was built from"
    },
    "fey-form": {
     "name": "Fey Form",
     "status": "doc",
-    "docId": "spell-910",
+    "docId": "spell-2702",
     "how": "importer:the doc this record was built from"
    },
    "flame-vortex": {
     "name": "Flame Vortex",
     "status": "doc",
-    "docId": "spell-911",
+    "docId": "spell-2705",
     "how": "importer:the doc this record was built from"
    },
    "flame-wisp": {
     "name": "Flame Wisp",
     "status": "doc",
-    "docId": "spell-912",
+    "docId": "spell-2706",
     "how": "importer:the doc this record was built from"
    },
    "flammable-fumes": {
@@ -2365,7 +2365,7 @@
    "flowing-strike": {
     "name": "Flowing Strike",
     "status": "doc",
-    "docId": "spell-914",
+    "docId": "spell-2708",
     "how": "importer:the doc this record was built from"
    },
    "forceful-hand": {
@@ -2377,13 +2377,13 @@
    "frigid-flurry": {
     "name": "Frigid Flurry",
     "status": "doc",
-    "docId": "spell-916",
+    "docId": "spell-2713",
     "how": "importer:the doc this record was built from"
    },
    "geyser": {
     "name": "Geyser",
     "status": "doc",
-    "docId": "spell-918",
+    "docId": "spell-2717",
     "how": "importer:the doc this record was built from"
    },
    "glimmer-of-charm": {
@@ -2395,13 +2395,13 @@
    "gravitational-pull": {
     "name": "Gravitational Pull",
     "status": "doc",
-    "docId": "spell-921",
+    "docId": "spell-2723",
     "how": "importer:the doc this record was built from"
    },
    "guiding-star": {
     "name": "Guiding Star",
     "status": "doc",
-    "docId": "spell-923",
+    "docId": "spell-2726",
     "how": "importer:the doc this record was built from"
    },
    "healing-plaster": {
@@ -2413,19 +2413,19 @@
    "healing-well": {
     "name": "Healing Well",
     "status": "doc",
-    "docId": "spell-926",
+    "docId": "spell-2728",
     "how": "importer:the doc this record was built from"
    },
    "horizon-thunder-sphere": {
     "name": "Horizon Thunder Sphere",
     "status": "doc",
-    "docId": "spell-927",
+    "docId": "spell-2732",
     "how": "importer:the doc this record was built from"
    },
    "ignite-fireworks": {
     "name": "Ignite Fireworks",
     "status": "doc",
-    "docId": "spell-928",
+    "docId": "spell-2734",
     "how": "importer:the doc this record was built from"
    },
    "impending-doom": {
@@ -2437,7 +2437,7 @@
    "inevitable-disaster": {
     "name": "Inevitable Disaster",
     "status": "doc",
-    "docId": "spell-930",
+    "docId": "spell-2747",
     "how": "importer:the doc this record was built from"
    },
    "inexhaustible-cynicism": {
@@ -2449,19 +2449,19 @@
    "infectious-enthusiasm": {
     "name": "Infectious Enthusiasm",
     "status": "doc",
-    "docId": "spell-932",
+    "docId": "spell-2748",
     "how": "importer:the doc this record was built from"
    },
    "infectious-melody": {
     "name": "Infectious Melody",
     "status": "doc",
-    "docId": "spell-933",
+    "docId": "spell-2749",
     "how": "importer:the doc this record was built from"
    },
    "inner-radiance-torrent": {
     "name": "Inner Radiance Torrent",
     "status": "doc",
-    "docId": "spell-934",
+    "docId": "spell-2751",
     "how": "importer:the doc this record was built from"
    },
    "instant-armor": {
@@ -2479,31 +2479,31 @@
    "juvenile-companion": {
     "name": "Juvenile Companion",
     "status": "doc",
-    "docId": "spell-938",
+    "docId": "spell-2754",
     "how": "importer:the doc this record was built from"
    },
    "life-connection": {
     "name": "Life Connection",
     "status": "doc",
-    "docId": "spell-939",
+    "docId": "spell-2755",
     "how": "importer:the doc this record was built from"
    },
    "lose-the-path": {
     "name": "Lose the Path",
     "status": "doc",
-    "docId": "spell-940",
+    "docId": "spell-2760",
     "how": "importer:the doc this record was built from"
    },
    "lucky-number": {
     "name": "Lucky Number",
     "status": "doc",
-    "docId": "spell-941",
+    "docId": "spell-2761",
     "how": "importer:the doc this record was built from"
    },
    "magic-mailbox": {
     "name": "Magic Mailbox",
     "status": "doc",
-    "docId": "spell-942",
+    "docId": "spell-2762",
     "how": "importer:the doc this record was built from"
    },
    "magnetic-acceleration": {
@@ -2527,13 +2527,13 @@
    "mantle-of-the-frozen-heart": {
     "name": "Mantle of the Frozen Heart",
     "status": "doc",
-    "docId": "spell-946",
+    "docId": "spell-2764",
     "how": "importer:the doc this record was built from"
    },
    "mantle-of-the-magma-heart": {
     "name": "Mantle of the Magma Heart",
     "status": "doc",
-    "docId": "spell-947",
+    "docId": "spell-2765",
     "how": "importer:the doc this record was built from"
    },
    "mimic-undead": {
@@ -2545,13 +2545,13 @@
    "mind-of-menace": {
     "name": "Mind of Menace",
     "status": "doc",
-    "docId": "spell-949",
+    "docId": "spell-2769",
     "how": "importer:the doc this record was built from"
    },
    "mirror-malefactors": {
     "name": "Mirror Malefactors",
     "status": "doc",
-    "docId": "spell-950",
+    "docId": "spell-2770",
     "how": "importer:the doc this record was built from"
    },
    "mirrors-misfortune": {
@@ -2563,7 +2563,7 @@
    "murderous-vine": {
     "name": "Murderous Vine",
     "status": "doc",
-    "docId": "spell-953",
+    "docId": "spell-2773",
     "how": "importer:the doc this record was built from"
    },
    "natures-reprisal": {
@@ -2575,25 +2575,25 @@
    "necromancers-generosity": {
     "name": "Necromancer's Generosity",
     "status": "doc",
-    "docId": "spell-955",
+    "docId": "spell-2775",
     "how": "importer:the doc this record was built from"
    },
    "necrotize": {
     "name": "Necrotize",
     "status": "doc",
-    "docId": "spell-956",
+    "docId": "spell-2776",
     "how": "importer:the doc this record was built from"
    },
    "nudge-the-odds": {
     "name": "Nudge the Odds",
     "status": "doc",
-    "docId": "spell-957",
+    "docId": "spell-2777",
     "how": "importer:the doc this record was built from"
    },
    "nullify": {
     "name": "Nullify",
     "status": "doc",
-    "docId": "spell-958",
+    "docId": "spell-2778",
     "how": "importer:the doc this record was built from"
    },
    "ocular-overload": {
@@ -2605,7 +2605,7 @@
    "one-with-the-land": {
     "name": "One with the Land",
     "status": "doc",
-    "docId": "spell-960",
+    "docId": "spell-2779",
     "how": "importer:the doc this record was built from"
    },
    "oneiric-mire": {
@@ -2629,37 +2629,37 @@
    "painful-vibrations": {
     "name": "Painful Vibrations",
     "status": "doc",
-    "docId": "spell-964",
+    "docId": "spell-2781",
     "how": "importer:the doc this record was built from"
    },
    "pernicious-poltergeist": {
     "name": "Pernicious Poltergeist",
     "status": "doc",
-    "docId": "spell-965",
+    "docId": "spell-2784",
     "how": "importer:the doc this record was built from"
    },
    "persistent-servant": {
     "name": "Persistent Servant",
     "status": "doc",
-    "docId": "spell-966",
+    "docId": "spell-2785",
     "how": "importer:the doc this record was built from"
    },
    "petal-storm": {
     "name": "Petal Storm",
     "status": "doc",
-    "docId": "spell-967",
+    "docId": "spell-2786",
     "how": "importer:the doc this record was built from"
    },
    "phantom-crowd": {
     "name": "Phantom Crowd",
     "status": "doc",
-    "docId": "spell-968",
+    "docId": "spell-2787",
     "how": "importer:the doc this record was built from"
    },
    "phantom-prison": {
     "name": "Phantom Prison",
     "status": "doc",
-    "docId": "spell-969",
+    "docId": "spell-2788",
     "how": "importer:the doc this record was built from"
    },
    "portrait-of-the-artist": {
@@ -2689,13 +2689,13 @@
    "protect-companion": {
     "name": "Protect Companion",
     "status": "doc",
-    "docId": "spell-975",
+    "docId": "spell-2793",
     "how": "importer:the doc this record was built from"
    },
    "quick-sort": {
     "name": "Quick Sort",
     "status": "doc",
-    "docId": "spell-978",
+    "docId": "spell-2797",
     "how": "importer:the doc this record was built from"
    },
    "rapid-adaptation": {
@@ -2713,7 +2713,7 @@
    "read-the-air": {
     "name": "Read the Air",
     "status": "doc",
-    "docId": "spell-981",
+    "docId": "spell-2798",
     "how": "importer:the doc this record was built from"
    },
    "repelling-pulse": {
@@ -2731,55 +2731,55 @@
    "restyle": {
     "name": "Restyle",
     "status": "doc",
-    "docId": "spell-984",
+    "docId": "spell-2803",
     "how": "importer:the doc this record was built from"
    },
    "rewinding-step": {
     "name": "Rewinding Step",
     "status": "doc",
-    "docId": "spell-985",
+    "docId": "spell-2805",
     "how": "importer:the doc this record was built from"
    },
    "rip-the-spirit": {
     "name": "Rip the Spirit",
     "status": "doc",
-    "docId": "spell-986",
+    "docId": "spell-2806",
     "how": "importer:the doc this record was built from"
    },
    "roaring-applause": {
     "name": "Roaring Applause",
     "status": "doc",
-    "docId": "spell-987",
+    "docId": "spell-2807",
     "how": "importer:the doc this record was built from"
    },
    "sanguine-mist": {
     "name": "Sanguine Mist",
     "status": "doc",
-    "docId": "spell-989",
+    "docId": "spell-2809",
     "how": "importer:the doc this record was built from"
    },
    "seashell-of-stolen-sound": {
     "name": "Seashell of Stolen Sound",
     "status": "doc",
-    "docId": "spell-993",
+    "docId": "spell-2810",
     "how": "importer:the doc this record was built from"
    },
    "shadow-army": {
     "name": "Shadow Army",
     "status": "doc",
-    "docId": "spell-994",
+    "docId": "spell-2811",
     "how": "importer:the doc this record was built from"
    },
    "shadow-projectile": {
     "name": "Shadow Projectile",
     "status": "doc",
-    "docId": "spell-995",
+    "docId": "spell-2812",
     "how": "importer:the doc this record was built from"
    },
    "shadow-raid": {
     "name": "Shadow Raid",
     "status": "doc",
-    "docId": "spell-996",
+    "docId": "spell-2813",
     "how": "importer:the doc this record was built from"
    },
    "shift-blame": {
@@ -2791,19 +2791,19 @@
    "sonata-span": {
     "name": "Sonata Span",
     "status": "doc",
-    "docId": "spell-998",
+    "docId": "spell-2818",
     "how": "importer:the doc this record was built from"
    },
    "soothing-blossoms": {
     "name": "Soothing Blossoms",
     "status": "doc",
-    "docId": "spell-999",
+    "docId": "spell-2819",
     "how": "importer:the doc this record was built from"
    },
    "soothing-spring": {
     "name": "Soothing Spring",
     "status": "doc",
-    "docId": "spell-1000",
+    "docId": "spell-2820",
     "how": "importer:the doc this record was built from"
    },
    "spiritual-attunement": {
@@ -2857,25 +2857,25 @@
    "summoners-precaution": {
     "name": "Summoner's Precaution",
     "status": "doc",
-    "docId": "spell-1011",
+    "docId": "spell-2832",
     "how": "importer:the doc this record was built from"
    },
    "summoners-visage": {
     "name": "Summoner's Visage",
     "status": "doc",
-    "docId": "spell-1012",
+    "docId": "spell-2833",
     "how": "importer:the doc this record was built from"
    },
    "synchronize": {
     "name": "Synchronize",
     "status": "doc",
-    "docId": "spell-1013",
+    "docId": "spell-2834",
     "how": "importer:the doc this record was built from"
    },
    "tame": {
     "name": "Tame",
     "status": "doc",
-    "docId": "spell-1014",
+    "docId": "spell-2836",
     "how": "importer:the doc this record was built from"
    },
    "tempest-of-shades": {
@@ -2893,31 +2893,31 @@
    "thicket-of-knives": {
     "name": "Thicket of Knives",
     "status": "doc",
-    "docId": "spell-1017",
+    "docId": "spell-2840",
     "how": "importer:the doc this record was built from"
    },
    "thundering-dominance": {
     "name": "Thundering Dominance",
     "status": "doc",
-    "docId": "spell-1018",
+    "docId": "spell-2842",
     "how": "importer:the doc this record was built from"
    },
    "time-jump": {
     "name": "Time Jump",
     "status": "doc",
-    "docId": "spell-1019",
+    "docId": "spell-2843",
     "how": "importer:the doc this record was built from"
    },
    "timely-tutor": {
     "name": "Timely Tutor",
     "status": "doc",
-    "docId": "spell-1020",
+    "docId": "spell-2845",
     "how": "importer:the doc this record was built from"
    },
    "tortoise-and-the-hare": {
     "name": "Tortoise and the Hare",
     "status": "doc",
-    "docId": "spell-1021",
+    "docId": "spell-2848",
     "how": "importer:the doc this record was built from"
    },
    "umbral-extraction": {
@@ -2935,7 +2935,7 @@
    "unexpected-transposition": {
     "name": "Unexpected Transposition",
     "status": "doc",
-    "docId": "spell-1024",
+    "docId": "spell-2853",
     "how": "importer:the doc this record was built from"
    },
    "unspeakable-shadow": {
@@ -2953,7 +2953,7 @@
    "voracious-gestalt": {
     "name": "Voracious Gestalt",
     "status": "doc",
-    "docId": "spell-1027",
+    "docId": "spell-2859",
     "how": "importer:the doc this record was built from"
    },
    "wall-of-water": {
@@ -2965,25 +2965,25 @@
    "warding-aggression": {
     "name": "Warding Aggression",
     "status": "doc",
-    "docId": "spell-1029",
+    "docId": "spell-2860",
     "how": "importer:the doc this record was built from"
    },
    "warriors-regret": {
     "name": "Warrior's Regret",
     "status": "doc",
-    "docId": "spell-1030",
+    "docId": "spell-2861",
     "how": "importer:the doc this record was built from"
    },
    "wash-your-luck": {
     "name": "Wash Your Luck",
     "status": "doc",
-    "docId": "spell-1031",
+    "docId": "spell-2863",
     "how": "importer:the doc this record was built from"
    },
    "web-of-eyes": {
     "name": "Web of Eyes",
     "status": "doc",
-    "docId": "spell-1032",
+    "docId": "spell-2866",
     "how": "importer:the doc this record was built from"
    },
    "whirlwind": {
@@ -2995,7 +2995,7 @@
    "winning-streak": {
     "name": "Winning Streak",
     "status": "doc",
-    "docId": "spell-1034",
+    "docId": "spell-2869",
     "how": "importer:the doc this record was built from"
    },
    "zero-gravity": {
@@ -3013,91 +3013,91 @@
    "dimensional-assault": {
     "name": "Dimensional Assault",
     "status": "doc",
-    "docId": "spell-1037",
+    "docId": "spell-2877",
     "how": "importer:the doc this record was built from"
    },
    "force-fang": {
     "name": "Force Fang",
     "status": "doc",
-    "docId": "spell-1038",
+    "docId": "spell-2878",
     "how": "importer:the doc this record was built from"
    },
    "hasted-assault": {
     "name": "Hasted Assault",
     "status": "doc",
-    "docId": "spell-1039",
+    "docId": "spell-2880",
     "how": "importer:the doc this record was built from"
    },
    "runic-impression": {
     "name": "Runic Impression",
     "status": "doc",
-    "docId": "spell-1040",
+    "docId": "spell-2881",
     "how": "importer:the doc this record was built from"
    },
    "shielding-strike": {
     "name": "Shielding Strike",
     "status": "doc",
-    "docId": "spell-1041",
+    "docId": "spell-2882",
     "how": "importer:the doc this record was built from"
    },
    "shooting-star": {
     "name": "Shooting Star",
     "status": "doc",
-    "docId": "spell-1042",
+    "docId": "spell-2883",
     "how": "importer:the doc this record was built from"
    },
    "spinning-staff": {
     "name": "Spinning Staff",
     "status": "doc",
-    "docId": "spell-1043",
+    "docId": "spell-2884",
     "how": "importer:the doc this record was built from"
    },
    "thunderous-strike": {
     "name": "Thunderous Strike",
     "status": "doc",
-    "docId": "spell-1044",
+    "docId": "spell-2885",
     "how": "importer:the doc this record was built from"
    },
    "boost-eidolon": {
     "name": "Boost Eidolon",
     "status": "doc",
-    "docId": "spell-1045",
+    "docId": "spell-2913",
     "how": "importer:the doc this record was built from"
    },
    "eidolons-wrath": {
     "name": "Eidolon's Wrath",
     "status": "doc",
-    "docId": "spell-1046",
+    "docId": "spell-2914",
     "how": "importer:the doc this record was built from"
    },
    "evolution-surge": {
     "name": "Evolution Surge",
     "status": "doc",
-    "docId": "spell-1047",
+    "docId": "spell-2915",
     "how": "importer:the doc this record was built from"
    },
    "extend-boost": {
     "name": "Extend Boost",
     "status": "doc",
-    "docId": "spell-1048",
+    "docId": "spell-2916",
     "how": "importer:the doc this record was built from"
    },
    "lifelink-surge": {
     "name": "Lifelink Surge",
     "status": "doc",
-    "docId": "spell-1049",
+    "docId": "spell-2917",
     "how": "importer:the doc this record was built from"
    },
    "reinforce-eidolon": {
     "name": "Reinforce Eidolon",
     "status": "doc",
-    "docId": "spell-1050",
+    "docId": "spell-2918",
     "how": "importer:the doc this record was built from"
    },
    "unfetter-eidolon": {
     "name": "Unfetter Eidolon",
     "status": "doc",
-    "docId": "spell-1051",
+    "docId": "spell-2919",
     "how": "importer:the doc this record was built from"
    },
    "combustion": {
@@ -3289,7 +3289,7 @@
    "bone-spray": {
     "name": "Bone Spray",
     "status": "doc",
-    "docId": "spell-1097",
+    "docId": "spell-2647",
     "how": "importer:the doc this record was built from"
    },
    "boneshaker": {
@@ -3859,7 +3859,7 @@
    "musical-accompaniment": {
     "name": "Musical Accompaniment",
     "status": "doc",
-    "docId": "spell-1289",
+    "docId": "spell-2774",
     "how": "importer:the doc this record was built from"
    },
    "nothing-up-my-sleeve": {
@@ -16726,7 +16726,7 @@
    "stormbreaker-fulu": {
     "name": "Stormbreaker Fulu",
     "status": "doc",
-    "docId": "equipment-984",
+    "docId": "equipment-5084",
     "how": "importer:the doc this record was built from"
    },
    "tusk-and-fang-chain": {
@@ -16852,13 +16852,13 @@
    "apotropaic-fulu": {
     "name": "Apotropaic Fulu",
     "status": "doc",
-    "docId": "equipment-971",
+    "docId": "equipment-5071",
     "how": "importer:the doc this record was built from"
    },
    "detect-anathema-fulu": {
     "name": "Detect Anathema Fulu",
     "status": "doc",
-    "docId": "equipment-972",
+    "docId": "equipment-5072",
     "how": "importer:the doc this record was built from"
    },
    "fulus-of-concealment": {
@@ -16870,55 +16870,55 @@
    "fulu-of-the-drunken-monkey": {
     "name": "Fulu of the Drunken Monkey",
     "status": "doc",
-    "docId": "equipment-974",
+    "docId": "equipment-5074",
     "how": "importer:the doc this record was built from"
    },
    "fulu-of-fire-suppression": {
     "name": "Fulu of Fire Suppression",
     "status": "doc",
-    "docId": "equipment-975",
+    "docId": "equipment-5075",
     "how": "importer:the doc this record was built from"
    },
    "fulu-of-flood-suppression": {
     "name": "Fulu of Flood Suppression",
     "status": "doc",
-    "docId": "equipment-976",
+    "docId": "equipment-5076",
     "how": "importer:the doc this record was built from"
    },
    "fulu-of-the-stoic-ox": {
     "name": "Fulu of the Stoic Ox",
     "status": "doc",
-    "docId": "equipment-977",
+    "docId": "equipment-5077",
     "how": "importer:the doc this record was built from"
    },
    "ghostbane-fulu": {
     "name": "Ghostbane Fulu",
     "status": "doc",
-    "docId": "equipment-978",
+    "docId": "equipment-5078",
     "how": "importer:the doc this record was built from"
    },
    "magical-lock-fulu": {
     "name": "Magical Lock Fulu",
     "status": "doc",
-    "docId": "equipment-979",
+    "docId": "equipment-5079",
     "how": "importer:the doc this record was built from"
    },
    "matchmaker-fulu": {
     "name": "Matchmaker Fulu",
     "status": "doc",
-    "docId": "equipment-980",
+    "docId": "equipment-5080",
     "how": "importer:the doc this record was built from"
    },
    "rebound-fulu": {
     "name": "Rebound Fulu",
     "status": "doc",
-    "docId": "equipment-981",
+    "docId": "equipment-5081",
     "how": "importer:the doc this record was built from"
    },
    "restful-sleep-fulu": {
     "name": "Restful Sleep Fulu",
     "status": "doc",
-    "docId": "equipment-982",
+    "docId": "equipment-5082",
     "how": "importer:the doc this record was built from"
    },
    "spirit-sealing-fulu": {
@@ -16936,37 +16936,37 @@
    "tracking-fulu": {
     "name": "Tracking Fulu",
     "status": "doc",
-    "docId": "equipment-985",
+    "docId": "equipment-5085",
     "how": "importer:the doc this record was built from"
    },
    "venomous-cure-fulu": {
     "name": "Venomous Cure Fulu",
     "status": "doc",
-    "docId": "equipment-986",
+    "docId": "equipment-5086",
     "how": "importer:the doc this record was built from"
    },
    "fu-water": {
     "name": "Fu Water",
     "status": "doc",
-    "docId": "equipment-987",
+    "docId": "equipment-5087",
     "how": "importer:the doc this record was built from"
    },
    "fulu-compendium": {
     "name": "Fulu Compendium",
     "status": "doc",
-    "docId": "equipment-988",
+    "docId": "equipment-5088",
     "how": "importer:the doc this record was built from"
    },
    "bestiary-of-metamorphosis": {
     "name": "Bestiary of Metamorphosis",
     "status": "doc",
-    "docId": "equipment-989",
+    "docId": "equipment-5120",
     "how": "importer:the doc this record was built from"
    },
    "book-of-lingering-blaze": {
     "name": "Book of Lingering Blaze",
     "status": "doc",
-    "docId": "equipment-990",
+    "docId": "equipment-5123",
     "how": "importer:the doc this record was built from"
    },
    "codex-of-unimpeded-sight": {
@@ -16984,7 +16984,7 @@
    "endless-grimoire": {
     "name": "Endless Grimoire",
     "status": "doc",
-    "docId": "equipment-992",
+    "docId": "equipment-5127",
     "how": "importer:the doc this record was built from"
    },
    "endless-grimoire-greater": {
@@ -17014,43 +17014,43 @@
    "spellbook-of-redundant-enchantment": {
     "name": "Spellbook of Redundant Enchantment",
     "status": "doc",
-    "docId": "equipment-994",
+    "docId": "equipment-5133",
     "how": "importer:the doc this record was built from"
    },
    "storytellers-opus": {
     "name": "Storyteller's Opus",
     "status": "doc",
-    "docId": "equipment-995",
+    "docId": "equipment-5134",
     "how": "importer:the doc this record was built from"
    },
    "summoning-handscroll": {
     "name": "Summoning Handscroll",
     "status": "doc",
-    "docId": "equipment-996",
+    "docId": "equipment-5135",
     "how": "importer:the doc this record was built from"
    },
    "warding-tablets": {
     "name": "Warding Tablets",
     "status": "doc",
-    "docId": "equipment-997",
+    "docId": "equipment-5137",
     "how": "importer:the doc this record was built from"
    },
    "familiar-tattoo": {
     "name": "Familiar Tattoo",
     "status": "doc",
-    "docId": "equipment-998",
+    "docId": "equipment-5177",
     "how": "importer:the doc this record was built from"
    },
    "rune-of-sin": {
     "name": "Rune of Sin",
     "status": "doc",
-    "docId": "equipment-999",
+    "docId": "equipment-5180",
     "how": "importer:the doc this record was built from"
    },
    "warding-tattoo": {
     "name": "Warding Tattoo",
     "status": "doc",
-    "docId": "equipment-1000",
+    "docId": "equipment-5181",
     "how": "importer:the doc this record was built from"
    },
    "warding-tattoo-trail": {
@@ -17080,7 +17080,7 @@
    "staff-of-natures-cunning": {
     "name": "Staff of Nature's Cunning",
     "status": "doc",
-    "docId": "equipment-1002",
+    "docId": "equipment-5169",
     "how": "importer:the doc this record was built from"
    },
    "staff-of-natures-cunning-greater": {
@@ -17110,13 +17110,13 @@
    "dimensional-knot": {
     "name": "Dimensional Knot",
     "status": "doc",
-    "docId": "equipment-1004",
+    "docId": "equipment-5048",
     "how": "importer:the doc this record was built from"
    },
    "firestarter-pellets": {
     "name": "Firestarter Pellets",
     "status": "doc",
-    "docId": "equipment-1005",
+    "docId": "equipment-5051",
     "how": "importer:the doc this record was built from"
    },
    "firestarter-pellets-greater": {
@@ -17140,7 +17140,7 @@
    "healers-gel": {
     "name": "Healer's Gel",
     "status": "doc",
-    "docId": "equipment-1007",
+    "docId": "equipment-5055",
     "how": "importer:the doc this record was built from"
    },
    "healers-gel-lesser": {
@@ -17176,19 +17176,19 @@
    "shimmering-dust": {
     "name": "Shimmering Dust",
     "status": "doc",
-    "docId": "equipment-1009",
+    "docId": "equipment-5063",
     "how": "importer:the doc this record was built from"
    },
    "soothing-scents": {
     "name": "Soothing Scents",
     "status": "doc",
-    "docId": "equipment-1010",
+    "docId": "equipment-5064",
     "how": "importer:the doc this record was built from"
    },
    "thunderbird-tuft": {
     "name": "Thunderbird Tuft",
     "status": "doc",
-    "docId": "equipment-1011",
+    "docId": "equipment-5067",
     "how": "importer:the doc this record was built from"
    },
    "thunderbird-tuft-lesser": {
@@ -17218,13 +17218,13 @@
    "waterproofing-wax": {
     "name": "Waterproofing Wax",
     "status": "doc",
-    "docId": "equipment-1012",
+    "docId": "equipment-5070",
     "how": "importer:the doc this record was built from"
    },
    "five-feather-wreath": {
     "name": "Five-Feather Wreath",
     "status": "doc",
-    "docId": "equipment-1013",
+    "docId": "equipment-5152",
     "how": "importer:the doc this record was built from"
    },
    "five-feather-wreath-greater": {
@@ -17242,7 +17242,7 @@
    "flaming-star": {
     "name": "Flaming Star",
     "status": "doc",
-    "docId": "equipment-1014",
+    "docId": "equipment-5153",
     "how": "importer:the doc this record was built from"
    },
    "flaming-star-greater": {
@@ -17260,7 +17260,7 @@
    "grim-sandglass": {
     "name": "Grim Sandglass",
     "status": "doc",
-    "docId": "equipment-1015",
+    "docId": "equipment-5154",
     "how": "importer:the doc this record was built from"
    },
    "grim-sandglass-greater": {
@@ -17278,7 +17278,7 @@
    "perfect-droplet": {
     "name": "Perfect Droplet",
     "status": "doc",
-    "docId": "equipment-1016",
+    "docId": "equipment-5157",
     "how": "importer:the doc this record was built from"
    },
    "perfect-droplet-greater": {
@@ -17296,7 +17296,7 @@
    "trinity-geode": {
     "name": "Trinity Geode",
     "status": "doc",
-    "docId": "equipment-1017",
+    "docId": "equipment-5160",
     "how": "importer:the doc this record was built from"
    },
    "trinity-geode-greater": {
@@ -17326,61 +17326,61 @@
    "dispersing-bullet": {
     "name": "Dispersing Bullet",
     "status": "doc",
-    "docId": "equipment-1019",
+    "docId": "equipment-5034",
     "how": "importer:the doc this record was built from"
    },
    "dragonbone-arrowhead": {
     "name": "Dragonbone Arrowhead",
     "status": "doc",
-    "docId": "equipment-1020",
+    "docId": "equipment-5102",
     "how": "importer:the doc this record was built from"
    },
    "eye-of-enlightenment": {
     "name": "Eye of Enlightenment",
     "status": "doc",
-    "docId": "equipment-1021",
+    "docId": "equipment-5103",
     "how": "importer:the doc this record was built from"
    },
    "ghostly-portal-paint": {
     "name": "Ghostly Portal Paint",
     "status": "doc",
-    "docId": "equipment-1022",
+    "docId": "equipment-5091",
     "how": "importer:the doc this record was built from"
    },
    "golden-chrysalis": {
     "name": "Golden Chrysalis",
     "status": "doc",
-    "docId": "equipment-1023",
+    "docId": "equipment-5037",
     "how": "importer:the doc this record was built from"
    },
    "lion-claw": {
     "name": "Lion Claw",
     "status": "doc",
-    "docId": "equipment-1024",
+    "docId": "equipment-5104",
     "how": "importer:the doc this record was built from"
    },
    "orchestral-brooch": {
     "name": "Orchestral Brooch",
     "status": "doc",
-    "docId": "equipment-1025",
+    "docId": "equipment-5106",
     "how": "importer:the doc this record was built from"
    },
    "phoenix-flask": {
     "name": "Phoenix Flask",
     "status": "doc",
-    "docId": "equipment-1026",
+    "docId": "equipment-5096",
     "how": "importer:the doc this record was built from"
    },
    "potion-of-grounding": {
     "name": "Potion of Grounding",
     "status": "doc",
-    "docId": "equipment-1027",
+    "docId": "equipment-5097",
     "how": "importer:the doc this record was built from"
    },
    "potion-of-minute-echoes": {
     "name": "Potion of Minute Echoes",
     "status": "doc",
-    "docId": "equipment-1028",
+    "docId": "equipment-5099",
     "how": "importer:the doc this record was built from"
    },
    "potion-of-stable-form": {
@@ -17404,7 +17404,7 @@
    "resonating-ammunition": {
     "name": "Resonating Ammunition",
     "status": "doc",
-    "docId": "equipment-1031",
+    "docId": "equipment-5040",
     "how": "importer:the doc this record was built from"
    },
    "retrieval-prism": {
@@ -17428,37 +17428,37 @@
    "stormfeather": {
     "name": "Stormfeather",
     "status": "doc",
-    "docId": "equipment-1034",
+    "docId": "equipment-5110",
     "how": "importer:the doc this record was built from"
    },
    "topology-protoplasm": {
     "name": "Topology Protoplasm",
     "status": "doc",
-    "docId": "equipment-1035",
+    "docId": "equipment-5094",
     "how": "importer:the doc this record was built from"
    },
    "vapor-sphere": {
     "name": "Vapor Sphere",
     "status": "doc",
-    "docId": "equipment-1036",
+    "docId": "equipment-5112",
     "how": "importer:the doc this record was built from"
    },
    "anointed-waterskin": {
     "name": "Anointed Waterskin",
     "status": "doc",
-    "docId": "equipment-1037",
+    "docId": "equipment-5139",
     "how": "importer:the doc this record was built from"
    },
    "archivists-gaze": {
     "name": "Archivist's Gaze",
     "status": "doc",
-    "docId": "equipment-1038",
+    "docId": "equipment-5113",
     "how": "importer:the doc this record was built from"
    },
    "auspicious-scepter": {
     "name": "Auspicious Scepter",
     "status": "doc",
-    "docId": "equipment-1039",
+    "docId": "equipment-5012",
     "how": "importer:the doc this record was built from"
    },
    "backfire-mantle": {
@@ -17476,7 +17476,7 @@
    "bane": {
     "name": "Bane",
     "status": "doc",
-    "docId": "equipment-1041",
+    "docId": "equipment-4986",
     "how": "importer:the doc this record was built from"
    },
    "blade-of-four-energies": {
@@ -17494,7 +17494,7 @@
    "burr-shield": {
     "name": "Burr Shield",
     "status": "doc",
-    "docId": "equipment-1044",
+    "docId": "equipment-4999",
     "how": "importer:the doc this record was built from"
    },
    "buzzsaw-axe": {
@@ -17518,7 +17518,7 @@
    "cantrip-deck": {
     "name": "Cantrip Deck",
     "status": "doc",
-    "docId": "equipment-1046",
+    "docId": "equipment-5140",
     "how": "importer:the doc this record was built from"
    },
    "cantrip-deck-5-pack": {
@@ -17542,13 +17542,13 @@
    "cloak-of-feline-rest": {
     "name": "Cloak of Feline Rest",
     "status": "doc",
-    "docId": "equipment-1048",
+    "docId": "equipment-5183",
     "how": "importer:the doc this record was built from"
    },
    "codebreakers-parchment": {
     "name": "Codebreaker's Parchment",
     "status": "doc",
-    "docId": "equipment-1049",
+    "docId": "equipment-5141",
     "how": "importer:the doc this record was built from"
    },
    "codebreakers-parchment-greater": {
@@ -17566,13 +17566,13 @@
    "collar-of-the-eternal-bond": {
     "name": "Collar of the Eternal Bond",
     "status": "doc",
-    "docId": "equipment-1050",
+    "docId": "equipment-5184",
     "how": "importer:the doc this record was built from"
    },
    "conflagration-club": {
     "name": "Conflagration Club",
     "status": "doc",
-    "docId": "equipment-1051",
+    "docId": "equipment-5016",
     "how": "importer:the doc this record was built from"
    },
    "deck-of-illusions": {
@@ -17584,31 +17584,31 @@
    "deck-of-mischief": {
     "name": "Deck of Mischief",
     "status": "doc",
-    "docId": "equipment-1053",
+    "docId": "equipment-5142",
     "how": "importer:the doc this record was built from"
    },
    "emberheart": {
     "name": "Emberheart",
     "status": "doc",
-    "docId": "equipment-1054",
+    "docId": "equipment-5114",
     "how": "importer:the doc this record was built from"
    },
    "flask-of-fellowship": {
     "name": "Flask of Fellowship",
     "status": "doc",
-    "docId": "equipment-1056",
+    "docId": "equipment-5143",
     "how": "importer:the doc this record was built from"
    },
    "glasses-of-sociability": {
     "name": "Glasses of Sociability",
     "status": "doc",
-    "docId": "equipment-1057",
+    "docId": "equipment-5185",
     "how": "importer:the doc this record was built from"
    },
    "gloaming-shard": {
     "name": "Gloaming Shard",
     "status": "doc",
-    "docId": "equipment-1058",
+    "docId": "equipment-5018",
     "how": "importer:the doc this record was built from"
    },
    "guiding-star": {
@@ -17620,13 +17620,13 @@
    "hat-of-many-minds": {
     "name": "Hat of Many Minds",
     "status": "doc",
-    "docId": "equipment-1060",
+    "docId": "equipment-5186",
     "how": "importer:the doc this record was built from"
    },
    "hundred-moth-caress": {
     "name": "Hundred-Moth Caress",
     "status": "doc",
-    "docId": "equipment-1061",
+    "docId": "equipment-5020",
     "how": "importer:the doc this record was built from"
    },
    "impactful": {
@@ -17644,43 +17644,43 @@
    "invisible-chain-shirt": {
     "name": "Invisible Chain Shirt",
     "status": "doc",
-    "docId": "equipment-1063",
+    "docId": "equipment-4981",
     "how": "importer:the doc this record was built from"
    },
    "jar-of-shifting-sands": {
     "name": "Jar of Shifting Sands",
     "status": "doc",
-    "docId": "equipment-1064",
+    "docId": "equipment-5144",
     "how": "importer:the doc this record was built from"
    },
    "keymaking-tools": {
     "name": "Keymaking Tools",
     "status": "doc",
-    "docId": "equipment-1065",
+    "docId": "equipment-5145",
     "how": "importer:the doc this record was built from"
    },
    "mask-of-allure": {
     "name": "Mask of Allure",
     "status": "doc",
-    "docId": "equipment-1066",
+    "docId": "equipment-5115",
     "how": "importer:the doc this record was built from"
    },
    "mercurial-mantle": {
     "name": "Mercurial Mantle",
     "status": "doc",
-    "docId": "equipment-1067",
+    "docId": "equipment-5116",
     "how": "importer:the doc this record was built from"
    },
    "north-winds-night-verse": {
     "name": "North Wind's Night Verse",
     "status": "doc",
-    "docId": "equipment-1068",
+    "docId": "equipment-5022",
     "how": "importer:the doc this record was built from"
    },
    "ouroboros-flail": {
     "name": "Ouroboros Flail",
     "status": "doc",
-    "docId": "equipment-1069",
+    "docId": "equipment-5023",
     "how": "importer:the doc this record was built from"
    },
    "ouroboros-flail-greater": {
@@ -17698,7 +17698,7 @@
    "rebounding-breastplate": {
     "name": "Rebounding Breastplate",
     "status": "doc",
-    "docId": "equipment-1070",
+    "docId": "equipment-4983",
     "how": "importer:the doc this record was built from"
    },
    "restful-tent": {
@@ -17710,7 +17710,7 @@
    "sages-lash": {
     "name": "Sage's Lash",
     "status": "doc",
-    "docId": "equipment-1072",
+    "docId": "equipment-5117",
     "how": "importer:the doc this record was built from"
    },
    "singing-shortbow": {
@@ -17740,13 +17740,13 @@
    "south-winds-scorch-song": {
     "name": "South Wind's Scorch Song",
     "status": "doc",
-    "docId": "equipment-1076",
+    "docId": "equipment-5030",
     "how": "importer:the doc this record was built from"
    },
    "staff-of-the-desert-winds": {
     "name": "Staff of the Desert Winds",
     "status": "doc",
-    "docId": "equipment-1078",
+    "docId": "equipment-5170",
     "how": "importer:the doc this record was built from"
    },
    "staff-of-the-desert-winds-greater": {
@@ -17770,7 +17770,7 @@
    "staff-storing-shield": {
     "name": "Staff-Storing Shield",
     "status": "doc",
-    "docId": "equipment-1079",
+    "docId": "equipment-5008",
     "how": "importer:the doc this record was built from"
    },
    "staff-storing-shield-greater": {
@@ -17794,7 +17794,7 @@
    "stampede-medallion": {
     "name": "Stampede Medallion",
     "status": "doc",
-    "docId": "equipment-1080",
+    "docId": "equipment-5189",
     "how": "importer:the doc this record was built from"
    },
    "stampede-medallion-greater": {
@@ -17812,13 +17812,13 @@
    "thousand-blade-thesis": {
     "name": "Thousand-Blade Thesis",
     "status": "doc",
-    "docId": "equipment-1081",
+    "docId": "equipment-5146",
     "how": "importer:the doc this record was built from"
    },
    "titans-grasp": {
     "name": "Titan's Grasp",
     "status": "doc",
-    "docId": "equipment-1082",
+    "docId": "equipment-5118",
     "how": "importer:the doc this record was built from"
    },
    "true-name-amulet": {
@@ -51726,9 +51726,9 @@
    },
    "amulet-implement": {
     "name": "Amulet Implement",
-    "how": "reclass:suffix:implement",
+    "how": "reclass:suffix:implement -> newest printing (was implement-1)",
     "status": "doc",
-    "docId": "implement-1",
+    "docId": "implement-17",
     "archiveName": "Amulet"
    },
    "amulet-of-the-slumberer": {
@@ -51968,9 +51968,9 @@
    },
    "bell-implement": {
     "name": "Bell Implement",
-    "how": "reclass:suffix:implement",
+    "how": "reclass:suffix:implement -> newest printing (was implement-2)",
     "status": "doc",
-    "docId": "implement-2",
+    "docId": "implement-18",
     "archiveName": "Bell"
    },
    "belt-of-giant-strength": {
@@ -52341,9 +52341,9 @@
    },
    "chalice-implement": {
     "name": "Chalice Implement",
-    "how": "reclass:suffix:implement",
+    "how": "reclass:suffix:implement -> newest printing (was implement-3)",
     "status": "doc",
-    "docId": "implement-3",
+    "docId": "implement-19",
     "archiveName": "Chalice"
    },
    "chandelier-crafted-from-dreams": {
@@ -54700,9 +54700,9 @@
    },
    "regalia-implement": {
     "name": "Regalia Implement",
-    "how": "reclass:suffix:implement",
+    "how": "reclass:suffix:implement -> newest printing (was implement-6)",
     "status": "doc",
-    "docId": "implement-6",
+    "docId": "implement-22",
     "archiveName": "Regalia"
    },
    "reinforced-chassis": {
@@ -55827,9 +55827,9 @@
    },
    "tome-implement": {
     "name": "Tome Implement",
-    "how": "reclass:suffix:implement",
+    "how": "reclass:suffix:implement -> newest printing (was implement-7)",
     "status": "doc",
-    "docId": "implement-7",
+    "docId": "implement-23",
     "archiveName": "Tome"
    },
    "toothy-knife-greater": {
@@ -55965,9 +55965,9 @@
    },
    "wand-implement": {
     "name": "Wand Implement",
-    "how": "reclass:suffix:implement",
+    "how": "reclass:suffix:implement -> newest printing (was implement-8)",
     "status": "doc",
-    "docId": "implement-8",
+    "docId": "implement-24",
     "archiveName": "Wand"
    },
    "wand-of-choking-mist-2nd-rank": {
@@ -59367,13 +59367,13 @@
    "magus": {
     "name": "Magus",
     "status": "doc",
-    "docId": "class-17",
+    "docId": "class-74",
     "how": "importer:the doc this record was built from"
    },
    "summoner": {
     "name": "Summoner",
     "status": "doc",
-    "docId": "class-18",
+    "docId": "class-77",
     "how": "importer:the doc this record was built from"
    },
    "inventor": {
@@ -61699,9 +61699,9 @@
    },
    "animal-order": {
     "name": "Animal Order",
-    "how": "reclass:suffix:order",
+    "how": "reclass:suffix:order -> newest printing (was druidic-order-1)",
     "status": "doc",
-    "docId": "druidic-order-1",
+    "docId": "druidic-order-8",
     "archiveName": "Animal"
    },
    "antimagic-plating": {
@@ -61736,9 +61736,9 @@
    },
    "ashes": {
     "name": "Ashes",
-    "how": "reclass:plural",
+    "how": "reclass:plural -> newest printing (was mystery-10)",
     "status": "doc",
-    "docId": "mystery-10",
+    "docId": "mystery-20",
     "archiveName": "Ash"
    },
    "attack-refiner": {
@@ -61839,9 +61839,9 @@
    },
    "bloodline-aberrant": {
     "name": "Bloodline: Aberrant",
-    "how": "reclass:prefix:bloodline",
+    "how": "reclass:prefix:bloodline -> newest printing (was bloodline-1)",
     "status": "doc",
-    "docId": "bloodline-1",
+    "docId": "bloodline-19",
     "archiveName": "Aberrant"
    },
    "bloodline-aesir": {
@@ -61853,37 +61853,37 @@
    },
    "bloodline-angelic": {
     "name": "Bloodline: Angelic",
-    "how": "reclass:prefix:bloodline",
+    "how": "reclass:prefix:bloodline -> newest printing (was bloodline-2)",
     "status": "doc",
-    "docId": "bloodline-2",
+    "docId": "bloodline-20",
     "archiveName": "Angelic"
    },
    "bloodline-demonic": {
     "name": "Bloodline: Demonic",
-    "how": "reclass:prefix:bloodline",
+    "how": "reclass:prefix:bloodline -> newest printing (was bloodline-3)",
     "status": "doc",
-    "docId": "bloodline-3",
+    "docId": "bloodline-21",
     "archiveName": "Demonic"
    },
    "bloodline-diabolic": {
     "name": "Bloodline: Diabolic",
-    "how": "reclass:prefix:bloodline",
+    "how": "reclass:prefix:bloodline -> newest printing (was bloodline-4)",
     "status": "doc",
-    "docId": "bloodline-4",
+    "docId": "bloodline-22",
     "archiveName": "Diabolic"
    },
    "bloodline-draconic": {
     "name": "Bloodline: Draconic",
-    "how": "reclass:prefix:bloodline",
+    "how": "reclass:prefix:bloodline -> newest printing (was bloodline-5)",
     "status": "doc",
-    "docId": "bloodline-5",
+    "docId": "bloodline-23",
     "archiveName": "Draconic"
    },
    "bloodline-elemental": {
     "name": "Bloodline: Elemental",
-    "how": "reclass:prefix:bloodline",
+    "how": "reclass:prefix:bloodline -> newest printing (was bloodline-6)",
     "status": "doc",
-    "docId": "bloodline-6",
+    "docId": "bloodline-24",
     "archiveName": "Elemental"
    },
    "bloodline-fey": {
@@ -61914,9 +61914,9 @@
    },
    "bloodline-imperial": {
     "name": "Bloodline: Imperial",
-    "how": "reclass:prefix:bloodline",
+    "how": "reclass:prefix:bloodline -> newest printing (was bloodline-9)",
     "status": "doc",
-    "docId": "bloodline-9",
+    "docId": "bloodline-27",
     "archiveName": "Imperial"
    },
    "bloodline-nymph": {
@@ -61955,9 +61955,9 @@
    },
    "bloodline-undead": {
     "name": "Bloodline: Undead",
-    "how": "reclass:prefix:bloodline",
+    "how": "reclass:prefix:bloodline -> newest printing (was bloodline-10)",
     "status": "doc",
-    "docId": "bloodline-10",
+    "docId": "bloodline-28",
     "archiveName": "Undead"
    },
    "bloodline-wyrmblessed": {
@@ -62969,9 +62969,9 @@
    },
    "leaf-order": {
     "name": "Leaf Order",
-    "how": "reclass:suffix:order",
+    "how": "reclass:suffix:order -> newest printing (was druidic-order-2)",
     "status": "doc",
-    "docId": "druidic-order-2",
+    "docId": "druidic-order-9",
     "archiveName": "Leaf"
    },
    "leech-deviant-classification": {
@@ -64139,9 +64139,9 @@
    },
    "storm-order": {
     "name": "Storm Order",
-    "how": "reclass:suffix:order",
+    "how": "reclass:suffix:order -> newest printing (was druidic-order-3)",
     "status": "doc",
-    "docId": "druidic-order-3",
+    "docId": "druidic-order-10",
     "archiveName": "Storm"
    },
    "strained-metabolism": {
@@ -65413,8 +65413,8 @@
    "act-together": {
     "name": "Act Together",
     "status": "doc",
-    "docId": "action-758",
-    "how": "slug-any"
+    "docId": "action-4268",
+    "how": "slug-any -> newest printing (was action-758)"
    },
    "beasts-charge": {
     "name": "Beast's Charge",
@@ -65479,8 +65479,8 @@
    "manifest-eidolon": {
     "name": "Manifest Eidolon",
     "status": "doc",
-    "docId": "action-757",
-    "how": "slug-any"
+    "docId": "action-4267",
+    "how": "slug-any -> newest printing (was action-757)"
    },
    "primal-roar": {
     "name": "Primal Roar",
@@ -65509,8 +65509,8 @@
    "share-senses": {
     "name": "Share Senses",
     "status": "doc",
-    "docId": "action-759",
-    "how": "slug-any"
+    "docId": "action-4269",
+    "how": "slug-any -> newest printing (was action-759)"
    },
    "sickening-assault": {
     "name": "Sickening Assault",
@@ -71965,61 +71965,61 @@
    "maguss-analysis": {
     "name": "Magus's Analysis",
     "status": "doc",
-    "docId": "feat-2847",
+    "docId": "feat-9045",
     "how": "importer:the doc this record was built from"
    },
    "raise-a-tome": {
     "name": "Raise a Tome",
     "status": "doc",
-    "docId": "feat-2848",
+    "docId": "feat-9046",
     "how": "importer:the doc this record was built from"
    },
    "expansive-spellstrike": {
     "name": "Expansive Spellstrike",
     "status": "doc",
-    "docId": "feat-2849",
+    "docId": "feat-9047",
     "how": "importer:the doc this record was built from"
    },
    "force-fang": {
     "name": "Force Fang",
     "status": "doc",
-    "docId": "feat-2850",
+    "docId": "feat-9048",
     "how": "importer:the doc this record was built from"
    },
    "spell-parry": {
     "name": "Spell Parry",
     "status": "doc",
-    "docId": "feat-2851",
+    "docId": "feat-9049",
     "how": "importer:the doc this record was built from"
    },
    "spirit-sheath": {
     "name": "Spirit Sheath",
     "status": "doc",
-    "docId": "feat-2852",
+    "docId": "feat-9050",
     "how": "importer:the doc this record was built from"
    },
    "devastating-spellstrike": {
     "name": "Devastating Spellstrike",
     "status": "doc",
-    "docId": "feat-2853",
+    "docId": "feat-9052",
     "how": "importer:the doc this record was built from"
    },
    "distracting-spellstrike": {
     "name": "Distracting Spellstrike",
     "status": "doc",
-    "docId": "feat-2854",
+    "docId": "feat-9053",
     "how": "importer:the doc this record was built from"
    },
    "emergency-targe": {
     "name": "Emergency Targe",
     "status": "doc",
-    "docId": "feat-2855",
+    "docId": "feat-9054",
     "how": "importer:the doc this record was built from"
    },
    "starlit-eyes": {
     "name": "Starlit Eyes",
     "status": "doc",
-    "docId": "feat-2856",
+    "docId": "feat-9058",
     "how": "importer:the doc this record was built from"
    },
    "steady-spellcasting-magus": {
@@ -72031,13 +72031,13 @@
    "strikers-scroll": {
     "name": "Striker's Scroll",
     "status": "doc",
-    "docId": "feat-2858",
+    "docId": "feat-9059",
     "how": "importer:the doc this record was built from"
    },
    "student-of-the-staff": {
     "name": "Student of the Staff",
     "status": "doc",
-    "docId": "feat-2859",
+    "docId": "feat-9060",
     "how": "importer:the doc this record was built from"
    },
    "cascade-countermeasure": {
@@ -72049,121 +72049,121 @@
    "shielded-tome": {
     "name": "Shielded Tome",
     "status": "doc",
-    "docId": "feat-2862",
+    "docId": "feat-9063",
     "how": "importer:the doc this record was built from"
    },
    "capture-magic": {
     "name": "Capture Magic",
     "status": "doc",
-    "docId": "feat-2863",
+    "docId": "feat-9066",
     "how": "importer:the doc this record was built from"
    },
    "fused-staff": {
     "name": "Fused Staff",
     "status": "doc",
-    "docId": "feat-2864",
+    "docId": "feat-9067",
     "how": "importer:the doc this record was built from"
    },
    "runic-impression": {
     "name": "Runic Impression",
     "status": "doc",
-    "docId": "feat-2865",
+    "docId": "feat-9068",
     "how": "importer:the doc this record was built from"
    },
    "spell-swipe": {
     "name": "Spell Swipe",
     "status": "doc",
-    "docId": "feat-2866",
+    "docId": "feat-9069",
     "how": "importer:the doc this record was built from"
    },
    "standby-spell": {
     "name": "Standby Spell",
     "status": "doc",
-    "docId": "feat-2867",
+    "docId": "feat-9070",
     "how": "importer:the doc this record was built from"
    },
    "cascading-ray": {
     "name": "Cascading Ray",
     "status": "doc",
-    "docId": "feat-2868",
+    "docId": "feat-9071",
     "how": "importer:the doc this record was built from"
    },
    "dazzling-block": {
     "name": "Dazzling Block",
     "status": "doc",
-    "docId": "feat-2869",
+    "docId": "feat-9072",
     "how": "importer:the doc this record was built from"
    },
    "dimensional-disappearance": {
     "name": "Dimensional Disappearance",
     "status": "doc",
-    "docId": "feat-2870",
+    "docId": "feat-9073",
     "how": "importer:the doc this record was built from"
    },
    "lunging-spellstrike": {
     "name": "Lunging Spellstrike",
     "status": "doc",
-    "docId": "feat-2871",
+    "docId": "feat-9075",
     "how": "importer:the doc this record was built from"
    },
    "meteoric-spellstrike": {
     "name": "Meteoric Spellstrike",
     "status": "doc",
-    "docId": "feat-2872",
+    "docId": "feat-9076",
     "how": "importer:the doc this record was built from"
    },
    "rapid-recharge": {
     "name": "Rapid Recharge",
     "status": "doc",
-    "docId": "feat-2873",
+    "docId": "feat-9077",
     "how": "importer:the doc this record was built from"
    },
    "sustaining-steel": {
     "name": "Sustaining Steel",
     "status": "doc",
-    "docId": "feat-2874",
+    "docId": "feat-9079",
     "how": "importer:the doc this record was built from"
    },
    "conflux-focus": {
     "name": "Conflux Focus",
     "status": "doc",
-    "docId": "feat-2875",
+    "docId": "feat-9080",
     "how": "importer:the doc this record was built from"
    },
    "overwhelming-spellstrike": {
     "name": "Overwhelming Spellstrike",
     "status": "doc",
-    "docId": "feat-2876",
+    "docId": "feat-9081",
     "how": "importer:the doc this record was built from"
    },
    "arcane-shroud": {
     "name": "Arcane Shroud",
     "status": "doc",
-    "docId": "feat-2877",
+    "docId": "feat-9083",
     "how": "importer:the doc this record was built from"
    },
    "hasted-assault": {
     "name": "Hasted Assault",
     "status": "doc",
-    "docId": "feat-2878",
+    "docId": "feat-9084",
     "how": "importer:the doc this record was built from"
    },
    "preternatural-parry": {
     "name": "Preternatural Parry",
     "status": "doc",
-    "docId": "feat-2879",
+    "docId": "feat-9085",
     "how": "importer:the doc this record was built from"
    },
    "dispelling-spellstrike": {
     "name": "Dispelling Spellstrike",
     "status": "doc",
-    "docId": "feat-2880",
+    "docId": "feat-9086",
     "how": "importer:the doc this record was built from"
    },
    "resounding-cascade": {
     "name": "Resounding Cascade",
     "status": "doc",
-    "docId": "feat-2881",
+    "docId": "feat-9087",
     "how": "importer:the doc this record was built from"
    },
    "conflux-wellspring": {
@@ -72175,163 +72175,163 @@
    "versatile-spellstrike": {
     "name": "Versatile Spellstrike",
     "status": "doc",
-    "docId": "feat-2883",
+    "docId": "feat-9089",
     "how": "importer:the doc this record was built from"
    },
    "supreme-spellstrike": {
     "name": "Supreme Spellstrike",
     "status": "doc",
-    "docId": "feat-2884",
+    "docId": "feat-9090",
     "how": "importer:the doc this record was built from"
    },
    "whirlwind-spell": {
     "name": "Whirlwind Spell",
     "status": "doc",
-    "docId": "feat-2885",
+    "docId": "feat-9091",
     "how": "importer:the doc this record was built from"
    },
    "advanced-weaponry": {
     "name": "Advanced Weaponry",
     "status": "doc",
-    "docId": "feat-2886",
+    "docId": "feat-9221",
     "how": "importer:the doc this record was built from"
    },
    "dual-studies": {
     "name": "Dual Studies",
     "status": "doc",
-    "docId": "feat-2887",
+    "docId": "feat-9222",
     "how": "importer:the doc this record was built from"
    },
    "energy-heart": {
     "name": "Energy Heart",
     "status": "doc",
-    "docId": "feat-2888",
+    "docId": "feat-9223",
     "how": "importer:the doc this record was built from"
    },
    "expanded-senses": {
     "name": "Expanded Senses",
     "status": "doc",
-    "docId": "feat-2889",
+    "docId": "feat-9224",
     "how": "importer:the doc this record was built from"
    },
    "extend-boost": {
     "name": "Extend Boost",
     "status": "doc",
-    "docId": "feat-2890",
+    "docId": "feat-9225",
     "how": "importer:the doc this record was built from"
    },
    "glider-form": {
     "name": "Glider Form",
     "status": "doc",
-    "docId": "feat-2891",
+    "docId": "feat-9226",
     "how": "importer:the doc this record was built from"
    },
    "meld-into-eidolon": {
     "name": "Meld into Eidolon",
     "status": "doc",
-    "docId": "feat-2892",
+    "docId": "feat-9227",
     "how": "importer:the doc this record was built from"
    },
    "unfetter-eidolon": {
     "name": "Unfetter Eidolon",
     "status": "doc",
-    "docId": "feat-2893",
+    "docId": "feat-9228",
     "how": "importer:the doc this record was built from"
    },
    "alacritous-action": {
     "name": "Alacritous Action",
     "status": "doc",
-    "docId": "feat-2894",
+    "docId": "feat-9229",
     "how": "importer:the doc this record was built from"
    },
    "amphibious-form": {
     "name": "Amphibious Form",
     "status": "doc",
-    "docId": "feat-2895",
+    "docId": "feat-9230",
     "how": "importer:the doc this record was built from"
    },
    "magical-understudy": {
     "name": "Magical Understudy",
     "status": "doc",
-    "docId": "feat-2896",
+    "docId": "feat-9231",
     "how": "importer:the doc this record was built from"
    },
    "ranged-combatant": {
     "name": "Ranged Combatant",
     "status": "doc",
-    "docId": "feat-2897",
+    "docId": "feat-9232",
     "how": "importer:the doc this record was built from"
    },
    "reinforce-eidolon": {
     "name": "Reinforce Eidolon",
     "status": "doc",
-    "docId": "feat-2898",
+    "docId": "feat-9233",
     "how": "importer:the doc this record was built from"
    },
    "steed-form": {
     "name": "Steed Form",
     "status": "doc",
-    "docId": "feat-2899",
+    "docId": "feat-9234",
     "how": "importer:the doc this record was built from"
    },
    "bloodletting-claws": {
     "name": "Bloodletting Claws",
     "status": "doc",
-    "docId": "feat-2900",
+    "docId": "feat-9235",
     "how": "importer:the doc this record was built from"
    },
    "defend-summoner": {
     "name": "Defend Summoner",
     "status": "doc",
-    "docId": "feat-2901",
+    "docId": "feat-9236",
     "how": "importer:the doc this record was built from"
    },
    "dual-energy-heart": {
     "name": "Dual Energy Heart",
     "status": "doc",
-    "docId": "feat-2902",
+    "docId": "feat-9237",
     "how": "importer:the doc this record was built from"
    },
    "lifelink-surge": {
     "name": "Lifelink Surge",
     "status": "doc",
-    "docId": "feat-2903",
+    "docId": "feat-9238",
     "how": "importer:the doc this record was built from"
    },
    "reactive-dismissal": {
     "name": "Reactive Dismissal",
     "status": "doc",
-    "docId": "feat-2904",
+    "docId": "feat-9239",
     "how": "importer:the doc this record was built from"
    },
    "shrink-down": {
     "name": "Shrink Down",
     "status": "doc",
-    "docId": "feat-2905",
+    "docId": "feat-9240",
     "how": "importer:the doc this record was built from"
    },
    "skilled-partner": {
     "name": "Skilled Partner",
     "status": "doc",
-    "docId": "feat-2906",
+    "docId": "feat-9241",
     "how": "importer:the doc this record was built from"
    },
    "tandem-movement": {
     "name": "Tandem Movement",
     "status": "doc",
-    "docId": "feat-2907",
+    "docId": "feat-9242",
     "how": "importer:the doc this record was built from"
    },
    "vibration-sense": {
     "name": "Vibration Sense",
     "status": "doc",
-    "docId": "feat-2908",
+    "docId": "feat-9243",
     "how": "importer:the doc this record was built from"
    },
    "blood-frenzy": {
     "name": "Blood Frenzy",
     "status": "doc",
-    "docId": "feat-2909",
+    "docId": "feat-9244",
     "how": "importer:the doc this record was built from"
    },
    "eidolons-opportunity": {
@@ -72343,85 +72343,85 @@
    "eidolons-wrath": {
     "name": "Eidolon's Wrath",
     "status": "doc",
-    "docId": "feat-2911",
+    "docId": "feat-9246",
     "how": "importer:the doc this record was built from"
    },
    "master-summoner": {
     "name": "Master Summoner",
     "status": "doc",
-    "docId": "feat-2912",
+    "docId": "feat-9247",
     "how": "importer:the doc this record was built from"
    },
    "ostentatious-arrival": {
     "name": "Ostentatious Arrival",
     "status": "doc",
-    "docId": "feat-2913",
+    "docId": "feat-9248",
     "how": "importer:the doc this record was built from"
    },
    "phase-out": {
     "name": "Phase Out",
     "status": "doc",
-    "docId": "feat-2914",
+    "docId": "feat-9249",
     "how": "importer:the doc this record was built from"
    },
    "tandem-strike": {
     "name": "Tandem Strike",
     "status": "doc",
-    "docId": "feat-2915",
+    "docId": "feat-9250",
     "how": "importer:the doc this record was built from"
    },
    "boost-summons": {
     "name": "Boost Summons",
     "status": "doc",
-    "docId": "feat-2916",
+    "docId": "feat-9251",
     "how": "importer:the doc this record was built from"
    },
    "constricting-hold": {
     "name": "Constricting Hold",
     "status": "doc",
-    "docId": "feat-2917",
+    "docId": "feat-9252",
     "how": "importer:the doc this record was built from"
    },
    "energy-resistance": {
     "name": "Energy Resistance",
     "status": "doc",
-    "docId": "feat-2918",
+    "docId": "feat-9253",
     "how": "importer:the doc this record was built from"
    },
    "hulking-size": {
     "name": "Hulking Size",
     "status": "doc",
-    "docId": "feat-2919",
+    "docId": "feat-9254",
     "how": "importer:the doc this record was built from"
    },
    "magical-adept": {
     "name": "Magical Adept",
     "status": "doc",
-    "docId": "feat-2920",
+    "docId": "feat-9255",
     "how": "importer:the doc this record was built from"
    },
    "miniaturize": {
     "name": "Miniaturize",
     "status": "doc",
-    "docId": "feat-2921",
+    "docId": "feat-9256",
     "how": "importer:the doc this record was built from"
    },
    "burrowing-form": {
     "name": "Burrowing Form",
     "status": "doc",
-    "docId": "feat-2922",
+    "docId": "feat-9258",
     "how": "importer:the doc this record was built from"
    },
    "merciless-rend": {
     "name": "Merciless Rend",
     "status": "doc",
-    "docId": "feat-2923",
+    "docId": "feat-9260",
     "how": "importer:the doc this record was built from"
    },
    "protective-bond": {
     "name": "Protective Bond",
     "status": "doc",
-    "docId": "feat-2924",
+    "docId": "feat-9262",
     "how": "importer:the doc this record was built from"
    },
    "pushing-attack": {
@@ -72433,73 +72433,73 @@
    "transpose": {
     "name": "Transpose",
     "status": "doc",
-    "docId": "feat-2926",
+    "docId": "feat-9263",
     "how": "importer:the doc this record was built from"
    },
    "weighty-impact": {
     "name": "Weighty Impact",
     "status": "doc",
-    "docId": "feat-2927",
+    "docId": "feat-9264",
     "how": "importer:the doc this record was built from"
    },
    "flexible-transmogrification": {
     "name": "Flexible Transmogrification",
     "status": "doc",
-    "docId": "feat-2928",
+    "docId": "feat-9266",
     "how": "importer:the doc this record was built from"
    },
    "grasping-limbs": {
     "name": "Grasping Limbs",
     "status": "doc",
-    "docId": "feat-2929",
+    "docId": "feat-9267",
     "how": "importer:the doc this record was built from"
    },
    "link-focus": {
     "name": "Link Focus",
     "status": "doc",
-    "docId": "feat-2930",
+    "docId": "feat-9268",
     "how": "importer:the doc this record was built from"
    },
    "summoners-call": {
     "name": "Summoner's Call",
     "status": "doc",
-    "docId": "feat-2931",
+    "docId": "feat-9269",
     "how": "importer:the doc this record was built from"
    },
    "towering-size": {
     "name": "Towering Size",
     "status": "doc",
-    "docId": "feat-2932",
+    "docId": "feat-9270",
     "how": "importer:the doc this record was built from"
    },
    "airborne-form": {
     "name": "Airborne Form",
     "status": "doc",
-    "docId": "feat-2933",
+    "docId": "feat-9265",
     "how": "importer:the doc this record was built from"
    },
    "resilient-shell": {
     "name": "Resilient Shell",
     "status": "doc",
-    "docId": "feat-2934",
+    "docId": "feat-9273",
     "how": "importer:the doc this record was built from"
    },
    "share-eidolon-magic": {
     "name": "Share Eidolon Magic",
     "status": "doc",
-    "docId": "feat-2935",
+    "docId": "feat-9274",
     "how": "importer:the doc this record was built from"
    },
    "spell-repelling-form": {
     "name": "Spell-Repelling Form",
     "status": "doc",
-    "docId": "feat-2936",
+    "docId": "feat-9275",
     "how": "importer:the doc this record was built from"
    },
    "ever-vigilant-senses": {
     "name": "Ever-Vigilant Senses",
     "status": "doc",
-    "docId": "feat-2937",
+    "docId": "feat-9277",
     "how": "importer:the doc this record was built from"
    },
    "trample-summoner": {
@@ -72517,121 +72517,121 @@
    "magical-master": {
     "name": "Magical Master",
     "status": "doc",
-    "docId": "feat-2940",
+    "docId": "feat-9279",
     "how": "importer:the doc this record was built from"
    },
    "true-transmogrification": {
     "name": "True Transmogrification",
     "status": "doc",
-    "docId": "feat-2941",
+    "docId": "feat-9280",
     "how": "importer:the doc this record was built from"
    },
    "eternal-boost": {
     "name": "Eternal Boost",
     "status": "doc",
-    "docId": "feat-2942",
+    "docId": "feat-9281",
     "how": "importer:the doc this record was built from"
    },
    "legendary-summoner": {
     "name": "Legendary Summoner",
     "status": "doc",
-    "docId": "feat-2943",
+    "docId": "feat-9282",
     "how": "importer:the doc this record was built from"
    },
    "twin-eidolon": {
     "name": "Twin Eidolon",
     "status": "doc",
-    "docId": "feat-2944",
+    "docId": "feat-9283",
     "how": "importer:the doc this record was built from"
    },
    "magus-dedication": {
     "name": "Magus Dedication",
     "status": "doc",
-    "docId": "feat-2945",
+    "docId": "feat-9284",
     "how": "importer:the doc this record was built from"
    },
    "basic-martial-magic": {
     "name": "Basic Martial Magic",
     "status": "doc",
-    "docId": "feat-2946",
+    "docId": "feat-9286",
     "how": "importer:the doc this record was built from"
    },
    "hybrid-study-spell": {
     "name": "Hybrid Study Spell",
     "status": "doc",
-    "docId": "feat-2947",
+    "docId": "feat-9287",
     "how": "importer:the doc this record was built from"
    },
    "spellstriker": {
     "name": "Spellstriker",
     "status": "doc",
-    "docId": "feat-2948",
+    "docId": "feat-9288",
     "how": "importer:the doc this record was built from"
    },
    "advanced-martial-magic": {
     "name": "Advanced Martial Magic",
     "status": "doc",
-    "docId": "feat-2949",
+    "docId": "feat-9289",
     "how": "importer:the doc this record was built from"
    },
    "basic-magus-spellcasting": {
     "name": "Basic Magus Spellcasting",
     "status": "doc",
-    "docId": "feat-2950",
+    "docId": "feat-9285",
     "how": "importer:the doc this record was built from"
    },
    "expert-magus-spellcasting": {
     "name": "Expert Magus Spellcasting",
     "status": "doc",
-    "docId": "feat-2951",
+    "docId": "feat-9290",
     "how": "importer:the doc this record was built from"
    },
    "master-magus-spellcasting": {
     "name": "Master Magus Spellcasting",
     "status": "doc",
-    "docId": "feat-2952",
+    "docId": "feat-9291",
     "how": "importer:the doc this record was built from"
    },
    "summoner-dedication": {
     "name": "Summoner Dedication",
     "status": "doc",
-    "docId": "feat-2953",
+    "docId": "feat-9307",
     "how": "importer:the doc this record was built from"
    },
    "basic-synergy": {
     "name": "Basic Synergy",
     "status": "doc",
-    "docId": "feat-2954",
+    "docId": "feat-9309",
     "how": "importer:the doc this record was built from"
    },
    "initial-eidolon-ability": {
     "name": "Initial Eidolon Ability",
     "status": "doc",
-    "docId": "feat-2955",
+    "docId": "feat-9310",
     "how": "importer:the doc this record was built from"
    },
    "advanced-synergy": {
     "name": "Advanced Synergy",
     "status": "doc",
-    "docId": "feat-2956",
+    "docId": "feat-9311",
     "how": "importer:the doc this record was built from"
    },
    "basic-summoner-spellcasting": {
     "name": "Basic Summoner Spellcasting",
     "status": "doc",
-    "docId": "feat-2957",
+    "docId": "feat-9308",
     "how": "importer:the doc this record was built from"
    },
    "expert-combat-eidolon": {
     "name": "Expert Combat Eidolon",
     "status": "doc",
-    "docId": "feat-2958",
+    "docId": "feat-9312",
     "how": "importer:the doc this record was built from"
    },
    "expert-summoner-spellcasting": {
     "name": "Expert Summoner Spellcasting",
     "status": "doc",
-    "docId": "feat-2959",
+    "docId": "feat-9313",
     "how": "importer:the doc this record was built from"
    },
    "signature-synergy": {
@@ -72643,7 +72643,7 @@
    "master-summoner-spellcasting": {
     "name": "Master Summoner Spellcasting",
     "status": "doc",
-    "docId": "feat-2961",
+    "docId": "feat-9314",
     "how": "importer:the doc this record was built from"
    },
    "tattoo-artist": {
@@ -72907,25 +72907,25 @@
    "soulforger-dedication": {
     "name": "Soulforger Dedication",
     "status": "doc",
-    "docId": "feat-3016",
+    "docId": "feat-9350",
     "how": "importer:the doc this record was built from"
    },
    "soul-flare": {
     "name": "Soul Flare",
     "status": "doc",
-    "docId": "feat-3017",
+    "docId": "feat-9351",
     "how": "importer:the doc this record was built from"
    },
    "rapid-manifestation": {
     "name": "Rapid Manifestation",
     "status": "doc",
-    "docId": "feat-3018",
+    "docId": "feat-9352",
     "how": "importer:the doc this record was built from"
    },
    "soul-arsenal": {
     "name": "Soul Arsenal",
     "status": "doc",
-    "docId": "feat-3019",
+    "docId": "feat-9353",
     "how": "importer:the doc this record was built from"
    },
    "polearm-tricks": {
@@ -72985,7 +72985,7 @@
    "arcane-fists": {
     "name": "Arcane Fists",
     "status": "doc",
-    "docId": "feat-3033",
+    "docId": "feat-9044",
     "how": "importer:the doc this record was built from"
    },
    "folklorist-dedication": {
@@ -74725,61 +74725,61 @@
    "captivator-dedication": {
     "name": "Captivator Dedication",
     "status": "doc",
-    "docId": "feat-3358",
+    "docId": "feat-9315",
     "how": "importer:the doc this record was built from"
    },
    "basic-captivator-spellcasting": {
     "name": "Basic Captivator Spellcasting",
     "status": "doc",
-    "docId": "feat-3359",
+    "docId": "feat-9316",
     "how": "importer:the doc this record was built from"
    },
    "captivating-intensity": {
     "name": "Captivating Intensity",
     "status": "doc",
-    "docId": "feat-3360",
+    "docId": "feat-9318",
     "how": "importer:the doc this record was built from"
    },
    "countercharm": {
     "name": "Countercharm",
     "status": "doc",
-    "docId": "feat-3361",
+    "docId": "feat-9319",
     "how": "importer:the doc this record was built from"
    },
    "heightened-captivation": {
     "name": "Heightened Captivation",
     "status": "doc",
-    "docId": "feat-3362",
+    "docId": "feat-9317",
     "how": "importer:the doc this record was built from"
    },
    "expert-captivator-spellcasting": {
     "name": "Expert Captivator Spellcasting",
     "status": "doc",
-    "docId": "feat-3363",
+    "docId": "feat-9320",
     "how": "importer:the doc this record was built from"
    },
    "reactive-charm": {
     "name": "Reactive Charm",
     "status": "doc",
-    "docId": "feat-3364",
+    "docId": "feat-9321",
     "how": "importer:the doc this record was built from"
    },
    "effortless-captivation": {
     "name": "Effortless Captivation",
     "status": "doc",
-    "docId": "feat-3365",
+    "docId": "feat-9323",
     "how": "importer:the doc this record was built from"
    },
    "master-captivator-spellcasting": {
     "name": "Master Captivator Spellcasting",
     "status": "doc",
-    "docId": "feat-3366",
+    "docId": "feat-9324",
     "how": "importer:the doc this record was built from"
    },
    "look-again": {
     "name": "Look Again",
     "status": "doc",
-    "docId": "feat-3367",
+    "docId": "feat-9325",
     "how": "importer:the doc this record was built from"
    },
    "spell-trickster-dedication": {
@@ -108380,31 +108380,31 @@
    "archaeologist": {
     "name": "Archaeologist",
     "status": "doc",
-    "docId": "background-202",
+    "docId": "background-668",
     "how": "importer:the doc this record was built from"
    },
    "pathfinder-recruiter": {
     "name": "Pathfinder Recruiter",
     "status": "doc",
-    "docId": "background-203",
+    "docId": "background-669",
     "how": "importer:the doc this record was built from"
    },
    "spell-seeker": {
     "name": "Spell Seeker",
     "status": "doc",
-    "docId": "background-204",
+    "docId": "background-670",
     "how": "importer:the doc this record was built from"
    },
    "trailblazer": {
     "name": "Trailblazer",
     "status": "doc",
-    "docId": "background-205",
+    "docId": "background-671",
     "how": "importer:the doc this record was built from"
    },
    "translator": {
     "name": "Translator",
     "status": "doc",
-    "docId": "background-206",
+    "docId": "background-672",
     "how": "importer:the doc this record was built from"
    },
    "sewer-dragon": {
@@ -114786,31 +114786,31 @@
    "spellstrike": {
     "name": "Spellstrike",
     "status": "doc",
-    "docId": "action-755",
+    "docId": "action-4260",
     "how": "importer:the doc this record was built from"
    },
    "arcane-cascade": {
     "name": "Arcane Cascade",
     "status": "doc",
-    "docId": "action-756",
+    "docId": "action-4261",
     "how": "importer:the doc this record was built from"
    },
    "manifest-eidolon": {
     "name": "Manifest Eidolon",
     "status": "doc",
-    "docId": "action-757",
+    "docId": "action-4267",
     "how": "importer:the doc this record was built from"
    },
    "act-together": {
     "name": "Act Together",
     "status": "doc",
-    "docId": "action-758",
+    "docId": "action-4268",
     "how": "importer:the doc this record was built from"
    },
    "share-senses": {
     "name": "Share Senses",
     "status": "doc",
-    "docId": "action-759",
+    "docId": "action-4269",
     "how": "importer:the doc this record was built from"
    },
    "furious-strike": {
@@ -114894,7 +114894,7 @@
    "cleanse-soul-path": {
     "name": "Cleanse Soul Path",
     "status": "doc",
-    "docId": "action-774",
+    "docId": "action-4270",
     "how": "importer:the doc this record was built from"
    },
    "learn-name": {
@@ -122002,8 +122002,8 @@
    "magic-broom": {
     "name": "Flying Broom",
     "status": "doc",
-    "docId": "equipment-251",
-    "how": "manual:word-order (equipment \"Broom of Flying\")"
+    "docId": "equipment-3023",
+    "how": "manual:word-order (equipment \"Broom of Flying\") -> newest printing (was equipment-251)"
    },
    "sand-diver": {
     "name": "Sand Diver",
@@ -123408,13 +123408,13 @@
    "magus": {
     "name": "Magus",
     "status": "doc",
-    "docId": "archetype-95",
+    "docId": "archetype-386",
     "how": "importer:the doc this record was built from"
    },
    "summoner": {
     "name": "Summoner",
     "status": "doc",
-    "docId": "archetype-96",
+    "docId": "archetype-389",
     "how": "importer:the doc this record was built from"
    },
    "cathartic-mage": {
@@ -123444,7 +123444,7 @@
    "soulforger": {
     "name": "Soulforger",
     "status": "doc",
-    "docId": "archetype-102",
+    "docId": "archetype-393",
     "how": "importer:the doc this record was built from"
    },
    "wellspring-mage": {
@@ -123570,7 +123570,7 @@
    "captivator": {
     "name": "Captivator",
     "status": "doc",
-    "docId": "archetype-125",
+    "docId": "archetype-390",
     "how": "importer:the doc this record was built from"
    },
    "spell-trickster": {
@@ -125544,13 +125544,13 @@
    "hybrid-studies": {
     "name": "Hybrid Studies",
     "status": "doc",
-    "docId": "category-page-68",
+    "docId": "category-page-183",
     "how": "importer:the doc this record was built from"
    },
    "eidolons": {
     "name": "Eidolons",
     "status": "doc",
-    "docId": "category-page-69",
+    "docId": "category-page-182",
     "how": "importer:the doc this record was built from"
    },
    "innovations": {
@@ -136666,13 +136666,13 @@
    "binding-an-armament": {
     "name": "Binding an Armament",
     "status": "doc",
-    "docId": "rules-1561",
+    "docId": "rules-3690",
     "how": "importer:the doc this record was built from"
    },
    "soul-path": {
     "name": "Soul Path",
     "status": "doc",
-    "docId": "rules-1562",
+    "docId": "rules-3692",
     "how": "importer:the doc this record was built from"
    },
    "corruption": {
@@ -136684,7 +136684,7 @@
    "removing-corruption": {
     "name": "Removing Corruption",
     "status": "doc",
-    "docId": "rules-1564",
+    "docId": "rules-3694",
     "how": "importer:the doc this record was built from"
    },
    "upgrading-reshaping-restoring": {
@@ -136696,7 +136696,7 @@
    "essence-powers": {
     "name": "Essence Powers",
     "status": "doc",
-    "docId": "rules-1566",
+    "docId": "rules-3689",
     "how": "importer:the doc this record was built from"
    },
    "thassilonian-rune-magic": {
@@ -136804,13 +136804,13 @@
    "eidolon-spells": {
     "name": "Eidolon Spells",
     "status": "doc",
-    "docId": "rules-1585",
+    "docId": "rules-3686",
     "how": "importer:the doc this record was built from"
    },
    "reading-an-eidolon-entry": {
     "name": "Reading an Eidolon Entry",
     "status": "doc",
-    "docId": "rules-1586",
+    "docId": "rules-3687",
     "how": "importer:the doc this record was built from"
    },
    "gears-characters": {
@@ -151596,19 +151596,19 @@
    "eidolon": {
     "name": "Eidolon",
     "status": "doc",
-    "docId": "trait-386",
+    "docId": "trait-958",
     "how": "importer:the doc this record was built from"
    },
    "grimoire": {
     "name": "Grimoire",
     "status": "doc",
-    "docId": "trait-387",
+    "docId": "trait-962",
     "how": "importer:the doc this record was built from"
    },
    "magus": {
     "name": "Magus",
     "status": "doc",
-    "docId": "trait-389",
+    "docId": "trait-953",
     "how": "importer:the doc this record was built from"
    },
    "pervasive-magic": {
@@ -151626,7 +151626,7 @@
    "summoner": {
     "name": "Summoner",
     "status": "doc",
-    "docId": "trait-392",
+    "docId": "trait-954",
     "how": "importer:the doc this record was built from"
    },
    "true-name": {
@@ -151638,13 +151638,13 @@
    "evolution": {
     "name": "Evolution",
     "status": "doc",
-    "docId": "trait-394",
+    "docId": "trait-959",
     "how": "importer:the doc this record was built from"
    },
    "tandem": {
     "name": "Tandem",
     "status": "doc",
-    "docId": "trait-395",
+    "docId": "trait-960",
     "how": "importer:the doc this record was built from"
    },
    "class": {

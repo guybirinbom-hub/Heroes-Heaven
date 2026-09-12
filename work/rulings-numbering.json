@@ -155,6 +155,10 @@
   "empty-description-marker-line": 152,
   "timewracked-dedication-speed-clause": 153,
   "speed-plural-while-a-state-is-on": 154,
-  "flexible-spellcaster-book-casters": 155
+  "flexible-spellcaster-book-casters": 155,
+  "reprint-twins-merge": 158,
+  "reprint-lost-traits": 159,
+  "reprint-damaged-pages": 160,
+  "spell-parry-badge": 161
  }
 }

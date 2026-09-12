@@ -683,6 +683,20 @@ with its listed spells and free Arcane Cascade (desk #56, #104, #120, #121; his 
 to use the newest sources we have"*). It is also why a record whose legacy twin is empty stays hidden
 rather than being offered (#36).
 
+**Refined 2026-09-12 — the record's SOURCE document, not only its display.** After v0.1.31 made every
+popup follow its record, 566 records turned out to point at an Archives document the Archives had since
+reprinted — 384 of them repointable, 182 whose reprint already ships as its own record (a merge decision
+for the desk) — (Spellstrike at *Secrets of Magic* while *Impossible Magic* replaces it): the sheet had been on
+the old printing all along, with only the popup picking the new one. His words: *"we cant be using old
+data ( not to be confused with pre remaster and after remster data)"*. So the join itself follows the
+Archives' own reprint links (`legacy_id` on the reprint, `remaster_id` on the replaced page — never a name
+match; two different *Zombie Horde* feats exist): a record whose document was reprinted comes from the
+reprint — page, text, traits, numbers, edition — and keeps its id. Two things are NOT this rule: legacy
+content that was never reprinted stays as it is (the pre-/post-remaster axis is chosen by the "hide legacy"
+filter, not here), and an overlay `aonId` ruling of his still wins. A reprint whose own slug already ships
+as a separate record is a merge decision for the desk. Guard: `scripts/reprint-check.mjs` in
+`npm run verify`.
+
 ### R13 · "either X or Y" / "your choice of X or Y" is ONE pick
 
 A feat or background printed *"you're trained in your choice of either the Crafting or Society skill"*

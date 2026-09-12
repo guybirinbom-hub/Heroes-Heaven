@@ -201,7 +201,9 @@ export const findStrippedSaveDc = (root = ROOT) => {
         next = r.next;
         done.push({ run: r.inserted, at: `${ctx} ▸ ${m[3]}`, was: r.was });
       }
-      if (next !== raw) edits.push({ category: bucket, id, field: 'description', value: next, sites: done });
+      // The doc id rides along: apply-parity-fixes.mjs refuses a `why` that names no AoN document,
+      // and this is the very document the run above was read out of.
+      if (next !== raw) edits.push({ category: bucket, id, field: 'description', value: next, sites: done, aonId: core[bucket][id].aonId });
     }
   }
   return { edits, refused, footHoles, examined };
@@ -235,7 +237,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
             id: e.id,
             field: 'description',
             value: e.value,
-            why: `AoN prints "${e.sites[0].run} ${e.sites[0].at.split(' ▸ ')[1]}" here and our import dropped it, so the player had no DC to roll against (finding unmemorable-mantle#save-dc; restored by scripts/repair-stripped-save-dc.mjs, insertions only).`,
+            // The doc id is not decoration: apply-parity-fixes.mjs refuses a `why` that names no AoN
+            // document, and test/batch29-repair.test.ts pins the "AoN prints" phrase. Both, once.
+            why: `AoN prints "${e.sites[0].run} ${e.sites[0].at.split(' ▸ ')[1]}" on ${e.aonId} here and our import dropped it, so the player had no DC to roll against (finding unmemorable-mantle#save-dc; restored by scripts/repair-stripped-save-dc.mjs, insertions only).`,
           })),
           note: `${edits.length} description(s) repaired by insertion of the printed DC/save type; ${refused.length} site(s) refused (see the script's report). The three Unmemorable Mantle rungs are hand-authored by the data agent.`,
         },

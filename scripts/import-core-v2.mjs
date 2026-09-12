@@ -19,6 +19,7 @@ import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
 import { aonFacets } from './lib/aon-facets.mjs';
+import { buildReprintMap, repointDoc } from './lib/reprint.mjs';
 
 const DATA = 'C:/trying ai 2/hh-data-export/without-images/data';
 const OUT = 'public/core.json';
@@ -281,7 +282,35 @@ const resolveBaseItem = (arg, want) => {
   return baseItemIndex.get(String(arg).toLowerCase()) ?? null;
 };
 
-function overlayContent(rec, old = {}, bucket = null) {
+/*
+ * THE RENAME BOUNDARY — a case-only difference is AoN's heading style, not a rename.
+ *
+ * Owner, 2026-09-12: "we cant be using old data (not to be confused with pre remaster and after
+ * remster data)" — so a record takes its reprint WHOLE, including a real rename (equipment-251
+ * "Broom of Flying" -> equipment-3023 "Flying Broomstick" is adopted, as today). But the Archives
+ * TITLE-CASE a reprint's page heading, and the printed book does not: measured over the 384-record
+ * newest-printing repoint, 28 names changed and every single one was only letter case —
+ * "Fulu of Fire Suppression" -> "Fulu Of Fire Suppression", "Bathe in Blood" -> "Bathe In Blood",
+ * "Five-Feather Wreath" -> "Five-feather Wreath", "The World's a Stage" -> "The World's a stage",
+ * "Meld into Eidolon" -> "Meld Into Eidolon". Shipping those would be a visible regression against a
+ * name the book does not print.
+ *
+ * So: same letters, different case (whitespace collapsed) => the record keeps the name it ships
+ * under. Different letters => the reprint's name is adopted, unchanged from before.
+ *
+ * `data.legacy_name` is NOT the instrument here — it re-cases in both directions on 101 records
+ * ("Air Cartridge Firing System" -> "…Firing system"), so it cannot decide which spelling is right.
+ */
+// Declared BEFORE overlayContent for the same reason facetStats is: the function is hoisted, a `const`
+// read before its initialiser throws.
+let caseOnlyKept = 0;
+const foldName = (s) => String(s ?? '').replace(/\s+/g, ' ').trim();
+const caseOnlyRename = (a, b) => {
+  const x = foldName(a); const y = foldName(b);
+  return !!x && !!y && x !== y && x.toLowerCase() === y.toLowerCase();
+};
+
+function overlayContent(rec, old = {}, bucket = null, shippedName = null) {
   /*
    * The NAME plus every facet the Archives can state — level, rarity, traits, price, bulk.
    *
@@ -314,7 +343,10 @@ function overlayContent(rec, old = {}, bucket = null) {
   }
   for (const n of notes) facetNotes.push({ slug: slug(rec.name), name: rec.name, ...n });
   for (const k of Object.keys(facets)) facetStats[k] = (facetStats[k] ?? 0) + 1;
-  return { name: rec.name, ...facets };
+  // See the rename boundary above: case-only => keep what ships; different letters => adopt.
+  const name = caseOnlyRename(shippedName, rec.name) ? shippedName : rec.name;
+  if (name !== rec.name) caseOnlyKept++;
+  return { name, ...facets };
 }
 
 // ------------------------------------------------------------------ load reference (pristine Foundry core)
@@ -376,6 +408,13 @@ for (const f of readdirSync(DATA).filter((x) => x.endsWith('.json'))) {
   }
 }
 
+/*
+ * THE NEWEST PRINTING WINS (owner, 2026-09-12: "we cant be using old data (not to be confused with pre
+ * remaster and after remster data)"; gold-set R12). Built from the documents already loaded above —
+ * `data.legacy_id` / `data.remaster_id` state the pairing, so no name matching is involved. See
+ * scripts/lib/reprint.mjs for the rule and its two exceptions.
+ */
+const reprints = buildReprintMap(docById);
 
 // ------------------------------------------------------------------ fresh-record derivation (new-only corpus)
 // New-only records (no old baseline) that Foundry never had. Added with facet-derived fields so they're
@@ -537,6 +576,26 @@ for (const r of supersededRecs) {
   if (newSlug) (supersededMap[r.bucket] ||= {})[r.slug] = newSlug;
 }
 
+/*
+ * THE SHIPPED ARTEFACT — read for its `aonId` stamps and for the NAME a record already ships under.
+ *
+ * `cur` (the transcription reference, public/core.foundry-backup.json) is PRE-ARCHIVE: it carries no
+ * aon* field on any of its 17,772 records, and it never can — `aonId` is written by
+ * scripts/migration/stamp-aonid.mjs, a LATER stage of `npm run data`, from scripts/migration/out/map.json.
+ * So `db[bucket][s].aonId` in the ast writer is undefined for every record except the authored `aonId`
+ * overlay rows applyBackfill() just wrote, and the guard that reads it fired for almost nobody.
+ *
+ * public/core.json is the previous run's FINAL, stamped output. It is not overwritten until the end of
+ * this file, so reading it here gives what the chain last agreed on — the provenance for the ast
+ * writer, and the display name for the case-only rename boundary in overlayContent().
+ *
+ * ⚠ The NAME reader must be this file and NOT `cur`: measured 2026-09-12, 272 records differ from the
+ * Foundry reference by case alone and in BOTH directions ("Transmute Rock And Mud" -> the Archives'
+ * better "Transmute Rock and Mud"), so comparing against `cur` would drag 272 unrelated names back to
+ * Foundry spellings. Against the shipped artefact it is exactly the 28 the reprint re-cased.
+ */
+const shippedCore = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : {};
+
 // ------------------------------------------------------------------ assemble the new ContentDatabase
 const db = {};
 const stats = {};
@@ -547,7 +606,7 @@ for (const bucket of AON_BUCKETS) {
   const newMap = bestByBucket[bucket] || {};
   const out = {};
   const supers = supersededMap[bucket] || {};
-  let overlaid = 0, deferred = 0, orphanKept = 0, added = 0, superseded = 0, mapCorrected = 0;
+  let overlaid = 0, deferred = 0, orphanKept = 0, added = 0, superseded = 0, mapCorrected = 0, repointed = 0;
 
   // 1. every new record that MATCHES an old slug: adopt the new name, keep old content+mechanics.
   //    New-only records are DEFERRED to Step 2 (they need real mechanics before they can ship).
@@ -566,6 +625,9 @@ for (const bucket of AON_BUCKETS) {
   // Both key sets: `potion-of-flying` exists only in the AoN corpus (it is a FRESH record, absent from
   // the Foundry reference), so counting kin over oldMap alone missed exactly the records this protects.
   const allKeysSorted = [...new Set([...Object.keys(oldMap), ...Object.keys(newMap)])].sort();
+  // Every slug this bucket can end up holding — the test for reprint exception 2 (see reprint.mjs).
+  const keySet = new Set(allKeysSorted);
+  const hasSlug = (k) => keySet.has(k);
   const kinCount = (s) => {
     let n = 0;
     for (let i = allKeysSorted.indexOf(s) + 1; i > 0 && i < allKeysSorted.length && allKeysSorted[i].startsWith(`${s}-`); i++) n++;
@@ -612,11 +674,35 @@ for (const bucket of AON_BUCKETS) {
     const mapped = mappedDoc && !(mappedDoc.exclude_from_search === 1 && fallback.exclude_from_search !== 1)
       ? mappedDoc
       : null;
-    const rec = mapped ?? fallback;
+    const joined = mapped ?? fallback;
+    /*
+     * …and THEN the newest printing of whatever the join landed on. Owner, 2026-09-12: "we cant be
+     * using old data (not to be confused with pre remaster and after remster data)" — where the SAME
+     * thing was reprinted in a newer book the record takes the reprint WHOLE: facets, text, edition,
+     * and therefore the AST page below. The pairing is stated by the documents themselves
+     * (`data.legacy_id` / `data.remaster_id`), never guessed from a name.
+     *
+     * Exception 1 — an overlay `aonId` ruling — is honoured because a pinned record keeps its own
+     * aonId through the AST resolution below and stamp-aonid.mjs re-applies the authored rows last.
+     * Exception 2 — the reprint already ships as a record of its own — is `hasSlug`: repointing there
+     * would collapse two records onto one page, which is a merge decision for the owner.
+     *
+     * NAMES: the reprint's display name is adopted, through the existing "adopt only the new canonical
+     * NAME" boundary in overlayContent — the id (slug) never changes, so overlay rows, tests and saved
+     * characters keep resolving. Measured on this repoint: 28 of the 384 change, and every one of them
+     * is the Archives' own title-casing of the reprint heading ("Bathe in Blood" -> "Bathe In Blood",
+     * "Fulu of the Drunken Monkey" -> "Fulu Of The Drunken Monkey"). Left as the Archives print it:
+     * `data.legacy_name` is not a better source (it re-cases in BOTH directions — "Air Cartridge
+     * Firing System" -> "…firing system"), so a casing repair would be a lane of its own, not part of
+     * this rule.
+     */
+    const rep = repointDoc(reprints, joined?.id, s, hasSlug);
+    const rec = (rep && docById.get(rep)) || joined;
     if (mapped && mapped !== fallback) mapCorrected++;
+    if (rec !== joined) repointed++;
     if (rec?.id) (usedDocs[bucket] ??= {})[s] = rec.id;
     const old = oldMap[s];
-    if (old) { out[s] = { ...old, ...overlayContent(rec, old, bucket), id: s, edition: rec.edition }; overlaid++; }
+    if (old) { out[s] = { ...old, ...overlayContent(rec, old, bucket, shippedCore[bucket]?.[s]?.name), id: s, edition: rec.edition }; overlaid++; }
     else if (REFERENCE_BUCKETS.has(bucket)) { const fr = deriveReference(s, rec); if (fr) { out[s] = fr; added++; } else deferred++; }
     else if (FRESH_BUCKETS.has(bucket)) { const fr = deriveFresh(bucket, s, rec); if (fr) { fr.edition = rec.edition; out[s] = fr; added++; } else deferred++; }
     else deferred++;
@@ -639,7 +725,7 @@ for (const bucket of AON_BUCKETS) {
     else { out[s] = oldMap[s]; orphanKept++; }
   }
   db[bucket] = out;
-  stats[bucket] = { total: Object.keys(out).length, overlaid, added, deferred, orphanKept, superseded, mapCorrected };
+  stats[bucket] = { total: Object.keys(out).length, overlaid, added, deferred, orphanKept, superseded, mapCorrected, repointed };
 }
 
 // carry the hand-authored buckets over unchanged
@@ -776,19 +862,6 @@ function resolveAst(node) {
 }
 mkdirSync('public/ast', { recursive: true });
 const astStats = {};
-/*
- * THE SHIPPED ARTEFACT, read for its `aonId` stamps only.
- *
- * `cur` (the transcription reference, public/core.foundry-backup.json) is PRE-ARCHIVE: it carries no
- * aon* field on any of its 17,772 records, and it never can — `aonId` is written by
- * scripts/migration/stamp-aonid.mjs, a LATER stage of `npm run data`, from scripts/migration/out/map.json.
- * So `db[bucket][s].aonId` below is undefined for every record except the 66 authored `aonId` overlay
- * rows applyBackfill() just wrote, and the guard that reads it fired for almost nobody.
- *
- * public/core.json is the previous run's FINAL, stamped output. It is not overwritten until the end of
- * this file, so reading it here gives the provenance the chain last agreed on.
- */
-const shippedCore = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : {};
 // preference order when a slug has ast in several buckets (a description-opener with only a title
 // resolves to the first bucket here that carries it).
 const BUCKET_PRIORITY = ['conditions', 'actions', 'feats', 'classFeatures', 'spells', 'items', 'deities',
@@ -832,7 +905,17 @@ for (const bucket of AON_BUCKETS) {
      *      first, so this is what stamp-aonid.mjs will stamp as aonId later in this very run.
      *   4. nothing known -> the old edition-rank pick, unchanged.
      */
-    const ownId = db[bucket][s]?.aonId ?? shippedCore[bucket]?.[s]?.aonId ?? usedDocs[bucket]?.[s];
+    /*
+     * …and step 2 above (the SHIPPED aonId) is the provenance of the LAST chain, which is exactly what
+     * the newest-printing rule repoints. Hop it, unless the record is pinned by an overlay ruling —
+     * only an authored row can put an aonId on an assembled record, and a ruling is not overridden.
+     * Step 3 (usedDocs) is already the repointed doc, so hopping it again is a no-op; that is what
+     * makes the page, the record and the stamp land on the SAME document in ONE run.
+     */
+    const pinnedId = db[bucket][s]?.aonId;
+    const joinedId = pinnedId ?? shippedCore[bucket]?.[s]?.aonId ?? usedDocs[bucket]?.[s];
+    const ownId = pinnedId ? pinnedId
+      : (repointDoc(reprints, joinedId && String(joinedId), s, (k) => k in (db[bucket] || {})) ?? joinedId);
     const own = ownId ? docById.get(String(ownId)) : null;
     const rec = (own?.ast ? own : null) ?? newMap[s].rec;
     // PROVENANCE: the archive document this page was built from, so a guard can be exact rather than
@@ -916,6 +999,7 @@ try {
   console.warn('could not write used-docs.json:', e.message);
 }
 
+if (caseOnlyKept) console.log(`names: ${caseOnlyKept} record(s) kept their shipped spelling — the reprint only re-cased the heading (see the rename boundary in overlayContent)`);
 const sz = (existsSync(OUT) ? (readFileSync(OUT).length / 1e6).toFixed(1) : '?') + ' MB';
 console.log('new data: ' + total + ' docs | pruned superseded: ' + pruned + ' | idMap entries: ' + Object.keys(idMap).length);
 console.log('core.json (structured, no ast): ' + sz + '  [backup: public/core.foundry-backup.json]');

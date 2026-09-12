@@ -100333,9 +100333,19 @@
   "id": "blood-frenzy",
   "field": "actionCost",
   "value": {
+   "type": "free"
+  },
+  "why": "feat-9244 (Impossible Magic pg. 81, the reprint of feat-2909) prints \"Blood Frenzy Free Action\"; the Secrets of Magic printing this row was authored from printed Single Action. Newest printing wins (gold-set R12)."
+ },
+ {
+  "category": "feats",
+  "id": "spell-parry",
+  "field": "actionCost",
+  "value": {
    "type": "actions",
    "value": 1
-  }
+  },
+  "why": "feat-9049 (Impossible Magic, the reprint of feat-2851) prints the Secrets of Magic text UNCHANGED — Requirements line included — and only its action badge is empty (`<actions string=\"\" />`), while feat-2851 prints \"Single Action\". A bare badge is scrape damage, not the Archives stating \"no cost\" (the rule, and this very record as its worked example, is the header of scripts/actioncost-vs-aon.mjs), so the newest-printing repoint must not turn the feat passive. Pinned at the printed cost until desk #161 settles what the book shows."
  },
  {
   "category": "feats",
@@ -110328,7 +110338,7 @@
   "category": "items",
   "id": "amulet-implement",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "items",
@@ -110520,7 +110530,7 @@
   "category": "items",
   "id": "bell-implement",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "items",
@@ -110712,7 +110722,7 @@
   "category": "items",
   "id": "chalice-implement",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "items",
@@ -111900,7 +111910,7 @@
   "category": "items",
   "id": "regalia-implement",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "items",
@@ -112470,7 +112480,7 @@
   "category": "items",
   "id": "tome-implement",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "items",
@@ -112548,7 +112558,7 @@
   "category": "items",
   "id": "wand-implement",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "items",
@@ -115862,7 +115872,7 @@
   "category": "classFeatures",
   "id": "animal-order",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -115886,7 +115896,7 @@
   "category": "classFeatures",
   "id": "ashes",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -115952,7 +115962,7 @@
   "category": "classFeatures",
   "id": "bloodline-aberrant",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -115964,31 +115974,31 @@
   "category": "classFeatures",
   "id": "bloodline-angelic",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
   "id": "bloodline-demonic",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
   "id": "bloodline-diabolic",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
   "id": "bloodline-draconic",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
   "id": "bloodline-elemental",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -116006,7 +116016,7 @@
   "category": "classFeatures",
   "id": "bloodline-imperial",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -116036,7 +116046,7 @@
   "category": "classFeatures",
   "id": "bloodline-undead",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -116635,7 +116645,7 @@
   "category": "classFeatures",
   "id": "leaf-order",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -117495,7 +117505,7 @@
   "category": "classFeatures",
   "id": "storm-order",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -118499,7 +118509,7 @@
   "category": "classFeatures",
   "id": "act-together",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -118565,7 +118575,7 @@
   "category": "classFeatures",
   "id": "manifest-eidolon",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -118589,7 +118599,7 @@
   "category": "classFeatures",
   "id": "share-senses",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -121183,7 +121193,7 @@
   "category": "vehicles",
   "id": "magic-broom",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster"
  },
  {
   "category": "vehicles",
@@ -135264,7 +135274,7 @@
   "category": "spells",
   "id": "pernicious-poltergeist",
   "field": "description",
-  "value": "You create an echo of a powerful poltergeist, temporarily anchoring it to the area to terrorize and harm any opponents foolish enough to remain in the area. Because the poltergeist is a manifestation and is not truly present, it can't be attacked or hurt; it remains invisible unless otherwise stated. When you Cast the Spell, and the first time you Sustain it on subsequent rounds, the poltergeist creates your choice of one of the following effects.\n\n- **Deathly Assault** (negative) The poltergeist focuses on one creature in the area and flies through that creature's space, dealing damage ( save).\n- **Frighten** (emotion, fear, mental) The poltergeist becomes visible, appearing as a skeletal, ghostlike humanoid. Creatures in the area must attempt a save, becoming Frightened 2 on a failure.\n- **Telekinetic Storm** (force) The poltergeist hurls debris and quasi-real objects around in the area. All creatures in the area take 4d8 force damage ( save).\n\n---\n\n**Heightened (+2)** The damage of the deathly assault effect increases by 1d10, and the damage of the telekinetic storm effect increases by 1d8."
+  "value": "You create an echo of a powerful poltergeist, temporarily anchoring it to the area to terrorize and harm any opponents foolish enough to remain in the area. Because the poltergeist is a manifestation and is not truly present, it can't be attacked or hurt; it remains invisible unless otherwise stated. When you Cast the Spell, and the first time you Sustain it on subsequent rounds, the poltergeist creates your choice of one of the following effects.\n\n- **Deathly Assault** (negative) The poltergeist focuses on one creature in the area and flies through that creature's space, dealing damage ( save).\n- **Frighten** (emotion, fear, mental) The poltergeist becomes visible, appearing as a skeletal, ghostlike humanoid. Creatures in the area must attempt a Will save, becoming Frightened 2 on a failure.\n- **Telekinetic Storm** (force) The poltergeist hurls debris and quasi-real objects around in the area. All creatures in the area take 4d8 force damage ( save).\n\n---\n\n**Heightened (+2)** The damage of the deathly assault effect increases by 1d10, and the damage of the telekinetic storm effect increases by 1d8."
  },
  {
   "category": "spells",
@@ -135660,7 +135670,8 @@
   "category": "items",
   "id": "conflagration-club",
   "field": "description",
-  "value": "A ring of magical crystals encircles the base of this *+1 striking greatclub*, allowing it to absorb and store magical energy.\n\n---\n\n**Activate** ⟨5⟩ envision\n\n**Trigger** You Cast a Spell from a spell slot, and the spell has the acid, cold, electricity, fire, or sonic trait\n\n**Requirements** The club has no charges\n\n---\n\n**Effect** You mentally align the club's crystals to reverberate with energy from the spell. It gains a number of charges equal to the rank of the spell slot, and the charges are attuned to the damage type matching the spell's trait. If the spell has more than one eligible trait, choose one when the charges are stored.\n\n---\n\n**Activate** ⟨2⟩ command, envision (evocation, magical)\n\n**Requirements** The club has at least 1 charge\n\n---\n\n**Effect** You flip the club around to blast a cone of energy from its base. Each creature in a 15-foot cone takes 1d6 damage per charge stored in the club, with a basic Reflex save against your spell DC or DC 19, whichever is greater. The damage type is the same type the charges were attuned to. The club loses all of its charges."
+  "value": "A ring of magical crystals encircles the base of this *+1 striking greatclub*, allowing it to absorb and store magical energy.\n\n---\n\n**Activate** ⟨5⟩ envision\n\n**Trigger** You Cast a Spell from a spell slot, and the spell has the acid, cold, electricity, fire, or sonic trait\n\n**Requirements** The club has no charges\n\n---\n\n**Effect** You mentally align the club's crystals to reverberate with energy from the spell. It gains a number of charges equal to the rank of the spell slot, and the charges are attuned to the damage type matching the spell's trait. If the spell has more than one eligible trait, choose one when the charges are stored.\n\n---\n\n**Activate** ⟨2⟩ command, envision (evocation, magical)\n\n**Requirements** The club has at least 1 charge\n\n---\n\n**Effect** You flip the club around to blast a cone of energy from its base. Each creature in a 15-foot cone takes 1d6 damage per charge stored in the club, with a DC 20 basic Reflex save against your spell DC or DC 19, whichever is greater. The damage type is the same type the charges were attuned to. The club loses all of its charges.",
+  "why": "equipment-5016 prints \"DC 20 basic Reflex save\" here and our import dropped it, so the player had no DC to roll against (finding unmemorable-mantle#save-dc; restored by scripts/repair-stripped-save-dc.mjs, insertions only)."
  },
  {
   "category": "items",
@@ -186996,5 +187007,416 @@
   "field": "note",
   "value": "Flexible Spellcaster: you prepare a spell COLLECTION rather than filling each slot, and can cast any spell in it using any slot of an appropriate rank. The collection is ONE pool, not a list per rank: it holds as many spells as the total spell slots you get each day from your class, in any mix of ranks, and at least one of them must be 1st rank. That total counts your 1st- to 9th-rank slots only: a single 10th-rank slot from a class feature stays OUTSIDE the collection and works just as it always did, so the spell you choose for it is not one of the collection's spells and does not use up one of its places. In exchange your slots per rank never advance past 2, and you learn 2 fewer class cantrips. Restricted slots (a wizard curriculum slot, a cleric divine font) are unaffected and their spells do not count toward the collection.",
   "why": "AoN archetype-99, the footnote to Table 5-1: \"Your class most likely has a class feature that gives you a single 10th level spell slot that works a bit differently from other slots. If so, flexible spellcaster doesn't change the way that spell works.\" The same table prints Collection 18 at 17th, 18th, 19th and 20th while its 10th-rank column turns from an em dash to that footnote mark at 19th - so the capstone slot enlarges nothing. The shipped note said the collection equals \"the total spell slots you get each day from your class\" with no carve-out, which reads as 19 places at 19th level and contradicts both the footnote and the printed column. Owner ruling 2026-09-10 #102."
+ },
+ {
+  "category": "feats",
+  "id": "spellstriker",
+  "field": "grantsActions",
+  "value": [
+   "spellstrike"
+  ],
+  "why": "feat-9288 (Impossible Magic pg. 88) prints \"You gain the magus's Spellstrike activity\" exactly as feat-2948 (Secrets of Magic pg. 75) did, but the reprint page carries no <document id=\"action-4260\"> embed, so the importer's link-derived grantsActions came out empty and the dedication stopped handing the player Spellstrike. The printed rule is unchanged; only the Archives' markup is missing."
+ },
+ {
+  "category": "feats",
+  "id": "summoner-dedication",
+  "field": "grantsActions",
+  "value": [
+   "manifest-eidolon"
+  ],
+  "why": "feat-9307 (Impossible Magic pg. 91) prints \"You gain an eidolon as well as the Manifest Eidolon activity\" exactly as feat-2953 (Secrets of Magic pg. 76) did, but the reprint page carries no <document id=\"action-4267\"> embed, so grantsActions came out empty. Same markup gap as spellstriker above."
+ },
+ {
+  "category": "spells",
+  "id": "bathe-in-blood",
+  "field": "name",
+  "value": "Bathe in Blood",
+  "why": "ritual-246 re-cases the heading of ritual-54 (\"Bathe in Blood\" -> \"Bathe In Blood\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Bathe in Blood\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "spells",
+  "id": "the-worlds-a-stage",
+  "field": "name",
+  "value": "The World's a Stage",
+  "why": "ritual-272 re-cases the heading of ritual-64 (\"The World's a Stage\" -> \"The World's a stage\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"The World's a Stage\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "fulu-of-the-drunken-monkey",
+  "field": "name",
+  "value": "Fulu of the Drunken Monkey",
+  "why": "equipment-5074 re-cases the heading of equipment-974 (\"Fulu of the Drunken Monkey\" -> \"Fulu Of The Drunken Monkey\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Fulu of the Drunken Monkey\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "fulu-of-fire-suppression",
+  "field": "name",
+  "value": "Fulu of Fire Suppression",
+  "why": "equipment-5075 re-cases the heading of equipment-975 (\"Fulu of Fire Suppression\" -> \"Fulu Of Fire Suppression\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Fulu of Fire Suppression\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "fulu-of-flood-suppression",
+  "field": "name",
+  "value": "Fulu of Flood Suppression",
+  "why": "equipment-5076 re-cases the heading of equipment-976 (\"Fulu of Flood Suppression\" -> \"Fulu Of Flood Suppression\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Fulu of Flood Suppression\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "fulu-of-the-stoic-ox",
+  "field": "name",
+  "value": "Fulu of the Stoic Ox",
+  "why": "equipment-5077 re-cases the heading of equipment-977 (\"Fulu of the Stoic Ox\" -> \"Fulu Of The Stoic Ox\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Fulu of the Stoic Ox\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "bestiary-of-metamorphosis",
+  "field": "name",
+  "value": "Bestiary of Metamorphosis",
+  "why": "equipment-5120 re-cases the heading of equipment-989 (\"Bestiary of Metamorphosis\" -> \"Bestiary Of Metamorphosis\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Bestiary of Metamorphosis\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "book-of-lingering-blaze",
+  "field": "name",
+  "value": "Book of Lingering Blaze",
+  "why": "equipment-5123 re-cases the heading of equipment-990 (\"Book of Lingering Blaze\" -> \"Book Of Lingering Blaze\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Book of Lingering Blaze\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "spellbook-of-redundant-enchantment",
+  "field": "name",
+  "value": "Spellbook of Redundant Enchantment",
+  "why": "equipment-5133 re-cases the heading of equipment-994 (\"Spellbook of Redundant Enchantment\" -> \"Spellbook Of Redundant Enchantment\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Spellbook of Redundant Enchantment\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "rune-of-sin",
+  "field": "name",
+  "value": "Rune of Sin",
+  "why": "equipment-5180 re-cases the heading of equipment-999 (\"Rune of Sin\" -> \"Rune Of Sin\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Rune of Sin\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "staff-of-natures-cunning",
+  "field": "name",
+  "value": "Staff of Nature's Cunning",
+  "why": "equipment-5169 re-cases the heading of equipment-1002 (\"Staff of Nature's Cunning\" -> \"Staff Of Nature's Cunning\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Staff of Nature's Cunning\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "five-feather-wreath",
+  "field": "name",
+  "value": "Five-Feather Wreath",
+  "why": "equipment-5152 re-cases the heading of equipment-1013 (\"Five-Feather Wreath\" -> \"Five-feather Wreath\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Five-Feather Wreath\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "eye-of-enlightenment",
+  "field": "name",
+  "value": "Eye of Enlightenment",
+  "why": "equipment-5103 re-cases the heading of equipment-1021 (\"Eye of Enlightenment\" -> \"Eye Of Enlightenment\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Eye of Enlightenment\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "potion-of-grounding",
+  "field": "name",
+  "value": "Potion of Grounding",
+  "why": "equipment-5097 re-cases the heading of equipment-1027 (\"Potion of Grounding\" -> \"Potion Of Grounding\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Potion of Grounding\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "potion-of-minute-echoes",
+  "field": "name",
+  "value": "Potion of Minute Echoes",
+  "why": "equipment-5099 re-cases the heading of equipment-1028 (\"Potion of Minute Echoes\" -> \"Potion Of Minute Echoes\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Potion of Minute Echoes\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "cloak-of-feline-rest",
+  "field": "name",
+  "value": "Cloak of Feline Rest",
+  "why": "equipment-5183 re-cases the heading of equipment-1048 (\"Cloak of Feline Rest\" -> \"Cloak Of Feline Rest\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Cloak of Feline Rest\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "collar-of-the-eternal-bond",
+  "field": "name",
+  "value": "Collar of the Eternal Bond",
+  "why": "equipment-5184 re-cases the heading of equipment-1050 (\"Collar of the Eternal Bond\" -> \"Collar Of The Eternal Bond\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Collar of the Eternal Bond\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "deck-of-mischief",
+  "field": "name",
+  "value": "Deck of Mischief",
+  "why": "equipment-5142 re-cases the heading of equipment-1053 (\"Deck of Mischief\" -> \"Deck Of Mischief\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Deck of Mischief\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "flask-of-fellowship",
+  "field": "name",
+  "value": "Flask of Fellowship",
+  "why": "equipment-5143 re-cases the heading of equipment-1056 (\"Flask of Fellowship\" -> \"Flask Of Fellowship\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Flask of Fellowship\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "glasses-of-sociability",
+  "field": "name",
+  "value": "Glasses of Sociability",
+  "why": "equipment-5185 re-cases the heading of equipment-1057 (\"Glasses of Sociability\" -> \"Glasses Of Sociability\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Glasses of Sociability\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "hat-of-many-minds",
+  "field": "name",
+  "value": "Hat of Many Minds",
+  "why": "equipment-5186 re-cases the heading of equipment-1060 (\"Hat of Many Minds\" -> \"Hat Of Many Minds\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Hat of Many Minds\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "hundred-moth-caress",
+  "field": "name",
+  "value": "Hundred-Moth Caress",
+  "why": "equipment-5020 re-cases the heading of equipment-1061 (\"Hundred-Moth Caress\" -> \"Hundred-moth Caress\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Hundred-Moth Caress\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "jar-of-shifting-sands",
+  "field": "name",
+  "value": "Jar of Shifting Sands",
+  "why": "equipment-5144 re-cases the heading of equipment-1064 (\"Jar of Shifting Sands\" -> \"Jar Of Shifting Sands\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Jar of Shifting Sands\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "mask-of-allure",
+  "field": "name",
+  "value": "Mask of Allure",
+  "why": "equipment-5115 re-cases the heading of equipment-1066 (\"Mask of Allure\" -> \"Mask Of Allure\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Mask of Allure\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "staff-of-the-desert-winds",
+  "field": "name",
+  "value": "Staff of the Desert Winds",
+  "why": "equipment-5170 re-cases the heading of equipment-1078 (\"Staff of the Desert Winds\" -> \"Staff Of The Desert Winds\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Staff of the Desert Winds\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "staff-storing-shield",
+  "field": "name",
+  "value": "Staff-Storing Shield",
+  "why": "equipment-5008 re-cases the heading of equipment-1079 (\"Staff-Storing Shield\" -> \"Staff-storing Shield\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Staff-Storing Shield\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "thousand-blade-thesis",
+  "field": "name",
+  "value": "Thousand-Blade Thesis",
+  "why": "equipment-5146 re-cases the heading of equipment-1081 (\"Thousand-Blade Thesis\" -> \"Thousand-blade Thesis\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Thousand-Blade Thesis\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "feats",
+  "id": "meld-into-eidolon",
+  "field": "name",
+  "value": "Meld into Eidolon",
+  "why": "feat-9227 re-cases the heading of feat-2892 (\"Meld into Eidolon\" -> \"Meld Into Eidolon\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Meld into Eidolon\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+ },
+ {
+  "category": "items",
+  "id": "chalice-implement",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Dark Archive (Remastered)",
+   "license": "OGL"
+  },
+  "why": "implement-19 prints [\"Dark Archives (Remastered)\"]; the record still named \"Pathfinder Dark Archive\", which is the book of implement-3 — the printing implement-19 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "items",
+  "id": "lucky-keepsake",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core",
+   "license": "OGL"
+  },
+  "why": "feat-4505 prints [\"Player Core\"]; the record still named \"Pathfinder Lost Omens Character Guide\", which is the book of feat-1048 — the printing feat-4505 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "act-together",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "OGL"
+  },
+  "why": "action-4268 prints [\"Impossible Magic\"]; the record still named \"Pathfinder Secrets of Magic\", which is the book of action-758 — the printing action-4268 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "manifest-eidolon",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "OGL"
+  },
+  "why": "action-4267 prints [\"Impossible Magic\"]; the record still named \"Pathfinder Secrets of Magic\", which is the book of action-757 — the printing action-4267 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "share-senses",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "OGL"
+  },
+  "why": "action-4269 prints [\"Impossible Magic\"]; the record still named \"Pathfinder Secrets of Magic\", which is the book of action-759 — the printing action-4269 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "feats",
+  "id": "keep-up-the-good-fight-knight-vigilant",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Battlecry!",
+   "license": "OGL"
+  },
+  "why": "feat-7875 prints [\"Battlecry!\"]; the record still named \"Pathfinder Lost Omens Knights of Lastwall\", which is the book of feat-3586 — the printing feat-7875 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "feats",
+  "id": "magic-sense-magus",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core",
+   "license": "OGL"
+  },
+  "why": "feat-5044 prints [\"Player Core\",\"Player Core 2\"]; the record still named \"Pathfinder Secrets of Magic\", which is the book of feat-622 — the printing feat-5044 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "feats",
+  "id": "signature-spell-expansion-psychic",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core 2",
+   "license": "ORC"
+  },
+  "why": "feat-6109 prints [\"Player Core 2\"]; the record still named \"Pathfinder Dark Archive (Remastered)\", which is the book of feat-1823 — the printing feat-6109 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "feats",
+  "id": "counterspell-spontaneous",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core",
+   "license": "OGL"
+  },
+  "why": "feat-4994 prints [\"Player Core\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of feat-633 — the printing feat-4994 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "feats",
+  "id": "soulsight-sorcerer",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core",
+   "license": "OGL"
+  },
+  "why": "feat-4609 prints [\"Player Core\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of feat-1647 — the printing feat-4609 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "deities",
+  "id": "aon-atheism",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Lost Omens Divine Mysteries",
+   "license": "OGL"
+  },
+  "why": "deity-297 prints [\"Divine Mysteries\"]; the record still named \"Pathfinder Core Rulebook\", which is the book of deity-21 — the printing deity-297 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "deities",
+  "id": "aon-followers-of-fate",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Lost Omens Divine Mysteries Web Supplement",
+   "license": "OGL"
+  },
+  "why": "deity-322 prints [\"Divine Mysteries Web Supplement\"]; the record still named \"Pathfinder Bestiary 2\", which is the book of deity-210 — the printing deity-322 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "actions",
+  "id": "rampaging-ferocity",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core",
+   "license": "OGL"
+  },
+  "why": "feat-4529 prints [\"Player Core\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of feat-1294 — the printing feat-4529 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "actions",
+  "id": "soaring-flight",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core 2",
+   "license": "OGL"
+  },
+  "why": "feat-5684 prints [\"Player Core 2\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of feat-1320 — the printing feat-5684 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "familiarAbilities",
+  "id": "elemental-wisp",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Rage of Elements"
+  },
+  "why": "familiar-specific-26 prints [\"Rage of Elements\"]; the record still named \"Pathfinder Grand Bazaar\", which is the book of familiar-specific-10 — the printing familiar-specific-26 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "familiarAbilities",
+  "id": "pipefox",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core 2"
+  },
+  "why": "familiar-specific-38 prints [\"Player Core 2\"]; the record still named \"Pathfinder Grand Bazaar\", which is the book of familiar-specific-12 — the printing familiar-specific-38 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "familiarAbilities",
+  "id": "imp",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core 2",
+   "license": "OGL"
+  },
+  "why": "familiar-specific-37 prints [\"Player Core 2\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of familiar-specific-2 — the printing familiar-specific-37 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "familiarAbilities",
+  "id": "spirit-guide",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Adventure Path: Gatewalkers"
+  },
+  "why": "familiar-specific-56 prints [\"Gatewalkers (Hardcover)\"]; the record still named \"Pathfinder #188: They Watched the Stars\", which is the book of familiar-specific-23 — the printing familiar-specific-56 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "familiarAbilities",
+  "id": "spellslime",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core 2",
+   "license": "OGL"
+  },
+  "why": "familiar-specific-40 prints [\"Player Core 2\"]; the record still named \"Pathfinder Advanced Player's Guide\", which is the book of familiar-specific-3 — the printing familiar-specific-40 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "familiarAbilities",
+  "id": "calligraphy-wyrm",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Lost Omens Rival Academies",
+   "license": "ORC"
+  },
+  "why": "familiar-specific-52 prints [\"Rival Academies\"]; the record still named \"Pathfinder PFS Guide\", which is the book of familiar-specific-5 — the printing familiar-specific-52 replaces. source.book is the key the source filter runs on (src/rules/sources.ts), so the record was hidden for a player who owns the new book and not the old. Licence carried over unchanged (never derived from the Archives)."
  }
 ]

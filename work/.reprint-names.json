@@ -1,0 +1,206 @@
+{
+  "findings": [
+    {
+      "id": "reprint-heading-case",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "bathe-in-blood",
+          "field": "name",
+          "value": "Bathe in Blood",
+          "why": "ritual-246 re-cases the heading of ritual-54 (\"Bathe in Blood\" -> \"Bathe In Blood\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Bathe in Blood\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "spells",
+          "id": "the-worlds-a-stage",
+          "field": "name",
+          "value": "The World's a Stage",
+          "why": "ritual-272 re-cases the heading of ritual-64 (\"The World's a Stage\" -> \"The World's a stage\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"The World's a Stage\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "fulu-of-the-drunken-monkey",
+          "field": "name",
+          "value": "Fulu of the Drunken Monkey",
+          "why": "equipment-5074 re-cases the heading of equipment-974 (\"Fulu of the Drunken Monkey\" -> \"Fulu Of The Drunken Monkey\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Fulu of the Drunken Monkey\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "fulu-of-fire-suppression",
+          "field": "name",
+          "value": "Fulu of Fire Suppression",
+          "why": "equipment-5075 re-cases the heading of equipment-975 (\"Fulu of Fire Suppression\" -> \"Fulu Of Fire Suppression\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Fulu of Fire Suppression\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "fulu-of-flood-suppression",
+          "field": "name",
+          "value": "Fulu of Flood Suppression",
+          "why": "equipment-5076 re-cases the heading of equipment-976 (\"Fulu of Flood Suppression\" -> \"Fulu Of Flood Suppression\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Fulu of Flood Suppression\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "fulu-of-the-stoic-ox",
+          "field": "name",
+          "value": "Fulu of the Stoic Ox",
+          "why": "equipment-5077 re-cases the heading of equipment-977 (\"Fulu of the Stoic Ox\" -> \"Fulu Of The Stoic Ox\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Fulu of the Stoic Ox\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "bestiary-of-metamorphosis",
+          "field": "name",
+          "value": "Bestiary of Metamorphosis",
+          "why": "equipment-5120 re-cases the heading of equipment-989 (\"Bestiary of Metamorphosis\" -> \"Bestiary Of Metamorphosis\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Bestiary of Metamorphosis\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "book-of-lingering-blaze",
+          "field": "name",
+          "value": "Book of Lingering Blaze",
+          "why": "equipment-5123 re-cases the heading of equipment-990 (\"Book of Lingering Blaze\" -> \"Book Of Lingering Blaze\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Book of Lingering Blaze\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "spellbook-of-redundant-enchantment",
+          "field": "name",
+          "value": "Spellbook of Redundant Enchantment",
+          "why": "equipment-5133 re-cases the heading of equipment-994 (\"Spellbook of Redundant Enchantment\" -> \"Spellbook Of Redundant Enchantment\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Spellbook of Redundant Enchantment\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "rune-of-sin",
+          "field": "name",
+          "value": "Rune of Sin",
+          "why": "equipment-5180 re-cases the heading of equipment-999 (\"Rune of Sin\" -> \"Rune Of Sin\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Rune of Sin\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "staff-of-natures-cunning",
+          "field": "name",
+          "value": "Staff of Nature's Cunning",
+          "why": "equipment-5169 re-cases the heading of equipment-1002 (\"Staff of Nature's Cunning\" -> \"Staff Of Nature's Cunning\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Staff of Nature's Cunning\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "five-feather-wreath",
+          "field": "name",
+          "value": "Five-Feather Wreath",
+          "why": "equipment-5152 re-cases the heading of equipment-1013 (\"Five-Feather Wreath\" -> \"Five-feather Wreath\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Five-Feather Wreath\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "eye-of-enlightenment",
+          "field": "name",
+          "value": "Eye of Enlightenment",
+          "why": "equipment-5103 re-cases the heading of equipment-1021 (\"Eye of Enlightenment\" -> \"Eye Of Enlightenment\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Eye of Enlightenment\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "potion-of-grounding",
+          "field": "name",
+          "value": "Potion of Grounding",
+          "why": "equipment-5097 re-cases the heading of equipment-1027 (\"Potion of Grounding\" -> \"Potion Of Grounding\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Potion of Grounding\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "potion-of-minute-echoes",
+          "field": "name",
+          "value": "Potion of Minute Echoes",
+          "why": "equipment-5099 re-cases the heading of equipment-1028 (\"Potion of Minute Echoes\" -> \"Potion Of Minute Echoes\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Potion of Minute Echoes\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "cloak-of-feline-rest",
+          "field": "name",
+          "value": "Cloak of Feline Rest",
+          "why": "equipment-5183 re-cases the heading of equipment-1048 (\"Cloak of Feline Rest\" -> \"Cloak Of Feline Rest\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Cloak of Feline Rest\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "collar-of-the-eternal-bond",
+          "field": "name",
+          "value": "Collar of the Eternal Bond",
+          "why": "equipment-5184 re-cases the heading of equipment-1050 (\"Collar of the Eternal Bond\" -> \"Collar Of The Eternal Bond\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Collar of the Eternal Bond\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "deck-of-mischief",
+          "field": "name",
+          "value": "Deck of Mischief",
+          "why": "equipment-5142 re-cases the heading of equipment-1053 (\"Deck of Mischief\" -> \"Deck Of Mischief\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Deck of Mischief\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "flask-of-fellowship",
+          "field": "name",
+          "value": "Flask of Fellowship",
+          "why": "equipment-5143 re-cases the heading of equipment-1056 (\"Flask of Fellowship\" -> \"Flask Of Fellowship\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Flask of Fellowship\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "glasses-of-sociability",
+          "field": "name",
+          "value": "Glasses of Sociability",
+          "why": "equipment-5185 re-cases the heading of equipment-1057 (\"Glasses of Sociability\" -> \"Glasses Of Sociability\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Glasses of Sociability\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "hat-of-many-minds",
+          "field": "name",
+          "value": "Hat of Many Minds",
+          "why": "equipment-5186 re-cases the heading of equipment-1060 (\"Hat of Many Minds\" -> \"Hat Of Many Minds\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Hat of Many Minds\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "hundred-moth-caress",
+          "field": "name",
+          "value": "Hundred-Moth Caress",
+          "why": "equipment-5020 re-cases the heading of equipment-1061 (\"Hundred-Moth Caress\" -> \"Hundred-moth Caress\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Hundred-Moth Caress\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "jar-of-shifting-sands",
+          "field": "name",
+          "value": "Jar of Shifting Sands",
+          "why": "equipment-5144 re-cases the heading of equipment-1064 (\"Jar of Shifting Sands\" -> \"Jar Of Shifting Sands\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Jar of Shifting Sands\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "mask-of-allure",
+          "field": "name",
+          "value": "Mask of Allure",
+          "why": "equipment-5115 re-cases the heading of equipment-1066 (\"Mask of Allure\" -> \"Mask Of Allure\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Mask of Allure\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "staff-of-the-desert-winds",
+          "field": "name",
+          "value": "Staff of the Desert Winds",
+          "why": "equipment-5170 re-cases the heading of equipment-1078 (\"Staff of the Desert Winds\" -> \"Staff Of The Desert Winds\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Staff of the Desert Winds\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "staff-storing-shield",
+          "field": "name",
+          "value": "Staff-Storing Shield",
+          "why": "equipment-5008 re-cases the heading of equipment-1079 (\"Staff-Storing Shield\" -> \"Staff-storing Shield\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Staff-Storing Shield\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "items",
+          "id": "thousand-blade-thesis",
+          "field": "name",
+          "value": "Thousand-Blade Thesis",
+          "why": "equipment-5146 re-cases the heading of equipment-1081 (\"Thousand-Blade Thesis\" -> \"Thousand-blade Thesis\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Thousand-Blade Thesis\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        },
+        {
+          "category": "feats",
+          "id": "meld-into-eidolon",
+          "field": "name",
+          "value": "Meld into Eidolon",
+          "why": "feat-9227 re-cases the heading of feat-2892 (\"Meld into Eidolon\" -> \"Meld Into Eidolon\"); the letters are identical, so this is the Archives' title-case style and not a rename, and the book prints \"Meld into Eidolon\". Newest-printing repoint (gold-set R12) keeps the printing, not the heading style."
+        }
+      ],
+      "note": "28 names the newest-printing repoint re-cased. Measured over the whole 384-record repoint set: every name change it produced is letter-identical to the printing it replaced, so all 28 are the Archives' heading style. The rename boundary in overlayContent() stops any future reprint from doing it again; these rows restore the ones already shipped."
+    }
+  ]
+}

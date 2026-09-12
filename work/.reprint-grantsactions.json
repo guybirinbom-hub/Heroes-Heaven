@@ -1,0 +1,24 @@
+{
+  "findings": [
+    {
+      "id": "reprint-lost-action-embed",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "spellstriker",
+          "field": "grantsActions",
+          "value": ["spellstrike"],
+          "why": "feat-9288 (Impossible Magic pg. 88) prints \"You gain the magus's Spellstrike activity\" exactly as feat-2948 (Secrets of Magic pg. 75) did, but the reprint page carries no <document id=\"action-4260\"> embed, so the importer's link-derived grantsActions came out empty and the dedication stopped handing the player Spellstrike. The printed rule is unchanged; only the Archives' markup is missing."
+        },
+        {
+          "category": "feats",
+          "id": "summoner-dedication",
+          "field": "grantsActions",
+          "value": ["manifest-eidolon"],
+          "why": "feat-9307 (Impossible Magic pg. 91) prints \"You gain an eidolon as well as the Manifest Eidolon activity\" exactly as feat-2953 (Secrets of Magic pg. 76) did, but the reprint page carries no <document id=\"action-4267\"> embed, so grantsActions came out empty. Same markup gap as spellstriker above."
+        }
+      ],
+      "note": "The newest-printing repoint moved both feats onto their Impossible Magic pages; those pages lost the action hyperlink the Secrets of Magic pages carried. Caught by scripts/wg-regate-all.mjs (batches 009 and 012 went red on KINDS/IDENTITY/EXPERIENCE, both naming the missing giveAbilityBlock). Swept the whole 384-record repoint set: these are the only two grantsActions losses."
+    }
+  ]
+}

@@ -165,7 +165,7 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
   // batch 035: animal-instinct#spider-web
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
-  it('the widening is exactly five records — the four still-open aspect keys and the deferred relic family', () => {
+  it('the widening is exactly six records — the five still-open aspect keys and the deferred relic family', () => {
     /*
      * The pin against silent growth. `--queued-parks` lists every record parked by a desk id that is
      * not its own; today that is five, and each is deliberate:
@@ -180,6 +180,11 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
      *                                                                    shipped flat +5 is neither
      *   speed                  ← #154 speed-plural-while-a-state-is-on   LANE question, loose
      *   flexible-spellcaster   ← #155 flexible-spellcaster-book-casters  aspect, LONGEST wins (not `flexible`)
+     *   spell-parry            ← #161 spell-parry-badge                  aspect: the 2026-09-12 repoint
+     *                                                                    moved it to feat-9049, which
+     *                                                                    reprints the Secrets of Magic
+     *                                                                    text unchanged but carries no
+     *                                                                    action badge on either printing
      *   relic                  ← #58  relic-gift-family-…-adamantine     LANE question, loose, deferred
      *
      * `speed` and `relic` are accepted rather than fixed: neither has ever been cut into a batch, so the
@@ -204,6 +209,7 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
       'screech-shooter-major': 'screech-shooter-major-rune-grade',
       'timewracked-dedication': 'timewracked-dedication-speed-clause',
       speed: 'speed-plural-while-a-state-is-on',
+      'spell-parry': 'spell-parry-badge',
       relic: 'relic-gift-family-skysunder-sparkwarden-uniter-adamantine',
     });
     expect(queuedFor('flexible')).toBe('');

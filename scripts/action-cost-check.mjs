@@ -67,8 +67,33 @@ for (const [id, rec] of Object.entries(db.feats ?? {})) {
     held.push(`${id}: no mirror record at level ${rec.level}`);
     continue;
   }
-  const remaster = candidates.filter((m) => !m.remaster_id);
-  const pool = (remaster.length ? remaster : candidates).filter((m) => norm(m.actions ?? ''));
+  /*
+   * ⚠ READ THE RECORD'S OWN PAGE, NOT A NAME TWIN. The match above is by NAME, and since the
+   * newest-printing repoint (scripts/lib/reprint.mjs, gold-set R12) a magus/summoner feat's own
+   * document is the Impossible Magic reprint while its Secrets of Magic twin is still in the mirror
+   * under the same name. `remaster_id` cannot separate them — the replaced doc frequently does not
+   * carry one (feat-2848 has none; the reprint feat-9046 states `legacy_id: ["feat-2848"]`).
+   *
+   * That matters because a reprint CAN change the cost by rewriting the feat: Impossible Magic turned
+   * Raise a Tome from a Single Action into a passive rider on another action ("When you Raise a
+   * Shield, you can raise a book you're wielding instead of a shield"), Arcane Shroud into a rider on
+   * Arcane Cascade (its Frequency and Requirements lines are gone) and Resounding Cascade from a Free
+   * Action into a standing aura. The reprint pages carry no action string at all, so the old filter
+   * kept only the superseded twin and reported all three as missing costs.
+   *
+   * ⚠ NOT a clean sweep, and this is the honest half: `spell-parry` (feat-9049) reprints the Secrets
+   * of Magic text UNCHANGED, Requirements line and all, and only its badge is missing — which is the
+   * scrape damage the sibling check's header describes, not a rewrite. The repoint DID derive
+   * `passive` from that empty badge (feat-2851 printed Single Action, and our record carried 1 from
+   * HEAD to this change), so the record is pinned back to Single Action by an overlay row in
+   * scripts/data/effect-backfill.json and by test/action-costs.test.ts; desk #161 asks the owner what
+   * the book shows. The reprint page cannot settle it either way, so it is a desk question, not
+   * something this comparison should answer from a superseded twin's badge.
+   */
+  const own = rec.aonId ? candidates.filter((m) => m.id === rec.aonId) : [];
+  const scoped = own.length ? own : candidates;
+  const remaster = scoped.filter((m) => !m.remaster_id);
+  const pool = (remaster.length ? remaster : scoped).filter((m) => norm(m.actions ?? ''));
   const costs = new Set(pool.map((m) => norm(m.actions)));
   if (costs.size !== 1) {
     if (costs.size > 1) held.push(`${id}: prints ${[...costs].join(' / ')}`);

@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "id": "reprint-actioncost",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "blood-frenzy",
+          "supersedes": true,
+          "field": "actionCost",
+          "value": { "type": "free" },
+          "why": "feat-9244 (Impossible Magic pg. 81, the reprint of feat-2909) prints \"Blood Frenzy Free Action\"; the Secrets of Magic printing this row was authored from printed Single Action. Newest printing wins (gold-set R12)."
+        }
+      ],
+      "note": "The only action cost the newest-printing repoint changes: swept every repointed record's reprint page against its stored actionCost, 1 of 384 differs."
+    }
+  ]
+}

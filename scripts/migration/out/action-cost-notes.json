@@ -131,17 +131,34 @@
   }
  },
  {
-  "name": "Spellstriker",
-  "via": "passive, grants action-755",
+  "name": "Raise a Tome",
+  "via": "no cost anywhere — now passive",
   "cost": {
-   "type": "passive"
+   "type": "actions",
+   "value": 1
   }
  },
  {
-  "name": "Summoner Dedication",
-  "via": "passive, grants action-757",
+  "name": "Spell Parry",
+  "via": "no cost anywhere — now passive",
   "cost": {
-   "type": "passive"
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Arcane Shroud",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "actions",
+   "value": 1
+  }
+ },
+ {
+  "name": "Resounding Cascade",
+  "via": "no cost anywhere — now passive",
+  "cost": {
+   "type": "free"
   }
  },
  {
