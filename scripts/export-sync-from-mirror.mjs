@@ -14,6 +14,16 @@
  * Crafting skill"; both WG and Foundry had the choice, and the stale snapshot was what put the record on
  * the owner's desk). Refresh the mirror doc first (the ES proxy), then this, then the record.
  *
+ * ⚠ --refresh USED TO REPLACE THE WHOLE DOCUMENT, AND THE EXPORT CARRIES MORE THAN THE MIRROR DOES.
+ * `ast` — the display tree DescBody renders — is not in the mirror at all: it is produced by the AoG
+ * build (normalize.parse + autolink.annotate, build.py stages normalize,autolink) and only ever
+ * reaches the export through export_data.py. So the 2026-09-11 refresh of background-479 silently
+ * dropped it, and the next `npm run data` removed backgrounds/streetfood-vendor from public/ast and
+ * from ast-index.json — the record still existed and had nothing to read. Now a refresh KEEPS every
+ * key the old document had that the mirror envelope cannot produce, and prints them: a carried-over
+ * `ast` is STALE by definition (the page's text just changed), so rebuild it through those two
+ * functions for the one doc rather than trusting what is printed.
+ *
  *   node scripts/export-sync-from-mirror.mjs
  *   node scripts/export-sync-from-mirror.mjs --ids arcane-school-31,arcane-school-32
  *   node scripts/export-sync-from-mirror.mjs --ids background-479 --refresh
@@ -85,7 +95,19 @@ for (const [cat, docs] of perFile) {
   if (!existsSync(file)) { console.log('no export file for category ' + cat + ' — skipped ' + docs.map((d) => d.id).join(', ')); continue; }
   const json = JSON.parse(readFileSync(file, 'utf8'));
   json.docs ??= {};
-  for (const d of docs) { json.docs[d.id] = d; inserted++; }
+  for (const d of docs) {
+    const old = json.docs[d.id];
+    if (old) {
+      /* Keep what the mirror cannot rebuild, and say what moved — a refresh must never be a net
+       * loss of fields. `kept` is the guard: those values describe the OLD text. */
+      const kept = Object.keys(old).filter((k) => !(k in d));
+      const changed = Object.keys(d).filter((k) => k in old && JSON.stringify(old[k]) !== JSON.stringify(d[k]));
+      for (const k of kept) d[k] = old[k];
+      console.log(`  ${d.id}: ${changed.length} field(s) replaced (${changed.join(', ') || 'none'})`
+        + (kept.length ? ` | ${kept.length} kept, NOT in the mirror — re-derive if the text changed: ${kept.join(', ')}` : ''));
+    }
+    json.docs[d.id] = d; inserted++;
+  }
   json.count = Object.keys(json.docs).length;
   writeFileSync(file, JSON.stringify(json));
   console.log(cat + '.json: +' + docs.length + ' (' + docs.map((d) => d.id + ' "' + d.name + '"').join(', ') + ')');

@@ -223,7 +223,21 @@ for (const bucket of ['kingdomStructure', 'kingdomEvent', 'creatureAdjustment', 
   for (const [i, fix] of rows.entries()) {
     if (!fix.path?.length && fix.field && (lastAmend.get(`${fix.category}/${fix.id}/${fix.field}`) ?? -1) > i) continue;
     if (fix.create) {
-      if (!core[fix.category]?.[fix.id]) stale.push(`${fix.category}/${fix.id} (created record absent)`);
+      const rec = core[fix.category]?.[fix.id];
+      if (!rec) { stale.push(`${fix.category}/${fix.id} (created record absent)`); continue; }
+      /*
+       * …and the record's AoN JOIN KEYS, which a `create` row carries INSIDE its value rather than as
+       * a `field` row, so the loop below never saw them. stamp-aonid.mjs clears every aon* field and
+       * rewrites it from out/map.json; a created record is not in the committed map, so build-map
+       * called it `authored` and the authored parent page was replaced by `aonOrigin` on every regen.
+       * Measured 2026-09-12: 33 records silently lost their parent page that way — nine Munitions
+       * Master modifications, eighteen Construct innovation modifications, and six more.
+       */
+      for (const f of ['aonId', 'aonParentId', 'aonSection']) {
+        if (fix.value?.[f] !== undefined && rec[f] !== fix.value[f]) {
+          stale.push(`${fix.category}/${fix.id}.${f} (created as ${JSON.stringify(fix.value[f])}, artefact has ${JSON.stringify(rec[f])})`);
+        }
+      }
       continue;
     }
     if (!fix.field) continue;

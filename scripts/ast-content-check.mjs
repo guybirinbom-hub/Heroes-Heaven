@@ -8,11 +8,22 @@
  *
  *   node scripts/ast-content-check.mjs
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+/* The tracked, shipped tree is `public/ast/<bucket>.json.gz`; the raw `.json` beside it is gitignored
+ * importer output, so reading it first threw ENOENT in a clean clone and made the verdict depend on
+ * what the last local regen left behind. Same order as scripts/readable-record-check.mjs. */
+const astOf = (bucket) => {
+  const gz = join(ROOT, 'public/ast', `${bucket}.json.gz`);
+  const raw = join(ROOT, 'public/ast', `${bucket}.json`);
+  if (existsSync(gz)) return JSON.parse(gunzipSync(readFileSync(gz)).toString('utf8'));
+  if (existsSync(raw)) return JSON.parse(readFileSync(raw, 'utf8'));
+  return {};
+};
 const flat = (n) => (!n || typeof n !== 'object') ? '' : n.t === 'text' ? (n.v ?? '') : (n.c ?? []).map(flat).join('');
 
 /* One probe set per patched node — the strings the export's parse dropped. */
@@ -28,7 +39,7 @@ const PROBES = [
 const cache = new Map();
 const bad = [];
 for (const [bucket, slug, probes] of PROBES) {
-  if (!cache.has(bucket)) cache.set(bucket, JSON.parse(readFileSync(join(ROOT, 'public/ast/' + bucket + '.json'), 'utf8')));
+  if (!cache.has(bucket)) cache.set(bucket, astOf(bucket));
   const node = cache.get(bucket)[slug];
   const text = node ? flat(node) : '';
   const missing = probes.filter((x) => !text.includes(x));

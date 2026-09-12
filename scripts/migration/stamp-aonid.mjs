@@ -121,14 +121,14 @@ for (const [bucket, records] of Object.entries(core)) {
 }
 
 /*
- * ---- the AUTHORED aonId always wins -------------------------------------------------------------
+ * ---- the AUTHORED PROVENANCE always wins ---------------------------------------------------------
  *
  * Stamping is an automated guess made from a NAME, and the loop above deliberately clears every aon*
  * field first so a reclassified record never keeps a stale pairing. That also throws away the
- * hand-corrected links, which live as `aonId` rows in scripts/data/effect-backfill.json and reach
- * core.json through import-core-v2 — a stage that runs BEFORE this one. So every regen quietly
- * reinstated the wrong page and nothing said so: `fix-aonid-collisions.mjs` saw its own row still in
- * the overlay and reported "0 change(s)".
+ * hand-corrected links, which live in scripts/data/effect-backfill.json and reach core.json through
+ * import-core-v2 — a stage that runs BEFORE this one. So every regen quietly reinstated the wrong
+ * page and nothing said so: `fix-aonid-collisions.mjs` saw its own row still in the overlay and
+ * reported "0 change(s)".
  *
  * Measured 2026-08-19 — 25 records, all of them a subclass whose name is also something else:
  *
@@ -139,21 +139,45 @@ for (const [bucket, records] of Object.entries(core)) {
  *
  * A name-match cannot tell those apart; a person already did. Re-applying the authored rows LAST
  * makes that ruling durable, and costs nothing where the two agree.
+ *
+ * ⚠ 2026-09-12 — THE SAME HOLE, ONE FIELD OVER. This block only knew `aonId`, so the identical
+ * ruling expressed as a PARENT link was still wiped every regen. Measured against the committed
+ * artefact: 23 armour-innovation records fell back from `innovation-1` (Armor, Guns & Gears
+ * REMASTERED, the newest printing) to the stale `innovation-5` section row; `blessed-swiftness` fell
+ * from `class-feature-877` to `equipment-2320`, a class feature pointing at an ITEM page; and 33
+ * records the overlay CREATES carried their parent inside the created value — out of the map, so
+ * build-map called them `authored` and the parent was replaced by `aonOrigin`. Two carriers, one
+ * ruling, so both are re-applied here:
+ *
+ *   {category,id,field:'aonId'|'aonParentId'|'aonSection',value}   a hand-corrected link
+ *   {category,id,create:true,value:{… aonParentId, aonSection …}}  a record authored with its parent
+ *
+ * A record gets exactly ONE of aonId / aonParentId / aonOrigin (see the header), so re-applying a
+ * parent drops the `authored` origin stamping had just written.
  */
 {
   let overlay = [];
   try { overlay = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')); } catch { /* optional */ }
+  const AON_FIELDS = ['aonId', 'aonParentId', 'aonSection'];
   let restored = 0;
+  const put = (rec, field, value) => {
+    if (value === null) { if (field in rec) { delete rec[field]; restored++; } return; }
+    if (rec[field] === value) return;
+    rec[field] = value;
+    if (field === 'aonParentId' && 'aonOrigin' in rec) delete rec.aonOrigin;
+    restored++;
+  };
   for (const r of overlay) {
-    if (r?.field !== 'aonId' || r.path?.length || r.create) continue;
+    if (!r || r.path?.length) continue;
     const rec = core[r.category]?.[r.id];
     if (!rec) continue;
-    if (r.value === null) { if ('aonId' in rec) { delete rec.aonId; restored++; } continue; }
-    if (rec.aonId === r.value) continue;
-    rec.aonId = r.value;
-    restored++;
+    if (r.create) {
+      for (const f of AON_FIELDS) if (r.value?.[f] !== undefined) put(rec, f, r.value[f]);
+    } else if (AON_FIELDS.includes(r.field)) {
+      put(rec, r.field, r.value);
+    }
   }
-  if (restored) console.log(`\n${restored} authored aonId(s) re-applied over the stamp (the overlay is the ruling).`);
+  if (restored) console.log(`\n${restored} authored aon* field(s) re-applied over the stamp (the overlay is the ruling).`);
 }
 
 const total = Object.values(tally).reduce((a, b) => a + b, 0);

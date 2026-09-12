@@ -1,9 +1,9 @@
 {
  "tally": {
-  "doc": 24997,
-  "subblock": 573,
+  "doc": 25000,
   "drop": 143,
-  "authored": 951,
+  "subblock": 572,
+  "authored": 990,
   "table": 21,
   "scraped": 1,
   "derived": 22
@@ -8710,12 +8710,6 @@
     "docId": "spell-2138",
     "how": "importer:the doc this record was built from"
    },
-   "discomfiting-whisper": {
-    "name": "Discomfiting Whisper",
-    "status": "doc",
-    "docId": "spell-2139",
-    "how": "importer:the doc this record was built from"
-   },
    "devouring-dark-form": {
     "name": "Devouring Dark Form",
     "status": "doc",
@@ -11909,10 +11903,10 @@
     "how": "slug"
    },
    "discomfiting-whispers": {
-    "name": "Discomfiting Whispers",
-    "status": "subblock",
-    "parentDocId": "spell-2139",
-    "how": "fts"
+    "name": "Discomfiting Whisper",
+    "status": "doc",
+    "docId": "spell-2139",
+    "how": "record carries its own aonId (targeted merge)"
    },
    "forced-quiet": {
     "name": "Forced Quiet",
@@ -59356,6 +59350,17 @@
     "name": "Fire Spine (Spined Shield)",
     "status": "authored",
     "how": "overlay-created record with no archive page"
+   },
+   "innovation-light-mortar": {
+    "name": "Light Mortar",
+    "status": "doc",
+    "docId": "siege-weapon-36",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "pyrotechnic-versatile-vial": {
+    "name": "Pyrotechnic Versatile Vial",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
    }
   },
   "classes": {
@@ -59572,7 +59577,7 @@
     "how": "importer:the doc this record was built from"
    },
    "studious-spells": {
-    "name": "Studious Spells",
+    "name": "Studious Spell",
     "status": "doc",
     "docId": "class-feature-431",
     "how": "importer:the doc this record was built from"
@@ -63012,10 +63017,10 @@
     "how": "slug-any"
    },
    "lesson-of-elements": {
-    "name": "Lesson of Elements",
+    "name": "Lesson of the Elements",
     "status": "doc",
-    "docId": "lesson-2",
-    "how": "manual:the"
+    "docId": "lesson-17",
+    "how": "record carries its own aonId (targeted merge)"
    },
    "lesson-of-favors": {
     "name": "Lesson of Favors",
@@ -65250,7 +65255,7 @@
     "how": "slug-any"
    },
    "pistoleros-retort": {
-    "name": "Pistolero's Retort",
+    "name": "Pistoler's Retort",
     "status": "doc",
     "docId": "action-3681",
     "how": "slug-any"
@@ -65743,6 +65748,108 @@
     "name": "School of Quantic Control",
     "status": "doc",
     "docId": "arcane-school-34",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "arcane-bond-school-of-unified-magical-theory": {
+    "name": "Arcane Bond (Unified Magical Theory)",
+    "status": "doc",
+    "docId": "arcane-school-21",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "accelerated-mobility": {
+    "name": "Accelerated Mobility",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "amphibious-construction": {
+    "name": "Amphibious Construction",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "increased-size": {
+    "name": "Increased Size",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "manual-dexterity": {
+    "name": "Manual Dexterity",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "projectile-launcher": {
+    "name": "Projectile Launcher",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "sensory-array": {
+    "name": "Sensory Array",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "wonder-gears": {
+    "name": "Wonder Gears",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "advanced-weaponry-construct": {
+    "name": "Advanced Weaponry",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "antimagic-construction": {
+    "name": "Antimagic Construction",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "climbing-limbs": {
+    "name": "Climbing Limbs",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "durable-construction": {
+    "name": "Durable Construction",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "marvelous-gears": {
+    "name": "Marvelous Gears",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "turret-configuration": {
+    "name": "Turret Configuration",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "flight-chassis": {
+    "name": "Flight Chassis",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "miracle-gears": {
+    "name": "Miracle Gears",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "resistant-coating": {
+    "name": "Resistant Coating",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "runic-keystone": {
+    "name": "Runic Keystone",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "wall-configuration": {
+    "name": "Wall Configuration",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "conservation-of-energy": {
+    "name": "Conservation of Energy",
+    "status": "doc",
+    "docId": "conscious-mind-9",
     "how": "record carries its own aonId (targeted merge)"
    },
    "necromancer-spellcasting": {
@@ -105212,6 +105319,11 @@
     "status": "doc",
     "docId": "feat-5941",
     "how": "slug-noparen"
+   },
+   "haunting-memories-skill-feat": {
+    "name": "Haunting Memories (Skill Feat)",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
    }
   },
   "ancestries": {
@@ -119499,6 +119611,11 @@
    },
    "reinforcing-network": {
     "name": "Reinforcing Network",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "drain-familiar": {
+    "name": "Drain Familiar",
     "status": "authored",
     "how": "overlay-created record with no archive page"
    }
@@ -158025,11 +158142,6 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "guardians-armor": {
-    "name": "Guardian's Armor",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
    "harden-flesh": {
     "name": "Harden Flesh",
     "status": "authored",
@@ -158922,6 +159034,101 @@
    },
    "item-energy-robe-cold": {
     "name": "Flash-Frozen Footing",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-crown-of-the-fire-eater": {
+    "name": "Fire Eater (Activated)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "cat-harmonic-oscillator-overdrive": {
+    "name": "Harmonic Oscillator (Overdriven)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "curse-of-torrential-knowledge-1": {
+    "name": "Torrential Knowledge 1",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "curse-of-torrential-knowledge-2": {
+    "name": "Torrential Knowledge 2",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "curse-of-torrential-knowledge-3": {
+    "name": "Torrential Knowledge 3",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "curse-of-torrential-knowledge-4": {
+    "name": "Torrential Knowledge 4",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "cat-phlogistonic-regulator-overdrive": {
+    "name": "Phlogistonic Regulator (Overdriven)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "curse-of-the-skys-call-1": {
+    "name": "Sky’s Call 1",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "curse-of-the-skys-call-2": {
+    "name": "Sky’s Call 2",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "curse-of-the-skys-call-3": {
+    "name": "Sky’s Call 3",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "curse-of-the-skys-call-4": {
+    "name": "Sky’s Call 4",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "animalistic-brutality-backswing": {
+    "name": "Animalistic Brutality (Backswing)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "animalistic-brutality-forceful": {
+    "name": "Animalistic Brutality (Forceful)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "animalistic-brutality-parry": {
+    "name": "Animalistic Brutality (Parry)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "animalistic-brutality-razing": {
+    "name": "Animalistic Brutality (Razing)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "animalistic-brutality-sweep": {
+    "name": "Animalistic Brutality (Sweep)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "scar-of-the-survivor": {
+    "name": "Scar of the Survivor (immanence)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "soul-well": {
+    "name": "Soul Well",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-mask-of-the-mantis-major": {
+    "name": "Vernai's Ire",
     "status": "authored",
     "how": "hand-authored bucket"
    }
