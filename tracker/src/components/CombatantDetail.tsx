@@ -410,6 +410,15 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
             showDescription={showDescription}
             onToggleDescription={!combatant.isPC && combatant.creature && hasDescription ? () => { setShowDescription(v => !v); setShowNotes(false) } : undefined}
           />
+          {/* AoN prints a qualifier beside the HP — "135 (4 segments)" for troops, "(3 heads)",
+              regeneration, negative healing (808 creatures). StatBlock has an HP line for it, but
+              CombatantDetail passes hideHP for every non-hazard, so for creatures that line never
+              renders and the note had nowhere to appear. It belongs beside the bar that replaced it. */}
+          {combatant.creature?.defenses?.hpNote && (
+            <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
+              {combatant.creature.defenses.hpNote}
+            </div>
+          )}
         </div>
       </div>
 

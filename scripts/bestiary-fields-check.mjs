@@ -14,6 +14,13 @@
  *
  * Floors, not exact counts, so adding creatures never trips it. Raise them when the corpus grows.
  *
+ * 2026-09-12: the bestiary is now built from the owner's Archives by scripts/build-bestiary.mjs (one
+ * pass, flavor/family/rituals included), so the two-stage trap above is gone — but the floors had been
+ * set on the OLD scrape's counts, and its "flavor" for 763 creatures was nothing but the Recall
+ * Knowledge sidebar scraped as prose. The honest count is ~4,000, so the flavor floor came down.
+ * Also checked since then: every index row points at a bestiary file that ships, and every bestiary
+ * file is reachable from the index (a renamed source file left a 12-creature orphan behind).
+ *
  *   node scripts/bestiary-fields-check.mjs
  */
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
@@ -24,10 +31,13 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIR = join(ROOT, 'public/data/bestiary');
 const FAMILIES = join(ROOT, 'public/data/creature-families.json');
 
-/* Measured 2026-08-17 after restoring the enrichment pass: 4,760 records carry
- * flavor 4,754 / family 2,706 / rituals 270. Floors sit a little under those. */
-const FLOORS = { records: 4500, flavor: 4500, family: 2500, rituals: 200 };
+/* Measured 2026-09-12 on the Archives build: 4,791 records carry flavor 4,008 / family 2,682 /
+ * rituals 325 (the 2026-08-17 scrape read 4,754 flavor, 763 of them sidebar junk). Floors sit a
+ * little under those. */
+const FLOORS = { records: 4700, flavor: 3900, family: 2600, rituals: 300 };
 const FAMILY_FLOOR = 400;
+const INDEX = join(ROOT, 'public/data/index.json');
+const HAZARDS = join(ROOT, 'public/data/hazards.json');
 
 if (!existsSync(DIR)) { console.error(`no bestiary at ${DIR}`); process.exit(1); }
 
@@ -69,11 +79,33 @@ if (family === 0 && familyCount > 0) {
   bad++;
 }
 
+/* The index is the tracker's only list of bestiary files (tracker/src/data/dataStore.ts fetches
+ * `bestiary/${entry.file}`): a row whose file is missing is a 404 in "Add Combatants", and a file no
+ * row names is dead weight shipped in every installer. */
+try {
+  const idx = JSON.parse(readFileSync(INDEX, 'utf8'));
+  const rows = Array.isArray(idx) ? idx : (Object.values(idx).find(Array.isArray) ?? []);
+  const named = new Set();
+  const missing = [];
+  let hazardRows = 0;
+  for (const r of rows) {
+    if (r.file === '../hazards.json') { hazardRows++; continue; }
+    named.add(r.file);
+    if (!existsSync(join(DIR, r.file))) missing.push(r.file);
+  }
+  const orphans = readdirSync(DIR).filter((f) => f.endsWith('.json') && !named.has(f));
+  console.log(`  index: ${rows.length} rows, ${named.size} bestiary files named, ${hazardRows} hazard rows`);
+  if (missing.length) { console.error(`  index names ${missing.length} file(s) that do not exist: ${missing.slice(0, 5).join(', ')}`); bad++; }
+  if (orphans.length) { console.error(`  ${orphans.length} bestiary file(s) no index row names: ${orphans.slice(0, 5).join(', ')}`); bad++; }
+  if (!hazardRows || !existsSync(HAZARDS)) { console.error('  no hazard rows in the index, or hazards.json is missing'); bad++; }
+} catch (e) {
+  console.error(`  could not read ${INDEX}: ${e.message}`); bad++;
+}
+
 if (bad) {
-  console.error('\nRe-run the enrichment pass in C:/pf2e-tracker, then copy public/data/bestiary + creature-families.json across:');
-  console.error('  node scripts/rebuild-family-cache.mjs   # only if scripts/aon-raw/creature-family.json is missing');
-  console.error('  node scripts/add-descriptions.mjs       # flavor + family + creature-families.json');
-  console.error('  node scripts/add-rituals.mjs            # rituals');
+  console.error('\nRebuild the bestiary from the Archives export, then confirm nothing was silently dropped:');
+  console.error('  node scripts/build-bestiary.mjs        # public/data/bestiary + hazards.json + index.json');
+  console.error('  node scripts/check-creature-parse.mjs  # every ability header in the markdown survived');
   process.exit(1);
 }
 console.log('\nall fields present.');

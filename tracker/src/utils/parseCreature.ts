@@ -138,8 +138,8 @@ function splitMergedAbility(ab: Ability): Ability[] {
   return out.length > 1 ? out : [ab]
 }
 
-interface RawSpellEntry { name: string; amount?: string | number; atWill?: boolean }
-function toSpellList(raw?: RawSpellEntry[]): Array<{ name: string; amount?: string; uses?: number; atWill?: boolean }> {
+interface RawSpellEntry { name: string; amount?: string | number; atWill?: boolean; note?: string }
+function toSpellList(raw?: RawSpellEntry[]): Array<{ name: string; amount?: string; uses?: number; atWill?: boolean; note?: string }> {
   if (!raw?.length) return []
   return raw.map(s => {
     const usesNum = typeof s.amount === 'number'
@@ -150,6 +150,7 @@ function toSpellList(raw?: RawSpellEntry[]): Array<{ name: string; amount?: stri
       amount: s.amount != null ? String(s.amount) : undefined,
       uses: usesNum,
       atWill: s.atWill || undefined,
+      note: s.note || undefined,
     }
   })
 }
@@ -167,6 +168,7 @@ export function parseCreature(raw: RawCreature, _sourceFile = ''): Creature {
   const def = raw.defenses ?? {}
   const attacks: Attack[] = (raw.attacks ?? []).map(a => ({
     range: a.range, name: a.name, attack: a.attack ?? 0,
+    activity: activitySymbol(a.activity),
     traits: a.traits ?? [], damage: cleanDamageExpr(a.damage ?? ''),
     types: a.types ?? [], effects: a.effects ?? [],
     isAgile: (a.traits ?? []).some(t => t.toLowerCase().includes('agile')),
@@ -253,6 +255,9 @@ export function parseCreature(raw: RawCreature, _sourceFile = ''): Creature {
     ac: getACStd(def.ac), fort: getSaveStd(def.savingThrows?.fort),
     ref: getSaveStd(def.savingThrows?.ref), will: getSaveStd(def.savingThrows?.will),
     hp: def.hp?.[0]?.hp ?? 0,
+    hpNote: def.hp?.[0]?.name,
+    saveNote: def.savingThrows?.note,
+    acNote: def.acNote,
     immunities: def.immunities ?? [],
     resistances: (def.resistances ?? []).map(r => ({ amount:r.amount, name:r.name, note:r.note })),
     weaknesses: (def.weaknesses ?? []).map(w => ({ amount:w.amount, name:w.name, note:w.note })),
@@ -272,11 +277,12 @@ export function parseCreature(raw: RawCreature, _sourceFile = ''): Creature {
     level: raw.level ?? 0, traits: raw.traits ?? [],
     perception: raw.perception?.std ?? 0,
     senses: (raw.senses ?? []).map(s => s.name + (s.range ? ` ${s.range}ft`:'')),
+    perceptionNote: raw.perceptionNote,
     languages: (raw.languages?.languages ?? []).map(cleanAonTemplate), skills,
     str: raw.abilityMods?.str??0, dex: raw.abilityMods?.dex??0,
     con: raw.abilityMods?.con??0, int: raw.abilityMods?.int??0,
     wis: raw.abilityMods?.wis??0, cha: raw.abilityMods?.cha??0,
-    items: raw.items ?? [], speed: raw.speed ?? {},
+    items: raw.items ?? [], speed: raw.speed ?? {}, speedNote: raw.speedNote,
     attacks, spellcasting, rituals: raw.rituals, abilities: allAbilities, defenses,
     isHazard: false,
     flavor: raw.flavor || undefined,

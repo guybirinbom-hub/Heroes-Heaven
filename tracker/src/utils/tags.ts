@@ -311,13 +311,17 @@ export function autoLinkPlainText(text: string, dict: AutoLinkDict): Segment[] {
 }
 
 // ── Misc helpers ───────────────────────────────────────────────────────────────
-export function activitySymbol(act?: { number: number; unit: string }): string {
+export function activitySymbol(act?: { number: number; unit: string; to?: number; sep?: 'to' | 'or' }): string {
   if (!act) return ''
-  const { number, unit } = act
+  const { number, unit, to, sep } = act
   if (unit === 'reaction') return ' ↺'
   if (unit === 'free') return ' ◇'
-  if (unit === 'action') return ' ' + '◆'.repeat(Math.min(number, 3))
-  return ''
+  if (unit !== 'action') return ''
+  // Clamp BOTH ends: the glyph font only has one, two and three action pips, and a repeat(0)
+  // would silently render an ability as costing nothing at all.
+  const pips = (n: number) => '◆'.repeat(Math.min(Math.max(n, 1), 3))
+  // A range renders the way the rulebooks print it — "◆ to ◆◆◆" — keeping AoN's own conjunction.
+  return ' ' + (to && to !== number ? `${pips(number)} ${sep ?? 'to'} ${pips(to)}` : pips(number))
 }
 
 export function formatSpeed(speed: Record<string, number | undefined>): string {

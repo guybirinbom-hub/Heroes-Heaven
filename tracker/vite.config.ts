@@ -80,6 +80,19 @@ export default defineConfig({
   },
   // Pin the root so it doesn't depend on the launcher's cwd/short-path form.
   root: TRACKER_DIR,
+  /*
+   * Serve Heroes Heaven's public/ rather than the tracker's own.
+   *
+   * The tracker has no public/data of its own — it has only ever run mounted inside HH, so
+   * standalone on 1421 every /data fetch fell through to the SPA fallback and returned index.html
+   * with a 200. dataStore then reported "Data not loaded. Run npm run data", which reads like a
+   * missing build step rather than a missing directory, and the bestiary picker was unusable.
+   *
+   * HH's public/ carries data/ AND fonts/, so pointing here fixes the stat-block data and the
+   * action-glyph font together. A junction under tracker/public does NOT work: Vite caches its
+   * publicDir listing at startup and does not traverse a junction created afterwards.
+   */
+  publicDir: path.join(HH_DIR, 'public'),
   server: {
     port: 1421,
     strictPort: true,

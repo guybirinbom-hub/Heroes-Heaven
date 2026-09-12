@@ -1031,6 +1031,13 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
       rgba(8, 5, 5, 0.78);
     backdrop-filter: blur(2px);
 }
+  /* App zoom is `zoom` on <html> (src/theme/zoom.ts), and `vh` does NOT divide by it — at zoom
+     1.5 a modal's `max-height: 90vh` renders at 135% of the REAL viewport and the centred box
+     spills off the top and bottom. This overlay IS the real viewport (fixed inset-0), so a
+     percentage cap here beats every child's own vh cap without touching each modal.
+     !important is load-bearing, not laziness: the modals set `maxHeight: '90vh'` as an INLINE
+     React style, and inline beats a stylesheet rule — without it this whole rule is inert. */
+  .tracker-root .modal-overlay > * { max-height: 100% !important; }
   .tracker-root .modal-box {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -1600,6 +1607,11 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
 .tracker-root .opacity-70 {
   opacity: 0.7;
 }
+.tracker-root .shadow {
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 .tracker-root .outline {
   outline-style: solid;
 }
@@ -1634,9 +1646,14 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
    ────────────────────────────────────────────────────────────────────────── */
 @font-face {
   font-family: 'PF2Actions';
-  src: url('/fonts/pathfinder-2e-actions.woff2') format('woff2');
+  /* The TTF, not the woff2: the woff2 only ever shipped in tracker/public, and the merged
+     Heroes Heaven app serves public/ — so it 404'd and every glyph fell back to its literal
+     char ("Breath Weapon D"). Both public dirs carry this .ttf, and its cmap has the chars
+     ActionGlyph.tsx emits (1-5 A D F R T). */
+  src: url('/fonts/Pathfinder2eActions.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: block;
 }
 .tracker-root .pf2-action-glyph {
   font-family: 'PF2Actions';

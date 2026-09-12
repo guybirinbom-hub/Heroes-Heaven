@@ -282,12 +282,12 @@ export function scaleByLevel(creature: Creature, toLvl: number): Creature {
 
   // Resistances & weaknesses — clamp to a minimum of 1 (like HP above): scaling
   // a low amount far down can round to 0 or negative, which is nonsensical.
-  c.defenses.resistances = creature.defenses.resistances.map(r => ({
-    ...r, amount: Math.max(1, Math.round(scaleValue(lvlIn, toLvl, r.amount, LvlResistanceWeakness))),
-  }))
-  c.defenses.weaknesses = creature.defenses.weaknesses.map(w => ({
-    ...w, amount: Math.max(1, Math.round(scaleValue(lvlIn, toLvl, w.amount, LvlResistanceWeakness))),
-  }))
+  // A null amount is a VALUELESS weakness ("light vulnerability", "vampire weaknesses"). There is
+  // no number to scale, and coercing it to 0 would invent one — so it passes through untouched.
+  const scaleDR = (v: number | null) =>
+    v === null ? null : Math.max(1, Math.round(scaleValue(lvlIn, toLvl, v, LvlResistanceWeakness)))
+  c.defenses.resistances = creature.defenses.resistances.map(r => ({ ...r, amount: scaleDR(r.amount) }))
+  c.defenses.weaknesses = creature.defenses.weaknesses.map(w => ({ ...w, amount: scaleDR(w.amount) }))
 
   // Attacks
   c.attacks = creature.attacks.map(a => ({

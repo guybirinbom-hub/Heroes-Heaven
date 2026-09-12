@@ -10,11 +10,18 @@ export interface RawCreature {
   traits?: string[]
   perception?: { std?: number; [key: string]: number | undefined }
   senses?: Array<{ name: string; range?: number }>
+  /** AoN's qualifier on the Perception modifier — "+27 to detect lies" (Kolyarut), "26 vs traps"
+   *  (Kuworsys), "expert" (Valerie). 105 creatures. It used to ride at the head of `senses[0]`
+   *  and render as a pseudo-sense; parseSenses now splits it out here. */
+  perceptionNote?: string
   languages?: { languages?: string[]; abilities?: string[] }
   skills?: Record<string, { std?: number; [k: string]: number | string | undefined }>
   abilityMods?: { str: number; dex: number; con: number; int: number; wis: number; cha: number }
   items?: string[]
   speed?: { walk?: number; fly?: number; swim?: number; burrow?: number; climb?: number }
+  /** AoN's Speed line after the ';' — "trailblazing stride, troop movement". 497 creatures name
+   *  movement abilities there, and five optional numbers have nowhere to put them. */
+  speedNote?: string
   attacks?: RawAttack[]
   spellcasting?: RawSpellcasting[]
   /** Rituals the creature can cast (added by scripts/add-rituals.mjs). */
@@ -31,6 +38,11 @@ export interface RawAttack {
   range: 'Melee' | 'Ranged'
   name: string
   attack: number
+  /* AoN prints an action cost on every Melee/Ranged line and the parser was reading it, then
+   * discarding it — 9,487 strikes across 4,546 creatures. Same shape as RawAbility.activity so the
+   * one `activitySymbol` converts both. 29 strikes carry an EMPTY cost on purpose; those stay
+   * undefined rather than defaulting to one action. */
+  activity?: { number: number; unit: string; to?: number; sep?: 'to' | 'or' }
   traits?: string[]
   damage?: string
   types?: string[]
@@ -40,22 +52,37 @@ export interface RawAttack {
 
 export interface RawDefenses {
   ac?: { std?: number; [key: string]: number | undefined }
+  /** AoN's qualifier beside the AC — "all-around vision", "(19 when broken)",
+   *  "(29 with shield raised)". 272 creatures. Kept OUT of `ac` so that object stays
+   *  numeric-only: widening its index signature breaks every numeric helper that reads it. */
+  acNote?: string
   savingThrows?: {
     fort?: { std?: number; [k: string]: number | undefined }
     ref?: { std?: number; [k: string]: number | undefined }
     will?: { std?: number; [k: string]: number | undefined }
+    /** AoN's note after the three saves — "+1 status to all saves vs. magic", "construct armor".
+     *  Markdown-only: every save facet is a bare integer, so this had nowhere to come from. */
+    note?: string
   }
   hp?: Array<{ hp: number; name?: string; abilities?: string[] }>
   hardness?: { std?: number }
   bt?: { std?: number }
   immunities?: string[]
-  resistances?: Array<{ amount: number; name: string; note?: string }>
-  weaknesses?: Array<{ amount: number; name: string; note?: string }>
+  /* `amount` is NULL for the ones AoN prints with no value — "light vulnerability",
+   * "vampire weaknesses", "axe vulnerability". Requiring a number dropped 113 of them, and where it
+   * was the only weakness the array shipped empty, asserting the creature had none. */
+  resistances?: Array<{ amount: number | null; name: string; note?: string }>
+  weaknesses?: Array<{ amount: number | null; name: string; note?: string }>
 }
 
 export interface RawAbility {
   name: string
-  activity?: { number: number; unit: string }
+  /* A VARIABLE action cost needs `to`. AoN writes 171 abilities as a range —
+   * `<actions string="Single Action to Three Actions" />` (153 of them), plus the `or` forms
+   * ("Single Action or Two Actions") — and a bare {number, unit} cannot say that, so those costs
+   * had nowhere to land and were dropped on import. `to` is the upper bound; `sep` keeps AoN's own
+   * wording rather than normalising "or" into "to". */
+  activity?: { number: number; unit: string; to?: number; sep?: 'to' | 'or' }
   traits?: string[]
   trigger?: string
   requirements?: string
@@ -75,7 +102,10 @@ export interface RawSpellcasting {
     level?: number
     /** Spontaneous rank slot count (enrich-spell-usage.mjs). */
     slots?: number
-    spells?: Array<{ name: string; amount?: string | number; atWill?: boolean }>
+    /* `note` is AoN's per-spell parenthetical with the usage token removed — "self only",
+     * "cave bear or woolly rhinoceros only", "Dimension of Time and Universe only". 584 of them
+     * over the corpus; written by harvestSpells in scripts/lib/creature-markdown.mjs. */
+    spells?: Array<{ name: string; amount?: string | number; atWill?: boolean; note?: string }>
   }>
   fp?: number
 }
@@ -129,11 +159,15 @@ export interface Creature {
   traits: string[]
   perception: number
   senses: string[]
+  /** Qualifier shown beside the Perception modifier (see RawCreature.perceptionNote). */
+  perceptionNote?: string
   languages: string[]
   skills: Record<string, number>
   str: number; dex: number; con: number; int: number; wis: number; cha: number
   items: string[]
   speed: { walk?: number; fly?: number; swim?: number; burrow?: number; climb?: number }
+  /** Movement abilities AoN prints after the Speed value (see RawCreature.speedNote). */
+  speedNote?: string
   attacks: Attack[]
   spellcasting: SpellBlock[]
   /** Rituals the creature can cast (see RitualBlock); names link the rituals index. */
@@ -163,6 +197,10 @@ export interface Attack {
   range: 'Melee' | 'Ranged'
   name: string
   attack: number
+  /** The strike's action cost as a glyph string (see activitySymbol). Optional, like
+   *  Ability.activity: hand-built strikes (the editor, hazards, the sample block) have no AoN
+   *  markdown behind them and legitimately carry no cost. */
+  activity?: string
   traits: string[]
   damage: string
   types: string[]
@@ -176,11 +214,17 @@ export interface Defenses {
   ref: number
   will: number
   hp: number
+  /** What AoN prints beside the HP — "(4 segments)", "(3 heads)", regeneration. 808 creatures. */
+  hpNote?: string
+  /** AoN's note after the saves — "+1 status to all saves vs. magic". 942 creatures. */
+  saveNote?: string
+  /** AoN's qualifier beside the AC — "all-around vision", "(19 when broken)". 272 creatures. */
+  acNote?: string
   hardness?: number
   bt?: number
   immunities: string[]
-  resistances: Array<{ amount: number; name: string; note?: string }>
-  weaknesses: Array<{ amount: number; name: string; note?: string }>
+  resistances: Array<{ amount: number | null; name: string; note?: string }>
+  weaknesses: Array<{ amount: number | null; name: string; note?: string }>
 }
 
 export interface Ability {
@@ -210,6 +254,9 @@ export interface SpellSlotEntry {
     uses?: number
     /** Innate at-will spell — unlimited, no counter shown. */
     atWill?: boolean
+    /** AoN's per-spell restriction, minus the usage token: the Solar's Invisibility is
+     *  "self only", the Zebub's Summon Animal is "swarm creatures only". */
+    note?: string
   }>
 }
 

@@ -244,9 +244,14 @@ function DefTerm({ term }: { term: string }) {
   return <span style={{ color: 'var(--text-muted)' }}>{display}</span>
 }
 
-function Mod({ base, mod }: { base: number; mod: number }) {
+function Mod({ base, mod, signed = true }: { base: number; mod: number; signed?: boolean }) {
   const total = base + mod
-  const display = fmt(total)
+  /* AC is a DC, not a modifier. The rulebooks and AoN both print "AC 27"; this rendered "+27"
+   * because AC shared the save renderer, which signs everything. `plain` was not an option — it
+   * shows the BASE and would drop any condition adjustment, so a +2 status bonus to AC would go
+   * unshown. Hence a sign switch rather than a second code path: the number still moves with
+   * conditions and still colours up/down, it just loses the leading plus. */
+  const display = signed ? fmt(total) : String(total)
   if (mod < 0) return <span className="stat-down">{display}</span>
   if (mod > 0) return <span className="stat-up">{display}</span>
   return <span>{display}</span>
@@ -300,7 +305,7 @@ function CondStar({ entries, rollTotal, onRoll }: {
 // Big mono value over a small label so each stat is easy to spot at a glance.
 // When `onRoll` is given the whole box is clickable (rolls the save); the
 // situational "*" sits inline with the value and rolls its own total.
-function DefBox({ label, base, mod, onRoll, title, star, plain, unit }: {
+function DefBox({ label, base, mod, onRoll, title, star, plain, unit, signed = true }: {
   label: string
   base: number
   mod: number
@@ -309,6 +314,8 @@ function DefBox({ label, base, mod, onRoll, title, star, plain, unit }: {
   star?: React.ReactNode
   plain?: boolean
   unit?: string
+  /** false for AC, which the rulebooks print unsigned ("AC 27", never "+27"). */
+  signed?: boolean
 }) {
   return (
     <div
@@ -318,7 +325,7 @@ function DefBox({ label, base, mod, onRoll, title, star, plain, unit }: {
     >
       <div className="def-box-label">{label}</div>
       <div className="def-box-val">
-        {plain ? base : <Mod base={base} mod={mod} />}
+        {plain ? base : <Mod base={base} mod={mod} signed={signed} />}
         {unit && <span className="def-box-unit">{unit}</span>}
         {star && <span onClick={e => e.stopPropagation()}>{star}</span>}
       </div>
@@ -411,7 +418,18 @@ const RK_TYPE_SKILLS: Record<string, string[]> = {
   plant: ['Nature'], spirit: ['Occultism'], undead: ['Religion'],
 }
 
-interface RkInfo { dc: number; skills: string[]; type?: string; unspecific?: number; specific?: number }
+interface RkInfo {
+  dc: number
+  skills: string[]
+  type?: string
+  /* AoN lists EACH creature type with its OWN skill — "Animal (Nature), Humanoid (Society)" — and
+   * the Hellknight cavalry brigade is both. Collapsing them into one type plus a union of skills
+   * printed "Animal (Nature or Society)", which says a Society check identifies it as an Animal.
+   * Wrong, and it changes what a GM rolls. Kept as pairs so the render can stay faithful. */
+  byType?: Array<{ type: string; skills: string[] }>
+  unspecific?: number
+  specific?: number
+}
 
 // Pull the precise Recall Knowledge block out of the AoN flavor blurb, e.g.
 //   "Recall Knowledge - Fiend\n(Religion): DC 23\n
@@ -443,14 +461,19 @@ function getRecallKnowledge(level: number, traits: string[]): RkInfo {
   else if (lowerTraits.includes('uncommon')) baseDC += 2
   const skills = new Set<string>()
   let type: string | undefined
+  const byType: Array<{ type: string; skills: string[] }> = []
   for (const t of traits) {
     const s = RK_TYPE_SKILLS[t.toLowerCase()]
-    if (s) { s.forEach(sk => skills.add(sk)); if (!type) type = t }   // keep the creature type (e.g. "Fiend")
+    if (s) {
+      s.forEach(sk => skills.add(sk))
+      if (!type) type = t   // keep the creature type (e.g. "Fiend")
+      byType.push({ type: t, skills: s })
+    }
   }
   // No creature type identified — fall back to a generic skill set so we still
   // render a usable Recall Knowledge row at the top of the stat block.
   if (!skills.size) return { dc: baseDC, skills: ['Lore'], type }
-  return { dc: baseDC, skills: [...skills], type }
+  return { dc: baseDC, skills: [...skills], type, byType }
 }
 
 // Resolve attack trait with progressive key stripping
@@ -915,28 +938,31 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
   // their own "Senses" row when Perception is pulled into a defense cube.
   // The scraped data often crams several senses (with ranges and stray text)
   // into one string, so split on commas first; each real sense then resolves to
-  // its glossary/trait popup. AoN ALSO crams a Perception initiative qualifier —
-  // e.g. "(+14 when rolling initiative)" — into the senses string; pull it out
-  // so it renders ONCE next to the Perception modifier (single parens, rollable)
-  // instead of being double-wrapped as a pseudo-sense.
-  const rawSenseParts = !isHazard
+  // its glossary/trait popup.
+  const senseParts: string[] = !isHazard
     ? creature.senses.flatMap(s => s.split(',').map(x => x.trim())).filter(Boolean)
     : []
-  let initiativeBonus: number | null = null
-  const senseParts: string[] = []
-  for (const s of rawSenseParts) {
-    const m = s.match(/^\(\s*\+?(\d+)\s+when rolling initiative\s*\)\s*(.*)$/i)
-    if (m) { initiativeBonus = parseInt(m[1]); if (m[2].trim()) senseParts.push(m[2].trim()) }
-    else senseParts.push(s)
-  }
 
-  const initiativeNote: React.ReactNode = initiativeBonus != null ? (
+  // The PERCEPTION QUALIFIER AoN prints between the modifier and the senses —
+  // "+27 to detect lies" (Kolyarut), "expert" (Valerie), "26 when rolling
+  // initiative" (Wight Commander). The builder used to leave it glued to the
+  // front of the senses string on 105 creatures, so this component clawed the
+  // "when rolling initiative" flavour back out of senseParts and the other 103
+  // rendered as pseudo-senses. Creature.perceptionNote now carries it and
+  // senses[] is senses only; the initiative ones stay rollable (the same two
+  // creatures as before, Wight Commander and the Palace Guard) and the rest
+  // render as plain parenthesised text in that same slot.
+  const percNote = isHazard ? undefined : creature.perceptionNote
+  const initM = percNote?.match(/^\+?(\d+)\s+when rolling initiative$/i)
+  const initiativeBonus: number | null = initM ? parseInt(initM[1]) : null
+
+  const perceptionNoteNode: React.ReactNode = initiativeBonus != null ? (
     <span style={muted}> (
       <span className="roll-check" title="Roll initiative"
         onClick={() => handleCheck('Initiative', initiativeBonus as number)}>+{initiativeBonus}</span>
       {' when rolling initiative)'}
     </span>
-  ) : null
+  ) : percNote ? <span style={muted}> ({percNote})</span> : null
 
   const senseNodes: React.ReactNode = senseParts.length ? senseParts.map((s, si) => {
     const key = senseKey(s)
@@ -991,7 +1017,9 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
           <>
             <span className="stat-label">Recall Knowledge</span>{' '}
             <span style={{ color: 'var(--text-muted)' }}>
-              DC {rk.dc}{rk.type ? ` • ${rk.type}` : ''} ({rk.skills.join(' or ')})
+              DC {rk.dc} {rk.byType && rk.byType.length > 1
+                ? `• ${rk.byType.map(b => `${b.type} (${b.skills.join(' or ')})`).join(', ')}`
+                : `${rk.type ? `• ${rk.type} ` : ''}(${rk.skills.join(' or ')})`}
             </span>
             {lore && <span style={{ color: 'var(--text-faded)', fontSize: 11, marginLeft: 8 }}>{lore}</span>}
           </>
@@ -1011,7 +1039,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
             <CondStar entries={condFor(['perception', 'allChecks'])}
               rollTotal={creature.perception + resolveStatMod(combatant.conditions, 'perception', true)}
               onRoll={() => handleCheck('Perception (situational)', creature.perception + resolveStatMod(combatant.conditions, 'perception', true))} />
-            {initiativeNote}
+            {perceptionNoteNode}
             {senseNodes && <span style={muted}> ({senseNodes})</span>}
           </>
         )
@@ -1074,7 +1102,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
         const bt = creature.defenses.bt
         return (
           <>
-            <span className="stat-label">HP</span> {creature.defenses.hp}
+            <span className="stat-label">HP</span> {creature.defenses.hp}{creature.defenses.hpNote && <span style={{ ...muted, marginLeft: 4 }}>{creature.defenses.hpNote}</span>}
             {bt !== undefined && <span style={{ marginLeft: 10 }}><span className="stat-label">BT</span> {bt}</span>}
           </>
         )
@@ -1115,7 +1143,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                 <div className="def-box-val"><Mod base={creature.perception} mod={mods.perception} /></div>
               </div>
             </div>
-            {initiativeNote && <div className="stat-line" style={{ fontSize: 12 }}>{initiativeNote}</div>}
+            {perceptionNoteNode && <div className="stat-line" style={{ fontSize: 12 }}>{perceptionNoteNode}</div>}
             {senseNodes && <StatRow><span className="stat-label">Senses</span> <span style={muted}>{senseNodes}</span></StatRow>}
           </Fragment>
         )
@@ -1145,11 +1173,11 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
         const showSection = !isHazard || (hasHardness || hasSaves || d.hp > 0 || d.resistances.length > 0 || d.weaknesses.length > 0 || d.immunities.length > 0)
         if (!showSection) return null
         type DefEntry =
-          | { kind: 'val'; key: string; label: string; base: number; mod: number; plain?: boolean; title?: string; onRoll?: () => void; star?: React.ReactNode }
+          | { kind: 'val'; key: string; label: string; base: number; mod: number; plain?: boolean; signed?: boolean; title?: string; onRoll?: () => void; star?: React.ReactNode }
           | { kind: 'speed'; key: string; sp: SpeedSet }
         const entries: DefEntry[] = []
         if (!isHazard) {
-          entries.push({ kind: 'val', key: 'ac', label: 'AC', base: d.ac, mod: mods.ac,
+          entries.push({ kind: 'val', key: 'ac', label: 'AC', base: d.ac, mod: mods.ac, signed: false,
             star: <CondStar entries={condFor(['ac'])} rollTotal={d.ac + resolveStatMod(cnd, 'ac', true)} /> })
         }
         if (hasHardness) {
@@ -1207,8 +1235,35 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
               {entries.map(e => e.kind === 'speed'
                 ? <SpeedBox key={e.key} speed={e.sp} />
                 : <DefBox key={e.key} label={e.label} base={e.base} mod={e.mod} plain={e.plain}
-                    onRoll={e.onRoll} title={e.title} star={e.star} />)}
+                    signed={e.signed} onRoll={e.onRoll} title={e.title} star={e.star} />)}
             </div>
+            {/* AoN's qualifier beside the AC — "all-around vision", "(19 when broken)",
+                "(29 with shield raised)". 272 creatures; the numeric facet had no room for it. */}
+            {creature.defenses.acNote && (
+              <div className="stat-line">
+                <span className="stat-label">AC</span>{' '}
+                <TagRenderer text={creature.defenses.acNote} />
+              </div>
+            )}
+            {/* AoN prints a qualifier after the three saves — "+1 status to all saves vs. magic",
+                "construct armor". It exists only in the markdown (every save facet is a bare
+                integer), and it decides saving throws, so it sits directly under the cubes it
+                modifies. 942 creatures. */}
+            {creature.defenses.saveNote && (
+              <div className="stat-line">
+                <span className="stat-label">Saves</span>{' '}
+                <TagRenderer text={creature.defenses.saveNote} />
+              </div>
+            )}
+            {/* AoN's Speed line is "40 feet; trailblazing stride, troop movement" — the movement
+                abilities after the ';'. The Speed cube holds only the numbers, so they go here
+                rather than being dropped (497 creatures). */}
+            {creature.speedNote && (
+              <div className="stat-line">
+                <span className="stat-label">Speed</span>{' '}
+                <TagRenderer text={creature.speedNote} />
+              </div>
+            )}
           </>
         )
       }
@@ -1218,7 +1273,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
         if (isHazard) {
           return (
             <StatRow>
-              <span className="stat-label">HP</span> {creature.defenses.hp}
+              <span className="stat-label">HP</span> {creature.defenses.hp}{creature.defenses.hpNote && <span style={{ ...muted, marginLeft: 4 }}>{creature.defenses.hpNote}</span>}
               {bt !== undefined && <span style={{ marginLeft: 10 }}><span className="stat-label">BT</span> {bt}</span>}
             </StatRow>
           )
@@ -1257,6 +1312,9 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                 <div className="stat-line" key={i}>
                   <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 4 }}>
                     <span className="stat-label" style={{ textTransform: 'capitalize' }}>{atk.range}</span>
+                    {/* AoN prints the action cost on every strike line; it was parsed and thrown
+                        away for 9,487 strikes before the cost reached the record. */}
+                    {atk.activity && <ActionGlyph act={atk.activity} />}
                     <span style={{ fontWeight: 600, color: 'var(--text)' }}>{atk.name}</span>
                     <span className={totalAtk < atk.attack ? 'stat-down' : totalAtk > atk.attack ? 'stat-up' : ''}>{fmt(totalAtk)}</span>
                     {atk.traits.length > 0 && (
@@ -1345,7 +1403,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
               const isInnate      = type === 'innate'
               const isFocus       = type === 'focus'
 
-              const spellName = (sp: { name: string; atWill?: boolean }, slot: SpellSlotEntry, spent: boolean) => {
+              const spellName = (sp: { name: string; atWill?: boolean; note?: string }, slot: SpellSlotEntry, spent: boolean) => {
                 const info = spells.get(sp.name.toLowerCase())
                 const isCantripSpell = info?.traits?.some(t => t.toLowerCase() === 'cantrip') ?? false
                 const castRank = (slot.isCantrip || isCantripSpell || isFocus)
@@ -1354,7 +1412,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                 const st: React.CSSProperties = spent
                   ? { ...spellLink, color: 'var(--text-faded)', textDecoration: 'line-through', borderBottomColor: 'transparent' }
                   : spellLink
-                return info
+                const label = info
                   ? <Tooltip
                       content={<PopupPreview type="spell" ref_={sp.name.toLowerCase()} title={info.name} castRank={castRank} />}
                       onActivate={pos => openWin('spell', sp.name.toLowerCase(), sp.name, pos.x, pos.y, { noCascade: true, castRank })}
@@ -1362,6 +1420,10 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                       <span style={st}>{sp.name}</span>
                     </Tooltip>
                   : <span style={spent ? { color: 'var(--text-faded)', textDecoration: 'line-through' } : { color: 'var(--linked)' }}>{sp.name}</span>
+                /* AoN prints the restriction beside the spell and it changes what the spell DOES:
+                 * the Solar's Invisibility is "self only", the Zebub's Summon Animal is "swarm
+                 * creatures only". Both render here so per-spell rows and the inline list agree. */
+                return sp.note ? <>{label}<span style={{ color: 'var(--text-faded)' }}> ({sp.note})</span></> : label
               }
 
               // Rank order + per-block rank spacing (Settings → Stat Blocks,
@@ -1404,7 +1466,12 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                       : { fontSize: 12 }}>
                       {orderedSlots.map((slot, si) => {
                         const untracked = slot.isCantrip || slot.isConstant
-                        const label = slot.isCantrip ? 'Cantrips'
+                        {/* AoN prints the rank a caster's cantrips are heightened to — "Cantrips
+                            (3rd)" — and it matters, because that rank sets their damage. The rank
+                            was parsed and shipped all along; this label just ignored it, on 1,273
+                            creatures. */}
+                        const label = slot.isCantrip
+                          ? (slot.level > 0 ? <>Cantrips <b>{slot.level}{ord(slot.level)}</b></> : 'Cantrips')
                           : slot.isConstant ? slot.label
                           : slot.level > 0 ? <><b>{slot.level}{ord(slot.level)}</b> rank</>
                           : slot.label

@@ -188,7 +188,20 @@ export function resolveStatMod(
       }
     }
   }
-  return resolveBucket(b[statKey], ALL_CHECKS_TARGETS.has(statKey) ? b.allChecks : null)
+  /* A stat key we have never heard of is a SKILL WE DO NOT ENUMERATE, not a bug to crash on.
+   *
+   * StatBlock.tsx:1042 rolls every skill on the creature through here, casting the key with
+   * `as keyof StatMods` — a cast that lies for anything outside the 16 canonical skills. It went
+   * unnoticed because AoN's `skill_mod` facet only ever emitted canonical skills; the moment the
+   * builder started reading Lore skills out of `skill_markdown` (1,118 creatures — "Hell Lore +12"),
+   * `b['hell lore']` came back undefined and `resolveBucket` threw on `.circumstance`, taking the
+   * whole stat block down behind the error boundary.
+   *
+   * A Lore IS a skill check, so it still receives the all-checks modifiers (frightened, enfeebled…);
+   * it simply has no per-stat bucket of its own. */
+  const bucket = b[statKey] ?? { circumstance: [], status: [], item: [], untyped: [] }
+  const getsAllChecks = ALL_CHECKS_TARGETS.has(statKey) || !(statKey in b)
+  return resolveBucket(bucket, getsAllChecks ? b.allChecks : null)
 }
 
 // ── Conditional (situational) modifiers ───────────────────────────────────

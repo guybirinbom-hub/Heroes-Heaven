@@ -52,7 +52,9 @@ const parseSkills = (s: string): Record<string, number> => {
 const skillsToText = (sk?: Record<string, number>) =>
   Object.entries(sk ?? {}).map(([k, v]) => `${k} ${v >= 0 ? '+' : ''}${v}`).join(', ')
 
-type DR = { amount: number; name: string; note?: string }
+/** `amount` is null for the valueless weaknesses AoN prints ("light vulnerability",
+ *  "vampire weaknesses") — the editor must round-trip those rather than drop them. */
+type DR = { amount: number | null; name: string; note?: string }
 const parseDR = (s: string): DR[] => {
   const out: DR[] = []
   for (const part of splitTop(s)) {

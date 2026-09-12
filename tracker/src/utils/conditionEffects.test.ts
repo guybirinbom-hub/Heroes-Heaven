@@ -460,3 +460,27 @@ describe('computeConditionMods — combined realistic scenario', () => {
     expect(m.speed).toBe(0)
   })
 })
+
+describe('resolveStatMod with an unenumerated skill', () => {
+  /*
+   * Lore skills are real skills with arbitrary names — "Hell Lore", "Warfare Lore", "Legal Lore" —
+   * so they can never all appear in StatMods. StatBlock rolls every skill on a creature through
+   * resolveStatMod with an `as keyof StatMods` cast, and that cast lies for exactly these.
+   *
+   * This went unnoticed while the bestiary was built from AoN's `skill_mod` facet, which silently
+   * omits every Lore. The moment the builder started reading them out of `skill_markdown`
+   * (1,118 creatures), the undefined bucket threw and took the whole stat block down behind the
+   * error boundary. It must degrade, not crash.
+   */
+  const frightened = [{ name: 'Frightened', value: 2 }] as unknown as Parameters<typeof resolveStatMod>[0]
+
+  it('does not throw on a Lore skill', () => {
+    expect(() => resolveStatMod(frightened, 'hell lore' as never, true)).not.toThrow()
+  })
+
+  it('still applies all-checks modifiers to it, because a Lore IS a check', () => {
+    expect(resolveStatMod(frightened, 'hell lore' as never, true)).toBe(-2)
+    // and it matches what a skill we DO enumerate gets from the same condition
+    expect(resolveStatMod(frightened, 'acrobatics', true)).toBe(-2)
+  })
+})
