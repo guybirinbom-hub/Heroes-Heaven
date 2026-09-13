@@ -5534,6 +5534,14 @@ button.strike-name:hover {
   color: var(--app-text);
   border-color: var(--app-border);
 }
+/* bug 2026-09-12 #7: homebrew-delete — the trash control on a row the user authored. Tinted rather
+   than the solid red of .btn-danger: it stands beside Buy/Give and should be available, not shouted. */
+.ai-buy button.del {
+  background: var(--app-surface-2);
+  color: var(--app-bad);
+  border-color: color-mix(in srgb, var(--app-bad) 50%, transparent);
+  padding: 3px 9px;
+}
 .ai-buy button:disabled {
   opacity: 0.4;
   cursor: default;

@@ -1946,6 +1946,81 @@ export function buyItem(play: PlayState, itemId: string, price: Coins | undefine
   return addInventoryItem({ ...play, currency: remaining }, itemId);
 }
 
+/** Every field of an inventory row except its id — the test for "this row is still exactly what the
+ *  build handed over", i.e. the player never touched it. Any quantity / worn / equipped / invested /
+ *  rune / container / charge change they made shows up here. */
+function instanceSig(i: InventoryItem): string {
+  return JSON.stringify(
+    Object.entries(i)
+      .filter(([k, v]) => k !== 'instanceId' && v !== undefined)
+      .sort(([a], [b]) => (a < b ? -1 : 1)),
+  );
+}
+
+/**
+ * bug 2026-09-12 #3c: merge the rebuilt build's gear into the player's live inventory.
+ *
+ * `play.inventory` OVERRIDES the build's gear on the sheet (applyPlayState), and a rebuild used to
+ * keep it verbatim — so for any character that had ever managed inventory in play, an item added in
+ * the BUILDER never reached the sheet and the two disagreed permanently.
+ *
+ * RULE — the sheet's inventory wins, the build can only add:
+ *  • KEEP every play instance, untouched: its quantity, worn/equipped/invested state, runes,
+ *    container, affixation, charges and formulas are the player's live state.
+ *  • ADD a build item that has no counterpart in play — matched first by its own instance id, then
+ *    by itemId, so a rebuild never duplicates something the player already carries (and rebuilding
+ *    twice adds nothing the second time).
+ *  • REMOVE an instance only when all three hold: the new build no longer asks for it, it came from
+ *    the OLD build (`prevBuilt` = character.inventory before this edit, the rows play was seeded
+ *    from — same instance id), and it is still byte-identical to what that build handed over. If we
+ *    cannot tell that it was never touched, it STAYS. So does everything on a character rebuilt
+ *    without a previous inventory to compare against.
+ */
+function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[], prevBuilt: InventoryItem[]): InventoryItem[] {
+  const taken = new Set<number>();
+  const claim = (pred: (p: InventoryItem) => boolean): number => {
+    const i = playInv.findIndex((p, idx) => !taken.has(idx) && pred(p));
+    if (i >= 0) taken.add(i);
+    return i;
+  };
+  /** built instance id → the live instance id it ended up as, so a nested add keeps its container. */
+  const idMap = new Map<string, string>();
+  const add: InventoryItem[] = [];
+  for (const b of built) {
+    const own = claim((p) => p.instanceId === b.instanceId && p.itemId === b.itemId);
+    const i = own >= 0 ? own : claim((p) => p.itemId === b.itemId);
+    if (i >= 0) idMap.set(b.instanceId, playInv[i].instanceId);
+    else add.push(b);
+  }
+  // Untouched leftovers of build items the builder has since dropped.
+  const gone = new Set<number>();
+  for (const old of prevBuilt) {
+    const i = playInv.findIndex(
+      (p, idx) => !taken.has(idx) && !gone.has(idx) && p.instanceId === old.instanceId && instanceSig(p) === instanceSig(old),
+    );
+    if (i >= 0) gone.add(i);
+  }
+  const kept = playInv.filter((_, i) => !gone.has(i));
+  const added: InventoryItem[] = [];
+  for (const b of add) {
+    const all = [...kept, ...added];
+    const instanceId = all.some((p) => p.instanceId === b.instanceId) ? nextInstanceId(all) : b.instanceId;
+    idMap.set(b.instanceId, instanceId);
+    added.push({ ...b, instanceId });
+  }
+  // A build-side container/host id means nothing in play — re-point it at whatever that item became
+  // (loose, rather than at an unrelated row, if it became nothing).
+  const ref = (v: string | null | undefined) => (v == null ? v : idMap.get(v) ?? null);
+  return [
+    ...kept,
+    ...added.map((i) => ({
+      ...i,
+      ...(i.containerInstanceId !== undefined ? { containerInstanceId: ref(i.containerInstanceId) } : {}),
+      ...(i.attachedTo !== undefined ? { attachedTo: ref(i.attachedTo) } : {}),
+    })),
+  ];
+}
+
 /**
  * Reconcile a play state after the build is edited/rebuilt. The rebuild re-derives spell preparation
  * and class resources from the new choices, so we drop those (re-seeded from the new character) and
@@ -1953,8 +2028,12 @@ export function buyItem(play: PlayState, itemId: string, price: Coins | undefine
  * XP, conditions, pins, notes, companion state — AND the player's actual inventory + currency (real
  * progress, not build-derived; left undefined for a character that never touched inventory in play so
  * the rebuilt build gear still seeds correctly).
+ *
+ * `built` / `prevBuilt` are the new and the previous `character.inventory`; pass both so gear added in
+ * the builder reaches the sheet (see mergeRebuiltInventory). Without them the play inventory is kept
+ * verbatim, which is the old — lossless but deaf — behaviour.
  */
-export function playForRebuild(play: PlayState): PlayState {
+export function playForRebuild(play: PlayState, built?: InventoryItem[], prevBuilt?: InventoryItem[]): PlayState {
   return {
     damage: play.damage,
     tempHp: play.tempHp,
@@ -1978,7 +2057,8 @@ export function playForRebuild(play: PlayState): PlayState {
     // genuine progress, not build-derived. (Undefined falls back to the rebuilt build gear for a
     // character that never managed inventory in play, so fresh builds still seed correctly.) Spell
     // prep / repertoire / signature and class resources ARE re-derived from the new build, so omitted.
-    inventory: play.inventory,
+    // Gear the BUILDER added is merged in on top — see mergeRebuiltInventory.
+    inventory: play.inventory && built ? mergeRebuiltInventory(play.inventory, built, prevBuilt ?? []) : play.inventory,
     currency: play.currency,
     // Learning a spell costs an hour per rank and real gold; it is knowledge the character now has,
     // not a preparation, so it outlives a rebuild the same way bought gear does.

@@ -358,7 +358,7 @@ export function FilterableSelect<T>({
   limit?: number;
   /** Marks an item the character can't take (unmet prerequisites). When set, a "Hide ineligible"
    *  toggle appears in the results bar — but only while the current results actually contain
-   *  ineligible entries (or the toggle is already on). */
+   *  ineligible entries, so the button is never offered with nothing behind it. */
   ineligible?: (item: T) => boolean;
   /** Rendered at the END of the results list, given the current name-search text. Used by the
    *  feat picker to surface matches that exist in the full content but are hidden from this
@@ -435,7 +435,7 @@ export function FilterableSelect<T>({
   );
 
   // "Hide ineligible" — ON by default (feat pickers): options you don't qualify for are REMOVED from
-  // the list, not greyed out, so the list only offers things you can actually take. The always-visible
+  // the list, not greyed out, so the list only offers things you can actually take. The
   // "Show ineligible · N" toggle brings them back (that's also how Overrides' "Take anyway" is
   // reached). The ineligible set is computed once per items/predicate identity so keystrokes don't
   // re-run prerequisite checks over the list.
@@ -627,7 +627,13 @@ export function FilterableSelect<T>({
               ) : (
                 <span />
               )}
-              {inelKeys && (inelCount > 0 || hideInel) && (
+              {/* bug 2026-09-12 #1: "after i press the show ineligible button nothing changes". The
+                * `|| hideInel` that used to sit here kept the button on screen in its default (hidden)
+                * state even when the current results held NOTHING ineligible — a 1st-level ancestry or
+                * class slot, where every offered feat is takeable — so pressing it changed the label
+                * and not one row. `inelCount` counts over `filtered`, i.e. BEFORE the ineligible filter
+                * is applied, so it stays > 0 once revealed and the button can still re-hide them. */}
+              {inelCount > 0 && (
                 <button
                   type="button"
                   className={'fsel-inel' + (hideInel ? ' on' : '')}

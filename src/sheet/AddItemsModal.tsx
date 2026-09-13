@@ -3,8 +3,16 @@ import { listValues } from '../data';
 import type { Coins, ContentDatabase, Item } from '../rules/types';
 import { canAfford } from '../rules/play';
 import { formatPrice, parsePrice } from '../rules/wealth';
+import { confirmDialog } from './confirm';
 import { FilterableSelect, descNodeOf } from './FilterableSelect';
 import { ITEM_SPEC } from './filterSpecs';
+
+/** bug 2026-09-12 #7: homebrew-delete — an item THIS USER authored (or copy-on-wrote from a printed
+ *  one), which is the only kind the delete control below may touch. Same two-part test the item
+ *  editor uses to decide whether an edit is in-place or copy-on-write (ItemEditorModal.tsx): the
+ *  homebrew merge stamps `license: 'homebrew'` on every stored entry, and a copy keeps the original
+ *  book's attribution but is minted with a `custom-` id. */
+const userAuthored = (it: Item) => it.source?.license === 'homebrew' || it.id.startsWith('custom-');
 
 /** A vehicle/siege catalog pick routed to the companion system. `kind` selects the catalog map;
  *  `typeId` is the vehicle/siege id. */
@@ -29,6 +37,7 @@ export function AddItemsModal({
   onBuyCompanion,
   onGiveCompanion,
   onClose,
+  onSaveItem,
   hideLegacy,
 }: {
   content: ContentDatabase;
@@ -37,6 +46,10 @@ export function AddItemsModal({
   hideLegacy?: boolean;
   onBuy: (itemId: string) => void;
   onGive: (itemId: string) => void;
+  /** bug 2026-09-12 #7: homebrew-delete — persist a user-authored item (App's `addCustomItem`: into
+   *  the live content DB and into homebrew storage). The SAME callback that registers a created item
+   *  retires a deleted one, so deleting needs no second write path. Omit to hide the control. */
+  onSaveItem?: (item: Item) => void;
   /** Buy a vehicle/siege as a companion (deduct its price). Omit to hide vehicles/siege entirely. */
   onBuyCompanion?: (pick: CompanionPick) => void;
   /** Add a vehicle/siege as a companion for free. Omit to hide vehicles/siege entirely. */
@@ -116,6 +129,7 @@ export function AddItemsModal({
     const items = listValues(content, content.items).filter((i) => {
       const e = (i as { edition?: string }).edition;
       if (e === 'superseded') return false; // renamed/outdated half of a remaster change — always hidden
+      if (i.retired) return false; // bug 2026-09-12 #7: deleted here, but still resolvable for anyone carrying one
       if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) return false;
       return true;
     });
@@ -123,6 +137,28 @@ export function AddItemsModal({
       (a, b) => a.level - b.level || a.name.localeCompare(b.name),
     );
   }, [content, services, companionCatalog, hideLegacy]);
+
+  /*
+   * bug 2026-09-12 #7: homebrew-delete. Owner: *"for items that a user created and appear in search
+   * have a way to delete them in search, ask the user if they are sure; if they delete the item in
+   * search but they still have it in the inventory then dont delete it from the inventory."*
+   *
+   * So this RETIRES the record rather than erasing it. An inventory row resolves its item through
+   * `content.items[inv.itemId]` (InventoryTab) and a missing record renders as "Unknown item —
+   * missing data", which is exactly the outcome the owner ruled out; a hard delete guarded by a
+   * roster scan would race the roster's own save. The entry stays authored content — the Homebrew
+   * manager still lists it and its Delete there is the real, permanent one.
+   */
+  const retire = async (it: Item) => {
+    const ok = await confirmDialog({
+      title: `Delete ${it.name}?`,
+      message:
+        "This removes the item you created from this list. Anyone already carrying one keeps it, and the entry stays in Homebrew until you delete it there.",
+      confirmLabel: 'Delete',
+      danger: true,
+    });
+    if (ok) onSaveItem?.({ ...it, retired: true });
+  };
 
   return (
     <FilterableSelect
@@ -183,6 +219,12 @@ export function AddItemsModal({
                   <button className="give" title="Add for free" onClick={() => onGive(it.id)}>
                     Give
                   </button>
+                  {/* bug 2026-09-12 #7: homebrew-delete — only on the rows this user authored. */}
+                  {onSaveItem && userAuthored(it) && (
+                    <button className="del" title="Delete this item you created" aria-label={`Delete ${it.name}`} onClick={() => void retire(it)}>
+                      <i className="ti ti-trash" aria-hidden="true" />
+                    </button>
+                  )}
                 </>
               )}
             </div>

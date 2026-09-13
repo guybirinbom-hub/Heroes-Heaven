@@ -873,9 +873,15 @@ export default function App() {
           if (editing) {
             const id = editing.id;
             // Keep in-play progress across a rebuild, but reconcile build-derived overrides
-            // (gear/currency/spells/resources) so the edited build actually takes effect.
+            // (gear/currency/spells/resources) so the edited build actually takes effect. The old
+            // character's inventory goes along so gear added in the BUILDER reaches the sheet without
+            // disturbing what the player has been carrying (bug 2026-09-12 #3c).
             setRoster((r) =>
-              r.map((c) => (c.id === id ? { ...c, id, character: built, build, play: c.play ? playForRebuild(c.play) : c.play } : c)),
+              r.map((c) =>
+                c.id === id
+                  ? { ...c, id, character: built, build, play: c.play ? playForRebuild(c.play, built.inventory, c.character.inventory) : c.play }
+                  : c,
+              ),
             );
             setActiveId(id);
           } else {

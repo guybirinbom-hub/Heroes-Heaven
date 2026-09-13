@@ -1368,9 +1368,20 @@ function collectBoosts(
       );
       boosts.push(...fixedBoosts(eff.abilityBoosts));
       flaws.push(...eff.abilityFlaws);
-      // The free ancestry boost must differ from the ancestry's fixed boosts AND its flaw (all granted
-      // by the same source at the same time) — filter those out so a pick can't double-boost one attribute.
-      const ancTaken = new Set<AbilityId>([...fixedBoosts(eff.abilityBoosts), ...eff.abilityFlaws]);
+      /*
+       * The free ancestry boost must differ from the ancestry's FIXED BOOSTS — "when you gain multiple
+       * attribute boosts at the same time, you must apply each one to a different modifier… Dwarves,
+       * for example, receive an attribute boost to their Constitution modifier and their Wisdom
+       * modifier, as well as one free attribute boost, which can be applied to any OTHER attribute"
+       * (Player Core p.19; Core Rulebook p.20 is word-for-word the same rule).
+       *
+       * The ancestry's FLAW is not in that set. The rule bars a second BOOST on an attribute this
+       * source already boosted; a flaw is not a boost, and neither edition's flaw text ("you decrease
+       * that attribute modifier by 1") forbids boosting it back. Filtering the flaw out here is what
+       * stopped a level-7 catfolk (Dex, Cha, free; Wisdom flaw) from putting its free boost into
+       * Wisdom — the owner's "why cant i choose wisdom for the ancestry boost?", 2026-09-12.
+       */
+      const ancTaken = new Set<AbilityId>(fixedBoosts(eff.abilityBoosts));
       pushDistinct((build.ancestryBoosts ?? []).filter((a) => a == null || !ancTaken.has(a)));
     }
   }
@@ -9713,14 +9724,24 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       need[X] = Math.max(0, total - (fixedCount[X] ?? 0));
     }
 
-    type Ev = { write: (sels: (AbilityId | null)[]) => void; slots: { options?: AbilityId[] }[] };
+    /** `taken` = attributes this event's OWN source already boosts outright. `collectBoosts` drops a
+     *  free pick that repeats one (the same-source rule), so a solver that hands the ancestry's free
+     *  slot an attribute the ancestry already boosts silently throws that boost away — a bard whose
+     *  Charisma was 18 came back 16. See the save-anyway round-trip test. */
+    type Ev = { write: (sels: (AbilityId | null)[]) => void; slots: { options?: AbilityId[] }[]; taken?: AbilityId[] };
     const slotsOf = (boosts: AbilityBoost[]): { options?: AbilityId[] }[] =>
       boostSlots(boosts).map((sl) => (sl.kind === 'choice' ? { options: sl.options } : {}));
     const events: Ev[] = [];
     // Slots come from the heritage-ADJUSTED boosts: Mightyfall's package has no free ancestry slot,
     // and the normal kobold's phantom one would soak a boost buildCharacter then filters out.
-    if (ancestry) events.push({ write: (s) => (b.ancestryBoosts = s), slots: altBoosts ? [{}, {}] : slotsOf((eff ?? ancestry).abilityBoosts) });
-    if (background) events.push({ write: (s) => (b.backgroundBoosts = s), slots: slotsOf(background.abilityBoosts) });
+    if (ancestry)
+      events.push({
+        write: (s) => (b.ancestryBoosts = s),
+        slots: altBoosts ? [{}, {}] : slotsOf((eff ?? ancestry).abilityBoosts),
+        taken: altBoosts ? [] : fixedBoosts((eff ?? ancestry).abilityBoosts),
+      });
+    if (background)
+      events.push({ write: (s) => (b.backgroundBoosts = s), slots: slotsOf(background.abilityBoosts), taken: fixedBoosts(background.abilityBoosts) });
     events.push({ write: (s) => (b.levelBoosts = s), slots: [{}, {}, {}, {}] });
     const boostCount = attributeBoostCount(c.variantRules);
     for (const lvl of attributeBoostLevels(c.variantRules))
@@ -9735,7 +9756,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       }
       return best;
     };
-    const slotState = events.map((ev) => ({ placed: new Set<AbilityId>(), res: ev.slots.map(() => null as AbilityId | null) }));
+    const slotState = events.map((ev) => ({ placed: new Set<AbilityId>(ev.taken ?? []), res: ev.slots.map(() => null as AbilityId | null) }));
     // Pass 1: respect choice-slot option lists.
     events.forEach((ev, ei) => {
       const st = slotState[ei];
@@ -10105,7 +10126,21 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       if (ds) granted.add(ds as ProficiencyKey);
     }
 
-    let extras = trained.filter((sk) => !granted.has(sk));
+    // Steps the character's OWN recorded skill increases already contribute, per skill.
+    const nativeSteps: Partial<Record<ProficiencyKey, number>> = {};
+    for (const si of c.skillIncreases ?? []) nativeSteps[si.skill] = (nativeSteps[si.skill] ?? 0) + 1;
+    /*
+     * A skill the character first got TRAINED by a skill INCREASE is not a class skill.
+     *
+     * Without this subtraction the one increase is counted twice on the way back — once as a class
+     * training the character never had, once as the increase itself — and the skill returns a rank
+     * higher than it went in (measured: a level-7 bard with `skillIncreases: { 3: 'acrobatics' }` and
+     * no class skills came back trained→EXPERT in Acrobatics). Anything above what the increases alone
+     * explain is still a real training and stays.
+     */
+    let extras = trained.filter(
+      (sk) => !granted.has(sk) && PROFICIENCY_RANKS.indexOf(c.proficiencies.skills[sk]) > (nativeSteps[sk] ?? 0),
+    );
     if (c.heritageId === 'skilled-human') {
       // Skilled Heritage raises its skill to expert at 5th. The skill it names may equally be one
       // the character was GRANTED — a Sarenrae cleric is trained in Medicine by their deity and can
@@ -10134,9 +10169,8 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       const rankIdx = (r: ProficiencyRank) => PROFICIENCY_RANKS.indexOf(r);
       // Baseline ranks from this build with increases stripped (b.classSkills/heritageSkill are set).
       const baseline = buildCharacter({ ...b, skillIncreases: {} }, content).proficiencies.skills as Record<string, ProficiencyRank>;
-      // Steps the native increases already contribute per skill (don't re-synthesize those).
-      const nativeSteps: Partial<Record<ProficiencyKey, number>> = {};
-      for (const si of c.skillIncreases ?? []) nativeSteps[si.skill] = (nativeSteps[si.skill] ?? 0) + 1;
+      // `nativeSteps` (computed above with the class-skill subtraction) is what the native increases
+      // already contribute per skill — don't re-synthesize those.
       const siLevels = (cls?.skillIncreaseLevels ?? SKILL_INCREASE_LEVELS).filter((lvl) => lvl <= c.level);
       const freeLevels = siLevels.filter((lvl) => !b.skillIncreases[lvl]).sort((a, b2) => a - b2);
       for (const [skRaw, rankRaw] of Object.entries(c.proficiencies.skills) as [ProficiencyKey, ProficiencyRank][]) {

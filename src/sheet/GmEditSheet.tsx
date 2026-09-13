@@ -145,7 +145,12 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
 
   const onCreate = (build: BuildState) => {
     const built = buildCharacter(build, applyOverrides(content, build.overrides));
-    setWork((w) => ({ ...w, character: built, build, play: w.play ? playForRebuild(w.play) : w.play }));
+    setWork((w) => ({
+      ...w,
+      character: built,
+      build,
+      play: w.play ? playForRebuild(w.play, built.inventory, w.character.inventory) : w.play,
+    }));
     setDirty(true);
     setEditing(null);
   };

@@ -194,6 +194,31 @@ export function ItemDetail({
   const itemModeOn = !!itemMode && activeModes.some((m) => m.id === itemMode.id);
   const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv);
   const id = inv.instanceId;
+  /*
+   * The "This is my …" marks that make sense ON THIS ITEM. The caller (InventoryTab) decides which
+   * marks the CHARACTER may use at all; this is the per-item half, and it has to be applied before the
+   * block's own emptiness test or the heading renders over no buttons.
+   *
+   * A mark already set always survives the filter: a designation you cannot see is one you cannot take
+   * off, and the item that holds it is exactly where you would look.
+   */
+  const shownDesignationKinds = designationKinds.filter(({ kind }) => {
+    if ((inv.designations ?? []).includes(kind)) return true;
+    // `wayfinder-slotted` only makes sense on a record that HAS a resonant power — otherwise it offers
+    // to slot a longsword into a wayfinder. The gate is the FIELD, so a newly imported aeon stone
+    // needs no UI change to become slottable.
+    if (kind === 'wayfinder-slotted') return !!(item as { resonant?: unknown } | undefined)?.resonant;
+    /* bug 2026-09-12 #5: a rune source is a WEAPON. The one rule that creates one — Cutting Heaven,
+     * Crushing Earth — is about weapons at both ends: *"you also apply their runes to a single weapon
+     * you're wielding"*, and the feat's own note says the control is "offered on a wielded one-handed,
+     * agile or finesse melee weapon". Handwraps of mighty blows, the runes' source, are themselves
+     * itemType 'weapon'. Armour, a wand, a backpack can never be one and used to be asked anyway.
+     * (The AoN "+1"/"striking" handwraps VARIANT rows ship as itemType 'equipment', so they fall
+     * outside this — the mark belongs on the weapon per the note, and anything already marked is kept
+     * by the clause above.) */
+    if (kind === 'rune-source') return item.itemType === 'weapon';
+    return true;
+  });
   const storedSpell = inv.heldSpell ? content.spells[inv.heldSpell] : undefined;
   // Spells legal for a generic scroll/wand: the slot's rank, the right tradition (if locked), no rituals.
   const slotSpellOptions = item.spellSlot
@@ -543,16 +568,11 @@ export function ItemDetail({
               </span>
             </label>
           )}
-          {onPlay && designationKinds.length > 0 && (
+          {onPlay && shownDesignationKinds.length > 0 && (
             <div className="sd-uses">
               <span className="sd-uses-title">This is my</span>
               <span className="sd-uses-row">
-                {designationKinds
-                  /* `wayfinder-slotted` only makes sense on a record that HAS a resonant power. Every
-                   * other mark is class-gated; this one would otherwise offer to slot a longsword into
-                   * a wayfinder. The gate is the FIELD, so a newly imported aeon stone needs no UI
-                   * change to become slottable. */
-                  .filter(({ kind }) => kind !== 'wayfinder-slotted' || !!(item as { resonant?: unknown } | undefined)?.resonant)
+                {shownDesignationKinds
                   .map(({ kind, label }) => {
                   const on = (inv.designations ?? []).includes(kind);
                   return (

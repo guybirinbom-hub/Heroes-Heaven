@@ -120,6 +120,11 @@ function isConsumable(item: Item): boolean {
  *  `character.investedLimit` wherever a character is in hand; this is only the RAW default. */
 const INVESTED_LIMIT = 10;
 
+/** The only printed record in the database that gives a character a rune source — a Spirit Warrior
+ *  archetype feat. See `designationKinds` below. Exported so the test asserts the same id the UI
+ *  gates on, rather than its own copy of the string. */
+export const RUNE_SOURCE_FEAT = 'cutting-heaven-crushing-earth';
+
 function ItemCard({
   inv,
   item,
@@ -679,8 +684,18 @@ export function InventoryTab({
    * Which "this item IS my …" marks this character can use. Offered only where the class actually has
    * the concept, so an ordinary fighter is not asked which of their swords is an innovation.
    *
-   * `rune-source` is offered to everyone: Cutting Heaven, Crushing Earth makes invested handwraps
-   * feed one wielded weapon, and nothing about that is class-specific.
+   * bug 2026-09-12 #5 — `rune-source` used to be pushed unconditionally, so every character was asked
+   * of every item whether it was their rune source ("why does every item has a place to put if it is
+   * my rune source, isnt that only for a specific archetype?"). It is: exactly ONE printed record in
+   * the database creates a rune source, and it is an archetype feat — Cutting Heaven, Crushing Earth
+   * (Spirit Warrior, 6th): *"As long as you have invested and are wearing a set of handwraps of mighty
+   * blows, you also apply their runes to a single weapon you're wielding that can be used with your
+   * Overwhelming Combination ability."* Its own authored note sends the player to this control.
+   *
+   * Gated on holding that feat — and on ALREADY holding the mark, so a character who set one before
+   * this gate still sees it and can take it off. The per-ITEM half is in ItemDetail, like the
+   * wayfinder's: a rune source is a weapon (the handwraps that supply the runes, or the weapon the
+   * note says draws them), never a backpack.
    */
   const designationKinds = useMemo(() => {
     const owned = new Set([character.classId, character.classId2].filter(Boolean) as string[]);
@@ -699,13 +714,16 @@ export function InventoryTab({
     if (owned.has('thaumaturge')) out.push({ kind: 'weapon-implement', label: 'Weapon implement' });
     if (owned.has('wizard')) out.push({ kind: 'bonded', label: 'Bonded item' });
     if (hasIkon) out.push({ kind: 'ikon', label: 'Ikon' });
-    out.push({ kind: 'rune-source', label: 'Rune source' });
-    /* Offered to everyone, like `rune-source`: slotting an aeon stone into a wayfinder is not
+    const hasRuneSource =
+      (character.feats ?? []).some((f) => f.featId === RUNE_SOURCE_FEAT) ||
+      character.inventory.some((i) => i.designations?.includes('rune-source'));
+    if (hasRuneSource) out.push({ kind: 'rune-source', label: 'Rune source' });
+    /* Offered to everyone, unlike `rune-source`: slotting an aeon stone into a wayfinder is not
      * class-specific, and the mark is what turns a stone's RESONANT power on. Only aeon stones can use
      * it, which the per-item gate below enforces — nothing else carries `resonant`. */
     out.push({ kind: 'wayfinder-slotted', label: 'Slotted in a wayfinder' });
     return out;
-  }, [character.classId, character.classId2, character.feats, content]);
+  }, [character.classId, character.classId2, character.feats, character.inventory, content]);
   // When the character holds more than one instance of the same item, number them (" 1", " 2", …)
   // in inventory order so otherwise-identical copies (e.g. two Longswords, one refined) are
   // distinguishable. Computed across the whole inventory; recomputes (renumbers) when one is removed.
@@ -1395,6 +1413,9 @@ export function InventoryTab({
           onGiveCompanion={(pick: CompanionPick) =>
             onPlay((p) => addPlayCompanion(p, { kind: pick.kind, name: '', typeId: pick.typeId } as Omit<CompanionConfig, 'id'>))
           }
+          // bug 2026-09-12 #7: homebrew-delete — the same callback that registers a created item
+          // retires a deleted one (App: addCustomItem).
+          onSaveItem={onCreateItem}
           onClose={() => setAddOpen(false)}
         />
       )}

@@ -234,11 +234,22 @@ function TableEl({ node, ctx }: { node: AstNode; ctx: Ctx }): ReactNode {
  * a full class/ancestry page renders in full, not just its loose paragraphs. `hideMeta` drops only the
  * Source/Range/… meta lines (detail views show their own stat block) — flavor prose is NEVER dimmed.
  */
-function Blocks({ nodes, ctx, hideMeta, kb = 'b' }: { nodes: AstNode[]; ctx: Ctx; hideMeta?: boolean; kb?: string }): ReactNode {
+function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead }: { nodes: AstNode[]; ctx: Ctx; hideMeta?: boolean; kb?: string; lead?: boolean }): ReactNode {
   const out: ReactNode[] = [];
   for (let i = 0; i < nodes.length; i++) {
     const n = nodes[i];
     const key = `${kb}.${i}`;
+    /* bug 2026-09-12 #8: popup-divider — a rule with NOTHING above it.
+     *
+     * An AoN page is <stat header> <hr> <prose>, and a detail popup passes `hideMeta` because it prints
+     * that header itself — so the page's separator became the FIRST thing in the body: a line under the
+     * title bar with its own .7em margin above and below and nothing to separate. Measured on the shipped
+     * artefact: 18,667 of 24,964 pages open that way in the hideMeta path (0 in the modal path, where the
+     * Source/stat lines do render above it — that popup is unchanged).
+     *
+     * `lead` is "nothing has been rendered before this run"; with an empty `out` this hr is the first
+     * thing on screen. A divider is only a divider when it divides. */
+    if (n.t === 'hr' && lead && !out.length) continue;
     if (n.t === 'p') {
       const bold0 = (n.c || []).find((x) => !(x.t === 'text' && !textOf(x).trim()));
       // Activate—X immediately followed by an <actions> glyph → one inline (unboxed) activation line.
@@ -251,35 +262,73 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b' }: { nodes: AstNode[]; ctx: Ctx
       // (AoN artifact: "…Fortitude" / sup"(F)" / ", Reflex" / sup"(R)" / … each became its own block, so
       // they stacked one-per-line). Greedily fold following sup/sub + continuation-p nodes into one <p>.
       const raw = textOf(n).trim();
-      if (raw && !isMetaP(n) && !successTier(n) && !/^#{1,6}$/.test(raw) && !/^[-*_]{3,}$/.test(raw)) {
+      const meta = isMetaP(n);
+      if (raw && !successTier(n) && !/^#{1,6}$/.test(raw) && !/^[-*_]{3,}$/.test(raw)) {
         let j = i + 1;
         const frags: AstNode[] = [];
-        while (j < nodes.length && isInlineFrag(nodes[j])) { frags.push(nodes[j]); j++; }
-        if (frags.length) {
-          const combined: AstNode[] = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' ? [pp] : pp.c || []));
-          out.push(<p key={key}>{combined.map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />)}</p>);
+        while (j < nodes.length && isInlineFrag(nodes[j], nodes[j + 1])) { frags.push(nodes[j]); j++; }
+        /* A META line joins the fold ONLY to collect a split-out glyph — 78 rows in the modal path (77
+         * under hideMeta): 4 "Range ⟨1⟩ shortbow …" stat rows and 74 "Craft Requirements Supply a casting
+         * of ⟨2⟩ …" wand lines, meta either way, so hideMeta now drops each one WITH its label instead of
+         * stranding the glyph below it. It stays out of it otherwise: the 3 other meta lines
+         * with a continuation include trait:asura, whose Source line is followed by its flavour text, and
+         * folding that would dim a paragraph of prose into the source line (and drop it under hideMeta).
+         * "flavor prose is NEVER dimmed" is this renderer's rule; the glyph rows are not prose. */
+        if (frags.length && (!meta || frags.some((f) => f.t === 'actions'))) {
           i = j - 1;
+          // A reunited meta row keeps the meta branch's styling AND its hideMeta drop — which used to
+          // leave the glyph and the second half of the row behind as orphan blocks once the label went.
+          if (meta && hideMeta) continue;
+          const combined: AstNode[] = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' ? [pp] : pp.c || []));
+          const kids = combined.map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />);
+          out.push(meta
+            ? <div key={key} className={'ast-meta' + (isSourceP(n) ? ' src' : '')}>{kids}</div>
+            : <p key={key}>{kids}</p>);
           continue;
         }
       }
     }
-    const el = renderBlock(n, ctx, hideMeta, key);
+    const el = renderBlock(n, ctx, hideMeta, key, lead && !out.length);
     if (el != null) out.push(el);
   }
-  return <>{out}</>;
+  /* Rendered nothing ⇒ render NOTHING, not an empty fragment. A container whose children all drop out
+   * (a `column` holding only a Source line without "pg. N", which isMetaishBlock keeps but whose metaP
+   * renders null under hideMeta) was still an entry in the caller's `out`, so it counted as "something
+   * above" and kept the hr after it: 32 pages — actions/tumbling-swipe, items/conundrum-spectacles,
+   * items/secret-keepers-mask and its variants… — still opened on a rule. */
+  return out.length ? <>{out}</> : null;
+}
+
+/** A container that renders as its children — and as nothing at all when they all render nothing, so it
+ *  never stands in for content above a divider (see the end of Blocks). */
+function subBlocks(props: Parameters<typeof Blocks>[0], key: string): ReactNode {
+  const inner = Blocks(props);
+  return inner == null ? null : <Fragment key={key}>{inner}</Fragment>;
 }
 
 /** A block node that is really an inline continuation of the previous paragraph — an AoN artifact where a
  *  sentence was split at a <sup> or after a soft break. A `sup`/`sub`, or a `p` whose text opens with
- *  punctuation or a lowercase letter (never a real new paragraph, which starts capitalized). */
-function isInlineFrag(n: AstNode): boolean {
+ *  punctuation or a lowercase letter (never a real new paragraph, which starts capitalized).
+ *
+ *  bug 2026-09-12 #9: inline-glyph — an `actions` node counts too, but ONLY when `next` carries the
+ *  sentence on ("…for example, “" / ⟨reaction⟩ / " command.”" arrived as three sibling blocks, so the
+ *  glyph got a line of its own between two half-sentences). A glyph that ENDS the run, or is followed by
+ *  a real new paragraph, is an ability heading's cost ("A Moment Unending" ⟨1⟩) and keeps its block line.
+ *  Measured on the shipped artefact: 19,017 `actions` nodes, 9,419 of them inside a title/heading; the
+ *  fold reunites 1,351 glyphs on 815 pages in the hideMeta path (1,393 on 847 in the modal path), where
+ *  3,846 glyph lines still render as their own block — down from 5,885 (the modal path, 5,745). No
+ *  cost-string test: 8 of the reunited glyphs carry no cost at all, and those broke a stat row in two
+ *  around a glyph that draws nothing. */
+function isInlineFrag(n: AstNode | undefined, next?: AstNode): boolean {
+  if (!n) return false; // `next` past the end of the run
   if (n.t === 'sup' || n.t === 'sub') return true;
+  if (n.t === 'actions') return isInlineFrag(next);
   if (n.t !== 'p') return false;
   const t = textOf(n).trim();
   return t.length > 0 && t.length < 400 && /^[,.;:)\]]|^[a-z]/.test(t);
 }
 
-function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: string): ReactNode {
+function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: string, lead?: boolean): ReactNode {
   switch (n.t) {
     case 'traits':
       return null; // shown as chips in the header
@@ -336,7 +385,7 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       // A row that holds BLOCK children (columns, a TABLE, paragraphs, lists…) is a layout/content row —
       // render those as blocks. (A row wrapping a table was the bug that mashed the whole exemplars table
       // into one inline run.) Only a row of purely inline bits is a compact "A; B; C" stat line.
-      if (kids.some((c) => BLOCK_TYPES.has(c.t))) return <Blocks key={key} nodes={kids} ctx={ctx} hideMeta={hideMeta} kb={key} />;
+      if (kids.some((c) => BLOCK_TYPES.has(c.t))) return subBlocks({ nodes: kids, ctx, hideMeta, kb: key, lead }, key);
       const parts = kids.filter((f) => textOf(f).trim());
       if (!parts.length) return null;
       return hideMeta ? null : <div key={key} className="ast-meta">{parts.map((f, m) => <Fragment key={m}>{m > 0 ? '; ' : ''}<Kids node={f} ctx={ctx} /></Fragment>)}</div>;
@@ -345,10 +394,10 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       // The leading Source + stat column (armor/weapon/gear header) duplicates a detail view's own stat
       // panel — drop it when hiding meta; otherwise render its children as blocks.
       if (hideMeta && isMetaishBlock(n)) return null;
-      return <Blocks key={key} nodes={n.c || []} ctx={ctx} hideMeta={hideMeta} kb={key} />;
+      return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead }, key);
     case 'document':
     case 'doc':
-      return <Blocks key={key} nodes={n.c || []} ctx={ctx} hideMeta={hideMeta} kb={key} />;
+      return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead }, key);
     case 'view':
       return <p key={key}><Kids node={n} ctx={ctx} /></p>;
     default:
@@ -357,7 +406,7 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       // the whole Ethnicities section) instead of being flattened into one inline run. Otherwise it's an
       // inline node — render its children inline.
       return (n.c || []).some((c) => BLOCK_TYPES.has(c.t))
-        ? <Blocks key={key} nodes={n.c || []} ctx={ctx} hideMeta={hideMeta} kb={key} />
+        ? subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead }, key)
         : <Fragment key={key}><Kids node={n} ctx={ctx} /></Fragment>;
   }
 }
@@ -371,7 +420,9 @@ const BLOCK_TYPES = new Set([
 
 /** Render the doc's body faithfully (see Blocks). */
 function DocBody({ top, ctx, hideMeta }: { top: AstNode[]; ctx: Ctx; hideMeta?: boolean }): ReactNode {
-  return <Blocks nodes={top} ctx={ctx} hideMeta={hideMeta} kb="d" />;
+  /* `lead` starts true here and only here: this run IS the top of the popup body, so a divider it
+   * reaches before anything else has nothing above it (bug #8). */
+  return <Blocks nodes={top} ctx={ctx} hideMeta={hideMeta} kb="d" lead />;
 }
 
 /**

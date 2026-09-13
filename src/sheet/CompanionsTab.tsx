@@ -1784,6 +1784,8 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           currency={character.currency}
           onGive={(itemId) => onPlay((p) => addCompanionItem(p, invAddFor, itemId))}
           onBuy={(itemId) => onPlay((p) => buyCompanionItem(p, invAddFor, itemId, content.items[itemId]?.price))}
+          // bug 2026-09-12 #7: homebrew-delete — same control as the character's own item search.
+          onSaveItem={onCreateItem}
           onClose={() => setInvAddFor(null)}
         />
       )}

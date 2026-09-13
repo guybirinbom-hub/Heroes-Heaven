@@ -2676,8 +2676,68 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       build.cantrips.length > 0 ||
       Object.keys(build.spells).length > 0);
   const requestClassChange = (id: string) => {
-    if (id !== build.classId && classChangeLoses) setPendingClass(id);
+    if (id === build.classId) return; // re-picking the class you already have wiped every class pick
+    if (classChangeLoses) setPendingClass(id);
     else actions.changeClass(id);
+  };
+  /*
+   * bug 2026-09-12 #3b: an ORIGIN swap that throws away answers the player already gave has to ask
+   * first — the guard changing class and lowering the level already carry. `changeAncestry` dropped
+   * the heritage, the ancestry boosts, the heritage skill + feat, every language and every ancestry
+   * feat on one misclick in the search list, with nothing said and no way back: exactly "i come back
+   * to edit and things are different". Rule: name what goes, Cancel changes NOTHING, and a build with
+   * nothing to lose changes with no dialog at all.
+   */
+  const confirmLoss = async (title: string, confirmLabel: string, losses: string[], apply: () => void) => {
+    if (!losses.length) return apply();
+    const ok = await confirmDialog({
+      title,
+      message: (
+        <>
+          <p>This clears {losses.length === 1 ? 'a choice you already made' : `${losses.length} choices you already made`}:</p>
+          <ul style={{ margin: '6px 0 0', paddingLeft: 20 }}>
+            {losses.map((l) => (
+              <li key={l}>{l}</li>
+            ))}
+          </ul>
+        </>
+      ),
+      confirmLabel,
+      cancelLabel: 'Cancel',
+    });
+    if (ok) apply();
+  };
+  const requestAncestryChange = (id: string) => {
+    if (id === build.ancestryId) return;
+    const lost: string[] = [];
+    if (build.ancestryId) {
+      if (build.heritageId) lost.push(`Heritage — ${content.heritages[build.heritageId]?.name ?? build.heritageId}`);
+      if (build.ancestryBoosts.some((a) => a)) lost.push('Ancestry attribute boosts');
+      if (build.heritageSkill) lost.push('Heritage skill');
+      if (build.heritageFeatId) lost.push('Heritage feat');
+      if (build.languages.length) lost.push(`Languages (${build.languages.length})`);
+      const feats = Object.keys(build.featPicks).filter((k) => k.split(':')[1] === 'ancestry').length;
+      if (feats) lost.push(`Ancestry feat${feats > 1 ? 's' : ''} (${feats})`);
+    }
+    void confirmLoss('Change ancestry?', 'Change ancestry', lost, () => actions.changeAncestry(id));
+  };
+  const requestHeritageChange = (id: string) => {
+    if (id === build.heritageId) return;
+    const lost: string[] = [];
+    if (build.heritageId) {
+      if (build.heritageSkill) lost.push('Heritage skill');
+      if (build.heritageFeatId) lost.push('Heritage feat');
+    }
+    void confirmLoss('Change heritage?', 'Change heritage', lost, () => actions.changeHeritage(id));
+  };
+  const requestBackgroundChange = (id: string) => {
+    if (id === build.backgroundId) return;
+    const lost: string[] = [];
+    if (build.backgroundId) {
+      if (build.backgroundBoosts.some((a) => a)) lost.push('Background attribute boosts');
+      if (build.backgroundSkillChoice) lost.push('Background skill');
+    }
+    void confirmLoss('Change background?', 'Change background', lost, () => actions.changeBackground(id));
   };
   return (
     <>
@@ -2686,7 +2746,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           bare
           label="Ancestry"
           value={build.ancestryId}
-          onChange={actions.changeAncestry}
+          onChange={requestAncestryChange}
           descBucket="ancestries"
           options={Object.values(content.ancestries).map((a) => ({ id: a.id, name: a.name, note: note(a.rarity), description: a.description, descRefs: a.descRefs }))}
         />
@@ -2719,7 +2779,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               key={i}
               value={build.ancestryBoosts[i] ?? null}
               options={slot.kind === 'choice' && slot.options ? slot.options : ABILITIES}
-              exclude={altBoosts ? build.ancestryBoosts : [...build.ancestryBoosts, ...ancFixed, ...(ancAttrs?.abilityFlaws ?? [])]}
+              /* Fixed boosts only. The ancestry's FLAW belongs to no boost set, and the printed rule
+                 bars only a second boost on an attribute this source already BOOSTED — see the
+                 same-source note in collectBoosts. Greying the flaw here is what kept a catfolk's
+                 free boost off Wisdom. */
+              exclude={altBoosts ? build.ancestryBoosts : [...build.ancestryBoosts, ...ancFixed]}
               onChange={(v) => actions.setBoost('ancestryBoosts', i, v)}
             />
           ))}
@@ -2745,7 +2809,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           bare
           label="Heritage"
           value={build.heritageId}
-          onChange={actions.changeHeritage}
+          onChange={requestHeritageChange}
           descBucket="heritages"
           options={heritageOpts.map((h) => ({ id: h.id, name: h.name, note: note(h.rarity), description: h.description, descRefs: h.descRefs }))}
         />
@@ -2944,7 +3008,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           bare
           label="Background"
           value={build.backgroundId}
-          onChange={actions.changeBackground}
+          onChange={requestBackgroundChange}
           options={[
             ...(showCustomBg ? [{ id: CUSTOM_BACKGROUND_ID, name: '✎ Custom background…' }] : []),
             ...Object.values(content.backgrounds).map((b) => ({

@@ -263,13 +263,12 @@ type Host = {
  * native <select>s (label.sd-choice-row > .sd-choice-prompt) and its own `choice` as a <select> or
  * <input> under an .sd-uses-title. They are read off that card, one control per select/input.
  */
-/** The designation kinds InventoryTab offers everyone (InventoryTab.tsx:685-707): the class-gated ones
- *  need a matching class, and the harness host is a fighter, so only the universal two apply — the
- *  wayfinder slot is what turns an aeon stone's RESONANT power on (ItemDetail gates it on `item.resonant`). */
-const ITEM_DESIGNATIONS = [
-  { kind: 'rune-source', label: 'Rune source' },
-  { kind: 'wayfinder-slotted', label: 'Slotted in a wayfinder' },
-] as never;
+/** The designation kinds InventoryTab offers this host: the others need a matching class, and the
+ *  harness host is a fighter, so only the wayfinder slot is left — it is what turns an aeon stone's
+ *  RESONANT power on (ItemDetail gates it on `item.resonant`). `rune-source` USED to be here; it is
+ *  gated on the one feat that creates a rune source as of bug 2026-09-12 #5, and this fighter has no
+ *  such feat, so listing it would model a control the player does not get. */
+const ITEM_DESIGNATIONS = [{ kind: 'wayfinder-slotted', label: 'Slotted in a wayfinder' }] as never;
 
 function collectItemControls(db: ContentDatabase, character: Character, itemId: string): Ctl[] {
   const inv = character.inventory.find((i) => i.itemId === itemId);

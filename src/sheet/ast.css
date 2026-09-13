@@ -154,7 +154,10 @@
 
 /* item activation — inline, unboxed */
 .ast-act { margin: .55em 0; }
-.ast-act .ast-ag { margin: 0 3px; }
+/* bug 2026-09-12 #9: inline-glyph — a glyph the parser split out of its own sentence now renders inline,
+   in the paragraph (or the reunited stat row) it belongs to, so it wants the same breathing room the
+   activation line's glyph already had. It is a direct child of its <p> / .ast-meta either way. */
+.ast-body p > .ast-ag, .ast-body .ast-meta > .ast-ag { margin: 0 3px; }
 .ast-actline { margin: .4em 0; }
 
 /* Placeholder shown while a description's ast bucket is still downloading — prevents a flash of the

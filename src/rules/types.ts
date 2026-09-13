@@ -4108,6 +4108,15 @@ export interface Spell extends ContentBase {
 interface ItemBase extends ContentBase {
   level: number;
   /**
+   * bug 2026-09-12 #7: homebrew-delete — a user-authored item the player deleted from the item
+   * search WHILE a character still carried one. Owner: *"if they delete the item in search but they
+   * still have it in the inventory then dont delete it from the inventory"*, so the record is kept
+   * (an inventory row resolves its item by id through `content.items[inv.itemId]`, and a missing one
+   * renders as "Unknown item — missing data") and only hidden from the browse list. Set nowhere in
+   * the shipped data; written only by the delete control in AddItemsModal.
+   */
+  retired?: boolean;
+  /**
    * An aeon stone's RESONANT POWER — what it does *"when slotted into a special magical item called a
    * wayfinder"*, a second effect on top of the stone's own.
    *
