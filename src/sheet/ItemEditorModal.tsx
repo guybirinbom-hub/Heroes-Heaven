@@ -81,6 +81,16 @@ const num = (s: string, dflt = 0) => {
   return Number.isFinite(n) ? n : dflt;
 };
 const str = (n?: number) => (n != null ? String(n) : '');
+/** A pack count only says something at 2 or more, so 1 (or absent) shows as an empty box rather than
+ *  a "1" the player would have to clear before the field means anything. */
+const packStr = (n?: number) => (n && n > 1 ? String(n) : '');
+/** Draft → record for the pack count. Only a whole number of 2+ pieces is a pack; blank, 0, 1, a
+ *  fraction and junk all mean a single item, and then no `packOf` ships at all — the printed price
+ *  and Bulk are read as one piece's, which is what they are for everything that isn't sold by the bag. */
+const packNum = (s: string): number | undefined => {
+  const n = Number(s.trim());
+  return Number.isInteger(n) && n >= 2 ? n : undefined;
+};
 /** A rich-text field whose HTML has no actual text/glyph content reads as empty (e.g. a stray <br>). */
 const richEmpty = (s: string) => !s.replace(/<[^>]*>/g, '').replace(/&nbsp;/gi, ' ').trim();
 const cleanRich = (s: string) => (richEmpty(s) ? '' : s.trim());
@@ -122,6 +132,8 @@ interface Draft {
   traits: string[];
   pp: string; gp: string; sp: string; cp: string;
   bulk: string;
+  /** Pieces the printed Price and Bulk above cover (a quiver of 10 arrows). Empty = a single item. */
+  packOf: string;
   size: Size | '';
   hands: string;
   usage: string;
@@ -153,7 +165,7 @@ interface Draft {
 function defaults(): Draft {
   return {
     itemType: 'equipment', name: '', level: '0', rarity: 'common', traits: [],
-    pp: '', gp: '', sp: '', cp: '', bulk: '', size: '', hands: '', usage: '',
+    pp: '', gp: '', sp: '', cp: '', bulk: '', packOf: '', size: '', hands: '', usage: '',
     matType: '', matGrade: '', freqMax: '', freqPer: 'day', srcBook: '', srcPage: '',
     description: '', craft: '',
     wCat: 'martial', wGroup: '', wDice: '1', wDie: 'd6', wType: 'slashing', wRange: '', wReload: '',
@@ -177,6 +189,7 @@ function fromItem(it: Item): Draft {
   d.traits = [...(it.traits ?? [])];
   d.pp = str(it.price?.pp); d.gp = str(it.price?.gp); d.sp = str(it.price?.sp); d.cp = str(it.price?.cp);
   d.bulk = str(it.bulk);
+  d.packOf = packStr(it.packOf);
   d.size = it.size ?? '';
   d.hands = it.hands != null ? String(it.hands) : '';
   d.usage = it.usage ?? '';
@@ -513,6 +526,9 @@ export function ItemEditorModal({
         traits: [...(b.traits ?? [])],
         pp: str(b.price?.pp), gp: str(b.price?.gp), sp: str(b.price?.sp), cp: str(b.price?.cp),
         bulk: str(b.bulk),
+        // Copied WITH the price and Bulk above: those two are the pack's figures, so leaving the count
+        // behind would re-read "1 sp / L" as one arrow's and charge ten times over.
+        packOf: packStr(b.packOf),
         size: b.size ?? '',
         hands: b.hands != null ? String(b.hands) : '',
         usage: b.usage ?? '',
@@ -599,9 +615,9 @@ export function ItemEditorModal({
       ...(item?.descRefs ? { descRefs: item.descRefs } : {}),
       // A PACK count rides along with the printed price and Bulk it explains — the two fields above are
       // the PACK's ("1 sp" and "L" for ten arrows), so dropping `packOf` on the way out would silently
-      // re-read them as one arrow's, charging ten times over for a renamed quiver. There is no control
-      // for it: it is a property of the printed entry, not something a homebrew author sets.
-      ...(item?.packOf ? { packOf: item.packOf } : {}),
+      // re-read them as one arrow's, charging ten times over for a renamed quiver. The draft is the
+      // only source: it is loaded from the item on open, so clearing the box really does clear the pack.
+      ...(packNum(d.packOf) ? { packOf: packNum(d.packOf)! } : {}),
       // Monster-part authoring: `isMonsterPart` marks the item a harvested part (Price = its value);
       // its tags carry the vocabulary/free-text descriptors. An empty tag list is still a valid part.
       ...(d.isMonsterPart ? { isMonsterPart: true as const, monsterPartTags: d.mpTags.map((t) => t.trim().toLowerCase()).filter(Boolean) } : {}),
@@ -794,6 +810,12 @@ export function ItemEditorModal({
               </select>
             </label>
           </div>
+
+          <label className="ci-field">
+            <span>Pack of</span>
+            <input type="number" min={0} step={1} value={d.packOf} onChange={(e) => upd({ packOf: e.target.value })} placeholder="—" />
+            <span className="ie-hint">pieces per listed price and Bulk (leave empty for a single item)</span>
+          </label>
 
           <div className="ie-grid2">
             <label className="ci-field">
