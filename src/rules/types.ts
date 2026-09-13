@@ -4197,6 +4197,13 @@ interface ItemBase extends ContentBase {
    *  a Spell" charge system (staves and wands); these are simply available while the item is worn. */
   innateSpells?: InnateSpellGrant[];
   price?: Price;
+  /**
+   * PACK ITEMS (ammunition, mostly): the printed `price` and `bulk` are for THIS MANY pieces — the
+   * Archives print it as *"1 sp (price for 10)"*. Inventory `quantity` is always PIECES, because a
+   * player shoots one arrow at a time, so both numbers are divided by this: 10 sling bullets weigh
+   * L, not 1 Bulk, and cost 1 sp, not 10 sp. Absent (the overwhelming majority) means 1.
+   */
+  packOf?: number;
   bulk: Bulk;
   usage?: string;
   hands?: 0 | 1 | 2 | '1+';

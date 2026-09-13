@@ -1270,15 +1270,15 @@ function patchCompanionInventory(
 }
 
 /** Add a (free) item to a companion's gear. */
-export function addCompanionItem(play: PlayState, compId: string, itemId: string): PlayState {
-  return patchCompanionInventory(play, compId, (inv) => [...inv, { instanceId: nextInstanceId(inv), itemId, quantity: 1 }]);
+export function addCompanionItem(play: PlayState, compId: string, itemId: string, init?: Partial<InventoryItem>): PlayState {
+  return patchCompanionInventory(play, compId, (inv) => [...inv, { instanceId: nextInstanceId(inv), itemId, quantity: 1, ...init }]);
 }
 
 /** Buy an item for a companion — deduct the character's coins, then add it. */
-export function buyCompanionItem(play: PlayState, compId: string, itemId: string, price: Coins | undefined): PlayState {
+export function buyCompanionItem(play: PlayState, compId: string, itemId: string, price: Coins | undefined, init?: Partial<InventoryItem>): PlayState {
   if (!canAfford(play.currency, price)) return play;
   const remaining = cpToCoins(coinsToCp(play.currency) - coinsToCp(price));
-  return addCompanionItem({ ...play, currency: remaining }, compId, itemId);
+  return addCompanionItem({ ...play, currency: remaining }, compId, itemId, init);
 }
 
 /** Remove one of a companion's items. */
@@ -1451,6 +1451,13 @@ const KIT_CONTENTS: Record<string, { container: string; items: { itemId: string;
     ],
   },
 };
+
+/** How many PIECES one purchase of an item is. A pack item (ammunition) is printed, priced and sold
+ *  by the pack — "1 sp (price for 10)" — while the inventory counts pieces, so adding arrows adds ten
+ *  of them for the one printed price. Everything else adds one. */
+export function packQuantity(item: { packOf?: number } | undefined): number {
+  return Math.max(1, Math.round(item?.packOf ?? 1));
+}
 
 /** Add one of `itemId` to the inventory (worn/equipped state defaulted by the caller). A KIT item
  *  (Adventurer's Pack) instead adds its container + each content item nested inside it. */
@@ -1993,11 +2000,12 @@ export function canAfford(currency: Coins | undefined, price: Coins | undefined)
   return coinsToCp(price) <= coinsToCp(currency);
 }
 
-/** Buy an item: deduct its price from the wallet and add it. No-op if unaffordable. */
-export function buyItem(play: PlayState, itemId: string, price: Coins | undefined): PlayState {
+/** Buy an item: deduct its price from the wallet and add it. No-op if unaffordable. `init` carries the
+ *  same row defaults `addInventoryItem` takes — the pack quantity for ammunition, above all. */
+export function buyItem(play: PlayState, itemId: string, price: Coins | undefined, init?: Partial<InventoryItem>): PlayState {
   if (!canAfford(play.currency, price)) return play;
   const remaining = cpToCoins(coinsToCp(play.currency) - coinsToCp(price));
-  return addInventoryItem({ ...play, currency: remaining }, itemId);
+  return addInventoryItem({ ...play, currency: remaining }, itemId, init);
 }
 
 /** Every field of an inventory row except its id — the test for "this row is still exactly what the

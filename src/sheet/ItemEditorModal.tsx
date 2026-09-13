@@ -597,6 +597,11 @@ export function ItemEditorModal({
       ...(d.freqMax.trim() ? { frequency: { max: num(d.freqMax), per: d.freqPer || 'day' } } : {}),
       ...(cleanRich(d.craft) ? { craftRequirements: cleanRich(d.craft) } : {}),
       ...(item?.descRefs ? { descRefs: item.descRefs } : {}),
+      // A PACK count rides along with the printed price and Bulk it explains — the two fields above are
+      // the PACK's ("1 sp" and "L" for ten arrows), so dropping `packOf` on the way out would silently
+      // re-read them as one arrow's, charging ten times over for a renamed quiver. There is no control
+      // for it: it is a property of the printed entry, not something a homebrew author sets.
+      ...(item?.packOf ? { packOf: item.packOf } : {}),
       // Monster-part authoring: `isMonsterPart` marks the item a harvested part (Price = its value);
       // its tags carry the vocabulary/free-text descriptors. An empty tag list is still a valid part.
       ...(d.isMonsterPart ? { isMonsterPart: true as const, monsterPartTags: d.mpTags.map((t) => t.trim().toLowerCase()).filter(Boolean) } : {}),

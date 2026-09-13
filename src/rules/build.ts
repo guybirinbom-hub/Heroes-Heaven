@@ -72,7 +72,7 @@ import { openChoiceLabel } from './openChoice';
 import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
-import { coinsToCp, cpToCoins, startingWealthGp } from './wealth';
+import { cpToCoins, itemPriceCp, startingWealthGp } from './wealth';
 import { apparitionSlots, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
 
 /** The player's in-progress choices. The builder UI owns one of these. */
@@ -9381,7 +9381,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ],
     currency: cpToCoins(
       startingWealthGp(level) * 100 -
-        build.inventory.reduce((cp, it) => cp + coinsToCp(content.items[it.itemId]?.price) * Math.max(1, it.quantity), 0),
+        // itemPriceCp, not a bare multiply: a pack item's printed price covers `packOf` pieces, so
+        // 20 crossbow bolts cost 2 sp out of the starting purse, not 20 sp.
+        build.inventory.reduce((cp, it) => cp + itemPriceCp(content.items[it.itemId], Math.max(1, it.quantity)), 0),
     ),
     spellcasting,
     details: build.deityId ? { deityId: build.deityId } : {},

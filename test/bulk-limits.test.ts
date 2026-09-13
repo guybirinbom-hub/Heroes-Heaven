@@ -40,7 +40,9 @@ describe('feat-driven Bulk limits', () => {
   it('it only applies while the armor is WORN, and only to armor', () => {
     const [armorId] = heavy();
     const ch = build('fighter', 5, { featPicks: { '4:class': 'armor-regiment-training' } });
-    expect(carried(ch, [{ ...worn(armorId), worn: false }])).toBeCloseTo(db.items[armorId].bulk, 5);
+    // bug 2026-09-13: bulk rules — the relief is still worn-only, but the unworn figure is no longer
+    // the listed one: Player Core p. 271 charges a carried suit 1 more Bulk than its worn rating.
+    expect(carried(ch, [{ ...worn(armorId), worn: false }])).toBeCloseTo(db.items[armorId].bulk + 1, 5);
 
     // A heavy non-armor item is untouched.
     const [gearId, gear] = Object.entries(db.items).find(([, it]) => it.itemType !== 'armor' && it.bulk >= 2)!;

@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from '
 import type { Character, CompanionConfig, ContentDatabase, InventoryItem, Item, ItemDesignation, SiegeWeaponStat, VehicleStat } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
 import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable,
-  handwrapsRuneSharing, isHandwraps } from '../rules/derive';
+  handwrapsRuneSharing, isHandwraps, unitBulk } from '../rules/derive';
 import { affixHostType, isAttachable, planAttach } from '../rules/attachments';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import {
@@ -15,6 +15,7 @@ import {
   bumpItemCounter,
   bumpItemQuantity,
   buyItem,
+  packQuantity,
   removeInventoryItem,
   removePlayCompanion,
   setCurrency,
@@ -25,7 +26,7 @@ import {
 import { parsePrice } from '../rules/wealth';
 import type { CompanionPick } from './AddItemsModal';
 import { itemCounters } from '../rules/itemUses';
-import { formatPrice, grp } from '../rules/wealth';
+import { formatItemPrice, grp } from '../rules/wealth';
 import { ItemDetail } from './ItemDetail';
 import { chooseDialog, confirmDialog } from './confirm';
 import { ActionGlyph, isActionCost } from './widgets';
@@ -296,7 +297,7 @@ function ItemCard({
           )}
         </div>
         <div className="inv-sub">
-          level {item.level} · {formatPrice(item.price)}
+          level {item.level} · {formatItemPrice(item)}
           {item.material ? ` · ${capWord(item.material.type.replace(/-/g, ' '))}` : ''}
           {item.isMonsterPart && item.monsterPartTags && item.monsterPartTags.length > 0 && (
             <span className="inv-mp-tags"> · {item.monsterPartTags.join(', ')}</span>
@@ -380,7 +381,9 @@ function ItemCard({
         )}
       </div>
       <div className="inv-bulk">
-        <div className="inv-bval">{formatBulk(item.bulk)}</div>
+        {/* The row shows what ONE of these weighs where it actually is — a suit of plate in the pack is
+            5, not the 4 its page prints — so this column and the total at the top cannot disagree. */}
+        <div className="inv-bval">{formatBulk(unitBulk(item, !!inv.worn && !inv.containerInstanceId))}</div>
         <div className="inv-blbl">bulk</div>
       </div>
       {/* In interactive mode the highlighted equip/invest button already shows this state, so the
@@ -627,11 +630,13 @@ export function InventoryTab({
   const addMaybeToCompanion = async (itemId: string, buy: boolean) => {
     if (!onPlay) return;
     const item = content.items[itemId];
+    // Ammunition is sold by the pack: one purchase is ten arrows for the one printed price.
+    const init = { quantity: packQuantity(item) };
     const isCompanionGear = (item?.traits ?? []).includes('companion');
     const comps = character.companions ?? [];
     const wearers = comps.filter((c) => c.kind !== 'vehicle' && c.kind !== 'siege');
     if (!isCompanionGear || wearers.length === 0) {
-      onPlay((p) => (buy ? buyItem(p, itemId, item?.price) : addInventoryItem(p, itemId)));
+      onPlay((p) => (buy ? buyItem(p, itemId, item?.price, init) : addInventoryItem(p, itemId, init)));
       if (isCompanionGear) {
         void chooseDialog({
           title: `${item?.name ?? 'This item'} is companion gear`,
@@ -654,10 +659,10 @@ export function InventoryTab({
           });
     if (pick === null) return; // dismissed — add nothing
     if (!pick) {
-      onPlay((p) => (buy ? buyItem(p, itemId, item?.price) : addInventoryItem(p, itemId)));
+      onPlay((p) => (buy ? buyItem(p, itemId, item?.price, init) : addInventoryItem(p, itemId, init)));
       return;
     }
-    onPlay((p) => (buy ? buyCompanionItem(p, pick, itemId, item?.price) : addCompanionItem(p, pick, itemId)));
+    onPlay((p) => (buy ? buyCompanionItem(p, pick, itemId, item?.price, init) : addCompanionItem(p, pick, itemId, init)));
   };
 
   const resolve = (inv: InventoryItem) => content.items[inv.itemId];
@@ -1299,14 +1304,18 @@ export function InventoryTab({
           const enc = character.options?.ignoreBulk ? '' : bulk.encTotal > bulk.max ? 'over' : bulk.encTotal > bulk.encumberedAt ? 'encumbered' : '';
           return (
             <>
+              {/* The COUNTED Bulk leads, the exact figure follows. The thresholds compare encTotal —
+                  fractions of a Bulk round down — so a readout of "5.1 / 5" looked over the limit while
+                  the app (rightly) said you were fine. */}
               <span
                 className={'bulk-badge' + (enc ? ' ' + enc : '')}
-                title={`Carrying ${bulk.total} Bulk. You can carry up to ${bulk.encumberedAt} Bulk with no penalty; carrying more makes you encumbered (Clumsy 1, −10 ft Speed). The most you can carry at all is ${bulk.max} Bulk.`}
+                title={`Carrying ${bulk.total} Bulk, which counts as ${bulk.encTotal} — Bulk fractions (light items, and coins) round down. You can carry up to ${bulk.encumberedAt} Bulk with no penalty; carrying more makes you encumbered (Clumsy 1, −10 ft Speed). The most you can carry at all is ${bulk.max} Bulk.`}
               >
                 <i className="ti ti-weight" aria-hidden="true" /> Bulk{' '}
                 <strong>
-                  {bulk.total} / {bulk.encumberedAt}
+                  {bulk.encTotal} / {bulk.encumberedAt}
                 </strong>
+                {bulk.total !== bulk.encTotal && <span className="bulk-state"> · {bulk.total} exact</span>}
                 <span className="bulk-state"> · max {bulk.max}</span>
                 {enc === 'encumbered' && <span className="bulk-state"> · encumbered</span>}
                 {enc === 'over' && <span className="bulk-state"> · overloaded</span>}
@@ -1477,7 +1486,7 @@ export function InventoryTab({
           maxSpellRank={maxSpellRank}
           onSave={(item) => {
             onCreateItem(item);
-            onPlay((p) => addInventoryItem(p, item.id));
+            onPlay((p) => addInventoryItem(p, item.id, { quantity: packQuantity(item) }));
           }}
           onClose={() => setCreateOpen(false)}
         />

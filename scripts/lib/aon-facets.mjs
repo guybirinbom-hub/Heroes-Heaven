@@ -139,6 +139,25 @@ export function bulkOf(rec) {
   return typeof rec?.bulk_num === 'number' ? rec.bulk_num : null;
 }
 
+/*
+ * AMMUNITION IS PRICED AND WEIGHED BY THE PACK, and only `price_raw` says so.
+ *
+ * Arrows print "Price 1 sp (price for 10)" with "Bulk L" — Player Core p. 277 has an ammunition entry
+ * list "only the name, quantity, Price, and Bulk", so BOTH numbers are for the whole bundle. The
+ * structured fields state exactly the same values with nothing to mark them as a bundle (price_cp 10,
+ * bulk_num 0.1), which reads as "one arrow costs a silver and weighs Light" — 10x on price and 10x on
+ * encumbrance, quietly, for every quiver a player buys.
+ *
+ * 25 documents carry the phrase and the wording varies: "(price for 10)", "(price for 5 bolts)".
+ * Returns the COUNT only; `price` and `bulk` keep the pack's own values, which is what the page prints.
+ */
+export function packOf(rec) {
+  const raw = rec?.data?.price_raw ?? rec?.price_raw;
+  const m = typeof raw === 'string' ? /price for (\d+)/i.exec(raw) : null;
+  const n = m ? Number(m[1]) : 0;
+  return n > 1 ? n : 0;
+}
+
 /**
  * Every facet the Archives can state for this record. Keys are omitted entirely when the Archives say
  * nothing, so a spread over the existing record leaves that field untouched.

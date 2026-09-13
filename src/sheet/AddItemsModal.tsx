@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { listValues } from '../data';
 import type { Coins, ContentDatabase, Item } from '../rules/types';
 import { canAfford } from '../rules/play';
-import { formatPrice, parsePrice } from '../rules/wealth';
+import { formatItemPrice, parsePrice } from '../rules/wealth';
 import { confirmDialog } from './confirm';
 import { FilterableSelect, descNodeOf } from './FilterableSelect';
 import { ITEM_SPEC } from './filterSpecs';
@@ -179,7 +179,7 @@ export function AddItemsModal({
             <div className="ai-name">{it.name}</div>
             <div className="ai-meta">
               {svc ? 'service' : comp ? (comp.pick.kind === 'vehicle' ? 'vehicle' : 'siege weapon') : it.itemType} · lvl {it.level} ·{' '}
-              {svc ? svc.price ?? 'varies' : comp ? comp.price ?? 'free' : formatPrice(it.price)}
+              {svc ? svc.price ?? 'varies' : comp ? comp.price ?? 'free' : formatItemPrice(it)}
               {!svc && !comp && it.rarity !== 'common' ? ` · ${it.rarity}` : ''}
             </div>
           </>

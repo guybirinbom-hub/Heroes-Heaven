@@ -11,7 +11,7 @@
  * The maturity ranks + HP formula are sourced from the published Animal Companion
  * rules (Archives of Nethys), authored into COMPANION_FORMULA below.
  */
-import { abilityModOf, deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl, bestHandwrapsRunes, bestMpHandwraps } from './derive';
+import { abilityModOf, deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl, unitBulk, bestHandwrapsRunes, bestMpHandwraps } from './derive';
 import { mpWeaponRefine, mpImbuedDamageTerms, type MpDamage } from './monsterParts';
 import { abpOn, abpAttack, abpStrikingDice } from './abp';
 import { conditionPenalty } from './conditions';
@@ -278,7 +278,10 @@ function companionGear(cfg: CompanionConfig, content: ContentDatabase, strMod: n
   for (const it of cfg.inventory ?? []) {
     const def = content.items[it.itemId];
     if (!def) continue;
-    g.carriedBulk += (def.bulk || 0) * (it.quantity || 1);
+    // The owner's sheet and this stat block weigh the SAME gear, so both go through `unitBulk` (a suit
+    // of barding not worn costs 1 more Bulk) and both divide a pack item's printed Bulk by the count it
+    // covers — twenty arrows in a saddlebag are two packs' worth of Light, not twenty Bulk-tenths.
+    g.carriedBulk += (unitBulk(def, !!it.worn) * (it.quantity || 1)) / (def.packOf ?? 1);
     // Invested magic gear can buff the companion (Alacritous Horseshoes: +5 ft land Speed).
     if (it.invested && def.passiveEffects?.speedBonus) {
       g.speedBonus += def.passiveEffects.speedBonus;

@@ -95,3 +95,26 @@ export function formatPrice(p: Coins | undefined, empty = '—'): string {
   if (p.cp) parts.push(`${grp(p.cp)} cp`);
   return parts.length ? parts.join(', ') : empty;
 }
+
+/** The pack-item shapes both helpers below need — a bare structural type so callers can pass an Item,
+ *  a homebrew draft or a hand-built test record without importing the full union. */
+type Priced = { price?: Coins; packOf?: number };
+
+/**
+ * THE price-times-quantity helper. Ammunition prints one price for a whole pack ("1 sp (price for
+ * 10)") while inventory counts PIECES, so every per-quantity charge — buying, the builder's gear
+ * budget — must divide by `packOf` or a player pays ten times over for a quiver of arrows. Every call
+ * site that multiplies a price by a quantity goes through here rather than reimplementing the
+ * division; `pieces` defaults to 1 so it reads as "what does one of these cost".
+ */
+export function itemPriceCp(item: Priced | undefined, pieces = 1): number {
+  return Math.round((coinsToCp(item?.price) * pieces) / Math.max(1, item?.packOf ?? 1));
+}
+
+/** Format an item's PRINTED price, saying what the pack holds when it is a pack item: "1 sp per 10".
+ *  The printed figure is kept as-is — dividing it would show arrows at "1 cp" and disagree with every
+ *  price list the player can look up. */
+export function formatItemPrice(item: Priced | undefined, empty = '—'): string {
+  const s = formatPrice(item?.price, empty);
+  return item?.packOf && item.packOf > 1 && s !== empty ? `${s} per ${item.packOf}` : s;
+}

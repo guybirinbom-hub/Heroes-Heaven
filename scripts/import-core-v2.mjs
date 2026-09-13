@@ -18,7 +18,7 @@ import { readFileSync, writeFileSync, readdirSync, copyFileSync, existsSync, mkd
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
-import { aonFacets } from './lib/aon-facets.mjs';
+import { aonFacets, packOf } from './lib/aon-facets.mjs';
 import { buildReprintMap, repointDoc } from './lib/reprint.mjs';
 
 const DATA = 'C:/trying ai 2/hh-data-export/without-images/data';
@@ -984,6 +984,36 @@ if (!existsSync(BACKUP)) copyFileSync(OUT, BACKUP); // preserve the pristine ref
     if (cat === 'Wands') { rec.itemType = 'equipment'; fixed++; }
   }
   if (fixed) console.log(`itemType: ${fixed} wand(s) re-typed consumable -> equipment (a consumable is destroyed on use; a wand is not)`);
+}
+
+/*
+ * AMMUNITION PACKS — `packOf` is "the printed Price and Bulk are for this many pieces". See packOf()
+ * in aon-facets.mjs for the evidence; the short version is that Arrows are 1 sp and Bulk L for TEN,
+ * and without this the app charged 1 sp and counted L per arrow.
+ *
+ * Applied here, at the end, for the same reason the wand fix above is: two of the sixteen records are
+ * KEPT ORPHANS — `aon-spray-pellet` and `aon-practice-targets` are scrape twins with no new-data slug
+ * of their own, so overlayContent never runs for them and a facet would never reach them. The
+ * migration map still knows their doc (both resolve, to weapon-353 and equipment-1205).
+ *
+ * The NAME index is the fallback, not the join: map.json is rebuilt by build-map.mjs LATER in the
+ * chain, so a pack item that appears in a fresh export has no map row on the run that first imports
+ * it. Only pack documents are indexed by name, so the fallback can only ever assert a pack count that
+ * some document with that exact name actually prints. scripts/pack-price-check.mjs is the check.
+ */
+{
+  const packByName = new Map();
+  for (const doc of docById.values()) {
+    const n = packOf(doc);
+    if (n && doc?.name) packByName.set(foldName(doc.name).toLowerCase(), n);
+  }
+  let stamped = 0;
+  for (const [s, rec] of Object.entries(db.items ?? {})) {
+    if (!rec?.name) continue;
+    const n = packOf(docById.get(mapDocFor('items', s))) || packByName.get(foldName(rec.name).toLowerCase()) || 0;
+    if (n) { rec.packOf = n; stamped++; }
+  }
+  console.log(`packOf: ${stamped} item record(s) carry a pack count (${packByName.size} pack name(s) in the export)`);
 }
 
 writeFileSync(OUT, JSON.stringify(db));

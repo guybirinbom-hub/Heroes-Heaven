@@ -5591,6 +5591,28 @@ function childrenByContainer(c: Character, db: ContentDatabase): { childrenOf: R
   return { childrenOf, containerIds };
 }
 
+/**
+ * The Bulk ONE unit of an item costs before quantity, which is not always the printed figure.
+ *
+ * Player Core p. 271: *"A suit of armor that's carried usually has 1 more Bulk than what's listed here
+ * (or 1 Bulk total for armor of light Bulk)."* The listed figure is the WORN one, so a suit merely in
+ * the pack weighs a whole Bulk more. Shields are excluded on purpose — their listed Bulk already IS
+ * the carried value (p. 274). And the other direction, p. 287: a Backpack prints no Bulk because that
+ * is what it weighs ON YOUR BACK; *"if you're carrying or stowing the pack rather than wearing it on
+ * your back, its Bulk is light instead of negligible"*. Keyed off the printed 0 plus the worn-backpack
+ * slot, so the packs that print a real Bulk keep it.
+ *
+ * Exported because the COMPANION sheet weighs the same gear with its own loop (companions.ts): a
+ * companion's stat block and the very same companion's inventory badge must not disagree about what
+ * a stowed suit of barding weighs.
+ */
+export function unitBulk(item: { itemType?: string; usage?: string; bulk?: number }, worn: boolean): number {
+  const b = item.bulk || 0;
+  if (item.itemType === 'armor' && !worn) return b < 1 ? 1 : b + 1;
+  if (item.itemType === 'container' && item.usage === 'wornbackpack' && b === 0 && !worn) return 0.1;
+  return b;
+}
+
 /** Build the effective-Bulk function for a character: the Bulk an item contributes including its
  *  (reduced) nested-container contents, innermost-first, with a seen-guard against container cycles. */
 function makeEffBulk(c: Character, db: ContentDatabase) {
@@ -5601,7 +5623,13 @@ function makeEffBulk(c: Character, db: ContentDatabase) {
     // Heavy Construction restats the innovation's Bulk (2 -> 3). Read the ridden item so the
     // encumbrance total agrees with the armour the rest of the sheet is showing.
     const eff = item.itemType === 'armor' && inv.designations?.length ? applyArmorRiders(c, db, inv, item).armor : item;
-    const own = eff.bulk * inv.quantity;
+    /* Anything INSIDE a container is stowed, whatever its worn flag still says — that is what makes a
+     * suit in the pack cost its carried Bulk and a backpack in a backpack cost L. `armorRelief` (the
+     * worn-only feats) is gated on `inv.worn` and so can never meet the carried branch.
+     * A PACK item's printed Bulk then covers `packOf` pieces (10 arrows = L) while `quantity` counts
+     * pieces: without the division a quiver of 10 bullets came out at a full Bulk each. */
+    const nested = !!inv.containerInstanceId && containerIds.has(inv.containerInstanceId);
+    const own = (unitBulk({ itemType: item.itemType, usage: item.usage, bulk: eff.bulk }, !!inv.worn && !nested) * inv.quantity) / (item.packOf ?? 1);
     if (item.itemType !== 'container' || seen.has(inv.instanceId)) return own;
     seen.add(inv.instanceId);
     const contents = (childrenOf[inv.instanceId] ?? []).reduce((s, k) => s + effBulk(k, seen), 0);
@@ -5710,13 +5738,20 @@ export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
   };
   const { effBulk, containerIds } = makeEffBulk(c, db);
   const topLevel = c.inventory.filter((i) => !(i.containerInstanceId && containerIds.has(i.containerInstanceId)));
-  let total = topLevel.reduce((s, inv) => s + effBulk(inv, new Set()) - armorRelief(inv), 0);
+  const itemsRaw = topLevel.reduce((s, inv) => s + effBulk(inv, new Set()) - armorRelief(inv), 0);
   // 1,000 coins = 1 Bulk. NOTE: the app keeps Bulk as a precise fractional sum (informative, and the
   // container-nesting reduction relies on it) rather than RAW-flooring Light/coin remainders.
   const coins = (c.currency.pp ?? 0) + (c.currency.gp ?? 0) + (c.currency.sp ?? 0) + (c.currency.cp ?? 0);
-  total += coins / 1000;
-  total = Math.max(0, Math.round(total * 10) / 10);
-  return { total, encTotal: Math.floor(total), encumberedAt: 5 + strMod + limitBonus, max: 10 + strMod + limitBonus + maxOnlyBonus };
+  const total = Math.max(0, Math.round((itemsRaw + coins / 1000) * 10) / 10);
+  /* Bulk Values p. 269 rounds the LIGHT-item remainder down, and Bulk of Coins p. 269 says *"100 coins
+   * don't count as a light item"* — i.e. the coin remainder is dropped on its own, not pooled with the
+   * gear's. Flooring the combined sum let 7 light items plus 300 coins add up to a whole Bulk that the
+   * rules never charge. The two remainders are therefore floored SEPARATELY. The epsilon is for binary
+   * drift alone (ten separate 0.1-Bulk rows sum to 0.999…): it must NOT be a rounding step, because a
+   * part-pack of ammunition makes hundredths real and rounding 5.96 to a tenth flagged a Str-10
+   * character encumbered at five and a bit Bulk. */
+  const encTotal = Math.max(0, Math.floor(itemsRaw + 1e-6) + Math.floor(coins / 1000));
+  return { total, encTotal, encumberedAt: 5 + strMod + limitBonus, max: 10 + strMod + limitBonus + maxOnlyBonus };
 }
 
 /** How full each container is: the raw Bulk of its DIRECT contents vs its capacity. Used to

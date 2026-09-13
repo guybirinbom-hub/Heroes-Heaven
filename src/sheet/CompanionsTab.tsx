@@ -29,6 +29,7 @@ import {
   buyCompanionItem,
   canAfford,
   onCompanionInventory,
+  packQuantity,
   removeCompanionCondition,
   removePlayCompanion,
   stepCompanionConditionValue,
@@ -1789,8 +1790,10 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           content={content}
           hideLegacy={character.hideLegacy}
           currency={character.currency}
-          onGive={(itemId) => onPlay((p) => addCompanionItem(p, invAddFor, itemId))}
-          onBuy={(itemId) => onPlay((p) => buyCompanionItem(p, invAddFor, itemId, content.items[itemId]?.price))}
+          // Ammunition is sold by the pack here too: one purchase is ten arrows for the one printed
+          // price, exactly as on the character's own Inventory tab.
+          onGive={(itemId) => onPlay((p) => addCompanionItem(p, invAddFor, itemId, { quantity: packQuantity(content.items[itemId]) }))}
+          onBuy={(itemId) => onPlay((p) => buyCompanionItem(p, invAddFor, itemId, content.items[itemId]?.price, { quantity: packQuantity(content.items[itemId]) }))}
           // bug 2026-09-12 #7: homebrew-delete — same control as the character's own item search.
           onSaveItem={onCreateItem}
           onClose={() => setInvAddFor(null)}

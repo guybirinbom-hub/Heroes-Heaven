@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Character, ContentDatabase, InventoryItem, Item, ItemDesignation } from '../rules/types';
 import { bumpItemCounter, bumpItemQuantity, removeInventoryItem, setItemDesignation, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
 import { containerOptionsFor, propertyRuneDefs } from '../rules/derive';
-import { formatPrice } from '../rules/wealth';
+import { formatItemPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
 import { confirmDialog } from './confirm';
@@ -346,7 +346,7 @@ export function ItemDetail({
             ))}
             <Stat k="Material" v={materialLabel(item)} />
             <Stat k="Worn slot" v={wornSlot(item.usage)} />
-            <Stat k="Price" v={formatPrice(item.price)} />
+            <Stat k="Price" v={formatItemPrice(item)} />
             <Stat k="Bulk" v={formatBulk(item.bulk)} />
             <Stat k="Usage" v={wornSlot(item.usage) ? undefined : usageLabel(item.usage)} />
             <Stat k="Hands" v={item.hands ? String(item.hands) : undefined} />
