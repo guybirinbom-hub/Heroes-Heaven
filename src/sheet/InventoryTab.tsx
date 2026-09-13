@@ -12,19 +12,19 @@ import {
   buyCompanion,
   buyCompanionItem,
   addCompanionItem,
+  bumpItemCounter,
+  bumpItemQuantity,
   buyItem,
   removeInventoryItem,
   removePlayCompanion,
   setCurrency,
-  setItemCounter,
-  setItemQuantity,
   toggleItemFlag,
   updateInventoryItem,
   type PlayUpdater,
 } from '../rules/play';
 import { parsePrice } from '../rules/wealth';
 import type { CompanionPick } from './AddItemsModal';
-import { chargesFor, itemCounters } from '../rules/itemUses';
+import { itemCounters } from '../rules/itemUses';
 import { formatPrice, grp } from '../rules/wealth';
 import { ItemDetail } from './ItemDetail';
 import { chooseDialog, confirmDialog } from './confirm';
@@ -169,10 +169,12 @@ function ItemCard({
   rationsDayTracking?: boolean;
   /** Phone layout: disable the desktop HTML5 drag (cards aren't draggable on touch). */
   isMobile?: boolean;
-  onDragStartItem?: (instanceId: string) => void;
+  /** The ROW, not just its id: an instance id is reused when a row is freed, so a gesture that
+   *  outlives its row has to be able to tell that the id it is holding is no longer the same item. */
+  onDragStartItem?: (inv: InventoryItem) => void;
   onDragEndItem?: () => void;
   /** Phone hold-to-move: press-and-hold the card to pick the item up (pointerdown starts the hold timer). */
-  onHoldDrag?: (instanceId: string, e: React.PointerEvent) => void;
+  onHoldDrag?: (inv: InventoryItem, e: React.PointerEvent) => void;
   /** This card is the one currently being lifted on mobile — dim it in place while it's "in transit". */
   dragging?: boolean;
   /** This card is a potential drop target for the attachment/rune currently being dragged. */
@@ -224,14 +226,14 @@ function ItemCard({
         (attachOver && attachValid ? ' attach-over' : '')
       }
       onClick={onOpen}
-      onPointerDown={onHoldDrag ? (e) => onHoldDrag(inv.instanceId, e) : undefined}
+      onPointerDown={onHoldDrag ? (e) => onHoldDrag(inv, e) : undefined}
       draggable={!!onPlay && !isMobile}
       onDragStart={
         onPlay
           ? (e) => {
               e.dataTransfer.setData('text/plain', inv.instanceId);
               e.dataTransfer.effectAllowed = 'copyMove';
-              onDragStartItem?.(inv.instanceId);
+              onDragStartItem?.(inv);
             }
           : undefined
       }
@@ -342,7 +344,7 @@ function ItemCard({
                 <button
                   aria-label={`Spend a use (${u.label})`}
                   disabled={u.current <= 0}
-                  onClick={(e) => { stop(e); onPlay((p) => setItemCounter(p, inv.instanceId, u.id, chargesFor(u, u.current - 1)), `uses:${inv.instanceId}:${u.id}`); }}
+                  onClick={(e) => { stop(e); onPlay((p) => bumpItemCounter(p, inv.instanceId, u, -1), `uses:${inv.instanceId}:${u.id}`); }}
                 >
                   <i className="ti ti-minus" aria-hidden="true" />
                 </button>
@@ -352,7 +354,7 @@ function ItemCard({
                 <button
                   aria-label={`Restore a use (${u.label})`}
                   disabled={u.current >= u.max}
-                  onClick={(e) => { stop(e); onPlay((p) => setItemCounter(p, inv.instanceId, u.id, chargesFor(u, u.current + 1)), `uses:${inv.instanceId}:${u.id}`); }}
+                  onClick={(e) => { stop(e); onPlay((p) => bumpItemCounter(p, inv.instanceId, u, 1), `uses:${inv.instanceId}:${u.id}`); }}
                 >
                   <i className="ti ti-plus" aria-hidden="true" />
                 </button>
@@ -364,12 +366,12 @@ function ItemCard({
                   aria-label="Decrease quantity"
                   disabled={inv.quantity <= 1}
                   title={inv.quantity <= 1 ? 'Use the trash button to remove' : undefined}
-                  onClick={(e) => { stop(e); onPlay((p) => setItemQuantity(p, inv.instanceId, inv.quantity - 1), `qty:${inv.instanceId}`); }}
+                  onClick={(e) => { stop(e); onPlay((p) => bumpItemQuantity(p, inv.instanceId, -1), `qty:${inv.instanceId}`); }}
                 >
                   <i className="ti ti-minus" aria-hidden="true" />
                 </button>
                 <span>{inv.quantity}</span>
-                <button aria-label="Increase quantity" onClick={(e) => { stop(e); onPlay((p) => setItemQuantity(p, inv.instanceId, inv.quantity + 1), `qty:${inv.instanceId}`); }}>
+                <button aria-label="Increase quantity" onClick={(e) => { stop(e); onPlay((p) => bumpItemQuantity(p, inv.instanceId, 1), `qty:${inv.instanceId}`); }}>
                   <i className="ti ti-plus" aria-hidden="true" />
                 </button>
               </span>
@@ -555,7 +557,8 @@ export function InventoryTab({
   // interrupted. Buffer per denomination, commit on blur/Enter.
   const [coinDraft, setCoinDraft] = useState<Record<string, string>>({});
   const [dragId, setDragId] = useState<string | null>(null);
-  const dragIdRef = useRef<string | null>(null);
+  /** The ROW a desktop drag is carrying (id + item), not just its id — see `liveRow` below. */
+  const dragRef = useRef<{ instanceId: string; itemId: string } | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   const isMobile = useIsMobile();
   // Mobile hold-to-move: press-and-hold an item card to pick it up. `holdRef` tracks the pointer; once
@@ -564,7 +567,7 @@ export function InventoryTab({
   // tab/header currently under the finger. Reliable because the card is `touch-action:none` (a scroll
   // can never steal the grab) and the pointer is captured on <html> at arm (so hiding the card mid-drag
   // can't cancel it); pointer events are read off `window`.
-  const holdRef = useRef<{ id: string; startX: number; startY: number; lastX: number; lastY: number; active: boolean; pointerId: number; holdTimer: number | null; scrolling: boolean; scrollEl: HTMLElement | null } | null>(null);
+  const holdRef = useRef<{ id: string; itemId: string; startX: number; startY: number; lastX: number; lastY: number; active: boolean; pointerId: number; holdTimer: number | null; scrolling: boolean; scrollEl: HTMLElement | null } | null>(null);
   const [ghost, setGhost] = useState<{ id: string; x: number; y: number; icon: string } | null>(null);
   const [dropTarget, setDropTarget] = useState<string | null>(null);
   // Mobile-only: which tab's item list is shown. 'equipped' | 'carried' | a container instanceId.
@@ -579,6 +582,25 @@ export function InventoryTab({
     const t = setTimeout(() => setAttachMsg(null), 6000);
     return () => clearTimeout(t);
   }, [attachMsg]);
+  /*
+   * An instance id can be REUSED. `nextInstanceId` allocates max(suffix) + 1, so deleting the highest
+   * row frees its id and the next item acquired takes it — and anything still holding that id (an open
+   * detail popup, the item editor, a drag in flight) silently re-binds to a different object: the
+   * player edits, or trashes, an item they never opened. Nothing here may outlive its row, so the
+   * moment a held id has no instance, whatever holds it lets go.
+   */
+  /** The live row one of those holders is pointing at — matched on the item as well as the id,
+   *  because the id alone is exactly what gets reused. Undefined = that row is gone. */
+  const liveRow = (held: { instanceId: string; itemId: string }) =>
+    character.inventory.find((i) => i.instanceId === held.instanceId && i.itemId === held.itemId);
+  useEffect(() => {
+    if (detail && !liveRow(detail.inv)) setDetail(null);
+    if (editTarget && !liveRow(editTarget.inv)) setEditTarget(null);
+    if (dragRef.current && !liveRow(dragRef.current)) {
+      dragRef.current = null;
+      setDragId(null);
+    }
+  }, [character.inventory, detail, editTarget]);
   const charBulk = deriveBulk(character, content);
   // A companion carries to ITS limit, not its owner's. deriveBulk still supplies the carried total —
   // that's just the sum of what's in the pack — so only the two caps are swapped.
@@ -797,7 +819,13 @@ export function InventoryTab({
     const effBulk = effectiveItemBulk(character, content, dragId);
     return dragId !== dest && !isInside(dest, dragId) && fitsIn(dest, effBulk, draggedInv?.containerInstanceId === dest);
   };
-  const moveTo = (instanceId: string, dest: string) => {
+  /** `wasItemId` = the item the gesture GRABBED. A drag or a phone hold outlives its own row (a GM
+   *  edit, another tab, a cloud pull can all delete it mid-gesture) and `nextInstanceId` hands the
+   *  freed id to the next item acquired, so by the time the finger lifts the id can belong to
+   *  something else — a move of an item the player never picked up. The check is INSIDE the updater
+   *  because a hold's pointerup handler is the closure from the render the hold started on: the
+   *  `character` out here is the one that still had the row, and only `p` knows what is there now. */
+  const moveTo = (instanceId: string, dest: string, wasItemId?: string) => {
     if (!onPlay) return;
     const inv = character.inventory.find((i) => i.instanceId === instanceId);
     const item = inv && resolve(inv);
@@ -820,16 +848,20 @@ export function InventoryTab({
       if (!fitsIn(dest, effectiveItemBulk(character, content, instanceId), inv.containerInstanceId === dest)) return; // over capacity
       patch = { containerInstanceId: dest, worn: false, equipped: false, invested: false };
     }
-    onPlay((p) => updateInventoryItem(p, instanceId, patch));
+    onPlay((p) => {
+      const now = (p.inventory ?? []).find((i) => i.instanceId === instanceId);
+      if (wasItemId !== undefined && now?.itemId !== wasItemId) return p;
+      return updateInventoryItem(p, instanceId, patch);
+    });
   };
   // A SYNCHRONOUS mirror of dragId. setDragId (React state) doesn't apply until the next render, so
   // during the first `dragover` events right after `dragstart` the handler closure still sees
   // dragId===null — and a drop target only accepts a drop if `dragover` calls preventDefault(). The
   // old code gated preventDefault on state, so the FIRST drag was marked "no drop" by the browser and
   // silently failed (you had to drag twice). onDragOver/onDrop below read this ref instead.
-  const startDrag = (id: string) => {
-    dragIdRef.current = id;
-    setDragId(id);
+  const startDrag = (inv: InventoryItem) => {
+    dragRef.current = { instanceId: inv.instanceId, itemId: inv.itemId };
+    setDragId(inv.instanceId);
   };
   /** The attach plan for the CURRENT drag against a host card, computed from the SYNCHRONOUS drag ref
    *  rather than `dragId` state. The card's attach handlers used to be gated on `attachHost` (derived
@@ -838,7 +870,7 @@ export function InventoryTab({
    *  happened and you had to drag a second time. Returns null when this isn't an attach drag at all,
    *  which lets the event bubble to the section's normal relocate drop. */
   const attachPlanNow = (hostItem: Item, hostInv: InventoryItem) => {
-    const did = dragIdRef.current;
+    const did = dragRef.current?.instanceId;
     if (!onPlay || !did || did === hostInv.instanceId) return null;
     const srcInv = character.inventory.find((i) => i.instanceId === did);
     const srcItem = srcInv ? resolve(srcInv) : null;
@@ -848,7 +880,7 @@ export function InventoryTab({
     return planAttach(srcItem, srcInv, hostItem, hostInv, character.inventory, content, character);
   };
   const endDrag = () => {
-    dragIdRef.current = null;
+    dragRef.current = null;
     setDragId(null);
     setOverId(null);
     setAttachOver(null);
@@ -859,7 +891,7 @@ export function InventoryTab({
   // cancel) and is bound to window (not the re-rendering card), so the drag UI always resets.
   useEffect(() => {
     const reset = () => {
-      dragIdRef.current = null;
+      dragRef.current = null;
       setDragId(null);
       setOverId(null);
       setAttachOver(null);
@@ -956,18 +988,20 @@ export function InventoryTab({
     if (!d || e.pointerId !== d.pointerId) return;
     const wasActive = d.active;
     const id = d.id;
+    const wasItemId = d.itemId;
     const dest = wasActive && e.type !== 'pointercancel' ? dropDestAt(e.clientX, e.clientY) : null;
     cleanupHold();
     if (dest && dest !== id) {
-      moveTo(id, dest); // moveTo validates fit / equippable
+      moveTo(id, dest, wasItemId); // moveTo validates fit / equippable / still-the-same-row
       setActiveTab(dest); // open the section it landed in (a tab or a header both carry the dest)
     }
   };
-  const startHold = (instanceId: string, e: React.PointerEvent) => {
+  const startHold = (held: InventoryItem, e: React.PointerEvent) => {
     if (!onPlay) return;
     if (e.button != null && e.button > 0) return; // primary button / touch only
     holdRef.current = {
-      id: instanceId,
+      id: held.instanceId,
+      itemId: held.itemId,
       startX: e.clientX,
       startY: e.clientY,
       lastX: e.clientX,
@@ -1019,7 +1053,12 @@ export function InventoryTab({
       } else {
         onPlay((p) => {
           let next = updateInventoryItem(p, hostId, { runes: plan.runes });
-          if (plan.consume) next = attInv.quantity > 1 ? setItemQuantity(next, srcId, attInv.quantity - 1) : removeInventoryItem(next, srcId);
+          if (plan.consume) {
+            // Read the stack from the play state, not from `attInv`: that was captured before the
+            // confirm modal, and anything the player did to the stack meanwhile would be undone here.
+            const live = (next.inventory ?? []).find((i) => i.instanceId === srcId);
+            next = (live?.quantity ?? 1) > 1 ? bumpItemQuantity(next, srcId, -1) : removeInventoryItem(next, srcId);
+          }
           return next;
         });
       }
@@ -1097,7 +1136,7 @@ export function InventoryTab({
                 // preventDefault (which is what ALLOWS the drop) must fire from the first dragover of
                 // the gesture — gate on the synchronous ref, not the async `validHere` state, or the
                 // first drag fails. moveTo() re-validates the actual drop, so this stays correct.
-                if (!dragIdRef.current) return;
+                if (!dragRef.current) return;
                 e.preventDefault();
                 e.dataTransfer.dropEffect = 'move';
                 if (overId !== id) setOverId(id);
@@ -1119,10 +1158,14 @@ export function InventoryTab({
           droppable
             ? (e) => {
                 e.preventDefault();
-                const did = e.dataTransfer.getData('text/plain') || dragIdRef.current;
+                const drag = dragRef.current;
+                const did = e.dataTransfer.getData('text/plain') || drag?.instanceId;
                 // No `validHere` gate: moveTo() self-validates (equip/invest-cap/self/cycle/capacity)
                 // and no-ops an illegal drop, so we don't depend on the lagging React state here.
-                if (did) moveTo(did, dropKind!);
+                // The dataTransfer payload is a plain id frozen at `dragstart`, so it survives its own
+                // row being deleted — only the ref knows whether there is still a drag behind it, and
+                // only the item it grabbed proves the id has not been handed to something else.
+                if (did && drag) moveTo(did, dropKind!, drag.itemId);
                 endDrag();
               }
             : undefined
@@ -1388,7 +1431,7 @@ export function InventoryTab({
 
       {detail && (
         <ItemDetail
-          inv={character.inventory.find((i) => i.instanceId === detail.inv.instanceId) ?? detail.inv}
+          inv={liveRow(detail.inv) ?? detail.inv}
           item={detail.item}
           content={content}
           onClose={() => setDetail(null)}
@@ -1443,7 +1486,7 @@ export function InventoryTab({
         <ItemEditorModal
           mode="edit"
           item={editTarget.item}
-          inv={character.inventory.find((i) => i.instanceId === editTarget.inv.instanceId) ?? editTarget.inv}
+          inv={liveRow(editTarget.inv) ?? editTarget.inv}
           inventory={character.inventory}
           content={content}
           character={character}

@@ -28,11 +28,15 @@ export function reconcileGmWork(args: { live: string; work: string; dirty: boole
  * them. Not a reason to refuse the edit — last change wins — but it IS a reason to say so, because a
  * change disappearing with no explanation is the one thing a player can't recover from on their own.
  *
- * Unknown `lastPublished` (nothing published yet this session) counts as "no loss to report": we can't
- * tell, and crying wolf on every GM edit would train the player to ignore the banner.
+ * Nothing published yet this session? Then there is no baseline — and suppressing the banner outright
+ * made the FIRST revert of every session the silent one. `incoming` (the sheet about to be applied) is
+ * the fallback baseline: if it already matches what is on screen, applying it changes nothing and there
+ * is nothing to report; if it differs, the player's version is being replaced and they are told. With
+ * neither baseline we still say nothing, because crying wolf trains the player to ignore the banner.
  */
-export function playerWorkWasOverwritten(lastPublished: string | undefined, localNow: string): boolean {
-  return !!lastPublished && lastPublished !== localNow;
+export function playerWorkWasOverwritten(lastPublished: string | undefined, localNow: string, incoming?: string): boolean {
+  if (lastPublished !== undefined) return lastPublished !== localNow;
+  return incoming !== undefined && incoming !== localNow;
 }
 
 /**

@@ -29,7 +29,7 @@ import { getPrefs, subscribePrefs } from './data/prefs';
 import { useShowUndoButtons } from './sheet/useIsMobile';
 import { playerWorkWasOverwritten, editsToApply } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
-import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
+import { setupPersist, schedulePersist, persistNow, flushPersist, hasPendingPersist, recentPersists } from './data/persist';
 import { chooseDialog } from './sheet/confirm';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
 import { useUndoableState } from './useUndoableState';
@@ -56,6 +56,11 @@ import type { Character, ContentDatabase, Item, ModeDef } from './rules/types';
  * to be 1500ms, which at the table reads as the sync being slow.
  */
 const PUBLISH_DEBOUNCE_MS = 400;
+
+/** The comparable shape of one saved character: exactly what the publish effect uploads and what a GM
+ *  edit replaces, so "did this move?" is one string compare in the same key order everywhere. */
+const sheetJson = (id: string, s: { character?: unknown; build?: unknown; play?: unknown }): string =>
+  JSON.stringify({ id, character: s.character, build: s.build, play: s.play });
 
 function initialRoster(): SavedChar[] {
   // A fresh install starts with an EMPTY roster — no demo character is injected. The RosterScreen
@@ -283,6 +288,11 @@ export default function App() {
   const publishedSheetRef = useRef<Map<string, string>>(new Map());
   /** Warn ONCE per session when the gm_character_edits cleanup delete removes no rows (RLS gap). */
   const warnedGmEditDelete = useRef(false);
+  /** The applied stamps THIS session, held in memory beside the stored ones. `saveGmEditsApplied`
+   *  swallows a storage failure (quota, private mode), and a stamp that never reached disk means the
+   *  same GM row re-applies on every focus / visibility / online / Realtime event — the revert loop,
+   *  back again. Memory is enough to close it for the session; the stored map covers the next launch. */
+  const gmAppliedSession = useRef<Record<string, string>>({});
   useEffect(() => {
     if (auth.status !== 'signed-in' || !content) return;
     const readyContent = content;
@@ -370,6 +380,10 @@ export default function App() {
     if (auth.status !== 'signed-in') return;
     let cancelled = false;
     const apply = async () => {
+      // The roster as it stands BEFORE the round trip. A GM edit replaces the whole sheet, so anything
+      // the player does while the fetch is in flight would be applied over — see the raced-edit branch
+      // below, which keeps their `play` (their actions) and takes only the GM's character + build.
+      const beforeFetch = new Map(rosterRef.current.map((c) => [c.id, c]));
       const edits = await fetchGmEdits();
       if (cancelled || !edits.length) return;
       // Only edits whose character actually lives in THIS device's roster are applied+cleared here.
@@ -387,6 +401,8 @@ export default function App() {
        * by updated_at) is the structural guard: a row can linger in the table forever and still apply
        * exactly once. */
       const appliedStamps = loadGmEditsApplied();
+      // …and the session's own stamps on top, for the ones a failed write never got to store.
+      for (const [k, v] of Object.entries(gmAppliedSession.current)) if ((appliedStamps[k] ?? '') < v) appliedStamps[k] = v;
       const applicable = editsToApply(forThisDevice, appliedStamps);
       if (applicable.length) {
         // A character attached to two campaigns can have two pending edits (PK is campaign+char). Apply the
@@ -405,6 +421,11 @@ export default function App() {
          * compare what we last published against what's local right now: a difference means there WAS
          * unpublished work, and the player gets told. It stays recoverable — the replacement is one step
          * on the roster's undo timeline, so Ctrl+Z brings their version back.
+         *
+         * Before the first publish of a session there is nothing to compare against, and the banner used
+         * to be suppressed outright — so the very first revert of a session was the silent one. With no
+         * published copy we compare the INCOMING sheet against the local one instead: if they differ, the
+         * player's version is being replaced, which is exactly what the banner is for.
          */
         const clobbered: string[] = [];
         setRoster((r) =>
@@ -412,15 +433,26 @@ export default function App() {
             const edit = newestByChar.get(c.id);
             if (!edit) return c;
             const lastPublished = publishedSheetRef.current.get(c.id);
-            const localNow = JSON.stringify({ id: c.id, character: c.character, build: c.build, play: c.play });
-            if (playerWorkWasOverwritten(lastPublished, localNow)) clobbered.push(c.character.name);
-            return { ...edit.sheet, id: c.id, archived: c.archived ?? false };
+            const localNow = sheetJson(c.id, c);
+            // The player edited DURING the fetch (identity first — the JSON compare only runs for a
+            // character that actually moved). Their actions are newer than anything the GM saw, so the
+            // GM's character + build land and the local `play` stays.
+            const was = beforeFetch.get(c.id);
+            const raced = !!was && was !== c && sheetJson(c.id, was) !== localNow;
+            if (raced || playerWorkWasOverwritten(lastPublished, localNow, sheetJson(c.id, edit.sheet))) {
+              clobbered.push(c.character.name);
+            }
+            return { ...edit.sheet, id: c.id, archived: c.archived ?? false, ...(raced ? { play: c.play } : {}) };
           }),
         );
         if (clobbered.length) setGmOverwrote(clobbered);
         // Stamp every edit we consumed (the applied newest AND the superseded older ones), so none of
         // them can ever re-apply, whatever becomes of the delete below.
-        for (const e of applicable) appliedStamps[`${e.campaignId}|${e.charId}`] = e.updatedAt || new Date().toISOString();
+        for (const e of applicable) {
+          const stamp = e.updatedAt || new Date().toISOString();
+          appliedStamps[`${e.campaignId}|${e.charId}`] = stamp;
+          gmAppliedSession.current[`${e.campaignId}|${e.charId}`] = stamp;
+        }
         // …and prune stamps for characters no longer on this device, so the map cannot grow forever.
         for (const k of Object.keys(appliedStamps)) {
           const charId = k.slice(k.indexOf('|') + 1);
@@ -588,17 +620,30 @@ export default function App() {
   // overwrite this tab's characters — whoever saves last wins, and the other tab never notices its
   // work vanished. The `storage` event fires only in OTHER tabs when a key changes, so when the
   // roster key is written elsewhere we adopt that value (reloading it into our timeline) instead of
-  // continuing to overwrite it. Comparing to our current serialization skips our own echo — the
-  // reload triggers a re-persist of the identical value, which would otherwise ping-pong forever.
+  // continuing to overwrite it. Three things are NOT another tab's work and must never be adopted:
+  // our current serialization, an echo of any RECENT write of ours, and anything at all while an edit
+  // of ours is still queued — adopting any of them hands the player back a version they moved past.
   // Desktop/web-relevant; the lone Tauri webview rarely hits it, so this stays lightweight.
   useEffect(() => {
     const onStorage = (e: StorageEvent) => {
       if (e.key !== ROSTER_KEY || e.newValue === null) return;
       if (e.newValue === JSON.stringify(roster)) return; // our own write echoed back — ignore
-      // Another tab wrote the roster. Drop any of OUR pending debounced writes first so a stale
-      // in-flight value can't clobber the version we're about to adopt, then reload theirs.
-      cancelPersist();
-      setRoster(loadRoster());
+      // An edit of ours is still inside the persist debounce, so THIS tab holds the newest state and
+      // adopting would undo it: t=0 we edit, t=400 we write v2, the other tab adopts v2, t=500 we
+      // edit again (v3, pending), t=800 the other tab re-persists v2. Keep v3 AND its pending write —
+      // it lands a moment later and the other tab adopts it in turn.
+      if (hasPendingPersist()) return;
+      // An echo of an OLDER write of ours is not another tab's work either: the `roster` above is this
+      // effect's closure, and the other tab's echo of what it adopted from us can arrive several of our
+      // own writes later (a backgrounded tab's debounce timer is throttled to a second or more), so it
+      // is checked against every recent write, newest first, not just the last one.
+      if ([...recentPersists()].reverse().some((r) => e.newValue === JSON.stringify(r))) return;
+      // Another tab wrote the roster. Taking their version is a DERIVED refresh, NOT an edit — tell
+      // cloud sync so the echo isn't stamped "updated now" and pushed as the newest copy of every
+      // character (the two-device loss described on noteDerivedRefresh).
+      const adopted = loadRoster();
+      noteDerivedRefresh(adopted);
+      setRoster(adopted);
     };
     window.addEventListener('storage', onStorage);
     return () => window.removeEventListener('storage', onStorage);

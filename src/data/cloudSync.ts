@@ -1,19 +1,32 @@
 // Cloud sync orchestration. Local-first: the app always works from localStorage; this module mirrors
 // that to Supabase so a signed-in user's characters follow them across devices. Lifecycle:
 //   • on open   → PULL the cloud bundle, MERGE with local, adopt, then PUSH the merged result up.
+//   • on edit   → PUSH, debounced (LIVE_PUSH_DEBOUNCE_MS), so the user's other open devices see the
+//                 change within seconds instead of only when this one is closed.
 //   • on focus  → PULL + MERGE again (throttled) so a device you return to refreshes itself before you
 //                 can edit stale data — this is the lightweight alternative to a hard device lock.
 //   • on leave  → PUSH when the app is backgrounded/closed (visibilitychange→hidden / pagehide / blur).
 //   • on online → resume a pull (if the first never succeeded) or a pending push.
-// Deliberately NO mid-session push: edits stay local + fast during play and only reach the cloud on
-// leave/close, per the "sync on open and close" model. That's safe because localStorage is durable
-// and the merge is per-character newest-timestamp-wins — a push that never fired (hard kill) simply
-// re-syncs on the next open, when local's newer timestamps win the merge and get pushed.
+// A push that never fired (hard kill, offline) loses nothing: localStorage is durable and the merge is
+// per-character newest-timestamp-wins, so the next open pushes local's newer timestamps up.
 //
-// SAFETY (no stale overwrite): every PUSH first re-PULLs and MERGES, so a device that's been sitting
-// on old data can never blow away newer changes another device saved in the meantime. And we never
-// PUSH until a PULL has succeeded this session, so a failed pull (offline) isn't mistaken for "the
-// cloud is empty". See cloudMerge.ts for the (tested) conflict logic.
+// SAFETY 1 (no stale overwrite from another device): every PUSH first re-PULLs and MERGES, so a device
+// that's been sitting on old data can never blow away newer changes another device saved in the
+// meantime. And we never PUSH until a PULL has succeeded this session, so a failed pull (offline) isn't
+// mistaken for "the cloud is empty". See cloudMerge.ts for the (tested) conflict logic.
+//
+// SAFETY 2 (no stale overwrite from OURSELVES — the roundtrip window): a pull/push takes hundreds of ms
+// to seconds, and the player keeps playing through it. Everything a network leg carries was read out of
+// localStorage BEFORE that wait, so adopting the result as-it-left reverts whatever was edited during
+// the wait — on screen AND in storage, and the reverted copy is then stamped newest and uploaded. The
+// owner saw "something I do in the inventory gets overwritten after a second" (2026-09-13, the third
+// report of that shape). Four things close it: both legs flushPersist() before reading local (the
+// 400 ms persist debounce is not a place an edit may hide); adopt() re-merges against the CURRENT
+// localStorage before it writes anything, so a character edited during the roundtrip — newer
+// charUpdated stamp — wins, and anything that won that way goes straight back on the push queue;
+// `dirty` is cleared where local is snapshotted rather than after the upload, so a change made during
+// the upload stays dirty; and a push asked for while one is in flight is re-queued instead of dropped,
+// so that dirty change actually gets a turn. Pinned by test/sync-edit-during-roundtrip.test.ts.
 import { supabase } from './supabase';
 import {
   loadCharUpdated,
@@ -27,7 +40,7 @@ import {
   type CloudBundle,
   type SavedChar,
 } from './storage';
-import { setOnPersisted, cancelPersist } from './persist';
+import { setOnPersisted, cancelPersist, flushPersist } from './persist';
 import { loadCustomizationUpdated, loadSettingsUpdated, onLocalDataChanged } from './syncBus';
 import { reloadPrefs } from './prefs';
 import { reloadCustomization } from './customization';
@@ -113,10 +126,29 @@ export function bundleSettingsChanged(merged: CloudBundle): boolean {
   return (merged.settingsUpdated ?? 0) !== loadSettingsUpdated() || (merged.customizationUpdated ?? 0) !== loadCustomizationUpdated();
 }
 
+/** Did the re-merge in adopt() keep a LOCAL character over the copy the network leg was carrying? Then
+ *  that character was edited during the roundtrip and is not in the cloud yet — it still has to go up. */
+function rosterLostToLocal(final: CloudBundle, carried: CloudBundle): boolean {
+  if (final.roster.length !== carried.roster.length) return true;
+  const was = new Map(carried.roster.map((c) => [c.id, charFingerprint(c)]));
+  return final.roster.some((c) => was.get(c.id) !== charFingerprint(c));
+}
+
 /** Adopt a merged bundle locally: write it to localStorage, re-apply live settings, and hand the
- *  roster to React only when it actually changed (so a no-op sync doesn't churn state / undo). */
+ *  roster to React only when it actually changed (so a no-op sync doesn't churn state / undo).
+ *
+ *  `merged` was assembled from a localStorage snapshot taken BEFORE the network wait, so by now it can
+ *  be stale in one specific way: the player edited something while the roundtrip was in the air. Writing
+ *  it as-is is what the owner kept seeing as "something I do in the inventory gets overwritten after a
+ *  second" (2026-09-13) — the edit was reverted in storage, reverted on screen by applyRoster, then
+ *  re-persisted and stamped as the newest copy. So flush the persist debounce and re-merge against the
+ *  CURRENT localStorage first: a character edited during the roundtrip carries a newer charUpdated stamp
+ *  and wins (ties go to local anyway). Anything the local side won that way isn't in the cloud yet, so
+ *  it goes back on the push queue. */
 function adopt(merged: CloudBundle): void {
-  const rosterChanged = rosterDiffers(merged.roster);
+  flushPersist(); // an edit sitting in the 400 ms debounce is a real edit — get it into localStorage
+  const final = mergeBundles(readCloudBundle(), merged);
+  const rosterChanged = rosterDiffers(final.roster);
   // Did the merge bring DIFFERENT settings / customization than this device holds? Only then is a
   // reload + repaint warranted. Before this, every adopt — including the echo of this device's OWN
   // push, ~3 s after each edit — re-read prefs, re-read the customization and re-ran initTheme(),
@@ -124,8 +156,8 @@ function adopt(merged: CloudBundle): void {
   // that was "changing things in Customize is super laggy, I choose things and it reverts back
   // immediately" (2026-09-02): the palette/font he had just picked snapped back to the device default
   // on the next sync tick. A no-op sync now touches nothing on screen.
-  const settingsChanged = bundleSettingsChanged(merged);
-  writeCloudBundle(merged);
+  const settingsChanged = bundleSettingsChanged(final);
+  writeCloudBundle(final);
   // writeCloudBundle only wrote the raw keys — re-read + re-apply so the theme repaints and prefs
   // subscribers fire. Non-fatal if it throws (settings still take effect on next load).
   if (settingsChanged) {
@@ -137,8 +169,12 @@ function adopt(merged: CloudBundle): void {
       /* non-fatal */
     }
   }
-  fingerprints = new Map(merged.roster.map((c) => [c.id, charFingerprint(c)]));
-  if (rosterChanged) applyRoster?.(merged.roster);
+  fingerprints = new Map(final.roster.map((c) => [c.id, charFingerprint(c)]));
+  if (rosterChanged) applyRoster?.(final.roster);
+  if (rosterLostToLocal(final, merged)) {
+    dirty = true;
+    schedulePush();
+  }
   window.dispatchEvent(new Event('hh-synced'));
 }
 
@@ -149,6 +185,7 @@ async function pull(): Promise<void> {
   if (!supabase || syncing) return;
   syncing = true;
   try {
+    flushPersist(); // so `local` is the whole local truth, not "everything except the last 400 ms"
     const local = readCloudBundle();
     const cloud = await pullBundle();
     if (SYNC_DEBUG)
@@ -168,12 +205,26 @@ async function pull(): Promise<void> {
  *  cloud data (optimistic-concurrency, the light alternative to a device lock). Only runs after a
  *  successful pull this session. */
 async function push(): Promise<void> {
-  if (!supabase || syncing || !pulledOk) return;
-  const uid = await currentUserId();
-  if (!uid) return;
-  syncing = true;
+  if (!supabase || !pulledOk) return;
+  // A push asked for while one is in flight must never be DROPPED: the in-flight one is uploading a
+  // snapshot taken before this request existed, so whatever prompted it would sit unsent until some
+  // later trigger happened to come along. Re-queue it instead — the timer callback only fires a push
+  // while `dirty`, so this settles as soon as everything is uploaded.
+  if (syncing) {
+    schedulePush();
+    return;
+  }
+  syncing = true; // claimed BEFORE the first await, or two pushes can both pass the guard above
   try {
+    const uid = await currentUserId();
+    if (!uid) return;
+    flushPersist(); // so `local` is the whole local truth, not "everything except the last 400 ms"
     const local = readCloudBundle();
+    // Everything in `local` is about to go up, so clear `dirty` HERE rather than after the upload:
+    // anything the player changes during the network wait re-dirties itself (noteRosterChange /
+    // onLocalDataChanged) and keeps its own scheduled push. Clearing it afterwards swallowed exactly
+    // those changes — they stayed local-only until some unrelated later edit happened to push them.
+    dirty = false;
     const cloud = await pullBundle();
     const merged: CloudBundle = { ...mergeBundles(local, cloud), lastDevice: getDeviceInfo(), lastEditedAt: Date.now() };
     const { error } = await supabase.from('user_data').upsert({ user_id: uid, data: merged });
@@ -181,7 +232,6 @@ async function push(): Promise<void> {
       dirty = true; // keep dirty (retry later) if the write failed
       console.warn('[HeavenSync] upload FAILED:', error.message, error);
     } else {
-      dirty = false;
       adopt(merged); // adopt any changes pulled in during the merge + stamp the "last synced" line
       if (SYNC_DEBUG) console.info(`[HeavenSync] uploaded ${merged.roster.length} character(s)`);
     }

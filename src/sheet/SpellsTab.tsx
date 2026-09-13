@@ -4,11 +4,12 @@ import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry, Tradition } from '../rules/types';
 import { deityDomainsOf, deriveSpellcasting, deriveClassDc, formatMod, ownedFeatureIds } from '../rules/derive';
 import { toggleKnownRitual,
+  bumpItemCounter,
+  bumpItemQuantity,
   poolKey,
   removeInventoryItem,
   setFocusUsed,
   setItemCounter,
-  setItemQuantity,
   setPreparedSpell,
   setRestrictedSpell,
   setRestrictedRank,
@@ -2047,12 +2048,15 @@ export function SpellsTab({
         castDisabled: !canCastFromItem(itemDef, itemInv, rank),
         castTitle:
           cid === 'pool' ? `Cast — spend ${cost} charge${cost === 1 ? '' : 's'}` : cid === 'freq' ? 'Cast — uses the daily charge' : 'Cast — uses the item',
+        // Both branches step from the LIVE value in `p`, never from the stack/charge count this render
+        // captured: two casts in one React batch have to spend two scrolls, or two charges.
         onCast: () =>
           onPlay((p) => {
-            if (cid === null) return itemInv.quantity > 1 ? setItemQuantity(p, itemInv.instanceId, itemInv.quantity - 1) : removeInventoryItem(p, itemInv.instanceId);
+            const live = (p.inventory ?? []).find((i) => i.instanceId === itemInv.instanceId);
+            if (cid === null) return (live?.quantity ?? itemInv.quantity) > 1 ? bumpItemQuantity(p, itemInv.instanceId, -1) : removeInventoryItem(p, itemInv.instanceId);
             const u = itemCounters(itemDef, itemInv).find((c) => c.id === cid);
             if (!u || cost <= 0) return p;
-            return setItemCounter(p, itemInv.instanceId, cid, chargesFor(u, u.current - cost));
+            return bumpItemCounter(p, itemInv.instanceId, u, -cost);
           }),
       };
     };

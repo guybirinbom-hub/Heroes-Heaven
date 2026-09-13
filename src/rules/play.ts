@@ -1422,7 +1422,12 @@ export function makeProfileImage(play: PlayState, id: string): PlayState {
   return { ...play, appearance };
 }
 
-/** A fresh instanceId that won't collide with existing `inv-N` ids. */
+/** A fresh instanceId that won't collide with existing `inv-N` ids.
+ *
+ *  It does REUSE a freed one: delete the highest-numbered row and the next allocation takes its id.
+ *  Every allocation here is a pure array→array step with no place to keep a counter, so the guard is
+ *  on the other side — a holder of an instance id (an open popup, the item editor, a drag in flight)
+ *  lets go the moment that instance leaves the inventory. See InventoryTab's stale-id effect. */
 function nextInstanceId(inv: InventoryItem[]): string {
   const max = inv.reduce((m, i) => Math.max(m, Number(/(\d+)$/.exec(i.instanceId)?.[1] ?? -1)), -1);
   return `inv-${max + 1}`;
@@ -1510,6 +1515,19 @@ export function detachItem(play: PlayState, attachmentId: string): PlayState {
 }
 
 /** Set an item's quantity (minimum 1). */
+/**
+ * Step an item's quantity by `delta`, reading the CURRENT value out of `play`.
+ *
+ * A stepper that computes `inv.quantity + 1` from its render closure loses a tap: two clicks inside one
+ * React batch both start from the value that was on screen when the batch began, so "+ +" moves the
+ * stack by one and "+ −" can land on something that was never a state the player asked for. Only the
+ * updater sees the live value, so the arithmetic belongs in here rather than at each of its callers.
+ */
+export function bumpItemQuantity(play: PlayState, instanceId: string, delta: number): PlayState {
+  const live = (play.inventory ?? []).find((i) => i.instanceId === instanceId);
+  return live ? setItemQuantity(play, instanceId, live.quantity + delta) : play;
+}
+
 export function setItemQuantity(play: PlayState, instanceId: string, qty: number): PlayState {
   return {
     ...play,
@@ -1754,6 +1772,28 @@ export function setItemCounter(
   };
 }
 
+/**
+ * Spend/restore one of an item's counters by `delta`, reading the CURRENT value out of `play` — the
+ * counter half of bumpItemQuantity, and there for the same reason: two taps in one React batch must
+ * move the tracker twice. `u` carries the counter's id and limits, plus the value shown on screen,
+ * which is the right starting point only for an instance that has never stored this counter (a fresh
+ * item's tracker starts full, or empty, from the item definition rather than from play).
+ */
+export function bumpItemCounter(
+  play: PlayState,
+  instanceId: string,
+  u: { id: string; current: number; max: number; resetsOnRest: boolean },
+  delta: number,
+): PlayState {
+  const live = (play.inventory ?? []).find((i) => i.instanceId === instanceId);
+  const current = live?.counters?.[u.id]?.current ?? u.current;
+  return setItemCounter(play, instanceId, u.id, {
+    current: clamp(current + delta, 0, u.max),
+    max: u.max,
+    resetsOnRest: u.resetsOnRest,
+  });
+}
+
 /** Set the wallet directly (Manage Coins editor). */
 export function setCurrency(play: PlayState, currency: Coins): PlayState {
   return { ...play, currency };
@@ -1879,6 +1919,20 @@ export function setResource(play: PlayState, id: string, value: number, max: num
   return { ...play, resources: { ...(play.resources ?? {}), [id]: clamp(Math.round(value), 0, max) } };
 }
 
+/**
+ * Step a class-resource counter by `delta`, reading the CURRENT value out of `play`.
+ *
+ * The rail's +/− buttons computed `val ± 1` from the value they had RENDERED, so two taps inside one
+ * React batch both started from the same number and the counter moved once — the same lost tap as
+ * bumpItemQuantity, on the focus/vial/stratagem trackers a player spends in bursts mid-encounter.
+ * `current` is the on-screen value, used only when play has never stored this resource (a fresh
+ * character's pool starts full, from the class definition rather than from play).
+ */
+export function bumpResource(play: PlayState, id: string, current: number, delta: number, max: number): PlayState {
+  const live = (play.resources ?? {})[id] ?? current;
+  return setResource(play, id, live + delta, max);
+}
+
 /** Flip a class-resource toggle (0/1) on/off. */
 export function toggleResource(play: PlayState, id: string): PlayState {
   const cur = (play.resources ?? {})[id] ?? 0;
@@ -1967,9 +2021,13 @@ function instanceSig(i: InventoryItem): string {
  * RULE — the sheet's inventory wins, the build can only add:
  *  • KEEP every play instance, untouched: its quantity, worn/equipped/invested state, runes,
  *    container, affixation, charges and formulas are the player's live state.
- *  • ADD a build item that has no counterpart in play — matched first by its own instance id, then
- *    by itemId, so a rebuild never duplicates something the player already carries (and rebuilding
- *    twice adds nothing the second time).
+ *  • ADD a build item that has no counterpart in play — matched first by its own instance id, then by
+ *    itemId, so a rebuild never duplicates something the player already carries (and rebuilding twice
+ *    adds nothing the second time) — UNLESS it is one the player already deleted. A row the previous
+ *    build handed over whose instance is gone from play was sold, dropped or consumed, and re-adding
+ *    it made saving the builder — with no change at all — resurrect sold gear. One deleted row
+ *    absorbs one build row of that item and no more, so a builder that asks for a second copy of
+ *    something still gets it.
  *  • REMOVE an instance only when all three hold: the new build no longer asks for it, it came from
  *    the OLD build (`prevBuilt` = character.inventory before this edit, the rows play was seeded
  *    from — same instance id), and it is still byte-identical to what that build handed over. If we
@@ -1985,11 +2043,34 @@ function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[],
   };
   /** built instance id → the live instance id it ended up as, so a nested add keeps its container. */
   const idMap = new Map<string, string>();
+  /**
+   * What the PLAYER deleted: a row the previous build handed over whose instance is no longer in play.
+   *
+   * Counted by itemId, NOT by the build's `inv-N` id. Those ids are the build list's INDEX
+   * (build.ts `inv-${i}`), so every insert or removal in the builder renumbers everything after it —
+   * an id says nothing about which row it is. Keying the guard on the id alone meant any build row
+   * sitting at an index the old build also used was treated as already handed over: replace the torch
+   * with a shortbow in the builder and the shortbow (now `inv-2`, the torch's old index) never reached
+   * the sheet, which is the very bug this merge exists to fix.
+   */
+  const liveIds = new Set(playInv.map((p) => p.instanceId));
+  const deletedInPlay = new Map<string, number>();
+  for (const p of prevBuilt) {
+    if (!liveIds.has(p.instanceId)) deletedInPlay.set(p.itemId, (deletedInPlay.get(p.itemId) ?? 0) + 1);
+  }
   const add: InventoryItem[] = [];
   for (const b of built) {
     const own = claim((p) => p.instanceId === b.instanceId && p.itemId === b.itemId);
     const i = own >= 0 ? own : claim((p) => p.itemId === b.itemId);
-    if (i >= 0) idMap.set(b.instanceId, playInv[i].instanceId);
+    if (i >= 0) {
+      idMap.set(b.instanceId, playInv[i].instanceId);
+      continue;
+    }
+    // No live counterpart. If the previous build handed one of these over and the player got rid of
+    // it, re-adding it would undo that — one deleted row absorbs one build row and no more, so a
+    // builder that genuinely asks for a SECOND copy still gets it.
+    const deleted = deletedInPlay.get(b.itemId) ?? 0;
+    if (deleted > 0) deletedInPlay.set(b.itemId, deleted - 1);
     else add.push(b);
   }
   // Untouched leftovers of build items the builder has since dropped.

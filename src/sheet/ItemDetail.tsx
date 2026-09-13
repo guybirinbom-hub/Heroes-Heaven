@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type { Character, ContentDatabase, InventoryItem, Item, ItemDesignation } from '../rules/types';
-import { removeInventoryItem, setItemCounter, setItemDesignation, setItemQuantity, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
+import { bumpItemCounter, bumpItemQuantity, removeInventoryItem, setItemDesignation, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
 import { containerOptionsFor, propertyRuneDefs } from '../rules/derive';
 import { formatPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
 import { confirmDialog } from './confirm';
-import { chargesFor, itemCounters } from '../rules/itemUses';
+import { itemCounters } from '../rules/itemUses';
 import { traitDesc, traitLabel } from '../rules/glossary';
 import { InfoTerm } from './InfoTerm';
 import { DescBody, type RemasteredAs } from './DescBody';
@@ -491,7 +491,7 @@ export function ItemDetail({
                 <span className="sd-uses-row" key={u.id}>
                   <button
                     className="sd-uses-btn"
-                    onClick={() => onPlay((p) => setItemCounter(p, id, u.id, chargesFor(u, u.current - 1)), `uses:${id}:${u.id}`)}
+                    onClick={() => onPlay((p) => bumpItemCounter(p, id, u, -1), `uses:${id}:${u.id}`)}
                     disabled={u.current <= 0}
                     aria-label="Spend a use"
                   >
@@ -502,7 +502,7 @@ export function ItemDetail({
                   </span>
                   <button
                     className="sd-uses-btn"
-                    onClick={() => onPlay((p) => setItemCounter(p, id, u.id, chargesFor(u, u.current + 1)), `uses:${id}:${u.id}`)}
+                    onClick={() => onPlay((p) => bumpItemCounter(p, id, u, 1), `uses:${id}:${u.id}`)}
                     disabled={u.current >= u.max}
                     aria-label="Restore a use"
                   >
@@ -595,7 +595,7 @@ export function ItemDetail({
               <span className="sd-uses-row">
                 <button
                   className="sd-uses-btn"
-                  onClick={() => onPlay((p) => setItemQuantity(p, id, inv.quantity - 1), `qty:${id}`)}
+                  onClick={() => onPlay((p) => bumpItemQuantity(p, id, -1), `qty:${id}`)}
                   disabled={inv.quantity <= 1}
                   aria-label="Decrease quantity"
                 >
@@ -606,7 +606,7 @@ export function ItemDetail({
                 </span>
                 <button
                   className="sd-uses-btn"
-                  onClick={() => onPlay((p) => setItemQuantity(p, id, inv.quantity + 1), `qty:${id}`)}
+                  onClick={() => onPlay((p) => bumpItemQuantity(p, id, 1), `qty:${id}`)}
                   aria-label="Increase quantity"
                 >
                   <i className="ti ti-plus" aria-hidden="true" />

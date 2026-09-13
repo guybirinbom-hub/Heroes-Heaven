@@ -37,9 +37,20 @@ describe('playerWorkWasOverwritten — a GM edit lands on the player', () => {
     expect(playerWorkWasOverwritten('same', 'same')).toBe(false);
   });
 
-  it('stays quiet when nothing has been published yet', () => {
-    // We can't tell, and a banner on every GM edit would train the player to ignore it.
+  it('stays quiet when nothing has been published yet AND the incoming sheet is unknown', () => {
+    // With no baseline at all we can't tell, and a banner on every GM edit would train the player
+    // to ignore it.
     expect(playerWorkWasOverwritten(undefined, 'anything')).toBe(false);
+  });
+
+  // bug 2026-09-13: edits overwritten (D5)
+  it('falls back to the INCOMING sheet before the first publish — the first revert is not silent', () => {
+    // Nothing published this session (the usual state until the publish debounce has fired once), so
+    // the only other version we have is the one about to land. Different = the player's copy is being
+    // replaced, which is exactly what the banner is for.
+    expect(playerWorkWasOverwritten(undefined, 'local', 'gmVersion')).toBe(true);
+    // …and identical = nothing of theirs is being replaced, so still silent.
+    expect(playerWorkWasOverwritten(undefined, 'same', 'same')).toBe(false);
   });
 });
 

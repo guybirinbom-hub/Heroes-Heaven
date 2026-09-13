@@ -1,6 +1,6 @@
 import { type ReactNode, useId, useMemo, useState } from 'react';
 import { partyHasFeat } from '../data/partyCapabilities';
-import { attachItem, detachItem, removeInventoryItem, setItemQuantity, updateInventoryItem, addInventoryItem, setItemMonsterPart, type PlayUpdater } from '../rules/play';
+import { attachItem, bumpItemQuantity, detachItem, removeInventoryItem, updateInventoryItem, addInventoryItem, setItemMonsterPart, type PlayUpdater } from '../rules/play';
 import { affixHostType, canAttachTo } from '../rules/attachments';
 import { propertyRuneCapacity } from '../rules/derive';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
@@ -1467,7 +1467,11 @@ function AttachmentsSection({
                           danger: true,
                         })
                       )
-                        onPlay((p) => (a.quantity > 1 ? setItemQuantity(p, a.instanceId, a.quantity - 1) : removeInventoryItem(p, a.instanceId)));
+                        // The stack as it is NOW, not as it was before the confirm modal opened.
+                        onPlay((p) => {
+                          const live = (p.inventory ?? []).find((i) => i.instanceId === a.instanceId);
+                          return (live?.quantity ?? a.quantity) > 1 ? bumpItemQuantity(p, a.instanceId, -1) : removeInventoryItem(p, a.instanceId);
+                        });
                     }}
                   >
                     Activate

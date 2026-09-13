@@ -25,12 +25,12 @@ import {
   addCondition,
   applyDamage,
   applyHeal,
+  bumpResource,
   removeCondition,
   stepConditionValue,
   setHeroPoints,
   setMythicPoints,
   setHp,
-  setResource,
   setShieldDamage,
   setTempHp,
   toggleMode,
@@ -936,13 +936,13 @@ export function VitalsRail({
                 </span>
                 {onPlay ? (
                   <span className="res-step">
-                    <button aria-label="Decrease" onClick={() => onPlay((p) => setResource(p, r.id, val - 1, max), `res:${r.id}`)}>
+                    <button aria-label="Decrease" onClick={() => onPlay((p) => bumpResource(p, r.id, val, -1, max), `res:${r.id}`)}>
                       <i className="ti ti-minus" aria-hidden="true" />
                     </button>
                     <span className="res-val">
                       {val} / {max}
                     </span>
-                    <button aria-label="Increase" onClick={() => onPlay((p) => setResource(p, r.id, val + 1, max), `res:${r.id}`)}>
+                    <button aria-label="Increase" onClick={() => onPlay((p) => bumpResource(p, r.id, val, 1, max), `res:${r.id}`)}>
                       <i className="ti ti-plus" aria-hidden="true" />
                     </button>
                   </span>

@@ -113,6 +113,42 @@ describe('gear added in the builder reaches the sheet', () => {
     expect(built.inventory.length).toBeGreaterThan(0); // fixture check: there WAS build gear
   });
 
+  // bug 2026-09-13: edits overwritten (D4)
+  it('does NOT resurrect a build item the player deleted in play', () => {
+    // The player sells the torch the build handed them, then opens the builder and saves with no
+    // change at all. "ADD anything with no counterpart in play" used to hand it straight back — the
+    // app undoing a deliberate act of the player's, on a save that changed nothing.
+    const { built, play } = played();
+    const sold = { ...play, inventory: play.inventory!.filter((i) => i.itemId !== 'torch') };
+    const out = rebuild(sold, built, built);
+    expect(rows(out.inventory, 'torch'), 'the builder gave back an item the player had got rid of').toHaveLength(0);
+    expect(out.inventory, 'a save that changes nothing must change nothing').toEqual(sold.inventory);
+  });
+
+  // bug 2026-09-13: edits overwritten (D4)
+  it('…and a build item that merely REUSES a dropped item’s index still arrives', () => {
+    // Build instance ids are the build list's INDEX (`inv-${i}`), so swapping the torch for a shortbow
+    // in the builder hands the shortbow the torch's old `inv-2`. Keying "the previous build already
+    // handed this over" on the id alone read that as "nothing new here" and the shortbow never reached
+    // the sheet — the exact disagreement between builder and sheet this whole merge exists to end.
+    const { built, play } = played();
+    const next = build1(base([{ itemId: 'longsword', quantity: 1 }, { itemId: 'rations', quantity: 2 }, { itemId: 'shortbow', quantity: 1 }]));
+    expect(next.inventory.find((i) => i.itemId === 'shortbow')!.instanceId, 'fixture: it must reuse the torch’s index').toBe('inv-2');
+    const out = rebuild(play, built, next);
+    expect(rows(out.inventory, 'shortbow'), 'the builder’s new item was mistaken for one already handed over').toHaveLength(1);
+  });
+
+  // bug 2026-09-13: edits overwritten (D4)
+  it('…while gear the builder NEWLY adds still arrives', () => {
+    // The same save, with a real addition: the guard must not turn into "the builder can never add".
+    const { built, play } = played();
+    const sold = { ...play, inventory: play.inventory!.filter((i) => i.itemId !== 'torch') };
+    const next = build1(base([...STARTING, { itemId: 'shortbow', quantity: 1 }]));
+    const out = rebuild(sold, built, next);
+    expect(rows(out.inventory, 'shortbow'), 'a newly built item is not the deleted one').toHaveLength(1);
+    expect(rows(out.inventory, 'torch'), 'still sold').toHaveLength(0);
+  });
+
   it('a character that never managed inventory in play still seeds from the build', () => {
     const { built } = played();
     const next = build1(base([...STARTING, { itemId: 'shortbow', quantity: 1 }]));
