@@ -91,8 +91,10 @@ describe('per-companion HP tracking (vehicles, siege weapons, creatures)', () =>
     const [wolfId, carriageId] = p.companions!.map((c) => c.id);
     p = applyCompanionDamage(p, wolfId, 10, 30);
     p = applyCompanionDamage(p, carriageId, 10, 40);
-    p = rest(p, { level: 1, conMod: 1 });
-    expect(p.companionHp![wolfId].damage).toBe(0); // creature recovers overnight
+    // A creature recovers max(1, its Con) × level like a character, NOT to full — this used to
+    // expect a free full heal. The caller passes the companion's own Constitution × level.
+    p = rest(p, { level: 1, conMod: 1, companionHeal: { [wolfId]: 3 } });
+    expect(p.companionHp![wolfId].damage).toBe(7); // 10 − 3
     expect(p.companionHp![carriageId].damage).toBe(10); // vehicle needs Repair
   });
 });

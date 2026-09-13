@@ -5650,6 +5650,16 @@ export interface InventoryItem {
   charges?: { current: number; max: number; resetsOnRest?: boolean };
   /** Per-instance live values for the item's `counters`, keyed by counter id. */
   counters?: Record<string, { current: number; max: number; resetsOnRest?: boolean }>;
+  /**
+   * A STAFF's charge maximum as it was prepared this morning — the wielder's highest spell-slot rank,
+   * plus the rank of any slot they expended into it at daily preparations.
+   *
+   * Its own field rather than the counter's `max` because `setItemCounter` replaces that value object
+   * wholesale (every charge pip click rewrites it), and because saves written before the staff rule
+   * was fixed hold a stale `max` of the ITEM'S LEVEL — an absent `staffCharges` is what lets those
+   * fall back to the character's real rank instead of resurrecting the bug.
+   */
+  staffCharges?: number;
   /** For a generic scroll/wand (item.spellSlot): the spell id the player chose to store in it. */
   heldSpell?: string;
   /** Monster Parts (variant rule): when present, this item is refined/imbued with monster parts and

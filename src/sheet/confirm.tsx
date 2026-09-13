@@ -83,7 +83,8 @@ export function confirmDialog(opts: ConfirmOptions): Promise<boolean> {
 export interface ChooseButton {
   /** The value resolved when this button is clicked. */
   value: string;
-  label: string;
+  /** ReactNode, not string: a choice may carry the same icon its old inline control had. */
+  label: ReactNode;
   /** Render as the primary (filled) button; first such by default. */
   primary?: boolean;
   /** Render as destructive (red). */

@@ -516,16 +516,128 @@ export function archetypeOf(rec, slugify, prev) {
 }
 
 /*
- * An item's use limit, from the printed `**Frequency**` stat line.
+ * THE PRINTED FREQUENCY — "Frequency once per day" on an activation block.
  *
- * HH's item shape is `{ max, per }` with `per` drawn from a CLOSED set (types.ts:1971 + :1183), and the
- * item type has no `every` field — so "once per 10 minutes" has to collapse to `minute`, which is what
- * the app already ships for those 35 records. Anything whose unit falls outside the set is not emitted
- * rather than guessed at.
+ * One grammar, three readers, so they cannot drift: `frequencyOf` below (the item's `{max, per}`
+ * field), the counter pass at the end of scripts/import-core-v2.mjs, and
+ * scripts/item-frequency-check.mjs, which fails the build when a printed value has nothing to track it.
+ *
+ * `per` is a CLOSED set (types.ts ItemCounter). The period MULTIPLIER is kept here, unlike in the item's
+ * `frequency` field, which has no `every` and must still collapse "once per 10 minutes" to `minute` —
+ * the counter is the richer record and carries `{ per: 'minute', every: 10 }`. A unit outside the set
+ * ("once per year", "once every 1d4 rounds") yields nothing rather than a guess; printedFrequencies()
+ * hands those back as `unread` so a caller can report the wording instead of inventing a period.
  */
-const FREQ_WORD = { once: 1, twice: 2, 'three times': 3, 'four times': 4, 'five times': 5, 'six times': 6, 'ten times': 10 };
+const FREQ_WORD = { once: 1, one: 1, twice: 2, two: 2, thrice: 3, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, twelve: 12 };
 const FREQ_PER = new Set(['round', 'turn', 'minute', 'hour', 'day', 'week', 'month']);
+/* The label in BOTH shapes the text arrives in: `**Frequency**` in the mirror's markdown, a bare
+ * `Frequency` in the plain description core-descriptions.json ships. The value runs to the next stat
+ * label (`**Trigger**`, `; Effect`) or the end of the line. */
+const FREQ_LABEL = /\bfrequency\b\**\s*:?\s*([^\n*;]{1,90})/gi;
+const FREQ_VALUE = /^(once|twice|thrice|one|two|three|four|five|six|seven|eight|nine|ten|twelve|\d+)(?:\s+times?)?\s+(?:per|every|each|a)\s+(?:(\d+)\s+)?([a-z]+)/;
+/* A value that STARTS like a count is a frequency this parser could not read, and is worth reporting.
+ * Anything else following the word "frequency" is prose ("at a frequency that otherworldly beings find
+ * unpleasant", "the Frequency, if any, appears in its entry below") and is not a stat line at all. */
+const FREQ_COUNTISH = /^(once|twice|thrice|one|two|three|four|five|six|seven|eight|nine|ten|twelve|\d+|(?:a|any) number of)\b/;
 
+/** One printed value ("once per 10 minutes") as `{ max, per, every? }`; null outside the closed set. */
+export function parseFrequency(raw) {
+  const t = String(raw ?? '').trim().toLowerCase().replace(/\s+/g, ' ')
+    .replace(/\.\s.*$/, '')   // the stat line runs on into the next sentence
+    .replace(/\.$/, '');
+  const m = FREQ_VALUE.exec(t);
+  if (!m) return null;
+  const max = /^\d+$/.test(m[1]) ? Number(m[1]) : FREQ_WORD[m[1]];
+  // AoN qualifies the unit where the limit is per-something-else — "day for each spell", "day per
+  // bead" — none of which the closed set can hold, so only the unit word itself is read.
+  const per = m[3].replace(/s$/, '');
+  const every = Number(m[2]) || 1;
+  return max && FREQ_PER.has(per) ? { max, per, ...(every > 1 ? { every } : {}) } : null;
+}
+
+/** Daily preparations refill this period (day and shorter); a week/month limit outlives a rest. */
+export const frequencyResets = (per) => !['week', 'month'].includes(per);
+
+/**
+ * Every DISTINCT printed frequency in `text`, plus the wordings that start like one and do not parse.
+ *
+ * DISTINCT, because an item page prints its Greater/Major siblings' activation blocks too (and a family
+ * page prints all five lenses): a repeated "Frequency once per day" is nearly always one activation
+ * restated, not a second pool. Distinct values — "once per round" alongside "once per day" — are two
+ * activations and stay two.
+ */
+export function printedFrequencies(text) {
+  const read = new Map();
+  const unread = [];
+  for (const m of String(text ?? '').matchAll(FREQ_LABEL)) {
+    const raw = m[1].trim().toLowerCase().replace(/\s+/g, ' ');
+    const f = parseFrequency(raw);
+    if (f) read.set(`${f.max}/${f.per}/${f.every ?? 1}`, f);
+    else if (FREQ_COUNTISH.test(raw)) unread.push(raw);
+  }
+  return { read: [...read.values()], unread };
+}
+
+/** A printed value as a counter in itemUses.ts `counterDefs` shape. `taken` = how many freq* ids are used. */
+export const frequencyCounter = (f, taken = 0) => ({
+  id: taken ? `freq${taken + 1}` : 'freq',
+  label: `per ${(f.every ?? 1) > 1 ? `${f.every} ${f.per}s` : f.per}`,
+  max: f.max,
+  per: f.per,
+  ...(f.every ? { every: f.every } : {}),
+  resetsOnRest: frequencyResets(f.per),
+});
+
+/** What a record actually tracks, as counterDefs sees it: its counters, else the legacy frequency/uses. */
+export function trackedCounters(rec) {
+  if (rec?.counters?.length) return rec.counters;
+  if (rec?.frequency) return [frequencyCounter(rec.frequency)];
+  const uses = rec?.uses;
+  if (rec?.itemType === 'consumable' && uses && uses.max > 1) return [{ id: 'uses', label: 'Uses', max: uses.max, resetsOnRest: false }];
+  return [];
+}
+
+/**
+ * Whether anything in `have` already tracks the printed value `f`.
+ *
+ * A counter with NO period is a hand-authored pool — holy prayer beads' `bless`, bloodstride boots'
+ * `blood-walk`, a staff's `pool`. It states no period, so it cannot contradict one, and it satisfies a
+ * printed limit whenever it refills on the same schedule. Adding a second counter beside it would show
+ * the player two pips for one activation.
+ */
+export const tracksFrequency = (have, f) =>
+  (have ?? []).some((c) =>
+    (c.per === f.per && c.max === f.max && (c.every ?? 1) === (f.every ?? 1)) ||
+    (c.per == null && c.resetsOnRest === frequencyResets(f.per)));
+
+/**
+ * Give every item that prints a Frequency a counter for daily preparations to refill, in place.
+ *
+ * ADD-ONLY and idempotent — an existing counter is never rewritten or dropped, and a limit already
+ * tracked is skipped — which is what makes it safe to run TWICE. It has to be: a `counters` row in
+ * scripts/data/effect-backfill.json is an ABSOLUTE assignment, and import-siege-and-gaps.mjs re-applies
+ * every row over the whole database after the importer has finished, so the second call restores what
+ * that re-apply discarded. The long WHY is at the call site in scripts/import-core-v2.mjs.
+ */
+export function fillFrequencyCounters(items) {
+  let filled = 0;
+  let gained = 0;
+  for (const rec of Object.values(items ?? {})) {
+    const { read } = printedFrequencies(rec?.description);
+    if (!read.length) continue;
+    const counters = [...trackedCounters(rec)];
+    const add = read.filter((f) => !tracksFrequency(counters, f));
+    if (!add.length) continue;
+    let taken = counters.filter((c) => /^freq\d*$/.test(String(c.id ?? ''))).length;
+    for (const f of add) counters.push(frequencyCounter(f, taken++));
+    rec.counters = counters;
+    filled++;
+    gained += add.length;
+  }
+  return { filled, gained };
+}
+
+/** An item's use limit as its `{ max, per }` field, from the printed `**Frequency**` stat line. */
 export function frequencyOf(rec) {
   let line = null;
   for (const scope of variantScopes(rec)) {
@@ -533,24 +645,8 @@ export function frequencyOf(rec) {
     if (line) break;
   }
   if (!line) return null;
-
-  const t = String(line[1]).trim().toLowerCase()
-    .replace(/[.;].*$/, '')          // the stat line runs on into the next label
-    .replace(/,?\s*plus\s+overcharge$/, '')
-    .trim();
-
-  const m = /^(once|twice|three times|four times|five times|six times|ten times|(\d+) times)\s+(?:per|every|a)\s+(.+)$/.exec(t);
-  if (!m) return null;
-
-  const max = m[2] ? Number(m[2]) : FREQ_WORD[m[1]];
-  if (!max) return null;
-
-  /*
-   * Reduce the period to its unit. AoN writes "10 minutes", and qualifies the unit where the limit is
-   * per-something-else — "day for each spell", "day per bead" — none of which HH's closed set can hold.
-   */
-  const unit = String(m[3]).trim().replace(/^\d+\s+/, '').split(/\s+(?:for|per)\s+/)[0].trim().replace(/s$/, '');
-  return FREQ_PER.has(unit) ? { max, per: unit } : null;
+  const f = parseFrequency(String(line[1]).replace(/,?\s*plus\s+overcharge/, ''));
+  return f ? { max: f.max, per: f.per } : null;
 }
 
 /*

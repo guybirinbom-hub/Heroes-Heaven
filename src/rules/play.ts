@@ -12,7 +12,7 @@
  * changes — a Con boost, a level-up — the character stays as hurt as they were,
  * rather than the current value silently desyncing from the new max.
  */
-import type { AbilityId, ActiveCondition, Character, CharacterAppearance, CharacterDetails, CharacterImage, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, InnateSpellGrant, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
+import type { AbilityId, ActiveCondition, Character, CharacterAppearance, CharacterDetails, CharacterImage, Coins, CompanionConfig, ContentDatabase, InventoryItem, Item, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, InnateSpellGrant, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { deriveMaxHp, deriveBulk, dailyChoiceGrants, ownedFeatureIds } from './derive';
 import { FORMULA_BOOK_ITEM_ID, formulaBooks, grantsFormulaBook, withFormula } from './formulaBook';
@@ -142,12 +142,13 @@ export interface PlayState {
   /** Spells added by the Learn a Spell activity: entryId → rank → spell ids. Permanent knowledge
    *  rather than a daily choice, so this survives both a night's rest and a rebuild. */
   learnedSpells?: Record<string, Record<number, string[]>>;
-  /** Commander tactics prepared today (subset of the folio, up to preparedMax); reset on rest. */
+  /** Commander tactics prepared today (subset of the folio, up to preparedMax). Re-chosen each morning
+   *  but NOT cleared by rest() — like `dailyChoices`, the last set is the answer you keep. */
   preparedTactics?: string[];
   /**
    * Runesmith runes currently etched (subset of the repertoire, up to etchedMax).
    *
-   * ⚠ NOT reset on rest, unlike its sibling `preparedTactics`. The printed rule is explicit that these
+   * ⚠ NOT reset on rest. (Nor is `preparedTactics` — this comment used to say it was.) The printed rule is explicit that these
    * outlast a night: *"Your etched runes remain indefinitely until they are expended or removed or
    * until you etch more runes than your maximum, which causes your oldest rune to fade."* Re-etching is
    * merely *allowed* each morning — *"You can etch any number of runes up to your maximum during your
@@ -2162,33 +2163,79 @@ export function playForRebuild(play: PlayState, built?: InventoryItem[], prevBui
   };
 }
 
-/** Apply a full night's rest to a condition list. A night's rest is the day's big recovery, so it
- *  removes Fatigued, Wounded, AND Dying (you survive/recover overnight — without this, Dying and
- *  Wounded picked up from dropping to 0 HP would linger forever, since a night's HP recovery often
- *  won't reach full). Doomed and Drained step down by 1 (removed at 0). Other conditions persist
- *  (their durations aren't tracked, so the player clears those manually). */
-function restConditions(list: ActiveCondition[], steps = 1): ActiveCondition[] {
+/**
+ * Apply a full night's rest to a condition list. Fatigued and Dying end with the night; Doomed and
+ * Drained step down by 1 (removed at 0); other conditions persist (their durations aren't tracked,
+ * so the player clears those manually).
+ *
+ * Wounded is the one that turns on the BODY rather than the clock: *"You lose the wounded condition
+ * if someone successfully restores Hit Points to you with Treat Wounds, or if you are restored to
+ * full Hit Points and rest for 10 minutes"* (Player Core p. 447). This used to drop it
+ * unconditionally, which handed a still-bleeding character a clean slate every morning. It now
+ * clears only when the night left the creature at FULL Hit Points — `fullHp`, measured on the damage
+ * AFTER this rest, which is why the caller computes that first.
+ *
+ * Losing Dying is not free either: *"When you lose the dying condition, you become wounded 1 if you
+ * didn't already have the wounded condition. If you already had that condition, increase its value
+ * by 1."* So the night's removal of Dying feeds straight into the rule above.
+ *
+ * `armorFatigue` is the other direction: *"Sleeping in armor results in poor rest that leaves you
+ * fatigued"* (Player Core p. 439), so the night ADDS Fatigued instead of removing it.
+ */
+function restConditions(list: ActiveCondition[], steps: number | undefined, fullHp: boolean, armorFatigue = false): ActiveCondition[] {
+  const wounded = (list.find((c) => c.id === 'wounded')?.value ?? 0) + (list.some((c) => c.id === 'dying') ? 1 : 0);
   const out: ActiveCondition[] = [];
   for (const c of list) {
-    if (c.id === 'fatigued' || c.id === 'wounded' || c.id === 'dying') continue;
+    if (c.id === 'fatigued' || c.id === 'dying') continue;
+    if (c.id === 'wounded') {
+      if (!fullHp) out.push({ ...c, value: wounded });
+      continue;
+    }
     if (c.id === 'doomed' || c.id === 'drained') {
       // `steps` is 1 by RAW; Bolstered Recovery doubles "the amount by which condition values are
       // reduced from a full night's rest", which was hardcoded here.
-      const v = (c.value ?? 1) - Math.max(1, steps);
+      const v = (c.value ?? 1) - Math.max(1, steps ?? 1);
       if (v > 0) out.push({ ...c, value: v });
       continue;
     }
     out.push(c);
   }
+  // Dying on a creature that carried no Wounded row yet still leaves one behind.
+  if (!fullHp && wounded > 0 && !list.some((c) => c.id === 'wounded')) out.push({ id: 'wounded', value: wounded });
+  if (armorFatigue) out.push({ id: 'fatigued' });
   return out;
+}
+
+/**
+ * Did the character sleep in armour? *"Sleeping in armor results in poor rest that leaves you
+ * fatigued"* (Player Core p. 439).
+ *
+ * Two printed exceptions, both read off the item rather than guessed: the `comfort` trait (*"you can
+ * sleep in this armor without becoming fatigued"*) and the `unarmored` category — explorer's
+ * clothing, robes and swarmsuits are clothes, not armour. (Explorer's clothing carries both.)
+ * Without `items` there is nothing to read, so nothing is claimed.
+ *
+ * A CATEGORY is required, not merely a non-`unarmored` one. 16 shipped armour records are Archives
+ * CATEGORY PAGES rather than suits — "Unarmored" itself, "Magic Armor", and the 14 precious-material
+ * pages — with no category, no price, no bulk and no AC bonus. They are offered in Add Items like any
+ * other record, so without this a character wearing the thing literally named Unarmored woke fatigued.
+ */
+function sleptInArmor(inventory: InventoryItem[] | undefined, items: Record<string, Item> | undefined): boolean {
+  if (!items) return false;
+  return (inventory ?? []).some((inv) => {
+    if (!inv.worn) return false;
+    const it = items[inv.itemId];
+    return it?.itemType === 'armor' && !!it.category && it.category !== 'unarmored' && !(it.traits ?? []).includes('comfort');
+  });
 }
 
 /**
  * A full night's rest + daily preparations, per PF2e — NOT a full heal. You regain Hit
  * Points equal to your level × your Constitution modifier (minimum 1); temp HP clears;
- * spell slots, the focus pool, and daily-use class resources refresh; Fatigued, Wounded, and
- * Dying are removed, and Doomed and Drained step down by 1. Hero points are session-based and
- * untouched. XP carries over.
+ * spell slots, the focus pool, and daily-use class resources refresh; Fatigued is removed (unless
+ * you slept in armour, which ADDS it), Dying ends and leaves Wounded behind, Wounded itself clears
+ * only at full Hit Points, and Doomed and Drained step down by 1. Hero points and mythic points are
+ * session resources and are untouched. XP carries over.
  */
 export function rest(
   play: PlayState,
@@ -2200,23 +2247,51 @@ export function rest(
     /** Character.restRecovery — Fast Recovery doubles the HP, Bolstered Recovery the condition steps
      *  as well. Both were hardcoded to 1 here, so neither feat changed a night's sleep. */
     restRecovery?: { hpMultiplier: number; conditionSteps: number };
+    /** content.items — the WORN armour's category and traits decide whether the night leaves the
+     *  character Fatigued. Without it no armour can be read, so no fatigue is claimed. */
+    items?: Record<string, Item>;
+    /** Character.drainedReduction (Svetocher) — Drained counts *"as though the condition value were
+     *  1 lower"* for the HP reduction, so a step-down there hands back that much less max HP, and the
+     *  damage below must grow by that much less too. */
+    drainedReduction?: number;
+    /** Hit Points each creature companion gets back tonight — max(1, ITS Con) × the character's
+     *  level — keyed by companion id. The caller derives it because only the companion's stat block
+     *  knows its Constitution; a companion with no entry falls back to the character's own recovery. */
+    companionHeal?: Record<string, number>;
   },
 ): PlayState {
   const hpMult = Math.max(1, opts.restRecovery?.hpMultiplier ?? 1);
   const recovered = Math.max(0, opts.level) * Math.max(1, opts.conMod) * hpMult;
-  const damage = Math.max(0, play.damage - recovered);
-  const companionConditions = play.companionConditions
-    ? Object.fromEntries(Object.entries(play.companionConditions).map(([k, v]) => [k, restConditions(v)]))
-    : play.companionConditions;
-  // Creature companions fully recover overnight; vehicles & siege weapons need Repair, not rest.
+  // Drained steps down tonight, and *"This increases your maximum Hit Points, but you don't
+  // immediately recover the lost Hit Points"* (Player Core p. 443). Drained was modelled as a pure
+  // max-HP cut (drainedHpLoss = effective value × level), so stepping it down quietly handed those
+  // Hit Points back as healing. Growing `damage` by exactly the max HP the step returns is what
+  // leaves CURRENT Hit Points where they were — the night's own Con × level heal applies on top.
+  const drained = (play.conditions ?? []).find((c) => c.id === 'drained');
+  const drainedBefore = drained ? drained.value ?? 1 : 0;
+  const drainedAfter = Math.max(0, drainedBefore - Math.max(1, opts.restRecovery?.conditionSteps ?? 1));
+  const suffered = (v: number) => Math.max(0, v - (opts.drainedReduction ?? 0));
+  const damage = Math.max(0, play.damage - recovered) + (suffered(drainedBefore) - suffered(drainedAfter)) * Math.max(1, opts.level);
+  // Creature companions recover like a character — max(1, their Con) × level, NOT a full heal, which
+  // is what this used to grant. Vehicles & siege weapons need Repair, not rest.
   const companionHp = play.companionHp
     ? Object.fromEntries(
         Object.entries(play.companionHp).map(([id, hp]) => {
           const kind = (play.companions ?? []).find((c) => c.id === id)?.kind;
-          return [id, kind === 'vehicle' || kind === 'siege' ? hp : { damage: 0, temp: 0 }];
+          if (kind === 'vehicle' || kind === 'siege') return [id, hp];
+          return [id, { damage: Math.max(0, hp.damage - (opts.companionHeal?.[id] ?? recovered)), temp: 0 }];
         }),
       )
     : play.companionHp;
+  // A companion's Wounded turns on ITS post-rest Hit Points, the same rule the character gets.
+  const companionConditions = play.companionConditions
+    ? Object.fromEntries(
+        Object.entries(play.companionConditions).map(([k, v]) => [
+          k,
+          restConditions(v, opts.restRecovery?.conditionSteps, (companionHp?.[k]?.damage ?? 0) === 0),
+        ]),
+      )
+    : play.companionConditions;
   // Refill tracked item uses that reset on daily preparations (wands, staves, per-day items) —
   // both the legacy single `charges` and each `counters` entry flagged resetsOnRest.
   const inventory = play.inventory
@@ -2241,23 +2316,27 @@ export function rest(
     ...play,
     damage,
     tempHp: 0,
+    // A temporary Speed comes from a spell or an elixir and does not outlast the night; `tempHpFrom`
+    // only names where temp HP came from, so it is stale the moment tempHp is 0.
+    tempSpeed: undefined,
+    tempHpFrom: undefined,
     focusUsed: 0,
-    // Mythic points are a SESSION resource, not a daily one — the comment here used to say the
-    // opposite. "Mythic Points last for only a single session… Each mythic character starts the
-    // session with 3" (War of Immortals p.76), and the printed ways to regain them are slaying a
-    // mythic foe, completing a mythic deed and following your Calling's edicts — never resting.
-    //
-    // Refilled here anyway, because Rest is the only session boundary this app has and a player who
-    // rests has almost certainly ended a session. The pips stay clickable for the mid-session
-    // regains, and the rail states the real rule so the app is not teaching a wrong one.
-    mythicPoints: MAX_MYTHIC_POINTS,
+    // Mythic points are a SESSION resource, not a daily one: "Mythic Points last for only a single
+    // session… Each mythic character starts the session with 3" (War of Immortals p.76), and the
+    // printed ways to regain them are slaying a mythic foe, completing a mythic deed and following
+    // your Calling's edicts — never resting. So rest does NOT refill them; the pips stay clickable
+    // for both the mid-session regains and setting the pool at the start of a session.
     expendedSlots: {},
     slotsUsed: {},
     innateUsed: {},
     // Per-day feat uses refill with everything else. dailyChoices deliberately does NOT reset here —
     // it is the answer you keep, which is what the "reuse my last pick" setting relies on.
     featUses: {},
-    conditions: restConditions(play.conditions ?? [], opts.restRecovery?.conditionSteps),
+    // Yesterday's Advanced Alchemy items are gone: *"These items have the infused trait and remain
+    // potent for 24 hours or until your next daily preparations, whichever comes first."* This IS
+    // that moment, so the alchemist makes today's batch after resting.
+    alchemyPrep: {},
+    conditions: restConditions(play.conditions ?? [], opts.restRecovery?.conditionSteps, damage === 0, sleptInArmor(play.inventory, opts.items)),
     companionConditions,
     companionHp,
     resources: opts.initialResources ?? play.resources,

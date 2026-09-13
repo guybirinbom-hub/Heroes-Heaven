@@ -17,10 +17,13 @@ import type { DescNode } from './descref';
  * The picker offers every alchemical item you're eligible for — you pick the ones you actually know —
  * plus anything a formula book grants you "as alchemical consumables" (ruling Q19).
  */
+/** Which items Advanced Alchemy can make is capped by the ADVANCED ALCHEMY LEVEL, not the character
+ *  level. They are the same for an alchemist and diverge for an archetype one: Master Alchemy sets it
+ *  to 7 at 12th. */
+export const alchemyLevel = (character: Character) => character.advancedAlchemy?.level ?? character.level;
+
 export function AlchemyPanel({ character, content, onPlay }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater }) {
   const [picker, setPicker] = useState<null | 'advanced' | 'quick'>(null);
-  const [q, setQ] = useState('');
-  const [descNode, setDescNode] = useState<DescNode | null>(null);
 
   const intMod = abilityMod(character.abilities.int);
   // Advanced Alchemy: 4 + Int items during daily prep, unless a feat raised it (Efficient Alchemy →
@@ -49,31 +52,7 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
   const prep = character.alchemyPrep ?? {};
   const preparedCount = Object.values(prep).reduce((a, b) => a + b, 0);
 
-  // Which items Advanced Alchemy can make is capped by the ADVANCED ALCHEMY LEVEL, not the character
-  // level. They are the same for an alchemist and diverge for an archetype one: Master Alchemy sets
-  // it to 7 at 12th, so this list was showing an archetype alchemist items they cannot make.
-  const alchLevel = character.advancedAlchemy?.level ?? character.level;
-  const eligible = useMemo(() => {
-    const out = Object.values(content.items).filter((it) => (it.traits ?? []).includes('alchemical') && (it.level ?? 0) <= alchLevel);
-    // Ruling Q19: a formula the book holds "as alchemical consumables" is makeable even though the
-    // item is not itself alchemical — Improbable Elixirs' potions are the case. Pool membership only:
-    // the formula never becomes an inventory copy, and losing the book empties this again.
-    const have = new Set(out.map((it) => it.id));
-    for (const id of craftableFormulas(character, content)) {
-      const it = content.items[id];
-      if (it && !have.has(id) && (it.level ?? 0) <= alchLevel) out.push(it);
-    }
-    return out;
-  }, [content, character, alchLevel]);
-  const shown = useMemo(() => {
-    // bug 2026-09-13: search-rank — ranked BEFORE the 80-row cap, so the item the player typed can
-    // never be the one the cap cuts off (alphabetical order alone decided that).
-    return rankBySearch(
-      eligible.filter((it) => searchMatches(q, it.name)).sort((a, b) => a.name.localeCompare(b.name)),
-      q,
-      (it) => it.name,
-    ).slice(0, 80);
-  }, [eligible, q]);
+  const alchLevel = alchemyLevel(character);
 
   if (!onPlay) return null; // read-only viewer — no controls
 
@@ -111,8 +90,9 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
         </span>
       </div>
       <div className="alchemy-actions">
+        {/* The picker mounts fresh each time it opens, so its search box starts empty by itself. */}
         {hasAdvanced && (
-          <button type="button" className="btn" onClick={() => { setPicker('advanced'); setQ(''); }}>
+          <button type="button" className="btn" onClick={() => setPicker('advanced')}>
             <i className="ti ti-flask" aria-hidden="true" /> Prepare item
           </button>
         )}
@@ -121,7 +101,7 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
           className="btn"
           disabled={vialsCur < 1}
           title={vialsCur < 1 ? 'No Versatile Vials left' : 'Spend a Versatile Vial to make an item now'}
-          onClick={() => { setPicker('quick'); setQ(''); }}
+          onClick={() => setPicker('quick')}
         >
           <i className="ti ti-bolt" aria-hidden="true" /> Quick Alchemy (−1 vial)
         </button>
@@ -142,52 +122,121 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
         </div>
       )}
       {picker && (
-        <div className="picker-overlay" onClick={() => setPicker(null)}>
-          <div className="picker alchemy-picker" onClick={(e) => e.stopPropagation()}>
-            <div className="picker-head">
-              <span className="info-title">{picker === 'quick' ? 'Quick Alchemy — spend a vial' : 'Prepare an infused item'}</span>
-              <button type="button" className="picker-close" onClick={() => setPicker(null)} aria-label="Close">
-                <i className="ti ti-x" aria-hidden="true" />
-              </button>
-            </div>
-            {picker === 'advanced' && preparedCount >= budget && (
-              <p className="alchemy-cap-note">You've prepared your daily maximum ({budget}). Remove one to prepare another.</p>
-            )}
-            <input className="hb-input" autoFocus placeholder="Search alchemical items…" value={q} onChange={(e) => setQ(e.target.value)} />
-            <div className="alchemy-pick-list">
-              {/* Both routes bail in silence — `pick` returns the state untouched past the daily
-                  budget, and `quickAlchemy` does the same with no vial left. The picker stays open
-                  after each make, so the vial case is reached just by pressing Make one time too
-                  many, and every row still read as live. Q27: it has to look spent. */}
-              {shown.map((it) => {
-                const node = descNodeOf({ name: it.name, description: it.description, descRefs: it.descRefs }, 'items');
-                const spent = picker === 'quick' ? vialsCur < 1 : preparedCount >= budget;
-                return (
-                  <PickerRow
-                    key={it.id}
-                    name={it.name}
-                    lead={<span className="alchemy-pick-lvl">Lvl {it.level ?? 0}</span>}
-                    chosen={(prep[it.id] ?? 0) > 0}
-                    onOpenDesc={node ? () => setDescNode(node) : undefined}
-                    selectLabel={picker === 'quick' ? 'Make' : 'Prepare'}
-                    selectDisabled={spent}
-                    disabledReason={
-                      spent
-                        ? picker === 'quick'
-                          ? 'No Versatile Vial left — Quick Alchemy costs one.'
-                          : `You have prepared your daily maximum (${budget}). Remove one first.`
-                        : undefined
-                    }
-                    onSelect={() => pick(it.id)}
-                  />
-                );
-              })}
-              {shown.length === 0 && <div className="acts-empty">No alchemical items match.</div>}
-            </div>
+        <AlchemyPicker
+          character={character}
+          content={content}
+          mode={picker}
+          prep={prep}
+          budget={budget}
+          spent={picker === 'quick' ? vialsCur < 1 : preparedCount >= budget}
+          onPick={pick}
+          onClose={() => setPicker(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+/**
+ * The item picker itself — the eligible-item list, its search, and the disabled/"spent" rendering.
+ *
+ * Split out of the panel because the Daily preparations dialog needs the SAME list: Advanced Alchemy
+ * is a daily preparation ("during your daily preparations you create infused items"), and the dialog
+ * never mentioned it. Duplicating the eligibility rules there would have given the two surfaces two
+ * different ideas of what an alchemist can make.
+ */
+export function AlchemyPicker({
+  character,
+  content,
+  mode,
+  prep,
+  budget,
+  spent,
+  onPick,
+  onClose,
+}: {
+  character: Character;
+  content: ContentDatabase;
+  mode: 'advanced' | 'quick';
+  /** What is already prepared/drafted, for the ✓ on a row. */
+  prep: Record<string, number>;
+  budget: number;
+  /** Nothing left to spend — the daily maximum is reached, or there is no Versatile Vial. */
+  spent: boolean;
+  onPick: (itemId: string) => void;
+  onClose: () => void;
+}) {
+  const [q, setQ] = useState('');
+  const [descNode, setDescNode] = useState<DescNode | null>(null);
+  const alchLevel = alchemyLevel(character);
+  const eligible = useMemo(() => {
+    const out = Object.values(content.items).filter((it) => (it.traits ?? []).includes('alchemical') && (it.level ?? 0) <= alchLevel);
+    // Ruling Q19: a formula the book holds "as alchemical consumables" is makeable even though the
+    // item is not itself alchemical — Improbable Elixirs' potions are the case. Pool membership only:
+    // the formula never becomes an inventory copy, and losing the book empties this again.
+    const have = new Set(out.map((it) => it.id));
+    for (const id of craftableFormulas(character, content)) {
+      const it = content.items[id];
+      if (it && !have.has(id) && (it.level ?? 0) <= alchLevel) out.push(it);
+    }
+    return out;
+  }, [content, character, alchLevel]);
+  const shown = useMemo(() => {
+    // bug 2026-09-13: search-rank — ranked BEFORE the 80-row cap, so the item the player typed can
+    // never be the one the cap cuts off (alphabetical order alone decided that).
+    return rankBySearch(
+      eligible.filter((it) => searchMatches(q, it.name)).sort((a, b) => a.name.localeCompare(b.name)),
+      q,
+      (it) => it.name,
+    ).slice(0, 80);
+  }, [eligible, q]);
+
+  return (
+    <>
+      <div className="picker-overlay" onClick={onClose}>
+        <div className="picker alchemy-picker" onClick={(e) => e.stopPropagation()}>
+          <div className="picker-head">
+            <span className="info-title">{mode === 'quick' ? 'Quick Alchemy — spend a vial' : 'Prepare an infused item'}</span>
+            <button type="button" className="picker-close" onClick={onClose} aria-label="Close">
+              <i className="ti ti-x" aria-hidden="true" />
+            </button>
+          </div>
+          {mode === 'advanced' && spent && (
+            <p className="alchemy-cap-note">You've prepared your daily maximum ({budget}). Remove one to prepare another.</p>
+          )}
+          <input className="hb-input" autoFocus placeholder="Search alchemical items…" value={q} onChange={(e) => setQ(e.target.value)} />
+          <div className="alchemy-pick-list">
+            {/* Both routes bail in silence — `pick` returns the state untouched past the daily
+                budget, and `quickAlchemy` does the same with no vial left. The picker stays open
+                after each make, so the vial case is reached just by pressing Make one time too
+                many, and every row still read as live. Q27: it has to look spent. */}
+            {shown.map((it) => {
+              const node = descNodeOf({ name: it.name, description: it.description, descRefs: it.descRefs }, 'items');
+              return (
+                <PickerRow
+                  key={it.id}
+                  name={it.name}
+                  lead={<span className="alchemy-pick-lvl">Lvl {it.level ?? 0}</span>}
+                  chosen={(prep[it.id] ?? 0) > 0}
+                  onOpenDesc={node ? () => setDescNode(node) : undefined}
+                  selectLabel={mode === 'quick' ? 'Make' : 'Prepare'}
+                  selectDisabled={spent}
+                  disabledReason={
+                    spent
+                      ? mode === 'quick'
+                        ? 'No Versatile Vial left — Quick Alchemy costs one.'
+                        : `You have prepared your daily maximum (${budget}). Remove one first.`
+                      : undefined
+                  }
+                  onSelect={() => onPick(it.id)}
+                />
+              );
+            })}
+            {shown.length === 0 && <div className="acts-empty">No alchemical items match.</div>}
           </div>
         </div>
-      )}
+      </div>
       {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
-    </div>
+    </>
   );
 }

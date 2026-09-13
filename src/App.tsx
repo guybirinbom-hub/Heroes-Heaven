@@ -35,6 +35,7 @@ import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, t
 import { useUndoableState } from './useUndoableState';
 import { applyPlayState, initialPlay, playForRebuild, reconcileFormulaBook, rest, type PlayState } from './rules/play';
 import { abilityMod } from './rules/derive';
+import { companionConMod } from './rules/companions';
 import { ContentContext } from './sheet/ContentContext';
 import { PopupSizeController } from './sheet/PopupSizeController';
 import { OverlayDismissGuard } from './sheet/OverlayDismissGuard';
@@ -1015,6 +1016,19 @@ export default function App() {
               modeDefs: content?.modes,
               // Fast Recovery / Bolstered Recovery — without this a night's sleep ignores them.
               restRecovery: active.character.restRecovery,
+              // "Sleeping in armor results in poor rest that leaves you fatigued" — rest reads the
+              // worn row's category + traits to tell armour from clothes.
+              items: readyContent.items,
+              // Svetocher reads Drained "as though the condition value were 1 lower", so a step-down
+              // hands back that much less max HP.
+              drainedReduction: active.character.drainedReduction,
+              // A companion recovers on ITS OWN Constitution, which only its stat block knows.
+              companionHeal: Object.fromEntries(
+                (p.companions ?? active.character.companions ?? []).flatMap((c) => {
+                  const con = companionConMod(c, active.character, readyContent);
+                  return con == null ? [] : [[c.id, Math.max(1, con) * active.character.level]];
+                }),
+              ),
             }),
           )
         }

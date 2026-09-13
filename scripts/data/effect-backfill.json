@@ -74330,6 +74330,7 @@
   "category": "items",
   "id": "bravery-baldric",
   "field": "counters",
+  "why": "equipment-2309: 'Frequency once per hour' printed on the Activate beside the 2-charge pool",
   "value": [
    {
     "id": "charges",
@@ -74337,6 +74338,13 @@
     "max": 2,
     "resetsOnRest": false,
     "startsFull": false
+   },
+   {
+    "id": "freq",
+    "label": "per hour",
+    "max": 1,
+    "per": "hour",
+    "resetsOnRest": true
    }
   ]
  },
@@ -74344,6 +74352,7 @@
   "category": "items",
   "id": "bravery-baldric-healthful-greater",
   "field": "counters",
+  "why": "equipment-2309: 'Frequency once per hour' printed on the Activate beside the 2-charge pool",
   "value": [
    {
     "id": "charges",
@@ -74351,6 +74360,13 @@
     "max": 2,
     "resetsOnRest": false,
     "startsFull": false
+   },
+   {
+    "id": "freq",
+    "label": "per hour",
+    "max": 1,
+    "per": "hour",
+    "resetsOnRest": true
    }
   ]
  },

@@ -6,7 +6,7 @@ import { formatItemPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
 import { confirmDialog } from './confirm';
-import { itemCounters } from '../rules/itemUses';
+import { itemCounters, highestSlotRank } from '../rules/itemUses';
 import { traitDesc, traitLabel } from '../rules/glossary';
 import { InfoTerm } from './InfoTerm';
 import { DescBody, type RemasteredAs } from './DescBody';
@@ -192,7 +192,8 @@ export function ItemDetail({
   // needs the Activate control below, or the mode is unreachable.
   const itemMode = Object.values(content.modes ?? {}).find((m) => m.fromItemId === item.id);
   const itemModeOn = !!itemMode && activeModes.some((m) => m.id === itemMode.id);
-  const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv);
+  // A staff's charges come from its wielder's highest spell-slot rank, not from the staff's level.
+  const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv, highestSlotRank(character));
   const id = inv.instanceId;
   /*
    * The "This is my …" marks that make sense ON THIS ITEM. The caller (InventoryTab) decides which

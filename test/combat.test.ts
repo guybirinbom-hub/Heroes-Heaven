@@ -82,11 +82,13 @@ describe('rest() / daily preparations (PF2e)', () => {
     expect(valOf(r, 'drained')).toBeUndefined();
   });
 
-  it('a full night’s rest clears Wounded even if still hurt (you recover overnight)', () => {
+  // Wounded ends *"if you are restored to full Hit Points … and rest for 10 minutes"* (Player Core
+  // p. 447) — the night alone is not enough, which this used to assert it was.
+  it('a full night’s rest clears Wounded only when it reaches full Hit Points', () => {
     const hurt = { ...setCondition(emptyPlay(), 'wounded', 2), damage: 30 };
-    expect(valOf(rest(hurt, opts), 'wounded')).toBeUndefined();
+    expect(valOf(rest(hurt, opts), 'wounded')).toBe(2); // still 20 damage in the morning
     const light = { ...setCondition(emptyPlay(), 'wounded', 1), damage: 5 };
-    expect(valOf(rest(light, opts), 'wounded')).toBeUndefined();
+    expect(valOf(rest(light, opts), 'wounded')).toBeUndefined(); // healed past full
   });
 
   it('a full night’s rest clears Dying (you survive/recover overnight)', () => {

@@ -1235,3 +1235,25 @@ export function deriveEidolon(
 export function eidolonCantripSlots(character: Character, content: ContentDatabase): number {
   return (character.feats ?? []).reduce((n, f) => n + (content.feats[f.featId]?.eidolonCantrips ?? 0), 0);
 }
+
+/**
+ * A companion's own Constitution modifier — what a night's rest heals it on (max(1, Con) × level,
+ * exactly as for a character). `undefined` for vehicles and siege weapons: they are Repaired, not
+ * rested, and `rest()` reads the undefined as "leave this one alone".
+ *
+ * Read off the derived stat block rather than the type's printed array, because maturity, an owner's
+ * companion-modifying feat and a specialization all boost the animal's Constitution. A familiar (and
+ * a follower or pet) has no Constitution of its own — it has a flat 5 Hit Points per level — so it
+ * comes back 0 here and the minimum-1 recovery is what it gets.
+ */
+export function companionConMod(cfg: CompanionConfig, character: Character, content: ContentDatabase): number | undefined {
+  if (cfg.kind === 'vehicle' || cfg.kind === 'siege') return undefined;
+  if (cfg.kind === 'animal') {
+    const type = cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
+    if (!type) return 0;
+    const ownerFeatIds = new Set((character.feats ?? []).map((f) => f.featId));
+    return deriveAnimalCompanion(cfg, type, character.level, content, [], false, [], ownerFeatIds).abilities.con ?? 0;
+  }
+  if (cfg.kind === 'eidolon') return deriveEidolon(cfg, character, content).abilities.con ?? 0;
+  return 0;
+}

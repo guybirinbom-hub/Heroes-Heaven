@@ -84,7 +84,6 @@ export function RosterScreen({
 }) {
   const [filter, setFilter] = useState<Filter>('active');
   const [query, setQuery] = useState('');
-  const [exportFor, setExportFor] = useState<string | null>(null);
   const [result, setResult] = useState<ImportReport | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
@@ -157,13 +156,50 @@ export function RosterScreen({
 
   const doExport = (c: SavedChar, target: 'wg' | 'native') => {
     if (target === 'wg' && !content) return; // WG export resolves against the content database
-    setExportFor(null);
     try {
       const text = target === 'wg' && content ? exportWg(c, content) : exportNative(c);
       downloadText(`${fileSlug(c.character.name)}${target === 'wg' ? '.wg' : '.codex'}.json`, text);
     } catch (e) {
       setError(`Export failed: ${(e as Error).message}`);
     }
+  };
+
+  /* bug 2026-09-13: "the export pop up is cut off." The two choices used to be a popup positioned
+   * inside the card (.rcard-export-menu), and .rcard carries overflow:hidden for its rounded corners —
+   * so the card ate the top choice and the menu's left edge. The app's own dialog mounts its own root
+   * on <body>, where nothing can clip it, and it gives a real two-way choice a real way out: Escape /
+   * click-outside / the X resolve null, which exports nothing. */
+  const askExport = async (c: SavedChar) => {
+    const target = await chooseDialog({
+      title: 'Export',
+      message: "Export to Wanderer's Guide?",
+      buttons: [
+        // Offered only once the content database is here — a WG export is resolved against it, so
+        // before then there is nothing to grey out, there is simply no such export yet.
+        ...(content
+          ? [
+              {
+                value: 'wg',
+                primary: true,
+                label: (
+                  <>
+                    <i className="ti ti-external-link" aria-hidden="true" /> Yes — Wanderer&apos;s Guide
+                  </>
+                ),
+              },
+            ]
+          : []),
+        {
+          value: 'native',
+          label: (
+            <>
+              <i className="ti ti-device-floppy" aria-hidden="true" /> No — Heroes Heaven file (lossless .codex)
+            </>
+          ),
+        },
+      ],
+    });
+    if (target === 'wg' || target === 'native') doExport(c, target);
   };
 
   return (
@@ -278,25 +314,9 @@ export function RosterScreen({
                   </div>
                 </button>
                 <div className="rcard-actions">
-                  <div className="rcard-export">
-                    <button title="Export" onClick={() => setExportFor(exportFor === c.id ? null : c.id)}>
-                      <i className="ti ti-upload" aria-hidden="true" />
-                    </button>
-                    {exportFor === c.id && (
-                      <>
-                        <div className="rcard-export-back" onClick={() => setExportFor(null)} />
-                        <div className="rcard-export-menu" role="menu">
-                          <div className="rxm-q">Export to Wanderer&apos;s Guide?</div>
-                          <button role="menuitem" disabled={!content} onClick={() => doExport(c, 'wg')}>
-                            <i className="ti ti-external-link" aria-hidden="true" /> Yes — Wanderer&apos;s Guide
-                          </button>
-                          <button role="menuitem" onClick={() => doExport(c, 'native')}>
-                            <i className="ti ti-device-floppy" aria-hidden="true" /> No — Heroes Heaven file (lossless .codex)
-                          </button>
-                        </div>
-                      </>
-                    )}
-                  </div>
+                  <button title="Export" onClick={() => void askExport(c)}>
+                    <i className="ti ti-upload" aria-hidden="true" />
+                  </button>
                   <button title="Duplicate" onClick={() => onDuplicate(c.id)}>
                     <i className="ti ti-copy" aria-hidden="true" />
                   </button>

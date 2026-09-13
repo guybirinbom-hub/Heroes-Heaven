@@ -295,6 +295,7 @@ describe('rest', () => {
       slotsUsed: { 'arcane:2': 3 },
       conditions: [{ id: 'doomed', value: 1 }],
       pinned: [],
+      mythicPoints: 1,
     };
     // toMatchObject rather than toEqual: rest() legitimately passes through untouched keys
     // (companionHp, inventory, resources…), so an exact-shape assertion fails whenever a new field is
@@ -304,7 +305,7 @@ describe('rest', () => {
       damage: 2, // 12 − (5 × 2)
       tempHp: 0,
       heroPoints: 0, // session-based, untouched
-      mythicPoints: 3, // daily resource, refilled on rest
+      mythicPoints: 1, // a SESSION resource — a night's rest does not refill it
       xp: 250,
       focusUsed: 0,
       expendedSlots: {},

@@ -18,7 +18,7 @@ import { readFileSync, writeFileSync, readdirSync, copyFileSync, existsSync, mkd
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
-import { aonFacets, packOf } from './lib/aon-facets.mjs';
+import { aonFacets, packOf, fillFrequencyCounters } from './lib/aon-facets.mjs';
 import { buildReprintMap, repointDoc } from './lib/reprint.mjs';
 
 const DATA = 'C:/trying ai 2/hh-data-export/without-images/data';
@@ -1014,6 +1014,49 @@ if (!existsSync(BACKUP)) copyFileSync(OUT, BACKUP); // preserve the pristine ref
     if (n) { rec.packOf = n; stamped++; }
   }
   console.log(`packOf: ${stamped} item record(s) carry a pack count (${packByName.size} pack name(s) in the export)`);
+}
+
+/*
+ * PER-DAY ACTIVATIONS — a printed Frequency must leave something for daily preparations to refill.
+ *
+ * Rest refills any counter flagged `resetsOnRest` (src/rules/itemUses.ts), and a counter exists only
+ * where the record carries `counters` or a legacy `frequency`. 146 item records print a Frequency line
+ * on an activation block and carry NEITHER, so "abilities that can be used only a certain number of
+ * times per day, including magic item uses, are reset" had nothing to act on for any of them.
+ *
+ * Why they were missed, in order of size:
+ *   • a NEW-ONLY record is built by deriveFreshItem() from the export's FLAT fields (level, price,
+ *     bulk, traits) and nothing there reads the activation block — the whole of Impossible Magic
+ *     arrived that way;
+ *   • a KEPT ORPHAN is never overlaid at all, so no facet ever reaches it (the campsite meals);
+ *   • frequencyOf() fills the single `frequency` FIELD only, from the record's own variant scope, so a
+ *     second activation with a different limit had nowhere to go even when the overlay did run.
+ *
+ * Applied here, at the end, for the same reason the wand and packOf passes above are — it is the only
+ * point all three paths have met — and AFTER the effect backfill, so a curated row is what it reads.
+ *
+ * The source is the record's OWN description, which is the same text core-descriptions.json ships and
+ * scripts/item-frequency-check.mjs reads: the guard and the importer cannot disagree about what a
+ * record prints.
+ *
+ * ADD-ONLY. An existing counter is never rewritten and never dropped: scripts/data/effect-backfill.json
+ * carries 640 curated frequency/counter rows, applied just above, and a "correction" here would quietly
+ * undo one. Four records print a limit that disagrees with their curated row; both are kept and the
+ * guard reports the pair rather than picking a winner.
+ *
+ * Ceiling: two activations printing the SAME limit collapse to one counter (printedFrequencies is
+ * distinct-by-value) — a page prints its Greater/Major siblings' blocks too, so a repeated "once per
+ * day" is far more often one activation restated than two pools. Distinct limits stay separate.
+ *
+ * ⚠ THIS IS NOT THE LAST WORD, and the pass runs a second time for it. import-siege-and-gaps.mjs, the
+ * very next step of `npm run data`, re-applies every effect-backfill.json row over the whole database,
+ * and a `counters` row there is an ABSOLUTE assignment: it restored bravery-baldric's curated 2-charge
+ * pool and discarded the per-hour counter added here, so the guard went red on a chain that had just
+ * run green in isolation. The second call is at the end of that script, after its re-apply.
+ */
+{
+  const { filled, gained } = fillFrequencyCounters(db.items);
+  console.log(`item uses: ${filled} item record(s) gained ${gained} counter(s) from a printed Frequency line (rest had nothing to refill on them)`);
 }
 
 writeFileSync(OUT, JSON.stringify(db));

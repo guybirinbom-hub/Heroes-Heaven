@@ -25,7 +25,7 @@ import {
 } from '../rules/play';
 import { parsePrice } from '../rules/wealth';
 import type { CompanionPick } from './AddItemsModal';
-import { itemCounters } from '../rules/itemUses';
+import { itemCounters, highestSlotRank } from '../rules/itemUses';
 import { formatItemPrice, grp } from '../rules/wealth';
 import { ItemDetail } from './ItemDetail';
 import { chooseDialog, confirmDialog } from './confirm';
@@ -137,6 +137,7 @@ function ItemCard({
   investedCount = 0,
   investedLimit = INVESTED_LIMIT,
   rationsDayTracking = false,
+  staffCharges,
   isMobile = false,
   onDragStartItem,
   onDragEndItem,
@@ -168,6 +169,9 @@ function ItemCard({
   investedLimit?: number;
   /** "Individual day tracking of rations" option — suppress the Rations days counter. */
   rationsDayTracking?: boolean;
+  /** The owner's highest spell-slot rank: a STAFF's charge pool is sized by its wielder, not by the
+   *  staff's own level. Absent (a companion's pack) falls back to the item level as before. */
+  staffCharges?: number;
   /** Phone layout: disable the desktop HTML5 drag (cards aren't draggable on touch). */
   isMobile?: boolean;
   /** The ROW, not just its id: an instance id is reused when a row is freed, so a gesture that
@@ -199,7 +203,7 @@ function ItemCard({
   // An animal companion has no hands: a Wield control on its pack does nothing but mislead. Same for
   // Invest on a creature that cannot invest.
   const equip = rawEquip && (rawEquip.flag === 'worn' ? can?.wear !== false : can?.wield !== false) ? rawEquip : null;
-  const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv);
+  const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv, staffCharges);
   const investable = item.traits?.includes('invested') && can?.invest !== false;
   const inlineQty = keepsInlineQuantity(item);
   // The delete button moved to the item detail popup, so only render the actions row when there's
@@ -551,6 +555,8 @@ export function InventoryTab({
   const [addOpen, setAddOpen] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
   const rationsDayTracking = !!character.options?.rationsDayTracking;
+  // A staff's charges are the WIELDER's ("equal to the rank of your highest-rank spell slot").
+  const staffCharges = highestSlotRank(character);
   const [editTarget, setEditTarget] = useState<{ item: Item; inv: InventoryItem } | null>(null);
   // A bound scroll/wand can't hold a spell above what the character could cast.
   const maxSpellRank = Math.min(10, Math.max(1, Math.ceil(character.level / 2)));
@@ -1240,6 +1246,7 @@ export function InventoryTab({
                   investedCount={investedCount}
                   investedLimit={investedLimit}
                   rationsDayTracking={rationsDayTracking}
+                  staffCharges={staffCharges}
                   isMobile={isMobile}
                   onDragStartItem={startDrag}
                   onDragEndItem={endDrag}

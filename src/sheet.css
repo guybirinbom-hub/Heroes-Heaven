@@ -906,57 +906,8 @@ body {
 .rcard-actions button.danger:hover {
   color: var(--app-bad);
 }
-/* Per-card export menu (asks Wanderer's Guide vs Codex). */
-.rcard-export {
-  position: relative;
-  flex: 1;
-  display: flex;
-}
-.rcard-export > button {
-  flex: 1;
-  border-right: var(--app-bw) solid var(--app-border);
-}
-.rcard-export-back {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-}
-.rcard-export-menu {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  z-index: 30;
-  min-width: 230px;
-  margin-bottom: 6px;
-  padding: 6px;
-  background: var(--app-surface);
-  border: var(--app-bw) solid var(--app-border);
-  border-radius: var(--app-radius);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-}
-.rxm-q {
-  font-size: 11.5px;
-  color: var(--app-text-dim);
-  padding: 4px 8px 6px;
-}
-.rcard-export-menu button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  text-align: left;
-  flex: none;
-  background: transparent;
-  border: none;
-  border-radius: var(--app-radius-sm);
-  color: var(--app-text);
-  padding: 8px 10px;
-  font-size: 12.5px;
-  cursor: pointer;
-}
-.rcard-export-menu button:hover {
-  background: var(--app-surface-2);
-}
+/* bug 2026-09-13: the per-card export menu is gone — .rcard clips (overflow:hidden, above) and ate
+   it. The choice is the app's own chooseDialog now, so there is nothing left to style here. */
 /* Imported portrait fills the roster card avatar. */
 .rcard-portrait {
   overflow: hidden;
@@ -3114,13 +3065,12 @@ button.strike-name:hover {
   box-shadow: var(--app-shadow);
   padding: 12px;
 }
-/* Dropdown menus (hamburger, appearance, roster export): cap the height to the real viewport and
+/* Dropdown menus (hamburger, appearance): cap the height to the real viewport and
    scroll, so a long menu always fits — at ANY zoom, on desktop and phone alike. dvh renders
    multiplied by the html{zoom} factor, hence the / var(--zoom) correction; the safe-area insets
    (phone status bar / home bar) are physical, so they divide too. */
 .topmenu,
-.appearance-menu,
-.rcard-export-menu {
+.appearance-menu {
   max-height: calc((100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) / var(--zoom, 1) - 24px);
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -11243,7 +11193,7 @@ button.strike-name:hover {
   .picker.item-edit .ci-body { scroll-padding-bottom: 64px; }
 
   /* Dropdown menus: the zoom-corrected max-height cap + scroll is now GLOBAL (see the .topmenu /
-     .appearance-menu / .rcard-export-menu rule next to their definitions) — nothing extra needed here. */
+     .appearance-menu rule next to their definitions) — nothing extra needed here. */
 
   /* Dice roller → true full-width drawer + tappable quick-roll buttons. */
   /* Dice roller: full-screen on phones (its header X closes it). */

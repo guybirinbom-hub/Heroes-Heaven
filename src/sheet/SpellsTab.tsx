@@ -33,7 +33,7 @@ import { toggleKnownRitual,
   CANTRIPS_PER_TRADE,
   type PlayUpdater,
 } from '../rules/play';
-import { itemCounters, chargesFor, chargeCounterId, chargeCostToCast, canCastFromItem } from '../rules/itemUses';
+import { itemCounters, chargesFor, chargeCounterId, chargeCostToCast, canCastFromItem, highestSlotRank } from '../rules/itemUses';
 import { ActionGlyph, SituationalStar } from './widgets';
 import { ItemDetail } from './ItemDetail';
 import { useEscapeClose } from './useEscapeClose';
@@ -2024,6 +2024,9 @@ export function SpellsTab({
     </section>
   ) : null;
 
+  // A staff's charge pool is sized by its WIELDER ("charges equal to the rank of your highest-rank
+  // spell slot"), not by the staff's own level — see itemUses.ts.
+  const staffMax = highestSlotRank(character);
   // Extra spell sources: staff/wand held spells and innate spells — read-only cards, cast with your spell DC.
   const itemNodes: { id: string; name: string; node: ReactNode }[] = itemEntries.map((entry) => {
     const isInnate = entry.type === 'innate';
@@ -2036,7 +2039,7 @@ export function SpellsTab({
     const itemInv = !isInnate && itemInstId ? character.inventory.find((iv) => iv.instanceId === itemInstId) : undefined;
     const itemDef = itemInv ? content.items[itemInv.itemId] : undefined;
     const counterId = itemDef ? chargeCounterId(itemDef) : null;
-    const counter = itemDef && itemInv && counterId ? itemCounters(itemDef, itemInv).find((c) => c.id === counterId) : undefined;
+    const counter = itemDef && itemInv && counterId ? itemCounters(itemDef, itemInv, staffMax).find((c) => c.id === counterId) : undefined;
 
     // Casting a rank-N held spell spends the item's charges (staff = N, wand = 1) or consumes a
     // single-use item. Per-spell cast props are attached to the leveled SpellCards below.
@@ -2045,7 +2048,7 @@ export function SpellsTab({
       const cid = chargeCounterId(itemDef);
       const cost = chargeCostToCast(itemDef, rank);
       return {
-        castDisabled: !canCastFromItem(itemDef, itemInv, rank),
+        castDisabled: !canCastFromItem(itemDef, itemInv, rank, staffMax),
         castTitle:
           cid === 'pool' ? `Cast — spend ${cost} charge${cost === 1 ? '' : 's'}` : cid === 'freq' ? 'Cast — uses the daily charge' : 'Cast — uses the item',
         // Both branches step from the LIVE value in `p`, never from the stack/charge count this render
@@ -2054,7 +2057,7 @@ export function SpellsTab({
           onPlay((p) => {
             const live = (p.inventory ?? []).find((i) => i.instanceId === itemInv.instanceId);
             if (cid === null) return (live?.quantity ?? itemInv.quantity) > 1 ? bumpItemQuantity(p, itemInv.instanceId, -1) : removeInventoryItem(p, itemInv.instanceId);
-            const u = itemCounters(itemDef, itemInv).find((c) => c.id === cid);
+            const u = itemCounters(itemDef, itemInv, staffMax).find((c) => c.id === cid);
             if (!u || cost <= 0) return p;
             return bumpItemCounter(p, itemInv.instanceId, u, -cost);
           }),

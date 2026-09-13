@@ -39,6 +39,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
+import { fillFrequencyCounters } from './lib/aon-facets.mjs';
 import { plain, unlink, decode, ACTION_WORD } from './lib/aon-plain.mjs';
 
 /** The PRISTINE AoN mirror (one JSON file per record). Facets + markdown come from here. */
@@ -897,6 +898,23 @@ if (notes.length) console.log(`\nnotes:\n  ${notes.join('\n  ')}`);
   const { applied, unresolved } = applyBackfill(core);
   console.log(`\nre-applied ${applied} effect backfills over the gap-imported records`);
   if (unresolved.length) console.warn(`!! ${unresolved.length} backfill paths did not resolve:\n  ` + unresolved.join('\n  '));
+}
+
+/*
+ * …and THEN the printed-Frequency counters again, because "every row is an absolute assignment" cuts
+ * both ways. A `counters` row REPLACES the array, so the re-apply above restored bravery-baldric's
+ * curated 2-charge pool and with it discarded the per-hour counter the pass at the end of
+ * import-core-v2.mjs had added beside it — the two records daily preparations still had nothing to
+ * refill after a chain that reported success. Both belong: the pool is the baldric's charges (they
+ * reset to 0 on investment, not on rest) and the counter is its printed "Frequency once per hour".
+ *
+ * This is the LAST step of `npm run data` that touches an item's counters or its inline description
+ * (split-descriptions.mjs moves the text out next), so it is the last place the pass can run. Add-only
+ * and idempotent: on every record the re-apply did not touch it finds the counter already there.
+ */
+{
+  const { filled, gained } = fillFrequencyCounters(core.items);
+  console.log(`item uses: ${filled} record(s) regained ${gained} printed-Frequency counter(s) the backfill re-apply had replaced`);
 }
 
 if (DRY) {

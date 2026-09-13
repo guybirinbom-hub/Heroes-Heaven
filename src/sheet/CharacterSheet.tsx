@@ -1,6 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Character, ContentDatabase, Customization, Item, ModeDef } from '../rules/types';
-import { addXp, setXp, setTempSpeed, togglePinnedDesc, descId, type PlayUpdater } from '../rules/play';
+import {
+  addXp,
+  setXp,
+  setTempSpeed,
+  togglePinnedDesc,
+  descId,
+  setItemCounter,
+  updateInventoryItem,
+  setAlchemyItem,
+  toggleExpended,
+  setSlotsUsed,
+  poolKey,
+  slotKeyOf,
+  type PlayUpdater,
+} from '../rules/play';
+import { canPrepareStaff, chargeCounterId, highestSlotRank, isStaff, openSlots, type OpenSlot } from '../rules/itemUses';
+import { AlchemyPicker } from './AlchemyPanel';
 import { abilityMod, deriveSpeeds, setPlusOnMods } from '../rules/derive';
 import type { BuildState } from '../rules/build';
 import { explainStat, type StatRef } from '../rules/explain';
@@ -53,6 +69,8 @@ const TAB_META: Record<string, { icon: string; short: string }> = {
   Details: { icon: 'ti-id-badge-2', short: 'Details' },
 };
 const TAB_KEY = 'wanderers-codex:tab:v1';
+/** "1st"/"2nd"/"3rd" for a spell rank. */
+const ordinal = (r: number) => (r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`);
 
 function initialTab(): string {
   try {
@@ -240,6 +258,46 @@ export function CharacterSheet({
   const dailyItems = useMemo(() => dailyItemSlots(character, content), [character, content]);
   const [dailyItemDraft, setDailyItemDraft] = useState<Record<string, string>>({});
   const dailyItemAnswer = (key: string) => dailyItemDraft[key] ?? character.dailyItems?.[key] ?? '';
+  /*
+   * STAVES. GM Core "Preparing a Staff": *"During your daily preparations, you can prepare a staff
+   * you're holding. It gains a number of charges equal to the rank of your highest-rank spell slot
+   * (you can't prepare a staff if you have no spell slots). You can expend one spell slot to add a
+   * number of charges to the staff equal to that slot's rank."*
+   *
+   * The app refilled staves overnight to a pool sized by the STAFF'S LEVEL and never asked. Two more
+   * printed limits ride on the same step: *"No one can prepare more than one staff per day"* — so ONE
+   * staff is chosen and every other carried staff goes to 0 for the day — and *"You can prepare a
+   * staff only if you have at least one of the staff's spells on your spell list"*, which is read
+   * through tradition in `canPrepareStaff`. The expended slot follows the chosen staff, since the
+   * rules allow one of those a day too.
+   */
+  const staffCharges = highestSlotRank(character);
+  const staves = useMemo(
+    () => character.inventory.filter((iv) => isStaff(content.items[iv.itemId])),
+    [character.inventory, content.items],
+  );
+  /** The carried staves this caster's own spell list lets them prepare at all. */
+  const preparableStaves = useMemo(
+    () => staves.filter((iv) => canPrepareStaff(content.items[iv.itemId], iv, character, content.spells)),
+    [staves, character, content.items, content.spells],
+  );
+  const slotOptions = useMemo(() => (staves.length ? openSlots(character) : []), [staves.length, character]);
+  const [staffSlotKey, setStaffSlotKey] = useState('');
+  const [staffPick, setStaffPick] = useState<string | null>(null);
+  const optKeyOf = (o: OpenSlot) => `${o.entryId}:${o.rank}`;
+  // Default to the staff prepared last time (the only one carrying a prepared pool), else the first
+  // one they can prepare — a player with a single staff never has to answer a question at all.
+  const chosenStaff =
+    staffPick ?? (preparableStaves.find((iv) => iv.staffCharges != null) ?? preparableStaves[0])?.instanceId ?? null;
+  const staffBonus = slotOptions.find((o) => optKeyOf(o) === staffSlotKey)?.rank ?? 0;
+  const showStaves = staves.length > 0 && staffCharges > 0;
+  /* ADVANCED ALCHEMY — "during your daily preparations you create infused items". Same gate the
+   * Main-tab panel uses (`character.advancedAlchemy`), so the archetype alchemist who has Quick
+   * Alchemy WITHOUT the daily budget is not offered one here either. */
+  const alchemyBudget = character.advancedAlchemy?.max ?? 0;
+  const [alchemyDraft, setAlchemyDraft] = useState<Record<string, number>>({});
+  const [alchemyPicker, setAlchemyPicker] = useState(false);
+  const alchemyPrepared = Object.values(alchemyDraft).reduce((a, b) => a + b, 0);
   /**
    * Close the Daily preparations dialog WITHOUT preparing — and throw the morning's picks away.
    *
@@ -252,6 +310,10 @@ export function CharacterSheet({
     setRestOpen(false);
     setDailyDraft({});
     setDailyItemDraft({});
+    setStaffSlotKey('');
+    setStaffPick(null);
+    setAlchemyDraft({});
+    setAlchemyPicker(false);
   };
   const [customizeOpen, setCustomizeOpen] = useState(false);
   useBackHandler(customizeOpen, () => setCustomizeOpen(false));
@@ -860,6 +922,109 @@ export function CharacterSheet({
                 </div>
               )}
 
+              {/* STAVES. A staff is prepared during daily preparations and gains charges equal to the
+                  rank of your highest-rank spell slot — the app used to refill it to a pool sized by
+                  the STAFF'S OWN level and never asked. Hidden for a character with no spell slots:
+                  "you can't prepare a staff if you have no spell slots". */}
+              {showStaves && (
+                <div className="daily-choices">
+                  <p className="confirm-note">Staves you prepare today:</p>
+                  {staves.map((iv) => {
+                    const it = content.items[iv.itemId];
+                    const canPrep = preparableStaves.some((p) => p.instanceId === iv.instanceId);
+                    const chosen = canPrep && iv.instanceId === chosenStaff;
+                    return (
+                      <div className="daily-choice" key={iv.instanceId}>
+                        <div className="daily-choice-q">
+                          {it?.name ?? iv.itemId}{' '}
+                          <span className="sb-trait">
+                            {!canPrep
+                              ? 'Can’t prepare — none of its spells are on your spell list'
+                              : chosen
+                                ? `Prepare: ${staffCharges + staffBonus} charges`
+                                : 'Not prepared today — 0 charges'}
+                          </span>
+                        </div>
+                        {/* Only asked when there is a choice to make: one staff needs no radio. */}
+                        {canPrep && preparableStaves.length > 1 && (
+                          <div className="daily-pick-opts">
+                            <button
+                              type="button"
+                              className={'daily-opt' + (chosen ? ' on' : '')}
+                              onClick={() => setStaffPick(iv.instanceId)}
+                            >
+                              Prepare this staff
+                            </button>
+                          </div>
+                        )}
+                        {chosen && slotOptions.length > 0 && (
+                          <PopupSelect
+                            title="Expend a spell slot"
+                            placeholder="Also expend a spell slot…"
+                            value={staffSlotKey}
+                            clearLabel="Don’t expend a slot"
+                            onChange={(v) => setStaffSlotKey(v)}
+                            options={slotOptions.map((o) => ({
+                              value: optKeyOf(o),
+                              label: `${ordinal(o.rank)}-rank slot (+${o.rank} charges)`,
+                              note: slotOptions.some((x) => x.entryId !== o.entryId) ? o.entryName : undefined,
+                            }))}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                  <p className="confirm-note">
+                    A staff gains charges equal to the rank of your highest-rank spell slot ({staffCharges}). You may
+                    expend one spell slot per day to add its rank on top, and no one can prepare more than one staff
+                    per day.
+                  </p>
+                </div>
+              )}
+
+              {/* ADVANCED ALCHEMY. "During your daily preparations, you create infused items" — the
+                  step the dialog never had, so the one thing an alchemist does every morning was only
+                  reachable from a panel on another tab. The Main-tab panel stays for mid-day changes. */}
+              {character.advancedAlchemy && (
+                <div className="daily-choices">
+                  <p className="confirm-note">
+                    Advanced Alchemy — today’s infused items ({alchemyPrepared}/{alchemyBudget}):
+                  </p>
+                  {Object.entries(alchemyDraft).map(([itemId, qty]) => (
+                    <div className="alchemy-row" key={itemId}>
+                      <span className="alchemy-item-name">{content.items[itemId]?.name ?? itemId}</span>
+                      <span className="alchemy-qty">
+                        <button
+                          type="button"
+                          aria-label="Fewer"
+                          onClick={() =>
+                            setAlchemyDraft((d) => {
+                              const next = { ...d, [itemId]: (d[itemId] ?? 0) - 1 };
+                              if (next[itemId] <= 0) delete next[itemId];
+                              return next;
+                            })
+                          }
+                        >
+                          −
+                        </button>
+                        <b>{qty}</b>
+                        <button
+                          type="button"
+                          aria-label="More"
+                          disabled={alchemyPrepared >= alchemyBudget}
+                          onClick={() => setAlchemyDraft((d) => ({ ...d, [itemId]: (d[itemId] ?? 0) + 1 }))}
+                        >
+                          +
+                        </button>
+                      </span>
+                    </div>
+                  ))}
+                  <button type="button" className="btn" onClick={() => setAlchemyPicker(true)}>
+                    <i className="ti ti-flask" aria-hidden="true" /> Prepare item
+                  </button>
+                </div>
+              )}
+
               {/* With "reuse" on and everything already answered, say what is being kept — a silent
                   re-application the player can't see is indistinguishable from a bug. */}
               {reuseDaily && needsAsking.length === 0 && dailyChoices.length > 0 && (
@@ -892,8 +1057,41 @@ export function CharacterSheet({
                     }));
                   }
                   onRest();
+                  /*
+                   * AFTER onRest(), and that ordering is load-bearing. Both go through the same
+                   * updatePlay queue, and rest() refills every counter to its STORED max, wipes
+                   * expendedSlots/slotsUsed and clears yesterday's infused items — so a staff
+                   * prepared, a slot expended or an item made before it would be undone by the same
+                   * button press that made them.
+                   */
+                  if (onPlay && (showStaves || Object.keys(alchemyDraft).length)) {
+                    onPlay((p) => {
+                      let next = p;
+                      if (showStaves) {
+                        // ONE staff per day. Every other carried staff is explicitly zeroed rather
+                        // than skipped: rest() refills each counter to its stored max, so a staff
+                        // left alone would quietly keep yesterday's charges forever.
+                        for (const iv of staves) {
+                          const max = iv.instanceId === chosenStaff ? staffCharges + staffBonus : 0;
+                          const cid = chargeCounterId(content.items[iv.itemId]) ?? 'pool';
+                          next = updateInventoryItem(next, iv.instanceId, { staffCharges: max });
+                          next = setItemCounter(next, iv.instanceId, cid, { current: max, max, resetsOnRest: true });
+                        }
+                        const opt = chosenStaff ? slotOptions.find((o) => optKeyOf(o) === staffSlotKey) : undefined;
+                        if (opt)
+                          next = opt.pool
+                            ? setSlotsUsed(next, poolKey(opt.entryId, opt.rank), opt.pool.used + 1, opt.pool.max)
+                            : toggleExpended(next, slotKeyOf(opt.entryId, opt.rank, opt.index ?? 0, opt.slot));
+                      }
+                      for (const [itemId, qty] of Object.entries(alchemyDraft)) next = setAlchemyItem(next, itemId, qty);
+                      return next;
+                    });
+                  }
                   setDailyDraft({});
                   setDailyItemDraft({});
+                  setStaffSlotKey('');
+                  setStaffPick(null);
+                  setAlchemyDraft({});
                   setRestOpen(false);
                 }}
               >
@@ -901,6 +1099,25 @@ export function CharacterSheet({
               </button>
             </div>
           </div>
+          {/* The SAME picker the Main-tab panel opens, so the two surfaces cannot disagree about what
+              this alchemist can make. Its picks land in the draft, not in play — Cancel discards. */}
+          {alchemyPicker && character.advancedAlchemy && (
+            <AlchemyPicker
+              character={character}
+              content={content}
+              mode="advanced"
+              prep={alchemyDraft}
+              budget={alchemyBudget}
+              spent={alchemyPrepared >= alchemyBudget}
+              onPick={(itemId) =>
+                setAlchemyDraft((d) => {
+                  const total = Object.values(d).reduce((a, b) => a + b, 0);
+                  return total >= alchemyBudget ? d : { ...d, [itemId]: (d[itemId] ?? 0) + 1 };
+                })
+              }
+              onClose={() => setAlchemyPicker(false)}
+            />
+          )}
         </div>
       )}
 
