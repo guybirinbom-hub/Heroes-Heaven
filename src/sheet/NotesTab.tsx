@@ -10,6 +10,7 @@ import { decodeEntities } from './RichText';
 import { sanitize } from './sanitizeHtml';
 import { applyAutoDir } from './autoDir';
 import { setPref, usePrefs } from '../data/prefs';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 
 /** Toolbar formatting commands (document.execCommand on the focused contentEditable). */
 const TOOLS: { cmd: string; arg?: string; icon?: string; text?: string; title: string }[] = [
@@ -466,17 +467,17 @@ function IconPickerModal({
     onPickColor?.(c);
   };
   const [query, setQuery] = useState('');
-  const q = query.trim().toLowerCase();
-  // Every word must match somewhere ("map pin" and "pin map" both find it).
-  const terms = q ? q.split(/\s+/) : [];
-  const matches = (icon: string) => {
-    if (!terms.length) return true;
-    const hay = `${icon.replace(/^ti-/, '').replace(/-/g, ' ')} ${ICON_ALIASES[icon] ?? ''}`.toLowerCase();
-    return terms.every((t) => hay.includes(t));
-  };
-  const groups = NOTE_ICON_GROUPS.map((g) => ({ group: g.group, icons: g.icons.filter(matches) })).filter(
-    (g) => g.icons.length > 0,
-  );
+  // Every word must match somewhere ("map pin" and "pin map" both find it) — which is the shared
+  // rule's own multi-token filter, over the same label + aliases the ranking below reads.
+  const matches = (icon: string) => searchMatches(query, iconLabel(icon), ICON_ALIASES[icon] ?? '');
+  /* bug 2026-09-13: search-rank — ranked inside each GROUP (the group heading says what kind of thing
+   * an icon is, so a glyph must not jump out of its own). Measured on this list: "map" showed Map pin
+   * before Map, "book" showed Notebook before Books, "stars" showed Moon stars before Stars — seven
+   * queries in all where the icon the player named was not the first one offered. */
+  const groups = NOTE_ICON_GROUPS.map((g) => ({
+    group: g.group,
+    icons: rankBySearch(g.icons.filter(matches), query, iconLabel, (i) => ICON_ALIASES[i] ?? ''),
+  })).filter((g) => g.icons.length > 0);
 
   return (
     <div className="picker-overlay" onClick={onClose}>
@@ -593,7 +594,17 @@ export function NotesTab({ character, onPlay, hidePrivate }: { character: Charac
   }, [character.id, active?.id]);
 
   const q = query.trim().toLowerCase();
-  const shown = q ? pages.filter((p) => p.title.toLowerCase().includes(q) || p.content.toLowerCase().includes(q)) : pages;
+  /* bug 2026-09-13: search-rank. Matches the page BODY as well as its title, so a page the player
+   * named after the thing they were looking for sat wherever they had dragged it, below every page
+   * that mentions the word once. With no query the list is their own drag order, untouched. */
+  const shown = q
+    ? rankBySearch(
+        pages.filter((p) => searchMatches(query, p.title, p.content)),
+        query,
+        (p) => p.title,
+        (p) => p.content,
+      )
+    : pages;
 
   // Choosing an icon either creates a new page with it, or re-icons an existing page.
   const [iconPicker, setIconPicker] = useState<{ mode: 'new' } | { mode: 'edit'; id: string } | null>(null);

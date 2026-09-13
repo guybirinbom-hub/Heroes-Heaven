@@ -66,7 +66,7 @@ import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, SourcesCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, SourcesCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, requestSubclassChange, useBuilderActions } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
 import { formulaSlots } from '../rules/formulaBook';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -2026,7 +2026,10 @@ export function Builder({
                                   title={cls.subclass.name}
                                   placeholder="Choose…"
                                   value={build.subclassId ?? ''}
-                                  onChange={(v) => actions.changeSubclass(v)}
+                                  /* bug 2026-09-13: change-subclass-deity-confirm — the SECOND
+                                     subclass picker (the level page's card). Same helper as the
+                                     Setup one in shared.tsx, so both ask before dropping spells. */
+                                  onChange={(v) => requestSubclassChange(v, build, content, actions)}
                                   options={cls.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
                                 />
                               </div>

@@ -9,6 +9,7 @@
  * feats exist in the full content but are hidden here, and WHY (disabled source book / behind the
  * class-slot Archetypes toggle / behind a campaign toggle / simply not valid for this slot).
  */
+import { searchMatches } from '../data/searchRank';
 import type { BuildState } from './build';
 import { backgroundGrantedFeats, resolveBackground } from './build';
 import { maxTakes } from './featGrants';
@@ -311,7 +312,10 @@ export function findHiddenFeatMatches(opts: {
   let invalid = 0;
   for (const f of opts.allFeats) {
     if (opts.shownIds.has(f.id)) continue;
-    if (!`${f.name}\n${f.description}`.toLowerCase().includes(q)) continue;
+    // bug 2026-09-13: search-rank — the SAME rule the picker's own filter uses (FilterableSelect's
+    // text field), or this note would count "water skin" as zero hidden matches while the picker
+    // itself is showing rows for it.
+    if (!searchMatches(q, f.name, f.description)) continue;
     if (!opts.slotEligibleIds.has(f.id)) {
       invalid++;
     } else if (

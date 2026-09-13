@@ -4,6 +4,7 @@ import { abilityMod } from '../rules/derive';
 import { resourceMaxFor, resourcesForCharacter } from '../rules/classResources';
 import { setAlchemyItem, quickAlchemy, type PlayUpdater } from '../rules/play';
 import { craftableFormulas } from '../rules/formulaBook';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
 import type { DescNode } from './descref';
@@ -65,11 +66,13 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
     return out;
   }, [content, character, alchLevel]);
   const shown = useMemo(() => {
-    const s = q.trim().toLowerCase();
-    return eligible
-      .filter((it) => !s || it.name.toLowerCase().includes(s))
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .slice(0, 80);
+    // bug 2026-09-13: search-rank — ranked BEFORE the 80-row cap, so the item the player typed can
+    // never be the one the cap cuts off (alphabetical order alone decided that).
+    return rankBySearch(
+      eligible.filter((it) => searchMatches(q, it.name)).sort((a, b) => a.name.localeCompare(b.name)),
+      q,
+      (it) => it.name,
+    ).slice(0, 80);
   }, [eligible, q]);
 
   if (!onPlay) return null; // read-only viewer — no controls

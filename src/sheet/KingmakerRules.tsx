@@ -6,6 +6,7 @@
  */
 import { useMemo, useState, type ReactNode } from 'react';
 import { listValues } from '../data';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import type { ContentDatabase, DescRef, Feat, Action } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
@@ -91,7 +92,13 @@ export function KingmakerRules({ content, onClose, embedded = false }: { content
   useBackHandler(isMobile && mobileSection !== null, () => setMobileSection(null));
 
   const q = query.trim().toLowerCase();
-  const nameMatch = (name: string) => !q || name.toLowerCase().includes(q);
+  const nameMatch = (name: string) => searchMatches(query, name);
+  /* bug 2026-09-13: search-rank. Measured on this page's own data: "camp" listed Camp Management
+   * BELOW Camouflage Campsite, "kingdom" listed Kingdom Assurance below Quick Recovery (Kingdom),
+   * "trade" listed Trade Commodities below Establish Trade Agreement — the activity the player typed,
+   * behind the ones that merely contain the word. Ranked inside each list (and, for feats, inside
+   * each LEVEL group, since the level heading says what a feat costs). */
+  const ranked = <T extends { name: string }>(list: T[]) => rankBySearch(list, query, (x) => x.name);
 
   const camping = useMemo(() => campingActivities(content), [content]);
   const activities = useMemo(() => kingdomActivities(content), [content]);
@@ -131,7 +138,7 @@ export function KingmakerRules({ content, onClose, embedded = false }: { content
         night before daily preparations. Tap an activity to read it. ({camping.length} available.)
       </p>
       <div className="mpr-proplist">
-        {camping.filter((a) => nameMatch(a.name)).map((a) => (
+        {ranked(camping.filter((a) => nameMatch(a.name))).map((a) => (
           <EntryTerm key={a.id} item={a} descKey="actions" />
         ))}
         {camping.filter((a) => nameMatch(a.name)).length === 0 && <p className="mpr-note">No camping activities match “{query.trim()}”.</p>}
@@ -181,7 +188,7 @@ export function KingmakerRules({ content, onClose, embedded = false }: { content
         Commerce steps. Tap one to read it. ({activities.length} available.)
       </p>
       <div className="mpr-proplist">
-        {activities.filter((a) => nameMatch(a.name)).map((a) => (
+        {ranked(activities.filter((a) => nameMatch(a.name))).map((a) => (
           <EntryTerm key={a.id} item={a} descKey="actions" />
         ))}
         {activities.filter((a) => nameMatch(a.name)).length === 0 && <p className="mpr-note">No kingdom activities match “{query.trim()}”.</p>}
@@ -202,7 +209,7 @@ export function KingmakerRules({ content, onClose, embedded = false }: { content
             <span className="mpr-kind-name">Level {lvl}</span>
           </div>
           <div className="mpr-proplist">
-            {fs.sort((a, b) => a.name.localeCompare(b.name)).map((f) => (
+            {ranked(fs.sort((a, b) => a.name.localeCompare(b.name))).map((f) => (
               <EntryTerm key={f.id} item={f} descKey="feats" level={f.level} />
             ))}
           </div>

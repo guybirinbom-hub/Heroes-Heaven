@@ -11,6 +11,7 @@ import {
   type ModeTargetOption,
 } from '../rules/modes';
 import { usePrefs, togglePinnedMode } from '../data/prefs';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { ModeDetailModal } from './ModeDetailModal';
 
 function cap(s: string): string {
@@ -122,7 +123,7 @@ export function ModesPanel({
   const active = new Set(activeIds);
   const pinned = new Set(prefs.pinnedModes ?? []);
   const ql = q.trim().toLowerCase();
-  const matches = (m: ModeDef) => !ql || m.name.toLowerCase().includes(ql);
+  const matches = (m: ModeDef) => searchMatches(q, m.name);
 
   // A predefined mode is on the default (non-search, non-show-all) list if it's relevant to the
   // character, OR force-shown because it's pinned or currently active (so a gated mode the player
@@ -133,7 +134,12 @@ export function ModesPanel({
 
   const allModes = [...library, ...predefined];
   const editableIds = new Set(library.map((m) => m.id));
-  const pinnedList = allModes.filter((m) => pinned.has(m.id) && matches(m));
+  /* bug 2026-09-13: search-rank. A name-only box, ranked inside each SECTION (Pinned / Your modes /
+   * each category) rather than across them: the sections are the panel's structure, and lifting a
+   * mode out of its category to the top of the page would tell the player it lives somewhere it
+   * doesn't. Within a section the mode whose name was typed is now the first row. */
+  const rank = (list: ModeDef[]) => rankBySearch(list, q, (m) => m.name);
+  const pinnedList = rank(allModes.filter((m) => pinned.has(m.id) && matches(m)));
 
   // Predefined shown in the categorized section (search → all; show-all → all; else default set),
   // minus the ones already surfaced in the Pinned section.
@@ -152,6 +158,7 @@ export function ModesPanel({
     }
     g.list.push(md);
   }
+  for (const g of groups) g.list = rank(g.list); // bug 2026-09-13: search-rank
 
   const row = (mode: ModeDef, editable: boolean) => {
     const on = active.has(mode.id);
@@ -230,7 +237,7 @@ export function ModesPanel({
             : 'All your custom modes are pinned above.'}
         </div>
       ) : (
-        <div className="modes-list">{library.filter((m) => !pinned.has(m.id)).filter(matches).map((mode) => row(mode, true))}</div>
+        <div className="modes-list">{rank(library.filter((m) => !pinned.has(m.id)).filter(matches)).map((mode) => row(mode, true))}</div>
       )}
 
       <div className="modes-section-head">
@@ -278,7 +285,7 @@ function TargetPicker({
   const current = options.find((o) => o.value === value);
   const ql = q.trim().toLowerCase();
   const shown = ql
-    ? options.filter((o) => (o.label + ' ' + o.group + ' ' + (o.alias ?? '')).toLowerCase().includes(ql))
+    ? options.filter((o) => searchMatches(q, o.label, `${o.group} | ${o.alias ?? ''}`))
     : options;
   // Keep the picker's own headings, but only for the groups that survived the search.
   const groups: { name: string; list: ModeTargetOption[] }[] = [];
@@ -287,6 +294,11 @@ function TargetPicker({
     if (!g) groups.push((g = { name: o.group, list: [] }));
     g.list.push(o);
   }
+  /* bug 2026-09-13: search-rank. This box matches beyond the label — the group heading and the
+   * option's alias — so typing "reflex" listed every option in the Saves GROUP before the Reflex save
+   * itself. Ranked within each heading, since the heading is what tells the player where the target
+   * lives. */
+  for (const g of groups) g.list = rankBySearch(g.list, q, (o) => o.label, (o) => `${o.group} | ${o.alias ?? ''}`);
   return (
     <>
       <button

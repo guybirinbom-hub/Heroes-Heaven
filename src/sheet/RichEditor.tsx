@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { sanitize } from './sanitizeHtml';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { useContent } from './ContentContext';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
@@ -82,7 +83,12 @@ export function RefSearchModal({ onPick, onClose }: { onPick: (t: RefTarget) => 
     return out;
   }, [content]);
   const ql = q.trim().toLowerCase();
-  const results = ql ? index.filter((e) => e.name.toLowerCase().includes(ql)).slice(0, 60) : [];
+  /* bug 2026-09-13: search-rank. Ranked BEFORE the 60-row cap, which is what makes it load-bearing
+   * here rather than cosmetic: the index is in bucket order, so the entry actually named by the query
+   * could sit past row 60 and be cut off entirely — not merely low down. */
+  const results = ql
+    ? rankBySearch(index.filter((e) => searchMatches(q, e.name)), q, (e) => e.name).slice(0, 60)
+    : [];
 
   return (
     <div className="picker-overlay ref-search-overlay" onClick={onClose}>

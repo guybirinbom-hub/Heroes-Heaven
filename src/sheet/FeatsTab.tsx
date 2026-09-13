@@ -3,6 +3,7 @@ import type { Character, ContentDatabase } from '../rules/types';
 import { classFeatureDescription } from '../rules/featureText';
 import { ownedFeatureIds, subclassFeatureIds } from '../rules/derive';
 import { markNote, nameOfRecord, recordMarkersFor } from '../rules/explain';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { ActionGlyph, isActionCost } from './widgets';
 import { FeatDetail, trustRefOf, type FeatEntry } from './FeatDetail';
 import { TrustMarker } from './TrustMarker';
@@ -349,12 +350,10 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
   const filtered = entries.filter(
     (e) =>
       (showAll || picked.has(e.bucket)) &&
-      (!q ||
-        e.name.toLowerCase().includes(q) ||
-        e.traits.some((t) => t.toLowerCase().includes(q)) ||
-        // Keep the group heading searchable — it used to match via the fake trait entry.
-        (e.groupLabel ?? '').toLowerCase().includes(q) ||
-        e.description.toLowerCase().includes(q) ||
+      // bug 2026-09-13: search-rank — the same fields as before, through the shared rule, so the
+      // owner's "water skin" spelling finds a row here too. The group heading stays searchable (it
+      // used to match via the fake trait entry), and rarity keeps its own exact term.
+      (searchMatches(query, e.name, [...e.traits, e.groupLabel ?? '', e.description].join(' | ')) ||
         (e.rarity ?? '').includes(q)),
   );
 
@@ -425,7 +424,16 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
 
       <section className="card">
         {BUCKETS.filter((b) => showAll || picked.has(b)).map((b) => {
-          const rows = filtered.filter((e) => e.bucket === b).sort((a, c) => a.level - c.level);
+          /* bug 2026-09-13: search-rank. This box matches beyond the name — traits, the group
+           * heading, the rarity and the full description — so typing a feat's own name listed it
+           * wherever its LEVEL put it, behind every feat that merely mentions it. Ranked first, level
+           * second: with no query every tier is 0 and the level order below is untouched. */
+          const rows = rankBySearch(
+            filtered.filter((e) => e.bucket === b).sort((a, c) => a.level - c.level),
+            query,
+            (e) => e.name,
+            (e) => [...e.traits, e.groupLabel ?? '', e.rarity ?? '', e.description].join(' | '),
+          );
           if (rows.length === 0) return null;
           return (
             <div key={b}>

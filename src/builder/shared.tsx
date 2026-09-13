@@ -4,6 +4,7 @@ import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptio
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { loadHomebrewSources, loadCampaigns, saveCampaigns } from '../data/storage';
 import { useAuth } from '../data/useAuth';
 import { fetchCampaignByCode, type CampaignMembership } from '../data/campaigns';
@@ -43,6 +44,7 @@ import {
   backgroundChoiceKind,
   backgroundChoiceValue,
   secondHeritageIdOf,
+  signaturesAt,
   toggleSignature,
   featChoicePrompt,
   trainedSkillOptions,
@@ -242,6 +244,171 @@ function emptyExtraChoices(c: ClassDef | undefined): Record<string, string[]> {
   return out;
 }
 
+/*
+ * bug 2026-09-13: change-subclass-deity-confirm
+ *
+ * Owner ruling, 2026-09-13: a SUBCLASS or DEITY change that throws away an answered pick must ask
+ * first, exactly like the ancestry/heritage/background guard shipped in v0.1.34. Measured on the real
+ * Builder before this: swapping a sorcerer's bloodline across traditions deleted three cantrips,
+ * three spells and the signature spell with nothing said and no way back; swapping a cleric's deity
+ * deleted both Domain Initiate domains and silently switched the divine font; picking Battle Creed
+ * overwrote whatever the player had answered in the level-2 class-feat slot.
+ *
+ * The two functions below are the ONE place that says what each swap destroys: the reducer applies
+ * exactly what they return and the confirm list is built from the same call, so the dialog cannot
+ * name a loss the reducer doesn't take, or miss one it does.
+ */
+/** What `changeSubclass(id)` throws away, and the featPicks map it leaves behind. */
+export function subclassSwapDrops(
+  b: BuildState,
+  content: ContentDatabase,
+  id: string,
+): { clearsSpells: boolean; featPicks: Record<string, string>; lostFeat: string | null } {
+  const cls = b.classId ? content.classes[b.classId] : undefined;
+  const oldOpt = cls?.subclass?.options.find((o) => o.id === b.subclassId);
+  const newOpt = cls?.subclass?.options.find((o) => o.id === id);
+  // Cleric Battle Creed REQUIRES Battle Harbinger Dedication as the L2 class feat — pre-fill it
+  // (and clear it when leaving battle creed if it was the auto-filled value). Entering battle creed
+  // overwrites that slot, so whatever the player had answered there is a real loss; LEAVING it only
+  // removes the value the app filled in itself, which is nobody's answer and not a loss.
+  const L2 = '2:class:0';
+  let featPicks = b.featPicks;
+  let lostFeat: string | null = null;
+  if (id === 'battle-creed' && b.featPicks[L2] !== 'battle-harbinger-dedication') {
+    lostFeat = b.featPicks[L2] ?? null;
+    featPicks = { ...b.featPicks, [L2]: 'battle-harbinger-dedication' };
+  } else if (oldOpt?.id === 'battle-creed' && id !== 'battle-creed' && b.featPicks[L2] === 'battle-harbinger-dedication') {
+    featPicks = { ...b.featPicks };
+    delete featPicks[L2];
+  }
+  // a patron change that switches tradition invalidates previously chosen spells
+  return { clearsSpells: oldOpt?.tradition !== newOpt?.tradition, featPicks, lostFeat };
+}
+
+/** What `changeDeity(id)` keeps (font + featChoices) and what it throws away (the dropped domains). */
+export function deitySwapDrops(
+  b: BuildState,
+  content: ContentDatabase,
+  id: string,
+): { font: 'heal' | 'harm' | null; featChoices: Record<string, string>; lostDomains: string[] } {
+  // Keep the current font if the new deity allows it. Otherwise: a deity offering exactly one
+  // font isn't asking a question, so settle it; a deity offering both leaves it EMPTY for the
+  // player rather than silently picking whichever is listed first.
+  const fonts = (content.deities[id]?.divineFont ?? []) as ('heal' | 'harm')[];
+  const font = b.divineFont && (!fonts.length || fonts.includes(b.divineFont))
+    ? b.divineFont
+    : fonts.length === 1
+      ? fonts[0]
+      : null;
+  // A Domain-feat sub-choice (Domain Initiate, …) that points at a domain the new deity doesn't
+  // have has to go — otherwise it silently grants an off-deity focus spell. CLEAR it rather than
+  // swapping in the new deity's first domain, which was answering the question on the player's
+  // behalf while looking like their own pick.
+  const featChoices = { ...b.featChoices };
+  const lostDomains: string[] = [];
+  /** Slots that have already kept one domain from outside the NEW deity's two lists. */
+  const outsideKept = new Set<string>();
+  for (const [key, val] of Object.entries(featChoices)) {
+    // A multi-pick choice fans its answers out to `<slot>#<n>` (choiceKeys), so the SLOT has to
+    // be recovered before featPicks can name the feat. Read raw, the four Splinter Faith
+    // answers matched no featPick at all and changing deity validated nothing on the one feat
+    // with the widest pool.
+    const slotKey = key.replace(/#\d+$/, '');
+    const featId = b.featPicks[slotKey];
+    const def = featId ? content.feats[featId]?.choice : undefined;
+    // A domain choice may draw from a WIDER pool than the deity's own list (Splinter Faith
+    // adds the alternate domains), so validate against the pool that choice actually offers.
+    if (def?.kind !== 'domains') continue;
+    const build = { ...b, deityId: id || null };
+    if (!domainPoolForChoice(build, content, featId, def.domainPool).includes(val)) {
+      delete featChoices[key];
+      lostDomains.push(val);
+      continue;
+    }
+    // "…and up to ONE domain that isn't on either list" — the new deity's lists are different,
+    // so two surviving answers can both be outside them. The later one goes, exactly as the
+    // picker withholds it.
+    if (outsideDomains([val], build.deityId, content, def.domainPool).size) {
+      if (outsideKept.has(slotKey)) {
+        delete featChoices[key];
+        lostDomains.push(val);
+      } else outsideKept.add(slotKey);
+    }
+  }
+  return { font, featChoices, lostDomains };
+}
+
+/**
+ * "This clears N choices you already made" — the shared confirm used by every picker that destroys
+ * an answer (origins in v0.1.34, subclass + deity here).
+ *
+ * Rule: name what goes, Cancel changes NOTHING, and a build with nothing to lose changes with no
+ * dialog at all.
+ */
+export async function confirmLoss(title: string, confirmLabel: string, losses: string[], apply: () => void) {
+  if (!losses.length) return apply();
+  const ok = await confirmDialog({
+    title,
+    message: (
+      <>
+        <p>This clears {losses.length === 1 ? 'a choice you already made' : `${losses.length} choices you already made`}:</p>
+        <ul style={{ margin: '6px 0 0', paddingLeft: 20 }}>
+          {losses.map((l) => (
+            <li key={l}>{l}</li>
+          ))}
+        </ul>
+      </>
+    ),
+    confirmLabel,
+    cancelLabel: 'Cancel',
+  });
+  if (ok) apply();
+}
+
+/** The losses a subclass swap takes, read off `subclassSwapDrops` so the two can never disagree. */
+function subclassChangeLosses(b: BuildState, content: ContentDatabase, id: string): string[] {
+  /* adversarially confirmed 2026-09-13: this used to short-circuit on `!b.subclassId` ("nothing
+   * answered under a subclass nobody picked yet"), and that is the one state where the dialog and
+   * the reducer DISAGREED — the reducer reads `oldOpt?.tradition !== newOpt?.tradition`, and with no
+   * subclass the old tradition is `undefined`, so picking a first bloodline clears every cantrip,
+   * spell and signature while the dialog reported nothing. Nothing needs guarding: an empty build
+   * produces an empty list below and `confirmLoss` shows no dialog for one. */
+  const { clearsSpells, lostFeat } = subclassSwapDrops(b, content, id);
+  const spellName = (sid: string) => content.spells[sid]?.name ?? sid;
+  const lost: string[] = [];
+  if (clearsSpells) {
+    if (b.cantrips.length) lost.push(`Cantrips (${b.cantrips.length}) — ${b.cantrips.map(spellName).join(', ')}`);
+    const spells = Object.values(b.spells).flat();
+    if (spells.length) lost.push(`Spells (${spells.length}) — ${spells.map(spellName).join(', ')}`);
+    const sigs = Object.keys(b.signatures).flatMap((r) => signaturesAt(b.signatures, Number(r)));
+    if (sigs.length) lost.push(`Signature spells (${sigs.length}) — ${sigs.map(spellName).join(', ')}`);
+  }
+  if (lostFeat) lost.push(`Level 2 class feat — ${content.feats[lostFeat]?.name ?? lostFeat}`);
+  return lost;
+}
+
+/** Change the subclass, asking first when that would throw an answered pick away. */
+export function requestSubclassChange(id: string, build: BuildState, content: ContentDatabase, actions: BuilderActions) {
+  if (id === build.subclassId) return; // re-picking the one you already have wiped the whole spell list
+  const label = (build.classId ? content.classes[build.classId]?.subclass?.name : undefined) ?? 'subclass';
+  const verb = `Change ${label.toLowerCase()}`;
+  void confirmLoss(`${verb}?`, verb, subclassChangeLosses(build, content, id), () => actions.changeSubclass(id));
+}
+
+/** Change the deity, asking first when that would throw an answered pick away. */
+export function requestDeityChange(id: string, build: BuildState, content: ContentDatabase, actions: BuilderActions) {
+  if (id === build.deityId) return;
+  /* adversarially confirmed 2026-09-13: this list used to be built only `if (build.deityId)`, which
+   * hid the same disagreement the subclass guard did — `changeDeity` replaces an answered divine font
+   * and drops off-list domains whether or not a deity was set first, so a build carrying either with
+   * no deity yet lost them with nothing said. The drops come off `deitySwapDrops`, the same call the
+   * reducer makes, so an empty build still yields an empty list and no dialog. */
+  const { font, lostDomains } = deitySwapDrops(build, content, id);
+  const lost = lostDomains.map((d) => `Domain — ${cap(d)}`);
+  if (build.divineFont && font !== build.divineFont) lost.push(`Divine font — ${cap(build.divineFont)}`);
+  void confirmLoss('Change deity?', 'Change deity', lost, () => actions.changeDeity(id));
+}
+
 export function useBuilderActions(
   setBuild: Dispatch<SetStateAction<BuildState>>,
   content: ContentDatabase,
@@ -338,26 +505,12 @@ export function useBuilderActions(
     },
     changeSubclass(id) {
       setBuild((b) => {
-        const cls = b.classId ? content.classes[b.classId] : undefined;
-        const oldOpt = cls?.subclass?.options.find((o) => o.id === b.subclassId);
-        const newOpt = cls?.subclass?.options.find((o) => o.id === id);
         // A racket that requires a deity (rogue Avenger) used to have one picked for it — the first
         // entry in the database — so the player never saw the question. It stays unset; setupMissing
         // reports "Deity" (buildNeedsDeity covers subclass-driven requirements) until they answer it.
         const deityId = b.deityId;
-        // Cleric Battle Creed REQUIRES Battle Harbinger Dedication as the L2 class feat — pre-fill it
-        // (and clear it when leaving battle creed if it was the auto-filled value).
-        let featPicks = b.featPicks;
-        const L2 = '2:class:0';
-        if (id === 'battle-creed' && b.featPicks[L2] !== 'battle-harbinger-dedication') {
-          featPicks = { ...b.featPicks, [L2]: 'battle-harbinger-dedication' };
-        } else if (oldOpt?.id === 'battle-creed' && id !== 'battle-creed' && b.featPicks[L2] === 'battle-harbinger-dedication') {
-          featPicks = { ...b.featPicks };
-          delete featPicks[L2];
-        }
-        // a patron change that switches tradition invalidates previously chosen spells
-        if (oldOpt?.tradition !== newOpt?.tradition)
-          return { ...b, subclassId: id, deityId, featPicks, cantrips: [], spells: {}, signatures: {} };
+        const { clearsSpells, featPicks } = subclassSwapDrops(b, content, id);
+        if (clearsSpells) return { ...b, subclassId: id, deityId, featPicks, cantrips: [], spells: {}, signatures: {} };
         return { ...b, subclassId: id, deityId, featPicks };
       });
     },
@@ -377,46 +530,7 @@ export function useBuilderActions(
     },
     changeDeity(id) {
       setBuild((b) => {
-        // Keep the current font if the new deity allows it. Otherwise: a deity offering exactly one
-        // font isn't asking a question, so settle it; a deity offering both leaves it EMPTY for the
-        // player rather than silently picking whichever is listed first.
-        const fonts = (content.deities[id]?.divineFont ?? []) as ('heal' | 'harm')[];
-        const font = b.divineFont && (!fonts.length || fonts.includes(b.divineFont))
-          ? b.divineFont
-          : fonts.length === 1
-            ? fonts[0]
-            : null;
-        // A Domain-feat sub-choice (Domain Initiate, …) that points at a domain the new deity doesn't
-        // have has to go — otherwise it silently grants an off-deity focus spell. CLEAR it rather than
-        // swapping in the new deity's first domain, which was answering the question on the player's
-        // behalf while looking like their own pick.
-        const featChoices = { ...b.featChoices };
-        /** Slots that have already kept one domain from outside the NEW deity's two lists. */
-        const outsideKept = new Set<string>();
-        for (const [key, val] of Object.entries(featChoices)) {
-          // A multi-pick choice fans its answers out to `<slot>#<n>` (choiceKeys), so the SLOT has to
-          // be recovered before featPicks can name the feat. Read raw, the four Splinter Faith
-          // answers matched no featPick at all and changing deity validated nothing on the one feat
-          // with the widest pool.
-          const slotKey = key.replace(/#\d+$/, '');
-          const featId = b.featPicks[slotKey];
-          const def = featId ? content.feats[featId]?.choice : undefined;
-          // A domain choice may draw from a WIDER pool than the deity's own list (Splinter Faith
-          // adds the alternate domains), so validate against the pool that choice actually offers.
-          if (def?.kind !== 'domains') continue;
-          const build = { ...b, deityId: id || null };
-          if (!domainPoolForChoice(build, content, featId, def.domainPool).includes(val)) {
-            delete featChoices[key];
-            continue;
-          }
-          // "…and up to ONE domain that isn't on either list" — the new deity's lists are different,
-          // so two surviving answers can both be outside them. The later one goes, exactly as the
-          // picker withholds it.
-          if (outsideDomains([val], build.deityId, content, def.domainPool).size) {
-            if (outsideKept.has(slotKey)) delete featChoices[key];
-            else outsideKept.add(slotKey);
-          }
-        }
+        const { font, featChoices } = deitySwapDrops(b, content, id);
         return { ...b, deityId: id || null, divineFont: font, featChoices };
       });
     },
@@ -751,7 +865,12 @@ export function SearchSelect({
       : descNodeOf({ name: o.name, description: o.description, descRefs: o.descRefs }, 'origin');
   const current = options.find((o) => o.id === value);
   const needle = q.trim().toLowerCase();
-  const filtered = needle ? options.filter((o) => o.name.toLowerCase().includes(needle)) : options;
+  // bug 2026-09-13: search-rank — ranked BEFORE the 100-row cap below, so the option the player
+  // typed leads the list and can never be the row the cap cut off. Name only: that is all this
+  // picker filters on.
+  const filtered = needle
+    ? rankBySearch(options.filter((o) => searchMatches(q, o.name)), q, (o) => o.name)
+    : options;
   const readFirst = !!descBucket || filtered.some((o) => o.description || o.descRefs?.length);
   const currentNode = current ? mkNode(current) : null;
   // Harness markers — see PopupSelect's ctlAttrs.
@@ -965,7 +1084,11 @@ export function PopupSelect({
     : null;
   const useSearch = search ?? options.length > 6;
   const needle = q.trim().toLowerCase();
-  const filtered = useSearch && needle ? options.filter((o) => o.label.toLowerCase().includes(needle)) : options;
+  // bug 2026-09-13: search-rank — label only, since the label is the whole of this popup's filter.
+  const filtered =
+    useSearch && needle
+      ? rankBySearch(options.filter((o) => searchMatches(q, o.label)), q, (o) => o.label)
+      : options;
   const openPicker = () => {
     setQ('');
     setCustomMode(false);
@@ -1856,12 +1979,22 @@ export function SourcesCard({
     ? rawGroups
         .map((g) => {
           if (g.category.toLowerCase().includes(sq)) return g; // whole category matches → show all entries
-          const entries = g.entries.filter((e) => e.label.toLowerCase().includes(sq));
+          // bug 2026-09-13: search-rank — the surviving books lead with the one whose title was
+          // typed, inside their own category (the group heading says where a book lives, so a row
+          // must not jump out of it).
+          const entries = rankBySearch(
+            g.entries.filter((e) => searchMatches(search, e.label)),
+            search,
+            (e) => e.label,
+          );
           return entries.length ? { ...g, entries } : null;
         })
         .filter((g): g is SourceGroup => g != null)
     : rawGroups;
-  const hbShown = sq ? hbList.filter((h) => h.name.toLowerCase().includes(sq)) : hbList;
+  // bug 2026-09-13: search-rank — same for the player's own homebrew sources.
+  const hbShown = sq
+    ? rankBySearch(hbList.filter((h) => searchMatches(search, h.name)), search, (h) => h.name)
+    : hbList;
   const noMatches = sq !== '' && groups.length === 0 && hbShown.length === 0;
   // Searching forces sections open so matches show without manual expansion.
   const hbOpen = sq !== '' || expanded.has('__homebrew__');
@@ -2687,26 +2820,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
    * feat on one misclick in the search list, with nothing said and no way back: exactly "i come back
    * to edit and things are different". Rule: name what goes, Cancel changes NOTHING, and a build with
    * nothing to lose changes with no dialog at all.
+   *
+   * `confirmLoss` itself moved to module scope on 2026-09-13 (bug: change-subclass-deity-confirm) —
+   * the subclass picker has a SECOND call site over in Builder.tsx that could not reach a helper
+   * living inside this component, and two copies of this dialog is how the two drift apart.
    */
-  const confirmLoss = async (title: string, confirmLabel: string, losses: string[], apply: () => void) => {
-    if (!losses.length) return apply();
-    const ok = await confirmDialog({
-      title,
-      message: (
-        <>
-          <p>This clears {losses.length === 1 ? 'a choice you already made' : `${losses.length} choices you already made`}:</p>
-          <ul style={{ margin: '6px 0 0', paddingLeft: 20 }}>
-            {losses.map((l) => (
-              <li key={l}>{l}</li>
-            ))}
-          </ul>
-        </>
-      ),
-      confirmLabel,
-      cancelLabel: 'Cancel',
-    });
-    if (ok) apply();
-  };
   const requestAncestryChange = (id: string) => {
     if (id === build.ancestryId) return;
     const lost: string[] = [];
@@ -3305,7 +3423,10 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           <PopupSelect
             title={cls.subclass.name}
             value={build.subclassId ?? ''}
-            onChange={(v) => actions.changeSubclass(v)}
+            /* bug 2026-09-13: change-subclass-deity-confirm — a bloodline/patron swap across
+               traditions deletes every cantrip, spell and signature. Ask first (Builder.tsx's
+               level-page copy of this picker routes through the same helper). */
+            onChange={(v) => requestSubclassChange(v, build, content, actions)}
             /* …and grey the options the character's SANCTIFICATION forbids. Champion class-58: *"Whether
              * you become holy, unholy, or neither will limit your choice of causes"* / *"Some causes are
              * limited to certain sanctifications"* — Desecration and Iniquity are Unholy, Grandeur and
@@ -3848,7 +3969,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             bare
             label="Deity"
             value={build.deityId}
-            onChange={actions.changeDeity}
+            /* bug 2026-09-13: change-subclass-deity-confirm — a deity swap deletes every domain the
+               new deity doesn't offer, and can replace an answered divine font. Ask first. */
+            onChange={(v) => requestDeityChange(v, build, content, actions)}
             descBucket="deities"
             options={Object.values(content.deities).map((d) => ({
               id: d.id,

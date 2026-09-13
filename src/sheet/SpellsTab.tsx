@@ -38,6 +38,7 @@ import { ItemDetail } from './ItemDetail';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
 import { confirmDialog } from './confirm';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
 import { DescBody, type RemasteredAs } from './DescBody';
@@ -522,7 +523,8 @@ function LearnSpellModal({
             // still answers the name search, which is how the group is actually used.
             resultsFooter={(q, openDesc) => {
               const ql = q.trim().toLowerCase();
-              const shown = ql ? rituals.filter((s) => s.name.toLowerCase().includes(ql)) : rituals;
+              // bug 2026-09-13: search-rank — the ritual whose name was typed heads its group.
+              const shown = ql ? rankBySearch(rituals.filter((s) => searchMatches(q, s.name)), q, (s) => s.name) : rituals;
               if (!shown.length) return null;
               return (
                 <>
@@ -1456,9 +1458,17 @@ export function SpellsTab({
   function visible(sp: Spell | undefined): boolean {
     if (!filtering) return true;
     if (!sp) return false;
-    if (query && !sp.name.toLowerCase().includes(query)) return false;
+    if (!searchMatches(query, sp.name)) return false;
     return matchesCostFilters(sp.cast);
   }
+  /* bug 2026-09-13: search-rank. This page FILTERED and never ORDERED, so a match sat wherever the
+   * player's own list put it — a spellbook holding Wall of Fire before Fireball answered "fireball"
+   * with Wall of Fire on top. Every PLAIN list below is ranked (known cantrips, a repertoire's spells,
+   * the spellbook, learned spells, focus spells, an item's or an innate entry's spells). The prepared
+   * SLOTS are not: a slot's position IS its identity — its pip key is `…:<rank>:<index>` — so
+   * reordering them would move the expended pips onto other slots. */
+  const rankSpellIds = <T,>(list: T[], idOf: (t: T) => string) =>
+    rankBySearch(list, query, (t) => content.spells[idOf(t)]?.name ?? idOf(t));
 
   // Only bail when the character has NO castable magic at all — a focus-only caster (champion, monk/
   // ranger with focus feats) or a staff/wand holder has no prepared/spontaneous pool but still needs
@@ -1494,7 +1504,7 @@ export function SpellsTab({
      * same treatment, pointing at where the picking actually happens (the builder). */
     const emptyCantrips = Math.max(0, (main.cantripCap ?? 0) - main.cantrips.length);
     if (main.cantrips.length || tradedCantrips.length || emptyCantrips > 0) {
-      const cards = main.cantrips
+      const cards = rankSpellIds(main.cantrips, (id) => id)
         .map((id, i) => {
           const sp = content.spells[id];
           // A cantrip a RECORD put in this pool — Adapted Cantrip's "you can cast this cantrip as a
@@ -1610,7 +1620,7 @@ export function SpellsTab({
       (a, b) => a - b,
     );
     for (const rank of allRanks) {
-      const ids = main.repertoire[rank] ?? [];
+      const ids = rankSpellIds(main.repertoire[rank] ?? [], (id) => id);
       const pool = main.slots?.[rank];
       const baseCards = ids
         .map((id, i) => {
@@ -1785,20 +1795,25 @@ export function SpellsTab({
   const spellbookMain = mains.find((m) => m.spellbook);
   const spellbookCards: ReactNode[] = [];
   if (spellbookMain?.spellbook) {
-    for (const rank of Object.keys(spellbookMain.spellbook).map(Number).sort((a, b) => a - b)) {
-      for (const id of spellbookMain.spellbook[rank]) {
-        const sp = content.spells[id];
-        if (!visible(sp)) continue;
-        spellbookCards.push(
-          <SpellCard
-            key={'sb' + rank + id}
-            name={sp?.name ?? id} marks={marksFor(id)}
-            cost={sp?.cast}
-            meta={ord(rank) + ' rank'}
-            onClick={sp ? () => openDetail(sp) : undefined}
-          />,
-        );
-      }
+    const book = spellbookMain.spellbook;
+    // The whole book is ONE grid, so it ranks as one list; with no query rankSpellIds hands back the
+    // same array and the rank-then-book order below is untouched.
+    const pages = Object.keys(book)
+      .map(Number)
+      .sort((a, b) => a - b)
+      .flatMap((rank) => book[rank].map((id) => ({ rank, id })));
+    for (const { rank, id } of rankSpellIds(pages, (p) => p.id)) {
+      const sp = content.spells[id];
+      if (!visible(sp)) continue;
+      spellbookCards.push(
+        <SpellCard
+          key={'sb' + rank + id}
+          name={sp?.name ?? id} marks={marksFor(id)}
+          cost={sp?.cast}
+          meta={ord(rank) + ' rank'}
+          onClick={sp ? () => openDetail(sp) : undefined}
+        />,
+      );
     }
   }
 
@@ -1808,20 +1823,23 @@ export function SpellsTab({
   const learnedMain = mains.find((m) => !m.spellbook && m.learned);
   const learnedCards: ReactNode[] = [];
   if (learnedMain?.learned) {
-    for (const rank of Object.keys(learnedMain.learned).map(Number).sort((a, b) => a - b)) {
-      for (const id of learnedMain.learned[rank]) {
-        const sp = content.spells[id];
-        if (!visible(sp)) continue;
-        learnedCards.push(
-          <SpellCard
-            key={'ln' + rank + id}
-            name={sp?.name ?? id} marks={marksFor(id)}
-            cost={sp?.cast}
-            meta={rank === 0 ? 'Cantrip' : ord(rank) + ' rank'}
-            onClick={sp ? () => openDetail(sp) : undefined}
-          />,
-        );
-      }
+    const learned = learnedMain.learned;
+    const known = Object.keys(learned)
+      .map(Number)
+      .sort((a, b) => a - b)
+      .flatMap((rank) => learned[rank].map((id) => ({ rank, id })));
+    for (const { rank, id } of rankSpellIds(known, (k) => k.id)) {
+      const sp = content.spells[id];
+      if (!visible(sp)) continue;
+      learnedCards.push(
+        <SpellCard
+          key={'ln' + rank + id}
+          name={sp?.name ?? id} marks={marksFor(id)}
+          cost={sp?.cast}
+          meta={rank === 0 ? 'Cantrip' : ord(rank) + ' rank'}
+          onClick={sp ? () => openDetail(sp) : undefined}
+        />,
+      );
     }
   }
 
@@ -1831,31 +1849,37 @@ export function SpellsTab({
     const out: ReactNode[] = [];
     if (!entry.repertoire) return out;
     const focusHeighten = Math.min(10, Math.ceil(character.level / 2));
-    for (const rank of Object.keys(entry.repertoire).map(Number).sort((a, b) => a - b)) {
-      for (const id of entry.repertoire[rank]) {
-        const sp = content.spells[id];
-        if (!visible(sp)) continue;
-        const shown = Math.max(rank, focusHeighten);
-        // Focus spells pool from many feats/subclasses — name the source so it's clear where each came from.
-        const from = entry.spellSources?.[id];
-        out.push(
-          <SpellCard
-            key={entry.id + '/' + id}
-            name={sp?.name ?? id} marks={marksFor(id)}
-            cost={sp?.cast}
-            meta={`rank ${shown}${from ? ` · from ${from}` : ''}`}
-            fp
-            onClick={sp ? () => openDetail(sp) : undefined}
-          />,
-        );
-      }
+    const rep = entry.repertoire;
+    const spells = Object.keys(rep)
+      .map(Number)
+      .sort((a, b) => a - b)
+      .flatMap((rank) => rep[rank].map((id) => ({ rank, id })));
+    for (const { rank, id } of rankSpellIds(spells, (s) => s.id)) {
+      const sp = content.spells[id];
+      if (!visible(sp)) continue;
+      const shown = Math.max(rank, focusHeighten);
+      // Focus spells pool from many feats/subclasses — name the source so it's clear where each came from.
+      const from = entry.spellSources?.[id];
+      out.push(
+        <SpellCard
+          key={entry.id + '/' + id}
+          name={sp?.name ?? id} marks={marksFor(id)}
+          cost={sp?.cast}
+          meta={`rank ${shown}${from ? ` · from ${from}` : ''}`}
+          fp
+          onClick={sp ? () => openDetail(sp) : undefined}
+        />,
+      );
     }
     return out;
   };
 
   // Rituals matching the search — hoisted out of ritualsNode so the section count below can be taken
   // without building the node.
-  const ritualsShown = query ? myRituals.filter((r) => r.spell.name.toLowerCase().includes(query)) : myRituals;
+  // bug 2026-09-13: search-rank — as in the picker's ritual group above.
+  const ritualsShown = query
+    ? rankBySearch(myRituals.filter((r) => searchMatches(query, r.spell.name)), query, (r) => r.spell.name)
+    : myRituals;
 
   /* How many collapsible sections this page actually renders — one per spell pool, plus whichever of
    * the focus / item / spellbook / learned / ritual cards exist. Drives whether a collapse chevron is
@@ -2034,7 +2058,7 @@ export function SpellsTab({
     };
 
     const cards: ReactNode[] = [];
-    for (const id of entry.cantrips) {
+    for (const id of rankSpellIds(entry.cantrips, (i) => i)) {
       const sp = content.spells[id];
       if (!visible(sp)) continue;
       // An innate cantrip carries the same two facts a leveled innate does and printed NEITHER: the
@@ -2052,41 +2076,44 @@ export function SpellsTab({
         <SpellCard key={`${entry.id}:c:${id}`} name={sp?.name ?? id} cost={sp?.cast} meta={cMeta} marks={marksFor(id)} onClick={sp ? () => openDetail(sp) : undefined} />,
       );
     }
-    for (const rank of Object.keys(entry.repertoire ?? {}).map(Number).sort((a, b) => a - b)) {
-      for (const id of entry.repertoire![rank]) {
-        const sp = content.spells[id];
-        if (!visible(sp)) continue;
-        const cost = !isInnate && itemDef ? chargeCostToCast(itemDef, rank) : 0;
-        // Innate cadence: per-spell override (0 = at-will, N = N/day), default 1/day.
-        const uses = entry.innateUses?.[id];
-        const cadence = entry.innateCadence?.[id];
-        // Pooled entries (innate / focus) draw from many feats — name the granting source so it's
-        // obvious where each spell came from.
-        const from = entry.spellSources?.[id];
-        // …and its TRADITION when that differs from the entry's. One pooled entry has one tradition and
-        // its spells do not, so the header was a majority vote: a psychic's heritage spell and an
-        // invested item's outvote each other and the loser is described wrongly.
-        const trad = entry.spellTraditions?.[id];
-        const meta = isInnate
-          ? `rank ${rank} · ${uses === 0 ? 'at will' : cadence ?? `${uses ?? 1}/day`}${from ? ` · from ${from}` : ''}${trad && trad !== entry.tradition ? ` · ${trad}` : ''}`
-          : counterId === 'pool'
-            ? `rank ${rank} · ${cost} charge${cost === 1 ? '' : 's'}`
-            : counterId === 'freq'
-              ? `rank ${rank} · 1/day`
-              : `rank ${rank}`;
-        cards.push(
-          <SpellCard
-            key={`${entry.id}:${rank}:${id}`}
-            name={sp?.name ?? id} marks={marksFor(id)}
-            cost={sp?.cast}
-            meta={meta}
-            onClick={sp ? () => openDetail(sp) : undefined}
-            pip={isInnate && uses !== 0 ? (innateUsedSet.has(id) ? 'empty' : 'filled') : undefined}
-            onPip={isInnate && uses !== 0 && onPlay ? () => onPlay((p) => toggleInnateCast(p, entry.id, id)) : undefined}
-            {...castProps(rank)}
-          />,
-        );
-      }
+    const rep = entry.repertoire ?? {};
+    const held = Object.keys(rep)
+      .map(Number)
+      .sort((a, b) => a - b)
+      .flatMap((rank) => rep[rank].map((id) => ({ rank, id })));
+    for (const { rank, id } of rankSpellIds(held, (h) => h.id)) {
+      const sp = content.spells[id];
+      if (!visible(sp)) continue;
+      const cost = !isInnate && itemDef ? chargeCostToCast(itemDef, rank) : 0;
+      // Innate cadence: per-spell override (0 = at-will, N = N/day), default 1/day.
+      const uses = entry.innateUses?.[id];
+      const cadence = entry.innateCadence?.[id];
+      // Pooled entries (innate / focus) draw from many feats — name the granting source so it's
+      // obvious where each spell came from.
+      const from = entry.spellSources?.[id];
+      // …and its TRADITION when that differs from the entry's. One pooled entry has one tradition and
+      // its spells do not, so the header was a majority vote: a psychic's heritage spell and an
+      // invested item's outvote each other and the loser is described wrongly.
+      const trad = entry.spellTraditions?.[id];
+      const meta = isInnate
+        ? `rank ${rank} · ${uses === 0 ? 'at will' : cadence ?? `${uses ?? 1}/day`}${from ? ` · from ${from}` : ''}${trad && trad !== entry.tradition ? ` · ${trad}` : ''}`
+        : counterId === 'pool'
+          ? `rank ${rank} · ${cost} charge${cost === 1 ? '' : 's'}`
+          : counterId === 'freq'
+            ? `rank ${rank} · 1/day`
+            : `rank ${rank}`;
+      cards.push(
+        <SpellCard
+          key={`${entry.id}:${rank}:${id}`}
+          name={sp?.name ?? id} marks={marksFor(id)}
+          cost={sp?.cast}
+          meta={meta}
+          onClick={sp ? () => openDetail(sp) : undefined}
+          pip={isInnate && uses !== 0 ? (innateUsedSet.has(id) ? 'empty' : 'filled') : undefined}
+          onPip={isInnate && uses !== 0 && onPlay ? () => onPlay((p) => toggleInnateCast(p, entry.id, id)) : undefined}
+          {...castProps(rank)}
+        />,
+      );
     }
     return {
       id: entry.id,

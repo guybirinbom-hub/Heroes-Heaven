@@ -4,6 +4,7 @@ import { useIsMobile } from './useIsMobile';
 import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable,
   handwrapsRuneSharing, isHandwraps } from '../rules/derive';
 import { affixHostType, isAttachable, planAttach } from '../rules/attachments';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import {
   addInventoryItem,
   addPlayCompanion,
@@ -645,7 +646,7 @@ export function InventoryTab({
     ? character.inventory.filter((inv) => inv.equipped && content.items[inv.itemId]?.itemType === 'weapon' && !isHandwraps(content.items[inv.itemId]))
     : [];
   const q = query.trim().toLowerCase();
-  const match = (inv: InventoryItem) => !q || (resolve(inv) && displayName(resolve(inv)!, content).toLowerCase().includes(q));
+  const match = (inv: InventoryItem) => !q || (!!resolve(inv) && searchMatches(query, displayName(resolve(inv)!, content)));
 
   const containers = character.inventory.filter((inv) => resolve(inv)?.itemType === 'container');
   const containerIds = new Set(containers.map((c) => c.instanceId));
@@ -655,8 +656,13 @@ export function InventoryTab({
   const loose = character.inventory.filter((inv) => !(inv.containerInstanceId && containerIds.has(inv.containerInstanceId)));
   // A container is shown among the Carried items (or inside its parent), never "Equipped".
   // Its own contents render in a separate section below. Other items split by their flags.
-  const equipped = loose.filter((inv) => !isContainer(inv) && (inv.worn || inv.equipped || inv.invested)).filter(match);
-  const carried = loose.filter((inv) => isContainer(inv) || !(inv.worn || inv.equipped || inv.invested)).filter(match);
+  /* bug 2026-09-13: search-rank — a name-only box, ranked inside each section. Equipped/Carried is
+   * where an item IS, so a row must not jump between them; within a section the item whose name was
+   * typed leads, and with no query the player's own order is returned unchanged. */
+  const rank = (list: InventoryItem[]) =>
+    rankBySearch(list, query, (inv) => { const it = resolve(inv); return it ? displayName(it, content) : ''; });
+  const equipped = rank(loose.filter((inv) => !isContainer(inv) && (inv.worn || inv.equipped || inv.invested)).filter(match));
+  const carried = rank(loose.filter((inv) => isContainer(inv) || !(inv.worn || inv.equipped || inv.invested)).filter(match));
   // Only items that are actually investable (carry the `invested` trait) count toward the
   // 10-item cap — not anything that happens to have a stale invested flag.
   /*
@@ -1324,7 +1330,8 @@ export function InventoryTab({
         // Per-container section data (contents + Bulk-load chip) — shared by both layouts.
         const containerGroup = (c: InventoryItem) => {
           const item = resolve(c);
-          const contents = character.inventory.filter((inv) => inv.containerInstanceId === c.instanceId).filter(match);
+          // bug 2026-09-13: search-rank — same rule inside a container as outside it.
+          const contents = rank(character.inventory.filter((inv) => inv.containerInstanceId === c.instanceId).filter(match));
           const load = loads[c.instanceId];
           // The container item itself lives in its location section (Carried, or a parent
           // container) — this section shows only what's INSIDE it, plus its Bulk load.

@@ -4,6 +4,7 @@ import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
 import { deriveMaxHp } from '../rules/derive';
 import { exportWg, exportNative, importCharacter, type ImportReport } from '../data/transfer';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { sanitizeImportedPortrait } from './imageUtil';
@@ -93,14 +94,27 @@ export function RosterScreen({
   const archivedCount = roster.filter((c) => c.archived).length;
   const q = query.trim().toLowerCase();
 
-  const shown = roster.filter((c) => {
-    if (filter === 'active' && c.archived) return false;
-    if (filter === 'archived' && !c.archived) return false;
-    if (!q) return true;
+  /** The two non-name fields this box also searches, as one string (see the ranking note below). */
+  const originOf = (c: SavedChar) => {
     const anc = content && c.character.ancestryId ? content.ancestries[c.character.ancestryId]?.name : '';
     const cls = content && c.character.classId ? content.classes[c.character.classId]?.name : '';
-    return [c.character.name, anc, cls].some((s) => (s ?? '').toLowerCase().includes(q));
-  });
+    return `${anc ?? ''} | ${cls ?? ''}`;
+  };
+  /* bug 2026-09-13: search-rank. This box matches beyond the name — ancestry and class too — so a
+   * character whose name IS the query sat wherever the roster order put them, below everyone who
+   * merely plays that ancestry or class. The separator keeps the two fields apart, exactly as the
+   * `.some()` below does: a query may never match by spanning ancestry into class. */
+  const shown = rankBySearch(
+    roster.filter((c) => {
+      if (filter === 'active' && c.archived) return false;
+      if (filter === 'archived' && !c.archived) return false;
+      if (!q) return true;
+      return searchMatches(query, c.character.name, originOf(c));
+    }),
+    query,
+    (c) => c.character.name,
+    originOf,
+  );
 
   const tabs: { id: Filter; label: string; n: number }[] = [
     { id: 'all', label: 'All', n: roster.length },

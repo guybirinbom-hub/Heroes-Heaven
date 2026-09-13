@@ -19,6 +19,7 @@ import {
 } from '../rules/derive';
 import { togglePin, togglePinnedDesc, toggleTactic, toggleEtchedRune, setActiveStance, toggleMode, descId, type PlayUpdater } from '../rules/play';
 import { resourcesForCharacter } from '../rules/classResources';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { featUse, spendFeatUse, refundFeatUse } from '../rules/featUses';
 import { actionGate, gateLabel, type ResourceGate } from '../rules/actionGates';
 import { AlchemyPanel } from './AlchemyPanel';
@@ -496,8 +497,7 @@ export function MainTab({
   const strikeKey = (instanceId: string) => `strike:${instanceId}`;
   const actionKey = (name: string) => `action:${name}`;
 
-  const q = query.trim().toLowerCase();
-  const matchText = (name: string, desc = '') => !q || name.toLowerCase().includes(q) || desc.toLowerCase().includes(q);
+  const matchText = (name: string, desc = '') => searchMatches(query, name, desc);
   const matchCost = (c?: ActionCost) => {
     if (filters.size === 0) return true;
     if (!c) return false;
@@ -505,16 +505,22 @@ export function MainTab({
     return id != null && filters.has(id);
   };
   const matchAct = (a: Act) => matchText(a.name, a.desc) && matchCost(a.cost);
+  /* bug 2026-09-13: search-rank. This box matches the description as well as the name, so typing an
+   * action's own name buried it under every action that mentions it. Ranked inside each SECTION
+   * (Strikes / Feats / Tactics / Runes / Item actions / Basic / Skill / Explore / Downtime / Camping)
+   * — the sections say where an action comes from, so a row must not jump out of its own. */
+  const rank = <A extends { name: string; desc?: string }>(list: A[]): A[] =>
+    rankBySearch(list, query, (a) => a.name, (a) => a.desc ?? '');
 
-  const shownStrikes = strikes.filter((s) => matchText(s.name) && matchCost(STRIKE_COST));
-  const shownFeats = featActions.filter(matchAct);
-  const shownTactics = tacticActions.filter(matchAct);
-  const shownRunes = runeActs.filter(matchAct);
-  const shownItemActions = itemActions.filter(matchAct);
-  const shownBasic = encActivities.filter((a) => !a.skill && matchAct(a));
-  const shownSkill = encActivities.filter((a) => a.skill && matchAct(a));
-  const shownExplore = exploreActivities.filter((a) => matchText(a.name, a.desc));
-  const shownDowntime = downtimeActivities.filter((a) => matchText(a.name, a.desc));
+  const shownStrikes = rank(strikes.filter((s) => matchText(s.name) && matchCost(STRIKE_COST)));
+  const shownFeats = rank(featActions.filter(matchAct));
+  const shownTactics = rank(tacticActions.filter(matchAct));
+  const shownRunes = rank(runeActs.filter(matchAct));
+  const shownItemActions = rank(itemActions.filter(matchAct));
+  const shownBasic = rank(encActivities.filter((a) => !a.skill && matchAct(a)));
+  const shownSkill = rank(encActivities.filter((a) => a.skill && matchAct(a)));
+  const shownExplore = rank(exploreActivities.filter((a) => matchText(a.name, a.desc)));
+  const shownDowntime = rank(downtimeActivities.filter((a) => matchText(a.name, a.desc)));
   // Camping activities (Kingmaker): the camping-trait actions from content, surfaced as their own mode
   // when the campaign has Kingmaker on. They live only in content.actions (not the curated ACTIVITIES),
   // so build them here — a short inline summary (strip the "Source … ---" header) + full text in the popup.
@@ -529,7 +535,7 @@ export function MainTab({
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((a) => ({ name: a.name, desc: campingSummary(a.description), traits: a.traits, fullDesc: a.description, fullRefs: a.descRefs }))
     : [];
-  const shownCamping = campingActs.filter((a) => matchText(a.name, a.desc));
+  const shownCamping = rank(campingActs.filter((a) => matchText(a.name, a.desc))); // bug 2026-09-13: search-rank
   // Camping is an extra activity mode, only offered while Kingmaker is on. If the mode is left on
   // 'camp' after Kingmaker is turned off, fall back to Downtime so the list never goes blank.
   const modes = character.kingmakerEnabled ? [...MODES, { id: 'camp', name: 'Camping' }] : MODES;

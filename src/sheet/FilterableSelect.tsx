@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode, type UIEvent } from 'reac
 import type { ActionCost, DescRef } from '../rules/types';
 import type { SliderStop } from '../rules/filterValues';
 import { spellCostMatches } from '../rules/spellFilter';
+import { rankBySearch, searchMatches, splitNameText } from '../data/searchRank';
 import { RangeSlider } from './RangeSlider';
 import { ActionGlyph } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
@@ -125,6 +126,15 @@ export type FilterTab = 'traits' | 'type' | 'numbers';
 
 /** One declarative filter control. */
 export type FilterField<T> =
+  /**
+   * Free-text match.
+   *
+   * bug 2026-09-13: search-rank — the FIRST field of this kind is the picker's always-visible search
+   * box, and its results are RANKED (exact name → prefix → whole word → anywhere in the name → other
+   * fields). The accessor's FIRST LINE must therefore be the record's name and the rest whatever else
+   * the box searches: `` `${x.name}\n${x.description}` ``. Put the description first and a record whose
+   * name the player typed sinks below every record that merely mentions it — which is the defect.
+   */
   | { id: string; label: string; kind: 'text'; accessor: (t: T) => string; placeholder?: string; tab?: FilterTab }
   | { id: string; label: string; kind: 'chips'; options: { id: string; label: string }[]; accessor: (t: T) => string | string[]; mode?: 'any' | 'all'; tab?: FilterTab }
   /** Multi-select chips with a runtime "match any (OR)" ↔ "match all (AND)" toggle. State is
@@ -288,8 +298,12 @@ function isActive<T>(f: FilterField<T>, v: unknown, eff: EffStops): boolean {
 function fieldPass<T>(f: FilterField<T>, v: unknown, item: T, eff: EffStops): boolean {
   switch (f.kind) {
     case 'text': {
-      const needle = ((v as string) ?? '').trim().toLowerCase();
-      return !needle || f.accessor(item).toLowerCase().includes(needle);
+      /* bug 2026-09-13: search-rank — the FILTER half of the same rule. `water skin` (the spelling
+       * the owner used in his own report) matched NOTHING here: "Waterskin" fails a substring test
+       * on the space, so the row was gone before the ranking could lift it. `searchMatches` is
+       * `includes` for a one-word query and all-tokens-present for a multi-word one — the same
+       * condition searchTier scores as tier 4/6. */
+      return searchMatches((v as string) ?? '', f.accessor(item));
     }
     case 'chips': {
       const st = asMulti(v);
@@ -426,6 +440,9 @@ export function FilterableSelect<T>({
   }, [spec, items, presence]);
   // Only fields that can actually narrow this list participate (in the panel AND in filtering).
   const liveFields = useMemo(() => spec.fields.filter((f) => presence[f.id].show), [spec, presence]);
+  // The primary text field is surfaced as an always-visible search box in the results bar (every
+  // picker gets a search); the remaining filters live in the collapsible panel.
+  const searchField = liveFields.find((f) => f.kind === 'text');
 
   const activeCount = liveFields.filter((f) => isActive(f, state[f.id], effStops)).length;
 
@@ -449,7 +466,26 @@ export function FilterableSelect<T>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ineligible, items]);
   const inelCount = inelKeys ? filtered.reduce((n, it) => n + (inelKeys.has(rowKey(it)) ? 1 : 0), 0) : 0;
-  const results = hideInel && inelKeys ? filtered.filter((it) => !inelKeys.has(rowKey(it))) : filtered;
+  const eligible = hideInel && inelKeys ? filtered.filter((it) => !inelKeys.has(rowKey(it))) : filtered;
+
+  /* bug 2026-09-13: search-rank. The search box matches the name AND the description (every spec's
+   * text accessor is `name\ndescription`), so "waterskin" returned 19 rows in the list's own
+   * level-then-name order with Waterskin 16th, behind fifteen kits whose contents list one. Ranking
+   * happens HERE rather than in each picker because this component IS the search box for all nine of
+   * them. Ties keep the incoming order, so a picker's own sort still decides everything the query
+   * doesn't, and an empty box returns `eligible` unchanged (same reference — no re-render churn). */
+  const results = useMemo(
+    () =>
+      searchField
+        ? rankBySearch(
+            eligible,
+            (state[searchField.id] as string) ?? '',
+            (it) => splitNameText(searchField.accessor(it)).name,
+            (it) => splitNameText(searchField.accessor(it)).other,
+          )
+        : eligible,
+    [eligible, searchField, state],
+  );
 
   // Infinite scroll: render `limit` rows at a time and grow as the user nears the bottom, so EVERY
   // option is reachable by scrolling (a hard cap used to hide the tail — you could only reveal it by
@@ -461,9 +497,6 @@ export function FilterableSelect<T>({
     if (el.scrollHeight - el.scrollTop - el.clientHeight < 300) setVisibleCount((n) => (n < results.length ? n + limit : n));
   };
 
-  // The primary text field is surfaced as an always-visible search box in the results bar (every
-  // picker gets a search); the remaining filters live in the collapsible panel.
-  const searchField = liveFields.find((f) => f.kind === 'text');
   const panelFields = searchField ? liveFields.filter((f) => f.id !== searchField.id) : liveFields;
   const hasPanel = panelFields.length >= 1;
   const panelOpen = hasPanel && showFilters;

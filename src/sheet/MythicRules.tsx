@@ -6,6 +6,7 @@
  * (classFeatures with the `calling` trait; feats with the `mythic` trait) so the reference can't drift.
  */
 import { useMemo, useState, type ReactNode } from 'react';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import type { ContentDatabase, DescRef, Feat } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
@@ -107,7 +108,12 @@ export function MythicRules({ content, onClose, embedded = false }: { content: C
   useBackHandler(isMobile && mobileSection !== null, () => setMobileSection(null));
 
   const q = query.trim().toLowerCase();
-  const nameMatch = (name: string) => !q || name.toLowerCase().includes(q);
+  const nameMatch = (name: string) => searchMatches(query, name);
+  /* bug 2026-09-13: search-rank. Measured on this page's own data: "mythic" listed Mythic Casting
+   * BELOW Summon Mythic Power, "cut" listed Cutting Rebuke below Arms that Cut the Waves, "death"
+   * listed Deathless Servant below Steal Death. Ranked inside each list — and inside each LEVEL
+   * group / each DESTINY, because those headings say what a feat costs and where it comes from. */
+  const ranked = <T extends { name: string }>(list: T[]) => rankBySearch(list, query, (x) => x.name);
 
   const callings = useMemo(() => mythicCallings(content), [content]);
   const generalFeats = useMemo(() => generalMythicFeats(content), [content]);
@@ -174,7 +180,7 @@ export function MythicRules({ content, onClose, embedded = false }: { content: C
         that calling's mythic feats. Tap a calling to read it. ({callings.length} in your enabled sources.)
       </p>
       <div className="mpr-proplist">
-        {callings.filter((c) => nameMatch(c.name)).map((c) => (
+        {ranked(callings.filter((c) => nameMatch(c.name))).map((c) => (
           <EntryTerm key={c.id} item={c} descKey="classFeatures" />
         ))}
         {callings.filter((c) => nameMatch(c.name)).length === 0 && <p className="mpr-note">No callings match “{query.trim()}”.</p>}
@@ -196,7 +202,7 @@ export function MythicRules({ content, onClose, embedded = false }: { content: C
             <span className="mpr-kind-name">Level {cmp(lvl)}</span>
           </div>
           <div className="mpr-proplist">
-            {feats.sort((a, b) => a.name.localeCompare(b.name)).map((f) => (
+            {ranked(feats.sort((a, b) => a.name.localeCompare(b.name))).map((f) => (
               <EntryTerm key={f.id} item={f} descKey="feats" />
             ))}
           </div>
@@ -237,7 +243,7 @@ export function MythicRules({ content, onClose, embedded = false }: { content: C
               <span className="mpr-feat-type">Level {cmp(g.dedication?.level ?? 12)}</span>
             </div>
             <div className="mpr-proplist">
-              {feats.map((f) => (
+              {ranked(feats).map((f) => (
                 <EntryTerm key={f.id} item={f} descKey="feats" />
               ))}
             </div>

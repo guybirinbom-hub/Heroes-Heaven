@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { isMobileNow } from './useIsMobile';
 import type { ActiveCondition, Condition, ModeDef } from '../rules/types';
 import { ModesPanel } from './ModesPanel';
@@ -63,9 +64,16 @@ export function ConditionsModal({
   // The condition whose full rules page is open on top of this list.
   const [reading, setReading] = useState<Condition | null>(null);
   const activeIds = new Set(active.map((c) => c.id));
-  const list = Object.values(conditions)
-    .filter((c) => c.name.toLowerCase().includes(q.trim().toLowerCase()))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  // bug 2026-09-13: search-rank — a name-only box, so the rule only lifts the exact/prefix match:
+  // the list is still alphabetical, but the condition the player typed is the first row, not the
+  // first row that happens to contain the word.
+  const list = rankBySearch(
+    Object.values(conditions)
+      .filter((c) => searchMatches(q, c.name))
+      .sort((a, b) => a.name.localeCompare(b.name)),
+    q,
+    (c) => c.name,
+  );
 
   return (
     <div className="picker-overlay" onClick={onClose}>

@@ -49,6 +49,7 @@ import { ConditionsModal } from './ConditionsModal';
 import { CATALOG_MODES, contentGatedModes, playerModeLibrary } from '../rules/modes';
 import { FEAT_SITUATIONAL, shippedSituational } from '../rules/situationalBonuses';
 import { AddItemsModal } from './AddItemsModal';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
 import type { DescNode } from './descref';
@@ -244,11 +245,12 @@ function AddCompanionModal({ content, currency, enabledSources, offers, onAdd, o
   // Companions now carry a real source.book (the AoN re-import), so the picker respects the
   // character's enabled books like every other picker. `enabledSources` absent = Core only.
   const enabledBooks = useMemo(() => enabledBookSet(enabledSources), [enabledSources]);
-  const matches = (r: AddRow) => (cat === 'all' || r.cat === cat) && (!ql || r.name.toLowerCase().includes(ql));
+  const matches = (r: AddRow) => (cat === 'all' || r.cat === cat) && searchMatches(ql, r.name);
   // `offers` is recomputed by the caller on every render, so memoize against WHICH offers there are —
   // depending on the array itself would rebuild the whole several-hundred-row catalogue each keystroke.
   const offerKey = offers.map((o) => o.offerSlug).join(',');
-  const rows = useMemo(() => addRows(content, enabledBooks, offers).filter(matches), [content, enabledBooks, offerKey, cat, ql]);
+  // bug 2026-09-13: search-rank — `addRows` orders by level then name; the typed companion leads.
+  const rows = useMemo(() => rankBySearch(addRows(content, enabledBooks, offers).filter(matches), ql, (r) => r.name), [content, enabledBooks, offerKey, cat, ql]);
   // Most companions come from non-Core books (19 from Howl of the Wild alone), so a Core-only
   // character sees a much shorter list than the data holds. Say so, rather than letting it look like
   // the app is missing content — this is the same trap the feat picker's hidden-matches note avoids.
@@ -369,9 +371,14 @@ function FamiliarAbilityPicker({
   const [descNode, setDescNode] = useState<DescNode | null>(null);
   const has = new Set(chosen);
   const free = new Set(granted ?? []);
-  const list = Object.values(content.familiarAbilities)
-    .filter((a) => a.name.toLowerCase().includes(q.trim().toLowerCase()))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  // bug 2026-09-13: search-rank — alphabetical, with the typed ability lifted to the top.
+  const list = rankBySearch(
+    Object.values(content.familiarAbilities)
+      .filter((a) => searchMatches(q, a.name))
+      .sort((a, b) => a.name.localeCompare(b.name)),
+    q,
+    (a) => a.name,
+  );
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker cond-modal" onClick={(e) => e.stopPropagation()}>

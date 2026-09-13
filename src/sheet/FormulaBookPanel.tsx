@@ -7,6 +7,7 @@ import {
   formulaSlots,
   type FormulaSlot,
 } from '../rules/formulaBook';
+import { rankBySearch, searchMatches } from '../data/searchRank';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
 import { ITEM_SPEC } from './filterSpecs';
@@ -45,11 +46,16 @@ export function FormulaBookPanel({
     [character, content],
   );
   const rows = useMemo(() => {
-    const needle = q.trim().toLowerCase();
-    return formulas
-      .map((id) => ({ id, item: content.items[id] as Item | undefined }))
-      .filter((r) => !needle || (r.item?.name ?? r.id).toLowerCase().includes(needle))
-      .sort((a, b) => (a.item?.name ?? a.id).localeCompare(b.item?.name ?? b.id));
+    // bug 2026-09-13: search-rank — the book stays alphabetical; the formula whose name was typed
+    // leads it.
+    return rankBySearch(
+      formulas
+        .map((id) => ({ id, item: content.items[id] as Item | undefined }))
+        .filter((r) => searchMatches(q, r.item?.name ?? r.id))
+        .sort((a, b) => (a.item?.name ?? a.id).localeCompare(b.item?.name ?? b.id)),
+      q,
+      (r) => r.item?.name ?? r.id,
+    );
   }, [formulas, content.items, q]);
 
   const slotPool = useMemo(() => (slot ? formulaOptions(slot, character, content) : []), [slot, character, content]);
