@@ -270,6 +270,7 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
 }) {
   const { duplicateCombatant, removeCombatant, setDefeated, delayCombatant, returnFromDelay } = useCombatStore()
   const inCombat = useCombatStore(s => s.inCombat)
+  const isActiveTurn = useCombatStore(s => s.combatants[s.activeIndex]?.id === c.id)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -342,10 +343,17 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
         {c.isDefeated ? 'Restore' : 'Mark defeated'}
       </button>
 
-      {/* Delay — step out of the order, come back after any later turn. */}
-      {inCombat && (
+      {/* Delay — step out of the order, come back after any later turn. Offered on the row whose
+          turn it is and nowhere else: Player Core p. 416 gives Delay the trigger "Your turn begins",
+          and the same entry puts the cost of delaying on that turn — *"any persistent damage or
+          other negative effects that normally occur at the start or end of your turn occur
+          immediately when you use the Delay action"*. delayCombatant runs that end-of-turn pass by
+          handing the turn on (nextTurn), which it can only do for the creature that HAS the turn; on
+          any other row the click used to drop a round of persistent damage and one step of every
+          auto-decrementing condition. Returning stays available on any delayed row. */}
+      {inCombat && (isActiveTurn || c.isDelayed) && (
         <button style={itemStyle} onMouseEnter={hov(true)} onMouseLeave={hov(false)}
-          title={c.isDelayed ? 'Re-enter the order right after the current turn' : 'Leave the turn order until you bring it back'}
+          title={c.isDelayed ? 'Re-enter the order right after the current turn' : 'Leave the turn order — it takes its turn on its own count next round if you don’t bring it back sooner (Player Core p. 416)'}
           onClick={run(() => (c.isDelayed ? returnFromDelay(c.id) : delayCombatant(c.id)))}>
           {c.isDelayed ? 'Return from delay' : 'Delay'}
         </button>

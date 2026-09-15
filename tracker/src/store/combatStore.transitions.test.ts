@@ -7,7 +7,10 @@
 // live Archives rather than recalled: the rows that were wrong were wrong because they carried an
 // older printing's wording or a play-aid's shorthand instead of the sentence on the page.
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { createElement } from 'react'
+import { render, screen, fireEvent, cleanup, act } from '@testing-library/react'
 import { useCombatStore } from './combatStore'
+import { InitiativeTracker } from '../components/InitiativeTracker'
 import { useLayoutStore, useGmLayoutStore } from './layoutStore'
 import { computeConditionMods } from '../utils/conditionEffects'
 import type { AppliedCondition, Creature } from '../types/pf2e'
@@ -112,7 +115,7 @@ describe('setScope', () => {
     // campaign A would show campaign B's cmb-1 — a different creature under the same id, which
     // reconcile() can't prune (the id is valid in B).
     // MUTATION (layoutStore.ts: onScopeChange registration moved back inside `if (persistKey)`):
-    //   FAILS at line 123 — "expected { id: 'leaf2', kind: 'leaf', … tabs: [ cmb-1 ] } to be null"
+    //   FAILS at line 126 — "expected { id: 'leaf2', kind: 'leaf', … tabs: [ cmb-1 ] } to be null"
     //   (campaign B's board is empty, and the pane is still showing A's cmb-1).
     useCombatStore.getState().setScope('camp-a')
     add('Goblin Boss')
@@ -225,7 +228,7 @@ describe('condition durations tick on the SOURCE\'s turn', () => {
     // (Clear Defeated, Remove) has no turns left to give, so without the fallback the effect freezes
     // on the target at its current count for the rest of the session.
     // MUTATION (`!hasSource(s, c)` → `!c.source` at both nextTurn guards):
-    //   FAILS at line 235 — "expected 3 to be 2" (the count froze where the wizard left it).
+    //   FAILS at line 238 — "expected 3 to be 2" (the count froze where the wizard left it).
     twoCreatureFight()
     useCombatStore.getState().addCondition(idOf('Goblin'), {
       name: 'slowed', value: 1, duration: 3, source: idOf('Wizard'), isPermanent: false,
@@ -247,7 +250,7 @@ describe('condition durations tick on the SOURCE\'s turn', () => {
     // startCombat opened, and startCombat credits no count at all, so a round-1 delay has nothing to
     // double and the leg passes whether the guard exists or not.
     // MUTATION (creditCount: `if (!c || c.countedThisRound) return` → `if (!c) return`):
-    //   FAILS at line 266 — "expected 1 to be 2" (the wizard's round-2 count credited twice, which
+    //   FAILS at line 269 — "expected 1 to be 2" (the wizard's round-2 count credited twice, which
     //   is the 3-round effect down to 1 before the wizard has had two turns).
     twoCreatureFight()                                // Wizard 20, Goblin 10 — the wizard acts first
     useCombatStore.getState().addCondition(idOf('Goblin'), {
@@ -271,29 +274,480 @@ describe('condition durations tick on the SOURCE\'s turn', () => {
     expect(durOn('Goblin')).toBe(1)                   // and the clock is running again, not stuck
   })
 
-  it('a source that Delays and NEVER returns holds its own effects open', () => {
-    // The consequence of the line above, recorded rather than left to be found: the delayed source
-    // is still on the board, so hasSource() keeps its targets off the turn-end clock, and its own
-    // count never comes up — so nothing ticks for as long as it stays delayed. The tracker doesn't
-    // model "Delay ends at the end of the round" (Player Core p. 421); a GM leaving a creature
-    // delayed is holding its turn open. Un-delay it and the clock runs again (the test above).
-    // Same reason as above for delaying on the ROUND-2 turn: a round-1 delay leaves a count that was
-    // never credited, so the skip guard can't be told from its absence.
-    // MUTATION (`if (skipped && !skipped.isDelayed)` → `if (skipped)` in nextTurn's skip loop):
-    //   FAILS at line 296 — "expected undefined to be 2" (three credited skips ran the 3-round
-    //   effect out entirely).
+  // FINDING 4 — a Delay that is never taken back used to freeze the source's effects for the rest
+  // of the session (the skip loop credited no count, and hasSource() kept the targets off the
+  // turn-end clock either way). The print ends a Delay by itself, in the entry this repo ships
+  // (public/data/actions.json, "Delay"):
+  //   Player Core p. 416, Delay: "If you Delay an entire round without returning to the initiative
+  //   order, the actions from the Delayed turn are lost, your initiative doesn't change, and your
+  //   next turn occurs at your original position in the initiative order."
+  it('a source that Delays and never comes back takes its turn on its own count next round', () => {
+    // MUTATION (nextTurn's skip loop: delete the `skipped?.isDelayed && …` auto-return branch):
+    //   FAILS at line 300 — "expected 'Goblin' to be 'Wizard'" (the wizard's position came up in
+    //   round 3 and the advance stepped straight over it again).
     twoCreatureFight()                                // Wizard 20, Goblin 10
     useCombatStore.getState().addCondition(idOf('Goblin'), {
       name: 'slowed', value: 1, duration: 3, source: idOf('Wizard'), isPermanent: false,
     })
     useCombatStore.getState().nextTurn()              // → Goblin, round 1
     useCombatStore.getState().nextTurn()              // → Wizard, round 2: 3 → 2
+    expect(durOn('Goblin')).toBe(2)
+
     useCombatStore.getState().delayCombatant(idOf('Wizard'))    // delays on its own turn → turn passes
+    expect(activeName()).toBe('Goblin')
+    useCombatStore.getState().nextTurn()              // the wizard's position comes up in ROUND 3
+    expect(useCombatStore.getState().round).toBe(3)
+    expect(activeName()).toBe('Wizard')
+    expect(useCombatStore.getState().combatants.find(c => c.name === 'Wizard')!.isDelayed).toBe(false)
+    expect(durOn('Goblin')).toBe(1)                   // its next turn, at its own position — one tick
+
+    useCombatStore.getState().nextTurn()              // → Goblin, round 3
+    useCombatStore.getState().nextTurn()              // → Wizard, round 4
+    expect(condOn('Goblin')).toHaveLength(0)          // and the clock ran out on schedule
+  })
+})
+
+// ───────────────────────────────────────────────────────────────────────────
+// 2b. The once-per-round initiative count, at every entry point
+//
+//     The count is what tickSourceDurations spends (Player Core p. 426), and `countedThisRound` is
+//     the record of having spent it. An adversarial re-read of the 2026-09-15 commit found four
+//     ways in besides a nextTurn landing — the start of the fight, a step backwards, a load, and a
+//     Delay nobody took back — each of which either skipped the credit or handed one out twice.
+//     Finding 4 is the test directly above; findings 1, 2, 3 and 5 are here.
+// ───────────────────────────────────────────────────────────────────────────
+describe('the once-per-round count survives every entry point', () => {
+  beforeEach(() => { resetCombat(); localStorage.clear() })
+  afterEach(() => { useCombatStore.getState().setScope(null); localStorage.clear() })
+
+  /** Wizard 20 / Goblin 15 / Orc 10, fight started — the wizard acts first. */
+  function threeCreatureFight() {
+    add('Wizard', { initiative: 20 }); add('Goblin', { initiative: 15 }); add('Orc', { initiative: 10 })
+    useCombatStore.getState().startCombat()
+  }
+  /** A 3-round effect on the orc, created by the wizard. */
+  function wizardSlowsTheOrc(duration = 3) {
+    useCombatStore.getState().addCondition(idOf('Orc'), {
+      name: 'slowed', value: 1, duration, source: idOf('Wizard'), isPermanent: false,
+    })
+  }
+  /** One full cycle of the order (three combatants) — back to the same creature, a round later. */
+  function cycle() { for (let i = 0; i < 3; i++) useCombatStore.getState().nextTurn() }
+  /** Who has already had their initiative count this round, in order. */
+  function flags() {
+    return useCombatStore.getState().combatants.map(c => `${c.name}:${!!c.countedThisRound}`).join(' ')
+  }
+
+  it('FINDING 1 — startCombat credits the creature it opens on, so a round-1 Delay buys no second tick', () => {
+    // startCombat set activeIndex and began that creature's turn without crediting it, leaving the
+    // first combatant the one creature with no count in round 1. Delay + return then landed the
+    // advance on it a SECOND time inside round 1 and that landing found a free count: a 3-round
+    // effect went 3 → 2 in the round it was created, and expired at the start of the wizard's 3rd
+    // turn instead of its 4th.
+    // MUTATION (startCombat: delete the `creditCount` + `tickSourceDurations` pair):
+    //   FAILS at line 360 — "expected 2 to be 3" (the wizard's round-1 count was still on the table
+    //   when it came back from the Delay); FINDING 5 below fails with it, at line 510, and so does
+    //   the top-skip test that follows, at line 386.
+    threeCreatureFight()
+    wizardSlowsTheOrc()                               // created on the wizard's own round-1 turn
+
+    useCombatStore.getState().delayCombatant(idOf('Wizard'))    // delays that same turn
+    expect(activeName()).toBe('Goblin')
+    useCombatStore.getState().returnFromDelay(idOf('Wizard'))   // back in behind the goblin
+    useCombatStore.getState().nextTurn()              // lands on the wizard again — still round 1
+    expect(activeName()).toBe('Wizard')
+    expect(useCombatStore.getState().round).toBe(1)
+    expect(durOn('Orc')).toBe(3)                      // round 1's count was spent by startCombat
+
+    cycle(); expect(durOn('Orc')).toBe(2)             // the wizard's 2nd turn
+    cycle(); expect(durOn('Orc')).toBe(1)             // its 3rd
+    cycle(); expect(condOn('Orc')).toHaveLength(0)    // and it ends at the start of its 4th
+  })
+
+  it('FINDING 1, continued — startCombat credits every seat the opening advance steps OVER, and a reload agrees', () => {
+    // Crediting only `combatants[activeIndex]` disagreed with loadPersistedCombat, which derives the
+    // same flag as `i <= activeIndex`. A defeated NPC sorted ahead of the first actor — a corpse the
+    // GM never cleared off the board — kept a free round-1 count on a live board but not on a
+    // reloaded one, so a round-duration effect it left behind ran a round long, and HOW long
+    // depended on whether the GM had reloaded. Its initiative count comes up like any skipped
+    // creature's (nextTurn's skip loop credits exactly that); it just can't act.
+    // MUTATION (startCombat: the `for (let i = 0; i <= s.activeIndex; i++) creditCount(…)` loop
+    //   back to the single `creditCount(s.combatants[s.activeIndex], counts)`):
+    //   FAILS at line 386 — "expected 3 to be 2" (the corpse's round-1 count was never spent, so its
+    //   effect still read its full duration once the fight was under way).
+    useCombatStore.getState().setScope('camp-topskip')
+    add('Corpse', { initiative: 25 }); add('Wizard', { initiative: 20 }); add('Goblin', { initiative: 15 })
+    useCombatStore.getState().setDefeated(idOf('Corpse'), true)
+    useCombatStore.getState().addCondition(idOf('Goblin'), {
+      name: 'slowed', value: 1, duration: 3, source: idOf('Corpse'), isPermanent: false,
+    })
+    useCombatStore.getState().startCombat()
+    expect(activeName()).toBe('Wizard')                // the corpse is stepped over, as it should be
+    expect(durOn('Goblin')).toBe(2)                    // …but its count came up: 3 → 2 in round 1
+
+    const live = flags()
+    cycle(); expect(durOn('Goblin')).toBe(1)           // round 2's wrap crosses its count again
+    cycle(); expect(condOn('Goblin')).toHaveLength(0)  // and it runs out in round 3, not round 4
+
+    // The same board reloaded from a pre-commit save must read the same flags, or the clock shifts
+    // by a round depending on whether the GM reopened the tracker.
+    useCombatStore.getState().setScope(null)
+    const key = 'pf2e-current-combat:camp-topskip'
+    const raw = JSON.parse(localStorage.getItem(key)!) as { combatants: Record<string, unknown>[]; round: number; activeIndex: number }
+    raw.round = 1; raw.activeIndex = 1                 // rewind the snapshot to the opening turn
+    for (const c of raw.combatants) delete c.countedThisRound
+    localStorage.setItem(key, JSON.stringify(raw))
+    useCombatStore.getState().setScope('camp-topskip')
+    expect(flags()).toBe(live)
+  })
+
+  it('FINDING 2 — prevTurn stops at the top of the order instead of un-wrapping the round', () => {
+    // prevTurn is not the inverse of nextTurn: it un-ticks no duration and un-credits no count. It
+    // used to step 0 → last with `round - 1`, leaving every tick applied, so the re-advance hit the
+    // wrap branch again, wiped every flag and re-credited — a second tick inside one round.
+    // MUTATION (prevTurn: `if (s.activeIndex === 0) return` → the old
+    //   `{ s.activeIndex = s.combatants.length-1; s.round = Math.max(1, s.round-1) }`):
+    //   FAILS at line 420 — "expected 'Orc' to be 'Wizard'" (the pointer walked back into round 1;
+    //   the re-advance then wraps a second time and re-credits everyone, which is the tick the
+    //   assertions below this one hold down).
+    threeCreatureFight()
+    wizardSlowsTheOrc()
+    cycle()                                           // → the wizard's round-2 turn
+    expect(useCombatStore.getState().round).toBe(2)
+    expect(durOn('Orc')).toBe(2)
+
+    useCombatStore.getState().prevTurn()              // at the top of the order: nothing to step back to
+    expect(activeName()).toBe('Wizard')
+    expect(useCombatStore.getState().round).toBe(2)
+    useCombatStore.getState().nextTurn()              // → Goblin
+    expect(durOn('Orc')).toBe(2)
+
+    // Mid-round it still steps back — the clamp is only at the round boundary.
+    useCombatStore.getState().prevTurn()
+    expect(activeName()).toBe('Wizard')
     useCombatStore.getState().nextTurn()
+    expect(activeName()).toBe('Goblin')
+    expect(durOn('Orc')).toBe(2)
+  })
+
+  it('FINDING 3 — a board saved before the flag existed loads with its spent counts already spent', () => {
+    // Every save written before the once-per-round commit has no `countedThisRound` at all, and
+    // `undefined` reads as "not counted yet" — so re-opening ANY existing player save mid-fight put
+    // a free count back on the table for everyone the order had already passed.
+    // MUTATION (loadPersistedCombat: delete the `parsed.combatants.forEach(…)` default):
+    //   FAILS at line 463 — "expected 1 to be 2" (the wizard's spent round-2 count came back with
+    //   the save, and the Delay cashed it); the reload half of finding 1 above fails with it, at
+    //   line 401 — "expected 'Corpse:false Wizard:false Goblin:false' to be
+    //   'Corpse:true Wizard:true Goblin:false'".
+    useCombatStore.getState().setScope('camp-flagless')
+    threeCreatureFight()
+    wizardSlowsTheOrc()
+    cycle()                                           // → the wizard's round-2 turn, 3 → 2
+    expect(durOn('Orc')).toBe(2)
+    useCombatStore.getState().setScope(null)          // flushes the board under its own key
+
+    const key = 'pf2e-current-combat:camp-flagless'
+    const raw = JSON.parse(localStorage.getItem(key)!) as { combatants: Record<string, unknown>[] }
+    for (const c of raw.combatants) delete c.countedThisRound      // a pre-commit save, exactly
+    localStorage.setItem(key, JSON.stringify(raw))
+
+    useCombatStore.getState().setScope('camp-flagless')
+    expect(activeName()).toBe('Wizard')
+    expect(useCombatStore.getState().round).toBe(2)
+    expect(durOn('Orc')).toBe(2)
+
+    useCombatStore.getState().delayCombatant(idOf('Wizard'))
+    useCombatStore.getState().returnFromDelay(idOf('Wizard'))
+    useCombatStore.getState().nextTurn()              // lands on the wizard again, same round
+    expect(activeName()).toBe('Wizard')
+    expect(durOn('Orc')).toBe(2)
+  })
+
+  it('FINDING 3, continued — a reinforcement that joins mid-fight saves the flag it has live', () => {
+    // The positional default above is for saves written BEFORE the flag existed. addCombatant wrote
+    // no `countedThisRound` key at all (duplicateCombatant always has), JSON drops a missing key,
+    // and the default then fired for a creature that joined THIS fight — inventing its count from
+    // wherever its initiative happened to sort it. A reinforcement IS a source (the GM applies its
+    // aura through the same addCondition the condition panel calls), so the same board reloaded ran
+    // that effect a round longer than the live one.
+    // MUTATION (addCombatant: drop `countedThisRound: false` from the pushed literal):
+    //   FAILS at line 491 — "expected 'Reinforcement:true Wizard:true Goblin:true Orc:false' to be
+    //   'Reinforcement:false Wizard:true Goblin:true Orc:false'".
+    useCombatStore.getState().setScope('camp-reinforcement')
+    threeCreatureFight()                              // Wizard 20 / Goblin 15 / Orc 10
+    useCombatStore.getState().nextTurn()              // → the goblin's round-1 turn
+    add('Reinforcement', { initiative: 25 })          // pushed on the END of the array…
+    useCombatStore.getState().setInitiative(idOf('Reinforcement'), 25)   // …and sorted to the front
+    expect(names()[0]).toBe('Reinforcement')          // i.e. BEHIND the pointer
+    expect(activeName()).toBe('Goblin')
+    useCombatStore.getState().addCondition(idOf('Orc'), {
+      name: 'slowed', value: 1, duration: 3, source: idOf('Reinforcement'), isPermanent: false,
+    })
+    const live = flags()
+    expect(live).toContain('Reinforcement:false')     // its count is still on the table
+
+    useCombatStore.getState().setScope(null)          // flush the board under its own key…
+    useCombatStore.getState().setScope('camp-reinforcement')   // …and reopen the tracker
+    expect(flags()).toBe(live)
+    // …so the reloaded board spends that count exactly where the live one does.
+    useCombatStore.getState().delayCombatant(idOf('Reinforcement'))
+    useCombatStore.getState().returnFromDelay(idOf('Reinforcement'))
     useCombatStore.getState().nextTurn()
-    useCombatStore.getState().nextTurn()
-    expect(useCombatStore.getState().round).toBe(5)   // three more rounds of goblin turns
-    expect(durOn('Goblin')).toBe(2)                   // and the wizard's clock never moved again
+    expect(activeName()).toBe('Reinforcement')
+    expect(durOn('Orc')).toBe(2)
+  })
+
+  it('FINDING 5 — an effect created BEFORE the fight ticks on its source\'s very first turn', () => {
+    // Narrow twin of finding 1, same site: startCombat begins a turn, and a turn start is where
+    // p. 426 puts the tick. A 1-round effect set up during preparations, whose creator rolls
+    // highest, used to survive that first turn and expire a whole turn late.
+    add('Wizard', { initiative: 20 }); add('Goblin', { initiative: 15 }); add('Orc', { initiative: 10 })
+    useCombatStore.getState().addCondition(idOf('Orc'), {
+      name: 'slowed', value: 1, duration: 1, source: idOf('Wizard'), isPermanent: false,
+    })
+    useCombatStore.getState().startCombat()           // initiative rolled; the wizard acts first
+    expect(activeName()).toBe('Wizard')
+    expect(condOn('Orc')).toHaveLength(0)             // its one round ran out on that turn
+  })
+
+  it('the round turns over as the pointer crosses the top, so a count is never spent against the wrong round', () => {
+    // Where findings 1 and 4 meet the wrap. The round used to be bumped (and every flag cleared)
+    // AFTER the skip loop, so a creature stepped over past the top of the order was credited against
+    // the round it had just left: the wizard took startCombat's round-1 count, was skipped on the
+    // wrap as a defeated NPC, and its round-2 count found the round-1 flag still set and was
+    // swallowed — its effects froze on the board from round 2 on.
+    // MUTATION (nextTurn: `cross(next)` / `cross(stepped)` deleted and the old
+    //   `if (wrapped) { s.round += 1; for (…) c.countedThisRound = false }` put back after the loop,
+    //   with `wrapped` set from `next === 0` / `stepped === 0` as before):
+    //   FAILS at line 530 — "expected 3 to be 2" (the wizard's round-2 count went missing); the
+    //   p. 416 auto-return test fails with it at line 300, since it reads the same bumped round.
+    threeCreatureFight()
+    wizardSlowsTheOrc()
+    useCombatStore.getState().setDefeated(idOf('Wizard'), true)   // killed on its own first turn
+    cycle()                                           // Goblin, Orc, then the wrap steps over the wizard
+    expect(useCombatStore.getState().round).toBe(2)
+    expect(activeName()).toBe('Goblin')
+    expect(durOn('Orc')).toBe(2)                      // its count came up even though it can't act
+    cycle(); expect(durOn('Orc')).toBe(1)
+    cycle(); expect(condOn('Orc')).toHaveLength(0)    // and it still runs out on time
+  })
+})
+
+// ───────────────────────────────────────────────────────────────────────────
+// 2c. The once-per-round END-of-turn pass
+//
+//     `countedThisRound` guards the SOURCE clock only. Everything nextTurn does for the creature
+//     whose turn is ending — persistent damage, the auto-decrement step (Frightened), the
+//     source-less duration tick, the per-round resource refill — had no guard of its own.
+//
+//     Player Core p. 416, Delay (public/data/actions.json, the entry this repo ships):
+//     "When you Delay, any persistent damage or other negative effects that normally occur at the
+//      start or end of your turn occur immediately when you use the Delay action."
+//
+//     delayCombatant hands the turn on through nextTurn, so that pass IS the "occur immediately",
+//     and the print then offers the way back "as a free action triggered by the end of any other
+//     creature's turn" — inside the same round. What resumes is the rest of the one turn already
+//     paid for; its end used to charge for it a second time.
+// ───────────────────────────────────────────────────────────────────────────
+describe('the END-of-turn pass runs once per creature per round', () => {
+  beforeEach(() => {
+    resetCombat(); localStorage.clear()
+    useCombatStore.setState({ diceResults: [] } as never)   // the reminder stack is the pass counter
+  })
+  afterEach(() => { useCombatStore.getState().setScope(null); localStorage.clear() })
+
+  /** Wizard 20 / Goblin 15 / Orc 10, fight started — the wizard acts first. */
+  function fight() {
+    add('Wizard', { initiative: 20 }); add('Goblin', { initiative: 15 }); add('Orc', { initiative: 10 })
+    useCombatStore.getState().startCombat()
+  }
+  const condVal = (who: string, what: string) => condOn(who).find(c => c.name === what)?.value
+  const condDur = (who: string, what: string) => condOn(who).find(c => c.name === what)?.duration
+  /** One reminder card per firePersistentDamage call (the default setting is warn, not auto-roll). */
+  const pdCards = () => useCombatStore.getState().diceResults.filter(d => d.label.startsWith('⚠ Persistent damage')).length
+  /** Whose turn has already ended this round, in order. */
+  function endFlags() {
+    return useCombatStore.getState().combatants.map(c => `${c.name}:${!!c.endedThisRound}`).join(' ')
+  }
+  function usesOn(name: string): Record<string, number> {
+    return useCombatStore.getState().combatants.find(c => c.name === name)!.resourceUses ?? {}
+  }
+  /** A stat block whose one ability is "once per round" — roundTurnAbilityKeys reads it as `ab:blast`. */
+  const BLASTER = {
+    name: 'Blaster', defenses: { hp: 40 },
+    abilities: [{ name: 'Blast', entries: ['Frequency once per round'] }],
+  } as unknown as Creature
+  /** Advance until it is `who`'s turn in `round`, with a bound so a stuck pointer fails loudly. */
+  function walkTo(round: number, who: string) {
+    for (let i = 0; i < 12 && !(useCombatStore.getState().round === round && activeName() === who); i++) {
+      useCombatStore.getState().nextTurn()
+    }
+    expect([useCombatStore.getState().round, activeName()]).toEqual([round, who])
+  }
+
+  it('an in-turn Delay and a same-round Return pay the negatives once — and again next round', () => {
+    // MUTATION (nextTurn: `if (cur && !cur.endedThisRound) { cur.endedThisRound = true` back to the
+    //   old `if (cur) {`):
+    //   FAILS at line 614 — "expected 2 to be 1" (the wizard's one Delayed turn rolled persistent
+    //   damage twice; the two assertions under it hold Frightened 4 → 3 → 2 and the source-less
+    //   3-round condition 3 → 2 → 1 down the same way). The reload leg below fails with it, at
+    //   line 662 — "expected 2 to be 3".
+    fight()
+    useCombatStore.getState().addCondition(idOf('Wizard'), {
+      name: 'persistent damage', pdAmount: '1d6', pdType: 'fire', isPermanent: true,
+    })
+    useCombatStore.getState().addCondition(idOf('Wizard'), { name: 'frightened', value: 4, isPermanent: false })
+    // No `source` → the "until the end of the target's next turn" family, i.e. this same pass.
+    useCombatStore.getState().addCondition(idOf('Wizard'), { name: 'slowed', value: 1, duration: 3, isPermanent: false })
+
+    useCombatStore.getState().delayCombatant(idOf('Wizard'))   // legal: Delay on its own turn
+    expect(activeName()).toBe('Goblin')
+    expect(pdCards()).toBe(1)                         // "occur immediately when you use the Delay action"
+    expect(condVal('Wizard', 'frightened')).toBe(3)
+    expect(condDur('Wizard', 'slowed')).toBe(2)
+
+    useCombatStore.getState().returnFromDelay(idOf('Wizard'))   // "the end of any other creature's turn"
+    useCombatStore.getState().nextTurn()              // the advance lands on it again, still round 1
+    expect(activeName()).toBe('Wizard')
+    expect(useCombatStore.getState().round).toBe(1)
+    useCombatStore.getState().nextTurn()              // …and the REST of that same turn ends
+    expect(pdCards()).toBe(1)
+    expect(condVal('Wizard', 'frightened')).toBe(3)
+    expect(condDur('Wizard', 'slowed')).toBe(2)
+
+    // Per round, not once ever: the next round's turn-end charges again.
+    expect(activeName()).toBe('Orc')
+    useCombatStore.getState().nextTurn()              // the orc's turn ends → the wrap, round 2
+    expect(useCombatStore.getState().round).toBe(2)
+    useCombatStore.getState().nextTurn()              // the goblin's round-2 turn ends
+    expect(activeName()).toBe('Wizard')
+    useCombatStore.getState().nextTurn()              // the wizard's round-2 turn ends
+    expect(pdCards()).toBe(2)
+    expect(condVal('Wizard', 'frightened')).toBe(2)
+    expect(condDur('Wizard', 'slowed')).toBe(1)
+  })
+
+  it('a board saved before the flag existed comes back with its spent turn-ends already spent', () => {
+    // The flagless twin of finding 3. `undefined` reads as "hasn't ended yet", so re-opening any
+    // existing save mid-fight put a free end-of-turn pass back on the table for everyone the pointer
+    // had already passed — and a board saved with someone Delayed is exactly the board a GM reopens,
+    // with "Return from delay" waiting on that row.
+    // MUTATION (loadPersistedCombat: delete the `c.endedThisRound ??= …` line):
+    //   FAILS at line 654 — "expected 'Wizard:false Goblin:false Orc:false' to be
+    //   'Wizard:true Goblin:false Orc:false'" (the reloaded board hands the wizard's one round-1
+    //   turn a second end, which is what line 662 holds down).
+    useCombatStore.getState().setScope('camp-endflagless')
+    fight()
+    useCombatStore.getState().addCondition(idOf('Wizard'), { name: 'frightened', value: 4, isPermanent: false })
+    useCombatStore.getState().delayCombatant(idOf('Wizard'))   // in-turn Delay: 4 → 3, turn to the goblin
+    expect(condVal('Wizard', 'frightened')).toBe(3)
+    const live = endFlags()
+    expect(live).toBe('Wizard:true Goblin:false Orc:false')
+    useCombatStore.getState().setScope(null)          // flushes the board under its own key
+
+    const key = 'pf2e-current-combat:camp-endflagless'
+    const raw = JSON.parse(localStorage.getItem(key)!) as { combatants: Record<string, unknown>[] }
+    for (const c of raw.combatants) delete c.endedThisRound     // a pre-commit save, exactly
+    localStorage.setItem(key, JSON.stringify(raw))
+
+    useCombatStore.getState().setScope('camp-endflagless')
+    expect(endFlags()).toBe(live)                     // behind the pointer = already ended
+    expect(activeName()).toBe('Goblin')
+    expect(useCombatStore.getState().round).toBe(1)
+
+    useCombatStore.getState().returnFromDelay(idOf('Wizard'))
+    useCombatStore.getState().nextTurn()              // the rest of the wizard's round-1 turn…
+    expect(activeName()).toBe('Wizard')
+    useCombatStore.getState().nextTurn()              // …and its end
+    expect(condVal('Wizard', 'frightened')).toBe(3)   // still the single step this round
+  })
+
+  it('the ACTIVE creature is mid-turn, so a reload still owes it its own turn-end', () => {
+    // Why the default is strictly `<` where the count's is `<=`: the pointer sits ON a creature
+    // whose turn has STARTED and not ended. `<=` would mark it done and swallow the end of the very
+    // turn the GM reopened the tracker in the middle of.
+    // MUTATION (loadPersistedCombat: `i < parsed.activeIndex` → `i <= parsed.activeIndex`):
+    //   FAILS at line 686 — "expected 4 to be 3" (the goblin's reloaded turn ended for free); the
+    //   test above fails with it at line 654 — "expected 'Wizard:true Goblin:true Orc:false'".
+    useCombatStore.getState().setScope('camp-endactive')
+    fight()
+    useCombatStore.getState().nextTurn()              // → the goblin's round-1 turn
+    useCombatStore.getState().addCondition(idOf('Goblin'), { name: 'frightened', value: 4, isPermanent: false })
+    useCombatStore.getState().setScope(null)
+
+    const key = 'pf2e-current-combat:camp-endactive'
+    const raw = JSON.parse(localStorage.getItem(key)!) as { combatants: Record<string, unknown>[] }
+    for (const c of raw.combatants) delete c.endedThisRound
+    localStorage.setItem(key, JSON.stringify(raw))
+
+    useCombatStore.getState().setScope('camp-endactive')
+    expect(activeName()).toBe('Goblin')
+    useCombatStore.getState().nextTurn()              // the turn it was reopened in ends
+    expect(condVal('Goblin', 'frightened')).toBe(3)
+  })
+
+  it('the per-round refill is not one of the negatives — an ability spent after the Return comes back', () => {
+    // p. 416 guards "persistent damage or other negative effects". Clearing a once-per-round use is
+    // the opposite: it is what puts the ability back for the creature's NEXT turn, and deleting an
+    // already-deleted key costs nothing. A use spent in the RESUMED half of a Delayed turn is only
+    // on the sheet after the flag is up, so guarding it left the ability locked for a whole turn.
+    // MUTATION (endTurnPass: move the `if (c.resourceUses) { … }` stanza back inside the
+    //   `if (!c.endedThisRound)` block):
+    //   FAILS at line 710 — "expected 1 to be undefined" (the Blast spent after the Return is still
+    //   marked used at the start of the round-2 turn, i.e. locked for that whole turn).
+    useCombatStore.getState().addCombatant(BLASTER, { name: 'Wizard', initiative: 20, maxHP: 40 })
+    add('Goblin', { initiative: 15 }); add('Orc', { initiative: 10 })
+    useCombatStore.getState().startCombat()
+
+    useCombatStore.getState().delayCombatant(idOf('Wizard'))   // in-turn Delay, round 1
+    useCombatStore.getState().returnFromDelay(idOf('Wizard'))
+    useCombatStore.getState().nextTurn()              // the advance lands back on it, still round 1
+    expect([useCombatStore.getState().round, activeName()]).toEqual([1, 'Wizard'])
+    useCombatStore.getState().setResourceUse(idOf('Wizard'), 'ab:blast', 1)   // Blasts in the resumed half
+    useCombatStore.getState().nextTurn()              // …and that one turn finishes
+
+    walkTo(2, 'Wizard')
+    expect(usesOn('Wizard')['ab:blast']).toBeUndefined()
+  })
+
+  it('a defeated NPC still has a turn: its persistent damage and its Frightened keep running down', () => {
+    // The sibling half of the same pass. skipsTurn() means a downed monster is never the active
+    // creature, so its end-of-turn work used to stop dead the moment it dropped — its burning and
+    // its Frightened frozen at whatever they were, which a GM only sees on the round they heal it
+    // back up. Its initiative COUNT already came up here (creditCount, right beside it): the two
+    // clocks disagreed about the same creature.
+    // MUTATION (nextTurn's skip loop: `{ creditCount(skipped, counts); endTurnPass(s, skipped) }`
+    //   back to the bare `creditCount(skipped, counts)`):
+    //   FAILS at line 732 — "expected +0 to be 2" (two rounds of burning never rolled at all; the
+    //   Frightened assertion under it is frozen at 4 the same way).
+    fight()
+    useCombatStore.getState().addCondition(idOf('Orc'), {
+      name: 'persistent damage', pdAmount: '1d6', pdType: 'fire', isPermanent: true,
+    })
+    useCombatStore.getState().addCondition(idOf('Orc'), { name: 'frightened', value: 4, isPermanent: false })
+    useCombatStore.getState().setDefeated(idOf('Orc'), true)   // an NPC at 0 HP — the advance steps over it
+
+    for (let i = 0; i < 4; i++) useCombatStore.getState().nextTurn()   // two full laps
+    expect([useCombatStore.getState().round, activeName()]).toEqual([3, 'Wizard'])
+    expect(pdCards()).toBe(2)                         // once per round, never twice
+    expect(condVal('Orc', 'frightened')).toBe(2)
+  })
+
+  it('a defeated NPC above the first actor ends its round-1 turn as the fight starts', () => {
+    // Where the same skip happens with no advance to carry it: startCombat already credits every
+    // seat the opening pointer stepped over (their counts came up), so their turn-ends land here
+    // too, or round 1 is the one round a corpse at the top of the order never finishes.
+    // MUTATION (startCombat: drop the `if (i < s.activeIndex) endTurnPass(s, s.combatants[i])` line):
+    //   FAILS at line 749 — "expected 4 to be 3" (the corpse's round-1 turn never ended).
+    add('Corpse', { initiative: 25 }); add('Wizard', { initiative: 20 }); add('Goblin', { initiative: 15 })
+    useCombatStore.getState().addCondition(idOf('Corpse'), { name: 'frightened', value: 4, isPermanent: false })
+    useCombatStore.getState().addCondition(idOf('Wizard'), { name: 'frightened', value: 4, isPermanent: false })
+    useCombatStore.getState().setDefeated(idOf('Corpse'), true)
+    useCombatStore.getState().startCombat()
+
+    expect(activeName()).toBe('Wizard')
+    expect(condVal('Corpse', 'frightened')).toBe(3)   // stepped over, so its turn came and went
+    expect(condVal('Wizard', 'frightened')).toBe(4)   // the lander is mid-turn — strictly `<`
   })
 })
 
@@ -514,17 +968,16 @@ describe('turn-engine actions', () => {
 
     useCombatStore.getState().nextTurn()
     expect(activeName()).toBe('C')                        // A is skipped, not just dimmed
-    useCombatStore.getState().nextTurn()
-    expect(activeName()).toBe('B')                        // and skipped again on the wrap
-    expect(useCombatStore.getState().round).toBe(2)
+    expect(useCombatStore.getState().round).toBe(1)       // still the round A delayed in
 
     useCombatStore.getState().returnFromDelay(idOf('A'))
-    expect(names()).toEqual(['B', 'A', 'C'])              // back in, right after the acting creature
-    expect(activeName()).toBe('B')
+    expect(names()).toEqual(['B', 'C', 'A'])              // back in, right after the acting creature
+    expect(activeName()).toBe('C')
     expect(useCombatStore.getState().combatants.find(c => c.name === 'A')!.isDelayed).toBe(false)
-    expect(useCombatStore.getState().combatants.find(c => c.name === 'A')!.initiative).toBe(20)
+    expect(useCombatStore.getState().combatants.find(c => c.name === 'A')!.initiative).toBe(10)
     useCombatStore.getState().nextTurn()
     expect(activeName()).toBe('A')
+    expect(useCombatStore.getState().round).toBe(1)       // it took its turn inside its own round
   })
 
   it('a creature that returned from Delay stays behind the one it returned after when the order re-sorts', () => {
@@ -532,7 +985,7 @@ describe('turn-engine actions', () => {
     // "monster beats PC" tie rule would float the monster back in front of the PC it returned
     // after. Mid-combat that rule is off (initSort's `settled`) and the stable sort holds the pair.
     // MUTATION (`initSort(true)` → `initSort(false)` in setInitiative's mid-combat re-sort):
-    //   FAILS at line 549 — "expected [ 'Goblin', 'Hero', 'Ogre' ] to deeply equal
+    //   FAILS at line 1002 — "expected [ 'Goblin', 'Hero', 'Ogre' ] to deeply equal
     //   [ 'Hero', 'Goblin', 'Ogre' ]" (the goblin jumped back ahead of the hero).
     useCombatStore.getState().addCombatant(STUB_CREATURE, { name: 'Goblin', initiative: 30 })
     add('Hero', { initiative: 20, isPC: true, maxHP: 20 }); add('Ogre', { initiative: 5 })
@@ -554,7 +1007,7 @@ describe('turn-engine actions', () => {
     // A single "I returned behind X" marker can't express this: both returned behind Pc1, and what
     // decides Mon vs Pc2 is which of them re-entered later. The board order already says it.
     // MUTATION (`initSort(s.inCombat)` → `initSort(false)` in sortByInitiative):
-    //   FAILS at line 576 — "expected [ 'Mon', 'Pc1', 'Pc2' ] to deeply equal
+    //   FAILS at line 1029 — "expected [ 'Mon', 'Pc1', 'Pc2' ] to deeply equal
     //   [ 'Pc1', 'Pc2', 'Mon' ]" (the tie rule dragged the monster to the front of the count).
     useCombatStore.getState().addCombatant(STUB_CREATURE, { name: 'Mon', initiative: 20 })
     add('Pc1', { initiative: 20, isPC: true, maxHP: 20 }); add('Pc2', { initiative: 20, isPC: true, maxHP: 20 })
@@ -581,7 +1034,7 @@ describe('turn-engine actions', () => {
     // sort is the one place the monster/PC tie rule still runs, so the new order is settled at the
     // top of the fight — not silently on whatever re-sort happens first.
     // MUTATION (`initSort(false)` → `initSort(true)` in startCombat):
-    //   FAILS at line 595 — "expected [ 'Hero', 'Goblin' ] to deeply equal [ 'Goblin', 'Hero' ]"
+    //   FAILS at line 1048 — "expected [ 'Hero', 'Goblin' ] to deeply equal [ 'Goblin', 'Hero' ]"
     //   (the new fight opened in last fight's Delay order, then flipped on the next re-sort).
     useCombatStore.getState().addCombatant(STUB_CREATURE, { name: 'Goblin', initiative: 30 })
     add('Hero', { initiative: 20, isPC: true, maxHP: 20 })
@@ -602,7 +1055,7 @@ describe('turn-engine actions', () => {
     // is an artifact, not an order anybody arranged. Typing its roll has to run the printed tie
     // rule (adversary before a tied PC) even though the rest of the board stays settled.
     // MUTATION (drop setInitiative's `wasUnplaced` branch, i.e. always `initSort(true)`):
-    //   FAILS at line 612 — "expected [ 'Goblin', 'Hero', 'Orc' ] to deeply equal
+    //   FAILS at line 1065 — "expected [ 'Goblin', 'Hero', 'Orc' ] to deeply equal
     //   [ 'Goblin', 'Orc', 'Hero' ]" (the new monster stayed stranded behind the hero it ties).
     useCombatStore.getState().addCombatant(STUB_CREATURE, { name: 'Goblin', initiative: 30 })
     add('Hero', { initiative: 20, isPC: true, maxHP: 20 })
@@ -639,5 +1092,54 @@ describe('turn-engine actions', () => {
     useCombatStore.getState().nextTurn()                  // Hero → skip both goblins → wrap to Hero
     expect(activeName()).toBe('Hero')
     expect(useCombatStore.getState().round).toBe(2)
+  })
+})
+
+// ───────────────────────────────────────────────────────────────────────────
+// 5. The Delay row action — where the button may be offered
+//
+//    Player Core p. 416, Delay (public/data/actions.json, the entry this repo ships):
+//    "Trigger Your turn begins." and "When you Delay, any persistent damage or other negative
+//    effects that normally occur at the start or end of your turn occur immediately when you use
+//    the Delay action."
+//
+//    delayCombatant runs those negatives by handing the turn on (nextTurn owns the end-of-turn
+//    pass), which it can only do for the creature that HAS the turn. The menu offered Delay on
+//    EVERY row while in combat, so the ordinary GM click on some other row took the creature out of
+//    the order and silently skipped its persistent damage and one step of every auto-decrementing
+//    condition for that round. The store is right; the affordance was the defect.
+// ───────────────────────────────────────────────────────────────────────────
+describe('Delay is offered on the row whose turn it is', () => {
+  beforeEach(() => { resetCombat(); localStorage.clear() })
+  afterEach(() => { cleanup(); localStorage.clear() })
+
+  const row = (name: string) => screen.getByText(name).closest('.init-row')!
+
+  it('a row that is not acting gets no Delay item; the acting row does, and a delayed row can return', () => {
+    // MUTATION (InitiativeTracker.tsx: `{inCombat && (isActiveTurn || c.isDelayed) && (` back to
+    //   `{inCombat && (`):
+    //   FAILS at line 1129 — "expected <button …(2)></button> to be null" (the goblin's menu offers
+    //   Delay on a turn that hasn't begun).
+    add('Wizard', { initiative: 20 }); add('Goblin', { initiative: 10 })
+    useCombatStore.getState().startCombat()
+    render(createElement(InitiativeTracker))
+    expect(activeName()).toBe('Wizard')
+
+    fireEvent.contextMenu(row('Goblin'))
+    expect(screen.queryByText('Delay')).toBeNull()
+    fireEvent.mouseDown(document.body)                    // close the menu
+
+    fireEvent.contextMenu(row('Wizard'))
+    expect(screen.queryByText('Delay')).not.toBeNull()
+    fireEvent.mouseDown(document.body)
+
+    // Out of the order, its turn passed to the goblin — and it can still be brought back from any
+    // row, which is the half of the affordance the print does put on "the end of any other
+    // creature's turn".
+    act(() => { useCombatStore.getState().delayCombatant(idOf('Wizard')) })
+    expect(activeName()).toBe('Goblin')
+    fireEvent.contextMenu(row('Wizard'))
+    expect(screen.queryByText('Return from delay')).not.toBeNull()
+    expect(screen.queryByText('Delay')).toBeNull()
   })
 })

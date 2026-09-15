@@ -171,14 +171,27 @@ function skipsTurn(c: Combatant | undefined): boolean {
   return !!c && (c.isDelayed || (c.isDefeated && !c.isPC))
 }
 
-// Turn-advance bookkeeping. Declared here rather than in types/pf2e.ts because nextTurn is the only
-// thing that writes it and creditCount the only thing that reads it — it is not board state the UI
-// or a saved encounter has any use for.
+// Turn-advance bookkeeping. Declared here rather than in types/pf2e.ts because the turn engine in
+// this file is the only thing that reads or writes these — they are not board state the UI or a
+// saved encounter has any use for.
 declare module '../types/pf2e' {
   interface Combatant {
     /** Its initiative count has already been credited in the CURRENT round (see creditCount).
      *  Cleared when the order wraps to a new round and when a fight starts. */
     countedThisRound?: boolean
+    /** Its END-of-turn NEGATIVES have already run in the CURRENT round — persistent damage, the
+     *  auto-decrement step and the source-less duration tick (endTurnPass). The per-round resource
+     *  refill in the same function is deliberately outside this flag: it isn't a negative.
+     *  Delay runs that pass as it hands the turn on, which is the print, Player Core p. 416, Delay
+     *  (public/data/actions.json, the entry this repo ships): *"When you Delay, any persistent
+     *  damage or other negative effects that normally occur at the start or end of your turn occur
+     *  immediately when you use the Delay action."* Coming back on the end of another creature's
+     *  turn in the SAME round resumes the rest of that one turn, so its end must not fire them
+     *  again. Cleared alongside countedThisRound — a new round, a new turn. */
+    endedThisRound?: boolean
+    /** The round this creature Delayed in. Delay lasts at most until its own initiative position
+     *  comes up again (Player Core p. 416) — nextTurn's skip loop reads this to end it. */
+    delayedOnRound?: number
   }
 }
 
@@ -375,6 +388,30 @@ function loadPersistedCombat(): PersistedCombat | null {
     if (!raw) return null
     const parsed = JSON.parse(raw) as PersistedCombat
     if (!Array.isArray(parsed.combatants)) return null
+    // Every board saved before the once-per-round credit existed carries no flag at all, and
+    // `undefined` reads as "not counted yet" — so loading one mid-fight hands everyone the order has
+    // already passed a SECOND count this round (Delay, return, advance, and their effects tick
+    // twice). Derive it from the pointer instead: in a running fight, everyone from the top of the
+    // order through the active creature has had their count this round.
+    parsed.combatants.forEach((c, i) => {
+      c.countedThisRound ??= parsed.inCombat && i <= parsed.activeIndex
+      // The end-of-turn pass is the same story one seat earlier: everyone the pointer has already
+      // passed has had their turn END this round — but the ACTIVE creature's has not (it is mid-turn
+      // when the board is saved), so this one is strictly `<`. Reading `undefined` as "not ended"
+      // would hand every creature behind the pointer a second pass on the first Delay + return.
+      // KNOWN COST, and only on a board saved before this flag shipped: a creature that Delayed OUT
+      // of turn (the row's Delay button is offered whoever's turn it is) and was then stepped over
+      // sits behind the pointer WITHOUT having had its pass, and nothing in a flagless save tells it
+      // apart from the in-turn delayer, which has. It reads as already ended, so a same-round Return
+      // loses that one round's negatives for it. One round, once, on the last pre-flag save — the
+      // same trade countedThisRound takes above. `&& !c.isDelayed` is NOT the patch: it clears the
+      // flag for the in-turn delayer too and re-opens the double-fire the tests below pin down.
+      c.endedThisRound ??= parsed.inCombat && i < parsed.activeIndex
+      // Same for a creature that was already Delayed when the board was saved: the round it went out
+      // in wasn't recorded, and without a value its Delay never ends (p. 416, nextTurn's skip loop).
+      // The saved round is the latest it can have delayed in, so it comes back a round late at worst.
+      if (c.isDelayed) c.delayedOnRound ??= parsed.round
+    })
     return parsed
   } catch {
     return null
@@ -470,8 +507,10 @@ function firePersistentDamage(s: CombatStore, cur: Combatant) {
       if (cur.tempHP > 0) { const abs = Math.min(cur.tempHP, rem); cur.tempHP -= abs; rem -= abs }
       cur.currentHP = Math.max(0, cur.currentHP - rem)
       // Match applyDamage: a PC dropped to 0 by persistent damage goes
-      // Unconscious; a monster is defeated. (cur is the active creature, so
-      // applyPCDefeat does no array reorder here.)
+      // Unconscious; a monster is defeated. (endTurnPass also runs for seats the
+      // pointer steps over, but those are skipsTurn seats = defeated NPCs, and
+      // applyPCDefeat returns early for a non-PC, so no array reorder happens here.
+      // A future caller passing a non-active PC would splice mid-iteration.)
       if (cur.currentHP === 0) {
         if (cur.isPC) applyPCDefeat(s, cur.id)
         else cur.isDefeated = true
@@ -480,6 +519,69 @@ function firePersistentDamage(s: CombatStore, cur: Combatant) {
     } else {
       const amt = `${c.pdAmount}${type ? ' ' + type : ''}`
       pushDice(s, makeReminder(`⚠ Persistent damage — ${cur.name}`, `Roll ${amt} and apply it, then a DC 15 flat check to end it.`))
+    }
+  }
+}
+
+/**
+ * One creature's turn ENDING: the p. 416 negatives (once per round) and then the per-round refill
+ * (every turn end — see the second half).
+ *
+ * Runs for the creature the pointer is leaving (nextTurn) AND for every defeated NPC the advance
+ * steps over. A downed monster's initiative count still comes up — the tracker already credits it so
+ * the effects IT created keep running down (creditCount) — so its OWN end-of-turn work runs too:
+ * persistent damage, the Frightened step, its source-less durations. They used to freeze the moment
+ * it dropped and stayed frozen for the rest of the fight, which a GM only sees on the round they
+ * heal it back onto its feet still carrying round-one's burning.
+ */
+function endTurnPass(s: CombatStore, c: Combatant) {
+  // ONE pass per creature per round. A creature that Delayed on its own turn has already had it:
+  // delayCombatant hands the turn on through nextTurn, which is what p. 416 asks for (*"…occur
+  // immediately when you use the Delay action"*). Returning on the end of another creature's turn in
+  // the same round gives it the REST of that one turn — so when that turn ends, the negatives are
+  // already spent. Ungated, a legal in-turn Delay + same-round Return rolled persistent damage
+  // twice, stepped Frightened 4 → 2, and ran a source-less 3-round condition down to 1 in one round.
+  if (!c.endedThisRound) {
+    c.endedThisRound = true
+    // Persistent damage resolves at the END of the creature's turn — roll &
+    // apply it (if auto-roll is on) or pop a reminder, BEFORE the duration
+    // tick below can expire the condition.
+    firePersistentDamage(s, c)
+    c.conditions = c.conditions
+      .map(cd => {
+        const meta = CONDITION_META[cd.name.toLowerCase()]
+        // END-of-turn auto-decrement (e.g. Frightened −1). Conditions consumed
+        // at the START of a turn (Stunned) are handled elsewhere, when the next
+        // creature's turn begins, so they're skipped here.
+        // `isPermanent` ("until removed") pins the value — see tickConditionsAtStart.
+        if (meta?.autoDecrement && !meta.tickAtStart && !cd.isPermanent && cd.value !== undefined && cd.value > 0) {
+          return { ...cd, value: Math.max(0, cd.value - (meta.decrementBy ?? 1)) }
+        }
+        // Timed conditions with NO source ON THE BOARD tick at the end of the affected
+        // creature's turn — the "until the end of the target's next turn" family. A condition
+        // whose creator is still here ticks on THAT creature's turn instead
+        // (tickSourceDurations), one whose creator has left falls back to this clock
+        // rather than freezing (hasSource).
+        if (!cd.isPermanent && cd.duration !== undefined && !hasSource(s, cd)) {
+          return { ...cd, duration: cd.duration - 1 }
+        }
+        return cd
+      })
+      .filter(cd => {
+        const meta = CONDITION_META[cd.name.toLowerCase()]
+        if (meta?.autoDecrement && !meta.tickAtStart && !cd.isPermanent && (cd.value ?? 1) <= 0) return false
+        if (!cd.isPermanent && !hasSource(s, cd) && cd.duration !== undefined && cd.duration <= 0) return false
+        return true
+      })
+  }
+  // OUTSIDE the guard on purpose. Refilling per-round / per-turn limited uses is not one of p. 416's
+  // "negative effects" — it is what makes the ability available again on the creature's next turn,
+  // and deleting an already-deleted key costs nothing. Behind the guard, a use spent during the
+  // RESUMED half of a Delayed turn (the flag is already up by then) was never cleared, so a
+  // once-per-round ability stayed locked through the creature's whole next turn.
+  if (c.resourceUses) {
+    for (const k of roundTurnAbilityKeys(c.creature)) {
+      if (c.resourceUses[k]) delete c.resourceUses[k]
     }
   }
 }
@@ -513,6 +615,12 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
           initiative: opts.initiative ?? null,
           currentHP: hp, maxHP: hp, tempHP: 0,
           conditions: [], isElite: false, isWeak: false, notes: '', isDefeated: false,
+          // Written explicitly (as duplicateCombatant does) so a reinforcement that joins mid-fight
+          // ROUND-TRIPS: a missing key is dropped by JSON, and loadPersistedCombat's `??=` would
+          // then invent the flag from the newcomer's position — a live board and a reload of that
+          // same board disagreeing about whose count is still on the table. The positional
+          // heuristic is for genuinely pre-commit saves only.
+          countedThisRound: false, endedThisRound: false,
         })
       }
     })
@@ -542,7 +650,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         resourceUses: undefined,
         isDefeated: false,
         isDelayed: false,
-        countedThisRound: false,
+        countedThisRound: false, endedThisRound: false,
       }
       s.combatants.splice(idx + 1, 0, copy)
       // Keep the active-turn pointer on the same combatant.
@@ -605,6 +713,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       if (!c || c.isDelayed) return
       record(s)
       c.isDelayed = true
+      c.delayedOnRound = s.round    // when its position next comes up, the Delay is over (p. 416)
       moved = true
     })
     if (moved && wasActive && get().inCombat) get().nextTurn()
@@ -706,7 +815,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
     set(s => {
       // Delay is a within-combat position, so a fresh fight starts with everyone in the order —
       // cleared BEFORE the sort, so nothing last fight left behind can reach it.
-      for (const c of s.combatants) { c.isDelayed = false; c.countedThisRound = false }
+      for (const c of s.combatants) { c.isDelayed = false; c.countedThisRound = false; c.endedThisRound = false }
       // A fresh fight settles its own order: the monster-before-PC tie rule applies here and
       // nowhere else (initSort's `settled`).
       s.combatants.sort(initSort(false))
@@ -715,8 +824,27 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       // still take turns; only defeated NPCs/monsters are skipped).
       s.activeIndex = s.combatants.findIndex(c => !skipsTurn(c))
       if (s.activeIndex < 0) s.activeIndex = 0
-      // The first creature's turn begins now — consume any start-of-turn
-      // conditions (Stunned) it walked into combat with.
+      // The first creature's turn begins now, and a turn start is a turn start: credit its
+      // initiative count and run the round-duration clocks it owns (Player Core p. 426). Without
+      // this it is the ONE creature with no count in round 1, so a Delay-and-return inside round 1
+      // lands the advance on it a second time and ticks its effects a round early — and any effect
+      // it created before the fight began misses its first turn's tick entirely.
+      // Everything the opening advance stepped OVER (a defeated NPC the GM never cleared, sorted
+      // ahead of the first actor) has had its count too — its initiative came up, it just can't act,
+      // exactly as in nextTurn's skip loop. Crediting the whole run 0…activeIndex is also what
+      // loadPersistedCombat derives (`i <= activeIndex`), so a reloaded board and a live one agree;
+      // crediting only the lander left those seats a free count and ran their effects a round long.
+      const counts = new Set<string>()
+      for (let i = 0; i <= s.activeIndex; i++) {
+        creditCount(s.combatants[i], counts)
+        // …and the seats it stepped OVER have had their turn END as well, on the same reasoning the
+        // skip loop uses — otherwise a defeated NPC at the top of the order is the one creature
+        // whose round-1 turn never ends. Strictly `<`: the lander's turn is starting, not ending
+        // (the same seat split loadPersistedCombat derives for a reloaded board).
+        if (i < s.activeIndex) endTurnPass(s, s.combatants[i])
+      }
+      tickSourceDurations(s, counts)
+      // …and any start-of-turn conditions (Stunned) it walked into combat with are consumed.
       tickConditionsAtStart(s.combatants[s.activeIndex])
       // selectedId intentionally NOT changed — user controls which stat block is shown
       if (turnTimerOn()) beginTurn(s, s.combatants[s.activeIndex])
@@ -741,76 +869,56 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       // which prevTurn can't recreate.
       record(s)
       const cur = s.combatants[s.activeIndex]
-      if (cur) {
-        // Persistent damage resolves at the END of the creature's turn — roll &
-        // apply it (if auto-roll is on) or pop a reminder, BEFORE the duration
-        // tick below can expire the condition.
-        firePersistentDamage(s, cur)
-        cur.conditions = cur.conditions
-          .map(c => {
-            const meta = CONDITION_META[c.name.toLowerCase()]
-            // END-of-turn auto-decrement (e.g. Frightened −1). Conditions consumed
-            // at the START of a turn (Stunned) are handled below, when the next
-            // creature's turn begins, so they're skipped here.
-            // `isPermanent` ("until removed") pins the value — see tickConditionsAtStart.
-            if (meta?.autoDecrement && !meta.tickAtStart && !c.isPermanent && c.value !== undefined && c.value > 0) {
-              return { ...c, value: Math.max(0, c.value - (meta.decrementBy ?? 1)) }
-            }
-            // Timed conditions with NO source ON THE BOARD tick at the end of the affected
-            // creature's turn — the "until the end of the target's next turn" family. A condition
-            // whose creator is still here ticks on THAT creature's turn instead
-            // (tickSourceDurations, below); one whose creator has left falls back to this clock
-            // rather than freezing (hasSource).
-            if (!c.isPermanent && c.duration !== undefined && !hasSource(s, c)) {
-              return { ...c, duration: c.duration - 1 }
-            }
-            return c
-          })
-          .filter(c => {
-            const meta = CONDITION_META[c.name.toLowerCase()]
-            if (meta?.autoDecrement && !meta.tickAtStart && !c.isPermanent && (c.value ?? 1) <= 0) return false
-            if (!c.isPermanent && !hasSource(s, c) && c.duration !== undefined && c.duration <= 0) return false
-            return true
-          })
-        // Refill per-round / per-turn limited-use abilities — they become
-        // available again on this creature's next turn.
-        if (cur.resourceUses) {
-          for (const k of roundTurnAbilityKeys(cur.creature)) {
-            if (cur.resourceUses[k]) delete cur.resourceUses[k]
-          }
-        }
-      }
+      if (cur) endTurnPass(s, cur)
       // Advance, skipping defeated NPCs/monsters and anyone who Delayed. Defeated PCs still take
       // their turn — a downed player can spend actions, recover, etc.
       const len = s.combatants.length
-      let next = (s.activeIndex + 1) % len
       // Every initiative count the advance passes, landing one included: a skipped creature still
       // has a turn on the count, so effects IT created keep running down (Duration, above).
       const counts = new Set<string>()
-      // Bump the round exactly ONCE if the advance crosses back past the top of the order — whether
-      // that happens on the first step OR while skipping a run of defeated NPCs. (Two separate bump
-      // sites previously double-counted the round when the entire order was defeated NPCs.)
-      let wrapped = next === 0
+      // Crossing back past the top of the order starts a new round, and a new round gives everyone
+      // their count back — including anyone who Delayed across the wrap. The round turns over HERE,
+      // as the pointer crosses, not after the skip loop: a creature the loop steps over PAST the top
+      // is taking its turn in the NEW round, and checking it against the old round's flags spends a
+      // count it doesn't own (a source credited in round 1 and skipped on the wrap then got no
+      // round-2 tick at all). Guarded so the bump fires exactly once per advance even when the whole
+      // order is skipped and the pointer crosses the top twice.
+      let wrapped = false
+      const cross = (i: number) => {
+        if (i !== 0 || wrapped) return
+        wrapped = true
+        s.round += 1
+        for (const c of s.combatants) { c.countedThisRound = false; c.endedThisRound = false }
+      }
+      let next = (s.activeIndex + 1) % len
+      cross(next)
       let safety = 0
       while (skipsTurn(s.combatants[next]) && safety < len) {
         // A DEFEATED creature's initiative count still comes up — it just can't act — so effects it
-        // created keep running down. A DELAYED one gave its count up: its turn happens later, and
-        // its effects tick then. Crediting the skip too would tick a delayed source's effect twice
-        // in the round it returns (a 3-round effect ending after 2).
-        // Consequence, deliberate: a source that Delays and NEVER returns freezes its own effects.
-        // It is still on the board, so hasSource() keeps the targets off the turn-end clock too,
-        // and neither clock runs while it stays delayed. The tracker doesn't model "Delay ends at
-        // the end of the round" (Player Core p. 421), so the GM leaving a creature delayed for ever
-        // is the GM holding its turn open — un-delay it (or remove it) and the clock resumes.
+        // created keep running down, AND its own turn ends (endTurnPass below: its persistent
+        // damage, its Frightened step, its source-less durations). A DELAYED one gave its count up:
+        // its turn happens later, and both clocks run then. Crediting the skip too would tick a
+        // delayed source's effect twice in the round it returns (a 3-round effect ending after 2),
+        // and passing its turn-end would spend the very negatives p. 416 already charged at the
+        // Delay — which is why one `!skipped.isDelayed` gates both.
         const skipped = s.combatants[next]
-        if (skipped && !skipped.isDelayed) creditCount(skipped, counts)
+        // Delay does not hold a turn open for ever. Player Core p. 416, Delay (the entry this repo
+        // ships, public/data/actions.json): *"If you Delay an entire round without returning to the
+        // initiative order, the actions from the Delayed turn are lost, your initiative doesn't
+        // change, and your next turn occurs at your original position in the initiative order."*
+        // Its own position has now come up in a LATER round than the one it delayed in, so the Delay
+        // is spent: it re-enters here and the advance lands on it.
+        if (skipped?.isDelayed && s.round > (skipped.delayedOnRound ?? s.round)) {
+          skipped.isDelayed = false
+          skipped.delayedOnRound = undefined
+          if (!skipsTurn(skipped)) break     // its next turn, at its original position
+        }
+        if (skipped && !skipped.isDelayed) { creditCount(skipped, counts); endTurnPass(s, skipped) }
         const stepped = (next + 1) % len
-        if (stepped === 0) wrapped = true
+        cross(stepped)
         next = stepped
         safety++
       }
-      // A new round gives everyone their count back — including anyone who Delayed across the wrap.
-      if (wrapped) { s.round += 1; for (const c of s.combatants) c.countedThisRound = false }
       s.activeIndex = next
       creditCount(s.combatants[next], counts)
       // Round durations tick at the START of their SOURCE's turn (Player Core p. 426).
@@ -829,8 +937,15 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   prevTurn() {
     set(s => {
       if (!s.combatants.length) return
-      if (s.activeIndex === 0) { s.activeIndex = s.combatants.length-1; s.round = Math.max(1, s.round-1) }
-      else s.activeIndex -= 1
+      // Back the pointer up WITHIN the round only. prevTurn is not the inverse of nextTurn — it
+      // un-ticks no duration, un-rolls no persistent damage and un-credits no initiative count.
+      // Stepping back past the top of the order used to drop the round number while leaving all of
+      // that applied, so the next advance re-ran the wrap branch: every countedThisRound cleared and
+      // the same counts credited a second time inside one round (a 2-round effect down to 1 on the
+      // spot). The previous round's ticks have already fired and only Undo (Ctrl+Z) reverses a turn
+      // advance, so at the top of the order this does nothing.
+      if (s.activeIndex === 0) return
+      s.activeIndex -= 1
       // selectedId intentionally NOT changed — user controls which stat block is shown
       // Going back discards the current running turn (it didn't really finish)
       // and restarts timing for the now-active combatant.
