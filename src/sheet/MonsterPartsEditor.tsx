@@ -8,6 +8,7 @@ import {
   weaponRefinement,
   armorRefinement,
   shieldRefinement,
+  shieldFamily,
   senseSkillRefinement,
   imbueSlots,
   refinementCost,
@@ -139,7 +140,9 @@ export function MonsterPartsSection({
 
   const refineLevel = itemLevelForValue(blob.refineValue, kind);
   const cappedLevel = Math.min(refineLevel, charLevel);
-  const slots = imbueSlots(kind, cappedLevel);
+  const slots = imbueSlots(kind, cappedLevel, item);
+  // "Tower shields can't be refined this way" (the Monster Parts page, "Refining").
+  const unrefinable = kind === 'shield' && shieldFamily(item) === 'tower';
   const kindReq = MP_ITEM_KINDS.find((k) => k.id === kind)?.requirement ?? '';
   const baseType = item.itemType === 'weapon' ? item.damage.type : undefined;
 
@@ -154,7 +157,7 @@ export function MonsterPartsSection({
     if (refineLevel <= 0) return;
     const targetValue = refineLevel <= 1 ? 0 : refinementCost(refineLevel - 1, kind);
     const newLevel = itemLevelForValue(targetValue, kind);
-    const newSlots = imbueSlots(kind, Math.min(newLevel, charLevel));
+    const newSlots = imbueSlots(kind, Math.min(newLevel, charLevel), item);
     const trimmed = blob.imbuements.slice(0, newSlots);
     put({ refineValue: targetValue, imbuements: trimmed });
   };
@@ -347,7 +350,11 @@ export function MonsterPartsSection({
               </span>
             </span>
           </div>
-          {slots === 0 && <span className="mp-hint">Refine higher to unlock imbuing slots.</span>}
+          {slots === 0 && (
+            <span className="mp-hint">
+              {unrefinable ? "Tower shields can't be refined this way — this shield keeps its printed statistics and runes." : 'Refine higher to unlock imbuing slots.'}
+            </span>
+          )}
 
           {blob.imbuements.map((im, i) => {
             const prop = getMpProperty(im.propertyId);

@@ -73,6 +73,7 @@ import {
   mpSenseSkillRefine,
   mpImbuedDamageTerms,
   mpDefenseGrants,
+  shieldFamily,
   type MpDamage,
 } from './monsterParts';
 
@@ -2194,14 +2195,18 @@ export function deriveShield(c: Character, db: ContentDatabase): ShieldInfo | nu
   const s = held.item;
   // A reinforcing rune (or a Monster-Parts refined shield, Table 4C) raises the shield's
   // Hardness/HP/Broken Threshold. A refined shield ignores runes and uses its refinement stats instead.
-  const rein = mpActive(c, held.inv) ? undefined : (held.inv.runes as ArmorRunes | undefined)?.reinforcing;
+  // "Tower shields can't be refined this way" (the Monster Parts page, "Refining"): for one the switch
+  // is inert — its rune and its level-granted tier still count, and it gains nothing from Table 4C.
+  const refined = mpActive(c, held.inv) && shieldFamily(s) !== 'tower';
+  const rein = refined ? undefined : (held.inv.runes as ArmorRunes | undefined)?.reinforcing;
   // A record can supply the tier from the CHARACTER instead of an etched rune — Blessed Shield: "In
   // your hands, a shield gains the minor Reinforcing rune… the reinforcing rune of your level." The
   // tier could only ever come from `inv.runes`, so the champion's shield gained nothing. Folded into
   // the same max() below, so an actually-etched better rune still wins.
-  const byLevel = mpActive(c, held.inv) ? undefined : levelReinforcingTier(c, db);
+  const byLevel = refined ? undefined : levelReinforcingTier(c, db);
   const r = REINFORCING[Math.max(rein ?? 0, byLevel ?? 0)];
-  const ref = mpActive(c, held.inv) ? mpShieldRefine(held.inv.monsterPart, c.level) : null;
+  // Table 4C for THIS shield — bucklers sit 2 Hardness / 12 HP / 6 BT under the steel baseline.
+  const ref = refined ? mpShieldRefine(held.inv.monsterPart, c.level, s) : null;
   // Guard every shield stat against a data-incomplete item (missing hardness/hp/BT/acBonus) so the
   // shield block — and the AC breakdown that reads it — can never compute NaN.
   const base = { hardness: s.hardness ?? 0, hp: s.hp ?? 0, bt: s.brokenThreshold ?? 0 };

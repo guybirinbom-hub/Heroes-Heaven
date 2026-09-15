@@ -172,11 +172,27 @@ const SHIELD_STATS: [number, number, number, number][] = [
   [12, 11, 66, 33], [13, 12, 72, 36], [15, 13, 78, 39], [16, 14, 84, 42], [17, 15, 90, 45],
   [18, 16, 96, 48], [19, 17, 102, 51], [20, 18, 108, 54],
 ];
-/** Table 4C. Imbuing unlocks at level 4. (Buckler adjustments handled by the caller.) */
+/** Table 4C, steel-shield baseline. Imbuing unlocks at level 4. The buckler / tower-shield clauses of
+ *  the printed rule live in `mpShieldRefine`, which needs the item to tell the families apart. */
 export function shieldRefinement(level: number): ShieldRefinement {
   let stat = { hardness: 0, hp: 0, bt: 0 };
   for (const [lv, h, hp, bt] of SHIELD_STATS) if (level >= lv) stat = { hardness: h, hp, bt };
   return { ...stat, imbueSlots: level >= 4 ? 1 : 0 };
+}
+
+export type ShieldFamily = 'buckler' | 'tower' | 'shield';
+/**
+ * Which family a shield belongs to, read off its NAME — the only signal the data carries. Bucklers
+ * ship with empty traits and share `acBonus: 1` with klars, targes, the sapling shields and Duelist's
+ * Beacon, so neither field can tell them apart; every buckler in core.json (24, counting the Archives
+ * twins) and both tower shields say so in their name, and a homebrew "Oak Buckler" should count too.
+ * Word-bounded so "Bucklers' Bane" or a "Towering Shield" homebrew would not match by accident.
+ */
+export function shieldFamily(item: { name?: string } | undefined): ShieldFamily {
+  const n = (item?.name ?? '').toLowerCase();
+  if (/\bbuckler\b/.test(n)) return 'buckler';
+  if (/\btower shield\b/.test(n)) return 'tower';
+  return 'shield';
 }
 
 /** Perception item (Table 4D) / skill item (Table 4E): item bonus +1/+2/+3 and one imbuing slot. */
@@ -184,15 +200,16 @@ export function senseSkillRefinement(level: number): { bonus: number; imbueSlots
   return { bonus: level >= 17 ? 3 : level >= 9 ? 2 : level >= 3 ? 1 : 0, imbueSlots: level >= 3 ? 1 : 0 };
 }
 
-/** How many imbuing slots a refined item of the given kind + level provides. */
-export function imbueSlots(kind: MpItemKind, level: number): number {
+/** How many imbuing slots a refined item of the given kind + level provides. Pass the item for a
+ *  shield: a tower shield "can't be refined this way", so it never has a slot. */
+export function imbueSlots(kind: MpItemKind, level: number, item?: { name?: string }): number {
   switch (kind) {
     case 'weapon':
       return weaponRefinement(level).imbueSlots;
     case 'armor':
       return armorRefinement(level).imbueSlots;
     case 'shield':
-      return shieldRefinement(level).imbueSlots;
+      return shieldFamily(item) === 'tower' ? 0 : shieldRefinement(level).imbueSlots;
     default:
       return senseSkillRefinement(level).imbueSlots;
   }
@@ -453,9 +470,22 @@ export function mpWeaponRefine(mp: ItemMonsterPart | undefined, characterLevel: 
 export function mpArmorRefine(mp: ItemMonsterPart | undefined, characterLevel: number): ArmorRefinement {
   return armorRefinement(mpRefinedLevel(mp, characterLevel));
 }
-/** Shield refinement (Table 4C) at the item's capped refined level. */
-export function mpShieldRefine(mp: ItemMonsterPart | undefined, characterLevel: number): ShieldRefinement {
-  return shieldRefinement(mpRefinedLevel(mp, characterLevel));
+/**
+ * Shield refinement (Table 4C) at the item's capped refined level, for THIS shield.
+ *
+ * The printed rule (the app's own Monster Parts page, "Refining"): "A refined shield uses steel-shield
+ * statistics by default (bucklers subtract 2 Hardness / 12 HP / 6 BT; tower shields can't be refined
+ * this way)." Until 2026-09-15 the table's comment said the buckler adjustment was "handled by the
+ * caller" and no caller did, so a refined buckler read full steel numbers and a tower shield took the
+ * refinement it is denied. A tower shield now refines to nothing at all — zeros, so the floor in
+ * deriveShield leaves its printed statistics alone and it has no imbuing slot either.
+ */
+export function mpShieldRefine(mp: ItemMonsterPart | undefined, characterLevel: number, item?: { name?: string }): ShieldRefinement {
+  const family = shieldFamily(item);
+  if (family === 'tower') return { hardness: 0, hp: 0, bt: 0, imbueSlots: 0 };
+  const r = shieldRefinement(mpRefinedLevel(mp, characterLevel));
+  if (family === 'buckler') return { ...r, hardness: Math.max(0, r.hardness - 2), hp: Math.max(0, r.hp - 12), bt: Math.max(0, r.bt - 6) };
+  return r;
 }
 /** Perception/skill item refinement bonus (Tables 4D/4E) at the item's capped refined level. */
 export function mpSenseSkillRefine(mp: ItemMonsterPart | undefined, characterLevel: number): number {
