@@ -294,6 +294,23 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     const bulk = deriveBulk({ ...ch, inventory: play.inventory ?? ch.inventory }, content);
     if (bulk.encTotal > bulk.encumberedAt) conditions = [...conditions, { id: 'encumbered' }];
   }
+  /*
+   * Conditions an ACTIVE MODE imposes — Curse of the Sky's Call 1's *"you are enfeebled 1"*, the hydra
+   * mutagen's clumsy 1. Derived here from the live toggles, exactly like the Encumbered line above, and
+   * never written back into `play.conditions`: the condition has to disappear the moment the mode goes
+   * off, and a written one would outlive it. A worse one the player already holds is kept, so the
+   * toggle can only ever raise the value, never downgrade what a GM applied.
+   *
+   * Before `deriveMaxHp` below on purpose — a mode could impose Drained, which lowers maximum HP, and
+   * the damage clamp has to use the same max the sheet will show.
+   */
+  for (const id of play.activeModes ?? []) {
+    for (const mc of content.modes[id]?.conditions ?? []) {
+      const have = conditions.find((x) => x.id === mc.id);
+      if (!have) conditions = [...conditions, mc.value != null ? { id: mc.id, value: mc.value } : { id: mc.id }];
+      else if (mc.value != null && (have.value ?? 0) < mc.value) conditions = conditions.map((x) => (x.id === mc.id ? { ...x, value: mc.value } : x));
+    }
+  }
   // Max HP must reflect the overlaid conditions (Drained lowers it), so the
   // damage clamp below uses the same max the sheet will display.
   const max = deriveMaxHp({ ...ch, conditions }, content);

@@ -389,12 +389,12 @@
   "name": "Antivenom",
   "fromItemId": "antivenom-potion",
   "duration": "1 minute",
-  "note": "On drinking, you may immediately attempt a check to end any persistent poison damage you're taking - a one-time effect outside the duration.",
+  "note": "On drinking, you may immediately attempt a DC 10 flat check to end any persistent poison damage you're taking - a one-time effect outside the duration.",
   "modifiers": [
    {
     "target": "save",
     "detail": "fortitude",
-    "type": "untyped",
+    "type": "item",
     "value": 1,
     "appliesWhen": "to avoid taking persistent poison damage"
    }
@@ -406,7 +406,19 @@
   "fromItemId": "apricot-of-bestial-might",
   "name": "Bestial Might",
   "duration": "1 hour (the grade its own text points at — the statblock omits a duration)",
-  "note": "Boar-faced battle form. Also 8 resistance to all physical damage; you are Clumsy 1 and must succeed at a flat check to take auditory or linguistic actions.",
+  "note": "Boar-faced battle form. Also 8 resistance to all physical damage; you are Clumsy 1 and must succeed at a DC 5 flat check to take auditory or linguistic actions.",
+  "conditions": [
+   {
+    "id": "clumsy",
+    "value": 1
+   }
+  ],
+  "resistances": [
+   {
+    "type": "physical",
+    "value": 8
+   }
+  ],
   "grantedStrikes": [
    {
     "name": "Tusk",
@@ -463,7 +475,6 @@
   "name": "Auric Noodles",
   "fromItemId": "auric-noodles",
   "duration": "24 hours or until your next daily preparations, whichever comes first",
-  "survivesRest": true,
   "note": "Identify Magic is rolled with Arcana, Nature, Occultism, or Religion, so the bonus is listed on those four. For the same duration you can also move at full speed while using the Detect Magic exploration activity, which is not a sheet number.",
   "modifiers": [
    {
@@ -721,15 +732,21 @@
   "name": "Candle of Inflamed Passions (lit)",
   "fromItemId": "candle-of-inflamed-passions",
   "duration": "10 minutes",
-  "note": "The lit candle affects everything within 10 feet of it — allies, enemies, and you if you stay close — with a -1 status penalty to saves against emotion effects. Nothing is applied to your sheet.",
-  "modifiers": []
+  "note": "The lit candle affects every creature within 10 feet of it — allies, enemies, and you while you hold it or stay close. The -1 status penalty to saves against emotion effects is conditional: it underlines your saves and shows in the breakdown without moving the number.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "status",
+    "value": -1,
+    "appliesWhen": "against emotion effects while you are within 10 feet of the lit candle"
+   }
+  ]
  },
  {
   "id": "item-candle-of-invocation",
   "name": "Candle of Invocation",
   "fromItemId": "candle-of-invocation",
   "duration": "until your next daily preparations",
-  "survivesRest": true,
   "note": "You must cast divine spells, worship the deity emblazoned on the candle, and have performed your daily preparations within 10 feet of it while lit. No one benefits from more than one candle in a day.",
   "modifiers": [],
   "spellSlotBonus": {
@@ -745,7 +762,7 @@
   "name": "Cayden's Brew",
   "fromItemId": "caydens-brew",
   "duration": "1 hour",
-  "note": "While the brew lasts you can spend a single action to breathe out intoxicating vapor audible for 100 feet; creatures in it save or become clumsy and stupefied. You can't do so again for 1d4 rounds.",
+  "note": "While the brew lasts you can spend a single action to breathe out a 15-foot cone of intoxicating vapor with a burp audible for 100 feet; each creature in the cone attempts a DC 25 Fortitude save (success: clumsy 1 and stupefied 1 for 1 round; failure: for 1d4 rounds; critical failure: clumsy 2, stupefied 2, and sickened 1, the clumsy and stupefied lasting until 1d4 rounds after the sickened ends). You can't do so again for 1d4 rounds.",
   "modifiers": [
    {
     "target": "save",
@@ -775,7 +792,7 @@
   "name": "Cayden's Brew (Double)",
   "fromItemId": "caydens-brew-double",
   "duration": "1 hour",
-  "note": "While the brew lasts you can spend a single action to breathe out intoxicating vapor audible for 100 feet; creatures in it save or become clumsy and stupefied. You can't use the breath weapon again for 1d4 rounds.",
+  "note": "While the brew lasts you can spend a single action to breathe out a 15-foot cone of intoxicating vapor with a burp audible for 100 feet; each creature in it must attempt a DC 31 Fortitude saving throw or become clumsy and stupefied. You can't use the breath weapon again for 1d4 rounds.",
   "modifiers": [
    {
     "target": "save",
@@ -805,7 +822,7 @@
   "name": "Cayden's Brew (Triple)",
   "fromItemId": "caydens-brew-triple",
   "duration": "1 hour",
-  "note": "While the brew lasts you can spend a single action to breathe out intoxicating vapor audible for 100 feet; creatures in it save or become clumsy and stupefied. You can't use the breath weapon again for 1d4 rounds.",
+  "note": "While the brew lasts you can spend a single action to breathe out a 15-foot cone of intoxicating vapor with a burp audible for 100 feet; each creature in it must attempt a DC 40 Fortitude save (success: clumsy 1 and stupefied 1 for 1 round; failure: 1d4 rounds; critical failure: clumsy 2, stupefied 2, and sickened 1). You can't use the breath weapon again for 1d4 rounds.",
   "modifiers": [
    {
     "target": "save",
@@ -913,6 +930,9 @@
   "name": "Extended Claws",
   "duration": "10 minutes",
   "note": "Once per hour. You also gain a climb Speed of 20 feet.",
+  "speeds": {
+   "climb": 20
+  },
   "grantedStrikes": [
    {
     "name": "Claw",
@@ -934,6 +954,9 @@
   "fromItemId": "cloud-buns-greater",
   "duration": "1 minute",
   "note": "Grants a fly Speed of 30 feet, or your Speed if that's lower, for the duration.",
+  "speeds": {
+   "fly": "min(30,@actor.speed.land)"
+  },
   "modifiers": [
    {
     "target": "skill",
@@ -1084,7 +1107,12 @@
   "name": "Deadweight (Greater)",
   "fromItemId": "deadweight-mutagen-greater",
   "duration": "1 hour",
-  "note": "The same +3 item bonus also applies to your Fortitude and Reflex DCs against attempts to Shove or Trip you - a defense DC, not a save roll. At this grade you can also Shove or Trip creatures up to two sizes larger than you. Drawback: you gain the encumbered condition and can't remove it while the mutagen lasts.",
+  "note": "The same +3 item bonus also applies to your Fortitude and Reflex DCs against attempts to Shove or Trip you - a defense DC, not a save roll. At this grade you can also Shove or Trip creatures up to two sizes larger than you. Drawback: you are Encumbered for the mutagen's duration and can't remove it early — the app applies that condition's Clumsy 1 and -10-ft penalty to all Speeds (floor 5 ft), so do not enter a separate Speed penalty.",
+  "conditions": [
+   {
+    "id": "encumbered"
+   }
+  ],
   "modifiers": [
    {
     "value": 3,
@@ -1106,7 +1134,12 @@
   "name": "Deadweight (Lesser)",
   "fromItemId": "deadweight-mutagen-lesser",
   "duration": "1 minute",
-  "note": "The same +1 item bonus also applies to your Fortitude and Reflex DCs against attempts to Shove or Trip you - a defense DC, not a save roll, so it isn't emitted as a save modifier. Drawback: you gain the encumbered condition and can't remove it while the mutagen lasts.",
+  "note": "The same +1 item bonus also applies to your Fortitude and Reflex DCs against attempts to Shove or Trip you - a defense DC, not a save roll, so it isn't emitted as a save modifier. Drawback: you are Encumbered for the mutagen's duration and can't remove it early — the app applies that condition's Clumsy 1 and -10-ft penalty to all Speeds (floor 5 ft), so do not enter a separate Speed penalty.",
+  "conditions": [
+   {
+    "id": "encumbered"
+   }
+  ],
   "modifiers": [
    {
     "value": 1,
@@ -1128,7 +1161,12 @@
   "name": "Deadweight (Major)",
   "fromItemId": "deadweight-mutagen-major",
   "duration": "1 hour",
-  "note": "The same +4 item bonus applies to your Fortitude and Reflex DCs when a creature tries to Shove or Trip you (that is a DC, not a save you roll). You can attempt to Shove or Trip creatures up to three sizes larger than you. Drawback: you gain the encumbered condition and can't remove it while the mutagen lasts.",
+  "note": "The same +4 item bonus applies to your Fortitude and Reflex DCs when a creature tries to Shove or Trip you (that is a DC, not a save you roll). You can attempt to Shove or Trip creatures up to three sizes larger than you. Drawback: you are Encumbered for the mutagen's duration and can't remove it early — the app applies that condition's Clumsy 1 and -10-ft penalty to all Speeds (floor 5 ft), so do not enter a separate Speed penalty.",
+  "conditions": [
+   {
+    "id": "encumbered"
+   }
+  ],
   "modifiers": [
    {
     "target": "skill",
@@ -1165,7 +1203,12 @@
   "name": "Deadweight (Moderate)",
   "fromItemId": "deadweight-mutagen-moderate",
   "duration": "10 minutes",
-  "note": "The same +2 item bonus also applies to your Fortitude and Reflex DCs against attempts to Shove or Trip you - a defense DC, not a save roll. Drawback: you gain the encumbered condition and can't remove it while the mutagen lasts.",
+  "note": "The same +2 item bonus also applies to your Fortitude and Reflex DCs against attempts to Shove or Trip you - a defense DC, not a save roll. Drawback: you are Encumbered for the mutagen's duration and can't remove it early — the app applies that condition's Clumsy 1 and -10-ft penalty to all Speeds (floor 5 ft), so do not enter a separate Speed penalty.",
+  "conditions": [
+   {
+    "id": "encumbered"
+   }
+  ],
   "modifiers": [
    {
     "value": 2,
@@ -1196,6 +1239,9 @@
   "fromItemId": "delve-scale",
   "duration": "1 minute",
   "note": "Also grants a burrow Speed of 15 feet for the duration (a new movement type, not a bonus to an existing Speed).",
+  "speeds": {
+   "burrow": 15
+  },
   "modifiers": [
    {
     "value": 2,
@@ -1216,11 +1262,24 @@
  },
  {
   "id": "item-dinosaur-boots",
-  "modifiers": [],
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "melee damage rolls (Enlarge)"
+   }
+  ],
   "fromItemId": "dinosaur-boots",
   "name": "Dinosaur Legs",
   "duration": "1 minute",
-  "note": "Also the effects of Enlarge, and one Trample during the duration.",
+  "note": "Also the effects of Enlarge for the minute: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are Clumsy 1. Once during the duration you can Trample (3 actions) creatures your size or smaller for your Foot damage, with a save. You can Dismiss it.",
+  "conditions": [
+   {
+    "id": "clumsy",
+    "value": 1
+   }
+  ],
   "grantedStrikes": [
    {
     "name": "Foot",
@@ -1239,11 +1298,24 @@
  },
  {
   "id": "item-dinosaur-boots-greater",
-  "modifiers": [],
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 4,
+    "appliesWhen": "melee Strike damage while enlarged (4th-rank Enlarge)"
+   }
+  ],
   "fromItemId": "dinosaur-boots-greater",
   "name": "Dinosaur Legs",
   "duration": "1 minute",
-  "note": "Also the effects of 4th-rank Enlarge (Huge if you choose), and Trample during the duration.",
+  "note": "Also the effects of 4th-rank Enlarge: you grow to size Huge if you choose, your reach increases by 10 feet, you gain a +4 status bonus to melee Strike damage and are clumsy 1. You can Trample (3 actions) creatures one size smaller than you or smaller during the duration; the activation can be Dismissed.",
+  "conditions": [
+   {
+    "id": "clumsy",
+    "value": 1
+   }
+  ],
   "grantedStrikes": [
    {
     "name": "Foot",
@@ -1265,8 +1337,7 @@
   "name": "Diplomat's Charcuterie",
   "fromItemId": "diplomats-charcuterie",
   "duration": "24 hours or until your next daily preparations, whichever comes first",
-  "survivesRest": true,
-  "note": "Eaten over a 10-minute activation; the mode should clear at the next daily preparations even if 24 hours have not elapsed.",
+  "note": "Eaten over a 10-minute activation. Rest (daily preparations) clears it.",
   "modifiers": [
    {
     "value": 1,
@@ -1304,7 +1375,15 @@
   "name": "Dragonfly Potion",
   "fromItemId": "dragonfly-potion",
   "duration": "1 minute",
-  "note": "Also grants a fly Speed equal to your land Speed, low-light vision, and you can't be flanked except by creatures higher level than you — none of those are numeric modifiers (the fly Speed is a new movement type, not a +N to Speed).",
+  "note": "You also can't be flanked except by creatures of a higher level than you (lower-level creatures can still help their higher-level allies flank) — no sheet carrier for that clause.",
+  "speeds": {
+   "fly": "@actor.speed.land"
+  },
+  "senses": [
+   {
+    "name": "low-light-vision"
+   }
+  ],
   "modifiers": [
    {
     "value": 2,
@@ -1515,7 +1594,7 @@
   "name": "Egg Cream Fizz",
   "fromItemId": "egg-cream-fizz",
   "duration": "10 minutes",
-  "note": "+5-foot item bonus to your Speed for the full 10 minutes. Speed is not a mode-modifier target in this app, so track it from this note (same handling as Triple Time and Panache). Exactly ONE syrup rider applies, fixed when the drink was created; the third option, Vanilla, instead lets you Step into difficult terrain and has no number.",
+  "note": "+5-foot item bonus to your Speed for the full 10 minutes. Exactly ONE syrup rider applies, fixed when the drink was created; the third option, Vanilla, instead lets you Step into difficult terrain and has no number.",
   "modifiers": [
    {
     "value": 1,
@@ -1530,6 +1609,11 @@
     "target": "skill",
     "detail": "athletics",
     "appliesWhen": "Strawberry syrup only — Athletics checks to Climb, Leap, and Swim"
+   },
+   {
+    "value": 5,
+    "type": "item",
+    "target": "speed"
    }
   ]
  },
@@ -2019,7 +2103,7 @@
   "name": "Gecko Grip",
   "fromItemId": "gecko-potion",
   "duration": "5 minutes",
-  "note": "Also grants a +1 item bonus to your Reflex DC against Disarm attempts — a defense DC, not a saving throw, so it is not modeled as a save modifier.",
+  "note": "Also grants a +1 item bonus to your Reflex DC against Disarm attempts — a defense DC, not a saving throw.",
   "modifiers": [
    {
     "target": "skill",
@@ -2034,6 +2118,13 @@
     "type": "item",
     "value": 1,
     "appliesWhen": "to Palm an Object"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "to your Reflex DC against Disarm attempts"
    }
   ]
  },
@@ -2043,6 +2134,12 @@
   "fromItemId": "ghost-fowl-porridge",
   "duration": "1 hour",
   "note": "You also have resistance 3 to physical damage for the hour.",
+  "resistances": [
+   {
+    "type": "physical",
+    "value": 3
+   }
+  ],
   "modifiers": [
    {
     "target": "save",
@@ -2074,6 +2171,9 @@
   "fromItemId": "golden-liberators-feather",
   "duration": "until the end of your turn",
   "note": "Also grants a fly Speed of 50 feet for the duration (a new movement type, not a bonus to your Speed). The 1-action version's 8d8 buffet damage to adjacent enemies is instantaneous.",
+  "speeds": {
+   "fly": 50
+  },
   "modifiers": [
    {
     "target": "ac",
@@ -2228,6 +2328,12 @@
     "type": "circumstance",
     "value": 1,
     "appliesWhen": "against death effects, disease, paralysis, poison, and sleep"
+   },
+   {
+    "target": "save",
+    "type": "status",
+    "value": -2,
+    "appliesWhen": "against the powers of the vampire who created the heartblood"
    }
   ]
  },
@@ -2263,7 +2369,13 @@
   "name": "Hydra Mutagen",
   "fromItemId": "hydra-mutagen",
   "duration": "10 minutes",
-  "note": "The +3 item bonus also applies to any Intelligence- or Wisdom-based Lore skills. You gain all-around vision. Once during the effect, if you fail or critically fail a Will save against a mental effect, you can treat the result as one degree better. Drawback: you are Clumsy 1 for the same 10 minutes (apply as a condition).",
+  "note": "The +3 item bonus also applies to any Intelligence- or Wisdom-based Lore skills. You gain all-around vision. Once during the effect, if you fail or critically fail a Will save against a mental effect, you can treat the result as one degree better. Drawback: you are Clumsy 1 for the same 10 minutes.",
+  "conditions": [
+   {
+    "id": "clumsy",
+    "value": 1
+   }
+  ],
   "modifiers": [
    {
     "target": "skill",
@@ -2396,24 +2508,45 @@
   "name": "Insight Coffee",
   "fromItemId": "insight-coffee-greater",
   "duration": "1 hour",
-  "note": "+4 item bonus to checks with the single skill this coffee was brewed for (chosen when it was crafted). Apply it yourself — the app doesn't know which skill your cup is.",
-  "modifiers": []
+  "note": "For 1 hour: if you have the strategic strike class feature, its extra damage uses d8s instead of d6s. +4 item bonus to Recall Knowledge checks with the one skill the cup was brewed for (Double Coffee Religion, Hazelnut Nature, Mocha Arcana, Vanilla Society, Pumpkin Spice Occultism, Toffee Medicine) — apply it to that skill's Recall Knowledge checks only; the app doesn't know which blend your cup is.",
+  "modifiers": [
+   {
+    "value": 4,
+    "type": "item",
+    "target": "skill",
+    "appliesWhen": "checks to Recall Knowledge with the blend's skill (chosen when the cup was crafted)"
+   }
+  ]
  },
  {
   "id": "item-insight-coffee-lesser",
   "name": "Insight Coffee",
   "fromItemId": "insight-coffee-lesser",
   "duration": "1 hour",
-  "note": "+2 item bonus to checks with the single skill this coffee was brewed for (chosen when it was crafted). Apply it yourself — the app doesn't know which skill your cup is.",
-  "modifiers": []
+  "note": "For 1 hour: if you have the strategic strike class feature, its extra damage uses d8s instead of d6s. +2 item bonus to Recall Knowledge checks with the one skill the cup was brewed for (Double Coffee Religion, Hazelnut Nature, Mocha Arcana, Vanilla Society, Pumpkin Spice Occultism, Toffee Medicine) — apply it to that skill's Recall Knowledge checks only; the app doesn't know which blend your cup is.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "skill",
+    "appliesWhen": "checks to Recall Knowledge with the blend's skill (chosen when the cup was crafted)"
+   }
+  ]
  },
  {
   "id": "item-insight-coffee-moderate",
   "name": "Insight Coffee",
   "fromItemId": "insight-coffee-moderate",
   "duration": "1 hour",
-  "note": "+3 item bonus to checks with the single skill this coffee was brewed for (chosen when it was crafted). Apply it yourself — the app doesn't know which skill your cup is.",
-  "modifiers": []
+  "note": "For 1 hour: if you have the strategic strike class feature, its extra damage uses d8s instead of d6s. +3 item bonus to Recall Knowledge checks with the one skill the cup was brewed for (Double Coffee Religion, Hazelnut Nature, Mocha Arcana, Vanilla Society, Pumpkin Spice Occultism, Toffee Medicine) — apply it to that skill's Recall Knowledge checks only; the app doesn't know which blend your cup is.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "skill",
+    "appliesWhen": "checks to Recall Knowledge with the blend's skill (chosen when the cup was crafted)"
+   }
+  ]
  },
  {
   "id": "item-iron-medallion",
@@ -2780,6 +2913,14 @@
   "name": "Serpentine Form",
   "duration": "1 hour",
   "note": "On application you may also counteract one poison or disease afflicting you (counteract rank 5, +15).",
+  "strikeDamage": [
+   {
+    "type": "poison",
+    "flat": 1,
+    "strikeName": "Fangs",
+    "note": "Mana-rattler liniment"
+   }
+  ],
   "grantedStrikes": [
    {
     "name": "Fangs",
@@ -2832,7 +2973,6 @@
   "name": "Mender's Soup",
   "fromItemId": "menders-soup",
   "duration": "24 hours or until your next daily preparations, whichever comes first",
-  "survivesRest": true,
   "note": "Duration sentence: \"After you eat the soup, its effects last 24 hours or until you make your next daily preparations, whichever comes first.\" Items you successfully Repair recover an extra 5 Hit Points. If you eat the soup across the whole time a Craft check requires (typically each day for at least 4 days), the +1 also applies to that Craft check.",
   "modifiers": [
    {
@@ -2872,13 +3012,12 @@
   "name": "Moon Blossom Tea",
   "fromItemId": "moon-blossom-tea",
   "duration": "1 hour (4 hours with the Tea Ceremony activation)",
-  "note": "The text says \"all initiative rolls\", so it covers initiative rolled with Perception or with a skill (Stealth, Deception, …); `all-checks` plus the appliesWhen condition is the only encoding in ModeTargetKind that reaches both, and being conditional it stars those stats rather than folding into any number. It also grants the Evade Peril reaction: turn a failed Reflex save into a success, reducing the tea's remaining duration by 1 hour (ending it if that hits 0). Tea Ceremony extends the duration to 4 hours.",
+  "note": "The text says \"all initiative rolls\", so it covers initiative rolled with Perception or with a skill (Stealth, Deception, …). It also grants the Evade Peril reaction: turn a failed Reflex save into a success, reducing the tea's remaining duration by 1 hour (ending it if that hits 0). Tea Ceremony extends the duration to 4 hours.",
   "modifiers": [
    {
-    "target": "all-checks",
+    "target": "initiative",
     "type": "item",
-    "value": 2,
-    "appliesWhen": "on initiative rolls"
+    "value": 2
    }
   ]
  },
@@ -2968,6 +3107,11 @@
   "fromItemId": "ommatophoric-mutagen",
   "duration": "1 minute",
   "note": "You gain all-around vision and low-light vision if you don't already have it. Drawback: you can't close your eyes, taking the -2 penalty to saves against visual effects for the same 1 minute.",
+  "senses": [
+   {
+    "name": "low-light-vision"
+   }
+  ],
   "modifiers": [
    {
     "target": "perception",
@@ -3037,6 +3181,18 @@
   "fromItemId": "pallesthetic-mutagen",
   "duration": "1 minute",
   "note": "Also grants precise echolocation 40 feet and imprecise tremorsense 60 feet; drawback: you are blinded for 1 minute.",
+  "senses": [
+   {
+    "name": "echolocation",
+    "range": 40,
+    "acuity": "precise"
+   },
+   {
+    "name": "tremorsense",
+    "range": 60,
+    "acuity": "imprecise"
+   }
+  ],
   "modifiers": [
    {
     "target": "perception",
@@ -3105,10 +3261,25 @@
   "fromItemId": "phoenix-cinder",
   "duration": "1 week (Stage 1)",
   "survivesRest": true,
-  "note": "On first entering Stage 1 you are affected as if by Regenerate, and you are immune to fire for 3 days. While in this stage or higher you have fast healing equal to half your level and resistance to fire damage equal to half your level, and you treat any save against fire effects as one degree better. The bonus applies to any other defense, not just saves. You can cast Ignition as an innate spell, and once per day you can wreathe yourself in flame for 1 minute (adjacent creatures that hit you in melee, touch you, or hit you with an unarmed attack take 2d6; dismissable). Stage 2 (1 month) allows the activation once per hour but reduces current and maximum HP by 2 x your level and adds a weakness.",
+  "resistances": [
+   {
+    "type": "fire",
+    "value": "floor(@actor.level/2)"
+   }
+  ],
+  "immunities": [
+   "fire"
+  ],
+  "note": "Fire immunity lasts only the first 3 days of the week; after that only the half-level fire resistance remains. On first entering Stage 1 you are affected as if by Regenerate, and you are immune to fire for 3 days. While in this stage or higher you have fast healing equal to half your level and resistance to fire damage equal to half your level, and you treat any save against fire effects as one degree better. The bonus applies to any other defense, not just saves. You can cast Ignition as an innate spell, and once per day you can wreathe yourself in flame for 1 minute (adjacent creatures that hit you in melee, touch you, or hit you with an unarmed attack take 2d6; dismissable). Stage 2 (1 month) allows the activation once per hour but reduces current and maximum HP by 2 x your level and adds a weakness.",
   "modifiers": [
    {
     "target": "save",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "against fire"
+   },
+   {
+    "target": "ac",
     "type": "circumstance",
     "value": 1,
     "appliesWhen": "against fire"
@@ -3791,7 +3962,7 @@
   "name": "Silvertongue Mutagen",
   "fromItemId": "silvertongue-mutagen-greater",
   "duration": "1 hour",
-  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
+  "note": "Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
   "modifiers": [
    {
     "target": "skill",
@@ -3816,6 +3987,12 @@
     "detail": "performance",
     "type": "item",
     "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "lore:*",
+    "type": "item",
+    "value": -2
    },
    {
     "target": "skill",
@@ -3848,7 +4025,7 @@
   "name": "Silvertongue Mutagen",
   "fromItemId": "silvertongue-mutagen-lesser",
   "duration": "1 minute",
-  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
+  "note": "Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
   "modifiers": [
    {
     "target": "skill",
@@ -3873,6 +4050,12 @@
     "detail": "performance",
     "type": "item",
     "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "lore:*",
+    "type": "item",
+    "value": -2
    },
    {
     "target": "skill",
@@ -3905,7 +4088,7 @@
   "name": "Silvertongue Mutagen",
   "fromItemId": "silvertongue-mutagen-major",
   "duration": "1 hour",
-  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
+  "note": "Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
   "modifiers": [
    {
     "target": "skill",
@@ -3930,6 +4113,12 @@
     "detail": "performance",
     "type": "item",
     "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "lore:*",
+    "type": "item",
+    "value": -2
    },
    {
     "target": "skill",
@@ -3962,7 +4151,7 @@
   "name": "Silvertongue Mutagen",
   "fromItemId": "silvertongue-mutagen-moderate",
   "duration": "10 minutes",
-  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
+  "note": "Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
   "modifiers": [
    {
     "target": "skill",
@@ -3987,6 +4176,12 @@
     "detail": "performance",
     "type": "item",
     "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "lore:*",
+    "type": "item",
+    "value": -2
    },
    {
     "target": "skill",
@@ -4057,6 +4252,9 @@
   "fromItemId": "spiderfoot-brew-greater",
   "duration": "1 hour",
   "note": "You also gain a climb Speed of 25 feet for the duration.",
+  "speeds": {
+   "climb": 25
+  },
   "modifiers": [
    {
     "target": "skill",
@@ -4073,6 +4271,9 @@
   "fromItemId": "spiderfoot-brew-lesser",
   "duration": "1 minute",
   "note": "You also gain a climb Speed of 15 feet for the duration.",
+  "speeds": {
+   "climb": 15
+  },
   "modifiers": [
    {
     "target": "skill",
@@ -4089,6 +4290,9 @@
   "fromItemId": "spiderfoot-brew-moderate",
   "duration": "10 minutes",
   "note": "You also gain a climb Speed of 20 feet for the duration.",
+  "speeds": {
+   "climb": 20
+  },
   "modifiers": [
    {
     "target": "skill",
@@ -4236,6 +4440,16 @@
   "fromItemId": "statue-skin-salve",
   "duration": "20 minutes (stone layer); 8 hours (Impersonate bonus)",
   "note": "For the first 20 minutes a thin layer of stone gives resistance 3 to piercing and slashing damage. The Impersonate bonus ends early if the body is fully submerged in water. If applied to an ally instead of yourself, the whole effect belongs on their sheet.",
+  "resistances": [
+   {
+    "type": "piercing",
+    "value": 3
+   },
+   {
+    "type": "slashing",
+    "value": 3
+   }
+  ],
   "modifiers": [
    {
     "target": "skill",
@@ -4318,7 +4532,7 @@
   "name": "Theatrical (Greater)",
   "fromItemId": "theatrical-mutagen-greater",
   "duration": "10 minutes",
-  "note": "You also gain a +10-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
+  "note": "If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
   "modifiers": [
    {
     "target": "skill",
@@ -4348,6 +4562,11 @@
     "detail": "will",
     "type": "untyped",
     "value": -1
+   },
+   {
+    "target": "speed",
+    "type": "status",
+    "value": 10
    }
   ]
  },
@@ -4356,7 +4575,7 @@
   "name": "Theatrical (Lesser)",
   "fromItemId": "theatrical-mutagen-lesser",
   "duration": "1 minute",
-  "note": "You also gain a +5-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
+  "note": "If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
   "modifiers": [
    {
     "target": "skill",
@@ -4386,6 +4605,11 @@
     "detail": "will",
     "type": "untyped",
     "value": -1
+   },
+   {
+    "target": "speed",
+    "type": "status",
+    "value": 5
    }
   ]
  },
@@ -4394,7 +4618,7 @@
   "name": "Theatrical (Major)",
   "fromItemId": "theatrical-mutagen-major",
   "duration": "1 hour",
-  "note": "You also gain a +10-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
+  "note": "If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
   "modifiers": [
    {
     "target": "skill",
@@ -4424,6 +4648,11 @@
     "detail": "will",
     "type": "untyped",
     "value": -1
+   },
+   {
+    "target": "speed",
+    "type": "status",
+    "value": 10
    }
   ]
  },
@@ -4432,7 +4661,7 @@
   "name": "Theatrical (Moderate)",
   "fromItemId": "theatrical-mutagen-moderate",
   "duration": "1 minute",
-  "note": "You also gain a +5-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
+  "note": "If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
   "modifiers": [
    {
     "target": "skill",
@@ -4462,6 +4691,11 @@
     "detail": "will",
     "type": "untyped",
     "value": -1
+   },
+   {
+    "target": "speed",
+    "type": "status",
+    "value": 5
    }
   ]
  },
@@ -4525,7 +4759,6 @@
   "name": "Tracker's Stew",
   "fromItemId": "trackers-stew",
   "duration": "24 hours or until your next daily preparations, whichever comes first",
-  "survivesRest": true,
   "note": "While the stew lasts you can Cover Tracks or Track at full Speed, or do both at half Speed.",
   "modifiers": [
    {
@@ -4594,7 +4827,7 @@
   "name": "Vermin Repellent",
   "fromItemId": "vermin-repellent-agent-greater",
   "duration": "4 hours",
-  "note": "Attacking arthropods must save or become frightened (fleeing on a critical failure), then are temporarily immune for 1 minute. That effect lands on the attacker.",
+  "note": "Arthropods (insects, spiders, scorpions, crabs and similar) attacking you with a melee Strike or swarm attack must attempt a DC 29 Will save: critical success acts normally, success frightened 1, failure frightened 2, critical failure frightened 2 and fleeing; the arthropod is then temporarily immune for 1 minute. That effect lands on the attacker.",
   "modifiers": [
    {
     "target": "save",
@@ -4626,7 +4859,7 @@
   "name": "Vermin Repellent",
   "fromItemId": "vermin-repellent-agent-major",
   "duration": "4 hours",
-  "note": "Attacking arthropods must save or become frightened (fleeing on a critical failure), then are temporarily immune for 1 minute. That effect lands on the attacker.",
+  "note": "Arthropods (insects, spiders, scorpions, crabs and similar) attacking you with a melee Strike or swarm attack must attempt a DC 35 Will save: critical success acts normally, success frightened 1, failure frightened 2, critical failure frightened 2 and fleeing; the arthropod is then temporarily immune for 1 minute. That effect lands on the attacker.",
   "modifiers": [
    {
     "target": "save",
@@ -4642,7 +4875,7 @@
   "name": "Vermin Repellent",
   "fromItemId": "vermin-repellent-agent-moderate",
   "duration": "4 hours",
-  "note": "Attacking arthropods must save or become frightened (fleeing on a critical failure), then are temporarily immune for 1 minute. That effect lands on the attacker.",
+  "note": "While active, arthropods must attempt a Will save (DC 24) when attacking you with a melee Strike or swarm attack (Critical Success no effect, Success frightened 1, Failure frightened 2, Critical Failure frightened 2 and fleeing), then are temporarily immune for 1 minute. That save affects the attacker, not you.",
   "modifiers": [
    {
     "target": "save",
@@ -4667,7 +4900,7 @@
   "name": "War Blood Mutagen (Greater)",
   "fromItemId": "war-blood-mutagen-greater",
   "duration": "1 hour",
-  "note": "Drawback: you can't voluntarily release the weapon without succeeding at a check (which ends the mutagen), and concentrate actions require a successful check or the action is lost. Disarm or other removal attempts must exceed DC 40.",
+  "note": "Drawback: the weapon is fused to you - you can't voluntarily release it without succeeding at an Athletics check (DC 40), which ends the mutagen and takes a single action, and any concentrate action requires a DC 5 flat check or the action is lost. Disarm or other removal attempts must exceed DC 40.",
   "modifiers": [
    {
     "value": 3,
@@ -4711,7 +4944,7 @@
   "name": "War Blood Mutagen (Major)",
   "fromItemId": "war-blood-mutagen-major",
   "duration": "1 hour",
-  "note": "Drawback: you can't voluntarily release the weapon without succeeding at a check (which ends the mutagen), and concentrate actions require a successful check or the action is lost. Disarm or other removal attempts must exceed DC 50.",
+  "note": "Drawback: the weapon is fused to you - you can't voluntarily release it without succeeding at an Athletics check (DC 50), which ends the mutagen and takes a single action, and any concentrate action requires a DC 5 flat check or the action is lost. Disarm or other removal attempts must exceed DC 50.",
   "modifiers": [
    {
     "value": 4,
@@ -4733,7 +4966,7 @@
   "name": "War Blood Mutagen (Moderate)",
   "fromItemId": "war-blood-mutagen-moderate",
   "duration": "10 minutes",
-  "note": "Drawback: you can't voluntarily release the weapon without succeeding at a check (which ends the mutagen), and concentrate actions require a successful check or the action is lost. Disarm or other removal attempts must exceed DC 30.",
+  "note": "Drawback: the weapon is fused to you - you can't voluntarily release it without succeeding at an Athletics check (DC 30), which ends the mutagen and takes a single action, and any concentrate action requires a DC 5 flat check or the action is lost. Disarm or other removal attempts must exceed DC 30.",
   "modifiers": [
    {
     "value": 2,
@@ -4814,6 +5047,14 @@
   "name": "Witchwarg Jaws",
   "duration": "1 minute (not printed — the statblock omits one)",
   "note": "Once per hour. The jaws are made using your hands. They deal 1 cold damage on top of the die.",
+  "strikeDamage": [
+   {
+    "type": "cold",
+    "flat": 1,
+    "strikeName": "Jaws",
+    "note": "Witchwarg jaws"
+   }
+  ],
   "grantedStrikes": [
    {
     "name": "Jaws",
@@ -4855,6 +5096,7 @@
   "name": "Sea Touch (Greater)",
   "fromItemId": "sea-touch-elixir-greater",
   "duration": "24 hours",
+  "survivesRest": true,
   "modifiers": [],
   "speeds": {
    "swim": 20
@@ -4866,7 +5108,6 @@
   "name": "Phantom Roll",
   "fromItemId": "phantom-roll",
   "duration": "24 hours or until your next daily preparations, whichever comes first",
-  "survivesRest": true,
   "note": "For the same duration you can also Avoid Notice at full Speed, or combine Avoid Notice with Investigate or Scout while moving at half Speed, which is not a sheet number.",
   "modifiers": [
    {
@@ -4980,6 +5221,6 @@
     "value": 10
    }
   ],
-  "note": "Once per day, as a reaction when you attempt a Will save against a mental effect. Turn this on only if you SUCCEED at that save: 'If you succeed at this saving throw, the resistance to mental damage granted by the resolute mind wrap increases to 10 for 1 minute.'"
+  "note": "Once per day, as a reaction when you attempt a Will save against a mental effect. The reaction itself grants a +1 item bonus to that triggering Will save — one roll, not a duration, so it is not a sheet modifier. Turn this on only if you SUCCEED at that save: 'If you succeed at this saving throw, the resistance to mental damage granted by the resolute mind wrap increases to 10 for 1 minute.'"
  }
 ]

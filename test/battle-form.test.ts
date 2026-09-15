@@ -174,7 +174,32 @@ describe('battleForm — the shipped modes', () => {
     expect(dt?.battleForm?.attackMod).toBeUndefined();
     // …and no strikes either, because deriveStrikes would roll them at attackMod ?? 0.
     expect(dt?.battleForm?.strikes).toBeUndefined();
-    expect(dt?.battleForm?.speeds?.fly).toBe(100);
+  });
+
+  it("dragon transformation's fly Speed is the 18th-level formula, and it resolves to a number", () => {
+    /*
+     * spell-1502 dragon form prints *"Speed 40 feet, fly 100 feet"*, and the feat adds *"At 18th level,
+     * you gain a +20-foot status bonus to your fly Speed"* — one Speed with two values, which a flat 100
+     * could not say, so an 18th-level barbarian flew at 100 forever.
+     *
+     * `battleForm.speeds` goes through the same `resolveFormula` the AC formula above uses (derive.ts,
+     * deriveSpeeds' form-seeding branch), so the string is a number by the time it reaches a pixel.
+     *
+     * MUTATION PROOF — make deriveSpeeds' form branch keep the raw value instead of resolving it:
+     *   AssertionError: expected '100+20*min(1,floor(@actor.level/18))' to be 120
+     */
+    const con = db();
+    const dt = con.modes?.['dragon-transformation'] as ModeDef | undefined;
+    expect(dt?.battleForm?.speeds?.fly).toBe('100+20*min(1,floor(@actor.level/18))');
+    const flying = (level: number) => {
+      const base = buildCharacter(
+        { ...emptyBuild(), level, ancestryId: 'dwarf', backgroundId: Object.keys(con.backgrounds)[0], classId: 'barbarian', subclassId: con.classes.barbarian?.subclass?.options?.[0]?.id ?? null, keyAbility: 'str' },
+        con,
+      );
+      return deriveSpeeds({ ...base, activeModes: [dt!] } as Character, con).fly;
+    };
+    expect(flying(17), 'the printed 100 feet below 18th level').toBe(100);
+    expect(flying(18), 'the +20-foot status bonus at 18th').toBe(120);
   });
 
   it('no authored form prints Strikes without an attack modifier to roll them at', () => {

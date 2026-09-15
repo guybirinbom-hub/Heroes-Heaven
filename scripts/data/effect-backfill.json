@@ -186331,14 +186331,14 @@
      "value": 1,
      "type": "status",
      "target": "save",
-     "detail": "fortitude",
-     "appliesWhen": "while your divine spark is in the scar"
+     "detail": "fortitude"
     }
    ],
-   "note": "Immanence: divine energy spreads outward from your scar, reinforcing your flesh. You gain the benefits of the Diehard feat - you die from the dying condition at dying 5 rather than dying 4 - and a +1 status bonus to Fortitude saving throws. The Fortitude bonus is applied while this toggle is on; the dying value is not moved yet (the sheet's death threshold has no toggle-driven lane), so raise it by hand while the spark is in the scar.",
+   "dyingThresholdBonus": 1,
+   "note": "Immanence: divine energy spreads outward from your scar, reinforcing your flesh. Both halves are applied while this toggle is on: the +1 status bonus to Fortitude saves, and the death threshold rises to dying 5 (the Diehard benefit).",
    "aonOrigin": "authored"
   },
-  "why": "ikon-13 Immanence: \"Divine energy spreads outward from your scar, reinforcing your flesh. You gain the benefits of the Diehard feat and a +1 status bonus to Fortitude saving throws.\" Both halves are conditional on the divine spark being in this ikon, so both belong behind one toggle rather than on the always-on record - batch 034 already retired the ungated grantsFeats:[\"diehard\"] row for that reason."
+  "why": "ikon-13 Immanence: \"Divine energy spreads outward from your scar, reinforcing your flesh. You gain the benefits of the Diehard feat and a +1 status bonus to Fortitude saving throws.\" The toggle IS the spark-in-the-scar state, so the Fortitude modifier must not carry an appliesWhen that merely restates the duration - modeNumberBonus/modeTypedMods skip every appliesWhen modifier, so the bonus was applied nowhere. The Diehard half now rides dyingThresholdBonus, the field play.ts already sums over active modes."
  },
  {
   "category": "modes",
@@ -186352,10 +186352,11 @@
    ],
    "duration": "1 minute",
    "modifiers": [],
-   "note": "For 1 minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain, and living creatures within the same area die from the dying condition at dying 5 rather than dying 4 - you included, while you stand in your own well. Raise the death threshold by hand while this is on; the sheet has no toggle-driven death threshold yet. If a living creature's dying value increases while within your Soul Well, your spectral dagger deals one additional weapon die of damage until the end of your next turn.",
+   "dyingThresholdBonus": 1,
+   "note": "For 1 minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain, and living creatures within the same area die from the dying condition at dying 5 rather than dying 4 - you included, while you stand in your own well. If a living creature's dying value increases while within your Soul Well, your spectral dagger deals one additional weapon die of damage until the end of your next turn.",
    "aonOrigin": "authored"
   },
-  "why": "feat-7707: \"For the next minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain and living creatures within the same area die from the dying condition at dying 5 rather than dying 4.\" A one-minute activity is a toggle, not a permanent character field."
+  "why": "feat-7707: \"For the next minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain and living creatures within the same area die from the dying condition at dying 5 rather than dying 4.\" The earlier row retired the feat-level dyingThresholdBonus on the grounds that the toggle carried it, but the toggle never received the field, so the rise to dying 5 reached nothing."
  },
  {
   "category": "items",
@@ -187501,5 +187502,53 @@
    "laughing shadow hybrid study"
   ],
   "why": "feat-9073 (Dimensional Disappearance). The page prints two prerequisites and both are kept — only the punctuation changes. The export's facet is \"_dimensional assault_ focus spell,; laughing shadow hybrid study\": AoN wrote its clause separator as \",;\", and prerequisitesFrom() splits on ';' alone, so the first clause shipped as \"dimensional assault focus spell,\" with a trailing comma. checkPrerequisites() (src/rules/build.ts) matches clauses with anchored patterns, so that comma silently switched the gate off. Owner ruling 2026-09-12, desk #160: \"keep both prerequisites, drop the stray comma\"."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-the-skys-call-1",
+  "field": "conditions",
+  "value": [
+   {
+    "id": "enfeebled",
+    "value": 1
+   }
+  ],
+  "why": "AoN mystery-15 §Curse of the Sky's Call: \"you are enfeebled with a value equal to your cursebound value\". The create row for this record parked the enfeebled half in prose because \"ModeDef has no `conditions` field\"; it has one now (src/rules/types.ts:4944) and applyPlayState derives it from the live toggle (src/rules/play.ts ~305), so cursebound 1 carries enfeebled 1 as a real condition instead of a sentence."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-the-skys-call-2",
+  "field": "conditions",
+  "value": [
+   {
+    "id": "enfeebled",
+    "value": 2
+   }
+  ],
+  "why": "AoN mystery-15 §Curse of the Sky's Call: \"you are enfeebled with a value equal to your cursebound value\" — cursebound 2 is enfeebled 2, as this record's own note already prints. Carried by ModeDef.conditions (src/rules/types.ts:4944), read by applyPlayState (src/rules/play.ts ~305)."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-the-skys-call-3",
+  "field": "conditions",
+  "value": [
+   {
+    "id": "enfeebled",
+    "value": 3
+   }
+  ],
+  "why": "AoN mystery-15 §Curse of the Sky's Call: \"you are enfeebled with a value equal to your cursebound value\" — cursebound 3 is enfeebled 3, as this record's own note already prints. Carried by ModeDef.conditions (src/rules/types.ts:4944), read by applyPlayState (src/rules/play.ts ~305)."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-the-skys-call-4",
+  "field": "conditions",
+  "value": [
+   {
+    "id": "enfeebled",
+    "value": 4
+   }
+  ],
+  "why": "AoN mystery-15 §Curse of the Sky's Call: \"you are enfeebled with a value equal to your cursebound value\" — cursebound 4 is enfeebled 4, as this record's own note already prints. Carried by ModeDef.conditions (src/rules/types.ts:4944), read by applyPlayState (src/rules/play.ts ~305)."
  }
 ]

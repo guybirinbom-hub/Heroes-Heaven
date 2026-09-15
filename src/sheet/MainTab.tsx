@@ -26,7 +26,7 @@ import { AlchemyPanel } from './AlchemyPanel';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
-import { markTooltip, recordMarkersFor, sheetLoreKeys, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
+import { assuranceNote, assuranceResult, markTooltip, markedActionCost, recordMarkersFor, sheetLoreKeys, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { stanceRequirementIssue, modeGateIds } from '../rules/derive';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
@@ -764,20 +764,24 @@ export function MainTab({
     // source. Neither has a stat row to sit on: Magic Hands gives no bonus to the Medicine check at
     // all, so starring the nearest roll would have claimed something the feat does not grant.
     const marks = recordMarkersFor(character, content, 'action', actionId(a.name));
-    const markValue = marks.find((m) => m.value)?.value;
+    // …unless the changed value IS the cost (Quick Jump's "1 action"), which belongs in the cost slot
+    // rather than beside it — a row that shows both states two costs at once. See `markedActionCost`.
+    const markedCost = markedActionCost(marks);
+    const markValue = markedCost ? undefined : marks.find((m) => m.value)?.value;
+    const cost = markedCost ?? a.cost;
     const markTitle = markTooltip(content, marks);
     const MarkTag = () =>
       marks.length === 0 ? null : (
         <span className="action-mark" title={markTitle}>
           {markValue && <span className="action-mark-val">({markValue})</span>}
-          <SituationalStar />
+          <SituationalStar title={markTitle} />
         </span>
       );
     if (compactActions && !full) {
       return (
         <button type="button" className={'action-chip' + (onPrepare && !prepared ? ' unprepared' : '') + (gate ? ' gated' : '')} title={gate ? `Needs ${gateLabel(gate)} — ${a.name}` : `Show ${a.name}`} onClick={openDetail}>
           <span className="action-cost">
-            {a.cost ? <ActionGlyph cost={a.cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
+            {cost ? <ActionGlyph cost={cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
           </span>
           <span className="action-chip-name">{a.name}</span>
           <ActionUses a={a} />
@@ -796,8 +800,8 @@ export function MainTab({
         title={gate ? `Needs ${gateLabel(gate)} — ${a.name}` : `Show ${a.name}`}
       >
         <span className="action-cost">
-          {a.cost ? (
-            <ActionGlyph cost={a.cost} />
+          {cost ? (
+            <ActionGlyph cost={cost} />
           ) : (
             <i className="ti ti-hourglass-low action-activity-icon" title="Activity" aria-hidden="true" />
           )}
@@ -858,12 +862,17 @@ export function MainTab({
     useEscapeClose(onClose);
     const { a, pinnable, prepare } = detail;
     const traits = a.traits ?? [];
+    /* …the SAME cost the chip that opened this popup shows. A record marker whose value is a cost
+     * replaces the action's own (Quick Jump: High Jump becomes ◆), and the chip already routes it —
+     * this header read `a.cost` straight off the table, so tapping a ◆ chip opened a ◆◆ popup. One
+     * action, two costs, one click apart: the same defect the row fix exists for. */
+    const cost = markedActionCost(recordMarkersFor(character, content, 'action', actionId(a.name))) ?? a.cost;
     return (
       <div className="picker-overlay" onClick={onClose}>
         <div className="picker info-modal" onClick={(e) => e.stopPropagation()}>
           <div className="picker-head">
             <span className="action-cost action-detail-cost">
-              {a.cost ? <ActionGlyph cost={a.cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
+              {cost ? <ActionGlyph cost={cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
             </span>
             <span className="info-title">
               {a.name}
@@ -989,6 +998,11 @@ export function MainTab({
             const note = [penalized ? `${formatMod(acp.value)} armor check penalty (${acp.source})` : '', subNote, dailyNote]
               .filter(Boolean)
               .join(' · ');
+            // Assurance's fixed result. The `*` this row already carries says a note exists; it never
+            // said WHAT, and the whole of Assurance is a number — one the modifier beside it cannot
+            // stand in for, because the rule excludes every other term of it. Owner, 2026-09-15:
+            // "I have Assurance … but I don't see that Assurance on that skill in the character page".
+            const assurance = assuranceResult(character, key, d.rank);
             return (
               <div
                 className={'skill' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'skill', skill: key }, content)}
@@ -1000,6 +1014,11 @@ export function MainTab({
                 <span className="skill-name">
                   {skillLabel(key)}
                   {statHasSituational(character, { kind: 'skill', skill: key }, content) && <SituationalStar />}
+                  {assurance != null && (
+                    <span className="skill-sub assurance-badge" title={assuranceNote(assurance)}>
+                      Assurance {assurance}
+                    </span>
+                  )}
                   {dailyRank && (
                     <span className="skill-sub" title={dailyNote}>
                       today

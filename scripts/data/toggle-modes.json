@@ -12,6 +12,12 @@
   "creatureTraits": [
    "animal"
   ],
+  "weaknesses": [
+   {
+    "type": "physical",
+    "value": 5
+   }
+  ],
   "battleForm": {
    "ac": "20+@actor.level",
    "speeds": {
@@ -83,7 +89,7 @@
   "creatureTraits": [
    "animal"
   ],
-  "duration": "once per day, 5th-rank animal form",
+  "duration": "up to 1 minute, once per day",
   "battleForm": {
    "ac": "18+@actor.level",
    "attackMod": 18,
@@ -176,7 +182,19 @@
    "air-gate"
   ],
   "duration": "while your kinetic aura is active",
-  "modifiers": [],
+  "modifiers": [
+   {
+    "value": 10,
+    "type": "status",
+    "target": "speed"
+   },
+   {
+    "value": 10,
+    "type": "status",
+    "target": "speed",
+    "detail": "fly"
+   }
+  ],
   "note": "You and any ally that starts its turn in the aura gains a +10-foot status bonus to land Speed until the end of that turn, and to fly Speed if you have one. Switch this on only if you took this gate’s Aura Junction at a Gate’s Threshold — a gate gives you its Impulse Junction automatically, but the aura one is a choice — and only while your kinetic aura is active.",
   "category": "Aura"
  },
@@ -313,10 +331,23 @@
   ],
   "duration": "5 minutes, or until you use the action again",
   "speeds": {
-   "fly": "@actor.speed.land"
+   "fly": "max(20,@actor.speed.land)"
   },
-  "modifiers": [],
-  "note": "You take a towering form for 5 minutes and gain the benefits of the 4th-rank enlarge and fly spells — enlarge makes you Large with +5-foot reach, +2 status damage on melee Strikes and clumsy 1; fly gives the fly Speed shown here. If you have your head gem it radiates an aura of moonlight: creatures that start their turn adjacent to you become dazzled until the beginning of their turn unless they succeed at a Will save against the higher of your class DC or spell DC. Once per day.",
+  "modifiers": [
+   {
+    "value": 4,
+    "type": "status",
+    "target": "damage",
+    "appliesWhen": "melee Strikes while in the form"
+   }
+  ],
+  "conditions": [
+   {
+    "id": "clumsy",
+    "value": 1
+   }
+  ],
+  "note": "You take a towering form for 5 minutes and gain the benefits of the 4th-rank enlarge and fly spells — enlarge makes you Huge (if you were Large or smaller), your reach increases by 10 feet (15 feet if you started out Tiny), you gain a +4 status bonus to damage rolls on melee Strikes and you are clumsy 1; fly gives the fly Speed shown here. If you have your head gem it radiates an aura of moonlight: creatures that start their turn adjacent to you become dazzled until the beginning of their turn unless they succeed at a Will save against the higher of your class DC or spell DC. Once per day.",
   "category": "Aura"
  },
  "aura-corpse-stench": {
@@ -394,6 +425,11 @@
     "value": 1,
     "type": "status",
     "target": "attack"
+   },
+   {
+    "value": 1,
+    "type": "status",
+    "target": "spell-attack"
    }
   ],
   "note": "You are continuously surrounded by a bless spell of a rank equal to half your level (rounded up), in a 15-foot emanation you cannot enlarge. You and allies inside gain a +1 status bonus to attack rolls. You can Dismiss it; it comes back on its own after 1 minute.",
@@ -536,8 +572,7 @@
    {
     "value": 1,
     "type": "status",
-    "target": "ac",
-    "appliesWhen": "while your divine spark is in the mirrored aegis"
+    "target": "ac"
    }
   ],
   "note": "The aegis emits a 15-foot emanation protecting you and all allies inside, granting a +1 status bonus to AC. If the aegis houses your divine spark for 10 uninterrupted minutes it is restored to full Hit Points.",
@@ -650,8 +685,12 @@
    {
     "value": 1,
     "type": "status",
-    "target": "attack",
-    "appliesWhen": "while your divine spark is in the victor's wreath"
+    "target": "attack"
+   },
+   {
+    "value": 1,
+    "type": "status",
+    "target": "spell-attack"
    }
   ],
   "note": "You and all allies in a 15-foot emanation gain a +1 status bonus to attack rolls.",
@@ -696,8 +735,7 @@
    {
     "value": 3,
     "type": "status",
-    "target": "damage",
-    "appliesWhen": "to damage with Strikes, while you are inside your own aura"
+    "target": "damage"
    }
   ],
   "note": "A 30-foot aura for 1 minute or until you Dismiss it, once per 10 minutes. You and your allies inside gain a +3 status bonus to damage with Strikes, and enemies who end their turn inside cannot reduce their frightened value below 1.",
@@ -729,7 +767,13 @@
   "creatureTraits": [
    "animal"
   ],
-  "duration": "once per hour",
+  "duration": "up to 10 minutes (pest form), once per hour",
+  "weaknesses": [
+   {
+    "type": "physical",
+    "value": 5
+   }
+  ],
   "battleForm": {
    "ac": "15+@actor.level",
    "speeds": {
@@ -807,10 +851,25 @@
    "swarm"
   ],
   "duration": "up to 1 minute, once per day",
-  "battleForm": {
-   "speeds": {
-    "fly": 40
+  "speeds": {
+   "fly": 40
+  },
+  "weaknesses": [
+   {
+    "type": "area damage",
+    "value": 5
    },
+   {
+    "type": "splash damage",
+    "value": 5
+   }
+  ],
+  "immunities": [
+   "grabbed",
+   "prone",
+   "restrained"
+  ],
+  "battleForm": {
    "size": "Huge",
    "noStrikes": true
   },
@@ -909,6 +968,12 @@
   "creatureTraits": [
    "animal"
   ],
+  "weaknesses": [
+   {
+    "type": "physical",
+    "value": 5
+   }
+  ],
   "battleForm": {
    "ac": "15+@actor.level",
    "speeds": {
@@ -943,6 +1008,12 @@
    "animal"
   ],
   "duration": "up to 10 minutes, once per hour",
+  "weaknesses": [
+   {
+    "type": "physical",
+    "value": 5
+   }
+  ],
   "battleForm": {
    "ac": "15+@actor.level",
    "speeds": {
@@ -1549,7 +1620,13 @@
     "appliesWhen": "melee damage rolls"
    }
   ],
-  "note": "Enlarge: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are clumsy 1."
+  "conditions": [
+   {
+    "id": "clumsy",
+    "value": 1
+   }
+  ],
+  "note": "Enlarge: you become Large (if Medium or smaller) and your reach increases by 5 feet. You are Clumsy 1 for as long as you are in your hybrid shape."
  },
  "dire-growth": {
   "id": "dire-growth",
@@ -1566,7 +1643,13 @@
     "appliesWhen": "melee damage rolls"
    }
   ],
-  "note": "Enlarge: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are clumsy 1."
+  "conditions": [
+   {
+    "id": "clumsy",
+    "value": 1
+   }
+  ],
+  "note": "Enlarge: you become Large (if Medium or smaller), your reach increases by 5 feet, and you are Clumsy 1 while you remain in your animal shape."
  },
  "dissolutions-sight": {
   "id": "dissolutions-sight",
@@ -1600,7 +1683,7 @@
   "battleForm": {
    "speeds": {
     "land": 40,
-    "fly": 100
+    "fly": "100+20*min(1,floor(@actor.level/18))"
    },
    "senses": [
     {
@@ -1675,7 +1758,6 @@
    "energetic-meltdown"
   ],
   "duration": "Until your next daily preparations",
-  "survivesRest": true,
   "note": "Moderate Backlash from Energetic Meltdown. You also lose immunity to that energy type, if you had it, until your next daily preparations. (Mild Backlash is only damage equal to your level; Severe Backlash is a burst dealing 1d6 per level, which you take in full without a save.)",
   "modifiers": [],
   "weaknesses": [
@@ -1720,11 +1802,13 @@
   "duration": "1 minute",
   "senses": [
    {
-    "name": "see-invisibility"
+    "name": "see-invisibility",
+    "range": 60,
+    "note": "only if the GM's secret truesight counteract against the invisibility effect succeeds"
    }
   ],
   "modifiers": [],
-  "note": "Costs 1 Mythic Point. You have the effects of Truesight (you see through illusions and magical darkness and can see invisible creatures) and roll all Perception checks with mythic proficiency."
+  "note": "Costs 1 Mythic Point. For 1 minute you have the effects of Truesight (60 ft): the GM rolls a secret counteract check against any illusion, morph or polymorph effect, only to decide whether you see through it — this usually reveals invisible creatures and polymorphed forms but does not end the effect. You roll all Perception checks with mythic proficiency."
  },
  "feat-aegis-for-the-innocent": {
   "name": "Aegis for the Innocent",
@@ -1736,22 +1820,6 @@
   "duration": "1 minute",
   "note": "An ally inside your nimbus is barriered: they have +1 status AC and enemies in/entering it must save vs your class or spell DC. While it runs, your nimbus area is halved. Your own AC is unchanged.",
   "modifiers": []
- },
- "feat-eternal-blessing": {
-  "id": "feat-eternal-blessing",
-  "name": "Eternal Blessing",
-  "feats": [
-   "eternal-blessing"
-  ],
-  "duration": "permanent — you may Dismiss it, and it returns automatically after 1 minute",
-  "modifiers": [
-   {
-    "target": "attack",
-    "type": "status",
-    "value": 1
-   }
-  ],
-  "note": "You are continuously surrounded by bless at a spell rank equal to half your level (rounded up), radius 15 feet (it cannot be increased): you and allies inside gain a +1 status bonus to attack rolls."
  },
  "feat-tweak-appearances": {
   "name": "Tweak Appearances",
@@ -1804,7 +1872,7 @@
   "feats": [
    "advanced-vials-mutagenist"
   ],
-  "duration": "the field vial's duration",
+  "duration": "1 minute",
   "resistances": [
    {
     "type": "physical",
@@ -1871,7 +1939,13 @@
   "creatureTraits": [
    "animal"
   ],
-  "duration": "once per hour",
+  "duration": "up to 10 minutes, once per hour",
+  "weaknesses": [
+   {
+    "type": "physical",
+    "value": 5
+   }
+  ],
   "battleForm": {
    "ac": "15+@actor.level",
    "speeds": {
@@ -1906,14 +1980,14 @@
   "creatureTraits": [
    "animal"
   ],
-  "duration": "once per day, 5th-rank animal form",
+  "duration": "up to 1 minute, once per day",
   "battleForm": {
    "ac": "18+@actor.level",
    "attackMod": 18,
    "strikes": [
     {
      "name": "Fangs",
-     "damage": "4d4+7 piercing plus 1d6 poison",
+     "damage": "4d4+7 piercing plus 2d6 poison",
      "traits": [
       "unarmed",
       "reach-15"
@@ -1938,7 +2012,7 @@
    "size": "Huge",
    "tempHp": 20
   },
-  "note": "Form of the Beloved Mother: a 5th-rank animal form, snake only. AC = 18 + your level, 20 temporary Hit Points, attack modifier +18, Athletics +20 unless yours is higher, Huge with 15-foot reach. Snake fangs print 2d4 piercing plus 1d6 poison with a +7 damage bonus; 5th rank doubles the printed damage dice, so the piercing becomes 4d4+7 (the rider poison die is left as printed — the spell doubles \"the number of damage dice\", and the conservative reading is that the rider is not part of the form’s listed damage). Spending an extra action also casts 5th-rank slither, which never harms you."
+  "note": "Form of the Beloved Mother: a 5th-rank animal form, snake only. AC = 18 + your level, 20 temporary Hit Points, attack modifier +18, Athletics +20 unless yours is higher, Huge with 15-foot reach. Snake fangs print 2d4 piercing plus 1d6 poison with a +7 damage bonus; 5th rank doubles the number of damage dice, so the strike becomes 4d4+7 piercing plus 2d6 poison. Spending an extra action also casts 5th-rank slither, which never harms you."
  },
  "fresh-produce": {
   "id": "fresh-produce",
@@ -2014,7 +2088,13 @@
   ],
   "duration": "until you stop raging",
   "modifiers": [],
-  "note": "You are Large: your reach increases by 5 feet and you are clumsy 1 until you stop raging. Your equipment grows with you. Requires that you were Medium or smaller."
+  "conditions": [
+   {
+    "id": "clumsy",
+    "value": 1
+   }
+  ],
+  "note": "You are Large: your reach increases by 5 feet and you are Clumsy 1 until you stop raging. Your equipment grows with you. Requires that you were Medium or smaller."
  },
  "golden-body": {
   "id": "golden-body",
@@ -2146,7 +2226,7 @@
   ],
   "duration": "until the end of your next turn",
   "modifiers": [],
-  "note": "Infused with Belkzen's Might: expend one use of your storied skin's Living History. Your weapon and unarmed Strikes deal additional spirit damage equal to 1 plus half the number of Tattooed Historian feats you have (so 1 with one or two such feats, 2 with three or four, and so on)."
+  "note": "Infused with Belkzen's Might: expend one use of your storied skin's Living History. Your weapon and unarmed Strikes deal additional spirit damage equal to 1 plus half the number of Tattooed Historian feats you have (2 with two or three such feats, 3 with four or five, and so on)."
  },
  "item-abysium-chunk": {
   "id": "item-abysium-chunk",
@@ -2158,6 +2238,21 @@
     "value": -1,
     "type": "status",
     "target": "all-checks"
+   },
+   {
+    "value": -1,
+    "type": "status",
+    "target": "spell-dc"
+   },
+   {
+    "value": -1,
+    "type": "status",
+    "target": "class-dc"
+   },
+   {
+    "value": -1,
+    "type": "status",
+    "target": "ac"
    }
   ],
   "note": "A creature carrying this standard-grade, light-Bulk abysium chunk is sickened 1 (a poison effect). Switch off when the chunk is not carried. The chunk also sheds dim light in a 10-foot radius.",
@@ -2173,6 +2268,21 @@
     "value": -2,
     "type": "status",
     "target": "all-checks"
+   },
+   {
+    "value": -2,
+    "type": "status",
+    "target": "spell-dc"
+   },
+   {
+    "value": -2,
+    "type": "status",
+    "target": "class-dc"
+   },
+   {
+    "value": -2,
+    "type": "status",
+    "target": "ac"
    }
   ],
   "note": "A creature carrying this standard-grade, 1-Bulk abysium ingot is sickened 2 (a poison effect). Switch off when the ingot is not carried. It also sheds dim light in a 10-foot radius.",
@@ -2228,7 +2338,13 @@
   "fromItemId": "azatas-grace",
   "duration": "until Dismissed",
   "survivesRest": true,
-  "modifiers": [],
+  "modifiers": [
+   {
+    "target": "max-hp",
+    "type": "untyped",
+    "value": 50
+   }
+  ],
   "weaknesses": [
    {
     "type": "lawful",
@@ -2258,17 +2374,31 @@
   "name": "Blessed Tattoo",
   "fromItemId": "blessed-tattoo",
   "duration": "1 minute",
-  "note": "Once per day; grants the effect of Protection (+1 status bonus to AC and saving throws). Can be activated as a reaction instead of a 2-action activity when a demon attacks you or you attempt a save against a demon's ability.",
+  "note": "Once per day; grants the effect of the legacy Protection spell against evil: +1 status bonus to AC and saving throws against evil creatures and effects, +3 against attacks by evil summoned creatures and against effects from evil creatures that would directly control you. Can be activated as a reaction instead of a 2-action activity when a demon attacks you or you attempt a save against a demon's ability.",
   "modifiers": [
    {
     "value": 1,
     "type": "status",
-    "target": "ac"
+    "target": "ac",
+    "appliesWhen": "against evil creatures and effects"
    },
    {
     "value": 1,
     "type": "status",
-    "target": "save"
+    "target": "save",
+    "appliesWhen": "against evil creatures and effects"
+   },
+   {
+    "value": 3,
+    "type": "status",
+    "target": "ac",
+    "appliesWhen": "against attacks by evil summoned creatures"
+   },
+   {
+    "value": 3,
+    "type": "status",
+    "target": "save",
+    "appliesWhen": "against effects from evil creatures that would directly control you"
    }
   ]
  },
@@ -2653,7 +2783,7 @@
    {
     "value": 1,
     "type": "status",
-    "target": "all-checks",
+    "target": "skill",
     "appliesWhen": "to Recall Knowledge"
    }
   ],
@@ -2972,7 +3102,13 @@
   "fromItemId": "giant-catch-pole",
   "duration": "while wielding the giant catch pole",
   "modifiers": [],
-  "note": "You are Clumsy 1 while wielding it (apply as a condition). The rope loop lets you Grapple without having a free hand, and the giant version can Grapple creatures up to your normal size limit rather than only Medium or smaller."
+  "conditions": [
+   {
+    "id": "clumsy",
+    "value": 1
+   }
+  ],
+  "note": "You are Clumsy 1 while wielding it. The rope loop lets you Grapple without having a free hand, and the giant version can Grapple creatures up to your normal size limit rather than only Medium or smaller."
  },
  "item-golden-wings": {
   "id": "item-golden-wings",
@@ -3140,7 +3276,8 @@
     "value": 5
    }
   ],
-  "duration": "while standing on the earth"
+  "duration": "while standing on the earth",
+  "survivesRest": true
  },
  "item-maelstromic-destabilizer-lesser": {
   "id": "item-maelstromic-destabilizer-lesser",
@@ -3233,7 +3370,8 @@
     "acuity": "precise"
    }
   ],
-  "duration": "while affixed to armor"
+  "duration": "while affixed to armor",
+  "survivesRest": true
  },
  "item-siccatite-buckler-high-grade-cold": {
   "id": "item-siccatite-buckler-high-grade-cold",
@@ -3363,12 +3501,12 @@
   "id": "item-soaring-wings-major",
   "name": "Soaring Wings",
   "fromItemId": "soaring-wings-major",
-  "duration": "10 minutes",
+  "duration": "until you Dismiss the activation",
   "modifiers": [],
   "speeds": {
    "fly": "max(20,@actor.speed.land)"
   },
-  "note": "Fly Speed equal to your land Speed or 20 feet, whichever is greater."
+  "note": "Fly Speed equal to your land Speed or 20 feet, whichever is greater. You can activate the tattoo any number of times."
  },
  "item-spiny-lodestone": {
   "id": "item-spiny-lodestone",
@@ -3389,7 +3527,8 @@
     "value": 2
    }
   ],
-  "duration": "while affixed to metal armor"
+  "duration": "while affixed to metal armor",
+  "survivesRest": true
  },
  "item-spiny-lodestone-greater": {
   "id": "item-spiny-lodestone-greater",
@@ -3410,7 +3549,8 @@
     "value": 5
    }
   ],
-  "duration": "while affixed to metal armor"
+  "duration": "while affixed to metal armor",
+  "survivesRest": true
  },
  "item-spun-cloud-blue": {
   "id": "item-spun-cloud-blue",
@@ -3451,13 +3591,19 @@
   "name": "Stone Body (Lesser)",
   "fromItemId": "stone-body-mutagen-lesser",
   "duration": "10 minutes",
-  "note": "Benefit: resistance 5 to physical damage except bludgeoning. Drawback: -2 to Reflex saves, and all your Speeds are reduced by 10 feet (minimum 5 feet) — the Speed reduction is not applied to the sheet, track it yourself.",
+  "note": "Benefit: resistance 5 to physical damage except bludgeoning. Drawback: -2 to Reflex saves, and all your Speeds are reduced by 10 feet (minimum 5 feet).",
   "modifiers": [
    {
     "value": -2,
     "type": "untyped",
     "target": "save",
     "detail": "reflex"
+   },
+   {
+    "value": -10,
+    "type": "untyped",
+    "target": "speed",
+    "detail": "all"
    }
   ],
   "resistances": [
@@ -3472,13 +3618,19 @@
   "name": "Stone Body (Moderate)",
   "fromItemId": "stone-body-mutagen-moderate",
   "duration": "1 hour",
-  "note": "Benefit: resistance 5 to physical damage except bludgeoning. Drawback: -2 to Reflex saves, and all your Speeds are reduced by 10 feet (minimum 5 feet) — the Speed reduction is not applied to the sheet, track it yourself.",
+  "note": "Benefit: resistance 5 to physical damage except bludgeoning. Drawback: -2 to Reflex saves, and all your Speeds are reduced by 10 feet (minimum 5 feet).",
   "modifiers": [
    {
     "value": -2,
     "type": "untyped",
     "target": "save",
     "detail": "reflex"
+   },
+   {
+    "value": -10,
+    "type": "untyped",
+    "target": "speed",
+    "detail": "all"
    }
   ],
   "resistances": [
@@ -3738,7 +3890,7 @@
   "id": "item-winged",
   "name": "Take to the Skies",
   "fromItemId": "winged",
-  "duration": "1 minute",
+  "duration": "5 minutes, or until you Dismiss it",
   "modifiers": [],
   "speeds": {
    "fly": "min(25,@actor.speed.land)"
@@ -3801,20 +3953,27 @@
   "id": "item-wyrms-flight",
   "name": "Wyrm's Flight",
   "fromItemId": "wyrms-flight",
-  "duration": "1 minute",
+  "duration": "10 minutes or until you Dismiss it (unlimited at 17th level)",
   "modifiers": [],
   "speeds": {
    "fly": "max(20,@actor.speed.land)"
   },
-  "note": "Fly Speed equal to your Speed or 20 feet, whichever is greater. Once per day."
+  "note": "Fly Speed equal to your Speed or 20 feet, whichever is greater. Once per day; at 17th level you can Activate and Dismiss it as often as you want."
  },
  "item-zetogeki-hide-armor": {
   "id": "item-zetogeki-hide-armor",
   "name": "Shift Scales",
   "fromItemId": "zetogeki-hide-armor",
   "duration": "until the end of your next turn",
-  "note": "Once per day. While the scales are shifted your Speeds are ALSO reduced by 10 feet (minimum 5 feet) — the app can't apply that yet, so lower your Speeds by hand.",
-  "modifiers": [],
+  "note": "Once per day. While the scales are shifted your Speeds are reduced by 10 feet (minimum 5 feet — the app does not apply the floor, so if a Speed drops below 5 feet treat it as 5).",
+  "modifiers": [
+   {
+    "value": -10,
+    "type": "untyped",
+    "target": "speed",
+    "detail": "all"
+   }
+  ],
   "resistances": [
    {
     "type": "bludgeoning",
@@ -3852,10 +4011,14 @@
   "feats": [
    "klingegeist"
   ],
-  "duration": "while possessing the blade",
+  "duration": "10 minutes or until you Dismiss it",
+  "exclusiveGroup": "battle-form",
   "modifiers": [],
-  "speeds": {
-   "fly": 30
+  "battleForm": {
+   "ac": "18+@actor.level",
+   "speeds": {
+    "fly": 30
+   }
   },
   "note": "Fly Speed 30 feet while possessing the blade. You can take only Strike and Fly actions, and they do not trigger reactions."
  },
@@ -3885,26 +4048,6 @@
    "climb": 20
   },
   "note": "Mountaineering Training tactic: you and each signalled squadmate gain a climb Speed of 20 feet until the end of your next turn. While this tactic is prepared you can also use Warfare Lore in place of Athletics to Climb."
- },
- "mode-mutagenist-field-vial": {
-  "id": "mode-mutagenist-field-vial",
-  "name": "Field Vial (Mutagenist)",
-  "category": "Alchemist",
-  "classes": [
-   "alchemist"
-  ],
-  "feats": [
-   "mutagenist"
-  ],
-  "duration": "1 minute",
-  "modifiers": [],
-  "resistances": [
-   {
-    "type": "physical",
-    "value": "floor(@actor.level/2)"
-   }
-  ],
-  "note": "Advanced Vials (11th): drinking a field vial also gives you resistance to physical damage equal to half your level for the same duration. The vial also suppresses one mutagen drawback for 1 minute."
  },
  "pain-is-temporary": {
   "id": "pain-is-temporary",
@@ -3944,12 +4087,13 @@
   ],
   "duration": "for the duration of Offer a Story",
   "note": "Taken in place of Offer a Story's normal benefits: you wrap yourself in spectral flame and the action gains the fire trait. The extra damage is fire and applies only to melee Strikes.",
-  "modifiers": [
+  "modifiers": [],
+  "strikeDamage": [
    {
-    "value": 2,
-    "type": "untyped",
-    "target": "damage",
-    "appliesWhen": "on melee Strikes, as fire damage (4 if you're a master in Religion, 6 if legendary)"
+    "type": "fire",
+    "appliesTo": "melee",
+    "flat": 2,
+    "note": "Raging Stories (4 if you are a master in Religion, 6 if legendary)"
    }
   ]
  },
@@ -3965,6 +4109,13 @@
   ],
   "creatureTraits": [
    "animal"
+  ],
+  "duration": "10 minutes, or until you Dismiss it",
+  "weaknesses": [
+   {
+    "type": "physical",
+    "value": 5
+   }
   ],
   "battleForm": {
    "ac": "15+@actor.level",
@@ -4019,8 +4170,19 @@
    "scouring-spark"
   ],
   "duration": "while Channeling your Divine Spark",
-  "note": "You are immune to confused and frightened. Your unarmed attacks deal 1d6 additional fire damage and your fire spells deal one extra die of fire damage (doubled against aberrations, fiends and undead) — those damage riders aren't applied to your Strikes yet. The 3d6 to creatures that touch or hit you is target-facing.",
+  "note": "You are immune to confused and frightened. Your unarmed attacks deal 1d6 additional fire damage (on your Strikes); your fire spells deal one additional die of fire damage, and both riders are doubled against aberrations, fiends and undead — the spell die and the doubling are not automated. The 3d6 to creatures that touch or hit you in melee is target-facing.",
   "modifiers": [],
+  "strikeDamage": [
+   {
+    "type": "fire",
+    "appliesTo": "unarmed",
+    "dice": {
+     "n": 1,
+     "die": "d6"
+    },
+    "note": "Scouring Spark"
+   }
+  ],
   "immunities": [
    "confused",
    "frightened"
@@ -4039,7 +4201,8 @@
     "value": 2,
     "type": "circumstance",
     "target": "skill",
-    "detail": "stealth"
+    "detail": "stealth",
+    "appliesWhen": "Stealth checks and DCs to hide or conceal the innovation (concealable trait)"
    }
   ],
   "note": "Segmented Frame: collapsed to light Bulk your innovation has the concealable trait — +2 circumstance to Stealth checks and to DCs to hide or conceal the weapon. Interact to collapse or restore it."
@@ -4095,10 +4258,13 @@
   ],
   "duration": "indefinite (use the action again to revert)",
   "modifiers": [],
-  "speeds": {
-   "land": "max(0,25-@actor.speed.land)"
+  "exclusiveGroup": "battle-form",
+  "battleForm": {
+   "speeds": {
+    "land": 25
+   }
   },
-  "note": "You walk on two legs: your land Speed becomes 25 feet. You lose the swim Speed from your merfolk ancestry (swim Speeds from other sources remain). Using the Shore Gift also counts as creating a disguise for Impersonate and automatically defeats Perception DCs to notice it."
+  "note": "You walk on two legs: land Speed 25 feet; your merfolk swim Speed is gone (swim Speeds from other sources remain). Using the Shore Gift also counts as creating a disguise for Impersonate and automatically defeats Perception DCs to notice it."
  },
  "spell-survivor": {
   "id": "spell-survivor",
@@ -4210,7 +4376,7 @@
    "air",
    "elemental"
   ],
-  "duration": "once per day, 7th-rank elemental form",
+  "duration": "1 minute or until you Dismiss it (once per day)",
   "battleForm": {
    "ac": "22+@actor.level",
    "attackMod": 25,
@@ -4277,8 +4443,27 @@
   "modifiers": [],
   "resistances": [
    {
-    "type": "all-damage",
+    "type": "all",
     "value": "floor(@actor.level/2)"
+   }
+  ],
+  "weaponTraits": {
+   "match": {
+    "melee": true
+   },
+   "add": [
+    "reach"
+   ]
+  },
+  "strikeDamage": [
+   {
+    "type": "vitality or void",
+    "appliesTo": "melee",
+    "dice": {
+     "n": 2,
+     "die": "d6"
+    },
+    "note": "The Tyrant Falls!"
    }
   ],
   "note": "The Tyrant Falls!: at the start of each of your turns you become drained 1 or increase your drained value by 1, and you can't reduce or remove drained while this is active — but drained doesn't penalize your Fortitude save while it lasts. You can cast Invoke the Crimson Oath at will without spending Focus Points (with an increased area). Any melee weapon you wield gains the reach trait (or +5 feet of reach if it already had reach) and its Strikes deal an extra 2d6 vitality or void damage, whichever is more effective against the target."
@@ -4293,7 +4478,7 @@
   "feats": [
    "transcend-the-azimuth"
   ],
-  "duration": "once per day, 7th-rank cosmic form",
+  "duration": "up to 1 minute or until you Dismiss it, once per day",
   "battleForm": {
    "ac": "21+@actor.level",
    "attackMod": 25,
@@ -4328,7 +4513,7 @@
    "size": "Large",
    "tempHp": 20
   },
-  "note": "Transcend the Azimuth, moon form: AC = 21 + your level, 20 temporary Hit Points, darkvision, attack modifier +25, Athletics +25 unless yours is higher, Large. This form’s fire damage counts as silver for resistances and weaknesses. On a critical hit with either Strike the target is stupefied 2 for 1 round. Sustaining lets you switch to the sun form once per turn — switch the mode over when you do."
+  "note": "Transcend the Azimuth, moon form (a 7th-rank cosmic form): AC = 21 + your level, 20 temporary Hit Points, darkvision, attack modifier +25, Athletics +25 unless yours is higher, Large. This form’s fire damage counts as silver for resistances and weaknesses. On a critical hit with either Strike the target is stupefied 2 for 1 round. Sustaining lets you switch to the sun form once per turn — switch the mode over when you do."
  },
  "transcend-the-azimuth-sun": {
   "id": "transcend-the-azimuth-sun",
@@ -4340,7 +4525,7 @@
   "feats": [
    "transcend-the-azimuth"
   ],
-  "duration": "once per day, 7th-rank cosmic form",
+  "duration": "up to 1 minute or until you Dismiss it, once per day",
   "battleForm": {
    "ac": "21+@actor.level",
    "attackMod": 25,
@@ -4375,7 +4560,7 @@
    "size": "Large",
    "tempHp": 20
   },
-  "note": "Transcend the Azimuth, sun form: AC = 21 + your level, 20 temporary Hit Points, darkvision, attack modifier +25, Athletics +25 unless yours is higher, Large. On a critical hit with either Strike the target is dazzled for 1 round. You have hands and can take manipulate actions. Sustaining lets you switch to the moon form once per turn — switch the mode over when you do."
+  "note": "Transcend the Azimuth, sun form (a 7th-rank cosmic form): AC = 21 + your level, 20 temporary Hit Points, darkvision, attack modifier +25, Athletics +25 unless yours is higher, Large. On a critical hit with either Strike the target is dazzled for 1 round. You have hands and can take manipulate actions. Sustaining lets you switch to the moon form once per turn — switch the mode over when you do."
  },
  "unyielding-force": {
   "id": "unyielding-force",
@@ -4420,12 +4605,22 @@
    "warped-by-rage"
   ],
   "duration": "while this ikon is immanent",
+  "exclusiveGroup": "battle-form",
+  "battleForm": {
+   "size": "Huge"
+  },
   "modifiers": [
    {
     "value": 4,
     "type": "status",
     "target": "damage",
     "appliesWhen": "melee Strike damage while enlarged by the ikon's immanence"
+   }
+  ],
+  "conditions": [
+   {
+    "id": "clumsy",
+    "value": 1
    }
   ],
   "note": "Immanence: you're affected by a 4th-rank Enlarge — you become Huge, your reach increases by 10 feet, you gain a +4 status bonus to melee damage and are clumsy 1. You can forgo this effect when your body ikon becomes empowered."
@@ -4864,12 +5059,14 @@
   "duration": "1 minute",
   "modifiers": [],
   "weaponTraits": {
-   "match": {},
+   "match": {
+    "designated": "steadying-hand"
+   },
    "add": [
     "deadly-d12"
    ]
   },
-  "note": "Only the ONE weapon you touched to the symbol gains this — the mode shows deadly d12 on every equipped weapon, so if you wield more than one, read it on that weapon alone. Against undead the weapon gains fatal d12 instead of deadly d12. Ends early if you score a critical hit with the weapon or stop wielding it. Once per day — tick the item's per-day counter when you activate it."
+  "note": "Only the ONE weapon you touched to the symbol gains this — mark it \"Steadying hand weapon\" on the weapon's own card. Against undead the weapon gains fatal d12 instead of deadly d12. Ends early if you score a critical hit with the weapon or stop wielding it. Once per day — tick the item's per-day counter when you activate it."
  },
  "item-camouflaging-chromatophores-lesser": {
   "id": "item-camouflaging-chromatophores-lesser",
@@ -4984,6 +5181,7 @@
   "backgrounds": [
    "harrow-chosen"
   ],
+  "duration": "1 minute",
   "note": "Empowered draw, partial match (suit or value): for 1 minute you gain resistance equal to your level against one energy type you choose of acid, cold, electricity, fire, or sonic."
  },
  "harrow-chosen-unmatched": {
@@ -4995,6 +5193,7 @@
   "backgrounds": [
    "harrow-chosen"
   ],
-  "note": "Empowered draw, no match: you gain temporary Hit Points equal to 2 + half your level for 1 minute (apply them to your temp HP by hand)."
+  "duration": "1 minute",
+  "note": "Empowered draw, no match: you gain temporary Hit Points equal to twice your level for 1 minute (apply them to your temp HP by hand)."
  }
 }

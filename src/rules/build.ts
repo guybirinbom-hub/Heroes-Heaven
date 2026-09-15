@@ -9977,6 +9977,12 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     }
     if (!bgFeatDropped && bgFeat && f.featId === bgFeat && f.level === 1 && f.category === 'skill') {
       bgFeatDropped = true;
+      /* …but keep its SUB-CHOICE. buildCharacter re-injects this feat from the background and reads
+       * the answer back out of `grantedFeatChoices` keyed by the bare feat id (:5333) — the row was
+       * dropped whole, so the answer went with it and the feat came back unanswered. bug 2026-09-15:
+       * builder round-trip; measured on the owner's rogue, whose custom background's Assurance lost
+       * its Athletics on every reopen. */
+      if (f.choice) (b.grantedFeatChoices ??= {})[f.featId] = f.choice.value;
       continue;
     }
     if (heritageGrantsFeat && !b.heritageFeatId && f.level === 1 && f.category === 'general') {
@@ -10005,7 +10011,21 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
         continue;
       }
     }
-    if (addedFeatIds.has(f.featId)) continue;
+    /*
+     * …but only a row that ISN'T already a slot pick.
+     *
+     * bug 2026-09-15: builder round-trip. `addedFeatIds` is keyed by feat ID, and buildCharacter
+     * emits ONE row per feat — so a feat the player picked in a slot AND that also sits in
+     * `overrides.addedFeats` (every character the overflow-chip branch below has ever touched, and
+     * every WG import) had its SLOT dropped here and came back as a chip with an empty slot behind
+     * it. Measured on the owner's own saves: his guardian lost Toughness (3:general:0) and Fleet
+     * (7:general:0), his rogue lost Gang Up and Swift Sneak, his bard lost Lucky Break, Ancestral Paragon
+     * and with it the Well-Met Traveler its pick-grant had chosen. The row itself says where it came
+     * from — an override-added row is stamped `override:<featId>` (:5478) and a real pick gets its
+     * own `${level}:${category}:${idx}` — so ask it. Rows saved before slotKey existed carry none and
+     * keep the old ID-only behaviour.
+     */
+    if (f.slotKey?.startsWith('override:') || (!f.slotKey && addedFeatIds.has(f.featId))) continue;
     const arr = featsByLevel.get(f.level) ?? [];
     arr.push(f);
     featsByLevel.set(f.level, arr);
@@ -10126,6 +10146,32 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     if (c.classId === 'cleric' || c.classId2 === 'cleric') {
       const ds = c.details.deityId ? content.deities[c.details.deityId]?.skill : undefined;
       if (ds) granted.add(ds as ProficiencyKey);
+    }
+    /*
+     * …and everything the hand-list above does not know about, asked of the ENGINE.
+     *
+     * bug 2026-09-15: builder round-trip. The six sources listed above are not the set buildCharacter
+     * trains from: a background's own Lore CHOICE (the Guard background → Legal Lore), a heritage skill, a
+     * thaumaturge's esoteric skill — and, above all, every skill a FEAT trains (Bardic Lore, Well-Met
+     * Traveler's Diplomacy) — all came back as class-skill PICKS and each ate one of the player's few
+     * free trainings. Rebuilding with no class-skill picks at all names exactly the trainings that
+     * come from somewhere else, whatever that somewhere is; the same trick the skill-increase
+     * reconstruction below already uses for its baseline. `b.classSkills` is still emptyBuild's [] and
+     * `b.heritageSkill` still null here, so the skilled-human recovery below still has its expert to
+     * find. Only ADDS to `granted` — nothing the hand-list caught is given back.
+     *
+     * The three INCREASE stores have to come off too (they were filled at :9552, from the character's
+     * own record): leave them on and every skill an increase trained reads as "granted by something
+     * else" and a rogue — who takes one at every level from 2nd — loses Acrobatics, Athletics and
+     * Intimidation out of `classSkills` and comes back expert→trained in all three. A skill the
+     * increases ALONE explain is still dropped, by the `nativeSteps` comparison below, which is what
+     * that comparison is for.
+     */
+    for (const [sk, r] of Object.entries(
+      buildCharacter({ ...b, classSkills: [], skillIncreases: {}, bonusSkillIncreases: {}, backgroundSkillIncreases: {} }, content)
+        .proficiencies.skills,
+    ) as [ProficiencyKey, ProficiencyRank][]) {
+      if (r !== 'untrained') granted.add(sk);
     }
 
     // Steps the character's OWN recorded skill increases already contribute, per skill.

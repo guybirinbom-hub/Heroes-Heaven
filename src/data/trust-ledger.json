@@ -1,5 +1,5 @@
 {
- "coreSha": "fdae2687a8002492b01e03408b26499990d2f09aefd9b25c07aa516d7705fa35",
+ "coreSha": "89ace6c31ab03e746c88b6759c4570122e8949d22698f513308549c1ed21ef92",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -826,7 +826,6 @@
    "exude-demonic-corruption",
    "eyes-that-see-eternity",
    "feat-aegis-for-the-innocent",
-   "feat-eternal-blessing",
    "feat-tweak-appearances",
    "flamboyant-athlete",
    "force-of-nature",
@@ -7481,5 +7480,5 @@
    "passiveEffects.resistances"
   ]
  },
- "wgSha": "ab48b293992622642ffe6b405955b95bf2e82966ad9f521ff780baee49c8c307"
+ "wgSha": "ccee7f8b1d687a0946f1b63c87daa98fd07970b1130c441d07b9a5728d0a04ba"
 }

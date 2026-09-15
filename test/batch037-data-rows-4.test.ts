@@ -71,21 +71,24 @@ describe('scar-of-the-survivor puts its whole Immanence sentence behind a divine
   // Both halves are conditional on the spark, so both belong on a toggle — the shape the three
   // shipped immanence modes (aura-mirrored-aegis and its siblings) already use.
   // batch 037: scar-of-the-survivor#dying-toggle
+  // modes-vs-print 2026-09-15: the toggle IS the "spark in the scar" state, so the modifier carries no
+  // `appliesWhen` — modeNumberBonus / modeTypedMods skip a modifier that has one, and the +1 never
+  // reached the Fortitude total while the toggle was on.
   it('scar-of-the-survivor ships a mode gated on the ikon, with the +1 status Fortitude bonus', () => {
     const m = mode('scar-of-the-survivor');
     expect(m?.feats).toEqual(['scar-of-the-survivor']);
     expect(m?.duration).toMatch(/divine spark/i);
-    expect(m?.modifiers).toEqual([
-      { value: 1, type: 'status', target: 'save', detail: 'fortitude', appliesWhen: 'while your divine spark is in the scar' },
-    ]);
+    expect(m?.modifiers).toEqual([{ value: 1, type: 'status', target: 'save', detail: 'fortitude' }]);
   });
 
-  // The Diehard half has no number to move yet — ModeDef carries no death threshold and build.ts
-  // reads `dyingThresholdBonus` only off feats, unconditionally — so it must at least be SAID on the
-  // toggle rather than lost with the ungated grant batch 034 retired.
+  // The Diehard half IS a number now: applyPlayState sums `dyingThresholdBonus` over the active modes
+  // (play.ts), so the toggle raises the death threshold to dying 5 and the note says so.
   // batch 037: scar-of-the-survivor#dying-toggle
-  it('scar-of-the-survivor names the Diehard clause on the toggle that gates it', () => {
-    expect(String(mode('scar-of-the-survivor')?.note ?? '')).toMatch(/dying 5 rather than dying 4/i);
+  it('scar-of-the-survivor carries the Diehard half on the toggle that gates it', () => {
+    const m = mode('scar-of-the-survivor');
+    expect(m?.dyingThresholdBonus).toBe(1);
+    expect(String(m?.note ?? '')).toMatch(/dying 5/i);
+    expect(String(m?.note ?? '')).toMatch(/diehard/i);
   });
 });
 

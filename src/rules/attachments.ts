@@ -119,6 +119,22 @@ function planRune(
   capacityFor: (potency: number) => number,
 ): AttachPlan {
   if (!isHost(host)) return { ok: false, reason: `Runes can only be etched onto a weapon, armor, or shield — not ${host.name}.` };
+  /*
+   * A shield is the one host whose refusal is a RULE rather than a mismatch, and the player has no way
+   * to know that from "Armor Potency (+1) is an armor rune". GM Core p. 224 (Runes): *"A shield can't
+   * have property runes, only a reinforcing rune"*, and Armor Potency's own usage line is "etched onto
+   * armor" — so armor potency and resilient are off the table for the same reason. Say which rune a
+   * shield CAN take, since that is the next thing the player wants.
+   *
+   * Shield spikes and a shield boss are `weapon` items in their own right, so they fall to the generic
+   * branch below and take weapon runes normally — this clause never sees them.
+   */
+  if (host.itemType === 'shield' && rune.kind !== 'reinforcing') {
+    return {
+      ok: false,
+      reason: `Shields can’t take armor potency, resilient or property runes — only a reinforcing rune (GM Core p. 224). ${attachment.name} can’t be etched onto ${host.name}.`,
+    };
+  }
   if (rune.slot !== host.itemType) return { ok: false, reason: `${attachment.name} is ${aOrAn(rune.slot)} rune — it can’t be etched onto ${host.name}.` };
   const runes: HostRunes = { ...((hostInv.runes ?? {}) as HostRunes) };
   const v = rune.value ?? 1;

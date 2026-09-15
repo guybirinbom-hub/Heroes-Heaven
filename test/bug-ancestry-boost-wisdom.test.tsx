@@ -8,8 +8,8 @@ import { buildCharacter, emptyBuild, fixedBoosts, type BuildState } from '../src
 import type { AbilityId } from '../src/rules/types';
 
 /**
- * "there is a character lv 7 named rux why cant i choose wisdom for the ancestry boost?" — owner,
- * 2026-09-12. Rux is a CATFOLK bard. Catfolk (Player Core 2, and the Advanced Player's Guide before
+ * "there is a character lv 7 … why cant i choose wisdom for the ancestry boost?" — owner,
+ * 2026-09-12, about his level-7 CATFOLK bard. Catfolk (Player Core 2, and the Advanced Player's Guide before
  * it) boost Dexterity and Charisma, get one free boost, and take a WISDOM FLAW.
  *
  * The builder greyed Wisdom, and `collectBoosts` threw the pick away if it ever got through, because
@@ -34,7 +34,7 @@ const noop = () => undefined;
 
 const rux = (over: Partial<BuildState> = {}): BuildState => ({
   ...emptyBuild(),
-  name: 'Rux',
+  name: 'Catfolk bard fixture',
   level: 7,
   ancestryId: 'catfolk',
   heritageId: 'liminal-catfolk',
@@ -67,7 +67,7 @@ function ancestryBoostOptions(build: BuildState, slot = 0): { label: string; dis
 }
 const row = (rows: ReturnType<typeof ancestryBoostOptions>, label: string) => rows.find((o) => o.label === label)!;
 
-describe("Rux's ancestry: catfolk", () => {
+describe("the catfolk bard's ancestry: catfolk", () => {
   it('is the shape the report describes — Dex + Cha boosts, one free boost, a Wisdom flaw', () => {
     const anc = c().ancestries.catfolk;
     expect(fixedBoosts(anc.abilityBoosts).sort()).toEqual(['cha', 'dex']);

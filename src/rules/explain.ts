@@ -6,6 +6,7 @@
  */
 import type {
   AbilityId,
+  ActionCost,
   Character,
   ContentDatabase,
   DefenseGrants,
@@ -762,6 +763,86 @@ export function markTooltip(db: ContentDatabase, marks: { sourceId: string; note
 export function markNote(db: ContentDatabase, m: { sourceId: string; note: string }): string {
   const name = nameOfRecord(db, m.sourceId);
   return m.note.startsWith(`${name}: `) ? m.note.slice(name.length + 2) : m.note;
+}
+
+/**
+ * A printed action-cost phrase ("1 action", "free", "reaction", "1 to 3 actions") as an ActionCost.
+ *
+ * Null for text that is no action cost at all ("varies", "10 minutes", "+5 feet", "d10"), which its
+ * callers then show as words. Lives beside `markTooltip` for the same reason that does: two surfaces
+ * read the same phrasing — `SkillAction.costText` and a record mark's `value` — and they must not
+ * come to different answers about what a cost is.
+ */
+export function parseActionCost(text?: string): ActionCost | null {
+  if (!text) return null;
+  const t = text.trim().toLowerCase();
+  if (t === 'free' || t === 'free action') return { type: 'free' };
+  if (t === 'reaction') return { type: 'reaction' };
+  const single = t.match(/^(\d)\s*actions?$/);
+  if (single) {
+    const v = Number(single[1]);
+    if (v >= 1 && v <= 3) return { type: 'actions', value: v as 1 | 2 | 3 };
+  }
+  const range = t.match(/^(\d)\s*(?:to|–|-)\s*(\d)\s*actions?$/);
+  if (range) return { type: 'variable', min: Number(range[1]) as 1 | 2 | 3, max: Number(range[2]) as 1 | 2 | 3 };
+  return null;
+}
+
+/**
+ * The cost a record mark REPLACES an action's own cost with, if any.
+ *
+ * Owner, 2026-09-15: *"why do the actions look messed up?"* — the Athletics list read
+ * `High Jump   (1 action) *   ◆◆`. Neither half came from the skill-action table, whose `costText`
+ * is "2 actions" and always was. Quick Jump's mark is `value: '1 action'` (*"you can High Jump as a
+ * single action instead of 2"*), and EVERY mark value prints as a parenthetical beside the action's
+ * name — so the row stated the base cost as a glyph and the replacement cost as text, side by side,
+ * with nothing to say which one was this character's.
+ *
+ * A value that parses as a cost IS the cost, so the row renders it in the cost slot and drops the
+ * parenthetical; a value that does not (Magic Hands' "d10", Slink's "+5 feet") is untouched and
+ * keeps its parentheses. The `*` stays either way — it is what carries the source's wording.
+ *
+ * Exported so MainTab's action rows and StatDetailModal's skill-action rows share one answer, as
+ * `markTooltip` already does.
+ */
+export function markedActionCost(marks: { value?: string }[]): ActionCost | null {
+  for (const m of marks) {
+    const cost = parseActionCost(m.value);
+    if (cost) return cost;
+  }
+  return null;
+}
+
+/**
+ * Assurance's fixed result for a skill, or null when this character has no Assurance in it.
+ *
+ * Player Core p. 252: *"Choose a skill you're trained in. You can forgo rolling a skill check for
+ * that skill to instead receive a result of 10 + your proficiency bonus (do not apply any other
+ * bonuses, penalties, or modifiers)."* So it is 10 + rank + level — or 10 + rank alone under
+ * Proficiency Without Level — and NOTHING else: not the attribute, not an item bonus, not a status.
+ * That is why it cannot be read off the skill's own modifier, and why it needs a number of its own.
+ *
+ * Owner, 2026-09-15: *"I have Assurance that I got from Deep Backgrounds but I don't see that
+ * Assurance on that skill in the character page"*. The ruling-Q20 star was already there, but the
+ * number the feat exists to give was on no surface at all.
+ *
+ * The skill comes off `f.choice.value`, the answer stored on the feat entry — the same field that
+ * star reads, which is what makes one line cover every route into the feat: a skill-feat slot, a
+ * feat or class feature that grants it, and a DEEP (custom) background, whose granted skill feat
+ * carries the player's pick through `grantedFeatChoices`. Assurance is repeatable, so every taking
+ * is tested rather than the first.
+ */
+/* `skill` is a plain string, not a ProficiencyKey: StatBreakdown.skill is one (it carries
+ * 'perception' and 'lore' too), and the comparison is against a stored answer either way. Perception
+ * simply never matches — Assurance's own text says "choose a SKILL you're trained in". */
+export function assuranceResult(c: Character, skill: string, rank: ProficiencyRank): number | null {
+  if (!(c.feats ?? []).some((f) => f.featId === 'assurance' && f.choice?.value === skill)) return null;
+  return 10 + profBonus(rank, c.level, pwl(c));
+}
+
+/** The rule behind the Assurance badge, for its tooltip — the badge is a bare number otherwise. */
+export function assuranceNote(result: number): string {
+  return `Assurance: you may forgo the roll and take a fixed ${result} (10 + your proficiency bonus). No other bonus, penalty or modifier applies.`;
 }
 
 /**

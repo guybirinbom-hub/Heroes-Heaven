@@ -1074,6 +1074,7 @@ export interface ArmorCheckPenalty {
 /** The armor check penalty currently in effect: the worn armor's check penalty
  *  unless the wearer meets its Strength threshold (then 0). */
 export function deriveArmorCheckPenalty(c: Character, db: ContentDatabase, skill?: ProficiencyKey): ArmorCheckPenalty {
+  if (ignoresArmorPenalties(c)) return { value: 0, source: null };
   const worn = findWornArmor(c, db);
   if (!worn || !worn.armor.checkPenalty) return { value: 0, source: null };
   const traits = worn.armor.traits ?? [];
@@ -2112,6 +2113,27 @@ export function activeBattleForm(c: Character): BattleForm | undefined {
 }
 
 /**
+ * Is the worn armour's check penalty and Speed reduction suspended right now?
+ *
+ * Every printed battle form says it in the SAME BREATH as its AC — pest form: *"AC = 15 + your level.
+ * Ignore your armor's check penalty and Speed reduction."*, elemental form: *"AC = 19 + your level.
+ * Ignore your armor's check penalty and Speed reduction."*, cosmic form: *"AC = 21 + your level.
+ * Ignore your armor check's penalty and Speed reduction."* Both sentences are one statement: the form
+ * has replaced what your armour was doing for you, so it stops charging you for it.
+ *
+ * Keyed on `battleForm.ac`, which IS that first sentence and which the records already carry, rather
+ * than on a new data field or a list of mode ids. That also draws the line in the right place: a
+ * werecreature's Change Shape states Speeds but no AC — it is not a battle form that replaces your
+ * defences — and its wearer keeps paying the armour's penalty, which is RAW.
+ *
+ * NOT applied to the `hindering` trait's −5, which prints its own exception: *"affects you even if
+ * your Strength or an ability lets you reduce or ignore the armor's Speed penalty."*
+ */
+export function ignoresArmorPenalties(c: Character): boolean {
+  return activeBattleForm(c)?.ac != null;
+}
+
+/**
  * The active battle form that FORBIDS Strikes, if any — so the empty Strikes list can say why.
  *
  * A list that is simply empty reads as a broken app rather than as a rule (ruling Q27's principle: a
@@ -2182,19 +2204,23 @@ export function deriveShield(c: Character, db: ContentDatabase): ShieldInfo | nu
   const ref = mpActive(c, held.inv) ? mpShieldRefine(held.inv.monsterPart, c.level) : null;
   // Guard every shield stat against a data-incomplete item (missing hardness/hp/BT/acBonus) so the
   // shield block — and the AC breakdown that reads it — can never compute NaN.
-  let hardness = Math.max(s.hardness ?? 0, r?.hardness ?? 0, ref?.hardness ?? 0);
-  const hp = Math.max(s.hp ?? 0, r?.hp ?? 0, ref?.hp ?? 0);
-  const brokenThreshold = Math.max(s.brokenThreshold ?? 0, r?.bt ?? 0, ref?.bt ?? 0);
+  const base = { hardness: s.hardness ?? 0, hp: s.hp ?? 0, bt: s.brokenThreshold ?? 0 };
+  // The rune RAISES the shield's own stats (see `raise`); Monster-Parts Table 4C is a printed
+  // statistics block instead, so it stays a floor. The two are exclusive by construction above.
+  let hardness = r ? raise(base.hardness, r.hardness) : Math.max(base.hardness, ref?.hardness ?? 0);
+  const hp = r ? raise(base.hp, r.hp) : Math.max(base.hp, ref?.hp ?? 0);
+  const brokenThreshold = r ? raise(base.bt, r.bt) : Math.max(base.bt, ref?.bt ?? 0);
   // "If your shield already has the appropriate reinforcing rune for your level, or if it's a Sturdy
-  // Shield of the same level, the shield's Hardness INSTEAD increases by 1." Exclusive with the tier
-  // above: the +1 applies only when the shield already meets every number that tier would have set,
-  // so a blessing can never both raise the floor and add the bonus.
+  // Shield of the same level, the shield's Hardness INSTEAD increases by 1." Two limbs, both printed:
+  // an etched rune at or above the level's tier, or a shield whose own statistics already stand at
+  // that tier's printed maxima — which IS the sturdy-shield ladder (sturdy minor is 8/64/32, exactly
+  // the minor rune's ceilings). The first limb was missing entirely, so a champion who had bought the
+  // rune the blessing would have granted got nothing for it.
   const lvlTier = byLevel ? REINFORCING[byLevel] : undefined;
   if (
     lvlTier &&
-    (s.hardness ?? 0) >= lvlTier.hardness &&
-    (s.hp ?? 0) >= lvlTier.hp &&
-    (s.brokenThreshold ?? 0) >= lvlTier.bt
+    ((rein ?? 0) >= byLevel! ||
+      (base.hardness >= lvlTier.hardness[1] && base.hp >= lvlTier.hp[1] && base.bt >= lvlTier.bt[1]))
   ) {
     hardness += 1;
   }
@@ -2216,14 +2242,28 @@ function levelReinforcingTier(c: Character, db: ContentDatabase): number | undef
   return c.level >= 19 ? 6 : c.level >= 16 ? 5 : c.level >= 13 ? 4 : c.level >= 10 ? 3 : c.level >= 7 ? 2 : 1;
 }
 
-/** Reinforcing-rune tiers → the shield Hardness/HP/Broken-Threshold maximum each sets. */
-const REINFORCING: Record<number, { hardness: number; hp: number; bt: number }> = {
-  1: { hardness: 8, hp: 64, bt: 32 }, // minor
-  2: { hardness: 10, hp: 80, bt: 40 }, // lesser
-  3: { hardness: 13, hp: 104, bt: 52 }, // moderate
-  4: { hardness: 15, hp: 120, bt: 60 }, // greater
-  5: { hardness: 17, hp: 136, bt: 68 }, // major
-  6: { hardness: 20, hp: 160, bt: 80 }, // supreme
+/**
+ * *"The shield's Hardness increases by 3 … (maximum 8 Hardness…)"* — ADD the increase, clamp it to
+ * the printed ceiling, and never take a shield below what it already had.
+ *
+ * Bug 2026-09-15: the table below held only the MAXIMA and this was `Math.max(base, maximum)`, so the
+ * rune SET the shield to 8/64/32 instead of raising it by 3/44/22. The misreading survives contact
+ * with the common cases because the ceilings ARE the sturdy-shield ladder — sturdy (minor) is exactly
+ * 8/64/32, sturdy (lesser) exactly 10/80/40 — and a plain steel shield plus a minor rune lands on its
+ * ceiling to the point. Every other combination was wrong and always too GENEROUS: a wooden shield
+ * with a minor rune read 8/64/32 rather than 6/56/28, a steel shield with a supreme rune 20/160/80
+ * rather than 12/128/64, and a level-7 champion's steel shield 10/80/40 rather than 8/72/36.
+ */
+const raise = (b: number, [inc, max]: readonly [number, number]) => Math.max(b, Math.min(b + inc, max));
+
+/** Reinforcing-rune tiers → `[increase, printed maximum]` per stat (GM Core p. 232, live Archives). */
+const REINFORCING: Record<number, { hardness: readonly [number, number]; hp: readonly [number, number]; bt: readonly [number, number] }> = {
+  1: { hardness: [3, 8], hp: [44, 64], bt: [22, 32] }, // minor — item 4, 75 gp
+  2: { hardness: [3, 10], hp: [52, 80], bt: [26, 40] }, // lesser — item 7, 300 gp
+  3: { hardness: [3, 13], hp: [64, 104], bt: [32, 52] }, // moderate — item 10, 900 gp
+  4: { hardness: [5, 15], hp: [80, 120], bt: [40, 60] }, // greater — item 13, 2,500 gp
+  5: { hardness: [5, 17], hp: [84, 136], bt: [42, 68] }, // major — item 16, 8,000 gp
+  6: { hardness: [7, 20], hp: [108, 160], bt: [54, 80] }, // supreme — item 19, 32,000 gp
 };
 
 /** One thing that contributed a resistance / weakness / immunity, and what it offered.
@@ -5508,7 +5548,9 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   }
 
   // ---- penalties. Every one of these hits EVERY movement type, not just land.
-  const ignoreArmor = adjusts.some((a) => a.ignoreArmorPenalty);
+  // Unburdened Iron's clause — and the other half of the battle-form sentence deriveArmorCheckPenalty
+  // reads: *"Ignore your armor's check penalty AND SPEED REDUCTION."* (see ignoresArmorPenalties).
+  const ignoreArmor = adjusts.some((a) => a.ignoreArmorPenalty) || ignoresArmorPenalties(c);
   const worn = findWornArmor(c, db);
   // Full penalty if you don't meet the armor's Strength threshold; meeting it reduces the penalty by
   // 5 feet (to a minimum of 0).

@@ -88,7 +88,12 @@ describe('consumable modes: the data', () => {
     const bad: string[] = [];
     for (const m of itemModes()) {
       for (const mod of m.modifiers) {
-        if (mod.target === 'skill' && mod.detail && !SKILLS.has(mod.detail)) bad.push(`${m.id}: ${mod.detail}`);
+        // A LORE detail is legitimate and is not in the fixed list: `lore:*` is the wildcard the four
+        // silvertongue mutagens' printed "−2 item penalty to … Lore checks" needs (a character's Lores
+        // are their own, so the shared record cannot enumerate them), and `lore:<subject>` names one.
+        // modeMatches understands both — see the bug 2026-09-15 legs in test/bug-modes-engine.test.ts.
+        if (mod.target === 'skill' && mod.detail && !SKILLS.has(mod.detail) && !mod.detail.startsWith('lore:'))
+          bad.push(`${m.id}: ${mod.detail}`);
         if (mod.target === 'save' && mod.detail && !['fortitude', 'reflex', 'will'].includes(mod.detail))
           bad.push(`${m.id}: ${mod.detail}`);
       }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Character, ContentDatabase, InventoryItem, Item, ItemDesignation } from '../rules/types';
 import { bumpItemCounter, bumpItemQuantity, removeInventoryItem, setItemDesignation, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
-import { containerOptionsFor, propertyRuneDefs } from '../rules/derive';
+import { containerOptionsFor, deriveShield, propertyRuneDefs } from '../rules/derive';
 import { formatItemPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
@@ -218,6 +218,9 @@ export function ItemDetail({
      * outside this — the mark belongs on the weapon per the note, and anything already marked is kept
      * by the clause above.) */
     if (kind === 'rune-source') return item.itemType === 'weapon';
+    // The brooch's mark is a WEAPON's — *"one weapon you touch to the symbol"* gains deadly d12 — so it
+    // is offered on the same terms, and for the same reason, as the rune source directly above.
+    if (kind === 'steadying-hand') return item.itemType === 'weapon';
     return true;
   });
   const storedSpell = inv.heldSpell ? content.spells[inv.heldSpell] : undefined;
@@ -255,6 +258,33 @@ export function ItemDetail({
     onPlay((p) => removeInventoryItem(p, id));
     onClose();
   };
+  /*
+   * bug 2026-09-15: shield runes. The stat rows above are the item RECORD's printed statistics — the
+   * owner's ruling for the popup, given over Bulk: it shows what the book prints. But a reinforcing
+   * rune, a record that grants one ("In your hands, a shield gains…"), or a Monster-Parts refinement
+   * raises Hardness/HP/BT, and the rail beside it prints the raised numbers — so a steel shield with a
+   * lesser rune read "Hardness 5 · HP 20 (BT 10)" here and "Hardness 8 · BT 36" there, with nothing to
+   * say which was true. One extra line names the raised values WITHOUT touching the printed ones.
+   *
+   * Computed by `deriveShield` — the same function the rail calls, so the two can never drift and the
+   * additive-with-cap table (GM Core p. 232) stays in one place. It picks the held shield out of a
+   * character, so THIS row is handed to it as the held one: the popup answers for the row that was
+   * opened, not for whatever happens to be equipped.
+   */
+  const shieldEff =
+    item.itemType === 'shield' && character
+      ? deriveShield({ ...character, inventory: [{ ...inv, equipped: true }] }, content)
+      : null;
+  const reinTier = (inv.runes as { reinforcing?: number } | undefined)?.reinforcing;
+  const shieldEffLine =
+    shieldEff &&
+    item.itemType === 'shield' &&
+    (shieldEff.hardness !== (item.hardness ?? 0) ||
+      shieldEff.hp !== (item.hp ?? 0) ||
+      shieldEff.brokenThreshold !== (item.brokenThreshold ?? 0))
+      ? `${reinTier ? `With ${REINFORCING_NAMES[reinTier].toLowerCase()} reinforcing` : 'As you carry it'}: ` +
+        `Hardness ${shieldEff.hardness} · HP ${shieldEff.hp} (BT ${shieldEff.brokenThreshold})`
+      : null;
   const attached = inventory.filter((i) => i.attachedTo === inv.instanceId);
   // If THIS item is affixed to something, name the host so the card can show it.
   const host = inv.attachedTo ? inventory.find((i) => i.instanceId === inv.attachedTo) : undefined;
@@ -352,6 +382,7 @@ export function ItemDetail({
             <Stat k="Usage" v={wornSlot(item.usage) ? undefined : usageLabel(item.usage)} />
             <Stat k="Hands" v={item.hands ? String(item.hands) : undefined} />
           </div>
+          {shieldEffLine && <div className="sd-rune-hint sd-shield-eff">{shieldEffLine}</div>}
           {attached.length > 0 && (
             <div className="sd-attach">
               <span className="sd-uses-title">Attached</span>

@@ -53,7 +53,7 @@ const row = (itemId: string, quantity = 1, extra: Partial<InventoryItem> = {}): 
 // ─────────────────────────────────────────────────────────────────────────────
 describe('pack items (ammunition) weigh and cost by the pack', () => {
   // bug 2026-09-13: bulk rules
-  it('ten bullets are L, not ten times L — the owner’s Rux carries exactly this row', () => {
+  it('ten bullets are L, not ten times L — the owner’s own sheet carries exactly this row', () => {
     expect(bulkOf([row('tb-bullets', 10)]).total).toBe(0.1);
     // …and the full pack is what a single purchase adds, so this is the everyday case, not a corner.
     expect(packQuantity(ITEMS['tb-bullets'])).toBe(10);

@@ -70,8 +70,9 @@ describe("Blessed Shield's redundancy clause", () => {
     expect(deriveShield(champ('warding-escutcheon-greater', 19, true), db)!.hardness).toBe(20);
   });
 
-  it('the two clauses are exclusive — a plain shield gets the floor and no +1', () => {
-    const plainShield = Object.entries(db.items).find(([, i]) => i.itemType === 'shield' && (i.hardness ?? 0) <= 5)![0];
-    expect(deriveShield(champ(plainShield, 3, true), db)!.hardness).toBe(8);
+  it('the two clauses are exclusive — a plain shield gets the rune and no +1', () => {
+    // bug 2026-09-15: shield runes — anchored to a named shield (steel, Hardness 5) because the rune
+    // now ADDS to the shield's own Hardness: 5 + 3 (minor) = 8, its printed maximum.
+    expect(deriveShield(champ('steel-shield', 3, true), db)!.hardness).toBe(8);
   });
 });

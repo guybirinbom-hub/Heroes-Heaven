@@ -127,6 +127,11 @@ const INVESTED_LIMIT = 10;
  *  gates on, rather than its own copy of the string. */
 export const RUNE_SOURCE_FEAT = 'cutting-heaven-crushing-earth';
 
+/** The only record that creates a `steadying-hand` mark — the Hunter's Brooch, whose activation gives
+ *  deadly d12 to *"one weapon you touch to the symbol"*. Exported for the same reason as the line
+ *  above: the test asserts the id the UI gates on, not its own copy of the string. */
+export const STEADYING_HAND_ITEM = 'hunters-brooch';
+
 function ItemCard({
   inv,
   item,
@@ -757,6 +762,14 @@ export function InventoryTab({
       (character.feats ?? []).some((f) => f.featId === RUNE_SOURCE_FEAT) ||
       character.inventory.some((i) => i.designations?.includes('rune-source'));
     if (hasRuneSource) out.push({ kind: 'rune-source', label: 'Rune source' });
+    /* The Hunter's Brooch names ONE weapon — *"one weapon you touch to the symbol"* — and nothing could
+     * say which, so its deadly d12 showed on every weapon the character wielded and the mode's own note
+     * had to ask the player to read it on the right one. Gated on owning the brooch, and (like the rune
+     * source above) on already holding the mark, so a mark set before this still shows and can come off. */
+    const hasSteadyingHand = character.inventory.some(
+      (i) => i.itemId === STEADYING_HAND_ITEM || i.designations?.includes('steadying-hand'),
+    );
+    if (hasSteadyingHand) out.push({ kind: 'steadying-hand', label: 'Steadying hand weapon' });
     /* Offered to everyone, unlike `rune-source`: slotting an aeon stone into a wayfinder is not
      * class-specific, and the mark is what turns a stone's RESONANT power on. Only aeon stones can use
      * it, which the per-item gate below enforces — nothing else carries `resonant`. */

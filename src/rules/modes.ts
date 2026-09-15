@@ -118,7 +118,17 @@ function modeMatches(mod: ModeModifier, target: ModeTarget): boolean {
   if (mod.target !== target.kind) return false;
   // Detail-bearing kinds: an empty detail means "all of this kind" (all saves / all skills), a set one
   // must match. `ability` always names one attribute — a blanket +1 to every attribute isn't a thing.
-  if (mod.target === 'save' || mod.target === 'skill') return !mod.detail || mod.detail === target.detail;
+  if (mod.target === 'save' || mod.target === 'skill') {
+    /*
+     * `lore:*` is the one WILDCARD detail, and it exists because a character's Lores are their OWN.
+     * The four silvertongue mutagens print *"a −2 item penalty to … Lore checks"* — every Lore the
+     * drinker has — and the data cannot list them, because the set is per-character and the record is
+     * shared. Spelled with the star (rather than a bare 'lore') so it cannot be mistaken for a Lore
+     * actually called "lore"; a plain `lore:legal` still matches that one Lore and nothing else.
+     */
+    if (mod.detail === 'lore:*') return !!target.detail?.startsWith('lore:');
+    return !mod.detail || mod.detail === target.detail;
+  }
   if (mod.target === 'ability') return mod.detail === target.detail;
   /*
    * 'speed' is detail-bearing too, but its DEFAULT is not "all of this kind": a mode saying "+10 to
@@ -531,6 +541,8 @@ export function modeTargetLabel(mod: ModeModifier): string {
   // 'str' reads as a stat code, not a word — spell the attribute out.
   if (mod.target === 'ability' && mod.detail) return `${ABILITY_NAME[mod.detail] ?? mod.detail} modifier`;
   if (mod.detail) {
+    // The `lore:*` wildcard names the whole category, so it reads as "Lore" — not as a Lore called "*".
+    if (mod.detail === 'lore:*') return 'Lore';
     const d = mod.detail.startsWith('lore:') ? `${mod.detail.slice(5)} Lore` : mod.detail;
     return d.charAt(0).toUpperCase() + d.slice(1);
   }

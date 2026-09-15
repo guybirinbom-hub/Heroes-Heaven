@@ -44,14 +44,16 @@ describe('runes recompute stats', () => {
     expect(strike.damage).toContain('plus 1d6 fire');
   });
 
-  it('a reinforcing rune raises a shield to its tier Hardness/HP/BT', () => {
+  it('a reinforcing rune raises a shield BY the tier’s increments, capped at its printed maximum', () => {
+    // bug 2026-09-15: shield runes — this asserted `Math.max(base, maximum)`, i.e. the rune SET the
+    // shield to 8/64/32. Minor is "+3 Hardness, +44 HP, +22 BT (maximum 8 / 64 / 32)", GM Core p. 232.
     const plain = withInventory([{ instanceId: 's', itemId: shield.id, quantity: 1, equipped: true }]);
     const minor = withInventory([{ instanceId: 's', itemId: shield.id, quantity: 1, equipped: true, runes: { reinforcing: 1 } }]);
     const p = deriveShield(plain, C)!;
     const m = deriveShield(minor, C)!;
     expect(p.hardness).toBe(shield.hardness); // unchanged
-    expect(m.hardness).toBe(Math.max(shield.hardness, 8)); // minor → 8
-    expect(m.hp).toBe(Math.max(shield.hp, 64));
-    expect(m.brokenThreshold).toBe(Math.max(shield.brokenThreshold, 32));
+    expect(m.hardness).toBe(Math.min(shield.hardness + 3, 8));
+    expect(m.hp).toBe(Math.min(shield.hp + 44, 64));
+    expect(m.brokenThreshold).toBe(Math.min(shield.brokenThreshold + 22, 32));
   });
 });

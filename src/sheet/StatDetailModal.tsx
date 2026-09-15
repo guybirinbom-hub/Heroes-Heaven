@@ -1,7 +1,16 @@
 import { useState, type ReactNode } from 'react';
-import type { ActionCost, Character, ContentDatabase } from '../rules/types';
+import type { Character, ContentDatabase } from '../rules/types';
 import { formatMod } from '../rules/derive';
-import { RANK_LABEL, markTooltip, recordMarkersFor, type StatBreakdown } from '../rules/explain';
+import {
+  RANK_LABEL,
+  assuranceNote,
+  assuranceResult,
+  markTooltip,
+  markedActionCost,
+  parseActionCost,
+  recordMarkersFor,
+  type StatBreakdown,
+} from '../rules/explain';
 import { skillActionsFor, type SkillAction } from '../rules/skillActions';
 import { DescriptionModal } from './DescriptionModal';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
@@ -11,24 +20,6 @@ import { DescBody } from './DescBody';
 /** An action name to its core.json id — the same kebab-casing MainTab uses, so a marker authored
  *  against "treat-wounds" is found from either surface. */
 const actionSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
-/** Parse a skill-action cost string ("1 action", "free", "reaction", "1 to 3 actions") into
- *  an ActionCost so it renders as glyphs. Returns null for non-action text ("varies",
- *  "10 minutes"), which is then shown as-is. */
-function parseActionCost(text?: string): ActionCost | null {
-  if (!text) return null;
-  const t = text.trim().toLowerCase();
-  if (t === 'free' || t === 'free action') return { type: 'free' };
-  if (t === 'reaction') return { type: 'reaction' };
-  const single = t.match(/^(\d)\s*actions?$/);
-  if (single) {
-    const v = Number(single[1]);
-    if (v >= 1 && v <= 3) return { type: 'actions', value: v as 1 | 2 | 3 };
-  }
-  const range = t.match(/^(\d)\s*(?:to|–|-)\s*(\d)\s*actions?$/);
-  if (range) return { type: 'variable', min: Number(range[1]) as 1 | 2 | 3, max: Number(range[2]) as 1 | 2 | 3 };
-  return null;
-}
 
 /** The "why is this number what it is" panel: calculation, level-by-level history,
  *  description, and (for skills) the actions you can take at your proficiency. */
@@ -56,6 +47,9 @@ export function StatDetailModal({
   const b = breakdown;
   const featNames = new Set(character.feats.map((f) => content.feats[f.featId]?.name).filter(Boolean) as string[]);
   const actions = b.skill && b.rank ? skillActionsFor(b.skill, b.rank, (n) => featNames.has(n)) : [];
+  // Assurance's fixed result, beside the modifier it is the alternative to. Its own number because
+  // the rule excludes every other term of that modifier — see `assuranceResult`.
+  const assurance = b.skill && b.rank ? assuranceResult(character, b.skill, b.rank) : null;
 
   return (
     <div className="picker-overlay" onClick={onClose}>
@@ -67,6 +61,11 @@ export function StatDetailModal({
           </div>
           {b.rank && <RankPill rank={b.rank} />}
           <span className="sd-total">{b.totalText}</span>
+          {assurance != null && (
+            <span className="sd-assurance skill-sub" title={assuranceNote(assurance)}>
+              Assurance {assurance}
+            </span>
+          )}
           {b.roll && onRoll && (
             <button
               className="sd-roll"
@@ -183,20 +182,29 @@ export function StatDetailModal({
                           so this is where its marker has to be. */}
                       {(() => {
                         const marks = recordMarkersFor(character, content, 'action', actionSlug(a.name));
-                        if (!marks.length) return null;
-                        const val = marks.find((m) => m.value)?.value;
+                        // A mark whose value is itself a COST replaces the glyph rather than sitting
+                        // beside it — see `markedActionCost`. Quick Jump printed "(1 action)" next to
+                        // High Jump's own ◆◆, and the row said two different things at once.
+                        const marked = markedActionCost(marks);
+                        const val = marked ? undefined : marks.find((m) => m.value)?.value;
+                        const cost = marked ?? parseActionCost(a.costText);
+                        const markTitle = markTooltip(content, marks);
                         return (
-                          <span className="action-mark" title={markTooltip(content, marks)}>
-                            {val && <span className="action-mark-val">({val})</span>}
-                            <SituationalStar />
-                          </span>
+                          <>
+                            {marks.length > 0 && (
+                              <span className="action-mark" title={markTitle}>
+                                {val && <span className="action-mark-val">({val})</span>}
+                                <SituationalStar title={markTitle} />
+                              </span>
+                            )}
+                            {/* The glyph IS the notation — a box around it just adds a second border to read. */}
+                            {cost ? (
+                              <span className="sd-act-cost"><ActionGlyph cost={cost} /></span>
+                            ) : a.costText ? (
+                              <span className="sd-act-cost sd-act-cost-text">{a.costText}</span>
+                            ) : null}
+                          </>
                         );
-                      })()}
-                      {(() => {
-                        const cost = parseActionCost(a.costText);
-                        // The glyph IS the notation — a box around it just adds a second border to read.
-                        if (cost) return <span className="sd-act-cost"><ActionGlyph cost={cost} /></span>;
-                        return a.costText ? <span className="sd-act-cost sd-act-cost-text">{a.costText}</span> : null;
                       })()}
                       {a.feat && <span className="sd-act-feat">feat</span>}
                       <i className="ti ti-chevron-right sd-act-go" aria-hidden="true" />

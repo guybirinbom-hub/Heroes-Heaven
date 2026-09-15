@@ -163,7 +163,7 @@ describe('WG import → builder slots', () => {
   });
 
   it('subtracts auto-granted feats (muse + background) so genuine player feats keep their real slots', () => {
-    // Mirrors the real Rux case: a Bard with a Maestro muse (auto-grants Lingering Composition, a CLASS
+    // Mirrors the owner's real case: a Bard with a Maestro muse (auto-grants Lingering Composition, a CLASS
     // feat) and a Cook background (auto-grants Seasoned, a SKILL feat). A level-5 bard has class-feat
     // slots only at levels 2 and 4. If the muse grant weren't subtracted it would eat a class slot and
     // push a genuine player class feat into an overflow chip — the bug. With the fix: both player class

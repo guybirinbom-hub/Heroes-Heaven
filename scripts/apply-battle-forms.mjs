@@ -289,7 +289,11 @@ const MODES = {
     // any you already have from entering a rage." It is the only printed exception to the
     // do-not-stack rule, and without it a raging barbarian would gain nothing here — their rage pool
     // is already larger than 10, so the raise-only default would keep it and grant no dragon HP.
-    battleForm: { speeds: { land: 40, fly: 100 }, senses: [DARKVISION, { name: 'scent', range: 60, acuity: 'imprecise' }], size: 'Large', tempHp: 10, tempHpStacks: true },
+    // `fly` is a FORMULA, not 100: *"At 18th level, you gain a +20-foot status bonus to your fly
+    // Speed"*, and deriveSpeeds' form-seeding branch resolves formulas. It shipped as the formula in
+    // scripts/data/toggle-modes.json while this script still said `fly: 100`, and this script rebuilds
+    // the record whole — so a rerun would have silently reverted the 18th-level dragon to 100 feet.
+    battleForm: { speeds: { land: 40, fly: '100+20*min(1,floor(@actor.level/18))' }, senses: [DARKVISION, { name: 'scent', range: 60, acuity: 'imprecise' }], size: 'Large', tempHp: 10, tempHpStacks: true },
     note:
       'Dragon Transformation: a 6th-rank dragon form, except you keep your own AC and attack modifier, add your ' +
       'Rage damage, and your Dragon Breath uses your class DC. 10 temporary Hit Points (they stack with rage’s). ' +

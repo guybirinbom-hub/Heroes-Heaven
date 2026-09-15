@@ -1,10 +1,15 @@
 import type { ActionCost, ProficiencyRank } from '../rules/types';
 
 /** A small `*` flag next to a stat that has a SITUATIONAL bonus (from a feat or a conditional mode).
- *  Tells the player "you have something conditional here — open the detail to see it." */
-export function SituationalStar() {
+ *  Tells the player "you have something conditional here — open the detail to see it."
+ *
+ *  `title` is for the surfaces that already KNOW what the star means. An action row wraps the star in
+ *  a span carrying the source's own wording, and the innermost title wins a hover — so the generic
+ *  sentence below shadowed it, and the `*` on a marked action row said nothing about the record that
+ *  put it there. Owner, 2026-09-15: the `*` beside High Jump was "unexplained". */
+export function SituationalStar({ title }: { title?: string } = {}) {
   return (
-    <sup className="sit-star" title="Has a situational bonus — open for details" aria-label="has a situational bonus">
+    <sup className="sit-star" title={title || 'Has a situational bonus — open for details'} aria-label="has a situational bonus">
       *
     </sup>
   );

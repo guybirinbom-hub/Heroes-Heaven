@@ -4927,6 +4927,21 @@ export interface ModeDef {
    * supplies the timing.
    */
   creatureTraits?: string[];
+  /**
+   * CONDITIONS the mode imposes for as long as it is on — Curse of the Sky's Call's *"Cursebound 1:
+   * you are enfeebled 1"*, the hydra mutagen's and the giant catch pole's clumsy 1.
+   *
+   * There was no field for this, so every such record shipped the sentence as prose: a note reading
+   * "Clumsy 1 (apply as a condition)" is an instruction to the PLAYER to do the app's arithmetic by
+   * hand, and nothing on the sheet moved when the toggle went on.
+   *
+   * Derived by `applyPlayState` from the ACTIVE modes each time, and deliberately never written into
+   * `play.conditions`: a condition a toggle imposes has to vanish with the toggle, and one written
+   * into play state would outlive it — the player would be left permanently enfeebled by a curse they
+   * had already switched off. A condition the player already holds at the same or a higher value is
+   * left alone, so switching the mode on can never DOWNGRADE a worse one the GM applied.
+   */
+  conditions?: { id: string; value?: number }[];
   /** Scope of a USER-created mode: a roster character id ⇒ only that character sees it; absent ⇒
    *  universal (every character on this device). Catalog/predefined modes never set this. */
   charId?: string;
@@ -5539,7 +5554,11 @@ export interface GrantedStrike {
  * inventor's innovation, the thaumaturge's weapon implement, the wizard's bonded item, an exemplar's
  * ikon, and a weapon acting as a rune source for another.
  */
-export type ItemDesignation = 'innovation' | 'weapon-implement' | 'bonded' | 'ikon' | 'rune-source' | 'wayfinder-slotted';
+/* `steadying-hand`: the Hunter's Brooch gives deadly d12 (fatal d12 vs undead) to *"one weapon you
+ * touch to the symbol"*, and nothing could name WHICH — so the mode's trait rider matched every weapon
+ * the character wielded, exactly the "a first-weapon fallback would hand a greatsword's modifications
+ * to a dagger" trap `WeaponRider.match.designated` exists to avoid. */
+export type ItemDesignation = 'innovation' | 'weapon-implement' | 'bonded' | 'ikon' | 'rune-source' | 'wayfinder-slotted' | 'steadying-hand';
 
 /**
  * Spells a record gives the character ACCESS to, and in what sense.

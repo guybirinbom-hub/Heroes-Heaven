@@ -72,7 +72,9 @@ describe('Enlarged Chassis', () => {
 });
 
 describe('Blessed Shield', () => {
-  const shieldId = Object.entries(db.items).find(([, i]) => i.itemType === 'shield')![0];
+  // Anchored to a NAMED shield with known printed statistics (5/20/10): a reinforcing rune adds to
+  // the shield's own numbers, so "the first shield in the database" no longer determines the answer.
+  const shieldId = 'steel-shield';
   const champ = (level: number, blessed: boolean) => {
     const c = build('champion', level, {
       deityId: 'iomedae',
@@ -92,16 +94,19 @@ describe('Blessed Shield', () => {
   });
 
   it('a blessed one follows the printed table', () => {
-    // minor@1, lesser@7, moderate@10, greater@13, major@16, supreme@19.
-    expect(deriveShield(champ(3, true), db)!.hardness).toBe(8);
-    expect(deriveShield(champ(7, true), db)!.hardness).toBe(10);
-    expect(deriveShield(champ(13, true), db)!.hardness).toBe(15);
-    expect(deriveShield(champ(19, true), db)!.hardness).toBe(20);
+    // bug 2026-09-15: shield runes — minor@1, lesser@7, moderate@10, greater@13, major@16, supreme@19,
+    // each ADDING to the steel shield's Hardness 5 and capped at the tier's printed maximum. This
+    // asserted the maxima themselves (8/10/15/20), which is what the broken table handed back.
+    expect(deriveShield(champ(3, true), db)!.hardness).toBe(8); // +3, capped at 8
+    expect(deriveShield(champ(7, true), db)!.hardness).toBe(8); // +3, cap 10 not reached
+    expect(deriveShield(champ(13, true), db)!.hardness).toBe(10); // +5, cap 15 not reached
+    expect(deriveShield(champ(19, true), db)!.hardness).toBe(12); // +7, cap 20 not reached
   });
 
-  it('an etched rune that is BETTER still wins — the record sets a floor', () => {
+  it('an etched rune that is BETTER still wins — and counts as "the appropriate rune" (+1)', () => {
+    // bug 2026-09-15: shield runes
     const c = champ(3, true);
     c.inventory[0].runes = { reinforcing: 6 } as never;
-    expect(deriveShield(c, db)!.hardness).toBe(20);
+    expect(deriveShield(c, db)!.hardness).toBe(13); // 5 + 7 (supreme) + 1 (already has the rune)
   });
 });

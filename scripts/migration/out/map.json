@@ -3,7 +3,7 @@
   "doc": 25000,
   "drop": 143,
   "subblock": 572,
-  "authored": 990,
+  "authored": 988,
   "table": 21,
   "scraped": 1,
   "derived": 22
@@ -158947,11 +158947,6 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "feat-eternal-blessing": {
-    "name": "Eternal Blessing",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
    "feat-tweak-appearances": {
     "name": "Tweak Appearances",
     "status": "authored",
@@ -159629,11 +159624,6 @@
    },
    "mode-mountaineering-training": {
     "name": "Mountaineering Training",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "mode-mutagenist-field-vial": {
-    "name": "Field Vial (Mutagenist)",
     "status": "authored",
     "how": "hand-authored bucket"
    },

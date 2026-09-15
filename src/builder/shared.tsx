@@ -13,7 +13,6 @@ import {
   type BuildState,
   CUSTOM_BACKGROUND_ID,
   additionalClassSkills,
-  backgroundTrainedSkill,
   bonusLanguageSlots,
   type BoostSlot,
   boostSlots,
@@ -37,7 +36,6 @@ import {
   featChoiceLabel,
   fixedBoosts,
   heritageAdjustedAncestryAttributes,
-  resolveBackground,
   subclassKeyAbility,
   backgroundGrantedFeats,
   backgroundChoiceKey,
@@ -757,15 +755,19 @@ export function useBuilderActions(
     },
     toggleSkill(s) {
       setBuild((b) => {
-        const cls = b.classId ? content.classes[b.classId] : undefined;
-        const locked = new Set<string>();
-        if (cls) cls.trainedSkills.fixed.forEach((x) => locked.add(x));
-        const bg = resolveBackground(b, content);
-        const bgSkill = backgroundTrainedSkill(b, bg);
-        if (bgSkill) locked.add(bgSkill);
-        if (b.heritageSkill) locked.add(b.heritageSkill);
-        const sub = cls?.subclass?.options.find((o) => o.id === b.subclassId);
-        sub?.grants?.skills?.forEach((x) => locked.add(x));
+        /*
+         * The granted-skill set comes from the ENGINE — the same `Character.grantedSkills` the card
+         * that draws these slots reads (SkillEditor, below). It used to be re-derived here from four
+         * sources while buildCharacter locks nine, so the two disagreed about which picks are free,
+         * and the CARD drew a slot this function then refused to fill: click, nothing, no reason.
+         *
+         * bug 2026-09-15: builder skills. Measured on the owner's own save — a Guard guardian whose
+         * `classSkills` still held the background's own Legal Lore. The card counted two picks of
+         * three and drew an empty slot; this counted three of three and returned `b` unchanged. With
+         * two slots open that reads exactly as he reported it: "it lets me pick the first skill but
+         * not the second."
+         */
+        const locked = new Set<string>(Object.keys(buildCharacter(b, content).grantedSkills ?? {}));
         if (locked.has(s)) return b;
         const max = additionalClassSkills(b, content);
         if (b.classSkills.includes(s)) return { ...b, classSkills: b.classSkills.filter((x) => x !== s) };

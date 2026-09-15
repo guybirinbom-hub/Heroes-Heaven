@@ -550,6 +550,10 @@ export function VitalsRail({
                 </button>
               </div>
             )}
+            {/* bug 2026-09-15: shield runes — the popup's "with the rune" line is computed by
+                deriveShield, which needs the owner (a feat-granted reinforcing tier, the
+                Monster-Parts variant switch). Without `character` the rail's OWN shield popup was
+                the one place that could not print what the rail prints. */}
             {shieldDetailOpen && shieldEntry && shieldItem && (
               <ItemDetail
                 inv={shieldEntry.inv}
@@ -557,6 +561,8 @@ export function VitalsRail({
                 content={content}
                 inventory={character.inventory}
                 feats={character.feats}
+                character={character}
+                charLevel={character.level}
                 onPlay={onPlay}
                 activeModes={character.activeModes}
                 onClose={() => setShieldDetailOpen(false)}
