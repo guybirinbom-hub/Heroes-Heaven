@@ -81,9 +81,10 @@
   display: block;
 }
 
-/* The hamburger sits in the topbar's button row, which is an Electron drag region — the menu must
-   opt out or it can't be clicked. Height matches the text buttons beside it (their taller line box
-   sets the row height), same trick the old gear button used. */
+/* The hamburger sits in the topbar's button row, which still carries a WebkitAppRegion: 'drag' style
+   left over from the old Electron shell (inert in a browser) — the menu must opt out or it can't be
+   clicked. Height matches the text buttons beside it (their taller line box sets the row height),
+   same trick the old gear button used. */
 .hh-menu-slot {
   display: inline-flex;
   align-self: stretch;

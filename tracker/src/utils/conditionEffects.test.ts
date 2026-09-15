@@ -1,8 +1,19 @@
+/*
+ * HOW TO RUN THIS FILE (it does not answer to the root config):
+ *
+ *   node scripts/vt.mjs run --root tracker src/utils/conditionEffects.test.ts
+ *
+ * The repo-root vitest.config.ts includes only globs under `test/`, so the obvious
+ * `node scripts/vt.mjs run tracker/src/utils/conditionEffects.test.ts` exits 1 with
+ * "No test files found" — a red exit and zero coverage, not a failure you can read. `--root tracker`
+ * hands vitest the tracker's own config; the path is then relative to it.
+ */
 import { describe, it, expect } from 'vitest'
 import type { AppliedCondition } from '../types/pf2e'
 import {
   computeConditionMods,
   resolveStatMod,
+  resolveAttackMod,
   conditionalModsFor,
   ZERO_MODS,
   STAT_MOD_KEYS,
@@ -112,9 +123,10 @@ describe('computeConditionMods — single built-in conditions', () => {
     expect(nonZero(m)).toEqual({ meleeAttack: -1, athletics: -1 })
   })
 
-  it('clumsy 1 applies -1 status to AC, Reflex, Acrobatics, Stealth, Thievery', () => {
+  // tracker 2026-09-15: store — rows re-checked against the Player Core (remaster) printing.
+  it('clumsy 1: "…AC, Reflex saves, ranged attack rolls, and skill checks using Acrobatics, Stealth, and Thievery"', () => {
     const m = computeConditionMods([cond({ name: 'clumsy', value: 1 })])
-    expect(nonZero(m)).toEqual({ ac: -1, ref: -1, acrobatics: -1, stealth: -1, thievery: -1 })
+    expect(nonZero(m)).toEqual({ ac: -1, ref: -1, rangedAttack: -1, acrobatics: -1, stealth: -1, thievery: -1 })
   })
 
   it('drained 2 applies -2 status to Fortitude only', () => {
@@ -122,9 +134,16 @@ describe('computeConditionMods — single built-in conditions', () => {
     expect(nonZero(m)).toEqual({ fort: -2 })
   })
 
-  it('stupefied 3 applies -3 status to Will, spell attack, spell DC', () => {
+  // "…on Intelligence-, Wisdom-, and Charisma-based rolls and DCs, including Will saving throws,
+  //  spell attack modifiers, spell DCs, and skill checks that use these attribute modifiers."
+  it('stupefied 3: Will, Perception, spell attack/DC and the 12 mental skills — not Str/Dex skills', () => {
     const m = computeConditionMods([cond({ name: 'stupefied', value: 3 })])
-    expect(nonZero(m)).toEqual({ will: -3, spellAttack: -3, spellDC: -3 })
+    expect(nonZero(m)).toEqual({
+      will: -3, perception: -3, spellAttack: -3, spellDC: -3,
+      arcana: -3, crafting: -3, occultism: -3, society: -3,
+      medicine: -3, nature: -3, religion: -3, survival: -3,
+      deception: -3, diplomacy: -3, intimidation: -3, performance: -3,
+    })
   })
 
   it('sickened 1 behaves like frightened (allChecks + melee/ranged)', () => {
@@ -140,8 +159,9 @@ describe('computeConditionMods — single built-in conditions', () => {
     expect(nonZero(computeConditionMods([cond({ name: 'flat-footed' })]))).toEqual({ ac: -2 })
   })
 
-  it('prone applies -2 circumstance to attackBonus', () => {
-    expect(nonZero(computeConditionMods([cond({ name: 'prone' })]))).toEqual({ attackBonus: -2 })
+  // "You are off-guard and take a –2 circumstance penalty to attack rolls."
+  it('prone: -2 circumstance to AC (off-guard) AND to attack rolls', () => {
+    expect(nonZero(computeConditionMods([cond({ name: 'prone' })]))).toEqual({ ac: -2, attackBonus: -2, spellAttack: -2 })
   })
 
   it('fatigued applies -1 status to AC and all saves', () => {
@@ -150,13 +170,17 @@ describe('computeConditionMods — single built-in conditions', () => {
     })
   })
 
-  it('grabbed/restrained apply -2 circumstance to AC and attackBonus', () => {
-    expect(nonZero(computeConditionMods([cond({ name: 'grabbed' })]))).toEqual({ ac: -2, attackBonus: -2 })
-    expect(nonZero(computeConditionMods([cond({ name: 'restrained' })]))).toEqual({ ac: -2, attackBonus: -2 })
+  // Grabbed: "…giving you the off-guard and immobilized conditions." Restrained: "You have the
+  // off-guard and immobilized conditions…" Neither prints an attack penalty in the remaster.
+  it('grabbed/restrained apply -2 circumstance to AC only', () => {
+    expect(nonZero(computeConditionMods([cond({ name: 'grabbed' })]))).toEqual({ ac: -2 })
+    expect(nonZero(computeConditionMods([cond({ name: 'restrained' })]))).toEqual({ ac: -2 })
   })
 
-  it('blinded applies -4 status perception and -2 circumstance AC', () => {
-    expect(nonZero(computeConditionMods([cond({ name: 'blinded' })]))).toEqual({ perception: -4, ac: -2 })
+  // "…if vision is your only precise sense, you take a –4 status penalty to Perception checks."
+  // The entry prints no AC clause — off-guard against what you can't see is applied separately.
+  it('blinded applies -4 status perception and no AC penalty of its own', () => {
+    expect(nonZero(computeConditionMods([cond({ name: 'blinded' })]))).toEqual({ perception: -4 })
   })
 
   it('deafened applies -2 status perception', () => {
@@ -207,8 +231,8 @@ describe('computeConditionMods — typed stacking rules', () => {
       cond({ name: 'grabbed' }),
     ])
     expect(m.ac).toBe(-2)
-    // grabbed also gives -2 circ attackBonus, off-guard gives none there
-    expect(m.attackBonus).toBe(-2)
+    // Neither prints an attack penalty, so nothing lands there.
+    expect(m.attackBonus).toBe(0)
   })
 
   it('untyped custom mods stack with each other and with typed mods', () => {
@@ -482,5 +506,71 @@ describe('resolveStatMod with an unenumerated skill', () => {
     expect(resolveStatMod(frightened, 'hell lore' as never, true)).toBe(-2)
     // and it matches what a skill we DO enumerate gets from the same condition
     expect(resolveStatMod(frightened, 'acrobatics', true)).toBe(-2)
+  })
+
+  /* The rows that name a CLASS of skill have to reach it too — they used to enumerate the 16 keys,
+   * which a Lore is not one of, so a Fascinated creature's "Hell Lore" resolved to 0 here while the
+   * player sheet (which asks attribute + slot, not a key) said −2. */
+  it('takes the skill-wide rows: Fascinated is −2 on a Lore, exactly as on an enumerated skill', () => {
+    const fascinated = [cond({ name: 'Fascinated' })]
+    expect(resolveStatMod(fascinated, 'hell lore' as never, false)).toBe(-2)
+    expect(resolveStatMod(fascinated, 'occultism', false)).toBe(-2)
+    expect(computeConditionMods(fascinated).athletics).toBe(-2)
+  })
+
+  it('takes Stupefied too (every Lore is Int-based) but not Clumsy (Dex) or Enfeebled (Str)', () => {
+    expect(resolveStatMod([cond({ name: 'Stupefied', value: 2 })], 'hell lore' as never, false)).toBe(-2)
+    expect(resolveStatMod([cond({ name: 'Clumsy', value: 2 })], 'hell lore' as never, false)).toBe(0)
+    expect(resolveStatMod([cond({ name: 'Enfeebled', value: 2 })], 'hell lore' as never, false)).toBe(0)
+  })
+})
+
+describe('resolveAttackMod — attackBonus and the range key resolved in ONE typed pool', () => {
+  /*
+   * Found by test/bug-condition-table-parity.test.ts, which compares this table against the player
+   * sheet's src/rules/conditions.ts: the sheet said Frightened 2 costs a Strike −2, the stat block
+   * showed −4. The TABLE was right on both sides; the stat block was adding two separately resolved
+   * numbers (`mods.attackBonus + mods.meleeAttack`) that are the same status penalty counted twice,
+   * because allChecks reaches attackBonus AND frightened pushes melee/ranged explicitly.
+   */
+  it('frightened 2 costs a Strike −2, not −4', () => {
+    const cs = [cond({ name: 'frightened', value: 2 })]
+    expect(resolveAttackMod(cs, 'melee')).toBe(-2)
+    expect(resolveAttackMod(cs, 'ranged')).toBe(-2)
+    // The arithmetic the stat block used to do, kept here as the reason this function exists.
+    const m = computeConditionMods(cs)
+    expect(m.attackBonus + m.meleeAttack).toBe(-4)
+  })
+
+  it('frightened 2 + enfeebled 1 is −2 on a melee Strike — worst status, never the sum', () => {
+    const cs = [cond({ name: 'frightened', value: 2 }), cond({ name: 'enfeebled', value: 1 })]
+    expect(resolveAttackMod(cs, 'melee')).toBe(-2)
+    expect(resolveAttackMod(cs, 'ranged')).toBe(-2)
+  })
+
+  it('range-specific rows still land on the right range', () => {
+    expect(resolveAttackMod([cond({ name: 'clumsy', value: 1 })], 'melee')).toBe(0)
+    expect(resolveAttackMod([cond({ name: 'clumsy', value: 1 })], 'ranged')).toBe(-1)
+    expect(resolveAttackMod([cond({ name: 'enfeebled', value: 2 })], 'melee')).toBe(-2)
+    expect(resolveAttackMod([cond({ name: 'enfeebled', value: 2 })], 'ranged')).toBe(0)
+  })
+
+  it('prone’s −2 circumstance reaches both ranges and stacks with a status penalty', () => {
+    expect(resolveAttackMod([cond({ name: 'prone' })], 'melee')).toBe(-2)
+    expect(resolveAttackMod([cond({ name: 'prone' })], 'ranged')).toBe(-2)
+    // different types, so they sum
+    expect(resolveAttackMod([cond({ name: 'prone' }), cond({ name: 'frightened', value: 1 })], 'melee')).toBe(-3)
+  })
+
+  it('an AC-only condition never touches a Strike', () => {
+    expect(resolveAttackMod([cond({ name: 'off-guard' })], 'melee')).toBe(0)
+    expect(resolveAttackMod([cond({ name: 'fatigued' })], 'ranged')).toBe(0)
+    expect(resolveAttackMod([], 'melee')).toBe(0)
+  })
+
+  it('situational mods only count when asked for', () => {
+    const c = cond({ name: 'X', condMods: { attackBonus: { value: -2, when: 'vs dragons', type: 'status' } } })
+    expect(resolveAttackMod([c], 'melee')).toBe(0)
+    expect(resolveAttackMod([c], 'melee', true)).toBe(-2)
   })
 })

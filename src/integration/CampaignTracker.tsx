@@ -1,4 +1,3 @@
-/// <reference path="../../tracker/src/types/electron.d.ts" />
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import type { CampaignMembership } from '../data/campaigns';
@@ -34,10 +33,12 @@ import { TextConverter } from '../../tracker/src/components/TextConverter';
 import { EncounterManager } from '../../tracker/src/components/EncounterManager';
 import { DiceOverlay } from '../../tracker/src/components/DiceOverlay';
 import { FloatingWindowLayer } from '../../tracker/src/components/FloatingWindow';
+import { ErrorBoundary } from '../../tracker/src/components/ErrorBoundary';
 import { usePartyStore } from '../../tracker/src/store/partyStore';
 import type { Combatant } from '../../tracker/src/types/pf2e';
 import { PartyMembers } from '../sheet/PartyMembers';
-import type { PartyMember } from '../data/party';
+import { fetchParty, type PartyMember } from '../data/party';
+import { livePlay, useMemberSheets, usePcSheetTruth } from './pcSheetTruth';
 import type { ContentDatabase, DescRef } from '../rules/types';
 import { useLocalCampaignMembers } from './useLocalCampaignMembers';
 import { TEST_CAMPAIGNS_WITHOUT_LOGIN } from './enabled';
@@ -49,6 +50,24 @@ import { claimCombatUndo } from './combatUndoClaim';
 // collapses ~32 of HH's headings to body text. Regenerate with `npm run build:css` in tracker/.
 import '../../tracker/dist-css/tracker.scoped.css';
 import './campaign-tracker.css';
+
+/** One stable empty list, so "the party isn't known yet" doesn't re-run every memo below it. */
+const NO_MEMBERS: PartyMember[] = [];
+
+/*
+ * A tracker popup that ISN'T one of the five overlays registered on the dismiss stack below.
+ *
+ * The initiative row's right-click menu does close itself on Escape — but from a listener on
+ * `document`, which fires BEFORE the shared stack's listener on `window` and marks nothing on the
+ * event. So the same press also reached the stack, whose base handler leaves the campaign: one
+ * Escape out of a row menu and the GM was out of the campaign, unpushed pane edits and all. The
+ * tracker can't import HH's hooks to register itself, so the seam asks the DOM: such a menu portals
+ * itself to <body> (carrying `.tracker-root` for its CSS variables) and is still there on this
+ * press. This view's own root is inside HH's page, and excluded by name in case it ever isn't.
+ */
+function trackerPopupOpen(): boolean {
+  return !!document.querySelector('body > .tracker-root:not(.campaign-tracker)');
+}
 
 /**
  * Opening a campaign IS the initiative tracker (layout option B).
@@ -72,6 +91,7 @@ export function CampaignTracker({
   m,
   content,
   onOpenSettings,
+  onLeave,
   onViewMember,
 }: {
   m: CampaignMembership;
@@ -83,6 +103,12 @@ export function CampaignTracker({
    * changes, so the decision belongs here.
    */
   onOpenSettings: () => void;
+  /**
+   * Leave the campaign (back to the campaigns list). Called only once it's SAFE to unmount, exactly
+   * like onOpenSettings — Escape and the Back arrow both arrive here through the shared dismiss
+   * stack, so neither can throw away an unpushed working copy without asking.
+   */
+  onLeave: () => void;
   /** Open a member's sheet — the same GM view the old campaign detail panel offered. */
   onViewMember: (mem: PartyMember) => void;
 }) {
@@ -104,15 +130,74 @@ export function CampaignTracker({
   // that only exists on this device), so feed HH's real cards from the local roster instead.
   const localMembers = useLocalCampaignMembers(m.id, content);
 
+  /*
+   * THE PARTY, FROM THE SERVER.
+   *
+   * PartyMembers (inside PartyView's playersSlot) does its own fetch and Realtime refresh — but that
+   * slot never mounts until a party EXISTS in the tracker's store, and the party is built from this
+   * very list. So the seam fetches the members itself once at mount to break the circle, and
+   * PartyMembers hands every later list back through `onMembers` so the two can't drift.
+   *
+   * The bridge below used to be gated on TEST_CAMPAIGNS_WITHOUT_LOGIN — i.e. OFF in every release: a
+   * signed-in GM opened their campaign on "Party not found.", players could only be quick-added as
+   * name-only monsters, and the encounter badge rated every fight against a level-1 party of one. The
+   * local roster is now only the FALLBACK, for the dev-without-login path where nobody ever published.
+   */
+  /*
+   * `null` = NOT YET KNOWN — no read of the party has succeeded on this mount. It is deliberately a
+   * different value from `[]` ("the campaign really has no members"), because the party bridge below
+   * MIRRORS this list and an empty one prunes for real. A failed fetch used to arrive as `[]` and
+   * wiped the GM's per-player notes, turn history and stat overrides; it now arrives as null and the
+   * bridge simply doesn't run. Adversarially confirmed.
+   */
+  const [serverMembers, setServerMembers] = useState<PartyMember[] | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    void fetchParty(m.id).then((list) => {
+      if (!cancelled && list) setServerMembers(list);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [m.id]);
+  const known = !TEST_CAMPAIGNS_WITHOUT_LOGIN || serverMembers?.length ? serverMembers : localMembers;
+  const members = known ?? NO_MEMBERS;
+
+  /*
+   * The players' own sheets — the truth for a PC's HP and conditions, in both directions. See
+   * ./pcSheetTruth.ts for the conflict rules that keep a player's own edit from ever being lost.
+   */
+  const memberSheets = useMemberSheets(m.id, members);
+  const sheetById = useMemo(() => {
+    const map = new Map<string, SavedChar>();
+    // This device's own characters first, so the dev-without-login path still has sheets to show;
+    // a published sheet always wins over the local copy.
+    for (const e of loadRoster()) if (!e.archived && (e.character.campaignIds ?? []).includes(m.id)) map.set(e.id, e);
+    for (const [charId, s] of memberSheets) map.set(charId, s);
+    return map;
+    // localMembers changes whenever the roster relevant to this campaign changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [memberSheets, localMembers, m.id]);
+  usePcSheetTruth({ campaignId: m.id, members, sheetById, content });
+
   const inCombat = useCombatStore((s) => s.inCombat);
   const combatants = useCombatStore((s) => s.combatants);
   const activeIndex = useCombatStore((s) => s.activeIndex);
   const selectCombatant = useCombatStore((s) => s.selectCombatant);
   const active = inCombat ? (combatants[activeIndex] ?? null) : null;
 
-  const activePartyId = usePartyStore((s) => s.activePartyId);
   const parties = usePartyStore((s) => s.parties);
-  const partyId = activePartyId ?? parties[0]?.id ?? '';
+  /*
+   * THIS campaign's mirrored party, and nothing else.
+   *
+   * It used to fall back to `activePartyId`, then to the first party on the device — both of which
+   * are some OTHER campaign's. `syncCampaignParty` is the only thing that sets activePartyId, so the
+   * moment it doesn't run (a party we haven't read yet) those fallbacks handed the GM campaign A's
+   * party while standing in campaign B: A's PCs added to B's initiative order, A's per-player notes
+   * and turn history edited from B. An unmirrored campaign resolves to '' and says "Party not
+   * found." — the honest answer, and the sync below makes sure that's only ever momentary.
+   */
+  const partyId = parties.find((p) => p.campaignId === m.id)?.id ?? '';
 
   /*
    * The real characters' stats, in the tracker's own PcStats shape.
@@ -125,16 +210,17 @@ export function CampaignTracker({
   const pcStats = useMemo(() => {
     const byName = new Map<string, PcStats>();
     const byId = new Map<string, PcStats>();
-    for (const e of loadRoster()) {
-      if (e.archived || !(e.character.campaignIds ?? []).includes(m.id)) continue;
-      const stats = computePcStats(e.character, content);
-      byName.set(e.character.name.trim().toLowerCase(), stats);
-      byId.set(e.id, stats);
+    for (const mem of members) {
+      const sheet = sheetById.get(mem.charId);
+      if (!sheet) continue;
+      // The PLAYED character, not the build: the numbers the GM reads have to be the ones on the
+      // player's sheet right now — damage taken, conditions in effect.
+      const stats = computePcStats(livePlay(sheet, content), content);
+      byName.set(mem.name.trim().toLowerCase(), stats);
+      byId.set(mem.charId, stats);
     }
     return { byName, byId };
-    // localMembers changes whenever the roster relevant to this campaign changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localMembers, content, m.id]);
+  }, [members, sheetById, content]);
 
   /*
    * Mirror the campaign's PCs into the tracker's OWN party store (the party tagged with this
@@ -143,19 +229,50 @@ export function CampaignTracker({
    *   • PartyView's "Add to Initiative" now adds these PCs (with real HP) to the order, and
    *   • the turn timer's "Save to Averages" matches them by name and records per-player turn history
    *     (which the per-player turn-time graph on the cards then reads).
-   * It also makes this the active party, so `partyId` resolves to it. Only while testing without
-   * login — the real flow publishes a server party. useLayoutEffect so the party exists before the
-   * first paint (no "Party not found" flash).
+   * It also makes this the active party, so `partyId` resolves to it. useLayoutEffect so the party
+   * exists before the first paint (no "Party not found" flash) — and it runs even for an empty list a
+   * read actually RETURNED, because PartyMembers only mounts once a party exists and it is what fills
+   * the list in. An empty list nobody read is a different thing entirely; see the guard below.
    */
   const syncCampaignParty = usePartyStore((s) => s.syncCampaignParty);
   const hostPcs = useMemo(
-    () => localMembers.map((mem) => ({ charId: mem.charId, name: mem.name, maxHP: pcStats.byName.get(mem.name.trim().toLowerCase())?.maxHP })),
-    [localMembers, pcStats],
+    () =>
+      members.map((mem) => ({
+        charId: mem.charId,
+        name: mem.name,
+        // The published summary is what the player's own app derived; the computed sheet stats are
+        // the fallback for a member whose sheet hasn't arrived yet.
+        maxHP: mem.summary?.hpMax || pcStats.byName.get(mem.name.trim().toLowerCase())?.maxHP,
+      })),
+    [members, pcStats],
   );
   useLayoutEffect(() => {
-    if (!TEST_CAMPAIGNS_WITHOUT_LOGIN) return;
+    // …but NOT before a read has actually succeeded: `known === null` means we don't know the party
+    // yet, and mirroring a list we never read would prune every PC in it.
+    //
+    // The one exception is a campaign this device has NEVER mirrored: there is nothing to prune, and
+    // without an (empty) party the GM whose read just failed — offline, or a missing
+    // `campaign_characters` table — sits on "Party not found." for the life of the mount, with no
+    // cards, no message and no way back short of leaving the campaign. With the empty party there,
+    // PartyMembers mounts in the players slot, says what went wrong and keeps its own live
+    // subscription, so the real list lands the moment the connection does.
+    // Read through getState so `parties` isn't a dep: every sync writes a new parties array, which
+    // as a dep would re-run this effect forever.
+    if (!known && usePartyStore.getState().parties.some((p) => p.campaignId === m.id)) return;
     syncCampaignParty(m.id, m.name, hostPcs);
-  }, [hostPcs, m.id, m.name, syncCampaignParty]);
+  }, [known, hostPcs, m.id, m.name, syncCampaignParty]);
+
+  /*
+   * Scope the tracker's combat + GM-screen layout to THIS campaign, so two campaigns don't share one
+   * initiative order. `setScope` lands with the tracker's own store work; guarded so this seam keeps
+   * working (and its tests keep passing) against a build that doesn't have it yet.
+   */
+  useEffect(() => {
+    const setScope = (useCombatStore.getState() as { setScope?: (id: string | null) => void }).setScope;
+    if (typeof setScope !== 'function') return;
+    setScope(m.id);
+    return () => setScope(null);
+  }, [m.id]);
 
   /*
    * Global Search over ALL of Heroes Heaven's content (feats, spells, items, ancestries, rules,
@@ -213,17 +330,19 @@ export function CampaignTracker({
    * also true of the tracker's existing matching.
    */
   const roster = useMemo(() => {
-    const byName = new Map<string, SavedChar>();
-    const byId = new Map<string, SavedChar>();
-    const all = loadRoster();
-    for (const mem of localMembers) {
-      const e = all.find((x) => x.id === mem.charId);
-      if (!e) continue;
-      byName.set(mem.name.trim().toLowerCase(), e);
-      byId.set(mem.charId, e);
+    const byName = new Map<string, { entry: SavedChar; ownerId: string }>();
+    const byId = new Map<string, { entry: SavedChar; ownerId: string }>();
+    for (const mem of members) {
+      const entry = sheetById.get(mem.charId);
+      if (!entry) continue;
+      // The owner id travels with the member: it's who a GM edit is addressed to, and a published
+      // SavedChar doesn't carry it.
+      const row = { entry, ownerId: mem.ownerId };
+      byName.set(mem.name.trim().toLowerCase(), row);
+      byId.set(mem.charId, row);
     }
     return { byName, byId };
-  }, [localMembers]);
+  }, [members, sheetById]);
 
   // ── The GM's unpushed working copies ─────────────────────────────────────────
   /*
@@ -273,6 +392,19 @@ export function CampaignTracker({
     [fullSheetId],
   );
 
+  /**
+   * Everything that must be safe before this whole view is taken away: the full-screen review sheet
+   * and every open pane's unpushed working copy. Both routes out — campaign settings and leaving the
+   * campaign — unmount the same sheets, so they ask the same question.
+   */
+  const guardLeave = useCallback(async (): Promise<boolean> => {
+    if (!(await leaveFullSheet())) return false;
+    for (const h of paneSheets.current.values()) {
+      if (!(await h.confirmLeave())) return false;
+    }
+    return true;
+  }, [leaveFullSheet]);
+
   /*
    * Back / Escape closes the OPEN review sheet before it leaves the campaign — it's a layer on top of
    * the tracker, so one back press should peel it, not exit the whole campaign. Registered on the
@@ -282,6 +414,38 @@ export function CampaignTracker({
   useBackHandler(fullSheetId != null, () => {
     void (async () => {
       if (await leaveFullSheet()) setFullSheetId(null);
+    })();
+  });
+
+  /*
+   * Escape inside a tracker overlay used to LEAVE THE CAMPAIGN.
+   *
+   * The overlays are the tracker's own components and close themselves on their own terms; the shared
+   * dismiss stack knew nothing about them, so its topmost handler was still "leave the campaign" —
+   * one press out of a search box and the GM was out of it, unpushed pane edits and all. Registering
+   * each open overlay puts it ABOVE the base handler below (the stack is LIFO and these push when
+   * they open), so Escape peels the overlay first and only the next press leaves.
+   */
+  useBackHandler(monsterSearchOpen, () => trackerUi.setMonsterSearch(false));
+  useBackHandler(searchOpen, () => trackerUi.setSearch(false));
+  useBackHandler(customOpen, () => trackerUi.setCustom(false));
+  useBackHandler(encountersOpen, () => trackerUi.setEncounters(false));
+  useBackHandler(appearanceOpen, () => trackerUi.setAppearance(false));
+
+  /*
+   * LEAVING THE CAMPAIGN IS THIS VIEW'S DECISION.
+   *
+   * It used to be the campaigns page's: its own "back to the list" sat at the bottom of the dismiss
+   * stack, so Escape and the Back arrow unmounted the tracker — and every open sheet's unpushed
+   * working copy with it — without a word, while the settings route (which unmounts exactly the
+   * same sheets) asked first. Registering the base handler HERE puts the same gate on both routes
+   * and, because only the topmost handler runs, also stops a press this view has already spent
+   * (a tracker popup closing itself) from falling through and leaving.
+   */
+  useBackHandler(true, () => {
+    if (trackerPopupOpen()) return;
+    void (async () => {
+      if (await guardLeave()) onLeave();
     })();
   });
 
@@ -324,6 +488,13 @@ export function CampaignTracker({
     const onKey = (e: KeyboardEvent) => {
       if (!e.ctrlKey && !e.metaKey) return;
       const k = e.key.toLowerCase();
+      // Ctrl+K opens Search. The tools button has advertised the shortcut since it was written, but
+      // the binding lived in the tracker's own App — which HH doesn't mount — so it did nothing here.
+      if (k === 'k') {
+        e.preventDefault();
+        trackerUi.setSearch(true);
+        return;
+      }
       if (k !== 'z' && k !== 'y') return;
       // A focused text field keeps the browser's own text undo — same rule HH's handler uses.
       const el = document.activeElement as HTMLElement | null;
@@ -443,11 +614,7 @@ export function CampaignTracker({
     if (settingsRequest === lastSettingsReqRef.current) return;
     lastSettingsReqRef.current = settingsRequest;
     void (async () => {
-      if (!(await leaveFullSheet())) return;
-      for (const h of paneSheets.current.values()) {
-        if (!(await h.confirmLeave())) return;
-      }
-      onOpenSettings();
+      if (await guardLeave()) onOpenSettings();
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settingsRequest]);
@@ -460,8 +627,9 @@ export function CampaignTracker({
    */
   const renderPcPane = useCallback(
     (c: Combatant, handles: PcPaneHandles): ReactNode | null => {
-      const entry = roster.byName.get(c.name.trim().toLowerCase());
-      if (!entry) return null;
+      const row = roster.byName.get(c.name.trim().toLowerCase());
+      if (!row) return null;
+      const entry = row.entry;
 
       /*
        * A PC pane needs its OWN close and move controls. The tracker gives a creature pane those via
@@ -490,9 +658,12 @@ export function CampaignTracker({
               else paneSheets.current.delete(c.id);
             }}
             initial={entry}
+            // The player's sheet, live: adopted silently while the GM has no unsaved edits, flagged
+            // (never applied over them) when they do.
+            live={entry}
             content={content}
             campaignId={m.id}
-            playerOwnerId={entry.id}
+            playerOwnerId={row.ownerId}
             onExit={() => handles.onClose?.()}
           />
         </PcPaneShell>
@@ -504,7 +675,7 @@ export function CampaignTracker({
   // The real levels of the real characters — what encounter difficulty must be rated against. The
   // tracker's own party level was a typed number that defaulted to 1, and rated a level-3 party's
   // fights against a level-1 budget.
-  const partyLevels = useMemo(() => localMembers.map((mem) => mem.summary.level), [localMembers]);
+  const partyLevels = useMemo(() => members.map((mem) => mem.summary?.level ?? 0), [members]);
 
   /*
    * Battlezoo Monster Parts comes from THE CAMPAIGN, not from a switch in the tracker: the campaign
@@ -571,6 +742,10 @@ export function CampaignTracker({
           )}
 
           <div className="ct-main">
+            {/* One malformed stat block used to white-screen the whole campaign: the tracker's own
+                boundary exists (its App.tsx wraps the same ternary) but was never mounted in here.
+                resetKeys so switching view / party recovers without a manual "Try again". */}
+            <ErrorBoundary label="this campaign’s tracker" resetKeys={[mainView, partyId]}>
             {mainView === 'gm' ? (
               <GMScreen />
             ) : mainView === 'combatant' ? (
@@ -598,11 +773,6 @@ export function CampaignTracker({
                       );
                     }}
                     onView={(mem) => {
-                      if (!TEST_CAMPAIGNS_WITHOUT_LOGIN) {
-                        onViewMember(mem);
-                        return;
-                      }
-                      // Local members ARE roster entries (charId === roster id).
                       // In combat the sheet joins the workspace beside the initiative order; out of
                       // combat there's nothing to keep an eye on, so it gets the whole view.
                       if (inCombat) {
@@ -614,13 +784,20 @@ export function CampaignTracker({
                           return;
                         }
                       }
-                      setFullSheetId(mem.charId);
+                      // Their published sheet is already here — show it. Only a member we have no
+                      // sheet for falls back to the page's own loader.
+                      if (roster.byId.has(mem.charId)) setFullSheetId(mem.charId);
+                      else onViewMember(mem);
                     }}
-                    localMembers={TEST_CAMPAIGNS_WITHOUT_LOGIN ? localMembers : undefined}
+                    // Hand every later list (Realtime refresh, a kick) back to the seam, so the
+                    // tracker party and the cards can't drift apart.
+                    onMembers={setServerMembers}
+                    localMembers={members === localMembers ? localMembers : undefined}
                   />
                 }
               />
             )}
+            </ErrorBoundary>
           </div>
         </div>
 
@@ -653,12 +830,13 @@ export function CampaignTracker({
         {fullSheetChar && (
           <div className="ct-sheet-full" style={fullSheetRevert}>
             <GmEditSheet
-              key={fullSheetChar.id}
+              key={fullSheetChar.entry.id}
               ref={fullSheetRef}
-              initial={fullSheetChar}
+              initial={fullSheetChar.entry}
+              live={fullSheetChar.entry}
               content={content}
               campaignId={m.id}
-              playerOwnerId={fullSheetChar.id}
+              playerOwnerId={fullSheetChar.ownerId}
               onExit={() => setFullSheetId(null)}
             />
           </div>

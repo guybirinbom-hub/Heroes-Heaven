@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useCombatStore } from '../store/combatStore'
+import { useCombatStore, useScopedState } from '../store/combatStore'
 import { useGameData } from '../data/gameDataContext'
 import { CONDITION_META } from '../utils/conditionEffects'
 import { rollDamageExpr } from '../utils/dice'
@@ -37,13 +37,10 @@ export const GM_WIDGETS: GmWidgetDef[] = [
 ]
 
 // ── persisted per-widget state ───────────────────────────────────────────────
-function usePersistentState<T>(key: string, initial: T): [T, React.Dispatch<React.SetStateAction<T>>] {
-  const [v, setV] = useState<T>(() => {
-    try { const r = localStorage.getItem(key); return r != null ? (JSON.parse(r) as T) : initial } catch { return initial }
-  })
-  useEffect(() => { try { localStorage.setItem(key, JSON.stringify(v)) } catch { /* quota / private mode */ } }, [key, v])
-  return [v, setV]
-}
+// Campaign-scoped: the key passed in is bare (`gmw:<ref>`) and useScopedState turns it into
+// `gmw:<ref>:<scopeId>` inside a campaign, so switching campaigns swaps every widget's saved state
+// along with the board. See combatStore's scope section.
+const usePersistentState = useScopedState
 
 // ── canonical PF2e reference tables ──────────────────────────────────────────
 const DC_BY_LEVEL: Record<number, number> = { 0:14,1:15,2:16,3:18,4:19,5:20,6:22,7:23,8:24,9:26,10:27,11:28,12:30,13:31,14:32,15:34,16:35,17:36,18:38,19:39,20:40,21:42,22:44,23:46,24:48,25:50 }

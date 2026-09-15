@@ -1,18 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useEncounterTablesStore, rollEncounterEntry, type EncounterEntry, type EncounterKind } from '../store/encounterTablesStore'
-import { useCombatStore } from '../store/combatStore'
+import { useCombatStore, useScopedState } from '../store/combatStore'
 import { useGmLayoutStore } from '../store/layoutStore'
 import { loadCreatureByName } from '../data/dataStore'
 import { rollDie } from '../utils/dice'
 
-// Per-instance persisted state (mirrors GmWidgets' usePersistentState).
-function usePersisted<T>(key: string, initial: T): [T, React.Dispatch<React.SetStateAction<T>>] {
-  const [v, setV] = useState<T>(() => {
-    try { const r = localStorage.getItem(key); return r != null ? (JSON.parse(r) as T) : initial } catch { return initial }
-  })
-  useEffect(() => { try { localStorage.setItem(key, JSON.stringify(v)) } catch { /* quota */ } }, [key, v])
-  return [v, setV]
-}
+// Per-instance persisted state — campaign-scoped, shared with the other GM widgets.
+const usePersisted = useScopedState
 
 const wrap: React.CSSProperties = { height: '100%', overflowY: 'auto', padding: '12px 14px', fontFamily: 'var(--font-ui)', color: 'var(--text)', boxSizing: 'border-box' }
 const lbl: React.CSSProperties = { fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text-faded)', margin: '14px 0 6px' }

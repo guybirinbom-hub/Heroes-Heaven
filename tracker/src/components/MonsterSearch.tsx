@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
-import { searchCreatures, loadCreature, loadCustomCreatures, deleteCustomCreature, loadHiddenEntries, hideEntry, loadImages } from '../data/dataStore'
+import { searchCreatures, loadCreature, loadCustomCreatures, deleteCustomCreature, loadHiddenEntries, hideEntry } from '../data/dataStore'
 import type { IndexEntry } from '../data/dataStore'
 import type { Creature } from '../types/pf2e'
 import { useCombatStore } from '../store/combatStore'
@@ -7,10 +7,10 @@ import { usePartyStore } from '../store/partyStore'
 import type { PartyPlayer } from '../store/partyStore'
 import { TrashIcon, XIcon, SearchIcon } from './Icons'
 import { RangeSlider } from './RangeSlider'
-import { readThemeTokens } from '../utils/themeTokens'
 import { cleanSource as cleanSourceShared } from '../utils/sources'
 import { useSourcesStore } from '../store/sourcesStore'
 import { useEncounterTablesStore } from '../store/encounterTablesStore'
+import { searchMatches, rankBySearch } from '../utils/searchRank'
 
 // ── 3-state pill ────────────────────────────────────────────────────────────
 type TriState = 'off' | 'yes' | 'no'
@@ -503,24 +503,11 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
     setHiddenEntries(loadHiddenEntries())
   }, [])
 
-  // ── Token images for search rows ──────────────────────────────────────
-  // images.json is name-keyed (lowercase). Loaded once when the modal opens
-  // and used to look up a small thumbnail per result row.
-  const [imageMap, setImageMap] = useState<Map<string, string>>(new Map())
-  useEffect(() => {
-    let alive = true
-    loadImages().then(m => { if (alive) setImageMap(m) }).catch(() => {})
-    return () => { alive = false }
-  }, [])
   /** Hover-preview popup state — coordinates anchor a larger image right
    *  next to the cursor while the user hovers a token. Cleared on leave. */
   const [hoverImg, setHoverImg] = useState<{ src: string; x: number; y: number } | null>(null)
-  const openImageViewer = (src: string, name: string) => {
-    if (window.electronAPI?.openImageWindow) {
-      void window.electronAPI.openImageWindow(src, name, readThemeTokens())
-    } else {
-      window.open(src, '_blank')
-    }
+  const openImageViewer = (src: string, _name: string) => {
+    window.open(src, '_blank')
   }
   // Token callbacks — pulled out so the Token component (module-level) only
   // sees stable handlers, and so they can be passed without rebuilding them
@@ -872,13 +859,15 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
     return it.kind === 'party' ? 1 : it.qty
   }
 
-  /** Resolve a token image URL for any result row (bestiary or custom). */
+  /** Resolve a token image URL for any result row. Only custom creatures carry one
+   *  (a base64 data URL the player uploads via CombatantDetail) — the bestiary never
+   *  had real images (see the loadImages removal note in data/dataStore.ts). */
   const imageFor = (entry: IndexEntry): string | undefined => {
     if (entry.file.startsWith('custom::')) {
       const id = entry.file.slice('custom::'.length)
       return customById.get(id)?.image
     }
-    return imageMap.get(entry.name.toLowerCase())
+    return undefined
   }
   // Note: the Token component itself lives at module scope (above) so it
   // stays a stable React type across renders — otherwise every mousemove
@@ -1040,21 +1029,25 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
   })), [customCreatures])
 
   const visibleCustomEntries = customAsEntries.filter(e => {
-    if (creatureQuery && !e.name.toLowerCase().includes(creatureQuery.toLowerCase())) return false
+    if (creatureQuery && !searchMatches(creatureQuery, e.name)) return false
     if (suppressedNames.has(e.name.toLowerCase())) return false
     return passesFilters(e, filters, cleanSource(e.source), biomeNames)
   })
 
   // Merge bestiary + custom into one sorted list, then split into Creatures vs Hazards.
+  // A query re-ranks that list by match quality (name-exact/prefix/word/substring beats a
+  // multi-word scatter match); ties keep the level/name sort below, so an empty query is
+  // untouched — rankBySearch returns the same array reference in that case.
   const combinedEntries = useMemo(() => {
     const all = [...visibleResults, ...visibleCustomEntries]
     const byName  = (a: IndexEntry, b: IndexEntry) => a.name.localeCompare(b.name)
     const byLevel = (dir: 1 | -1) => (a: IndexEntry, b: IndexEntry) =>
       (a.level - b.level) * dir || byName(a, b)
-    if (levelSort === 'asc')  return [...all].sort(byLevel(1))
-    if (levelSort === 'desc') return [...all].sort(byLevel(-1))
-    return [...all].sort(byName)
-  }, [visibleResults, visibleCustomEntries, levelSort])
+    const sorted = levelSort === 'asc'  ? [...all].sort(byLevel(1))
+      : levelSort === 'desc' ? [...all].sort(byLevel(-1))
+      : [...all].sort(byName)
+    return rankBySearch(sorted, creatureQuery, e => e.name)
+  }, [visibleResults, visibleCustomEntries, levelSort, creatureQuery])
 
   const creatureEntries = combinedEntries.filter(e => !e.isHazard)
   const hazardEntries   = combinedEntries.filter(e => e.isHazard)
@@ -1634,11 +1627,9 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
               </div>
               {!collapsed && matchingMembers.map(pl => {
                 const inCart = cartKeys.has(cartKeyForParty(pl))
-                // Party NPC creatures may carry their own image (or fall back
-                // to the bestiary image-map by name). PCs typically don't.
+                // Party NPC creatures may carry their own image; PCs typically don't
+                // (the bestiary never had real images — see the imageFor note above).
                 const img = pl.creature?.image
-                  ?? (pl.creature ? imageMap.get(pl.creature.name.toLowerCase()) : undefined)
-                  ?? imageMap.get(pl.name.toLowerCase())
                 return (
                 <div key={pl.id} style={{
                   ...rowBase,

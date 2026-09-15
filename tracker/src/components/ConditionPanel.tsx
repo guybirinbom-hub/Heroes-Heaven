@@ -19,6 +19,44 @@ function sliderMax(meta: ConditionMeta | undefined): number {
   return meta.maxValue ?? 4
 }
 
+/**
+ * A condition's text, framed. Owner ruling 2026-09-15: wherever a condition's text is shown, show
+ * the FULL printed entry, not a summary — so the one-line `summary` from conditionEffects.ts is kept
+ * as the first line and the loaded Archives entry (useGameData().conditions, already the complete
+ * Player Core text) goes under it. The picker GRID stays compact; only the detail areas grew.
+ */
+function ConditionText({ name, summary, full }: { name: string; summary?: string; full?: string }) {
+  return (
+    <div style={{
+      background: 'var(--bg-panel)',
+      border: 'var(--app-bw) solid var(--border-strong)',
+      color: 'var(--text)',
+      borderRadius: 'var(--radius)',
+      boxShadow: 'var(--shadow-md)',
+      padding: '12px 14px',
+      maxWidth: 400, minWidth: 220, maxHeight: 380,
+      overflowY: 'auto',
+      fontFamily: 'var(--font-ui)',
+    }}>
+      <div style={{
+        fontFamily: 'var(--font-display)', fontWeight: 600,
+        fontSize: 14, color: 'var(--accent)', marginBottom: 8,
+        paddingBottom: 6, borderBottom: 'var(--app-bw) solid var(--border)',
+      }}>{name}</div>
+      {summary && (
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: full ? 8 : 0 }}>
+          {summary}
+        </div>
+      )}
+      {full && (
+        <div style={{ fontSize: 12.5, color: 'var(--text)', lineHeight: 1.55, whiteSpace: 'pre-wrap' }}>
+          <TagRenderer text={full} />
+        </div>
+      )}
+    </div>
+  )
+}
+
 function ConditionBadge({ cond, combatantId }: { cond: AppliedCondition; combatantId: string }) {
   const { removeCondition, updateConditionValue } = useCombatStore()
   const openWin = useWindowStore(s => s.open)
@@ -37,36 +75,16 @@ function ConditionBadge({ cond, combatantId }: { cond: AppliedCondition; combata
   const border = meta?.border ? meta.border + '80' : 'color-mix(in srgb, var(--linked) 50%, transparent)'
   const max = sliderMax(meta)
 
-  // Hover content: prefer the condition's own description (used by custom
-  // entries and ability cooldowns), then the metadata summary for built-ins.
-  // Custom descriptions get their own framed box so they read the same as a
-  // normal condition popup (instead of inheriting the transparent "bare" mode
-  // that React-element content triggers).
+  // Hover content: a custom entry's own description (custom conditions and ability cooldowns), else
+  // the built-in's one-line summary FOLLOWED BY its full printed entry. Hovering a built-in badge
+  // used to show the summary alone, so the only way to read the rules was to click through to the
+  // floating window. Both get the same framed box (React-element content otherwise inherits the
+  // transparent "bare" tooltip mode).
+  const printed = cond.description ?? conditions.get(cond.name.toLowerCase())
   const tooltipContent: string | React.ReactNode =
-    cond.description
-      ? (
-        <div style={{
-          background: 'var(--bg-panel)',
-          border: 'var(--app-bw) solid var(--border-strong)',
-          color: 'var(--text)',
-          borderRadius: 'var(--radius)',
-          boxShadow: 'var(--shadow-md)',
-          padding: '12px 14px',
-          maxWidth: 400, minWidth: 220, maxHeight: 380,
-          overflowY: 'auto',
-          fontFamily: 'var(--font-ui)',
-        }}>
-          <div style={{
-            fontFamily: 'var(--font-display)', fontWeight: 600,
-            fontSize: 14, color: 'var(--accent)', marginBottom: 8,
-            paddingBottom: 6, borderBottom: 'var(--app-bw) solid var(--border)',
-          }}>{cond.name}</div>
-          <div style={{ fontSize: 12.5, color: 'var(--text)', lineHeight: 1.55, whiteSpace: 'pre-wrap' }}>
-            <TagRenderer text={cond.description} />
-          </div>
-        </div>
-      )
-      : (meta?.summary ?? '')
+    printed || meta?.summary
+      ? <ConditionText name={cond.name} summary={cond.description ? undefined : meta?.summary} full={printed} />
+      : ''
 
   return (
     <div className="flex items-center gap-1 group" style={{ fontSize: 12 }}>
@@ -133,8 +151,21 @@ const SAVED_PREFIX = 'saved::'
 
 function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
   const { addCondition } = useCombatStore()
+  // Who the duration's clock belongs to. Player Core p. 426: a duration in rounds "decreases by 1
+  // at the start of each turn of the creature that created the effect", so the acting creature is
+  // offered as the default. Empty = no source = the other printed family, "until the end of the
+  // target's next turn", which ticks at the end of THIS combatant's own turn.
+  const combatants = useCombatStore(s => s.combatants)
+  const activeIndex = useCombatStore(s => s.activeIndex)
+  const inCombat = useCombatStore(s => s.inCombat)
+  const acting = inCombat ? combatants[activeIndex] : undefined
+  const [source, setSource] = useState<string>(() => (acting && acting.id !== combatant.id ? acting.id : ''))
+  const src = source || undefined
   const customLibrary = useCustomConditionsStore(s => s.conditions)
   const upsertCustom = useCustomConditionsStore(s => s.upsert)
+  // The loaded Archives entries — read for the detail panel below, so the GM sees the whole rule
+  // before applying it instead of the 12-word summary the tile's title attribute carries.
+  const { conditions: conditionText } = useGameData()
   const ref = useRef<HTMLDivElement>(null)
   const [search, setSearch] = useState('')
   const [selected, setSelected] = useState('')
@@ -206,6 +237,7 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
       name: tpl.name,
       value: tpl.hasValue ? (opts.value ?? 1) : undefined,
       duration: (opts.isPermanent ?? tpl.isPermanent) ? undefined : (opts.duration ?? tpl.defaultDuration),
+      source: src,
       isPermanent: opts.isPermanent ?? tpl.isPermanent,
       description: tpl.description?.trim() || undefined,
       mods: Object.keys(tpl.mods).length ? tpl.mods : undefined,
@@ -226,6 +258,7 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
       addCondition(combatant.id, {
         name,
         duration: isPermanent ? undefined : duration,
+        source: src,
         isPermanent,
         description: customDescription.trim() || undefined,
       })
@@ -238,6 +271,7 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
         pdAmount: pdAmount.trim(),
         pdType: pdType.trim() || undefined,
         duration: isPermanent ? undefined : duration,
+        source: src,
         isPermanent,
       })
     } else {
@@ -245,6 +279,7 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
         name: selected,
         value: meta?.hasValue ? value : undefined,
         duration: isPermanent ? undefined : duration,
+        source: src,
         isPermanent,
       })
     }
@@ -408,6 +443,20 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
           display: 'flex', flexDirection: 'column', gap: 10,
           background: 'rgba(0,0,0,0.15)',
         }}>
+          {/* What the GM is about to apply, in full. Summary first (it names the numbers), then the
+              printed entry. Scrolls on its own so the Apply button never leaves the popup. */}
+          {meta && (
+            <div style={{ maxHeight: 148, overflowY: 'auto' }}>
+              <div style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5, fontStyle: 'italic' }}>
+                {meta.summary}
+              </div>
+              {conditionText.get(selected) && (
+                <div style={{ fontSize: 11.5, color: 'var(--text)', lineHeight: 1.5, whiteSpace: 'pre-wrap', marginTop: 7 }}>
+                  <TagRenderer text={conditionText.get(selected)!} />
+                </div>
+              )}
+            </div>
+          )}
           {isCustom && (
             <>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -495,6 +544,25 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
                   style={{ accentColor: 'var(--accent)' }} />
                 <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>until removed</span>
               </label>
+            </div>
+          )}
+
+          {/* Whose turn the round-clock runs on. */}
+          {!effectiveMeta?.autoDecrement && !isPermanent && combatants.length > 1 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="pf-label" style={{ width: 50, marginBottom: 0 }}>Source</span>
+              <select
+                value={source}
+                onChange={e => setSource(e.target.value)}
+                className="input-dark"
+                style={{ flex: 1, minWidth: 0, fontSize: 11.5, padding: '5px 8px', opacity: isPermanent ? 0.4 : 1 }}
+                title="Whose turn the duration counts down on. Player Core: a duration in rounds decreases by 1 at the start of each turn of the creature that CREATED the effect."
+              >
+                <option value="">ends at the end of {combatant.name}&rsquo;s turn</option>
+                {combatants.filter(c => c.id !== combatant.id).map(c => (
+                  <option key={c.id} value={c.id}>ticks on {c.name}&rsquo;s turn</option>
+                ))}
+              </select>
             </div>
           )}
 

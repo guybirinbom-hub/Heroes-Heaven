@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState, useLayoutEffect, Fragment } from 'react'
 import type { Creature, Combatant, SpellSlotEntry } from '../types/pf2e'
 import { applyWeakElite, scaleByLevel } from '../utils/weakElite'
-import { computeConditionMods, conditionalModsFor, resolveStatMod, type ConditionalModEntry } from '../utils/conditionEffects'
+import { computeConditionMods, conditionalModsFor, resolveStatMod, resolveAttackMod, type ConditionalModEntry } from '../utils/conditionEffects'
 import { fmtSave, traitDisplay, traitBaseName, joinCriticalDegrees } from '../utils/tags'
 import { mapPenalty, rollAttack, rollDamageExpr, fmtBonus as fmt } from '../utils/dice'
 import { TagRenderer } from './TagRenderer'
@@ -889,7 +889,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
     const atk = creature.attacks[attackIdx]
     if (!atk) return
     const map = mapPenalty(attackNumber, atk.isAgile)
-    const totalBonus = atk.attack + mods.attackBonus + (atk.range==='Melee' ? mods.meleeAttack : mods.rangedAttack)
+    const totalBonus = atk.attack + resolveAttackMod(combatant.conditions, atk.range==='Melee' ? 'melee' : 'ranged')
     const label = `${combatant.name} — ${atk.name} (${attackNumber}${attackNumber===1?'st':attackNumber===2?'nd':'rd'} attack${map?`, MAP ${map}`:''}) — ${atk.range}`
     addDiceResult(rollAttack(label, totalBonus, map))
   }
@@ -1052,10 +1052,12 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
           <>
             <span className="stat-label">Skills</span>{' '}
             {Object.entries(creature.skills).map(([k, v], i) => {
-              // Flat custom-condition skill mods adjust the shown number; the
-              // 16 PF2e skills are valid StatMods keys, lore/other skills aren't.
+              // The penalty SHOWN on the skill. `mods` is keyed by the 16 enumerated skills, so a
+              // Lore fell through to 0 there — a Fascinated creature's "Hell Lore" displayed and
+              // rolled clean while the player sheet showed −2. resolveStatMod answers for any skill
+              // name and returns the identical number for the 16.
               const sk = k.toLowerCase()
-              const flat = (mods as unknown as Record<string, number>)[sk] ?? 0
+              const flat = resolveStatMod(combatant.conditions, sk as keyof typeof mods, false)
               const total = v + flat
               return (
               <span key={k}>{i > 0 && ', '}
@@ -1307,7 +1309,9 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
               className={effPerLine > 1 ? 'attacks-grid' : undefined}
               style={effPerLine > 1 ? { gridTemplateColumns: `repeat(${effPerLine}, minmax(0, 1fr))`, columnGap: effAtkGap } : undefined}>
             {creature.attacks.map((atk, i) => {
-              const totalAtk = atk.attack + mods.attackBonus + (atk.range==='Melee' ? mods.meleeAttack : mods.rangedAttack)
+              // attackBonus + melee/ranged pooled in ONE typed bucket — adding the two resolved
+              // numbers double-counted Frightened (see resolveAttackMod).
+              const totalAtk = atk.attack + resolveAttackMod(combatant.conditions, atk.range==='Melee' ? 'melee' : 'ranged')
               return (
                 <div className="stat-line" key={i}>
                   <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 4 }}>

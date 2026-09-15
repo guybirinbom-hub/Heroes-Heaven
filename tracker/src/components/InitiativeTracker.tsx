@@ -79,7 +79,7 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
     <div
       className={`init-row group ${isActive ? 'active' : ''} ${isSelected ? 'viewing' : ''}`}
       style={{
-        ...(c.isDefeated ? { opacity: 0.38, filter: 'grayscale(0.7)' } : {}),
+        ...(c.isDefeated ? { opacity: 0.38, filter: 'grayscale(0.7)' } : c.isDelayed ? { opacity: 0.55 } : {}),
       }}
       // Drag the card into a pane to open its stat block (split or new tab).
       draggable={!editingName && !editInit}
@@ -150,6 +150,7 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 }}>{c.name}</span>
             {c.isPC && <Chip tone="accent">PC</Chip>}
             {c.isAlly && !c.isPC && <Chip tone="linked">NPC</Chip>}
+            {c.isDelayed && <Chip tone="muted">DELAYED</Chip>}
             {c.isElite && <span className="label-elite" style={{ fontSize: 8, flexShrink: 0 }}>E</span>}
             {c.isWeak && <span className="label-weak" style={{ fontSize: 8, flexShrink: 0 }}>W</span>}
             {c.scaledToLevel !== undefined && <Chip tone="accent" mono>L{c.scaledToLevel}</Chip>}
@@ -267,7 +268,8 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
 function RowContextMenu({ c, x, y, onClose, onRename }: {
   c: Combatant; x: number; y: number; onClose: () => void; onRename: () => void
 }) {
-  const { duplicateCombatant, removeCombatant, setDefeated } = useCombatStore()
+  const { duplicateCombatant, removeCombatant, setDefeated, delayCombatant, returnFromDelay } = useCombatStore()
+  const inCombat = useCombatStore(s => s.inCombat)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -288,7 +290,7 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
   // Keep the menu inside the viewport.
   const W = 184, rowH = 30
   const left = Math.min(x, window.innerWidth - W - 8)
-  const top = Math.min(y, window.innerHeight - rowH * 5 - 8)
+  const top = Math.min(y, window.innerHeight - rowH * 6 - 8)
 
   const run = (fn: () => void) => (e: React.MouseEvent) => { e.stopPropagation(); fn(); onClose() }
 
@@ -340,6 +342,15 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
         {c.isDefeated ? 'Restore' : 'Mark defeated'}
       </button>
 
+      {/* Delay — step out of the order, come back after any later turn. */}
+      {inCombat && (
+        <button style={itemStyle} onMouseEnter={hov(true)} onMouseLeave={hov(false)}
+          title={c.isDelayed ? 'Re-enter the order right after the current turn' : 'Leave the turn order until you bring it back'}
+          onClick={run(() => (c.isDelayed ? returnFromDelay(c.id) : delayCombatant(c.id)))}>
+          {c.isDelayed ? 'Return from delay' : 'Delay'}
+        </button>
+      )}
+
       {sep}
       <button style={{ ...itemStyle, color: 'var(--danger)' }}
         onMouseEnter={e => (e.currentTarget.style.background = 'var(--danger-soft)')}
@@ -374,6 +385,7 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
   const prevTurn             = useCombatStore(s => s.prevTurn)
   const rollMonsterInitiative = useCombatStore(s => s.rollMonsterInitiative)
   const selectCombatant      = useCombatStore(s => s.selectCombatant)
+  const removeDefeated       = useCombatStore(s => s.removeDefeated)
   const undo                 = useCombatStore(s => s.undo)
   const redo                 = useCombatStore(s => s.redo)
   const canUndo              = useCombatStore(s => s.canUndo)
@@ -403,6 +415,8 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
   const partySize   = Math.max(1, combatants.filter(c =>
     !c.isDefeated && (c.isPC || (c.isAlly && c.creature != null))
   ).length)
+
+  const hasDefeatedNpcs = combatants.some(c => c.isDefeated && !c.isPC)
 
   // Encounter stats — recomputed whenever combatants or party info changes
   const stats = computeEncounter(combatants, partyLevel, partySize)
@@ -645,6 +659,20 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
                 <StopIcon size={10} /> End
               </button>
             </div>
+          )}
+
+          {/* Clearing the board of downed monsters between fights: PCs stay (downed or not), and the
+              removed monsters stop counting toward the next encounter's XP. Undoable (Ctrl+Z), so
+              no confirm. */}
+          {hasDefeatedNpcs && (
+            <button style={{ ...btnBase, color: 'var(--text-muted)' }}
+              onClick={removeDefeated}
+              title="Remove every defeated monster / NPC from the board — players stay"
+              onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-hover)'; e.currentTarget.style.borderColor = 'var(--border-focus)'; e.currentTarget.style.color = 'var(--text)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'var(--border-strong)'; e.currentTarget.style.color = 'var(--text-muted)' }}
+            >
+              Clear Defeated
+            </button>
           )}
 
           {encounterBadge}

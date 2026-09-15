@@ -1065,7 +1065,11 @@ export default function App() {
           app-wide with no mode gate. A mouse or tablet user had no way to undo on any of them. */}
       {/* Not on the builder: it keeps its own build timeline and draws its own pair in its header,
           so the floating one would be a second undo button that undoes something else. */}
-      {showUndoButtons && which !== 'sheet' && which !== 'loading' && which !== 'builder' && (canUndo || canRedo) && (
+      {/* Not on the campaigns screen either: while a campaign is open Ctrl+Z means UNDO THE COMBAT
+          (the tracker claims it), so a character-undo pair floating over it is a button that does
+          something other than what the keyboard beside it does. A static screen test, not a
+          render-time read of combatOwnsUndo() — the claim isn't React state and wouldn't re-render. */}
+      {showUndoButtons && which !== 'sheet' && which !== 'loading' && which !== 'builder' && which !== 'campaigns' && (canUndo || canRedo) && (
         <div className="app-undo" role="group" aria-label="Undo and redo">
           <button className="icon-btn" title="Undo (Ctrl+Z)" aria-label="Undo" disabled={!canUndo} onClick={() => canUndo && undo()}>
             <i className="ti ti-arrow-back-up" aria-hidden="true" />

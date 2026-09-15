@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { getAppearance, setAccent, setFont, setStyle, setTheme } from '../theme/theme-manager';
 import { getZoom, setZoom, subscribeZoom } from '../theme/zoom';
 import { loadRoster, loadSyncMeta, wipeAllData } from '../data/storage';
@@ -18,7 +18,11 @@ import { PageMenu } from './PageMenu';
 // Removable integration — deleting src/integration/ plus these two imports and the 'tracker'
 // entries above/below restores the original Settings. See src/integration/README.md.
 import { TRACKER_IN_CAMPAIGN } from '../integration/enabled';
-import { TrackerSettingsSection } from '../integration/TrackerSettingsSection';
+// Lazy: this section reaches into the tracker's stores, which drag the whole tracker bundle with
+// them — nobody should download it to open Settings → Appearance.
+const TrackerSettingsSection = lazy(() =>
+  import('../integration/TrackerSettingsSection').then((mod) => ({ default: mod.TrackerSettingsSection })),
+);
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import type { Customization, ModeDef } from '../rules/types';
@@ -695,6 +699,10 @@ export function SettingsPage({
 }) {
   const [section, setSection] = useState<SectionId>('appearance');
   const isMobile = useIsMobile();
+  // "I don't want the GM side of campaign management and initiative tracking in the phone version" —
+  // the tracker section is that GM side, and opening it also pulled the whole tracker chunk onto a
+  // phone that can never use it.
+  const sections = isMobile ? SECTIONS.filter((s) => s.id !== 'tracker') : SECTIONS;
   // Mobile: a full-screen page that opens to a Cards grid; null = show the cards, else drill into a section.
   const [mobileSection, setMobileSection] = useState<SectionId | null>(null);
   // Android Back / Escape: a drilled-in mobile section steps back to the cards; otherwise the page closes
@@ -707,7 +715,11 @@ export function SettingsPage({
       {id === 'appearance' && <AppearanceSection />}
       {id === 'rules' && <RulesSection />}
       {id === 'modes' && <ModesSection modes={modes} characters={characters} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} />}
-      {id === 'tracker' && TRACKER_IN_CAMPAIGN && <TrackerSettingsSection />}
+      {id === 'tracker' && TRACKER_IN_CAMPAIGN && (
+        <Suspense fallback={null}>
+          <TrackerSettingsSection />
+        </Suspense>
+      )}
       {id === 'backup' && <BackupSection />}
       {id === 'account' && <AccountSection />}
       {id === 'about' && <AboutSection />}
@@ -715,7 +727,7 @@ export function SettingsPage({
     </>
   );
 
-  const headTitle = isMobile && mobileSection ? SECTIONS.find((s) => s.id === mobileSection)?.label ?? 'Settings' : 'Settings';
+  const headTitle = isMobile && mobileSection ? sections.find((s) => s.id === mobileSection)?.label ?? 'Settings' : 'Settings';
 
   return (
     <div className="ws-app subpage settings-subpage">
@@ -757,7 +769,7 @@ export function SettingsPage({
         {isMobile ? (
           mobileSection === null ? (
             <div className="settings-cards">
-              {SECTIONS.map((s) => (
+              {sections.map((s) => (
                 <button
                   key={s.id}
                   className={'settings-card' + (s.id === 'uninstall' ? ' danger' : '')}
@@ -774,7 +786,7 @@ export function SettingsPage({
         ) : (
           <div className="settings-body">
             <nav className="settings-nav" aria-label="Settings sections">
-              {SECTIONS.map((s) => (
+              {sections.map((s) => (
                 <button
                   key={s.id}
                   className={'settings-navitem' + (section === s.id ? ' active' : '')}

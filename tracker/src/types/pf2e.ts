@@ -294,6 +294,12 @@ export interface AppliedCondition {
    *  the built-in `ConditionMeta.autoDecrement` flag. */
   autoDecrement?: boolean
   duration?: number
+  /** Combatant id of the creature that CREATED the effect. Player Core p. 426: a duration in rounds
+   *  *"decreases by 1 at the start of each turn of the creature that created the effect"* — so the
+   *  clock belongs to the source, not to whoever is wearing the condition. Absent means the other
+   *  printed family, *"until the end of the target's next turn"*: it ticks at the end of the
+   *  affected creature's own turn (also what every pre-source saved snapshot means). */
+  source?: string
   isPermanent: boolean
   /** Optional free-form description shown when hovering the condition badge.
    *  Used by custom user-added conditions and by auto-generated ability
@@ -355,6 +361,9 @@ export interface Combatant {
   scaledToLevel?: number
   notes: string
   isDefeated: boolean
+  /** Delayed: out of the turn order (skipped by nextTurn) until the GM brings it back in after
+   *  someone's turn. Cleared when a new combat starts. */
+  isDelayed?: boolean
   /** Consumed count for each tracked limited-use resource, keyed by the
    *  helpers in utils/limitedUses.ts (abilities, spell slots, prepared /
    *  innate spell uses, focus pool). Absent / 0 = fully available. */

@@ -32,7 +32,7 @@ import type { AbilityId } from '../src/rules/types';
 const c = () => content();
 const noop = () => undefined;
 
-const rux = (over: Partial<BuildState> = {}): BuildState => ({
+const catfolkBard = (over: Partial<BuildState> = {}): BuildState => ({
   ...emptyBuild(),
   name: 'Catfolk bard fixture',
   level: 7,
@@ -78,14 +78,14 @@ describe("the catfolk bard's ancestry: catfolk", () => {
   it('offers Wisdom for the free ancestry boost', () => {
     // The reported bug, at the pixel. Mutation proof: put `ancAttrs.abilityFlaws` back into the
     // picker's `exclude` and this fails — Wis comes back disabled.
-    const wis = row(ancestryBoostOptions(rux()), 'Wis');
+    const wis = row(ancestryBoostOptions(catfolkBard()), 'Wis');
     expect(wis, 'Wisdom is not even in the list').toBeTruthy();
     expect(wis.disabled, 'Wisdom is greyed out — the flaw is not part of the boost set').toBe(false);
     expect(wis.why).toBe('');
   });
 
   it('still refuses the two attributes catfolk already boost, and says why', () => {
-    const rows = ancestryBoostOptions(rux());
+    const rows = ancestryBoostOptions(catfolkBard());
     for (const label of ['Dex', 'Cha']) {
       expect(row(rows, label).disabled, `${label} is a fixed catfolk boost and must stay greyed`).toBe(true);
       expect(row(rows, label).why).toMatch(/already boosted/i);
@@ -96,7 +96,7 @@ describe("the catfolk bard's ancestry: catfolk", () => {
 
   it('a second ancestry slot still excludes the first slot’s own pick', () => {
     // The same-source rule that IS real: two boosts from one source cannot share an attribute.
-    const rows = ancestryBoostOptions(rux({ ancestryBoosts: ['int'], options: { alternateAncestryBoosts: true } }), 1);
+    const rows = ancestryBoostOptions(catfolkBard({ ancestryBoosts: ['int'], options: { alternateAncestryBoosts: true } }), 1);
     expect(row(rows, 'Int').disabled).toBe(true);
     expect(row(rows, 'Wis').disabled).toBe(false);
   });
@@ -105,8 +105,8 @@ describe("the catfolk bard's ancestry: catfolk", () => {
     // Mutation proof for the engine half: put the flaw back into `ancTaken` in collectBoosts and the
     // two scores come out equal, because the pick is filtered away before it is ever applied.
     const db = c();
-    const none = buildCharacter(rux(), db);
-    const boosted = buildCharacter(rux({ ancestryBoosts: ['wis'] }), db);
+    const none = buildCharacter(catfolkBard(), db);
+    const boosted = buildCharacter(catfolkBard({ ancestryBoosts: ['wis'] }), db);
     expect(none.abilities.wis, 'the flaw alone').toBe(8);
     expect(boosted.abilities.wis, 'flaw −2, free ancestry boost +2').toBe(10);
   });
@@ -145,7 +145,7 @@ describe('the rule is applied the same way to every ancestry', () => {
   });
 
   it('the dwarf picker greys Wisdom, and says it is already boosted', () => {
-    const rows = ancestryBoostOptions({ ...rux(), ancestryId: 'dwarf', heritageId: null });
+    const rows = ancestryBoostOptions({ ...catfolkBard(), ancestryId: 'dwarf', heritageId: null });
     expect(row(rows, 'Wis').disabled).toBe(true);
     expect(row(rows, 'Wis').why).toMatch(/already boosted/i);
     expect(row(rows, 'Cha').disabled, 'the dwarf Charisma flaw is not a boost — it stays live').toBe(false);

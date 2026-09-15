@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { usePartyStore } from '../../tracker/src/store/partyStore';
 import { formatTurnTime } from '../../tracker/src/utils/turnTimer';
 import { TurnTimeline } from '../../tracker/src/components/TurnTimeline';
+import { useBackHandler } from '../sheet/useEscapeClose';
 
 /*
  * The per-player turn-time button shown on a campaign party card — same idea as the ⏱ chip on the
@@ -27,6 +28,9 @@ export function MemberTurnButton({ campaignId, charId, name }: { campaignId: str
     );
   });
   const [open, setOpen] = useState(false);
+  // This graph is a layer over the campaign, so Escape has to close IT — unregistered, the topmost
+  // handler was the campaign's own and one press left the campaign entirely.
+  useBackHandler(open, () => setOpen(false));
   const hasData = !!player && (player.turnCount ?? 0) > 0;
   // A synthetic player when none exists yet, so the graph can still show its empty-state guidance.
   const target = player ?? { name, turnHistory: undefined, turnAvgSeconds: undefined, turnCount: undefined };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useScopedState } from '../store/combatStore'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Downtime calculator — Earn Income + Craft (and rune etching, which is just
@@ -57,14 +57,8 @@ function fmtCoins(cp: number): string {
 }
 const pct = (x: number) => `${Math.round(x * 100)}%`
 
-// Per-instance persisted state.
-function usePersisted<T>(key: string, initial: T): [T, React.Dispatch<React.SetStateAction<T>>] {
-  const [v, setV] = useState<T>(() => {
-    try { const r = localStorage.getItem(key); return r != null ? (JSON.parse(r) as T) : initial } catch { return initial }
-  })
-  useEffect(() => { try { localStorage.setItem(key, JSON.stringify(v)) } catch { /* quota */ } }, [key, v])
-  return [v, setV]
-}
+// Per-instance persisted state — campaign-scoped, shared with the other GM widgets.
+const usePersisted = useScopedState
 
 // ── styles ──
 const wrap: React.CSSProperties = { height: '100%', overflowY: 'auto', padding: '12px 14px', fontFamily: 'var(--font-ui)', color: 'var(--text)', boxSizing: 'border-box' }

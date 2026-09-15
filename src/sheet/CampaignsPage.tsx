@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import '../builder/builder.css';
 import type { ContentDatabase, ModeDef } from '../rules/types';
 import { emptyBuild, type BuildState } from '../rules/build';
@@ -9,9 +9,15 @@ import { useBuilderActions, VariantRulesCard, CampaignOptionsCard, SourcesCard }
 import { TRACKER_IN_CAMPAIGN, TEST_CAMPAIGNS_WITHOUT_LOGIN } from '../integration/enabled';
 import { getRememberedCampaign, rememberCampaign } from '../integration/lastCampaignView';
 import { loadLocalDefaults, saveLocalDefaults, deleteLocalDefaults } from '../integration/localCampaignDefaults';
-import { TrackerTools } from '../integration/TrackerTools';
 import { trackerUi } from '../integration/trackerUiStore';
-import { CampaignTracker } from '../integration/CampaignTracker';
+/*
+ * LAZY, both of them. The tracker is ~747 KB — a fifth of the main bundle — and every player who
+ * never opens a campaign was downloading it to look at their own character sheet. These are the only
+ * two doors into it from HH, and both render only inside a campaign, so splitting here moves the
+ * whole thing (and the bestiary data it pulls) behind the click that actually needs it.
+ */
+const TrackerTools = lazy(() => import('../integration/TrackerTools').then((mod) => ({ default: mod.TrackerTools })));
+const CampaignTracker = lazy(() => import('../integration/CampaignTracker').then((mod) => ({ default: mod.CampaignTracker })));
 import {
   createCampaign,
   updateCampaign,
@@ -28,6 +34,7 @@ import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import { confirmDialog } from './confirm';
+import { useIsMobile } from './useIsMobile';
 import { useBackHandler, useEscapeClose, triggerBack } from './useEscapeClose';
 
 type View =
@@ -101,8 +108,19 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
     const m = id ? loadCampaigns().find((x) => x.id === id) : undefined;
     return m ? { kind: 'detail', m } : { kind: 'list' };
   });
+  /*
+   * PHONES DON'T RUN A TABLE.
+   *
+   * "I don't want the GM side of campaign management and initiative tracking in the phone version;
+   * players on phones must still be able to join a campaign." So at ≤720px this page keeps the list,
+   * joining by code and the player's view of a campaign (the party, their teammates' sheets), and
+   * every GM tool — create/edit defaults, the tracker, the GM screen, encounters, custom creatures —
+   * is replaced by one line saying where to find them. The desktop/web path below is untouched.
+   */
+  const isPhone = useIsMobile();
   // GM detail: the GM edits a player's sheet (fully, silently pushed on Update) — not a read-only view.
-  const { sheetEl, open } = useMemberViewer(content, { gmEdit: true });
+  // On a phone that editor IS the GM side, so a teammate's sheet opens read-only there instead.
+  const { sheetEl, open } = useMemberViewer(content, { gmEdit: !isPhone });
   // Back navigation, one step at a time. Campaign settings (edit) was opened FROM a campaign, so back
   // returns to that campaign's tracker — not all the way out to the list, which would lose the GM's
   // place. Every other sub-view steps back to the list.
@@ -113,7 +131,15 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
   // The hamburger is the navigation — no top-level back arrow. Escape / Android-back close the page
   // (list view) or step back one level (sub-views), via the shared dismiss stack.
   useEscapeClose(onClose);
-  useBackHandler(view.kind !== 'list', goBack);
+  /*
+   * …except while the campaign IS the tracker: leaving is THAT view's decision, because it's the only
+   * one that knows whether a GM edit is still unpushed, and it registers its own handler (calling
+   * `goBack` through onLeave once it's safe). Registering a second handler for the same gesture would
+   * race on mount order — with the lazy chunk already loaded the tracker mounts in the SAME commit,
+   * where a child's effect runs before its parent's, and the handler that asks first would lose.
+   */
+  const trackerView = TRACKER_IN_CAMPAIGN && !isPhone && view.kind === 'detail';
+  useBackHandler(view.kind !== 'list' && !trackerView, goBack);
 
   // Track where the user is, so the hamburger re-opens here. Stepping back to the list is an
   // explicit "I'm done with that campaign", so it clears the memory.
@@ -192,10 +218,14 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
         </div>
         {/* Row 1 of the campaign-as-tracker view: the tracker's tools live in HH's own chrome.
             Part of the removable integration — see src/integration/README.md. */}
-        {TRACKER_IN_CAMPAIGN && view.kind === 'detail' && <TrackerTools />}
+        {TRACKER_IN_CAMPAIGN && !isPhone && view.kind === 'detail' && (
+          <Suspense fallback={null}>
+            <TrackerTools />
+          </Suspense>
+        )}
         {/* Customize the GM's tracker look (theme/style only, tracker-scoped) — mirrors the character
             sheet's Customize icon, sitting next to the hamburger. Removable integration. */}
-        {TRACKER_IN_CAMPAIGN && view.kind === 'detail' && (
+        {TRACKER_IN_CAMPAIGN && !isPhone && view.kind === 'detail' && (
           <button
             className="icon-btn"
             title="Customize tracker appearance"
@@ -222,24 +252,53 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
       {/* The tracker needs the WHOLE screen; .cmp-body is otherwise capped at 640px and centred
           (right for a list of campaign cards, wrong for a combat tracker). The modifier is defined
           in src/integration/campaign-tracker.css and goes away with the integration. */}
-      <div className={'cmp-body' + (TRACKER_IN_CAMPAIGN && view.kind === 'detail' ? ' cmp-body-tracker' : '')}>
+      <div className={'cmp-body' + (TRACKER_IN_CAMPAIGN && !isPhone && view.kind === 'detail' ? ' cmp-body-tracker' : '')}>
         {view.kind === 'list' && (
-          <GmList campaigns={gmCampaigns} onCreate={() => setView({ kind: 'create' })} onOpen={(m) => setView({ kind: 'detail', m })} />
+          <>
+            {/* On a phone the list is every campaign you're IN, GM or player — the page is a player's
+                page there, and a GM with only their own campaigns still sees exactly what they ran. */}
+            <GmList
+              campaigns={isPhone ? memberships : gmCampaigns}
+              phone={isPhone}
+              onCreate={isPhone ? undefined : () => setView({ kind: 'create' })}
+              onOpen={(m) => setView({ kind: 'detail', m })}
+            />
+            {isPhone && (
+              <JoinRow
+                // Joining must never DOWNGRADE a membership you already have: `upsertMembership`
+                // REPLACES the row, so a GM pasting their own share code here turned their local
+                // role into 'player' (and dropped `useDefaults`). The desktop join in
+                // builder/shared.tsx has always kept the existing row; this does the same and says so.
+                onJoined={(next) => {
+                  if (memberships.some((x) => x.id === next.id)) return false;
+                  upsertMembership(next);
+                  return true;
+                }}
+              />
+            )}
+          </>
         )}
 
         {/* Opening a campaign IS the full-screen initiative tracker. Flip TRACKER_IN_CAMPAIGN to
             false for the original detail panel back. See src/integration/README.md. */}
         {view.kind === 'detail' &&
-          (TRACKER_IN_CAMPAIGN ? (
-            <CampaignTracker
-              m={view.m}
-              content={content}
-              onOpenSettings={() => setView({ kind: 'edit', m: view.m })}
-              onViewMember={(mem) => void open(view.m.id, mem.charId, mem.ownerId)}
-            />
+          (TRACKER_IN_CAMPAIGN && !isPhone ? (
+            <Suspense fallback={null}>
+              <CampaignTracker
+                m={view.m}
+                content={content}
+                onOpenSettings={() => setView({ kind: 'edit', m: view.m })}
+                // Leaving the campaign is the TRACKER's call, not this page's: it's the only one that
+                // knows whether a GM edit is still unpushed. It registers the base handler on the
+                // dismiss stack (Escape + the Back arrow) and calls this once it's safe to unmount.
+                onLeave={goBack}
+                onViewMember={(mem) => void open(view.m.id, mem.charId, mem.ownerId)}
+              />
+            </Suspense>
           ) : (
             <CampaignDetail
               m={view.m}
+              gmTools={!isPhone}
               onEdit={() => setView({ kind: 'edit', m: view.m })}
               onDelete={() => void deleteFrom(view.m, () => setView({ kind: 'list' }))}
               onViewMember={(mem) => void open(view.m.id, mem.charId, mem.ownerId)}
@@ -281,15 +340,28 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
   );
 }
 
-function GmList({ campaigns, onCreate, onOpen }: { campaigns: CampaignMembership[]; onCreate: () => void; onOpen: (m: CampaignMembership) => void }) {
+function GmList({ campaigns, phone, onCreate, onOpen }: {
+  campaigns: CampaignMembership[];
+  /** Phone: the GM half of this page is hidden, so the copy and the Create button go with it. */
+  phone?: boolean;
+  /** Absent = no way to create one from here (phones). */
+  onCreate?: () => void;
+  onOpen: (m: CampaignMembership) => void;
+}) {
   return (
     <div className="cmp-list">
       <p className="cmp-intro">
-        Campaigns you <strong>run</strong>. Create one, set its default rules, and share the code — players join by
-        entering it in a character&rsquo;s <strong>Setup → Campaigns</strong>. Open a campaign to manage it and see the party.
+        {phone ? (
+          <>Campaigns you&rsquo;re in. Open one to see the party. <strong>GM tools are available on the desktop and web app.</strong></>
+        ) : (
+          <>
+            Campaigns you <strong>run</strong>. Create one, set its default rules, and share the code — players join by
+            entering it in a character&rsquo;s <strong>Setup → Campaigns</strong>. Open a campaign to manage it and see the party.
+          </>
+        )}
       </p>
       {campaigns.length === 0 ? (
-        <div className="cmp-empty">You don&rsquo;t run any campaigns yet.</div>
+        <div className="cmp-empty">{phone ? 'You haven’t joined a campaign yet.' : 'You don’t run any campaigns yet.'}</div>
       ) : (
         campaigns.map((m) => (
           <div
@@ -306,7 +378,7 @@ function GmList({ campaigns, onCreate, onOpen }: { campaigns: CampaignMembership
             }}
           >
             <div className="cmp-card-main">
-              <div className="cmp-card-name">{m.name}<span className="cmp-role gm">GM</span></div>
+              <div className="cmp-card-name">{m.name}<span className={'cmp-role ' + m.role}>{m.role === 'gm' ? 'GM' : 'Player'}</span></div>
               {m.description && <div className="cmp-card-desc">{m.description}</div>}
               <CodeChip code={m.code} />
             </div>
@@ -314,15 +386,81 @@ function GmList({ campaigns, onCreate, onOpen }: { campaigns: CampaignMembership
           </div>
         ))
       )}
-      <div className="cmp-add-row">
-        <button className="btn-primary" onClick={onCreate}><i className="ti ti-plus" aria-hidden="true" /> Create a campaign</button>
-      </div>
+      {onCreate && (
+        <div className="cmp-add-row">
+          <button className="btn-primary" onClick={onCreate}><i className="ti ti-plus" aria-hidden="true" /> Create a campaign</button>
+        </div>
+      )}
     </div>
   );
 }
 
-function CampaignDetail({ m, onEdit, onDelete, onViewMember }: {
+/**
+ * Join a campaign with the GM's code, from this page.
+ *
+ * Joining otherwise lives in a character's Setup → Campaigns, and still does — but on a phone this
+ * page is the player's campaigns page, and "players on phones must still be able to join a campaign"
+ * has to be true without going hunting. It records the MEMBERSHIP only; attaching a character to the
+ * party is still the Setup card's job, which is where the campaign's default rules are offered.
+ */
+function JoinRow({ onJoined }: { onJoined: (m: CampaignMembership) => boolean }) {
+  const [code, setCode] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const [joined, setJoined] = useState('');
+  /** The code was for a campaign this device is already in — nothing was changed. */
+  const [already, setAlready] = useState(false);
+
+  const join = async () => {
+    if (busy || !code.trim()) return;
+    setBusy(true);
+    setError('');
+    setJoined('');
+    const res = await fetchCampaignByCode(code.trim());
+    setBusy(false);
+    if (!res.ok) {
+      setError(res.error);
+      return;
+    }
+    const c = res.value;
+    setAlready(!onJoined({ id: c.id, code: c.code, role: 'player', name: c.name, description: c.description }));
+    setCode('');
+    setJoined(c.name);
+  };
+
+  return (
+    <div className="cmp-join-row">
+      <label className="cmp-field">
+        <span className="cmp-label">Join with a code</span>
+        <input
+          className="hb-input"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          placeholder="Your GM’s share code"
+          aria-label="Campaign share code"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') void join();
+          }}
+        />
+      </label>
+      <button className="btn-primary" disabled={busy || !code.trim()} onClick={() => void join()}>
+        {busy ? 'Joining…' : 'Join'}
+      </button>
+      {error && <p className="login-error" role="alert">{error}</p>}
+      {joined && (
+        <p className="setup-note" role="status">
+          {already ? 'Already joined' : 'Joined'} “{joined}”. Attach a character in its{' '}
+          <strong>Setup → Campaigns</strong> to appear in the party.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function CampaignDetail({ m, gmTools, onEdit, onDelete, onViewMember }: {
   m: CampaignMembership;
+  /** False on a phone: the campaign's settings and deletion are GM tools and live on desktop/web. */
+  gmTools: boolean;
   onEdit: () => void;
   onDelete: () => void;
   onViewMember: (m: PartyMember) => void;
@@ -335,14 +473,19 @@ function CampaignDetail({ m, onEdit, onDelete, onViewMember }: {
           <span className="cmp-label">Share code</span>
           <CodeChip code={m.code} />
         </div>
-        <div className="cmp-detail-actions">
-          <button className="chip" onClick={onEdit}><i className="ti ti-settings" aria-hidden="true" /> Settings &amp; defaults</button>
-          <button className="chip danger" onClick={onDelete}><i className="ti ti-trash" aria-hidden="true" /> Delete campaign</button>
-        </div>
+        {gmTools ? (
+          <div className="cmp-detail-actions">
+            <button className="chip" onClick={onEdit}><i className="ti ti-settings" aria-hidden="true" /> Settings &amp; defaults</button>
+            <button className="chip danger" onClick={onDelete}><i className="ti ti-trash" aria-hidden="true" /> Delete campaign</button>
+          </div>
+        ) : (
+          <div className="setup-note">GM tools are available on the desktop and web app.</div>
+        )}
       </div>
       <div className="cmp-detail-players">
         <div className="cmp-section-h"><i className="ti ti-users" aria-hidden="true" /> Party</div>
-        <PartyMembers campaignId={m.id} isGm onView={onViewMember} />
+        {/* Kick is a GM tool; without it this is the player's view of their own party. */}
+        <PartyMembers campaignId={m.id} isGm={gmTools && m.role === 'gm'} onView={onViewMember} />
       </div>
     </div>
   );

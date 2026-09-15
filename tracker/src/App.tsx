@@ -17,17 +17,16 @@ import { GMScreen } from './components/GMScreen'
 import { DiceOverlay } from './components/DiceOverlay'
 import { FloatingWindowLayer } from './components/FloatingWindow'
 import { ErrorBoundary } from './components/ErrorBoundary'
-import { PlusIcon, StarIcon, XIcon, MinimizeIcon, MaximizeIcon, WindowRestoreIcon, PencilIcon, SaveIcon, DiceIcon, SearchIcon, ScreenIcon, ChevronRightIcon } from './components/Icons'
+import { PlusIcon, StarIcon, XIcon, PencilIcon, SaveIcon, DiceIcon, SearchIcon, ScreenIcon, ChevronRightIcon } from './components/Icons'
 // Heroes Heaven's REAL brand mark + nav menu, imported live from ../src — so the tracker reads as
 // part of the builder rather than as a lookalike. Both are alias-safe: Logo has zero imports, and
 // PageMenu pulls only useEscapeClose (react-only) plus a type-only ModeDef that erases at build.
 import { HeroesHeavenLogo } from '@hh/sheet/Logo'
 import { PageMenu } from '@hh/sheet/PageMenu'
 import { useSettingsStore } from './store/settingsStore'
-import { updateTaskbarIcon } from './utils/themeIcon'
 import { SettingsModal } from './components/SettingsModal'
 import { TurnTimerWidget } from './components/TurnTimerWidget'
-import { UpdateNotice } from './components/UpdateNotice'
+import { bumpZoom, ZOOM_STEP } from '@hh/theme/zoom'
 
 // ── Add-party dialog ────────────────────────────────────────────────────────
 function AddPartyDialog({ onDone, onCancel }: {
@@ -208,27 +207,8 @@ export default function App() {
   const clearAllCombatants = useCombatStore(s => s.clearAllCombatants)
   const isEncounterUnchanged = useCombatStore(s => s.isEncounterUnchanged)
   const [showClearConfirm, setShowClearConfirm] = useState(false)
-  // Track window maximize state so the maximize button shows a restore-down
-  // icon while maximized.
-  const [isMaximized, setIsMaximized] = useState(true)
-  useEffect(() => {
-    const api = window.electronAPI
-    if (!api?.onMaximizeChange) return
-    void api.winIsMaximized?.().then(setIsMaximized)
-    return api.onMaximizeChange(setIsMaximized)
-  }, [])
   const { parties, activePartyId, addParty, toggleFavorite, setActiveParty } = usePartyStore()
-  const activeTheme = useSettingsStore(s => s.theme)
   const showInitCollapse = useSettingsStore(s => s.showInitCollapseButton)
-
-  // Repaint the window / taskbar / alt-tab icon to match the active theme.
-  // Runs on first mount (so the icon flips from the build-time default to
-  // the user's persisted theme before anyone sees the taskbar) and on every
-  // theme change. The CSS variables on <html> are applied synchronously by
-  // settingsStore so reading them here always returns the correct values.
-  useEffect(() => {
-    void updateTaskbarIcon()
-  }, [activeTheme])
 
   const [showSearch, setShowSearch] = useState(false)
   const [showGlobalSearch, setShowGlobalSearch] = useState(false)
@@ -346,11 +326,14 @@ export default function App() {
     if (sidebarWidth < sidebarMinWidth) setSidebarWidth(sidebarMinWidth)
   }, [sidebarMinWidth, sidebarWidth])
 
+  // Ctrl+wheel zooms the whole tracker UI via the shared CSS-zoom gesture (same
+  // one src/App.tsx wires for the main app). Without this the browser's own
+  // page zoom would fire on Ctrl+wheel instead.
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
       if (!e.ctrlKey) return
       e.preventDefault()
-      window.electronAPI?.zoomBy(e.deltaY < 0 ? 1 : -1)
+      bumpZoom(e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP)
     }
     document.addEventListener('wheel', onWheel, { passive: false })
     return () => document.removeEventListener('wheel', onWheel)
@@ -524,46 +507,6 @@ export default function App() {
           <span className="hh-menu-slot" style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}>
             <PageMenu items={[]} onOpenSettings={() => setShowSettings(true)} />
           </span>
-          {window.electronAPI && (
-            // Window controls stretch the full header height and out to the
-            // top-right corner (negative margins cancel the header's padding)
-            // so they're flush with the screen edge when maximized — you can
-            // slam the cursor into the corner to hit Close (Fitts's law).
-            (() => {
-              // Each button spans the FULL header height (content + the
-              // header's 10px vertical padding) and the container's negative
-              // right margin cancels the 14px right padding — so the buttons
-              // are flush with the window's top + right edges when maximized.
-              const winBtn: React.CSSProperties = {
-                width: 44, height: 'calc(100% + 20px)', marginTop: -10,
-                display: 'grid', placeItems: 'center',
-                background: 'transparent', border: 'none', cursor: 'pointer',
-                color: 'var(--text-faded)', transition: 'background 0.15s, color 0.15s',
-                WebkitAppRegion: 'no-drag',
-              } as React.CSSProperties
-              return (
-            <div className="flex" style={{
-              alignSelf: 'stretch', marginLeft: 10, marginRight: -14,
-            }}>
-              <button onClick={() => window.electronAPI!.winMinimize()} title="Minimize"
-                style={winBtn}
-                onMouseEnter={e=>{e.currentTarget.style.background='var(--bg-hover)'; e.currentTarget.style.color='var(--text)'}}
-                onMouseLeave={e=>{e.currentTarget.style.background='transparent'; e.currentTarget.style.color='var(--text-faded)'}}
-              ><MinimizeIcon size={12} /></button>
-              <button onClick={() => window.electronAPI!.winToggleMaximize()} title={isMaximized ? 'Restore down' : 'Maximize'}
-                style={winBtn}
-                onMouseEnter={e=>{e.currentTarget.style.background='var(--bg-hover)'; e.currentTarget.style.color='var(--text)'}}
-                onMouseLeave={e=>{e.currentTarget.style.background='transparent'; e.currentTarget.style.color='var(--text-faded)'}}
-              >{isMaximized ? <WindowRestoreIcon size={12} /> : <MaximizeIcon size={11} />}</button>
-              <button onClick={() => window.electronAPI!.winClose()} title="Close"
-                style={winBtn}
-                onMouseEnter={e=>{e.currentTarget.style.background='var(--danger)';e.currentTarget.style.color='#fff'}}
-                onMouseLeave={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.color='var(--text-faded)'}}
-              ><XIcon size={15} /></button>
-            </div>
-              )
-            })()
-          )}
         </div>
       </header>
 
@@ -765,7 +708,6 @@ export default function App() {
 
       <DiceOverlay />
       <FloatingWindowLayer />
-      <UpdateNotice />
     </div>
   )
 }

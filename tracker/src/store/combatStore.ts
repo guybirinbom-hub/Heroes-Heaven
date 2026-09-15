@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState, useSyncExternalStore, type Dispatch, type SetStateAction } from 'react'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { original } from 'immer'
@@ -49,7 +50,31 @@ function rehydrateTimer(t: TurnTimerState | null | undefined): TurnTimerState | 
   return { ...t, startedAt: t.paused ? null : Date.now() }
 }
 
-// Shared PC-defeat logic: sets HP to 0, applies Unconscious, reorders initiative
+/** The value of a named condition on a combatant, 0 when it isn't applied. */
+function condValue(c: Combatant, name: string): number {
+  return c.conditions.find(x => x.name.toLowerCase() === name)?.value ?? 0
+}
+
+/**
+ * Restored to 1+ Hit Points: lose Dying AND Unconscious, and become Wounded 1 (or +1 to an existing
+ * Wounded). Player Core, Unconscious: *"If you are restored to 1 Hit Point or more, you lose the
+ * dying and unconscious conditions and can act normally on your next turn."* The Wounded bump is
+ * the recovery half, mirroring `recoverFromDying` in the player sheet's src/rules/play.ts. Capped at
+ * the tracker's own Wounded slider maximum (3).
+ */
+function reviveConditions(c: Combatant) {
+  const wasDying = c.conditions.some(x => x.name.toLowerCase() === 'dying')
+  c.conditions = c.conditions.filter(x => {
+    const n = x.name.toLowerCase()
+    return n !== 'unconscious' && n !== 'dying'
+  })
+  if (!wasDying) return
+  const w = c.conditions.find(x => x.name.toLowerCase() === 'wounded')
+  if (w) w.value = Math.min(3, (w.value ?? 1) + 1)
+  else c.conditions.push({ id: ncid(), name: 'wounded', value: 1, isPermanent: true })
+}
+
+// Shared PC-defeat logic: sets HP to 0, applies Unconscious + Dying, reorders initiative
 function applyPCDefeat(s: { combatants: Combatant[]; activeIndex: number }, id: string) {
   const c = s.combatants.find(c => c.id === id)
   if (!c || !c.isPC) return
@@ -58,6 +83,13 @@ function applyPCDefeat(s: { combatants: Combatant[]; activeIndex: number }, id: 
   if (!c.conditions.some(x => x.name.toLowerCase() === 'unconscious')) {
     c.conditions.push({ id: ncid(), name: 'unconscious', isPermanent: true })
   }
+  // Dropped to 0 HP → Dying as well as Unconscious. The value gained is 1 + your Wounded value, or
+  // +1 if you were already Dying, never past the death threshold (4, reduced by Doomed, min 1).
+  // Mirrors applyDamage in the player sheet's src/rules/play.ts.
+  const deathAt = Math.max(1, 4 - condValue(c, 'doomed'))
+  const dying = c.conditions.find(x => x.name.toLowerCase() === 'dying')
+  if (dying) dying.value = Math.min(deathAt, (dying.value ?? 0) + 1)
+  else c.conditions.push({ id: ncid(), name: 'dying', value: Math.min(deathAt, 1 + condValue(c, 'wounded')), isPermanent: true })
   const pcIdx = s.combatants.findIndex(x => x.id === id)
   const activeIdx = s.activeIndex
   if (pcIdx !== -1 && pcIdx !== activeIdx && s.combatants.length > 1) {
@@ -90,6 +122,81 @@ function tickConditionsAtStart(c: Combatant | undefined | null) {
     })
 }
 
+/**
+ * Whether a timed condition's clock still has an owner on the board.
+ *
+ * Player Core p. 426 (Duration): *"For an effect that lasts a number of rounds, the remaining
+ * duration decreases by 1 at the start of each turn of the creature that created the effect."* A
+ * source that has LEFT the board (Clear Defeated, Remove) has no turns left to give, so its effects
+ * would otherwise freeze on their targets for the rest of the session. Treat those as source-less
+ * and fall back to the print's other family, *"until the end of the target's next turn"*.
+ */
+function hasSource(s: { combatants: Combatant[] }, c: AppliedCondition): boolean {
+  return !!c.source && s.combatants.some(x => x.id === c.source)
+}
+
+/**
+ * Tick every ROUND-DURATION condition on the board whose `source` is one of the creatures whose
+ * initiative count has just come up, and drop the ones that reach 0.
+ *
+ * Player Core p. 426 (Duration): *"For an effect that lasts a number of rounds, the remaining
+ * duration decreases by 1 at the start of each turn of the creature that created the effect."* So
+ * the clock belongs to the SOURCE, not to the creature wearing the condition — one 2-round effect
+ * on five targets expires for all five at the same moment, and a condition on a creature that never
+ * gets a turn (downed, delayed, skipped) still runs out.
+ *
+ * `sourceIds` carries every combatant the turn advance passed over as well as the one it landed on:
+ * a defeated or delayed source still has an initiative count, so its effects keep ticking.
+ *
+ * Conditions with NO source keep the old clock — they tick at the END of the affected creature's
+ * turn, which is the print's other family (*"until the end of the target's next turn"*).
+ */
+function tickSourceDurations(s: { combatants: Combatant[] }, sourceIds: Set<string>) {
+  if (!sourceIds.size) return
+  for (const c of s.combatants) {
+    let ticked = false
+    for (const cc of c.conditions) {
+      // `sourceIds` is drawn from the board, so this membership test IS hasSource() here: a source
+      // that has left can never match, and nextTurn's turn-end pass picks those up instead.
+      if (cc.isPermanent || cc.duration === undefined || !cc.source || !sourceIds.has(cc.source)) continue
+      cc.duration -= 1
+      ticked = true
+    }
+    if (ticked) c.conditions = c.conditions.filter(cc => cc.isPermanent || cc.duration === undefined || cc.duration > 0)
+  }
+}
+
+/** Skipped by the turn advance: a defeated NPC (downed PCs still act) or anyone who Delayed. */
+function skipsTurn(c: Combatant | undefined): boolean {
+  return !!c && (c.isDelayed || (c.isDefeated && !c.isPC))
+}
+
+// Turn-advance bookkeeping. Declared here rather than in types/pf2e.ts because nextTurn is the only
+// thing that writes it and creditCount the only thing that reads it — it is not board state the UI
+// or a saved encounter has any use for.
+declare module '../types/pf2e' {
+  interface Combatant {
+    /** Its initiative count has already been credited in the CURRENT round (see creditCount).
+     *  Cleared when the order wraps to a new round and when a fight starts. */
+    countedThisRound?: boolean
+  }
+}
+
+/**
+ * Credit a creature's initiative count for `tickSourceDurations` — at most ONCE per round.
+ *
+ * Player Core p. 426 puts the tick at the start of each of the source's turns, and a creature gets
+ * one turn per round. Delay hands the same count a SECOND landing in the round it returns: Delay is
+ * an action taken on your turn, so the advance already landed on you (and credited you) before you
+ * delayed, and `returnFromDelay` puts you back in front of the pointer so the next advance lands on
+ * you again. Crediting that second landing ticks a 3-round effect down to 1 in one round.
+ */
+function creditCount(c: Combatant | undefined, counts: Set<string>) {
+  if (!c || c.countedThisRound) return
+  counts.add(c.id)
+  c.countedThisRound = true
+}
+
 interface CombatStore {
   combatants: Combatant[]
   round: number; activeIndex: number; selectedId: string | null; inCombat: boolean
@@ -102,6 +209,21 @@ interface CombatStore {
    *  No-op for PCs (a player character can't appear twice). */
   duplicateCombatant: (id: string) => void
   removeCombatant: (id: string) => void
+  /** Drop every DEFEATED non-PC from the board (PCs stay, downed or not) so the next fight starts
+   *  clean and the removed monsters stop counting toward its XP budget. The active pointer follows
+   *  its combatant by id, or falls to the next survivor. Recorded as one undo step. */
+  removeDefeated: () => void
+  /** Delay: the combatant leaves the turn order (skipped like a defeated NPC) until it is brought
+   *  back with `returnFromDelay`. Delaying the ACTIVE combatant ends its turn. */
+  delayCombatant: (id: string) => void
+  /** Re-enter the order immediately after the combatant whose turn it is, taking that creature's
+   *  initiative count (PF2e: you return "after any turn"). */
+  returnFromDelay: (id: string) => void
+  /** Point the persisted board at a campaign: `pf2e-current-combat:<scopeId>` (bare key when null).
+   *  Flushes the OUTGOING scope's pending write first, then loads the incoming scope's snapshot (or
+   *  an empty board), resets undo/redo and the turn timer, and resumes the id counters. The GM
+   *  layout store and the GM widgets ride the same switch — see scopeKey / onScopeChange. */
+  setScope: (scopeId: string | null) => void
   /** Wipe every combatant from the initiative tracker and reset combat
    *  state. The caller is expected to confirm before invoking. */
   clearAllCombatants: () => void
@@ -171,6 +293,52 @@ interface CombatStore {
 // We snapshot the live initiative tracker to localStorage so reopening the app
 // brings back the exact same lineup (combatants, conditions, HP, round, etc.).
 const COMBAT_STATE_KEY = 'pf2e-current-combat'
+
+// ── Scope (campaign) ───────────────────────────────────────────────────────
+// Combat, the GM layout and the GM widgets are per-CAMPAIGN, not global: opening campaign B must
+// not show campaign A's fight. One `setScope(id)` call from the Heroes Heaven campaign seam moves
+// all three onto `<key>:<id>`; a null scope keeps the bare keys, which is the standalone tracker's
+// behaviour and every pre-scoping save. Lives here (not in its own module) because `setScope` is
+// the combat store's action — layoutStore and GmWidgets import these two helpers from it.
+let _scopeId: string | null = null
+const _scopeListeners = new Set<() => void>()
+/** The scoped form of a localStorage key: `base` while unscoped, `base:<scopeId>` inside a campaign. */
+export function scopeKey(base: string): string {
+  return _scopeId === null ? base : `${base}:${_scopeId}`
+}
+/** Subscribe to scope switches. Returns the unsubscribe, so it doubles as a
+ *  `useSyncExternalStore` subscriber. */
+export function onScopeChange(fn: () => void): () => void {
+  _scopeListeners.add(fn)
+  return () => { _scopeListeners.delete(fn) }
+}
+/** A component-level scoped key that re-renders when the scope switches. */
+export function useScopeKey(base: string): string {
+  return useSyncExternalStore(onScopeChange, () => scopeKey(base), () => base)
+}
+
+function readJson<T>(key: string, fallback: T): T {
+  try { const r = localStorage.getItem(key); return r != null ? (JSON.parse(r) as T) : fallback } catch { return fallback }
+}
+/** Component state persisted under a CAMPAIGN-SCOPED localStorage key. Pass the bare key
+ *  (`gmw:<ref>`); it becomes `gmw:<ref>:<scopeId>` inside a campaign and re-reads when setScope
+ *  switches. The GM-screen widgets self-persist outside the layout tree, so this is how they get
+ *  scoped; it lives here rather than in its own module so there is one copy, not three. */
+export function useScopedState<T>(baseKey: string, initial: T): [T, Dispatch<SetStateAction<T>>] {
+  const key = useScopeKey(baseKey)
+  const [v, setV] = useState<T>(() => readJson(key, initial))
+  const lastKey = useRef(key)
+  useEffect(() => {
+    // A key change means the campaign switched: adopt the incoming campaign's value instead of
+    // writing the outgoing one over it.
+    if (lastKey.current !== key) { lastKey.current = key; setV(readJson(key, initial)); return }
+    try { localStorage.setItem(key, JSON.stringify(v)) } catch { /* quota / private mode */ }
+    // `initial` is a fresh literal on nearly every caller's render — deliberately not a dep.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, v])
+  return [v, setV]
+}
+
 interface PersistedCombat {
   combatants: Combatant[]
   round: number
@@ -203,7 +371,7 @@ function combatSignature(combatants: Combatant[]): string {
 
 function loadPersistedCombat(): PersistedCombat | null {
   try {
-    const raw = localStorage.getItem(COMBAT_STATE_KEY)
+    const raw = localStorage.getItem(scopeKey(COMBAT_STATE_KEY))
     if (!raw) return null
     const parsed = JSON.parse(raw) as PersistedCombat
     if (!Array.isArray(parsed.combatants)) return null
@@ -225,7 +393,9 @@ let _pendingSnap: (() => PersistedCombat) | null = null
 function flushPersist() {
   if (_persistTimer) { clearTimeout(_persistTimer); _persistTimer = null }
   if (!_pendingSnap) return
-  try { localStorage.setItem(COMBAT_STATE_KEY, JSON.stringify(_pendingSnap())) } catch { /* quota */ }
+  // scopeKey() is read HERE, at write time: setScope flushes before it swaps the scope, so the
+  // outgoing campaign's board always lands under its own key (never lose a snapshot).
+  try { localStorage.setItem(scopeKey(COMBAT_STATE_KEY), JSON.stringify(_pendingSnap())) } catch { /* quota */ }
   _pendingSnap = null
 }
 function schedulePersist(snap: () => PersistedCombat) {
@@ -371,6 +541,8 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         conditions: [],
         resourceUses: undefined,
         isDefeated: false,
+        isDelayed: false,
+        countedThisRound: false,
       }
       s.combatants.splice(idx + 1, 0, copy)
       // Keep the active-turn pointer on the same combatant.
@@ -405,16 +577,106 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
     })
   },
 
+  removeDefeated() {
+    set(s => {
+      const doomed = new Set(s.combatants.filter(c => c.isDefeated && !c.isPC).map(c => c.id))
+      if (!doomed.size) return
+      record(s)
+      const activeId = s.combatants[s.activeIndex]?.id
+      // Where the active pointer lands if its own combatant is one of the ones going: the survivor
+      // that now occupies the same place in the order (count survivors ahead of it BEFORE the cut).
+      const survivorsBefore = s.combatants.slice(0, s.activeIndex).filter(c => !doomed.has(c.id)).length
+      s.combatants = s.combatants.filter(c => !doomed.has(c.id))
+      if (s.selectedId && doomed.has(s.selectedId)) s.selectedId = null
+      const stillThere = activeId ? s.combatants.findIndex(c => c.id === activeId) : -1
+      s.activeIndex = stillThere >= 0 ? stillThere : Math.min(survivorsBefore, Math.max(0, s.combatants.length - 1))
+    })
+  },
+
+  delayCombatant(id) {
+    // Two undo steps when you delay the creature whose turn it is (one for leaving the order, one
+    // for the turn advance) — nextTurn owns the end-of-turn ticks and the timer, so it runs as
+    // itself rather than being inlined here.
+    const st = get()
+    const wasActive = st.combatants[st.activeIndex]?.id === id
+    let moved = false
+    set(s => {
+      const c = s.combatants.find(x => x.id === id)
+      if (!c || c.isDelayed) return
+      record(s)
+      c.isDelayed = true
+      moved = true
+    })
+    if (moved && wasActive && get().inCombat) get().nextTurn()
+  },
+
+  returnFromDelay(id) {
+    set(s => {
+      const i = s.combatants.findIndex(c => c.id === id)
+      if (i < 0 || !s.combatants[i].isDelayed) return
+      record(s)
+      const [c] = s.combatants.splice(i, 1)
+      c.isDelayed = false
+      // Removing it from earlier in the array pulls the active pointer down with it.
+      const active = i < s.activeIndex ? s.activeIndex - 1 : s.activeIndex
+      // You return on the initiative count of the turn you came back after — an exact tie, so the
+      // array position is the only thing saying you re-entered BEHIND it (and behind anyone else
+      // who already returned onto that count). initSort keeps mid-combat ties as they lie for
+      // exactly that reason — see `settled` there.
+      c.initiative = s.combatants[active]?.initiative ?? c.initiative
+      s.combatants.splice(active + 1, 0, c)
+      s.activeIndex = active
+    })
+  },
+
+  setScope(scopeId) {
+    if (scopeId === _scopeId) return
+    flushPersist()          // the outgoing campaign's board, under the outgoing key
+    _scopeId = scopeId
+    const p = loadPersistedCombat()
+    _cid = p?.cidCounter ?? 0
+    _condId = p?.condCounter ?? 0
+    _undoStack.length = 0
+    _redoStack.length = 0
+    set(s => {
+      s.combatants = p?.combatants ?? []
+      s.round = p?.round ?? 1
+      s.activeIndex = p?.activeIndex ?? 0
+      s.selectedId = p?.selectedId ?? null
+      s.inCombat = p?.inCombat ?? false
+      s.savedSignature = p?.savedSignature ?? null
+      s.turns = p?.turns ?? []
+      s.turnTimer = rehydrateTimer(p?.turnTimer)
+      s.diceResults = []
+      s.canUndo = false
+      s.canRedo = false
+    })
+    // The GM layout store and the GM widgets re-key off the same switch.
+    for (const fn of _scopeListeners) fn()
+  },
+
   setInitiative(id, v) {
     set(s => {
       const c = s.combatants.find(c => c.id === id)
       if (!c) return
       invalidateRedo(s)
+      // A combatant with no initiative yet was never PLACED — reinforcements are just pushed on
+      // the end of the array, so its position says nothing and the settled sort would strand it
+      // behind a PC it ties. Place it by the fresh-order rule instead (adversary first on a tie
+      // with a PC, Player Core "Initiative"); everyone already on the board keeps their spot.
+      const wasUnplaced = c.initiative === null
       c.initiative = v
       // Mid-combat: re-sort immediately and keep activeIndex pointing to the same combatant
       if (s.inCombat && v !== null) {
         const activeId = s.combatants[s.activeIndex]?.id
-        s.combatants.sort(initSort)
+        if (wasUnplaced) {
+          const cmp = initSort(false)
+          s.combatants.splice(s.combatants.findIndex(x => x.id === id), 1)
+          const at = s.combatants.findIndex(x => cmp(c, x) < 0)
+          s.combatants.splice(at < 0 ? s.combatants.length : at, 0, c)
+        } else {
+          s.combatants.sort(initSort(true))   // mid-combat: ties stay as the board has them
+        }
         if (activeId !== undefined) {
           const newIdx = s.combatants.findIndex(c => c.id === activeId)
           if (newIdx >= 0) s.activeIndex = newIdx
@@ -424,7 +686,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   },
 
   sortByInitiative() {
-    set(s => { s.combatants.sort(initSort) })
+    set(s => { s.combatants.sort(initSort(s.inCombat)) })
   },
 
   rollMonsterInitiative() {
@@ -442,11 +704,16 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
 
   startCombat() {
     set(s => {
-      s.combatants.sort(initSort)
+      // Delay is a within-combat position, so a fresh fight starts with everyone in the order —
+      // cleared BEFORE the sort, so nothing last fight left behind can reach it.
+      for (const c of s.combatants) { c.isDelayed = false; c.countedThisRound = false }
+      // A fresh fight settles its own order: the monster-before-PC tie rule applies here and
+      // nowhere else (initSort's `settled`).
+      s.combatants.sort(initSort(false))
       s.inCombat = true; s.round = 1
       // First active = first combatant that's either alive or a PC (downed PCs
       // still take turns; only defeated NPCs/monsters are skipped).
-      s.activeIndex = s.combatants.findIndex(c => !c.isDefeated || c.isPC)
+      s.activeIndex = s.combatants.findIndex(c => !skipsTurn(c))
       if (s.activeIndex < 0) s.activeIndex = 0
       // The first creature's turn begins now — consume any start-of-turn
       // conditions (Stunned) it walked into combat with.
@@ -489,8 +756,12 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
             if (meta?.autoDecrement && !meta.tickAtStart && !c.isPermanent && c.value !== undefined && c.value > 0) {
               return { ...c, value: Math.max(0, c.value - (meta.decrementBy ?? 1)) }
             }
-            // Normal timed conditions tick duration
-            if (!c.isPermanent && c.duration !== undefined) {
+            // Timed conditions with NO source ON THE BOARD tick at the end of the affected
+            // creature's turn — the "until the end of the target's next turn" family. A condition
+            // whose creator is still here ticks on THAT creature's turn instead
+            // (tickSourceDurations, below); one whose creator has left falls back to this clock
+            // rather than freezing (hasSource).
+            if (!c.isPermanent && c.duration !== undefined && !hasSource(s, c)) {
               return { ...c, duration: c.duration - 1 }
             }
             return c
@@ -498,7 +769,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
           .filter(c => {
             const meta = CONDITION_META[c.name.toLowerCase()]
             if (meta?.autoDecrement && !meta.tickAtStart && !c.isPermanent && (c.value ?? 1) <= 0) return false
-            if (!c.isPermanent && c.duration !== undefined && c.duration <= 0) return false
+            if (!c.isPermanent && !hasSource(s, c) && c.duration !== undefined && c.duration <= 0) return false
             return true
           })
         // Refill per-round / per-turn limited-use abilities — they become
@@ -509,23 +780,41 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
           }
         }
       }
-      // Advance, skipping defeated NPCs/monsters. Defeated PCs still take
+      // Advance, skipping defeated NPCs/monsters and anyone who Delayed. Defeated PCs still take
       // their turn — a downed player can spend actions, recover, etc.
       const len = s.combatants.length
       let next = (s.activeIndex + 1) % len
+      // Every initiative count the advance passes, landing one included: a skipped creature still
+      // has a turn on the count, so effects IT created keep running down (Duration, above).
+      const counts = new Set<string>()
       // Bump the round exactly ONCE if the advance crosses back past the top of the order — whether
       // that happens on the first step OR while skipping a run of defeated NPCs. (Two separate bump
       // sites previously double-counted the round when the entire order was defeated NPCs.)
       let wrapped = next === 0
       let safety = 0
-      while (s.combatants[next]?.isDefeated && !s.combatants[next]?.isPC && safety < len) {
+      while (skipsTurn(s.combatants[next]) && safety < len) {
+        // A DEFEATED creature's initiative count still comes up — it just can't act — so effects it
+        // created keep running down. A DELAYED one gave its count up: its turn happens later, and
+        // its effects tick then. Crediting the skip too would tick a delayed source's effect twice
+        // in the round it returns (a 3-round effect ending after 2).
+        // Consequence, deliberate: a source that Delays and NEVER returns freezes its own effects.
+        // It is still on the board, so hasSource() keeps the targets off the turn-end clock too,
+        // and neither clock runs while it stays delayed. The tracker doesn't model "Delay ends at
+        // the end of the round" (Player Core p. 421), so the GM leaving a creature delayed for ever
+        // is the GM holding its turn open — un-delay it (or remove it) and the clock resumes.
+        const skipped = s.combatants[next]
+        if (skipped && !skipped.isDelayed) creditCount(skipped, counts)
         const stepped = (next + 1) % len
         if (stepped === 0) wrapped = true
         next = stepped
         safety++
       }
-      if (wrapped) s.round += 1
+      // A new round gives everyone their count back — including anyone who Delayed across the wrap.
+      if (wrapped) { s.round += 1; for (const c of s.combatants) c.countedThisRound = false }
       s.activeIndex = next
+      creditCount(s.combatants[next], counts)
+      // Round durations tick at the START of their SOURCE's turn (Player Core p. 426).
+      tickSourceDurations(s, counts)
       // Start-of-turn conditions (Stunned) are consumed as the new creature's
       // turn begins.
       tickConditionsAtStart(s.combatants[s.activeIndex])
@@ -579,8 +868,9 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       if (c.currentHP > 0) {
         c.isDefeated = false
         // Healed back above 0 → no longer knocked out. Mirror setDefeated(false): drop the Unconscious
-        // condition applyPCDefeat added, so a revived PC doesn't keep its -4 Perception/Reflex + off-guard.
-        if (c.isPC) c.conditions = c.conditions.filter(x => x.name.toLowerCase() !== 'unconscious')
+        // and Dying conditions applyPCDefeat added (and take the Wounded bump), so a revived PC
+        // doesn't keep its -4 Perception/Reflex + off-guard.
+        if (c.isPC) reviveConditions(c)
       }
     })
     syncPcHp(get().combatants.find(c => c.id === id))
@@ -599,10 +889,8 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         applyPCDefeat(s, id)
       } else {
         c.isDefeated = val
-        // Restoring a PC: remove the Unconscious condition
-        if (!val && c.isPC) {
-          c.conditions = c.conditions.filter(x => x.name.toLowerCase() !== 'unconscious')
-        }
+        // Restoring a PC: remove Unconscious + Dying (and take the Wounded bump).
+        if (!val && c.isPC) reviveConditions(c)
       }
     })
     syncPcHp(get().combatants.find(c => c.id === id))
@@ -799,6 +1087,9 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
     const saved = getEncStore()[name]
     if (!saved) return
     set(s => {
+      // Loading replaces the whole board — record it so Ctrl+Z puts the previous fight back
+      // (the way clearAllCombatants does).
+      record(s)
       s.combatants = saved.combatants.map(sc => {
         const creature = sc.creature ?? null
         const hp = creature?.defenses.hp ?? sc.maxHP
@@ -831,7 +1122,8 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   resetCombat() {
     // Keep recorded turns so the GM can still review / Save to Averages after
     // clearing the board; only the live running timer stops.
-    set(s => { s.combatants = []; s.round = 1; s.activeIndex = 0; s.selectedId = null; s.inCombat = false; s.diceResults = []; s.turnTimer = null; s.savedSignature = null })
+    // Recorded so Ctrl+Z brings the wiped board back (same as clearAllCombatants / loadEncounter).
+    set(s => { record(s); s.combatants = []; s.round = 1; s.activeIndex = 0; s.selectedId = null; s.inCombat = false; s.diceResults = []; s.turnTimer = null; s.savedSignature = null })
   },
 
   // ── Turn timer actions ──
@@ -959,16 +1251,27 @@ useCombatStore.subscribe((s) => {
   }))
 })
 
-// Sort: highest initiative first; on tie, monsters (non-PC with creature) before PCs
-function initSort(a: Combatant, b: Combatant): number {
-  if (a.initiative === null && b.initiative === null) return 0
-  if (a.initiative === null) return 1
-  if (b.initiative === null) return -1
-  if (a.initiative !== b.initiative) return b.initiative - a.initiative
-  // Tie: monster beats PC
-  const aIsMonster = !a.isPC && !!a.creature
-  const bIsMonster = !b.isPC && !!b.creature
-  if (aIsMonster && !bIsMonster) return -1
-  if (!aIsMonster && bIsMonster) return 1
-  return 0
+/**
+ * Sort: highest initiative first; on tie, monsters (non-PC with creature) before PCs.
+ *
+ * `settled` = the board is already in an order somebody arranged, i.e. mid-combat. The
+ * monster-before-PC tie rule only settles a FRESH order; once the fight is running the array
+ * position IS the order — a creature back from Delay re-entered behind the one whose count it
+ * returned on, possibly behind others who returned onto that same count earlier. So mid-combat a
+ * tie compares equal and Array#sort (stable) leaves the pair where it lies. Re-applying the tie
+ * rule instead would silently re-shuffle creatures nobody touched, on every initiative edit.
+ */
+function initSort(settled: boolean) {
+  return (a: Combatant, b: Combatant): number => {
+    if (a.initiative === null && b.initiative === null) return 0
+    if (a.initiative === null) return 1
+    if (b.initiative === null) return -1
+    if (a.initiative !== b.initiative) return b.initiative - a.initiative
+    if (settled) return 0
+    const aIsMonster = !a.isPC && !!a.creature
+    const bIsMonster = !b.isPC && !!b.creature
+    if (aIsMonster && !bIsMonster) return -1
+    if (!aIsMonster && bIsMonster) return 1
+    return 0
+  }
 }

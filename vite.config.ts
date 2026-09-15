@@ -201,6 +201,19 @@ export default defineConfig({
               cacheableResponse: { statuses: [0, 200] },
             },
           },
+          {
+            // The TRACKER's data (/data/*.json plus the per-book bestiary files). Without this an
+            // installed web app at the table had the character sheet offline and an empty bestiary.
+            // StaleWhileRevalidate rather than CacheFirst: these files are rebuilt far more often
+            // than core.json and are served from cache immediately either way.
+            urlPattern: ({ url }) => url.pathname.startsWith('/data/'),
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'heroes-heaven-tracker-data',
+              expiration: { maxEntries: 250 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
         ],
       },
       devOptions: { enabled: false },

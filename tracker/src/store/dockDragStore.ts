@@ -8,7 +8,7 @@ import { useWindowStore } from './windowStore'
 const layoutFor = (scope?: string) => (scope === 'gm' ? useGmLayoutStore : useLayoutStore)
 
 // ── Popup dragging — two distinct modes (mouse-driven; HTML5 DnD is unreliable
-//    from position:fixed windows in the frameless Electron shell) ─────────────
+//    from position:fixed windows in a browser/Tauri webview) ─────────────────
 //
 //   ⠿ handle  →  beginDockDrag  →  DOCK mode: the whole window/block goes into
 //                the tiling layout. Pane blocks HIGHLIGHT as drop targets.

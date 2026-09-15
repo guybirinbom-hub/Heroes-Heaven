@@ -1,6 +1,7 @@
 import type { Creature, RawCondition, RawTrait, RawCreature, RawHazard } from '../types/pf2e'
 import { parseCreature, parseHazard } from '../utils/parseCreature'
 import { entriesToText } from '../utils/tags'
+import { searchMatches } from '../utils/searchRank'
 import { MONSTER_PARTS_RULES } from './monsterPartsRules'
 
 const BASE = '/data'
@@ -13,7 +14,6 @@ let _rituals: Map<string, RitualInfo> | null = null
 let _actions: Map<string, string> | null = null
 let _skills: Map<string, string> | null = null
 let _equipment: Map<string, EquipmentInfo> | null = null
-let _images: Map<string, string> | null = null
 const _creatureCache = new Map<string, Creature>()
 const _fileCache = new Map<string, object>()
 
@@ -148,7 +148,9 @@ export async function loadRituals(): Promise<Map<string, RitualInfo>> {
   return _rituals
 }
 
+let _abilities: Map<string, string> | null = null
 export async function loadAbilitiesGlossary(): Promise<Map<string, string>> {
+  if (_abilities) return _abilities
   try {
     const data = await fetchJSON<{ ability: Array<{ name: string; entries?: (string|object)[] }> }>('abilities.json')
     const map = new Map<string, string>()
@@ -158,6 +160,7 @@ export async function loadAbilitiesGlossary(): Promise<Map<string, string>> {
         if (!map.has(key)) map.set(key, entriesToText(a.entries))
       }
     }
+    _abilities = map
     return map
   } catch { return new Map() }
 }
@@ -183,6 +186,10 @@ let _actionTraits: Map<string, string[]> | null = null
 export async function loadActionTraits(): Promise<Map<string, string[]>> {
   if (_actionTraits) return _actionTraits
   try {
+    // Wait for loadActions first. `fetchJSON`'s cache only helps a caller that arrives AFTER the
+    // response; started side by side in the same Promise.all, both missed it and actions.json (3.4 MB)
+    // went over the wire twice on every cold load.
+    await loadActions()
     const data = await fetchJSON<{ action: Array<{ name: string; traits?: string[] }> }>('actions.json')
     _actionTraits = new Map()
     for (const a of data.action ?? []) {
@@ -268,34 +275,39 @@ export async function loadRules(): Promise<Map<string, RuleEntry>> {
   return _rules
 }
 
-export async function loadImages(): Promise<Map<string, string>> {
-  if (_images) return _images
-  try {
-    const data = await fetchJSON<Record<string, string>>('images.json')
-    _images = new Map(Object.entries(data))
-  } catch { _images = new Map() }
-  return _images
-}
+/* `loadImages` / public/data/images.json are GONE (2026-09-15). The file was 84 KB of 1,050 creature
+ * names mapped onto FIVE distinct URLs — every one an Archives sidebar icon
+ * (https://2e.aonprd.com/images/Icons/Sidebar_*.png), not a token — and both app CSPs allow images
+ * only from 'self', data: and blob:, so not one of them could ever have loaded. A creature's `image`
+ * is still real: it is the base64 data URL a user uploads via CombatantDetail, stored on the custom
+ * creature. Nothing replaced this lookup because there was nothing to replace. */
 
+/**
+ * The bestiary PRE-FILTER. MonsterSearch calls this with max 5000 and ranks only what comes back, so
+ * anything this drops is invisible no matter how good the ranking is — and a bare
+ * `name.includes(query)` drops every multi-word query whose words are in a different order than the
+ * creature's name ("rat giant", or a stray double space, returned 0 rows for Giant Rat).
+ *
+ * `searchMatches` is the same `.includes` for a single word and "every word appears somewhere" for
+ * several, so nothing that matched before stops matching. Imported from the TRACKER's copy of
+ * searchRank (a sync test pins it byte-identical to src/data/searchRank.ts) — never from ../../src,
+ * which tsconfig deliberately keeps out of reach.
+ */
 export async function searchCreatures(query: string, max = 60): Promise<IndexEntry[]> {
   const idx = await loadIndex()
   if (!query.trim()) return idx.slice(0, max)
-  const q = query.toLowerCase()
-  return idx.filter(e => e.name.toLowerCase().includes(q)).slice(0, max)
+  return idx.filter(e => searchMatches(query, e.name)).slice(0, max)
 }
 
 export async function loadCreature(entry: IndexEntry): Promise<Creature> {
   const key = `${entry.file}::${entry.name}`
   if (_creatureCache.has(key)) return _creatureCache.get(key)!
 
-  const images = await loadImages()
-
   if (entry.isHazard) {
     const data = await fetchJSON<{ hazard: RawHazard[] }>('hazards.json')
     const raw = data.hazard.find(h => h.name === entry.name)
     if (!raw) throw new Error(`Hazard "${entry.name}" not found`)
     const c = parseHazard(raw)
-    if (!c.image) c.image = images.get(c.name.toLowerCase())
     _creatureCache.set(key, c)
     return c
   }
@@ -304,7 +316,6 @@ export async function loadCreature(entry: IndexEntry): Promise<Creature> {
   const raw = data.creature.find(c => c.name === entry.name)
   if (!raw) throw new Error(`Creature "${entry.name}" not found`)
   const c = parseCreature(raw, entry.file)
-  if (!c.image) c.image = images.get(c.name.toLowerCase())
   _creatureCache.set(key, c)
   return c
 }

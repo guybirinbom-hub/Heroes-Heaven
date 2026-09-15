@@ -73,15 +73,24 @@ export async function kickFromParty(campaignId: string, memberOwnerId: string): 
   return { ok: true, value: null };
 }
 
-/** The party for a campaign — small summaries for the cards. Empty on any error. */
-export async function fetchParty(campaignId: string): Promise<PartyMember[]> {
+/**
+ * The party for a campaign — small summaries for the cards.
+ *
+ * `null` means THE READ FAILED (offline, a Supabase blip, a missing table), which is a different
+ * answer from "nobody has shared a character yet". Swallowing the failure into `[]` made the two
+ * indistinguishable, and a caller that mirrors the list — the tracker's party bridge — then pruned
+ * every real member on one bad response, taking the GM's per-player notes and turn history with it.
+ * Adversarially confirmed. With no cloud configured at all there is genuinely no server party, so
+ * that stays `[]`.
+ */
+export async function fetchParty(campaignId: string): Promise<PartyMember[] | null> {
   if (!supabase) return [];
   const { data, error } = await supabase
     .from('campaign_characters')
     .select('owner_id,char_id,name,summary')
     .eq('campaign_id', campaignId)
     .order('name');
-  if (error || !data) return [];
+  if (error || !data) return null;
   return data.map((r) => ({
     ownerId: r.owner_id as string,
     charId: r.char_id as string,
@@ -243,7 +252,7 @@ export function subscribeParty(campaignId: string, onChange: () => void): () => 
       { event: '*', schema: 'public', table: 'campaign_characters', filter: `campaign_id=eq.${campaignId}` },
       () => onChange(),
     )
-    .subscribe();
+    .subscribe((status) => { if (status === 'SUBSCRIBED') onChange(); }); // Realtime replays nothing missed while disconnected, so re-pull on every successful (re)join — this is the only retry a party read that failed (offline, a blip) ever gets.
   return () => {
     void client.removeChannel(channel);
   };

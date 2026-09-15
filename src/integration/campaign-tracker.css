@@ -735,6 +735,17 @@
   .tracker-tool-label {
     display: none;
   }
+  /*
+   * Tablets. Dropping the labels buys ~300px, and on a long campaign name that still isn't enough:
+   * .chrome is `flex-wrap: nowrap` with no overflow strategy, so the last tools simply leave the
+   * screen. Letting THIS page's chrome wrap puts them on a second row instead of off the edge.
+   * Scoped to .cmp-page — every other page's titlebar is Heroes Heaven's and stays one row.
+   * (Phones don't reach here at all: the tracker isn't rendered at ≤720px.)
+   */
+  .cmp-page > .chrome {
+    flex-wrap: wrap;
+    height: auto;
+  }
 }
 
 /* Phones: the rail can't sit beside the dashboard. */

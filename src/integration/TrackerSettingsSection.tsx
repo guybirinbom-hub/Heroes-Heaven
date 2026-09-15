@@ -1,4 +1,3 @@
-/// <reference path="../../tracker/src/types/electron.d.ts" />
 import { useState } from 'react';
 import {
   DisplaySection,

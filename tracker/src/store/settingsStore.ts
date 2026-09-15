@@ -488,10 +488,6 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   },
 }))
 
-// Apply on module load so the persisted theme is live before React mounts —
-// otherwise the first paint flashes the default palette and then snaps.
-applyTheme(loadSettings().theme)
-
 // ── Monster Parts tables (Battlezoo) ──────────────────────────────────────
 /**
  * Which of the three Monster Parts variants is in play. The gp a monster yields differs a LOT

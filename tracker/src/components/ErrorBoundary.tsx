@@ -34,8 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    // Surface to the console so the Electron main process (which logs renderer
-    // output) and DevTools both capture it for diagnosis.
+    // Surface to the console so DevTools captures it for diagnosis.
     console.error('ErrorBoundary caught:', error, info.componentStack)
     this.setState({ componentStack: info.componentStack ?? '' })
   }

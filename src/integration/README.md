@@ -16,14 +16,15 @@ detail panel. Nothing else changes.
 
 | HH file | What the integration added | To remove |
 |---|---|---|
-| `src/sheet/CampaignsPage.tsx` | `integration/` imports; `<TrackerTools/>` + the `ti-palette` Customize button in the chrome; the `cmp-body-tracker` class; `<CampaignTracker>` in place of `<CampaignDetail>`; the two `TRACKER_IN_CAMPAIGN`-gated last-campaign-memory blocks; `CampaignForm`'s `localOnly` fallback | Delete the imports and restore `<CampaignDetail>` (which already has its own Settings / Delete / share code); drop `localOnly` and its branches |
+| `src/sheet/CampaignsPage.tsx` | `integration/` imports (`TrackerTools` + `CampaignTracker` are `React.lazy`, each in its own `<Suspense fallback={null}>`, so a player who never opens a campaign doesn't download the tracker); `<TrackerTools/>` + the `ti-palette` Customize button in the chrome; the `cmp-body-tracker` class; `<CampaignTracker>` in place of `<CampaignDetail>` on desktop; the two `TRACKER_IN_CAMPAIGN`-gated last-campaign-memory blocks; `CampaignForm`'s `localOnly` fallback | Delete the imports and restore `<CampaignDetail>` (which already has its own Settings / Delete / share code); drop `localOnly` and its branches |
+| `src/sheet/CampaignsPage.tsx` (phone) | `useIsMobile` → `isPhone`, which hides every GM tool at ≤720px (Create/Edit, the tracker, the tools row, the Customize button) and renders `<CampaignDetail gmTools={false}>` + `<JoinRow/>` instead. NOT part of the seam — it is HH's own player-facing campaigns page | Keep. Only the `TRACKER_IN_CAMPAIGN && !isPhone` terms go with the integration |
 | `src/theme/theme-manager.ts` | `resolveAppearanceVars` — the token-resolution half of `applyResolved`, extracted + exported so a scoped appearance (the tracker's own theme) can be built without writing `<html>` | A pure refactor with no tracker names in it; harmless to keep. To fully revert, inline it back into `applyResolved` |
-| `src/sheet/SettingsPage.tsx` | the `'tracker'` section (id, `ALL_SECTIONS` entry, `renderSection` case) | Delete the three `'tracker'` references |
-| `src/sheet/PartyMembers.tsx` | optional `localMembers?: PartyMember[]` prop; optional `renderExtra?` render-prop (the "Stats shown" card sections) + the `.party-extra` wrapper | Delete both props; use `members`; drop the `extra` slot |
+| `src/sheet/SettingsPage.tsx` | the `'tracker'` section (id, `ALL_SECTIONS` entry, `renderSection` case); `TrackerSettingsSection` is `React.lazy` + `<Suspense>` so opening Settings doesn't pull the tracker's stores in | Delete the three `'tracker'` references and the lazy import |
+| `src/sheet/PartyMembers.tsx` | optional `localMembers?: PartyMember[]` prop; optional `renderExtra?` render-prop (the "Stats shown" card sections) + the `.party-extra` wrapper; optional `onMembers?` callback (every loaded list, so the tracker's party can be built from the server party — this component mounts INSIDE the tracker's party view, which needs that party to exist first) | Delete the three props; use `members`; drop the `extra` slot |
 | `src/sheet/GmEditSheet.tsx` | `forwardRef` + the `GmEditHandle` (`confirmLeave`) so the initiative order can ask before swapping the sheet out | Drop the ref plumbing; inline `confirmLeave` back into `doExit` |
 | `src/sheet/useIsMobile.ts` | `ForceMobileContext` (null default) so a narrow PC pane can put the sheet into its phone layout; `useIsMobile` returns `forced ?? isMobile` | Delete the context + the `forced ??` — with no provider it was already inert |
 | `src/sheet/useEscapeClose.ts` | `triggerBack()` — fires the topmost dismiss handler, so the campaign back arrow can share the dismiss stack (close an open sheet before leaving the campaign) | A generic helper with no tracker names; harmless to keep |
-| `src/App.tsx` | `TEST_CAMPAIGNS_WITHOUT_LOGIN` in the **DEV-only** `devBypass`; `bootToCampaign` + its branch in the post-content-load jump; the `setOnCampaignsPage(mode==='campaigns')` effect — reopen a campaign the app was closed on; the one `combatOwnsUndo()` guard in the Ctrl+Z handler | Delete that term, the `bootToCampaign` state + branch, the marker effect, and the guard |
+| `src/App.tsx` | `TEST_CAMPAIGNS_WITHOUT_LOGIN` in the **DEV-only** `devBypass`; `bootToCampaign` + its branch in the post-content-load jump; the `setOnCampaignsPage(mode==='campaigns')` effect — reopen a campaign the app was closed on; the one `combatOwnsUndo()` guard in the Ctrl+Z handler; `which !== 'campaigns'` on the floating undo/redo pair (Ctrl+Z there undoes the COMBAT, so a character-undo button beside it would do something else) | Delete that term, the `bootToCampaign` state + branch, the marker effect, the guard, and the `which !== 'campaigns'` term |
 
 **Deliberately NOT in that table:** the share code and *Delete campaign* on HH's campaign settings
 page (`CampaignForm`), and their `sheet.css` rules. They moved there when the tracker replaced the
@@ -166,11 +167,18 @@ dev-only and cannot reach a production build or the server.
 
 ## What is connected, and what isn't
 
-**Connected.** The party cards are HH's real `PartyMembers` fed from the local roster
-(`useLocalCampaignMembers`); clicking one opens the real `GmEditSheet`; the initiative order drives
-which character the main pane shows; and the **party level** — which the whole encounter budget is
-rated against — is derived from the characters' real levels instead of the hand-typed number that
-defaulted to 1.
+**Connected.** The party cards are HH's real `PartyMembers`, fed from the **server party**
+(`fetchParty` at mount, then every list `PartyMembers` loads, via `onMembers`) with the local roster
+as the dev-without-login fallback; clicking one opens the real `GmEditSheet`; the initiative order
+drives which character the main pane shows; and the **party level** — which the whole encounter
+budget is rated against — is derived from the characters' real levels instead of the hand-typed
+number that defaulted to 1.
+
+**The sheet is the truth for PCs** (`pcSheetTruth.ts`). A PC row's HP and conditions are READ from
+the player's published sheet (`fetchMemberSheet` + `subscribeMemberSheet` per member), and a
+condition or damage the GM applies to a PC in the tracker is written back to that sheet through
+`pushGmEdit`. Read that file's header before touching either direction: it is where the
+never-overwrite rules live.
 
 **Known gaps.**
 
@@ -184,4 +192,8 @@ defaulted to 1.
 - **Anything server-backed is untested here**, because these test campaigns exist only on this
   device. That includes `GmEditSheet`'s **Update** (it pushes through `gm_character_edits`) and the
   campaign's **Settings & defaults**, which reports "No campaign with that code". Local campaign
-  persistence behind `TEST_CAMPAIGNS_WITHOUT_LOGIN` would close this.
+  persistence behind `TEST_CAMPAIGNS_WITHOUT_LOGIN` would close this. The server path IS covered by
+  `test/bug-tracker-seam.test.tsx`, which runs the whole seam against a mocked party layer with the
+  dev flag OFF — but nothing here has met a real Supabase campaign.
+- **A phone never sees the tracker at all** (see the table above): the GM half of the campaigns page
+  is desktop/web only.

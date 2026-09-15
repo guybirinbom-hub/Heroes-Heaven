@@ -28,12 +28,20 @@ const GameDataCtx = createContext<GameData>(EMPTY)
 export function GameDataProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<GameData>(EMPTY)
   useEffect(() => {
-    Promise.all([loadConditions(), loadTraits(), loadSpells(), loadRituals(), loadActions(), loadActionTraits(), loadSkills(), loadAbilitiesGlossary(), loadEquipment(), loadFamilies(), loadCreatureNameIndex(), loadCreatureLinks(), loadRules()])
-      .then(([conditions, traits, spells, rituals, actions, actionTraits, skills, abilitiesGlossary, equipment, families, creatures, creatureLinks, rules]) => {
+    // TWO WAVES, not one. All thirteen loaders in a single Promise.all meant the tracker showed
+    // nothing until ~4 MB of gzipped JSON had landed — and the three files the first screen actually
+    // needs (conditions, traits, the creature name index) are a small fraction of that. The nine
+    // heavy ones (actions.json alone is 3.4 MB) now resolve into a SECOND setData; consumers already
+    // re-render on the context value, so a popup opened in between simply finds its map empty for a
+    // moment, exactly as it did before the first wave landed. Order only — no loader changed.
+    Promise.all([loadConditions(), loadTraits(), loadCreatureNameIndex()])
+      .then(([conditions, traits, creatures]) => setData((d) => ({ ...d, conditions, traits, creatures })))
+      .then(() => Promise.all([loadSpells(), loadRituals(), loadActions(), loadActionTraits(), loadSkills(), loadAbilitiesGlossary(), loadEquipment(), loadFamilies(), loadCreatureLinks(), loadRules()]))
+      .then(([spells, rituals, actions, actionTraits, skills, abilitiesGlossary, equipment, families, creatureLinks, rules]) => {
         // Merge: start with actions, then override/add with abilities (more creature-relevant)
         const merged = new Map(actions)
         for (const [k, v] of abilitiesGlossary) merged.set(k, v)
-        setData({ conditions, traits, spells, rituals, actions: merged, actionTraits, skills, equipment, families, creatures, creatureLinks, rules })
+        setData((d) => ({ ...d, spells, rituals, actions: merged, actionTraits, skills, equipment, families, creatureLinks, rules }))
       })
       // Defense-in-depth: every loader already degrades to an empty map, so this should never fire —
       // but if one ever throws outside its own guard, log it instead of silently leaving ALL data empty.

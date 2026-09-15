@@ -8,6 +8,7 @@ import { cleanSource } from '../utils/sources'
 import { useSourcesStore } from '../store/sourcesStore'
 import { useSettingsStore } from '../store/settingsStore'
 import { MONSTER_PARTS_SOURCE } from '../data/monsterPartsRules'
+import { searchMatches, rankBySearch } from '../utils/searchRank'
 
 // ── Global reference search ("command palette") ─────────────────────────────
 // One box that searches everything the app knows how to show in a popup —
@@ -109,21 +110,11 @@ export function GlobalSearch({ onClose, onPick, title }: {
   }, [data, host, disabledSourceSet, showMonsterParts])
 
   const results = useMemo<Hit[]>(() => {
-    const q = deferredQuery.trim().toLowerCase()
+    const q = deferredQuery.trim()
     if (!q) return []
-    const scored: { hit: Hit; score: number }[] = []
-    for (const it of index) {
-      const i = it.tl.indexOf(q)
-      if (i < 0) continue
-      // exact < prefix < word-start < anywhere
-      const score = it.tl === q ? 0 : i === 0 ? 1 : it.tl[i - 1] === ' ' ? 2 : 3
-      scored.push({ hit: it, score })
-    }
-    scored.sort((a, b) =>
-      a.score - b.score ||
-      a.hit.title.length - b.hit.title.length ||
-      a.hit.title.localeCompare(b.hit.title))
-    return scored.slice(0, 80).map(s => s.hit)
+    const matched = index.filter(it => searchMatches(q, it.title, it.tl))
+    matched.sort((a, b) => a.title.length - b.title.length || a.title.localeCompare(b.title))
+    return rankBySearch(matched, q, it => it.title, it => it.tl).slice(0, 80)
   }, [deferredQuery, index])
 
   useEffect(() => { setActive(0) }, [query])

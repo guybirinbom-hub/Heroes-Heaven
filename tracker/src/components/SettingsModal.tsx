@@ -23,7 +23,7 @@ interface Props { onClose: () => void }
 // ── Section identifiers ──────────────────────────────────────────────────
 // The sidebar drives which body view renders. Add a new SectionId and a
 // matching case in the switch below to grow the settings.
-type SectionId = 'appearance' | 'display' | 'statblock' | 'sources' | 'timer' | 'players' | 'conditions' | 'encounter-tables' | 'danger'
+type SectionId = 'appearance' | 'display' | 'statblock' | 'sources' | 'timer' | 'players' | 'conditions' | 'encounter-tables'
 
 interface SectionDef { id: SectionId; label: string; show: () => boolean }
 
@@ -36,9 +36,6 @@ const SECTIONS: SectionDef[] = [
   { id: 'players',    label: 'Player Characters', show: () => true },
   { id: 'conditions', label: 'Conditions', show: () => true },
   { id: 'encounter-tables', label: 'Encounter Tables', show: () => true },
-  // Uninstall is only available in the desktop build — hide the whole
-  // section in the unreachable browser preview rather than show a dead row.
-  { id: 'danger',     label: 'Danger Zone', show: () => !!window.electronAPI?.appUninstall },
 ]
 
 // ── Encounter Tables — CRUD for random encounter tables ──────────────────
@@ -62,6 +59,10 @@ export function EncounterTablesSection() {
   const upsert = useEncounterTablesStore(s => s.upsert)
   const [editing, setEditing] = useState<{ table?: EncounterTable } | null>(null)
   const [msg, setMsg] = useState('')
+  // Inline replace for the native confirm dialog — HH forbids those. First click
+  // arms this row's id and swaps the icon button for a Yes/No pair; clears on
+  // either choice, and for free when the section unmounts (tab switch / modal close).
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
 
   const exportTable = (t: EncounterTable) => {
     const blob = new Blob([JSON.stringify(t, null, 2)], { type: 'application/json' })
@@ -143,94 +144,24 @@ export function EncounterTablesSection() {
               </div>
               <button className="btn btn-secondary btn-sm" title="Export this table to a JSON file" onClick={() => exportTable(t)}><SaveIcon size={11} /> Export</button>
               <button className="btn btn-secondary btn-sm" onClick={() => setEditing({ table: t })}><PencilIcon size={11} /> Edit</button>
-              <button className="ico-btn" title="Delete table" style={{ width: 28, height: 28, color: 'var(--danger)' }}
-                onClick={() => { if (window.confirm(`Delete "${t.name}"? This can't be undone.`)) remove(t.id) }}><TrashIcon size={13} /></button>
+              {confirmDeleteId === t.id ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <span style={{ fontSize: 10.5, color: 'var(--danger)', whiteSpace: 'nowrap' }}>Really delete?</span>
+                  <button className="btn btn-secondary btn-sm" style={{ padding: '3px 8px', fontSize: 10.5 }}
+                    onClick={() => { remove(t.id); setConfirmDeleteId(null) }}>Yes</button>
+                  <button className="btn btn-secondary btn-sm" style={{ padding: '3px 8px', fontSize: 10.5 }}
+                    onClick={() => setConfirmDeleteId(null)}>No</button>
+                </div>
+              ) : (
+                <button className="ico-btn" title="Delete table" style={{ width: 28, height: 28, color: 'var(--danger)' }}
+                  onClick={() => setConfirmDeleteId(t.id)}><TrashIcon size={13} /></button>
+              )}
             </div>
           ))}
         </div>
       )}
 
       {editing && <EncounterTableEditor table={editing.table} onClose={() => setEditing(null)} />}
-    </div>
-  )
-}
-
-// ── Theme picker — grid of swatches that previews and applies a palette ──
-function UninstallConfirm({ onCancel }: { onCancel: () => void }) {
-  const [typed, setTyped] = useState('')
-  const ready = typed.trim().toUpperCase() === 'DELETE'
-
-  const runUninstall = () => {
-    if (!window.electronAPI?.appUninstall) {
-      alert('Uninstall is only available in the desktop app.')
-      return
-    }
-    void window.electronAPI.appUninstall()
-  }
-
-  return (
-    <div className="modal-overlay" style={{ zIndex: 10000 }}>
-      <div className="modal-box" style={{
-        maxWidth: 460, padding: 0, overflow: 'hidden',
-        maxHeight: '90vh',
-        display: 'flex', flexDirection: 'column',
-      }}>
-        <div style={{
-          padding: '16px 22px',
-          background: 'linear-gradient(180deg, color-mix(in srgb, var(--danger) 18%, transparent), color-mix(in srgb, var(--danger) 6%, transparent))',
-          borderBottom: 'var(--app-bw) solid var(--danger)',
-          flexShrink: 0,
-        }}>
-          <h2 style={{
-            margin: 0, fontFamily: 'var(--font-display)', fontWeight: 600,
-            fontSize: 17, color: 'var(--danger)',
-          }}>Uninstall PF2e Initiative Tracker?</h2>
-        </div>
-        <div style={{ padding: '16px 22px 18px', overflowY: 'auto', flex: 1, minHeight: 0 }}>
-          <p style={{
-            margin: '0 0 12px', fontFamily: 'var(--font-ui)', fontSize: 13, lineHeight: 1.55, color: 'var(--text)',
-          }}>This will permanently remove:</p>
-          <ul style={{
-            margin: '0 0 14px 18px', padding: 0,
-            fontFamily: 'var(--font-ui)', fontSize: 12.5, lineHeight: 1.7,
-            color: 'var(--text-muted)',
-          }}>
-            <li>The application files (everything in the install folder)</li>
-            <li>All saved parties, encounters, and custom stat blocks</li>
-            <li>The current initiative tracker state</li>
-            <li>All settings</li>
-          </ul>
-          <p style={{
-            margin: '0 0 8px', fontFamily: 'var(--font-ui)', fontSize: 12, lineHeight: 1.5, color: 'var(--text-faded)',
-          }}>
-            This cannot be undone. Type <strong style={{ color: 'var(--danger)', fontFamily: 'var(--font-mono)' }}>DELETE</strong> to confirm.
-          </p>
-          <input autoFocus value={typed} onChange={e => setTyped(e.target.value)} placeholder="DELETE"
-            className="input-dark"
-            style={{ width: '100%', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}
-          />
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 16 }}>
-            <button className="btn btn-secondary" onClick={onCancel}>Cancel</button>
-            <button
-              disabled={!ready}
-              onClick={runUninstall}
-              style={{
-                background: ready ? 'var(--danger)' : 'rgba(198,106,90,0.25)',
-                color: ready ? 'var(--text-on-danger)' : 'var(--text-faded)',
-                border: 'var(--app-bw) solid var(--danger)',
-                borderRadius: 'var(--radius-sm)',
-                padding: '6px 14px',
-                fontFamily: 'var(--font-ui)',
-                fontWeight: 600,
-                fontSize: 12.5,
-                cursor: ready ? 'pointer' : 'not-allowed',
-                opacity: ready ? 1 : 0.6,
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-              }}
-            ><TrashIcon size={13} /> Uninstall</button>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
@@ -1066,53 +997,6 @@ export function PlayersSection() {
   )
 }
 
-function DangerSection({ onUninstall }: { onUninstall: () => void }) {
-  return (
-    <div style={{
-      border: 'var(--app-bw) solid var(--danger)',
-      borderRadius: 'var(--radius-sm)',
-      padding: '12px 14px',
-      background: 'color-mix(in srgb, var(--danger) 4%, transparent)',
-      display: 'flex', alignItems: 'center', gap: 14,
-    }}>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{
-          fontFamily: 'var(--font-ui)', fontSize: 13, fontWeight: 600,
-          color: 'var(--text)', marginBottom: 2,
-        }}>Uninstall the app</div>
-        <div style={{
-          fontFamily: 'var(--font-ui)', fontSize: 11.5,
-          color: 'var(--text-muted)', lineHeight: 1.5,
-        }}>
-          Removes the app files, your saved parties and encounters, the current tracker, and all settings. This cannot be undone.
-        </div>
-      </div>
-      <button
-        onClick={onUninstall}
-        style={{
-          flexShrink: 0,
-          background: 'transparent',
-          border: 'var(--app-bw) solid var(--danger)',
-          color: 'var(--danger)',
-          borderRadius: 'var(--radius-sm)',
-          padding: '6px 12px',
-          fontFamily: 'var(--font-ui)', fontWeight: 600, fontSize: 12,
-          cursor: 'pointer',
-          display: 'inline-flex', alignItems: 'center', gap: 6,
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.background = 'var(--danger)'
-          e.currentTarget.style.color = 'var(--text-on-danger)'
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.background = 'transparent'
-          e.currentTarget.style.color = 'var(--danger)'
-        }}
-      ><TrashIcon size={12} /> Uninstall</button>
-    </div>
-  )
-}
-
 // ── Sources (book) toggles ────────────────────────────────────────────────
 // Turn whole books off so their stat blocks, spells, and items vanish from
 // every browse/search/filter surface. Built from the loaded data, grouped and
@@ -1273,7 +1157,6 @@ export function SourcesSection() {
 // ── Main shell — sidebar + body ──────────────────────────────────────────
 export function SettingsModal({ onClose }: Props) {
   const [section, setSection] = useState<SectionId>('appearance')
-  const [showUninstall, setShowUninstall] = useState(false)
 
   const visibleSections = SECTIONS.filter(s => s.show())
   const activeLabel = visibleSections.find(s => s.id === section)?.label ?? 'Settings'
@@ -1319,7 +1202,6 @@ export function SettingsModal({ onClose }: Props) {
           }}>
             {visibleSections.map(s => {
               const active = s.id === section
-              const isDanger = s.id === 'danger'
               return (
                 <button key={s.id}
                   onClick={() => setSection(s.id)}
@@ -1330,9 +1212,7 @@ export function SettingsModal({ onClose }: Props) {
                     border: 'var(--app-bw) solid',
                     borderColor: active ? 'var(--accent-line)' : 'transparent',
                     borderRadius: 'var(--radius-sm)',
-                    color: active
-                      ? (isDanger ? 'var(--danger)' : 'var(--accent)')
-                      : (isDanger ? 'var(--danger)' : 'var(--text)'),
+                    color: active ? 'var(--accent)' : 'var(--text)',
                     fontFamily: 'var(--font-ui)',
                     fontSize: 12.5, fontWeight: active ? 700 : 500,
                     letterSpacing: '0.02em',
@@ -1363,11 +1243,9 @@ export function SettingsModal({ onClose }: Props) {
             {section === 'players'    && <PlayersSection />}
             {section === 'conditions' && <ConditionsSection />}
             {section === 'encounter-tables' && <EncounterTablesSection />}
-            {section === 'danger'     && <DangerSection onUninstall={() => setShowUninstall(true)} />}
           </div>
         </div>
       </div>
-      {showUninstall && <UninstallConfirm onCancel={() => setShowUninstall(false)} />}
     </div>
   )
 }

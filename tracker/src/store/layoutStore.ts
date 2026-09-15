@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { create } from 'zustand'
+import { scopeKey, onScopeChange } from './combatStore'
 import type { WinType } from './windowStore'
 
 // ── Tiled panes (unified stat blocks + popups) ───────────────────────────────
@@ -155,16 +156,21 @@ function bumpIds(n: PaneNode | null): void {
 
 /** Create a layout store. `persistKey` (the GM Screen) restores its pane tree
  *  from localStorage and saves on every change; without it (combat) the layout
- *  is session-only. */
+ *  is session-only. A persisted layout is CAMPAIGN-SCOPED: the real key is
+ *  `scopeKey(persistKey)`, and combatStore's setScope swaps it under us. */
 export function createLayoutStore(opts?: { persistKey?: string }) {
   const persistKey = opts?.persistKey
-  let initialRoot: PaneNode | null = null
-  if (persistKey) {
+  function loadRoot(): PaneNode | null {
+    if (!persistKey) return null
     try {
-      const raw = localStorage.getItem(persistKey)
-      if (raw) { initialRoot = JSON.parse(raw) as PaneNode; bumpIds(initialRoot) }
-    } catch { initialRoot = null }
+      const raw = localStorage.getItem(scopeKey(persistKey))
+      if (!raw) return null
+      const root = JSON.parse(raw) as PaneNode
+      bumpIds(root)
+      return root
+    } catch { return null }
   }
+  const initialRoot: PaneNode | null = loadRoot()
 
   const store = create<LayoutStore>((set, get) => ({
     root: initialRoot,
@@ -287,14 +293,25 @@ export function createLayoutStore(opts?: { persistKey?: string }) {
     },
   }))
 
-  // Persist the pane tree (GM Screen only) when it actually changes.
+  // Persist the pane tree (GM Screen only) when it actually changes. The write is immediate (no
+  // debounce), so the outgoing campaign's tree is already on disk by the time a scope switch lands
+  // — nothing to flush.
   if (persistKey) {
     store.subscribe((s, p) => {
       if (s.root !== p.root) {
-        try { localStorage.setItem(persistKey, JSON.stringify(s.root)) } catch { /* quota */ }
+        try { localStorage.setItem(scopeKey(persistKey), JSON.stringify(s.root)) } catch { /* quota */ }
       }
     })
   }
+  // BOTH layouts re-key on a campaign switch, not just the persisted one: combatant ids restart per
+  // scope (setScope resumes the incoming snapshot's cidCounter), so a combat pane left open on cmb-1
+  // in campaign A would otherwise show campaign B's cmb-1 — same id, different creature, and
+  // reconcile() can't tell (the id IS valid in B). The persisted (GM) tree reloads from the incoming
+  // key; the session-only (combat) tree has nothing to load, so loadRoot() returns null and clears it.
+  onScopeChange(() => {
+    const next = loadRoot()
+    store.setState({ root: next, ...validHover(next, null) })
+  })
 
   return store
 }

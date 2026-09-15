@@ -13,7 +13,6 @@ import { ImageIcon, PencilIcon, XIcon } from './Icons'
 import { NumberInput } from './NumberInput'
 import { useSettingsStore, monsterPartsFor } from '../store/settingsStore'
 import { useCampaignMonsterParts } from '../data/monsterPartsContext'
-import { readThemeTokens } from '../utils/themeTokens'
 import { PcStatsDisplay } from './PcStatsDisplay'
 import { MonsterPartsPopup } from './MonsterPartsPopup'
 
@@ -230,17 +229,7 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
   const openImageWindow = () => {
     const img = combatant.creature?.image
     if (!img) return
-    // Both data URIs and http(s)/file URLs are now routed through the
-    // in-app image viewer (the Electron main process handles each kind).
-    // Fall back to window.open only when the API isn't available (e.g. dev
-    // browser preview without the Electron preload). We also ship a snapshot
-    // of the current theme tokens so the viewer paints in the same palette
-    // as the main app instead of staying on hardcoded Tavern colours.
-    if (window.electronAPI?.openImageWindow) {
-      window.electronAPI.openImageWindow(img, combatant.creature!.name, readThemeTokens())
-    } else {
-      window.open(img, '_blank')
-    }
+    window.open(img, '_blank')
   }
 
   return (

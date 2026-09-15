@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ContentDatabase } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
@@ -9,6 +9,8 @@ import { CharacterSheet } from './CharacterSheet';
 import { GmEditSheet } from './GmEditSheet';
 import { confirmDialog } from './confirm';
 import { useBackHandler } from './useEscapeClose';
+
+const LOAD_ERROR = "Couldn't load the party. Check your connection, or that the campaign SQL has been run.";
 
 interface ViewingState {
   campaignId: string;
@@ -116,12 +118,21 @@ export function PartyMembers({
   campaignId,
   isGm,
   onView,
+  onMembers,
   localMembers,
   renderExtra,
 }: {
   campaignId: string;
   isGm: boolean;
   onView: (m: PartyMember) => void;
+  /**
+   * Every list this component loads, handed to the host — the first fetch and every Realtime refresh.
+   *
+   * The tracker integration builds its combat party from the campaign's members, and it can't read
+   * them out of here: this component only mounts INSIDE the tracker's party view, which needs that
+   * party to exist first. So the host fetches once itself and keeps in step through this.
+   */
+  onMembers?: (list: PartyMember[]) => void;
   /**
    * Extra content for each card body — the tracker integration passes the "Stats shown" sections
    * here (saves, abilities, skills, …) built from the real character. A render prop, not tracker
@@ -146,6 +157,9 @@ export function PartyMembers({
   // `myId` is null both BEFORE the auth check resolves and when genuinely signed out, so track the
   // resolution separately — otherwise the signed-out notice below flashes for a signed-in user.
   const [authChecked, setAuthChecked] = useState(false);
+  // Read through a ref: a host passing an inline arrow must not restart the fetch + subscription.
+  const onMembersRef = useRef(onMembers);
+  onMembersRef.current = onMembers;
 
   useEffect(() => {
     void currentUserId()
@@ -165,13 +179,21 @@ export function PartyMembers({
       fetchParty(campaignId)
         .then((list) => {
           if (cancelled) return;
+          // A FAILED read is not an empty party. Keep the cards already on screen, say what happened,
+          // and above all don't hand the host an empty list: the tracker mirrors this into its own
+          // party store, where an empty list means "everyone left" and prunes them for real.
+          if (!list) {
+            setError(LOAD_ERROR);
+            return;
+          }
           setMembers(list);
+          onMembersRef.current?.(list);
           // Cache the party's SHARED capabilities (Battleforger). The item editor renders
           // synchronously and cannot await the party, so it reads what the last fetch saw.
           rememberPartyCapabilities(campaignId, list.map((m) => m.summary));
         })
         .catch(() => {
-          if (!cancelled) setError("Couldn't load the party. Check your connection, or that the campaign SQL has been run.");
+          if (!cancelled) setError(LOAD_ERROR);
         });
     };
     refresh(true);
