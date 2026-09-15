@@ -34,12 +34,20 @@ function reportResize(el: Element) {
   for (const o of observers) if (o.el === el) o.cb();
 }
 
-/** A .picker whose reported height we control, standing in for jsdom's absent layout. */
+/**
+ * A .picker whose reported height we control, standing in for jsdom's absent layout — as BOTH of the
+ * things a browser reports: `offsetHeight`, which is rounded to whole pixels, and the computed height,
+ * which is not. The gap between them is bug 2026-09-15 (phantom scrollbar): a popup is 261.286px tall
+ * on a 175% display, and pinning the rounded 261px left the flex body a third of a pixel short of its
+ * own content — a scrollbar over nothing. See test/bug-popup-phantom-scrollbar.test.ts.
+ */
+const fakeHeight = new WeakMap<Element, () => string>();
 function makePicker(height: number, ...classes: string[]): HTMLElement {
   const el = document.createElement('div');
   el.className = ['picker', ...classes].join(' ');
   let h = height;
-  Object.defineProperty(el, 'offsetHeight', { get: () => h, configurable: true });
+  Object.defineProperty(el, 'offsetHeight', { get: () => Math.round(h), configurable: true });
+  fakeHeight.set(el, () => `${h}px`);
   (el as HTMLElement & { grow(to: number): void }).grow = (to: number) => {
     h = to;
     reportResize(el);
@@ -51,10 +59,16 @@ const grow = (el: HTMLElement, to: number) => (el as HTMLElement & { grow(to: nu
 let root: Root;
 let host: HTMLElement;
 
+const realGetComputedStyle = window.getComputedStyle.bind(window);
+
 beforeEach(() => {
   vi.useFakeTimers();
   observers.length = 0;
   (globalThis as unknown as { ResizeObserver: unknown }).ResizeObserver = FakeResizeObserver;
+  window.getComputedStyle = ((el: Element, pseudo?: string | null) => {
+    const fake = fakeHeight.get(el);
+    return fake ? ({ height: fake() } as CSSStyleDeclaration) : realGetComputedStyle(el, pseudo);
+  }) as typeof window.getComputedStyle;
   host = document.createElement('div');
   document.body.appendChild(host);
   root = createRoot(host);
@@ -65,6 +79,7 @@ afterEach(() => {
   act(() => root.unmount());
   host.remove();
   document.body.innerHTML = '';
+  window.getComputedStyle = realGetComputedStyle;
   vi.useRealTimers();
 });
 
@@ -103,6 +118,14 @@ describe('PopupSizeLock', () => {
     expect(p.style.height).toBe('');
     act(() => void vi.advanceTimersByTime(400));
     expect(p.style.height).toBe('700px');
+  });
+
+  // bug 2026-09-15: phantom scrollbar
+  it('pins the height the browser actually used, not the rounded offsetHeight', async () => {
+    const p = makePicker(261.286); // a real popup at devicePixelRatio 1.75
+    await open(p);
+    act(() => void vi.advanceTimersByTime(400));
+    expect(p.style.height).toBe('261.286px'); // 261px is a third of a pixel of overflow = a scrollbar
   });
 
   it('stops watching once pinned, so a later expand cannot resize the popup', async () => {

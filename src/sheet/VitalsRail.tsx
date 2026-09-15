@@ -137,6 +137,25 @@ function IwrTerm({
   );
 }
 
+/**
+ * The record behind an extra reaction, so its popup note opens like every other situational line.
+ *
+ * `extraReactions[].from` is the display NAME (build.ts stores the name, not the id), so it has to be
+ * mapped back. A name with no match — a homebrew record that was deleted, say — simply has no opener,
+ * which is what `SituationalNote` already means by leaving `sourceId` off.
+ */
+// ponytail: linear scan of two collections, on the popup's click only; index it if it ever runs per render.
+function reactionSource(
+  content: ContentDatabase,
+  from: string,
+): { sourceId?: string; sourceCollection?: 'feats' | 'classFeatures' } {
+  for (const k of ['feats', 'classFeatures'] as const) {
+    const hit = Object.values((content[k] ?? {}) as Record<string, { id: string; name: string }>).find((r) => r.name === from);
+    if (hit) return { sourceId: hit.id, sourceCollection: k };
+  }
+  return {};
+}
+
 /** The vitals rail that sits to the left of every tab. */
 export function VitalsRail({
   character,
@@ -216,6 +235,8 @@ export function VitalsRail({
   const initiative = deriveInitiative(character, content);
   // The gate for the Initiative row AND the whole content of its popup — see `initiativeInfluences`.
   const initInfluences = initiativeInfluences(character, content);
+  // Everyone has one unrestricted reaction per round; `extraReactions` are the RESTRICTED extras.
+  const reactionsPerRound = 1 + (character.extraReactions ?? []).reduce((n, r) => n + r.count, 0);
   const speeds = deriveSpeeds(character, content);
   // A temporary Speed override (Hasted/Slowed/…) replaces the derived land Speed and is highlighted.
   const speedOverride = character.speedOverride;
@@ -704,22 +725,35 @@ export function VitalsRail({
         {/* Extra RESTRICTED reactions. Every character has one unrestricted reaction per round; 15
             feats grant a second one usable only for a named thing, and nothing tracked reactions at
             all, so all 15 were a sentence on the Feats tab and no number anywhere. */}
-        {/* bug 2026-09-15: rail initiative — the whole sentence used to live INSIDE the right-aligned
-            value, so "2 per round — a reaction from a guardian feat or class feature (including Shield
-            Block) (Reaction Time)" wrapped into a ragged right-aligned block the owner read as
-            right-to-left. The number is the value; the explanation is its own left-aligned line, with
-            the untrimmed wording on the hover. */}
+        {/* bug 2026-09-15: rail reactions — owner: *"i don't want the whole text block there because
+            it's too big … add a Reactions row with a dotted line underneath so that the player will
+            know it's pressable, and that popup will show the full explanation."* So the row is the
+            number and nothing else, and the FULL untrimmed wording lives in the popup, exactly the
+            shape the Initiative row below uses. */}
         {!!character.extraReactions?.length && (
-          <div className="rail-kv rail-kv-note">
+          <div className="rail-kv">
             <span className="kv-label">Reactions</span>
-            <span className="iwr-val">{1 + character.extraReactions.reduce((n, r) => n + r.count, 0)} per round</span>
-            <span
-              className="sh-sub kv-note"
-              title={character.extraReactions.map((r) => `${r.from}: ${r.usableFor}`).join('\n')}
-            >
-              {character.extraReactions
-                .map((r) => `+${r.count} · ${r.usableFor.replace(/^an? reaction (?:from|for) (an? )?/i, '').replace(/\(including ([^)]+)\)/i, 'incl. $1')} — ${r.from}`)
-                .join(' · ')}
+            <span className="iwr-val">
+              <IwrTerm
+                first
+                label={`${reactionsPerRound} per round`}
+                title="What gives you extra reactions?"
+                onOpen={() =>
+                  setDefBreak({
+                    title: 'Reactions',
+                    subtitle: '1 free reaction each round, plus:',
+                    totalText: `${reactionsPerRound} per round`,
+                    // No parts and no timeline: a reaction count is not a calculated modifier, so the
+                    // only thing to say is which record grants the extra and what it may be spent on.
+                    parts: [],
+                    timeline: [],
+                    situational: (character.extraReactions ?? []).map((r) => ({
+                      text: `+${r.count} reaction — usable only for ${r.usableFor} — ${r.from}`,
+                      ...reactionSource(content, r.from),
+                    })),
+                  })
+                }
+              />
             </span>
           </div>
         )}

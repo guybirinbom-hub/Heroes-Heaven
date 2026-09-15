@@ -3460,6 +3460,18 @@ function bookGrantedSpellIds(content: ContentDatabase, cls: ClassDef | undefined
   return out;
 }
 
+/**
+ * Are a STORED natural attack (build.naturalAttacks — a WG import, or a save from before the feat
+ * carried the grant itself) and a feat/ancestry-GRANTED strike the same attack? By name, or by shape:
+ * the owner's lizardfolk carried "Iruxi Fangs" (d8 piercing, brawling) from an older save while Iruxi
+ * Armaments now grants "Fangs" (d8 piercing, brawling) for the same choice, and a name-only match
+ * showed both — two Fangs on the sheet (2026-09-15). Same die, damage type and group is one attack.
+ */
+function sameNaturalAttack(a: { name: string; die?: string; damageType?: string; group?: string }, b: { name: string; die?: string; damageType?: string; group?: string }): boolean {
+  if (a.name.toLowerCase() === b.name.toLowerCase()) return true;
+  return !!a.die && a.die === b.die && !!a.damageType && a.damageType === b.damageType && (a.group ?? 'brawling') === (b.group ?? 'brawling');
+}
+
 export function buildCharacter(build: BuildState, content: ContentDatabase): Character {
   const { scores: abilities, partial: partialBoosts } = computeAbilitiesDetailed(build, content);
   // Override: force-set raw ability scores (no boost limits). Mutating this object in place flows to
@@ -7868,7 +7880,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // rows can be selected by the pick the player already made.
     build.featChoices,
   );
-  const naturalAttacks = [...(build.naturalAttacks ?? []), ...grantedNaturals];
+  // A stored attack that a grant re-states (by name or by shape) yields to the grant: the grant is the
+  // live source and carries the feat's riders; the stored copy is an older save or an import.
+  const naturalAttacks = [
+    ...(build.naturalAttacks ?? []).filter((na) => !grantedNaturals.some((g) => sameNaturalAttack(na, g))),
+    ...grantedNaturals,
+  ];
 
   // Caster archetype (multiclass into spellcasting): a caster Dedication + the Basic/Expert/Master
   // Spellcasting feats grant a separate prepared pool. When the CLASS isn't a slot caster the pool
@@ -9500,17 +9517,15 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   if (c.naturalAttacks?.length) {
     // Keep only user/WG-imported attacks in the build — feat/feature-granted ones are re-derived on
     // every build, so subtract them here to stay idempotent (no double-count on round-trip).
-    const grantedNames = new Set(
-      // Must subtract exactly what the build ADDS, subclass included, or a subclass-granted Strike
-      // round-trips into a manually-added one and then appears twice.
-      // batch 035: animal-instinct#no-reader — the CLASS-FEATURE answers too (`Character.featureChoices`
-      // carries the same `feature:<id>` keys the build stores), or an Animal barbarian's Jaws is added
-      // by the build, not subtracted here, and comes back as a second manual attack on every round-trip.
-      collectGrantedNaturals(content, c.feats ?? [], c.heritageId, c.ancestryId, c.classId, c.level, new Set(), [], c.subclassId, undefined, undefined, c.featureChoices).map((g) =>
-        g.name.toLowerCase(),
-      ),
-    );
-    const kept = c.naturalAttacks.filter((na) => !grantedNames.has(na.name.toLowerCase())).map((na) => ({ ...na }));
+    // Must subtract exactly what the build ADDS, subclass included, or a subclass-granted Strike
+    // round-trips into a manually-added one and then appears twice.
+    // batch 035: animal-instinct#no-reader — the CLASS-FEATURE answers too (`Character.featureChoices`
+    // carries the same `feature:<id>` keys the build stores), or an Animal barbarian's Jaws is added
+    // by the build, not subtracted here, and comes back as a second manual attack on every round-trip.
+    // Matched by name OR shape (sameNaturalAttack), so an older save's "Iruxi Fangs" is recognised as
+    // the "Fangs" the feat now grants and does not come back as a second manual attack.
+    const granted = collectGrantedNaturals(content, c.feats ?? [], c.heritageId, c.ancestryId, c.classId, c.level, new Set(), [], c.subclassId, undefined, undefined, c.featureChoices);
+    const kept = c.naturalAttacks.filter((na) => !granted.some((g) => sameNaturalAttack(na, g))).map((na) => ({ ...na }));
     if (kept.length) b.naturalAttacks = kept;
   }
   if (c.classId2 !== undefined) b.classId2 = c.classId2;

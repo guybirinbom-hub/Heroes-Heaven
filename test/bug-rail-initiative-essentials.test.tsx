@@ -18,8 +18,11 @@ import type { Character } from '../src/rules/types';
  *    number unconditionally, which told the player nothing. It now appears ONLY when something
  *    actually changes initiative, and its dotted value opens the list of those things and nothing
  *    else (`initiativeInfluences`).
- *  • The Reactions row wrapped a whole sentence into a right-aligned value box, which reads as
- *    right-to-left. The number is the value; the explanation is its own left-aligned line.
+ *  • *"i don't want the whole text block there because it's too big, but if a character does have
+ *    something that affects the amount of reactions, add a Reactions row with a dotted line
+ *    underneath so that the player will know it's pressable, and that popup will show the full
+ *    explanation."* — so the row is the number on a pressable term and nothing else, and the
+ *    untrimmed wording lives in the popup.
  *
  * MUTATION PROOF (each applied once, then restored):
  *  • Relaxing the row's gate to `initInfluences.length >= 0` fails "a plain fighter has nothing that
@@ -32,6 +35,10 @@ import type { Character } from '../src/rules/types';
  *  • Taking Perception back OUT of Essentials fails four legs, "Perception sits directly above
  *    Senses" among them — `AssertionError: expected [ 'Hero points', 'Speed', 'Senses' ] to deeply
  *    equal [ 'Hero points', 'Speed', …(2) ]`.
+ *  • Reverting the Reactions value from `IwrTerm` to a plain span that still opens the popup fails
+ *    the Reactions leg — `AssertionError: the value has to carry the dotted affordance: expected null
+ *    to be truthy`. The popup half of the leg keeps passing, which is the point: pressability is
+ *    asserted on its own, not smuggled in through the click.
  */
 const db = content();
 const noop = (() => undefined) as never;
@@ -160,24 +167,40 @@ describe('an Initiative row only when something affects initiative', () => {
 });
 
 describe('the Reactions row', () => {
-  // bug 2026-09-15: rail initiative
-  it('a guardian with Reaction Time reads "2 per round", with the reason on its own line', () => {
+  // bug 2026-09-15: rail reactions
+  it('a guardian with Reaction Time reads "2 per round" on a pressable term, the wording in its popup', () => {
     const guardian = build('guardian', 7);
     expect(guardian.extraReactions?.length, 'fixture: level 7 is where Reaction Time lands').toBeTruthy();
     const r = rail(guardian);
     const row = [...card(r.host, 'Essentials')!.querySelectorAll<HTMLElement>('.rail-kv')].find(
       (e) => (e.querySelector('.kv-label')?.textContent ?? '').trim() === 'Reactions',
     )!;
-    // The VALUE is the number and nothing else — the sentence used to live inside it, right-aligned,
-    // which is what the owner read as right-to-left.
+    // *"i don't want the whole text block there because it's too big"* — the row is the label and the
+    // number, with no explanation line left on it at all.
     expect(row.querySelector('.iwr-val')?.textContent?.trim()).toBe('2 per round');
-    const note = row.querySelector<HTMLElement>('.kv-note');
-    expect(note, 'the explanation is its own line').toBeTruthy();
-    expect(note!.closest('.iwr-val'), 'and it is NOT inside the right-aligned value').toBeNull();
-    // Trimmed of the "a reaction from …" boilerplate the row's own label already says.
-    expect(note!.textContent).toBe('+1 · guardian feat or class feature incl. Shield Block — Reaction Time');
-    // Trimmed for the row; the untouched printed wording stays reachable on the hover.
-    expect(note!.getAttribute('title')).toContain('a reaction from a guardian feat or class feature');
+    expect(row.querySelector('.kv-note'), 'the trimmed explanation line is gone from the row').toBeNull();
+    expect(row.textContent?.trim(), 'the whole row is the label and the number').toBe('Reactions2 per round');
+    // *"a dotted line underneath so that the player will know it's pressable"* — the SAME affordance
+    // the Initiative term carries (.info-term, role=button), not a lookalike of it.
+    const term = row.querySelector<HTMLElement>('.iwr-val .info-term');
+    expect(term, 'the value has to carry the dotted affordance').toBeTruthy();
+    expect(term!.getAttribute('role'), 'and say it is pressable').toBe('button');
+    const initTerm = [...card(r.host, 'Essentials')!.querySelectorAll<HTMLElement>('.rail-kv')]
+      .find((e) => (e.querySelector('.kv-label')?.textContent ?? '').trim() === 'Initiative')
+      ?.querySelector<HTMLElement>('.iwr-val .info-term');
+    if (initTerm) expect(term!.className, 'the same class the Initiative term uses').toBe(initTerm.className);
+    expect(term!.textContent).toBe('2 per round');
+    // *"that popup will show the full explanation"* — untrimmed, parenthetical and all, plus the record
+    // it came from and the click that opens that record's own text.
+    r.click(term);
+    const modal = r.host.querySelector<HTMLElement>('.stat-detail');
+    expect(modal, 'pressing the term opens the breakdown popup').toBeTruthy();
+    const text = modal!.textContent ?? '';
+    expect(text, 'the parenthetical the row used to abbreviate to "incl."').toContain('(including Shield Block)');
+    expect(text).toContain('a reaction from a guardian feat or class feature');
+    expect(text, 'and what grants it').toContain('Reaction Time');
+    // `extraReactions[].from` is a NAME; the note is only clickable if it was mapped back to the id.
+    expect(modal!.querySelector('.sd-situational .sd-sit-more'), 'the note opens its record like the others').toBeTruthy();
     r.stop();
   });
 });

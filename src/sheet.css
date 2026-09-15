@@ -1540,19 +1540,6 @@ body {
   flex: 1;
   text-align: left;
 }
-/* The Reactions row's explanation: its own full-width line under the value, left-aligned and dim. */
-.rail-kv.rail-kv-note {
-  flex-wrap: wrap;
-}
-.rail-kv .kv-note {
-  /* min-width, not flex-basis: the mobile cube turns this row into a COLUMN flex, where a 100% basis
-     would be a height. min-width forces the line break in the row direction and is inert in the other. */
-  min-width: 100%;
-  text-align: left;
-  font-size: 11.5px;
-  line-height: 1.35;
-  color: var(--app-text-dim);
-}
 /* "This will be removed" list in the source-removal confirmation. Capped and scrollable: a character
    can easily have thirty feats from one book, and a dialog that grows past the screen hides its own
    Cancel button — the one control someone reading a destructive warning most needs to reach. */
@@ -9118,12 +9105,29 @@ button.strike-name:hover {
 .spell-detail {
   width: 480px;
 }
+/* bug 2026-09-15: phantom scrollbar. A scroll box counts its own trailing whitespace as scrollable
+   content — this body's bottom padding, the last child's bottom margin, and the embedded description's
+   own bottom padding. That added up to 23-44px of EMPTY space under the last line of text, so a popup
+   showing every word it has still overflowed and painted a scrollbar whose thumb spanned almost the
+   whole track ("a scroll bar but there isn't any scrolling"). Measured at dpr 1.75 — trailing space
+   below the last text block: Bedroll 23px, Full Plate 37px, Staff of Fire 44px; after: 1 / 0 / 7px.
+   The bottom gap is not lost, it moves to .picker's own bottom gutter (--picker-gutter), where it
+   still shows and never scrolls. */
 .sd-body {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 13px 14px;
+  padding: 13px 14px 0;
+}
+.sd-body > :last-child {
+  margin-bottom: 0;
+}
+/* `.ast-embed { padding: 0 }` (ast.css) already says an embedded description carries no padding of its
+   own, but it is declared BEFORE `.ast-body { padding: 12px 15px 15px }` and loses on source order.
+   Scoped here so only the popup's copy gives up its trailing 15px. */
+.sd-desc > .ast-embed {
+  padding-bottom: 0;
 }
 .sd-sub {
   font-size: 12.5px;

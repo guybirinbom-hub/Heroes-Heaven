@@ -45,8 +45,14 @@ export function PopupSizeLock() {
       const pin = () => {
         ro.disconnect();
         if (!el.isConnected || el.style.height) return;
-        const h = el.offsetHeight;
-        if (h > 0) el.style.height = `${h}px`;
+        // bug 2026-09-15: phantom scrollbar. offsetHeight is a ROUNDED integer, but a popup's real
+        // height is fractional on a scaled display (261.286px at 175%). Pinning the rounded value gave
+        // the flex body ~0.3px LESS than its own content — which is a scrollbar; and once the 11px bar
+        // appears the text rewraps one line narrower, turning the hair into a real 22px overflow of
+        // pure whitespace. Half the popups rounded down and got a bar with nothing to scroll, half
+        // rounded up and looked fine. The computed height is that same used height, unrounded.
+        const h = getComputedStyle(el).height; // border-box px — every .picker is box-sizing: border-box
+        if (parseFloat(h) > 0) el.style.height = h;
       };
       const restart = () => {
         if (timer) {
