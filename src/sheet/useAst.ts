@@ -48,6 +48,42 @@ export function variantSection(node: AstNode, slug: string): AstNode {
 }
 
 /**
+ * bug 2026-09-15: item popup — the appended "every OTHER item built on this one" list.
+ *
+ * Owner, on the Full Plate popup: *"specific magic armor doesn't need to be in the item card — the
+ * user has the item, he is not searching for more items; he does need the crit specialization rules."*
+ *
+ * An AoN armor/weapon/shield page ends with a level-2 section that is nothing but a comma-separated
+ * run of links to every specific magic item built on that base. Measured on the shipped artefact
+ * (public/ast/items.json): 143 pages carry one, under exactly three headings — "Specific Magic
+ * Weapons" (111), "Specific Magic Armor" (23), "Specific Magic Shields" (9) — always a TOP-LEVEL
+ * level-2 title, never nested, and no other bucket has one. Cutting the section takes everything under
+ * it up to the next level-2 title; on all 143 pages that leaves neither a trailing rule nor an empty
+ * body.
+ *
+ * Matched by HEADING, not by "a paragraph that is only links": the rules sections beside these —
+ * "Armor Specialization Effects", "Critical Specialization Effects" — are exactly what the owner asked
+ * to keep, and so is the item's own text.
+ *
+ * Applied in DescBody (the popup for a record the character HAS), never inside `useAstNode` — the
+ * search popup goes through DescriptionModal, where the player IS browsing for more items.
+ */
+const ITEM_LIST_SECTION = /^\s*Specific\s+(Magic\s+)?(Armou?rs?|Weapons?|Shields?)\b/i;
+
+export function withoutItemLists(node: AstNode): AstNode {
+  const top = node.c ?? [];
+  const keep: AstNode[] = [];
+  let dropping = false;
+  for (const n of top) {
+    // A level-2 title opens a section and closes the one before it, so the flag flips on every section
+    // — which is what stops the cut at the next heading instead of eating the rest of the page.
+    if (isSection(n)) dropping = ITEM_LIST_SECTION.test(flatText(n));
+    if (!dropping) keep.push(n);
+  }
+  return keep.length === top.length ? node : { ...node, c: keep };
+}
+
+/**
  * Resolve (and lazily load) the ast for a record — using its explicit bucket key, or the global
  * slug→bucket index when only a slug/title is known. Returns the node + the bucket it resolved to
  * (for self-link suppression). node stays undefined until loaded / when the record has no ast.

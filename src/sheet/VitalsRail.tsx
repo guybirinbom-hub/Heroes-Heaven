@@ -20,7 +20,7 @@ import {
   stateGrantSummary,
   type DefenseSource,
 } from '../rules/derive';
-import { deriveInitiative } from '../rules/initiative';
+import { deriveInitiative, initiativeInfluences } from '../rules/initiative';
 import {
   addCondition,
   applyDamage,
@@ -99,11 +99,14 @@ function IwrTerm({
   label,
   sources,
   first,
+  title = 'How is this calculated?',
   onOpen,
 }: {
   label: string;
   sources?: DefenseSource[];
   first: boolean;
+  /** Hover text. Defaults to the IWR wording; the Initiative value asks a different question. */
+  title?: string;
   onOpen: () => void;
 }) {
   const conditional = sources?.some((s) => s.condition);
@@ -114,7 +117,7 @@ function IwrTerm({
         className="info-term"
         role="button"
         tabIndex={0}
-        title="How is this calculated?"
+        title={title}
         onClick={onOpen}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -170,7 +173,8 @@ export function VitalsRail({
   /** The "what changes this condition for me" popup — ruling D's condition marker. */
   const [condMark, setCondMark] = useState<{ name: string; marks: { sourceId: string; value?: string; note: string }[] } | null>(null);
   // A resistance/weakness/immunity opens the SAME breakdown modal every other stat uses, rather than a
-  // prose popup — one visual language for "how is this number made".
+  // prose popup — one visual language for "how is this number made". The Initiative row uses it too,
+  // with an empty calculation, so its list of influences renders through the one path.
   const [defBreak, setDefBreak] = useState<StatBreakdown | null>(null);
   const [shieldDetailOpen, setShieldDetailOpen] = useState(false);
   const [shieldEditOpen, setShieldEditOpen] = useState(false);
@@ -210,6 +214,8 @@ export function VitalsRail({
   const sc = primary?.sc ?? null;
   const perception = derivePerception(character, content);
   const initiative = deriveInitiative(character, content);
+  // The gate for the Initiative row AND the whole content of its popup — see `initiativeInfluences`.
+  const initInfluences = initiativeInfluences(character, content);
   const speeds = deriveSpeeds(character, content);
   // A temporary Speed override (Hasted/Slowed/…) replaces the derived land Speed and is highlighted.
   const speedOverride = character.speedOverride;
@@ -598,7 +604,9 @@ export function VitalsRail({
       <section className="card">
         <div className="ct">
           <i className="ti ti-shield-checkered" aria-hidden="true" />
-          Saves &amp; perception
+          {/* bug 2026-09-15: rail initiative — Perception left this card for "Essentials", where it
+              sits with the senses it belongs to, and Initiative left it entirely (see below). */}
+          Saves
         </div>
         <div className="saves-strip">
         {SAVES.map((s) => {
@@ -633,42 +641,6 @@ export function VitalsRail({
             </div>
           );
         })}
-        <div
-          className={'stat-row' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'perception' }, content)}
-          onClick={onOpenStat ? () => onOpenStat({ kind: 'perception' }) : undefined}
-          title={onOpenStat ? 'Perception — how is this calculated?' : undefined}
-        >
-          <RankPill rank={perception.rank} />
-          <span className="stat-name">
-            Perception
-            {statHasSituational(character, { kind: 'perception' }, content) && <SituationalStar />}
-          </span>
-          <span className="stat-short">Perc</span>
-          {/* Perception has a DC too — it's what a Sneaking or Hiding creature rolls against, and it
-              was the one number on this card the setting didn't cover. */}
-          {showSaveDCs && (
-            <span className="stat-dc" title="Perception DC">
-              DC {10 + perception.modifier}
-            </span>
-          )}
-          <span className="stat-mod">{formatMod(perception.modifier)}</span>
-        </div>
-        {/* Initiative is its own line now. It was rolled with Perception and shown nowhere, so a
-            character who rolls it with Stealth (Avoiding Notice) or Deception had no number to read,
-            and the ~45 initiative bonuses had only Perception to hang on. */}
-        <div
-          className={'stat-row' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'initiative' }, content)}
-          onClick={onOpenStat ? () => onOpenStat({ kind: 'initiative' }) : undefined}
-          title={onOpenStat ? 'Initiative — how is this calculated?' : undefined}
-        >
-          <RankPill rank={initiative.rank} />
-          <span className="stat-name">
-            Initiative
-            {statHasSituational(character, { kind: 'initiative' }, content) && <SituationalStar />}
-          </span>
-          <span className="stat-short">{initiative.label}</span>
-          <span className="stat-mod">{formatMod(initiative.modifier)}</span>
-        </div>
         </div>
       </section>
   );
@@ -676,7 +648,9 @@ export function VitalsRail({
       <section className="card">
         <div className="ct">
           <i className="ti ti-bolt" aria-hidden="true" />
-          Hero points &amp; movement
+          {/* bug 2026-09-15: rail initiative — a general name, because the card now also holds
+              Perception and (when anything affects it) Initiative. */}
+          Essentials
         </div>
         <div className="rail-kv">
           <span className="kv-label">Hero points</span>
@@ -730,15 +704,73 @@ export function VitalsRail({
         {/* Extra RESTRICTED reactions. Every character has one unrestricted reaction per round; 15
             feats grant a second one usable only for a named thing, and nothing tracked reactions at
             all, so all 15 were a sentence on the Feats tab and no number anywhere. */}
+        {/* bug 2026-09-15: rail initiative — the whole sentence used to live INSIDE the right-aligned
+            value, so "2 per round — a reaction from a guardian feat or class feature (including Shield
+            Block) (Reaction Time)" wrapped into a ragged right-aligned block the owner read as
+            right-to-left. The number is the value; the explanation is its own left-aligned line, with
+            the untrimmed wording on the hover. */}
         {!!character.extraReactions?.length && (
-          <div className="rail-kv">
+          <div className="rail-kv rail-kv-note">
             <span className="kv-label">Reactions</span>
+            <span className="iwr-val">{1 + character.extraReactions.reduce((n, r) => n + r.count, 0)} per round</span>
+            <span
+              className="sh-sub kv-note"
+              title={character.extraReactions.map((r) => `${r.from}: ${r.usableFor}`).join('\n')}
+            >
+              {character.extraReactions
+                .map((r) => `+${r.count} · ${r.usableFor.replace(/^an? reaction (?:from|for) (an? )?/i, '').replace(/\(including ([^)]+)\)/i, 'incl. $1')} — ${r.from}`)
+                .join(' · ')}
+            </span>
+          </div>
+        )}
+        {/* Perception belongs with the senses, not with the saves — owner, 2026-09-15. Same rollable
+            row it had on the saves card: rank pill, situational star, DC when the setting is on. */}
+        <div
+          className={'stat-row' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'perception' }, content)}
+          onClick={onOpenStat ? () => onOpenStat({ kind: 'perception' }) : undefined}
+          title={onOpenStat ? 'Perception — how is this calculated?' : undefined}
+        >
+          <RankPill rank={perception.rank} />
+          <span className="stat-name">
+            Perception
+            {statHasSituational(character, { kind: 'perception' }, content) && <SituationalStar />}
+          </span>
+          <span className="stat-short">Perc</span>
+          {/* Perception has a DC too — it's what a Sneaking or Hiding creature rolls against, and it
+              was the one number on this card the setting didn't cover. */}
+          {showSaveDCs && (
+            <span className="stat-dc" title="Perception DC">
+              DC {10 + perception.modifier}
+            </span>
+          )}
+          <span className="stat-mod">{formatMod(perception.modifier)}</span>
+        </div>
+        {/* Initiative ONLY when something actually changes it. "In pf2e initiative isn't always
+            perception" — but usually it IS, and a row that repeated the Perception number every time
+            taught the player nothing. `initiativeInfluences` is the gate and the popup's whole
+            content; it deliberately excludes the plain Perception/skill terms. */}
+        {initInfluences.length > 0 && (
+          <div className="rail-kv">
+            <span className="kv-label">Initiative</span>
             <span className="iwr-val">
-              {1 + character.extraReactions.reduce((n, r) => n + r.count, 0)} per round
-              <span className="sh-sub">
-                {' — '}
-                {character.extraReactions.map((r) => `${r.count > 1 ? r.count + ' × ' : ''}${r.usableFor} (${r.from})`).join('; ')}
-              </span>
+              <IwrTerm
+                first
+                label={`${formatMod(initiative.modifier)} (${initiative.label})`}
+                title="What affects your initiative?"
+                onOpen={() =>
+                  setDefBreak({
+                    title: 'Initiative',
+                    subtitle: `rolled with ${initiative.label}`,
+                    totalText: formatMod(initiative.modifier),
+                    // No parts, no timeline, no description: those would be the PERCEPTION breakdown,
+                    // which is one click away on its own row. This popup answers one question — what
+                    // makes my initiative different from that number.
+                    parts: [],
+                    timeline: [],
+                    situational: initInfluences,
+                  })
+                }
+              />
             </span>
           </div>
         )}

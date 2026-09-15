@@ -7,7 +7,7 @@ import { DescriptionModal } from './DescriptionModal';
 import { sanitize } from './sanitizeHtml';
 import { htmlWithAutoDir } from './autoDir';
 import { AstRenderer } from './AstRenderer';
-import { useAstNode } from './useAst';
+import { useAstNode, withoutItemLists } from './useAst';
 
 /** A description is treated as rich HTML (user-authored, from the item editor) if it carries any
  *  HTML tag; otherwise it's curated markdown and RichText parses + auto-linkifies it. */
@@ -122,7 +122,12 @@ export function DescBody({
     return (
       <>
         <div className={className}>
-          <AstRenderer node={ast} bodyOnly hideMeta selfRef={`${astBucket}:${astId}`} onOpenRef={openRecord} />
+          {/* bug 2026-09-15: item popup — `withoutItemLists` cuts the page's appended "Specific Magic
+              Armor/Weapons/Shields" link lists. It sits HERE, on the path every detail view of a thing
+              the character already HAS reads through, rather than in `useAstNode`: the search popup
+              (DescriptionModal) reads the same tree straight from the hook and keeps its lists, because
+              there the player is looking for another item. */}
+          <AstRenderer node={withoutItemLists(ast)} bodyOnly hideMeta selfRef={`${astBucket}:${astId}`} onOpenRef={openRecord} />
           {remastered}
         </div>
         {node && <DescriptionModal root={node} onClose={() => setNode(null)} onExit={onExit} backToSource={!!onExit} />}

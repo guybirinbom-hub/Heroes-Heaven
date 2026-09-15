@@ -45,8 +45,10 @@ export const HIDEABLE_TABS = SHEET_TABS.filter((t) => t !== 'Main');
 /** Human labels for the rail cards, for the Customize editor. */
 export const RAIL_CARD_LABELS: Record<string, string> = {
   hp: 'Hit points & defenses',
-  saves: 'Saves & perception',
-  movement: 'Hero points & movement',
+  // The KEYS are frozen — every saved rail order is stored by them — so the two cards the owner
+  // renamed on 2026-09-15 (Perception and Initiative moved into "Essentials") keep theirs.
+  saves: 'Saves',
+  movement: 'Essentials (hero points, speed, perception, senses)',
   defenses: 'Resistances, weaknesses, immunities',
   resources: 'Class resources',
   // Was missing, so the Customize editor listed the raw key "multiclassDc" among prose labels.

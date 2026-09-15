@@ -1523,16 +1523,35 @@ body {
   width: 82px;
   flex: none;
 }
+/* A single-line value sits flush RIGHT; one that wraps reads LEFT-to-right.
+   Owner, 2026-09-15: a long Reactions sentence in a right-aligned box read as right-to-left. There is
+   no "when it wraps" selector, so the box itself does the work — `flex: 0 1 auto` hugs its content
+   (pushed right by the auto margin, exactly as before) and only grows to the full width when the text
+   needs the room, at which point left-aligned lines are the readable ones. */
 .iwr-val {
   margin-left: auto;
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
-  text-align: right;
-}
-/* Senses read as a normal left-to-right list (the right-align used for immunities/weaknesses/
-   resistances made it look right-to-left). */
-.iwr-val.senses-val {
   text-align: left;
+}
+/* Senses START at the left of the row rather than hugging the right edge — it is a list, not a
+   number (the right-align used for immunities/weaknesses/resistances made it look right-to-left). */
+.iwr-val.senses-val {
+  flex: 1;
+  text-align: left;
+}
+/* The Reactions row's explanation: its own full-width line under the value, left-aligned and dim. */
+.rail-kv.rail-kv-note {
+  flex-wrap: wrap;
+}
+.rail-kv .kv-note {
+  /* min-width, not flex-basis: the mobile cube turns this row into a COLUMN flex, where a 100% basis
+     would be a height. min-width forces the line break in the row direction and is inert in the other. */
+  min-width: 100%;
+  text-align: left;
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--app-text-dim);
 }
 /* "This will be removed" list in the source-removal confirmation. Capped and scrollable: a character
    can easily have thirty feats from one book, and a dialog that grows past the screen hides its own
@@ -9118,23 +9137,27 @@ button.strike-name:hover {
   gap: 5px;
   margin-bottom: 10px;
 }
+/* bug 2026-09-15: item popup — the label column used to be a fixed `width: 64px`, so "Check penalty",
+   "Speed penalty" and "Dex cap" each wrapped onto two lines beside a mostly empty row. ONE grid on the
+   block sizes that column to its own longest label and keeps every value starting at the same x —
+   which a per-row width can't do, and a per-row `nowrap` alone would break. `minmax(0, 1fr)` lets the
+   value column shrink on the phone popup instead of pushing the value off-screen. */
 .sd-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 8px;
+  row-gap: 3px;
   margin-bottom: 11px;
   padding-bottom: 11px;
   border-bottom: var(--app-bw) solid var(--app-border);
 }
 .sd-stat {
-  display: flex;
-  gap: 8px;
+  display: contents; /* the row's own two spans are the grid cells, so all rows share one label column */
   font-size: 12.5px;
 }
 .sd-stat-k {
   color: var(--app-text-dim);
-  width: 64px;
-  flex: none;
+  white-space: nowrap;
 }
 .sd-stat-v {
   font-weight: 500;
@@ -10973,13 +10996,17 @@ button.strike-name:hover {
   .rail .defs { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 6px; }
   .rail .defs .shield-block { grid-column: 1 / -1; }
 
-  /* Saves & perception as a compact 4-across strip of tiles (name on top, big modifier below). */
+  /* The three saves as a compact strip of tiles (name on top, big modifier below). Three, not four:
+     Perception moved to the Essentials card — owner, 2026-09-15 — and a fourth track left an empty
+     cell where it used to sit. */
   .saves-strip {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 6px;
   }
-  .saves-strip .stat-row {
+  .saves-strip .stat-row,
+  /* …and Perception keeps the same tile shape in its new home, among the Speed/Senses cubes. */
+  .kv-cubes > .stat-row {
     flex-direction: column;
     align-items: center;
     gap: 1px;
@@ -10989,10 +11016,14 @@ button.strike-name:hover {
     border-radius: var(--app-radius-sm);
     text-align: center;
   }
-  .saves-strip .stat-name { display: none; }
-  .saves-strip .stat-short { display: block; font-size: 11px; color: var(--app-text-dim); }
-  .saves-strip .stat-mod { margin-left: 0; width: auto; font-size: 18px; }
-  .saves-strip .rank-pill { display: none; }
+  .saves-strip .stat-name,
+  .kv-cubes > .stat-row .stat-name { display: none; }
+  .saves-strip .stat-short,
+  .kv-cubes > .stat-row .stat-short { display: block; font-size: 11px; color: var(--app-text-dim); }
+  .saves-strip .stat-mod,
+  .kv-cubes > .stat-row .stat-mod { margin-left: 0; width: auto; font-size: 18px; }
+  .saves-strip .rank-pill,
+  .kv-cubes > .stat-row .rank-pill { display: none; }
 
   /* Skills: force a dense 2-column grid (auto-fill can collapse to 1 column on narrow phones). */
   .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
