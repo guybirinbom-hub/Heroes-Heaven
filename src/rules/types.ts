@@ -4117,6 +4117,18 @@ interface ItemBase extends ContentBase {
    */
   retired?: boolean;
   /**
+   * The OFFICIAL record this homebrew item was copied from — the item editor's "Start from an
+   * existing item…", and a copy-on-write edit of a built-in.
+   *
+   * Every code table in the rules layer is keyed by the official id (FEAT_SITUATIONAL,
+   * RECORD_MARKERS, the trust ledger, the steadying-hand mark), so a copy under its own `custom-…`
+   * id looked up nothing and the player's Spellguard Shield copy starred no saves. This is the
+   * pointer back; `officialIdOf` (rules/officialId.ts) is the one reader. Deliberately a POINTER and
+   * not a copy of the tables themselves — those are code, and a copy of them would go stale the next
+   * time one is corrected.
+   */
+  basedOn?: string;
+  /**
    * An aeon stone's RESONANT POWER — what it does *"when slotted into a special magical item called a
    * wayfinder"*, a second effect on top of the stone's own.
    *

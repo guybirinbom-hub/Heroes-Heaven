@@ -473,7 +473,9 @@ export function ItemEditorModal({
   const [open, setOpen] = useState<Set<string>>(
     () => new Set(['additional', ...(item?.itemType ? [item.itemType] : []), ...(inv ? ['runes'] : [])]),
   );
-  const [baseId, setBaseId] = useState<string | null>(null);
+  // Pre-filled from the record being edited, so a copy REMEMBERS what it was started from (the row
+  // reads "Spellguard Shield" instead of an empty picker) and Clear is what unsets it.
+  const [baseId, setBaseId] = useState<string | null>(item?.basedOn ?? null);
   // The rich-text editors are uncontrolled; bump this key to remount them when the description is
   // replaced wholesale (copy-from-item, reset) so they reflect the new value.
   const [editorKey, setEditorKey] = useState(0);
@@ -597,6 +599,12 @@ export function ItemEditorModal({
     // Homebrew items (and copies) edit in place; editing a BUILT-IN item is copy-on-write —
     // mint a fresh id so only this character's instance (repointed by the caller) changes.
     const editingHomebrew = mode === 'edit' && !!item && (item.source?.license === 'homebrew' || item.id.startsWith('custom-'));
+    /* The OFFICIAL record this copy came from — see `ItemBase.basedOn`. Without it a copy's own
+     * `custom-…` id looks up nothing in the code tables keyed by item id, which is why a copied
+     * Spellguard Shield starred no saves. Two gestures make a copy and both are recorded: the "Start
+     * from an existing item…" picker above, and the copy-on-write that minting a new id out of an
+     * edit to a BUILT-IN already performs. */
+    const basedOn = baseId ?? (mode === 'edit' && item && !editingHomebrew ? item.id : undefined);
     const base = {
       id: editingHomebrew && item ? item.id : `custom-${slugify(name)}-${rand()}`,
       name,
@@ -613,6 +621,7 @@ export function ItemEditorModal({
       ...(d.freqMax.trim() ? { frequency: { max: num(d.freqMax), per: d.freqPer || 'day' } } : {}),
       ...(cleanRich(d.craft) ? { craftRequirements: cleanRich(d.craft) } : {}),
       ...(item?.descRefs ? { descRefs: item.descRefs } : {}),
+      ...(basedOn ? { basedOn } : {}),
       // A PACK count rides along with the printed price and Bulk it explains — the two fields above are
       // the PACK's ("1 sp" and "L" for ten arrows), so dropping `packOf` on the way out would silently
       // re-read them as one arrow's, charging ten times over for a renamed quiver. The draft is the

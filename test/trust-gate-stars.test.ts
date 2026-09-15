@@ -80,9 +80,13 @@ describe('trust gate — situational stars', () => {
     // actually breaks is someone adding a THIRD raw `FEAT_SITUATIONAL[` read to either file.
     // The guard names the ID EXPRESSION, not just the function: a bare `shippedSituational(` test
     // passes on any dead call left in the file, so deleting the real gate stayed green (verified).
+    // bug 2026-09-15: homebrew copies inherit markers — the companion reader now asks both halves
+    // about `sourceId` (`officialIdOf(inv.itemId, …)`, so a homebrew COPY finds the official entry),
+    // and the guard moved with it. Still the same property, stated more strictly than before: the
+    // gate and the table are asked about ONE expression, spelled the same way in both.
     for (const [f, guard] of [
       ['src/rules/explain.ts', 'if (!shippedSituational(id)) continue;'],
-      ['src/sheet/CompanionsTab.tsx', 'shippedSituational(inv.itemId)'],
+      ['src/sheet/CompanionsTab.tsx', 'shippedSituational(sourceId) ? (FEAT_SITUATIONAL[sourceId]'],
     ] as const) {
       const src = readFileSync(f, 'utf8');
       expect(src.includes(guard), `${f} reads FEAT_SITUATIONAL without asking the trust gate about the id it read`).toBe(true);

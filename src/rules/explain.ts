@@ -60,6 +60,7 @@ import {
 } from './derive';
 import { mpArmorRefine } from './monsterParts';
 import { traitLabel } from './glossary';
+import { officialIdOf } from './officialId';
 import { KINETIC_ELEMENTS } from './kineticElements';
 import {
   FEAT_SITUATIONAL,
@@ -316,9 +317,15 @@ export function characterSituationalIds(c: Character, db?: ContentDatabase): str
      * loose crystal, so an equip test hid the clause instead of qualifying it. Marked per clause with
      * `whileCarried`, because it is a property of the sentence, not of the item. */
     const carriedOnly = (db?.items[inv.itemId]?.situational ?? []).some((s) => s.whileCarried);
-    if (carriedOnly) ids.push(inv.itemId);
+    /* A HOMEBREW COPY contributes the id of the record it was copied from, not its own — every table
+     * these ids are read against (FEAT_SITUATIONAL, RECORD_MARKERS, SITUATIONAL_SUPERSEDES, the
+     * trust ledger) is keyed by the official id, so a copy contributed a key nothing holds and the
+     * copy's rules silently did not exist. Resolved HERE, at the one place an inventory row becomes a
+     * lookup key, so every one of those tables is fixed by the same line. */
+    const sourceId = officialIdOf(inv.itemId, db?.items);
+    if (carriedOnly) ids.push(sourceId);
     if (!itemInUse(inv)) continue;
-    if (!carriedOnly) ids.push(inv.itemId);
+    if (!carriedOnly) ids.push(sourceId);
     // Etching CONSUMES the loose rune item and records its id here, so `inv.itemId` never names it.
     // Without this, a rune's conditional bonuses vanished at exactly the moment the rune started
     // working — listed while it sat unused in your pack, silent once it was on the weapon.
@@ -963,6 +970,24 @@ function situationalList(modeLines: SituationalLine[], registryLines: Situationa
     sourceCollection: l.sourceCollection,
     ...(l.dcOnly ? { dcOnly: true as const } : {}),
   }));
+}
+
+/**
+ * The `*`'s own hover on a stat row: one line per situational entry, so the star SAYS what it is
+ * instead of only promising that something is there.
+ *
+ * Owner, 2026-09-15, on his copied Spellguard Shield: *"WG shows that with a `*`"* — and what WG's
+ * star carries is the clause. The three saves rows already drew a star, with the generic "open for
+ * details" wording; this is the trigger text ("while the shield is Raised") reaching the hover.
+ *
+ * Registry + authored entries only. A star lit purely by an active MODE returns "" here and the
+ * generic sentence in `SituationalStar` stands, which is the right answer for it — a mode's wording
+ * lives in the breakdown, alongside the number it is currently moving.
+ */
+export function situationalTitle(c: Character, ref: StatRef, db: ContentDatabase): string {
+  return situationalList([], featSituationalLines(c, db, ref))
+    .map((n) => n.text)
+    .join('\n');
 }
 
 const DESC: Record<string, string> = {

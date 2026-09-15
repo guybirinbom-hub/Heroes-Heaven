@@ -43,6 +43,7 @@ import { formatMod, modeGateIds, ownedFeatureIds } from '../rules/derive';
 import { InventoryTab } from './InventoryTab';
 import { HpControl } from './HpControl';
 import { specificFamiliars } from '../rules/specificFamiliars';
+import { officialIdOf } from '../rules/officialId';
 import { companionModKeys, featGrantedCompanions, offeredCreatures, COMPANION_MODS, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, FAMILIAR_ABILITY_CHOICES, type CreatureOffer } from '../rules/companionGrants';
 import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
@@ -596,7 +597,10 @@ function CompanionSituational({ cfg, content }: { cfg: CompanionConfig; content:
     if (!item) continue;
     // The other `entriesFor` bypass: ask the trust gate by name, same as `sheetLoreKeys`. The item's
     // own `situational` field is already stripped by the ledger when the gate turns the item off.
-    const shipped = shippedSituational(inv.itemId) ? (FEAT_SITUATIONAL[inv.itemId] ?? []) : [];
+    // Asked about the OFFICIAL record: both the ledger and the table are keyed by it, so a homebrew
+    // copy in a companion's pack looked up nothing — the PC's twin of this bug, see `officialIdOf`.
+    const sourceId = officialIdOf(inv.itemId, content.items);
+    const shipped = shippedSituational(sourceId) ? (FEAT_SITUATIONAL[sourceId] ?? []) : [];
     for (const b of [...shipped, ...(item.situational ?? [])]) {
       lines.push({
         source: item.name,

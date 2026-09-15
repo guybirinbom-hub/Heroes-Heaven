@@ -43,7 +43,7 @@ import {
 import { useCustomization, DEFAULT_RAIL_ORDER } from '../data/customization';
 import { CATALOG_MODES, contentGatedModes, playerModeLibrary } from '../rules/modes';
 import { resourcesForCharacter, resourceMaxFor } from '../rules/classResources';
-import { explainDefense, markNote, markTooltip, nameOfRecord, recordMarkersFor, saveDcHasSituational, statHasSituational, statMarkClass, type StatBreakdown, type StatRef } from '../rules/explain';
+import { explainDefense, markNote, markTooltip, nameOfRecord, recordMarkersFor, saveDcHasSituational, situationalTitle, statHasSituational, statMarkClass, type StatBreakdown, type StatRef } from '../rules/explain';
 import { StatDetailModal } from './StatDetailModal';
 import { ConditionsModal } from './ConditionsModal';
 import { ItemDetail } from './ItemDetail';
@@ -613,7 +613,12 @@ export function VitalsRail({
               <RankPill rank={d.rank} />
               <span className="stat-name">
                 {SAVE_LABEL[s]}
-                {statHasSituational(character, { kind: 'save', save: s }, content) && <SituationalStar />}
+                {/* The star carries the clause itself — a Spellguard Shield's "while the shield is
+                    Raised" — rather than the generic "open for details", which is what the owner
+                    reads on the Wanderer's Guide row he compared this one to. */}
+                {statHasSituational(character, { kind: 'save', save: s }, content) && (
+                  <SituationalStar title={situationalTitle(character, { kind: 'save', save: s }, content)} />
+                )}
               </span>
               <span className="stat-short">{SAVE_SHORT[s]}</span>
               {/* Ruling D: a bonus that only moves the DC others roll against gets its `*` HERE, not

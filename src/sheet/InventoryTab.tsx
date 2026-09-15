@@ -4,6 +4,7 @@ import { useIsMobile } from './useIsMobile';
 import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable,
   handwrapsRuneSharing, isHandwraps, unitBulk } from '../rules/derive';
 import { affixHostType, isAttachable, planAttach } from '../rules/attachments';
+import { officialIdOf } from '../rules/officialId';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import {
   addInventoryItem,
@@ -767,7 +768,10 @@ export function InventoryTab({
      * had to ask the player to read it on the right one. Gated on owning the brooch, and (like the rune
      * source above) on already holding the mark, so a mark set before this still shows and can come off. */
     const hasSteadyingHand = character.inventory.some(
-      (i) => i.itemId === STEADYING_HAND_ITEM || i.designations?.includes('steadying-hand'),
+      // …through `officialIdOf`, because this is one more table keyed by the OFFICIAL item id: a
+      // homebrew copy of the brooch is still the brooch, and without it the mark was simply not
+      // offered to the player who made one.
+      (i) => officialIdOf(i.itemId, content.items) === STEADYING_HAND_ITEM || i.designations?.includes('steadying-hand'),
     );
     if (hasSteadyingHand) out.push({ kind: 'steadying-hand', label: 'Steadying hand weapon' });
     /* Offered to everyone, unlike `rune-source`: slotting an aeon stone into a wayfinder is not
