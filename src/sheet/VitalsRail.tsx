@@ -643,8 +643,8 @@ export function VitalsRail({
               <span className="stat-name">
                 {SAVE_LABEL[s]}
                 {/* The star carries the clause itself — a Spellguard Shield's "while the shield is
-                    Raised" — rather than the generic "open for details", which is what the owner
-                    reads on the Wanderer's Guide row he compared this one to. */}
+                    Raised" — rather than the generic "open for details", which is what a
+                    comparable app shows on the same row. */}
                 {statHasSituational(character, { kind: 'save', save: s }, content) && (
                   <SituationalStar title={situationalTitle(character, { kind: 'save', save: s }, content)} />
                 )}
