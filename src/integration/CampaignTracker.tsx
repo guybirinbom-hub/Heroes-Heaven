@@ -668,6 +668,36 @@ export function CampaignTracker({
   const dragging = useRef(false);
   const dragStart = useRef({ x: 0, width: 0 });
 
+  /*
+   * Tablet-width guard. railWidth (280–480px, GM-dragged this session only — it does not persist)
+   * is fine on a desktop but eats the middle workspace on a tablet-ish window. effectiveRailWidth
+   * caps only the RENDERED width to ~30% of the viewport (never below railMinWidth) — railWidth
+   * itself is never written here, so resizing the window and back never loses the GM's dragged
+   * width, and the drag ceiling below stays the flat 480 it always was. railCap stores the DERIVED
+   * cap (Infinity once the guard is off), not the raw viewport width, so React's same-value bailout
+   * swallows resize frames that don't change the cap — every frame on a desktop-width window. A
+   * plain 0.3*viewportWidth cap wouldn't clear 480 until 1600px (0.3*1400=420), quietly shrinking
+   * common ~1400px laptop windows that are desktop, not tablet — so DESKTOP_MIN_WIDTH (at or above
+   * it, the cap is off) switches the cap off outright there.
+   */
+  const DESKTOP_MIN_WIDTH = 1400;
+  const railCapFor = (w: number, minW: number) => (w >= DESKTOP_MIN_WIDTH ? Infinity : Math.max(minW, Math.floor(w * 0.3)));
+  const [railCap, setRailCap] = useState(() => railCapFor(window.innerWidth, railMinWidth));
+  useEffect(() => {
+    setRailCap(railCapFor(window.innerWidth, railMinWidth));
+    let raf = 0;
+    const onResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setRailCap(railCapFor(window.innerWidth, railMinWidth)));
+    };
+    window.addEventListener('resize', onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [railMinWidth]);
+  const effectiveRailWidth = Math.min(railWidth, railCap);
+
   const onRailDragStart = useCallback(
     (e: React.MouseEvent) => {
       if (e.button !== 0) return;
@@ -683,6 +713,10 @@ export function CampaignTracker({
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       if (!dragging.current) return;
+      // Flat 480 ceiling, same as before the tablet cap existed — the viewport only narrows the
+      // RENDERED width (effectiveRailWidth above), never the stored railWidth the GM dragged to.
+      // Tying this to viewportWidth would silently shrink a desktop drag ceiling on 1400–1599px
+      // windows and would let a narrow-window nudge permanently overwrite a wider dragged width.
       setRailWidth(Math.min(480, Math.max(railMinWidth, dragStart.current.width + e.clientX - dragStart.current.x)));
     };
     const onUp = () => {
@@ -885,7 +919,7 @@ export function CampaignTracker({
             <>
               <aside
                 className="ct-order"
-                style={{ width: railWidth, minWidth: railWidth, maxWidth: railWidth }}
+                style={{ width: effectiveRailWidth, minWidth: effectiveRailWidth, maxWidth: effectiveRailWidth }}
               >
                 {/* The turn timer now lives in the TOP BAR (TrackerTools), not the rail. */}
                 {/* InitiativeTracker is h-full, so it needs its own flex:1 box to leave room for the
