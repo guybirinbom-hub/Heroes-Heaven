@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { themeList } from '../theme/themes';
+import { PaletteTile } from '../theme/PaletteTile';
 import { styleList } from '../theme/styles';
 import { fontList } from '../theme/fonts';
 import { getAppearance } from '../theme/theme-manager';
@@ -52,23 +53,14 @@ export function TrackerCustomize({ onClose }: { onClose: () => void }) {
         <div className="tc-body">
           <div style={label}>Palette</div>
           <div style={row}>
-            {themeList.map((t) => {
-              const active = eff.themeId === t.id;
-              return (
-                <button
-                  key={t.id}
-                  className="tc-swatch"
-                  data-active={active || undefined}
-                  title={t.name}
-                  onClick={() => { trackerAppearance.setTheme(t.id); tick(); }}
-                >
-                  <span className="tc-chip" style={{ background: t.tokens['--app-surface'], borderColor: t.tokens['--app-border'] }}>
-                    <span style={{ background: t.tokens['--app-accent'] }} />
-                  </span>
-                  {t.name}
-                </button>
-              );
-            })}
+            {themeList.map((t) => (
+              <PaletteTile
+                key={t.id}
+                theme={t}
+                selectedId={eff.themeId}
+                onPick={() => { trackerAppearance.setTheme(t.id); tick(); }}
+              />
+            ))}
           </div>
 
           <div style={label}>Style</div>

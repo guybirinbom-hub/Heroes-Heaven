@@ -8,6 +8,7 @@ import type { PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
 import { GmEditSheet } from './GmEditSheet';
 import { confirmDialog } from './confirm';
+import { RankPill } from './widgets';
 import { useBackHandler } from './useEscapeClose';
 
 const LOAD_ERROR = "Couldn't load the party. Check your connection, or that the campaign SQL has been run.";
@@ -134,12 +135,12 @@ export function PartyMembers({
    */
   onMembers?: (list: PartyMember[]) => void;
   /**
-   * Extra content for each card body — the tracker integration passes the "Stats shown" sections
-   * here (saves, abilities, skills, …) built from the real character. A render prop, not tracker
-   * types, so this component stays pure: the real (non-tracker) party page passes nothing and is
-   * unchanged.
+   * Extra content for each card — the tracker integration passes the "Stats shown" sections here
+   * (saves, abilities, skills, …) built from the real character, plus the header's turn chip and
+   * add-to-initiative button. A render prop, not tracker types, so this component stays pure: the
+   * real (non-tracker) party page passes nothing and is unchanged.
    */
-  renderExtra?: (m: PartyMember) => React.ReactNode;
+  renderExtra?: (m: PartyMember) => PartyCardSlots;
   /**
    * Render THESE members instead of fetching from the server.
    *
@@ -252,6 +253,37 @@ export function PartyMembers({
   );
 }
 
+/**
+ * What a party card carries when it is dragged.
+ *
+ * The GM drags a player's card onto the initiative rail to put that PC in the order; the seam
+ * (src/integration/CampaignTracker.tsx) is what accepts the drop. Declared here, next to the drag
+ * source, so the two can't disagree about the type or the payload.
+ */
+export const PARTY_MEMBER_DRAG = 'application/x-hh-party-member';
+export interface PartyMemberDrag {
+  charId: string;
+  name: string;
+  maxHP?: number;
+}
+
+/**
+ * The three places a host can put its own content on a card.
+ *
+ * The card is two columns (the owner's design C, 2026-09-16), so one opaque node no longer fits:
+ * the saves belong under AC on the left, the rest is the right column, and the turn chip + the
+ * add-to-initiative button belong in the header beside the chevron. Named slots keep the layout
+ * here, where the CSS is, instead of in whatever the host hands over.
+ */
+export interface PartyCardSlots {
+  /** Header, between the name and the chevron — the tracker's turn-timer chip and "+" button. */
+  header?: React.ReactNode;
+  /** Left column, inside the AC/Fort/Ref/Will block. */
+  saves?: React.ReactNode;
+  /** The whole right column: Speed & DCs, Skills, Abilities, Senses & Languages. */
+  right?: React.ReactNode;
+}
+
 function hpColor(cur: number, max: number): string {
   if (max <= 0) return 'var(--app-accent)';
   const f = cur / max;
@@ -260,7 +292,7 @@ function hpColor(cur: number, max: number): string {
   return 'var(--app-good, #22c55e)';
 }
 
-function PartyCard({
+export function PartyCard({
   member,
   isMine,
   showKick,
@@ -270,10 +302,11 @@ function PartyCard({
 }: {
   member: PartyMember;
   isMine: boolean;
-  showKick: boolean;
+  /** GM only. Omitted (the card in a PC's tracker pane) → no kick button, and no chevron offset. */
+  showKick?: boolean;
   onOpen: () => void;
-  onKick: () => void;
-  extra?: React.ReactNode;
+  onKick?: () => void;
+  extra?: PartyCardSlots;
 }) {
   const s: PartySummary = member.summary ?? ({} as PartySummary);
   const initials = (s.name || member.name || '—').slice(0, 2).toUpperCase();
@@ -285,27 +318,27 @@ function PartyCard({
       className="party-card"
       role="button"
       tabIndex={0}
+      // Drag a card onto the initiative rail to add that PC to the order. Inert everywhere else —
+      // the campaign detail panel has nothing that accepts this type.
+      draggable
+      onDragStart={(e) => {
+        const payload: PartyMemberDrag = { charId: member.charId, name: member.name, maxHP: s.hpMax };
+        e.dataTransfer.setData(PARTY_MEMBER_DRAG, JSON.stringify(payload));
+        e.dataTransfer.effectAllowed = 'copy';
+      }}
       onClick={onOpen}
       onKeyDown={(e) => {
+        // Only the card's OWN key presses open the sheet. A keydown bubbling out of a control inside
+        // it (the "+", the kick) is that control's activation: swallowing it here would preventDefault
+        // the browser's click-from-Enter and open the sheet instead, so those buttons would be
+        // mouse-only. stopPropagation on their click covers the mouse half; this covers the keyboard.
+        if (e.target !== e.currentTarget) return;
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           onOpen();
         }
       }}
     >
-      {showKick && (
-        <button
-          className="party-kick"
-          title="Remove from party"
-          aria-label="Remove from party"
-          onClick={(e) => {
-            e.stopPropagation();
-            onKick();
-          }}
-        >
-          <i className="ti ti-user-minus" aria-hidden="true" />
-        </button>
-      )}
       <div className="party-card-h">
         <span className="party-av">{s.portrait ? <img src={s.portrait} alt="" /> : initials}</span>
         <span className="party-card-id">
@@ -315,38 +348,87 @@ function PartyCard({
           </span>
           <span className="party-card-sub">{sub || '—'}</span>
         </span>
+        {/* The host's header controls (turn chip, add-to-initiative). Their own clicks are theirs —
+            they must not also open the sheet. */}
+        {extra?.header && (
+          <span className="party-card-tools" onClick={(e) => e.stopPropagation()}>
+            {extra.header}
+          </span>
+        )}
         <i className="ti ti-chevron-right party-chev" aria-hidden="true" />
       </div>
-      <div className="party-stats">
-        <span className="party-stat party-hp">
-          <span className="party-stat-l">HP</span>
-          <span className="party-stat-v">
-            {s.hpCur ?? hpMax}
-            {hpMax ? ` / ${hpMax}` : ''}
-            {s.hpTemp ? <span className="party-temp"> +{s.hpTemp}</span> : null}
-          </span>
-          <span className="party-hpbar"><span style={{ width: pct + '%', background: hpColor(s.hpCur ?? hpMax, hpMax) }} /></span>
-        </span>
-        <span className="party-stat"><span className="party-stat-l">AC</span><span className="party-stat-v">{s.ac ?? '—'}</span></span>
-        <span className="party-stat"><span className="party-stat-l">Perc</span><span className="party-stat-v">{s.perception >= 0 ? '+' : ''}{s.perception ?? 0}</span></span>
+      {/* Two columns: the left is what the GM reads while a turn is running, the right is what they
+          look up between turns. They stack on a phone (see sheet.css, <=720px). */}
+      <div className={'party-card-body' + (extra?.right ? ' has-right' : '')}>
+        <div className="party-col party-col-l">
+          <div className="party-hp">
+            <span className="party-lab">HP</span>
+            <span className="party-stat-v">
+              {s.hpCur ?? hpMax}
+              {hpMax ? ` / ${hpMax}` : ''}
+              {s.hpTemp ? <span className="party-temp"> +{s.hpTemp}</span> : null}
+            </span>
+            <span className="party-hpbar"><span style={{ width: pct + '%', background: hpColor(s.hpCur ?? hpMax, hpMax) }} /></span>
+          </div>
+          {((s.conditions?.length ?? 0) > 0 || (s.modes?.length ?? 0) > 0) && (
+            <div className="party-chips">
+              {(s.conditions ?? []).map((c, i) => (
+                // A condition the SHEET worked out (Bulk, an active mode) carries its cause and wears
+                // a lock here, the same way the owner's own rail marks it — nobody at the table can
+                // take it off, it goes when its cause goes.
+                <span className={'party-cond' + (c.derivedFrom ? ' is-auto' : '')} key={'c' + i} title={c.derivedFrom || undefined}>
+                  {c.name}
+                  {c.value ? ` ${c.value}` : ''}
+                  {c.derivedFrom && <i className="ti ti-lock party-cond-lock" aria-hidden="true" />}
+                </span>
+              ))}
+              {(s.modes ?? []).map((m, i) => (
+                <span className="party-mode" key={'m' + i}>{m}</span>
+              ))}
+            </div>
+          )}
+          <div className="party-perc">
+            <span className="party-lab">Perception</span>
+            <span className="party-perc-v">
+              {s.perception >= 0 ? '+' : ''}
+              {s.perception ?? 0}
+              {s.perceptionRank && <RankPill rank={s.perceptionRank} />}
+            </span>
+          </div>
+          {/* AC and the saves as one bold block — the numbers a GM calls for mid-turn. Part of the
+              card's own surface, so a click here still opens the sheet, exactly as it used to. */}
+          <div className="party-defs">
+            <span className="party-def">
+              <span className="party-lab">AC</span>
+              <b>{s.ac ?? '—'}</b>
+            </span>
+            {extra?.saves}
+          </div>
+          {/* Bottom of the LEFT column, under the AC/saves block (owner 2026-09-16: *"the remove
+              player button doesn't need a row of its own, put it in the bottom left"*). No footer
+              line, no divider — `margin-top:auto` in the column drops it to the bottom. */}
+          {showKick && onKick && (
+            <button
+              className="party-kick"
+              title="Remove from party"
+              aria-label="Remove from party"
+              onClick={(e) => {
+                e.stopPropagation();
+                onKick();
+              }}
+            >
+              <i className="ti ti-trash" aria-hidden="true" />
+            </button>
+          )}
+        </div>
+        {/* Reference: the host's Speed & DCs, Skills, Abilities, Senses. A click on the numbers is
+            not navigation, so it doesn't open the sheet. */}
+        {extra?.right && (
+          <div className="party-col party-col-r" onClick={(e) => e.stopPropagation()}>
+            {extra.right}
+          </div>
+        )}
       </div>
-      {((s.conditions?.length ?? 0) > 0 || (s.modes?.length ?? 0) > 0) && (
-        <div className="party-chips">
-          {(s.conditions ?? []).map((c, i) => (
-            <span className="party-cond" key={'c' + i}>{c.name}{c.value ? ` ${c.value}` : ''}</span>
-          ))}
-          {(s.modes ?? []).map((m, i) => (
-            <span className="party-mode" key={'m' + i}>{m}</span>
-          ))}
-        </div>
-      )}
-      {/* The tracker integration's "Stats shown" sections, when present. Wrapped so a click on the
-          extra stats doesn't also open the sheet — the numbers are for reading, not navigation. */}
-      {extra && (
-        <div className="party-extra" onClick={(e) => e.stopPropagation()}>
-          {extra}
-        </div>
-      )}
     </div>
   );
 }

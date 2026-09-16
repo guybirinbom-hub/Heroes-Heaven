@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import type { Combatant, AppliedCondition } from '../types/pf2e'
 import { useCombatStore } from '../store/combatStore'
 import { CONDITION_META, ALL_CONDITIONS } from '../utils/conditionEffects'
@@ -10,8 +10,11 @@ import { NumberInput } from './NumberInput'
 import { TagRenderer } from './TagRenderer'
 import { useWindowStore } from '../store/windowStore'
 import { useGameData } from '../data/gameDataContext'
+import { fixedPopupPos, localRect } from '../utils/zoomFix'
 
 const STUNNED_SLIDER_MAX = 10
+/** Width of the add-condition panel — the clamp needs it, the panel's style sets it. */
+const PANEL_W = 320
 
 function sliderMax(meta: ConditionMeta | undefined): number {
   if (!meta?.hasValue) return 1
@@ -201,9 +204,18 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
   } : (meta ?? undefined)
   const max = sliderMax(effectiveMeta)
 
+  // The anchor's rect is real viewport pixels while this panel is `position: fixed` inside Heroes
+  // Heaven's zoomed root, whose pixels are smaller/larger — writing one into the other opened the
+  // panel further and further from its chip the lower down the list it was. Same correction as the
+  // initiative row's menu; see utils/zoomFix. The panel's own height is measured so a chip near the
+  // bottom of the screen gets the panel pulled up instead of running off the edge.
+  const [panelH, setPanelH] = useState(0)
+  useLayoutEffect(() => {
+    const h = ref.current ? localRect(ref.current).height : 0
+    setPanelH(prev => (Math.abs(prev - h) < 1 ? prev : h))
+  })
   const rect = anchorEl.getBoundingClientRect()
-  const top = rect.bottom + 6
-  const left = rect.left
+  const { left, top } = fixedPopupPos(rect.left, rect.bottom + 6, PANEL_W, panelH)
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -303,7 +315,7 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
   return (
     <div ref={ref} style={{
       position: 'fixed', top, left, zIndex: 9999,
-      width: 320,
+      width: PANEL_W,
       background: 'var(--bg-panel)',
       border: 'var(--app-bw) solid var(--border-strong)',
       borderRadius: 'var(--radius)',

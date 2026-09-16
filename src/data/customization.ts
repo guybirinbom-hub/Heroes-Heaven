@@ -47,8 +47,8 @@ export const RAIL_CARD_LABELS: Record<string, string> = {
   hp: 'Hit points & defenses',
   // The KEYS are frozen — every saved rail order is stored by them — so the two cards the owner
   // renamed on 2026-09-15 (Perception and Initiative moved into "Essentials") keep theirs.
-  saves: 'Saves',
-  movement: 'Essentials (hero points, speed, perception, senses)',
+  saves: 'Saves & Perception',
+  movement: 'Essentials (hero points, speed, reactions, senses)',
   defenses: 'Resistances, weaknesses, immunities',
   resources: 'Class resources',
   // Was missing, so the Customize editor listed the raw key "multiclassDc" among prose labels.

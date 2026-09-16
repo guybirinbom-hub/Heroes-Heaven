@@ -12,6 +12,7 @@ import { useSourcesStore } from '../store/sourcesStore'
 import { useEncounterTablesStore } from '../store/encounterTablesStore'
 import { usePersistVersion } from '../store/persistBus'
 import { searchMatches, rankBySearch } from '../utils/searchRank'
+import { fixedPopupPos } from '../utils/zoomFix'
 
 // ── 3-state pill ────────────────────────────────────────────────────────────
 type TriState = 'off' | 'yes' | 'no'
@@ -295,9 +296,13 @@ function ContextMenu({ menu, onDelete, onClose }: { menu: CtxMenu; onDelete: () 
 
   const name = menu.kind === 'custom' ? menu.creature.name : menu.entry.name
 
+  // Same zoom correction as the initiative row's menu — see utils/zoomFix. This menu had no edge
+  // clamp of its own before, so it also stops at the viewport edge now instead of overflowing it.
+  const { left, top } = fixedPopupPos(menu.x, menu.y, 210, 96)
+
   return (
     <div ref={ref} style={{
-      position: 'fixed', left: menu.x, top: menu.y, zIndex: 9999,
+      position: 'fixed', left, top, zIndex: 9999,
       background: 'var(--bg-panel)', border: 'var(--app-bw) solid var(--border-strong)',
       borderRadius: 8, boxShadow: 'var(--shadow-md)',
       minWidth: 210, padding: '4px 0',
@@ -454,6 +459,11 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
     | { kind: 'custom';   key: string; creature: Creature; qty: number }
     | { kind: 'party';    key: string; player: PartyPlayer & { partyName: string } }
   const [cart, setCart] = useState<CartItem[]>([])
+  // ── Quick add ────────────────────────────────────────────────────────
+  // The name-only box that used to sit in the campaign rail's footer, moved in here. Deliberately
+  // NOT a cart entry: it adds straight to the tracker the way the rail's box did.
+  const [quickNames, setQuickNames] = useState('')
+  const [quickAdded, setQuickAdded] = useState(0)
   // Hydrate filter + sort + collapsed-section state from localStorage on
   // first mount so reopening the modal or relaunching the app keeps the
   // configuration the user last set.
@@ -895,10 +905,25 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
         // Party member — single instance, original signature.
         const pl = it.player
         if (pl.memberType === 'npc') addCombatant(pl.creature ?? null, { name: pl.name, isPC: false })
-        else addCombatant(null, { name: pl.name, isPC: true, maxHP: pl.pcStats?.maxHP })
+        else addCombatant(null, { name: pl.name, isPC: true, maxHP: pl.pcStats?.maxHP, charId: pl.charId })
       }
     }
     onClose()
+  }
+
+  /**
+   * Quick add — one name per line, or comma-separated, each straight into the initiative order as a
+   * name-only combatant. This is the campaign rail footer's old "Quick add by name…" box, and it
+   * makes the SAME store call it made — `addCombatant(null, { name })` — so a line typed with a
+   * player character's name still produces the plain combatant that Heroes Heaven's seam matches to
+   * that character's pane by name.
+   */
+  const quickAdd = () => {
+    const names = quickNames.split(/[\n,]/).map(s => s.trim()).filter(Boolean)
+    if (!names.length) return
+    for (const name of names) addCombatant(null, { name })
+    setQuickNames('')
+    setQuickAdded(names.length)
   }
 
   const handleAddPartyMember = (pl: PartyPlayer & { partyName: string }) => {
@@ -1255,6 +1280,42 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
             )}
           </button>
         </div>
+
+        {/* ── Quick add ─ the campaign rail footer's old name-only box. Directly under the search
+              field, above the results, so it's in view the moment the picker opens — no scrolling.
+              Hidden in pick-mode (that flow returns ONE creature to its caller) and while the filter
+              panel has the modal. */}
+        {!showFilters && !pickMode && (
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, marginBottom: 8 }}>
+            <label style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 3 }}>
+              <span className="pf-label">Quick add</span>
+              <textarea
+                className="input-dark w-full"
+                rows={2}
+                placeholder="One name per line, or comma-separated — added with no stat block"
+                value={quickNames}
+                onChange={e => { setQuickNames(e.target.value); setQuickAdded(0) }}
+                // Enter alone makes a new line (this is a multi-line box); Ctrl/Cmd+Enter commits.
+                onKeyDown={e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); quickAdd() } }}
+                style={{ resize: 'vertical', minHeight: 46, fontSize: 12.5, padding: '5px 8px' }}
+              />
+            </label>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 3, flexShrink: 0 }}>
+              {quickAdded > 0 && (
+                <span role="status" style={{ fontSize: 10.5, color: 'var(--accent)', fontWeight: 700 }}>
+                  Added {quickAdded}
+                </span>
+              )}
+              <button
+                onClick={quickAdd}
+                disabled={!quickNames.trim()}
+                className="btn-secondary btn btn-sm"
+                title="Add each name to the initiative order as a combatant with no stat block"
+                style={{ opacity: quickNames.trim() ? 1 : 0.5 }}
+              >Add</button>
+            </div>
+          </div>
+        )}
 
         {/* Filter panel — fills the modal when open */}
         {showFilters && (
@@ -1790,8 +1851,9 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
       {hoverImg && (
         <div style={{
           position: 'fixed',
-          left: Math.min(hoverImg.x + 18, (typeof window !== 'undefined' ? window.innerWidth : 1600) - 240),
-          top:  Math.min(hoverImg.y + 18, (typeof window !== 'undefined' ? window.innerHeight : 900) - 240),
+          // Zoom-corrected like the context menus (utils/zoomFix) — the preview is anchored to the
+          // cursor, so at a zoomed-out root it used to drift off the creature it belongs to.
+          ...fixedPopupPos(hoverImg.x + 18, hoverImg.y + 18, 240, 240, 0),
           zIndex: 10000,
           pointerEvents: 'none',
           padding: 4,

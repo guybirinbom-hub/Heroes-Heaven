@@ -107,7 +107,10 @@ export function StatDetailModal({
 
           {b.situational && b.situational.length > 0 && (
             <section className="sd-sec">
-              <div className="sd-sec-label">Situational (apply when it fits)</div>
+              {/* The default is right for a stat whose starred entries really are sometimes-only. A
+                  popup whose list means something else (Initiative, Reactions) says so — see
+                  StatBreakdown.situationalLabel. */}
+              <div className="sd-sec-label">{b.situationalLabel ?? 'Situational (apply when it fits)'}</div>
               <ul className="sd-situational">
                 {b.situational.map((s, i) => {
                   // Notes are capped at about one line, so the trigger stays readable in a list. The

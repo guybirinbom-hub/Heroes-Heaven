@@ -2,6 +2,7 @@ import type { Customization } from '../rules/types';
 import { DEFAULT_RAIL_ORDER, RAIL_CARD_LABELS, HIDEABLE_TABS } from '../data/customization';
 import { themeConsumableColor } from '../theme/theme-manager';
 import { themeList } from '../theme/themes';
+import { PaletteTile } from '../theme/PaletteTile';
 import { styleList } from '../theme/styles';
 import { fontList } from '../theme/fonts';
 import { ZOOM_MAX, ZOOM_MIN } from '../theme/zoom';
@@ -90,11 +91,12 @@ export function CustomizationEditor({
     );
   };
 
-  // A single-choice axis (palette/style/font). In character scope a leading "Match device" chip clears it.
+  // A single-choice axis (style/font). In character scope a leading "Match device" chip clears it.
+  // The palette axis has its own row below — its options are drawn as miniatures, not chips.
   const axisRow = (
-    key: 'themeId' | 'styleId' | 'fontId',
+    key: 'styleId' | 'fontId',
     label: string,
-    items: { id: string; name: string; swatch?: string; stack?: string }[],
+    items: { id: string; name: string; stack?: string }[],
   ) => {
     const resolved = value[key] ?? base[key];
     return (
@@ -115,7 +117,6 @@ export function CustomizationEditor({
                 style={it.stack ? { fontFamily: it.stack } : undefined}
                 onClick={() => onChange(key, it.id)}
               >
-                {it.swatch && <span className="chip-swatch" style={{ background: it.swatch }} />}
                 {it.name}
               </button>
             );
@@ -167,7 +168,24 @@ export function CustomizationEditor({
       )}
 
       {/* Appearance axes */}
-      {axisRow('themeId', 'Palette', themeList.map((t) => ({ id: t.id, name: t.name, swatch: t.tokens['--app-accent'] })))}
+      <div className="menu-label">Palette</div>
+      <div className="menu-row">
+        {perChar && (
+          <button className={'chip' + (value.themeId == null ? ' active' : '')} onClick={() => onChange('themeId', undefined)}>
+            Match device
+          </button>
+        )}
+        {themeList.map((t) => (
+          <PaletteTile
+            key={t.id}
+            theme={t}
+            // Per-character, an unset field means "match device" — pass it through so nothing shows as
+            // chosen here and the Match device chip is the one lit.
+            selectedId={perChar ? value.themeId : value.themeId ?? base.themeId}
+            onPick={() => onChange('themeId', t.id)}
+          />
+        ))}
+      </div>
       {axisRow('styleId', 'Style', styleList.map((s) => ({ id: s.id, name: s.name })))}
       {axisRow('fontId', 'Font', fontList.map((f) => ({ id: f.id, name: f.name, stack: f.stack })))}
 

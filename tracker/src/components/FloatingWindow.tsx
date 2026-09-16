@@ -12,6 +12,7 @@ import type { Creature } from '../types/pf2e'
 import { parseSegments, autoLinkPlainText, joinCriticalDegrees, decodeEntities } from '../utils/tags'
 import { formatSpellDuration } from '../utils/formatDuration'
 import { GLOSSARY, PROSE_GLOSSARY_KEYS, PROSE_DAMAGE_TRAITS } from '../data/glossary'
+import { pageZoom, localDelta } from '../utils/zoomFix'
 import { heightenSpell, applyHeightenedDamage } from '../utils/heightenSpell'
 import { TableAwareText } from './MarkdownTable'
 import { useCombatStore } from '../store/combatStore'
@@ -738,7 +739,7 @@ export function PopupPreview({ type, ref_, title, castRank, fill, dockHandle, on
 // layout pane (dock) — all via the mouse-driven dockDragStore.
 function WinItem({ win }: { win: FloatingWin }) {
   const { close, closeTab, focusTab, toFront, resize } = useWindowStore()
-  const rsz  = useRef<{ mx: number; my: number; ww: number; wh: number } | null>(null)
+  const rsz  = useRef<{ mx: number; my: number; ww: number; wh: number; z: number } | null>(null)
   const active = win.tabs[win.active] ?? win.tabs[0]
   const meta = useMetaBadge(active.type, active.ref, active.castRank)
   // A creature tab whose ref is a LIVE combatant id hosts the full interactive
@@ -806,13 +807,16 @@ function WinItem({ win }: { win: FloatingWin }) {
     e.preventDefault(); e.stopPropagation()
     const winEl = (e.currentTarget as HTMLElement).closest('[data-win-root]') as HTMLElement | null
     const currentH = winEl ? winEl.offsetHeight : (win.sized ? win.h : 360)
-    rsz.current = { mx: e.clientX, my: e.clientY, ww: win.w, wh: currentH }
+    // mx/my are real viewport px (clientX/clientY); ww/wh are layout px (win.w is written straight
+    // into `width` on this fixed window, offsetHeight never scales). Under HH's zoomed root those
+    // are different units, so the drag delta comes back through localDelta — see utils/zoomFix.
+    rsz.current = { mx: e.clientX, my: e.clientY, ww: win.w, wh: currentH, z: pageZoom() }
     document.body.style.userSelect = 'none'
     const onMove = (ev: MouseEvent) => {
       if (!rsz.current) return
       resize(win.id,
-        Math.max(300, rsz.current.ww + ev.clientX - rsz.current.mx),
-        Math.max(200, rsz.current.wh + ev.clientY - rsz.current.my),
+        Math.max(300, rsz.current.ww + localDelta(ev.clientX - rsz.current.mx, rsz.current.z)),
+        Math.max(200, rsz.current.wh + localDelta(ev.clientY - rsz.current.my, rsz.current.z)),
       )
     }
     const onUp = () => {
@@ -963,9 +967,13 @@ function DockDragGhost() {
   if (drag.winId) return null
   const extra = (drag.allTabs?.length ?? 1) > 1 ? ` +${drag.allTabs!.length - 1} more` : ''
   const label = drag.label ?? drag.popup?.title ?? 'Stat block'
+  // The store tracks the cursor in real viewport pixels; this chip is fixed inside Heroes Heaven's
+  // zoomed root, so the offset has to be divided back out or the chip trails the cursor — see
+  // utils/zoomFix. (Divided as one sum: the +14/+12 nudge is meant to clear the cursor on screen.)
+  const z = pageZoom()
   return (
     <div style={{
-      position: 'fixed', left: x + 14, top: y + 12, zIndex: 30000,
+      position: 'fixed', left: (x + 14) / z, top: (y + 12) / z, zIndex: 30000,
       pointerEvents: 'none',
       background: 'var(--bg-elevated)', border: 'var(--app-bw) solid var(--accent-line)',
       borderRadius: 'var(--radius-sm)', padding: '4px 10px',

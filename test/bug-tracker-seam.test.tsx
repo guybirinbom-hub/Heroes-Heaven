@@ -221,14 +221,14 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-async function openTracker(): Promise<HTMLElement> {
+async function openTracker(opts?: { onLeave?: () => void }): Promise<HTMLElement> {
   const { CampaignTracker } = await import('../src/integration/CampaignTracker');
   const el = render(
     <CampaignTracker
       m={CAMPAIGN}
       content={content()}
       onOpenSettings={() => undefined}
-      onLeave={() => undefined}
+      onLeave={opts?.onLeave ?? (() => undefined)}
       onViewMember={() => undefined}
     />,
   );
@@ -299,6 +299,23 @@ describe('the campaign ↔ tracker seam', () => {
     await flush(1);
     const pcs = useCombatStore.getState().combatants.filter((c) => c.isPC);
     expect(pcs.map((c) => c.name).sort()).toEqual(['Ayla Brightwood', 'Doran Vex']);
+    // …and each row keeps the STABLE character id, not just the name. This button — not the card's
+    // "+" — is the GM's bulk gesture, so a charId-less row here is a link that never existed: a save
+    // has nothing to persist, and a mid-campaign rename orphans the pane.
+    expect(pcs.every((c) => !!c.charId)).toBe(true);
+
+    // Pressing it again after a rename must NOT add the same PC twice. The button used to hold its
+    // own name-only dedupe; it now defers to the store's isSamePc, so the two can't disagree.
+    act(() =>
+      usePartyStore.setState((s) => {
+        const pl = s.parties.find((p) => p.campaignId === CAMPAIGN.id)?.players.find((x) => x.name === 'Doran Vex');
+        if (pl) pl.name = 'Doran the Vexed';
+      }),
+    );
+    await flush(1);
+    click(btn('Add to Initiative'));
+    await flush(1);
+    expect(useCombatStore.getState().combatants.filter((c) => c.isPC)).toHaveLength(2);
 
     act(() => useCombatStore.getState().addCombatant(OGRE));
     await flush(1);
@@ -633,6 +650,38 @@ describe('the campaign ↔ tracker seam', () => {
     expect(mine().at(-1)?.sheet.play?.conditions).toEqual(
       expect.arrayContaining([{ id: 'sickened', value: 1 }]),
     );
+  }, 120_000);
+
+  it('leaves a PC’s pane with nothing unpushed to lose', async () => {
+    // owner 2026-09-16: seam
+    /*
+     * A PC's pane used to BE their editable GmEditSheet — one unpushed working copy per pane, each
+     * of which the view had to ask about before it could be unmounted, through a registry keyed by
+     * combatant id. The pane holds the player's CARD now (the sheet it opens is a layer over the
+     * whole view), so there is exactly one working copy left and the registry went with the sheets.
+     * This is what says that deletion is safe: the pane really holds a card, and one Escape still
+     * leaves the campaign without something invisible swallowing the press.
+     */
+    srv.party = [publish(PC_A(), 'owner-a')];
+    let left = 0;
+    const el = await openTracker({
+      onLeave: () => {
+        left++;
+      },
+    });
+    act(() => useCombatStore.getState().addCombatant(null, { name: 'Ayla Brightwood', isPC: true, maxHP: 40 }));
+    await flush(2);
+
+    const row = [...el.querySelectorAll('.init-row')].find((r) => (r.textContent ?? '').includes('Ayla Brightwood'));
+    expect(row).toBeTruthy();
+    click(row!);
+    await flush(2);
+    expect(el.querySelector('.ct-pane-card .party-card')).toBeTruthy();
+    expect(el.querySelector('.ct-pc-pane .ws-app')).toBeNull();
+
+    key({ key: 'Escape' });
+    await flush(2);
+    expect(left).toBe(1);
   }, 120_000);
 
   it('hides the GM tools on a phone, and keeps joining a campaign', async () => {

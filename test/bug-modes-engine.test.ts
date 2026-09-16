@@ -217,7 +217,13 @@ describe('finding #112: a mode that applies a condition', () => {
     const mode = enfeebling(1);
     const ch = build('oracle', 5);
     const on = live(mode, ch);
-    expect(on.conditions.find((x) => x.id === 'enfeebled'), 'the printed enfeebled 1 reaches the sheet').toEqual({ id: 'enfeebled', value: 1 });
+    // `derivedFrom` since 2026-09-16: the entry carries the cause so the sheet can lock it instead of
+    // offering a remove button that removes nothing. Still an exact shape, not a relaxed one.
+    expect(on.conditions.find((x) => x.id === 'enfeebled'), 'the printed enfeebled 1 reaches the sheet').toEqual({
+      id: 'enfeebled',
+      value: 1,
+      derivedFrom: "the Sky's Call 1 mode",
+    });
     // Enfeebled is a real number on a real roll, not a badge: −1 to every Strength-based check.
     expect(deriveSkill(on, 'athletics', db(mode)).modifier).toBe(deriveSkill(ch, 'athletics', c).modifier - 1);
 

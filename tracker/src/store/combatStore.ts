@@ -217,7 +217,7 @@ interface CombatStore {
   diceResults: DiceResult[]
   /** Whether the combat-edit undo / redo stacks have anything to apply. */
   canUndo: boolean; canRedo: boolean
-  addCombatant: (creature: Creature | null, opts?: { name?: string; isPC?: boolean; isAlly?: boolean; initiative?: number|null; count?: number; maxHP?: number }) => void
+  addCombatant: (creature: Creature | null, opts?: { name?: string; isPC?: boolean; isAlly?: boolean; initiative?: number|null; count?: number; maxHP?: number; charId?: string }) => void
   /** Add another copy of an existing combatant (same stat block + weak/elite/
    *  scaled state), inserted right after it with fresh HP and no conditions.
    *  No-op for PCs (a player character can't appear twice). */
@@ -597,6 +597,20 @@ function endTurnPass(s: CombatStore, c: Combatant) {
   }
 }
 
+/**
+ * Is this the SAME player character?
+ *
+ * The stable `charId` when both sides carry one — so a PC renamed mid-campaign is still themselves,
+ * and two PCs who happen to share a name stay two rows. Either side missing it (a row the GM typed
+ * in by hand, a save from before charId was tracked) falls back to the name, which is all there is.
+ * Same shape partyStore.syncCampaignParty matches players with; the seam's "+" button asks this too,
+ * so the button and the store can't disagree about who is already in the order.
+ */
+export function isSamePc(a: { name: string; charId?: string }, b: { name: string; charId?: string }): boolean {
+  if (a.charId !== undefined && b.charId !== undefined) return a.charId === b.charId
+  return a.name.trim().toLowerCase() === b.name.trim().toLowerCase()
+}
+
 export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   combatants: _persisted?.combatants ?? [],
   round:       _persisted?.round       ?? 1,
@@ -616,13 +630,14 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       for (let i = 0; i < count; i++) {
         const suffix = count > 1 ? ` ${String.fromCharCode(65+i)}` : ''
         const name = (opts.name ?? creature?.name ?? 'PC') + suffix
-        // A player character can't appear twice — skip if one with this name
-        // is already in the tracker.
-        if (opts.isPC && s.combatants.some(c => c.isPC && c.name.toLowerCase() === name.toLowerCase())) continue
+        // A player character can't appear twice — skip if this same character is already in the
+        // tracker. Same charId is the same PC whatever they're called; without one on either side
+        // the name is the only handle there is (isSamePc).
+        if (opts.isPC && s.combatants.some(c => c.isPC && isSamePc(c, { name, charId: opts.charId }))) continue
         const hp = opts.maxHP ?? creature?.defenses.hp ?? 0
         s.combatants.push({
           id: nid(), name, creature: creature ?? null,
-          isPC: opts.isPC ?? false, isAlly: opts.isAlly ?? false,
+          isPC: opts.isPC ?? false, isAlly: opts.isAlly ?? false, charId: opts.charId,
           initiative: opts.initiative ?? null,
           currentHP: hp, maxHP: hp, tempHP: 0,
           conditions: [], isElite: false, isWeak: false, notes: '', isDefeated: false,
@@ -1203,6 +1218,10 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         return {
           name: slim.name, creature: slim.creature ?? null, creatureId: slim.creature?.id ?? null,
           isPC: slim.isPC, isAlly: slim.isAlly, maxHP: slim.maxHP, isElite: slim.isElite, isWeak: slim.isWeak,
+          // The character this PC row points at. Built field by field here, so leaving it out is
+          // what dropped the link: a reloaded save was a PC by name only, and the party card's "+"
+          // offered to add them a second time.
+          charId: slim.charId,
           scaledToLevel: slim.scaledToLevel, notes: slim.notes,
         }
       }),
@@ -1224,7 +1243,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         const creature = sc.creature ?? null
         const hp = creature?.defenses.hp ?? sc.maxHP
         return {
-          id: nid(), name: sc.name, creature, isPC: sc.isPC, isAlly: sc.isAlly ?? false,
+          id: nid(), name: sc.name, creature, isPC: sc.isPC, isAlly: sc.isAlly ?? false, charId: sc.charId,
           initiative: null, currentHP: hp, maxHP: hp, tempHP: 0, conditions: [],
           isElite: sc.isElite, isWeak: sc.isWeak, scaledToLevel: sc.scaledToLevel,
           notes: sc.notes, isDefeated: false,

@@ -1,6 +1,9 @@
+import { useEffect, useRef } from 'react';
 import { useTrackerUi, trackerUi } from './trackerUiStore';
 import { TurnTimerWidget } from '../../tracker/src/components/TurnTimerWidget';
 import { useSettingsStore } from '../../tracker/src/store/settingsStore';
+import { useTrackerAppearance } from './trackerAppearance';
+import { resolveAppearanceVars } from '../theme/theme-manager';
 
 /*
  * The tracker's tools, rendered in Heroes Heaven's TOP BAR (Option B, row 1).
@@ -14,6 +17,40 @@ import { useSettingsStore } from '../../tracker/src/store/settingsStore';
 export function TrackerTools() {
   const { searchOpen, customOpen, encountersOpen, mainView, boardReady } = useTrackerUi();
   const turnTimerEnabled = useSettingsStore((s) => s.turnTimerEnabled);
+
+  /*
+   * THE TOP BAR FOLLOWS THE TRACKER'S OWN PALETTE.
+   *
+   * "Customize tracker appearance" paints the tracker with trackerAppearance's tokens, and
+   * CampaignTracker applies them as inline `--app-*` variables on `.tracker-root.campaign-tracker`.
+   * This bar is NOT inside that element — it's Heroes Heaven's `header.chrome`, a sibling — so it
+   * kept resolving `--app-surface-2` / `--app-accent` from <html>, i.e. the app-wide palette. Pick
+   * Ember for the tracker and the body went Ember while the bar above it stayed Midnight, for good:
+   * reloading doesn't fix it, because the override is tracker-scoped by design and the bar was
+   * never in scope.
+   *
+   * The tools ARE the tracker, so the bar that holds them is painted with the same tokens: we copy
+   * them onto the header this component is mounted in, and take them off again when the tracker
+   * view goes away (or the GM resets the override to "inherit"). Reaching up to the host element is
+   * deliberate — it keeps the whole thing inside the removable seam, with nothing to unpick in
+   * CampaignsPage. See ./README.md.
+   */
+  const rootRef = useRef<HTMLDivElement>(null);
+  // The STATE, not useTrackerVars(): the resolved map is a fresh object on every render, which would
+  // re-run this effect (strip + rewrite every token on the header) on every keystroke in the tracker.
+  // The state object only changes when the GM actually changes an axis. `null` = inherit the app's
+  // appearance, and then the header is left exactly as Heroes Heaven painted it.
+  const app = useTrackerAppearance();
+  useEffect(() => {
+    const header = rootRef.current?.closest('header') as HTMLElement | null;
+    if (!header || !app) return;
+    const { vars } = resolveAppearanceVars(app.themeId, app.styleId, app.fontId, app.accent, null);
+    const names = Object.keys(vars);
+    for (const n of names) header.style.setProperty(n, vars[n]);
+    return () => {
+      for (const n of names) header.style.removeProperty(n);
+    };
+  }, [app, boardReady]);
 
   /**
    * `on: undefined` means "this button doesn't have an on/off state" — it navigates. Such a button
@@ -40,7 +77,7 @@ export function TrackerTools() {
   if (!boardReady) return null;
 
   return (
-    <div className="tracker-tools">
+    <div className="tracker-tools" ref={rootRef}>
       {/* The turn timer lives here in the top bar (it used to sit in the initiative rail). Wrapped in
           `.tracker-root` because this row is Heroes Heaven's chrome — OUTSIDE the tracker's wrapper —
           and the widget's colours are tracker CSS variables scoped to `.tracker-root`. Self-gated on

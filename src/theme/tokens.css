@@ -184,3 +184,12 @@ body {
   outline: 2px solid var(--app-focus);
   outline-offset: 2px;
 }
+
+/* Explicit ring for the palette tile — it renders in the tracker too (PaletteTile.tsx), where this
+ * is the one stylesheet both apps load, and ties the ring to the tile by name so a future reset
+ * (e.g. `button { outline: none }`) can't drop it silently the way the bare :focus-visible above
+ * would. See test/theme-contrast.test.ts. */
+.palette-tile:focus-visible {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 2px;
+}

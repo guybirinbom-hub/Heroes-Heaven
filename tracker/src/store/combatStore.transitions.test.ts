@@ -9,7 +9,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { createElement } from 'react'
 import { render, screen, fireEvent, cleanup, act } from '@testing-library/react'
-import { useCombatStore } from './combatStore'
+import { useCombatStore, invalidateEncounterCache } from './combatStore'
 import { InitiativeTracker } from '../components/InitiativeTracker'
 import { useLayoutStore, useGmLayoutStore } from './layoutStore'
 import { computeConditionMods } from '../utils/conditionEffects'
@@ -1166,5 +1166,67 @@ describe('Delay is offered on the row whose turn it is', () => {
     fireEvent.contextMenu(row('Wizard'))
     expect(screen.queryByText('Return from delay')).not.toBeNull()
     expect(screen.queryByText('Delay')).toBeNull()
+  })
+})
+
+// ───────────────────────────────────────────────────────────────────────────
+// 6. charId — the Heroes Heaven character a PC row stands for
+//
+//    The tracker's PC↔character link USED to be the lower-cased name, and two characters can carry
+//    the same one. The embed knows the real id, so the row carries it — and the dedupe matches on it
+//    (isSamePc: same charId is the same PC; either side missing one falls back to the name, which is
+//    all a hand-typed row or a pre-charId save has).
+//
+//    It has to SURVIVE too: every path that rebuilds a combatant object field by field
+//    (slimCombatantForPersist → saveEncounter, loadEncounter) drops whatever it doesn't name.
+// ───────────────────────────────────────────────────────────────────────────
+describe('a PC row carries its charId', () => {
+  beforeEach(() => { resetCombat(); localStorage.clear() })
+  afterEach(() => { useCombatStore.getState().setScope(null); localStorage.clear() })
+
+  it('keeps the id addCombatant was given, and brings it back through a scope round-trip', () => {
+    useCombatStore.getState().setScope('camp-a')
+    add('Hero', { isPC: true, maxHP: 30, charId: 'hh-char-7' })
+    add('Goblin')                                                   // a hand-typed row has no character
+    expect(useCombatStore.getState().combatants.map(c => c.charId)).toEqual(['hh-char-7', undefined])
+
+    // setScope flushes campaign A under its own key and reads it back on the way in.
+    useCombatStore.getState().setScope('camp-b')
+    useCombatStore.getState().setScope('camp-a')
+    expect(useCombatStore.getState().combatants.find(c => c.name === 'Hero')!.charId).toBe('hh-char-7')
+  })
+
+  it('dedupes a PC by charId, and by name only when one side has none', () => {
+    add('Hero', { isPC: true, charId: 'hh-char-7' })
+    // Same character, renamed at the table — one row, not two.
+    add('Hero the Bold', { isPC: true, charId: 'hh-char-7' })
+    expect(names()).toEqual(['Hero'])
+    // A DIFFERENT character who happens to share the name is a second player at the table.
+    add('Hero', { isPC: true, charId: 'hh-char-9' })
+    expect(names()).toEqual(['Hero', 'Hero'])
+    expect(useCombatStore.getState().combatants.map(c => c.charId)).toEqual(['hh-char-7', 'hh-char-9'])
+    // No charId on the incoming row (the GM typed the name in): the name is the only handle, so it
+    // still refuses the duplicate rather than adding a third Hero.
+    add('hero', { isPC: true })
+    expect(names()).toEqual(['Hero', 'Hero'])
+    // …and a monster is never PC-deduped at all.
+    add('Goblin'); add('Goblin')
+    expect(names()).toEqual(['Hero', 'Hero', 'Goblin', 'Goblin'])
+  })
+
+  it('keeps the charId through a saved encounter', () => {
+    invalidateEncounterCache()
+    add('Hero', { isPC: true, maxHP: 30, charId: 'hh-char-7' })
+    add('Goblin')
+    useCombatStore.getState().saveEncounter('Ambush')
+
+    resetCombat()
+    useCombatStore.getState().loadEncounter('Ambush', [])
+    expect(useCombatStore.getState().combatants.map(c => c.charId)).toEqual(['hh-char-7', undefined])
+
+    // Which is the point: the reloaded row IS that character, so the card's "+" refuses a second one.
+    add('Hero the Bold', { isPC: true, charId: 'hh-char-7' })
+    expect(names()).toEqual(['Hero', 'Goblin'])
+    invalidateEncounterCache()
   })
 })

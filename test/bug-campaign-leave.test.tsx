@@ -231,16 +231,21 @@ async function openCampaign(): Promise<HTMLElement> {
 }
 
 describe('leaving a campaign', () => {
-  it('asks before the Back arrow throws away an unpushed pane edit, and stays put on cancel', async () => {
-    // tracker 2026-09-15: leave gate
+  it('asks before the Back arrow throws away an unpushed sheet edit, and stays put on cancel', async () => {
+    // tracker 2026-09-15: leave gate · owner 2026-09-16: the working copy moved
     // Without the fix (CampaignsPage's goBack still the base of the dismiss stack):
     //   Error: no .btn-ghost in the dialog — on screen: (no dialog at all)
+    /*
+     * The unpushed working copy used to live in a PC's PANE, one per pane. It doesn't any more: a
+     * PC's pane holds their card, and the card opens the one editable sheet as a layer over the whole
+     * view. So this walks the route a GM actually takes to a working copy now — row → card → sheet —
+     * and then presses Back on it. The guarantee is unchanged: nothing throws that copy away silently.
+     */
     srv.party = [publishPc()];
     localStorage.setItem('pf2e-codex.campaigns', JSON.stringify([CAMPAIGN]));
     const el = await openCampaign();
     expect(el.querySelector('.campaign-tracker')).not.toBeNull();
 
-    // Open this PC's pane — that's what registers a working copy with the view.
     act(() =>
       useCombatStore.getState().addCombatant(null, { name: 'Ayla Brightwood', isPC: true, maxHP: 60 }),
     );
@@ -251,19 +256,33 @@ describe('leaving a campaign', () => {
       trackerUi.showMain('combatant');
     });
     await flush(2);
-    expect(el.querySelector('.stub-gm-sheet')).not.toBeNull();
+    // The pane is the player's CARD; clicking it is what opens the editable sheet.
+    const paneCard = el.querySelector('.ct-pane-card .party-card');
+    expect(paneCard).not.toBeNull();
+    click(paneCard!);
+    await flush(2);
+    expect(el.querySelector('.ct-sheet-full .stub-gm-sheet')).not.toBeNull();
 
     // Back arrow → the same question the campaign-settings route has always asked.
     click(el.querySelector('.hb-back')!);
     await flush(2);
     click(dialogButton('.btn-ghost')); // Cancel
     await flush(2);
-    expect(el.querySelector('.campaign-tracker')).not.toBeNull(); // still in the campaign
+    expect(el.querySelector('.stub-gm-sheet')).not.toBeNull(); // the working copy is still there
+    expect(el.querySelector('.campaign-tracker')).not.toBeNull(); // and still in the campaign
 
-    // …and saying yes still leaves, so the gate isn't just a dead end.
+    // …saying yes closes the SHEET and lands back on the card — the gate isn't a dead end, and Back
+    // peels one layer at a time rather than dropping the GM out of the campaign.
     click(el.querySelector('.hb-back')!);
     await flush(2);
     click(dialogButton('.btn-primary')); // Update
+    await flush(3);
+    expect(el.querySelector('.stub-gm-sheet')).toBeNull();
+    expect(el.querySelector('.ct-pane-card .party-card')).not.toBeNull();
+    expect(el.querySelector('.campaign-tracker')).not.toBeNull();
+
+    // Nothing left to lose — the next Back really does leave.
+    click(el.querySelector('.hb-back')!);
     await flush(3);
     expect(el.querySelector('.campaign-tracker')).toBeNull();
   }, 120_000);

@@ -132,6 +132,17 @@ export interface StatBreakdown {
   /** Conditional mode modifiers ("+1 status from Inspire Courage — when …") not folded
    *  into the number; shown so the player can apply them situationally. */
   situational?: SituationalNote[];
+  /**
+   * Heading for that list, when "Situational (apply when it fits)" would be wrong.
+   *
+   * bug 2026-09-16: the Initiative popup lists influences that are outside the number but apply on
+   * EVERY initiative roll (ponderous armour's check penalty, Incredible Initiative), and filing them
+   * under "apply when it fits" told the player the opposite of what the line next to it said. Same
+   * for the Reactions popup, whose list is which record grants an extra reaction — nothing there is
+   * applied at all. A caller that means something else by the list says so; everyone else is
+   * unchanged.
+   */
+  situationalLabel?: string;
 }
 
 const ABIL_LABEL: Record<AbilityId, string> = {

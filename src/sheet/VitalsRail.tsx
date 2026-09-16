@@ -20,7 +20,8 @@ import {
   stateGrantSummary,
   type DefenseSource,
 } from '../rules/derive';
-import { deriveInitiative, initiativeInfluences } from '../rules/initiative';
+import { deriveInitiative, initiativeInfluenceDetail } from '../rules/initiative';
+import { isRestrictedReaction } from '../rules/reactions';
 import {
   addCondition,
   applyDamage,
@@ -233,10 +234,16 @@ export function VitalsRail({
   const sc = primary?.sc ?? null;
   const perception = derivePerception(character, content);
   const initiative = deriveInitiative(character, content);
-  // The gate for the Initiative row AND the whole content of its popup — see `initiativeInfluences`.
-  const initInfluences = initiativeInfluences(character, content);
-  // Everyone has one unrestricted reaction per round; `extraReactions` are the RESTRICTED extras.
-  const reactionsPerRound = 1 + (character.extraReactions ?? []).reduce((n, r) => n + r.count, 0);
+  // The gate for the Initiative row AND the whole content of its popup — one call, both halves.
+  const initInfluences = initiativeInfluenceDetail(character, content);
+  // …and whether any of them is OUTSIDE that number, which is what the row's star says. An influence
+  // that applies on every initiative roll (Incredible Initiative, ponderous armour) is in the number
+  // instead — see `InitiativeInfluence.inNumber`, which is the whole rule and is asked here, on the
+  // list this component already holds, rather than through a second helper that could disagree.
+  const initHasSituational = initInfluences.some((i) => !i.inNumber);
+  // Everything that changes how many reactions this character gets. No count is printed anywhere —
+  // see reactions.ts — so this list is both the gate for the row and the whole of its popup.
+  const reactionChanges = character.extraReactions ?? [];
   const speeds = deriveSpeeds(character, content);
   // A temporary Speed override (Hasted/Slowed/…) replaces the derived land Speed and is highlighted.
   const speedOverride = character.speedOverride;
@@ -625,8 +632,9 @@ export function VitalsRail({
       <section className="card">
         <div className="ct">
           <i className="ti ti-shield-checkered" aria-hidden="true" />
-          {/* bug 2026-09-15: rail initiative — Perception left this card for "Essentials", where it
-              sits with the senses it belongs to, and Initiative left it entirely (see below). */}
+          {/* bug 2026-09-16: rail perception — Perception is back beside the saves, where the owner
+              wants to read it. Initiative stays out of this card: it is only ever shown when something
+              actually changes it, and that row lives in Essentials (see below). */}
           Saves
         </div>
         <div className="saves-strip">
@@ -662,6 +670,29 @@ export function VitalsRail({
             </div>
           );
         })}
+        {/* bug 2026-09-16: rail perception — back on this card, in the shape it had before it left:
+            rank pill, situational star, its own DC when the setting is on. Initiative did NOT come
+            back with it — that row appears in Essentials only when something changes it. */}
+        <div
+          className={'stat-row' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'perception' }, content)}
+          onClick={onOpenStat ? () => onOpenStat({ kind: 'perception' }) : undefined}
+          title={onOpenStat ? 'Perception — how is this calculated?' : undefined}
+        >
+          <RankPill rank={perception.rank} />
+          <span className="stat-name">
+            Perception
+            {statHasSituational(character, { kind: 'perception' }, content) && <SituationalStar />}
+          </span>
+          <span className="stat-short">Perc</span>
+          {/* Perception has a DC too — it's what a Sneaking or Hiding creature rolls against, and it
+              was the one number on this card the setting didn't cover. */}
+          {showSaveDCs && (
+            <span className="stat-dc" title="Perception DC">
+              DC {10 + perception.modifier}
+            </span>
+          )}
+          <span className="stat-mod">{formatMod(perception.modifier)}</span>
+        </div>
         </div>
       </section>
   );
@@ -669,8 +700,9 @@ export function VitalsRail({
       <section className="card">
         <div className="ct">
           <i className="ti ti-bolt" aria-hidden="true" />
-          {/* bug 2026-09-15: rail initiative — a general name, because the card now also holds
-              Perception and (when anything affects it) Initiative. */}
+          {/* bug 2026-09-15: rail initiative — a general name, because the card also holds Reactions
+              and (when anything affects it) Initiative. Perception went back to the saves card on
+              2026-09-16; the name still fits what is left. */}
           Essentials
         </div>
         <div className="rail-kv">
@@ -726,62 +758,72 @@ export function VitalsRail({
             feats grant a second one usable only for a named thing, and nothing tracked reactions at
             all, so all 15 were a sentence on the Feats tab and no number anywhere. */}
         {/* bug 2026-09-15: rail reactions — owner: *"i don't want the whole text block there because
-            it's too big … add a Reactions row with a dotted line underneath so that the player will
-            know it's pressable, and that popup will show the full explanation."* So the row is the
-            number and nothing else, and the FULL untrimmed wording lives in the popup, exactly the
-            shape the Initiative row below uses. */}
-        {!!character.extraReactions?.length && (
+            it's too big … add a Reactions row … and that popup will show the full explanation."* So
+            the row carries one pressable thing and nothing else, and the FULL untrimmed wording lives
+            in the popup, exactly the shape the Initiative row below uses. */}
+        {/* bug 2026-09-16: rail reactions — owner, on a guardian reading "2 per round": that second
+            reaction *"can only be used for guardian reactions"*, so the number was a promise the rules
+            do not keep. Counting only the unrestricted extras left "1 per round", which is true of
+            every character alive — so, second ruling the same day: *"don't show 1 per round … if a
+            character has something with reaction amount changes then add the reaction line and have a
+            `*` and the `*` when clicked shows the reaction changes."* No number, ever. The row exists
+            only when something changes the count, and the star IS the value. */}
+        {reactionChanges.length > 0 && (
           <div className="rail-kv">
             <span className="kv-label">Reactions</span>
             <span className="iwr-val">
-              <IwrTerm
-                first
-                label={`${reactionsPerRound} per round`}
-                title="What gives you extra reactions?"
-                onOpen={() =>
+              {/* bug 2026-09-16 (refutation): this star is the row's ONLY control, and as a bare
+                  `.cond-mark` it measured 7.4 × 0 px. That class is `inline-flex` and its only child,
+                  `.sit-star`, carries `line-height: 0` — beside a condition pill, which is pressable
+                  itself, the star is a garnish and the collapsed box never showed; here the whole row
+                  is the button, so all a finger could hit was the glyph overflowing a box with no
+                  height, wearing the `cursor: help` `.sit-star` sets rather than a pointer.
+                  So: a real target, and the 09-15 ruling's *"dotted line underneath so that the player
+                  will know it's pressable"* under the whole of it — `.rail-star-btn` in sheet.css,
+                  which also un-collapses the glyph `.sit-star` assumes is sitting inside a line of
+                  text. `.cond-mark` itself now carries a 24 × 24 target for the stars beside the
+                  condition pills, which are tapped on a phone too. */}
+              <button
+                className="cond-mark rail-star-btn"
+                aria-label="What changes your reactions"
+                /* The clause the star SAYS, like every other star on this sheet — on the BUTTON, so it
+                   covers the whole target (a child with no `title` of its own inherits the tooltip). */
+                title={reactionChanges
+                  .map((r) => (isRestrictedReaction(r) ? `${r.from}: usable only for ${r.usableFor}` : `${r.from}: +${r.count} reaction`))
+                  .join('\n')}
+                onClick={() =>
                   setDefBreak({
                     title: 'Reactions',
-                    subtitle: '1 free reaction each round, plus:',
-                    totalText: `${reactionsPerRound} per round`,
-                    // No parts and no timeline: a reaction count is not a calculated modifier, so the
-                    // only thing to say is which record grants the extra and what it may be spent on.
+                    subtitle: 'everyone gets one reaction each round — this is what changes that',
+                    // No total: the count is exactly what the owner took off this row. No parts and no
+                    // timeline either — a reaction is not a calculated modifier, so the only thing to
+                    // say is which record changes it and what the extra may be spent on.
+                    totalText: '',
                     parts: [],
                     timeline: [],
-                    situational: (character.extraReactions ?? []).map((r) => ({
-                      text: `+${r.count} reaction — usable only for ${r.usableFor} — ${r.from}`,
+                    // Nothing in this list is a bonus the player "applies when it fits" — it is who
+                    // gave them the extra reaction — so it does not wear that heading.
+                    situationalLabel: 'What gives you extra reactions',
+                    // EVERY change, restricted or not, each with its own printed clause.
+                    situational: reactionChanges.map((r) => ({
+                      text: isRestrictedReaction(r)
+                        ? `+${r.count} reaction — usable only for ${r.usableFor} — ${r.from}`
+                        : `+${r.count} reaction — ${r.from}`,
                       ...reactionSource(content, r.from),
                     })),
                   })
                 }
-              />
+              >
+                <sup className="sit-star" aria-hidden="true">
+                  *
+                </sup>
+              </button>
             </span>
           </div>
         )}
-        {/* Perception belongs with the senses, not with the saves — owner, 2026-09-15. Same rollable
-            row it had on the saves card: rank pill, situational star, DC when the setting is on. */}
-        <div
-          className={'stat-row' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'perception' }, content)}
-          onClick={onOpenStat ? () => onOpenStat({ kind: 'perception' }) : undefined}
-          title={onOpenStat ? 'Perception — how is this calculated?' : undefined}
-        >
-          <RankPill rank={perception.rank} />
-          <span className="stat-name">
-            Perception
-            {statHasSituational(character, { kind: 'perception' }, content) && <SituationalStar />}
-          </span>
-          <span className="stat-short">Perc</span>
-          {/* Perception has a DC too — it's what a Sneaking or Hiding creature rolls against, and it
-              was the one number on this card the setting didn't cover. */}
-          {showSaveDCs && (
-            <span className="stat-dc" title="Perception DC">
-              DC {10 + perception.modifier}
-            </span>
-          )}
-          <span className="stat-mod">{formatMod(perception.modifier)}</span>
-        </div>
         {/* Initiative ONLY when something actually changes it. "In pf2e initiative isn't always
             perception" — but usually it IS, and a row that repeated the Perception number every time
-            taught the player nothing. `initiativeInfluences` is the gate and the popup's whole
+            taught the player nothing. `initiativeInfluenceDetail` is the gate and the popup's whole
             content; it deliberately excludes the plain Perception/skill terms. */}
         {initInfluences.length > 0 && (
           <div className="rail-kv">
@@ -801,10 +843,28 @@ export function VitalsRail({
                     // makes my initiative different from that number.
                     parts: [],
                     timeline: [],
-                    situational: initInfluences,
+                    /*
+                     * bug 2026-09-16 (refutation): this list is NOT "situational (apply when it fits)".
+                     * Some of it always applies — ponderous armour's check penalty is on every single
+                     * initiative roll — and printing "always applies" under a heading that says the
+                     * opposite made the popup argue with itself.
+                     */
+                    situationalLabel: 'What changes your initiative',
+                    // TWO kinds, and only two — owner, 2026-09-16: a number for what always applies, a
+                    // star for what applies only sometimes. The third label this list used to carry
+                    // ("every initiative roll — add it yourself") was homework the engine could do,
+                    // and now does: an always-on bonus is inside the value above.
+                    situational: initInfluences.map(({ note, inNumber }) => ({
+                      ...note,
+                      text: `${note.text} ${inNumber ? '(in the number)' : '(only sometimes — apply it yourself)'}`,
+                    })),
                   })
                 }
               />
+              {/* bug 2026-09-16: rail initiative — the star means one thing, "not in that number".
+                  "On initiative rolls" is not a sometimes-clause on the Initiative row, it is the row,
+                  so it is counted instead — see `ALWAYS_ON_WHEN` and `initiativeTerms`. */}
+              {initHasSituational && <SituationalStar title="Something affects your initiative only in certain situations — open for details" />}
             </span>
           </div>
         )}
@@ -1194,8 +1254,13 @@ export function VitalsRail({
             // marks the condition itself — there is no stat row it could sit on, and starring the
             // nearest roll would claim a bonus it does not give.
             const marks = recordMarkersFor(character, content, 'condition', c.id);
+            // bug 2026-09-16: derived conditions — `applyPlayState` worked this one out (Bulk, an
+            // active mode) and says so on the entry itself, so it is not the player's to remove: it
+            // goes when its cause goes. It used to wear a remove button that silently did nothing.
+            // Read off the condition, never re-derived here — see ActiveCondition.derivedFrom.
+            const auto = c.derivedFrom;
             return (
-              <span className={'cond-pill' + (dead ? ' cond-dead' : '')} key={c.id}>
+              <span className={'cond-pill' + (dead ? ' cond-dead' : '') + (auto ? ' cond-auto' : '')} key={c.id}>
                 <InfoTerm title={name} description={def?.description} descRefs={def?.descRefs} descKey="conditions">
                   {dead ? `Dead — ${name}` : name}
                 </InfoTerm>
@@ -1212,7 +1277,12 @@ export function VitalsRail({
                     <SituationalStar />
                   </button>
                 )}
-                {valued && onPlay ? (
+                {/* bug 2026-09-16 (second pass): a DERIVED valued condition keeps its value but not its
+                    stepper. The lock already said the condition is not the player's to remove, while
+                    the ± beside it still offered to change the one thing about it they cannot change:
+                    the value comes from the cause (a mode's Enfeebled 1, Bulk), and `applyPlayState`
+                    re-derives it on the next pass. A dead control is worse than none. */}
+                {valued && onPlay && !auto ? (
                   <span className="cond-pill-step">
                     <button aria-label="Decrease" onClick={() => onPlay((p) => stepConditionValue(p, c.id, -1), `cond:${c.id}`)}>
                       −
@@ -1257,10 +1327,21 @@ export function VitalsRail({
                     </span>
                   );
                 })()}
-                {onPlay && (
-                  <button className="cond-pill-x" aria-label={`Remove ${name}`} onClick={() => onPlay((p) => removeCondition(p, c.id))}>
-                    <i className="ti ti-x" aria-hidden="true" />
-                  </button>
+                {auto ? (
+                  <span
+                    className="cond-auto-lock"
+                    title={`Automatic — from ${auto}. It clears itself when its cause does.`}
+                    aria-label={`${name} is automatic (from ${auto}) and cannot be removed`}
+                  >
+                    <i className="ti ti-lock" aria-hidden="true" />
+                    {`from ${auto.replace(/ —.*$/, '')}`}
+                  </span>
+                ) : (
+                  onPlay && (
+                    <button className="cond-pill-x" aria-label={`Remove ${name}`} onClick={() => onPlay((p) => removeCondition(p, c.id))}>
+                      <i className="ti ti-x" aria-hidden="true" />
+                    </button>
+                  )
                 )}
               </span>
             );
@@ -1382,6 +1463,8 @@ export function VitalsRail({
           conditions={Object.fromEntries(
             Object.entries(content.conditions).filter(([, cd]) => !/kingmaker/i.test(cd.source?.book ?? '')),
           )}
+          // bug 2026-09-16: derived conditions — the entries carry their own `derivedFrom`, so the
+          // picker wears the same lock the rail pills wear without a second opinion about the cause.
           active={character.conditions}
           onAdd={(id, valued) => onPlay((p) => addCondition(p, id, valued ? 1 : undefined))}
           onRemove={(id) => onPlay((p) => removeCondition(p, id))}

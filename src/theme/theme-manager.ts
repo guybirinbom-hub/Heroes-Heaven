@@ -5,7 +5,7 @@
  * This is the only module that touches the DOM's CSS variables. Components and
  * the rest of the app just call setTheme / setStyle / setAccent.
  */
-import { themes, type Polarity } from './themes';
+import { themes, getTheme, type Polarity } from './themes';
 import { styles } from './styles';
 import { fonts } from './fonts';
 import { touchSettings } from '../data/syncBus';
@@ -38,7 +38,13 @@ function loadState(): AppearanceState {
     if (raw) {
       const p = JSON.parse(raw) as Partial<AppearanceState>;
       return {
-        themeId: p.themeId && themes[p.themeId] ? p.themeId : DEFAULT.themeId,
+        // Validated through getTheme (so a RETIRED id counts as known and paints its replacement rather
+        // than reverting to the default) but stored EXACTLY as saved. Appearance is a synced setting:
+        // rewriting a retired id to its replacement here would push an id that a device still on an older
+        // build cannot resolve — that device would fall back to the default and push THAT back, leaving
+        // both devices on a palette nobody chose. Aliases are resolved when PAINTING
+        // (resolveAppearanceVars), never on the way into storage.
+        themeId: getTheme(p.themeId) ? (p.themeId as string) : DEFAULT.themeId,
         styleId: p.styleId && styles[p.styleId] ? p.styleId : DEFAULT.styleId,
         fontId: p.fontId && fonts[p.fontId] ? p.fontId : DEFAULT.fontId,
         accent: typeof p.accent === 'string' ? p.accent : null,
@@ -80,9 +86,25 @@ function relativeLuminance(hex: string): number {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-/** Pick near-black or white text for legibility on a given accent fill. */
+/** Near-black ink for text sitting on an accent fill (not pure black — it keeps the app's soft edge). */
+const ACCENT_INK = '#101013';
+const ACCENT_INK_L = relativeLuminance(ACCENT_INK);
+
+/**
+ * Pick the ink or white for text on a given accent fill — whichever scores the higher WCAG contrast
+ * ratio against it.
+ *
+ * This used to flip to ink only above 0.45 luminance, but the crossover where ink starts winning is
+ * around 0.18, so every mid-bright accent was painted white on a bright fill: Slate's #38bdf8 measured
+ * 2.14:1 that way against 8.87:1 with ink, and Tavern, Forest, Nocturne, Ember and Arcane sat in the
+ * same hole. Measuring both candidates can never score worse than a fixed cutoff, since the cutoff only
+ * ever names one of the same two colours.
+ */
 function textOn(hex: string): string {
-  return relativeLuminance(hex) > 0.45 ? '#101013' : '#ffffff';
+  const l = relativeLuminance(hex);
+  const onInk = (l + 0.05) / (ACCENT_INK_L + 0.05);
+  const onWhite = 1.05 / (l + 0.05);
+  return onInk >= onWhite ? ACCENT_INK : '#ffffff';
 }
 
 /** Lighten (amount > 0) or darken (amount < 0) a hex color toward white/black. */
@@ -113,7 +135,7 @@ export function resolveAppearanceVars(
   accent: string | null,
   consumable: string | null,
 ): { vars: Record<string, string>; theme: string; polarity: Polarity } {
-  const theme = themes[themeId] ?? themes[DEFAULT.themeId];
+  const theme = getTheme(themeId) ?? themes[DEFAULT.themeId];
   const style = styles[styleId] ?? styles[DEFAULT.styleId];
   const font = fonts[fontId] ?? fonts[DEFAULT.fontId];
   const acc = accent ?? theme.tokens['--app-accent'];
@@ -161,7 +183,7 @@ export function applyAppearance(): void {
 
 /** The active theme's recommended consumable-highlight colour (ignores any user override). */
 export function themeConsumableColor(): string {
-  const theme = themes[state.themeId] ?? themes[DEFAULT.themeId];
+  const theme = getTheme(state.themeId) ?? themes[DEFAULT.themeId];
   return theme.consumableColor;
 }
 
@@ -185,7 +207,9 @@ export function getAppearance(): AppearanceState {
 }
 
 export function setTheme(themeId: string): void {
-  if (!themes[themeId]) return;
+  if (!getTheme(themeId)) return;
+  // Store what the caller named, not the palette it resolves to — a retired id has to keep round-tripping
+  // across devices on different builds (see loadState).
   state = { ...state, themeId };
   saveState();
   applyAppearance();

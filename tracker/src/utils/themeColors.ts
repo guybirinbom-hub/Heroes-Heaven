@@ -52,6 +52,22 @@ export function luminance(hex: string): number {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b
 }
 
+/** WCAG contrast ratio between two colours, 1 (identical) to 21 (black on white). */
+function contrast(a: string, b: string): number {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x)
+  return (hi + 0.05) / (lo + 0.05)
+}
+
+/** Near-black ink for text on an accent fill (not pure black — it keeps the app's soft edge). */
+const ACCENT_INK = '#1a1011'
+
+/** Ink or white on an accent fill — whichever MEASURES better against it. A fixed luminance cutoff
+ *  (this was `> 0.55`) only ever names one of these same two colours, and named the wrong one for
+ *  every mid-bright accent: #38bdf8 got white at 2.14:1 where the ink scores 8.87:1. */
+export function textOnAccent(accent: string): string {
+  return contrast(accent, ACCENT_INK) >= contrast(accent, '#ffffff') ? ACCENT_INK : '#ffffff'
+}
+
 /** Every token applyTheme may set inline — cleared when switching themes so a
  *  custom override never bleeds into the next theme. */
 export const CUSTOM_VAR_KEYS = [
@@ -94,7 +110,7 @@ export function deriveThemeVars(c: ThemeColors): Record<string, string> {
     '--text': toHex(c.text),
     '--text-muted': mix(c.text, c.bg, 0.42),
     '--text-faded': mix(c.text, c.bg, 0.60),
-    '--text-on-accent': luminance(c.accent) > 0.55 ? '#1a1011' : '#ffffff',
+    '--text-on-accent': textOnAccent(c.accent),
     // Brand-mark icon: a deep, dark accent-hued square (kept dark even for light
     // themes, with a hint of the page bg) so the bright accent glyph + sweep
     // always read. All derived from the accent, so the logo follows the palette.

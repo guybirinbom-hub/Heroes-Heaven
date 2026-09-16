@@ -15,12 +15,12 @@ import { CampaignPcStatsProvider } from '../../tracker/src/data/pcStatsContext';
 import type { PcStats } from '../../tracker/src/utils/pcDetail';
 import { useCampaignDefaults } from './useCampaignDefaults';
 import { computePcStats } from './computePcStats';
-import { PcStatsCardExtra } from './PcStatsCardExtra';
+import { PcStatsCardExtra, PcSavesCells, hasRightColumn } from './PcStatsCardExtra';
 import { MemberTurnButton } from './MemberTurnButton';
-import { useCombatStore } from '../../tracker/src/store/combatStore';
+import { useCombatStore, isSamePc } from '../../tracker/src/store/combatStore';
 import { useSettingsStore } from '../../tracker/src/store/settingsStore';
 import { useWindowStore } from '../../tracker/src/store/windowStore';
-import { useLayoutStore, leafCids } from '../../tracker/src/store/layoutStore';
+import { useLayoutStore } from '../../tracker/src/store/layoutStore';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
 import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
 import { InitiativeTracker } from '../../tracker/src/components/InitiativeTracker';
@@ -36,7 +36,8 @@ import { FloatingWindowLayer } from '../../tracker/src/components/FloatingWindow
 import { ErrorBoundary } from '../../tracker/src/components/ErrorBoundary';
 import { usePartyStore } from '../../tracker/src/store/partyStore';
 import type { Combatant } from '../../tracker/src/types/pf2e';
-import { PartyMembers } from '../sheet/PartyMembers';
+import { PartyMembers, PartyCard, PARTY_MEMBER_DRAG, type PartyMemberDrag, type PartyCardSlots } from '../sheet/PartyMembers';
+import { computeSummary } from '../sheet/partySummary';
 import { fetchParty, type PartyMember } from '../data/party';
 import { useAuth } from '../data/useAuth';
 import { startTrackerSync, isTrackerSyncReady } from '../data/trackerSync';
@@ -73,6 +74,55 @@ const SYNC_READY_CAP_MS = 4000;
  */
 function trackerPopupOpen(): boolean {
   return !!document.querySelector('body > .tracker-root:not(.campaign-tracker)');
+}
+
+/** True when this PC already has a row in the initiative order. Matched through the store's OWN
+ *  `isSamePc` (charId first, name as the fallback), because that is what `addCombatant`'s PC dedupe
+ *  uses — the two must agree or the button lies. */
+function pcInOrder(pc: { name: string; charId?: string }): boolean {
+  return useCombatStore.getState().combatants.some((c) => c.isPC && isSamePc(c, pc));
+}
+
+/**
+ * THE ONE WAY a party member reaches the initiative order.
+ *
+ * Both gestures end here: dragging the card onto the rail, and the "+" beside the card's turn chip.
+ * They add the same thing — a PC row with no initiative value, the real maxHP, and the character id
+ * the tracker now stores — so the two can never drift into adding subtly different combatants.
+ *
+ * Returns false when that PC is already in the order; the caller decides how to say so.
+ */
+export function addPartyMemberToInitiative(pc: PartyMemberDrag): boolean {
+  const name = (pc.name ?? '').trim();
+  if (!name || pcInOrder({ name, charId: pc.charId })) return false;
+  useCombatStore.getState().addCombatant(null, { name, isPC: true, maxHP: pc.maxHP, charId: pc.charId });
+  return true;
+}
+
+/** The "+" beside a card's turn chip: this player, into the initiative order. Disabled (with the
+ *  reason) once they're in it — the tracker refuses a second PC of the same name anyway. */
+export function PartyAddToOrderButton({ member }: { member: PartyMember }) {
+  const inOrder = useCombatStore((s) =>
+    s.combatants.some((c) => c.isPC && isSamePc(c, { name: member.name, charId: member.charId })),
+  );
+  const label = inOrder
+    ? `${member.name} is already in the initiative order`
+    : `Add ${member.name} to the initiative order`;
+  // A disabled button gets no hover tooltip of its own, so the wrapper carries the title too.
+  return (
+    <span className="party-add-init-wrap" title={label}>
+      <button
+        type="button"
+        className="party-add-init"
+        disabled={inOrder}
+        title={label}
+        aria-label={label}
+        onClick={() => addPartyMemberToInitiative({ charId: member.charId, name: member.name, maxHP: member.summary?.hpMax })}
+      >
+        <i className="ti ti-plus" aria-hidden="true" />
+      </button>
+    </span>
+  );
 }
 
 /**
@@ -256,6 +306,28 @@ export function CampaignTracker({
       byId.set(mem.charId, stats);
     }
     return { byName, byId };
+  }, [members, sheetById, content]);
+
+  /*
+   * The members again, but with the summary RE-DERIVED from the player's live sheet — keyed by name,
+   * which is all a combatant row carries.
+   *
+   * This is what a PC's pane card reads. The dashboard's own cards are kept current by PartyMembers'
+   * Realtime subscription, but PartyMembers is unmounted the moment the GM leaves the dashboard for
+   * the workspace, so `mem.summary` there is frozen at whatever the last visit fetched. The sheets in
+   * `sheetById` keep arriving either way (pcSheetTruth subscribes per member for the life of the
+   * mount), so the card in the pane shows the HP and conditions the player has right now.
+   */
+  const liveMembers = useMemo(() => {
+    const map = new Map<string, PartyMember>();
+    for (const mem of members) {
+      const sheet = sheetById.get(mem.charId);
+      map.set(
+        mem.name.trim().toLowerCase(),
+        sheet ? { ...mem, summary: computeSummary(livePlay(sheet, content), content) } : mem,
+      );
+    }
+    return map;
   }, [members, sheetById, content]);
 
   /*
@@ -462,65 +534,30 @@ export function CampaignTracker({
   // unmounting. Opening campaign settings unmounts this too, and back from there must restore the
   // exact view the GM left (a combat pane, the GM screen), so a reset on every unmount would be wrong.
 
-  /*
-   * Combatants are matched to characters BY NAME. The initiative order stores its own combatants and
-   * has no character id to join on, and this is already how the tracker links a PC to a party member
-   * (partyStore.importCharacter matches on lower-cased name), so the convention is at least
-   * consistent. Two characters with the same name in one campaign would be ambiguous — which is
-   * also true of the tracker's existing matching.
+  /**
+   * The campaign's characters the GM can actually open, by charId — the sheet plus the owner id,
+   * which travels with the MEMBER because a published SavedChar doesn't carry who to address a GM
+   * edit to. Only the cards and the initiative rows need a name lookup, and `liveMembers` above is
+   * that one (combatants carry no character id, so they are matched by lower-cased name, the same
+   * convention partyStore.importCharacter already uses).
    */
   const roster = useMemo(() => {
-    const byName = new Map<string, { entry: SavedChar; ownerId: string }>();
     const byId = new Map<string, { entry: SavedChar; ownerId: string }>();
     for (const mem of members) {
       const entry = sheetById.get(mem.charId);
-      if (!entry) continue;
-      // The owner id travels with the member: it's who a GM edit is addressed to, and a published
-      // SavedChar doesn't carry it.
-      const row = { entry, ownerId: mem.ownerId };
-      byName.set(mem.name.trim().toLowerCase(), row);
-      byId.set(mem.charId, row);
+      if (entry) byId.set(mem.charId, { entry, ownerId: mem.ownerId });
     }
-    return { byName, byId };
+    return { byId };
   }, [members, sheetById]);
 
-  // ── The GM's unpushed working copies ─────────────────────────────────────────
+  // ── The GM's unpushed working copy ───────────────────────────────────────────
   /*
-   * Every open GmEditSheet registers its handle here so we can ask it before its pane is taken away.
-   * Keyed by COMBATANT id, because that's what the pane tree stores and what a swap is expressed in.
-   *
-   * A registry rather than one ref because the tab system can have several sheets open at once —
-   * a PC tiled beside a monster, or two PCs in one pane's tabs — each with its own dirty state.
+   * There is exactly ONE editable sheet in this view now: the full-screen one a card opens. A PC's
+   * pane holds their card, not a GmEditSheet, so there are no longer several working copies tiled
+   * across the pane tree to ask about one at a time — and no pane swap that can silently destroy one
+   * (the registry + pane-swap guard that existed for that went with the sheets).
    */
-  const paneSheets = useRef(new Map<string, GmEditHandle>());
-  /** The full-screen sheet (party card, out of combat) — only ever one. */
   const fullSheetRef = useRef<GmEditHandle>(null);
-
-  const LOSE_TURN = (name: string) => ({
-    title: 'Keep your changes?',
-    message: `It’s ${name}’s turn. You’ve made changes to this character that haven’t been sent to the player yet — keep them by updating now, or discard them?`,
-  });
-
-  /*
-   * `layoutStore.open(cid)` REPLACES the hovered pane's active stat block when that pane is already
-   * showing a creature and the target isn't open — which silently destroys a PC sheet's working copy.
-   * This mirrors open()'s own three-way decision to work out whether anything is actually about to be
-   * lost, and only then asks. Focusing an existing tab, or adding one, loses nothing and must not
-   * prompt.
-   */
-  const guardPaneSwap = useCallback(
-    async (targetCid: string, reason?: { title: string; message: string }): Promise<boolean> => {
-      const st = useLayoutStore.getState();
-      if (!st.root) return true; // no panes yet → open() creates one
-      if (leafCids(st.root).includes(targetCid)) return true; // → focuses the existing tab
-      const doomed = st.hoveredCid; // non-null ⟺ the hovered pane's active tab IS a stat block
-      if (!doomed || doomed === targetCid) return true; // → adds a tab
-      const h = paneSheets.current.get(doomed);
-      if (!h) return true; // a monster — nothing to lose
-      return await h.confirmLeave(reason);
-    },
-    [],
-  );
 
   /** Every way of leaving/closing the whole view has to clear the full-screen sheet too. */
   const [fullSheetId, setFullSheetId] = useState<string | null>(null);
@@ -532,18 +569,8 @@ export function CampaignTracker({
     [fullSheetId],
   );
 
-  /**
-   * Everything that must be safe before this whole view is taken away: the full-screen review sheet
-   * and every open pane's unpushed working copy. Both routes out — campaign settings and leaving the
-   * campaign — unmount the same sheets, so they ask the same question.
-   */
-  const guardLeave = useCallback(async (): Promise<boolean> => {
-    if (!(await leaveFullSheet())) return false;
-    for (const h of paneSheets.current.values()) {
-      if (!(await h.confirmLeave())) return false;
-    }
-    return true;
-  }, [leaveFullSheet]);
+  // Both routes out of the view — campaign settings and leaving the campaign — unmount that same
+  // sheet, so both ask `leaveFullSheet` the same question before they go.
 
   /*
    * Back / Escape closes the OPEN review sheet before it leaves the campaign — it's a layer on top of
@@ -591,7 +618,7 @@ export function CampaignTracker({
   useBackHandler(true, () => {
     if (trackerPopupOpen()) return;
     void (async () => {
-      if (await guardLeave()) onLeave();
+      if (await leaveFullSheet()) onLeave();
     })();
   });
 
@@ -604,15 +631,60 @@ export function CampaignTracker({
    */
   const handleCombatantClick = useCallback(
     (id: string) => {
-      void (async () => {
-        if (!(await guardPaneSwap(id))) return;
-        selectCombatant(id);
-        useLayoutStore.getState().open(id);
-        trackerUi.showMain('combatant');
-      })();
+      selectCombatant(id);
+      useLayoutStore.getState().open(id);
+      trackerUi.showMain('combatant');
     },
-    [guardPaneSwap, selectCombatant],
+    [selectCombatant],
   );
+
+  // ── Drag a party card into the initiative order ──────────────────────────────
+  /*
+   * The GM drags a player's card off the party dashboard and drops it on the rail: that PC joins the
+   * order with NO initiative, exactly as PartyView's "Add to Initiative" adds them (isPC, the real
+   * maxHP and the character id, deduped through isSamePc). Where in the list it was dropped is
+   * ignored — an un-rolled combatant lands where un-rolled combatants land, and a made-up
+   * initiative would be a number the GM never rolled.
+   *
+   * The rail is the seam's own element, so nothing in tracker/src has to know this gesture exists.
+   * The initiative rows are themselves draggable (onto a pane, to open a stat block) and carry a
+   * different type, which is why every leg below checks for ours before it claims the event.
+   */
+  const [dropOver, setDropOver] = useState(false);
+  const [dropMsg, setDropMsg] = useState('');
+  useEffect(() => {
+    if (!dropMsg) return;
+    const t = setTimeout(() => setDropMsg(''), 3000);
+    return () => clearTimeout(t);
+  }, [dropMsg]);
+  const onRailDragOver = useCallback((e: React.DragEvent) => {
+    if (!e.dataTransfer.types.includes(PARTY_MEMBER_DRAG)) return;
+    // Without BOTH preventDefaults the browser refuses the drop and runs its own navigation instead.
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    setDropOver(true);
+  }, []);
+  const onRailDragLeave = useCallback((e: React.DragEvent) => {
+    // dragleave also fires crossing between children — only a pointer that really left the rail counts.
+    const to = e.relatedTarget as Node | null;
+    if (to && e.currentTarget.contains(to)) return;
+    setDropOver(false);
+  }, []);
+  const onRailDrop = useCallback((e: React.DragEvent) => {
+    setDropOver(false);
+    const raw = e.dataTransfer.getData(PARTY_MEMBER_DRAG);
+    if (!raw) return; // something else's drag (an initiative row onto a pane) — leave it alone
+    e.preventDefault();
+    let pc: PartyMemberDrag;
+    try {
+      pc = JSON.parse(raw) as PartyMemberDrag;
+    } catch {
+      return;
+    }
+    // addCombatant refuses a second PC of the same name on its own; saying so is what keeps a drop
+    // that quietly does nothing from reading as a broken drop target.
+    if (!addPartyMemberToInitiative(pc)) setDropMsg(`${(pc.name ?? '').trim()} is already in the initiative order.`);
+  }, []);
 
   // ── The rail: collapse + resize ──────────────────────────────────────────────
   /*
@@ -762,14 +834,11 @@ export function CampaignTracker({
     if (!active || !activeId) return;
     // A name-only NPC has nothing to show — CombatantDetail would render an empty shell.
     if (!active.isPC && !active.creature) return;
-    void (async () => {
-      if (!(await guardPaneSwap(activeId, LOSE_TURN(active.name)))) return;
-      selectCombatant(activeId);
-      useLayoutStore.getState().open(activeId);
-      trackerUi.showMain('combatant');
-    })();
+    selectCombatant(activeId);
+    useLayoutStore.getState().open(activeId);
+    trackerUi.showMain('combatant');
     // `active` is read fresh on the render where activeId changes; adding it would re-run this on
-    // every unrelated combatant edit (HP, conditions) and re-prompt.
+    // every unrelated combatant edit (HP, conditions).
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeId, inCombat]);
 
@@ -786,70 +855,93 @@ export function CampaignTracker({
 
   /*
    * The tools asked for the campaign's settings page. Navigating there unmounts this whole view —
-   * and every open sheet with it, taking unpushed working copies with no warning. So it goes through
-   * the SAME gate as every other way of losing a sheet, and only navigates if the GM agrees.
+   * and the open sheet with it, taking an unpushed working copy with no warning. So it goes through
+   * the SAME gate as every other way of losing that sheet, and only navigates if the GM agrees.
    */
   const lastSettingsReqRef = useRef(settingsRequest);
   useEffect(() => {
     if (settingsRequest === lastSettingsReqRef.current) return;
     lastSettingsReqRef.current = settingsRequest;
     void (async () => {
-      if (await guardLeave()) onOpenSettings();
+      if (await leaveFullSheet()) onOpenSettings();
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settingsRequest]);
 
-  // ── A PC's pane IS their Heroes Heaven sheet ─────────────────────────────────
+  // ── The card is the way in to a player's sheet ───────────────────────────────
   /*
-   * The whole point of the two apps being connected: a PC's tab shows the real, editable character,
-   * not the tracker's thin copy of them. Returning null (a combatant who isn't one of this
-   * campaign's characters) falls back to the tracker's own CombatantDetail.
+   * ONE route to the GM-edit sheet, from both the party dashboard and the initiative order.
+   *
+   * The sheet takes the whole tracker view (`.ct-sheet-full`, absolute over `.ct-body`), so leaving
+   * it simply uncovers whatever asked for it: the dashboard, or the PC's pane card. That is what
+   * makes the back arrow land where the GM came from without anything here tracking a history.
+   */
+  const openMemberSheet = useCallback(
+    (mem: PartyMember) => {
+      // Their published sheet is already here — show it. Only a member we have no sheet for falls
+      // back to the page's own loader.
+      if (roster.byId.has(mem.charId)) setFullSheetId(mem.charId);
+      else onViewMember(mem);
+    },
+    [roster, onViewMember],
+  );
+
+  /** The card's host slots — the same ones on the dashboard, so the pane card matches it. The turn
+   *  chip and the add-to-initiative button ride in the header; the stats split across the two
+   *  columns (saves under AC on the left, everything else on the right).
+   *
+   *  `canAdd` is false for the pane card: a PC only HAS a pane because they are in the initiative
+   *  order, so the "+" there could never be anything but permanently disabled. */
+  const cardExtra = useCallback(
+    (mem: PartyMember, canAdd = true): PartyCardSlots => {
+      const st = pcStats.byId.get(mem.charId);
+      return {
+        header: (
+          <>
+            <MemberTurnButton campaignId={m.id} charId={mem.charId} name={mem.name} />
+            {canAdd && <PartyAddToOrderButton member={mem} />}
+          </>
+        ),
+        saves: st ? <PcSavesCells stats={st} detail={pcDetail} /> : null,
+        // Emptiness is decided HERE, before the slot exists: the card splits into two columns off
+        // the slot itself, so handing it an element that renders null (every right-column section
+        // off — "Stats shown" → Minimal / Name only) bought a blank bordered gutter.
+        right: st && hasRightColumn(st, pcDetail) ? <PcStatsCardExtra stats={st} detail={pcDetail} /> : null,
+      };
+    },
+    [pcStats, pcDetail, m.id],
+  );
+
+  // ── A PC's pane IS their party card ──────────────────────────────────────────
+  /*
+   * Clicking a PC in the initiative order used to drop the GM straight into the editable sheet, with
+   * the "GM editing X" strip hidden (a pane is too short for it) and no way out but the pane's ×.
+   * The pane holds the CARD instead — the dashboard's own card, with the live HP and conditions —
+   * and a click on it opens the full sheet, strip, Update and Back arrow included. Back uncovers the
+   * card again, because the sheet is a layer over this whole view rather than the pane's content.
+   *
+   * Returning null (a combatant who isn't one of this campaign's members) falls back to the
+   * tracker's own CombatantDetail.
    */
   const renderPcPane = useCallback(
     (c: Combatant, handles: PcPaneHandles): ReactNode | null => {
-      const row = roster.byName.get(c.name.trim().toLowerCase());
-      if (!row) return null;
-      const entry = row.entry;
-
+      const mem = liveMembers.get(c.name.trim().toLowerCase());
+      if (!mem) return null;
       /*
-       * A PC pane needs its OWN close and move controls. The tracker gives a creature pane those via
-       * CombatantDetail's header; a PC pane renders HH's sheet instead, whose only close (the Back
-       * arrow) lives in the app chrome we hide. Without this header, two PC sheets tiled as two panes
-       * couldn't be closed at all — exactly the bug being fixed.
-       *
-       * PaneLayout hands `onClose`/`dockHandle`/`onHeaderDrag` only to a SOLO pane; a pane sharing a
-       * tab strip already has a × per tab, so no header is drawn there.
+       * A PC pane needs its OWN close and move controls: the tracker gives a creature pane those via
+       * CombatantDetail's header, and nothing HH renders in here carries any. PaneLayout hands
+       * `onClose`/`dockHandle`/`onHeaderDrag` only to a SOLO pane; a pane sharing a tab strip already
+       * has a × per tab, so no header is drawn there.
        */
-      const closePane = async () => {
-        const h = paneSheets.current.get(c.id);
-        if (h && !(await h.confirmLeave())) return; // prompt before dropping unsaved GM edits
-        handles.onClose?.();
-      };
-
       return (
-        <PcPaneShell name={entry.character.name} handles={handles} onClose={closePane}>
-          <GmEditSheet
-            // KEY IS LOAD-BEARING: GmEditSheet copies `initial` into state, and useState only reads
-            // its argument on first render — so reusing this position for a different character would
-            // keep showing (and editing) the previous one's working copy.
-            key={entry.id}
-            ref={(h) => {
-              if (h) paneSheets.current.set(c.id, h);
-              else paneSheets.current.delete(c.id);
-            }}
-            initial={entry}
-            // The player's sheet, live: adopted silently while the GM has no unsaved edits, flagged
-            // (never applied over them) when they do.
-            live={entry}
-            content={content}
-            campaignId={m.id}
-            playerOwnerId={row.ownerId}
-            onExit={() => handles.onClose?.()}
-          />
+        <PcPaneShell name={mem.name} handles={handles} onClose={() => handles.onClose?.()}>
+          <div className="ct-pane-card">
+            <PartyCard member={mem} isMine={false} onOpen={() => openMemberSheet(mem)} extra={cardExtra(mem, false)} />
+          </div>
         </PcPaneShell>
       );
     },
-    [roster, content, m.id],
+    [liveMembers, openMemberSheet, cardExtra],
   );
 
   // The real levels of the real characters — what encounter difficulty must be rated against. The
@@ -917,9 +1009,14 @@ export function CampaignTracker({
 
           {!(showInitCollapse && railCollapsed) && (
             <>
+              {/* The whole rail is the drop target for a party card — the tracker's own components
+                  inside it know nothing about the gesture. */}
               <aside
-                className="ct-order"
+                className={'ct-order' + (dropOver ? ' is-drop' : '')}
                 style={{ width: effectiveRailWidth, minWidth: effectiveRailWidth, maxWidth: effectiveRailWidth }}
+                onDragOver={onRailDragOver}
+                onDragLeave={onRailDragLeave}
+                onDrop={onRailDrop}
               >
                 {/* The turn timer now lives in the TOP BAR (TrackerTools), not the rail. */}
                 {/* InitiativeTracker is h-full, so it needs its own flex:1 box to leave room for the
@@ -931,6 +1028,7 @@ export function CampaignTracker({
                     onCollapse={showInitCollapse ? () => setRailCollapsedPersist(true) : undefined}
                   />
                 </div>
+                {dropMsg && <div className="ct-order-drop-msg" role="status">{dropMsg}</div>}
                 <RailFooter />
               </aside>
               {/* The drag handle. Its own element rather than a border so there's something to grab. */}
@@ -970,18 +1068,10 @@ export function CampaignTracker({
                     isGm={m.role === 'gm'}
                     // The card's "Stats shown" sections, built from the real character. Following
                     // the tracker's own PcDetailConfig — the same dropdown in the party header.
-                    renderExtra={(mem) => {
-                      const st = pcStats.byId.get(mem.charId);
-                      return (
-                        <>
-                          <MemberTurnButton campaignId={m.id} charId={mem.charId} name={mem.name} />
-                          {st ? <PcStatsCardExtra stats={st} detail={pcDetail} /> : null}
-                        </>
-                      );
-                    }}
+                    renderExtra={cardExtra}
                     onView={(mem) => {
-                      // In combat the sheet joins the workspace beside the initiative order; out of
-                      // combat there's nothing to keep an eye on, so it gets the whole view.
+                      // In combat the card joins the workspace beside the initiative order; out of
+                      // combat there's nothing to keep an eye on, so the sheet gets the whole view.
                       if (inCombat) {
                         const cid = combatants.find(
                           (c) => c.isPC && c.name.trim().toLowerCase() === mem.name.trim().toLowerCase(),
@@ -991,10 +1081,7 @@ export function CampaignTracker({
                           return;
                         }
                       }
-                      // Their published sheet is already here — show it. Only a member we have no
-                      // sheet for falls back to the page's own loader.
-                      if (roster.byId.has(mem.charId)) setFullSheetId(mem.charId);
-                      else onViewMember(mem);
+                      openMemberSheet(mem);
                     }}
                     // Hand every later list (Realtime refresh, a kick) back to the seam, so the
                     // tracker party and the cards can't drift apart.
@@ -1156,23 +1243,14 @@ function PcPaneShell({
  *
  * PRIMARY add = the bestiary picker (MonsterSearch), exactly like the original app's dashed
  * "+ Add Combatants" button — search Archives creatures/hazards and drop them in with a full stat
- * block. The original embed had only the name-only text box (built before creature data was wired);
- * now that the bestiary loads, the button opens it. The name-only "quick add" is KEPT as a smaller
- * secondary control so a nameless goblin or a hazard can still go in without the bestiary, alongside
+ * block. Quick-add-by-name used to sit here as a second control; it now lives INSIDE that popup,
+ * where the GM is already looking when they want a nameless goblin. What's left beside the button is
  * "Clear" (empty the board — End Combat ends the round but keeps everyone).
  */
 function RailFooter() {
   const combatants = useCombatStore((s) => s.combatants);
-  const addCombatant = useCombatStore((s) => s.addCombatant);
   const clearAll = useCombatStore((s) => s.clearAllCombatants);
-  const [name, setName] = useState('');
 
-  const add = () => {
-    const t = name.trim();
-    if (!t) return;
-    addCombatant(null, { name: t });
-    setName('');
-  };
   const clear = async () => {
     const ok = await confirmDialog({
       title: 'Clear the initiative order?',
@@ -1192,26 +1270,14 @@ function RailFooter() {
       >
         <i className="ti ti-plus" aria-hidden="true" /> Add combatants
       </button>
-      <div className="ct-rail-foot-row">
-        <input
-          className="ct-rail-add"
-          placeholder="Quick add by name…"
-          aria-label="Quick-add a name-only combatant to the initiative order"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') add();
-          }}
-        />
-        <button
-          className="ct-rail-clear"
-          onClick={() => void clear()}
-          disabled={combatants.length === 0}
-          title={combatants.length === 0 ? 'Nothing to clear' : 'Remove every combatant'}
-        >
-          <i className="ti ti-trash" aria-hidden="true" /> Clear
-        </button>
-      </div>
+      <button
+        className="ct-rail-clear"
+        onClick={() => void clear()}
+        disabled={combatants.length === 0}
+        title={combatants.length === 0 ? 'Nothing to clear' : 'Remove every combatant'}
+      >
+        <i className="ti ti-trash" aria-hidden="true" /> Clear
+      </button>
     </div>
   );
 }

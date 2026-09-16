@@ -362,13 +362,17 @@ export function PartyView({ partyId, playersSlot }: Props) {
   const handleDelete = () => { removeParty(partyId) }
 
   const addAllToInitiative = () => {
-    const existing = new Set(combatants.map(c => c.name.toLowerCase()))
+    // Who is already in the order is decided in ONE place per kind. A PC carries the stable charId
+    // through, and `addCombatant`'s own dedupe (isSamePc — charId first, name only when a side has
+    // none) does the skipping, so this button and the card's "+" can't disagree about a renamed PC.
+    // An NPC has no id, so a snapshot name check here is all there is.
+    const existing = new Set(combatants.map(c => c.name.trim().toLowerCase()))
     party.players.forEach(pl => {
-      if (existing.has(pl.name.toLowerCase())) return
       if (pl.memberType === 'npc') {
+        if (existing.has(pl.name.trim().toLowerCase())) return
         addCombatant(pl.creature ?? null, { name: pl.name, isPC: false, isAlly: true })
       } else {
-        addCombatant(null, { name: pl.name, isPC: true, maxHP: pl.pcStats?.maxHP })
+        addCombatant(null, { name: pl.name, isPC: true, maxHP: pl.pcStats?.maxHP, charId: pl.charId })
       }
     })
   }
@@ -390,23 +394,27 @@ export function PartyView({ partyId, playersSlot }: Props) {
 
   return (
     <div className="flex flex-col h-full" style={{ background: 'var(--bg-panel)' }}>
-      {/* ── Page head — large display title + level + actions ── */}
+      {/* ── Page head — ONE compact bar: the name on the left, the actions on the right, vertically
+            centred. It used to be a 28px-padded display-title block ~100–155px tall depending on
+            whether the actions wrapped; at that size the campaign's name was the loudest thing on
+            the GM's screen and the player cards started below the fold. Title size now matches the
+            tracker's other section headings (the picker's modal title). ── */}
       <div style={{
-        padding: '28px 36px 18px',
+        padding: '10px 20px',
         borderBottom: 'var(--app-bw) solid var(--border)',
         flexShrink: 0,
-        display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
-        gap: 24, flexWrap: 'wrap',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        gap: 16, flexWrap: 'wrap',
       }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
           {hostManaged ? (
             // Host-managed: the name is the campaign's (also in the chrome title), edited only in
             // campaign settings — so it's a plain, non-editable heading here.
             <span
               style={{
                 color: 'var(--text)', fontFamily: 'var(--font-display)',
-                fontVariationSettings: '"opsz" 96',
-                fontSize: 32, fontWeight: 500, letterSpacing: '-0.02em',
+                fontVariationSettings: '"opsz" 72',
+                fontSize: 20, fontWeight: 500, letterSpacing: '-0.015em',
                 overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0,
               }}
             >
@@ -418,13 +426,17 @@ export function PartyView({ partyId, playersSlot }: Props) {
               onChange={e => setNameVal(e.target.value)}
               onBlur={commitName}
               onKeyDown={e => e.key === 'Enter' && (e.currentTarget as HTMLInputElement).blur()}
+              // Sized to the name. An input's default `size` of 20 made this field ~250px wide
+              // whatever it said, which was enough to push the actions onto a second row and undo
+              // the one-line bar on a narrow pane.
+              size={Math.max(8, nameVal.length + 1)}
               style={{
                 background: 'transparent', border: 'none',
                 borderBottom: 'var(--app-bw) solid transparent',
                 color: 'var(--text)',
                 fontFamily: 'var(--font-display)',
-                fontVariationSettings: '"opsz" 96',
-                fontSize: 32, fontWeight: 500, letterSpacing: '-0.02em',
+                fontVariationSettings: '"opsz" 72',
+                fontSize: 20, fontWeight: 500, letterSpacing: '-0.015em',
                 padding: '1px 0', outline: 'none', minWidth: 120,
                 transition: 'border-color 0.15s',
               }}

@@ -9,6 +9,7 @@ import { Chip } from './Chip'
 import { CONDITION_META, computeConditionMods } from '../utils/conditionEffects'
 import { applyWeakElite, scaleByLevel } from '../utils/weakElite'
 import { computeEncounter, DIFFICULTY_COLOR } from '../utils/encounter'
+import { fixedPopupPos } from '../utils/zoomFix'
 import { useCampaignPartyLevel } from '../data/partyLevelContext'
 import { useHostPcStats } from '../data/pcStatsContext'
 import { PlayIcon, StopIcon, ChevronLeftIcon, ChevronRightIcon, DiceIcon } from './Icons'
@@ -288,10 +289,12 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
     }
   }, [onClose])
 
-  // Keep the menu inside the viewport.
+  // Keep the menu inside the viewport — and in the coordinate space a `position: fixed` child of
+  // <body> is actually laid out in. Heroes Heaven zooms <html>, which scales left/top but not the
+  // clientX/clientY this menu is opened at, so at any zoom but 100% the raw coords put the menu
+  // further and further from the row the further down the page it is (the owner's "far away").
   const W = 184, rowH = 30
-  const left = Math.min(x, window.innerWidth - W - 8)
-  const top = Math.min(y, window.innerHeight - rowH * 6 - 8)
+  const { left, top } = fixedPopupPos(x, y, W, rowH * 6)
 
   const run = (fn: () => void) => (e: React.MouseEvent) => { e.stopPropagation(); fn(); onClose() }
 

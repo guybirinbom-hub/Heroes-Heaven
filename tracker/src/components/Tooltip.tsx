@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useLayoutEffect, type ReactNode, type CSSProperties, isValidElement } from 'react'
 import { createPortal } from 'react-dom'
+import { pageZoom, localRect } from '../utils/zoomFix'
 
 interface TooltipProps {
   content: string | ReactNode
@@ -57,10 +58,14 @@ export function Tooltip({ content, children, className = '', style, bare, onActi
       setMeasured(false)
       return
     }
-    const popup = popupRef.current.getBoundingClientRect()
-    const trig  = ref.current.getBoundingClientRect()
-    const vw = window.innerWidth
-    const vh = window.innerHeight
+    // A rect is real viewport pixels, but this popup's left/top/max-height are pixels of the zoomed
+    // root, so every measurement below is converted into that space first — see utils/zoomFix. At
+    // zoom 1 (standalone tracker, jsdom, the embed at 100%) the division changes nothing.
+    const z = pageZoom()
+    const popup = localRect(popupRef.current, z)
+    const trig  = localRect(ref.current, z)
+    const vw = window.innerWidth / z
+    const vh = window.innerHeight / z
     const PAD = 8
     const GAP = 6
 
@@ -109,9 +114,10 @@ export function Tooltip({ content, children, className = '', style, bare, onActi
 
   const show = () => {
     if (!ref.current) return
-    const r = ref.current.getBoundingClientRect()
+    const z = pageZoom()
+    const r = localRect(ref.current, z)
     // Initial best-effort position (useLayoutEffect will refine after mount).
-    setPos({ top: r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - 430)) })
+    setPos({ top: r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth / z - 430)) })
     setVisible(true)
   }
   const hide = () => setVisible(false)

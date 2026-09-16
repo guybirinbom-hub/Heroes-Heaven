@@ -34,6 +34,8 @@ export function ConditionsModal({
   onDeleteMode,
 }: {
   conditions: Record<string, Condition>;
+  /** An entry carrying `derivedFrom` is one the SHEET worked out (Bulk, an active mode): it is on,
+   *  it cannot be toggled off, and the row says which cause holds it there. */
   active: ActiveCondition[];
   onAdd: (id: string, valued: boolean) => void;
   onRemove: (id: string) => void;
@@ -125,38 +127,59 @@ export function ConditionsModal({
         <div className="modes-list cond-list">
           {list.map((c) => {
             const on = activeIds.has(c.id);
-            const val = active.find((a) => a.id === c.id)?.value;
+            const held = active.find((a) => a.id === c.id);
+            const val = held?.value;
+            // bug 2026-09-16: derived conditions — Encumbered comes from Bulk, not from this list.
+            // Its circle used to look like every other toggle and do nothing at all, because a derived
+            // condition is never written into play.conditions and so has nothing to remove. The entry
+            // itself says whether the player applied it, so a condition they DID apply keeps its
+            // toggle even when a mode happens to impose the same one.
+            const auto = held?.derivedFrom;
             return (
-              <div key={c.id} className={'mode-row cond-row' + (on ? ' on' : '')}>
+              <div key={c.id} className={'mode-row cond-row' + (on ? ' on' : '') + (auto ? ' cond-auto' : '')}>
                 <button
                   className={'mode-toggle' + (on ? ' on' : '')}
-                  aria-label={on ? `Remove ${c.name}` : `Apply ${c.name}`}
+                  aria-label={auto ? `${c.name} is automatic (from ${auto}) and cannot be removed` : on ? `Remove ${c.name}` : `Apply ${c.name}`}
                   aria-pressed={on}
-                  title={on ? 'Remove' : 'Apply'}
-                  onClick={() => (on ? onRemove(c.id) : onAdd(c.id, c.valued))}
+                  disabled={!!auto}
+                  title={auto ? `Automatic — from ${auto}. It clears itself when its cause does.` : on ? 'Remove' : 'Apply'}
+                  onClick={() => (auto ? undefined : on ? onRemove(c.id) : onAdd(c.id, c.valued))}
                 >
-                  <i className={'ti ' + (on ? 'ti-circle-check' : 'ti-circle')} aria-hidden="true" />
+                  <i className={'ti ' + (auto ? 'ti-lock' : on ? 'ti-circle-check' : 'ti-circle')} aria-hidden="true" />
                 </button>
                 <button type="button" className="mode-info cond-row-open" title={`Read ${c.name}`} onClick={() => setReading(c)}>
                   <div className="mode-name">
                     {c.name}
                     {c.valued && <span className="cond-valued-tag">valued</span>}
+                    {auto && <span className="cond-auto-tag">{`from ${auto.replace(/ —.*$/, '')}`}</span>}
                   </div>
                   {/* Plain text, line-clamped. The rich renderer put links and block elements in here,
                       which is what made the clamp slice through the middle of a line. */}
                   {c.description && <div className="cond-row-desc">{toPlainText(c.description)}</div>}
                 </button>
+                {/* bug 2026-09-16 (second pass): the toggle is locked for a derived condition, and so is
+                    the value. Its number comes from the cause — a mode's Enfeebled 1, the Bulk limit —
+                    and `applyPlayState` re-derives it, so the ± here changed nothing at all. The value
+                    stays on screen; only the two dead buttons go.
+                    ⚠ (refutation) the wrapper stays whatever happens: `.cond-val` is styled by
+                    `.cond-stepper .cond-val` and nothing else, and it is `.cond-stepper` that carries
+                    the `flex: none` this row needs beside a `.mode-info` of `width: 100%` — lifted out
+                    of it, the locked value was an element with no rule at all. */}
                 {on && c.valued && (
                   <span className="cond-stepper">
                     {/* Deltas, not absolutes: see stepConditionValue — computing "val + 1" out here made
                         two fast taps write the same number twice. */}
-                    <button aria-label={`Decrease ${c.name}`} onClick={() => onStepValue(c.id, -1)}>
-                      <i className="ti ti-minus" aria-hidden="true" />
-                    </button>
+                    {!auto && (
+                      <button aria-label={`Decrease ${c.name}`} onClick={() => onStepValue(c.id, -1)}>
+                        <i className="ti ti-minus" aria-hidden="true" />
+                      </button>
+                    )}
                     <span className="cond-val">{val ?? 1}</span>
-                    <button aria-label={`Increase ${c.name}`} onClick={() => onStepValue(c.id, 1)}>
-                      <i className="ti ti-plus" aria-hidden="true" />
-                    </button>
+                    {!auto && (
+                      <button aria-label={`Increase ${c.name}`} onClick={() => onStepValue(c.id, 1)}>
+                        <i className="ti ti-plus" aria-hidden="true" />
+                      </button>
+                    )}
                   </span>
                 )}
               </div>

@@ -501,7 +501,11 @@ body {
 }
 .party-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* 320, not 280: the card carries two columns of stats now, and a 280px card squeezed the skill
+     grid to one abbreviation per line. auto-FILL, not auto-fit: auto-fit collapses the empty tracks
+     and stretches a one-member party's card across the whole window — 1045px of card for a 700px
+     layout, which is what the two columns looked like on a real screen. */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 8px;
 }
 .party-card {
@@ -518,12 +522,18 @@ body {
 .party-card:hover {
   border-color: var(--app-accent);
 }
+/* Bottom-LEFT of the card, INSIDE the left column (owner 2026-09-16: *"the remove player button
+   doesn't need a row of its own, put it in the bottom left and change the icon to a trash can"*).
+   `margin-top:auto` takes the slack in that flex column, so it sits at the card's bottom-left
+   whichever column is taller; `align-self` keeps the column's stretch from widening it. It used to
+   be absolutely positioned in the top-right corner, under the chevron, then briefly on its own
+   footer line — which is the row the owner said it doesn't need. */
 .party-kick {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+  margin-top: auto;
+  align-self: flex-start;
   width: 26px;
   height: 26px;
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -673,22 +683,155 @@ body {
   color: var(--app-text-dim);
   flex: none;
 }
-.party-stats {
-  display: flex;
-  gap: 14px;
-  align-items: flex-end;
+/* The header's own controls (the tracker's turn chip + "add to initiative"), between the name and
+   the chevron. In the row, not over it — the kick button's old corner overlap is why. */
+.party-card-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
 }
-.party-stat {
+/* "Add this player to the initiative order", beside the turn chip. Same size as the kick button so
+   the header reads as one row of controls. */
+.party-add-init {
+  width: 24px;
+  height: 24px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+  color: var(--app-text-dim);
+  cursor: pointer;
+  font-size: 15px;
 }
-.party-hp {
-  flex: 1;
+.party-add-init:hover:not(:disabled) {
+  color: var(--app-accent);
+  border-color: var(--app-accent);
+}
+.party-add-init:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+/* ---- the two-column body (owner's design C) ---- */
+.party-card-body {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+.party-col {
   min-width: 0;
 }
-.party-stat-l {
-  font-size: 11px;
+.party-col-l {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+/* Only a card WITH a right column is split in two — the plain party page (no host sections) keeps
+   one full-width column, so its HP bar doesn't end up half a card wide for no reason. */
+.party-card-body:not(.has-right) {
+  grid-template-columns: 1fr;
+}
+.party-col-r {
+  border-left: var(--app-bw) solid var(--app-border);
+  padding-left: 12px;
+}
+.party-lab {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--app-text-dim);
+}
+/* A column, not a text run: `.party-hpbar` is a <span>, so without this it stays display:inline,
+   ignores its own 4px height and paints its `height:100%` child over whatever follows. */
+.party-hp {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+/* Moderately larger than body text, and no accent rule under it — the owner asked for both. */
+.party-perc-v {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+.party-defs {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.party-def {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+}
+.party-def b {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+/* ---- the right column's sections ---- */
+.party-sec + .party-sec,
+.party-sec + .party-sl {
+  margin-top: 9px;
+}
+.party-kv {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px 5px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  margin-top: 3px;
+}
+/* A cell is a label and a number; wrapping one onto two lines reads as two entries. */
+.party-kv > span,
+.party-sk {
+  white-space: nowrap;
+}
+.party-kv.two {
+  grid-template-columns: repeat(2, 1fr);
+}
+.party-skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px 8px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  margin-top: 3px;
+}
+.party-sk {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+}
+.party-k {
+  color: var(--app-text-dim);
+}
+/* The sheet's own proficiency pill, one size down so sixteen of them fit a card column. Untrained
+   is a pill like any other — never a greyed-out row. */
+.party-card .rank-pill {
+  font-size: 9px;
+  padding: 0 4px;
+  line-height: 1.5;
+}
+.party-sl {
+  font-size: 10.5px;
+  color: var(--app-text-dim);
+}
+.party-sl b {
+  color: var(--app-text);
+  font-weight: 600;
 }
 .party-stat-v {
   font-variant-numeric: tabular-nums;
@@ -713,13 +856,23 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  margin-top: 10px;
 }
 .party-cond,
 .party-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 11px;
   padding: 2px 8px;
   border-radius: 999px;
+}
+/* A condition the sheet derived (Bulk, an active mode): locked, exactly as the rail marks it. */
+.party-cond.is-auto {
+  cursor: help;
+}
+.party-cond-lock {
+  font-size: 10px;
+  opacity: 0.8;
 }
 .party-cond {
   background: color-mix(in srgb, var(--app-danger, #ef4444) 16%, transparent);
@@ -730,11 +883,18 @@ body {
   color: color-mix(in srgb, var(--app-accent) 70%, var(--app-text));
 }
 
-/* The tracker integration's "Stats shown" sections, appended below a card's core stats. */
-.party-extra {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: var(--app-bw) solid var(--app-border);
+/* A phone is too narrow for two columns of stats: they stack, and the divider becomes the rule
+   between them. */
+@media (max-width: 720px) {
+  .party-card-body {
+    grid-template-columns: 1fr;
+  }
+  .party-col-r {
+    border-left: 0;
+    padding-left: 0;
+    border-top: var(--app-bw) solid var(--app-border);
+    padding-top: 10px;
+  }
 }
 
 /* ---- roster screen ---- */
@@ -3123,11 +3283,6 @@ button.strike-name:hover {
   border-color: var(--app-accent);
   background: color-mix(in srgb, var(--app-accent) 14%, var(--app-surface-2));
 }
-.chip-swatch {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-}
 .accent-swatch {
   width: 24px;
   height: 24px;
@@ -4250,11 +4405,38 @@ button.strike-name:hover {
 .cond-mark {
   background: transparent;
   border: none;
-  padding: 0 0 0 2px;
   cursor: pointer;
   line-height: 1;
   display: inline-flex;
   align-items: center;
+  /* bug 2026-09-16: ≥ 24px tall for a finger. The glyph is a few px wide and ZERO tall (`.sit-star`
+     carries `line-height: 0`), so the box grows by padding and hands the space straight back as a
+     matching negative margin, which is why it is padding and not `min-width` — a `*` is narrow and
+     its width is the font's business. Vertically `min-height` does it, and -6px is exactly
+     `.cond-wrap`'s 6px gap, so the overflow reaches the edge of the row above and never into it.
+     Horizontal padding/margin used to do the same trick sideways, which let the box overlap 14px of
+     the condition name beside it — dropped, so the hit target stays vertical-only and the glyph sits
+     exactly where it always did. */
+  min-height: 24px;
+  padding: 0;
+  margin: -6px 0;
+}
+/* The Reactions row's star is the row's ONLY control, not a garnish beside a pill, so it is centred
+   in its own target and wears the 09-15 ruling's dotted affordance under the whole of it. Everything
+   here was inline on the element until 2026-09-16. It follows `.cond-mark` because it overrides it. */
+.rail-star-btn {
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0 6px;
+  margin: 0;
+  justify-content: center;
+  border-bottom: 1px dotted var(--app-text-dim);
+}
+/* `.sit-star` assumes it sits inside a line of text; here it IS the line, so it may not collapse the
+   button it is the content of, nor shadow that button's pointer with `cursor: help`. */
+.rail-star-btn .sit-star {
+  line-height: inherit;
+  cursor: inherit;
 }
 /* A situational note that moves the DC rather than the roll — set apart so it can't be misread as a
    bonus to your own save. */
@@ -6419,7 +6601,10 @@ button.strike-name:hover {
   color: var(--app-accent);
 }
 .settings-navitem.hb-special.active {
-  color: var(--app-accent-text);
+  /* The active row is filled with --app-surface-2, NOT the accent, so --app-accent-text (the ink
+     chosen to sit on an accent FILL) painted near-black on a dark panel — 1.29:1 on Slate. Stay
+     accent-tinted, the same way the row reads when it isn't the active one. */
+  color: var(--app-accent);
 }
 /* Export / Import homebrew action buttons, on the page (not the hamburger). Sit under the source
    list, separated by a rule. */
@@ -9054,6 +9239,32 @@ button.strike-name:hover {
   border: 1px solid var(--app-border);
   border-radius: 999px;
   padding: 0 6px;
+}
+/* bug 2026-09-16: derived conditions. A condition the sheet works out for itself (Encumbered from
+   Bulk, a condition an active mode imposes) is ON but not the player's to switch off — its cause is.
+   Same tag shape as "valued", and the locked toggle keeps the row's alignment instead of leaving a
+   hole where the circle was. */
+.cond-auto-tag {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--app-text-dim);
+  border: 1px dashed var(--app-border);
+  border-radius: 999px;
+  padding: 0 6px;
+}
+.cond-row.cond-auto .mode-toggle,
+.cond-row.cond-auto .mode-toggle:disabled {
+  opacity: 0.75;
+  cursor: default;
+}
+/* The pill's counterpart: a lock and the cause, where a toggled condition carries its remove button. */
+.cond-pill .cond-auto-lock {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  opacity: 0.8;
+  cursor: help;
 }
 /* Two whole lines, then an ellipsis. The clamp height is derived from the line-height rather than
    left to the box's own size, which is what used to slice the second line through the middle. */

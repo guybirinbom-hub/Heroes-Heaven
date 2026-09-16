@@ -5,6 +5,7 @@ import { useState } from 'react'
 // editing HH's build, which is what keeps this integration removable. A relative path resolves in
 // both projects with no configuration at all.
 import { themeList } from '../../../src/theme/themes'
+import { PaletteTile } from '../../../src/theme/PaletteTile'
 import { styleList } from '../../../src/theme/styles'
 import { fontList } from '../../../src/theme/fonts'
 import { getAppearance, setTheme, setStyle, setFont, setAccent } from '../../../src/theme/theme-manager'
@@ -30,37 +31,6 @@ const label: React.CSSProperties = {
   textTransform: 'uppercase', color: 'var(--text-faded)', margin: '0 0 8px',
 }
 const row: React.CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 20 }
-
-/** A palette swatch — shows the theme's actual surface/accent so the choice is visible, not verbal. */
-function ThemeSwatch({ name, tokens, active, onPick }: {
-  name: string; tokens: Record<string, string>; active: boolean; onPick: () => void
-}) {
-  return (
-    <button
-      onClick={onPick}
-      title={name}
-      style={{
-        display: 'flex', alignItems: 'center', gap: 8,
-        padding: '7px 10px', cursor: 'pointer',
-        borderRadius: 'var(--radius-sm)',
-        background: active ? 'var(--accent-soft)' : 'var(--bg-elevated)',
-        border: `var(--app-bw) solid ${active ? 'var(--accent-line)' : 'var(--border)'}`,
-        color: 'var(--text)', fontFamily: 'var(--font-ui)', fontSize: 12.5,
-      }}
-    >
-      {/* Live preview chip painted from the theme's OWN tokens, not the active ones. */}
-      <span style={{
-        width: 26, height: 16, borderRadius: 3, flex: 'none',
-        background: tokens['--app-surface'],
-        border: `1px solid ${tokens['--app-border']}`,
-        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-      }}>
-        <span style={{ width: 8, height: 8, borderRadius: 2, background: tokens['--app-accent'] }} />
-      </span>
-      {name}
-    </button>
-  )
-}
 
 function Seg({ items, active, onPick }: {
   items: { id: string; name: string }[]; active: string; onPick: (id: string) => void
@@ -105,12 +75,13 @@ export function HHAppearance() {
 
       <div style={label}>Palette</div>
       <div style={row}>
+        {/* HH's own tile component, not a copy: the tracker already imports HH's theme list, and the
+            tile is painted from the offered palette's tokens with no stylesheet of its own. */}
         {themeList.map(t => (
-          <ThemeSwatch
+          <PaletteTile
             key={t.id}
-            name={t.name}
-            tokens={t.tokens}
-            active={app.themeId === t.id}
+            theme={t}
+            selectedId={app.themeId}
             onPick={() => { setTheme(t.id); tick() }}
           />
         ))}

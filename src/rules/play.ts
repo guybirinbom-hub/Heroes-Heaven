@@ -290,9 +290,20 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
   let conditions = play.conditions ?? ch.conditions;
   // Carrying more than your Bulk limit applies the Encumbered condition (clumsy 1, −10 ft Speed) —
   // unless the "Ignore Bulk Limit" option is on. Derived from the live inventory so it tracks gear.
+  //
+  // ⚠ bug 2026-09-16: the LIVE WALLET too. 1,000 coins are 1 Bulk (deriveBulk reads `c.currency`) and
+  // the sheet renders `play.currency` (below), so overlaying only the inventory judged the limit
+  // against the BUILD purse: a character who earned 10,000 gp in play had an Inventory header reading
+  // "Bulk 10 / 5 · encumbered" and no Encumbered condition anywhere — no pill, no clumsy 1, no −10 ft.
+  // Both overlays have to be the same character the sheet shows, or the condition and the number that
+  // justifies it are computed from two different wallets.
   if (!ch.options?.ignoreBulk && !conditions.some((c) => c.id === 'encumbered')) {
-    const bulk = deriveBulk({ ...ch, inventory: play.inventory ?? ch.inventory }, content);
-    if (bulk.encTotal > bulk.encumberedAt) conditions = [...conditions, { id: 'encumbered' }];
+    const bulk = deriveBulk({ ...ch, inventory: play.inventory ?? ch.inventory, currency: play.currency ?? ch.currency }, content);
+    // `derivedFrom` says the cause, so the sheet can mark it automatic and lock it rather than
+    // offering a remove button that removes nothing (it is never in `play.conditions` to remove).
+    if (bulk.encTotal > bulk.encumberedAt) {
+      conditions = [...conditions, { id: 'encumbered', derivedFrom: `Bulk — carrying ${bulk.encTotal} of ${bulk.encumberedAt}` }];
+    }
   }
   /*
    * Conditions an ACTIVE MODE imposes — Curse of the Sky's Call 1's *"you are enfeebled 1"*, the hydra
@@ -305,9 +316,14 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
    * the damage clamp has to use the same max the sheet will show.
    */
   for (const id of play.activeModes ?? []) {
-    for (const mc of content.modes[id]?.conditions ?? []) {
+    const mode = content.modes[id];
+    for (const mc of mode?.conditions ?? []) {
       const have = conditions.find((x) => x.id === mc.id);
-      if (!have) conditions = [...conditions, mc.value != null ? { id: mc.id, value: mc.value } : { id: mc.id }];
+      // Only the entry this loop CREATES is marked derived. Raising a value the player already holds
+      // (the `else` below) leaves it theirs — otherwise a GM-applied Enfeebled 2 would lose its remove
+      // button the moment a mode that imposes Enfeebled 1 came on, and the player could only step it
+      // down, never take it off.
+      if (!have) conditions = [...conditions, { id: mc.id, ...(mc.value != null ? { value: mc.value } : {}), derivedFrom: `the ${mode?.name ?? 'active'} mode` }];
       else if (mc.value != null && (have.value ?? 0) < mc.value) conditions = conditions.map((x) => (x.id === mc.id ? { ...x, value: mc.value } : x));
     }
   }

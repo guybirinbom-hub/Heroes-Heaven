@@ -5356,6 +5356,17 @@ export interface ActiveCondition {
   id: string;
   /** For valued conditions, e.g. Frightened 2. */
   value?: number;
+  /**
+   * Set only when `applyPlayState` WORKED THIS OUT — the cause in words, "Bulk — carrying 10 of 5",
+   * "the Juggernaut Mutagen mode". The player never applied it, so it is not theirs to remove: it
+   * goes when its cause goes.
+   *
+   * Written on the OVERLAID character only, never into `play.conditions` (nothing persists it), and
+   * never onto an entry the player already holds — a mode that raises a GM-applied Enfeebled 1 to 2
+   * leaves that entry the player's, remove button and all. The sheet reads this field instead of
+   * re-deriving the causes next to the display, which is how the two answers used to disagree.
+   */
+  derivedFrom?: string;
 }
 
 /** A PF2e condition definition (the browsable rules entry). */

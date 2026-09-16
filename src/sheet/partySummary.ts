@@ -1,7 +1,7 @@
 // Compact card data for the party page — computed by each owner at publish time (so teammates render
 // a small summary without pulling the whole sheet). Everything is wrapped defensively: a partial or
 // odd character must never throw the publish/sync path.
-import type { Character, ContentDatabase } from '../rules/types';
+import type { Character, ContentDatabase, ProficiencyRank } from '../rules/types';
 import { deriveMaxHp, deriveAc, derivePerception } from '../rules/derive';
 
 export interface PartySummary {
@@ -14,7 +14,12 @@ export interface PartySummary {
   hpTemp?: number;
   ac: number;
   perception: number;
-  conditions: { name: string; value?: number }[];
+  /** The rank behind `perception`, so the card can draw the same proficiency pill the sheet does.
+   *  Optional: a summary published before this field existed simply has no pill. */
+  perceptionRank?: ProficiencyRank;
+  /** `derivedFrom` is the cause a condition the SHEET worked out carries (Bulk, an active mode) —
+   *  the card shows those locked, exactly as the owner's own rail does. */
+  conditions: { name: string; value?: number; derivedFrom?: string }[];
   modes: string[];
   /** Feats the PARTY shares rather than the individual: a capability any member can use because one
    *  member has it. Battleforger is the first — it prepares another character's gear, so the control
@@ -41,6 +46,8 @@ export function computeSummary(c: Character, content: ContentDatabase): PartySum
     }
   };
   const hpMax = safe(() => deriveMaxHp(c, content), c.hitPoints?.current ?? 0);
+  // One derive, two fields — the card draws the rank's pill beside the modifier.
+  const perc = safe<{ modifier: number; rank?: ProficiencyRank }>(() => derivePerception(c), { modifier: 0 });
   return {
     name: c.name || 'Unnamed',
     ancestry: c.ancestryId ? content.ancestries[c.ancestryId]?.name : undefined,
@@ -50,11 +57,13 @@ export function computeSummary(c: Character, content: ContentDatabase): PartySum
     hpMax,
     hpTemp: c.hitPoints?.temp || undefined,
     ac: safe(() => deriveAc(c, content).value, 10),
-    perception: safe(() => derivePerception(c).modifier, 0),
+    perception: perc.modifier,
+    perceptionRank: perc.rank,
     sharedFeats: PARTY_SHARED_FEATS.filter((f) => (c.feats ?? []).some((x) => x.featId === f)),
     conditions: (c.conditions ?? []).map((cond) => ({
       name: content.conditions?.[cond.id]?.name ?? cap(cond.id),
       value: cond.value,
+      derivedFrom: cond.derivedFrom,
     })),
     modes: (c.activeModes ?? []).map((m) => m.name).filter(Boolean),
     // The party list draws this in a small round slot, so send the player's own square crop when they

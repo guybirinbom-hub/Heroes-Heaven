@@ -350,6 +350,11 @@ export interface Combatant {
   name: string
   creature: Creature | null
   isPC: boolean
+  /** The Heroes Heaven character id this PC row stands for, stamped by the embed when the row is
+   *  added from a party card. The tracker's own PC↔character link is the lower-cased NAME, which two
+   *  characters can share — anything matching a row to a character should prefer this when both
+   *  sides have one. Absent in the standalone tracker and on every hand-typed row. */
+  charId?: string
   isAlly: boolean    // true = allied NPC (counts with players for XP purposes)
   initiative: number | null
   currentHP: number
@@ -379,6 +384,7 @@ export interface SavedEncounter {
     creatureId: string | null  // kept for legacy saved data
     isPC: boolean
     isAlly?: boolean    // optional for back-compat with older saves
+    charId?: string     // the campaign character a PC row points at; absent on pre-charId saves
     maxHP: number
     isElite: boolean
     isWeak: boolean
