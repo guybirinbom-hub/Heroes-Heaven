@@ -3,6 +3,7 @@ import { parseCreature, parseHazard } from '../utils/parseCreature'
 import { entriesToText } from '../utils/tags'
 import { searchMatches } from '../utils/searchRank'
 import { MONSTER_PARTS_RULES } from './monsterPartsRules'
+import { notifyPersist } from '../store/persistBus'
 
 const BASE = '/data'
 
@@ -370,6 +371,7 @@ export function saveCustomCreature(creature: Creature): void {
     : [...current, creature]
   _customCreatures = next
   localStorage.setItem(CUSTOM_KEY, JSON.stringify(next))
+  notifyPersist(CUSTOM_KEY)
 }
 
 export function deleteCustomCreature(id: string): void {
@@ -378,6 +380,13 @@ export function deleteCustomCreature(id: string): void {
   if (next.length === current.length) return
   _customCreatures = next
   localStorage.setItem(CUSTOM_KEY, JSON.stringify(next))
+  notifyPersist(CUSTOM_KEY)
+}
+
+/** Drop the in-memory cache so the next read re-parses localStorage — the GM-device mirror
+ *  (src/data/trackerSync.ts) wrote a newer list there. */
+export function reloadCustomCreatures(): void {
+  _customCreatures = null
 }
 
 // ── Hidden bestiary entries ────────────────────────────────────────────────

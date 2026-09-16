@@ -4,6 +4,7 @@ import type { IndexEntry } from '../data/dataStore'
 import type { Creature } from '../types/pf2e'
 import { cleanSource } from '../utils/sources'
 import { useSourcesStore } from '../store/sourcesStore'
+import { usePersistVersion } from '../store/persistBus'
 
 interface Props {
   title?: string
@@ -22,7 +23,10 @@ export function CreaturePickerModal({ title = 'Link Stat Block', onSelect, onClo
   const disabledSources = useSourcesStore(s => s.disabled)
   const disabledSourceSet = useMemo(() => new Set(disabledSources), [disabledSources])
 
-  useEffect(() => { setCustomCreatures(loadCustomCreatures()) }, [])
+  // Re-read when the list changes under us — a save here, or the GM-device mirror pulling this
+  // account's other device's homebrew.
+  const customVersion = usePersistVersion('pf2e-custom-creatures')
+  useEffect(() => { setCustomCreatures(loadCustomCreatures()) }, [customVersion])
 
   const doSearch = useCallback(async (q: string) => {
     setLoading(true); setError('')

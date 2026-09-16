@@ -172,6 +172,39 @@ describe('partyStore review fixes', () => {
     const p2 = usePartyStore.getState().parties.find(p => p.id === id2)!
     expect(p2.players.filter(p => p.name === 'Twin').length).toBe(2)
   })
+
+  /*
+   * TWO DEVICES, ONE CAMPAIGN, TWO PARTIES (GM-device sync, 2026-09-16). Each device minted its own
+   * id for the campaign's party, so the mirror's first-contact union of `pf2e-parties` — which
+   * matches BY ID — keeps both. Everything that resolves a campaign to its party takes the first
+   * match, so the other device's hand-added NPCs, notes and turn history sat in storage unreachable.
+   * Without the fold in syncCampaignParty:
+   *   AssertionError: expected 2 to be 1                 ← two parties for one campaign
+   *   AssertionError: expected undefined to be defined   ← the other device's NPC
+   */
+  it('#GM-sync folds a second party for the same campaign back into one', () => {
+    usePartyStore.setState({
+      parties: [
+        { id: 'mine', name: 'Camp', level: 1, isFavorite: false, campaignId: 'camp',
+          players: [mkPlayer('a', 'Bob', { charId: 'c1', turnCount: 3 })] },
+        // The other device's copy of the same campaign, arrived through the union.
+        { id: 'theirs', name: 'Camp', level: 1, isFavorite: false, campaignId: 'camp',
+          players: [mkPlayer('b', 'Bob', { charId: 'c1', turnCount: 99 }), mkPlayer('n', 'Cave bear', { memberType: 'npc', notes: 'wounded' })] },
+      ],
+      activePartyId: null,
+    } as never)
+
+    const id = usePartyStore.getState().syncCampaignParty('camp', 'Camp', [{ charId: 'c1', name: 'Bob', maxHP: 20 }])
+
+    expect(id).toBe('mine') // the one the seam already resolves to
+    expect(usePartyStore.getState().parties.filter(p => p.campaignId === 'camp').length).toBe(1)
+    const party = usePartyStore.getState().parties.find(p => p.id === 'mine')!
+    const bear = party.players.find(p => p.name === 'Cave bear')
+    expect(bear).toBeDefined()          // the other device's NPC came across…
+    expect(bear!.notes).toBe('wounded')
+    expect(party.players.filter(p => p.name === 'Bob').length).toBe(1)
+    expect(party.players.find(p => p.name === 'Bob')!.turnCount).toBe(3) // …and this device's PC won
+  })
 })
 
 // ---- data store ----------------------------------------------------------

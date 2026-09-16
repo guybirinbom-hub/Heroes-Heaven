@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import '../builder/builder.css';
 import type { ContentDatabase, ModeDef } from '../rules/types';
 import { emptyBuild, type BuildState } from '../rules/build';
@@ -28,6 +28,7 @@ import {
   type CampaignMembership,
 } from '../data/campaigns';
 import type { PartyMember } from '../data/party';
+import { useAuth } from '../data/useAuth';
 import { loadCampaigns, saveCampaigns } from '../data/storage';
 import { PartyMembers, useMemberViewer } from './PartyMembers';
 import { PageMenu } from './PageMenu';
@@ -36,6 +37,27 @@ import { HeroesHeavenLogo } from './Logo';
 import { confirmDialog } from './confirm';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler, useEscapeClose, triggerBack } from './useEscapeClose';
+
+/**
+ * THE LOCAL TABLE — the initiative tracker without an account.
+ *
+ * "The initiative tracker needs to be accessible without an account. It will just not have any of the
+ * online features and only work as an empty campaign, because it doesn't have influence on any
+ * settings and such, but I still need to access the initiative tracker to use it."
+ *
+ * So a signed-out desktop user gets ONE thing on this page: this synthetic GM membership, handed
+ * straight to <CampaignTracker>. It is never saved to `loadCampaigns()` and never reaches the server
+ * — `local: true` is what every server leg in the seam checks before it does anything online.
+ *
+ * THE ID `local` IS LOAD-BEARING TWICE OVER: the board persists under `pf2e-current-combat:local`,
+ * and src/data/trackerSync.ts excludes exactly that key by name so this table is never mirrored to the
+ * GM's other devices. Renaming it here without renaming it there puts a no-account table in the cloud.
+ *
+ * The EMPTY share code is load-bearing: `useCampaignDefaults` refetches a campaign by its code, and
+ * `fetchCampaignByCode` answers "Enter a campaign code." before touching Supabase — so even that leg
+ * goes nowhere. Module-level (not rebuilt per render) because CampaignTracker memoises on `m`.
+ */
+const LOCAL_TABLE: CampaignMembership = { id: 'local', code: '', role: 'gm', name: 'Local table', description: '', local: true };
 
 type View =
   | { kind: 'list' }
@@ -102,12 +124,14 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
   // Gated on TRACKER_IN_CAMPAIGN, like every other integration branch in this file: it only makes
   // sense BECAUSE a campaign is now a live combat tracker you're working inside. Opening a campaign
   // is a plain detail panel again, and jumping straight back into one isn't what HH did before.
-  const [view, setView] = useState<View>(() => {
-    if (!TRACKER_IN_CAMPAIGN) return { kind: 'list' };
-    const id = getRememberedCampaign();
-    const m = id ? loadCampaigns().find((x) => x.id === id) : undefined;
-    return m ? { kind: 'detail', m } : { kind: 'list' };
-  });
+  //
+  // …but only once auth has ANSWERED, and only for a signed-in user. `signOut()` doesn't clear the
+  // remembered campaign (nor the cached memberships), so seeding this from render used to open a real
+  // campaign's tracker on a signed-out web device during the loading window — a party fetch and the
+  // member-sheet subscriptions going out for a campaign it has no session for, before the local table
+  // replaced it. An effect instead of a lazy initial state, because the answer arrives a tick later.
+  const [view, setView] = useState<View>({ kind: 'list' });
+  const adoptedRemembered = useRef(false);
   /*
    * PHONES DON'T RUN A TABLE.
    *
@@ -118,6 +142,27 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
    * is replaced by one line saying where to find them. The desktop/web path below is untouched.
    */
   const isPhone = useIsMobile();
+  /*
+   * SIGNED OUT, ON DESKTOP → this page IS the local table, and nothing else. No list, no create, no
+   * join, no party: every one of those needs the server, which refuses without auth. See LOCAL_TABLE.
+   *
+   * 'loading' is deliberately NOT local: on the web the session is read asynchronously, and treating
+   * that moment as signed-out would flash the local table (and mount, then unmount, a tracker scoped
+   * to it) in front of a GM who is signed in. A signed-out user simply waits one tick longer.
+   * On a phone this never applies — the phone has no GM side, so signed out there is no page at all
+   * (App hides the menu item) and signed in it keeps the list + join-by-code it always had.
+   */
+  const auth = useAuth();
+  /*
+   * ⚠ IN DEV, CACHED CAMPAIGNS STILL WIN. TEST_CAMPAIGNS_WITHOUT_LOGIN is `import.meta.env.DEV`, and
+   * its whole promise (see src/integration/enabled.ts) is "without login you can open the page and
+   * work with campaigns already cached on this device". The local table would swallow that path whole
+   * — the list, Create, the defaults editor and both of the flag's other consumers become unreachable
+   * on desktop. So a dev with nothing cached gets the local table (which is what needs testing), and a
+   * dev with campaigns on the device gets them. Constant-folds away in a release build.
+   */
+  const devCampaigns = TEST_CAMPAIGNS_WITHOUT_LOGIN && memberships.length > 0;
+  const localTable = TRACKER_IN_CAMPAIGN && !isPhone && !devCampaigns && auth.status !== 'signed-in' && auth.status !== 'loading';
   // GM detail: the GM edits a player's sheet (fully, silently pushed on Update) — not a read-only view.
   // On a phone that editor IS the GM side, so a teammate's sheet opens read-only there instead.
   const { sheetEl, open } = useMemberViewer(content, { gmEdit: !isPhone });
@@ -128,33 +173,115 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
     if (view.kind === 'edit') setView({ kind: 'detail', m: view.m });
     else setView({ kind: 'list' });
   };
-  // The hamburger is the navigation — no top-level back arrow. Escape / Android-back close the page
-  // (list view) or step back one level (sub-views), via the shared dismiss stack.
-  useEscapeClose(onClose);
+  // The tracker is on screen: a campaign the GM opened, or the signed-out local table. Both put the
+  // tracker's tools in HH's chrome and both hand leaving to the tracker itself (see below).
+  const trackerView = TRACKER_IN_CAMPAIGN && !isPhone && (localTable || view.kind === 'detail');
   /*
-   * …except while the campaign IS the tracker: leaving is THAT view's decision, because it's the only
+   * The hamburger is the navigation — no top-level back arrow. Escape / Android-back close the page
+   * (list view) or step back one level (sub-views), via the shared dismiss stack.
+   *
+   * …EXCEPT while the campaign IS the tracker: leaving is THAT view's decision, because it's the only
    * one that knows whether a GM edit is still unpushed, and it registers its own handler (calling
-   * `goBack` through onLeave once it's safe). Registering a second handler for the same gesture would
-   * race on mount order — with the lazy chunk already loaded the tracker mounts in the SAME commit,
-   * where a child's effect runs before its parent's, and the handler that asks first would lose.
+   * `goBack` through onLeave once it's safe). This line used to register unconditionally, and the
+   * stack is LIFO with a child's effect running before its parent's — so on any commit where the
+   * tracker mounts WITH the page (a warm lazy chunk: the second visit, and every first render of the
+   * local table) this handler sat on top of the tracker's own. One Escape out of an initiative row's
+   * right-click menu then left the whole page, unpushed sheet edits and all. `undefined` is the hook's
+   * documented "no handler", and topHandler() skips it — nothing is reordered by passing it.
    */
-  const trackerView = TRACKER_IN_CAMPAIGN && !isPhone && view.kind === 'detail';
+  /*
+   * …and until the tracker is actually MOUNTED, this page keeps its own Escape.
+   *
+   * `trackerView` is true from the very first render (the local table never leaves view.kind ===
+   * 'list'), but <CampaignTracker> is LAZY: on a cold chunk the commit that makes this view the
+   * tracker contains no tracker. Handing Escape over on `trackerView` alone handed it to nobody —
+   * this hook got `undefined`, useBackHandler's own condition is false for the local table, and
+   * Escape / Android-back did nothing at all until the chunk landed. `trackerMounted` is set by the
+   * sentinel inside the tracker's own Suspense boundary below, so the handover happens exactly when
+   * there is something to hand over to.
+   */
+  const [trackerMounted, setTrackerMounted] = useState(false);
+  useEscapeClose(trackerView && trackerMounted ? undefined : onClose);
   useBackHandler(view.kind !== 'list' && !trackerView, goBack);
 
+  // Re-open on the campaign the user was last in (see the note on `view`). Once, and only for a
+  // session that actually exists — OR the dev path, whose whole promise is working without one. Left
+  // out, a dev build with cached campaigns and no session booted to this page (App's bootToCampaign)
+  // and then sat on the list with no way into the campaign it had booted for. `devCampaigns` is false
+  // in a release build, so the real gate is unchanged.
+  useEffect(() => {
+    if (!TRACKER_IN_CAMPAIGN || adoptedRemembered.current) return;
+    if (auth.status !== 'signed-in' && !devCampaigns) return;
+    adoptedRemembered.current = true;
+    const id = getRememberedCampaign();
+    const m = id ? loadCampaigns().find((x) => x.id === id) : undefined;
+    if (m) setView({ kind: 'detail', m });
+  }, [auth.status, devCampaigns]);
+
   // Track where the user is, so the hamburger re-opens here. Stepping back to the list is an
-  // explicit "I'm done with that campaign", so it clears the memory.
+  // explicit "I'm done with that campaign", so it clears the memory — but ARRIVING on the list is
+  // not: this page opens on the list every time (the effect above moves it), and the local table
+  // never leaves it, so clearing on the first run wiped the memory of a GM who simply opened the
+  // tracker while signed out.
+  const firstViewRun = useRef(true);
   useEffect(() => {
     if (!TRACKER_IN_CAMPAIGN) return;
+    const first = firstViewRun.current;
+    firstViewRun.current = false;
     if (view.kind === 'detail') rememberCampaign(view.m.id);
-    else if (view.kind === 'list') rememberCampaign(null);
+    else if (!first && view.kind === 'list') rememberCampaign(null);
   }, [view]);
 
   // Reset the tracker's transient UI (open panels, which view) only when returning to the LIST —
   // i.e. actually leaving the campaign. Going into campaign settings and back is NOT leaving, so the
   // exact view the GM was on (a combat pane, the GM screen) survives the round-trip.
+  //
+  // ARRIVING on the list is not leaving either. `view` starts on the list and the effect above moves
+  // it to the remembered campaign a tick later, so this ran on EVERY mount: a GM who left the page on
+  // the GM screen came back to the party view, every time. Same first-run ref, for the same reason.
+  const firstResetRun = useRef(true);
   useEffect(() => {
-    if (TRACKER_IN_CAMPAIGN && view.kind === 'list') trackerUi.reset();
+    const first = firstResetRun.current;
+    firstResetRun.current = false;
+    if (TRACKER_IN_CAMPAIGN && !first && view.kind === 'list') trackerUi.reset();
   }, [view.kind]);
+
+  /*
+   * ── Removable integration ── HOLD THE GM MIRROR FOR THE WHOLE VISIT TO A CAMPAIGN.
+   *
+   * ../data/trackerSync.ts is refcounted, and CampaignTracker was its only holder — so opening this
+   * campaign's settings, which unmounts the tracker and mounts it again on the way back, dropped the
+   * count to zero: channel down, and re-entry paid for a fresh opening pull that the board had to sit
+   * through ("Opening the table…", up to four seconds) before the GM could touch anything. This
+   * second holder spans the round trip, so nothing is torn down and coming back is instant.
+   *
+   * The POLICY still lives in CampaignTracker ("THE GM'S OTHER DEVICE" there) — this must never hold
+   * a mirror the tracker itself would refuse to start, so the local table, a player's membership, a
+   * phone and a signed-out session are all excluded by name here too.
+   *
+   * The import is DYNAMIC on purpose: trackerSync reaches into the tracker's stores, and a static
+   * import here would pull that whole chunk back into the main bundle the two lazy() calls above
+   * exist to keep it out of.
+   */
+  const mirrorMembership = view.kind === 'detail' || view.kind === 'edit' ? view.m : null;
+  const mirrorUid =
+    TRACKER_IN_CAMPAIGN && !isPhone && mirrorMembership && !mirrorMembership.local && mirrorMembership.role === 'gm' && auth.status === 'signed-in'
+      ? (auth.session?.user.id ?? null)
+      : null;
+  useEffect(() => {
+    if (!mirrorUid) return;
+    let stop: (() => void) | null = null;
+    let live = true;
+    void import('../data/trackerSync').then(({ startTrackerSync }) => {
+      const handle = startTrackerSync({ uid: mirrorUid });
+      if (live) stop = handle.stop;
+      else handle.stop(); // left the campaign while the chunk was still loading
+    });
+    return () => {
+      live = false;
+      stop?.();
+    };
+  }, [mirrorUid]);
 
   if (sheetEl) return sheetEl; // the GM's editable sheet for a player takes over the screen
 
@@ -186,8 +313,9 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
     after();
   };
 
-  const title =
-    view.kind === 'list'
+  const title = localTable
+    ? 'Initiative tracker'
+    : view.kind === 'list'
       ? 'Campaigns'
       : view.kind === 'created'
         ? 'Campaign created'
@@ -203,8 +331,9 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
         <div className="chrome-brand" data-tauri-drag-region>
           {/* Back only inside a sub-view. Routes through the shared dismiss stack (like Escape), so it
               peels ONE layer at a time: a full-screen character sheet the GM opened closes first, and
-              only then does the next press leave the campaign. goBack is the base of that stack. */}
-          {view.kind !== 'list' && (
+              only then does the next press leave the campaign. goBack is the base of that stack.
+              The local table has no sub-view to step back to — its only exit is out of the page. */}
+          {!localTable && view.kind !== 'list' && (
             <button
               className="icon-btn hb-back"
               onClick={() => { if (!triggerBack()) goBack(); }}
@@ -218,14 +347,14 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
         </div>
         {/* Row 1 of the campaign-as-tracker view: the tracker's tools live in HH's own chrome.
             Part of the removable integration — see src/integration/README.md. */}
-        {TRACKER_IN_CAMPAIGN && !isPhone && view.kind === 'detail' && (
+        {trackerView && (
           <Suspense fallback={null}>
             <TrackerTools />
           </Suspense>
         )}
         {/* Customize the GM's tracker look (theme/style only, tracker-scoped) — mirrors the character
             sheet's Customize icon, sitting next to the hamburger. Removable integration. */}
-        {TRACKER_IN_CAMPAIGN && !isPhone && view.kind === 'detail' && (
+        {trackerView && (
           <button
             className="icon-btn"
             title="Customize tracker appearance"
@@ -252,7 +381,44 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
       {/* The tracker needs the WHOLE screen; .cmp-body is otherwise capped at 640px and centred
           (right for a list of campaign cards, wrong for a combat tracker). The modifier is defined
           in src/integration/campaign-tracker.css and goes away with the integration. */}
-      <div className={'cmp-body' + (TRACKER_IN_CAMPAIGN && !isPhone && view.kind === 'detail' ? ' cmp-body-tracker' : '')}>
+      <div className={'cmp-body' + (trackerView ? ' cmp-body-tracker' : '')}>
+        {/* SIGNED OUT: the local table, and nothing else on the page. `local: true` turns every online
+            leg of the seam off inside the tracker — see CampaignTracker's `offline`. Leaving goes
+            straight out of the page (there's no list underneath), through the tracker's own guarded
+            exit, so a half-built encounter still gets its say. */}
+        {localTable ? (
+          <>
+            {/* THE BOARD, not "everything". `pf2e-current-combat:local` is excluded from the GM
+                mirror by name, so this fight is never uploaded — but an encounter saved here, a
+                creature converted here and this table's entry in `pf2e-parties` live in the tracker's
+                single device-wide collections, and those DO follow the GM's account once they sign in
+                (see src/data/trackerSync.ts's header). The copy says what is actually true. */}
+            <p className="setup-note cmp-local-note">
+              Sign in to run campaigns with players — this initiative order stays on this device.
+            </p>
+            <Suspense fallback={null}>
+              <TrackerMounted onChange={setTrackerMounted} />
+              <CampaignTracker
+                m={LOCAL_TABLE}
+                content={content}
+                // There is no campaign behind this table, so there are no campaign settings. The
+                // tools' "Campaign" button lives in the tracker's own bar and can't be hidden from
+                // here, so say what it would have opened instead of doing nothing.
+                onOpenSettings={() =>
+                  void confirmDialog({
+                    title: 'No campaign settings',
+                    message:
+                      'This table is local to this device. Sign in and create a campaign to set default rules, share a code and bring players in.',
+                    confirmLabel: 'OK',
+                  })
+                }
+                onLeave={onClose}
+                onViewMember={() => undefined}
+              />
+            </Suspense>
+          </>
+        ) : (
+          <>
         {view.kind === 'list' && (
           <>
             {/* On a phone the list is every campaign you're IN, GM or player — the page is a player's
@@ -284,6 +450,7 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
         {view.kind === 'detail' &&
           (TRACKER_IN_CAMPAIGN && !isPhone ? (
             <Suspense fallback={null}>
+              <TrackerMounted onChange={setTrackerMounted} />
               <CampaignTracker
                 m={view.m}
                 content={content}
@@ -335,9 +502,26 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
             onDone={() => setView({ kind: 'detail', m: { id: view.c.id, code: view.c.code, role: 'gm', name: view.c.name, description: view.c.description } })}
           />
         )}
+          </>
+        )}
       </div>
     </div>
   );
+}
+
+/**
+ * "The lazy tracker chunk has landed and its own dismiss handler is on the stack."
+ *
+ * It shares the tracker's Suspense boundary, so it suspends with it and mounts with it — which is
+ * the one moment the page can hand Escape over (see `trackerMounted` above). Part of the removable
+ * integration; it goes with the two <CampaignTracker> mounts.
+ */
+function TrackerMounted({ onChange }: { onChange: (mounted: boolean) => void }) {
+  useEffect(() => {
+    onChange(true);
+    return () => onChange(false);
+  }, [onChange]);
+  return null;
 }
 
 function GmList({ campaigns, phone, onCreate, onOpen }: {

@@ -22,6 +22,7 @@ import type {
 } from '../rules/types';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
 import { loadSettingsUpdated, markLocalDataChanged, saveSettingsUpdated, loadCustomizationUpdated, saveCustomizationUpdated } from './syncBus';
+import { notifyReset } from '../../tracker/src/store/persistBus';
 import type { CampaignMembership } from './campaigns';
 
 export interface SavedChar {
@@ -350,6 +351,15 @@ export function saveCampaigns(list: CampaignMembership[]): void {
  *  this app's data and nothing else. Returns the number of storage keys removed. IRREVERSIBLE —
  *  only call behind an explicit, typed user confirmation. */
 export function wipeAllData(): number {
+  // BEFORE ANY KEY GOES: the GM-device mirror holds a per-key history of its conversation with the
+  // cloud, in memory as well as on disk, and clearing storage below settles only the disk half. Its
+  // next scheduled push finds nothing dirty left to send and writes the in-memory map straight back
+  // out (trackerSync.ts's `if (!rows.length) { saveStamps(); return; }`) — so the file outlives the
+  // wipe in the two branches that keep running after it (the plain-browser reload, same origin still
+  // signed in; the Android fallback, which does not reload at all), and on the next start every cloud
+  // row it names reads as already reconciled and is skipped: the GM's own boards never come back
+  // down. Same announcement the two other wholesale rewrites make — see forgetTrackerSyncStamps.
+  notifyReset();
   let removed = 0;
   try {
     removed = localStorage.length;

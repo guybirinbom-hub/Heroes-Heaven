@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useCombatStore } from '../store/combatStore'
+import { usePersistVersion } from '../store/persistBus'
 import { downloadEncounters, importEncountersFromFilePicker } from '../utils/encounterTransfer'
 
 interface Props { onClose: () => void }
@@ -22,6 +23,9 @@ export function EncounterManager({ onClose }: Props) {
   // Re-render trigger after an import (localStorage is updated outside of React state).
   const [refreshTick, setRefreshTick] = useState(0)
   void refreshTick
+  // …and after the GM-device mirror pulls this key from the GM's other device: the names below come
+  // from a module cache the pull only invalidates, so nothing else would re-read it.
+  void usePersistVersion('pf2e-encounters')
   const names = getSavedEncounterNames()
 
   // Auto-dismiss the toast message after a few seconds.

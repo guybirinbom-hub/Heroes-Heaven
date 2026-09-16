@@ -1,4 +1,5 @@
 import type { Creature } from '../types/pf2e'
+import { notifyPersist, notifyReset } from '../store/persistBus'
 
 // ── Full backup / restore + custom-creature import ─────────────────────────
 // All app data lives in localStorage under `pf2e-*` keys (parties, encounters,
@@ -84,14 +85,24 @@ export type ImportMode = 'replace' | 'merge'
 
 // Collection keys whose JSON value is an array of objects with an `id` — in
 // merge mode these are unioned by id (imported entries win on an id clash).
-const MERGE_BY_ID = new Set(['pf2e-parties', 'pf2e-custom-creatures', 'pf2e-custom-conditions', 'pf2e-custom-themes'])
+// (pf2e-encounter-tables is the same shape and was simply missed when that store was added — as a
+// singleton it was the one collection a merge-import, or the GM mirror's first contact, would drop.)
+const MERGE_BY_ID = new Set(['pf2e-parties', 'pf2e-custom-creatures', 'pf2e-custom-conditions', 'pf2e-custom-themes', 'pf2e-encounter-tables'])
 // JSON arrays of plain strings — merged as a set.
 const MERGE_STRING_SET = new Set(['pf2e-hidden-entries', 'pf2e-disabled-sources'])
 // JSON objects keyed by name — merged key-by-key (imported keys win).
 const MERGE_OBJECT_MAP = new Set(['pf2e-encounters'])
 
-/** Combine one key's current value with the imported value for merge mode. */
-function mergeValue(key: string, current: string | null, incoming: string): string {
+/** True for the keys mergeValue actually knows how to combine (the rest are singletons it keeps).
+ *  Exported for the GM-device mirror, which unions the two devices' collections the first time it
+ *  meets a key rather than letting one of them delete the other's — see src/data/trackerSync.ts. */
+export function isMergeableKey(key: string): boolean {
+  return MERGE_BY_ID.has(key) || MERGE_STRING_SET.has(key) || MERGE_OBJECT_MAP.has(key)
+}
+
+/** Combine one key's current value with the imported value for merge mode. Exported for the same
+ *  first-contact union; `incoming` wins a clash on the same id. */
+export function mergeValue(key: string, current: string | null, incoming: string): string {
   if (current == null) return incoming  // nothing local yet → take the import
   try {
     if (MERGE_BY_ID.has(key)) {
@@ -116,6 +127,20 @@ function mergeValue(key: string, current: string | null, incoming: string): stri
   return current
 }
 
+/**
+ * Heroes Heaven's GM-device mirror keeps its per-key stamps under this prefix. THE OWNER IS
+ * src/data/trackerSync.ts (`STAMP_PREFIX` there) — the literal is repeated because the tracker never
+ * imports from src/, and renaming it there means renaming it here.
+ *
+ * They are not `pf2e-*`, so a replace used to leave them standing while the keys they describe were
+ * wiped: a key the cloud holds and the backup doesn't was deleted locally, KEPT its stamp, and every
+ * later pull then read that cloud row as one this device already has and skipped it. The key stayed
+ * missing forever — and if the GM rebuilt it here, it went up over the copy on their other device. A
+ * replace is a brand-new history for every key, so the stamps go with it and each one meets the
+ * cloud again as first contact (which unions, rather than picking a winner).
+ */
+const HH_SYNC_STAMP_PREFIX = 'wanderers-codex:tracker-sync:'
+
 /** Write a backup's data into the `pf2e-*` localStorage keys. `replace` first
  *  WIPES every existing pf2e-* key (true reset); `merge` adds the backup's
  *  collections to the current data without losing what's already there. The
@@ -123,10 +148,16 @@ function mergeValue(key: string, current: string | null, incoming: string): stri
  *  re-hydrates. */
 export function applyBackup(data: Record<string, string>, mode: ImportMode = 'replace'): number {
   if (mode === 'replace') {
+    // FIRST, and through the bus: removing the stamp FILES is not enough while a mirror is running,
+    // because it holds the same stamps in memory and the notifyPersist calls below make it write them
+    // straight back out — whichever ran first decided, and when the file won, a key the backup left
+    // out was skipped by every later pull and stayed missing. The listener drops the in-memory copy
+    // and stops writing the file at all for this session (the restore reloads the app immediately).
+    notifyReset()
     const existing: string[] = []
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i)
-      if (k && k.startsWith(PREFIX)) existing.push(k)
+      if (k && (k.startsWith(PREFIX) || k.startsWith(HH_SYNC_STAMP_PREFIX))) existing.push(k)
     }
     for (const k of existing) localStorage.removeItem(k)
   }
@@ -134,6 +165,11 @@ export function applyBackup(data: Record<string, string>, mode: ImportMode = 're
   for (const [key, value] of Object.entries(data)) {
     if (!key.startsWith(PREFIX) || typeof value !== 'string') continue
     localStorage.setItem(key, mode === 'merge' ? mergeValue(key, localStorage.getItem(key), value) : value)
+    // Same announcement every other writer in the tracker makes. Without it the GM-device mirror
+    // never hears about the restore: its stamps don't start with `pf2e-` so they survive the wipe
+    // above, every restored key then looks like the mirror's own echo, and the restore sits diverged
+    // from the cloud until the GM's other device quietly undoes it.
+    notifyPersist(key)
     n++
   }
   return n

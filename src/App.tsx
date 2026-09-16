@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 // Removable integration flag — see src/integration/README.md.
 import { TEST_CAMPAIGNS_WITHOUT_LOGIN, TRACKER_IN_CAMPAIGN } from './integration/enabled';
-import { wasOnCampaignsPage, setOnCampaignsPage, getRememberedCampaign } from './integration/lastCampaignView';
+import { wasOnCampaignsPage, setOnCampaignsPage } from './integration/lastCampaignView';
 import { combatOwnsUndo } from './integration/combatUndoClaim';
 import { undoIsClaimed } from './undoClaim';
 import { CharacterSheet } from './sheet/CharacterSheet';
@@ -26,7 +26,7 @@ import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit, curre
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadGmEditsApplied, saveGmEditsApplied, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
 import { getPrefs, subscribePrefs } from './data/prefs';
-import { useShowUndoButtons } from './sheet/useIsMobile';
+import { useIsMobile, useShowUndoButtons } from './sheet/useIsMobile';
 import { playerWorkWasOverwritten, editsToApply } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
 import { setupPersist, schedulePersist, persistNow, flushPersist, hasPendingPersist, recentPersists } from './data/persist';
@@ -93,6 +93,8 @@ export default function App() {
   // Settings → Interface can hide the undo/redo arrows (and 'auto' hides them on phones). The keyboard
   // shortcuts below are NOT gated on this — the setting is about header clutter, not about undo.
   const showUndoButtons = useShowUndoButtons();
+  // ≤720px. Only the Campaigns menu gate below reads it — the phone keeps no GM side.
+  const isPhone = useIsMobile();
   const [activeId, setActiveId] = useState<string>(() => {
     // Reopen the last-active character if it still exists, else the first (or '' on an empty roster).
     const r = initialRoster();
@@ -104,15 +106,49 @@ export default function App() {
   // continue to the last-active sheet — the app's usual landing screen — unless the user already
   // started interacting with the roster (then yanking them away would be jarring).
   const [mode, setMode] = useState<'sheet' | 'builder' | 'roster' | 'homebrew' | 'campaigns' | 'settings'>('roster');
-  // Was the app closed while on a campaign? Captured ONCE, at mount, because the effect that keeps the
-  // "on campaigns page" marker in sync clears it as soon as we boot on the roster — so we must read it
-  // before that runs. Acted on only after content loads (campaigns needs it). See boot effect below.
-  const [bootToCampaign] = useState(
-    () => TRACKER_IN_CAMPAIGN && wasOnCampaignsPage() && !!getRememberedCampaign(),
-  );
+  // Was the app closed on the campaigns page? Captured ONCE, at mount, because the effect that keeps
+  // the marker in sync clears it as soon as we boot on the roster — so we must read it before that
+  // runs. Acted on only after content loads (campaigns needs it). See boot effect below.
+  //
+  // The marker alone decides it. It used to need a REMEMBERED CAMPAIGN as well, which quietly excluded
+  // the one user this door was built for: signed out, the page IS the initiative tracker (the local
+  // table) and there is no campaign to remember, so a GM who closed the app running a fight was
+  // dropped on the roster every launch and had to go back through the hamburger. Since the marker is
+  // cleared the moment you navigate anywhere else, "it was the current screen at close" is already the
+  // whole question — a signed-in GM sitting on the campaigns list simply reopens on the list.
+  const [bootToCampaign] = useState(() => TRACKER_IN_CAMPAIGN && wasOnCampaignsPage());
+  // Campaign OPERATIONS are a cloud feature: create, join, the party, a player's published sheet all
+  // need an account, and `campaignsOnline` is the gate on them. The DEV-only skip-login bypass counts
+  // (`devBypass` is always false in the production build, so this never loosens the real gate).
+  //
+  // THE INITIATIVE TRACKER IS NOT ONE OF THEM. "The initiative tracker needs to be accessible without
+  // an account. It will just not have any of the online features and only work as an empty campaign."
+  // So on desktop the page is always offered — signed out it opens the local table instead of the
+  // campaigns list (see CampaignsPage). On a PHONE it stays closed while signed out: the phone has no
+  // GM side at all, and a signed-in phone still gets exactly the list + join-by-code it always had.
+  const campaignsOnline = auth.status === 'signed-in' || devBypass;
+  /**
+   * CAN THIS DEVICE BE ON THE CAMPAIGNS PAGE AT ALL — the one predicate, for BOTH ways in.
+   *
+   * The menu item asks it, and so does the boot restore below. The boot path used to ask nothing
+   * (just "was the app closed there?"), so the door the menu keeps shut on a signed-out phone stood
+   * wide open at launch: the phone booted onto a campaigns page it has no GM side for.
+   *
+   * ⚠ On a PHONE this is false while the session is still 'loading' — not because the answer is no,
+   * but because there is no answer yet. Harmless for the MENU (a hidden item costs nothing and comes
+   * back on the very next render) and wrong for the BOOT restore, which decides once and for all: see
+   * `bootPending` below.
+   */
+  const campaignsReachable = campaignsOnline || !isPhone;
+  const onOpenCampaigns = campaignsReachable ? () => setMode('campaigns') : undefined;
+  /** Set when the boot restore wants the campaigns page and the session hasn't answered yet. */
+  const [bootPending, setBootPending] = useState(false);
   // Which screen the Settings / Customize pages should return to when closed (the one they opened from).
   const [uiReturn, setUiReturn] = useState<'sheet' | 'roster' | 'homebrew' | 'campaigns'>('roster');
   const autoOpenSheet = useRef(true);
+  /** Takes the "the user is already using the app" listeners off — called where the boot restore's
+   *  decision is actually MADE, which is either the content load or the `bootPending` effect below. */
+  const stopBootCancel = useRef(() => {});
   // The build being edited: a BuildState (edit existing) or null (creating new).
   const [editing, setEditing] = useState<{ id: string; build: BuildState } | null>(null);
   // True when the last persist attempt was rejected (e.g. localStorage quota) — surfaced as a banner
@@ -203,6 +239,11 @@ export default function App() {
     };
     window.addEventListener('pointerdown', cancel, true);
     window.addEventListener('keydown', cancel, true);
+    const stopCancel = () => {
+      window.removeEventListener('pointerdown', cancel, true);
+      window.removeEventListener('keydown', cancel, true);
+    };
+    stopBootCancel.current = stopCancel;
     // Descriptions arrive in a second file after the app is already interactive, and the loader
     // re-merges so they come back as a NEW database. Swapping it in is what makes them appear:
     // several layers downstream memoise on the database identity (applyOverrides, the sheet's
@@ -217,22 +258,55 @@ export default function App() {
       // fire if the user hasn't already started interacting with the roster (which cancels the jump),
       // and only from the roster boot screen — never yanking them off somewhere they navigated to.
       // Settings → Appearance → "Opens on" can turn the whole restore off and stay on Characters.
+      let waiting = false;
       if (autoOpenSheet.current && getPrefs().startupScreen !== 'characters') {
+        // …and only where this device may be on that page at all — the menu gate and this one are the
+        // same predicate. The screen itself is picked in the effect below, because on a phone that
+        // predicate needs the session and the session often answers AFTER this load.
         if (bootToCampaign) {
-          setMode((m) => (m === 'roster' ? 'campaigns' : m));
-        } else if (activeId) {
-          setMode((m) => (m === 'roster' ? 'sheet' : m));
-        }
+          setBootPending(true);
+          waiting = true;
+        } else if (activeId) setMode((m) => (m === 'roster' ? 'sheet' : m));
       }
-      window.removeEventListener('pointerdown', cancel, true);
-      window.removeEventListener('keydown', cancel, true);
+      // The listeners come off where the decision is MADE, and the bootPending branch has not made one
+      // — it is still waiting for the session. Removing them here left that whole wait with nothing
+      // listening: a GM who gave up and started using the roster was yanked onto the campaigns page
+      // anyway the moment auth answered. That branch takes them off in the effect below instead.
+      if (!waiting) stopCancel();
     });
     return () => {
-      window.removeEventListener('pointerdown', cancel, true);
-      window.removeEventListener('keydown', cancel, true);
+      stopCancel();
       stopDesc();
     };
   }, []);
+
+  /*
+   * THE OTHER HALF OF THE BOOT RESTORE — which screen a launch that was closed on the campaigns page
+   * lands on, decided once the session has answered.
+   *
+   * It used to be decided inside the content load above, from `campaignsReachable` read at that one
+   * moment. On a phone that predicate NEEDS the session, and the session regularly answers later than
+   * the content does: core.json comes straight out of the service worker's cache while an expired
+   * token is still being refreshed over the network. 'loading' was then read as "no account", so a
+   * SIGNED-IN GM's phone that was closed on a campaign reopened on a character sheet — and nothing
+   * ever re-ran the branch. "Not yet known" is not "no": the ambiguous case waits here instead.
+   *
+   * Where auth has already answered this runs on the very next commit, so nothing else changes.
+   * `autoOpenSheet` keeps the last word: a user who started using the roster while we waited is never
+   * yanked off it.
+   */
+  useEffect(() => {
+    if (!bootPending || auth.status === 'loading') return;
+    setBootPending(false);
+    // THE DECISION IS MADE HERE, so this is where the cancel listeners have done their job — anything
+    // the user did during the wait above has already reached `autoOpenSheet`, and nothing after this
+    // line is a boot restore to cancel.
+    stopBootCancel.current();
+    if (!autoOpenSheet.current) return;
+    if (campaignsReachable) setMode((m) => (m === 'roster' ? 'campaigns' : m));
+    else if (activeId) setMode((m) => (m === 'roster' ? 'sheet' : m));
+  }, [bootPending, auth.status, campaignsReachable, activeId]);
+
   // Roster persistence is DEBOUNCED (see data/persist.ts): a burst of play mutations (HP ticks,
   // condition toggles, resource pips, a scrubbed stepper, per-keystroke XP) coalesces into one write
   // after a short idle gap, instead of JSON-stringifying the whole roster (portraits included) on
@@ -703,11 +777,6 @@ export default function App() {
     const id = active.id;
     setRoster((r) => r.map((c) => (c.id === id ? { ...c, character: fn(c.character) } : c)));
   };
-  // Campaigns are a cloud feature — only offered when signed in. Local / not-signed-in users don't see
-  // the menu item at all (a fully-local experience stays available by simply not signing in). The
-  // DEV-only skip-login bypass can reach it too for local testing (`devBypass` is always false in the
-  // production build, so this never loosens the real gate).
-  const onOpenCampaigns = auth.status === 'signed-in' || devBypass ? () => setMode('campaigns') : undefined;
 
   // Update the active character's in-play runtime state (seeding from its built
   // starting values the first time it's touched), then persist via the roster.
@@ -1005,7 +1074,7 @@ export default function App() {
         onCustomize={updateCharacter}
         globalCustomization={globalCustom}
         onLeaveCampaign={leaveCampaign}
-        partyEnabled={!!onOpenCampaigns}
+        partyEnabled={campaignsOnline}
         onRest={() =>
           updatePlay((p) =>
             rest(p, {

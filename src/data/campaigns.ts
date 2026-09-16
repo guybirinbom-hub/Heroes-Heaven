@@ -37,6 +37,12 @@ export interface CampaignMembership {
   description?: string;
   /** The player's answer to "use this campaign's default setup?", captured on join. */
   useDefaults?: boolean;
+  /**
+   * NOT A REAL CAMPAIGN — the signed-out "Local table" (id `local`), synthesised by CampaignsPage so
+   * the initiative tracker works without an account. Never stored, never on the server: every server
+   * leg (party, published sheets, GM edits, sync) skips a membership carrying this flag.
+   */
+  local?: boolean;
 }
 
 export type CampaignResult<T> = { ok: true; value: T } | { ok: false; error: string };

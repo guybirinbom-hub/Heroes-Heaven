@@ -10,6 +10,7 @@ import { RangeSlider } from './RangeSlider'
 import { cleanSource as cleanSourceShared } from '../utils/sources'
 import { useSourcesStore } from '../store/sourcesStore'
 import { useEncounterTablesStore } from '../store/encounterTablesStore'
+import { usePersistVersion } from '../store/persistBus'
 import { searchMatches, rankBySearch } from '../utils/searchRank'
 
 // ── 3-state pill ────────────────────────────────────────────────────────────
@@ -498,10 +499,13 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
       return next
     })
 
+  // The version re-reads the list when it changes under us — including the GM-device mirror pulling
+  // this account's other device's homebrew, which only invalidates dataStore's module cache.
+  const customVersion = usePersistVersion('pf2e-custom-creatures')
   useEffect(() => {
     setCustomCreatures(loadCustomCreatures())
     setHiddenEntries(loadHiddenEntries())
-  }, [])
+  }, [customVersion])
 
   /** Hover-preview popup state — coordinates anchor a larger image right
    *  next to the cursor while the user hovers a token. Cleared on leave. */

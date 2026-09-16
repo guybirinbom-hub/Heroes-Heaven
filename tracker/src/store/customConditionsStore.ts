@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { notifyPersist } from './persistBus'
 import type { StatMods, ModType } from '../utils/conditionEffects'
 
 /** A situational modifier on a single stat — applies only `when` a circumstance
@@ -63,6 +64,7 @@ function saveAll(list: CustomCondition[]): void {
   } catch {
     /* quota errors are surfaced by the calling component as needed */
   }
+  notifyPersist(STORAGE_KEY)
 }
 
 /** Build a blank template — used when the editor opens for a new entry. */
@@ -97,6 +99,8 @@ interface CustomConditionsStore {
   /** Replace the entire list — used by future import/export. */
   setAll: (list: CustomCondition[]) => void
   getById: (id: string) => CustomCondition | undefined
+  /** Re-read the library out of localStorage (the GM-device mirror wrote a newer copy). */
+  reloadFromStorage: () => void
 }
 
 export const useCustomConditionsStore = create<CustomConditionsStore>((set, get) => ({
@@ -125,5 +129,8 @@ export const useCustomConditionsStore = create<CustomConditionsStore>((set, get)
   },
   getById(id) {
     return get().conditions.find(c => c.id === id)
+  },
+  reloadFromStorage() {
+    set({ conditions: loadAll() })
   },
 }))

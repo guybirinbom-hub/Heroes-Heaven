@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { notifyPersist } from './persistBus'
 
 // ── Universal DM turn-time average ─────────────────────────────────────────
 // Shared across every party (unlike per-player averages, which live on each
@@ -31,12 +32,15 @@ function load(): DmAverage {
 
 function save(a: DmAverage) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(a)) } catch { /* quota */ }
+  notifyPersist(STORAGE_KEY)
 }
 
 interface DmAverageStore extends DmAverage {
   /** Fold a batch of turns into the cumulative average. */
   addTurns: (sumSeconds: number, count: number) => void
   reset: () => void
+  /** Re-read the average out of localStorage (the GM-device mirror wrote a newer copy). */
+  reloadFromStorage: () => void
 }
 
 export const useDmAverageStore = create<DmAverageStore>((set, get) => ({
@@ -58,5 +62,8 @@ export const useDmAverageStore = create<DmAverageStore>((set, get) => ({
     const next = { avgSeconds: 0, turnCount: 0, history: [] }
     save(next)
     set(next)
+  },
+  reloadFromStorage() {
+    set(load())
   },
 }))

@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { notifyPersist } from './persistBus'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Random encounter tables. Each table has a flat-check DC, a free-form note
@@ -55,6 +56,7 @@ function load(): EncounterTable[] {
 
 function persist(tables: EncounterTable[]) {
   try { localStorage.setItem(KEY, JSON.stringify(tables)) } catch { /* quota / private mode */ }
+  notifyPersist(KEY)
 }
 
 let _seq = 0
@@ -97,6 +99,8 @@ interface EncounterTablesStore {
   /** Add a new table or replace one with the same id. */
   upsert: (t: EncounterTable) => void
   remove: (id: string) => void
+  /** Re-read the tables out of localStorage (the GM-device mirror wrote a newer copy). */
+  reloadFromStorage: () => void
 }
 
 export const useEncounterTablesStore = create<EncounterTablesStore>((set, get) => ({
@@ -113,5 +117,8 @@ export const useEncounterTablesStore = create<EncounterTablesStore>((set, get) =
     const next = get().tables.filter(x => x.id !== id)
     persist(next)
     set({ tables: next })
+  },
+  reloadFromStorage() {
+    set({ tables: load() })
   },
 }))

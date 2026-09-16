@@ -99,6 +99,31 @@ describe('setScope', () => {
     expect(all.slice(0, restored.length)).toEqual(restored)
   })
 
+  it('reloadFromStorage adopts a board another GM device wrote under the CURRENT key', () => {
+    // The GM-device mirror (src/data/trackerSync.ts) writes the newer board into localStorage and then
+    // asks the store to catch up — without a scope change, which setScope refuses to do for the key
+    // it is already on.
+    useCombatStore.getState().setScope('camp-a')
+    add('Goblin Boss')
+    useCombatStore.getState().removeCombatant(idOf('Goblin Boss'))  // leaves an undo step behind
+    add('Goblin Boss')
+    expect(useCombatStore.getState().canUndo).toBe(true)
+
+    localStorage.setItem('pf2e-current-combat:camp-a', JSON.stringify({
+      combatants: [{ id: 'cmb-99', name: 'From The Other Device', conditions: [], currentHP: 10, maxHP: 10, tempHP: 0 }],
+      round: 3, activeIndex: 0, inCombat: true, selectedId: null, cidCounter: 99, condCounter: 0,
+    }))
+    useCombatStore.getState().reloadFromStorage()
+
+    expect(names()).toEqual(['From The Other Device'])
+    expect(useCombatStore.getState().round).toBe(3)
+    // Same cost as a scope load: the incoming board is not a state this device edited its way into,
+    // so undoing into the board it replaced would be undoing someone else's fight.
+    expect(useCombatStore.getState().canUndo).toBe(false)
+    add('Mine')                                                     // ids resume past the adopted board
+    expect(useCombatStore.getState().combatants.map(c => c.id)).toEqual(['cmb-99', 'cmb-100'])
+  })
+
   it('one setScope call also re-keys the GM layout store', () => {
     useCombatStore.getState().setScope('camp-a')
     add('Goblin Boss')

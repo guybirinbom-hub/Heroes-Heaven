@@ -38,6 +38,8 @@ import { usePartyStore } from '../../tracker/src/store/partyStore';
 import type { Combatant } from '../../tracker/src/types/pf2e';
 import { PartyMembers } from '../sheet/PartyMembers';
 import { fetchParty, type PartyMember } from '../data/party';
+import { useAuth } from '../data/useAuth';
+import { startTrackerSync, isTrackerSyncReady } from '../data/trackerSync';
 import { livePlay, useMemberSheets, usePcSheetTruth } from './pcSheetTruth';
 import type { ContentDatabase, DescRef } from '../rules/types';
 import { useLocalCampaignMembers } from './useLocalCampaignMembers';
@@ -53,6 +55,10 @@ import './campaign-tracker.css';
 
 /** One stable empty list, so "the party isn't known yet" doesn't re-run every memo below it. */
 const NO_MEMBERS: PartyMember[] = [];
+
+/** How long the board waits for the GM mirror's opening pull (or for auth to answer) before it draws
+ *  anyway. The GM plays off LOCAL data — a slow network must never hold the table hostage. */
+const SYNC_READY_CAP_MS = 4000;
 
 /*
  * A tracker popup that ISN'T one of the five overlays registered on the dismiss stack below.
@@ -114,6 +120,22 @@ export function CampaignTracker({
 }) {
   const { searchOpen, monsterSearchOpen, customOpen, encountersOpen, appearanceOpen, mainView, paneRequest, settingsRequest } = useTrackerUi();
   /*
+   * ── OFFLINE: THE TRACKER WITHOUT AN ACCOUNT ──────────────────────────────────
+   *
+   * "The initiative tracker needs to be accessible without an account. It will just not have any of
+   * the online features and only work as an empty campaign … but I still need to access the
+   * initiative tracker to use it."
+   *
+   * `m.local` is CampaignsPage's marker on the synthetic "Local table" membership (id `local`): there
+   * is no row behind it on the server and no account to ask, so every online leg below is skipped —
+   * the party read, the players' published sheets, the GM-edit push, HH's party cards. What is left is
+   * the standalone tracker: the initiative order, the bestiary picker, the name quick-add, encounters,
+   * the GM screen — all of which are local already.
+   *
+   * It is NOT a permissions check. A signed-in GM's campaign takes every branch it always did.
+   */
+  const offline = !!m.local;
+  /*
    * The GM's own theme for this tracker view (theme/style only, local, never synced).
    *  - trackerVars: paint the tracker with them; null → inherit the app's global appearance.
    *  - fullSheetRevert: the OUT-OF-COMBAT full-screen sheet (opened from a party card to review a
@@ -152,6 +174,8 @@ export function CampaignTracker({
    */
   const [serverMembers, setServerMembers] = useState<PartyMember[] | null>(null);
   useEffect(() => {
+    // OFFLINE: no server, no account — this is the one call that would go out for a local table.
+    if (offline) return;
     let cancelled = false;
     void fetchParty(m.id).then((list) => {
       if (!cancelled && list) setServerMembers(list);
@@ -159,8 +183,14 @@ export function CampaignTracker({
     return () => {
       cancelled = true;
     };
-  }, [m.id]);
-  const known = !TEST_CAMPAIGNS_WITHOUT_LOGIN || serverMembers?.length ? serverMembers : localMembers;
+  }, [m.id, offline]);
+  /*
+   * OFFLINE the party is EMPTY AND KNOWN — deliberately `NO_MEMBERS`, not `null`. A local table really
+   * has no members (rather than "we haven't read them yet"), so the bridge below is free to run: it
+   * creates the campaign's empty party, which is what keeps the party view off "Party not found." and
+   * gives the GM the tracker's own NPC tools. There is nothing to prune, because nothing was mirrored.
+   */
+  const known = offline ? NO_MEMBERS : !TEST_CAMPAIGNS_WITHOUT_LOGIN || serverMembers?.length ? serverMembers : localMembers;
   const members = known ?? NO_MEMBERS;
 
   /*
@@ -170,6 +200,10 @@ export function CampaignTracker({
   const memberSheets = useMemberSheets(m.id, members);
   const sheetById = useMemo(() => {
     const map = new Map<string, SavedChar>();
+    // OFFLINE: no sheets at all. Nobody's character is attached to the local table, so this would be
+    // empty anyway — returning early makes "no PC pane, no GM edit, ever" structural rather than
+    // incidental, since `roster` (and therefore renderPcPane) is built from this map.
+    if (offline) return map;
     // This device's own characters first, so the dev-without-login path still has sheets to show;
     // a published sheet always wins over the local copy.
     for (const e of loadRoster()) if (!e.archived && (e.character.campaignIds ?? []).includes(m.id)) map.set(e.id, e);
@@ -177,7 +211,9 @@ export function CampaignTracker({
     return map;
     // localMembers changes whenever the roster relevant to this campaign changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memberSheets, localMembers, m.id]);
+  }, [memberSheets, localMembers, m.id, offline]);
+  // With no members and no sheets this reconciles nothing and pushes nothing — the hook still runs
+  // (hooks can't be conditional) but every loop inside it is over an empty list.
   usePcSheetTruth({ campaignId: m.id, members, sheetById, content });
 
   const inCombat = useCombatStore((s) => s.inCombat);
@@ -263,16 +299,120 @@ export function CampaignTracker({
   }, [known, hostPcs, m.id, m.name, syncCampaignParty]);
 
   /*
+   * ── THE GM'S OTHER DEVICE ────────────────────────────────────────────────────
+   *
+   * "I would like all of the data to be local and that is what the GM actually uses, to cut on lag;
+   * but when I open another device I want to be able to see the current encounter if there is one,
+   * and all of the saved encounters also need to be visible. So if there are 2 GM devices and one
+   * updates something it needs to update on the second one."
+   *
+   * ../data/trackerSync.ts mirrors this ACCOUNT's tracker keys to `gm_tracker_state` (owner-only RLS
+   * — a player can never read a GM's board) and back down to the same GM's other devices. It is
+   * started here, at the campaign mount, rather than on the campaigns page:
+   *   • its opening pull has to land BEFORE the `setScope` below, because that pull is what writes the
+   *     other device's newer board into localStorage and setScope is what READS localStorage;
+   *   • this is the component that knows whether the campaign is the offline local table;
+   *   • it mirrors EVERY campaign's keys in one round, so starting it per opened campaign costs
+   *     nothing — one uid, one channel, one pull.
+   *
+   * NEVER for the local table (ruling 3: no account at all) and never for a player's membership — a
+   * player's device has no GM board to mirror. `startTrackerSync` is itself a no-op with no uid or no
+   * Supabase client, so this is belt and braces, and the ONE place the policy is written down.
+   */
+  const auth = useAuth();
+  const syncUid = !offline && m.role === 'gm' && auth.status === 'signed-in' ? (auth.session?.user.id ?? null) : null;
+  /*
+   * `false` until that opening pull has settled. The scope effect below waits for it — and so does
+   * the whole view (the early return further down), because a board nobody can touch yet is the only
+   * honest version of "not scoped yet".
+   *
+   * Drawing the board first looks harmless (the pull would correct it a moment later), but a GM who
+   * TOUCHES a stale board in that window marks its key dirty, and a dirty key beats the cloud — it
+   * has to, an unsent local change is a real change. This device's old copy would then be pushed over
+   * the other device's newer one. Waiting is what keeps a GM's change on the other device from being
+   * overwritten by this app.
+   */
+  /*
+   * …but NOT on a remount of a mirror that never went down. Campaign settings unmounts this view and
+   * mounts it again on the way back, and the campaigns page holds the mirror across that round trip
+   * (see CampaignsPage's mirror hold), so the rows are already in localStorage: there is no pull to
+   * wait for and nothing stale to hide. Re-entering cost the whole blackout — a full network round
+   * trip of "Opening the table…" — every single time. A mirror that really did come down is a new
+   * session and waits like any first open, which is the guarantee above, unchanged.
+   */
+  const [synced, setSynced] = useState(() => isTrackerSyncReady(syncUid));
+  useEffect(() => {
+    // BACK TO THE GATE on every restart of the mirror. `synced` only ever went true, so a session that
+    // left and re-entered 'signed-in' (a token refresh) tore the mirror down and started a new one —
+    // with a new opening pull in flight — over a board that was already drawn and editable. That is the
+    // exact window this state exists to close, so it closes again. Where nothing is mirrored the `go()`
+    // below runs in this same effect, so the local table never sees a flicker.
+    setSynced(isTrackerSyncReady(syncUid));
+    let live = true;
+    const go = () => {
+      if (live) setSynced(true);
+    };
+    // THE CAP. Neither a slow network nor a session that hasn't answered yet may hold the board
+    // hostage: the GM plays off local data, and a late pull simply lands on top of it.
+    const cap = setTimeout(go, SYNC_READY_CAP_MS);
+    if (!syncUid) {
+      // The local table, a player's membership, signed out: nothing to wait for. `loading` is the one
+      // exception — auth may be about to say "signed in", and scoping now is exactly the stale-board
+      // window above, so it waits for the cap instead.
+      if (auth.status !== 'loading') go();
+      return () => {
+        live = false;
+        clearTimeout(cap);
+      };
+    }
+    const { stop, ready } = startTrackerSync({ uid: syncUid });
+    void ready.then(go); // `ready` never rejects — a failed pull resolves and the sync stays local
+    return () => {
+      live = false;
+      clearTimeout(cap);
+      // Unmount, or a sign-out (syncUid drops to null and re-runs this): stop() unsubscribes and
+      // flushes whatever push was still pending.
+      stop();
+    };
+  }, [syncUid, auth.status]);
+
+  /*
+   * THE TOOLS ROW IS PART OF THE BOARD, and it is rendered by CampaignsPage — in Heroes Heaven's own
+   * chrome, outside this component, where `synced` cannot reach it. It is not decoration: the turn
+   * timer chip inside it calls pause/resume/discard/removeTurn/saveTurnsToAverages straight on the
+   * combat store, and until `setScope` has run that store persists to the UNSCOPED key — the
+   * standalone tracker's board, the one thing this view must never touch ("NOTHING TO EDIT UNTIL THE
+   * BOARD IS THE RIGHT ONE" below). "Save to Averages" additionally writes pf2e-parties and
+   * pf2e-dm-turn-average, both of which the GM mirror uploads. So the row waits with the table.
+   */
+  useEffect(() => {
+    trackerUi.setBoardReady(synced);
+    return () => trackerUi.setBoardReady(false);
+  }, [synced]);
+
+  /*
    * Scope the tracker's combat + GM-screen layout to THIS campaign, so two campaigns don't share one
    * initiative order. `setScope` lands with the tracker's own store work; guarded so this seam keeps
    * working (and its tests keep passing) against a build that doesn't have it yet.
+   *
+   * THE LOCAL TABLE IS A REAL SCOPE, NOT THE BARE KEY. `m.id` is `local` there, so its board persists
+   * under `pf2e-current-combat:local`. It deliberately does NOT fall back to the unscoped
+   * `pf2e-current-combat`: that key holds whatever the STANDALONE tracker saved before scoping
+   * existed, and adopting it would drop a signed-out user into someone's half-finished old encounter
+   * (and, worse, write over it). The GM mirror leaves both alone — it carries campaigns that are real
+   * memberships, and `local` is not one.
+   *
+   * `synced` is the gate described above: this reads localStorage, so it must not run until the pull
+   * that fills localStorage has finished (or given up). It is true immediately when nothing is being
+   * mirrored, so the local table scopes on the very next commit.
    */
   useEffect(() => {
+    if (!synced) return;
     const setScope = (useCombatStore.getState() as { setScope?: (id: string | null) => void }).setScope;
     if (typeof setScope !== 'function') return;
     setScope(m.id);
     return () => setScope(null);
-  }, [m.id]);
+  }, [m.id, synced]);
 
   /*
    * Global Search over ALL of Heroes Heaven's content (feats, spells, items, ancestries, rules,
@@ -425,12 +565,18 @@ export function CampaignTracker({
    * one press out of a search box and the GM was out of it, unpushed pane edits and all. Registering
    * each open overlay puts it ABOVE the base handler below (the stack is LIFO and these push when
    * they open), so Escape peels the overlay first and only the next press leaves.
+   *
+   * Each one is gated on `synced` as well, because the overlays themselves render BELOW the early
+   * return further down: while the board is still opening there is nothing on screen for these to
+   * close, and a flag left over from before (opening campaign settings and coming back deliberately
+   * doesn't reset the tracker UI) would put a handler on the stack that swallows an Escape and closes
+   * nothing — the same LIFO trap, one level down.
    */
-  useBackHandler(monsterSearchOpen, () => trackerUi.setMonsterSearch(false));
-  useBackHandler(searchOpen, () => trackerUi.setSearch(false));
-  useBackHandler(customOpen, () => trackerUi.setCustom(false));
-  useBackHandler(encountersOpen, () => trackerUi.setEncounters(false));
-  useBackHandler(appearanceOpen, () => trackerUi.setAppearance(false));
+  useBackHandler(synced && monsterSearchOpen, () => trackerUi.setMonsterSearch(false));
+  useBackHandler(synced && searchOpen, () => trackerUi.setSearch(false));
+  useBackHandler(synced && customOpen, () => trackerUi.setCustom(false));
+  useBackHandler(synced && encountersOpen, () => trackerUi.setEncounters(false));
+  useBackHandler(synced && appearanceOpen, () => trackerUi.setAppearance(false));
 
   /*
    * LEAVING THE CAMPAIGN IS THIS VIEW'S DECISION.
@@ -691,6 +837,29 @@ export function CampaignTracker({
 
   const fullSheetChar = fullSheetId ? (roster.byId.get(fullSheetId) ?? null) : null;
 
+  /*
+   * NOTHING TO EDIT UNTIL THE BOARD IS THE RIGHT ONE.
+   *
+   * `synced` gated only the setScope effect below, so until it flipped the rail rendered whatever the
+   * store held — with no scope set, that is the BARE `pf2e-current-combat`: the standalone tracker's
+   * board, the one key this view deliberately never touches. Damage, a condition, an added creature in
+   * that window went into that key and then vanished off screen when the scope swapped. It was one
+   * commit before this round; the wait for the mirror's opening pull made it up to four seconds.
+   *
+   * So the table simply isn't there yet. The GM plays off local data and SYNC_READY_CAP_MS is the
+   * ceiling on this — it ends when the pull lands or four seconds pass, whichever is first, and it is
+   * skipped outright (same commit) where nothing is being mirrored.
+   */
+  if (!synced) {
+    return (
+      <div className="tracker-root campaign-tracker" style={trackerVars ?? undefined}>
+        <div className="ct-body">
+          <div className="ct-empty">Opening the table…</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="tracker-root campaign-tracker" style={trackerVars ?? undefined}>
       <GameDataProvider>
@@ -757,7 +926,11 @@ export function CampaignTracker({
                  section (and its Add NPC) is kept as-is beneath them. */
               <PartyView
                 partyId={partyId}
+                /* OFFLINE: no players slot. PartyMembers is a Supabase view of the campaign's party
+                   (fetch, Realtime, kick), and there is no campaign — so the local table gets the
+                   tracker's OWN party section, exactly as the standalone app shows it. */
                 playersSlot={
+                  offline ? undefined : (
                   <PartyMembers
                     campaignId={m.id}
                     isGm={m.role === 'gm'}
@@ -794,6 +967,7 @@ export function CampaignTracker({
                     onMembers={setServerMembers}
                     localMembers={members === localMembers ? localMembers : undefined}
                   />
+                  )
                 }
               />
             )}

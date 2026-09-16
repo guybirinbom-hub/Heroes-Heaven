@@ -7,6 +7,11 @@
  * as opaque strings: a backup made by a newer build round-trips through an older one untouched.
  */
 import { APP_VERSION } from '../version';
+import { notifyReset } from '../../tracker/src/store/persistBus';
+
+/** The GM-device mirror's per-key history (src/data/trackerSync.ts's STAMP_PREFIX, one file per
+ *  account). Named here so a restore can leave it out — see restoreBackup. */
+const TRACKER_SYNC_STAMP_PREFIX = 'wanderers-codex:tracker-sync:';
 
 export const BACKUP_APP = 'heroes-heaven';
 export const BACKUP_KIND = 'full-backup';
@@ -124,6 +129,12 @@ export function backupCharCount(env: BackupEnvelope): number | null {
  *  clear Error is rethrown, so a mid-restore failure can never leave a half-restored roster with
  *  dangling homebrew/mode references. The caller reloads only on success. Returns keys written. */
 export function restoreBackup(env: BackupEnvelope): number {
+  // BEFORE ANY KEY MOVES: tell the GM-device mirror its per-key history is void. It holds those stamps
+  // in memory as well as on disk, so clearing the file below settles nothing on its own — any later
+  // save (a pending push, the teardown flush) writes the pre-restore copy straight back out, and the
+  // mirror then reads each restored key as one it has already reconciled: the cloud's copy is skipped
+  // for good, and a key the backup left out never comes back. See forgetTrackerSyncStamps.
+  notifyReset();
   // Snapshot current app-owned values so we can roll back on any failure.
   const snapshot: Record<string, string> = {};
   const clearKeys = new Set<string>(Object.keys(ALWAYS_KEYS)); // always cleared, even if absent from backup
@@ -140,6 +151,11 @@ export function restoreBackup(env: BackupEnvelope): number {
   const toWrite: [string, string][] = [];
   for (const [key, value] of Object.entries(env.data)) {
     if (typeof value !== 'string' || value === '') continue; // tolerate a hand-edited file / skip placeholders
+    // …except the mirror's stamps, which a backup snapshots like everything else. They are that
+    // device's conversation with the cloud AT EXPORT TIME: restored on Friday, Monday's stamps say the
+    // cloud has moved on, so the next pull replaces the data the user just restored. Left out, every
+    // key meets the cloud as first contact and is UNIONED with it instead.
+    if (key.startsWith(TRACKER_SYNC_STAMP_PREFIX)) continue;
     toWrite.push([key, value]);
   }
 

@@ -4,6 +4,7 @@ import type { Creature } from '../types/pf2e'
 import type { PcStats, PcSkill, PcDetailConfig, ImportedSheet } from '../utils/pcDetail'
 import type { ImportedCharacter } from '../utils/wanderersGuide'
 import { useCombatStore } from './combatStore'
+import { notifyPersist } from './persistBus'
 
 let _pid = 0, _plid = 0
 const npid = () => `party-${Date.now()}-${++_pid}`
@@ -89,10 +90,14 @@ interface PartyStore {
    *  sets each PC's maxHP, prunes PCs who left (keeping hand-added NPCs), makes it the active party,
    *  and returns its id. Called by the embed from the live campaign roster. */
   syncCampaignParty: (campaignId: string, campaignName: string, members: { charId: string; name: string; maxHP?: number }[]) => string
+  /** Re-read the parties out of localStorage — another of this GM's devices wrote a newer copy and the
+   *  mirror (src/data/trackerSync.ts) put it there. Keeps the active party selected when it survived. */
+  reloadFromStorage: () => void
 }
 
 function saveToStorage(parties: Party[]) {
   try { localStorage.setItem('pf2e-parties', JSON.stringify(parties)) } catch { /**/ }
+  notifyPersist('pf2e-parties')
 }
 
 function loadFromStorage(): Party[] {
@@ -349,6 +354,32 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
         p.name = campaignName
       }
       partyId = p.id
+      /*
+       * TWO DEVICES, ONE CAMPAIGN, TWO PARTIES.
+       *
+       * Each device minted its own id for this campaign's party (npid() above), so when the GM mirror
+       * meets `pf2e-parties` for the first time and unions the two copies BY ID, both survive with the
+       * same campaignId. Everything that resolves a campaign to its party takes the first match —
+       * `partyId` in the seam, and the find above — so the other device's NPCs, per-player notes and
+       * turn history sat in storage where nothing could reach them.
+       *
+       * Fold them into the one we keep rather than dropping them: a player already here (by charId, or
+       * by name for hand-added NPCs) wins, everyone else comes across. This runs on every open, so a
+       * device heals itself the next time the GM opens the campaign.
+       */
+      const party = p
+      const dupes = s.parties.filter(pp => pp.campaignId === campaignId && pp.id !== party.id)
+      for (const d of dupes) {
+        for (const pl of d.players) {
+          const lower = pl.name.trim().toLowerCase()
+          const here = party.players.find(x =>
+            pl.charId !== undefined && x.charId !== undefined
+              ? x.charId === pl.charId
+              : x.memberType === pl.memberType && x.name.trim().toLowerCase() === lower)
+          if (!here) party.players.push(pl)
+        }
+      }
+      if (dupes.length) s.parties = s.parties.filter(pp => pp.campaignId !== campaignId || pp.id === party.id)
       const wantedIds = new Set(members.map(m => m.charId))
       // Prune PCs whose character left the campaign — matched by stable charId, NOT name. Keep any NPCs
       // the GM added by hand, and (back-compat) any PC player that predates charId tracking, so a first
@@ -374,5 +405,13 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
     })
     saveToStorage(get().parties)
     return partyId
+  },
+
+  reloadFromStorage() {
+    const parties = loadFromStorage()
+    set(s => {
+      s.parties = parties
+      if (s.activePartyId && !parties.some(p => p.id === s.activePartyId)) s.activePartyId = null
+    })
   },
 })))

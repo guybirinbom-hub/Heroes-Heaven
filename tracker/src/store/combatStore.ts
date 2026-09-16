@@ -10,6 +10,7 @@ import { rollDamageExpr } from '../utils/dice'
 import { useSettingsStore } from './settingsStore'
 import { usePartyStore } from './partyStore'
 import { useDmAverageStore } from './dmAverageStore'
+import { notifyPersist } from './persistBus'
 import type { TurnRecord, TurnTimerState } from '../utils/turnTimer'
 
 let _cid = 0, _condId = 0, _tid = 0
@@ -237,6 +238,11 @@ interface CombatStore {
    *  an empty board), resets undo/redo and the turn timer, and resumes the id counters. The GM
    *  layout store and the GM widgets ride the same switch — see scopeKey / onScopeChange. */
   setScope: (scopeId: string | null) => void
+  /** Re-read the CURRENT scope's snapshot out of localStorage and adopt it, as a scope switch does.
+   *  For the GM-device mirror: another of this GM's devices wrote a newer board, the mirror put it in
+   *  localStorage, and the open board has to catch up. Same cost as a scope load — undo/redo is reset
+   *  (the incoming board is not a state this device edited its way into). */
+  reloadFromStorage: () => void
   /** Wipe every combatant from the initiative tracker and reset combat
    *  state. The caller is expected to confirm before invoking. */
   clearAllCombatants: () => void
@@ -427,13 +433,18 @@ if (_persisted) {
 
 let _persistTimer: ReturnType<typeof setTimeout> | null = null
 let _pendingSnap: (() => PersistedCombat) | null = null
-function flushPersist() {
+/** Write the pending board snapshot NOW. Exported because anything that reads this key from the
+ *  outside (the GM-device mirror in src/data/trackerSync.ts) must not see "everything except the last
+ *  200 ms" — an edit sitting in the debounce is a real edit. */
+export function flushPersist() {
   if (_persistTimer) { clearTimeout(_persistTimer); _persistTimer = null }
   if (!_pendingSnap) return
   // scopeKey() is read HERE, at write time: setScope flushes before it swaps the scope, so the
   // outgoing campaign's board always lands under its own key (never lose a snapshot).
-  try { localStorage.setItem(scopeKey(COMBAT_STATE_KEY), JSON.stringify(_pendingSnap())) } catch { /* quota */ }
+  const key = scopeKey(COMBAT_STATE_KEY)
+  try { localStorage.setItem(key, JSON.stringify(_pendingSnap())) } catch { /* quota */ }
   _pendingSnap = null
+  notifyPersist(key)
 }
 function schedulePersist(snap: () => PersistedCombat) {
   _pendingSnap = snap
@@ -742,6 +753,12 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
     if (scopeId === _scopeId) return
     flushPersist()          // the outgoing campaign's board, under the outgoing key
     _scopeId = scopeId
+    get().reloadFromStorage()
+    // The GM layout store and the GM widgets re-key off the same switch.
+    for (const fn of _scopeListeners) fn()
+  },
+
+  reloadFromStorage() {
     const p = loadPersistedCombat()
     _cid = p?.cidCounter ?? 0
     _condId = p?.condCounter ?? 0
@@ -760,8 +777,6 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       s.canUndo = false
       s.canRedo = false
     })
-    // The GM layout store and the GM widgets re-key off the same switch.
-    for (const fn of _scopeListeners) fn()
   },
 
   setInitiative(id, v) {
@@ -1308,6 +1323,7 @@ function getEncStore(): Record<string, SavedEncounter> {
 function setEncStore(store: Record<string, SavedEncounter>): void {
   _encStoreCache = store
   localStorage.setItem('pf2e-encounters', JSON.stringify(store))
+  notifyPersist('pf2e-encounters')
 }
 
 /** Drop the in-memory cache. Call this from any code path that writes the

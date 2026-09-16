@@ -12,7 +12,7 @@ import { useSettingsStore } from '../../tracker/src/store/settingsStore';
  * Heroes Heaven's chrome, so it should look like it. Part of the removable seam.
  */
 export function TrackerTools() {
-  const { searchOpen, customOpen, encountersOpen, mainView } = useTrackerUi();
+  const { searchOpen, customOpen, encountersOpen, mainView, boardReady } = useTrackerUi();
   const turnTimerEnabled = useSettingsStore((s) => s.turnTimerEnabled);
 
   /**
@@ -33,6 +33,11 @@ export function TrackerTools() {
       <span className="tracker-tool-label">{label}</span>
     </button>
   );
+
+  // Nothing here may run before the board is the campaign's own — the turn-timer chip below writes
+  // into the combat store, which until then persists to the standalone tracker's board (see
+  // `boardReady` in trackerUiStore). The tracker body shows "Opening the table…" for the same window.
+  if (!boardReady) return null;
 
   return (
     <div className="tracker-tools">

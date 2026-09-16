@@ -8,7 +8,15 @@
  * NOT published: none of this ships in a release until the user says so.
  */
 
-/** Opening a campaign shows the full-screen initiative tracker instead of the old detail panel. */
+/**
+ * Opening a campaign shows the full-screen initiative tracker instead of the old detail panel.
+ *
+ * It also governs the SIGNED-OUT door: the tracker needs no account and no server, so with this on,
+ * a signed-out desktop user opening Campaigns gets the local table (CampaignsPage's `localTable` →
+ * CampaignTracker's `offline`) rather than a campaigns list they can't use. Flip this to false and
+ * that door closes with everything else — nothing here is gated on being signed in, deliberately:
+ * the tracker has nothing to ask a server for.
+ */
 export const TRACKER_IN_CAMPAIGN = true;
 
 /**
@@ -28,5 +36,9 @@ export const TRACKER_IN_CAMPAIGN = true;
  * ⚠ Campaign *operations* still need the server: create/join/kick go through Supabase, which
  * refuses without auth ("Sign in to use campaigns."). So without login you can open the page and
  * work with campaigns already cached on this device — you can't create a new one.
+ *
+ * ⚠ AND THE SIGNED-OUT DOOR NOW SHARES THAT PAGE. With no campaigns cached, a signed-out desktop user
+ * (dev or release) gets the local table instead of an empty list — see CampaignsPage's `devCampaigns`,
+ * which is what keeps the sentence above true in dev rather than letting the table swallow it.
  */
 export const TEST_CAMPAIGNS_WITHOUT_LOGIN = import.meta.env.DEV;

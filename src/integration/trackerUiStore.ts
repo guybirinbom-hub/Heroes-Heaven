@@ -61,11 +61,22 @@ export interface TrackerUiState {
    * must not navigate on its own. It asks; CampaignTracker prompts and decides.
    */
   settingsRequest: number;
+  /**
+   * The tracker body is on screen AND scoped to the campaign it belongs to.
+   *
+   * CampaignTracker waits for the GM mirror's opening pull before it calls `setScope` (its `synced`),
+   * and until that lands the combat store is still on the UNSCOPED key — the standalone tracker's own
+   * board. The tools row is rendered by CampaignsPage, in Heroes Heaven's chrome, so it could not see
+   * that wait: its turn-timer chip writes straight into the combat store (pause, discard, remove a
+   * turn, "save to averages"), and every one of those writes landed on that standalone board — with
+   * pf2e-parties and pf2e-dm-turn-average going up to the GM's account on top. So the row waits too.
+   */
+  boardReady: boolean;
 }
 
 const INITIAL: TrackerUiState = {
   searchOpen: false, monsterSearchOpen: false, customOpen: false, encountersOpen: false, appearanceOpen: false,
-  mainView: 'party', paneRequest: 0, settingsRequest: 0,
+  mainView: 'party', paneRequest: 0, settingsRequest: 0, boardReady: false,
 };
 
 let state: TrackerUiState = INITIAL;
@@ -98,6 +109,8 @@ export const trackerUi = {
   showMain: (mainView: MainView) => set({ mainView, paneRequest: state.paneRequest + 1 }),
   /** Ask to leave for the campaign's settings page. CampaignTracker decides — it may prompt first. */
   requestCampaignSettings: () => set({ settingsRequest: state.settingsRequest + 1 }),
+  /** CampaignTracker only: the board is scoped and editable (see boardReady). */
+  setBoardReady: (boardReady: boolean) => set({ boardReady }),
   /** Close everything — used when leaving the campaign so panels don't reappear on re-entry. */
   reset: () => set(INITIAL),
 };

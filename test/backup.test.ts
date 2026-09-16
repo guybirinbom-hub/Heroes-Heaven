@@ -166,6 +166,26 @@ describe('restoreBackup', () => {
     expect(localStorage.getItem('wanderers-codex:modes:v1')).toBe('{"m-original":{}}');
   });
 
+  it('never writes back the GM mirror’s stamp file, whatever the backup carries', () => {
+    // A backup snapshots EVERY key, so the exporting device's conversation with the cloud (per-key
+    // "the server's copy was last this") rides along in the file. Written back, this device inherits
+    // the state of that conversation AT EXPORT TIME: the cloud has moved on since, so every key it
+    // names reads as already reconciled and the next pull replaces the data just restored. Left out,
+    // each key meets the cloud as first contact and is unioned with it.
+    // Deleting `if (key.startsWith(TRACKER_SYNC_STAMP_PREFIX)) continue;` from restoreBackup:
+    //   AssertionError: expected '{"pf2e-parties":{"remote":"2026-…' to be null
+    const env = parseBackup(createBackup());
+    env.data['wanderers-codex:tracker-sync:v2:gm-1'] = '{"pf2e-parties":{"remote":"2026-09-16T11:00:00.000Z"}}';
+    env.data['pf2e-parties'] = '[{"id":"p1","name":"The Salt Road","players":[]}]';
+
+    const written = restoreBackup(env);
+
+    expect(localStorage.getItem('wanderers-codex:tracker-sync:v2:gm-1')).toBe(null);
+    expect(localStorage.getItem('pf2e-parties')).toBe('[{"id":"p1","name":"The Salt Road","players":[]}]');
+    const nonEmpty = Object.values(env.data).filter((v) => typeof v === 'string' && v !== '').length;
+    expect(written).toBe(nonEmpty - 1); // everything except the stamp file
+  });
+
   it('replaces roster + homebrew even when restoring a fresh device’s backup', () => {
     const freshFile = createBackup(); // nothing stored yet → empty required keys
     localStorage.setItem('wanderers-codex:roster:v1', '[{"id":"c-old","character":{}}]');

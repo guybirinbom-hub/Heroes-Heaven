@@ -20,6 +20,11 @@ export function useCampaignDefaults(m: CampaignMembership): CampaignDefaults | n
   const [defaults, setDefaults] = useState<CampaignDefaults | null>(() => loadLocalDefaults(m.id));
 
   useEffect(() => {
+    // OFFLINE (ruling 3's no-account table): there is no campaign and no session, so this is the one
+    // server leg left in the seam for it. It was reaching Supabase and being turned back only by
+    // LOCAL_TABLE's empty `code` hitting normalizeCode — i.e. by a field nobody would think of as
+    // load-bearing. Say it here, where the reason is visible.
+    if (m.local) return;
     let cancelled = false;
     void fetchCampaignByCode(m.code).then((res) => {
       if (cancelled || !res.ok) return; // offline / device-only → keep what we loaded locally
@@ -28,7 +33,7 @@ export function useCampaignDefaults(m: CampaignMembership): CampaignDefaults | n
     return () => {
       cancelled = true;
     };
-  }, [m.code, m.id]);
+  }, [m.code, m.id, m.local]);
 
   return defaults;
 }
