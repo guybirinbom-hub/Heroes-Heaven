@@ -635,7 +635,7 @@ export function VitalsRail({
           {/* bug 2026-09-16: rail perception — Perception is back beside the saves, where the owner
               wants to read it. Initiative stays out of this card: it is only ever shown when something
               actually changes it, and that row lives in Essentials (see below). */}
-          Saves
+          Saves &amp; Perception
         </div>
         <div className="saves-strip">
         {SAVES.map((s) => {

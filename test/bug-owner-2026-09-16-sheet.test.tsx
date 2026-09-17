@@ -172,14 +172,14 @@ describe('Perception is back on the saves card', () => {
   // bug 2026-09-16: rail perception
   it('the saves card is Fortitude, Reflex, Will and Perception — in that order', () => {
     const r = rail(plain());
-    expect(rowLabels(card(r.host, 'Saves')!)).toEqual(['Fortitude', 'Reflex', 'Will', 'Perception']);
+    expect(rowLabels(card(r.host, 'Saves & Perception')!)).toEqual(['Fortitude', 'Reflex', 'Will', 'Perception']);
     r.stop();
   });
 
   // bug 2026-09-16: rail perception
   it('Perception keeps the shape it had — rank pill, modifier, rollable', () => {
     const r = rail(plain());
-    const row = [...card(r.host, 'Saves')!.querySelectorAll<HTMLElement>('.stat-row')].find((e) =>
+    const row = [...card(r.host, 'Saves & Perception')!.querySelectorAll<HTMLElement>('.stat-row')].find((e) =>
       (e.querySelector('.stat-name')?.textContent ?? '').startsWith('Perception'),
     )!;
     expect(row.querySelector('.rank-pill'), 'the rank pill came with it').toBeTruthy();
