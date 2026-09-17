@@ -169,3 +169,7 @@ work/.next-batch-probe-catalogue.json
 #   work/.b*-created-desc*.json  work/.b*-commit.txt  work/wg-batch-*-parity.json  -residual.json
 #   work/.b*-report-<family>.txt  work/.b*-verify-<family>.txt   ← the evidence apply-digest collates
 #   its gap lines out of: a gap line's `ref` points at report:line, so the report has to be re-readable.
+
+# The owner's own character names (scripts/owner-names-check.mjs's input) — MUST NEVER be tracked.
+# This is a PUBLIC repo; the list exists only to catch a name before it is committed.
+work/owner-names.local.txt

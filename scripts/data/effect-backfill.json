@@ -89518,7 +89518,7 @@
    "spellCollection": true,
    "cantripDelta": -2
   },
-  "why": "wg batch 24 (bellphor): spellCollection flag | wg batch 24 (bellphor): + spellCollection (the collection lane) — and the flat cantripDelta -2 is DELIBERATE: the dedication's give-back (\"four instead of three; at 4th, five instead of four\") lives on this record's spellSlotBonus.cantripsAt ladder, and the two compose to Table 5-1 (cleric 4 at 2nd-3rd, 5 from 4th). Carrying the give-back in BOTH fields double-counted it — the builder cap (which ignored the -2 entirely and offered 6) was the actual defect."
+  "why": "wg batch 24: spellCollection flag | wg batch 24: + spellCollection (the collection lane) — and the flat cantripDelta -2 is DELIBERATE: the dedication's give-back (\"four instead of three; at 4th, five instead of four\") lives on this record's spellSlotBonus.cantripsAt ladder, and the two compose to Table 5-1 (cleric 4 at 2nd-3rd, 5 from 4th). Carrying the give-back in BOTH fields double-counted it — the builder cap (which ignored the -2 entirely and offered 6) was the actual defect."
  },
  {
   "category": "feats",
@@ -90088,7 +90088,7 @@
    "invisibility",
    "vision-of-death"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-13) cleric spells; this is the record's own page (deity-289). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-13) cleric spells; this is the record's own page (deity-289). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -90099,7 +90099,7 @@
    "ghostly-weapon",
    "vision-of-death"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-14) cleric spells; this is the record's own page (deity-290). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-14) cleric spells; this is the record's own page (deity-290). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -90271,7 +90271,7 @@
    "feet-to-fins",
    "hydraulic-torrent"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-264) cleric spells; this is the record's own page (deity-308). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-264) cleric spells; this is the record's own page (deity-308). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -90292,7 +90292,7 @@
    "enthrall",
    "project-image"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-178) cleric spells; this is the record's own page (deity-310). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-178) cleric spells; this is the record's own page (deity-310). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -90401,7 +90401,7 @@
    "aqueous-orb",
    "slither"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-25) cleric spells; this is the record's own page (deity-321). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-25) cleric spells; this is the record's own page (deity-321). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -90568,7 +90568,7 @@
    "penumbral-disguise",
    "moon-frenzy"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-235) cleric spells; this is the record's own page (deity-338). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-235) cleric spells; this is the record's own page (deity-338). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -90659,7 +90659,7 @@
    "aqueous-orb",
    "control-water"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-154) cleric spells; this is the record's own page (deity-347). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-154) cleric spells; this is the record's own page (deity-347). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -91222,7 +91222,7 @@
    "wall-of-thorns",
    "natures-pathway"
   ],
-  "why": "wg batch 24 (bellphor): mirror deity-406 (Divine Mysteries) cleric_spell = Protector Tree / Wall of Thorns / Nature's Pathway; ours carried the legacy deity-155 trio (temporary-tool/shape-wood/wall-of-thorns). scripts/deity-spell-check.mjs now guards the whole class of legacy-page spell lists."
+  "why": "wg batch 24: mirror deity-406 (Divine Mysteries) cleric_spell = Protector Tree / Wall of Thorns / Nature's Pathway; ours carried the legacy deity-155 trio (temporary-tool/shape-wood/wall-of-thorns). scripts/deity-spell-check.mjs now guards the whole class of legacy-page spell lists."
  },
  {
   "category": "deities",
@@ -91233,7 +91233,7 @@
    "enthrall",
    "subconscious-suggestion"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-156) cleric spells; this is the record's own page (deity-565). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-156) cleric spells; this is the record's own page (deity-565). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -91640,7 +91640,7 @@
    "haste",
    "subconscious-suggestion"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-28) cleric spells; this is the record's own page (deity-447). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-28) cleric spells; this is the record's own page (deity-447). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -91819,7 +91819,7 @@
    "aerial-form",
    "collective-transposition"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-112) cleric spells; this is the record's own page (deity-464). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-112) cleric spells; this is the record's own page (deity-464). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -91903,7 +91903,7 @@
    "umbral-extraction",
    "reflective-scales"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-121) cleric spells; this is the record's own page (deity-472). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-121) cleric spells; this is the record's own page (deity-472). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -92136,7 +92136,7 @@
    "haste",
    "weapon-storm"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-239) cleric spells; this is the record's own page (deity-495). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-239) cleric spells; this is the record's own page (deity-495). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -92413,7 +92413,7 @@
    "wall-of-radiance",
    "cloak-of-colors"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-173) cleric spells; this is the record's own page (deity-523). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-173) cleric spells; this is the record's own page (deity-523). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -92902,7 +92902,7 @@
    "dream-council",
    "phantasmagoria"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-164) cleric spells; this is the record's own page (deity-573). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-164) cleric spells; this is the record's own page (deity-573). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -92985,7 +92985,7 @@
    "slither",
    "time-beacon"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-166) cleric spells; this is the record's own page (deity-580). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-166) cleric spells; this is the record's own page (deity-580). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -93096,7 +93096,7 @@
    "blur",
    "illusory-scene"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-170) cleric spells; this is the record's own page (deity-591). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-170) cleric spells; this is the record's own page (deity-591). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -93237,7 +93237,7 @@
    "creation",
    "howling-blizzard"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-171) cleric spells; this is the record's own page (deity-605). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-171) cleric spells; this is the record's own page (deity-605). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -93288,7 +93288,7 @@
    "one-with-plants",
    "burning-blossoms"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-186) cleric spells; this is the record's own page (deity-610). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-186) cleric spells; this is the record's own page (deity-610). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -93359,7 +93359,7 @@
    "slow",
    "hydraulic-torrent"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-193) cleric spells; this is the record's own page (deity-617). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-193) cleric spells; this is the record's own page (deity-617). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -93400,7 +93400,7 @@
    "translocate",
    "strange-geometry"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-245) cleric spells; this is the record's own page (deity-621). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-245) cleric spells; this is the record's own page (deity-621). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -93483,7 +93483,7 @@
    "cozy-cabin",
    "vibrant-pattern"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-268) cleric spells; this is the record's own page (deity-630). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-268) cleric spells; this is the record's own page (deity-630). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -93584,7 +93584,7 @@
    "vomit-swarm",
    "paralyze"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-59) cleric spells; this is the record's own page (deity-640). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-59) cleric spells; this is the record's own page (deity-640). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -94012,7 +94012,7 @@
    "haste",
    "aerial-form"
   ],
-  "why": "wg batch 24 (bellphor): the stored list was the LEGACY page's (deity-228) cleric spells; this is the record's own page (deity-682). Found by scripts/deity-spell-check.mjs, which now guards the class."
+  "why": "wg batch 24: the stored list was the LEGACY page's (deity-228) cleric spells; this is the record's own page (deity-682). Found by scripts/deity-spell-check.mjs, which now guards the class."
  },
  {
   "category": "deities",
@@ -166098,7 +166098,7 @@
   "value": [
    "elf"
   ],
-  "why": "wg batch 24 (bellphor): \"when you gain an ancestry feat, you can choose from aiuvarin and elf feats in addition to those from your ancestry\" — the aiuvarin half rides her.traits; this is the elf half, read at featSlots.ts eligibleFeatsForSlot. WG: countsAs elf."
+  "why": "wg batch 24: \"when you gain an ancestry feat, you can choose from aiuvarin and elf feats in addition to those from your ancestry\" — the aiuvarin half rides her.traits; this is the elf half, read at featSlots.ts eligibleFeatsForSlot. WG: countsAs elf."
  },
  {
   "category": "heritages",
@@ -166107,7 +166107,7 @@
   "value": [
    "orc"
   ],
-  "why": "wg batch 24 (bellphor): the same-shape sibling, print verified: \"you can choose from dromaar and orc feats in addition to those from your ancestry\"."
+  "why": "wg batch 24: the same-shape sibling, print verified: \"you can choose from dromaar and orc feats in addition to those from your ancestry\"."
  },
  {
   "category": "classFeatures",
@@ -166118,56 +166118,56 @@
    "as": "list",
    "entryId": "cleric-casting"
   },
-  "why": "wg batch 24 (bellphor): Deity (Cleric) prints \"add your deity's spells to your spell list\"; deity.spells had readers only behind spellListAdditions and no classFeature carried one, so a cleric of Jaidi could never prepare her spells. Blessed Blood shape, no max — the cleric gets the whole list."
+  "why": "wg batch 24: Deity (Cleric) prints \"add your deity's spells to your spell list\"; deity.spells had readers only behind spellListAdditions and no classFeature carried one, so a cleric of Jaidi could never prepare her spells. Blessed Blood shape, no max — the cleric gets the whole list."
  },
  {
   "category": "spells",
   "id": "heal",
   "field": "description",
   "value": "You channel vital energy to heal the living or damage the undead. If the target is a willing living creature, you restore 1d8 Hit Points. If the target is undead, you deal that amount of vitality damage to it, and it gets a basic Fortitude save. The number of actions you spend when Casting this Spell determines its targets, range, area, and other parameters.\n\n⟨1⟩ The spell has a range of touch.\n\n⟨2⟩ (concentrate) The spell has a range of 30 feet. If you're healing a living creature, increase the Hit Points restored by 8.\n\n⟨3⟩ (concentrate) You disperse vital energy in a 30-foot emanation. This targets all living and undead creatures in the burst.\n\n---\n\n**Heightened (+1)** The amount of healing or damage increases by 1d8, and the extra healing for the 2-action version increases by 8.",
-  "why": "wg batch 24 (bellphor): the @Template cleaner deleted \"30-foot emanation\" from the 3-action mode (\"in a . This targets\"); dropped-inline's HOLES prefilter could not see a hole followed by punctuation. Restored to print (mirror spell-1554)."
+  "why": "wg batch 24: the @Template cleaner deleted \"30-foot emanation\" from the 3-action mode (\"in a . This targets\"); dropped-inline's HOLES prefilter could not see a hole followed by punctuation. Restored to print (mirror spell-1554)."
  },
  {
   "category": "spells",
   "id": "harm",
   "field": "description",
   "value": "You channel void energy to harm the living or heal the undead. If the target is a living creature, you deal 1d8 void damage to it, and it gets a basic Fortitude save. If the target is a willing undead creature, you restore that amount of Hit Points. The number of actions you spend when Casting this Spell determines its targets, range, area, and other parameters.\n\n⟨1⟩ The spell has a range of touch.\n\n⟨2⟩ (concentrate) The spell has a range of 30 feet. If you're healing an undead creature, increase the Hit Points restored by 8.\n\n⟨3⟩ (concentrate) You disperse void energy in a 30-foot emanation. This targets all living and undead creatures in the area.\n\n---\n\n**Heightened (+1)** The amount of healing or damage increases by 1d8, and the extra healing for the 2-action version increases by 8.",
-  "why": "wg batch 24 (bellphor): the twin of heal — same deleted area, mirror spell-1552."
+  "why": "wg batch 24: the twin of heal — same deleted area, mirror spell-1552."
  },
  {
   "category": "spells",
   "id": "soothing-words",
   "field": "save",
   "value": null,
-  "why": "wg batch 24 (bellphor): print has NO save (mirror spell-1800 has no saving_throw; Foundry defense null; WG defense null) — the facet parser read \"+1 status bonus to Will saving throws\" as a Will save. Parser taught (aon-facets BONUS_CLAUSE); this row fixes the shipped value."
+  "why": "wg batch 24: print has NO save (mirror spell-1800 has no saving_throw; Foundry defense null; WG defense null) — the facet parser read \"+1 status bonus to Will saving throws\" as a Will save. Parser taught (aon-facets BONUS_CLAUSE); this row fixes the shipped value."
  },
  {
   "category": "spells",
   "id": "nymphs-token",
   "field": "save",
   "value": null,
-  "why": "wg batch 24 (bellphor): same parser class — the save named only inside a bonus/penalty clause, no saving_throw on the AoN page (spell-785)."
+  "why": "wg batch 24: same parser class — the save named only inside a bonus/penalty clause, no saving_throw on the AoN page (spell-785)."
  },
  {
   "category": "spells",
   "id": "elemental-gift",
   "field": "save",
   "value": null,
-  "why": "wg batch 24 (bellphor): same parser class (spell-904)."
+  "why": "wg batch 24: same parser class (spell-904)."
  },
  {
   "category": "spells",
   "id": "movanic-glimmer",
   "field": "save",
   "value": null,
-  "why": "wg batch 24 (bellphor): same parser class (spell-1223)."
+  "why": "wg batch 24: same parser class (spell-1223)."
  },
  {
   "category": "spells",
   "id": "musical-shift",
   "field": "save",
   "value": null,
-  "why": "wg batch 24 (bellphor): same parser class (spell-2450)."
+  "why": "wg batch 24: same parser class (spell-2450)."
  },
  {
   "category": "feats",
@@ -166177,7 +166177,7 @@
   ],
   "field": "distinctAcrossTakes",
   "value": true,
-  "why": "wg batch 24 (bellphor): \"Special: You can select this feat multiple times, selecting a DIFFERENT domain each time\" — the assurance/terrain-stalker flag, now that buildChoiceOptions' domains kind reaches markClaimed."
+  "why": "wg batch 24: \"Special: You can select this feat multiple times, selecting a DIFFERENT domain each time\" — the assurance/terrain-stalker flag, now that buildChoiceOptions' domains kind reaches markClaimed."
  },
  {
   "category": "items",

@@ -9,15 +9,15 @@ import { cantripsKnown } from '../src/rules/spellcasting';
 const db = content();
 
 /**
- * Batch 24 — the CHARACTER-scoped parity read (Bellphor Sheldane: halfling/aiuvarin cloistered
+ * Batch 24 — a CHARACTER-scoped parity read (a halfling/aiuvarin cloistered
  * cleric of Jaidi, free-archetype Flexible Spellcaster). 20 records read against print + WG;
  * headliners: the flexible spell COLLECTION, the repeatable Domain Initiate double-take, versatile
  * heritages' extra-ancestry feat access, sanctification's creature trait, and the deity spell-list
  * widening the Deity feature prints.
  */
-const bellphor = (over?: Partial<BuildState>): BuildState => ({
+const vessa = (over?: Partial<BuildState>): BuildState => ({
   ...emptyBuild(),
-  name: 'Bellphor',
+  name: 'Vessa Orrin',
   classId: 'cleric',
   subclassId: 'cloistered-cleric',
   level: 3,
@@ -40,7 +40,7 @@ describe('aiuvarin (versatile heritage) opens the elf feat list', () => {
   });
 
   it("Ancestral Paragon's menu offers halfling, aiuvarin AND elf level-1 feats", () => {
-    const opts = pickableFeats(FEAT_PICK_GRANTS['ancestral-paragon']!, bellphor(), db).map((f) => f.id);
+    const opts = pickableFeats(FEAT_PICK_GRANTS['ancestral-paragon']!, vessa(), db).map((f) => f.id);
     expect(opts).toContain('halfling-luck');
     expect(opts, 'the heritage’s own feats').toContain('sociable');
     expect(opts, 'the opened elf list').toContain('nimble-elf');
@@ -49,7 +49,7 @@ describe('aiuvarin (versatile heritage) opens the elf feat list', () => {
 
 describe('the repeatable Domain Initiate', () => {
   it('a slot take with a DIFFERENT domain than the doctrine grant is two takings: two spells, pool 2', () => {
-    const ch = buildCharacter(bellphor({ featChoices: { '2:class:0': 'might' }, grantedFeatChoices: { 'domain-initiate': 'family' } } as Partial<BuildState>), db);
+    const ch = buildCharacter(vessa({ featChoices: { '2:class:0': 'might' }, grantedFeatChoices: { 'domain-initiate': 'family' } } as Partial<BuildState>), db);
     expect(ch.feats.filter((f) => f.featId === 'domain-initiate').length).toBe(2);
     const rep = ch.spellcasting.find((e) => e.type === 'focus')?.repertoire?.[1] ?? [];
     expect(new Set(rep)).toEqual(new Set(['athletic-rush', 'soothing-words']));
@@ -61,7 +61,7 @@ describe('the repeatable Domain Initiate', () => {
     // look like it granted nothing ("I didn't get it, in WG I did"). Both instances render, each
     // with its own pickers; distinctFeatFocus dedupes by SPELL id, so the same domain twice is
     // still one focus spell and a 1-point pool — the printed economics under WG's display.
-    const ch = buildCharacter(bellphor({ grantedFeatChoices: { 'domain-initiate': 'family' } } as Partial<BuildState>), db);
+    const ch = buildCharacter(vessa({ grantedFeatChoices: { 'domain-initiate': 'family' } } as Partial<BuildState>), db);
     expect(ch.feats.filter((f) => f.featId === 'domain-initiate').length).toBe(2);
     const rep = ch.spellcasting.find((e) => e.type === 'focus')?.repertoire?.[1] ?? [];
     expect(rep).toEqual(['soothing-words']);
@@ -70,25 +70,25 @@ describe('the repeatable Domain Initiate', () => {
 
   it("the INITIAL DOMAIN SPELL is the player's pick (WG's second select), defaulting to the domain's own", () => {
     // Slot take: domain family, spell overridden to Fire Ray — the override wins for that take.
-    const slotPick = buildCharacter(bellphor({ featSpellChoices: { '2:class:0': 'fire-ray' } } as Partial<BuildState>), db);
+    const slotPick = buildCharacter(vessa({ featSpellChoices: { '2:class:0': 'fire-ray' } } as Partial<BuildState>), db);
     const rep1 = slotPick.spellcasting.find((e) => e.type === 'focus')?.repertoire?.[1] ?? [];
     expect(rep1).toContain('fire-ray');
     expect(rep1).not.toContain('soothing-words');
     // The granted copy keys apart (`granted:<featId>`), so each take picks its own spell.
     const both = buildCharacter(
-      bellphor({ grantedFeatChoices: { 'domain-initiate': 'family' }, featSpellChoices: { '2:class:0': 'fire-ray', 'granted:domain-initiate': 'moonbeam' } } as Partial<BuildState>),
+      vessa({ grantedFeatChoices: { 'domain-initiate': 'family' }, featSpellChoices: { '2:class:0': 'fire-ray', 'granted:domain-initiate': 'moonbeam' } } as Partial<BuildState>),
       db,
     );
     const rep2 = both.spellcasting.find((e) => e.type === 'focus')?.repertoire?.[1] ?? [];
     expect(new Set(rep2)).toEqual(new Set(['fire-ray', 'moonbeam']));
     expect(both.focus).toEqual({ current: 2, max: 2 });
     // An override from OUTSIDE the initiate pool is refused — the printed default returns.
-    const bogus = buildCharacter(bellphor({ featSpellChoices: { '2:class:0': 'heal' } } as Partial<BuildState>), db);
+    const bogus = buildCharacter(vessa({ featSpellChoices: { '2:class:0': 'heal' } } as Partial<BuildState>), db);
     expect(bogus.spellcasting.find((e) => e.type === 'focus')?.repertoire?.[1]).toContain('soothing-words');
   });
 
   it('the domain picker greys a domain another take already claimed (Q27: shown, explained, never removed)', () => {
-    const b = bellphor({ grantedFeatChoices: { 'domain-initiate': 'family' } } as Partial<BuildState>);
+    const b = vessa({ grantedFeatChoices: { 'domain-initiate': 'family' } } as Partial<BuildState>);
     const ch = buildCharacter(b, db);
     const opts = buildChoiceOptions('domain-initiate', db.feats['domain-initiate'].choice!, b, db, ch, '2:class:0');
     const family = opts.find((o) => o.value === 'family');
@@ -99,7 +99,7 @@ describe('the repeatable Domain Initiate', () => {
 
 describe('the flexible spell collection', () => {
   it('the class entry becomes a repertoire over the capped table, and the font is untouched', () => {
-    const ch = buildCharacter(bellphor(), db);
+    const ch = buildCharacter(vessa(), db);
     const main = ch.spellcasting.find((e) => e.id === 'cleric-casting')!;
     expect(main.type).toBe('spontaneous');
     expect(main.prepared).toBeUndefined();
@@ -109,7 +109,7 @@ describe('the flexible spell collection', () => {
   });
 
   it('every collected spell is signature once 2nd-rank spells arrive, pinned by the archetype', () => {
-    const ch = buildCharacter(bellphor({ spells: { 1: ['heal', 'bless'], 2: ['spiritual-armament', 'restoration'] } } as Partial<BuildState>), db);
+    const ch = buildCharacter(vessa({ spells: { 1: ['heal', 'bless'], 2: ['spiritual-armament', 'restoration'] } } as Partial<BuildState>), db);
     const main = ch.spellcasting.find((e) => e.id === 'cleric-casting')!;
     expect(new Set(main.signature)).toEqual(new Set(['heal', 'bless', 'spiritual-armament', 'restoration']));
     expect(main.signatureFixed).toEqual(main.signature);
@@ -121,14 +121,14 @@ describe('the flexible spell collection', () => {
     // per day instead of three; at 4th level, five instead of four"). Cleric: 5-2+1=4 at 2nd-3rd,
     // 5-2+2=5 from 4th — the owner caught a report (and a briefly-shipped double-carrier) getting
     // this wrong; the SHEET's composition had it right, and this pins the whole sum.
-    expect(classArchetypeSpellMods(bellphor(), db)).toEqual({ slotCap: 2, cantripDelta: -2, spellCollection: true });
+    expect(classArchetypeSpellMods(vessa(), db)).toEqual({ slotCap: 2, cantripDelta: -2, spellCollection: true });
     const cap = (b: BuildState) => cantripsKnown(b.classId) + cantripBonusFor(b, db) + classArchetypeSpellMods(b, db).cantripDelta;
-    expect(cap(bellphor()), 'level 3 casts FOUR cantrips').toBe(4);
-    expect(cap(bellphor({ level: 4 } as Partial<BuildState>)), 'level 4 is back to the full five').toBe(5);
+    expect(cap(vessa()), 'level 3 casts FOUR cantrips').toBe(4);
+    expect(cap(vessa({ level: 4 } as Partial<BuildState>)), 'level 4 is back to the full five').toBe(5);
   });
 
   it('without the dedication nothing changes: prepared cleric, no collection', () => {
-    const plain = bellphor();
+    const plain = vessa();
     plain.featPicks = { '2:class:0': 'domain-initiate' };
     const main = buildCharacter(plain, db).spellcasting.find((e) => e.id === 'cleric-casting')!;
     expect(main.type).toBe('prepared');
@@ -138,7 +138,7 @@ describe('the flexible spell collection', () => {
 
 describe('Deity (Cleric) delivers its printed halves', () => {
   it('sanctification Holy confers the holy creature trait — on a cleric, not a mere worshipper', () => {
-    const ch = buildCharacter(bellphor(), db);
+    const ch = buildCharacter(vessa(), db);
     expect(ch.chosenCreatureTraits).toEqual([{ trait: 'holy', source: 'Jaidi' }]);
     const fighter = buildCharacter({ ...emptyBuild(), name: 'f', classId: 'fighter', level: 1, deityId: 'jaidi', effectChoices: { 'jaidi:sanctification': 'holy' } } as BuildState, db);
     expect(fighter.chosenCreatureTraits ?? []).toEqual([]);
@@ -146,14 +146,14 @@ describe('Deity (Cleric) delivers its printed halves', () => {
 
   it("the deity's spells join the cleric's list (Jaidi's REMASTER trio, not the legacy one)", () => {
     expect(db.deities['jaidi'].spells).toEqual(['protector-tree', 'wall-of-thorns', 'natures-pathway']);
-    const ch = buildCharacter(bellphor(), db);
+    const ch = buildCharacter(vessa(), db);
     expect(ch.spellListAdditions?.['cleric-casting']).toEqual(['protector-tree', 'wall-of-thorns', 'natures-pathway']);
   });
 });
 
 describe('cantrips are DAILY PREPARATION for a prepared class (owner, 2026-09-02)', () => {
   it('the class entry says so, and the play overlay re-prepares per opening', () => {
-    const ch = buildCharacter(bellphor({ cantrips: ['guidance', 'shield', 'light', 'stabilize'] } as Partial<BuildState>), db);
+    const ch = buildCharacter(vessa({ cantrips: ['guidance', 'shield', 'light', 'stabilize'] } as Partial<BuildState>), db);
     const main = ch.spellcasting.find((e) => e.id === 'cleric-casting')!;
     // The flexible collection keeps it: "this archetype doesn't change the way you prepare cantrips".
     expect(main.cantripsPrepared).toBe(true);
@@ -194,7 +194,7 @@ describe('record fixes', () => {
   });
 
   it('cloistered second doctrine: Fortitude expert at 3', () => {
-    const ch = buildCharacter(bellphor(), db);
+    const ch = buildCharacter(vessa(), db);
     expect(ch.proficiencies.saves.fortitude).toBe('expert');
   });
 });

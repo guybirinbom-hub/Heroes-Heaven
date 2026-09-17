@@ -1,7 +1,7 @@
 /*
  * CHARACTER REPORT — one exported character (.codex.json), rebuilt with the CURRENT engine and content.
  *
- *   npx jiti scripts/character-report.mjs work/wg/bellphor-sheldane.codex.json [--json out.json]
+ *   npx jiti scripts/character-report.mjs work/wg/some-character.codex.json [--json out.json]
  *
  * Prints (1) what the stored character in the file and a fresh buildCharacter() disagree on — the
  * stored one is whatever app version the owner exported from, so a difference is either a fix that

@@ -351,7 +351,7 @@ export function pickableFeats(spec: FeatPickSpec, build: BuildState, content: Co
         // SLOT would offer, so this reads the same widened set as eligibleFeatsForSlot
         // (featSlots.ts): a versatile heritage's own feats, the extra ancestry lists a heritage
         // opens (Aiuvarin: elf), and universal-ancestry. Filtering on the bare ancestry trait
-        // offered Bellphor halfling feats only — not even the aiuvarin feats his heritage grants.
+        // offered only the base ancestry's feats — not even the extra feats a versatile heritage grants.
         const her = build.heritageId ? content.heritages[build.heritageId] : undefined;
         const widened = [
           ancTrait,
