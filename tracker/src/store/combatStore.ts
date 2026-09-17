@@ -23,12 +23,16 @@ const turnTimerOn = () => useSettingsStore.getState().turnTimerEnabled
 
 interface TimerDraft { turnTimer: TurnTimerState | null; turns: TurnRecord[] }
 
-/** Start timing the given combatant's turn (replaces any running timer). */
+/** Start timing the given combatant's turn (replaces any running timer). Resumes from
+ *  `pausedTurnSeconds` when the pointer is coming back to a Return-interrupted turn (see
+ *  `pauseTurn`), rather than starting a fresh count at 0. */
 function beginTurn(s: TimerDraft, c: Combatant | undefined | null) {
   if (!c) { s.turnTimer = null; return }
+  const resumeSeconds = c.pausedTurnSeconds ?? 0
+  if (c.pausedTurnSeconds !== undefined) c.pausedTurnSeconds = undefined
   s.turnTimer = {
     combatantId: c.id, name: c.name, isPC: c.isPC,
-    startedAt: Date.now(), accumMs: 0, paused: false,
+    startedAt: Date.now(), accumMs: resumeSeconds * 1000, paused: false,
   }
 }
 
@@ -41,6 +45,19 @@ function commitTurn(s: TimerDraft) {
   if (seconds > 0) {
     s.turns.push({ id: ntid(), combatantId: t.combatantId, name: t.name, isPC: t.isPC, seconds })
   }
+}
+
+/** Freeze the running timer's elapsed time onto the combatant it belongs to, WITHOUT banking a
+ *  TurnRecord — a Return cuts this turn short mid-way; it isn't over. `beginTurn` picks the count
+ *  back up from `pausedTurnSeconds` when the pointer returns to this combatant, so exactly one
+ *  record (the full turn) is committed when it really ends. */
+function pauseTurn(s: TimerDraft, c: Combatant | undefined | null) {
+  const t = s.turnTimer
+  if (t && c) {
+    const ms = t.accumMs + (t.startedAt != null && !t.paused ? Date.now() - t.startedAt : 0)
+    c.pausedTurnSeconds = Math.round(ms / 1000)
+  }
+  s.turnTimer = null
 }
 
 /** On reload, drop any wall-clock gap from the app being closed: a running
@@ -193,6 +210,17 @@ declare module '../types/pf2e' {
     /** The round this creature Delayed in. Delay lasts at most until its own initiative position
      *  comes up again (Player Core p. 416) — nextTurn's skip loop reads this to end it. */
     delayedOnRound?: number
+    /** Its turn has already BEGUN in the CURRENT round — the start-of-turn step (Stunned) is spent.
+     *  A Return cuts the returnee in ahead of the creature whose turn it is, so the pointer comes
+     *  back to that creature a second time in the round; the turn it resumes is the same one, not a
+     *  new one, and its start must not run twice. Cleared alongside countedThisRound. */
+    startedThisRound?: boolean
+    /** Seconds banked by `pauseTurn` when a Return cut this combatant's turn short mid-way — the
+     *  turn isn't over, so this is NOT a TurnRecord yet. `beginTurn` adds it back in and clears the
+     *  field the next time the pointer reaches this combatant, so the eventual commitTurn covers the
+     *  whole turn in one record instead of splitting it into two. Cleared by endCombat too, so a
+     *  fight that ends before the pointer comes back can't leak stale seconds into the next one. */
+    pausedTurnSeconds?: number
   }
 }
 
@@ -209,6 +237,20 @@ function creditCount(c: Combatant | undefined, counts: Set<string>) {
   if (!c || c.countedThisRound) return
   counts.add(c.id)
   c.countedThisRound = true
+}
+
+/**
+ * A creature's turn BEGINNING — the start-of-turn condition step (Stunned), at most ONCE per round.
+ *
+ * The pointer can land on the same creature twice in a round: `returnFromDelay` cuts the returnee in
+ * immediately ahead of whoever is acting, so the next advance lands back on the interrupted creature
+ * to finish the turn it was in the middle of. That landing is a RESUMPTION, not a turn start — it
+ * must not eat a second point of Stunned. Same shape as `endTurnPass`'s once-per-round guard.
+ */
+function startTurn(c: Combatant | undefined | null) {
+  if (!c || c.startedThisRound) return
+  c.startedThisRound = true
+  tickConditionsAtStart(c)
 }
 
 interface CombatStore {
@@ -228,10 +270,12 @@ interface CombatStore {
    *  its combatant by id, or falls to the next survivor. Recorded as one undo step. */
   removeDefeated: () => void
   /** Delay: the combatant leaves the turn order (skipped like a defeated NPC) until it is brought
-   *  back with `returnFromDelay`. Delaying the ACTIVE combatant ends its turn. */
-  delayCombatant: (id: string) => void
-  /** Re-enter the order immediately after the combatant whose turn it is, taking that creature's
-   *  initiative count (PF2e: you return "after any turn"). */
+   *  back with `returnFromDelay`, and its turn ends (p. 416's negatives run). ONLY the creature whose
+   *  turn it is may Delay — any other id is a no-op and returns false. */
+  delayCombatant: (id: string) => boolean
+  /** Come back from Delay: cut in IMMEDIATELY BEFORE the creature whose turn it is and take the turn
+   *  now, on that creature's initiative count. The interrupted creature is mid-turn — the next
+   *  advance lands back on it and its turn carries on. */
   returnFromDelay: (id: string) => void
   /** Point the persisted board at a campaign: `pf2e-current-combat:<scopeId>` (bare key when null).
    *  Flushes the OUTGOING scope's pending write first, then loads the incoming scope's snapshot (or
@@ -413,10 +457,20 @@ function loadPersistedCombat(): PersistedCombat | null {
       // same trade countedThisRound takes above. `&& !c.isDelayed` is NOT the patch: it clears the
       // flag for the in-turn delayer too and re-opens the double-fire the tests below pin down.
       c.endedThisRound ??= parsed.inCombat && i < parsed.activeIndex
+      // The turn START goes with the count, not with the end: the ACTIVE creature's turn HAS begun
+      // (it is mid-turn when the board is saved), so this one is `<=` like countedThisRound. A
+      // pre-flag save that reads "not started" would let a Return hand the interrupted creature a
+      // second start-of-turn step on the landing that only resumes its turn.
+      c.startedThisRound ??= parsed.inCombat && i <= parsed.activeIndex
       // Same for a creature that was already Delayed when the board was saved: the round it went out
       // in wasn't recorded, and without a value its Delay never ends (p. 416, nextTurn's skip loop).
       // The saved round is the latest it can have delayed in, so it comes back a round late at worst.
       if (c.isDelayed) c.delayedOnRound ??= parsed.round
+      // Out of combat nobody is delayed. endCombat clears the flag now and startCombat always did,
+      // but a board saved by a build that did NEITHER (v0.1.38 and earlier) loads with the flag still
+      // on, and a delayed creature out of combat is drawn NOWHERE: the list filters it out and both
+      // Delay areas only exist during a fight. The GM would see a combatant they added just missing.
+      if (!parsed.inCombat) c.isDelayed = false
     })
     return parsed
   } catch {
@@ -646,7 +700,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
           // then invent the flag from the newcomer's position — a live board and a reload of that
           // same board disagreeing about whose count is still on the table. The positional
           // heuristic is for genuinely pre-commit saves only.
-          countedThisRound: false, endedThisRound: false,
+          countedThisRound: false, endedThisRound: false, startedThisRound: false,
         })
       }
     })
@@ -676,7 +730,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         resourceUses: undefined,
         isDefeated: false,
         isDelayed: false,
-        countedThisRound: false, endedThisRound: false,
+        countedThisRound: false, endedThisRound: false, startedThisRound: false,
       }
       s.combatants.splice(idx + 1, 0, copy)
       // Keep the active-turn pointer on the same combatant.
@@ -728,11 +782,18 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   },
 
   delayCombatant(id) {
+    // ONLY the acting creature may Delay, in the store and not just in the affordance that offers it.
+    // Player Core p. 416 gives Delay the trigger "Your turn begins", and the same entry charges the
+    // turn's negatives at the moment you use it — which this runs by handing the turn on through
+    // nextTurn, and a turn can only be handed on by whoever HAS it. Taking any other row out of the
+    // order skips that creature's persistent damage and one step of every auto-decrementing
+    // condition for the round, silently. The right-click item and the drag both refuse it too; this
+    // is the same rule where it cannot be routed around.
+    const st = get()
+    if (!st.inCombat || st.combatants[st.activeIndex]?.id !== id) return false
     // Two undo steps when you delay the creature whose turn it is (one for leaving the order, one
     // for the turn advance) — nextTurn owns the end-of-turn ticks and the timer, so it runs as
     // itself rather than being inlined here.
-    const st = get()
-    const wasActive = st.combatants[st.activeIndex]?.id === id
     let moved = false
     set(s => {
       const c = s.combatants.find(x => x.id === id)
@@ -742,7 +803,8 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       c.delayedOnRound = s.round    // when its position next comes up, the Delay is over (p. 416)
       moved = true
     })
-    if (moved && wasActive && get().inCombat) get().nextTurn()
+    if (moved) get().nextTurn()
+    return moved
   },
 
   returnFromDelay(id) {
@@ -754,13 +816,33 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       c.isDelayed = false
       // Removing it from earlier in the array pulls the active pointer down with it.
       const active = i < s.activeIndex ? s.activeIndex - 1 : s.activeIndex
-      // You return on the initiative count of the turn you came back after — an exact tie, so the
-      // array position is the only thing saying you re-entered BEHIND it (and behind anyone else
-      // who already returned onto that count). initSort keeps mid-combat ties as they lie for
-      // exactly that reason — see `settled` there.
-      c.initiative = s.combatants[active]?.initiative ?? c.initiative
-      s.combatants.splice(active + 1, 0, c)
+      const interrupted = s.combatants[active]
+      // THE OWNER'S GESTURE. The GM says "now it's this creature's turn", a player who was holding
+      // back says "I go now" — so they go in FRONT of that creature and the turn is theirs this
+      // instant. They re-enter ON the interrupted creature's initiative count (an exact tie), and the
+      // array position is the only thing saying they came in AHEAD of it; initSort leaves mid-combat
+      // ties exactly as the board has them for that reason — see `settled` there.
+      c.initiative = interrupted?.initiative ?? c.initiative
+      s.combatants.splice(active, 0, c)
       s.activeIndex = active
+      if (!s.inCombat) return
+      // The interrupted creature is MID-TURN. When the GM presses Next after the returnee, the
+      // pointer lands back on it and it carries on where it left off — not a new turn, so no second
+      // start-of-turn step (it is already flagged, being the creature whose turn it was; written
+      // here so a board that reached this pointer some other way can't leak one through). Its END
+      // still comes, once, when that resumed turn finally ends — endedThisRound is untouched.
+      if (interrupted) interrupted.startedThisRound = true
+      // …and the returnee's own turn begins NOW: its initiative count (once per round — if it
+      // delayed in this same round it already spent it) and the start-of-turn step, exactly what a
+      // nextTurn landing does.
+      const counts = new Set<string>()
+      creditCount(c, counts)
+      tickSourceDurations(s, counts)
+      startTurn(c)
+      // The interrupted creature's turn isn't over — pause its timer (bank the seconds so far onto
+      // it, no TurnRecord yet) rather than commit it, or its resumed half banks a second record and
+      // halves its average. beginTurn picks the paused seconds back up when nextTurn lands on it.
+      if (turnTimerOn()) { pauseTurn(s, interrupted); beginTurn(s, c) }
     })
   },
 
@@ -845,7 +927,10 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
     set(s => {
       // Delay is a within-combat position, so a fresh fight starts with everyone in the order —
       // cleared BEFORE the sort, so nothing last fight left behind can reach it.
-      for (const c of s.combatants) { c.isDelayed = false; c.countedThisRound = false; c.endedThisRound = false }
+      for (const c of s.combatants) {
+        c.isDelayed = false
+        c.countedThisRound = false; c.endedThisRound = false; c.startedThisRound = false
+      }
       // A fresh fight settles its own order: the monster-before-PC tie rule applies here and
       // nowhere else (initSort's `settled`).
       s.combatants.sort(initSort(false))
@@ -875,7 +960,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       }
       tickSourceDurations(s, counts)
       // …and any start-of-turn conditions (Stunned) it walked into combat with are consumed.
-      tickConditionsAtStart(s.combatants[s.activeIndex])
+      startTurn(s.combatants[s.activeIndex])
       // selectedId intentionally NOT changed — user controls which stat block is shown
       if (turnTimerOn()) beginTurn(s, s.combatants[s.activeIndex])
       else s.turnTimer = null
@@ -885,6 +970,11 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   endCombat() {
     set(s => {
       s.inCombat = false
+      // Delay is a position INSIDE a turn order, so the end of the fight ends it. Without this the
+      // creature is on the board and on screen nowhere: the list draws no delayed row (it is out of
+      // the order) and the Delay area only exists during a fight. startCombat clears the flag too —
+      // this is the same clear at the other end, so the gap between fights can't swallow anyone.
+      for (const c of s.combatants) { c.isDelayed = false; c.pausedTurnSeconds = undefined }
       // Save the final turn's time, then stop the timer.
       if (turnTimerOn()) commitTurn(s)
       s.turnTimer = null
@@ -918,7 +1008,9 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         if (i !== 0 || wrapped) return
         wrapped = true
         s.round += 1
-        for (const c of s.combatants) { c.countedThisRound = false; c.endedThisRound = false }
+        for (const c of s.combatants) {
+          c.countedThisRound = false; c.endedThisRound = false; c.startedThisRound = false
+        }
       }
       let next = (s.activeIndex + 1) % len
       cross(next)
@@ -953,9 +1045,9 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       creditCount(s.combatants[next], counts)
       // Round durations tick at the START of their SOURCE's turn (Player Core p. 426).
       tickSourceDurations(s, counts)
-      // Start-of-turn conditions (Stunned) are consumed as the new creature's
-      // turn begins.
-      tickConditionsAtStart(s.combatants[s.activeIndex])
+      // Start-of-turn conditions (Stunned) are consumed as the new creature's turn begins — unless
+      // this landing is the RESUMED half of a turn a Return cut into, which startTurn's flag knows.
+      startTurn(s.combatants[s.activeIndex])
       // selectedId intentionally NOT changed — user controls which stat block is shown
       // Turn timer: bank the turn that just ended, start timing the new one.
       if (turnTimerOn()) { commitTurn(s); beginTurn(s, s.combatants[s.activeIndex]) }

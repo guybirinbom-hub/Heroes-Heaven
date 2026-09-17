@@ -7,7 +7,7 @@
  */
 import { themes, getTheme, type Polarity } from './themes';
 import { styles } from './styles';
-import { fonts } from './fonts';
+import { fonts, warmFontStacks } from './fonts';
 import { touchSettings } from '../data/syncBus';
 
 const STORAGE_KEY = 'pf2e-codex.appearance';
@@ -200,6 +200,17 @@ export function setConsumableColorOverride(color: string | null): void {
 export function initTheme(): void {
   state = loadState();
   applyAppearance();
+  // The Font axis's ten stacks are part of the Customize panel's first-open cost, and none of them is
+  // used anywhere else — so the first time that panel opens is the first time the browser has to match
+  // them (see warmFontStacks). Pay it while the app is idle instead. AFTER applyAppearance, never
+  // before: this must not stand between a cold start and its first paint. The timeout is deliberately
+  // short: a booting app has no idle period for several seconds, and a backgrounded tab gets none at
+  // all (there, idle callbacks only ever run on the timeout), while "launch it and go straight to
+  // Customize" is well inside that window. cloudSync re-runs initTheme on a settings pull;
+  // warmFontStacks is a no-op from the second call on.
+  const warm = () => void warmFontStacks();
+  if (typeof requestIdleCallback === 'function') requestIdleCallback(warm, { timeout: 500 });
+  else if (typeof setTimeout === 'function') setTimeout(warm, 500);
 }
 
 export function getAppearance(): AppearanceState {

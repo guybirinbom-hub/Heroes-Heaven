@@ -270,17 +270,17 @@ export interface PartyMemberDrag {
 /**
  * The three places a host can put its own content on a card.
  *
- * The card is two columns (the owner's design C, 2026-09-16), so one opaque node no longer fits:
- * the saves belong under AC on the left, the rest is the right column, and the turn chip + the
- * add-to-initiative button belong in the header beside the chevron. Named slots keep the layout
- * here, where the CSS is, instead of in whatever the host hands over.
+ * The card is two rows (the owner's pick, 2026-09-17), so one opaque node no longer fits: the saves
+ * belong beside AC in row 1's band, the rest is row 2, and the turn chip + the add-to-initiative
+ * button belong in the header beside the chevron. Named slots keep the layout here, where the CSS
+ * is, instead of in whatever the host hands over.
  */
 export interface PartyCardSlots {
   /** Header, between the name and the chevron — the tracker's turn-timer chip and "+" button. */
   header?: React.ReactNode;
-  /** Left column, inside the AC/Fort/Ref/Will block. */
+  /** Row 1, inside the AC/Fort/Ref/Will block. */
   saves?: React.ReactNode;
-  /** The whole right column: Speed & DCs, Skills, Abilities, Senses & Languages. */
+  /** The whole of ROW 2: Speed & DCs, Skills, Abilities, Senses & Languages. Falsy → no row 2. */
   right?: React.ReactNode;
 }
 
@@ -357,76 +357,88 @@ export function PartyCard({
         )}
         <i className="ti ti-chevron-right party-chev" aria-hidden="true" />
       </div>
-      {/* Two columns: the left is what the GM reads while a turn is running, the right is what they
-          look up between turns. They stack on a phone (see sheet.css, <=720px). */}
+      {/* Two ROWS (the owner's pick, 2026-09-17): row 1 is the band the GM reads while a turn is
+          running — HP + chips on the left, then Perception and AC/saves across; row 2 is the
+          full-width reference band they look up between turns. On a phone row 1's right-hand group
+          wraps under the left one (see sheet.css, <=720px). */}
       <div className={'party-card-body' + (extra?.right ? ' has-right' : '')}>
-        <div className="party-col party-col-l">
-          <div className="party-hp">
-            <span className="party-lab">HP</span>
-            <span className="party-stat-v">
-              {s.hpCur ?? hpMax}
-              {hpMax ? ` / ${hpMax}` : ''}
-              {s.hpTemp ? <span className="party-temp"> +{s.hpTemp}</span> : null}
-            </span>
-            <span className="party-hpbar"><span style={{ width: pct + '%', background: hpColor(s.hpCur ?? hpMax, hpMax) }} /></span>
-          </div>
-          {((s.conditions?.length ?? 0) > 0 || (s.modes?.length ?? 0) > 0) && (
-            <div className="party-chips">
-              {(s.conditions ?? []).map((c, i) => (
-                // A condition the SHEET worked out (Bulk, an active mode) carries its cause and wears
-                // a lock here, the same way the owner's own rail marks it — nobody at the table can
-                // take it off, it goes when its cause goes.
-                <span className={'party-cond' + (c.derivedFrom ? ' is-auto' : '')} key={'c' + i} title={c.derivedFrom || undefined}>
-                  {c.name}
-                  {c.value ? ` ${c.value}` : ''}
-                  {c.derivedFrom && <i className="ti ti-lock party-cond-lock" aria-hidden="true" />}
-                </span>
-              ))}
-              {(s.modes ?? []).map((m, i) => (
-                <span className="party-mode" key={'m' + i}>{m}</span>
-              ))}
+        <div className="party-row-turn">
+          <div className="party-turn-l">
+            <div className="party-hp">
+              <span className="party-lab">HP</span>
+              <span className="party-stat-v">
+                {s.hpCur ?? hpMax}
+                {hpMax ? ` / ${hpMax}` : ''}
+                {s.hpTemp ? <span className="party-temp"> +{s.hpTemp}</span> : null}
+              </span>
+              <span className="party-hpbar"><span style={{ width: pct + '%', background: hpColor(s.hpCur ?? hpMax, hpMax) }} /></span>
             </div>
-          )}
-          <div className="party-perc">
-            <span className="party-lab">Perception</span>
-            <span className="party-perc-v">
-              {s.perception >= 0 ? '+' : ''}
-              {s.perception ?? 0}
-              {s.perceptionRank && <RankPill rank={s.perceptionRank} />}
-            </span>
+            {((s.conditions?.length ?? 0) > 0 || (s.modes?.length ?? 0) > 0) && (
+              <div className="party-chips">
+                {(s.conditions ?? []).map((c, i) => (
+                  // A condition the SHEET worked out (Bulk, an active mode) carries its cause and
+                  // wears a lock here, the same way the owner's own rail marks it — nobody at the
+                  // table can take it off, it goes when its cause goes.
+                  <span className={'party-cond' + (c.derivedFrom ? ' is-auto' : '')} key={'c' + i} title={c.derivedFrom || undefined}>
+                    {c.name}
+                    {c.value ? ` ${c.value}` : ''}
+                    {c.derivedFrom && <i className="ti ti-lock party-cond-lock" aria-hidden="true" />}
+                  </span>
+                ))}
+                {(s.modes ?? []).map((m, i) => (
+                  <span className="party-mode" key={'m' + i}>{m}</span>
+                ))}
+              </div>
+            )}
           </div>
-          {/* AC and the saves as one bold block — the numbers a GM calls for mid-turn. Part of the
-              card's own surface, so a click here still opens the sheet, exactly as it used to. */}
-          <div className="party-defs">
-            <span className="party-def">
-              <span className="party-lab">AC</span>
-              <b>{s.ac ?? '—'}</b>
-            </span>
-            {extra?.saves}
+          {/* The numbers a GM calls for mid-turn, across the band past the divider: Perception with
+              its circle, then AC and the saves as label-over-value tiles. Part of the card's own
+              surface, so a click here still opens the sheet, exactly as it used to. */}
+          <div className="party-turn-r">
+            <div className="party-perc">
+              <span className="party-lab">Perception</span>
+              <span className="party-perc-v">
+                {s.perception >= 0 ? '+' : ''}
+                {s.perception ?? 0}
+                {s.perceptionRank && <RankPill rank={s.perceptionRank} />}
+              </span>
+            </div>
+            <div className="party-defs">
+              <span className="party-def">
+                <span className="party-lab">AC</span>
+                <b>{s.ac ?? '—'}</b>
+              </span>
+              {extra?.saves}
+            </div>
           </div>
-          {/* Bottom of the LEFT column, under the AC/saves block (owner 2026-09-16: *"the remove
-              player button doesn't need a row of its own, put it in the bottom left"*). No footer
-              line, no divider — `margin-top:auto` in the column drops it to the bottom. */}
-          {showKick && onKick && (
-            <button
-              className="party-kick"
-              title="Remove from party"
-              aria-label="Remove from party"
-              onClick={(e) => {
-                e.stopPropagation();
-                onKick();
-              }}
-            >
-              <i className="ti ti-trash" aria-hidden="true" />
-            </button>
-          )}
         </div>
-        {/* Reference: the host's Speed & DCs, Skills, Abilities, Senses. A click on the numbers is
-            not navigation, so it doesn't open the sheet. */}
+        {/* ROW 2 — the host's Speed & DCs, Skills, Abilities, Senses, full card width. Omitted
+            entirely when the "Stats shown" preset leaves nothing to draw, so there is no empty band
+            and no divider. A click on the numbers is not navigation, so it doesn't open the sheet. */}
         {extra?.right && (
-          <div className="party-col party-col-r" onClick={(e) => e.stopPropagation()}>
+          <div className="party-row-ref" onClick={(e) => e.stopPropagation()}>
             {extra.right}
           </div>
+        )}
+        {/* Bottom-left of the card, under row 2 (owner 2026-09-16: *"the remove player button
+            doesn't need a row of its own, put it in the bottom left"*).
+            DEVIATION from the approved mockup (card-two-rows.html), pending the owner's nod: the
+            mockup puts this button INSIDE `.party-row-ref`. It sits in the body instead, after that
+            row, because a "Stats shown" preset that hides every reference section drops row 2 — and
+            with it the GM's only remove control. Pixel-identical on a normal card (row 2 has no
+            padding-bottom); the difference shows only on a card with no row 2. */}
+        {showKick && onKick && (
+          <button
+            className="party-kick"
+            title="Remove from party"
+            aria-label="Remove from party"
+            onClick={(e) => {
+              e.stopPropagation();
+              onKick();
+            }}
+          >
+            <i className="ti ti-trash" aria-hidden="true" />
+          </button>
         )}
       </div>
     </div>

@@ -1324,6 +1324,8 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   }
 
   // Patch in coins, vitals, bio, and portrait the build doesn't carry.
+  // (rebuildRoster carries `character.currency` forward rather than re-deriving it — see rebuild.ts —
+  // so this imported wallet survives the next app launch instead of being reset to the build's 0.)
   const coins = c.inventory?.coins;
   if (coins) character.currency = { pp: coins.pp ?? 0, gp: coins.gp ?? 0, sp: coins.sp ?? 0, cp: coins.cp ?? 0 };
   // (Monster Parts: this app's redesigned subsystem tracks harvested parts as regular inventory ITEMS,

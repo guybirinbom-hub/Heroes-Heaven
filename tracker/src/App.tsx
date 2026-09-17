@@ -3,7 +3,7 @@ import { useCombatStore } from './store/combatStore'
 import { usePartyStore } from './store/partyStore'
 import type { Party } from './store/partyStore'
 import { loadIndex, loadCustomCreatures } from './data/dataStore'
-import { InitiativeTracker } from './components/InitiativeTracker'
+import { InitiativeTracker, useDelayDropZone } from './components/InitiativeTracker'
 import { NumberInput } from './components/NumberInput'
 import { PaneLayout } from './components/PaneLayout'
 import { useLayoutStore, useGmLayoutStore } from './store/layoutStore'
@@ -198,6 +198,61 @@ function PartyMenu({ parties, activePartyId, isPartyFocus, onPick, onToggleFav, 
         </div>
       </div>
     </>
+  )
+}
+
+/**
+ * The standalone tracker's Delay area — the small copy of the one Heroes Heaven's rail draws.
+ *
+ * A delayed creature is no longer drawn in the initiative list (it is out of the order), so without
+ * this there would be nothing left to click to bring it back: the GM would have to wait for the
+ * round to come round to its own count (Player Core p. 416). Drop the ACTING row here to Delay it;
+ * Return puts it back immediately ahead of the current turn, acting now. The drag-back-onto-the-list
+ * half of the campaign rail's version is deliberately not copied — the button is the function.
+ */
+function DelayStrip() {
+  const combatants = useCombatStore(s => s.combatants)
+  const inCombat = useCombatStore(s => s.inCombat)
+  // Same hook the campaign rail's area uses — the drag contract is written once, beside the row that
+  // starts the drag, so this copy cannot answer the drag differently from that one.
+  const { over, props } = useDelayDropZone()
+  const delayed = combatants.filter(c => c.isDelayed)
+  if (!inCombat) return null
+  return (
+    <div
+      {...props}
+      style={{
+        flexShrink: 0, margin: '0 10px 8px', padding: '5px 7px',
+        display: 'flex', flexDirection: 'column', gap: 4,
+        border: `1px ${over ? 'solid var(--accent)' : 'dashed var(--border-strong)'}`,
+        borderRadius: 'var(--radius)',
+        background: over ? 'var(--accent-soft)' : 'var(--bg-elevated)',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, minWidth: 0 }}>
+        <span style={{ fontFamily: 'var(--font-ui)', fontSize: 10.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Delay</span>
+        {delayed.length === 0 && (
+          <span style={{ fontFamily: 'var(--font-ui)', fontSize: 10.5, fontStyle: 'italic', color: 'var(--text-faded)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            drag the acting creature here
+          </span>
+        )}
+      </div>
+      {delayed.map(c => (
+        <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0 }}>
+          <span style={{ flexShrink: 0, width: 20, textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent)' }}>{c.initiative ?? '—'}</span>
+          <span style={{ flex: 1, minWidth: 0, fontFamily: 'var(--font-ui)', fontSize: 12, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.name}</span>
+          <button
+            onClick={() => useCombatStore.getState().returnFromDelay(c.id)}
+            title="Back in, just ahead of the current turn — and it acts now"
+            style={{
+              flexShrink: 0, fontFamily: 'var(--font-ui)', fontSize: 11, padding: '2px 8px',
+              cursor: 'pointer', color: 'var(--accent)', background: 'transparent',
+              border: 'var(--app-bw) solid var(--accent)', borderRadius: 'var(--radius-sm)',
+            }}
+          >Return</button>
+        </div>
+      ))}
+    </div>
   )
 }
 
@@ -547,6 +602,7 @@ export default function App() {
               onCollapse={showInitCollapse ? () => setSidebarCollapsedPersist(true) : undefined}
             />
           </div>
+          <DelayStrip />
           <div style={{ padding: '10px', borderTop: 'var(--app-bw) solid var(--border)', flexShrink: 0, display: 'flex', gap: 6 }}>
             <button
               onClick={() => setShowSearch(true)}

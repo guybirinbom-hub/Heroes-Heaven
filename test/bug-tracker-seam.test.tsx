@@ -12,6 +12,7 @@ import type { CampaignMembership } from '../src/data/campaigns';
 import type { PartyMember } from '../src/data/party';
 import type { Creature } from '../tracker/src/types/pf2e';
 import { useCombatStore } from '../tracker/src/store/combatStore';
+import { DELAY_MIME, DELAY_RETURN_MIME } from '../tracker/src/components/InitiativeTracker';
 import { usePartyStore, type Party } from '../tracker/src/store/partyStore';
 import { useLayoutStore } from '../tracker/src/store/layoutStore';
 import { trackerUi } from '../src/integration/trackerUiStore';
@@ -183,6 +184,63 @@ const btn = (label: string): HTMLElement => {
   return el;
 };
 const click = (el: Element) => act(() => el.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+
+/*
+ * jsdom has no DataTransfer and no DragEvent, so a drag is spelled out by hand: the payload the
+ * source writes, carried on a plain bubbling Event that React reads `dataTransfer` off exactly as it
+ * would a real one. (Same pair as test/bug-owner-2026-09-16-seam.test.tsx, which drags a party card
+ * onto this same rail.)
+ */
+function makeDataTransfer(): DataTransfer {
+  const store = new Map<string, string>();
+  return {
+    get types() {
+      return [...store.keys()];
+    },
+    setData: (t: string, v: string) => void store.set(t, v),
+    getData: (t: string) => store.get(t) ?? '',
+    dropEffect: 'none',
+    // What a real drag starts at when the source sets nothing — NOT 'none', which would forbid every
+    // drop and make the negotiation below fire on drags that are fine.
+    effectAllowed: 'uninitialized',
+  } as unknown as DataTransfer;
+}
+
+/*
+ * The one rule of the HTML drag-and-drop model a hand-rolled DataTransfer has to keep: the current
+ * drag operation is the target's dropEffect MATCHED against the source's effectAllowed, and when
+ * they don't match it resolves to "none" — the browser then fires NO drop at all, while the zone
+ * still lights up, because dragover did run and did preventDefault. A stub that fires 'drop'
+ * unconditionally passes a drop target that cannot work in a browser, which is exactly how a zone
+ * answering 'move' to a 'copy' drag shipped. So the two values are pinned against each other here,
+ * as the real handlers set them, and a drop the browser would not deliver fails the leg loudly.
+ */
+const EFFECT_PERMITS: Record<string, string[]> = {
+  none: [],
+  copy: ['copy'],
+  move: ['move'],
+  link: ['link'],
+  copyMove: ['copy', 'move'],
+  copyLink: ['copy', 'link'],
+  linkMove: ['link', 'move'],
+  all: ['copy', 'move', 'link'],
+  uninitialized: ['copy', 'move', 'link'],
+};
+
+function fireDrag(el: Element, type: 'dragstart' | 'dragover' | 'dragleave' | 'drop', dataTransfer: DataTransfer): void {
+  const { dropEffect, effectAllowed } = dataTransfer;
+  // dropEffect 'none' = the target never accepted the drag; firing a drop at it anyway is the
+  // synthetic "even then, nothing happens" probe below, and a browser's own refusal, not a defect.
+  if (type === 'drop' && dropEffect !== 'none' && !(EFFECT_PERMITS[effectAllowed] ?? []).includes(dropEffect)) {
+    throw new Error(
+      `no drop would fire: the target answered dropEffect="${dropEffect}" to a drag whose source set ` +
+        `effectAllowed="${effectAllowed}", so the drag operation resolves to none`,
+    );
+  }
+  const ev = new Event(type, { bubbles: true, cancelable: true });
+  Object.defineProperty(ev, 'dataTransfer', { value: dataTransfer });
+  act(() => void el.dispatchEvent(ev));
+}
 const key = (init: KeyboardEventInit) => act(() => void window.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, ...init })));
 
 beforeEach(() => {
@@ -682,6 +740,106 @@ describe('the campaign ↔ tracker seam', () => {
     key({ key: 'Escape' });
     await flush(2);
     expect(left).toBe(1);
+  }, 120_000);
+
+  it('the Delay area takes the acting creature, and gives it back ONE TURN BEFORE the current one', async () => {
+    // lane delay 2026-09-17: seam
+    /*
+     * The owner's gesture, in his words: "I want a delay mechanic where I drag someone from the
+     * initiative order and above the Add combatants button there will be a delay area that I can
+     * drop into, and there will be a button to add back to initiative… players decide to enter after
+     * they hear me say 'now it's this guy's turn' and say 'I want to enter' — so when I press the
+     * return button they enter ONE TURN BEFORE the current turn AND THE CURRENT TURN MOVES TO THEM."
+     *
+     * Only the acting creature can go in (Player Core p. 416 — Delay is an action on your own turn),
+     * and dragging a delayed row back onto the order is the Return button by another gesture.
+     *
+     * MUTATIONS:
+     *  - InitiativeTracker `combatants.filter(c => !c.isDelayed).map(…)` → `combatants.map(…)`:
+     *    FAILS at line 813 — "expected true to be false" (the delayed row is still in the order).
+     *  - InitiativeTracker's `if (isActive) e.dataTransfer.setData(DELAY_MIME, c.id)` → unconditional:
+     *    FAILS at line 799 — "expected [ 'text/combatant-id', …(1) ] to not include
+     *    'application/x-hh-delay'" (any row could be dragged out of the order).
+     *  - CampaignTracker: drop `onDragOver`/`onDrop` from the `.ct-order-scroll` wrapper:
+     *    FAILS at line 840 — "expected 'Torch Bearer' to be 'Road Ogre'" (the drag back onto the
+     *    order lands nowhere and the delayed creature stays out).
+     *  - useDelayDropZone: `dropEffect = ROW_DRAG_EFFECT` → `'move'` (how it shipped, against the
+     *    row's effectAllowed = 'copy'): FAILS at line 810 — "no drop would fire: the target answered
+     *    dropEffect="move" to a drag whose source set effectAllowed="copy", so the drag operation
+     *    resolves to none". The zone highlighted and the browser delivered nothing.
+     *  - CampaignTracker's `onReturnDragOver`: `dropEffect = 'move'` → `'copy'`, against the delayed
+     *    row's effectAllowed = 'move': FAILS at line 838, the same way, on the way back in.
+     */
+    const el = await openTracker();
+    act(() => {
+      // Name-only rows on purpose: a turn change opens the acting creature's stat block in the
+      // workspace, and this leg is about the order, not about what a stat block renders.
+      useCombatStore.getState().addCombatant(null, { name: 'Road Ogre', initiative: 20 });
+      useCombatStore.getState().addCombatant(null, { name: 'Torch Bearer', initiative: 10 });
+      useCombatStore.getState().startCombat();
+    });
+    await flush(2);
+
+    const state = () => useCombatStore.getState();
+    const acting = () => state().combatants[state().activeIndex]?.name;
+    const order = () => state().combatants.map((c) => c.name);
+    const zone = () => el.querySelector('.ct-delay')!;
+    const listed = (name: string) => [...el.querySelectorAll('.init-row')].some((r) => (r.textContent ?? '').includes(name));
+    const rowFor = (name: string) => [...el.querySelectorAll('.init-row')].find((r) => (r.textContent ?? '').includes(name))!;
+    expect(acting()).toBe('Road Ogre');
+    // Always on screen during the fight, one line tall and saying what it is for.
+    expect(zone().textContent).toContain('Delay');
+    expect(zone().textContent).toContain('drag the acting creature here');
+
+    // A row whose turn has NOT begun writes no delay payload — its drag is the stat-block one only,
+    // so the zone's dragover declines it (dropEffect stays 'none'; a browser would deliver no drop
+    // here at all) and the drop fired anyway finds nothing to delay.
+    const idle = makeDataTransfer();
+    fireDrag(rowFor('Torch Bearer'), 'dragstart', idle);
+    expect(idle.types).not.toContain(DELAY_MIME);
+    fireDrag(zone(), 'dragover', idle);
+    expect(idle.dropEffect).toBe('none');
+    fireDrag(zone(), 'drop', idle);
+    expect(state().combatants.find((c) => c.name === 'Torch Bearer')!.isDelayed).toBe(false);
+
+    // The acting row does, and dropping it in the area takes it out of the order.
+    const out = makeDataTransfer();
+    fireDrag(rowFor('Road Ogre'), 'dragstart', out);
+    expect(out.types).toContain(DELAY_MIME);
+    fireDrag(zone(), 'dragover', out);
+    fireDrag(zone(), 'drop', out);
+    await flush(1);
+    expect(state().combatants.find((c) => c.name === 'Road Ogre')!.isDelayed).toBe(true);
+    expect(listed('Road Ogre')).toBe(false); // out of the ORDER, not merely dimmed in it…
+    expect(zone().textContent).toContain('Road Ogre'); // …and waiting in the area
+    expect(acting()).toBe('Torch Bearer');
+
+    // Return: in immediately AHEAD of the creature whose turn it is, acting this instant.
+    click(zone().querySelector('button')!);
+    await flush(1);
+    expect(acting()).toBe('Road Ogre');
+    expect(order()).toEqual(['Road Ogre', 'Torch Bearer']);
+    expect(listed('Road Ogre')).toBe(true);
+
+    // And the drag out of the area does exactly what the button does — dropped ANYWHERE on the
+    // order, because where it lands is not the GM's to choose.
+    const again = makeDataTransfer();
+    fireDrag(rowFor('Road Ogre'), 'dragstart', again);
+    fireDrag(zone(), 'dragover', again);
+    fireDrag(zone(), 'drop', again);
+    await flush(1);
+    expect(acting()).toBe('Torch Bearer');
+
+    const back = makeDataTransfer();
+    fireDrag(zone().querySelector('.ct-delay-row')!, 'dragstart', back);
+    expect(back.types).toContain(DELAY_RETURN_MIME);
+    const list = el.querySelector('.ct-order-scroll')!;
+    fireDrag(list, 'dragover', back);
+    fireDrag(list, 'drop', back);
+    await flush(1);
+    expect(acting()).toBe('Road Ogre');
+    expect(order()).toEqual(['Road Ogre', 'Torch Bearer']);
+    expect(zone().textContent).toContain('drag the acting creature here'); // empty again
   }, 120_000);
 
   it('hides the GM tools on a phone, and keeps joining a campaign', async () => {

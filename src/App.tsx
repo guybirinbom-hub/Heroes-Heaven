@@ -17,7 +17,7 @@ import { loadContent, rebuildContent, onDescriptionsLoaded } from './data';
 import { pickScreen } from './appScreen';
 import { useAuth } from './data/useAuth';
 import { startCloudSync, hasSyncedOnce, noteDerivedRefresh } from './data/cloudSync';
-import { rebuildRoster } from './data/rebuild';
+import { rebuildRoster, carryStoredOverrides } from './data/rebuild';
 import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
@@ -994,7 +994,13 @@ export default function App() {
             setRoster((r) =>
               r.map((c) =>
                 c.id === id
-                  ? { ...c, id, character: built, build, play: c.play ? playForRebuild(c.play, built.inventory, c.character.inventory) : c.play }
+                  ? {
+                      ...c,
+                      id,
+                      character: carryStoredOverrides(built, c.character),
+                      build,
+                      play: c.play ? playForRebuild(c.play, built.inventory, c.character.inventory) : c.play,
+                    }
                   : c,
               ),
             );

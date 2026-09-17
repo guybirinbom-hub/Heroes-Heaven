@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
+import type { DragEvent as ReactDragEvent } from 'react'
 import { createPortal } from 'react-dom'
 import type { Combatant } from '../types/pf2e'
 import { useCombatStore } from '../store/combatStore'
@@ -14,6 +15,54 @@ import { useCampaignPartyLevel } from '../data/partyLevelContext'
 import { useHostPcStats } from '../data/pcStatsContext'
 import { PlayIcon, StopIcon, ChevronLeftIcon, ChevronRightIcon, DiceIcon } from './Icons'
 import { EncounterTablesModal } from './EncounterTablesModal'
+
+/** Dragging the ACTING row into the host's Delay area takes it out of the order (delayCombatant). */
+export const DELAY_MIME = 'application/x-hh-delay'
+/** Dragging a row of that Delay area back onto the initiative list brings it in (returnFromDelay).
+ *  Declared beside its twin so the two hosts that draw the area can't drift apart on the spelling. */
+export const DELAY_RETURN_MIME = 'application/x-hh-return'
+/*
+ * The drag effect BOTH halves must name. A dragover that answers 'move' to a drag whose source set
+ * effectAllowed = 'copy' resolves the current drag operation to NONE per the HTML drag-and-drop
+ * model: the browser then fires no drop at all, while the zone still lights up (dragover did run),
+ * so the target looks alive and is dead. One constant, set on the row below and read by the hook
+ * below that, is the only way the two ends can't drift apart again.
+ */
+const ROW_DRAG_EFFECT = 'copy'
+
+/**
+ * The drop-zone half of the Delay drag, shared by the two hosts that draw a Delay area (Heroes
+ * Heaven's campaign rail and the standalone app's strip) — one implementation, so a fix to it is a
+ * fix to both. `over` drives whatever highlight the host prefers.
+ */
+export function useDelayDropZone() {
+  const [over, setOver] = useState(false)
+  return {
+    over,
+    props: {
+      onDragOver: (e: ReactDragEvent) => {
+        if (!e.dataTransfer.types.includes(DELAY_MIME)) return
+        // Without the preventDefault the browser refuses the drop and runs its own navigation.
+        e.preventDefault()
+        e.dataTransfer.dropEffect = ROW_DRAG_EFFECT
+        setOver(true)
+      },
+      onDragLeave: (e: ReactDragEvent) => {
+        // dragleave also fires crossing between children — only a pointer that really left counts.
+        const to = e.relatedTarget as Node | null
+        if (to && e.currentTarget.contains(to)) return
+        setOver(false)
+      },
+      onDrop: (e: ReactDragEvent) => {
+        setOver(false)
+        const id = e.dataTransfer.getData(DELAY_MIME)
+        if (!id) return // something else's drag (a row heading for a pane) — leave it alone
+        e.preventDefault()
+        useCombatStore.getState().delayCombatant(id)
+      },
+    },
+  }
+}
 
 function InitRow({ c, isActive, isSelected, onSelect }: {
   c: Combatant; isActive: boolean; isSelected: boolean; onSelect: () => void
@@ -80,13 +129,18 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
     <div
       className={`init-row group ${isActive ? 'active' : ''} ${isSelected ? 'viewing' : ''}`}
       style={{
-        ...(c.isDefeated ? { opacity: 0.38, filter: 'grayscale(0.7)' } : c.isDelayed ? { opacity: 0.55 } : {}),
+        ...(c.isDefeated ? { opacity: 0.38, filter: 'grayscale(0.7)' } : {}),
       }}
       // Drag the card into a pane to open its stat block (split or new tab).
       draggable={!editingName && !editInit}
       onDragStart={e => {
         e.dataTransfer.setData(DRAG_MIME, c.id)
-        e.dataTransfer.effectAllowed = 'copy'
+        // …and, on the ACTING row only, the same drag can be dropped in the host's Delay area. One
+        // gesture, two payloads: each target claims the drag only if it finds the type it wants, so
+        // the pane drop above is untouched and no other row can be delayed by dragging (p. 416 —
+        // Delay is an action on your own turn).
+        if (isActive) e.dataTransfer.setData(DELAY_MIME, c.id)
+        e.dataTransfer.effectAllowed = ROW_DRAG_EFFECT
       }}
       onClick={onSelect}
       onContextMenu={e => { e.preventDefault(); setCtxPos({ x: e.clientX, y: e.clientY }) }}
@@ -151,7 +205,6 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 }}>{c.name}</span>
             {c.isPC && <Chip tone="accent">PC</Chip>}
             {c.isAlly && !c.isPC && <Chip tone="linked">NPC</Chip>}
-            {c.isDelayed && <Chip tone="muted">DELAYED</Chip>}
             {c.isElite && <span className="label-elite" style={{ fontSize: 8, flexShrink: 0 }}>E</span>}
             {c.isWeak && <span className="label-weak" style={{ fontSize: 8, flexShrink: 0 }}>W</span>}
             {c.scaledToLevel !== undefined && <Chip tone="accent" mono>L{c.scaledToLevel}</Chip>}
@@ -269,7 +322,7 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
 function RowContextMenu({ c, x, y, onClose, onRename }: {
   c: Combatant; x: number; y: number; onClose: () => void; onRename: () => void
 }) {
-  const { duplicateCombatant, removeCombatant, setDefeated, delayCombatant, returnFromDelay } = useCombatStore()
+  const { duplicateCombatant, removeCombatant, setDefeated, delayCombatant } = useCombatStore()
   const inCombat = useCombatStore(s => s.inCombat)
   const isActiveTurn = useCombatStore(s => s.combatants[s.activeIndex]?.id === c.id)
   const ref = useRef<HTMLDivElement>(null)
@@ -353,12 +406,14 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
           immediately when you use the Delay action"*. delayCombatant runs that end-of-turn pass by
           handing the turn on (nextTurn), which it can only do for the creature that HAS the turn; on
           any other row the click used to drop a round of persistent damage and one step of every
-          auto-decrementing condition. Returning stays available on any delayed row. */}
-      {inCombat && (isActiveTurn || c.isDelayed) && (
+          auto-decrementing condition. The store refuses it on any other row too, so the rule holds
+          wherever the call comes from. A delayed creature is drawn in the host's Delay area, not in
+          this list — its Return button and drag-out are the only way back in. */}
+      {inCombat && isActiveTurn && (
         <button style={itemStyle} onMouseEnter={hov(true)} onMouseLeave={hov(false)}
-          title={c.isDelayed ? 'Re-enter the order right after the current turn' : 'Leave the turn order — it takes its turn on its own count next round if you don’t bring it back sooner (Player Core p. 416)'}
-          onClick={run(() => (c.isDelayed ? returnFromDelay(c.id) : delayCombatant(c.id)))}>
-          {c.isDelayed ? 'Return from delay' : 'Delay'}
+          title="Leave the turn order — it takes its turn on its own count next round if you don’t bring it back sooner (Player Core p. 416)"
+          onClick={run(() => delayCombatant(c.id))}>
+          Delay
         </button>
       )}
 
@@ -702,9 +757,13 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
             No combatants yet.
           </div>
         )}
-        {combatants.map((c, i) => (
+        {/* A delayed creature is NOT in the turn order — it sits in the host's Delay area until the
+            GM brings it back, so it is not drawn here. (Its row used to stay in place, dimmed, which
+            said the opposite of what Delay means.) The active row is found by id, not by index: the
+            filtered list's indices are not the board's. */}
+        {combatants.filter(c => !c.isDelayed).map(c => (
           <InitRow key={c.id} c={c}
-            isActive={inCombat && i === activeIndex}
+            isActive={inCombat && c.id === combatants[activeIndex]?.id}
             isSelected={c.id === hoveredCid}
             onSelect={() => {
               if (onCombatantClick) onCombatantClick(c.id)

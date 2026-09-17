@@ -8,7 +8,7 @@ import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import { loadRoster, saveRoster, type SavedChar } from '../src/data/storage';
-import { rebuildRoster } from '../src/data/rebuild';
+import { rebuildRoster, carryStoredOverrides } from '../src/data/rebuild';
 import { PROFICIENCY_RANKS } from '../src/rules/types';
 
 /**
@@ -185,5 +185,37 @@ describe('the reverse-derive load path keeps a PARTIALLY-filled build intact', (
     const back = deriveBuildFromCharacter(built, db);
     expect(back.classSkills).toContain('stealth');
     expect(buildCharacter(back, db).proficiencies.skills.stealth).toBe('expert');
+  });
+});
+
+describe('the builder\'s edit-save (App.tsx onCreate, editing branch) keeps a currency-only wallet', () => {
+  /*
+   * refuter #2: buildCharacter's fresh currency is always 0 (see rebuild.ts) — a wallet that lives
+   * only on the STORED character (character.currency), with no play.currency yet to overlay it (a
+   * WG import that never entered Play mode), used to vanish the moment the character was reopened
+   * in the builder and saved, because App.tsx's roster.map replaced `character` wholesale with the
+   * freshly built one. This mirrors that exact transform — `{ ...c, id, character:
+   * carryStoredOverrides(built, c.character), build, play: ... }` from App.tsx's onCreate — with the
+   * REAL carryStoredOverrides, so a regression in the shared helper fails here too.
+   *
+   * Mutation proof: commenting out the `if (stored.currency !== undefined) …` line in
+   * carryStoredOverrides (src/data/rebuild.ts) — i.e. exactly what dropping the helper call at the
+   * App.tsx site would produce — turns this wallet into `{}` and fails the assertion below.
+   */
+  it('a stored wallet with no play object survives a save that changes nothing', () => {
+    const db = c();
+    const build = partial({ ancestryBoosts: ['int'] }); // any valid build — the UI dialog is not under test here
+    const built = buildCharacter(build, db);
+    expect(built.currency, 'fixture check: a fresh build starts at 0 gold').toEqual({});
+    const stored: SavedChar = { id: 'c-1', character: { ...built, currency: { gp: 500 } }, build } as SavedChar;
+    // The exact App.tsx expression for the `editing` roster entry, `c.play` absent (no play yet).
+    const out: SavedChar = {
+      ...stored,
+      id: stored.id,
+      character: carryStoredOverrides(built, stored.character),
+      build,
+      play: stored.play,
+    };
+    expect(out.character.currency).toEqual({ gp: 500 });
   });
 });

@@ -269,15 +269,15 @@ describe('the owner’s 2026-09-16 list — the seam', () => {
     // …and so is the chevron. Both present is the whole point: they used to occupy the same corner.
     expect(card!.querySelector('.party-chev')).toBeTruthy();
     /*
-     * SETTLED A DIFFERENT WAY, 2026-09-16 (design C): the kick is at the bottom of the card's LEFT
-     * COLUMN now — a trash can under the AC/saves block — so it cannot share the header's corner at
-     * all, and the clearance padding that used to hold the chevron off it is gone with the absolute
-     * positioning it was compensating for. A different column is a stronger guarantee than a
-     * reserved 28px. (It spent one pass on a footer row of its own; the owner said it doesn't need
-     * a row, so there is no `.party-foot` any more.)
+     * SETTLED A DIFFERENT WAY, 2026-09-16 (design C) and again on 2026-09-17 (two rows): the kick is
+     * a trash can at the bottom left of the card's BODY — under the reference row — so it cannot
+     * share the header's corner at all, and the clearance padding that used to hold the chevron off
+     * it is gone with the absolute positioning it was compensating for. A different block is a
+     * stronger guarantee than a reserved 28px. (It spent one pass on a footer row of its own; the
+     * owner said it doesn't need a row, so there is no `.party-foot` any more.)
      */
     expect(card!.querySelector('.party-card-h .party-kick')).toBeNull();
-    expect(card!.querySelector('.party-col-l > .party-kick')).toBeTruthy();
+    expect(card!.querySelector('.party-card-body > .party-kick')).toBeTruthy();
     expect(card!.querySelector('.party-foot')).toBeNull();
 
     const css = readFileSync('src/sheet.css', 'utf8');

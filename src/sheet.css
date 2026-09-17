@@ -457,7 +457,10 @@ body {
   overflow-y: auto;
   overscroll-behavior: contain;
   width: 100%;
-  max-width: 720px;
+  /* 880, not 720: the two-row card's 420px minimum (.party-grid, below) needs 2*420 + 8px gap +
+     2*14px padding = 876px of room for a second column — 720 fit two of the old 320px cards but
+     leaves the 420px card permanently single-column even on a wide desktop window. */
+  max-width: 880px;
   margin: 0 auto;
   padding: 14px 14px calc(36px + env(safe-area-inset-bottom, 0px) / var(--zoom, 1));
 }
@@ -501,11 +504,12 @@ body {
 }
 .party-grid {
   display: grid;
-  /* 320, not 280: the card carries two columns of stats now, and a 280px card squeezed the skill
-     grid to one abbreviation per line. auto-FILL, not auto-fit: auto-fit collapses the empty tracks
-     and stretches a one-member party's card across the whole window — 1045px of card for a 700px
-     layout, which is what the two columns looked like on a real screen. */
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  /* 420, not 320: the two-row card puts Perception + AC/Fort/Ref/Will across one band beside the HP
+     block, and six abilities on a single line — under about 420px the band's right-hand group eats
+     the HP block's width. auto-FILL, not auto-fit: auto-fit collapses the empty tracks and
+     stretches a one-member party's card across the whole window. (A phone gets one column outright,
+     below.) */
+  grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr));
   gap: 8px;
 }
 .party-card {
@@ -522,15 +526,14 @@ body {
 .party-card:hover {
   border-color: var(--app-accent);
 }
-/* Bottom-LEFT of the card, INSIDE the left column (owner 2026-09-16: *"the remove player button
+/* Bottom-LEFT of the card, the last thing in the body (owner 2026-09-16: *"the remove player button
    doesn't need a row of its own, put it in the bottom left and change the icon to a trash can"*).
-   `margin-top:auto` takes the slack in that flex column, so it sits at the card's bottom-left
-   whichever column is taller; `align-self` keeps the column's stretch from widening it. It used to
-   be absolutely positioned in the top-right corner, under the chevron, then briefly on its own
-   footer line — which is the row the owner said it doesn't need. */
+   With the two-row body it is simply the last block in the flow, so it lands under row 2 at the
+   left edge; on a card with no row 2 it lands under the band, still bottom-left. It used to be
+   absolutely positioned in the top-right corner, under the chevron, then briefly on its own footer
+   line — which is the row the owner said it doesn't need. */
 .party-kick {
-  margin-top: auto;
-  align-self: flex-start;
+  margin-top: 10px;
   width: 26px;
   height: 26px;
   flex: none;
@@ -714,29 +717,39 @@ body {
   opacity: 0.45;
   cursor: default;
 }
-/* ---- the two-column body (owner's design C) ---- */
+/* ---- the two-ROW body (owner's pick over the two-column one, 2026-09-17) ---- */
+/* ROW 1 is what the GM reads while a turn is running — HP and chips, then the numbers they call
+   for — as one horizontal band, so the mid-turn scan is a strip rather than a column read
+   top-to-bottom. ROW 2 is the reference block they look up between turns, and having the whole
+   card width is what buys the skills four across instead of two. */
 .party-card-body {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: 12px;
   margin-top: 10px;
 }
-.party-col {
-  min-width: 0;
+.party-row-turn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 10px;
 }
-.party-col-l {
+.party-turn-l {
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 7px;
 }
-/* Only a card WITH a right column is split in two — the plain party page (no host sections) keeps
-   one full-width column, so its HP bar doesn't end up half a card wide for no reason. */
-.party-card-body:not(.has-right) {
-  grid-template-columns: 1fr;
-}
-.party-col-r {
+.party-turn-r {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 14px;
   border-left: var(--app-bw) solid var(--app-border);
-  padding-left: 12px;
+}
+/* A card with NO row 2 (the plain party page, or a "Stats shown" preset with every section off) has
+   nothing under the band, so the band keeps no bottom padding either — no gap, no divider. */
+.party-card-body:not(.has-right) .party-row-turn {
+  padding-bottom: 0;
 }
 .party-lab {
   font-size: 9px;
@@ -761,16 +774,22 @@ body {
   line-height: 1.15;
   font-variant-numeric: tabular-nums;
 }
-.party-defs {
+/* Perception and AC/Fort/Ref/Will read ACROSS the band as small label-over-value tiles, instead of
+   down a column — same type sizes as the column card had. */
+.party-perc {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 1px;
+}
+.party-defs {
+  display: flex;
+  gap: 12px;
 }
 .party-def {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
   font-size: 13px;
 }
 .party-def b {
@@ -780,14 +799,20 @@ body {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
-/* ---- the right column's sections ---- */
+/* ---- ROW 2: the reference band, full card width ---- */
+.party-row-ref {
+  border-top: var(--app-bw) solid var(--app-border);
+  padding-top: 10px;
+}
 .party-sec + .party-sec,
 .party-sec + .party-sl {
   margin-top: 9px;
 }
+/* Six abilities on one line, Speed & DCs three-up, sixteen skills four-up: all of it is the full
+   card width paying for itself. These grids live only inside row 2. */
 .party-kv {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 3px 5px;
   font-size: 11px;
   font-variant-numeric: tabular-nums;
@@ -799,11 +824,12 @@ body {
   white-space: nowrap;
 }
 .party-kv.two {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 60%;
 }
 .party-skills {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 2px 8px;
   font-size: 11px;
   font-variant-numeric: tabular-nums;
@@ -883,17 +909,32 @@ body {
   color: color-mix(in srgb, var(--app-accent) 70%, var(--app-text));
 }
 
-/* A phone is too narrow for two columns of stats: they stack, and the divider becomes the rule
-   between them. */
+/* A phone is too narrow for the band to run side by side, or for six cells on a line. */
 @media (max-width: 720px) {
-  .party-card-body {
+  /* One card per row: a 420px minimum track would overflow a 375px screen sideways. */
+  .party-grid {
     grid-template-columns: 1fr;
   }
-  .party-col-r {
+  /* Row 1's right-hand group wraps UNDER the left group, and its divider becomes the rule above it. */
+  .party-row-turn {
+    flex-wrap: wrap;
+  }
+  .party-turn-r {
+    flex-basis: 100%;
     border-left: 0;
     padding-left: 0;
     border-top: var(--app-bw) solid var(--app-border);
-    padding-top: 10px;
+    padding-top: 8px;
+  }
+  .party-skills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .party-kv {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .party-kv.two {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: none;
   }
 }
 

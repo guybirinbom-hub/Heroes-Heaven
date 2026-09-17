@@ -46,6 +46,15 @@ describe('rebuildRoster', () => {
     expect(out.play).toBe(sc.play);
   });
 
+  it('carries currency over too — refuter #1: a wallet not yet in play.currency is not reset to the build\'s 0 gold on relaunch', () => {
+    const sc = saved('a', build(), false);
+    (sc.character as { currency?: unknown }).currency = { gp: 500, sp: 3 };
+    const [out] = rebuildRoster([sc], content());
+    // buildCharacter's own fresh currency is always 0 now (lane "gold") — if rebuildRoster stopped
+    // carrying it over, this would come back {} instead of the stored wallet.
+    expect(out.character.currency).toEqual({ gp: 500, sp: 3 });
+  });
+
   it('a character without a build is left exactly as stored', () => {
     const sc = { id: 'b', character: { name: 'legacy' }, play: {} } as unknown as SavedChar;
     expect(rebuildRoster([sc], content())[0]).toBe(sc);

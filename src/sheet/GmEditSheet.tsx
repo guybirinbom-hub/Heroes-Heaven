@@ -10,6 +10,7 @@ import { downloadText } from './download';
 import { pushGmEdit, fetchMemberSheet } from '../data/party';
 import { confirmDialog, chooseDialog } from './confirm';
 import { reconcileGmWork } from './gmSync';
+import { carryStoredOverrides } from '../data/rebuild';
 
 function fileSlug(name: string): string {
   return (name || 'character').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'character';
@@ -147,7 +148,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
     const built = buildCharacter(build, applyOverrides(content, build.overrides));
     setWork((w) => ({
       ...w,
-      character: built,
+      character: carryStoredOverrides(built, w.character),
       build,
       play: w.play ? playForRebuild(w.play, built.inventory, w.character.inventory) : w.play,
     }));

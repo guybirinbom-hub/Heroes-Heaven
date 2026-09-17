@@ -72,7 +72,7 @@ import { openChoiceLabel } from './openChoice';
 import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
-import { cpToCoins, itemPriceCp, startingWealthGp } from './wealth';
+import { cpToCoins } from './wealth';
 import { apparitionSlots, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
 
 /** The player's in-progress choices. The builder UI owns one of these. */
@@ -9396,12 +9396,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           })(),
         })),
     ],
-    currency: cpToCoins(
-      startingWealthGp(level) * 100 -
-        // itemPriceCp, not a bare multiply: a pack item's printed price covers `packOf` pieces, so
-        // 20 crossbow bolts cost 2 sp out of the starting purse, not 20 sp.
-        build.inventory.reduce((cp, it) => cp + itemPriceCp(content.items[it.itemId], Math.max(1, it.quantity)), 0),
-    ),
+    // Owner's call (2026-09-17): every NEW character starts with 0 gold, at any level — the
+    // STARTING_WEALTH_GP table (wealth.ts) stays for reference but is not applied here. The
+    // in-play wallet (PlayState.currency, play.ts) overlays this and is what actually persists
+    // once a player earns or spends money, so this only ever shows on a freshly built character.
+    currency: cpToCoins(0),
     spellcasting,
     details: build.deityId ? { deityId: build.deityId } : {},
     ...(build.backgroundId === CUSTOM_BACKGROUND_ID && build.customBackground

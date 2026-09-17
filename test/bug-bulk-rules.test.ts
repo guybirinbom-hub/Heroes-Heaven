@@ -96,15 +96,19 @@ describe('pack items (ammunition) weigh and cost by the pack', () => {
     expect(after.currency).toEqual({ sp: 9 }); // 1 gp − 1 sp, not 1 gp − 10 sp (which would be empty)
   });
 
-  // bug 2026-09-13: bulk rules
-  it("the builder's gear budget charges per pack too (build.ts, through the same helper)", () => {
+  // bug 2026-09-13: bulk rules. Owner's call (2026-09-17): a new character starts at 0 gold, so
+  // build.ts no longer runs a gear budget through itemPriceCp — picking gear costs nothing out of
+  // a starting purse (there isn't one). packOf division still matters for BULK, which is what this
+  // now checks; the (removed) currency-budget half of this test lived in wealth.test.ts.
+  it('the builder still weighs a pack item by the whole pack, not by the piece (build.ts, through the same helper)', () => {
     const real = content();
     expect(real.items['crossbow-bolts'].packOf).toBe(10);
     const cp = (ch: Character) => (ch.currency.gp ?? 0) * 100 + (ch.currency.sp ?? 0) * 10 + (ch.currency.cp ?? 0);
     const bare = build('fighter', 1, { inventory: [] });
     const armed = build('fighter', 1, { inventory: [{ instanceId: 'b1', itemId: 'crossbow-bolts', quantity: 20 }] });
-    expect(cp(bare) - cp(armed)).toBe(20); // two packs of ten at 1 sp each — not 20 sp
-    // …and the same twenty bolts weigh two packs' worth of Bulk, not twenty pieces' worth.
+    expect(cp(bare)).toBe(0);
+    expect(cp(armed)).toBe(0); // no starting purse to charge against any more
+    // …the same twenty bolts still weigh two packs' worth of Bulk, not twenty pieces' worth.
     expect(deriveBulk(armed, real).total - deriveBulk(bare, real).total).toBeCloseTo(0.2, 5);
   });
 });

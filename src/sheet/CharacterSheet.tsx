@@ -42,7 +42,7 @@ import { NotesTab } from './NotesTab';
 import { useCustomization, densityStyleId, applyGlobalCustomizationDom, SHEET_TABS } from '../data/customization';
 import { applySheetOverlay } from '../theme/theme-manager';
 import { applyZoomOverlay, applyGlobalZoom } from '../theme/zoom';
-import { CustomizeModal } from './CustomizeModal';
+import { CustomizeHost } from './CustomizeHost';
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { useIsMobile, useShowUndoButtons } from './useIsMobile';
@@ -315,8 +315,9 @@ export function CharacterSheet({
     setAlchemyDraft({});
     setAlchemyPicker(false);
   };
-  const [customizeOpen, setCustomizeOpen] = useState(false);
-  useBackHandler(customizeOpen, () => setCustomizeOpen(false));
+  // The Customize drawer's open flag lives in CustomizeHost, NOT here: as sheet state it re-rendered
+  // the whole sheet on every open and every close (see CustomizeHost). A ref write is not state.
+  const customizeOpener = useRef<() => void>(() => undefined);
   const [portraitOpen, setPortraitOpen] = useState(false);
   // Android Back (mobile): unwind one step — close the portrait / rest sheet, else drop back to
   // the home tab — instead of exiting the app. (The menu, popups and Settings handle their own Back.)
@@ -700,7 +701,7 @@ export function CharacterSheet({
               </button>
             )}
             {!isMobile && onCustomize && (
-              <button className="icon-btn" title="Customize" aria-label="Customize" onClick={() => setCustomizeOpen(true)}>
+              <button className="icon-btn" title="Customize" aria-label="Customize" onClick={() => customizeOpener.current()}>
                 <i className="ti ti-adjustments" aria-hidden="true" />
               </button>
             )}
@@ -710,7 +711,7 @@ export function CharacterSheet({
                   ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
                   ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
                   ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
-                  ...(onCustomize ? [{ label: 'Customize', icon: 'ti-adjustments', onClick: () => setCustomizeOpen(true) }] : []),
+                  ...(onCustomize ? [{ label: 'Customize', icon: 'ti-adjustments', onClick: () => customizeOpener.current() }] : []),
                 ]}
                 onOpenSettings={onOpenSettings}
               />
@@ -1121,12 +1122,12 @@ export function CharacterSheet({
         </div>
       )}
 
-      {customizeOpen && onCustomize && (
-        <CustomizeModal
+      {onCustomize && (
+        <CustomizeHost
+          opener={customizeOpener}
           character={character}
           globalDefault={globalCustomization ?? {}}
           onCustomize={onCustomize}
-          onClose={() => setCustomizeOpen(false)}
         />
       )}
     </div>

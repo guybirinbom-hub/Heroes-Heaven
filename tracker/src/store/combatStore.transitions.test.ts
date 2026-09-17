@@ -6,12 +6,13 @@
 // Every condition row below quotes the Player Core (remaster) sentence it encodes, fetched from the
 // live Archives rather than recalled: the rows that were wrong were wrong because they carried an
 // older printing's wording or a play-aid's shorthand instead of the sentence on the page.
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { createElement } from 'react'
 import { render, screen, fireEvent, cleanup, act } from '@testing-library/react'
 import { useCombatStore, invalidateEncounterCache } from './combatStore'
 import { InitiativeTracker } from '../components/InitiativeTracker'
 import { useLayoutStore, useGmLayoutStore } from './layoutStore'
+import { useSettingsStore } from './settingsStore'
 import { computeConditionMods } from '../utils/conditionEffects'
 import type { AppliedCondition, Creature } from '../types/pf2e'
 
@@ -288,12 +289,11 @@ describe('condition durations tick on the SOURCE\'s turn', () => {
 
     useCombatStore.getState().delayCombatant(idOf('Wizard'))    // delays on its own turn → turn passes
     expect(activeName()).toBe('Goblin')
-    useCombatStore.getState().returnFromDelay(idOf('Wizard'))
-    useCombatStore.getState().nextTurn()              // back in, for the rest of its round-2 turn
-    expect(activeName()).toBe('Wizard')
+    useCombatStore.getState().returnFromDelay(idOf('Wizard'))   // cuts back in ahead of the goblin
+    expect(activeName()).toBe('Wizard')                // …and the rest of its round-2 turn is now
     expect(durOn('Goblin')).toBe(2)                   // still exactly one tick for round 2
 
-    useCombatStore.getState().nextTurn()              // → Goblin, round 3
+    useCombatStore.getState().nextTurn()              // → the goblin, resuming its interrupted turn
     useCombatStore.getState().nextTurn()              // → Wizard, round 3: a new round, a new count
     expect(useCombatStore.getState().round).toBe(3)
     expect(durOn('Goblin')).toBe(1)                   // and the clock is running again, not stuck
@@ -378,8 +378,7 @@ describe('the once-per-round count survives every entry point', () => {
 
     useCombatStore.getState().delayCombatant(idOf('Wizard'))    // delays that same turn
     expect(activeName()).toBe('Goblin')
-    useCombatStore.getState().returnFromDelay(idOf('Wizard'))   // back in behind the goblin
-    useCombatStore.getState().nextTurn()              // lands on the wizard again — still round 1
+    useCombatStore.getState().returnFromDelay(idOf('Wizard'))   // back in AHEAD of the goblin, acting
     expect(activeName()).toBe('Wizard')
     expect(useCombatStore.getState().round).toBe(1)
     expect(durOn('Orc')).toBe(3)                      // round 1's count was spent by startCombat
@@ -482,8 +481,7 @@ describe('the once-per-round count survives every entry point', () => {
     expect(durOn('Orc')).toBe(2)
 
     useCombatStore.getState().delayCombatant(idOf('Wizard'))
-    useCombatStore.getState().returnFromDelay(idOf('Wizard'))
-    useCombatStore.getState().nextTurn()              // lands on the wizard again, same round
+    useCombatStore.getState().returnFromDelay(idOf('Wizard'))   // acting again, same round
     expect(activeName()).toBe('Wizard')
     expect(durOn('Orc')).toBe(2)
   })
@@ -514,10 +512,13 @@ describe('the once-per-round count survives every entry point', () => {
     useCombatStore.getState().setScope(null)          // flush the board under its own key…
     useCombatStore.getState().setScope('camp-reinforcement')   // …and reopen the tracker
     expect(flags()).toBe(live)
-    // …so the reloaded board spends that count exactly where the live one does.
-    useCombatStore.getState().delayCombatant(idOf('Reinforcement'))
-    useCombatStore.getState().returnFromDelay(idOf('Reinforcement'))
-    useCombatStore.getState().nextTurn()
+    // …so the reloaded board spends that count exactly where the live one does: on the wrap into
+    // round 2, which is where the reinforcement's own initiative position next comes up.
+    // (This used to cash the count in round 1 through a Delay + Return on the reinforcement itself.
+    // Delay is an action on your OWN turn — the store refuses it on any other row now — so the
+    // flag comparison above is the whole proof, and the walk below is what it predicts.)
+    useCombatStore.getState().nextTurn()              // → the orc
+    useCombatStore.getState().nextTurn()              // → the wrap: the reinforcement's first turn
     expect(activeName()).toBe('Reinforcement')
     expect(durOn('Orc')).toBe(2)
   })
@@ -573,6 +574,10 @@ describe('the once-per-round count survives every entry point', () => {
 //     and the print then offers the way back "as a free action triggered by the end of any other
 //     creature's turn" — inside the same round. What resumes is the rest of the one turn already
 //     paid for; its end used to charge for it a second time.
+//
+//     The START-of-turn pass is here too, for the same reason one seat over: a Return cuts the
+//     returnee in AHEAD of the creature whose turn it is, so the pointer comes back to THAT creature
+//     to finish the turn it was in the middle of — a resumption, not a turn start (`startedThisRound`).
 // ───────────────────────────────────────────────────────────────────────────
 describe('the END-of-turn pass runs once per creature per round', () => {
   beforeEach(() => {
@@ -632,8 +637,7 @@ describe('the END-of-turn pass runs once per creature per round', () => {
     expect(condDur('Wizard', 'slowed')).toBe(2)
 
     useCombatStore.getState().returnFromDelay(idOf('Wizard'))   // "the end of any other creature's turn"
-    useCombatStore.getState().nextTurn()              // the advance lands on it again, still round 1
-    expect(activeName()).toBe('Wizard')
+    expect(activeName()).toBe('Wizard')                // cut in ahead of the goblin, acting now
     expect(useCombatStore.getState().round).toBe(1)
     useCombatStore.getState().nextTurn()              // …and the REST of that same turn ends
     expect(pdCards()).toBe(1)
@@ -641,10 +645,10 @@ describe('the END-of-turn pass runs once per creature per round', () => {
     expect(condDur('Wizard', 'slowed')).toBe(2)
 
     // Per round, not once ever: the next round's turn-end charges again.
-    expect(activeName()).toBe('Orc')
+    expect(activeName()).toBe('Goblin')               // the interrupted turn, carrying on
+    useCombatStore.getState().nextTurn()              // → the orc
     useCombatStore.getState().nextTurn()              // the orc's turn ends → the wrap, round 2
     expect(useCombatStore.getState().round).toBe(2)
-    useCombatStore.getState().nextTurn()              // the goblin's round-2 turn ends
     expect(activeName()).toBe('Wizard')
     useCombatStore.getState().nextTurn()              // the wizard's round-2 turn ends
     expect(pdCards()).toBe(2)
@@ -652,15 +656,75 @@ describe('the END-of-turn pass runs once per creature per round', () => {
     expect(condDur('Wizard', 'slowed')).toBe(1)
   })
 
+  it('Next after a Return RESUMES the interrupted turn — one start-of-turn pass, one end', () => {
+    // The pointer visits the interrupted creature TWICE in the round: once when its turn began, and
+    // again when the returnee it let in front is done. The second landing is the same turn carrying
+    // on — Stunned must not eat a second helping of its actions, and the turn ends once.
+    // MUTATION (startTurn: `if (!c || c.startedThisRound) return` → `if (!c) return`):
+    //   FAILS at line 682 — "expected undefined to be 3" (the goblin's Stunned 6 was stepped twice,
+    //   3 → 0, so the condition was dropped and a whole extra turn of lost actions with it).
+    fight()                                           // Wizard 20 / Goblin 15 / Orc 10
+    useCombatStore.getState().addCondition(idOf('Goblin'), { name: 'stunned', value: 6, isPermanent: false })
+    useCombatStore.getState().addCondition(idOf('Goblin'), {
+      name: 'persistent damage', pdAmount: '1d6', pdType: 'fire', isPermanent: true,
+    })
+
+    useCombatStore.getState().delayCombatant(idOf('Wizard'))   // → the goblin's turn BEGINS: 6 → 3
+    expect(activeName()).toBe('Goblin')
+    expect(condVal('Goblin', 'stunned')).toBe(3)
+    expect(pdCards()).toBe(0)                         // …and has not ended
+
+    useCombatStore.getState().returnFromDelay(idOf('Wizard'))  // the wizard cuts in, acting now
+    expect(activeName()).toBe('Wizard')
+    expect(condVal('Goblin', 'stunned')).toBe(3)      // the interrupted creature is untouched
+
+    useCombatStore.getState().nextTurn()              // …and the goblin's own turn carries on
+    expect(activeName()).toBe('Goblin')
+    expect(condVal('Goblin', 'stunned')).toBe(3)      // ONE start-of-turn pass in the round
+    expect(pdCards()).toBe(0)
+
+    useCombatStore.getState().nextTurn()              // the goblin's turn finally ends
+    expect(activeName()).toBe('Orc')
+    expect(pdCards()).toBe(1)                         // …once, at the end of the one turn
+  })
+
+  it('a board saved before the start flag existed comes back with its acting creature already started', () => {
+    // The start flag's own flagless save, on the one path that reaches the ACTIVE creature's start a
+    // second time without a Return: Prev then Next. `undefined` reads as "hasn't started", so the
+    // re-advance onto the creature the GM stepped back from ran its start-of-turn pass again — the
+    // reloaded board stepping Stunned where the live one (which has the flag) does not.
+    // MUTATION (loadPersistedCombat: delete the `c.startedThisRound ??= …` line):
+    //   FAILS at line 715 — "expected undefined to be 3" (the reloaded goblin's Stunned 3 was
+    //   stepped to 0 and dropped on the way back into the turn it was already in).
+    useCombatStore.getState().setScope('camp-startflagless')
+    fight()
+    useCombatStore.getState().addCondition(idOf('Goblin'), { name: 'stunned', value: 6, isPermanent: false })
+    useCombatStore.getState().nextTurn()              // the goblin's turn begins: 6 → 3
+    expect([activeName(), condVal('Goblin', 'stunned')]).toEqual(['Goblin', 3])
+    useCombatStore.getState().setScope(null)          // flushes the board under its own key
+
+    const key = 'pf2e-current-combat:camp-startflagless'
+    const raw = JSON.parse(localStorage.getItem(key)!) as { combatants: Record<string, unknown>[] }
+    for (const c of raw.combatants) delete c.startedThisRound   // a pre-commit save, exactly
+    localStorage.setItem(key, JSON.stringify(raw))
+
+    useCombatStore.getState().setScope('camp-startflagless')
+    expect(activeName()).toBe('Goblin')
+    useCombatStore.getState().prevTurn()              // the GM steps back…
+    useCombatStore.getState().nextTurn()              // …and forward into the SAME turn
+    expect(activeName()).toBe('Goblin')
+    expect(condVal('Goblin', 'stunned')).toBe(3)
+  })
+
   it('a board saved before the flag existed comes back with its spent turn-ends already spent', () => {
     // The flagless twin of finding 3. `undefined` reads as "hasn't ended yet", so re-opening any
     // existing save mid-fight put a free end-of-turn pass back on the table for everyone the pointer
     // had already passed — and a board saved with someone Delayed is exactly the board a GM reopens,
-    // with "Return from delay" waiting on that row.
+    // with that row waiting in the host's Delay area for its own Return button or a drag-out.
     // MUTATION (loadPersistedCombat: delete the `c.endedThisRound ??= …` line):
-    //   FAILS at line 654 — "expected 'Wizard:false Goblin:false Orc:false' to be
+    //   FAILS at line 742 — "expected 'Wizard:false Goblin:false Orc:false' to be
     //   'Wizard:true Goblin:false Orc:false'" (the reloaded board hands the wizard's one round-1
-    //   turn a second end, which is what line 662 holds down).
+    //   turn a second end, which is what that same line holds down).
     useCombatStore.getState().setScope('camp-endflagless')
     fight()
     useCombatStore.getState().addCondition(idOf('Wizard'), { name: 'frightened', value: 4, isPermanent: false })
@@ -681,8 +745,7 @@ describe('the END-of-turn pass runs once per creature per round', () => {
     expect(useCombatStore.getState().round).toBe(1)
 
     useCombatStore.getState().returnFromDelay(idOf('Wizard'))
-    useCombatStore.getState().nextTurn()              // the rest of the wizard's round-1 turn…
-    expect(activeName()).toBe('Wizard')
+    expect(activeName()).toBe('Wizard')               // the rest of the wizard's round-1 turn…
     useCombatStore.getState().nextTurn()              // …and its end
     expect(condVal('Wizard', 'frightened')).toBe(3)   // still the single step this round
   })
@@ -692,8 +755,8 @@ describe('the END-of-turn pass runs once per creature per round', () => {
     // whose turn has STARTED and not ended. `<=` would mark it done and swallow the end of the very
     // turn the GM reopened the tracker in the middle of.
     // MUTATION (loadPersistedCombat: `i < parsed.activeIndex` → `i <= parsed.activeIndex`):
-    //   FAILS at line 686 — "expected 4 to be 3" (the goblin's reloaded turn ended for free); the
-    //   test above fails with it at line 654 — "expected 'Wizard:true Goblin:true Orc:false'".
+    //   FAILS at line 773 — "expected 4 to be 3" (the goblin's reloaded turn ended for free); the
+    //   test above fails with it at line 742 — "expected 'Wizard:true Goblin:true Orc:false'".
     useCombatStore.getState().setScope('camp-endactive')
     fight()
     useCombatStore.getState().nextTurn()              // → the goblin's round-1 turn
@@ -718,15 +781,14 @@ describe('the END-of-turn pass runs once per creature per round', () => {
     // on the sheet after the flag is up, so guarding it left the ability locked for a whole turn.
     // MUTATION (endTurnPass: move the `if (c.resourceUses) { … }` stanza back inside the
     //   `if (!c.endedThisRound)` block):
-    //   FAILS at line 710 — "expected 1 to be undefined" (the Blast spent after the Return is still
+    //   FAILS at line 796 — "expected 1 to be undefined" (the Blast spent after the Return is still
     //   marked used at the start of the round-2 turn, i.e. locked for that whole turn).
     useCombatStore.getState().addCombatant(BLASTER, { name: 'Wizard', initiative: 20, maxHP: 40 })
     add('Goblin', { initiative: 15 }); add('Orc', { initiative: 10 })
     useCombatStore.getState().startCombat()
 
     useCombatStore.getState().delayCombatant(idOf('Wizard'))   // in-turn Delay, round 1
-    useCombatStore.getState().returnFromDelay(idOf('Wizard'))
-    useCombatStore.getState().nextTurn()              // the advance lands back on it, still round 1
+    useCombatStore.getState().returnFromDelay(idOf('Wizard'))   // acting again, still round 1
     expect([useCombatStore.getState().round, activeName()]).toEqual([1, 'Wizard'])
     useCombatStore.getState().setResourceUse(idOf('Wizard'), 'ab:blast', 1)   // Blasts in the resumed half
     useCombatStore.getState().nextTurn()              // …and that one turn finishes
@@ -743,7 +805,7 @@ describe('the END-of-turn pass runs once per creature per round', () => {
     // clocks disagreed about the same creature.
     // MUTATION (nextTurn's skip loop: `{ creditCount(skipped, counts); endTurnPass(s, skipped) }`
     //   back to the bare `creditCount(skipped, counts)`):
-    //   FAILS at line 732 — "expected +0 to be 2" (two rounds of burning never rolled at all; the
+    //   FAILS at line 818 — "expected +0 to be 2" (two rounds of burning never rolled at all; the
     //   Frightened assertion under it is frozen at 4 the same way).
     fight()
     useCombatStore.getState().addCondition(idOf('Orc'), {
@@ -763,7 +825,7 @@ describe('the END-of-turn pass runs once per creature per round', () => {
     // seat the opening pointer stepped over (their counts came up), so their turn-ends land here
     // too, or round 1 is the one round a corpse at the top of the order never finishes.
     // MUTATION (startCombat: drop the `if (i < s.activeIndex) endTurnPass(s, s.combatants[i])` line):
-    //   FAILS at line 749 — "expected 4 to be 3" (the corpse's round-1 turn never ended).
+    //   FAILS at line 835 — "expected 4 to be 3" (the corpse's round-1 turn never ended).
     add('Corpse', { initiative: 25 }); add('Wizard', { initiative: 20 }); add('Goblin', { initiative: 15 })
     useCombatStore.getState().addCondition(idOf('Corpse'), { name: 'frightened', value: 4, isPermanent: false })
     useCombatStore.getState().addCondition(idOf('Wizard'), { name: 'frightened', value: 4, isPermanent: false })
@@ -982,7 +1044,14 @@ describe('turn-engine actions', () => {
     expect(condOn('Hero').find(c => c.name === 'wounded')!.value).toBe(2)
   })
 
-  it('Delay takes a combatant out of the order; returning re-inserts it after the current turn', () => {
+  it('Delay takes a combatant out of the order; returning cuts in AHEAD of the current turn and takes it', () => {
+    // The owner's gesture, in his words: "players decide to enter after they hear me say 'now it's
+    // this guy's turn' and say 'I want to enter' — so when I press the return button they enter ONE
+    // TURN BEFORE the current turn AND THE CURRENT TURN MOVES TO THEM."
+    // MUTATION (returnFromDelay: `s.combatants.splice(active, 0, c); s.activeIndex = active` back to
+    //   the old `s.combatants.splice(active + 1, 0, c); s.activeIndex = active`):
+    //   FAILS at line 1067 — "expected [ 'B', 'C', 'A' ] to deeply equal [ 'B', 'A', 'C' ]" (it came
+    //   back BEHIND the creature it interrupted, and the turn stayed with C).
     add('A', { initiative: 30 }); add('B', { initiative: 20 }); add('C', { initiative: 10 })
     useCombatStore.getState().startCombat()
     expect(activeName()).toBe('A')
@@ -996,62 +1065,137 @@ describe('turn-engine actions', () => {
     expect(useCombatStore.getState().round).toBe(1)       // still the round A delayed in
 
     useCombatStore.getState().returnFromDelay(idOf('A'))
-    expect(names()).toEqual(['B', 'C', 'A'])              // back in, right after the acting creature
-    expect(activeName()).toBe('C')
+    expect(names()).toEqual(['B', 'A', 'C'])              // in immediately AHEAD of the acting creature
+    expect(activeName()).toBe('A')                        // …and the turn is A's this instant
     expect(useCombatStore.getState().combatants.find(c => c.name === 'A')!.isDelayed).toBe(false)
     expect(useCombatStore.getState().combatants.find(c => c.name === 'A')!.initiative).toBe(10)
+
     useCombatStore.getState().nextTurn()
-    expect(activeName()).toBe('A')
+    expect(activeName()).toBe('C')                        // C's interrupted turn carries on
     expect(useCombatStore.getState().round).toBe(1)       // it took its turn inside its own round
   })
 
-  it('a creature that returned from Delay stays behind the one it returned after when the order re-sorts', () => {
-    // Returning copies that creature's initiative EXACTLY, so the numeric compare ties and the
-    // "monster beats PC" tie rule would float the monster back in front of the PC it returned
-    // after. Mid-combat that rule is off (initSort's `settled`) and the stable sort holds the pair.
-    // MUTATION (`initSort(true)` → `initSort(false)` in setInitiative's mid-combat re-sort):
-    //   FAILS at line 1002 — "expected [ 'Goblin', 'Hero', 'Ogre' ] to deeply equal
-    //   [ 'Hero', 'Goblin', 'Ogre' ]" (the goblin jumped back ahead of the hero).
-    useCombatStore.getState().addCombatant(STUB_CREATURE, { name: 'Goblin', initiative: 30 })
-    add('Hero', { initiative: 20, isPC: true, maxHP: 20 }); add('Ogre', { initiative: 5 })
+  it('Delay is refused for anyone but the acting creature — in the STORE, not just in the menu', () => {
+    // The right-click item is already gated on the acting row, and the drag only carries a payload
+    // from that row. Both are affordances; this is the rule. Taking a non-acting creature out of the
+    // order skips its persistent damage and one step of every auto-decrementing condition for the
+    // round, because delayCombatant charges those by handing the turn on (Player Core p. 416).
+    // MUTATION (delayCombatant: delete the
+    //   `if (!st.inCombat || st.combatants[st.activeIndex]?.id !== id) return false` guard):
+    //   FAILS at line 1090 — "expected true to be false" (the goblin left the order on a turn that
+    //   had not begun).
+    add('Wizard', { initiative: 20 }); add('Goblin', { initiative: 10 })
     useCombatStore.getState().startCombat()
-    expect(activeName()).toBe('Goblin')
+    expect(activeName()).toBe('Wizard')
 
-    useCombatStore.getState().delayCombatant(idOf('Goblin'))    // waits to see what the hero does
+    expect(useCombatStore.getState().delayCombatant(idOf('Goblin'))).toBe(false)
+    expect(useCombatStore.getState().combatants.find(c => c.name === 'Goblin')!.isDelayed).toBe(false)
+    expect(activeName()).toBe('Wizard')                   // and nobody's turn moved
+    expect(useCombatStore.getState().delayCombatant(idOf('Wizard'))).toBe(true)
+  })
+
+  it('ending the fight puts a delayed creature back in the order — there is no order to be out of', () => {
+    // The list draws no delayed row (it is out of the turn order) and the Delay area only exists
+    // during a fight, so a creature left delayed when the GM pressed End was on the board and on
+    // screen NOWHERE until the next Start. startCombat already clears the flag; this is the same
+    // clear at the other end of the fight.
+    // MUTATION (endCombat: delete the `for (const c of s.combatants) c.isDelayed = false` line):
+    //   FAILS at line 1108 — "expected true to be false" (still flagged delayed, with no fight to
+    //   come back into and no row anywhere to bring it back from).
+    add('A', { initiative: 30 }); add('B', { initiative: 20 })
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().delayCombatant(idOf('A'))
+    useCombatStore.getState().endCombat()
+    expect(useCombatStore.getState().combatants.find(c => c.name === 'A')!.isDelayed).toBe(false)
+  })
+
+  it('a board SAVED out of combat with someone still delayed loads with that creature back on it', () => {
+    // The clear above is only the clear from now on. Every board the SHIPPED build (v0.1.38) saved
+    // after an End with a creature delayed still carries the flag, and out of combat a delayed
+    // creature is drawn nowhere at all: the list filters it out, and both Delay areas render null
+    // when !inCombat. The GM reopens the campaign and a combatant they added is simply missing.
+    // MUTATION (loadPersistedCombat: delete the `if (!parsed.inCombat) c.isDelayed = false` line):
+    //   FAILS at line 1132 — "expected true to be false" (the creature loads delayed, off-screen
+    //   with no fight to be delayed in and no area to bring it back from).
+    useCombatStore.getState().setScope('camp-delayedatend')
+    add('A', { initiative: 30 }); add('B', { initiative: 20 })
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().delayCombatant(idOf('A'))
+    useCombatStore.getState().endCombat()
+    useCombatStore.getState().setScope(null)             // flushes the board under its own key
+
+    const key = 'pf2e-current-combat:camp-delayedatend'
+    const raw = JSON.parse(localStorage.getItem(key)!) as { combatants: Record<string, unknown>[] }
+    for (const c of raw.combatants) if (c.name === 'A') c.isDelayed = true   // a v0.1.38 save, exactly
+    localStorage.setItem(key, JSON.stringify(raw))
+
+    useCombatStore.getState().setScope('camp-delayedatend')
+    expect(useCombatStore.getState().combatants.find(c => c.name === 'A')!.isDelayed).toBe(false)
+  })
+
+  it('Undo reverses a Return: back out of the order, and the turn back to the creature it cut in front of', () => {
+    // returnFromDelay moves a creature, rewrites its initiative AND moves the pointer. Ctrl+Z has to
+    // put all three back or the GM's misclick leaves the board somewhere neither state was.
+    // MUTATION (returnFromDelay: delete the `record(s)` call):
+    //   FAILS at line 1149 — "expected 'A' to be 'B'" (the return is off the timeline, so one Ctrl+Z
+    //   jumps straight past it and undoes the DELAY, putting A back at the top of the order acting).
+    add('A', { initiative: 30 }); add('B', { initiative: 20 })
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().delayCombatant(idOf('A'))   // → B acting, A out of the order
+    useCombatStore.getState().returnFromDelay(idOf('A'))
+    expect([names(), activeName()]).toEqual([['A', 'B'], 'A'])
+
+    expect(useCombatStore.getState().canUndo).toBe(true)
+    useCombatStore.getState().undo()
+    expect(activeName()).toBe('B')                        // the turn is B's again…
+    expect(useCombatStore.getState().combatants.find(c => c.name === 'A')!.isDelayed).toBe(true)
+    expect(useCombatStore.getState().combatants.find(c => c.name === 'A')!.initiative).toBe(30)
+  })
+
+  it('a creature that returned from Delay stays AHEAD of the one it cut in front of when the order re-sorts', () => {
+    // Returning copies that creature's initiative EXACTLY, so the numeric compare ties and the
+    // "monster beats PC" tie rule would float the monster back in front of the PC that cut ahead of
+    // it. Mid-combat that rule is off (initSort's `settled`) and the stable sort holds the pair.
+    // MUTATION (`initSort(true)` → `initSort(false)` in setInitiative's mid-combat re-sort):
+    //   FAILS at line 1174 — "expected [ 'Goblin', 'Hero', 'Ogre' ] to deeply equal
+    //   [ 'Hero', 'Goblin', 'Ogre' ]" (the goblin jumped back ahead of the hero).
+    add('Hero', { initiative: 30, isPC: true, maxHP: 20 })
+    useCombatStore.getState().addCombatant(STUB_CREATURE, { name: 'Goblin', initiative: 20 })
+    add('Ogre', { initiative: 5 })
+    useCombatStore.getState().startCombat()
     expect(activeName()).toBe('Hero')
-    useCombatStore.getState().returnFromDelay(idOf('Goblin'))
+
+    useCombatStore.getState().delayCombatant(idOf('Hero'))       // waits to see what the goblin does
+    expect(activeName()).toBe('Goblin')
+    useCombatStore.getState().returnFromDelay(idOf('Hero'))      // "I go now" — in ahead of the goblin
     expect(names()).toEqual(['Hero', 'Goblin', 'Ogre'])
-    expect(useCombatStore.getState().combatants[1].initiative).toBe(20)   // the hero's count
+    expect(useCombatStore.getState().combatants[0].initiative).toBe(20)   // the goblin's count
 
     useCombatStore.getState().setInitiative(idOf('Ogre'), 5)     // any mid-combat edit re-sorts the board
     expect(names()).toEqual(['Hero', 'Goblin', 'Ogre'])
     expect(activeName()).toBe('Hero')
   })
 
-  it('TWO creatures returning onto the same count keep the order they re-entered in', () => {
-    // A single "I returned behind X" marker can't express this: both returned behind Pc1, and what
-    // decides Mon vs Pc2 is which of them re-entered later. The board order already says it.
+  it('a returner cuts in on the acting creature\'s count, and a mid-fight Sort leaves it there', () => {
+    // The returnee takes the interrupted creature's initiative exactly, so the whole count ties and
+    // only the board order says who is in front. Mid-combat the tie rule is off for that reason.
     // MUTATION (`initSort(s.inCombat)` → `initSort(false)` in sortByInitiative):
-    //   FAILS at line 1029 — "expected [ 'Mon', 'Pc1', 'Pc2' ] to deeply equal
-    //   [ 'Pc1', 'Pc2', 'Mon' ]" (the tie rule dragged the monster to the front of the count).
+    //   FAILS at line 1197 — "expected [ 'Mon', 'Pc1', 'Pc2' ] to deeply equal
+    //   [ 'Pc1', 'Mon', 'Pc2' ]" (the tie rule dragged the monster to the front of the count).
     useCombatStore.getState().addCombatant(STUB_CREATURE, { name: 'Mon', initiative: 20 })
     add('Pc1', { initiative: 20, isPC: true, maxHP: 20 }); add('Pc2', { initiative: 20, isPC: true, maxHP: 20 })
     useCombatStore.getState().startCombat()
     expect(names()).toEqual(['Mon', 'Pc1', 'Pc2'])               // fresh order: monster wins the tie
 
     useCombatStore.getState().delayCombatant(idOf('Mon'))        // on its own turn → the turn passes
-    useCombatStore.getState().returnFromDelay(idOf('Mon'))       // back in behind Pc1
+    useCombatStore.getState().nextTurn()                          // Pc1 → Pc2
+    expect(activeName()).toBe('Pc2')
+    useCombatStore.getState().returnFromDelay(idOf('Mon'))       // in ahead of Pc2, acting now
     expect(names()).toEqual(['Pc1', 'Mon', 'Pc2'])
-
-    useCombatStore.getState().delayCombatant(idOf('Pc2'))
-    useCombatStore.getState().nextTurn()                          // Pc1 → Mon
-    useCombatStore.getState().nextTurn()                          // Mon → (Pc2 delayed, skipped) → Pc1
-    expect(activeName()).toBe('Pc1')
-    useCombatStore.getState().returnFromDelay(idOf('Pc2'))        // back in behind Pc1 too — ahead of Mon
-    expect(names()).toEqual(['Pc1', 'Pc2', 'Mon'])
+    expect(activeName()).toBe('Mon')
 
     useCombatStore.getState().sortByInitiative()                  // the GM presses Sort mid-fight
-    expect(names()).toEqual(['Pc1', 'Pc2', 'Mon'])                // nobody moves
+    expect(names()).toEqual(['Pc1', 'Mon', 'Pc2'])                // nobody moves
   })
 
   it('a NEW fight re-settles the order the last one ended in, and it holds through a re-sort', () => {
@@ -1059,14 +1203,14 @@ describe('turn-engine actions', () => {
     // sort is the one place the monster/PC tie rule still runs, so the new order is settled at the
     // top of the fight — not silently on whatever re-sort happens first.
     // MUTATION (`initSort(false)` → `initSort(true)` in startCombat):
-    //   FAILS at line 1048 — "expected [ 'Hero', 'Goblin' ] to deeply equal [ 'Goblin', 'Hero' ]"
+    //   FAILS at line 1216 — "expected [ 'Hero', 'Goblin' ] to deeply equal [ 'Goblin', 'Hero' ]"
     //   (the new fight opened in last fight's Delay order, then flipped on the next re-sort).
-    useCombatStore.getState().addCombatant(STUB_CREATURE, { name: 'Goblin', initiative: 30 })
-    add('Hero', { initiative: 20, isPC: true, maxHP: 20 })
+    add('Hero', { initiative: 30, isPC: true, maxHP: 20 })
+    useCombatStore.getState().addCombatant(STUB_CREATURE, { name: 'Goblin', initiative: 20 })
     useCombatStore.getState().startCombat()
-    useCombatStore.getState().delayCombatant(idOf('Goblin'))
-    useCombatStore.getState().returnFromDelay(idOf('Goblin'))
-    expect(names()).toEqual(['Hero', 'Goblin'])                   // this fight: behind the hero, on 20
+    useCombatStore.getState().delayCombatant(idOf('Hero'))
+    useCombatStore.getState().returnFromDelay(idOf('Hero'))
+    expect(names()).toEqual(['Hero', 'Goblin'])                   // this fight: ahead of the goblin, on 20
 
     useCombatStore.getState().endCombat()
     useCombatStore.getState().startCombat()
@@ -1080,7 +1224,7 @@ describe('turn-engine actions', () => {
     // is an artifact, not an order anybody arranged. Typing its roll has to run the printed tie
     // rule (adversary before a tied PC) even though the rest of the board stays settled.
     // MUTATION (drop setInitiative's `wasUnplaced` branch, i.e. always `initSort(true)`):
-    //   FAILS at line 1065 — "expected [ 'Goblin', 'Hero', 'Orc' ] to deeply equal
+    //   FAILS at line 1233 — "expected [ 'Goblin', 'Hero', 'Orc' ] to deeply equal
     //   [ 'Goblin', 'Orc', 'Hero' ]" (the new monster stayed stranded behind the hero it ties).
     useCombatStore.getState().addCombatant(STUB_CREATURE, { name: 'Goblin', initiative: 30 })
     add('Hero', { initiative: 20, isPC: true, maxHP: 20 })
@@ -1140,10 +1284,9 @@ describe('Delay is offered on the row whose turn it is', () => {
 
   const row = (name: string) => screen.getByText(name).closest('.init-row')!
 
-  it('a row that is not acting gets no Delay item; the acting row does, and a delayed row can return', () => {
-    // MUTATION (InitiativeTracker.tsx: `{inCombat && (isActiveTurn || c.isDelayed) && (` back to
-    //   `{inCombat && (`):
-    //   FAILS at line 1129 — "expected <button …(2)></button> to be null" (the goblin's menu offers
+  it('a row that is not acting gets no Delay item; the acting row does, and a delayed row is gone from the list', () => {
+    // MUTATION (InitiativeTracker.tsx: `{inCombat && isActiveTurn && (` back to `{inCombat && (`):
+    //   FAILS at line 1297 — "expected <button …(2)></button> to be null" (the goblin's menu offers
     //   Delay on a turn that hasn't begun).
     add('Wizard', { initiative: 20 }); add('Goblin', { initiative: 10 })
     useCombatStore.getState().startCombat()
@@ -1158,14 +1301,66 @@ describe('Delay is offered on the row whose turn it is', () => {
     expect(screen.queryByText('Delay')).not.toBeNull()
     fireEvent.mouseDown(document.body)
 
-    // Out of the order, its turn passed to the goblin — and it can still be brought back from any
-    // row, which is the half of the affordance the print does put on "the end of any other
-    // creature's turn".
+    // Out of the order, its turn passed to the goblin — and its ROW IS GONE from the list. Delayed
+    // means out of the turn order; the row used to sit there dimmed, which said the opposite. It is
+    // drawn in the host's Delay area instead (the seam test covers the way back).
+    // MUTATION (InitiativeTracker: `combatants.filter(c => !c.isDelayed).map(…)` back to
+    //   `combatants.map(…)`):
+    //   FAILS at line 1313 — "expected <span …(1)></span> to be null" (the delayed wizard is still
+    //   listed among the creatures waiting for a turn).
     act(() => { useCombatStore.getState().delayCombatant(idOf('Wizard')) })
     expect(activeName()).toBe('Goblin')
-    fireEvent.contextMenu(row('Wizard'))
-    expect(screen.queryByText('Return from delay')).not.toBeNull()
-    expect(screen.queryByText('Delay')).toBeNull()
+    expect(screen.queryByText('Wizard')).toBeNull()
+    expect(screen.queryByText('Goblin')).not.toBeNull()
+  })
+})
+
+// ───────────────────────────────────────────────────────────────────────────
+// 5b. The turn timer through a Return — the interrupted creature's partial turn must NOT bank as
+//     its own TurnRecord (it isn't over), or the resumed half banks a second one and halves its
+//     average. commitTurn only ever fires for a turn that is genuinely ending.
+// ───────────────────────────────────────────────────────────────────────────
+describe('the turn timer survives a Return without splitting a turn in two', () => {
+  beforeEach(() => {
+    resetCombat(); localStorage.clear()
+    vi.useFakeTimers()
+    useSettingsStore.setState({ turnTimerEnabled: true })
+  })
+  afterEach(() => {
+    useSettingsStore.setState({ turnTimerEnabled: false })
+    vi.useRealTimers()
+    localStorage.clear()
+  })
+
+  it('banks ONE Alpha record covering both halves of its interrupted turn, and one Bravo record', () => {
+    // MUTATION (returnFromDelay: `pauseTurn(s, interrupted)` back to `commitTurn(s)`):
+    //   FAILS — Alpha turns out as TWO records (~10s then ~7s) instead of one ~17s record, because
+    //   the interrupted half got banked as if it were a whole turn.
+    add('Bravo', { initiative: 20 }); add('Alpha', { initiative: 10 })
+    useCombatStore.getState().startCombat()
+    expect(activeName()).toBe('Bravo')
+
+    useCombatStore.getState().delayCombatant(idOf('Bravo'))   // waits — the turn passes to Alpha
+    expect(activeName()).toBe('Alpha')
+
+    vi.advanceTimersByTime(10_000)                             // Alpha runs 10s…
+    useCombatStore.getState().returnFromDelay(idOf('Bravo'))   // …then Bravo cuts in, interrupting it
+    expect(activeName()).toBe('Bravo')
+
+    vi.advanceTimersByTime(5_000)                               // Bravo runs 5s
+    useCombatStore.getState().nextTurn()                        // Bravo's turn ends; Alpha RESUMES
+    expect(activeName()).toBe('Alpha')
+
+    vi.advanceTimersByTime(7_000)                               // Alpha's resumed half runs 7s
+    useCombatStore.getState().nextTurn()                        // Alpha's turn (finally) ends for real
+
+    const turns = useCombatStore.getState().turns
+    const alpha = turns.filter(t => t.name === 'Alpha')
+    const bravo = turns.filter(t => t.name === 'Bravo')
+    expect(alpha).toHaveLength(1)
+    expect(alpha[0].seconds).toBe(17)                           // the two halves, one record
+    expect(bravo).toHaveLength(1)
+    expect(bravo[0].seconds).toBe(5)
   })
 })
 

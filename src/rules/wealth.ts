@@ -1,9 +1,11 @@
 /*
- * Money: starting wealth by level + coin conversion helpers.
+ * Money: starting wealth by level (reference table, NOT applied) + coin conversion helpers.
  *
- * Level 1 is the canonical 15 gp. Higher levels use the PF2e "Character Wealth"
- * creation guideline (a single gp lump sum for building a higher-level character);
- * it's a GM-adjustable guide, so treat it as a budget hint, not a hard rule.
+ * A new character starts with 0 gold at every level (the owner's call, 2026-09-17) — buildCharacter
+ * no longer calls startingWealthGp(), so this table has no callers in src/ (only its own test still
+ * exercises it). It's the PF2e "Character Wealth" creation guideline (a single gp lump sum for
+ * building a higher-level character) kept here as a GM-adjustable budget hint, wired up wherever a
+ * future higher-level-creation flow wants to offer it.
  */
 import type { Coins } from './types';
 

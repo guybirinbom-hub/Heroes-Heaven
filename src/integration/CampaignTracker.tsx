@@ -23,7 +23,7 @@ import { useWindowStore } from '../../tracker/src/store/windowStore';
 import { useLayoutStore } from '../../tracker/src/store/layoutStore';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
 import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
-import { InitiativeTracker } from '../../tracker/src/components/InitiativeTracker';
+import { InitiativeTracker, DELAY_RETURN_MIME, useDelayDropZone } from '../../tracker/src/components/InitiativeTracker';
 import { PaneLayout } from '../../tracker/src/components/PaneLayout';
 import { PartyView } from '../../tracker/src/components/PartyView';
 import { GMScreen } from '../../tracker/src/components/GMScreen';
@@ -686,6 +686,27 @@ export function CampaignTracker({
     if (!addPartyMemberToInitiative(pc)) setDropMsg(`${(pc.name ?? '').trim()} is already in the initiative order.`);
   }, []);
 
+  // ── Drag a delayed creature back out of the Delay area ───────────────────────
+  /*
+   * Dropped ANYWHERE on the initiative list, it does exactly what the area's Return button does —
+   * WHERE it lands is ignored on purpose, because the position is not the GM's to choose: the print
+   * (and the owner) put the returning creature immediately ahead of the turn it interrupted. The
+   * handler sits on the seam's own wrapper, so the tracker's list component knows nothing about it.
+   */
+  const onReturnDragOver = useCallback((e: React.DragEvent) => {
+    if (!e.dataTransfer.types.includes(DELAY_RETURN_MIME)) return;
+    e.preventDefault();
+    // Matches the effectAllowed the delayed row's drag sets — a mismatched pair resolves the drag
+    // operation to none and the browser delivers no drop, which is how the Delay zone shipped dead.
+    e.dataTransfer.dropEffect = 'move';
+  }, []);
+  const onReturnDrop = useCallback((e: React.DragEvent) => {
+    const id = e.dataTransfer.getData(DELAY_RETURN_MIME);
+    if (!id) return; // an initiative row heading for a pane — not ours
+    e.preventDefault();
+    useCombatStore.getState().returnFromDelay(id);
+  }, []);
+
   // ── The rail: collapse + resize ──────────────────────────────────────────────
   /*
    * Straight from the tracker's App.tsx — same localStorage key, same 480 ceiling, same
@@ -1021,7 +1042,7 @@ export function CampaignTracker({
                 {/* The turn timer now lives in the TOP BAR (TrackerTools), not the rail. */}
                 {/* InitiativeTracker is h-full, so it needs its own flex:1 box to leave room for the
                     footer below it. */}
-                <div className="ct-order-scroll">
+                <div className="ct-order-scroll" onDragOver={onReturnDragOver} onDrop={onReturnDrop}>
                   <InitiativeTracker
                     onCombatantClick={handleCombatantClick}
                     onMinWidthMeasured={setRailMinWidth}
@@ -1247,6 +1268,59 @@ function PcPaneShell({
  * where the GM is already looking when they want a nameless goblin. What's left beside the button is
  * "Clear" (empty the board — End Combat ends the round but keeps everyone).
  */
+/**
+ * THE DELAY AREA — the owner's gesture, in his words: "I want a delay mechanic where I drag someone
+ * from the initiative order and above the Add combatants button there will be a delay area that I
+ * can drop into, and there will be a button to add back to initiative".
+ *
+ * Only the creature whose turn it is can be dropped in (the acting row is the only one that carries
+ * DELAY_MIME, and delayCombatant refuses the rest anyway — Player Core p. 416). Coming back, by the
+ * button or by dragging the row onto the list, puts it in one place: immediately ahead of the turn
+ * it interrupted, acting now. That is the whole point of it — "players decide to enter after they
+ * hear me say 'now it's this guy's turn'".
+ *
+ * Always on screen during a fight, one line tall while empty, so the GM can see where to drop.
+ */
+function DelayArea() {
+  const combatants = useCombatStore((s) => s.combatants);
+  const inCombat = useCombatStore((s) => s.inCombat);
+  // The drag half lives with the drag SOURCE (the acting row writes DELAY_MIME and the effect the
+  // zone has to answer with) — this host only says what the highlight looks like.
+  const { over, props } = useDelayDropZone();
+  const delayed = combatants.filter((c) => c.isDelayed);
+  if (!inCombat) return null;
+  return (
+    <div className={'ct-delay' + (over ? ' is-over' : '')} {...props}>
+      <div className="ct-delay-head">
+        <span className="ct-delay-title">Delay</span>
+        {delayed.length === 0 && <span className="ct-delay-hint">drag the acting creature here</span>}
+      </div>
+      {delayed.map((c) => (
+        <div
+          key={c.id}
+          className="ct-delay-row"
+          draggable
+          onDragStart={(e) => {
+            e.dataTransfer.setData(DELAY_RETURN_MIME, c.id);
+            e.dataTransfer.effectAllowed = 'move';
+          }}
+          title="Drag onto the initiative order, or press Return"
+        >
+          <span className="ct-delay-init">{c.initiative ?? '—'}</span>
+          <span className="ct-delay-name">{c.name}</span>
+          <button
+            className="ct-delay-back"
+            onClick={() => useCombatStore.getState().returnFromDelay(c.id)}
+            title="Back in, just ahead of the current turn — and it acts now"
+          >
+            Return
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function RailFooter() {
   const combatants = useCombatStore((s) => s.combatants);
   const clearAll = useCombatStore((s) => s.clearAllCombatants);
@@ -1263,6 +1337,7 @@ function RailFooter() {
 
   return (
     <div className="ct-rail-foot">
+      <DelayArea />
       <button
         className="ct-rail-add-btn"
         onClick={() => trackerUi.setMonsterSearch(true)}
