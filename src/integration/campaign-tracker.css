@@ -224,8 +224,8 @@
   background: var(--app-surface);
 }
 
-/* Footer: primary "Add combatants" (bestiary) button, then Clear. (Quick-add-by-name moved into the
-   Add-combatants popup, so the rail no longer carries a text field.) */
+/* Footer: primary "Add combatants" (bestiary) button with Clear beside it. (Quick-add-by-name moved
+   into the Add-combatants popup, so the rail no longer carries a text field.) */
 .ct-rail-foot {
   flex: none;
   display: flex;
@@ -235,8 +235,23 @@
   border-top: var(--app-bw) solid var(--app-border);
   background: var(--app-surface);
 }
-/* The Delay area — sits directly above "Add combatants", visible for the whole fight so there is
-   always somewhere to drop the acting creature. One line tall while nothing is delayed. */
+/* "I don't want a separate line for Add combatants and Clear; the Clear can be a smaller button on
+   the same line" (2026-09-17). align-items: stretch is the default, and it is the whole trick — the
+   small button matches the tall one's height without either side naming a pixel. There is no rail at
+   all at phone width: CampaignsPage never mounts CampaignTracker at ≤720px, showing the phone player
+   view instead (see CampaignsPage.tsx). Above that breakpoint the rail keeps its own narrow column
+   (280px by default), and this row sits inside that width, minus its own padding (~264px), so there
+   is no extra room down there. The row fits for the other reason: Clear is flex:none at its ~57px
+   while the add button is flex:1 with min-width:0 and overflow:hidden, so a squeeze clips the long
+   label instead of pushing Clear off the rail. */
+.ct-rail-foot-row {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  min-width: 0;
+}
+/* The Delay area — sits directly above "Add combatants" whenever it is on screen, which is while
+   someone is delayed or a delay drag is in the air. One line tall while empty. */
 .ct-delay {
   flex: none;
   display: flex;
@@ -322,7 +337,13 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  width: 100%;
+  /* Takes whatever the small Clear beside it leaves; min-width 0 lets it clip its own label on a
+     rail dragged narrow instead of pushing Clear off the edge. No ellipsis to add here: the label
+     is a bare text node in a flex box, so text-overflow has no block container to act on. */
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
   font: inherit;
   font-size: 12.5px;
   font-weight: 600;
@@ -339,15 +360,18 @@
   color: var(--app-accent-text, #fff);
   border-style: solid;
 }
+/* The small one on that row: smaller type, tighter sides, no growing. Its height comes from the
+   row's stretch, so it stays flush with "Add combatants". */
 .ct-rail-clear {
   flex: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 4px;
   font: inherit;
-  font-size: 12.5px;
-  padding: 7px 11px;
+  font-size: 11px;
+  white-space: nowrap;
+  padding: 4px 8px;
   cursor: pointer;
   color: var(--app-bad);
   background: transparent;

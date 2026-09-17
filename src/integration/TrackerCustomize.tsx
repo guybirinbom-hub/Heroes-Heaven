@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { themeList } from '../theme/themes';
+import { getTheme, themeList } from '../theme/themes';
 import { PaletteTile } from '../theme/PaletteTile';
 import { styleList } from '../theme/styles';
 import { fontList } from '../theme/fonts';
@@ -29,6 +29,8 @@ export function TrackerCustomize({ onClose }: { onClose: () => void }) {
   // The effective look shown as selected: the tracker override, else the global appearance it inherits.
   const eff = override ?? getAppearance();
   const isCustom = override != null;
+  // A hex none of the eight presets offers — the colour input wears the ring instead of a swatch.
+  const accentIsCustom = eff.accent != null && !ACCENTS.includes(eff.accent);
   // Local re-render nudge isn't needed — useTrackerAppearance already re-renders on every change.
   const [, force] = useState(0);
   const tick = () => force((n) => n + 1);
@@ -109,6 +111,17 @@ export function TrackerCustomize({ onClose }: { onClose: () => void }) {
                 onClick={() => { trackerAppearance.setAccent(c); tick(); }}
               />
             ))}
+            {/* Any colour, not just the eight. Writes the same `accent` field, so a custom hex is stored,
+                resolved and painted exactly like a preset — the swatches just stop matching it. */}
+            <input
+              type="color"
+              className="tc-accent"
+              title="Any accent colour"
+              aria-label="Custom accent colour"
+              value={eff.accent ?? getTheme(eff.themeId)?.tokens['--app-accent'] ?? ACCENTS[0]}
+              style={{ padding: 0, background: 'none', outline: accentIsCustom ? '2px solid var(--app-text)' : 'none' }}
+              onChange={(e) => { trackerAppearance.setAccent(e.target.value); tick(); }}
+            />
           </div>
         </div>
 

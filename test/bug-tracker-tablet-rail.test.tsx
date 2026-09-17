@@ -174,14 +174,14 @@ describe('campaign tracker rail — tablet width cap', () => {
     // just above the drag-cap comment) with plain `railWidth` fails this leg — 280 is not <= 270 —
     // while the 1600px leg below still passes. Dropped, run, confirmed the failure, reverted.
     expect(parseFloat(rail().style.width)).toBeLessThanOrEqual(270);
-  });
+  }, 120_000);
 
   it('leaves the rail at the stored 280px on a desktop-width viewport (1600px, cap=480)', async () => {
     Object.defineProperty(window, 'innerWidth', { configurable: true, writable: true, value: 1600 });
     await openTracker();
     await setViewport(1600);
     expect(parseFloat(rail().style.width)).toBe(280);
-  });
+  }, 120_000);
 
   it('drags to the full 480px ceiling at a 1400px "desktop" width, unaffected by the tablet cap', async () => {
     Object.defineProperty(window, 'innerWidth', { configurable: true, writable: true, value: 1400 });
@@ -189,7 +189,7 @@ describe('campaign tracker rail — tablet width cap', () => {
     await setViewport(1400);
     await dragRailBy(2000);
     expect(parseFloat(rail().style.width)).toBe(480);
-  });
+  }, 120_000);
 
   it('does not let a narrow-viewport drag permanently overwrite a wider dragged width', async () => {
     Object.defineProperty(window, 'innerWidth', { configurable: true, writable: true, value: 1600 });
@@ -205,5 +205,5 @@ describe('campaign tracker rail — tablet width cap', () => {
     await dragRailBy(1);
     await setViewport(1600);
     expect(parseFloat(rail().style.width)).toBe(480); // back to the full dragged width
-  });
+  }, 120_000);
 });

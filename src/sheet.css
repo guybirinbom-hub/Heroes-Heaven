@@ -3368,6 +3368,12 @@ button.strike-name:hover {
   border: none;
   border-radius: 4px;
 }
+/* Chosen, when this field IS the choice (Accent: a hand-picked hex, with every preset swatch unlit).
+   Same ring as .accent-swatch.active, so the row has one vocabulary for "this is the one". */
+.color-field.active input[type='color'] {
+  outline: 2px solid var(--app-text);
+  outline-offset: 2px;
+}
 
 /* ---- Details: origin ---- */
 .origin-wrap {
@@ -7651,6 +7657,18 @@ button.strike-name:hover {
   overflow-y: auto;
   overscroll-behavior: contain;
 }
+/* The pinned-shell guard at the top of this file — `.ws-app > :not(.body) { flex: none }`, so a tall
+   body can't shrink the bars around it — also matched a SUBPAGE's body: a subpage shell IS a .ws-app,
+   and its body is `.subpage-body`, not `.body`. Two classes against one, so it beat `.subpage-body
+   { flex: 1 }` and the Settings body grew to its content height (measured: 2,673px) inside a shell
+   clamped to the window with overflow:hidden. .settings-pane is sized by that body, so it never had
+   anything to scroll: the wheel moved nothing and every section past the first screenful was
+   unreachable (owner, 2026-09-17). Equal specificity, later in the file — the subpage body flexes
+   again and the pane below gets a real height to scroll inside. `.body` keeps the guard. */
+.ws-app > .subpage-body {
+  flex: 1 1 auto;
+  min-height: 0;
+}
 /* Settings keeps its nav + pane; make them fill the page height and scroll independently. */
 .settings-subpage-body {
   overflow: hidden;
@@ -11367,6 +11385,11 @@ button.strike-name:hover {
   .settings-card.danger i, .settings-card.danger span { color: var(--app-danger, #e0584d); }
   .settings-page-m .settings-pane { flex: 1; padding: 14px; padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)); overflow-y: auto; overscroll-behavior: contain; }
   .settings-back { flex: none; }
+  /* The Settings SUBPAGE's pane (a drilled-in section) falls through to the desktop `.settings-pane`
+     rule and its flat 16px bottom padding, so on an edge-to-edge phone the last control of a section
+     sat under the home bar — the other end of "I can't access some of the settings". /var(--zoom)
+     because this lives inside the html{zoom}-scaled shell (see .ws-app). */
+  .settings-subpage-body .settings-pane { padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px) / var(--zoom, 1)); }
   /* Full-screen Settings page: keep its header (back / title / close) below the phone status bar / notch. */
   .settings-page-m .picker-head { padding-top: calc(11px + env(safe-area-inset-top, 0px)); }
 
@@ -11584,6 +11607,11 @@ button.strike-name:hover {
   .icon-opt { font-size: 12px; padding: 11px 4px; }
   .icon-opt i { font-size: 22px; }
   .settings-pane .accent-swatch { width: 36px; height: 36px; }
+  /* The native colour input's desktop chrome is 30x24 — the smallest control in any row it sits in, and
+     well under the 44px touch target. Scoped to the Settings pane, like the swatch bump above — the
+     Customize drawer's own preset swatches stay 24px, so its colour field is sized to match them below. */
+  .settings-pane .color-field input[type='color'] { width: 44px; height: 44px; }
+  .cust-drawer-body .color-field input[type='color'] { width: 24px; height: 24px; }
   .settings-pane .mode-edit { min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
   .ref-search-row { min-height: 44px; padding: 11px 12px; }
   .origin-boxes .obox .oval { white-space: normal; font-size: 14px; }

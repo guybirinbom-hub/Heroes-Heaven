@@ -1,7 +1,7 @@
 import type { Customization } from '../rules/types';
 import { DEFAULT_RAIL_ORDER, RAIL_CARD_LABELS, HIDEABLE_TABS } from '../data/customization';
 import { themeConsumableColor } from '../theme/theme-manager';
-import { themeList } from '../theme/themes';
+import { getTheme, themeList } from '../theme/themes';
 import { PaletteTile } from '../theme/PaletteTile';
 import { styleList } from '../theme/styles';
 import { fontList } from '../theme/fonts';
@@ -153,6 +153,15 @@ export function CustomizationEditor({
   const curDefaultTab = value.defaultTab ?? base.defaultTab ?? '';
   // Keep the current default in the list even if that tab is now hidden, so the <select> never goes blank.
   const visibleTabsForDefault = ['Main', ...HIDEABLE_TABS.filter((t) => !hiddenTabs.has(t) || t === curDefaultTab)];
+  // The accent the picker opens on is the one actually PAINTED, so dragging the native picker starts
+  // from what's on screen rather than snapping to some default. Mirrors applyOverlayResolved's accent
+  // fallback: a character that overrides the palette but leaves the accent alone gets THAT palette's
+  // accent, not the device's (no cross-theme accent bleed).
+  const inheritedAccent = perChar && value.themeId ? undefined : base.accentColor;
+  const themeAccent = getTheme(value.themeId ?? base.themeId)?.tokens['--app-accent'] ?? ACCENTS[0];
+  const curAccent = value.accentColor ?? inheritedAccent ?? themeAccent;
+  // A hex the presets don't offer. Same field, same save/sync path — the swatches simply stop matching.
+  const accentIsCustom = value.accentColor != null && !ACCENTS.includes(value.accentColor);
   const curZoom = value.zoom ?? base.zoom ?? 1;
   // Zoom caps at 1.0 on phones (matches the device zoom clamp) so the "+" doesn't dead-click past 100%.
   const zMax = isMobile ? 1 : ZOOM_MAX;
@@ -203,6 +212,17 @@ export function CustomizationEditor({
             onClick={() => onChange('accentColor', c)}
           />
         ))}
+        {/* Any colour at all. The fourteen swatches above are shortcuts, not the limit — this writes the
+            same accentColor field, so a hand-picked hex saves, syncs and applies exactly like a preset. */}
+        <label className={'color-field' + (accentIsCustom ? ' active' : '')} title="Any accent colour">
+          <input
+            type="color"
+            value={curAccent}
+            aria-label="Custom accent colour"
+            onChange={(e) => onChange('accentColor', e.target.value)}
+          />
+          <span>{accentIsCustom ? curAccent : 'Custom'}</span>
+        </label>
       </div>
 
       {/* Phones only. On a desktop keyboard Ctrl +/−/0 and Ctrl+wheel already zoom, and that level is

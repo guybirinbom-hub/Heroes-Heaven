@@ -772,10 +772,15 @@ export default function App() {
     [globalCustom, active?.character.customization],
   );
   // Edit the ACTIVE character's stored data (not play-state) — used for per-character customization.
-  const updateCharacter = (fn: (c: Character) => Character) => {
+  // Undo works like updatePlay below: one step per call, unless the caller passes a coalesceTag, in
+  // which case rapid calls sharing it merge into one step (a dragged colour input, a typed field).
+  const updateCharacter = (fn: (c: Character) => Character, coalesceTag?: string) => {
     if (!active) return;
     const id = active.id;
-    setRoster((r) => r.map((c) => (c.id === id ? { ...c, character: fn(c.character) } : c)));
+    setRoster(
+      (r) => r.map((c) => (c.id === id ? { ...c, character: fn(c.character) } : c)),
+      coalesceTag ? { coalesce: true, tag: `char:${id}:${coalesceTag}` } : undefined,
+    );
   };
 
   // Update the active character's in-play runtime state (seeding from its built

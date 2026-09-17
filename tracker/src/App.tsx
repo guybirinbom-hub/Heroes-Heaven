@@ -4,6 +4,7 @@ import { usePartyStore } from './store/partyStore'
 import type { Party } from './store/partyStore'
 import { loadIndex, loadCustomCreatures } from './data/dataStore'
 import { InitiativeTracker, useDelayDropZone } from './components/InitiativeTracker'
+import { useDelayDragActive } from './useDelayDragActive'
 import { NumberInput } from './components/NumberInput'
 import { PaneLayout } from './components/PaneLayout'
 import { useLayoutStore, useGmLayoutStore } from './store/layoutStore'
@@ -211,13 +212,22 @@ function PartyMenu({ parties, activePartyId, isPartyFocus, onPick, onToggleFav, 
  * half of the campaign rail's version is deliberately not copied — the button is the function.
  */
 function DelayStrip() {
-  const combatants = useCombatStore(s => s.combatants)
   const inCombat = useCombatStore(s => s.inCombat)
+  const anyDelayed = useCombatStore(s => s.combatants.some(c => c.isDelayed))
+  // Gone while there is nothing in it and no delay drag in the air — the campaign rail's rule, and
+  // the same hook drawing it, so the copy can't drift from the original. The strip itself is a
+  // child so its drop-highlight state is born and dies with it, as over there.
+  const dragging = useDelayDragActive()
+  if (!inCombat || (!anyDelayed && !dragging)) return null
+  return <DelayStripBody />
+}
+
+function DelayStripBody() {
+  const combatants = useCombatStore(s => s.combatants)
   // Same hook the campaign rail's area uses — the drag contract is written once, beside the row that
   // starts the drag, so this copy cannot answer the drag differently from that one.
   const { over, props } = useDelayDropZone()
   const delayed = combatants.filter(c => c.isDelayed)
-  if (!inCombat) return null
   return (
     <div
       {...props}

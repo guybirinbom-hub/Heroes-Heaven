@@ -4,7 +4,7 @@ import { useState } from 'react'
 // vite/tsconfig — HH's build would fail to resolve it, and adding the alias there would mean
 // editing HH's build, which is what keeps this integration removable. A relative path resolves in
 // both projects with no configuration at all.
-import { themeList } from '../../../src/theme/themes'
+import { getTheme, themeList } from '../../../src/theme/themes'
 import { PaletteTile } from '../../../src/theme/PaletteTile'
 import { styleList } from '../../../src/theme/styles'
 import { fontList } from '../../../src/theme/fonts'
@@ -119,6 +119,21 @@ export function HHAppearance() {
             }}
           />
         ))}
+        {/* Any colour, not just the eight. Same setAccent, same stored field — a hand-picked hex
+            round-trips through the shared appearance state exactly like a preset. */}
+        <input
+          type="color"
+          title="Any accent colour"
+          aria-label="Custom accent colour"
+          value={app.accent ?? getTheme(app.themeId)?.tokens['--app-accent'] ?? ACCENTS[0]}
+          onChange={e => { setAccent(e.target.value); tick() }}
+          style={{
+            width: 30, height: 30, cursor: 'pointer', padding: 0, background: 'none',
+            borderRadius: 'var(--radius-sm)',
+            border: 'var(--app-bw) solid var(--border)',
+            outline: app.accent != null && !ACCENTS.includes(app.accent) ? '2px solid var(--text)' : 'none',
+          }}
+        />
       </div>
 
       <div style={label}>Zoom</div>

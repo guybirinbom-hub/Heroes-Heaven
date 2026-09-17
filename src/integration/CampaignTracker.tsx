@@ -24,6 +24,7 @@ import { useLayoutStore } from '../../tracker/src/store/layoutStore';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
 import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
 import { InitiativeTracker, DELAY_RETURN_MIME, useDelayDropZone } from '../../tracker/src/components/InitiativeTracker';
+import { useDelayDragActive } from '../../tracker/src/useDelayDragActive';
 import { PaneLayout } from '../../tracker/src/components/PaneLayout';
 import { PartyView } from '../../tracker/src/components/PartyView';
 import { GMScreen } from '../../tracker/src/components/GMScreen';
@@ -1279,16 +1280,31 @@ function PcPaneShell({
  * it interrupted, acting now. That is the whole point of it — "players decide to enter after they
  * hear me say 'now it's this guy's turn'".
  *
- * Always on screen during a fight, one line tall while empty, so the GM can see where to drop.
+ * On screen only when it has something to say — someone is delayed, or a delay drag is in the air
+ * right now (the owner's afternoon list, 2026-09-17: "make the delay section not visible if it's
+ * empty; if the GM drags then make it visible"). An empty strip sitting there for a whole fight is
+ * rail height spent on nothing, and the drop target still arrives the instant the drag begins.
  */
 function DelayArea() {
-  const combatants = useCombatStore((s) => s.combatants);
   const inCombat = useCombatStore((s) => s.inCombat);
+  const anyDelayed = useCombatStore((s) => s.combatants.some((c) => c.isDelayed));
+  // The drag that makes it appear starts on a row inside InitiativeTracker, which knows nothing
+  // about whoever is drawing a Delay area — so the signal is taken off the document, where every
+  // dragstart passes, rather than by threading a callback through the tracker.
+  const dragging = useDelayDragActive();
+  if (!inCombat || (!anyDelayed && !dragging)) return null;
+  // The zone is a child, not this function's own JSX, so its drop-highlight state is born and dies
+  // with it. Returning null from THIS component would leave that state alive between appearances,
+  // and a drag abandoned over the zone (Escape) would bring the next one back already lit.
+  return <DelayZone />;
+}
+
+function DelayZone() {
+  const combatants = useCombatStore((s) => s.combatants);
   // The drag half lives with the drag SOURCE (the acting row writes DELAY_MIME and the effect the
   // zone has to answer with) — this host only says what the highlight looks like.
   const { over, props } = useDelayDropZone();
   const delayed = combatants.filter((c) => c.isDelayed);
-  if (!inCombat) return null;
   return (
     <div className={'ct-delay' + (over ? ' is-over' : '')} {...props}>
       <div className="ct-delay-head">
@@ -1338,21 +1354,25 @@ function RailFooter() {
   return (
     <div className="ct-rail-foot">
       <DelayArea />
-      <button
-        className="ct-rail-add-btn"
-        onClick={() => trackerUi.setMonsterSearch(true)}
-        title="Search the bestiary and add creatures with full stat blocks"
-      >
-        <i className="ti ti-plus" aria-hidden="true" /> Add combatants
-      </button>
-      <button
-        className="ct-rail-clear"
-        onClick={() => void clear()}
-        disabled={combatants.length === 0}
-        title={combatants.length === 0 ? 'Nothing to clear' : 'Remove every combatant'}
-      >
-        <i className="ti ti-trash" aria-hidden="true" /> Clear
-      </button>
+      {/* One line, not two — "the Clear can be a smaller button on the same line" (2026-09-17). Both
+          are still plain buttons, so Tab reaches them in this order and Enter/Space fires them. */}
+      <div className="ct-rail-foot-row">
+        <button
+          className="ct-rail-add-btn"
+          onClick={() => trackerUi.setMonsterSearch(true)}
+          title="Search the bestiary and add creatures with full stat blocks"
+        >
+          <i className="ti ti-plus" aria-hidden="true" /> Add combatants
+        </button>
+        <button
+          className="ct-rail-clear"
+          onClick={() => void clear()}
+          disabled={combatants.length === 0}
+          title={combatants.length === 0 ? 'Nothing to clear' : 'Clear the order'}
+        >
+          <i className="ti ti-trash" aria-hidden="true" /> Clear
+        </button>
+      </div>
     </div>
   );
 }

@@ -21,7 +21,7 @@ export function CustomizeModal({
 }: {
   character: Character;
   globalDefault: Customization;
-  onCustomize: (fn: (c: Character) => Character) => void;
+  onCustomize: (fn: (c: Character) => Character, coalesceTag?: string) => void;
   onClose: () => void;
 }) {
   // Only the drawer's own scrollbar should be drawn while it's open — see :root.cust-open in tokens.css.
@@ -44,8 +44,14 @@ export function CustomizeModal({
     zoom: getZoom(),
   };
 
+  // One undo step per FIELD, not per event: the colour inputs (accent, consumable) emit an `input` on
+  // every drag frame, and without a tag each frame became its own roster snapshot — dozens of Ctrl+Z to
+  // take back one colour, and 60 of them evicted every real edit from the timeline.
   const onChangeOverride = <K extends keyof Customization>(key: K, val: Customization[K] | undefined) =>
-    onCustomize((c) => ({ ...c, customization: withCustomizationField(c.customization, key, val) }));
+    onCustomize(
+      (c) => ({ ...c, customization: withCustomizationField(c.customization, key, val) }),
+      `cust:${String(key)}`,
+    );
 
   const makeGlobal = async () => {
     const ok = await confirmDialog({

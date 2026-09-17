@@ -227,7 +227,7 @@ const EFFECT_PERMITS: Record<string, string[]> = {
   uninitialized: ['copy', 'move', 'link'],
 };
 
-function fireDrag(el: Element, type: 'dragstart' | 'dragover' | 'dragleave' | 'drop', dataTransfer: DataTransfer): void {
+function fireDrag(el: Element, type: 'dragstart' | 'dragover' | 'dragleave' | 'dragend' | 'drop', dataTransfer: DataTransfer): void {
   const { dropEffect, effectAllowed } = dataTransfer;
   // dropEffect 'none' = the target never accepted the drag; firing a drop at it anyway is the
   // synthetic "even then, nothing happens" probe below, and a browser's own refusal, not a defect.
@@ -754,21 +754,29 @@ describe('the campaign ↔ tracker seam', () => {
      * Only the acting creature can go in (Player Core p. 416 — Delay is an action on your own turn),
      * and dragging a delayed row back onto the order is the Return button by another gesture.
      *
+     * Every dragend below is fired AT THE ROW THAT STARTED THE DRAG, which is where a browser fires
+     * it — and after a drop that succeeded, that row has already been unmounted, so the event
+     * reaches no listener at all. Firing dragend at the container instead (as this file did) invents
+     * an ending the GM's own gesture never produces, and hid a live defect behind a green suite.
+     *
      * MUTATIONS:
      *  - InitiativeTracker `combatants.filter(c => !c.isDelayed).map(…)` → `combatants.map(…)`:
-     *    FAILS at line 813 — "expected true to be false" (the delayed row is still in the order).
+     *    FAILS at line 832 — "expected true to be false" (the delayed row is still in the order).
      *  - InitiativeTracker's `if (isActive) e.dataTransfer.setData(DELAY_MIME, c.id)` → unconditional:
-     *    FAILS at line 799 — "expected [ 'text/combatant-id', …(1) ] to not include
+     *    FAILS at line 804 — "expected [ 'text/combatant-id', …(1) ] to not include
      *    'application/x-hh-delay'" (any row could be dragged out of the order).
      *  - CampaignTracker: drop `onDragOver`/`onDrop` from the `.ct-order-scroll` wrapper:
-     *    FAILS at line 840 — "expected 'Torch Bearer' to be 'Road Ogre'" (the drag back onto the
+     *    FAILS at line 866 — "expected 'Torch Bearer' to be 'Road Ogre'" (the drag back onto the
      *    order lands nowhere and the delayed creature stays out).
      *  - useDelayDropZone: `dropEffect = ROW_DRAG_EFFECT` → `'move'` (how it shipped, against the
-     *    row's effectAllowed = 'copy'): FAILS at line 810 — "no drop would fire: the target answered
+     *    row's effectAllowed = 'copy'): FAILS at line 823 — "no drop would fire: the target answered
      *    dropEffect="move" to a drag whose source set effectAllowed="copy", so the drag operation
      *    resolves to none". The zone highlighted and the browser delivered nothing.
      *  - CampaignTracker's `onReturnDragOver`: `dropEffect = 'move'` → `'copy'`, against the delayed
-     *    row's effectAllowed = 'move': FAILS at line 838, the same way, on the way back in.
+     *    row's effectAllowed = 'move': FAILS at line 860, the same way, on the way back in.
+     *  - useDelayDragActive: drop the `'drop'` listener (how it shipped, dragend only): FAILS at
+     *    line 868 — "expected <div class="ct-delay">…(1)</div> to be null". The drag that ended by
+     *    unmounting its own source was never recorded as over, so the empty area stayed on the rail.
      */
     const el = await openTracker();
     act(() => {
@@ -787,27 +795,38 @@ describe('the campaign ↔ tracker seam', () => {
     const listed = (name: string) => [...el.querySelectorAll('.init-row')].some((r) => (r.textContent ?? '').includes(name));
     const rowFor = (name: string) => [...el.querySelectorAll('.init-row')].find((r) => (r.textContent ?? '').includes(name))!;
     expect(acting()).toBe('Road Ogre');
-    // Always on screen during the fight, one line tall and saying what it is for.
-    expect(zone().textContent).toContain('Delay');
-    expect(zone().textContent).toContain('drag the acting creature here');
 
     // A row whose turn has NOT begun writes no delay payload — its drag is the stat-block one only,
-    // so the zone's dragover declines it (dropEffect stays 'none'; a browser would deliver no drop
-    // here at all) and the drop fired anyway finds nothing to delay.
+    // so no area appears for it and there is nowhere to drop it.
     const idle = makeDataTransfer();
-    fireDrag(rowFor('Torch Bearer'), 'dragstart', idle);
+    const idleRow = rowFor('Torch Bearer');
+    fireDrag(idleRow, 'dragstart', idle);
     expect(idle.types).not.toContain(DELAY_MIME);
-    fireDrag(zone(), 'dragover', idle);
-    expect(idle.dropEffect).toBe('none');
-    fireDrag(zone(), 'drop', idle);
-    expect(state().combatants.find((c) => c.name === 'Torch Bearer')!.isDelayed).toBe(false);
+    expect(el.querySelector('.ct-delay')).toBeNull();
+    fireDrag(idleRow, 'dragend', idle); // at the SOURCE — where a browser ends a drag, never at the container
 
-    // The acting row does, and dropping it in the area takes it out of the order.
+    // The acting row does, the area arrives with the drag, and dropping it there takes the creature
+    // out of the order.
     const out = makeDataTransfer();
-    fireDrag(rowFor('Road Ogre'), 'dragstart', out);
+    const ogreRow = rowFor('Road Ogre');
+    fireDrag(ogreRow, 'dragstart', out);
     expect(out.types).toContain(DELAY_MIME);
+    expect(zone().textContent).toContain('Delay');
+    expect(zone().textContent).toContain('drag the acting creature here');
+    // Anything else's drag is still declined once it is on screen: dropEffect stays 'none', which is
+    // a browser delivering no drop at all.
+    const foreign = makeDataTransfer();
+    foreign.setData('text/combatant-id', 'someone-else');
+    fireDrag(zone(), 'dragover', foreign);
+    expect(foreign.dropEffect).toBe('none');
     fireDrag(zone(), 'dragover', out);
     fireDrag(zone(), 'drop', out);
+    // The drop took Road Ogre out of the order, so React has already unmounted the row the drag
+    // started at. A browser fires its dragend THERE, at the detached node, where it bubbles to
+    // nothing — so it is fired there here too. Firing it at the container instead would be a drag
+    // ending that a GM's successful delay never actually produces.
+    expect(ogreRow.isConnected).toBe(false);
+    fireDrag(ogreRow, 'dragend', out);
     await flush(1);
     expect(state().combatants.find((c) => c.name === 'Road Ogre')!.isDelayed).toBe(true);
     expect(listed('Road Ogre')).toBe(false); // out of the ORDER, not merely dimmed in it…
@@ -824,22 +843,162 @@ describe('the campaign ↔ tracker seam', () => {
     // And the drag out of the area does exactly what the button does — dropped ANYWHERE on the
     // order, because where it lands is not the GM's to choose.
     const again = makeDataTransfer();
-    fireDrag(rowFor('Road Ogre'), 'dragstart', again);
+    const ogreAgain = rowFor('Road Ogre');
+    fireDrag(ogreAgain, 'dragstart', again);
     fireDrag(zone(), 'dragover', again);
     fireDrag(zone(), 'drop', again);
+    fireDrag(ogreAgain, 'dragend', again); // detached again, same as above
     await flush(1);
     expect(acting()).toBe('Torch Bearer');
 
     const back = makeDataTransfer();
-    fireDrag(zone().querySelector('.ct-delay-row')!, 'dragstart', back);
+    const delayedRow = zone().querySelector('.ct-delay-row')!;
+    fireDrag(delayedRow, 'dragstart', back);
     expect(back.types).toContain(DELAY_RETURN_MIME);
     const list = el.querySelector('.ct-order-scroll')!;
     fireDrag(list, 'dragover', back);
     fireDrag(list, 'drop', back);
+    // Back in the order, so the area emptied and took this row with it — the source is gone before
+    // its own dragend, the same way round.
+    expect(delayedRow.isConnected).toBe(false);
+    fireDrag(delayedRow, 'dragend', back);
     await flush(1);
     expect(acting()).toBe('Road Ogre');
     expect(order()).toEqual(['Road Ogre', 'Torch Bearer']);
-    expect(zone().textContent).toContain('drag the acting creature here'); // empty again
+    expect(el.querySelector('.ct-delay')).toBeNull(); // empty again, and off the rail with it
+  }, 120_000);
+
+  it('puts Add combatants and Clear on ONE rail line, with Clear the small one', async () => {
+    // lane rail 2026-09-17: "I don't want a separate line for Add combatants and Clear; the Clear
+    // can be a smaller button on the same line."
+    //
+    // MUTATIONS (each one applied and run, and the line it stopped at read off that run):
+    //  - CampaignTracker: drop the `.ct-rail-foot-row` wrapper, both buttons back to direct children
+    //    of the column footer: FAILS at line 890 — "the footer still stacks its controls".
+    //  - CSS: `.ct-rail-add-btn { flex: 1 }` → `width: 100%` (how it was while it had the line to
+    //    itself): FAILS at line 906 — a full-width button is the stacked footer again.
+    //  - CSS: `.ct-rail-clear` font-size 11px → 12.5px: FAILS at line 908, Clear is no longer small.
+    //  - CampaignTracker: `onClick={() => void clear()}` → `onClick={clearAll}`: FAILS at line 917,
+    //    the order gone with nothing asked.
+    const el = await openTracker();
+    act(() => {
+      useCombatStore.getState().addCombatant(null, { name: 'Road Ogre', initiative: 20 });
+    });
+    await flush(1);
+
+    const row = el.querySelector('.ct-rail-foot > .ct-rail-foot-row');
+    if (!row) throw new Error('the footer still stacks its controls — no .ct-rail-foot-row');
+    const controls = [...row.children];
+    expect(controls.map((c) => c.className)).toEqual(['ct-rail-add-btn', 'ct-rail-clear']);
+    // Real buttons, both of them: Tab reaches them in that order and Enter/Space fires them.
+    expect(controls.map((c) => c.tagName)).toEqual(['BUTTON', 'BUTTON']);
+    const clearBtn = controls[1] as HTMLButtonElement;
+    expect(clearBtn.disabled).toBe(false);
+    expect(clearBtn.title).toBe('Clear the order');
+    expect((clearBtn.textContent ?? '').trim()).toBe('Clear'); // icon plus a SHORT label
+
+    // jsdom has no layout, so the stylesheet is the honest assertion for "one line, Clear smaller".
+    const css = readFileSync('src/integration/campaign-tracker.css', 'utf8');
+    const rule = (sel: string) =>
+      new RegExp(sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*\\{[^}]*\\}').exec(css)?.[0] ?? '';
+    const fontSize = (sel: string) => Number(/font-size:\s*([\d.]+)px/.exec(rule(sel))?.[1] ?? NaN);
+    expect(rule('.ct-rail-foot-row')).toMatch(/display:\s*flex/);
+    expect(rule('.ct-rail-add-btn')).toMatch(/flex:\s*1;/); // takes the width Clear leaves…
+    expect(rule('.ct-rail-clear')).toMatch(/flex:\s*none/); // …and Clear only ever takes its own
+    expect(fontSize('.ct-rail-clear')).toBeLessThan(fontSize('.ct-rail-add-btn'));
+    // Neither button pins a height — the row's stretch gives it, which is how they stay flush.
+    expect(rule('.ct-rail-foot-row')).toMatch(/align-items:\s*stretch/);
+
+    // Small, but still the destructive one: it asks first, with the app's dialog and not the
+    // browser's, and the order survives the question.
+    click(clearBtn);
+    await flush(2);
+    const dlg = document.querySelector('[role="alertdialog"]');
+    expect(dlg).not.toBeNull();
+    expect(useCombatStore.getState().combatants).toHaveLength(1);
+    click(dlg!.querySelector('.btn-danger')!);
+    await flush(2);
+    expect(useCombatStore.getState().combatants).toHaveLength(0);
+  }, 120_000);
+
+  it('keeps the Delay area off the rail until a drag or a delayed creature needs it', async () => {
+    // lane rail 2026-09-17: "Make the delay section not visible if it's empty; if the GM drags then
+    // make it visible." An empty strip stood there for the whole fight before this.
+    //
+    // MUTATIONS:
+    //  - CampaignTracker DelayArea: `(!anyDelayed && !dragging)` → `false` (always drawn, as it
+    //    shipped): FAILS at line 951 — the area is on the rail with nothing in it.
+    //  - useDelayDragActive: drop the DELAY_MIME check from the dragstart listener: FAILS at line
+    //    978 — any drag on the page would flash an area that refuses the drop.
+    //  - useDelayDragActive: drop the `dragend` listener: FAILS at line 966 — the area would outlive
+    //    a drag the GM abandoned.
+    //  - useDelayDragActive: drop the `'drop'` listener (dragend alone, as it shipped): FAILS at
+    //    line 1001 — a successful delay unmounts the row the drag started at, so its dragend fires
+    //    at a detached node and the seam never hears the drag end at all.
+    //  - CampaignTracker: `return <DelayZone />` → the zone's JSX inline in DelayArea: FAILS at line
+    //    971 — useDelayDropZone's highlight would survive the unmount and light the next appearance.
+    const el = await openTracker();
+    act(() => {
+      useCombatStore.getState().addCombatant(null, { name: 'Road Ogre', initiative: 20 });
+      useCombatStore.getState().addCombatant(null, { name: 'Torch Bearer', initiative: 10 });
+      useCombatStore.getState().startCombat();
+    });
+    await flush(2);
+    const zone = () => el.querySelector('.ct-delay');
+    const actingRow = () => [...el.querySelectorAll('.init-row')].find((r) => (r.textContent ?? '').includes('Road Ogre'))!;
+
+    // Nothing delayed and nothing in the air: no rail height spent on it at all.
+    expect(zone()).toBeNull();
+
+    // The acting row's drag brings it — before the pointer is anywhere near it, which is the whole
+    // point, since dragover cannot summon a target that isn't rendered.
+    const dt = makeDataTransfer();
+    fireDrag(actingRow(), 'dragstart', dt);
+    expect(dt.types).toContain(DELAY_MIME);
+    expect(zone()).not.toBeNull();
+    expect(zone()!.className).not.toContain('is-over');
+    fireDrag(zone()!, 'dragover', dt);
+    expect(zone()!.className).toContain('is-over');
+
+    // Abandoned over the zone (Escape, or dropped nowhere): the rail goes back to what it was. No
+    // drop fired, the source is still in the order, so its dragend is the only ending there is.
+    fireDrag(actingRow(), 'dragend', dt);
+    expect(zone()).toBeNull();
+
+    // …and comes back unlit, not still wearing the highlight of the drag that was called off.
+    const second = makeDataTransfer();
+    fireDrag(actingRow(), 'dragstart', second);
+    expect(zone()!.className).not.toContain('is-over');
+    fireDrag(actingRow(), 'dragend', second);
+
+    // Someone else's drag is not a delay, and never summons it.
+    const foreign = makeDataTransfer();
+    foreign.setData('text/combatant-id', 'road-ogre');
+    act(() => void el.dispatchEvent(Object.defineProperty(new Event('dragstart', { bubbles: true }), 'dataTransfer', { value: foreign })));
+    expect(zone()).toBeNull();
+
+    // The drag a GM actually finishes: dropped in, the creature leaves the order, and React unmounts
+    // the very row the drag started at. Chrome then fires dragend AT THAT DETACHED NODE, where it
+    // bubbles to nothing and reaches no listener on document — so the drag's ending has to be read
+    // from the drop, which bubbles from the still-attached zone.
+    const done = makeDataTransfer();
+    const source = actingRow();
+    fireDrag(source, 'dragstart', done);
+    fireDrag(zone()!, 'dragover', done);
+    fireDrag(zone()!, 'drop', done);
+    await flush(1);
+    expect(source.isConnected).toBe(false);
+    fireDrag(source, 'dragend', done);
+
+    // Delayed, so the area stands there with its rows — no drag required.
+    expect(zone()!.textContent).toContain('Road Ogre');
+    expect(zone()!.querySelector('.ct-delay-back')).not.toBeNull();
+
+    // And when the creature comes back, the rail is clean again. Which it only is if that drag was
+    // ever recorded as over: otherwise the empty area returns here and stays for the session.
+    click(zone()!.querySelector('.ct-delay-back')!);
+    await flush(1);
+    expect(zone()).toBeNull();
   }, 120_000);
 
   it('hides the GM tools on a phone, and keeps joining a campaign', async () => {
