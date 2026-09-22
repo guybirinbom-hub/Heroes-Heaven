@@ -908,6 +908,23 @@ body {
   background: color-mix(in srgb, var(--app-accent) 18%, transparent);
   color: color-mix(in srgb, var(--app-accent) 70%, var(--app-text));
 }
+/* GM only: this card is drawn from the GM's own last Update, which the player's app hasn't applied
+   yet. In the header beside the name, so it reads as a state of the CARD, not of the character. */
+.party-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  font-size: 10.5px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  cursor: help;
+  background: color-mix(in srgb, var(--app-accent) 16%, transparent);
+  color: color-mix(in srgb, var(--app-accent) 72%, var(--app-text));
+}
+.party-pending > .ti {
+  font-size: 11px;
+}
 
 /* A phone is too narrow for the band to run side by side, or for six cells on a line. */
 @media (max-width: 720px) {
@@ -4734,6 +4751,23 @@ button.strike-name:hover {
   flex: none;
   padding: 5px 10px;
   font-size: 12px;
+}
+/* "Pushed, but the player's app hasn't picked it up yet" — the sheet's half of the card's chip. Not a
+   warning: nothing is wrong and nothing is lost, the change is simply still on its way. */
+.gm-pending-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: color-mix(in srgb, var(--app-accent) 14%, var(--app-surface));
+  border-bottom: var(--app-bw) solid color-mix(in srgb, var(--app-accent) 40%, transparent);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.gm-pending-strip > .ti {
+  font-size: 16px;
+  flex: none;
+  color: var(--app-accent);
 }
 
 /* The secondary "release notes" link — present but clearly not the button you're meant to press. */
@@ -9315,6 +9349,14 @@ button.strike-name:hover {
 .cond-row.cond-auto .mode-toggle:disabled {
   opacity: 0.75;
   cursor: default;
+}
+/* bug 2026-09-18: the same thing the lock says, in words — a GM read the locked circle as a control
+   that was simply not working and went looking for another way to apply the condition by hand. */
+.cond-auto-note {
+  font-size: 11.5px;
+  line-height: 1.45;
+  margin-top: 2px;
+  color: color-mix(in srgb, var(--app-accent) 62%, var(--app-text));
 }
 /* The pill's counterpart: a lock and the cause, where a toggled condition carries its remove button. */
 .cond-pill .cond-auto-lock {

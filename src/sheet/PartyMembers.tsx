@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import type { ContentDatabase } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
 import { rememberPartyCapabilities } from '../data/partyCapabilities';
-import { fetchParty, fetchMemberSheet, currentUserId, kickFromParty, subscribeParty, subscribeMemberSheet, type PartyMember } from '../data/party';
-import type { PartySummary } from './partySummary';
+import { fetchParty, fetchMemberRow, fetchPendingGmEdits, currentUserId, kickFromParty, subscribeParty, subscribeMemberSheet, type PartyMember } from '../data/party';
+import { gmPendingEdit, gmPendingVersion, pendingEditStillStands, resolvePendingGmEdit, subscribeGmPending } from './gmSync';
+import { memberConditions, memberSummary, type PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
 import { GmEditSheet } from './GmEditSheet';
 import { confirmDialog } from './confirm';
@@ -18,6 +19,25 @@ interface ViewingState {
   ownerId: string;
   charId: string;
   sheet: SavedChar;
+  /**
+   * The PLAYER's published summary, carried into the sheet so the two can't disagree about a
+   * condition their app derived and this device can't.
+   *
+   * ⚠ It is re-read with the sheet on every refresh (`fetchMemberRow`), never captured at open time.
+   * A carried pill is locked and says "it disappears when its cause does" — and when this was frozen
+   * at open, it didn't: the player dropped the loot, republished, the HP and inventory on the GM's
+   * screen updated around a stale "Encumbered" that only closing the sheet could clear.
+   */
+  summary?: PartySummary;
+}
+
+/**
+ * "A GM edit is waiting for this character" — module state, so it re-renders every card and sheet at
+ * once. The version counter is the store's snapshot; see ./gmSync.ts for what puts an edit in it and
+ * what takes it out again.
+ */
+export function useGmPendingVersion(): number {
+  return useSyncExternalStore(subscribeGmPending, gmPendingVersion, gmPendingVersion);
 }
 
 /** Teammate-sheet viewer shared by the party page and the GM campaign detail. Returns the full-screen
@@ -28,14 +48,20 @@ interface ViewingState {
 export function useMemberViewer(content: ContentDatabase, options?: { gmEdit?: boolean }) {
   const [viewing, setViewing] = useState<ViewingState | null>(null);
   useBackHandler(!!viewing, () => setViewing(null));
+  // The summary is read HERE, from the same row as the sheet, rather than taken from the card that
+  // opened it — see ViewingState.summary for what a card-supplied one could not do.
   const open = async (campaignId: string, charId: string, ownerId: string): Promise<boolean> => {
-    const sheet = await fetchMemberSheet(campaignId, charId);
+    const { sheet, summary } = await fetchMemberRow(campaignId, charId);
     if (sheet && sheet.character) {
-      setViewing({ campaignId, ownerId, charId, sheet });
+      setViewing({ campaignId, ownerId, charId, sheet, summary });
       return true;
     }
     return false;
   };
+  // A GM's own push changes nothing on the server the pull below watches, so the store that holds it
+  // is the trigger: reopen/refresh the sheet on it too, or the sheet under the card would still be
+  // showing the pre-Update character.
+  const pendingVersion = useGmPendingVersion();
 
   /*
    * Keep the OPEN sheet live.
@@ -51,27 +77,55 @@ export function useMemberViewer(content: ContentDatabase, options?: { gmEdit?: b
    */
   const campaignId = viewing?.campaignId;
   const charId = viewing?.charId;
+  const pull = useCallback(() => {
+    if (!campaignId || !charId) return;
+    void fetchMemberRow(campaignId, charId).then(({ sheet, summary, read }) => {
+      if (!sheet?.character) return;
+      setViewing((v) => {
+        // Guard against a late response for a sheet the viewer has since closed or swapped away from.
+        if (!v || v.campaignId !== campaignId || v.charId !== charId) return v;
+        // The SUMMARY moves with the sheet: a re-publish that drops a derived condition has to drop
+        // the carried pill with it, and that pill is joined from this field.
+        //
+        // ⚠ …but only when the read actually ANSWERED. A failed read (`read === false`) hands back
+        // `undefined` here, and writing that in would erase the player's carried "Encumbered" from
+        // an open GM sheet on one bad response — the owner's own symptom, from a network blip rather
+        // than from anything the player did. The sheet half of the same response already works this
+        // way (the pending overlay stands), and only a NEWER player publish may change what is
+        // carried. Keep what we had, and the next successful read moves it on.
+        const next = read ? summary : v.summary;
+        // Skip identical payloads so an unchanged re-publish doesn't re-render the whole sheet.
+        return JSON.stringify(v.sheet) !== JSON.stringify(sheet) || JSON.stringify(v.summary) !== JSON.stringify(next)
+          ? { ...v, sheet, summary: next }
+          : v;
+      });
+    });
+  }, [campaignId, charId]);
+  /*
+   * The SUBSCRIPTION's own effect — and `pendingVersion` is deliberately not one of its deps.
+   *
+   * Every Update bumps that counter, and so does every point of damage the GM applies in the tracker
+   * (pushVitals → pushGmEdit → rememberGmEdit). Having it here tore this channel down and re-joined
+   * the same deterministic topic in the same tick, with the leave still in flight — a Supabase
+   * footgun whose symptom is a feed that quietly stops delivering, which is the very "the GM is
+   * looking at stale data" complaint being fixed. Only the re-PULL needs to follow the store.
+   */
   useEffect(() => {
     if (!campaignId || !charId) return;
-    let cancelled = false;
-    const pull = () => {
-      void fetchMemberSheet(campaignId, charId).then((sheet) => {
-        if (cancelled || !sheet?.character) return;
-        setViewing((v) =>
-          // Guard against a late response for a sheet the viewer has since closed or swapped away from,
-          // and skip identical payloads so an unchanged re-publish doesn't re-render the whole sheet.
-          v && v.campaignId === campaignId && v.charId === charId && JSON.stringify(v.sheet) !== JSON.stringify(sheet)
-            ? { ...v, sheet }
-            : v,
-        );
-      });
-    };
-    const unsub = subscribeMemberSheet(campaignId, charId, pull);
-    return () => {
-      cancelled = true;
-      unsub();
-    };
-  }, [campaignId, charId]);
+    pull();
+    return subscribeMemberSheet(campaignId, charId, pull);
+  }, [campaignId, charId, pull]);
+  // A GM's own push changes nothing on the server, so no Realtime event ever arrives for it: this is
+  // what re-reads the overlay. A plain refetch, no channels touched.
+  useEffect(() => {
+    pull();
+  }, [pendingVersion, pull]);
+  /* ⚠ The published summary STAYS while a GM edit of ours is waiting. Standing it down there was the
+   * owner's own symptom all over again — press Update and the "Encumbered" only the player's app can
+   * work out disappears from the sheet for the whole pending window. Only DERIVED chips are ever
+   * carried, and a derived chip is locked on every surface, so there is none a GM edit could have
+   * taken off; what the player's app derives changes when the PLAYER publishes, and not before. */
+  const summary = viewing?.summary;
   let sheetEl = null;
   if (viewing) {
     if (options?.gmEdit) {
@@ -81,6 +135,7 @@ export function useMemberViewer(content: ContentDatabase, options?: { gmEdit?: b
             key={viewing.charId}
             initial={viewing.sheet}
             live={viewing.sheet}
+            summary={summary}
             content={content}
             campaignId={viewing.campaignId}
             playerOwnerId={viewing.ownerId}
@@ -96,6 +151,10 @@ export function useMemberViewer(content: ContentDatabase, options?: { gmEdit?: b
       } catch {
         live = viewing.sheet.character;
       }
+      // …through the same one function the card and the GM's sheet use, so a teammate's view can't be
+      // the one that goes quiet about a condition the card is showing.
+      const merged = memberConditions(live.conditions ?? [], summary?.conditions);
+      if (merged !== (live.conditions ?? [])) live = { ...live, conditions: merged };
       sheetEl = (
         <div className="party-viewer">
           <CharacterSheet
@@ -118,6 +177,8 @@ export function useMemberViewer(content: ContentDatabase, options?: { gmEdit?: b
 export function PartyMembers({
   campaignId,
   isGm,
+  content,
+  summarize,
   onView,
   onMembers,
   localMembers,
@@ -125,6 +186,22 @@ export function PartyMembers({
 }: {
   campaignId: string;
   isGm: boolean;
+  /** Needed only to re-read a card whose GM edit hasn't reached the player yet — the summary the
+   *  server holds is the pre-edit one, so the card is recomputed from the pending sheet. Omitted →
+   *  the published summaries, exactly as before. */
+  content?: ContentDatabase;
+  /**
+   * What THIS device makes of the member, when the host holds their full sheet.
+   *
+   * `m.summary` is the column the PLAYER's app wrote, on the player's device, against the player's
+   * content database. A card drawing it raw and a sheet re-derived here part company the moment the
+   * two databases do — Encumbered comes out of item Bulk — and that disagreement between two cards
+   * for the same character, on the same screen, is what the owner reported. The host that has the
+   * sheets (the tracker) passes its own reconciliation in through here, so the dashboard card, the
+   * pane card and the sheet a card opens are all the same answer. Omitted (the party page, which
+   * never fetches member sheets) → the published summary, exactly as before.
+   */
+  summarize?: (m: PartyMember) => PartySummary | undefined;
   onView: (m: PartyMember) => void;
   /**
    * Every list this component loads, handed to the host — the first fetch and every Realtime refresh.
@@ -206,8 +283,76 @@ export function PartyMembers({
     };
   }, [campaignId, reload, localMembers]);
 
+  /*
+   * A GM edit that hasn't reached the player yet, drawn on the card.
+   *
+   * `summary` is a column the PLAYER writes, so it still describes the pre-edit character however
+   * long the edit waits — press Update, come back to the party page, and nothing had moved. The
+   * pending sheet is re-summarised here instead, through `memberSummary` on the same play-overlaid
+   * character the owner's app would have published, so the card says what the GM did. It is a view:
+   * nothing here is ever written to `campaign_characters`.
+   *
+   * ⚠ AND IT HAS TO STAND DOWN. The first version of this read the pending store with no staleness
+   * test at all, and no code path reachable from this page could ever prune it: the card showed the
+   * GM's pushed sheet and the "waiting" chip forever, HIDING the player's real current state, across
+   * reloads. The member row now carries `updatedAt` (the player's own publish stamp), which is the
+   * whole question — see `pendingEditStillStands`.
+   */
+  const pendingVersion = useGmPendingVersion();
+  useEffect(() => {
+    // Also covers the GM's OTHER devices and a reload. It prunes as well as adds now: a row the
+    // player's app has applied and deleted is gone from the server, and its chip goes with it.
+    if (!localMembers && campaignId && isGm) void fetchPendingGmEdits(campaignId);
+  }, [campaignId, isGm, localMembers]);
   // What the cards actually render: host-supplied members win over the fetched list.
-  const shown = localMembers ?? members;
+  const fetched = localMembers ?? members;
+  useEffect(() => {
+    // THE PRUNER, reached from the party page at last. `resolvePendingGmEdit` is the one place an
+    // overtaken edit is dropped, so doing it here is what makes the chip disappear on the cards, the
+    // tracker pane and the sheet together. `sheet: null` — the stamp is the entire question here.
+    if (!campaignId || !fetched) return;
+    for (const m of fetched)
+      if (m.updatedAt) resolvePendingGmEdit(campaignId, m.charId, { sheet: null, updatedAt: m.updatedAt });
+  }, [fetched, campaignId]);
+  const shown = useMemo(
+    () =>
+      fetched?.map((m) => {
+        const edit = gmPendingEdit(campaignId, m.charId);
+        // The same test the effect above prunes by, applied while rendering so the FIRST paint is
+        // already right — a stale overlay must never flash up before the effect clears it.
+        //
+        // ⚠ AND NEVER ON THE VIEWER'S OWN CHARACTER. A GM's edit is silent by design: the player is
+        // not told, and this page is a page PLAYERS open. The store is scoped to the account that
+        // pushed (gmSync.setGmPendingAccount), so another player's browser holds nothing to draw,
+        // and `gmPendingEdit` itself refuses to answer with an edit about the signed-in account's
+        // own character — that is the rule's home, reached by every surface. The `m.ownerId` test
+        // here is the belt for an edit whose row recorded no owner, which that one cannot judge.
+        const pending =
+          !!edit && m.ownerId !== myId && pendingEditStillStands(edit, { sheet: null, updatedAt: m.updatedAt });
+        // A host that holds the sheet has already done the whole job — this device's derivation, plus
+        // any derived chip only the player's app could reach, and the pending edit folded in (the
+        // sheets it works from are the overlaid ones). Its answer is the card's answer, so the two
+        // cards the tracker draws for one character cannot say different things again.
+        const derived = summarize?.(m);
+        if (derived) return { member: { ...m, name: derived.name || m.name, summary: derived }, pending };
+        if (!pending || !edit || !content) return { member: m, pending };
+        try {
+          const live = applyPlayState(edit.sheet.character, edit.sheet.play, content);
+          // `memberSummary`, so a pending edit does not cost the card everything only the PLAYER's
+          // app could work out. A bare `computeSummary` here made pressing Update wipe a carried
+          // "Encumbered" off the card for the whole pending window — the owner's original symptom,
+          // re-created by the fix for the other half of it.
+          return { member: { ...m, name: live.name || m.name, summary: memberSummary(live, content, m.summary) }, pending };
+        } catch {
+          return { member: m, pending }; // a sheet that won't compute is never worth a broken card
+        }
+      }) ?? null,
+    // The pending store is module state; `pendingVersion` is what says it moved. `summarize` is in
+    // the deps because it closes over the host's sheets: a member's sheet arriving is exactly when
+    // these cards have to be recomputed, and the host re-rendering is the only signal for it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fetched, campaignId, content, pendingVersion, summarize, myId],
+  );
 
   const kick = async (m: PartyMember) => {
     const ok = await confirmDialog({
@@ -236,10 +381,11 @@ export function PartyMembers({
         <div className="party-empty">No one has shared a character with this campaign yet. Characters appear here once a member attaches one (Builder → Setup → Campaigns) and their app syncs.</div>
       ) : (
         <div className="party-grid">
-          {(shown ?? []).map((m) => (
+          {(shown ?? []).map(({ member: m, pending }) => (
             <PartyCard
               key={m.charId}
               member={m}
+              pending={pending}
               isMine={m.ownerId === myId}
               showKick={isGm && !!myId && m.ownerId !== myId}
               onOpen={() => onView(m)}
@@ -295,6 +441,7 @@ function hpColor(cur: number, max: number): string {
 export function PartyCard({
   member,
   isMine,
+  pending,
   showKick,
   onOpen,
   onKick,
@@ -302,6 +449,8 @@ export function PartyCard({
 }: {
   member: PartyMember;
   isMine: boolean;
+  /** GM only: this card is showing an edit the player's app hasn't picked up yet. */
+  pending?: boolean;
   /** GM only. Omitted (the card in a PC's tracker pane) → no kick button, and no chevron offset. */
   showKick?: boolean;
   onOpen: () => void;
@@ -348,6 +497,13 @@ export function PartyCard({
           </span>
           <span className="party-card-sub">{sub || '—'}</span>
         </span>
+        {/* This card is drawn from the GM's own last Update, not from what the player published —
+            say so, rather than letting them wonder which of the two they are reading. */}
+        {pending && (
+          <span className="party-pending" title="Waiting — the player’s app hasn’t picked this change up yet.">
+            <i className="ti ti-cloud-upload" aria-hidden="true" /> waiting
+          </span>
+        )}
         {/* The host's header controls (turn chip, add-to-initiative). Their own clicks are theirs —
             they must not also open the sheet. */}
         {extra?.header && (

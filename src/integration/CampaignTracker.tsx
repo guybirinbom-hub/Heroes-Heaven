@@ -37,12 +37,13 @@ import { FloatingWindowLayer } from '../../tracker/src/components/FloatingWindow
 import { ErrorBoundary } from '../../tracker/src/components/ErrorBoundary';
 import { usePartyStore } from '../../tracker/src/store/partyStore';
 import type { Combatant } from '../../tracker/src/types/pf2e';
-import { PartyMembers, PartyCard, PARTY_MEMBER_DRAG, type PartyMemberDrag, type PartyCardSlots } from '../sheet/PartyMembers';
-import { computeSummary } from '../sheet/partySummary';
+import { PartyMembers, PartyCard, useGmPendingVersion, PARTY_MEMBER_DRAG, type PartyMemberDrag, type PartyCardSlots } from '../sheet/PartyMembers';
+import { gmPendingEdit, pendingEditStillStands } from '../sheet/gmSync';
+import { type PartySummary } from '../sheet/partySummary';
 import { fetchParty, type PartyMember } from '../data/party';
 import { useAuth } from '../data/useAuth';
 import { startTrackerSync, isTrackerSyncReady } from '../data/trackerSync';
-import { livePlay, useMemberSheets, usePcSheetTruth } from './pcSheetTruth';
+import { gmMemberSummary, livePlay, useMemberSheets, usePcSheetTruth } from './pcSheetTruth';
 import type { ContentDatabase, DescRef } from '../rules/types';
 import { useLocalCampaignMembers } from './useLocalCampaignMembers';
 import { TEST_CAMPAIGNS_WITHOUT_LOGIN } from './enabled';
@@ -248,6 +249,9 @@ export function CampaignTracker({
    * The players' own sheets — the truth for a PC's HP and conditions, in both directions. See
    * ./pcSheetTruth.ts for the conflict rules that keep a player's own edit from ever being lost.
    */
+  /* A GM edit the player's app hasn't picked up yet: the sheets below are already overlaid with it
+   * (src/data/party.ts), and this is what re-renders the cards and panes that draw them. */
+  const pendingVersion = useGmPendingVersion();
   const memberSheets = useMemberSheets(m.id, members);
   const sheetById = useMemo(() => {
     const map = new Map<string, SavedChar>();
@@ -309,27 +313,49 @@ export function CampaignTracker({
     return { byName, byId };
   }, [members, sheetById, content]);
 
+  /** Is an Update of ours still waiting for THIS character? The same staleness test the party cards
+   *  use: a chip must never outlive the player's own publish, and `mem.updatedAt` is that publish.
+   *  `gmPendingEdit` also refuses to answer for a character the signed-in account owns, so a GM who
+   *  plays in their own campaign gets no overlay and no chip here either — the same rule the cards
+   *  and the sheet follow, kept in the one place all three read through (../sheet/gmSync.ts). */
+  const pendingFor = (mem: PartyMember): boolean => {
+    const edit = gmPendingEdit(m.id, mem.charId);
+    return !!edit && pendingEditStillStands(edit, { sheet: null, updatedAt: mem.updatedAt });
+  };
+
+  /** THE ONE SUMMARY every GM-side surface in this view draws from — and it takes the whole member
+   *  precisely so that no surface here can decide to withhold the player's own half of it. See
+   *  `gmMemberSummary` (./pcSheetTruth.ts) for what withholding it cost. */
+  const summaryFor = (mem: PartyMember, sheet: SavedChar): PartySummary => gmMemberSummary(mem, sheet, content);
+
   /*
    * The members again, but with the summary RE-DERIVED from the player's live sheet — keyed by name,
    * which is all a combatant row carries.
    *
-   * This is what a PC's pane card reads. The dashboard's own cards are kept current by PartyMembers'
-   * Realtime subscription, but PartyMembers is unmounted the moment the GM leaves the dashboard for
-   * the workspace, so `mem.summary` there is frozen at whatever the last visit fetched. The sheets in
+   * This is what a PC's pane card reads. (The dashboard's cards go through the same answer, by way of
+   * `roster.byId` and PartyMembers' `summarize` prop — it is keyed by charId, which is what a card
+   * carries, while a combatant row carries only a name.) PartyMembers is unmounted the moment the GM
+   * leaves the dashboard for the workspace, so `mem.summary` there is frozen at whatever the last
+   * visit fetched, and the pane needs an answer that doesn't depend on it. The sheets in
    * `sheetById` keep arriving either way (pcSheetTruth subscribes per member for the life of the
    * mount), so the card in the pane shows the HP and conditions the player has right now.
+   *
+   * ⚠ `memberSummary`, NOT a bare `computeSummary`. Re-deriving on its own was the second half of the
+   * owner's report from inside the tracker itself: this pane card showed no Encumbered while the
+   * dashboard card two clicks away (drawn from the player's published summary) showed it, because a
+   * condition derived from item Bulk depends on which device's data you ask. `memberSummary` is the
+   * one reconciliation — this device's derivation, plus anything only the player's app could reach.
    */
   const liveMembers = useMemo(() => {
     const map = new Map<string, PartyMember>();
     for (const mem of members) {
       const sheet = sheetById.get(mem.charId);
-      map.set(
-        mem.name.trim().toLowerCase(),
-        sheet ? { ...mem, summary: computeSummary(livePlay(sheet, content), content) } : mem,
-      );
+      map.set(mem.name.trim().toLowerCase(), sheet ? { ...mem, summary: summaryFor(mem, sheet) } : mem);
     }
     return map;
-  }, [members, sheetById, content]);
+    // `summaryFor` is defined just above and closes over the same values.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [members, sheetById, content, pendingVersion]);
 
   /*
    * Mirror the campaign's PCs into the tracker's OWN party store (the party tagged with this
@@ -543,13 +569,17 @@ export function CampaignTracker({
    * convention partyStore.importCharacter already uses).
    */
   const roster = useMemo(() => {
-    const byId = new Map<string, { entry: SavedChar; ownerId: string }>();
+    const byId = new Map<string, { entry: SavedChar; ownerId: string; summary?: PartySummary }>();
     for (const mem of members) {
       const entry = sheetById.get(mem.charId);
-      if (entry) byId.set(mem.charId, { entry, ownerId: mem.ownerId });
+      // `summary` travels with the sheet, through the SAME reconciliation the cards use, so the sheet
+      // a card opens cannot contradict the card — and cannot resurrect a condition a pending GM edit
+      // has already removed (which the raw published summary did).
+      if (entry) byId.set(mem.charId, { entry, ownerId: mem.ownerId, summary: summaryFor(mem, entry) });
     }
     return { byId };
-  }, [members, sheetById]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [members, sheetById, content, pendingVersion]);
 
   // ── The GM's unpushed working copy ───────────────────────────────────────────
   /*
@@ -958,12 +988,23 @@ export function CampaignTracker({
       return (
         <PcPaneShell name={mem.name} handles={handles} onClose={() => handles.onClose?.()}>
           <div className="ct-pane-card">
-            <PartyCard member={mem} isMine={false} onOpen={() => openMemberSheet(mem)} extra={cardExtra(mem, false)} />
+            <PartyCard
+              member={mem}
+              isMine={false}
+              // Same chip as the dashboard card: this pane may be showing the GM's own last Update
+              // rather than what the player published. `sheetById` is already overlaid (party.ts),
+              // so the numbers here are the edited ones — this says why.
+              pending={pendingFor(mem)}
+              onOpen={() => openMemberSheet(mem)}
+              extra={cardExtra(mem, false)}
+            />
           </div>
         </PcPaneShell>
       );
     },
-    [liveMembers, openMemberSheet, cardExtra],
+    // `pendingVersion` is the pending store's snapshot — module state, so it is what says it moved.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [liveMembers, openMemberSheet, cardExtra, m.id, pendingVersion],
   );
 
   // The real levels of the real characters — what encounter difficulty must be rated against. The
@@ -1088,6 +1129,18 @@ export function CampaignTracker({
                   <PartyMembers
                     campaignId={m.id}
                     isGm={m.role === 'gm'}
+                    // So a card whose GM edit the player hasn't applied yet is re-summarised from
+                    // that edit instead of from the pre-edit `summary` column the server holds.
+                    content={content}
+                    /* THE DASHBOARD CARD GOES THROUGH THE SAME ANSWER AS EVERYTHING ELSE HERE.
+                       Without this it drew `m.summary` raw — the player's own verdict, computed on
+                       their device against their content database — while the PC's pane card two
+                       clicks away and the sheet a card opens both went through `memberSummary`. Same
+                       character, same screen, two answers about Encumbered, which is the owner's
+                       report with the sides swapped. `roster.byId` already holds that one answer
+                       (this device's derivation ∪ the chips only the player's app could reach, with
+                       a pending edit of ours folded in), so the card just reads it. */
+                    summarize={(mem) => roster.byId.get(mem.charId)?.summary}
                     // The card's "Stats shown" sections, built from the real character. Following
                     // the tracker's own PcDetailConfig — the same dropdown in the party header.
                     renderExtra={cardExtra}
@@ -1151,6 +1204,9 @@ export function CampaignTracker({
               ref={fullSheetRef}
               initial={fullSheetChar.entry}
               live={fullSheetChar.entry}
+              // The card's own summary, so the sheet can't go quiet about a condition the card shows
+              // (a condition the owner's app derived and this device's content can't reproduce).
+              summary={fullSheetChar.summary}
               content={content}
               campaignId={m.id}
               playerOwnerId={fullSheetChar.ownerId}

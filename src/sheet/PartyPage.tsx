@@ -65,7 +65,7 @@ export function PartyPage({ content, campaigns, onClose, onLeave }: PartyPagePro
             </div>
           </div>
         )}
-        <PartyMembers campaignId={selectedId} isGm={selectedCampaign?.role === 'gm'} onView={(m) => void open(selectedId, m.charId, m.ownerId)} />
+        <PartyMembers campaignId={selectedId} isGm={selectedCampaign?.role === 'gm'} content={content} onView={(m) => void open(selectedId, m.charId, m.ownerId)} />
         {/* Players can leave a campaign entirely; a GM ends theirs by deleting it in the Campaigns page. */}
         {onLeave && selectedCampaign && selectedCampaign.role === 'player' && (
           <div className="party-leave-row">

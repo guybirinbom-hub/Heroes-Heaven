@@ -153,6 +153,17 @@ export function ConditionsModal({
                     {c.valued && <span className="cond-valued-tag">valued</span>}
                     {auto && <span className="cond-auto-tag">{`from ${auto.replace(/ —.*$/, '')}`}</span>}
                   </div>
+                  {/* bug 2026-09-18: a derived condition needs to say so IN WORDS, not only as a lock
+                      and a tag. A GM looking at a player's sheet went to add Encumbered by hand —
+                      which is not a thing you can do: it is set by Bulk, the sheet re-derives it on
+                      every pass, and a hand-added copy would be a duplicate the derived one wins over
+                      anyway. So the row says what holds it and what would clear it. */}
+                  {auto && (
+                    <div className="cond-auto-note">
+                      {`${c.name} is set by ${auto.replace(/ —.*$/, '')} — the sheet works it out, so it can't be added or
+                        removed here. It clears itself when its cause does.`}
+                    </div>
+                  )}
                   {/* Plain text, line-clamped. The rich renderer put links and block elements in here,
                       which is what made the clamp slice through the middle of a line. */}
                   {c.description && <div className="cond-row-desc">{toPlainText(c.description)}</div>}

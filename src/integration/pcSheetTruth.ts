@@ -1,7 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { applyPlayState, initialPlay } from '../rules/play';
+import { gmPendingEdit, gmPendingVersion, resolvePendingGmEdit, subscribeGmPending } from '../sheet/gmSync';
 import { deriveMaxHp } from '../rules/derive';
-import { fetchMemberSheet, pushGmEdit, subscribeMemberSheet, type PartyMember } from '../data/party';
+import { fetchMemberSheet, fetchPublishedSheet, pushGmEdit, subscribeMemberSheet, type PartyMember } from '../data/party';
+import { memberSummary, type PartySummary } from '../sheet/partySummary';
 import type { SavedChar } from '../data/storage';
 import type { Character, ContentDatabase } from '../rules/types';
 import { useCombatStore } from '../../tracker/src/store/combatStore';
@@ -23,8 +25,10 @@ import type { Combatant } from '../../tracker/src/types/pf2e';
  * NPC / monster rows are untouched — they have no sheet and stay entirely tracker-local.
  *
  * ⚠ NEVER OVERWRITE A PLAYER'S OWN NEWER EDIT. Three rules keep that true:
- *   1. a push re-bases on the player's NEWEST published sheet (a fresh fetchMemberSheet), never on
- *      the snapshot this screen happens to be holding — the same guard GmEditSheet.pushToPlayer uses;
+ *   1. a push re-bases on a FRESH read of the server (`fetchPublishedSheet`), never on the snapshot
+ *      this screen happens to be holding — the same guard GmEditSheet.pushToPlayer uses. When the GM
+ *      has an edit of their own still waiting, that unapplied edit is the newer version and is what
+ *      the push builds on; otherwise it is the player's published sheet;
  *   2. a push writes ONLY `play.damage` and `play.conditions`, so nothing else of theirs is carried;
  *   3. when the sheet and the tracker have BOTH moved since the last agreement, the sheet wins and
  *      the tracker's value is discarded — the player's own edit is never the one that loses.
@@ -66,6 +70,21 @@ export function livePlay(sheet: SavedChar, content: ContentDatabase): Character 
   } catch {
     return sheet.character;
   }
+}
+
+/**
+ * THE ONE SUMMARY every GM-side surface draws for a member whose SHEET this device holds.
+ *
+ * Here, taking the whole member, rather than written out at each call site: the published summary
+ * is not an optional extra the caller may decide to withhold. It was withheld while a GM edit of
+ * ours was pending, and that re-created the owner's own report for the length of the pending window
+ * — the "Encumbered" only the PLAYER's app can work out (their content database, their item Bulk)
+ * vanished from the cards and the sheet the moment the GM pressed Update. Only DERIVED chips are
+ * ever carried, every surface locks those, so there is not one a GM edit could have taken off; what
+ * the player's app derives changes when the PLAYER publishes again, and until then it is still true.
+ */
+export function gmMemberSummary(mem: PartyMember, sheet: SavedChar, content: ContentDatabase): PartySummary {
+  return memberSummary(livePlay(sheet, content), content, mem.summary);
 }
 
 function maxHpOf(live: Character, content: ContentDatabase): number {
@@ -148,19 +167,41 @@ function writeVitals(cid: string, v: PcVitals, content: ContentDatabase): void {
 }
 
 /** Push the GM's change to the player. Re-based on their newest sheet, carrying only the vitals.
- *  Reports whether the server actually took it — a refusal (RLS, offline) must not be mistaken for a
- *  landed change, or the GM's damage is silently dropped. */
+ *
+ *  Answers with the PUSH's own stamp (`pendingAt`), or `null` when the server refused it — a
+ *  refusal (RLS, offline) must not be mistaken for a landed change, or the GM's damage is silently
+ *  dropped. The stamp is what the echo test below recognises a push by; `''` means the server took
+ *  it but left us no stamp to recognise it with, which costs a re-read and never a value. */
 async function pushVitals(
   campaignId: string,
   mem: PartyMember,
   v: PcVitals,
   content: ContentDatabase,
   fallback: SavedChar,
-): Promise<boolean> {
-  const current = await fetchMemberSheet(campaignId, mem.charId);
+): Promise<string | null> {
+  // One read of the PUBLISHED row, then the overlay applied here rather than inside the fetch, so
+  // this push gets two things from the same look: the newest sheet to build on (which is the GM's
+  // own still-unapplied edit when there is one — re-basing on the pre-edit row would upsert straight
+  // over it), and the published stamp that edit was based on, which is what lets the overlay stand
+  // down later without ever comparing two devices' clocks.
+  const row = await fetchPublishedSheet(campaignId, mem.charId);
+  const current = resolvePendingGmEdit(campaignId, mem.charId, row);
   const base = current?.character ? current : fallback;
-  const res = await pushGmEdit(campaignId, mem.charId, mem.ownerId, sheetWithVitals(base, v, content));
-  return res.ok;
+  // `mem.updatedAt` is the fallback when that read FAILED: it is the same column, off the same
+  // (player's) clock, read by the party list — older, therefore safe. What it must never be is
+  // nothing, because an edit with no base falls back to comparing the GM's clock against the
+  // player's, which is the one comparison this whole path exists to avoid. rememberGmEdit also
+  // refuses to overwrite a base it already holds; this is the other half.
+  const res = await pushGmEdit(
+    campaignId,
+    mem.charId,
+    mem.ownerId,
+    sheetWithVitals(base, v, content),
+    row?.updatedAt ?? mem.updatedAt,
+  );
+  // The push we just recorded, by the stamp it carries — `rememberGmEdit` ran inside `pushGmEdit`,
+  // synchronously, the moment the server accepted it.
+  return res.ok ? gmPendingEdit(campaignId, mem.charId)?.pushedAt ?? '' : null;
 }
 
 /**
@@ -172,27 +213,68 @@ async function pushVitals(
 export function useMemberSheets(campaignId: string, members: PartyMember[]): Map<string, SavedChar> {
   const [sheets, setSheets] = useState<Map<string, SavedChar>>(() => new Map());
   const ids = members.map((m) => m.charId).join(',');
+  const pendingVersion = useSyncExternalStore(subscribeGmPending, gmPendingVersion, gmPendingVersion);
+  // The list as it stands right now, so a response for a member who has since left the party is
+  // dropped instead of re-adding them. (It replaces the per-effect `cancelled` flag, which no longer
+  // works now that the pull outlives any one effect.)
+  const idsRef = useRef(ids);
+  idsRef.current = ids;
+  const pull = useCallback(
+    (charId: string) => {
+      void fetchMemberSheet(campaignId, charId).then((s) => {
+        if (!s?.character || !idsRef.current.split(',').includes(charId)) return;
+        // Skip an identical re-publish so an echo doesn't re-render the whole party.
+        setSheets((prev) => (JSON.stringify(prev.get(charId)) === JSON.stringify(s) ? prev : new Map(prev).set(charId, s)));
+      });
+    },
+    [campaignId],
+  );
+  /*
+   * THE SUBSCRIPTIONS — one channel per member, and nothing about a GM's own edit belongs in here.
+   *
+   * `pendingVersion` used to be a dep of this effect, which meant every Update AND every point of
+   * damage the GM applied (pushVitals → pushGmEdit → rememberGmEdit) tore down and instantly re-joined
+   * one channel per member, each on the same deterministic topic, with the leave still in flight.
+   * Mid-combat that is N leave/join pairs per damage entry on identical topic names — and a Realtime
+   * feed that quietly stops delivering is precisely the "the GM is looking at stale data" fault this
+   * whole change exists to remove.
+   */
   useEffect(() => {
     if (!campaignId || !ids) return;
-    let cancelled = false;
     const unsubs = ids.split(',').map((charId) => {
-      const pull = () => {
-        void fetchMemberSheet(campaignId, charId).then((s) => {
-          if (cancelled || !s?.character) return;
-          // Skip an identical re-publish so an echo doesn't re-render the whole party.
-          setSheets((prev) =>
-            JSON.stringify(prev.get(charId)) === JSON.stringify(s) ? prev : new Map(prev).set(charId, s),
-          );
-        });
-      };
-      pull();
-      return subscribeMemberSheet(campaignId, charId, pull);
+      pull(charId);
+      return subscribeMemberSheet(campaignId, charId, () => pull(charId));
     });
     return () => {
-      cancelled = true;
       for (const u of unsubs) u();
     };
-  }, [campaignId, ids]);
+  }, [campaignId, ids, pull]);
+  /*
+   * The re-PULL, and only the re-pull — for the ONE character whose pending edit actually moved.
+   *
+   * A GM's own Update doesn't touch `campaign_characters`, so no Realtime event ever arrives for it
+   * and this map would keep answering with the pre-edit sheet until the player's device came online.
+   * `fetchMemberSheet` overlays the pending edit (src/data/party.ts); this is what makes it re-ask.
+   *
+   * It also closes a clobber door on the way past: `pushVitals` re-bases on the overlaid sheet, so a
+   * damage push that arrived while a sheet edit was still pending used to be built on the published
+   * (pre-edit) sheet and upserted over the GM's own waiting row, silently dropping it.
+   *
+   * ⚠ The counter is campaign-wide, so a bare re-run of this refetched EVERY member on every push —
+   * and every single point of damage is a push. That is N HTTP reads per damage entry mid-combat,
+   * and a drop inside one of them bumps the counter again and re-runs the whole fan-out. The stamp
+   * of each member's own pending edit is what changed or didn't, so only that member is re-read.
+   */
+  const pendingSig = useRef(new Map<string, string>());
+  useEffect(() => {
+    if (!campaignId || !ids) return;
+    for (const charId of ids.split(',')) {
+      const sig = gmPendingEdit(campaignId, charId)?.pushedAt ?? '';
+      if (pendingSig.current.get(charId) === sig) continue;
+      pendingSig.current.set(charId, sig);
+      pull(charId);
+    }
+  }, [campaignId, ids, pendingVersion, pull]);
   return sheets;
 }
 
@@ -218,8 +300,26 @@ export function usePcSheetTruth(args: {
    * applies the edit and re-publishes, and until it does `fetchMemberSheet` still answers with the
    * pre-edit sheet. Comparing against `agreed` alone would read that unchanged sheet as "the sheet
    * moved" and revert the GM's damage on the spot, then un-revert when the echo landed.
+   *
+   *  `pushed` the STAMPS of the pushes we made and are still waiting to see come back.
+   *
+   * ⚠ That third field is not optional any more. `fetchMemberSheet` overlays this device's own
+   * pending edit, so a push now DOES move the sheet we read — our own value arrives here looking
+   * exactly like the player publishing it. With two damage entries inside one round trip the row
+   * goes V1, V2, and then push 1's overlay lands, reads as "the sheet moved", and drags the row
+   * visibly back to V1. Worse, if push 2 is then refused, the rollback below restores `agreed` while
+   * `sheet` has already advanced — and the GM's V2 is dropped with nothing left to re-push it.
+   *
+   * ⚠⚠ STAMPS, NOT VALUES. It held the vitals we had pushed, and asked "is this the same HP and
+   * conditions as something of ours?" — so a genuine PLAYER publish that happened to land on a value
+   * we pushed at some point (they healed back to full, they took the same five) was swallowed as our
+   * own echo, and the GM went on reading an HP the player no longer had. Whether the sheet in hand
+   * is our push is a question about the ROW, not about its contents, and `updated_at` is what
+   * answers it: a pending edit only stands while no newer player publish exists (see
+   * `pendingEditStillStands`), so "a push of ours is still standing" is that comparison, made on the
+   * player's own clock, and a publish newer than our push can never read as an echo.
    */
-  const [seen] = useState(() => new Map<string, { sheet: string; agreed: string }>());
+  const [seen] = useState(() => new Map<string, { sheet: string; agreed: string; pushed: Set<string> }>());
 
   const reconcile = useCallback(() => {
     const combatants = useCombatStore.getState().combatants;
@@ -232,25 +332,40 @@ export function usePcSheetTruth(args: {
       const sv = vitalsFromSheet(sheet, content);
       const skey = vitalsKey(sv);
       const st = seen.get(mem.charId);
+      // Our own push, coming back through the overlay. The row already holds it (or something newer
+      // we pushed after it), so there is nothing to write — only the "last seen" mark moves on.
+      // Not doing this is what let a late echo drag the row back to an earlier value.
+      //
+      // The overlay is the ONLY way a push of ours can come back looking like a sheet move, and it
+      // only stands while the player has published nothing newer — so a push of ours still standing
+      // IS the echo, and a publish with a newer `campaign_characters.updated_at` has already
+      // dropped it (`resolvePendingGmEdit`, inside the read that handed us this sheet) and is the
+      // player moving, whatever value it carries.
+      const pend = gmPendingEdit(campaignId, mem.charId);
+      const echo = !!st && st.sheet !== skey && !!pend && st.pushed.has(pend.pushedAt);
       // The sheet moved (or this PC has never been synced): the sheet wins, always. This is also what
       // makes a simultaneous change safe — the player's edit is never the one discarded.
-      if (!st || st.sheet !== skey) {
-        seen.set(mem.charId, { sheet: skey, agreed: skey });
+      if (!st || (st.sheet !== skey && !echo)) {
+        seen.set(mem.charId, { sheet: skey, agreed: skey, pushed: new Set() });
         writeVitals(c.id, sv, content);
         continue;
       }
+      if (echo) seen.set(mem.charId, { ...st, sheet: skey });
       const cv = vitalsFromCombatant(c, content);
       const ckey = vitalsKey(cv);
       if (ckey === st.agreed) continue; // in step
-      seen.set(mem.charId, { sheet: st.sheet, agreed: ckey }); // the GM moved it here → publish, once
-      void pushVitals(campaignId, mem, cv, content, sheet).then((ok) => {
+      // the GM moved it here → publish, once
+      seen.set(mem.charId, { sheet: skey, agreed: ckey, pushed: st.pushed });
+      void pushVitals(campaignId, mem, cv, content, sheet).then((stamp) => {
         // A REFUSED push must not leave the row stamped as agreed — that is what made a failed push
         // unrepeatable, so a GM whose edit the server rejected never found out and the player never
         // got it. Roll the stamp back (unless a newer pass has already moved it on) and the next
         // pass re-pushes. Deliberately no retry from here: the pass runs on the next change anyway,
         // and re-entering it would spin hot against a server that is still refusing.
         const cur = seen.get(mem.charId);
-        if (!ok && cur?.agreed === ckey) seen.set(mem.charId, { sheet: cur.sheet, agreed: st.agreed });
+        if (stamp) cur?.pushed.add(stamp); // …so this PUSH is recognised when it echoes back
+        else if (stamp === null && cur?.agreed === ckey)
+          seen.set(mem.charId, { sheet: cur.sheet, agreed: st.agreed, pushed: cur.pushed });
       });
     }
   }, [seen, campaignId, members, sheetById, content]);

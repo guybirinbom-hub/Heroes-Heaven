@@ -4,6 +4,15 @@
 // table is missing, so the rest of the app never has to special-case it.
 import { supabase } from './supabase';
 import type { PartySummary } from '../sheet/partySummary';
+import {
+  reconcileGmPendingEdits,
+  rememberGmEdit,
+  resolvePendingGmEdit,
+  setGmPendingAccount,
+  snapshotGmPending,
+  type PendingGmEdit,
+  type PublishedRow,
+} from '../sheet/gmSync';
 import type { SavedChar } from './storage';
 import type { CampaignResult } from './campaigns';
 
@@ -15,11 +24,26 @@ export interface GmEdit {
   updatedAt: string;
 }
 
+/** The published row as the write paths read it, plus the player's own card summary — the display
+ *  side wants both and they live in the same row. */
+export interface PublishedMemberRow extends PublishedRow {
+  summary?: PartySummary;
+}
+
 export interface PartyMember {
   ownerId: string;
   charId: string;
   name: string;
   summary: PartySummary;
+  /**
+   * `campaign_characters.updated_at` — when the PLAYER last published this character.
+   *
+   * The party list carries it because the cards are a GM-side surface too, and a card showing the
+   * GM's own pending edit has to be able to find out the player has published since. Without it the
+   * party page had no way of telling a waiting edit from a landed one, and the "waiting" chip stayed
+   * on a card forever. Optional: a row read before this column was selected simply has no stamp.
+   */
+  updatedAt?: string;
 }
 
 export async function currentUserId(): Promise<string | null> {
@@ -87,7 +111,9 @@ export async function fetchParty(campaignId: string): Promise<PartyMember[] | nu
   if (!supabase) return [];
   const { data, error } = await supabase
     .from('campaign_characters')
-    .select('owner_id,char_id,name,summary')
+    // `updated_at` travels with the card: it is how a card drawn from the GM's own pending edit
+    // finds out the player has published since, which is the only thing that clears the chip there.
+    .select('owner_id,char_id,name,summary,updated_at')
     .eq('campaign_id', campaignId)
     .order('name');
   if (error || !data) return null;
@@ -96,21 +122,81 @@ export async function fetchParty(campaignId: string): Promise<PartyMember[] | nu
     charId: r.char_id as string,
     name: (r.name as string) || 'Unnamed',
     summary: (r.summary ?? {}) as PartySummary,
+    updatedAt: (r.updated_at as string | undefined) ?? undefined,
   }));
 }
 
-/** The full published character (SavedChar: character + build + play) for a party member — fetched
- *  lazily when a card is tapped. Used for the read-only view and for GM editing. */
+/**
+ * The full published character (SavedChar: character + build + play) for a party member — fetched
+ * lazily when a card is tapped. Used for the read-only view and for GM editing.
+ *
+ * THE ONE CHOKEPOINT for reading somebody else's character, which is why the GM's pending edit is
+ * folded in here rather than at each caller: the cards, the tracker's pane card, the GM-edit sheet's
+ * working copy and the seam's down-sync all come through this call, and a GM who pressed Update has
+ * to see the same character in every one of them. `resolvePendingGmEdit` hands back the published
+ * sheet again the moment the player's own row overtakes the push — see ../sheet/gmSync.ts.
+ *
+ * Nothing here writes: the overlay is a local view of a row already sitting in `gm_character_edits`,
+ * and `campaign_characters` is still only ever written by the character's own owner.
+ */
 export async function fetchMemberSheet(campaignId: string, charId: string): Promise<SavedChar | null> {
+  return (await fetchMemberRow(campaignId, charId)).sheet;
+}
+
+/**
+ * The same read, with the PLAYER's own card summary beside the sheet — they are one row.
+ *
+ * Reading them together is what keeps an OPEN sheet honest. The viewer used to be handed the summary
+ * once, by the card that opened it, and then refreshed only the sheet half: a carried
+ * "Encumbered — the player's own app" pill therefore outlived the player dropping the loot and
+ * republishing, and only closing and reopening the sheet could clear it. Same row, same read, same
+ * refresh.
+ *
+ * ⚠ `read` — UNKNOWN IS NOT EMPTY, for the summary half too. A FAILED read (offline, a blip) gives
+ * `row === null`, which the sheet half already treats as "not an answer": the pending overlay stands
+ * and the caller keeps what it had. The summary half silently became `undefined` on the same
+ * response, and `undefined` means "the player publishes nothing derived" — so one bad response took
+ * the player's carried "Encumbered" off the GM's open sheet until some later read happened to
+ * succeed, which in a pending window is days. A network blip is not a publish, and only a publish
+ * may change what is carried; this flag is how the caller tells the two apart.
+ */
+export async function fetchMemberRow(
+  campaignId: string,
+  charId: string,
+): Promise<{ sheet: SavedChar | null; summary?: PartySummary; read: boolean }> {
+  const row = await fetchPublishedSheet(campaignId, charId);
+  return { sheet: resolvePendingGmEdit(campaignId, charId, row), summary: row?.summary, read: !!row };
+}
+
+/**
+ * THE PUBLISHED ROW, WITH NO OVERLAY — what the player's own device actually holds.
+ *
+ * ⚠ EVERY WRITE PATH RE-BASES ON THIS, never on `fetchMemberSheet`. The overlay is this device's own
+ * unapplied edit: a push that re-based on it would be comparing the GM's work against itself, so the
+ * "the player changed this while you were editing" guard would see no change and quietly overwrite
+ * whatever the player published in the meantime. Displaying the overlay is right; building a write on
+ * it is not, and the two calls are separate so the difference can't be lost in a refactor.
+ *
+ * `null` means THE READ FAILED — a different answer from "there is no such row", and the reason a
+ * blip never drops a pending edit.
+ */
+export async function fetchPublishedSheet(campaignId: string, charId: string): Promise<PublishedMemberRow | null> {
   if (!supabase) return null;
   const { data, error } = await supabase
     .from('campaign_characters')
-    .select('sheet')
+    // `updated_at` comes back too: it is how a pending GM edit finds out the player has published
+    // since, which is the one thing that makes the overlay stand down. `summary` rides along for the
+    // display side (fetchMemberRow) — it costs nothing extra, it is the same row.
+    .select('sheet,summary,updated_at')
     .eq('campaign_id', campaignId)
     .eq('char_id', charId)
     .maybeSingle();
-  if (error || !data) return null;
-  return (data.sheet ?? null) as SavedChar | null;
+  if (error) return null;
+  return {
+    sheet: (data?.sheet ?? null) as SavedChar | null,
+    summary: (data?.summary ?? undefined) as PartySummary | undefined,
+    updatedAt: (data?.updated_at as string | undefined) ?? undefined,
+  };
 }
 
 /** GM: push an edited copy of a member's character. Their app applies it on its next sync — silently.
@@ -120,20 +206,89 @@ export async function pushGmEdit(
   charId: string,
   playerOwnerId: string,
   sheet: SavedChar,
+  /** `campaign_characters.updated_at` as the caller just read it — the stamp this edit is built on.
+   *  Passed rather than read here so it is the value the push was ACTUALLY based on, with no window
+   *  in between. See PendingGmEdit.baseUpdatedAt for what it protects. */
+  baseUpdatedAt?: string,
 ): Promise<CampaignResult<null>> {
   if (!supabase) return { ok: false, error: 'Sign in to edit a player.' };
   const editor = await currentUserId();
   if (!editor) return { ok: false, error: 'Sign in to edit a player.' };
+  const pushedAt = new Date().toISOString();
   const { error } = await supabase.from('gm_character_edits').upsert({
     campaign_id: campaignId,
     char_id: charId,
     owner_id: playerOwnerId,
     editor_id: editor,
     sheet,
-    updated_at: new Date().toISOString(),
+    updated_at: pushedAt,
   });
   if (error) return { ok: false, error: error.message || 'Could not push the change.' };
+  // Only once the server took it. The GM's own views read the published row, which doesn't change
+  // until the player's app applies this and re-publishes — so remember the push and show it in the
+  // meantime, with the "not picked up yet" chip. A REFUSED push records nothing, so the GM is never
+  // shown a change that isn't on the server.
+  //
+  // Bound to the EDITOR first: the overlay is private to the account that pushed it, and the store
+  // is keyed by that account so no other sign-in on this browser profile can see it (gmSync.ts).
+  setGmPendingAccount(editor);
+  // …and it carries WHOSE character it is, so the one read every surface goes through can keep the
+  // overlay off the editor's own card (gmSync.gmPendingEdit).
+  rememberGmEdit(campaignId, charId, sheet, pushedAt, baseUpdatedAt, playerOwnerId);
   return { ok: true, value: null };
+}
+
+/**
+ * GM: the edits this campaign still has waiting for its players, so the pending overlay survives a
+ * reload and reaches the GM's other devices.
+ *
+ * Readable because `gce_gm_write` is `for all` (SELECT included) for the campaign's owner — no new
+ * policy, nothing for the owner to re-run.
+ *
+ * A read that FAILED returns early and changes nothing (UNKNOWN is not EMPTY). A read that SUCCEEDED
+ * is an answer about the whole campaign, so it both adds and PRUNES: a row the player's app has
+ * applied and deleted is gone from the server, and its "waiting" chip has to go with it. Without the
+ * prune the party page had no way at all of clearing a chip — it could only ever grow.
+ */
+export async function fetchPendingGmEdits(campaignId: string): Promise<void> {
+  if (!supabase || !campaignId) return;
+  // OUR OWN edits, and only ours. The overlay is a private view of a change this account has not
+  // told the player about, so it is bound to the account that pushed it (the store is keyed by that
+  // uid — see gmSync.setGmPendingAccount) and a co-GM's row is not something we re-draw as "ours".
+  const me = await currentUserId();
+  if (!me) return;
+  setGmPendingAccount(me);
+  // Taken BEFORE the read: an edit pushed while it was in flight is newer than the answer, not
+  // missing from it, and comparing the entries themselves says so without involving any clock.
+  const before = snapshotGmPending(campaignId);
+  try {
+    const { data, error } = await supabase
+      .from('gm_character_edits')
+      // `owner_id` comes back so a seeded edit knows whose character it is — the overlay is never
+      // drawn on the editor's own card, and a row read back from the server must not be the one
+      // exception to that (see gmSync.gmPendingEdit).
+      .select('char_id,owner_id,sheet,updated_at')
+      .eq('campaign_id', campaignId)
+      .eq('editor_id', me);
+    if (error || !data) return;
+    reconcileGmPendingEdits(
+      campaignId,
+      data
+        .filter((r) => !!r.sheet)
+        .map(
+          (r): PendingGmEdit => ({
+            campaignId,
+            charId: r.char_id as string,
+            sheet: r.sheet as SavedChar,
+            pushedAt: (r.updated_at as string) ?? '',
+            ownerId: (r.owner_id as string | undefined) ?? undefined,
+          }),
+        ),
+      before,
+    );
+  } catch {
+    /* best-effort */
+  }
 }
 
 /** Player: any GM edits pending for MY characters (to apply on sync). Empty on any error. */

@@ -466,6 +466,7 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
             <CampaignDetail
               m={view.m}
               gmTools={!isPhone}
+              content={content}
               onEdit={() => setView({ kind: 'edit', m: view.m })}
               onDelete={() => void deleteFrom(view.m, () => setView({ kind: 'list' }))}
               onViewMember={(mem) => void open(view.m.id, mem.charId, mem.ownerId)}
@@ -641,10 +642,12 @@ function JoinRow({ onJoined }: { onJoined: (m: CampaignMembership) => boolean })
   );
 }
 
-function CampaignDetail({ m, gmTools, onEdit, onDelete, onViewMember }: {
+function CampaignDetail({ m, gmTools, content, onEdit, onDelete, onViewMember }: {
   m: CampaignMembership;
   /** False on a phone: the campaign's settings and deletion are GM tools and live on desktop/web. */
   gmTools: boolean;
+  /** So a card can be re-summarised from a GM edit the player hasn't picked up yet. */
+  content: ContentDatabase;
   onEdit: () => void;
   onDelete: () => void;
   onViewMember: (m: PartyMember) => void;
@@ -669,7 +672,7 @@ function CampaignDetail({ m, gmTools, onEdit, onDelete, onViewMember }: {
       <div className="cmp-detail-players">
         <div className="cmp-section-h"><i className="ti ti-users" aria-hidden="true" /> Party</div>
         {/* Kick is a GM tool; without it this is the player's view of their own party. */}
-        <PartyMembers campaignId={m.id} isGm={gmTools && m.role === 'gm'} onView={onViewMember} />
+        <PartyMembers campaignId={m.id} isGm={gmTools && m.role === 'gm'} content={content} onView={onViewMember} />
       </div>
     </div>
   );

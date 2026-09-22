@@ -112,6 +112,20 @@ import type { Character } from '../src/rules/types';
  *  • Reverting the Initiative popup's heading to the shared default fails "an always-on influence is
  *    inside the number" — `AssertionError: a line that always applies is not filed under "apply when
  *    it fits"`.
+ *
+ * owner ruling 2026-09-22 — a stored manual duplicate no longer hides the derived condition it shares
+ * an id with (reversing the "theirs, over the Bulk limit or not" half of 2026-09-16). MUTATION PROOF:
+ *  • Dropping ConditionsModal's `disabled`+`auto` guard together (the picker's whole lock, not either
+ *    half alone — React never dispatches a click to a `disabled` control regardless of the handler)
+ *    fails "clicking Encumbered in the picker while it is derived does not touch play.conditions" —
+ *    `AssertionError: onAdd never dispatched a play-state update: expected [ [Function] ] to have a
+ *    length of +0 but got 1`.
+ *  • Reverting play.ts's Encumbered overlay to the old suppress-on-duplicate gate (`if (!conditions
+ *    .some(…)) conditions = […]`) fails "a stored manual Encumbered plus the derived one renders ONE
+ *    locked pill with the Bulk cause" — `AssertionError: the given combination of arguments (undefined
+ *    and string) is invalid for this assertion` (derivedFrom is undefined: the manual copy won).
+ *  • Dropping the mode loop's new unvalued-duplicate branch fails "a mode-derived UNVALUED condition
+ *    wins over a stored manual duplicate of the same id" the same way — derivedFrom stays undefined.
  */
 const db = content();
 const noop = (() => undefined) as never;
@@ -615,6 +629,24 @@ describe('a condition derived from Bulk shows on the sheet, locked', () => {
     r.stop();
   });
 
+  // owner ruling 2026-09-22: adding a condition the sheet already derives is a no-op, not a second
+  // copy in play.conditions. React itself refuses to dispatch a click to a `disabled` control (checked
+  // against the fiber's own `disabled` prop, not a DOM attribute a test could strip out from under it),
+  // so a real click on this row can never reach `onAdd` — this leg pins that observable contract, and
+  // the note that explains why the toggle does nothing.
+  it('clicking Encumbered in the picker while it is derived does not touch play.conditions', () => {
+    const calls: unknown[] = [];
+    const r = rail(overloaded(), (fn: unknown) => calls.push(fn));
+    r.click(card(r.host, 'Conditions')!.querySelector('.add-btn'));
+    const row = [...r.host.querySelectorAll<HTMLElement>('.cond-row')].find(
+      (e) => (e.querySelector('.mode-name')?.textContent ?? '').startsWith('Encumbered'),
+    )!;
+    r.click(row.querySelector('.mode-toggle'));
+    expect(calls, 'onAdd never dispatched a play-state update').toHaveLength(0);
+    expect(row.querySelector('.cond-auto-note')?.textContent).toContain('Encumbered is set by Bulk');
+    r.stop();
+  });
+
   // bug 2026-09-16: derived conditions
   it('dropping the load removes it', () => {
     const light = applyPlayState(plain({ currency: { gp: 100 } }), emptyPlay(), db);
@@ -707,16 +739,53 @@ describe('a derived condition is locked; a condition the player applied is not',
     r.stop();
   });
 
-  // bug 2026-09-16: derived conditions
-  it('an Encumbered the player applied themselves is theirs, over the Bulk limit or not', () => {
+  // owner ruling 2026-09-22, reversing the "over the Bulk limit or not" half of 2026-09-16: while
+  // Bulk actually justifies it, the derived Encumbered wins the render — one locked pill, not two —
+  // because a manual duplicate sharing its id is otherwise a hollow flag hiding the real cause (the
+  // 2026-09-18 GM scenario in play.ts). The stored copy is never deleted, only out-rendered.
+  it('a stored manual Encumbered plus the derived one renders ONE locked pill with the Bulk cause', () => {
+    const play = { ...emptyPlay(), currency: { gp: 10000 }, conditions: [{ id: 'encumbered' }] };
+    const c = applyPlayState(plain({ currency: { gp: 15 } }), play, db);
+    const held = c.conditions.filter((x) => x.id === 'encumbered');
+    expect(held, 'one entry, not a duplicate').toHaveLength(1);
+    expect(held[0].derivedFrom).toContain('Bulk');
+    expect(play.conditions, 'the manual copy is real data and is never deleted').toEqual([{ id: 'encumbered' }]);
+    const r = rail(c);
+    const pill = condPill(r.host, 'Encumbered')!;
+    expect(pill.querySelector('.cond-pill-x'), 'the derived one is not theirs to remove').toBeNull();
+    expect(pill.querySelector('.cond-auto-lock')?.textContent).toContain('from Bulk');
+    r.stop();
+  });
+
+  // The other half of 2026-09-16 stands: BELOW the limit Bulk has nothing to say, so a manual
+  // Encumbered is exactly what that ruling decided — theirs, removable.
+  it('a stored manual Encumbered under the Bulk limit is still theirs', () => {
     const c = applyPlayState(
-      plain({ currency: { gp: 15 } }),
-      { ...emptyPlay(), currency: { gp: 10000 }, conditions: [{ id: 'encumbered' }] },
+      plain({ currency: { gp: 10000 } }),
+      { ...emptyPlay(), currency: { gp: 10 }, conditions: [{ id: 'encumbered' }] },
       db,
     );
-    expect(c.conditions.filter((x) => x.id === 'encumbered')).toHaveLength(1);
+    const held = c.conditions.filter((x) => x.id === 'encumbered');
+    expect(held).toHaveLength(1);
+    expect(held[0].derivedFrom, 'not derived — Bulk is not the cause here').toBeUndefined();
     const r = rail(c);
-    expect(condPill(r.host, 'Encumbered')!.querySelector('.cond-pill-x'), 'they applied it, so they can remove it').toBeTruthy();
+    expect(condPill(r.host, 'Encumbered')!.querySelector('.cond-pill-x'), 'still theirs, still removable').toBeTruthy();
     r.stop();
+  });
+
+  // owner ruling 2026-09-22: the same collision, for a mode-granted UNVALUED condition. An unvalued
+  // manual duplicate has no number to protect (unlike the Enfeebled-2-vs-1 case above), so it is the
+  // same hollow flag as Encumbered/Bulk — the mode's derivedFrom wins the render.
+  it('a mode-derived UNVALUED condition wins over a stored manual duplicate of the same id', () => {
+    const offGuardModeDb = {
+      ...db,
+      modes: { ...db.modes, 'lane-mode-unvalued': { id: 'lane-mode-unvalued', name: 'Test Aura', predefined: true, modifiers: [], conditions: [{ id: 'off-guard' }] } },
+    };
+    const play = { ...emptyPlay(), activeModes: ['lane-mode-unvalued'], conditions: [{ id: 'off-guard' }] };
+    const c = applyPlayState(plain(), play, offGuardModeDb as typeof db);
+    const held = c.conditions.filter((x) => x.id === 'off-guard');
+    expect(held, 'one entry, not a duplicate').toHaveLength(1);
+    expect(held[0].derivedFrom).toContain('Test Aura');
+    expect(play.conditions, 'the manual copy is never deleted').toEqual([{ id: 'off-guard' }]);
   });
 });

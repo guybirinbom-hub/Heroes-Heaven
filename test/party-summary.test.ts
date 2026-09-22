@@ -45,9 +45,12 @@ describe('computeSummary', () => {
     );
     expect(s.hpCur).toBe(12);
     expect(s.hpTemp).toBe(3);
+    // The RULES ID travels with the display name (2026-09-18): a teammate's device joins its own
+    // derivation to this list on the id, so it can show a condition the owner's app worked out and
+    // theirs cannot. Printing stays name-driven.
     expect(s.conditions).toEqual([
-      { name: 'Frightened', value: 2 },
-      { name: 'My-custom', value: undefined },
+      { id: 'frightened', name: 'Frightened', value: 2 },
+      { id: 'my-custom', name: 'My-custom', value: undefined },
     ]);
     expect(s.modes).toEqual(['Rage']); // the empty-name mode is filtered out
     expect(s.portrait).toBe('data:img');

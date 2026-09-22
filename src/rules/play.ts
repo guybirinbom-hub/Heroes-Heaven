@@ -297,12 +297,25 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
   // "Bulk 10 / 5 · encumbered" and no Encumbered condition anywhere — no pill, no clumsy 1, no −10 ft.
   // Both overlays have to be the same character the sheet shows, or the condition and the number that
   // justifies it are computed from two different wallets.
-  if (!ch.options?.ignoreBulk && !conditions.some((c) => c.id === 'encumbered')) {
+  /*
+   * ⚠ owner ruling 2026-09-22, REVERSING half of 2026-09-16: a HAND-APPLIED `encumbered` no longer
+   * suppresses this derivation. It came up on 2026-09-18 from the other side of the table — a GM whose
+   * device does not derive Encumbered (see partySummary.memberConditions) would add it by hand, and
+   * the copy they pushed was a plain unlocked one that no longer tracked Bulk at all, no cause, outliving
+   * the gear. Bulk is still the real cause while it holds, so the sheet shows ONE pill, the derived one,
+   * locked — a manual duplicate is never deleted (see the `.map` below, not a filter), it just stops
+   * being what's rendered while Bulk agrees with it. Below the limit, an existing manual copy is left
+   * exactly as it was (2026-09-16's "theirs" half stands for the case Bulk doesn't speak to at all).
+   */
+  if (!ch.options?.ignoreBulk) {
     const bulk = deriveBulk({ ...ch, inventory: play.inventory ?? ch.inventory, currency: play.currency ?? ch.currency }, content);
     // `derivedFrom` says the cause, so the sheet can mark it automatic and lock it rather than
     // offering a remove button that removes nothing (it is never in `play.conditions` to remove).
     if (bulk.encTotal > bulk.encumberedAt) {
-      conditions = [...conditions, { id: 'encumbered', derivedFrom: `Bulk — carrying ${bulk.encTotal} of ${bulk.encumberedAt}` }];
+      const derived = { id: 'encumbered', derivedFrom: `Bulk — carrying ${bulk.encTotal} of ${bulk.encumberedAt}` };
+      conditions = conditions.some((c) => c.id === 'encumbered')
+        ? conditions.map((c) => (c.id === 'encumbered' ? derived : c))
+        : [...conditions, derived];
     }
   }
   /*
@@ -319,12 +332,19 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     const mode = content.modes[id];
     for (const mc of mode?.conditions ?? []) {
       const have = conditions.find((x) => x.id === mc.id);
-      // Only the entry this loop CREATES is marked derived. Raising a value the player already holds
-      // (the `else` below) leaves it theirs — otherwise a GM-applied Enfeebled 2 would lose its remove
-      // button the moment a mode that imposes Enfeebled 1 came on, and the player could only step it
-      // down, never take it off.
+      // A VALUED condition the player already holds is left theirs (raised, never downgraded) —
+      // otherwise a GM-applied Enfeebled 2 would lose its remove button the moment a mode that imposes
+      // Enfeebled 1 came on, and the player could only step it down, never take it off. Owner ruling
+      // 2026-09-16, unchanged.
       if (!have) conditions = [...conditions, { id: mc.id, ...(mc.value != null ? { value: mc.value } : {}), derivedFrom: `the ${mode?.name ?? 'active'} mode` }];
-      else if (mc.value != null && (have.value ?? 0) < mc.value) conditions = conditions.map((x) => (x.id === mc.id ? { ...x, value: mc.value } : x));
+      else if (mc.value != null) {
+        if ((have.value ?? 0) < mc.value) conditions = conditions.map((x) => (x.id === mc.id ? { ...x, value: mc.value } : x));
+      } else if (!have.derivedFrom) {
+        // An UNVALUED condition has no number to protect, so a manual duplicate here is exactly the
+        // Encumbered/Bulk case above: a hollow flag hiding the real cause. Owner ruling 2026-09-22: the
+        // derived one wins the render; the manual entry stays in play.conditions untouched underneath.
+        conditions = conditions.map((x) => (x.id === mc.id ? { ...x, derivedFrom: `the ${mode?.name ?? 'active'} mode` } : x));
+      }
     }
   }
   // Max HP must reflect the overlaid conditions (Drained lowers it), so the

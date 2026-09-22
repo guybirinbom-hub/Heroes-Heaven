@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
@@ -7,9 +7,10 @@ import { Builder } from '../builder/Builder';
 import { CharacterSheet } from './CharacterSheet';
 import { exportNative } from '../data/transfer';
 import { downloadText } from './download';
-import { pushGmEdit, fetchMemberSheet } from '../data/party';
+import { pushGmEdit, fetchPublishedSheet } from '../data/party';
 import { confirmDialog, chooseDialog } from './confirm';
-import { reconcileGmWork } from './gmSync';
+import { gmPendingEdit, gmPendingVersion, reconcileGmWork, subscribeGmPending } from './gmSync';
+import { memberConditions, type PartySummary } from './partySummary';
 import { carryStoredOverrides } from '../data/rebuild';
 
 function fileSlug(name: string): string {
@@ -41,6 +42,10 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   /** The player's CURRENT published sheet, kept live by the viewer's Realtime subscription. Adopted
    *  automatically while the GM has no unsaved edits; flagged rather than applied when they do. */
   live?: SavedChar;
+  /** The card's published summary — what the OWNER's own app said about this character. Used only to
+   *  carry over conditions their app DERIVED that this device cannot reproduce, so the sheet can
+   *  never be silent about something the card is showing. See partySummary.memberConditions. */
+  summary?: PartySummary;
   content: ContentDatabase;
   campaignId: string;
   playerOwnerId: string;
@@ -48,6 +53,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
 }>(function GmEditSheet({
   initial,
   live,
+  summary,
   content: baseContent,
   campaignId,
   playerOwnerId,
@@ -67,6 +73,22 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
    * the working copy would throw away whatever the GM is in the middle of. Shown as a banner with the
    * choice to take their version. */
   const [playerAhead, setPlayerAhead] = useState<SavedChar | null>(null);
+  /*
+   * Has the player's app picked up what we pushed?
+   *
+   * An Update writes `gm_character_edits`; the player's device is what applies it and re-publishes.
+   * Until then the published character really is unchanged, and the GM used to be given no way of
+   * telling "it didn't send" from "it hasn't landed yet" — pressing Update and coming back to an
+   * unchanged sheet reads as the first. The edit IS shown (party.ts overlays it on every GM-side
+   * read); this is the line that says it is still only on its way.
+   */
+  const pendingVersion = useSyncExternalStore(subscribeGmPending, gmPendingVersion, gmPendingVersion);
+  const pending = useMemo(
+    () => gmPendingEdit(campaignId, work.id),
+    // The store is module state; `pendingVersion` is what says it moved.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [campaignId, work.id, pendingVersion],
+  );
 
   /*
    * Follow the player, live — but never at the cost of the GM's work.
@@ -81,7 +103,14 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
    */
   useEffect(() => {
     if (!live) return;
-    const verdict = reconcileGmWork({ live: JSON.stringify(live), work: JSON.stringify(work), dirty });
+    const verdict = reconcileGmWork({
+      live: JSON.stringify(live),
+      work: JSON.stringify(work),
+      dirty,
+      // Our own last push, which now comes BACK through the pending overlay — never "the player
+      // changed this while you were editing".
+      pushed: JSON.stringify(baselineRef.current),
+    });
     if (verdict === 'in-step') {
       setPlayerAhead(null); // usually our own push echoing back
       return;
@@ -106,13 +135,28 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
     setDirty(false);
   };
 
+  /*
+   * ⚠ bug 2026-09-18 (the owner's GM report): *"in the party page it says he is encumbered, when I
+   * enter the character page it doesn't say that in any place."*
+   *
+   * The card draws the summary the PLAYER's app published; this sheet re-derives the character here,
+   * on the GM's device, against the GM's content database. Encumbered comes out of item Bulk, so the
+   * two answers part company whenever the two databases do — and then the GM is looking at a card
+   * that says one thing and a sheet that says nothing. `memberConditions` is the single place that
+   * question is answered now: this derivation, plus any DERIVED condition the owner's own app
+   * reported that we could not reproduce, still carrying the cause they gave it (so it stays locked
+   * and nobody at the table can "fix" it by hand).
+   */
   const character = useMemo(() => {
+    let live: ReturnType<typeof applyPlayState>;
     try {
-      return applyPlayState(work.character, work.play, content);
+      live = applyPlayState(work.character, work.play, content);
     } catch {
-      return work.character;
+      live = work.character;
     }
-  }, [work.character, work.play, content]);
+    const conditions = memberConditions(live.conditions ?? [], summary?.conditions);
+    return conditions === (live.conditions ?? []) ? live : { ...live, conditions };
+  }, [work.character, work.play, content, summary]);
 
   const sheetContent = useMemo(
     () => applyOverrides(content, work.character.overrides),
@@ -159,14 +203,32 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   // Push the working copy to the player. Returns true on success.
   const pushToPlayer = async (): Promise<boolean> => {
     setBusy(true);
-    // Don't silently clobber newer player work: if the player has re-published this character since we
-    // opened it, our working copy is based on a stale snapshot. Detect it (re-fetch + compare to the
-    // snapshot we opened) and let the GM reopen for the current version instead of overwriting theirs.
-    const current = await fetchMemberSheet(campaignId, work.id);
-    // Only warn about a PLAYER change: `current` must differ from BOTH the snapshot we opened and our own
-    // last push (our first push re-publishes via the player, so on a later push `current` is our own edit).
+    /*
+     * Don't silently clobber newer player work: if the player has re-published this character since we
+     * opened it, our working copy is based on a stale snapshot. Detect it (re-fetch + compare to the
+     * snapshot we opened) and let the GM reopen for the current version instead of overwriting theirs.
+     *
+     * ⚠ `fetchPublishedSheet`, NOT `fetchMemberSheet`. The latter hands back our own pending edit
+     * whenever one is waiting, so this guard would be comparing the GM's work against itself: it
+     * would find nothing changed and push straight over whatever the player published in between,
+     * with no warning at all. A write re-bases on the player's row; only the display overlays it.
+     */
+    const row = await fetchPublishedSheet(campaignId, work.id);
+    const current = row?.sheet ?? null;
+    // Only warn about a PLAYER change. `current` must differ from every version we already know is
+    // OURS: the snapshot we opened, our last push, and the edit still waiting on the server (which is
+    // what `initial` is when the GM reopened a character whose edit hasn't landed yet).
     const cur = current ? JSON.stringify(current) : null;
-    const changedByPlayer = cur !== null && cur !== JSON.stringify(initial) && cur !== JSON.stringify(baselineRef.current);
+    const mine = [JSON.stringify(initial), JSON.stringify(baselineRef.current)];
+    if (pending) mine.push(JSON.stringify(pending.sheet));
+    const changedByPlayer =
+      cur !== null &&
+      !mine.includes(cur) &&
+      // With an edit of ours still waiting, the published row is SUPPOSED to be the pre-edit one, so
+      // the fact that it differs proves nothing at all. The stamp is what answers it — and both sides
+      // of that comparison come off the player's own clock, so a GM device running fast can't fool it.
+      // Unknown either way (an edit seeded from the GM's other device) errs towards asking.
+      (!pending || !pending.baseUpdatedAt || !row?.updatedAt || row.updatedAt > pending.baseUpdatedAt);
     if (changedByPlayer) {
       setBusy(false);
       const overwrite = await confirmDialog({
@@ -179,7 +241,9 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
       if (!overwrite) return false;
       setBusy(true);
     }
-    const res = await pushGmEdit(campaignId, work.id, playerOwnerId, work);
+    // The stamp we just read travels with the push: it is the published version this edit is built
+    // on, and the only skew-free way of asking later whether the player has moved past it.
+    const res = await pushGmEdit(campaignId, work.id, playerOwnerId, work, row?.updatedAt);
     setBusy(false);
     if (!res.ok) {
       await confirmDialog({ title: 'Couldn’t update', message: res.error, confirmLabel: 'OK' });
@@ -205,7 +269,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
       if (ok)
         await confirmDialog({
           title: 'Sent',
-          message: `Your changes to ${work.character.name} were sent — they apply on the player’s device right away if their app is open, otherwise next time they open it.`,
+          message: `Your changes to ${work.character.name} were sent — they apply on the player’s device right away if their app is open, otherwise next time they open it. Your own cards and sheet show them from now, marked “waiting” until the player’s app has them.`,
           confirmLabel: 'OK',
         });
     }
@@ -256,6 +320,18 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
 
   return (
     <>
+      {/* Pushed, on the server, not yet on the player's device. The sheet above already SHOWS the
+          edit; this says why the player might not have it. It clears itself the moment their app
+          publishes a version that carries the change (or anything newer). */}
+      {pending && !dirty && (
+        <div className="gm-pending-strip" role="status">
+          <i className="ti ti-cloud-upload" aria-hidden="true" />
+          <span>
+            Your changes to <strong>{work.character.name}</strong> are saved and waiting — the player&apos;s app
+            hasn&apos;t picked them up yet. They land the next time it&apos;s open.
+          </span>
+        </div>
+      )}
       {/* Only ever shown when the GM has unsaved edits — otherwise the player's change was already
           adopted silently and there is nothing to decide. */}
       {playerAhead && (
