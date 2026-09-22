@@ -1,5 +1,15 @@
-import { describe, it, expect } from 'vitest';
-import { reconcileGmWork, playerWorkWasOverwritten, editsToApply } from '../src/sheet/gmSync';
+import { describe, it, expect, beforeEach } from 'vitest';
+import {
+  reconcileGmWork,
+  playerWorkWasOverwritten,
+  editsToApply,
+  clearGmPendingEdits,
+  gmPendingEdit,
+  rememberGmEdit,
+  resolvePendingGmEdit,
+  setGmPendingAccount,
+} from '../src/sheet/gmSync';
+import type { SavedChar } from '../src/data/storage';
 
 /*
  * The conflict model, in the two places it can lose someone's work: the GM's unsaved working copy when
@@ -84,5 +94,63 @@ describe('editsToApply — a lingering gm_character_edits row must apply exactly
   it('an edit with no timestamp cannot prove it is new — skipped, never loopable', () => {
     expect(editsToApply([edit(undefined)], {})).toHaveLength(0);
     expect(editsToApply([edit(undefined)], { 'c1|x': '2026-09-01T10:00:00Z' })).toHaveLength(0);
+  });
+});
+
+/*
+ * A GM's pending edit is private to the GM's account, so it must never be drawn on a character that
+ * account OWNS — their own app applies it through the ordinary player path. An edit row written
+ * before `gm_character_edits.owner_id` existed can't say whose character it is about; the PUBLISHED
+ * row always can, and this is the read that puts the two together.
+ */
+describe('resolvePendingGmEdit — an overlay never lands on the viewer’s own character', () => {
+  const EDITED = { id: 'pc-1', character: { name: 'the GM’s unapplied change' } } as unknown as SavedChar;
+  const PUBLISHED = { id: 'pc-1', character: { name: 'what the player published' } } as unknown as SavedChar;
+  /** An older row: the push never recorded whose character it is. */
+  const ownerless = () => rememberGmEdit('c1', 'pc-1', EDITED, '2026-09-22T10:05:00Z', '2026-09-22T10:00:00Z');
+
+  beforeEach(() => {
+    clearGmPendingEdits();
+    setGmPendingAccount('gm-1');
+  });
+
+  it('refuses it when the published row says the owner is us — and drops it from every surface', () => {
+    ownerless();
+    const row = { sheet: PUBLISHED, updatedAt: '2026-09-22T10:00:00Z', ownerId: 'gm-1' };
+    expect(resolvePendingGmEdit('c1', 'pc-1', row)).toBe(PUBLISHED);
+    expect(gmPendingEdit('c1', 'pc-1'), 'the row placed it, so the chip and the strip go too').toBeUndefined();
+  });
+
+  it('still overlays another player’s character, exactly as before', () => {
+    ownerless();
+    const row = { sheet: PUBLISHED, updatedAt: '2026-09-22T10:00:00Z', ownerId: 'player-1' };
+    expect(resolvePendingGmEdit('c1', 'pc-1', row)).toBe(EDITED);
+    expect(gmPendingEdit('c1', 'pc-1')?.ownerId, 'and the store keeps what the row taught it').toBe('player-1');
+  });
+
+  it('refuses rather than guesses when NOBODY can say whose character it is', () => {
+    // An older edit row AND a read that answered no row (offline, a blip). Two unknowns are not a
+    // reason to show someone's silent change on a sheet that may be our own.
+    ownerless();
+    expect(resolvePendingGmEdit('c1', 'pc-1', null)).toBeNull();
+    expect(gmPendingEdit('c1', 'pc-1'), 'and refusing to DRAW it never drops it — it is a server row').toBeDefined();
+  });
+
+  it('an edit whose own push recorded the owner is untouched by any of this', () => {
+    rememberGmEdit('c1', 'pc-1', EDITED, '2026-09-22T10:05:00Z', '2026-09-22T10:00:00Z', 'player-1');
+    expect(resolvePendingGmEdit('c1', 'pc-1', null), 'a failed read never stands an edit down').toBe(EDITED);
+  });
+
+  it('learning the owner MUTATES the pending entry — reconcileGmPendingEdits keys a delete off that identity', () => {
+    // If this ever goes back to replacing the entry (`pendingMap().set(key, { ...edit, ownerId })`),
+    // a learn landing mid-fetch makes reconcileGmPendingEdits' `before.get(key) !== have` (gmSync.ts
+    // ~line 392) see a "different" object and skip a delete it should make.
+    ownerless();
+    const before = gmPendingEdit('c1', 'pc-1');
+    const row = { sheet: PUBLISHED, updatedAt: '2026-09-22T10:00:00Z', ownerId: 'player-1' };
+    resolvePendingGmEdit('c1', 'pc-1', row);
+    const after = gmPendingEdit('c1', 'pc-1');
+    expect(after, 'same object — not a replacement').toBe(before);
+    expect(after?.ownerId).toBe('player-1');
   });
 });

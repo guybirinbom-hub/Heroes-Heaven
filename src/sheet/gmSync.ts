@@ -118,8 +118,12 @@ export interface PendingGmEdit {
    * their own campaign is both parties: an edit they push to themselves lands through the ordinary
    * player path (their own app applies it and republishes), so drawing an overlay of it on their own
    * card, pane and sheet only showed them a change with no way to tell it apart from what they had
-   * published. Undefined on an edit from a row with no owner recorded — then the card's own
-   * `m.ownerId !== myId` test is what covers it.
+   * published. Undefined on an edit from a row with no owner recorded — but that gap is what the
+   * READ closes now: `learnPendingOwner` fills it in from the published row's own `owner_id`, and
+   * `resolvePendingGmEdit` refuses to draw an overlay on the signed-in account's own character, or
+   * when nobody — neither this field nor the published row — can say whose character it is. The
+   * card's own `m.ownerId !== myId` test (./PartyMembers.tsx) is only the belt for the case where
+   * there is no published row to learn from at all.
    */
   ownerId?: string;
 }
@@ -129,6 +133,17 @@ export interface PublishedRow {
   sheet: SavedChar | null;
   /** `campaign_characters.updated_at` — the PLAYER's clock at their last publish. */
   updatedAt?: string;
+  /**
+   * `campaign_characters.owner_id` — WHOSE character this row is.
+   *
+   * The only thing that can answer that for an edit whose own row never recorded it (see
+   * `PendingGmEdit.ownerId`): a pending edit is matched to a published row by (campaign, character),
+   * and the row always knows its owner. So the read fills the gap in, and the "never on your own
+   * character" rule below can judge an older edit everywhere instead of nowhere.
+   *
+   * Undefined where the caller has no row to hand — the party cards' pruner passes a stamp alone.
+   */
+  ownerId?: string;
 }
 
 export function pendingGmKey(campaignId: string, charId: string): string {
@@ -432,16 +447,56 @@ export function dropGmPendingEdit(campaignId: string, charId: string): void {
 }
 
 /**
+ * Teach an edit whose own row never recorded an owner whose character it is.
+ *
+ * `gm_character_edits.owner_id` came later than the first rows, and an edit that cannot say whose
+ * character it is, is one the rule above cannot judge. The published row it is matched against
+ * always knows, so the single read every surface goes through fills it in — once — and the rule
+ * then covers the sheet, the "waiting" strip on it, the cards' chips and the tracker's pane
+ * together, instead of each of them carrying its own guess about an edit nobody could judge.
+ */
+function learnPendingOwner(campaignId: string, charId: string, ownerId?: string): void {
+  if (!ownerId) return;
+  const key = pendingGmKey(campaignId, charId);
+  const edit = pendingMap().get(key);
+  if (!edit || edit.ownerId) return; // an owner the push itself recorded is the better one
+  // Mutate in place — `reconcileGmPendingEdits` tells "pushed while the read was in flight" apart
+  // from "the server dropped it" by object identity (`before.get(key) !== have`, ~line 392).
+  // Replacing the entry here would forge a false "pushed since" for every edit this learns an
+  // owner for, and a delete that should happen gets skipped.
+  edit.ownerId = ownerId;
+  pendingChanged();
+}
+
+/**
  * The one call the party layer makes: give it what the server answered, get back the sheet the GM
  * should see. A pending edit the published row has overtaken is dropped here — that is the single
  * place the chip goes away, so the card, the pane and the sheet all stop showing it together.
  */
 export function resolvePendingGmEdit(campaignId: string, charId: string, published: PublishedRow | null): SavedChar | null {
+  // The row knows whose character this is even when an older edit row didn't.
+  learnPendingOwner(campaignId, charId, published?.ownerId);
   const edit = gmPendingEdit(campaignId, charId);
   if (edit && !pendingEditStillStands(edit, published)) {
     dropGmPendingEdit(campaignId, charId);
     return published?.sheet ?? null;
   }
+  /*
+   * ⚠ AND NEVER ONTO OUR OWN CHARACTER — from HERE, not from each surface that draws the result.
+   *
+   * A GM's pending edit is private to the GM's account. Overlaid on the signed-in account's own
+   * character it is somebody's unapplied change to OUR sheet, shown as if we had published it: the
+   * cards carried their own test for that (`m.ownerId === myId` in ./PartyMembers.tsx) and the
+   * SHEET those cards open carried none, so the card refused the edit while the sheet behind it
+   * showed it.
+   *
+   * Two ways to refuse, and neither is a guess: the row says the owner is us, or nobody can say
+   * whose character this is at all (an older edit row, and a read that gave us no row either). An
+   * overlay we cannot judge is one we do not draw — the published sheet is what this account
+   * published, and showing that is never wrong.
+   */
+  if (edit && (published?.ownerId ? published.ownerId === pendingAccount : !edit.ownerId))
+    return published?.sheet ?? null;
   return withPendingGmEdit(published, edit);
 }
 

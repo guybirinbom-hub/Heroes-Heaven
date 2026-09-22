@@ -5,6 +5,7 @@ import { applyPlayState } from '../rules/play';
 import { rememberPartyCapabilities } from '../data/partyCapabilities';
 import { fetchParty, fetchMemberRow, fetchPendingGmEdits, currentUserId, kickFromParty, subscribeParty, subscribeMemberSheet, type PartyMember } from '../data/party';
 import { gmPendingEdit, gmPendingVersion, pendingEditStillStands, resolvePendingGmEdit, subscribeGmPending } from './gmSync';
+import { memberCardSummary, useMemberSheets } from './memberSheets';
 import { memberConditions, memberSummary, type PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
 import { GmEditSheet } from './GmEditSheet';
@@ -13,6 +14,9 @@ import { RankPill } from './widgets';
 import { useBackHandler } from './useEscapeClose';
 
 const LOAD_ERROR = "Couldn't load the party. Check your connection, or that the campaign SQL has been run.";
+
+/** One array, so switching the member loader off can't look like a new list every render. */
+const NO_MEMBERS: PartyMember[] = [];
 
 interface ViewingState {
   campaignId: string;
@@ -198,8 +202,11 @@ export function PartyMembers({
    * two databases do — Encumbered comes out of item Bulk — and that disagreement between two cards
    * for the same character, on the same screen, is what the owner reported. The host that has the
    * sheets (the tracker) passes its own reconciliation in through here, so the dashboard card, the
-   * pane card and the sheet a card opens are all the same answer. Omitted (the party page, which
-   * never fetches member sheets) → the published summary, exactly as before.
+   * pane card and the sheet a card opens are all the same answer.
+   *
+   * Omitted → this component loads the members' sheets ITSELF and reconciles them the same way (see
+   * `loadSheets` below). It used to fall back to the published summary, which is what left the plain
+   * party page and the GM's campaign detail disagreeing with the sheets their own cards open.
    */
   summarize?: (m: PartyMember) => PartySummary | undefined;
   onView: (m: PartyMember) => void;
@@ -314,6 +321,49 @@ export function PartyMembers({
     for (const m of fetched)
       if (m.updatedAt) resolvePendingGmEdit(campaignId, m.charId, { sheet: null, updatedAt: m.updatedAt });
   }, [fetched, campaignId]);
+
+  /*
+   * THE CARDS' OWN SHEETS — what the plain party surfaces never had.
+   *
+   * `m.summary` is a column the PLAYER's app wrote, on the player's device, against the PLAYER's
+   * content database; the sheet a card opens is re-derived here, against THIS one. Encumbered comes
+   * out of item Bulk, so a card drawing that column raw and the sheet behind it disagree the moment
+   * the two databases do — the owner's report, on the two surfaces (a character's Party button, the
+   * GM's campaign detail) that the tracker-side fix could not reach, because the loader lived behind
+   * the lazy tracker chunk. It lives in ./memberSheets now: one row read and one subscription per
+   * member, reconciled through the one function the tracker calls.
+   *
+   * Three ways in, and only one of them fetches:
+   *   • a host that passes `summarize` (the tracker) already holds every sheet — off, so nothing is
+   *     read or subscribed twice;
+   *   • `localMembers` are this device's own roster, never published to a campaign — off, there is
+   *     no row to read;
+   *   • no `content` to derive against — off, and the published summary is all the card can say.
+   *
+   * There is no flash of the wrong thing: until a member's sheet lands `summarizeOwn` answers
+   * `undefined` and the card draws the published summary, exactly as it did before.
+   */
+  const loadSheets = !summarize && !!content && !localMembers;
+  const sheets = useMemberSheets(loadSheets ? campaignId : '', loadSheets ? (fetched ?? NO_MEMBERS) : NO_MEMBERS);
+  const summarizeOwn = useCallback(
+    (m: PartyMember): PartySummary | undefined => {
+      const sheet = sheets.get(m.charId);
+      if (!sheet || !content) return undefined;
+      // A GM's pending edit is already inside that sheet — `fetchMemberSheet` overlays it, and that
+      // store only ever answers the account that pushed it, so a PLAYER on this same page has
+      // nothing to fold in and sees the published character (../sheet/gmSync.ts).
+      //
+      // ⚠ …EXCEPT ON THE VIEWER'S OWN CHARACTER, and this is the second half of the belt that sits
+      // on `pending` twenty lines below. The read itself now refuses such an overlay — it sees the
+      // published row's `owner_id`, so an edit whose own row never recorded one is judged there and
+      // the SHEET a card opens is covered too (../sheet/gmSync.ts → resolvePendingGmEdit). This
+      // stays as the belt for the one case that read cannot answer: a row it never got.
+      if (m.ownerId === myId && gmPendingEdit(campaignId, m.charId)) return undefined;
+      return memberCardSummary(m, sheet, content);
+    },
+    [sheets, content, myId, campaignId],
+  );
+  const summarizeFor = summarize ?? summarizeOwn;
   const shown = useMemo(
     () =>
       fetched?.map((m) => {
@@ -333,7 +383,7 @@ export function PartyMembers({
         // any derived chip only the player's app could reach, and the pending edit folded in (the
         // sheets it works from are the overlaid ones). Its answer is the card's answer, so the two
         // cards the tracker draws for one character cannot say different things again.
-        const derived = summarize?.(m);
+        const derived = summarizeFor(m);
         if (derived) return { member: { ...m, name: derived.name || m.name, summary: derived }, pending };
         if (!pending || !edit || !content) return { member: m, pending };
         try {
@@ -351,7 +401,7 @@ export function PartyMembers({
     // the deps because it closes over the host's sheets: a member's sheet arriving is exactly when
     // these cards have to be recomputed, and the host re-rendering is the only signal for it.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [fetched, campaignId, content, pendingVersion, summarize, myId],
+    [fetched, campaignId, content, pendingVersion, summarizeFor, myId],
   );
 
   const kick = async (m: PartyMember) => {

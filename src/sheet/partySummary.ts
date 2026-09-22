@@ -159,7 +159,8 @@ export function carriedDerivedConditions(
 }
 
 /**
- * The summary a GM-SIDE CARD should draw for a member whose sheet this device holds.
+ * The summary ANY card should draw for a member whose sheet this device holds — a GM's or, since
+ * the loader moved out of the tracker chunk (./memberSheets.ts), a PLAYER's own party page.
  *
  * The published summary is the player's own verdict, computed on their device against their content
  * database; `computeSummary` here is this device's. The tracker had both, in two different places —
@@ -175,9 +176,9 @@ export function carriedDerivedConditions(
  * locked chip is not one a GM edit could have taken off. Withholding it cost the GM the
  * "Encumbered" only the PLAYER's app can work out — their content database, their item Bulk — for
  * the whole pending window, which between sessions is days. What the player's app derives changes
- * when the PLAYER publishes again, and nothing else may change it. Both GM-side callers
- * (`gmMemberSummary` in ../integration/pcSheetTruth.ts and the card in ./PartyMembers.tsx) pass the
- * member's own summary for exactly that reason.
+ * when the PLAYER publishes again, and nothing else may change it. Both callers
+ * (`memberCardSummary` in ./memberSheets.ts and the card in ./PartyMembers.tsx) pass the member's
+ * own summary for exactly that reason.
  */
 export function memberSummary(c: Character, content: ContentDatabase, published?: PartySummary): PartySummary {
   const s = computeSummary(c, content);

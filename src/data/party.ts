@@ -187,13 +187,17 @@ export async function fetchPublishedSheet(campaignId: string, charId: string): P
     // `updated_at` comes back too: it is how a pending GM edit finds out the player has published
     // since, which is the one thing that makes the overlay stand down. `summary` rides along for the
     // display side (fetchMemberRow) — it costs nothing extra, it is the same row.
-    .select('sheet,summary,updated_at')
+    .select('owner_id,sheet,summary,updated_at')
     .eq('campaign_id', campaignId)
     .eq('char_id', charId)
     .maybeSingle();
   if (error) return null;
   return {
     sheet: (data?.sheet ?? null) as SavedChar | null,
+    // WHOSE character this row is. An older `gm_character_edits` row can't say, and an edit nobody
+    // can place is one that must never be overlaid on the signed-in account's own character — this
+    // column is what the read judges that by (../sheet/gmSync.ts → resolvePendingGmEdit).
+    ownerId: (data?.owner_id as string | undefined) ?? undefined,
     summary: (data?.summary ?? undefined) as PartySummary | undefined,
     updatedAt: (data?.updated_at as string | undefined) ?? undefined,
   };

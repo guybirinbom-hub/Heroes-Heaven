@@ -1,13 +1,24 @@
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
-import { applyPlayState, initialPlay } from '../rules/play';
-import { gmPendingEdit, gmPendingVersion, resolvePendingGmEdit, subscribeGmPending } from '../sheet/gmSync';
+import { useCallback, useEffect, useState } from 'react';
+import { initialPlay } from '../rules/play';
+import { gmPendingEdit, resolvePendingGmEdit } from '../sheet/gmSync';
 import { deriveMaxHp } from '../rules/derive';
-import { fetchMemberSheet, fetchPublishedSheet, pushGmEdit, subscribeMemberSheet, type PartyMember } from '../data/party';
-import { memberSummary, type PartySummary } from '../sheet/partySummary';
+import { fetchPublishedSheet, pushGmEdit, type PartyMember } from '../data/party';
+import { livePlay } from '../sheet/memberSheets';
 import type { SavedChar } from '../data/storage';
 import type { Character, ContentDatabase } from '../rules/types';
 import { useCombatStore } from '../../tracker/src/store/combatStore';
 import type { Combatant } from '../../tracker/src/types/pf2e';
+
+/*
+ * `livePlay`, `memberCardSummary` (once `gmMemberSummary`) and `useMemberSheets` MOVED to
+ * ../sheet/memberSheets.
+ *
+ * Nothing about them is tracker-specific, and this file imports the tracker's combat store — so
+ * while they lived here the plain party surfaces (a character's Party button, the GM's campaign
+ * detail) could not read a member's sheet without pulling the whole lazily-split tracker chunk into
+ * the main bundle. They are re-exported so the seam's own callers, and this file's, are unchanged.
+ */
+export { memberCardSummary, livePlay, useMemberSheets } from '../sheet/memberSheets';
 
 /*
  * THE SHEET IS THE TRUTH — for a campaign's player characters, and only for them.
@@ -61,30 +72,6 @@ let _cid = 0;
  *  the GM typed) has no id on the sheet, so it is neither pushed nor reconciled — it simply stays. */
 function known(list: { id: string; value?: number }[], content: ContentDatabase): { id: string; value?: number }[] {
   return list.filter((c) => !!content.conditions?.[c.id]);
-}
-
-/** What the sheet SHOWS: the build with play overlaid (damage taken, conditions in effect). */
-export function livePlay(sheet: SavedChar, content: ContentDatabase): Character {
-  try {
-    return applyPlayState(sheet.character, sheet.play, content);
-  } catch {
-    return sheet.character;
-  }
-}
-
-/**
- * THE ONE SUMMARY every GM-side surface draws for a member whose SHEET this device holds.
- *
- * Here, taking the whole member, rather than written out at each call site: the published summary
- * is not an optional extra the caller may decide to withhold. It was withheld while a GM edit of
- * ours was pending, and that re-created the owner's own report for the length of the pending window
- * — the "Encumbered" only the PLAYER's app can work out (their content database, their item Bulk)
- * vanished from the cards and the sheet the moment the GM pressed Update. Only DERIVED chips are
- * ever carried, every surface locks those, so there is not one a GM edit could have taken off; what
- * the player's app derives changes when the PLAYER publishes again, and until then it is still true.
- */
-export function gmMemberSummary(mem: PartyMember, sheet: SavedChar, content: ContentDatabase): PartySummary {
-  return memberSummary(livePlay(sheet, content), content, mem.summary);
 }
 
 function maxHpOf(live: Character, content: ContentDatabase): number {
@@ -202,80 +189,6 @@ async function pushVitals(
   // The push we just recorded, by the stamp it carries — `rememberGmEdit` ran inside `pushGmEdit`,
   // synchronously, the moment the server accepted it.
   return res.ok ? gmPendingEdit(campaignId, mem.charId)?.pushedAt ?? '' : null;
-}
-
-/**
- * Every member's published sheet, kept live.
- *
- * One subscription per member, exactly as the member viewer keeps ONE open sheet live — the GM is
- * looking at the whole party at once here, so all of them have to follow.
- */
-export function useMemberSheets(campaignId: string, members: PartyMember[]): Map<string, SavedChar> {
-  const [sheets, setSheets] = useState<Map<string, SavedChar>>(() => new Map());
-  const ids = members.map((m) => m.charId).join(',');
-  const pendingVersion = useSyncExternalStore(subscribeGmPending, gmPendingVersion, gmPendingVersion);
-  // The list as it stands right now, so a response for a member who has since left the party is
-  // dropped instead of re-adding them. (It replaces the per-effect `cancelled` flag, which no longer
-  // works now that the pull outlives any one effect.)
-  const idsRef = useRef(ids);
-  idsRef.current = ids;
-  const pull = useCallback(
-    (charId: string) => {
-      void fetchMemberSheet(campaignId, charId).then((s) => {
-        if (!s?.character || !idsRef.current.split(',').includes(charId)) return;
-        // Skip an identical re-publish so an echo doesn't re-render the whole party.
-        setSheets((prev) => (JSON.stringify(prev.get(charId)) === JSON.stringify(s) ? prev : new Map(prev).set(charId, s)));
-      });
-    },
-    [campaignId],
-  );
-  /*
-   * THE SUBSCRIPTIONS — one channel per member, and nothing about a GM's own edit belongs in here.
-   *
-   * `pendingVersion` used to be a dep of this effect, which meant every Update AND every point of
-   * damage the GM applied (pushVitals → pushGmEdit → rememberGmEdit) tore down and instantly re-joined
-   * one channel per member, each on the same deterministic topic, with the leave still in flight.
-   * Mid-combat that is N leave/join pairs per damage entry on identical topic names — and a Realtime
-   * feed that quietly stops delivering is precisely the "the GM is looking at stale data" fault this
-   * whole change exists to remove.
-   */
-  useEffect(() => {
-    if (!campaignId || !ids) return;
-    const unsubs = ids.split(',').map((charId) => {
-      pull(charId);
-      return subscribeMemberSheet(campaignId, charId, () => pull(charId));
-    });
-    return () => {
-      for (const u of unsubs) u();
-    };
-  }, [campaignId, ids, pull]);
-  /*
-   * The re-PULL, and only the re-pull — for the ONE character whose pending edit actually moved.
-   *
-   * A GM's own Update doesn't touch `campaign_characters`, so no Realtime event ever arrives for it
-   * and this map would keep answering with the pre-edit sheet until the player's device came online.
-   * `fetchMemberSheet` overlays the pending edit (src/data/party.ts); this is what makes it re-ask.
-   *
-   * It also closes a clobber door on the way past: `pushVitals` re-bases on the overlaid sheet, so a
-   * damage push that arrived while a sheet edit was still pending used to be built on the published
-   * (pre-edit) sheet and upserted over the GM's own waiting row, silently dropping it.
-   *
-   * ⚠ The counter is campaign-wide, so a bare re-run of this refetched EVERY member on every push —
-   * and every single point of damage is a push. That is N HTTP reads per damage entry mid-combat,
-   * and a drop inside one of them bumps the counter again and re-runs the whole fan-out. The stamp
-   * of each member's own pending edit is what changed or didn't, so only that member is re-read.
-   */
-  const pendingSig = useRef(new Map<string, string>());
-  useEffect(() => {
-    if (!campaignId || !ids) return;
-    for (const charId of ids.split(',')) {
-      const sig = gmPendingEdit(campaignId, charId)?.pushedAt ?? '';
-      if (pendingSig.current.get(charId) === sig) continue;
-      pendingSig.current.set(charId, sig);
-      pull(charId);
-    }
-  }, [campaignId, ids, pendingVersion, pull]);
-  return sheets;
 }
 
 /**

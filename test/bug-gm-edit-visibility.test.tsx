@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { readFileSync } from 'node:fs';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, useEffect, useRef, type ReactElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
@@ -129,9 +130,11 @@ const { clearGmPendingEdits, gmPendingEdit, pendingEditStillStands, setGmPending
 const { signOut } = await import('../src/data/useAuth');
 const { GmEditSheet } = await import('../src/sheet/GmEditSheet');
 const { PartyCard, PartyMembers, useMemberViewer } = await import('../src/sheet/PartyMembers');
-const { gmMemberSummary, useMemberSheets, usePcSheetTruth } = await import('../src/integration/pcSheetTruth');
+const { PartyPage } = await import('../src/sheet/PartyPage');
+const { memberCardSummary, useMemberSheets, usePcSheetTruth } = await import('../src/integration/pcSheetTruth');
 const { useCombatStore } = await import('../tracker/src/store/combatStore');
 type PartyMember = import('../src/data/party').PartyMember;
+type CampaignMembership = import('../src/data/campaigns').CampaignMembership;
 
 const db = content();
 const CAMPAIGN = 'camp-1';
@@ -946,8 +949,8 @@ describe('(m) a waiting GM edit never costs the GM what only the PLAYER’s app 
 
   it('so do the tracker’s cards — through the one function the tracker calls', async () => {
     /*
-     * MUTATION: withhold the member's own summary inside `gmMemberSummary`
-     * (src/integration/pcSheetTruth.ts) — `memberSummary(livePlay(sheet, content), content)` — and
+     * MUTATION: withhold the member's own summary inside `memberCardSummary`
+     * (src/sheet/memberSheets.ts) — `memberSummary(livePlay(sheet, content), content)` — and
      * this fails —
      *   AssertionError: expected [ 'Frightened' ] to deeply equal [ 'Encumbered', 'Frightened' ]
      *
@@ -957,7 +960,7 @@ describe('(m) a waiting GM edit never costs the GM what only the PLAYER’s app 
     const mem = await pendingOverACarriedChip();
     // The sheet the tracker holds for this member is the overlaid one — the GM's own pending edit.
     const sheets = new Map([[CHAR, (await fetchMemberSheet(CAMPAIGN, CHAR))!]]);
-    const card = gmMemberSummary(mem, sheets.get(CHAR)!, db);
+    const card = memberCardSummary(mem, sheets.get(CHAR)!, db);
     expect(card.conditions.map((c) => c.name).sort()).toEqual(['Encumbered', 'Frightened']);
     expect(card.conditions.find((c) => c.name === 'Encumbered')!.derivedFrom).toContain('the player’s own app');
 
@@ -967,7 +970,7 @@ describe('(m) a waiting GM edit never costs the GM what only the PLAYER’s app 
         campaignId={CAMPAIGN}
         isGm
         content={db}
-        summarize={(x) => gmMemberSummary(x, sheets.get(x.charId)!, db)}
+        summarize={(x) => memberCardSummary(x, sheets.get(x.charId)!, db)}
         onView={() => undefined}
       />,
     );
@@ -1293,5 +1296,270 @@ describe('(q) a read that FAILED is not the player publishing an empty summary',
     publish(light(), '2026-09-18T23:59:00.000Z');
     await realtime();
     expect(host.textContent, 'their own newer verdict is the one that counts').not.toContain('Encumbered');
+  });
+});
+
+describe('(P) the PLAIN party page — the cards, not just the sheet behind them', () => {
+  /*
+   * "the cards need to be updated." — the owner, 2026-09-22.
+   *
+   * (a)–(q) above put every surface INSIDE the initiative tracker through one answer and left the
+   * two outside it drawing `campaign_characters.summary` raw: a character's Party button
+   * (src/sheet/PartyPage.tsx — a page PLAYERS open) and the campaign detail's party section
+   * (src/sheet/CampaignsPage.tsx). Neither loaded a member's sheet, because the loader lived in the
+   * tracker seam (src/integration/pcSheetTruth.ts), which imports the tracker's combat store and is
+   * therefore behind the lazily-split tracker chunk. It is src/sheet/memberSheets.ts now, and
+   * PartyMembers loads through it whenever the host has not already done the job.
+   *
+   * Which makes these cards the SAME defect as (a), on the other two surfaces, and in the direction
+   * only these can produce: a condition THIS device works out from the published sheet, which the
+   * player's own app never wrote into the summary column.
+   */
+
+  const MEMBERSHIP: CampaignMembership = { id: CAMPAIGN, code: 'ABC234', name: 'The Fall of Plaguestone', role: 'player' };
+  /** The real page, as App mounts it from a character's Party button. */
+  const partyPage = (role: 'gm' | 'player' = 'player') => (
+    <PartyPage content={db} campaigns={[{ ...MEMBERSHIP, role }]} onClose={() => undefined} />
+  );
+  /** The campaign detail's own mount (src/sheet/CampaignsPage.tsx → CampaignDetail): same component,
+   *  same props, GM tools on. Asserted against the real file below, so the two can't drift. */
+  const campaignDetail = () => <PartyMembers campaignId={CAMPAIGN} isGm content={db} onView={() => undefined} />;
+  const other = (charId: string, name: string): SavedChar => ({ ...light(name), id: charId });
+
+  it('the card says what THIS device works out from the member’s sheet', async () => {
+    /*
+     * MUTATION: `const summarizeFor = (m: PartyMember) => summarize?.(m);` in
+     * src/sheet/PartyMembers.tsx — the cards go back to the published column unless a host hands
+     * them an answer — and this fails, taking two more legs of this group with it —
+     *   AssertionError: the card and the sheet it opens are one answer now: expected ' PartyTHThessaly VaneHuman Fighter 3H…' to contain 'Encumbered'
+     */
+    // Their app published a summary that says nothing; the sheet in the same row is over the limit.
+    publish(encumbered(), '2026-09-22T10:00:00.000Z', light());
+    expect((await fetchParty(CAMPAIGN))![0].summary.conditions, 'the column the card used to draw').toEqual([]);
+
+    const host = render(partyPage());
+    await settle();
+    expect(host.textContent, 'the card and the sheet it opens are one answer now').toContain('Encumbered');
+    act(() => live!.unmount());
+    live = null;
+
+    const detail = render(campaignDetail());
+    await settle();
+    expect(detail.textContent, 'and the GM’s campaign detail is the same component, same answer').toContain('Encumbered');
+  });
+
+  it('…and it still carries the chip only the PLAYER’s app could reach', async () => {
+    /*
+     * The other direction, which the raw column used to get right for free: their app derived it
+     * from THEIR item Bulk and this device's data cannot reach it. Reconciling must not cost it.
+     *
+     * MUTATION: `computeSummary(livePlay(sheet, content), content)` inside `memberCardSummary`
+     * (src/sheet/memberSheets.ts) and this fails —
+     *   AssertionError: reconciling must never subtract: expected ' PartyTHThessaly VaneHuman Fighter 3H…' to contain 'Encumbered'
+     */
+    publish(light(), '2026-09-22T10:00:00.000Z', encumbered());
+    const host = render(partyPage());
+    await settle();
+    expect(host.textContent, 'reconciling must never subtract').toContain('Encumbered');
+    const chip = host.querySelector('.party-cond.is-auto');
+    expect(chip?.getAttribute('title'), 'locked, and it says whose device worked it out').toContain('the player’s own app');
+  });
+
+  it('a member whose sheet never arrives keeps their published card', async () => {
+    // No flash of the wrong thing and no blank: the published summary is the card until (and unless)
+    // a sheet lands. A row written by an older client has no sheet at all, and that is this forever.
+    publish(light(), '2026-09-22T10:00:00.000Z', encumbered());
+    server.chars.get(`${CAMPAIGN}|${CHAR}`)!.sheet = null;
+    const host = render(partyPage());
+    await settle();
+    expect(host.textContent).toContain('Thessaly Vane');
+    expect(host.textContent, 'what the card had before is what the card still has').toContain('Encumbered');
+  });
+
+  it('the GM’s Update shows on both plain surfaces, with the waiting chip', async () => {
+    publish(light(), '2026-09-22T10:00:00.000Z', encumbered());
+    const base = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
+    await gmPush({ ...base, play: addCondition(base.play!, 'frightened', 2) });
+
+    const page = render(partyPage('gm'));
+    await settle();
+    expect(page.textContent, 'the GM’s own change, on a card they reached from their own character').toContain('Frightened');
+    expect(page.textContent, 'and never at the cost of the player’s own chip').toContain('Encumbered');
+    expect(page.textContent, 'said plainly: this is your Update, not what they published').toContain('waiting');
+    act(() => live!.unmount());
+    live = null;
+
+    const detail = render(campaignDetail());
+    await settle();
+    expect(detail.textContent).toContain('Frightened');
+    expect(detail.textContent).toContain('Encumbered');
+    expect(detail.textContent).toContain('waiting');
+  });
+
+  it('a PLAYER on the same page sees no overlay and no chip', async () => {
+    // The overlay is private to the account that pushed it. The store is keyed by that uid, so
+    // another sign-in on the same browser profile holds nothing to draw — and the sheets the cards
+    // now load come through the same one read, so they arrive un-overlaid for them too.
+    publish(light(), '2026-09-22T10:00:00.000Z', encumbered());
+    const base = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
+    await gmPush({ ...base, play: addCondition(base.play!, 'frightened', 2) });
+    await new Promise((r) => setTimeout(r, 500)); // the disk copy is debounced
+
+    setGmPendingAccount('player-9'); // a player signs in where the GM was
+    expect(gmPendingEdit(CAMPAIGN, CHAR), 'the GM’s private edit is not theirs to see').toBeUndefined();
+    const host = render(partyPage());
+    await settle();
+    expect(host.textContent, 'a GM edit is silent — the player is not told').not.toContain('Frightened');
+    expect(host.textContent).not.toContain('waiting');
+    expect(host.textContent, 'they see the published character, exactly as everyone else does').toContain('Encumbered');
+  });
+
+  /**
+   * An edit row from before `gm_character_edits.owner_id` existed — the one the store cannot place
+   * on its own. Seeded through the server read, exactly as a GM's other device or a reload gets it.
+   */
+  async function ownerlessEdit(): Promise<SavedChar> {
+    const base = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
+    const edited: SavedChar = { ...base, play: addCondition(base.play!, 'frightened', 2) };
+    server.edits.set(`${CAMPAIGN}|${CHAR}`, {
+      campaign_id: CAMPAIGN,
+      char_id: CHAR,
+      editor_id: 'gm-1',
+      sheet: edited,
+      updated_at: '2026-09-22T10:05:00.000Z',
+    });
+    await fetchPendingGmEdits(CAMPAIGN);
+    return edited;
+  }
+
+  it('and never on the viewer’s OWN character, even from an edit row that recorded no owner', async () => {
+    /*
+     * The belt, now needed twice. `gmPendingEdit` refuses an edit ABOUT the signed-in account's own
+     * character — but only when the edit row says whose character it is, and an older row doesn't.
+     * `fetchMemberSheet` overlays that unjudgeable edit onto the sheet it answers with, so the cards
+     * (which now read sheets) would draw somebody's unapplied change to OUR character as if we had
+     * published it, with no chip beside it. The card's `pending` test already refused it the chip.
+     *
+     * MUTATION: drop `m.ownerId === myId && gmPendingEdit(...)` from `summarizeOwn`
+     * (src/sheet/PartyMembers.tsx) and this fails —
+     *   AssertionError: your own card is your own published character: expected ' PartyTHThessaly Vane · youHuman Figh…' not to contain 'Frightened'
+     */
+    publish(light(), '2026-09-22T10:00:00.000Z', encumbered());
+    server.chars.get(`${CAMPAIGN}|${CHAR}`)!.owner_id = 'gm-1'; // the GM plays this one themselves
+    await ownerlessEdit();
+    expect(gmPendingEdit(CAMPAIGN, CHAR), 'the store cannot tell whose this one is — yet').toBeDefined();
+
+    const host = render(partyPage('gm'));
+    await settle();
+    expect(host.textContent, 'your own card is your own published character').not.toContain('Frightened');
+    expect(host.textContent).not.toContain('waiting');
+    expect(host.textContent, 'carried chip and all — it is what they published').toContain('Encumbered');
+  });
+
+  it('…and neither does the SHEET that card opens — the rule belongs at the READ', async () => {
+    /*
+     * The other half of the same hole, and the half nothing covered. The card refused the overlay
+     * (the leg above) while `fetchMemberRow` — the one read every surface goes through — handed the
+     * sheet BEHIND that card the very same unjudgeable edit. Tap your own card on the GM's campaign
+     * page and somebody's unapplied change to YOUR character opened as if you had published it,
+     * with the "waiting" strip over the top of it.
+     *
+     * The read is where it is answered now: the published row carries `owner_id`, so the store is
+     * told whose character this edit is about and the one rule
+     * (`gmPendingEdit` — never our own) covers the sheet, the strip, the card and the tracker's pane
+     * from a single place.
+     *
+     * MUTATION: drop the `learnPendingOwner(campaignId, charId, published?.ownerId)` line from
+     * `resolvePendingGmEdit` (src/sheet/gmSync.ts) and this fails —
+     *   AssertionError: no strip: an edit nobody can place is not an edit of ours to announce: expected <div class="gm-pending-strip" …(1)>…(2)</div> to be null
+     *
+     * (The sheet's CONTENT survives that mutation on its own — the refusal below it in the same
+     * function catches "the row says the owner is us". Take THAT line out instead and the unit leg
+     * in test/gm-sync.test.ts is the one that falls over: with no row and no owner on the edit,
+     * nobody can place it and it must not be drawn.)
+     */
+    publish(light(), '2026-09-22T10:00:00.000Z', encumbered());
+    server.chars.get(`${CAMPAIGN}|${CHAR}`)!.owner_id = 'gm-1'; // the GM plays this one themselves
+    await ownerlessEdit();
+
+    const host = render(<GmViewer />);
+    await settle();
+    expect(host.textContent, 'the sheet is the character this account published').not.toContain('Frightened');
+    expect(
+      host.querySelector('.gm-pending-strip'),
+      'no strip: an edit nobody can place is not an edit of ours to announce',
+    ).toBeNull();
+    expect(host.textContent, 'and the player’s own carried chip is untouched by any of it').toContain('Encumbered');
+    expect(gmPendingEdit(CAMPAIGN, CHAR), 'the read placed it: ours, so no surface draws it').toBeUndefined();
+  });
+
+  it('…while another player’s character still gets the overlay it always did', async () => {
+    // The same unjudgeable row, on a character this account does NOT own. Nothing about it changes:
+    // the GM's Update is what they see, with the strip that says the player hasn't picked it up.
+    publish(light(), '2026-09-22T10:00:00.000Z', encumbered()); // owner_id stays the player's
+    await ownerlessEdit();
+
+    const host = render(<GmViewer />);
+    await settle();
+    expect(host.textContent, 'their character, our Update — shown, exactly as before').toContain('Frightened');
+    expect(host.querySelector('.gm-pending-strip'), 'and said to be waiting').not.toBeNull();
+    expect(gmPendingEdit(CAMPAIGN, CHAR)?.ownerId, 'the read placed it: theirs').toBe(PLAYER);
+  });
+
+  it('a member publishing again moves their card, live', async () => {
+    publish(light(), '2026-09-22T10:00:00.000Z');
+    const host = render(partyPage());
+    await settle();
+    expect(host.textContent).not.toContain('Encumbered');
+
+    // They pick the hoard up. Their app's own summary still says nothing about it, so only the
+    // per-member subscription + this device's derivation can put it on the card.
+    publish(encumbered(), '2026-09-22T11:00:00.000Z', light());
+    await realtime();
+    expect(host.textContent, 'the per-member subscription is what carries it').toContain('Encumbered');
+  });
+
+  it('costs one row read per member on open, and one — not four — when one member changes', async () => {
+    publish(light(), '2026-09-22T10:00:00.000Z');
+    publish(other('pc-2', 'Bran Ashgrove'), '2026-09-22T10:00:00.000Z');
+    publish(other('pc-3', 'Neve Calder'), '2026-09-22T10:00:00.000Z');
+    publish(other('pc-4', 'Orin Vale'), '2026-09-22T10:00:00.000Z');
+    expect(await fetchParty(CAMPAIGN)).toHaveLength(4);
+
+    server.reads = 0; // single-row reads of campaign_characters — the party LIST is not one of these
+    const host = render(partyPage());
+    await settle();
+    expect(host.textContent).toContain('Bran Ashgrove');
+    /*
+     * TWO per member, and both are the existing shape:
+     *   • the loader's own pull, which is the answer when Realtime is down or unconfigured, and
+     *   • the pull `subscribeMemberSheet` fires on a successful join — Realtime replays nothing
+     *     missed while it was disconnected, so every caller of it re-reads on (re)join.
+     * The third one this used to cost (the pending-edit effect re-pulling every member it had never
+     * seen before) is gone; see `pendingSig` in src/sheet/memberSheets.ts.
+     */
+    expect(server.reads, 'four members, no polling').toBe(8);
+
+    // One member publishes: only that member's row is re-read. The channel is per member, so this
+    // cannot become an N-read fan-out when the party grows.
+    const idx = server.channels.indexOf(`member:${CAMPAIGN}:pc-2`);
+    expect(idx, 'one channel per member, on its own topic').toBeGreaterThanOrEqual(0);
+    server.reads = 0;
+    await act(async () => {
+      server.listeners[idx]();
+      await new Promise((r) => setTimeout(r, 0));
+    });
+    expect(server.reads, 'one member changed — one row read').toBe(1);
+  });
+
+  it('and both plain pages really do hand the cards a content database', async () => {
+    // Without `content` the loader is off by design (there is nothing to derive against) and the
+    // cards fall back to the published column — silently, which is the whole defect. Dropping the
+    // prop is a one-word edit, so it gets a guard rather than a comment.
+    for (const f of ['src/sheet/PartyPage.tsx', 'src/sheet/CampaignsPage.tsx']) {
+      const mount = readFileSync(f, 'utf8').match(/<PartyMembers[\s\S]*?\/>/);
+      expect(mount, `${f} must still mount PartyMembers`).not.toBeNull();
+      expect(mount![0], `${f}: no content= means cards drawn from the player's own column again`).toContain('content=');
+    }
   });
 });

@@ -43,7 +43,7 @@ import { type PartySummary } from '../sheet/partySummary';
 import { fetchParty, type PartyMember } from '../data/party';
 import { useAuth } from '../data/useAuth';
 import { startTrackerSync, isTrackerSyncReady } from '../data/trackerSync';
-import { gmMemberSummary, livePlay, useMemberSheets, usePcSheetTruth } from './pcSheetTruth';
+import { memberCardSummary, livePlay, useMemberSheets, usePcSheetTruth } from './pcSheetTruth';
 import type { ContentDatabase, DescRef } from '../rules/types';
 import { useLocalCampaignMembers } from './useLocalCampaignMembers';
 import { TEST_CAMPAIGNS_WITHOUT_LOGIN } from './enabled';
@@ -325,8 +325,8 @@ export function CampaignTracker({
 
   /** THE ONE SUMMARY every GM-side surface in this view draws from — and it takes the whole member
    *  precisely so that no surface here can decide to withhold the player's own half of it. See
-   *  `gmMemberSummary` (./pcSheetTruth.ts) for what withholding it cost. */
-  const summaryFor = (mem: PartyMember, sheet: SavedChar): PartySummary => gmMemberSummary(mem, sheet, content);
+   *  `memberCardSummary` (../sheet/memberSheets.ts) for what withholding it cost. */
+  const summaryFor = (mem: PartyMember, sheet: SavedChar): PartySummary => memberCardSummary(mem, sheet, content);
 
   /*
    * The members again, but with the summary RE-DERIVED from the player's live sheet — keyed by name,
