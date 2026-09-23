@@ -24,6 +24,7 @@ import { deriveInitiative, initiativeInfluenceDetail } from '../rules/initiative
 import { isRestrictedReaction } from '../rules/reactions';
 import {
   addCondition,
+  addXp,
   applyDamage,
   applyHeal,
   bumpResource,
@@ -34,6 +35,7 @@ import {
   setHp,
   setShieldDamage,
   setTempHp,
+  setXp,
   toggleMode,
   toggleResource,
   updateInventoryItem,
@@ -186,7 +188,7 @@ export function VitalsRail({
   const [shDraft, setShDraft] = useState<string | null>(null);
   /** Damage/repair amount for the shield's own HP row (separate from the character's hpAmt). */
   const [shAmt, setShAmt] = useState('');
-  const { hpCommandEntry, shieldAutoHardness, hpIwrButtons, showSaveDCs, railOrder, railHidden } = useCustomization();
+  const { hpCommandEntry, shieldAutoHardness, hpIwrButtons, showSaveDCs, railOrder, railHidden, xpDisplay } = useCustomization();
   const [condOpen, setCondOpen] = useState(false);
   /** The mode whose detail popup is open — clicking a pill opens it. */
   const [modeInfo, setModeInfo] = useState<ModeDef | null>(null);
@@ -223,6 +225,35 @@ export function VitalsRail({
     else setTempDraft(String(character.hitPoints.temp));
   };
   const hpPct = hpMax > 0 ? Math.round((character.hitPoints.current / hpMax) * 100) : 0;
+  // XP in the Hit points card (Customize → XP display): a chip in the title row by default, or a thin
+  // line with a bar. Pressing either opens the editor below, which offers the same two moves the header
+  // XP field does — SET the total, or ADD to it — through the same play setters, so there is one write
+  // path for XP and not a second one that could drift. Unlike the HP damage/heal row this is NOT hidden
+  // on a phone: XP is exactly what gets awarded at a table where the phone is the sheet.
+  const [xpOpen, setXpOpen] = useState(false);
+  const [xpTotalDraft, setXpTotalDraft] = useState(String(character.xp));
+  const [xpAddDraft, setXpAddDraft] = useState('');
+  useEffect(() => setXpTotalDraft(String(character.xp)), [character.xp]);
+  // Blur APPLIES but leaves the editor open, so tabbing from Total to Add doesn't shut it mid-edit;
+  // Enter and the + button apply and close.
+  const applyXpTotal = () => {
+    const n = parseInt(xpTotalDraft, 10);
+    if (onPlay && Number.isFinite(n)) onPlay((p) => setXp(p, n));
+    else setXpTotalDraft(String(character.xp));
+  };
+  const applyXpAdd = () => {
+    const n = parseInt(xpAddDraft, 10);
+    if (onPlay && Number.isFinite(n) && n !== 0) onPlay((p) => addXp(p, n));
+    setXpAddDraft('');
+    setXpOpen(false);
+  };
+  // Escape throws the drafts away and closes. It deliberately does NOT blur() first: that would fire
+  // the blur handler with the discarded text still in state and write the very value being cancelled.
+  const cancelXp = () => {
+    setXpTotalDraft(String(character.xp));
+    setXpAddDraft('');
+    setXpOpen(false);
+  };
   const ac = deriveAc(character, content);
   const classDc = deriveClassDc(character);
   // The rail shows one Spell DC: prefer a full tradition pool (prepared/spontaneous/innate) over a
@@ -352,11 +383,103 @@ export function VitalsRail({
     }
   }
 
+  // The XP surfaces. PF2e is a flat 1,000 XP per level (Player Core), so the bar is simply the XP shown
+  // out of 1,000; a player who banks past a level-up still gets a full bar rather than a broken one.
+  const xp = character.xp;
+  const xpPct = Math.max(0, Math.min(100, Math.round(xp / 10)));
+  // Pressable only in play — a read-only sheet shows the same box without offering an editor it could
+  // not commit.
+  const xpPressable = (className: string, label: string, body: ReactNode) =>
+    onPlay ? (
+      <button
+        type="button"
+        className={className}
+        aria-label={label}
+        title="Experience points — press to set the total or add XP"
+        onClick={(e) => {
+          e.stopPropagation(); // the chip rides inside the card title, which opens the HP breakdown
+          setXpOpen((o) => !o);
+        }}
+        onKeyDown={(e) => {
+          // Clicking this button leaves FOCUS on the button, not on an input inside the editor it just
+          // opened — so without this, Escape only worked once you'd tabbed into a field.
+          if (e.key === 'Escape' && xpOpen) cancelXp();
+        }}
+      >
+        {body}
+      </button>
+    ) : (
+      <span className={className}>{body}</span>
+    );
+  const xpChip = xpPressable(
+    'xp-chip' + (xpOpen ? ' open' : ''),
+    `Experience points: ${xp} — press to edit`,
+    <>XP {xp}</>,
+  );
+  const xpLine = xpPressable(
+    'xp-rail-line' + (xpOpen ? ' open' : ''),
+    `Experience points: ${xp} of 1000 — press to edit`,
+    <>
+      <span className="xp-rail-row">
+        <span className="xp-rail-lbl">XP</span>
+        <span className="xp-rail-val">{xp}</span>
+        <span className="xp-rail-max">/ 1000</span>
+      </span>
+      <span className="xp-rail-track">
+        <span className="xp-rail-fill" style={{ width: xpPct + '%' }} />
+      </span>
+    </>,
+  );
+  const xpEditor = onPlay && xpOpen && (
+    // Escape is handled HERE, once, for the whole editor (any field, or the +XP button) rather than
+    // per-input — a keydown bubbles up to this container from wherever focus actually is.
+    <div className="hp-edit xp-rail-edit" onKeyDown={(e) => { if (e.key === 'Escape') cancelXp(); }}>
+      <label className="xp-rail-field">
+        <span>Total</span>
+        <input
+          type="text"
+          inputMode="numeric"
+          className="hp-amt"
+          value={xpTotalDraft}
+          aria-label="Experience points total — type to set"
+          onChange={(e) => setXpTotalDraft(e.target.value.replace(/[^0-9]/g, ''))}
+          onFocus={(e) => e.currentTarget.select()}
+          onBlur={applyXpTotal}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              applyXpTotal();
+              setXpOpen(false);
+            }
+          }}
+        />
+      </label>
+      <label className="xp-rail-field">
+        <span>Add</span>
+        <input
+          type="text"
+          inputMode="numeric"
+          className="hp-amt"
+          value={xpAddDraft}
+          placeholder="+ XP"
+          aria-label="Experience points to add (a minus sign takes XP away)"
+          onChange={(e) => setXpAddDraft(e.target.value.replace(/[^0-9-]/g, ''))}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') applyXpAdd();
+          }}
+        />
+      </label>
+      <button className="hp-heal xp-rail-add" onClick={applyXpAdd} title="Add this much XP" aria-label="Add XP">
+        <i className="ti ti-plus" aria-hidden="true" />
+      </button>
+    </div>
+  );
+
   // Rail cards keyed by id so Customize can reorder / hide them. Conditional cards resolve to null when
   // they have no content (or don't apply to the class) and are simply skipped.
   const cards: Record<string, ReactNode> = {};
   cards.hp = (
       <section className="card">
+        {xpDisplay === 'line' && xpLine}
         <div
           className={
             'ct' +
@@ -369,7 +492,9 @@ export function VitalsRail({
           <i className="ti ti-heart" aria-hidden="true" />
           Hit points
           {statHasSituational(character, { kind: 'hp' }, content) && <SituationalStar />}
+          {xpDisplay !== 'line' && xpChip}
         </div>
+        {xpEditor}
         <div className="hp-line">
           {onPlay ? (
             isMobile ? (

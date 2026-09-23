@@ -194,7 +194,10 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
       ...w,
       character: carryStoredOverrides(built, w.character),
       build,
-      play: w.play ? playForRebuild(w.play, built.inventory, w.character.inventory) : w.play,
+      // Same lossless round-trip as the player's own builder Save (App.tsx): the fresh character
+      // says what the player's sheet picks are still allowed to be, the previous one lets gear
+      // added in the builder reach the sheet.
+      play: w.play ? playForRebuild(w.play, built, w.character) : w.play,
     }));
     setDirty(true);
     setEditing(null);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Character, ContentDatabase, InventoryItem, Item, ItemDesignation } from '../rules/types';
-import { bumpItemCounter, bumpItemQuantity, removeInventoryItem, setItemDesignation, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
+import { bumpItemCounter, bumpItemQuantity, removeInventoryItem, setItemDesignation, toggleItemFlag, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
 import { containerOptionsFor, deriveShield, propertyRuneDefs } from '../rules/derive';
 import { formatItemPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
@@ -102,7 +102,9 @@ function typeStats(item: Item, content: ContentDatabase): { k: string; v: string
 
 const REINFORCING_NAMES = ['', 'Minor', 'Lesser', 'Moderate', 'Greater', 'Major', 'Supreme'];
 
-function runeLines(inv: InventoryItem): string[] {
+/** The etched runes as chips ("+1 potency", "Greater striking", …). Exported because the Essentials
+ *  inventory card shows the same list on its second line — one reading of a row's runes, not two. */
+export function runeLines(inv: InventoryItem): string[] {
   const r = inv.runes as
     | { potency?: number; striking?: string; resilient?: string; reinforcing?: number; property?: string[] }
     | undefined;
@@ -114,6 +116,73 @@ function runeLines(inv: InventoryItem): string[] {
   if (r.reinforcing) out.push(`${REINFORCING_NAMES[r.reinforcing]} reinforcing`);
   for (const p of r.property ?? []) out.push(cap(p.replace(/-/g, ' ')));
   return out;
+}
+
+/** PF2e caps a character at 10 invested magic items — Incredible Investiture raises it to 12. Read
+ *  `character.investedLimit` wherever a character is in hand; this is only the RAW default. */
+export const INVESTED_LIMIT = 10;
+
+/**
+ * How many of the cap's slots this inventory already spends. `toggleItemFlag` enforces nothing — the
+ * cap has always been the CALLER's guard — so every surface that offers an Invest control counts here
+ * rather than being handed a number, or a popup opened from somewhere other than the Inventory tab
+ * would invest an 11th item.
+ *
+ * Only items that are actually investable (carry the `invested` trait) count — not anything that
+ * happens to have a stale invested flag. …and items sharing an `investmentGroup` count ONCE between
+ * them: *"No matter how many magical medals you have, they COLLECTIVELY COUNT AS ONE invested item."*
+ * All five medals each consumed a slot of the ten, so a decorated soldier lost half their investments
+ * to their own medals. An item with no group counts individually, which is every other item in the game.
+ */
+export function countInvested(inventory: readonly InventoryItem[], content: ContentDatabase): number {
+  const groups = new Set<string>();
+  let n = 0;
+  for (const inv of inventory) {
+    const item = content.items[inv.itemId];
+    if (!inv.invested || !item?.traits?.includes('invested')) continue;
+    const group = item.investmentGroup;
+    if (!group) { n++; continue; }
+    if (groups.has(group)) continue;
+    groups.add(group);
+    n++;
+  }
+  return n;
+}
+
+/** The primary equip action for an item type: armor is worn, weapons/shields are wielded.
+ *  Lives here rather than on the inventory card because the card is not always able to show it — a
+ *  Compact row is one line with no controls on it — and wielding, wearing and investing may not depend
+ *  on a display setting. Card and popup read the same function. */
+export function equipControl(item: Item): { flag: 'worn' | 'equipped'; on: string; off: string } | null {
+  if (item.itemType === 'armor') return { flag: 'worn', on: 'Worn', off: 'Wear' };
+  // Material/precious-metal placeholder "weapons" (ingots, chunks) carry no damage object — they aren't
+  // really wieldable, so don't offer a Wield control (deriveStrike guards the same case for safety).
+  if (item.itemType === 'weapon' && !item.damage) return null;
+  if (item.itemType === 'weapon' || item.itemType === 'shield') return { flag: 'equipped', on: 'Wielded', off: 'Wield' };
+  return null;
+}
+
+/** Doubling Rings (and Cutting Heaven, Crushing Earth): which weapon's runes copy onto this one. */
+export interface RuneCopy {
+  value?: string;
+  options: { value: string; label: string }[];
+  onChange: (v: string) => void;
+}
+
+/** The rune-copy picker, written once for the card and the popup — it is the ONLY way to choose the
+ *  source weapon, so it cannot live only on a card shape the player may have switched off. */
+export function RuneCopyPicker({ runeCopy, onClick }: { runeCopy: RuneCopy; onClick?: (e: React.MouseEvent) => void }) {
+  return (
+    <label className="inv-runecopy" title="Doubling Rings: duplicate another wielded weapon's runes onto this one" onClick={onClick}>
+      <i className="ti ti-copy" aria-hidden="true" />
+      <span className="inv-runecopy-lbl">Runes from</span>
+      <select value={runeCopy.value ?? ''} onChange={(e) => runeCopy.onChange(e.target.value)}>
+        {runeCopy.options.map((o) => (
+          <option key={o.value} value={o.value}>{o.label}</option>
+        ))}
+      </select>
+    </label>
+  );
 }
 
 /** Special item categories worth badging prominently (they're plain traits in the data). */
@@ -156,6 +225,8 @@ export function ItemDetail({
   gmView = false,
   onEdit,
   character,
+  runeCopy,
+  can,
 }: {
   inv: InventoryItem;
   item: Item;
@@ -183,6 +254,11 @@ export function ItemDetail({
   /** The owner — the ONE control here that needs the whole character rather than a slice of it: a
    *  formula book's empty slots come from every feat and class feature the character owns. */
   character?: Character;
+  /** Doubling Rings: the source-weapon picker for THIS item, when the caller has one to offer. */
+  runeCopy?: RuneCopy;
+  /** What the owner of this pack can physically do with gear — an animal companion has no hands, so
+   *  it is offered no Wield. Absent = a player character, who can do all three. */
+  can?: { wear: boolean; wield: boolean; invest: boolean };
 }) {
   useEscapeClose(onClose);
   const isMobile = useIsMobile();
@@ -195,6 +271,13 @@ export function ItemDetail({
   // A staff's charges come from its wielder's highest spell-slot rank, not from the staff's level.
   const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv, highestSlotRank(character));
   const id = inv.instanceId;
+  const rawEquip = equipControl(item);
+  const equip = rawEquip && (rawEquip.flag === 'worn' ? can?.wear !== false : can?.wield !== false) ? rawEquip : null;
+  const investable = !!item.traits?.includes('invested') && can?.invest !== false;
+  // Derived HERE, not passed in: this popup opens from the Inventory tab, the Spells tab's item-spell
+  // section and the vitals rail's shield, and only the first of those knows the count.
+  const investedCount = investable ? countInvested(inventory, content) : 0;
+  const investedLimit = character?.investedLimit ?? INVESTED_LIMIT;
   /*
    * The "This is my …" marks that make sense ON THIS ITEM. The caller (InventoryTab) decides which
    * marks the CHARACTER may use at all; this is the per-item half, and it has to be applied before the
@@ -619,6 +702,47 @@ export function ItemDetail({
                   );
                 })}
               </span>
+            </div>
+          )}
+          {/* Wield / wear / invest, and the Doubling Rings picker. The inventory card offers these too
+              when it has a line to put them on; a Compact row does not, and "how you carry this" is not
+              a thing a display setting may take away. */}
+          {((onPlay && (equip || investable || runeCopy)) || inv.battleforged) && (
+            <div className="sd-uses">
+              <span className="sd-uses-title">Carrying</span>
+              <span className="sd-uses-row">
+                {onPlay && equip && !inv.attachedTo && (
+                  <button
+                    className={'ec-chip' + (inv[equip.flag] ? ' on' : '')}
+                    onClick={() => onPlay((p) => toggleItemFlag(p, id, equip.flag))}
+                  >
+                    {inv[equip.flag] ? equip.on : equip.off}
+                  </button>
+                )}
+                {onPlay && investable && (
+                  <button
+                    className={'ec-chip' + (inv.invested ? ' on' : '')}
+                    disabled={!inv.invested && investedCount >= investedLimit}
+                    title={
+                      !inv.invested && investedCount >= investedLimit
+                        ? `You can invest at most ${investedLimit} items`
+                        : undefined
+                    }
+                    onClick={() => onPlay((p) => toggleItemFlag(p, id, 'invested'))}
+                  >
+                    {inv.invested ? 'Invested' : 'Invest'}
+                  </button>
+                )}
+                {onPlay && runeCopy && <RuneCopyPicker runeCopy={runeCopy} />}
+                {/* Read-only: the toggle lives in the item editor's Advanced panel. A smaller card's
+                    Compact chip and this popup are the only two places the state has to survive. */}
+                {inv.battleforged && (
+                  <span className="inv-badge bf" title="Battleforged: +1 potency until your next daily preparations">
+                    <i className="ti ti-hammer" aria-hidden="true" /> Battleforged
+                  </span>
+                )}
+              </span>
+              {inv.attachedTo && <span className="sd-uses-hint">Affixed to another item — it is carried as part of it.</span>}
             </div>
           )}
           {onPlay && (

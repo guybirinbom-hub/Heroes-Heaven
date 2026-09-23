@@ -30,6 +30,9 @@ export const DEFAULT_CUSTOMIZATION: Customization = {
   compactActions: true,
   showSlotBadges: true,
   consumableHighlight: true,
+  // The owner's ruling: every character reads the Essentials card unless they say otherwise, so an
+  // absent key resolves HERE rather than at each reader.
+  itemCardDetail: 'essentials',
   scrollbarAccent: false,
   notesShowRail: false,
 };

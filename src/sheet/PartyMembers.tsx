@@ -33,6 +33,15 @@ interface ViewingState {
    * screen updated around a stale "Encumbered" that only closing the sheet could clear.
    */
   summary?: PartySummary;
+  /**
+   * The signed-in account AT OPEN TIME — the raw answer, so both questions below are asked of the
+   * same one: "is this mine?" (the label) and "is this positively someone else's?" (GM edit).
+   *
+   * ⚠ Stored rather than re-read while rendering. A GM-edit warning that flashes on your own
+   * character and then corrects itself is the owner's report all over again, just faster. `null`
+   * means the account was not known when the card was opened, which is neither yes nor no.
+   */
+  myId: string | null;
 }
 
 /**
@@ -44,20 +53,101 @@ export function useGmPendingVersion(): number {
   return useSyncExternalStore(subscribeGmPending, gmPendingVersion, gmPendingVersion);
 }
 
+/** The signed-in account's id once auth has ANSWERED. `authChecked` is what tells "still asking"
+ *  from "genuinely signed out" — `myId` is null for both. */
+export function useMyId(): { myId: string | null; authChecked: boolean } {
+  const [myId, setMyId] = useState<string | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
+  useEffect(() => {
+    void currentUserId()
+      .then(setMyId)
+      .finally(() => setAuthChecked(true));
+  }, []);
+  return { myId, authChecked };
+}
+
+/**
+ * "This member IS the signed-in user, and the character is on THIS device" — the one test every
+ * campaign surface asks before opening a card. Answers the roster id to open, or null.
+ *
+ * Your own character is never a GM-edit target and never a read-only copy of your own published row:
+ * the published row is a shadow of what this device holds, so editing it there is edit-and-lose, and
+ * reading it there is being shown your own sheet through a keyhole.
+ *
+ * `charId` IS the roster id — App publishes `sc.id` (see its publish effect), and roster ids survive
+ * cloud sync between a user's devices — so the match is BY ID ONLY. The owner's ruling: no name
+ * fallback. A different local character that merely shares the published name is not this character,
+ * and opening it on a name guess would be the WRONG sheet.
+ */
+export function ownRosterId(
+  member: { ownerId: string; charId: string; name?: string },
+  myId: string | null,
+  roster?: { id: string; name: string }[],
+): string | null {
+  if (!myId || member.ownerId !== myId || !roster?.length) return null;
+  return roster.some((c) => c.id === member.charId) ? member.charId : null;
+}
+
+/**
+ * "We KNOW this member is somebody else" — the ONLY answer that may open a GM-edit sheet.
+ *
+ * ⚠ This is not `ownerId !== myId`, and the difference is the whole bug. `myId` is null while the
+ * auth answer is still in flight AND when it failed, and `ownerId !== null` is true of your own card
+ * too — so that test hands a GM their own character wearing "GM editing X — changes reach the player
+ * only when you Update" in precisely the window a GM taps a card (the party list paints as soon as
+ * its own fetch lands, which is a different request from the auth one). Not knowing answers FALSE:
+ * read the sheet, don't edit it. A sheet read by mistake costs a tap; a sheet edited by mistake is
+ * work the owning device silently overwrites on its next publish.
+ *
+ * Exported because the tracker's card has to ask the same question, and asking it a second way is
+ * how the two surfaces came apart in the first place.
+ */
+export function knownToBeOther(ownerId: string, myId: string | null): boolean {
+  return !!myId && ownerId !== myId;
+}
+
 /** Teammate-sheet viewer shared by the party page and the GM campaign detail. Returns the full-screen
  *  sheet element (or null) plus an `open(campaignId, charId, ownerId)` to load + show it. Render
  *  `sheetEl` with an early return from the host page so the sheet takes over the screen. With
  *  `{ gmEdit: true }` (GM campaign detail) the sheet is fully editable and can push changes back to the
- *  player; otherwise it's a read-only view. */
-export function useMemberViewer(content: ContentDatabase, options?: { gmEdit?: boolean }) {
+ *  player; otherwise it's a read-only view.
+ *
+ *  `roster` + `onOpenOwn` are what make YOUR OWN card open YOUR OWN sheet instead of either of those
+ *  (see ownRosterId). Both omitted → every card behaves exactly as it did. */
+export function useMemberViewer(
+  content: ContentDatabase,
+  options?: {
+    gmEdit?: boolean;
+    /** This device's characters (id + name) — the host already has them; App passes the roster down. */
+    roster?: { id: string; name: string }[];
+    /** Navigate to one of this device's own characters. Absent → no own-sheet route from here. */
+    onOpenOwn?: (charId: string) => void;
+  },
+) {
   const [viewing, setViewing] = useState<ViewingState | null>(null);
   useBackHandler(!!viewing, () => setViewing(null));
   // The summary is read HERE, from the same row as the sheet, rather than taken from the card that
   // opened it — see ViewingState.summary for what a card-supplied one could not do.
   const open = async (campaignId: string, charId: string, ownerId: string): Promise<boolean> => {
+    /*
+     * YOUR OWN character goes to YOUR OWN sheet, and nothing is fetched on the way: the live
+     * character this device holds is the one to open, not the snapshot it last published.
+     *
+     * ⚠ The account is READ HERE, not taken from a rendered `useMyId()`. That hook answers null
+     * until auth comes back, and a card tapped inside that window — the first seconds on the
+     * campaign page, which is exactly when a GM taps one — would have been judged "not mine" and
+     * opened the editor on the owner's own character. `currentUserId` is a local storage read
+     * (../data/party), so waiting for it here costs no round-trip.
+     */
+    const uid = await currentUserId();
+    const mine = ownRosterId({ ownerId, charId }, uid, options?.roster);
+    if (mine && options?.onOpenOwn) {
+      options.onOpenOwn(mine);
+      return true;
+    }
     const { sheet, summary } = await fetchMemberRow(campaignId, charId);
     if (sheet && sheet.character) {
-      setViewing({ campaignId, ownerId, charId, sheet, summary });
+      setViewing({ campaignId, ownerId, charId, sheet, summary, myId: uid });
       return true;
     }
     return false;
@@ -132,7 +222,22 @@ export function useMemberViewer(content: ContentDatabase, options?: { gmEdit?: b
   const summary = viewing?.summary;
   let sheetEl = null;
   if (viewing) {
-    if (options?.gmEdit) {
+    /*
+     * YOUR character, published from a device this roster isn't.
+     *
+     * `open()` above could find no roster entry to send you to, so this is the copy on the server —
+     * and it must not be handed to the GM editor. A GM edit of your own row is refused downstream
+     * anyway (gmSync scopes the pending store to the account that pushed and won't answer with an
+     * edit about your own character), so "editable" here would mean typing into a sheet that the
+     * owning device's next publish overwrites without a word. It reads instead, and says which
+     * character you are looking at rather than claiming you are GM-editing a player.
+     *
+     * ⚠ The two are asked SEPARATELY, and the GM sheet needs the stronger one. "Not known to be
+     * mine" is not "known to be someone else's": with no answer from auth both are false, and the
+     * sheet then reads without the label — never edits. See knownToBeOther.
+     */
+    const ownElsewhere = !!viewing.myId && viewing.ownerId === viewing.myId;
+    if (options?.gmEdit && knownToBeOther(viewing.ownerId, viewing.myId)) {
       sheetEl = (
         <div className="party-viewer">
           <GmEditSheet
@@ -167,6 +272,7 @@ export function useMemberViewer(content: ContentDatabase, options?: { gmEdit?: b
             charKey="party-member"
             characters={[]}
             readOnly
+            readOnlyNote={ownElsewhere ? `${live.name} — your character, published from another device` : undefined}
             onBack={() => setViewing(null)}
           />
         </div>
@@ -237,20 +343,13 @@ export function PartyMembers({
 }) {
   const [members, setMembers] = useState<PartyMember[] | null>(null);
   const [error, setError] = useState('');
-  const [myId, setMyId] = useState<string | null>(null);
   const [reload, setReload] = useState(0);
-  // `myId` is null both BEFORE the auth check resolves and when genuinely signed out, so track the
-  // resolution separately — otherwise the signed-out notice below flashes for a signed-in user.
-  const [authChecked, setAuthChecked] = useState(false);
+  // `myId` is null both BEFORE the auth check resolves and when genuinely signed out, which is why
+  // the hook answers both — otherwise the signed-out notice below flashes for a signed-in user.
+  const { myId, authChecked } = useMyId();
   // Read through a ref: a host passing an inline arrow must not restart the fetch + subscription.
   const onMembersRef = useRef(onMembers);
   onMembersRef.current = onMembers;
-
-  useEffect(() => {
-    void currentUserId()
-      .then(setMyId)
-      .finally(() => setAuthChecked(true));
-  }, []);
 
   useEffect(() => {
     // Local members are supplied by the host — never fetch or subscribe.

@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { cleanRun } from './RichText';
 import { listValues } from '../data';
-import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry, Tradition } from '../rules/types';
+import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
 import { deityDomainsOf, deriveSpellcasting, deriveClassDc, formatMod, ownedFeatureIds } from '../rules/derive';
 import { toggleKnownRitual,
   bumpItemCounter,
@@ -15,8 +15,10 @@ import { toggleKnownRitual,
   setRestrictedRank,
   setTradedCantrip,
   setPreparedCantrip,
-  setRepertoireRank,
-  setSignatureSpells,
+  addRepertoireSpell,
+  removeRepertoireSpell,
+  starsAtRank,
+  toggleSignatureSpell,
   learnSpell,
   unlearnSpell,
   setSlotsUsed,
@@ -52,6 +54,15 @@ import { useCustomization } from '../data/customization';
 import { traitDesc, traitLabel } from '../rules/glossary';
 import { spellNotesFor, spellSituationalFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { spellCostMatches } from '../rules/spellFilter';
+import {
+  chosenAt,
+  collectionUsed,
+  hiddenAt,
+  repertoireCap,
+  signatureEchoIds,
+  spellOptions,
+  traditionPool,
+} from '../rules/spellOptions';
 import { heighteningApplies, splitHeightening, scaleDamage, scaleArea } from '../rules/heightening';
 
 function escapeRe(s: string): string {
@@ -70,19 +81,6 @@ function injectDamageArrow(text: string, baseFormula: string, heightened: string
     if (re.test(text)) return text.replace(re, `$1 ⟦(→ ${heightened})⟧`);
   }
   return text;
-}
-
-/**
- * Ids of a spontaneous entry's signature spells that should ECHO (display-only, starred) at `rank`:
- * a signature spell can be cast — heightened — from any slot of its base rank OR HIGHER, so it
- * appears at every higher rank that has a slot pool. Returns [] for rank 0 (cantrips never echo),
- * for ranks with no slot pool, and skips a spell already repertoired at that rank. The spell stays
- * repertoired only at its base rank; echoes never touch the data model or the known-spell count.
- */
-export function signatureEchoIds(entry: SpellcastingEntry, rank: number, baseRank: (id: string) => number): string[] {
-  if (rank <= 0 || !entry.slots?.[rank]?.max) return [];
-  const here = entry.repertoire?.[rank] ?? [];
-  return (entry.signature ?? []).filter((id) => baseRank(id) < rank && !here.includes(id));
 }
 
 function cap(s: string): string {
@@ -278,84 +276,13 @@ function groupBy<T>(items: T[], key: (t: T) => string): [string, T[]][] {
   return [...out];
 }
 
-/**
- * Every spell this entry may draw on, indexed by rank.
- *
- * `byRank` is the exact-rank list (cantrips, exact-rank fallbacks); `upTo[N]` is the CUMULATIVE
- * rank-1..N list, so a slot of rank N can hold any spell of rank ≤ N (cast/prepared heightened to the
- * slot's rank). Indexed once rather than scanning the full spell map on every render.
- *
- * Shared by the prepare/repertoire picker and Learn a Spell — both mean "what's on this caster's list",
- * including everything a feat, an opened tradition, or a replaced list has done to it.
+/*
+ * WHAT A SLOT MAY HOLD lives in src/rules/spellOptions.ts, with no React in it, because the RENDER
+ * has to ask the same question and used to have its own answer — `spellOptions` (this tab's old
+ * `optionsFor`), `traditionPool`, the repertoire cap, and `spellOpenedBy`, re-exported here because
+ * it was exported from this file first and two tests import it from here.
  */
-/**
- * Does ONE tradition widening open this spell?
- *
- * A widening may be narrowed BY TRAIT — AoN eidolon-8, Fey Gift Spells: *"spells that have the ILLUSION
- * OR MENTAL traits that appear on the arcane spell list"*. Any of the named traits qualifies, and the
- * tradition test still applies on top; a widening with no `traits` opens the whole list, as before.
- *
- * Tested per spell rather than folded into a set of open traditions, because the trait list belongs to
- * the widening and not to the tradition: two records can open arcane on different terms. Exported so
- * the rule can be pinned without mounting the tab.
- */
-export function spellOpenedBy(w: { traditions: Tradition[] | 'any'; traits?: string[] }, s: Spell): boolean {
-  const onTradition = w.traditions === 'any' || s.traditions.some((t) => w.traditions.includes(t));
-  return onTradition && (!w.traits?.length || w.traits.some((t) => (s.traits ?? []).includes(t)));
-}
-
-function useTraditionSpells(character: Character, entry: SpellcastingEntry, content: ContentDatabase) {
-  return useMemo(() => {
-    const byRank: Record<number, Spell[]> = {};
-    const hideLegacy = character.hideLegacy;
-    // "Add Illusory Disguise, Illusory Object, and Illusory Scene to your spell list" (Fey Caller;
-    // Dragon Arcana adds ten). Those spells are not in the entry's tradition, so a strict tradition
-    // filter offered nothing and the feat was inert. They still cost a repertoire slot to learn.
-    const added = new Set([
-      ...(character.spellListAdditions?.['*'] ?? []),
-      ...(character.spellListAdditions?.[entry.id] ?? []),
-    ]);
-    // …and whole traditions opened by a rule rather than a list — "one spell in your spell repertoire
-    // not on the divine spell list" (Mysterious Repertoire). Expanding that into ids on the character
-    // would be ~1,500 entries in every saved roster to say one sentence.
-    const openTraditions = (character.spellListTraditions ?? []).filter((w) => !w.entryId || w.entryId === entry.id);
-    const openedBy = (s: Spell) => openTraditions.some((w) => spellOpenedBy(w, s));
-    // A class archetype may REPLACE the list rather than widen it — "Replace your spell list with the
-    // elemental spell list … your actual magical tradition is unchanged". So this stands in for the
-    // tradition test; everything else (feat additions, opened traditions) still applies on top.
-    const rep = character.spellListReplacement;
-    const repActive = !!rep && (!rep.entryId || rep.entryId === entry.id);
-    const onList = (s: Spell): boolean => {
-      if (!rep || !repActive) return s.traditions.includes(entry.tradition);
-      // Only a spell that is on SOME list can be on a replaced one. Focus spells, rituals and the
-      // class-granted cantrips (bard compositions, witch hexes, psychic amps) all carry no
-      // tradition, which is exactly what kept them out of the ordinary picker for free — a rule
-      // written on traits has to say so, or an elementalist wizard is offered Crushing Ground and
-      // Entropic Wheel to write in a spellbook.
-      if (!s.traditions.length) return !!s.spellLists?.includes(rep.list);
-      if (s.spellLists?.includes(rep.list)) return true;
-      // "Any spell that shares one or more traits with those in your elemental philosophy, and
-      // doesn't have any traits that aren't in your elemental philosophy."
-      if (!rep.anyTrait.length) return false;
-      const t = s.traits ?? [];
-      return t.some((x) => rep.anyTrait.includes(x)) && !t.some((x) => rep.excludeTraits.includes(x));
-    };
-    for (const s of listValues(content, content.spells)) {
-      const e = (s as { edition?: string }).edition;
-      if (e === 'superseded') continue; // renamed/outdated half of a remaster change — always hidden
-      if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) continue; // per-character Hide legacy data
-      const opened = openedBy(s);
-      if (onList(s) || added.has(s.id) || opened) (byRank[s.rank] ??= []).push(s);
-    }
-    const upTo: Record<number, Spell[]> = {};
-    let acc: Spell[] = [];
-    for (let r = 1; r <= 10; r++) {
-      if (byRank[r]) acc = acc.concat(byRank[r]);
-      upTo[r] = acc.slice().sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
-    }
-    return { byRank, upTo };
-  }, [content, entry.tradition, entry.id, character.hideLegacy, character.spellListAdditions, character.spellListTraditions, character.spellListReplacement]);
-}
+export { spellOpenedBy } from '../rules/spellOptions';
 
 /**
  * Table 4-3: Learning a Spell — the materials Price and the typical DC, by the spell's rank. Shown on
@@ -421,7 +348,7 @@ function LearnSpellModal({
   useEscapeClose(onClose);
   const [picking, setPicking] = useState(false);
   const [rules, setRules] = useState(false);
-  const pool = useTraditionSpells(character, entry, content);
+  const pool = traditionPool(character, entry, content);
 
   // "…and you can cast spells of that rank." The highest rank this caster has any way to cast — slots
   // for a spontaneous caster, prepared slots for a prepared one.
@@ -646,58 +573,28 @@ function ManageSpellsModal({
   const sigAvailable =
     spontaneous && (cls?.features ?? []).some((f) => f.featureId === 'signature-spells' && f.level <= character.level);
 
-  const traditionSpellsByRank = useTraditionSpells(character, entry, content);
-
   const listReplacement = (() => {
     const r = character.spellListReplacement;
     return r && (!r.entryId || r.entryId === entry.id) ? r : undefined;
   })();
 
-  // Spells you may add (spontaneous) / prepare (prepared) at a rank — rank ≤ the slot's rank.
+  /*
+   * Spells you may add (spontaneous) / prepare (prepared) at a rank — rank ≤ the slot's rank.
+   *
+   * ⛔ The rule itself is `spellOptions` in src/rules/spellOptions.ts and nothing here may re-decide
+   * it: the RENDER (applyPlayState) asks the same function about a pick the player already made, and
+   * while the two were separate implementations they answered differently — a spell this picker had
+   * offered stopped being drawn, or one it would refuse kept casting. All that is left here is the
+   * DEDUPE, which is not legality: a rank does not offer what it already knows, and a cantrip opening
+   * does not offer a cantrip another opening is holding.
+   *
+   * `entry` is the OVERLAID entry, so `restrictedSlots` includes the ones a toggled mode grants.
+   */
   const optionsFor = (rank: number, restrictedId?: string): Spell[] => {
-    // A restricted slot offers ONLY its allowed list — that is the entire point of the lane. When the
-    // restriction is prose the engine can't check (a wizard's curriculum), `allowed` is absent and the
-    // slot falls through to the normal options with the sentence shown beside it.
-    // The `#2` suffix names the SECOND spell of a Spell Combination slot; the slot itself is the id
-    // without it.
-    const rs = restrictedId ? entry.restrictedSlots?.find((s) => s.id === restrictedId.replace(/#2$/, '')) : undefined;
-    // A combination slot caps what it may hold BELOW its own rank ("each spell in the combination must
-    // be 2 or more spell ranks below the slot's rank"), so the ceiling is the slot's, not the rank
-    // being prepared.
-    const ceiling = Math.min(rank, rs?.maxRank ?? rank);
-    if (rs?.allowed?.length) {
-      return rs.allowed
-        .map((id) => content.spells[id])
-        .filter((s): s is Spell => !!s && s.rank <= ceiling)
-        .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
-    }
-    /* desk 155: flexible-book-casters — a caster WITH A BOOK offers the book and nothing else, whether
-     * the entry prepares into slots or holds a collection. A flexible wizard, witch or magus casts
-     * spontaneous-shaped, and print is explicit that the source does not change: *"Select these spells
-     * from the same source as normal, such as from a spellbook for a wizard"* (archetype-99). Before
-     * this the spontaneous branch ran first and offered the whole tradition, so the collection could be
-     * stocked with spells that are in no spellbook the character owns. */
-    const fromBook = (): Spell[] | null => {
-      if (!entry.spellbook) return null;
-      if (ceiling === 0) return (entry.spellbook[0] ?? []).map((id) => content.spells[id]).filter(Boolean) as Spell[];
-      const out: Spell[] = [];
-      for (let r = 1; r <= ceiling; r++) for (const id of entry.spellbook[r] ?? []) { const sp = content.spells[id]; if (sp) out.push(sp); }
-      return out;
-    };
-    if (spontaneous) {
-      const known = new Set(entry.repertoire?.[rank] ?? []);
-      const pool = fromBook() ?? (ceiling === 0 ? traditionSpellsByRank.byRank[0] ?? [] : traditionSpellsByRank.upTo[ceiling] ?? []);
-      return pool.filter((s) => !known.has(s.id));
-    }
-    const book = fromBook();
-    if (book) return book;
-    return ceiling === 0 ? traditionSpellsByRank.byRank[0] ?? [] : traditionSpellsByRank.upTo[ceiling] ?? [];
-  };
-
-  /** Player-chosen spells at a rank — granted ones (bloodline, patron, conscious mind) never count. */
-  const chosenAt = (rank: number) => {
-    const granted = entry.grantedRepertoire?.[rank] ?? [];
-    return (entry.repertoire?.[rank] ?? []).filter((id) => !granted.includes(id)).length;
+    const all = spellOptions({ character, entry, content }, rank, restrictedId);
+    if (!spontaneous || restrictedId) return all;
+    const known = new Set(entry.repertoire?.[rank] ?? []);
+    return all.filter((s) => !known.has(s.id));
   };
 
   /*
@@ -718,28 +615,31 @@ function ManageSpellsModal({
    *     keeps its own slot cap.
    */
   const collectionSize = entry.spellCollection;
-  const collectionUsed = () => {
-    let n = 0;
-    for (let r = 1; r <= 9; r++) n += chosenAt(r);
-    return n;
-  };
-
-  // A spontaneous caster knows at most as many spells per rank as they have slots of that
-  // rank (the PF2e repertoire cap). Infinity if the rank has no slot pool (shouldn't happen).
-  const repCap = (rank: number) => {
-    if (collectionSize !== undefined && rank >= 1 && rank <= 9) {
-      const floorHeld = chosenAt(1) === 0 && rank !== 1 ? 1 : 0;
-      // The cap is expressed per rank because every caller compares it against this rank's count:
-      // what this rank already holds, plus whatever is left in the shared pool.
-      return chosenAt(rank) + Math.max(0, collectionSize - collectionUsed() - floorHeld);
-    }
-    return entry.slots?.[rank]?.max ?? Infinity;
+  // A spontaneous caster knows at most as many spells per rank as they have slots of that rank (the
+  // PF2e repertoire cap), or, for a flexible collection, as the flat pool has left — `repertoireCap`,
+  // beside `spellOptions`, because the ADD GATE is the only place a cap is enforced and the render
+  // has to know what that number was.
+  const repCap = (rank: number) => repertoireCap(entry, rank);
+  /** D5 — the count the gate refused on includes places the fresh build is not DRAWING, so where any
+   *  are hidden the note SAYS so: "Repertoire full (4 known)" beside an empty list, with no ✕ and no
+   *  Add, is a refusal whose cause is off screen. (A collection is one flat pool, so it counts the
+   *  pool's hidden places rather than the rank's.) */
+  const hiddenNote = (rank: number) => {
+    const pooled = collectionSize !== undefined && rank >= 1 && rank <= 9;
+    const n = pooled
+      ? Array.from({ length: 9 }, (_, i) => hiddenAt(entry, i + 1)).reduce((a, b) => a + b, 0)
+      : hiddenAt(entry, rank);
+    return n ? ` — ${n} of them ${n === 1 ? 'is' : 'are'} not on your current spell list` : '';
   };
   /** What a refused add is called — a collection is full as a POOL, not at a rank. */
   const capNote = (rank: number) =>
-    collectionSize !== undefined && rank >= 1 && rank <= 9
-      ? `Collection full (${collectionUsed()} of ${collectionSize})`
-      : `Repertoire full (${repCap(rank)} known)`;
+    (collectionSize !== undefined && rank >= 1 && rank <= 9
+      ? `Collection full (${collectionUsed(entry)} of ${collectionSize})`
+      : `Repertoire full (${repCap(rank)} known)`) + hiddenNote(rank);
+  /** D5 — over the cap is REPORTED, never hidden: every one of the player's spells is drawn and the
+   *  rank says so. Only a build edit can produce the state (a level entered wrong, a subclass swap). */
+  const overAt = (rank: number) => entry.overCap?.find((o) => o.rank === rank)?.by ?? 0;
+  const overNote = (by: number) => `${by} over the limit — remove ${by > 1 ? 'some' : 'one'}`;
 
   const pick = (spellId: string | null) => {
     if (picking) {
@@ -756,9 +656,13 @@ function ManageSpellsModal({
           // live in the repertoire too but don't count, matching the "Add" button's display gate. Counting
           // the full array here silently dropped a legal add whenever chosen + granted filled the slots.
           const granted = entry.grantedRepertoire?.[picking.rank] ?? [];
-          const chosenCount = cur.filter((id) => !granted.includes(id)).length;
-          if (!cur.includes(spellId) && chosenCount < repCap(picking.rank))
-            onPlay((p) => setRepertoireRank(p, entry.id, picking.rank, [...cur, spellId]));
+          if (!cur.includes(spellId) && chosenAt(entry, picking.rank) < repCap(picking.rank))
+            // ⛔ The WRITER edits the stored list by this one id — never the rendered list `cur`, which
+            // is missing whatever the build is currently hiding and carries grants that are not the
+            // player's. `own` is the base for a rank the player has never touched.
+            onPlay((p) =>
+              addRepertoireSpell(p, entry.id, picking.rank, spellId, cur.filter((id) => !granted.includes(id)), granted),
+            );
         }
       } else {
         if (picking.cantripTrade) onPlay((p) => setTradedCantrip(p, entry.id, picking.slot!, spellId));
@@ -769,8 +673,9 @@ function ManageSpellsModal({
   };
 
   const removeKnown = (rank: number, id: string) => {
-    const cur = entry.repertoire?.[rank] ?? [];
-    onPlay((p) => setRepertoireRank(p, entry.id, rank, cur.filter((x) => x !== id)));
+    const granted = entry.grantedRepertoire?.[rank] ?? [];
+    const own = (entry.repertoire?.[rank] ?? []).filter((x) => !granted.includes(x));
+    onPlay((p) => removeRepertoireSpell(p, entry.id, rank, id, own, granted));
   };
 
   /* A signature spell a RECORD granted is not the player's to un-star — the feat's text says it IS
@@ -779,14 +684,21 @@ function ManageSpellsModal({
   // One signature spell per rank: toggling a new one drops any existing same-rank signature.
   const toggleSig = (rank: number, id: string) => {
     if (fixedSig.has(id)) return;
-    const cur = entry.signature ?? [];
-    if (cur.includes(id)) {
-      onPlay((p) => setSignatureSpells(p, entry.id, cur.filter((x) => x !== id)));
-    } else {
-      // A granted signature never yields its rank to a new pick, for the same reason.
-      const sameRank = new Set((entry.repertoire?.[rank] ?? []).filter((x) => !fixedSig.has(x)));
-      onPlay((p) => setSignatureSpells(p, entry.id, [...cur.filter((x) => !sameRank.has(x)), id]));
-    }
+    // A granted signature never yields its rank to a new pick, for the same reason. The write itself
+    // edits the STORED star list by this one id (see toggleSignatureSpell): the rendered `signature`
+    // holds the record's granted stars, which are not the player's to store, and omits any ★ the
+    // build is currently hiding, which writing the whole list back would have thrown away.
+    //
+    // ⛔ D3 — and so is the list of stars it DISPLACES: `starsAtRank` reads the store, because this
+    // read `entry.repertoire[rank]` (the drawn list) and left a ★ on a spell the render was hiding
+    // undisplaced, which is two signature spells at one rank as soon as that spell comes back.
+    //
+    // ⚠ `rank` is THE RANK THIS ROW IS DRAWN UNDER — where the repertoire files the spell — and that
+    // is the only rank a star is at. Passing the spell's own rank from `content` as a second reading
+    // deleted the player's ★ on a lower-rank spell filed higher up, on an unrelated click (R2).
+    const granted = entry.grantedRepertoire?.[rank] ?? [];
+    const own = (entry.repertoire?.[rank] ?? []).filter((x) => !granted.includes(x));
+    onPlay((p) => toggleSignatureSpell(p, entry.id, id, starsAtRank(p, entry.id, rank, own, granted).filter((x) => !fixedSig.has(x))));
   };
 
   // (The "Reset to default repertoire/preparation" button was removed at the owner's request, 2026-09-02.)
@@ -839,9 +751,11 @@ function ManageSpellsModal({
               // full. Both bail without touching state, so the row has to say so rather than look live.
               const addingToRepertoire = spontaneous && !picking.restricted && !picking.preparedCantrip;
               const cur = addingToRepertoire ? entry.repertoire?.[picking.rank] ?? [] : [];
-              const grantedHere = addingToRepertoire ? entry.grantedRepertoire?.[picking.rank] ?? [] : [];
               const alreadyKnown = addingToRepertoire && cur.includes(s.id);
-              const rankFull = addingToRepertoire && cur.filter((id) => !grantedHere.includes(id)).length >= repCap(picking.rank);
+              // `chosenAt`, not the drawn list: what the player HOLDS at the rank includes the picks
+              // the fresh build is hiding, and counting only the visible ones is how the sheet could
+              // hand out places a rank did not have (see repertoireHeld).
+              const rankFull = addingToRepertoire && chosenAt(entry, picking.rank) >= repCap(picking.rank);
               const cantAdd = alreadyKnown || rankFull;
               return (
                 <PickerRow
@@ -868,9 +782,15 @@ function ManageSpellsModal({
                     alreadyKnown
                       ? 'Already in your repertoire at this rank.'
                       : rankFull
-                        ? collectionSize !== undefined && picking.rank >= 1 && picking.rank <= 9
-                          ? `Your spell collection is full (${collectionUsed()} of ${collectionSize})${chosenAt(1) === 0 && picking.rank !== 1 ? ' — one place is held for a 1st-rank spell.' : '.'}`
-                          : `Your ${ord(picking.rank)}-rank repertoire is full (${repCap(picking.rank)} known).`
+                        ? // D5 — the refusal names every reason it is refusing, including the places
+                          // the fresh build is not drawing (hiddenNote): the count in this sentence
+                          // is the STORE's, so without it the player reads "full (4 known)" over a
+                          // list of two and has nothing on screen to act on.
+                          (collectionSize !== undefined && picking.rank >= 1 && picking.rank <= 9
+                            ? `Your spell collection is full (${collectionUsed(entry)} of ${collectionSize})${chosenAt(entry, 1) === 0 && picking.rank !== 1 ? ' — one place is held for a 1st-rank spell' : ''}`
+                            : `Your ${ord(picking.rank)}-rank repertoire is full (${repCap(picking.rank)} known)`) +
+                          hiddenNote(picking.rank) +
+                          '.'
                         : undefined
                   }
                   onSelect={() => pick(s.id)}
@@ -913,10 +833,14 @@ function ManageSpellsModal({
                   // Bloodline/mystery/muse spells are added FOR FREE — they don't count toward the
                   // known-spells cap and can't be removed in play.
                   const granted = entry.grantedRepertoire?.[rank] ?? [];
-                  const knownCount = (entry.repertoire?.[rank] ?? []).filter((id) => !granted.includes(id)).length;
+                  const knownCount = chosenAt(entry, rank);
+                  // The flat pool's own report rides the first rank shown — a collection has no rank
+                  // of its own to hang it on.
+                  const over = overAt(rank) || (rank === ranks[0] ? overAt(0) : 0);
                   return (
                 <div key={rank} className="ms-rank">
                   <div className="ms-rank-hdr">{ord(rank)} rank</div>
+                  {!!over && <div className="ms-cap-note">{overNote(over)}</div>}
                   {(entry.repertoire?.[rank] ?? []).map((id) => {
                     const sp = content.spells[id];
                     const isSig = entry.signature?.includes(id);
@@ -1639,7 +1563,7 @@ export function SpellsTab({
           );
         })
         .filter(Boolean);
-      const echoCards = signatureEchoIds(main, rank, (id) => content.spells[id]?.rank ?? 0)
+      const echoCards = signatureEchoIds(main, rank)
         .filter((id) => visible(content.spells[id]))
         .map((id) => {
           const sp = content.spells[id];
@@ -2453,7 +2377,7 @@ export function SpellsTab({
           const inv = character.inventory.find((iv) => iv.instanceId === itemView);
           const item = inv ? content.items[inv.itemId] : undefined;
           return inv && item ? (
-            <ItemDetail inv={inv} item={item} content={content} inventory={character.inventory} feats={character.feats} onPlay={onPlay} activeModes={character.activeModes} onClose={() => setItemView(null)} />
+            <ItemDetail inv={inv} item={item} content={content} inventory={character.inventory} feats={character.feats} character={character} charLevel={character.level} onPlay={onPlay} activeModes={character.activeModes} onClose={() => setItemView(null)} />
           ) : null;
         })()}
       {manageEntry && onPlay && (

@@ -114,6 +114,10 @@ vi.mock('../src/data/supabase', () => {
       },
       removeChannel: () => undefined,
       auth: {
+        // `getSession` is what src/data/party.ts reads — a LOCAL answer, no round-trip and no
+        // failure mode that reports a signed-in user as signed out. `getUser` stays for the modules
+        // that still call it (cloudSync, trackerSync).
+        getSession: async () => ({ data: { session: { user: { id: 'gm-1' } } } }),
         getUser: async () => ({ data: { user: { id: 'gm-1' } } }),
         signOut: async () => ({ error: null }),
       },

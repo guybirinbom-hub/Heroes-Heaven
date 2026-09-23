@@ -25,6 +25,19 @@ const DAILY_PREP_MODES: { id: NonNullable<Customization['dailyPrepPrompt']>; lab
   { id: 'reuse', label: 'Reuse my last pick' },
 ];
 
+/** How much an inventory card shows. Absent = 'essentials'. */
+const ITEM_CARD_DETAILS: { id: NonNullable<Customization['itemCardDetail']>; label: string }[] = [
+  { id: 'essentials', label: 'Essentials' },
+  { id: 'compact', label: 'Compact' },
+  { id: 'standard', label: 'Standard' },
+];
+
+/** Where XP rides in the rail's Hit points card. Absent = 'chip'. */
+const XP_DISPLAYS: { id: NonNullable<Customization['xpDisplay']>; label: string }[] = [
+  { id: 'chip', label: 'Chip in the title' },
+  { id: 'line', label: 'Line with a bar' },
+];
+
 /** Keys whose control is a simple on/off chip. */
 type BoolKey =
   | 'showLevelChip'
@@ -148,6 +161,8 @@ export function CustomizationEditor({
 
   const curShape = value.portraitShape ?? base.portraitShape ?? 'circle';
   const curDailyPrep = value.dailyPrepPrompt ?? base.dailyPrepPrompt ?? 'ask';
+  const curXpDisplay = value.xpDisplay ?? base.xpDisplay ?? 'chip';
+  const curItemCard = value.itemCardDetail ?? base.itemCardDetail ?? 'essentials';
   const consumableOn = (value.consumableHighlight ?? base.consumableHighlight) as boolean | undefined;
   const consumableColor = value.consumableColor ?? base.consumableColor ?? themeConsumableColor();
   const curDefaultTab = value.defaultTab ?? base.defaultTab ?? '';
@@ -337,6 +352,24 @@ export function CustomizationEditor({
         sets temp HP.
       </p>
 
+      <div className="menu-label">XP display</div>
+      <div className="menu-row">
+        {XP_DISPLAYS.map((m) => (
+          <button
+            key={m.id}
+            className={'chip' + (curXpDisplay === m.id ? ' active' : '')}
+            onClick={() => onChange('xpDisplay', m.id === (base.xpDisplay ?? 'chip') ? undefined : m.id)}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+      <p className="settings-desc" style={{ marginTop: 0 }}>
+        XP sits in the Hit points card. <strong>Chip in the title</strong> rides in the card's title row and costs no
+        height; <strong>Line with a bar</strong> adds a thin <strong>XP 340 / 1000</strong> row with a progress bar above
+        the HP numbers. Press either one to set the total or add XP — on the phone too.
+      </p>
+
       <div className="menu-label">Daily preparations</div>
       <div className="menu-row">
         {DAILY_PREP_MODES.map((m) => (
@@ -381,6 +414,25 @@ export function CustomizationEditor({
           <div className="menu-row">{boolChip('showSlotBadges', 'Slot count on rank tabs')}</div>
         </>
       )}
+
+      <div className="menu-label">Item card detail</div>
+      <div className="menu-row">
+        {ITEM_CARD_DETAILS.map((m) => (
+          <button
+            key={m.id}
+            className={'chip' + (curItemCard === m.id ? ' active' : '')}
+            onClick={() => onChange('itemCardDetail', m.id === (base.itemCardDetail ?? 'essentials') ? undefined : m.id)}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+      <p className="settings-desc" style={{ marginTop: 0 }}>
+        How much each inventory card shows. <strong>Essentials</strong> keeps the name, quantity, Bulk and price, and
+        under them only what changes in play — equipped, invested, charges, runes. <strong>Compact</strong> is one line
+        an item (the price appears when you point at the row). <strong>Standard</strong> is the older, taller card with
+        the item level and every button. Whatever a smaller card leaves out is still in the item's own page.
+      </p>
 
       <div className="menu-label">Consumables</div>
       <div className="menu-row">{boolChip('consumableHighlight', 'Colour-code consumables')}</div>

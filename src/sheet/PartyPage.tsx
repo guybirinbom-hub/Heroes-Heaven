@@ -11,16 +11,20 @@ interface PartyPageProps {
   /** The campaigns this character is attached to (subset of the user's memberships). */
   campaigns: CampaignMembership[];
   onClose: () => void;
+  /** This device's characters (id + name) — how a card is recognised as one of your own. */
+  characters?: { id: string; name: string }[];
+  /** Open one of your own characters for real (a roster id), instead of reading its published copy. */
+  onOpenOwn?: (charId: string) => void;
   /** Player leaves a campaign entirely (drops the membership + detaches all their characters). */
   onLeave?: (campaignId: string) => void;
 }
 
 /** Party view opened from a character's Party button — teammates' characters in summary for the
  *  selected campaign; tap one to read (only) their full sheet. A GM viewing here can still kick. */
-export function PartyPage({ content, campaigns, onClose, onLeave }: PartyPageProps) {
+export function PartyPage({ content, campaigns, characters, onOpenOwn, onClose, onLeave }: PartyPageProps) {
   const [selectedId, setSelectedId] = useState(campaigns[0]?.id ?? '');
   const selectedCampaign = campaigns.find((c) => c.id === selectedId);
-  const { sheetEl, open } = useMemberViewer(content);
+  const { sheetEl, open } = useMemberViewer(content, { roster: characters, onOpenOwn });
 
   const leave = async () => {
     if (!onLeave || !selectedCampaign) return;

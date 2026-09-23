@@ -11,7 +11,7 @@ import {
   updateInventoryItem,
   type PlayState,
 } from '../src/rules/play';
-import type { InventoryItem } from '../src/rules/types';
+import type { Character, InventoryItem } from '../src/rules/types';
 
 /**
  * "i come back to edit and things are different." — owner, 2026-09-12.
@@ -29,8 +29,7 @@ const db = () => content();
 
 /** The exact chain App.tsx runs: build the character, then rebuild it with the play state carried. */
 const build1 = (b: BuildState) => buildCharacter(b, applyOverrides(db(), b.overrides));
-const rebuild = (play: PlayState, prev: { inventory: InventoryItem[] }, next: { inventory: InventoryItem[] }) =>
-  playForRebuild(play, next.inventory, prev.inventory);
+const rebuild = (play: PlayState, prev: Character, next: Character) => playForRebuild(play, next, prev);
 
 const base = (items: BuildState['inventory']): BuildState => ({
   ...emptyBuild(),
@@ -108,7 +107,7 @@ describe('gear added in the builder reaches the sheet', () => {
     // Legacy/GM paths with no `prevBuilt`: nothing can be shown untouched, so nothing is dropped.
     const { built, play } = played();
     const next = build1(base([]));
-    const out = playForRebuild(play, next.inventory);
+    const out = playForRebuild(play, next);
     expect(out.inventory!.map((i) => i.itemId).sort()).toEqual(play.inventory!.map((i) => i.itemId).sort());
     expect(built.inventory.length).toBeGreaterThan(0); // fixture check: there WAS build gear
   });
@@ -152,7 +151,7 @@ describe('gear added in the builder reaches the sheet', () => {
   it('a character that never managed inventory in play still seeds from the build', () => {
     const { built } = played();
     const next = build1(base([...STARTING, { itemId: 'shortbow', quantity: 1 }]));
-    const out = playForRebuild({ ...initialPlay(built, db()), inventory: undefined }, next.inventory, built.inventory);
+    const out = playForRebuild({ ...initialPlay(built, db()), inventory: undefined }, next, built);
     expect(out.inventory, 'undefined must stay undefined so the sheet falls back to the build').toBeUndefined();
     expect(applyPlayState(next, out, db()).inventory.map((i) => i.itemId)).toContain('shortbow');
   });

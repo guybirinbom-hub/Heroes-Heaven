@@ -108,6 +108,9 @@ interface CampaignsPageProps {
   onOpenHomebrew: () => void;
   onOpenSettings?: () => void;
   characters: { id: string; name: string }[];
+  /** Open one of this device's own characters (a roster id) — what a GM's own card in the party does
+   *  instead of opening the GM editor on their own published copy. */
+  onOpenOwn?: (charId: string) => void;
   modes: Record<string, ModeDef>;
   onSaveMode: (m: ModeDef) => void;
   onDeleteMode: (id: string) => void;
@@ -116,7 +119,7 @@ interface CampaignsPageProps {
 /** Campaigns page — GM-only management. Lists the campaigns you RUN; open one to edit its settings and
  *  see the players in it (and view their sheets / kick). Players don't manage campaigns here — they
  *  JOIN by entering a code in a character's Setup, and reach the party from that character. */
-export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, onOpenSettings, characters, modes, onSaveMode, onDeleteMode }: CampaignsPageProps) {
+export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, onOpenSettings, characters, onOpenOwn, modes, onSaveMode, onDeleteMode }: CampaignsPageProps) {
   const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
   // Re-open on the campaign the user was last in, rather than always on the list — a GM running a
   // campaign lives inside it. (Removable integration; see src/integration/README.md.)
@@ -165,7 +168,8 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
   const localTable = TRACKER_IN_CAMPAIGN && !isPhone && !devCampaigns && auth.status !== 'signed-in' && auth.status !== 'loading';
   // GM detail: the GM edits a player's sheet (fully, silently pushed on Update) — not a read-only view.
   // On a phone that editor IS the GM side, so a teammate's sheet opens read-only there instead.
-  const { sheetEl, open } = useMemberViewer(content, { gmEdit: !isPhone });
+  // A GM plays too: their OWN card in the party is their own sheet, not a GM edit of it.
+  const { sheetEl, open } = useMemberViewer(content, { gmEdit: !isPhone, roster: characters, onOpenOwn });
   // Back navigation, one step at a time. Campaign settings (edit) was opened FROM a campaign, so back
   // returns to that campaign's tracker — not all the way out to the list, which would lose the GM's
   // place. Every other sub-view steps back to the list.

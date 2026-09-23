@@ -75,8 +75,12 @@ describe('in-play repertoire + signature (spontaneous)', () => {
   });
 
   it('setSignatureSpells overlays the signature list', () => {
-    const play = setSignatureSpells(initialPlay(bard, c), sentry.id, ['fear']);
-    expect(sigOf(applyPlayState(bard, play, c), sentry.id)).toContain('fear');
+    // ⚠ FIXTURE: the ★ has to sit on a spell the bard KNOWS. A star is drawn only on a spell the
+    // collection is drawing (it is cast from a higher slot, so a star on a spell that is not there
+    // showed a castable card for a spell the character does not have), so this stars a real one.
+    const known = sentry.repertoire![srank][0];
+    const play = setSignatureSpells(initialPlay(bard, c), sentry.id, [known]);
+    expect(sigOf(applyPlayState(bard, play, c), sentry.id)).toContain(known);
   });
 
   it('resetRepertoire reverts repertoire + signature to the build defaults', () => {

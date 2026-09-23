@@ -11420,48 +11420,15 @@
   "category": "feats",
   "id": "spellshot-dedication",
   "field": "spellcastingGrant",
-  "value": {
-   "tradition": "arcane",
-   "keyAbility": "int",
-   "proficiency": "trained"
-  }
+  "value": null,
+  "why": "feat-3267 — Spellshot Dedication, Guns & Gears (Remastered) p. 140: the trained spell attack/DC and the Intelligence key belong to the archetype ENTRY, which archetypeProficiency + the table now build. Left here the profile also retunes an unrelated INNATE entry (build.ts: the innate entry takes its keyAbility/proficiency from spellcastingGrants), which this feat does not print."
  },
  {
   "category": "feats",
   "id": "spellshot-dedication",
   "field": "effectChoices",
-  "value": [
-   {
-    "id": "spellbook-cantrip-1",
-    "prompt": "Spellshot spellbook: choose an arcane cantrip to prepare",
-    "spellFilter": {
-     "traditions": [
-      "arcane"
-     ],
-     "cantripsOnly": true,
-     "grantAs": "innate",
-     "innate": {
-      "tradition": "arcane",
-      "atWill": true
-     }
-    }
-   },
-   {
-    "id": "spellbook-cantrip-2",
-    "prompt": "Spellshot spellbook: choose a second arcane cantrip to prepare",
-    "spellFilter": {
-     "traditions": [
-      "arcane"
-     ],
-     "cantripsOnly": true,
-     "grantAs": "innate",
-     "innate": {
-      "tradition": "arcane",
-      "atWill": true
-     }
-    }
-   }
-  ]
+  "value": null,
+  "why": "feat-3267 — Spellshot Dedication, Guns & Gears (Remastered) p. 140 prints a wizard-style SPELLBOOK — \"gaining a spellbook with four common arcane cantrips of your choice … You can prepare two cantrips each day from your spellbook\" — not innate at-will spells. The two effectChoices granted the cantrips as INNATE (grantAs: innate, atWill) because the archetype had no entry in CASTER_ARCHETYPES; it does now, so the pool would double-grant."
  },
  {
   "category": "feats",
@@ -96407,7 +96374,11 @@
        "level": 15
       }
      ],
-     "classDcKeyAbility": "int"
+     "classDcKeyAbility": "int",
+     "requiresFeat": {
+      "featId": "spellshot-dedication",
+      "level": 2
+     }
     },
     {
      "id": "way-of-the-triggerbrand",
@@ -150301,7 +150272,8 @@
   "category": "feats",
   "id": "spellshot-dedication",
   "field": "note",
-  "value": "This feat counts as Wizard Dedication for the prerequisites of Basic Wizard Spellcasting; the builder still demands the literal feat, so take it through an Override."
+  "value": "Your spellbook holds four arcane cantrips; the app tracks the two you prepare each day, chosen in the archetype's own cantrip picker. Spell slots come from the wizard archetype's feats — Basic Wizard Spellcasting at 4th, Expert Wizard Spellcasting at 12th — which this feat lets you take.",
+  "why": "feat-3267 — Spellshot Dedication, Guns & Gears (Remastered) p. 140, and archetype-122, whose feat list runs to Expert Wizard Spellcasting. Replaces a note that told the player to take that feat through an Override."
  },
  {
   "category": "feats",
@@ -187880,5 +187852,71 @@
   "id": "aon-weary",
   "field": "description",
   "value": "Source Kingmaker Adventure Path pg. 583\n\nThe army is exhausted. Weary always has a numerical value. A weary army takes a circumstance penalty equal to its weary value to its AC, to its Maneuver checks, and to its Army activity checks; it takes double this circumstance penalty on Deploy Army checks. An army reduces the value of this condition by 1 each Kingdom turn that passes during which it does not attempt an Army activity or engage in a war encounter."
+ },
+ {
+  "category": "feats",
+  "id": "spellshot-dedication",
+  "field": "description",
+  "value": "You cast arcane spells like a wizard, gaining a spellbook with four common arcane cantrips of your choice. You gain the Cast a Spell activity. You can prepare two cantrips each day from your spellbook. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for spellshot archetype spells is Intelligence, and they are arcane spells. You become trained in Arcana; if you were already trained in Arcana, you instead become trained in a skill of your choice. This counts as the wizard archetype for the benefits of Basic Wizard Spellcasting.\n\n---\n\n**Special** You can't select another dedication feat other than Beast Gunner Dedication until you've gained two other feats from the spellshot or beast gunner archetypes.",
+  "why": "feat-3267 — Spellshot Dedication, Guns & Gears (Remastered) p. 140 — the Special clause shipped with both archetype names deleted (\"from the or archetypes\"), and the wizard-archetype sentence as a narrower paraphrase."
+ },
+ {
+  "category": "feats",
+  "id": "spellshot-dedication",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "Basic Wizard Spellcasting",
+    "key": "feats"
+   },
+   {
+    "label": "Beast Gunner Dedication",
+    "key": "feats"
+   }
+  ],
+  "why": "feat-3267 — Spellshot Dedication, Guns & Gears (Remastered) p. 140: the restored sentence no longer contains the words \"Wizard Dedication\", so that ref matches nothing."
+ },
+ {
+  "category": "feats",
+  "id": "fulminating-shot",
+  "field": "description",
+  "value": "**Frequency** once per round.\n\n---\n\nYou channel potent magic into your next shot, empowering it with a blast of crackling energy. Choose acid, cold, electricity, or fire. If you hit with your next attack roll using a firearm or crossbow before the end of your turn, you deal 1d6 additional damage of this type. At 12th level, this increases to 2d6 additional damage, and at 18th level, it increases to 3d6 additional damage.",
+  "why": "feat-3268 — both printings read \"You channel potent magic into your next shot, empowering it with a blast of crackling energy.\"; the import dropped the middle of the sentence and left it grammatical."
+ },
+ {
+  "category": "feats",
+  "id": "call-gun",
+  "field": "description",
+  "value": "You build a powerful magical connection with a chosen gun or crossbow, gaining the ability to conjure it directly to your hand from any distant location. During your daily preparations, choose a single crossbow or firearm. Until your next daily preparations, you can use the Call Gun action to call the gun to your hand.",
+  "why": "feat-3269 — the clause naming what the connection DOES was dropped at import."
+ },
+ {
+  "category": "classFeatures",
+  "id": "energy-shot",
+  "field": "description",
+  "value": "**Trigger** You roll initiative.\n\n---\n\nYou unleash a small surge of magical energy into your weapon, granting it the ability to deal energy damage to your foes to exploit their weaknesses. You can Interact to draw a crossbow or firearm. On your first three Strikes of this encounter with a firearm or crossbow, you deal an additional 1 acid, cold, fire, or electricity damage per weapon damage die. You choose which damage type to deal as part of making each Strike.",
+  "why": "action-923 — the record carries the remastered aonId but the LEGACY text (action-3692), whose draw clause is wider than the reprint's."
+ },
+ {
+  "category": "actions",
+  "id": "energy-shot",
+  "field": "description",
+  "value": "**Trigger** You roll initiative.\n\n---\n\nYou unleash a small surge of magical energy into your weapon, granting it the ability to deal energy damage to your foes to exploit their weaknesses. You can Interact to draw a crossbow or firearm. On your first three Strikes of this encounter with a firearm or crossbow, you deal an additional 1 acid, cold, fire, or electricity damage per weapon damage die. You choose which damage type to deal as part of making each Strike.",
+  "why": "action-923 — the same legacy text on the action twin; test/gunslinger-deeds.test.ts holds the two copies equal."
+ },
+ {
+  "category": "classes",
+  "id": "gunslinger",
+  "path": [
+   "subclass",
+   "options",
+   "id=way-of-the-spellshot"
+  ],
+  "field": "requiresFeat",
+  "value": {
+   "featId": "spellshot-dedication",
+   "level": 2
+  },
+  "why": "way-5 and archetype-122 — Way of the Spellshot prints \"You must select Spellshot Dedication as your 2nd-level class feat.\" and nothing enforced or prompted it. requiresFeat is the app's existing field for exactly this sentence: barbarian/bloodrager and inventor/light-mortar-innovation both carry it, and setupMissing (build.ts) reports the feat as outstanding once the level is reached without it. Never auto-granted — the printed sentence instructs the player."
  }
 ]

@@ -28,7 +28,7 @@ import { parsePrice } from '../rules/wealth';
 import type { CompanionPick } from './AddItemsModal';
 import { itemCounters, highestSlotRank } from '../rules/itemUses';
 import { formatItemPrice, grp } from '../rules/wealth';
-import { ItemDetail } from './ItemDetail';
+import { INVESTED_LIMIT, ItemDetail, RuneCopyPicker, countInvested, equipControl, runeLines } from './ItemDetail';
 import { chooseDialog, confirmDialog } from './confirm';
 import { ActionGlyph, isActionCost } from './widgets';
 import { AddItemsModal } from './AddItemsModal';
@@ -45,8 +45,11 @@ const TYPE_ICON: Record<string, string> = {
   treasure: 'ti-coin',
 };
 
+/** Bulk as the card prints it. Negligible Bulk is '' rather than the book's '—': under a "bulk" column
+ *  heading a dash reads as the printed value, but inlined into the Essentials facts line, or standing
+ *  alone in a Compact row, it reads as data we failed to load. The Standard column restores it. */
 function formatBulk(b: number): string {
-  if (b === 0) return '—';
+  if (b === 0) return '';
   if (b === 0.1) return 'L';
   return String(b);
 }
@@ -69,16 +72,6 @@ function stateBadge(inv: InventoryItem): { label: string; kind: string } | null 
   if (inv.invested) return { label: 'Invested', kind: 'invested' };
   if (inv.equipped) return { label: 'Wielded', kind: 'worn' };
   if (inv.worn) return { label: 'Worn', kind: 'worn' };
-  return null;
-}
-
-/** The primary equip action for an item type: armor is worn, weapons/shields are wielded. */
-function equipControl(item: Item): { flag: 'worn' | 'equipped'; on: string; off: string } | null {
-  if (item.itemType === 'armor') return { flag: 'worn', on: 'Worn', off: 'Wear' };
-  // Material/precious-metal placeholder "weapons" (ingots, chunks) carry no damage object — they aren't
-  // really wieldable, so don't offer a Wield control (deriveStrike guards the same case for safety).
-  if (item.itemType === 'weapon' && !item.damage) return null;
-  if (item.itemType === 'weapon' || item.itemType === 'shield') return { flag: 'equipped', on: 'Wielded', off: 'Wield' };
   return null;
 }
 
@@ -118,10 +111,6 @@ function keepsInlineQuantity(item: Item): boolean {
 function isConsumable(item: Item): boolean {
   return item.itemType === 'consumable' || (item.traits ?? []).includes('consumable');
 }
-
-/** PF2e caps a character at 10 invested magic items — Incredible Investiture raises it to 12. Read
- *  `character.investedLimit` wherever a character is in hand; this is only the RAW default. */
-const INVESTED_LIMIT = 10;
 
 /** The only printed record in the database that gives a character a rune source — a Spirit Warrior
  *  archetype feat. See `designationKinds` below. Exported so the test asserts the same id the UI
@@ -203,7 +192,11 @@ function ItemCard({
    *  character, who can do all three. */
   can?: { wear: boolean; wield: boolean; invest: boolean };
 }) {
-  const { consumableHighlight } = useCustomization();
+  const { consumableHighlight, itemCardDetail } = useCustomization();
+  // Three looks for one card (Settings → Customization → Item card detail). Everything a Standard card
+  // can do a Compact or Essentials card can do too: same root element, same class, same handlers — only
+  // the contents differ, and what a smaller card leaves out is in the item's own popup.
+  const mode = itemCardDetail ?? 'essentials';
   const badge = stateBadge(inv);
   const rawEquip = equipControl(item);
   // An animal companion has no hands: a Wield control on its pack does nothing but mislead. Same for
@@ -224,56 +217,131 @@ function ItemCard({
   const canHost =
     !!attachPlanNow && (item.itemType === 'weapon' || item.itemType === 'armor' || item.itemType === 'shield');
 
+  // What ONE of these weighs where it actually is — a suit of plate in the pack is 5, not the 4 its
+  // page prints — so the row and the total at the top of the tab cannot disagree.
+  const bulk = formatBulk(unitBulk(item, !!inv.worn && !inv.containerInstanceId));
+  // Essentials drops the level/material line, so the runes etched on this row — the part of it that a
+  // player changes — move to the second line as chips.
+  const runeChips =
+    mode === 'essentials'
+      ? runeLines(inv).map((r) => (
+          <span className="ff-trait rune" key={r}>
+            {r}
+          </span>
+        ))
+      : [];
+  // One set of props for every mode: the drag, hold-to-move and attach handlers are written once, so a
+  // smaller card cannot quietly lose one of them.
+  const rootProps: React.HTMLAttributes<HTMLDivElement> = {
+    className:
+      'inv-card' +
+      (mode === 'compact' ? ' inv-compact' : mode === 'essentials' ? ' inv-essentials' : '') +
+      (inv.invested ? ' invested' : '') +
+      (consumableHighlight && isConsumable(item) ? ' consumable' : '') +
+      ' clickable' +
+      (onPlay ? ' draggable' : '') +
+      (dragging ? ' inv-dragging' : '') +
+      (attachHost && attachValid ? ' attach-target' : '') +
+      (attachOver && attachValid ? ' attach-over' : ''),
+    onClick: onOpen,
+    onPointerDown: onHoldDrag ? (e) => onHoldDrag(inv, e) : undefined,
+    draggable: !!onPlay && !isMobile,
+    onDragStart: onPlay
+      ? (e) => {
+          e.dataTransfer.setData('text/plain', inv.instanceId);
+          e.dataTransfer.effectAllowed = 'copyMove';
+          onDragStartItem?.(inv);
+        }
+      : undefined,
+    onDragEnd: onPlay ? () => onDragEndItem?.() : undefined,
+    onDragOver: canHost
+      ? (e) => {
+          const plan = attachPlanNow!(item, inv);
+          if (!plan) return; // not an attach drag → section handles the relocate
+          e.preventDefault();
+          e.stopPropagation();
+          e.dataTransfer.dropEffect = plan.ok ? 'copy' : 'none';
+          onAttachOver?.(inv.instanceId);
+        }
+      : undefined,
+    onDragLeave: canHost ? () => onAttachLeave?.() : undefined,
+    onDrop: canHost
+      ? (e) => {
+          const plan = attachPlanNow!(item, inv);
+          if (!plan) return; // let the enclosing Group's relocate drop handle it
+          e.preventDefault();
+          e.stopPropagation(); // win over the enclosing Group's relocate drop
+          onAttachDrop?.(e.dataTransfer.getData('text/plain') || '', inv.instanceId);
+        }
+      : undefined,
+  };
+
+  // Compact: one line an item. State (and any charge count) survives as chips; every control the card
+  // would have shown is a tap away in the item's popup, which this row opens like a card.
+  if (mode === 'compact') {
+    const counts = counters.map((u) => `${u.current}/${u.max}`).join(' ');
+    // Every chip's sentence, in the order the box fills. A pill is shown whole or not at all, so a
+    // narrow row prints only as many of them as fit — sometimes none — and the same sentences ride on
+    // the row itself, which is where a pointer can still read what the row had no width for. (No hover
+    // on a touch screen: there the reader is the popup, which carries all of it either way.)
+    const chipText = [
+      [badge?.label, counts].filter(Boolean).join(' '),
+      inv.battleforged && 'Battleforged',
+      inv.attachedTo && 'Affixed',
+    ]
+      .filter(Boolean)
+      .join(' · ');
+    return (
+      <div {...rootProps} title={chipText || undefined}>
+        <span className="inv-name">
+          {displayName(item, content)}
+          {nameSuffix}
+        </span>
+        {inv.quantity > 1 && <span className="inv-qty">×{inv.quantity}</span>}
+        {/* One box for all of them (sheet.css): the chips fill it from the left and whatever does not
+            fit WHOLE wraps out of sight, so this order is what survives a narrow row. State and charges
+            lead because they are what a player checks at the table; each chip carries its own sentence
+            as a title, and all of it is in the popup. */}
+        {!!chipText && (
+          <span className="inv-cdots">
+            {(!!badge || !!counts) && (
+              <span
+                className={'inv-cdot' + (badge ? ' on' : '')}
+                title={[badge?.label, counts].filter(Boolean).join(' ')}
+              >
+                {badge && <span className="inv-clbl">{badge.label}</span>}
+                {/* Its own element so the pill can say "Worn 1/1" with one space in it (the chip's
+                    4px gap) without the two ever being one string a layout could cut between. */}
+                {counts && <span className="inv-cnum">{counts}</span>}
+              </span>
+            )}
+            {/* Battleforged is additive to Wielded/Worn/Invested (the state chip above), not a
+                replacement for one, so it needs its own chip rather than folding into it. */}
+            {inv.battleforged && (
+              <span className="inv-cdot bf" title="Battleforged: +1 potency until your next daily preparations">
+                <span className="inv-clbl">Battleforged</span>
+              </span>
+            )}
+            {inv.attachedTo && (
+              <span className="inv-cdot" title="Affixed to another item">
+                <span className="inv-clbl">Affixed</span>
+              </span>
+            )}
+          </span>
+        )}
+        <span className="inv-bval inv-cbulk">{bulk}</span>
+        {/* Hidden until the pointer is on the row (CSS); a touch screen has no hover, so there it just
+            stays dimmed rather than being unreachable. */}
+        <span className="inv-cprice">
+          {formatItemPrice(item)}
+          {inv.quantity > 1 ? ' ea' : ''}
+        </span>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={
-        'inv-card' +
-        (inv.invested ? ' invested' : '') +
-        (consumableHighlight && isConsumable(item) ? ' consumable' : '') +
-        ' clickable' +
-        (onPlay ? ' draggable' : '') +
-        (dragging ? ' inv-dragging' : '') +
-        (attachHost && attachValid ? ' attach-target' : '') +
-        (attachOver && attachValid ? ' attach-over' : '')
-      }
-      onClick={onOpen}
-      onPointerDown={onHoldDrag ? (e) => onHoldDrag(inv, e) : undefined}
-      draggable={!!onPlay && !isMobile}
-      onDragStart={
-        onPlay
-          ? (e) => {
-              e.dataTransfer.setData('text/plain', inv.instanceId);
-              e.dataTransfer.effectAllowed = 'copyMove';
-              onDragStartItem?.(inv);
-            }
-          : undefined
-      }
-      onDragEnd={onPlay ? () => onDragEndItem?.() : undefined}
-      onDragOver={
-        canHost
-          ? (e) => {
-              const plan = attachPlanNow!(item, inv);
-              if (!plan) return; // not an attach drag → section handles the relocate
-              e.preventDefault();
-              e.stopPropagation();
-              e.dataTransfer.dropEffect = plan.ok ? 'copy' : 'none';
-              onAttachOver?.(inv.instanceId);
-            }
-          : undefined
-      }
-      onDragLeave={canHost ? () => onAttachLeave?.() : undefined}
-      onDrop={
-        canHost
-          ? (e) => {
-              const plan = attachPlanNow!(item, inv);
-              if (!plan) return; // let the enclosing Group's relocate drop handle it
-              e.preventDefault();
-              e.stopPropagation(); // win over the enclosing Group's relocate drop
-              onAttachDrop?.(e.dataTransfer.getData('text/plain') || '', inv.instanceId);
-            }
-          : undefined
-      }
-    >
+    <div {...rootProps}>
       <span className="inv-icon">
         <i className={'ti ' + (TYPE_ICON[item.itemType] ?? 'ti-package')} aria-hidden="true" />
       </span>
@@ -305,14 +373,34 @@ function ItemCard({
               <ActionGlyph cost={item.activationCost} />
             </span>
           )}
-        </div>
-        <div className="inv-sub">
-          level {item.level} · {formatItemPrice(item)}
-          {item.material ? ` · ${capWord(item.material.type.replace(/-/g, ' '))}` : ''}
-          {item.isMonsterPart && item.monsterPartTags && item.monsterPartTags.length > 0 && (
-            <span className="inv-mp-tags"> · {item.monsterPartTags.join(', ')}</span>
+          {/* Essentials has no subline, so the three facts a player checks at the table ride here. The
+              ×N is only added for a stack whose count the name line doesn't already carry. */}
+          {mode === 'essentials' && (
+            <span className="inv-facts">
+              {inlineQty && inv.quantity > 1 ? `×${inv.quantity} · ` : ''}
+              {/* Negligible Bulk says nothing worth a fact of its own — and a '—' here would be the
+                  placeholder this card refuses to print. */}
+              {bulk && (
+                <>
+                  <span className="inv-bval">{bulk}</span> bulk ·{' '}
+                </>
+              )}
+              {/* A stack prints the price of ONE, the same as Compact — and says so, or "×3 … 4 gp"
+                  reads as the price of the three. */}
+              {formatItemPrice(item)}
+              {inv.quantity > 1 ? ' ea' : ''}
+            </span>
           )}
         </div>
+        {mode === 'standard' && (
+          <div className="inv-sub">
+            level {item.level} · {formatItemPrice(item)}
+            {item.material ? ` · ${capWord(item.material.type.replace(/-/g, ' '))}` : ''}
+            {item.isMonsterPart && item.monsterPartTags && item.monsterPartTags.length > 0 && (
+              <span className="inv-mp-tags"> · {item.monsterPartTags.join(', ')}</span>
+            )}
+          </div>
+        )}
         {onPlay && hasActions && (
           <div className="inv-actions">
             {inv.attachedTo && <span className="inv-affixed" title="Affixed to another item">Affixed</span>}
@@ -338,17 +426,7 @@ function ItemCard({
                 {inv.invested ? 'Invested' : 'Invest'}
               </button>
             )}
-            {runeCopy && (
-              <label className="inv-runecopy" title="Doubling Rings: duplicate another wielded weapon's runes onto this one" onClick={stop}>
-                <i className="ti ti-copy" aria-hidden="true" />
-                <span className="inv-runecopy-lbl">Runes from</span>
-                <select value={runeCopy.value ?? ''} onChange={(e) => runeCopy.onChange(e.target.value)}>
-                  {runeCopy.options.map((o) => (
-                    <option key={o.value} value={o.value}>{o.label}</option>
-                  ))}
-                </select>
-              </label>
-            )}
+            {runeCopy && <RuneCopyPicker runeCopy={runeCopy} onClick={stop} />}
             {counters.map((u) => (
               <span className="inv-uses" key={u.id} title={`${u.label}${u.resetsOnRest ? ' — refills on daily preparations' : ''}`}>
                 <i className="ti ti-battery-2" aria-hidden="true" />
@@ -387,15 +465,21 @@ function ItemCard({
                 </button>
               </span>
             )}
+            {runeChips}
           </div>
         )}
+        {/* Runes with no controls beside them (a read-only sheet) still earn the line. Nothing to put on
+            it at all and the line is simply absent — a placeholder dash would be a mark the data never
+            had, and it would be the only thing on half the cards. */}
+        {!(onPlay && hasActions) && runeChips.length > 0 && <div className="inv-actions">{runeChips}</div>}
       </div>
-      <div className="inv-bulk">
-        {/* The row shows what ONE of these weighs where it actually is — a suit of plate in the pack is
-            5, not the 4 its page prints — so this column and the total at the top cannot disagree. */}
-        <div className="inv-bval">{formatBulk(unitBulk(item, !!inv.worn && !inv.containerInstanceId))}</div>
-        <div className="inv-blbl">bulk</div>
-      </div>
+      {mode !== 'essentials' && (
+        <div className="inv-bulk">
+          {/* Under its own heading the book's '—' for negligible Bulk IS the value. */}
+          <div className="inv-bval">{bulk || '—'}</div>
+          <div className="inv-blbl">bulk</div>
+        </div>
+      )}
       {/* In interactive mode the highlighted equip/invest button already shows this state, so the
           static badge would be a redundant second "Worn"/"Wielded"/"Invested". Only show it read-only. */}
       {badge && !onPlay && <span className={'inv-badge ' + badge.kind}>{badge.label}</span>}
@@ -406,8 +490,35 @@ function ItemCard({
 /** Fallback card for an inventory entry whose item definition is missing from the data,
  *  so it stays visible and removable instead of silently vanishing. */
 function UnknownItemCard({ inv, onPlay }: { inv: InventoryItem; onPlay?: PlayUpdater }) {
+  // Follows the card-detail setting like any other row — otherwise a Standard-shaped card sits in the
+  // middle of a list of Essentials or Compact ones.
+  const mode = useCustomization().itemCardDetail ?? 'essentials';
+  const sub = `missing data (${inv.itemId})`;
+  // This row has no popup, so its one control travels with it into every mode.
+  const remove = onPlay && (
+    <button
+      className="inv-act danger"
+      aria-label="Remove item"
+      onClick={() => onPlay((p) => removeInventoryItem(p, inv.instanceId))}
+    >
+      <i className="ti ti-trash" aria-hidden="true" /> Remove
+    </button>
+  );
+  // The facts are the Compact line's filler (sheet.css): the name is served first, so a long item id
+  // ellipsises, and against a long enough name the facts have no width left at all. This row has no
+  // popup to read them in, so the untruncated string hangs on the row itself.
+  if (mode === 'compact') {
+    return (
+      <div className="inv-card unknown inv-compact" title={sub}>
+        <span className="inv-name">Unknown item</span>
+        {inv.quantity > 1 && <span className="inv-qty">×{inv.quantity}</span>}
+        <span className="inv-facts">{sub}</span>
+        {remove}
+      </div>
+    );
+  }
   return (
-    <div className="inv-card unknown">
+    <div className={'inv-card unknown' + (mode === 'essentials' ? ' inv-essentials' : '')}>
       <span className="inv-icon">
         <i className="ti ti-help" aria-hidden="true" />
       </span>
@@ -415,19 +526,10 @@ function UnknownItemCard({ inv, onPlay }: { inv: InventoryItem; onPlay?: PlayUpd
         <div className="inv-name-line">
           <span className="inv-name">Unknown item</span>
           {inv.quantity > 1 && <span className="inv-qty">×{inv.quantity}</span>}
+          {mode === 'essentials' && <span className="inv-facts">{sub}</span>}
         </div>
-        <div className="inv-sub">missing data ({inv.itemId})</div>
-        {onPlay && (
-          <div className="inv-actions">
-            <button
-              className="inv-act danger"
-              aria-label="Remove item"
-              onClick={() => onPlay((p) => removeInventoryItem(p, inv.instanceId))}
-            >
-              <i className="ti ti-trash" aria-hidden="true" /> Remove
-            </button>
-          </div>
-        )}
+        {mode === 'standard' && <div className="inv-sub">{sub}</div>}
+        {remove && <div className="inv-actions">{remove}</div>}
       </div>
     </div>
   );
@@ -447,6 +549,9 @@ function VehicleSiegeSection({
   content: ContentDatabase;
   onPlay?: PlayUpdater;
 }) {
+  // These rows are hand-rolled .inv-cards, so they follow the card-detail setting themselves or they
+  // keep the Standard shape beside rows that dropped it.
+  const mode = useCustomization().itemCardDetail ?? 'essentials';
   const rows = (character.companions ?? [])
     .filter((c): c is CompanionConfig & { kind: 'vehicle' | 'siege' } => c.kind === 'vehicle' || c.kind === 'siege')
     .map((cfg) => {
@@ -472,40 +577,56 @@ function VehicleSiegeSection({
           no Bulk
         </span>
       </div>
-      <div className="inv-grid">
+      <div className={'inv-grid' + (mode === 'compact' ? ' inv-grid-compact' : '')}>
         {rows.map(({ cfg, v }) => {
           const kindLabel = cfg.kind === 'vehicle' ? 'Vehicle' : 'Siege weapon';
           const name = cfg.name || v?.name || kindLabel;
           const st = character.companionHp?.[cfg.id];
           const max = v?.hp;
           const cur = max != null ? Math.max(0, max - (st?.damage ?? 0)) : undefined;
+          // A portable siege weapon states no AC/Hardness/HP at all — omit those rather than printing
+          // blanks.
+          const sub =
+            kindLabel +
+            (v ? ` · level ${v.level}` : ' · pick a type in Companions') +
+            (v?.ac != null ? ` · AC ${v.ac}` : '') +
+            (v?.hardness != null ? ` · Hardness ${v.hardness}` : '') +
+            (v && cur != null ? ` · HP ${cur}/${v.hp}` : '');
+          // No popup behind these rows, so Remove rides along in every mode.
+          const removeBtn = onPlay && (
+            <button className="inv-act danger" aria-label={`Remove ${name}`} onClick={() => remove(cfg, name)}>
+              <i className="ti ti-trash" aria-hidden="true" /> Remove
+            </button>
+          );
+          // The stat line is longer than a Compact card is wide, so it is that line's filler
+          // (sheet.css) and ellipsises rather than squeezing the name — which is the only thing
+          // saying WHICH vehicle this is — out of the row. No popup behind these rows, so the
+          // untruncated string hangs on the row itself; the Companions tab is its other home.
+          if (mode === 'compact') {
+            return (
+              <div className="inv-card inv-compact" key={cfg.id} title={sub}>
+                <span className="inv-name">{name}</span>
+                <span className="inv-facts">{sub}</span>
+                {removeBtn}
+              </div>
+            );
+          }
           return (
-            <div className="inv-card" key={cfg.id}>
+            <div className={'inv-card' + (mode === 'essentials' ? ' inv-essentials' : '')} key={cfg.id}>
               <span className="inv-icon">
                 <i className={'ti ' + (cfg.kind === 'vehicle' ? 'ti-wheel' : 'ti-bow')} aria-hidden="true" />
               </span>
               <div className="inv-mid">
                 <div className="inv-name-line">
                   <span className="inv-name">{name}</span>
+                  {mode === 'essentials' && <span className="inv-facts">{sub}</span>}
                 </div>
-                <div className="inv-sub">
-                  {kindLabel}
-                  {/* A portable siege weapon states no AC/Hardness/HP at all — omit those rather than
-                      printing blanks. */}
-                  {v ? ` · level ${v.level}` : ' · pick a type in Companions'}
-                  {v?.ac != null ? ` · AC ${v.ac}` : ''}
-                  {v?.hardness != null ? ` · Hardness ${v.hardness}` : ''}
-                  {v && cur != null ? ` · HP ${cur}/${v.hp}` : ''}
-                </div>
-                {onPlay && (
-                  <div className="inv-actions">
-                    <button className="inv-act danger" aria-label={`Remove ${name}`} onClick={() => remove(cfg, name)}>
-                      <i className="ti ti-trash" aria-hidden="true" /> Remove
-                    </button>
-                  </div>
-                )}
+                {mode === 'standard' && <div className="inv-sub">{sub}</div>}
+                {removeBtn && <div className="inv-actions">{removeBtn}</div>}
               </div>
-              {v && (
+              {/* The bulk column is Standard's; these are bulk-EXEMPT, so its '—' is the one place the
+                  dash is the truth — and the smaller cards don't carry the column at all. */}
+              {v && mode === 'standard' && (
                 <div className="inv-bulk">
                   <div className="inv-bval">—</div>
                   <div className="inv-blbl">bulk</div>
@@ -576,6 +697,8 @@ export function InventoryTab({
   const dragRef = useRef<{ instanceId: string; itemId: string } | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   const isMobile = useIsMobile();
+  // One-line rows need a wider column than the 230px cards do, or the name is all ellipsis.
+  const compactCards = (useCustomization().itemCardDetail ?? 'essentials') === 'compact';
   // Mobile hold-to-move: press-and-hold an item card to pick it up. `holdRef` tracks the pointer; once
   // the hold arms, `ghost` is the floating item icon that follows the finger (the source card hides and
   // the open section collapses so only tabs + headers remain as drop targets), and `dropTarget` is the
@@ -684,6 +807,35 @@ export function InventoryTab({
   const wieldedWeapons = drAvailable
     ? character.inventory.filter((inv) => inv.equipped && content.items[inv.itemId]?.itemType === 'weapon' && !isHandwraps(content.items[inv.itemId]))
     : [];
+  /**
+   * The rune-copy picker offered for ONE row — read by the card AND by the item's own popup, because a
+   * Compact card has no line to put it on and this is the only control in the app that chooses the
+   * source weapon. A wielder who cannot reach it cannot use the rings at all.
+   *
+   * …and Cutting Heaven, Crushing Earth does the same from invested HANDWRAPS, which are worn rather
+   * than wielded and so were never among the sources this picker offered.
+   */
+  const runeCopyFor = (inv: InventoryItem, item: Item) => {
+    const play = onPlay;
+    const hwSource = handwrapsRuneSharing(character, content, inv)
+      ? character.inventory.filter((x) => x.invested && (x.worn || x.equipped) && isHandwraps(content.items[x.itemId]))
+      : [];
+    if (!play || !(drAvailable || hwSource.length > 0)) return undefined;
+    if (!inv.equipped || item.itemType !== 'weapon' || isHandwraps(item) || mpActive(character, inv)) return undefined;
+    return {
+      value: inv.copyRunesFrom,
+      options: [
+        { value: '', label: 'its own runes' },
+        ...(drAvailable
+          ? wieldedWeapons
+              .filter((w) => w.instanceId !== inv.instanceId)
+              .map((w) => ({ value: w.instanceId, label: content.items[w.itemId]!.name }))
+          : []),
+        ...hwSource.map((w) => ({ value: w.instanceId, label: content.items[w.itemId]!.name })),
+      ],
+      onChange: (v: string) => play((p) => updateInventoryItem(p, inv.instanceId, { copyRunesFrom: v || undefined })),
+    };
+  };
   const q = query.trim().toLowerCase();
   const match = (inv: InventoryItem) => !q || (!!resolve(inv) && searchMatches(query, displayName(resolve(inv)!, content)));
 
@@ -702,28 +854,9 @@ export function InventoryTab({
     rankBySearch(list, query, (inv) => { const it = resolve(inv); return it ? displayName(it, content) : ''; });
   const equipped = rank(loose.filter((inv) => !isContainer(inv) && (inv.worn || inv.equipped || inv.invested)).filter(match));
   const carried = rank(loose.filter((inv) => isContainer(inv) || !(inv.worn || inv.equipped || inv.invested)).filter(match));
-  // Only items that are actually investable (carry the `invested` trait) count toward the
-  // 10-item cap — not anything that happens to have a stale invested flag.
-  /*
-   * …and items sharing an `investmentGroup` count ONCE between them: *"No matter how many magical
-   * medals you have, they COLLECTIVELY COUNT AS ONE invested item."* All five medals each consumed a
-   * slot of the ten, so a decorated soldier lost half their investments to their own medals. An item
-   * with no group counts individually, which is every other item in the game.
-   */
-  const investedCount = (() => {
-    const groups = new Set<string>();
-    let n = 0;
-    for (const inv of character.inventory) {
-      const item = resolve(inv);
-      if (!inv.invested || !item?.traits?.includes('invested')) continue;
-      const group = (item as { investmentGroup?: string }).investmentGroup;
-      if (!group) { n++; continue; }
-      if (groups.has(group)) continue;
-      groups.add(group);
-      n++;
-    }
-    return n;
-  })();
+  // Counted in ItemDetail (the trait test and the investmentGroup rule live with the cap they serve),
+  // so the card and the item popup can never disagree about how full the ten slots are.
+  const investedCount = countInvested(character.inventory, content);
   const investedLimit = character.investedLimit ?? INVESTED_LIMIT;
   /**
    * Which "this item IS my …" marks this character can use. Offered only where the class actually has
@@ -1210,7 +1343,7 @@ export function InventoryTab({
           {right}
         </div>
         {expanded && (
-          <div className="inv-grid">
+          <div className={'inv-grid' + (compactCards ? ' inv-grid-compact' : '')}>
             {lead}
             {items.map((inv) => {
               const item = resolve(inv);
@@ -1228,27 +1361,7 @@ export function InventoryTab({
               const plan = attachHost && draggedItem && draggedInv ? planAttach(draggedItem, draggedInv, item, inv, character.inventory, content, character) : null;
               // Doubling Rings: a wielded weapon can borrow another wielded weapon's runes. Only offered
               // while the rings are invested and there's a second weapon to copy from.
-              // …and Cutting Heaven, Crushing Earth does the same from invested HANDWRAPS, which are
-              // worn rather than wielded and so were never among the sources this picker offered.
-              const hwSource = handwrapsRuneSharing(character, content, inv)
-                ? character.inventory.filter((x) => x.invested && (x.worn || x.equipped) && isHandwraps(content.items[x.itemId]))
-                : [];
-              const runeCopy =
-                onPlay && (drAvailable || hwSource.length > 0) && inv.equipped && item.itemType === 'weapon' && !isHandwraps(item) && !mpActive(character, inv)
-                  ? {
-                      value: inv.copyRunesFrom,
-                      options: [
-                        { value: '', label: 'its own runes' },
-                        ...(drAvailable
-                          ? wieldedWeapons
-                              .filter((w) => w.instanceId !== inv.instanceId)
-                              .map((w) => ({ value: w.instanceId, label: content.items[w.itemId]!.name }))
-                          : []),
-                        ...hwSource.map((w) => ({ value: w.instanceId, label: content.items[w.itemId]!.name })),
-                      ],
-                      onChange: (v: string) => onPlay((p) => updateInventoryItem(p, inv.instanceId, { copyRunesFrom: v || undefined })),
-                    }
-                  : undefined;
+              const runeCopy = runeCopyFor(inv, item);
               return (
                 <ItemCard
                   key={inv.instanceId}
@@ -1477,6 +1590,10 @@ export function InventoryTab({
           activeModes={character.activeModes}
           designationKinds={designationKinds}
           character={character}
+          // Everything a smaller card leaves out is here, and these three are what it leaves out:
+          // wield/wear/invest and the rune-copy picker exist in no other place in the app.
+          can={scope && { wear: scope.canWear, wield: scope.canWield, invest: scope.canInvest }}
+          runeCopy={runeCopyFor(liveRow(detail.inv) ?? detail.inv, detail.item)}
           onEdit={onCreateItem ? (it, iv) => setEditTarget({ item: it, inv: iv }) : undefined}
         />
       )}

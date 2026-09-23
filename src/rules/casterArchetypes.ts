@@ -111,6 +111,55 @@ export function archetypeTraditionOptions(a: Tier | ActiveCasterArchetype): Trad
   return out;
 }
 
+/**
+ * Dedications that PRINT that they count as another archetype's — the dedication feat id each one
+ * stands in for, and THE FEATS THAT PERMISSION REACHES.
+ *
+ * Spellshot Dedication: *"This counts as the wizard archetype for the benefits of Basic Wizard
+ * Spellcasting"* (feat-3267) — its whole slot ladder is the wizard one (see the table entry). The
+ * prerequisite lane resolves "Wizard Dedication" to a real feat and so enforces it, which left every
+ * rung of that ladder — Basic Arcana, Basic Wizard Spellcasting — unreachable for the one archetype
+ * whose text hands it over. Read by `checkPrerequisites` in build.ts.
+ *
+ * ⚠ `forFeats` IS THE WHOLE POINT, and it is not a convenience. A blanket "holder of A also holds B"
+ * token opens EVERY record whose prerequisite names B. Thirteen ship with prerequisite "Wizard
+ * Dedication"; ten are the level-20 masks (*"Druid Dedication or Wizard Dedication"*, never enforced)
+ * and the three that resolve are Basic Wizard Spellcasting, Basic Arcana — both on the spellshot's own
+ * archetype list (archetype-122) — and **Arcane School Spell**, which is not on it and which carries a
+ * focus point plus a real wizard school focus spell. The printed permission names one benefit; naming
+ * the two ids the archetype actually lists keeps the ladder reachable and closes that hole.
+ *
+ * ⚠ NOT archetype MEMBERSHIP. A spellshot has not "started" the wizard archetype, so nothing here may
+ * reach `belongsToArchetype` or the `started` half of `dedicationBlock`.
+ *
+ * `forFeats` has a SECOND reader, and it is the counting half of `dedicationBlock` rather than the
+ * membership half: the rungs this permission reaches are printed on the BORROWER's own feat list too
+ * (archetype-122 carries Basic Arcana and Basic Wizard Spellcasting; the Archives tag both
+ * `archetype: ["Wizard","Spellshot"]`), so taking one counts toward the borrower's *"two other feats
+ * from the … archetypes"* clause. Read the note there — this list is the whole reason that credit can
+ * be given without a blanket token crediting feats neither archetype prints.
+ *
+ * ⚠ AND THE WALL AT THE TOP OF THE BORROWED LADDER — `notOnItsList`. Opening the bottom rung opens
+ * everything above it whose OWN prerequisite line names a rung rather than the dedication: Expert
+ * Wizard Spellcasting asks for *"Basic Wizard Spellcasting, master in Arcana"* and Master Wizard
+ * Spellcasting for *"Expert Wizard Spellcasting, legendary in Arcana"*, neither of which mentions a
+ * dedication at all. Expert IS on archetype-122 and is meant to be reachable; Master is not on it, and
+ * with no `masterId` on the table entry taking it would grant a level-18 class feat's worth of nothing
+ * — a silent dead pick, which is the failure mode this whole lane exists to remove. Listed feats are
+ * blocked outright (`forbiddenFeatReason`) unless the character actually holds the borrowed
+ * dedication, in which case they are a real member of that archetype and it is theirs.
+ */
+export const DEDICATION_COUNTS_AS: Record<string, { forFeats: string[]; countsAs: string[]; notOnItsList?: string[] }> = {
+  'spellshot-dedication': {
+    // The only two feats on archetype-122 whose prerequisite line names Wizard Dedication; the rest of
+    // the ladder (Advanced Arcana, Arcane Breadth, Expert Wizard Spellcasting) hangs off these two.
+    forFeats: ['basic-wizard-spellcasting', 'basic-arcana'],
+    countsAs: ['wizard-dedication'],
+    // archetype-122 ends at Expert Wizard Spellcasting — the spellshot's ladder stops at rank 6.
+    notOnItsList: ['master-wizard-spellcasting'],
+  },
+};
+
 export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   /*
    * ⚠ `cantrips` IS THE PREPARED-PER-DAY CAP, NOT THE SPELLBOOK SIZE. Every cantrip the player selects
@@ -216,6 +265,42 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   // *"Your key spellcasting ability for these spells is either Charisma or Intelligence, chosen when you
   // take this feat."* Only the tradition half was modelled, so an Intelligence beast gunner was unbuildable.
   'beast-gunner-dedication': { ...mk('arcane', 'cha', 1, 'beast-gunner', true), traditionOptions: ['arcane', 'primal'], choiceKeyAbility: ['cha', 'int'] },
+  /*
+   * SPELLSHOT (Guns & Gears) — a gunslinger CLASS archetype whose dedication is a wizard in all but
+   * name: *"You cast arcane spells like a wizard, gaining a spellbook with four common arcane cantrips
+   * of your choice … You can prepare two cantrips each day from your spellbook. You're trained in the
+   * spell attack modifier and spell DC statistics. Your key spellcasting attribute for spellshot
+   * archetype spells is Intelligence, and they are arcane spells. … This counts as the wizard archetype
+   * for the benefits of Basic Wizard Spellcasting."* (feat-3267).
+   *
+   * Its slot ladder is therefore the WIZARD one — no `basic-spellshot-spellcasting` exists — which is
+   * why mk() could not mint it and the archetype was missing from this table altogether. Measured at
+   * levels 2, 4 and 8, a spellshot had NO spellcasting entry at all and Basic Wizard Spellcasting
+   * granted nothing; the record's own `note` told the player to take that feat through an Override.
+   *
+   * ⚠ IT SITS AFTER beast-gunner-dedication ON PURPOSE, and moving it up is a live regression.
+   * `activeCasterArchetype` returns the FIRST key the character matches and the app models ONE
+   * archetype caster. Spellshot + Beast Gunner is the one dedication pairing the record itself
+   * legalises — *"You can't select another dedication feat OTHER THAN BEAST GUNNER DEDICATION until…"*
+   * — and a character holding both has been getting the beast gunner's spontaneous repertoire since it
+   * shipped. Placed first, this entry replaced that repertoire, its cantrips and its slots with a
+   * prepared arcane entry the moment the app updated: a player's spells vanishing off the sheet with
+   * nothing asked. Measured both ways; the pairing keeps the beast gunner, and a lone spellshot is
+   * unaffected because it matches nothing earlier. Owner question: two archetype casters at once.
+   *
+   * ⚠ NO masterId, deliberately. The archetype's printed feat list (archetype-122) is Spellshot
+   * Dedication · Basic Arcana · Basic Wizard Spellcasting · Spell-Woven Shot · Advanced Arcana ·
+   * Fulminating Shot · Arcane Breadth · Call Gun · Expert Wizard Spellcasting · Phase Bullet · Black
+   * Powder Embodiment. Master Wizard Spellcasting is not on it, so the ladder stops at expert (ranks
+   * 1-6). Owner question: allow the master rung anyway for a spellshot who takes it?
+   */
+  'spellshot-dedication': {
+    tradition: 'arcane',
+    keyAbility: 'int',
+    cantrips: 2, // spellbook of 4, prepare 2 — see the header note above
+    basicId: 'basic-wizard-spellcasting',
+    expertId: 'expert-wizard-spellcasting',
+  },
   // Psychic: occult tradition, key = the attribute you qualified with (Int or Cha — player's choice).
   'psychic-dedication': { ...mk('occult', 'int', 1, 'psychic'), choiceKeyAbility: ['int', 'cha'] },
   // Summoner: a spontaneous repertoire whose tradition follows the chosen eidolon TYPE; caps at Expert

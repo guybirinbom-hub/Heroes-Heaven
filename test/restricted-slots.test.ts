@@ -165,9 +165,15 @@ describe('using a restricted slot in play', () => {
 
   it('moving a Sin Reservoir slot to another rank empties it', () => {
     const wiz = build('wizard', 8, { featPicks: { '8:class:0': 'sin-reservoir' }, subclassId: firstSubclass('wizard') });
-    const id = rs(wiz, 'wizard-casting', 'Sin Reservoir')[0].id;
-    let p = setRestrictedSpell(emptyPlay(), id, 'fly');
-    expect(rs(applyPlayState(wiz, p, db), 'wizard-casting', 'Sin Reservoir')[0].spellId).toBe('fly');
+    const slot = rs(wiz, 'wizard-casting', 'Sin Reservoir')[0];
+    const id = slot.id;
+    // A spell the slot may actually hold: on its curriculum list AND at or below its rank. This used
+    // to be `fly`, a 4th-rank spell in a 2nd-rank slot — the overlay rendered it with no test of its
+    // own, and now refuses it (the slot's picker never offered it), so the fixture said nothing.
+    const legal = (slot.allowed ?? []).find((s) => (db.spells[s]?.rank ?? 99) <= slot.rank)!;
+    expect(legal, 'fixture: the curriculum teaches something this slot can hold').toBeTruthy();
+    let p = setRestrictedSpell(emptyPlay(), id, legal);
+    expect(rs(applyPlayState(wiz, p, db), 'wizard-casting', 'Sin Reservoir')[0].spellId).toBe(legal);
     // A 2nd-rank spell chosen for a 2nd-rank slot cannot follow it down to 1st.
     p = setRestrictedRank(p, id, 1);
     const moved = rs(applyPlayState(wiz, p, db), 'wizard-casting', 'Sin Reservoir')[0];

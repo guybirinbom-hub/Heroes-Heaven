@@ -42,11 +42,14 @@ const view = (c: Character, play: PlayState): SpellcastingEntry =>
 
 const entryOf = (c: Character) => c.spellcasting.find((e) => e.type === 'prepared')!;
 
-/** A real shipped spell of a given rank. The generated test wizard has an EMPTY spellbook, so any
- *  `spellbook[n][0]` fallback is undefined and every assertion resting on it proves nothing. */
+/** A real shipped ARCANE spell of a given rank. The generated test wizard has an EMPTY spellbook, so
+ *  any `spellbook[n][0]` fallback is undefined and every assertion resting on it proves nothing — and
+ *  the tradition is load-bearing too: an empty book reads as "cannot say" and the slot's picker then
+ *  offers the entry's own list, so a divine spell is one the wizard could never have chosen and the
+ *  sheet does not draw it. */
 const spellAtRank = (rank: number): string => {
-  const hit = Object.values(db.spells).find((s) => s.rank === rank && !s.ritual);
-  if (!hit) throw new Error(`no rank-${rank} spell ships — the test cannot assert anything`);
+  const hit = Object.values(db.spells).find((s) => s.rank === rank && !s.ritual && s.traditions.includes('arcane'));
+  if (!hit) throw new Error(`no rank-${rank} arcane spell ships — the test cannot assert anything`);
   return hit.id;
 };
 const liveCount = (e: SpellcastingEntry, rank: number) => (e.prepared?.[rank] ?? []).filter((s) => !s.traded).length;
@@ -206,9 +209,16 @@ describe('it does not leak', () => {
     expect(liveCount(view(c, p), 1)).toBe(liveCount(e, 1));
   });
 
-  it('a builder edit drops them — slot counts are build-derived', () => {
+  it('a builder edit KEEPS them — a stale one is ignored at render, not deleted on save', () => {
+    /* This used to assert `toBeUndefined()`, i.e. that opening the builder and pressing Save threw
+     * the morning's trades away. That was a data loss dressed as a safety measure: a trade is the
+     * player's own preparation decision, the spells prepared into its bonus slots ride in
+     * `preparedSpells` under `bonusSlotKey`, and the very next case here proves a trade naming a
+     * slot that no longer exists is already ignored at render. Nothing needed deleting.
+     * (Owner report 2026-09-22 — the whole playForRebuild whitelist; see
+     * test/bug-builder-save-lossless.test.ts.) */
     const p = playForRebuild(addSpellTrade(emptyPlay(), e, 1, 3));
-    expect(p.spellTrades).toBeUndefined();
+    expect(p.spellTrades?.[e.id]).toHaveLength(1);
   });
 
   it('a trade naming a slot that no longer exists is ignored, not applied', () => {

@@ -14,6 +14,7 @@
  */
 import type { AbilityId, ActiveCondition, Character, CharacterAppearance, CharacterDetails, CharacterImage, Coins, CompanionConfig, ContentDatabase, InventoryItem, Item, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, InnateSpellGrant, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
 import { resolveRestrictedSlots } from './restrictedSlots';
+import { filedRank, heldCounts, offersSpell, overCapOf, type SpellOptionCtx } from './spellOptions';
 import { deriveMaxHp, deriveBulk, dailyChoiceGrants, ownedFeatureIds } from './derive';
 import { FORMULA_BOOK_ITEM_ID, formulaBooks, grantsFormulaBook, withFormula } from './formulaBook';
 import { adjustModes } from './modes';
@@ -262,6 +263,69 @@ export function itemApex(inventory: InventoryItem[] | undefined, content: Conten
   return null;
 }
 
+/**
+ * ⑥ THE COLLECTION THE SHEET DRAWS — the player's stored repertoire, plus the grants the FRESH build
+ * makes, minus only what is on no list this caster casts from.
+ *
+ * ⛔ THE CAP IS NOT APPLIED HERE, and that is the point of the function.
+ *
+ * It was, for one pass. A rank whose cap had shrunk drew as many as the fresh build allowed and held
+ * the rest back, on the reasoning that holding back is not deleting and the spell returns the moment
+ * the cap does. It is not deleting — until the player touches the rank: Manage-spells used to read
+ * `entry.repertoire[rank]` — THIS list — and write it straight back, so one ordinary add or remove at
+ * a rank with something held back collapsed the store to the drawn list and the held-back spell was
+ * gone for good, with the player never seeing what the click was about to take.
+ *
+ * So the cap belongs to the PICKER, which owns it already (`repertoireCap`, and the Add gate beside
+ * it): it decides what may be ADDED, where refusing costs the player nothing they already had. Over
+ * its cap is a state only a build edit can produce — a level entered wrong, a subclass swapped — and
+ * it is the player's own spells that are over it, so the render draws every one and SAYS SO: the
+ * entry carries `overCap` and the sheet puts a chip beside the rank. Reported, never hidden.
+ *
+ * ⚠ Which is only true because the gate counts what the store HOLDS (`repertoireHeld`, written just
+ * below this function's caller) and not the list this one returns. It counted the drawn list once:
+ * hide four spells with a subclass swap and the rank looked empty to the picker, which handed out
+ * four more places — eight of the player's own spells at a rank capped at four, produced by the
+ * sheet alone, with the sentence above still claiming only a build edit could do it.
+ *
+ * (The writers cannot destroy a hidden spell any more either — they edit the STORED list by the one
+ * id the player clicked, never the rendered one. That is the other half of the same rule, and it is
+ * what lets this function filter at all.)
+ *
+ * WHAT IS FILTERED is the list: a spell the slot's own picker would not offer today (off the fresh
+ * spellbook, off the fresh tradition) is not drawn — `offersSpell`, the picker's own function. That
+ * is not a number that moves under the player, it is the same question the picker asks, and it is
+ * the only way an illegal collection entry can be reached at all.
+ *
+ * ⛔ A GRANT IS NEVER IN THE STORE, and that is what makes a withdrawn one a non-problem. A granted
+ * spell (a bloodline's, a patron's, a conscious mind's) is a rule rather than a pick — *"can't be
+ * removed in play"* — so the writers strip it before writing (setRepertoireRank) and THIS FUNCTION
+ * puts the FRESH build's grants back on top at every render. A grant the build has withdrawn is
+ * simply not re-injected: it vanishes by itself, with nothing deleted anywhere. The Save used to cut
+ * it, which needed the previous character, could not tell a withdrawn grant from a spell the player
+ * had chosen for themselves, and wrote the ones it kept permanently into the player's own store.
+ */
+function renderRepertoire(
+  e: SpellcastingEntry,
+  stored: Record<number, string[]> | undefined,
+  ctx: SpellOptionCtx,
+): Record<number, string[]> {
+  const out: Record<number, string[]> = {};
+  for (const rank of Object.keys(e.repertoire ?? {}).map(Number)) {
+    const granted = e.grantedRepertoire?.[rank] ?? [];
+    const list = stored?.[rank];
+    if (!list) {
+      out[rank] = e.repertoire?.[rank] ?? [];
+      continue;
+    }
+    // An OLD store may still hold a grant, from before the writers began stripping them; it draws
+    // as the player's own pick while it is legal, and de-duplicates here rather than twice.
+    const kept = list.filter((id) => granted.includes(id) || offersSpell(ctx, rank, id));
+    out[rank] = [...granted.filter((id) => !kept.includes(id)), ...kept];
+  }
+  return out;
+}
+
 /** Overlay the in-play runtime values onto a freshly-built (snapshot) character. */
 export function applyPlayState(ch: Character, play: PlayState | undefined, content: ContentDatabase): Character {
   if (!play) return ch;
@@ -356,109 +420,31 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
   const spellcasting = (ch.spellcasting ?? []).map((e) => {
     let out = e;
     const isMainCaster = e.id === mainCasterId;
-    if (e.prepared) {
-      const prepared: Record<number, PreparedSlot[]> = {};
-      // Spell Blending. Stale trades are dropped rather than applied: investing a Ring of Wizardry or
-      // levelling up changes the slot arrays in PLAY, without ever passing through playForRebuild, so
-      // a recorded index can outlive the slot it named.
-      const trades = (play.spellTrades?.[e.id] ?? []).filter(
-        (t) => e.prepared?.[t.from] && t.indices.every((i) => i < (e.prepared?.[t.from]?.length ?? 0)) && (t.to === CANTRIP_TRADE || !!e.prepared?.[t.to]),
-      );
-      const tradedAt = new Map<number, Set<number>>();
-      for (const t of trades) {
-        const set = tradedAt.get(t.from) ?? new Set<number>();
-        for (const i of t.indices) set.add(i);
-        tradedAt.set(t.from, set);
-      }
-      for (const [rankStr, slots] of Object.entries(e.prepared)) {
-        const rank = Number(rankStr);
-        const spent = tradedAt.get(rank);
-        prepared[rank] = slots.map((s, i) => {
-          const key = preparedKey(e.id, rank, i);
-          const override = play.preparedSpells?.[key];
-          // A traded slot is not a slot you have today: it renders greyed and casts nothing.
-          if (spent?.has(i)) return { ...s, spellId: null, expended: false, traded: true };
-          return { ...s, spellId: override !== undefined ? override : s.spellId, expended: !!expended[key] };
-        });
-      }
-      // Bonus slots are APPENDED, so no existing index moves. Their key comes from the source rank,
-      // not their position, so removing another trade cannot renumber them.
-      for (const t of trades) {
-        if (t.to === CANTRIP_TRADE || !prepared[t.to]) continue;
-        const key = bonusSlotKey(e.id, t.to, t.from);
-        prepared[t.to] = [
-          ...prepared[t.to],
-          { spellId: play.preparedSpells?.[key] ?? null, expended: !!expended[key], bonusFrom: t.from },
-        ];
-      }
-      out = { ...out, prepared };
-      // "trade any spell slot for two additional cantrips" — openings on the OVERLAY only, never on
-      // the stored character, so the builder's known-cantrip cap survives a round-trip untouched.
-      // Keyed at rank 0, which prepared slots never use, so the keys cannot collide with a real slot.
-      const extra = trades.filter((t) => t.to === CANTRIP_TRADE).length * CANTRIPS_PER_TRADE;
-      if (extra) {
-        out = {
-          ...out,
-          tradedCantrips: Array.from({ length: extra }, (_, i) => play.preparedSpells?.[cantripTradeKey(e.id, i)] ?? null),
-        };
-      }
-    }
-    if (e.slots) {
-      const slots: Record<number, { max: number; used: number }> = {};
-      for (const [rankStr, pool] of Object.entries(e.slots)) {
-        const rank = Number(rankStr);
-        slots[rank] = { ...pool, used: clamp(used[poolKey(e.id, rank)] ?? 0, 0, pool.max) };
-      }
-      out = { ...out, slots };
-    }
-    /* A prepared caster's CANTRIPS re-prepare in play ("you prepare your cantrips" — daily prep,
-     * owner 2026-09-02). Per-opening: the builder's picks are the standing default, an override
-     * replaces (null empties) its opening, a stale override naming a dead spell falls back rather
-     * than casting nothing, and RECORD-granted cantrips are appended untouchable — a re-preparation
-     * can never drop a psychic's psi cantrips. `cantrips` stays the flat list every reader uses;
-     * `cantripSlots` is the per-opening view the Prepare panel edits. */
-    if (e.cantripsPrepared) {
-      const cap = e.cantripCap ?? e.cantrips.length;
-      const granted = new Set(e.grantedCantrips ?? []);
-      const defaults = e.cantrips.filter((id) => !granted.has(id));
-      const cantripSlots = Array.from({ length: cap }, (_, i) => {
-        const o = play.preparedSpells?.[preparedCantripKey(e.id, i)];
-        if (o === undefined) return defaults[i] ?? null;
-        return o && content.spells[o] ? o : null;
-      });
-      out = {
-        ...out,
-        cantripSlots,
-        cantrips: [...new Set([...cantripSlots.filter((x): x is string => !!x), ...(e.grantedCantrips ?? [])])],
-      };
-    }
-    if (e.repertoire) {
-      const repOverride = play.repertoireSpells?.[e.id];
-      let repertoire = e.repertoire;
-      if (repOverride) {
-        repertoire = {};
-        for (const rankStr of Object.keys(e.repertoire)) {
-          const rank = Number(rankStr);
-          repertoire[rank] = repOverride[rank] ?? e.repertoire[rank];
-        }
-      }
-      /*
-       * The player's ★ picks ADD to the record's granted signature spells; they never replace them.
-       * This was `play.signatureSpells?.[e.id] ?? e.signature`, so the moment the entry had a stored
-       * list at all, the authored one stopped being consulted — a granted signature ("you treat the
-       * field of life halcyon spell as a signature spell", an animist's whole apparition repertoire)
-       * was shadowed permanently, including any the record gained afterwards. A grant is a rule, not
-       * a preference; only the player's own half is theirs to edit.
-       */
-      const granted = e.signature ?? [];
-      const chosen = play.signatureSpells?.[e.id];
-      out = {
-        ...out,
-        repertoire,
-        signature: chosen ? [...new Set([...granted, ...chosen])] : e.signature,
-        signatureFixed: granted.length ? granted : undefined,
-      };
-    }
+    /*
+     * ①②⑤ WOULD THE SLOT'S OWN PICKER STILL OFFER WHAT IS PREPARED IN IT.
+     *
+     * The three slot shapes in `preparedSpells` that have a list (an ordinary slot, a Spell Blending
+     * bonus slot, a restricted slot) are all read below straight off the map with, until now, no test
+     * of any kind — rewrite the spellbook in the builder and yesterday's spell stayed prepared and
+     * castable out of a book the wizard no longer owns.
+     *
+     * The test is HERE rather than at the Save (reconcileBuildMirrors, which used to delete the key)
+     * for the reason ⑥ is: a build answer that moves usually moves back. A level entered wrong and
+     * corrected takes a level-gated book grant away and returns it — magusStudiousSpells REPLACES per
+     * band, so `haste` is in an 11th-level magus's book and absent at 10th — and the Save's delete
+     * could not be undone, so the round trip cost the player the spell they had prepared into a slot
+     * BOTH levels have. Not drawing it costs them nothing: the key stays, and the spell is back on
+     * the sheet the moment the build says so again.
+     *
+     * It is also the only place that can ask properly. The content database is here (a spell's own
+     * rank, and the tradition list for a caster who keeps no book), and so are the restricted slots a
+     * toggled MODE grants, which are resolved here and are on no stored character at all.
+     *
+     * ⛔ The question is not asked HERE. It is `spellOptions` — SpellsTab's own picker, moved into
+     * src/rules/spellOptions.ts so that the two surfaces cannot answer it differently. Whatever the
+     * picker would offer into this slot right now is what the slot draws; everything else is left in
+     * the store, undrawn, and comes back the moment the build says so again.
+     */
     /*
      * Learn a Spell. "A spell you learn is added to your repository of spells, such as a spellbook for
      * a wizard… If you have a spell repertoire, such as a bard, it's not automatically added since you
@@ -467,6 +453,10 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
      * So a spellbook caster's learned spells are merged into the spellbook — that IS the repository, and
      * merging is what makes them preparable — while a repertoire caster's stay in `learned`, offered to
      * the repertoire picker rather than silently pushed past the known-spells cap.
+     *
+     * FIRST, because every reader below asks the picker what this entry may hold and the picker reads
+     * the merged book. A spell that cost the character days to learn is on the list from the moment it
+     * is in the book, and the two surfaces must not disagree about which book that is.
      */
     const learned = play.learnedSpells?.[e.id];
     if (learned && Object.values(learned).some((ids) => ids.length > 0)) {
@@ -481,24 +471,180 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
         out = { ...out, spellbook };
       }
     }
+    // A lit Candle of Invocation grants its two slots through a MODE, because the item's own
+    // spellSlotBonus only fires for invested items and a candle is a consumable you light. Resolved
+    // here rather than at build time for the same reason: the toggle is play state — and BEFORE the
+    // readers, because the picker has to be able to look one up by id like any other slot.
+    const modeSlots: RestrictedSlot[] = [];
+    for (const mid of play.activeModes ?? []) {
+      const g = content.modes[mid]?.spellSlotBonus;
+      if (!g?.restricted) continue;
+      const target = g.entryId ?? (isMainCaster ? e.id : null);
+      if (target !== e.id) continue;
+      /* ⚠ The group key is the MODE'S OWN ID, never its position in `activeModes`. It was `m${i}`,
+       * the array index, and `toggleMode` removes by filter — so turning off any unrelated mode
+       * sitting earlier in the array renumbered this slot from `…:rs:m1:0` to `…:rs:m0:0`, the
+       * stored `preparedSpells` key stopped matching, and the candle's slot rendered empty. A slot
+       * id is the key a player's pick is filed under; it may not move because something else did. */
+      modeSlots.push(...resolveRestrictedSlots(g.restricted, e, ch.level, `m${mid}`, undefined, content));
+    }
+    const baseRestricted = [...(e.restrictedSlots ?? []), ...modeSlots];
+    /** What the PICKER would offer, for this entry as the sheet is showing it. */
+    const ctx: SpellOptionCtx = { character: ch, entry: out, content, restrictedSlots: baseRestricted };
+    /** The player's pick at `key`, or `undefined` where the slot's own picker would not offer it. */
+    const prepared1 = (key: string, rank: number, slotId?: string) => {
+      const pick = play.preparedSpells?.[key];
+      return typeof pick === 'string' && !offersSpell(ctx, rank, pick, slotId) ? undefined : pick;
+    };
+    if (e.prepared) {
+      const prepared: Record<number, PreparedSlot[]> = {};
+      // Spell Blending. Stale trades are dropped rather than applied — see liveTrades.
+      const trades = liveTrades(play, e);
+      const tradedAt = new Map<number, Set<number>>();
+      for (const t of trades) {
+        const set = tradedAt.get(t.from) ?? new Set<number>();
+        for (const i of t.indices) set.add(i);
+        tradedAt.set(t.from, set);
+      }
+      for (const [rankStr, slots] of Object.entries(e.prepared)) {
+        const rank = Number(rankStr);
+        const spent = tradedAt.get(rank);
+        prepared[rank] = slots.map((s, i) => {
+          const key = preparedKey(e.id, rank, i);
+          const override = prepared1(key, rank);
+          // A traded slot is not a slot you have today: it renders greyed and casts nothing.
+          if (spent?.has(i)) return { ...s, spellId: null, expended: false, traded: true };
+          return { ...s, spellId: override !== undefined ? override : s.spellId, expended: !!expended[key] };
+        });
+      }
+      // Bonus slots are APPENDED, so no existing index moves. Their key comes from the source rank,
+      // not their position, so removing another trade cannot renumber them.
+      for (const t of trades) {
+        if (t.to === CANTRIP_TRADE || !prepared[t.to]) continue;
+        const key = bonusSlotKey(e.id, t.to, t.from);
+        // A bonus slot has no build spell to fall back to, so `?? null` would be harmless here — and
+        // it is written the same way as everywhere else all the same: `??` after a stored pick reads
+        // an emptied slot as an absent one, and one of the three sites that wrote it was a bug.
+        const override = prepared1(key, t.to);
+        prepared[t.to] = [
+          ...prepared[t.to],
+          { spellId: override === undefined ? null : override, expended: !!expended[key], bonusFrom: t.from },
+        ];
+      }
+      out = { ...out, prepared };
+      // "trade any spell slot for two additional cantrips" — openings on the OVERLAY only, never on
+      // the stored character, so the builder's known-cantrip cap survives a round-trip untouched.
+      // Keyed at rank 0, which prepared slots never use, so the keys cannot collide with a real slot.
+      const extra = trades.filter((t) => t.to === CANTRIP_TRADE).length * CANTRIPS_PER_TRADE;
+      if (extra) {
+        out = {
+          ...out,
+          // ④ held to ③'s list — the opening's own picker, which is `spellOptions(0)`.
+          tradedCantrips: Array.from({ length: extra }, (_, i) => {
+            const o = play.preparedSpells?.[cantripTradeKey(e.id, i)];
+            return o && offersSpell(ctx, 0, o) ? o : null;
+          }),
+        };
+      }
+    }
+    if (e.slots) {
+      const slots: Record<number, { max: number; used: number }> = {};
+      for (const [rankStr, pool] of Object.entries(e.slots)) {
+        const rank = Number(rankStr);
+        slots[rank] = { ...pool, used: clamp(used[poolKey(e.id, rank)] ?? 0, 0, pool.max) };
+      }
+      out = { ...out, slots };
+    }
+    /* A prepared caster's CANTRIPS re-prepare in play ("you prepare your cantrips" — daily prep,
+     * owner 2026-09-02). Per-opening: the builder's picks are the standing default, an override
+     * replaces (null empties) its opening, a pick the opening's own picker would no longer offer
+     * falls back rather than casting something illegal, and RECORD-granted cantrips are appended
+     * untouchable — a re-preparation can never drop a psychic's psi cantrips. `cantrips` stays the
+     * flat list every reader uses; `cantripSlots` is the per-opening view the Prepare panel edits.
+     *
+     * ③④ have a list after all, and the table said for three rounds that they did not: `optionsFor(0)`
+     * is the tradition's CANTRIPS (a book caster's rank-0 book being "cannot say" — see spellOptions),
+     * so a 4th-rank spell parked in an opening rendered as an at-will cantrip until this asked. */
+    if (e.cantripsPrepared) {
+      const cap = e.cantripCap ?? e.cantrips.length;
+      const granted = new Set(e.grantedCantrips ?? []);
+      const defaults = e.cantrips.filter((id) => !granted.has(id));
+      const cantripSlots = Array.from({ length: cap }, (_, i) => {
+        const o = play.preparedSpells?.[preparedCantripKey(e.id, i)];
+        if (o === undefined) return defaults[i] ?? null;
+        return o && offersSpell(ctx, 0, o) ? o : null;
+      });
+      out = {
+        ...out,
+        cantripSlots,
+        cantrips: [...new Set([...cantripSlots.filter((x): x is string => !!x), ...(e.grantedCantrips ?? [])])],
+        // The BUILD's list, kept beside the rewritten one: an opening may hold any cantrip the
+        // character KNOWS (Adapted Cantrip buys one off-tradition on purpose), and the picker reads
+        // the overlaid entry — so without this, re-preparing that opening put the cantrip out of
+        // reach of every picker for ever. See SpellcastingEntry.cantripPool.
+        cantripPool: e.cantrips,
+      };
+    }
+    if (e.repertoire) {
+      const repOverride = play.repertoireSpells?.[e.id];
+      /* ⑥ The player's own collection, plus the grants the fresh build makes, minus what is on no
+       * list this caster casts from — renderRepertoire, which filters rather than deletes, and does
+       * NOT apply the cap (read it: the cap is the picker's, and applying it here was a delete on a
+       * delay). A rank the stored collection says nothing about renders the build's answer. */
+      const repertoire = repOverride ? renderRepertoire(e, repOverride, ctx) : e.repertoire;
+      // …and how many of their own the player HOLDS at each rank, the ones hidden just above
+      // included. The Add gate counts this rather than the drawn list: a rank that still holds four
+      // must not look empty to the picker because a subclass swap hid them (see repertoireHeld).
+      const repertoireHeld = repOverride ? heldCounts(e, repOverride) : undefined;
+      /*
+       * The player's ★ picks ADD to the record's granted signature spells; they never replace them.
+       * This was `play.signatureSpells?.[e.id] ?? e.signature`, so the moment the entry had a stored
+       * list at all, the authored one stopped being consulted — a granted signature ("you treat the
+       * field of life halcyon spell as a signature spell", an animist's whole apparition repertoire)
+       * was shadowed permanently, including any the record gained afterwards. A grant is a rule, not
+       * a preference; only the player's own half is theirs to edit.
+       */
+      const granted = e.signature ?? [];
+      const chosen = play.signatureSpells?.[e.id];
+      /* ⑦ …and a ★ IS DRAWN ONLY ON A SPELL THIS COLLECTION IS DRAWING. The stored stars used to be
+       * unioned on with no test at all, and `signature` has a second renderer nobody had enumerated:
+       * `signatureEchoIds` (spellOptions.ts) draws a castable echo card of every starred spell at
+       * every higher rank with a slot pool, and tested only the rank — so a ★ left on a spell the
+       * player had since removed from the repertoire (Manage spells writes the collection and never
+       * touches the stars) showed a spell they do not know as castable at ranks 3..N. It reads the
+       * rank the repertoire FILES the spell at now, which answers both at once.
+       *
+       * The store keeps the star either way — nothing here deletes, and the Save deletes nothing at
+       * all — so a ★ parked on a spell the build is currently hiding comes back with the spell.
+       *
+       * ⚠ AND ONE ★ PER RANK IS DECIDED HERE, not at the writer. The writer displaces the stars the
+       * store files at the rank it is editing, and a rank's filing can change under a star it is not
+       * editing: ✕ a starred spell (the ✕ leaves the star alone on purpose), ★ another at that rank,
+       * add the first back, and two of the player's stars are filed at one rank — a free signature
+       * spell, and a second set of echo cards above it. Both stay in the store; the one drawn is the
+       * one they starred LAST, and re-starring the other is one click. */
+      const mine = new Map<number, string>();
+      for (const id of chosen ?? []) {
+        const at = filedRank(repertoire, id);
+        if (at !== undefined) mine.set(at, id);
+      }
+      out = {
+        ...out,
+        repertoire,
+        ...(repertoireHeld ? { repertoireHeld } : {}),
+        signature: chosen ? [...new Set([...granted, ...mine.values()])] : e.signature,
+        signatureFixed: granted.length ? granted : undefined,
+        // D5: over the cap is REPORTED, never hidden — the sheet draws every one of the player's
+        // spells and puts a chip beside the rank. Only a build edit can produce the state.
+        overCap: overCapOf({ ...out, repertoire, slots: out.slots ?? e.slots }, e),
+      };
+    }
     if (e.font) {
       out = {
         ...out,
         font: { ...e.font, expended: Array.from({ length: e.font.slots }, (_, i) => !!expended[`${e.id}:font:${i}`]) },
       };
     }
-    // A lit Candle of Invocation grants its two slots through a MODE, because the item's own
-    // spellSlotBonus only fires for invested items and a candle is a consumable you light. Resolved
-    // here rather than at build time for the same reason: the toggle is play state.
-    const modeSlots: RestrictedSlot[] = [];
-    for (const [i, mid] of (play.activeModes ?? []).entries()) {
-      const g = content.modes[mid]?.spellSlotBonus;
-      if (!g?.restricted) continue;
-      const target = g.entryId ?? (isMainCaster ? e.id : null);
-      if (target !== e.id) continue;
-      modeSlots.push(...resolveRestrictedSlots(g.restricted, e, ch.level, `m${i}`, undefined, content));
-    }
-    const baseRestricted = [...(e.restrictedSlots ?? []), ...modeSlots];
     if (baseRestricted.length) {
       const resolved = baseRestricted.map((s) => {
         // The chosen rank is stored under the slot's OWN id, so re-picking one slot's rank cannot
@@ -506,12 +652,30 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
         const picked = play.restrictedSlotRanks?.[s.id];
         const moved = picked != null && picked !== s.rank && (s.rankOptions ?? []).includes(picked);
         const rank = moved ? picked : s.rank;
-        // Moving the slot empties it: what was prepared there was chosen for the old rank and may
-        // be a spell the slot can no longer hold.
-        const spellId = moved ? null : play.preparedSpells?.[s.id] ?? s.spellId;
+        /* The pick is held to what the slot's own picker would offer AT THE RANK THE SLOT IS AT —
+         * `allowed` where there is one, the book or the tradition where there is not, under the rank
+         * ceiling in both cases (spellOptions). This reaches a MODE-granted slot too, which is the
+         * whole reason the test is on this side: the only mode in the data that grants restricted
+         * slots is a lit Candle of Invocation ({label, note, halfHighest} — no `allowed`, no
+         * `maxRank`), its slots exist nowhere but here, and a wizard who lit one, prepared into it
+         * and then rewrote their spellbook kept casting out of a book they no longer own.
+         *
+         * ⚠ `moved` empties the BUILD'S OWN spell and nothing else. It used to null the slot outright,
+         * which meant a slot the player had moved could never hold a spell again: `setRestrictedRank`
+         * deletes the old pick at the move (it was chosen for the old rank), the player then picks
+         * into the moved slot, the key is written — and the reader threw it away on every render
+         * afterwards, for as long as the slot stayed off its default rank, which is for ever. */
+        /* ⚠ `!== undefined`, never `??`: a stored `null` is the player pressing "Leave slot empty",
+         * and `null ?? s.spellId` would put the build's own spell back into a slot they had just
+         * emptied. It is the same test the ordinary slots make one screen up, and it is inert today
+         * only because restrictedSlots.ts builds every slot with `spellId: null` — the day a record
+         * ships a default spell in a restricted slot, `??` is a player's change overwritten. */
+        const override = prepared1(s.id, rank, s.id);
+        const spellId = override !== undefined ? override : moved ? null : s.spellId;
         // A Spell Combination slot holds a SECOND spell, stored under a `#2` key so it rides the same
         // preparedSpells map (and the same rank-move clearing) as the first.
-        const spellId2 = s.pairs ? (moved ? null : play.preparedSpells?.[`${s.id}#2`] ?? s.spellId2 ?? null) : undefined;
+        const override2 = s.pairs ? prepared1(`${s.id}#2`, rank, `${s.id}#2`) : undefined;
+        const spellId2 = s.pairs ? (override2 !== undefined ? override2 : moved ? null : s.spellId2 ?? null) : undefined;
         return { ...s, rank, spellId, ...(s.pairs ? { spellId2 } : {}), expended: !!expended[s.id] };
       });
       out = { ...out, restrictedSlots: resolved };
@@ -961,6 +1125,22 @@ export const bonusSlotKey = (entryId: string, rank: number, from: number) => `${
 /** Key for a traded-cantrip opening. Rank 0 has no prepared slots, so this can never collide. */
 export const cantripTradeKey = (entryId: string, index: number) => `${entryId}:0:c${index}`;
 
+/**
+ * The trades that still RENDER against an entry's slot table.
+ *
+ * A stale trade is dropped rather than applied: investing a Ring of Wizardry or levelling up changes
+ * the slot arrays in PLAY, without ever passing through playForRebuild, so a recorded index can
+ * outlive the slot it named. The OVERLAY is its only caller — it appends a bonus slot per live trade.
+ * ⚠ `reconcileBuildMirrors` used to call it too and this comment said so for three rounds after it
+ * stopped: the Save tests nothing at all now (D1), and a reader auditing "does the Save test
+ * anything?" must not be told by a stale sentence that it does.
+ */
+function liveTrades(play: PlayState, e: Pick<SpellcastingEntry, 'id' | 'prepared'>): SpellTrade[] {
+  return (play.spellTrades?.[e.id] ?? []).filter(
+    (t) => e.prepared?.[t.from] && t.indices.every((i) => i < (e.prepared?.[t.from]?.length ?? 0)) && (t.to === CANTRIP_TRADE || !!e.prepared?.[t.to]),
+  );
+}
+
 /** The key for one slot of a rendered prepared entry — a bonus slot carries its own. */
 export const slotKeyOf = (entryId: string, rank: number, index: number, slot?: PreparedSlot): string =>
   slot?.bonusFrom != null ? bonusSlotKey(entryId, rank, slot.bonusFrom) : preparedKey(entryId, rank, index);
@@ -1087,16 +1267,131 @@ export function setPreparedCantrip(play: PlayState, entryId: string, index: numb
   return { ...play, preparedSpells: { ...(play.preparedSpells ?? {}), [preparedCantripKey(entryId, index)]: spellId } };
 }
 
-/** Set a spontaneous caster's known spells for one rank, in play. */
+/**
+ * Store a spontaneous caster's OWN known spells for one rank, in play. `ids` is exactly what is
+ * stored — no filter, no guard, no put-back.
+ *
+ * ⚠ It stores the PLAYER'S OWN PICKS. The grants (`grantedRepertoire`) are re-injected by
+ * renderRepertoire at every render and must not be written here, or a grant the build later
+ * withdraws sits in the player's store for ever, castable, spending one of their places at the cap
+ * and impossible to tell from a spell they chose. The sheet's own writers below strip them; a caller
+ * that hands this function a rendered list hands it grants.
+ */
 export function setRepertoireRank(play: PlayState, entryId: string, rank: number, ids: string[]): PlayState {
   const repertoireSpells = { ...(play.repertoireSpells ?? {}) };
   repertoireSpells[entryId] = { ...(repertoireSpells[entryId] ?? {}), [rank]: ids };
   return { ...play, repertoireSpells };
 }
 
+/**
+ * THE SHEET'S TWO REPERTOIRE WRITERS — add one spell, remove one spell.
+ *
+ * ⛔ They edit the STORED list, never the rendered one. Manage spells used to read
+ * `entry.repertoire[rank]` — what the sheet was SHOWING — and write it straight back, so any spell
+ * the render was holding back (off the fresh book or tradition after a spellbook rewrite or a
+ * subclass swap) was written away by an unrelated click on another spell, with the player never
+ * seeing what the click was about to take. A writer that names one id cannot destroy another.
+ *
+ * `own` is the build's own non-granted picks at that rank: the base for a rank the player has never
+ * touched, where the store has nothing yet and the build's answer is what they are looking at.
+ *
+ * ⛔ THE GRANT STRIP IS ON THE FALLBACK ONLY, and this is not a detail. `own` is a rendered list and
+ * can carry grants, so it is filtered — that is the one path by which a grant could enter the store
+ * (setRepertoireRank says why it must not). The STORED list is the player's own and is returned
+ * whole. Filtering it too DESTROYED a pick: the moment the fresh build started granting an id the
+ * player had stored for themselves, the next add or remove ANYWHERE at that rank rewrote the rank
+ * without it — bard, `soothe` + a bought `fear`, muse swapped to one that grants `fear`, one
+ * unrelated Add, and `fear` was in no build, no grant and no store for the rest of the character's
+ * life. Nothing downstream needs the strip: renderRepertoire de-duplicates an id that is both stored
+ * and granted, and `heldCounts` does not count it against the cap while the grant is covering it.
+ */
+export const storedRank = (play: PlayState, entryId: string, rank: number, own: string[], granted: string[] = []): string[] =>
+  play.repertoireSpells?.[entryId]?.[rank] ?? own.filter((id) => !granted.includes(id));
+
+export function addRepertoireSpell(
+  play: PlayState,
+  entryId: string,
+  rank: number,
+  spellId: string,
+  own: string[],
+  granted: string[] = [],
+): PlayState {
+  const cur = storedRank(play, entryId, rank, own, granted);
+  if (cur.includes(spellId) || granted.includes(spellId)) return play;
+  return setRepertoireRank(play, entryId, rank, [...cur, spellId]);
+}
+
+export function removeRepertoireSpell(
+  play: PlayState,
+  entryId: string,
+  rank: number,
+  spellId: string,
+  own: string[],
+  granted: string[] = [],
+): PlayState {
+  const cur = storedRank(play, entryId, rank, own, granted);
+  return setRepertoireRank(
+    play,
+    entryId,
+    rank,
+    cur.filter((id) => id !== spellId),
+  );
+}
+
 /** Set a spontaneous caster's signature spell ids, in play. */
 export function setSignatureSpells(play: PlayState, entryId: string, ids: string[]): PlayState {
   return { ...play, signatureSpells: { ...(play.signatureSpells ?? {}), [entryId]: ids } };
+}
+
+/**
+ * ⑦ THE ★s ALREADY AT THIS RANK — what `toggleSignatureSpell` displaces, read from the STORE.
+ *
+ * ⛔ D3, the half that was left reading the overlay. SpellsTab computed this as
+ * `entry.repertoire[rank]` — the RENDERED list — and a stored ★ whose spell the render was not
+ * drawing was therefore not displaced by a new ★ at the same rank. Three clicks and no build edit
+ * did it: ✕ a starred spell (the ✕ leaves the star alone, on purpose — it comes back with the
+ * spell), ★ another at that rank, re-add the first. Both are drawn, the render applies no per-rank
+ * cap, and the character has TWO signature spells at one rank plus a second set of heightened echo
+ * cards at every higher rank (signatureEchoIds) — a free signature spell, against the app's own
+ * "one signature spell per rank".
+ *
+ * ⛔ ONE READING OF "WHICH RANK A ★ IS AT", AND IT IS THE FILING — the rank the repertoire files the
+ * spell at (the stored list, else the build's own), never the spell's own rank out of the content
+ * database. This filtered on `held.includes(id) || rankOf(id) === rank` for one round, and the second
+ * half DELETED a player's star at another rank: the picker offers every rank up to the slot's, so a
+ * 1st-rank spell legitimately filed at 3rd is starred there — and starring anything at 1st then
+ * displaced it, silently, with nothing on screen saying why. `signatureEchoIds` (spellOptions.ts)
+ * reads the same filing, which is what the second half was there to paper over.
+ */
+export function starsAtRank(play: PlayState, entryId: string, rank: number, own: string[], granted: string[]): string[] {
+  const held = storedRank(play, entryId, rank, own, granted);
+  return (play.signatureSpells?.[entryId] ?? []).filter((id) => held.includes(id));
+}
+
+/**
+ * Star / un-star ONE spell — the sheet's ★ writer, and the same rule as the two above: it edits the
+ * STORED star list, so a ★ on a spell the render is currently hiding is not swept away by starring
+ * something else, and a RECORD-granted star (`signatureFixed`) never enters the store.
+ *
+ * `sameRank` is the rank's other ids, because one rank carries one ★ — `starsAtRank`, which reads
+ * the store; a caller that computes it off the rendered repertoire hands over a short list.
+ *
+ * ⚠ WHICH WAY THE CLICK GOES IS DECIDED BY WHAT IS ON SCREEN. The rank draws the LAST of its stars
+ * (applyPlayState), so a stored ★ another one is shadowing is not "on" to the player: their click on
+ * it means "make this the rank's star", and un-starring it would be a click that changes nothing they
+ * can see. Un-star only the star the rank is actually drawing.
+ */
+export function toggleSignatureSpell(play: PlayState, entryId: string, spellId: string, sameRank: string[] = []): PlayState {
+  const cur = play.signatureSpells?.[entryId] ?? [];
+  const here = cur.filter((id) => id === spellId || sameRank.includes(id));
+  const drawnHere = here[here.length - 1] === spellId;
+  return setSignatureSpells(
+    play,
+    entryId,
+    drawnHere
+      ? cur.filter((id) => id !== spellId)
+      : [...cur.filter((id) => id !== spellId && !sameRank.includes(id)), spellId],
+  );
 }
 
 /** Record a spell learned with the Learn a Spell activity. Idempotent — learning it twice is a no-op. */
@@ -1127,7 +1422,14 @@ export function unlearnSpell(play: PlayState, entryId: string, rank: number, spe
   return { ...play, learnedSpells: all };
 }
 
-/** Revert in-play repertoire + signature changes for one entry to the build's defaults. */
+/**
+ * Revert in-play repertoire + signature changes for one entry to the build's defaults.
+ *
+ * ⚠ NOT WIRED TO ANYTHING: the "Reset to default repertoire/preparation" button was removed at the
+ * owner's request (2026-09-02) and no src file calls this. It is the only function in this file that
+ * throws a player's picks away, which is right for a button labelled "reset" and wrong everywhere
+ * else — if the button ever comes back, that is the line to check first.
+ */
 export function resetRepertoire(play: PlayState, entryId: string): PlayState {
   const repertoireSpells = { ...(play.repertoireSpells ?? {}) };
   const signatureSpells = { ...(play.signatureSpells ?? {}) };
@@ -2165,55 +2467,292 @@ function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[],
 }
 
 /**
- * Reconcile a play state after the build is edited/rebuilt. The rebuild re-derives spell preparation
- * and class resources from the new choices, so we drop those (re-seeded from the new character) and
- * refill usage counters (slots/focus). Genuine in-play progress is KEPT: damage, temp HP, hero points,
- * XP, conditions, pins, notes, companion state — AND the player's actual inventory + currency (real
- * progress, not build-derived; left undefined for a character that never touched inventory in play so
- * the rebuilt build gear still seeds correctly).
+ * ⛔ THE SAVE DELETES NOTHING. Not a key, not an entry, not from any store the player writes to.
  *
- * `built` / `prevBuilt` are the new and the previous `character.inventory`; pass both so gear added in
- * the builder reaches the sheet (see mergeRebuiltInventory). Without them the play inventory is kept
- * verbatim, which is the old — lossless but deaf — behaviour.
+ * A handful of play fields SHADOW something the build also decides: a prepared slot's spell, a bonus
+ * slot's, a restricted slot's, a prepared caster's cantrip openings, a spontaneous/flexible caster's
+ * repertoire, the player's ★ signature picks, the class resource values. Both surfaces are the
+ * player editing the same thing, so neither may simply win.
+ *
+ * This used to compare the PREVIOUS build answer with the fresh one and drop the player's override
+ * wherever the two differed — "the builder holds the later edit, so it wins at that key". But a
+ * difference is not always a builder edit. A content/data update landing between two Saves moves a
+ * granted prepared spell, a cantrip opening or a repertoire rank by itself, and the next Save then
+ * deleted a sheet pick nobody had touched. Three rounds of case-by-case fixes narrowed the delete and
+ * never converged, because every "this one is safe to cut" was wrong from some direction nobody had
+ * enumerated yet. So the rule is now absolute and there are no cases in it:
+ *
+ *   · IS ANYTHING ILLEGAL HERE? Not this function's business. That question belongs to the RENDER,
+ *     which asks the slot's own picker (`spellOptions`) and answers "not drawn today" rather than
+ *     "deleted". Every reason a pick can be illegal is a build answer, and a build answer moves back
+ *     as readily as it moves — a level entered wrong, a subclass swapped by mistake, a data update.
+ *     A delete does not move back.
+ *   · IS THIS ENTRY A GRANT THE BUILD HAS WITHDRAWN? Also not this function's business, and it used
+ *     to be: it needed the previous character, it could not tell a withdrawn grant from a spell the
+ *     player had chosen for themselves, and the ones it kept it wrote permanently into the player's
+ *     own store. Grants are simply NOT STORED any more — the writers strip them and renderRepertoire
+ *     re-injects the fresh ones at every render — so a withdrawn grant vanishes on its own.
+ *
+ * WHAT IT DOES DO is additive, twice: the fresh build's resource defaults are merged UNDER the
+ * player's numbers, and a repertoire spell the BUILDER has just added is appended to a stored rank
+ * that would otherwise shadow the build's answer for ever.
+ *
+ * ──────────────────────────────────────────────────────────────────────────────────────────────────
+ * THE TABLE — every key shape, where it is TESTED, and what happens to it.
+ *
+ * Eight refute rounds each found one more key SHAPE the reconcile could not produce (a bonus slot, a
+ * restricted slot, a repertoire rank the fresh build has lost, a Spell Combination slot's two halves,
+ * a slot a MODE grants), so the shapes are enumerated here rather than discovered one at a time. The
+ * lesson of the last two is that a table of what the SAVE does is half a table: ⑤'s loop walked the
+ * stored character while the sheet renders slots that are not on it, and the row claimed "EVERY
+ * slot" regardless. Each row below therefore names its RENDERER, and the renderer is where the test
+ * lives wherever it can live there.
+ *
+ * The table names every store of PlayState that MIRRORS A BUILD ANSWER — ①-⑧ and ⑩-⑫ — plus ⑨,
+ * which does not. The other thirty fields (damage, hero points, inventory, notes, companions,
+ * conditions, the usage counters…) record what happened in play and have no build answer to be
+ * shadowed by; they are kept untouched by the spread in playForRebuild, and
+ * test/bug-builder-save-lossless.test.ts holds this list against the interface so that a store added
+ * to PlayState tomorrow cannot join it without being classified. "It is not in the table" has been
+ * wrong twice (⑤'s `#2` half, and ⑫'s four), which is why the claim is now guarded rather than made.
+ *
+ * Every row names its WRITER, its RENDERER (by function, and every one of them is in this file or in
+ * SpellsTab), WHAT THE RENDER TESTS — which branch of `spellOptions` decides it — and WHAT THIS
+ * FUNCTION DOES, which is nothing at all in eleven rows of twelve.
+ *
+ * ① preparedSpells[`entry:rank:index`] — preparedKey.
+ *     WRITER   setPreparedSpell (SpellsTab `pick`, an ordinary prepared slot).
+ *     RENDERS  applyPlayState `prepared1` → one per slot of the fresh `e.prepared[rank]`.
+ *     TESTS    spellOptions(rank): the rank CEILING off the spell's own rank, then the book (plus
+ *              what was LEARNED in play, merged into it above) or else the tradition list. An EMPTY
+ *              book is "cannot say" and falls through to the tradition — a book that failed to build
+ *              must never take the player's preparations with it.
+ *     SAVE     nothing. An illegal pick is not drawn (the slot falls back to the build's own spell)
+ *              and returns the moment the fresh build offers it again: magusStudiousSpells REPLACES
+ *              the book per level band, so `haste` is a book grant to an 11th-level magus and absent
+ *              at 10th, and a level entered wrong, Saved, corrected and Saved again used to empty a
+ *              5th-rank slot BOTH levels have.
+ * ② preparedSpells[`entry:rank:b<from>`] — bonusSlotKey (Spell Blending).
+ *     WRITER   setPreparedSpell via slotKeyOf.  RENDERS appended to rank `to`, one per live trade.
+ *     TESTS    ①'s, at the bonus slot's own rank.   SAVE nothing.
+ * ③ preparedSpells[`entry:cantrip:i`] — preparedCantripKey.
+ *     WRITER   setPreparedCantrip (the Prepare-a-cantrip opening).
+ *     RENDERS  applyPlayState `cantripSlots`, the openings below the fresh `cantripCap`.
+ *     TESTS    spellOptions(0) — and there IS a rank-0 list, which this table denied for three
+ *              rounds: the tradition's cantrips. The book does not answer at rank 0 (the engine keeps
+ *              cantrips in `entry.cantrips` and fills the spellbook off the slot table, which starts
+ *              at rank 1), so it says "cannot say" and the tradition answers. Without it a 4th-rank
+ *              spell parked in an opening rendered as an at-will cantrip.
+ *     SAVE     nothing — including the openings past the cap.
+ * ④ preparedSpells[`entry:0:c<i>`] — cantripTradeKey.
+ *     WRITER   setTradedCantrip.  RENDERS `tradedCantrips`, two per cantrip trade.
+ *     TESTS    ③'s.   SAVE nothing.
+ * ⑤ preparedSpells[slotId] and [`${slotId}#2`] — a RESTRICTED slot under its own id (restrictedSlots.ts
+ *     `${entry}:rs:${group}:${n}`; `#2` is Spell Combination's second spell).
+ *     WRITER   setRestrictedSpell.
+ *     RENDERS  applyPlayState's `baseRestricted` loop → `restrictedSlots[].spellId` / `.spellId2`.
+ *     TESTS    spellOptions(rank, slotId): the ceiling `Math.min(rank, maxRank ?? rank)` against the
+ *              spell's own rank from the content database — so it bites for a caster with no book and
+ *              for an `allowed` list disjoint from the book, which are most of them — then the slot's
+ *              `allowed` list where it has one, and ①'s branches where it has none (Spell Combination
+ *              and a lit Candle of Invocation are both that shape).
+ *              ⚠ A STORED `null` is "Leave slot empty", a decision, and is drawn as empty: the reader
+ *              tests `!== undefined`, never `??`, or the build's own spell walks back into a slot the
+ *              player had just emptied (the ordinary slots ① do it the same way).
+ *     SAVE     nothing. ⚠ EVERY slot means the slots a toggled MODE grants too: they are built in
+ *              applyPlayState from the modes the player has switched on, exist on no stored
+ *              character, and are keyed by the MODE'S OWN ID — never by its position in the list of
+ *              active ones, which moves when an unrelated mode is switched off. ⚠ A slot the player
+ *              has MOVED to another rank draws a pick made after the move; only the BUILD's own spell
+ *              for the slot is dropped there, because it was chosen for the rank the slot has left.
+ * ⑥ repertoireSpells[entry][rank].
+ *     WRITER   addRepertoireSpell / removeRepertoireSpell (SpellsTab `pick` / `removeKnown`) — ONE id
+ *              at a time, onto the STORED list (`storedRank`). ⚠ The grants are stripped off the
+ *              BUILD'S FALLBACK only, never off the stored list: filtering the store too destroyed a
+ *              pick outright the moment the fresh build started granting it (one unrelated Add and it
+ *              was in no build, no grant and no store — see storedRank).
+ *     RENDERS  renderRepertoire → `repertoire`, at the ranks the fresh build lists: every legal
+ *              stored pick, plus the FRESH grants re-injected on top.
+ *     TESTS    spellOptions(rank) — the fresh book or tradition. ⚠ NOT the cap: over-cap is drawn in
+ *              full and reported on the entry as `overCap`; the picker's Add gate refuses to make it
+ *              worse. Read renderRepertoire for why hiding one was a delete on a delay. ⚠ That gate
+ *              counts `repertoireHeld` — what the STORE holds, hidden picks included — which the
+ *              render writes beside the list; counting the drawn list let the sheet itself put a rank
+ *              at twice its cap (hide four, the rank looks empty, four more places). ⚠ And a place it
+ *              counts that the rank is not DRAWING is SAID so (`hiddenAt`, on both cap sentences):
+ *              "Repertoire full (4 known)" over an empty list, with no ✕ and no Add, is a refusal
+ *              whose cause is off screen — D5's own rule read from the other end.
+ *     SAVE     appends the fresh build's OWN NON-GRANTED picks that are new — on the fresh list, not
+ *              in the stored rank, and on no rank the PREVIOUS character held. Two tests, which are
+ *              the whole of D1(b); a third, backed by a ledger of the player's ✕ clicks, was ruled
+ *              out (R1). A stored rank replaces the build's answer outright, so without this a
+ *              repertoire spell added in the builder was invisible on the sheet and unreachable except
+ *              by adding it a second time in Manage spells. Nothing else, and nothing is removed.
+ * ⑦ signatureSpells[entry].
+ *     WRITER   toggleSignatureSpell (SpellsTab `toggleSig`) — one ★, onto the STORED list, granted
+ *              stars stripped. ⚠ The ★s it DISPLACES come from the store too (`starsAtRank`): read
+ *              off the rendered repertoire, a ★ the render was hiding kept its rank and the character
+ *              ended with two signature spells at one rank — and two sets of echo cards above it.
+ *     RENDERS  applyPlayState `signature` — the record's granted stars, plus the player's — and
+ *              `signatureEchoIds` (spellOptions.ts, drawn by SpellsTab), the second renderer, which
+ *              draws a castable echo card at every higher rank with a slot pool.
+ *     TESTS    membership of what ⑥ IS DRAWING. A ★ on a spell the collection is not showing draws
+ *              nowhere, so the two renderers cannot disagree about the same spell. ⚠ And BOTH read
+ *              one rank for a ★: the rank the repertoire FILES the spell at (`filedRank`), never the
+ *              spell's own rank in the content database — the picker offers every rank up to the
+ *              slot's, so the two readings differ for any spell filed above its own rank, and the
+ *              writer reading the second one deleted a player's star at another rank (R2).
+ *     SAVE     nothing. The star stays on the spell it is on, through every round trip.
+ * ⑧ restrictedSlotRanks[slotId] — setRestrictedRank. RENDERS in ⑤'s loop, only where the fresh slot
+ *     offers that rank (`rankOptions`), so a stale value shows nothing. SAVE nothing.
+ * ⑨ spellTrades[entry] — addSpellTrade/removeSpellTrade. RENDERS through `liveTrades`, only while the
+ *     traded indices still exist. SAVE nothing.
+ * ⑩ learnedSpells[entry][rank] — learnSpell. Days of a character's time. RENDERS on the entry as
+ *     `learned`, and for a caster WITH A BOOK also merged into the fresh spellbook at the top of
+ *     applyPlayState's entry loop. TESTED nowhere, because it is part of the list ①②⑤⑥ are tested
+ *     against: `spellOptions` offers `entry.learned` under the ordinary rank ceiling for EVERY caster
+ *     shape. ⚠ The merge alone was not that, and this row claimed it was: it is guarded by
+ *     `if (out.spellbook)`, so a bard or sorcerer — the shape ⑥ is about, and the one print keeps out
+ *     of the book ("it's not automatically added… you can select it when you add or swap spells") —
+ *     had its learned spells on no list any picker or render read (R3). SAVE nothing.
+ * ⑪ resources[id] — the sheet's own steppers. A tracked number is not a pick off a list, so it has no
+ *     legality to lose. RENDERS VitalsRail. SAVE the one merge: the fresh build's defaults UNDER the
+ *     player's numbers, so a resource the new build introduces arrives and a number the player is
+ *     tracking is never touched.
+ * ⑫ preparedTactics · etchedRunes · dailyChoices · dailyItems — four more stores that DO mirror a
+ *     build answer (a subset of `commanderTactics.folio`, of `runicRepertoire.known`, the daily
+ *     questions the fresh character asks, the item slots it offers). RENDERS: applyPlayState filters
+ *     `preparedTactics` against the fresh folio and slices to `preparedMax`, and `etchedRunes`
+ *     against `known` / `etchedMax`; derive.ts `dailyChoiceGrants` walks the fresh character's own
+ *     records; CharacterSheet recomputes `dailyItemSlots` from it. SAVE nothing — same posture as the
+ *     rest: the filter is at the render, so nothing illegal draws and nothing of the player's dies.
+ * ⑬ — WITHDRAWN. `repertoireRemoved`, a ledger of the player's own ✕ clicks, was added here for one
+ *     round to keep the ⑥ append from undoing a removal at a rank the previous character never had.
+ *     The field, its writer, the prune and the third append condition are all gone (R1): the Save may
+ *     not consult, let alone PRUNE, a store the player writes. What the ledger bought is now paid for
+ *     the plain way — see ⑥'s SAVE and the ⚠ beside `everWas` in the function.
+ * ──────────────────────────────────────────────────────────────────────────────────────────────────
+ *
+ * The PREVIOUS character is consulted for ONE thing, and it is not a legality test: which entries of
+ * the fresh repertoire the BUILDER has just ADDED (on the fresh list, and on no rank of the previous
+ * one). Everything else about a stored pick is settled at the RENDER.
+ *
+ * WHICH SURFACE WINS AT ONE KEY, stated rather than asked (owner's delegate, 2026-09-22): a sheet
+ * pick the fresh build still allows STAYS, and a builder ADD comes through. A builder edit therefore
+ * does not overwrite a still-legal sheet pick at the same key — the sheet is the later word on what is
+ * prepared or collected — and nothing of the player's is deleted on either side; the two surfaces can
+ * only disagree. That is the design.
  */
-export function playForRebuild(play: PlayState, built?: InventoryItem[], prevBuilt?: InventoryItem[]): PlayState {
+function reconcileBuildMirrors(play: PlayState, built: Character, prev?: Character): PlayState {
+  /*
+   * ⛔ NOTHING IS DELETED, AND NOTHING IS TESTED FOR LEGALITY — no exception, no bookkeeping store of
+   * its own. Not `preparedSpells` in any of its five key shapes, not `repertoireSpells`, not
+   * `signatureSpells`, not `restrictedSlotRanks`, `spellTrades`, `learnedSpells`, `preparedTactics`,
+   * `etchedRunes`, `dailyChoices`, `dailyItems`. Every one of them is read against the fresh build by
+   * the RENDER, whose answer is "not drawn today" and is undone by the correction that usually
+   * follows; this function's answer would be a delete, which is not.
+   *
+   * ⚠ A LEDGER OF THE PLAYER'S ✕ CLICKS (`repertoireRemoved`) lived here for one round, to keep a
+   * removal from being undone by the ⑥ append at a rank the previous character never had. It is gone:
+   * it was a third condition on an append the design states as two, it was a player-written store the
+   * Save both read and PRUNED, and the owner ruled it out (R1, 2026-09-22). The cost is named and
+   * accepted — a builder remove-then-re-add of a spell the player had taken off puts it back, which is
+   * the player's own later action through the other surface.
+   *
+   * Both writes below are additive, and neither can remove anything.
+   */
+  const repertoireSpells = play.repertoireSpells ? { ...play.repertoireSpells } : undefined;
+  if (repertoireSpells)
+    for (const e of built.spellcasting ?? []) {
+      const was = prev?.spellcasting?.find((p) => p.id === e.id);
+      const stored = repertoireSpells[e.id];
+      if (!stored || !e.repertoire || !was) continue;
+      /*
+       * ⑥ A SPELL THE BUILDER JUST ADDED. A stored rank replaces the build's answer outright at the
+       * render (that is what an override is), so a repertoire spell added in the builder at a rank
+       * the sheet had touched was invisible on the sheet and unreachable except by adding it again in
+       * Manage spells — a pick the player made, lost. `was` is what separates "the builder has just
+       * added this" from "the player took this off the sheet": a spell on the fresh list that no rank
+       * of the PREVIOUS character held is new, and arrives at the back of the stored rank.
+       *
+       * ⚠ `everWas` is asked of the WHOLE previous repertoire, not of the rank: gating on
+       * `was.repertoire[rank]` lost the builder's own new spell PERMANENTLY at a rank the previous
+       * character did not have (the level entered wrong and corrected), because from the next Save on
+       * `everWas` holds it and it can never arrive. The other side of that case — a spell the player
+       * had taken off at a rank the previous character never had — comes back, and that is the design
+       * as written: the sheet's ✕ leaves no record for the Save to consult, by ruling.
+       *
+       * ⚠ And never a GRANT. A grant is not stored (renderRepertoire re-injects the fresh ones at
+       * every render), and writing one in here is how a muse the character no longer has kept handing
+       * them its spell: swapped away and back, `fear` sat in the player's own store for ever, drawn,
+       * castable, spending one of their three places at the cap and indistinguishable from a spell
+       * they had chosen.
+       */
+      const everWas = new Set(Object.values(was.repertoire ?? {}).flat());
+      const next: Record<number, string[]> = { ...stored };
+      for (const rank of Object.keys(e.repertoire).map(Number)) {
+        const granted = e.grantedRepertoire?.[rank] ?? [];
+        const list = stored[rank];
+        if (!list) continue;
+        const arrived = (e.repertoire[rank] ?? []).filter(
+          (id) => !granted.includes(id) && !list.includes(id) && !everWas.has(id),
+        );
+        if (arrived.length) next[rank] = [...list, ...arrived];
+      }
+      repertoireSpells[e.id] = next;
+    }
   return {
-    damage: play.damage,
-    tempHp: play.tempHp,
-    shieldDamage: play.shieldDamage,
-    tempSpeed: play.tempSpeed,
-    heroPoints: play.heroPoints,
-    mythicPoints: play.mythicPoints,
-    xp: play.xp,
+    ...play,
+    ...(repertoireSpells ? { repertoireSpells } : {}),
+    // ⑪ A resource the new build introduces must reach the sheet at its default, but a value the
+    // player has been tracking is theirs — merge, rather than replace or drop.
+    ...(play.resources ? { resources: { ...(built.classResources ?? {}), ...play.resources } } : {}),
+  };
+}
+
+/**
+ * Reconcile a play state after the build is edited/rebuilt: refill the three usage counters
+ * (expended prepared slots, the spontaneous pool, focus) and KEEP EVERYTHING ELSE.
+ *
+ * ⛔ This used to be a WHITELIST — it named about twenty fields and returned an object built from
+ * those alone — so every field of PlayState it did not name was DELETED the moment the player
+ * opened the builder and pressed Save, with or without making a change. That is how a flexible
+ * spellcaster's whole spell collection vanished (owner report, 2026-09-22): the spells a player
+ * chooses on the SHEET live in `repertoireSpells`, which the list did not name. It was never only
+ * spells — `preparedSpells`, `signatureSpells`, `spellTrades`, `restrictedSlotRanks`,
+ * `knownRituals` (a ritual the character spent days learning), `etchedRunes` (*"remain
+ * indefinitely"*), `preparedTactics`, `dailyChoices`, `dailyItems`, `featUses`, `alchemyPrep`,
+ * `innateUsed`, `activeStance`, `resources` and `tempHpFrom` went the same way, and any field
+ * added to PlayState afterwards would have joined them in silence.
+ *
+ * So the shape is inverted: spread the play state, then take away only what a rebuild is entitled
+ * to take away. A field added to PlayState tomorrow is kept by default, which is the safe default —
+ * a player's change must never be lost by the app.
+ *
+ * The overrides that shadow a build answer are handled by `reconcileBuildMirrors`, which deletes
+ * nothing at all — read it.
+ *
+ * `built` / `prev` are the new and the previous stored `character`. `prev` is what lets gear added in
+ * the builder reach the sheet (see mergeRebuiltInventory) and what says which repertoire spells the
+ * BUILDER has just added rather than the player having removed them (see reconcileBuildMirrors).
+ * Without `built` nothing is reconciled and the overlay is kept verbatim.
+ */
+export function playForRebuild(play: PlayState, built?: Character, prev?: Character): PlayState {
+  const next: PlayState = {
+    ...play,
     conditions: play.conditions ?? [],
     pinned: play.pinned ?? [],
-    pinnedDescs: play.pinnedDescs,
-    companionConditions: play.companionConditions,
-    companionHp: play.companionHp,
-    companionModes: play.companionModes,
-    companions: play.companions,
-    details: play.details,
-    appearance: play.appearance,
-    activeModes: play.activeModes,
-    notes: play.notes,
     // Keep the player's real gear + wallet across the edit: items bought/looted and gold spent are
     // genuine progress, not build-derived. (Undefined falls back to the rebuilt build gear for a
-    // character that never managed inventory in play, so fresh builds still seed correctly.) Spell
-    // prep / repertoire / signature and class resources ARE re-derived from the new build, so omitted.
+    // character that never managed inventory in play, so fresh builds still seed correctly.)
     // Gear the BUILDER added is merged in on top — see mergeRebuiltInventory.
-    inventory: play.inventory && built ? mergeRebuiltInventory(play.inventory, built, prevBuilt ?? []) : play.inventory,
-    currency: play.currency,
-    // Learning a spell costs an hour per rank and real gold; it is knowledge the character now has,
-    // not a preparation, so it outlives a rebuild the same way bought gear does.
-    learnedSpells: play.learnedSpells,
-    // A formula grant is spent once. Dropping this ledger on a rebuild would re-open every slot the
-    // character had already answered, which is exactly the re-granting point 9 forbids.
-    formulaPicks: play.formulaPicks,
-    formulaBookGranted: play.formulaBookGranted,
+    inventory:
+      play.inventory && built ? mergeRebuiltInventory(play.inventory, built.inventory, prev?.inventory ?? []) : play.inventory,
     expendedSlots: {},
     slotsUsed: {},
     focusUsed: 0,
   };
+  return built ? reconcileBuildMirrors(next, built, prev) : next;
 }
 
 /**

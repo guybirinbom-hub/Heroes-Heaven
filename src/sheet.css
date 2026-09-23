@@ -1681,6 +1681,106 @@ body {
 .hp-fill.crit {
   background: var(--app-bad);
 }
+
+/* ---- XP inside the hit-points card (Customize → XP display) ---- */
+/* The chip rides in the card's title row. Its line-height is PINNED: left to the font, the pill's box
+   is taller than the 12 px title text and grows .ct by 2 px — and "costs no height" is the whole
+   reason this is the default. */
+.xp-chip {
+  margin-left: auto;
+  flex: none;
+  white-space: nowrap;
+  font-family: inherit;
+  font-size: 10.5px;
+  line-height: 12px;
+  font-weight: 500;
+  border-radius: 999px;
+  padding: 1px 8px;
+  border: var(--app-bw) solid var(--app-border);
+  background: transparent;
+  color: var(--app-text-dim);
+  cursor: pointer;
+}
+.xp-chip:hover {
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+}
+.xp-chip.open {
+  border-color: var(--app-accent);
+  color: var(--app-text);
+}
+/* The line option: the numbers and a 3 px bar under them, as ONE pressable block above the HP row. */
+.xp-rail-line {
+  display: block;
+  width: 100%;
+  margin: 0 0 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.xp-rail-row {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-bottom: 4px;
+  font-size: 11.5px;
+  line-height: 1;
+  color: var(--app-text-dim);
+}
+.xp-rail-lbl {
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.xp-rail-val {
+  color: var(--app-text);
+  font-variant-numeric: tabular-nums;
+}
+.xp-rail-max {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+.xp-rail-line:hover .xp-rail-val,
+.xp-rail-line.open .xp-rail-val {
+  color: var(--app-accent);
+}
+.xp-rail-track {
+  display: block;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--app-surface-2);
+  overflow: hidden;
+}
+.xp-rail-fill {
+  display: block;
+  height: 100%;
+  background: var(--app-accent);
+  transition: width 0.25s ease;
+}
+/* The editor: the .hp-edit row shape with two labelled fields, allowed to wrap at rail width. */
+.xp-rail-edit {
+  flex-wrap: wrap;
+}
+.xp-rail-field {
+  flex: 1 1 62px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.xp-rail-field .hp-amt {
+  min-width: 0;
+}
+.xp-rail-add {
+  flex: none;
+}
+
 .defs {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -6001,6 +6101,220 @@ button.strike-name:hover {
   outline: 2px solid var(--app-accent);
   outline-offset: 2px;
   background: color-mix(in srgb, var(--app-accent) 12%, transparent);
+}
+
+/* --- Item card detail (Settings → Customization → Item card detail) ------------------------------
+   Three looks for the same row. Standard is the card above, untouched. Essentials (the default) drops
+   the level/material subline and the bulk column — Bulk and price move up beside the name — and keeps
+   the live controls underneath. Compact is one line an item. All three keep the .inv-card class, so the
+   invested/consumable colouring, the hover border, the drop-target outlines and the phone
+   hold-to-move rules below apply to them unchanged. */
+.inv-card.inv-essentials {
+  gap: 10px;
+  padding: 7px 11px;
+}
+/* Compact shares it: the vehicle/siege and unknown-item rows are hand-rolled cards with no columns to
+   put their facts in, so in both small modes those facts ride on the name line.
+   That line is shared with the NAME, and a facts string can be longer than the row is wide — a cart's
+   "Vehicle · level 0 · AC 10 · Hardness 5 · HP 14/14" measures 236.7px against the 311px of content a
+   347px Compact card has left after its Remove button. At `flex: none` the facts took that width
+   whole and the name, which is the only part of the row that says WHICH cart it is, was the item left
+   with nothing: measured 0px, so the row read as a stat line with no item on it. The facts are
+   therefore the FILLER of the line, not a claim on it: basis 0 means they ask for none of the row's
+   width and take what is left over after the name, right-aligned because the right edge is where the
+   growing name used to push them. `min-width: 0` is load-bearing — a flex item's automatic minimum is
+   its min-content width, which for the Compact line (`white-space: nowrap`) is the whole string.
+   Shrinking the facts instead of zeroing their basis does NOT work: any shrink at all lands a
+   fraction of a pixel on the name, and a name box a hundredth of a pixel short of its text is an
+   ellipsis — measured "C…" for a cart named Cart. */
+.inv-card.inv-essentials .inv-facts,
+.inv-card.inv-compact .inv-facts {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: right;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--app-text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.inv-card.inv-compact .inv-facts {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Essentials only: with the line above allowed to wrap, the facts no longer have to be talked out of
+   their own width — they take a line to themselves when the name and the badges have filled the first
+   one, and are still the item that grows, so on a row with room they sit at the right edge exactly as
+   before. Compact keeps basis 0: its row cannot wrap, so there the facts really are what is left. */
+.inv-card.inv-essentials .inv-facts {
+  flex-basis: auto;
+}
+/* The Bulk value keeps its own class wherever it is shown; inside the facts line it reads as part of
+   the sentence rather than as the column heading it is in the Standard card. */
+.inv-card.inv-essentials .inv-facts .inv-bval {
+  font-size: inherit;
+  font-weight: inherit;
+}
+/* Essentials' name line WRAPS, and the facts keep a width of their own (`flex-basis: auto`, below).
+   Without both, the badges beside the name are `flex: none` and the facts are the only thing on the
+   line that can give — so on a row carrying two of them the facts went to ZERO and the item's price
+   was simply not on the card. Measured on a 36-character name with a "Cursed" and a "Battleforged"
+   badge (both whole at 50.61px and 93.63px throughout): at a 375px phone card the facts were 0px wide
+   against a string wanting 22px and the name was cut to 130.04px of 234; at a 251px desktop card the
+   name was 25.62px of 234. After: the facts take a line of their own (192.65px, whole) and the name
+   is whole at 233.86px on the phone. The row is also SHORTER for it — a 0px-wide facts box wraps its
+   own text into a column, which stood the name line at 88.54px tall against 49px now.
+   Wrapping is what makes the facts a line of their own instead of nothing; Compact cannot do this —
+   it IS one line. An ordinary row is untouched: measured identical before and after on Longsword,
+   Rope, Chain Shirt and the Cart stat line (facts still on line 1 at the right edge, 20.25px tall). */
+.inv-card.inv-essentials .inv-name-line {
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+/* `1 1 auto`, not `1`: a flex-basis of 0 gives the name no size of its own, so on a row where it does
+   not grow (the one below) it would be 0px wide. */
+.inv-card.inv-essentials .inv-name {
+  flex: 1 1 auto;
+}
+.inv-card.inv-essentials .inv-actions {
+  margin-top: 3px;
+}
+
+.inv-grid.inv-grid-compact {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 4px;
+}
+.inv-card.inv-compact {
+  gap: 8px;
+  padding: 5px 10px;
+  min-height: 32px;
+  border-radius: var(--app-radius-sm);
+}
+/* Same `1 1 auto` as Essentials, and it matters more here: this row is one line, so nothing that
+   loses the argument for width has anywhere else to go. */
+.inv-card.inv-compact .inv-name {
+  flex: 1 1 auto;
+  font-size: 13px;
+}
+/* On an ordinary row the name is the one that grows, which is what holds the bulk/price columns out
+   at the right edge. On a row that also carries facts — or state chips — that other item is the
+   filler instead, so the name keeps exactly its own text and is never the item squeezed out. Equal
+   specificity to the two rules above, so it has to stay after them. Anywhere `:has` is missing, both
+   grow and split the leftover between them — the name still reads whole, the filler truncates sooner. */
+.inv-card .inv-name:has(~ .inv-facts),
+.inv-card .inv-name:has(~ .inv-cdots) {
+  flex-grow: 0;
+}
+/* The chips are ONE filler, not one each. Given `flex: 1 1 0` apiece they split the leftover EQUALLY,
+   which has nothing to do with what any of them needs: a short chip was clipped while a longer one
+   beside it still had slack ("WIELD…" next to a roomier Battleforged), and where the row was tight
+   every chip shrank to its own padding and said a single letter — "B", "W" — while "Invested 3/3"
+   came out "INV…", i.e. the live charge count, the one thing on the chip a player reads at a glance,
+   was the first thing deleted. Pills that say nothing still cost their padding and their gaps.
+   So the chips share one box, and that box is the filler: basis 0 asks for none of the row and takes
+   what is left AFTER the name. Inside it every chip keeps its own width and they fill from the left
+   in the order the row renders them — state and charges first. A chip that does not fit WRAPS, and
+   the box is one pill tall with `overflow: hidden`, so it is not shown at all rather than shown as a
+   letter; `row-gap` is >= that clip, so the wrapped line starts below it however tall line 1 is.
+   `::before` is what lets the FIRST chip leave too. A flex line always keeps its first item, however
+   little of it fits, so the leading chip could not wrap and was squeezed instead — at a narrow row it
+   came out as a pill with 6px of label, as a pill holding nothing but a clipped number, or as a 1.22px
+   sliver of border beside the name. A zero-width item ahead of them means the chips are never first,
+   so every one of them is on the row whole or not at all.
+   `min-width: 0` and `overflow: hidden` are one brake with two hands on it, and either alone holds:
+   forcing `min-width: auto` measured no change, forcing `overflow: visible` measured no change, and
+   only with BOTH gone does the box claim its min-content (91.29px, its widest chip) and cut the name
+   to 122.99 of 160.33.
+   The CEILING, stated rather than coded around: where the leftover is narrower than one whole pill the
+   row shows NO chip — the name and the two columns are all of it, exactly as on an item that has no
+   state at all. Swept at 0.5px with the box width forced, 56→60px of leftover shows nothing and 60.5px
+   shows the whole 60.11px "Wielded" pill; no width in between puts part of a chip on the row. What that costs is carried elsewhere: the sentences are on the row's own `title`
+   (InventoryTab's compact branch) and in the popup the row opens, and an invested item still reads
+   through the card's accent border. */
+.inv-card.inv-compact .inv-cdots {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  column-gap: 6px;
+  row-gap: 20px;
+  max-height: 18px;
+  overflow: hidden;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: max-content;
+}
+/* The zero-width item the chips are never first ahead of. The negative margin cancels the column-gap
+   it would otherwise cost the chip behind it, so what a chip is measured against is the box itself. */
+.inv-card.inv-compact .inv-cdots::before {
+  content: '';
+  flex: none;
+  width: 0;
+  margin-right: -6px;
+}
+/* A pill holds its own width and is never handed a share of the row: at `flex: none` it is laid out at
+   its own text, so the only two things that can happen to it are fitting on the line and wrapping off
+   it — it is never sized to something narrower than what it says. `line-height` is what makes the 18px
+   clip above a number rather than a guess: 14px of line, 1px of padding and 1px of border, top and
+   bottom. */
+.inv-card.inv-compact .inv-cdot {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  white-space: nowrap;
+  line-height: 14px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--app-text-dim);
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  padding: 1px 7px;
+}
+.inv-card.inv-compact .inv-cdot.on {
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+}
+/* Battleforged is temporary (expires at daily preparations), same dashed "not permanent" language
+   as the .inv-badge.bf chip the Standard/Essentials name line uses. */
+.inv-card.inv-compact .inv-cdot.bf {
+  border-style: dashed;
+  border-color: var(--warn, #e0a458);
+  color: var(--warn, #e0a458);
+}
+/* No rule for .inv-clbl / .inv-cnum, and that is the point: a pill is never squeezed, so there is
+   nothing for a word to give way to and no ellipsis to hide a charge count behind. The two spans are
+   markup only — the 4px gap above is the space between "Worn" and "1/1". */
+.inv-card.inv-compact .inv-cbulk,
+.inv-card.inv-compact .inv-cprice {
+  flex: none;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--app-text-dim);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+/* The chips stop growing at their own text, so on a roomy row there is leftover space between them
+   and the columns. `margin-left: auto` parks it there instead of after the price, which keeps Bulk
+   and price on the same right edge as a row with no chips at all (measured 911.4px on both). */
+.inv-card.inv-compact .inv-cbulk {
+  margin-left: auto;
+  width: 34px;
+}
+.inv-card.inv-compact .inv-cprice {
+  width: 62px;
+}
+/* Price is the number a player looks at least often, so on a pointing device it waits for the pointer.
+   A touch screen has no hover at all — there it simply stays visible and dim, never unreachable. */
+@media (hover: hover) {
+  .inv-card.inv-compact .inv-cprice {
+    opacity: 0;
+    transition: opacity 0.12s ease;
+  }
+  .inv-card.inv-compact:hover .inv-cprice {
+    opacity: 1;
+  }
 }
 /* "Why it can't attach" banner, shown when a drop is rejected. */
 .inv-attach-error {
@@ -11262,8 +11576,9 @@ button.strike-name:hover {
   /* Drop the desktop title bar + top tab strip; the identity row IS the top bar (the avatar opens the
      menu), and the bottom .mtabs nav holds every tab. Clamp the app to the viewport so only the body
      scrolls, between the pinned top bar and bottom nav. */
-  /* Fixed inset (not height:100dvh) so the shell fills the viewport at any zoom — `100dvh` mis-scales under
-     html{zoom} (leaves a blank band when zoomed out). Fixed top/right/bottom/left=0 pins to the viewport edges. */
+  /* Fixed inset as the base, so the shell fills the viewport at any zoom — a bare `100dvh` mis-scales
+     under html{zoom} (it left a blank band when zoomed out). Fixed top/right/bottom/left=0 pins to the
+     viewport edges; the zoom-corrected dvh height below then layers on top of it. */
   .ws-app { position: fixed; inset: 0; overflow: hidden; }
   /* Native-app feel: no text selection / long-press callout on the UI chrome (long-press is for drag,
      not selecting). Keep selection where it matters — inputs, selects, and editable rich-text areas. */
@@ -11517,6 +11832,21 @@ button.strike-name:hover {
   /* Centered popups. `safe center` keeps them centred when they fit, but anchors a too-tall popup to
      the TOP (moves it up) instead of clipping its top off-screen. Full-screen pickers opt out below. */
   .picker-overlay { align-items: safe center; padding: 0; }
+  /* Every popup's X (and the pin star beside it) was a 21px box — the smallest control left on the
+     phone and under both platforms' minimum touch target, so "I pressed the X" could land just outside
+     it. Same glyph, 40px of tappable area around it. */
+  .picker-close,
+  .info-star {
+    min-width: 40px;
+    min-height: 40px;
+    justify-content: center;
+  }
+  .info-back { min-height: 40px; }
+  /* Same reason, one popup deeper: a Compact row carries no buttons, so the item popup's chips are the
+     ONLY way to wield, wear, invest or stow that item — 22px tall was fine for a secondary control and
+     is not fine for the only one. The whole .sd-uses family moves together so the Carrying chips stay
+     the height of the Container chips beside them. */
+  .sd-uses .ec-chip { min-height: 40px; }
   .picker:not(.hp-numpad):not(.settings-page-m) {
     max-width: calc(94vw / var(--zoom, 1)); min-width: 0; max-height: calc(90dvh / var(--zoom, 1)); resize: none;
     /* Bottom-sheet pickers sit at the viewport edge (align-items:flex-end), so their scrollable option
@@ -11553,6 +11883,64 @@ button.strike-name:hover {
   .dice-drawer { position: fixed; inset: 0; width: auto; max-width: none; height: auto; max-height: none; border-left: none; }
   .dice-drawer .picker-head { padding-top: calc(11px + env(safe-area-inset-top, 0px)); }
   .dice-drawer .dice-hist { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px) / var(--zoom, 1)); }
+
+  /* ---- The phone WEBSITE's visible height (2026-09-22) ----
+     `position: fixed; inset: 0` — and `100vh` — resolve against the initial containing block, which a
+     mobile BROWSER sizes to the LARGE viewport: the height the page would have with the URL bar and
+     toolbar hidden. While that chrome is showing, every full-screen surface therefore runs past the
+     bottom of what can actually be seen — which is the bottom tab bar sitting under the browser's own
+     bar ("it disappears, then comes back after a scroll"), the Notes editor's bottom row cut off, and a
+     centred popup pushed down with its lower edge (and the dim strip you tap to dismiss it) out of view.
+     The installed app has no browser chrome, so there the two heights are the same and it has always
+     looked right. `dvh` IS the currently visible height: the same number in the app, the correct one in
+     a browser. Layered as an @supports enhancement so a webview without dvh keeps exactly today's
+     behaviour, and divided by --zoom like every other viewport unit in this file.
+
+     POSITION MATTERS: this sits BELOW the full-screen picker / Settings / dice rules above, which pin
+     `height: auto !important` at the same specificity — and at equal specificity the LAST !important
+     declaration wins. Written above them, the dvh height did nothing at all for those surfaces.
+     test/bug-phone-web.test.tsx resolves the cascade and fails if this moves back up. */
+  @supports (height: 100dvh) {
+    .ws-app,
+    /* The BUILDER shell — the same `position: fixed; inset: 0` construction as .ws-app, and the screen
+       the owner named first. `.builder-body` is the only scroller inside that box, so while the box
+       runs past the visible bottom the last row of a long level page sits in the hidden strip and
+       cannot be scrolled into view. (It already carries `min-height: 0` above; this is the height.) */
+    .builder,
+    /* :not(.mpr-embedded) — the embedded Monster Parts / Mythic / Kingmaker rules pages reuse
+       .picker-overlay as an ordinary in-flow section inside Homebrew (position: static). Sizing THAT to
+       the viewport turns a page section into a nested scroll box. */
+    .picker-overlay:not(.mpr-embedded),
+    .drawer-overlay,
+    /* The other two fixed-inset overlays with something of their own inside: the Customize drawer
+       (full-width on a phone, its body scrolls) and the portrait lightbox (a centred image). */
+    .cust-drawer-wrap,
+    .portrait-lightbox,
+    .settings-page-m,
+    .picker.fsel,
+    .picker.ref-search,
+    .picker.item-edit,
+    .picker.cond-modal,
+    .dice-drawer {
+      bottom: auto;
+      /* The shell's own `min-height: calc(100vh / var(--zoom, 1))` at the top of this file clamps the
+         height right back to the LARGE viewport — min-height beats height, !important or not. Same trap
+         the desktop shell documents with `min-height: 0`. */
+      min-height: 0;
+      /* !important: the full-screen pickers pin `height: auto !important` themselves. */
+      height: calc(100dvh / var(--zoom, 1)) !important;
+    }
+    .hb-page { min-height: 0; height: calc(100dvh / var(--zoom, 1) - var(--app-banner-h, 0px)); }
+    /* The two screens that SCROLL THE DOCUMENT instead of pinning to it (position: static on a phone):
+       a large-viewport min-height here is not an unreachable row, just a URL-bar's worth of dead scroll
+       past the last character card. min-height only — a fixed height would clamp a list that grows. */
+    .roster-screen, .login-screen { min-height: calc(100dvh / var(--zoom, 1)); }
+    /* Centred inside the lightbox above, so it has to be capped against the same height or a tall
+       picture overflows the box it is centred in and loses its bottom edge again. */
+    .portrait-lightbox-img { max-height: calc(92dvh / var(--zoom, 1)); }
+    /* The empty-Notes placeholder sizes itself to the screen too. */
+    .notes-empty { min-height: calc(100dvh / var(--zoom, 1) - 132px); }
+  }
   /* Hero points: wide pills that fill the row (wider, not taller). */
   .rail-kv .pips { flex: 1; gap: 6px; }
   .rail-kv .pip { flex: 1; width: auto; border-radius: 7px; }
@@ -11716,6 +12104,9 @@ button.strike-name:hover {
      it; drop on a tab or a section header to move the item there and open that section. Scroll a long list
      via the tab row / section headers instead of the item rows. */
   .inv-card { touch-action: none; }
+  /* A one-line row is still a hold-to-move target and a tap target, so give it a finger's worth of
+     height even though its contents don't need it. */
+  .inv-card.inv-compact { min-height: 40px; }
   .inv-card.inv-dragging { display: none; } /* picked up → only the floating ghost shows */
   .inv-drag-ghost {
     position: fixed; z-index: 9999; pointer-events: none; transform: translate(-50%, -55%);
@@ -11811,6 +12202,20 @@ button.strike-name:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   }
 }
+/* Touch screens: mark the dim backdrop as a clickable thing.
+   iOS Safari only SYNTHESISES a click for an element it considers interactive — a link, a form control,
+   something carrying an inline onclick, or something with `cursor: pointer`. React attaches its
+   handlers once at the root container rather than on the element, so a bare `<div class="picker-overlay">`
+   is not interactive by that test and a tap on it can produce no click at all: "on the iPhone the popup
+   didn't close when I tapped outside it". `cursor` is invisible on a touch screen, so this only flips
+   that test. Coarse pointers only, so the desktop backdrop keeps the normal arrow. */
+@media (pointer: coarse) {
+  .picker-overlay,
+  .drawer-overlay {
+    cursor: pointer;
+  }
+}
+
 /* Desktop: banners stack above the app as before — but as a real box, not `display: contents`, so its
    height can be measured (see --app-banner-h in App.tsx). A contents box has no border box of its own,
    so a ResizeObserver on it never fires and the pinned screens below couldn't subtract it. */

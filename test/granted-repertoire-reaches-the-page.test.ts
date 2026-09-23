@@ -99,9 +99,16 @@ describe('granted signature spells', () => {
     const ch = build('bard', 8);
     const entry = ch.spellcasting.find((e) => e.type === 'spontaneous' && !(e.signature?.length));
     if (!entry) return;
-    const live = applyPlayState(ch, setSignatureSpells(initialPlay(ch, con), entry.id, ['x', 'y']), con);
+    /* ⚠ FIXTURE: two spells the bard actually KNOWS, where this used to star `['x','y']`. A ★ is drawn
+     * only on a spell the collection is drawing — SpellsTab echoes each starred spell as a castable
+     * card at every higher rank, so a star on a spell the character does not know put a spell they
+     * cannot cast on the sheet. The claim under test (the player's own stars pass through untouched
+     * when the record granted none) is the same one; only the ids are real now. */
+    const mine = [...new Set(Object.values(entry.repertoire ?? {}).flat())].slice(0, 2);
+    expect(mine.length, 'the bard fixture has no repertoire to star').toBeGreaterThan(0);
+    const live = applyPlayState(ch, setSignatureSpells(initialPlay(ch, con), entry.id, mine), con);
     const after = live.spellcasting.find((e) => e.id === entry.id)!;
-    expect(after.signature).toEqual(['x', 'y']);
+    expect(after.signature).toEqual(mine);
     expect(after.signatureFixed).toBeUndefined();
   });
 });

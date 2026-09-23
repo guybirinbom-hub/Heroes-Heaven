@@ -1,11 +1,19 @@
 import { describe, it, expect } from 'vitest';
 import { emptyPlay, playForRebuild, type PlayState } from '../src/rules/play';
 
-// playForRebuild reconciles the play overlay when a build is edited/leveled: it re-derives spell
-// prep + class resources from the new build (dropping those overrides) and refills usage counters,
-// while KEEPING genuine in-play progress — including the player's actual inventory + currency, which
-// are real progress (items bought/looted, gold spent), not build-derived. (A prior version wrongly
-// dropped inventory/currency, wiping the player's gear on every level-up.)
+// playForRebuild reconciles the play overlay when a build is edited/leveled: it refills the three
+// usage counters (expended slots, the spontaneous pool, focus) and KEEPS everything else — the
+// player's damage, temp HP, hero points, XP, conditions, pins, notes, and their actual inventory +
+// currency, which are real progress (items bought/looted, gold spent), not build-derived. (A prior
+// version wrongly dropped inventory/currency, wiping the player's gear on every level-up.)
+//
+// ⛔ The "drops build-derived spell/resource overrides" case below USED to assert the opposite, and
+// it was asserting a data-loss bug: deleting the player's sheet-side spell picks on a rebuild is
+// what made a flexible spellcaster's whole collection vanish on a Save that changed nothing (owner
+// report 2026-09-22). A pick is now dropped only where the FRESH built character makes it illegal,
+// and `playForRebuild(p)` — the call here — is handed no character at all, so it has no legality to
+// judge and keeps the overlay verbatim. See test/bug-builder-save-lossless.test.ts for the full
+// round-trip with a character on both sides.
 describe('playForRebuild (reconcile play state on edit)', () => {
   const p: PlayState = {
     ...emptyPlay(),
@@ -43,11 +51,11 @@ describe('playForRebuild (reconcile play state on edit)', () => {
     expect(out.currency).toEqual({ gp: 99 });
   });
 
-  it('drops build-derived spell/resource overrides so the rebuild is authoritative', () => {
-    expect(out.resources).toBeUndefined();
-    expect(out.preparedSpells).toBeUndefined();
-    expect(out.repertoireSpells).toBeUndefined();
-    expect(out.signatureSpells).toBeUndefined();
+  it('keeps the spell + resource overrides when it has no build answers to compare', () => {
+    expect(out.resources).toEqual({ rage: 1 });
+    expect(out.preparedSpells).toEqual({ 'a:1:0': 'heal' });
+    expect(out.repertoireSpells).toEqual({ a: { 1: ['heal'] } });
+    expect(out.signatureSpells).toEqual({ a: ['heal'] });
   });
 
   it('resets usage counters (slots/focus refill on rebuild)', () => {

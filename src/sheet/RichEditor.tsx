@@ -126,6 +126,43 @@ export function RefSearchModal({ onPick, onClose }: { onPick: (t: RefTarget) => 
 }
 
 /**
+ * Mobile keyboard detection that works across every shell we ship into: some shrink the window for the
+ * keyboard (the installed Android app — innerHeight drops), some keep it and shrink only the visual
+ * viewport (Chrome and Safari on the phone WEBSITE). In either case the visual-viewport HEIGHT drops
+ * when the keyboard opens, so remember the largest height seen and treat a meaningful drop as "keyboard
+ * up". `bottom` = how much of the layout viewport the keyboard covers, which is 0 when the window itself
+ * shrank (there `bottom: 0` already sits right above the keyboard) and the keyboard's height on the
+ * website — a bar pinned to `bottom: 0` there would be BEHIND the keyboard.
+ *
+ * Shared so the two editors (Notes, RichEditor) pin their toolbar the same way; Notes used to pin on
+ * focus alone, which is correct only in the installed app.
+ */
+export function useKeyboardInset(isMobile: boolean): { open: boolean; bottom: number } {
+  const [kb, setKb] = useState<{ open: boolean; bottom: number }>({ open: false, bottom: 0 });
+  const maxVh = useRef(0);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!isMobile || !vv) {
+      setKb({ open: false, bottom: 0 });
+      return;
+    }
+    const update = () => {
+      maxVh.current = Math.max(maxVh.current, vv.height);
+      const bottom = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      setKb({ open: maxVh.current - vv.height > 120, bottom });
+    };
+    update();
+    vv.addEventListener('resize', update);
+    vv.addEventListener('scroll', update);
+    return () => {
+      vv.removeEventListener('resize', update);
+      vv.removeEventListener('scroll', update);
+    };
+  }, [isMobile]);
+  return kb;
+}
+
+/**
  * An uncontrolled rich-text editor (the same toolbar as Notes). The contentEditable fills from
  * `initialHtml` on mount; thereafter it reports its HTML on every input via `onChange` without
  * re-syncing its own DOM, so the caret never jumps. To reset it (e.g. "copy from item"), change its
@@ -154,32 +191,7 @@ export function RichEditor({
 
   const isMobile = useIsMobile();
   const [focused, setFocused] = useState(false);
-  // Mobile keyboard detection that works across BOTH Android WebView modes: some shrink the window for
-  // the keyboard (innerHeight drops), some keep it and only the visual viewport shrinks. In either case
-  // the visual-viewport HEIGHT drops when the keyboard opens, so we remember the largest height seen and
-  // treat a meaningful drop as "keyboard up". `bottom` = how much the keyboard covers the layout viewport
-  // (0 when the window itself shrank — then bottom:0 already sits right above the keyboard).
-  const [kb, setKb] = useState<{ open: boolean; bottom: number }>({ open: false, bottom: 0 });
-  const maxVh = useRef(0);
-  useEffect(() => {
-    const vv = window.visualViewport;
-    if (!isMobile || !vv) {
-      setKb({ open: false, bottom: 0 });
-      return;
-    }
-    const update = () => {
-      maxVh.current = Math.max(maxVh.current, vv.height);
-      const bottom = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
-      setKb({ open: maxVh.current - vv.height > 120, bottom });
-    };
-    update();
-    vv.addEventListener('resize', update);
-    vv.addEventListener('scroll', update);
-    return () => {
-      vv.removeEventListener('resize', update);
-      vv.removeEventListener('scroll', update);
-    };
-  }, [isMobile]);
+  const kb = useKeyboardInset(isMobile);
   // Toolbar shows pinned above the keyboard only while focused AND the keyboard is actually up — so it
   // appears when a field is tapped and disappears the instant the keyboard closes (even if focus lingers).
   const kbShow = isMobile && focused && kb.open;

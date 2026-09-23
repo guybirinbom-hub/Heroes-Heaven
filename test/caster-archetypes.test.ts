@@ -40,8 +40,14 @@ describe('archetype spell slot table', () => {
       if (cfg.innateCantrip || cfg.customUnlocks || cfg.cantripsOnly) continue;
       expect(c.feats[cfg.basicId], cfg.basicId).toBeTruthy();
       expect(c.feats[cfg.expertId], cfg.expertId).toBeTruthy();
-      // Summoner archetype caps at Expert — there is no master-summoner-spellcasting feat.
-      if (ded !== 'summoner-dedication') expect(c.feats[cfg.masterId], cfg.masterId).toBeTruthy();
+      /* ⚠ STRICT on purpose: every other entry must NAME a master feat AND it must resolve, so an entry
+       * that silently loses its `masterId` fails here rather than passing a `if (cfg.masterId)` check.
+       * The one archetype whose printed list stops short is named, and is asserted to have no master
+       * rung — Spellshot's archetype-122 ends at Expert Wizard Spellcasting — so the exception cannot
+       * quietly widen into a second hole. (The old `summoner-dedication` exception was stale:
+       * master-summoner-spellcasting does ship.) */
+      if (ded === 'spellshot-dedication') expect(cfg.masterId, ded).toBeUndefined();
+      else expect(c.feats[cfg.masterId!], cfg.masterId).toBeTruthy();
     }
   });
 

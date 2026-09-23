@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import type { Character } from '../rules/types';
 import { addNotePage, moveNotePage, nextNoteId, removeNotePage, updateNotePage, type PlayUpdater } from '../rules/play';
-import { RefSearchModal, refLinkHtml, type RefTarget } from './RichEditor';
+import { RefSearchModal, refLinkHtml, useKeyboardInset, type RefTarget } from './RichEditor';
 import { confirmDialog } from './confirm';
 import { DescBody } from './DescBody';
 import { useIsMobile } from './useIsMobile';
@@ -74,10 +74,20 @@ function NoteEditor({
   const savedRange = useRef<Range | null>(null);
   const [linking, setLinking] = useState(false);
 
-  // Mobile: while focused, pin the toolbar to the bottom of the scroll container via position:sticky
-  // (CSS .rte-toolwrap-sticky) — robust against Android adjustResize where the visualViewport math fails.
+  // Mobile: while the keyboard is up, pin the toolbar just above it (CSS .rte-toolwrap-sticky).
+  // This used to pin on focus alone, at `bottom: 0` — right in the installed app, where the window
+  // itself shrinks for the keyboard, and wrong on the phone WEBSITE, where it does not: there the bar
+  // pinned to the bottom of a window that still spans the whole screen, i.e. BEHIND the keyboard, and
+  // drifted about as the browser scrolled the visual viewport. Same hook the other editor uses.
   const isMobile = useIsMobile();
   const [focused, setFocused] = useState(false);
+  const kb = useKeyboardInset(isMobile);
+  // `kb.bottom === 0` means the WINDOW itself shrank for the keyboard — the installed app under
+  // adjustResize, where `bottom: 0` already sits right above it — or there is no keyboard at all. Pin on
+  // focus there, exactly as this did before, so the app keeps today's behaviour even where the
+  // visualViewport numbers misreport (they are present but do not move). Only the website leaves the
+  // window at full height while the keyboard covers it (bottom > 0), and there the keyboard IS up.
+  const kbShow = isMobile && focused && (kb.bottom === 0 || kb.open);
 
   useEffect(() => {
     // Sanitize before injecting (see RichEditor): innerHTML executes inline handlers, and note HTML can
@@ -177,7 +187,8 @@ function NoteEditor({
   return (
     <>
       <div
-        className={'rte-toolwrap' + (isMobile && focused ? ' rte-toolwrap-sticky' : '')}
+        className={'rte-toolwrap' + (kbShow ? ' rte-toolwrap-sticky' : '')}
+        style={kbShow ? { bottom: kb.bottom } : undefined}
       >
       <div className="toolbar">
         {TOOLS.map((t, i) => (

@@ -460,13 +460,20 @@ describe('the second readers of a pack count', () => {
       } as unknown as Character);
     const readRow = (inv: InventoryItem[]) => {
       const r = renderDom(createElement(InventoryTab, { character: sheetOf(inv), content: merged2 } as never));
+      // An absent .inv-bval span means "no bulk to print" (bulk 0) AND "the row never rendered" —
+      // the same empty string either way. Only the first is a pass, so check the row exists first.
+      const name = r.host.querySelector<HTMLElement>('.inv-name')?.textContent ?? '';
       const v = r.host.querySelector<HTMLElement>('.inv-bval')?.textContent ?? '';
       r.stop();
+      expect(name, 'the row itself has to render before its bulk cell means anything').not.toBe('');
       return v;
     };
     expect(readRow([row('tb-plate', 1, { worn: true })])).toBe('4');
     expect(readRow([row('tb-plate', 1)])).toBe('5');
-    expect(readRow([row('tb-pack', 1, { worn: true })])).toBe('—');
+    // Negligible Bulk: the default card (Essentials) prints nothing for it. The book's '—' is the
+    // VALUE under the Standard card's own "bulk" heading — inlined into a row it read as data that
+    // failed to load, so only Standard still prints it (test/bug-item-card-detail.test.tsx).
+    expect(readRow([row('tb-pack', 1, { worn: true })])).toBe('');
     expect(readRow([row('tb-pack', 1)])).toBe('L');
   });
 

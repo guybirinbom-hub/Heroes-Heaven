@@ -127,8 +127,11 @@ export function CharacterSheet({
   globalCustomization,
   onLeaveCampaign,
   partyEnabled,
+  characters,
   readOnly,
+  readOnlyNote,
   gmEdit,
+  onOpenOwn,
   onBack,
   charKey,
   build,
@@ -170,6 +173,12 @@ export function CharacterSheet({
   /** Render as a look-but-don't-touch view of someone else's character (party page): no menu, no
    *  mutations, and a Back button instead. */
   readOnly?: boolean;
+  /** Replaces the read-only strip's wording. Used for the one case the default line would misdescribe:
+   *  your OWN character, read from a campaign because this device's roster doesn't hold it. */
+  readOnlyNote?: string;
+  /** Open one of this device's own characters (a roster id). The Party page uses it when the card you
+   *  tapped turns out to be yours — see PartyMembers.ownRosterId. */
+  onOpenOwn?: (charId: string) => void;
   /** GM editing a player's character (from the campaign detail): fully editable, no nav hamburger, and
    *  a top-bar [edit-build · export · Update · Back] set. `onUpdate` pushes to the player (silently);
    *  `onExport` downloads the file. Mutually exclusive with `readOnly`. */
@@ -481,6 +490,10 @@ export function CharacterSheet({
       <PartyPage
         content={content}
         campaigns={attachedCampaigns}
+        characters={characters}
+        // Tapping your own card here leaves the party view as well as switching character — without
+        // the close it would hand App a new active id and leave the party page sitting on top of it.
+        onOpenOwn={onOpenOwn && ((id) => { setPartyOpen(false); onOpenOwn(id); })}
         onClose={() => setPartyOpen(false)}
         onLeave={
           onLeaveCampaign
@@ -499,7 +512,7 @@ export function CharacterSheet({
     <div className={'ws-app' + (readOnly ? ' ws-readonly' : '')}>
       {readOnly && (
         <div className="ro-frame-tab">
-          <i className="ti ti-eye" aria-hidden="true" /> Viewing {character.name} · read-only
+          <i className="ti ti-eye" aria-hidden="true" /> {readOnlyNote ?? `Viewing ${character.name} · read-only`}
         </div>
       )}
       {gmEdit && (

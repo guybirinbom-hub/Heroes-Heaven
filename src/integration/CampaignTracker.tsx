@@ -37,10 +37,10 @@ import { FloatingWindowLayer } from '../../tracker/src/components/FloatingWindow
 import { ErrorBoundary } from '../../tracker/src/components/ErrorBoundary';
 import { usePartyStore } from '../../tracker/src/store/partyStore';
 import type { Combatant } from '../../tracker/src/types/pf2e';
-import { PartyMembers, PartyCard, useGmPendingVersion, PARTY_MEMBER_DRAG, type PartyMemberDrag, type PartyCardSlots } from '../sheet/PartyMembers';
+import { PartyMembers, PartyCard, useGmPendingVersion, useMyId, knownToBeOther, PARTY_MEMBER_DRAG, type PartyMemberDrag, type PartyCardSlots } from '../sheet/PartyMembers';
 import { gmPendingEdit, pendingEditStillStands } from '../sheet/gmSync';
 import { type PartySummary } from '../sheet/partySummary';
-import { fetchParty, type PartyMember } from '../data/party';
+import { currentUserId, fetchParty, type PartyMember } from '../data/party';
 import { useAuth } from '../data/useAuth';
 import { startTrackerSync, isTrackerSyncReady } from '../data/trackerSync';
 import { memberCardSummary, livePlay, useMemberSheets, usePcSheetTruth } from './pcSheetTruth';
@@ -252,6 +252,8 @@ export function CampaignTracker({
   /* A GM edit the player's app hasn't picked up yet: the sheets below are already overlaid with it
    * (src/data/party.ts), and this is what re-renders the cards and panes that draw them. */
   const pendingVersion = useGmPendingVersion();
+  // Which of these cards is the GM's own character — the one card that must not open the GM editor.
+  const { myId } = useMyId();
   const memberSheets = useMemberSheets(m.id, members);
   const sheetById = useMemo(() => {
     const map = new Map<string, SavedChar>();
@@ -929,13 +931,32 @@ export function CampaignTracker({
    * makes the back arrow land where the GM came from without anything here tracking a history.
    */
   const openMemberSheet = useCallback(
-    (mem: PartyMember) => {
+    async (mem: PartyMember) => {
       // Their published sheet is already here — show it. Only a member we have no sheet for falls
       // back to the page's own loader.
-      if (roster.byId.has(mem.charId)) setFullSheetId(mem.charId);
+      //
+      // …except YOUR OWN character. A GM plays too, and the sheet here is the GM editor: opening it
+      // on your own card put you in front of your own character wearing "GM editing X — changes
+      // reach the player only when you Update", with the player being you. The page above owns that
+      // decision for every surface (useMemberViewer → ownRosterId), so hand it over rather than
+      // asking the same question a second way here.
+      //
+      // ⚠ THE ACCOUNT IS READ HERE, not taken from the rendered `useMyId()` a few lines up. That
+      // hook answers null until auth comes back, and these cards paint the moment `fetchParty`
+      // resolves — a separate request, started at the same mount, so the window is reachable and is
+      // exactly the first seconds a GM spends on this page. An inequality against that rendered null
+      // is TRUE inside it for your own card, which dropped the GM into the editor on their own
+      // character. `knownToBeOther` is the one function the page asks (../sheet/PartyMembers); a
+      // second phrasing of the question here is how these two came apart before.
+      //
+      // The dev seam's party (localMembers) is derived from this device's roster with no accounts in
+      // play at all — its `ownerId` IS the roster id — so there is nobody it could belong to, and the
+      // GM sheet opens there exactly as it always did.
+      const other = members === localMembers || knownToBeOther(mem.ownerId, await currentUserId());
+      if (other && roster.byId.has(mem.charId)) setFullSheetId(mem.charId);
       else onViewMember(mem);
     },
-    [roster, onViewMember],
+    [roster, onViewMember, members, localMembers],
   );
 
   /** The card's host slots — the same ones on the dashboard, so the pane card matches it. The turn
@@ -990,12 +1011,12 @@ export function CampaignTracker({
           <div className="ct-pane-card">
             <PartyCard
               member={mem}
-              isMine={false}
+              isMine={mem.ownerId === myId}
               // Same chip as the dashboard card: this pane may be showing the GM's own last Update
               // rather than what the player published. `sheetById` is already overlaid (party.ts),
               // so the numbers here are the edited ones — this says why.
               pending={pendingFor(mem)}
-              onOpen={() => openMemberSheet(mem)}
+              onOpen={() => void openMemberSheet(mem)}
               extra={cardExtra(mem, false)}
             />
           </div>
@@ -1004,7 +1025,7 @@ export function CampaignTracker({
     },
     // `pendingVersion` is the pending store's snapshot — module state, so it is what says it moved.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [liveMembers, openMemberSheet, cardExtra, m.id, pendingVersion],
+    [liveMembers, openMemberSheet, cardExtra, m.id, pendingVersion, myId],
   );
 
   // The real levels of the real characters — what encounter difficulty must be rated against. The
@@ -1156,7 +1177,7 @@ export function CampaignTracker({
                           return;
                         }
                       }
-                      openMemberSheet(mem);
+                      void openMemberSheet(mem);
                     }}
                     // Hand every later list (Realtime refresh, a kick) back to the seam, so the
                     // tracker party and the cards can't drift apart.

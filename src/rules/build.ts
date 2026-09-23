@@ -70,7 +70,7 @@ import { DOMAIN_SPELLS } from './domains';
 import { mpImbuedSpellIds } from './monsterParts';
 import { openChoiceLabel } from './openChoice';
 import { initialClassResources } from './classResources';
-import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions } from './casterArchetypes';
+import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions, CASTER_ARCHETYPES, DEDICATION_COUNTS_AS } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { cpToCoins } from './wealth';
 import { apparitionSlots, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
@@ -823,6 +823,30 @@ export function dedicationBlock(
   if (!candidate.traits.includes('dedication')) return null;
   const started: Feat[] = [];
   const counts = new Map<string, number>(); // archetype -> non-dedication feats taken
+  /*
+   * A BORROWED RUNG IS ON BOTH ARCHETYPES' LISTS, and `Feat.archetype` is a single string.
+   *
+   * Spellshot Dedication hands over the wizard ladder, and the two rungs that permission reaches —
+   * Basic Arcana, Basic Wizard Spellcasting — are printed on archetype-122 as spellshot feats (the
+   * Archives tag both `archetype: ["Wizard","Spellshot"]`). Ours carry `archetype: 'wizard'` alone,
+   * so a spellshot who spent 4th and 6th on exactly the ladder their own dedication points them at
+   * credited the WIZARD pool and nothing else: `counts.get('spellshot')` stayed 0 and the Special
+   * clause — *"until you've gained two other feats from the spellshot or beast gunner archetypes"* —
+   * could never be satisfied by them. Measured: that character was still told "Take 2 more feats…".
+   *
+   * So the borrower's archetype is credited TOO, and only while the borrowing dedication is actually
+   * held. `DEDICATION_COUNTS_AS.forFeats` is already the named list of rungs the permission reaches,
+   * which is the same list the print puts on both archetypes — a blanket token would credit feats
+   * neither list carries.
+   */
+  const alsoCounts = new Map<string, string>(); // feat id -> the borrowing archetype's slug
+  for (const t of taken) {
+    const id = typeof t === 'string' ? t : t.id;
+    const eq = DEDICATION_COUNTS_AS[id];
+    const borrower = content.feats[id]?.archetype;
+    if (!eq || !borrower) continue;
+    for (const fid of eq.forFeats) alsoCounts.set(fid, borrower);
+  }
   for (const t of taken) {
     const id = typeof t === 'string' ? t : t.id;
     const inArchetypeSlot = typeof t === 'string' ? undefined : t.category === 'archetype';
@@ -836,6 +860,8 @@ export function dedicationBlock(
       if (f.dedicationGate || f.archetype) started.push(f);
     } else if (countsForArchetype(f, inArchetypeSlot)) {
       counts.set(f.archetype!, (counts.get(f.archetype!) ?? 0) + 1);
+      const borrowed = alsoCounts.get(id);
+      if (borrowed && borrowed !== f.archetype) counts.set(borrowed, (counts.get(borrowed) ?? 0) + 1);
     }
   }
   for (const d of started) {
@@ -1655,6 +1681,52 @@ export function skillKeyLabel(key: string): string {
 const LEGACY_SKILL_SLOT_KEYS: Record<string, string> = {
   'gildedsoul:0': 'gildedsoul:gildedsoul-skill',
 };
+
+/**
+ * The same shape, one surface over: CANTRIP picks stored under a dedication's own `effectChoices`
+ * before that archetype had an entry in CASTER_ARCHETYPES, keyed by dedication id.
+ *
+ * Spellshot Dedication shipped its two spellbook cantrips as INNATE at-will `effectChoices`
+ * (`spellbook-cantrip-1` / `-2`) because the archetype was missing from the table, so nothing could
+ * deliver the prepared spellbook the feat prints. The record now grants the archetype entry instead
+ * and no longer asks those two questions — and without this read, a character who ANSWERED them has
+ * both answers delivered nowhere: the archetype pool (`build.cantrips`) is empty for them, so the
+ * entry ships with no cantrips at all and the player's two picks simply stop existing.
+ *
+ * Read only when the archetype's own pool is EMPTY, so a pick made in the archetype's picker always
+ * wins and re-answering there migrates it. Read-only and additive, kept rather than run as a one-shot
+ * migration for the same reason as above: these builds live in localStorage, in Supabase and in
+ * exported `.codex` files, and a migration that never sees a file cannot fix it.
+ *
+ * ⚠ KEYED BY THE DEDICATION THAT ASKED, and looked up over the dedications the character HOLDS — never
+ * over the one archetype that won the single pool. Those are different feats the moment a character
+ * holds two caster dedications (Spellshot + Beast Gunner), and keying on the winner delivers the
+ * loser's stored answers nowhere at all. See the two readers in `buildCharacter`: the winner's answers
+ * fill its entry's cantrips, a held loser's arrive as the at-will innate cantrips they shipped as.
+ *
+ * The one seam an empty-pool rule leaves: a player who deliberately empties the picker back to zero
+ * sees the two old answers again, because "none chosen" and "never chosen" look alike from here.
+ * Distinguishing them needs a marker in BuildState, which is a schema change for a case that returns
+ * the cantrips the feat prints anyway — where the alternative is losing both.
+ */
+const LEGACY_ARCHETYPE_CANTRIP_KEYS: Record<string, string[]> = {
+  'spellshot-dedication': ['spellshot-dedication:spellbook-cantrip-1', 'spellshot-dedication:spellbook-cantrip-2'],
+};
+
+/**
+ * The cantrips a HELD dedication's retired answers still deliver, in pick order.
+ *
+ * ⚠ EXPORTED FOR THE BUILDER, and that is the point of it being a function at all. buildCharacter
+ * hands these to the sheet; the Builder's cantrip row counts `build.cantrips`, which for one of these
+ * saves is empty — so the row read "0 / 2" over two cantrips the character was already casting, and
+ * the only way out was re-picking them. Both sides now read THIS, so the row cannot disagree with the
+ * sheet about what the save holds, and the rule has one home.
+ */
+export function legacyArchetypeCantrips(dedicationId: string, build: BuildState, content: ContentDatabase): string[] {
+  return (LEGACY_ARCHETYPE_CANTRIP_KEYS[dedicationId] ?? [])
+    .map((k) => build.effectChoices?.[k])
+    .filter((id): id is string => !!id && !!content.spells[id]);
+}
 
 /**
  * Is this effect choice even asked of this character?
@@ -4548,6 +4620,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         // has to exist (it did before extraRepertoire arrived). Only a rank the SLOT table never
         // mentions — one reached solely through extraRepertoire — is skipped here.
         if (rank in slotCounts) entry.slots[rank] = { max: slotCounts[rank], used: 0 };
+        // …and where the repertoire is printed WIDER than the slots, the number itself, because the
+        // SHEET's add gate has no other way to know it (see SpellcastingEntry.repertoireMax): an
+        // oracle who removed one of their two 10th-rank spells could never put another one back.
+        if (count !== slotCounts[rank]) (entry.repertoireMax ??= {})[rank] = count;
         const granted = grantedByRank[rank] ?? [];
         /* Player-chosen repertoire plus any granted spells of this rank. Granted spells normally ride
          * ON TOP — the psychic's conscious mind is *additional* by its own print ("3*" plus "Your
@@ -7894,6 +7970,29 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // so it never collides with the class pool. Entry id is dedication-based, so the two never clash.
   {
     const arch = activeCasterArchetype(feats.map((f) => f.featId));
+    /** The retired answers a HELD dedication still stores, in pick order — see LEGACY_ARCHETYPE_CANTRIP_KEYS. */
+    const legacyCantripsOf = (dedId: string): string[] => legacyArchetypeCantrips(dedId, build, content);
+    /*
+     * THE ANSWERS BELONG TO THE DEDICATION THAT ASKED THEM, NOT TO WHATEVER WON THE POOL.
+     *
+     * The app models ONE archetype caster, and Spellshot + Beast Gunner — the one pairing the
+     * spellshot's own Special clause legalises — deliberately gives that pool to the beast gunner. Read
+     * off `arch.dedicationId` alone, a spellshot in that pairing has both stored cantrips delivered
+     * nowhere: the winner has no legacy keys, so the fallback below never fires for them. Before this
+     * archetype had a table entry the two shipped as at-will INNATE cantrips (`grantAs: 'innate'`), and
+     * that is where a held-but-not-winning dedication's answers go — the same spells on the same sheet,
+     * which is the whole point. Nothing to dedupe against the winner: a dedication that IS the winner
+     * is skipped here and handled by the entry below.
+     */
+    for (const f of feats) {
+      if (f.featId === arch?.dedicationId) continue;
+      const tradition = CASTER_ARCHETYPES[f.featId]?.tradition;
+      for (const id of legacyCantripsOf(f.featId)) {
+        chosenInnateGrants.push({ spellId: id, atWill: true, ...(tradition ? { tradition } : {}) });
+        chosenInnateSource[id] ??= content.feats[f.featId]?.name ?? f.featId;
+        chosenInnateRecord[id] ??= f.featId;
+      }
+    }
     if (arch) {
       const twoCaster = !!cls?.spellcasting; // class already has its own pool → use the separate surface
       const src = twoCaster ? build.archetypeSpells : undefined;
@@ -7906,7 +8005,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * 2026-09-10 #113). Narrowed on READ, not migrated — these builds live in localStorage, in
        * Supabase and in exported `.codex` files, and a migration that never sees a file cannot fix it.
        */
-      const srcCantripsRaw = src?.cantrips ?? build.cantrips;
+      const pooledCantrips = src?.cantrips ?? build.cantrips;
+      /* An EMPTY pool falls back to the answers the dedication's own retired `effectChoices` still
+       * hold, so a character built before the archetype had an entry keeps the cantrips they picked
+       * instead of losing both — see LEGACY_ARCHETYPE_CANTRIP_KEYS. */
+      const srcCantripsRaw = pooledCantrips.length ? pooledCantrips : legacyCantripsOf(arch.dedicationId);
       const srcCantrips = srcCantripsRaw.filter((id) => archetypeCantripAllowed(arch, id));
       for (const id of srcCantripsRaw)
         if (!archetypeCantripAllowed(arch, id))
@@ -10546,11 +10649,28 @@ function declaredTokens(content: ContentDatabase): Set<string> {
  * illegal feat. Folded into `checkPrerequisites`' `unmet` rather than checked at each picker, because
  * that function is the one funnel the row, the "hide ineligible" filter and every other eligibility
  * consumer already share.
+ *
+ * …and the second thing nothing else can say: a rung of a BORROWED archetype ladder that the borrower's
+ * own printed feat list does not include (`DEDICATION_COUNTS_AS.notOnItsList`). Also not a prerequisite
+ * — Master Wizard Spellcasting asks for *"Expert Wizard Spellcasting, legendary in Arcana"* and names no
+ * dedication, so a spellshot who reached Expert through the printed permission clears its line by
+ * accident. It is here rather than in `unmet` for the same reason as the heritage clause: list
+ * membership is not something a background waiver may waive.
  */
 export function forbiddenFeatReason(featId: string, character: Character, content: ContentDatabase): string | undefined {
   for (const hid of [character.heritageId, character.secondHeritageId]) {
     const h = hid ? content.heritages[hid] : undefined;
     if (h?.forbidsFeats?.includes(featId)) return `${h.name}: you can never take this feat.`;
+  }
+  const held = new Set(character.feats.map((f) => f.featId));
+  for (const dedId of held) {
+    const eq = DEDICATION_COUNTS_AS[dedId];
+    if (!eq?.notOnItsList?.includes(featId)) continue;
+    // Holding the real dedication makes them a member of that archetype, so the rung is theirs.
+    if (eq.countsAs.some((id) => held.has(id))) continue;
+    const arch = content.feats[dedId]?.name.replace(/\s+Dedication$/i, '') ?? dedId;
+    const need = eq.countsAs.map((id) => content.feats[id]?.name ?? id).join(' or ');
+    return `Not on the ${arch} archetype's feat list — it needs ${need}.`;
   }
   return undefined;
 }
@@ -10591,6 +10711,16 @@ export function checkPrerequisites(
   const PARENT_ORDER: Record<string, string> = { 'cultivation-order': 'leaf-order', 'spore-order': 'leaf-order' };
   const parentOrder = PARENT_ORDER[character.subclassId ?? ''];
   if (parentOrder) has.add(parentOrder);
+  /* …and the same shape one level up: a DEDICATION that prints it counts as another archetype's.
+   * Spellshot Dedication — *"This counts as the wizard archetype for the benefits of Basic Wizard
+   * Spellcasting"* (feat-3267) — so every rung of the ladder the spellshot's casting actually runs on
+   * was blocked by a prerequisite naming a feat the archetype never asks you to take. Prerequisites
+   * only, and only for the feats the printed permission names — a blanket token would also open
+   * Arcane School Spell, which is not on the spellshot's list; see DEDICATION_COUNTS_AS. */
+  for (const f of character.feats) {
+    const eq = DEDICATION_COUNTS_AS[f.featId];
+    if (eq?.forFeats.includes(feat.id)) for (const id of eq.countsAs) has.add(id);
+  }
 
   // Tokens this character's CHOICE ANSWERS grant (Magaambyan branch, …), and the universe of tokens
   // anything declares. Both normalized once, outside the loop.

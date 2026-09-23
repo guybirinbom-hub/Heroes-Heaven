@@ -992,10 +992,13 @@ export default function App() {
           commitStructural(); // create/rebuild a character — persist immediately
           if (editing) {
             const id = editing.id;
-            // Keep in-play progress across a rebuild, but reconcile build-derived overrides
-            // (gear/currency/spells/resources) so the edited build actually takes effect. The old
-            // character's inventory goes along so gear added in the BUILDER reaches the sheet without
-            // disturbing what the player has been carrying (bug 2026-09-12 #3c).
+            // Keep in-play progress across a rebuild. playForRebuild DROPS NOTHING — not one key of
+            // the play overlay, whatever the fresh build says (the 2026-09-22 vanished-spells
+            // report); a pick the new build cannot hold is simply not DRAWN, by applyPlayState, and
+            // comes back when the build does. The FRESH and PREVIOUS characters are passed for the
+            // two additive things: gear added in the BUILDER reaching the sheet without disturbing
+            // what the player has been carrying (bug 2026-09-12 #3c), and the same for a repertoire
+            // spell added in the builder.
             setRoster((r) =>
               r.map((c) =>
                 c.id === id
@@ -1004,7 +1007,7 @@ export default function App() {
                       id,
                       character: carryStoredOverrides(built, c.character),
                       build,
-                      play: c.play ? playForRebuild(c.play, built.inventory, c.character.inventory) : c.play,
+                      play: c.play ? playForRebuild(c.play, built, c.character) : c.play,
                     }
                   : c,
               ),
@@ -1043,6 +1046,7 @@ export default function App() {
         onOpenHomebrew={() => setMode('homebrew')}
         onOpenSettings={openSettings}
         characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
+        onOpenOwn={(id) => { setActiveId(id); setMode('sheet'); }}
         modes={readyContent.modes}
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
@@ -1075,6 +1079,7 @@ export default function App() {
         build={active.build}
         charKey={active.id}
         characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
+        onOpenOwn={(id) => { setActiveId(id); setMode('sheet'); }}
         onPlay={updatePlay}
         onCreateItem={addCustomItem}
         onSaveMode={saveModeDef}

@@ -102,11 +102,19 @@ describe('trust-approvals.json — completeness', () => {
    * unchanged but carries no action badge on either printing). All four are `open`, so all four are
    * `unruled` below — which, as above, means the answers file does not speak for them. Roster 157 -> 161.
    */
+  /*
+   * Then the 2026-09-22 Spellshot lane filed TWO more, engine-shape questions with no WG comparison
+   * (the lane's audit found no encoding to compare against): #162
+   * engine-second-archetype-pool-spellshot-beast-gunner (does Spellshot + Beast Gunner get a real
+   * second archetype spellcasting pool) and #163 engine-no-route-riders-energy-fulminating-dispelling
+   * (three spellshot riders with no engine carrier — how should each be exposed). Both are `open`, so
+   * both are `unruled` below. Roster 161 -> 163.
+   */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
-  it('the desk roster is every number in work/owner-questions.json — 161: 155 batch-filed questions, the two 2026-09-11 authorised exceptions and the four filed by the 2026-09-12 reprint lane — with no gaps or repeats', () => {
+  it('the desk roster is every number in work/owner-questions.json — 163: 155 batch-filed questions, the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane and the two filed by the 2026-09-22 Spellshot lane — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
-    expect(deskNumbers.length).toBe(161);
+    expect(deskNumbers.length).toBe(163);
   });
 
   it('every desk number has exactly one disposition', () => {

@@ -46,10 +46,22 @@ export interface PartyMember {
   updatedAt?: string;
 }
 
+/**
+ * The signed-in account's id, read LOCALLY.
+ *
+ * ⚠ `getSession()`, never `getUser()`. `getUser` issues a `GET /auth/v1/user` on every single call —
+ * auth-js 2.110's `_getUser` has no cache, it re-requests unconditionally — and this is now asked on
+ * the way into every member card, so each tap waited on an auth round-trip before the row fetch even
+ * started. The worse half: when that request fails (expired refresh token, a 429, a flaky link) it
+ * answers `{ user: null }`, which is indistinguishable from signed out — and "signed out" is exactly
+ * the answer that sends a GM into the EDIT sheet on their own character. `getSession` reads the
+ * persisted session out of storage (autoRefreshToken keeps it current in the background) and answers
+ * the same question with no network and no such failure mode.
+ */
 export async function currentUserId(): Promise<string | null> {
   if (!supabase) return null;
-  const { data } = await supabase.auth.getUser();
-  return data.user?.id ?? null;
+  const { data } = await supabase.auth.getSession();
+  return data.session?.user?.id ?? null;
 }
 
 /** Publish (upsert) one character into one campaign. `sheet` is the full SavedChar (character + build +

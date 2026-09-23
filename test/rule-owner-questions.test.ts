@@ -106,8 +106,9 @@ describe('rule-owner-questions.mjs applies the desk pass', () => {
     const stillOpen = (after.open ?? []).map((e) => Number(e.n)).sort((a, b) => a - b);
     expect(stillOpen).toEqual((BEFORE.open ?? []).map((e) => Number(e.n)).filter((n) => !ANSWERED.has(n)).sort((a, b) => a - b));
     /* The five batch-037 questions the owner has NOT seen stay on the desk, and so do the four the
-     * 2026-09-12 newest-printing repoint filed after the desk pass closed (#158-#161). */
-    expect(stillOpen).toEqual([151, 152, 153, 154, 155, 158, 159, 160, 161]);
+     * 2026-09-12 newest-printing repoint filed after the desk pass closed (#158-#161), plus the two
+     * engine-shape spellshot questions filed 2026-09-22 (#162-#163). */
+    expect(stillOpen).toEqual([151, 152, 153, 154, 155, 158, 159, 160, 161, 162, 163]);
     expect((after.ruled ?? []).length).toBe((BEFORE.ruled ?? []).length + ANSWERED.size);
 
     for (const n of ANSWERED) {

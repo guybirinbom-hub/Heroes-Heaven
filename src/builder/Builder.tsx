@@ -20,6 +20,7 @@ import {
   buildChoiceOptions,
   cantripBonusFor,
   classArchetypeSpellMods,
+  legacyArchetypeCantrips,
   levelGrants,
   levelChoices,
   subclassAnchorAt,
@@ -507,6 +508,25 @@ export function Builder({
       }, 0)
     : 0;
   const cantripCap = Math.max(0, (casting ? cantripsKnown(build.classId) : (archCaster?.config.cantrips ?? 0) + archCantripBonus) + cantripBonus + (casting ? archMods.cantripDelta : 0));
+  /* A build saved before its archetype had a spell pool keeps its cantrips in the dedication's own
+   * retired effectChoices, and buildCharacter hands them to the sheet from there. The row counted
+   * `build.cantrips` alone, so it read "0 / 2" over two cantrips the character was already casting and
+   * the only way to clear it was picking them again. It reads the SHEET'S function now — never a
+   * second copy of the rule — filtered by the same allow-list buildCharacter applies to it.
+   *
+   * Display only: the answers become ordinary picks on the first edit (`writeCantrip`), never on open.
+   * Nothing the player stored is rewritten by arriving at this page. */
+  const legacyCantrips = archCaster && !build.cantrips.length
+    ? legacyArchetypeCantrips(archCaster.dedicationId, build, content).filter((id) => archetypeCantripAllowed(archCaster, id))
+    : [];
+  const rowCantrips = legacyCantrips.length ? legacyCantrips : build.cantrips;
+  /* Editing a row that is showing the fallback materialises it first: the two stored answers become
+   * real picks, and the toggle then does what it always does. Without this the X on a chip runs
+   * `toggleCantrip` against an empty list and ADDS the cantrip the player just asked to remove. */
+  const writeCantrip = (id: string) => {
+    if (legacyCantrips.length) actions.patch({ cantrips: legacyCantrips });
+    actions.toggleCantrip(id);
+  };
   // The built character, used to evaluate feat prerequisites in the picker and the stats rail.
   // Memoized so the full per-level build pipeline runs once per build change, not 2–3× per render.
   const featPrereqChar = useMemo(() => buildCharacter(build, ovContent), [build, ovContent]);
@@ -1223,14 +1243,14 @@ export function Builder({
             <div className="spr-head">
               <span>Cantrips</span>
               <span className="spr-count">
-                {build.cantrips.length} / {cantripCap}
+                {rowCantrips.length} / {cantripCap}
               </span>
             </div>
             <div className="spr-chips">
-              {build.cantrips.map((id) => (
+              {rowCantrips.map((id) => (
                 <span className="spr-chip" key={id}>
                   {content.spells[id]?.name ?? id}
-                  <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => actions.toggleCantrip(id)}>
+                  <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => writeCantrip(id)}>
                     <i className="ti ti-x" aria-hidden="true" />
                   </button>
                 </span>
@@ -1240,8 +1260,8 @@ export function Builder({
               <button
                 className="spr-add"
                 type="button"
-                disabled={build.cantrips.length >= cantripCap}
-                title={build.cantrips.length >= cantripCap ? `All ${cantripCap} cantrip slots are filled — remove one first.` : undefined}
+                disabled={rowCantrips.length >= cantripCap}
+                title={rowCantrips.length >= cantripCap ? `All ${cantripCap} cantrip slots are filled — remove one first.` : undefined}
                 data-ctl="spell"
                 data-ctl-title="Cantrip"
                 data-ctl-options={cantripCap}
@@ -3341,7 +3361,7 @@ export function Builder({
         const capSlots = c2 ? slotCounts2 : slotCounts;
         const wizBook = c2 ? isWizardBook2 : flatBudget;
         const prepared = c2 ? isPrepared2 : isPrepared;
-        const cantripList = c2 ? build.cantrips2 ?? [] : build.cantrips;
+        const cantripList = c2 ? build.cantrips2 ?? [] : rowCantrips;
         const spellList = c2 ? build.spells2?.[picker.rank] ?? [] : build.spells[picker.rank] ?? [];
         const learned = c2 ? learnedTotal2 : poolSpent;
         const items = c2 ? eligibleSpells2(picker.rank) : eligibleSpells(picker.rank);
@@ -3409,7 +3429,7 @@ export function Builder({
                           ? actions.addSpell2(picker.rank, sp.id)
                           : actions.toggleSpell2(picker.rank, sp.id)
                       : isCantrip
-                        ? actions.toggleCantrip(sp.id)
+                        ? writeCantrip(sp.id)
                         : preparedMode
                           ? actions.addSpell(picker.rank, sp.id)
                           : actions.toggleSpell(picker.rank, sp.id)

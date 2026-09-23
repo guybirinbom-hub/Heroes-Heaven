@@ -50,7 +50,7 @@ import {
   removeChosenIds,
   withCustomAnswer,
 } from '../rules/build';
-import { choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, narrowSpellFilter, resolveClassArchetype, subclassOptionAllowed } from '../rules/build';
+import { choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, legacyArchetypeCantrips, narrowSpellFilter, resolveClassArchetype, subclassOptionAllowed } from '../rules/build';
 import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
 import { openChoiceOptions } from '../rules/openChoice';
 import { cantripsKnown } from '../rules/spellcasting';
@@ -4079,6 +4079,26 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             return b?.entryId && archEntryIds.has(b.entryId) ? n + (b.cantrips ?? 0) : n;
           }, 0);
           const cantripCap = arch.config.cantrips + archCantripBonus;
+          /* A build saved before THIS pool existed keeps its two cantrips in the dedication's own
+           * retired effectChoices (LEGACY_ARCHETYPE_CANTRIP_KEYS) — buildCharacter's sheet already
+           * delivers them from there (see legacyArchetypeCantrips); this card counted `as.cantrips`
+           * alone, which is empty for exactly those saves, so the day another dedication joins that
+           * table on a caster CLASS, this card reads "0 / 2" over cantrips the sheet already casts —
+           * the same divergence the Builder.tsx cantrip row had. Same reader, same allow-list.
+           *
+           * Display only: the answers become ordinary picks on the first edit (writeArchetypeCantrip),
+           * never on open. */
+          const legacyCantrips = !as.cantrips.length
+            ? legacyArchetypeCantrips(arch.dedicationId, build, content).filter((id) => archetypeCantripAllowed(arch, id))
+            : [];
+          const rowCantrips = legacyCantrips.length ? legacyCantrips : as.cantrips;
+          /* Editing while the fallback is showing materialises it first — otherwise toggleArchetypeCantrip
+           * runs against an empty as.cantrips and the X on a chip ADDS the cantrip the player just asked
+           * to remove (same reasoning as Builder.tsx's writeCantrip). */
+          const writeArchetypeCantrip = (id: string) => {
+            if (legacyCantrips.length) actions.patch({ archetypeSpells: { ...as, cantrips: legacyCantrips } });
+            actions.toggleArchetypeCantrip(id, cantripCap);
+          };
           const widened = new Set<string>();
           for (const id of takenIds) {
             const list = content.feats[id]?.spellListAdditions;
@@ -4131,21 +4151,21 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   </div>
                 </SubCard>
               )}
-              <SubCard icon="ti-sparkles" label={`Cantrips (${as.cantrips.length}/${cantripCap})`}>
+              <SubCard icon="ti-sparkles" label={`Cantrips (${rowCantrips.length}/${cantripCap})`}>
                 <PopupSelect
                   title="Add a cantrip"
                   value=""
-                  onChange={(v) => v && actions.toggleArchetypeCantrip(v, cantripCap)}
+                  onChange={(v) => v && writeArchetypeCantrip(v)}
                   options={cantripList.map((s) => ({ value: s.id, label: s.name, description: s.description, descRefs: s.descRefs }))}
                 />
-                {as.cantrips.length > 0 && (
+                {rowCantrips.length > 0 && (
                   <div className="spr-chips" style={{ marginTop: 6 }}>
-                    {as.cantrips.map((id) => (
+                    {rowCantrips.map((id) => (
                       <button
                         key={id}
                         type="button"
                         className="ec-chip on"
-                        onClick={() => actions.toggleArchetypeCantrip(id, cantripCap)}
+                        onClick={() => writeArchetypeCantrip(id)}
                       >
                         {content.spells[id]?.name ?? id} ✕
                       </button>

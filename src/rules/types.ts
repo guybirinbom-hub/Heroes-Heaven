@@ -5782,6 +5782,17 @@ export interface SpellcastingEntry {
   /** OVERLAY ONLY: the per-opening view of today's prepared cantrips (`cantripCap` entries, null =
    *  an emptied opening). `cantrips` stays the flat effective list every existing reader uses. */
   cantripSlots?: (string | null)[];
+  /**
+   * OVERLAY ONLY: the BUILD's own cantrip list, kept beside the overlay's rewritten `cantrips`.
+   *
+   * A cantrip opening may hold any cantrip the character KNOWS, not only one on their tradition —
+   * Adapted Cantrip buys a cantrip from another tradition on purpose. The overlay rewrites `cantrips`
+   * to what the openings are holding today, so without this the off-tradition one disappeared from
+   * the picker the moment its opening was re-prepared and could never be chosen back. `spellOptions`
+   * reads it at rank 0; both surfaces therefore offer the same list (the RENDER asks against the
+   * build entry, which has the list under `cantrips` already).
+   */
+  cantripPool?: string[];
   /** Prepared casters: slots per rank. */
   prepared?: Record<number, PreparedSlot[]>;
   /** Spontaneous casters: known spell ids per rank. */
@@ -5789,6 +5800,28 @@ export interface SpellcastingEntry {
   /** Spells granted into the repertoire by a subclass (bloodline/mystery/muse/conscious mind) — these
    *  do NOT count against the per-rank known-spells cap and can't be removed in play. */
   grantedRepertoire?: Record<number, string[]>;
+  /**
+   * How many spells of their OWN this entry may know at a rank, where that is not the slot count.
+   *
+   * Two records print a repertoire WIDER than their slot table — the summoner's *"maximum size of
+   * five spells"* over four slots, the oracle's Oracular Clarity (*"Add two common 10th-rank divine
+   * spells to your repertoire. You gain a single 10th-rank spell slot"*) — and nothing on the entry
+   * carried that number, so the sheet's add gate read `slots[rank].max` and refused to let an oracle
+   * put a different 10th-rank spell back after removing one. Written from `repertoireCounts`, the
+   * same function the BUILDER's picker caps with, and only where it differs from the slot count.
+   */
+  repertoireMax?: Record<number, number>;
+  /**
+   * OVERLAY ONLY: how many spells of their own the PLAYER holds at each rank, the ones the fresh
+   * build is currently hiding included.
+   *
+   * The add gate counts this, not the drawn list. `renderRepertoire` draws only what the rank's own
+   * picker would still offer, so a subclass swap that hides four spells made the rank LOOK empty and
+   * the gate handed out four more places — the store then held eight at a rank capped at four, from
+   * the sheet alone. Written by applyPlayState from `play.repertoireSpells`; absent on a rank the
+   * player has never touched, where the build's own list is what they hold.
+   */
+  repertoireHeld?: Record<number, number>;
   /** Slot pool per rank (used by spontaneous; prepared derives from `prepared`). */
   slots?: Record<number, { max: number; used: number }>;
   /** Extra slots that may hold only certain spells. Deliberately NOT folded into `prepared`/`slots`:
@@ -5839,6 +5872,13 @@ export interface SpellcastingEntry {
    * sheet's add gate never has to re-derive Table 5-1's arithmetic. Absent on every other entry.
    */
   spellCollection?: number;
+  /**
+   * OVERLAY ONLY: ranks whose collection is OVER the cap, and by how many (`rank: 0` is a flexible
+   * collection's flat pool). Over-cap is a state only a BUILD edit produces — a level entered wrong,
+   * a subclass swapped — and every spell in it is the player's own, so the sheet draws them all and
+   * shows this beside the rank instead of hiding one. Written by applyPlayState (`overCapOf`).
+   */
+  overCap?: { rank: number; by: number }[];
   /** Wizard: learned spells per rank (the daily preparation is drawn from this). */
   spellbook?: Record<number, string[]>;
   /**
@@ -6565,6 +6605,13 @@ export interface Customization {
    *  entering DAMAGE, and only for a character that actually has a resistance or weakness.
    *  Immunity is deliberately absent — immune damage is 0, so there is nothing to type. */
   hpIwrButtons?: boolean;
+  /** How XP is shown in the vitals rail's Hit points card:
+   *    'chip' — a small "XP 340" chip riding in the card's title row, costing no height (DEFAULT, and
+   *             what an ABSENT key means, so nothing has to be written to get it);
+   *    'line' — a thin "XP 340 / 1000" row above the HP numbers with a 3 px progress bar (PF2e is a
+   *             flat 1,000 XP per level, Player Core).
+   *  Pressing either one opens the same XP editor (set the total, or add to it). */
+  xpDisplay?: 'chip' | 'line';
   /**
    * How Daily preparations handles choices that are re-made each morning (Environmental Adaptability's
    * cold-or-heat, and so on):
@@ -6581,6 +6628,11 @@ export interface Customization {
   consumableHighlight?: boolean;
   /** Override hex for the consumable highlight; absent = the theme's recommended colour. */
   consumableColor?: string;
+  /** How much each inventory card shows: 'standard' = the card as it has always been (icon, level ·
+   *  price line, action buttons, bulk column); 'compact' = one line per item; 'essentials' = name with
+   *  qty · bulk · price, and under it only what changes during play (equipped/invested, charges, runes).
+   *  Absent = 'essentials' (the default, see DEFAULT_CUSTOMIZATION). */
+  itemCardDetail?: 'standard' | 'compact' | 'essentials';
   /** Tint the scrollbars with the accent colour instead of neutral grey. */
   scrollbarAccent?: boolean;
 }

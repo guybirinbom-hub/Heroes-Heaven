@@ -45,12 +45,15 @@ describe('Spell Combination', () => {
     const slotId = (applyPlayState(ch, play, c()).spellcasting.find((e) => e.type === 'prepared')!.restrictedSlots ?? []).find(
       (s) => s.label === 'Combination slots',
     )!.id;
+    // Both 1st-rank: this is the 3rd-rank combination slot, whose `maxRank` is 1 ("2 or more spell
+    // ranks below"). The overlay used to render whatever was stored with no test at all, so the
+    // second half held `blur` — a 2nd-rank spell the slot's own picker would never have offered.
     play = setRestrictedSpell(play, slotId, 'fear');
-    play = setRestrictedSpell(play, `${slotId}#2`, 'blur');
+    play = setRestrictedSpell(play, `${slotId}#2`, 'grease');
     const slot = (applyPlayState(ch, play, c()).spellcasting.find((e) => e.type === 'prepared')!.restrictedSlots ?? []).find(
       (s) => s.id === slotId,
     )!;
-    expect([slot.spellId, slot.spellId2]).toEqual(['fear', 'blur']);
+    expect([slot.spellId, slot.spellId2]).toEqual(['fear', 'grease']);
   });
 });
 
