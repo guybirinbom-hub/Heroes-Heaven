@@ -1037,6 +1037,11 @@ export function deriveEidolon(
    * anywhere (`grep "area damage" src/` was empty) because a static TYPE_PACKAGE string cannot scale
    * with level. Interpolated here, the same form Dual Energy Heart's resistance uses below. */
   if (cfg.typeId === 'swarm-eidolon') evoIwr.push(`weakness ${level} area damage`);
+  /* AoN eidolon-23, Ooze Physiology: *"resistance equal to half your level (minimum 1 resistance)
+   * against acid, critical hits, and precision damage"*. Same reason as the swarm row above — a
+   * static COMPANION_MODS string cannot scale with level — and the same form as Dual Energy Heart
+   * below. The flat halves of that ability are the note on its COMPANION_MODS row. */
+  if (cfg.typeId === 'ooze-eidolon') evoIwr.push(`resistance ${Math.max(1, Math.floor(level / 2))} acid, critical hits, precision`);
   // `companionModKeys` adds `<featId>:<answer>` beside every plain feat id, so an eidolon mod chosen by
   // the owner's own answer can be found here too. A superset of the old set: the composite keys carry a
   // colon, which no feat id does, so the `featIdSet.has('expanded-senses')` style lookups below are

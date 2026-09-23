@@ -6184,6 +6184,31 @@ button.strike-name:hover {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 4px;
 }
+/* Compact rows → "one" (2026-09-23, and what an absent key means): ONE full-width row an item, rather
+   than three narrow ones side by side. Width is the whole point — at a desktop width a single column is
+   three times the 300px above, which is more than any name plus every state chip it can carry, so the
+   "a pill is on the row whole or not at all" rule below stops costing the player anything and the tags
+   are simply always there — measured at 1280 (a 1028px section) on the wand row carrying "Invested
+   2/3" + its charges + "Battleforged": all three on the row, and all three still on it under a
+   55-character name.
+   That is a DESKTOP win on the column width alone, and the phone case needed a second look: at 375
+   this column and the 300px auto-fill above are the same single 355px track, so the value here changes
+   nothing, and what is left beside the name is all the chips get — an ordinary 26-character name
+   leaves 52.7px, which is the 28.5px charge chip and not the 83.4px "Invested 2/3". Under the CLIP a
+   chip that did not fit was simply gone, which made a phone in this mode worse than the shipped
+   three-column grid it replaced as the default. The 2026-09-23 correction (below the price hover rule,
+   after this section) lifts that clip for exactly `.inv-grid-1col`, and for `.inv-flow` beside it: the
+   chip wraps under the name instead of vanishing, and the row grows to hold it. Read the fix there —
+   this rule only ever set the column WIDTH.
+   Compact's alone — Standard and Essentials are cards, and cards read fine three across.
+   `minmax(0, 1fr)`, never a bare `1fr`: `1fr` is `minmax(auto, 1fr)`, and that `auto` makes the
+   column at least as wide as the widest row's MIN-CONTENT — which for a Compact row carrying a long
+   nowrap facts string is wider than a phone. Measured at 375px on the Cart row (name + the vehicle
+   stat line + Remove): the column stood at 390px inside a 355px section and the row ran off the right
+   edge. A zero minimum is what the three-column grid's own 300px floor was already giving it. */
+.inv-grid.inv-grid-compact.inv-grid-1col {
+  grid-template-columns: minmax(0, 1fr);
+}
 .inv-card.inv-compact {
   gap: 8px;
   padding: 5px 10px;
@@ -6315,6 +6340,148 @@ button.strike-name:hover {
   .inv-card.inv-compact:hover .inv-cprice {
     opacity: 1;
   }
+}
+
+/* 2026-09-23 correction, PART 2 — the always-two-lines cost of the fix above. Stacking the row's first
+   line over the chip box UNCONDITIONALLY (`flex-direction: column`) meant a row was two lines the
+   moment it carried any chip at all, even where a short name and every chip would have fit on one 32px
+   line. What the row actually needs is `flex-wrap`: name and the chip box go back to being ordinary
+   flex siblings, and the chip box (still `flex: 0 0 auto` below — sized to its own content, not a
+   0-basis filler) either fits on line 1 beside the name or, because a flex line always keeps its first
+   item and pushes whatever does not fit to the next one, wraps AS A WHOLE onto a line of its own under
+   the name, where it has the row's full width to lay its pills across.
+   Bulk and price can no longer be ordinary flex items sharing that line — pinning them to a FIRST line
+   while a chip box that does not fit takes a line of its own under them needs the two out of the row's
+   flow entirely. `position: absolute` does that; `top: 5px` / `line-height: 22px` puts them in the same
+   22px band `.inv-card.inv-compact`'s own `min-height: 32px` (minus its 5px top/bottom padding) already
+   gives every other line-1 item, so they read flush with the name whether the row ends up one line or
+   two.
+   Taking them out of flow means the row's remaining items no longer know a strip on the right is spoken
+   for, and `padding-right` on the ROW is the only reservation that holds: padding shortens the LINE
+   BOX, so every item line 1 places — the name, the ×N badge, and the chip box's own fit-or-wrap
+   decision — is measured against a line that already stops short of the pinned columns, and a box that
+   would have crossed them wraps instead.
+   A `margin-right` on whichever of name/qty is line 1's last item does NOT hold, and was this fix's own
+   first cut: a sibling's margin is a gap BETWEEN the name and the chip box, not floor space at the END
+   of the line, so the chip box started 114px further along and ran into the pinned strip all the same.
+   Measured at 375 on `Wand of Contagious Frailty` — a 26-character name carrying nothing but its own
+   `1/1` charge chip — the chip box sat at 302.9–331.4 inside a price box at 292.9–354.9: `1/1` printed
+   across `160 gp`. At 1280 the same collision opened whenever the name grew (chips past the Bulk column
+   at 88 characters, past price at 95) and closed only when the box finally wrapped at 100. In flow it
+   was structural at every width, a content-sized card's right edge being the chip box's own right edge.
+   122px is the three-column mode's fixed cells, put back as floor space: 62px (price) + 8px (this row's
+   own `gap`, between bulk and price) + 34px (bulk) + 10px (this row's own right padding), and one more
+   8px of air between line 1's last item and the Bulk column — the gap those two had when they were
+   ordinary flex items on the row.
+   What padding costs, and what `max-width: calc(100% + 112px)` on the chip box below pays back: padding
+   is one number for every flex LINE alike, and a chip box that wraps to a line of its own is not
+   sharing line 1 with bulk/price — nothing is pinned over IT. Left at `max-width: 100%` it lost the
+   same strip a second time and its pills wrapped AGAIN inside their own box (measured at 375: a 3-chip
+   box held to 230.3px against the 243.7px it asks for). `100% + 112px` is that strip handed back less
+   the row's own 10px right padding, so a wrapped box ends on the same right edge every other line does
+   and never past it.
+   `:has(> .inv-cbulk)` is the same scoping the stacked version needed, on a different peg: only
+   ItemCard's own compact row renders `.inv-cbulk` at all, so it is "the rows this fix is about" without
+   a synthetic wrapper class to carry the marker — UnknownItemCard and the vehicle/siege section
+   (InventoryTab) hand-roll their own Compact rows with neither `.inv-cbulk` nor `.inv-cprice`, and stay
+   exactly as flat as they always were. */
+.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact:has(> .inv-cbulk) {
+  flex-wrap: wrap;
+  position: relative;
+  padding-right: 122px;
+}
+.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact .inv-cdots {
+  flex: 0 0 auto;
+  max-width: calc(100% + 112px);
+  max-height: none;
+  overflow: visible;
+  row-gap: 4px;
+}
+.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact .inv-cbulk,
+.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact .inv-cprice {
+  position: absolute;
+  top: 5px;
+  line-height: 22px;
+  margin: 0;
+}
+.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact .inv-cprice {
+  right: 10px;
+}
+.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact .inv-cbulk {
+  right: 80px; /* price's own 10px + its 62px width + the row's 8px gap */
+}
+
+/* --- Inventory layout → "flow" (Settings → Customization) ----------------------------------------
+   The other half of the 2026-09-23 ruling. Not a grid of equal cells: each card is exactly as wide as
+   its own contents and they wrap across the width like words in a paragraph, so a Rope is a short card
+   and a Greater Striking Longsword is a long one. Applies to all three looks — in Compact the row is
+   its own name and tags, in Standard/Essentials the card is its widest line.
+   Only the BOX changes. The cards keep `.inv-card`, so the invested/consumable colouring, the hover
+   border, the attach-target outlines, the phone hold-to-move rules and every drag handler (all written
+   in JS against the card, never against the grid's geometry) are untouched.
+   The filler rules the grid needs are turned back OFF for the children below, and that is the point of
+   the mode rather than a patch on it: those rules exist because a fixed-width cell has to decide who
+   gives way, and a content-sized card has nothing to decide. Under content sizing a `flex-basis: 0`
+   item asks for no width — which is why leaving them on would print a Compact row with no facts and no
+   chips at all. */
+.inv-grid.inv-flow {
+  display: flex;
+  flex-wrap: wrap;
+}
+/* `max-width: 100%` so one enormous name wraps its line instead of widening the page (the name
+   ellipsises inside the card, as it does in the grid); `min-width` so a two-word item is still a card
+   and not a stub. */
+.inv-grid.inv-flow > .inv-card {
+  flex: 0 1 auto;
+  min-width: 160px;
+  max-width: 100%;
+}
+/* The two remaining fillers, given their own width back: the Standard/Essentials middle column
+   (`.inv-mid` is `flex: 1` — basis 0), and Essentials' facts line. Without this the row would print a
+   name and nothing else: under content sizing a `flex-basis: 0` item asks for no width and gets none.
+   Compact's chip box is the THIRD filler and needs more than its basis back — see below. */
+.inv-grid.inv-flow .inv-mid,
+.inv-grid.inv-flow .inv-card.inv-compact .inv-facts {
+  flex-basis: auto;
+}
+/* Compact's chip box in flow: the SAME PART-2 fix as `.inv-grid-1col` above — `flex-wrap` on the row
+   instead of an unconditional `flex-direction: column`, bulk/price taken `position: absolute` out of
+   the row's flow, and the same 122px of floor space held for them as `padding-right` on the row, with
+   the chip box allowed 112px of it back on a line of its own. Flow NEEDS the padding more than the grid
+   does, rather than less: a content-sized card (`flex: 0 1 auto` above) is exactly as wide as its own
+   line 1, so line 1's right edge IS the card's right edge, and anything pinned against that edge lands
+   on whatever ended the line. With the reservation on a sibling's margin instead, price sat on the chip
+   box of every chipped row at every width — measured at 1280, chips 816–844.6 against a price box at
+   782.6–844.6 (the same right edge, the chips wholly inside it), and at 375, 302.9–331.4 against
+   269.4–331.4. Padding is part of the card's own content size, so the card simply grows the strip it
+   needs and the two never meet.
+   `:has(> .inv-cbulk)` for the same reason as the `.inv-grid-1col` rule above — the hand-rolled Unknown
+   and vehicle/siege Compact rows render neither `.inv-cbulk` nor `.inv-cprice`, so the selector never
+   reaches them. */
+.inv-grid.inv-flow .inv-card.inv-compact:has(> .inv-cbulk) {
+  flex-wrap: wrap;
+  position: relative;
+  padding-right: 122px;
+}
+.inv-grid.inv-flow .inv-card.inv-compact .inv-cdots {
+  flex: 0 0 auto;
+  max-width: calc(100% + 112px);
+  max-height: none;
+  overflow: visible;
+  row-gap: 4px;
+}
+.inv-grid.inv-flow .inv-card.inv-compact .inv-cbulk,
+.inv-grid.inv-flow .inv-card.inv-compact .inv-cprice {
+  position: absolute;
+  top: 5px;
+  line-height: 22px;
+  margin: 0;
+}
+.inv-grid.inv-flow .inv-card.inv-compact .inv-cprice {
+  right: 10px;
+}
+.inv-grid.inv-flow .inv-card.inv-compact .inv-cbulk {
+  right: 80px; /* price's own 10px + its 62px width + the row's 8px gap */
 }
 /* "Why it can't attach" banner, shown when a drop is rejected. */
 .inv-attach-error {

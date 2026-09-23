@@ -32,6 +32,18 @@ const ITEM_CARD_DETAILS: { id: NonNullable<Customization['itemCardDetail']>; lab
   { id: 'standard', label: 'Standard' },
 ];
 
+/** How many COMPACT rows sit side by side. Absent = 'one'. Offered only while Compact is chosen. */
+const COMPACT_COLUMNS: { id: NonNullable<Customization['compactColumns']>; label: string }[] = [
+  { id: 'one', label: 'One wide row' },
+  { id: 'three', label: 'Three columns' },
+];
+
+/** How the inventory lays its cards out, in all three looks. Absent = 'grid'. */
+const INVENTORY_LAYOUTS: { id: NonNullable<Customization['inventoryLayout']>; label: string }[] = [
+  { id: 'grid', label: 'Grid' },
+  { id: 'flow', label: 'Flow' },
+];
+
 /** Where XP rides in the rail's Hit points card. Absent = 'chip'. */
 const XP_DISPLAYS: { id: NonNullable<Customization['xpDisplay']>; label: string }[] = [
   { id: 'chip', label: 'Chip in the title' },
@@ -163,6 +175,8 @@ export function CustomizationEditor({
   const curDailyPrep = value.dailyPrepPrompt ?? base.dailyPrepPrompt ?? 'ask';
   const curXpDisplay = value.xpDisplay ?? base.xpDisplay ?? 'chip';
   const curItemCard = value.itemCardDetail ?? base.itemCardDetail ?? 'essentials';
+  const curCompactCols = value.compactColumns ?? base.compactColumns ?? 'one';
+  const curLayout = value.inventoryLayout ?? base.inventoryLayout ?? 'grid';
   const consumableOn = (value.consumableHighlight ?? base.consumableHighlight) as boolean | undefined;
   const consumableColor = value.consumableColor ?? base.consumableColor ?? themeConsumableColor();
   const curDefaultTab = value.defaultTab ?? base.defaultTab ?? '';
@@ -432,6 +446,53 @@ export function CustomizationEditor({
         under them only what changes in play — equipped, invested, charges, runes. <strong>Compact</strong> is one line
         an item (the price appears when you point at the row). <strong>Standard</strong> is the older, taller card with
         the item level and every button. Whatever a smaller card leaves out is still in the item's own page.
+      </p>
+
+      {/* Compact's alone — the taller cards read fine three across — so the control is only here while
+          Compact is the chosen look, rather than sitting greyed out under every other one. */}
+      {curItemCard === 'compact' && (
+        <>
+          <div className="menu-label">Compact rows</div>
+          <div className="menu-row">
+            {COMPACT_COLUMNS.map((m) => (
+              <button
+                key={m.id}
+                className={'chip' + (curCompactCols === m.id ? ' active' : '')}
+                onClick={() => onChange('compactColumns', m.id === (base.compactColumns ?? 'one') ? undefined : m.id)}
+              >
+                {m.label}
+              </button>
+            ))}
+          </div>
+          <p className="settings-desc" style={{ marginTop: 0 }}>
+            For the <strong>Compact</strong> look. <strong>One wide row</strong> gives each item the whole width on a
+            computer, so its tags — worn, wielded, invested, charges — sit beside the name instead of waiting in the
+            item's page; on a <strong>phone</strong> there is only ever one item across either way, so what it buys
+            there instead is that a tag which doesn't fit beside the name wraps onto a second line under it rather
+            than being left out. <strong>Three columns</strong> fits three items across on a computer and falls back
+            to that same single phone row, but there a tag still only shows when the row has room for the whole of
+            it, and the rest wait in the item's page. <strong>Flow</strong> below never leaves a tag out either, in
+            every look and at every width, and with Flow chosen this setting has nothing left to decide.
+          </p>
+        </>
+      )}
+
+      <div className="menu-label">Inventory layout</div>
+      <div className="menu-row">
+        {INVENTORY_LAYOUTS.map((m) => (
+          <button
+            key={m.id}
+            className={'chip' + (curLayout === m.id ? ' active' : '')}
+            onClick={() => onChange('inventoryLayout', m.id === (base.inventoryLayout ?? 'grid') ? undefined : m.id)}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+      <p className="settings-desc" style={{ marginTop: 0 }}>
+        <strong>Grid</strong> lays the items out in equal cells. <strong>Flow</strong> makes each item exactly as wide
+        as its own name and tags and wraps them across the page like words in a paragraph — a rope takes a short card,
+        a Greater Striking Longsword a long one. Works with all three looks above.
       </p>
 
       <div className="menu-label">Consumables</div>

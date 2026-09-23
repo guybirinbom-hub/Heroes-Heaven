@@ -1035,6 +1035,23 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
     if (picked < max) out.push({ page: 0, label: max - picked === 1 ? g.name : `${g.name} (${max - picked})`, required: true });
   }
 
+  /*
+   * …and the runesmith's RUNIC REPERTOIRE, the same hole one surface over. The picker renders in
+   * OriginPickers with its own `0/4` counter and nothing counted it, so a runesmith could be created
+   * and saved knowing zero runes — the class's entire mechanic empty — while the completeness check
+   * said everything was answered. Gated exactly as the picker is, including the archetype runesmith's
+   * smaller table, so the two cannot disagree about how many are owed.
+   */
+  {
+    const runesmith = build.classId === 'runesmith' || build.classId2 === 'runesmith';
+    const dedicated = Object.values(build.featPicks ?? {}).includes('runesmith-dedication');
+    if (runesmith || dedicated) {
+      const max = runesmith ? runeRepertoireMax(build.level, content) : runeRepertoireMaxViaDedication(build.level, content);
+      const known = (build.runesmithRunes ?? []).filter(Boolean).length;
+      if (known < max) out.push({ page: 0, label: max - known === 1 ? 'Runic repertoire' : `Runic repertoire (${max - known})`, required: true });
+    }
+  }
+
   const picks = Object.values(build.featPicks ?? {}).filter(Boolean) as string[];
   for (let lvl = 1; lvl <= build.level; lvl++) {
     const g = levelGrants(
@@ -1054,6 +1071,39 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
       if (done < want) at(want - done === 1 ? 'attribute boost' : `attribute boosts (${want - done})`);
     }
     if (subclassAnchorLevel(build, content) === lvl && !build.subclassId) at(cls?.subclass?.name ?? 'subclass');
+
+    /*
+     * …and the questions a GRANTED CLASS FEATURE asks. This loop only ever counted `cls.extraChoices`
+     * groups and the subclass anchor, so a question carried on the FEATURE was invisible to every
+     * reader of this list — the chip markers, the page header tag and the Create/Save confirmation.
+     *
+     * The necromancer is the class where that shows: Grim Fascination is a level-1 pick of the same
+     * weight as a subclass — it grants the grave spell and the thrall enhancement — and
+     * `classes.necromancer.extraChoices` is `[]`, so a necromancer could be created, saved and played
+     * one focus point and one grave spell short at every level with nothing anywhere saying a choice
+     * was outstanding. Measured through the engine: L20 unanswered gives focus {0:[create-thrall,
+     * thrall-charge], 1:[necrotic-bomb]} and pool 1/1; answered "bone" gives 1:[necrotic-bomb,
+     * bone-spear] and pool 2/2.
+     *
+     * Generic rather than a necromancer branch, because it is the same hole for the six others that
+     * ask this way: the witch's starting hex, the champion's deity skill and the kineticist's four
+     * gate junctions. Every gate the PICKER applies is applied here too — `effectChoiceOffered` (the
+     * shared predicate), the `answerFromChoiceFlag` short-circuit and `effectChoiceDefault` — so this
+     * cannot count a question the player is never shown, which is the tag nothing on the page can
+     * clear.
+     */
+    const anchorHere = subclassAnchorAt(build, content, lvl);
+    for (const f of g.features) {
+      if (f.id === anchorHere) continue; // rendered inside the subclass card, not the choice zone
+      const rec = content.classFeatures[f.id];
+      for (const ch of rec?.effectChoices ?? []) {
+        if (effectChoiceDefault(ch) !== undefined) continue; // an unanswered pick that still grants
+        if (!effectChoiceOffered(ch, build, content, f.id)) continue;
+        if (ch.answerFromChoiceFlag && choiceFlagAnswer(ch.answerFromChoiceFlag, build, content)) continue;
+        if (build.effectChoices?.[`${f.id}:${ch.id}`]) continue;
+        at(`${rec?.name ?? f.name} — choose`);
+      }
+    }
   }
 
   // A feat you picked can ask a follow-up ("Assurance — in which skill?"). The feat arrived; the
@@ -1618,6 +1668,23 @@ export function featChoiceLabel(raw: string): string {
 export function signaturesAt(store: Record<number, string | string[]> | undefined, rank: number): string[] {
   const v = store?.[rank];
   return v == null ? [] : Array.isArray(v) ? v : [v];
+}
+
+/**
+ * Does this class grant the one-per-rank signature rule by this level?
+ *
+ * `signature-spells-<class>` is this database's shape for one class's own printing of a shared
+ * feature (arcane-spellcasting-magus, spell-repertoire-bard), and the summoner's Impossible Magic
+ * reprint is one: class-feature-1346, Class Summoner. Matching the prefix means a class that gets
+ * its own copy later reaches this route with no second edit.
+ *
+ * ONE predicate, because the engine that GRANTS a signature and the three controls that SHOW the
+ * star must never disagree. They did: build.ts was widened to the prefix while Builder.tsx (both
+ * casters) and SpellsTab.tsx stayed on exact equality, so a summoner's repertoire was marked
+ * signature-capable by nothing and could not be filled by hand either.
+ */
+export function signatureSpellsAt(cls: { features?: { level: number; featureId: string }[] } | undefined, level: number): boolean {
+  return !!cls?.features?.some((f) => (f.featureId === 'signature-spells' || f.featureId.startsWith('signature-spells-')) && f.level <= level);
 }
 
 /** Toggle one spell's signature status at a rank, returning the new store. */
@@ -4642,25 +4709,32 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       }
       // Signature spells (one per rank) — only once the class grants the feature
       // (e.g. bard at level 3); each must be a spell actually in the repertoire.
-      const sigAvailable = (cls.features ?? []).some((f) => f.featureId === 'signature-spells' && f.level <= level);
+      // `signatureSpellsAt` is the shared predicate the Builder's two stars and the sheet's star read too.
+      const sigAvailable = signatureSpellsAt(cls, level);
       if (sigAvailable) {
         const sig = Object.keys(build.signatures)
           .flatMap((rankStr) => signaturesAt(build.signatures, Number(rankStr))
             .filter((id) => entry.repertoire?.[Number(rankStr)]?.includes(id)));
         if (sig.length) entry.signature = sig;
       }
-      // Summoner's Unlimited Signature Spells (level 3): every spell in the repertoire is a signature
-      // spell, so the summoner can heighten any known spell to any slot rank it can cast.
+      // Ultimate Polymath (bard 20): every spell in the repertoire is a signature spell.
       //
-      // The bard's Ultimate Polymath (20) says exactly the same thing — "All of the spells in your
-      // repertoire are signature spells for you" — so it takes the same route rather than a second
-      // implementation. Without it a 20th-level bard was still capped at the one signature per rank
-      // the base feature grants.
+      // "All of the spells in your repertoire are signature spells for you" (feat-1090), so it takes
+      // the base feature's route rather than a second implementation. Without it a 20th-level bard was
+      // still capped at the one signature per rank the base feature grants.
+      //
+      // ⚠ THE SUMMONER IS NOT HERE ANY MORE, on purpose. Secrets of Magic gave it Unlimited Signature
+      // Spells (class-feature-455) and this branch answered for it off that feature id. Impossible
+      // Magic reprints the feature as the ordinary one-per-rank rule under the plain name — class-
+      // feature-1346, "Signature Spells", Class Summoner — and the newest printing wins in the record
+      // AND in the engine, so the summoner now goes through `sigAvailable` above like the bard and the
+      // sorcerer. A saved summoner keeps whatever is in `build.signatures`; nothing rewrites it. What
+      // it does NOT keep is the derived "every spell is signature", because that is the rule Paizo
+      // replaced — the sheet shows one star per rank and the picker is live from level 3.
       const unlimitedSig =
-        (cls.features ?? []).some((f) => f.featureId === 'unlimited-signature-spells' && f.level <= level) ||
         // Read from the PICKS: the built `feats` array does not exist yet at this point in the build,
         // the same reason `cantripBonus` above reads them directly.
-        (Object.values(build.featPicks ?? {}).includes('ultimate-polymath') && !engineLaneOff('ultimate-polymath'));
+        Object.values(build.featPicks ?? {}).includes('ultimate-polymath') && !engineLaneOff('ultimate-polymath');
       if (unlimitedSig) entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
       /* …or any prepared class whose own record declares a BOOK. The class-id test was the only
        * spellbook lane in the engine, so the magus — *"The spellbook contains your choice of eight
@@ -4914,7 +4988,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         entry2.repertoire[rank] = [...new Set((spells2[rank] ?? []).slice(0, count))];
       }
       // Signature spells (spontaneous, once granted) — each must be in the repertoire.
-      const sig2Available = (cls2.features ?? []).some((f) => f.featureId === 'signature-spells' && f.level <= level);
+      const sig2Available = signatureSpellsAt(cls2, level);
       if (sig2Available) {
         const sig2 = Object.keys(build.signatures2 ?? {})
           .flatMap((rankStr) => signaturesAt(build.signatures2, Number(rankStr))
@@ -10747,8 +10821,8 @@ export function checkPrerequisites(
     const m = line.match(/^(trained|expert|master|legendary)\s+(?:in\s+)?(.+)$/i);
     if (m) {
       const need = m[1].toLowerCase() as ProficiencyRank;
-      // Compound "X or Y" is an OR: satisfied if any alternative meets the rank.
-      const targets = m[2].split(/\s+or\s+/i).map((t) => t.trim().toLowerCase());
+      // Compound "X or Y" is an OR, and so is the comma list AoN prints for three or more: "Expert in Arcana, Nature, Occultism, or Religion" split on " or " alone read as ONE unrecognized skill, "arcana, nature, occultism,", so the clause was not enforced at all. A clause with no "or" keeps its commas — there the comma is an AND, and splitting it would turn a requirement into an alternative.
+      const targets = (/\bor\b/i.test(m[2]) ? m[2].split(/\s*,\s*(?:or\s+)?|\s+or\s+/i) : [m[2]]).map((t) => t.trim().toLowerCase()).filter(Boolean);
       const rankOf = (target: string): ProficiencyRank | null => {
         if (target === 'perception') return character.proficiencies.perception;
         if ((SKILLS as readonly string[]).includes(target)) return character.proficiencies.skills[target as SkillId] ?? 'untrained';

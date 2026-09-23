@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import type { Character, CompanionConfig, ContentDatabase, InventoryItem, Item, ItemDesignation, SiegeWeaponStat, VehicleStat } from '../rules/types';
+import type { Character, CompanionConfig, ContentDatabase, Customization, InventoryItem, Item, ItemDesignation, SiegeWeaponStat, VehicleStat } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
 import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable,
   handwrapsRuneSharing, isHandwraps, unitBulk } from '../rules/derive';
@@ -52,6 +52,30 @@ function formatBulk(b: number): string {
   if (b === 0) return '';
   if (b === 0.1) return 'L';
   return String(b);
+}
+
+/** The classes on an inventory section's card container, for one combination of the three inventory
+ *  settings. Written once because the item list and the vehicle/siege section each render their own
+ *  `.inv-grid` — the two used to drift (Compact reached one of them and not the other).
+ *    Compact rows  — 'one' (the default) is a single full-width column, which at a desktop width is
+ *                    wide enough that every state chip fits beside any name; 'three' is the
+ *                    auto-filling 300px grid. The column WIDTH is a desktop-only choice — at 375 the
+ *                    auto-fill leaves one 355px track too, so both values draw the same row — but 'one'
+ *                    (and flow, below) also lifts the row's chip clip there: a chip that doesn't fit
+ *                    beside the name wraps onto a second line instead of waiting in the popup, which
+ *                    'three' still does not do (its clip is unchanged; see sheet.css, .inv-cdots).
+ *                    Compact's alone: the taller cards already read fine three across.
+ *    Inventory layout — 'flow' drops the equal cells for content-sized cards that wrap like words, in
+ *                    all three looks. Content-sized means nothing is fighting for the row's width, so
+ *                    the column choice has nothing left to decide. */
+function gridClass(c: Customization): string {
+  const compact = (c.itemCardDetail ?? 'essentials') === 'compact';
+  return (
+    'inv-grid' +
+    (compact ? ' inv-grid-compact' : '') +
+    (compact && (c.compactColumns ?? 'one') === 'one' ? ' inv-grid-1col' : '') +
+    ((c.inventoryLayout ?? 'grid') === 'flow' ? ' inv-flow' : '')
+  );
 }
 
 
@@ -291,6 +315,39 @@ function ItemCard({
     ]
       .filter(Boolean)
       .join(' · ');
+    // One box for all of them (sheet.css): the chips fill it from the left and whatever does not fit
+    // WHOLE wraps out of sight (three columns) or onto a row of its own (one wide row, and flow) — this
+    // order is what survives either. State and charges lead because they are what a player checks at
+    // the table; each chip carries its own sentence as a title, and all of it is in the popup.
+    const chips = !!chipText && (
+      <span className="inv-cdots">
+        {(!!badge || !!counts) && (
+          <span className={'inv-cdot' + (badge ? ' on' : '')} title={[badge?.label, counts].filter(Boolean).join(' ')}>
+            {badge && <span className="inv-clbl">{badge.label}</span>}
+            {/* Its own element so the pill can say "Worn 1/1" with one space in it (the chip's 4px gap)
+                without the two ever being one string a layout could cut between. */}
+            {counts && <span className="inv-cnum">{counts}</span>}
+          </span>
+        )}
+        {/* Battleforged is additive to Wielded/Worn/Invested (the state chip above), not a replacement
+            for one, so it needs its own chip rather than folding into it. */}
+        {inv.battleforged && (
+          <span className="inv-cdot bf" title="Battleforged: +1 potency until your next daily preparations">
+            <span className="inv-clbl">Battleforged</span>
+          </span>
+        )}
+        {inv.attachedTo && (
+          <span className="inv-cdot" title="Affixed to another item">
+            <span className="inv-clbl">Affixed</span>
+          </span>
+        )}
+      </span>
+    );
+    // Same markup in every mode (InventoryTab's grid class is what varies — see gridClass()): name,
+    // qty, the chip box, then bulk and price. 'three columns' has no room to grow a row into, so the
+    // shipped clip (sheet.css) still applies to it unchanged; 'one wide row' and flow instead pull bulk
+    // and price out of flow (`position: absolute`, sheet.css) and let the chip box wrap under the name
+    // as a whole when it doesn't fit beside it, rather than hiding.
     return (
       <div {...rootProps} title={chipText || undefined}>
         <span className="inv-name">
@@ -298,37 +355,7 @@ function ItemCard({
           {nameSuffix}
         </span>
         {inv.quantity > 1 && <span className="inv-qty">×{inv.quantity}</span>}
-        {/* One box for all of them (sheet.css): the chips fill it from the left and whatever does not
-            fit WHOLE wraps out of sight, so this order is what survives a narrow row. State and charges
-            lead because they are what a player checks at the table; each chip carries its own sentence
-            as a title, and all of it is in the popup. */}
-        {!!chipText && (
-          <span className="inv-cdots">
-            {(!!badge || !!counts) && (
-              <span
-                className={'inv-cdot' + (badge ? ' on' : '')}
-                title={[badge?.label, counts].filter(Boolean).join(' ')}
-              >
-                {badge && <span className="inv-clbl">{badge.label}</span>}
-                {/* Its own element so the pill can say "Worn 1/1" with one space in it (the chip's
-                    4px gap) without the two ever being one string a layout could cut between. */}
-                {counts && <span className="inv-cnum">{counts}</span>}
-              </span>
-            )}
-            {/* Battleforged is additive to Wielded/Worn/Invested (the state chip above), not a
-                replacement for one, so it needs its own chip rather than folding into it. */}
-            {inv.battleforged && (
-              <span className="inv-cdot bf" title="Battleforged: +1 potency until your next daily preparations">
-                <span className="inv-clbl">Battleforged</span>
-              </span>
-            )}
-            {inv.attachedTo && (
-              <span className="inv-cdot" title="Affixed to another item">
-                <span className="inv-clbl">Affixed</span>
-              </span>
-            )}
-          </span>
-        )}
+        {chips}
         <span className="inv-bval inv-cbulk">{bulk}</span>
         {/* Hidden until the pointer is on the row (CSS); a touch screen has no hover, so there it just
             stays dimmed rather than being unreachable. */}
@@ -551,7 +578,8 @@ function VehicleSiegeSection({
 }) {
   // These rows are hand-rolled .inv-cards, so they follow the card-detail setting themselves or they
   // keep the Standard shape beside rows that dropped it.
-  const mode = useCustomization().itemCardDetail ?? 'essentials';
+  const custom = useCustomization();
+  const mode = custom.itemCardDetail ?? 'essentials';
   const rows = (character.companions ?? [])
     .filter((c): c is CompanionConfig & { kind: 'vehicle' | 'siege' } => c.kind === 'vehicle' || c.kind === 'siege')
     .map((cfg) => {
@@ -577,7 +605,7 @@ function VehicleSiegeSection({
           no Bulk
         </span>
       </div>
-      <div className={'inv-grid' + (mode === 'compact' ? ' inv-grid-compact' : '')}>
+      <div className={gridClass(custom)}>
         {rows.map(({ cfg, v }) => {
           const kindLabel = cfg.kind === 'vehicle' ? 'Vehicle' : 'Siege weapon';
           const name = cfg.name || v?.name || kindLabel;
@@ -697,8 +725,9 @@ export function InventoryTab({
   const dragRef = useRef<{ instanceId: string; itemId: string } | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   const isMobile = useIsMobile();
-  // One-line rows need a wider column than the 230px cards do, or the name is all ellipsis.
-  const compactCards = (useCustomization().itemCardDetail ?? 'essentials') === 'compact';
+  // One-line rows need a wider column than the 230px cards do, or the name is all ellipsis — and how
+  // many of those columns there are, and whether there is a column grid at all, are the player's.
+  const gridCls = gridClass(useCustomization());
   // Mobile hold-to-move: press-and-hold an item card to pick it up. `holdRef` tracks the pointer; once
   // the hold arms, `ghost` is the floating item icon that follows the finger (the source card hides and
   // the open section collapses so only tabs + headers remain as drop targets), and `dropTarget` is the
@@ -1343,7 +1372,7 @@ export function InventoryTab({
           {right}
         </div>
         {expanded && (
-          <div className={'inv-grid' + (compactCards ? ' inv-grid-compact' : '')}>
+          <div className={gridCls}>
             {lead}
             {items.map((inv) => {
               const item = resolve(inv);

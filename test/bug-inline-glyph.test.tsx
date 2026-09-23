@@ -120,12 +120,36 @@ describe('bug #9 — a split-out glyph rejoins its sentence', () => {
     } finally { stop(); }
   });
 
-  it('a glyph that carries NO cost still stops breaking the row it sits in (apparition/shepherd-of-errant-winds)', () => {
-    // 8 of the reunited sentences are split around an `actions` node with no cost string — it draws
-    // nothing at all, so the row read as three lines with an invisible gap between them.
+  /*
+   * A GLYPH THAT CARRIES NO COST draws nothing at all, so a row split around one read as three lines
+   * with an invisible gap between them.
+   *
+   * ⚠ THE FIXTURE IS FOUND, NOT NAMED. apparition/shepherd-of-errant-winds used to be the costless
+   * case, and the 2026-09-23 Archives refresh gave both of its Strike rows a Single Action glyph —
+   * correct for a Strike, and it made this guard's premise false overnight while the property it
+   * guards was untouched. 1,571 costless mid-sentence glyphs remain in the shipped trees, so the
+   * guard asks the corpus for one instead of depending on any single page staying still.
+   */
+  it('a glyph that carries NO cost still stops breaking the row it sits in', () => {
+    const splitsAtCostlessGlyph = (node: AstNode) => {
+      const c = node.c ?? [];
+      const acts = c.filter((n) => n.t === 'actions');
+      if (!acts.length || acts.some((n) => n.string)) return false;
+      return c.some((n, i) => n.t === 'actions' && i > 0 && i < c.length - 1 && c[i - 1].t === 'p' && c[i + 1].t === 'p');
+    };
+    const found = Object.entries(readBucket('itemBonus')).find(([, n]) => splitsAtCostlessGlyph(n));
+    expect(found, 'the corpus still splits a sentence at a costless glyph').not.toBeUndefined();
+
+    const { host, stop } = renderDom(<AstRenderer node={found![1]} bodyOnly onOpenRef={() => undefined} />);
+    try {
+      // Nothing is drawn for a costless glyph, so it must not open a block line of its own.
+      expect(host.querySelector('.ast-body')!.querySelectorAll('.ast-actline')).toHaveLength(0);
+    } finally { stop(); }
+  });
+
+  it('a stat row split at TWO glyphs rejoins as one row (apparition/shepherd-of-errant-winds)', () => {
     const top = SHEPHERD.c ?? [];
     expect(top.slice(6, 11).map((n) => n.t)).toEqual(['p', 'actions', 'p', 'actions', 'p']);
-    expect(top[7].string, 'the glyph really is costless').toBeFalsy();
 
     const { host, stop } = renderDom(<AstRenderer node={SHEPHERD} bodyOnly onOpenRef={() => undefined} />);
     try {

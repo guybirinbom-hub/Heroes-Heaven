@@ -65,11 +65,22 @@ const unexplained = [];
 const held = [];
 for (const [coll, dirs, appLevel] of SETS) {
   const byName = new Map();
+  /*
+   * …and by DOCUMENT ID, the same index scripts/price-check.mjs keeps and for the same reason: an id
+   * cannot collide, and a NAME can stop matching. The `own` lookup below used to search the by-name
+   * list, which quietly fails the moment AoN RENAMES a reprint — then the record falls through to the
+   * by-name branch and is judged against a different feat that still answers to the old name.
+   * Measured 2026-09-23: feats/knowledge-is-power is built from feat-5039, which AoN had just renamed
+   * "Knowledge is Power (Wizard)"; the by-name list held only feat-2861 (Secrets of Magic, Feat 6),
+   * and the record was reported as `app 8 -> mirror 6` against a document it is not.
+   */
+  const byDocId = new Map();
   for (const d of dirs) {
     let files;
     try { files = readdirSync(join(MIRROR, d)); } catch { continue; }
     for (const f of files) {
       const j = JSON.parse(readFileSync(join(MIRROR, d, f), 'utf8'));
+      if (j.id) byDocId.set(String(j.id), j);
       if (!j.name) continue;
       const k = norm(j.name);
       const list = byName.get(k);
@@ -81,7 +92,14 @@ for (const [coll, dirs, appLevel] of SETS) {
     // A legacy / superseded record is SUPPOSED to differ from its remaster mirror entry.
     if (!rec?.name || ['superseded', 'legacy', 'legacy-era'].includes(rec.edition)) continue;
     const list = byName.get(norm(rec.name)) ?? [];
+    /*
+     * The POPULATION is still "records whose name answers to a mirror document" — widening it to
+     * every record with an aonId was tried and immediately reported 20+ archetype variants
+     * (play-to-the-crowd-dandy, even-the-odds-eagle-knight …) that share a base feat's document and
+     * are supposed to differ from it. Only the CHOICE of document inside that population changes.
+     */
     if (!list.length) continue;
+    const ownDoc = rec.aonId ? byDocId.get(String(rec.aonId)) : undefined;
     compared++;
 
     /*
@@ -94,7 +112,7 @@ for (const [coll, dirs, appLevel] of SETS) {
      * both being compared against a same-named record from another book, while their own documents
      * (feat-8515, spell-2597) say "uncommon", exactly as the app does.
      */
-    const own = rec.aonId ? list.find((m) => String(m.id) === String(rec.aonId)) : undefined;
+    const own = ownDoc;
     if (own) {
       const wantLevelOwn = printedLevel(own) ?? own.level;
       const haveLevelOwn = appLevel(rec);

@@ -6633,6 +6633,28 @@ export interface Customization {
    *  qty · bulk · price, and under it only what changes during play (equipped/invested, charges, runes).
    *  Absent = 'essentials' (the default, see DEFAULT_CUSTOMIZATION). */
   itemCardDetail?: 'standard' | 'compact' | 'essentials';
+  /** How many COMPACT rows sit side by side: 'one' = one full-width row per item, which at a DESKTOP
+   *  width is wide enough that every state chip fits beside any name — at 1280 (a 1028px section) the
+   *  wand row carrying "Invested 2/3" + its charges + "Battleforged" shows all three, and shows all
+   *  three under a 55-character name too; 'three' = the auto-filling 300px grid, where a chip only
+   *  shows when the row has the width for it whole (that same row is a 340px card at 1280 and shows
+   *  NONE of the three).
+   *  A DESKTOP choice only. At 375 the auto-fill leaves ONE 355px track as well, so both values draw
+   *  the same single row, and there what is left beside the name decides: measured on that row, a name
+   *  of 13 characters or fewer keeps both "Invested 2/3" (83.4px) and the charge chip (28.5px), at 20
+   *  characters it keeps neither — the chip that will not fit takes the ones after it with it — and the
+   *  item's own ordinary 26-character name leaves 52.7px, room for the lone charge chip and nothing
+   *  more. So the phone half of the ruling is `inventoryLayout: 'flow'`, not this key: the same row in
+   *  flow at 375 has a 154.5px box and shows two of the three.
+   *  Read only while `itemCardDetail` is 'compact'; absent = 'one' (the
+   *  default, see DEFAULT_CUSTOMIZATION) — which is a CHANGE for characters already on Compact, since
+   *  the three-column grid is what shipped before it. */
+  compactColumns?: 'one' | 'three';
+  /** How the inventory sections lay their cards out, in ALL three looks: 'grid' = equal cells that fill
+   *  the width; 'flow' = each card exactly as wide as its own contents, wrapping across the width like
+   *  words in a paragraph. In 'flow' the cards are content-sized, so `compactColumns` has nothing left to
+   *  decide. Absent = 'grid' (the default, see DEFAULT_CUSTOMIZATION). */
+  inventoryLayout?: 'grid' | 'flow';
   /** Tint the scrollbars with the accent colour instead of neutral grey. */
   scrollbarAccent?: boolean;
 }

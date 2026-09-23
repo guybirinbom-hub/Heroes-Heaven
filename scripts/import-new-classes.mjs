@@ -60,7 +60,21 @@ for (const f of files) {
     // Still pass the pack's features through: the record merge below is a no-op for anything that
     // already exists, but the provenance and description stages need to know which features are this
     // class's. Passing {} here is why the already-merged classes' features had no aonId.
-    if (DESC_ONLY) { added.push({ file: f, cls, features: pack.features ?? {}, descOnly: true }); continue; }
+    /*
+     * `"descriptionsOnly": true` IN THE PACK is the same half, declared by the pack rather than by the
+     * command line — because `npm run data` runs this script with no flags, so the CLI half can only
+     * ever be typed at a prompt and never survives a regen.
+     *
+     * The magus and the summoner need it. Both classes EXIST (they came from the Foundry-era base
+     * file) and both now carry Impossible Magic's own class record — but their prose still came from
+     * that base file, so the class-details popup printed the Secrets of Magic advancement table
+     * ("Arcane Spellcasting (Magus)", "Lightning Reflexes", "Alertness, Resolve", "Juggernaut") beside
+     * Builder level rows reading "Magus Spellcasting", "Reflex Expertise", "Perception Expertise",
+     * "Twofold Will", "Spell-Tempered Body". One screen, two printings. A pack that names only the
+     * class and its aonId routes them through exactly the stage the necromancer and the runesmith
+     * already use, so all four Impossible Magic classes read their own page.
+     */
+    if (DESC_ONLY || pack.descriptionsOnly) { added.push({ file: f, cls, features: pack.features ?? {}, descOnly: true }); continue; }
     problems.push(`${f}: classes/${cls.id} already exists — refusing to overwrite (use --descriptions-only to write just its prose + ast)`);
     continue;
   }
@@ -92,6 +106,16 @@ for (const { cls, features, descOnly } of added) {
   if (!descOnly) core.classes[cls.id] = cls;
   for (const [id, rec] of Object.entries(features)) {
     if (core.classFeatures[id]) continue; // never overwrite an existing feature
+    /*
+     * THE BOOK COMES WITH THE CLASS. An authored feature states its mechanics, not its provenance, so
+     * 21 of the 24 runesmith and necromancer features shipped with no `source` at all — of only 24
+     * sourceless records in the whole 1,073-record bucket. `source.book` is the key Setup -> Sources
+     * filters on and the key the edition/reprint bookkeeping reads, so a feature with none answers to
+     * no book: a player who turns Impossible Magic off still sees them, and every provenance guard
+     * has nothing to compare. The class record carries the book these features were printed in;
+     * a feature that states its own is left alone.
+     */
+    if (!rec.source && cls.source) rec.source = { ...cls.source };
     core.classFeatures[id] = rec;
     newFeatures++;
   }
@@ -121,9 +145,12 @@ for (const { cls, features } of added) {
  * reported — better no provenance than a wrong one, which is the same rule stamp-aonid.mjs applies to
  * its own unverified parents.
  */
+/** The class-feature documents, kept for the description pass below as well as for the stamping. */
+const cfByIdForRefs = new Map();
 {
   const EXPORT_DIR = process.env.AON_EXPORT || 'C:/trying ai 2/hh-data-export/without-images/data';
   const cfDocs = JSON.parse(readFileSync(join(EXPORT_DIR, 'class-feature.json'), 'utf8')).docs ?? {};
+  for (const [docId, doc] of Object.entries(cfDocs)) cfByIdForRefs.set(String(docId), doc);
   const byName = new Map();
   for (const [docId, doc] of Object.entries(cfDocs)) {
     const n = String(doc?.name ?? doc?.data?.name ?? '').trim().toLowerCase();
@@ -163,8 +190,25 @@ const LINK_BUCKET = {
   'traits.aspx': 'trait', 'skills.aspx': 'skill', 'rules.aspx': 'rules', 'archetypes.aspx': 'archetype',
   'deities.aspx': 'deities', 'ancestries.aspx': 'ancestries', 'classes.aspx': 'classes',
   'heritages.aspx': 'heritages', 'domains.aspx': 'domain', 'siegeweapons.aspx': 'siegeWeapons',
+  'languages.aspx': 'languages',
 };
-const strip = (s) => String(s ?? '')
+/*
+ * AoN prints the class-advancement table (and the spells-per-day table) as HTML. Stripping the tags
+ * flattens both into one run-on sentence — "Your Level Class Features 1 Ancestry and background,
+ * attribute boosts … 2 Necromancer feat, skill feat 3 …" — which is what the necromancer's and the
+ * runesmith's class pages have shipped since they were merged. Every other class description in
+ * core-descriptions.json carries a markdown pipe table, so build one: same words, same order, no
+ * words added or dropped, just the row and cell boundaries kept.
+ */
+const tables = (s) => String(s ?? '').replace(/<table>[\s\S]*?<\/table>/g, (block) => {
+  const rows = [...block.matchAll(/<tr>([\s\S]*?)<\/tr>/g)]
+    .map((m) => [...m[1].matchAll(/<t[hd]>([\s\S]*?)<\/t[hd]>/g)].map((c) => c[1].replace(/\s+/g, ' ').trim()));
+  if (rows.length < 2 || !rows[0].length) return block;
+  const width = rows[0].length;
+  const line = (cells) => `| ${[...cells, ...Array(Math.max(0, width - cells.length)).fill('')].slice(0, width).join(' | ')} |`;
+  return `\n\n${line(rows[0])}\n${line(rows[0].map(() => '---'))}\n${rows.slice(1).map(line).join('\n')}\n\n`;
+});
+const strip = (s) => tables(s)
   .replace(/<[^>]+>/g, ' ')
   .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
   .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#39;/g, "'").replace(/&quot;/g, '"')
@@ -199,6 +243,34 @@ function writeDescriptionsAndAst(list) {
     return out;
   };
 
+  /**
+   * Cross-references for one record's prose, from its own page's links — emitted ONLY where the
+   * target resolves in core.json AND the label survives into the plain description, so nothing here
+   * can render as a dead control. Same rule as `descRefsOf` in import-siege-and-gaps.mjs.
+   *
+   * Used for the CLASS page and, below, for the class's FEATURES: nothing in the chain has ever built
+   * descRefs for `classFeatures` — the bucket's refs are carried forward from the Foundry-era
+   * transcription — so the 24 necromancer and runesmith features arrived after it, shipped zero, and
+   * could never gain any. `runes` alone links magical, Arcana, polymorphed and a runesmith rune, and
+   * it is the runesmith's whole mechanic.
+   */
+  const refsFrom = (markdown, text) => {
+    const out = [];
+    const seen = new Set();
+    for (const m of String(markdown ?? '').matchAll(/\[([\s\S]*?)\]\(\/([A-Za-z]+\.aspx)[^)]*\)/g)) {
+      const label = strip(m[1]).replace(/\s+/g, ' ').trim();
+      const bucket = LINK_BUCKET[m[2].toLowerCase()];
+      if (!bucket || !label || seen.has(label.toLowerCase())) continue;
+      if (!text.includes(label)) continue; // the link text must survive into the plain description
+      const s = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      const byName = Object.values(core[bucket] ?? {}).some((r) => String(r?.name).toLowerCase() === label.toLowerCase());
+      if (!core[bucket]?.[s] && !byName) continue;
+      seen.add(label.toLowerCase());
+      out.push({ label, key: bucket });
+    }
+    return out;
+  };
+
   const descPath = join(ROOT, 'public/core-descriptions.json');
   const descs = JSON.parse(readFileSync(descPath, 'utf8'));
   descs.classes ??= {};
@@ -217,19 +289,7 @@ function writeDescriptionsAndAst(list) {
     /* Cross-references, so a link in the prose opens a popup instead of reading as dead text. Emitted
      * ONLY where the target actually resolves in core.json — an unresolvable ref renders as a dead
      * control, which is worse than plain prose. Same rule as `descRefsOf` in import-siege-and-gaps. */
-    const refs = [];
-    const seen = new Set();
-    for (const m of String(doc.data?.markdown ?? '').matchAll(/\[([\s\S]*?)\]\(\/([A-Za-z]+\.aspx)[^)]*\)/g)) {
-      const label = strip(m[1]).replace(/\s+/g, ' ').trim();
-      const bucket = LINK_BUCKET[m[2].toLowerCase()];
-      if (!bucket || !label || seen.has(label.toLowerCase())) continue;
-      if (!text.includes(label)) continue; // the link text must survive into the plain description
-      const s = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-      const byName = Object.values(core[bucket] ?? {}).some((r) => String(r?.name).toLowerCase() === label.toLowerCase());
-      if (!core[bucket]?.[s] && !byName) continue;
-      seen.add(label.toLowerCase());
-      refs.push({ label, key: bucket });
-    }
+    const refs = refsFrom(doc.data?.markdown, text);
     if (text) { descs.classes[cls.id] = refs.length ? { d: text, r: refs } : { d: text }; wroteDesc++; }
     if (doc.ast) {
       ast[cls.id] = resolveAst(doc.ast);
@@ -255,12 +315,14 @@ function writeDescriptionsAndAst(list) {
       const rec = core.classFeatures?.[fid];
       if (!rec) continue;
       const d = rec.description;
-      const r = rec.descRefs;
-      if (!d && !r) continue;
+      /* …and its cross-references, built from the feature's own page the way the class page's are. */
+      const fdoc = rec.aonId ? cfByIdForRefs.get(String(rec.aonId)) : null;
+      const r = rec.descRefs ?? (d && fdoc ? refsFrom(fdoc.data?.markdown ?? fdoc.markdown, d) : undefined);
+      if (!d && !(r && r.length)) continue;
       descs.classFeatures ??= {};
       const entry = (descs.classFeatures[fid] ??= {});
       if (d) { entry.d = d; delete rec.description; }
-      if (r) { entry.r = r; delete rec.descRefs; }
+      if (r && r.length) { entry.r = r; delete rec.descRefs; }
       splitDesc++;
     }
   }

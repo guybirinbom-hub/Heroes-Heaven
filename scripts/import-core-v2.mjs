@@ -18,7 +18,7 @@ import { readFileSync, writeFileSync, readdirSync, copyFileSync, existsSync, mkd
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
-import { aonFacets, packOf, fillFrequencyCounters } from './lib/aon-facets.mjs';
+import { aonFacets, packOf, fillFrequencyCounters, prerequisitesFrom } from './lib/aon-facets.mjs';
 import { buildReprintMap, repointDoc } from './lib/reprint.mjs';
 
 const DATA = 'C:/trying ai 2/hh-data-export/without-images/data';
@@ -214,12 +214,34 @@ try {
 
 const baseItemIndex = new Map();
 const BASE_CATS = ['weapon', 'armor', 'shield'];
+/*
+ * A BASE-ITEM NAME IS NOT UNIQUE, and the loser of the tie hands its mechanics to somebody else's
+ * item. 290 base-item names are claimed by more than one document; on 7 of them the live documents
+ * disagree about the TRAITS, which is the whole reason this index exists:
+ *
+ *   leiomano        weapon-166 (Pathfinder #166) Deadly   vs weapon-292 (Treasure Vault (Rem.)) Fatal
+ *   chakri          weapon-270 (Impossible Lands) Deadly  vs weapon-333 (Treasure Vault (Rem.)) Recovery
+ *   jiu huan dao / tekko-kagi / butterfly sword / throwing knife / bola — same shape
+ *
+ * `items/dragontooth-club` names "Leiomano" and took weapon-166's Deadly d10 in place of the Fatal
+ * d10 its own Treasure Vault printing is built on — a different crit mechanic, from an adventure
+ * path the item has nothing to do with. First-wins is not a rule, so the tie is broken by the rule
+ * this repo already applies everywhere else (gold-set R12, "the newest printing wins"): a document
+ * something supersedes never wins, and among live candidates the later release date does.
+ */
+const baseRank = (rec) => [
+  BASE_CATS.includes(rec.category) ? 1 : 0,
+  rec.superseded_by ? 0 : 1,
+  String(rec.release_date ?? ''),
+];
 function indexBaseItem(rec) {
   if (!rec?.name) return;
   const k = String(rec.name).toLowerCase();
   const prev = baseItemIndex.get(k);
-  const better = BASE_CATS.includes(rec.category) && !(prev && BASE_CATS.includes(prev.category));
-  if (!prev || better) baseItemIndex.set(k, rec);
+  if (!prev) { baseItemIndex.set(k, rec); return; }
+  const [a, b] = [baseRank(rec), baseRank(prev)];
+  const better = a[0] !== b[0] ? a[0] > b[0] : a[1] !== b[1] ? a[1] > b[1] : a[2] > b[2];
+  if (better) baseItemIndex.set(k, rec);
 }
 /*
  * url -> docs, for the id-based base-item hop. `data.base_item` is NAMES only; only
@@ -371,6 +393,57 @@ const bestByBucket = {}; // bucket -> slug -> {rec, rank}
 const allByBucket = {};  // bucket -> slug -> [rec, …]  — every candidate, for pickByArchetype
 const idMap = {};        // numericId -> {bucket, slug}
 const supersededRecs = []; // {bucket, slug, by} for each pruned legacy record (for orphan rename-dedup)
+/*
+ * bucket -> slug -> the best PRUNED (superseded_by) document of that name.
+ *
+ * A pruned printing is dropped from the per-slug pick, but the RECORD it belongs to does not go with
+ * it: the owner's desk #158 ruling keeps the old page as its own record, marked legacy and carrying a
+ * "remastered as" link. That record then falls to the kept-orphan branch below, where its content came
+ * from the Foundry reference instead of from the page it says it is — so the day AoN adds a
+ * `superseded_by`, the record silently reverts to Foundry values.
+ *
+ * Measured on the 2026-09-23 refresh: 82 documents gained the pointer, 73 of them ship a record, and
+ * the reversion cost `spells/summon-kaiju` its printed traits and level, `items/staff-storing-shield-*`
+ * their usage and Bulk, `items/cantrip-deck-full-pack` its variable activation and
+ * `items/noxious-incense-greater` its hands. Keeping the pruned document here is what lets the orphan
+ * branch build those records from their own page.
+ */
+const prunedBest = {}; // bucket -> slug -> {rec, rank}
+
+/*
+ * A SIDEBAR IS A FRAGMENT OF ITS PARENT PAGE, SO ITS `remaster_id` IS ABOUT THE PARENT.
+ *
+ * The export derives `superseded_by` from AoN's own `remaster_id`, and for a spell that is exactly
+ * what it means: spell-3 "Acid Splash" names spell-1461 "Caustic Blast", the reprint of ITSELF. A
+ * sidebar has no page of its own — its `url` is its parent's (`sidebar-1573` "Spellstrike Options"
+ * carries `/Classes.aspx?ID=17` and its own markdown prints "**Parent page** [Magus]") — so the only
+ * thing its `remaster_id` can name is the REMASTERED PARENT. sidebar-1573 points at class-74, the
+ * remastered Magus; sidebar-1115 "Tianjing" and sidebar-1936 "The Shaded Library" both point at
+ * ancestry-68, Nephilim. Fetched live: none of class-74, class-77 or ancestry-68 contains the string
+ * "Spellstrike Options", "Summoning Spells" or "Tianjing". Nothing reprinted that prose anywhere.
+ *
+ * Treating that pointer as a supersession deleted 13 shipped sidebars in the 2026-09-23 refresh —
+ * ~700-1,200 characters of readable prose each, reachable nowhere afterwards — against the owner's
+ * standing rule that legacy-only content STAYS. 254 of the 709 sidebar documents carry the pointer and
+ * 78 more had been dropped this way before anyone measured it.
+ *
+ * Bounded by the category, because a sidebar is the only shipped bucket whose documents are page
+ * fragments, and by the NAME: `sidebar-2312` "Building an Infiltration" and `sidebar-2311`
+ * "Propulsion" name a rules page of the same name, which IS that prose reprinted, and those two stay
+ * pruned. scripts/lib/reprint.mjs already refuses every cross-category link for the same reason; this
+ * is the prune side of that rule, which had never been given it.
+ *
+ * The name half reads `docById`, which holds the categories whose file sorts before `sidebar.json`
+ * (rules, ancestry, class, archetype, action, feat, condition, equipment…) and not the few that sort
+ * after (skill, spell, trait). A target that is not loaded yet reads as "no name", which lands on KEEP
+ * THE RECORD — the safe side of a loss guard, and the one all 21 of those targets want anyway, since
+ * every one of them is a differently-named parent page.
+ */
+const parentPagePointer = (category, rec) =>
+  category === 'sidebar'
+  && !String(rec.superseded_by).startsWith('sidebar-')
+  && slug(docById.get(String(rec.superseded_by))?.name ?? '') !== slug(rec.name);
+
 let total = 0, pruned = 0;
 
 for (const f of readdirSync(DATA).filter((x) => x.endsWith('.json'))) {
@@ -390,20 +463,28 @@ for (const f of readdirSync(DATA).filter((x) => x.endsWith('.json'))) {
     indexShelf(rec);
     docById.set(numericId, rec);
     indexUrl(numericId, rec);
-    if (rec.superseded_by) { pruned++; supersededRecs.push({ id: numericId, bucket, slug: slug(rec.name), by: rec.superseded_by }); continue; }
-    const s = slug(rec.name);
     // A record AoN flags `exclude_from_search` is a hidden/older printing, and deriveFresh /
     // deriveReference drop it outright — so letting it WIN the per-slug pick silently deletes the
     // visible twin. That is exactly how the Jalmeri Heavenseeker and Bright Lion archetype reference
     // entries went missing: each book ships a hidden earlier printing at the SAME edition rank, and
     // it happened to be seen first. Rank hidden records strictly below every visible one.
-    const rk = (EDITION_RANK[rec.edition] ?? 5) + (rec.exclude_from_search === 1 ? 10 : 0);
+    // Computed before the prune below, because the pruned pick uses the same ordering.
+    const rank0 = (EDITION_RANK[rec.edition] ?? 5) + (rec.exclude_from_search === 1 ? 10 : 0);
+    if (rec.superseded_by && !parentPagePointer(raw.category, rec)) {
+      pruned++;
+      supersededRecs.push({ id: numericId, bucket, slug: slug(rec.name), by: rec.superseded_by });
+      const ps = slug(rec.name);
+      const pv = (prunedBest[bucket] ||= {});
+      if (!pv[ps] || rank0 < pv[ps].rank) pv[ps] = { rec, rank: rank0 };
+      continue;
+    }
+    const s = slug(rec.name);
     // Keep EVERY candidate too, not just the winner: two different feats can share a name, and the
     // archetype is what tells them apart. See pickByArchetype below.
     ((allByBucket[bucket] ||= {})[s] ||= []).push(rec);
     (bestByBucket[bucket] ||= {});
     const prev = bestByBucket[bucket][s];
-    if (!prev || rk < prev.rank) bestByBucket[bucket][s] = { rec, rank: rk, numericId };
+    if (!prev || rank0 < prev.rank) bestByBucket[bucket][s] = { rec, rank: rank0, numericId };
     idMap[numericId] = { bucket, slug: s };
   }
 }
@@ -546,7 +627,26 @@ function deriveFresh(bucket, s, rec) {
   const book = mapBook(rec.book); if (book) base.source = { book };
   const desc = plainDesc(rec.ast); if (desc) base.description = desc;
   const ac = parseActionCost(rec.action_cost);
-  if (bucket === 'feats') { const f = { ...base, level: clamp(num(rec.level, 1), 1, 20), category: featCategory(traits) }; if (ac && ac.type !== 'passive') f.actionCost = ac; return f; }
+  if (bucket === 'feats') {
+    const f = { ...base, level: clamp(num(rec.level, 1), 1, 20), category: featCategory(traits) };
+    if (ac && ac.type !== 'passive') f.actionCost = ac;
+    /*
+     * …and the PREREQUISITES, through the same reader an overlaid feat uses.
+     *
+     * A new-only feat never passes through overlayContent, so `prerequisitesFrom` never ran for it and
+     * every one of them shipped with the gate wide open — 272 of them measured 2026-09-23, including
+     * the whole Marine Marauder and Pirate archetypes ("Marine Marauder Dedication" printed, nothing
+     * enforced) and `feats/overwhelming-harm`, whose "mastery of life and death" the Archives print
+     * and the record did not carry.
+     *
+     * checkPrerequisites() (src/rules/build.ts) enforces a clause ONLY when it resolves to a known
+     * skill rank, an attribute modifier or a feat this database ships, so an unparsed clause stays
+     * under-enforced rather than locking a legal character out.
+     */
+    const pre = prerequisitesFrom(rec);
+    if (pre?.length) f.prerequisites = pre;
+    return f;
+  }
   if (bucket === 'actions') { const a = { ...base }; if (ac) a.actionCost = ac; return a; }
   if (bucket === 'spells') { const cantrip = traits.includes('cantrip') || /cantrip/i.test(rec.spell_type || ''); return { ...base, rank: cantrip ? 0 : clamp(num(rec.spell_rank, 1), 0, 10), traditions: [] }; }
   if (bucket === 'items') return deriveFreshItem(base, rec);
@@ -595,6 +695,26 @@ for (const r of supersededRecs) {
  * Foundry spellings. Against the shipped artefact it is exactly the 28 the reprint re-cased.
  */
 const shippedCore = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : {};
+/*
+ * …AND THE PROSE THAT WAS SPLIT OUT OF IT.
+ *
+ * split-descriptions.mjs moves `description` and `descRefs` into public/core-descriptions.json and
+ * DELETES them from core.json, so `shippedCore` carries the identity of a record and none of its
+ * text. Step 3 below rebuilds a record by copying what shipped; copying it from core.json alone
+ * resurrected 20 records with a blank popup — `items/universal-solvent` and its three variants,
+ * `items/world-forge`, `items/mythic-resilent`, `feats/irrepressible-ganzi`, `feats/guding-retort`,
+ * `trait/negative`, … — each of which a saved character can still be holding.
+ */
+const SHIPPED_DESC = 'public/core-descriptions.json';
+const shippedDesc = existsSync(SHIPPED_DESC) ? JSON.parse(readFileSync(SHIPPED_DESC, 'utf8')) : {};
+/** The record as it last SHIPPED, prose included — the two files rejoined. */
+const shippedFull = (bucket, s) => {
+  const was = shippedCore[bucket]?.[s];
+  if (!was) return was;
+  const p = shippedDesc[bucket]?.[s];
+  if (!p || (p.d === undefined && p.r === undefined)) return was;
+  return { ...was, ...(p.d !== undefined ? { description: p.d } : {}), ...(p.r !== undefined ? { descRefs: p.r } : {}) };
+};
 
 // ------------------------------------------------------------------ assemble the new ContentDatabase
 const db = {};
@@ -607,6 +727,7 @@ for (const bucket of AON_BUCKETS) {
   const out = {};
   const supers = supersededMap[bucket] || {};
   let overlaid = 0, deferred = 0, orphanKept = 0, added = 0, superseded = 0, mapCorrected = 0, repointed = 0;
+  let fromPruned = 0, renamedKept = 0, mapRenamed = 0;
 
   // 1. every new record that MATCHES an old slug: adopt the new name, keep old content+mechanics.
   //    New-only records are DEFERRED to Step 2 (they need real mechanics before they can ship).
@@ -671,9 +792,30 @@ for (const bucket of AON_BUCKETS) {
 
     const fallback = pickByArchetype() ?? newMap[s].rec;
     const mappedDoc = pickByArchetype() ?? docById.get(preferBase(mapDocFor(bucket, s), s));
-    const mapped = mappedDoc && !(mappedDoc.exclude_from_search === 1 && fallback.exclude_from_search !== 1)
+    /*
+     * …AND THE MAP'S DOC HAS TO BE A DOCUMENT OF THIS NAME.
+     *
+     * The map exists to separate two documents that SHARE a slug (Death from Above, Stone Blood), so
+     * inside this loop — where a document of this name provably exists — a row naming a differently
+     * named page is a stale row, not a disambiguation. And the map is stale by construction on the run
+     * that first sees a rename: build-map.mjs runs AFTER this file, so map.json still holds the last
+     * chain's answer.
+     *
+     * Measured 2026-09-23: AoN renamed feat-7201 "Irrepressible (Ganzi)" to "Irrepressible
+     * (Nephilim)". The map still said `irrepressible-nephilim -> feat-4469`, which is the level-9
+     * HALFLING Irrepressible, so the record came back as a halfling feat eight levels above the
+     * nephilim one it had always been — and, because used-docs.json feeds build-map.mjs, the next run
+     * wrote that answer back into the map. Two slugs change with this guard in place:
+     * `feats/irrepressible-nephilim` (-> feat-7201, the nephilim feat) and
+     * `feats/incredible-familiar-animist` (-> feat-9420 "Incredible Familiar (Animist)" instead of
+     * feat-5004 "Incredible Familiar"). preferBase() only ever hops to a document of the SAME name,
+     * so the family-summary rebind is unaffected.
+     */
+    const mapNamesThisSlug = !mappedDoc || slug(mappedDoc.name) === s;
+    const mapped = mappedDoc && mapNamesThisSlug && !(mappedDoc.exclude_from_search === 1 && fallback.exclude_from_search !== 1)
       ? mappedDoc
       : null;
+    if (mappedDoc && !mapNamesThisSlug) mapRenamed++;
     const joined = mapped ?? fallback;
     /*
      * …and THEN the newest printing of whatever the join landed on. Owner, 2026-09-12: "we cant be
@@ -713,7 +855,27 @@ for (const bucket of AON_BUCKETS) {
   for (const s in oldMap) {
     if (s in out) continue;
     const replacement = supers[s];
-    if (replacement && replacement in out) { out[s] = { ...oldMap[s], edition: 'superseded' }; superseded++; }
+    /*
+     * THE RECORD'S OWN PAGE, EVEN WHEN THAT PAGE IS A PRINTING AoN HAS REPLACED.
+     *
+     * `prunedBest` (see its declaration) holds the superseded document of this exact name. The pick
+     * above dropped it, but desk #158 keeps the RECORD — so without this the record is built from the
+     * Foundry reference while `aonId`, the AST page and `remasteredAs` all say it is that document.
+     * That is not a cosmetic disagreement: it is how `spells/summon-kaiju` lost the Conjuration trait
+     * and the level its page prints the moment AoN added `superseded_by` to spell-1009.
+     *
+     * NOT the general "overlay every orphan" idea rejected below: the document here is the one whose
+     * NAME this record already answers to and whose id it is already stamped with, so nothing is being
+     * guessed at and no curated near-duplicate is touched (an `aon-` twin has no document of its own
+     * name). `edition` is deliberately NOT taken from it — the shipped-twin ruling decides that later,
+     * in stamp-aonid.mjs.
+     */
+    const pdoc = REFERENCE_BUCKETS.has(bucket) ? null : prunedBest[bucket]?.[s]?.rec;
+    const base = pdoc
+      ? { ...oldMap[s], ...overlayContent(pdoc, oldMap[s], bucket, shippedCore[bucket]?.[s]?.name), id: s }
+      : oldMap[s];
+    if (pdoc) { fromPruned++; (usedDocs[bucket] ??= {})[s] = pdoc.id; }
+    if (replacement && replacement in out) { out[s] = { ...base, edition: 'superseded' }; superseded++; }
     /*
      * A KEPT ORPHAN is left exactly as it is. Overlaying Archives facets onto orphans was tried and
      * REVERTED: it brought 1,897 more records under Archives sourcing but broke four tests, because an
@@ -722,10 +884,77 @@ for (const bucket of AON_BUCKETS) {
      * `test/grade-spelling-duplicates.test.ts` and `test/granted-actions.test.ts` all encode that
      * curation. If this is revisited, it needs to respect those, not bulldoze them.
      */
-    else { out[s] = oldMap[s]; orphanKept++; }
+    else { out[s] = base; orphanKept++; }
+  }
+  /*
+   * 3. A KEY THE LAST RUN SHIPPED DOES NOT VANISH BECAUSE THE ARCHIVES MOVED ITS PAGE.
+   *
+   * Step 2 keeps a slug alive only when the FOUNDRY reference has it. A record with no Foundry
+   * ancestor takes its key from the document's own name, and then two ordinary Archives events delete
+   * it outright — with it, the feat or item on a saved character's sheet:
+   *
+   *   · A RENAME. feat-7201 "Irrepressible (Ganzi)" became "Irrepressible (Nephilim)"; feat-9271's
+   *     "Guding Retort" typo was corrected to "Guiding Retort"; equipment-3499 "Mythic Resilent" to
+   *     "Mythic Resilient". The same page now answers to another key, so this one is kept
+   *     `superseded` — resolvable, never offered, so nothing is pickable twice.
+   *   · A REPRINT. The document gained `superseded_by` and was pruned, and desk #158's "keep both,
+   *     mark the old one legacy" had nothing to keep, because the record only ever existed as a fresh
+   *     one. `items/universal-solvent` and its three variants, `feats/azata-magic`,
+   *     `feats/invigorating-mercy`, `feats/elucidating-mercy`, `items/shadow-essence`,
+   *     `items/fulus-of-concealment` and `spells/efficient-apport` all disappeared that way on
+   *     2026-09-23 while their reprints shipped beside them. The record is carried through exactly as
+   *     the last chain agreed it; stamp-aonid.mjs re-applies `legacy` + `remasteredAs` after this.
+   *
+   * Bounded by the document still EXISTING and its successor still SHIPPING in this bucket: a page the
+   * Archives really delete, or one whose replacement we do not carry, is not resurrected here.
+   */
+  for (const s in (shippedCore[bucket] ?? {})) {
+    if (s in out) continue;
+    const was = shippedFull(bucket, s);
+    const d = was?.aonId ? docById.get(String(was.aonId)) : null;
+    if (!d) continue;
+    /*
+     * A DISAMBIGUATED KEY IS NOT A RENAME. `<document slug>-<class id>` is the shape this database
+     * already uses to give one class its own copy of a feature every class prints under the same name
+     * — `arcane-spellcasting-magus`, `spell-repertoire-bard`, `medium-armor-expertise-inventor`. The
+     * document is still called "Weapon Expertise", so the bare test below reads the suffix as "the page
+     * now answers to another key" and stamps the record `superseded`.
+     *
+     * That is not cosmetic: `applyEditionFilter` drops `superseded` from the Builder's content ALWAYS,
+     * whatever the "Hide legacy data" toggle says, so `levelGrants` falls back to `?? f.featureId` and
+     * the class table prints a RAW SLUG with no Details button. Measured on the 17 per-class rows built
+     * for the summoner, necromancer and runesmith: a level-1 runesmith's page read
+     * `shield-block-runesmith`. The magus's 12 escaped only because their own pages are remaster-era
+     * and they never reached this branch.
+     *
+     * The test is the document's slug being a PREFIX of the key, which no rename in this corpus
+     * produces: "Guding Retort" -> "Guiding Retort", "Mythic Resilent" -> "Mythic Resilient" and
+     * "Irrepressible (Ganzi)" -> "Irrepressible (Nephilim)" all change a letter inside the name, never
+     * append to it. So it needs no list of class ids and cannot go stale when a class is added.
+     */
+    const disambiguated = s.startsWith(`${slug(d.name)}-`);
+    const renamedTo = slug(d.name) !== s && !disambiguated ? slug(d.name) : null;
+    const replacedBy = d.superseded_by ? idMap[d.superseded_by]?.slug : null;
+    /*
+     * …AND THE PROSE, whichever way it has to come back.
+     *
+     * `shippedFull` rejoins the text the split moved out, which is enough from the run after this one
+     * on. It is not enough for the twenty records the run that introduced this step already shipped
+     * empty — there is nothing left to rejoin — so a record that comes back without prose takes it
+     * off the document it names, through the same reader deriveFresh uses for a new record.
+     */
+    const revivedDesc = was.description ? null : plainDesc(d.ast);
+    const revived = revivedDesc ? { ...was, description: revivedDesc } : was;
+    if (renamedTo) {
+      if (!(renamedTo in out)) continue;
+      out[s] = { ...revived, edition: 'superseded' };
+    } else if (replacedBy && replacedBy !== s && replacedBy in out) {
+      out[s] = { ...revived };
+    } else continue;
+    renamedKept++;
   }
   db[bucket] = out;
-  stats[bucket] = { total: Object.keys(out).length, overlaid, added, deferred, orphanKept, superseded, mapCorrected, repointed };
+  stats[bucket] = { total: Object.keys(out).length, overlaid, added, deferred, orphanKept, superseded, mapCorrected, repointed, fromPruned, renamedKept, mapRenamed };
 }
 
 // carry the hand-authored buckets over unchanged
@@ -912,8 +1141,21 @@ for (const bucket of AON_BUCKETS) {
      * Step 3 (usedDocs) is already the repointed doc, so hopping it again is a no-op; that is what
      * makes the page, the record and the stamp land on the SAME document in ONE run.
      */
+    /*
+     * usedDocs BEFORE the shipped aonId, not after.
+     *
+     * usedDocs is the document THIS run built the record from, and it is what build-map.mjs reads
+     * first and stamp-aonid.mjs therefore writes as `aonId` later in this very run. The shipped id is
+     * the LAST chain's answer, so putting it first makes the page lag the record by one whole run
+     * whenever the record's document changes for any reason other than a reprint — which the repoint
+     * below is the only thing that can undo. Measured 2026-09-23: `feats/incredible-familiar-animist`
+     * (feat-5004 -> feat-9420, the migration-map guard) and ten Treasure Vault weapons and armours the
+     * refresh re-joined all rendered the previous document's page, and scripts/ast-provenance-check.mjs
+     * failed on exactly those twelve. The shipped id stays as the fallback for a KEPT ORPHAN, which
+     * this run built from no document at all.
+     */
     const pinnedId = db[bucket][s]?.aonId;
-    const joinedId = pinnedId ?? shippedCore[bucket]?.[s]?.aonId ?? usedDocs[bucket]?.[s];
+    const joinedId = pinnedId ?? usedDocs[bucket]?.[s] ?? shippedCore[bucket]?.[s]?.aonId;
     const ownId = pinnedId ? pinnedId
       : (repointDoc(reprints, joinedId && String(joinedId), s, (k) => k in (db[bucket] || {})) ?? joinedId);
     const own = ownId ? docById.get(String(ownId)) : null;

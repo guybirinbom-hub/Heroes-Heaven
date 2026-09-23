@@ -3,6 +3,7 @@ import { cleanRun } from './RichText';
 import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
 import { deityDomainsOf, deriveSpellcasting, deriveClassDc, formatMod, ownedFeatureIds } from '../rules/derive';
+import { signatureSpellsAt } from '../rules/build';
 import { toggleKnownRitual,
   bumpItemCounter,
   bumpItemQuantity,
@@ -571,7 +572,7 @@ function ManageSpellsModal({
 
   const cls = character.classId ? content.classes[character.classId] : undefined;
   const sigAvailable =
-    spontaneous && (cls?.features ?? []).some((f) => f.featureId === 'signature-spells' && f.level <= character.level);
+    spontaneous && signatureSpellsAt(cls, character.level);
 
   const listReplacement = (() => {
     const r = character.spellListReplacement;

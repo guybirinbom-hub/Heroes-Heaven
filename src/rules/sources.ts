@@ -34,6 +34,21 @@ const LEGACY_HARDCOVERS = new Set([
   'Pathfinder Howl of the Wild',
   'Pathfinder War of Immortals',
   'Pathfinder Battlecry!',
+  /*
+   * ⚠ IMPOSSIBLE MAGIC SHELVED AS "Other" AND "Other" IS HIDDEN BY DEFAULT.
+   *
+   * NICHE_CATEGORIES is {'Other'}, `showNicheSources` defaults false (src/data/prefs.ts) and the
+   * Sources card drops niche groups, so the book never appeared on the card at all — Setup → Sources
+   * read "4/223" with no row to switch it on. Behind that one missing line sat 1,029 choosable
+   * records: the magus, summoner, necromancer and runesmith, 362 feats, 331 spells, 313 items and 19
+   * actions. Searching the class picker for "necro" or "rune" returned no matches in the shipped app.
+   *
+   * It is the ONLY class-bearing book that fell through to "Other": Guns & Gears, Rage of Elements,
+   * War of Immortals, Battlecry! and Dark Archive (Remastered) are all on this list already, which is
+   * what put them on the Rulebooks shelf. Impossible Magic is the same kind of book and belongs in
+   * the same tier. Guarded by test/impossible-magic-source-shelf.test.ts.
+   */
+  'Pathfinder Impossible Magic',
   'Pathfinder Bestiary',
   'Pathfinder Bestiary 2',
   'Pathfinder Bestiary 3',
@@ -223,7 +238,7 @@ export function sourceCatalog(content: ContentDatabase): {
     // Adventure Paths fold into per-AP bundles; the niche "Other" shelf folds into Society + blogs;
     // every other shelf lists books individually.
     const bundles: Record<string, SourceEntry> = {};
-    const singles: SourceEntry[] = [];
+    const singles: Record<string, SourceEntry> = {}; // keyed by the DISPLAY label with curly apostrophes folded — "Season of Ghosts Player's Guide" and "…Player’s Guide" are two book names and must be ONE row, not two the player cannot tell apart. Toggling the row toggles every book behind it.
     for (const book of [...books].sort((a, b) => a.localeCompare(b))) {
       const label = cat === 'Adventure Paths' ? apBundleLabel(book) : cat === 'Other' ? otherBundleLabel(book) : null;
       if (label) {
@@ -231,14 +246,14 @@ export function sourceCatalog(content: ContentDatabase): {
         bd.books.push(book);
         bd.count += counts[book];
       } else {
-        singles.push({ label: book.replace(/^Pathfinder /, ''), books: [book], count: counts[book] });
+        { const l = book.replace(/^Pathfinder /, ''); const e = (singles[l.replace(/’/g, "'")] ??= { label: l, books: [], count: 0 }); e.books.push(book); e.count += counts[book]; }
       }
     }
     // Bundles first (alphabetical, "Standalone Adventures" last), then any individual books.
     const bundleEntries = Object.values(bundles)
       .map((e) => ({ ...e, books: e.books.sort() }))
       .sort((a, b) => (a.label === 'Standalone Adventures' ? 1 : b.label === 'Standalone Adventures' ? -1 : a.label.localeCompare(b.label)));
-    groups.push({ category: cat, entries: [...bundleEntries, ...singles], bookCount: books.length });
+    groups.push({ category: cat, entries: [...bundleEntries, ...Object.values(singles)], bookCount: books.length });
   }
   const homebrew = Object.entries(hbCounts)
     .map(([name, count]) => ({ name, count }))

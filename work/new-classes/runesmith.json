@@ -53,7 +53,7 @@
    },
    {
     "level": 1,
-    "featureId": "shield-block"
+    "featureId": "shield-block-runesmith"
    },
    {
     "level": 2,
@@ -61,7 +61,7 @@
    },
    {
     "level": 5,
-    "featureId": "weapon-expertise"
+    "featureId": "weapon-expertise-runesmith"
    },
    {
     "level": 7,
@@ -69,7 +69,7 @@
    },
    {
     "level": 7,
-    "featureId": "reflex-expertise"
+    "featureId": "reflex-expertise-runesmith"
    },
    {
     "level": 7,
@@ -85,15 +85,15 @@
    },
    {
     "level": 13,
-    "featureId": "medium-armor-expertise"
+    "featureId": "medium-armor-expertise-runesmith"
    },
    {
     "level": 13,
-    "featureId": "perception-expertise"
+    "featureId": "perception-expertise-runesmith"
    },
    {
     "level": 13,
-    "featureId": "weapon-mastery"
+    "featureId": "weapon-mastery-runesmith"
    },
    {
     "level": 15,
@@ -109,7 +109,7 @@
    },
    {
     "level": 19,
-    "featureId": "medium-armor-mastery"
+    "featureId": "medium-armor-mastery-runesmith"
    }
   ],
   "featProgression": {

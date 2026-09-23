@@ -615,6 +615,387 @@ describe('item card detail: Standard / Compact / Essentials', () => {
 });
 
 /**
+ * "Compact rows" and "Inventory layout" — the owner's ruling of 2026-09-23, after a picture of three
+ * narrow columns beside one wide row. Two more settings beside "Item card detail", per character and
+ * global exactly like it, and ABSENT is what every character that already exists carries — so
+ * `compactColumns` is a CHANGE to those characters, not a no-op: 'three' is what shipped, nobody has
+ * the key, and every character on the Compact look moves to one wide row on upgrade. That is the
+ * ruling; `inventoryLayout` is the half that changes nothing.
+ *
+ *   compactColumns   absent = 'one'   one full-width Compact row an item. Width is the whole point on a
+ *                                     computer: a single column is three times the 300px cell, so every
+ *                                     state chip fits beside any name. At 375 the 300px auto-fill draws
+ *                                     that same single track, so 'one' buys nothing there in WIDTH — the
+ *                                     2026-09-23 correction is what it buys instead: a chip that does not
+ *                                     fit beside the name wraps onto a second line rather than waiting in
+ *                                     the popup. 'three' is the grid as it shipped, clip and all — there a
+ *                                     chip still either fits on the one line or waits.
+ *   inventoryLayout  absent = 'grid'  the equal cells as they shipped. 'flow' sizes every card to its own
+ *                                     contents and wraps them across the width like words in a paragraph
+ *                                     — in all three looks — and for a Compact row never hides a chip
+ *                                     either, the same correction as 'one'.
+ *
+ * MUTATION LINES: flip DEFAULT_CUSTOMIZATION.compactColumns to 'three', or .inventoryLayout to 'flow'
+ * (src/data/customization.ts), and the first test below goes red — it is the only guard on the two
+ * defaults. Delete either `.inv-flow` override rule in src/sheet.css and the stylesheet tests do; put
+ * `max-height`/`overflow` back on the `.inv-grid-1col` or `.inv-flow` override of `.inv-cdots` and the
+ * clip guard below does too.
+ */
+describe('compact rows + inventory layout', () => {
+  /** Every card container in the tab. There is more than one — Equipped, Carried and the hand-rolled
+   *  vehicle/siege section each render their OWN `.inv-grid`, and they used to drift apart. */
+  const grids = (host: HTMLElement) => [...host.querySelectorAll<HTMLElement>('.inv-grid')];
+  const gridClasses = (over: Partial<Customization>) => {
+    const { host, stop } = renderDom(tab({ ...DEFAULT_CUSTOMIZATION, ...over }));
+    const out = grids(host).map((g) => [...g.classList]);
+    stop();
+    expect(out.length, 'the item sections and the vehicle section, all of them').toBeGreaterThanOrEqual(3);
+    return out;
+  };
+  const everyGrid = (over: Partial<Customization>, cls: string) => gridClasses(over).every((c) => c.includes(cls));
+
+  it('nobody chose → one full-width Compact row, and the ordinary grid', () => {
+    // Resolved the way the sheet resolves it: baseline + global default + this character's override,
+    // with neither of the last two carrying either key.
+    expect(effectiveCustomization({}, null).compactColumns).toBe('one');
+    expect(effectiveCustomization({}, null).inventoryLayout).toBe('grid');
+    const cls = gridClasses({ itemCardDetail: 'compact' });
+    expect(cls.every((c) => c.includes('inv-grid-1col')), 'one row an item, on every section').toBe(true);
+    expect(cls.some((c) => c.includes('inv-flow')), 'and the cards still lie in a grid').toBe(false);
+  });
+
+  it('each value puts its own class on every section, and the column choice is Compact’s alone', () => {
+    expect(everyGrid({ itemCardDetail: 'compact', compactColumns: 'one' }, 'inv-grid-1col')).toBe(true);
+    expect(gridClasses({ itemCardDetail: 'compact', compactColumns: 'three' }).some((c) => c.includes('inv-grid-1col')))
+      .toBe(false);
+    expect(everyGrid({ itemCardDetail: 'compact', compactColumns: 'three' }, 'inv-grid-compact')).toBe(true);
+    // The taller cards read fine three across, so 'one' means nothing to them — and must not silently
+    // squeeze them into a single column.
+    for (const look of ['essentials', 'standard'] as const) {
+      const cls = gridClasses({ itemCardDetail: look, compactColumns: 'one' });
+      expect(cls.some((c) => c.includes('inv-grid-1col')), `${look} is not a Compact row`).toBe(false);
+      expect(cls.some((c) => c.includes('inv-grid-compact'))).toBe(false);
+    }
+    // Flow applies to all three looks.
+    for (const look of ['essentials', 'standard', 'compact'] as const)
+      expect(everyGrid({ itemCardDetail: look, inventoryLayout: 'flow' }, 'inv-flow'), look).toBe(true);
+    expect(gridClasses({ inventoryLayout: 'grid' }).some((c) => c.includes('inv-flow'))).toBe(false);
+  });
+
+  /**
+   * The Equipped / Carried / container sections, the container drag targets, the Bulk-load chip,
+   * drag-to-attach and right-click→popup all have to keep working in every combination. They do,
+   * because none of them is written against the grid's geometry: the handlers live on the CARD (one
+   * `rootProps` object in InventoryTab, shared by all three looks) and the sections are `.inv-group`,
+   * outside the grid entirely. This is that claim as a test — flow changes the BOX and nothing else.
+   */
+  it('flow changes the box and nothing else — the cards keep every attribute and handler they had', () => {
+    const html = (inventoryLayout: 'grid' | 'flow') => {
+      const { host, stop } = renderDom(tab({ ...DEFAULT_CUSTOMIZATION, itemCardDetail: 'compact', inventoryLayout }));
+      const out = host.innerHTML;
+      stop();
+      return out;
+    };
+    expect(html('flow').replace(/ inv-flow/g, ''), 'the grid’s className is the whole diff').toBe(html('grid'));
+    // …and the drag attributes really are on the cards, so the assertion above is not passing on a
+    // tab that has no drag sources in either layout.
+    const { host, click, stop } = renderDom(
+      tab({ ...DEFAULT_CUSTOMIZATION, itemCardDetail: 'compact', inventoryLayout: 'flow' }),
+    );
+    expect(cards(host).filter((e) => e.getAttribute('draggable') === 'true').length).toBeGreaterThan(0);
+    // The row still opens the item, which is where a Compact row's controls are.
+    click(card(host, 'Longsword'));
+    expect(host.querySelector('.sd-head-name')?.textContent).toBe('Longsword');
+    stop();
+  });
+
+  /** Every rule aimed at exactly this selector, in source order. */
+  const rulesFor = (sel: string) => RULES.filter((r) => r.sels.includes(sel));
+
+  /**
+   * …and the column's MINIMUM is 0, not `auto`. A bare `1fr` is `minmax(auto, 1fr)`, and that `auto`
+   * makes the column at least the widest row's min-content — which a Compact row, with a nowrap facts
+   * string on it, can take past the width of a phone. MEASURED at 375px on the Cart row (name + the
+   * vehicle stat line + a Remove button): the column stood at 390px inside a 355px section and the row
+   * ran off the right edge. The three-column grid never showed it because its own `minmax(300px, 1fr)`
+   * already put a floor under the track.
+   */
+  it('compact rows "one": a single full-width column, over the three-column grid', () => {
+    expect(declared('.inv-grid.inv-grid-compact.inv-grid-1col', 'grid-template-columns')).toEqual(['minmax(0, 1fr)']);
+    // It is written as a strictly longer selector than the rule it overrides, so it wins on specificity
+    // wherever either sits in the file.
+    expect(declared('.inv-grid.inv-grid-compact', 'grid-template-columns')[0], 'the three-column grid it beats')
+      .toContain('300px');
+  });
+
+  it('flow: the box wraps like a paragraph and the cards are sized to their own contents', () => {
+    const box = Object.fromEntries(rulesFor('.inv-grid.inv-flow').flatMap((r) => declarations(r.body)));
+    expect(box['display'], 'a grid of equal cells cannot size a cell to its contents').toBe('flex');
+    expect(box['flex-wrap'], '…and the cards have to wrap across the width like words').toBe('wrap');
+    const cardRules = rulesFor('.inv-grid.inv-flow > .inv-card');
+    const flex = flexOf(cardRules);
+    expect(flex.basis, 'basis auto IS "exactly as wide as its own name and tags"').toBe('auto');
+    expect(flex.grow, 'a card that grows is back to equal cells by another name').toBe('0');
+    const cardCss = Object.fromEntries(cardRules.flatMap((r) => declarations(r.body)));
+    expect(cardCss['max-width'], 'one enormous name may not widen the page').toBe('100%');
+    expect(parseFloat(cardCss['min-width']), 'a two-word item is still a card, not a stub').toBeGreaterThan(0);
+    // Bulk and price are pinned out of flow in this mode too (position: absolute, at the row's own
+    // fixed 34px/62px widths) — asserted in the "compact rows + inventory layout" pinning test below,
+    // not here: a content-sized card has nothing left to decide about a child that isn't in its flow.
+  });
+
+  /**
+   * The rule that makes flow work at all, and the one that would break it silently.
+   *
+   * The grid's cells are a fixed width, so somebody on the row has to give: `.inv-mid`, and Compact's
+   * `.inv-facts` and `.inv-cdots`, are all `flex-basis: 0` — they ask for no width of their own and
+   * take what is left after the name. A card sized to its OWN contents has nothing to decide, and
+   * there a zero basis asks for no width and gets none: the facts, and every state chip, would simply
+   * not be on the card. So flow hands all three their width back — which is also what widens the
+   * window in which every Compact chip is on the row: a box laid out at its own contents has nothing
+   * wrapping into the 18px clip (at 1280, no chip is hidden in Compact + flow, on any row).
+   *
+   * What happens once a row IS squeezed — `max-width: 100%` clamping the card back to the section — is
+   * the next test's job, not this one's: this one is only the three fillers getting their width back.
+   */
+  it('flow: the three fillers take their own width back, or the row prints nothing but a name', () => {
+    for (const tail of ['.inv-mid', '.inv-card.inv-compact .inv-facts', '.inv-card.inv-compact .inv-cdots']) {
+      expect(flexOf(rulesFor(tail)).basis, `${tail} is the grid’s filler`).toBe('0');
+      // Read on its OWN, not folded into the rule above in source order: the override adds two classes
+      // to the same subject, so it is strictly more specific and wins wherever either sits in the file
+      // (`.inv-mid`'s own rule is a thousand lines further down, and still loses).
+      const override = rulesFor('.inv-grid.inv-flow ' + tail);
+      expect(override.length, `nothing hands ${tail} its width back in flow`).toBeGreaterThan(0);
+      expect(
+        flexOf(override).basis,
+        `${tail} has to hold its own width once the card is sized to its contents`,
+      ).toBe('auto');
+    }
+  });
+
+  /**
+   * The 2026-09-23 correction itself: a squeezed row — `.inv-grid-1col` at any width, or `.inv-flow`
+   * once `max-width: 100%` clamps the card back to the section — no longer throws a chip away. Its
+   * override reads on its OWN selector, not folded into the base rule in source order: CSS wins on
+   * SPECIFICITY, and none of the inventory-card rules carries `!important` to reorder that (the
+   * stylesheet uses it elsewhere), so the override has to be the strictly longer selector for either
+   * of these to mean anything.
+   * 'three' gets neither override, so the base rule every Compact row starts from — the clip Compact
+   * has always had — is exactly what is left for it: a chip that does not fit still waits in the popup,
+   * unchanged.
+   *
+   * MUTATION: put `max-height: 18px` / `overflow: hidden` back on either override below (or delete the
+   * override rule outright) and this goes red — it is the only guard on the fix.
+   */
+  it('compact rows "one" and flow lift the chip clip — "three" keeps it', () => {
+    for (const sel of [
+      '.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact .inv-cdots',
+      '.inv-grid.inv-flow .inv-card.inv-compact .inv-cdots',
+    ]) {
+      expect(declared(sel, 'max-height'), sel).toEqual(['none']);
+      expect(declared(sel, 'overflow'), sel).toEqual(['visible']);
+    }
+    expect(declared('.inv-card.inv-compact .inv-cdots', 'max-height'), 'the three-column rule').toEqual(['18px']);
+    expect(declared('.inv-card.inv-compact .inv-cdots', 'overflow'), 'the three-column rule').toEqual(['hidden']);
+  });
+
+  /**
+   * PART 2 of the 2026-09-23 correction (owner feedback: a row with any chip was ALWAYS two lines, even
+   * at a desktop width with room for all of them on one). The clip guard above still holds — that half
+   * never changed — but 'one' and flow no longer need name + qty + bulk + price grouped into a wrapper
+   * box either: the same flat markup 'three' always rendered now works in every mode, because the FIX
+   * moved entirely into the stylesheet — the DOM is identical, only the surrounding grid class differs
+   * (InventoryTab's `gridClass()`).
+   */
+  it('the row markup is flat and identical in "one", "three" and flow alike — the fix is CSS-only', () => {
+    const rowClasses = (over: Partial<Customization>) => {
+      const { host, stop } = renderDom(
+        tab({ ...DEFAULT_CUSTOMIZATION, itemCardDetail: 'compact', ...over }, wandCharacter()),
+      );
+      const out = [...card(host, 'Wand of Contagious Frailty').children].map((e) => e.className);
+      stop();
+      return out;
+    };
+    // Name, then the chip box, then the two fixed columns — a screen reader hits the name first no
+    // matter which of the three combinations rendered the row.
+    const flat = ['inv-name', 'inv-cdots', 'inv-bval inv-cbulk', 'inv-cprice'];
+    expect(rowClasses({}), 'one (the default)').toEqual(flat);
+    expect(rowClasses({ compactColumns: 'three' }), 'three').toEqual(flat);
+    expect(rowClasses({ compactColumns: 'three', inventoryLayout: 'flow' }), 'flow').toEqual(flat);
+  });
+
+  /**
+   * The stylesheet half of PART 2, on the ROW itself: `flex-wrap` (name and the chip box are ordinary
+   * flex siblings again — the chip box wraps to its own line only when it doesn't fit beside the name,
+   * instead of always sitting under it), `position: relative` (the containing block bulk/price pin
+   * against), and the reservation that holds line 1 off the pinned columns.
+   *
+   * That reservation has to be `padding-right` on the ROW. Padding shortens the LINE BOX, so every item
+   * line 1 places — the name, the ×N badge, and the chip box's own fit-or-wrap decision — is measured
+   * against a line that already stops short of bulk and price. A `margin-right` on whichever of name/qty
+   * is line 1's last item, which is what this fix shipped first, does NOT: a sibling's margin is a gap
+   * BETWEEN the name and the chip box, not floor space at the END of the line, so the chip box simply
+   * started further along and ran onto the pinned strip anyway. MEASURED at 375 on the ordinary
+   * `Wand of Contagious Frailty` row — 26 characters carrying nothing but its own `1/1` charge chip —
+   * chip box 302.9–331.4 inside a price box at 292.9–354.9, i.e. `1/1` printed across `160 gp`; at 1280
+   * the same collision over a window of name lengths; in flow, structurally, at every width and every
+   * name, a content-sized card's right edge being the chip box's own.
+   *
+   * So this test is ARITHMETIC over the shipped numbers rather than a reading of declarations: it lays
+   * the row out on paper — line 1's flow area from the row's own padding, the two pinned columns from
+   * their own `right`/`width` — and asserts that the two cannot meet at any card width. (jsdom applies
+   * no stylesheet and lays nothing out; live, at 375 and 1280, in all four mode combinations, the chip
+   * box's closest approach to the Bulk column over a 10→160-character name sweep was 8.7px, and it never
+   * crossed.)
+   *
+   * MUTATION: put `flex-direction: column` back on either row selector in src/sheet.css (the
+   * unconditional stack this lane replaces) and the first assertion goes red; drop the `padding-right`,
+   * shrink it, or move it back onto a sibling's `margin-right`, and the geometry does.
+   */
+  it('compact rows "one" and flow: line 1 stops short of the pinned columns — a chip cannot land on the price', () => {
+    const px = (v: string | undefined) => {
+      expect(v, 'the row cannot be laid out without this number').toBeTruthy();
+      return parseFloat(v!);
+    };
+    const gap = px(declared('.inv-card.inv-compact', 'gap')[0]);
+    const padLeft = px(declared('.inv-card.inv-compact', 'padding')[0].split(/\s+/)[1]);
+    const bulkW = px(declared('.inv-card.inv-compact .inv-cbulk', 'width')[0]);
+    const priceW = px(declared('.inv-card.inv-compact .inv-cprice', 'width')[0]);
+    const W = 1000; // any card width: every edge below is measured from one of its own two borders
+    for (const grid of ['.inv-grid.inv-grid-compact.inv-grid-1col', '.inv-grid.inv-flow']) {
+      const row = `${grid} .inv-card.inv-compact:has(> .inv-cbulk)`;
+      expect(declared(row, 'flex-direction'), `${row}: no more unconditional stacking`).toEqual([]);
+      expect(declared(row, 'flex-wrap'), row).toEqual(['wrap']);
+      expect(declared(row, 'position'), row).toEqual(['relative']);
+      // The two pinned columns, placed from the card's RIGHT border by their own `right` and width.
+      const priceLeft = W - px(declared(`${grid} .inv-card.inv-compact .inv-cprice`, 'right')[0]) - priceW;
+      const bulkLeft = W - px(declared(`${grid} .inv-card.inv-compact .inv-cbulk`, 'right')[0]) - bulkW;
+      expect(priceLeft - (bulkLeft + bulkW), 'the two columns keep the row’s own gap between them').toBe(gap);
+      // Line 1's flow area: where the name, the ×N badge and the chip box are laid out.
+      const line1Right = W - px(declared(row, 'padding-right')[0]);
+      expect(line1Right, 'whatever ends line 1 here is drawn ON the Bulk column').toBeLessThanOrEqual(bulkLeft);
+      expect(bulkLeft - line1Right, 'one gap of air between line 1’s last item and Bulk').toBe(gap);
+      // …and the reservation is the ROW's own, never a sibling's: a margin between the name and the
+      // chip box leaves the chip box free to run into the strip, which is the regression above.
+      for (const tail of ['.inv-name:not(:has(~ .inv-qty))', '.inv-qty'])
+        expect(declared(`${row} ${tail}`, 'margin-right'), `${tail}: a sibling’s margin reserves nothing`).toEqual([]);
+      // Line 2 — a chip box that lost that fit — shares line 1 with nothing, so it takes the strip back,
+      // as far as the row's own right padding and no further.
+      const maxW = declared(`${grid} .inv-card.inv-compact .inv-cdots`, 'max-width')[0];
+      expect(maxW, 'a plain 100% would cost a wrapped chip box the same strip a second time').toMatch(
+        /^calc\(100% \+ [\d.]+px\)$/,
+      );
+      const back = px(/\+ ([\d.]+px)\)$/.exec(maxW)?.[1]);
+      expect(line1Right + back, 'a wrapped chip box reaches the row’s own right padding, and stops there').toBe(W - padLeft);
+    }
+  });
+
+  /**
+   * Bulk and price themselves: taken `position: absolute` out of the row those two rules above just
+   * made wrapping, so they stay pinned top-right whether the row ends up one line or two. `top` and
+   * `line-height` put them in the row's own 22px line-1 band (`min-height: 32px` minus its 5px
+   * top/bottom padding); `right` places price flush with the row's old 10px padding and bulk 8px to
+   * its left, across its 62px width — the three fixed numbers the row's `padding-right` holds open, and
+   * the test above is the arithmetic that keeps the two sets in step.
+   */
+  it('compact rows "one" and flow: bulk and price pin to the row\'s top-right corner', () => {
+    for (const sel of [
+      '.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact .inv-cbulk',
+      '.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact .inv-cprice',
+      '.inv-grid.inv-flow .inv-card.inv-compact .inv-cbulk',
+      '.inv-grid.inv-flow .inv-card.inv-compact .inv-cprice',
+    ]) {
+      expect(declared(sel, 'position'), sel).toEqual(['absolute']);
+      expect(declared(sel, 'top'), sel).toEqual(['5px']);
+    }
+    for (const grid of ['.inv-grid.inv-grid-compact.inv-grid-1col', '.inv-grid.inv-flow']) {
+      expect(declared(`${grid} .inv-card.inv-compact .inv-cprice`, 'right')).toEqual(['10px']);
+      expect(declared(`${grid} .inv-card.inv-compact .inv-cbulk`, 'right')).toEqual(['80px']);
+    }
+  });
+
+  /**
+   * The other half of "who gets wrapped". `.inv-card.inv-compact` is NOT ItemCard's alone —
+   * UnknownItemCard and the vehicle/siege section hand-roll their own Compact rows (InventoryTab) and
+   * render neither `.inv-cbulk` nor `.inv-cprice`, so `:has(> .inv-cbulk)` never matches them: no
+   * `flex-wrap`, no reserved padding, nothing pinned — they stay exactly as flat as they always were.
+   *
+   * MUTATION: drop `:has(> .inv-cbulk)` from either row selector in src/sheet.css (making it apply to
+   * every Compact row, hand-rolled ones included) and the first assertion goes red — it is the only
+   * guard on the scoping.
+   */
+  it('only a row that carries .inv-cbulk is wrapped — the hand-rolled Compact rows are untouched', () => {
+    for (const sel of [
+      '.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact',
+      '.inv-grid.inv-flow .inv-card.inv-compact',
+    ]) {
+      expect(declared(sel, 'flex-wrap'), `${sel}: unscoped, it would wrap EVERY Compact row`).toEqual([]);
+    }
+    // …and rows without `.inv-cbulk` really are on the tab in that same mode, or the scoping guards
+    // nothing.
+    const { host, stop } = renderDom(tab({ ...DEFAULT_CUSTOMIZATION, itemCardDetail: 'compact' }));
+    for (const name of ['Cart', 'Unknown item']) {
+      const row = card(host, name);
+      expect(row.querySelector('.inv-cbulk'), `${name} is hand-rolled — it never renders the fixed columns`).toBe(null);
+      expect(
+        [...row.children].some((e) => e.classList.contains('inv-facts')),
+        `${name} keeps its facts as a child of the row`,
+      ).toBe(true);
+    }
+    stop();
+  });
+
+  it('the editor offers both controls and writes the keys', () => {
+    const calls: [string, unknown][] = [];
+    const { host, click, stop } = renderDom(
+      <CustomizationEditor
+        value={{ itemCardDetail: 'compact' }}
+        base={DEFAULT_CUSTOMIZATION}
+        scope="global"
+        onChange={(k, v) => calls.push([k, v])}
+      />,
+    );
+    const chipsOf = (label: string) => {
+      const row = [...host.querySelectorAll<HTMLElement>('.menu-label')].find((e) => e.textContent === label);
+      expect(row, `the "${label}" setting has to be findable`).toBeTruthy();
+      return [...row!.nextElementSibling!.querySelectorAll<HTMLButtonElement>('button.chip')];
+    };
+    expect(chipsOf('Compact rows').map((b) => b.textContent?.trim())).toEqual(['One wide row', 'Three columns']);
+    expect(chipsOf('Compact rows')[0].className, 'the default reads as the one chosen').toContain('active');
+    click(chipsOf('Compact rows')[1]);
+    expect(calls.at(-1)).toEqual(['compactColumns', 'three']);
+    // Choosing the baseline again clears the field, so the character/device goes back to inheriting it.
+    click(chipsOf('Compact rows')[0]);
+    expect(calls.at(-1)).toEqual(['compactColumns', undefined]);
+
+    expect(chipsOf('Inventory layout').map((b) => b.textContent?.trim())).toEqual(['Grid', 'Flow']);
+    expect(chipsOf('Inventory layout')[0].className).toContain('active');
+    click(chipsOf('Inventory layout')[1]);
+    expect(calls.at(-1)).toEqual(['inventoryLayout', 'flow']);
+    click(chipsOf('Inventory layout')[0]);
+    expect(calls.at(-1)).toEqual(['inventoryLayout', undefined]);
+    stop();
+  });
+
+  it('the Compact-rows control is there only while Compact is the chosen look', () => {
+    const labels = (value: Customization) => {
+      const { host, stop } = renderDom(
+        <CustomizationEditor value={value} base={DEFAULT_CUSTOMIZATION} scope="global" onChange={() => undefined} />,
+      );
+      const out = [...host.querySelectorAll('.menu-label')].map((e) => e.textContent);
+      stop();
+      return out;
+    };
+    expect(labels({}), 'Essentials is the default look — no columns to choose').not.toContain('Compact rows');
+    expect(labels({ itemCardDetail: 'standard' })).not.toContain('Compact rows');
+    expect(labels({ itemCardDetail: 'compact' })).toContain('Compact rows');
+    // The layout applies to all three looks, so it is offered under all three.
+    for (const v of [{}, { itemCardDetail: 'standard' as const }, { itemCardDetail: 'compact' as const }])
+      expect(labels(v)).toContain('Inventory layout');
+  });
+});
+
+/**
  * The ten-item investment cap, in the popup that now carries the Invest control.
  *
  * `toggleItemFlag` enforces nothing — the cap has always been the CALLER's guard — and this popup is

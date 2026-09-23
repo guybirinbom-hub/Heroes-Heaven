@@ -55,7 +55,7 @@ import {
   type NarrowedOption,
 } from '../rules/derive';
 import { foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, skillSlotOptions } from '../rules/build';
-import { signaturesAt } from '../rules/build';
+import { signaturesAt, signatureSpellsAt } from '../rules/build';
 // batch 037: flexible-spellcaster#collection-shape — the sheet's own sizer, never a copy of it.
 import { flexibleCollectionSize } from '../rules/build';
 import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
@@ -400,7 +400,7 @@ export function Builder({
   // feature (e.g. bard at level 3).
   const sigAvailable =
     (casting?.type === 'spontaneous' &&
-      !!casterCls?.features?.some((f) => f.featureId === 'signature-spells' && f.level <= build.level)) ||
+      signatureSpellsAt(casterCls, build.level)) ||
     // A spell collection heightens EVERY collected spell once 2nd-rank spells arrive — the stars
     // are fixed on (signatureFixed), so the builder shows them rather than offering a budget.
     (archMods.spellCollection && !!casting && build.level >= 3);
@@ -1070,7 +1070,7 @@ export function Builder({
   const isPrepared2 = castType2 === 'prepared';
   const sigAvailable2 =
     casting2?.type === 'spontaneous' &&
-    !!cls2?.features?.some((f) => f.featureId === 'signature-spells' && f.level <= build.level);
+    signatureSpellsAt(cls2, build.level);
   // Same spellbook lane as the primary class above (dual class), so a magus/wizard pair agrees with itself.
   const bookSpec2 = casting2?.spellbook;
   const isWizardBook2 = !!casting2 && isPrepared2 && (!!bookSpec2 || cls2?.id === 'wizard' || cls2?.id === 'witch');

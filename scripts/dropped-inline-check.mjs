@@ -207,6 +207,66 @@ const DAMAGE_TYPE_BASELINE = 11;
   } else console.log(`dropped-inline: ${dt.edits.length} stripped-damage-type hole(s) (ratchet ${DAMAGE_TYPE_BASELINE}; repair-damage-type.mjs drives it to zero)`);
 }
 
+/*
+ * THE BLANK STAT-BLOCK LABEL — an eighth class, and the first one whose hole is in THE ARCHIVES
+ * rather than in our own pipeline.
+ *
+ * Every other class here compares our text against AoN's and fails where AoN prints a value we do
+ * not. This one has no counterpart to compare against: AoN's own document is the thing with the hole
+ * in it. The Impossible Magic eidolon pages print an attribute array with the Strength, Dexterity and
+ * AC tokens missing —
+ *
+ *     ours & AoN   "- Str \n- Dex \n- Con 2\n- Int 1\n- Wis 1\n- Cha -1\n-  AC ( Dex cap)"
+ *     legacy AoN   "- Str 18\n- Dex 14\n- Con 16\n- Int 8\n- Wis 12\n- Cha 10\n- +2 AC (+3 Dex cap)"
+ *
+ * — measured over the mirror's own bytes: 13 of 13 Impossible Magic eidolon pages (eidolon-14 …
+ * eidolon-26) are blank in both places, 0 of 13 older pages are. No structured field carries the
+ * numbers either (the documents have no `strength`/`ac` keys at all), so there is nothing to repair
+ * FROM and nothing to type in that would not be invented. That is the one thing this repo never does:
+ * *"a confident wrong number is far worse than a visible missing one"* (lib/dropped-inline.mjs).
+ *
+ * NOT A COUNT — AN ALLOW LIST OF IDS. A numeric ratchet set to today's 2 would pass a third record
+ * that appeared while one of these two was repaired, which is exactly how a hole spreads silently. A
+ * site not named below fails the build whatever the total is, and the list shrinks to empty when AoN
+ * corrects the pages (or an owner ruling supplies the numbers). Never add to it without the AoN doc
+ * id and the same measurement.
+ */
+const BLANK_STAT_ALLOW = new Map([
+  ['classFeatures/aberrant-eidolon', 'AoN eidolon-14 prints the Str, Dex and AC slots blank itself; new in Impossible Magic, so no earlier printing exists'],
+  ['classFeatures/ooze-eidolon', 'AoN eidolon-23, same blanks, same book, no earlier printing'],
+  ['classes.summoner option aberrant-eidolon', 'the picker copy of classFeatures/aberrant-eidolon'],
+  ['classes.summoner option ooze-eidolon', 'the picker copy of classFeatures/ooze-eidolon'],
+]);
+/* A stat-block bullet whose LABEL is all that is left: "- Str" at the end of its line, or an AC line
+ * that lost its bonus or its Dex cap number. Both shapes are the same defect — a token deleted from
+ * between the label and the line end — and neither can be seen by the "a ." or "<N>-foot" patterns
+ * above, which need a following word or a sentence to align. */
+const BLANK_ATTR = /^[-*]\s*(?:Str|Dex|Con|Int|Wis|Cha)\s*$/m;
+const BLANK_AC = /^[-*]\s+AC \(\s*Dex cap\)\s*$|^[-*]\s*\s+AC \(/m;
+{
+  const core = JSON.parse(readFileSync(join(ROOT, 'public/core.json'), 'utf8'));
+  const descs = JSON.parse(readFileSync(join(ROOT, 'public/core-descriptions.json'), 'utf8'));
+  const holed = (t) => typeof t === 'string' && (BLANK_ATTR.test(t) || BLANK_AC.test(t));
+  const hits = [];
+  for (const [cat, recs] of Object.entries(descs)) {
+    for (const [id, e] of Object.entries(recs ?? {})) if (holed(e?.d)) hits.push(`${cat}/${id}`);
+  }
+  /* The picker reads the subclass OPTION's own inline copy, not the description bucket, so a guard
+   * that only walked core-descriptions.json would pass while the page a player chooses on had the
+   * hole on it. That is how these two shipped. */
+  for (const [clsId, cls] of Object.entries(core.classes ?? {})) {
+    for (const o of cls?.subclass?.options ?? []) if (holed(o?.description)) hits.push(`classes.${clsId} option ${o.id}`);
+  }
+  const unallowed = hits.filter((h) => !BLANK_STAT_ALLOW.has(h));
+  if (unallowed.length) {
+    console.log(`dropped-inline: FAIL — ${unallowed.length} record(s) print a stat-block label with no value after it ("- Str", "- AC ( Dex cap)"), and are not on the blank-stat allow list:`);
+    for (const h of unallowed) console.log(`   ${h}`);
+    console.log('\nEither the value exists upstream and the importer dropped it (repair it), or AoN itself prints the blank — then add the id here with the AoN doc id and the measurement. Never a bare count.');
+    process.exit(1);
+  }
+  console.log(`dropped-inline: ${hits.length} blank stat-block label(s), all ${BLANK_STAT_ALLOW.size} allowed by id (AoN's own pages are blank; awaiting an upstream correction or an owner ruling)`);
+}
+
 const found = findDroppedInline(ROOT);
 
 if (!found) {

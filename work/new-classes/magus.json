@@ -1,0 +1,9 @@
+{
+  "_why": "DESCRIPTIONS ONLY. The magus record itself is built by scripts/import-core-v2.mjs from the Foundry-era base file plus the Archives overlay; nothing here may create or overwrite it. What the base file also carried was the class PROSE, and that prose is Secrets of Magic's: its '| Level | You gain |' table names Arcane Spellcasting (Magus), Lightning Reflexes, Alertness, Resolve and Juggernaut, while classes.magus.features names Magus Spellcasting, Reflex Expertise, Perception Expertise, Twofold Will and Spell-Tempered Body. A player choosing the magus read both on one screen. class-74 is the Impossible Magic Magus page and the record's own aonId, so the description and display tree come from there, exactly as the necromancer's and the runesmith's do.",
+  "descriptionsOnly": true,
+  "class": {
+    "id": "magus",
+    "name": "Magus",
+    "aonId": "class-74"
+  }
+}

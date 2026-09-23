@@ -30,6 +30,7 @@
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { canonBookName } from './lib/aon-facets.mjs';
 
 const SRC = process.env.AON_DATA || 'C:/trying ai 2/Archives of GuyB/data/by-category';
 const CORE = 'public/core.json';
@@ -110,11 +111,8 @@ for (const bucket of Object.keys(core)) {
     if (b && !canonBook[normBook(b)]) canonBook[normBook(b)] = b;
   }
 }
-function mapBook(book) {
-  const b = String(book || '').trim();
-  if (!b) return undefined;
-  return canonBook[normBook(b)] ?? (/^Pathfinder /i.test(b) ? b : `Pathfinder ${b}`);
-}
+/** The hand-kept table first, then this script's own fold — see canonBookName's note in aon-facets. */
+const mapBook = (book) => canonBookName(book, (b) => canonBook[normBook(b)]);
 
 /** Edition of a KEPT (non-superseded) record: remaster when AoN links a legacy predecessor,
  *  otherwise its source book's edition. Verified 378/378 against the hh-data-export's own field. */

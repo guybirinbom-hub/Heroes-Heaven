@@ -11505,7 +11505,7 @@
   "value": [
    {
     "id": "esoterica-divine-cantrip",
-    "prompt": "Esoterica Methodology: choose a cantrip from the divine spell list (cast at will as an innate spell)",
+    "prompt": "Choose your Esoterica Methodology cantrip from the divine spell list (cast at will as an innate spell)",
     "spellFilter": {
      "traditions": [
       "divine"
@@ -11520,7 +11520,7 @@
    },
    {
     "id": "esoterica-occult-cantrip",
-    "prompt": "Esoterica Methodology: choose a cantrip from the occult spell list (cast at will as an innate spell)",
+    "prompt": "Choose your Esoterica Methodology cantrip from the occult spell list (cast at will as an innate spell)",
     "spellFilter": {
      "traditions": [
       "occult"
@@ -11533,7 +11533,8 @@
      }
     }
    }
-  ]
+  ],
+  "why": "archetype-306 (Palatine Detective) prints the Esoterica Methodology cantrips. The prompt was a sentence beginning \"Esoterica Methodology:\", which the picker then printed as a paragraph under a label carrying the same paragraph — the Grim Fascination shape exactly."
  },
  {
   "category": "feats",
@@ -43042,11 +43043,16 @@
      {
       "value": "holy",
       "label": "Holy"
+     },
+     {
+      "value": "none",
+      "label": "None",
+      "note": "You take no sanctification."
      }
     ]
    }
   ],
-  "why": "AoN deity-319 (Yamatsumi) prints sanctification \"must choose holy\""
+  "why": "deity-319 (Yamatsumi) changed sanctification_raw from \" must choose holy\" to \" can choose holy\" in the re-export — a Paizo errata making the sanctification optional. The row is the shape scripts/deity-fields-check.mjs --write authors for every other 'can choose' deity: the holy option plus an explicit None."
  },
  {
   "category": "deities",
@@ -54757,7 +54763,7 @@
   "value": [
    {
     "id": "mastermind-skill",
-    "prompt": "Trained skill",
+    "prompt": "Choose the skill your Mastermind racket makes you trained in",
     "options": [
      {
       "value": "arcana",
@@ -54797,7 +54803,8 @@
      }
     ]
    }
-  ]
+  ],
+  "why": "racket-6 (Mastermind) prints the trained-skill choice. Same picker, same reason as eidolon-7 above."
  },
  {
   "category": "classFeatures",
@@ -86700,7 +86707,7 @@
   "value": [
    {
     "id": "staff-cantrip",
-    "prompt": "Makeshift staff — the cantrip it holds",
+    "prompt": "Choose the cantrip your makeshift staff holds",
     "spellFilter": {
      "cantripsOnly": true,
      "traditions": [
@@ -86711,7 +86718,7 @@
    },
    {
     "id": "staff-spell",
-    "prompt": "Makeshift staff — the 1st-rank spell it holds",
+    "prompt": "Choose the 1st-rank spell your makeshift staff holds",
     "spellFilter": {
      "rank": 1,
      "traditions": [
@@ -86720,7 +86727,8 @@
      "grantAs": "staff"
     }
    }
-  ]
+  ],
+  "why": "arcane-thesis-10 (Staff Nexus) prints the makeshift staff. Same picker, same reason."
  },
  {
   "category": "items",
@@ -98492,8 +98500,9 @@
   "id": "temperbrand",
   "field": "price",
   "value": {
-   "gp": 7000
-  }
+   "gp": 70000
+  },
+  "why": "equipment-3489 \"Temperbrand\" now prints price_raw \"70,000 gp\" (7,000,000 cp). The record carried 7,000 gp, which is what equipment-3489 said before the re-export — AoN corrected its own record, the app did not follow, and price-check.mjs reported it as a x0.100 disagreement."
  },
  {
   "category": "items",
@@ -98881,19 +98890,22 @@
   "category": "items",
   "id": "crimson-bluff",
   "field": "level",
-  "value": 16
+  "value": 15,
+  "why": "equipment-3487 \"Crimson Bluff\" now prints level 15; it said 16 before the re-export. One of three Prey for Death items AoN re-levelled in the same pass (see also equipment-3488 and equipment-3489). Reported by scripts/field-diff.mjs."
  },
  {
   "category": "items",
   "id": "fleshrender",
   "field": "level",
-  "value": 16
+  "value": 18,
+  "why": "equipment-3488 \"Fleshrender\" now prints level 18; it said 16 before the re-export. Same Prey for Death re-levelling pass as equipment-3487 and equipment-3489. Reported by scripts/field-diff.mjs."
  },
  {
   "category": "items",
   "id": "temperbrand",
   "field": "level",
-  "value": 16
+  "value": 20,
+  "why": "equipment-3489 now prints level 20; it said 16 before the re-export, and AoN moved the level in the same correction that moved the price from 7,000 gp to 70,000 gp. Left at 16 the item would be buyable ten levels early at a tenth of its cost."
  },
  {
   "category": "items",
@@ -99615,7 +99627,8 @@
   "category": "items",
   "id": "bloodroot-shield",
   "field": "bulk",
-  "value": 0.1
+  "value": 1,
+  "why": "equipment-3610 \"Bloodroot Shield\" now prints bulk_raw \"1\"; it printed \"L\" (0.1) before the re-export. A shield at Light Bulk versus 1 Bulk is a real encumbrance difference, so the record follows the corrected page. Reported by scripts/stat-check.mjs."
  },
  {
   "category": "items",
@@ -110240,7 +110253,8 @@
   "category": "spells",
   "id": "aon-efficient-apport",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "spell-1062 now carries superseded_by spell-2323 (Reclined Apport) in the refreshed Archives, so scripts/lib/reprint.mjs shippedTwin() stamps edition 'legacy' plus remasteredAs. The pinned 'legacy-era' predates that pointer arriving."
  },
  {
   "category": "spells",
@@ -113313,7 +113327,8 @@
   "category": "items",
   "id": "aon-shadow-essence",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "equipment-127 now carries superseded_by equipment-3342 (Nethershade); the shipped-twin rule stamps 'legacy' and the pinned 'legacy-era' no longer survives a regen."
  },
  {
   "category": "items",
@@ -113367,7 +113382,8 @@
   "category": "items",
   "id": "aon-universal-solvent",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "equipment-701 now carries superseded_by equipment-3351 (Absolute Solvent); the shipped-twin rule stamps 'legacy' and the pinned 'legacy-era' no longer survives a regen."
  },
  {
   "category": "items",
@@ -115872,7 +115888,7 @@
   "category": "classFeatures",
   "id": "arcane-spellcasting-magus",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -116536,7 +116552,7 @@
   "category": "classFeatures",
   "id": "inexorable-iron",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster-era"
  },
  {
   "category": "classFeatures",
@@ -116633,7 +116649,7 @@
   "category": "classFeatures",
   "id": "laughing-shadow",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster-era"
  },
  {
   "category": "classFeatures",
@@ -117384,7 +117400,7 @@
   "category": "classFeatures",
   "id": "sparkling-targe",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster-era"
  },
  {
   "category": "classFeatures",
@@ -117402,31 +117418,31 @@
   "category": "classFeatures",
   "id": "spell-repertoire-bard",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
   "id": "spell-repertoire-oracle",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
   "id": "spell-repertoire-psychic",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
   "id": "spell-repertoire-sorcerer",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
   "id": "spell-repertoire-summoner",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster"
  },
  {
   "category": "classFeatures",
@@ -117475,7 +117491,7 @@
   "category": "classFeatures",
   "id": "starlit-span",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster-era"
  },
  {
   "category": "classFeatures",
@@ -117686,7 +117702,7 @@
   "category": "classFeatures",
   "id": "twisting-tree",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster-era"
  },
  {
   "category": "classFeatures",
@@ -119375,7 +119391,8 @@
   "category": "feats",
   "id": "aon-azata-magic",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "feat-1359 now carries superseded_by feat-4558 (Celestial Magic); the shipped-twin rule stamps 'legacy' and the pinned 'legacy-era' no longer survives a regen."
  },
  {
   "category": "feats",
@@ -119393,13 +119410,15 @@
   "category": "feats",
   "id": "aon-invigorating-mercy",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "feat-1675 now carries superseded_by feat-5897 (Mercy); the shipped-twin rule stamps 'legacy' and the pinned 'legacy-era' no longer survives a regen."
  },
  {
   "category": "feats",
   "id": "aon-elucidating-mercy",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "feat-1680 now carries superseded_by feat-5897 (Mercy); the shipped-twin rule stamps 'legacy' and the pinned 'legacy-era' no longer survives a regen."
  },
  {
   "category": "feats",
@@ -119832,7 +119851,8 @@
   "category": "heritages",
   "id": "aon-aphorite",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "legacy",
+  "why": "ancestry-28 now carries superseded_by in the refreshed Archives and its reprint ships as heritages/nephilim; the shipped-twin rule stamps 'legacy' and the pinned 'legacy-era' no longer survives a regen."
  },
  {
   "category": "heritages",
@@ -125547,10 +125567,11 @@
   "category": "classFeatures",
   "id": "grim-fascination",
   "field": "effectChoices",
+  "why": "class-feature-1288 \"Grim Fascination\" (Impossible Magic, class Necromancer) prints the choice as a required selection at 1st level; the sentence that was in `prompt` is the record's own description text and already shows in the Details popup, so the picker asks for the pick instead of restating the page.",
   "value": [
    {
     "id": "grim-fascination",
-    "prompt": "Grim Fascination: your focus of necrotic study — it grants a grave spell and a thrall enhancement",
+    "prompt": "Choose your grim fascination — it grants a grave spell and a thrall enhancement",
     "options": [
      {
       "value": "blood",
@@ -133088,8 +133109,9 @@
      "label": "Primal"
     }
    ],
-   "note": "Arcana for arcane, Nature for primal, Occultism for occult, Religion for divine. The feat requires expert in all four, so all four are open."
-  }
+   "note": "Arcana for arcane, Nature for primal, Occultism for occult, Religion for divine. The feat asks for expert in ONE of the four, and the tradition must be one whose related skill you are at least expert in — all four are offered, so pick the one you qualify for."
+  },
+  "why": "feat-9186: \"the tradition can be any tradition for which you are at least expert in the related skill\". The old note gave \"the feat requires expert in all four\" as its reason, which the page does not say."
  },
  {
   "category": "feats",
@@ -133146,11 +133168,9 @@
   "id": "writing-on-the-wall",
   "field": "prerequisites",
   "value": [
-   "expert in Arcana",
-   "expert in Nature",
-   "expert in Occultism",
-   "expert in Religion"
-  ]
+   "expert in Arcana, Nature, Occultism, or Religion"
+  ],
+  "why": "feat-9186 prints \"Expert in Arcana, Expert in Nature, Expert in Occultism, OR Expert in Religion\" (Impossible Magic pg. 49). One of four, not four of four."
  },
  {
   "category": "feats",
@@ -160915,7 +160935,7 @@
   "category": "items",
   "id": "singing-shortbow",
   "field": "description",
-  "value": "Rather than a normal bowstring, this *+2 greater striking thundering composite shortbow* has a string made of animal gut, much like a musical instrument's. When you shoot the bow, it releases a soft musical note: sonorous if your aim is true and discordant if your shot goes off-target.\n\n---\n\n**Activate** ⟨2⟩ command (auditory)\n\n**Frequency** once per hour\n\n---\n\n**Effect** You sing, hum, or whistle a note, and your bow provides appropriate accompaniment. Make a Strike with the bow. If it hits, the bow generates a magical effect determined by the note you sung, which has the traits indicated in parentheses. This affects every creature in a 10-foot emanation from the creature you hit. As normal for an emanation, you choose whether the creature you hit is affected.\n\n- **Song of Soothing** (emotion, enchantment, healing, mental) Each creature regains 3d10 Hit Points and gains a +1 status bonus to saves against mental effects for 1 minute.\n- **Song of Suffering** (evocation, sonic) Each creature takes damage with a save."
+  "value": "Rather than a normal bowstring, this *+2 greater striking thundering composite shortbow* has a string made of animal gut, much like a musical instrument's. When you shoot the bow, it releases a soft musical note: sonorous if your aim is true and discordant if your shot goes off-target.\n\n---\n\n**Activate** ⟨2⟩ command (auditory)\n\n**Frequency** once per hour\n\n---\n\n**Effect** You sing, hum, or whistle a note, and your bow provides appropriate accompaniment. Make a Strike with the bow. If it hits, the bow generates a magical effect determined by the note you sung, which has the traits indicated in parentheses. This affects every creature in a 10-foot emanation from the creature you hit. As normal for an emanation, you choose whether the creature you hit is affected.\n\n- **Song of Soothing** (emotion, enchantment, healing, mental) Each creature regains 3d10 Hit Points and gains a +1 status bonus to saves against mental effects for 1 minute.\n- **Song of Suffering** (evocation, sonic) Each creature takes 3d10 sonic damage with a DC 31 basic Fortitude save."
  },
  {
   "category": "items",
@@ -171415,7 +171435,7 @@
    },
    {
     "level": 1,
-    "featureId": "spell-repertoire"
+    "featureId": "spell-repertoire-sorcerer"
    },
    {
     "level": 17,
@@ -171470,7 +171490,7 @@
     "featureId": "master-spellcaster"
    }
   ],
-  "why": "class-62 level-1 row lists four features (bloodline, sorcerer spellcasting, spell repertoire, sorcerous potency); 'Bloodline Spells' is an AoN sub-section of the bloodline page with no aonId, no edition and no mechanics."
+  "why": "class-62 level-1 row lists four features (bloodline, sorcerer spellcasting, spell repertoire, sorcerous potency); 'Bloodline Spells' is an AoN sub-section of the bloodline page with no aonId, no edition and no mechanics. Only the repertoire row changes against the shipped array: it names `spell-repertoire-sorcerer`, built from class-feature-984 (Class Sorcerer), instead of the four-class composite on class-feature-1141 (Class Psychic)."
  },
  {
   "category": "classes",
@@ -172229,9 +172249,111 @@
       ]
      }
     }
+   },
+   {
+    "id": "twofold-tine",
+    "name": "Twofold Tine",
+    "description": "Magic dances between the two weapons you wield with equally deadly grace. Fighting groups of enemies takes full advantage of your capabilities as you move from one foe to another.\n\nWhile in Arcane Cascade stance, if you make a Strike with a melee weapon you're holding, you can intensify the stance's power for another melee weapon of your choice you're holding in a different hand. Until the end of your turn, any extra damage the chosen weapon gains from Arcane Cascade is increased to 2. The extra damage increases to 4 if you have weapon specialization or 6 if you have greater weapon specialization.\n\n**Conflux Spell** Force Fling",
+    "descRefs": [
+     {
+      "label": "Arcane Cascade",
+      "key": "actions"
+     },
+     {
+      "label": "Force Fling",
+      "key": "spells"
+     }
+    ],
+    "focusSpells": [
+     "force-fling"
+    ],
+    "spellSlotBonus": {
+     "entryId": "magus-casting",
+     "restricted": {
+      "label": "Studious spells",
+      "ladder": [
+       {
+        "level": 7,
+        "byRank": {},
+        "addSpells": [
+         "blur"
+        ]
+       },
+       {
+        "level": 11,
+        "byRank": {},
+        "addSpells": [
+         "gravity-well"
+        ]
+       },
+       {
+        "level": 13,
+        "byRank": {},
+        "addSpells": [
+         "unfettered-movement"
+        ]
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "volatile-spark",
+    "name": "Volatile Spark",
+    "description": "Your crashing spells meet their match with booming gunshots in a magical fusillade. By modifying your shots with your magic, you create explosions and cut through defenses.\n\nWhen you use Spellstrike, you can make a ranged firearm Strike, as long as the target is within the first range increment of your firearm. This overrides the actual range of the spell. If your firearm has the concussive trait, any damage from the spell you use in the Spellstrike uses the target's weakest resistance to any of the following: the spell's damage type, piercing, or bludgeoning. This benefit applies only to creatures you target with your firearm Strike during the Spellstrike, so it wouldn't apply to other creatures damaged with Expansive Spellstrike or similar abilities.\n\nIn addition, you gain the Reloading Cascade action.\n\n**Reloading Cascade** (1 action) You use Arcane Cascade and Interact to reload a firearm.\n\n**Conflux Spell** Booming Blast",
+    "descRefs": [
+     {
+      "label": "Spellstrike",
+      "key": "actions"
+     },
+     {
+      "label": "Arcane Cascade",
+      "key": "actions"
+     },
+     {
+      "label": "Interact",
+      "key": "actions"
+     },
+     {
+      "label": "Booming Blast",
+      "key": "spells"
+     }
+    ],
+    "focusSpells": [
+     "booming-blast"
+    ],
+    "spellSlotBonus": {
+     "entryId": "magus-casting",
+     "restricted": {
+      "label": "Studious spells",
+      "ladder": [
+       {
+        "level": 7,
+        "byRank": {},
+        "addSpells": [
+         "entangling-flora"
+        ]
+       },
+       {
+        "level": 11,
+        "byRank": {},
+        "addSpells": [
+         "earthbind"
+        ]
+       },
+       {
+        "level": 13,
+        "byRank": {},
+        "addSpells": [
+         "seal-fate"
+        ]
+       }
+      ]
+     }
+    }
    }
   ],
-  "why": "hybrid-study-3 'You gain the Shield Block general feat' and hybrid-study-7 'You gain the Cat Fall general feat' — each option's own description states the grant and delivered none of it. | batch 29 (folded from eight per-option path rows so this array row stays the single carrier the overlay checker can bake-compare): each hybrid study carries spellSlotBonus.restricted — label \"Studious spells\", byRank {} (a study adds a SPELL to the feature's two slots, never a slot), addSpells per tier 7/11/13 from print: unfurling-brocade web, whirling-scarves, planar-tether; aloof-firmament water-walk, wall-of-wind, variable-gravity; inexorable-iron enlarge, earthbind, planar-tether; laughing-shadow blur, shift-blame, translocate; resurgent-maelstrom water-walk, aqueous-orb, unfettered-movement; sparkling-targe resist-energy, warding-aggression, mountain-resilience; starlit-span darkvision, wall-of-wind, unfettered-movement; twisting-tree embed-message, slow, flicker"
+  "why": "hybrid-study-15 \"Twofold Tine\" (Impossible Magic pg. 14 — Conflux Spell Force Fling; Studious Spell 7th Blur, 11th Gravity Well, 13th Unfettered Movement) and hybrid-study-16 \"Volatile Spark\" (Impossible Magic pg. 14 — Conflux Spell Booming Blast; Studious Spell 7th Entangling Flora, 11th Earthbind, 13th Seal Fate). The eight shipped options are carried through byte-for-byte."
  },
  {
   "category": "classes",
@@ -182037,7 +182159,7 @@
   "value": [
    {
     "id": "eidolonBreathArea",
-    "prompt": "Breath Weapon area",
+    "prompt": "Choose your eidolon's breath weapon area",
     "options": [
      {
       "value": "line",
@@ -182050,7 +182172,7 @@
     ]
    }
   ],
-  "why": "eidolon-7: \"choose whether the area is a 60-foot line or a 30-foot cone\" — a second, grantless question the record asks and we never did. ClassFeature.choice is a single object and the record already spends it on eidolonBreathDamage, so effectChoices is the lane that takes a second question; classFeatures/dragon-eidolon carries NO effectChoices today, so this assigns the whole (new) field. Options may legitimately carry no grant (types.ts:2012-2016, \"An option with no grant simply applies nothing\"), and Builder.tsx:1897-1904 already mounts EffectChoicesPicker on content.classFeatures[build.subclassId] — dragon-eidolon IS a summoner subclass option id — so the row alone makes it a visible control."
+  "why": "eidolon-7 prints the Dragon eidolon's Breath Weapon. EffectChoicesPicker prints the prompt twice — as the card label and inside the button — so a label, not a question, reads as a stray fragment."
  },
  {
   "category": "classFeatures",
@@ -182306,6 +182428,60 @@
    "subclass"
   ],
   "value": [
+   {
+    "id": "aberrant-eidolon",
+    "name": "Aberrant Eidolon",
+    "description": "Your eidolon is a terrifying, incomprehensible nightmare patterned after the creatures who owe their existence to the Outer Gods and Great Old Ones. Aberrant eidolons come in a variety of forms, though their anatomies often appear twisted and impossible. Most people can't even look at any aberrant eidolon without developing a splitting headache or having a panic attack, but your studies of the occult have inured your mind to these dread terrors.\n\n**Tradition** Occult\n\n**Home Plane** Dimension of Dreams or the Universe\n\n---\n\n**Size** Medium or Small\n\n**Suggested Attacks** claw (slashing), jaws (piercing), tentacle (bludgeoning)\n\n- Str \n- Dex \n- Con 2\n- Int 1\n- Wis 1\n- Cha -1\n- AC ( Dex cap)\n\n**Skills** Athletics, Occultism\n\n**Senses** darkvision\n\n**Language** Aklo\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities**\n\n- **Initial** Surprising Anatomy \n- **Symbiosis** Unfathomable Mind\n- **Transcendence** Maddening Whispers\n\n Surprising Anatomy \n\n**Trigger** An enemy adjacent to your eidolon deals damage to your eidolon; **Effect** Your eidolon's form shifts horribly to retaliate against the attacker. Your eidolon makes a melee unarmed Strike against the triggering enemy.\n\n Unfathomable Mind \n\nThose who try to touch your eidolon's mind find their own minds shattered. When your eidolon succeeds at a saving throw against a mental effect from a creature, that creature takes 4d6 mental damage with a basic Will save against your spell DC. A creature who fails this save is also stupefied 1 (stupefied 2 on a critical failure). At 9th level and every 2 levels thereafter, the damage increases by 1d6.\n\n Maddening Whispers \n\nYour aberrant eidolon utters terrible secrets about the true nature of the universe. They can cast _unfathomable song_ once per day as an innate occult spell. Your eidolon can Sustain this spell as a free action if they spend at least one action Striding toward one of the targets.",
+    "descRefs": [
+     {
+      "label": "Athletics",
+      "key": "skill"
+     },
+     {
+      "label": "Occultism",
+      "key": "skill"
+     },
+     {
+      "label": "Aklo",
+      "key": "languages"
+     },
+     {
+      "label": "stupefied",
+      "key": "conditions"
+     },
+     {
+      "label": "_unfathomable song_",
+      "key": "spells"
+     }
+    ],
+    "tradition": "occult",
+    "grants": {
+     "skills": [
+      "athletics",
+      "occultism"
+     ]
+    },
+    "eidolonAbilities": [
+     {
+      "tier": "initial",
+      "level": 1,
+      "name": "Surprising Anatomy",
+      "text": "**Trigger** An enemy adjacent to your eidolon deals damage to your eidolon; **Effect** Your eidolon's form shifts horribly to retaliate against the attacker. Your eidolon makes a melee unarmed Strike against the triggering enemy."
+     },
+     {
+      "tier": "symbiosis",
+      "level": 7,
+      "name": "Unfathomable Mind",
+      "text": "Those who try to touch your eidolon's mind find their own minds shattered. When your eidolon succeeds at a saving throw against a mental effect from a creature, that creature takes 4d6 mental damage with a basic Will save against your spell DC. A creature who fails this save is also stupefied 1 (stupefied 2 on a critical failure). At 9th level and every 2 levels thereafter, the damage increases by 1d6."
+     },
+     {
+      "tier": "transcendence",
+      "level": 17,
+      "name": "Maddening Whispers",
+      "text": "Your aberrant eidolon utters terrible secrets about the true nature of the universe. They can cast _unfathomable song_ once per day as an innate occult spell. Your eidolon can Sustain this spell as a free action if they spend at least one action Striding toward one of the targets."
+     }
+    ]
+   },
    {
     "id": "angel-eidolon",
     "name": "Angel Eidolon",
@@ -182716,6 +182892,60 @@
     ]
    },
    {
+    "id": "ooze-eidolon",
+    "name": "Ooze Eidolon",
+    "description": "Your eidolon is a simple creature of protoplasm held together by magic and your mind. They often appear as creeping blobs of a single color, but this doesn't mean they can't have distinctive features, such as moss or fungus growing on their surface or bones and other debris floating within. Because they have been formed by your thoughts, your ooze eidolon isn't mindless, but likely doesn't have a complete personality. Though your ooze eidolon speaks no language, you might believe you can interpret the constant burbles and plops they make as a form of speaking.\n\n**Tradition** Arcane\n\n**Home Plane** the Universe\n\n---\n\n**Size** Medium\n\n**Suggested Attacks** pseudopod (bludgeoning)\n\n- Str \n- Dex \n- Con 3\n- Int -1\n- Wis 1\n- Cha 0\n- AC ( Dex cap)\n\n**Skills** Arcana, Athletics\n\n**Senses** motion sense (precise) 60 feet, no vision\n\n**Language** \n\n**Speed** 20 feet\n\n---\n\n**Eidolon Abilities**\n\n- **Initial** Ooze Physiology\n- **Symbiosis** Stretching Pseudopods\n- **Transcendence** Flowing Engulf \n\n Ooze Physiology \n\nYou and your ooze eidolon are directly connected in both body and mind, which renders your eidolon susceptible to effects that wouldn't normally bother an ooze. They don't have an ooze's normal immunities, but do gain resistance equal to half your level (minimum 1 resistance) against acid, critical hits, and precision damage and a +2 circumstance bonus to saving throws against mental effects. Additionally, their surface closes quickly after being wounded. The flat check to remove persistent bleed damage from the eidolon is DC 10 (or DC 5 after receiving particularly effective aid).\n\n Stretching Pseudopods \n\nYour eidolon's pseudopods can stretch farther. All your eidolon's melee unarmed attacks gain the reach trait.\n\n Flowing Engulf \n\nYour eidolon Strides up to double their Speed and can move through the spaces of any creatures in their path. Any creature of the eidolon's size or smaller whose space your eidolon moves through is engulfed unless it succeeds at a Reflex save against your spell DC. Your eidolon can attempt to engulf the same creature only once in a single use of Flowing Engulf, and they can contain as many creatures as can fit in their space.\n\n An engulfed creature is pulled into your eidolon's body. It is grabbed, slowed 1, and moves along with your eidolon as long as it is engulfed. It can get free by Escaping against your spell DC, moving to a space of its choice adjacent to your eidolon.",
+    "descRefs": [
+     {
+      "label": "Arcana",
+      "key": "skill"
+     },
+     {
+      "label": "Athletics",
+      "key": "skill"
+     },
+     {
+      "label": "mental",
+      "key": "trait"
+     },
+     {
+      "label": "reach",
+      "key": "trait"
+     },
+     {
+      "label": "slowed",
+      "key": "conditions"
+     }
+    ],
+    "tradition": "arcane",
+    "grants": {
+     "skills": [
+      "arcana",
+      "athletics"
+     ]
+    },
+    "eidolonAbilities": [
+     {
+      "tier": "initial",
+      "level": 1,
+      "name": "Ooze Physiology",
+      "text": "You and your ooze eidolon are directly connected in both body and mind, which renders your eidolon susceptible to effects that wouldn't normally bother an ooze. They don't have an ooze's normal immunities, but do gain resistance equal to half your level (minimum 1 resistance) against acid, critical hits, and precision damage and a +2 circumstance bonus to saving throws against mental effects. Additionally, their surface closes quickly after being wounded. The flat check to remove persistent bleed damage from the eidolon is DC 10 (or DC 5 after receiving particularly effective aid)."
+     },
+     {
+      "tier": "symbiosis",
+      "level": 7,
+      "name": "Stretching Pseudopods",
+      "text": "Your eidolon's pseudopods can stretch farther. All your eidolon's melee unarmed attacks gain the reach trait."
+     },
+     {
+      "tier": "transcendence",
+      "level": 17,
+      "name": "Flowing Engulf",
+      "text": "Your eidolon Strides up to double their Speed and can move through the spaces of any creatures in their path. Any creature of the eidolon's size or smaller whose space your eidolon moves through is engulfed unless it succeeds at a Reflex save against your spell DC. Your eidolon can attempt to engulf the same creature only once in a single use of Flowing Engulf, and they can contain as many creatures as can fit in their space.\n\n An engulfed creature is pulled into your eidolon's body. It is grabbed, slowed 1, and moves along with your eidolon as long as it is engulfed. It can get free by Escaping against your spell DC, moving to a space of its choice adjacent to your eidolon."
+     }
+    ]
+   },
+   {
     "id": "plant-eidolon",
     "name": "Plant Eidolon",
     "description": "Your eidolon is an intelligent plant, formed from the same disembodied fragments of nature's life energy that become leshys. Plant eidolons tend to be curious and adaptable, with temperaments based on the parts of mortal culture they feel affinity toward. Despite coming from the same source, plant eidolons don't always look like leshys. Plant eidolons have forms that vary greatly and can look like almost any kind of plant creature in existence. Some even resemble plant creatures so strange they are impossible to identify.\n\n**Tradition** primal\n\n**Traits** eidolon, plant\n\n**Home Plane** Material Plane\n\n---\n\n**Size** Medium\n\n**Suggested Attacks** vine (bludgeoning), branch (bludgeoning), root (bludgeoning)\n\n**Guardian Plant** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap)\n\n**Creeping Plant** Str 12, Dex 18, Con 16, Int 8, Wis 14, Cha 10; +1 AC (+4 Dex cap)\n\n**Skills** Nature, Survival\n\n**Senses** low-light vision\n\n**Language** Sylvan\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities** *Initial *tendril strike*; Symbiosis *growing vines*; Transcendence *field of roots\n\n## Tendril Strike\n\nYour eidolon can stretch out vines and roots, attacking foes outside its reach. It gains the Tendril Strike action.\n\n## Growing Vines 7th\n\nYour eidolon's vines and branches lengthen even more. All your eidolon's melee unarmed attacks gain the reach trait.\n\n## Field of Roots 17th\n\nYour eidolon learns how to send its roots underground to hinder foes. It gains the Field of Roots activity.",
@@ -182900,7 +183130,7 @@
     ]
    }
   ],
-  "why": "AoN eidolon-13 \"In addition, your eidolon gains the Redistribute reaction.\" — the option copy shipped with the reaction NAME deleted. The same value also carries swarm-eidolon#sickening-swarm-name's \"## Sickening Swarm 17th\" heading (eidolon-13 titles it Sickening Swarm), merged here because two findings hit one record+field. Supersedes the existing classes/summoner options@[subclass] row, whose value is merged whole (it is byte-identical to the shipped array)."
+  "why": "eidolon-14 (Aberrant) and eidolon-23 (Ooze) are the two eidolon types Impossible Magic adds, and a summoner could not pick either. Elemental (eidolon-12, Rage of Elements) and Swarm (eidolon-13, Battlecry!) stay: neither is reprinted, and legacy-only content stays. Every shipped option keeps its id, so a saved summoner still resolves."
  },
  {
   "category": "classes",
@@ -187918,5 +188148,747 @@
    "level": 2
   },
   "why": "way-5 and archetype-122 — Way of the Spellshot prints \"You must select Spellshot Dedication as your 2nd-level class feat.\" and nothing enforced or prompted it. requiresFeat is the app's existing field for exactly this sentence: barbarian/bloodrager and inventor/light-mortar-innovation both carry it, and setupMissing (build.ts) reports the feat as outstanding once the level is reached without it. Never auto-granted — the printed sentence instructs the player."
+ },
+ {
+  "category": "classFeatures",
+  "id": "ability-boosts",
+  "field": "edition",
+  "value": "legacy"
+ },
+ {
+  "category": "feats",
+  "id": "void-siphon",
+  "field": "edition",
+  "value": "remaster-era"
+ },
+ {
+  "category": "feats",
+  "id": "knowledge-is-power",
+  "field": "aonId",
+  "value": "feat-5039",
+  "why": "PINNED, and pinned deliberately. feat-2861 (Secrets of Magic) names TWO successors — feat-5039 (Player Core, now Wizard-only) and feat-9062 (Impossible Magic, Magus) — so the newest-printing rule reaches for feat-9062, which already ships as feats/knowledge-is-power-magus. Repointing there was tried and test/batch032-gap-situational.test.ts caught it: a level-8 wizard was offered no Knowledge is Power at all. feat-5039 is the document this record has always been built from and stays so."
+ },
+ {
+  "category": "feats",
+  "id": "knowledge-is-power",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Player Core",
+   "license": "OGL"
+  },
+  "why": "feat-5039 prints [\"Player Core\"]. The record had drifted to \"Pathfinder Secrets of Magic\" — the book of feat-2861, the printing feat-5039 replaced — when the re-export pruned feat-2861 and the record briefly fell back to its Foundry copy. source.book is the key the source filter runs on (src/rules/sources.ts). Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "arcane-spellcasting-magus",
+  "field": "aonId",
+  "value": "class-feature-1258",
+  "why": "class-feature-418 \"Arcane Spellcasting\" (Secrets of Magic, class Magus, level 1) is replaced by class-feature-1258 \"Magus Spellcasting\" (Impossible Magic, class Magus, level 1), which carries legacy_id [\"class-17\"] — the legacy magus CLASS page, not this feature. Same class, same level, one feature each side; only the name moved, which is exactly the case the class hop refuses to guess at. Nothing in src/ reads this id, so the record changes its page and its text and keeps its key."
+ },
+ {
+  "category": "classFeatures",
+  "id": "arcane-spellcasting-magus",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "OGL"
+  },
+  "why": "class-feature-1258 prints [\"Impossible Magic\"]. source.book is the key the source filter runs on (src/rules/sources.ts), so it has to follow the document or the record answers to a book it is no longer in. Licence carried over unchanged."
+ },
+ {
+  "category": "items",
+  "id": "staff-of-natures-cunning",
+  "field": "price",
+  "value": {
+   "gp": 320
+  },
+  "why": "The record is on its Impossible Magic printing, equipment-5169, whose base variant equipment-5169-4671 prints \"320 gp\" (32,000 cp). The 250 gp it carried is the Secrets of Magic price from equipment-1002-953, the printing equipment-5169 replaces. The greater and major rungs are unchanged at 1,400 and 6,500 gp (equipment-5169-4672 / -4673), so only the base moved."
+ },
+ {
+  "category": "spells",
+  "id": "elemental-confluence",
+  "field": "area",
+  "value": "20-foot burst",
+  "why": "spell-2689 \"Elemental Confluence\" prints a 20-foot burst and has all along — the record said 10-foot. It only became visible now because the page used to carry the area inside AoN's old template markup (area_raw \"20-foot <%RULES%2385%%>burst<%END>\"), which scripts/spell-check.mjs could not read; the re-export replaced it with the new {{rules 2385 \"burst\"}} form, the comparison started working, and it immediately found this. Ours was wrong, not the Archives."
+ },
+ {
+  "category": "spells",
+  "id": "elemental-confluence",
+  "field": "baseArea",
+  "value": {
+   "value": 20,
+   "kind": "burst"
+  },
+  "why": "spell-2689 \"Elemental Confluence\" prints a 20-foot burst (area_raw \"20-foot {{rules 2385 \\\"burst\\\"}}\", structured area [20]). The record's `area` string was corrected to \"20-foot burst\" in the same batch; `baseArea` still held {value: 10, kind: burst}, which is the number the engine actually reads."
+ },
+ {
+  "category": "feats",
+  "id": "knowledge-is-power",
+  "field": "level",
+  "value": 8,
+  "why": "feat-5039 prints \"Feat 8\". The record briefly read 6 — feat-2861's level — for the same fallback reason as the source row above."
+ },
+ {
+  "category": "feats",
+  "id": "knowledge-is-power",
+  "field": "traits",
+  "value": [
+   "magus",
+   "wizard"
+  ],
+  "why": "⚠ THE ONE VALUE HERE THAT THE ARCHIVES NO LONGER PRINT, and it is deliberate. feat-5039's trait_raw was [\"Magus\",\"Wizard\"] until the 2026-09-23 re-export narrowed it to [\"Wizard\"]. This record is the only one carrying both, and it is the record both classes are offered — drop `magus` and a magus loses the feat, mark the record superseded instead and a wizard loses it, because feats/knowledge-is-power-wizard is hidden behind it by findDuplicateIds. Held at the v0.1.40 shape until the owner rules on following the split."
+ },
+ {
+  "category": "feats",
+  "id": "knowledge-is-power",
+  "field": "edition",
+  "value": "remaster",
+  "why": "feat-5039 is a remaster printing. The record briefly came back as `superseded` when the re-export pruned feat-2861 and it fell through to the kept-orphan path; `superseded` hides it from every picker, which is what took the feat off the level-8 wizard."
+ },
+ {
+  "category": "backgrounds",
+  "id": "animal-wrangler",
+  "field": "grantedFeatId",
+  "value": "titan-wrestler",
+  "why": "background-135 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. titan-wrestler is the branch for athletics, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "blow-in",
+  "field": "grantedFeatId",
+  "value": "lengthy-diversion",
+  "why": "background-137 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. lengthy-diversion is the branch for deception, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "sponsored-by-family",
+  "field": "grantedFeatId",
+  "value": "hobnobber",
+  "why": "background-223 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. hobnobber is the branch for diplomacy, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "sponsored-by-teacher-ot",
+  "field": "grantedFeatId",
+  "value": "survey-wildlife",
+  "why": "background-224 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. survey-wildlife is the branch for survival, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "sponsored-by-a-village",
+  "field": "grantedFeatId",
+  "value": "crafters-appraisal",
+  "why": "background-226 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. crafters-appraisal is the branch for crafting, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "unsponsored",
+  "field": "grantedFeatId",
+  "value": "group-impression",
+  "why": "background-227 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. group-impression is the branch for diplomacy, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "able-carter",
+  "field": "grantedFeatId",
+  "value": "charming-liar",
+  "why": "background-318 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. charming-liar is the branch for deception, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "construction-occultist",
+  "field": "grantedFeatId",
+  "value": "hefty-hauler",
+  "why": "background-319 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. hefty-hauler is the branch for athletics, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "food-trader",
+  "field": "grantedFeatId",
+  "value": "seasoned",
+  "why": "background-321 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. seasoned is the branch for crafting, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "money-counter",
+  "field": "grantedFeatId",
+  "value": "eye-for-numbers",
+  "why": "background-322 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. eye-for-numbers is the branch for society, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "propaganda-promoter",
+  "field": "grantedFeatId",
+  "value": "steady-balance",
+  "why": "background-323 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. steady-balance is the branch for acrobatics, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "backgrounds",
+  "id": "martial-disciple",
+  "field": "grantedFeatId",
+  "value": "cat-fall",
+  "why": "background-432 still prints the pair in its prose (\"You gain a skill feat: …\"); only the structured feat facet was emptied. cat-fall is the branch for acrobatics, the first skill the record offers, which is the branch backgroundGrantedFeats() defaults to when the player has not picked yet."
+ },
+ {
+  "category": "classFeatures",
+  "id": "inexorable-iron",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "OGL"
+  },
+  "why": "hybrid-study-10 prints [\"Impossible Magic\"]; the record's aonId is already that document. Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "laughing-shadow",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "OGL"
+  },
+  "why": "hybrid-study-11 prints [\"Impossible Magic\"]; the record's aonId is already that document. Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "sparkling-targe",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "OGL"
+  },
+  "why": "hybrid-study-12 prints [\"Impossible Magic\"]; the record's aonId is already that document. Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "starlit-span",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "OGL"
+  },
+  "why": "hybrid-study-13 prints [\"Impossible Magic\"]; the record's aonId is already that document. Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "twisting-tree",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "OGL"
+  },
+  "why": "hybrid-study-14 prints [\"Impossible Magic\"]; the record's aonId is already that document. Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "spell-repertoire-summoner",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "OGL"
+  },
+  "why": "class-feature-1339 prints [\"Impossible Magic\"]; the record's aonId is already that document. Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "arcane-spellcasting-magus",
+  "field": "name",
+  "value": "Magus Spellcasting",
+  "why": "class-feature-1258 is titled \"Magus Spellcasting\" (Impossible Magic pg. 9, class Magus, level 1) and is the record's own aonId. The key stays `arcane-spellcasting-magus` because the magus class table names it and saved characters resolve through it; only the displayed name follows the page."
+ },
+ {
+  "category": "classes",
+  "id": "summoner",
+  "field": "features",
+  "value": [
+   {
+    "level": 1,
+    "featureId": "eidolon"
+   },
+   {
+    "level": 11,
+    "featureId": "eidolon-defensive-expertise"
+   },
+   {
+    "level": 13,
+    "featureId": "weapon-specialization-summoner"
+   },
+   {
+    "level": 9,
+    "featureId": "expert-spellcaster-summoner"
+   },
+   {
+    "level": 19,
+    "featureId": "instant-manifestation"
+   },
+   {
+    "level": 3,
+    "featureId": "shared-vigilance"
+   },
+   {
+    "level": 13,
+    "featureId": "eidolon-unarmed-mastery"
+   },
+   {
+    "level": 15,
+    "featureId": "shared-resolve"
+   },
+   {
+    "level": 3,
+    "featureId": "signature-spells-summoner"
+   },
+   {
+    "level": 1,
+    "featureId": "evolution-feat"
+   },
+   {
+    "level": 11,
+    "featureId": "twin-juggernauts"
+   },
+   {
+    "level": 15,
+    "featureId": "greater-eidolon-specialization"
+   },
+   {
+    "level": 13,
+    "featureId": "defensive-robes-summoner"
+   },
+   {
+    "level": 11,
+    "featureId": "simple-weapon-expertise-summoner"
+   },
+   {
+    "level": 1,
+    "featureId": "summoner-spellcasting"
+   },
+   {
+    "level": 1,
+    "featureId": "spell-repertoire-summoner"
+   },
+   {
+    "level": 5,
+    "featureId": "eidolon-unarmed-expertise"
+   },
+   {
+    "level": 7,
+    "featureId": "eidolon-symbiosis"
+   },
+   {
+    "level": 17,
+    "featureId": "master-spellcaster-summoner"
+   },
+   {
+    "level": 7,
+    "featureId": "eidolon-weapon-specialization"
+   },
+   {
+    "level": 17,
+    "featureId": "eidolon-transcendence"
+   },
+   {
+    "level": 19,
+    "featureId": "eidolon-defensive-mastery"
+   },
+   {
+    "level": 9,
+    "featureId": "shared-reflexes"
+   },
+   {
+    "level": 1,
+    "featureId": "link-spells"
+   }
+  ],
+  "why": "class-feature-1346 is the level-3 row Impossible Magic prints for the summoner (class-77). The row moves off `unlimited-signature-spells` (class-feature-455, Secrets of Magic) to the summoner's own reprint id, so the class table and the engine agree on one printing."
+ },
+ {
+  "category": "items",
+  "id": "noxious-incense",
+  "field": "hands",
+  "value": 1,
+  "why": "equipment-5060 (Impossible Magic) prints \"**Usage** held in 1 hand\" and no `hands` field; equipment-1008-964, the printing it replaces, prints \"**Hands** 1\". Same item, same one hand."
+ },
+ {
+  "category": "feats",
+  "id": "irrepressible-ganzi",
+  "create": true,
+  "value": {
+   "id": "irrepressible-ganzi",
+   "name": "Irrepressible (Ganzi)",
+   "traits": [
+    "nephilim"
+   ],
+   "rarity": "common",
+   "source": {
+    "book": "Pathfinder War of Immortals"
+   },
+   "level": 1,
+   "category": "general",
+   "edition": "superseded",
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against an emotion effect",
+     "saves": [
+      "all"
+     ]
+    }
+   ],
+   "aonId": "feat-7201"
+  },
+  "why": "feat-7201 is the same document under both names — it was \"Irrepressible (Ganzi)\" in the pre-refresh export and is \"Irrepressible (Nephilim)\" now. The live record is feats/irrepressible-nephilim; this is the key a character saved before the rename still carries."
+ },
+ {
+  "category": "feats",
+  "id": "guding-retort",
+  "create": true,
+  "value": {
+   "id": "guding-retort",
+   "name": "Guding Retort",
+   "traits": [
+    "eidolon",
+    "evolution",
+    "summoner"
+   ],
+   "rarity": "common",
+   "source": {
+    "book": "Pathfinder Impossible Magic"
+   },
+   "level": 14,
+   "category": "class",
+   "edition": "superseded",
+   "aonId": "feat-9271"
+  },
+  "why": "feat-9271 is the same document under both names — AoN corrected its own \"Guding\" spelling to \"Guiding\". The live record is feats/guiding-retort; this is the key a character saved before the correction carries."
+ },
+ {
+  "category": "classFeatures",
+  "id": "double-spellstrike",
+  "field": "description",
+  "value": "When adding a spell to an attack simply isn’t enough, you combine two spells with your attack instead. You gain the Double Spellstrike activity.",
+  "why": "class-feature-1281 (Impossible Magic) is this record's own aonId — the shipped prose is Secrets of Magic's stored-echo mechanic (\"you retain an echo of the spell, stored in your body\"), which Impossible Magic replaced outright with a two-spell activity. The record's own AST and the action it grants (actions/double-spellstrike, Impossible Magic pg. 11) already describe the new one, so the Feats-tab row and the page it opens stated different rules."
+ },
+ {
+  "category": "classFeatures",
+  "id": "eidolon-transcendence",
+  "field": "description",
+  "value": "Your connection with your eidolon approaches its peak, granting your eidolon access to a powerful new ability depending on their type, as described in Eidolon Abilities in each eidolon’s entry. In addition, choose one of your eidolon’s attribute modifiers to increase by 1.",
+  "why": "class-feature-1362 (Impossible Magic) is this record's own aonId — the shipped prose says the ability \"increases one of the eidolon's ability scores by 2\"; the reprint says choose one of the eidolon's attribute MODIFIERS to increase by 1. Different number, different statistic."
+ },
+ {
+  "category": "classFeatures",
+  "id": "spell-repertoire-summoner",
+  "field": "description",
+  "value": "The collection of spells you can cast is called your spell repertoire. At 1st level, you learn one 1st-rank spell of your choice and five cantrips of your choice. You choose these from the common spells from the tradition corresponding to your eidolon, or from other spells from that tradition to which you have access. You can cast any spell in your spell repertoire by using a spell slot of an appropriate spell rank.\n\nYou add to this spell repertoire as you increase in level. Each time you get a spell slot (see the Summoner Spells per Day table), you add a spell to your spell repertoire of the same rank. At 2nd level, you select another 1st-rank spell. At 3rd level, you add the first 2nd-rank spell to your repertoire. At 4th level, you gain your second 2nd-rank spell, and so on. When you add spells, you might select a higher-rank version of a spell you already have so that you can cast a heightened version of that spell.\n\nThough you gain them at the same rate, your spell slots and the spells in your spell repertoire are separate. If a feat or other ability adds a spell to your spell repertoire, it wouldn't give you another spell slot or vice versa.\n\nSwapping Spells In Your Repertoire\n\nAs you gain new spells in your repertoire, you might want to replace some of the spells you previously learned. Each time you gain a level and learn new spells, you can swap out one of your old spells for a different spell of the same rank. This spell can be a cantrip, but you can't swap out link spells. You can also swap out spells by retraining during downtime.",
+  "why": "class-feature-1339 (Impossible Magic) is this record's own aonId — the shipped prose says a 1st-level summoner learns TWO 1st-rank spells and that the repertoire reaches \"its maximum size of five spells\"; the reprint says one 1st-rank spell and five cantrips, and drops the fixed maximum. The engine already sizes the repertoire from the slot table, which is the reprint's shape, so the text was the half that was wrong."
+ },
+ {
+  "category": "items",
+  "id": "judgment-thurible-greater",
+  "field": "level",
+  "value": 17,
+  "why": "equipment-2232-1951 — the remastered printing of this exact variant, \"Judgement Thurible (Greater)\", Item 17. The legacy block the record's own aonId names (equipment-4766-4258) carries Item 20 under the title \"(Greater)\", which is the transposition price-check.mjs already records."
+ },
+ {
+  "category": "items",
+  "id": "judgment-thurible-greater",
+  "field": "price",
+  "value": {
+   "gp": 14000
+  },
+  "why": "equipment-2232-1951 prints 14,000 gp for the Greater. The legacy page's \"(Greater)\" block prints 65,000 gp, which is the Major's price on the remastered page (equipment-2232-1952)."
+ },
+ {
+  "category": "items",
+  "id": "judgment-thurible-major",
+  "field": "level",
+  "value": 20,
+  "why": "equipment-2232-1952 — the remastered printing of this exact variant, \"Judgement Thurible (Major)\", Item 20. The legacy block the record's own aonId names (equipment-4766-4257) carries Item 17 under the title \"(Major)\"."
+ },
+ {
+  "category": "items",
+  "id": "judgment-thurible-major",
+  "field": "price",
+  "value": {
+   "gp": 65000
+  },
+  "why": "equipment-2232-1952 prints 65,000 gp for the Major. The legacy page's \"(Major)\" block prints 14,000 gp, which is the Greater's price on the remastered page (equipment-2232-1951)."
+ },
+ {
+  "category": "items",
+  "id": "dragonhide",
+  "field": "description",
+  "value": "Dragonhide \nSource Player Core 2 pg. 276\nPrice 350 gp\nBulk L \n\nThe hide and scales of a dragon can be used to Craft any item normally made of ordinary leather or hide. Dragonhide varies in color and texture, depending on the dragon it came from. Due to dragonhide's resiliency, it can also be used to Craft armor usually made out of metal plates (such as a breastplate, half plate, and full plate), allowing such armor to be made without metal. Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon.\n## \nDragonhide Items\nHardness\nHP\nBT\nThin Items\nStandard-grade\n4\n16\n8\nHigh-grade\n8\n32\n16\nStandard Items\nStandard-grade\n7\n28\n14\nHigh-grade\n11\n44\n22\n\nMaterial Uses\n Dragonhide Armor\nDragonhide Shield\n Dragonhide Object (Standard-Grade) \nSource Player Core 2 pg. 276, Core Rulebook pg. 579\nPrice 350 gp (per Bulk)\nBulk L\n\nCraft Requirements The initial raw materials must include dragonhide worth at least 200 gp + 20 per Bulk\n Dragonhide Object (High-Grade) \nSource Player Core 2 pg. 276, Core Rulebook pg. 579\nPrice 6,000 gp (per Bulk)\nBulk L",
+  "why": "equipment-3269 (Dragonhide Armor) prints the restored sentence verbatim, as does equipment-3270 (Dragonhide Shield) — the same Craft Requirement for the same material. equipment-3268, the material's own page, printed it until the 2026-09-23 refresh and no longer does."
+ },
+ {
+  "category": "items",
+  "id": "dragonhide-object-standard-grade",
+  "field": "description",
+  "value": "Dragonhide \nSource Player Core 2 pg. 276\nPrice 350 gp\nBulk L \n\nThe hide and scales of a dragon can be used to Craft any item normally made of ordinary leather or hide. Dragonhide varies in color and texture, depending on the dragon it came from. Due to dragonhide's resiliency, it can also be used to Craft armor usually made out of metal plates (such as a breastplate, half plate, and full plate), allowing such armor to be made without metal. Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon.\n## \nDragonhide Items\nHardness\nHP\nBT\nThin Items\nStandard-grade\n4\n16\n8\nHigh-grade\n8\n32\n16\nStandard Items\nStandard-grade\n7\n28\n14\nHigh-grade\n11\n44\n22\n\nMaterial Uses\n Dragonhide Armor\nDragonhide Shield\n Dragonhide Object (Standard-Grade) \nSource Player Core 2 pg. 276, Core Rulebook pg. 579\nPrice 350 gp (per Bulk)\nBulk L\n\nCraft Requirements The initial raw materials must include dragonhide worth at least 200 gp + 20 per Bulk\n Dragonhide Object (High-Grade) \nSource Player Core 2 pg. 276, Core Rulebook pg. 579\nPrice 6,000 gp (per Bulk)\nBulk L",
+  "why": "equipment-3269 (Dragonhide Armor) prints the restored sentence verbatim. This record shares the material page's prose with items/dragonhide, so it lost the same line."
+ },
+ {
+  "category": "items",
+  "id": "dragonhide-object-high-grade",
+  "field": "description",
+  "value": "Dragonhide \nSource Player Core 2 pg. 276\nPrice 350 gp\nBulk L \n\nThe hide and scales of a dragon can be used to Craft any item normally made of ordinary leather or hide. Dragonhide varies in color and texture, depending on the dragon it came from. Due to dragonhide's resiliency, it can also be used to Craft armor usually made out of metal plates (such as a breastplate, half plate, and full plate), allowing such armor to be made without metal. Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon.\n## \nDragonhide Items\nHardness\nHP\nBT\nThin Items\nStandard-grade\n4\n16\n8\nHigh-grade\n8\n32\n16\nStandard Items\nStandard-grade\n7\n28\n14\nHigh-grade\n11\n44\n22\n\nMaterial Uses\n Dragonhide Armor\nDragonhide Shield\n Dragonhide Object (Standard-Grade) \nSource Player Core 2 pg. 276, Core Rulebook pg. 579\nPrice 350 gp (per Bulk)\nBulk L\n\nCraft Requirements The initial raw materials must include dragonhide worth at least 200 gp + 20 per Bulk\n Dragonhide Object (High-Grade) \nSource Player Core 2 pg. 276, Core Rulebook pg. 579\nPrice 6,000 gp (per Bulk)\nBulk L",
+  "why": "equipment-3269 (Dragonhide Armor) prints the restored sentence verbatim. This record shares the material page's prose with items/dragonhide, so it lost the same line."
+ },
+ {
+  "category": "classFeatures",
+  "id": "eidolon",
+  "field": "description",
+  "value": "You have a connection with a powerful and usually otherworldly entity called an eidolon, and you can use your life force as a conduit to manifest this ephemeral entity into the mortal world. Magic also flows through this conduit from your eidolon into you, so your eidolon determines the type of spells you cast and the spell list you choose from.\n\nChoose a type of eidolon from the options you have access to. When you choose your eidolon, you also determine its appearance and general form, within the parameters for that particular type of eidolon. Once you establish your eidolon's type and general appearance, these features can't be changed later, except by selecting special evolution feats that can cause your eidolon to develop new features.\n\nYour magical connection with your eidolon takes the form of a sigil on each of your bodies. As long as your eidolon is manifested, the sigil glows with light and can't be covered or disguised via any means; it will shine through clothing, appear over cloaks, and remain unaffected by obfuscating magic. This, combined with the way that the two of you clearly act in tandem, makes it readily apparent to an intelligent observer that the two of you are connected in some way, even if the person has never encountered a summoner before.\n\nYou bring your eidolon into reality with the Manifest Eidolon action.\n\nYour eidolon is no mere minion. It doesn't have the minion or summoned trait, and the two of you work together and coordinate your actions. You and your eidolon share your actions and multiple attack penalty. Each round, you can use any of your actions (including reactions and free actions) for yourself or your eidolon.\n\nYou coordinate your actions with your eidolon more efficiently when you Act Together. Your connection with your eidolon allows you to communicate with it telepathically at all times, even when it isn't manifested. You also gain the Share Senses action.\n\nLastly, the connection between you and your eidolon means you both share a single pool of Hit Points. Damage taken by either you or the eidolon reduces your Hit Points, while healing either of you recovers your Hit Points. Like with your actions, if you and your eidolon are both subject to the same effect that affects your Hit Points, you apply those effects only once (applying the greater effect, if applicable). For instance, if you and your eidolon get caught in an area effect that would heal or damage you both, only the greater amount of healing or damage applies.\n\n### Gear and your Eidolon\n\nYour eidolon can't wear or use magic items, except for items with the eidolon trait. An eidolon can have up to two items invested. Your eidolon's link to you means it can benefit from certain magic items invested by you.\n\n- Your eidolon gains item bonuses to Perception and skills from any magical items that you have invested.\n- Your eidolon increases its item bonus to AC based on your armor's armor potency rune or bracers of armor. It also gains an item bonus to its saves from the resilient rune on your armor or from your bracers of armor. Other permanent items that grant or increase item bonuses to AC and saves might convey a similar benefit, as determined by the GM.\n- Your eidolon's Strikes benefit from the fundamental and property runes on your handwraps of mighty blows. Alternatively, you can Invest a magic weapon (even though magic weapons can't normally be Invested) to share its fundamental and property runes with your eidolon. You share these benefits only while you're holding the weapon, and you can have no more than one weapon invested in this way at a time. In either case, the eidolon gains only the benefits that can apply to its attacks, with the same limitations noted in handwraps of mighty blows.\n\n### Lost and Altered Actions\n\nIf you or your eidolon becomes slowed, stunned, quickened, or otherwise affected by something that changes the actions you gain at the start of each turn, it affects your shared actions. However, if you are both subject to such an effect, apply only the more severe one. For instance, if you or your eidolon were Slowed 1, you would start your turn with one fewer action, but if you were both slowed 1, you would still lose only one action, rather than adding the two slowed effects together. However, if you were slowed 1 and your eidolon Slowed 2, you'd have two fewer actions, because that's the more severe effect. If only one of you becomes restricted in how you can spend your actions, that restriction doesn't automatically extend to the other; for example, if your eidolon became immobilized or petrified, it wouldn't be able to move, but you could still use your actions to move. The GM resolves any situation that's unclear.\n\nYou, as the player, control both your summoner and your eidolon, and the two are generally considered to cooperate unless you decide for them not to. While a summoner's link with an eidolon is a partnership, ultimately the eidolon is linked to you, not the other way around. If there's ever a conflict of who should act, you win out over your eidolon. This means that if the eidolon comes under an effect that would take its actions out of your control, such as the confused or controlled condition, you can use all of your shared actions so your eidolon doesn't have any actions remaining to cause trouble (as long as you are able to act). However, if you came under such an effect, you would simply use all of your shared actions, preventing your eidolon from acting.",
+  "why": "class-feature-1337 (Impossible Magic) is this record's own aonId and prints \"Choose a type of eidolon from the options you have access to.\" — the only span restored. Its Secrets of Magic twin, class-feature-445, prints the same sentence with \"the options that you have access to\"."
+ },
+ {
+  "category": "classFeatures",
+  "id": "hybrid-study",
+  "field": "description",
+  "value": "Your extensive physical training and carefully chosen magic combine to form a unique and dangerous fighting style that's more than the sum of its parts. You choose one field of hybrid study to represent your particular combination of skills. Your hybrid study gives you a special ability, usually tied to Spellstrike or Arcane Cascade, and it determines your initial conflux spell. Your hybrid study will also grant you the listed studious spells, starting when you gain that class feature at 7th level.",
+  "why": "class-feature-1261 (Impossible Magic) is this record's own aonId. It prints this paragraph, enumerates no studies at all, and sends the reader to the hybrid studies index — which in the app is the picker itself, already offering all ten."
+ },
+ {
+  "category": "classFeatures",
+  "id": "hybrid-study",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "Spellstrike",
+    "key": "classFeatures"
+   },
+   {
+    "label": "Arcane Cascade",
+    "key": "classFeatures"
+   }
+  ],
+  "why": "class-feature-1261 — the eight per-study refs linked labels the new prose no longer contains, so only the two the sentence still names survive."
+ },
+ {
+  "category": "runesmithRune",
+  "id": "atryl-rune-of-fire",
+  "field": "usage",
+  "value": "drawn on a creature or object",
+  "why": "runesmith-rune-1 (Atryl, Rune of Fire) prints \"Usage drawn on a creature or object\"; the shipped overlay row carried a typo."
+ },
+ {
+  "category": "items",
+  "id": "backpack",
+  "field": "bulk",
+  "value": 0,
+  "why": "equipment-4 (Backpack) prints an empty Bulk row — the em dash of \"Bulk —(L)\" did not survive the Archives' structured fields, so neither `bulk_raw` nor `bulk_num` can state the worn-negligible half. The ruling is the app's own and belongs here rather than in a fallback that happened to produce the same number."
+ },
+ {
+  "category": "classFeatures",
+  "id": "conflux-spells",
+  "field": "description",
+  "value": "You learn a conflux spell from your hybrid study, and you can cast additional conflux spells by selecting certain feats. Conflux spells are magus-specific spells created for combat and are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to both study your spellbook and perform a physical regimen.\n\nFocus spells are automatically heightened to half your level rounded up. Focus spells don't require spell slots, nor can you cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but it can never be more than 3 points.",
+  "why": "class-feature-1262 (Impossible Magic) is this record's own aonId and prints the Remaster focus rule verbatim. The shipped sentence — \"Taking feats can give you more focus spells and increase the size of your focus pool\" plus \"The full rules can be found on page 300 of the Core Rulebook\" — is the pre-Remaster rule and a book reference the reprint does not make."
+ },
+ {
+  "category": "classFeatures",
+  "id": "link-spells",
+  "field": "description",
+  "value": "Your connection to your eidolon allows you to cast link spells, special spells that have been forged through your shared connection with your eidolon. Link spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to specifically connect with your eidolon, such as by having a heart-to-heart conversation, playing together, or meditating in unison on the nature of your bond.\n\nFocus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots, and you can't cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points.\n\nYou learn the Evolution Surge link spell, which allows you to grant your eidolon one of several useful benefits.\n\n### Link Cantrips\n\nLink cantrips are special link spells that don't cost Focus Points, so you can cast them as often as you like. Link cantrips are in addition to the cantrips you choose from your tradition's spell list. Generally, only feats can give you more link cantrips. Unlike other cantrips, you can't swap out link cantrips gained from summoner feats at a later level, unless you swap out the specific feat via retraining.\n\nYou learn the Boost Eidolon link cantrip, which briefly improves your eidolon's capabilities, allowing it to attack with greater power.",
+  "why": "class-feature-1340 (Impossible Magic) is this record's own aonId and prints the same Remaster focus rule. The shipped text carried the pre-Remaster pool sentence and the Core Rulebook page 300 reference."
+ },
+ {
+  "category": "classFeatures",
+  "id": "summoner-spellcasting",
+  "field": "description",
+  "value": "Your link to your eidolon grants you limited magic connected to your eidolon's nature. You are a spellcaster and can cast spells using the Cast a Spell activity. As a summoner, when you cast spells, your incantations call upon forces related to the spellcasting tradition determined by your eidolon, and your gestures often echo the shape of the rune that you and your eidolon share.\n\nEach day, you can cast one 1st-rank spell and five cantrips. You must know spells to cast them, and you learn them via the spell repertoire class feature. The number of spells you can cast each day is called your spell slots.\n\nAs you increase in level as a summoner, the magical link with your eidolon grants you additional, more powerful spell slots. Your total number of spell slots and the highest rank of spells you can cast are shown on the Summoner Spells per Day table.\n\nSome of your spells require you to attempt a spell attack roll to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Since your key attribute is Charisma, your spell attack modifier and spell DC use your Charisma modifier.\n\n### Heightening Spells\n\nWhen you gain spell slots of 2nd level and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. Many spells have specific improvements when they are heightened to certain ranks.\n\n### Cantrips\n\nA cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up-this is usually equal to the highest rank of spell you can cast as a summoner. For example, as a 1st-level summoner, your cantrips are 1st-rank spells, and as a 5th-level summoner, your cantrips are 3rd-rank spells.",
+  "why": "class-feature-1338 (Impossible Magic) is this record's own aonId. It prints the replacement opening sentence and the Charisma sentence word for word, and it prints NEITHER of the two the shipped text carried — the material-component permission, and the slot ladder (\"you begin to lose lower-rank spell slots once you reach 5th level. The maximum number of spell slots you get from the summoner class is four\"). The sheet already builds the Impossible Magic table, so the removed sentences contradicted the numbers printed beside them."
+ },
+ {
+  "category": "classFeatures",
+  "id": "arcane-spellcasting-magus",
+  "field": "description",
+  "value": "You study spells so you can combine them with your attacks or solve problems that strength of arms alone can't handle. You are a spellcaster, and you can cast spells of the arcane tradition using the Cast a Spell activity.\n\nAs a magus, when you cast spells, you might draw sigils with your weapon or a free hand and shout magical words of power as battle cries.\n\nAt 1st level, you can prepare one 1st-rank spell and five cantrips each morning from the spells in your spellbook. Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare is called your spell slots.\n\nAs you increase in level as a magus, your number of spell slots and the highest rank of spells you can cast from spell slots increase. Because you split your focus between physical training and magical scholarship, you have no more than two spell slots of your highest rank and, if you can cast 2nd-rank spells or higher, two spell slots of 1 rank lower than your highest spell rank. For anything that requires the ability to cast spells of a certain rank that's lower than the highest slots you have, you still qualify even if you no longer have spell slots at those ranks.\n\nSome of your spells require you to attempt a spell attack roll to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Your spell attack rolls and spell DCs use your Intelligence modifier.\n\n### Heightening Spells\n\nWhen you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. Many spells have specific improvements when they're heightened to certain ranks.\n\n### Cantrips\n\nA cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up—this is usually equal to the highest rank of spell you can cast as a magus. For example, as a 1st-level magus, your cantrips are 1st-rank spells, and as a 5th-level magus, your cantrips are 3rd-rank spells.\n\n### Spellbook\n\nEvery arcane spell has a written version, usually recorded in a spellbook. You start with a spellbook worth 10 sp or less, which you receive for free and must study to prepare your spells each day. The spellbook contains your choice of eight arcane cantrips and five 1st-rank arcane spells. You choose these from the common spells on the arcane spell list or from other arcane spells you gain access to. Your spellbook's form and name are up to you. It might be anything from a sturdy book with a secure latch entitled Theses on the Stratagems of Supernatural Warfare to a tattered collection of training pamphlets with your name scrawled on the cover.\n\nEach time you gain a level, you add two more arcane spells to your spellbook, of any rank of spell you can cast. You can also use the Arcana skill to add other spells that you find in your adventures. Though you lose some lower spell slots as you increase in level, you keep the spells in your spellbook and can prepare them in your higher-rank slots as normal.\n\nIf you have a spellbook from multiple sources (such as being a magus with the Wizard Dedication feat), you can use the same spellbook for all your spells.",
+  "why": "class-feature-1258 (Impossible Magic) is this record's own aonId. It prints the replacement first and second sentences word for word, and its spellbook block reads \"eight arcane cantrips and five 1st-rank arcane spells\" where the shipped text said four — while `classes.magus.spellcasting.spellbook` already grants five, so the page and the builder disagreed. The material-component permission the shipped text granted is not in this printing."
+ },
+ {
+  "category": "classFeatures",
+  "id": "spell-repertoire-bard",
+  "field": "aonId",
+  "value": "class-feature-625",
+  "why": "class-feature-625 is Spell Repertoire, Class Bard, Player Core — the bard's current printing, carrying no superseded_by. The record carried class-feature-447 (Class Summoner, Secrets of Magic), which scripts/migration/join.mjs matched by stripping the \"(Bard)\" from the record's name and taking one of four same-named documents."
+ },
+ {
+  "category": "classFeatures",
+  "id": "spell-repertoire-oracle",
+  "field": "aonId",
+  "value": "class-feature-956",
+  "why": "class-feature-956 is Spell Repertoire, Class Oracle, Player Core 2. Same join defect as spell-repertoire-bard: the record carried class-feature-447, the Summoner's page."
+ },
+ {
+  "category": "classFeatures",
+  "id": "spell-repertoire-sorcerer",
+  "field": "aonId",
+  "value": "class-feature-984",
+  "why": "class-feature-984 is Spell Repertoire, Class Sorcerer, Player Core 2. Same join defect as spell-repertoire-bard: the record carried class-feature-447, the Summoner's page."
+ },
+ {
+  "category": "classFeatures",
+  "id": "spell-repertoire-psychic",
+  "field": "aonId",
+  "value": "class-feature-1141",
+  "why": "class-feature-1141 is Spell Repertoire, Class Psychic, Dark Archives (Remastered). Same join defect as spell-repertoire-bard: the record carried class-feature-447, the Summoner's page."
+ },
+ {
+  "category": "companionAdvanced",
+  "id": "unseen",
+  "field": "source",
+  "why": "animal-companion-advanced-9 \"Unseen\" prints its book as \"Dark Archives (Remastered)\", which core.json files as \"Pathfinder Dark Archive (Remastered)\" (537 records, the Sources card's own shelf). \"Pathfinder Dark Archives (Remastered)\" is a title no book has and no toggle reaches.",
+  "value": {
+   "book": "Pathfinder Dark Archive (Remastered)"
+  }
+ },
+ {
+  "category": "classFeatures",
+  "id": "signature-spells-summoner",
+  "create": true,
+  "value": {
+   "id": "signature-spells-summoner",
+   "name": "Signature Spells",
+   "traits": [
+    "summoner"
+   ],
+   "rarity": "common",
+   "source": {
+    "book": "Pathfinder Impossible Magic",
+    "license": "OGL"
+   },
+   "level": 3,
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster",
+   "aonId": "class-feature-1346",
+   "description": "You have learned to cast some spells more flexibly. For each spell rank you can cast, choose one spell of that rank to be a signature spell. You don't need to learn heightened versions of signature spells separately; instead, you can heighten these spells freely. If you've learned a signature spell at a higher rank than its minimum, you can also cast all its lower-rank versions without learning those separately. If you swap out a signature spell, you can choose a replacement signature spell of the same spell rank at which you learned the previous spell. You can also retrain specifically to change a signature spell to a different spell of that rank without swapping any spells; this takes as much time as retraining a spell normally does."
+  },
+  "why": "class-feature-1346 \"Signature Spells\", Impossible Magic pg. 63, Class Summoner — the summoner's OWN page for the reprinted feature. It is not the psychic's class-feature-1149 (`signature-spells`, traits bard/oracle/psychic/sorcerer) and it is not the retired class-feature-455 (\"Unlimited Signature Spells\", Secrets of Magic). The engine reaches it through the same `signature-spells*` route bard and sorcerer use."
+ },
+ {
+  "category": "classFeatures",
+  "id": "aberrant-eidolon",
+  "create": true,
+  "value": {
+   "id": "aberrant-eidolon",
+   "name": "Aberrant Eidolon",
+   "traits": [
+    "summoner"
+   ],
+   "rarity": "common",
+   "source": {
+    "book": "Pathfinder Impossible Magic",
+    "license": "OGL"
+   },
+   "level": 1,
+   "actionCost": {
+    "type": "passive"
+   },
+   "otherTags": [
+    "summoner-eidolon"
+   ],
+   "edition": "remaster",
+   "aonId": "eidolon-14",
+   "description": "Your eidolon is a terrifying, incomprehensible nightmare patterned after the creatures who owe their existence to the Outer Gods and Great Old Ones. Aberrant eidolons come in a variety of forms, though their anatomies often appear twisted and impossible. Most people can't even look at any aberrant eidolon without developing a splitting headache or having a panic attack, but your studies of the occult have inured your mind to these dread terrors.\n\n**Tradition** Occult\n\n**Home Plane** Dimension of Dreams or the Universe\n\n---\n\n**Size** Medium or Small\n\n**Suggested Attacks** claw (slashing), jaws (piercing), tentacle (bludgeoning)\n\n- Str \n- Dex \n- Con 2\n- Int 1\n- Wis 1\n- Cha -1\n- AC ( Dex cap)\n\n**Skills** Athletics, Occultism\n\n**Senses** darkvision\n\n**Language** Aklo\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities**\n\n- **Initial** Surprising Anatomy \n- **Symbiosis** Unfathomable Mind\n- **Transcendence** Maddening Whispers\n\n Surprising Anatomy \n\n**Trigger** An enemy adjacent to your eidolon deals damage to your eidolon; **Effect** Your eidolon's form shifts horribly to retaliate against the attacker. Your eidolon makes a melee unarmed Strike against the triggering enemy.\n\n Unfathomable Mind \n\nThose who try to touch your eidolon's mind find their own minds shattered. When your eidolon succeeds at a saving throw against a mental effect from a creature, that creature takes 4d6 mental damage with a basic Will save against your spell DC. A creature who fails this save is also stupefied 1 (stupefied 2 on a critical failure). At 9th level and every 2 levels thereafter, the damage increases by 1d6.\n\n Maddening Whispers \n\nYour aberrant eidolon utters terrible secrets about the true nature of the universe. They can cast _unfathomable song_ once per day as an innate occult spell. Your eidolon can Sustain this spell as a free action if they spend at least one action Striding toward one of the targets.",
+   "descRefs": [
+    {
+     "label": "Athletics",
+     "key": "skill"
+    },
+    {
+     "label": "Occultism",
+     "key": "skill"
+    },
+    {
+     "label": "Aklo",
+     "key": "languages"
+    },
+    {
+     "label": "stupefied",
+     "key": "conditions"
+    },
+    {
+     "label": "_unfathomable song_",
+     "key": "spells"
+    }
+   ]
+  },
+  "why": "eidolon-14 — Impossible Magic pg. 70, an eidolon type the book ADDS. src/rules/derive.ts adds classFeatures[subclassId] to the sheet's feature list, so an option with no record shows the player nothing."
+ },
+ {
+  "category": "classFeatures",
+  "id": "ooze-eidolon",
+  "create": true,
+  "value": {
+   "id": "ooze-eidolon",
+   "name": "Ooze Eidolon",
+   "traits": [
+    "summoner"
+   ],
+   "rarity": "common",
+   "source": {
+    "book": "Pathfinder Impossible Magic",
+    "license": "OGL"
+   },
+   "level": 1,
+   "actionCost": {
+    "type": "passive"
+   },
+   "otherTags": [
+    "summoner-eidolon"
+   ],
+   "edition": "remaster",
+   "aonId": "eidolon-23",
+   "description": "Your eidolon is a simple creature of protoplasm held together by magic and your mind. They often appear as creeping blobs of a single color, but this doesn't mean they can't have distinctive features, such as moss or fungus growing on their surface or bones and other debris floating within. Because they have been formed by your thoughts, your ooze eidolon isn't mindless, but likely doesn't have a complete personality. Though your ooze eidolon speaks no language, you might believe you can interpret the constant burbles and plops they make as a form of speaking.\n\n**Tradition** Arcane\n\n**Home Plane** the Universe\n\n---\n\n**Size** Medium\n\n**Suggested Attacks** pseudopod (bludgeoning)\n\n- Str \n- Dex \n- Con 3\n- Int -1\n- Wis 1\n- Cha 0\n- AC ( Dex cap)\n\n**Skills** Arcana, Athletics\n\n**Senses** motion sense (precise) 60 feet, no vision\n\n**Language** \n\n**Speed** 20 feet\n\n---\n\n**Eidolon Abilities**\n\n- **Initial** Ooze Physiology\n- **Symbiosis** Stretching Pseudopods\n- **Transcendence** Flowing Engulf \n\n Ooze Physiology \n\nYou and your ooze eidolon are directly connected in both body and mind, which renders your eidolon susceptible to effects that wouldn't normally bother an ooze. They don't have an ooze's normal immunities, but do gain resistance equal to half your level (minimum 1 resistance) against acid, critical hits, and precision damage and a +2 circumstance bonus to saving throws against mental effects. Additionally, their surface closes quickly after being wounded. The flat check to remove persistent bleed damage from the eidolon is DC 10 (or DC 5 after receiving particularly effective aid).\n\n Stretching Pseudopods \n\nYour eidolon's pseudopods can stretch farther. All your eidolon's melee unarmed attacks gain the reach trait.\n\n Flowing Engulf \n\nYour eidolon Strides up to double their Speed and can move through the spaces of any creatures in their path. Any creature of the eidolon's size or smaller whose space your eidolon moves through is engulfed unless it succeeds at a Reflex save against your spell DC. Your eidolon can attempt to engulf the same creature only once in a single use of Flowing Engulf, and they can contain as many creatures as can fit in their space.\n\n An engulfed creature is pulled into your eidolon's body. It is grabbed, slowed 1, and moves along with your eidolon as long as it is engulfed. It can get free by Escaping against your spell DC, moving to a space of its choice adjacent to your eidolon.",
+   "descRefs": [
+    {
+     "label": "Arcana",
+     "key": "skill"
+    },
+    {
+     "label": "Athletics",
+     "key": "skill"
+    },
+    {
+     "label": "mental",
+     "key": "trait"
+    },
+    {
+     "label": "reach",
+     "key": "trait"
+    },
+    {
+     "label": "slowed",
+     "key": "conditions"
+    }
+   ]
+  },
+  "why": "eidolon-23 — Impossible Magic pg. 76, an eidolon type the book ADDS. src/rules/derive.ts adds classFeatures[subclassId] to the sheet's feature list, so an option with no record shows the player nothing."
+ },
+ {
+  "category": "classFeatures",
+  "id": "ability-boosts",
+  "field": "aonId",
+  "value": "class-feature-456",
+  "why": "class-feature-456 is \"Ability Boosts\", Secrets of Magic, Class Summoner — and this record carries traits [\"summoner\"]. The refresh repointed it to class-feature-10, which is the ALCHEMIST's Core Rulebook page: 21 documents share the name and the matcher took the first. There is no Player Core printing of this feature (all 21 are edition \"legacy\"), so the newest printing rule has nothing to prefer and the record goes back to its own class's page."
+ },
+ {
+  "category": "classFeatures",
+  "id": "ability-boosts",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Secrets of Magic",
+   "license": "OGL"
+  },
+  "why": "class-feature-456 prints Secrets of Magic. The book is derived from the matched document, so it moved to \"Pathfinder Core Rulebook\" with the aonId and has to move back with it."
+ },
+ {
+  "category": "classFeatures",
+  "id": "unlimited-signature-spells",
+  "field": "edition",
+  "value": "legacy"
  }
 ]

@@ -33,6 +33,15 @@ export const DEFAULT_CUSTOMIZATION: Customization = {
   // The owner's ruling: every character reads the Essentials card unless they say otherwise, so an
   // absent key resolves HERE rather than at each reader.
   itemCardDetail: 'essentials',
+  // 2026-09-23, after a picture of three narrow columns beside one wide row: a Compact row is one
+  // full-width row unless they say otherwise, and the cards lie in a grid unless they say otherwise.
+  // `compactColumns` is a CHANGE to characters that already exist, not a no-op: what shipped in
+  // 4df735b is the three-column grid, and nobody has the key, so every character on the Compact look
+  // moves to one wide row on upgrade. That is the ruling — the picture it was ruled on is the upgrade
+  // — and 'three' is still one chip away. `inventoryLayout` is the no-op half: 'grid' is what they
+  // already see.
+  compactColumns: 'one',
+  inventoryLayout: 'grid',
   scrollbarAccent: false,
   notesShowRail: false,
 };

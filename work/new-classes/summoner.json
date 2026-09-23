@@ -1,0 +1,9 @@
+{
+  "_why": "DESCRIPTIONS ONLY — see work/new-classes/magus.json. The summoner record is built by scripts/import-core-v2.mjs; this pack writes only its prose and display tree. The base file's '| Level | You gain |' table is Secrets of Magic's and still names Unlimited Signature Spells at 3, while classes.summoner.features names the Impossible Magic reprint (Signature Spells, class-feature-1346). class-77 is the Impossible Magic Summoner page and the record's own aonId.",
+  "descriptionsOnly": true,
+  "class": {
+    "id": "summoner",
+    "name": "Summoner",
+    "aonId": "class-77"
+  }
+}

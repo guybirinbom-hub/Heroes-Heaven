@@ -94,7 +94,12 @@ describe('batch 28 — sorcerer', () => {
   it('bloodline-spells is not a fifth level-1 class feature', () => {
     const l1 = cls('sorcerer').features.filter((f) => f.level === 1).map((f) => f.featureId);
     expect(l1).not.toContain('bloodline-spells');
-    expect(l1.sort()).toEqual(['bloodline', 'sorcerer-spellcasting', 'sorcerous-potency', 'spell-repertoire']);
+    /* `spell-repertoire-sorcerer` since 2026-09-23: the shared `spell-repertoire` record's prose is a
+     * four-class composite ("**Bard** … --- **Oracle** … --- **Psychic** … --- **Sorcerer** …" in one
+     * 8,817-character blob), so every one of the four classes that named it read all four classes'
+     * repertoire rules stacked. Each now names its own printing — the sorcerer's is class-feature-984,
+     * Class Sorcerer, Player Core 2. Still four rows; this one is the SAME row under its own id. */
+    expect(l1.sort()).toEqual(['bloodline', 'sorcerer-spellcasting', 'sorcerous-potency', 'spell-repertoire-sorcerer']);
   });
 
   it('the bloodline-spells RECORD is kept (display hygiene: hide, never delete)', () => {

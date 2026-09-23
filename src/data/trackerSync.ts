@@ -251,11 +251,15 @@ function localSyncedKeys(): string[] {
 function reloadLocal(key: string): void {
   if (key.startsWith(COMBAT_PREFIX)) {
     if (key !== scopeKey('pf2e-current-combat')) return;
+    // NOTHING TO FLUSH AFTER THIS, and that is the load's doing, not ours: reloadFromStorage ends with
+    // cancelPersist(), so the write the load itself re-queued is dropped rather than left sitting in
+    // the 200 ms debounce. A flushCombatPersist() stood here for the case that write used to cause —
+    // it landed after `applying` had cleared, read as a local edit, and ping-ponged the same board
+    // between two devices every 3 seconds. Dropping the write closes that harder than flushing it did:
+    // no write means no onLocalPersist at all, so the lastSeen the caller takes is the remote's own
+    // bytes. The call is gone rather than kept as a no-op because a flush that can never have anything
+    // to flush reads like a safety net, and the next person to touch this would keep it for that.
     useCombatStore.getState().reloadFromStorage();
-    // The reload re-queues a persist of the board we just adopted. Flush it here, inside `applying`,
-    // so the settled bytes are what lastSeen records — otherwise that write lands 200 ms later, looks
-    // like a local edit, and ping-pongs the same board between the two devices every 3 seconds.
-    flushCombatPersist();
     return;
   }
   switch (key) {
@@ -312,18 +316,17 @@ function applyRemote(row: Row): void {
  * board over the other device's live fight, then pulled the stale one back down. It fires exactly at
  * a rollout, where every on-disk board predates the new fields.
  *
- * Flushing the load's own persist here, inside `applying`, and taking the baseline from the settled
- * bytes is the same move applyRemote makes for the reload IT causes.
+ * That re-write is now DROPPED at its source — reloadFromStorage ends with cancelPersist() — so the
+ * derived bytes never reach onLocalPersist and there is nothing left here to flush or to suppress.
+ * What this function still has to do is the other half, and it is the half that was always the point:
+ * take the echo baseline from the board setScope has just loaded, so the next pull compares against
+ * the incoming campaign rather than the outgoing one.
  */
 function onScopeSwitch(): void {
   const key = scopeKey('pf2e-current-combat');
   if (!isTrackerSyncKey(key)) return; // the standalone board and the no-account table are not ours
-  applying = true;
-  try {
-    flushCombatPersist();
-  } finally {
-    applying = false;
-  }
+  // Runs from setScope's own listener loop, i.e. after its reloadFromStorage → cancelPersist, so the
+  // `applying` window a flushCombatPersist() used to need here has nothing to guard any more.
   lastSeen.set(key, readRaw(key) ?? '');
 }
 

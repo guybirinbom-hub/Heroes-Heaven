@@ -90,8 +90,20 @@ describe('batch 037 instruments-1 — advanced-red-mantis-magic settles the lega
     const missing = theyOnly();
     expect(missing.get('unholy-resurrection')).toContain('spellSlot');
     expect(missing.get('mortem-ultimatum')).toContain('spellSlot');
+    /*
+     * `arcane-spellcasting-magus` joined this roster on 2026-09-23, when the record was repointed to
+     * its Impossible Magic printing and renamed "Magus Spellcasting" — the comparer joins on the
+     * displayed name, so a record that had never paired started pairing. It reports
+     * `missing=[spellcasting, grantsItem, spellSlot]` with `ourKinds: []`, and that is a MODELLING
+     * difference, not a gap: the app carries the magus's arcane prepared casting, its slot ladder and
+     * its spellbook on `classes.magus.spellcasting` (`spellbook: { spells: 5, perLevel: 2 }`), where
+     * the comparer's side hangs all three on the feature record. Listed rather than settled, because a
+     * settle would silence the next real difference on this record unread — the trap this file's own
+     * header describes.
+     */
+    expect(missing.get('arcane-spellcasting-magus')).toContain('spellSlot');
     expect([...missing].filter(([, ks]) => ks.includes('spellSlot')).map(([id]) => id).sort())
-      .toEqual(['mortem-ultimatum', 'unholy-resurrection']);
+      .toEqual(['arcane-spellcasting-magus', 'mortem-ultimatum', 'unholy-resurrection']);
   });
 
   // batch 037: advanced-red-mantis-magic#legacy-slots

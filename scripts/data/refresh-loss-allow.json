@@ -1,0 +1,2060 @@
+[
+ {
+  "key": "actions/concentration",
+  "field": "record",
+  "aon": "action-3524",
+  "why": "action-3524 carries exclude_from_search: the Archives hid the page, so the importer no longer builds a record from it."
+ },
+ {
+  "key": "actions/spellshape",
+  "field": "record",
+  "aon": "action-3525",
+  "why": "action-3525 carries exclude_from_search: the Archives hid the page, so the importer no longer builds a record from it."
+ },
+ {
+  "key": "actions/trace-rune",
+  "field": "description",
+  "aon": "action-4264",
+  "why": "action-4264 is this record's own page. The text that went is \"Requirements You’re holding or wearing an artisan’s toolkit.\\n\"."
+ },
+ {
+  "key": "classes/bard",
+  "field": "features",
+  "aon": "class-32",
+  "why": "class-feature-625 is Spell Repertoire, Class Bard, and it is this class's own current printing. The row named the shared `spell-repertoire` record, whose prose is a four-class composite — \"**Bard** … --- **Oracle** … --- **Psychic** … --- **Sorcerer** …\" in one 8,817-character blob — so every one of the four read all four classes' rules stacked. It now names `spell-repertoire-bard`, rebuilt from the document above (see buildImClassFeatures in scripts/import-siege-and-gaps.mjs)."
+ },
+ {
+  "key": "classes/magus",
+  "field": "features",
+  "aon": "class-74",
+  "why": "the Impossible Magic class table (class-74) names this class's OWN class-feature documents; the rows that changed moved from a shared record built on another class's page to the Impossible Magic document of this class (see scripts/import-siege-and-gaps.mjs, buildImClassFeatures)."
+ },
+ {
+  "key": "classes/necromancer",
+  "field": "features",
+  "aon": "class-75",
+  "why": "the Impossible Magic class table (class-75) names this class's OWN class-feature documents; the rows that changed moved from a shared record built on another class's page to the Impossible Magic document of this class (see scripts/import-siege-and-gaps.mjs, buildImClassFeatures)."
+ },
+ {
+  "key": "classes/oracle",
+  "field": "features",
+  "aon": "class-61",
+  "why": "class-feature-956 is Spell Repertoire, Class Oracle, and it is this class's own current printing. The row named the shared `spell-repertoire` record, whose prose is a four-class composite — \"**Bard** … --- **Oracle** … --- **Psychic** … --- **Sorcerer** …\" in one 8,817-character blob — so every one of the four read all four classes' rules stacked. It now names `spell-repertoire-oracle`, rebuilt from the document above (see buildImClassFeatures in scripts/import-siege-and-gaps.mjs)."
+ },
+ {
+  "key": "classes/psychic",
+  "field": "features",
+  "aon": "class-68",
+  "why": "class-feature-1141 is Spell Repertoire, Class Psychic, and it is this class's own current printing. The row named the shared `spell-repertoire` record, whose prose is a four-class composite — \"**Bard** … --- **Oracle** … --- **Psychic** … --- **Sorcerer** …\" in one 8,817-character blob — so every one of the four read all four classes' rules stacked. It now names `spell-repertoire-psychic`, rebuilt from the document above (see buildImClassFeatures in scripts/import-siege-and-gaps.mjs)."
+ },
+ {
+  "key": "classes/runesmith",
+  "field": "features",
+  "aon": "class-76",
+  "why": "the Impossible Magic class table (class-76) names this class's OWN class-feature documents; the rows that changed moved from a shared record built on another class's page to the Impossible Magic document of this class (see scripts/import-siege-and-gaps.mjs, buildImClassFeatures)."
+ },
+ {
+  "key": "classes/sorcerer",
+  "field": "features",
+  "aon": "class-62",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-62 level-1 row lists four features (bloodline, sorcerer spellcasting, spell repertoire, sorcerous potency); 'Bloodline Spells' is an AoN sub-section of the bloodline page with no aonId, no edition and no mechanics. Only the repertoire row changes against the shipped array: it names `spell-repertoire-sorcerer`, built from class-feature-984 (Class Sorcerer), instead of the four-class composite on class-feature-1141 (Class Psychic)."
+ },
+ {
+  "key": "classes/summoner",
+  "field": "features",
+  "aon": "class-77",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): Impossible Magic prints the summoner's own page for all five: class-feature-1359 Weapon Specialization, class-feature-1352 Expert Spellcaster, class-feature-1357 Defensive Robes, class-feature-1355 Simple Weapon Expertise and class-feature-1363 Master Spellcaster, every one carrying Class Summoner. The shared records they replace sit on class-feature-1181 (Thaumaturge), class-feature-1154 and -1161 (Psychic), class-feature-996 (Sorcerer) and class-feature-1050 (Animist). The level-3 row is `signature-spells-summoner` (class-feature-1346, the summoner's own Signature Spells page); the engine applies the one-signature-spell-per-rank rule that page prints."
+ },
+ {
+  "key": "classFeatures/arcane-spellcasting-magus",
+  "field": "description",
+  "aon": "class-feature-1258",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-feature-1258 (Impossible Magic) is this record's own aonId. It prints the replacement first and second sentences word for word, and its spellbook block reads \"eight arcane cantrips and five 1st-rank arcane spells\" where the shipped text said four — while `classes.magus.spellcasting.spellbook` already grants five, so the page and the builder disagreed. The material-component permission the shipped text granted is not in this printing."
+ },
+ {
+  "key": "classFeatures/arcane-spellcasting-magus",
+  "field": "name",
+  "aon": "class-feature-1258",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-feature-1258 is titled \"Magus Spellcasting\" (Impossible Magic pg. 9, class Magus, level 1) and is the record's own aonId. The key stays `arcane-spellcasting-magus` because the magus class table names it and saved characters resolve through it; only the displayed name follows the page."
+ },
+ {
+  "key": "classFeatures/arcane-spellcasting-magus",
+  "field": "name",
+  "aon": "class-feature-1258",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-feature-1258 is titled \"Magus Spellcasting\" (Impossible Magic pg. 9, class Magus, level 1) and is the record's own aonId. The key stays `arcane-spellcasting-magus` because the magus class table names it and saved characters resolve through it; only the displayed name follows the page."
+ },
+ {
+  "key": "classFeatures/conflux-spells",
+  "field": "description",
+  "aon": "class-feature-1262",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-feature-1262 (Impossible Magic) is this record's own aonId and prints the Remaster focus rule verbatim. The shipped sentence — \"Taking feats can give you more focus spells and increase the size of your focus pool\" plus \"The full rules can be found on page 300 of the Core Rulebook\" — is the pre-Remaster rule and a book reference the reprint does not make."
+ },
+ {
+  "key": "classFeatures/double-spellstrike",
+  "field": "description",
+  "aon": "class-feature-1281",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-feature-1281 (Impossible Magic) is this record's own aonId — the shipped prose is Secrets of Magic's stored-echo mechanic (\"you retain an echo of the spell, stored in your body\"), which Impossible Magic replaced outright with a two-spell activity. The record's own AST and the action it grants (actions/double-spellstrike, Impossible Magic pg. 11) already describe the new one, so the Feats-tab row and the page it opens stated different rules."
+ },
+ {
+  "key": "classFeatures/double-spellstrike",
+  "field": "name",
+  "aon": "class-feature-1281",
+  "why": "class-feature-1281 is titled \"Double Spellstrike\"."
+ },
+ {
+  "key": "classFeatures/evasion",
+  "field": "level",
+  "aon": "class-feature-25",
+  "why": "class-feature-25 prints level 15."
+ },
+ {
+  "key": "classFeatures/greater-resolve",
+  "field": "source.book",
+  "aon": "class-feature-77",
+  "why": "class-feature-77 names its source as \"Core Rulebook\", canonicalised against the book names core.json already uses."
+ },
+ {
+  "key": "classFeatures/hybrid-study",
+  "field": "descRefs",
+  "aon": "class-feature-1261",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-feature-1261 — the eight per-study refs linked labels the new prose no longer contains, so only the two the sentence still names survive."
+ },
+ {
+  "key": "classFeatures/hybrid-study",
+  "field": "description",
+  "aon": "class-feature-1261",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-feature-1261 (Impossible Magic) is this record's own aonId. It prints this paragraph, enumerates no studies at all, and sends the reader to the hybrid studies index — which in the app is the picker itself, already offering all ten."
+ },
+ {
+  "key": "classFeatures/improved-evasion",
+  "field": "level",
+  "aon": "class-feature-227",
+  "why": "class-feature-227 prints level 15."
+ },
+ {
+  "key": "classFeatures/iron-will",
+  "field": "level",
+  "aon": "class-feature-14",
+  "why": "class-feature-14 prints level 7."
+ },
+ {
+  "key": "classFeatures/link-spells",
+  "field": "description",
+  "aon": "class-feature-1340",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-feature-1340 (Impossible Magic) is this record's own aonId and prints the same Remaster focus rule. The shipped text carried the pre-Remaster pool sentence and the Core Rulebook page 300 reference."
+ },
+ {
+  "key": "classFeatures/spell-repertoire-summoner",
+  "field": "description",
+  "aon": "class-feature-1339",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-feature-1339 (Impossible Magic) is this record's own aonId — the shipped prose says a 1st-level summoner learns TWO 1st-rank spells and that the repertoire reaches \"its maximum size of five spells\"; the reprint says one 1st-rank spell and five cantrips, and drops the fixed maximum. The engine already sizes the repertoire from the slot table, which is the reprint's shape, so the text was the half that was wrong."
+ },
+ {
+  "key": "classFeatures/summoner-spellcasting",
+  "field": "description",
+  "aon": "class-feature-1338",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): class-feature-1338 (Impossible Magic) is this record's own aonId. It prints the replacement opening sentence and the Charisma sentence word for word, and it prints NEITHER of the two the shipped text carried — the material-component permission, and the slot ladder (\"you begin to lose lower-rank spell slots once you reach 5th level. The maximum number of spell slots you get from the summoner class is four\"). The sheet already builds the Impossible Magic table, so the removed sentences contradicted the numbers printed beside them."
+ },
+ {
+  "key": "deities/yamatsumi",
+  "field": "effectChoices",
+  "aon": "deity-319",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): deity-319 (Yamatsumi) changed sanctification_raw from \" must choose holy\" to \" can choose holy\" in the re-export — a Paizo errata making the sanctification optional. The row is the shape scripts/deity-fields-check.mjs --write authors for every other 'can choose' deity: the holy option plus an explicit None."
+ },
+ {
+  "key": "feats/binding-serpents-celestial-arrow",
+  "field": "actionCost.type",
+  "aon": "feat-7164",
+  "why": "feat-7164 prints an empty <actions string=\"\" /> on its title: the feat itself costs nothing, and any action cost belongs to an activity inside it."
+ },
+ {
+  "key": "feats/binding-serpents-celestial-arrow",
+  "field": "actionCost.value",
+  "aon": "feat-7164",
+  "why": "feat-7164 prints an empty <actions string=\"\" /> on its title: the feat itself costs nothing, and any action cost belongs to an activity inside it."
+ },
+ {
+  "key": "feats/draconic-acolyte-dedication",
+  "field": "prerequisites",
+  "aon": "feat-8090",
+  "why": "feat-8090 prints Prerequisites \"Trained in Arcana, Trained in Nature, Trained in Occultism, or Trained in Religion\"."
+ },
+ {
+  "key": "feats/draining-strike",
+  "field": "actionCost.type",
+  "aon": "feat-9100",
+  "why": "feat-9100 prints \"Single Action\" on the page title."
+ },
+ {
+  "key": "feats/draining-strike",
+  "field": "actionCost.value",
+  "aon": "feat-9100",
+  "why": "feat-9100 prints \"Single Action\" on the page title."
+ },
+ {
+  "key": "feats/fracture-time-flow",
+  "field": "description",
+  "aon": "feat-8175",
+  "why": "feat-8175 is this record's own page. The text that went is \"Adventure Path \"."
+ },
+ {
+  "key": "feats/harbingers-caw",
+  "field": "traits",
+  "aon": "feat-2442",
+  "why": "feat-2442's own trait list is [\"Auditory\",\"Misfortune\",\"Tengu\"] and does not print divine."
+ },
+ {
+  "key": "feats/implausible-purchase-investigator",
+  "field": "prerequisites",
+  "aon": "feat-1477",
+  "why": "feat-1477 prints Prerequisites \"Predictive Purchase (Investigator)\"."
+ },
+ {
+  "key": "feats/incredible-familiar",
+  "field": "traits",
+  "aon": "feat-5004",
+  "why": "feat-5004's own trait list is [\"Thaumaturge\",\"Witch\"] and does not print animist."
+ },
+ {
+  "key": "feats/incredible-familiar-animist",
+  "field": "archetype",
+  "aon": "feat-9420",
+  "why": "feat-9420 prints no Archetype line — its traits are [\"Animist\"], so it is a class feat on its own page."
+ },
+ {
+  "key": "feats/incredible-familiar-animist",
+  "field": "level",
+  "aon": "feat-9420",
+  "why": "feat-9420 prints level 10."
+ },
+ {
+  "key": "feats/incredible-familiar-animist",
+  "field": "name",
+  "aon": "feat-9420",
+  "why": "feat-9420 is titled \"Incredible Familiar (Animist)\"."
+ },
+ {
+  "key": "feats/incredible-familiar-animist",
+  "field": "traits",
+  "aon": "feat-9420",
+  "why": "feat-9420's own trait list is [\"Animist\"] and does not print thaumaturge, witch."
+ },
+ {
+  "key": "feats/internal-cohesion",
+  "field": "traits",
+  "aon": "feat-2477",
+  "why": "feat-2477's own trait list is [\"Aphorite\"] and does not print nephilim."
+ },
+ {
+  "key": "feats/like-a-fish-in-water",
+  "field": "description",
+  "aon": "feat-9032",
+  "why": "feat-9032 is this record's own page. The text that went is \"Marine Marauder \"."
+ },
+ {
+  "key": "feats/maze-of-runes",
+  "field": "actionCost.type",
+  "aon": "feat-9211",
+  "why": "feat-9211 prints an empty <actions string=\"\" /> on its title: the feat itself costs nothing, and any action cost belongs to an activity inside it."
+ },
+ {
+  "key": "feats/maze-of-runes",
+  "field": "actionCost.value",
+  "aon": "feat-9211",
+  "why": "feat-9211 prints an empty <actions string=\"\" /> on its title: the feat itself costs nothing, and any action cost belongs to an activity inside it."
+ },
+ {
+  "key": "feats/mercenary-reversal",
+  "field": "actionCost.type",
+  "aon": "feat-7827",
+  "why": "feat-7827 prints \"Two Actions\" on the page title."
+ },
+ {
+  "key": "feats/mercenary-reversal",
+  "field": "actionCost.value",
+  "aon": "feat-7827",
+  "why": "feat-7827 prints \"Two Actions\" on the page title."
+ },
+ {
+  "key": "feats/mortal-herald-dedication",
+  "field": "prerequisites",
+  "aon": "feat-7528",
+  "why": "feat-7528 prints Prerequisites \"Worshiper of a specific deity; Master in Religion or your deity’s divine skill\"."
+ },
+ {
+  "key": "feats/reckless-abandon",
+  "field": "level",
+  "aon": "feat-173",
+  "why": "feat-173 prints level 16."
+ },
+ {
+  "key": "feats/reckless-abandon",
+  "field": "traits",
+  "aon": "feat-173",
+  "why": "feat-173's own trait list is [\"Barbarian\",\"Rage\"] and does not print fortune, goblin."
+ },
+ {
+  "key": "feats/smashing-tail",
+  "field": "traits",
+  "aon": "feat-2535",
+  "why": "feat-2535's own trait list is [\"Ganzi\"] and does not print nephilim."
+ },
+ {
+  "key": "feats/smithing-weapons",
+  "field": "description",
+  "aon": "feat-9175",
+  "why": "feat-9175 is this record's own page. The text that went is \"weapons in the hammer, knife, and pick weapon groups, you can trace runes using the weapon without holding or wearing an artisan’\", replaced by \"a weapon in the hammer, knife, and pick weapon group, you can use that weapon to etch runes without an artisan'\"."
+ },
+ {
+  "key": "feats/strategist-stance",
+  "field": "prerequisites",
+  "aon": "feat-7016",
+  "why": "feat-7016 prints Prerequisites \"Marshal Dedication; Trained in Society or Trained in Warfare Lore\"."
+ },
+ {
+  "key": "feats/writing-on-the-wall",
+  "field": "prerequisites",
+  "aon": "feat-9186",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): feat-9186 prints \"Expert in Arcana, Expert in Nature, Expert in Occultism, OR Expert in Religion\" (Impossible Magic pg. 49). One of four, not four of four."
+ },
+ {
+  "key": "itemBonus/accoutrements-of-bone",
+  "field": "name",
+  "aon": "equipment-4978",
+  "why": "equipment-4978 is titled \"Accoutrements of Bone\"; the itemBonus row is a synthetic `-bonus-N` id this pipeline mints off that page, so the page is the evidence."
+ },
+ {
+  "key": "itemBonus/codex-of-unimpeded-sight-greater",
+  "field": "record",
+  "aon": "equipment-991-944",
+  "why": "equipment-991-944 \"Codex of Unimpeded Sight (Greater)\" now carries superseded_by equipment-5126, and the importer drops a superseded printing; the itemBonus row is a synthetic `-bonus-N` id minted off that page."
+ },
+ {
+  "key": "itemBonus/flask-of-fellowship",
+  "field": "record",
+  "aon": "equipment-1056",
+  "why": "equipment-1056 \"Flask of Fellowship\" now carries superseded_by equipment-5143, and the importer drops a superseded printing; the itemBonus row is a synthetic `-bonus-N` id minted off that page."
+ },
+ {
+  "key": "itemBonus/robe-of-beneficence",
+  "field": "name",
+  "aon": "equipment-4984",
+  "why": "equipment-4984 is titled \"Robe of Beneficence\"; the itemBonus row is a synthetic `-bonus-N` id this pipeline mints off that page, so the page is the evidence."
+ },
+ {
+  "key": "itemBonus/suit-of-false-impression",
+  "field": "name",
+  "aon": "equipment-4985",
+  "why": "equipment-4985 is titled \"Suit of False Impression\"; the itemBonus row is a synthetic `-bonus-N` id this pipeline mints off that page, so the page is the evidence."
+ },
+ {
+  "key": "items/accoutrements-of-bone",
+  "field": "name",
+  "aon": "equipment-4978",
+  "why": "equipment-4978 is titled \"Accoutrements of Bone\"."
+ },
+ {
+  "key": "items/aerial-cloak",
+  "field": "bulk",
+  "aon": "equipment-2575",
+  "why": "equipment-2575 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/alchemical-gauntlet",
+  "field": "bulk",
+  "aon": "equipment-1971",
+  "why": "equipment-1971 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/alchemists-damper",
+  "field": "usage",
+  "aon": "equipment-1581",
+  "why": "equipment-1581 prints Usage \"attached to a firearm with the kickback weapon trait\"."
+ },
+ {
+  "key": "items/alloy-orb-high-grade",
+  "field": "bulk",
+  "aon": "equipment-2963-2839",
+  "why": "equipment-2963-2839 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/alloy-orb-low-grade",
+  "field": "bulk",
+  "aon": "equipment-2963-2836",
+  "why": "equipment-2963-2836 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/alloy-orb-standard-grade",
+  "field": "bulk",
+  "aon": "equipment-2963-2837",
+  "why": "equipment-2963-2837 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/backfire-mantle",
+  "field": "traits",
+  "aon": "equipment-5182",
+  "why": "equipment-5182's own trait list is [\"Invested\",\"Magical\"] and does not print abjuration."
+ },
+ {
+  "key": "items/banner-of-common-cause",
+  "field": "bulk",
+  "aon": "equipment-4952",
+  "why": "equipment-4952 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/battering-ammunition",
+  "field": "bulk",
+  "aon": "equipment-3862",
+  "why": "equipment-3862 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/beloveds-bracelets",
+  "field": "price.gp",
+  "aon": "equipment-4052",
+  "why": "equipment-4052 prints Price 10,000 gp."
+ },
+ {
+  "key": "items/belt-of-long-life",
+  "field": "bulk",
+  "aon": "equipment-3007",
+  "why": "equipment-3007 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/binding-coil",
+  "field": "traits",
+  "aon": "equipment-5101",
+  "why": "equipment-5101's own trait list is [\"Consumable\",\"Magical\",\"Talisman\"] and does not print transmutation."
+ },
+ {
+  "key": "items/black-powder-horn",
+  "field": "bulk",
+  "aon": "equipment-1190-1121",
+  "why": "equipment-1190-1121 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/black-powder-keg",
+  "field": "bulk",
+  "aon": "equipment-1190-1122",
+  "why": "equipment-1190-1122 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/blade-of-fallen-stars",
+  "field": "bulk",
+  "aon": "equipment-2574",
+  "why": "equipment-2574 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/blade-of-four-energies",
+  "field": "traits",
+  "aon": "equipment-5013",
+  "why": "equipment-5013's own trait list is [\"Magical\"] and does not print evocation."
+ },
+ {
+  "key": "items/blood-drinker",
+  "field": "bulk",
+  "aon": "equipment-3485",
+  "why": "equipment-3485 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/bloodbane",
+  "field": "usage",
+  "aon": "equipment-539-611",
+  "why": "equipment-539-611 prints Usage \"etched onto a clan dagger\"."
+ },
+ {
+  "key": "items/bloodbane-greater",
+  "field": "usage",
+  "aon": "equipment-539-612",
+  "why": "equipment-539-612 prints Usage \"etched onto a clan dagger\"."
+ },
+ {
+  "key": "items/bloodroot-shield",
+  "field": "bulk",
+  "aon": "equipment-3610",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): equipment-3610 \"Bloodroot Shield\" now prints bulk_raw \"1\"; it printed \"L\" (0.1) before the re-export. A shield at Light Bulk versus 1 Bulk is a real encumbrance difference, so the record follows the corrected page. Reported by scripts/stat-check.mjs."
+ },
+ {
+  "key": "items/bloodseeker-beak-greater",
+  "field": "bulk",
+  "aon": "equipment-2965-2842",
+  "why": "equipment-2965-2842 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/bloody-fang",
+  "field": "bulk",
+  "aon": "equipment-3486",
+  "why": "equipment-3486 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/bolkas-blessing",
+  "field": "bulk",
+  "aon": "equipment-3769-3568",
+  "why": "equipment-3769-3568 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/book-of-endless-walls",
+  "field": "name",
+  "aon": "equipment-5122",
+  "why": "equipment-5122 is titled \"Book of Endless Walls\"."
+ },
+ {
+  "key": "items/bravery-baldric-restoration",
+  "field": "traits",
+  "aon": "equipment-4841-4458",
+  "why": "equipment-4841-4458's own trait list is [\"Invested\",\"Magical\"] and does not print healing."
+ },
+ {
+  "key": "items/bravery-baldric-restoration-greater",
+  "field": "name",
+  "aon": "equipment-4841-4459",
+  "why": "equipment-4841-4459 is titled \"Bravery Baldric (Restoration Greater)\"."
+ },
+ {
+  "key": "items/bravery-baldric-restoration-greater",
+  "field": "traits",
+  "aon": "equipment-4841-4459",
+  "why": "equipment-4841-4459's own trait list is [\"Invested\",\"Magical\"] and does not print healing."
+ },
+ {
+  "key": "items/burglars-rosebud",
+  "field": "bulk",
+  "aon": "equipment-3733-3510",
+  "why": "equipment-3733-3510 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/burrowing-bolt",
+  "field": "bulk",
+  "aon": "equipment-3863-3610",
+  "why": "equipment-3863-3610 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/captivating-rosebud",
+  "field": "bulk",
+  "aon": "equipment-2639",
+  "why": "equipment-2639 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/charm-of-the-ordinary",
+  "field": "bulk",
+  "aon": "equipment-2459",
+  "why": "equipment-2459 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/chatterer-of-follies",
+  "field": "traits",
+  "aon": "equipment-5015",
+  "why": "equipment-5015's own trait list is [\"Illusion\",\"Magical\",\"Mental\",\"Uncommon\"] and does not print enchantment."
+ },
+ {
+  "key": "items/clawed-bracers",
+  "field": "traits",
+  "aon": "equipment-3068",
+  "why": "equipment-3068's own trait list is [\"Invested\",\"Primal\"] and does not print magical."
+ },
+ {
+  "key": "items/clay-sphere",
+  "field": "bulk",
+  "aon": "equipment-3728",
+  "why": "equipment-3728 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/cloth-wool-cloth-1-bulk",
+  "field": "name",
+  "aon": "equipment-1773-1564",
+  "why": "equipment-1773-1564 is titled \"Cloth (Wool cloth, 1 Bulk)\"."
+ },
+ {
+  "key": "items/codex-of-unimpeded-sight",
+  "field": "traits",
+  "aon": "equipment-5126",
+  "why": "equipment-5126's own trait list is [\"Grimoire\",\"Magical\"] and does not print divination."
+ },
+ {
+  "key": "items/cold-iron-ingot",
+  "field": "bulk",
+  "aon": "equipment-2916-2766",
+  "why": "equipment-2916-2766 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/copper-penny",
+  "field": "usage",
+  "aon": "equipment-2100",
+  "why": "equipment-2100 prints Usage \"affixed to explorer's clothing (or another item in the unarmored defense category)\"."
+ },
+ {
+  "key": "items/countering-charm",
+  "field": "bulk",
+  "aon": "equipment-3070",
+  "why": "equipment-3070 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/countering-charm-greater",
+  "field": "bulk",
+  "aon": "equipment-3070-3003",
+  "why": "equipment-3070-3003 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/countering-charm-major",
+  "field": "bulk",
+  "aon": "equipment-3070-3004",
+  "why": "equipment-3070-3004 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/crackling-bubble-gum-greater",
+  "field": "bulk",
+  "aon": "equipment-1912-1667",
+  "why": "equipment-1912-1667 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/crackling-bubble-gum-lesser",
+  "field": "bulk",
+  "aon": "equipment-1912-1665",
+  "why": "equipment-1912-1665 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/crackling-bubble-gum-major",
+  "field": "bulk",
+  "aon": "equipment-1912-1668",
+  "why": "equipment-1912-1668 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/crackling-bubble-gum-moderate",
+  "field": "bulk",
+  "aon": "equipment-1912-1666",
+  "why": "equipment-1912-1666 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/crimson-bluff",
+  "field": "bulk",
+  "aon": "equipment-3487",
+  "why": "equipment-3487 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/crimson-bluff",
+  "field": "level",
+  "aon": "equipment-3487",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): equipment-3487 \"Crimson Bluff\" now prints level 15; it said 16 before the re-export. One of three Prey for Death items AoN re-levelled in the same pass (see also equipment-3488 and equipment-3489). Reported by scripts/field-diff.mjs."
+ },
+ {
+  "key": "items/cyrusian-wand",
+  "field": "description",
+  "aon": "equipment-4045",
+  "why": "equipment-4045 is this record's own page. The text that went is \"Adventure Path #219: Lord of the Trinity Star pg. 70\\nUsage held in 1 hand\\nBulk L \\n\\nRunelord Xanderghul often crafted Cyrusian wands to bolster his …\", replaced by \"#219: Lord of the Trinity Star pg. 70\\nUsage held in 1 hand\\nBulk L \\n\\nRunelord Xanderghul often crafted Cyrusian wands to bolster his access to his f…\"."
+ },
+ {
+  "key": "items/dawnsilver-ingot",
+  "field": "bulk",
+  "aon": "equipment-2917-2771",
+  "why": "equipment-2917-2771 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/deathdrinking",
+  "field": "usage",
+  "aon": "equipment-1762",
+  "why": "equipment-1762 prints Usage \"etched onto a weapon without a  disrupting  rune\"."
+ },
+ {
+  "key": "items/delve-scale",
+  "field": "bulk",
+  "aon": "equipment-1913",
+  "why": "equipment-1913 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/devils-breath-incense",
+  "field": "bulk",
+  "aon": "equipment-3445",
+  "why": "equipment-3445 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/dragonprism-staff-greater",
+  "field": "heldSpells.9",
+  "aon": "equipment-2250-1998",
+  "why": "equipment-2250-1998 links the spell by page id and the resolver follows superseded_by to the printing the app ships: summon-draconic-legion was renamed by the Remaster and the staff now holds the reprint under its new slug."
+ },
+ {
+  "key": "items/dragontooth-club",
+  "field": "bulk",
+  "aon": "equipment-4418",
+  "why": "equipment-4418 prints Bulk \"2\"."
+ },
+ {
+  "key": "items/dragontooth-club",
+  "field": "rarity",
+  "aon": "equipment-4418",
+  "why": "equipment-4418 prints Rarity \"common\"; the pre-refresh transcription had it uncommon. Rarity gates Access, so it is a finding, not a note — and nothing reported this one until rarity-changed existed."
+ },
+ {
+  "key": "items/dragontooth-leiomano",
+  "field": "traits",
+  "aon": "equipment-1885",
+  "why": "base item \"Leiomano\": the item is itself Treasure Vault (Remastered), and that book's leiomano is weapon-292, which prints Fatal d10. The record had been reading weapon-166 (Pathfinder #166: Despair on Danger Island), an adventure-path weapon of the same name that prints Deadly d10."
+ },
+ {
+  "key": "items/dullahan-codex",
+  "field": "bulk",
+  "aon": "equipment-2379",
+  "why": "equipment-2379 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/duskwood-branch",
+  "field": "bulk",
+  "aon": "equipment-2918-2774",
+  "why": "equipment-2918-2774 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/duskwood-lumber",
+  "field": "bulk",
+  "aon": "equipment-2918-2775",
+  "why": "equipment-2918-2775 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/echo-token",
+  "field": "bulk",
+  "aon": "equipment-3521",
+  "why": "equipment-3521 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/elixir-of-the-peaks",
+  "field": "description",
+  "aon": "equipment-4042",
+  "why": "equipment-4042 is this record's own page. The text that went is \"Adventure Path #219: Lord of the Trinity Star pg. 69\\nUsage held in 1 hand\\nBulk L \\n\\nWith much of New Thassilon located among the rugged heights of t…\", replaced by \"#219: Lord of the Trinity Star pg. 69\\nUsage held in 1 hand\\nBulk L \\n\\nWith much of New Thassilon located among the rugged heights of the Kodar Mounta…\"."
+ },
+ {
+  "key": "items/elven-chain",
+  "field": "bulk",
+  "aon": "equipment-2801",
+  "why": "equipment-2801 prints Bulk \"L\"."
+ },
+ {
+  "key": "items/elven-chain",
+  "field": "description",
+  "aon": "equipment-2801",
+  "why": "equipment-2801 is this record's own page. The text that went is \"varies by armor\", replaced by \"L\"."
+ },
+ {
+  "key": "items/elven-chain-high-grade",
+  "field": "bulk",
+  "aon": "equipment-2801-2602",
+  "why": "equipment-2801-2602 prints Bulk \"L\"."
+ },
+ {
+  "key": "items/elven-chain-standard-grade",
+  "field": "bulk",
+  "aon": "equipment-2801-2601",
+  "why": "equipment-2801-2601 prints Bulk \"L\"."
+ },
+ {
+  "key": "items/extinguishing-ball",
+  "field": "bulk",
+  "aon": "equipment-3864",
+  "why": "equipment-3864 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/false-death-vial",
+  "field": "usage",
+  "aon": "equipment-2106-1853",
+  "why": "equipment-2106-1853 prints Usage \"affixed to explorer's clothing (or another item in the unarmored defense category)\"."
+ },
+ {
+  "key": "items/false-death-vial-greater",
+  "field": "usage",
+  "aon": "equipment-2106-1854",
+  "why": "equipment-2106-1854 prints Usage \"affixed to explorer's clothing (or another item in the unarmored defense category)\"."
+ },
+ {
+  "key": "items/ferrofluid-urchin-greater",
+  "field": "bulk",
+  "aon": "equipment-2613-2366",
+  "why": "equipment-2613-2366 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/ferrofluid-urchin-lesser",
+  "field": "bulk",
+  "aon": "equipment-2613-2364",
+  "why": "equipment-2613-2364 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/ferrofluid-urchin-moderate",
+  "field": "bulk",
+  "aon": "equipment-2613-2365",
+  "why": "equipment-2613-2365 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/fleshrender",
+  "field": "bulk",
+  "aon": "equipment-3488",
+  "why": "equipment-3488 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/fleshrender",
+  "field": "level",
+  "aon": "equipment-3488",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): equipment-3488 \"Fleshrender\" now prints level 18; it said 16 before the re-export. Same Prey for Death re-levelling pass as equipment-3487 and equipment-3489. Reported by scripts/field-diff.mjs."
+ },
+ {
+  "key": "items/flurrying",
+  "field": "usage",
+  "aon": "equipment-1867",
+  "why": "equipment-1867 prints Usage \"etched onto a melee weapon with the monk trait\"."
+ },
+ {
+  "key": "items/freezing-embrace-snare",
+  "field": "bulk",
+  "aon": "equipment-4340",
+  "why": "equipment-4340 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/galvanic-chew",
+  "field": "bulk",
+  "aon": "equipment-1918",
+  "why": "equipment-1918 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/ginger-chew",
+  "field": "bulk",
+  "aon": "equipment-1919",
+  "why": "equipment-1919 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/gliding-membranes-greater",
+  "field": "bulk",
+  "aon": "equipment-3185-3078",
+  "why": "equipment-3185-3078 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/gliding-membranes-lesser",
+  "field": "bulk",
+  "aon": "equipment-3185-3077",
+  "why": "equipment-3185-3077 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/glittering-lights-snare",
+  "field": "bulk",
+  "aon": "equipment-4341",
+  "why": "equipment-4341 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/golden-liberators-feather",
+  "field": "bulk",
+  "aon": "equipment-4954",
+  "why": "equipment-4954 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/golden-souled-yang-na",
+  "field": "name",
+  "aon": "equipment-5178",
+  "why": "equipment-5178 is titled \"Golden-Souled Yang Na\"."
+ },
+ {
+  "key": "items/grasp-of-droskar",
+  "field": "bulk",
+  "aon": "equipment-1729",
+  "why": "equipment-1729 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/greater-elixir-of-the-peaks",
+  "field": "description",
+  "aon": "equipment-4042-3721",
+  "why": "equipment-4042-3721 is this record's own page. The text that went is \"Adventure Path #219: Lord of the Trinity Star pg. 69\\nUsage held in 1 hand\\nBulk L \\n\\nWith much of New Thassilon located among the rugged heights of t…\", replaced by \"#219: Lord of the Trinity Star pg. 69\\nUsage held in 1 hand\\nBulk L \\n\\nWith much of New Thassilon located among the rugged heights of the Kodar Mounta…\"."
+ },
+ {
+  "key": "items/greater-sihedron-medallion",
+  "field": "description",
+  "aon": "equipment-4043-3724",
+  "why": "equipment-4043-3724 is this record's own page. The text that went is \"Adventure Path #219: Lord of the Trinity Star pg. 69\\nUsage worn\\n\\nThese amulets once served as tokens of loyalty between the runelords and their fav…\", replaced by \"#219: Lord of the Trinity Star pg. 69\\nUsage worn\\n\\nThese amulets once served as tokens of loyalty between the runelords and their favored agents. Th…\"."
+ },
+ {
+  "key": "items/greater-sihedron-ring",
+  "field": "description",
+  "aon": "equipment-4044-3727",
+  "why": "equipment-4044-3727 is this record's own page. The text that went is \"Adventure Path #219: Lord of the Trinity Star pg. 69\\nUsage worn\\n\\nThough simple in appearance, Sihedron rings are among the most treasured tokens a …\", replaced by \"#219: Lord of the Trinity Star pg. 69\\nUsage worn\\n\\nThough simple in appearance, Sihedron rings are among the most treasured tokens a runelord would …\"."
+ },
+ {
+  "key": "items/guardian-aluum-charm",
+  "field": "bulk",
+  "aon": "equipment-2498",
+  "why": "equipment-2498 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/hat-of-many-minds",
+  "field": "bulk",
+  "aon": "equipment-5186",
+  "why": "equipment-5186 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/impactful",
+  "field": "aonId",
+  "aon": "equipment-4990",
+  "why": "equipment-4990 is the page this record is built from; the longer id it carried was a sub-document row of the same page."
+ },
+ {
+  "key": "items/impactful",
+  "field": "traits",
+  "aon": "equipment-4990",
+  "why": "equipment-4990's own trait list is [\"Force\",\"Magical\"] and does not print evocation."
+ },
+ {
+  "key": "items/injection-reservoir",
+  "field": "usage",
+  "aon": "equipment-1977",
+  "why": "equipment-1977 prints Usage \"applied to a non-injection melee weapon that deals piercing damage\"."
+ },
+ {
+  "key": "items/injigos-loving-embrace",
+  "field": "bulk",
+  "aon": "equipment-4099",
+  "why": "equipment-4099 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/inspiring-spotlight",
+  "field": "bulk",
+  "aon": "equipment-3531",
+  "why": "equipment-3531 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/instructions-for-lasting-agony",
+  "field": "remasteredAs.bucket",
+  "aon": "equipment-5129",
+  "why": "equipment-5129 is this record's own printing and carries no superseded_by, so there is no reprint to link forward to."
+ },
+ {
+  "key": "items/instructions-for-lasting-agony",
+  "field": "remasteredAs.id",
+  "aon": "equipment-5129",
+  "why": "equipment-5129 is this record's own printing and carries no superseded_by, so there is no reprint to link forward to."
+ },
+ {
+  "key": "items/instructions-for-lasting-agony",
+  "field": "remasteredAs.name",
+  "aon": "equipment-5129",
+  "why": "equipment-5129 is this record's own printing and carries no superseded_by, so there is no reprint to link forward to."
+ },
+ {
+  "key": "items/instructions-for-lasting-agony",
+  "field": "traits",
+  "aon": "equipment-5129",
+  "why": "equipment-5129's own trait list is [\"Grimoire\",\"Magical\"] and does not print necromancy."
+ },
+ {
+  "key": "items/inubrix-chunk",
+  "field": "bulk",
+  "aon": "equipment-1415-1315",
+  "why": "equipment-1415-1315 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/inubrix-ingot",
+  "field": "bulk",
+  "aon": "equipment-1415-1316",
+  "why": "equipment-1415-1316 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/jorngarls-harm",
+  "field": "bulk",
+  "aon": "equipment-3773",
+  "why": "equipment-3773 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/journeybread",
+  "field": "bulk",
+  "aon": "equipment-1921-1675",
+  "why": "equipment-1921-1675 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/journeybread-power",
+  "field": "bulk",
+  "aon": "equipment-1921-1676",
+  "why": "equipment-1921-1676 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/judgment-thurible",
+  "field": "usage",
+  "aon": "equipment-4766-4256",
+  "why": "equipment-4766-4256 prints Usage \"affixed to armor or weapon\"."
+ },
+ {
+  "key": "items/judgment-thurible-greater",
+  "field": "usage",
+  "aon": "equipment-4766-4258",
+  "why": "equipment-4766-4258 prints Usage \"affixed to armor or weapon\"."
+ },
+ {
+  "key": "items/judgment-thurible-major",
+  "field": "usage",
+  "aon": "equipment-4766-4257",
+  "why": "equipment-4766-4257 prints Usage \"affixed to armor or weapon\"."
+ },
+ {
+  "key": "items/keep-stone-chunk",
+  "field": "bulk",
+  "aon": "equipment-2569-2321",
+  "why": "equipment-2569-2321 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/keep-stone-ingot",
+  "field": "bulk",
+  "aon": "equipment-2569-2322",
+  "why": "equipment-2569-2322 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/kin-warding",
+  "field": "usage",
+  "aon": "equipment-538",
+  "why": "equipment-538 prints Usage \"etched onto a clan dagger\"."
+ },
+ {
+  "key": "items/kolss-oath",
+  "field": "bulk",
+  "aon": "equipment-3770-3570",
+  "why": "equipment-3770-3570 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/lattice-armor",
+  "field": "price.gp",
+  "aon": "armor-27",
+  "why": "armor-27 prints Price 9 gp."
+ },
+ {
+  "key": "items/lesser-elixir-of-the-peaks",
+  "field": "description",
+  "aon": "equipment-4042-3719",
+  "why": "equipment-4042-3719 is this record's own page. The text that went is \"Adventure Path #219: Lord of the Trinity Star pg. 69\\nUsage held in 1 hand\\nBulk L \\n\\nWith much of New Thassilon located among the rugged heights of t…\", replaced by \"#219: Lord of the Trinity Star pg. 69\\nUsage held in 1 hand\\nBulk L \\n\\nWith much of New Thassilon located among the rugged heights of the Kodar Mounta…\"."
+ },
+ {
+  "key": "items/locket-of-love-left-behind",
+  "field": "bulk",
+  "aon": "equipment-3970",
+  "why": "equipment-3970 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/look-me-not",
+  "field": "name",
+  "aon": "equipment-5105",
+  "why": "equipment-5105 is titled \"Look-Me-Not\"."
+ },
+ {
+  "key": "items/lovers-ink",
+  "field": "usage",
+  "aon": "equipment-765",
+  "why": "equipment-765 prints Usage \"with writing set\"."
+ },
+ {
+  "key": "items/magnetic-bola",
+  "field": "traits",
+  "aon": "equipment-4192",
+  "why": "base item \"Bola\": weapon-331 (Treasure Vault (Remastered), 2025) is the current printing and prints the trait as bare \"Thrown\", which is what `items/bola` itself already carries. The record had been reading weapon-92 (Gods & Magic, 2020), whose trait line still spells out \"Thrown 20 ft.\""
+ },
+ {
+  "key": "items/major-elixir-of-the-peaks",
+  "field": "description",
+  "aon": "equipment-4042-3722",
+  "why": "equipment-4042-3722 is this record's own page. The text that went is \"Adventure Path #219: Lord of the Trinity Star pg. 69\\nUsage held in 1 hand\\nBulk L \\n\\nWith much of New Thassilon located among the rugged heights of t…\", replaced by \"#219: Lord of the Trinity Star pg. 69\\nUsage held in 1 hand\\nBulk L \\n\\nWith much of New Thassilon located among the rugged heights of the Kodar Mounta…\"."
+ },
+ {
+  "key": "items/major-sihedron-medallion",
+  "field": "description",
+  "aon": "equipment-4043-3725",
+  "why": "equipment-4043-3725 is this record's own page. The text that went is \"Adventure Path #219: Lord of the Trinity Star pg. 69\\nUsage worn\\n\\nThese amulets once served as tokens of loyalty between the runelords and their fav…\", replaced by \"#219: Lord of the Trinity Star pg. 69\\nUsage worn\\n\\nThese amulets once served as tokens of loyalty between the runelords and their favored agents. Th…\"."
+ },
+ {
+  "key": "items/mocking-mirror-snare",
+  "field": "bulk",
+  "aon": "equipment-4342",
+  "why": "equipment-4342 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/moderate-elixir-of-the-peaks",
+  "field": "description",
+  "aon": "equipment-4042-3720",
+  "why": "equipment-4042-3720 is this record's own page. The text that went is \"Adventure Path #219: Lord of the Trinity Star pg. 69\\nUsage held in 1 hand\\nBulk L \\n\\nWith much of New Thassilon located among the rugged heights of t…\", replaced by \"#219: Lord of the Trinity Star pg. 69\\nUsage held in 1 hand\\nBulk L \\n\\nWith much of New Thassilon located among the rugged heights of the Kodar Mounta…\"."
+ },
+ {
+  "key": "items/moonkeep-hyacinth",
+  "field": "bulk",
+  "aon": "equipment-3790-3587",
+  "why": "equipment-3790-3587 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/moonkeep-lily",
+  "field": "bulk",
+  "aon": "equipment-3790-3585",
+  "why": "equipment-3790-3585 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/moonkeep-orchid",
+  "field": "bulk",
+  "aon": "equipment-3790-3586",
+  "why": "equipment-3790-3586 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/name-pendant",
+  "field": "bulk",
+  "aon": "equipment-3974",
+  "why": "equipment-3974 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/navaratna-of-the-solar-ruby",
+  "field": "bulk",
+  "aon": "equipment-3480",
+  "why": "equipment-3480 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/necklace-of-allure",
+  "field": "bulk",
+  "aon": "equipment-3012",
+  "why": "equipment-3012 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/nyctessas-staff",
+  "field": "bulk",
+  "aon": "equipment-2779",
+  "why": "equipment-2779 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/oathbow",
+  "field": "usage",
+  "aon": "equipment-392",
+  "why": "equipment-392 prints Usage \"held in 1 hand\"."
+ },
+ {
+  "key": "items/oathbow",
+  "field": "usage",
+  "aon": "equipment-392",
+  "why": "equipment-392 prints Usage \"held in 1 hand\"."
+ },
+ {
+  "key": "items/orichalcum-ingot",
+  "field": "bulk",
+  "aon": "equipment-2919-2779",
+  "why": "equipment-2919-2779 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/peachwood-branch",
+  "field": "bulk",
+  "aon": "equipment-3470-3378",
+  "why": "equipment-3470-3378 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/peachwood-lumber",
+  "field": "bulk",
+  "aon": "equipment-3470-3379",
+  "why": "equipment-3470-3379 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/persistent-lodestone",
+  "field": "usage",
+  "aon": "equipment-1232",
+  "why": "equipment-1232 prints Usage \"affixed to a firearm with a reload of 1\"."
+ },
+ {
+  "key": "items/phoenix-cinder",
+  "field": "bulk",
+  "aon": "equipment-2372",
+  "why": "equipment-2372 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/phoenix-fulu-holder",
+  "field": "bulk",
+  "aon": "equipment-4095",
+  "why": "equipment-4095 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/pick-of-arcane-accuracy",
+  "field": "name",
+  "aon": "equipment-5026",
+  "why": "equipment-5026 is titled \"Pick of Arcane Accuracy\"."
+ },
+ {
+  "key": "items/pit-illusion-snare",
+  "field": "bulk",
+  "aon": "equipment-4343",
+  "why": "equipment-4343 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/plate-armor-of-the-deep",
+  "field": "usage",
+  "aon": "equipment-157",
+  "why": "equipment-157 prints Usage \"worn armor\"."
+ },
+ {
+  "key": "items/poisoners-staff-greater",
+  "field": "heldSpells.2",
+  "aon": "equipment-838-816",
+  "why": "equipment-838-816 links the spell by page id and the resolver follows superseded_by to the printing the app ships: enhance-victuals was renamed by the Remaster and the staff now holds the reprint under its new slug."
+ },
+ {
+  "key": "items/poisoners-staff-major",
+  "field": "heldSpells.2",
+  "aon": "equipment-838-817",
+  "why": "equipment-838-817 links the spell by page id and the resolver follows superseded_by to the printing the app ships: enhance-victuals was renamed by the Remaster and the staff now holds the reprint under its new slug."
+ },
+ {
+  "key": "items/potion-of-living-light",
+  "field": "name",
+  "aon": "equipment-5098",
+  "why": "equipment-5098 is titled \"Potion of Living Light\"."
+ },
+ {
+  "key": "items/potion-of-stable-form",
+  "field": "traits",
+  "aon": "equipment-5100",
+  "why": "equipment-5100's own trait list is [\"Consumable\",\"Magical\",\"Potion\"] and does not print abjuration."
+ },
+ {
+  "key": "items/preserving-shot",
+  "field": "bulk",
+  "aon": "equipment-3865",
+  "why": "equipment-3865 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/psalter-of-the-blessed",
+  "field": "name",
+  "aon": "equipment-5130",
+  "why": "equipment-5130 is titled \"Psalter of the Blessed\"."
+ },
+ {
+  "key": "items/puddle-shove-snare",
+  "field": "bulk",
+  "aon": "equipment-4344",
+  "why": "equipment-4344 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/purifying-spoon-ladle",
+  "field": "bulk",
+  "aon": "equipment-2643-2429",
+  "why": "equipment-2643-2429 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/purifying-spoon-tablespoon",
+  "field": "bulk",
+  "aon": "equipment-2643-2428",
+  "why": "equipment-2643-2428 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/purifying-spoon-teaspoon",
+  "field": "bulk",
+  "aon": "equipment-2643-2427",
+  "why": "equipment-2643-2427 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/rattling-bolt",
+  "field": "bulk",
+  "aon": "equipment-2522-2291",
+  "why": "equipment-2522-2291 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/rattling-bolt-greater",
+  "field": "bulk",
+  "aon": "equipment-2522-2292",
+  "why": "equipment-2522-2292 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/repeater-bandolier",
+  "field": "bulk",
+  "aon": "equipment-3987",
+  "why": "equipment-3987 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/retrieval-prism",
+  "field": "traits",
+  "aon": "equipment-5108",
+  "why": "equipment-5108's own trait list is [\"Consumable\",\"Magical\",\"Talisman\",\"Teleportation\"] and does not print conjuration."
+ },
+ {
+  "key": "items/returning-starknife",
+  "field": "traits",
+  "aon": "equipment-3678",
+  "why": "base item \"Throwing Knife\": weapon-243 (Grand Bazaar, 2021) is the current printing and prints Agile, Finesse, Thrown 20 ft. The record had been reading weapon-113 (Pathfinder #151: The Show Must Go On, 2020), which also prints Twin."
+ },
+ {
+  "key": "items/robe-of-beneficence",
+  "field": "name",
+  "aon": "equipment-4984",
+  "why": "equipment-4984 is titled \"Robe of Beneficence\"."
+ },
+ {
+  "key": "items/rod-of-wonder",
+  "field": "traits",
+  "aon": "equipment-265",
+  "why": "equipment-265 prints [\"Chaotic\",\"Evocation\",\"Magical\",\"Rare\"]; chaotic is dropped by the remaster trait map (alignment traits have no successor)."
+ },
+ {
+  "key": "items/runewell-of-lust",
+  "field": "bulk",
+  "aon": "equipment-5226",
+  "why": "equipment-5226 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/scouting-arrow",
+  "field": "bulk",
+  "aon": "equipment-3866",
+  "why": "equipment-3866 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/shadow-cloak-snare",
+  "field": "bulk",
+  "aon": "equipment-4345",
+  "why": "equipment-4345 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/shaping-sweet",
+  "field": "bulk",
+  "aon": "equipment-3522",
+  "why": "equipment-3522 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/shield-of-endurance",
+  "field": "name",
+  "aon": "equipment-5003",
+  "why": "equipment-5003 is titled \"Shield of Endurance\"."
+ },
+ {
+  "key": "items/shield-of-mental-fortitude",
+  "field": "name",
+  "aon": "equipment-5004",
+  "why": "equipment-5004 is titled \"Shield of Mental Fortitude\"."
+ },
+ {
+  "key": "items/shield-of-silent-words",
+  "field": "name",
+  "aon": "equipment-5006",
+  "why": "equipment-5006 is titled \"Shield of Silent Words\"."
+ },
+ {
+  "key": "items/shield-of-the-bear",
+  "field": "name",
+  "aon": "equipment-5005",
+  "why": "equipment-5005 is titled \"Shield of the Bear\"."
+ },
+ {
+  "key": "items/silver-ingot",
+  "field": "bulk",
+  "aon": "equipment-2920-2782",
+  "why": "equipment-2920-2782 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/silver-tripod",
+  "field": "usage",
+  "aon": "equipment-1235",
+  "why": "equipment-1235 prints Usage \"affixed to a firearm with the kickback trait\"."
+ },
+ {
+  "key": "items/silversoul-bomb-greater",
+  "field": "source.book",
+  "aon": "equipment-3153-3069",
+  "why": "equipment-3153-3069 names its source as \"Pathfinder #199: To Bloom Below the Web\", canonicalised against the book names core.json already uses."
+ },
+ {
+  "key": "items/silversoul-bomb-major",
+  "field": "source.book",
+  "aon": "equipment-3153-3070",
+  "why": "equipment-3153-3070 names its source as \"Pathfinder #199: To Bloom Below the Web\", canonicalised against the book names core.json already uses."
+ },
+ {
+  "key": "items/singing-shortbow",
+  "field": "aonId",
+  "aon": "equipment-5028",
+  "why": "equipment-5028 is the page this record is built from; the longer id it carried was a sub-document row of the same page."
+ },
+ {
+  "key": "items/singing-shortbow",
+  "field": "traits",
+  "aon": "equipment-5028",
+  "why": "equipment-5028's own trait list is [\"Magical\",\"Sonic\"] and does not print enchantment."
+ },
+ {
+  "key": "items/skeletal-claw",
+  "field": "traits",
+  "aon": "equipment-1718",
+  "why": "base item \"Tekko-kagi\": weapon-304 (Tian Xia Character Guide, 2024) is the current printing — weapon-632 is superseded by it — and prints Agile, Disarm, Finesse, Free-Hand, Monk, Parry. The record had been reading weapon-101 (Gods & Magic, 2020), which prints Trip."
+ },
+ {
+  "key": "items/sluggish-bracelet",
+  "field": "bulk",
+  "aon": "equipment-2388",
+  "why": "equipment-2388 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/sonic-tuning-mace",
+  "field": "aonId",
+  "aon": "equipment-5029",
+  "why": "equipment-5029 is the page this record is built from; the longer id it carried was a sub-document row of the same page."
+ },
+ {
+  "key": "items/sonic-tuning-mace",
+  "field": "traits",
+  "aon": "equipment-5029",
+  "why": "equipment-5029's own trait list is [\"Magical\",\"Sonic\"] and does not print evocation."
+ },
+ {
+  "key": "items/spirit-sealing-fulu",
+  "field": "traits",
+  "aon": "equipment-5083",
+  "why": "equipment-5083's own trait list is [\"Consumable\",\"Fulu\",\"Incapacitation\",\"Magical\"] and does not print necromancy."
+ },
+ {
+  "key": "items/spirit-sealing-fulu",
+  "field": "usage",
+  "aon": "equipment-5083",
+  "why": "equipment-5083 prints Usage \"affixed to one undead creature\"."
+ },
+ {
+  "key": "items/spirit-sealing-fulu-greater",
+  "field": "usage",
+  "aon": "equipment-983-942",
+  "why": "equipment-983-942 prints Usage \"affixed to one undead creature\"."
+ },
+ {
+  "key": "items/splinter-of-finality",
+  "field": "bulk",
+  "aon": "equipment-3772",
+  "why": "equipment-3772 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/spore-shephards-staff",
+  "field": "level",
+  "aon": "equipment-2665",
+  "why": "AoN sub-doc equipment-2665-2454 is titled \"(Major)\" and repeats the BASE page's Item 4 / 100 gp; the Greater is Item 8 / 475 gp and the mirror carries no higher figure anywhere. The Archives' own defect, with nothing to correct it to — the same acceptance scripts/price-check.mjs carries."
+ },
+ {
+  "key": "items/spore-shephards-staff",
+  "field": "price",
+  "aon": "equipment-2665",
+  "why": "AoN sub-doc equipment-2665-2454 is titled \"(Major)\" and repeats the BASE page's Item 4 / 100 gp; the Greater is Item 8 / 475 gp and the mirror carries no higher figure anywhere. The Archives' own defect, with nothing to correct it to — the same acceptance scripts/price-check.mjs carries."
+ },
+ {
+  "key": "items/spore-shepherds-staff",
+  "field": "level",
+  "aon": "equipment-2665",
+  "why": "AoN sub-doc equipment-2665-2454 is titled \"(Major)\" and repeats the BASE page's Item 4 / 100 gp; the Greater is Item 8 / 475 gp and the mirror carries no higher figure anywhere. The Archives' own defect, with nothing to correct it to — the same acceptance scripts/price-check.mjs carries."
+ },
+ {
+  "key": "items/spore-shepherds-staff",
+  "field": "price",
+  "aon": "equipment-2665",
+  "why": "AoN sub-doc equipment-2665-2454 is titled \"(Major)\" and repeats the BASE page's Item 4 / 100 gp; the Greater is Item 8 / 475 gp and the mirror carries no higher figure anywhere. The Archives' own defect, with nothing to correct it to — the same acceptance scripts/price-check.mjs carries."
+ },
+ {
+  "key": "items/staff-of-natures-cunning",
+  "field": "price.gp",
+  "aon": "equipment-5169",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): The record is on its Impossible Magic printing, equipment-5169, whose base variant equipment-5169-4671 prints \"320 gp\" (32,000 cp). The 250 gp it carried is the Secrets of Magic price from equipment-1002-953, the printing equipment-5169 replaces. The greater and major rungs are unchanged at 1,400 and 6,500 gp (equipment-5169-4672 / -4673), so only the base moved."
+ },
+ {
+  "key": "items/staff-of-the-desert-winds-greater",
+  "field": "heldSpells.2",
+  "aon": "equipment-1078-1017",
+  "why": "equipment-1078-1017 links the spell by page id and the resolver follows superseded_by to the printing the app ships: enhance-victuals was renamed by the Remaster and the staff now holds the reprint under its new slug."
+ },
+ {
+  "key": "items/staff-of-the-desert-winds-major",
+  "field": "heldSpells.2",
+  "aon": "equipment-1078-1018",
+  "why": "equipment-1078-1018 links the spell by page id and the resolver follows superseded_by to the printing the app ships: enhance-victuals was renamed by the Remaster and the staff now holds the reprint under its new slug."
+ },
+ {
+  "key": "items/staff-of-the-desert-winds-true",
+  "field": "heldSpells.2",
+  "aon": "equipment-1078-1019",
+  "why": "equipment-1078-1019 links the spell by page id and the resolver follows superseded_by to the printing the app ships: enhance-victuals was renamed by the Remaster and the staff now holds the reprint under its new slug."
+ },
+ {
+  "key": "items/stalagmite-seed",
+  "field": "bulk",
+  "aon": "equipment-2597",
+  "why": "equipment-2597 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/stalk-goggles-greater",
+  "field": "source.book",
+  "aon": "equipment-1821-1589",
+  "why": "equipment-1821-1589 names its source as \"Pathfinder #187: The Seventh Arch\", canonicalised against the book names core.json already uses."
+ },
+ {
+  "key": "items/stalk-goggles-major",
+  "field": "source.book",
+  "aon": "equipment-1821-1590",
+  "why": "equipment-1821-1590 names its source as \"Pathfinder #187: The Seventh Arch\", canonicalised against the book names core.json already uses."
+ },
+ {
+  "key": "items/steelscour",
+  "field": "price",
+  "aon": "equipment-2784",
+  "why": "AoN sub-doc equipment-2784-2569 \"(major)\" prints 210 gp against the greater's 215 gp (equipment-2784-2568) — a digit, not a ladder; both levels ascend. The same acceptance scripts/price-check.mjs carries."
+ },
+ {
+  "key": "items/suit-of-false-impression",
+  "field": "name",
+  "aon": "equipment-4985",
+  "why": "equipment-4985 is titled \"Suit of False Impression\"."
+ },
+ {
+  "key": "items/swarmsuit",
+  "field": "bulk",
+  "aon": "equipment-1401-1285",
+  "why": "equipment-1401-1285 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/swarmsuit-impenetrable",
+  "field": "bulk",
+  "aon": "equipment-1401-1286",
+  "why": "equipment-1401-1286 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/temperbrand",
+  "field": "bulk",
+  "aon": "equipment-3489",
+  "why": "equipment-3489 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/temperbrand",
+  "field": "level",
+  "aon": "equipment-3489",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): equipment-3489 now prints level 20; it said 16 before the re-export, and AoN moved the level in the same correction that moved the price from 7,000 gp to 70,000 gp. Left at 16 the item would be buyable ten levels early at a tenth of its cost."
+ },
+ {
+  "key": "items/temperbrand",
+  "field": "price.gp",
+  "aon": "equipment-3489",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): equipment-3489 \"Temperbrand\" now prints price_raw \"70,000 gp\" (7,000,000 cp). The record carried 7,000 gp, which is what equipment-3489 said before the re-export — AoN corrected its own record, the app did not follow, and price-check.mjs reported it as a x0.100 disagreement."
+ },
+ {
+  "key": "items/the-bear",
+  "field": "bulk",
+  "aon": "equipment-2501",
+  "why": "equipment-2501 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/the-beating",
+  "field": "bulk",
+  "aon": "equipment-2502",
+  "why": "equipment-2502 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/thorn-triad",
+  "field": "bulk",
+  "aon": "equipment-2650",
+  "why": "equipment-2650 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/thorn-triad-greater",
+  "field": "bulk",
+  "aon": "equipment-2650-2441",
+  "why": "equipment-2650-2441 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/thorn-triad-major",
+  "field": "bulk",
+  "aon": "equipment-2650-2442",
+  "why": "equipment-2650-2442 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/thresholds-of-truth",
+  "field": "bulk",
+  "aon": "equipment-924",
+  "why": "equipment-924 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/toy-carriage-windup",
+  "field": "bulk",
+  "aon": "equipment-1342-1233",
+  "why": "equipment-1342-1233 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/trudds-strength",
+  "field": "bulk",
+  "aon": "equipment-3771-3572",
+  "why": "equipment-3771-3572 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/unassuming-face-paint",
+  "field": "bulk",
+  "aon": "equipment-4178",
+  "why": "equipment-4178 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/unexceptional",
+  "field": "bulk",
+  "aon": "equipment-2563",
+  "why": "equipment-2563 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/void-fragment",
+  "field": "bulk",
+  "aon": "equipment-2373",
+  "why": "equipment-2373 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/wand-of-purification-2nd-rank-spell",
+  "field": "bulk",
+  "aon": "equipment-3476-3368",
+  "why": "equipment-3476-3368 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/wand-of-purification-3rd-rank-spell",
+  "field": "bulk",
+  "aon": "equipment-3476-3369",
+  "why": "equipment-3476-3369 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/wand-of-purification-4th-rank-spell",
+  "field": "bulk",
+  "aon": "equipment-3476-3370",
+  "why": "equipment-3476-3370 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/wand-of-purification-5th-rank-spell",
+  "field": "bulk",
+  "aon": "equipment-3476-3371",
+  "why": "equipment-3476-3371 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/wand-of-purification-6th-rank-spell",
+  "field": "bulk",
+  "aon": "equipment-3476-3372",
+  "why": "equipment-3476-3372 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/wand-of-purification-7th-rank-spell",
+  "field": "bulk",
+  "aon": "equipment-3476-3373",
+  "why": "equipment-3476-3373 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/wand-of-purification-8th-rank-spell",
+  "field": "bulk",
+  "aon": "equipment-3476-3374",
+  "why": "equipment-3476-3374 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/wand-of-purification-9th-rank-spell",
+  "field": "bulk",
+  "aon": "equipment-3476-3375",
+  "why": "equipment-3476-3375 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/waterproof-firearm-carrying-case",
+  "field": "hands",
+  "aon": "equipment-4312",
+  "why": "equipment-4312 prints no Usage line of its own, so the record keeps its transcription usage \"held-in-two-hands\" — and the hands count is derived from that usage, which nothing had done before."
+ },
+ {
+  "key": "items/wheelchair",
+  "field": "bulk",
+  "aon": "equipment-2777",
+  "why": "equipment-2777 carries no bulk_raw — the Archives print no Bulk row for it — so the record keeps its transcription value. The deleted `bulk_num` fallback wrote 0 over it; measured over the export, every document with a bulk_num and no bulk_raw carries 0, so that fallback could only ever zero a real value."
+ },
+ {
+  "key": "items/worldforge",
+  "field": "bulk",
+  "aon": "equipment-3511",
+  "why": "equipment-3511 prints Bulk \"1\"."
+ },
+ {
+  "key": "items/wyrm-claw",
+  "field": "usage",
+  "aon": "equipment-4777",
+  "why": "equipment-4777 prints Usage \"affixed to armor or weapon\"."
+ },
+ {
+  "key": "items/wyrm-claw-greater",
+  "field": "usage",
+  "aon": "equipment-4777-4289",
+  "why": "equipment-4777-4289 prints Usage \"affixed to armor or weapon\"."
+ },
+ {
+  "key": "items/wyrm-claw-major",
+  "field": "usage",
+  "aon": "equipment-4777-4290",
+  "why": "equipment-4777-4290 prints Usage \"affixed to armor or weapon\"."
+ },
+ {
+  "key": "runesmithRune/atryl-rune-of-fire",
+  "field": "usage",
+  "aon": "runesmith-rune-1",
+  "why": "overlay ruling (scripts/data/effect-backfill.json): runesmith-rune-1 (Atryl, Rune of Fire) prints \"Usage drawn on a creature or object\"; the shipped overlay row carried a typo."
+ },
+ {
+  "key": "classFeatures/grim-fascination",
+  "field": "effectChoices",
+  "aon": "class-feature-1288",
+  "why": "the picker's `prompt` is its button text AND its label, so the helper sentence printed twice where every sibling reads \"Choose…\". Overlay ruling (scripts/data/effect-backfill.json): the prompt now asks for the pick; class-feature-1288's own text stays on the record's description, and all four options, their grants and their notes are byte-identical."
+ },
+ {
+  "key": "spells/acid-arrow",
+  "field": "level",
+  "aon": "spell-2",
+  "why": "spell-2 prints level 2; the record carried none."
+ },
+ {
+  "key": "spells/elemental-confluence",
+  "field": "area",
+  "aon": "spell-2689",
+  "why": "spell-2689 prints \"**Area** 20-foot burst\" and carries area_raw \"20-foot burst\"; the record had 10-foot. Corrected by an overlay ruling, and only visible at all because this guard now watches a spell's numbers as well as an item's."
+ },
+ {
+  "key": "spells/elemental-confluence",
+  "field": "baseArea.value",
+  "aon": "spell-2689",
+  "why": "spell-2689's area_raw is \"20-foot burst\" and its structured `area` is [20]; baseArea.value follows the printed figure."
+ },
+ {
+  "key": "spells/acid-arrow",
+  "field": "traits",
+  "aon": "spell-2",
+  "why": "spell-2's own trait list is [\"Acid\",\"Attack\",\"Evocation\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/acid-splash",
+  "field": "level",
+  "aon": "spell-3",
+  "why": "spell-3 prints level 1; the record carried none."
+ },
+ {
+  "key": "spells/acid-splash",
+  "field": "traits",
+  "aon": "spell-3",
+  "why": "spell-3's own trait list is [\"Acid\",\"Attack\",\"Cantrip\",\"Evocation\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/alter-reality",
+  "field": "level",
+  "aon": "spell-8",
+  "why": "spell-8 prints level 10; the record carried none."
+ },
+ {
+  "key": "spells/alter-reality",
+  "field": "traits",
+  "aon": "spell-8",
+  "why": "spell-8's own trait list is [\"Divination\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/black-tentacles",
+  "field": "level",
+  "aon": "spell-23",
+  "why": "spell-23 prints level 5; the record carried none."
+ },
+ {
+  "key": "spells/black-tentacles",
+  "field": "traits",
+  "aon": "spell-23",
+  "why": "spell-23's own trait list is [\"Conjuration\"] and does not print attack, concentrate, manipulate."
+ },
+ {
+  "key": "spells/blade-barrier",
+  "field": "level",
+  "aon": "spell-24",
+  "why": "spell-24 prints level 6; the record carried none."
+ },
+ {
+  "key": "spells/blade-barrier",
+  "field": "traits",
+  "aon": "spell-24",
+  "why": "spell-24's own trait list is [\"Evocation\",\"Force\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/call-of-the-grave",
+  "field": "level",
+  "aon": "spell-522",
+  "why": "spell-522 prints level 1; the record carried none."
+ },
+ {
+  "key": "spells/call-of-the-grave",
+  "field": "traits",
+  "aon": "spell-522",
+  "why": "spell-522's own trait list is [\"Arcane\",\"Attack\",\"Necromancy\",\"Uncommon\",\"Wizard\",\"Focus\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/cone-of-cold",
+  "field": "level",
+  "aon": "spell-47",
+  "why": "spell-47 prints level 5; the record carried none."
+ },
+ {
+  "key": "spells/cone-of-cold",
+  "field": "traits",
+  "aon": "spell-47",
+  "why": "spell-47's own trait list is [\"Cold\",\"Evocation\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/darkened-eyes",
+  "field": "level",
+  "aon": "spell-411",
+  "why": "spell-411 prints level 4; the record carried none."
+ },
+ {
+  "key": "spells/darkened-eyes",
+  "field": "traits",
+  "aon": "spell-411",
+  "why": "spell-411's own trait list is [\"Cleric\",\"Darkness\",\"Transmutation\",\"Uncommon\",\"Focus\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/disjunction",
+  "field": "level",
+  "aon": "spell-77",
+  "why": "spell-77 prints level 9; the record carried none."
+ },
+ {
+  "key": "spells/disjunction",
+  "field": "traits",
+  "aon": "spell-77",
+  "why": "spell-77's own trait list is [\"Abjuration\",\"Uncommon\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/enervation",
+  "field": "level",
+  "aon": "spell-687",
+  "why": "spell-687 prints level 4; the record carried none."
+ },
+ {
+  "key": "spells/enervation",
+  "field": "traits",
+  "aon": "spell-687",
+  "why": "spell-687's own trait list is [\"Necromancy\",\"Negative\",\"Void\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/faerie-fire",
+  "field": "level",
+  "aon": "spell-107",
+  "why": "spell-107 prints level 2; the record carried none."
+ },
+ {
+  "key": "spells/faerie-fire",
+  "field": "traits",
+  "aon": "spell-107",
+  "why": "spell-107's own trait list is [\"Evocation\",\"Light\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/fire-seeds",
+  "field": "level",
+  "aon": "spell-117",
+  "why": "spell-117 prints level 6; the record carried none."
+ },
+ {
+  "key": "spells/fire-seeds",
+  "field": "traits",
+  "aon": "spell-117",
+  "why": "spell-117's own trait list is [\"Evocation\",\"Fire\",\"Plant\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/flame-strike",
+  "field": "level",
+  "aon": "spell-120",
+  "why": "spell-120 prints level 5; the record carried none."
+ },
+ {
+  "key": "spells/flame-strike",
+  "field": "traits",
+  "aon": "spell-120",
+  "why": "spell-120's own trait list is [\"Evocation\",\"Fire\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/forced-quiet",
+  "field": "level",
+  "aon": "spell-424",
+  "why": "spell-424 prints level 1; the record carried none."
+ },
+ {
+  "key": "spells/forced-quiet",
+  "field": "traits",
+  "aon": "spell-424",
+  "why": "spell-424's own trait list is [\"Abjuration\",\"Cleric\",\"Uncommon\",\"Focus\"] and does not print manipulate."
+ },
+ {
+  "key": "spells/ghost-sound",
+  "field": "level",
+  "aon": "spell-132",
+  "why": "spell-132 prints level 1; the record carried none."
+ },
+ {
+  "key": "spells/ghost-sound",
+  "field": "traits",
+  "aon": "spell-132",
+  "why": "spell-132's own trait list is [\"Auditory\",\"Cantrip\",\"Illusion\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/miracle",
+  "field": "level",
+  "aon": "spell-196",
+  "why": "spell-196 prints level 10; the record carried none."
+ },
+ {
+  "key": "spells/miracle",
+  "field": "traits",
+  "aon": "spell-196",
+  "why": "spell-196's own trait list is [\"Divination\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/phantasmal-killer",
+  "field": "level",
+  "aon": "spell-219",
+  "why": "spell-219 prints level 4; the record carried none."
+ },
+ {
+  "key": "spells/phantasmal-killer",
+  "field": "traits",
+  "aon": "spell-219",
+  "why": "spell-219's own trait list is [\"Death\",\"Emotion\",\"Fear\",\"Illusion\",\"Mental\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/polar-ray",
+  "field": "level",
+  "aon": "spell-224",
+  "why": "spell-224 prints level 8; the record carried none."
+ },
+ {
+  "key": "spells/polar-ray",
+  "field": "traits",
+  "aon": "spell-224",
+  "why": "spell-224's own trait list is [\"Attack\",\"Cold\",\"Evocation\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/primal-phenomenon",
+  "field": "level",
+  "aon": "spell-231",
+  "why": "spell-231 prints level 10; the record carried none."
+ },
+ {
+  "key": "spells/primal-phenomenon",
+  "field": "traits",
+  "aon": "spell-231",
+  "why": "spell-231's own trait list is [\"Divination\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/ray-of-frost",
+  "field": "level",
+  "aon": "spell-245",
+  "why": "spell-245 prints level 1; the record carried none."
+ },
+ {
+  "key": "spells/ray-of-frost",
+  "field": "traits",
+  "aon": "spell-245",
+  "why": "spell-245's own trait list is [\"Attack\",\"Cantrip\",\"Cold\",\"Evocation\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/rope-trick",
+  "field": "level",
+  "aon": "spell-264",
+  "why": "spell-264 prints level 4; the record carried none."
+ },
+ {
+  "key": "spells/rope-trick",
+  "field": "traits",
+  "aon": "spell-264",
+  "why": "spell-264's own trait list is [\"Conjuration\",\"Extradimensional\",\"Uncommon\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/secret-chest",
+  "field": "level",
+  "aon": "spell-716",
+  "why": "spell-716 prints level 5; the record carried none."
+ },
+ {
+  "key": "spells/secret-chest",
+  "field": "traits",
+  "aon": "spell-716",
+  "why": "spell-716's own trait list is [\"Conjuration\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/shocking-grasp",
+  "field": "level",
+  "aon": "spell-283",
+  "why": "spell-283 prints level 1; the record carried none."
+ },
+ {
+  "key": "spells/shocking-grasp",
+  "field": "traits",
+  "aon": "spell-283",
+  "why": "spell-283's own trait list is [\"Attack\",\"Electricity\",\"Evocation\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/spell-turning",
+  "field": "level",
+  "aon": "spell-297",
+  "why": "spell-297 prints level 7; the record carried none."
+ },
+ {
+  "key": "spells/spell-turning",
+  "field": "traits",
+  "aon": "spell-297",
+  "why": "spell-297's own trait list is [\"Abjuration\",\"Uncommon\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/spiritual-weapon",
+  "field": "level",
+  "aon": "spell-306",
+  "why": "spell-306 prints level 2; the record carried none."
+ },
+ {
+  "key": "spells/spiritual-weapon",
+  "field": "traits",
+  "aon": "spell-306",
+  "why": "spell-306's own trait list is [\"Evocation\",\"Force\"] and does not print attack, concentrate, manipulate."
+ },
+ {
+  "key": "spells/storm-of-vengeance",
+  "field": "level",
+  "aon": "spell-313",
+  "why": "spell-313 prints level 9; the record carried none."
+ },
+ {
+  "key": "spells/storm-of-vengeance",
+  "field": "traits",
+  "aon": "spell-313",
+  "why": "spell-313's own trait list is [\"Air\",\"Electricity\",\"Evocation\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "spells/weird",
+  "field": "level",
+  "aon": "spell-375",
+  "why": "spell-375 prints level 9; the record carried none."
+ },
+ {
+  "key": "spells/weird",
+  "field": "traits",
+  "aon": "spell-375",
+  "why": "spell-375's own trait list is [\"Death\",\"Emotion\",\"Fear\",\"Illusion\",\"Mental\"] and does not print concentrate, manipulate."
+ },
+ {
+  "key": "classes/magus",
+  "field": "descRefs",
+  "aon": "class-74",
+  "why": "the class-details popup's prose is now class-74's own page (Impossible Magic Magus) instead of the Foundry-era transcription, so its cross-references are that page's links. The refs that went named features only the Secrets of Magic printing has."
+ },
+ {
+  "key": "classes/summoner",
+  "field": "description",
+  "aon": "class-77",
+  "why": "the class-details popup's prose is now class-77's own page (Impossible Magic Summoner). The Foundry-era transcription was longer because it restated every class feature's rules text below the table; the feature popups carry that text."
+ },
+ {
+  "key": "classes/summoner",
+  "field": "descRefs",
+  "aon": "class-77",
+  "why": "class-77's own links, for the same reason as classes/magus above."
+ },
+ {
+  "key": "classFeatures/dragon-eidolon",
+  "field": "effectChoices",
+  "aon": "eidolon-7",
+  "why": "the picker's prompt is printed twice — as the card label and inside the button — so it reads as a question now (\"Choose your eidolon's breath weapon area\") instead of the fragment \"Breath Weapon area\". Same options, same values; eidolon-7 is the page they come from."
+ },
+ {
+  "key": "classFeatures/mastermind",
+  "field": "effectChoices",
+  "aon": "racket-6",
+  "why": "the same prompt repair; racket-6 (Mastermind) is the page the trained-skill choice comes from. Same options, same grants."
+ },
+ {
+  "key": "classFeatures/palatine-detective",
+  "field": "effectChoices",
+  "aon": "archetype-306",
+  "why": "the same prompt repair; archetype-306 (Palatine Detective) prints the Esoterica Methodology cantrips. Same spell filters."
+ },
+ {
+  "key": "classFeatures/staff-nexus",
+  "field": "effectChoices",
+  "aon": "arcane-thesis-10",
+  "why": "the same prompt repair; arcane-thesis-10 (Staff Nexus) prints the makeshift staff. Same spell filters."
+ }
+]

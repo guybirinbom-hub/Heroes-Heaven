@@ -5,7 +5,7 @@ import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { content } from './_content';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
-import { initialPlay } from '../src/rules/play';
+import { bumpItemQuantity, initialPlay } from '../src/rules/play';
 import { ROSTER_KEY, type SavedChar } from '../src/data/storage';
 
 /**
@@ -25,6 +25,9 @@ const gm = vi.hoisted(() => ({
   edits: [] as { campaignId: string; charId: string; sheet: unknown; updatedAt: string }[],
   /** When set, fetchGmEdits waits on it — the in-flight window of case (c). */
   gate: null as Promise<void> | null,
+  /** Run the moment the gate opens, INSIDE the microtask drain and before the rows are handed back —
+   *  so anything it schedules is still queued, unrendered, when the apply reads the roster. Case (e). */
+  onResume: null as (() => void) | null,
   fetches: 0,
 }));
 
@@ -36,6 +39,7 @@ vi.mock('../src/data/party', async (importOriginal) => ({
   fetchGmEdits: async () => {
     gm.fetches++;
     if (gm.gate) await gm.gate;
+    gm.onResume?.();
     return gm.edits;
   },
   deleteGmEdit: async () => 1,
@@ -77,6 +81,7 @@ afterEach(() => {
   localStorage.clear();
   gm.edits = [];
   gm.gate = null;
+  gm.onResume = null;
   gm.fetches = 0;
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
@@ -192,5 +197,137 @@ describe('a GM edit never eats the player’s work silently', () => {
     expect(app.host.textContent, 'the GM’s character + build still land').toContain('GM Version');
     expect(app.qty(), 'the player’s own action was applied over by a sheet that predates it').toBe('4');
     expect(app.banner(), 'a replacement the player has to undo is never silent').toContain('Your GM updated');
+  }, APP_TIMEOUT);
+
+  // bug 2026-09-23: the banner was decided INSIDE the setRoster updater
+  it('(d) says so even when App is already mid-update as the rows land', async () => {
+    // (c) with one thing added: App has an update of its own scheduled and not yet rendered.
+    // React runs a functional updater when it RENDERS, not when you hand it over — it only evaluates
+    // it on the spot while the fiber has nothing pending. So a list filled inside the updater and read
+    // on the next line is empty exactly when the app happens to be busy, and the banner that this whole
+    // branch exists to raise never appears: the GM's sheet lands over the player's work, silently.
+    // Without the fix (decide inside the `setRoster` updater again):
+    //   AssertionError: expected '' to contain 'Your GM updated'
+    let open = () => undefined as void;
+    gm.gate = new Promise<void>((resolve) => {
+      open = () => resolve();
+    });
+    gm.edits = [{ campaignId: 'camp', charId: 'c1', sheet: saved('c1', 'GM Version'), updatedAt: '2026-09-13T10:00:00Z' }];
+    const app = await openInventory([saved('c1', 'Player Version')]);
+    app.plusOnce(); // the player drinks in the pub while the fetch is out
+    expect(app.qty()).toBe('4');
+    // Past the persist debounce, or the cross-tab guard below skips on a queued write of our own.
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 600));
+    });
+    // DELIBERATELY OUTSIDE act(). A React update that has been scheduled and not yet rendered is a
+    // Scheduler task — a macrotask — while the apply resumes from `await fetchGmEdits()` on a
+    // microtask, and a microtask always runs first. That ordering is what puts the apply inside the
+    // busy window deterministically; act() would flush the render before the rows land and the window
+    // would never open. Another tab writing the roster is one real way to be in it (this one, so the
+    // busy update is something the app itself does); a cloud pull, an autosave or a Realtime echo are
+    // the others, and the fix must not depend on which.
+    window.dispatchEvent(new StorageEvent('storage', { key: ROSTER_KEY, newValue: '[]' }));
+    open();
+    await app.settle();
+    app.openTab();
+    expect(app.host.textContent, 'the GM’s character + build still land').toContain('GM Version');
+    expect(app.qty(), 'the player’s own action survives the busy window too').toBe('4');
+    expect(app.banner(), 'busy is not a reason to take the player’s work without saying so').toContain('Your GM updated');
+  }, APP_TIMEOUT);
+
+  // bug 2026-09-23: (d)'s fix moved the KEEP decision out of the updater too
+  it('(e) keeps play that is still QUEUED — work this tab has not rendered yet', async () => {
+    // THE OTHER SIDE OF (d), and the trap in its fix. `rosterRef.current` is assigned during render,
+    // so it is the last COMMITTED roster; `r` inside the setRoster updater is the latest QUEUED one.
+    // They disagree in exactly the state (d) creates — an update scheduled and not yet rendered — and
+    // when that queued update is ITSELF the player's work, a "did they edit during the fetch" compare
+    // taken over rosterRef.current answers no (same object as beforeFetch captured) and the GM's `play`
+    // replaces theirs. (d) cannot see it: its queued update is the roster re-parsed, byte for byte, so
+    // stale and fresh agree. Here the queued roster carries a potion this tab has never rendered.
+    //   Deciding over rosterRef.current instead of `r`:
+    //     AssertionError: expected '3' to be '4'
+    // A ROSTER ID OF ITS OWN. The cross-tab guard refuses to adopt an echo of any RECENT write of ours,
+    // and `recentPersists()` is module state that outlives a test — (b), (c) and (d) each persist a
+    // four-potion `c1`, so a four-potion `c1` arriving here reads as our own echo and is never adopted.
+    // Measured: the adopt was silently skipped and this test passed the fix and failed the mutant for
+    // the wrong reason. The app is right; the collision is the file's.
+    const player = saved('e1', 'Player Version');
+    const potion = player.play!.inventory!.find((i) => i.itemId === 'healing-potion-minor')!;
+    // The player's OTHER tab (or their phone, through the cloud pull's merge — same Scheduler lane)
+    // picked up one more: four potions, written to storage, never yet seen by this tab.
+    const fromOtherTab = [{ ...player, play: bumpItemQuantity(player.play!, potion.instanceId, 1) }];
+    let open = () => undefined as void;
+    gm.gate = new Promise<void>((resolve) => {
+      open = () => resolve();
+    });
+    gm.edits = [{ campaignId: 'camp', charId: 'e1', sheet: saved('e1', 'GM Version'), updatedAt: '2026-09-13T10:00:00Z' }];
+    const app = await openInventory([player]);
+    expect(app.qty(), 'fixture: this tab is showing three').toBe('3');
+    // Past the persist debounce — the cross-tab guard refuses to adopt anything while a write of ours
+    // is queued, and would skip the whole path below.
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 600));
+    });
+    // THE OTHER TAB'S WRITE LANDS *INSIDE THE MICROTASK DRAIN* that opens the gate — not merely
+    // "before open()". A React render is a Scheduler task, so an update queued in this window cannot
+    // have rendered by the time the apply resumes a microtask later: committed and queued are
+    // guaranteed to disagree. Dispatching before open() instead is not enough, and measuring that is
+    // what this test cost — the first draft did exactly that, act() flushed the adopt render first,
+    // rosterRef.current was already the four-potion roster, and the test passed the bug.
+    gm.onResume = () => {
+      localStorage.setItem(ROSTER_KEY, JSON.stringify(fromOtherTab));
+      window.dispatchEvent(new StorageEvent('storage', { key: ROSTER_KEY, newValue: JSON.stringify(fromOtherTab) }));
+    };
+    open();
+    await app.settle();
+    app.openTab();
+    expect(app.host.textContent, 'the GM’s character + build still land').toContain('GM Version');
+    expect(app.qty(), 'the player’s fourth potion was queued, not rendered — and taken').toBe('4');
+  }, APP_TIMEOUT);
+
+  // bug 2026-09-23: the banner was still decided over rosterRef.current while the map ran over `r`
+  it('(f) says so when the work it replaced was QUEUED BUILD work, not play', async () => {
+    // (e) KEPT the player's queued `play`. Their queued BUILD is a different ruling: the GM's sheet
+    // replaces it, last change wins — being TOLD is what makes that recoverable. Decide who to tell
+    // over `rosterRef.current` and the answer is about an entry the queued update has already replaced:
+    // `was === c`, so nothing raced, and the published compare has nothing to say either — a level-up
+    // made in the player's other tab is overwritten by the GM's sheet with the banner silent. That is
+    // more than "told about fewer characters": it is work gone with no explanation, which is the one
+    // thing a player cannot recover from on their own (they still can — one Ctrl+Z — but only if they
+    // know to).
+    //   Deciding over rosterRef.current instead of `r`:
+    //     AssertionError: expected '' to contain 'Your GM updated'
+    //
+    // THE GM'S SHEET IS THIS TAB'S OWN, BYTE FOR BYTE. Nothing has been published this session, so the
+    // fallback compare is incoming-vs-local — any difference there raises the banner by itself, and the
+    // test would go green for a reason that has nothing to do with the queued roster. Identical sheets
+    // leave the queued entry as the only thing that can answer. (e) is the proof that this window
+    // really opens; the mutation above is what proves this leg reads it.
+    const player = saved('f1', 'Player Version');
+    // The player's other tab renamed them — build work, not play, so the raced branch cannot keep it.
+    const fromOtherTab = [
+      { ...player, build: { ...player.build, name: 'Other Tab' }, character: { ...player.character, name: 'Other Tab' } },
+    ];
+    let open = () => undefined as void;
+    gm.gate = new Promise<void>((resolve) => {
+      open = () => resolve();
+    });
+    gm.edits = [{ campaignId: 'camp', charId: 'f1', sheet: saved('f1', 'Player Version'), updatedAt: '2026-09-13T10:00:00Z' }];
+    const app = await openInventory([player]);
+    expect(app.banner(), 'fixture: an identical sheet has nothing to announce on its own').toBe('');
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 600));
+    });
+    gm.onResume = () => {
+      localStorage.setItem(ROSTER_KEY, JSON.stringify(fromOtherTab));
+      window.dispatchEvent(new StorageEvent('storage', { key: ROSTER_KEY, newValue: JSON.stringify(fromOtherTab) }));
+    };
+    open();
+    await app.settle();
+    expect(app.banner(), 'a build change replaced in the busy window is the silent one').toContain('Your GM updated');
+    // It names the entry the map REALLY replaced — the queued one, which is the whole question here.
+    expect(app.banner(), 'named from the roster the updater ran over').toContain('Other Tab');
+    expect(app.host.textContent, 'the GM’s sheet still lands over it — last change wins').toContain('Player Version');
   }, APP_TIMEOUT);
 });

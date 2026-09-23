@@ -16,8 +16,11 @@ const eidolon = (typeId: string, level: number) =>
   deriveEidolon({ id: 'e1', kind: 'eidolon', name: 'Eidolon', typeId } as never, build('summoner', level, { subclassId: typeId }), db);
 
 describe('the data', () => {
-  it('all thirteen types carry all three tiers', () => {
-    expect(TYPES.length).toBe(13);
+  /* FIFTEEN since Impossible Magic: the book adds Aberrant and Ooze (eidolon-14, eidolon-23) and
+   * reprints eleven of the thirteen, while Elemental (Rage of Elements) and Swarm (Battlecry!) are
+   * legacy-only and stay. The count is pinned so a type cannot quietly leave the picker. */
+  it('all fifteen types carry all three tiers', () => {
+    expect(TYPES.length).toBe(15);
     for (const t of TYPES) {
       expect(t.eidolonAbilities?.map((a) => a.tier), t.id).toEqual(['initial', 'symbiosis', 'transcendence']);
     }
@@ -42,6 +45,46 @@ describe('the data', () => {
   it('names are properly cased, not slug-derived', () => {
     const angel = TYPES.find((t) => t.id === 'angel-eidolon')!.eidolonAbilities!;
     expect(angel.map((a) => a.name)).toEqual(['Hallowed Strikes', "Traveler's Aura", 'Angelic Mercy']);
+  });
+});
+
+/*
+ * …AND A TYPE THAT GRANTS NOTHING IS NOT AN OPTION, IT IS A LABEL.
+ *
+ * Aberrant and Ooze arrived as picker options with no COMPANION_MODS row and no TYPE_PACKAGE row,
+ * which are the only two routes `deriveEidolon` reads for a type's senses, languages and IWR. Both
+ * were offered to the player and then changed nothing about the eidolon they got — against this
+ * repo's standing "every option affects the player" rule, and invisible to the count above because
+ * the abilities PROSE was complete.
+ *
+ * Asserted through the real derive for EVERY type rather than for the two that were broken: a
+ * sixteenth type added later reaches this the same way.
+ */
+describe('every type grants something mechanical', () => {
+  it('no type leaves the eidolon block with no senses, languages or IWR of its own', () => {
+    const bare = TYPES.filter((t) => {
+      const b = eidolon(t.id, 20);
+      return !(b.senses?.length || b.languages?.length || b.iwr?.length);
+    }).map((t) => t.id);
+    expect(bare, 'a picker option that grants nothing is a label').toEqual([]);
+  });
+
+  it('aberrant: darkvision and Aklo, off its own AoN page (eidolon-14)', () => {
+    const b = eidolon('aberrant-eidolon', 5);
+    expect(b.senses).toContain('darkvision');
+    expect(b.languages).toContain(db.languages.aklo.name);
+  });
+
+  it('ooze: motion sense, no vision, and the level-scaled Ooze Physiology resistance (eidolon-23)', () => {
+    const b = eidolon('ooze-eidolon', 10);
+    expect(b.senses).toContain('motion sense (precise) 60 feet');
+    expect(b.senses).toContain('no vision');
+    // "resistance equal to half your level (minimum 1)" — a static string cannot scale, so it is
+    // interpolated; 10th level is 5, and the minimum holds at 1st.
+    expect(b.iwr?.join(' | ')).toContain('resistance 5 acid, critical hits, precision');
+    expect(eidolon('ooze-eidolon', 1).iwr?.join(' | ')).toContain('resistance 1 acid');
+    // The page prints no Language line and the prose says it speaks none — so nothing to answer.
+    expect(b.languages ?? []).toEqual([]);
   });
 });
 

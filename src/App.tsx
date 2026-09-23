@@ -447,6 +447,10 @@ export default function App() {
       if (timer) clearTimeout(timer);
     };
   }, [auth.status]);
+  // The characters a GM edit replaced unpublished work on, handed from INSIDE the `setRoster` updater
+  // below to the effect under it. Both comments there say why it cannot be decided or raised anywhere
+  // else: the decision needs the queued roster, the banner needs a commit to have happened.
+  const gmClobberedRef = useRef<string[] | null>(null);
   // Apply pending GM edits to MY characters — silently. A GM can edit a player's sheet and push it; the
   // player's app swaps in the GM's version. It applies INSTANTLY via a Realtime subscription while the
   // app is open, and the focus/visibility/online/sign-in pull is the fallback for when it was closed or
@@ -502,25 +506,50 @@ export default function App() {
          * published copy we compare the INCOMING sheet against the local one instead: if they differ, the
          * player's version is being replaced, which is exactly what the banner is for.
          */
-        const clobbered: string[] = [];
-        setRoster((r) =>
-          r.map((c) => {
+        /* TWO DECISIONS, ONE ROSTER — the one the map is actually replacing.
+         *
+         * `r` is the latest QUEUED roster; `rosterRef.current` is the last COMMITTED one (assigned
+         * during render). They disagree in exactly one state — an update scheduled and not yet
+         * rendered — and if that queued update is ITSELF the player's work (another tab's roster
+         * arriving on the storage event, or the cloud pull's merged roster: both non-discrete
+         * Scheduler-lane updates), then anything decided over `rosterRef.current` is decided about a
+         * roster that is already gone. `rosterRef.current` still holds the very entry `beforeFetch`
+         * captured, so the "did they edit during the fetch" compare answers no, and:
+         *   - WHAT TO KEEP: the GM's `play` replaces theirs.
+         *   - WHO TO TELL: a character the queued roster has since dropped is named though nothing of
+         *     it was replaced; and a queued BUILD change — a level-up made in the player's other tab —
+         *     is replaced by the GM's sheet and NOT announced, which is the shape that costs work
+         *     silently. (Their queued `play` is kept, so that half needs no banner.)
+         * So both are decided in here, per entry, over `r`.
+         *
+         * WHAT DOES NOT BELONG IN HERE IS THE `setGmOverwrote` CALL. React runs a functional updater
+         * when it RENDERS, not when you hand it over — it only evaluates it on the spot while the
+         * component has no other update pending. So a list filled here and read on the next line is
+         * empty exactly when App happens to be busy, and the banner this whole branch exists to raise
+         * silently does not appear. The names go into a ref instead, and the effect below this one
+         * raises them after the commit — a commit React cannot reach without having run this updater.
+         * That write is the only side effect in here and it is idempotent: same roster in, same names
+         * out, so an updater React re-invokes leaves the same list behind.
+         * 2026-09-23; (d) pins the banner, (e) the queued `play`, (f) the queued build — all in
+         * test/bug-gm-edit-race.test.tsx. */
+        setRoster((r) => {
+          const clobbered: string[] = [];
+          const next = r.map((c) => {
             const edit = newestByChar.get(c.id);
             if (!edit) return c;
-            const lastPublished = publishedSheetRef.current.get(c.id);
-            const localNow = sheetJson(c.id, c);
             // The player edited DURING the fetch (identity first — the JSON compare only runs for a
             // character that actually moved). Their actions are newer than anything the GM saw, so the
             // GM's character + build land and the local `play` stays.
             const was = beforeFetch.get(c.id);
+            const localNow = sheetJson(c.id, c);
             const raced = !!was && was !== c && sheetJson(c.id, was) !== localNow;
-            if (raced || playerWorkWasOverwritten(lastPublished, localNow, sheetJson(c.id, edit.sheet))) {
+            if (raced || playerWorkWasOverwritten(publishedSheetRef.current.get(c.id), localNow, sheetJson(c.id, edit.sheet)))
               clobbered.push(c.character.name);
-            }
             return { ...edit.sheet, id: c.id, archived: c.archived ?? false, ...(raced ? { play: c.play } : {}) };
-          }),
-        );
-        if (clobbered.length) setGmOverwrote(clobbered);
+          });
+          gmClobberedRef.current = clobbered;
+          return next;
+        });
         // Stamp every edit we consumed (the applied newest AND the superseded older ones), so none of
         // them can ever re-apply, whatever becomes of the delete below.
         for (const e of applicable) {
@@ -580,6 +609,16 @@ export default function App() {
       unsubscribe();
     };
   }, [auth.status, setRoster]);
+  /* The banner goes up AFTER a commit, never on the line after `setRoster` — see the updater above.
+   * No dependency list on purpose: the only moment those names are certainly known is once React has
+   * actually rendered the update that produced them, and "after every commit" is that moment without
+   * having to guess which of App's states carried it there. Everything else is a null check. */
+  useEffect(() => {
+    const names = gmClobberedRef.current;
+    if (!names) return;
+    gmClobberedRef.current = null;
+    if (names.length) setGmOverwrote(names);
+  });
   useEffect(() => {
     if (persistImmediately.current) {
       persistImmediately.current = false;

@@ -30,6 +30,31 @@ const USAGE_SLUGS = (() => {
 })();
 const USAGE_NUM = { 1: 'one', 2: 'two', 3: 'three', 4: 'four' };
 
+/*
+ * THE BOOK NAME THE SOURCES CARD KNOWS.
+ *
+ * AoN titles a book "Dark Archives (Remastered)"; core.json files it as "Pathfinder Dark Archive
+ * (Remastered)" — one letter apart, so every importer's own normalising fold produces `darkarchives`
+ * against `darkarchive`, misses, and invents "Pathfinder Dark Archives (Remastered)". The Sources card
+ * then lists that invented title as a SECOND, near-identical book with one record in it, beside the
+ * real one with 425, and a player who owns Dark Archive cannot switch those records on.
+ *
+ * scripts/data/book-names.json is the hand-kept answer, and three importers mint `source.book` —
+ * import-siege-and-gaps, import-companions and import-archive-buckets. It lives here so they read the
+ * one table instead of three copies drifting apart; the per-script fold stays where it is, because it
+ * is built from whatever core.json already holds and is not shareable.
+ */
+const BOOK_NAMES = (() => {
+  try { return JSON.parse(readFileSync('scripts/data/book-names.json', 'utf8')); } catch { return {}; }
+})();
+
+/** AoN's book title -> core.json's, via the hand-kept table then `fold` (an importer's own index). */
+export function canonBookName(book, fold) {
+  const b = String(book || '').trim();
+  if (!b) return undefined;
+  return BOOK_NAMES[b] ?? fold?.(b) ?? (/^Pathfinder /i.test(b) ? b : `Pathfinder ${b}`);
+}
+
 /** HH's usage slug for an archive record, or null when the Archives say nothing. */
 export function usageOf(rec) {
   const raw = rec?.data?.usage;
@@ -41,6 +66,42 @@ export function usageOf(rec) {
     .replace(/\b([1-4])\b/g, (_, d) => USAGE_NUM[d])
     .normalize('NFKD').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || null;
 }
+
+/*
+ * The traits the ARCHIVES themselves classify as a base item's mechanics — every trait doc whose
+ * `trait_group` names Weapon, Armor or Shield (94 of them, taken from the export's trait.json).
+ *
+ * These are the traits a magic item's own page never prints, because they belong to the base item it
+ * is built on: `data.base_item` is how the Archives say which one, and the union below re-sources
+ * them from that page. When the Archives name NO base item the union has nothing to add, and the
+ * record's own weapon mechanics were being deleted instead — `items/staff-of-power` came out
+ * Evocation/Magical/Staff, with no Monk and no Two-Hand d8, so a staff stopped upgrading its damage
+ * die and stopped being a monk weapon.
+ *
+ * The classification is the Archives' own, not a judgement here: a school, ancestry or material trait
+ * the page omits stays omitted, because the page is authoritative for those.
+ */
+const BASE_ITEM_TRAITS = new Set([
+  'adjusted', 'agile', 'alchemical', 'aquadynamic', 'attached', 'azarketi', 'backstabber',
+  'backswing', 'barding', 'brace', 'brutal', 'bulwark', 'capacity', 'catfolk', 'climbing',
+  'clockwork', 'cobbled', 'combination', 'comfort', 'concealable', 'concussive', 'conrasu',
+  'critical-fusion', 'deadly', 'deflecting', 'disarm', 'double-barrel', 'dwarf', 'elf',
+  'entrench', 'expandable', 'fatal', 'fatal-aim', 'finesse', 'flexible', 'foldaway', 'forceful',
+  'free-hand', 'geniekin', 'ghoran', 'gnome', 'goblin', 'grapple', 'grippli', 'halfling',
+  'hampering', 'harnessed', 'hefty', 'hindering', 'injection', 'inscribed', 'integrated',
+  'jousting', 'kickback', 'kobold', 'laminar', 'launching', 'modular', 'monk', 'mounted',
+  'noisy', 'nonlethal', 'orc', 'parry', 'ponderous', 'portable', 'propulsive', 'range',
+  'ranged-trip', 'razing', 'reach', 'recovery', 'reload', 'repeating', 'resonant', 'scatter',
+  'shield-throw', 'shove', 'sweep', 'tearing', 'tengu', 'tethered', 'thrown', 'training', 'trip',
+  'twin', 'two-hand', 'unarmed', 'vanara', 'vehicular', 'venomous', 'versatile', 'vishkanya',
+  'volley',
+]);
+/** …allowing for HH's parameters: `two-hand-d8`, `deadly-d10`, `thrown-20`, `fatal-aim-d12`. */
+const isBaseItemTrait = (t) => {
+  const parts = String(t).split('-');
+  for (let i = parts.length; i > 0; i--) if (BASE_ITEM_TRAITS.has(parts.slice(0, i).join('-'))) return true;
+  return false;
+};
 
 const RARITY = new Set(['common', 'uncommon', 'rare', 'unique']);
 // The Archives list rarity and the edition marker among the traits; Heroes Heaven keeps rarity in its
@@ -120,23 +181,26 @@ export function coinsFromCp(cp) {
 }
 
 /*
- * Bulk needs `bulk_raw`, not `bulk_num`. `bulk_num` is 0 both for "Bulk —" (negligible) and for the
- * 115 items where the Archives simply print no Bulk row at all — Backpack (equipment-4) has
- * bulk_num 0.0, bulk_raw null, and an empty row where the value should be. Reading bulk_num alone
- * would quietly zero out real values.
+ * Bulk needs `bulk_raw`, and ONLY `bulk_raw`. `bulk_num` is 0 both for "Bulk —" (negligible) and for
+ * the items where the Archives simply print no Bulk row at all — Backpack (equipment-4) has
+ * bulk_num 0.0 and an empty row where the value should be. Reading bulk_num quietly zeroes out real
+ * values, and it cannot do anything else: measured over the whole export, 3,772 documents carry a
+ * `bulk_num` with no `bulk_raw` beside it and EVERY one of them is 0, so the fallback could only
+ * ever write a zero. It wrote one over `items/boots-of-elvenkind`, whose printed Bulk is L and whose
+ * own Greater variant (equipment-413-503, `bulk_raw: "L"`) kept it.
+ *
+ * The earlier guard tested `raw === null`; the export states "no Bulk row" by leaving the key OUT,
+ * so the absent case fell straight through it.
  */
 export function bulkOf(rec) {
   const raw = rec?.data?.bulk_raw ?? rec?.bulk_raw;
-  if (typeof raw === 'string') {
-    const s = raw.trim().toLowerCase();
-    if (!s) return null;
-    if (s === 'l') return 0.1;             // light
-    if (s === '—' || s === '-' || s === '–') return 0;
-    const n = Number(s);
-    return Number.isFinite(n) ? n : null;  // "varies (see text)" and friends
-  }
-  if (raw === null) return null;           // the Archives print no Bulk for this item
-  return typeof rec?.bulk_num === 'number' ? rec.bulk_num : null;
+  if (typeof raw !== 'string') return null; // the Archives print no Bulk for this item
+  const s = raw.trim().toLowerCase();
+  if (!s) return null;
+  if (s === 'l') return 0.1;             // light
+  if (s === '—' || s === '-' || s === '–') return 0;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;  // "varies (see text)" and friends
 }
 
 /*
@@ -273,6 +337,15 @@ export function prerequisitesFrom(rec) {
         .replace(/’/g, "'")
         .replace(/[“”]/g, '"')
         .replace(/\s*\.\s*$/, '')
+        /*
+         * A DOUBLED CONNECTOR is upstream damage, same family as the leading-connector case above and
+         * the same authority applies: the Archives PAGE, not the facet. feat-4558's facet now reads
+         * "Angelkin, Lawbringer, Musetouched, or OR another lineage feat associated with celestials"
+         * — one clause, one word duplicated, and the page prints it once. Exactly one document in the
+         * corpus has this shape (measured 2026-09-23 over all 45,547), so this repairs that one and
+         * cannot quietly reshape a clause that means something.
+         */
+        .replace(/\b(or|and)\s+\1\b/gi, '$1')
         /*
          * AoN repeats the rank word across an OR/comma list — "Trained in Deception or Trained in
          * Diplomacy" — but the engine's OR-split only understands "trained in A or B". Leaving the
@@ -1037,6 +1110,13 @@ export function aonFacets(rec, prev = {}, resolveBase = null, bucket = null, res
   if (baseName && typeof resolveBase === 'function') {
     const base = resolveBase(baseName);
     if (base) baseTraits = remasterTraits(rawTraitsOf(base)) ?? [];
+  } else if (prev?.itemType === 'weapon' || prev?.itemType === 'armor') {
+    /*
+     * NO BASE ITEM NAMED, so there is no page to read the mechanics off — see BASE_ITEM_TRAITS. The
+     * record already carries them and this page cannot contradict them, so they survive. The stem
+     * test keeps a renamed family from doubling up (`adjusted` beside `adjusted-storage`).
+     */
+    baseTraits = (prev.traits ?? []).filter((t) => isBaseItemTrait(t) && !own.some((o) => o === t || o.startsWith(`${t}-`)));
   }
   const traits = [...new Set([...own, ...baseTraits])].sort();
   if (traits.length) facets.traits = traits;

@@ -53,20 +53,35 @@ describe('a chosen subclass is owned', () => {
     expect(additive).toEqual([]);
   });
 
+  /*
+   * ⚠ ONE grantedStrike, not "the first of several".
+   *
+   * Both cases below assert that grantedStrikes[0] is a Strike the character HAS, and that only holds
+   * when the record grants exactly one. Two subclass options carry the field today:
+   * magus/unfurling-brocade grants one (Qi-Infused Fabric) and barbarian/animal-instinct lists 32 —
+   * Fist, Jaws, Claw, Horn … — which are ALTERNATIVES gated on which animal the player picks, so its
+   * [0] is not "the Strike it grants" and a barbarian who has chosen no animal has none of them.
+   *
+   * This used to read `grantedStrikes?.length` and pick whichever class came FIRST in core.json's key
+   * order. That worked only because magus happened to be key 0. It stopped on 2026-09-23, when the
+   * Archives refresh gave the legacy magus and summoner class documents their superseded_by pointers
+   * and the two classes moved to the end of the bucket — barbarian was then found first and the case
+   * failed on Fist. The order was never the thing being tested; "grants exactly one" is.
+   */
+  const grantsOneStrike = () => Object.values(db.classes)
+    .map((c) => ({ cls: c, opt: (c.subclass?.options ?? []).find((o) => db.classFeatures[o.id]?.grantedStrikes?.length === 1) }))
+    .find((x) => x.opt);
+
   it('a subclass that grants a Strike actually grants it', () => {
-    const granting = Object.values(db.classes)
-      .map((c) => ({ cls: c, opt: (c.subclass?.options ?? []).find((o) => db.classFeatures[o.id]?.grantedStrikes?.length) }))
-      .find((x) => x.opt);
-    if (!granting?.opt) return; // no subclass grants a Strike; nothing to prove
+    const granting = grantsOneStrike();
+    if (!granting?.opt) return; // no subclass grants exactly one Strike; nothing to prove
     const ch = build(granting.cls.id, 5, { subclassId: granting.opt.id });
     const want = db.classFeatures[granting.opt.id].grantedStrikes![0].name.toLowerCase();
     expect((ch.naturalAttacks ?? []).map((n) => n.name.toLowerCase())).toContain(want);
   });
 
   it('a granted Strike is not duplicated on a build round-trip', () => {
-    const granting = Object.values(db.classes)
-      .map((c) => ({ cls: c, opt: (c.subclass?.options ?? []).find((o) => db.classFeatures[o.id]?.grantedStrikes?.length) }))
-      .find((x) => x.opt);
+    const granting = grantsOneStrike();
     if (!granting?.opt) return;
     const ch = build(granting.cls.id, 5, { subclassId: granting.opt.id });
     const want = db.classFeatures[granting.opt.id].grantedStrikes![0].name.toLowerCase();

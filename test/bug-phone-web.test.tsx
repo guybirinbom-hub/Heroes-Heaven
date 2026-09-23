@@ -2,8 +2,11 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { act } from 'react';
-import { describe, expect, it, vi } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { OverlayDismissGuard } from '../src/sheet/OverlayDismissGuard';
+import { CustomizeModal } from '../src/sheet/CustomizeModal';
+import type { Character } from '../src/rules/types';
+import { ForceMobileContext, useIsMobile } from '../src/sheet/useIsMobile';
 import { renderDom } from './_render';
 
 /**
@@ -19,7 +22,19 @@ import { renderDom } from './_render';
  * 2. A popup dismisses on a click on its backdrop, and a click is only reported when the press ENDS.
  *    On a phone the backdrop beside a 94vw popup is an ~11px strip, so a finger that drags the popup's
  *    text and lifts just outside it dismissed the popup. OverlayDismissGuard now ignores a click whose
- *    press began on the popup — asserted here with the event sequence a touch screen really sends.
+ *    press began inside the backdrop — asserted here with the event sequence a touch screen really
+ *    sends, on the REAL markup of each surface. WHICH elements that covers is a measurement (a
+ *    positioned layer with four zero insets), not a list of class names: the list version was refuted
+ *    three times running — the tracker's Customize drawer, then both portrait lightboxes, then the
+ *    tracker's twelve `.modal-overlay` mounts and a GlobalSearch backdrop with no className at all —
+ *    and every check in this file was blind to them in the same way, because it asked about names too.
+ * 3. `useIsMobile` and the `max-width: 720px` block in sheet.css answer the same question and MUST
+ *    agree; when they don't, the phone gets the desktop markup laid out by the phone rules — the sheet
+ *    rail and both notes cards on a 375px screen, no bottom tab row. That state was seen once on
+ *    2026-09-23, in an emulated browser tab and only after a scripted resize — never on a fresh load at
+ *    375x812, and rewriting the hook did not stop it happening in that tab. So the instrument is the
+ *    suspect, not the hook, and the hook is unchanged. Pinned below is only what holds either way: the
+ *    subscription is live, and a ForceMobileContext still wins.
  *
  * jsdom has no layout, so (1) is asserted on the CSS text. NOT by looking for the rule: the first cut of
  * this fix was written and shipped while doing nothing at all, because a `height` can be reverted by a
@@ -260,6 +275,59 @@ describe('phone website: the visible height', () => {
   });
 });
 
+/** The only thing OverlayDismissGuard looks at: a layer over its whole containing block. `fixed` for
+ *  the ones that dim the screen, `absolute` for `.tc-overlay`, which dims the tracker PANE it lives in
+ *  — the reason the guard measures "covers its containing block" rather than "position: fixed". */
+const coversBlock = (d: { position: string; inset: string } | null): boolean =>
+  !!d && (d.position === 'fixed' || d.position === 'absolute') && d.inset === '0';
+
+/**
+ * `position` + `inset` as ONE stylesheet declares them for one selector.
+ *
+ * The cascade resolver above reads builder.css + sheet.css, and it stays that way — adding files to it
+ * would change what the dvh completeness test scans. The two stylesheets below render into the SAME
+ * document as the guard but are not in it: `src/integration/campaign-tracker.css` (the palette drawer)
+ * and `tracker/src/index.css` (twelve `.modal-overlay` mounts across eleven tracker files). Tailwind's
+ * `@apply fixed inset-0` is that same declaration spelled as utilities, so it is translated here
+ * rather than excused — a test that could not read it is how those twelve were called "clean".
+ */
+function declaredLayer(file: string, selector: string): { position: string; inset: string } | null {
+  const css = readFileSync(path.join(__dirname, '..', ...file.split('/')), 'utf8');
+  for (const r of parse(css)) {
+    if (!r.sels.includes(selector)) continue;
+    const d = decls(r.body);
+    const apply = /@apply([^;]*)/.exec(r.body)?.[1] ?? '';
+    const position = d.find((x) => x.prop === 'position')?.value ?? (/\bfixed\b/.test(apply) ? 'fixed' : '');
+    const inset = d.find((x) => x.prop === 'inset')?.value ?? (/\binset-0\b/.test(apply) ? '0' : '');
+    if (position && inset) return { position, inset };
+  }
+  return null;
+}
+
+/** The same two properties for a class the cascade resolver above DOES read. */
+function sheetLayer(cls: string): { position: string; inset: string } | null {
+  const position = value(cls, 'position', true);
+  const inset = value(cls, 'inset', true);
+  return position && inset ? { position, inset } : null;
+}
+
+/** Put the app's OWN declaration for these selectors into the test document, and hand back the undo.
+ *  jsdom has no bundler and no Tailwind, so the guard would otherwise measure `position: static` on
+ *  every element here and arm on nothing. The values are LOOKED UP, never typed: a `.portrait-lightbox`
+ *  that stopped being `position: fixed; inset: 0` would stop arming the guard in the app, and these
+ *  tests go red for exactly that reason instead of passing against a fixture that says what we wish. */
+function withCss(rules: Record<string, { position: string; inset: string } | null>): () => void {
+  const style = document.createElement('style');
+  style.textContent = Object.entries(rules)
+    .map(([sel, d]) => {
+      if (!d) throw new Error(`no stylesheet declares ${sel} a layer over its containing block`);
+      return `${sel}{position:${d.position};inset:${d.inset}}`;
+    })
+    .join('\n');
+  document.head.appendChild(style);
+  return () => style.remove();
+}
+
 describe('phone website: popup controls', () => {
   it('gives the popup X a 40px touch target', () => {
     expect(value('picker-close', 'min-width')).toBe('40px');
@@ -272,6 +340,43 @@ describe('phone website: popup controls', () => {
     const coarse = RULES.filter((r) => r.at.some((a) => a.includes('pointer: coarse')));
     const cursor = coarse.flatMap((r) => (r.sels.includes('.picker-overlay') ? decls(r.body) : []));
     expect(cursor.find((d) => d.prop === 'cursor')?.value).toBe('pointer');
+  });
+
+  it('declares every backdrop a full-screen layer — which is what arms the guard', () => {
+    // THIS IS NOT A STYLE PREFERENCE ANY MORE. OverlayDismissGuard used to carry two lists of class
+    // names, and every review found another surface in neither of them: the tracker's Customize
+    // drawer, then both `.portrait-lightbox` mounts, then the tracker's own `.modal-overlay` (twelve
+    // sites, eleven files, all rendered into THIS document), then a GlobalSearch backdrop with no
+    // className at all — unreachable by any name-keyed check, including the one that used to sit here
+    // and reported 0. So the guard now measures `position: fixed` + four zero insets off the live
+    // element, and THIS is the check that the app keeps saying it: a backdrop that stopped declaring
+    // it would go on dimming the screen and quietly stop being guarded.
+    //
+    // WHAT IT DOES AND DOES NOT SAY. It resolves the cascade and asserts the DECLARATION. That is not
+    // the same as "covers the screen": `position: fixed` resolves against the nearest TRANSFORMED
+    // ancestor, not the viewport, so a nested backdrop inside an outer popup still running its open
+    // animation (`transform: matrix(.985,0,0,.985,0,8)`) measured 14.5,223.8 346.5x799.8 in the live
+    // app on 2026-09-23 — a real backdrop, nowhere near the viewport box. The declaration is what both
+    // the dimming and the guard rest on, and it is what is pinned.
+    for (const cls of ['picker-overlay', 'drawer-overlay', 'portrait-lightbox']) {
+      expect(value(cls, 'position', true), cls).toBe('fixed');
+      expect(value(cls, 'inset', true), cls).toBe('0');
+    }
+    // Two stylesheets the resolver above does not read, both rendering into this same document.
+    // `.tc-overlay` is `absolute` — it dims the tracker pane, not the screen — and a guard that only
+    // knew `fixed` would quietly stop covering the drawer a previous pass had just fixed by name.
+    const tc = declaredLayer('src/integration/campaign-tracker.css', '.tc-overlay');
+    expect(coversBlock(tc), `.tc-overlay is ${JSON.stringify(tc)}`).toBe(true);
+    const modal = declaredLayer('tracker/src/index.css', '.modal-overlay');
+    expect(coversBlock(modal), `.modal-overlay is ${JSON.stringify(modal)}`).toBe(true);
+    // The one with no name to check. `tracker/src/components/GlobalSearch.tsx` inline-styles its
+    // backdrop and dismisses on `e.target === e.currentTarget`; it is rendered four lines from the
+    // Customize drawer (src/integration/CampaignTracker.tsx), in this document, and every instrument
+    // this file has ever had was blind to it. The guard reads the same property off the computed
+    // style, inline or not — this asserts the property is there to read.
+    const globalSearch = readFileSync(
+      path.join(__dirname, '..', 'tracker', 'src', 'components', 'GlobalSearch.tsx'), 'utf8');
+    expect(globalSearch, 'GlobalSearch’s backdrop is the unnamed one').toContain("position: 'fixed', inset: 0");
   });
 });
 
@@ -290,6 +395,22 @@ describe('OverlayDismissGuard', () => {
   // The guard chooses its listener at mount; jsdom doesn't always expose the pointer handlers, so say
   // what every browser we ship to says.
   if (!('onpointerdown' in window)) (window as unknown as Record<string, unknown>).onpointerdown = null;
+
+  // The guard measures the element it is about to swallow a click on, so the app's real declarations
+  // have to be IN this document. Four stylesheets' worth of one property, and not one of them typed
+  // out here: what the app says is what the guard gets.
+  let removeCss = () => {};
+  beforeAll(() => {
+    removeCss = withCss({
+      '.picker-overlay': sheetLayer('picker-overlay'),
+      '.portrait-lightbox': sheetLayer('portrait-lightbox'),
+      '.cust-drawer-wrap': sheetLayer('cust-drawer-wrap'),
+      '.cust-drawer-backdrop': sheetLayer('cust-drawer-backdrop'),
+      '.tc-overlay': declaredLayer('src/integration/campaign-tracker.css', '.tc-overlay'),
+      '.modal-overlay': declaredLayer('tracker/src/index.css', '.modal-overlay'),
+    });
+  });
+  afterAll(() => removeCss());
 
   function harness(onClose: () => void) {
     return renderDom(
@@ -334,6 +455,64 @@ describe('OverlayDismissGuard', () => {
     stop();
   });
 
+  /** A `.ref-link` inside a description opens its own popup INSIDE the outer one's body — measured in
+   *  the live app: `outer.contains(inner) === true`. Both onClose handlers are live at once.
+   *
+   *  THE `stopPropagation` ON EACH `.picker` IS NOT DECORATION — it is what every real popup does
+   *  (DescriptionModal.tsx, FilterableSelect.tsx), and it is what makes a click inside the inner popup
+   *  stop before the outer backdrop's onClose. Without it both handlers fire for any click anywhere
+   *  inside, and the strip test below could only assert that the inner popup closed — never the half a
+   *  reader assumes it pins, that the outer one SURVIVES. */
+  function nested(onOuter: () => void, onInner: () => void) {
+    return renderDom(
+      <>
+        <OverlayDismissGuard />
+        <div className="picker-overlay" onClick={onOuter}>
+          <div className="picker spell-detail" onClick={(e) => e.stopPropagation()}>
+            <div className="sd-body">
+              <p className="info-body">outer text</p>
+              <div className="picker-overlay inner" onClick={onInner}>
+                <div className="picker" onClick={(e) => e.stopPropagation()}>
+                  <p className="info-body inner-text">trait text</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>,
+    );
+  }
+
+  it('ignores a press that starts on a NESTED popup and lifts on its own backdrop', () => {
+    // The old test was `closest(BACKDROP) && !closest(POPUP)`, and from the inner backdrop
+    // `closest('.picker')` finds the OUTER popup — so the guard was a no-op for every nested popup and
+    // this gesture closed BOTH (measured live, ov 2 -> 0). Which layer an event is on is the NEAREST
+    // match, not "backdrop and not popup".
+    const outer = vi.fn();
+    const inner = vi.fn();
+    const { host, stop } = nested(outer, inner);
+    expect(host.querySelector('.picker-overlay')!.contains(host.querySelector('.picker-overlay.inner')),
+      'fixture: the nested overlay really is inside the outer popup').toBe(true);
+    tap(host.querySelector('.inner-text')!, host.querySelector('.picker-overlay.inner')!);
+    expect(inner).not.toHaveBeenCalled();
+    expect(outer).not.toHaveBeenCalled();
+    stop();
+  });
+
+  it('still dismisses the nested popup ONLY, on a tap on its own 11px strip', () => {
+    // The other half: reading the nearest layer must not turn the inner backdrop into "popup" and
+    // leave the nested popup with no way out but its X — and dismissing it must not take the outer
+    // popup with it, which is the same "closed two things" complaint from the other direction.
+    const outer = vi.fn();
+    const inner = vi.fn();
+    const { host, stop } = nested(outer, inner);
+    const strip = host.querySelector('.picker-overlay.inner')!;
+    tap(strip, strip);
+    expect(inner, 'the nested popup must still have a way out').toHaveBeenCalledTimes(1);
+    expect(outer, 'closing the trait popup must leave the spell behind it open').not.toHaveBeenCalled();
+    stop();
+  });
+
   it('does not swallow the NEXT press once the finger is back on the backdrop', () => {
     // The flag is per-press: one drag out of the popup must not leave the backdrop dead afterwards
     // (that would read as "tapping outside does nothing", which is where this started).
@@ -344,5 +523,279 @@ describe('OverlayDismissGuard', () => {
     tap(overlay, overlay);
     expect(onClose).toHaveBeenCalledTimes(1);
     stop();
+  });
+
+  it('forgets a press that ended without a click, so the next bare click still dismisses', () => {
+    // A press does not always produce a click. The finger drags out of the window; the browser takes
+    // the touch over as a scroll or a gesture and sends `pointercancel`; the popup unmounts under the
+    // finger; the tab goes to the background. The pressed element used to stay recorded through all of
+    // that, and the next PRESS-LESS click — keyboard activation, anything synthetic — was matched
+    // against the stale one and swallowed whenever it landed on a layer containing it. Refuted on the
+    // nested popup on 2026-09-23: pointerdown on the trait text, no click, then a bare click on the
+    // trait popup's own strip, and the strip was dead.
+    //
+    // A FRESH PRESS IS NOT IN THIS LIST because it needs nothing — `onDown` overwrites the record — so
+    // what is pinned here is only the endings that produce no click of their own to clear it. Each one
+    // is a separate listener in the guard, and each was dropped on its own against this file: one red
+    // per mutant, and the message names the ending that stopped working.
+    for (const ending of ['pointercancel', 'blur', 'visibilitychange'] as const) {
+      const outer = vi.fn();
+      const inner = vi.fn();
+      const { host, stop } = nested(outer, inner);
+      const text = host.querySelector('.inner-text')!;
+      const strip = host.querySelector('.picker-overlay.inner')!;
+      act(() => {
+        text.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }));
+        if (ending === 'pointercancel') text.dispatchEvent(new MouseEvent('pointercancel', { bubbles: true }));
+        else if (ending === 'blur') window.dispatchEvent(new Event('blur'));
+        else document.dispatchEvent(new Event('visibilitychange'));
+        strip.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(inner, `a press ended by ${ending} left the strip dead`).toHaveBeenCalledTimes(1);
+      expect(outer, 'and it must not take the popup behind it').not.toHaveBeenCalled();
+      stop();
+    }
+  });
+
+  it('the sheet’s Customize drawer survives the same gesture — by its own shape, not by the guard', () => {
+    // THE ONE ARRANGEMENT THE GUARD'S CEILING NAMES, rendered from the real component rather than
+    // described: `.cust-drawer-wrap` (fixed, inset 0) holds the dismissing `.cust-drawer-backdrop` as a
+    // SIBLING of the `.cust-drawer` panel, not as its parent. The browser reports a cross-edge click on
+    // the common ancestor, which here is the WRAP — and the wrap carries no handler — so this drawer
+    // cannot be dismissed by that gesture whether the guard arms or not. That is the half the ceiling
+    // paragraph got wrong twice: first by claiming nothing renders the shape, then by reading the shape
+    // as a hole. Both halves are asserted, because only the pair says anything: an immunity that also
+    // ate the plain tap would just be a drawer with no way out but its X.
+    const onClose = vi.fn();
+    const character = { name: 'Fixture', customization: undefined } as unknown as Character;
+    const { host, stop } = renderDom(
+      <>
+        <OverlayDismissGuard />
+        <CustomizeModal character={character} globalDefault={{}} onCustomize={() => {}} onClose={onClose} />
+      </>,
+    );
+    const wrap = host.querySelector('.cust-drawer-wrap')!;
+    const backdrop = host.querySelector('.cust-drawer-backdrop')!;
+    const panel = host.querySelector('.cust-drawer')!;
+    expect(
+      wrap.contains(backdrop) && wrap.contains(panel) && !backdrop.contains(panel),
+      'fixture: the dismissing backdrop must be the panel’s SIBLING — that IS what this pins',
+    ).toBe(true);
+    tap(host.querySelector('.cust-drawer-title')!, wrap);
+    expect(onClose, 'dragging the drawer’s title onto the strip closed it').not.toHaveBeenCalled();
+    tap(backdrop, backdrop);
+    expect(onClose, 'a tap on the strip must still close the drawer').toHaveBeenCalledTimes(1);
+    stop();
+  });
+
+  it('leaves an ordinary control alone — press the label, lift on the padding, it still clicks', () => {
+    // THE DISCRIMINATOR, and the reason the guard measures anything at all. "A click reported on an
+    // ancestor of the press" also describes every finger that presses a button's TEXT and lifts on the
+    // button's own padding. Swallowing that would break every control in both apps, so the
+    // full-screen-layer measurement is not decoration — it is the entire difference between the two
+    // gestures. Drop it (swallow on `contains` alone) and this goes red first.
+    const onClick = vi.fn();
+    const { host, stop } = renderDom(
+      <>
+        <OverlayDismissGuard />
+        <button className="btn" onClick={onClick}>
+          <span className="btn-label">Go</span>
+        </button>
+      </>,
+    );
+    tap(host.querySelector('.btn-label')!, host.querySelector('.btn')!);
+    expect(onClick, 'a button is not a backdrop — its click must survive the same gesture').toHaveBeenCalledTimes(1);
+    stop();
+  });
+
+  /** Both portrait lightboxes, exactly as they are written (src/sheet/CharacterImages.tsx and
+   *  src/sheet/CharacterSheet.tsx): the dismissing div WRAPS the picture, `position: fixed; inset: 0`,
+   *  and on a phone the picture is capped to 92dvh — so there is dim area all round it. Dragging a
+   *  picture is the most natural gesture there is, and this was the one surface where doing it closed
+   *  the thing you were looking at. Neither class was in the guard's old lists; nothing in this file
+   *  could see that, because it asked about names. */
+  function lightbox(onClose: () => void) {
+    return renderDom(
+      <>
+        <OverlayDismissGuard />
+        <div className="portrait-lightbox" onClick={onClose} role="dialog" aria-label="Portrait">
+          <img src="" alt="" className="portrait-lightbox-img" />
+          <button className="portrait-lightbox-close" onClick={onClose} aria-label="Close">
+            x
+          </button>
+        </div>
+      </>,
+    );
+  }
+
+  it('keeps the portrait lightbox open when the picture is dragged off its edge', () => {
+    const onClose = vi.fn();
+    const { host, stop } = lightbox(onClose);
+    tap(host.querySelector('.portrait-lightbox-img')!, host.querySelector('.portrait-lightbox')!);
+    expect(onClose, 'dragging the picture closed the lightbox').not.toHaveBeenCalled();
+    stop();
+  });
+
+  it('still closes the portrait lightbox on a tap beside the picture', () => {
+    const onClose = vi.fn();
+    const { host, stop } = lightbox(onClose);
+    const box = host.querySelector('.portrait-lightbox')!;
+    tap(box, box);
+    expect(onClose).toHaveBeenCalledTimes(1);
+    stop();
+  });
+
+  it('keeps a tracker modal open when its box is dragged off the edge', () => {
+    // Twelve `.modal-overlay` mounts across eleven files under tracker/src/components, every one of
+    // them rendered INTO THIS DOCUMENT from src/integration/CampaignTracker.tsx. Their own dismiss
+    // test is `e.target === e.currentTarget`, which is NOT a defence against this gesture: the browser
+    // reports the cross-edge click on the common ancestor, and the common ancestor IS the overlay — so
+    // the test passes and the modal closes. Written here the way they all write it.
+    const onClose = vi.fn();
+    const { host, stop } = renderDom(
+      <>
+        <OverlayDismissGuard />
+        <div
+          className="modal-overlay"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) onClose();
+          }}
+        >
+          <div className="modal-box">
+            <p className="modal-text">creature stats</p>
+          </div>
+        </div>
+      </>,
+    );
+    const overlay = host.querySelector('.modal-overlay')!;
+    tap(host.querySelector('.modal-text')!, overlay);
+    expect(onClose, 'e.target === e.currentTarget is true on the cross-edge click too').not.toHaveBeenCalled();
+    tap(overlay, overlay);
+    expect(onClose, 'and a tap on the dim area must still close it').toHaveBeenCalledTimes(1);
+    stop();
+  });
+
+  it('keeps the tracker’s Customize drawer open when its panel is dragged onto the dim strip', () => {
+    // src/integration/TrackerCustomize.tsx, and the one backdrop in either app that is `absolute`
+    // rather than `fixed` (it dims the tracker pane it sits in). A guard keyed on `position: fixed`
+    // passes every other test in this file and leaves exactly this drawer broken.
+    const onClose = vi.fn();
+    const { host, stop } = renderDom(
+      <>
+        <OverlayDismissGuard />
+        <div className="tc-overlay" onClick={onClose}>
+          <div className="tc-panel" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Customize">
+            <p className="tc-note">accent colour</p>
+          </div>
+        </div>
+      </>,
+    );
+    const overlay = host.querySelector('.tc-overlay')!;
+    tap(host.querySelector('.tc-note')!, overlay);
+    expect(onClose, 'dragging the panel’s text onto the dim strip closed the drawer').not.toHaveBeenCalled();
+    tap(overlay, overlay);
+    expect(onClose, 'and a tap on the strip must still close it').toHaveBeenCalledTimes(1);
+    stop();
+  });
+
+  it('guards a backdrop with no className at all', () => {
+    // tracker/src/components/GlobalSearch.tsx: an inline-styled `position: fixed; inset: 0` wrapper
+    // with a dismiss handler and no class token anywhere. No name-keyed instrument could ever have
+    // found it — the guard reads the property off the computed style, which an inline style sets just
+    // as well as a stylesheet does.
+    const onClose = vi.fn();
+    const { host, stop } = renderDom(
+      <>
+        <OverlayDismissGuard />
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) onClose();
+          }}
+          style={{ position: 'fixed', inset: 0, zIndex: 9500, display: 'flex', paddingTop: '12vh' }}
+        >
+          <div className="gs-box">
+            <p className="gs-row">Fireball</p>
+          </div>
+        </div>
+      </>,
+    );
+    const backdrop = host.firstElementChild!;
+    expect(backdrop.className, 'fixture: the shape under test really has no class').toBe('');
+    tap(host.querySelector('.gs-row')!, backdrop);
+    expect(onClose).not.toHaveBeenCalled();
+    tap(backdrop, backdrop);
+    expect(onClose, 'and it must still dismiss on a tap outside the box').toHaveBeenCalledTimes(1);
+    stop();
+  });
+});
+
+/** A media query that answers honestly and NEVER dispatches `change` — so a test using it says nothing
+ *  about event delivery, only about what holds without any event at all. */
+function silentMatchMedia(state: { phone: boolean }) {
+  const real = window.matchMedia;
+  window.matchMedia = ((media: string) => ({
+    get matches() {
+      return state.phone;
+    },
+    media,
+    onchange: null,
+    addListener: () => undefined,
+    removeListener: () => undefined,
+    addEventListener: () => undefined,
+    removeEventListener: () => undefined,
+    dispatchEvent: () => false,
+  })) as unknown as typeof window.matchMedia;
+  return () => {
+    window.matchMedia = real;
+  };
+}
+
+describe('useIsMobile', () => {
+  /** Prints what the hook says, and nothing else. */
+  function Probe() {
+    const isMobile = useIsMobile();
+    return <span>{isMobile ? 'phone' : 'desktop'}</span>;
+  }
+
+  it('follows a change event when one arrives', () => {
+    const state = { phone: false };
+    const listeners = new Set<() => void>();
+    const real = window.matchMedia;
+    window.matchMedia = ((media: string) => ({
+      get matches() {
+        return state.phone;
+      },
+      media,
+      onchange: null,
+      addListener: () => undefined,
+      removeListener: () => undefined,
+      addEventListener: (_t: string, fn: () => void) => listeners.add(fn),
+      removeEventListener: (_t: string, fn: () => void) => listeners.delete(fn),
+      dispatchEvent: () => false,
+    })) as unknown as typeof window.matchMedia;
+    const { host, stop } = renderDom(<Probe />);
+    expect(host.textContent).toBe('desktop');
+    act(() => {
+      state.phone = true;
+      listeners.forEach((fn) => fn());
+    });
+    expect(host.textContent, 'the subscription is live — a crossed breakpoint reaches the layout').toBe('phone');
+    stop();
+    window.matchMedia = real;
+  });
+
+  it('a ForceMobileContext above still wins', () => {
+    // The tracker renders the sheet in a narrow PC pane and forces the phone shape there; the viewport
+    // read must not take that decision back.
+    const state = { phone: false };
+    const restore = silentMatchMedia(state);
+    const { host, stop } = renderDom(
+      <ForceMobileContext.Provider value={true}>
+        <Probe />
+      </ForceMobileContext.Provider>,
+    );
+    expect(host.textContent).toBe('phone');
+    stop();
+    restore();
   });
 });

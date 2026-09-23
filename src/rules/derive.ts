@@ -3514,8 +3514,20 @@ export function weaponSpecialization(c: Character, db: ContentDatabase): { spec:
   // stops paying the specialization damage (docs/trust-gate.md section 3).
   const owned = cls.features.filter((f) => f.level <= c.level).map((f) => f.featureId).filter((id) => !engineLaneOff(id));
   const greater = owned.some((id) => id.startsWith('greater-weapon-specialization'));
-  // 'eidolon-weapon-specialization' (summoner) is the pet's, not the character's — excluded by exact match.
-  const spec = greater || owned.some((id) => id === 'weapon-specialization' || id === 'psychic-weapon-specialization');
+  /*
+   * 'eidolon-weapon-specialization' (summoner) is the pet's, not the character's — excluded by exact
+   * match, and that exact match is why this has to name the per-class forms too.
+   *
+   * ⚠ A CLASS MAY CARRY ITS OWN RECORD FOR THIS ROW. Impossible Magic prints Weapon Specialization on
+   * the summoner's and the necromancer's own pages (class-feature-1359 / -1304), so their tables name
+   * `weapon-specialization-summoner` / `-necromancer` rather than the shared record that sits on the
+   * THAUMATURGE's page — see buildImClassFeatures in scripts/import-siege-and-gaps.mjs. Matching the
+   * bare id alone silently took the specialization damage away from both classes at 13th level, which
+   * test/weaponspec.test.ts caught. `psychic-weapon-specialization` is the same convention with the
+   * class name in front, so it falls out of the second form instead of being named.
+   */
+  const spec = greater || owned.some((id) => id === 'weapon-specialization'
+    || id === `weapon-specialization-${c.classId}` || id === `${c.classId}-weapon-specialization`);
   return { spec, greater };
 }
 

@@ -57,7 +57,23 @@ if (!existsSync(MIRROR)) {
   process.exit(0);
 }
 const core = JSON.parse(readFileSync(path.join(ROOT, 'public/core.json'), 'utf8'));
+/*
+ * …plus the DESK #158 SHIPPED TWINS. `findDuplicateIds` is the app's hide-duplicates rule and knows
+ * nothing about editions, but a record carrying `edition: "legacy"` AND a `remasteredAs` link is not
+ * an accidental second listing: it is the owner's ruling of 2026-09-12 — "keep both, mark the old one
+ * legacy, add a 'remastered as …' link" — and the hide-legacy toggle is what takes it off a
+ * remaster-only character's shelf (applyEditionFilter, src/rules/build.ts). scripts/reprint-check.mjs
+ * enforces the pairing itself, and the branch below still fails when the MECHANICS ended up on the
+ * half that is hidden, which is the harm this script exists for.
+ *
+ * Without this the 2026-09-23 Archives refresh failed the run on three rows: AoN newly stated that
+ * Absolute Solvent reprints Universal Solvent, and the three legacy variants — stamped legacy +
+ * remasteredAs by the chain, exactly as the ruling says — read as a double listing.
+ */
 const hidden = findDuplicateIds(core);
+for (const [id, rec] of Object.entries(core.items ?? {})) {
+  if (rec?.edition === 'legacy' && rec?.remasteredAs?.id && core.items[rec.remasteredAs.id]) hidden.add(id);
+}
 
 /** In copper, so `{gp:125}` and `{pp:0,gp:125,sp:0,cp:0}` compare equal. */
 const copper = (p) => (p?.pp ?? 0) * 1000 + (p?.gp ?? 0) * 100 + (p?.sp ?? 0) * 10 + (p?.cp ?? 0);
@@ -122,10 +138,14 @@ const rebuilt = [];
 const wrongHalfShown = [];
 const accepted = [];
 for (const [reprint, legacy, how] of pairs) {
+  const line = `${reprint} / ${legacy} — "${core.items[reprint].name}" and "${core.items[legacy].name}" both list (${how})`;
+  /* An acceptance is about the PAIR, not about which of the two branches below it happens to land in.
+   * It was tested inside the both-visible branch only, so the moment one half became hidden the same
+   * pair reappeared as a fresh failure under a different heading — which is what the Awakened
+   * Adamantine Shot family did the first time a desk #158 twin counted as hidden. */
+  if (ACCEPTED[reprint]) { accepted.push(`${line}\n      accepted: ${ACCEPTED[reprint]}`); continue; }
   if (!hidden.has(reprint) && !hidden.has(legacy)) {
-    const line = `${reprint} / ${legacy} — "${core.items[reprint].name}" and "${core.items[legacy].name}" both list (${how})`;
-    if (ACCEPTED[reprint]) accepted.push(`${line}\n      accepted: ${ACCEPTED[reprint]}`);
-    else if (hollow(reprint, legacy) || hollow(legacy, reprint)) bothVisible.push(line);
+    if (hollow(reprint, legacy) || hollow(legacy, reprint)) bothVisible.push(line);
     else rebuilt.push(line); // both modelled — a rebuilt item under a new name, not a double listing
     continue;
   }

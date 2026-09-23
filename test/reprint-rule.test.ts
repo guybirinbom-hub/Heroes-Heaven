@@ -29,10 +29,12 @@ import { buildReprintMap, newestPrinting, repointDoc, shippedTwin, slugify } fro
  *     scripts/data/effect-backfill.json, which assert the shipped spellings directly.
  */
 
-type Doc = { id: string; category: string; name?: string; edition?: string; release_date?: string; data?: { legacy_id?: string[]; remaster_id?: string[] } };
+/* `url` and `data.class` are here for the class hop: AoN expresses "the features of class-17" as
+ * every feature carrying that class page's url, and names the class in `data.class`. */
+type Doc = { id: string; category: string; name?: string; edition?: string; release_date?: string; url?: string; data?: { legacy_id?: string[]; remaster_id?: string[]; class?: string } };
 
 const doc = (id: string, category: string, extra: Partial<Doc> = {}): [string, Doc] =>
-  [id, { id, category, name: extra.name ?? id, edition: extra.edition ?? 'legacy', release_date: extra.release_date ?? '2020-01-01', data: extra.data ?? {} }];
+  [id, { id, category, name: extra.name ?? id, edition: extra.edition ?? 'legacy', release_date: extra.release_date ?? '2020-01-01', url: extra.url, data: extra.data ?? {} }];
 
 /** The reprint names what it replaces — the direction action-4260 uses (`legacy_id: ['action-755']`). */
 const reprintOf = (id: string, category: string, replaces: string[], release_date: string, name?: string) =>
@@ -204,6 +206,136 @@ describe('reprint.mjs — the newest printing wins', () => {
       expect(repointDoc(index, 'w-200', 'rounds-dragon-mouth-pistol', shipsPistol)).toBeNull();
       // … but it is not marked legacy and carries no link.
       expect(shippedTwin(index, 'w-200', 'rounds-dragon-mouth-pistol', shipsPistol)).toBeNull();
+    });
+  });
+
+  /*
+   * THE CLASS HOP (owner, 2026-09-23). AoN links a reprinted class feature to the legacy CLASS page,
+   * never to the feature it replaces: class-feature-1258 "Magus Spellcasting" says
+   * legacy_id: ['class-17']. The shapes below are that data, shrunk — a legacy class with three
+   * features, a reprint class with the same three, and every feature naming the legacy CLASS.
+   */
+  describe('the class hop', () => {
+    const cls = (id: string, name: string, url: string, extra: Partial<Doc> = {}) =>
+      doc(id, 'class', { name, url, ...extra });
+    const feat = (id: string, name: string, url: string, extra: Partial<Doc> = {}) =>
+      doc(id, 'class-feature', { name, url, ...extra });
+
+    /** Legacy class c-17 with Spellstrike / Weapon Expertise / Alertness, reprinted as c-74. */
+    const magus = () => buildReprintMap([
+      cls('c-17', 'Magus', '/Classes.aspx?ID=17'),
+      cls('c-74', 'Magus', '/Classes.aspx?ID=74', { release_date: '2026-07-30' }),
+      feat('cf-419', 'Spellstrike', '/Classes.aspx?ID=17', { data: { class: 'Magus' } }),
+      feat('cf-430', 'Weapon Expertise', '/Classes.aspx?ID=17', { data: { class: 'Magus' } }),
+      feat('cf-433', 'Alertness', '/Classes.aspx?ID=17', { data: { class: 'Magus' } }),
+      feat('cf-1259', 'Spellstrike', '/Classes.aspx?ID=74', { release_date: '2026-07-30', data: { legacy_id: ['c-17'], class: 'Magus' } }),
+      feat('cf-1269', 'Weapon Expertise', '/Classes.aspx?ID=74', { release_date: '2026-07-30', data: { legacy_id: ['c-17'], class: 'Magus' } }),
+      feat('cf-1273', 'Perception Expertise', '/Classes.aspx?ID=74', { release_date: '2026-07-30', data: { legacy_id: ['c-17'], class: 'Magus' } }),
+    ]);
+
+    it('follows a class-level legacy_id into that class\'s feature of the same name', () => {
+      const index = magus();
+      expect(newestPrinting(index, 'cf-419')).toBe('cf-1259');
+      expect(repointDoc(index, 'cf-419', 'spellstrike', never)).toBe('cf-1259');
+    });
+
+    it('marks the pair DERIVED — the documents never stated it', () => {
+      const index = magus();
+      expect(index.derived.get('cf-419')).toEqual({ name: 'Spellstrike', class: 'Magus' });
+      // a link AoN wrote down itself is not derived
+      const plain = buildReprintMap([doc('a-1', 'action'), reprintOf('a-2', 'action', ['a-1'], '2026-07-30')]);
+      expect(plain.derived.has('a-1')).toBe(false);
+    });
+
+    /*
+     * THE GUARD THAT MATTERS. classFeatures/weapon-expertise-swashbuckler really does sit on the
+     * MAGUS document cf-430 in the shipped artefact. Without this it would follow the magus into
+     * Impossible Magic and come back telling a swashbuckler their feature is from a magus book.
+     */
+    it('refuses a record whose key is another class\'s', () => {
+      const index = magus();
+      expect(repointDoc(index, 'cf-430', 'weapon-expertise-swashbuckler', never)).toBeNull();
+      expect(repointDoc(index, 'cf-430', 'weapon-expertise', never)).toBe('cf-1269');
+      expect(repointDoc(index, 'cf-430', 'weapon-expertise-magus', never)).toBe('cf-1269');
+    });
+
+    it('does not follow a RENAME — that is a class-table change, not a repoint', () => {
+      // Alertness -> Perception Expertise share a level and a class but not a name, and the legacy
+      // slug is shared by a dozen other classes, so nothing is offered.
+      const index = magus();
+      expect(newestPrinting(index, 'cf-433')).toBeNull();
+      expect(index.derived.has('cf-433')).toBe(false);
+    });
+
+    it('does not apply the shipped-twin exception to a derived pair', () => {
+      // `signature-spells` ships as another class's record; the summoner's own feature must still
+      // move, and must NOT be marked legacy and pointed at that stranger.
+      const index = buildReprintMap([
+        cls('c-18', 'Summoner', '/Classes.aspx?ID=18'),
+        cls('c-77', 'Summoner', '/Classes.aspx?ID=77', { release_date: '2026-07-30' }),
+        feat('cf-447', 'Spell Repertoire', '/Classes.aspx?ID=18', { data: { class: 'Summoner' } }),
+        feat('cf-1339', 'Spell Repertoire', '/Classes.aspx?ID=77', { release_date: '2026-07-30', data: { legacy_id: ['c-18'], class: 'Summoner' } }),
+      ]);
+      const shipsIt = (k: string) => k === 'spell-repertoire';
+      expect(repointDoc(index, 'cf-447', 'spell-repertoire-summoner', shipsIt)).toBe('cf-1339');
+      expect(shippedTwin(index, 'cf-447', 'spell-repertoire-summoner', shipsIt)).toBeNull();
+      // and the OTHER classes' copies of that same document are still refused
+      expect(repointDoc(index, 'cf-447', 'spell-repertoire-bard', shipsIt)).toBeNull();
+    });
+
+    it('refuses when the name does not identify exactly one feature of that class', () => {
+      const index = buildReprintMap([
+        cls('c-9', 'Ranger', '/Classes.aspx?ID=9'),
+        feat('cf-a', 'Trackless Step', '/Classes.aspx?ID=9'),
+        feat('cf-b', 'Trackless Step', '/Classes.aspx?ID=9'),
+        feat('cf-c', 'Trackless Step', '/Classes.aspx?ID=99', { release_date: '2026-07-30', data: { legacy_id: ['c-9'] } }),
+      ]);
+      expect(newestPrinting(index, 'cf-a')).toBeNull();
+      expect(newestPrinting(index, 'cf-b')).toBeNull();
+    });
+
+    it('never hops backwards in time', () => {
+      const index = buildReprintMap([
+        cls('c-17', 'Magus', '/Classes.aspx?ID=17', { release_date: '2026-07-30' }),
+        feat('cf-new', 'Spellstrike', '/Classes.aspx?ID=17', { release_date: '2026-07-30' }),
+        feat('cf-old', 'Spellstrike', '/Classes.aspx?ID=74', { release_date: '2021-01-01', data: { legacy_id: ['c-17'] } }),
+      ]);
+      expect(newestPrinting(index, 'cf-new')).toBeNull();
+    });
+  });
+
+  /*
+   * NAME-PAIRED CATEGORIES. `hybrid-study` carries no legacy_id or remaster_id anywhere in the
+   * corpus, so there is no link to follow; it is a closed per-class option set where a repeated name
+   * is always a reprint. Only categories on that list are paired this way.
+   */
+  describe('name-paired categories', () => {
+    it('pairs a hybrid study with its newest printing', () => {
+      const index = buildReprintMap([
+        doc('hybrid-study-2', 'hybrid-study', { name: 'Laughing Shadow' }),
+        doc('hybrid-study-11', 'hybrid-study', { name: 'Laughing Shadow', release_date: '2026-07-30' }),
+      ]);
+      expect(newestPrinting(index, 'hybrid-study-2')).toBe('hybrid-study-11');
+      expect(repointDoc(index, 'hybrid-study-2', 'laughing-shadow', never)).toBe('hybrid-study-11');
+      expect(index.derived.has('hybrid-study-2')).toBe(true);
+    });
+
+    it('does NOT pair by name in an ordinary category', () => {
+      // two different feats really are both called Zombie Horde — see the header
+      const index = buildReprintMap([
+        doc('feat-3654', 'feat', { name: 'Zombie Horde' }),
+        doc('feat-9122', 'feat', { name: 'Zombie Horde', release_date: '2026-07-30' }),
+      ]);
+      expect(newestPrinting(index, 'feat-3654')).toBeNull();
+    });
+
+    it('refuses a tie rather than picking one', () => {
+      const index = buildReprintMap([
+        doc('hybrid-study-20', 'hybrid-study', { name: 'Twofold Tine', release_date: '2026-07-30' }),
+        doc('hybrid-study-21', 'hybrid-study', { name: 'Twofold Tine', release_date: '2026-07-30' }),
+      ]);
+      expect(newestPrinting(index, 'hybrid-study-20')).toBeNull();
+      expect(newestPrinting(index, 'hybrid-study-21')).toBeNull();
     });
   });
 

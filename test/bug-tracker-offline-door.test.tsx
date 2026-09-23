@@ -9,7 +9,7 @@ import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build'
 import { initialPlay } from '../src/rules/play';
 import { ROSTER_KEY, type SavedChar } from '../src/data/storage';
 import type { CampaignMembership } from '../src/data/campaigns';
-import { useCombatStore, flushPersist, scopeKey } from '../tracker/src/store/combatStore';
+import { useCombatStore, flushPersist, cancelPersist, scopeKey } from '../tracker/src/store/combatStore';
 import { useSettingsStore } from '../tracker/src/store/settingsStore';
 import { usePartyStore } from '../tracker/src/store/partyStore';
 import { useLayoutStore } from '../tracker/src/store/layoutStore';
@@ -354,6 +354,12 @@ beforeEach(() => {
   setOnCampaignsPage(false);
   trackerUi.reset();
   useCombatStore.setState({ combatants: [], round: 1, activeIndex: 0, selectedId: null, inCombat: false });
+  // …and disarm the write that reset just scheduled. The persist debounce is module state the store
+  // reset does not reach: 200 ms after this line it writes the EMPTY board to whatever key the scope
+  // names, which while unscoped is the bare `pf2e-current-combat` the standalone-save test below
+  // asserts on. Whether it landed before or after that assertion was a question of machine load —
+  // the 803 "flake". A test reset is not an edit and must not leave a write behind it.
+  cancelPersist();
   // Module state, so it outlives localStorage.clear() — the turn-timer leg below turns it on.
   useSettingsStore.setState({ turnTimerEnabled: false });
   usePartyStore.setState({ parties: [], activePartyId: null });
@@ -533,9 +539,8 @@ describe('the initiative tracker without an account', () => {
     //   AssertionError: expected null not to be null            ← nothing under pf2e-current-combat:local
     //   and the bare key no longer holds the standalone save.
 
-    // Drain anything the store reset above queued (it is scoped to nothing yet), then put a real
-    // pre-scoping save on the bare key.
-    flushPersist();
+    // A real pre-scoping save on the bare key. (The store reset in beforeEach used to leave a write
+    // queued that had to be drained here first; it now disarms it instead — see cancelPersist there.)
     localStorage.setItem(COMBAT_BARE, STANDALONE_SAVE);
 
     await openLocalTable();
@@ -551,6 +556,54 @@ describe('the initiative tracker without an account', () => {
     // …and the local table did not adopt it either.
     expect(useCombatStore.getState().combatants.map((c) => c.name)).toEqual(['Bandit lookout']);
   }, 120_000);
+
+  it('never replaces a saved board it could not READ with the empty one it fell back to', () => {
+    // A LOAD IS NOT AN EDIT. loadPersistedCombat returns null for a raw it cannot parse — a field a
+    // newer build wrote, a quota-truncated write — and reloadFromStorage then adopts the EMPTY board.
+    // The persist subscriber fires on that adoption like any other state change, so 200 ms later the
+    // empty board was written over the raw and the GM's fight was gone for good instead of merely
+    // unreadable by this build. Same call also disarms whatever the replaced board left pending,
+    // which would otherwise land on top of a board the GM mirror had just handed this device.
+    // Without the fix (drop `cancelPersist()` from reloadFromStorage in tracker's combatStore):
+    //   AssertionError: expected '{"combatants":[],"round":1,…}' to be '{ truncated'
+    vi.useFakeTimers();
+    try {
+      expect(scopeKey(COMBAT_BARE), 'fixture: this leg runs unscoped, so the bare key IS the one written').toBe(COMBAT_BARE);
+      localStorage.setItem(COMBAT_BARE, '{ truncated');
+      act(() => useCombatStore.getState().reloadFromStorage());
+      expect(useCombatStore.getState().combatants, 'fixture: the unreadable raw loads as empty').toEqual([]);
+      vi.advanceTimersByTime(5_000);
+      expect(localStorage.getItem(COMBAT_BARE)).toBe('{ truncated');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('still saves the next real edit after a reload', () => {
+    // The other half of that `cancelPersist()`: it has to disarm the LOAD's write, not the store. A
+    // reload that left persistence dead would drop every edit made afterwards — the same loss from the
+    // other end, and invisible until the next launch, which is why it is pinned rather than reasoned
+    // about. (`scopeKey` is asserted for the same reason as above: a write to a key this test does not
+    // read would make it pass for the wrong reason.)
+    // Without a live debounce after reloadFromStorage:
+    //   AssertionError: expected '{"combatants":[{"id":"c1",…}]}' not to be '{"combatants":[{"id":"c1",…}]}'
+    vi.useFakeTimers();
+    try {
+      expect(scopeKey(COMBAT_BARE), 'fixture: this leg runs unscoped too').toBe(COMBAT_BARE);
+      localStorage.setItem(COMBAT_BARE, STANDALONE_SAVE);
+      act(() => useCombatStore.getState().reloadFromStorage());
+      expect(useCombatStore.getState().combatants.map((c) => c.name), 'fixture: the saved board loaded').toEqual([
+        "Last night's goblin",
+      ]);
+      act(() => useCombatStore.getState().addCombatant(null, { name: 'Bandit lookout' }));
+      vi.advanceTimersByTime(5_000);
+      const written = localStorage.getItem(COMBAT_BARE);
+      expect(written, 'the edit made after the reload never reached storage').not.toBe(STANDALONE_SAVE);
+      expect(JSON.parse(written!).combatants.map((c: { name: string }) => c.name)).toContain('Bandit lookout');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 
   it('makes no server call at all for the local table', async () => {
     // tracker 2026-09-16: offline door — there is no account, so every one of these would be a

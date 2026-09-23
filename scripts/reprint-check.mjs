@@ -91,6 +91,27 @@ const mapBook = (b) => {
 const docNamesBook = (doc, book) =>
   (doc?.books ?? []).some((b) => mapBook(b) === book || normBook(b) === normBook(book));
 
+/*
+ * "the printing this document replaces" — taken from the SAME pairing the repoint runs on.
+ *
+ * It used to be read straight off `doc.data.legacy_id`, filtered to the same category, which only ever
+ * sees the links AoN writes document-to-document. Two of the four rules in scripts/lib/reprint.mjs do
+ * not have that shape, so the check was blind to exactly the records they move:
+ *   · THE CLASS HOP — every Impossible Magic class feature carries `legacy_id: ["class-77"]`, a CLASS
+ *     document, so the same-category filter threw it away. `classFeatures/spell-repertoire-summoner`
+ *     moved to class-feature-1339 (Impossible Magic) and kept `source.book` "Pathfinder Secrets of
+ *     Magic", and this printed 0.
+ *   · A NAME-PAIRED CATEGORY — `hybrid-study` states no link at all, so there was nothing to read.
+ *     All five reprinted hybrid studies moved and kept the Secrets of Magic book.
+ * `index.next` already holds every pair from every rule; inverting it is the whole fix. The predicate
+ * is unchanged in meaning — "the book the record names is the book of a document that this one
+ * REPLACES" — and it still reports 6 records, not the 287 the wider readings produced.
+ */
+const replacedBy = new Map();
+for (const [oldId, newId] of index.next) {
+  (replacedBy.get(newId) ?? replacedBy.set(newId, []).get(newId)).push(oldId);
+}
+
 let withAon = 0, unknown = 0;
 const bad = [];
 const staleBook = [];
@@ -113,8 +134,7 @@ for (const [bucket, records] of Object.entries(core)) {
     // CHECK 2 (see the header): the book must have followed the document to the newer printing.
     const doc = index.docs.get(D);
     if (rec.source?.book && doc?.books?.length && !docNamesBook(doc, rec.source.book)) {
-      const from = (doc.data?.legacy_id ?? []).map(String)
-        .find((l) => index.docs.get(l)?.category === doc.category && docNamesBook(index.docs.get(l), rec.source.book));
+      const from = (replacedBy.get(D) ?? []).find((l) => docNamesBook(index.docs.get(l), rec.source.book));
       if (from) {
         staleBook.push(`${where}  source.book is ${JSON.stringify(rec.source.book)}, the book of ${from} — but ${D} prints ${JSON.stringify(doc.books)}`);
       }

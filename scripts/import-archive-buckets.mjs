@@ -34,7 +34,7 @@ import { gzipSync, gunzipSync } from 'node:zlib';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { plain } from './lib/aon-plain.mjs';
-import { coinsFromCp } from './lib/aon-facets.mjs';
+import { coinsFromCp, canonBookName } from './lib/aon-facets.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const EXPORT = process.env.AON_EXPORT || 'C:/trying ai 2/hh-data-export/without-images/data';
@@ -53,6 +53,19 @@ const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[’']/g,
   .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
 const RARITY = new Set(['common', 'uncommon', 'rare', 'unique']);
+
+/*
+ * THE BOOK NAME, WHERE THE HAND-KEPT TABLE RENAMES IT — and only there.
+ *
+ * These buckets file a book under the Archives' own title ("Kingmaker Adventure Path", "NPC Core"),
+ * unlike the rest of core.json, so the "Pathfinder " prefix the other importers apply is deliberately
+ * NOT applied: the identity fold in canonBookName is `(b) => b`. What IS applied is the alias table,
+ * because "Dark Archives (Remastered)" is a title the Sources card has never heard of — five creature
+ * adjustments shipped on it, and the card drew it as a second near-identical book with one record in
+ * it beside the real "Dark Archive (Remastered)" with 425. A player who owns the book could not switch
+ * those five on.
+ */
+const bookName = (b) => canonBookName(b, (x) => x);
 
 const CORE = join(ROOT, 'public/core.json');
 const core = JSON.parse(readFileSync(CORE, 'utf8'));
@@ -103,7 +116,7 @@ for (const { cat, bucket, kind } of PLAN) {
   const ast = astWrites.get(bucket) ?? readAst(bucket);
   astWrites.set(bucket, ast);
 
-  let added = 0, skipped = 0, existed = 0, renormalised = 0, filled = 0;
+  let added = 0, skipped = 0, existed = 0, renormalised = 0, filled = 0, rebooked = 0;
   for (const [docId, doc] of Object.entries(docs)) {
     const name = String(doc?.name ?? doc?.data?.name ?? '').trim();
     if (!name) { skipped++; continue; }
@@ -122,7 +135,7 @@ for (const { cat, bucket, kind } of PLAN) {
       if (t.length) rec.traits = t;
     }
     if (doc.level != null) rec.level = doc.level;
-    if (doc.book) rec.source = { book: doc.book };
+    if (doc.book) rec.source = { book: bookName(doc.book) };
 
     if (kind === 'item') {
       // The owner's ruling: purchasable, with no encoded mechanical effect. AoN prices are in COPPER.
@@ -179,6 +192,12 @@ for (const { cat, bucket, kind } of PLAN) {
         const t = cur.traits.filter((x) => !RARITY.has(String(x).toLowerCase()));
         if (t.length !== cur.traits.length) { cur.traits = t; renormalised++; }
       }
+      /* …and its BOOK, for the same reason: the five "Dark Archives (Remastered)" records were written
+       * before the alias table was read here, and an add-only script cannot repair its own output. */
+      if (cur.aonId === docId && cur.source?.book && bookName(cur.source.book) !== cur.source.book) {
+        cur.source = { ...cur.source, book: bookName(cur.source.book) };
+        rebooked++;
+      }
       continue;
     }
 
@@ -189,7 +208,7 @@ for (const { cat, bucket, kind } of PLAN) {
     }
     added++;
   }
-  report.push({ cat, bucket, total: Object.keys(docs).length, added, skipped, existed, renormalised, filled });
+  report.push({ cat, bucket, total: Object.keys(docs).length, added, skipped, existed, renormalised, filled, rebooked });
 }
 
 console.log(`${'category'.padEnd(26)} ${'-> bucket'.padEnd(24)} ${'docs'.padStart(5)} ${'ADD'.padStart(5)} ${'exists'.padStart(7)} ${'skip'.padStart(5)}`);
@@ -200,13 +219,15 @@ for (const r of report) {
 const totalAdded = report.reduce((n, r) => n + r.added, 0);
 const totalRenorm = report.reduce((n, r) => n + (r.renormalised ?? 0), 0);
 const totalFilled = report.reduce((n, r) => n + (r.filled ?? 0), 0);
+const totalRebooked = report.reduce((n, r) => n + (r.rebooked ?? 0), 0);
 if (totalRenorm) console.log(`${totalRenorm} existing record(s) had a rarity word stripped from traits.`);
+if (totalRebooked) console.log(`${totalRebooked} existing record(s) moved to the book name the Sources card shelves.`);
 if (totalFilled) console.log(`${totalFilled} field(s) filled in on records stage 1 had already created.`);
 console.log(`\n${totalAdded} record(s) to add; ${descWrites.length} with prose.`);
 console.log('skips are AoN hidden pages (exclude_from_search) and reprinted legacy (superseded_by).');
 
 if (!WRITE) { console.log('\nreport only — pass --write to apply.'); process.exit(0); }
-if (!totalAdded && !totalRenorm && !totalFilled) { console.log('\nnothing to add, fill or re-normalise.'); process.exit(0); }
+if (!totalAdded && !totalRenorm && !totalFilled && !totalRebooked) { console.log('\nnothing to add, fill or re-normalise.'); process.exit(0); }
 
 mkdirSync(join(ROOT, 'public/ast'), { recursive: true });
 for (const [bucket, ast] of astWrites) {

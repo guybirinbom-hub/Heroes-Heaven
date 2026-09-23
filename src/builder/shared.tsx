@@ -2670,7 +2670,12 @@ export function SetupCard({
 
 /** A dependent follow-up choice (an attribute boost a background grants, the domain a feat asks
  *  for, …) rendered as a small card indented + connected under the card that triggered it. */
-export function SubCard({ icon, label, count, children }: { icon: string; label: string; count?: ReactNode; children: ReactNode }) {
+/** `pending` draws the same `!` the subclass card and every feat slot draw for an unanswered required
+ *  choice (Builder.tsx: `{!build.subclassId && <span className="lvl-pending">!</span>}`). A necromancer's
+ *  Grim Fascination is counted by `levelChoices` with required:true and listed in the Create/Save
+ *  confirmation, but its row was the only required row on the page with no marker on it — the level
+ *  said "3 choices left" and only two of the three rows showed which. */
+export function SubCard({ icon, label, count, pending, children }: { icon: string; label: string; count?: ReactNode; pending?: boolean; children: ReactNode }) {
   return (
     <div className="lvl-subcard" data-subcard={label}>
       <i className="ti ti-corner-down-right lvl-subcard-conn" aria-hidden="true" />
@@ -2685,6 +2690,7 @@ export function SubCard({ icon, label, count, children }: { icon: string; label:
           </div>
           <div className="lvl-card-row">{children}</div>
         </div>
+        {pending && <span className="lvl-pending">!</span>}
       </div>
     </div>
   );
@@ -4810,13 +4816,16 @@ export function EffectChoicesPicker({
         // asked twice — and could disagree with the first answer.
         if (ch.answerFromChoiceFlag && choiceFlagAnswer(ch.answerFromChoiceFlag, build, content)) return null;
         const set = (v: string) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } });
+        /* Unanswered and not self-answering — exactly the test `levelChoices` counts the row by, so the
+         * page's "N choices left" and the `!` on the rows can never disagree. */
+        const pending = !build.effectChoices?.[ecKey] && effectChoiceDefault(ch) === undefined;
         /* An OPEN pick from content that is NOT a spell — Syncretism's second favored weapon. Resolved
          * by the same `openChoiceOptions` the `choice.kind: 'open'` lane uses, so the two cannot
          * disagree about what a `weapon` pick admits. */
         if (ch.openFrom) {
           const opts = openChoiceOptions(ch.openFrom, content, { hideLegacy: build.hideLegacy });
           return (
-            <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt}>
+            <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt} pending={pending}>
               <SearchSelect bare label={ch.prompt} placeholder="Search…" value={build.effectChoices?.[ecKey] ?? null} onChange={set} options={opts} />
             </SubCard>
           );
@@ -4831,13 +4840,13 @@ export function EffectChoicesPicker({
             note: (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`,
           }));
           return (
-            <SubCard key={`ec-${ecKey}`} icon="ti-sparkles" label={ch.prompt}>
+            <SubCard key={`ec-${ecKey}`} icon="ti-sparkles" label={ch.prompt} pending={pending}>
               <SearchSelect bare label="Spell" placeholder="Search spells…" value={build.effectChoices?.[ecKey] ?? null} onChange={set} options={opts} />
             </SubCard>
           );
         }
         return (
-          <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt}>
+          <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt} pending={pending}>
             <PopupSelect
               title={ch.prompt}
               placeholder={`${ch.prompt}…`}

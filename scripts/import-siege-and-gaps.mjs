@@ -39,8 +39,8 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
-import { fillFrequencyCounters } from './lib/aon-facets.mjs';
-import { plain, unlink, decode, ACTION_WORD } from './lib/aon-plain.mjs';
+import { fillFrequencyCounters, canonBookName } from './lib/aon-facets.mjs';
+import { plain, unlink, decode, handlebarsLinks, ACTION_WORD } from './lib/aon-plain.mjs';
 
 /** The PRISTINE AoN mirror (one JSON file per record). Facets + markdown come from here. */
 const SRC = process.env.AON_MIRROR || 'C:/wonderers guide/aon-2e-archive/data/by-category';
@@ -82,7 +82,14 @@ const readCat = (cat) => {
 /* ------------------------------------------------------------------ core.json context */
 
 const core = JSON.parse(readFileSync(CORE, 'utf8'));
-const BUCKETS = ['siegeWeapons', 'heritages', 'deities', 'languages', 'archetype', 'familiarAbilities', 'animalCompanions'];
+const BUCKETS = ['siegeWeapons', 'heritages', 'deities', 'languages', 'archetype', 'familiarAbilities', 'animalCompanions', 'classFeatures', 'runesmithRune'];
+/**
+ * Buckets where this script may write the ast for the slugs it OWNS and for nothing else, not even a
+ * slug with no tree yet. The rule above is "add a tree where there is none, never rewrite one" —
+ * right for a bucket this script created, wrong for `classFeatures`, where 1,073 records belong to
+ * the full importer and a missing tree is its answer, not a gap for this one to fill.
+ */
+const STRICT_AST = new Set(['classFeatures']);
 
 /**
  * Slugs `topUpCarried` adds, so `writeAst` knows which trees it may write and leaves every
@@ -119,11 +126,8 @@ for (const bucket of Object.keys(core)) {
     if (lic) ((bookLicense[b] ??= {})[lic] = (bookLicense[b][lic] ?? 0) + 1);
   }
 }
-function mapBook(book) {
-  const b = String(book || '').trim();
-  if (!b) return undefined;
-  return canonBook[normBook(b)] ?? (/^Pathfinder /i.test(b) ? b : `Pathfinder ${b}`);
-}
+/** …and the hand-kept table first, because `normBook` cannot spell — see canonBookName's own note. */
+const mapBook = (book) => canonBookName(book, (b) => canonBook[normBook(b)]);
 /** The license the rest of core.json records for this book (majority vote), or none. */
 function licenseOf(canonicalBook) {
   const counts = bookLicense[canonicalBook];
@@ -171,6 +175,9 @@ const LINK_BUCKET = {
   'traits.aspx': 'trait', 'skills.aspx': 'skill', 'rules.aspx': 'rules', 'archetypes.aspx': 'archetype',
   'deities.aspx': 'deities', 'ancestries.aspx': 'ancestries', 'classes.aspx': 'classes',
   'heritages.aspx': 'heritages', 'domains.aspx': 'domain', 'siegeweapons.aspx': 'siegeWeapons',
+  /* `languages` is a shipped bucket and 42 handlebars cross-references name it; without the row
+   * every one of them resolved to no bucket and was dropped. */
+  'languages.aspx': 'languages',
 };
 const nameIdx = {};
 function resolves(bucket, label) {
@@ -186,11 +193,13 @@ function resolves(bucket, label) {
   return false;
 }
 /** Cross-references for a description, from the AoN markdown's own links — emitted only when the
- *  target actually resolves in core.json, so no ref renders as a dead link. */
+ *  target actually resolves in core.json, so no ref renders as a dead link. `handlebarsLinks` first,
+ *  because AoN's newer `{{conditions 62 "concealed"}}` template says the same thing in a shape this
+ *  scanner cannot see (see its header). */
 function descRefsOf(md, body) {
   const out = [];
   const seen = new Set();
-  for (const m of String(md ?? '').replace(/\r/g, '').matchAll(/\[([\s\S]*?)\]\(\/([A-Za-z]+\.aspx)[^)]*\)/g)) {
+  for (const m of handlebarsLinks(md).replace(/\r/g, '').matchAll(/\[([\s\S]*?)\]\(\/([A-Za-z]+\.aspx)[^)]*\)/g)) {
     const label = plain(m[1]).replace(/\s+/g, ' ').trim();
     const bucket = LINK_BUCKET[m[2].toLowerCase()];
     if (!bucket || !label || seen.has(label.toLowerCase())) continue;
@@ -739,6 +748,248 @@ function buildArchetypes() {
   return out;
 }
 
+/* ============================================ Impossible Magic: a class table row opens ITS class */
+
+/**
+ * EVERY ROW OF THESE FOUR CLASS TABLES MUST OPEN A DOCUMENT OF THAT CLASS.
+ *
+ * PF2e gives 25 classes a row called "Weapon Expertise" and the app ships ONE record for it, on
+ * whichever class's page won the slug. Measured across the whole corpus, 187 of 567 class-table rows
+ * resolve to another class's document; 30 of them belong to the four Impossible Magic classes, and
+ * those are the ones a player meets on a page the app has only just started shipping:
+ *
+ *   magus 12 · summoner 6 · necromancer 5 · runesmith 7
+ *
+ * A magus opening Weapon Expertise at 5th read the THAUMATURGE's page (class-feature-1178), Expert
+ * and Master Spellcaster the PSYCHIC's, and the three rows Impossible Magic RENAMED still read
+ * Alertness / Resolve / Juggernaut and opened Inventor, Inventor and Barbarian pages.
+ *
+ * Impossible Magic prints its own document for every one of the thirty, so nothing here is invented:
+ * the record is the SHARED record's mechanics with this class's page, name, level and prose over the
+ * top. Cloning the mechanics is load-bearing — `resolve` carries a success-to-critical-success
+ * degreeShift on Will saves (which Twofold Will restates word for word), `juggernaut` the same on
+ * Fortitude (Spell-Tempered Body), and `shield-block` grants the Shield Block feat, so a bare display
+ * record in their place would silently take all three away.
+ *
+ * ⚠ THE OTHER 157 ROWS ARE LEFT ALONE, deliberately. Splitting every shared feature per class is 157
+ * more records across 25 more class tables and its own batch; this closes it for the four classes
+ * whose tables this lane is answerable for. scripts/class-table-diff.mjs asserts the invariant for
+ * exactly these four and says so.
+ */
+const IM_CLASSES = { magus: 'Magus', summoner: 'Summoner', necromancer: 'Necromancer', runesmith: 'Runesmith' };
+/**
+ * …and ONE row on four more classes, because that row's prose is a FOUR-CLASS COMPOSITE.
+ *
+ * `classFeatures/spell-repertoire` is 8,817 characters reading "**Bard** … --- **Oracle** … ---
+ * **Psychic** … --- **Sorcerer** …" in a single blob, so a bard opening their own Spell Repertoire
+ * feature read all four classes' repertoire rules stacked on top of each other. Every one of those
+ * four classes prints its own page — class-feature-625 (Player Core), -956 and -984 (Player Core 2),
+ * -1141 (Dark Archives (Remastered)) — and the app already held four empty-handed per-class records
+ * that all pointed at class-feature-447, the SUMMONER's Secrets of Magic page, and that no class
+ * table named. Splitting is the composite's own answer: each class reads its own printing.
+ *
+ * Scoped to this one feature id on these four classes. Everything else they share stays shared —
+ * see the note above about the other 157 rows.
+ */
+const OWN_PAGE_ROWS = {
+  bard: { className: 'Bard', rows: ['spell-repertoire'] },
+  oracle: { className: 'Oracle', rows: ['spell-repertoire'] },
+  sorcerer: { className: 'Sorcerer', rows: ['spell-repertoire'] },
+  psychic: { className: 'Psychic', rows: ['spell-repertoire'] },
+};
+/**
+ * The rows Impossible Magic RENAMED: the app's table-row id -> the name IM prints for the same row.
+ * Everything else matches on the record's own name, because the flavour word did not move.
+ * (The summoner's L3 row is not here: it names `signature-spells-summoner`, an authored overlay record
+ * carrying class-feature-1346 — the Summoner's own "Signature Spells" page — under the `<slug>-<class>`
+ * id src/rules/build.ts routes through the ordinary one-signature-per-rank rule.)
+ */
+const IM_RENAMED = {
+  magus: { alertness: 'Perception Expertise', resolve: 'Twofold Will', juggernaut: 'Spell-Tempered Body' },
+};
+/** Filled by buildImClassFeatures with exactly the slugs it creates, for the ast pass. */
+const IM_FEATURE_IDS = new Set();
+
+/*
+ * THE PROSE, WITHOUT THE PAGE FURNITURE.
+ *
+ * `plain()` flattens the WHOLE document, and an AoN class-feature page opens with its own title, a
+ * `Source <book> pg. N` line, a `Class <Class>` line and a `---` rule before the rules text starts. The
+ * description POPUP is fine either way — it renders the ast, which draws those as proper metadata rows
+ * with live links — but the flat `description` is what the Feats & Features list prints as its preview,
+ * and 32 records shipped previews reading "Weapon Expertise Source Impossible Magic pg. 9 Class Magus
+ * You've dedicated yourself…". Every record the FULL importer builds carries the body alone, so this is
+ * the odd one out, not a house style.
+ *
+ * Cut only when what precedes the rule really is that block — a `Source` line inside the first few
+ * lines. A page with a `---` in the middle of its prose and no furniture keeps all of it.
+ */
+const featureBody = (md) => {
+  const s = plain(md ?? '');
+  const cut = s.indexOf('\n---\n');
+  return cut > 0 && /\n\nSource [^\n]+/.test(s.slice(0, cut)) ? s.slice(cut + 5).trim() : s;
+};
+
+function buildImClassFeatures() {
+  const docs = readCat('class-feature');
+  /*
+   * WHICH ROW NEEDS ITS OWN PAGE — decided from the CLASS TABLES, not from `aonId`.
+   *
+   * This runs before `stamp-aonid.mjs`, which CLEARS and rewrites every aon* field, so at this point
+   * in the chain a record's `aonId` is absent or self-assigned and cannot be trusted (the same reason
+   * writeAst() below goes through the migration map). Reading it made the first run of this function
+   * a silent no-op: every lookup missed and all 30 rows were skipped while the script reported
+   * success.
+   *
+   * A row is shared when more than one class's table names it, which is exactly the condition that
+   * makes one page have to serve several classes — and it is in core.json, complete, right here.
+   */
+  const namedBy = new Map();
+  for (const [cid, cl] of Object.entries(core.classes ?? {})) {
+    for (const f of cl.features ?? []) (namedBy.get(f.featureId) ?? namedBy.set(f.featureId, new Set()).get(f.featureId)).add(cid);
+  }
+  let created = 0;
+  let already = 0;
+  const unmatched = [];
+  const scopes = [
+    ...Object.entries(IM_CLASSES).map(([classId, className]) => ({ classId, className, only: null })),
+    ...Object.entries(OWN_PAGE_ROWS).map(([classId, s]) => ({ classId, className: s.className, only: new Set(s.rows) })),
+  ];
+  for (const { classId, className, only } of scopes) {
+    /*
+     * The necromancer and the runesmith are not in core.json yet — `import-new-classes.mjs` merges
+     * them four steps later, and it cannot move earlier (split-descriptions.mjs rebuilds the prose
+     * file from whatever core.json holds, so a class merged after it renders an empty page). Their
+     * tables live in work/new-classes/<id>.json and already name the per-class ids, so the rows are
+     * read from there and the records are built here, in time for that merge's own "every feature the
+     * table names must exist" guard.
+     */
+    const packPath = join('work/new-classes', `${classId}.json`);
+    const rows = core.classes?.[classId]?.features
+      ?? (existsSync(packPath) ? JSON.parse(readFileSync(packPath, 'utf8')).class?.features : null);
+    if (!rows) continue;
+    /* This class's own documents, newest printing per name — a superseded or hidden page never wins,
+     * and where two live pages share a name the later release does (gold-set R12). For the four
+     * Impossible Magic classes every Secrets of Magic / Dark Archive twin is superseded by the class
+     * page, so this resolves to the Impossible Magic printing without naming the book. */
+    const ownByName = new Map();
+    for (const d of docs) {
+      if (d.class !== className || d.exclude_from_search || d.superseded_by) continue;
+      const k = String(d.name).toLowerCase();
+      const prev = ownByName.get(k);
+      if (!prev || String(d.release_date ?? '') > String(prev.release_date ?? '')) ownByName.set(k, d);
+    }
+    for (const row of rows) {
+      /* A row read from a pack already names the per-class id; a row read from core.json names the
+       * shared one. Both resolve back to the SHARED record, which is where the mechanics live. */
+      const suffix = `-${classId}`;
+      const suffixed = row.featureId.endsWith(suffix);
+      const baseId = suffixed ? row.featureId.slice(0, -suffix.length) : row.featureId;
+      if (only && !only.has(baseId)) continue; // a scoped class answers for its listed rows only
+      if (suffixed && core.classFeatures?.[row.featureId]) continue; // built on an earlier run
+      const rec = core.classFeatures?.[baseId];
+      if (!rec) continue;
+      const renamed = IM_RENAMED[classId]?.[baseId];
+      if (!only && !suffixed && !renamed && (namedBy.get(row.featureId)?.size ?? 1) < 2) continue; // this class's own record already
+      const want = renamed ?? rec.name;
+      const doc = ownByName.get(String(want).toLowerCase());
+      if (!doc) { unmatched.push(`${classId}/${row.featureId} — no ${className} document named "${want}"`); continue; }
+      /* The bare slug when nothing holds it (Twofold Will, Spell-Tempered Body — rows Impossible Magic
+       * named for the first time), the class-suffixed form otherwise: the convention
+       * `medium-armor-expertise-inventor` and `arcane-spellcasting-magus` set. */
+      const bare = slug(doc.name);
+      const id = core.classFeatures[bare] ? `${bare}-${classId}` : bare;
+      const body = featureBody(doc.markdown ?? doc.text ?? '');
+      const refs = body ? descRefsOf(doc.markdown, body) : [];
+      const { id: _id, name: _n, level: _l, aonId: _a, source: _s, edition: _e, description: _d, descRefs: _r, traits: _t, ...mechanics } = rec;
+      /* A record that already carries the page's name plus a disambiguator — "Spell Repertoire
+       * (Bard)" — keeps it: four rows all reading "Spell Repertoire" is what the split is for. */
+      const held = core.classFeatures[id]?.name;
+      core.classFeatures[id] = {
+        id,
+        name: held && held.replace(/\s*\([^)]*\)\s*$/, '') === doc.name ? held : doc.name,
+        /* The class's OWN trait, not the 14-class list the shared record carries: these records are
+         * named by one table and a picker that filters on the trait must not offer them elsewhere. */
+        traits: [classId],
+        ...mechanics,
+        ...(sourceOf(doc.primary_source) ? { source: sourceOf(doc.primary_source) } : {}),
+        level: typeof doc.level === 'number' ? doc.level : row.level,
+        edition: editionOf(doc.primary_source),
+        aonId: String(doc.id),
+        ...(body ? { description: body } : {}),
+        ...(refs.length ? { descRefs: refs } : {}),
+      };
+      if (rec.id === id) already++; else created++;
+      row.featureId = id;
+      IM_FEATURE_IDS.add(id);
+    }
+  }
+  stats.classFeatures = { before: Object.keys(core.classFeatures).length - created, after: Object.keys(core.classFeatures).length, added: created, refreshed: already };
+  if (unmatched.length) notes.push(`Impossible Magic class rows with no document of their own class (LEFT as they are):\n  ${unmatched.join('\n  ')}`);
+}
+
+/**
+ * THE RUNESMITH'S RUNES, which ship with dead cross-links and no display tree.
+ *
+ * All 44 are hand-authored `create: true` rows in scripts/data/effect-backfill.json (the category did
+ * not exist in the archive when they were written, which is why scripts/import-core-v2.mjs REF_SKIPs
+ * it to this day). The archive has held `runesmith-rune-1…44` since the 2026-09-07 delta, so the one
+ * player-facing bucket with no file in public/ast/ is the only one whose prose cannot resolve a link:
+ * 39 of the 44 print cross-references on their own page (atryl: resistance, immunities, dazzled;
+ * baruiel: frightened, emanation; esvadir: Strikes, persistent bleed damage) and shipped ZERO, and
+ * the transcription also lost the bold on 34 "Invocation" and 13 "Level (+N)" lines.
+ *
+ * The MECHANICS stay authored — `level`, `usage`, `traits` and the rest are untouched, which is what
+ * the REF_SKIP note protects. Only the cross-references are added here, and the ast pass below writes
+ * the display tree from the rune's own page, which is where the bold and the live links come back.
+ */
+function addRunesmithRuneRefs() {
+  const map = core.runesmithRune;
+  if (!map) return;
+  const byId = new Map(readCat('runesmith-rune').map((d) => [String(d.id), d]));
+  let filled = 0;
+  for (const rec of Object.values(map)) {
+    const doc = byId.get(String(rec.aonId));
+    if (!doc) continue;
+    const body = rec.description || plain(doc.markdown ?? doc.text ?? '');
+    const refs = body ? descRefsOf(doc.markdown, body) : [];
+    if (!refs.length) continue;
+    rec.descRefs = refs;
+    filled++;
+  }
+  stats.runesmithRune = { before: Object.keys(map).length, after: Object.keys(map).length, added: 0, refreshed: filled };
+}
+
+/**
+ * …and the SAME HOLE on the four classes' own features. `conflux-spells`, `evolution-feat`,
+ * `summoner-spellcasting`, `spell-repertoire-summoner`, `mental-wards`, `runes`, `runic-crafter` and
+ * `assured-runic-crafter` all print cross-references on their own page and shipped ZERO, because
+ * nothing in the chain has ever built descRefs for `classFeatures`: they are carried forward from the
+ * Foundry-era transcription, and a record that arrived after it has none and can never gain any.
+ *
+ * ADD-ONLY and scoped to the records whose source is Impossible Magic, so it cannot rewrite a
+ * cross-reference somebody authored. `descRefsOf` emits a ref only where the label resolves in
+ * core.json AND survives into the plain description, so nothing here can render as a dead link.
+ */
+function addImFeatureRefs() {
+  const byId = new Map(readCat('class-feature').map((d) => [String(d.id), d]));
+  let filled = 0;
+  for (const [id, rec] of Object.entries(core.classFeatures ?? {})) {
+    if (rec.descRefs?.length) continue;
+    if (rec.source?.book !== 'Pathfinder Impossible Magic') continue;
+    /* `stamp-aonid.mjs` has not run yet, so the record's own aonId is absent or self-assigned — the
+     * verified join is the trustworthy answer here, exactly as it is for writeAst below. */
+    const doc = byId.get(String(mapDocFor('classFeatures', id) ?? rec.aonId));
+    if (!doc) continue;
+    const body = rec.description || plain(doc.markdown ?? doc.text ?? '');
+    const refs = body ? descRefsOf(doc.markdown, body) : [];
+    if (!refs.length) continue;
+    rec.descRefs = refs;
+    filled++;
+  }
+  if (filled) notes.push(`${filled} Impossible Magic class feature(s) gained the cross-references their page prints`);
+}
+
 /* ==================================================================== run the merge */
 
 core.siegeWeapons = buildSiegeWeapons();
@@ -747,6 +998,8 @@ core.deities = buildDeities();
 core.languages = buildLanguages();
 core.archetype = buildArchetypes();
 topUpCarried();
+buildImClassFeatures();
+addRunesmithRuneRefs();
 
 /* ==================================================================== ast (lazy-loaded descriptions)
  * Every record in core.json renders its description from public/ast/<bucket>.json — the pre-parsed
@@ -762,6 +1015,10 @@ const AON_CATEGORY = {
    * prose and no display tree — measured: 98 of the 209 familiar abilities could render NOTHING,
    * because `topUpCarried` wrote {id,name,kind,source,edition,aonId} and stopped there. */
   familiarAbilities: 'familiar-ability', animalCompanions: 'animal-companion',
+  /* The 30 Impossible Magic per-class rows built above, and the runesmith's 44 runes — the one
+   * player-facing bucket that had no file in public/ast/ at all, so its cross-links had no display
+   * path that could render them and the bold its page prints was simply gone. */
+  classFeatures: 'class-feature', runesmithRune: 'runesmith-rune',
 };
 
 /** The slugs this script authored — the only asts it may (re)write. Everything else in a bucket's
@@ -775,6 +1032,8 @@ const OWNED_IDS = {
    * every pre-existing record's tree untouched. */
   familiarAbilities: TOPPED_UP.familiarAbilities,
   animalCompanions: TOPPED_UP.animalCompanions,
+  classFeatures: IM_FEATURE_IDS,
+  runesmithRune: new Set(Object.keys(core.runesmithRune ?? {})),
 };
 const ownsSlug = (bucket, s) => (bucket === 'siegeWeapons' ? !CURATED_SIEGE_IDS.has(s) : OWNED_IDS[bucket].has(s));
 
@@ -848,7 +1107,7 @@ function writeAst() {
     const out = { ...existing };
     let addedAst = 0;
     for (const [s, d] of bySlug) {
-      if (!ownsSlug(bucket, s) && s in existing) continue; // never rewrite the full importer's ast
+      if (!ownsSlug(bucket, s) && (STRICT_AST.has(bucket) || s in existing)) continue; // never rewrite the full importer's ast
       if (!(s in existing)) addedAst++;
       out[s] = resolveAst(d.ast);
       if (d.id) out[s].aon = d.id; // provenance — see scripts/ast-provenance-check.mjs
@@ -866,6 +1125,10 @@ function writeAst() {
   writeFileSync('public/ast-index.json', JSON.stringify(orderedIndex));
   stats._ast = astStats;
 }
+
+/* Below `mapDocFor`, which it reads for the same reason writeAst does: `stamp-aonid.mjs` runs four
+ * steps later and a record's own aonId cannot be trusted at this point in the chain. */
+addImFeatureRefs();
 
 if (!DRY && !NO_AST) writeAst();
 

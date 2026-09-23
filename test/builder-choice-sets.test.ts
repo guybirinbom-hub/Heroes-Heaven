@@ -264,7 +264,14 @@ describe('a versatile heritage matches its feats by TRAIT as well as by id', () 
       const gain = byTrait.filter((f) => !byId.includes(f)).length;
       if (gain) gains[h.id] = gain;
     }
-    expect(gains).toEqual({ 'aon-aasimar': 20, 'aon-ifrit': 23, 'aon-tiefling': 16, 'aon-aphorite': 5, 'aon-ganzi': 2 });
+    /* aphorite 5 -> 6 and ganzi 2 -> 3 on 2026-09-23, and both are the legacy heritage reaching its
+     * own legacy feat: `feats/internal-cohesion` (feat-2477, Ancestry Guide, printed trait Aphorite)
+     * and `feats/smashing-tail` (feat-2535, printed trait Ganzi) carried `nephilim` from the Foundry
+     * reference, because the importer only built a record from its own document while that document
+     * was still the newest printing. Both are now marked `legacy` with a `remasteredAs` link, and
+     * their Nephilim reprints — `aeonbound` (feat-7195) and `bestial-manifestation` (feat-4548) —
+     * ship separately and carry the nephilim trait, so no nephilim character lost anything. */
+    expect(gains).toEqual({ 'aon-aasimar': 20, 'aon-ifrit': 23, 'aon-tiefling': 16, 'aon-aphorite': 6, 'aon-ganzi': 3 });
   });
 
   it('NO REGRESSION: hungerseed, suli and undine gain nothing', () => {

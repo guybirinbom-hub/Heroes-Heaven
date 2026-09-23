@@ -15,6 +15,17 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
  * local change is never applied over, it is pushed instead.
  */
 
+/* EVERY LEG HERE RUNS ON FAKE TIMERS, so nothing in this file waits on the clock — but the 5 s
+ * default timeout is REAL time, and each leg re-imports four modules through `vi.resetModules()`.
+ * Under machine load (two other vitest processes on this box) one full-file run in six failed: leg `a`
+ * timed out at 5017 ms and leg `b` — whose work is ~100 ms — took 3902 ms and then saw a turn count
+ * from the leg before it, the shape of a test that was still draining when the next one started. Both
+ * pass in isolation, and neither has anything to do with what they assert. A budget that contention
+ * cannot blow is the fix; 60 s is ~560x the measured per-leg cost, and still fails fast if a leg ever
+ * genuinely hangs. (The tracker's other suite reaches for the same instrument: 180_000 per test in
+ * test/bug-tracker-offline-door.test.tsx.) */
+vi.setConfig({ testTimeout: 60_000 });
+
 const sb = vi.hoisted(() => {
   type Row = { key: string; value: unknown; updated_at: string };
   type Chan = { on: (evt: string, filter: unknown, cb: () => void) => Chan; subscribe: (cb?: (s: string) => void) => Chan };

@@ -28,9 +28,13 @@ const ACCEPTED = {
   // "major". The printed ladder is 975 / 14,000 / 65,000 gp ascending, which is what the app has.
   'judgment-thurible-greater': 'mirror field transposes greater and major; printed ladder ascends',
   'judgment-thurible-major': 'mirror field transposes greater and major; printed ladder ascends',
-  // Two different items share this name. The app's record is the GM Core intelligent shield, which
-  // prints no Price line at all; the Hellbreakers one is `martyrs-shield-hellbreakers` at 360 gp.
-  'martyrs-shield': 'the app record is the GM Core intelligent shield, which prints no price',
+  /*
+   * `martyrs-shield` was here too, for the GM Core intelligent shield that prints no Price line. The
+   * acceptance is retired: the record now IS the Hellbreakers shield (equipment-4193, 360 gp, which is
+   * what it ships) and agrees with the mirror exactly, so the entry could never fire again. The
+   * stale-acceptance test below is what said so — it is the same silent retirement that took the
+   * Judgment Thurible's ladder.
+   */
 };
 
 const copper = (p) => (p?.pp ?? 0) * 1000 + (p?.gp ?? 0) * 100 + (p?.sp ?? 0) * 10 + (p?.cp ?? 0);
@@ -88,6 +92,61 @@ for (const [id, rec] of Object.entries(db.items ?? {})) {
   (ACCEPTED[id] ? accepted : bad).push({ id, app, aon: m.price, why: ACCEPTED[id] });
 }
 
+/*
+ * AN ACCEPTANCE THAT STOPS FIRING IS A RULING THAT HAS BEEN SILENTLY UNDONE.
+ *
+ * Every entry in ACCEPTED says "the mirror is wrong here and the app is deliberately different". The
+ * loop above only ever notices a DISAGREEMENT, so the day the app starts agreeing with the mirror the
+ * entry simply goes quiet — the ruling is gone and this script reports a clean run. That is how
+ * `judgment-thurible-greater` and `-major` had their printed ladder (14,000 / 65,000 gp ascending)
+ * replaced by the mirror's transposed one without a single guard going red.
+ *
+ * So the acceptance is checked in BOTH directions: an id that no longer disagrees is a failure here
+ * until somebody removes it from the map on purpose.
+ */
+const stale = Object.keys(ACCEPTED).filter((id) => db.items?.[id] && !accepted.some((a) => a.id === id));
+
+/*
+ * …and the PF2e grade ladder, which is always ascending: lesser ≤ moderate ≤ greater ≤ major ≤ true,
+ * in level and in price. The family base is left out — it is often a priceless summary page.
+ *
+ * This is the invariant the transposition broke, and it is the one thing that can catch an Archives
+ * labelling error without a second printing to compare against.
+ */
+const GRADES = ['lesser', 'moderate', 'greater', 'major', 'true'];
+/** Families whose ladder the ARCHIVES THEMSELVES print out of order, with the evidence. */
+const ACCEPTED_LADDER = {
+  // equipment-2665-2454 "(Major)" repeats the BASE page's Item 4 / 100 gp; the Greater is Item 8 /
+  // 475 gp. The mirror carries no higher figure anywhere, so there is nothing to correct it to.
+  'spore-shepherds-staff': 'AoN sub-doc equipment-2665-2454 repeats the base level and price',
+  'spore-shephards-staff': 'spelling twin of spore-shepherds-staff; same AoN defect',
+  // equipment-2784-2569 "(major)" prints 210 gp against the greater's 215 gp (equipment-2784-2568) —
+  // a digit, not a ladder. Both levels ascend (11 -> 17), so only the price inverts.
+  steelscour: 'AoN sub-doc equipment-2784-2569 prints 210 gp against the greater\'s 215 gp',
+};
+const families = new Map();
+for (const [id, rec] of Object.entries(db.items ?? {})) {
+  const i = GRADES.findIndex((g) => id.endsWith(`-${g}`));
+  if (i < 0) continue;
+  const base = id.slice(0, -(GRADES[i].length + 1));
+  if (!families.has(base)) families.set(base, []);
+  families.get(base).push({ id, rank: i, rec });
+}
+const inverted = [];
+for (const [base, members] of families) {
+  if (members.length < 2 || ACCEPTED_LADDER[base]) continue;
+  members.sort((a, b) => a.rank - b.rank);
+  for (let i = 1; i < members.length; i++) {
+    const lo = members[i - 1], hi = members[i];
+    if (typeof lo.rec.level === 'number' && typeof hi.rec.level === 'number' && hi.rec.level < lo.rec.level) {
+      inverted.push(`${hi.id} is level ${hi.rec.level}, below ${lo.id} at ${lo.rec.level}`);
+    }
+    if (lo.rec.price && hi.rec.price && copper(hi.rec.price) < copper(lo.rec.price)) {
+      inverted.push(`${hi.id} costs ${copper(hi.rec.price)} cp, below ${lo.id} at ${copper(lo.rec.price)} cp`);
+    }
+  }
+}
+
 console.log(`compared against the mirror: ${compared} items`);
 console.log(`accepted disagreements: ${accepted.length}`);
 for (const a of accepted) console.log(`   ${a.id.padEnd(30)} app ${a.app} cp / mirror ${a.aon} cp — ${a.why}`);
@@ -96,4 +155,9 @@ for (const b of bad) {
   const ratio = b.aon ? (b.app / b.aon).toFixed(3) : 'n/a';
   console.log(`   ${b.id.padEnd(34)} app ${String(b.app).padStart(9)} cp   mirror ${String(b.aon).padStart(9)} cp   x${ratio}`);
 }
-if (bad.length) process.exitCode = 1;
+console.log(`\nACCEPTANCES THAT NO LONGER FIRE: ${stale.length}`);
+for (const id of stale) console.log(`   ${id.padEnd(34)} now agrees with the mirror — the ruling "${ACCEPTED[id]}" is gone`);
+console.log(`\ngrade ladders checked: ${[...families.values()].filter((m) => m.length > 1).length}  (${Object.keys(ACCEPTED_LADDER).length} accepted as AoN's own defect)`);
+console.log(`INVERTED LADDERS: ${inverted.length}`);
+for (const line of inverted) console.log(`   ${line}`);
+if (bad.length || stale.length || inverted.length) process.exitCode = 1;

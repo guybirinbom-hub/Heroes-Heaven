@@ -500,6 +500,14 @@ export function flushPersist() {
   _pendingSnap = null
   notifyPersist(key)
 }
+/** Drop a scheduled write WITHOUT performing it — for a state change that is not an edit. Exported
+ *  for the same reason src/data/persist.ts exports its own pair: whoever replaces the board wholesale
+ *  (a load, a scope switch, a harness reset) has to disarm the write the replaced board left behind,
+ *  or it lands 200 ms later on a key whose content has moved on. */
+export function cancelPersist() {
+  if (_persistTimer) { clearTimeout(_persistTimer); _persistTimer = null }
+  _pendingSnap = null
+}
 function schedulePersist(snap: () => PersistedCombat) {
   _pendingSnap = snap
   if (_persistTimer) clearTimeout(_persistTimer)
@@ -874,6 +882,15 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       s.canUndo = false
       s.canRedo = false
     })
+    /* A LOAD IS NOT AN EDIT, SO IT MUST NOT SCHEDULE A SAVE. The `set` above just fired the persist
+     * subscriber, which armed a write of the board we have this instant READ back to the key we read
+     * it from — pointless when the read worked, and destructive when it did not: loadPersistedCombat
+     * returns null for a raw it cannot parse (a field a newer build wrote, a quota-truncated save),
+     * so the fallback is the EMPTY board and 200 ms later that empty board replaces the raw for good.
+     * The same call also disarms anything the replaced board left pending, which would otherwise land
+     * on top of the one just adopted (the GM mirror's whole job is handing this store a newer board
+     * from another device). */
+    cancelPersist()
   },
 
   setInitiative(id, v) {

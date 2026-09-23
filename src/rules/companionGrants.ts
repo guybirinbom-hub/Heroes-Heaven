@@ -476,6 +476,12 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'stealthy-companion': { kinds: ['animal'], note: "Stealthy Companion: your companion gains the benefit of the Camouflage feat. If it is a specialized ambusher, its Stealth rank increases to master (legendary if it was already master) — apply that by hand, as it depends on the specialization you chose." },
   'advanced-reanimated-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Advanced Reanimated Companion: your construct companion is at least an advanced construct companion (the mature rung here) — +1 Str/Dex/Con/Wis, unarmed Strikes go from one die to two, and Perception and all saves become expert. During an encounter, even if you don't use the Command a Minion action, it can still use 1 action on your turn that round to Stride or Strike. It also becomes trained in Intimidation, Stealth, and Survival, and you may change its Size to Small, Medium, or Large (not tracked on this block)."},
   'airborne-form': {"kinds":["eidolon"],"speeds":{"fly":"land"},"note":"Airborne Form: your eidolon can fly."},
+  /* AoN eidolon-14: *"**Senses** darkvision"*, *"**Language** Aklo"*. The two Impossible Magic types
+   * (this and 'ooze-eidolon' below) arrived as subclass OPTIONS with no row here, which is the only
+   * route `deriveEidolon` reads for a type's senses and languages — so an aberrant eidolon was offered
+   * to the player and then granted nothing at all. Every one of the thirteen older types has a row;
+   * these two are the same shape, keyed by the option id the way `cfg.typeId` looks them up. */
+  'aberrant-eidolon': { kinds: ['eidolon'], senses: ['darkvision'], languages: ['aklo'] },
   /* AoN eidolon-1, Hallowed Strikes: *"Your eidolon's unarmed Strikes GAIN THE HOLY TRAIT and deal 1
    * extra spirit damage TO UNHOLY CREATURES AND CREATURES WITH WEAKNESS TO HOLY. Additionally, your
    * eidolon can make nonlethal attacks with its unarmed attacks without taking the usual –2 circumstance
@@ -548,6 +554,12 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'incredible-megafauna-companion': {"kinds":["animal"],"maturityFloor":"savage","note":"Incredible Megafauna Companion: your megafauna companion is at least an indomitable or savage companion (your choice) — 'indomitable' is the megafauna name for the nimble rung, so pick nimble in Edit if you want that side."},
   'night-terror': {"kinds":["animal"],"speeds":{"fly":"land"},"note":"Night Terror: your apocalypse mount gains a fly Speed equal to its land Speed. At night or anywhere deprived of natural sunlight it gains a +10-foot circumstance bonus to that fly Speed, and critical failures on Acrobatics checks to Maneuver in Flight become failures instead. If it already had a fly Speed it also gains a +2 circumstance bonus to Acrobatics checks to Maneuver in Flight."},
   'paragon-companion': {"kinds":["animal"],"maturityFloor":"specialized","note":"Paragon Companion: your construct companion is at least a paragon (specialized) companion."},
+  /* AoN eidolon-23: *"**Senses** motion sense (precise) 60 feet, no vision"*, and a Language line the
+   * page leaves empty — *"your ooze eidolon speaks no language"* — so no `languages` and no
+   * `languageChoices`: nothing to answer. The half of Ooze Physiology that SCALES (resistance equal to
+   * half your level) cannot live in a static string and is interpolated in companions.ts beside the
+   * swarm's area weakness; the flat halves are the note. */
+  'ooze-eidolon': { kinds: ['eidolon'], senses: ['motion sense (precise) 60 feet', 'no vision'], note: 'Ooze Physiology: +2 circumstance bonus to saves against mental effects, and the flat check to remove persistent bleed damage is DC 10 (DC 5 after particularly effective aid). It does not have an ooze’s usual immunities.' },
   'peerless-mascot-companion': {"kinds":["animal"],"abilityBoosts":{"int":2,"wis":1},"maxHpBonus":20,"speeds":{"climb":"land","swim":"land"},"note":"Peerless Mascot specialization: expert in Warfare Lore; can speak one language you also speak (chosen when you gain this feat); gains the beast trait and a 30-foot banner aura acting as a second banner. Max HP increases by 20 (the app applies this flat +20; it rises to +25 at 18th level and +30 at 20th in the rules)."},
   /* batch 035, plant-eidolon#language. AoN eidolon-9 (the page this record cites) prints
    * *"**Language** Sylvan"* — a fixed ANSWER, not a pick — and this row carried senses/note but no
