@@ -209,7 +209,7 @@ describe('the Sources card lists campaign homebrew', () => {
     expect(latest.enabledSources).toContain('hbsrc:gm-src');
     expect(latest.enabledSources).not.toContain('Salt Road Brews'); // a name would also catch a later source of that name
     expect(rowsNamed(el, 'Salt Road Brews')[0].classList.contains('on')).toBe(true);
-  });
+  }, 120_000); // the file's first render: a cold `import('../src/builder/shared')` under full-suite load can pass 5 s
 
   it('hides campaign-only rows in the GM defaults editor and says ticking shares', async () => {
     // Without the campaignDefaults filter:  AssertionError: expected [ …(1) ] to have a length of +0 but got 1
@@ -265,7 +265,7 @@ describe('the GM shares homebrew from the campaign defaults editor', () => {
     // The defaults players copy carry the id, so a later rename never switches it off on their characters.
     expect(srv.updateCampaign.mock.calls[0][1].defaults.enabledSources).toContain('hbsrc:src-a');
     expect(saved).toHaveBeenCalledTimes(1);
-  });
+  }, 120_000); // this describe's first render: a cold `import('../src/sheet/CampaignsPage')` under full-suite load can pass 5 s
 
   it('asks before unsharing; Cancel saves nothing, Stop sharing unshares exactly that source', async () => {
     // Without the confirm:  AssertionError: expected '(no dialog at all)' to contain 'Stop sharing Renamed with …'
@@ -503,7 +503,7 @@ describe('a GM renaming a shared source', () => {
     saveHomebrewSource({ id: 'hbsrc-kept-gm-src', name: 'Salt Road Brews II', kept: { from: 'The Salt Road', ids: ['feats:gm-feat'] } });
     db = rebuildContent();
     expect(pickable(db)).toBeDefined();
-  });
+  }, 120_000); // this test's first render: a cold `import('../src/data')` under full-suite load can pass 5 s
 });
 
 describe('who can read shared homebrew — the campaign-system convention', () => {
