@@ -1,0 +1,51 @@
+BATCH 038 - family data-rows - ADVERSARIAL VERIFY
+
+Checked: work/.b038-rows-data-rows.json (4 rows), work/.b038-report-data-rows.txt, test/batch038-data.test.ts,
+work/.b038-specs.json. No project file edited by the verifier (a throwaway harness test was written, run, deleted).
+
+RUNS
+  npx tsc --noEmit: clean.
+  node scripts/vt.mjs run test/batch038-data.test.ts: 4 mechanism tests pass; the 4 "shipped" tests fail only on the
+    absent shipped field (azlanti trainedLore undefined, lamentation avatar notes [], etc.) - they flip green when the driver applies.
+  node scripts/test-flip-audit.mjs --batch 038: clean (3 test files touched, every flip cited).
+  Throwaway harness (applied data-rows rows, and data-rows + engine rows, to an in-memory content copy; built real characters):
+    - fighter/automaton/defensive-automaton L1 HP 18 -> 20 (data-rows) -> 21 (+ engine Toughness); L5 58 -> 60 -> 65. ancestryHp 10. Sibling heritage untouched.
+    - newly-minted-automaton: bonusLanguageSlots +1; defensive-automaton slots unchanged.
+    - azlanti-researcher (both families): lore:azlant trained, religion trained, languages [common, utopian, azlanti], feat student-of-the-canon.
+    - L19 animist attuned + primary Lamentation: character.spellNotes.avatar = 1 note; DescBody renders it with no raw ** and the (1) glyph.
+
+ROW CHECKS
+  - All 4 targets exist in core.json (classFeatures/lamentation-of-sinister-deals, backgrounds/azlanti-researcher,
+    heritages/defensive-automaton, heritages/newly-minted-automaton); none needs create. spells/avatar exists.
+  - Each field is absent on the shipped record and on every effect-backfill.json row (0 overlay rows name any of the 4 ids),
+    so no value to preserve, no supersedes needed, none declared. No path rows.
+  - Readers: spellNotes -> build.ts:7432 N2 pass (ownedRecords) -> SpellsTab.tsx:2372 spellNotesFor -> DescBody;
+    trainedLore -> build.ts:3900 / 10461; ancestryHp -> build.ts:736 heritageAncestryHp; languageChoices -> build.ts:2446
+    recordLanguageSlots -> bonusLanguageSlots -> builder/shared.tsx:4747.
+  - Every `why` names an AoN doc id; the printed clauses match the mirror (apparition-16, class-feature-1056, background-654,
+    heritage-438, heritage-439). The note text follows print ("fly 50 feet"), not the description copy's "fly Speed 50 feet".
+  - Cross-family key collision: none. Engine fields are focusSpells / grantsLanguages / grantsFeats; data-rows fields are
+    spellNotes / trainedLore / ancestryHp / languageChoices.
+
+PER FINDING
+lamentation-of-sinister-deals#avatar: DONE - the row puts the Cosmic Notary form in the built L19 animist's spellNotes.avatar (harness), and it renders on the Avatar card through DescBody. Caveat: see DATA STILL NEEDED line 1. Avatar is not in that animist's rank-10 apparition repertoire, so the card exists only if the player learns avatar by hand.
+azlanti-researcher#lore: DONE - trainedLore 'azlant' trains lore:azlant on a built character (harness + mechanism test). Same slug as scholar-of-the-ancients.
+defensive-automaton#hp: DONE - ancestryHp 10 gives +2 max HP at L1 and L5 on a built automaton (harness). It stacks correctly with engine's Toughness row.
+newly-minted-automaton#language: DONE - languageChoices 1 adds exactly one Builder language slot (bonusLanguageSlots, harness + mechanism test).
+
+MANIFEST
+  work/.b038-specs.json holds ONLY the data-rows entry. Its stage[] covers everything data-rows touched (rows, report, test).
+  The ENGINE family's entry is MISSING. The manifest was written at 22:07:00 and work/.b038-rows-engine.json at 22:07:03, so the engine entry was either never registered or lost in a concurrent write. See CROSS-FILE GAPS line 2.
+  No row declares supersedes, and none needs to.
+
+DATA STILL NEEDED
+- classFeatures/supreme-incarnation (AoN class-feature-1056 "you can use this slot to cast avatar") has no encoding. A built L19 animist's animist-apparition-casting repertoire[10] is [], so the lamentation-of-sinister-deals#avatar note has no Avatar card to render on unless the player uses Learn a spell by hand. This is not a batch 038 finding. Queue it as one lane with the next line.
+- The other 13 animist apparitions lack the same avatar spellNotes row (b034 monarch-of-the-fey-courts#avatar was the first). They are not batch 038 findings. Queue them as one lane.
+
+CROSS-FILE GAPS
+- src/data/trust-ledger.json must be regenerated after apply (node scripts/trust-ledger.mjs). The builder's list is CORRECTED here. classFeatures/lamentation-of-sinister-deals ALSO leaves `unencoded`: spellNotes is not in CREATED_CONTENT, scripts/trust-ledger.mjs:567. The same happens to heritages/defensive-automaton and heritages/newly-minted-automaton, and partly['backgrounds/azlanti-researcher'] drops. These pins flip with the regen:
+  - test/trust-ledger.test.ts:522
+  - test/player-created-pickers.test.tsx:182-225
+  - test/player-created-pickers.test.tsx:329-340 ("the ledger names every created heritage, feat and class option"). It asserts EVERY created classFeature/heritage is `unencoded`, so it now fails for lamentation-of-sinister-deals as well as the two heritages. Cite the matching finding ids.
+  Coordinate with the engine family (azlanti-researcher#language, defensive-automaton#toughness, newly-minted-automaton#lore, zombie-horde-impossible-magic).
+- work/.b038-specs.json is missing the engine family's entry. The missing paths are work/.b038-rows-engine.json, work/.b038-report-engine.txt and test/batch038-engine.test.ts, plus src/rules/featFeatGrants.ts, which is modified in the tree with the newly-minted-automaton EXTRA_FEAT_TAKINGS row. The orchestrator must restore that entry before the driver applies, or the engine rows and code never land.

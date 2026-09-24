@@ -1,0 +1,85 @@
+{
+ "batch": 38,
+ "records": [
+  {
+   "id": "lamentation-of-sinister-deals",
+   "verdict": "FIXED",
+   "evidence": "[batch 38 read, adversarially confirmed] lamentation-of-sinister-deals#avatar: The apparition's avatar form (Cosmic Notary) reaches the player only as prose in the apparition's description; WG writes — cited by row spec work/.b038-rows-data-rows.json finding lamentation-of-sinister-deals#avatar (1 row(s)), row classFeatures/lamentation-of-sinister-deals field:spellNotes in work/.b038-rows-data-rows.json, test test/batch038-data.test.ts (in what this batch added), test test/player-created-pickers.test.tsx (in what this batch added)"
+  },
+  {
+   "id": "zombie-horde-impossible-magic",
+   "verdict": "FIXED",
+   "evidence": "[batch 38 read, adversarially confirmed] zombie-horde-impossible-magic: The feat prints that you learn the zombie horde grave spell, but our record has no focusSpells (or any spell-grant field — cited by row spec work/.b038-rows-engine.json finding zombie-horde-impossible-magic (1 row(s)), row feats/zombie-horde-impossible-magic field:focusSpells in work/.b038-rows-engine.json, test test/batch038-engine.test.ts (in what this batch added), test test/player-created-pickers.test.tsx (in what this batch added)"
+  },
+  {
+   "id": "clockwork-wonder",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "boundless-wonder",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "immortal-influence",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "battles-spark",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "azlanti-researcher",
+   "verdict": "FIXED",
+   "evidence": "[batch 38 read, adversarially confirmed] azlanti-researcher#language: Ours never grants the Azlanti language the background prints; WG delivers it with giveLanguage, so a player picking this — cited by row backgrounds/azlanti-researcher field:trainedLore in work/.b038-rows-data-rows.json, row spec work/.b038-rows-engine.json finding azlanti-researcher#language (1 row(s)), row backgrounds/azlanti-researcher field:grantsLanguages in work/.b038-rows-engine.json, test test/batch038-data.test.ts (in what this batch added), test test/batch038-engine.test.ts (in what this batch added), test test/trust-ledger.test.ts (in what this batch added), test test/player-created-pickers.test.tsx (in what this batch added); azlanti-researcher#lore: Ours omits the Azlant Lore training the background prints (trainedLore absent), which WG delivers via createValue; the c — cited by row spec work/.b038-rows-data-rows.json finding azlanti-researcher#lore (1 row(s)), row backgrounds/azlanti-researcher field:trainedLore in work/.b038-rows-data-rows.json, row backgrounds/azlanti-researcher field:grantsLanguages in work/.b038-rows-engine.json, test test/batch038-data.test.ts (in what this batch added), test test/batch038-engine.test.ts (in what this batch added), test test/trust-ledger.test.ts (in what this batch added), test test/player-created-pickers.test.tsx (in what this batch added)"
+  },
+  {
+   "id": "unfettered-exploration",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "radiant-oath",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "verdant-wheel",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "defensive-automaton",
+   "verdict": "FIXED",
+   "evidence": "[batch 38 read, adversarially confirmed] defensive-automaton#hp: Defensive Automaton carries no ancestryHp, so the character keeps the automaton chassis's 8 ancestry HP where print (and — cited by row spec work/.b038-rows-data-rows.json finding defensive-automaton#hp (1 row(s)), row heritages/defensive-automaton field:ancestryHp in work/.b038-rows-data-rows.json, row heritages/defensive-automaton field:grantsFeats in work/.b038-rows-engine.json, test test/batch038-data.test.ts (in what this batch added), test test/batch038-engine.test.ts (in what this batch added), test test/player-created-pickers.test.tsx (in what this batch added); defensive-automaton#toughness: Defensive Automaton does not grant the Toughness feat that print and WG both grant (real gap, not an instrument misread) — cited by row heritages/defensive-automaton field:ancestryHp in work/.b038-rows-data-rows.json, row spec work/.b038-rows-engine.json finding defensive-automaton#toughness (1 row(s)), row heritages/defensive-automaton field:grantsFeats in work/.b038-rows-engine.json, test test/batch038-data.test.ts (in what this batch added), test test/batch038-engine.test.ts (in what this batch added), test test/player-created-pickers.test.tsx (in what this batch added)"
+  },
+  {
+   "id": "grand-archive",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "horizon-hunters",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "vigilant-seal",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "newly-minted-automaton",
+   "verdict": "FIXED",
+   "evidence": "[batch 38 read, adversarially confirmed] newly-minted-automaton#lore: Newly Minted Automaton does not grant the Additional Lore feat (lore of the player's choice) that print and WG both gran — cited by row heritages/newly-minted-automaton field:languageChoices in work/.b038-rows-data-rows.json, code-only spec work/.b038-rows-engine.json finding newly-minted-automaton#lore (0 rows; family engine changed src/rules/featFeatGrants.ts in this batch), test test/batch038-data.test.ts (in what this batch added), test test/batch038-engine.test.ts (in what this batch added), code src/rules/featFeatGrants.ts (in what this batch added), test test/player-created-pickers.test.tsx (in what this batch added); newly-minted-automaton#language: Newly Minted Automaton gives no bonus language slot where print (and WG's LANGUAGE select) give one. — cited by row spec work/.b038-rows-data-rows.json finding newly-minted-automaton#language (1 row(s)), row heritages/newly-minted-automaton field:languageChoices in work/.b038-rows-data-rows.json, test test/batch038-data.test.ts (in what this batch added), test test/batch038-engine.test.ts (in what this batch added), code src/rules/featFeatGrants.ts (in what this batch added), test test/player-created-pickers.test.tsx (in what this batch added)"
+  },
+  {
+   "id": "archival-assistant",
+   "verdict": "MATCHES",
+   "evidence": "[batch 38 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  }
+ ]
+}

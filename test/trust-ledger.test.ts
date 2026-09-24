@@ -515,11 +515,23 @@ describe('trust ledger — a created record that applies only part of its print 
     expect(backgroundUnapplied(rec, PRINT.replace(' Add Azlanti to your list of known languages.', ' You love old ruins.'))).toBe('');
   });
 
-  it('the shipped ledger lists the seven, in words, and none of the other created backgrounds', () => {
+  // batch 038: azlanti-researcher#language
+  it('the shipped ledger lists the partly applied ones (azlanti-researcher until its Lore and language are encoded), in words, and none of the other created backgrounds', () => {
     const created = JSON.parse(readFileSync(join(CLI_ROOT, 'scripts/migration/out/player-created.json'), 'utf8'));
+    /* Batch 038 encodes AoN background-654 "Add Azlanti to your list of known languages." as
+     * grantsLanguages ['azlanti'] (azlanti-researcher#language) and its Azlant Lore as trainedLore
+     * (azlanti-researcher#lore). `ledger` is generated from the SHIPPED core.json, so its entry is read
+     * off the shipped record through the same comparer: whatever of the two is still missing, or no
+     * entry once both land. This holds before and after the driver applies the rows; the fixture tests
+     * above pin the in-memory flip itself (both encoded -> ''). */
+    const azlanti = core.backgrounds['azlanti-researcher'];
+    const azlantiMissing = backgroundUnapplied(azlanti, PRINT);
+    // batch 038: azlanti-researcher#language
+    expect(backgroundUnapplied({ ...azlanti, trainedLore: 'azlant', grantsLanguages: ['azlanti'] }, PRINT)).toBe('');
+    // batch 038: azlanti-researcher#language
     expect(ledger.partly).toEqual({
       'backgrounds/art-collector': 'its daily-preparation choice, its situational bonuses',
-      'backgrounds/azlanti-researcher': 'Azlant Lore, the Azlanti language',
+      ...(azlantiMissing ? { 'backgrounds/azlanti-researcher': azlantiMissing } : {}),
       'backgrounds/blooded-by-the-dead': 'its daily-preparation choice',
       'backgrounds/curse-marked': 'its situational bonuses and penalties',
       'backgrounds/friend-of-a-friend': 'a Lore skill of your choice, its situational bonuses',
@@ -527,7 +539,8 @@ describe('trust ledger — a created record that applies only part of its print 
       'backgrounds/trusted-rival': 'its daily-preparation choice, its situational bonuses',
     });
     const full = Object.keys(created.backgrounds).map((id: string) => `backgrounds/${id}`).filter((k: string) => !ledger.partly[k]);
-    expect(full).toHaveLength(18);
+    // batch 038: azlanti-researcher#language — Azlanti Researcher joins the fully applied ones once both rows land.
+    expect(full).toHaveLength(azlantiMissing ? 18 : 19);
     for (const k of full) expect(ledger.unencoded, k).not.toContain(k);
     // No key is on both lists.
     expect(Object.keys(ledger.partly).filter((k) => ledger.unencoded.includes(k))).toEqual([]);

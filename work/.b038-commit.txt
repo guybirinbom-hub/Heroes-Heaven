@@ -1,0 +1,49 @@
+wg parity batch 038 — 16 records read against print (WG-comparison lane), 8 findings fixed
+
+WHAT WAS READ. 35 ids were cut; Wanderer's Guide encodes 16 of them (no packet for the other 19,
+e.g. twofold-tine, volatile-spark, art-collector, blooded-by-the-dead, curse-marked,
+friend-of-a-friend). The read found 8 CONFIRMED findings on 5 records, 0 refuted, 0 for the owner.
+Two families built them: data-rows (4) and engine (4), plus a gap-engine pass for the test pins.
+
+WHAT CHANGED. 7 overlay rows went into scripts/data/effect-backfill.json (14,618 -> 14,625, all new,
+no supersessions), replayed into public/core.json and read back from the shipped artefacts:
+  - classFeatures/lamentation-of-sinister-deals spellNotes: the Cosmic Notary avatar form now sits on
+    the Avatar spell card (AoN class-feature-1056 / apparition-16), existing N2 spellNotes lane.
+  - feats/zombie-horde-impossible-magic focusSpells ["zombie-horde"]: the feat prints that you learn
+    the grave spell; same lane as bony-barrage / bloody-tendrils / deathly-scream.
+  - backgrounds/azlanti-researcher trainedLore "azlant" + grantsLanguages ["azlanti"] (background-654).
+  - heritages/defensive-automaton ancestryHp 10 + grantsFeats ["toughness"] (heritage-438).
+  - heritages/newly-minted-automaton languageChoices 1 (heritage-439).
+One code lane: src/rules/featFeatGrants.ts EXTRA_FEAT_TAKINGS['newly-minted-automaton'] grants
+Additional Lore as a heritage taking ("You gain the Additional Lore skill feat in one lore of your
+choice"), the sage-jotunborn shape, so a slot-taken Additional Lore cannot swallow it.
+The trust ledger was regenerated at close. Tests: test/batch038-data.test.ts,
+test/batch038-engine.test.ts, and test/trust-ledger.test.ts + test/player-created-pickers.test.tsx
+now follow the shipped ledger (regen-proof), every flip cited to its finding id.
+
+VERDICTS. 16 parity verdicts: FIXED 5, MATCHES 11. Gate: all nine gates pass, experience 16/16 OK.
+
+QUEUED / DEFERRED. Nothing went to the owner. Deferred as flaggedResidue, for a later batch as one
+lane: the avatar spellNotes rows for the other 13 animist apparitions, and
+classFeatures/supreme-incarnation ("you can use this slot to cast avatar"), which is unmodelled, so
+the Lamentation note shows only when the player learns avatar by hand.
+GATE-RED ROUND (two repair groups, 0 data rows, no finding ids, no teach or settle):
+  - red-regate-024-residual: batch 024 was red on RESIDUAL only because the 2026-09-17 owner-names
+    scrub (74e8a05) deleted work/wg-batch-024-residual.json. It is restored from 74e8a05^ with the
+    owner's character name, save path and dump file name withheld; values, ids and verdicts are
+    unchanged. Pinned by test/batch038-red-regate-024-residual.test.ts.
+  - red-suite-load-timeouts: tests that ran too long under full-suite load. The
+    authoring-guards script reads are memoised with an early exit, the two batch035 field-diff
+    mirror walks now run concurrently, and vitest.config.ts caps maxWorkers at 60% (the
+    offline-door worker had missed vitest's 60 s start timeout). Pinned by
+    test/batch038-red-suite-load-timeouts.test.ts. No it( or expect( line changed.
+  - The closer rearranged test/bug-tracker-data.test.ts so its guard it( block keeps its assertions
+    line for line (the fixture beforeAll now sits below the it(). The flip audit had counted the
+    moved block as 3 uncited flips. The orchestrator committed that file in c5e3547.
+
+FINAL STATE (second closer pass): apply 3/5 specs re-applied (2 already byte-identical), 7 rows,
+0 new; overlay 14,625. gaps 16 (9 authored, 7 parked). close: 16 verdicts, FIXED 5 and MATCHES 11,
+with 7 flagged residues. Experience 16/16 OK. Gate: all nine gates pass (re-run last, green).
+Regate: green, and 024 is fixed here. Suite: green, 7945 passed. Verify: 49/49 clean. Nothing was
+queued for the owner. One item is parked for the owner: work/owner-names.local.txt lacks the
+024 cleric's surname, so the names guard would not catch it (the surname is gone from the tree).

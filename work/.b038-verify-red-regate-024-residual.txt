@@ -1,0 +1,42 @@
+batch 038 GATE-RED round — ADVERSARIAL VERIFY — group red-regate-024-residual
+
+ITEM 1 — REGATE batch 024, RESIDUAL gate (wg-batch-gate.mjs section 7): DONE
+  Evidence: `node scripts/wg-batch-gate.mjs --batch work/wg-batch-024.json` -> "BATCH DONE — all nine gates pass".
+  Independent structural diff of work/wg-batch-024-residual.json against `git show 74e8a05^:work/wg-batch-024-residual.json`
+  (verifier's own scratchpad script, values never printed): 24 differences = 1 ADDED ($.provenance) + 23 TEXT
+  ($.character, $.method, 18 confirmed[].claim/fix strings, refuted[0].claim, flaggedResidues[0].note). Zero
+  numeric/boolean/key/array-length differences. Word-level diff of each TEXT field shows ONLY the name, the save
+  path and the owned-dump file name swapped for "the owner's cleric(')s" / "(name withheld: public repo)" /
+  "the owned-build dump (file name withheld)". examined 5, closed true, complete true, 23 confirmed in the same
+  id order, every fixed: true.
+  Leak checks: `node scripts/owner-names-check.mjs` (tracked set) clean; run again with HH_OWNER_FILES pointing
+  at a PATH LIST naming the restored file, the test and the report -> 3 files, clean. No save path, no
+  *-owned.json in the file. The character's surname (present at 74e8a05^ in the method field) is also gone —
+  0 occurrences in the restored file, test/, src/, scripts/, work/.b038-*.
+  Test: test/batch038-red-regate-024-residual.test.ts 2/2 pass via scripts/vt.mjs; `npx tsc --noEmit` clean.
+  Spec: work/.b038-rows-red-regate-024-residual.json = {"findings":[]} — no rows, so no record/supersedes/why/
+  collision exposure. Correct: the fix is an artefact restore, not data.
+  Citations: the test is new (no changed/removed it/expect), no settle or teach -> no citation or mutation-proof
+  test required; the flip audit reports nothing for this file.
+
+CORRECTIONS TO THE BUILDER'S REPORT
+  - Its second owner-names run ("HH_OWNER_FILES pointed at the restored file") was a no-op: HH_OWNER_FILES takes
+    a newline-separated LIST of paths, so pointing it at the JSON scanned the JSON's lines as file names (it
+    reported "204 file(s) checked"). The correct run (path list, above) is clean, so the conclusion stands.
+  - Manifest: appended work/.b038-verify-red-regate-024-residual.txt to this entry's stage[]; the other four
+    entries (data-rows, engine, gap-engine, red-suite-load-timeouts) are intact.
+  - The restored file is UNTRACKED (`?? work/wg-batch-024-residual.json`); .gitignore:125 un-ignores it. It is in
+    stage[], so the orchestrator's commit carries it; without that the gate goes red again on a clean checkout.
+
+OBSERVED OUTSIDE THIS GROUP (not attributable here, not fixed)
+  `node scripts/test-flip-audit.mjs --batch 038` FAILS on 3 uncited flips in test/bug-tracker-data.test.ts
+  (lines 65, 98, 99). That file is in no manifest entry's stage[]. It is likely one of the partial wave-2 edits
+  already in the tree. The orchestrator has to account for it before the batch commit.
+
+DATA STILL NEEDED
+  (none)
+
+CROSS-FILE GAPS
+  work/owner-names.local.txt (local, untracked, owner-maintained) lacks the cleric's SURNAME. The 74e8a05^ copy
+    carried it and the guard would not have caught it. Only the builder's manual scrub removed it. The owner should add
+    it to the list (verifier did not edit the owner's file).

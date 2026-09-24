@@ -1,0 +1,33 @@
+BATCH 038 - family data-rows - report
+
+DATA STILL NEEDED
+(none - all four rows are authored in work/.b038-rows-data-rows.json; the driver applies them)
+
+CROSS-FILE GAPS
+- src/data/trust-ledger.json: once these rows land, 'unencoded' still lists heritages/defensive-automaton and heritages/newly-minted-automaton, and partly['backgrounds/azlanti-researcher'] still says "Azlant Lore, the Azlanti language". Regenerate with node scripts/trust-ledger.mjs after apply. The pins at test/trust-ledger.test.ts:522 and test/player-created-pickers.test.tsx:182-190 / 197-225 (heritage "nothing applies yet" note) move with it. Coordinate with the engine family (azlanti-researcher#language, defensive-automaton#toughness, newly-minted-automaton#lore touch the same three records).
+- The other 13 animist apparitions lack the same avatar spellNotes row (b034 monarch-of-the-fey-courts#avatar was the first). They are not findings of batch 038, so no rows were authored. Queue them for a later batch as one lane.
+
+PER FINDING
+
+lamentation-of-sinister-deals#avatar
+  Row: classFeatures/lamentation-of-sinister-deals field spellNotes = [{spellId:'avatar', note:'When you cast avatar with your Supreme Incarnation slot and this is your primary attuned apparition, ... **Cosmic Notary** Speed 30 feet, fly 50 feet; **Melee** ⟨1⟩ burning pen (...), **Damage** 6d6+6 piercing; **Ranged** ⟨1⟩ exacting language (...), **Damage** 6d6+6 mental'}].
+  The row reuses the existing N2 SpellNote lane (build.ts ownedRecords -> spellNotes -> SpellsTab via spellNotesFor/DescBody). It adds no new reader. The record has no primary-apparition gate, so the note text states the condition itself (AoN class-feature-1056). This is a new field with no overlay row to supersede.
+  Tests: test/batch038-data.test.ts "lamentation-of-sinister-deals: the shipped apparition puts the Cosmic Notary form on Avatar". It fails now because there is no note, and passes after apply. "lamentation-of-sinister-deals: spellNotes on the apparition record is the carrier" is a mechanism test on stripped and patched copies. It passes now.
+
+azlanti-researcher#lore
+  Row: backgrounds/azlanti-researcher field trainedLore = 'azlant' (AoN background-654). It is read by the build.ts background trainedLore loop and trains lore:azlant. This is a new field with no overlay row to supersede.
+  Tests: "azlanti-researcher: the shipped background names Azlant Lore and the built character is trained in it" fails now and passes after apply. "azlanti-researcher: trainedLore "azlant" is what trains lore:azlant" is a mechanism test. It passes now.
+
+defensive-automaton#hp
+  Row: heritages/defensive-automaton field ancestryHp = 10 (AoN heritage-438). It is read by heritageAncestryHp in build.ts. This is a new field with no overlay row to supersede.
+  Tests: "defensive-automaton: the shipped heritage carries ancestryHp 10 and the built automaton gets it" fails now and passes after apply. "defensive-automaton: the field is what moves max HP by 2" is a mechanism test. It passes now.
+
+newly-minted-automaton#language
+  Row: heritages/newly-minted-automaton field languageChoices = 1 (AoN heritage-439). It is read by recordLanguageSlots and then bonusLanguageSlots. This is a new field with no overlay row to supersede.
+  Tests: "newly-minted-automaton: the shipped heritage carries one language slot" fails now and passes after apply. "newly-minted-automaton: languageChoices 1 on the heritage adds exactly one Builder language slot" is a mechanism test. It passes now.
+
+CHECKS
+  node scripts/vt.mjs run test/batch038-data.test.ts: 4 fail, all for the right reason (each shipped field is absent). The 4 mechanism tests pass.
+  npx tsc --noEmit: clean.
+  node scripts/test-flip-audit.mjs --batch 038: clean.
+  No src/ or scripts/ file edited, and effect-backfill.json was not touched.

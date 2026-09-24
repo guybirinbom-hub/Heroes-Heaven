@@ -7,6 +7,7 @@ import { content } from './_content';
 import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
 import { emptyBuild, levelGrants, type BuildState } from '../src/rules/build';
+import { EXTRA_FEAT_TAKINGS } from '../src/rules/featFeatGrants';
 import { categoryOfBook, NICHE_CATEGORIES } from '../src/rules/sources';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { AddItemsModal } from '../src/sheet/AddItemsModal';
@@ -44,6 +45,10 @@ const settle = () => act(async () => { for (let i = 0; i < 4; i++) await new Pro
 const prose = (d = '') => d.replace(/\s+/g, ' ').trim().slice(0, 60);
 const bodyText = () => (document.body.textContent ?? '').replace(/\s+/g, ' ');
 const NOTE = 'Not yet verified';
+/** TrustMarker's wording for a created record with NONE of its rules encoded (the ledger's `unencoded`). */
+const NOTHING_APPLIED = 'shown, not applied';
+/** The SHIPPED ledger's `unencoded`: the close stage regenerates it after a batch's rows land. */
+const UNENCODED = new Set((LEDGER as { unencoded?: string[] }).unencoded ?? []);
 
 /* jsdom cannot fetch public/ast: serve the SHIPPED trees for the records these tests open (through the
  * loader's raw-json fallback) and 404 everything else, so a background popup falls back to its plain
@@ -179,16 +184,32 @@ describe('created player records reach the Builder with their text', () => {
    * Azlanti Researcher's card read "Trained: Religion · Student of the Canon" and nothing said that its
    * Azlant Lore and Azlanti language do nothing. A partly applied background says so on its card too.
    */
-  it("picked, a partly applied background's card says what is not applied (Azlanti Researcher)", async () => {
-    const r = openBuilder({ backgroundId: 'azlanti-researcher' });
-    openLevel(r, '0');
-    await settle();
-    const note = document.querySelector('[data-ctl-title="Background"]')?.parentElement?.querySelector('.sd-choice-note')?.textContent ?? '';
-    r.stop();
-    expect(note).toBe('Not yet verified — shown, partly applied. Not applied: Azlant Lore, the Azlanti language.');
+  /*
+   * Batch 038 encodes both halves (azlanti-researcher#language: AoN background-654 "Add Azlanti to your
+   * list of known languages."; azlanti-researcher#lore: its Azlant Lore), and the close stage then
+   * regenerates the ledger without its `partly` entry. So the card follows the SHIPPED ledger, as the
+   * picker test above does: the line while it is partly applied, no line once it is not. Any other
+   * background still on `partly` keeps the card wording pinned after Azlanti Researcher leaves.
+   */
+  // batch 038: azlanti-researcher#language
+  it("picked, a partly applied background's card says what is not applied (azlanti-researcher, and one still partly applied)", async () => {
+    const partlyMap = (LEDGER as { partly?: Record<string, string> }).partly ?? {};
+    const other = Object.keys(partlyMap).map((k) => k.replace(/^backgrounds\//, '')).find((id) => id !== 'azlanti-researcher');
+    for (const id of ['azlanti-researcher', ...(other ? [other] : [])]) {
+      const r = openBuilder({ backgroundId: id });
+      openLevel(r, '0');
+      await settle();
+      const note = document.querySelector('[data-ctl-title="Background"]')?.parentElement?.querySelector('.sd-choice-note')?.textContent ?? '';
+      r.stop();
+      const partly = partlyMap[`backgrounds/${id}`];
+      // batch 038: azlanti-researcher#language
+      expect(note, id).toBe(partly ? `Not yet verified — shown, partly applied. Not applied: ${partly}.` : '');
+    }
   }, 60_000);
 
-  it('the created heritages are rows of an automaton\'s Heritage picker, open on their own page and say nothing applies yet', async () => {
+  // batch 038: defensive-automaton#toughness
+  // batch 038: newly-minted-automaton#lore
+  it('the created heritages are rows of an automaton\'s Heritage picker, open on their own page and say nothing applies yet while the ledger lists them (defensive-automaton, newly-minted-automaton)', async () => {
     const c = db();
     const r = openBuilder();
     openLevel(r, '0');
@@ -200,7 +221,13 @@ describe('created player records reach the Builder with their text', () => {
       r.click(row!.querySelector('.pick-body'));
       await settle();
       expect(bodyText(), `heritages/${id} popup`).toContain(prose(rec.description));
-      expect(document.querySelector('.sd-choice-note')?.textContent, `heritages/${id} popup`).toContain(NOTE);
+      const popupNote = document.querySelector('.sd-choice-note')?.textContent ?? '';
+      // batch 038: defensive-automaton#toughness
+      // batch 038: newly-minted-automaton#lore
+      // Both leave the ledger's `unencoded` once their batch-038 rows land and the close stage regenerates
+      // it: the "nothing applies" line then goes, following the SHIPPED ledger like the backgrounds above.
+      if (UNENCODED.has(`heritages/${id}`)) expect(popupNote, `heritages/${id} popup`).toContain(NOTE);
+      else expect(popupNote, `heritages/${id} popup`).not.toContain(NOTHING_APPLIED);
       r.click(document.querySelector('.ast-modal .picker-close, .info-modal .picker-close'));
       await settle();
       r.click(document.querySelector('.picker-overlay .picker-close'));
@@ -209,14 +236,22 @@ describe('created player records reach the Builder with their text', () => {
     r.stop();
   }, 60_000);
 
-  it('picked, a created heritage says so on its card, not only inside its popup (Defensive Automaton)', async () => {
-    const r = openBuilder({ heritageId: 'defensive-automaton' });
-    openLevel(r, '0');
-    await settle();
-    const ctl = document.querySelector('[data-ctl-title="Heritage"]');
-    const note = ctl?.parentElement?.querySelector('.sd-choice-note')?.textContent ?? '';
-    r.stop();
-    expect(note).toContain(NOTE);
+  // batch 038: defensive-automaton#toughness
+  // batch 038: newly-minted-automaton#lore
+  it('picked, a created heritage says so on its card, not only inside its popup, while the ledger lists it (defensive-automaton, newly-minted-automaton)', async () => {
+    for (const id of HERITAGES) {
+      const r = openBuilder({ heritageId: id });
+      openLevel(r, '0');
+      await settle();
+      const ctl = document.querySelector('[data-ctl-title="Heritage"]');
+      const note = ctl?.parentElement?.querySelector('.sd-choice-note')?.textContent ?? '';
+      r.stop();
+      // batch 038: defensive-automaton#toughness (AoN heritage-438 "You also gain the Toughness feat.")
+      // and newly-minted-automaton#lore encode them, so after the close stage's ledger regen the card
+      // no longer says nothing applies.
+      if (UNENCODED.has(`heritages/${id}`)) expect(note, id).toContain(NOTE);
+      else expect(note, id).not.toContain(NOTHING_APPLIED);
+    }
   }, 60_000);
 });
 
@@ -327,16 +362,56 @@ describe('a player can reach and find what was created or reprinted', () => {
 });
 
 describe('a created record says that none of its rules apply yet', () => {
-  it('the ledger names every created heritage, feat and class option, and the marker shows for each', () => {
+  /*
+   * Batch 038 encodes four created records, each through one field the ledger's CREATED_CONTENT does not
+   * list, so the close stage's regen drops them from `unencoded` (scripts/trust-ledger.mjs, the
+   * `unencoded` loop). Only these four may leave, and only once their shipped record carries that field;
+   * every other created record stays listed and marked.
+   */
+  // batch 038: zombie-horde-impossible-magic
+  // batch 038: defensive-automaton#toughness
+  // batch 038: newly-minted-automaton#lore
+  // batch 038: lamentation-of-sinister-deals#avatar
+  it('the ledger names every created heritage, feat and class option not yet encoded (zombie-horde-impossible-magic, defensive-automaton, newly-minted-automaton, lamentation-of-sinister-deals leave in batch 038), and the marker shows for each', () => {
+    const c = db();
     const unencoded = new Set((LEDGER as { unencoded?: string[] }).unencoded ?? []);
+    const has = (bucket: string, id: string, field: string) => !!(c as unknown as Record<string, Record<string, Record<string, unknown>>>)[bucket]?.[id]?.[field];
+    /** What each of the four carries once encoded — the reason it may leave `unencoded`. */
+    const ENCODED_038: Record<string, () => boolean> = {
+      // AoN feat-9122 "You learn the zombie horde grave spell"
+      'feats/zombie-horde-impossible-magic': () => has('feats', 'zombie-horde-impossible-magic', 'focusSpells'),
+      // AoN heritage-438 "You also gain the Toughness feat."
+      'heritages/defensive-automaton': () => has('heritages', 'defensive-automaton', 'grantsFeats'),
+      // Its Additional Lore is the EXTRA_FEAT_TAKINGS entry (on the ledger's grant registry, so it leaves at
+      // the next regen by itself); its language is the data-rows family's languageChoices row.
+      'heritages/newly-minted-automaton': () => !!EXTRA_FEAT_TAKINGS['newly-minted-automaton'] || has('heritages', 'newly-minted-automaton', 'languageChoices'),
+      // its avatar note (data-rows family)
+      'classFeatures/lamentation-of-sinister-deals': () => has('classFeatures', 'lamentation-of-sinister-deals', 'spellNotes'),
+    };
     // A created background carries its boosts, skills and feat, so it is not "nothing encoded".
     for (const id of BACKGROUNDS) expect(unencoded.has(`backgrounds/${id}`), `backgrounds/${id}`).toBe(false);
+    // batch 038: newly-minted-automaton#lore
     for (const bucket of ['heritages', 'feats', 'classFeatures']) {
       for (const id of Object.keys(created[bucket] ?? {})) {
-        expect(unencoded.has(`${bucket}/${id}`), `${bucket}/${id} is not in the ledger's unencoded list`).toBe(true);
+        // batch 038: zombie-horde-impossible-magic
+        // batch 038: defensive-automaton#toughness — the two removed pins (every created record listed and
+        // marked) are now the listed/marked branch below plus the ENCODED_038 branch for the four.
+        const key = `${bucket}/${id}`;
         const r = renderDom(createElement(TrustMarker, { bucket, id }));
-        expect(r.host.textContent, `${bucket}/${id}`).toContain(NOTE);
+        const text = r.host.textContent ?? '';
         r.stop();
+        // batch 038: zombie-horde-impossible-magic — still listed until its row lands and the ledger regenerates.
+        if (unencoded.has(key)) {
+          expect(text, key).toContain(NOTE);
+          continue;
+        }
+        // batch 038: zombie-horde-impossible-magic
+        // batch 038: defensive-automaton#toughness
+        // batch 038: newly-minted-automaton#lore
+        // batch 038: lamentation-of-sinister-deals#avatar
+        expect(ENCODED_038[key], `${key} is not in the ledger's unencoded list`).toBeTruthy();
+        expect(ENCODED_038[key](), `${key} left \`unencoded\` without its batch-038 encoding`).toBe(true);
+        expect(text, key).not.toContain(NOTHING_APPLIED);
       }
     }
   });

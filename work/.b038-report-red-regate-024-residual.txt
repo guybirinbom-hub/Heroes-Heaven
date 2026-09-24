@@ -1,0 +1,35 @@
+batch 038 GATE-RED round — group red-regate-024-residual (family repair)
+
+ITEM 1 — REGATE batch 024, RESIDUAL gate (scripts/wg-batch-gate.mjs section 7): BUILT
+  Cause: the artefact existed and was complete; commit 74e8a05 (2026-09-17 owner-names scrub) deleted
+  work/wg-batch-024-residual.json because it named the owner's character. Not a comparer misread.
+  Fix: work/wg-batch-024-residual.json restored from `git show 74e8a05^:work/wg-batch-024-residual.json`
+  by a one-off scratchpad script (Write tool, not node -e). Text-level replace only:
+    - "character" field -> "the owner's cleric save (name withheld: public repo)"
+    - the character's name (given name, surname, possessive; 26 mentions across method, claim,
+      fix and note text) -> "the owner's cleric" / "the owner's cleric's"
+    - the D:/Inst save path -> "(save path withheld)"; the *-owned.json dump -> "the owned-build dump
+      (file name withheld)"
+    - added top-level "provenance" note (restored from 74e8a05^, names scrubbed).
+  Every other field is structurally identical to 74e8a05^ (checked by JSON diff: only character,
+  method and the text inside confirmed/refuted/flaggedResidues changed; the 23 confirmed ids and
+  every fixed:true flag are the same; examined 5, closed true, complete true).
+  Checks: node scripts/owner-names-check.mjs -> clean (run twice: tracked set, and HH_OWNER_FILES
+  pointed at the restored file because it is untracked until the orchestrator stages it).
+  node scripts/wg-batch-gate.mjs --batch work/wg-batch-024.json -> "BATCH DONE — all nine gates pass".
+  Test: test/batch038-red-regate-024-residual.test.ts — pins the gate contract (examined >= the 5
+  batch records, 23 confirmed all fixed, closed/complete, provenance) and the no-owner-name rule
+  (reads the local list when present). 2/2 pass via scripts/vt.mjs.
+  No finding in work/.b038-read.json covers this item, so there is no teach/settle line and no
+  citation comment (all tests are new, nothing changed or removed).
+
+Spec: work/.b038-rows-red-regate-024-residual.json is {"findings":[]} — no data rows needed.
+
+NOTE FOR THE ORCHESTRATOR: the restored file is untracked; it must be staged with the batch commit
+(.gitignore:125 un-ignores it) or the gate goes red again on a clean checkout.
+
+DATA STILL NEEDED
+  (none)
+
+CROSS-FILE GAPS
+  (none)

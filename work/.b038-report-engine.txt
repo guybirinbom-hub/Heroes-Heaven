@@ -1,0 +1,31 @@
+BATCH 038 - ENGINE family report
+
+DATA STILL NEEDED
+(none - the three rows these findings need are authored in work/.b038-rows-engine.json for the driver to apply)
+
+CROSS-FILE GAPS
+- src/rules/featFeatGrants.ts EXTRA_FEAT_TAKINGS: add 'newly-minted-automaton': [{ feat: 'additional-lore', variant: 'heritage' }] (finding newly-minted-automaton#lore; heritage-439 "You gain the Additional Lore skill feat in one lore of your choice."). Outside this family's files; reader + Builder control already exist; pinned by test/batch038-engine.test.ts with the row set in memory.
+- src/data/trust-ledger.json (regenerate with scripts/trust-ledger.mjs after the rows land): feats/zombie-horde-impossible-magic, heritages/defensive-automaton and heritages/newly-minted-automaton leave `unencoded`, and partly['backgrounds/azlanti-researcher'] drops once this family's grantsLanguages row AND data-rows' trainedLore row both land.
+- test/trust-ledger.test.ts:522 pins partly['backgrounds/azlanti-researcher'] = 'Azlant Lore, the Azlanti language' - flips with the ledger regen (cite azlanti-researcher#language).
+- test/player-created-pickers.test.tsx:182-188 (Azlanti Researcher card says "Not applied: Azlant Lore, the Azlanti language") and :336 (every created heritage/feat expected in `unencoded`) - flip with the ledger regen for the four records above (cite the matching finding ids).
+
+PER FINDING
+
+zombie-horde-impossible-magic
+  did: teach - data row feats/zombie-horde-impossible-magic focusSpells ["zombie-horde"] (work/.b038-rows-engine.json). Reader already exists: src/rules/build.ts feat.focusSpells (the bony-barrage / bloody-tendrils / deathly-scream lane). No code change, no widening.
+  test: test/batch038-engine.test.ts "zombie-horde-impossible-magic with focusSpells puts zombie-horde in the necromancer's focus spells" - 6th-level necromancer built with the field stripped vs patched in memory; zombie-horde absent/present in the focus entry's repertoire.
+
+azlanti-researcher#language
+  did: teach - data row backgrounds/azlanti-researcher grantsLanguages ["azlanti"] (work/.b038-rows-engine.json). Reader: src/rules/build.ts bgLangs. No code change. Does not collide with data-rows' azlanti-researcher#lore (trainedLore).
+  test: test/batch038-engine.test.ts "azlanti-researcher with grantsLanguages knows Azlanti" - built character's languages lack/contain 'azlanti'.
+
+defensive-automaton#toughness
+  did: teach - data row heritages/defensive-automaton grantsFeats ["toughness"] (work/.b038-rows-engine.json). Reader: src/rules/build.ts heritage grantSources (tailed-goblin lane). One lane only, not also FEAT_FEAT_GRANTS. Does not collide with data-rows' defensive-automaton#hp (ancestryHp).
+  test: test/batch038-engine.test.ts "defensive-automaton with grantsFeats holds Toughness and its +1 HP per level" - 5th-level automaton: toughness row grantedBy defensive-automaton, deriveMaxHp +5.
+
+newly-minted-automaton#lore
+  did: NOT applied by this family - the fix is one row in src/rules/featFeatGrants.ts EXTRA_FEAT_TAKINGS (CROSS-FILE GAPS line 1). Spec entry has backfillRows: [] and says why. A heritage grantsFeats data row was considered and rejected: Additional Lore has no `choice`, so distinctRepeatableGrant() is false and that lane drops the grant whenever the character already holds Additional Lore (a skill-feat slot pick). The existing EXTRA_FEAT_TAKINGS walk in build.ts (heritage-seeded queue) and the Builder's Lore input (Builder.tsx gKey `${grantedBy}#${grantVariant}:additional-lore:<idx>`) already handle it.
+  tests: test/batch038-engine.test.ts "newly-minted-automaton grants Additional Lore and trains the subject typed under its own key" and "newly-minted-automaton's taking survives Automaton Lore's bound one and a slot-taken Additional Lore" - row set on the table in memory and restored in afterEach, so they pass before and after the row lands.
+
+READERS WIDENED: none. Blast radius: none (no src/ file edited).
+VERIFY: node scripts/vt.mjs run test/batch038-engine.test.ts -> 5 passed; npx tsc --noEmit clean.

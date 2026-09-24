@@ -1,0 +1,63 @@
+[
+  {
+    "file": "work/.b038-rows-data-rows.json",
+    "kind": "rows",
+    "family": "data-rows",
+    "stage": [
+      "work/.b038-rows-data-rows.json",
+      "work/.b038-report-data-rows.txt",
+      "test/batch038-data.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b038-rows-engine.json",
+    "kind": "rows",
+    "family": "engine",
+    "stage": [
+      "work/.b038-rows-engine.json",
+      "work/.b038-report-engine.txt",
+      "test/batch038-engine.test.ts",
+      "src/rules/featFeatGrants.ts",
+      "work/.b038-verify-engine.txt"
+    ]
+  },
+  {
+    "file": "work/.b038-rows-gap-engine.json",
+    "kind": "rows",
+    "family": "gap-engine",
+    "stage": [
+      "work/.b038-rows-gap-engine.json",
+      "work/.b038-report-gap-engine.txt",
+      "test/trust-ledger.test.ts",
+      "test/player-created-pickers.test.tsx"
+    ]
+  },
+  {
+    "file": "work/.b038-rows-red-regate-024-residual.json",
+    "kind": "rows",
+    "family": "red-regate-024-residual",
+    "stage": [
+      "work/.b038-rows-red-regate-024-residual.json",
+      "work/.b038-report-red-regate-024-residual.txt",
+      "work/wg-batch-024-residual.json",
+      "test/batch038-red-regate-024-residual.test.ts",
+      "work/.b038-verify-red-regate-024-residual.txt"
+    ]
+  },
+  {
+    "file": "work/.b038-rows-red-suite-load-timeouts.json",
+    "kind": "rows",
+    "family": "red-suite-load-timeouts",
+    "stage": [
+      "work/.b038-rows-red-suite-load-timeouts.json",
+      "work/.b038-report-red-suite-load-timeouts.txt",
+      "test/authoring-guards.test.ts",
+      "test/batch035-field-diff.test.ts",
+      "vitest.config.ts",
+      "test/batch038-red-suite-load-timeouts.test.ts",
+      "work/.b038-verify-red-suite-load-timeouts.txt",
+      "test/bug-tracker-data.test.ts",
+      "test/bug-own-sheet-from-campaign.test.tsx"
+    ]
+  }
+]

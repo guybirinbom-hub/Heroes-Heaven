@@ -22,7 +22,7 @@
  *   (c) the ritual is still reported when its rank is stunted back to 1, so the guard did not swallow
  *       a real defect along with the false ones.
  */
-import { describe, expect, it, vi } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { INSTRUMENT_TIMEOUT } from './_timeouts';
 /*
  * (b) and (c) run field-diff as a real node child over core.json and the whole AoN mirror.
@@ -39,9 +39,10 @@ import { INSTRUMENT_TIMEOUT } from './_timeouts';
  * swallows the real ritual-275 defect.
  */
 vi.setConfig({ testTimeout: INSTRUMENT_TIMEOUT, hookTimeout: INSTRUMENT_TIMEOUT });
-import { execFileSync } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import { readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { promisify } from 'node:util';
 import { content } from './_content';
 
 const CLI_ROOT = join(__dirname, '..');
@@ -68,11 +69,12 @@ const THRONEGLASS = [
  * root, exactly as scripts/.. is) so `public/core.json` still resolves, and it is removed either way.
  * A non-zero exit is the script's own "UNEXPLAINED > 0" signal, not a failure to run.
  */
-function runCopy(name: string, transform: (src: string) => string): string {
+const execFileP = promisify(execFile);
+async function runCopy(name: string, transform: (src: string) => string): Promise<string> {
   const p = join(CLI_ROOT, 'work', name);
   writeFileSync(p, transform(SRC), 'utf8');
   try {
-    return execFileSync(process.execPath, [p], { cwd: CLI_ROOT, encoding: 'utf8' });
+    return (await execFileP(process.execPath, [p], { cwd: CLI_ROOT, encoding: 'utf8' })).stdout;
   } catch (e) {
     const out = (e as { stdout?: string }).stdout;
     if (typeof out !== 'string' || !out.includes('UNEXPLAINED')) throw e;
@@ -82,7 +84,31 @@ function runCopy(name: string, transform: (src: string) => string): string {
   }
 }
 
+/*
+ * Both mirror walks start AT ONCE, here, and each describe's beforeAll awaits them.
+ * WHY: in batch 038's suite run case (c) timed out at 356 s against INSTRUMENT_TIMEOUT (300 s) — this
+ * file took 383 s of a 391 s suite, the suite's critical path, because the two children ran one after
+ * the other and each walks the whole mirror. Run side by side, the file costs one walk of wall time.
+ * The copies (.b035-field-diff-pinned.mjs / -stunted.mjs) have distinct names, so they cannot collide.
+ * The stunt for (b) is `headingAgreesOwn` forced true; test (b) below carries its mutation-proof.
+ */
+const runs = Promise.all([
+  runCopy('.b035-field-diff-pinned.mjs', (s) => s.replace(DB_LOAD, PIN_RANK)),
+  runCopy('.b035-field-diff-stunted.mjs', (s) =>
+    s.replace(DB_LOAD, PIN_RANK).replace(GUARD, 'const headingAgreesOwn = true;'),
+  ),
+]);
+// A rejection surfaces through the beforeAll that awaits it, not as an unhandled rejection meanwhile.
+runs.catch(() => {});
+let pinnedOut = '';
+let stuntedOut = '';
+const awaitRuns = async () => {
+  [pinnedOut, stuntedOut] = await runs;
+};
+
 describe('batch 035 field-diff — beckon-the-blasphemous-brethren prints Ritual 3', () => {
+  beforeAll(awaitRuns);
+
   // batch 035 premise: ritual-275 "Ritual 3"
   it('carries rank 3, the level its own AoN document prints', () => {
     const mirror = JSON.parse(readFileSync(join(AON, 'ritual/ritual-275.json'), 'utf8'));
@@ -112,7 +138,7 @@ describe('batch 035 field-diff — beckon-the-blasphemous-brethren prints Ritual
 
   // batch 035 premise: ritual-275 "Ritual 3"
   it('is still reported by field-diff when its rank is stunted back to 1', () => {
-    const out = runCopy('.b035-field-diff-pinned.mjs', (s) => s.replace(DB_LOAD, PIN_RANK));
+    const out = pinnedOut; // the pinned rank-1 copy, run at module level (see `runs`)
     expect(out).toContain('level   spells/beckon-the-blasphemous-brethren');
     expect(out).toContain('app 1 -> mirror 3');
     // The guard silences the five false ones and nothing else: one red left, and it is this one.
@@ -122,6 +148,7 @@ describe('batch 035 field-diff — beckon-the-blasphemous-brethren prints Ritual
 });
 
 describe('batch 035 field-diff — the throneglass family heads are the instrument, not a defect', () => {
+  beforeAll(awaitRuns);
   // batch 035 premise: equipment-5212 "Item 2"
   it('agrees with each record\'s own mirror document', () => {
     const c = content() as unknown as Record<string, Record<string, Record<string, unknown>>>;
@@ -140,9 +167,8 @@ describe('batch 035 field-diff — the throneglass family heads are the instrume
   it('come back the moment the own-document level condition is stunted out', () => {
     // mutation-proof — stunts the batch-035 guard `headingAgreesOwn` (scripts/field-diff.mjs).
     expect(SRC).toContain(GUARD);
-    const out = runCopy('.b035-field-diff-stunted.mjs', (s) =>
-      s.replace(DB_LOAD, PIN_RANK).replace(GUARD, 'const headingAgreesOwn = true;'),
-    );
+    // the copy with `const headingAgreesOwn = true;` stunted in, run at module level (see `runs`)
+    const out = stuntedOut;
     for (const id of THRONEGLASS) expect(out).toContain(`items/${id}`);
     expect(out).toContain('UNEXPLAINED: 6');
   });

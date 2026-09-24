@@ -27,5 +27,16 @@ export default defineConfig({
     // …and the dedupe above only reaches a module Vite itself loads. Anything under node_modules is
     // externalized to Node's own resolver by default, which is what handed zustand the second React.
     server: { deps: { inline: [/zustand/] } },
+    /*
+     * FEWER WORKERS THAN CORES. Default forks = cores - 1 (15 on the 16-core dev box), and batch 038's
+     * full-suite run starved itself: "import 1419s / transform 387s", and in that one run
+     *   · test/bug-tracker-offline-door.test.tsx never started ("[vitest-pool-runner]: Timeout waiting
+     *     for worker to respond") — vitest's hard-coded START_TIMEOUT of 60 s, which no config setting
+     *     reaches, so the only lever is less contention;
+     *   · three load timeouts: authoring-guards' two scripts/ sweeps (5.3 s, 6.7 s vs 5 s) and
+     *     batch035-field-diff case (c) (356 s vs 300 s). All passed alone.
+     * Those three also had their own cost cut; this is the shared cause. A percentage, so it scales.
+     */
+    maxWorkers: '60%',
   },
 });

@@ -1,0 +1,48 @@
+{
+  "findings": [
+    {
+      "id": "zombie-horde-impossible-magic",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "zombie-horde-impossible-magic",
+          "field": "focusSpells",
+          "value": ["zombie-horde"],
+          "why": "AoN feat-9122 prints 'You learn the zombie horde grave spell' (links spell-2912 = spells/zombie-horde); read by build.ts feat.focusSpells, the lane sibling grave-spell feats bony-barrage / bloody-tendrils / deathly-scream ride."
+        }
+      ],
+      "note": "Existing reader (build.ts feat.focusSpells); no prior overlay row for this record+field, so no supersedes. Pinned in test/batch038-engine.test.ts on a built 6th-level necromancer with the field patched/stripped in memory."
+    },
+    {
+      "id": "azlanti-researcher#language",
+      "backfillRows": [
+        {
+          "category": "backgrounds",
+          "id": "azlanti-researcher",
+          "field": "grantsLanguages",
+          "value": ["azlanti"],
+          "why": "AoN background-654 prints 'Add Azlanti to your list of known languages.'; read by build.ts bgLangs (content.backgrounds[id].grantsLanguages), same shape as student-of-the-ancients."
+        }
+      ],
+      "note": "Existing reader; no prior overlay row. Distinct field from the data-rows family's azlanti-researcher#lore row (trainedLore), so no collision. The trust-ledger partly entry and its two test pins are a CROSS-FILE GAP (see report)."
+    },
+    {
+      "id": "defensive-automaton#toughness",
+      "backfillRows": [
+        {
+          "category": "heritages",
+          "id": "defensive-automaton",
+          "field": "grantsFeats",
+          "value": ["toughness"],
+          "why": "AoN heritage-438 prints 'You also gain the Toughness feat.'; read by build.ts heritage grantSources (precedent tailed-goblin)."
+        }
+      ],
+      "note": "One lane only (heritage grantsFeats), not also FEAT_FEAT_GRANTS. Toughness has no choice, so the flat dedupe is correct here: a player who also spends a slot on Toughness holds it once, as print intends. Distinct field from the data-rows family's defensive-automaton#hp row (ancestryHp)."
+    },
+    {
+      "id": "newly-minted-automaton#lore",
+      "backfillRows": [],
+      "note": "Code-only fix, no data row: the grant belongs in src/rules/featFeatGrants.ts EXTRA_FEAT_TAKINGS ('newly-minted-automaton': [{ feat: 'additional-lore', variant: 'heritage' }]), which is outside this family's files - listed as a CROSS-FILE GAP. A heritage grantsFeats row was rejected: Additional Lore has no `choice`, so distinctRepeatableGrant is false and the heritage lane drops the grant whenever the character already holds Additional Lore from a skill-feat slot. The build.ts reader (EXTRA_FEAT_TAKINGS walk over the heritage-seeded queue) already exists; test/batch038-engine.test.ts pins it with the row set on the table in memory."
+    }
+  ]
+}

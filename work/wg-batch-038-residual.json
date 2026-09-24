@@ -1,0 +1,132 @@
+{
+ "batch": "work/wg-batch-038.json",
+ "examined": 16,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 3 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "lamentation-of-sinister-deals",
+   "finding": "lamentation-of-sinister-deals#avatar",
+   "severity": "player-visible",
+   "summary": "The apparition's avatar form (Cosmic Notary) reaches the player only as prose in the apparition's description; WG writes the form onto the Avatar spell itself through the apparition's Primary mode, so a 19th-level animist casting avatar thr",
+   "fixed": true
+  },
+  {
+   "id": "zombie-horde-impossible-magic",
+   "finding": "zombie-horde-impossible-magic",
+   "severity": "player-visible",
+   "summary": "The feat prints that you learn the zombie horde grave spell, but our record has no focusSpells (or any spell-grant field), so the player never gets the focus spell; WG grants it and the flag is a real gap, not a misread.",
+   "fixed": true
+  },
+  {
+   "id": "azlanti-researcher",
+   "finding": "azlanti-researcher#language",
+   "severity": "player-visible",
+   "summary": "Ours never grants the Azlanti language the background prints; WG delivers it with giveLanguage, so a player picking this background is missing a known language.",
+   "fixed": true
+  },
+  {
+   "id": "azlanti-researcher",
+   "finding": "azlanti-researcher#lore",
+   "severity": "player-visible",
+   "summary": "Ours omits the Azlant Lore training the background prints (trainedLore absent), which WG delivers via createValue; the comparer's flag named only 'language' and missed it.",
+   "fixed": true
+  },
+  {
+   "id": "defensive-automaton",
+   "finding": "defensive-automaton#hp",
+   "severity": "player-visible",
+   "summary": "Defensive Automaton carries no ancestryHp, so the character keeps the automaton chassis's 8 ancestry HP where print (and WG) give 10.",
+   "fixed": true
+  },
+  {
+   "id": "defensive-automaton",
+   "finding": "defensive-automaton#toughness",
+   "severity": "player-visible",
+   "summary": "Defensive Automaton does not grant the Toughness feat that print and WG both grant (real gap, not an instrument misread).",
+   "fixed": true
+  },
+  {
+   "id": "newly-minted-automaton",
+   "finding": "newly-minted-automaton#lore",
+   "severity": "player-visible",
+   "summary": "Newly Minted Automaton does not grant the Additional Lore feat (lore of the player's choice) that print and WG both grant.",
+   "fixed": true
+  },
+  {
+   "id": "newly-minted-automaton",
+   "finding": "newly-minted-automaton#language",
+   "severity": "player-visible",
+   "summary": "Newly Minted Automaton gives no bonus language slot where print (and WG's LANGUAGE select) give one.",
+   "fixed": true
+  }
+ ],
+ "refuted": [],
+ "flaggedResidues": [
+  {
+   "id": "flaggedResidue: the trust-ledger regen (src/data/trust-ledger.json) is the driver's close-stage step (scripts/wg-batch-run.mjs regenerateTrustLedger, docs/trust-gate.md section 6) and must run after the batch-038 rows apply (lamentation-of-sinister-deals, defensive-automaton, newly-minted-automaton, azlanti-researcher); runtime impact meanwhile nil, and the pins that follow it are regen-proof at test/trust-ledger.test.ts:519 and test/player-created-pickers.test.tsx:195/212/241/375.",
+   "finding": "flaggedResidue: the trust-ledger regen (src/data/trust-ledger.json) is the driver's close-stage step (scripts/wg-batch-run.mjs regenerateTrustLedger, docs/trust-gate.md section 6) and must run after the batch-038 rows apply (lamentation-of-sinister-deals, defensive-automaton, newly-minted-automaton, azlanti-researcher); runtime impact meanwhile nil, and the pins that follow it are regen-proof at test/trust-ledger.test.ts:519 and test/player-created-pickers.test.tsx:195/212/241/375.",
+   "severity": "internal",
+   "summary": "src/data/trust-ledger.json: once these rows land, 'unencoded' still lists heritages/defensive-automaton and heritages/newly-minted-automaton, and partly['backgrounds/azlanti-researcher'] still says \"Azlant Lore, the Azlanti language\". Regenerate with node scripts/trust-ledger.mjs after apply. The pins at test/trust-ledger.test.ts:522 and test/player-created-pickers.test.tsx:182-190 / 197-225 (her…",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the avatar spellNotes rows for the other 13 animist apparitions are not batch 038 findings (b034 monarch-of-the-fey-courts#avatar was the first); they go to a later batch as one lane with its own read and verify.",
+   "finding": "flaggedResidue: the avatar spellNotes rows for the other 13 animist apparitions are not batch 038 findings (b034 monarch-of-the-fey-courts#avatar was the first); they go to a later batch as one lane with its own read and verify.",
+   "severity": "internal",
+   "summary": "The other 13 animist apparitions lack the same avatar spellNotes row (b034 monarch-of-the-fey-courts#avatar was the first). They are not findings of batch 038, so no rows were authored. Queue them for a later batch as one lane.",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the trust-ledger regen is the driver's close-stage step (scripts/wg-batch-run.mjs regenerateTrustLedger, docs/trust-gate.md section 6) and must run after the batch-038 rows apply; regenerating now would be stale at once. Runtime impact meanwhile nil: `unencoded`/`partly` are display markers (src/data/trustGate.ts). The test pins that follow it are made regen-proof in work/.b038-rows-gap-engine.json.",
+   "finding": "flaggedResidue: the trust-ledger regen is the driver's close-stage step (scripts/wg-batch-run.mjs regenerateTrustLedger, docs/trust-gate.md section 6) and must run after the batch-038 rows apply; regenerating now would be stale at once. Runtime impact meanwhile nil: `unencoded`/`partly` are display markers (src/data/trustGate.ts). The test pins that follow it are made regen-proof in work/.b038-rows-gap-engine.json.",
+   "severity": "internal",
+   "summary": "src/data/trust-ledger.json (regenerate with scripts/trust-ledger.mjs after the rows land): feats/zombie-horde-impossible-magic, heritages/defensive-automaton and heritages/newly-minted-automaton leave `unencoded`, and partly['backgrounds/azlanti-researcher'] drops once this family's grantsLanguages row AND data-rows' trainedLore row both land.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: classFeatures/supreme-incarnation (AoN class-feature-1056 \"you can use this slot to cast Avatar\") is an unmodelled engine mechanic (a 10th-rank apparition slot that also casts avatar), not a batch 038 finding; it goes to a later batch together with the 13-apparition avatar spellNotes lane.",
+   "finding": "flaggedResidue: classFeatures/supreme-incarnation (AoN class-feature-1056 \"you can use this slot to cast Avatar\") is an unmodelled engine mechanic (a 10th-rank apparition slot that also casts avatar), not a batch 038 finding; it goes to a later batch together with the 13-apparition avatar spellNotes lane.",
+   "severity": "internal",
+   "summary": "classFeatures/supreme-incarnation (AoN class-feature-1056 \"you can use this slot to cast avatar\") has no encoding. A built L19 animist's animist-apparition-casting repertoire[10] is [], so the lamentation-of-sinister-deals#avatar note has no Avatar card to render on unless the player uses Learn a spell by hand. This is not a batch 038 finding. Queue it as one lane with the next line.",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: the avatar spellNotes rows for the other 13 animist apparitions are not batch 038 findings (b034 monarch-of-the-fey-courts#avatar was the first); they go to a later batch as one lane with its own read and verify.",
+   "finding": "flaggedResidue: the avatar spellNotes rows for the other 13 animist apparitions are not batch 038 findings (b034 monarch-of-the-fey-courts#avatar was the first); they go to a later batch as one lane with its own read and verify.",
+   "severity": "internal",
+   "summary": "The other 13 animist apparitions lack the same avatar spellNotes row (b034 monarch-of-the-fey-courts#avatar was the first). They are not batch 038 findings. Queue them as one lane.",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: the trust-ledger regen (src/data/trust-ledger.json) is the driver's close-stage step (scripts/wg-batch-run.mjs regenerateTrustLedger, docs/trust-gate.md section 6) and must run after the batch-038 rows apply (lamentation-of-sinister-deals, defensive-automaton, newly-minted-automaton, azlanti-researcher); runtime impact meanwhile nil, and the pins that follow it are regen-proof at test/trust-ledger.test.ts:519 and test/player-created-pickers.test.tsx:195/212/241/375.",
+   "finding": "flaggedResidue: the trust-ledger regen (src/data/trust-ledger.json) is the driver's close-stage step (scripts/wg-batch-run.mjs regenerateTrustLedger, docs/trust-gate.md section 6) and must run after the batch-038 rows apply (lamentation-of-sinister-deals, defensive-automaton, newly-minted-automaton, azlanti-researcher); runtime impact meanwhile nil, and the pins that follow it are regen-proof at test/trust-ledger.test.ts:519 and test/player-created-pickers.test.tsx:195/212/241/375.",
+   "severity": "internal",
+   "summary": "src/data/trust-ledger.json must be regenerated after apply (node scripts/trust-ledger.mjs). The builder's list is CORRECTED here. classFeatures/lamentation-of-sinister-deals ALSO leaves `unencoded`: spellNotes is not in CREATED_CONTENT, scripts/trust-ledger.mjs:567. The same happens to heritages/defensive-automaton and heritages/newly-minted-automaton, and partly['backgrounds/azlanti-researcher']…",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: same trust-ledger regen as the engine report's line 8 - the close stage (scripts/wg-batch-run.mjs regenerateTrustLedger) regenerates src/data/trust-ledger.json after the rows land; no agent runs the generator by hand, and the pins that follow it are regen-proof (work/.b038-rows-gap-engine.json).",
+   "finding": "flaggedResidue: same trust-ledger regen as the engine report's line 8 - the close stage (scripts/wg-batch-run.mjs regenerateTrustLedger) regenerates src/data/trust-ledger.json after the rows land; no agent runs the generator by hand, and the pins that follow it are regen-proof (work/.b038-rows-gap-engine.json).",
+   "severity": "internal",
+   "summary": "src/data/trust-ledger.json (regenerate with scripts/trust-ledger.mjs AFTER the driver lands the rows): feats/zombie-horde-impossible-magic, heritages/defensive-automaton, heritages/newly-minted-automaton leave `unencoded`; partly['backgrounds/azlanti-researcher'] drops once this family's grantsLanguages row (azlanti-researcher#language) AND data-rows' trainedLore row (azlanti-researcher#lore) bot…",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  }
+ ],
+ "rejected": 0,
+ "askOwner": [],
+ "complete": true
+}

@@ -190,6 +190,11 @@ export const SKILL_RANK_BEFORE_OWN_GRANTS: Record<string, ProficiencyKey[]> = {
 export const EXTRA_FEAT_TAKINGS: Record<string, { feat: string; heritages?: string[]; variant: string }[]> = {
   'jotunborn-lore': [{ feat: 'additional-lore', heritages: ['sage-jotunborn'], variant: 'sage' }],
   'sage-jotunborn': [{ feat: 'additional-lore', variant: 'heritage' }],
+  /* Newly Minted Automaton (heritage-439): *"You gain the Additional Lore skill feat in one lore of your
+   * choice."* The sage-jotunborn shape, not FEAT_FEAT_GRANTS: an automaton who also takes Automaton
+   * Lore already owns an Additional Lore bound to Automaton Lore, and a flat row would be swallowed by
+   * that dedupe. The free subject is answered at 'newly-minted-automaton#heritage:additional-lore:0'. */
+  'newly-minted-automaton': [{ feat: 'additional-lore', variant: 'heritage' }],
   /* *"…gain the Specialty Crafting skill feat, BUT YOU CAN PICK TWO DIFFERENT SPECIALTIES INSTEAD OF
    * ONE."* (Anvil Dwarf.) WG encodes it as the same feat granted twice; here the flat
    * FEAT_FEAT_GRANTS row above is the first taking and this is the second, with its own `variant` so

@@ -54,6 +54,28 @@ const overlay: Row[] = JSON.parse(read('scripts/data/effect-backfill.json'));
  */
 const AON_JOIN_KEYS = ['aonId', 'aonParentId', 'aonSection'];
 
+/*
+ * scripts/**\/*.mjs, each file read AT MOST ONCE per run and shared by the two scripts/ sweeps below.
+ * WHY: in batch 038's suite run both sweeps timed out under full-suite load (5.3 s and 6.7 s against
+ * the 5 s default) while passing alone — the first walked all ~450 .mjs (4.5 MB) in-process and the
+ * next describe re-read the ~395 top-level ones. test/_timeouts.ts: "An in-process test that starts
+ * timing out is a bug", so the IO is cut rather than the clock raised.
+ */
+const scriptTexts = new Map<string, string>();
+const readScript = (p: string) => {
+  let t = scriptTexts.get(p);
+  if (t === undefined) scriptTexts.set(p, (t = readFileSync(p, 'utf8')));
+  return t;
+};
+/** Every .mjs path under `d`, lazily, so a caller that has what it needs stops reading. */
+function* mjsUnder(d: string): Generator<string> {
+  for (const e of readdirSync(d, { withFileTypes: true })) {
+    const p = join(d, e.name);
+    if (e.isDirectory()) yield* mjsUnder(p);
+    else if (/\.mjs$/.test(e.name)) yield p;
+  }
+}
+
 describe('every field authored into the overlay has a reader in src/', () => {
   it('or it cannot reach the sheet, whatever the data says', () => {
     /* Two kinds of row are not a field being SET, and both were false positives the first time this
@@ -83,14 +105,14 @@ describe('every field authored into the overlay has a reader in src/', () => {
   it('an AoN join key authored on blessed-swiftness is read by the pipeline, not by src/', () => {
     const scriptText = (() => {
       const out: string[] = [];
-      const walk = (d: string) => {
-        for (const e of readdirSync(d, { withFileTypes: true })) {
-          const p = join(d, e.name);
-          if (e.isDirectory()) walk(p);
-          else if (/\.mjs$/.test(e.name)) out.push(readFileSync(p, 'utf8'));
-        }
-      };
-      walk(join(ROOT, 'scripts'));
+      // Stop at the first point every join key has a reader: the question is only "is it read at all".
+      const missing = new Set(AON_JOIN_KEYS);
+      for (const p of mjsUnder(join(ROOT, 'scripts'))) {
+        const t = readScript(p);
+        out.push(t);
+        for (const k of missing) if (t.includes(k)) missing.delete(k);
+        if (!missing.size) break;
+      }
       return out.join('\n');
     })();
     const unread = AON_JOIN_KEYS.filter((f) => !scriptText.includes(f));
@@ -148,7 +170,7 @@ describe('the scripts that own a record outright', () => {
     const dir = join(ROOT, 'scripts');
     const mentions = readdirSync(dir)
       .filter((n) => n.endsWith('.mjs'))
-      .filter((f) => readFileSync(join(dir, f), 'utf8').includes('situationalBonuses.ts'));
+      .filter((f) => readScript(join(dir, f)).includes('situationalBonuses.ts'));
     // If this ever drops to one, the lane has a single owner and the warnings about it can go.
     expect(mentions.length).toBeGreaterThan(1);
     expect(mentions).toContain('apply-situational-lane.mjs');

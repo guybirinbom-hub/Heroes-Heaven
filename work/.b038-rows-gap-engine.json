@@ -1,0 +1,19 @@
+{
+  "findings": [
+    {
+      "id": "azlanti-researcher#language",
+      "backfillRows": [],
+      "note": "Gap line (engine report :9 / verify :23): no data row. test/trust-ledger.test.ts 'the shipped ledger lists the partly applied ones (azlanti-researcher ...)' now reads the azlanti-researcher `partly` entry off the SHIPPED record through backgroundUnapplied (the generator's own comparer) and pins the in-memory flip (both rows set -> ''), so it holds before and after the driver applies this family's grantsLanguages row and data-rows' trainedLore row. test/player-created-pickers.test.tsx Azlanti Researcher card test follows the shipped ledger's `partly` (and keeps the wording pinned on another still-partly background)."
+    },
+    {
+      "id": "defensive-automaton#toughness",
+      "backfillRows": [],
+      "note": "Gap line (engine report :10 / verify :24): no data row. test/player-created-pickers.test.tsx heritage popup + heritage card tests say 'shown, not applied' only while the SHIPPED ledger lists the heritage `unencoded`, and never after the close stage's regen drops it."
+    },
+    {
+      "id": "zombie-horde-impossible-magic",
+      "backfillRows": [],
+      "note": "Gap line (engine report :10 / verify :24): no data row. test/player-created-pickers.test.tsx 'the ledger names every created heritage, feat and class option not yet encoded (...)' lets exactly the four batch-038 records leave `unencoded`, each only once its shipped record carries its encoding (focusSpells / grantsFeats / EXTRA_FEAT_TAKINGS or languageChoices / spellNotes)."
+    }
+  ]
+}

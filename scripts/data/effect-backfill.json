@@ -188920,5 +188920,65 @@
   "id": "breath-weapon",
   "field": "aonId",
   "value": "familiar-ability-19"
+ },
+ {
+  "category": "classFeatures",
+  "id": "lamentation-of-sinister-deals",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "avatar",
+    "note": "When you cast avatar with your Supreme Incarnation slot and this is your primary attuned apparition, you do not become an avatar of a deity; the apparition incarnates itself using your body, transforming you into its avatar: **Cosmic Notary** Speed 30 feet, fly 50 feet; **Melee** ⟨1⟩ burning pen (agile, reach 15 feet, versatile fire), **Damage** 6d6+6 piercing; **Ranged** ⟨1⟩ exacting language (fatal d10, mental, range 60 feet), **Damage** 6d6+6 mental"
+   }
+  ],
+  "why": "AoN apparition-16 prints \"Avatar Cosmic Notary Speed 30 feet, fly 50 feet; Melee Single Action burning pen (agile, reach 15 feet, versatile fire), Damage 6d6+6 piercing; Ranged Single Action exacting language (fatal d10, mental, range 60 feet), Damage 6d6+6 mental\", and AoN class-feature-1056 (Supreme Incarnation) prints \"When you cast avatar in this way, you do not become an avatar of a deity; rather, your primary attuned apparition incarnates itself using your body, transforming you into the avatar described in your primary attuned apparition's entry.\" The form reached the player only as prose on the apparition; the N2 spellNotes pass (build.ts ownedRecords, classFeatureIdsOwned carries the attuned apparition) now writes it onto the Avatar spell's detail under the apparition's name. That pass has no primary-apparition gate, so the note states the primary condition itself."
+ },
+ {
+  "category": "backgrounds",
+  "id": "azlanti-researcher",
+  "field": "trainedLore",
+  "value": "azlant",
+  "why": "AoN background-654 prints \"You're trained in the Religion skill, and the Azlant Lore skill .\" The record carried only trainedSkill 'religion'; trainedLore is read by build.ts (the background trainedLore loop, through loreKey) and trains lore:azlant, the same subject slug scholar-of-the-ancients uses."
+ },
+ {
+  "category": "heritages",
+  "id": "defensive-automaton",
+  "field": "ancestryHp",
+  "value": 10,
+  "why": "AoN heritage-438 prints \"You gain 10 hit points from your ancestry instead of 8.\" The record had no ancestryHp, so the character kept ancestries.automaton.hp = 8; heritageAncestryHp (build.ts) reads the heritage field first, precedent sturdy-skeleton."
+ },
+ {
+  "category": "heritages",
+  "id": "newly-minted-automaton",
+  "field": "languageChoices",
+  "value": 1,
+  "why": "AoN heritage-439 prints \"You know one additional language from the languages that you have access to.\" recordLanguageSlots (build.ts) reads the heritage's languageChoices into bonusLanguageSlots; the record had none and ancestries.automaton.languages.additional is 0, so the Builder offered no slot. Precedent nomadic-halfling."
+ },
+ {
+  "category": "feats",
+  "id": "zombie-horde-impossible-magic",
+  "field": "focusSpells",
+  "value": [
+   "zombie-horde"
+  ],
+  "why": "AoN feat-9122 prints 'You learn the zombie horde grave spell' (links spell-2912 = spells/zombie-horde); read by build.ts feat.focusSpells, the lane sibling grave-spell feats bony-barrage / bloody-tendrils / deathly-scream ride."
+ },
+ {
+  "category": "backgrounds",
+  "id": "azlanti-researcher",
+  "field": "grantsLanguages",
+  "value": [
+   "azlanti"
+  ],
+  "why": "AoN background-654 prints 'Add Azlanti to your list of known languages.'; read by build.ts bgLangs (content.backgrounds[id].grantsLanguages), same shape as student-of-the-ancients."
+ },
+ {
+  "category": "heritages",
+  "id": "defensive-automaton",
+  "field": "grantsFeats",
+  "value": [
+   "toughness"
+  ],
+  "why": "AoN heritage-438 prints 'You also gain the Toughness feat.'; read by build.ts heritage grantSources (precedent tailed-goblin)."
  }
 ]

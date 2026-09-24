@@ -1,0 +1,29 @@
+confirmed 8 | refuted 0 | askOwner 0
+confirmed but NOT adversarially confirmed: 0
+
+== FAMILIES
+(routed from each finding's PROPOSAL by FAMILY_RULES in scripts/wg-batch-run.mjs — first rule wins, exactly one family per finding; a family with no findings is omitted)
+data-rows (4): lamentation-of-sinister-deals#avatar, azlanti-researcher#lore, defensive-automaton#hp, newly-minted-automaton#language
+engine (4): zombie-horde-impossible-magic, azlanti-researcher#language, defensive-automaton#toughness, newly-minted-automaton#lore
+
+== CONFIRMED
+- lamentation-of-sinister-deals#avatar [player]: The apparition's avatar form (Cosmic Notary) reaches the player only as prose in the apparition's description; WG writes the form onto the Avatar spell itself through the apparition's Primary mode, so a 19th-level animist casting avatar through Supreme Incarna
+    PROPOSAL: Add to scripts/data/effect-backfill.json {category:'classFeatures', id:'lamentation-of-sinister-deals', field:'spellNotes', value:[{spellId:'avatar', note:'If this is your primary apparition and you cast avatar with your Supreme Incarnation slot, you take its avatar form, Cosmic Notary: Speed 30 feet, fly 50 feet; Melee [one-action] burning pen (agile, reach 15 feet, versatile fire), Damage 6d6+6 piercing; Ranged [on
+- zombie-horde-impossible-magic [player]: The feat prints that you learn the zombie horde grave spell, but our record has no focusSpells (or any spell-grant field), so the player never gets the focus spell; WG grants it and the flag is a real gap, not a misread.
+    PROPOSAL: Add to scripts/data/effect-backfill.json: {"category":"feats","id":"zombie-horde-impossible-magic","field":"focusSpells","value":["zombie-horde"]} (same lane as sibling necromancer grave-spell feats bony-barrage, bloody-tendrils, deathly-scream; read by src/rules/build.ts feat.focusSpells)
+- azlanti-researcher#language [player]: Ours never grants the Azlanti language the background prints; WG delivers it with giveLanguage, so a player picking this background is missing a known language.
+    PROPOSAL: scripts/data/effect-backfill.json: {"category":"backgrounds","id":"azlanti-researcher","field":"grantsLanguages","value":["azlanti"]} (reader: src/rules/build.ts bgLangs = content.backgrounds[id].grantsLanguages; same shape as student-of-the-ancients). Then the trust-ledger 'partly' entry for backgrounds/azlanti-researcher and its pin in test/trust-ledger.test.ts:522 + test/player-created-pickers.test.tsx:182 drop ou
+- azlanti-researcher#lore [player]: Ours omits the Azlant Lore training the background prints (trainedLore absent), which WG delivers via createValue; the comparer's flag named only 'language' and missed it.
+    PROPOSAL: scripts/data/effect-backfill.json: {"category":"backgrounds","id":"azlanti-researcher","field":"trainedLore","value":"azlant"} (print names 'Azlant Lore'; same slug as scholar-of-the-ancients). instrument: the digest's kinds flag listed only 'language' because trainedSkill satisfied the 'skill' kind; the Lore is a separate unmet grant.
+- defensive-automaton#hp [player]: Defensive Automaton carries no ancestryHp, so the character keeps the automaton chassis's 8 ancestry HP where print (and WG) give 10.
+    PROPOSAL: scripts/data/effect-backfill.json: {category:'heritages', id:'defensive-automaton', field:'ancestryHp', value:10} (reader heritageAncestryHp build.ts:736; precedent sturdy-skeleton).
+- defensive-automaton#toughness [player]: Defensive Automaton does not grant the Toughness feat that print and WG both grant (real gap, not an instrument misread).
+    PROPOSAL: scripts/data/effect-backfill.json: {category:'heritages', id:'defensive-automaton', field:'grantsFeats', value:['toughness']} (reader build.ts:5869 heritage grantSources; precedent tailed-goblin) - or equivalently FEAT_FEAT_GRANTS 'defensive-automaton': ['toughness'] in src/rules/featFeatGrants.ts; one lane, not both.
+- newly-minted-automaton#lore [player]: Newly Minted Automaton does not grant the Additional Lore feat (lore of the player's choice) that print and WG both grant.
+    PROPOSAL: src/rules/featFeatGrants.ts EXTRA_FEAT_TAKINGS: 'newly-minted-automaton': [{ feat: 'additional-lore', variant: 'heritage' }] (the sage-jotunborn shape, not FEAT_FEAT_GRANTS: an automaton who also takes Automaton Lore owns an Additional Lore bound to Automaton Lore, and a plain row would be swallowed by that dedupe); the free subject is answered at grantKey 'newly-minted-automaton#heritage:additional-lore:0'.
+- newly-minted-automaton#language [player]: Newly Minted Automaton gives no bonus language slot where print (and WG's LANGUAGE select) give one.
+    PROPOSAL: scripts/data/effect-backfill.json: {category:'heritages', id:'newly-minted-automaton', field:'languageChoices', value:1} (reader recordLanguageSlots build.ts:2466 -> bonusLanguageSlots; precedent nomadic-halfling / polyglot-android). Note for the instrument: the digest lists only additionallore under theirs-not-ours; this language select is a second real gap behind the MISSING-CONTROL flag.
+
+== ASK OWNER
+
+== REFUTED

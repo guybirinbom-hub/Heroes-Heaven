@@ -1,0 +1,103 @@
+{
+ "batch": "038",
+ "confirmed": [
+  {
+   "id": "lamentation-of-sinister-deals#avatar",
+   "claim": "The apparition's avatar form (Cosmic Notary) reaches the player only as prose in the apparition's description; WG writes the form onto the Avatar spell itself through the apparition's Primary mode, so a 19th-level animist casting avatar through Supreme Incarnation sees the form on the spell card, which our sheet never shows.",
+   "printed": "Avatar Cosmic Notary Speed 30 feet, fly 50 feet; Melee (1 action) burning pen (agile, reach 15 feet, versatile fire), Damage 6d6+6 piercing; Ranged (1 action) exacting language (fatal d10, mental, range 60 feet), Damage 6d6+6 mental. (Supreme Incarnation, class feature 19: \"When you cast avatar in this way, you do not become an avatar of a deity; rather, your primary attuned apparition incarnates itself using your body, transforming you into the avatar described in your primary attuned apparition's entry.\")",
+   "ours": "classes.animist.extraChoices[apparition].options['lamentation-of-sinister-deals'].description carries the Cosmic Notary block as prose only; classFeatures['lamentation-of-sinister-deals'] has no spellNotes, the core.json modes bucket has no avatar mode for any apparition, and nothing annotates spells['avatar'].",
+   "theirs": "Primary mode (their id 57495, reached from the feat's giveAbilityBlock type=mode): {\"type\":\"injectText\",\"data\":{\"type\":\"spell\",\"id\":4407,\"text\":\"**Lamentation of Sinister Deals** _Cosmic Notary_ Speed 30 feet, fly 50 feet; **Melee** <abbr cost=\\\"ONE-ACTION\\\" class=\\\"action-symbol\\\">1</abbr> burning pen ([agile](link_trait_1569), [reach 15 feet](link_trait_4174), versatile [fire](link_trait_1542)), **Damage** 6d6+6 piercing; **Ranged** <abbr cost=\\\"ONE-ACTION\\\" class=\\\"action-symbol\\\">1</abbr> exacting language ([fatal d10](link_trait_3199), [mental](link_trait_1448), range 60 feet), **Damage** 6d6+6 [mental](link_trait_1448)\"}} (WG spell 4407 = Avatar, rank 10)",
+   "proposal": "Add to scripts/data/effect-backfill.json {category:'classFeatures', id:'lamentation-of-sinister-deals', field:'spellNotes', value:[{spellId:'avatar', note:'If this is your primary apparition and you cast avatar with your Supreme Incarnation slot, you take its avatar form, Cosmic Notary: Speed 30 feet, fly 50 feet; Melee [one-action] burning pen (agile, reach 15 feet, versatile fire), Damage 6d6+6 piercing; Ranged [one-action] exacting language (fatal d10, mental, range 60 feet), Damage 6d6+6 mental.'}]}. The N2 spellNotes pass (build.ts:7432) already walks this record: an attuned apparition's option is in chosenOptions/grantOptions, so classFeatureIdsOwned puts classFeatures['lamentation-of-sinister-deals'] into ownedRecords. That pass has no primary-apparition gate, so the note text states the primary condition itself. This is the same gap b034 found on monarch-of-the-fey-courts#avatar, and the fix belongs on all 14 apparitions in one lane.",
+   "playerVisible": true,
+   "askOwner": false,
+   "verdict": "CONFIRMED",
+   "evidence": "wg-show \"Lamentation of Sinister Deals - Primary\" --raw shows injectText type=spell id=4407 with the Cosmic Notary line, and row 4407 in work/wg/wg-data.sql is Avatar (rank 10, divine); Supreme Incarnation (class-feature-1056) prints that avatar cast takes the primary apparition's form. Our classFeatures['lamentation-of-sinister-deals'] carries no spellNotes, no classFeatures record has an avatar spellNote, 'Cosmic Notary' exists only in the apparition's description, and spells['avatar'] has no note, so the SpellsTab detail (spellNotesFor) never shows it. The b034 refutation of monarch-of-the-fey-courts#avatar rejected a different claim (mode with Speeds/Strikes); this claim concedes WG's side is prose and names only where it renders."
+  },
+  {
+   "id": "zombie-horde-impossible-magic",
+   "claim": "The feat prints that you learn the zombie horde grave spell, but our record has no focusSpells (or any spell-grant field), so the player never gets the focus spell; WG grants it and the flag is a real gap, not a misread.",
+   "printed": "You raise what seems like an endless torrent of walking corpses. You learn the zombie horde grave spell.",
+   "ours": "core.json feats/zombie-horde-impossible-magic carries no mechanical field (no focusSpells, no effectChoices); not present in scripts/data/effect-backfill.json; the target spell exists as spells/zombie-horde (rank 3, focus + necromancer traits, aonId spell-2912)",
+   "theirs": "{\"type\":\"giveSpell\",\"data\":{\"spellId\":8753,\"type\":\"FOCUS\",\"castingSource\":\"NECROMANCER\",\"rank\":3}}",
+   "proposal": "Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"zombie-horde-impossible-magic\",\"field\":\"focusSpells\",\"value\":[\"zombie-horde\"]} (same lane as sibling necromancer grave-spell feats bony-barrage, bloody-tendrils, deathly-scream; read by src/rules/build.ts feat.focusSpells)",
+   "playerVisible": true,
+   "askOwner": false,
+   "verdict": "CONFIRMED",
+   "evidence": "AoN feat-9122 (Impossible Magic pg. 37, remaster-era, matches our aonId) prints 'You learn the zombie horde grave spell' linking Spells ID 2912 = our spells/zombie-horde; our record dump has no focusSpells/effectChoices/choice, no effect-backfill entry for this id (the backfill 'zombie-horde' row is the level-20 archetype feat's description), and a sweep of every core.json bucket, classFeatures, situationalBonuses (its 'zombie-horde' key is the archetype feat's +2 circumstance strike), and build.ts found no other carrier or text parser granting it. wg-show confirms WG id 58062 (level 6) giveSpell FOCUS rank 3 NECROMANCER; siblings bony-barrage etc. use the proposed focusSpells backfill lane."
+  },
+  {
+   "id": "azlanti-researcher#language",
+   "claim": "Ours never grants the Azlanti language the background prints; WG delivers it with giveLanguage, so a player picking this background is missing a known language.",
+   "printed": "Add Azlanti to your list of known languages.",
+   "ours": "backgrounds/azlanti-researcher carries no grantsLanguages / languageChoices field (only abilityBoosts, trainedSkill 'religion', grantedFeatId 'student-of-the-canon'); src/data/trust-ledger.json 'partly' lists it as 'Azlant Lore, the Azlanti language'.",
+   "theirs": "{\"type\":\"giveLanguage\",\"data\":{\"languageId\":409}}  (409 = Azlanti)",
+   "proposal": "scripts/data/effect-backfill.json: {\"category\":\"backgrounds\",\"id\":\"azlanti-researcher\",\"field\":\"grantsLanguages\",\"value\":[\"azlanti\"]} (reader: src/rules/build.ts bgLangs = content.backgrounds[id].grantsLanguages; same shape as student-of-the-ancients). Then the trust-ledger 'partly' entry for backgrounds/azlanti-researcher and its pin in test/trust-ledger.test.ts:522 + test/player-created-pickers.test.tsx:182 drop out.",
+   "playerVisible": true,
+   "askOwner": false,
+   "verdict": "CONFIRMED",
+   "evidence": "Mirror background-654 prints 'Add Azlanti to your list of known languages'; our record (aonId background-654) has no grantsLanguages, the only reader (build.ts:9548 bgLangs) reads that field, no effect-backfill / backgroundGrants / src entry names this background, and the granted feat student-of-the-canon carries only degreeShifts. Packet theirEncoding ends in giveLanguage."
+  },
+  {
+   "id": "azlanti-researcher#lore",
+   "claim": "Ours omits the Azlant Lore training the background prints (trainedLore absent), which WG delivers via createValue; the comparer's flag named only 'language' and missed it.",
+   "printed": "You're trained in the Religion skill, and the Azlant Lore skill .",
+   "ours": "no trainedLore / trainedLoreOptions on backgrounds/azlanti-researcher (its four Clockwork Mystery siblings all carry trainedLore; this one's print has a stray space before the period, 'Lore skill .').",
+   "theirs": "{\"type\":\"createValue\",\"data\":{\"variable\":\"SKILL_LORE_AZLANTI\",\"type\":\"prof\",\"value\":{\"value\":\"T\",\"attribute\":\"ATTRIBUTE_INT\"}}}",
+   "proposal": "scripts/data/effect-backfill.json: {\"category\":\"backgrounds\",\"id\":\"azlanti-researcher\",\"field\":\"trainedLore\",\"value\":\"azlant\"} (print names 'Azlant Lore'; same slug as scholar-of-the-ancients). instrument: the digest's kinds flag listed only 'language' because trainedSkill satisfied the 'skill' kind; the Lore is a separate unmet grant.",
+   "playerVisible": true,
+   "askOwner": false,
+   "verdict": "CONFIRMED",
+   "evidence": "Mirror prints 'trained in the Religion skill, and the Azlant Lore skill'; our record has only trainedSkill 'religion' with no trainedLore / trainedLoreOptions / trainedLoreChoice (the readers at build.ts:3900 and 10461), and no other carrier (backgroundGrants.ts, effect-backfill, student-of-the-canon) supplies it. Packet theirEncoding shows createValue SKILL_LORE_AZLANTI = T."
+  },
+  {
+   "id": "defensive-automaton#hp",
+   "claim": "Defensive Automaton carries no ancestryHp, so the character keeps the automaton chassis's 8 ancestry HP where print (and WG) give 10.",
+   "printed": "You gain 10 hit points from your ancestry instead of 8.",
+   "ours": "core.json heritages/defensive-automaton = {ancestryId:'automaton', versatile:false} only; no ancestryHp; ancestries/automaton.hp = 8; no registry mentions the id.",
+   "theirs": "setValue {variable: MAX_HEALTH_ANCESTRY, value: 10}",
+   "proposal": "scripts/data/effect-backfill.json: {category:'heritages', id:'defensive-automaton', field:'ancestryHp', value:10} (reader heritageAncestryHp build.ts:736; precedent sturdy-skeleton).",
+   "playerVisible": true,
+   "askOwner": false,
+   "verdict": "CONFIRMED",
+   "evidence": "AoN heritage-438 (Impossible Magic pg. 110, our record's aonId, remaster-era) prints 'You gain 10 hit points from your ancestry instead of 8'; our record holds only id/name/traits/rarity/source/ancestryId/versatile/edition/aonId, ancestries.automaton.hp=8, and the only ancestryHp reader (build.ts:736) reads the heritage field; no id hit in src/ or scripts/data beyond trust-ledger.json. WG setValue MAX_HEALTH_ANCESTRY=10."
+  },
+  {
+   "id": "defensive-automaton#toughness",
+   "claim": "Defensive Automaton does not grant the Toughness feat that print and WG both grant (real gap, not an instrument misread).",
+   "printed": "You also gain the Toughness feat.",
+   "ours": "nothing: no grantsFeats on the record, no FEAT_FEAT_GRANTS / EXTRA_FEAT_TAKINGS row in src/rules/featFeatGrants.ts.",
+   "theirs": "giveAbilityBlock {type: feat, abilityBlockId: 20636} (their ability_block 20636 = Toughness)",
+   "proposal": "scripts/data/effect-backfill.json: {category:'heritages', id:'defensive-automaton', field:'grantsFeats', value:['toughness']} (reader build.ts:5869 heritage grantSources; precedent tailed-goblin) - or equivalently FEAT_FEAT_GRANTS 'defensive-automaton': ['toughness'] in src/rules/featFeatGrants.ts; one lane, not both.",
+   "playerVisible": true,
+   "askOwner": false,
+   "verdict": "CONFIRMED",
+   "evidence": "Print says 'You also gain the Toughness feat'; WG giveAbilityBlock feat 20636. Our record has no grantsFeats, and grep of featFeatGrants.ts / featGrantsAuto.ts / situationalBonuses.ts / classResources.ts / effect-backfill finds no defensive-automaton row (automaton rows there are only automaton-lore / hunter-automaton)."
+  },
+  {
+   "id": "newly-minted-automaton#lore",
+   "claim": "Newly Minted Automaton does not grant the Additional Lore feat (lore of the player's choice) that print and WG both grant.",
+   "printed": "You gain the Additional Lore skill feat in one lore of your choice.",
+   "ours": "nothing: core.json record has only ancestryId/versatile; no grantsFeats, no loreChoices, no featFeatGrants.ts row.",
+   "theirs": "giveAbilityBlock {type: feat, abilityBlockId: 19873} (their ability_block 19873 = Additional Lore)",
+   "proposal": "src/rules/featFeatGrants.ts EXTRA_FEAT_TAKINGS: 'newly-minted-automaton': [{ feat: 'additional-lore', variant: 'heritage' }] (the sage-jotunborn shape, not FEAT_FEAT_GRANTS: an automaton who also takes Automaton Lore owns an Additional Lore bound to Automaton Lore, and a plain row would be swallowed by that dedupe); the free subject is answered at grantKey 'newly-minted-automaton#heritage:additional-lore:0'.",
+   "playerVisible": true,
+   "askOwner": false,
+   "verdict": "CONFIRMED",
+   "evidence": "AoN heritage-439 prints 'You gain the Additional Lore skill feat in one lore of your choice'; WG giveAbilityBlock feat 19873. Our record is bare (ancestryId/versatile only); featFeatGrants.ts carries additional-lore only for automaton-lore (fixedLore automaton), nothing keyed newly-minted-automaton in any carrier."
+  },
+  {
+   "id": "newly-minted-automaton#language",
+   "claim": "Newly Minted Automaton gives no bonus language slot where print (and WG's LANGUAGE select) give one.",
+   "printed": "You know one additional language from the languages that you have access to.",
+   "ours": "nothing: no languageChoices on the record; ancestries/automaton.languages.additional = 0.",
+   "theirs": "select {title: \"Select a Language\", modeType: FILTERED, optionType: LANGUAGE, optionsFilters: {type: LANGUAGE}}",
+   "proposal": "scripts/data/effect-backfill.json: {category:'heritages', id:'newly-minted-automaton', field:'languageChoices', value:1} (reader recordLanguageSlots build.ts:2466 -> bonusLanguageSlots; precedent nomadic-halfling / polyglot-android). Note for the instrument: the digest lists only additionallore under theirs-not-ours; this language select is a second real gap behind the MISSING-CONTROL flag.",
+   "playerVisible": true,
+   "askOwner": false,
+   "verdict": "CONFIRMED",
+   "evidence": "Print: 'You know one additional language from the languages that you have access to'; WG has a FILTERED LANGUAGE select. recordLanguageSlots (build.ts:2446) reads the heritage's languageChoices, which our record lacks; ancestries.automaton.languages.additional=0 and no other carrier names the id."
+  }
+ ],
+ "refuted": [],
+ "askOwner": []
+}

@@ -1,0 +1,24 @@
+BATCH 038 - ENGINE family ADVERSARIAL VERIFY
+
+zombie-horde-impossible-magic: DONE - row feats/zombie-horde-impossible-magic focusSpells ["zombie-horde"]; record exists, field unshipped, no overlay row (no supersedes needed); spells/zombie-horde exists (rank 3, focus+necromancer); record shape now identical to siblings bony-barrage/bloody-tendrils/deathly-scream; reader build.ts:4404 feat.focusSpells; test/batch038-engine.test.ts pins it on a built 6th-level necromancer (pass).
+azlanti-researcher#language: DONE - row backgrounds/azlanti-researcher grantsLanguages ["azlanti"]; languages.azlanti exists; reader build.ts:9548 bgLangs; no collision with data-rows' trainedLore row; throwaway harness applying BOTH families' rows to a content copy built a fighter whose languages contain azlanti (harness deleted).
+defensive-automaton#toughness: DONE - row heritages/defensive-automaton grantsFeats ["toughness"]; feats.toughness exists; reader heritage grantSources (tailed-goblin precedent); harness with both families' rows (plus data-rows' ancestryHp 10) built a 5th-level automaton at exactly +7 max HP over shipped (+2 ancestry, +5 Toughness).
+newly-minted-automaton#lore: FIXED-BY-ME - builder left it as a CROSS-FILE GAP, but src/rules/*.ts IS this family's file set (FAMILY_RULES in scripts/wg-batch-run.mjs routes any src/rules/*.ts proposal to `engine`). Added EXTRA_FEAT_TAKINGS['newly-minted-automaton'] = [{ feat: 'additional-lore', variant: 'heritage' }] in src/rules/featFeatGrants.ts with the heritage-439 clause quoted; new test "newly-minted-automaton ships its Additional Lore taking in EXTRA_FEAT_TAKINGS (no in-memory patch)" builds an automaton off the SHIPPED table and gets lore:engineering; builder's two tests still pass (the "without" side deletes the key in memory, afterEach restores it).
+
+CHECKS RUN
+- node scripts/vt.mjs run test/batch038-engine.test.ts -> 6 passed
+- node scripts/vt.mjs run test/jotunborn-lore-takings.test.ts test/player-created-pickers.test.tsx test/trust-ledger.test.ts -> 61 passed (the EXTRA_FEAT_TAKINGS siblings and the ledger pins, unmoved)
+- node scripts/grant-reach-check.mjs -> ok (EXTRA_FEAT_TAKINGS: 4 keys, heritages 3)
+- node scripts/test-flip-audit.mjs --batch 038 -> clean, every flip cited
+- npx tsc --noEmit -> clean
+- Spec rows: 3 rows, every target record exists, every field absent on the shipped record and in effect-backfill.json (no supersedes owed), every named id (spells/zombie-horde, languages/azlanti, feats/toughness) exists, no record+field key collides within or across the engine and data-rows specs.
+- trust-ledger `unencoded` is a display marker only (src/data/trustGate.ts), not a mechanical gate, so the rows reach the character with the ledger unchanged.
+- Manifest: work/.b038-specs.json still holds the data-rows entry; engine stage[] now also lists src/rules/featFeatGrants.ts and work/.b038-verify-engine.txt.
+
+DATA STILL NEEDED
+(none - the three rows are in work/.b038-rows-engine.json for the driver; newly-minted-automaton#lore is now code, landed)
+
+CROSS-FILE GAPS
+- src/data/trust-ledger.json (regenerate with scripts/trust-ledger.mjs AFTER the driver lands the rows): feats/zombie-horde-impossible-magic, heritages/defensive-automaton, heritages/newly-minted-automaton leave `unencoded`; partly['backgrounds/azlanti-researcher'] drops once this family's grantsLanguages row (azlanti-researcher#language) AND data-rows' trainedLore row (azlanti-researcher#lore) both land.
+- test/trust-ledger.test.ts:522 pins partly['backgrounds/azlanti-researcher'] = 'Azlant Lore, the Azlanti language' - flips with the ledger regen (cite azlanti-researcher#language).
+- test/player-created-pickers.test.tsx:182-188 (Azlanti Researcher card "Not applied: Azlant Lore, the Azlanti language", cite azlanti-researcher#language) and :336 (every created heritage/feat expected in `unencoded` - needs the three records above excluded, cite zombie-horde-impossible-magic, defensive-automaton#toughness, newly-minted-automaton#lore) - flip with the ledger regen.
