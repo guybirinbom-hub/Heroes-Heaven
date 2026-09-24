@@ -89,3 +89,17 @@ export function sanitize(html: string): string {
     FORBID_ATTR: ['srcset', 'src', 'formaction', 'xlink:href'],
   });
 }
+
+/** Rich-HTML fields a homebrew entry may carry; sanitized on import (and on every campaign pull) so
+ *  nothing active persists at rest. */
+const HTML_FIELDS = ['description', 'craft'] as const;
+
+/** A copy of a homebrew entry with its rich-HTML fields run through sanitize(). */
+export function sanitizeEntryHtml<T>(entry: T): T {
+  if (!entry || typeof entry !== 'object') return entry;
+  const out = { ...(entry as Record<string, unknown>) };
+  for (const k of HTML_FIELDS) {
+    if (typeof out[k] === 'string') out[k] = sanitize(out[k] as string);
+  }
+  return out as T;
+}

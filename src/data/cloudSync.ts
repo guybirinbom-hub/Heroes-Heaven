@@ -268,9 +268,21 @@ function maybePull(): void {
  * opened one then won every merge it should have lost — the owner's edits on the other device vanished
  * a few seconds later (2026-09-02). Registering the refreshed roster here moves the edit-detection
  * baseline forward WITHOUT touching timestamps or dirtiness, so only a real edit after it stamps.
+ *
+ * `prev` — the roster the refresh was derived FROM — is for a refresh that lands mid-session (campaign
+ * homebrew arriving, synced homebrew, the trust-gate switch), and it closes the opposite hole. A
+ * character whose `prev` copy no longer matches its baseline holds an edit that has not been persisted
+ * yet: it is still in React state or inside the 400 ms persist debounce. Moving that character's
+ * baseline to the rebuilt copy would swallow the edit — the persist that follows would find nothing
+ * changed, never stamp it and never push it, and the next merge would hand the player an older copy.
+ * That is the 2026-09-13 roundtrip-window incident class (an edit made while sync work was in the air,
+ * reverted a second later). So that character keeps its old baseline and the next persist's
+ * noteRosterChange stamps and pushes it as the edit it is. A missing baseline counts as "differs".
+ * Without `prev` (the launch rebuild, an adopted pull) every baseline moves, as before.
  */
-export function noteDerivedRefresh(roster: SavedChar[]): void {
-  for (const c of roster) fingerprints.set(c.id, charFingerprint(c));
+export function noteDerivedRefresh(roster: SavedChar[], prev?: SavedChar[]): void {
+  const holdsEdit = new Set(prev?.filter((c) => fingerprints.get(c.id) !== charFingerprint(c)).map((c) => c.id));
+  for (const c of roster) if (!holdsEdit.has(c.id)) fingerprints.set(c.id, charFingerprint(c));
 }
 
 /** After each local persist: bump timestamps for characters whose content changed (and prune ones

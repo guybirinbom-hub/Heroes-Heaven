@@ -21,7 +21,7 @@ import type {
   Spell,
 } from '../rules/types';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
-import { loadSettingsUpdated, markLocalDataChanged, saveSettingsUpdated, loadCustomizationUpdated, saveCustomizationUpdated } from './syncBus';
+import { loadSettingsUpdated, markLocalDataChanged, markCampaignHbDirty, saveSettingsUpdated, loadCustomizationUpdated, saveCustomizationUpdated } from './syncBus';
 import { notifyReset } from '../../tracker/src/store/persistBus';
 import type { CampaignMembership } from './campaigns';
 
@@ -136,6 +136,13 @@ export interface HomebrewSource {
   name: string;
   abbreviation?: string;
   description?: string;
+  /**
+   * A GM's campaign source this player's app KEPT when it stopped being shared (unshared, deleted,
+   * campaign gone, kicked, left) — see data/campaignHomebrew.ts. `from` names the campaign; `ids` are
+   * the `${type}:${id}` keys the player has not edited since, which sit UNDER the GM's live copy if it
+   * comes back. saveHomebrewEntry drops a key from here the moment the player edits that entry.
+   */
+  kept?: { from: string; ids: string[] };
 }
 
 /** The content-type buckets the Homebrew manager can author. */
@@ -192,6 +199,7 @@ export function saveHomebrewSource(source: HomebrewSource): void {
   }
   recordReviveKeys([`hbsrc:${source.id}`]);
   markLocalDataChanged();
+  markHbDirty(`src:${source.id}`, source.id);
 }
 
 /** Delete a source and every content entry that belonged to it. */
@@ -216,6 +224,8 @@ export function deleteHomebrewSource(id: string): void {
   }
   recordTombstoneKeys(tombstones);
   markLocalDataChanged();
+  // One key for the whole source: the publish deletes every row with this source_id.
+  markHbDirty(`src:${id}`, id);
 }
 
 /** All homebrew content, folding in any items saved under the legacy items-only key. */
@@ -256,14 +266,111 @@ export function saveHomebrewEntry<T extends HomebrewType>(type: T, entry: Homebr
   content[type][id] = entry;
   recordReviveKeys([`hb:${type}:${id}`]); // (re-)created → beat any older tombstone through the merge
   saveHomebrewContent(content);
+  const key = `${type}:${id}`;
+  const sid = (entry as { homebrewSourceId?: string }).homebrewSourceId;
+  // A KEPT campaign entry the player edits becomes theirs: off the kept list, so it sits ON TOP of the
+  // GM's live copy from now on instead of under it (data/index.ts mergeWithSeed, layer 1 vs 3).
+  const src = sid ? loadHomebrewSources()[sid] : undefined;
+  if (src?.kept?.ids?.includes(key)) saveHomebrewSource({ ...src, kept: { ...src.kept, ids: src.kept.ids.filter((k) => k !== key) } });
+  markHbDirty(key, sid);
 }
 
 /** Remove a homebrew entry. */
 export function deleteHomebrewEntry(type: HomebrewType, id: string): void {
   const content = loadHomebrewContent();
+  const sid = (content[type][id] as { homebrewSourceId?: string } | undefined)?.homebrewSourceId; // read BEFORE the delete
   delete content[type][id];
   recordTombstoneKeys([`hb:${type}:${id}`]); // so the union merge won't resurrect it
   saveHomebrewContent(content);
+  markHbDirty(`${type}:${id}`, sid);
+}
+
+/* ---- Campaign homebrew (data/campaignHomebrew.ts) — DEVICE-LOCAL, never in the CloudBundle --------
+ * The CACHE is this device's last pulled copy of every campaign's shared homebrew (keyed by campaign
+ * id), stamped with the account it was pulled for so a second account on this browser never reads it.
+ * The DIRTY set is the GM side: `type:id` / `src:id` → source id of every homebrew record written since
+ * the last publish. Only the four writers above add to it; writeCloudBundle never does — a pull is not
+ * an edit. */
+export const CAMPAIGN_HB_CACHE_KEY = 'wanderers-codex:campaign-homebrew:v1';
+export const CAMPAIGN_HB_DIRTY_KEY = 'wanderers-codex:campaign-hb-dirty:v1';
+
+export interface CampaignHbCampaign {
+  name: string;
+  sources: Record<string, HomebrewSource>;
+  content: Partial<HomebrewContent>;
+  updatedAt: string;
+  /** `${type}:${id}` → that entry row's SERVER updated_at: a player's tombstone blocks converting the
+   *  entry only when it is newer than this (data/campaignHomebrew.ts convertGone). */
+  stamps?: Record<string, string>;
+}
+
+/** The last pulled copy, or {} when it was pulled for another account (or never). */
+export function loadCampaignHbCache(): Record<string, CampaignHbCampaign> {
+  const raw = loadJsonRaw(CAMPAIGN_HB_CACHE_KEY) as { uid?: unknown; campaigns?: unknown } | undefined;
+  if (!raw || typeof raw !== 'object' || raw.uid !== loadSyncOwner()) return {};
+  const c = raw.campaigns;
+  return c && typeof c === 'object' ? (c as Record<string, CampaignHbCampaign>) : {};
+}
+
+export function saveCampaignHbCache(uid: string, campaigns: Record<string, CampaignHbCampaign>): void {
+  try {
+    localStorage.setItem(CAMPAIGN_HB_CACHE_KEY, JSON.stringify({ uid, campaigns }));
+  } catch {
+    /* non-fatal: the next pull writes it again */
+  }
+}
+
+/** Every campaign source this device holds, once each (the first campaign that shares it wins). */
+export function listCampaignHbSources(): { id: string; name: string; campaignId: string; campaignName: string; count: number }[] {
+  const out = new Map<string, { id: string; name: string; campaignId: string; campaignName: string; count: number }>();
+  for (const [campaignId, camp] of Object.entries(loadCampaignHbCache())) {
+    for (const src of Object.values(camp.sources ?? {})) {
+      if (out.has(src.id)) continue;
+      let count = 0;
+      for (const t of HOMEBREW_TYPES) {
+        for (const e of Object.values(camp.content?.[t] ?? {})) if ((e as { homebrewSourceId?: string }).homebrewSourceId === src.id) count++;
+      }
+      out.set(src.id, { id: src.id, name: src.name, campaignId, campaignName: camp.name, count });
+    }
+  }
+  return [...out.values()];
+}
+
+/** The player's own homebrew as one string that ignores key order — "did a sync change it?". */
+export function homebrewFingerprint(): string {
+  const sorted = (r: Record<string, unknown>) => Object.keys(r).sort().map((k) => [k, r[k]]);
+  const c = loadHomebrewContent();
+  return JSON.stringify([sorted(loadHomebrewSources()), HOMEBREW_TYPES.map((t) => sorted(c[t]))]);
+}
+
+/** The dirty set as it sits on disk. The publish READS it and leaves it there: a key goes only once its
+ *  upload went through (clearCampaignHbDirty), so an app killed mid-publish still holds every edit. */
+export function loadCampaignHbDirty(): Record<string, string> {
+  const raw = loadJsonRaw(CAMPAIGN_HB_DIRTY_KEY);
+  return raw && typeof raw === 'object' ? (raw as Record<string, string>) : {};
+}
+function saveCampaignHbDirty(map: Record<string, string>): void {
+  try {
+    if (Object.keys(map).length) localStorage.setItem(CAMPAIGN_HB_DIRTY_KEY, JSON.stringify(map));
+    else localStorage.removeItem(CAMPAIGN_HB_DIRTY_KEY);
+  } catch {
+    /* non-fatal: worst case one edit waits for the next write of that record */
+  }
+}
+
+/** A publish that went through forgets the keys it settled — each only while it still names the source
+ *  it was settled under (a write since then that moved the record to another source keeps it). */
+export function clearCampaignHbDirty(done: Record<string, string>): void {
+  const map = loadCampaignHbDirty();
+  for (const [key, sid] of Object.entries(done)) if (map[key] === sid) delete map[key];
+  saveCampaignHbDirty(map);
+}
+
+/** The writers' hook: record the key (newest source wins), then nudge the publish. */
+function markHbDirty(key: string, sourceId: string | undefined): void {
+  if (!sourceId) return; // an entry with no source can't be in a shared one
+  saveCampaignHbDirty({ ...loadCampaignHbDirty(), [key]: sourceId });
+  markCampaignHbDirty();
 }
 
 /** Back-compat shim: the inventory "Create item" flow and data/index.ts use these. */
@@ -567,6 +674,9 @@ export function wipeSyncedLocalData(): void {
     TOMBSTONES_KEY,
     REVIVED_KEY,
     SYNC_META_KEY,
+    // Device-local, not synced — but ACCOUNT-scoped: another account's campaign copy and unsent edits.
+    CAMPAIGN_HB_CACHE_KEY,
+    CAMPAIGN_HB_DIRTY_KEY,
   ]) {
     try {
       localStorage.removeItem(k);

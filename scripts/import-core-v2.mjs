@@ -18,8 +18,10 @@ import { readFileSync, writeFileSync, readdirSync, copyFileSync, existsSync, mkd
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
-import { aonFacets, packOf, fillFrequencyCounters, prerequisitesFrom } from './lib/aon-facets.mjs';
+import { aonFacets, backgroundFacets, packOf, fillFrequencyCounters, prerequisitesFrom } from './lib/aon-facets.mjs';
+import { loadLivePages, liveEdition } from './lib/live-pages.mjs';
 import { buildReprintMap, repointDoc } from './lib/reprint.mjs';
+import { creationPlan, subclassLink, ancestryOf, appendSubclassOptions } from './lib/player-create.mjs';
 
 const DATA = 'C:/trying ai 2/hh-data-export/without-images/data';
 const OUT = 'public/core.json';
@@ -202,9 +204,11 @@ const usedDocs = {};
 let mapDocFor = () => null;
 try {
   const mig = JSON.parse(readFileSync('scripts/migration/out/map.json', 'utf8')).map ?? {};
+  // `joinDocId`: where an owner's aonId ruling replaced the join's page, the page this record has
+  // always been built from (see build-map.mjs) — the ruling is stamped later, by stamp-aonid.mjs.
   mapDocFor = (bucket, s) => {
     const m = mig[bucket]?.[s];
-    return m && (m.status === 'doc' || m.status === 'scraped') ? m.docId : null;
+    return m && (m.status === 'doc' || m.status === 'scraped') ? m.joinDocId ?? m.docId : null;
   };
   console.log(`migration map loaded: ${Object.keys(mig).length} buckets`);
 } catch {
@@ -501,6 +505,11 @@ const reprints = buildReprintMap(docById);
 // New-only records (no old baseline) that Foundry never had. Added with facet-derived fields so they're
 // selectable + described. Advanced grants aren't modeled yet (inert like today's un-mechanized content),
 // but nothing crashes. Only low-risk buckets are enabled here (no NaN / ancestry-linkage requirements).
+//
+// Every OTHER player kind — backgrounds, heritages, class features and class options — and a page whose
+// slug another record already holds (the second "Zombie Horde") are created by step 4 below, gated by
+// the coverage rule. Adding those buckets HERE would create every new slug unconditionally, chassis rows
+// and already-shipped twins included; see scripts/lib/player-create.mjs for the measurement.
 const FRESH_BUCKETS = new Set(['feats', 'actions', 'spells', 'items']);
 const DIE = new Set([4, 6, 8, 10, 12]);
 function cpToCoins(cp) {
@@ -707,6 +716,10 @@ const shippedCore = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : {}
  */
 const SHIPPED_DESC = 'public/core-descriptions.json';
 const shippedDesc = existsSync(SHIPPED_DESC) ? JSON.parse(readFileSync(SHIPPED_DESC, 'utf8')) : {};
+/** The records step 4 (below) created on the LAST run — scripts/migration/out/player-created.json. Step 3
+ *  leaves them to step 4, and step 4's rule does not count them as a page's presence. */
+const PLAYER_CREATED = 'scripts/migration/out/player-created.json';
+const prevPlayerCreated = existsSync(PLAYER_CREATED) ? JSON.parse(readFileSync(PLAYER_CREATED, 'utf8')) : {};
 /** The record as it last SHIPPED, prose included — the two files rejoined. */
 const shippedFull = (bucket, s) => {
   const was = shippedCore[bucket]?.[s];
@@ -910,9 +923,18 @@ for (const bucket of AON_BUCKETS) {
    */
   for (const s in (shippedCore[bucket] ?? {})) {
     if (s in out) continue;
+    /* A record step 4 below CREATED is step 4's to make again or not — it re-creates every page still
+     * missing. Reviving it here kept one step 4 had stopped making: the first run created Keep Pace
+     * from the APG page as well as from its Player Core 2 reprint, and this branch carried the APG
+     * copy on as "the legacy half of a reprint" — which then answered for the reprint's page, so step 4
+     * stopped making the Player Core 2 record instead. Known by the last run's list, and by step 4's
+     * own key shape `<page slug>-<book slug>` (a list that no longer names it cannot recall it; the
+     * LEFTOVER check in scripts/player-coverage-check.mjs measured that shape on no other record). */
+    if (prevPlayerCreated[bucket]?.[s]) continue;
     const was = shippedFull(bucket, s);
     const d = was?.aonId ? docById.get(String(was.aonId)) : null;
     if (!d) continue;
+    if (s === `${slug(d.name)}-${slug(d.book)}`) continue;
     /*
      * A DISAMBIGUATED KEY IS NOT A RENAME. `<document slug>-<class id>` is the shape this database
      * already uses to give one class its own copy of a feature every class prints under the same name
@@ -955,6 +977,77 @@ for (const bucket of AON_BUCKETS) {
   }
   db[bucket] = out;
   stats[bucket] = { total: Object.keys(out).length, overlaid, added, deferred, orphanKept, superseded, mapCorrected, repointed, fromPruned, renamedKept, mapRenamed };
+}
+
+/*
+ * 4. A PLAYER PAGE NO RECORD ANSWERS FOR BECOMES A RECORD (owner, 2026-09-24: "the players' missing
+ * data is more important — add it").
+ *
+ * Which pages: exactly those scripts/player-coverage-check.mjs would call MISSING — the same rule, from
+ * scripts/lib/player-coverage.mjs, run here in its importer view (a record THIS STEP created on the last
+ * run — scripts/migration/out/player-created.json — does not count as the page being present). Hidden and
+ * allow-listed pages are never created. Why this is not a wider FRESH_BUCKETS: scripts/lib/player-create.mjs.
+ *
+ * Keys: the page's slug; when another record already holds it (two different "Zombie Horde" feats) the
+ * page's book is appended — `zombie-horde-impossible-magic` — and the shipped older record keeps its key.
+ * A class option takes the id its class's option list already gives it, so the option and the record
+ * stay one pick. Content only: the page's text, traits, rarity, level, prerequisites, action cost, book
+ * and edition; aonId and the display tree follow through used-docs.json and the ast pass below. The
+ * mechanics are the parity batch's — except a BACKGROUND's, which the Archives state as structured
+ * fields (its two boosts, its trained skill and Lore, its skill feat) and every shipped background
+ * already takes through `backgroundFacets` (scripts/lib/aon-facets.mjs). A created background left
+ * without them handed a player two boosts, two trainings and a skill feat fewer than the page prints.
+ *
+ * Rarity and edition follow the LIVE page where it has been read (scripts/data/live-pages.json — the
+ * export says common for two Uncommon class options and neutral for Legacy Content pages);
+ * scripts/player-coverage-check.mjs fails while a created record's page is unread.
+ */
+const playerCreated = {}; // bucket -> key -> { doc, classId?, groupId? }
+{
+  const livePages = loadLivePages();
+  const ALLOW = 'scripts/data/player-coverage-allow.json';
+  const allow = existsSync(ALLOW) ? JSON.parse(readFileSync(ALLOW, 'utf8')) : {};
+  const { create, noCreator } = creationPlan({ docs: docById, reprint: reprints, shippedCore, shippedDesc, allow, prevCreated: prevPlayerCreated });
+  const unmade = noCreator.map((d) => `${d.id} ${d.category} "${d.name}": no creator for this kind`);
+  for (const { doc, bucket } of create) {
+    const map = (db[bucket] ||= {});
+    const subclass = bucket === 'classFeatures' && doc.category !== 'class-feature';
+    const link = subclass ? subclassLink(doc, shippedCore) : null;
+    if (link?.error) { unmade.push(`${doc.id} "${doc.name}": ${link.error}`); continue; }
+    let key = link?.optionId ?? slug(doc.name);
+    if (map[key]) key = `${key}-${slug(doc.book)}`;
+    if (map[key]) { unmade.push(`${doc.id} "${doc.name}": key ${key} is taken too`); continue; }
+    const traits = normTraits(doc.traits);
+    const base = { id: key, name: doc.name, traits, rarity: RARITY.has(doc.rarity) ? doc.rarity : 'common' };
+    const book = mapBook(doc.book); if (book) base.source = { book };
+    const desc = plainDesc(doc.ast); if (desc) base.description = desc;
+    let rec;
+    if (FRESH_BUCKETS.has(bucket)) rec = deriveFresh(bucket, key, doc);
+    else if (bucket === 'backgrounds') rec = { ...base, abilityBoosts: [], ...backgroundFacets(doc, (u) => resolveBaseItem(u, 'featSlug')) };
+    else if (bucket === 'heritages') {
+      const ancestryId = ancestryOf(doc.name, db.ancestries);
+      if (!ancestryId) { unmade.push(`${doc.id} "${doc.name}": no single ancestry's name ends this heritage's name`); continue; }
+      rec = { ...base, ancestryId, versatile: false };
+    } else if (link) {
+      rec = { ...base, traits: [...new Set([...traits, ...link.traits])], level: link.level, actionCost: link.actionCost, ...(link.otherTags.length ? { otherTags: link.otherTags } : {}) };
+      if (rec.actionCost == null) delete rec.actionCost;
+    } else if (bucket === 'classFeatures') {
+      const ac = parseActionCost(doc.action_cost);
+      rec = { ...base, level: clamp(num(doc.level, 1), 1, 20), ...(ac ? { actionCost: ac } : {}) };
+    }
+    if (!rec) { unmade.push(`${doc.id} "${doc.name}": the ${bucket} builder declined it`); continue; }
+    const read = livePages[doc.id];
+    if (RARITY.has(read?.rarity)) rec.rarity = read.rarity;
+    rec.edition = liveEdition(doc.edition, read);
+    map[key] = rec;
+    (usedDocs[bucket] ??= {})[key] = doc.id;
+    (playerCreated[bucket] ??= {})[key] = { doc: doc.id, ...(link?.classId ? { classId: link.classId, groupId: link.groupId } : {}) };
+    // A link to this page used to resolve to the OTHER record of its name — point it at its own.
+    if (!idMap[doc.id] || (idMap[doc.id].bucket === bucket && idMap[doc.id].slug !== key)) idMap[doc.id] = { bucket, slug: key };
+  }
+  const n = Object.values(playerCreated).reduce((a, m) => a + Object.keys(m).length, 0);
+  console.log(`player pages created: ${n} (${Object.entries(playerCreated).map(([b, m]) => `${b} ${Object.keys(m).length}`).join(', ') || 'none'})`);
+  if (unmade.length) console.warn(`!! ${unmade.length} missing player page(s) NOT created — scripts/player-coverage-check.mjs will fail on them:\n  ${unmade.join('\n  ')}`);
 }
 
 // carry the hand-authored buckets over unchanged
@@ -1050,6 +1143,9 @@ let backfillCount = 0;
   backfillCount = applied;
   console.log(`[import-v2] applied ${backfillCount} audit effect backfills`);
   if (unresolved.length) console.warn(`[import-v2] !! ${unresolved.length} backfill paths did not resolve:\n  ` + unresolved.join("\n  "));
+  // …and only then a created class option into its class's list: a backfill row may set a whole list.
+  const appended = appendSubclassOptions(db, playerCreated);
+  if (appended) console.log(`[import-v2] appended ${appended} created class option(s) to their class's option list`);
 }
 
 // ------------------------------------------------------------------ per-bucket ast (lazy-loaded, Step 1)
@@ -1165,6 +1261,12 @@ for (const bucket of AON_BUCKETS) {
     // renderer (src/sheet/AstRenderer.tsx switches on `t`) and preserved by every resolveAst copy.
     if (rec.ast) { astOut[s] = resolveAst(rec.ast); if (rec.id) astOut[s].aon = rec.id; }
   }
+  // Step 4's records: their page is not the per-slug pick (a suffixed key, or a class option built
+  // from another category's document), so the loop above never reaches them.
+  for (const [s, { doc }] of Object.entries(playerCreated[bucket] ?? {})) {
+    const d = docById.get(doc);
+    if (d?.ast) { astOut[s] = resolveAst(d.ast); astOut[s].aon = doc; }
+  }
   const json = JSON.stringify(astOut);
   writeFileSync('public/ast/' + bucket + '.json', json);
   // Ship the GZIPPED bucket (the raw JSON is far too large for static-host per-file limits — items is
@@ -1184,6 +1286,7 @@ for (const bucket of INDEX_ORDER) {
     if (!(s in astIndex) && newMap[s].rec.ast && (s in (db[bucket] || {}))) astIndex[s] = bucket;
   }
 }
+for (const [bucket, m] of Object.entries(playerCreated)) for (const s of Object.keys(m)) if (!(s in astIndex)) astIndex[s] = bucket;
 writeFileSync('public/ast-index.json', JSON.stringify(astIndex));
 
 // ------------------------------------------------------------------ write + report
@@ -1308,6 +1411,9 @@ try {
   mkdirSync('scripts/migration/out', { recursive: true });
   writeFileSync('scripts/migration/out/used-docs.json', JSON.stringify(usedDocs, null, 1));
   writeFileSync('scripts/migration/out/action-cost-notes.json', JSON.stringify(actionNotes, null, 1));
+  // The records step 4 created: import-siege-and-gaps.mjs re-appends their class options after its own
+  // backfill re-apply (see appendSubclassOptions).
+  writeFileSync('scripts/migration/out/player-created.json', JSON.stringify(playerCreated, null, 1));
   const n = Object.values(usedDocs).reduce((a, o) => a + Object.keys(o).length, 0);
   console.log(`recorded the source doc for ${n} records -> scripts/migration/out/used-docs.json`);
 } catch (e) {

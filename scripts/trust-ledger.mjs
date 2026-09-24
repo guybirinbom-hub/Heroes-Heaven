@@ -43,6 +43,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync, readdirSy
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { backgroundUnapplied, CLAUSE_FIELDS } from './lib/background-print.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (k, d = null) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
@@ -136,6 +137,12 @@ const wgSha = sha(diffRaw);
 if (statSync(R(DIFF_PATH)).mtimeMs < statSync(R('public/core.json')).mtimeMs) {
   refuse(`${DIFF_PATH} is older than public/core.json — re-run: node scripts/wg-diff.mjs --out ${DIFF_PATH}`);
 }
+
+/* The records `npm run data` created from a page, text only — see `unencoded` at the end of buildLedger. */
+const CREATED_PATH = R('scripts/migration/out/player-created.json');
+const created = existsSync(CREATED_PATH) ? JSON.parse(readFileSync(CREATED_PATH, 'utf8')) : {};
+/* …and their printed text, which lives in the split-off descriptions file, for `partly`. */
+const descs = JSON.parse(readFileSync(R('public/core-descriptions.json'), 'utf8'));
 
 const fieldsFile = JSON.parse(readFileSync(R('scripts/data/trust-fields.json'), 'utf8'));
 const FIELDS = fieldsFile.paths;
@@ -529,7 +536,63 @@ function buildLedger(batchedOnly) {
   }
   lanes.engine = [...new Set(lanes.engine)].sort();
 
-  return { ledger: { coreSha, wgSha, generator: 'scripts/trust-ledger.mjs', lanes, records }, stats };
+  /*
+   * ---- records with NO rules encoded at all — the other half of what the marker says.
+   *
+   * The gate darkens a mechanic that exists; it has nothing to say about a record that never had one.
+   * `npm run data` creates a record for every player page no record answered for (step 4 of
+   * scripts/import-core-v2.mjs, listed in scripts/migration/out/player-created.json) with the page's
+   * text and none of its mechanics — those are the parity batch's. Picked, such a record does nothing:
+   * Clockwork Wonder gives no boosts, skill or feat, Defensive Automaton leaves HP 8 where its text says
+   * 10. That is the "indistinguishable from a bug" case src/sheet/TrustMarker.tsx exists for, and no
+   * `records` entry can express it, because there is nothing to strip (and backgrounds are chassis).
+   *
+   * So the ledger names them, and the marker shows for them. A created record leaves the list by
+   * itself the moment anything is encoded on it — a field the creator does not write, a boost, or its
+   * id on one of the code registries the lanes above scrape. Items are not listed: a created item is
+   * derived like every other new-only item (price, Bulk, level, weapon stats from the page's facets).
+   */
+  const CREATED_CONTENT = new Set([
+    'id', 'name', 'traits', 'rarity', 'source', 'description', 'descRefs', 'edition', 'level', 'category',
+    'prerequisites', 'actionCost', 'otherTags', 'ancestryId', 'versatile', 'abilityBoosts', 'legacyNames',
+    'aonId', 'aonParentId', 'aonSection', 'aonOrigin', 'remasteredAs',
+  ]);
+  const onRegistry = new Set([...grantKinds.keys(), ...LANE_REGISTRY.situational.flatMap(registryKeys)]);
+  const unencoded = [];
+  for (const [bucket, m] of Object.entries(created)) {
+    if (!['backgrounds', 'heritages', 'feats', 'classFeatures'].includes(bucket)) continue;
+    for (const id of Object.keys(m ?? {})) {
+      const rec = core[bucket]?.[id];
+      if (!rec || onRegistry.has(id)) continue;
+      if (Object.keys(rec).every((k) => CREATED_CONTENT.has(k)) && !(rec.abilityBoosts ?? []).length) unencoded.push(`${bucket}/${id}`);
+    }
+  }
+  unencoded.sort();
+
+  /*
+   * ---- records created with SOME of their rules encoded — `partly`, the marker's third wording.
+   *
+   * Leaving `unencoded` must not be the same as "everything applies". The 25 created backgrounds took
+   * their boosts, skill, Lore and skill feat through `backgroundFacets` and so left the list above —
+   * and with it the marker — while seven still print a rule that does nothing (Azlanti Researcher's
+   * Azlant Lore and language; the Bastion of Blasphemies backgrounds' bonuses, daily choices and
+   * Spiritual Scar). So a created background's PRINT is compared with its record
+   * (scripts/lib/background-print.mjs) and whatever does not apply is listed here, in the player's
+   * words: "bucket/id" -> "Azlant Lore, the Azlanti language". Fully applied records are on neither
+   * list. Other created kinds are not read this way: their print has no fixed shape to compare, and
+   * every one of them is still `unencoded` (whole records the parity batch encodes at once).
+   */
+  const partly = {};
+  for (const id of Object.keys(created.backgrounds ?? {})) {
+    const rec = core.backgrounds?.[id];
+    if (!rec || unencoded.includes(`backgrounds/${id}`)) continue;
+    const otherRulesEncoded = onRegistry.has(id) || Object.keys(rec).some((k) => !CREATED_CONTENT.has(k) && !CLAUSE_FIELDS.has(k));
+    const d = descs.backgrounds?.[id];
+    const missing = backgroundUnapplied(rec, typeof d === 'string' ? d : d?.d, { otherRulesEncoded });
+    if (missing) partly[`backgrounds/${id}`] = missing;
+  }
+
+  return { ledger: { coreSha, wgSha, generator: 'scripts/trust-ledger.mjs', lanes, records, unencoded, partly }, stats };
 }
 
 /* --------------------------------------------------------------- determinism */
@@ -556,6 +619,7 @@ const census = (label, m, bytes) => {
 console.log(`-> ${OUT}  (${BATCHED_ONLY ? '--batched-only' : 'default'} mode)`);
 console.log(census('default        ', modes.default, Buffer.byteLength(stable(modes.default.ledger))));
 console.log(census('--batched-only ', modes.batchedOnly, Buffer.byteLength(stable(modes.batchedOnly.ledger))));
+console.log(`created records the marker names: ${chosen.ledger.unencoded.length} with nothing encoded · ${Object.keys(chosen.ledger.partly).length} partly encoded`);
 /* The 2026-09-11 rules, per mode: how many records each one handed back paths on. A rule that is in
  * trust-approvals.json and rescues NOTHING is the silent failure this line exists to make loud. */
 for (const [label, m] of [['default        ', modes.default], ['--batched-only ', modes.batchedOnly]]) {

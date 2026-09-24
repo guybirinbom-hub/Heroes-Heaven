@@ -1,0 +1,285 @@
+{
+ "_": "Facts read off the LIVE Archives pages (the house rule: the live page wins) — scripts/read-live-pages.mjs writes, scripts/lib/live-pages.mjs reads.",
+ "pages": {
+  "apparition-16": {
+   "name": "Lamentation of Sinister Deals",
+   "level": null,
+   "rarity": "uncommon",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-40": {
+   "name": "Refugee (FoP)",
+   "level": null,
+   "rarity": "common",
+   "legacy": true,
+   "read": "2026-09-24"
+  },
+  "background-647": {
+   "name": "Art \"Collector\"",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-648": {
+   "name": "Blooded by the Dead",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-649": {
+   "name": "Curse-Marked",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-650": {
+   "name": "Friend of a Friend",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-651": {
+   "name": "Once Possessed",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-652": {
+   "name": "Trusted Rival",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-653": {
+   "name": "Archival Assistant",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-654": {
+   "name": "Azlanti Researcher",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-655": {
+   "name": "Clockwork Wonder",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-657": {
+   "name": "Battle's Spark",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-658": {
+   "name": "Boundless Wonder",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-659": {
+   "name": "Immortal Influence",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-660": {
+   "name": "Unfettered Exploration",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-661": {
+   "name": "Envoy's Alliance",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-662": {
+   "name": "Grand Archive",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-663": {
+   "name": "Horizon Hunters",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-664": {
+   "name": "Radiant Oath",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-665": {
+   "name": "Verdant Wheel",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-667": {
+   "name": "Vigilant Seal",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-673": {
+   "name": "Absalom Street Preacher",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-674": {
+   "name": "Ambitious Knave",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-675": {
+   "name": "Destined for Greatness",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-676": {
+   "name": "Esoteric Bookworm",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-677": {
+   "name": "Mystery Adept",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "background-678": {
+   "name": "Puddles Carny",
+   "level": null,
+   "rarity": "rare",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "equipment-1781": {
+   "name": "Silver (Ingot)",
+   "level": 0,
+   "rarity": "common",
+   "legacy": true,
+   "read": "2026-09-24"
+  },
+  "familiar-ability-19": {
+   "name": "Breath Weapon",
+   "level": null,
+   "rarity": "common",
+   "legacy": true,
+   "read": "2026-09-24"
+  },
+  "familiar-ability-85": {
+   "name": "Breath Weapon",
+   "level": null,
+   "rarity": "common",
+   "legacy": true,
+   "read": "2026-09-24"
+  },
+  "feat-4380": {
+   "name": "Stone Blood",
+   "level": 6,
+   "rarity": "common",
+   "legacy": true,
+   "read": "2026-09-24"
+  },
+  "feat-6284": {
+   "name": "Keep Pace",
+   "level": 6,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "feat-7637": {
+   "name": "Play to the Crowd",
+   "level": 12,
+   "rarity": "uncommon",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "feat-9122": {
+   "name": "Zombie Horde",
+   "level": 6,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "feat-9171": {
+   "name": "Remote Detonation",
+   "level": 1,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "feat-9331": {
+   "name": "Practical Magic",
+   "level": 6,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "heritage-438": {
+   "name": "Defensive Automaton",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "heritage-439": {
+   "name": "Newly Minted Automaton",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "hybrid-study-15": {
+   "name": "Twofold Tine",
+   "level": null,
+   "rarity": "common",
+   "legacy": false,
+   "read": "2026-09-24"
+  },
+  "hybrid-study-16": {
+   "name": "Volatile Spark",
+   "level": null,
+   "rarity": "uncommon",
+   "legacy": false,
+   "read": "2026-09-24"
+  }
+ }
+}

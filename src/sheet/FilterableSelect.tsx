@@ -16,15 +16,22 @@ export const isInternalTrait = (t: string): boolean => t.startsWith('__');
 
 /** Build a description node for a content entry, or null when it has nothing to show.
  *  Used by picker rows: clicking a row's body opens this in a DescriptionModal. `key` is the
- *  originating content-map name ('feats'/'spells'/…), threaded into the pin identity. */
+ *  originating content-map name ('feats'/'spells'/…), threaded into the pin identity.
+ *
+ *  A record's `id` becomes the node's `slug`, so the popup opens the record's OWN page. Without it the
+ *  popup falls back to the slug of the NAME, which is another record's key whenever two records share a
+ *  name: the Impossible Magic "Zombie Horde" (`zombie-horde-impossible-magic`) opened the Clockwork
+ *  Reanimator feat `zombie-horde`, and the Travel Guide's "Silver (Ingot)" the GM Core Silver Ingot.
+ *  Measured over the shipped records: 86 whose name slug names another record's page, none whose own
+ *  id has no page the name slug would have found. */
 export function descNodeOf(
-  it: { name: string; description?: string; descRefs?: DescRef[] },
+  it: { id?: string; name: string; description?: string; descRefs?: DescRef[] },
   key?: string,
 ): DescNode | null {
   const hasText = !!it.description && it.description.trim().length > 0;
   const hasRefs = !!it.descRefs && it.descRefs.length > 0;
   if (!hasText && !hasRefs) return null;
-  return { title: it.name, description: it.description ?? '', descRefs: it.descRefs, key };
+  return { title: it.name, description: it.description ?? '', descRefs: it.descRefs, key, ...(it.id ? { slug: it.id } : {}) };
 }
 
 /**

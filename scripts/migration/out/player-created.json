@@ -1,0 +1,123 @@
+{
+ "classFeatures": {
+  "lamentation-of-sinister-deals": {
+   "doc": "apparition-16",
+   "classId": "animist",
+   "groupId": "apparition"
+  },
+  "twofold-tine": {
+   "doc": "hybrid-study-15",
+   "classId": "magus",
+   "groupId": "(subclass)"
+  },
+  "volatile-spark": {
+   "doc": "hybrid-study-16",
+   "classId": "magus",
+   "groupId": "(subclass)"
+  }
+ },
+ "backgrounds": {
+  "art-collector": {
+   "doc": "background-647"
+  },
+  "blooded-by-the-dead": {
+   "doc": "background-648"
+  },
+  "curse-marked": {
+   "doc": "background-649"
+  },
+  "friend-of-a-friend": {
+   "doc": "background-650"
+  },
+  "once-possessed": {
+   "doc": "background-651"
+  },
+  "trusted-rival": {
+   "doc": "background-652"
+  },
+  "archival-assistant": {
+   "doc": "background-653"
+  },
+  "azlanti-researcher": {
+   "doc": "background-654"
+  },
+  "clockwork-wonder": {
+   "doc": "background-655"
+  },
+  "battles-spark": {
+   "doc": "background-657"
+  },
+  "boundless-wonder": {
+   "doc": "background-658"
+  },
+  "immortal-influence": {
+   "doc": "background-659"
+  },
+  "unfettered-exploration": {
+   "doc": "background-660"
+  },
+  "envoys-alliance": {
+   "doc": "background-661"
+  },
+  "grand-archive": {
+   "doc": "background-662"
+  },
+  "horizon-hunters": {
+   "doc": "background-663"
+  },
+  "radiant-oath": {
+   "doc": "background-664"
+  },
+  "verdant-wheel": {
+   "doc": "background-665"
+  },
+  "vigilant-seal": {
+   "doc": "background-667"
+  },
+  "absalom-street-preacher": {
+   "doc": "background-673"
+  },
+  "ambitious-knave": {
+   "doc": "background-674"
+  },
+  "destined-for-greatness": {
+   "doc": "background-675"
+  },
+  "esoteric-bookworm": {
+   "doc": "background-676"
+  },
+  "mystery-adept": {
+   "doc": "background-677"
+  },
+  "puddles-carny": {
+   "doc": "background-678"
+  }
+ },
+ "items": {
+  "silver-ingot-travel-guide": {
+   "doc": "equipment-1781"
+  }
+ },
+ "feats": {
+  "zombie-horde-impossible-magic": {
+   "doc": "feat-9122"
+  },
+  "remote-detonation-impossible-magic": {
+   "doc": "feat-9171"
+  },
+  "practical-magic-impossible-magic": {
+   "doc": "feat-9331"
+  },
+  "keep-pace-player-core-2": {
+   "doc": "feat-6284"
+  }
+ },
+ "heritages": {
+  "defensive-automaton": {
+   "doc": "heritage-438"
+  },
+  "newly-minted-automaton": {
+   "doc": "heritage-439"
+  }
+ }
+}

@@ -11,7 +11,16 @@
 import type { ContentDatabase, SourceInfo } from '../rules/types';
 import { seedContent } from '../rules/seed';
 import { CATALOG_MODE_MAP } from '../rules/modes';
-import { loadHomebrewContent, loadHomebrewSources, loadModes, HOMEBREW_TYPES } from './storage';
+import {
+  loadCampaignHbCache,
+  loadHomebrewContent,
+  loadHomebrewSources,
+  loadModes,
+  HOMEBREW_TYPES,
+  type HomebrewContent,
+  type HomebrewSource,
+  type HomebrewType,
+} from './storage';
 import { applyTrustGate, clearTrustGate, trustGateOn } from './trustGate';
 
 function merge<T>(base: Record<string, T>, over: Record<string, T>): Record<string, T> {
@@ -467,10 +476,40 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
   if (!gateOn) clearTrustGate(); // …and empty the code-side lanes, or a previous gated load's stars stay dark
   const c = (gateOn ? applyTrustGate(core) : core) as ContentDatabase;
   // Seed → Core → user homebrew, so homebrew entries resolve everywhere core content does.
-  const hb = loadHomebrewContent();
+  //
+  // THREE HOMEBREW LAYERS (data/campaignHomebrew.ts), bottom to top:
+  //   1. the player's own entries KEPT from a campaign source and not edited since (their source's
+  //      `kept.ids` still lists them) — under the GM's live copy, so a reshare or rejoin brings his
+  //      updates back;
+  //   2. every campaign's shared homebrew this device last pulled (first campaign wins a duplicate).
+  //      Another account's content may ADD records, never REPLACE printed ones, so an id the seed or
+  //      core already holds is skipped;
+  //   3. every other own entry — the player's own work always wins.
+  // All of it is merged AFTER applyTrustGate above, so campaign homebrew is ungated by construction.
+  const own = loadHomebrewContent();
+  const ownSources = loadHomebrewSources();
+  const camps = Object.values(loadCampaignHbCache());
+  const hb = {} as HomebrewContent;
+  for (const type of HOMEBREW_TYPES) {
+    const kept: Record<string, unknown> = {};
+    const mine: Record<string, unknown> = {};
+    const shared: Record<string, unknown> = {};
+    for (const [id, e] of Object.entries(own[type])) {
+      const sid = (e as { homebrewSourceId?: string }).homebrewSourceId;
+      ((sid && ownSources[sid]?.kept?.ids?.includes(`${type}:${id}`)) ? kept : mine)[id] = e;
+    }
+    for (const camp of camps) {
+      for (const [id, e] of Object.entries(camp.content?.[type] ?? {})) {
+        if (!(id in shared) && !isPrintedId(type, id)) shared[id] = e;
+      }
+    }
+    (hb[type] as Record<string, unknown>) = { ...kept, ...shared, ...mine };
+  }
   // Tag each homebrew entry's source.book with its Source's name, so the per-character Sources filter
   // (applySources) governs it: a homebrew Source is off by default and opt-in via Setup → Sources.
-  const hbSources = loadHomebrewSources();
+  const hbSources: Record<string, HomebrewSource> = {};
+  for (const camp of camps) for (const [id, s] of Object.entries(camp.sources ?? {})) hbSources[id] ??= s;
+  Object.assign(hbSources, ownSources);
   for (const type of HOMEBREW_TYPES) {
     for (const entry of Object.values(hb[type]) as unknown as { homebrewSourceId?: string; source?: SourceInfo }[]) {
       const name = entry.homebrewSourceId ? hbSources[entry.homebrewSourceId]?.name : undefined;
@@ -528,6 +567,19 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
 let cached: ContentDatabase | null = null;
 let cachedCore: Partial<ContentDatabase> = {};
 let pending: Promise<ContentDatabase> | null = null;
+
+/** Is `id` a PRINTED record of this homebrew bucket (seed or the raw core, before any gate)? Campaign
+ *  homebrew reusing one is dropped: someone else's content may add records, never replace the book's. */
+export function isPrintedId(type: HomebrewType, id: string): boolean {
+  return !!(seedContent[type]?.[id] || cachedCore[type]?.[id]);
+}
+
+/** Waits on the one shared core.json load: true once isPrintedId knows the whole book, false when the
+ *  load failed and only the seed is known (an UNKNOWN, not "nothing is printed"). */
+export async function printedIdsReady(): Promise<boolean> {
+  await loadContent();
+  return Object.keys(cachedCore).length > 0;
+}
 
 /** Re-merge seed + core + the current homebrew (re-read from storage) without re-fetching core.json.
  *  Call after the user edits homebrew so the live content DB reflects it immediately. */

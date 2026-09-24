@@ -15,7 +15,7 @@
  * It reads the side map `trustOff(bucket, id)` that applyTrustGate fills at content load, so it costs
  * one map lookup and knows nothing about kinds, ledgers or lanes.
  */
-import { trustGateOn, trustOff } from '../data/trustGate';
+import { trustGateOn, trustOff, trustPartly, trustUnencoded } from '../data/trustGate';
 
 /**
  * Stripped field paths -> what a player would call them. First match wins, so the order is the
@@ -58,7 +58,28 @@ export function trustWords(paths: string[]): string {
  * record that IS verified is worse than no marker.
  */
 export function TrustMarker({ bucket, id }: { bucket?: string; id?: string }) {
-  if (!bucket || !id || !trustGateOn()) return null;
+  if (!bucket || !id) return null;
+  /* A record created from its page with NONE of its rules encoded yet (the importer's new player
+   * records): the same line, whatever the switch says — turning the gate off applies nothing that was
+   * never written, so the player needs telling either way. */
+  if (trustUnencoded(bucket, id)) {
+    return (
+      <div className="sd-choice-note" role="note" title="Not applied yet: none of its rules are encoded yet — the text is all there is for now.">
+        Not yet verified — shown, not applied
+      </div>
+    );
+  }
+  /* Created with SOME of its rules encoded: the rest of its print still does nothing, so the line
+   * names what — a Lore, a language, a reaction — on the screen, not only in the tooltip. */
+  const partly = trustPartly(bucket, id);
+  if (partly) {
+    return (
+      <div className="sd-choice-note" role="note" title={`Not applied yet: ${partly}.`}>
+        Not yet verified — shown, partly applied. Not applied: {partly}.
+      </div>
+    );
+  }
+  if (!trustGateOn()) return null;
   const off = trustOff(bucket, id);
   if (!off || off.length === 0) return null;
   return (

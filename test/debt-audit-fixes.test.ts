@@ -89,8 +89,12 @@ describe('archetype feats are reachable without the Free Archetype variant', () 
    */
   const archetypeCategory = Object.values(db.feats).filter((f) => f.category === 'archetype');
 
-  it('there really are 138 of them, all carrying the trait', () => {
-    expect(archetypeCategory.length).toBe(138);
+  it('there really are 140 of them, all carrying the trait', () => {
+    // 138 + the two archetype feats `npm run data` created for pages no record answered for
+    // (2026-09-24, scripts/migration/out/player-created.json): the Impossible Magic Hedge Mage's
+    // Practical Magic and the Player Core 2 Bounty Hunter's Keep Pace.
+    expect(archetypeCategory.length).toBe(140);
+    for (const id of ['practical-magic-impossible-magic', 'keep-pace-player-core-2']) expect(archetypeCategory.map((f) => f.id)).toContain(id);
     for (const f of archetypeCategory) expect(f.traits, f.id).toContain('archetype');
   });
 

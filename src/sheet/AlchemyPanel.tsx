@@ -211,7 +211,7 @@ export function AlchemyPicker({
                 after each make, so the vial case is reached just by pressing Make one time too
                 many, and every row still read as live. Q27: it has to look spent. */}
             {shown.map((it) => {
-              const node = descNodeOf({ name: it.name, description: it.description, descRefs: it.descRefs }, 'items');
+              const node = descNodeOf({ id: it.id, name: it.name, description: it.description, descRefs: it.descRefs }, 'items');
               return (
                 <PickerRow
                   key={it.id}

@@ -121,6 +121,30 @@ const REPOINTS = [
    * strength of a shared document rather than on a name that happens to be one letter away.
    */
   { category: 'feats', id: 'no-hands-no-problem', to: 'feat-6876', page: 'No Hands, No Problems' },
+
+  /*
+   * FIVE RECORDS WEARING ANOTHER BOOK'S PAGE OF THEIR NAME, found by the MISPOINTED guard in
+   * scripts/player-coverage-check.mjs (2026-09-24). build-map's weak "slug minus (…)" join takes the
+   * first live page of the bare name and never reads the book, so "Refugee (Fall of Plaguestone)" got
+   * the Player Core 2 Refugee — which `refugee-pc2` also carries — while the Fall of Plaguestone page
+   * was carried by nothing. The coverage rule then called that page missing and the importer created a
+   * second, empty Fall of Plaguestone Refugee beside the working one.
+   *
+   * Each target is the page of the record's OWN book, own archetype or class, and own level, and the
+   * record's own prose shares more of its words with the target than with the page it carried
+   * (word overlap, current page -> target):
+   *
+   *   refugee-fall-of-plaguestone  background-455 (Player Core 2)       0.23 -> background-40  0.94
+   *   stone-blood-stonebound       feat-890 (World Guide, Living Monolith) 0.63 -> feat-4380   0.81
+   *   play-to-the-crowd-dandy      feat-6335 (PC2, Gladiator, level 4)  0.07 -> feat-7637 (Dandy, 12) 0.45
+   *   deity-champion               class-feature-649 (the cleric's)     0.41 -> class-feature-871 0.81
+   *   breath-weapon (familiar)     familiar-ability-85 (House Drake)    0.51 -> familiar-ability-19 0.87
+   */
+  { category: 'backgrounds', id: 'refugee-fall-of-plaguestone', to: 'background-40', page: 'Refugee (FoP), The Fall of Plaguestone pg. 55', refreshAst: true },
+  { category: 'feats', id: 'stone-blood-stonebound', to: 'feat-4380', page: 'Stone Blood, Heavy is the Crown (Stonebound)', refreshAst: true },
+  { category: 'feats', id: 'play-to-the-crowd-dandy', to: 'feat-7637', page: 'Play to the Crowd, Stage Fright (Dandy)', refreshAst: true },
+  { category: 'classFeatures', id: 'deity-champion', to: 'class-feature-871', page: 'Deity, Player Core 2 (Champion)', refreshAst: true },
+  { category: 'familiarAbilities', id: 'breath-weapon', to: 'familiar-ability-19', page: 'Breath Weapon, APG (Faerie Dragon)', refreshAst: true },
 ];
 
 /*

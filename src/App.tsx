@@ -17,13 +17,14 @@ import { loadContent, rebuildContent, onDescriptionsLoaded } from './data';
 import { pickScreen } from './appScreen';
 import { useAuth } from './data/useAuth';
 import { startCloudSync, hasSyncedOnce, noteDerivedRefresh } from './data/cloudSync';
+import { startCampaignHomebrew, refreshCampaignHomebrew, homebrewFingerprint } from './data/campaignHomebrew';
 import { rebuildRoster, carryStoredOverrides } from './data/rebuild';
 import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
 import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit, currentUserId, subscribeGmEdits } from './data/party';
-import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadGmEditsApplied, saveGmEditsApplied, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
+import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
 import { getPrefs, subscribePrefs } from './data/prefs';
 import { useIsMobile, useShowUndoButtons } from './sheet/useIsMobile';
@@ -202,6 +203,51 @@ export default function App() {
   }, [content, setRoster]);
 
   /*
+   * RE-MERGE THE CONTENT DATABASE AND RE-DERIVE EVERY CHARACTER, MID-SESSION — the one path for every
+   * background change to what the database is merged from: the trust-gate switch below, a GM's campaign
+   * homebrew arriving (startCampaignHomebrew's onChanged), and homebrew another device synced here.
+   *
+   * ⚠ Still a DERIVED refresh, never an edit — and, mid-session, never a way to swallow one either:
+   * `noteDerivedRefresh(next, r)` leaves alone any character whose queued copy holds an edit that has
+   * not been persisted yet, so the persist that follows still stamps and pushes it (see cloudSync.ts).
+   *
+   * `lastHbFp` is the homebrew fingerprint the database was last merged from — and null until core.json
+   * is in. Before that, rebuildContent() would hand every screen a SEED-ONLY database and the launch
+   * rebuild would re-derive the roster against it; skipping is safe because the load's own merge reads
+   * storage itself. Called through a ref, so long-lived callbacks always reach the latest one.
+   *
+   * ⚠ `contentRef` moves WITH the merge, not on the next render. The cloud-sync adopt below rebuilds
+   * against it, and an adopt can land between this call and that render (a trust-gate flip arrives
+   * inside adopt() itself, before the roster does). Left a render behind, the adopt re-derived an
+   * untouched character against the OLD database after this refresh had moved its baseline to the NEW
+   * one — the next persist then stamped it "updated now" and pushed it (the 2026-09-02 class), and it
+   * stayed derived from the old database.
+   */
+  const contentRef = useRef(content);
+  contentRef.current = content;
+  const lastHbFp = useRef<string | null>(null);
+  /** Re-merge the database from storage. Null (and nothing done) before core.json is in. */
+  const remerge = (): ContentDatabase | null => {
+    if (lastHbFp.current === null) return null;
+    lastHbFp.current = homebrewFingerprint();
+    const db = rebuildContent();
+    contentRef.current = db;
+    setContent(db);
+    return db;
+  };
+  const refreshDerived = () => {
+    const db = remerge();
+    if (!db) return;
+    setRoster((r) => {
+      const next = rebuildRoster(r, db);
+      noteDerivedRefresh(next, r);
+      return next;
+    });
+  };
+  const refreshDerivedRef = useRef(refreshDerived);
+  refreshDerivedRef.current = refreshDerived;
+
+  /*
    * VERIFIED RULES ONLY — the trust gate's switch (docs/trust-gate.md §4).
    *
    * Flipping it must do TWO things, not one: re-merge the content database (the gate runs inside
@@ -221,15 +267,9 @@ export default function App() {
       subscribePrefs((p) => {
         if (p.trustGate === gatePref.current) return;
         gatePref.current = p.trustGate;
-        const db = rebuildContent();
-        setContent(db);
-        setRoster((r) => {
-          const next = rebuildRoster(r, db);
-          noteDerivedRefresh(next);
-          return next;
-        });
+        refreshDerivedRef.current();
       }),
-    [setRoster],
+    [],
   );
 
   useEffect(() => {
@@ -252,6 +292,9 @@ export default function App() {
     // already complete (main.tsx prefetches before React mounts) still reaches us.
     const stopDesc = onDescriptionsLoaded((db) => setContent(db));
     loadContent().then((c) => {
+      // What `c` was merged from. Read here, not after the commit: a sync landing in between would be
+      // counted as already merged and never reach the database.
+      lastHbFp.current = homebrewFingerprint();
       setContent(c);
       // Restore the last screen once content is ready (campaigns needs it). If the app was closed while
       // looking at a campaign, reopen there; otherwise auto-jump to the last-active sheet. Both only
@@ -323,14 +366,17 @@ export default function App() {
   // Web build: once signed in, mirror the roster to/from the cloud — pull+merge on login, push on
   // change/background. `disabled` (desktop) never starts it. Applying the merged roster replaces
   // React state so the just-pulled cloud characters appear immediately.
-  // The content database as a live ref, so the sync callback below (registered once per sign-in) can
-  // rebuild an adopted roster against whatever content is loaded by the time a pull lands.
-  const contentRef = useRef(content);
-  contentRef.current = content;
+  // The sync callback below (registered once per sign-in) rebuilds an adopted roster against
+  // `contentRef` — whatever content is loaded by the time a pull lands (see refreshDerived above).
   useEffect(() => {
     if (auth.status !== 'signed-in') return;
     let cleanup = () => {};
+    let stopCampaignHb = () => {};
     let cancelled = false;
+    // Whose data the database was merged from. Another account signing in wipes it (startCloudSync),
+    // and the database has to follow even when nothing that account pulls differs from the empty
+    // storage — else its sheets resolve the previous account's campaign homebrew until a relaunch.
+    const ownerBefore = loadSyncOwner();
     void startCloudSync((merged) => {
       if (cancelled) return;
       // A pulled copy was derived by whichever app version last saved it — re-derive it here, and
@@ -340,14 +386,36 @@ export default function App() {
       noteDerivedRefresh(next);
       setRoster(next);
     }).then((c) => {
-      if (cancelled) c();
-      else cleanup = c;
+      if (cancelled) {
+        c();
+        return;
+      }
+      cleanup = c;
+      // Campaign homebrew starts only once cloud sync has started and made its first pull: memberships
+      // are synced data, and a fresh device's pre-sync (empty) list would read as "left every campaign".
+      stopCampaignHb = startCampaignHomebrew({ onChanged: () => refreshDerivedRef.current() });
+      if (loadSyncOwner() !== ownerBefore) refreshDerivedRef.current();
     });
     return () => {
       cancelled = true;
+      stopCampaignHb();
       cleanup();
     };
   }, [auth.status, setRoster]);
+  // Homebrew that arrives BY SYNC — another device's edit, a converted or exported campaign source —
+  // used to reach localStorage and nothing else: the content database kept its launch-time merge, so
+  // the new records resolved nowhere until the app was relaunched. After every sync, re-merge when the
+  // homebrew actually differs from what the database was merged from. The fingerprint is
+  // order-insensitive, so the no-op sync that follows every push never rebuilds anything.
+  useEffect(() => {
+    if (auth.status !== 'signed-in') return;
+    // refreshDerived records the new fingerprint, and waits out a database that hasn't loaded yet.
+    const onSynced = () => {
+      if (homebrewFingerprint() !== lastHbFp.current) refreshDerivedRef.current();
+    };
+    window.addEventListener('hh-synced', onSynced);
+    return () => window.removeEventListener('hh-synced', onSynced);
+  }, [auth.status]);
   // Signing in supersedes any earlier "use offline" choice on the installed app.
   useEffect(() => {
     if (auth.status === 'signed-in' && localSkip) {
@@ -850,6 +918,8 @@ export default function App() {
   const addCustomItem = (item: Item) => {
     setContent((c) => (c ? { ...c, items: { ...c.items, [item.id]: item } } : c));
     saveHomebrewItem(item);
+    // Already merged, so the Realtime echo of this device's own push is not "homebrew arrived by sync".
+    if (lastHbFp.current !== null) lastHbFp.current = homebrewFingerprint();
   };
 
   // Create/update or delete a user mode: update the live content DB + persist to localStorage.
@@ -863,7 +933,9 @@ export default function App() {
   };
 
   // The Homebrew manager persists to localStorage itself; re-merge it over core so changes show live.
-  const onHomebrewChanged = () => setContent(rebuildContent());
+  // Through remerge, which records the fingerprint: otherwise the Realtime echo of this device's own
+  // push (~3 s later) read as "homebrew arrived by sync" and re-derived every character for nothing.
+  const onHomebrewChanged = () => void remerge();
 
   // Player: fully leave a campaign — drop the membership (synced + tombstoned via saveCampaigns) AND
   // detach it from every character, so nothing keeps publishing to it. Stripping the id from each
@@ -871,6 +943,9 @@ export default function App() {
   // by deleting it in the Campaigns page instead.)
   const leaveCampaign = (campaignId: string) => {
     saveCampaigns(loadCampaigns().filter((m) => m.id !== campaignId));
+    // The membership is gone, so that campaign's homebrew becomes this player's own on the next
+    // successful pull — kept, never deleted.
+    void refreshCampaignHomebrew();
     commitStructural();
     setRoster((r) =>
       r.map((c) => {

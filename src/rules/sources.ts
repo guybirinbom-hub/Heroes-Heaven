@@ -64,6 +64,10 @@ const LOST_OMENS_TITLES = new Set([
   'knights of lastwall', 'highhelm', 'tian xia character guide', 'tian xia world guide',
   'firebrands', 'rival academies', 'shining kingdoms', 'divine mysteries', 'draconic codex',
   'pathfinder society guide', 'the grand bazaar',
+  // The Archives shelve High Seas as Lost Omens; its records ship as "Pathfinder High Seas", which
+  // matched nothing here and fell to the hidden "Other" shelf with 119 choosable records behind it.
+  // Guarded by the shelf check in scripts/player-coverage-check.mjs.
+  'high seas',
 ]);
 /** Strip the "Pathfinder " / "Lost Omens:" prefixes and a trailing "(Remastered)" so a bare or
  *  remastered title can be matched against the title sets above / LEGACY_HARDCOVERS. */
@@ -76,6 +80,11 @@ const RULEBOOK_TITLES = new Set([...[...LEGACY_HARDCOVERS].map(stripBook), 'dark
  *  Path material — individual volumes ("Pathfinder #219: …"), compilations, and the free player's
  *  guides — so those are folded into one collapsible "Adventure Paths" group instead of swamping
  *  "Other". Society scenarios/quests/one-shots get their own "Organized Play" shelf. */
+/** Books put on the niche "Other" shelf ON PURPOSE, whatever shelf the Archives give them — see the
+ *  first test in categoryOfBook. Exported for the shelf guard in scripts/player-coverage-check.mjs,
+ *  which fails on any OTHER book the Archives shelve for players and this file hides. */
+export const NICHE_BY_DESIGN = /Blog|Web Supplement|Article|Fools Aplenty|April Fools|Special:|Fumbus|Comic/;
+
 export function categoryOfBook(book: string): SourceCategory {
   if (CORE_BOOKS.includes(book)) return 'Core';
   const base = stripBook(book);
@@ -85,7 +94,7 @@ export function categoryOfBook(book: string): SourceCategory {
   // /Lost Omens/ test used to shelve them as normal setting books — leaving joke feats (Wombat
   // Style, Dad Joke) selectable even with niche sources turned off. The real "Lost Omens Divine
   // Mysteries" hardcover does NOT match and stays a Lost Omens book.
-  if (/Blog|Web Supplement|Article|Fools Aplenty|April Fools|Special:|Fumbus|Comic/.test(book)) return 'Other';
+  if (NICHE_BY_DESIGN.test(book)) return 'Other';
   if (/Lost Omens/.test(book) || LOST_OMENS_TITLES.has(base)) return 'Lost Omens';
   // Rulebooks first, so the Advanced Player's Guide isn't swept up by the AP "Player's Guide" rule.
   if (LEGACY_HARDCOVERS.has(book) || RULEBOOK_TITLES.has(base) || /Bestiary|NPC Core|Monster Core 2|Beginner Box/.test(book)) return 'Rulebooks';
@@ -97,7 +106,11 @@ export function categoryOfBook(book: string): SourceCategory {
     /Player.?s Guide/.test(book) || // the free per-AP player's guides
     /^Pathfinder Adventures?:/.test(book) || // standalone adventures: "Pathfinder Adventure: The Slithering"
     /Kingmaker|Claws of the Tyrant|Wake the Dead|Malevolence|Quest for the Frozen Flame/.test(book) ||
-    /Crown of the Kobold King|Night of the Gray Death|Troubles in Grayce|Seven Dooms|Hellknight Hill|Fall of Plaguestone|Beginner Box: Heroes/.test(book)
+    /Crown of the Kobold King|Night of the Gray Death|Troubles in Grayce|Seven Dooms|Hellknight Hill|Fall of Plaguestone|Beginner Box: Heroes/.test(book) ||
+    // Two more standalone adventures the Archives shelve as "Adventures", which ship under a bare
+    // "Pathfinder <title>" and fell to the hidden "Other" shelf (the six Dead God's Hand backgrounds
+    // could not be reached with every shown shelf on). Guarded by scripts/player-coverage-check.mjs.
+    /Dead God.s Hand|Shadows at Sundown/.test(book)
   )
     return 'Adventure Paths';
   return 'Other';
@@ -264,4 +277,21 @@ export function sourceCatalog(content: ContentDatabase): {
 /** Resolve a build's enabled-books field to the concrete set (absent → Core-only). */
 export function enabledBookSet(enabledSources: string[] | undefined): Set<string> {
   return new Set(enabledSources ?? CORE_BOOKS);
+}
+
+/**
+ * A HOMEBREW source (the player's own, a GM's shared campaign source, a copy kept from one) is switched
+ * on by this token in `enabledSources`, not by its name: by name, a GM renaming a shared source switched
+ * it off on every player's characters. Printed books stay keyed by name. The kept prefix is folded, so a
+ * kept copy (`hbsrc-kept-<id>`, data/campaignHomebrew.ts) and the source it was kept from are ONE switch.
+ */
+export function sourceIdToken(sourceId: string): string {
+  return `hbsrc:${sourceId.replace(/^hbsrc-kept-/, '')}`;
+}
+
+/** Is this entry's source on? Its book by name (every printed book, and each homebrew toggle written
+ *  before the token), or its homebrew source by id. No book = always (the hand-authored records). */
+export function entrySourceOn(enabled: Set<string>, e: { source?: SourceInfo; homebrewSourceId?: string }): boolean {
+  const book = e.source?.book?.trim(); // match sourceCatalog's whitespace-normalized book names
+  return !book || enabled.has(book) || (!!e.homebrewSourceId && enabled.has(sourceIdToken(e.homebrewSourceId)));
 }

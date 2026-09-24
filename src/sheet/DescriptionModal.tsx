@@ -7,6 +7,7 @@ import { RichText } from './RichText';
 import { useEscapeClose } from './useEscapeClose';
 import { AstRenderer } from './AstRenderer';
 import { TrustMarker } from './TrustMarker';
+import { unencodedNamed } from '../data/trustGate';
 import { astSlug, useAstNode } from './useAst';
 
 /**
@@ -75,8 +76,13 @@ export function DescriptionModal({
   const showBack = stack.length > 1 || !!backToSource;
 
   /* "Not yet verified", for whichever node of the stack is open. A node whose key/slug does not
-     resolve to a gated record renders nothing, which is every glossary term and every homebrew page. */
-  const marker = <TrustMarker bucket={cur.key} id={curSlug} />;
+     resolve to a gated record renders nothing, which is every glossary term and every homebrew page.
+     A Builder origin / class-option row opens as `key: 'origin'`, which names no bucket: those resolve
+     by exact name among the records created with no rules encoded (unencodedNamed). */
+  const origin = cur.key === 'origin'
+    ? unencodedNamed(cur.title, content as unknown as Record<string, Record<string, { name?: string }>> | null)
+    : undefined;
+  const marker = <TrustMarker bucket={origin?.bucket ?? cur.key} id={origin?.id ?? curSlug} />;
 
   const controls = (
     <>

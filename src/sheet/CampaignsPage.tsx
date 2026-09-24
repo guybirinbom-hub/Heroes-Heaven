@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import '../builder/builder.css';
 import type { ContentDatabase, ModeDef } from '../rules/types';
 import { emptyBuild, type BuildState } from '../rules/build';
-import { sourceCatalog } from '../rules/sources';
+import { CORE_BOOKS, enabledBookSet, sourceCatalog, sourceIdToken } from '../rules/sources';
 import { useBuilderActions, RuleCards } from '../builder/shared';
 // ── The ONLY reference to the initiative tracker in Heroes Heaven. Removed by deleting
 // src/integration/ plus these imports and the TRACKER_IN_CAMPAIGN branches. See its README. ──
@@ -29,7 +29,8 @@ import {
 } from '../data/campaigns';
 import type { PartyMember } from '../data/party';
 import { useAuth } from '../data/useAuth';
-import { loadCampaigns, saveCampaigns } from '../data/storage';
+import { loadCampaigns, saveCampaigns, loadHomebrewSources } from '../data/storage';
+import { fetchSharedSourceIds, refreshCampaignHomebrew, shareSources, unshareSources } from '../data/campaignHomebrew';
 import { PartyMembers, useMemberViewer } from './PartyMembers';
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
@@ -63,7 +64,7 @@ type View =
   | { kind: 'list' }
   | { kind: 'create' }
   | { kind: 'edit'; m: CampaignMembership }
-  | { kind: 'created'; c: Campaign }
+  | { kind: 'created'; c: Campaign; shareError?: string }
   | { kind: 'detail'; m: CampaignMembership };
 
 /** Build a BuildState carrying just the campaign-default fields, so the Setup cards can edit them. */
@@ -95,7 +96,7 @@ export function DefaultsEditor({ content, build, setBuild }: { content: ContentD
       <div className="setup-note" style={{ marginBottom: 10 }}>
         Default rules new characters in this campaign can start from — the same options as a character&rsquo;s Setup page.
       </div>
-      <RuleCards build={build} actions={actions} content={content} catalog={catalog} />
+      <RuleCards build={build} actions={actions} content={content} catalog={catalog} campaignDefaults />
     </div>
   );
 }
@@ -299,7 +300,7 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
   const deleteFrom = async (m: CampaignMembership, after: () => void) => {
     const ok = await confirmDialog({
       title: `Delete “${m.name}”?`,
-      message: 'This permanently deletes the campaign for everyone — the party disappears and players can no longer open it. This cannot be undone.',
+      message: 'This permanently deletes the campaign for everyone — the party disappears and players can no longer open it. This cannot be undone. Players keep any homebrew you shared as their own.',
       confirmLabel: 'Delete',
       danger: true,
     });
@@ -488,9 +489,9 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
                 : undefined
             }
             onCancel={() => setView(view.kind === 'edit' ? { kind: 'detail', m: view.m } : { kind: 'list' })}
-            onCreated={(c) => {
+            onCreated={(c, shareError) => {
               upsertMembership({ id: c.id, code: c.code, role: 'gm', name: c.name, description: c.description });
-              setView({ kind: 'created', c });
+              setView({ kind: 'created', c, shareError });
             }}
             onSaved={(c) => {
               const m: CampaignMembership = { id: c.id, code: c.code, role: 'gm', name: c.name, description: c.description };
@@ -503,6 +504,7 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
         {view.kind === 'created' && (
           <CreatedView
             c={view.c}
+            shareError={view.shareError}
             onDone={() => setView({ kind: 'detail', m: { id: view.c.id, code: view.c.code, role: 'gm', name: view.c.name, description: view.c.description } })}
           />
         )}
@@ -611,7 +613,9 @@ function JoinRow({ onJoined }: { onJoined: (m: CampaignMembership) => boolean })
       return;
     }
     const c = res.value;
-    setAlready(!onJoined({ id: c.id, code: c.code, role: 'player', name: c.name, description: c.description }));
+    const added = onJoined({ id: c.id, code: c.code, role: 'player', name: c.name, description: c.description });
+    setAlready(!added);
+    if (added) void refreshCampaignHomebrew(); // the GM's shared homebrew, now rather than on the next focus
     setCode('');
     setJoined(c.name);
   };
@@ -705,13 +709,14 @@ function CodeChip({ code }: { code: string }) {
   );
 }
 
-function CampaignForm({ content, editing, onDelete, onCancel, onCreated, onSaved }: {
+export function CampaignForm({ content, editing, onDelete, onCancel, onCreated, onSaved }: {
   content: ContentDatabase;
   editing?: CampaignMembership;
   /** Absent when creating — there's nothing to delete yet. */
   onDelete?: () => void;
   onCancel: () => void;
-  onCreated: (c: Campaign) => void;
+  /** `shareError`: the campaign was created but sharing its homebrew failed. */
+  onCreated: (c: Campaign, shareError?: string) => void;
   onSaved: (c: Campaign) => void;
 }) {
   const [name, setName] = useState(editing?.name ?? '');
@@ -721,6 +726,12 @@ function CampaignForm({ content, editing, onDelete, onCancel, onCreated, onSaved
   const [error, setError] = useState('');
   const [loadedDefaults, setLoadedDefaults] = useState(!editing);
   const [loadError, setLoadError] = useState('');
+  /**
+   * The GM's homebrew source ids this campaign shares right now. A new campaign shares nothing ([]);
+   * null = UNKNOWN (not read yet, or the read failed), and then a save changes no sharing at all —
+   * an unread list must never be taken for an empty one, or saving would unshare everything.
+   */
+  const [sharedIds, setSharedIds] = useState<string[] | null>(editing ? null : []);
   /** Removable integration: this campaign isn't on the server, so its rules live on this device. */
   const [localOnly, setLocalOnly] = useState(false);
   // Prefetch the campaign's current defaults into the editor. Runs in an effect (not the render body,
@@ -729,10 +740,18 @@ function CampaignForm({ content, editing, onDelete, onCancel, onCreated, onSaved
   useEffect(() => {
     if (!editing) return;
     let cancelled = false;
-    void fetchCampaignByCode(editing.code).then((res) => {
+    void Promise.all([fetchCampaignByCode(editing.code), fetchSharedSourceIds(editing.id).catch(() => null)]).then(([res, shared]) => {
       if (cancelled) return;
       if (res.ok) {
-        setBuild(buildFromDefaults(res.value.defaults));
+        const b = buildFromDefaults(res.value.defaults);
+        /* A shared source is ticked by its ID (sources.ts sourceIdToken), like every homebrew toggle:
+         * a source renamed since the last save (here or on another device) still shows as on, so
+         * saving never unshares it — and the defaults players copy carry the id, so the rename never
+         * switches it off on their characters either. */
+        const tokens = (shared ?? []).map(sourceIdToken);
+        if (tokens.length) b.enabledSources = [...new Set([...(b.enabledSources ?? CORE_BOOKS), ...tokens])].sort();
+        setBuild(b);
+        setSharedIds(shared);
         setLoadedDefaults(true);
         return;
       }
@@ -768,17 +787,80 @@ function CampaignForm({ content, editing, onDelete, onCancel, onCreated, onSaved
       onSaved({ id: editing.id, code: editing.code, ownerId: '', name, description, defaults });
       return;
     }
+    /*
+     * SHARING = the GM's own homebrew sources ticked in Sources. Worked out BEFORE the save, so a
+     * Cancel on the confirm saves nothing at all. Only when the shared list was actually read.
+     * Unsharing only touches sources this device can see: a shared id missing here (made on another
+     * device, not synced yet) is not "unticked", it is unknown — left alone.
+     * BOTH directions ask, sharing too: a player's device keeps a shared source for good, and a tick
+     * can arrive without the GM meaning to share (Enable everything, a campaign whose defaults held
+     * homebrew names before ticking meant sharing, an old name a new source now has).
+     */
+    const syncSharing = (!editing || loadedDefaults) && sharedIds !== null;
+    let toShare: string[] = [];
+    let toUnshare: string[] = [];
+    if (syncSharing) {
+      const own = loadHomebrewSources();
+      const on = enabledBookSet(build.enabledSources);
+      const ticked = Object.values(own).filter((s) => on.has(sourceIdToken(s.id)) || on.has(s.name)).map((s) => s.id);
+      toShare = ticked.filter((id) => !sharedIds.includes(id));
+      toUnshare = sharedIds.filter((id) => own[id] && !ticked.includes(id));
+      const names = (ids: string[]) => ids.map((id) => own[id].name).join(', ');
+      if (toShare.length || toUnshare.length) {
+        const ok = await confirmDialog({
+          danger: true,
+          title: !toUnshare.length ? 'Share homebrew with players?' : !toShare.length ? 'Stop sharing homebrew?' : 'Change homebrew sharing?',
+          message: (
+            <>
+              {toShare.length > 0 && (
+                <p>
+                  Share {names(toShare)} with “{name.trim()}”? Each player gets a copy they keep as their own homebrew, even if
+                  you stop sharing later. To keep one private, cancel and turn it off in Sources.
+                </p>
+              )}
+              {toUnshare.length > 0 && (
+                <p>
+                  Stop sharing {names(toUnshare)} with “{name.trim()}”? Players keep it as their own homebrew but stop getting
+                  your changes.
+                </p>
+              )}
+            </>
+          ),
+          confirmLabel: !toUnshare.length ? 'Share' : !toShare.length ? 'Stop sharing' : 'Change sharing',
+        });
+        if (!ok) {
+          setBusy(false);
+          return;
+        }
+      }
+    }
     // Only send defaults when we actually loaded them (create, or a successful edit-prefetch). After a
     // failed prefetch we save just name/description and leave the campaign's real defaults untouched.
     const patch = editing && !loadedDefaults ? { name, description } : { name, description, defaults: defaultsFromBuild(build) };
     const res = editing ? await updateCampaign(editing.id, patch) : await createCampaign(name, description, defaultsFromBuild(build));
-    setBusy(false);
     if (!res.ok) {
+      setBusy(false);
       setError(res.error);
       return;
     }
-    if (editing) onSaved(res.value);
-    else onCreated(res.value);
+    let shareError = '';
+    if (syncSharing) {
+      const id = res.value.id;
+      const shared = toShare.length ? await shareSources(id, toShare) : null;
+      const unshared = toUnshare.length ? await unshareSources(id, toUnshare) : null;
+      // What went through is now the known list, so a retry neither asks nor sends it again.
+      setSharedIds((ids) => [...(ids ?? []).filter((x) => !(unshared?.ok && toUnshare.includes(x))), ...(shared?.ok ? toShare : [])]);
+      const failed = [shared, unshared].find((r) => r && !r.ok);
+      if (failed && !failed.ok)
+        shareError = editing
+          ? `Saved, but sharing failed: ${failed.error} Save again to retry.`
+          : `Created, but sharing failed: ${failed.error} To retry, open Manage campaign → Settings & defaults and save.`;
+    }
+    setBusy(false);
+    if (editing) {
+      if (shareError) setError(shareError); // the rest is saved; stay here so Save retries the sharing
+      else onSaved(res.value);
+    } else onCreated(res.value, shareError || undefined);
   };
 
   return (
@@ -821,6 +903,9 @@ function CampaignForm({ content, editing, onDelete, onCancel, onCreated, onSaved
               players.
             </div>
           )}
+          {!localOnly && sharedIds === null && (
+            <div className="setup-note">Couldn’t check which homebrew is shared — sharing won’t change when you save.</div>
+          )}
           <DefaultsEditor content={content} build={build} setBuild={setBuild} />
         </>
       )}
@@ -843,11 +928,12 @@ function CampaignForm({ content, editing, onDelete, onCancel, onCreated, onSaved
   );
 }
 
-function CreatedView({ c, onDone }: { c: Campaign; onDone: () => void }) {
+function CreatedView({ c, shareError, onDone }: { c: Campaign; shareError?: string; onDone: () => void }) {
   return (
     <div className="cmp-created">
       <i className="ti ti-circle-check cmp-created-icon" aria-hidden="true" />
       <h2 className="cmp-created-title">“{c.name}” is ready</h2>
+      {shareError && <p className="login-error" role="alert">{shareError}</p>}
       <p className="cmp-created-sub">Share this code with your players so they can join:</p>
       <CodeChip code={c.code} />
       <p className="cmp-created-hint">Players enter it in a character&rsquo;s <strong>Setup → Campaigns</strong>.</p>

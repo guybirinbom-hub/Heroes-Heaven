@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, type ChangeEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react';
 import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import {
   loadHomebrewSources,
@@ -9,10 +9,13 @@ import {
   deleteHomebrewEntry,
   newRosterId,
   HOMEBREW_TYPES,
+  listCampaignHbSources,
+  loadCampaignHbCache,
   type HomebrewContent,
   type HomebrewSource,
   type HomebrewType,
 } from '../data/storage';
+import { exportCampaignSource, sharedSourceCampaigns } from '../data/campaignHomebrew';
 import { downloadText } from './download';
 import {
   HOMEBREW_SCHEMAS,
@@ -23,8 +26,8 @@ import {
   type HBSchema,
 } from './homebrewSchemas';
 import { ItemEditorModal } from './ItemEditorModal';
-import { confirmDialog } from './confirm';
-import { sanitize } from './sanitizeHtml';
+import { chooseDialog, confirmDialog } from './confirm';
+import { sanitizeEntryHtml } from './sanitizeHtml';
 import { RichEditor } from './RichEditor';
 import { useEscapeClose, useBackHandler } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
@@ -41,19 +44,18 @@ const MP_RULES_ID = '__mp-rules__';
 const MYTHIC_RULES_ID = '__mythic-rules__';
 const KINGMAKER_RULES_ID = '__kingmaker-rules__';
 
-/** Rich-HTML fields a homebrew entry may carry; sanitized on import so nothing active persists at rest. */
-const HTML_FIELDS = ['description', 'craft'] as const;
-function sanitizeEntryHtml<T>(entry: T): T {
-  if (!entry || typeof entry !== 'object') return entry;
-  const rec = entry as Record<string, unknown>;
-  const out = { ...rec };
-  for (const k of HTML_FIELDS) {
-    if (typeof out[k] === 'string') out[k] = sanitize(out[k] as string);
-  }
-  return out as T;
-}
-
 type EntryRec = Record<string, unknown> & { id: string; name: string; homebrewSourceId?: string };
+
+/** Every authorable type in page order: Items (its own full editor) first, then the schema-driven ones. */
+const TYPE_GROUPS: { type: HomebrewType; label: string; icon: string }[] = [
+  { type: 'items', label: 'Items', icon: 'ti-briefcase' },
+  ...HOMEBREW_SCHEMAS.map((s) => ({
+    type: s.type,
+    label: s.label.endsWith('y') ? s.label.slice(0, -1) + 'ies' : s.label + 's',
+    icon: s.icon,
+  })),
+];
+const byName = (a: EntryRec, b: EntryRec) => a.name.localeCompare(b.name);
 
 /** Generic field-driven editor for a non-item homebrew type. */
 function HBEditorModal({
@@ -233,6 +235,33 @@ export function HomebrewPage({
   // sidebar+pane layout and is untouched).
   const [mobileOpen, setMobileOpen] = useState(false);
   const [sources, setSources] = useState<Record<string, HomebrewSource>>(() => loadHomebrewSources());
+  // A background refresh (a sync, a GM's campaign edit) hands App a new content DB while this page is
+  // open, so re-read what storage now holds each time one arrives.
+  useEffect(() => setSources(loadHomebrewSources()), [content]);
+  // Campaign homebrew: this device's last pulled copy of what the GMs of the player's campaigns share.
+  // Read-only here; its own selection so `selected` (and both editors' guards) stay own-only.
+  // `content` is the dependency because a new one is the "a refresh landed" signal.
+  const campaignSources = useMemo(() => listCampaignHbSources().sort((a, b) => a.name.localeCompare(b.name)), [content]);
+  const [campaignSel, setCampaignSel] = useState<{ campaignId: string; sourceId: string } | null>(null);
+  // The list holds each shared source once, so the source id alone finds it.
+  const campaignRow = campaignSel ? campaignSources.find((s) => s.id === campaignSel.sourceId) : undefined;
+  // GM side, desktop only — phones have no GM side and make no network call. Which of MY sources my
+  // campaigns share; null = unknown, and then nothing is claimed either way.
+  const [sharedMap, setSharedMap] = useState<Record<string, string[]> | null>(null);
+  useEffect(() => {
+    if (isMobile) return;
+    let live = true;
+    sharedSourceCampaigns().then(
+      (m) => {
+        if (live) setSharedMap(m);
+      },
+      () => undefined,
+    );
+    return () => {
+      live = false;
+    };
+  }, []); // once, on mount
+  const sharedWith = (id: string) => (!isMobile && sharedMap?.[id]?.length ? sharedMap[id].join(', ') : '');
   const saveEntry = (type: HomebrewType, entry: EntryRec) => {
     saveHomebrewEntry(type, entry as unknown as HomebrewContent[typeof type][string]);
     onChanged();
@@ -250,9 +279,20 @@ export function HomebrewPage({
   const isKingmakerRules = selectedId === KINGMAKER_RULES_ID;
   const isRulesRef = isMpRules || isMythicRules || isKingmakerRules;
   const selected = selectedId && !isRulesRef ? sources[selectedId] : null;
-  const drilledIn = isMobile && mobileOpen && (!!selected || isRulesRef);
+  const drilledIn = isMobile && mobileOpen && (!!selected || isRulesRef || !!campaignRow);
   // Android Back / Escape from a drilled-in source returns to the sources list.
   useBackHandler(drilledIn, () => setMobileOpen(false));
+  // Open a row (a no-op for mobileOpen on desktop, where drilledIn needs isMobile).
+  const open = (id: string) => {
+    setSelectedId(id);
+    setCampaignSel(null);
+    setMobileOpen(true);
+  };
+  const openCampaign = (row: { id: string; campaignId: string }) => {
+    setCampaignSel({ campaignId: row.campaignId, sourceId: row.id });
+    setSelectedId(null);
+    setMobileOpen(true);
+  };
 
   const persistSource = (src: HomebrewSource) => {
     saveHomebrewSource(src);
@@ -261,8 +301,24 @@ export function HomebrewPage({
   const createSource = () => {
     const src: HomebrewSource = { id: `hbsrc-${newRosterId()}`, name: 'New source' };
     persistSource(src);
-    setSelectedId(src.id);
-    setMobileOpen(true); // on a phone, drill straight into the new source
+    open(src.id); // on a phone, drill straight into the new source
+  };
+  // A campaign source → a separate own copy with new ids, which the GM's changes never reach.
+  const exportCampaign = async (row: { id: string; campaignId: string }) => {
+    const newId = exportCampaignSource(row.campaignId, row.id);
+    // Notices, not questions: one button (a Cancel beside them would offer to undo what already happened).
+    if (!newId) {
+      await chooseDialog({ title: "Couldn't copy", message: 'That source is no longer on this device.', buttons: [{ value: 'ok', label: 'OK', primary: true }] });
+      return;
+    }
+    onChanged();
+    setSources(loadHomebrewSources());
+    open(newId);
+    await chooseDialog({
+      title: 'Copied to your homebrew',
+      message: "It's yours now — your GM's changes won't reach it. Turn it on per character under Setup → Sources.",
+      buttons: [{ value: 'ok', label: 'Done', primary: true }],
+    });
   };
 
   // Export / import all homebrew (sources + content) as a shareable JSON file.
@@ -301,10 +357,13 @@ export function HomebrewPage({
     }
   };
   const removeSource = async (id: string) => {
+    const players = sharedWith(id);
     if (
       !(await confirmDialog({
         title: 'Delete this source?',
-        message: "Everything in it is deleted too. This can't be undone.",
+        message:
+          "Everything in it is deleted too. This can't be undone." +
+          (players ? ` Players in ${players} keep a copy as their own homebrew.` : ''),
         confirmLabel: 'Delete',
         danger: true,
       }))
@@ -321,13 +380,28 @@ export function HomebrewPage({
     setMobileOpen(false); // a deleted source drops back to the sources list on a phone
   };
 
-  // Entries of a given type belonging to the selected source (read from the live content DB).
+  // Entries of a given type belonging to the selected source. Read from STORAGE, not the content DB:
+  // there, a live campaign copy shadows a kept entry the player never edited, and the kept one must
+  // still list under its own source.
+  const ownContent = selected || campaignRow ? loadHomebrewContent() : null;
   const entriesOf = (type: HomebrewType): EntryRec[] =>
-    Object.values((content[type] ?? {}) as unknown as Record<string, EntryRec>)
+    Object.values((ownContent?.[type] ?? {}) as unknown as Record<string, EntryRec>)
       .filter((e) => e.homebrewSourceId === selectedId)
-      .sort((a, b) => a.name.localeCompare(b.name));
+      .sort(byName);
 
-  const ITEM_TYPE: HomebrewType = 'items';
+  // The open campaign source's entries, from this device's last pulled copy (shown offline too).
+  const campaignCopy = campaignRow ? loadCampaignHbCache()[campaignRow.campaignId] : undefined;
+  const campaignEntriesOf = (type: HomebrewType): EntryRec[] =>
+    Object.values((campaignCopy?.content?.[type] ?? {}) as unknown as Record<string, EntryRec>)
+      .filter((e) => e.homebrewSourceId === campaignRow?.id)
+      .sort(byName);
+  // The player's own entry with the same id wins over the GM's copy (data/index.ts mergeWithSeed) —
+  // unless it is a KEPT entry never edited since, which sits under the live copy.
+  const ownVersionUsed = (type: HomebrewType, id: string) => {
+    const own = ownContent?.[type][id] as unknown as EntryRec | undefined;
+    return !!own && !sources[own.homebrewSourceId ?? '']?.kept?.ids.includes(`${type}:${id}`);
+  };
+  const updated = campaignCopy?.updatedAt ? new Date(campaignCopy.updatedAt) : null;
 
   return (
     <div className="hb-page">
@@ -354,7 +428,7 @@ export function HomebrewPage({
                 ? 'Mythic Rules'
                 : isKingmakerRules
                   ? 'Kingmaker Rules'
-                  : selected?.name || 'Homebrew'
+                  : (campaignRow ?? selected)?.name || 'Homebrew'
             : 'Homebrew'}
         </div>
         <PageMenu
@@ -379,50 +453,39 @@ export function HomebrewPage({
             A <strong>source</strong> holds your custom content — items, feats, spells, ancestries, heritages,
             backgrounds, and actions. Tap one to open it; enable it per character under Setup → Sources.
           </p>
-          <button
-            className="hb-source-row hb-special"
-            onClick={() => {
-              setSelectedId(MP_RULES_ID);
-              setMobileOpen(true);
-            }}
-          >
+          <button className="hb-source-row hb-special" onClick={() => open(MP_RULES_ID)}>
             <i className="ti ti-bone" aria-hidden="true" />
             <span className="hb-row-name">Monster Parts Rules</span>
             <i className="ti ti-chevron-right hb-row-chev" aria-hidden="true" />
           </button>
-          <button
-            className="hb-source-row hb-special"
-            onClick={() => {
-              setSelectedId(MYTHIC_RULES_ID);
-              setMobileOpen(true);
-            }}
-          >
+          <button className="hb-source-row hb-special" onClick={() => open(MYTHIC_RULES_ID)}>
             <i className="ti ti-flame" aria-hidden="true" />
             <span className="hb-row-name">Mythic Rules</span>
             <i className="ti ti-chevron-right hb-row-chev" aria-hidden="true" />
           </button>
-          <button
-            className="hb-source-row hb-special"
-            onClick={() => {
-              setSelectedId(KINGMAKER_RULES_ID);
-              setMobileOpen(true);
-            }}
-          >
+          <button className="hb-source-row hb-special" onClick={() => open(KINGMAKER_RULES_ID)}>
             <i className="ti ti-crown" aria-hidden="true" />
             <span className="hb-row-name">Kingmaker Rules</span>
             <i className="ti ti-chevron-right hb-row-chev" aria-hidden="true" />
           </button>
           {sourceList.map((src) => (
-            <button
-              key={src.id}
-              className="hb-source-row"
-              onClick={() => {
-                setSelectedId(src.id);
-                setMobileOpen(true);
-              }}
-            >
+            <button key={src.id} className="hb-source-row" onClick={() => open(src.id)}>
               <i className="ti ti-folder" aria-hidden="true" />
-              <span className="hb-row-name">{src.name}</span>
+              <span className="hb-row-name">
+                {src.name}
+                {src.kept && <small className="hb-row-sub">Kept from {src.kept.from}</small>}
+              </span>
+              <i className="ti ti-chevron-right hb-row-chev" aria-hidden="true" />
+            </button>
+          ))}
+          {campaignSources.length > 0 && <div className="hb-group-head">From campaigns</div>}
+          {campaignSources.map((cs) => (
+            <button key={cs.id} className="hb-source-row" onClick={() => openCampaign(cs)}>
+              <i className="ti ti-lock" aria-hidden="true" />
+              <span className="hb-row-name">
+                {cs.name}
+                <small className="hb-row-sub">{cs.campaignName}</small>
+              </span>
               <i className="ti ti-chevron-right hb-row-chev" aria-hidden="true" />
             </button>
           ))}
@@ -442,21 +505,15 @@ export function HomebrewPage({
       ) : (
       <div className="settings-body">
           <nav className="settings-nav" aria-label="Homebrew sources">
-            <button
-              className={'settings-navitem hb-special' + (isMpRules ? ' active' : '')}
-              onClick={() => setSelectedId(MP_RULES_ID)}
-            >
+            <button className={'settings-navitem hb-special' + (isMpRules ? ' active' : '')} onClick={() => open(MP_RULES_ID)}>
               <i className="ti ti-bone" aria-hidden="true" /> Monster Parts Rules
             </button>
-            <button
-              className={'settings-navitem hb-special' + (isMythicRules ? ' active' : '')}
-              onClick={() => setSelectedId(MYTHIC_RULES_ID)}
-            >
+            <button className={'settings-navitem hb-special' + (isMythicRules ? ' active' : '')} onClick={() => open(MYTHIC_RULES_ID)}>
               <i className="ti ti-flame" aria-hidden="true" /> Mythic Rules
             </button>
             <button
               className={'settings-navitem hb-special' + (isKingmakerRules ? ' active' : '')}
-              onClick={() => setSelectedId(KINGMAKER_RULES_ID)}
+              onClick={() => open(KINGMAKER_RULES_ID)}
             >
               <i className="ti ti-crown" aria-hidden="true" /> Kingmaker Rules
             </button>
@@ -464,9 +521,27 @@ export function HomebrewPage({
               <button
                 key={src.id}
                 className={'settings-navitem' + (selectedId === src.id ? ' active' : '')}
-                onClick={() => setSelectedId(src.id)}
+                onClick={() => open(src.id)}
               >
-                <i className="ti ti-folder" aria-hidden="true" /> {src.name}
+                <i className="ti ti-folder" aria-hidden="true" />
+                <span className="hb-nav-label">
+                  {src.name}
+                  {src.kept && <small className="hb-row-sub">Kept from {src.kept.from}</small>}
+                </span>
+              </button>
+            ))}
+            {campaignSources.length > 0 && <div className="hb-group-head">From campaigns</div>}
+            {campaignSources.map((cs) => (
+              <button
+                key={cs.id}
+                className={'settings-navitem' + (campaignRow?.id === cs.id ? ' active' : '')}
+                onClick={() => openCampaign(cs)}
+              >
+                <i className="ti ti-lock" aria-hidden="true" />
+                <span className="hb-nav-label">
+                  {cs.name}
+                  <small className="hb-row-sub">{cs.campaignName}</small>
+                </span>
               </button>
             ))}
             <button className="settings-navitem hb-new-source" onClick={createSource}>
@@ -488,6 +563,43 @@ export function HomebrewPage({
               <MythicRules content={content} embedded />
             ) : isKingmakerRules ? (
               <KingmakerRules content={content} embedded />
+            ) : campaignRow ? (
+              /* A GM's shared source: read-only, no Add / Delete / rename — only the GM edits the campaign copy. */
+              <div className="settings-section">
+                <h3 className="settings-h">{campaignRow.name}</h3>
+                <p className="settings-desc">
+                  Shared by your GM in “{campaignRow.campaignName}”. It updates when your GM changes it, and only
+                  your GM can edit it.
+                </p>
+                {updated && !isNaN(updated.getTime()) && (
+                  <p className="settings-desc settings-sub">
+                    Updated {updated.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}
+                  </p>
+                )}
+                <button className="btn-primary hb-export-copy" onClick={() => exportCampaign(campaignRow)}>
+                  <i className="ti ti-copy" aria-hidden="true" /> Export to my homebrew
+                </button>
+                {TYPE_GROUPS.map((g) => {
+                  const entries = campaignEntriesOf(g.type);
+                  return entries.length === 0 ? null : (
+                    <div className="hb-type" key={g.type}>
+                      <div className="hb-type-head">
+                        <span>
+                          <i className={'ti ' + g.icon} aria-hidden="true" /> {g.label}
+                        </span>
+                      </div>
+                      {entries.map((e) => (
+                        <div className="hb-entry" key={e.id}>
+                          <span className="hb-entry-text">
+                            {e.name}
+                            {ownVersionUsed(g.type, e.id) && <small className="hb-entry-own"> — your own version is used</small>}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
             ) : !selected ? (
               <div className="settings-section">
                 <h3 className="settings-h">Homebrew</h3>
@@ -513,55 +625,30 @@ export function HomebrewPage({
                     <i className="ti ti-trash" aria-hidden="true" /> Delete source
                   </button>
                 </div>
+                {selected.kept && <p className="settings-desc settings-sub">Kept from {selected.kept.from}</p>}
+                {sharedWith(selected.id) && (
+                  <p className="settings-desc settings-sub">
+                    Shared with {sharedWith(selected.id)} — your edits reach its players automatically.
+                  </p>
+                )}
 
-                {/* Items — reuse the full item editor */}
-                <div className="hb-type">
-                  <div className="hb-type-head">
-                    <span>
-                      <i className="ti ti-briefcase" aria-hidden="true" /> Items
-                    </span>
-                    <button className="chip" onClick={() => setEditing({ type: ITEM_TYPE })}>
-                      <i className="ti ti-plus" aria-hidden="true" /> Add
-                    </button>
-                  </div>
-                  {entriesOf(ITEM_TYPE).map((e) => (
-                    <div className="hb-entry" key={e.id}>
-                      <button className="hb-entry-name" onClick={() => setEditing({ type: ITEM_TYPE, entry: e })}>
-                        {e.name}
-                      </button>
-                      <button
-                        className="hb-entry-del"
-                        aria-label={`Delete ${e.name}`}
-                        onClick={() => deleteEntry(ITEM_TYPE, e.id)}
-                      >
-                        <i className="ti ti-trash" aria-hidden="true" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Schema-driven types */}
-                {HOMEBREW_SCHEMAS.map((schema) => (
-                  <div className="hb-type" key={schema.type}>
+                {/* Items open the full item editor; every other type its schema-driven one. */}
+                {TYPE_GROUPS.map((g) => (
+                  <div className="hb-type" key={g.type}>
                     <div className="hb-type-head">
                       <span>
-                        <i className={'ti ' + schema.icon} aria-hidden="true" />{' '}
-                        {schema.label.endsWith('y') ? schema.label.slice(0, -1) + 'ies' : schema.label + 's'}
+                        <i className={'ti ' + g.icon} aria-hidden="true" /> {g.label}
                       </span>
-                      <button className="chip" onClick={() => setEditing({ type: schema.type })}>
+                      <button className="chip" onClick={() => setEditing({ type: g.type })}>
                         <i className="ti ti-plus" aria-hidden="true" /> Add
                       </button>
                     </div>
-                    {entriesOf(schema.type).map((e) => (
+                    {entriesOf(g.type).map((e) => (
                       <div className="hb-entry" key={e.id}>
-                        <button className="hb-entry-name" onClick={() => setEditing({ type: schema.type, entry: e })}>
+                        <button className="hb-entry-name" onClick={() => setEditing({ type: g.type, entry: e })}>
                           {e.name}
                         </button>
-                        <button
-                          className="hb-entry-del"
-                          aria-label={`Delete ${e.name}`}
-                          onClick={() => deleteEntry(schema.type, e.id)}
-                        >
+                        <button className="hb-entry-del" aria-label={`Delete ${e.name}`} onClick={() => deleteEntry(g.type, e.id)}>
                           <i className="ti ti-trash" aria-hidden="true" />
                         </button>
                       </div>

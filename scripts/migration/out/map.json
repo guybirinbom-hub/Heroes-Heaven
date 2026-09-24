@@ -1,6 +1,6 @@
 {
  "tally": {
-  "doc": 25107,
+  "doc": 25142,
   "drop": 143,
   "subblock": 572,
   "authored": 988,
@@ -13505,8 +13505,9 @@
    "atmospheric-staff": {
     "name": "Atmospheric Staff",
     "status": "doc",
-    "docId": "equipment-2576",
-    "how": "importer:the doc this record was built from"
+    "docId": "equipment-2576-2328",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "equipment-2576"
    },
    "atmospheric-staff-lesser": {
     "name": "Atmospheric Staff (Lesser)",
@@ -18131,8 +18132,9 @@
    "talisman-cord": {
     "name": "Talisman Cord",
     "status": "doc",
-    "docId": "equipment-883",
-    "how": "importer:the doc this record was built from"
+    "docId": "equipment-883-866",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "equipment-883"
    },
    "talisman-cord-lesser": {
     "name": "Talisman Cord (Lesser)",
@@ -28145,8 +28147,9 @@
    "fey-dragonet-liqueur": {
     "name": "Fey Dragonet Liqueur",
     "status": "doc",
-    "docId": "equipment-2085",
-    "how": "importer:the doc this record was built from"
+    "docId": "equipment-2085-1843",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "equipment-2085"
    },
    "fey-dragonet-liqueur-lesser": {
     "name": "Fey Dragonet Liqueur (Lesser)",
@@ -32663,8 +32666,9 @@
    "furnace-of-endings": {
     "name": "Furnace of Endings",
     "status": "doc",
-    "docId": "equipment-2552",
-    "how": "importer:the doc this record was built from"
+    "docId": "equipment-2552-2299",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "equipment-2552"
    },
    "furnace-of-endings-lesser": {
     "name": "Furnace of Endings (Lesser)",
@@ -42185,8 +42189,9 @@
    "irritating-seedpod": {
     "name": "Irritating Seedpod",
     "status": "doc",
-    "docId": "equipment-3735",
-    "how": "importer:the doc this record was built from"
+    "docId": "equipment-3735-3517",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "equipment-3735"
    },
    "lesser-irritating-seedpod": {
     "name": "Lesser Irritating Seedpod",
@@ -57482,8 +57487,9 @@
    "wrecker": {
     "name": "Wrecker",
     "status": "doc",
-    "docId": "animal-companion-specialization-18",
-    "how": "slug-any"
+    "docId": "weapon-348",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "animal-companion-specialization-18"
    },
    "wyrm-claw-greater": {
     "name": "Wyrm Claw (Greater)",
@@ -58642,8 +58648,9 @@
    "aon-meal-poor": {
     "name": "Meal (Poor)",
     "status": "doc",
-    "docId": "trait-466",
-    "how": "slug-noparen"
+    "docId": "equipment-2767-2537",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "trait-466"
    },
    "aon-stabling": {
     "name": "Stabling",
@@ -60126,6 +60133,12 @@
     "status": "doc",
     "docId": "equipment-3511",
     "how": "idmap"
+   },
+   "silver-ingot-travel-guide": {
+    "name": "Silver (Ingot)",
+    "status": "doc",
+    "docId": "equipment-1781",
+    "how": "importer:the doc this record was built from"
    },
    "extradimensional-stash-space": {
     "name": "Extradimensional Stash",
@@ -62370,8 +62383,9 @@
    "ability-boosts": {
     "name": "Ability Boosts",
     "status": "doc",
-    "docId": "class-feature-10",
-    "how": "importer:the doc this record was built from"
+    "docId": "class-feature-456",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-10"
    },
    "adept-benefit-amulet": {
     "name": "Adept Benefit (Amulet)",
@@ -62540,10 +62554,11 @@
    },
    "alchemical-sciences-methodology": {
     "name": "Alchemical Sciences Methodology",
-    "how": "reclass:suffix:methodology",
+    "how": "reclass:suffix:methodology -> owner ruling (aonId row in effect-backfill.json)",
     "status": "doc",
-    "docId": "methodology-1",
-    "archiveName": "Alchemical Sciences"
+    "docId": "methodology-5",
+    "archiveName": "Alchemical Sciences",
+    "joinDocId": "methodology-1"
    },
    "alchemist-armor-expertise-level-13": {
     "name": "Alchemist Armor Expertise (Level 13)",
@@ -62608,10 +62623,11 @@
    },
    "animal-instinct": {
     "name": "Animal Instinct",
-    "how": "reclass:suffix:instinct",
+    "how": "reclass:suffix:instinct -> owner ruling (aonId row in effect-backfill.json)",
     "status": "doc",
-    "docId": "instinct-1",
-    "archiveName": "Animal"
+    "docId": "instinct-8",
+    "archiveName": "Animal",
+    "joinDocId": "instinct-1"
    },
    "animal-order": {
     "name": "Animal Order",
@@ -62634,8 +62650,9 @@
    "arcane-spellcasting-magus": {
     "name": "Magus Spellcasting",
     "status": "doc",
-    "docId": "class-feature-418",
-    "how": "slug-noparen"
+    "docId": "class-feature-1258",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-418"
    },
    "armor-innovation": {
     "name": "Armor Innovation",
@@ -62672,8 +62689,9 @@
    "avenger": {
     "name": "Avenger",
     "status": "doc",
-    "docId": "archetype-282",
-    "how": "slug-any"
+    "docId": "racket-10",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "archetype-282"
    },
    "baba-yaga": {
     "name": "Baba Yaga",
@@ -62702,8 +62720,9 @@
    "battle": {
     "name": "Battle",
     "status": "doc",
-    "docId": "action-1422",
-    "how": "slug-any"
+    "docId": "mystery-13",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "action-1422"
    },
    "battledancer": {
     "name": "Battledancer",
@@ -62714,8 +62733,9 @@
    "beast-eidolon": {
     "name": "Beast Eidolon",
     "status": "doc",
-    "docId": "creature-3679",
-    "how": "slug-any"
+    "docId": "eidolon-3",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "creature-3679"
    },
    "bell": {
     "name": "Bell",
@@ -62750,8 +62770,9 @@
    "blight": {
     "name": "Blight",
     "status": "doc",
-    "docId": "creature-family-561",
-    "how": "slug-any"
+    "docId": "mystery-21",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "creature-family-561"
    },
    "bloodline-aberrant": {
     "name": "Bloodline: Aberrant",
@@ -62886,8 +62907,9 @@
    "bloodrager": {
     "name": "Bloodrager",
     "status": "doc",
-    "docId": "archetype-283",
-    "how": "slug-any"
+    "docId": "instinct-14",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "archetype-283"
    },
    "blunt-shot": {
     "name": "Blunt Shot",
@@ -62898,8 +62920,9 @@
    "bomber": {
     "name": "Bomber",
     "status": "doc",
-    "docId": "class-sample-2",
-    "how": "slug-any"
+    "docId": "research-field-5",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-sample-2"
    },
    "bones": {
     "name": "Bones",
@@ -62958,8 +62981,9 @@
    "chirurgeon": {
     "name": "Chirurgeon",
     "status": "doc",
-    "docId": "class-sample-1",
-    "how": "slug-any"
+    "docId": "research-field-6",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-sample-1"
    },
    "choir-politic": {
     "name": "Choir Politic",
@@ -63122,8 +63146,9 @@
    "deity-champion": {
     "name": "Deity (Champion)",
     "status": "doc",
-    "docId": "class-feature-649",
-    "how": "slug-noparen"
+    "docId": "class-feature-871",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-649"
    },
    "deity-cleric": {
     "name": "Deity (Cleric)",
@@ -63272,10 +63297,11 @@
    },
    "empiricism-methodology": {
     "name": "Empiricism Methodology",
-    "how": "reclass:suffix:methodology",
+    "how": "reclass:suffix:methodology -> owner ruling (aonId row in effect-backfill.json)",
     "status": "doc",
-    "docId": "methodology-2",
-    "archiveName": "Empiricism"
+    "docId": "methodology-6",
+    "archiveName": "Empiricism",
+    "joinDocId": "methodology-2"
    },
    "encroaching-presence": {
     "name": "Encroaching Presence",
@@ -63370,8 +63396,9 @@
    "fencer": {
     "name": "Fencer",
     "status": "doc",
-    "docId": "class-sample-32",
-    "how": "slug-any"
+    "docId": "style-9",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-sample-32"
    },
    "fetching-bangles": {
     "name": "Fetching Bangles",
@@ -63515,10 +63542,11 @@
    },
    "forensic-medicine-methodology": {
     "name": "Forensic Medicine Methodology",
-    "how": "reclass:suffix:methodology",
+    "how": "reclass:suffix:methodology -> owner ruling (aonId row in effect-backfill.json)",
     "status": "doc",
-    "docId": "methodology-3",
-    "archiveName": "Forensic Medicine"
+    "docId": "methodology-7",
+    "archiveName": "Forensic Medicine",
+    "joinDocId": "methodology-3"
    },
    "formula-book": {
     "name": "Formula Book",
@@ -63558,10 +63586,11 @@
    },
    "fury-instinct": {
     "name": "Fury Instinct",
-    "how": "reclass:suffix:instinct",
+    "how": "reclass:suffix:instinct -> owner ruling (aonId row in effect-backfill.json)",
     "status": "doc",
-    "docId": "instinct-3",
-    "archiveName": "Fury"
+    "docId": "instinct-10",
+    "archiveName": "Fury",
+    "joinDocId": "instinct-3"
    },
    "gate-junction": {
     "name": "Gate Junction",
@@ -63583,10 +63612,11 @@
    },
    "giant-instinct": {
     "name": "Giant Instinct",
-    "how": "reclass:suffix:instinct",
+    "how": "reclass:suffix:instinct -> owner ruling (aonId row in effect-backfill.json)",
     "status": "doc",
-    "docId": "instinct-4",
-    "archiveName": "Giant"
+    "docId": "instinct-11",
+    "archiveName": "Giant",
+    "joinDocId": "instinct-4"
    },
    "gleaming-blade": {
     "name": "Gleaming Blade",
@@ -63657,8 +63687,9 @@
    "gymnast": {
     "name": "Gymnast",
     "status": "doc",
-    "docId": "class-sample-31",
-    "how": "slug-any"
+    "docId": "style-10",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-sample-31"
    },
    "hampering-spikes": {
     "name": "Hampering Spikes",
@@ -63887,10 +63918,11 @@
    },
    "interrogation-methodology": {
     "name": "Interrogation Methodology",
-    "how": "reclass:suffix:methodology",
+    "how": "reclass:suffix:methodology -> owner ruling (aonId row in effect-backfill.json)",
     "status": "doc",
-    "docId": "methodology-4",
-    "archiveName": "Interrogation"
+    "docId": "methodology-8",
+    "archiveName": "Interrogation",
+    "joinDocId": "methodology-4"
    },
    "iron-will": {
     "name": "Iron Will",
@@ -63913,8 +63945,9 @@
    "lantern": {
     "name": "Lantern",
     "status": "doc",
-    "docId": "equipment-2730",
-    "how": "slug-any"
+    "docId": "implement-20",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "equipment-2730"
    },
    "laughing-shadow": {
     "name": "Laughing Shadow",
@@ -64118,8 +64151,9 @@
    "maestro": {
     "name": "Maestro",
     "status": "doc",
-    "docId": "creature-3579",
-    "how": "slug-any"
+    "docId": "muse-6",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "creature-3579"
    },
    "major-creed": {
     "name": "Major Creed",
@@ -64154,8 +64188,9 @@
    "mastermind": {
     "name": "Mastermind",
     "status": "doc",
-    "docId": "creature-3612",
-    "how": "slug-any"
+    "docId": "racket-6",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "creature-3612"
    },
    "medium-armor-expertise-inventor": {
     "name": "Medium Armor Expertise (Inventor)",
@@ -64166,8 +64201,9 @@
    "medium": {
     "name": "Medium",
     "status": "doc",
-    "docId": "class-sample-75",
-    "how": "slug-any"
+    "docId": "practice-2",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-sample-75"
    },
    "metal-gate": {
     "name": "Metal Gate",
@@ -64184,8 +64220,9 @@
    "mirror": {
     "name": "Mirror",
     "status": "doc",
-    "docId": "equipment-2735",
-    "how": "slug-any"
+    "docId": "implement-21",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "equipment-2735"
    },
    "mirrored-aegis": {
     "name": "Mirrored Aegis",
@@ -64226,8 +64263,9 @@
    "mosquito-witch": {
     "name": "Mosquito Witch",
     "status": "doc",
-    "docId": "creature-1735",
-    "how": "slug-any"
+    "docId": "patron-28",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "creature-1735"
    },
    "multisensory-mask": {
     "name": "Multisensory Mask",
@@ -64244,8 +64282,9 @@
    "mutagenist": {
     "name": "Mutagenist",
     "status": "doc",
-    "docId": "class-sample-3",
-    "how": "slug-any"
+    "docId": "research-field-7",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-sample-3"
    },
    "acrobats-calling": {
     "name": "Acrobat's Calling",
@@ -64819,8 +64858,9 @@
    "ruffian": {
     "name": "Ruffian",
     "status": "doc",
-    "docId": "class-sample-69",
-    "how": "slug-any"
+    "docId": "racket-7",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-sample-69"
    },
    "rune-capacity": {
     "name": "Rune Capacity",
@@ -64921,8 +64961,9 @@
    "scoundrel": {
     "name": "Scoundrel",
     "status": "doc",
-    "docId": "class-sample-16",
-    "how": "slug-any"
+    "docId": "racket-8",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-sample-16"
    },
    "second-doctrine-cloistered-cleric": {
     "name": "Second Doctrine (Cloistered Cleric)",
@@ -64957,8 +64998,9 @@
    "seer": {
     "name": "Seer",
     "status": "doc",
-    "docId": "class-sample-74",
-    "how": "slug-any"
+    "docId": "practice-3",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-sample-74"
    },
    "segmented-frame": {
     "name": "Segmented Frame",
@@ -65047,26 +65089,30 @@
    "spell-repertoire-bard": {
     "name": "Spell Repertoire (Bard)",
     "status": "doc",
-    "docId": "class-feature-447",
-    "how": "slug-noparen"
+    "docId": "class-feature-625",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-447"
    },
    "spell-repertoire-oracle": {
     "name": "Spell Repertoire (Oracle)",
     "status": "doc",
-    "docId": "class-feature-447",
-    "how": "slug-noparen"
+    "docId": "class-feature-956",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-447"
    },
    "spell-repertoire-psychic": {
     "name": "Spell Repertoire (Psychic)",
     "status": "doc",
-    "docId": "class-feature-447",
-    "how": "slug-noparen"
+    "docId": "class-feature-1141",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-447"
    },
    "spell-repertoire-sorcerer": {
     "name": "Spell Repertoire (Sorcerer)",
     "status": "doc",
-    "docId": "class-feature-447",
-    "how": "slug-noparen"
+    "docId": "class-feature-984",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-447"
    },
    "spell-repertoire-summoner": {
     "name": "Spell Repertoire (Summoner)",
@@ -65088,10 +65134,11 @@
    },
    "spirit-instinct": {
     "name": "Spirit Instinct",
-    "how": "reclass:suffix:instinct",
+    "how": "reclass:suffix:instinct -> owner ruling (aonId row in effect-backfill.json)",
     "status": "doc",
-    "docId": "instinct-5",
-    "archiveName": "Spirit"
+    "docId": "instinct-12",
+    "archiveName": "Spirit",
+    "joinDocId": "instinct-5"
    },
    "spore-order": {
     "name": "Spore Order",
@@ -65159,8 +65206,9 @@
    "studious-spells": {
     "name": "Studious Spell",
     "status": "doc",
-    "docId": "class-feature-431",
-    "how": "importer:the doc this record was built from"
+    "docId": "class-feature-1270",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-431"
    },
    "subtle-dampeners": {
     "name": "Subtle Dampeners",
@@ -65170,10 +65218,11 @@
    },
    "superstition-instinct": {
     "name": "Superstition Instinct",
-    "how": "reclass:suffix:instinct",
+    "how": "reclass:suffix:instinct -> owner ruling (aonId row in effect-backfill.json)",
     "status": "doc",
-    "docId": "instinct-6",
-    "archiveName": "Superstition"
+    "docId": "instinct-13",
+    "archiveName": "Superstition",
+    "joinDocId": "instinct-6"
    },
    "swarm-eidolon": {
     "name": "Swarm Eidolon",
@@ -65317,8 +65366,9 @@
    "thief": {
     "name": "Thief",
     "status": "doc",
-    "docId": "class-sample-15",
-    "how": "slug-any"
+    "docId": "racket-9",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-sample-15"
    },
    "third-doctrine-cloistered-cleric": {
     "name": "Third Doctrine (Cloistered Cleric)",
@@ -65353,8 +65403,9 @@
    "time": {
     "name": "Time",
     "status": "doc",
-    "docId": "domain-121",
-    "how": "slug-any"
+    "docId": "mystery-23",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "domain-121"
    },
    "titans-breaker": {
     "name": "Titan's Breaker",
@@ -65505,8 +65556,9 @@
    "warrior": {
     "name": "Warrior",
     "status": "doc",
-    "docId": "background-445",
-    "how": "slug-any"
+    "docId": "muse-8",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "background-445"
    },
    "water-gate": {
     "name": "Water Gate",
@@ -66275,8 +66327,9 @@
    "pistoleros-retort": {
     "name": "Pistoler's Retort",
     "status": "doc",
-    "docId": "action-3681",
-    "how": "slug-any"
+    "docId": "action-912",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "action-3681"
    },
    "raconteurs-reload": {
     "name": "Raconteur's Reload",
@@ -66649,6 +66702,24 @@
     "status": "doc",
     "docId": "conscious-mind-9",
     "how": "record carries its own aonId (targeted merge)"
+   },
+   "lamentation-of-sinister-deals": {
+    "name": "Lamentation of Sinister Deals",
+    "status": "doc",
+    "docId": "apparition-16",
+    "how": "importer:the doc this record was built from"
+   },
+   "twofold-tine": {
+    "name": "Twofold Tine",
+    "status": "doc",
+    "docId": "hybrid-study-15",
+    "how": "importer:the doc this record was built from"
+   },
+   "volatile-spark": {
+    "name": "Volatile Spark",
+    "status": "doc",
+    "docId": "hybrid-study-16",
+    "how": "importer:the doc this record was built from"
    },
    "energy-shot": {
     "name": "Energy Shot",
@@ -77921,8 +77992,9 @@
    "firework-technician-dedication": {
     "name": "Firework Technician Dedication",
     "status": "doc",
-    "docId": "feat-3245",
-    "how": "importer:the doc this record was built from"
+    "docId": "feat-8528",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "feat-3245"
    },
    "coughing-dragon-display": {
     "name": "Coughing Dragon Display",
@@ -105443,8 +105515,9 @@
    "play-to-the-crowd-dandy": {
     "name": "Play to the Crowd (Dandy)",
     "status": "doc",
-    "docId": "feat-6335",
-    "how": "slug-noparen"
+    "docId": "feat-7637",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "feat-6335"
    },
    "breath-of-the-dragon-dragon-disciple": {
     "name": "Breath of the Dragon (Dragon Disciple)",
@@ -105647,8 +105720,9 @@
    "rallying-charge-knight-vigilant": {
     "name": "Rallying Charge (Knight Vigilant)",
     "status": "doc",
-    "docId": "feat-6357",
-    "how": "slug-noparen"
+    "docId": "feat-7750",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "feat-6357"
    },
    "repulse-the-wicked": {
     "name": "Repulse the Wicked",
@@ -105719,8 +105793,9 @@
    "stone-blood-stonebound": {
     "name": "Stone Blood (Stonebound)",
     "status": "doc",
-    "docId": "feat-890",
-    "how": "slug-noparen"
+    "docId": "feat-4380",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "feat-890"
    },
    "master-summoning-spellcasting": {
     "name": "Master Summoning Spellcasting",
@@ -105970,8 +106045,9 @@
    "knowledge-is-power": {
     "name": "Knowledge is Power",
     "status": "doc",
-    "docId": "feat-2861",
-    "how": "importer:the doc this record was built from"
+    "docId": "feat-5039",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "feat-2861"
    },
    "timeless-body": {
     "name": "Timeless Body",
@@ -106706,6 +106782,30 @@
     "status": "doc",
     "docId": "feat-9271",
     "how": "record carries its own aonId (targeted merge)"
+   },
+   "zombie-horde-impossible-magic": {
+    "name": "Zombie Horde",
+    "status": "doc",
+    "docId": "feat-9122",
+    "how": "importer:the doc this record was built from"
+   },
+   "remote-detonation-impossible-magic": {
+    "name": "Remote Detonation",
+    "status": "doc",
+    "docId": "feat-9171",
+    "how": "importer:the doc this record was built from"
+   },
+   "practical-magic-impossible-magic": {
+    "name": "Practical Magic",
+    "status": "doc",
+    "docId": "feat-9331",
+    "how": "importer:the doc this record was built from"
+   },
+   "keep-pace-player-core-2": {
+    "name": "Keep Pace",
+    "status": "doc",
+    "docId": "feat-6284",
+    "how": "importer:the doc this record was built from"
    },
    "haunting-memories-skill-feat": {
     "name": "Haunting Memories (Skill Feat)",
@@ -109004,8 +109104,9 @@
    "aon-ganzi": {
     "name": "Ganzi",
     "status": "doc",
-    "docId": "trait-339",
-    "how": "slug-noparen"
+    "docId": "heritage-129",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "trait-339"
    },
    "aon-ifrit": {
     "name": "Ifrit",
@@ -109018,6 +109119,18 @@
     "status": "doc",
     "docId": "heritage-433",
     "how": "slug-noparen"
+   },
+   "defensive-automaton": {
+    "name": "Defensive Automaton",
+    "status": "doc",
+    "docId": "heritage-438",
+    "how": "importer:the doc this record was built from"
+   },
+   "newly-minted-automaton": {
+    "name": "Newly Minted Automaton",
+    "status": "doc",
+    "docId": "heritage-439",
+    "how": "importer:the doc this record was built from"
    },
    "benthic-athamaru": {
     "name": "Benthic Athamaru",
@@ -112007,8 +112120,9 @@
    "refugee-fall-of-plaguestone": {
     "name": "Refugee (Fall of Plaguestone)",
     "status": "doc",
-    "docId": "background-455",
-    "how": "slug-noparen"
+    "docId": "background-40",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "background-455"
    },
    "refugee-pc2": {
     "name": "Refugee (PC2)",
@@ -112045,6 +112159,156 @@
     "status": "doc",
     "docId": "background-580",
     "how": "slug-noparen"
+   },
+   "art-collector": {
+    "name": "Art \"Collector\"",
+    "status": "doc",
+    "docId": "background-647",
+    "how": "importer:the doc this record was built from"
+   },
+   "blooded-by-the-dead": {
+    "name": "Blooded by the Dead",
+    "status": "doc",
+    "docId": "background-648",
+    "how": "importer:the doc this record was built from"
+   },
+   "curse-marked": {
+    "name": "Curse-Marked",
+    "status": "doc",
+    "docId": "background-649",
+    "how": "importer:the doc this record was built from"
+   },
+   "friend-of-a-friend": {
+    "name": "Friend of a Friend",
+    "status": "doc",
+    "docId": "background-650",
+    "how": "importer:the doc this record was built from"
+   },
+   "once-possessed": {
+    "name": "Once Possessed",
+    "status": "doc",
+    "docId": "background-651",
+    "how": "importer:the doc this record was built from"
+   },
+   "trusted-rival": {
+    "name": "Trusted Rival",
+    "status": "doc",
+    "docId": "background-652",
+    "how": "importer:the doc this record was built from"
+   },
+   "archival-assistant": {
+    "name": "Archival Assistant",
+    "status": "doc",
+    "docId": "background-653",
+    "how": "importer:the doc this record was built from"
+   },
+   "azlanti-researcher": {
+    "name": "Azlanti Researcher",
+    "status": "doc",
+    "docId": "background-654",
+    "how": "importer:the doc this record was built from"
+   },
+   "clockwork-wonder": {
+    "name": "Clockwork Wonder",
+    "status": "doc",
+    "docId": "background-655",
+    "how": "importer:the doc this record was built from"
+   },
+   "battles-spark": {
+    "name": "Battle's Spark",
+    "status": "doc",
+    "docId": "background-657",
+    "how": "importer:the doc this record was built from"
+   },
+   "boundless-wonder": {
+    "name": "Boundless Wonder",
+    "status": "doc",
+    "docId": "background-658",
+    "how": "importer:the doc this record was built from"
+   },
+   "immortal-influence": {
+    "name": "Immortal Influence",
+    "status": "doc",
+    "docId": "background-659",
+    "how": "importer:the doc this record was built from"
+   },
+   "unfettered-exploration": {
+    "name": "Unfettered Exploration",
+    "status": "doc",
+    "docId": "background-660",
+    "how": "importer:the doc this record was built from"
+   },
+   "envoys-alliance": {
+    "name": "Envoy's Alliance",
+    "status": "doc",
+    "docId": "background-661",
+    "how": "importer:the doc this record was built from"
+   },
+   "grand-archive": {
+    "name": "Grand Archive",
+    "status": "doc",
+    "docId": "background-662",
+    "how": "importer:the doc this record was built from"
+   },
+   "horizon-hunters": {
+    "name": "Horizon Hunters",
+    "status": "doc",
+    "docId": "background-663",
+    "how": "importer:the doc this record was built from"
+   },
+   "radiant-oath": {
+    "name": "Radiant Oath",
+    "status": "doc",
+    "docId": "background-664",
+    "how": "importer:the doc this record was built from"
+   },
+   "verdant-wheel": {
+    "name": "Verdant Wheel",
+    "status": "doc",
+    "docId": "background-665",
+    "how": "importer:the doc this record was built from"
+   },
+   "vigilant-seal": {
+    "name": "Vigilant Seal",
+    "status": "doc",
+    "docId": "background-667",
+    "how": "importer:the doc this record was built from"
+   },
+   "absalom-street-preacher": {
+    "name": "Absalom Street Preacher",
+    "status": "doc",
+    "docId": "background-673",
+    "how": "importer:the doc this record was built from"
+   },
+   "ambitious-knave": {
+    "name": "Ambitious Knave",
+    "status": "doc",
+    "docId": "background-674",
+    "how": "importer:the doc this record was built from"
+   },
+   "destined-for-greatness": {
+    "name": "Destined for Greatness",
+    "status": "doc",
+    "docId": "background-675",
+    "how": "importer:the doc this record was built from"
+   },
+   "esoteric-bookworm": {
+    "name": "Esoteric Bookworm",
+    "status": "doc",
+    "docId": "background-676",
+    "how": "importer:the doc this record was built from"
+   },
+   "mystery-adept": {
+    "name": "Mystery Adept",
+    "status": "doc",
+    "docId": "background-677",
+    "how": "importer:the doc this record was built from"
+   },
+   "puddles-carny": {
+    "name": "Puddles Carny",
+    "status": "doc",
+    "docId": "background-678",
+    "how": "importer:the doc this record was built from"
    }
   },
   "deities": {
@@ -122886,8 +123150,9 @@
    "breath-weapon": {
     "name": "Breath Weapon",
     "status": "doc",
-    "docId": "familiar-ability-85",
-    "how": "importer:the doc this record was built from"
+    "docId": "familiar-ability-19",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "familiar-ability-85"
    },
    "gold-scent": {
     "name": "Gold Scent",
@@ -123979,8 +124244,9 @@
    "ram": {
     "name": "Battering Ram",
     "status": "doc",
-    "docId": "creature-family-256",
-    "how": "slug-any"
+    "docId": "siege-weapon-70",
+    "how": "slug-any -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "creature-family-256"
    },
    "adamantine-drilling-ram": {
     "name": "Adamantine Drilling Ram",

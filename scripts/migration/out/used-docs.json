@@ -8625,7 +8625,8 @@
   "wyrm-claw": "equipment-4777",
   "wyrm-on-the-wing-greater": "equipment-4759-4237",
   "wyrm-on-the-wing-major": "equipment-4759-4238",
-  "wyrm-on-the-wing": "equipment-4759"
+  "wyrm-on-the-wing": "equipment-4759",
+  "silver-ingot-travel-guide": "equipment-1781"
  },
  "classes": {
   "inventor": "class-19",
@@ -9075,7 +9076,10 @@
   "second-skin": "class-feature-230",
   "studious-spells": "class-feature-431",
   "unlimited-signature-spells": "class-feature-455",
-  "wizard-weapon-expertise": "class-feature-298"
+  "wizard-weapon-expertise": "class-feature-298",
+  "lamentation-of-sinister-deals": "apparition-16",
+  "twofold-tine": "hybrid-study-15",
+  "volatile-spark": "hybrid-study-16"
  },
  "feats": {
   "make-do": "feat-8860",
@@ -15448,7 +15452,11 @@
   "eidolons-opportunity": "feat-2910",
   "guardians-deflection-swashbuckler": "feat-1528",
   "criminal-connections": "feat-2119",
-  "quick-contacts": "feat-2144"
+  "quick-contacts": "feat-2144",
+  "zombie-horde-impossible-magic": "feat-9122",
+  "remote-detonation-impossible-magic": "feat-9171",
+  "practical-magic-impossible-magic": "feat-9331",
+  "keep-pace-player-core-2": "feat-6284"
  },
  "ancestries": {
   "shoony": "ancestry-16",

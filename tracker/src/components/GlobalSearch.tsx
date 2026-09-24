@@ -25,6 +25,8 @@ interface Hit {
   /** Set when this is a host (Heroes Heaven) content record — selecting it opens the host's OWN
    *  description popup (HostSearch.open) instead of the tracker's reference window. */
   host?: { bucket: string; id: string }
+  /** A host record's muted second line (HostSearchRecord.detail). */
+  detail?: string
 }
 
 const CATEGORY: Record<string, { label: string; fg: string; bg: string; bd: string }> = {
@@ -76,7 +78,10 @@ export function GlobalSearch({ onClose, onPick, title }: {
     // Host (Heroes Heaven) mode — search EVERYTHING the app has, like the Archives search.
     if (host) {
       for (const r of host.records) {
-        out.push({ type: 'rule', ref: r.id, title: r.name, tl: r.name.toLowerCase(), category: r.bucket, host: { bucket: r.bucket, id: r.id } })
+        // The names a record was printed under before are searched too (a GM typing "Flame Tongue"
+        // finds Searing Blade), after the name so a name match still ranks first.
+        const tl = [r.name, ...(r.aliases ?? [])].join(' · ').toLowerCase()
+        out.push({ type: 'rule', ref: r.id, title: r.name, tl, category: r.bucket, host: { bucket: r.bucket, id: r.id }, detail: r.detail })
       }
       // The bestiary the host content has no records for — creatures/hazards from the tracker data,
       // opened as stat-block reference windows (their own richer add path is "Add Combatants").
@@ -235,7 +240,12 @@ export function GlobalSearch({ onClose, onPick, title }: {
                 <span style={{
                   flex: 1, minWidth: 0, color: 'var(--text)', fontSize: 13.5,
                   overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                }}>{h.title}</span>
+                }}>
+                  {h.title}
+                  {h.detail && (
+                    <span style={{ display: 'block', color: 'var(--text-faded)', fontSize: 11, overflow: 'hidden', textOverflow: 'ellipsis' }}>{h.detail}</span>
+                  )}
+                </span>
                 <span style={{
                   flexShrink: 0, fontFamily: 'var(--font-ui)', fontSize: 9.5, fontWeight: 700,
                   letterSpacing: '.06em', textTransform: 'uppercase',

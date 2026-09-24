@@ -1,5 +1,5 @@
 {
- "coreSha": "aa124faf3ba10d5633a729b40d02bc7b304b852e9f31be453da6324b1e16e586",
+ "coreSha": "68caf5bf53f95470d766196851087e7635f79e6a6d760d7913d87750b1287de5",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -3981,6 +3981,15 @@
    "worm-form"
   ]
  },
+ "partly": {
+  "backgrounds/art-collector": "its daily-preparation choice, its situational bonuses",
+  "backgrounds/azlanti-researcher": "Azlant Lore, the Azlanti language",
+  "backgrounds/blooded-by-the-dead": "its daily-preparation choice",
+  "backgrounds/curse-marked": "its situational bonuses and penalties",
+  "backgrounds/friend-of-a-friend": "a Lore skill of your choice, its situational bonuses",
+  "backgrounds/once-possessed": "Fiend Lore, the Spiritual Scar reaction, its situational bonuses",
+  "backgrounds/trusted-rival": "its daily-preparation choice, its situational bonuses"
+ },
  "records": {
   "classFeatures/blight-soul-deviant-classification": [
    "specialStatistic"
@@ -7480,5 +7489,16 @@
    "passiveEffects.resistances"
   ]
  },
- "wgSha": "f61c80deb41d83002bfc70dde17443a7d090a66a7c58ed3943674aa09af1ab3e"
+ "unencoded": [
+  "classFeatures/lamentation-of-sinister-deals",
+  "classFeatures/twofold-tine",
+  "classFeatures/volatile-spark",
+  "feats/keep-pace-player-core-2",
+  "feats/practical-magic-impossible-magic",
+  "feats/remote-detonation-impossible-magic",
+  "feats/zombie-horde-impossible-magic",
+  "heritages/defensive-automaton",
+  "heritages/newly-minted-automaton"
+ ],
+ "wgSha": "a8cd47fd012a4eb92706dba8e2ed89263b895cd591c22c7194b39731c57e3db0"
 }

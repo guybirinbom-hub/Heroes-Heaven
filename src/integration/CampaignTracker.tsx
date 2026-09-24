@@ -23,6 +23,7 @@ import { useWindowStore } from '../../tracker/src/store/windowStore';
 import { useLayoutStore } from '../../tracker/src/store/layoutStore';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
 import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
+import { hostSearchRecords } from './hostSearchRecords';
 import { InitiativeTracker, DELAY_RETURN_MIME, useDelayDropZone } from '../../tracker/src/components/InitiativeTracker';
 import { useDelayDragActive } from '../../tracker/src/useDelayDragActive';
 import { PaneLayout } from '../../tracker/src/components/PaneLayout';
@@ -529,21 +530,8 @@ export function CampaignTracker({
   // each focus), so the host-search description popup — portalled to <body> at HH's .picker-overlay
   // z-index — would paint BEHIND any open window. Lift its wrapper above the current top.
   const floatingTopZ = useWindowStore((s) => s.topZ);
-  const searchRecords = useMemo<HostSearchRecord[]>(() => {
-    const skip = new Set(['modes', 'runes', 'stances']);
-    const db = content as unknown as Record<string, Record<string, { name?: string }> | undefined>;
-    const recs: HostSearchRecord[] = [];
-    for (const bucket of Object.keys(db)) {
-      if (skip.has(bucket)) continue;
-      const rows = db[bucket];
-      if (!rows || typeof rows !== 'object') continue;
-      for (const id of Object.keys(rows)) {
-        const name = rows[id]?.name;
-        if (typeof name === 'string' && name) recs.push({ bucket, id, name });
-      }
-    }
-    return recs;
-  }, [content]);
+  // The index itself — names, older names, a detail line, no duplicate scrapes: hostSearchRecords.ts.
+  const searchRecords = useMemo<HostSearchRecord[]>(() => hostSearchRecords(content), [content]);
   const hostSearch = useMemo(
     () => ({ records: searchRecords, open: (bucket: string, id: string) => setDescTarget({ bucket, id }) }),
     [searchRecords],

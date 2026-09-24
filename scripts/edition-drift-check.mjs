@@ -18,6 +18,16 @@
  * fixes only the direction that reveals correct content and can hide nothing: hidden-as-legacy over a
  * current document.
  *
+ * …EXCEPT WHERE THE LIVE PAGE HAS BEEN READ (scripts/data/live-pages.json, 2026-09-24). Then there is
+ * no content decision left to make: the house rule is that the live page wins, and its "Legacy
+ * Content" banner says which side the record is on, in both directions, down to the value
+ * (scripts/lib/live-pages.mjs `liveEdition`). This is what makes a REPOINT carry its edition: the
+ * edition row is written once and never re-derived, so the five records scripts/fix-aonid-collisions.mjs
+ * moved to their own book's page still said what the wrong page said — the Fall of Plaguestone
+ * Refugee `remaster` (from Player Core 2), the Faerie Dragon's Breath Weapon `neutral` (from the House
+ * Drake's) — and this check's own one-way repair had turned Stone Blood from `legacy-era` to `neutral`
+ * because the export calls Heavy is the Crown neutral, while its page says Legacy Content.
+ *
  *   node scripts/edition-drift-check.mjs            # report only, non-zero exit if any
  *   node scripts/edition-drift-check.mjs --write
  */
@@ -27,6 +37,7 @@ import { fileURLToPath } from 'node:url';
 import { readBackfill, writeBackfill } from './lib/write-backfill.mjs';
 import { buildDocIndex } from './lib/aonid-categories.mjs';
 import { HIDDEN, CURRENT } from './lib/edition.mjs';
+import { loadLivePages, liveEdition } from './lib/live-pages.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const EXPORT = process.env.AON_EXPORT || 'C:/trying ai 2/hh-data-export/without-images/data';
@@ -47,6 +58,7 @@ const docFor = (aonId) => {
   return cache.get(hit.cat)[aonId] ?? null;
 };
 
+const live = loadLivePages(ROOT);
 const drift = [];
 for (const [bucket, recs] of Object.entries(core)) {
   if (!recs || typeof recs !== 'object') continue;
@@ -57,6 +69,12 @@ for (const [bucket, recs] of Object.entries(core)) {
      * header. Its document is the old printing, so this check would not fire anyway for the 181
      * measured on 2026-09-12; skipping it says why rather than relying on that. */
     if (rec.remasteredAs) continue;
+    const read = live[rec.aonId];
+    if (read && rec.edition !== 'superseded') {
+      const to = liveEdition(docFor(rec.aonId)?.edition ?? rec.edition, read);
+      if (rec.edition !== to) drift.push({ bucket, id, name: rec.name, was: String(rec.edition), to, aonId: rec.aonId });
+      continue;
+    }
     if (!HIDDEN.has(String(rec.edition))) continue;
     const doc = docFor(rec.aonId);
     if (!doc || !CURRENT.has(String(doc.edition))) continue;
@@ -64,7 +82,7 @@ for (const [bucket, recs] of Object.entries(core)) {
   }
 }
 
-console.log(`${drift.length} record(s) hidden as legacy while rendering a current document`);
+console.log(`${drift.length} record(s) whose edition disagrees with the page they render (its live read, or hidden as legacy over a current document)`);
 if (drift.length) {
   console.log(`\n${'record'.padEnd(40)} ${'was'.padEnd(12)} ${'becomes'.padEnd(12)} renders`);
   for (const d of drift) {

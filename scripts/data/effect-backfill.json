@@ -118963,7 +118963,7 @@
   "category": "feats",
   "id": "play-to-the-crowd-dandy",
   "field": "edition",
-  "value": "remaster"
+  "value": "neutral"
  },
  {
   "category": "feats",
@@ -119888,7 +119888,7 @@
   "category": "backgrounds",
   "id": "refugee-fall-of-plaguestone",
   "field": "edition",
-  "value": "remaster"
+  "value": "legacy-era"
  },
  {
   "category": "backgrounds",
@@ -122242,7 +122242,7 @@
   "category": "familiarAbilities",
   "id": "breath-weapon",
   "field": "edition",
-  "value": "neutral"
+  "value": "legacy-era"
  },
  {
   "category": "familiarAbilities",
@@ -188890,5 +188890,35 @@
   "id": "unlimited-signature-spells",
   "field": "edition",
   "value": "legacy"
+ },
+ {
+  "category": "backgrounds",
+  "id": "refugee-fall-of-plaguestone",
+  "field": "aonId",
+  "value": "background-40"
+ },
+ {
+  "category": "feats",
+  "id": "stone-blood-stonebound",
+  "field": "aonId",
+  "value": "feat-4380"
+ },
+ {
+  "category": "feats",
+  "id": "play-to-the-crowd-dandy",
+  "field": "aonId",
+  "value": "feat-7637"
+ },
+ {
+  "category": "classFeatures",
+  "id": "deity-champion",
+  "field": "aonId",
+  "value": "class-feature-871"
+ },
+ {
+  "category": "familiarAbilities",
+  "id": "breath-weapon",
+  "field": "aonId",
+  "value": "familiar-ability-19"
  }
 ]

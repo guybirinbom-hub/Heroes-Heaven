@@ -15,6 +15,11 @@ export interface HostSearchRecord {
   /** The record's key within that bucket. */
   id: string
   name: string
+  /** Other names the record answers to — the names its page was printed under before (Searing Blade
+   *  is the reprint of Flame Tongue). Searched, not shown. */
+  aliases?: string[]
+  /** One muted line that tells same-named rows apart: level, archetype, book. */
+  detail?: string
 }
 
 export interface HostSearch {

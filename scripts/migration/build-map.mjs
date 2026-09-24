@@ -79,11 +79,11 @@ const OVERLAY_CREATED = (() => {
  * artefact would make `npm run data` stop being a fixed point.
  */
 const AON_PINNED = (() => {
-  const out = new Set();
+  const out = new Map(); // `<bucket>|<id>` -> the ruled aonId (a string, or null for "no page")
   try {
     for (const r of JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8'))) {
       if (!r || r.path?.length || !r.category || !r.id) continue;
-      if (r.field === 'aonId' || (r.create && r.value?.aonId !== undefined)) out.add(`${r.category}|${r.id}`);
+      if (r.field === 'aonId' || (r.create && r.value?.aonId !== undefined)) out.set(`${r.category}|${r.id}`, r.field === 'aonId' ? r.value : r.value.aonId);
     }
   } catch { /* the overlay is optional to this script */ }
   return out;
@@ -337,6 +337,21 @@ for (const [bucket, records] of Object.entries(core)) {
          */
         if (twin) { entry = { ...entry, remasteredAs: { bucket, id: twin.id, name: records[twin.id]?.name ?? twin.name } }; twinned++; }
       }
+    }
+    /*
+     * …and a record whose page is an OWNER RULING says so here too. The ruling was re-applied only at
+     * stamping, so the map kept naming the page the join found: the five records
+     * scripts/fix-aonid-collisions.mjs moved to their own book's page (2026-09-24) still read
+     * background-455, feat-890, feat-6335, class-feature-649 and familiar-ability-85 here, and 56
+     * older rulings the same way. `docId` is now the ruled page, the provenance core.json ships.
+     *
+     * `joinDocId` keeps the join's answer for the two importers' `mapDocFor`, which pick the document a
+     * record is BUILT from and read it first: switching them to the ruled page would rebuild those 56
+     * records from another document, a content change of its own, not part of making this file true.
+     */
+    const pin = AON_PINNED.get(id);
+    if ((entry.status === 'doc' || entry.status === 'scraped') && typeof pin === 'string' && entry.docId !== pin) {
+      entry = { ...entry, docId: pin, joinDocId: entry.docId, how: `${entry.how} -> owner ruling (aonId row in effect-backfill.json)` };
     }
     (map[bucket] ??= {})[key] = { name, ...entry };
     tally[entry.status] = (tally[entry.status] ?? 0) + 1;

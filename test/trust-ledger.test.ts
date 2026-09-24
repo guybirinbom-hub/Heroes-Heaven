@@ -17,6 +17,7 @@ vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 import { execFileSync } from 'node:child_process';
 import { readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
+import { backgroundUnapplied } from '../scripts/lib/background-print.mjs';
 
 const CLI_ROOT = join(__dirname, '..');
 type Json = Record<string, any>;
@@ -61,7 +62,11 @@ describe('trust ledger — the same inputs produce the same bytes', () => {
   });
 
   it('is stamped with exactly coreSha, wgSha and generator — no clock', () => {
-    expect(Object.keys(ledger).sort()).toEqual(['coreSha', 'generator', 'lanes', 'records', 'wgSha']);
+    // `unencoded` (2026-09-24): the records created from a page with no rules encoded, which the marker
+    // names too — a sorted id list, deterministic like every other key here. `partly`: the created
+    // records that apply only part of their print, keyed and sorted the same way.
+    expect(Object.keys(ledger).sort()).toEqual(['coreSha', 'generator', 'lanes', 'partly', 'records', 'unencoded', 'wgSha']);
+    expect(ledger.unencoded).toEqual([...ledger.unencoded].sort());
     expect(ledger.coreSha).toMatch(/^[0-9a-f]{64}$/);
     expect(JSON.stringify(ledger)).not.toMatch(/\d{4}-\d{2}-\d{2}T/);
   });
@@ -472,5 +477,59 @@ describe('trust ledger — the 2026-09-11 whole-class rules', () => {
     const stone = core.items['aeon-stone-black-disc'];
     expect(stone.resonant ?? stone.innateSpells).toBeDefined();
     expect(ledger.records['items/aeon-stone-black-disc']).toContain('passiveEffects.resistances');
+  });
+});
+
+/*
+ * Refuted 2026-09-24: the 25 created backgrounds left `unencoded` once they took their boosts, skill,
+ * Lore and skill feat, and the marker went with it — from seven whose print still does something the
+ * record does not (Azlanti Researcher's Azlant Lore and Azlanti language, the six rare Bastion of
+ * Blasphemies backgrounds' special rules). A created record that applies part of its print is on
+ * `partly`, with what it does not apply in words; one that applies all of it is on neither list.
+ */
+describe('trust ledger — a created record that applies only part of its print says which part', () => {
+  const PRINT = [
+    'Sorrina Westyr put out a call for people with an interest in Azlanti history.',
+    'Choose two attribute boosts. One must be to Wisdom or Charisma, and one is a free attribute boost.',
+    "You're trained in the Religion skill, and the Azlant Lore skill . Add Azlanti to your list of known languages. You gain the Student of the Canon skill feat.",
+  ].join('\n\n');
+  const facets = { abilityBoosts: [{ kind: 'choice', options: ['wis', 'cha'] }, { kind: 'free' }], trainedSkill: 'religion', grantedFeatId: 'student-of-the-canon' };
+
+  it('a fixture with its Lore and language unencoded is partly applied, and names both', () => {
+    expect(backgroundUnapplied(facets, PRINT)).toBe('Azlant Lore, the Azlanti language');
+    // Only what is missing: the Lore encoded, the language still not.
+    expect(backgroundUnapplied({ ...facets, trainedLore: 'azlant' }, PRINT)).toBe('the Azlanti language');
+  });
+
+  it('the same fixture fully encoded is on neither list', () => {
+    expect(backgroundUnapplied({ ...facets, trainedLore: 'azlant', grantsLanguages: ['azlanti'] }, PRINT)).toBe('');
+  });
+
+  it('a printed special rule counts until the record encodes one beyond its facets', () => {
+    const special = PRINT.replace(' Add Azlanti to your list of known languages. You gain the Student of the Canon skill feat.',
+      ' You gain a +2 circumstance bonus to saving throws against curses.\n\nSpiritual Scar (reaction) (concentrate) Frequency once per day; Effect You gain resistance.');
+    const rec = { ...facets, trainedLore: 'azlant' };
+    expect(backgroundUnapplied(rec, special)).toBe('the Spiritual Scar reaction, its situational bonuses');
+    expect(backgroundUnapplied(rec, special, { otherRulesEncoded: true })).toBe('');
+    // Prose after the boosts that prints no rule is not a rule.
+    expect(backgroundUnapplied(rec, PRINT.replace(' Add Azlanti to your list of known languages.', ' You love old ruins.'))).toBe('');
+  });
+
+  it('the shipped ledger lists the seven, in words, and none of the other created backgrounds', () => {
+    const created = JSON.parse(readFileSync(join(CLI_ROOT, 'scripts/migration/out/player-created.json'), 'utf8'));
+    expect(ledger.partly).toEqual({
+      'backgrounds/art-collector': 'its daily-preparation choice, its situational bonuses',
+      'backgrounds/azlanti-researcher': 'Azlant Lore, the Azlanti language',
+      'backgrounds/blooded-by-the-dead': 'its daily-preparation choice',
+      'backgrounds/curse-marked': 'its situational bonuses and penalties',
+      'backgrounds/friend-of-a-friend': 'a Lore skill of your choice, its situational bonuses',
+      'backgrounds/once-possessed': 'Fiend Lore, the Spiritual Scar reaction, its situational bonuses',
+      'backgrounds/trusted-rival': 'its daily-preparation choice, its situational bonuses',
+    });
+    const full = Object.keys(created.backgrounds).map((id: string) => `backgrounds/${id}`).filter((k: string) => !ledger.partly[k]);
+    expect(full).toHaveLength(18);
+    for (const k of full) expect(ledger.unencoded, k).not.toContain(k);
+    // No key is on both lists.
+    expect(Object.keys(ledger.partly).filter((k) => ledger.unencoded.includes(k))).toEqual([]);
   });
 });

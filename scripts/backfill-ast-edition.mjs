@@ -1,5 +1,6 @@
 /**
- * Give every record the display tree and edition its own archive document already holds.
+ * Give every record the display tree and edition its own archive document already holds — and the
+ * names that document says it was printed under before (`legacyNames`, see the loop below).
  *
  * `public/ast/<bucket>.json` is written by import-core-v2.mjs from its mirror scan, keyed by SLUG and
  * only for the categories that map to a first-class bucket. A record that reached its bucket by another
@@ -85,7 +86,7 @@ const rows = readBackfill(ROOT);
 const hasRow = (category, id, field) => rows.some((r) => r.category === category && r.id === id && r.field === field);
 
 const perBucket = [];
-let astAdded = 0, edAdded = 0, noDoc = 0, docNoAst = 0, implausible = 0;
+let astAdded = 0, edAdded = 0, noDoc = 0, docNoAst = 0, implausible = 0, lnSet = 0;
 
 for (const [bucket, recs] of Object.entries(core)) {
   if (!recs || typeof recs !== 'object') continue;
@@ -119,6 +120,21 @@ for (const [bucket, recs] of Object.entries(core)) {
       rec.edition = full.edition;
       bEd++; edAdded++;
     }
+    /*
+     * …and the NAMES its page says it was printed under before (`data.legacy_name`): Searing Blade is
+     * the reprint of Flame Tongue, Vitalizing of Disrupting. The record takes the reprint's name
+     * (gold-set R12), so a player searching the Core Rulebook name found nothing — the pickers search
+     * the name and the text, and neither says "Flame Tongue". The Archives' own search answers to these
+     * names, so the pickers read them too (`legacyNames`, src/sheet/filterSpecs.ts). A case-only
+     * difference is the Archives re-casing a heading, not another name. Recomputed from the record's
+     * FINAL page on every run — this is the first step after scripts/fix-aonid-collisions.mjs — so a
+     * repoint takes its names along and a stale list never outlives its page.
+     */
+    const was = [...new Set([].concat(full.data?.legacy_name ?? []).map((n) => String(n).trim())
+      .filter((n) => n && n.toLowerCase() !== String(rec.name ?? '').trim().toLowerCase()))];
+    if (was.length) {
+      if (JSON.stringify(rec.legacyNames) !== JSON.stringify(was)) { rec.legacyNames = was; lnSet++; }
+    } else if (rec.legacyNames) { delete rec.legacyNames; lnSet++; }
   }
   if (bAst || bEd) {
     perBucket.push({ bucket, bAst, bEd, total: Object.keys(ast).length });
@@ -134,6 +150,7 @@ for (const [bucket, recs] of Object.entries(core)) {
 
 console.log(`ast trees to add : ${astAdded}`);
 console.log(`editions to add  : ${edAdded}`);
+console.log(`legacy names set or cleared: ${lnSet}`);
 console.log(`(aonId resolves to nothing: ${noDoc};  document carries no ast: ${docNoAst};  link implausible, skipped: ${implausible})`);
 if (perBucket.length) {
   console.log('\nper bucket:');

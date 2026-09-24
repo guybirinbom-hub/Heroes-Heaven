@@ -41,6 +41,8 @@ import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
 import { fillFrequencyCounters, canonBookName } from './lib/aon-facets.mjs';
 import { plain, unlink, decode, handlebarsLinks, ACTION_WORD } from './lib/aon-plain.mjs';
+import { appendSubclassOptions } from './lib/player-create.mjs';
+import { readBackfill } from './lib/write-backfill.mjs';
 
 /** The PRISTINE AoN mirror (one JSON file per record). Facets + markdown come from here. */
 const SRC = process.env.AON_MIRROR || 'C:/wonderers guide/aon-2e-archive/data/by-category';
@@ -990,6 +992,68 @@ function addImFeatureRefs() {
   if (filled) notes.push(`${filled} Impossible Magic class feature(s) gained the cross-references their page prints`);
 }
 
+/* ==================================================================== the created records' prose */
+
+/*
+ * THE PROSE OF THE RECORDS import-core-v2.mjs CREATED (its step 4, listed in
+ * scripts/migration/out/player-created.json).
+ *
+ * That step writes a new record's description from the page's display tree, which prints the page
+ * HEADER as the first lines of the text: "Clockwork Wonder / Source Pathfinder Society Clockwork
+ * Mystery Player's Guide pg. 9 / You have a knack…", one flattened run with no links. The Builder's
+ * Background and Heritage pickers show exactly that text (they open a description, never the tree).
+ *
+ * So the text is re-read here from the page's markdown, the way buildHeritages reads the High Seas
+ * heritages: the title, traits and header block are dropped — they are the record's own fields
+ * (name, traits, source, prerequisites, price) — the printed rules lines of the header that belong to
+ * the text (Trigger, Requirements, Frequency, Cost) are kept, and the links the page prints become
+ * descRefs through the same resolver every record this script builds uses. A page whose only text is
+ * its header (the Travel Guide's "Silver (Ingot)", a trade-goods row) keeps the header lines bar its
+ * Source, so the record never goes blank.
+ */
+const HEADER_TEXT = /^\*\*(?:Trigger|Requirements?|Frequency|Cost)\*\*/;
+function pageProse(md) {
+  let s = String(md ?? '').replace(/\r/g, '');
+  const cut = s.search(/<title[\s\S]{0,60}?level="2"/);
+  if (cut >= 0) s = s.slice(0, cut);
+  s = s.replace(/<title[\s\S]*?<\/title>/g, '').replace(/<traits>[\s\S]*?<\/traits>/g, '');
+  let header = [];
+  const col = /<column[^>]*>([\s\S]*?)<\/column>/.exec(s);
+  if (col && /\*\*Source\*\*/.test(col[1])) {
+    header = col[1].split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+    s = s.slice(0, col.index) + s.slice(col.index + col[0].length);
+  }
+  s = s.replace(/^[ \t]*\*\*Source\*\*[^\n]*$/m, '').replace(/^\s*(?:---\s*)+/, '');
+  // "**Trigger**\nYour prey is…" -> "**Trigger** Your prey is…", the way every other record prints it.
+  const rules = header.filter((p) => HEADER_TEXT.test(p)).map((p) => p.replace(/^(\*\*[^*]+\*\*)[ \t]*\n[ \t]*/, '$1 '));
+  const bodyMd = [...rules, s].join('\n\n');
+  if (plain(bodyMd)) return bodyMd;
+  return header.filter((p) => !/^\*\*Source\*\*/.test(p)).join('\n\n');
+}
+/** The page's own hard wraps ("One must be to Intelligence\nor Wisdom") and indents are layout, not text. */
+const unwrap = (t) => t.replace(/\n[ \t]+/g, '\n').replace(/([^\n])\n(?=[a-z])/g, '$1 ');
+function createdProse() {
+  const path = 'scripts/migration/out/player-created.json';
+  if (!existsSync(path)) return;
+  let n = 0;
+  for (const [bucket, m] of Object.entries(JSON.parse(readFileSync(path, 'utf8')))) {
+    for (const [key, { doc }] of Object.entries(m ?? {})) {
+      const rec = core[bucket]?.[key];
+      const cat = String(doc).replace(/-\d+(?:-\d+)*$/, '');
+      const file = join(SRC, cat, `${doc}.json`);
+      if (!rec || !existsSync(file)) { notes.push(`created ${bucket}/${key}: no mirror page ${doc} — its prose stays as the importer wrote it`); continue; }
+      const bodyMd = pageProse(JSON.parse(readFileSync(file, 'utf8')).markdown);
+      const description = unwrap(plain(bodyMd));
+      if (!description) continue;
+      rec.description = description;
+      const refs = descRefsOf(bodyMd, description);
+      if (refs.length) rec.descRefs = refs; else delete rec.descRefs;
+      n++;
+    }
+  }
+  if (n) notes.push(`${n} created record(s) took their prose from their page's markdown (header dropped, links kept)`);
+}
+
 /* ==================================================================== run the merge */
 
 core.siegeWeapons = buildSiegeWeapons();
@@ -1000,6 +1064,7 @@ core.archetype = buildArchetypes();
 topUpCarried();
 buildImClassFeatures();
 addRunesmithRuneRefs();
+createdProse();
 
 /* ==================================================================== ast (lazy-loaded descriptions)
  * Every record in core.json renders its description from public/ast/<bucket>.json — the pre-parsed
@@ -1043,9 +1108,16 @@ const mapDocFor = (() => {
   try { mig = JSON.parse(readFileSync('scripts/migration/out/map.json', 'utf8')).map ?? {}; } catch { return () => null; }
   return (bucket, s) => {
     const m = mig[bucket]?.[s];
-    return m && (m.status === 'doc' || m.status === 'scraped') ? m.docId : null;
+    // `joinDocId`: the join's page where an owner's aonId ruling replaced it (build-map.mjs); writeAst
+    // reads the ruling itself first (PINNED_AON).
+    return m && (m.status === 'doc' || m.status === 'scraped') ? m.joinDocId ?? m.docId : null;
   };
 })();
+
+/** `bucket|id` -> the aonId an overlay row rules for that record (see writeAst). */
+const PINNED_AON = new Map(readBackfill('.')
+  .filter((r) => r?.field === 'aonId' && !r.path?.length && typeof r.value === 'string')
+  .map((r) => [`${r.category}|${r.id}`, r.value]));
 
 function writeAst() {
   if (!existsSync(EXPORT)) { notes.push(`ast SKIPPED: no export at ${EXPORT} (records fall back to their plain description)`); return; }
@@ -1100,8 +1172,14 @@ function writeAst() {
      * (scripts/migration/out/map.json, which is what stamp-aonid will read), then whatever aonId the
      * record does carry. Guarded by scripts/ast-provenance-check.mjs.
      */
+    /* …and an OWNER'S aonId ruling (an `aonId` row in scripts/data/effect-backfill.json, e.g. the
+     * scripts/fix-aonid-collisions.mjs repoints) before all three: it is re-applied over the stamp at
+     * the end of the chain, so a page built from anything else disagrees with the record it is
+     * attached to. `familiarAbilities/breath-weapon` (the APG Faerie Dragon's) kept rendering the House
+     * Drake's page of the same name after its repoint, because the importer's slug pick had recorded
+     * that page. */
     for (const s of [...bySlug.keys()]) {
-      const own = docs[String(existing[s]?.aon ?? mapDocFor(bucket, s) ?? core[bucket]?.[s]?.aonId ?? '')];
+      const own = docs[String(PINNED_AON.get(`${bucket}|${s}`) ?? existing[s]?.aon ?? mapDocFor(bucket, s) ?? core[bucket]?.[s]?.aonId ?? '')];
       if (own?.ast) bySlug.set(s, own);
     }
     const out = { ...existing };
@@ -1161,6 +1239,11 @@ if (notes.length) console.log(`\nnotes:\n  ${notes.join('\n  ')}`);
   const { applied, unresolved } = applyBackfill(core);
   console.log(`\nre-applied ${applied} effect backfills over the gap-imported records`);
   if (unresolved.length) console.warn(`!! ${unresolved.length} backfill paths did not resolve:\n  ` + unresolved.join('\n  '));
+  // The re-apply may have set a whole class option list again — put back the options
+  // import-core-v2.mjs created (scripts/lib/player-create.mjs).
+  const createdPath = 'scripts/migration/out/player-created.json';
+  const appended = existsSync(createdPath) ? appendSubclassOptions(core, JSON.parse(readFileSync(createdPath, 'utf8'))) : 0;
+  if (appended) console.log(`re-appended ${appended} created class option(s) the re-apply had replaced`);
 }
 
 /*

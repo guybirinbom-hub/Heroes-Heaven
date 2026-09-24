@@ -69,6 +69,21 @@ check(
   });
   check('every ledger key resolves to a record in public/core.json', stray.length === 0,
     `${Object.keys(ledger.records ?? {}).length} keys${stray.length ? ` — ${stray.length} resolve to nothing, e.g. ${some(stray)}` : ''}`);
+  /* …and so does every record the marker calls "nothing encoded" (`unencoded`, see scripts/trust-ledger.mjs):
+   * a stale key there would put the line on nothing, and a missing list would hide it on everything. */
+  const strayU = (ledger.unencoded ?? []).filter((k) => {
+    const [bucket, ...rest] = k.split('/');
+    return !core[bucket]?.[rest.join('/')];
+  });
+  check('every "nothing encoded" key resolves to a record in public/core.json', Array.isArray(ledger.unencoded) && strayU.length === 0,
+    `${(ledger.unencoded ?? []).length} keys${strayU.length ? ` — ${strayU.length} resolve to nothing, e.g. ${some(strayU)}` : ''}`);
+  /* …and every "partly encoded" one (`partly`), which also must say WHAT is not applied. */
+  const strayP = Object.entries(ledger.partly ?? {}).filter(([k, words]) => {
+    const [bucket, ...rest] = k.split('/');
+    return !core[bucket]?.[rest.join('/')] || typeof words !== 'string' || !words;
+  }).map(([k]) => k);
+  check('every "partly encoded" key resolves to a record and names what is not applied', !!ledger.partly && strayP.length === 0,
+    `${Object.keys(ledger.partly ?? {}).length} keys${strayP.length ? ` — ${strayP.length} bad, e.g. ${some(strayP)}` : ''}`);
 }
 
 /* ---- 3. the buckets that are ON by construction -------------------------------------------------

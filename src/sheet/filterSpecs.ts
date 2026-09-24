@@ -29,6 +29,14 @@ const RARITY = [
   { id: 'unique', label: 'Unique' },
 ];
 
+/**
+ * What a picker's search box reads: the NAME on the first line (splitNameText ranks on it), then the
+ * description, then the names the record's page was printed under before (`legacyNames`) — so typing
+ * the Core Rulebook's "Flame Tongue" finds GM Core's Searing Blade, which is the same item reprinted.
+ */
+export const searchText = (x: { name: string; description: string; legacyNames?: string[] }): string =>
+  [x.name, x.description, ...(x.legacyNames ?? [])].join('\n');
+
 /** Derive a spell's "type" (normal / focus / ritual). Rituals are flagged via `s.ritual`, not a trait. */
 function spellType(s: Spell): string {
   if (s.ritual) return 'ritual';
@@ -39,7 +47,7 @@ function spellType(s: Spell): string {
 /** The full spell filter set (matches the Add-Spell panel: chips + Rank/Range/Area/Duration sliders). */
 export const SPELL_SPEC: FilterSpec<Spell> = {
   fields: [
-    { id: 'desc', label: 'Description', kind: 'text', accessor: (s) => `${s.name}\n${s.description}`, placeholder: 'Any text in the name or description, e.g. “Strike”' },
+    { id: 'desc', label: 'Description', kind: 'text', accessor: searchText, placeholder: 'Any text in the name or description, e.g. “Strike”' },
     { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (s) => s.rarity, tab: 'traits' },
     { id: 'type', label: 'Spell type', kind: 'chips', options: [
       { id: 'normal', label: 'Normal' },
@@ -266,7 +274,7 @@ const WEAPON_GROUP_OPTS = [
 /** The item filter set (type/category/rarity/traits chips + Level/Price/Bulk sliders). */
 export const ITEM_SPEC: FilterSpec<Item> = {
   fields: [
-    { id: 'desc', label: 'Description', kind: 'text', accessor: (i) => `${i.name}\n${i.description}`, placeholder: 'Any text in the name or description' },
+    { id: 'desc', label: 'Description', kind: 'text', accessor: searchText, placeholder: 'Any text in the name or description' },
     { id: 'type', label: 'Item type', kind: 'chips', options: [
       { id: 'weapon', label: 'Weapons' },
       { id: 'armor', label: 'Armor' },
@@ -390,7 +398,7 @@ export const ITEM_SPEC: FilterSpec<Item> = {
  *  omitted — every rune twin is itemType 'equipment'. */
 export const RUNE_SPEC: FilterSpec<Item> = {
   fields: [
-    { id: 'desc', label: 'Description', kind: 'text', accessor: (i) => `${i.name}\n${i.description}`, placeholder: 'Any text in the name or description' },
+    { id: 'desc', label: 'Description', kind: 'text', accessor: searchText, placeholder: 'Any text in the name or description' },
     { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (i) => i.rarity, tab: 'traits' },
     { id: 'traits', label: 'Traits', kind: 'traits', accessor: (i) => i.traits },
     { id: 'level', label: 'Level', kind: 'range', stops: ITEM_LEVEL_STOPS, magnitude: (i) => i.level },
@@ -400,7 +408,7 @@ export const RUNE_SPEC: FilterSpec<Item> = {
 /** The feat filter set (lighter — the picker list is already slot-constrained by level/category). */
 export const FEAT_SPEC: FilterSpec<Feat> = {
   fields: [
-    { id: 'desc', label: 'Description', kind: 'text', accessor: (f) => `${f.name}\n${f.description}`, placeholder: 'Any text in the name or description' },
+    { id: 'desc', label: 'Description', kind: 'text', accessor: searchText, placeholder: 'Any text in the name or description' },
     { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (f) => f.rarity, tab: 'traits' },
     { id: 'cast', label: 'Action cost', kind: 'castTime', accessor: (f) => f.actionCost },
     { id: 'traits', label: 'Traits', kind: 'traits', accessor: (f) => f.traits },

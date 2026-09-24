@@ -74,6 +74,12 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
   const content = useContent();
   useEscapeClose(onClose);
   const kind = entry.isFeature ? 'Feature' : `${entry.bucket} feat`;
+  /* The row's OWN page when the row knows its record: the slug of its NAME is another record's key
+   * whenever two share a name (the Impossible Magic "Zombie Horde" opened the Clockwork Reanimator
+   * feat — see descNodeOf). A row with no id of its own keeps the name lookup it always had. */
+  const astKey = entry.isFeature ? 'classFeatures' : 'feats';
+  const ref = trustRefOf(entry);
+  const astId = ref.bucket === astKey && ref.id ? ref.id : astSlug(entry.name);
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker spell-detail" onClick={(e) => e.stopPropagation()}>
@@ -136,9 +142,9 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
             description={entry.description}
             descRefs={entry.descRefs}
             onExit={onClose}
-            astKey={entry.isFeature ? 'classFeatures' : 'feats'}
-            astId={astSlug(entry.name)}
-            remasteredAs={remasteredAsOf(content, trustRefOf(entry))}
+            astKey={astKey}
+            astId={astId}
+            remasteredAs={remasteredAsOf(content, ref)}
           />
         </div>
       </div>

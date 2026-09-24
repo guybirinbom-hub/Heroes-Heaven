@@ -35,7 +35,7 @@ import {
 import { OPEN_SOURCE_LABEL, openChoiceOptions } from '../rules/openChoice';
 import { DOMAIN_SPELLS } from '../rules/domains';
 import { confirmDialog } from '../sheet/confirm';
-import { sourceCatalog, enabledBookSet } from '../rules/sources';
+import { sourceCatalog, enabledBookSet, sourceIdToken } from '../rules/sources';
 import { eligibleFeatsForSlot, findHiddenFeatMatches, fitsSlot, moveTargetFor, swapSlotKeys } from '../rules/featSlots';
 import { classFeatureDescription } from '../rules/featureText';
 import {
@@ -73,6 +73,7 @@ import { hasSnareCrafting } from '../rules/snareFormulas';
 import { formulaSlots } from '../rules/formulaBook';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { DescriptionModal } from '../sheet/DescriptionModal';
+import { TrustMarker } from '../sheet/TrustMarker';
 import type { DescNode } from '../sheet/descref';
 import { ActionGlyph, isActionCost } from '../sheet/widgets';
 import { SPELL_SPEC_BUILDER, FEAT_SPEC } from '../sheet/filterSpecs';
@@ -2317,7 +2318,8 @@ export function Builder({
                               onClick={() => {
                                 if (!picked) return setPicker({ kind: 'feat', level: lvl, category: catg, idx: i });
                                 const f = content.feats[picked];
-                                if (f?.description) setFeatDescPopup({ title: f.name, description: f.description, descRefs: f.descRefs, key: 'feats' });
+                                // `slug`: the pick's OWN page — its name can be another feat's key (descNodeOf).
+                                if (f?.description) setFeatDescPopup({ title: f.name, description: f.description, descRefs: f.descRefs, key: 'feats', slug: picked });
                               }}
                             >
                               <span className="lvl-card-icon">
@@ -2357,6 +2359,10 @@ export function Builder({
                               </>
                             )}
                           </div>
+                          {/* The picked feat's TrustMarker line under the filled card, as the heritage
+                              card shows it: a created feat with no rules encoded applies nothing, and the
+                              slot is where the player spent the pick (see TrustMarker). */}
+                          {picked && <TrustMarker bucket="feats" id={picked} />}
                           {unfit && (
                             <div className="lvl-note lvl-unfit" data-unfit={key}>
                               <i className="ti ti-alert-triangle" aria-hidden="true" /> Not valid for this slot — still on your character. Replace or clear it.
@@ -3167,7 +3173,9 @@ export function Builder({
             ),
             confirmLabel: 'Enable book',
           });
-          if (ok) actions.patch({ enabledSources: [...new Set([...enabledBooks, book])].sort() });
+          // A homebrew feat's source goes on by its id (sources.ts sourceIdToken): a rename keeps it on.
+          const key = f.homebrewSourceId ? sourceIdToken(f.homebrewSourceId) : book;
+          if (ok) actions.patch({ enabledSources: [...new Set([...enabledBooks, key])].sort() });
         };
         return (
           <FilterableSelect

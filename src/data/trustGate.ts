@@ -50,6 +50,14 @@ export interface TrustLedger {
     stances: string[];
     engine: string[];
   };
+  /** "bucket/id" of records created from a page with NO rules encoded yet (scripts/trust-ledger.mjs).
+   *  Nothing to strip, so not a `records` entry — the marker says so for them whatever the switch says,
+   *  because turning the gate off cannot apply rules that were never written. */
+  unencoded?: string[];
+  /** "bucket/id" -> what a record created from its page prints but does not apply yet, in the player's
+   *  words ("Azlant Lore, the Azlanti language"). Some of its rules are encoded, not all — the marker
+   *  says which, whatever the switch says, for the same reason as `unencoded`. */
+  partly?: Record<string, string>;
 }
 
 /** The generated OFF list, imported as a MODULE, not fetched: mergeWithSeed is synchronous and runs
@@ -69,6 +77,37 @@ let census = { recordsOff: 0, recordsPartly: 0, stars: 0 };
  *  applied. Keyed "bucket/id" — the marker's only input. */
 export function trustOff(bucket: string, id: string): string[] | undefined {
   return offMap[`${bucket}/${id}`];
+}
+
+const unencodedSet = new Set(TRUST_LEDGER.unencoded ?? []);
+/** Whether this record was created from a page with none of its rules encoded (see `unencoded`). */
+export function trustUnencoded(bucket: string, id: string): boolean {
+  return unencodedSet.has(`${bucket}/${id}`);
+}
+
+const partlyMap = TRUST_LEDGER.partly ?? {};
+/** What this created record prints but does not apply yet, or undefined (see `partly`). */
+export function trustPartly(bucket: string, id: string): string | undefined {
+  return partlyMap[`${bucket}/${id}`];
+}
+
+/**
+ * The unencoded (or partly encoded) record a popup that knows only a TITLE is showing. The Builder's
+ * background rows and class-option rows open their description as `key: 'origin'`, which names no
+ * bucket, so the marker could never find them. Exact name, among the few records `unencoded` and
+ * `partly` list — never a guess over the whole database.
+ */
+export function unencodedNamed(
+  name: string,
+  content: Record<string, Record<string, { name?: string }> | undefined> | null | undefined,
+): { bucket: string; id: string } | undefined {
+  for (const key of [...unencodedSet, ...Object.keys(partlyMap)]) {
+    const slash = key.indexOf('/');
+    const bucket = key.slice(0, slash);
+    const id = key.slice(slash + 1);
+    if (content?.[bucket]?.[id]?.name === name) return { bucket, id };
+  }
+  return undefined;
 }
 
 /**

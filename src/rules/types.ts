@@ -269,6 +269,13 @@ interface ContentBase {
   descRefs?: DescRef[];
   source?: SourceInfo;
   /**
+   * The names this record's page says it was printed under before — the Archives' `legacy_name`
+   * ("Flame Tongue" for Searing Blade, "Disrupting" for Vitalizing). Search only: a picker matches them
+   * so a player typing the older book's name finds the reprint. Stamped by
+   * scripts/backfill-ast-edition.mjs from the record's final page.
+   */
+  legacyNames?: string[];
+  /**
    * "This record works; here is the part you apply yourself."
    *
    * Rendered under the record's description on the Feats tab. Deliberately distinct from

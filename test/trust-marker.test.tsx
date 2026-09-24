@@ -20,8 +20,15 @@ import LEDGER from '../src/data/trust-ledger.json';
 
 const OFF_PATHS = ['innateSpells', 'passiveEffects.resistances', 'choice.options[].grant.skills'];
 
-/** Mutable so a test can turn the switch off, or darken a real record before rendering a surface. */
-const stub = vi.hoisted(() => ({ on: true, dark: new Set<string>(['feats/dark-one']) }));
+/** Mutable so a test can turn the switch off, or darken a real record before rendering a surface.
+ *  `bare` = records created from their page with no rules encoded (the ledger's `unencoded`). */
+const stub = vi.hoisted(() => ({
+  on: true,
+  dark: new Set<string>(['feats/dark-one']),
+  bare: new Set<string>(['backgrounds/bare-one']),
+  /** `partly` = created with some rules encoded: what the print carries that the record does not. */
+  partly: { 'backgrounds/half-one': 'Azlant Lore, the Azlanti language' } as Record<string, string>,
+}));
 
 // Hoisted above the import below by vitest, which is why TrustMarker can be imported normally.
 vi.mock('../src/data/trustGate', () => ({
@@ -32,6 +39,15 @@ vi.mock('../src/data/trustGate', () => ({
     if (!bucket || !id) throw new Error(`trustOff called with bucket=${bucket} id=${id}`);
     return stub.dark.has(`${bucket}/${id}`) ? OFF_PATHS : undefined;
   },
+  trustUnencoded: (bucket: string, id: string) => {
+    if (!bucket || !id) throw new Error(`trustUnencoded called with bucket=${bucket} id=${id}`);
+    return stub.bare.has(`${bucket}/${id}`);
+  },
+  trustPartly: (bucket: string, id: string) => {
+    if (!bucket || !id) throw new Error(`trustPartly called with bucket=${bucket} id=${id}`);
+    return stub.partly[`${bucket}/${id}`];
+  },
+  unencodedNamed: () => undefined,
 }));
 
 import { TrustMarker, trustWords } from '../src/sheet/TrustMarker';
@@ -74,6 +90,38 @@ describe('TrustMarker', () => {
     } finally {
       stub.on = true;
     }
+  });
+
+  /* A record the importer created from its page with NO rules encoded (the ledger's `unencoded`, see
+   * scripts/trust-ledger.mjs): nothing to strip, so no `trustOff` entry — and still nothing applies,
+   * which is the case the line exists for. The switch cannot turn on rules that were never written, so
+   * the line stays with the gate off too. */
+  it('says so on a record created with none of its rules encoded, gate on or off', () => {
+    const on = render(<TrustMarker bucket="backgrounds" id="bare-one" />);
+    expect(on.text).toContain('Not yet verified');
+    expect(on.title).toContain('none of its rules are encoded yet');
+    stub.on = false;
+    try {
+      expect(render(<TrustMarker bucket="backgrounds" id="bare-one" />).text).toContain('Not yet verified');
+    } finally {
+      stub.on = true;
+    }
+  });
+
+  /* Created with SOME rules encoded (the ledger's `partly`): the line says it is partly applied and
+   * names what is not, on the screen — gate on or off, like the "nothing encoded" line above. */
+  it('says "partly applied" and names what is not, on a record created with only some rules encoded', () => {
+    const on = render(<TrustMarker bucket="backgrounds" id="half-one" />);
+    expect(on.text).toBe('Not yet verified — shown, partly applied. Not applied: Azlant Lore, the Azlanti language.');
+    expect(on.title).toBe('Not applied yet: Azlant Lore, the Azlanti language.');
+    stub.on = false;
+    try {
+      expect(render(<TrustMarker bucket="backgrounds" id="half-one" />).text).toContain('partly applied');
+    } finally {
+      stub.on = true;
+    }
+    // A fully applied created record — on neither list — shows nothing.
+    expect(render(<TrustMarker bucket="backgrounds" id="whole-one" />).text).toBe('');
   });
 
   it('says every kind of stripped path in words, deduplicated', () => {

@@ -2,12 +2,13 @@ import { Fragment, useMemo, useRef, useState, type Dispatch, type ReactNode, typ
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
 import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
-import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
+import { enabledBookSet, sourceCatalog, sourceIdToken, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
 import { rankBySearch, searchMatches } from '../data/searchRank';
-import { loadHomebrewSources, loadCampaigns, saveCampaigns } from '../data/storage';
+import { loadHomebrewSources, loadCampaigns, saveCampaigns, listCampaignHbSources } from '../data/storage';
 import { useAuth } from '../data/useAuth';
 import { fetchCampaignByCode, type CampaignMembership } from '../data/campaigns';
+import { refreshCampaignHomebrew } from '../data/campaignHomebrew';
 import { confirmDialog } from '../sheet/confirm';
 import {
   type BuildState,
@@ -1015,6 +1016,10 @@ export function SearchSelect({
           )}
         </button>
       )}
+      {/* The chosen record's TrustMarker line on the card itself, not only inside its popup:
+          a created heritage with no rules encoded applies nothing, and the card is where the player
+          looks (see TrustMarker). Only when the bucket is known — a guess is worse than silence. */}
+      {current && descBucket && <TrustMarker bucket={descBucket} id={current.id} />}
       {open && (
         <div className="picker-overlay" onClick={() => setOpen(false)}>
           <div className="picker" onClick={(e) => e.stopPropagation()}>
@@ -1891,6 +1896,8 @@ export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }:
       ];
       setMemberships(next);
       saveCampaigns(next);
+      // Pull the GM's shared homebrew now, not on the next focus: 'Use defaults' below can turn it on.
+      void refreshCampaignHomebrew();
     }
     actions.patch((b) => ({ campaignIds: [...new Set([...(b.campaignIds ?? []), c.id])] }));
     setCode('');
@@ -2020,18 +2027,20 @@ export function CampaignOptionsCard({ build, actions, content }: EditorProps) {
 /** The rule cards a character's Setup page and a campaign's defaults editor both show, in ONE order:
  *  SOURCES FIRST (owner, 2026-09-22) — which books are on decides what every other card can offer.
  *  `children` sit between Sources and Variant rules (the Setup page's Campaigns + Options cards).
- *  `sourcesContent` is the unfiltered db the Sources card needs (see SourcesCard). */
+ *  `sourcesContent` is the unfiltered db the Sources card needs (see SourcesCard).
+ *  `campaignDefaults`: this is a GM's campaign defaults editor (see SourcesCard). */
 export function RuleCards({
   build,
   actions,
   content,
   sourcesContent = content,
   catalog,
+  campaignDefaults,
   children,
-}: EditorProps & { sourcesContent?: ContentDatabase; catalog: ReturnType<typeof sourceCatalog>; children?: ReactNode }) {
+}: EditorProps & { sourcesContent?: ContentDatabase; catalog: ReturnType<typeof sourceCatalog>; campaignDefaults?: boolean; children?: ReactNode }) {
   return (
     <>
-      <SourcesCard build={build} actions={actions} catalog={catalog} content={sourcesContent} />
+      <SourcesCard build={build} actions={actions} catalog={catalog} content={sourcesContent} campaignDefaults={campaignDefaults} />
       {children}
       <VariantRulesCard build={build} actions={actions} content={content} />
       <CampaignOptionsCard build={build} actions={actions} content={content} />
@@ -2090,6 +2099,7 @@ export function SourcesCard({
   actions,
   catalog,
   content,
+  campaignDefaults,
 }: {
   build: BuildState;
   actions: BuilderActions;
@@ -2097,6 +2107,9 @@ export function SourcesCard({
   /** The UNFILTERED content (ovContent). It must see books that are currently off, or a chosen entry
    *  from a disabled book could not be named in the warning. */
   content: ContentDatabase;
+  /** A GM's campaign defaults editor: ticking one of HIS homebrew sources here shares it with the
+   *  campaign (CampaignsPage's save does the sharing), so other campaigns' homebrew isn't offered. */
+  campaignDefaults?: boolean;
 }) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   // Live filter for the (long) book list — a draft filter, not a committed value, so filter-as-you-type.
@@ -2111,16 +2124,27 @@ export function SourcesCard({
   const prefs = usePrefs();
   const enabled = enabledBookSet(build.enabledSources);
   const allBooks = catalog.allBooks;
-  // User homebrew Sources (toggled by their name, which is the entries' source.book). List every source
-  // the player has created — even empty ones — with how many entries each holds.
+  // User homebrew Sources. List every source the player has created — even empty ones — with how many
+  // entries each holds. Plus the homebrew GMs share with the player's campaigns, so it works on EVERY
+  // character. One row per NAME (the entries' source.book): a kept copy of a GM source is the same row.
+  // A row is SWITCHED by its sources' ids (`tokens`, sources.ts sourceIdToken), so a GM renaming a
+  // shared source leaves it on; a name in enabledSources (toggles from before the token) still counts.
+  // `campaign` marks a row that is here only because of a campaign.
   const hbList = useMemo(() => {
     const byName = new Map(catalog.homebrew.map((h) => [h.name, h.count]));
-    return Object.values(loadHomebrewSources())
-      .map((src) => ({ name: src.name, count: byName.get(src.name) ?? 0 }))
-      .sort((a, b) => a.name.localeCompare(b.name));
-  }, [catalog.homebrew]);
+    const rows = new Map<string, { name: string; count: number; campaign?: string; tokens: string[] }>();
+    const add = (name: string, id: string, campaign?: string) => {
+      let row = rows.get(name);
+      if (!row) rows.set(name, (row = { name, count: byName.get(name) ?? 0, tokens: [], ...(campaign ? { campaign } : {}) }));
+      if (!row.tokens.includes(sourceIdToken(id))) row.tokens.push(sourceIdToken(id));
+    };
+    for (const src of Object.values(loadHomebrewSources())) add(src.name, src.id);
+    if (!campaignDefaults) for (const src of listCampaignHbSources()) add(src.name, src.id, src.campaignName);
+    return [...rows.values()].sort((a, b) => a.name.localeCompare(b.name));
+  }, [catalog.homebrew, campaignDefaults]);
+  const hbOn = (h: (typeof hbList)[number]) => enabled.has(h.name) || h.tokens.some((t) => enabled.has(t));
   const enabledReal = allBooks.filter((b) => enabled.has(b)).length;
-  const hbOnCount = hbList.filter((h) => enabled.has(h.name)).length;
+  const hbOnCount = hbList.filter(hbOn).length;
   const hbAllOn = hbList.length > 0 && hbOnCount === hbList.length;
   // While searching, force every group open so matches are visible without manual expansion.
   // The niche "Other" shelf (Society scenarios, blogs, specials) stays hidden unless the pref is on.
@@ -2135,10 +2159,13 @@ export function SourcesCard({
           // bug 2026-09-13: search-rank — the surviving books lead with the one whose title was
           // typed, inside their own category (the group heading says where a book lives, so a row
           // must not jump out of it).
+          // A bundle row ("Pathfinder Society · 15 books") answers to the books inside it too, or
+          // "Clockwork" found nothing while the Clockwork Mystery Player's Guide sat in that bundle.
           const entries = rankBySearch(
-            g.entries.filter((e) => searchMatches(search, e.label)),
+            g.entries.filter((e) => searchMatches(search, e.label, e.books.join(' · '))),
             search,
             (e) => e.label,
+            (e) => e.books.join(' · '),
           );
           return entries.length ? { ...g, entries } : null;
         })
@@ -2160,9 +2187,9 @@ export function SourcesCard({
    * sheet), and dropping it silently deletes the player's choices without asking. So: name exactly
    * what would go, and only remove it if they say yes.
    */
-  const setBooks = async (books: string[], on: boolean) => {
+  const setBooks = async (books: string[], on: boolean, tokens: string[] = []) => {
     const n = new Set(enabled);
-    for (const b of books) on ? n.add(b) : n.delete(b);
+    for (const b of [...books, ...tokens]) on ? n.add(b) : n.delete(b);
     if (on) return write(n);
 
     const losing = chosenFromBooks(build, content, new Set(books));
@@ -2198,6 +2225,10 @@ export function SourcesCard({
     actions.patch(removeChosenIds({ ...build, enabledSources: [...n].sort() }, new Set(losing.map((c) => c.id))));
   };
   const setCategory = (g: SourceGroup, on: boolean) => setBooks(g.entries.flatMap((e) => e.books), on);
+  // Homebrew goes ON by id only (a name would also switch on whatever source takes that name later) and
+  // OFF by id and name alike; what the character loses is found by name, the entries' book.
+  const setHomebrew = (rows: typeof hbList, on: boolean) =>
+    setBooks(on ? [] : rows.map((h) => h.name), on, rows.flatMap((h) => h.tokens));
   return (
     <SetupCard icon="ti-books" label="Sources" count={`${enabledReal}/${allBooks.length}`}>
       <div className="src-wrap">
@@ -2213,7 +2244,7 @@ export function SourcesCard({
           onToggle={() => actions.patch({ hideLegacy: !build.hideLegacy })}
         />
         <div className="src-actions">
-        <button type="button" className="src-act" onClick={() => write(new Set([...allBooks, ...hbList.map((h) => h.name)]))}>
+        <button type="button" className="src-act" onClick={() => write(new Set([...allBooks, ...hbList.flatMap((h) => h.tokens)]))}>
           Enable everything
         </button>
         <button type="button" className="src-act" onClick={() => actions.patch({ enabledSources: undefined })}>
@@ -2253,19 +2284,25 @@ export function SourcesCard({
               className={'src-check' + (hbAllOn ? ' on' : hbOnCount > 0 ? ' partial' : '')}
               title={hbAllOn ? 'Turn all homebrew off' : 'Turn all homebrew on'}
               aria-label={hbAllOn ? 'Disable all homebrew' : 'Enable all homebrew'}
-              onClick={() => setBooks(hbList.map((h) => h.name), !hbAllOn)}
+              onClick={() => setHomebrew(hbList, !hbAllOn)}
             >
               <i className={'ti ' + (hbAllOn ? 'ti-checkbox' : hbOnCount > 0 ? 'ti-square-minus' : 'ti-square')} aria-hidden="true" />
             </button>
           </div>
+          {campaignDefaults && (
+            <p className="ovr-intro">Homebrew you turn on here is shared with this campaign’s players, and your edits reach them automatically.</p>
+          )}
           {hbOpen && (
             <div className="src-books">
               {hbShown.map((h) => {
-                const on = enabled.has(h.name);
+                const on = hbOn(h);
                 return (
-                  <button type="button" key={h.name} className={'src-book' + (on ? ' on' : '')} onClick={() => setBooks([h.name], !on)}>
+                  <button type="button" key={h.name} className={'src-book' + (on ? ' on' : '')} onClick={() => setHomebrew([h], !on)}>
                     <i className={'ti ' + (on ? 'ti-checkbox' : 'ti-square')} aria-hidden="true" />
-                    <span className="src-book-name">{h.name}</span>
+                    <span className="src-book-name">
+                      {h.name}
+                      {h.campaign && <span className="src-bundle-n"> · from {h.campaign}</span>}
+                    </span>
                     <span className="src-book-n">{h.count}</span>
                   </button>
                 );
@@ -3316,6 +3353,10 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             })),
           ]}
         />
+        {/* The chosen background's TrustMarker on the card itself: this picker opens its rows as
+            `origin` (no descBucket), so SearchSelect cannot draw it, and a created background whose
+            print is only partly applied must say so where the player looks. */}
+        {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && <TrustMarker bucket="backgrounds" id={background.id} />}
         {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && (
           <ChoiceGrants
             grants={

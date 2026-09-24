@@ -93,7 +93,7 @@ export function FormulaBookPanel({
       {rows.length > 0 ? (
         <ul className="fb-list">
           {rows.map(({ id, item }) => {
-            const node = item ? descNodeOf({ name: item.name, description: item.description, descRefs: item.descRefs }, 'items') : null;
+            const node = item ? descNodeOf({ id, name: item.name, description: item.description, descRefs: item.descRefs }, 'items') : null;
             return (
               <li className="fb-row" key={id}>
                 {node ? (
@@ -186,7 +186,7 @@ function FormulaPicker({
       onClose={onClose}
       headerExtra={note ? <span className="fsel-note">{note}</span> : undefined}
       renderRow={(it, openDesc) => {
-        const node = descNodeOf({ name: it.name, description: it.description, descRefs: it.descRefs }, 'items');
+        const node = descNodeOf({ id: it.id, name: it.name, description: it.description, descRefs: it.descRefs }, 'items');
         const known = have.includes(it.id);
         return (
           <PickerRow

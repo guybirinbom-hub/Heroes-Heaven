@@ -18,6 +18,7 @@ import { mythicSlotAllows } from './mythic';
 import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey } from './types';
 import { SKILLS } from './types';
 import { skillAbility } from './derive';
+import { entrySourceOn } from './sources';
 
 /**
  * Which SKILL a skill feat is for, read off its prerequisites — *"trained in Deception"*.
@@ -575,7 +576,8 @@ export function findHiddenFeatMatches(opts: {
     // bug 2026-09-13: search-rank — the SAME rule the picker's own filter uses (FilterableSelect's
     // text field), or this note would count "water skin" as zero hidden matches while the picker
     // itself is showing rows for it.
-    if (!searchMatches(q, f.name, f.description)) continue;
+    // …including the names the feat's page was printed under before (filterSpecs.ts `searchText`).
+    if (!searchMatches(q, f.name, [f.description, ...(f.legacyNames ?? [])].join('\n'))) continue;
     if (!opts.slotEligibleIds.has(f.id)) {
       invalid++;
     } else if (
@@ -593,8 +595,7 @@ export function findHiddenFeatMatches(opts: {
       // Tell the user to enable Archetypes, which is the actual gate.
       archetype++;
     } else {
-      const book = f.source?.book?.trim();
-      if (book && !opts.enabledBooks.has(book)) sources.push(f);
+      if (!entrySourceOn(opts.enabledBooks, f)) sources.push(f);
       else invalid++; // unexpected residue — count it honestly rather than dropping it
     }
   }

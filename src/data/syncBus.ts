@@ -17,6 +17,19 @@ export function markLocalDataChanged(): void {
   handler?.();
 }
 
+let campaignHbHandler: (() => void) | null = null;
+
+/** campaignHomebrew registers this to hear that a homebrew record was written (its key is already in
+ *  the dirty set), so it can schedule the GM's publish. Kept here so storage.ts never imports supabase. */
+export function onCampaignHbDirty(cb: (() => void) | null): void {
+  campaignHbHandler = cb;
+}
+
+/** Nudge the campaign-homebrew publish (no-op until it is started). */
+export function markCampaignHbDirty(): void {
+  campaignHbHandler?.();
+}
+
 /** Last time device settings (prefs/appearance) changed — drives last-write-wins on sync. */
 export function loadSettingsUpdated(): number {
   try {

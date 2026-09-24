@@ -50,7 +50,7 @@ import type {
 } from './types';
 import type { Ancestry, ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, Heritage, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, RestrictedSlotGrant, Size, SourceInfo, SpellChoiceFilter, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
-import { CHOOSABLE_SOURCE_MAPS } from './sources';
+import { CHOOSABLE_SOURCE_MAPS, entrySourceOn } from './sources';
 import { abilityMod, askedAtDailyPrep, belongsToArchetype, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, narrowChoiceOptions, outsideDomains, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
 import { advancementRows } from './advancement';
 import { applyCounterMods } from './counterMods';
@@ -3489,13 +3489,12 @@ export function applySources(content: ContentDatabase, enabled: Set<string>, kee
   const next: ContentDatabase = { ...content };
   let changed = false;
   for (const m of CHOOSABLE_SOURCE_MAPS) {
-    const map = content[m] as Record<string, { source?: SourceInfo }> | undefined;
+    const map = content[m] as Record<string, { source?: SourceInfo; homebrewSourceId?: string }> | undefined;
     if (!map) continue;
     let dropped = false;
     const filtered: Record<string, unknown> = {};
     for (const [id, e] of Object.entries(map)) {
-      const book = e.source?.book?.trim(); // match sourceCatalog's whitespace-normalized book names
-      if (!book || enabled.has(book) || keepIds.has(id)) filtered[id] = e;
+      if (entrySourceOn(enabled, e) || keepIds.has(id)) filtered[id] = e;
       else dropped = true;
     }
     if (dropped) {
