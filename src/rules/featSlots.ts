@@ -11,7 +11,7 @@
  */
 import { searchMatches } from '../data/searchRank';
 import type { BuildState } from './build';
-import { backgroundGrantedFeats, resolveBackground } from './build';
+import { backgroundGrantedFeats, levelGrants, loreKey, resolveBackground } from './build';
 import { maxTakes } from './featGrants';
 import { elementTraitsOf, impulseAllowedFor } from './kineticElements';
 import { mythicSlotAllows } from './mythic';
@@ -32,7 +32,8 @@ function skillKeysOfFeat(f: Feat): ProficiencyKey[] {
   for (const p of f.prerequisites ?? []) {
     for (const m of String(p).matchAll(/(?:trained|expert|master|legendary)\s+in\s+([A-Z][A-Za-z]*)(\s+Lore)?/g)) {
       const name = m[1].toLowerCase();
-      if (m[2]) out.add(`lore:${name}` as ProficiencyKey);
+      const lore = m[2] ? loreKey(name) : null;
+      if (lore) out.add(lore);
       else if ((SKILLS as readonly string[]).includes(name)) out.add(name as ProficiencyKey);
     }
   }
@@ -47,6 +48,248 @@ export interface FeatSlotRef {
 
 /** The featPicks key for a slot — "level:category:idx" (mirrors the builder's slotKey). */
 export const featSlotKey = (p: FeatSlotRef) => `${p.level}:${p.category}:${p.idx}`;
+
+/** One level's feat-slot list, exactly as the Builder's level page draws it (same arguments). */
+const slotListAt = (b: BuildState, content: ContentDatabase, level: number, taken = Object.values(b.featPicks ?? {}).filter(Boolean)) =>
+  levelGrants(level, b.classId, content, b.subclassId, b.variantRules, b.classId2, b.subclassId2, b.mythicEnabled, taken).featSlots;
+
+/** Every level's feat-slot list. */
+function featSlotLists(b: BuildState, content: ContentDatabase): FeatCategory[][] {
+  const taken = Object.values(b.featPicks ?? {}).filter(Boolean);
+  return Array.from({ length: 20 }, (_, i) => slotListAt(b, content, i + 1, taken));
+}
+
+/** Every build map whose keys START with a slot key: the pick, its sub-choice (`<slot>#n`), and the
+ *  spell / Lore / effect / pick-a-feat answers made under it (`<slot>:granted-spell`, `<slot>:0`,
+ *  `<slot>:<choice id>`, `<slot>#1`). */
+export const SLOT_KEYED = ['featPicks', 'featChoices', 'featSpellChoices', 'featLoreChoices', 'effectChoices', 'pickFeatChoices'] as const;
+const SLOT_PREFIX = /^(\d+):([a-z]+):(\d+)(?=$|[#:])/;
+/** The order `levelGrants` pushes a level's slots in. A test holds every level list to it. */
+export const SLOT_ORDER: FeatCategory[] = ['ancestry', 'class', 'skill', 'general', 'bonus', 'impulse', 'archetype', 'mythic'];
+/** Where a category sits in a level's list: [class, skill, archetype, mythic] → mythic at [3]. */
+const slotsOf = (list: FeatCategory[], cat: string) => list.flatMap((c, i) => (c === cat ? [i] : []));
+/** How many slots come before the block of category `r` (its SLOT_ORDER index) — where it is, or would be. */
+const before = (list: FeatCategory[], r: number) => list.filter((c) => SLOT_ORDER.indexOf(c) < r).length;
+/**
+ * The slot a key means: the nth slot of its category at its level. A drawn key is its place among that
+ * category's slots; a key no slot draws counts from where the category's block is, or would be. Never
+ * the index itself — that is a position in the WHOLE level list, which Paragon, Dual Class, Free
+ * Archetype and Mythic all move.
+ */
+const ordinalOf = (list: FeatCategory[], cat: string, idx: number) => {
+  const live = slotsOf(list, cat).indexOf(idx);
+  return live >= 0 ? live : idx - before(list, SLOT_ORDER.indexOf(cat as FeatCategory));
+};
+
+/**
+ * The picks a change takes the slot from: drawn in `prev` as the nth slot of their category at their
+ * level, where `next` — WITHOUT these picks — has fewer than n+1 of them, or has that slot but its own
+ * picker would no longer take the feat there while it took it in `prev`. Turning Free Archetype,
+ * Mythic, Ancestry Paragon or Dual Class off names exactly these in its confirm (`requestRulesChange`)
+ * and removes them on the player's yes. That ordinal is what `rekeyFeatSlots` carries every other pick
+ * by, so a drawn pick is either in this list or still in a drawn slot that takes it. Lowest level first.
+ *
+ * The second half is Dual Class: with it on, both class slots at a level take both classes' feats, so
+ * a rogue feat can sit in the fighter's FIRST slot. Counting positions alone named the fighter feat in
+ * the second slot and left the rogue feat in a slot that now refuses it, looking like a normal pick.
+ *
+ * Worked out until nothing more goes, because a feat can carry a slot: Ultimate Flexibility in the
+ * second-class slot adds a bonus slot at 20th, so Dual Class off takes that bonus slot too, and the
+ * feat in it is named beside Ultimate Flexibility. Read off `next` as handed over, the bonus slot was
+ * still drawn (the feat about to go was still in its picks) and its feat lost its slot unnamed.
+ */
+export function picksLosingSlot(prev: BuildState, next: BuildState, content: ContentDatabase): [string, string][] {
+  const was = featSlotLists(prev, content);
+  const drawn = Object.entries(prev.featPicks ?? {}).flatMap(([k, v]) => {
+    const m = SLOT_PREFIX.exec(k);
+    if (!v || m?.[0] !== k) return [];
+    const nth = slotsOf(was[Number(m[1]) - 1] ?? [], m[2]).indexOf(Number(m[3]));
+    return nth >= 0 ? [{ k, v, lvl: Number(m[1]), cat: m[2], nth }] : [];
+  });
+  const gone = new Set<string>();
+  for (let grew = true; grew; ) {
+    grew = false;
+    const kept = { ...next, featPicks: Object.fromEntries(Object.entries(next.featPicks ?? {}).filter(([k]) => !gone.has(k))) };
+    const now = featSlotLists(kept, content);
+    for (const d of drawn) {
+      if (gone.has(d.k)) continue;
+      const slots = slotsOf(now[d.lvl - 1] ?? [], d.cat);
+      // Kept: its slot is still drawn and still takes it — or never took it, which is not this change's doing.
+      if (d.nth < slots.length && (fitsSlot(kept, content, d.k, `${d.lvl}:${d.cat}:${slots[d.nth]}`) || !fitsSlot(prev, content, d.k, d.k))) continue;
+      gone.add(d.k);
+      grew = true;
+    }
+  }
+  return drawn
+    .filter((d) => gone.has(d.k))
+    .map((d): [string, string] => [d.k, d.v])
+    .sort(([a], [z]) => parseInt(a) - parseInt(z));
+}
+
+/**
+ * Would the slot's own picker take the feat at `from` in slot `to`? The test `eligibleFeatsForSlot`
+ * lists by — the one the picker's "not valid for this slot" count uses — asked of the build with the
+ * feat already moved, so its old key is not counted as a take of it. `from === to` asks whether the
+ * slot a pick sits in takes it. A feat the content no longer has is never taken.
+ */
+export function fitsSlot(b: BuildState, content: ContentDatabase, from: string, to: string): boolean {
+  const id = b.featPicks?.[from];
+  const f = id ? content.feats[id] : undefined;
+  const m = SLOT_PREFIX.exec(to);
+  if (!f || !m || m[0] !== to) return false;
+  const featPicks = { ...b.featPicks };
+  delete featPicks[from];
+  featPicks[to] = f.id;
+  return slotTakes({ ...b, featPicks }, content, { level: Number(m[1]), category: m[2] as FeatCategory, idx: Number(m[3]) })(f);
+}
+
+/**
+ * Where "Move to slot" puts a feat with no slot: the first EMPTY slot of its kind at its level that
+ * takes it (`fitsSlot`). A slot of its kind that would refuse it is never offered — moving a rogue feat
+ * left over from a changed second class into the fighter's own class slot turned a flagged feat into a
+ * pick that looked legitimate. null: no such slot, so the row offers Remove only.
+ */
+export function moveTargetFor(b: BuildState, content: ContentDatabase, from: string): string | null {
+  const m = SLOT_PREFIX.exec(from);
+  if (!m || m[0] !== from) return null;
+  for (const i of slotsOf(slotListAt(b, content, Number(m[1])), m[2])) {
+    const to = `${m[1]}:${m[2]}:${i}`;
+    if (!b.featPicks[to] && fitsSlot(b, content, from, to)) return to;
+  }
+  return null;
+}
+
+/**
+ * Swap everything keyed under two slot keys: the pick and every answer made under it (SLOT_KEYED).
+ * The Builder's "Move to slot" for a feat with no slot (to the slot `moveTargetFor` names): the feat takes the empty slot with its own
+ * answers, and whatever a cleared slot left there (`setFeat` clears only `featChoices`) takes the old
+ * key — nothing is merged into the moved feat, and nothing is dropped.
+ */
+export function swapSlotKeys(b: BuildState, x: string, y: string): Partial<BuildState> {
+  const swap = (k: string) => {
+    const m = SLOT_PREFIX.exec(k)?.[0];
+    return m === x ? y + k.slice(x.length) : m === y ? x + k.slice(y.length) : k;
+  };
+  return Object.fromEntries(SLOT_KEYED.filter((f) => b[f]).map((f) => [f, Object.fromEntries(Object.entries(b[f]!).map(([k, v]) => [swap(k), v]))]));
+}
+
+/**
+ * Keep every pick in ITS slot when a change moves the slots under it.
+ *
+ * A slot key is `<level>:<category>:<index in that level's slot list>` — every saved character uses
+ * it, so it stays. But the index is a position in a list other choices build: Free Archetype pushes
+ * 'archetype' BEFORE 'mythic', so turning it off moved a level-2 mythic slot from 2:mythic:3 to
+ * 2:mythic:2 and the mythic feat was left under a key no slot draws — still on the sheet, gone from
+ * the Builder, its slot shown empty. The same shift comes from Ancestry Paragon (ancestry slots at
+ * the front), Dual Class / a second class (a second class slot), the fighter's Ultimate Flexibility
+ * pick (a bonus slot before archetype/mythic at 20th), a class change, and a campaign's defaults
+ * changing several at once.
+ *
+ * So after ANY change, each slot-keyed answer is moved from its place in `prev`'s list to the slot
+ * with the same (level, category, ordinal within that category) in `next`'s. Nothing is ever dropped
+ * here: a toggle turned off removes the picks that lose their slot through its confirm, on the
+ * player's yes (`picksLosingSlot`, `requestRulesChange`) — before this runs.
+ *
+ * Nothing is moved into ANOTHER slot either. A pick with no slot in `next` (Ultimate Flexibility
+ * removed, a second class changed, a key v0.1.40 stranded — it had no re-keying, so Free Archetype,
+ * Paragon or Dual Class off left the picks after the removed slot one index too far) keeps a key that
+ * means "the nth slot of this category": where its slot would sit, after every category `levelGrants`
+ * puts before it (SLOT_ORDER), plus its ordinal. It moves with that spot like any drawn pick, and
+ * meanwhile the Builder lists it at its level as a feat with no slot, with Remove and Move to slot.
+ *
+ * It IS back in that slot, with no dialog, when a change draws the slot again — but only when the
+ * slot's own picker takes it there (`fitsSlot`). A dedication v0.1.40 left at 2:archetype:2 is back in
+ * the free slot on Free Archetype on, so turning it off again names it and removes it; a mythic feat
+ * v0.1.40 left behind on Mythic off is back on Mythic on. One the slot would refuse (a rogue feat from
+ * a second class since changed, when a ranger's slot comes back at that position) steps past the drawn
+ * slots and stays a feat with no slot. A key sitting BEFORE its category's block (a slot v0.1.40 added
+ * ahead of it) keeps its key; when a change draws that key again (Paragon off), the same test decides.
+ *
+ * A pick whose slot is still drawn keeps it even when that slot no longer takes it (a second class
+ * changed under a rogue feat in the fighter's slot): nothing is written for it, and the Builder flags
+ * it in its slot as not valid there, from the live build, whatever change or save put it there.
+ *
+ * Picks with no slot, then answers under a key that holds NO pick (a cleared slot keeps its spell,
+ * Lore and effect answers, because `setFeat` clears only `featChoices`) and keys of a category no
+ * level lists, move last. Each takes the key it would have had; if another now holds that key, or it
+ * is a drawn slot that would refuse the pick, it steps to the next free index of its own category
+ * that no slot draws, so no two keys' answers are ever merged.
+ */
+export function rekeyFeatSlots(prev: BuildState, next: BuildState, content: ContentDatabase): BuildState {
+  if (prev === next) return next;
+  const was = featSlotLists(prev, content);
+  const now = featSlotLists(next, content);
+  if (JSON.stringify(was) === JSON.stringify(now)) return next;
+  // No class on one side: there is no slot list to read a key against, so nothing moves.
+  if (!was.some((l) => l.length) || !now.some((l) => l.length)) return next;
+
+  const bases = new Set<string>();
+  for (const f of SLOT_KEYED) for (const k of Object.keys(next[f] ?? {})) {
+    const m = SLOT_PREFIX.exec(k);
+    if (m) bases.add(m[0]);
+  }
+  const to = new Map<string, string>();
+  // [base, the key it would have] for every pick `next` draws no slot for…
+  const rest: [string, string][] = [];
+  // …and for every answer that holds no pick, or has an unknown category.
+  const stale: [string, string][] = [];
+  for (const base of bases) {
+    const [, lvl, cat, idx] = SLOT_PREFIX.exec(base)!;
+    const r = SLOT_ORDER.indexOf(cat as FeatCategory);
+    if (r < 0) {
+      stale.push([base, base]);
+      continue;
+    }
+    const p = was[Number(lvl) - 1] ?? [];
+    const n = now[Number(lvl) - 1] ?? [];
+    const slots = slotsOf(n, cat);
+    const live = slotsOf(p, cat).indexOf(Number(idx));
+    const nth = ordinalOf(p, cat, Number(idx));
+    const want = nth < 0 ? base : `${lvl}:${cat}:${nth < slots.length ? slots[nth] : before(n, r) + nth}`;
+    if (!next.featPicks?.[base]) stale.push([base, want]);
+    else if (nth >= 0 && nth < slots.length && (live >= 0 || fitsSlot(next, content, base, want))) to.set(base, want);
+    else rest.push([base, want]);
+  }
+  const claimed = new Set(to.values());
+  const collide: [string, string][] = [];
+  // A pick no slot drew in `prev`, whose key `next` draws, that the slot's own picker would refuse.
+  const refused = (base: string, want: string) => {
+    const [, lvl, cat, idx] = SLOT_PREFIX.exec(want)!;
+    return !!next.featPicks?.[base] && slotsOf(now[Number(lvl) - 1] ?? [], cat).includes(Number(idx)) && !fitsSlot(next, content, base, want);
+  };
+  for (const [base, want] of [...rest, ...stale]) {
+    if (claimed.has(want) || refused(base, want)) {
+      collide.push([base, want]);
+      continue;
+    }
+    to.set(base, want);
+    claimed.add(want);
+  }
+  for (const [base, want] of collide) {
+    const [, lvl, cat, idx] = SLOT_PREFIX.exec(want)!;
+    // Past the drawn slots too: stepping into an empty one would put the pick (or its left-over
+    // answers) in a slot nobody chose it for.
+    const drawn = slotsOf(now[Number(lvl) - 1] ?? [], cat);
+    let j = Number(idx);
+    while (claimed.has(`${lvl}:${cat}:${j}`) || drawn.includes(j)) j++;
+    to.set(base, `${lvl}:${cat}:${j}`);
+    claimed.add(`${lvl}:${cat}:${j}`);
+  }
+  if ([...to].every(([a, b]) => a === b)) return next;
+
+  const out: BuildState = { ...next };
+  for (const f of SLOT_KEYED) {
+    const map = next[f];
+    if (!map) continue;
+    out[f] = Object.fromEntries(
+      Object.entries(map).map(([k, v]) => {
+        const m = SLOT_PREFIX.exec(k);
+        return [m ? to.get(m[0])! + k.slice(m[0].length) : k, v];
+      }),
+    );
+  }
+  return out;
+}
 
 /** The Adopted Ancestry feat id — the one pick that widens somebody else's ancestry-feat slot. */
 const ADOPTED_ANCESTRY = 'adopted-ancestry';
@@ -88,6 +331,15 @@ export function adoptedAncestryIds(build: BuildState, content: ContentDatabase, 
  * independently of source books.
  */
 export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase, p: FeatSlotRef): Feat[] {
+  const takes = slotTakes(build, content, p);
+  // Skip `aon-` scrapes that duplicate a canonical feat of the same name — they would offer the
+  // SAME feat twice in one picker. They stay in the db, so a feat already picked still resolves
+  // (and `fitsSlot` still finds it taken by its slot).
+  return Object.values(content.feats).filter((f) => !content.duplicateIds?.has(f.id) && takes(f));
+}
+
+/** Does slot `p` take feat f? The one test behind the picker's list and `fitsSlot`. */
+function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef): (f: Feat) => boolean {
   const currentKey = featSlotKey(p);
   // Count takes in OTHER slots; a feat is hidden here once those already reach its cap. A repeatable
   // feat therefore stays offered until the whole build holds maxTakes() copies of it.
@@ -96,10 +348,8 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
   for (const granted of backgroundGrantedFeats(resolveBackground(build, content), build.backgroundSkillChoice)) {
     taken.set(granted, (taken.get(granted) ?? 0) + 1);
   }
-  return Object.values(content.feats).filter((f) => {
-    // Skip `aon-` scrapes that duplicate a canonical feat of the same name — they would offer the
-    // SAME feat twice in one picker. They stay in the db, so a feat already picked still resolves.
-    if (content.duplicateIds?.has(f.id)) return false;
+  const impulseNth = p.category === 'impulse' ? ordinalOf(slotListAt(build, content, p.level), 'impulse', p.idx) : -1;
+  return (f) => {
     if (f.level > p.level) return false;
     /*
      * "**Special** You can select this feat only at 1st level." 28 records print that clause and
@@ -146,16 +396,26 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
      * A KINETIC GATE slot takes an impulse feat — and a DUAL gate binds one slot to each element:
      * *"select two 1st-level impulse feats, one with the trait of the first element and one with the
      * trait of the other."* Offering both elements in both slots would let a dual-gate kineticist take
-     * two impulses of the same element, which that sentence forbids. A single gate has one element, so
-     * the narrowing is a no-op there and both slots offer it.
+     * two impulses of the same element, which that sentence forbids. A single gate's two slots both take
+     * its one element: *"select two 1st-level impulse feats that have that element's trait."*
+     *
+     * The FIRST impulse slot takes the first element: its place among the impulse slots at its level
+     * (`ordinalOf`). It was the slot's index in the whole level list modulo two, so Ancestry Paragon's
+     * second ancestry slot or Dual Class's second class slot in front of the pair swapped the elements:
+     * correctly placed impulses were flagged, and Paragon off named and removed both.
+     *
+     * The elements are the GATE's, read at the slot's level: an element forked in at a Gate's Threshold
+     * made the list three long (or two for a single gate) and moved the binding the same way.
      */
     if (p.category === 'impulse') {
       if (!f.traits.includes('impulse')) return false;
-      const els = elementTraitsOf(build, build.level);
-      if (els.length > 1 && !f.traits.includes(els[p.idx % els.length])) return false;
+      const els = elementTraitsOf(build, p.level);
+      if (!impulseAllowedFor(f.traits, els)) return false;
+      if (els.length > 1 && !f.traits.includes(els[impulseNth])) return false;
       /* SHORT-CIRCUITS the category test below, exactly as the archetype, mythic and bonus slots do:
        * an impulse feat ships as category 'class', so matching category against 'impulse' offers
-       * nothing and the slot would be unfillable. */
+       * nothing and the slot would be unfillable. It skips the element gate at the end too, which is
+       * why `impulseAllowedFor` is asked above: without it a single gate offered all six elements. */
       return true;
     }
     /*
@@ -265,7 +525,7 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
     // has elements and was skipped by it.
     if (f.traits.includes('impulse') && !impulseAllowedFor(f.traits, elementTraitsOf(build, build.level))) return false;
     return true;
-  });
+  };
 }
 
 export interface HiddenFeatMatches {

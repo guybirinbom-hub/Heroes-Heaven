@@ -634,6 +634,24 @@
 .lvl-card.empty {
   border-style: dashed;
 }
+/* A kept answer that does not count right now (its label says why) — still there, still removable. */
+.lvl-card.lvl-card-idle {
+  border-style: dashed;
+  opacity: 0.7;
+}
+/* A feat still on the character that no slot at its level draws — shown to be moved or removed. */
+.lvl-noslot-row {
+  flex-wrap: wrap;
+}
+.lvl-slot .lvl-card.lvl-noslot {
+  flex: 1 1 200px;
+  border-style: dashed;
+  border-color: var(--app-warn);
+  cursor: default;
+}
+.lvl-noslot .lvl-card-icon {
+  color: var(--app-warn);
+}
 .lvl-card-icon {
   width: 28px;
   height: 28px;
@@ -708,6 +726,10 @@
   margin-left: auto;
   display: inline-flex;
   align-items: center;
+}
+/* A picked feat its slot would no longer take (a second class changed) — flagged, never moved. */
+.lvl-note.lvl-unfit {
+  color: var(--app-warn);
 }
 .lvl-future-tag {
   text-transform: none;
@@ -1031,6 +1053,20 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+/* A headed section inside a picker list (heritage: the ancestry's own vs the versatile ones). */
+.picker-group-h {
+  padding: 8px 8px 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--app-text-dim);
+}
+.picker-group-h:not(:first-child) {
+  margin-top: 4px;
+  border-top: var(--app-bw) solid var(--app-border);
+  padding-top: 10px;
 }
 .picker-more {
   padding: 8px 6px;
@@ -1480,6 +1516,11 @@
   justify-content: flex-end;
   gap: 8px;
 }
+/* Why the typed entry can't be taken (e.g. a Lore the character already has). */
+.popsel-custom-refusal {
+  font-size: 12px;
+  color: var(--app-warn);
+}
 /* Pill variant — compact, for the ability-boost rows. */
 .popsel.pill {
   width: auto;
@@ -1923,6 +1964,9 @@
   /* Nothing inside can force horizontal overflow. */
   .bmain, .lvl-cards, .lvl-card, .lvl-slot { min-width: 0; }
   .lvl-card { flex-wrap: wrap; }
+  /* A feat with no slot: the card on its own row, Move to slot + Remove side by side under it. */
+  .lvl-slot .lvl-card.lvl-noslot { flex-basis: 100%; }
+  .lvl-noslot-row .lvl-replace-btn { flex: 1 1 0; justify-content: center; min-height: 40px; }
 
   /* Top section: the 21-chip level strip scrolls sideways instead of wrapping into a block; the header
      reads as title / full-width name / (level + Cancel + Save) rows rather than an overflowing jumble. */

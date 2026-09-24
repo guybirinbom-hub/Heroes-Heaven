@@ -3,7 +3,7 @@ import '../builder/builder.css';
 import type { ContentDatabase, ModeDef } from '../rules/types';
 import { emptyBuild, type BuildState } from '../rules/build';
 import { sourceCatalog } from '../rules/sources';
-import { useBuilderActions, VariantRulesCard, CampaignOptionsCard, SourcesCard } from '../builder/shared';
+import { useBuilderActions, RuleCards } from '../builder/shared';
 // ── The ONLY reference to the initiative tracker in Heroes Heaven. Removed by deleting
 // src/integration/ plus these imports and the TRACKER_IN_CAMPAIGN branches. See its README. ──
 import { TRACKER_IN_CAMPAIGN, TEST_CAMPAIGNS_WITHOUT_LOGIN } from '../integration/enabled';
@@ -85,8 +85,9 @@ function defaultsFromBuild(b: BuildState): CampaignDefaults {
   };
 }
 
-/** The GM defaults editor — the exact Setup cards from the character builder, over a throwaway build. */
-function DefaultsEditor({ content, build, setBuild }: { content: ContentDatabase; build: BuildState; setBuild: React.Dispatch<React.SetStateAction<BuildState>> }) {
+/** The GM defaults editor — the exact Setup cards from the character builder, in the Setup page's
+ *  order (RuleCards: Sources first), over a throwaway build. */
+export function DefaultsEditor({ content, build, setBuild }: { content: ContentDatabase; build: BuildState; setBuild: React.Dispatch<React.SetStateAction<BuildState>> }) {
   const actions = useBuilderActions(setBuild, content);
   const catalog = useMemo(() => sourceCatalog(content), [content]);
   return (
@@ -94,9 +95,7 @@ function DefaultsEditor({ content, build, setBuild }: { content: ContentDatabase
       <div className="setup-note" style={{ marginBottom: 10 }}>
         Default rules new characters in this campaign can start from — the same options as a character&rsquo;s Setup page.
       </div>
-      <VariantRulesCard build={build} actions={actions} content={content} />
-      <CampaignOptionsCard build={build} actions={actions} content={content} />
-      <SourcesCard build={build} actions={actions} catalog={catalog} content={content} />
+      <RuleCards build={build} actions={actions} content={content} catalog={catalog} />
     </div>
   );
 }

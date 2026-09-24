@@ -16,6 +16,7 @@ import {
   bumpItemCounter,
   bumpItemQuantity,
   buyItem,
+  moveInventoryItem,
   packQuantity,
   removeInventoryItem,
   removePlayCompanion,
@@ -146,6 +147,12 @@ export const RUNE_SOURCE_FEAT = 'cutting-heaven-crushing-earth';
  *  above: the test asserts the id the UI gates on, not its own copy of the string. */
 export const STEADYING_HAND_ITEM = 'hunters-brooch';
 
+/** Where a reorder drop would land: before or after the row under the pointer, and whether the rows
+ *  there run ACROSS (a grid of several columns, or Flow). Across, "before" in reading order is to the
+ *  LEFT, so the hit zones are the card's left/right quarters and the line is drawn down that edge;
+ *  in a single column they are its top/bottom quarters and the line runs along the top or bottom. */
+type ReorderMark = { side: 'before' | 'after'; across: boolean };
+
 function ItemCard({
   inv,
   item,
@@ -169,6 +176,13 @@ function ItemCard({
   onAttachLeave,
   onAttachDrop,
   attachPlanNow,
+  reorderSide,
+  reorderSideNow,
+  onReorderOver,
+  onReorderLeave,
+  onReorderDrop,
+  reorder,
+  justAdded = false,
   runeCopy,
   can,
 }: {
@@ -212,6 +226,19 @@ function ItemCard({
   /** Plan the in-flight drag against THIS card as an attach host, read from the synchronous drag ref.
    *  null = the current drag isn't an attachment/rune, so the section handles it as a relocate. */
   attachPlanNow?: (hostItem: Item, hostInv: InventoryItem) => { ok: boolean; reason?: string } | null;
+  /** The drop-indicator line currently drawn on THIS row, and at which edge. */
+  reorderSide?: ReorderMark;
+  /** Would dropping the in-flight drag at this point reorder the list, and on which side? Read from
+   *  the SYNCHRONOUS drag ref for the same reason attachPlanNow is (the first dragover of a gesture
+   *  still sees the old state). null = not a reorder — the card/section handle the drop as before. */
+  reorderSideNow?: (target: InventoryItem, el: HTMLElement, clientX: number, clientY: number) => ReorderMark | null;
+  onReorderOver?: (instanceId: string, mark: ReorderMark) => void;
+  onReorderLeave?: () => void;
+  onReorderDrop?: (srcId: string, side: 'before' | 'after') => void;
+  /** Phone reorder arrows. Present = show them; a missing handler is that end of the list (disabled). */
+  reorder?: { up?: () => void; down?: () => void };
+  /** Just added from the picker — outline it briefly so the player sees where it landed. */
+  justAdded?: boolean;
   /** What the OWNER of this pack can physically do with gear (see InventoryScope). Absent = a player
    *  character, who can do all three. */
   can?: { wear: boolean; wield: boolean; invest: boolean };
@@ -266,7 +293,9 @@ function ItemCard({
       (onPlay ? ' draggable' : '') +
       (dragging ? ' inv-dragging' : '') +
       (attachHost && attachValid ? ' attach-target' : '') +
-      (attachOver && attachValid ? ' attach-over' : ''),
+      (attachOver && attachValid ? ' attach-over' : '') +
+      (reorderSide ? ' reorder-' + reorderSide.side + (reorderSide.across ? ' reorder-across' : '') : '') +
+      (justAdded ? ' inv-added' : ''),
     onClick: onOpen,
     onPointerDown: onHoldDrag ? (e) => onHoldDrag(inv, e) : undefined,
     draggable: !!onPlay && !isMobile,
@@ -278,27 +307,85 @@ function ItemCard({
         }
       : undefined,
     onDragEnd: onPlay ? () => onDragEndItem?.() : undefined,
-    onDragOver: canHost
-      ? (e) => {
-          const plan = attachPlanNow!(item, inv);
-          if (!plan) return; // not an attach drag → section handles the relocate
-          e.preventDefault();
-          e.stopPropagation();
-          e.dataTransfer.dropEffect = plan.ok ? 'copy' : 'none';
-          onAttachOver?.(inv.instanceId);
-        }
-      : undefined,
-    onDragLeave: canHost ? () => onAttachLeave?.() : undefined,
-    onDrop: canHost
-      ? (e) => {
-          const plan = attachPlanNow!(item, inv);
-          if (!plan) return; // let the enclosing Group's relocate drop handle it
-          e.preventDefault();
-          e.stopPropagation(); // win over the enclosing Group's relocate drop
-          onAttachDrop?.(e.dataTransfer.getData('text/plain') || '', inv.instanceId);
-        }
-      : undefined,
+    /*
+     * ONE decision, taken by position, so the three gestures a row can receive cannot be confused:
+     *   the two end quarters → REORDER within this section (top/bottom in one column, left/right when
+     *                    the rows run across — see ReorderMark). A line is drawn at that edge,
+     *                    dropEffect 'move'.
+     *   the middle     → what the card always did: the attach/rune highlight on a weapon/armor/shield
+     *                    (dropEffect 'copy'), otherwise the event bubbles to the enclosing section and
+     *                    relocates the item there (Equipped / Carried / into that container).
+     * Both plans are read from the synchronous drag ref rather than React state — see attachPlanNow.
+     */
+    onDragOver:
+      onPlay || canHost
+        ? (e) => {
+            const mark = reorderSideNow?.(inv, e.currentTarget as HTMLElement, e.clientX, e.clientY) ?? null;
+            if (mark) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.dataTransfer.dropEffect = 'move';
+              onAttachLeave?.();
+              onReorderOver?.(inv.instanceId, mark);
+              return;
+            }
+            onReorderLeave?.();
+            if (!canHost) return; // middle of a non-host row → the section's relocate drop
+            const plan = attachPlanNow!(item, inv);
+            if (!plan) return; // not an attach drag → section handles the relocate
+            e.preventDefault();
+            e.stopPropagation();
+            e.dataTransfer.dropEffect = plan.ok ? 'copy' : 'none';
+            onAttachOver?.(inv.instanceId);
+          }
+        : undefined,
+    onDragLeave:
+      onPlay || canHost
+        ? (e) => {
+            // A leave into one of this card's own children is not leaving the card (the section's
+            // handler makes the same test) — otherwise the line flickers off over the name or a chip.
+            if (e.relatedTarget instanceof Node && e.currentTarget.contains(e.relatedTarget)) return;
+            onReorderLeave?.();
+            if (canHost) onAttachLeave?.();
+          }
+        : undefined,
+    onDrop:
+      onPlay || canHost
+        ? (e) => {
+            const mark = reorderSideNow?.(inv, e.currentTarget as HTMLElement, e.clientX, e.clientY) ?? null;
+            if (mark) {
+              e.preventDefault();
+              e.stopPropagation(); // win over the enclosing Group's relocate drop
+              onReorderDrop?.(e.dataTransfer.getData('text/plain') || '', mark.side);
+              return;
+            }
+            if (!canHost) return; // let the enclosing Group's relocate drop handle it
+            const plan = attachPlanNow!(item, inv);
+            if (!plan) return; // let the enclosing Group's relocate drop handle it
+            e.preventDefault();
+            e.stopPropagation(); // win over the enclosing Group's relocate drop
+            onAttachDrop?.(e.dataTransfer.getData('text/plain') || '', inv.instanceId);
+          }
+        : undefined,
   };
+
+  /* Phone reorder arrows (Customization → Reorder arrows). Click stops here, so a tap never opens the
+   * item popup. Pointerdown must NOT stop: the card is touch-action:none on a phone, so the card's
+   * pointerdown handler is the only thing that scrolls a swipe starting on a row — including one that
+   * starts on an arrow. That handler skips arming the hold when the press is on an arrow (startHold). */
+  // The name the row PRINTS ("Adze 2", "Scroll of Heal"), which the arrows read out too — two copies
+  // of an item otherwise got the same "Move Adze up" twice.
+  const rowName = displayName(item, content) + nameSuffix;
+  const arrows = reorder && (
+    <span className="inv-reorder" onClick={stop}>
+      <button className="inv-reorder-btn" aria-label={`Move ${rowName} up`} disabled={!reorder.up} onClick={(e) => { stop(e); reorder.up?.(); }}>
+        <i className="ti ti-chevron-up" aria-hidden="true" />
+      </button>
+      <button className="inv-reorder-btn" aria-label={`Move ${rowName} down`} disabled={!reorder.down} onClick={(e) => { stop(e); reorder.down?.(); }}>
+        <i className="ti ti-chevron-down" aria-hidden="true" />
+      </button>
+    </span>
+  );
 
   // Compact: one line an item. State (and any charge count) survives as chips; every control the card
   // would have shown is a tap away in the item's popup, which this row opens like a card.
@@ -350,10 +437,7 @@ function ItemCard({
     // as a whole when it doesn't fit beside it, rather than hiding.
     return (
       <div {...rootProps} title={chipText || undefined}>
-        <span className="inv-name">
-          {displayName(item, content)}
-          {nameSuffix}
-        </span>
+        <span className="inv-name">{rowName}</span>
         {inv.quantity > 1 && <span className="inv-qty">×{inv.quantity}</span>}
         {chips}
         <span className="inv-bval inv-cbulk">{bulk}</span>
@@ -363,6 +447,7 @@ function ItemCard({
           {formatItemPrice(item)}
           {inv.quantity > 1 ? ' ea' : ''}
         </span>
+        {arrows}
       </div>
     );
   }
@@ -374,7 +459,7 @@ function ItemCard({
       </span>
       <div className="inv-mid">
         <div className="inv-name-line">
-          <span className="inv-name">{displayName(item, content)}{nameSuffix}</span>
+          <span className="inv-name">{rowName}</span>
           {!inlineQty && inv.quantity > 1 && <span className="inv-qty">×{inv.quantity}</span>}
           {(item.traits ?? [])
             .filter((t) => CATEGORY_TAGS.includes(t))
@@ -510,6 +595,7 @@ function ItemCard({
       {/* In interactive mode the highlighted equip/invest button already shows this state, so the
           static badge would be a redundant second "Worn"/"Wielded"/"Invested". Only show it read-only. */}
       {badge && !onPlay && <span className={'inv-badge ' + badge.kind}>{badge.label}</span>}
+      {arrows}
     </div>
   );
 }
@@ -727,7 +813,23 @@ export function InventoryTab({
   const isMobile = useIsMobile();
   // One-line rows need a wider column than the 230px cards do, or the name is all ellipsis — and how
   // many of those columns there are, and whether there is a column grid at all, are the player's.
-  const gridCls = gridClass(useCustomization());
+  const custom = useCustomization();
+  const gridCls = gridClass(custom);
+  /** The drop-indicator line: which row it is drawn on, and at which of its edges. */
+  const [reorderOver, setReorderOver] = useState<({ id: string } & ReorderMark) | null>(null);
+  /** The "Added …" line at the bottom of the screen. `n` remounts it, so a second add while the picker
+   *  is still open replays the fade (and restarts the timer) rather than riding the first one's. */
+  const [toast, setToast] = useState<{ text: string; n: number } | null>(null);
+  /** Every row an Add made since the picker opened. Outlined only once the picker CLOSES: it is a
+   *  full-screen overlay, and an outline that fades behind it is an outline nobody saw. */
+  const [freshIds, setFreshIds] = useState<ReadonlySet<string>>(() => new Set());
+  /** Armed just BEFORE an add so the effect below can tell which rows are new. The ids cannot be
+   *  guessed from out here (addInventoryItem mints them, and a kit mints several), and an updater must
+   *  stay pure, so the arming is a plain before-snapshot and the reading is an effect. */
+  const pendingAdd = useRef<{ before: Set<string>; text: string; at: number } | null>(null);
+  const addSeq = useRef(0);
+  const announce = (text: string) => setToast({ text, n: ++addSeq.current });
+  const rootRef = useRef<HTMLDivElement>(null);
   // Mobile hold-to-move: press-and-hold an item card to pick it up. `holdRef` tracks the pointer; once
   // the hold arms, `ghost` is the floating item icon that follows the finger (the source card hides and
   // the open section collapses so only tabs + headers remain as drop targets), and `dropTarget` is the
@@ -749,6 +851,48 @@ export function InventoryTab({
     const t = setTimeout(() => setAttachMsg(null), 6000);
     return () => clearTimeout(t);
   }, [attachMsg]);
+  // An add landed: whatever rows are here that weren't a moment ago are the ones it made.
+  useEffect(() => {
+    const p = pendingAdd.current;
+    if (!p) return;
+    // An add that never landed (a Buy the purse turned out not to cover) must not attach its toast to
+    // whatever row appears next.
+    if (Date.now() - p.at > 8000) {
+      pendingAdd.current = null;
+      return;
+    }
+    const fresh = character.inventory.filter((i) => !p.before.has(i.instanceId)).map((i) => i.instanceId);
+    if (!fresh.length) return;
+    pendingAdd.current = null;
+    announce(p.text);
+    setFreshIds((cur) => new Set([...cur, ...fresh]));
+  }, [character.inventory]);
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 2400);
+    return () => clearTimeout(t);
+  }, [toast]);
+  // The picker is closed and rows were added: bring the first into view, let the outline play, clear.
+  // On the phone only one section is open at a time (the accordion), and a new item usually lands in
+  // Carried while Equipped is the open one — so the section it landed in is opened, ONCE per batch of
+  // adds: a tab the player picks after that is theirs.
+  const openedFor = useRef<ReadonlySet<string> | null>(null);
+  useEffect(() => {
+    if (addOpen || freshIds.size === 0) return;
+    const first = character.inventory.find((i) => freshIds.has(i.instanceId));
+    if (isMobile && first && openedFor.current !== freshIds) {
+      openedFor.current = freshIds;
+      if (sectionOf(first) !== activeTab) {
+        setActiveTab(sectionOf(first));
+        return; // this runs again once that section is on screen
+      }
+    }
+    // Centred on the phone: 'nearest' parks a row at the bottom edge, which is where the toast sits.
+    rootRef.current?.querySelector('.inv-card.inv-added')?.scrollIntoView?.({ block: isMobile ? 'center' : 'nearest' });
+    const t = setTimeout(() => setFreshIds(new Set()), 2400);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addOpen, freshIds, activeTab]);
   /*
    * An instance id can be REUSED. `nextInstanceId` allocates max(suffix) + 1, so deleting the highest
    * row frees its id and the next item acquired takes it — and anything still holding that id (an open
@@ -791,6 +935,19 @@ export function InventoryTab({
    * anything to put it on) with a note saying why.
    */
   const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+  /** "Added 3 × Arrow" — what the toast says for one press of Give/Buy. */
+  const addedText = (item: Item | undefined, quantity: number) =>
+    `Added ${quantity > 1 ? `${quantity} × ` : ''}${item ? displayName(item, content) : 'item'}`;
+  /** Arm the "Added …" toast + row outline for an add that lands in THIS pack. Armed at the call, read
+   *  once the new rows exist (see the effect above), so the toast only ever reports an add that
+   *  happened. An add routed to a companion has no row here to outline and announces itself directly. */
+  const armAdded = (item: Item | undefined, quantity: number) => {
+    pendingAdd.current = {
+      before: new Set(character.inventory.map((i) => i.instanceId)),
+      text: addedText(item, quantity),
+      at: Date.now(),
+    };
+  };
   const addMaybeToCompanion = async (itemId: string, buy: boolean) => {
     if (!onPlay) return;
     const item = content.items[itemId];
@@ -800,6 +957,7 @@ export function InventoryTab({
     const comps = character.companions ?? [];
     const wearers = comps.filter((c) => c.kind !== 'vehicle' && c.kind !== 'siege');
     if (!isCompanionGear || wearers.length === 0) {
+      armAdded(item, init.quantity);
       onPlay((p) => (buy ? buyItem(p, itemId, item?.price, init) : addInventoryItem(p, itemId, init)));
       if (isCompanionGear) {
         void chooseDialog({
@@ -823,10 +981,13 @@ export function InventoryTab({
           });
     if (pick === null) return; // dismissed — add nothing
     if (!pick) {
+      armAdded(item, init.quantity);
       onPlay((p) => (buy ? buyItem(p, itemId, item?.price, init) : addInventoryItem(p, itemId, init)));
       return;
     }
     onPlay((p) => (buy ? buyCompanionItem(p, pick, itemId, item?.price, init) : addCompanionItem(p, pick, itemId, init)));
+    const who = wearers.find((c) => c.id === pick);
+    announce(`${addedText(item, init.quantity)} to ${who?.name || cap(who?.kind ?? 'companion')}`);
   };
 
   const resolve = (inv: InventoryItem) => content.items[inv.itemId];
@@ -874,6 +1035,17 @@ export function InventoryTab({
   // "Loose" = top level: not validly inside a container. A container item is loose unless it
   // is itself nested in another container (orphaned contents fall back here, not vanish).
   const loose = character.inventory.filter((inv) => !(inv.containerInstanceId && containerIds.has(inv.containerInstanceId)));
+  /** The section a row is drawn in — 'equipped' / 'carried' / its container's id — by the same tests
+   *  the section filters below use. A drop onto the section a row is ALREADY in is not a move: moveTo
+   *  would re-write its flags to that section's defaults (a worn backpack in Carried came out un-worn,
+   *  an invested weapon in Equipped came out un-invested), and with drag-to-reorder a drop that misses
+   *  the reorder edge of a neighbour lands exactly there. */
+  const sectionOf = (inv: InventoryItem) =>
+    inv.containerInstanceId && containerIds.has(inv.containerInstanceId)
+      ? inv.containerInstanceId
+      : !isContainer(inv) && (inv.worn || inv.equipped || inv.invested)
+        ? 'equipped'
+        : 'carried';
   // A container is shown among the Carried items (or inside its parent), never "Equipped".
   // Its own contents render in a separate section below. Other items split by their flags.
   /* bug 2026-09-13: search-rank — a name-only box, ranked inside each section. Equipped/Carried is
@@ -943,19 +1115,20 @@ export function InventoryTab({
     return out;
   }, [character.classId, character.classId2, character.feats, character.inventory, content]);
   // When the character holds more than one instance of the same item, number them (" 1", " 2", …)
-  // in inventory order so otherwise-identical copies (e.g. two Longswords, one refined) are
-  // distinguishable. Computed across the whole inventory; recomputes (renumbers) when one is removed.
+  // so otherwise-identical copies (e.g. two Longswords, one refined) are distinguishable. Numbered in
+  // ACQUISITION order, not list order: the list order is the player's (drag / reorder arrows), and
+  // numbering by it made two copies swap numbers when reordered, so the move looked like it did
+  // nothing. The acquisition counter is the instanceId's trailing number — the one every new row is
+  // minted from (play.ts `nextInstanceId`: max + 1); an id without one keeps list order, after them.
+  // Recomputes (renumbers) when one is removed.
   const dupSuffix = ((): Map<string, string> => {
-    const total = new Map<string, number>();
-    for (const iv of character.inventory) total.set(iv.itemId, (total.get(iv.itemId) ?? 0) + 1);
-    const seen = new Map<string, number>();
+    const byItem = new Map<string, InventoryItem[]>();
+    for (const iv of character.inventory) byItem.set(iv.itemId, [...(byItem.get(iv.itemId) ?? []), iv]);
+    const acquired = (id: string) => Number(/(\d+)$/.exec(id)?.[1] ?? Number.MAX_SAFE_INTEGER);
     const out = new Map<string, string>();
-    for (const iv of character.inventory) {
-      if ((total.get(iv.itemId) ?? 0) > 1) {
-        const n = (seen.get(iv.itemId) ?? 0) + 1;
-        seen.set(iv.itemId, n);
-        out.set(iv.instanceId, ` ${n}`);
-      }
+    for (const rows of byItem.values()) {
+      if (rows.length < 2) continue;
+      rows.sort((a, b) => acquired(a.instanceId) - acquired(b.instanceId)).forEach((iv, n) => out.set(iv.instanceId, ` ${n + 1}`));
     }
     return out;
   })();
@@ -993,7 +1166,8 @@ export function InventoryTab({
   /** Whether the item currently being dragged may be dropped on a target. `dest` is
    *  'equipped' / 'carried' / a container instanceId. */
   const canDrop = (dest: string) => {
-    if (!draggedItem || !dragId) return false;
+    if (!draggedItem || !dragId || !draggedInv) return false;
+    if (sectionOf(draggedInv) === dest) return false; // already there — no highlight, and moveTo no-ops
     if (dest === 'equipped') {
       if (!isEquippable(draggedItem)) return false; // containers aren't equippable
       // Dragging onto Equipped invests anything that isn't armor/weapon/shield — enforce the same
@@ -1020,6 +1194,7 @@ export function InventoryTab({
     const inv = character.inventory.find((i) => i.instanceId === instanceId);
     const item = inv && resolve(inv);
     if (!item) return;
+    if (sectionOf(inv) === dest) return; // already there (see sectionOf) — nothing to move
     let patch: Partial<InventoryItem>;
     if (dest === 'equipped') {
       if (!isEquippable(item)) return;
@@ -1044,6 +1219,58 @@ export function InventoryTab({
       return updateInventoryItem(p, instanceId, patch);
     });
   };
+  /* --- drag (and phone arrows) to REORDER, within one section ---------------------------------
+   *
+   * The order IS the array order: every section is a filter over `character.inventory` rendered in
+   * array order, so moving the row in the array is the whole feature and it persists through the
+   * ordinary inventory path (moveInventoryItem, src/rules/play.ts) — there is no sort field to add.
+   *
+   * Reorder never crosses a section, because a section says where an item IS (worn / carried / in that
+   * backpack). Dropping it on ANOTHER section is the existing relocate and still is (see sectionOf). */
+  /** How much of a row, at each end, means "drop before/after me" rather than "drop ON me". The middle
+   *  half is left to the drop the card already had (attach a rune) or to the section. */
+  const REORDER_EDGE = 0.25;
+  /** Do the rows here run across? Asked of the row's own box (the section grid), since the player's
+   *  layout and the window width decide it: Flow always does, a grid does when it resolved to more
+   *  than one column (the 230px auto-fill cards on a computer; One wide row never). */
+  const runsAcross = (el: HTMLElement) => {
+    const box = el.parentElement ? getComputedStyle(el.parentElement) : null;
+    if (!box) return false;
+    if (box.display === 'flex') return box.flexDirection.startsWith('row');
+    return box.display === 'grid' && box.gridTemplateColumns.trim().split(/\s+/).length > 1;
+  };
+  const reorderSideNow = (target: InventoryItem, el: HTMLElement, clientX: number, clientY: number): ReorderMark | null => {
+    const did = dragRef.current?.instanceId;
+    // While a search is typed the rows are RANKED, not in the stored order (rankBySearch above), so
+    // "put it above that one" would mean something different on screen than in the array. The arrows
+    // are hidden for the same reason.
+    if (!onPlay || !did || did === target.instanceId || q) return null;
+    const src = character.inventory.find((i) => i.instanceId === did);
+    if (!src || sectionOf(src) !== sectionOf(target)) return null;
+    const r = el.getBoundingClientRect();
+    const across = runsAcross(el);
+    const size = across ? r.width : r.height;
+    if (!(size > 0)) return null;
+    const rel = across ? (clientX - r.left) / size : (clientY - r.top) / size;
+    const side = rel <= REORDER_EDGE ? 'before' : rel >= 1 - REORDER_EDGE ? 'after' : null;
+    return side && { side, across };
+  };
+  /** Move `srcId` to just before/after `targetId`. `wasItemId` = the item the gesture GRABBED (the drag
+   *  ref's, frozen at dragstart; the arrow's own row), checked inside the updater exactly as moveTo does:
+   *  an instance id is reused, so a drag that outlived its row must not move its successor. Reading it
+   *  from `character` at drop time would read the successor. No grabbed item (the drag ended) = no move. */
+  const doReorder = (srcId: string, targetId: string, side: 'before' | 'after', wasItemId: string | undefined) => {
+    if (!onPlay || !srcId || !wasItemId || srcId === targetId) return;
+    onPlay((p) => {
+      const now = (p.inventory ?? []).find((i) => i.instanceId === srcId);
+      if (now?.itemId !== wasItemId) return p;
+      return moveInventoryItem(p, srcId, targetId, side);
+    });
+  };
+  // The phone's route to the same edit — there is no drag there (a hold already means "move me to
+  // another section"). Default on; hidden while a search re-ranks the rows.
+  const showArrows = !!onPlay && isMobile && (custom.inventoryReorderArrows ?? true) && !q;
+
   // A SYNCHRONOUS mirror of dragId. setDragId (React state) doesn't apply until the next render, so
   // during the first `dragover` events right after `dragstart` the handler closure still sees
   // dragId===null — and a drop target only accepts a drop if `dragover` calls preventDefault(). The
@@ -1074,6 +1301,7 @@ export function InventoryTab({
     setDragId(null);
     setOverId(null);
     setAttachOver(null);
+    setReorderOver(null);
   };
   // Safety net: a card's React onDragEnd is unreliable when the list re-renders mid-drag (setting
   // dragId re-renders the whole inventory), which left the source container highlighted after a
@@ -1085,6 +1313,7 @@ export function InventoryTab({
       setDragId(null);
       setOverId(null);
       setAttachOver(null);
+      setReorderOver(null);
     };
     window.addEventListener('dragend', reset);
     return () => window.removeEventListener('dragend', reset);
@@ -1198,7 +1427,9 @@ export function InventoryTab({
       lastY: e.clientY,
       active: false,
       pointerId: e.pointerId,
-      holdTimer: window.setTimeout(armHold, 450), // longer hold so a quick swipe scrolls instead of grabbing
+      // Longer hold so a quick swipe scrolls instead of grabbing. A press on a reorder arrow never arms
+      // it (the arrow is a button, not a handle) but is still tracked, so a swipe from there scrolls.
+      holdTimer: (e.target as Element | null)?.closest?.('.inv-reorder') ? null : window.setTimeout(armHold, 450),
       scrolling: false,
       scrollEl: scrollParentOf(e.currentTarget as HTMLElement),
     };
@@ -1374,7 +1605,7 @@ export function InventoryTab({
         {expanded && (
           <div className={gridCls}>
             {lead}
-            {items.map((inv) => {
+            {items.map((inv, i) => {
               const item = resolve(inv);
               if (!item) return <UnknownItemCard key={inv.instanceId} inv={inv} onPlay={onPlay} />;
               // While dragging a rune/attachment, weapon/armor/shield cards become attach targets;
@@ -1418,6 +1649,29 @@ export function InventoryTab({
                   onAttachLeave={() => setAttachOver((cur) => (cur === inv.instanceId ? null : cur))}
                   onAttachDrop={attachDrop}
                   attachPlanNow={onPlay ? attachPlanNow : undefined}
+                  reorderSide={reorderOver?.id === inv.instanceId ? reorderOver : undefined}
+                  reorderSideNow={onPlay ? reorderSideNow : undefined}
+                  onReorderOver={(id, m) =>
+                    setReorderOver((cur) => (cur?.id === id && cur.side === m.side && cur.across === m.across ? cur : { id, ...m }))
+                  }
+                  onReorderLeave={() => setReorderOver((cur) => (cur?.id === inv.instanceId ? null : cur))}
+                  onReorderDrop={(srcId, side) => {
+                    // Same pair as the section's drop: the dataTransfer id is frozen at dragstart, the
+                    // ref is what knows there is still a drag behind it and which item it grabbed.
+                    const drag = dragRef.current;
+                    doReorder(srcId || drag?.instanceId || '', inv.instanceId, side, drag?.itemId);
+                    endDrag();
+                  }}
+                  // One step per press, and the ends simply have no step to take (the button greys out).
+                  reorder={
+                    showArrows
+                      ? {
+                          up: i > 0 ? () => doReorder(inv.instanceId, items[i - 1].instanceId, 'before', inv.itemId) : undefined,
+                          down: i < items.length - 1 ? () => doReorder(inv.instanceId, items[i + 1].instanceId, 'after', inv.itemId) : undefined,
+                        }
+                      : undefined
+                  }
+                  justAdded={!addOpen && freshIds.has(inv.instanceId)}
                 />
               );
             })}
@@ -1431,7 +1685,7 @@ export function InventoryTab({
   const coinDenoms: ('pp' | 'gp' | 'sp' | 'cp')[] = ['pp', 'gp', 'sp', 'cp'];
 
   return (
-    <div className="maincol">
+    <div className="maincol" ref={rootRef}>
       {ghost && (
         <div className="inv-drag-ghost" style={{ left: ghost.x, top: ghost.y }} aria-hidden="true">
           <i className={'ti ' + ghost.icon} />
@@ -1443,7 +1697,13 @@ export function InventoryTab({
           <input placeholder="Search items" value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
         {onPlay && (
-          <button className="add-item-btn" onClick={() => setAddOpen(true)}>
+          <button
+            className="add-item-btn"
+            onClick={() => {
+              setFreshIds(new Set()); // a new picker session outlines only what IT adds
+              setAddOpen(true);
+            }}
+          >
             <i className="ti ti-plus" aria-hidden="true" /> Add item
           </button>
         )}
@@ -1604,6 +1864,15 @@ export function InventoryTab({
         );
       })()}
 
+      {/* Above the Add-items picker (z-index 60) so a second add while it is still open is seen too,
+          and below a confirm dialog (80), which is the one thing that must never be covered. */}
+      {toast && (
+        <div className="inv-toast" role="status" key={toast.n}>
+          <i className="ti ti-check" aria-hidden="true" />
+          {toast.text}
+        </div>
+      )}
+
       {detail && (
         <ItemDetail
           inv={liveRow(detail.inv) ?? detail.inv}
@@ -1636,12 +1905,15 @@ export function InventoryTab({
           onBuyCompanion={(pick) => {
             // A vehicle/siege pick routes to the COMPANION system (same path as the Companions-tab
             // Add picker): append a CompanionConfig to play.companions and deduct the coin price.
-            const price = pick.kind === 'vehicle' ? content.vehicles?.[pick.typeId]?.price : content.siegeWeapons?.[pick.typeId]?.price;
-            onPlay((p) => buyCompanion(p, { kind: pick.kind, name: '', typeId: pick.typeId } as Omit<CompanionConfig, 'id'>, parsePrice(price)));
+            const def = pick.kind === 'vehicle' ? content.vehicles?.[pick.typeId] : content.siegeWeapons?.[pick.typeId];
+            onPlay((p) => buyCompanion(p, { kind: pick.kind, name: '', typeId: pick.typeId } as Omit<CompanionConfig, 'id'>, parsePrice(def?.price)));
+            announce(`Added ${def?.name ?? cap(pick.kind)}`);
           }}
-          onGiveCompanion={(pick: CompanionPick) =>
-            onPlay((p) => addPlayCompanion(p, { kind: pick.kind, name: '', typeId: pick.typeId } as Omit<CompanionConfig, 'id'>))
-          }
+          onGiveCompanion={(pick: CompanionPick) => {
+            onPlay((p) => addPlayCompanion(p, { kind: pick.kind, name: '', typeId: pick.typeId } as Omit<CompanionConfig, 'id'>));
+            const def = pick.kind === 'vehicle' ? content.vehicles?.[pick.typeId] : content.siegeWeapons?.[pick.typeId];
+            announce(`Added ${def?.name ?? cap(pick.kind)}`);
+          }}
           // bug 2026-09-12 #7: homebrew-delete — the same callback that registers a created item
           // retires a deleted one (App: addCustomItem).
           onSaveItem={onCreateItem}

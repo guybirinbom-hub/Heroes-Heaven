@@ -386,7 +386,9 @@ describe('Wanderer’s Guide import — kitchen sink (overhaul mappings)', () =>
   });
 
   it('imports lore skills and weapon/armor/spellcasting proficiencies', () => {
-    expect(ch.proficiencies.skills['lore:deep earth']).toBe('trained');
+    // Through the one Lore keyer (build.ts loreKey): "deep-earth", the key the same Lore gets when typed
+    // in the builder — it was "deep earth" here, a second Lore for the same subject.
+    expect(ch.proficiencies.skills['lore:deep-earth']).toBe('trained');
     expect(ch.proficiencies.skills.religion).toBe('expert');
     expect(ch.proficiencies.attacks.martial).toBe('expert');
     expect(ch.proficiencies.defenses.heavy).toBe('trained');

@@ -63,6 +63,7 @@ type BoolKey =
   | 'compactActions'
   | 'showSlotBadges'
   | 'consumableHighlight'
+  | 'inventoryReorderArrows'
   | 'scrollbarAccent'
   | 'notesShowRail';
 
@@ -446,6 +447,14 @@ export function CustomizationEditor({
         under them only what changes in play — equipped, invested, charges, runes. <strong>Compact</strong> is one line
         an item (the price appears when you point at the row). <strong>Standard</strong> is the older, taller card with
         the item level and every button. Whatever a smaller card leaves out is still in the item's own page.
+      </p>
+
+      <div className="menu-label">Reorder arrows</div>
+      <div className="menu-row">{boolChip('inventoryReorderArrows', 'Up/down arrows on each row')}</div>
+      <p className="settings-desc" style={{ marginTop: 0 }}>
+        On a <strong>phone</strong>, two arrows on every inventory row that move the item up or down within its
+        section, so you can put your gear in the order you want it. On a computer you drag a row between its
+        neighbours instead — a line shows where it will land — so the arrows are not shown there.
       </p>
 
       {/* Compact's alone — the taller cards read fine three across — so the control is only here while

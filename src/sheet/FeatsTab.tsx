@@ -326,6 +326,51 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
   return entries;
 }
 
+/**
+ * "Long" — the one threshold, in characters of the string THIS component receives.
+ *
+ * That string is not the note as it sits in the data: `build.ts` pushes `` `${feat name}: ${ca.note}` ``
+ * onto `classArchetype.notes`, so every note carries its dedication's name in front of it and measures
+ * 26–33 characters longer than the raw field. Measured on the rendered string, the 14 class-archetype
+ * notes the app ships are 93, 114, 175, 187, 238, 313, 321, 343, 358, 413, 469, 521, 902 and 1,168
+ * characters long. 275 sits in the middle of the single wide gap in that list (238 → 313), leaving
+ * 37 characters of slack under it and 38 over — enough that a re-worded note, or a renamed feat, has
+ * to move a long way before it changes side. In pixels it is about five lines at phone width (375px,
+ * 13px text, ~50 characters to a line) — the point where a note stops being a caption under the
+ * heading and starts pushing the search box and every feat row off the screen. Flexible Spellcaster's
+ * 1,168 characters is twenty-odd lines of that, before the player has seen one feat.
+ *
+ * Paired with the CSS: `.ff-note` is capped at 65ch, so its 3 cut lines hold fewer than 275
+ * characters at ANY window width, and "Show more" always has something to show.
+ *
+ * Exported so the test measures against THIS number instead of a copy of it, and so the margin guard
+ * in `test/bug-feats-long-text-collapsed.test.tsx` fails if the data creeps up on the threshold again.
+ */
+export const LONG_NOTE_CHARS = 275;
+
+/**
+ * One class-archetype note. A long one starts CUT to three lines with its own Show more / Show less;
+ * a short one renders exactly as it did before, with no control to read past.
+ *
+ * The open flag lives in this component, which is the whole reason each note opens on its own and
+ * closes again when the player leaves the tab: there is one of these per note, nothing is written to
+ * the character, to prefs or to storage, and no customization key was asked for.
+ */
+function ArchNote({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+  if (text.length <= LONG_NOTE_CHARS) return <>{text}</>;
+  return (
+    <>
+      {/* The full text is always in the DOM — the cut is CSS (`-webkit-line-clamp`), so nothing the
+          player might need is thrown away, and find-in-page still reaches it. */}
+      <div className={'ff-note' + (open ? '' : ' cut')}>{text}</div>
+      <button type="button" className="ff-note-more" aria-expanded={open} onClick={() => setOpen(!open)}>
+        {open ? 'Show less' : 'Show more'}
+      </button>
+    </>
+  );
+}
+
 export function FeatsTab({ character, content, onPlay }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater }) {
   // Which type sections to show. EMPTY = "All" (everything); otherwise only the picked types.
   const [picked, setPicked] = useState<Set<string>>(new Set());
@@ -390,7 +435,9 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
             <strong>Class archetype</strong> — your class works differently:
             <ul>
               {character.classArchetype.notes.map((n, i) => (
-                <li key={i}>{n}</li>
+                <li key={i}>
+                  <ArchNote text={n} />
+                </li>
               ))}
               {/* A feature an owned record GIVES BACK is not replaced — Spellshield returns the War
                   Mage's arcane-bond — and reading the raw list said it was, on the same page as the

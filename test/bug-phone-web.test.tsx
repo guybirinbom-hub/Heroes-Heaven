@@ -5,6 +5,7 @@ import { act } from 'react';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { OverlayDismissGuard } from '../src/sheet/OverlayDismissGuard';
 import { CustomizeModal } from '../src/sheet/CustomizeModal';
+import { NotesTab } from '../src/sheet/NotesTab';
 import type { Character } from '../src/rules/types';
 import { ForceMobileContext, useIsMobile } from '../src/sheet/useIsMobile';
 import { renderDom } from './_render';
@@ -112,9 +113,10 @@ function decls(body: string): Decl[] {
 
 /** The value a browser would use for `prop` on a phone, for an element carrying `classes`.
  *  `skipSupports` answers the other question: what a webview WITHOUT `dvh` support falls back to. */
-function winner(classes: string, prop: string, skipSupports = false, rules = RULES): Decl | undefined {
-  const el = document.createElement('div');
-  el.className = classes;
+function winner(classes: string | Element, prop: string, skipSupports = false, rules = RULES): Decl | undefined {
+  // A string is one bare element wearing those classes; an Element is a node already in a rendered
+  // tree, so a descendant selector (`.body-notes .notes-wrap`) matches it the way it does in the app.
+  const el = typeof classes === 'string' ? Object.assign(document.createElement('div'), { className: classes }) : classes;
   let best: (Decl & { spec: number }) | undefined;
   for (const r of rules) {
     if (!onPhone(r)) continue;
@@ -140,7 +142,7 @@ function winner(classes: string, prop: string, skipSupports = false, rules = RUL
   return best;
 }
 
-const value = (classes: string, prop: string, skipSupports = false) => winner(classes, prop, skipSupports)?.value;
+const value = (classes: string | Element, prop: string, skipSupports = false) => winner(classes, prop, skipSupports)?.value;
 
 /** Everything on a phone that fills the screen, with the property that carries its size. Each one sized
  *  to the large viewport is one more thing running under the browser's chrome on the website — the tab
@@ -797,5 +799,97 @@ describe('useIsMobile', () => {
     expect(host.textContent).toBe('phone');
     stop();
     restore();
+  });
+});
+
+/**
+ * The Notes LIST on the phone website (owner's screenshot, 2026-09-24): with real notes, a few hundred
+ * characters each, the list card ran off the right edge — the search field, every row's one-line
+ * preview (no ellipsis in sight, because the ellipsis was off-screen too) and the card's own border.
+ * The preview already WAS one line with an ellipsis. What grew was the box around it.
+ *
+ * `.notes-wrap` is a flex item of `.content`, which is a flex ROW on a phone. A flex item's
+ * `min-width: auto` is its min-content width, and the min-content width of a `nowrap` line is the
+ * whole line: `overflow: hidden` on the preview clips what it paints, not what it asks for. So the
+ * wrap could not shrink below the longest note, and the card, stretched to the wrap, went with it.
+ * Short fixture notes never reach the screen width, which is why a 375px check found nothing.
+ *
+ * jsdom has no layout, so this resolves the cascade on the REAL markup: every element from the shell's
+ * `.content` down to a row's preview, plus the search field. Any of them that sits in a flex ROW (or a
+ * grid) has to resolve `min-width: 0` or a clipping overflow, the two things that stop its automatic
+ * minimum being its content. An item of a flex COLUMN is stretched to its container and needs neither.
+ */
+describe('phone website: the Notes list fits the screen', () => {
+  const words = 'the lantern swung above the gate while the rain kept falling on the old stone road ';
+  const prose = (n: number) => words.repeat(Math.ceil(n / words.length)).slice(0, n);
+  const character = {
+    id: 'notes-width-fixture',
+    notes: [
+      { id: 'note-0', title: 'Journal', icon: 'ti-note', content: `<p>${prose(600)}</p>` },
+      { id: 'note-1', title: 'Token', icon: 'ti-note', content: `<p>${'x'.repeat(200)}</p>` },
+    ],
+  } as unknown as Character;
+
+  /** The Notes tab inside the sheet shell's own markup (CharacterSheet.tsx), phone-shaped. */
+  function phoneNotes() {
+    return renderDom(
+      <ForceMobileContext.Provider value={true}>
+        <div className="ws-app">
+          <div className="body body-notes">
+            <main className="content">
+              <NotesTab character={character} />
+            </main>
+          </div>
+        </div>
+      </ForceMobileContext.Provider>,
+    );
+  }
+
+  /** Is `el` an item whose automatic minimum width is its content: a flex ROW's item, or a grid's? */
+  const sizedByContent = (el: Element): boolean => {
+    const parent = el.parentElement!;
+    const display = value(parent, 'display') ?? '';
+    return /grid/.test(display) || (/flex/.test(display) && !/column/.test(value(parent, 'flex-direction') ?? ''));
+  };
+  const canShrink = (el: Element): boolean =>
+    value(el, 'min-width') === '0' || /hidden|clip|auto|scroll/.test(value(el, 'overflow-x') ?? value(el, 'overflow') ?? '');
+
+  it('every box from the shell down to a preview can shrink below the longest note', () => {
+    const { host, stop } = phoneNotes();
+    const preview = host.querySelector('.ni-preview')!;
+    expect(preview.textContent!.length, 'fixture: a real-length note').toBeGreaterThanOrEqual(600);
+    const chain: Element[] = [];
+    for (let el: Element | null = preview; el && !el.classList.contains('body-notes'); el = el.parentElement) chain.push(el);
+    chain.push(host.querySelector('.notes-search-row .search')!);
+    expect(chain.map((el) => el.classList[0]), 'fixture: the whole chain is the real markup').toEqual(
+      ['ni-preview', 'ni-text', 'note-item', 'notes-list', 'card', 'notes-wrap', 'content', 'search'],
+    );
+    const stuck = chain.filter((el) => sizedByContent(el) && !canShrink(el)).map((el) => el.className);
+    expect(stuck, 'sized by their content, so the longest note sets their width').toEqual([]);
+    stop();
+  });
+
+  it('keeps the preview to one clipped line with an ellipsis, and no row carries a width of its own', () => {
+    const { host, stop } = phoneNotes();
+    const rows = [...host.querySelectorAll<HTMLElement>('.note-item')];
+    expect(rows.length).toBe(2);
+    for (const row of rows) {
+      const preview = row.querySelector('.ni-preview')!;
+      expect(preview, 'every row with text shows a preview').toBeTruthy();
+      expect(value(preview, 'white-space')).toBe('nowrap');
+      expect(value(preview, 'overflow')).toBe('hidden');
+      expect(value(preview, 'text-overflow')).toBe('ellipsis');
+      expect(row.style.width + row.style.minWidth, 'an inline width would pin the row whatever the CSS says').toBe('');
+    }
+    // The search field's input fills the field rather than asking for its own intrinsic width.
+    expect(value(host.querySelector('.notes-search-row .search input')!, 'width')).toBe('100%');
+    stop();
+  });
+
+  it('gives the desktop editor column a zero minimum, so one long word cannot widen it', () => {
+    // The same content-sized minimum one level over: on the desktop the wrap is a grid, and a bare `1fr`
+    // track means minmax(auto, 1fr). A 200-character unbroken word in the open page measured the editor
+    // column at 1572px in a 1252px body (1280px window) before this; 1093px after.
+    expect(value('notes-wrap', 'grid-template-columns')).toMatch(/\bminmax\(0, 1fr\)$/);
   });
 });

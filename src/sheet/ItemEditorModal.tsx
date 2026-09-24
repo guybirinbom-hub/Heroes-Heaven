@@ -3,6 +3,7 @@ import { partyHasFeat } from '../data/partyCapabilities';
 import { attachItem, bumpItemQuantity, detachItem, removeInventoryItem, updateInventoryItem, addInventoryItem, setItemMonsterPart, type PlayUpdater } from '../rules/play';
 import { affixHostType, canAttachTo } from '../rules/attachments';
 import { propertyRuneCapacity } from '../rules/derive';
+import { loreKey } from '../rules/build';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
 import type { DescNode } from './descref';
@@ -305,12 +306,12 @@ function ConditionalEffectRow({
   const spec = SIT_KINDS.find((k) => k.kind === kind)!;
 
   const addTarget = () => {
-    const t: SituationalTarget = spec.detail
-      ? { kind, detail: spec.detail === 'skill' && detail === 'lore' ? `lore:${lore.trim().toLowerCase()}` : detail }
-      : { kind };
+    // Through the one Lore keyer, so "Deep Earth" here names the Lore the character is trained in.
+    const typedLore = spec.detail === 'skill' && detail === 'lore' ? loreKey(lore) : undefined;
+    if (typedLore === null) return;
+    const t: SituationalTarget = spec.detail ? { kind, detail: typedLore ?? detail } : { kind };
     // Adding the same stat twice would star it once and list the effect twice.
     if (entry.targets.some((x) => x.kind === t.kind && x.detail === t.detail)) return;
-    if (spec.detail === 'skill' && detail === 'lore' && !lore.trim()) return;
     onChange({ ...entry, targets: [...entry.targets, t] });
     setLore('');
   };

@@ -277,6 +277,15 @@ export interface BuildState {
   heritageLore?: string[];
   /** Chosen bonus languages (Int-based + ancestry extra), beyond the granted ones. */
   languages: string[];
+  /** "Lore instead of language" (a setup house rule): the Lores taken IN PLACE OF Int-granted language
+   *  slots, stored as `lore:<slug>` keys (made by `loreKey`, the one keyer the card and the engine
+   *  share) — one entry per slot spent that way. Read only while `variantRules.loreInsteadOfLanguage`
+   *  is on, and only the player writes it. A stored Lore is kept but does not count while the rule is
+   *  off, while the character is trained in it some other way, past the Int-granted slot count, or
+   *  when the languages the player picked need the slot (languages win — turning the rule back on
+   *  never takes a language away). `activeLanguageLores` says which ones count. Ancestry/record
+   *  language slots are not affected. */
+  languageLores?: string[];
   /** Chosen feats, keyed by slot id `"level:category:idx"` -> feat id. */
   featPicks: Record<string, string>;
   /** A feat's embedded sub-choice value, keyed by the same slot id (Domain Initiate domain, …). */
@@ -1259,7 +1268,7 @@ export function backgroundChosenLoreKeys(build: Partial<BuildState>, content: Co
   for (const t of typed) {
     if (!t) continue;
     const k = loreKey(t);
-    if (k !== 'lore:' && !out.includes(k)) out.push(k);
+    if (k && !out.includes(k)) out.push(k);
   }
   return out;
 }
@@ -1570,19 +1579,26 @@ function rankAtLeast(a: ProficiencyRank, b: ProficiencyRank): boolean {
 }
 
 /**
- * A free-text Lore subject → the proficiency key that stores it.
+ * A Lore subject → the `lore:<slug>` key that stores it, or null when nothing but the word "Lore" is
+ * left. THE one keyer: every Lore the app names — typed by a player on any card, printed on a
+ * background, listed on an apparition, read off a prerequisite or a Wanderer's Guide import — goes
+ * through here, so the same subject can never become two Lores.
  *
- * The same subject reaches us typed by a player ("Warfare Lore"), printed on a background, and
- * listed on an apparition — so all three have to normalize identically or a character ends up
- * trained in two Lores that are the same Lore.
+ * There were two, and they disagreed: the builder cards stripped "lore" anywhere, the engine only a
+ * trailing " lore", so "Lore of the Sea" typed on the Languages card and on a background trained
+ * `lore:of-the-sea` and `lore:lore-of-the-sea`. "Lore of the Sea", "sea lore", "Sea Lore " and
+ * "lore: sea" are all `lore:sea`. A key passes through unchanged ("lore:sea" → "lore:sea").
+ * Measured over every printed Lore subject (514): none keys differently from the old engine keyer.
  */
-function loreKey(subject: string): ProficiencyKey {
-  const s = subject
+export function loreKey(raw: string): ProficiencyKey | null {
+  const slug = raw
+    .trim()
     .toLowerCase()
-    .replace(/\s*lore$/, '')
+    .replace(/^(?:lore\b[\s:,-]*)+(?:of[\s-]+(?:the[\s-]+)?)?/, '')
+    .replace(/\blore\b/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-  return `lore:${s}` as ProficiencyKey;
+  return slug ? (`lore:${slug}` as ProficiencyKey) : null;
 }
 
 /** Whichever rank is lower — used for CEILINGS (a class archetype that removes training). */
@@ -2041,7 +2057,7 @@ export function featSkillChoiceValue(
  * place: the two disagreeing is the exact failure Weight of Experience’s binding exists to stop.
  */
 export function boundLoreKeys(spec: { lore: string | string[] }): ProficiencyKey[] {
-  return (Array.isArray(spec.lore) ? spec.lore : [spec.lore]).map(loreKey);
+  return (Array.isArray(spec.lore) ? spec.lore : [spec.lore]).flatMap((s) => loreKey(s) ?? []);
 }
 
 export function boundGrantChoice(
@@ -2072,7 +2088,7 @@ export function boundGrantChoice(
     const subject =
       (granterSlotKey ? build.featLoreChoices?.[`${granterSlotKey}:${spec.index}`]?.trim() : undefined) ||
       build.featLoreChoices?.[`${granterId}:${spec.index}`]?.trim();
-    if (subject) key = loreKey(subject);
+    if (subject) key = loreKey(subject) ?? undefined;
   }
   return key ? { value: key, label: key.split(',').map(skillKeyLabel).join(', ') } : undefined;
 }
@@ -2103,7 +2119,7 @@ export function boundBackgroundGrantChoice(
   if (!spec) return undefined;
   let key: string | undefined;
   if (spec.kind === 'fixed') key = spec.skill;
-  else if (spec.kind === 'fixedLore') key = loreKey(spec.subject);
+  else if (spec.kind === 'fixedLore') key = loreKey(spec.subject) ?? undefined;
   else if (spec.kind === 'bgSkill') {
     const opts = background?.trainedSkillChoice ?? [];
     const picked = build.backgroundSkillChoice;
@@ -2112,7 +2128,7 @@ export function boundBackgroundGrantChoice(
     // A two-NAMED-subject record (Driver's driving/piloting) defaults like every other unanswered
     // choice — first option — where the free-text box still binds nothing until typed.
     const subject = build.backgroundLore?.trim() || background?.trainedLoreOptions?.[0];
-    if (subject) key = loreKey(subject);
+    if (subject) key = loreKey(subject) ?? undefined;
   } else {
     key = build.deityId ? content.deities[build.deityId]?.skill : undefined;
   }
@@ -2474,28 +2490,61 @@ export function recordLanguageSlots(
   return n;
 }
 
-/** How many bonus languages the character may choose: max(0, Int mod) + ancestry's extra + records'. */
-export function bonusLanguageSlots(build: BuildState, content: ContentDatabase): number {
+/** What the engine records as the source of a Lore trained through "Lore instead of language" — on
+ *  `Character.grantedSkills`, which is how `activeLanguageLores` finds them again. */
+export const LANGUAGE_LORE_SOURCE = 'a Lore taken instead of a language';
+
+/**
+ * "Lore instead of language" (setup house rule): the Lores the character HAS through it, in the
+ * order they are stored — read off the built character, so the builder's card and the slot count
+ * agree with the engine about which stored Lores count.
+ *
+ * A stored Lore does not count (and is kept, never deleted) while the rule is off, when the
+ * character is already trained in it some other way, when Intelligence grants fewer slots than there
+ * are Lores, or when the languages the player picked need the slot — see `buildCharacter`.
+ */
+export function activeLanguageLores(character: Character): ProficiencyKey[] {
+  return Object.entries(character.grantedSkills ?? {})
+    .filter(([, from]) => from === LANGUAGE_LORE_SOURCE)
+    .map(([k]) => k as ProficiencyKey);
+}
+
+/** How many of the bonus language slots come from INTELLIGENCE — the only ones the "Lore instead of
+ *  language" house rule may trade (the ancestry's extra and record-granted ones stay languages). Read
+ *  off the built character, so an attribute override counts here exactly as it does in the engine. */
+export function intLanguageSlots(
+  build: BuildState,
+  content: ContentDatabase,
+  built: Character = buildCharacter(build, content),
+): number {
+  return Math.max(0, abilityMod(built.abilities.int));
+}
+
+/** How many bonus languages the character may choose: max(0, Int mod) + ancestry's extra + records',
+ *  less every Int slot a Lore holds instead (see `activeLanguageLores`). Pass `built` when the caller
+ *  already has this build's character, to spare a rebuild. */
+export function bonusLanguageSlots(
+  build: BuildState,
+  content: ContentDatabase,
+  built: Character = buildCharacter(build, content),
+): number {
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
-  const intMod = abilityMod(computeAbilities(build, content).int);
-  const base = Math.max(0, intMod) + (ancestry?.languages.additional ?? 0);
+  const base =
+    intLanguageSlots(build, content, built) - activeLanguageLores(built).length + (ancestry?.languages.additional ?? 0);
   // EVERY feat the character has, not only the slot-picked ones. Multilingual reached by a
   // background, a heritage, a pick-a-feat grant or an override produced no language slots at all,
   // because only `featPicks` was read — the same "only slot picks are scanned" gap that hid the
   // granted-feat sub-choices.
   // NOT deduped: Multilingual is repeatable and taking it twice grants twice as many languages, so
   // this has to stay the multiset the built feat list already is.
-  const featIds = buildCharacter(build, content).feats.map((f) => f.featId);
-  const needsRanks = featIds.some((id) => content.feats[id]?.languageChoicesAtRank?.length);
-  const skills = needsRanks ? buildCharacter(build, content).proficiencies.skills : {};
   return (
     base +
     recordLanguageSlots(
       content,
-      featIds,
+      built.feats.map((f) => f.featId),
       build.heritageId,
       (build.inventory ?? []).filter((inv) => inv.invested).map((inv) => inv.itemId),
-      skills,
+      built.proficiencies.skills,
       build.level,
       build.backgroundId,
     )
@@ -3780,6 +3829,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
 
   const skills = {} as Record<ProficiencyKey, ProficiencyRank>;
   for (const sk of SKILLS) skills[sk] = 'untrained';
+  /**
+   * Redundant-grant fallbacks ("already trained → a skill of your choice"), surfaced on
+   * Character.skillFallbacks so the builder can offer the replacement picker. `note` says WHY the
+   * pick is being offered ("Already expert in Deception and Stealth"), and `lore` marks the ones
+   * whose replacement is a Lore subject rather than one of the sixteen skills.
+   *
+   * Declared HERE rather than beside the feat-grant loop that fills most of it, because the
+   * BACKGROUND lane below is the earliest filler and runs first.
+   */
+  const skillFallbacks: { featId: string; skill: ProficiencyKey; note?: string; lore?: true }[] = [];
   // Trainings granted by other sources first; they "lock" a skill and don't
   // consume a class pick.
   const locked = new Set<ProficiencyKey>();
@@ -3803,7 +3862,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   if (cls2) {
     for (const sk of cls2.trainedSkills.fixed) (skills[sk] = 'trained'), lock(sk, 'your second class');
     if (cls2.trainedSkills.choice?.length) (skills[cls2.trainedSkills.choice[0]] = 'trained'), lock(cls2.trainedSkills.choice[0], 'your second class');
-    if (cls2.trainedSkills.lore) skills[`lore:${cls2.trainedSkills.lore}`] = 'trained';
+    const cls2Lore = cls2.trainedSkills.lore && loreKey(cls2.trainedSkills.lore);
+    if (cls2Lore) skills[cls2Lore] = 'trained';
   }
   // A class-level restricted skill choice (thaumaturge: one of Arcana/Nature/Occultism/Religion) +
   // its fixed Lore (Esoteric Lore). Reuses build.subclassSkill (no class has both kinds of choice).
@@ -3813,15 +3873,39 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     skills[pick] = 'trained';
     lock(pick, 'your class');
   }
-  if (cls?.trainedSkills.lore) skills[`lore:${cls.trainedSkills.lore}`] = 'trained';
+  const clsLore = cls?.trainedSkills.lore && loreKey(cls.trainedSkills.lore);
+  if (clsLore) skills[clsLore] = 'trained';
   const bgTrainedSkill = backgroundTrainedSkill(build, background);
-  if (bgTrainedSkill) (skills[bgTrainedSkill] = 'trained'), lock(bgTrainedSkill, 'your background');
+  /*
+   * A HOMEBREW background — the per-character custom one OR a record from the Homebrew page — may
+   * name a skill the character is ALREADY trained in from another source: the author writes the
+   * form, and nothing stopped them choosing their own class's skill. It used to be offered and then
+   * land on nothing: the training was already there, the pick bought the player nothing, and no
+   * surface said so.
+   *
+   * Printed records solve this with the redundancy clause ("if you're already trained in that skill,
+   * you become trained in a skill of your choice"), carried by `redundantFallback` and surfaced on
+   * `skillFallbacks` for the builder's replacement picker. A homebrew background gets the SAME
+   * treatment, keyed the same way (`<background id>:fallback:<skill>` in featSkillChoices) so one
+   * picker shape serves both. "Already trained" is read at the moment the grant lands (after the
+   * class's trainings), exactly as the feat lane reads it. Printed backgrounds are untouched.
+   */
+  const homebrewBg = background?.id === CUSTOM_BACKGROUND_ID || background?.source?.license === 'homebrew';
+  if (bgTrainedSkill && background && homebrewBg && skills[bgTrainedSkill] !== 'untrained') {
+    skillFallbacks.push({ featId: background.id, skill: bgTrainedSkill });
+    const picked = build.featSkillChoices?.[`${background.id}:fallback:${bgTrainedSkill}`];
+    if (picked && SKILLS.includes(picked)) (skills[picked] = maxRank(skills[picked] ?? 'untrained', 'trained')), lock(picked, 'your background');
+  } else if (bgTrainedSkill) (skills[bgTrainedSkill] = 'trained'), lock(bgTrainedSkill, 'your background');
   // One subject, or several where the background grants several ("Deception, Art Lore, AND Underworld
   // Lore" — an AND, unlike the OR that `trainedLoreOptions` models).
   for (const subj of [background?.trainedLore ?? []].flat()) {
     // Through loreKey, so a capitalized data subject ("Labor") can never mint a `lore:Labor` twin of
     // the `lore:labor` every other writer uses (found on Remittance Agent, batch 20).
-    if (subj) skills[loreKey(subj)] = 'trained';
+    /* LOCKED like every other background training (the skill above, the choice Lore below), so the
+     * builder can say where it came from: an Acolyte typing "Scribing" on the Trained skills card was
+     * told only "Already trained in Scribing Lore" — `grantedSkills` is where the source is read. */
+    const key = subj && loreKey(subj);
+    if (key) (skills[key] = 'trained'), lock(key, 'your background');
   }
   /*
    * …and a SECOND background's skills, from a feat that grants one: *"you're TRAINED IN THE SKILLS …
@@ -3834,7 +3918,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (passion) {
       const s = backgroundTrainedSkill(build, passion);
       if (s) skills[s] = maxRank(skills[s], 'trained');
-      for (const subj of [passion.trainedLore ?? []].flat()) if (subj) skills[`lore:${subj}`] = 'trained';
+      for (const subj of [passion.trainedLore ?? []].flat()) {
+        const key = subj && loreKey(subj);
+        if (key) skills[key] = 'trained';
+      }
     }
   }
   // The BACKGROUND's own embedded sub-choice ("an Ancestry Lore of your choice", "Guild Lore or
@@ -3851,7 +3938,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // `trainedLoreFromChoice` widens the lore arm rather than replacing it: Energy Scarred's
       // options are named "Acid"/"Cold", which the classifier cannot read as Lores, yet the printed
       // Lore follows the pick (WG's SKILL_LORE_ACID… branches).
-      if (kind === 'lore' || background.trainedLoreFromChoice) (skills[loreKey(picked)] = 'trained'), lock(loreKey(picked), 'your background');
+      const pickedLore = kind === 'lore' || background.trainedLoreFromChoice ? loreKey(picked) : null;
+      if (pickedLore) (skills[pickedLore] = 'trained'), lock(pickedLore, 'your background');
       else if (kind === 'skill' && (SKILLS as readonly string[]).includes(picked)) {
         (skills[picked as SkillId] = 'trained'), lock(picked as SkillId, 'your background');
       }
@@ -3869,7 +3957,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const picks: string[] = [];
     for (const s of stored) if (s && loreOptions.includes(s) && !picks.includes(s) && picks.length < count) picks.push(s);
     for (const o of loreOptions) if (picks.length < count && !picks.includes(o)) picks.push(o);
-    for (const p of picks) skills[`lore:${p}` as ProficiencyKey] = 'trained';
+    for (const p of picks) {
+      const key = loreKey(p);
+      if (key) (skills[key] = 'trained'), lock(key, 'your background');
+    }
   }
   // A "choose a Lore" background: the player types the subject (Lore is free-text). A record may name
   // the printed first option as the default (Night Watch's "either Legal Lore or the Lore skill for
@@ -3878,7 +3969,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // One typed subject normally; Reborn Soul asks for TWO (trainedLoreChoiceCount). The subjects are
     // resolved by `backgroundChosenLoreKeys`, which the restricted-increase picker reads too — the two
     // must name the same Lores or a player is offered an increase on a Lore they aren't trained in.
-    for (const key of backgroundChosenLoreKeys(build, content)) skills[key] = 'trained';
+    for (const key of backgroundChosenLoreKeys(build, content)) (skills[key] = 'trained'), lock(key, 'your background');
   }
   // ADDITIONAL fixed skills beside trainedSkill (Tech-Reliant prints Crafting AND Medicine).
   for (const sk of background?.trainedSkills ?? []) {
@@ -3892,10 +3983,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         ? build.backgroundSkillChoice
         : background.trainedSkillChoice[0];
     const subj = background.trainedLoreByChoice[pick];
-    if (subj) {
-      const key = loreKey(subj);
-      (skills[key] = 'trained'), lock(key, 'your background');
-    }
+    const key = subj && loreKey(subj);
+    if (key) (skills[key] = 'trained'), lock(key, 'your background');
   }
   // The trained skill comes from the chosen DEITY (Raised by Belief) — the same dereference the
   // deitySkill bound-choice branch performs.
@@ -3933,11 +4022,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       .filter((s) => level >= s.level)
       .reduce<ProficiencyRank | undefined>((best, s) => (best ? maxRank(best, s.rank) : s.rank), undefined);
     for (const raw of (build.heritageLore ?? []).slice(0, heritageLoreN)) {
-      const subj = raw?.trim().toLowerCase().replace(/\s*lore$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-      if (subj) {
-        const key = `lore:${subj}` as ProficiencyKey;
-        skills[key] = maxRank(skills[key] ?? 'untrained', loreStep ?? 'trained');
-      }
+      const key = raw ? loreKey(raw) : null;
+      if (key) skills[key] = maxRank(skills[key] ?? 'untrained', loreStep ?? 'trained');
     }
   }
   if (build.heritageSkill) (skills[build.heritageSkill] = 'trained'), lock(build.heritageSkill, 'your heritage');
@@ -3970,7 +4056,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       .reduce<ProficiencyRank | undefined>((best, s) => (best ? maxRank(best, s.rank) : s.rank), undefined);
     for (const subj of o.grants?.lores ?? []) {
       const key = loreKey(subj);
-      (skills[key] = maxRank(skills[key] ?? 'untrained', optLoreStep ?? 'trained')), lock(key, 'a class choice');
+      if (key) (skills[key] = maxRank(skills[key] ?? 'untrained', optLoreStep ?? 'trained')), lock(key, 'a class choice');
     }
     // A restricted skill choice (Pistolero way, Empiricism methodology): train the picked skill,
     // defaulting to the first allowed option so the build is always legal.
@@ -3981,10 +4067,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * is a SkillId[] and cannot hold a Lore, so the subject rides in `build.subclassLore` and only
        * an option that opts in (`skillChoiceLore`) may answer that way. The named-skill default is
        * SKIPPED when a Lore is given, or the character would be trained in two skills for one choice. */
-      const loreSubj = o.skillChoiceLore ? build.subclassLore?.trim() : undefined;
+      const loreSubj = o.skillChoiceLore && build.subclassLore ? loreKey(build.subclassLore) : null;
       if (loreSubj) {
-        const key = loreKey(loreSubj);
-        (skills[key] = maxRank(skills[key] ?? 'untrained', 'trained')), lock(key, 'a class choice');
+        (skills[loreSubj] = maxRank(skills[loreSubj] ?? 'untrained', 'trained')), lock(loreSubj, 'a class choice');
       } else {
         const pick =
           build.subclassSkill && o.skillChoice.includes(build.subclassSkill) ? build.subclassSkill : o.skillChoice[0];
@@ -4018,6 +4103,29 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     skills[sk] = 'trained';
     added++;
   }
+  /* "Lore instead of language" (setup house rule): every language slot Intelligence grants may be
+   * spent on training in a NEW Lore instead, one slot at a time. A stored Lore the character already
+   * has — from the class, background, heritage, a class choice (an animist apparition) or a class
+   * skill pick — would spend a slot and train nothing, so it does not count; nor does one past the
+   * Int slot count. The languages half is taken off the bonus-slot budget below, where the language
+   * list is assembled — and where a Lore gives way to the languages the player picked (see
+   * `languageLoreRerun`). Nothing here writes the stored list.
+   *
+   * It runs AFTER every other level-1 training on purpose. Ahead of the class skill picks it locked
+   * its Lore first, which hid a class skill pick of the same Lore and freed that pick for another
+   * skill — then turning the rule off brought the hidden pick back and the class-skill cap above
+   * silently dropped the player's last skill. Here the house rule only ever yields: toggling it
+   * trains or untrains its own Lores and nothing else. */
+  const intLanguageSlots = Math.max(0, abilityMod(abilities.int));
+  const languageLores: ProficiencyKey[] = [];
+  if (build.variantRules?.loreInsteadOfLanguage) {
+    for (const raw of build.languageLores ?? []) {
+      if (languageLores.length >= intLanguageSlots) break;
+      const key = typeof raw === 'string' ? loreKey(raw) : null;
+      if (key && !languageLores.includes(key) && (skills[key] ?? 'untrained') === 'untrained') languageLores.push(key);
+    }
+  }
+  for (const key of languageLores) (skills[key] = 'trained'), lock(key, LANGUAGE_LORE_SOURCE);
 
   // Skill increases, applied in ascending level order so multiple increases to
   // the same skill stack correctly and each is capped by its own level.
@@ -4042,12 +4150,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const skillsBeforeIncreases = { ...skills };
   const skillIncreases: SkillIncrease[] = [];
   for (let lvl = 1; lvl <= level; lvl++) {
-    for (const [key, restrict] of [
+    for (const [stored, restrict] of [
       [siLevels.includes(lvl) ? build.skillIncreases[lvl] : undefined, null],
       [bonusSiLevels.includes(lvl) ? build.bonusSkillIncreases?.[lvl] : undefined, bonusSiRestrict],
       [bgSiRestrict?.levels.includes(lvl) ? build.backgroundSkillIncreases?.[lvl] : undefined, bgSiRestrict],
     ] as const) {
-      if (!key) continue;
+      if (!stored) continue;
+      /* An increase saved against the key the OLD engine keyer gave a typed subject — a background's
+       * "Lore of the Sea" trained `lore:lore-of-the-sea` — follows that Lore to its one key now
+       * (`lore:sea`), or the saved expert rank would land on a Lore nothing trains any more. Only when
+       * the stored key names nothing the character is trained in and its re-keyed form does. */
+      const alias = stored.startsWith('lore:') && (skills[stored] ?? 'untrained') === 'untrained' ? loreKey(stored) : null;
+      const key = alias && (skills[alias] ?? 'untrained') !== 'untrained' ? alias : stored;
       /* A record can forbid its own skill being increased — Bardic Lore: "you can't increase your
        * proficiency rank in Bardic Lore by any other means". DROPPED rather than applied, so a
        * character saved before the builder greyed the option does not keep an illegal rank; the level
@@ -6150,7 +6264,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   /* `note` says WHY the replacement pick is being offered ("Already expert in Deception and Stealth"),
    * and `lore` marks the ones whose replacement is a Lore subject rather than one of the sixteen
    * skills — both read by the builder when it renders the picker. */
-  const skillFallbacks: { featId: string; skill: ProficiencyKey; note?: string; lore?: true }[] = [];
+  // (declared with the skills block far above — the BACKGROUND lane fills it before this point)
   // CLASS FEATURES are grant sources too. This table is iterated over taken feats, and 13 entries in
   // featGrantsAuto.ts were authored against class-feature ids — `expert-overdrive` and
   // `legendary-overdrive` among them — so they had never once fired. A class feature has no embedded
@@ -6415,11 +6529,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           ...(slot.loreFallback ? { lore: true } : {}),
         });
         if (slot.loreFallback) {
-          const subject = build.featLoreChoices?.[`${fc.featId}:fallback:${skill}`]?.trim();
-          if (subject) {
-            const key = `lore:${subject.toLowerCase().replace(/\s+lore$/, '').trim()}` as ProficiencyKey;
-            proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', fbRank);
-          }
+          const subject = build.featLoreChoices?.[`${fc.featId}:fallback:${skill}`];
+          const key = subject ? loreKey(subject) : null;
+          if (key) proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', fbRank);
         } else {
           const picked = build.featSkillChoices?.[`${fc.featId}:fallback:${skill}`];
           const pickedCur = picked ? (proficiencies.skills[picked] ?? 'untrained') : 'untrained';
@@ -6489,7 +6601,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
               answered(`${fc.featId}:${idx}`),
           ]
             .filter((s): s is string => !!s)
-            .map(loreKey);
+            .flatMap((s) => loreKey(s) ?? []);
       for (const key of keys) {
         /* `at()` — "At 3rd, 7th, and 15th levels, you gain an additional skill increase you can apply
          * ONLY to the chosen Lore subcategory." The increase is spendable nowhere else, so the ladder
@@ -6502,8 +6614,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // names. Keyed by the answer for the same reason its skill slots are.
     for (let idx = 0; idx < (answeredGrant?.loreChoices ?? 0); idx++) {
       const subject = build.featLoreChoices?.[`${fc.featId}:${fc.choice?.value}:${idx}`]?.trim();
-      if (!subject) continue;
-      const key = loreKey(subject);
+      const key = subject ? loreKey(subject) : null;
+      if (!key) continue;
       proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', at('trained'));
     }
   }
@@ -9290,7 +9402,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ? classChoices.filter((r) => !r.id || !suppressedPickIds.has(r.id))
     : classChoices;
 
-  return {
+  /* Set by the language list below when the Lores above would leave the languages the player picked
+   * without a slot. The languages win — a Lore only ever takes an Int slot no picked language needs —
+   * so turning the house rule back on can never take a language away from the character. The Lores
+   * that fit are these; the build is re-run with only them (a shorter list each time, so it ends).
+   * The stored list itself is never written: a Lore that gives way comes back when a slot frees up. */
+  let languageLoreRerun: ProficiencyKey[] | undefined;
+  const built: Character = {
     id: `char-${slug(build.name)}`,
     schemaVersion: CHARACTER_SCHEMA_VERSION,
     name: build.name.trim() || 'New character',
@@ -9455,13 +9573,22 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         if (f.grantsLanguages.every((l) => withoutThisRecord.has(l))) fallbackSlots += 1;
       }
       const slots =
-        Math.max(0, abilityMod(abilities.int)) +
+        // …less every Int slot spent on a Lore instead (the setup house rule); the Lores themselves
+        // are trained up with the skills, and only Int-granted slots may be traded this way.
+        intLanguageSlots -
+        languageLores.length +
         (ancestry?.languages.additional ?? 0) +
         // "You learn three new languages of your choice" — a record widening the pick budget. The
         // picks themselves live in the same list the Int slots use, so the existing picker serves both.
         recordLanguageSlots(content, feats.map((fc) => fc.featId), build.heritageId, invested, proficiencies.skills, level, build.backgroundId) +
         fallbackSlots;
-      const bonus = build.languages.filter((l) => !granted.includes(l)).slice(0, slots);
+      const picked = build.languages.filter((l) => !granted.includes(l));
+      // A Lore may not push out a language the player picked (rule turned off, languages picked in
+      // the freed slots, rule turned back on — or Int lowered): keep only the Lores that still fit.
+      if (languageLores.length && picked.length > slots) {
+        languageLoreRerun = languageLores.slice(0, Math.max(0, languageLores.length - (picked.length - slots)));
+      }
+      const bonus = picked.slice(0, slots);
       return [...new Set([...granted, ...bonus, ...featLangs, ...featureLangs, ...heritageLangs, ...bgLangs, ...itemLangs, ...(build.overrides?.addedLanguages ?? [])])];
     })(),
     feats,
@@ -9599,6 +9726,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       return comps.length ? { companions: comps } : {};
     })()),
   };
+  return languageLoreRerun ? buildCharacter({ ...build, languageLores: languageLoreRerun }, content) : built;
 }
 
 /**
@@ -10331,9 +10459,11 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     }
     // Each subject separately — interpolating the field directly would silently produce the single key
     // `lore:art,underworld` for the one background that grants two, and TypeScript accepts that.
-    for (const subj of [background?.trainedLore ?? []].flat()) granted.add(`lore:${subj}`);
+    for (const subj of [background?.trainedLore ?? [], ...grantOptions.map((o) => o.grants?.lores ?? [])].flat()) {
+      const key = subj && loreKey(subj);
+      if (key) granted.add(key);
+    }
     for (const o of grantOptions) for (const sk of o.grants?.skills ?? []) granted.add(sk);
-    for (const o of grantOptions) for (const subj of o.grants?.lores ?? []) granted.add(loreKey(subj));
     if (c.classId === 'cleric' || c.classId2 === 'cleric') {
       const ds = c.details.deityId ? content.deities[c.details.deityId]?.skill : undefined;
       if (ds) granted.add(ds as ProficiencyKey);
@@ -10826,7 +10956,8 @@ export function checkPrerequisites(
       const rankOf = (target: string): ProficiencyRank | null => {
         if (target === 'perception') return character.proficiencies.perception;
         if ((SKILLS as readonly string[]).includes(target)) return character.proficiencies.skills[target as SkillId] ?? 'untrained';
-        if (/\blore$/.test(target)) return character.proficiencies.skills[`lore:${target.replace(/\s*lore$/, '')}`] ?? 'untrained';
+        const lore = /\blore$/.test(target) ? loreKey(target) : null;
+        if (lore) return character.proficiencies.skills[lore] ?? 'untrained';
         return null; // unrecognized (a tradition, a feat name, …) — can't verify
       };
       const ranks = targets.map(rankOf);

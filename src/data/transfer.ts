@@ -44,7 +44,7 @@ import type {
 } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
-import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, signaturesAt, type BuildState } from '../rules/build';
+import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, loreKey, signaturesAt, type BuildState } from '../rules/build';
 import { maxTakes } from '../rules/featGrants';
 import { CORE_BOOKS, sourceCatalog } from '../rules/sources';
 import { applyPlayState } from '../rules/play';
@@ -513,12 +513,13 @@ const WG_ARMOR_CATS: Record<string, ArmorCategory> = {
   HEAVY_ARMOR: 'heavy',
 };
 
-/** WG lore variable ("SKILL_LORE___DEEP_EARTH") → the app's lore key ("lore:deep earth"). */
+/** WG lore variable ("SKILL_LORE___DEEP_EARTH") → the app's lore key ("lore:deep-earth"), through the
+ *  one keyer — it used to keep the space, so an imported Deep Earth Lore and the same Lore typed in the
+ *  builder were two Lores. */
 function loreKeyFromWgVar(key: string): string | null {
   const m = /^SKILL_LORE___(.+)$/.exec(key);
   if (!m || m[1] === 'NONE') return null;
-  const subject = m[1].toLowerCase().replace(/_/g, ' ').trim();
-  return subject ? `lore:${subject}` : null;
+  return loreKey(m[1].replace(/_/g, ' '));
 }
 
 /** WG attribute strings ('STR') / skill strings ('ATHLETICS') → app ids, or null. */

@@ -1973,6 +1973,32 @@ export function toggleItemFlag(play: PlayState, instanceId: string, flag: ItemFl
   };
 }
 
+/**
+ * Move one inventory row to just before/after another — the player's ORDER.
+ *
+ * There is no sort field and none is wanted: the inventory sections are filters over this array and
+ * render it in array order (InventoryTab: `loose`, `equipped`, `carried`, a container's contents), so
+ * the array IS the stored order and always has been. Reordering therefore goes through the ordinary
+ * inventory persist path like every other inventory edit — nothing new to save, sync or migrate.
+ *
+ * A no-op when either row is gone (the drag outlived it) rather than a silent partial move.
+ */
+export function moveInventoryItem(
+  play: PlayState,
+  instanceId: string,
+  targetInstanceId: string,
+  side: 'before' | 'after',
+): PlayState {
+  if (instanceId === targetInstanceId) return play;
+  const inv = play.inventory ?? [];
+  const row = inv.find((i) => i.instanceId === instanceId);
+  if (!row) return play;
+  const rest = inv.filter((i) => i.instanceId !== instanceId);
+  const at = rest.findIndex((i) => i.instanceId === targetInstanceId);
+  if (at < 0) return play;
+  return { ...play, inventory: [...rest.slice(0, side === 'before' ? at : at + 1), row, ...rest.slice(side === 'before' ? at : at + 1)] };
+}
+
 /** Merge a partial update into one inventory item (used by drag-and-drop to relocate an
  *  item between Equipped / Carried / a container — sets carry flags + containerInstanceId). */
 export function updateInventoryItem(play: PlayState, instanceId: string, patch: Partial<InventoryItem>): PlayState {

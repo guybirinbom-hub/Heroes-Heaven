@@ -4659,6 +4659,14 @@ button.strike-name:hover {
   color: var(--app-accent-text);
   border: none;
 }
+/* A refused action must LOOK refused: with no disabled state, the Add button beside "Already trained
+   in Scribing Lore" (Learn a Lore instead / Learn a new lore) read as live. */
+.btn-primary:disabled,
+.btn-primary:disabled:hover {
+  opacity: 0.5;
+  cursor: default;
+  filter: none;
+}
 /* Destructive action button (Settings → Uninstall). */
 .btn-danger {
   border-radius: var(--app-radius-sm);
@@ -4935,13 +4943,22 @@ button.strike-name:hover {
 .notes-wrap {
   display: grid;
   /* list | drag handle | editor. The list width is a CSS variable so the handle can set it live
-     (NotesTab persists it as customization.notesListWidth). */
-  grid-template-columns: var(--notes-list-w, 152px) 7px 1fr;
+     (NotesTab persists it as customization.notesListWidth). minmax(0, 1fr), not 1fr: a bare 1fr has an
+     `auto` minimum, so one long unbroken word in the open page (a pasted link) widened the editor
+     column past the window — the same content-sized minimum as the min-width below. */
+  grid-template-columns: var(--notes-list-w, 152px) 7px minmax(0, 1fr);
   gap: 0;
   /* Fill the available height so the editor is tall enough to write in (the rest of the
      sheet sizes to content; the notes editor should grow). */
   min-height: calc(100vh / var(--zoom, 1) - 132px);
   align-items: stretch;
+  /* The wrap is a flex item of `.content`, a flex ROW in both the phone shell and the pinned desktop
+     one, and a flex item's `min-width: auto` is its min-content width. For the phone's page list that
+     is the WHOLE longest note: each row's preview is one `nowrap` line, and `overflow: hidden` clips
+     what a line paints, not the width it asks for. So the wrap, and the list card stretched to it, grew
+     to the longest note and ran off the right edge of the phone, search field and all (owner's
+     screenshot, 2026-09-24). test/bug-phone-web.test.tsx resolves this on the real markup. */
+  min-width: 0;
 }
 .notes-list-card {
   padding: 9px;
@@ -6101,6 +6118,135 @@ button.strike-name:hover {
   outline: 2px solid var(--app-accent);
   outline-offset: 2px;
   background: color-mix(in srgb, var(--app-accent) 12%, transparent);
+}
+
+/* Drag-to-REORDER: a LINE at the edge the row would land on — deliberately nothing like the outline
+   and tint the two "drop ON this card" states above wear, since the end quarters of a row mean
+   reorder and its middle means those. An inset shadow, not a pseudo-element: .inv-card is not a
+   positioned box in every look, and this adds no box to lay out, so it can't move a row under the
+   cursor mid-drag. Works in all three looks and in both layouts (it is on .inv-card itself).
+   `.reorder-across` = the rows run left to right (a grid of several columns, or Flow), so "before"
+   is the card's LEFT edge — InventoryTab's ReorderMark decides it and aims the hit zones the same way. */
+.inv-card.reorder-before {
+  box-shadow: inset 0 3px 0 0 var(--app-accent);
+}
+.inv-card.reorder-after {
+  box-shadow: inset 0 -3px 0 0 var(--app-accent);
+}
+.inv-card.reorder-before.reorder-across {
+  box-shadow: inset 3px 0 0 0 var(--app-accent);
+}
+.inv-card.reorder-after.reorder-across {
+  box-shadow: inset -3px 0 0 0 var(--app-accent);
+}
+/* Just added from the picker: an accent outline that fades out on its own (~2s, matching the toast). */
+.inv-card.inv-added {
+  animation: inv-added-fade 2.2s ease-out 1;
+}
+@keyframes inv-added-fade {
+  0%,
+  55% {
+    outline: 2px solid var(--app-accent);
+    outline-offset: 2px;
+  }
+  100% {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+}
+/* The phone's reorder arrows. 40px touch targets — the one size here that is not negotiable — so a
+   Compact row grows to fit them rather than shrinking them. */
+.inv-reorder {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+  flex: none;
+}
+.inv-reorder-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius);
+  background: var(--app-surface-2, var(--app-surface));
+  color: var(--app-text);
+  font-size: 16px;
+}
+.inv-reorder-btn:disabled {
+  opacity: 0.35;
+}
+/* A Compact row already parks its free space in front of the Bulk column (`.inv-cbulk`'s own
+   `margin-left: auto`, below); a second auto margin here would split that space in two and pull
+   Bulk/price off the right edge. */
+.inv-card.inv-compact > .inv-reorder {
+  margin-left: 0;
+}
+/* A Compact row whose Bulk and price are PINNED to its right edge (One wide row, and Flow — see the
+   2026-09-23 correction below) pins the arrows too, at the very end: left in the row's flow they land
+   wherever line 1 happened to stop, or wrap onto a line of their own. The strip the row holds back
+   grows by 88px (two 40px buttons, their 2px gap, 6px of air) and Bulk/price step left by the same
+   88px. The chip box's `100% + 112px` give-back stays as it is — it now ends exactly at the arrows'
+   left edge. One more selector than the rules it overrides, so it wins wherever it sits in the file. */
+.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact:has(> .inv-cbulk):has(> .inv-reorder),
+.inv-grid.inv-flow .inv-card.inv-compact:has(> .inv-cbulk):has(> .inv-reorder) {
+  padding-right: 210px;
+  min-height: 50px;
+  align-content: flex-start;
+}
+.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact:has(> .inv-reorder) > .inv-reorder,
+.inv-grid.inv-flow .inv-card.inv-compact:has(> .inv-reorder) > .inv-reorder {
+  position: absolute;
+  top: 5px;
+  right: 4px;
+}
+.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact:has(> .inv-reorder) > .inv-cprice,
+.inv-grid.inv-flow .inv-card.inv-compact:has(> .inv-reorder) > .inv-cprice {
+  right: 98px;
+}
+.inv-grid.inv-grid-compact.inv-grid-1col .inv-card.inv-compact:has(> .inv-reorder) > .inv-cbulk,
+.inv-grid.inv-flow .inv-card.inv-compact:has(> .inv-reorder) > .inv-cbulk {
+  right: 168px;
+}
+/* "Added Longsword" — a short line at the bottom of the screen, gone in ~2s. Above the Add-items
+   picker (60) so adding several in a row is visible without closing it; below confirmDialog (80). */
+.inv-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + var(--safe-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 75;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: min(92vw, 420px);
+  padding: 9px 15px;
+  border: var(--app-bw) solid var(--app-accent);
+  border-radius: 999px;
+  background: var(--app-surface);
+  color: var(--app-text);
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  animation: inv-toast-in 0.18s ease-out;
+}
+@keyframes inv-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+/* The phone's bottom tab bar is ~69px tall (measured at 375px): sit just above it, not over its labels. */
+@media (max-width: 720px) {
+  .inv-toast {
+    bottom: calc(80px + var(--safe-bottom, 0px));
+  }
 }
 
 /* --- Item card detail (Settings → Customization → Item card detail) ------------------------------
@@ -12467,6 +12613,14 @@ button.strike-name:hover {
 .ff-arch > i { color: var(--accent, #7a5af8); font-size: 18px; margin-top: 1px; }
 .ff-arch ul { margin: 4px 0 0; padding-left: 18px; }
 .ff-arch li { margin: 2px 0; color: var(--app-text); }
+/* A long class-archetype note (Flexible Spellcaster's renders 1,168 characters) starts cut to 3 lines;
+   the text itself stays in the DOM, only the box hides the rest. The 65ch measure keeps 3 lines under
+   LONG_NOTE_CHARS (275) on a wide desktop too — without it a 1920px window fits ~700 characters in 3
+   lines and "Show more" on a 313-character note would open nothing. */
+.ff-note { max-width: 65ch; }
+.ff-note.cut { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ff-note-more { display: inline-block; margin-top: 2px; padding: 4px 0; min-height: 26px; border: 0; background: none; color: var(--app-accent); font: inherit; font-weight: 600; cursor: pointer; }
+.ff-note-more:hover { text-decoration: underline; }
 
 /* Doubling Rings — rune-copy picker on a wielded weapon (Inventory). */
 .inv-runecopy { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--app-text-dim); background: var(--app-surface-2); border: 1px solid var(--app-border); border-radius: var(--app-radius); padding: 3px 8px; }

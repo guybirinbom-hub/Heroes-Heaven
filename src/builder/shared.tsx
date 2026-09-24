@@ -1,4 +1,4 @@
-import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
+import { Fragment, useMemo, useRef, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
 import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
@@ -13,7 +13,10 @@ import {
   type BuildState,
   CUSTOM_BACKGROUND_ID,
   additionalClassSkills,
+  activeLanguageLores,
   bonusLanguageSlots,
+  intLanguageSlots,
+  loreKey,
   type BoostSlot,
   boostSlots,
   buildCharacter,
@@ -92,6 +95,7 @@ import { useEscapeClose } from '../sheet/useEscapeClose';
 import { isMobileNow } from '../sheet/useIsMobile';
 import type { DescNode } from '../sheet/descref';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
+import { picksLosingSlot, rekeyFeatSlots, SLOT_KEYED } from '../rules/featSlots';
 
 /** The "what you gain" summary chips under a CHOICE (HP/size/speed for an ancestry, trained skills for
  *  a class …). No Details button: for anything the player picked, the picker itself is how you read it —
@@ -160,7 +164,9 @@ export function cap(s: string): string {
 }
 
 export interface BuilderActions {
-  patch: (p: Partial<BuildState>) => void;
+  /** A function reads the LIVE build — for a patch applied after an await or a dialog, so it never
+   *  writes back a build the player has changed since. */
+  patch: (p: Partial<BuildState> | ((b: BuildState) => Partial<BuildState>)) => void;
   setLevel: (n: number) => void;
   bumpLevel: (delta: number) => void;
   changeAncestry: (id: string) => void;
@@ -385,6 +391,81 @@ function subclassChangeLosses(b: BuildState, content: ContentDatabase, id: strin
   return lost;
 }
 
+/** The picks named in a confirm, and every answer made under their slot keys (the feat's sub-choice
+ *  `<slot>`/`<slot>#n`, its spell, Lore, effect and pick-a-feat answers `<slot>:…`).
+ *
+ *  Read off the LIVE build `b`, never the one the dialog was drawn from: the Builder stays usable
+ *  while a campaign join fetches, and writing a snapshot back undid whatever the player did meanwhile.
+ *  Only the picks the confirm NAMED go, and only while their slot still holds the feat it named — a
+ *  pick made or changed after the dialog was drawn is not what the player said yes to, so it stays.
+ *  Every other answer on the build is left alone. Called ONLY on a confirm's yes — `requestRulesChange`
+ *  and `requestRemovePick`. */
+function withoutPicks(b: BuildState, named: [string, string][]): Partial<BuildState> {
+  const gone = new Set(named.filter(([k, id]) => b.featPicks[k] === id).map(([k]) => k));
+  const slot = (k: string) => /^\d+:[a-z]+:\d+/.exec(k)?.[0] ?? '';
+  return Object.fromEntries(
+    SLOT_KEYED.filter((f) => b[f]).map((f) => [f, Object.fromEntries(Object.entries(b[f]!).filter(([k]) => !gone.has(slot(k))))]),
+  );
+}
+
+/** "Level 2 mythic feat", "Level 4 free archetype feat" — how a confirm names the slot a pick sat in. */
+const slotName = (key: string) => {
+  const [lvl, cat] = key.split(':');
+  return `Level ${lvl} ${cat === 'archetype' ? 'free archetype' : cat} feat`;
+};
+
+/** The four toggles whose slots come and go with them, by the name their Setup chip shows. */
+const SLOT_TOGGLES = { freeArchetype: 'Free Archetype', ancestryParagon: 'Ancestry Paragon', dualClass: 'Dual Class', mythicEnabled: 'Mythic' } as const;
+type SlotToggle = keyof typeof SLOT_TOGGLES;
+const toggleOn = (b: BuildState, f: SlotToggle) => !!(f === 'mythicEnabled' ? b.mythicEnabled : b.variantRules?.[f]);
+
+/**
+ * Change the build's RULES — a Setup toggle, or a campaign's defaults on "Use defaults". The one door
+ * for all of them, so none can take a slot from a feat behind the player's back.
+ *
+ * Turning Free Archetype, Mythic, Ancestry Paragon or Dual Class OFF takes slots away. `buildCharacter`
+ * reads EVERY entry of `featPicks` whether or not a slot still draws it, so the feats in those slots —
+ * and everything they granted — used to stay on the sheet with the toggle off, gone from the Builder.
+ * Now every feat that loses its slot (`picksLosingSlot`) — every feat in a slot one of those carries,
+ * like Ultimate Flexibility's bonus slot, and every feat left in a slot that would no longer take it,
+ * like a rogue feat in the fighter's own class slot on Dual Class off — is named in ONE confirm, "Turn it off" removes
+ * exactly those picks and their answers, and Cancel changes nothing, toggle included. A feat is removed
+ * on the player's yes or kept with its toggle, never moved into another slot; with those slots empty
+ * there is no dialog. Turning a toggle ON only adds slots, so it removes nothing — even in the same
+ * change as another going off. The picks that stay are re-keyed by `rekeyFeatSlots` in
+ * `useBuilderActions`. `build` is the build as it is NOW — it only decides what the dialog names; the
+ * removal itself is worked out on the live build when the player answers.
+ */
+export function requestRulesChange(p: Partial<BuildState>, build: BuildState, content: ContentDatabase, actions: BuilderActions) {
+  const next = { ...build, ...p };
+  const flags = Object.keys(SLOT_TOGGLES) as SlotToggle[];
+  const off = flags.filter((f) => toggleOn(build, f) && !toggleOn(next, f));
+  // The slots the toggles going OFF take, and only those: one going on in the same change keeps its old state here.
+  const kept = (f: SlotToggle) => toggleOn(build, f) && toggleOn(next, f);
+  const offOnly: BuildState = {
+    ...next,
+    mythicEnabled: kept('mythicEnabled'),
+    variantRules: { ...next.variantRules, freeArchetype: kept('freeArchetype'), ancestryParagon: kept('ancestryParagon'), dualClass: kept('dualClass') },
+  };
+  const picks = off.length ? picksLosingSlot(build, offOnly, content) : [];
+  if (!picks.length) return actions.patch(p);
+  void confirmLoss(
+    `Turn off ${off.map((f) => SLOT_TOGGLES[f]).join(' and ')}?`,
+    'Turn it off',
+    picks.map(([k, id]) => `${slotName(k)} — ${content.feats[id]?.name ?? id}, and everything it grants`),
+    () => actions.patch((b) => ({ ...p, ...withoutPicks(b, picks) })),
+  );
+}
+
+/** "Remove" on a feat with no slot (the Builder lists them at their level): named in the confirm, and
+ *  on yes only that pick and the answers under its key go. */
+export function requestRemovePick(key: string, id: string, content: ContentDatabase, actions: BuilderActions) {
+  const name = content.feats[id]?.name ?? id;
+  void confirmLoss(`Remove ${name}?`, 'Remove', [`${slotName(key)} with no slot — ${name}, and everything it grants`], () =>
+    actions.patch((b) => withoutPicks(b, [[key, id]])),
+  );
+}
+
 /** Change the subclass, asking first when that would throw an answered pick away. */
 export function requestSubclassChange(id: string, build: BuildState, content: ContentDatabase, actions: BuilderActions) {
   if (id === build.subclassId) return; // re-picking the one you already have wiped the whole spell list
@@ -408,10 +489,15 @@ export function requestDeityChange(id: string, build: BuildState, content: Conte
 }
 
 export function useBuilderActions(
-  setBuild: Dispatch<SetStateAction<BuildState>>,
+  setBuildRaw: Dispatch<SetStateAction<BuildState>>,
   content: ContentDatabase,
 ): BuilderActions {
-  const patch = (p: Partial<BuildState>) => setBuild((b) => ({ ...b, ...p }));
+  /* EVERY change to the build passes through here, so every change that moves a level's feat slots
+   * (Free Archetype, Ancestry Paragon, Dual Class, Mythic, a class, a campaign's defaults, Ultimate
+   * Flexibility) carries each pick to its own slot's new key — see rekeyFeatSlots. */
+  const setBuild: Dispatch<SetStateAction<BuildState>> = (u) =>
+    setBuildRaw((b) => rekeyFeatSlots(b, typeof u === 'function' ? u(b) : u, content));
+  const patch: BuilderActions['patch'] = (p) => setBuild((b) => ({ ...b, ...(typeof p === 'function' ? p(b) : p) }));
   return {
     patch,
     setLevel(n) {
@@ -840,8 +926,10 @@ export function SearchSelect({
   label: string;
   value: string | null | undefined;
   /** `disabled` carries the REASON the option cannot be committed (Q27: unpickable must say why);
-   *  the stored answer is never disabled by the caller, so a pick cannot vanish under the player. */
-  options: { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[]; disabled?: string }[];
+   *  the stored answer is never disabled by the caller, so a pick cannot vanish under the player.
+   *  `group` puts the option under a heading; sections follow the order the groups first appear in
+   *  this array, and SEARCH STILL SPANS ALL OF THEM (the filter runs before the split). */
+  options: { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[]; disabled?: string; group?: string }[];
   onChange: (id: string) => void;
   placeholder?: string;
   /** Render just the control (no .ocard/label wrapper) — for use inside a SetupCard. */
@@ -874,6 +962,15 @@ export function SearchSelect({
     ? rankBySearch(options.filter((o) => searchMatches(q, o.name)), q, (o) => o.name)
     : options;
   const readFirst = !!descBucket || filtered.some((o) => o.description || o.descRefs?.length);
+  /* Headed sections, when the caller groups its options (the heritage picker's "Human heritages" vs
+   * "Versatile heritages"). The split happens AFTER the search filter and the 100-row cap, so a query
+   * still spans every group and an ungrouped caller gets exactly the one flat list it had. */
+  const shown = filtered.slice(0, 100);
+  const sections = options.some((o) => o.group)
+    ? [...new Set(options.map((o) => o.group ?? ''))]
+        .map((g) => ({ head: g, items: shown.filter((o) => (o.group ?? '') === g) }))
+        .filter((s) => s.items.length)
+    : [{ head: '', items: shown }];
   const currentNode = current ? mkNode(current) : null;
   // Harness markers — see PopupSelect's ctlAttrs.
   const ctlAttrs = {
@@ -941,12 +1038,14 @@ export function SearchSelect({
               />
             </div>
             <div className="picker-list">
-              {readFirst
-                ? // Read-first rows: press the row to read its description; the Select button chooses it.
-                  filtered.slice(0, 100).map((o) => {
-                    const node = mkNode(o);
+              {sections.map((s) => (
+                <Fragment key={s.head || '_'}>
+                  {s.head && <div className="picker-group-h">{s.head}</div>}
+                  {s.items.map((o) => {
                     const off = !!o.disabled && o.id !== value;
-                    return (
+                    const node = readFirst ? mkNode(o) : null;
+                    // Read-first rows: press the row to read its description; the Select button chooses it.
+                    return readFirst ? (
                       <PickerRow
                         key={o.id}
                         name={o.name}
@@ -961,11 +1060,7 @@ export function SearchSelect({
                           setOpen(false);
                         }}
                       />
-                    );
-                  })
-                : filtered.slice(0, 100).map((o) => {
-                    const off = !!o.disabled && o.id !== value;
-                    return (
+                    ) : (
                       <button
                         type="button"
                         className={'picker-item' + (o.id === value ? ' chosen' : '')}
@@ -985,6 +1080,8 @@ export function SearchSelect({
                       </button>
                     );
                   })}
+                </Fragment>
+              ))}
               {filtered.length === 0 && (
                 <div className="setup-note" style={{ padding: 12 }}>
                   No matches.
@@ -1048,7 +1145,14 @@ export function PopupSelect({
   cardLabel?: string;
   /** Adds a "type your own" entry to the popup (e.g. a custom Lore): picking it swaps the list
    *  for a text field, all inside the same popup. onAdd receives the typed text. */
-  addCustom?: { label: string; placeholder: string; onAdd: (text: string) => void };
+  addCustom?: {
+    label: string;
+    placeholder: string;
+    onAdd: (text: string) => void;
+    /** Why the typed text can't be taken (said under the field while typing, and Add stays off), or
+     *  null — so a refused entry is explained instead of the popup closing on nothing. */
+    refuse?: (text: string) => string | null;
+  };
   /** Offer a "clear the current selection" ACTION (calls onChange('')). Renders as a pinned row
    *  below the option list — separator above, dimmed with an ✕ icon — so it reads as an action,
    *  not another option. Only shown while something is selected. Replaces the old pattern of a
@@ -1072,9 +1176,10 @@ export function PopupSelect({
     setCustomMode(false);
     setCustomText('');
   };
+  const customRefusal = customText.trim() ? (addCustom?.refuse?.(customText.trim()) ?? null) : null;
   const commitCustom = () => {
     const t = customText.trim();
-    if (!t || !addCustom) return;
+    if (!t || !addCustom || customRefusal) return;
     addCustom.onAdd(t);
     close();
   };
@@ -1189,11 +1294,16 @@ export function PopupSelect({
                     if (e.key === 'Escape') setCustomMode(false);
                   }}
                 />
+                {customRefusal && (
+                  <div className="popsel-custom-refusal" role="alert">
+                    {customRefusal}
+                  </div>
+                )}
                 <div className="popsel-custom-actions">
                   <button type="button" className="btn-ghost" onClick={() => setCustomMode(false)}>
                     Back
                   </button>
-                  <button type="button" className="btn-primary" disabled={!customText.trim()} onClick={commitCustom}>
+                  <button type="button" className="btn-primary" disabled={!customText.trim() || !!customRefusal} onClick={commitCustom}>
                     Add
                   </button>
                 </div>
@@ -1645,7 +1755,7 @@ function ToggleWithInfo({
 /** The optional-variant-rules toggles (Ancestry Paragon, ABP, Dual Class, …). Lives on the builder's
  *  Setup page. Their dependent per-character SELECTIONS (the second class/subclass, ABP skill potency
  *  / apex) are made on the Level 0 page — see SetupUnlockedChoices — so only the on/off toggle is here. */
-export function VariantRulesCard({ build, actions }: EditorProps) {
+export function VariantRulesCard({ build, actions, content }: EditorProps) {
   return (
     <SetupCard icon="ti-adjustments-alt" label="Variant rules">
       <div className="spr-chips">
@@ -1662,6 +1772,8 @@ export function VariantRulesCard({ build, actions }: EditorProps) {
             // Monster Parts is a Treasure Vault subsystem with no rules page in the shipped set — our
             // summary is the only description available for it.
             ['monsterParts', 'Monster Parts', 'Harvest parts from defeated monsters to refine (fundamental-rune-equivalent bonuses) and imbue (special properties) your weapons, armor, shields, and Perception/skill items in place of runes and precious materials. An item uses either Monster Parts or normal runes — never both.', undefined],
+            // A HOUSE RULE (owner, 2026-09-22) rather than a published variant, so no rules page either.
+            ['loreInsteadOfLanguage', 'Lore instead of language', 'Each time your Intelligence would grant an extra language, you may become trained in a new Lore instead', undefined],
           ] as const
         ).map(([flag, label, desc, rule]) => (
           <ToggleWithInfo
@@ -1670,7 +1782,12 @@ export function VariantRulesCard({ build, actions }: EditorProps) {
             description={desc}
             rule={rule}
             on={!!build.variantRules?.[flag]}
-            onToggle={() => actions.patch({ variantRules: { ...build.variantRules, [flag]: !build.variantRules?.[flag] } })}
+            onToggle={() =>
+              // Turning Free Archetype, Ancestry Paragon or Dual Class OFF takes slots away, so the feats
+              // in them go too — named first, and only on the player's yes. The same door "Use defaults"
+              // and the Mythic toggle go through.
+              requestRulesChange({ variantRules: { ...build.variantRules, [flag]: !build.variantRules?.[flag] } }, build, content, actions)
+            }
           />
         ))}
       </div>
@@ -1721,12 +1838,16 @@ function MonsterPartsModeSelect({ build, actions }: Pick<EditorProps, 'build' | 
  *  shared — and where any character is attached to campaigns it's in (so it shows in that party and
  *  publishes to teammates). Joining offers to start the character from the campaign's default rules.
  *  Hidden for local / not-signed-in users (no campaigns for them). */
-export function CampaignAttachCard({ build, actions, onLeaveCampaign }: EditorProps & { onLeaveCampaign?: (campaignId: string) => void }) {
+export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }: EditorProps & { onLeaveCampaign?: (campaignId: string) => void }) {
   const auth = useAuth();
   const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  /* The build as it is NOW. `join` awaits a fetch and a dialog, and the Builder stays usable
+   * meanwhile — the `build` its closure caught is the one from before the first await. */
+  const live = useRef(build);
+  live.current = build;
 
   const leave = async (m: CampaignMembership) => {
     const ok = await confirmDialog({
@@ -1738,7 +1859,7 @@ export function CampaignAttachCard({ build, actions, onLeaveCampaign }: EditorPr
     if (!ok) return;
     onLeaveCampaign?.(m.id); // App: drop the membership (synced) + detach it from every character
     setMemberships((ms) => ms.filter((x) => x.id !== m.id)); // reflect in this card immediately
-    actions.patch({ campaignIds: (build.campaignIds ?? []).filter((id) => id !== m.id) }); // and the draft build
+    actions.patch((b) => ({ campaignIds: (b.campaignIds ?? []).filter((id) => id !== m.id) })); // and the draft build
   };
 
   // Local / not signed in and not already in any campaign → nothing to show.
@@ -1771,7 +1892,7 @@ export function CampaignAttachCard({ build, actions, onLeaveCampaign }: EditorPr
       setMemberships(next);
       saveCampaigns(next);
     }
-    actions.patch({ campaignIds: [...new Set([...(build.campaignIds ?? []), c.id])] });
+    actions.patch((b) => ({ campaignIds: [...new Set([...(b.campaignIds ?? []), c.id])] }));
     setCode('');
     const d = c.defaults;
     // Only prompt when the GM actually configured something. An empty variantRules object is truthy but
@@ -1789,13 +1910,20 @@ export function CampaignAttachCard({ build, actions, onLeaveCampaign }: EditorPr
         message: 'Start this character from the campaign’s default variant rules and source books. You can still change anything afterwards.',
         confirmLabel: 'Use defaults',
       });
+      /* Through the Setup toggle's own door: a campaign whose defaults have Free Archetype off used
+       * to switch it off here with no confirm and leave the free-slot feats on the character. */
       if (use) {
-        actions.patch({
-          variantRules: { ...(d!.variantRules ?? {}) },
-          enabledSources: d!.enabledSources,
-          mythicEnabled: !!d!.mythicEnabled,
-          kingmakerEnabled: !!d!.kingmakerEnabled,
-        });
+        requestRulesChange(
+          {
+            variantRules: { ...(d!.variantRules ?? {}) },
+            enabledSources: d!.enabledSources,
+            mythicEnabled: !!d!.mythicEnabled,
+            kingmakerEnabled: !!d!.kingmakerEnabled,
+          },
+          live.current,
+          content,
+          actions,
+        );
       }
     }
   };
@@ -1861,7 +1989,7 @@ export function CampaignAttachCard({ build, actions, onLeaveCampaign }: EditorPr
 /** Campaign content toggles (Mythic, Kingmaker) — top-level build flags that show/hide their content.
  *  The dependent Mythic Calling SELECTION is made on the Level 0 page (see SetupUnlockedChoices); only
  *  the on/off toggle lives here. */
-export function CampaignOptionsCard({ build, actions }: EditorProps) {
+export function CampaignOptionsCard({ build, actions, content }: EditorProps) {
   return (
     <SetupCard icon="ti-flag" label="Campaign">
       <div className="spr-chips">
@@ -1880,11 +2008,34 @@ export function CampaignOptionsCard({ build, actions }: EditorProps) {
             description={desc}
             rule={rule}
             on={!!build[flag]}
-            onToggle={() => actions.patch({ [flag]: !build[flag] })}
+            // Mythic OFF takes its slots: through the same confirm as the Variant rules toggles.
+            onToggle={() => requestRulesChange({ [flag]: !build[flag] }, build, content, actions)}
           />
         ))}
       </div>
     </SetupCard>
+  );
+}
+
+/** The rule cards a character's Setup page and a campaign's defaults editor both show, in ONE order:
+ *  SOURCES FIRST (owner, 2026-09-22) — which books are on decides what every other card can offer.
+ *  `children` sit between Sources and Variant rules (the Setup page's Campaigns + Options cards).
+ *  `sourcesContent` is the unfiltered db the Sources card needs (see SourcesCard). */
+export function RuleCards({
+  build,
+  actions,
+  content,
+  sourcesContent = content,
+  catalog,
+  children,
+}: EditorProps & { sourcesContent?: ContentDatabase; catalog: ReturnType<typeof sourceCatalog>; children?: ReactNode }) {
+  return (
+    <>
+      <SourcesCard build={build} actions={actions} catalog={catalog} content={sourcesContent} />
+      {children}
+      <VariantRulesCard build={build} actions={actions} content={content} />
+      <CampaignOptionsCard build={build} actions={actions} content={content} />
+    </>
   );
 }
 
@@ -2709,9 +2860,16 @@ function fighterWeaponGroupOptions(content: ContentDatabase): { id: string; labe
 }
 
 export function OriginPickers({ build, actions, content }: EditorProps) {
-  const heritageOpts = Object.values(content.heritages).filter(
-    (h) => h.ancestryId === build.ancestryId || h.ancestryId === null,
-  );
+  /* Two headed groups, not one mixed list (owner, 2026-09-22): the ancestry's OWN heritages first,
+   * then the versatile ones any ancestry may take. Ordered here so the picker's sections come out in
+   * that order — it heads each group in the order it first meets one. */
+  const heritageOpts = [
+    ...Object.values(content.heritages).filter((h) => h.ancestryId !== null && h.ancestryId === build.ancestryId),
+    // The ancestry's own keep the ancestry's order; the versatile ones (from every book) by name.
+    ...Object.values(content.heritages)
+      .filter((h) => h.ancestryId === null)
+      .sort((a, b) => a.name.localeCompare(b.name)),
+  ];
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
   const background = build.backgroundId ? content.backgrounds[build.backgroundId] : undefined;
   const cls = build.classId ? content.classes[build.classId] : undefined;
@@ -2937,7 +3095,14 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           value={build.heritageId}
           onChange={requestHeritageChange}
           descBucket="heritages"
-          options={heritageOpts.map((h) => ({ id: h.id, name: h.name, note: note(h.rarity), description: h.description, descRefs: h.descRefs }))}
+          options={heritageOpts.map((h) => ({
+            id: h.id,
+            name: h.name,
+            note: note(h.rarity),
+            description: h.description,
+            descRefs: h.descRefs,
+            group: h.ancestryId === null ? 'Versatile heritages' : `${ancestry?.name ?? 'Ancestry'} heritages`,
+          }))}
         />
       </SetupCard>
       {/* Heritages that grant a "skill of your choice" (Skilled human) need a picker, or
@@ -3359,6 +3524,41 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       {showCustomBg && build.backgroundId === CUSTOM_BACKGROUND_ID && (
         <CustomBackgroundForm build={build} actions={actions} content={content} />
       )}
+      {/* A homebrew background (the custom one, or a Homebrew-page record) named a skill this
+          character is already trained in elsewhere. Same "already trained → choose another skill"
+          card every printed record's redundancy clause gets; the engine reports it on
+          `skillFallbacks`, so the two can't disagree about when it fires. */}
+      {!!build.backgroundId &&
+        (limitChar?.skillFallbacks ?? [])
+          .filter((fb) => fb.featId === build.backgroundId)
+          .map((fb) => {
+            const fbKey = `${build.backgroundId}:fallback:${fb.skill}`;
+            const held = limitChar?.proficiencies.skills[fb.skill] ?? 'trained';
+            return (
+              <SubCard key={fbKey} icon="ti-bulb" label={`Already ${held} in ${cap(fb.skill)} — replacement skill`}>
+                <PopupSelect
+                  title="Replacement skill"
+                  placeholder="Choose a skill…"
+                  value={build.featSkillChoices?.[fbKey] ?? ''}
+                  onChange={(v) =>
+                    actions.patch({ featSkillChoices: { ...(build.featSkillChoices ?? {}), [fbKey]: v as SkillId } })
+                  }
+                  clearLabel="Clear"
+                  // A skill already trained is a second dead end — the replacement grants `trained`.
+                  options={SKILLS.map((s) => {
+                    const cur = limitChar?.proficiencies.skills[s] ?? 'untrained';
+                    const dead = s !== build.featSkillChoices?.[fbKey] && cur !== 'untrained';
+                    return {
+                      value: s,
+                      label: cap(s),
+                      disabled: dead,
+                      disabledReason: dead ? `Already ${cur} — this replacement would change nothing.` : undefined,
+                    };
+                  })}
+                />
+              </SubCard>
+            );
+          })}
       <SetupCard icon="ti-sword" label="Class">
         <SearchSelect
           bare
@@ -4386,24 +4586,28 @@ export function loreLabel(key: string): string {
   return subject ? `${subject} Lore` : 'Lore';
 }
 
-/** "Warfare", "Sailing Lore", "underworld" -> a canonical `lore:<slug>` key (or null if empty). */
-export function loreKey(raw: string): ProficiencyKey | null {
-  const slug = raw
-    .trim()
-    .toLowerCase()
-    .replace(/\blore\b/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-  return slug ? (`lore:${slug}` as ProficiencyKey) : null;
+/** Why a typed Lore can't be taken as a NEW Lore on a builder card, or null. Every card that buys a
+ *  Lore asks this one question: a blank subject names nothing, one already on the card is there, and
+ *  one the character is already trained in — from its background, a class skill, a Lore taken
+ *  instead of a language — would spend the pick and train nothing. The last case was also a silent
+ *  loss: a locked Lore stored as a class skill is hidden and counts for nothing, and it comes back
+ *  (pushing the last class skill past the cap) the moment whatever locked it goes away. */
+function newLoreRefusal(ch: Character, text: string, onCard: readonly string[]): string | null {
+  const key = loreKey(text);
+  if (!key) return 'Name the Lore — e.g. Warfare.';
+  if (onCard.includes(key)) return `${loreLabel(key)} is already on this card.`;
+  const from = ch.grantedSkills?.[key];
+  if (!from && (ch.proficiencies.skills[key] ?? 'untrained') === 'untrained') return null;
+  return `Already trained in ${loreLabel(key)}${from ? ` — from ${from}` : ''}. Choose a new Lore.`;
 }
 
 /** A filled level-0 pick shown as a feat-style slot-card (icon tile + label + value), with an
  *  optional clear button — the static counterpart to PopupSelect's `variant="card"`. */
-function SlotCard({ icon, label, value, onClear }: { icon: string; label: string; value: string; onClear?: () => void }) {
+function SlotCard({ icon, label, value, onClear, idle }: { icon: string; label: string; value: string; onClear?: () => void; idle?: boolean }) {
   return (
     <div className="lvl-slot-wrap">
       <div className="lvl-slot">
-        <div className="lvl-card lvl-card-static">
+        <div className={'lvl-card lvl-card-static' + (idle ? ' lvl-card-idle' : '')}>
           <span className="lvl-card-icon">
             <i className={'ti ' + icon} aria-hidden="true" />
           </span>
@@ -4452,9 +4656,10 @@ export function SkillEditor({ build, actions, content, character }: EditorProps 
   // and are greyed below — they are the whole point of Q27.
   const available = SKILLS.filter((s) => !chosen.includes(s));
 
+  const refuseLore = (text: string) => newLoreRefusal(preview, text, chosen);
   const addLore = (text: string) => {
     const key = loreKey(text);
-    if (key && !build.classSkills.includes(key)) actions.toggleSkill(key);
+    if (key && !build.classSkills.includes(key) && !refuseLore(text)) actions.toggleSkill(key);
   };
 
   const emptyCount = Math.max(0, addlCount - chosen.length);
@@ -4485,7 +4690,7 @@ export function SkillEditor({ build, actions, content, character }: EditorProps 
                 disabled: locked.has(s),
                 disabledReason: locked.has(s) ? `Already trained — from ${grantedFrom[s]}.` : undefined,
               }))}
-              addCustom={{ label: 'Learn a new lore', placeholder: 'Lore subject (e.g. Warfare)…', onAdd: addLore }}
+              addCustom={{ label: 'Learn a new lore', placeholder: 'Lore subject (e.g. Warfare)…', refuse: refuseLore, onAdd: addLore }}
             />
           </div>
         </div>
@@ -4494,14 +4699,54 @@ export function SkillEditor({ build, actions, content, character }: EditorProps 
   );
 }
 
-export function LanguageEditor({ build, actions, content }: EditorProps) {
+export function LanguageEditor({ build, actions, content, character }: EditorProps & { character?: Character }) {
+  const ch = useMemo(() => character ?? buildCharacter(build, content), [character, build, content]);
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
   const granted = ancestry?.languages.granted ?? [];
-  const slots = bonusLanguageSlots(build, content);
+  const slots = bonusLanguageSlots(build, content, ch);
   const chosen = build.languages.filter((l) => !granted.includes(l));
+  /* "Lore instead of language" (setup house rule): each Int-granted slot may be spent on a Lore.
+     `intSlots` is how many of the slots on this card came from Intelligence — the rest (ancestry's
+     extra, Multilingual, …) are languages only. Which stored Lores COUNT is the engine's answer
+     (`activeLanguageLores`), never re-derived here, so this card and the sheet cannot disagree: a
+     Lore gives way to a language the player picked, and one the character already has from
+     elsewhere spends nothing. Nothing here rewrites `build.languages`. */
+  const loreRule = !!build.variantRules?.loreInsteadOfLanguage;
+  const intSlots = intLanguageSlots(build, content, ch);
+  const active = activeLanguageLores(ch);
+  /* EVERY stored Lore is shown while the rule is on — the ones that count, and the kept ones that
+     don't with the reason on the card — and edits work on the STORED list by its own index, so
+     removing one never writes another away and a kept one is never hidden from the player. */
+  const stored = build.languageLores ?? [];
+  const storedKeys = new Set<string>();
+  const lores: { at: number; key: ProficiencyKey; idle: string | null }[] = [];
+  for (const [at, raw] of stored.entries()) {
+    const key = typeof raw === 'string' ? loreKey(raw) : null;
+    if (!loreRule || !key) continue;
+    const counts = active.includes(key) && !storedKeys.has(key);
+    storedKeys.add(key);
+    const from = ch.grantedSkills?.[key];
+    lores.push({
+      at,
+      key,
+      idle: counts
+        ? null
+        : (ch.proficiencies.skills[key] ?? 'untrained') !== 'untrained'
+          ? `already trained${from ? ` (${from})` : ''}`
+          : 'no free language slot from Intelligence',
+    });
+  }
+  // A Lore slot buys a NEW Lore — the same question the Trained skills card asks (`newLoreRefusal`).
+  const refuseLore = (text: string) => newLoreRefusal(ch, text, [...storedKeys]);
+  /* How many of the OPEN slots could still take a Lore that counts: one per Int slot not yet traded,
+     and never more than the open slots, since a Lore may not use a slot a picked language needs. Only
+     that many are labelled "Language or Lore" — the rest (the ancestry's own, a record's) say
+     "Language". The slots are interchangeable, so a language picked in one moves the label on. */
+  const openSlots = Math.max(0, slots - chosen.length);
+  const loreRoom = loreRule ? Math.max(0, Math.min(intSlots - active.length, openSlots)) : 0;
   // Level 0 only shows the bonus languages you pick here; languages you already know (granted by
   // ancestry/Int) live in the side rail. No bonus slots → nothing to pick → hide the card.
-  if (slots === 0) return null;
+  if (slots === 0 && lores.length === 0) return null;
   /* The printed "Choose from …" list on the ancestry's Languages line. Surfaced FIRST rather than
    * enforced, because print keeps the escape clause "and any other languages to which you have
    * access (such as the languages prevalent in your region)" — a hard filter would delete a printed
@@ -4523,7 +4768,7 @@ export function LanguageEditor({ build, actions, content }: EditorProps) {
     .sort((a, b) => (listedFrom.has(b.id) ? 1 : 0) - (listedFrom.has(a.id) ? 1 : 0) || a.name.localeCompare(b.name))
     .map((l) => (listedFrom.has(l.id) ? { ...l, name: `${l.name} · ${listedFrom.get(l.id)} list` } : l));
   return (
-    <SetupCard icon="ti-language" label="Languages" count={`${chosen.length}/${slots} bonus`}>
+    <SetupCard icon="ti-language" label="Languages" count={`${chosen.length + active.length}/${slots + active.length} bonus`}>
       {chosen.map((id) => (
         <SlotCard
           key={id}
@@ -4533,24 +4778,53 @@ export function LanguageEditor({ build, actions, content }: EditorProps) {
           onClear={() => actions.toggleLanguage(id)}
         />
       ))}
-      {Array.from({ length: Math.max(0, slots - chosen.length) }).map((_, i) => (
+      {lores.map(({ at, key, idle }) => (
+        <SlotCard
+          key={'lore' + at}
+          icon="ti-book-2"
+          label={idle ? `Lore — not counted: ${idle}` : 'Lore (instead of a language)'}
+          value={loreLabel(key)}
+          idle={!!idle}
+          onClear={() => actions.patch({ languageLores: stored.filter((_, j) => j !== at) })}
+        />
+      ))}
+      {Array.from({ length: openSlots }).map((_, i) => {
+        // The house rule, said on the slot itself: the LAST `loreRoom` open slots (the Int ones — the
+        // ancestry's own comes first) are a language OR a Lore; the rest are languages only.
+        const asLore = i >= openSlots - loreRoom;
+        return (
         <div className="lvl-slot-wrap" key={'add' + i}>
           <div className="lvl-slot">
             <PopupSelect
               variant="card"
-              cardLabel="Language"
+              cardLabel={asLore ? 'Language or Lore' : 'Language'}
               icon="ti-language"
-              title="Add a language"
+              title={asLore ? 'Add a language — or a Lore instead' : 'Add a language'}
               placeholder="Choose…"
               value=""
               onChange={(v) => {
                 if (v) actions.toggleLanguage(v);
               }}
               options={available.map((l) => ({ value: l.id, label: l.name }))}
+              addCustom={
+                asLore
+                  ? {
+                      label: 'Learn a Lore instead',
+                      placeholder: 'Lore subject (e.g. Warfare)…',
+                      refuse: refuseLore,
+                      // Stored as the KEY, so the engine trains exactly the Lore this card shows.
+                      onAdd: (t: string) => {
+                        const key = loreKey(t);
+                        if (key && !refuseLore(t)) actions.patch({ languageLores: [...stored, key] });
+                      },
+                    }
+                  : undefined
+              }
             />
           </div>
         </div>
-      ))}
+        );
+      })}
     </SetupCard>
   );
 }

@@ -23,6 +23,7 @@ import {
   legacyArchetypeCantrips,
   levelGrants,
   levelChoices,
+  loreKey,
   subclassAnchorAt,
   backgroundGrantedFeats,
   boundGrantChoice,
@@ -35,7 +36,7 @@ import { OPEN_SOURCE_LABEL, openChoiceOptions } from '../rules/openChoice';
 import { DOMAIN_SPELLS } from '../rules/domains';
 import { confirmDialog } from '../sheet/confirm';
 import { sourceCatalog, enabledBookSet } from '../rules/sources';
-import { eligibleFeatsForSlot, findHiddenFeatMatches } from '../rules/featSlots';
+import { eligibleFeatsForSlot, findHiddenFeatMatches, fitsSlot, moveTargetFor, swapSlotKeys } from '../rules/featSlots';
 import { classFeatureDescription } from '../rules/featureText';
 import {
   resolveBackground,
@@ -67,7 +68,7 @@ import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, SourcesCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, requestSubclassChange, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, cap, loreLabel, requestRemovePick, requestSubclassChange, useBuilderActions } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
 import { formulaSlots } from '../rules/formulaBook';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -1653,11 +1654,12 @@ export function Builder({
               <div className="bsec-title">Setup</div>
               <div className="setup-note">Campaign options — optional variant rules for this character.</div>
               <div className="lvl-cards">
-                <CampaignAttachCard build={build} actions={actions} content={content} onLeaveCampaign={onLeaveCampaign} />
-                <OptionsCard build={build} actions={actions} content={content} />
-                <VariantRulesCard build={build} actions={actions} content={content} />
-                <CampaignOptionsCard build={build} actions={actions} content={content} />
-                <SourcesCard build={build} actions={actions} catalog={sourceCat} content={ovContent} />
+                {/* SOURCES FIRST (owner, 2026-09-22) — the order lives in RuleCards, which the
+                    campaign defaults editor renders too. */}
+                <RuleCards build={build} actions={actions} content={content} sourcesContent={ovContent} catalog={sourceCat}>
+                  <CampaignAttachCard build={build} actions={actions} content={content} onLeaveCampaign={onLeaveCampaign} />
+                  <OptionsCard build={build} actions={actions} content={content} />
+                </RuleCards>
                 {build.options?.overridesEnabled && (
                   <OverridesCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
                 )}
@@ -1713,7 +1715,7 @@ export function Builder({
                   </div>
                   <div className="lvl-cards">
                     <SkillEditor build={build} actions={actions} content={content} character={featPrereqChar} />
-                    <LanguageEditor build={build} actions={actions} content={content} />
+                    <LanguageEditor build={build} actions={actions} content={content} character={featPrereqChar} />
                   </div>
                 </div>
                 {/* Per-character selections unlocked by a Setup toggle (Dual Class second class, ABP
@@ -1820,6 +1822,12 @@ export function Builder({
               // `build` last: the level list is archetype-aware only when the resolver can see the
               // dedication that carries the class archetype (War Mage: no Arcane Bond row, a War Magic one).
               const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[], build);
+              /* Picks at this level under a key no slot above draws — a pick v0.1.40 stranded, a slot a
+                 change took away, any key the slot list does not produce. The sheet still grants every
+                 one, so each is listed here to be moved or removed by the player. Derived on every
+                 render; nothing is written when a character opens. */
+              const drawnKeys = new Set(g.featSlots.map((cat, i) => slotKey(lvl, cat, i)));
+              const noSlot = Object.entries(build.featPicks).filter(([k, v]) => !!v && Number(k.split(':')[0]) === lvl && !drawnKeys.has(k));
               const bg = resolveBackground(build, content);
               const bgFeatAtThisLevel = lvl === 1 && bg?.grantedFeatId;
               const anyContent =
@@ -2028,7 +2036,7 @@ export function Builder({
                         </div>
                       </div>
                     )}
-                    {(!!(cls?.subclass && subAnchorId) || g.featSlots.length > 0) && (
+                    {(!!(cls?.subclass && subAnchorId) || g.featSlots.length > 0 || noSlot.length > 0) && (
                       <div className="lvl-group">
                         <div className="lvl-group-h">
                           <i className="ti ti-award" aria-hidden="true" /> Feats
@@ -2290,6 +2298,10 @@ export function Builder({
                       const revalidation =
                         pickedFeat && !overridden ? checkPrerequisites(pickedFeat, featPrereqChar, content) : null;
                       const nowInvalid = !!revalidation && !revalidation.met;
+                      // A pick this slot's own picker would refuse — a second class changed under a rogue feat
+                      // in the fighter's slot, a save or import that put it there. Flagged here from the live
+                      // build, never moved or removed: the player replaces or clears it.
+                      const unfit = !!picked && !!ovContent.feats[picked] && !fitsSlot(build, ovContent, key, key);
                       return (
                         <div className="lvl-slot-wrap" key={key}>
                           <div className="lvl-slot">
@@ -2345,6 +2357,11 @@ export function Builder({
                               </>
                             )}
                           </div>
+                          {unfit && (
+                            <div className="lvl-note lvl-unfit" data-unfit={key}>
+                              <i className="ti ti-alert-triangle" aria-hidden="true" /> Not valid for this slot — still on your character. Replace or clear it.
+                            </div>
+                          )}
                           {/* The record-level NOTE — "this bonus lands on your hierophant, not you",
                               "recorded only", "your GM decides which ally wears the relic". It renders on
                               the Feats tab and was read NOWHERE in the builder, which is precisely where
@@ -2760,6 +2777,37 @@ export function Builder({
                         </div>
                       );
                     })}
+                          {noSlot.map(([k, id]) => {
+                            const name = content.feats[id]?.name ?? id;
+                            // The first EMPTY slot of its kind here that TAKES it — never one its own picker would refuse.
+                            const to = moveTargetFor(build, ovContent, k);
+                            return (
+                              <div className="lvl-slot lvl-noslot-row" key={`noslot-${k}`} data-noslot={k}>
+                                <div className="lvl-card lvl-noslot">
+                                  <span className="lvl-card-icon">
+                                    <i className="ti ti-alert-triangle" aria-hidden="true" />
+                                  </span>
+                                  <div className="lvl-card-text">
+                                    <div className="lvl-card-label">Feat with no slot: {name}</div>
+                                    <div className="lvl-card-val">Still on your character.</div>
+                                  </div>
+                                </div>
+                                {to && (
+                                  <button
+                                    className="lvl-replace-btn"
+                                    type="button"
+                                    // Re-checked on the live build: only while the feat is still here and that slot still the one that takes it.
+                                    onClick={() => actions.patch((b) => (b.featPicks[k] === id && moveTargetFor(b, ovContent, k) === to ? swapSlotKeys(b, k, to) : {}))}
+                                  >
+                                    <i className="ti ti-arrow-back-up" aria-hidden="true" /> Move to slot
+                                  </button>
+                                )}
+                                <button className="lvl-replace-btn" type="button" onClick={() => requestRemovePick(k, id, content, actions)}>
+                                  <i className="ti ti-trash" aria-hidden="true" /> Remove
+                                </button>
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     )}

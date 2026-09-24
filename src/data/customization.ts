@@ -42,6 +42,8 @@ export const DEFAULT_CUSTOMIZATION: Customization = {
   // already see.
   compactColumns: 'one',
   inventoryLayout: 'grid',
+  // The phone's only route to reordering an inventory row, so it is on unless the player turns it off.
+  inventoryReorderArrows: true,
   scrollbarAccent: false,
   notesShowRail: false,
 };

@@ -5980,6 +5980,11 @@ export interface VariantRules {
   /** Which Monster Parts GM variant is in play. Mostly informational — the per-item refine/imbue math
    *  is identical across all three; the mode only drives the treasure-by-level reference guidance. */
   monsterPartsMode?: MonsterPartsMode;
+  /** House rule: each language slot Intelligence grants (at creation and at every Int increase) may be
+   *  spent on TRAINING IN A NEW LORE instead. Per slot and independent — three Int-granted slots can be
+   *  two Lores and one language. The subjects live in `BuildState.languageLores`; ancestry- and
+   *  record-granted language slots are untouched. */
+  loreInsteadOfLanguage?: boolean;
 }
 
 /** The three GM variants for the Monster Parts subsystem (drives treasure guidance only). */
@@ -6655,6 +6660,10 @@ export interface Customization {
    *  words in a paragraph. In 'flow' the cards are content-sized, so `compactColumns` has nothing left to
    *  decide. Absent = 'grid' (the default, see DEFAULT_CUSTOMIZATION). */
   inventoryLayout?: 'grid' | 'flow';
+  /** Up/down arrow buttons on each inventory row, for reordering by hand. A PHONE control: the
+   *  computer reorders by dragging a row between its neighbours, which a touch screen has no room for
+   *  (the hold gesture there already means "move me to another section"). Absent = on. */
+  inventoryReorderArrows?: boolean;
   /** Tint the scrollbars with the accent colour instead of neutral grey. */
   scrollbarAccent?: boolean;
 }
