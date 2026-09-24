@@ -235,6 +235,11 @@ export function HomebrewPage({
   // sidebar+pane layout and is untouched).
   const [mobileOpen, setMobileOpen] = useState(false);
   const [sources, setSources] = useState<Record<string, HomebrewSource>>(() => loadHomebrewSources());
+  // entriesOf/ownContent below read storage fresh on every render rather than holding their own state
+  // (unlike `sources`), so deleting an entry needs its own nudge to re-render this component — bumped
+  // in deleteEntry, otherwise the list would only refresh once the parent's async onChanged→content
+  // round-trip lands.
+  const [, refreshEntries] = useState(0);
   // A background refresh (a sync, a GM's campaign edit) hands App a new content DB while this page is
   // open, so re-read what storage now holds each time one arrives.
   useEffect(() => setSources(loadHomebrewSources()), [content]);
@@ -266,9 +271,28 @@ export function HomebrewPage({
     saveHomebrewEntry(type, entry as unknown as HomebrewContent[typeof type][string]);
     onChanged();
   };
-  const deleteEntry = (type: HomebrewType, id: string) => {
-    deleteHomebrewEntry(type, id);
+  const deleteEntry = async (type: HomebrewType, entry: EntryRec) => {
+    // A player's own content must never be lost by one mis-tap — same shape as removeSource's confirm.
+    // What a deleted entry does to a character that holds it depends on the type: an item row keeps
+    // its id and draws "Unknown item", a feat pick drops off the Feats tab, a prepared cantrip reads
+    // "Empty cantrip" — so the message says "lose it", not one type's wording. When the entry's source
+    // is shared with a campaign, the players' copies are NOT deleted: convertGone keeps an entry a
+    // character still uses (src/data/campaignHomebrew.ts), so the message says so, like removeSource.
+    const players = sharedWith(entry.homebrewSourceId ?? '');
+    if (
+      !(await confirmDialog({
+        title: `Delete ${entry.name}?`,
+        message:
+          "It's removed from your homebrew and your characters lose it — this can't be undone." +
+          (players ? ` Players in ${players} keep a copy as their own homebrew.` : ''),
+        confirmLabel: 'Delete',
+        danger: true,
+      }))
+    )
+      return;
+    deleteHomebrewEntry(type, entry.id);
     onChanged();
+    refreshEntries((n) => n + 1);
   };
   const sourceList = useMemo(() => Object.values(sources).sort((a, b) => a.name.localeCompare(b.name)), [sources]);
   const [selectedId, setSelectedId] = useState<string | null>(() => sourceList[0]?.id ?? null);
@@ -649,7 +673,7 @@ export function HomebrewPage({
                         <button className="hb-entry-name" onClick={() => setEditing({ type: g.type, entry: e })}>
                           {e.name}
                         </button>
-                        <button className="hb-entry-del" aria-label={`Delete ${e.name}`} onClick={() => deleteEntry(g.type, e.id)}>
+                        <button className="hb-entry-del" aria-label={`Delete ${e.name}`} onClick={() => deleteEntry(g.type, e)}>
                           <i className="ti ti-trash" aria-hidden="true" />
                         </button>
                       </div>

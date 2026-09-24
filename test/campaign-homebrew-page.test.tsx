@@ -279,6 +279,43 @@ describe('campaign homebrew on the Homebrew page', () => {
     m.stop();
   });
 
+  it('deleting an entry asks first, named, and Cancel leaves it; Delete removes only that entry', async () => {
+    saveHomebrewSource({ id: 'own-1', name: 'My Stuff' });
+    saveHomebrewEntry('feats', { id: 'f-keep', name: 'Kept Feat', homebrewSourceId: 'own-1' } as never);
+    saveHomebrewEntry('feats', { id: 'f-gone', name: 'Doomed Feat', homebrewSourceId: 'own-1' } as never);
+    const onChanged = vi.fn();
+    const r = renderDom(page(EMPTY, onChanged));
+    r.click(find(r.host, '.settings-navitem', 'My Stuff'));
+    const pane = r.host.querySelector('.settings-pane')!;
+
+    // Cancel: the confirm names the entry and nothing is deleted.
+    r.click(pane.querySelector('button[aria-label="Delete Doomed Feat"]'));
+    await settle();
+    expect(dialog()?.textContent).toContain('Delete Doomed Feat?');
+    expect(dialog()?.textContent).toContain('your characters lose it');
+    expect(actionLabels()).toEqual(['Cancel', 'Delete']);
+    r.click(find(dialog()!, 'button', 'Cancel'));
+    await settle();
+    expect(dialog()).toBeNull();
+    expect(loadHomebrewContent().feats['f-gone']).toBeTruthy();
+    expect(onChanged).not.toHaveBeenCalled();
+    expect(find(pane, '.hb-entry-name', 'Doomed Feat')).not.toBeNull();
+
+    // Delete: removes only the targeted entry, not its sibling.
+    r.click(pane.querySelector('button[aria-label="Delete Doomed Feat"]'));
+    await settle();
+    r.click(find(dialog()!, 'button', 'Delete'));
+    await settle();
+    expect(dialog()).toBeNull();
+    const feats = loadHomebrewContent().feats;
+    expect(feats['f-gone']).toBeUndefined();
+    expect(feats['f-keep']).toBeTruthy();
+    expect(onChanged).toHaveBeenCalled();
+    expect(find(pane, '.hb-entry-name', 'Doomed Feat')).toBeNull();
+    expect(find(pane, '.hb-entry-name', 'Kept Feat')).not.toBeNull();
+    r.stop();
+  });
+
   it('import still sanitizes: a <script> in an imported description never reaches storage', async () => {
     const r = renderDom(page());
     const input = r.host.querySelector('input[type=file]') as HTMLInputElement;
