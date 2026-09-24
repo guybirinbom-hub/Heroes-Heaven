@@ -181,7 +181,8 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
   // batch 035: animal-instinct#spider-web
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
-  it('the widening is exactly six records — the five still-open aspect keys and the deferred relic family', () => {
+  // batch 039: familiar#archetype-reach
+  it('the widening is exactly seven records — the five still-open aspect keys, familiar under familiar#archetype-reach, and the deferred relic family', () => {
     /*
      * The pin against silent growth. `--queued-parks` lists every record parked by a desk id that is
      * not its own; today that is five, and each is deliberate:
@@ -230,6 +231,9 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
       'timewracked-dedication': 'timewracked-dedication-speed-clause',
       speed: 'speed-plural-while-a-state-is-on',
       'spell-parry': 'spell-parry-badge',
+      // batch 039: familiar#archetype-reach — desk #164 is filed under the FINDING id (record#aspect);
+      // the resolver now strips the '#aspect' to park the record while the owner rules on the lane.
+      familiar: 'familiar#archetype-reach',
       relic: 'relic-gift-family-skysunder-sparkwarden-uniter-adamantine',
     };
     const deskNow = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));

@@ -1,0 +1,289 @@
+{
+ "batch": "work/wg-batch-039.json",
+ "examined": 17,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 9 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "arcane-spellcasting-magus",
+   "finding": "arcane-spellcasting-magus#spellbook-item",
+   "severity": "player-visible",
+   "summary": "The magus never receives the free spellbook the feature prints; WG gives it and our wizard-spellcasting twin already carries the same grant.",
+   "fixed": true
+  },
+  {
+   "id": "arcane-spellcasting-magus",
+   "finding": "arcane-spellcasting-magus#description",
+   "severity": "player-visible",
+   "summary": "Our shipped description (effect-backfill description entry) still prints the Player Core slot cap and slot loss that the Impossible Magic printing (the record's own aonId) removed, and it contradicts the psychic-shaped slot table our builde",
+   "fixed": true
+  },
+  {
+   "id": "arcane-spellcasting-magus",
+   "finding": "arcane-spellcasting-magus#instrument",
+   "severity": "internal",
+   "summary": "The comparer's NO-SHEET-EFFECT and missing spellcasting/spellSlot kinds are a misread: casting is delivered by the owning class record, not by fields on this feature; only the grantsItem kind is a real gap.",
+   "fixed": true
+  },
+  {
+   "id": "arcane-cascade",
+   "finding": "arcane-cascade#resistance",
+   "severity": "player-visible",
+   "summary": "The printed stance gives resistance to damage from spells (1/2/3), and WG encodes it, but no carrier of ours delivers it.",
+   "fixed": true
+  },
+  {
+   "id": "arcane-cascade",
+   "finding": "arcane-cascade#damage",
+   "severity": "player-visible",
+   "summary": "The stance's extra damage does not scale: our only numeric carrier is a flat +1 display-only mode modifier whose note states a legacy scaling (\"+2 if expert in your tradition\") that the print does not have, while WG delivers 1/2/3 keyed to ",
+   "fixed": true
+  },
+  {
+   "id": "arcane-cascade",
+   "finding": "arcane-cascade#requirement",
+   "severity": "player-visible",
+   "summary": "Our stance and action carry the Player Core Requirements line and damage-type rule, which the Impossible Magic printing (action-4261, the action's own aonId) does not print.",
+   "fixed": true
+  },
+  {
+   "id": "arcane-cascade",
+   "finding": "arcane-cascade#duplicate-toggles",
+   "severity": "player-visible",
+   "summary": "A magus is offered three independent Arcane Cascade toggles that do not know about each other: the stance chip (Character.activeStance), a Class resources toggle (classResources magus 'arcane-cascade', no reader anywhere), and the Modes cat",
+   "fixed": true
+  },
+  {
+   "id": "spellstrike",
+   "finding": "spellstrike#action-text",
+   "severity": "player-visible",
+   "summary": "The granted Spellstrike action's text is the Player Core printing: it states the wrong crit-fail outcome for save spells and omits the combined-damage rule that the Impossible Magic action (action-4260, its own aonId) prints.",
+   "fixed": true
+  },
+  {
+   "id": "spellstrike",
+   "finding": "spellstrike#description",
+   "severity": "player-visible",
+   "summary": "The class feature's description still carries the Player Core 'Multiple Defenses' paragraph, which class-feature-1259 (Impossible Magic, its own aonId) does not print.",
+   "fixed": true
+  },
+  {
+   "id": "raise-a-tome",
+   "finding": "raise-a-tome#description",
+   "severity": "player-visible",
+   "summary": "Our description body is the legacy Secrets of Magic text (feat-2848: a one-action 'Requirements You're holding a book' action that stays raised until your next turn) on a remaster record whose aonId feat-9046 prints a passive feat that modi",
+   "fixed": true
+  },
+  {
+   "id": "expansive-spellstrike",
+   "finding": "expansive-spellstrike#description",
+   "severity": "player-visible",
+   "summary": "Our description body is the legacy Secrets of Magic text (feat-2849) on a remaster record (aonId feat-9047): it puts a Large target's burst on the corner closest to its centre where print lets you choose any corner of any square in its spac",
+   "fixed": true
+  },
+  {
+   "id": "force-fang",
+   "finding": "force-fang#description",
+   "severity": "player-visible",
+   "summary": "Our description keeps the legacy Secrets of Magic sentence 'Increase the number of Focus Points in your focus pool by 1.' (feat-2850), which the remaster print (aonId feat-9048) no longer has. The pool still comes out right because the focu",
+   "fixed": true
+  },
+  {
+   "id": "familiar",
+   "finding": "familiar#archetype-reach",
+   "severity": "player-visible",
+   "summary": "The Archives list Familiar as a 4th-level feat for the Elementalist, Shadowcaster and Soul Warden archetypes. Our record carries the single string archetype 'elementalist', which only groups or displays it; featSlots.ts slot filters admit o",
+   "fixed": true
+  },
+  {
+   "id": "starlit-eyes",
+   "finding": "starlit-eyes#dc",
+   "severity": "player-visible",
+   "summary": "Ours carries the LEGACY (Secrets of Magic) text on a remaster record (aonId feat-9058, Impossible Magic pg. 19): it reduces the flat-check DC only while in Arcane Cascade stance, so the out-of-stance reduction to 4 (concealed) / 10 (hidden)",
+   "fixed": true
+  },
+  {
+   "id": "starlit-eyes",
+   "finding": "starlit-eyes#shooting-star",
+   "severity": "player-visible",
+   "summary": "WG writes the shooting-star clause onto the Shooting Star spell itself; ours carries it only as a strikeAttack situational line, so the spell card a magus casts shows nothing.",
+   "fixed": true
+  },
+  {
+   "id": "student-of-the-staff",
+   "finding": "student-of-the-staff#magic-staves",
+   "severity": "player-visible",
+   "summary": "Both of our carriers match only the plain `staff` weapon id, so a Student of the Staff magus wielding a magic staff (Staff of Fire etc., 152 weapon items with the `staff` trait, group club) gets neither the club critical specialization nor ",
+   "fixed": true
+  },
+  {
+   "id": "student-of-the-staff",
+   "finding": "student-of-the-staff#spellstrike-clause",
+   "severity": "player-visible",
+   "summary": "Our description is the LEGACY text on a remaster record (aonId feat-9060, Impossible Magic pg. 20): it drops the printed Spellstrike clause, so a player never learns the spell still lands after the club crit spec knocks the target out of re",
+   "fixed": true
+  },
+  {
+   "id": "burning-cascade",
+   "finding": "burning-cascade",
+   "severity": "player-visible",
+   "summary": "Ours carries no mechanic at all for Burning Cascade (not even actionCost); WG writes the emanation damage onto the Arcane Cascade action and its mode, so a magus entering the stance on our sheet is never told enemies within 5 feet take dama",
+   "fixed": true
+  },
+  {
+   "id": "hasted-assault",
+   "finding": "hasted-assault#prerequisites",
+   "severity": "player-visible",
+   "summary": "Our remaster Hasted Assault feat (aonId feat-9084, Impossible Magic) still carries the legacy Secrets of Magic prerequisite 'focus pool'; the remaster print has no Prerequisites line.",
+   "fixed": true
+  },
+  {
+   "id": "hasted-assault",
+   "finding": "hasted-assault#spell-body",
+   "severity": "player-visible",
+   "summary": "The Hasted Assault conflux spell that this feat grants (spells/hasted-assault, aonId spell-2880) shows the legacy spell-1039 body: it restricts the quickened action to Strike only and leaves out the remaster timing sentence.",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#arcane-cascade-mode",
+   "severity": "player-visible",
+   "summary": "The class-keyed Arcane Cascade mode delivers a fixed +1 untyped damage to ALL Strikes with a note that invents a '+2 if expert in your tradition' rule, never scales to 2/3 with (greater) weapon specialization, is not limited to melee, and o",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#arcane-cascade-toggles",
+   "severity": "player-visible",
+   "summary": "A magus gets three unconnected Arcane Cascade toggles for the one stance - the class-resource toggle (no reader), the Modes-panel mode (the only one carrying the damage) and the stance chip (activeStance, whose stances entry carries no mech",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#arcane-cascade-stance-requires",
+   "severity": "player-visible",
+   "summary": "The Arcane Cascade stance entry shows the LEGACY Secrets of Magic requirement and legacy damage-type rule; the Impossible Magic action has no Requirements line and changes damage type only when you Cast a Spell and then enter the stance the",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#studious-spells-laughing-shadow",
+   "severity": "player-visible",
+   "summary": "Laughing Shadow's 11th-level studious spell is Ghostly Weapon in print (and in WG), but ours adds Shift Blame.",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#studious-spells-starlit-span",
+   "severity": "player-visible",
+   "summary": "Starlit Span's 7th-level studious spell is Telekinetic Maneuver in print (and in WG), but ours adds Darkvision.",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#studious-spells-twisting-tree",
+   "severity": "player-visible",
+   "summary": "Twisting Tree's 7th-level studious spell is Oaken Resilience in print (and in WG), but ours adds Embed Message.",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#volatile-spark-reloading-cascade",
+   "severity": "player-visible",
+   "summary": "Volatile Spark prints a Reloading Cascade action and WG grants it, but we have no reloading-cascade action record and no grant.",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#starlit-span-description",
+   "severity": "player-visible",
+   "summary": "Our Starlit Span text is the legacy wording and drops the printed Arcane Cascade rider that ranged attacks ignore lesser cover from allies; WG injects it.",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#twisting-tree-description",
+   "severity": "player-visible",
+   "summary": "Our Twisting Tree text carries the legacy grip-change rule (Interact or Release as part of a Strike, plus an end-of-turn Interact), which contradicts the printed once-per-round free Interact.",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "convergent-tides",
+   "finding": "convergent-tides",
+   "summary": "WG writes Convergent Tides onto the Arcane Cascade stance (mode 30043); ours marks only Stride and Swim, so the stance itself, where the condition lives, shows nothing.",
+   "evidence": "Mirror feat-7466 prints one rule: ignore water difficult terrain while in Arcane Cascade stance. Ours already delivers it through recordMarks on actions/stride and actions/swim, the movement actions where difficult terrain is met, and each note states the stance condition. Nothing the player gets is"
+  },
+  {
+   "id": "magus",
+   "finding": "magus#twisting-tree-staff",
+   "summary": "Twisting Tree reshapes the staff's Strike (one hand: agile, d6; two hands: parry, reach, trip) and neither side models it, so the Strike row shows a plain staff.",
+   "evidence": "Print does say this (hybrid-study-14) and nothing in src references twisting-tree, but wg-show 34425 encodes no staff reshape either (only spells and the grip injectText): WG encodes less than print and we match it, which is parity, not a WG-comparison finding."
+  },
+  {
+   "id": "magus",
+   "finding": "magus#unfurling-brocade-two-hand",
+   "summary": "The qi-infused fabric is a Bladed Scarf that may also be wielded one-handed at d4, but our granted Strike (and WG's item) exists only as the one-handed d4, so the printed two-handed Bladed Scarf d6 us",
+   "evidence": "WG's granted item 16308 'Qi-Infused Fabric' in work/wg/wg-data.sql is d4 slashing only, the same as our classFeatures/unfurling-brocade grantedStrikes row: WG encoding less than print (hybrid-study-8) with ours matching is parity, not a finding."
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "familiar#archetype-reach",
+   "finding": "familiar#archetype-reach",
+   "severity": "internal",
+   "summary": "familiar#archetype-reach -> engine family: needs a class-feat-via-archetype lane (Feat.archetype is one string; src/rules/featSlots.ts slotTakes admits a feat in an archetype slot only on the \"archetype\" trait (:369) and a class slot only on the class trait (:510-519)). Familiar (feat-5024) must be takeable at 4th by holders of elementalist / shadowcaster / soul-warden dedications; soul-warden's …",
+   "fixed": false,
+   "family": "data-rows-1",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: FEAT_SITUATIONAL['arcane-cascade'] star left as is - display-only, quotes print's 1/2/3 (the only place the numbers show out of stance); rewording would flip test/batch039-situational.test.ts and test/batch039-gap-situational.test.ts, which sibling families own",
+   "finding": "flaggedResidue: FEAT_SITUATIONAL['arcane-cascade'] star left as is - display-only, quotes print's 1/2/3 (the only place the numbers show out of stance); rewording would flip test/batch039-situational.test.ts and test/batch039-gap-situational.test.ts, which sibling families own",
+   "severity": "internal",
+   "summary": "src/rules/situationalBonuses.ts FEAT_SITUATIONAL['arcane-cascade'] (situational family, arcane-cascade#damage): once stances/arcane-cascade strikeDamage lands the stance FOLDS 1/2/3 force into the Strike's damage while it is on, so the star's \"+1 extra damage (2 with weapon specialization, 3 with greater…)\" re-reports a number already in the line; reword the star to the damage-type swap only (\"fo…",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: trust-ledger.json is regenerated by the driver's --stage close (scripts/wg-batch-run.mjs:1075) after the rows are applied; regenerating now would stamp the pre-apply core.json sha",
+   "finding": "flaggedResidue: trust-ledger.json is regenerated by the driver's --stage close (scripts/wg-batch-run.mjs:1075) after the rows are applied; regenerating now would stamp the pre-apply core.json sha",
+   "severity": "internal",
+   "summary": "src/data/trust-ledger.json (regenerate with scripts/trust-ledger.mjs after the rows land): feats/student-of-the-staff names critSpec/critSpecWeapons today; the new weaponTraits path and stances/arcane-cascade strikeDamage need their ledger state recomputed.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "familiar#archetype-reach",
+   "finding": "familiar#archetype-reach",
+   "severity": "internal",
+   "summary": "familiar#archetype-reach -> engine (src/rules/featSlots.ts slotTakes + src/rules/types.ts Feat.archetype): a lane for class feats listed under archetypes (feat-5024 Familiar at level 4 for Elementalist / Shadowcaster / Soul Warden), admitted in an archetype / class slot at >= the listed level when that dedication is held. Soul Warden's domain-initiate / expanded-domain-initiate use the same path.…",
+   "fixed": false,
+   "family": "data-rows-1",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: same FEAT_SITUATIONAL['arcane-cascade'] star as report-engine:10 - display-only, quotes print's 1/2/3; rewording would flip the situational families' two pinned tests",
+   "finding": "flaggedResidue: same FEAT_SITUATIONAL['arcane-cascade'] star as report-engine:10 - display-only, quotes print's 1/2/3; rewording would flip the situational families' two pinned tests",
+   "severity": "internal",
+   "summary": "src/rules/situationalBonuses.ts FEAT_SITUATIONAL['arcane-cascade'] (situational family, arcane-cascade#damage) - once stances/arcane-cascade strikeDamage lands the number is in the Strike line; the star should keep only the damage-type swap or go.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: same ledger regeneration as report-engine:12 - the driver's --stage close (scripts/wg-batch-run.mjs:1075) owns it after apply",
+   "finding": "flaggedResidue: same ledger regeneration as report-engine:12 - the driver's --stage close (scripts/wg-batch-run.mjs:1075) owns it after apply",
+   "severity": "internal",
+   "summary": "src/data/trust-ledger.json - regenerate with scripts/trust-ledger.mjs after the rows land (new stances strikeDamage + feat weaponTraits paths).",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  }
+ ],
+ "rejected": 3,
+ "askOwner": [],
+ "complete": true
+}

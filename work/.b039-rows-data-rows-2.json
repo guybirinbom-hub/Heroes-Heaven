@@ -1,0 +1,758 @@
+{
+ "findings": [
+  {
+   "id": "student-of-the-staff#spellstrike-clause",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "student-of-the-staff",
+     "field": "description",
+     "value": "You've studied the staff extensively to learn the hidden capabilities of your chosen weapon. When you critically succeed at an attack roll using a staff, you can apply the critical specialization effect of the club group. (If you use the critical specialization on a Spellstrike, the spell still affects the target even if you pushed the target out of reach.)\n\nWhile you're in Arcane Cascade stance, your staff gains the deadly d6 trait, with the damage from the deadly die being the same damage type as the extra damage from Arcane Cascade.\n\nIn addition, you can place property runes into a magic staff you prepare, even though a magic staff can't typically hold property runes. You must first inscribe the property runes into your spellbook, using the same process as transferring a rune. The rune takes the form of a specialized diagram in your spellbook, occupying one page. You can't inscribe runes that can't be placed on a non-magical staff, nor can you inscribe the Shifting rune. When you prepare a staff, you can impart any number of property runes from your spellbook into the staff, up to the limit imposed by the staff's *weapon potency* rune.",
+     "why": "batch 039 student-of-the-staff#spellstrike-clause: AoN feat-9060 (Student of the Staff, Impossible Magic pg. 20) prints \"you can apply the critical specialization effect of the club group. (If you use the critical specialization on a Spellstrike, the spell still affects the target even if you pushed the target out of reach.)\" Ours shipped the legacy body without the parenthetical and with \"you apply\". Body refreshed from feat-9060; the rest of the prose is unchanged."
+    },
+    {
+     "category": "feats",
+     "id": "student-of-the-staff",
+     "field": "recordMarks",
+     "value": [
+      {
+       "on": "action",
+       "id": "spellstrike",
+       "note": "If you apply the club critical specialization on a Spellstrike with a staff, the spell still affects the target even if you pushed the target out of reach."
+      }
+     ],
+     "why": "batch 039 student-of-the-staff#spellstrike-clause: AoN feat-9060 \"(If you use the critical specialization on a Spellstrike, the spell still affects the target even if you pushed the target out of reach.)\" is a rider on the Spellstrike ACTION, so it goes on that action row through recordMarks (read by explain.ts recordMarksFor, ownership via the taken feat)."
+    }
+   ],
+   "note": "Description refresh from feat-9060 plus a recordMarks rider on actions/spellstrike. Different fields from the engine family's student-of-the-staff#magic-staves (critSpecWeapons / modes.ts), so no collision."
+  },
+  {
+   "id": "burning-cascade",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "burning-cascade",
+     "field": "recordMarks",
+     "value": [
+      {
+       "on": "action",
+       "id": "arcane-cascade",
+       "note": "When you use Arcane Cascade, each enemy in a 5-foot emanation takes damage equal to the extra damage from Arcane Cascade, of the same type. A creature that takes this damage is temporarily immune to further uses of Burning Cascade for 1 minute."
+      }
+     ],
+     "why": "batch 039 burning-cascade: AoN feat-9051 prints \"When you use Arcane Cascade, each enemy in a 5-foot emanation takes damage equal to the extra damage from Arcane Cascade. This damage is the same type as that of Arcane Cascade. A creature that takes this damage is temporarily immune to further uses of Burning Cascade for 1 minute.\" The feat carried no mechanic at all; the rider lands on the Arcane Cascade action row (explain.ts recordMarksFor)."
+    },
+    {
+     "category": "feats",
+     "id": "burning-cascade",
+     "field": "actionCost",
+     "value": {
+      "type": "passive"
+     },
+     "why": "batch 039 burning-cascade: AoN feat-9051 prints no action glyph (<actions string=\"\" />) - a passive feat; the record shipped with no actionCost at all."
+    },
+    {
+     "category": "feats",
+     "id": "burning-cascade",
+     "field": "description",
+     "value": "Energy flares out around you when you drop into your signature stance. When you use Arcane Cascade, each enemy in a 5-foot emanation takes damage equal to the extra damage from Arcane Cascade. This damage is the same type as that of Arcane Cascade. A creature that takes this damage is temporarily immune to further uses of Burning Cascade for 1 minute.",
+     "why": "batch 039 burning-cascade: the shipped body opened with the scraped header \"Burning Cascade / Source Impossible Magic pg. 18 / Prerequisites Arcane Cascade\"; the body is AoN feat-9051 with the header removed (no words added)."
+    }
+   ],
+   "note": "recordMarks on actions/arcane-cascade (the WG injectText-on-action equivalent), passive actionCost, header stripped from the description. The existing feats/burning-cascade prerequisites overlay row is a different field and is untouched."
+  },
+  {
+   "id": "hasted-assault#prerequisites",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "hasted-assault",
+     "field": "prerequisites",
+     "value": [],
+     "why": "batch 039 hasted-assault#prerequisites: AoN feat-9084 (Hasted Assault, Impossible Magic pg. 25) prints no Prerequisites line; \"focus pool\" is the legacy feat-2878 prerequisite. Same empty-array shape as feats/soulforger-dedication."
+    },
+    {
+     "category": "feats",
+     "id": "hasted-assault",
+     "field": "description",
+     "value": "You can speed yourself up to move and attack more swiftly. You learn the Hasted Assault conflux spell.",
+     "why": "batch 039 hasted-assault#prerequisites: AoN feat-9084 prints only \"You can speed yourself up to move and attack more swiftly. You learn the hasted assault conflux spell.\" - the shipped \"Increase the number of Focus Points in your focus pool by 1.\" is the legacy feat-2878 sentence (deletion only, no words added)."
+    }
+   ],
+   "note": "Prerequisite cleared and the legacy focus-pool sentence dropped from the same record (the finding's evidence names it)."
+  },
+  {
+   "id": "hasted-assault#spell-body",
+   "backfillRows": [
+    {
+     "category": "spells",
+     "id": "hasted-assault",
+     "field": "description",
+     "value": "You call upon your magic to speed up your attacks. You gain the quickened condition and can use the extra action each round for only Stride and Strike actions. As normal, you don't gain an action on the turn you cast this spell, but you do when you regain actions at the start of your next turn.",
+     "why": "batch 039 hasted-assault#spell-body: AoN spell-2880 (Impossible Magic pg. 179) prints \"can use the extra action each round for only Stride and Strike actions. As normal, you don't gain an action on the turn you cast this spell, but you do when you regain actions at the start of your next turn.\" Ours carried the legacy spell-1039 body (\"only Strike actions\", no timing sentence)."
+    }
+   ],
+   "note": "Body refresh from spell-2880."
+  },
+  {
+   "id": "magus#arcane-cascade-toggles",
+   "backfillRows": [],
+   "note": "No row here: the stance resistance row (stances/arcane-cascade resistances) is sibling chunk data-rows-1's arcane-cascade#resistance, and deleting the reader-less classResources.ts magus toggle is a src/ edit (arcane-cascade#duplicate-toggles). Writing either here would collide. See CROSS-FILE GAPS in work/.b039-report-data-rows-2.txt."
+  },
+  {
+   "id": "magus#arcane-cascade-stance-requires",
+   "backfillRows": [],
+   "note": "No row here: stances/arcane-cascade requires (delete) and note (rewrite to action-4261) are exactly sibling chunk data-rows-1's arcane-cascade#requirement proposal; a second row on the same record+field would be refused as a cross-spec collision. See CROSS-FILE GAPS."
+  },
+  {
+   "id": "magus#studious-spells-laughing-shadow",
+   "backfillRows": [
+    {
+     "category": "classes",
+     "id": "magus",
+     "path": [
+      "subclass"
+     ],
+     "field": "options",
+     "value": [
+      {
+       "id": "aloof-firmament",
+       "name": "Aloof Firmament",
+       "description": "You're a philosopher of the sword who codifies your study of qinggong along principles arcane and martial. Your blade teaches morality and immortality, and you illustrate its lessons with an academician's rigor. Through your training, you've learned to move about with grace and create opportunity to strike foes.\n\nYou gain the Cat Fall general feat, though you benefit from it only as long as you aren't using a shield and are wearing light or no armor.\n\nWhile in Arcane Cascade stance, your steps become even lighter, giving you the benefits of the Quick Jump general feat. When you Fly, Leap, High Jump, or Long Jump while in that stance, your movement doesn't trigger reactions. If you take one of these actions, the next Strike you make before the end of your turn with a one-handed weapon in the sword group has greater damage from Arcane Cascade. Increase the extra damage to 4; increase it to 6 if you have weapon specialization, or to 8 if you have greater weapon specialization. You must have your other hand completely free; the extra damage doesn't apply if you have a free-hand weapon or other item in that hand, even if you would normally be able to use the hand for other things.\n\n**Conflux Spell** Sky Laughs at Waves",
+       "descRefs": [
+        {
+         "label": "Cat Fall",
+         "key": "feats"
+        },
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Quick Jump",
+         "key": "feats"
+        },
+        {
+         "label": "Leap",
+         "key": "actions"
+        },
+        {
+         "label": "High Jump",
+         "key": "actions"
+        },
+        {
+         "label": "Long Jump",
+         "key": "actions"
+        },
+        {
+         "label": "Sky Laughs at Waves",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "sky-laughs-at-waves"
+       ],
+       "grantedFeats": [
+        "cat-fall"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "water-walk"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "wall-of-wind"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "variable-gravity"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "inexorable-iron",
+       "name": "Inexorable Iron",
+       "description": "Once you begin along a path, nothing can stop you from reaching its end. You transform the mass of an enormous weapon into an unstoppable force to augment your own striking power or keep you standing on the battlefield.\n\nWhen you enter Arcane Cascade stance and at the start of each of your turns while you're in that stance, if you're wielding a melee weapon in two hands, you gain temporary Hit Points equal to half your level (minimum 1 temporary HP).\n\n**Conflux Spell** Thunderous Strike",
+       "descRefs": [
+        {
+         "label": "Thunderous Strike",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "thunderous-strike"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "enlarge"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "earthbind"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "planar-tether"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "laughing-shadow",
+       "name": "Laughing Shadow",
+       "description": "Magic is freeing, a means to your ends, and you can use it to go where you want, do as you please, and avoid the consequences. You are a laughing shadow of spell and blade, always one step ahead of your foes, always with a trick up your sleeve.\n\nWhile in Arcane Cascade stance, you gain a +5-foot status bonus to your Speeds, or a +10-foot bonus if you're unarmored. If you have a free hand while in the stance and are attacking an off-guard creature, you increase the extra damage to 3, to 5 if you have weapon specialization, or to 7 if you have greater weapon specialization. You must have your other hand completely free; the extra damage doesn't apply if you have a free-hand weapon or other item in that hand, even if you would normally be able to use the hand for other things.\n\n**Conflux Spell** Dimensional Assault",
+       "descRefs": [
+        {
+         "label": "off-guard",
+         "key": "conditions"
+        },
+        {
+         "label": "Dimensional Assault",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "dimensional-assault"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "blur"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "ghostly-weapon"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "translocate"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "resurgent-maelstrom",
+       "name": "Resurgent Maelstrom",
+       "description": "While fate may conspire to strip you of your armaments, you're never helpless. For you, anything can be a dangerous weapon, bolstered by the might of towering waves and crushing tides. You know these tools are transient, and so you think nothing of shattering and reforming them with your magic.\n\nYour attacks with improvised weapons do not take the normal –2 item penalty. While you wield an improvised weapon, streams of water flow from your limbs to surround the weapon, granting it the water trait. These improvised weapons have a minimum damage die of 1d6, or 1d4 if the improvised weapon is agile.\n\nEffects that apply runes to your unarmed attacks, like Runic Body and Handwraps of Might Blows, also apply those runes to your non-magical improvised weapons. The improvised weapon also gains an additional trait, depending on how many hands it takes to wield. A one-handed improvised weapon gains the backstabber trait; if it would already have the backstabber trait, double the amount of additional precision damage. A two-handed improvised weapon gains the forceful trait; if it would already have the forceful trait, treat the number of weapon damage dice the weapon has as 1 higher for the purpose of calculating the additional damage.\n\nWhile you're in Arcane Cascade stance , you can manipulate the water around your improvised weapon, making it cut like a knife or bash with the force of falling rocks. The weapon gains the versatile traits for the types of damage that it doesn't normally deal. For instance, an improvised weapon that normally deals bludgeoning damage gains the versatile P and versatile S traits.\n\n**Conflux Spell** Turbulent Tide",
+       "descRefs": [
+        {
+         "label": "Handwraps of Might Blows",
+         "key": "items"
+        },
+        {
+         "label": "Runic Body",
+         "key": "spells"
+        },
+        {
+         "label": "Turbulent Tide",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "turbulent-tide"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "water-walk"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "aqueous-orb"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "unfettered-movement"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "sparkling-targe",
+       "name": "Sparkling Targe",
+       "description": "You've studied the applications of magic, training yourself to perform not just offensive maneuvers but defensive tactics as well. When magic flows through you, your shield can block impossible things, even a dragon's breath or a magic missile.\n\nYou gain the Shield Block general feat.\n\nWhen you're in Arcane Cascade stance with your shield raised, your circumstance bonus to AC from your shield also applies to your saves against spells and other magical effects. In addition, damage you take as a result of a spell or magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage in this way, increase your shield's Hardness by an amount equal to the extra damage from Arcane Cascade (typically 1, but 2 if you have weapon specialization, or 3 if you have greater weapon specialization). These benefits apply whether you're using an actual shield, the shield spell, or something else that works like a shield (such as a raised tome if you have the Raise a Tome feat).\n\n**Conflux Spell** Shielding Strike",
+       "descRefs": [
+        {
+         "label": "Shield Block",
+         "key": "feats"
+        },
+        {
+         "label": "Shielding Strike",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "shielding-strike"
+       ],
+       "grantedFeats": [
+        "shield-block"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "resist-energy"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "warding-aggression"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "mountain-resilience"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "starlit-span",
+       "name": "Starlit Span",
+       "description": "With magic, the sky's the limit, and you can't be bound by the confines of physical proximity. Your power reaches as far as your senses can perceive, transcending the space between you and your target even with spells that normally require direct physical contact.\n\nWhen you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. This overrides the actual range of the spell.\n\nWhile you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\n\n**Conflux Spell** Shooting Star",
+       "descRefs": [
+        {
+         "label": "Spellstrike",
+         "key": "actions"
+        },
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Shooting Star",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "shooting-star"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "telekinetic-maneuver"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "wall-of-wind"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "unfettered-movement"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "twisting-tree",
+       "name": "Twisting Tree",
+       "description": "The staff is perhaps the simplest of weapons, but this simplicity belies its elegance and versatility. To you, a staff is casting implement and martial weapon alike—the foundation of a fighting style.\n\nWhile you wield a staff in one hand, the staff adjusts in shape and weight, gaining the agile trait and increasing its damage die size to 1d6. While you wield a staff in both hands, it lengthens, twists, and reshapes, gaining the parry, reach, and trip traits.\n\nWhile you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\n\n**Conflux Spell** Spinning Staff",
+       "descRefs": [
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Interact",
+         "key": "actions"
+        },
+        {
+         "label": "Spinning Staff",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "spinning-staff"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "oaken-resilience"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "slow"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "flicker"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "unfurling-brocade",
+       "name": "Unfurling Brocade",
+       "description": "You disdain others' reliance on crude contrivances of iron, instead favoring the elegance of fabric, with thread and brocade your panoply. Your mastery of qinggong allows qi-infused fabric to tear flesh, bind blades, and pierce steel.\n\nYou can create a special weapon, qi-infused fabric, by Interacting to grip a length of cloth of 1 Bulk or less and filling it with your qi. If you Interact to draw the object, you can do this as part of that action. For most unfurling brocade magi, this item is a scarf, sash, ribbon, or a similarly voluminous article of worn clothing, such as long sleeves. You can use the fabric as a Bladed Scarf. Unlike a normal bladed scarf, you have the option to wield the fabric in one hand instead of two. Its damage die is d4 if held in one hand. If you're wearing Handwraps of Mighty Blows, you can apply any of its runes to the fabric, provided those runes could be added to a bladed scarf. This begins when you wield the fabric and ends when you cease doing so.\n\nWhile in Arcane Cascade stance, the magical energy flowing through your fabric partially animates it to accomplish an even greater range of tricks.\n\n- If you critically succeed at an Athletics check to Disarm, you can spend a single action immediately afterward to flick your fabric, causing the disarmed object to fall to the ground in your space rather than in your opponent's.\n- Your fabric gains the grapple trait. If you succeed at an Athletics check to Grapple using your fabric, you can spend a single action immediately afterward to pull the creature 5 feet toward you.\n- When you attempt to Trip a foe using your fabric, the target can be two sizes larger than you instead of one.\n\n**Conflux Spell** Home Among Mulberry Leaves",
+       "descRefs": [
+        {
+         "label": "Bladed Scarf",
+         "key": "items"
+        },
+        {
+         "label": "Handwraps of Mighty Blows",
+         "key": "items"
+        },
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Disarm",
+         "key": "actions"
+        },
+        {
+         "label": "Grapple",
+         "key": "actions"
+        },
+        {
+         "label": "Trip",
+         "key": "actions"
+        },
+        {
+         "label": "Home Among Mulberry Leaves",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "home-among-mulberry-leaves"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "web"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "whirling-scarves"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "planar-tether"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "twofold-tine",
+       "name": "Twofold Tine",
+       "description": "Magic dances between the two weapons you wield with equally deadly grace. Fighting groups of enemies takes full advantage of your capabilities as you move from one foe to another.\n\nWhile in Arcane Cascade stance, if you make a Strike with a melee weapon you're holding, you can intensify the stance's power for another melee weapon of your choice you're holding in a different hand. Until the end of your turn, any extra damage the chosen weapon gains from Arcane Cascade is increased to 2. The extra damage increases to 4 if you have weapon specialization or 6 if you have greater weapon specialization.\n\n**Conflux Spell** Force Fling",
+       "descRefs": [
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Force Fling",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "force-fling"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "blur"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "gravity-well"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "unfettered-movement"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "volatile-spark",
+       "name": "Volatile Spark",
+       "description": "Your crashing spells meet their match with booming gunshots in a magical fusillade. By modifying your shots with your magic, you create explosions and cut through defenses.\n\nWhen you use Spellstrike, you can make a ranged firearm Strike, as long as the target is within the first range increment of your firearm. This overrides the actual range of the spell. If your firearm has the concussive trait, any damage from the spell you use in the Spellstrike uses the target's weakest resistance to any of the following: the spell's damage type, piercing, or bludgeoning. This benefit applies only to creatures you target with your firearm Strike during the Spellstrike, so it wouldn't apply to other creatures damaged with Expansive Spellstrike or similar abilities.\n\nIn addition, you gain the Reloading Cascade action.\n\n**Reloading Cascade** (1 action) You use Arcane Cascade and Interact to reload a firearm.\n\n**Conflux Spell** Booming Blast",
+       "descRefs": [
+        {
+         "label": "Spellstrike",
+         "key": "actions"
+        },
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Interact",
+         "key": "actions"
+        },
+        {
+         "label": "Booming Blast",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "booming-blast"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "entangling-flora"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "earthbind"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "seal-fate"
+           ]
+          }
+         ]
+        }
+       }
+      }
+     ],
+     "supersedes": true,
+     "why": "batch 039 magus#studious-spells-laughing-shadow + magus#studious-spells-starlit-span + magus#studious-spells-twisting-tree + magus#starlit-span-description + magus#twisting-tree-description, merged into ONE row (same key). AoN hybrid-study-11 (Laughing Shadow, Impossible Magic pg. 13) \"Studious Spell (11th) Ghostly Weapon\" (was shift-blame); hybrid-study-13 (Starlit Span, pg. 13) \"Studious Spell (7th) Telekinetic Maneuver\" (was darkvision) and its body \"This overrides the actual range of the spell. While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\"; hybrid-study-14 (Twisting Tree, pg. 14) \"Studious Spell (7th) Oaken Resilience\" (was embed-message) and its body \"While you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\" Supersedes the shipped row (hybrid-study-15 Twofold Tine and hybrid-study-16 Volatile Spark additions); every other option and field is carried through byte-for-byte."
+    }
+   ],
+   "note": "The whole classes/magus subclass options value, re-emitted from the shipped overlay row with the three ladder rungs and two option descriptions changed. Carries the rows for magus#studious-spells-starlit-span, magus#studious-spells-twisting-tree and the option half of magus#starlit-span-description / magus#twisting-tree-description, which cannot be separate rows (same key)."
+  },
+  {
+   "id": "magus#studious-spells-starlit-span",
+   "backfillRows": [],
+   "note": "Carried by the merged classes/magus options row under magus#studious-spells-laughing-shadow (starlit-span ladder level 7 addSpells [\"telekinetic-maneuver\"])."
+  },
+  {
+   "id": "magus#studious-spells-twisting-tree",
+   "backfillRows": [],
+   "note": "Carried by the merged classes/magus options row under magus#studious-spells-laughing-shadow (twisting-tree ladder level 7 addSpells [\"oaken-resilience\"])."
+  },
+  {
+   "id": "magus#volatile-spark-reloading-cascade",
+   "backfillRows": [
+    {
+     "category": "actions",
+     "id": "reloading-cascade",
+     "create": true,
+     "value": {
+      "id": "reloading-cascade",
+      "name": "Reloading Cascade",
+      "traits": [],
+      "rarity": "common",
+      "actionCost": {
+       "type": "actions",
+       "value": 1
+      },
+      "source": {
+       "book": "Pathfinder Impossible Magic",
+       "license": "OGL"
+      },
+      "edition": "remaster",
+      "aonParentId": "hybrid-study-16",
+      "aonSection": "Reloading Cascade"
+     },
+     "why": "batch 039 magus#volatile-spark-reloading-cascade: AoN hybrid-study-16 (Volatile Spark, Impossible Magic pg. 14) prints \"In addition, you gain the Reloading Cascade action. Reloading Cascade [Single Action] You use Arcane Cascade and Interact to reload a firearm.\" No core bucket held the action. Print lists no traits for it, so traits is empty. Shape mirrors actions/drain-familiar (aonParentId + aonSection)."
+    },
+    {
+     "category": "classFeatures",
+     "id": "volatile-spark",
+     "field": "grantsActions",
+     "value": [
+      "reloading-cascade"
+     ],
+     "why": "batch 039 magus#volatile-spark-reloading-cascade: AoN hybrid-study-16 \"you gain the Reloading Cascade action\". The chosen subclass is owned as a class feature (derive.ts ownedFeatureIds, \"The CHOSEN SUBCLASS ITSELF\"), and MainTab's granted-action walk reads grantsActions off owned class features - the lane classFeatures/improved-familiar-attunement uses."
+    }
+   ],
+   "note": "Created action + grant. Its description/descRefs are in work/.b039-created-desc-data-rows-2.json (a create row never carries prose)."
+  },
+  {
+   "id": "magus#starlit-span-description",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "starlit-span",
+     "field": "description",
+     "value": "With magic, the sky's the limit, and you can't be bound by the confines of physical proximity. Your power reaches as far as your senses can perceive, transcending the space between you and your target even with spells that normally require direct physical contact.\n\nWhen you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. This overrides the actual range of the spell.\n\nWhile you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\n\n**Conflux Spell** Shooting Star",
+     "why": "batch 039 magus#starlit-span-description: AoN hybrid-study-13 prints \"This overrides the actual range of the spell. While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\" The class-feature record carried the legacy \"You can deliver the spell even if its range is shorter than the range increment of your ranged attack.\" Same text as the option description in the merged classes/magus row."
+    },
+    {
+     "category": "classFeatures",
+     "id": "starlit-span",
+     "field": "recordMarks",
+     "value": [
+      {
+       "on": "action",
+       "id": "arcane-cascade",
+       "note": "While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target."
+      }
+     ],
+     "why": "batch 039 magus#starlit-span-description: AoN hybrid-study-13 \"While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\" A stance rider, so it goes on the Arcane Cascade action row (the chosen subclass is an owned class feature; explain.ts recordMarksFor)."
+    }
+   ],
+   "note": "classFeatures description + a recordMarks rider on actions/arcane-cascade; the option description is in the merged classes/magus row under magus#studious-spells-laughing-shadow."
+  },
+  {
+   "id": "magus#twisting-tree-description",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "twisting-tree",
+     "field": "description",
+     "value": "The staff is perhaps the simplest of weapons, but this simplicity belies its elegance and versatility. To you, a staff is casting implement and martial weapon alike—the foundation of a fighting style.\n\nWhile you wield a staff in one hand, the staff adjusts in shape and weight, gaining the agile trait and increasing its damage die size to 1d6. While you wield a staff in both hands, it lengthens, twists, and reshapes, gaining the parry, reach, and trip traits.\n\nWhile you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\n\n**Conflux Spell** Spinning Staff",
+     "why": "batch 039 magus#twisting-tree-description: AoN hybrid-study-14 prints \"While you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\" The class-feature record carried the legacy Interact-or-Release-when-you-Strike plus end-of-turn Interact rule. Same text as the option description in the merged classes/magus row."
+    },
+    {
+     "category": "classFeatures",
+     "id": "twisting-tree",
+     "field": "recordMarks",
+     "value": [
+      {
+       "on": "action",
+       "id": "arcane-cascade",
+       "note": "While you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action."
+      }
+     ],
+     "why": "batch 039 magus#twisting-tree-description: AoN hybrid-study-14 \"While you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\" A stance rider (WG injects it on the Arcane Cascade mode), so it goes on the Arcane Cascade action row via recordMarks."
+    }
+   ],
+   "note": "classFeatures description + recordMarks rider; the option description is in the merged classes/magus row under magus#studious-spells-laughing-shadow."
+  }
+ ]
+}

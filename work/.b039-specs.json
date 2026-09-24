@@ -1,0 +1,115 @@
+[
+  {
+    "file": "work/.b039-rows-situational.json",
+    "kind": "rows",
+    "family": "situational",
+    "stage": [
+      "work/.b039-rows-situational.json",
+      "test/batch039-situational.test.ts",
+      "src/rules/situationalBonuses.ts"
+    ]
+  },
+  {
+    "file": "work/.b039-rows-instruments.json",
+    "kind": "rows",
+    "family": "instruments",
+    "stage": [
+      "work/.b039-rows-instruments.json",
+      "test/batch039-instruments.test.ts",
+      "scripts/wg-diff.mjs",
+      "test/batch037-instruments-1.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b039-rows-engine.json",
+    "kind": "rows",
+    "family": "engine",
+    "stage": [
+      "work/.b039-rows-engine.json",
+      "work/.b039-report-engine.txt",
+      "test/batch039-engine.test.ts",
+      "src/rules/types.ts",
+      "src/rules/derive.ts"
+    ]
+  },
+  {
+    "file": "work/.b039-rows-data-rows-2.json",
+    "kind": "rows",
+    "family": "data-rows-2",
+    "stage": [
+      "work/.b039-rows-data-rows-2.json",
+      "work/.b039-created-desc-data-rows-2.json",
+      "work/.b039-report-data-rows-2.txt",
+      "test/batch039-data-rows-2.test.ts",
+      "work/.b039-verify-data-rows-2.txt",
+      "test/batch29-data.test.ts",
+      "test/player-created-pickers.test.tsx"
+    ]
+  },
+  {
+    "file": "work/.b039-created-desc-data-rows-2.json",
+    "kind": "created-prose",
+    "family": "data-rows-2",
+    "stage": [
+      "work/.b039-rows-data-rows-2.json",
+      "work/.b039-created-desc-data-rows-2.json",
+      "work/.b039-report-data-rows-2.txt",
+      "test/batch039-data-rows-2.test.ts",
+      "work/.b039-verify-data-rows-2.txt",
+      "test/batch29-data.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b039-rows-data-rows-1.json",
+    "kind": "rows",
+    "family": "data-rows-1",
+    "stage": [
+      "work/.b039-rows-data-rows-1.json",
+      "work/.b039-report-data-rows-1.txt",
+      "test/batch039-data-rows-1.test.ts",
+      "scripts/wg-batch-close.mjs",
+      "scripts/wg-batch-gate.mjs",
+      "test/batch039-closer.test.ts",
+      "test/batch035-gate-park.test.ts",
+      "scripts/data/trust-approvals.json",
+      "test/trust-approvals.test.ts",
+      "test/rule-owner-questions.test.ts",
+      "scripts/data/refresh-loss-allow.json"
+    ]
+  },
+  {
+    "file": "work/.b039-rows-gap-situational.json",
+    "kind": "rows",
+    "family": "gap-situational",
+    "stage": [
+      "work/.b039-rows-gap-situational.json",
+      "work/.b039-report-gap-situational.txt",
+      "test/batch039-gap-situational.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b039-rows-gap-data-rows-2.json",
+    "kind": "rows",
+    "family": "gap-data-rows-2",
+    "stage": [
+      "work/.b039-rows-gap-data-rows-2.json",
+      "work/.b039-report-gap-data-rows-2.txt",
+      "src/rules/classResources.ts",
+      "src/rules/modes.ts",
+      "test/batch039-data-rows-2.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b039-rows-gap-engine.json",
+    "kind": "rows",
+    "family": "gap-engine",
+    "stage": [
+      "work/.b039-rows-gap-engine.json",
+      "work/.b039-report-gap-engine.txt",
+      "test/batch039-gap-engine.test.ts",
+      "test/modes.test.ts",
+      "src/rules/modes.ts",
+      "src/data/trustGate.ts"
+    ]
+  }
+]

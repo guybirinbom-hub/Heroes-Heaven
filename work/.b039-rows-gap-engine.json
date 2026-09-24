@@ -1,0 +1,19 @@
+{
+  "findings": [
+    {
+      "id": "arcane-cascade#duplicate-toggles",
+      "backfillRows": [],
+      "note": "Gap stage, code only. The three unlinked Arcane Cascade switches are down to the stance chip: classResources magus 'arcane-cascade' deleted and modes cat-arcane-cascade retired (both by gap-data-rows-2 under magus#arcane-cascade-toggles, src/rules/classResources.ts:143 and src/rules/modes.ts:303); this lane dropped 'Arcane Cascade' from test/modes.test.ts's wanted-catalogue list (it went red on that retirement) and pins the single switch on a built magus 7 in test/batch039-gap-engine.test.ts (no class resource, no relevant mode, stance alone deals 'plus 2 force' with the engine row patched in memory)."
+    },
+    {
+      "id": "student-of-the-staff#magic-staves",
+      "backfillRows": [],
+      "note": "Gap stage, code only: src/rules/modes.ts cat-student-of-the-staff retired. Its deadly d6 now rides feats/student-of-the-staff weaponTraits gated whileStance:'arcane-cascade' (work/.b039-rows-engine.json), which also reaches the magic staves the mode's {items:['staff']} missed. Pinned in test/batch039-gap-engine.test.ts: no Modes toggle offered, deadly-d6 exactly once on staff and staff-of-fire in stance, none with the feat row stripped."
+    },
+    {
+      "id": "magus#arcane-cascade-mode",
+      "backfillRows": [],
+      "note": "Gap stage, code only: src/data/trustGate.ts STANCE_PAYLOAD gains 'strikeDamage', so a trust-gated stance's new damage rider goes dark with its resistances and strikes (docs/trust-gate.md: a benefit is payload). The rows stay in work/.b039-rows-engine.json. Pinned in test/batch039-gap-engine.test.ts on a built magus 7 in the stance: gated no force damage, ungated 'plus 2 force'."
+    }
+  ]
+}

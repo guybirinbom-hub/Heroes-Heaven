@@ -1,0 +1,6 @@
+BATCH 039 - gap agent, family data-rows-1 (2 gap lines, both the same finding familiar#archetype-reach)
+
+- PARKED familiar#archetype-reach (work/.b039-queue.json) - gap line "familiar#archetype-reach -> engine family: needs a class-feat-via-archetype lane ..." (from work/.b039-report-data-rows-1.txt:8): measured over the AoN mirror, the "Archetypes X (Level N)" rule has no lane in the app at all (602 non-archetype-trait feats, 781 feat/archetype pairs, 97 archetypes), so fixing Familiar is an engine-shape decision (new Feat.archetypeListings field fed by the importer + slotTakes admission + build.ts dedication-gate count, full lane vs Familiar-only), asked as a queue entry that passes add-owner-question.mjs's guards (dry run: would be desk #164).
+- PARKED familiar#archetype-reach (work/.b039-queue.json) - gap line "familiar#archetype-reach -> engine (src/rules/featSlots.ts slotTakes + src/rules/types.ts Feat.archetype) ..." (from work/.b039-verify-data-rows-1.txt:36): the same finding and the same engine-shape question as the line above, so it is closed by the same queue entry.
+
+No spec written, no src/ or test file edited: a data row for a field with no reader would be dead data, and a Familiar-only slot rule would hard-code one of the 781 pairs before the owner picks the lane's shape.

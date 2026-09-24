@@ -1,0 +1,15 @@
+VERIFY batch 039 - family "situational" (adversarial verifier)
+
+arcane-cascade#damage: DONE - FEAT_SITUATIONAL["arcane-cascade"] (src/rules/situationalBonuses.ts:1434-1442) is one strikeDamage star whose text matches action-4261 (melee Strikes, 1 extra force damage, 2 with weapon specialization, 3 with greater, the same-turn Cast a Spell type swap, no "tradition" rung). It reaches a BUILT level-1 magus through classFeatures/arcane-cascade (owned feature id AND its grantsActions ["arcane-cascade"]; the rows are deduplicated to one). Proof: explainStat(strikeDamage).situational shows exactly one arcane-cascade row. The only grantor in core.json is the magus class feature, and a fighter reads no row. The mutation-proof test deletes the entry in memory and the row disappears. test/batch039-situational.test.ts passes 3/3 via scripts/vt.mjs. npx tsc --noEmit is clean. test-flip-audit --batch 039 is clean, and all three it( blocks cite "// batch 039: arcane-cascade#damage" under a describe title that names arcane-cascade. The unfiltered strikeDamage target (melee is stated in `when`) has the same shape as all 211 sibling strikeDamage stars. The finding's second half (rewrite the cat-arcane-cascade note in src/rules/modes.ts) is outside this family's files. It is still open, and engine owns it through magus#arcane-cascade-mode (see CROSS-FILE GAPS).
+
+SPEC ROWS (work/.b039-rows-situational.json): backfillRows [] (code-only fix). There are no rows to diff, no created records, no ids to resolve and no collisions.
+
+MANIFEST (work/.b039-specs.json): the situational entry lists every path it touched in stage[]: work/.b039-rows-situational.json, test/batch039-situational.test.ts, src/rules/situationalBonuses.ts. This matches git status: the only other modified files are derive.ts, types.ts and wg-diff.mjs, which belong to engine/instruments, plus those families' own test files. No row supersedes anything. When I checked, the manifest held only this family's entry. The other families were still building: work/.b039-rows-data-rows-2.json was written at 00:42:47, after the manifest's 00:42:27 write. The manifest was not clobbered. It had simply not been appended yet. Before commit, the orchestrator must confirm data-rows, engine and instruments each registered their entry.
+
+I fixed nothing, so I touched no files and have no stage[] additions.
+
+DATA STILL NEEDED
+(none)
+
+CROSS-FILE GAPS
+- src/rules/modes.ts:303 cat-arcane-cascade (arcane-cascade#damage, second half; owner engine via magus#arcane-cascade-mode / arcane-cascade#duplicate-toggles): the modifier is still a flat m(1,'untyped','damage') on all Strikes. Its note still says "+1 extra damage (+2 if expert in your tradition)", and modes.ts is unmodified in the tree. A magus's sheet therefore shows the correct 1/2/3 star next to a mode note that contradicts it until engine lands. When engine makes the mode a numeric 1/2/3 melee force strikeDamage, the star stays text-only, so nothing is counted twice. Engine should still check that the two texts agree.

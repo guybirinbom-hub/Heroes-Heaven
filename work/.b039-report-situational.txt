@@ -1,0 +1,11 @@
+DATA STILL NEEDED
+(none)
+
+CROSS-FILE GAPS
+- src/rules/modes.ts:303 cat-arcane-cascade (arcane-cascade#damage): note still says "+1 extra damage (+2 if expert in your tradition)", a rung no printing has; rewrite to the printed "1 extra force damage (2 with weapon specialization, 3 with greater weapon specialization), melee Strikes" (action-4261), or hide/remove the mode per arcane-cascade#duplicate-toggles / magus#arcane-cascade-mode (engine family owns modes.ts).
+
+arcane-cascade#damage
+- DID: teach arcane-cascade#damage - added FEAT_SITUATIONAL["arcane-cascade"] in src/rules/situationalBonuses.ts (next to laughing-shadow): one strikeDamage star, when "on melee Strikes while in Arcane Cascade stance (force damage, or one type the spell you Cast this turn before entering the stance could deal)", bonus "+1 extra damage (2 with weapon specialization, 3 with greater weapon specialization)". Keyed by the ACTION id; reached through classFeatures/arcane-cascade grantsActions ["arcane-cascade"] in characterSituationalIds (explain.ts). Comment quotes action-4261.
+- TEST: test/batch039-situational.test.ts - builds a level-1 magus, reads explainStat(strikeDamage).situational (the StatDetailModal reader) and finds the arcane-cascade row with the 1/2/3 weapon-specialization scaling and no "tradition" rung; a mutation-proof test deletes FEAT_SITUATIONAL["arcane-cascade"] in memory and the row vanishes (then restored); a fighter reads no such row. 3/3 pass via scripts/vt.mjs; npx tsc --noEmit clean.
+- SPEC: work/.b039-rows-situational.json - backfillRows [] (code-only fix).
+- NOT DONE: the mode note in src/rules/modes.ts (see CROSS-FILE GAPS). The resistance half is arcane-cascade#resistance (data-rows family), not this star.

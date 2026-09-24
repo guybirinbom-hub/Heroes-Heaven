@@ -82,7 +82,10 @@ describe('predefined modes catalog', () => {
       'Courageous Anthem', 'Rallying Anthem', 'Song of Strength', 'Triple Time',
       'Cursebound One', 'Cursebound Two', 'Cursebound Three', 'Cursebound Four',
       'Photon-Attuned', 'Graviton-Attuned', 'Perfectly-Attuned', 'Photon Attunement', 'Graviton Attunement',
-      'Overdrive', 'Critical Overdrive', 'Panache', 'Panache (legacy)', 'Arcane Cascade', 'Mountain Stance', 'Unleash Psyche',
+      // batch 039: arcane-cascade#duplicate-toggles
+      // 'Arcane Cascade' deliberately absent: cat-arcane-cascade is retired (src/rules/modes.ts), the
+      // stance chip (stances['arcane-cascade']) is the one switch and carries the printed payload.
+      'Overdrive', 'Critical Overdrive', 'Panache', 'Panache (legacy)', 'Mountain Stance', 'Unleash Psyche',
       // 'Animal Shape' / 'Hybrid Shape' deliberately absent: the werecreature's shapes moved to
       // scripts/data/toggle-modes.json as eighteen real battle forms (nine types x two shapes) with
       // the printed per-type speeds. The two generic shells here had `modifiers: []` and no

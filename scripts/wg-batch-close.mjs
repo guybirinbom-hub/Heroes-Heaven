@@ -133,6 +133,23 @@ for (const arr of ['open', 'deferred', 'ruled']) {
     else desk.set(e.id, { n: i + 1, from: `POSITION in ${arr}[] — no n on the entry and no rulings-numbering entry` });
   });
 }
+/*
+ * A desk entry filed under a FINDING id (`<record>#<aspect>`, the same shape as read.json's ids) parks
+ * its record too. WHY: batch 039 filed desk #164 as `familiar#archetype-reach` (the class-feat-via-
+ * archetype lane, an engine-shape question), and `queued.has('familiar')` missed it, so the close
+ * refused "uncited NEW verdict — familiar" for a finding that is deliberately unbuilt while the owner
+ * rules. A second pass so an entry keyed by the record itself always keeps its own desk n. Only the
+ * `#` form is resolved here; the `-aspect` prefix form stays the orchestrator's (see the defect below).
+ */
+for (const arr of ['open', 'deferred', 'ruled']) {
+  for (const e of questions[arr] ?? []) {
+    const qid = String(e?.id ?? '');
+    if (!qid.includes('#')) continue;
+    const base = qid.split('#', 1)[0];
+    if (arr !== 'ruled') queued.add(base);
+    if (!desk.has(base) && desk.has(qid)) desk.set(base, { ...desk.get(qid), from: `${desk.get(qid).from} via ${qid}` });
+  }
+}
 
 /*
  * ⚠ KNOWN DEFECT, escalated to the orchestrator by batch 035's closer rather than fixed here.

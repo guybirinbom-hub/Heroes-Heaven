@@ -1,0 +1,32 @@
+BATCH 039 - ENGINE family - ADVERSARIAL VERIFY
+
+Checks run: npx tsc --noEmit clean; node scripts/vt.mjs run test/batch039-engine.test.ts 5/5 pass.
+Throwaway harness (deleted after the run) read work/.b039-rows-engine.json + data-rows-1's stances/arcane-cascade rows FROM DISK, applied them to a content copy and built real magi:
+  L1/6 longsword "plus 1 force", res spells 1 | L7/14 "plus 2 force", res 2 | L15/20 "plus 3 force", res 3; the fist Strike gets the same (a melee Strike, as print says); cat-arcane-cascade mode on top of the stance leaves the damage line unchanged (its +1 is appliesWhen-only).
+  Student of the Staff L4 in stance with cat-student-of-the-staff also on: staff / staff-of-fire / musket-staff-of-force each carry exactly ONE deadly-d6, and club crit spec shows on staff and staff-of-fire.
+Rows: 3 rows, all on existing records (stances/arcane-cascade, feats/student-of-the-staff); no create needed. Shipped values: stances/arcane-cascade has no strikeDamage; student-of-the-staff critSpecWeapons {bases:['staff']} -> row keeps bases:['staff'] and adds only traits:['staff']; weaponTraits absent before. No existing effect-backfill row on any of the three keys (the only arcane-cascade stance overlay row is `requires`, superseded by data-rows-1), so no supersedes is owed. No record+field collision with data-rows-1 (stances resistances/requires/note), data-rows-2 (feat description/recordMarks), situational or instruments. Ids named exist: trait bucket has deadly + staff (deadly-d6 is the family form, as hilt-hammer's versatile-b); items staff, staff-of-fire exist. Every `why` names an AoN doc (action-4261, feat-9060).
+Readers: StanceDef.strikeDamage -> derive.ts strikeDamageRiders via activeStanceDef (Requirements-gated); byWeaponSpecialization -> same function via weaponSpecialization(); WeaponRider.match.whileStance -> applyWeaponRiders; critSpecWeapons.traits -> weaponMatches. All four present in this batch's derive.ts diff.
+
+PER FINDING
+
+magus#arcane-cascade-mode: DONE - stance row + two reader widenings put melee-only 1/2/3 force on a built magus entering the stance from its chip (harness above); the resistance half is data-rows-1's stances row, measured 1/2/3 in the same harness. Left for the gap list: the Modes-panel cat-arcane-cascade still shows its invented "+2 if expert in your tradition" note until modes.ts is edited.
+
+student-of-the-staff#magic-staves: DONE - rows give club crit spec + deadly d6 (stance-gated) on staff and staff-of-fire for a built L4 magus with the feat, nothing out of stance or without the feat. The trait route also puts deadly-d6 on the 3 musket staves beside their fatal-d10 (proposal accepted this). Print's "deadly die the same damage type as Arcane Cascade's extra damage" has no carrier (deadly-d6 rolls the weapon's type); that clause is outside this finding's claim.
+
+arcane-cascade#duplicate-toggles: NOT-DONE - the player still sees all three toggles: classResources.ts:145 magus 'arcane-cascade' (no reader) and modes.ts:303 cat-arcane-cascade are untouched; the engine work only makes the stance chip able to carry the payload once the rows land. Missing: delete the classResources entry (re-check test/class-resources.test.ts:79) and retire cat-arcane-cascade (+ cat-student-of-the-staff) or hide them for owners of the stance. WARNING for the close: this finding's spec entry has 0 rows and the family staged src/ edits, so scripts/wg-batch-close.mjs will read it as a code-only fix - it must not be counted as fixed until those two edits land.
+
+Report wording: the builder's "did: teach <finding id>" lines describe code+row fixes, not a comparer change; harmless for the verdicts (rows outrank), but no mutation-proof test is owed because no comparer or settle registry was changed by this family.
+
+Manifest: work/.b039-specs.json holds situational, instruments, engine, data-rows-2 (rows + created-prose); the engine entry stages its rows, report, test, types.ts, derive.ts - every path it changed. It has NO data-rows-1 entry although work/.b039-rows-data-rows-1.json and test/batch039-data-rows-1.test.ts exist on disk - the orchestrator must confirm data-rows-1 registers before the apply stage. No engine row supersedes anything. I changed no file besides this one (no stage[] to add).
+
+DATA STILL NEEDED
+(none - the three rows are authored in work/.b039-rows-engine.json and verified above; they need only the driver's apply)
+
+CROSS-FILE GAPS
+- src/rules/classResources.ts:145 magus {id:'arcane-cascade', kind:'toggle'} - delete (arcane-cascade#duplicate-toggles); nothing reads it; re-check test/class-resources.test.ts:79.
+- src/rules/modes.ts:303 cat-arcane-cascade - retire once the stance rows land (arcane-cascade#duplicate-toggles, magus#arcane-cascade-mode); if kept, drop the m(1,'untyped','damage') modifier and rewrite the note to print (melee Strikes, 1/2/3 force by weapon specialization, resistance to spells; no "expert in your tradition").
+- src/rules/modes.ts:315-323 cat-student-of-the-staff - retire (student-of-the-staff#magic-staves); the feat row now carries the stance-gated deadly d6; harness shows no double trait while both are on, so this is clutter, not a wrong number.
+- src/rules/situationalBonuses.ts FEAT_SITUATIONAL['arcane-cascade'] (situational family, arcane-cascade#damage) - once stances/arcane-cascade strikeDamage lands the number is in the Strike line; the star should keep only the damage-type swap or go.
+- src/data/trustGate.ts:160 STANCE_PAYLOAD lacks 'strikeDamage' - a trust-gated stance's new damage rider would not go dark with its resistances/strikes.
+- src/data/trust-ledger.json - regenerate with scripts/trust-ledger.mjs after the rows land (new stances strikeDamage + feat weaponTraits paths).
+- work/.b039-specs.json - no data-rows-1 entry; its stances/arcane-cascade resistances row is what completes magus#arcane-cascade-mode's resistance half.

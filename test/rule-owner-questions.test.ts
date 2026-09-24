@@ -97,7 +97,8 @@ function runRaw(argv: string[]) {
 const readDesk = (root: string) => JSON.parse(readFileSync(path.join(root, 'desk.json'), 'utf8')) as Desk;
 
 describe('rule-owner-questions.mjs applies the desk pass', () => {
-  it('moves every answered number to `ruled` and leaves the unanswered ones open', () => {
+  // batch 039: familiar#archetype-reach
+  it('moves every answered number to `ruled` and leaves the unanswered ones open (familiar#archetype-reach, #164, among them)', () => {
     const root = fixture();
     const r = run(root, ['--write']);
     expect(r.code).toBe(0);
@@ -107,8 +108,10 @@ describe('rule-owner-questions.mjs applies the desk pass', () => {
     expect(stillOpen).toEqual((BEFORE.open ?? []).map((e) => Number(e.n)).filter((n) => !ANSWERED.has(n)).sort((a, b) => a - b));
     /* The five batch-037 questions the owner has NOT seen stay on the desk, and so do the four the
      * 2026-09-12 newest-printing repoint filed after the desk pass closed (#158-#161), plus the two
-     * engine-shape spellshot questions filed 2026-09-22 (#162-#163). */
-    expect(stillOpen).toEqual([151, 152, 153, 154, 155, 158, 159, 160, 161, 162, 163]);
+     * engine-shape spellshot questions filed 2026-09-22 (#162-#163), and batch 039's #164
+     * familiar#archetype-reach (the class-feat-via-archetype lane). */
+    // batch 039: familiar#archetype-reach
+    expect(stillOpen).toEqual([151, 152, 153, 154, 155, 158, 159, 160, 161, 162, 163, 164]);
     expect((after.ruled ?? []).length).toBe((BEFORE.ruled ?? []).length + ANSWERED.size);
 
     for (const n of ANSWERED) {

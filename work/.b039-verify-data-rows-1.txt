@@ -1,0 +1,36 @@
+BATCH 039 - VERIFY data-rows-1 (chunk 1 of 2 of the data-rows family)
+Spec checked: work/.b039-rows-data-rows-1.json (12 findings, 16 rows). Builder report: work/.b039-report-data-rows-1.txt. Test: test/batch039-data-rows-1.test.ts.
+
+HOW IT WAS CHECKED
+- Rows as rows: all 16 target records exist in public/core.json (no create needed). Supersedes flags match the overlay exactly: the 4 keys already in scripts/data/effect-backfill.json (classFeatures/arcane-spellcasting-magus description, stances/arcane-cascade requires, feats/raise-a-tome note, feats/starlit-eyes situational) carry supersedes:true; the other 12 keys are new and carry none. No path rows sit under any of these fields. Every why names an AoN doc id.
+- Collisions: scanned every work/.b039-rows-*.json + .b039-created-desc-data-rows-2.json (36 keys): no record+field+path key collides. Engine's stances/arcane-cascade strikeDamage and data-rows-2's classFeatures/starlit-span rows are different keys.
+- Descriptions (9 rows): each normalized body is word-for-word the mirror doc's body (class-feature-1258, action-4261, class-feature-1260, action-4260, class-feature-1259, feat-9046, feat-9047, feat-9048, feat-9058), and every paragraph passes the applier's refusal-4 token test (tokens of doc.text+markdown). The Spellstrike "**Frequency** until recharged (see below)" line is the mirror header, the classFeatures/arcane-cascade "Arcane Cascade" line is the embedded action title. descRefs are matched by label, case-insensitively (RichText.tsx), so Force Fang / Shield Block / Spellstrike / concealed / hidden / Cast a Spell links still resolve. actions/arcane-cascade's "Spellstrike" ref no longer matches any word, which does nothing.
+- Re-emitted values: starlit-eyes situational[1] is byte-identical to the shipped [1]. Only [0] changed. The raise-a-tome note keeps every clause of the superseded note (Hardness 3/HP 12/BT 6, the sheet shows no shield block, Raise a Shield substitution) and adds the reinforcing-rune clause. The requires:null removal loses no gate (stanceRequirementIssue gates only on unarmored/armored; the old value was {text} only).
+- Readers: classFeatures grantsItems -> build.ts:8475. Stance resistances -> derive.ts:2780 (activeStanceDef); the formula ladder matches magus weapon-specialization-magus at 7 and greater at 15 (classes.magus.features). The magus class feature is the only grantor of the stance. feats spellNotes -> build.ts:7433 pushSpellNote (shooting-star exists). feats situational -> situationalTitle. Stance note: scripts/data/stances.json is merged at import-core-v2.mjs:1075, before the overlay at :1130, so the overlay note wins.
+- In-memory harness (test/zz-harness-b039-dr1.test.ts, now DELETED): applied all 16 rows to the cached content() (value:null deletes), then imported the builder's test file. Result: 15/15 pass. The file as shipped today gives 11 fail + 4 pass; every failure is a missing row, as the report says.
+- npx tsc --noEmit: clean. scripts/test-flip-audit.mjs --batch 039: clean ("every flip cited").
+- Other tests that name these records (trust-gate.test.ts:246, batch037-*, impossible-magic-saved-characters, class-resources): none asserts a value these rows change. arcane-cascade is not in the trust ledger's stance lane, so gated == ungated still holds with the new resistances field.
+
+PER FINDING
+- arcane-spellcasting-magus#spellbook-item: DONE - row grantsItems [{spellbook-blank,1}]; the harness builds a level-1 magus holding spellbook-blank; the stripped copy has none.
+- arcane-spellcasting-magus#description: DONE - supersedes the overlay row with the full class-feature-1258 body (verbatim; no two-slot cap, no lost slots, Learn a Spell instead of Arcana).
+- arcane-cascade#resistance: DONE - stances resistances type "spells" gives 1/1/2/2/3/3 at levels 1/6/7/14/15/20 in the stance and 0 out of it (harness on shipped-plus-rows).
+- arcane-cascade#requirement: DONE - requires removed (null, supersedes); the stance note, actions/arcane-cascade and classFeatures/arcane-cascade descriptions are the action-4261 / class-feature-1260 text (verbatim, same-turn Cast a Spell damage-type rule).
+- spellstrike#action-text: DONE - actions/spellstrike body = action-4260 ("your spell is disrupted" + combined damage for resistances and weaknesses).
+- spellstrike#description: DONE - classFeatures/spellstrike body = class-feature-1259 (no Multiple Defenses; new Spellshape paragraph).
+- raise-a-tome#description: DONE - description = feat-9046 body; note superseded with every old clause kept plus the reinforcing rune.
+- expansive-spellstrike#description: DONE - description = feat-9047 body (disrupted = no effect; any corner of any square).
+- force-fang#description: DONE - description = feat-9048 body; focusSpells ["force-fang"] untouched, no focusPoolBonus, so the pool still gets exactly 1.
+- familiar#archetype-reach: NOT-DONE - no row, correctly: there is no reader to write one for. Confirmed that featSlots.ts slotTakes admits an archetype slot only on the "archetype" trait (:369) and a class slot only on the class trait / archetype trait (:510-519), and that Feat.archetype is one string. Elementalist / Shadowcaster / Soul Warden holders still cannot take Familiar at 4th. This needs an engine lane (see CROSS-FILE GAPS).
+- starlit-eyes#dc: DONE - situational[0] now reads 4/10, and 3/9 only in Arcane Cascade (superseding row; [1] carried byte-identical); description = feat-9058 body.
+- starlit-eyes#shooting-star: DONE - feats spellNotes [{shooting-star, printed clause}]. The harness builds a starlit-span magus with Starlit Eyes, and ch.spellNotes["shooting-star"] has the "Starlit Eyes" entry.
+
+No settle and no comparer teach in this chunk. No file fixed by me. Manifest: work/.b039-specs.json still holds situational, instruments, engine, data-rows-2 (rows + created-prose) and data-rows-1. data-rows-1's stage[] lists its spec, report and test, which are the only files the builder touched. No stage paths to append.
+
+Side note (not a gap): src/data/trust-ledger.json lists feats/starlit-eyes ["situational"], so with the trust gate ON, the corrected situational stays dark, the same as the old one did. The ledger regenerates from core.json after the apply (its coreSha check forces this).
+
+DATA STILL NEEDED
+(none - every row this chunk needs is in work/.b039-rows-data-rows-1.json and verified applicable)
+
+CROSS-FILE GAPS
+- familiar#archetype-reach -> engine (src/rules/featSlots.ts slotTakes + src/rules/types.ts Feat.archetype): a lane for class feats listed under archetypes (feat-5024 Familiar at level 4 for Elementalist / Shadowcaster / Soul Warden), admitted in an archetype / class slot at >= the listed level when that dedication is held. Soul Warden's domain-initiate / expanded-domain-initiate use the same path. Not built by any b039 family (no engine row or report line names it).

@@ -1,0 +1,9 @@
+{
+  "findings": [
+    {
+      "id": "arcane-spellcasting-magus#instrument",
+      "backfillRows": [],
+      "note": "Instrument teach, code-only: scripts/wg-diff.mjs ourKindsOf credits a class's spellcasting/spellSlot kinds to its casting feature when the id ends in -spellcasting OR -spellcasting-<owning class> (AoN class-feature-1258: 'At 1st level, you can prepare one 1st-rank spell and five cantrips each morning' is delivered by classes.magus.spellcasting, progression psychic). Blast radius measured: one record. The grantsItem kind stays a real gap, closed by the data row of arcane-spellcasting-magus#spellbook-item (another family)."
+    }
+  ]
+}

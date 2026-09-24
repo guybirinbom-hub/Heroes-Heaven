@@ -1,5 +1,5 @@
 {
- "coreSha": "48f317b6ee263f63d668335760bc24cfae5e2fa3247e435d2cae463fbe8ffb29",
+ "coreSha": "390719f56fcb62beaaa34188b25e38463b121cff09c74305069662b1c50ccf4e",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -4345,6 +4345,9 @@
   "feats/broken-chain-dedication": [
    "grantsActions"
   ],
+  "feats/burning-cascade": [
+   "recordMarks"
+  ],
   "feats/burrowing-tripkee": [
    "speeds"
   ],
@@ -5771,7 +5774,8 @@
   ],
   "feats/student-of-the-staff": [
    "critSpec",
-   "critSpecWeapons"
+   "critSpecWeapons",
+   "recordMarks"
   ],
   "feats/sunwrecker": [
    "grantsClassFeatures"
@@ -7490,10 +7494,9 @@
  },
  "unencoded": [
   "classFeatures/twofold-tine",
-  "classFeatures/volatile-spark",
   "feats/keep-pace-player-core-2",
   "feats/practical-magic-impossible-magic",
   "feats/remote-detonation-impossible-magic"
  ],
- "wgSha": "6c7b03baaa88460f4ae3df1135641179c7135c2eaaa220593f5a8af8f513c9a3"
+ "wgSha": "bfdffb9336d001878c465771afacabdd2535f7db8a47b337a6991f56dd3bec53"
 }

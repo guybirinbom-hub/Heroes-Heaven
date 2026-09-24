@@ -1,0 +1,9 @@
+{
+  "findings": [
+    {
+      "id": "arcane-cascade#damage",
+      "backfillRows": [],
+      "note": "Gap lane, second half of arcane-cascade#damage (gap lines 11 and 22: src/rules/modes.ts:303 cat-arcane-cascade). No data row. The mode itself was retired at src/rules/modes.ts:303 by the sibling gap agent under magus#arcane-cascade-toggles (the retirement comment is theirs; this lane did not edit modes.ts). This lane adds test/batch039-gap-situational.test.ts, which pins on a built magus 7 that no magus catalogue mode prints the invented 'expert in your tradition' rung or a flat +1 untyped damage beside the printed 1/2/3 star (action-4261), and proves the check has teeth with the old mode shape patched in memory."
+    }
+  ]
+}

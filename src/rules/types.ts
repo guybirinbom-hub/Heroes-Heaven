@@ -667,6 +667,16 @@ export interface WeaponRider {
      * a greatsword's modifications to a dagger. See InventoryItem.designations.
      */
     designated?: ItemDesignation;
+    /**
+     * Only while this stance id is the character's ACTIVE stance (and its Requirements are met — the
+     * same `activeStanceDef` gate every stance payload goes through).
+     *
+     * batch 039: student-of-the-staff#magic-staves — feat-9060 prints *"While you're in Arcane Cascade
+     * stance, your staff gains the deadly d6 trait"*. The trait comes from the FEAT, the condition is
+     * the STANCE, and the stance chip already sets `Character.activeStance`; without this gate the
+     * clause needed a separate Modes toggle the player had to remember to switch on as well.
+     */
+    whileStance?: string;
   };
   add?: string[];
   /** Traits to remove. Names a trait the weapon never had? Then nothing happens, silently. */
@@ -5148,6 +5158,15 @@ export interface StanceDef {
   speeds?: SpeedGrants;
   /** Save proficiency-independent status bonuses while active (Cobra Stance: +1 Fortitude). */
   saves?: Partial<Record<SaveId, { value: number; type: string }>>;
+  /**
+   * Extra Strike damage while the stance is active — the same rider shape (and the same reader,
+   * `strikeDamageRiders`) feats, class features and active modes already use.
+   *
+   * batch 039: magus#arcane-cascade-mode — action-4261 prints *"While you're in the stance, your
+   * melee Strikes … deal 1 extra force damage"*. The damage lived only on a separate Modes-panel
+   * toggle, so entering the stance from its chip delivered nothing; the stance itself is the carrier.
+   */
+  strikeDamage?: StrikeDamageRider[];
   /** This entry is an alternate FORM (Ursine Avenger, Bat Form), not a footwork stance — it surfaces
    *  as a toggle even without the `stance` trait, and reads as "Form" in the UI. */
   form?: boolean;
@@ -5474,6 +5493,16 @@ export interface StrikeDamageRider {
   /** Flat extra keyed to the STRIKE's weapon-proficiency rank (Spirit Striking: expert 2 / master 3 /
    *  legendary 4). Only applies at the listed ranks — a strike below the lowest key gets nothing. */
   byStrikeProficiency?: Partial<Record<'expert' | 'master' | 'legendary', number>>;
+  /**
+   * Flat extra raised by the CHARACTER's weapon specialization class feature (derive.ts
+   * `weaponSpecialization`): `spec` with Weapon Specialization, `greater` with Greater. Highest wins
+   * against `flat`, like `byStrikeProficiency`.
+   *
+   * batch 039: magus#arcane-cascade-mode — action-4261: *"If you have the weapon specialization class
+   * feature, the damage and resistance increase to 2, and if you have greater weapon specialization,
+   * they increase to 3."* Keyed to the feature, not to a level, because that is what print names.
+   */
+  byWeaponSpecialization?: { spec?: number; greater?: number };
   /** Restrict to ONE Strike by name, case-insensitively — Potent Nectar rides only on the nectar
    *  attack Caustic Nectar grants, not on every unarmed Strike the character has. `appliesTo` is a
    *  category and cannot say that. */

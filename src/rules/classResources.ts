@@ -140,15 +140,10 @@ export const CLASS_RESOURCES: Record<string, ClassResource[]> = {
   barbarian: [
     { id: 'rage', name: 'Rage', kind: 'toggle', refresh: 'encounter', feat: 'barbarian-dedication', note: 'Raging: lasts 1 min / until the encounter ends.' },
   ],
-  magus: [
-    {
-      id: 'arcane-cascade',
-      name: 'Arcane Cascade',
-      kind: 'toggle',
-      refresh: 'encounter',
-      note: 'Stance: bonus damage to Strikes and hybrid-study effects.',
-    },
-  ],
+  /* batch 039: magus#arcane-cascade-toggles — no magus entry. Print (class-feature-1260): "You can enter
+   * a special stance to blend magic into your attacks and defend against spells." It is ONE stance, and
+   * the sheet's stance chip (Character.activeStance -> stances['arcane-cascade']) is its carrier. The old
+   * 'arcane-cascade' toggle here had no reader anywhere, so a magus who flipped it got nothing. */
   swashbuckler: [
     { id: 'panache', name: 'Panache', kind: 'toggle', refresh: 'encounter', feat: 'swashbuckler-dedication', note: 'Gained via bravado actions; spent on finishers; clears at encounter end.' },
   ],

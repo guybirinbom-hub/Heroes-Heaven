@@ -118,6 +118,14 @@ const parkMapOf = (desk) => {
     const qid = q?.id;
     if (!qid) continue;
     if (RECORD_IDS.has(qid)) { parks.set(qid, qid); continue; }   // keyed by record — the old shape
+    /* Keyed by FINDING id, `<record>#<aspect>` — the shape read.json and a family's queue file use.
+     * WHY: batch 039 filed desk #164 as `familiar#archetype-reach`, and the hyphen walk below never
+     * reaches `familiar` through a `#`, so PARITY refused the record's OWNER-QUEUED verdict as unusable
+     * even though the comment at the PARITY gate says a record#aspect question must be honoured. */
+    if (qid.includes('#')) {
+      const base = qid.split('#', 1)[0];
+      if (RECORD_IDS.has(base)) { if (!parks.has(base)) parks.set(base, qid); continue; }
+    }
     /* Longest-first: lastIndexOf walks the hyphens right to left, so the first record id that matches
      * is the longest one, and a shorter prefix of the same id never sees the entry. */
     for (let cut = qid.lastIndexOf('-'); cut > 0; cut = qid.lastIndexOf('-', cut - 1)) {

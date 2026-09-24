@@ -1535,8 +1535,17 @@ function ourKindsOf(rec, id, bucket) {
         if ((o.grants?.skills ?? []).length) kinds.add('skill');
       }
     }
-    /* Spell slots and the spellcasting proficiency come off the class's own progression. */
-    if (cls?.spellcasting && /-spellcasting$/.test(id)) { kinds.add('spellSlot'); kinds.add('spellcasting'); }
+    /* Spell slots and the spellcasting proficiency come off the class's own progression.
+     *
+     * batch 039: arcane-spellcasting-magus#instrument — the magus's casting feature is the one class
+     * carrier whose id carries its class as a SUFFIX (`arcane-spellcasting-magus`, where every other
+     * class's is `<x>-spellcasting`), so `-spellcasting$` missed it and the record read as
+     * missing=[spellcasting, spellSlot] while classes.magus.spellcasting (prepared/arcane/int,
+     * progression 'psychic' → psychicSlots) delivers exactly the printed "At 1st level, you can
+     * prepare one 1st-rank spell and five cantrips each morning". Only `-spellcasting-<owner>` is
+     * accepted, so the suffix must BE the owning class — measured: it matches this one record.
+     * The feature's grantsItem (the free spellbook) is NOT credited here and keeps reporting. */
+    if (cls?.spellcasting && (/-spellcasting$/.test(id) || id.endsWith(`-spellcasting-${owner}`))) { kinds.add('spellSlot'); kinds.add('spellcasting'); }
     /* …and the class's focus spells, for the feature that introduces them (Composition Spells, Grave
      * Spells, Link Spells). Gated on the feature's name ending in "Spells" so an unrelated feature of a
      * focus-casting class is not credited. */

@@ -80,7 +80,8 @@ describe('batch 037 instruments-1 — advanced-red-mantis-magic settles the lega
   });
 
   // batch 037: advanced-red-mantis-magic#legacy-slots
-  it('blast radius is one row: the other two spellSlot gaps still report beside advanced-red-mantis-magic', () => {
+  // batch 039: arcane-spellcasting-magus#instrument
+  it('blast radius is one row: the other two spellSlot gaps still report beside advanced-red-mantis-magic, and arcane-spellcasting-magus is taught off the list', () => {
     /*
      * VERIFIED_EQUIVALENT is keyed by RECORD id, so the measured blast radius is the set of records
      * that stopped reporting `spellSlot` — and it is exactly one. The two whose carrier really does not
@@ -100,10 +101,18 @@ describe('batch 037 instruments-1 — advanced-red-mantis-magic settles the lega
      * the comparer's side hangs all three on the feature record. Listed rather than settled, because a
      * settle would silence the next real difference on this record unread — the trap this file's own
      * header describes.
+     *
+     * Batch 039 then TAUGHT it, not settled it: wg-diff's class-chassis rule now credits spellSlot +
+     * spellcasting to a feature whose id ends `-spellcasting-<owning class>` (the carrier is
+     * classes.magus.spellcasting, class-feature-1258 "one 1st-rank spell and five cantrips"), and the
+     * grantsItem half became the real spellbook row. So the record leaves this roster by a cited teach,
+     * pinned with its mutation-proof tests in test/batch039-instruments.test.ts.
      */
-    expect(missing.get('arcane-spellcasting-magus')).toContain('spellSlot');
+    // batch 039: arcane-spellcasting-magus#instrument
+    expect(missing.get('arcane-spellcasting-magus') ?? []).not.toContain('spellSlot');
+    // batch 039: arcane-spellcasting-magus#instrument
     expect([...missing].filter(([, ks]) => ks.includes('spellSlot')).map(([id]) => id).sort())
-      .toEqual(['arcane-spellcasting-magus', 'mortem-ultimatum', 'unholy-resurrection']);
+      .toEqual(['mortem-ultimatum', 'unholy-resurrection']);
   });
 
   // batch 037: advanced-red-mantis-magic#legacy-slots

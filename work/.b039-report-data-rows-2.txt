@@ -1,0 +1,42 @@
+batch 039 - data-rows-2 (chunk 2 of 2 of the data-rows family)
+spec: work/.b039-rows-data-rows-2.json, created prose: work/.b039-created-desc-data-rows-2.json, tests: test/batch039-data-rows-2.test.ts
+No src/ or scripts/ file edited. npx tsc --noEmit clean. The test file runs 15/15 RED before the driver applies the rows, each on the field the row sets (checked with node scripts/vt.mjs).
+
+DATA STILL NEEDED
+(none - every row this chunk needs is authored in the two spec files above)
+
+CROSS-FILE GAPS
+- test/batch29-data.test.ts:328,331,332 (the `studies` table in 'batch 29 — magus studious spells') still pins the OLD rungs laughing-shadow 'shift-blame', starlit-span 'darkvision', twisting-tree 'embed-message'. When my classes/magus options row lands, those rows go red. They must change to 'ghostly-weapon' (hybrid-study-11), 'telekinetic-maneuver' (hybrid-study-13) and 'oaken-resilience' (hybrid-study-14), each with "// batch 039: magus#studious-spells-laughing-shadow" / "#studious-spells-starlit-span" / "#studious-spells-twisting-tree" in the 6 lines above. That file is outside my grant (orchestrator or the data-rows owner).
+- magus#arcane-cascade-toggles (resistance half) -> sibling chunk data-rows-1, finding arcane-cascade#resistance: the stances/arcane-cascade `resistances` row ('spells' 1/2/3) is theirs. If I also wrote it, the driver would refuse the collision.
+- magus#arcane-cascade-toggles (single-carrier half) -> engine family: arcane-cascade#duplicate-toggles deletes the reader-less magus 'arcane-cascade' toggle in src/rules/classResources.ts:145, and magus#arcane-cascade-mode (engine) / arcane-cascade#damage (situational) own the damage carrier. Both are src/ edits outside my files.
+- magus#arcane-cascade-stance-requires -> sibling chunk data-rows-1, finding arcane-cascade#requirement: removing the stances/arcane-cascade `requires` overlay row and rewriting the stance `note` to action-4261 ("If you Cast a Spell and then enter Arcane Cascade on the same turn...") is exactly their proposal, on the same record and fields.
+
+PER FINDING
+
+student-of-the-staff#spellstrike-clause - TAUGHT (rows). feats/student-of-the-staff `description` refreshed from feat-9060 (adds "(If you use the critical specialization on a Spellstrike, the spell still affects the target even if you pushed the target out of reach.)" and "you can apply"). feats/student-of-the-staff `recordMarks` [{on:'action', id:'spellstrike', note:...}] puts the rider on the Spellstrike action row (reader: explain.ts recordMarksFor -> recordMarkersFor). Pinned by: "student-of-the-staff: the description prints the Spellstrike parenthetical..." and "student-of-the-staff: a magus with the feat sees the rider on the Spellstrike action row". The engine family's student-of-the-staff#magic-staves covers different fields (critSpecWeapons, modes.ts), so there is no collision.
+
+burning-cascade - TAUGHT (rows). feats/burning-cascade `recordMarks` [{on:'action', id:'arcane-cascade', note:'...5-foot emanation...immune...1 minute'}], `actionCost` {type:'passive'}, and `description` = the feat-9051 body with the scraped "Burning Cascade / Source / Prerequisites" header removed (no words added). The existing prerequisites overlay row is not touched. Pinned by: "burning-cascade: a magus with the feat sees the emanation damage on the Arcane Cascade action row" and "burning-cascade: is a passive feat and its description has no scraped header".
+
+hasted-assault#prerequisites - TAUGHT (rows). feats/hasted-assault `prerequisites` [] (feat-9084 prints no Prerequisites line; the same shape as feats/soulforger-dedication). Also on the same record, `description` drops the legacy feat-2878 sentence "Increase the number of Focus Points in your focus pool by 1." (a deletion only), which the finding's evidence names. Pinned by: "hasted-assault: the feat has no prerequisite and no legacy focus-pool sentence".
+
+hasted-assault#spell-body - TAUGHT (row). spells/hasted-assault `description` refreshed from spell-2880: "only Stride and Strike actions" plus "As normal, you don't gain an action on the turn you cast this spell, but you do when you regain actions at the start of your next turn." Pinned by: "hasted-assault: the spell lets the extra action Stride or Strike and prints the timing sentence".
+
+magus#arcane-cascade-toggles - NOT TAUGHT HERE, spec entry with backfillRows [] and a note. Every part of the fix belongs to another chunk or family (see CROSS-FILE GAPS: data-rows-1 arcane-cascade#resistance; engine arcane-cascade#duplicate-toggles / magus#arcane-cascade-mode). No test from this chunk.
+
+magus#arcane-cascade-stance-requires - NOT TAUGHT HERE, spec entry with backfillRows [] and a note. It duplicates sibling data-rows-1's arcane-cascade#requirement (the same stances/arcane-cascade requires + note), so a row here would collide (see CROSS-FILE GAPS). No test from this chunk.
+
+magus#studious-spells-laughing-shadow - TAUGHT (row). One merged whole-value row, classes/magus path ["subclass"] field `options`, supersedes:true over overlay row #13328. It is re-emitted from the shipped value, and only these change: laughing-shadow ladder L11 addSpells ['ghostly-weapon'] (hybrid-study-11); starlit-span L7 ['telekinetic-maneuver']; twisting-tree L7 ['oaken-resilience']; the starlit-span and twisting-tree option descriptions and descRefs. The other 8 options and every other field are byte-identical (checked by diff). Pinned by: "magus: Laughing Shadow adds Ghostly Weapon at 11th (hybrid-study-11), not Shift Blame" (built magus 11, spellbook).
+
+magus#studious-spells-starlit-span - TAUGHT through the merged classes/magus options row above (same key, so no row of its own). Pinned by: "magus: Starlit Span adds Telekinetic Maneuver at 7th (hybrid-study-13), not Darkvision".
+
+magus#studious-spells-twisting-tree - TAUGHT through the merged classes/magus options row above. Pinned by: "magus: Twisting Tree adds Oaken Resilience at 7th (hybrid-study-14), not Embed Message".
+
+magus#volatile-spark-reloading-cascade - TAUGHT (rows). Creates actions/reloading-cascade: 1 action, traits [] because print lists none, remaster, aonParentId hybrid-study-16, aonSection 'Reloading Cascade'. Also sets classFeatures/volatile-spark `grantsActions` ['reloading-cascade']. The chosen subclass is owned via derive.ts ownedFeatureIds and read by the MainTab granted-action walk. Its description ("You use Arcane Cascade and Interact to reload a firearm.", verbatim) and descRefs are in work/.b039-created-desc-data-rows-2.json. Pinned by: "magus: the Reloading Cascade action exists as a single action with the printed text" and "magus: a Volatile Spark magus owns a feature that grants Reloading Cascade".
+
+magus#starlit-span-description - TAUGHT (rows). The option description goes through the merged classes/magus row. classFeatures/starlit-span `description` gets the same hybrid-study-13 text ("This overrides the actual range of the spell." + the lesser-cover sentence; the legacy "deliver the spell even if its range is shorter" is gone). classFeatures/starlit-span `recordMarks` puts the lesser-cover rider on the actions/arcane-cascade row. Pinned by: "magus: Starlit Span prints the lesser-cover rider and drops the legacy range sentence" and "magus: a Starlit Span magus sees the lesser-cover rider on the Arcane Cascade action row".
+
+magus#twisting-tree-description - TAUGHT (rows). The option description goes through the merged classes/magus row. classFeatures/twisting-tree `description` gets the same hybrid-study-14 text (once-per-round free Interact; the Interact-or-Release-on-Strike and end-of-turn Interact wording is gone). classFeatures/twisting-tree `recordMarks` puts the grip rider on the actions/arcane-cascade row, matching WG's mode injectText. Pinned by: "magus: Twisting Tree prints the once-per-round free Interact, not the legacy Strike-time grip change" and "magus: a Twisting Tree magus sees the grip rider on the Arcane Cascade action row".
+
+CHECKS RUN
+- Every description row: each 3-word run of the new text occurs in the AoN doc its `why` names, or in the shipped text (replicated the applier's refusal-4 idea with node -e, read-only): all OK. I did not run the applier dry-run itself: the permission classifier denied running apply-parity-fixes.mjs.
+- supersedes: only the classes/magus/subclass.options row replaces an existing overlay key. No other row's key exists in scripts/data/effect-backfill.json.

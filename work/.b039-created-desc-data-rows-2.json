@@ -1,0 +1,33 @@
+{
+ "findings": [
+  {
+   "id": "magus#volatile-spark-reloading-cascade",
+   "backfillRows": [
+    {
+     "category": "actions",
+     "id": "reloading-cascade",
+     "field": "description",
+     "value": "You use Arcane Cascade and Interact to reload a firearm.",
+     "why": "batch 039 magus#volatile-spark-reloading-cascade: AoN hybrid-study-16 \"Reloading Cascade [Single Action] You use Arcane Cascade and Interact to reload a firearm.\" - verbatim."
+    },
+    {
+     "category": "actions",
+     "id": "reloading-cascade",
+     "field": "descRefs",
+     "value": [
+      {
+       "label": "Arcane Cascade",
+       "key": "actions"
+      },
+      {
+       "label": "Interact",
+       "key": "actions"
+      }
+     ],
+     "why": "batch 039 magus#volatile-spark-reloading-cascade: hybrid-study-16 links Interact (action-4174); Arcane Cascade is the magus action (action-4261)."
+    }
+   ],
+   "note": "Prose for the actions/reloading-cascade record created in work/.b039-rows-data-rows-2.json."
+  }
+ ]
+}

@@ -1,0 +1,53 @@
+{
+  "findings": [
+    {
+      "id": "magus#arcane-cascade-mode",
+      "backfillRows": [
+        {
+          "category": "stances",
+          "id": "arcane-cascade",
+          "field": "strikeDamage",
+          "value": [
+            {
+              "type": "force",
+              "appliesTo": "melee",
+              "flat": 1,
+              "byWeaponSpecialization": { "spec": 2, "greater": 3 },
+              "note": "Arcane Cascade"
+            }
+          ],
+          "why": "action-4261 (Impossible Magic pg. 12): \"your melee Strikes gain the arcane trait (making them magical) and deal 1 extra force damage ... If you have the weapon specialization class feature, the damage and resistance increase to 2, and if you have greater weapon specialization, they increase to 3.\" New reader: StanceDef.strikeDamage in derive.ts strikeDamageRiders (active stance, Requirements-gated) + StrikeDamageRider.byWeaponSpecialization."
+        }
+      ],
+      "note": "The stance the chip toggles carries the damage, so it no longer depends on the separate cat-arcane-cascade Modes toggle. The resistance half of this finding is delivered by data-rows' arcane-cascade#resistance row (stances/arcane-cascade resistances), which is not duplicated here; the two rows are different fields on the same record. Retiring or correcting cat-arcane-cascade in src/rules/modes.ts is a CROSS-FILE GAP (not an engine file)."
+    },
+    {
+      "id": "student-of-the-staff#magic-staves",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "student-of-the-staff",
+          "field": "critSpecWeapons",
+          "value": { "bases": ["staff"], "traits": ["staff"] },
+          "why": "feat-9060: \"When you critically succeed at an attack roll using a staff, you can apply the critical specialization effect of the club group.\" Magic staves (items/staff-of-fire etc.) carry the staff trait and no base link to the plain staff; the plain staff has no staff trait, so both routes are kept. Reader: derive.ts weaponMatches (traits route)."
+        },
+        {
+          "category": "feats",
+          "id": "student-of-the-staff",
+          "field": "weaponTraits",
+          "value": [
+            { "match": { "items": ["staff"], "whileStance": "arcane-cascade" }, "add": ["deadly-d6"] },
+            { "match": { "anyTrait": ["staff"], "whileStance": "arcane-cascade" }, "add": ["deadly-d6"] }
+          ],
+          "why": "feat-9060: \"While you're in Arcane Cascade stance, your staff gains the deadly d6 trait\". Reader: derive.ts applyWeaponRiders, new WeaponRider.match.whileStance gate (activeStance + activeStanceDef)."
+        }
+      ],
+      "note": "Neither field has an existing effect-backfill row for this record (critSpecWeapons comes from the importer), so no supersedes. The trait route also reaches the 3 musket staves (group firearm), which print covers as 'a staff' per the finding's proposal. The mode rider cat-student-of-the-staff in src/rules/modes.ts becomes redundant; retiring it is a CROSS-FILE GAP."
+    },
+    {
+      "id": "arcane-cascade#duplicate-toggles",
+      "backfillRows": [],
+      "note": "Code-only on the engine side: the stance (Character.activeStance) is made the single carrier by the StanceDef.strikeDamage reader (row authored under magus#arcane-cascade-mode) and the whileStance weapon-rider gate (row under student-of-the-staff#magic-staves). The actual removal of the other two toggles is outside the engine files: classResources.ts magus 'arcane-cascade' and modes.ts cat-arcane-cascade (CROSS-FILE GAPS)."
+    }
+  ]
+}

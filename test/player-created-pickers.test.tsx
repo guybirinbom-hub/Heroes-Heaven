@@ -372,7 +372,8 @@ describe('a created record says that none of its rules apply yet', () => {
   // batch 038: defensive-automaton#toughness
   // batch 038: newly-minted-automaton#lore
   // batch 038: lamentation-of-sinister-deals#avatar
-  it('the ledger names every created heritage, feat and class option not yet encoded (zombie-horde-impossible-magic, defensive-automaton, newly-minted-automaton, lamentation-of-sinister-deals leave in batch 038), and the marker shows for each', () => {
+  // batch 039: magus#volatile-spark-reloading-cascade
+  it('the ledger names every created heritage, feat and class option not yet encoded (zombie-horde-impossible-magic, defensive-automaton, newly-minted-automaton, lamentation-of-sinister-deals leave in batch 038; the magus hybrid study volatile-spark in batch 039), and the marker shows for each', () => {
     const c = db();
     const unencoded = new Set((LEDGER as { unencoded?: string[] }).unencoded ?? []);
     const has = (bucket: string, id: string, field: string) => !!(c as unknown as Record<string, Record<string, Record<string, unknown>>>)[bucket]?.[id]?.[field];
@@ -387,6 +388,9 @@ describe('a created record says that none of its rules apply yet', () => {
       'heritages/newly-minted-automaton': () => !!EXTRA_FEAT_TAKINGS['newly-minted-automaton'] || has('heritages', 'newly-minted-automaton', 'languageChoices'),
       // its avatar note (data-rows family)
       'classFeatures/lamentation-of-sinister-deals': () => has('classFeatures', 'lamentation-of-sinister-deals', 'spellNotes'),
+      // batch 039: magus#volatile-spark-reloading-cascade — AoN hybrid-study-16 "In addition, you gain the
+      // Reloading Cascade action": the created study now carries grantsActions ['reloading-cascade'].
+      'classFeatures/volatile-spark': () => has('classFeatures', 'volatile-spark', 'grantsActions'),
     };
     // A created background carries its boosts, skills and feat, so it is not "nothing encoded".
     for (const id of BACKGROUNDS) expect(unencoded.has(`backgrounds/${id}`), `backgrounds/${id}`).toBe(false);

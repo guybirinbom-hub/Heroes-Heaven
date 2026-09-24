@@ -1,0 +1,9 @@
+{
+  "findings": [
+    {
+      "id": "arcane-cascade#damage",
+      "backfillRows": [],
+      "note": "Code-only fix: FEAT_SITUATIONAL['arcane-cascade'] (strikeDamage star, printed 1/2/3 weapon-specialization scaling, action-4261) in src/rules/situationalBonuses.ts, reached via classFeatures/arcane-cascade grantsActions. No data row. The cat-arcane-cascade mode note correction lives in src/rules/modes.ts, outside this family's files (CROSS-FILE GAP in the report)."
+    }
+  ]
+}

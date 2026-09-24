@@ -1,0 +1,39 @@
+BATCH 039 — INSTRUMENTS (WG-COMPARISON lane) — family: instruments
+
+DATA STILL NEEDED
+(none from this family. The one real gap left on the record, grantsItem, is the data row of the sibling finding arcane-spellcasting-magus#spellbook-item (data-rows family): classFeatures/arcane-spellcasting-magus grantsItems = [{itemId:'spellbook-blank', quantity:1}].)
+
+CROSS-FILE GAPS
+(none)
+
+--- arcane-spellcasting-magus#instrument ---
+TEACH (not a settle): scripts/wg-diff.mjs, ourKindsOf, the class-chassis block's "Spell slots and the
+spellcasting proficiency come off the class's own progression" line. The rule credited spellSlot +
+spellcasting to a casting class's feature only when its id matched /-spellcasting$/; the magus's is
+the one class casting feature with its class as a suffix (arcane-spellcasting-magus). Now it also
+accepts id.endsWith(`-spellcasting-${owner}`), where owner is the class whose features list holds the
+record. Carrier: classes.magus.spellcasting (prepared/arcane/int, progression 'psychic' ->
+psychicSlots, cantripsKnown 5), which gives the printed "one 1st-rank spell and five cantrips".
+grantsItem is NOT credited and keeps reporting until the spellbook row lands.
+No settle was needed in wg-values / wg-identity / wg-experience: wg-values has nothing to adjudicate on
+the record; wg-identity's items theirs-not-ours=[spellbookblank] and experience's NO-SHEET-EFFECT
+(giveItem) are the same REAL spellbook gap and already count spellcasting/spellSlot as delivered.
+
+Tests (test/batch039-instruments.test.ts, each cited "// batch 039: arcane-spellcasting-magus#instrument"):
+  - built magus L1: prepared/arcane, cantripCap 5, prepared ranks [1] with 1 slot (carrier delivers print)
+  - wg-diff --raw, feature's grantsItems stripped in memory: missing === ['grantsItem'] (teach MATCHES)
+  - mutation-proof: classes.magus.spellcasting deleted -> spellcasting + spellSlot + grantsItem report again
+  - mutation-proof: feature moved to the wizard's features -> foreign suffix not credited, both kinds report
+  4/4 pass (node scripts/vt.mjs run test/batch039-instruments.test.ts). test-flip-audit --batch 039: clean.
+  npx tsc --noEmit: clean.
+
+BEFORE / AFTER per comparer (blast radius):
+  wg-diff (whole set, --out): THEY-ONLY 199 -> 199; disagree 2035, we-only 2911, agree 1105, noMatch 3937
+    unchanged. The only row that changed: classFeatures/arcane-spellcasting-magus
+    missing [spellcasting, grantsItem, spellSlot] -> [grantsItem]. Nothing gone or new anywhere else.
+    batch 037 THEY-ONLY: 0 -> 0.  batch 038: 0 -> 0.  batch 039: 1 -> 1 (same record, 3 kinds -> 1).
+  wg-values --batch: 037 / 038 / 039 output byte-identical before and after (0 records to adjudicate each).
+  wg-identity --batch: 037 65/65 match, 038 16/16, 039 7/8 (arcane-spellcasting-magus spellbookblank, the
+    real gap) — byte-identical before and after.
+  wg-casting (npx jiti, all classes): 16 class sources, 1 with mismatches (wizard cantrips, pre-existing,
+    not this family) — identical before and after.

@@ -469,6 +469,7 @@
   { "n": 160, "id": "reprint-damaged-pages", "status": "ruled" },
   { "n": 161, "id": "spell-parry-badge", "status": "ruled" },
   { "n": 162, "id": "engine-second-archetype-pool-spellshot-beast-gunner", "status": "open" },
-  { "n": 163, "id": "engine-no-route-riders-energy-fulminating-dispelling", "status": "open" }
+  { "n": 163, "id": "engine-no-route-riders-energy-fulminating-dispelling", "status": "open" },
+  { "n": 164, "id": "familiar#archetype-reach", "status": "open" }
  ]
 }

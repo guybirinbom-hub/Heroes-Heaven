@@ -1,0 +1,34 @@
+BATCH 039 — ADVERSARIAL VERIFY — family: instruments (WG-COMPARISON lane)
+
+arcane-spellcasting-magus#instrument — DONE
+  teach arcane-spellcasting-magus#instrument: scripts/wg-diff.mjs ourKindsOf (line ~1548) now credits spellSlot + spellcasting
+  when the id ends in -spellcasting OR -spellcasting-<owner>, owner = classOfFeature.get(id) (defined at ~1487, in scope).
+  Evidence:
+  - Blast radius re-measured on core.json: of the 12 class casting features only arcane-spellcasting-magus relies on the new
+    suffix branch; every other one already matched -spellcasting$. Carrier classes.magus.spellcasting =
+    {prepared, arcane, int, progression 'psychic', spellbook {5, 2/level}} delivers print "At 1st level, you can prepare
+    one 1st-rank spell and five cantrips each morning" (test: built magus L1 cantripCap 5, prepared {1:[1 slot]}).
+  - node scripts/vt.mjs run test/batch039-instruments.test.ts: 4/4 pass (two cases are mutation-proof: carrier deleted ->
+    spellcasting/spellSlot report again; feature moved to the wizard -> foreign suffix not credited).
+  - Throwaway harness (deleted): with the sibling row arcane-spellcasting-magus#spellbook-item applied in memory
+    (grantsItems [{itemId:'spellbook-blank',quantity:1}]), wg-diff --raw no longer lists the record in THEY-ONLY at all,
+    so the teach plus the data-rows family's row close the record completely; without that row only grantsItem reports.
+  - npx tsc --noEmit: clean. node scripts/test-flip-audit.mjs --batch 039: clean (5 test files, 0 new settle keys, every flip cited).
+
+SPEC ROWS (work/.b039-rows-instruments.json): backfillRows is empty (code-only teach), so there are no record/field
+  collisions, supersedes or create rows to check. The note's print quote matches the finding's printed text.
+
+MANIFEST (work/.b039-specs.json): the instruments entry lists every path it touched in stage[]
+  (work/.b039-rows-instruments.json, test/batch039-instruments.test.ts, scripts/wg-diff.mjs). The situational entry is
+  still present. When this check ran, the manifest had no entry for data-rows or engine, even though
+  work/.b039-rows-data-rows-{1,2}.json, work/.b039-rows-engine.json and engine's src edits (derive.ts, types.ts) exist
+  on disk. Those families register their own entries. This family did not drop them, but the orchestrator should
+  confirm they are listed before the commit.
+  I changed no files, so I add no stage[] paths.
+
+DATA STILL NEEDED
+(none from this family. The spellbook grantsItems row is arcane-spellcasting-magus#spellbook-item, in the data-rows family.
+ It is already written in work/.b039-rows-data-rows-1.json.)
+
+CROSS-FILE GAPS
+(none)

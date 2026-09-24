@@ -1,0 +1,14 @@
+GAP AGENT - family "situational", batch 039
+
+- gap line 11 (work/.b039-report-situational.txt:5, src/rules/modes.ts:303 cat-arcane-cascade, arcane-cascade#damage): AUTHORED, ref test/batch039-gap-situational.test.ts. The mode that carried the invented "+2 if expert in your tradition" note is now retired at src/rules/modes.ts:303. The sibling gap agent made that edit under magus#arcane-cascade-toggles, and I did not edit modes.ts, so the two edits do not collide. My test pins teach arcane-cascade#damage on a built magus 7 with every magus catalogue mode switched on. No mode prints the tradition rung or a flat +1 untyped damage, and the printed 1/2/3 star (action-4261) is still read. A copy with the old mode shape patched in memory brings the contradicting star back, which proves the check has teeth.
+- gap line 22 (work/.b039-verify-situational.txt:15, same site, the second half of arcane-cascade#damage covering the flat m(1,'untyped','damage') modifier): AUTHORED, ref test/batch039-gap-situational.test.ts. This line is closed by the same retirement and the same test. The test asserts that a built magus reads no "+1 untyped from Arcane Cascade" star and that no Arcane Cascade catalogue mode carries an untyped damage modifier. It stays green whether the mode is retired or later rewritten to print.
+
+SPEC: work/.b039-rows-gap-situational.json has backfillRows [] because this was a test-only close with no data row. Its manifest entry (family gap-situational) stages the spec, this report and test/batch039-gap-situational.test.ts.
+CHECKS: node scripts/vt.mjs run test/batch039-gap-situational.test.ts passed 3/3. npx tsc --noEmit is clean. test-flip-audit --batch 039 is clean.
+NOTE for the close: engine's gap lines 8 and 18 ask for FEAT_SITUATIONAL['arcane-cascade'] (src/rules/situationalBonuses.ts) to be reduced to the damage-type swap once stances/arcane-cascade strikeDamage lands. Those are engine's lines, and I did not touch them here. My test reads that star by sourceId only, so rewording it does not break the test.
+
+DATA STILL NEEDED
+(none)
+
+CROSS-FILE GAPS
+(none)

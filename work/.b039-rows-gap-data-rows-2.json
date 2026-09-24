@@ -1,0 +1,9 @@
+{
+  "findings": [
+    {
+      "id": "magus#arcane-cascade-toggles",
+      "backfillRows": [],
+      "note": "Gap stage, code only, already in the tree: src/rules/classResources.ts drops the reader-less magus 'arcane-cascade' toggle, and src/rules/modes.ts retires cat-arcane-cascade (its +1 untyped would stack on the stance's force damage; its '+2 if expert in your tradition' is in no printing). The stance chip is the one carrier: stances/arcane-cascade strikeDamage (work/.b039-rows-engine.json, magus#arcane-cascade-mode) and resistances (work/.b039-rows-data-rows-1.json, arcane-cascade#resistance). Pinned by test/batch039-data-rows-2.test.ts 'magus: a built magus has no Arcane Cascade class resource and no Arcane Cascade mode, only the stance'."
+    }
+  ]
+}

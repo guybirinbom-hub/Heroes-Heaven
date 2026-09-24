@@ -325,11 +325,14 @@ describe('batch 29 — magus studious spells', () => {
   const studies: [string, string[]][] = [
     ['aloof-firmament', ['water-walk', 'wall-of-wind', 'variable-gravity']],
     ['inexorable-iron', ['enlarge', 'earthbind', 'planar-tether']],
-    ['laughing-shadow', ['blur', 'shift-blame', 'translocate']],
+    // batch 039: magus#studious-spells-laughing-shadow — hybrid-study-11 prints "Studious Spell (11th) Ghostly Weapon"
+    ['laughing-shadow', ['blur', 'ghostly-weapon', 'translocate']],
     ['resurgent-maelstrom', ['water-walk', 'aqueous-orb', 'unfettered-movement']],
     ['sparkling-targe', ['resist-energy', 'warding-aggression', 'mountain-resilience']],
-    ['starlit-span', ['darkvision', 'wall-of-wind', 'unfettered-movement']],
-    ['twisting-tree', ['embed-message', 'slow', 'flicker']],
+    // batch 039: magus#studious-spells-starlit-span — hybrid-study-13 prints "Studious Spell (7th) Telekinetic Maneuver"
+    ['starlit-span', ['telekinetic-maneuver', 'wall-of-wind', 'unfettered-movement']],
+    // batch 039: magus#studious-spells-twisting-tree — hybrid-study-14 prints "Studious Spell (7th) Oaken Resilience"
+    ['twisting-tree', ['oaken-resilience', 'slow', 'flicker']],
     ['unfurling-brocade', ['web', 'whirling-scarves', 'planar-tether']],
   ];
 

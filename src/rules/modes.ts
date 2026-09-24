@@ -300,27 +300,19 @@ const RAW_MODES: ModeDef[] = [
   { id: 'cat-panache-legacy', name: 'Panache (legacy)', category: 'Swashbuckler', classes: ['swashbuckler'], exclusiveGroup: 'swashbuckler-panache', modifiers: [], note: 'Pre-Remaster panache: a status bonus to Speed and to certain Acrobatics/Athletics actions.' },
 
   // ---- Magus ----
-  { id: 'cat-arcane-cascade', name: 'Arcane Cascade', category: 'Magus', classes: ['magus'], modifiers: [m(1, 'untyped', 'damage', { appliesWhen: 'your Strikes while in Arcane Cascade stance' })], note: 'Stance: your Strikes deal +1 extra damage (+2 if expert in your tradition), of a type tied to your last spell.' },
-  /*
-   * *"While you're in Arcane Cascade stance, your staff gains the deadly d6 trait, with the damage from
-   * the deadly die being the same damage type as the extra damage from Arcane Cascade."*
-   *
-   * A SEPARATE toggle rather than a clause of Arcane Cascade above: the stance is the requirement, the
-   * trait comes from a feat, and a magus who never took Student of the Staff must not have their staff
-   * gain deadly d6 for entering the stance. Exactly the reasoning Invoke Offense already uses.
-   *
-   * The record itself carries only `critSpec`/`critSpecWeapons`, which cover its FIRST sentence; the
-   * deadly die had no carrier at all, so a staff crit never picked up the extra die.
-   */
-  {
-    id: 'cat-student-of-the-staff',
-    name: 'Student of the Staff',
-    category: 'Magus',
-    feats: ['student-of-the-staff'],
-    modifiers: [],
-    note: "While you're in Arcane Cascade stance, your staff gains deadly d6; the deadly die's damage type matches Arcane Cascade's extra damage.",
-    weaponTraits: { match: { items: ['staff'] }, add: ['deadly-d6'] },
-  },
+  /* batch 039: magus#arcane-cascade-toggles — cat-arcane-cascade is retired. Print (action-4261): "While
+   * you're in the stance, your melee Strikes ... deal 1 extra force damage, and you gain resistance 1 to
+   * damage from spells." The stance chip (activeStance -> stances['arcane-cascade'] strikeDamage +
+   * resistances) carries all of it; this mode was a second, unlinked toggle whose +1 untyped would have
+   * stacked on the stance's force damage, and its "+2 if expert in your tradition" was in no printing.
+   * A saved id resolves through content.modes[id] (play.ts) and is filtered out, so old saves are safe. */
+  /* batch 039: student-of-the-staff#magic-staves — cat-student-of-the-staff is retired. Print (feat-9060):
+   * "While you're in Arcane Cascade stance, your staff gains the deadly d6 trait". The feat record now
+   * carries that itself (feats/student-of-the-staff weaponTraits, gated whileStance:'arcane-cascade',
+   * matching the plain staff AND every `staff`-trait magic staff), so it follows the stance chip. This
+   * toggle was a second switch the player had to remember, keyed only to the plain `staff` id (Staff of
+   * Fire never got the die), and it gave the die with no stance at all. A saved id resolves through
+   * content.modes[id] (play.ts) and is filtered out, so old saves are safe. */
 
   // ---- Monk ----
   { id: 'cat-mountain-stance', name: 'Mountain Stance', category: 'Monk', classes: ['monk'], modifiers: [], note: 'Stance (incl. the Supported Armor version): falling-stone unarmed Strikes and a strong defensive posture; apply the stance’s AC effect per its rules.' },

@@ -110,11 +110,18 @@ describe('trust-approvals.json — completeness', () => {
    * (three spellshot riders with no engine carrier — how should each be exposed). Both are `open`, so
    * both are `unruled` below. Roster 161 -> 163.
    */
+  /*
+   * Then batch 039 filed ONE: #164 familiar#archetype-reach (feat-5024 prints "Archetypes Elementalist
+   * (Level 4), Shadowcaster (Level 4), Soul Warden (Level 4)" and the app has no class-feat-via-
+   * archetype lane). `open`, so `unruled` below. Roster 163 -> 164.
+   */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
-  it('the desk roster is every number in work/owner-questions.json — 163: 155 batch-filed questions, the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane and the two filed by the 2026-09-22 Spellshot lane — with no gaps or repeats', () => {
+  // batch 039: familiar#archetype-reach
+  it('the desk roster is every number in work/owner-questions.json — 164: 156 batch-filed questions (familiar#archetype-reach the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane and the two filed by the 2026-09-22 Spellshot lane — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
-    expect(deskNumbers.length).toBe(163);
+    // batch 039: familiar#archetype-reach
+    expect(deskNumbers.length).toBe(164);
   });
 
   it('every desk number has exactly one disposition', () => {

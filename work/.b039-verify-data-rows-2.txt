@@ -1,0 +1,39 @@
+batch 039 - VERIFY data-rows-2 (chunk 2 of 2 of the data-rows family)
+specs checked: work/.b039-rows-data-rows-2.json, work/.b039-created-desc-data-rows-2.json
+method: every row applied IN MEMORY to a content() copy by a throwaway harness (test/zz-tmp-verify-dr2.test.ts, deleted) that then ran
+test/batch039-data-rows-2.test.ts + test/batch29-data.test.ts + test/impossible-magic-saved-characters.test.ts on built characters: 84/84 green.
+Without the rows test/batch039-data-rows-2.test.ts is 15/15 red (each on its own field), as the builder said. npx tsc --noEmit clean.
+node scripts/test-flip-audit.mjs --batch 039: clean, every flip cited.
+
+ROW CHECKS
+- Targets: feats/student-of-the-staff, feats/burning-cascade, feats/hasted-assault, spells/hasted-assault, classes/magus (path subclass), classFeatures/volatile-spark, classFeatures/starlit-span, classFeatures/twisting-tree all exist; actions/reloading-cascade is absent from every core bucket and carries create:true with no prose in it; its description/descRefs are in the created-desc spec.
+- classes/magus subclass.options: the superseded overlay row #13328 equals the shipped value; the new value differs from it ONLY in laughing-shadow L11 (shift-blame -> ghostly-weapon), starlit-span L7 (darkvision -> telekinetic-maneuver), twisting-tree L7 (embed-message -> oaken-resilience), and the starlit-span / twisting-tree description + descRefs. Order and the other 8 options are byte-identical. supersedes:true present.
+- Every description row checked against the shipped text and the mirror doc (feat-9060, feat-9051, feat-9084, spell-2880, hybrid-study-13, -14, -16): each change is exactly the printed delta (curly quotes straightened as shipped).
+- Ids named by rows all exist: spells ghostly-weapon / telekinetic-maneuver / oaken-resilience, actions spellstrike / arcane-cascade / interact.
+- Readers: recordMarks -> explain.ts recordMarksFor (taken feats + ownedFeatureIds); grantsActions -> MainTab actionGranters (ownedFeatureIds includes the chosen subclass); spellSlotBonus.restricted ladder -> build.ts (spellbook assertion green); prerequisites -> Builder; actionCost -> sheet.
+- Collisions: 0 across all six b039 spec files (keys category|id|field|path). Engine's feats/student-of-the-staff critSpecWeapons + weaponTraits are different fields.
+- Reloading Cascade traits []: hybrid-study-16 prints the action with no trait line; print beats the finding's traits ['magus'] proposal. Correct.
+
+PER FINDING
+student-of-the-staff#spellstrike-clause - DONE. Description = feat-9060 body (parenthetical + "you can apply"); recordMarks on actions/spellstrike reaches a built magus 4 with the feat (harness green).
+burning-cascade - DONE. recordMarks on actions/arcane-cascade reaches a built magus 4 with the feat; actionCost passive; scraped header gone, no words added.
+hasted-assault#prerequisites - DONE. prerequisites [] (feat-9084 has none); legacy focus-pool sentence removed (deletion only).
+hasted-assault#spell-body - DONE. spells/hasted-assault = spell-2880 body ("only Stride and Strike actions" + timing sentence).
+magus#arcane-cascade-toggles - NOT-DONE (no row of this chunk, correctly). The payload now lands on the stance the chip toggles through sibling rows (data-rows-1 arcane-cascade#resistance: stances resistances; engine magus#arcane-cascade-mode: stances strikeDamage). Still missing: the reader-less classResources.ts:145 magus 'arcane-cascade' toggle is not deleted, and modes.ts:303 cat-arcane-cascade still adds +1 untyped damage, which will stack with the stance's force damage once strikeDamage lands. Both are in CROSS-FILE GAPS.
+magus#arcane-cascade-stance-requires - DONE, carried by data-rows-1's arcane-cascade#requirement rows (stances/arcane-cascade requires value:null supersedes:true; note rewritten to the action-4261 same-turn rule). No row here, which is correct: a second row on those keys would collide.
+magus#studious-spells-laughing-shadow - DONE. Merged classes/magus options row; a built magus 11 Laughing Shadow has ghostly-weapon and not shift-blame in the spellbook.
+magus#studious-spells-starlit-span - DONE (same merged row). Built magus 7 Starlit Span: telekinetic-maneuver, no darkvision.
+magus#studious-spells-twisting-tree - DONE (same merged row). Built magus 7 Twisting Tree: oaken-resilience, no embed-message.
+magus#volatile-spark-reloading-cascade - DONE. Created actions/reloading-cascade (1 action, printed text) + classFeatures/volatile-spark grantsActions; a built Volatile Spark magus owns the granter.
+magus#starlit-span-description - DONE. The option and classFeatures descriptions = hybrid-study-13; lesser-cover recordMark on the Arcane Cascade row reaches a built Starlit Span magus.
+magus#twisting-tree-description - DONE. The option and classFeatures descriptions = hybrid-study-14; the once-per-round grip recordMark reaches a built Twisting Tree magus.
+
+FIXED-BY-ME
+- test/batch29-data.test.ts (the builder's CROSS-FILE GAP): the `studies` table in 'batch 29 — magus studious spells' pinned shift-blame / darkvision / embed-message and would go red the moment the classes/magus row lands. Changed to ghostly-weapon / telekinetic-maneuver / oaken-resilience, each under "// batch 039: magus#studious-spells-<study>". Red now (3 rows) until the driver applies the row, green with it applied (harness). Flip audit clean. Manifest: work/.b039-specs.json data-rows-2 entries gained work/.b039-verify-data-rows-2.txt and test/batch29-data.test.ts.
+
+DATA STILL NEEDED
+(none - every row this chunk needs is in the two spec files)
+
+CROSS-FILE GAPS
+- src/rules/classResources.ts:145 magus {id:'arcane-cascade', kind:'toggle'}: delete it (no reader). Needed to close magus#arcane-cascade-toggles (engine's arcane-cascade#duplicate-toggles names the same line). Re-check test/class-resources.test.ts:79 when it goes.
+- src/rules/modes.ts:303 cat-arcane-cascade: retire it (or drop its m(1,'untyped','damage') and rewrite the note to print) once stances/arcane-cascade strikeDamage lands, or a magus with the mode on and the stance chip on gets +1 untyped on top of the stance's 1/2/3 force. Needed to close magus#arcane-cascade-toggles. No family owns modes.ts this batch.

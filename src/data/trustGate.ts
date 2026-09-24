@@ -157,7 +157,10 @@ const MODE_PAYLOAD = [
   'unarmedTraits',
   'weaponTraits',
 ];
-const STANCE_PAYLOAD = ['strikes', 'acBonus', 'dexCap', 'resistances', 'senses', 'senseIfFeat', 'speeds', 'saves'];
+/* batch 039: magus#arcane-cascade-mode — a stance may now carry `strikeDamage` (action-4261: "your melee
+ * Strikes ... deal 1 extra force damage"), read by derive.ts strikeDamageRiders off the active stance. It
+ * is a BENEFIT, so a gated stance's damage rider goes dark with its resistances and strikes. */
+const STANCE_PAYLOAD = ['strikes', 'acBonus', 'dexCap', 'resistances', 'senses', 'senseIfFeat', 'speeds', 'saves', 'strikeDamage'];
 
 type Node = Record<string, unknown>;
 

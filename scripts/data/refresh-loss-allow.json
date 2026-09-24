@@ -2056,5 +2056,71 @@
   "field": "effectChoices",
   "aon": "arcane-thesis-10",
   "why": "the same prompt repair; arcane-thesis-10 (Staff Nexus) prints the makeshift staff. Same spell filters."
+ },
+ {
+  "key": "classes/magus",
+  "field": "subclass.options",
+  "aon": "class-74",
+  "why": "batch 039 magus#studious-spells-laughing-shadow / -starlit-span / -twisting-tree: the three hybrid-study options changed IN PLACE (no option lost, 10 before and after) to the Impossible Magic studious-spell rungs, Ghostly Weapon (hybrid-study-11), Telekinetic Maneuver (hybrid-study-13), Oaken Resilience (hybrid-study-14). The guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classFeatures/spellstrike",
+  "field": "description",
+  "aon": "class-feature-1259",
+  "why": "batch 039 spellstrike#description: the legacy Secrets of Magic body replaced by the remaster printing, whose own paragraph reads \"Invalid or Immune Target: If the target you hit wouldn't be a valid target for the spell, the spell is still expended\"; shorter because the remaster text is."
+ },
+ {
+  "key": "classFeatures/twisting-tree",
+  "field": "description",
+  "aon": "hybrid-study-14",
+  "why": "batch 039 magus#twisting-tree-description: replaced with the Impossible Magic printing (\"While you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action\"); the legacy text it replaced was longer."
+ },
+ {
+  "key": "feats/force-fang",
+  "field": "description",
+  "aon": "feat-9048",
+  "why": "batch 039 force-fang#description: the legacy feat-2850 sentence removed; the remaster printing is \"You can turn your attack into an unerring blur of force. You learn the force fang conflux spell.\""
+ },
+ {
+  "key": "feats/burning-cascade",
+  "field": "description",
+  "aon": "feat-9051",
+  "why": "batch 039 burning-cascade: description set to the Impossible Magic printing (\"When you use Arcane Cascade, each enemy in a 5-foot emanation takes damage equal to the extra damage from Arcane Cascade\"), shorter than the legacy body it replaced."
+ },
+ {
+  "key": "feats/burning-cascade",
+  "field": "actionCost.type",
+  "aon": "feat-9051",
+  "why": "batch 039 burning-cascade: the record carried no actionCost at all; feat-9051 prints no action badge (it rides Arcane Cascade), so it is passive. A field gained, not a number moved."
+ },
+ {
+  "key": "feats/starlit-eyes",
+  "field": "situational",
+  "aon": "feat-9058",
+  "why": "batch 039 starlit-eyes#dc: the first star carried the legacy stance-only 3/9; the remaster printing reads \"The DC is reduced to 4 instead of 5 against a concealed creature and to 10 instead of 11 against a hidden one\" with 3/9 only in Arcane Cascade. Same two members, the first rewritten."
+ },
+ {
+  "key": "feats/hasted-assault",
+  "field": "prerequisites",
+  "aon": "feat-9084",
+  "why": "batch 039 hasted-assault#prerequisites: the legacy feat-2878 'focus pool' prerequisite dropped; the Impossible Magic printing (feat-9084) lists no prerequisites."
+ },
+ {
+  "key": "feats/hasted-assault",
+  "field": "description",
+  "aon": "feat-9084",
+  "why": "batch 039 hasted-assault#prerequisites: description set to the remaster printing \"You can speed yourself up to move and attack more swiftly. You learn the hasted assault conflux spell.\""
+ },
+ {
+  "key": "actions/arcane-cascade",
+  "field": "description",
+  "aon": "action-4261",
+  "why": "batch 039 arcane-cascade#requirement: the action text replaced by the remaster printing, which has no Requirements entry and ends \"If you Cast a Spell and then enter Arcane Cascade on the same turn, you can change the damage from the stance to any one damage type that spell could deal instead of force.\""
+ },
+ {
+  "key": "stances/arcane-cascade",
+  "field": "requires.text",
+  "aon": "action-4261",
+  "why": "batch 039 arcane-cascade#requirement / magus#arcane-cascade-stance-requires: action-4261 prints no Requirements entry, so the authored hard gate is removed and the same-turn clause lives in the stance note."
  }
 ]

@@ -4221,6 +4221,11 @@ export function strikeDamageRiders(
   // place a permanent one does, or a 10-minute "+1d4 fire to your unarmed attacks" has nowhere to go
   // but a note: `grantedStrikes` grants a NEW attack, which is not what those effects say.
   for (const m of c.activeModes ?? []) if (m.strikeDamage) sources.push(m);
+  /* …and the ACTIVE STANCE (Requirements-gated by activeStanceDef). batch 039: magus#arcane-cascade-mode
+   * — action-4261: *"While you're in the stance, your melee Strikes … deal 1 extra force damage"*. The
+   * stance chip is where the player enters Arcane Cascade, so the stance record carries the damage. */
+  const stance = activeStanceDef(c, db);
+  if (stance?.strikeDamage) sources.push(stance);
   // A resolved effect PICK — Potent Nectar's permanent one-of-two choice lands here.
   if (c.chosenEffects?.strikeDamage) sources.push({ strikeDamage: c.chosenEffects.strikeDamage });
   // The specific weapon's own intrinsic riders (Hyldarf's Fang +2d6) — only this Strike.
@@ -4246,6 +4251,14 @@ export function strikeDamageRiders(
         // Keyed to the strike's proficiency — only expert+ qualifies; take the value at that rank.
         const key = ctx.rank as 'expert' | 'master' | 'legendary';
         flat = Math.max(flat, RANK_I.indexOf(ctx.rank) >= 2 ? r.byStrikeProficiency[key] ?? 0 : 0);
+      }
+      /* batch 039: magus#arcane-cascade-mode — action-4261: *"If you have the weapon specialization
+       * class feature, the damage and resistance increase to 2, and if you have greater weapon
+       * specialization, they increase to 3."* */
+      if (r.byWeaponSpecialization) {
+        const ws = weaponSpecialization(c, db);
+        const v = ws.greater ? r.byWeaponSpecialization.greater : ws.spec ? r.byWeaponSpecialization.spec : undefined;
+        if (v != null) flat = Math.max(flat, v);
       }
       if (flat > 0) flatByType.set(r.type, Math.max(flatByType.get(r.type) ?? 0, flat));
       if (r.dice) {
@@ -4519,6 +4532,10 @@ function applyWeaponRiders(c: Character, db: ContentDatabase, w: WeaponItem, inv
       // "Your innovation gains the tearing trait." Matches nothing when nothing is designated — a
       // "first weapon" fallback would hand a greatsword's modifications to a dagger.
       if (m.designated && !(inv?.designations ?? []).includes(m.designated)) continue;
+      /* batch 039: student-of-the-staff#magic-staves — feat-9060: *"While you're in Arcane Cascade
+       * stance, your staff gains the deadly d6 trait"*. Gated through activeStanceDef so a stance whose
+       * Requirements fail gives nothing here either. */
+      if (m.whileStance && !(c.activeStance === m.whileStance && activeStanceDef(c, db))) continue;
 
       /* …or the traits the PLAYER chose. Fighting Horn prints *"Choose two of the following weapon
        * traits: disarm, grapple, shove, and trip. Your horn gains the chosen traits."* — a fixed

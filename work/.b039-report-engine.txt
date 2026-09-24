@@ -1,0 +1,40 @@
+BATCH 039 - ENGINE family report
+
+DATA STILL NEEDED
+(none - the three rows these findings need are authored in work/.b039-rows-engine.json for the driver to apply: stances/arcane-cascade strikeDamage, feats/student-of-the-staff critSpecWeapons, feats/student-of-the-staff weaponTraits)
+
+CROSS-FILE GAPS
+- src/rules/modes.ts:303 cat-arcane-cascade (arcane-cascade#duplicate-toggles, magus#arcane-cascade-mode): retire the mode once stances/arcane-cascade strikeDamage (this family) and resistances (data-rows, arcane-cascade#resistance) land - the stance chip then carries the whole printed payload (action-4261), and a magus with both on would get the mode's +1 untyped on top of the stance's force damage. If it is kept instead, drop its m(1,'untyped','damage') modifier and rewrite the note to print (melee Strikes, 1 force, 2 with weapon specialization / 3 with greater, resistance to spells; no "expert in your tradition" clause). No family was assigned modes.ts this batch - the orchestrator's call.
+- src/rules/modes.ts:315-323 cat-student-of-the-staff (student-of-the-staff#magic-staves): retire it - the deadly d6 now rides feats/student-of-the-staff weaponTraits gated whileStance:'arcane-cascade', so it follows the stance chip with no extra toggle. If kept, its match {items:['staff']} still misses every magic staff; widen to the same two riders as the row.
+- src/rules/classResources.ts:145 magus {id:'arcane-cascade', kind:'toggle'} (arcane-cascade#duplicate-toggles): delete it - no reader anywhere keys on it (0 hits for a gate/whileActive/requiresState on 'arcane-cascade'). test/class-resources.test.ts:79 already asserts some list lacks 'arcane-cascade'; re-check it when the entry goes.
+- src/rules/situationalBonuses.ts FEAT_SITUATIONAL['arcane-cascade'] (situational family, arcane-cascade#damage): once stances/arcane-cascade strikeDamage lands the stance FOLDS 1/2/3 force into the Strike's damage while it is on, so the star's "+1 extra damage (2 with weapon specialization, 3 with greater…)" re-reports a number already in the line; reword the star to the damage-type swap only ("force, or one type the spell you Cast this turn before entering could deal") or drop it.
+- src/data/trustGate.ts:160 STANCE_PAYLOAD: add 'strikeDamage' so a trust-gated stance's new damage rider goes dark like its resistances/strikes do (docs/trust-gate.md: a benefit is payload). test/trust-gate.test.ts:246 compares stances['arcane-cascade'] gated vs ungated - it only changes if the ledger ever names that stance.
+- src/data/trust-ledger.json (regenerate with scripts/trust-ledger.mjs after the rows land): feats/student-of-the-staff names critSpec/critSpecWeapons today; the new weaponTraits path and stances/arcane-cascade strikeDamage need their ledger state recomputed.
+
+PER FINDING
+
+magus#arcane-cascade-mode
+  did: teach magus#arcane-cascade-mode - two reader widenings plus one row.
+    * src/rules/types.ts StanceDef.strikeDamage (new field, StrikeDamageRider[]); src/rules/derive.ts strikeDamageRiders now pushes activeStanceDef(c, db) when it carries strikeDamage (Requirements-gated through activeStanceDef, same as every stance payload).
+    * src/rules/types.ts StrikeDamageRider.byWeaponSpecialization {spec, greater}; src/rules/derive.ts strikeDamageRiders raises flat to spec/greater off weaponSpecialization(c, db) (the class feature print names: "If you have the weapon specialization class feature … greater weapon specialization").
+    * row stances/arcane-cascade strikeDamage [{type:'force', appliesTo:'melee', flat:1, byWeaponSpecialization:{spec:2, greater:3}, note:'Arcane Cascade'}] (work/.b039-rows-engine.json).
+    The resistance half of the claim is data-rows' arcane-cascade#resistance row (stances/arcane-cascade resistances, reader derive.ts:2780 activeStanceDef resistances) - not duplicated here, different field, no collision. The note/modifier on cat-arcane-cascade is a CROSS-FILE GAP (modes.ts). The printed arcane trait on melee Strikes is not part of the claim and has no carrier (StanceDef has no weapon-trait field); left alone.
+  blast radius: none today - 0 stances carry strikeDamage and 0 records use byWeaponSpecialization (measured over public/core.json); only the new row reaches a character.
+  test: test/batch039-engine.test.ts "magus in Arcane Cascade: +1 force at 1st, 2 with weapon specialization (7th), 3 with greater (15th)" (built magus 1/7/15, activeStance, staff Strike damage "plus N force") and "magus in Arcane Cascade: melee only, and nothing without the stance or without the row" (shortbow gets none; out of stance none; field stripped in memory none).
+
+student-of-the-staff#magic-staves
+  did: teach student-of-the-staff#magic-staves - one reader widening plus two rows.
+    * src/rules/types.ts WeaponRider.match.whileStance; src/rules/derive.ts applyWeaponRiders skips a rider unless c.activeStance === whileStance and activeStanceDef(c, db) is live.
+    * row feats/student-of-the-staff critSpecWeapons {bases:['staff'], traits:['staff']} (reader derive.ts weaponMatches traits route; the plain staff has no staff trait so bases stays).
+    * row feats/student-of-the-staff weaponTraits [{match:{items:['staff'], whileStance:'arcane-cascade'}, add:['deadly-d6']}, {match:{anyTrait:['staff'], whileStance:'arcane-cascade'}, add:['deadly-d6']}].
+    The trait route also reaches the 3 musket staves (group firearm), as the finding's proposal accepts. Retiring the now-redundant cat-student-of-the-staff mode is a CROSS-FILE GAP.
+  blast radius: none today - 0 records use whileStance; critSpecWeapons change affects only this feat's owners (Staff of Fire and the other 151 staff-trait weapons now show club crit spec for them).
+  test: test/batch039-engine.test.ts "student-of-the-staff critSpecWeapons with traits:[staff] reaches Staff of Fire, not only the plain staff" (strikeShowsCritSpec false with the shipped {bases:['staff']} copy, true with the row copy, on a built 4th-level twisting-tree magus) and "student-of-the-staff: deadly d6 on the plain AND the magic staff while in Arcane Cascade, and only then" (deadly-d6 on staff + staff-of-fire in stance, absent out of stance, absent for a magus without the feat).
+
+arcane-cascade#duplicate-toggles
+  did: teach arcane-cascade#duplicate-toggles - engine side only: the stance (Character.activeStance, set by the stance chip) is now able to carry the damage (StanceDef.strikeDamage reader) and the Student of the Staff deadly die (whileStance gate), which is what lets the other two toggles go. No row of its own (backfillRows []).
+  NOT DONE (outside engine files): deleting classResources.ts magus 'arcane-cascade' and retiring modes.ts cat-arcane-cascade - see CROSS-FILE GAPS.
+  test: test/batch039-engine.test.ts "arcane-cascade entered only through activeStance delivers the damage with activeModes empty" (built magus, activeModes [] and classResources {}, staff Strike carries "plus 1 force").
+
+CHECKS
+  node scripts/vt.mjs run test/batch039-engine.test.ts - 5/5 pass. npx tsc --noEmit clean.

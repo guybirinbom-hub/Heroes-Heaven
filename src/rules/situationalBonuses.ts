@@ -1431,6 +1431,17 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "initiate-benefit-regalia": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "while you hold your regalia implement", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "while you hold your regalia implement", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while you hold your regalia implement", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against fear effects, while you hold your regalia (your inspiring aura; allies in 15 feet get it too)", bonus: "+1 status" }],
   "initiate-benefit-shield": [{ targets: [{ kind: 'ac' }], when: "while your shield implement is at 1 Hit Point: its Raise a Shield bonus to AC is 1 lower until it's repaired", bonus: "-1 circumstance (a penalty)" }],
   "initiate-benefit-tome": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge, while you hold your tome implement", bonus: "+1 circumstance" }],
+  /* batch 039: arcane-cascade#damage. Print (action-4261, Impossible Magic): *"your melee Strikes gain
+   * the arcane trait (making them magical) and deal 1 extra force damage... If you have the weapon
+   * specialization class feature, the damage and resistance increase to 2, and if you have greater
+   * weapon specialization, they increase to 3."* The only number we carried was the cat-arcane-cascade
+   * mode's flat +1, whose note invented a "+2 if expert in your tradition" rung. Keyed by the ACTION id:
+   * classFeatures/arcane-cascade grantsActions ['arcane-cascade'], which `characterSituationalIds`
+   * follows. The damage-type swap is the same-turn rule action-4261 prints. The resistance half is a
+   * stances data row (arcane-cascade#resistance), not a star. */
+  /* batch 039 closer: `when` trimmed to 116 chars — ruling H caps a situational `when` at one line
+   * (120; test/rulings-dfgh.test.ts, test/held-back-registry-fixes.test.ts). Same printed clauses. */
+  "arcane-cascade": [{ targets: [{ kind: 'strikeDamage' }], when: "on melee Strikes in Arcane Cascade stance (force, or a type the spell you Cast this turn before entering could deal)", bonus: "+1 extra damage (2 with weapon specialization, 3 with greater weapon specialization)" }],
   "laughing-shadow": [{ targets: [{ kind: 'speed' }], when: "while in Arcane Cascade stance", bonus: "+5 status (+10 if unarmored)" }, { targets: [{ kind: 'strikeDamage' }], when: "while in Arcane Cascade with your other hand completely free, attacking an off-guard creature", bonus: "extra damage becomes 3 (5 with weapon specialization, 7 with greater weapon specialization)" }],
   /* WG parity b029. Print (class-feature-493): *"on a successful Overdrive, you increase the
    * additional damage by a total of 2, replacing the increase from expert overdrive."* The number

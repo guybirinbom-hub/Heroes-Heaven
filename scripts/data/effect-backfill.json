@@ -78879,9 +78879,8 @@
   "category": "stances",
   "id": "arcane-cascade",
   "field": "requires",
-  "value": {
-   "text": "You used your most recent action this turn to Cast a Spell or make a Spellstrike"
-  }
+  "value": null,
+  "why": "AoN action-4261 (Arcane Cascade, Impossible Magic, the action's own aonId) prints no Requirements line; the Player Core \"You used your most recent action this turn to Cast a Spell or make a Spellstrike\" is gone. value:null removes the requires field the earlier overlay row set (its text was a reminder only — stanceRequirementIssue gates only on unarmored/armored — so nothing mechanical is lost)."
  },
  {
   "category": "stances",
@@ -149248,7 +149247,8 @@
   "category": "feats",
   "id": "raise-a-tome",
   "field": "note",
-  "value": "With Shield Block you can use the raised tome as a shield (Hardness 3, HP 12, BT 6), and anything that lets you Raise a Shield can Raise a Tome instead — the sheet shows no shield block for it."
+  "value": "When you Raise a Shield you can raise a book you're wielding instead. With Shield Block you can use the raised tome as a shield (Hardness 3, HP 12, BT 6) — the sheet shows no shield block for it. You can inscribe the reinforcing rune into your spellbook (as transferring a rune); its benefits apply to one tome chosen during daily preparations, suppressed while your spellbook is out of your possession.",
+  "why": "AoN feat-9046 prints \"The rune's benefits apply to any one tome in your possession chosen during your daily preparations. If your spellbook leaves your possession, the rune-granting benefit is suppressed until you get the book back.\" The superseded note (Shield Block tome Hardness 3/HP 12/BT 6, the sheet shows no shield block, Raise a Shield substitution) is carried whole, reworded to the remaster \"When you Raise a Shield\" clause."
  },
  {
   "category": "classFeatures",
@@ -150701,8 +150701,8 @@
       "kind": "strikeAttack"
      }
     ],
-    "when": "on a ranged Strike while in Arcane Cascade stance, against a concealed or hidden creature",
-    "bonus": "flat check DC is 3 instead of 5 (concealed) or 9 instead of 11 (hidden)"
+    "when": "on a ranged Strike against a concealed or hidden creature",
+    "bonus": "flat check DC is 4 instead of 5 (concealed) or 10 instead of 11 (hidden); in Arcane Cascade stance, 3 (concealed) or 9 (hidden) instead"
    },
    {
     "targets": [
@@ -150713,7 +150713,8 @@
     "when": "when you cast Shooting Star and target a hidden creature",
     "bonus": "no flat check to target the hidden creature"
    }
-  ]
+  ],
+  "why": "AoN feat-9058 (Starlit Eyes, Impossible Magic, this record's own aonId) prints \"The DC is reduced to 4 instead of 5 against a concealed creature and to 10 instead of 11 against a hidden one. If you're in Arcane Cascade stance, you instead reduce the DC to 3 against a concealed creature or 9 against a hidden one.\" Ours reduced the DC only while in the stance (legacy feat-2856). Entry [1] (the shooting star clause) is carried unchanged from the superseded row."
  },
  {
   "category": "items",
@@ -171982,7 +171983,7 @@
         "level": 11,
         "byRank": {},
         "addSpells": [
-         "shift-blame"
+         "ghostly-weapon"
         ]
        },
        {
@@ -172100,8 +172101,16 @@
    {
     "id": "starlit-span",
     "name": "Starlit Span",
-    "description": "With magic, the sky's the limit, and you can't be bound by the confines of physical proximity. Your power reaches as far as your senses can perceive, transcending the space between you and your target even with spells that normally require direct physical contact.\n\nWhen you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. You can deliver the spell even if its range is shorter than the range increment of your ranged attack.\n\n**Conflux Spell** Shooting Star",
+    "description": "With magic, the sky's the limit, and you can't be bound by the confines of physical proximity. Your power reaches as far as your senses can perceive, transcending the space between you and your target even with spells that normally require direct physical contact.\n\nWhen you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. This overrides the actual range of the spell.\n\nWhile you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\n\n**Conflux Spell** Shooting Star",
     "descRefs": [
+     {
+      "label": "Spellstrike",
+      "key": "actions"
+     },
+     {
+      "label": "Arcane Cascade",
+      "key": "actions"
+     },
      {
       "label": "Shooting Star",
       "key": "spells"
@@ -172119,7 +172128,7 @@
         "level": 7,
         "byRank": {},
         "addSpells": [
-         "darkvision"
+         "telekinetic-maneuver"
         ]
        },
        {
@@ -172143,8 +172152,16 @@
    {
     "id": "twisting-tree",
     "name": "Twisting Tree",
-    "description": "The staff is perhaps one of the simplest of weapons, but this simplicity belies its elegance and versatility. To you, a staff is casting implement and martial weapon alike-the foundation of a fighting style.\n\nWhile you wield a staff in one hand, the staff adjusts in shape and weight, gaining the agile trait and increasing its damage die size to 1d6. While you wield a staff in both hands, it lengthens, twists, and reshapes, gaining the parry, reach, and trip traits. While you're in Arcane Cascade stance, you can Interact or Release to change your grip on the weapon as a free action when you Strike with your staff, including Strikes made in a Spellstrike. This happens before you roll your attack roll. You can also Interact to change your grip on the staff as a free action triggered at the end of your turn.\n\n**Conflux Spell** Spinning Staff",
+    "description": "The staff is perhaps the simplest of weapons, but this simplicity belies its elegance and versatility. To you, a staff is casting implement and martial weapon alike—the foundation of a fighting style.\n\nWhile you wield a staff in one hand, the staff adjusts in shape and weight, gaining the agile trait and increasing its damage die size to 1d6. While you wield a staff in both hands, it lengthens, twists, and reshapes, gaining the parry, reach, and trip traits.\n\nWhile you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\n\n**Conflux Spell** Spinning Staff",
     "descRefs": [
+     {
+      "label": "Arcane Cascade",
+      "key": "actions"
+     },
+     {
+      "label": "Interact",
+      "key": "actions"
+     },
      {
       "label": "Spinning Staff",
       "key": "spells"
@@ -172162,7 +172179,7 @@
         "level": 7,
         "byRank": {},
         "addSpells": [
-         "embed-message"
+         "oaken-resilience"
         ]
        },
        {
@@ -172353,7 +172370,7 @@
     }
    }
   ],
-  "why": "hybrid-study-15 \"Twofold Tine\" (Impossible Magic pg. 14 — Conflux Spell Force Fling; Studious Spell 7th Blur, 11th Gravity Well, 13th Unfettered Movement) and hybrid-study-16 \"Volatile Spark\" (Impossible Magic pg. 14 — Conflux Spell Booming Blast; Studious Spell 7th Entangling Flora, 11th Earthbind, 13th Seal Fate). The eight shipped options are carried through byte-for-byte."
+  "why": "batch 039 magus#studious-spells-laughing-shadow + magus#studious-spells-starlit-span + magus#studious-spells-twisting-tree + magus#starlit-span-description + magus#twisting-tree-description, merged into ONE row (same key). AoN hybrid-study-11 (Laughing Shadow, Impossible Magic pg. 13) \"Studious Spell (11th) Ghostly Weapon\" (was shift-blame); hybrid-study-13 (Starlit Span, pg. 13) \"Studious Spell (7th) Telekinetic Maneuver\" (was darkvision) and its body \"This overrides the actual range of the spell. While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\"; hybrid-study-14 (Twisting Tree, pg. 14) \"Studious Spell (7th) Oaken Resilience\" (was embed-message) and its body \"While you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\" Supersedes the shipped row (hybrid-study-15 Twofold Tine and hybrid-study-16 Volatile Spark additions); every other option and field is carried through byte-for-byte."
  },
  {
   "category": "classes",
@@ -188703,8 +188720,8 @@
   "category": "classFeatures",
   "id": "arcane-spellcasting-magus",
   "field": "description",
-  "value": "You study spells so you can combine them with your attacks or solve problems that strength of arms alone can't handle. You are a spellcaster, and you can cast spells of the arcane tradition using the Cast a Spell activity.\n\nAs a magus, when you cast spells, you might draw sigils with your weapon or a free hand and shout magical words of power as battle cries.\n\nAt 1st level, you can prepare one 1st-rank spell and five cantrips each morning from the spells in your spellbook. Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare is called your spell slots.\n\nAs you increase in level as a magus, your number of spell slots and the highest rank of spells you can cast from spell slots increase. Because you split your focus between physical training and magical scholarship, you have no more than two spell slots of your highest rank and, if you can cast 2nd-rank spells or higher, two spell slots of 1 rank lower than your highest spell rank. For anything that requires the ability to cast spells of a certain rank that's lower than the highest slots you have, you still qualify even if you no longer have spell slots at those ranks.\n\nSome of your spells require you to attempt a spell attack roll to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Your spell attack rolls and spell DCs use your Intelligence modifier.\n\n### Heightening Spells\n\nWhen you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. Many spells have specific improvements when they're heightened to certain ranks.\n\n### Cantrips\n\nA cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up—this is usually equal to the highest rank of spell you can cast as a magus. For example, as a 1st-level magus, your cantrips are 1st-rank spells, and as a 5th-level magus, your cantrips are 3rd-rank spells.\n\n### Spellbook\n\nEvery arcane spell has a written version, usually recorded in a spellbook. You start with a spellbook worth 10 sp or less, which you receive for free and must study to prepare your spells each day. The spellbook contains your choice of eight arcane cantrips and five 1st-rank arcane spells. You choose these from the common spells on the arcane spell list or from other arcane spells you gain access to. Your spellbook's form and name are up to you. It might be anything from a sturdy book with a secure latch entitled Theses on the Stratagems of Supernatural Warfare to a tattered collection of training pamphlets with your name scrawled on the cover.\n\nEach time you gain a level, you add two more arcane spells to your spellbook, of any rank of spell you can cast. You can also use the Arcana skill to add other spells that you find in your adventures. Though you lose some lower spell slots as you increase in level, you keep the spells in your spellbook and can prepare them in your higher-rank slots as normal.\n\nIf you have a spellbook from multiple sources (such as being a magus with the Wizard Dedication feat), you can use the same spellbook for all your spells.",
-  "why": "class-feature-1258 (Impossible Magic) is this record's own aonId. It prints the replacement first and second sentences word for word, and its spellbook block reads \"eight arcane cantrips and five 1st-rank arcane spells\" where the shipped text said four — while `classes.magus.spellcasting.spellbook` already grants five, so the page and the builder disagreed. The material-component permission the shipped text granted is not in this printing."
+  "value": "You study spells so you can combine them with your attacks or solve problems that strength of arms alone can't handle. You are a spellcaster, and you can cast spells of the arcane tradition using the Cast a Spell activity. As a magus, when you cast spells, you might draw sigils with your weapon or a free hand and shout magical words of power as battle cries.\n\nAt 1st level, you can prepare one 1st-rank spell and five cantrips each morning from the spells in your spellbook (see below). Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare is called your spell slots.\n\nAs you increase in level as a magus, the number of spells you can prepare each day increases, as does the highest rank of spell you can cast, as shown in the Magus Spells per Day table.\n\nSome of your spells require you to attempt a spell attack to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Your spell attack modifier and spell DC are calculated using your Intelligence modifier.\n\n### Heightening Spells\n\nWhen you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. Many spells have specific improvements when they are heightened to certain ranks.\n\n### Cantrips\n\nSome of your spells are cantrips. A cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up— this is usually equal to the highest rank of magus spell slot you have. For example, as a 1st-level magus, your cantrips are 1st-rank spells, and as a 5th-level magus, your cantrips are 3rd-rank spells.\n\n### Spellbook\n\nEvery arcane spell has a written version, which you record in your personalized book of spells. You start with a spellbook worth 10 sp or less, which you receive for free and must study each day to prepare your spells. Your spellbook's form and name are up to you. It might be anything from a sturdy book with a secure latch entitled *Theses on the Stratagems of Supernatural Warfare* to a tattered collection of training pamphlets with your name scrawled on the cover.\n\nThe spellbook contains your choice of eight arcane cantrips and five 1st-rank arcane spells. You choose these from the common spells on the arcane spell list or from other arcane spells you gain access to.\n\nEach time you gain a level, you add two arcane spells to your spellbook, of any spell rank for which you have spell slots, chosen from common spells of your tradition or others you gain access to. You can also add spells to your spellbook with the Learn a Spell activity.\n\nIf you have a spellbook from multiple sources (such as being a magus with the Wizard Dedication feat, you can use the same spellbook for all your spells.",
+  "why": "AoN class-feature-1258 (Impossible Magic, this record's own aonId) prints \"As you increase in level as a magus, the number of spells you can prepare each day increases, as does the highest rank of spell you can cast, as shown in the Magus Spells per Day table.\" It has no two-slots-per-rank cap, no lost lower slots and no Arcana-skill clause (\"You can also add spells to your spellbook with the Learn a Spell activity.\"). The body is the whole class-feature-1258 text; it supersedes the earlier overlay description row, whose own corrections (five 1st-rank spells, no material-component permission) are kept because they come from the same printing."
  },
  {
   "category": "classFeatures",
@@ -188980,5 +188997,331 @@
    "toughness"
   ],
   "why": "AoN heritage-438 prints 'You also gain the Toughness feat.'; read by build.ts heritage grantSources (precedent tailed-goblin)."
+ },
+ {
+  "category": "stances",
+  "id": "arcane-cascade",
+  "field": "strikeDamage",
+  "value": [
+   {
+    "type": "force",
+    "appliesTo": "melee",
+    "flat": 1,
+    "byWeaponSpecialization": {
+     "spec": 2,
+     "greater": 3
+    },
+    "note": "Arcane Cascade"
+   }
+  ],
+  "why": "action-4261 (Impossible Magic pg. 12): \"your melee Strikes gain the arcane trait (making them magical) and deal 1 extra force damage ... If you have the weapon specialization class feature, the damage and resistance increase to 2, and if you have greater weapon specialization, they increase to 3.\" New reader: StanceDef.strikeDamage in derive.ts strikeDamageRiders (active stance, Requirements-gated) + StrikeDamageRider.byWeaponSpecialization."
+ },
+ {
+  "category": "feats",
+  "id": "student-of-the-staff",
+  "field": "critSpecWeapons",
+  "value": {
+   "bases": [
+    "staff"
+   ],
+   "traits": [
+    "staff"
+   ]
+  },
+  "why": "feat-9060: \"When you critically succeed at an attack roll using a staff, you can apply the critical specialization effect of the club group.\" Magic staves (items/staff-of-fire etc.) carry the staff trait and no base link to the plain staff; the plain staff has no staff trait, so both routes are kept. Reader: derive.ts weaponMatches (traits route)."
+ },
+ {
+  "category": "feats",
+  "id": "student-of-the-staff",
+  "field": "weaponTraits",
+  "value": [
+   {
+    "match": {
+     "items": [
+      "staff"
+     ],
+     "whileStance": "arcane-cascade"
+    },
+    "add": [
+     "deadly-d6"
+    ]
+   },
+   {
+    "match": {
+     "anyTrait": [
+      "staff"
+     ],
+     "whileStance": "arcane-cascade"
+    },
+    "add": [
+     "deadly-d6"
+    ]
+   }
+  ],
+  "why": "feat-9060: \"While you're in Arcane Cascade stance, your staff gains the deadly d6 trait\". Reader: derive.ts applyWeaponRiders, new WeaponRider.match.whileStance gate (activeStance + activeStanceDef)."
+ },
+ {
+  "category": "feats",
+  "id": "student-of-the-staff",
+  "field": "description",
+  "value": "You've studied the staff extensively to learn the hidden capabilities of your chosen weapon. When you critically succeed at an attack roll using a staff, you can apply the critical specialization effect of the club group. (If you use the critical specialization on a Spellstrike, the spell still affects the target even if you pushed the target out of reach.)\n\nWhile you're in Arcane Cascade stance, your staff gains the deadly d6 trait, with the damage from the deadly die being the same damage type as the extra damage from Arcane Cascade.\n\nIn addition, you can place property runes into a magic staff you prepare, even though a magic staff can't typically hold property runes. You must first inscribe the property runes into your spellbook, using the same process as transferring a rune. The rune takes the form of a specialized diagram in your spellbook, occupying one page. You can't inscribe runes that can't be placed on a non-magical staff, nor can you inscribe the Shifting rune. When you prepare a staff, you can impart any number of property runes from your spellbook into the staff, up to the limit imposed by the staff's *weapon potency* rune.",
+  "why": "batch 039 student-of-the-staff#spellstrike-clause: AoN feat-9060 (Student of the Staff, Impossible Magic pg. 20) prints \"you can apply the critical specialization effect of the club group. (If you use the critical specialization on a Spellstrike, the spell still affects the target even if you pushed the target out of reach.)\" Ours shipped the legacy body without the parenthetical and with \"you apply\". Body refreshed from feat-9060; the rest of the prose is unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "student-of-the-staff",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "spellstrike",
+    "note": "If you apply the club critical specialization on a Spellstrike with a staff, the spell still affects the target even if you pushed the target out of reach."
+   }
+  ],
+  "why": "batch 039 student-of-the-staff#spellstrike-clause: AoN feat-9060 \"(If you use the critical specialization on a Spellstrike, the spell still affects the target even if you pushed the target out of reach.)\" is a rider on the Spellstrike ACTION, so it goes on that action row through recordMarks (read by explain.ts recordMarksFor, ownership via the taken feat)."
+ },
+ {
+  "category": "feats",
+  "id": "burning-cascade",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "arcane-cascade",
+    "note": "When you use Arcane Cascade, each enemy in a 5-foot emanation takes damage equal to the extra damage from Arcane Cascade, of the same type. A creature that takes this damage is temporarily immune to further uses of Burning Cascade for 1 minute."
+   }
+  ],
+  "why": "batch 039 burning-cascade: AoN feat-9051 prints \"When you use Arcane Cascade, each enemy in a 5-foot emanation takes damage equal to the extra damage from Arcane Cascade. This damage is the same type as that of Arcane Cascade. A creature that takes this damage is temporarily immune to further uses of Burning Cascade for 1 minute.\" The feat carried no mechanic at all; the rider lands on the Arcane Cascade action row (explain.ts recordMarksFor)."
+ },
+ {
+  "category": "feats",
+  "id": "burning-cascade",
+  "field": "actionCost",
+  "value": {
+   "type": "passive"
+  },
+  "why": "batch 039 burning-cascade: AoN feat-9051 prints no action glyph (<actions string=\"\" />) - a passive feat; the record shipped with no actionCost at all."
+ },
+ {
+  "category": "feats",
+  "id": "burning-cascade",
+  "field": "description",
+  "value": "Energy flares out around you when you drop into your signature stance. When you use Arcane Cascade, each enemy in a 5-foot emanation takes damage equal to the extra damage from Arcane Cascade. This damage is the same type as that of Arcane Cascade. A creature that takes this damage is temporarily immune to further uses of Burning Cascade for 1 minute.",
+  "why": "batch 039 burning-cascade: the shipped body opened with the scraped header \"Burning Cascade / Source Impossible Magic pg. 18 / Prerequisites Arcane Cascade\"; the body is AoN feat-9051 with the header removed (no words added)."
+ },
+ {
+  "category": "feats",
+  "id": "hasted-assault",
+  "field": "prerequisites",
+  "value": [],
+  "why": "batch 039 hasted-assault#prerequisites: AoN feat-9084 (Hasted Assault, Impossible Magic pg. 25) prints no Prerequisites line; \"focus pool\" is the legacy feat-2878 prerequisite. Same empty-array shape as feats/soulforger-dedication."
+ },
+ {
+  "category": "feats",
+  "id": "hasted-assault",
+  "field": "description",
+  "value": "You can speed yourself up to move and attack more swiftly. You learn the Hasted Assault conflux spell.",
+  "why": "batch 039 hasted-assault#prerequisites: AoN feat-9084 prints only \"You can speed yourself up to move and attack more swiftly. You learn the hasted assault conflux spell.\" - the shipped \"Increase the number of Focus Points in your focus pool by 1.\" is the legacy feat-2878 sentence (deletion only, no words added)."
+ },
+ {
+  "category": "spells",
+  "id": "hasted-assault",
+  "field": "description",
+  "value": "You call upon your magic to speed up your attacks. You gain the quickened condition and can use the extra action each round for only Stride and Strike actions. As normal, you don't gain an action on the turn you cast this spell, but you do when you regain actions at the start of your next turn.",
+  "why": "batch 039 hasted-assault#spell-body: AoN spell-2880 (Impossible Magic pg. 179) prints \"can use the extra action each round for only Stride and Strike actions. As normal, you don't gain an action on the turn you cast this spell, but you do when you regain actions at the start of your next turn.\" Ours carried the legacy spell-1039 body (\"only Strike actions\", no timing sentence)."
+ },
+ {
+  "category": "actions",
+  "id": "reloading-cascade",
+  "create": true,
+  "value": {
+   "id": "reloading-cascade",
+   "name": "Reloading Cascade",
+   "traits": [],
+   "rarity": "common",
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "source": {
+    "book": "Pathfinder Impossible Magic",
+    "license": "OGL"
+   },
+   "edition": "remaster",
+   "aonParentId": "hybrid-study-16",
+   "aonSection": "Reloading Cascade"
+  },
+  "why": "batch 039 magus#volatile-spark-reloading-cascade: AoN hybrid-study-16 (Volatile Spark, Impossible Magic pg. 14) prints \"In addition, you gain the Reloading Cascade action. Reloading Cascade [Single Action] You use Arcane Cascade and Interact to reload a firearm.\" No core bucket held the action. Print lists no traits for it, so traits is empty. Shape mirrors actions/drain-familiar (aonParentId + aonSection)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "volatile-spark",
+  "field": "grantsActions",
+  "value": [
+   "reloading-cascade"
+  ],
+  "why": "batch 039 magus#volatile-spark-reloading-cascade: AoN hybrid-study-16 \"you gain the Reloading Cascade action\". The chosen subclass is owned as a class feature (derive.ts ownedFeatureIds, \"The CHOSEN SUBCLASS ITSELF\"), and MainTab's granted-action walk reads grantsActions off owned class features - the lane classFeatures/improved-familiar-attunement uses."
+ },
+ {
+  "category": "classFeatures",
+  "id": "starlit-span",
+  "field": "description",
+  "value": "With magic, the sky's the limit, and you can't be bound by the confines of physical proximity. Your power reaches as far as your senses can perceive, transcending the space between you and your target even with spells that normally require direct physical contact.\n\nWhen you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. This overrides the actual range of the spell.\n\nWhile you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\n\n**Conflux Spell** Shooting Star",
+  "why": "batch 039 magus#starlit-span-description: AoN hybrid-study-13 prints \"This overrides the actual range of the spell. While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\" The class-feature record carried the legacy \"You can deliver the spell even if its range is shorter than the range increment of your ranged attack.\" Same text as the option description in the merged classes/magus row."
+ },
+ {
+  "category": "classFeatures",
+  "id": "starlit-span",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "arcane-cascade",
+    "note": "While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target."
+   }
+  ],
+  "why": "batch 039 magus#starlit-span-description: AoN hybrid-study-13 \"While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\" A stance rider, so it goes on the Arcane Cascade action row (the chosen subclass is an owned class feature; explain.ts recordMarksFor)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "twisting-tree",
+  "field": "description",
+  "value": "The staff is perhaps the simplest of weapons, but this simplicity belies its elegance and versatility. To you, a staff is casting implement and martial weapon alike—the foundation of a fighting style.\n\nWhile you wield a staff in one hand, the staff adjusts in shape and weight, gaining the agile trait and increasing its damage die size to 1d6. While you wield a staff in both hands, it lengthens, twists, and reshapes, gaining the parry, reach, and trip traits.\n\nWhile you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\n\n**Conflux Spell** Spinning Staff",
+  "why": "batch 039 magus#twisting-tree-description: AoN hybrid-study-14 prints \"While you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\" The class-feature record carried the legacy Interact-or-Release-when-you-Strike plus end-of-turn Interact rule. Same text as the option description in the merged classes/magus row."
+ },
+ {
+  "category": "classFeatures",
+  "id": "twisting-tree",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "arcane-cascade",
+    "note": "While you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action."
+   }
+  ],
+  "why": "batch 039 magus#twisting-tree-description: AoN hybrid-study-14 \"While you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\" A stance rider (WG injects it on the Arcane Cascade mode), so it goes on the Arcane Cascade action row via recordMarks."
+ },
+ {
+  "category": "classFeatures",
+  "id": "arcane-spellcasting-magus",
+  "field": "grantsItems",
+  "value": [
+   {
+    "itemId": "spellbook-blank",
+    "quantity": 1
+   }
+  ],
+  "why": "AoN class-feature-1258 (Magus Spellcasting, Impossible Magic) prints \"You start with a spellbook worth 10 sp or less, which you receive for free and must study each day to prepare your spells.\" and links Equipment 2753 = items/spellbook-blank (aonId equipment-2753). The record handed nothing over; build.ts reads classFeatures[fid].grantsItems for every owned class feature (the grantedItems pass), the same lane and shape as classFeatures/wizard-spellcasting."
+ },
+ {
+  "category": "stances",
+  "id": "arcane-cascade",
+  "field": "resistances",
+  "value": [
+   {
+    "type": "spells",
+    "value": "1+min(1,max(0,@actor.level-6))+min(1,max(0,@actor.level-14))"
+   }
+  ],
+  "why": "AoN action-4261 (Arcane Cascade, Impossible Magic) prints \"you gain resistance 1 to damage from spells. If you have the weapon specialization class feature, the damage and resistance increase to 2, and if you have greater weapon specialization, they increase to 3.\" The magus gets weapon-specialization-magus at 7th and greater-weapon-specialization-magus at 15th (classes.magus.features) and the magus class feature is the only grantor of the stance, so the ladder is 1 / 2 at 7 / 3 at 15. derive.ts pushes activeStanceDef(c).resistances into the IWR list \"while this stance is active\"; type \"spells\" is the existing damage-from-spells key (items/hexwise-banner)."
+ },
+ {
+  "category": "stances",
+  "id": "arcane-cascade",
+  "field": "note",
+  "value": "Your melee Strikes gain the arcane trait (making them magical) and deal 1 extra force damage, and you gain resistance 1 to damage from spells; 2 with weapon specialization, 3 with greater weapon specialization. If you Cast a Spell and then enter Arcane Cascade on the same turn, you can change the damage from the stance to any one damage type that spell could deal instead of force.",
+  "why": "AoN action-4261 prints \"While you're in the stance, your melee Strikes gain the arcane trait (making them magical) and deal 1 extra force damage, and you gain resistance 1 to damage from spells.\" and \"If you Cast a Spell and then enter Arcane Cascade on the same turn, you can change the damage from the stance to any one damage type that spell could deal instead of force.\" The shipped note keyed the damage type to \"your most recent damaging spell\", the Player Core rule."
+ },
+ {
+  "category": "actions",
+  "id": "arcane-cascade",
+  "field": "description",
+  "value": "You cycle arcane power through your body and weapon using specialized forms, breathing, or footwork. While you're in the stance, your melee Strikes gain the arcane trait (making them magical) and deal 1 extra force damage, and you gain resistance 1 to damage from spells. If you have the weapon specialization class feature, the damage and resistance increase to 2, and if you have greater weapon specialization, they increase to 3.\n\nIf you Cast a Spell and then enter Arcane Cascade on the same turn, you can change the damage from the stance to any one damage type that spell could deal instead of force.",
+  "why": "AoN action-4261 (Impossible Magic, this record's own aonId): no Requirements block, the resistance sentence, and the same-turn damage-type rule \"If you Cast a Spell and then enter Arcane Cascade on the same turn, you can change the damage from the stance to any one damage type that spell could deal instead of force.\""
+ },
+ {
+  "category": "classFeatures",
+  "id": "arcane-cascade",
+  "field": "description",
+  "value": "You can enter a special stance to blend magic into your attacks and defend against spells.\n\nArcane Cascade",
+  "why": "AoN class-feature-1260 (Impossible Magic, this record's own aonId) prints \"You can enter a special stance to blend magic into your attacks and defend against spells.\" where ours read \"After you wield magic...\" (Player Core). The trailing \"Arcane Cascade\" line is the embedded action-4261 title, kept so the existing descRefs link still renders."
+ },
+ {
+  "category": "actions",
+  "id": "spellstrike",
+  "field": "description",
+  "value": "**Frequency** until recharged (see below)\n\n---\n\nYou channel a spell into a punch or sword thrust to deliver a combined attack. You cast a spell that takes 1 or 2 actions to cast and requires either a spell attack roll or a saving throw. You imbue its effects into an attack instead of executing the spell normally. Make a melee Strike with a weapon or unarmed attack. This counts as two attacks for your multiple attack penalty, but you don't apply the penalty until after you've completed the Spellstrike. The infusion of spell energy grants your Strike the arcane trait, making it magical. If the spell required a spell attack roll, use your Strike's results to determine the effects of both the Strike and the spell. If the spell required a save, the target of the Strike rolls its saving throw normally regardless of your attack roll's result unless your Strike was a critical failure, in which case your spell is disrupted. Combine the Strike and spell's damage for the purpose of resistances and weaknesses.\n\nAfter you use Spellstrike, you can't do so again until you recharge your Spellstrike as a single action, which has the concentrate trait. You also recharge your Spellstrike when you cast a conflux spell that takes at least 1 action to cast; casting a focus spell of another type doesn't recharge your Spellstrike.",
+  "why": "AoN action-4260 (Spellstrike, Impossible Magic, this record's own aonId) prints \"If the spell required a save, the target of the Strike rolls its saving throw normally regardless of your attack roll's result unless your Strike was a critical failure, in which case your spell is disrupted. Combine the Strike and spell's damage for the purpose of resistances and weaknesses.\" Ours said the target is unaffected on a critical failure and had no combined-damage rule."
+ },
+ {
+  "category": "classFeatures",
+  "id": "spellstrike",
+  "field": "description",
+  "value": "You’ve learned the fundamental magus technique that lets you combine magical and physical attacks together. You gain the Spellstrike activity.\n\n### Spellstrike Specifics\n\nThough the base Spellstrike rules cover most spells, various modifications apply to more complicated spells when loaded into your fist, blade, or other attack.\n\n**One Target:** The spell targets only the target of your Strike, even if it normally allows more targets. This includes area spells, against which only the target attempts a saving throw. Any ongoing effects of the area, such as the difficult terrain from *scatter scree*, affect only the target's space. Some feats let you affect more creatures.\n\n**Reach:** The coupled spell affects the target using the reach of the weapon or unarmed attack you use for your Spellstrike. For instance, *gouging claw* would affect a creature beyond the reach of your hand if you used a weapon with reach, and *frostbite* would affect only a creature in your weapon's reach, even though the spell's range is longer.\n\n**Ancillary Effects:** Your spell still has any non-targeted effects that might affect creatures other than the target, as well as any ongoing effects starting from the moment you hit with the Strike. For example, *scatter scree* would still create difficult terrain in the target's space (as mentioned above), and *tangle vine's* circumstance penalty would last for its normal duration. The spell takes effect after the Strike deals damage; if the Strike has other special effects, the GM determines whether they happen before or after the spell.\n\n**Invalid or Immune Target:** If the target you hit wouldn't be a valid target for the spell, the spell is still expended but doesn't affect the target. If the target is immune to your attack but not the spell, it can still be affected by the spell.\n\n**Variable Actions:** Some spells have different effects based on the number of actions you spend to cast them. You choose whether to use the effects of the 1- or 2-action version of the spell when you use Spellstrike. A spell has to take exactly 1 or 2 actions; you can't use Spellstrike with a spell that takes a free action, reaction, or 3 or more actions.\n\n**Spellshape:** Even if you gain a spellshape action from outside the magus class, such as from a multiclass feat or an item, you typically can't use spellshape with Spellstrike. Spellshape actions require the next action you take to be Cast a Spell, and Spellstrike is a combined activity that doesn't qualify.",
+  "why": "AoN class-feature-1259 (Spellstrike, Impossible Magic, this record's own aonId) has no Multiple Defenses paragraph and prints \"**Invalid or Immune Target:** If the target you hit wouldn't be a valid target for the spell, the spell is still expended but doesn't affect the target.\" and \"Even if you gain a spellshape action from outside the magus class, such as from a multiclass feat or an item, you typically can't use spellshape with Spellstrike.\""
+ },
+ {
+  "category": "feats",
+  "id": "raise-a-tome",
+  "field": "description",
+  "value": "You can flip open a book to simultaneously study and deflect attacks. When you Raise a Shield, you can raise a book you’re wielding instead of a shield. While you have a book raised, you gain a +2 circumstance bonus to AC and a +1 circumstance bonus to Recall Knowledge checks to identify creatures using a skill related to the subject of the book (Arcana if you’re using your spellbook). If consulting the book normally grants an item bonus to the check for consulting the book, you gain this bonus as well.\n\nIf you have Shield Block, you can use a raised tome for that feat as though it were a shield. The tome has Hardness 3, HP 12, and BT 6.\n\nIn addition, you can inscribe the *reinforcing rune* into your spellbook to strengthen your tomes, using the same process as transferring a rune. The rune takes the form of a specialized diagram in your spellbook, occupying one page. The rune’s benefits apply to any one tome in your possession chosen during your daily preparations. If your spellbook leaves your possession, the rune-granting benefit is suppressed until you get the book back.",
+  "why": "AoN feat-9046 (Raise a Tome, Impossible Magic, this record's own aonId; legacy feat-2848) prints a passive feat: \"When you Raise a Shield, you can raise a book you're wielding instead of a shield.\" plus the reinforcing-rune paragraph \"you can inscribe the reinforcing rune into your spellbook to strengthen your tomes, using the same process as transferring a rune.\" Ours shipped the legacy one-action \"Requirements You're holding a book\" text."
+ },
+ {
+  "category": "feats",
+  "id": "expansive-spellstrike",
+  "field": "description",
+  "value": "You can blast the energy of a spell out around the target of your attack. When you Spellstrike with a spell that has an area of a burst, cone, or line, the spell creates an area instead of affecting only the target. The target must be in the area, and Expansive Spellstrike has no effect if your spell was disrupted (such as if you critically fail your Strike). A burst is centered on any corner you choose of the target’s square (or the corner of any square in its space for a Large or larger creature). A cone or line emits from you and must include the target; if you’re not adjacent to the target (using a reach weapon or starlit span, for example), choose any square adjacent to the target as the source. The spell affects all creatures in the area as normal, but the Strike still targets only one creature.",
+  "why": "AoN feat-9047 (Expansive Spellstrike, Impossible Magic, this record's own aonId; legacy feat-2849) prints \"Expansive Spellstrike has no effect if your spell was disrupted (such as if you critically fail your Strike). A burst is centered on any corner you choose of the target's square (or the corner of any square in its space for a Large or larger creature).\" Ours shipped the legacy closest-to-centre corner rule and no disruption clause."
+ },
+ {
+  "category": "feats",
+  "id": "force-fang",
+  "field": "description",
+  "value": "You can turn your attack into an unerring blur of force. You learn the *force fang* conflux spell.",
+  "why": "AoN feat-9048 (Force Fang, Impossible Magic, this record's own aonId; legacy feat-2850) prints only \"You can turn your attack into an unerring blur of force. You learn the force fang conflux spell.\" The legacy \"Increase the number of Focus Points in your focus pool by 1.\" is gone; the pool is unchanged because focusSpells [\"force-fang\"] already adds the point."
+ },
+ {
+  "category": "feats",
+  "id": "starlit-eyes",
+  "field": "description",
+  "value": "Starlight shines in your sight, enhancing your perception and range. When you make a ranged Strike, you lower the DC of your flat check to target a creature that’s concealed or hidden from you. The DC is reduced to 4 instead of 5 against a concealed creature and to 10 instead of 11 against a hidden one. If you’re in Arcane Cascade stance, you instead reduce the DC to 3 against a concealed creature or 9 against a hidden one.\n\nIn addition, when you cast shooting star and target a hidden creature, you don’t have to attempt the flat check for targeting a hidden creature with a ranged Strike.",
+  "why": "AoN feat-9058 prints \"When you make a ranged Strike, you lower the DC of your flat check to target a creature that's concealed or hidden from you. The DC is reduced to 4 instead of 5 against a concealed creature and to 10 instead of 11 against a hidden one.\" Ours shipped the legacy stance-only 3/9 text."
+ },
+ {
+  "category": "feats",
+  "id": "starlit-eyes",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "shooting-star",
+    "note": "When you cast shooting star and target a hidden creature, you don't have to attempt the flat check for targeting a hidden creature with a ranged Strike."
+   }
+  ],
+  "why": "AoN feat-9058 prints \"In addition, when you cast shooting star and target a hidden creature, you don't have to attempt the flat check for targeting a hidden creature with a ranged Strike.\" build.ts reads spellNotes off every owned record (ownedRecords -> pushSpellNote), so the clause now shows on the Shooting Star spell card (spell-2883) under \"Starlit Eyes\"."
+ },
+ {
+  "category": "actions",
+  "id": "reloading-cascade",
+  "field": "description",
+  "value": "You use Arcane Cascade and Interact to reload a firearm.",
+  "why": "batch 039 magus#volatile-spark-reloading-cascade: AoN hybrid-study-16 \"Reloading Cascade [Single Action] You use Arcane Cascade and Interact to reload a firearm.\" - verbatim."
+ },
+ {
+  "category": "actions",
+  "id": "reloading-cascade",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "Arcane Cascade",
+    "key": "actions"
+   },
+   {
+    "label": "Interact",
+    "key": "actions"
+   }
+  ],
+  "why": "batch 039 magus#volatile-spark-reloading-cascade: hybrid-study-16 links Interact (action-4174); Arcane Cascade is the magus action (action-4261)."
  }
 ]

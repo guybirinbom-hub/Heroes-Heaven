@@ -1,0 +1,44 @@
+BATCH 039 - GAP VERIFIER (WG-comparison lane). Default REFUTE; a line is CLOSED only where the artefact was opened and checked.
+Result: 23 gap lines (same count as the apply-digest's 23 - no line removed), 23 CLOSED, 0 REOPENED, 0 STILL-OPEN.
+
+GLOBAL CHECKS
+- work/owner-questions.json: `git diff --quiet HEAD` clean - nobody edited it.
+- Manifest work/.b039-specs.json: all five builder families still present (situational, instruments, engine, data-rows-1, data-rows-2 x2 incl. created-prose) plus gap-situational, gap-data-rows-2, gap-engine. Every entry has stage[]. No entry removed.
+- Every row in the 8 spec files targets an existing core.json record (the one miss, actions/reloading-cascade, is a create:true row - expected). The 3 gap specs carry backfillRows [] (code/test-only closes).
+- node scripts/test-flip-audit.mjs --batch 039: clean (9 test files, 0 new settle keys, every flip cited).
+- npx tsc --noEmit: exit 0.
+- node scripts/vt.mjs run batch039-gap-engine, batch039-gap-situational, batch039-data-rows-2, modes, class-resources, trust-gate, batch29-data: 106 pass, 18 fail. All 18 fail on pre-apply data. None is a gap-code regression:
+    * 15 in test/batch039-data-rows-2.test.ts. That family's tests read SHIPPED content, not a patched copy, so they stay red until the driver applies work/.b039-rows-data-rows-2.json. This is not a gap line. The closer should know the family broke the "patch in memory" rule.
+    * 3 in test/batch29-data.test.ts studies table. They go green on apply. I checked the classes/magus options row's ladders against the table: laughing-shadow 7:blur 11:ghostly-weapon 13:translocate, starlit-span 7:telekinetic-maneuver, twisting-tree 7:oaken-resilience, and every spell exists.
+- Owner-question guard dry run (node scripts/add-owner-question.mjs --from work/.b039-queue.json, no --write): the entry passes as desk #164.
+
+PER LINE (index in work/.b039-gaps.json, family, verdict, ref, evidence)
+1  data-rows-1  CLOSED (parked)  familiar#archetype-reach - a real work/.b039-queue.json entry with printed (feat-5024 "Archetypes Elementalist (Level 4)..."), theirs, ours and a question. The question is a scope/engine-shape ruling (a full 602-feat lane with an npm run data regen, or overlay rows for Familiar/Domain Initiate only), which no print citation answers. It is a confirmed finding and passes the add-owner-question guards.
+2  data-rows-2  CLOSED  test/batch29-data.test.ts:328 - the studies table now pins ghostly-weapon / telekinetic-maneuver / oaken-resilience. Each is cited "// batch 039: magus#studious-spells-*" under describe "...magus studious spells", and the test is staged in the data-rows-2 manifest entry. It is red until the classes/magus options row applies. The row's ladders were checked to match (see above).
+3  data-rows-2  CLOSED  work/.b039-rows-data-rows-1.json - arcane-cascade#resistance row stances/arcane-cascade resistances [{type:'spells', value 1/2/3 by level 7/15}] is present. The record exists, and the manifest entry data-rows-1 stages it.
+4  data-rows-2  CLOSED  src/rules/classResources.ts:143 - the magus 'arcane-cascade' toggle is deleted (git diff), with a WHY comment quoting class-feature-1260. The damage carrier is engine's stances/arcane-cascade strikeDamage row (work/.b039-rows-engine.json). Pinned by test/batch039-data-rows-2.test.ts:148 (resourcesForCharacter not.toContain 'arcane-cascade') and test/batch039-gap-engine.test.ts. Both fail on revert, and both pass now.
+5  data-rows-2  CLOSED  work/.b039-rows-data-rows-1.json - arcane-cascade#requirement rows are present: stances/arcane-cascade requires null supersedes:true (it replaces the lone existing overlay row {text:"You used your most recent action..."}), plus the note rewritten to action-4261, plus the actions/classFeatures descriptions.
+6  engine       CLOSED  src/rules/modes.ts:303 - cat-arcane-cascade is retired (git diff), with a WHY comment quoting action-4261. Pinned by gap-engine ("d.modes['cat-arcane-cascade'] toBeUndefined", with the stance alone giving "plus 2 force" when the row is patched in memory) and by data-rows-2:156. Both fail on revert. test/modes.test.ts drops 'Arcane Cascade' from the wanted list (cited arcane-cascade#duplicate-toggles).
+7  engine       CLOSED  src/rules/modes.ts:309 - cat-student-of-the-staff is retired (git diff), with a WHY comment quoting feat-9060. The replacement is engine's feats/student-of-the-staff weaponTraits row (whileStance:'arcane-cascade', items staff + anyTrait staff). Pinned in gap-engine: the mode is undefined, deadly-d6 appears exactly once on staff and staff-of-fire with the row patched in memory, and there is none with the row stripped. This fails on revert.
+8  engine       CLOSED  src/rules/classResources.ts:143 - same deletion and tests as line 4.
+9  engine       CLOSED (parked)  flaggedResidue FEAT_SITUATIONAL['arcane-cascade'] star - the reason holds. The star is display-only (a situational note, never added to a total), its bonus text is print's 1/2/3 (situationalBonuses.ts:1442), and out of stance it is the only place the numbers show. test/batch039-situational.test.ts:36 pins /3 with greater weapon specialization/, so a swap-only rewording WOULD flip a sibling's pinned test. (gap-situational's test reads by sourceId only and would not flip.) This is not a wrong number, so parking is acceptable.
+10 engine       CLOSED  src/data/trustGate.ts:163 - STANCE_PAYLOAD now includes 'strikeDamage' (git diff), with a WHY comment quoting action-4261. Pinned in gap-engine (trustOff('stances','arcane-cascade') toContain 'strikeDamage'; gated gives no force, ungated gives "plus 2 force"). This fails on revert. trust-gate.test.ts is green.
+11 engine       CLOSED (parked)  flaggedResidue trust-ledger regeneration - verified that scripts/wg-batch-run.mjs:1075 (stageClose) runs scripts/trust-ledger.mjs after apply and refuses on a broken generator. Regenerating now would stamp the pre-apply core sha.
+12 situational  CLOSED  test/batch039-gap-situational.test.ts - 3/3 pass. It is cited arcane-cascade#damage under describe/it titles naming arcane-cascade. It asserts that no magus catalogue mode has the "expert in your tradition" note or an untyped damage modifier, and that the star is the one arcane-cascade row. Its teeth test patches the old mode in memory and gets the contradicting star back. The underlying code change is the modes.ts:303 retirement (line 6).
+13 data-rows-1  CLOSED (parked)  familiar#archetype-reach - same queue entry as line 1.
+14 data-rows-2  CLOSED  src/rules/classResources.ts:143 - same as line 4. test/class-resources.test.ts:79 is still green.
+15 data-rows-2  CLOSED  src/rules/modes.ts:303 - same as line 6. With the mode gone, its m(1,'untyped','damage') cannot stack on the stance's force damage.
+16 engine       CLOSED  src/rules/classResources.ts:143 - same as line 4.
+17 engine       CLOSED  src/rules/modes.ts:303 - same as line 6.
+18 engine       CLOSED  src/rules/modes.ts:309 - same as line 7.
+19 engine       CLOSED (parked)  flaggedResidue FEAT_SITUATIONAL['arcane-cascade'] - same star and same verified reason as line 9.
+20 engine       CLOSED  src/data/trustGate.ts:163 - same as line 10.
+21 engine       CLOSED (parked)  flaggedResidue trust-ledger - same as line 11.
+22 engine       CLOSED  work/.b039-rows-data-rows-1.json - the manifest now carries the data-rows-1 entry (stage: the spec, report-data-rows-1, test/batch039-data-rows-1.test.ts). Its resistances row is present (line 3).
+23 situational  CLOSED  test/batch039-gap-situational.test.ts - the second half of arcane-cascade#damage (the flat untyped modifier). It is closed by the modes.ts:303 retirement and pinned by the same test's untyped-modifier and untyped-star assertions.
+
+DATA STILL NEEDED
+(none - every row is in a manifest spec; the driver's apply is the only step left)
+
+CROSS-FILE GAPS
+(none open)
