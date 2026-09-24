@@ -304,12 +304,30 @@ describe('campaign homebrew on the Homebrew page', () => {
     });
     await settle();
     expect(dialog()?.textContent).toContain('Homebrew imported');
+    // A notice, not a question — the import already happened.
+    expect(actionLabels()).toEqual(['Done']);
     const desc = (loadHomebrewContent().feats['imp-feat'] as unknown as { description: string }).description;
     expect(desc).toContain('Fine text');
     expect(desc).toContain('bold');
     expect(desc).not.toMatch(/<script|onclick|__pwned/i);
     r.click(find(dialog()!, 'button', 'Done'));
     await settle();
+    r.stop();
+  });
+
+  it('"Couldn\'t import" (not a homebrew file) is a one-button notice', async () => {
+    const r = renderDom(page());
+    const input = r.host.querySelector('input[type=file]') as HTMLInputElement;
+    Object.defineProperty(input, 'files', { value: [new File(['not json'], 'hb.json', { type: 'application/json' })] });
+    await act(async () => {
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    await settle();
+    expect(dialog()?.textContent).toContain("Couldn't import");
+    expect(actionLabels()).toEqual(['OK']);
+    r.click(find(dialog()!, 'button', 'OK'));
+    await settle();
+    expect(dialog()).toBeNull();
     r.stop();
   });
 });

@@ -347,13 +347,14 @@ export function HomebrewPage({
       }
       onChanged();
       setSources(loadHomebrewSources());
-      await confirmDialog({
+      // A notice, not a question — the import already happened (a Cancel here would undo nothing).
+      await chooseDialog({
         title: 'Homebrew imported',
         message: `Added ${n} item${n === 1 ? '' : 's'} from the file. Enable their source per character under Setup → Sources.`,
-        confirmLabel: 'Done',
+        buttons: [{ value: 'ok', label: 'Done', primary: true }],
       });
     } catch {
-      await confirmDialog({ title: "Couldn't import", message: "That file isn't a Heroes Heaven homebrew export.", confirmLabel: 'OK' });
+      await chooseDialog({ title: "Couldn't import", message: "That file isn't a Heroes Heaven homebrew export.", buttons: [{ value: 'ok', label: 'OK', primary: true }] });
     }
   };
   const removeSource = async (id: string) => {
