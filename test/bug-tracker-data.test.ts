@@ -13,12 +13,13 @@
  * thirteen loaders went back into one Promise.all (the first wave could not resolve before the heavy
  * ones, which is exactly what the middle assertion checks).
  */
-import { describe, expect, it, vi } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { compareForm } from '../scripts/lib/condition-prose.mjs';
+import { INSTRUMENT_TIMEOUT } from './_timeouts';
 
 const ROOT = join(__dirname, '..');
 const read = (p: string) => readFileSync(join(ROOT, p), 'utf8');
@@ -61,20 +62,19 @@ describe('condition descriptions are the full printed Archives text', () => {
     expect(compareForm(descs.sickened?.d).length).toBeGreaterThan(400);
   });
 
+  /* The guard test spawns scripts/condition-text-check.mjs twice. The fixture files are small (the
+   * conditions slice only: ~10 KB of core.json, ~35 KB of descriptions); each child's real cost is
+   * openMirror(), its read of the AoN mirror (~4 s alone, several times that under the FULL suite,
+   * where the two runs outran a 120_000 ms inline timeout). Building the fixture needs a parse of the
+   * 10.5 MB public/core.json, so that runs here in beforeAll, off the test's clock. Only this hook and
+   * that one test get INSTRUMENT_TIMEOUT (test/_timeouts.ts): the in-process tests keep the default,
+   * so a real hang in one of them still shows up in seconds. The hook sits BELOW the it( (vitest runs
+   * a describe's beforeAll before its tests wherever it is written) so the it( block itself keeps its
+   * assertions line for line. */
+  let corePath = '';
+  let faithful = '';
+  let doctored = '';
   it('the guard exits 1 on a doctored copy with ONE shortened description', () => {
-    const dir = mkdtempSync(join(tmpdir(), 'cond-guard-'));
-    const core = JSON.parse(read('public/core.json')).conditions;
-    const corePath = join(dir, 'core.json');
-    writeFileSync(corePath, JSON.stringify({ conditions: core }));
-
-    const faithful = join(dir, 'descs.json');
-    writeFileSync(faithful, JSON.stringify({ conditions: descs }));
-
-    const doctored = join(dir, 'descs-doctored.json');
-    const cut = JSON.parse(JSON.stringify(descs));
-    cut.frightened.d = String(cut.frightened.d).slice(0, 120); // one record, truncated
-    writeFileSync(doctored, JSON.stringify({ conditions: cut }));
-
     const run = (descsPath: string) =>
       spawnSync(process.execPath, ['--max-old-space-size=4096', 'scripts/condition-text-check.mjs'], {
         cwd: ROOT,
@@ -86,7 +86,22 @@ describe('condition descriptions are the full printed Archives text', () => {
     const bad = run(doctored);
     expect(bad.status, 'a shortened description must fail the build').toBe(1);
     expect(bad.stderr).toContain('frightened');
-  }, 120_000);
+  }, INSTRUMENT_TIMEOUT);
+
+  beforeAll(() => {
+    const dir = mkdtempSync(join(tmpdir(), 'cond-guard-'));
+    const core = JSON.parse(read('public/core.json')).conditions;
+    corePath = join(dir, 'core.json');
+    writeFileSync(corePath, JSON.stringify({ conditions: core }));
+
+    faithful = join(dir, 'descs.json');
+    writeFileSync(faithful, JSON.stringify({ conditions: descs }));
+
+    doctored = join(dir, 'descs-doctored.json');
+    const cut = JSON.parse(JSON.stringify(descs));
+    cut.frightened.d = String(cut.frightened.d).slice(0, 120); // one record, truncated
+    writeFileSync(doctored, JSON.stringify({ conditions: cut }));
+  }, INSTRUMENT_TIMEOUT);
 });
 
 describe('dead tracker data is gone', () => {

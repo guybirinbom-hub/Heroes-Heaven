@@ -33,15 +33,19 @@ const server = vi.hoisted(() => ({
   /** What `fetchParty` answers. */
   party: [] as Record<string, unknown>[],
   /**
-   * What `currentUserId()` answers, and how long it takes to answer.
+   * What `currentUserId()` answers, and WHEN it is allowed to.
    *
    * Both are the point of legs (e) and (f): the account is the one thing every surface routes on,
    * and it arrives LATE (it is read asynchronously, while the cards are already on screen) or not at
    * all (signed out, or an auth read that failed). A mock that always resolves ME immediately can
    * only ever prove the happy path.
+   *
+   * `authGate`, when set, is what every in-flight `currentUserId()` call is awaiting — the test
+   * releases it, so a tap can be made to land BEFORE the answer with certainty instead of a timed
+   * guess at how long "before" needs to be.
    */
   uid: null as string | null,
-  authDelayMs: 0,
+  authGate: null as Promise<void> | null,
 }));
 
 const ME = 'me-1';
@@ -56,7 +60,7 @@ vi.mock('../src/data/useAuth', () => ({
 vi.mock('../src/data/party', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../src/data/party')>()),
   currentUserId: async () => {
-    if (server.authDelayMs) await new Promise((r) => setTimeout(r, server.authDelayMs));
+    if (server.authGate) await server.authGate;
     return server.uid;
   },
   fetchParty: async () => server.party,
@@ -125,10 +129,10 @@ function render(el: ReactElement): HTMLElement {
   act(() => live!.render(el));
   return host;
 }
-/** Let the component's own fetches land. `ms` outlasts a deliberately slow auth answer. */
-async function settle(ms = 0): Promise<void> {
+/** Let the component's own fetches land. */
+async function settle(): Promise<void> {
   await act(async () => {
-    await new Promise((r) => setTimeout(r, ms));
+    await new Promise((r) => setTimeout(r, 0));
   });
 }
 /** The party card whose name reads `name`. */
@@ -144,7 +148,7 @@ const PLAYER_MEMBERSHIP: CampaignMembership = { id: CAMPAIGN, code: 'ABC123', ro
 
 beforeEach(() => {
   server.uid = ME;
-  server.authDelayMs = 0;
+  server.authGate = null;
   server.sheets.set(MY_CHAR, saved(MY_CHAR, 'Ilsabet Corrow'));
   server.sheets.set(THEIR_CHAR, saved(THEIR_CHAR, 'Ondry Fellhand'));
   server.party = [MINE, THEIRS] as unknown as Record<string, unknown>[];
@@ -271,13 +275,20 @@ describe('your own character, opened from a campaign', () => {
    * routinely first. Every surface must WAIT for the answer rather than measure a rendered null,
    * because "not mine yet" and "not mine" are the same value and only one of them is true.
    *
+   * The window is pinned with `authGate` rather than a fixed millisecond delay: the tap is made
+   * while every `currentUserId()` call is still awaiting it, and only THEN is it released — so the
+   * tap lands before the answer because the test says so, not because a real clock did.
+   *
    * MUTATION: read the account from the rendered hook instead — in `open()`
    * (src/sheet/PartyMembers.tsx) replace `const uid = await currentUserId();` with the `myId` a
    * `useMyId()` at the top of the hook answers. This leg then fails: the tap lands inside the
    * window, `myId` is still null, and the own card opens the published copy instead of the sheet.
    */
   it('(e) a card tapped BEFORE the auth answer lands still routes to your own sheet', async () => {
-    server.authDelayMs = 25;
+    let releaseAuth = () => {};
+    server.authGate = new Promise<void>((res) => {
+      releaseAuth = res;
+    });
     const opened: string[] = [];
     const host = render(
       <PartyPage
@@ -295,7 +306,10 @@ describe('your own character, opened from a campaign', () => {
     act(() => {
       card(host, 'Ilsabet Corrow').dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
-    await settle(60);
+    // The tap's own `open()` is now awaiting authGate too — release it only now, so the order is
+    // guaranteed rather than timed.
+    releaseAuth();
+    await settle();
 
     expect(opened).toEqual([MY_CHAR]);
     expect(host.querySelector('.gm-edit-tab')).toBe(null);
