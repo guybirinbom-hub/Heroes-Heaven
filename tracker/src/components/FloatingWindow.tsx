@@ -4,6 +4,7 @@ import { CombatantDetail } from './CombatantDetail'
 import { useSettingsStore } from '../store/settingsStore'
 import { beginDockDrag, beginBrowserDrag, useDockDrag } from '../store/dockDragStore'
 import { useGameData, useCreatureLinks } from '../data/gameDataContext'
+import { useHostSearch } from '../data/hostSearchContext'
 import { Tooltip } from './Tooltip'
 import { TextWithGlyphs, ActionGlyph } from './ActionGlyph'
 import type { EquipmentInfo, SpellInfo, RitualInfo } from '../data/dataStore'
@@ -505,10 +506,17 @@ function CreatureCard({ name }: { name: string }) {
 // string refs" and crashes every docked popup. `refId` is a normal prop in both.
 function WinContent({ type, refId: ref_, title, castRank }: { type: WinType; refId: string; title: string; castRank?: number }) {
   const { conditions, traits, spells, rituals, actions, actionTraits, skills, equipment, rules } = useGameData()
+  const host = useHostSearch()
 
   // GM-screen tool widgets (timer, notes, dice, reference tables) ride the same
   // pane chrome as reference popups — the body is just routed by the ref's kind.
   if (type === 'widget') return <GmWidgetBody refId={ref_} />
+
+  // A host page pinned to the GM screen ("bucket:id") — the host draws it.
+  if (type === 'host') {
+    const cut = ref_.indexOf(':')
+    return <>{host?.render?.(ref_.slice(0, cut), ref_.slice(cut + 1)) ?? <p style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontSize: 12 }}>This page opens in Heroes Heaven.</p>}</>
+  }
 
   if (type === 'creature') return <CreatureCard name={ref_} />
 

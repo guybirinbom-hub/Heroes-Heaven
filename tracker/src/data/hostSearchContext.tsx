@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, type ReactNode } from 'react'
 
 /*
  * HH → tracker bridge for the global Search (null default, like the other host contexts).
@@ -26,6 +26,9 @@ export interface HostSearch {
   records: HostSearchRecord[]
   /** Open the host app's description popup for this record. */
   open: (bucket: string, id: string) => void
+  /** The body of a host page pinned to the GM screen (a `host` pane tab, ref "bucket:id"), drawn by the
+   *  host the way its own popup draws it. */
+  render?: (bucket: string, id: string) => ReactNode
 }
 
 const HostSearchContext = createContext<HostSearch | null>(null)

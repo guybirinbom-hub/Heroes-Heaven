@@ -35,6 +35,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { plain } from './lib/aon-plain.mjs';
 import { coinsFromCp, canonBookName } from './lib/aon-facets.mjs';
+import { createdRefs } from './lib/archive-coverage.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const EXPORT = process.env.AON_EXPORT || 'C:/trying ai 2/hh-data-export/without-images/data';
@@ -238,11 +239,13 @@ for (const [bucket, ast] of astWrites) {
   writeFileSync(join(ROOT, `public/ast/${bucket}.json.gz`), gzipSync(json, { level: 9 }));
 }
 
-// additive only: never re-point a slug an existing bucket already claims
+// additive only: never re-point a slug an existing bucket already claims — and never index a page
+// import-core-v2's step 5 created in one of these buckets (it opens by key — createdRefs)
 const indexPath = join(ROOT, 'public/ast-index.json');
 const index = existsSync(indexPath) ? JSON.parse(readFileSync(indexPath, 'utf8')) : {};
+const created = createdRefs(ROOT);
 let idx = 0;
-for (const [bucket, ast] of astWrites) for (const s of Object.keys(ast)) if (!(s in index)) { index[s] = bucket; idx++; }
+for (const [bucket, ast] of astWrites) for (const s of Object.keys(ast)) if (!(s in index) && !created.has(`${bucket}:${s}`)) { index[s] = bucket; idx++; }
 const orderedIndex = {};
 for (const s of Object.keys(index).sort()) orderedIndex[s] = index[s];
 writeFileSync(indexPath, JSON.stringify(orderedIndex));

@@ -13,6 +13,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { gzipSync } from 'node:zlib';
 
 const ROOT = join(__dirname, '..');
 const SCRIPT = join(ROOT, 'scripts/owner-names-check.mjs');
@@ -78,9 +79,32 @@ describe('owner-names-check', () => {
     const r = run(FORBIDDEN + '\n', [clean]);
     try {
       expect(r.status).toBe(0);
-      expect(r.stdout).toContain('checked, clean');
+      expect(r.stdout).toContain('1 of 1 tracked file(s) read, clean');
     } finally {
       rmSync(clean, { force: true });
+    }
+  }, CHILD_TIMEOUT);
+
+  // Until 2026-09-25 the guard skipped files over 5 MB and anything with a NUL byte — public/core.json and
+  // every public/ast/*.json.gz page tree went unread while its last line said "checked".
+  it('reads a .gz decompressed and a file over 5 MB, and says which files it could not read', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'owner-names-check-big-'));
+    const gz = join(dir, 'tree.json.gz');
+    const big = join(dir, 'core.json');
+    const png = join(dir, 'icon.png');
+    writeFileSync(gz, gzipSync(`{"t":"text","v":"a note from ${FORBIDDEN}"}`));
+    writeFileSync(big, `${'x'.repeat(6 * 1024 * 1024)} ${FORBIDDEN}\n`);
+    writeFileSync(png, Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0xff]));
+    try {
+      const r = run(FORBIDDEN + '\n', [gz, big, png]);
+      expect(r.status).toBe(1);
+      expect(r.stderr).toContain(`${gz}:1: ${FORBIDDEN}`);
+      expect(r.stderr).toContain(`${big}:1: ${FORBIDDEN}`);
+      const clean = run('Nobody Atall\n', [gz, big, png]);
+      expect(clean.status).toBe(0);
+      expect(clean.stdout).toContain('2 of 3 tracked file(s) read, clean (not read: not text: 1 .png)');
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
     }
   }, CHILD_TIMEOUT);
 

@@ -1,0 +1,3030 @@
+{
+ "reference": {
+  "hustle": {
+   "doc": "action-1040"
+  },
+  "strike": {
+   "doc": "action-1167"
+  },
+  "taunt": {
+   "doc": "action-1437"
+  },
+  "breachhill-outpost-of-secrets": {
+   "doc": "article-1"
+  },
+  "life-in-the-circus": {
+   "doc": "article-10"
+  },
+  "the-flood-truce": {
+   "doc": "article-100"
+  },
+  "belkzen-operations": {
+   "doc": "article-101"
+  },
+  "quahs-of-sun-and-moon": {
+   "doc": "article-102"
+  },
+  "continuing-the-campaign": {
+   "doc": "article-103"
+  },
+  "wyvernsting-gazetteer": {
+   "doc": "article-104"
+  },
+  "belkzen-faiths": {
+   "doc": "article-105"
+  },
+  "kyonin": {
+   "doc": "article-106"
+  },
+  "treerazer": {
+   "doc": "article-107"
+  },
+  "corruptors-of-nature": {
+   "doc": "article-108"
+  },
+  "heroic-artifacts": {
+   "doc": "article-109"
+  },
+  "catfolk-of-golarion": {
+   "doc": "article-11"
+  },
+  "beyond-the-campaign": {
+   "doc": "article-110"
+  },
+  "talmandors-bounty": {
+   "doc": "article-111"
+  },
+  "camazotz": {
+   "doc": "article-112"
+  },
+  "vellumis-gazetteer": {
+   "doc": "article-115"
+  },
+  "zura": {
+   "doc": "article-117"
+  },
+  "nin": {
+   "doc": "article-118"
+  },
+  "iblydos-gazetteer": {
+   "doc": "article-119"
+  },
+  "among-the-xulgaths": {
+   "doc": "article-12"
+  },
+  "hero-god-cults": {
+   "doc": "article-120"
+  },
+  "living-legends": {
+   "doc": "article-121"
+  },
+  "kardaji-bay-gazetteer": {
+   "doc": "article-122"
+  },
+  "more-about-iblydos": {
+   "doc": "article-123"
+  },
+  "swardlands-gazetteer": {
+   "doc": "article-13"
+  },
+  "zevgavizeb": {
+   "doc": "article-14"
+  },
+  "denizens-of-gluttondark": {
+   "doc": "article-15"
+  },
+  "willowside-gazetteer": {
+   "doc": "article-16"
+  },
+  "cults-of-the-darklands": {
+   "doc": "article-17"
+  },
+  "shraen-gazetter": {
+   "doc": "article-18"
+  },
+  "kortos-mounts-gazetteer": {
+   "doc": "article-19"
+  },
+  "ways-of-the-ekujae": {
+   "doc": "article-2"
+  },
+  "artifacts-of-aroden": {
+   "doc": "article-20"
+  },
+  "the-radiant-festival": {
+   "doc": "article-21"
+  },
+  "guards-of-absalom": {
+   "doc": "article-22"
+  },
+  "vudra": {
+   "doc": "article-23"
+  },
+  "games-of-the-irorium": {
+   "doc": "article-26"
+  },
+  "gangs-of-absalom": {
+   "doc": "article-27"
+  },
+  "legends-of-the-harrow": {
+   "doc": "article-28"
+  },
+  "starstone-aspirants": {
+   "doc": "article-29"
+  },
+  "ravounel-gazetteer": {
+   "doc": "article-3"
+  },
+  "prisons-of-the-inner-sea": {
+   "doc": "article-31"
+  },
+  "ravithra": {
+   "doc": "article-32"
+  },
+  "ecology-of-the-sahkils": {
+   "doc": "article-33"
+  },
+  "siege-castles-of-absalom": {
+   "doc": "article-34"
+  },
+  "otari-gazetteer": {
+   "doc": "article-35"
+  },
+  "among-the-will-o-wisps": {
+   "doc": "article-36"
+  },
+  "warpers-of-flesh": {
+   "doc": "article-37"
+  },
+  "nhimbaloth": {
+   "doc": "article-38"
+  },
+  "ghosts-of-the-inner-sea": {
+   "doc": "article-39"
+  },
+  "here-there-be-dragons": {
+   "doc": "article-4"
+  },
+  "ruby-phoenix-fighting-roster": {
+   "doc": "article-40"
+  },
+  "goka": {
+   "doc": "article-41"
+  },
+  "rise-of-the-kaiju": {
+   "doc": "article-42"
+  },
+  "tournaments-of-the-great-beyond": {
+   "doc": "article-43"
+  },
+  "lost-demiplanes": {
+   "doc": "article-44"
+  },
+  "life-in-the-academy": {
+   "doc": "article-45"
+  },
+  "students-of-the-magaambya": {
+   "doc": "article-46"
+  },
+  "mwangi-folktales": {
+   "doc": "article-47"
+  },
+  "jula-gazetter": {
+   "doc": "article-48"
+  },
+  "kovlar": {
+   "doc": "article-5"
+  },
+  "teachers-of-the-magaambya": {
+   "doc": "article-50"
+  },
+  "akiton-the-red": {
+   "doc": "article-51"
+  },
+  "walkena": {
+   "doc": "article-52"
+  },
+  "following-of-the-broken-tusk": {
+   "doc": "article-53"
+  },
+  "religions-of-the-realm": {
+   "doc": "article-54"
+  },
+  "megafauna": {
+   "doc": "article-55"
+  },
+  "telling-fables": {
+   "doc": "article-56"
+  },
+  "tiny-adventures": {
+   "doc": "article-57"
+  },
+  "hillcross": {
+   "doc": "article-59"
+  },
+  "droskar": {
+   "doc": "article-6"
+  },
+  "barrel-bullet-saloon": {
+   "doc": "article-60"
+  },
+  "the-spellscar-desert": {
+   "doc": "article-61"
+  },
+  "the-gunworks": {
+   "doc": "article-63"
+  },
+  "graydirge": {
+   "doc": "article-64"
+  },
+  "factions-of-geb": {
+   "doc": "article-65"
+  },
+  "secrets-of-the-coven": {
+   "doc": "article-66"
+  },
+  "among-the-shadows": {
+   "doc": "article-67"
+  },
+  "holomog": {
+   "doc": "article-68"
+  },
+  "kabriri": {
+   "doc": "article-69"
+  },
+  "ecology-of-the-witchwyrd": {
+   "doc": "article-7"
+  },
+  "inner-sea-trade": {
+   "doc": "article-70"
+  },
+  "the-warmaster-council": {
+   "doc": "article-71"
+  },
+  "narakaas": {
+   "doc": "article-72"
+  },
+  "adventures-on-castrovel": {
+   "doc": "article-73"
+  },
+  "the-lake": {
+   "doc": "article-74"
+  },
+  "findeladlara": {
+   "doc": "article-75"
+  },
+  "the-harrow-court": {
+   "doc": "article-77"
+  },
+  "lost-dwarven-treasure": {
+   "doc": "article-78"
+  },
+  "cave-worm-ecology": {
+   "doc": "article-79"
+  },
+  "lost-aiudara": {
+   "doc": "article-8"
+  },
+  "hagagraf": {
+   "doc": "article-80"
+  },
+  "return-to-the-darklands": {
+   "doc": "article-81"
+  },
+  "felgunn": {
+   "doc": "article-82"
+  },
+  "willowshore": {
+   "doc": "article-83"
+  },
+  "hermea": {
+   "doc": "article-9"
+  },
+  "arboreal-ecology": {
+   "doc": "article-90"
+  },
+  "verduran-forest": {
+   "doc": "article-91"
+  },
+  "green-man-faiths": {
+   "doc": "article-92"
+  },
+  "unfettered-growth": {
+   "doc": "article-93"
+  },
+  "cradle-of-knot": {
+   "doc": "article-94"
+  },
+  "continuing-the-campaign-pathfinder-203-shepherd-of-decay": {
+   "doc": "article-95"
+  },
+  "showtime": {
+   "doc": "article-96"
+  },
+  "arshea": {
+   "doc": "article-97"
+  },
+  "a-history-of-secrets": {
+   "doc": "article-98"
+  },
+  "the-orcs-of-belkzen": {
+   "doc": "article-99"
+  },
+  "chirurgeon": {
+   "doc": "class-sample-1"
+  },
+  "archer": {
+   "doc": "class-sample-10"
+  },
+  "lorekeeper": {
+   "doc": "class-sample-100"
+  },
+  "trickster": {
+   "doc": "class-sample-101"
+  },
+  "protector": {
+   "doc": "class-sample-102"
+  },
+  "student-of-thoughts": {
+   "doc": "class-sample-103"
+  },
+  "pillar-of-resolve": {
+   "doc": "class-sample-104"
+  },
+  "nomadic-visionary": {
+   "doc": "class-sample-105"
+  },
+  "armor-inventor": {
+   "doc": "class-sample-106"
+  },
+  "weapon-inventor": {
+   "doc": "class-sample-107"
+  },
+  "spellshot": {
+   "doc": "class-sample-108"
+  },
+  "drifter": {
+   "doc": "class-sample-109"
+  },
+  "bully": {
+   "doc": "class-sample-11"
+  },
+  "pistolero": {
+   "doc": "class-sample-110"
+  },
+  "sniper": {
+   "doc": "class-sample-111"
+  },
+  "arcane-scrapper": {
+   "doc": "class-sample-112"
+  },
+  "arcane-fist": {
+   "doc": "class-sample-113"
+  },
+  "spell-sniper": {
+   "doc": "class-sample-114"
+  },
+  "dual-weapon-magus": {
+   "doc": "class-sample-115"
+  },
+  "spellshooter": {
+   "doc": "class-sample-116"
+  },
+  "spirit-reaper": {
+   "doc": "class-sample-117"
+  },
+  "blood-puppeteer": {
+   "doc": "class-sample-118"
+  },
+  "flesh-puppeteer": {
+   "doc": "class-sample-119"
+  },
+  "duelist": {
+   "doc": "class-sample-12"
+  },
+  "runic-duelist": {
+   "doc": "class-sample-120"
+  },
+  "hammer-of-torag": {
+   "doc": "class-sample-121"
+  },
+  "rune-thrower": {
+   "doc": "class-sample-122"
+  },
+  "angelic-vessel": {
+   "doc": "class-sample-123"
+  },
+  "god-caller": {
+   "doc": "class-sample-124"
+  },
+  "ki-monk": {
+   "doc": "class-sample-13"
+  },
+  "archer-core-rulebook": {
+   "doc": "class-sample-14"
+  },
+  "thief": {
+   "doc": "class-sample-15"
+  },
+  "scoundrel": {
+   "doc": "class-sample-16"
+  },
+  "gozren": {
+   "doc": "class-sample-17"
+  },
+  "pharasmin": {
+   "doc": "class-sample-18"
+  },
+  "wild-druid": {
+   "doc": "class-sample-19"
+  },
+  "bomber": {
+   "doc": "class-sample-2"
+  },
+  "storm-druid": {
+   "doc": "class-sample-20"
+  },
+  "leaf-druid": {
+   "doc": "class-sample-21"
+  },
+  "fey-touched": {
+   "doc": "class-sample-22"
+  },
+  "demonblood": {
+   "doc": "class-sample-23"
+  },
+  "conjurer": {
+   "doc": "class-sample-24"
+  },
+  "illusionist": {
+   "doc": "class-sample-25"
+  },
+  "crane-monk": {
+   "doc": "class-sample-26"
+  },
+  "coroner": {
+   "doc": "class-sample-27"
+  },
+  "chemist": {
+   "doc": "class-sample-28"
+  },
+  "flame-augur": {
+   "doc": "class-sample-29"
+  },
+  "mutagenist": {
+   "doc": "class-sample-3"
+  },
+  "lifebringer": {
+   "doc": "class-sample-30"
+  },
+  "gymnast": {
+   "doc": "class-sample-31"
+  },
+  "fencer": {
+   "doc": "class-sample-32"
+  },
+  "hedge-witch": {
+   "doc": "class-sample-33"
+  },
+  "arcane-scrapper-secrets-of-magic": {
+   "doc": "class-sample-34"
+  },
+  "arcane-fist-secrets-of-magic": {
+   "doc": "class-sample-35"
+  },
+  "spell-sniper-secrets-of-magic": {
+   "doc": "class-sample-36"
+  },
+  "god-caller-secrets-of-magic": {
+   "doc": "class-sample-38"
+  },
+  "armor-inventor-guns-gears-remastered": {
+   "doc": "class-sample-39"
+  },
+  "dancer": {
+   "doc": "class-sample-4"
+  },
+  "weapon-inventor-guns-gears-remastered": {
+   "doc": "class-sample-40"
+  },
+  "drifter-guns-gears-remastered": {
+   "doc": "class-sample-41"
+  },
+  "pistolero-guns-gears-remastered": {
+   "doc": "class-sample-42"
+  },
+  "sniper-guns-gears-remastered": {
+   "doc": "class-sample-43"
+  },
+  "spellshot-guns-gears-remastered": {
+   "doc": "class-sample-44"
+  },
+  "student-of-thoughts-dark-archive": {
+   "doc": "class-sample-45"
+  },
+  "pillar-of-resolve-dark-archive": {
+   "doc": "class-sample-46"
+  },
+  "nomadic-visionary-dark-archive": {
+   "doc": "class-sample-47"
+  },
+  "trickster-dark-archive": {
+   "doc": "class-sample-48"
+  },
+  "protector-dark-archive": {
+   "doc": "class-sample-49"
+  },
+  "animal-rager": {
+   "doc": "class-sample-5"
+  },
+  "lorekeeper-dark-archive": {
+   "doc": "class-sample-50"
+  },
+  "element-explorer": {
+   "doc": "class-sample-51"
+  },
+  "dancer-player-core": {
+   "doc": "class-sample-59"
+  },
+  "fury": {
+   "doc": "class-sample-6"
+  },
+  "gozren-player-core": {
+   "doc": "class-sample-60"
+  },
+  "pharasmin-player-core": {
+   "doc": "class-sample-61"
+  },
+  "leaf-druid-player-core": {
+   "doc": "class-sample-62"
+  },
+  "storm-druid-player-core": {
+   "doc": "class-sample-63"
+  },
+  "untamed-druid": {
+   "doc": "class-sample-64"
+  },
+  "archer-player-core": {
+   "doc": "class-sample-65"
+  },
+  "bully-player-core": {
+   "doc": "class-sample-66"
+  },
+  "duelist-player-core": {
+   "doc": "class-sample-67"
+  },
+  "animal-ranger": {
+   "doc": "class-sample-68"
+  },
+  "ruffian": {
+   "doc": "class-sample-69"
+  },
+  "redeemer": {
+   "doc": "class-sample-7"
+  },
+  "hedge-witch-player-core": {
+   "doc": "class-sample-70"
+  },
+  "ice-witch": {
+   "doc": "class-sample-71"
+  },
+  "mindbender": {
+   "doc": "class-sample-72"
+  },
+  "student-of-the-void": {
+   "doc": "class-sample-73"
+  },
+  "seer": {
+   "doc": "class-sample-74"
+  },
+  "medium": {
+   "doc": "class-sample-75"
+  },
+  "sky-king-eternal": {
+   "doc": "class-sample-76"
+  },
+  "celestial-archer": {
+   "doc": "class-sample-77"
+  },
+  "creations-beast": {
+   "doc": "class-sample-78"
+  },
+  "chirurgeon-player-core-2": {
+   "doc": "class-sample-79"
+  },
+  "liberator": {
+   "doc": "class-sample-8"
+  },
+  "bomber-player-core-2": {
+   "doc": "class-sample-80"
+  },
+  "mutagenist-player-core-2": {
+   "doc": "class-sample-81"
+  },
+  "animal-rager-player-core-2": {
+   "doc": "class-sample-82"
+  },
+  "fury-player-core-2": {
+   "doc": "class-sample-83"
+  },
+  "redeemer-player-core-2": {
+   "doc": "class-sample-84"
+  },
+  "coroner-player-core-2": {
+   "doc": "class-sample-85"
+  },
+  "analyst": {
+   "doc": "class-sample-86"
+  },
+  "chemist-player-core-2": {
+   "doc": "class-sample-87"
+  },
+  "qi-monk": {
+   "doc": "class-sample-88"
+  },
+  "flame-augur-player-core-2": {
+   "doc": "class-sample-89"
+  },
+  "animal-ranger-core-rulebook": {
+   "doc": "class-sample-9"
+  },
+  "lifebringer-player-core-2": {
+   "doc": "class-sample-90"
+  },
+  "guided-blade": {
+   "doc": "class-sample-91"
+  },
+  "draconic-scion": {
+   "doc": "class-sample-92"
+  },
+  "fencer-player-core-2": {
+   "doc": "class-sample-94"
+  },
+  "officer": {
+   "doc": "class-sample-95"
+  },
+  "standard-bearer": {
+   "doc": "class-sample-96"
+  },
+  "bodyguard": {
+   "doc": "class-sample-97"
+  },
+  "shield-expert": {
+   "doc": "class-sample-98"
+  },
+  "intimidating-protector": {
+   "doc": "class-sample-99"
+  },
+  "retributive-strike": {
+   "doc": "creature-ability-31"
+  },
+  "sneak-attack": {
+   "doc": "creature-ability-34"
+  },
+  "form-up": {
+   "doc": "creature-ability-43"
+  },
+  "grab": {
+   "doc": "creature-ability-45"
+  },
+  "knockdown": {
+   "doc": "creature-ability-46"
+  },
+  "push": {
+   "doc": "creature-ability-47"
+  },
+  "reactive-strike": {
+   "doc": "creature-ability-48"
+  },
+  "all-around-vision": {
+   "doc": "creature-ability-49"
+  },
+  "aquatic-ambush": {
+   "doc": "creature-ability-51"
+  },
+  "at-will-spells": {
+   "doc": "creature-ability-52"
+  },
+  "aura": {
+   "doc": "creature-ability-53"
+  },
+  "buck": {
+   "doc": "creature-ability-54"
+  },
+  "change-shape": {
+   "doc": "creature-ability-55"
+  },
+  "constant-spells": {
+   "doc": "creature-ability-56"
+  },
+  "constrict": {
+   "doc": "creature-ability-57"
+  },
+  "coven": {
+   "doc": "creature-ability-58"
+  },
+  "darkvision": {
+   "doc": "creature-ability-59"
+  },
+  "disease": {
+   "doc": "creature-ability-60"
+  },
+  "engulf": {
+   "doc": "creature-ability-61"
+  },
+  "fast-healing": {
+   "doc": "creature-ability-62"
+  },
+  "ferocity": {
+   "doc": "creature-ability-63"
+  },
+  "frightful-presence": {
+   "doc": "creature-ability-64"
+  },
+  "greater-constrict": {
+   "doc": "creature-ability-65"
+  },
+  "improved-grab-improved-knockdown-or-improved-push": {
+   "doc": "creature-ability-66"
+  },
+  "lifesense": {
+   "doc": "creature-ability-67"
+  },
+  "light-blindness": {
+   "doc": "creature-ability-68"
+  },
+  "low-light-vision": {
+   "doc": "creature-ability-69"
+  },
+  "catch-rock": {
+   "doc": "creature-ability-7"
+  },
+  "poison": {
+   "doc": "creature-ability-70"
+  },
+  "pull": {
+   "doc": "creature-ability-71"
+  },
+  "regeneration": {
+   "doc": "creature-ability-72"
+  },
+  "rend": {
+   "doc": "creature-ability-73"
+  },
+  "scent": {
+   "doc": "creature-ability-74"
+  },
+  "shield-block": {
+   "doc": "creature-ability-75"
+  },
+  "stench": {
+   "doc": "creature-ability-76"
+  },
+  "swallow-whole": {
+   "doc": "creature-ability-77"
+  },
+  "swarm-mind": {
+   "doc": "creature-ability-78"
+  },
+  "telepathy": {
+   "doc": "creature-ability-79"
+  },
+  "throw-rock": {
+   "doc": "creature-ability-80"
+  },
+  "tremorsense": {
+   "doc": "creature-ability-82"
+  },
+  "void-healing": {
+   "doc": "creature-ability-83"
+  },
+  "wavesense": {
+   "doc": "creature-ability-84"
+  },
+  "troop-movement": {
+   "doc": "creature-ability-85"
+  },
+  "troop-defenses": {
+   "doc": "creature-ability-86"
+  },
+  "grim-reaper": {
+   "doc": "creature-family-104"
+  },
+  "deadly-flora": {
+   "doc": "creature-family-106"
+  },
+  "anadi": {
+   "doc": "creature-family-107"
+  },
+  "biloko": {
+   "doc": "creature-family-108"
+  },
+  "charau-ka": {
+   "doc": "creature-family-109"
+  },
+  "barghest": {
+   "doc": "creature-family-11"
+  },
+  "aluum": {
+   "doc": "creature-family-113"
+  },
+  "solifugid": {
+   "doc": "creature-family-114"
+  },
+  "flea": {
+   "doc": "creature-family-117"
+  },
+  "bogeyman": {
+   "doc": "creature-family-118"
+  },
+  "visitant": {
+   "doc": "creature-family-119"
+  },
+  "herecite": {
+   "doc": "creature-family-120"
+  },
+  "shoony": {
+   "doc": "creature-family-121"
+  },
+  "aukashungi": {
+   "doc": "creature-family-122"
+  },
+  "brughadatch": {
+   "doc": "creature-family-123"
+  },
+  "dragon-primal": {
+   "doc": "creature-family-132"
+  },
+  "octopus": {
+   "doc": "creature-family-143"
+  },
+  "ray": {
+   "doc": "creature-family-149"
+  },
+  "spriggan": {
+   "doc": "creature-family-154"
+  },
+  "squid": {
+   "doc": "creature-family-155"
+  },
+  "tick": {
+   "doc": "creature-family-156"
+  },
+  "vampire-vrykolakas": {
+   "doc": "creature-family-159"
+  },
+  "wolverine": {
+   "doc": "creature-family-160"
+  },
+  "worm-that-walks": {
+   "doc": "creature-family-161"
+  },
+  "yellow-musk-creeper": {
+   "doc": "creature-family-162"
+  },
+  "wight": {
+   "doc": "creature-family-163"
+  },
+  "blightburn-genies": {
+   "doc": "creature-family-180"
+  },
+  "foresters": {
+   "doc": "creature-family-186"
+  },
+  "magistrates": {
+   "doc": "creature-family-189"
+  },
+  "officers": {
+   "doc": "creature-family-192"
+  },
+  "publicans": {
+   "doc": "creature-family-194"
+  },
+  "firebrands": {
+   "doc": "creature-family-199"
+  },
+  "hellknights": {
+   "doc": "creature-family-200"
+  },
+  "knights-of-lastwall": {
+   "doc": "creature-family-201"
+  },
+  "magaambyan-adepts": {
+   "doc": "creature-family-202"
+  },
+  "pathfinders": {
+   "doc": "creature-family-203"
+  },
+  "saurian": {
+   "doc": "creature-family-204"
+  },
+  "toad": {
+   "doc": "creature-family-206"
+  },
+  "bone-skipper": {
+   "doc": "creature-family-207"
+  },
+  "sphinx": {
+   "doc": "creature-family-209"
+  },
+  "will-o-wisp": {
+   "doc": "creature-family-210"
+  },
+  "seugathi": {
+   "doc": "creature-family-212"
+  },
+  "gibtas": {
+   "doc": "creature-family-213"
+  },
+  "shanrigol": {
+   "doc": "creature-family-214"
+  },
+  "android": {
+   "doc": "creature-family-217"
+  },
+  "bore-worm": {
+   "doc": "creature-family-221"
+  },
+  "cecaelia": {
+   "doc": "creature-family-222"
+  },
+  "cobble-mite": {
+   "doc": "creature-family-224"
+  },
+  "dragon-imperial": {
+   "doc": "creature-family-226"
+  },
+  "ennosite": {
+   "doc": "creature-family-233"
+  },
+  "eurypterid": {
+   "doc": "creature-family-234"
+  },
+  "gathlain": {
+   "doc": "creature-family-237"
+  },
+  "ghoran": {
+   "doc": "creature-family-238"
+  },
+  "kovintus": {
+   "doc": "creature-family-244"
+  },
+  "living-symbol": {
+   "doc": "creature-family-245"
+  },
+  "maftet": {
+   "doc": "creature-family-246"
+  },
+  "mortic": {
+   "doc": "creature-family-248"
+  },
+  "paaridar": {
+   "doc": "creature-family-254"
+  },
+  "ram": {
+   "doc": "creature-family-256"
+  },
+  "shabti": {
+   "doc": "creature-family-258"
+  },
+  "siktempora": {
+   "doc": "creature-family-259"
+  },
+  "skelm": {
+   "doc": "creature-family-260"
+  },
+  "skull-swarm": {
+   "doc": "creature-family-261"
+  },
+  "skunk": {
+   "doc": "creature-family-262"
+  },
+  "stheno": {
+   "doc": "creature-family-266"
+  },
+  "terra-cotta-warrior": {
+   "doc": "creature-family-268"
+  },
+  "deep-gnome": {
+   "doc": "creature-family-27"
+  },
+  "tsukumogami": {
+   "doc": "creature-family-272"
+  },
+  "weasel": {
+   "doc": "creature-family-277"
+  },
+  "deadly-puffball": {
+   "doc": "creature-family-282"
+  },
+  "dhuthorex": {
+   "doc": "creature-family-283"
+  },
+  "anugobu": {
+   "doc": "creature-family-284"
+  },
+  "hantu": {
+   "doc": "creature-family-285"
+  },
+  "vampire-jiang-shi": {
+   "doc": "creature-family-286"
+  },
+  "kaava": {
+   "doc": "creature-family-287"
+  },
+  "giant-bee": {
+   "doc": "creature-family-288"
+  },
+  "silverfish": {
+   "doc": "creature-family-289"
+  },
+  "karumzek": {
+   "doc": "creature-family-290"
+  },
+  "contemplative-of-ashok": {
+   "doc": "creature-family-292"
+  },
+  "formian": {
+   "doc": "creature-family-293"
+  },
+  "ikeshti": {
+   "doc": "creature-family-294"
+  },
+  "khefak": {
+   "doc": "creature-family-295"
+  },
+  "shobhad": {
+   "doc": "creature-family-296"
+  },
+  "azarketi": {
+   "doc": "creature-family-297"
+  },
+  "threshold-of-knowledge-pregenerated-characters": {
+   "doc": "creature-family-298"
+  },
+  "somnalu": {
+   "doc": "creature-family-299"
+  },
+  "beaver": {
+   "doc": "creature-family-300"
+  },
+  "elk": {
+   "doc": "creature-family-301"
+  },
+  "werecreature-wereant": {
+   "doc": "creature-family-302"
+  },
+  "zombie-tar": {
+   "doc": "creature-family-303"
+  },
+  "gigantic-ant": {
+   "doc": "creature-family-304"
+  },
+  "deathless-acolyte": {
+   "doc": "creature-family-306"
+  },
+  "revenant": {
+   "doc": "creature-family-308"
+  },
+  "risen-pet": {
+   "doc": "creature-family-309"
+  },
+  "siabrae": {
+   "doc": "creature-family-310"
+  },
+  "vampire-vetalarana": {
+   "doc": "creature-family-311"
+  },
+  "verdorite": {
+   "doc": "creature-family-312"
+  },
+  "sluagh": {
+   "doc": "creature-family-313"
+  },
+  "mana-wastes-mutant": {
+   "doc": "creature-family-315"
+  },
+  "animated-bones": {
+   "doc": "creature-family-317"
+  },
+  "virulak": {
+   "doc": "creature-family-318"
+  },
+  "owlbear": {
+   "doc": "creature-family-320"
+  },
+  "thylacine": {
+   "doc": "creature-family-321"
+  },
+  "fetch": {
+   "doc": "creature-family-322"
+  },
+  "wild-hunt": {
+   "doc": "creature-family-323"
+  },
+  "bandersnatch": {
+   "doc": "creature-family-324"
+  },
+  "vilderavn": {
+   "doc": "creature-family-325"
+  },
+  "afziaka": {
+   "doc": "creature-family-326"
+  },
+  "facetbound": {
+   "doc": "creature-family-327"
+  },
+  "necrohulk": {
+   "doc": "creature-family-328"
+  },
+  "fleshforged": {
+   "doc": "creature-family-329"
+  },
+  "ratajin": {
+   "doc": "creature-family-330"
+  },
+  "bhanyada": {
+   "doc": "creature-family-335"
+  },
+  "lilu": {
+   "doc": "creature-family-336"
+  },
+  "demon-throng": {
+   "doc": "creature-family-337"
+  },
+  "harrowkin": {
+   "doc": "creature-family-339"
+  },
+  "dragon-chromatic": {
+   "doc": "creature-family-34"
+  },
+  "sporeborn": {
+   "doc": "creature-family-340"
+  },
+  "xiomorn": {
+   "doc": "creature-family-341"
+  },
+  "munsahir": {
+   "doc": "creature-family-342"
+  },
+  "elemental-metal": {
+   "doc": "creature-family-343"
+  },
+  "elemental-wood": {
+   "doc": "creature-family-345"
+  },
+  "bloodseeker": {
+   "doc": "creature-family-347"
+  },
+  "redcap": {
+   "doc": "creature-family-348"
+  },
+  "dragon-metallic": {
+   "doc": "creature-family-35"
+  },
+  "sinsludge": {
+   "doc": "creature-family-352"
+  },
+  "animated-handcraft": {
+   "doc": "creature-family-354"
+  },
+  "haunted-clockwork": {
+   "doc": "creature-family-355"
+  },
+  "orchid-mantis": {
+   "doc": "creature-family-356"
+  },
+  "aeon": {
+   "doc": "creature-family-357"
+  },
+  "alghollthu": {
+   "doc": "creature-family-358"
+  },
+  "angel": {
+   "doc": "creature-family-359"
+  },
+  "animated-object": {
+   "doc": "creature-family-360"
+  },
+  "ankhrav": {
+   "doc": "creature-family-361"
+  },
+  "ant": {
+   "doc": "creature-family-362"
+  },
+  "ape": {
+   "doc": "creature-family-363"
+  },
+  "arboreal": {
+   "doc": "creature-family-364"
+  },
+  "archon": {
+   "doc": "creature-family-365"
+  },
+  "athamaru": {
+   "doc": "creature-family-366"
+  },
+  "azarketi-monster-core": {
+   "doc": "creature-family-367"
+  },
+  "azata": {
+   "doc": "creature-family-368"
+  },
+  "bat": {
+   "doc": "creature-family-369"
+  },
+  "drow": {
+   "doc": "creature-family-37"
+  },
+  "bear": {
+   "doc": "creature-family-370"
+  },
+  "beetle": {
+   "doc": "creature-family-371"
+  },
+  "boar": {
+   "doc": "creature-family-372"
+  },
+  "boggard": {
+   "doc": "creature-family-373"
+  },
+  "bugbear": {
+   "doc": "creature-family-374"
+  },
+  "caligni": {
+   "doc": "creature-family-375"
+  },
+  "cat": {
+   "doc": "creature-family-376"
+  },
+  "catfolk": {
+   "doc": "creature-family-377"
+  },
+  "cave-worm": {
+   "doc": "creature-family-378"
+  },
+  "centaur": {
+   "doc": "creature-family-379"
+  },
+  "centipede": {
+   "doc": "creature-family-380"
+  },
+  "changeling": {
+   "doc": "creature-family-381"
+  },
+  "coatl": {
+   "doc": "creature-family-382"
+  },
+  "crawling-hand": {
+   "doc": "creature-family-383"
+  },
+  "crocodile": {
+   "doc": "creature-family-384"
+  },
+  "cyclops": {
+   "doc": "creature-family-385"
+  },
+  "daemon": {
+   "doc": "creature-family-386"
+  },
+  "demon": {
+   "doc": "creature-family-387"
+  },
+  "dero": {
+   "doc": "creature-family-388"
+  },
+  "devil": {
+   "doc": "creature-family-389"
+  },
+  "dhampir": {
+   "doc": "creature-family-390"
+  },
+  "dolphin": {
+   "doc": "creature-family-393"
+  },
+  "dominion-of-the-black": {
+   "doc": "creature-family-394"
+  },
+  "dragon": {
+   "doc": "creature-family-395"
+  },
+  "dragon-adamantine": {
+   "doc": "creature-family-396"
+  },
+  "dragon-conspirator": {
+   "doc": "creature-family-397"
+  },
+  "dragon-diabolic": {
+   "doc": "creature-family-398"
+  },
+  "dragon-empyreal": {
+   "doc": "creature-family-399"
+  },
+  "dragon-fortune": {
+   "doc": "creature-family-400"
+  },
+  "dragon-horned": {
+   "doc": "creature-family-401"
+  },
+  "dragon-mirage": {
+   "doc": "creature-family-402"
+  },
+  "dragon-omen": {
+   "doc": "creature-family-403"
+  },
+  "drake": {
+   "doc": "creature-family-404"
+  },
+  "dwarf": {
+   "doc": "creature-family-405"
+  },
+  "eagle": {
+   "doc": "creature-family-406"
+  },
+  "eel": {
+   "doc": "creature-family-407"
+  },
+  "elemental-air": {
+   "doc": "creature-family-408"
+  },
+  "elemental-earth": {
+   "doc": "creature-family-409"
+  },
+  "elemental-fire": {
+   "doc": "creature-family-410"
+  },
+  "elemental-scamp": {
+   "doc": "creature-family-411"
+  },
+  "elemental-water": {
+   "doc": "creature-family-412"
+  },
+  "elephant": {
+   "doc": "creature-family-413"
+  },
+  "elf": {
+   "doc": "creature-family-414"
+  },
+  "fleshwarp": {
+   "doc": "creature-family-415"
+  },
+  "flytrap": {
+   "doc": "creature-family-416"
+  },
+  "genie": {
+   "doc": "creature-family-417"
+  },
+  "ghost": {
+   "doc": "creature-family-418"
+  },
+  "ghoul": {
+   "doc": "creature-family-419"
+  },
+  "giant": {
+   "doc": "creature-family-420"
+  },
+  "gnome": {
+   "doc": "creature-family-421"
+  },
+  "goblin": {
+   "doc": "creature-family-422"
+  },
+  "graveknight": {
+   "doc": "creature-family-423"
+  },
+  "gremlin": {
+   "doc": "creature-family-424"
+  },
+  "hag": {
+   "doc": "creature-family-425"
+  },
+  "halfling": {
+   "doc": "creature-family-426"
+  },
+  "hell-hound": {
+   "doc": "creature-family-427"
+  },
+  "herexen": {
+   "doc": "creature-family-428"
+  },
+  "hippocampus": {
+   "doc": "creature-family-429"
+  },
+  "hobgoblin": {
+   "doc": "creature-family-430"
+  },
+  "horse": {
+   "doc": "creature-family-431"
+  },
+  "hryngar": {
+   "doc": "creature-family-432"
+  },
+  "hyena": {
+   "doc": "creature-family-433"
+  },
+  "kholo": {
+   "doc": "creature-family-434"
+  },
+  "kobold": {
+   "doc": "creature-family-435"
+  },
+  "lamia": {
+   "doc": "creature-family-436"
+  },
+  "leshy": {
+   "doc": "creature-family-437"
+  },
+  "lich": {
+   "doc": "creature-family-438"
+  },
+  "linnorm": {
+   "doc": "creature-family-439"
+  },
+  "lizardfolk": {
+   "doc": "creature-family-441"
+  },
+  "mantis": {
+   "doc": "creature-family-442"
+  },
+  "merfolk": {
+   "doc": "creature-family-443"
+  },
+  "minotaur": {
+   "doc": "creature-family-444"
+  },
+  "mummy": {
+   "doc": "creature-family-445"
+  },
+  "naga": {
+   "doc": "creature-family-446"
+  },
+  "nightmare": {
+   "doc": "creature-family-447"
+  },
+  "norn": {
+   "doc": "creature-family-448"
+  },
+  "nymph": {
+   "doc": "creature-family-449"
+  },
+  "ofalth": {
+   "doc": "creature-family-450"
+  },
+  "ogre": {
+   "doc": "creature-family-451"
+  },
+  "oni": {
+   "doc": "creature-family-452"
+  },
+  "ooze": {
+   "doc": "creature-family-453"
+  },
+  "orc": {
+   "doc": "creature-family-454"
+  },
+  "phantom": {
+   "doc": "creature-family-455"
+  },
+  "planar-scion": {
+   "doc": "creature-family-456"
+  },
+  "protean": {
+   "doc": "creature-family-457"
+  },
+  "psychopomp": {
+   "doc": "creature-family-458"
+  },
+  "pterosaur": {
+   "doc": "creature-family-459"
+  },
+  "qlippoth": {
+   "doc": "creature-family-460"
+  },
+  "rakshasa": {
+   "doc": "creature-family-461"
+  },
+  "ratfolk": {
+   "doc": "creature-family-463"
+  },
+  "rhinoceros": {
+   "doc": "creature-family-464"
+  },
+  "sargassum-heap": {
+   "doc": "creature-family-465"
+  },
+  "scorpion": {
+   "doc": "creature-family-466"
+  },
+  "sedacthy": {
+   "doc": "creature-family-467"
+  },
+  "serpentfolk": {
+   "doc": "creature-family-468"
+  },
+  "shadow": {
+   "doc": "creature-family-469"
+  },
+  "shark": {
+   "doc": "creature-family-470"
+  },
+  "sinspawn": {
+   "doc": "creature-family-471"
+  },
+  "skeleton": {
+   "doc": "creature-family-472"
+  },
+  "snake": {
+   "doc": "creature-family-473"
+  },
+  "sprite": {
+   "doc": "creature-family-475"
+  },
+  "tengu": {
+   "doc": "creature-family-476"
+  },
+  "tooth-fairy": {
+   "doc": "creature-family-477"
+  },
+  "troll": {
+   "doc": "creature-family-478"
+  },
+  "twigjack": {
+   "doc": "creature-family-479"
+  },
+  "vampire": {
+   "doc": "creature-family-480"
+  },
+  "vescavor": {
+   "doc": "creature-family-481"
+  },
+  "warg": {
+   "doc": "creature-family-482"
+  },
+  "wasp": {
+   "doc": "creature-family-483"
+  },
+  "werecreature": {
+   "doc": "creature-family-484"
+  },
+  "wolf": {
+   "doc": "creature-family-485"
+  },
+  "xulgath": {
+   "doc": "creature-family-486"
+  },
+  "zombie": {
+   "doc": "creature-family-487"
+  },
+  "basilisk": {
+   "doc": "creature-family-488"
+  },
+  "chimera": {
+   "doc": "creature-family-489"
+  },
+  "gargoyle": {
+   "doc": "creature-family-49"
+  },
+  "dischoran": {
+   "doc": "creature-family-490"
+  },
+  "elemental-bird": {
+   "doc": "creature-family-491"
+  },
+  "ethereal-wildlife": {
+   "doc": "creature-family-492"
+  },
+  "galvanoscale": {
+   "doc": "creature-family-495"
+  },
+  "gorgon": {
+   "doc": "creature-family-496"
+  },
+  "griffon": {
+   "doc": "creature-family-497"
+  },
+  "hexmoth": {
+   "doc": "creature-family-498"
+  },
+  "hydra": {
+   "doc": "creature-family-499"
+  },
+  "manticore": {
+   "doc": "creature-family-500"
+  },
+  "seal": {
+   "doc": "creature-family-501"
+  },
+  "spirit-guide": {
+   "doc": "creature-family-502"
+  },
+  "tardigrade": {
+   "doc": "creature-family-503"
+  },
+  "unicorn": {
+   "doc": "creature-family-504"
+  },
+  "wardens-of-the-wild": {
+   "doc": "creature-family-506"
+  },
+  "longlegs": {
+   "doc": "creature-family-507"
+  },
+  "zoog": {
+   "doc": "creature-family-508"
+  },
+  "servitors-of-gorum": {
+   "doc": "creature-family-510"
+  },
+  "artisan": {
+   "doc": "creature-family-531"
+  },
+  "courtier": {
+   "doc": "creature-family-532"
+  },
+  "criminal": {
+   "doc": "creature-family-533"
+  },
+  "devotee": {
+   "doc": "creature-family-534"
+  },
+  "downtrodden": {
+   "doc": "creature-family-535"
+  },
+  "engineer": {
+   "doc": "creature-family-536"
+  },
+  "explorer": {
+   "doc": "creature-family-537"
+  },
+  "healer": {
+   "doc": "creature-family-538"
+  },
+  "laborer": {
+   "doc": "creature-family-539"
+  },
+  "martial-artist": {
+   "doc": "creature-family-540"
+  },
+  "maverick": {
+   "doc": "creature-family-541"
+  },
+  "mercenary": {
+   "doc": "creature-family-542"
+  },
+  "military": {
+   "doc": "creature-family-543"
+  },
+  "mystic": {
+   "doc": "creature-family-544"
+  },
+  "official": {
+   "doc": "creature-family-545"
+  },
+  "performer": {
+   "doc": "creature-family-546"
+  },
+  "primalist": {
+   "doc": "creature-family-547"
+  },
+  "scholar": {
+   "doc": "creature-family-548"
+  },
+  "seafarer": {
+   "doc": "creature-family-549"
+  },
+  "villain": {
+   "doc": "creature-family-550"
+  },
+  "tripkee": {
+   "doc": "creature-family-551"
+  },
+  "eyelet": {
+   "doc": "creature-family-552"
+  },
+  "woodblessed": {
+   "doc": "creature-family-553"
+  },
+  "woodwarp": {
+   "doc": "creature-family-554"
+  },
+  "blight-bonded": {
+   "doc": "creature-family-555"
+  },
+  "palinthanos": {
+   "doc": "creature-family-556"
+  },
+  "floodslain-creature": {
+   "doc": "creature-family-557"
+  },
+  "storm-spirits": {
+   "doc": "creature-family-558"
+  },
+  "war-beast": {
+   "doc": "creature-family-559"
+  },
+  "wyvernsting-orc": {
+   "doc": "creature-family-560"
+  },
+  "blight": {
+   "doc": "creature-family-561"
+  },
+  "cliftwood-fiend": {
+   "doc": "creature-family-562"
+  },
+  "failed-prophet": {
+   "doc": "creature-family-563"
+  },
+  "vampire-strigoi": {
+   "doc": "creature-family-564"
+  },
+  "velstrac": {
+   "doc": "creature-family-565"
+  },
+  "gigantic-bee": {
+   "doc": "creature-family-566"
+  },
+  "stygian-guardian": {
+   "doc": "creature-family-567"
+  },
+  "painted-creatures": {
+   "doc": "creature-family-568"
+  },
+  "nephilim": {
+   "doc": "creature-family-569"
+  },
+  "golem": {
+   "doc": "creature-family-57"
+  },
+  "aesir": {
+   "doc": "creature-family-570"
+  },
+  "asura": {
+   "doc": "creature-family-571"
+  },
+  "automaton": {
+   "doc": "creature-family-572"
+  },
+  "badger": {
+   "doc": "creature-family-573"
+  },
+  "beheaded": {
+   "doc": "creature-family-574"
+  },
+  "clockwork": {
+   "doc": "creature-family-575"
+  },
+  "cockroach": {
+   "doc": "creature-family-576"
+  },
+  "crab": {
+   "doc": "creature-family-577"
+  },
+  "darvakka": {
+   "doc": "creature-family-578"
+  },
+  "deep-one": {
+   "doc": "creature-family-579"
+  },
+  "div": {
+   "doc": "creature-family-580"
+  },
+  "divine-warden": {
+   "doc": "creature-family-581"
+  },
+  "dragon-cinder": {
+   "doc": "creature-family-582"
+  },
+  "dragon-coral": {
+   "doc": "creature-family-583"
+  },
+  "dragon-despair": {
+   "doc": "creature-family-584"
+  },
+  "dragon-phase": {
+   "doc": "creature-family-585"
+  },
+  "dragon-requiem": {
+   "doc": "creature-family-586"
+  },
+  "dragon-resurrection": {
+   "doc": "creature-family-587"
+  },
+  "dragon-rune": {
+   "doc": "creature-family-588"
+  },
+  "dragon-whisper": {
+   "doc": "creature-family-589"
+  },
+  "dragonblood": {
+   "doc": "creature-family-590"
+  },
+  "dragonfly": {
+   "doc": "creature-family-591"
+  },
+  "elemental-wisp": {
+   "doc": "creature-family-592"
+  },
+  "fetchling": {
+   "doc": "creature-family-593"
+  },
+  "fly": {
+   "doc": "creature-family-594"
+  },
+  "geniekin": {
+   "doc": "creature-family-595"
+  },
+  "girtablilu": {
+   "doc": "creature-family-596"
+  },
+  "goblin-snake": {
+   "doc": "creature-family-597"
+  },
+  "grioth": {
+   "doc": "creature-family-598"
+  },
+  "guardian-beast": {
+   "doc": "creature-family-599"
+  },
+  "hippopotamus": {
+   "doc": "creature-family-600"
+  },
+  "house-spirit": {
+   "doc": "creature-family-601"
+  },
+  "jellyfish": {
+   "doc": "creature-family-602"
+  },
+  "jotunborn": {
+   "doc": "creature-family-603"
+  },
+  "kami": {
+   "doc": "creature-family-604"
+  },
+  "kitsune": {
+   "doc": "creature-family-605"
+  },
+  "leech": {
+   "doc": "creature-family-606"
+  },
+  "living-topiary": {
+   "doc": "creature-family-607"
+  },
+  "morlock": {
+   "doc": "creature-family-608"
+  },
+  "mosasaur": {
+   "doc": "creature-family-609"
+  },
+  "mosquito": {
+   "doc": "creature-family-610"
+  },
+  "munavri": {
+   "doc": "creature-family-611"
+  },
+  "nagaji": {
+   "doc": "creature-family-612"
+  },
+  "opossum": {
+   "doc": "creature-family-613"
+  },
+  "owb": {
+   "doc": "creature-family-614"
+  },
+  "poppet": {
+   "doc": "creature-family-615"
+  },
+  "raven": {
+   "doc": "creature-family-616"
+  },
+  "ravener": {
+   "doc": "creature-family-617"
+  },
+  "sahkil": {
+   "doc": "creature-family-618"
+  },
+  "samsaran": {
+   "doc": "creature-family-619"
+  },
+  "soulrider": {
+   "doc": "creature-family-620"
+  },
+  "spawn-of-rovagug": {
+   "doc": "creature-family-621"
+  },
+  "sportlebore": {
+   "doc": "creature-family-622"
+  },
+  "strix": {
+   "doc": "creature-family-623"
+  },
+  "swarm-strider": {
+   "doc": "creature-family-624"
+  },
+  "tanuki": {
+   "doc": "creature-family-625"
+  },
+  "terror-bird": {
+   "doc": "creature-family-626"
+  },
+  "titan": {
+   "doc": "creature-family-627"
+  },
+  "trilobite": {
+   "doc": "creature-family-628"
+  },
+  "urdefhan": {
+   "doc": "creature-family-629"
+  },
+  "vampire-nosferatu": {
+   "doc": "creature-family-630"
+  },
+  "vanara": {
+   "doc": "creature-family-631"
+  },
+  "vishkanya": {
+   "doc": "creature-family-632"
+  },
+  "wayang": {
+   "doc": "creature-family-633"
+  },
+  "dragon-barrage": {
+   "doc": "creature-family-634"
+  },
+  "dragon-bog": {
+   "doc": "creature-family-635"
+  },
+  "dragon-brine": {
+   "doc": "creature-family-636"
+  },
+  "dragon-cloud": {
+   "doc": "creature-family-637"
+  },
+  "dragon-crystal": {
+   "doc": "creature-family-638"
+  },
+  "dragon-delight": {
+   "doc": "creature-family-639"
+  },
+  "dragonet": {
+   "doc": "creature-family-640"
+  },
+  "dragon-executor": {
+   "doc": "creature-family-641"
+  },
+  "dragon-forest": {
+   "doc": "creature-family-642"
+  },
+  "dragon-magma": {
+   "doc": "creature-family-643"
+  },
+  "dragon-mocking": {
+   "doc": "creature-family-644"
+  },
+  "dragon-oath": {
+   "doc": "creature-family-645"
+  },
+  "dragon-rime": {
+   "doc": "creature-family-647"
+  },
+  "dragon-sage": {
+   "doc": "creature-family-648"
+  },
+  "dragon-sea": {
+   "doc": "creature-family-649"
+  },
+  "dragon-sky": {
+   "doc": "creature-family-650"
+  },
+  "dragon-sovereign": {
+   "doc": "creature-family-652"
+  },
+  "dragon-stormcrown": {
+   "doc": "creature-family-653"
+  },
+  "dragon-time": {
+   "doc": "creature-family-655"
+  },
+  "dragon-umbral": {
+   "doc": "creature-family-656"
+  },
+  "dragon-underworld": {
+   "doc": "creature-family-657"
+  },
+  "dragon-vizier": {
+   "doc": "creature-family-658"
+  },
+  "dragon-vorpal": {
+   "doc": "creature-family-659"
+  },
+  "dragon-wailing": {
+   "doc": "creature-family-660"
+  },
+  "dragon-wish": {
+   "doc": "creature-family-661"
+  },
+  "wyrmwraith": {
+   "doc": "creature-family-662"
+  },
+  "blackfrost-dead": {
+   "doc": "creature-family-664"
+  },
+  "elder-thing": {
+   "doc": "creature-family-665"
+  },
+  "gorga": {
+   "doc": "creature-family-666"
+  },
+  "skin-beetle": {
+   "doc": "creature-family-667"
+  },
+  "risen-runelord": {
+   "doc": "creature-family-668"
+  },
+  "hellbound-creature": {
+   "doc": "creature-family-670"
+  },
+  "wraith": {
+   "doc": "creature-family-671"
+  },
+  "wyrwood": {
+   "doc": "creature-family-672"
+  },
+  "agathion": {
+   "doc": "creature-family-674"
+  },
+  "nindoru": {
+   "doc": "creature-family-676"
+  },
+  "noppera-bo": {
+   "doc": "creature-family-677"
+  },
+  "thatchling": {
+   "doc": "creature-family-678"
+  },
+  "hellbreaker-troops": {
+   "doc": "creature-family-679"
+  },
+  "sarcovalt": {
+   "doc": "creature-family-680"
+  },
+  "fumecrux": {
+   "doc": "creature-family-681"
+  },
+  "hellcrown": {
+   "doc": "creature-family-682"
+  },
+  "skeletal-hellknight": {
+   "doc": "creature-family-683"
+  },
+  "arch-of-aroden-troops": {
+   "doc": "creature-family-684"
+  },
+  "aspodean-wall-troops": {
+   "doc": "creature-family-685"
+  },
+  "fangwood-troops": {
+   "doc": "creature-family-686"
+  },
+  "troops-in-isger": {
+   "doc": "creature-family-687"
+  },
+  "troops-in-nidal": {
+   "doc": "creature-family-688"
+  },
+  "thassilonian-sentinel": {
+   "doc": "creature-family-689"
+  },
+  "assist-pantheon": {
+   "doc": "cult-activity-1"
+  },
+  "create-wonders": {
+   "doc": "cult-activity-2"
+  },
+  "oversee-rites": {
+   "doc": "cult-activity-3"
+  },
+  "recruit-adherents": {
+   "doc": "cult-activity-4"
+  },
+  "teach-doctrine": {
+   "doc": "cult-activity-5"
+  },
+  "provarion": {
+   "doc": "vehicle-151"
+  },
+  "infantry-army": {
+   "doc": "warfare-army-1"
+  },
+  "greengripe-bombardiers": {
+   "doc": "warfare-army-12"
+  },
+  "lizardfolk-defenders": {
+   "doc": "warfare-army-13"
+  },
+  "mbotuu-frog-riders": {
+   "doc": "warfare-army-14"
+  },
+  "nomen-scouts": {
+   "doc": "warfare-army-15"
+  },
+  "sootscale-warriors": {
+   "doc": "warfare-army-16"
+  },
+  "tiger-lord-berserkers": {
+   "doc": "warfare-army-17"
+  },
+  "tok-nikrat-scouts": {
+   "doc": "warfare-army-18"
+  },
+  "cavalry": {
+   "doc": "warfare-army-2"
+  },
+  "skirmishers": {
+   "doc": "warfare-army-3"
+  },
+  "siege-engines": {
+   "doc": "warfare-army-4"
+  },
+  "ambush": {
+   "doc": "warfare-tactic-1"
+  },
+  "focused-devotion": {
+   "doc": "warfare-tactic-10"
+  },
+  "hold-the-line": {
+   "doc": "warfare-tactic-11"
+  },
+  "increased-ammunition": {
+   "doc": "warfare-tactic-12"
+  },
+  "keen-eyed": {
+   "doc": "warfare-tactic-13"
+  },
+  "keep-up-the-pressure": {
+   "doc": "warfare-tactic-14"
+  },
+  "live-off-the-land": {
+   "doc": "warfare-tactic-15"
+  },
+  "low-light-vision-kingmaker-adventure-path": {
+   "doc": "warfare-tactic-16"
+  },
+  "merciless": {
+   "doc": "warfare-tactic-17"
+  },
+  "opening-salvo": {
+   "doc": "warfare-tactic-18"
+  },
+  "reckless-flankers": {
+   "doc": "warfare-tactic-19"
+  },
+  "bloodied-but-unbroken": {
+   "doc": "warfare-tactic-2"
+  },
+  "sharpshooter": {
+   "doc": "warfare-tactic-20"
+  },
+  "toughened-soldiers": {
+   "doc": "warfare-tactic-21"
+  },
+  "cavalry-experts": {
+   "doc": "warfare-tactic-3"
+  },
+  "darkvision-kingmaker-adventure-path": {
+   "doc": "warfare-tactic-4"
+  },
+  "defensive-tactics": {
+   "doc": "warfare-tactic-5"
+  },
+  "explosive-shot": {
+   "doc": "warfare-tactic-6"
+  },
+  "field-triage": {
+   "doc": "warfare-tactic-7"
+  },
+  "flaming-shot": {
+   "doc": "warfare-tactic-8"
+  },
+  "flexible-tactics": {
+   "doc": "warfare-tactic-9"
+  },
+  "blizzard": {
+   "doc": "weather-hazard-1"
+  },
+  "tornado": {
+   "doc": "weather-hazard-10"
+  },
+  "wildfire": {
+   "doc": "weather-hazard-11"
+  },
+  "windstorm": {
+   "doc": "weather-hazard-12"
+  },
+  "cold-snap": {
+   "doc": "weather-hazard-2"
+  },
+  "flash-flood": {
+   "doc": "weather-hazard-3"
+  },
+  "fog": {
+   "doc": "weather-hazard-4"
+  },
+  "hailstorm-severe": {
+   "doc": "weather-hazard-5"
+  },
+  "heavy-downpour": {
+   "doc": "weather-hazard-6"
+  },
+  "subsidence": {
+   "doc": "weather-hazard-7"
+  },
+  "supernatural-storm": {
+   "doc": "weather-hazard-8"
+  },
+  "thunderstorm": {
+   "doc": "weather-hazard-9"
+  }
+ },
+ "categoryPage": {
+  "tactics-kingmaker-adventure-path": {
+   "doc": "category-page-86"
+  },
+  "structures-core-rulebook": {
+   "doc": "equipment-category-33"
+  },
+  "relics-gamemastery-guide": {
+   "doc": "equipment-category-50"
+  },
+  "animals-travel-guide": {
+   "doc": "equipment-category-88"
+  }
+ },
+ "disease": {
+  "blightburn-sickness-pathfinder-155-lord-of-the-black-sands": {
+   "doc": "disease-21"
+  }
+ },
+ "rules": {
+  "obstacles-and-dcs-gamemastery-guide": {
+   "doc": "rules-1211"
+  },
+  "sample-obstacles-gamemastery-guide": {
+   "doc": "rules-1220"
+  },
+  "example-gamemastery-guide": {
+   "doc": "rules-1305"
+  },
+  "spells-gamemastery-guide": {
+   "doc": "rules-1330"
+  },
+  "hit-points-gamemastery-guide": {
+   "doc": "rules-1347"
+  },
+  "adjusting-treasure-gamemastery-guide": {
+   "doc": "rules-1372"
+  },
+  "retraining-gamemastery-guide": {
+   "doc": "rules-1376"
+  },
+  "pantheons-gods-magic": {
+   "doc": "rules-1386"
+  },
+  "abilities-character-guide": {
+   "doc": "rules-1390"
+  },
+  "skills-character-guide": {
+   "doc": "rules-1391"
+  },
+  "introduction-advanced-players-guide": {
+   "doc": "rules-1408"
+  },
+  "how-to-use-this-book-advanced-players-guide": {
+   "doc": "rules-1410"
+  },
+  "access-entries-advanced-players-guide": {
+   "doc": "rules-1411"
+  },
+  "versatile-heritages-advanced-players-guide": {
+   "doc": "rules-1414"
+  },
+  "backgrounds-advanced-players-guide": {
+   "doc": "rules-1416"
+  },
+  "backgrounds-rules-1427": {
+   "doc": "rules-1427"
+  },
+  "rituals-advanced-players-guide": {
+   "doc": "rules-1444"
+  },
+  "alchemical-items-advanced-players-guide": {
+   "doc": "rules-1449"
+  },
+  "snares-advanced-players-guide": {
+   "doc": "rules-1450"
+  },
+  "magic-items-advanced-players-guide": {
+   "doc": "rules-1451"
+  },
+  "introduction-secrets-of-magic": {
+   "doc": "rules-1483"
+  },
+  "example-secrets-of-magic": {
+   "doc": "rules-1503"
+  },
+  "example-rules-1505": {
+   "doc": "rules-1505"
+  },
+  "example-rules-1507": {
+   "doc": "rules-1507"
+  },
+  "roleplaying-secrets-of-magic": {
+   "doc": "rules-1513"
+  },
+  "hit-points-core-rulebook": {
+   "doc": "rules-154"
+  },
+  "feats-secrets-of-magic": {
+   "doc": "rules-1541"
+  },
+  "size-guns-gears-remastered": {
+   "doc": "rules-1605"
+  },
+  "strikes-guns-gears-remastered": {
+   "doc": "rules-1606"
+  },
+  "hit-points-guns-gears-remastered": {
+   "doc": "rules-1608"
+  },
+  "senses-guns-gears-remastered": {
+   "doc": "rules-1610"
+  },
+  "speed-guns-gears-remastered": {
+   "doc": "rules-1611"
+  },
+  "hit-points-rules-162": {
+   "doc": "rules-162"
+  },
+  "size-core-rulebook": {
+   "doc": "rules-163"
+  },
+  "bulk-guns-gears-remastered": {
+   "doc": "rules-1631"
+  },
+  "how-to-use-this-book-guns-gears-remastered": {
+   "doc": "rules-1636"
+  },
+  "access-entries-guns-gears-remastered": {
+   "doc": "rules-1637"
+  },
+  "movement-core-rulebook": {
+   "doc": "rules-165"
+  },
+  "ammunition-guns-gears-remastered": {
+   "doc": "rules-1650"
+  },
+  "concept-pathfinder-176-lost-mammoth-valley": {
+   "doc": "rules-1679"
+  },
+  "review-pathfinder-176-lost-mammoth-valley": {
+   "doc": "rules-1686"
+  },
+  "alignment-core-rulebook": {
+   "doc": "rules-17"
+  },
+  "initial-proficiencies-kingmaker-adventure-path": {
+   "doc": "rules-1761"
+  },
+  "skill-descriptions-core-rulebook": {
+   "doc": "rules-179"
+  },
+  "settlements-kingmaker-adventure-path": {
+   "doc": "rules-1819"
+  },
+  "size-kingmaker-adventure-path": {
+   "doc": "rules-1825"
+  },
+  "level-kingmaker-adventure-path": {
+   "doc": "rules-1827"
+  },
+  "influence-kingmaker-adventure-path": {
+   "doc": "rules-1830"
+  },
+  "structures-kingmaker-adventure-path": {
+   "doc": "rules-1836"
+  },
+  "step-1-roll-initiative-kingmaker-adventure-path": {
+   "doc": "rules-1870"
+  },
+  "step-2-play-a-round-kingmaker-adventure-path": {
+   "doc": "rules-1871"
+  },
+  "precipitation-kingmaker-companion-guide": {
+   "doc": "rules-1900"
+  },
+  "temperature-kingmaker-companion-guide": {
+   "doc": "rules-1901"
+  },
+  "momentary-magic-treasure-vault-remastered": {
+   "doc": "rules-1907"
+  },
+  "chapter-1-introduction-player-core": {
+   "doc": "rules-1995"
+  },
+  "the-game-master-player-core": {
+   "doc": "rules-1999"
+  },
+  "encounters-player-core": {
+   "doc": "rules-2007"
+  },
+  "downtime-player-core": {
+   "doc": "rules-2008"
+  },
+  "chapter-2-ancestries-backgrounds-player-core": {
+   "doc": "rules-2012"
+  },
+  "chapter-3-classes-player-core": {
+   "doc": "rules-2013"
+  },
+  "chapter-4-skills-player-core": {
+   "doc": "rules-2014"
+  },
+  "chapter-5-feats-player-core": {
+   "doc": "rules-2015"
+  },
+  "chapter-6-equipment-player-core": {
+   "doc": "rules-2016"
+  },
+  "chapter-7-spells-player-core": {
+   "doc": "rules-2017"
+  },
+  "chapter-8-playing-the-game-player-core": {
+   "doc": "rules-2018"
+  },
+  "free-actions-player-core": {
+   "doc": "rules-2024"
+  },
+  "activities-player-core": {
+   "doc": "rules-2025"
+  },
+  "character-creation-player-core": {
+   "doc": "rules-2027"
+  },
+  "perception-player-core": {
+   "doc": "rules-2040"
+  },
+  "saving-throws-player-core": {
+   "doc": "rules-2041"
+  },
+  "skills-player-core": {
+   "doc": "rules-2043"
+  },
+  "edicts-and-anathema-player-core": {
+   "doc": "rules-2045"
+  },
+  "hero-points-player-core": {
+   "doc": "rules-2052"
+  },
+  "armor-class-ac-player-core": {
+   "doc": "rules-2053"
+  },
+  "bulk-player-core": {
+   "doc": "rules-2054"
+  },
+  "regional-languages-player-core": {
+   "doc": "rules-2070"
+  },
+  "hit-points-player-core": {
+   "doc": "rules-2076"
+  },
+  "speed-player-core": {
+   "doc": "rules-2078"
+  },
+  "languages-player-core": {
+   "doc": "rules-2080"
+  },
+  "traits-player-core": {
+   "doc": "rules-2081"
+  },
+  "special-abilities-player-core": {
+   "doc": "rules-2082"
+  },
+  "ancestry-feats-player-core": {
+   "doc": "rules-2084"
+  },
+  "languages-rules-2095": {
+   "doc": "rules-2095"
+  },
+  "key-attribute-player-core": {
+   "doc": "rules-2101"
+  },
+  "hit-points-rules-2102": {
+   "doc": "rules-2102"
+  },
+  "initial-proficiencies-player-core": {
+   "doc": "rules-2103"
+  },
+  "class-features-player-core": {
+   "doc": "rules-2105"
+  },
+  "skill-feats-player-core": {
+   "doc": "rules-2107"
+  },
+  "animal-companions-player-core": {
+   "doc": "rules-2113"
+  },
+  "secret-checks-player-core": {
+   "doc": "rules-2139"
+  },
+  "exploration-and-downtime-activities-player-core": {
+   "doc": "rules-2140"
+  },
+  "price-player-core": {
+   "doc": "rules-2146"
+  },
+  "item-level-player-core": {
+   "doc": "rules-2147"
+  },
+  "bulk-rules-2153": {
+   "doc": "rules-2153"
+  },
+  "armor-player-core": {
+   "doc": "rules-2166"
+  },
+  "armor-class-player-core": {
+   "doc": "rules-2167"
+  },
+  "ac-bonus-player-core": {
+   "doc": "rules-2171"
+  },
+  "group-player-core": {
+   "doc": "rules-2177"
+  },
+  "shields-player-core": {
+   "doc": "rules-2180"
+  },
+  "multiple-attack-penalty-player-core": {
+   "doc": "rules-2188"
+  },
+  "damage-rolls-player-core": {
+   "doc": "rules-2189"
+  },
+  "hands-player-core": {
+   "doc": "rules-2198"
+  },
+  "weapon-traits-player-core": {
+   "doc": "rules-2200"
+  },
+  "ammunition-player-core": {
+   "doc": "rules-2201"
+  },
+  "gear-player-core": {
+   "doc": "rules-2204"
+  },
+  "alchemical-tools-player-core": {
+   "doc": "rules-2212"
+  },
+  "cost-of-living-player-core": {
+   "doc": "rules-2218"
+  },
+  "innate-spells-player-core": {
+   "doc": "rules-2232"
+  },
+  "areas-player-core": {
+   "doc": "rules-2239"
+  },
+  "targets-player-core": {
+   "doc": "rules-2240"
+  },
+  "line-of-effect-player-core": {
+   "doc": "rules-2241"
+  },
+  "defenses-player-core": {
+   "doc": "rules-2246"
+  },
+  "basic-saving-throws-player-core": {
+   "doc": "rules-2247"
+  },
+  "counteracting-player-core": {
+   "doc": "rules-2250"
+  },
+  "walls-player-core": {
+   "doc": "rules-2253"
+  },
+  "checks-player-core": {
+   "doc": "rules-2260"
+  },
+  "effects-player-core": {
+   "doc": "rules-2270"
+  },
+  "defenses-rules-2273": {
+   "doc": "rules-2273"
+  },
+  "perception-and-detection-player-core": {
+   "doc": "rules-2277"
+  },
+  "defenses-rules-2294": {
+   "doc": "rules-2294"
+  },
+  "armor-class-rules-2295": {
+   "doc": "rules-2295"
+  },
+  "saving-throws-rules-2296": {
+   "doc": "rules-2296"
+  },
+  "perception-rules-2298": {
+   "doc": "rules-2298"
+  },
+  "death-player-core": {
+   "doc": "rules-2329"
+  },
+  "hero-points-rules-2333": {
+   "doc": "rules-2333"
+  },
+  "speed-rules-2347": {
+   "doc": "rules-2347"
+  },
+  "terrain-player-core": {
+   "doc": "rules-2365"
+  },
+  "hazardous-terrain-player-core": {
+   "doc": "rules-2368"
+  },
+  "cover-player-core": {
+   "doc": "rules-2372"
+  },
+  "special-circumstances-player-core": {
+   "doc": "rules-2374"
+  },
+  "duration-player-core": {
+   "doc": "rules-2378"
+  },
+  "senses-player-core": {
+   "doc": "rules-2405"
+  },
+  "scent-player-core": {
+   "doc": "rules-2412"
+  },
+  "mounted-combat-player-core": {
+   "doc": "rules-2434"
+  },
+  "aerial-combat-player-core": {
+   "doc": "rules-2437"
+  },
+  "aquatic-combat-player-core": {
+   "doc": "rules-2438"
+  },
+  "long-term-rest-player-core": {
+   "doc": "rules-2446"
+  },
+  "retraining-player-core": {
+   "doc": "rules-2447"
+  },
+  "skills-rules-2449": {
+   "doc": "rules-2449"
+  },
+  "introduction-gm-core": {
+   "doc": "rules-2460"
+  },
+  "potions-core-rulebook": {
+   "doc": "rules-247"
+  },
+  "special-considerations-gm-core": {
+   "doc": "rules-2496"
+  },
+  "looking-up-rules-gm-core": {
+   "doc": "rules-2500"
+  },
+  "buying-and-selling-items-gm-core": {
+   "doc": "rules-2617"
+  },
+  "rewards-gm-core": {
+   "doc": "rules-2647"
+  },
+  "experience-points-gm-core": {
+   "doc": "rules-2648"
+  },
+  "hero-points-gm-core": {
+   "doc": "rules-2654"
+  },
+  "currency-gm-core": {
+   "doc": "rules-2657"
+  },
+  "different-party-sizes-gm-core": {
+   "doc": "rules-2661"
+  },
+  "recurring-villains-gm-core": {
+   "doc": "rules-2680"
+  },
+  "corruption-gm-core": {
+   "doc": "rules-2704"
+  },
+  "treasure-gm-core": {
+   "doc": "rules-2714"
+  },
+  "free-archetype-gm-core": {
+   "doc": "rules-2751"
+  },
+  "aquatic-gm-core": {
+   "doc": "rules-2770"
+  },
+  "rubble-gm-core": {
+   "doc": "rules-2777"
+  },
+  "rubble-rules-2786": {
+   "doc": "rules-2786"
+  },
+  "undergrowth-gm-core": {
+   "doc": "rules-2788"
+  },
+  "floors-gm-core": {
+   "doc": "rules-2798"
+  },
+  "walls-gm-core": {
+   "doc": "rules-2807"
+  },
+  "level-gm-core": {
+   "doc": "rules-2859"
+  },
+  "defenses-gm-core": {
+   "doc": "rules-2869"
+  },
+  "level-rules-2879": {
+   "doc": "rules-2879"
+  },
+  "attribute-modifiers-gm-core": {
+   "doc": "rules-2881"
+  },
+  "perception-gm-core": {
+   "doc": "rules-2882"
+  },
+  "languages-gm-core": {
+   "doc": "rules-2884"
+  },
+  "skills-gm-core": {
+   "doc": "rules-2885"
+  },
+  "saving-throws-gm-core": {
+   "doc": "rules-2890"
+  },
+  "speed-gm-core": {
+   "doc": "rules-2894"
+  },
+  "ammunition-gm-core": {
+   "doc": "rules-2935"
+  },
+  "runes-gm-core": {
+   "doc": "rules-2940"
+  },
+  "scrolls-gm-core": {
+   "doc": "rules-2941"
+  },
+  "staves-gm-core": {
+   "doc": "rules-2943"
+  },
+  "talismans-gm-core": {
+   "doc": "rules-2945"
+  },
+  "wands-gm-core": {
+   "doc": "rules-2946"
+  },
+  "history-gm-core": {
+   "doc": "rules-2972"
+  },
+  "initiative-and-dueling-actions-gm-core": {
+   "doc": "rules-3091"
+  },
+  "random-encounters-gm-core": {
+   "doc": "rules-3107"
+  },
+  "terrain-gm-core": {
+   "doc": "rules-3108"
+  },
+  "level-rules-3148": {
+   "doc": "rules-3148"
+  },
+  "runes-rules-3158": {
+   "doc": "rules-3158"
+  },
+  "talismans-rules-3203": {
+   "doc": "rules-3203"
+  },
+  "introduction-monster-core": {
+   "doc": "rules-3258"
+  },
+  "languages-monster-core": {
+   "doc": "rules-3266"
+  },
+  "gear-monster-core": {
+   "doc": "rules-3267"
+  },
+  "attack-player-core": {
+   "doc": "rules-3288"
+  },
+  "secret-checks-core-rulebook": {
+   "doc": "rules-334"
+  },
+  "conditions-core-rulebook": {
+   "doc": "rules-349"
+  },
+  "eidolons-impossible-magic": {
+   "doc": "rules-3682"
+  },
+  "proficiencies-impossible-magic": {
+   "doc": "rules-3683"
+  },
+  "unarmed-attacks-impossible-magic": {
+   "doc": "rules-3685"
+  },
+  "corruption-impossible-magic": {
+   "doc": "rules-3693"
+  },
+  "encounters-core-rulebook": {
+   "doc": "rules-512"
+  },
+  "social-encounters-core-rulebook": {
+   "doc": "rules-517"
+  },
+  "exploration-activities-core-rulebook": {
+   "doc": "rules-522"
+  },
+  "hazards-core-rulebook": {
+   "doc": "rules-529"
+  },
+  "chapter-10-game-mastering-core-rulebook": {
+   "doc": "rules-56"
+  },
+  "rewards-core-rulebook": {
+   "doc": "rules-572"
+  },
+  "hero-points-core-rulebook": {
+   "doc": "rules-573"
+  },
+  "experience-points-core-rulebook": {
+   "doc": "rules-574"
+  },
+  "treasure-core-rulebook": {
+   "doc": "rules-580"
+  },
+  "buying-and-selling-items-core-rulebook": {
+   "doc": "rules-589"
+  },
+  "environment-core-rulebook": {
+   "doc": "rules-590"
+  },
+  "wind-core-rulebook": {
+   "doc": "rules-643"
+  },
+  "strength-core-rulebook": {
+   "doc": "rules-68"
+  },
+  "level-based-dcs-core-rulebook": {
+   "doc": "rules-681"
+  },
+  "talismans-core-rulebook": {
+   "doc": "rules-725"
+  },
+  "held-items-core-rulebook": {
+   "doc": "rules-728"
+  },
+  "structures-core-rulebook": {
+   "doc": "rules-755"
+  },
+  "ability-flaws-core-rulebook": {
+   "doc": "rules-76"
+  },
+  "ability-modifiers-core-rulebook": {
+   "doc": "rules-77"
+  },
+  "changing-alignment-core-rulebook": {
+   "doc": "rules-98"
+  }
+ },
+ "sidebar": {
+  "family-relations-ancestry-guide": {
+   "doc": "sidebar-1170"
+  },
+  "family-relations-sidebar-1172": {
+   "doc": "sidebar-1172"
+  },
+  "family-relations-sidebar-1174": {
+   "doc": "sidebar-1174"
+  },
+  "family-relations-sidebar-1176": {
+   "doc": "sidebar-1176"
+  },
+  "family-relations-sidebar-1178": {
+   "doc": "sidebar-1178"
+  },
+  "key-terms-guns-gears-remastered": {
+   "doc": "sidebar-1598"
+  },
+  "key-terms-sidebar-1613": {
+   "doc": "sidebar-1613"
+  },
+  "key-terms-kingmaker-adventure-path": {
+   "doc": "sidebar-1897"
+  },
+  "key-terms-rage-of-elements": {
+   "doc": "sidebar-2092"
+  },
+  "character-sheet-player-core": {
+   "doc": "sidebar-2128"
+  },
+  "character-sheet-sidebar-2129": {
+   "doc": "sidebar-2129"
+  },
+  "character-sheet-sidebar-2132": {
+   "doc": "sidebar-2132"
+  },
+  "character-sheet-sidebar-2133": {
+   "doc": "sidebar-2133"
+  },
+  "character-sheet-sidebar-2134": {
+   "doc": "sidebar-2134"
+  },
+  "character-sheet-sidebar-2135": {
+   "doc": "sidebar-2135"
+  },
+  "character-sheet-sidebar-2136": {
+   "doc": "sidebar-2136"
+  },
+  "key-terms-player-core": {
+   "doc": "sidebar-2144"
+  },
+  "key-terms-sidebar-2145": {
+   "doc": "sidebar-2145"
+  },
+  "key-terms-sidebar-2146": {
+   "doc": "sidebar-2146"
+  },
+  "key-terms-sidebar-2147": {
+   "doc": "sidebar-2147"
+  },
+  "key-terms-sidebar-2148": {
+   "doc": "sidebar-2148"
+  },
+  "key-terms-sidebar-2149": {
+   "doc": "sidebar-2149"
+  },
+  "key-terms-sidebar-2150": {
+   "doc": "sidebar-2150"
+  },
+  "key-terms-sidebar-2151": {
+   "doc": "sidebar-2151"
+  },
+  "gm-priorities-gm-core": {
+   "doc": "sidebar-2225"
+  },
+  "gm-priorities-sidebar-2229": {
+   "doc": "sidebar-2229"
+  },
+  "key-terms-player-core-2": {
+   "doc": "sidebar-2776"
+  },
+  "key-terms-sidebar-2779": {
+   "doc": "sidebar-2779"
+  },
+  "key-terms-sidebar-2780": {
+   "doc": "sidebar-2780"
+  },
+  "key-terms-sidebar-2782": {
+   "doc": "sidebar-2782"
+  },
+  "key-terms-sidebar-2784": {
+   "doc": "sidebar-2784"
+  },
+  "key-terms-sidebar-2785": {
+   "doc": "sidebar-2785"
+  },
+  "key-terms-sidebar-2788": {
+   "doc": "sidebar-2788"
+  },
+  "key-terms-war-of-immortals": {
+   "doc": "sidebar-2804"
+  },
+  "key-terms-sidebar-2805": {
+   "doc": "sidebar-2805"
+  },
+  "key-terms-battlecry": {
+   "doc": "sidebar-3160"
+  },
+  "key-terms-sidebar-3161": {
+   "doc": "sidebar-3161"
+  },
+  "key-terms-dark-archives-remastered": {
+   "doc": "sidebar-3638"
+  },
+  "key-terms-impossible-magic": {
+   "doc": "sidebar-3748"
+  },
+  "key-terms-sidebar-3751": {
+   "doc": "sidebar-3751"
+  },
+  "key-terms-sidebar-3752": {
+   "doc": "sidebar-3752"
+  },
+  "key-terms-sidebar-3754": {
+   "doc": "sidebar-3754"
+  }
+ }
+}

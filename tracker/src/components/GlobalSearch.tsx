@@ -133,8 +133,13 @@ export function GlobalSearch({ onClose, onPick, title }: {
 
   const choose = (h: Hit | undefined) => {
     if (!h) return
-    // Host (Heroes Heaven) content opens HH's own description popup.
-    if (h.host) { host?.open(h.host.bucket, h.host.id); onClose(); return }
+    // Host (Heroes Heaven) content opens HH's own description popup — or, picked for the GM screen,
+    // lands there as a host page (WinType 'host', drawn by the host).
+    if (h.host) {
+      if (onPick) onPick({ type: 'host', ref: `${h.host.bucket}:${h.host.id}`, title: h.title })
+      else host?.open(h.host.bucket, h.host.id)
+      onClose(); return
+    }
     // Widgets need a fresh instance id each time they're added (so two timers
     // don't share state / dedupe to one); references keep their stable key.
     const ref = h.category === 'widget' ? newWidgetRef(h.ref) : h.ref

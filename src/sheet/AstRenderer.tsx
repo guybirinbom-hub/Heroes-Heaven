@@ -11,7 +11,12 @@
 import { Fragment, type ReactNode } from 'react';
 import type { AstNode } from './astStore';
 import { useContent } from './ContentContext';
+import { openExternal } from '../platform';
 import './ast.css';
+
+/** The Archives of Nethys; a page's own address (`/Rules.aspx?ID=1503`) is stamped on its tree root by
+ *  scripts/stamp-ast-urls.mjs. */
+const AON = 'https://2e.aonprd.com';
 
 /* ---------- text hygiene: strip AoN template artifacts + markdown backslash-escapes ---------- */
 function clean(s: string): string {
@@ -458,6 +463,8 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, head
   // trait chips
   const traitsNode = top.find((n) => n.t === 'traits');
   const traitLabels = traitsNode ? (traitsNode.c || []).map((t) => t.label || textOf(t)).filter(Boolean) as string[] : [];
+  // The page on the Archives, where the record came from.
+  const aonUrl = /^\/\w+\.aspx/.test(String(node.url ?? '')) ? AON + node.url : '';
 
   return (
     <div className="ast-pop">
@@ -465,9 +472,16 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, head
       <div className="ast-head">
         {name && <span className="ast-name">{name}</span>}
         {cost && <Glyph str={cost.string} head />}
-        {(badge || headerControls) && (
+        {(badge || headerControls || aonUrl) && (
           <span className="ast-head-right">
             {badge && <span className="ast-badge">{badge}</span>}
+            {aonUrl && (
+              <a className="ast-aon" href={aonUrl} target="_blank" rel="noreferrer"
+                 title="Open this page on Archives of Nethys" aria-label="Open on Archives of Nethys"
+                 onClick={(e) => { e.stopPropagation(); void openExternal(e, aonUrl); }}>
+                <i className="ti ti-external-link" aria-hidden="true" />
+              </a>
+            )}
             {headerControls && <span className="ast-controls">{headerControls}</span>}
           </span>
         )}

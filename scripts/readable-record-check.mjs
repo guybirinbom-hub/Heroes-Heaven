@@ -65,8 +65,7 @@ const astIndex = read('public/ast-index.json');
  * left behind (2026-09-12: a regen that was never committed made 12 records "readable" here and
  * nowhere else), so the .gz is read first and the raw file only stands in where no .gz exists. */
 const astCache = {};
-const hasAst = (id) => {
-  const file = astIndex[id];
+const inFile = (file, id) => {
   if (!file) return false;
   if (!(file in astCache)) {
     const gz = join(ROOT, 'public/ast', `${file}.json.gz`);
@@ -77,6 +76,11 @@ const hasAst = (id) => {
   }
   return Boolean(astCache[file][id]);
 };
+/* …or the record's OWN bucket file, which is where a popup opened by bucket and key reads it
+ * (src/sheet/useAst.ts). The pages scripts/import-core-v2.mjs step 5 creates are only there: they open
+ * by key and are kept out of the index (scripts/lib/archive-coverage.mjs createdRefs). This only adds
+ * coverage, so it cannot hide a record the index lookup above would call empty. */
+const hasAst = (id, bucket) => inFile(astIndex[id], id) || inFile(bucket, id);
 
 /**
  * The four surfaces a record can carry text on, in one place so the exemption rules below can ask the
@@ -88,7 +92,7 @@ export const readable = (bucket, id, rec, descsFile = descs) =>
   Boolean(
     String(rec?.description ?? '').trim() ||
       String(descsFile?.[bucket]?.[id]?.d ?? '').trim() ||
-      hasAst(id) ||
+      hasAst(id, bucket) ||
       String(rec?.note ?? '').trim(),
   );
 

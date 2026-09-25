@@ -4,6 +4,12 @@ import type { CampaignMembership } from '../data/campaigns';
 import { loadRoster, type SavedChar } from '../data/storage';
 import { GmEditSheet, type GmEditHandle } from '../sheet/GmEditSheet';
 import { DescriptionModal } from '../sheet/DescriptionModal';
+import { DescBody } from '../sheet/DescBody';
+import { AstRenderer } from '../sheet/AstRenderer';
+import { astSlug, useAstNode } from '../sheet/useAst';
+import { bucketOf } from '../sheet/astStore';
+import { PinContext, type PinDescApi } from '../sheet/PinContext';
+import type { DescNode } from '../sheet/descref';
 import { ForceMobileContext } from '../sheet/useIsMobile';
 import { useBackHandler } from '../sheet/useEscapeClose';
 import { useTrackerVars, useGlobalVars } from './trackerAppearance';
@@ -20,7 +26,7 @@ import { MemberTurnButton } from './MemberTurnButton';
 import { useCombatStore, isSamePc } from '../../tracker/src/store/combatStore';
 import { useSettingsStore } from '../../tracker/src/store/settingsStore';
 import { useWindowStore } from '../../tracker/src/store/windowStore';
-import { useLayoutStore } from '../../tracker/src/store/layoutStore';
+import { useLayoutStore, useGmLayoutStore, type PaneNode } from '../../tracker/src/store/layoutStore';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
 import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
 import { hostSearchRecords } from './hostSearchRecords';
@@ -77,6 +83,39 @@ const SYNC_READY_CAP_MS = 4000;
  */
 function trackerPopupOpen(): boolean {
   return !!document.querySelector('body > .tracker-root:not(.campaign-tracker)');
+}
+
+/*
+ * THE GM'S STAR. Every description popup keeps its favourite star; on a player's sheet it pins to the
+ * character's Pinned section, and the GM has no character — the GM's pinned references are the GM
+ * screen (the tracker's workspace of pages kept across combats). So the star here puts the page on the
+ * GM screen as a `host` pane tab (ref "bucket:slug"), and takes it off again.
+ */
+function findHostTab(n: PaneNode | null, ref: string): { leaf: string; idx: number } | null {
+  if (!n) return null;
+  if (n.kind === 'leaf') {
+    const idx = n.tabs.findIndex((t) => t.type === 'host' && t.ref === ref);
+    return idx >= 0 ? { leaf: n.id, idx } : null;
+  }
+  return findHostTab(n.a, ref) ?? findHostTab(n.b, ref);
+}
+const hostRefOf = (n: DescNode): string | null => {
+  const slug = n.slug ?? astSlug(n.title);
+  const key = n.key ?? bucketOf(slug);
+  return key && slug ? `${key}:${slug}` : null;
+};
+
+/** A page pinned to the GM screen: the record's own page (its Range/Duration lines kept — the GM reads
+ *  them off it mid-fight), links opening HH's popup; a record with no page shows its text. */
+function HostPage({ content, bucket, id, onOpen }: {
+  content: ContentDatabase; bucket: string; id: string; onOpen: (bucket: string, id: string) => void;
+}) {
+  const rec = (content as unknown as Record<string, Record<string, { description?: string; descRefs?: DescRef[] }> | undefined>)[bucket]?.[id];
+  const { node, loading } = useAstNode(bucket, id);
+  if (!rec) return <p className="sd-ours">This page is not in this version of Heroes Heaven.</p>;
+  if (node) return <AstRenderer node={node} bodyOnly selfRef={`${bucket}:${id}`} onOpenRef={onOpen} />;
+  if (loading) return <div className="ast-body ast-loading" aria-busy="true" />;
+  return <DescBody description={rec.description} descRefs={rec.descRefs} />;
 }
 
 /** True when this PC already has a row in the initiative order. Matched through the store's OWN
@@ -532,10 +571,29 @@ export function CampaignTracker({
   const floatingTopZ = useWindowStore((s) => s.topZ);
   // The index itself — names, older names, a detail line, no duplicate scrapes: hostSearchRecords.ts.
   const searchRecords = useMemo<HostSearchRecord[]>(() => hostSearchRecords(content), [content]);
-  const hostSearch = useMemo(
-    () => ({ records: searchRecords, open: (bucket: string, id: string) => setDescTarget({ bucket, id }) }),
-    [searchRecords],
-  );
+  const hostSearch = useMemo(() => {
+    const open = (bucket: string, id: string) => setDescTarget({ bucket, id });
+    return {
+      records: searchRecords,
+      open,
+      // A page the GM starred onto the GM screen (gmPin below): its links open this same popup.
+      render: (bucket: string, id: string) => <HostPage content={content} bucket={bucket} id={id} onOpen={open} />,
+    };
+  }, [searchRecords, content]);
+  // The star in every description popup here (findHostTab above).
+  const gmRoot = useGmLayoutStore((s) => s.root);
+  const gmPin = useMemo<PinDescApi>(() => ({
+    where: 'GM screen',
+    has: (n) => { const ref = hostRefOf(n); return !!ref && !!findHostTab(gmRoot, ref); },
+    toggle: (n) => {
+      const ref = hostRefOf(n);
+      if (!ref) return;
+      const gm = useGmLayoutStore.getState();
+      const hit = findHostTab(gm.root, ref);
+      if (hit) gm.closeTab(hit.leaf, hit.idx);
+      else gm.addPopup({ type: 'host', ref, title: n.title });
+    },
+  }), [gmRoot]);
   const descRec = descTarget
     ? (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }> | undefined>)[descTarget.bucket]?.[descTarget.id]
     : null;
@@ -1062,6 +1120,7 @@ export function CampaignTracker({
     <div className="tracker-root campaign-tracker" style={trackerVars ?? undefined}>
       <GameDataProvider>
        <HostSearchProvider value={hostSearch}>
+       <PinContext.Provider value={gmPin}>
        <CampaignPartyLevelProvider levels={partyLevels}>
         <CampaignMonsterPartsProvider enabled={monsterParts} mode={monsterPartsMode}>
         <CampaignPcStatsProvider byName={pcStats.byName}>
@@ -1227,6 +1286,7 @@ export function CampaignTracker({
         </CampaignPcStatsProvider>
         </CampaignMonsterPartsProvider>
        </CampaignPartyLevelProvider>
+       </PinContext.Provider>
        </HostSearchProvider>
       </GameDataProvider>
     </div>

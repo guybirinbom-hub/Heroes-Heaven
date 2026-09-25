@@ -1,9 +1,9 @@
 {
  "tally": {
-  "doc": 25142,
+  "doc": 26148,
   "drop": 143,
   "subblock": 572,
-  "authored": 988,
+  "authored": 989,
   "table": 21,
   "scraped": 1,
   "derived": 22
@@ -121297,6 +121297,11 @@
     "name": "Drain Familiar",
     "status": "authored",
     "how": "overlay-created record with no archive page"
+   },
+   "reloading-cascade": {
+    "name": "Reloading Cascade",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
    }
   },
   "conditions": {
@@ -127813,6 +127818,30 @@
     "status": "doc",
     "docId": "equipment-category-120",
     "how": "importer:the doc this record was built from"
+   },
+   "tactics-kingmaker-adventure-path": {
+    "name": "Tactics",
+    "status": "doc",
+    "docId": "category-page-86",
+    "how": "importer:the doc this record was built from"
+   },
+   "structures-core-rulebook": {
+    "name": "Structures",
+    "status": "doc",
+    "docId": "equipment-category-33",
+    "how": "importer:the doc this record was built from"
+   },
+   "relics-gamemastery-guide": {
+    "name": "Relics",
+    "status": "doc",
+    "docId": "equipment-category-50",
+    "how": "importer:the doc this record was built from"
+   },
+   "animals-travel-guide": {
+    "name": "Animals",
+    "status": "doc",
+    "docId": "equipment-category-88",
+    "how": "importer:the doc this record was built from"
    }
   },
   "cause": {
@@ -129118,6 +129147,12 @@
     "name": "Fungal Rot",
     "status": "doc",
     "docId": "disease-44",
+    "how": "importer:the doc this record was built from"
+   },
+   "blightburn-sickness-pathfinder-155-lord-of-the-black-sands": {
+    "name": "Blightburn Sickness",
+    "status": "doc",
+    "docId": "disease-21",
     "how": "importer:the doc this record was built from"
    }
   },
@@ -148292,6 +148327,1272 @@
      "id": "attribute-modifiers-and-defenses",
      "name": "Attribute Modifiers and Defenses"
     }
+   },
+   "obstacles-and-dcs-gamemastery-guide": {
+    "name": "Obstacles and DCs",
+    "status": "doc",
+    "docId": "rules-1211",
+    "how": "importer:the doc this record was built from"
+   },
+   "sample-obstacles-gamemastery-guide": {
+    "name": "Sample Obstacles",
+    "status": "doc",
+    "docId": "rules-1220",
+    "how": "importer:the doc this record was built from"
+   },
+   "example-gamemastery-guide": {
+    "name": "Example",
+    "status": "doc",
+    "docId": "rules-1305",
+    "how": "importer:the doc this record was built from"
+   },
+   "spells-gamemastery-guide": {
+    "name": "Spells",
+    "status": "doc",
+    "docId": "rules-1330",
+    "how": "importer:the doc this record was built from"
+   },
+   "hit-points-gamemastery-guide": {
+    "name": "Hit Points",
+    "status": "doc",
+    "docId": "rules-1347",
+    "how": "importer:the doc this record was built from"
+   },
+   "adjusting-treasure-gamemastery-guide": {
+    "name": "Adjusting Treasure",
+    "status": "doc",
+    "docId": "rules-1372",
+    "how": "importer:the doc this record was built from"
+   },
+   "retraining-gamemastery-guide": {
+    "name": "Retraining",
+    "status": "doc",
+    "docId": "rules-1376",
+    "how": "importer:the doc this record was built from"
+   },
+   "pantheons-gods-magic": {
+    "name": "Pantheons",
+    "status": "doc",
+    "docId": "rules-1386",
+    "how": "importer:the doc this record was built from"
+   },
+   "abilities-character-guide": {
+    "name": "Abilities",
+    "status": "doc",
+    "docId": "rules-1390",
+    "how": "importer:the doc this record was built from"
+   },
+   "skills-character-guide": {
+    "name": "Skills",
+    "status": "doc",
+    "docId": "rules-1391",
+    "how": "importer:the doc this record was built from"
+   },
+   "introduction-advanced-players-guide": {
+    "name": "Introduction",
+    "status": "doc",
+    "docId": "rules-1408",
+    "how": "importer:the doc this record was built from"
+   },
+   "how-to-use-this-book-advanced-players-guide": {
+    "name": "How to Use This Book",
+    "status": "doc",
+    "docId": "rules-1410",
+    "how": "importer:the doc this record was built from"
+   },
+   "access-entries-advanced-players-guide": {
+    "name": "Access Entries",
+    "status": "doc",
+    "docId": "rules-1411",
+    "how": "importer:the doc this record was built from"
+   },
+   "versatile-heritages-advanced-players-guide": {
+    "name": "Versatile Heritages",
+    "status": "doc",
+    "docId": "rules-1414",
+    "how": "importer:the doc this record was built from"
+   },
+   "backgrounds-advanced-players-guide": {
+    "name": "Backgrounds",
+    "status": "doc",
+    "docId": "rules-1416",
+    "how": "importer:the doc this record was built from"
+   },
+   "backgrounds-rules-1427": {
+    "name": "Backgrounds",
+    "status": "doc",
+    "docId": "rules-1427",
+    "how": "importer:the doc this record was built from"
+   },
+   "rituals-advanced-players-guide": {
+    "name": "Rituals",
+    "status": "doc",
+    "docId": "rules-1444",
+    "how": "importer:the doc this record was built from"
+   },
+   "alchemical-items-advanced-players-guide": {
+    "name": "Alchemical Items",
+    "status": "doc",
+    "docId": "rules-1449",
+    "how": "importer:the doc this record was built from"
+   },
+   "snares-advanced-players-guide": {
+    "name": "Snares",
+    "status": "doc",
+    "docId": "rules-1450",
+    "how": "importer:the doc this record was built from"
+   },
+   "magic-items-advanced-players-guide": {
+    "name": "Magic Items",
+    "status": "doc",
+    "docId": "rules-1451",
+    "how": "importer:the doc this record was built from"
+   },
+   "introduction-secrets-of-magic": {
+    "name": "Introduction",
+    "status": "doc",
+    "docId": "rules-1483",
+    "how": "importer:the doc this record was built from"
+   },
+   "example-secrets-of-magic": {
+    "name": "Example",
+    "status": "doc",
+    "docId": "rules-1503",
+    "how": "importer:the doc this record was built from"
+   },
+   "example-rules-1505": {
+    "name": "Example",
+    "status": "doc",
+    "docId": "rules-1505",
+    "how": "importer:the doc this record was built from"
+   },
+   "example-rules-1507": {
+    "name": "Example",
+    "status": "doc",
+    "docId": "rules-1507",
+    "how": "importer:the doc this record was built from"
+   },
+   "roleplaying-secrets-of-magic": {
+    "name": "Roleplaying",
+    "status": "doc",
+    "docId": "rules-1513",
+    "how": "importer:the doc this record was built from"
+   },
+   "hit-points-core-rulebook": {
+    "name": "Hit Points",
+    "status": "doc",
+    "docId": "rules-154",
+    "how": "importer:the doc this record was built from"
+   },
+   "feats-secrets-of-magic": {
+    "name": "Feats",
+    "status": "doc",
+    "docId": "rules-1541",
+    "how": "importer:the doc this record was built from"
+   },
+   "size-guns-gears-remastered": {
+    "name": "Size",
+    "status": "doc",
+    "docId": "rules-1605",
+    "how": "importer:the doc this record was built from"
+   },
+   "strikes-guns-gears-remastered": {
+    "name": "Strikes",
+    "status": "doc",
+    "docId": "rules-1606",
+    "how": "importer:the doc this record was built from"
+   },
+   "hit-points-guns-gears-remastered": {
+    "name": "Hit Points",
+    "status": "doc",
+    "docId": "rules-1608",
+    "how": "importer:the doc this record was built from"
+   },
+   "senses-guns-gears-remastered": {
+    "name": "Senses",
+    "status": "doc",
+    "docId": "rules-1610",
+    "how": "importer:the doc this record was built from"
+   },
+   "speed-guns-gears-remastered": {
+    "name": "Speed",
+    "status": "doc",
+    "docId": "rules-1611",
+    "how": "importer:the doc this record was built from"
+   },
+   "hit-points-rules-162": {
+    "name": "Hit Points",
+    "status": "doc",
+    "docId": "rules-162",
+    "how": "importer:the doc this record was built from"
+   },
+   "size-core-rulebook": {
+    "name": "Size",
+    "status": "doc",
+    "docId": "rules-163",
+    "how": "importer:the doc this record was built from"
+   },
+   "bulk-guns-gears-remastered": {
+    "name": "Bulk",
+    "status": "doc",
+    "docId": "rules-1631",
+    "how": "importer:the doc this record was built from"
+   },
+   "how-to-use-this-book-guns-gears-remastered": {
+    "name": "How to Use this Book",
+    "status": "doc",
+    "docId": "rules-1636",
+    "how": "importer:the doc this record was built from"
+   },
+   "access-entries-guns-gears-remastered": {
+    "name": "Access Entries",
+    "status": "doc",
+    "docId": "rules-1637",
+    "how": "importer:the doc this record was built from"
+   },
+   "movement-core-rulebook": {
+    "name": "Movement",
+    "status": "doc",
+    "docId": "rules-165",
+    "how": "importer:the doc this record was built from"
+   },
+   "ammunition-guns-gears-remastered": {
+    "name": "Ammunition",
+    "status": "doc",
+    "docId": "rules-1650",
+    "how": "importer:the doc this record was built from"
+   },
+   "concept-pathfinder-176-lost-mammoth-valley": {
+    "name": "Concept",
+    "status": "doc",
+    "docId": "rules-1679",
+    "how": "importer:the doc this record was built from"
+   },
+   "review-pathfinder-176-lost-mammoth-valley": {
+    "name": "Review",
+    "status": "doc",
+    "docId": "rules-1686",
+    "how": "importer:the doc this record was built from"
+   },
+   "alignment-core-rulebook": {
+    "name": "Alignment",
+    "status": "doc",
+    "docId": "rules-17",
+    "how": "importer:the doc this record was built from"
+   },
+   "initial-proficiencies-kingmaker-adventure-path": {
+    "name": "Initial Proficiencies",
+    "status": "doc",
+    "docId": "rules-1761",
+    "how": "importer:the doc this record was built from"
+   },
+   "skill-descriptions-core-rulebook": {
+    "name": "Skill Descriptions",
+    "status": "doc",
+    "docId": "rules-179",
+    "how": "importer:the doc this record was built from"
+   },
+   "settlements-kingmaker-adventure-path": {
+    "name": "Settlements",
+    "status": "doc",
+    "docId": "rules-1819",
+    "how": "importer:the doc this record was built from"
+   },
+   "size-kingmaker-adventure-path": {
+    "name": "Size",
+    "status": "doc",
+    "docId": "rules-1825",
+    "how": "importer:the doc this record was built from"
+   },
+   "level-kingmaker-adventure-path": {
+    "name": "Level",
+    "status": "doc",
+    "docId": "rules-1827",
+    "how": "importer:the doc this record was built from"
+   },
+   "influence-kingmaker-adventure-path": {
+    "name": "Influence",
+    "status": "doc",
+    "docId": "rules-1830",
+    "how": "importer:the doc this record was built from"
+   },
+   "structures-kingmaker-adventure-path": {
+    "name": "Structures",
+    "status": "doc",
+    "docId": "rules-1836",
+    "how": "importer:the doc this record was built from"
+   },
+   "step-1-roll-initiative-kingmaker-adventure-path": {
+    "name": "Step 1: Roll Initiative",
+    "status": "doc",
+    "docId": "rules-1870",
+    "how": "importer:the doc this record was built from"
+   },
+   "step-2-play-a-round-kingmaker-adventure-path": {
+    "name": "Step 2: Play a Round",
+    "status": "doc",
+    "docId": "rules-1871",
+    "how": "importer:the doc this record was built from"
+   },
+   "precipitation-kingmaker-companion-guide": {
+    "name": "Precipitation",
+    "status": "doc",
+    "docId": "rules-1900",
+    "how": "importer:the doc this record was built from"
+   },
+   "temperature-kingmaker-companion-guide": {
+    "name": "Temperature",
+    "status": "doc",
+    "docId": "rules-1901",
+    "how": "importer:the doc this record was built from"
+   },
+   "momentary-magic-treasure-vault-remastered": {
+    "name": "Momentary Magic",
+    "status": "doc",
+    "docId": "rules-1907",
+    "how": "importer:the doc this record was built from"
+   },
+   "chapter-1-introduction-player-core": {
+    "name": "Chapter 1: Introduction",
+    "status": "doc",
+    "docId": "rules-1995",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-game-master-player-core": {
+    "name": "The Game Master",
+    "status": "doc",
+    "docId": "rules-1999",
+    "how": "importer:the doc this record was built from"
+   },
+   "encounters-player-core": {
+    "name": "Encounters",
+    "status": "doc",
+    "docId": "rules-2007",
+    "how": "importer:the doc this record was built from"
+   },
+   "downtime-player-core": {
+    "name": "Downtime",
+    "status": "doc",
+    "docId": "rules-2008",
+    "how": "importer:the doc this record was built from"
+   },
+   "chapter-2-ancestries-backgrounds-player-core": {
+    "name": "Chapter 2: Ancestries & Backgrounds",
+    "status": "doc",
+    "docId": "rules-2012",
+    "how": "importer:the doc this record was built from"
+   },
+   "chapter-3-classes-player-core": {
+    "name": "Chapter 3: Classes",
+    "status": "doc",
+    "docId": "rules-2013",
+    "how": "importer:the doc this record was built from"
+   },
+   "chapter-4-skills-player-core": {
+    "name": "Chapter 4: Skills",
+    "status": "doc",
+    "docId": "rules-2014",
+    "how": "importer:the doc this record was built from"
+   },
+   "chapter-5-feats-player-core": {
+    "name": "Chapter 5: Feats",
+    "status": "doc",
+    "docId": "rules-2015",
+    "how": "importer:the doc this record was built from"
+   },
+   "chapter-6-equipment-player-core": {
+    "name": "Chapter 6: Equipment",
+    "status": "doc",
+    "docId": "rules-2016",
+    "how": "importer:the doc this record was built from"
+   },
+   "chapter-7-spells-player-core": {
+    "name": "Chapter 7: Spells",
+    "status": "doc",
+    "docId": "rules-2017",
+    "how": "importer:the doc this record was built from"
+   },
+   "chapter-8-playing-the-game-player-core": {
+    "name": "Chapter 8: Playing the Game",
+    "status": "doc",
+    "docId": "rules-2018",
+    "how": "importer:the doc this record was built from"
+   },
+   "free-actions-player-core": {
+    "name": "Free Actions",
+    "status": "doc",
+    "docId": "rules-2024",
+    "how": "importer:the doc this record was built from"
+   },
+   "activities-player-core": {
+    "name": "Activities",
+    "status": "doc",
+    "docId": "rules-2025",
+    "how": "importer:the doc this record was built from"
+   },
+   "character-creation-player-core": {
+    "name": "Character Creation",
+    "status": "doc",
+    "docId": "rules-2027",
+    "how": "importer:the doc this record was built from"
+   },
+   "perception-player-core": {
+    "name": "Perception",
+    "status": "doc",
+    "docId": "rules-2040",
+    "how": "importer:the doc this record was built from"
+   },
+   "saving-throws-player-core": {
+    "name": "Saving Throws",
+    "status": "doc",
+    "docId": "rules-2041",
+    "how": "importer:the doc this record was built from"
+   },
+   "skills-player-core": {
+    "name": "Skills",
+    "status": "doc",
+    "docId": "rules-2043",
+    "how": "importer:the doc this record was built from"
+   },
+   "edicts-and-anathema-player-core": {
+    "name": "Edicts and Anathema",
+    "status": "doc",
+    "docId": "rules-2045",
+    "how": "importer:the doc this record was built from"
+   },
+   "hero-points-player-core": {
+    "name": "Hero Points",
+    "status": "doc",
+    "docId": "rules-2052",
+    "how": "importer:the doc this record was built from"
+   },
+   "armor-class-ac-player-core": {
+    "name": "Armor Class (AC)",
+    "status": "doc",
+    "docId": "rules-2053",
+    "how": "importer:the doc this record was built from"
+   },
+   "bulk-player-core": {
+    "name": "Bulk",
+    "status": "doc",
+    "docId": "rules-2054",
+    "how": "importer:the doc this record was built from"
+   },
+   "regional-languages-player-core": {
+    "name": "Regional Languages",
+    "status": "doc",
+    "docId": "rules-2070",
+    "how": "importer:the doc this record was built from"
+   },
+   "hit-points-player-core": {
+    "name": "Hit Points",
+    "status": "doc",
+    "docId": "rules-2076",
+    "how": "importer:the doc this record was built from"
+   },
+   "speed-player-core": {
+    "name": "Speed",
+    "status": "doc",
+    "docId": "rules-2078",
+    "how": "importer:the doc this record was built from"
+   },
+   "languages-player-core": {
+    "name": "Languages",
+    "status": "doc",
+    "docId": "rules-2080",
+    "how": "importer:the doc this record was built from"
+   },
+   "traits-player-core": {
+    "name": "Traits",
+    "status": "doc",
+    "docId": "rules-2081",
+    "how": "importer:the doc this record was built from"
+   },
+   "special-abilities-player-core": {
+    "name": "Special Abilities",
+    "status": "doc",
+    "docId": "rules-2082",
+    "how": "importer:the doc this record was built from"
+   },
+   "ancestry-feats-player-core": {
+    "name": "Ancestry Feats",
+    "status": "doc",
+    "docId": "rules-2084",
+    "how": "importer:the doc this record was built from"
+   },
+   "languages-rules-2095": {
+    "name": "Languages",
+    "status": "doc",
+    "docId": "rules-2095",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-attribute-player-core": {
+    "name": "Key Attribute",
+    "status": "doc",
+    "docId": "rules-2101",
+    "how": "importer:the doc this record was built from"
+   },
+   "hit-points-rules-2102": {
+    "name": "Hit Points",
+    "status": "doc",
+    "docId": "rules-2102",
+    "how": "importer:the doc this record was built from"
+   },
+   "initial-proficiencies-player-core": {
+    "name": "Initial Proficiencies",
+    "status": "doc",
+    "docId": "rules-2103",
+    "how": "importer:the doc this record was built from"
+   },
+   "class-features-player-core": {
+    "name": "Class Features",
+    "status": "doc",
+    "docId": "rules-2105",
+    "how": "importer:the doc this record was built from"
+   },
+   "skill-feats-player-core": {
+    "name": "Skill Feats",
+    "status": "doc",
+    "docId": "rules-2107",
+    "how": "importer:the doc this record was built from"
+   },
+   "animal-companions-player-core": {
+    "name": "Animal Companions",
+    "status": "doc",
+    "docId": "rules-2113",
+    "how": "importer:the doc this record was built from"
+   },
+   "secret-checks-player-core": {
+    "name": "Secret Checks",
+    "status": "doc",
+    "docId": "rules-2139",
+    "how": "importer:the doc this record was built from"
+   },
+   "exploration-and-downtime-activities-player-core": {
+    "name": "Exploration and Downtime Activities",
+    "status": "doc",
+    "docId": "rules-2140",
+    "how": "importer:the doc this record was built from"
+   },
+   "price-player-core": {
+    "name": "Price",
+    "status": "doc",
+    "docId": "rules-2146",
+    "how": "importer:the doc this record was built from"
+   },
+   "item-level-player-core": {
+    "name": "Item Level",
+    "status": "doc",
+    "docId": "rules-2147",
+    "how": "importer:the doc this record was built from"
+   },
+   "bulk-rules-2153": {
+    "name": "Bulk",
+    "status": "doc",
+    "docId": "rules-2153",
+    "how": "importer:the doc this record was built from"
+   },
+   "armor-player-core": {
+    "name": "Armor",
+    "status": "doc",
+    "docId": "rules-2166",
+    "how": "importer:the doc this record was built from"
+   },
+   "armor-class-player-core": {
+    "name": "Armor Class",
+    "status": "doc",
+    "docId": "rules-2167",
+    "how": "importer:the doc this record was built from"
+   },
+   "ac-bonus-player-core": {
+    "name": "AC Bonus",
+    "status": "doc",
+    "docId": "rules-2171",
+    "how": "importer:the doc this record was built from"
+   },
+   "group-player-core": {
+    "name": "Group",
+    "status": "doc",
+    "docId": "rules-2177",
+    "how": "importer:the doc this record was built from"
+   },
+   "shields-player-core": {
+    "name": "Shields",
+    "status": "doc",
+    "docId": "rules-2180",
+    "how": "importer:the doc this record was built from"
+   },
+   "multiple-attack-penalty-player-core": {
+    "name": "Multiple Attack Penalty",
+    "status": "doc",
+    "docId": "rules-2188",
+    "how": "importer:the doc this record was built from"
+   },
+   "damage-rolls-player-core": {
+    "name": "Damage Rolls",
+    "status": "doc",
+    "docId": "rules-2189",
+    "how": "importer:the doc this record was built from"
+   },
+   "hands-player-core": {
+    "name": "Hands",
+    "status": "doc",
+    "docId": "rules-2198",
+    "how": "importer:the doc this record was built from"
+   },
+   "weapon-traits-player-core": {
+    "name": "Weapon Traits",
+    "status": "doc",
+    "docId": "rules-2200",
+    "how": "importer:the doc this record was built from"
+   },
+   "ammunition-player-core": {
+    "name": "Ammunition",
+    "status": "doc",
+    "docId": "rules-2201",
+    "how": "importer:the doc this record was built from"
+   },
+   "gear-player-core": {
+    "name": "Gear",
+    "status": "doc",
+    "docId": "rules-2204",
+    "how": "importer:the doc this record was built from"
+   },
+   "alchemical-tools-player-core": {
+    "name": "Alchemical Tools",
+    "status": "doc",
+    "docId": "rules-2212",
+    "how": "importer:the doc this record was built from"
+   },
+   "cost-of-living-player-core": {
+    "name": "Cost of Living",
+    "status": "doc",
+    "docId": "rules-2218",
+    "how": "importer:the doc this record was built from"
+   },
+   "innate-spells-player-core": {
+    "name": "Innate Spells",
+    "status": "doc",
+    "docId": "rules-2232",
+    "how": "importer:the doc this record was built from"
+   },
+   "areas-player-core": {
+    "name": "Areas",
+    "status": "doc",
+    "docId": "rules-2239",
+    "how": "importer:the doc this record was built from"
+   },
+   "targets-player-core": {
+    "name": "Targets",
+    "status": "doc",
+    "docId": "rules-2240",
+    "how": "importer:the doc this record was built from"
+   },
+   "line-of-effect-player-core": {
+    "name": "Line of Effect",
+    "status": "doc",
+    "docId": "rules-2241",
+    "how": "importer:the doc this record was built from"
+   },
+   "defenses-player-core": {
+    "name": "Defenses",
+    "status": "doc",
+    "docId": "rules-2246",
+    "how": "importer:the doc this record was built from"
+   },
+   "basic-saving-throws-player-core": {
+    "name": "Basic Saving Throws",
+    "status": "doc",
+    "docId": "rules-2247",
+    "how": "importer:the doc this record was built from"
+   },
+   "counteracting-player-core": {
+    "name": "Counteracting",
+    "status": "doc",
+    "docId": "rules-2250",
+    "how": "importer:the doc this record was built from"
+   },
+   "walls-player-core": {
+    "name": "Walls",
+    "status": "doc",
+    "docId": "rules-2253",
+    "how": "importer:the doc this record was built from"
+   },
+   "checks-player-core": {
+    "name": "Checks",
+    "status": "doc",
+    "docId": "rules-2260",
+    "how": "importer:the doc this record was built from"
+   },
+   "effects-player-core": {
+    "name": "Effects",
+    "status": "doc",
+    "docId": "rules-2270",
+    "how": "importer:the doc this record was built from"
+   },
+   "defenses-rules-2273": {
+    "name": "Defenses",
+    "status": "doc",
+    "docId": "rules-2273",
+    "how": "importer:the doc this record was built from"
+   },
+   "perception-and-detection-player-core": {
+    "name": "Perception and Detection",
+    "status": "doc",
+    "docId": "rules-2277",
+    "how": "importer:the doc this record was built from"
+   },
+   "defenses-rules-2294": {
+    "name": "Defenses",
+    "status": "doc",
+    "docId": "rules-2294",
+    "how": "importer:the doc this record was built from"
+   },
+   "armor-class-rules-2295": {
+    "name": "Armor Class",
+    "status": "doc",
+    "docId": "rules-2295",
+    "how": "importer:the doc this record was built from"
+   },
+   "saving-throws-rules-2296": {
+    "name": "Saving Throws",
+    "status": "doc",
+    "docId": "rules-2296",
+    "how": "importer:the doc this record was built from"
+   },
+   "perception-rules-2298": {
+    "name": "Perception",
+    "status": "doc",
+    "docId": "rules-2298",
+    "how": "importer:the doc this record was built from"
+   },
+   "death-player-core": {
+    "name": "Death",
+    "status": "doc",
+    "docId": "rules-2329",
+    "how": "importer:the doc this record was built from"
+   },
+   "hero-points-rules-2333": {
+    "name": "Hero Points",
+    "status": "doc",
+    "docId": "rules-2333",
+    "how": "importer:the doc this record was built from"
+   },
+   "speed-rules-2347": {
+    "name": "Speed",
+    "status": "doc",
+    "docId": "rules-2347",
+    "how": "importer:the doc this record was built from"
+   },
+   "terrain-player-core": {
+    "name": "Terrain",
+    "status": "doc",
+    "docId": "rules-2365",
+    "how": "importer:the doc this record was built from"
+   },
+   "hazardous-terrain-player-core": {
+    "name": "Hazardous Terrain",
+    "status": "doc",
+    "docId": "rules-2368",
+    "how": "importer:the doc this record was built from"
+   },
+   "cover-player-core": {
+    "name": "Cover",
+    "status": "doc",
+    "docId": "rules-2372",
+    "how": "importer:the doc this record was built from"
+   },
+   "special-circumstances-player-core": {
+    "name": "Special Circumstances",
+    "status": "doc",
+    "docId": "rules-2374",
+    "how": "importer:the doc this record was built from"
+   },
+   "duration-player-core": {
+    "name": "Duration",
+    "status": "doc",
+    "docId": "rules-2378",
+    "how": "importer:the doc this record was built from"
+   },
+   "senses-player-core": {
+    "name": "Senses",
+    "status": "doc",
+    "docId": "rules-2405",
+    "how": "importer:the doc this record was built from"
+   },
+   "scent-player-core": {
+    "name": "Scent",
+    "status": "doc",
+    "docId": "rules-2412",
+    "how": "importer:the doc this record was built from"
+   },
+   "mounted-combat-player-core": {
+    "name": "Mounted Combat",
+    "status": "doc",
+    "docId": "rules-2434",
+    "how": "importer:the doc this record was built from"
+   },
+   "aerial-combat-player-core": {
+    "name": "Aerial Combat",
+    "status": "doc",
+    "docId": "rules-2437",
+    "how": "importer:the doc this record was built from"
+   },
+   "aquatic-combat-player-core": {
+    "name": "Aquatic Combat",
+    "status": "doc",
+    "docId": "rules-2438",
+    "how": "importer:the doc this record was built from"
+   },
+   "long-term-rest-player-core": {
+    "name": "Long-Term Rest",
+    "status": "doc",
+    "docId": "rules-2446",
+    "how": "importer:the doc this record was built from"
+   },
+   "retraining-player-core": {
+    "name": "Retraining",
+    "status": "doc",
+    "docId": "rules-2447",
+    "how": "importer:the doc this record was built from"
+   },
+   "skills-rules-2449": {
+    "name": "Skills",
+    "status": "doc",
+    "docId": "rules-2449",
+    "how": "importer:the doc this record was built from"
+   },
+   "introduction-gm-core": {
+    "name": "Introduction",
+    "status": "doc",
+    "docId": "rules-2460",
+    "how": "importer:the doc this record was built from"
+   },
+   "potions-core-rulebook": {
+    "name": "Potions",
+    "status": "doc",
+    "docId": "rules-247",
+    "how": "importer:the doc this record was built from"
+   },
+   "special-considerations-gm-core": {
+    "name": "Special Considerations",
+    "status": "doc",
+    "docId": "rules-2496",
+    "how": "importer:the doc this record was built from"
+   },
+   "looking-up-rules-gm-core": {
+    "name": "Looking Up Rules",
+    "status": "doc",
+    "docId": "rules-2500",
+    "how": "importer:the doc this record was built from"
+   },
+   "buying-and-selling-items-gm-core": {
+    "name": "Buying and Selling Items",
+    "status": "doc",
+    "docId": "rules-2617",
+    "how": "importer:the doc this record was built from"
+   },
+   "rewards-gm-core": {
+    "name": "Rewards",
+    "status": "doc",
+    "docId": "rules-2647",
+    "how": "importer:the doc this record was built from"
+   },
+   "experience-points-gm-core": {
+    "name": "Experience Points",
+    "status": "doc",
+    "docId": "rules-2648",
+    "how": "importer:the doc this record was built from"
+   },
+   "hero-points-gm-core": {
+    "name": "Hero Points",
+    "status": "doc",
+    "docId": "rules-2654",
+    "how": "importer:the doc this record was built from"
+   },
+   "currency-gm-core": {
+    "name": "Currency",
+    "status": "doc",
+    "docId": "rules-2657",
+    "how": "importer:the doc this record was built from"
+   },
+   "different-party-sizes-gm-core": {
+    "name": "Different Party Sizes",
+    "status": "doc",
+    "docId": "rules-2661",
+    "how": "importer:the doc this record was built from"
+   },
+   "recurring-villains-gm-core": {
+    "name": "Recurring Villains",
+    "status": "doc",
+    "docId": "rules-2680",
+    "how": "importer:the doc this record was built from"
+   },
+   "corruption-gm-core": {
+    "name": "Corruption",
+    "status": "doc",
+    "docId": "rules-2704",
+    "how": "importer:the doc this record was built from"
+   },
+   "treasure-gm-core": {
+    "name": "Treasure",
+    "status": "doc",
+    "docId": "rules-2714",
+    "how": "importer:the doc this record was built from"
+   },
+   "free-archetype-gm-core": {
+    "name": "Free Archetype",
+    "status": "doc",
+    "docId": "rules-2751",
+    "how": "importer:the doc this record was built from"
+   },
+   "aquatic-gm-core": {
+    "name": "Aquatic",
+    "status": "doc",
+    "docId": "rules-2770",
+    "how": "importer:the doc this record was built from"
+   },
+   "rubble-gm-core": {
+    "name": "Rubble",
+    "status": "doc",
+    "docId": "rules-2777",
+    "how": "importer:the doc this record was built from"
+   },
+   "rubble-rules-2786": {
+    "name": "Rubble",
+    "status": "doc",
+    "docId": "rules-2786",
+    "how": "importer:the doc this record was built from"
+   },
+   "undergrowth-gm-core": {
+    "name": "Undergrowth",
+    "status": "doc",
+    "docId": "rules-2788",
+    "how": "importer:the doc this record was built from"
+   },
+   "floors-gm-core": {
+    "name": "Floors",
+    "status": "doc",
+    "docId": "rules-2798",
+    "how": "importer:the doc this record was built from"
+   },
+   "walls-gm-core": {
+    "name": "Walls",
+    "status": "doc",
+    "docId": "rules-2807",
+    "how": "importer:the doc this record was built from"
+   },
+   "level-gm-core": {
+    "name": "Level",
+    "status": "doc",
+    "docId": "rules-2859",
+    "how": "importer:the doc this record was built from"
+   },
+   "defenses-gm-core": {
+    "name": "Defenses",
+    "status": "doc",
+    "docId": "rules-2869",
+    "how": "importer:the doc this record was built from"
+   },
+   "level-rules-2879": {
+    "name": "Level",
+    "status": "doc",
+    "docId": "rules-2879",
+    "how": "importer:the doc this record was built from"
+   },
+   "attribute-modifiers-gm-core": {
+    "name": "Attribute Modifiers",
+    "status": "doc",
+    "docId": "rules-2881",
+    "how": "importer:the doc this record was built from"
+   },
+   "perception-gm-core": {
+    "name": "Perception",
+    "status": "doc",
+    "docId": "rules-2882",
+    "how": "importer:the doc this record was built from"
+   },
+   "languages-gm-core": {
+    "name": "Languages",
+    "status": "doc",
+    "docId": "rules-2884",
+    "how": "importer:the doc this record was built from"
+   },
+   "skills-gm-core": {
+    "name": "Skills",
+    "status": "doc",
+    "docId": "rules-2885",
+    "how": "importer:the doc this record was built from"
+   },
+   "saving-throws-gm-core": {
+    "name": "Saving Throws",
+    "status": "doc",
+    "docId": "rules-2890",
+    "how": "importer:the doc this record was built from"
+   },
+   "speed-gm-core": {
+    "name": "Speed",
+    "status": "doc",
+    "docId": "rules-2894",
+    "how": "importer:the doc this record was built from"
+   },
+   "ammunition-gm-core": {
+    "name": "Ammunition",
+    "status": "doc",
+    "docId": "rules-2935",
+    "how": "importer:the doc this record was built from"
+   },
+   "runes-gm-core": {
+    "name": "Runes",
+    "status": "doc",
+    "docId": "rules-2940",
+    "how": "importer:the doc this record was built from"
+   },
+   "scrolls-gm-core": {
+    "name": "Scrolls",
+    "status": "doc",
+    "docId": "rules-2941",
+    "how": "importer:the doc this record was built from"
+   },
+   "staves-gm-core": {
+    "name": "Staves",
+    "status": "doc",
+    "docId": "rules-2943",
+    "how": "importer:the doc this record was built from"
+   },
+   "talismans-gm-core": {
+    "name": "Talismans",
+    "status": "doc",
+    "docId": "rules-2945",
+    "how": "importer:the doc this record was built from"
+   },
+   "wands-gm-core": {
+    "name": "Wands",
+    "status": "doc",
+    "docId": "rules-2946",
+    "how": "importer:the doc this record was built from"
+   },
+   "history-gm-core": {
+    "name": "History",
+    "status": "doc",
+    "docId": "rules-2972",
+    "how": "importer:the doc this record was built from"
+   },
+   "initiative-and-dueling-actions-gm-core": {
+    "name": "Initiative and Dueling Actions",
+    "status": "doc",
+    "docId": "rules-3091",
+    "how": "importer:the doc this record was built from"
+   },
+   "random-encounters-gm-core": {
+    "name": "Random Encounters",
+    "status": "doc",
+    "docId": "rules-3107",
+    "how": "importer:the doc this record was built from"
+   },
+   "terrain-gm-core": {
+    "name": "Terrain",
+    "status": "doc",
+    "docId": "rules-3108",
+    "how": "importer:the doc this record was built from"
+   },
+   "level-rules-3148": {
+    "name": "Level",
+    "status": "doc",
+    "docId": "rules-3148",
+    "how": "importer:the doc this record was built from"
+   },
+   "runes-rules-3158": {
+    "name": "Runes",
+    "status": "doc",
+    "docId": "rules-3158",
+    "how": "importer:the doc this record was built from"
+   },
+   "talismans-rules-3203": {
+    "name": "Talismans",
+    "status": "doc",
+    "docId": "rules-3203",
+    "how": "importer:the doc this record was built from"
+   },
+   "introduction-monster-core": {
+    "name": "Introduction",
+    "status": "doc",
+    "docId": "rules-3258",
+    "how": "importer:the doc this record was built from"
+   },
+   "languages-monster-core": {
+    "name": "Languages",
+    "status": "doc",
+    "docId": "rules-3266",
+    "how": "importer:the doc this record was built from"
+   },
+   "gear-monster-core": {
+    "name": "Gear",
+    "status": "doc",
+    "docId": "rules-3267",
+    "how": "importer:the doc this record was built from"
+   },
+   "attack-player-core": {
+    "name": "Attack",
+    "status": "doc",
+    "docId": "rules-3288",
+    "how": "importer:the doc this record was built from"
+   },
+   "secret-checks-core-rulebook": {
+    "name": "Secret Checks",
+    "status": "doc",
+    "docId": "rules-334",
+    "how": "importer:the doc this record was built from"
+   },
+   "conditions-core-rulebook": {
+    "name": "Conditions",
+    "status": "doc",
+    "docId": "rules-349",
+    "how": "importer:the doc this record was built from"
+   },
+   "eidolons-impossible-magic": {
+    "name": "Eidolons",
+    "status": "doc",
+    "docId": "rules-3682",
+    "how": "importer:the doc this record was built from"
+   },
+   "proficiencies-impossible-magic": {
+    "name": "Proficiencies",
+    "status": "doc",
+    "docId": "rules-3683",
+    "how": "importer:the doc this record was built from"
+   },
+   "unarmed-attacks-impossible-magic": {
+    "name": "Unarmed Attacks",
+    "status": "doc",
+    "docId": "rules-3685",
+    "how": "importer:the doc this record was built from"
+   },
+   "corruption-impossible-magic": {
+    "name": "Corruption",
+    "status": "doc",
+    "docId": "rules-3693",
+    "how": "importer:the doc this record was built from"
+   },
+   "encounters-core-rulebook": {
+    "name": "Encounters",
+    "status": "doc",
+    "docId": "rules-512",
+    "how": "importer:the doc this record was built from"
+   },
+   "social-encounters-core-rulebook": {
+    "name": "Social Encounters",
+    "status": "doc",
+    "docId": "rules-517",
+    "how": "importer:the doc this record was built from"
+   },
+   "exploration-activities-core-rulebook": {
+    "name": "Exploration Activities",
+    "status": "doc",
+    "docId": "rules-522",
+    "how": "importer:the doc this record was built from"
+   },
+   "hazards-core-rulebook": {
+    "name": "Hazards",
+    "status": "doc",
+    "docId": "rules-529",
+    "how": "importer:the doc this record was built from"
+   },
+   "chapter-10-game-mastering-core-rulebook": {
+    "name": "Chapter 10: Game Mastering",
+    "status": "doc",
+    "docId": "rules-56",
+    "how": "importer:the doc this record was built from"
+   },
+   "rewards-core-rulebook": {
+    "name": "Rewards",
+    "status": "doc",
+    "docId": "rules-572",
+    "how": "importer:the doc this record was built from"
+   },
+   "hero-points-core-rulebook": {
+    "name": "Hero Points",
+    "status": "doc",
+    "docId": "rules-573",
+    "how": "importer:the doc this record was built from"
+   },
+   "experience-points-core-rulebook": {
+    "name": "Experience Points",
+    "status": "doc",
+    "docId": "rules-574",
+    "how": "importer:the doc this record was built from"
+   },
+   "treasure-core-rulebook": {
+    "name": "Treasure",
+    "status": "doc",
+    "docId": "rules-580",
+    "how": "importer:the doc this record was built from"
+   },
+   "buying-and-selling-items-core-rulebook": {
+    "name": "Buying and Selling Items",
+    "status": "doc",
+    "docId": "rules-589",
+    "how": "importer:the doc this record was built from"
+   },
+   "environment-core-rulebook": {
+    "name": "Environment",
+    "status": "doc",
+    "docId": "rules-590",
+    "how": "importer:the doc this record was built from"
+   },
+   "wind-core-rulebook": {
+    "name": "Wind",
+    "status": "doc",
+    "docId": "rules-643",
+    "how": "importer:the doc this record was built from"
+   },
+   "strength-core-rulebook": {
+    "name": "Strength",
+    "status": "doc",
+    "docId": "rules-68",
+    "how": "importer:the doc this record was built from"
+   },
+   "level-based-dcs-core-rulebook": {
+    "name": "Level-Based DCs",
+    "status": "doc",
+    "docId": "rules-681",
+    "how": "importer:the doc this record was built from"
+   },
+   "talismans-core-rulebook": {
+    "name": "Talismans",
+    "status": "doc",
+    "docId": "rules-725",
+    "how": "importer:the doc this record was built from"
+   },
+   "held-items-core-rulebook": {
+    "name": "Held Items",
+    "status": "doc",
+    "docId": "rules-728",
+    "how": "importer:the doc this record was built from"
+   },
+   "structures-core-rulebook": {
+    "name": "Structures",
+    "status": "doc",
+    "docId": "rules-755",
+    "how": "importer:the doc this record was built from"
+   },
+   "ability-flaws-core-rulebook": {
+    "name": "Ability Flaws",
+    "status": "doc",
+    "docId": "rules-76",
+    "how": "importer:the doc this record was built from"
+   },
+   "ability-modifiers-core-rulebook": {
+    "name": "Ability Modifiers",
+    "status": "doc",
+    "docId": "rules-77",
+    "how": "importer:the doc this record was built from"
+   },
+   "changing-alignment-core-rulebook": {
+    "name": "Changing Alignment",
+    "status": "doc",
+    "docId": "rules-98",
+    "how": "importer:the doc this record was built from"
    }
   },
   "sidebar": {
@@ -151125,6 +152426,258 @@
     "name": "On Jotuns",
     "status": "doc",
     "docId": "sidebar-3760",
+    "how": "importer:the doc this record was built from"
+   },
+   "family-relations-ancestry-guide": {
+    "name": "Family Relations",
+    "status": "doc",
+    "docId": "sidebar-1170",
+    "how": "importer:the doc this record was built from"
+   },
+   "family-relations-sidebar-1172": {
+    "name": "Family Relations",
+    "status": "doc",
+    "docId": "sidebar-1172",
+    "how": "importer:the doc this record was built from"
+   },
+   "family-relations-sidebar-1174": {
+    "name": "Family Relations",
+    "status": "doc",
+    "docId": "sidebar-1174",
+    "how": "importer:the doc this record was built from"
+   },
+   "family-relations-sidebar-1176": {
+    "name": "Family Relations",
+    "status": "doc",
+    "docId": "sidebar-1176",
+    "how": "importer:the doc this record was built from"
+   },
+   "family-relations-sidebar-1178": {
+    "name": "Family Relations",
+    "status": "doc",
+    "docId": "sidebar-1178",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-guns-gears-remastered": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-1598",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-1613": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-1613",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-kingmaker-adventure-path": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-1897",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-rage-of-elements": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2092",
+    "how": "importer:the doc this record was built from"
+   },
+   "character-sheet-player-core": {
+    "name": "Character Sheet",
+    "status": "doc",
+    "docId": "sidebar-2128",
+    "how": "importer:the doc this record was built from"
+   },
+   "character-sheet-sidebar-2129": {
+    "name": "Character Sheet",
+    "status": "doc",
+    "docId": "sidebar-2129",
+    "how": "importer:the doc this record was built from"
+   },
+   "character-sheet-sidebar-2132": {
+    "name": "Character Sheet",
+    "status": "doc",
+    "docId": "sidebar-2132",
+    "how": "importer:the doc this record was built from"
+   },
+   "character-sheet-sidebar-2133": {
+    "name": "Character Sheet",
+    "status": "doc",
+    "docId": "sidebar-2133",
+    "how": "importer:the doc this record was built from"
+   },
+   "character-sheet-sidebar-2134": {
+    "name": "Character Sheet",
+    "status": "doc",
+    "docId": "sidebar-2134",
+    "how": "importer:the doc this record was built from"
+   },
+   "character-sheet-sidebar-2135": {
+    "name": "Character Sheet",
+    "status": "doc",
+    "docId": "sidebar-2135",
+    "how": "importer:the doc this record was built from"
+   },
+   "character-sheet-sidebar-2136": {
+    "name": "Character Sheet",
+    "status": "doc",
+    "docId": "sidebar-2136",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-player-core": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2144",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2145": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2145",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2146": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2146",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2147": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2147",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2148": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2148",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2149": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2149",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2150": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2150",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2151": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2151",
+    "how": "importer:the doc this record was built from"
+   },
+   "gm-priorities-gm-core": {
+    "name": "GM Priorities",
+    "status": "doc",
+    "docId": "sidebar-2225",
+    "how": "importer:the doc this record was built from"
+   },
+   "gm-priorities-sidebar-2229": {
+    "name": "GM Priorities",
+    "status": "doc",
+    "docId": "sidebar-2229",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-player-core-2": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2776",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2779": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2779",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2780": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2780",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2782": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2782",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2784": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2784",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2785": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2785",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2788": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2788",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-war-of-immortals": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2804",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-2805": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-2805",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-battlecry": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-3160",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-3161": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-3161",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-dark-archives-remastered": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-3638",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-impossible-magic": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-3748",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-3751": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-3751",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-3752": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-3752",
+    "how": "importer:the doc this record was built from"
+   },
+   "key-terms-sidebar-3754": {
+    "name": "Key Terms",
+    "status": "doc",
+    "docId": "sidebar-3754",
     "how": "importer:the doc this record was built from"
    }
   },
@@ -156884,6 +158437,4496 @@
     "name": "Sword",
     "status": "doc",
     "docId": "weapon-group-15",
+    "how": "importer:the doc this record was built from"
+   }
+  },
+  "reference": {
+   "hustle": {
+    "name": "Hustle",
+    "status": "doc",
+    "docId": "action-1040",
+    "how": "importer:the doc this record was built from"
+   },
+   "strike": {
+    "name": "Strike",
+    "status": "doc",
+    "docId": "action-1167",
+    "how": "importer:the doc this record was built from"
+   },
+   "taunt": {
+    "name": "Taunt",
+    "status": "doc",
+    "docId": "action-1437",
+    "how": "importer:the doc this record was built from"
+   },
+   "breachhill-outpost-of-secrets": {
+    "name": "Breachhill, Outpost of Secrets",
+    "status": "doc",
+    "docId": "article-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "life-in-the-circus": {
+    "name": "Life in the Circus",
+    "status": "doc",
+    "docId": "article-10",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-flood-truce": {
+    "name": "The Flood Truce",
+    "status": "doc",
+    "docId": "article-100",
+    "how": "importer:the doc this record was built from"
+   },
+   "belkzen-operations": {
+    "name": "Belkzen Operations",
+    "status": "doc",
+    "docId": "article-101",
+    "how": "importer:the doc this record was built from"
+   },
+   "quahs-of-sun-and-moon": {
+    "name": "Quahs of Sun and Moon",
+    "status": "doc",
+    "docId": "article-102",
+    "how": "importer:the doc this record was built from"
+   },
+   "continuing-the-campaign": {
+    "name": "Continuing the Campaign",
+    "status": "doc",
+    "docId": "article-103",
+    "how": "importer:the doc this record was built from"
+   },
+   "wyvernsting-gazetteer": {
+    "name": "Wyvernsting Gazetteer",
+    "status": "doc",
+    "docId": "article-104",
+    "how": "importer:the doc this record was built from"
+   },
+   "belkzen-faiths": {
+    "name": "Belkzen Faiths",
+    "status": "doc",
+    "docId": "article-105",
+    "how": "importer:the doc this record was built from"
+   },
+   "kyonin": {
+    "name": "Kyonin",
+    "status": "doc",
+    "docId": "article-106",
+    "how": "importer:the doc this record was built from"
+   },
+   "treerazer": {
+    "name": "Treerazer",
+    "status": "doc",
+    "docId": "article-107",
+    "how": "importer:the doc this record was built from"
+   },
+   "corruptors-of-nature": {
+    "name": "Corruptors of Nature",
+    "status": "doc",
+    "docId": "article-108",
+    "how": "importer:the doc this record was built from"
+   },
+   "heroic-artifacts": {
+    "name": "Heroic Artifacts",
+    "status": "doc",
+    "docId": "article-109",
+    "how": "importer:the doc this record was built from"
+   },
+   "catfolk-of-golarion": {
+    "name": "Catfolk of Golarion",
+    "status": "doc",
+    "docId": "article-11",
+    "how": "importer:the doc this record was built from"
+   },
+   "beyond-the-campaign": {
+    "name": "Beyond the Campaign",
+    "status": "doc",
+    "docId": "article-110",
+    "how": "importer:the doc this record was built from"
+   },
+   "talmandors-bounty": {
+    "name": "Talmandor's Bounty",
+    "status": "doc",
+    "docId": "article-111",
+    "how": "importer:the doc this record was built from"
+   },
+   "camazotz": {
+    "name": "Camazotz",
+    "status": "doc",
+    "docId": "article-112",
+    "how": "importer:the doc this record was built from"
+   },
+   "vellumis-gazetteer": {
+    "name": "Vellumis Gazetteer",
+    "status": "doc",
+    "docId": "article-115",
+    "how": "importer:the doc this record was built from"
+   },
+   "zura": {
+    "name": "Zura",
+    "status": "doc",
+    "docId": "article-117",
+    "how": "importer:the doc this record was built from"
+   },
+   "nin": {
+    "name": "Nin",
+    "status": "doc",
+    "docId": "article-118",
+    "how": "importer:the doc this record was built from"
+   },
+   "iblydos-gazetteer": {
+    "name": "Iblydos Gazetteer",
+    "status": "doc",
+    "docId": "article-119",
+    "how": "importer:the doc this record was built from"
+   },
+   "among-the-xulgaths": {
+    "name": "Among the Xulgaths",
+    "status": "doc",
+    "docId": "article-12",
+    "how": "importer:the doc this record was built from"
+   },
+   "hero-god-cults": {
+    "name": "Hero-God Cults",
+    "status": "doc",
+    "docId": "article-120",
+    "how": "importer:the doc this record was built from"
+   },
+   "living-legends": {
+    "name": "Living Legends",
+    "status": "doc",
+    "docId": "article-121",
+    "how": "importer:the doc this record was built from"
+   },
+   "kardaji-bay-gazetteer": {
+    "name": "Kardaji Bay Gazetteer",
+    "status": "doc",
+    "docId": "article-122",
+    "how": "importer:the doc this record was built from"
+   },
+   "more-about-iblydos": {
+    "name": "More About Iblydos!",
+    "status": "doc",
+    "docId": "article-123",
+    "how": "importer:the doc this record was built from"
+   },
+   "swardlands-gazetteer": {
+    "name": "Swardlands Gazetteer",
+    "status": "doc",
+    "docId": "article-13",
+    "how": "importer:the doc this record was built from"
+   },
+   "zevgavizeb": {
+    "name": "Zevgavizeb",
+    "status": "doc",
+    "docId": "article-14",
+    "how": "importer:the doc this record was built from"
+   },
+   "denizens-of-gluttondark": {
+    "name": "Denizens of Gluttondark",
+    "status": "doc",
+    "docId": "article-15",
+    "how": "importer:the doc this record was built from"
+   },
+   "willowside-gazetteer": {
+    "name": "Willowside Gazetteer",
+    "status": "doc",
+    "docId": "article-16",
+    "how": "importer:the doc this record was built from"
+   },
+   "cults-of-the-darklands": {
+    "name": "Cults of the Darklands",
+    "status": "doc",
+    "docId": "article-17",
+    "how": "importer:the doc this record was built from"
+   },
+   "shraen-gazetter": {
+    "name": "Shraen Gazetter",
+    "status": "doc",
+    "docId": "article-18",
+    "how": "importer:the doc this record was built from"
+   },
+   "kortos-mounts-gazetteer": {
+    "name": "Kortos Mounts Gazetteer",
+    "status": "doc",
+    "docId": "article-19",
+    "how": "importer:the doc this record was built from"
+   },
+   "ways-of-the-ekujae": {
+    "name": "Ways of the Ekujae",
+    "status": "doc",
+    "docId": "article-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "artifacts-of-aroden": {
+    "name": "Artifacts of Aroden",
+    "status": "doc",
+    "docId": "article-20",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-radiant-festival": {
+    "name": "The Radiant Festival",
+    "status": "doc",
+    "docId": "article-21",
+    "how": "importer:the doc this record was built from"
+   },
+   "guards-of-absalom": {
+    "name": "Guards of Absalom",
+    "status": "doc",
+    "docId": "article-22",
+    "how": "importer:the doc this record was built from"
+   },
+   "vudra": {
+    "name": "Vudra",
+    "status": "doc",
+    "docId": "article-23",
+    "how": "importer:the doc this record was built from"
+   },
+   "games-of-the-irorium": {
+    "name": "Games of the Irorium",
+    "status": "doc",
+    "docId": "article-26",
+    "how": "importer:the doc this record was built from"
+   },
+   "gangs-of-absalom": {
+    "name": "Gangs of Absalom",
+    "status": "doc",
+    "docId": "article-27",
+    "how": "importer:the doc this record was built from"
+   },
+   "legends-of-the-harrow": {
+    "name": "Legends of the Harrow",
+    "status": "doc",
+    "docId": "article-28",
+    "how": "importer:the doc this record was built from"
+   },
+   "starstone-aspirants": {
+    "name": "Starstone Aspirants",
+    "status": "doc",
+    "docId": "article-29",
+    "how": "importer:the doc this record was built from"
+   },
+   "ravounel-gazetteer": {
+    "name": "Ravounel Gazetteer",
+    "status": "doc",
+    "docId": "article-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "prisons-of-the-inner-sea": {
+    "name": "Prisons of the Inner Sea",
+    "status": "doc",
+    "docId": "article-31",
+    "how": "importer:the doc this record was built from"
+   },
+   "ravithra": {
+    "name": "Ravithra",
+    "status": "doc",
+    "docId": "article-32",
+    "how": "importer:the doc this record was built from"
+   },
+   "ecology-of-the-sahkils": {
+    "name": "Ecology of the Sahkils",
+    "status": "doc",
+    "docId": "article-33",
+    "how": "importer:the doc this record was built from"
+   },
+   "siege-castles-of-absalom": {
+    "name": "Siege Castles of Absalom",
+    "status": "doc",
+    "docId": "article-34",
+    "how": "importer:the doc this record was built from"
+   },
+   "otari-gazetteer": {
+    "name": "Otari Gazetteer",
+    "status": "doc",
+    "docId": "article-35",
+    "how": "importer:the doc this record was built from"
+   },
+   "among-the-will-o-wisps": {
+    "name": "Among the Will-O'-Wisps",
+    "status": "doc",
+    "docId": "article-36",
+    "how": "importer:the doc this record was built from"
+   },
+   "warpers-of-flesh": {
+    "name": "Warpers of Flesh",
+    "status": "doc",
+    "docId": "article-37",
+    "how": "importer:the doc this record was built from"
+   },
+   "nhimbaloth": {
+    "name": "Nhimbaloth",
+    "status": "doc",
+    "docId": "article-38",
+    "how": "importer:the doc this record was built from"
+   },
+   "ghosts-of-the-inner-sea": {
+    "name": "Ghosts of the Inner Sea",
+    "status": "doc",
+    "docId": "article-39",
+    "how": "importer:the doc this record was built from"
+   },
+   "here-there-be-dragons": {
+    "name": "Here There be Dragons",
+    "status": "doc",
+    "docId": "article-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "ruby-phoenix-fighting-roster": {
+    "name": "Ruby Phoenix Fighting Roster",
+    "status": "doc",
+    "docId": "article-40",
+    "how": "importer:the doc this record was built from"
+   },
+   "goka": {
+    "name": "Goka",
+    "status": "doc",
+    "docId": "article-41",
+    "how": "importer:the doc this record was built from"
+   },
+   "rise-of-the-kaiju": {
+    "name": "Rise of the Kaiju",
+    "status": "doc",
+    "docId": "article-42",
+    "how": "importer:the doc this record was built from"
+   },
+   "tournaments-of-the-great-beyond": {
+    "name": "Tournaments of the Great Beyond",
+    "status": "doc",
+    "docId": "article-43",
+    "how": "importer:the doc this record was built from"
+   },
+   "lost-demiplanes": {
+    "name": "Lost Demiplanes",
+    "status": "doc",
+    "docId": "article-44",
+    "how": "importer:the doc this record was built from"
+   },
+   "life-in-the-academy": {
+    "name": "Life in the Academy",
+    "status": "doc",
+    "docId": "article-45",
+    "how": "importer:the doc this record was built from"
+   },
+   "students-of-the-magaambya": {
+    "name": "Students of the Magaambya",
+    "status": "doc",
+    "docId": "article-46",
+    "how": "importer:the doc this record was built from"
+   },
+   "mwangi-folktales": {
+    "name": "Mwangi Folktales",
+    "status": "doc",
+    "docId": "article-47",
+    "how": "importer:the doc this record was built from"
+   },
+   "jula-gazetter": {
+    "name": "Jula Gazetter",
+    "status": "doc",
+    "docId": "article-48",
+    "how": "importer:the doc this record was built from"
+   },
+   "kovlar": {
+    "name": "Kovlar",
+    "status": "doc",
+    "docId": "article-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "teachers-of-the-magaambya": {
+    "name": "Teachers of the Magaambya",
+    "status": "doc",
+    "docId": "article-50",
+    "how": "importer:the doc this record was built from"
+   },
+   "akiton-the-red": {
+    "name": "Akiton the Red",
+    "status": "doc",
+    "docId": "article-51",
+    "how": "importer:the doc this record was built from"
+   },
+   "walkena": {
+    "name": "Walkena",
+    "status": "doc",
+    "docId": "article-52",
+    "how": "importer:the doc this record was built from"
+   },
+   "following-of-the-broken-tusk": {
+    "name": "Following of the Broken Tusk",
+    "status": "doc",
+    "docId": "article-53",
+    "how": "importer:the doc this record was built from"
+   },
+   "religions-of-the-realm": {
+    "name": "Religions of the Realm",
+    "status": "doc",
+    "docId": "article-54",
+    "how": "importer:the doc this record was built from"
+   },
+   "megafauna": {
+    "name": "Megafauna",
+    "status": "doc",
+    "docId": "article-55",
+    "how": "importer:the doc this record was built from"
+   },
+   "telling-fables": {
+    "name": "Telling Fables",
+    "status": "doc",
+    "docId": "article-56",
+    "how": "importer:the doc this record was built from"
+   },
+   "tiny-adventures": {
+    "name": "Tiny Adventures",
+    "status": "doc",
+    "docId": "article-57",
+    "how": "importer:the doc this record was built from"
+   },
+   "hillcross": {
+    "name": "Hillcross",
+    "status": "doc",
+    "docId": "article-59",
+    "how": "importer:the doc this record was built from"
+   },
+   "droskar": {
+    "name": "Droskar",
+    "status": "doc",
+    "docId": "article-6",
+    "how": "importer:the doc this record was built from"
+   },
+   "barrel-bullet-saloon": {
+    "name": "Barrel & Bullet Saloon",
+    "status": "doc",
+    "docId": "article-60",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-spellscar-desert": {
+    "name": "The Spellscar Desert",
+    "status": "doc",
+    "docId": "article-61",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-gunworks": {
+    "name": "The Gunworks",
+    "status": "doc",
+    "docId": "article-63",
+    "how": "importer:the doc this record was built from"
+   },
+   "graydirge": {
+    "name": "Graydirge",
+    "status": "doc",
+    "docId": "article-64",
+    "how": "importer:the doc this record was built from"
+   },
+   "factions-of-geb": {
+    "name": "Factions of Geb",
+    "status": "doc",
+    "docId": "article-65",
+    "how": "importer:the doc this record was built from"
+   },
+   "secrets-of-the-coven": {
+    "name": "Secrets of the Coven",
+    "status": "doc",
+    "docId": "article-66",
+    "how": "importer:the doc this record was built from"
+   },
+   "among-the-shadows": {
+    "name": "Among the Shadows",
+    "status": "doc",
+    "docId": "article-67",
+    "how": "importer:the doc this record was built from"
+   },
+   "holomog": {
+    "name": "Holomog",
+    "status": "doc",
+    "docId": "article-68",
+    "how": "importer:the doc this record was built from"
+   },
+   "kabriri": {
+    "name": "Kabriri",
+    "status": "doc",
+    "docId": "article-69",
+    "how": "importer:the doc this record was built from"
+   },
+   "ecology-of-the-witchwyrd": {
+    "name": "Ecology of the Witchwyrd",
+    "status": "doc",
+    "docId": "article-7",
+    "how": "importer:the doc this record was built from"
+   },
+   "inner-sea-trade": {
+    "name": "Inner Sea Trade",
+    "status": "doc",
+    "docId": "article-70",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-warmaster-council": {
+    "name": "The Warmaster Council",
+    "status": "doc",
+    "docId": "article-71",
+    "how": "importer:the doc this record was built from"
+   },
+   "narakaas": {
+    "name": "Narakaas",
+    "status": "doc",
+    "docId": "article-72",
+    "how": "importer:the doc this record was built from"
+   },
+   "adventures-on-castrovel": {
+    "name": "Adventures on Castrovel",
+    "status": "doc",
+    "docId": "article-73",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-lake": {
+    "name": "The Lake",
+    "status": "doc",
+    "docId": "article-74",
+    "how": "importer:the doc this record was built from"
+   },
+   "findeladlara": {
+    "name": "Findeladlara",
+    "status": "doc",
+    "docId": "article-75",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-harrow-court": {
+    "name": "The Harrow Court",
+    "status": "doc",
+    "docId": "article-77",
+    "how": "importer:the doc this record was built from"
+   },
+   "lost-dwarven-treasure": {
+    "name": "Lost Dwarven Treasure",
+    "status": "doc",
+    "docId": "article-78",
+    "how": "importer:the doc this record was built from"
+   },
+   "cave-worm-ecology": {
+    "name": "Cave Worm Ecology",
+    "status": "doc",
+    "docId": "article-79",
+    "how": "importer:the doc this record was built from"
+   },
+   "lost-aiudara": {
+    "name": "Lost Aiudara",
+    "status": "doc",
+    "docId": "article-8",
+    "how": "importer:the doc this record was built from"
+   },
+   "hagagraf": {
+    "name": "Hagagraf",
+    "status": "doc",
+    "docId": "article-80",
+    "how": "importer:the doc this record was built from"
+   },
+   "return-to-the-darklands": {
+    "name": "Return to the Darklands",
+    "status": "doc",
+    "docId": "article-81",
+    "how": "importer:the doc this record was built from"
+   },
+   "felgunn": {
+    "name": "Felgunn",
+    "status": "doc",
+    "docId": "article-82",
+    "how": "importer:the doc this record was built from"
+   },
+   "willowshore": {
+    "name": "Willowshore",
+    "status": "doc",
+    "docId": "article-83",
+    "how": "importer:the doc this record was built from"
+   },
+   "hermea": {
+    "name": "Hermea",
+    "status": "doc",
+    "docId": "article-9",
+    "how": "importer:the doc this record was built from"
+   },
+   "arboreal-ecology": {
+    "name": "Arboreal Ecology",
+    "status": "doc",
+    "docId": "article-90",
+    "how": "importer:the doc this record was built from"
+   },
+   "verduran-forest": {
+    "name": "Verduran Forest",
+    "status": "doc",
+    "docId": "article-91",
+    "how": "importer:the doc this record was built from"
+   },
+   "green-man-faiths": {
+    "name": "Green Man Faiths",
+    "status": "doc",
+    "docId": "article-92",
+    "how": "importer:the doc this record was built from"
+   },
+   "unfettered-growth": {
+    "name": "Unfettered Growth",
+    "status": "doc",
+    "docId": "article-93",
+    "how": "importer:the doc this record was built from"
+   },
+   "cradle-of-knot": {
+    "name": "Cradle of Knot",
+    "status": "doc",
+    "docId": "article-94",
+    "how": "importer:the doc this record was built from"
+   },
+   "continuing-the-campaign-pathfinder-203-shepherd-of-decay": {
+    "name": "Continuing the Campaign",
+    "status": "doc",
+    "docId": "article-95",
+    "how": "importer:the doc this record was built from"
+   },
+   "showtime": {
+    "name": "Showtime",
+    "status": "doc",
+    "docId": "article-96",
+    "how": "importer:the doc this record was built from"
+   },
+   "arshea": {
+    "name": "Arshea",
+    "status": "doc",
+    "docId": "article-97",
+    "how": "importer:the doc this record was built from"
+   },
+   "a-history-of-secrets": {
+    "name": "A History of Secrets",
+    "status": "doc",
+    "docId": "article-98",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-orcs-of-belkzen": {
+    "name": "The Orcs of Belkzen",
+    "status": "doc",
+    "docId": "article-99",
+    "how": "importer:the doc this record was built from"
+   },
+   "chirurgeon": {
+    "name": "Chirurgeon",
+    "status": "doc",
+    "docId": "class-sample-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "archer": {
+    "name": "Archer",
+    "status": "doc",
+    "docId": "class-sample-10",
+    "how": "importer:the doc this record was built from"
+   },
+   "lorekeeper": {
+    "name": "Lorekeeper",
+    "status": "doc",
+    "docId": "class-sample-100",
+    "how": "importer:the doc this record was built from"
+   },
+   "trickster": {
+    "name": "Trickster",
+    "status": "doc",
+    "docId": "class-sample-101",
+    "how": "importer:the doc this record was built from"
+   },
+   "protector": {
+    "name": "Protector",
+    "status": "doc",
+    "docId": "class-sample-102",
+    "how": "importer:the doc this record was built from"
+   },
+   "student-of-thoughts": {
+    "name": "Student of Thoughts",
+    "status": "doc",
+    "docId": "class-sample-103",
+    "how": "importer:the doc this record was built from"
+   },
+   "pillar-of-resolve": {
+    "name": "Pillar of Resolve",
+    "status": "doc",
+    "docId": "class-sample-104",
+    "how": "importer:the doc this record was built from"
+   },
+   "nomadic-visionary": {
+    "name": "Nomadic Visionary",
+    "status": "doc",
+    "docId": "class-sample-105",
+    "how": "importer:the doc this record was built from"
+   },
+   "armor-inventor": {
+    "name": "Armor Inventor",
+    "status": "doc",
+    "docId": "class-sample-106",
+    "how": "importer:the doc this record was built from"
+   },
+   "weapon-inventor": {
+    "name": "Weapon Inventor",
+    "status": "doc",
+    "docId": "class-sample-107",
+    "how": "importer:the doc this record was built from"
+   },
+   "spellshot": {
+    "name": "Spellshot",
+    "status": "doc",
+    "docId": "class-sample-108",
+    "how": "importer:the doc this record was built from"
+   },
+   "drifter": {
+    "name": "Drifter",
+    "status": "doc",
+    "docId": "class-sample-109",
+    "how": "importer:the doc this record was built from"
+   },
+   "bully": {
+    "name": "Bully",
+    "status": "doc",
+    "docId": "class-sample-11",
+    "how": "importer:the doc this record was built from"
+   },
+   "pistolero": {
+    "name": "Pistolero",
+    "status": "doc",
+    "docId": "class-sample-110",
+    "how": "importer:the doc this record was built from"
+   },
+   "sniper": {
+    "name": "Sniper",
+    "status": "doc",
+    "docId": "class-sample-111",
+    "how": "importer:the doc this record was built from"
+   },
+   "arcane-scrapper": {
+    "name": "Arcane Scrapper",
+    "status": "doc",
+    "docId": "class-sample-112",
+    "how": "importer:the doc this record was built from"
+   },
+   "arcane-fist": {
+    "name": "Arcane Fist",
+    "status": "doc",
+    "docId": "class-sample-113",
+    "how": "importer:the doc this record was built from"
+   },
+   "spell-sniper": {
+    "name": "Spell Sniper",
+    "status": "doc",
+    "docId": "class-sample-114",
+    "how": "importer:the doc this record was built from"
+   },
+   "dual-weapon-magus": {
+    "name": "Dual-Weapon Magus",
+    "status": "doc",
+    "docId": "class-sample-115",
+    "how": "importer:the doc this record was built from"
+   },
+   "spellshooter": {
+    "name": "Spellshooter",
+    "status": "doc",
+    "docId": "class-sample-116",
+    "how": "importer:the doc this record was built from"
+   },
+   "spirit-reaper": {
+    "name": "Spirit Reaper",
+    "status": "doc",
+    "docId": "class-sample-117",
+    "how": "importer:the doc this record was built from"
+   },
+   "blood-puppeteer": {
+    "name": "Blood Puppeteer",
+    "status": "doc",
+    "docId": "class-sample-118",
+    "how": "importer:the doc this record was built from"
+   },
+   "flesh-puppeteer": {
+    "name": "Flesh Puppeteer",
+    "status": "doc",
+    "docId": "class-sample-119",
+    "how": "importer:the doc this record was built from"
+   },
+   "duelist": {
+    "name": "Duelist",
+    "status": "doc",
+    "docId": "class-sample-12",
+    "how": "importer:the doc this record was built from"
+   },
+   "runic-duelist": {
+    "name": "Runic Duelist",
+    "status": "doc",
+    "docId": "class-sample-120",
+    "how": "importer:the doc this record was built from"
+   },
+   "hammer-of-torag": {
+    "name": "Hammer of Torag",
+    "status": "doc",
+    "docId": "class-sample-121",
+    "how": "importer:the doc this record was built from"
+   },
+   "rune-thrower": {
+    "name": "Rune Thrower",
+    "status": "doc",
+    "docId": "class-sample-122",
+    "how": "importer:the doc this record was built from"
+   },
+   "angelic-vessel": {
+    "name": "Angelic Vessel",
+    "status": "doc",
+    "docId": "class-sample-123",
+    "how": "importer:the doc this record was built from"
+   },
+   "god-caller": {
+    "name": "God Caller",
+    "status": "doc",
+    "docId": "class-sample-124",
+    "how": "importer:the doc this record was built from"
+   },
+   "ki-monk": {
+    "name": "Ki Monk",
+    "status": "doc",
+    "docId": "class-sample-13",
+    "how": "importer:the doc this record was built from"
+   },
+   "archer-core-rulebook": {
+    "name": "Archer",
+    "status": "doc",
+    "docId": "class-sample-14",
+    "how": "importer:the doc this record was built from"
+   },
+   "thief": {
+    "name": "Thief",
+    "status": "doc",
+    "docId": "class-sample-15",
+    "how": "importer:the doc this record was built from"
+   },
+   "scoundrel": {
+    "name": "Scoundrel",
+    "status": "doc",
+    "docId": "class-sample-16",
+    "how": "importer:the doc this record was built from"
+   },
+   "gozren": {
+    "name": "Gozren",
+    "status": "doc",
+    "docId": "class-sample-17",
+    "how": "importer:the doc this record was built from"
+   },
+   "pharasmin": {
+    "name": "Pharasmin",
+    "status": "doc",
+    "docId": "class-sample-18",
+    "how": "importer:the doc this record was built from"
+   },
+   "wild-druid": {
+    "name": "Wild Druid",
+    "status": "doc",
+    "docId": "class-sample-19",
+    "how": "importer:the doc this record was built from"
+   },
+   "bomber": {
+    "name": "Bomber",
+    "status": "doc",
+    "docId": "class-sample-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "storm-druid": {
+    "name": "Storm Druid",
+    "status": "doc",
+    "docId": "class-sample-20",
+    "how": "importer:the doc this record was built from"
+   },
+   "leaf-druid": {
+    "name": "Leaf Druid",
+    "status": "doc",
+    "docId": "class-sample-21",
+    "how": "importer:the doc this record was built from"
+   },
+   "fey-touched": {
+    "name": "Fey-Touched",
+    "status": "doc",
+    "docId": "class-sample-22",
+    "how": "importer:the doc this record was built from"
+   },
+   "demonblood": {
+    "name": "Demonblood",
+    "status": "doc",
+    "docId": "class-sample-23",
+    "how": "importer:the doc this record was built from"
+   },
+   "conjurer": {
+    "name": "Conjurer",
+    "status": "doc",
+    "docId": "class-sample-24",
+    "how": "importer:the doc this record was built from"
+   },
+   "illusionist": {
+    "name": "Illusionist",
+    "status": "doc",
+    "docId": "class-sample-25",
+    "how": "importer:the doc this record was built from"
+   },
+   "crane-monk": {
+    "name": "Crane Monk",
+    "status": "doc",
+    "docId": "class-sample-26",
+    "how": "importer:the doc this record was built from"
+   },
+   "coroner": {
+    "name": "Coroner",
+    "status": "doc",
+    "docId": "class-sample-27",
+    "how": "importer:the doc this record was built from"
+   },
+   "chemist": {
+    "name": "Chemist",
+    "status": "doc",
+    "docId": "class-sample-28",
+    "how": "importer:the doc this record was built from"
+   },
+   "flame-augur": {
+    "name": "Flame Augur",
+    "status": "doc",
+    "docId": "class-sample-29",
+    "how": "importer:the doc this record was built from"
+   },
+   "mutagenist": {
+    "name": "Mutagenist",
+    "status": "doc",
+    "docId": "class-sample-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "lifebringer": {
+    "name": "Lifebringer",
+    "status": "doc",
+    "docId": "class-sample-30",
+    "how": "importer:the doc this record was built from"
+   },
+   "gymnast": {
+    "name": "Gymnast",
+    "status": "doc",
+    "docId": "class-sample-31",
+    "how": "importer:the doc this record was built from"
+   },
+   "fencer": {
+    "name": "Fencer",
+    "status": "doc",
+    "docId": "class-sample-32",
+    "how": "importer:the doc this record was built from"
+   },
+   "hedge-witch": {
+    "name": "Hedge Witch",
+    "status": "doc",
+    "docId": "class-sample-33",
+    "how": "importer:the doc this record was built from"
+   },
+   "arcane-scrapper-secrets-of-magic": {
+    "name": "Arcane Scrapper",
+    "status": "doc",
+    "docId": "class-sample-34",
+    "how": "importer:the doc this record was built from"
+   },
+   "arcane-fist-secrets-of-magic": {
+    "name": "Arcane Fist",
+    "status": "doc",
+    "docId": "class-sample-35",
+    "how": "importer:the doc this record was built from"
+   },
+   "spell-sniper-secrets-of-magic": {
+    "name": "Spell Sniper",
+    "status": "doc",
+    "docId": "class-sample-36",
+    "how": "importer:the doc this record was built from"
+   },
+   "god-caller-secrets-of-magic": {
+    "name": "God Caller",
+    "status": "doc",
+    "docId": "class-sample-38",
+    "how": "importer:the doc this record was built from"
+   },
+   "armor-inventor-guns-gears-remastered": {
+    "name": "Armor Inventor",
+    "status": "doc",
+    "docId": "class-sample-39",
+    "how": "importer:the doc this record was built from"
+   },
+   "dancer": {
+    "name": "Dancer",
+    "status": "doc",
+    "docId": "class-sample-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "weapon-inventor-guns-gears-remastered": {
+    "name": "Weapon Inventor",
+    "status": "doc",
+    "docId": "class-sample-40",
+    "how": "importer:the doc this record was built from"
+   },
+   "drifter-guns-gears-remastered": {
+    "name": "Drifter",
+    "status": "doc",
+    "docId": "class-sample-41",
+    "how": "importer:the doc this record was built from"
+   },
+   "pistolero-guns-gears-remastered": {
+    "name": "Pistolero",
+    "status": "doc",
+    "docId": "class-sample-42",
+    "how": "importer:the doc this record was built from"
+   },
+   "sniper-guns-gears-remastered": {
+    "name": "Sniper",
+    "status": "doc",
+    "docId": "class-sample-43",
+    "how": "importer:the doc this record was built from"
+   },
+   "spellshot-guns-gears-remastered": {
+    "name": "Spellshot",
+    "status": "doc",
+    "docId": "class-sample-44",
+    "how": "importer:the doc this record was built from"
+   },
+   "student-of-thoughts-dark-archive": {
+    "name": "Student of Thoughts",
+    "status": "doc",
+    "docId": "class-sample-45",
+    "how": "importer:the doc this record was built from"
+   },
+   "pillar-of-resolve-dark-archive": {
+    "name": "Pillar of Resolve",
+    "status": "doc",
+    "docId": "class-sample-46",
+    "how": "importer:the doc this record was built from"
+   },
+   "nomadic-visionary-dark-archive": {
+    "name": "Nomadic Visionary",
+    "status": "doc",
+    "docId": "class-sample-47",
+    "how": "importer:the doc this record was built from"
+   },
+   "trickster-dark-archive": {
+    "name": "Trickster",
+    "status": "doc",
+    "docId": "class-sample-48",
+    "how": "importer:the doc this record was built from"
+   },
+   "protector-dark-archive": {
+    "name": "Protector",
+    "status": "doc",
+    "docId": "class-sample-49",
+    "how": "importer:the doc this record was built from"
+   },
+   "animal-rager": {
+    "name": "Animal Rager",
+    "status": "doc",
+    "docId": "class-sample-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "lorekeeper-dark-archive": {
+    "name": "Lorekeeper",
+    "status": "doc",
+    "docId": "class-sample-50",
+    "how": "importer:the doc this record was built from"
+   },
+   "element-explorer": {
+    "name": "Element Explorer",
+    "status": "doc",
+    "docId": "class-sample-51",
+    "how": "importer:the doc this record was built from"
+   },
+   "dancer-player-core": {
+    "name": "Dancer",
+    "status": "doc",
+    "docId": "class-sample-59",
+    "how": "importer:the doc this record was built from"
+   },
+   "fury": {
+    "name": "Fury",
+    "status": "doc",
+    "docId": "class-sample-6",
+    "how": "importer:the doc this record was built from"
+   },
+   "gozren-player-core": {
+    "name": "Gozren",
+    "status": "doc",
+    "docId": "class-sample-60",
+    "how": "importer:the doc this record was built from"
+   },
+   "pharasmin-player-core": {
+    "name": "Pharasmin",
+    "status": "doc",
+    "docId": "class-sample-61",
+    "how": "importer:the doc this record was built from"
+   },
+   "leaf-druid-player-core": {
+    "name": "Leaf Druid",
+    "status": "doc",
+    "docId": "class-sample-62",
+    "how": "importer:the doc this record was built from"
+   },
+   "storm-druid-player-core": {
+    "name": "Storm Druid",
+    "status": "doc",
+    "docId": "class-sample-63",
+    "how": "importer:the doc this record was built from"
+   },
+   "untamed-druid": {
+    "name": "Untamed Druid",
+    "status": "doc",
+    "docId": "class-sample-64",
+    "how": "importer:the doc this record was built from"
+   },
+   "archer-player-core": {
+    "name": "Archer",
+    "status": "doc",
+    "docId": "class-sample-65",
+    "how": "importer:the doc this record was built from"
+   },
+   "bully-player-core": {
+    "name": "Bully",
+    "status": "doc",
+    "docId": "class-sample-66",
+    "how": "importer:the doc this record was built from"
+   },
+   "duelist-player-core": {
+    "name": "Duelist",
+    "status": "doc",
+    "docId": "class-sample-67",
+    "how": "importer:the doc this record was built from"
+   },
+   "animal-ranger": {
+    "name": "Animal Ranger",
+    "status": "doc",
+    "docId": "class-sample-68",
+    "how": "importer:the doc this record was built from"
+   },
+   "ruffian": {
+    "name": "Ruffian",
+    "status": "doc",
+    "docId": "class-sample-69",
+    "how": "importer:the doc this record was built from"
+   },
+   "redeemer": {
+    "name": "Redeemer",
+    "status": "doc",
+    "docId": "class-sample-7",
+    "how": "importer:the doc this record was built from"
+   },
+   "hedge-witch-player-core": {
+    "name": "Hedge Witch",
+    "status": "doc",
+    "docId": "class-sample-70",
+    "how": "importer:the doc this record was built from"
+   },
+   "ice-witch": {
+    "name": "Ice Witch",
+    "status": "doc",
+    "docId": "class-sample-71",
+    "how": "importer:the doc this record was built from"
+   },
+   "mindbender": {
+    "name": "Mindbender",
+    "status": "doc",
+    "docId": "class-sample-72",
+    "how": "importer:the doc this record was built from"
+   },
+   "student-of-the-void": {
+    "name": "Student of the Void",
+    "status": "doc",
+    "docId": "class-sample-73",
+    "how": "importer:the doc this record was built from"
+   },
+   "seer": {
+    "name": "Seer",
+    "status": "doc",
+    "docId": "class-sample-74",
+    "how": "importer:the doc this record was built from"
+   },
+   "medium": {
+    "name": "Medium",
+    "status": "doc",
+    "docId": "class-sample-75",
+    "how": "importer:the doc this record was built from"
+   },
+   "sky-king-eternal": {
+    "name": "Sky King Eternal",
+    "status": "doc",
+    "docId": "class-sample-76",
+    "how": "importer:the doc this record was built from"
+   },
+   "celestial-archer": {
+    "name": "Celestial Archer",
+    "status": "doc",
+    "docId": "class-sample-77",
+    "how": "importer:the doc this record was built from"
+   },
+   "creations-beast": {
+    "name": "Creation's Beast",
+    "status": "doc",
+    "docId": "class-sample-78",
+    "how": "importer:the doc this record was built from"
+   },
+   "chirurgeon-player-core-2": {
+    "name": "Chirurgeon",
+    "status": "doc",
+    "docId": "class-sample-79",
+    "how": "importer:the doc this record was built from"
+   },
+   "liberator": {
+    "name": "Liberator",
+    "status": "doc",
+    "docId": "class-sample-8",
+    "how": "importer:the doc this record was built from"
+   },
+   "bomber-player-core-2": {
+    "name": "Bomber",
+    "status": "doc",
+    "docId": "class-sample-80",
+    "how": "importer:the doc this record was built from"
+   },
+   "mutagenist-player-core-2": {
+    "name": "Mutagenist",
+    "status": "doc",
+    "docId": "class-sample-81",
+    "how": "importer:the doc this record was built from"
+   },
+   "animal-rager-player-core-2": {
+    "name": "Animal Rager",
+    "status": "doc",
+    "docId": "class-sample-82",
+    "how": "importer:the doc this record was built from"
+   },
+   "fury-player-core-2": {
+    "name": "Fury",
+    "status": "doc",
+    "docId": "class-sample-83",
+    "how": "importer:the doc this record was built from"
+   },
+   "redeemer-player-core-2": {
+    "name": "Redeemer",
+    "status": "doc",
+    "docId": "class-sample-84",
+    "how": "importer:the doc this record was built from"
+   },
+   "coroner-player-core-2": {
+    "name": "Coroner",
+    "status": "doc",
+    "docId": "class-sample-85",
+    "how": "importer:the doc this record was built from"
+   },
+   "analyst": {
+    "name": "Analyst",
+    "status": "doc",
+    "docId": "class-sample-86",
+    "how": "importer:the doc this record was built from"
+   },
+   "chemist-player-core-2": {
+    "name": "Chemist",
+    "status": "doc",
+    "docId": "class-sample-87",
+    "how": "importer:the doc this record was built from"
+   },
+   "qi-monk": {
+    "name": "Qi Monk",
+    "status": "doc",
+    "docId": "class-sample-88",
+    "how": "importer:the doc this record was built from"
+   },
+   "flame-augur-player-core-2": {
+    "name": "Flame Augur",
+    "status": "doc",
+    "docId": "class-sample-89",
+    "how": "importer:the doc this record was built from"
+   },
+   "animal-ranger-core-rulebook": {
+    "name": "Animal Ranger",
+    "status": "doc",
+    "docId": "class-sample-9",
+    "how": "importer:the doc this record was built from"
+   },
+   "lifebringer-player-core-2": {
+    "name": "Lifebringer",
+    "status": "doc",
+    "docId": "class-sample-90",
+    "how": "importer:the doc this record was built from"
+   },
+   "guided-blade": {
+    "name": "Guided Blade",
+    "status": "doc",
+    "docId": "class-sample-91",
+    "how": "importer:the doc this record was built from"
+   },
+   "draconic-scion": {
+    "name": "Draconic Scion",
+    "status": "doc",
+    "docId": "class-sample-92",
+    "how": "importer:the doc this record was built from"
+   },
+   "fencer-player-core-2": {
+    "name": "Fencer",
+    "status": "doc",
+    "docId": "class-sample-94",
+    "how": "importer:the doc this record was built from"
+   },
+   "officer": {
+    "name": "Officer",
+    "status": "doc",
+    "docId": "class-sample-95",
+    "how": "importer:the doc this record was built from"
+   },
+   "standard-bearer": {
+    "name": "Standard-Bearer",
+    "status": "doc",
+    "docId": "class-sample-96",
+    "how": "importer:the doc this record was built from"
+   },
+   "bodyguard": {
+    "name": "Bodyguard",
+    "status": "doc",
+    "docId": "class-sample-97",
+    "how": "importer:the doc this record was built from"
+   },
+   "shield-expert": {
+    "name": "Shield Expert",
+    "status": "doc",
+    "docId": "class-sample-98",
+    "how": "importer:the doc this record was built from"
+   },
+   "intimidating-protector": {
+    "name": "Intimidating Protector",
+    "status": "doc",
+    "docId": "class-sample-99",
+    "how": "importer:the doc this record was built from"
+   },
+   "retributive-strike": {
+    "name": "Retributive Strike",
+    "status": "doc",
+    "docId": "creature-ability-31",
+    "how": "importer:the doc this record was built from"
+   },
+   "sneak-attack": {
+    "name": "Sneak Attack",
+    "status": "doc",
+    "docId": "creature-ability-34",
+    "how": "importer:the doc this record was built from"
+   },
+   "form-up": {
+    "name": "Form Up",
+    "status": "doc",
+    "docId": "creature-ability-43",
+    "how": "importer:the doc this record was built from"
+   },
+   "grab": {
+    "name": "Grab",
+    "status": "doc",
+    "docId": "creature-ability-45",
+    "how": "importer:the doc this record was built from"
+   },
+   "knockdown": {
+    "name": "Knockdown",
+    "status": "doc",
+    "docId": "creature-ability-46",
+    "how": "importer:the doc this record was built from"
+   },
+   "push": {
+    "name": "Push",
+    "status": "doc",
+    "docId": "creature-ability-47",
+    "how": "importer:the doc this record was built from"
+   },
+   "reactive-strike": {
+    "name": "Reactive Strike",
+    "status": "doc",
+    "docId": "creature-ability-48",
+    "how": "importer:the doc this record was built from"
+   },
+   "all-around-vision": {
+    "name": "All-Around Vision",
+    "status": "doc",
+    "docId": "creature-ability-49",
+    "how": "importer:the doc this record was built from"
+   },
+   "aquatic-ambush": {
+    "name": "Aquatic Ambush",
+    "status": "doc",
+    "docId": "creature-ability-51",
+    "how": "importer:the doc this record was built from"
+   },
+   "at-will-spells": {
+    "name": "At-Will Spells",
+    "status": "doc",
+    "docId": "creature-ability-52",
+    "how": "importer:the doc this record was built from"
+   },
+   "aura": {
+    "name": "Aura",
+    "status": "doc",
+    "docId": "creature-ability-53",
+    "how": "importer:the doc this record was built from"
+   },
+   "buck": {
+    "name": "Buck",
+    "status": "doc",
+    "docId": "creature-ability-54",
+    "how": "importer:the doc this record was built from"
+   },
+   "change-shape": {
+    "name": "Change Shape",
+    "status": "doc",
+    "docId": "creature-ability-55",
+    "how": "importer:the doc this record was built from"
+   },
+   "constant-spells": {
+    "name": "Constant Spells",
+    "status": "doc",
+    "docId": "creature-ability-56",
+    "how": "importer:the doc this record was built from"
+   },
+   "constrict": {
+    "name": "Constrict",
+    "status": "doc",
+    "docId": "creature-ability-57",
+    "how": "importer:the doc this record was built from"
+   },
+   "coven": {
+    "name": "Coven",
+    "status": "doc",
+    "docId": "creature-ability-58",
+    "how": "importer:the doc this record was built from"
+   },
+   "darkvision": {
+    "name": "Darkvision",
+    "status": "doc",
+    "docId": "creature-ability-59",
+    "how": "importer:the doc this record was built from"
+   },
+   "disease": {
+    "name": "Disease",
+    "status": "doc",
+    "docId": "creature-ability-60",
+    "how": "importer:the doc this record was built from"
+   },
+   "engulf": {
+    "name": "Engulf",
+    "status": "doc",
+    "docId": "creature-ability-61",
+    "how": "importer:the doc this record was built from"
+   },
+   "fast-healing": {
+    "name": "Fast Healing",
+    "status": "doc",
+    "docId": "creature-ability-62",
+    "how": "importer:the doc this record was built from"
+   },
+   "ferocity": {
+    "name": "Ferocity",
+    "status": "doc",
+    "docId": "creature-ability-63",
+    "how": "importer:the doc this record was built from"
+   },
+   "frightful-presence": {
+    "name": "Frightful Presence",
+    "status": "doc",
+    "docId": "creature-ability-64",
+    "how": "importer:the doc this record was built from"
+   },
+   "greater-constrict": {
+    "name": "Greater Constrict",
+    "status": "doc",
+    "docId": "creature-ability-65",
+    "how": "importer:the doc this record was built from"
+   },
+   "improved-grab-improved-knockdown-or-improved-push": {
+    "name": "Improved Grab, Improved Knockdown, or Improved Push",
+    "status": "doc",
+    "docId": "creature-ability-66",
+    "how": "importer:the doc this record was built from"
+   },
+   "lifesense": {
+    "name": "Lifesense",
+    "status": "doc",
+    "docId": "creature-ability-67",
+    "how": "importer:the doc this record was built from"
+   },
+   "light-blindness": {
+    "name": "Light Blindness",
+    "status": "doc",
+    "docId": "creature-ability-68",
+    "how": "importer:the doc this record was built from"
+   },
+   "low-light-vision": {
+    "name": "Low-Light Vision",
+    "status": "doc",
+    "docId": "creature-ability-69",
+    "how": "importer:the doc this record was built from"
+   },
+   "catch-rock": {
+    "name": "Catch Rock",
+    "status": "doc",
+    "docId": "creature-ability-7",
+    "how": "importer:the doc this record was built from"
+   },
+   "poison": {
+    "name": "Poison",
+    "status": "doc",
+    "docId": "creature-ability-70",
+    "how": "importer:the doc this record was built from"
+   },
+   "pull": {
+    "name": "Pull",
+    "status": "doc",
+    "docId": "creature-ability-71",
+    "how": "importer:the doc this record was built from"
+   },
+   "regeneration": {
+    "name": "Regeneration",
+    "status": "doc",
+    "docId": "creature-ability-72",
+    "how": "importer:the doc this record was built from"
+   },
+   "rend": {
+    "name": "Rend",
+    "status": "doc",
+    "docId": "creature-ability-73",
+    "how": "importer:the doc this record was built from"
+   },
+   "scent": {
+    "name": "Scent",
+    "status": "doc",
+    "docId": "creature-ability-74",
+    "how": "importer:the doc this record was built from"
+   },
+   "shield-block": {
+    "name": "Shield Block",
+    "status": "doc",
+    "docId": "creature-ability-75",
+    "how": "importer:the doc this record was built from"
+   },
+   "stench": {
+    "name": "Stench",
+    "status": "doc",
+    "docId": "creature-ability-76",
+    "how": "importer:the doc this record was built from"
+   },
+   "swallow-whole": {
+    "name": "Swallow Whole",
+    "status": "doc",
+    "docId": "creature-ability-77",
+    "how": "importer:the doc this record was built from"
+   },
+   "swarm-mind": {
+    "name": "Swarm Mind",
+    "status": "doc",
+    "docId": "creature-ability-78",
+    "how": "importer:the doc this record was built from"
+   },
+   "telepathy": {
+    "name": "Telepathy",
+    "status": "doc",
+    "docId": "creature-ability-79",
+    "how": "importer:the doc this record was built from"
+   },
+   "throw-rock": {
+    "name": "Throw Rock",
+    "status": "doc",
+    "docId": "creature-ability-80",
+    "how": "importer:the doc this record was built from"
+   },
+   "tremorsense": {
+    "name": "Tremorsense",
+    "status": "doc",
+    "docId": "creature-ability-82",
+    "how": "importer:the doc this record was built from"
+   },
+   "void-healing": {
+    "name": "Void Healing",
+    "status": "doc",
+    "docId": "creature-ability-83",
+    "how": "importer:the doc this record was built from"
+   },
+   "wavesense": {
+    "name": "Wavesense",
+    "status": "doc",
+    "docId": "creature-ability-84",
+    "how": "importer:the doc this record was built from"
+   },
+   "troop-movement": {
+    "name": "Troop Movement",
+    "status": "doc",
+    "docId": "creature-ability-85",
+    "how": "importer:the doc this record was built from"
+   },
+   "troop-defenses": {
+    "name": "Troop Defenses",
+    "status": "doc",
+    "docId": "creature-ability-86",
+    "how": "importer:the doc this record was built from"
+   },
+   "grim-reaper": {
+    "name": "Grim Reaper",
+    "status": "doc",
+    "docId": "creature-family-104",
+    "how": "importer:the doc this record was built from"
+   },
+   "deadly-flora": {
+    "name": "Deadly Flora",
+    "status": "doc",
+    "docId": "creature-family-106",
+    "how": "importer:the doc this record was built from"
+   },
+   "anadi": {
+    "name": "Anadi",
+    "status": "doc",
+    "docId": "creature-family-107",
+    "how": "importer:the doc this record was built from"
+   },
+   "biloko": {
+    "name": "Biloko",
+    "status": "doc",
+    "docId": "creature-family-108",
+    "how": "importer:the doc this record was built from"
+   },
+   "charau-ka": {
+    "name": "Charau-ka",
+    "status": "doc",
+    "docId": "creature-family-109",
+    "how": "importer:the doc this record was built from"
+   },
+   "barghest": {
+    "name": "Barghest",
+    "status": "doc",
+    "docId": "creature-family-11",
+    "how": "importer:the doc this record was built from"
+   },
+   "aluum": {
+    "name": "Aluum",
+    "status": "doc",
+    "docId": "creature-family-113",
+    "how": "importer:the doc this record was built from"
+   },
+   "solifugid": {
+    "name": "Solifugid",
+    "status": "doc",
+    "docId": "creature-family-114",
+    "how": "importer:the doc this record was built from"
+   },
+   "flea": {
+    "name": "Flea",
+    "status": "doc",
+    "docId": "creature-family-117",
+    "how": "importer:the doc this record was built from"
+   },
+   "bogeyman": {
+    "name": "Bogeyman",
+    "status": "doc",
+    "docId": "creature-family-118",
+    "how": "importer:the doc this record was built from"
+   },
+   "visitant": {
+    "name": "Visitant",
+    "status": "doc",
+    "docId": "creature-family-119",
+    "how": "importer:the doc this record was built from"
+   },
+   "herecite": {
+    "name": "Herecite",
+    "status": "doc",
+    "docId": "creature-family-120",
+    "how": "importer:the doc this record was built from"
+   },
+   "shoony": {
+    "name": "Shoony",
+    "status": "doc",
+    "docId": "creature-family-121",
+    "how": "importer:the doc this record was built from"
+   },
+   "aukashungi": {
+    "name": "Aukashungi",
+    "status": "doc",
+    "docId": "creature-family-122",
+    "how": "importer:the doc this record was built from"
+   },
+   "brughadatch": {
+    "name": "Brughadatch",
+    "status": "doc",
+    "docId": "creature-family-123",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-primal": {
+    "name": "Dragon, Primal",
+    "status": "doc",
+    "docId": "creature-family-132",
+    "how": "importer:the doc this record was built from"
+   },
+   "octopus": {
+    "name": "Octopus",
+    "status": "doc",
+    "docId": "creature-family-143",
+    "how": "importer:the doc this record was built from"
+   },
+   "ray": {
+    "name": "Ray",
+    "status": "doc",
+    "docId": "creature-family-149",
+    "how": "importer:the doc this record was built from"
+   },
+   "spriggan": {
+    "name": "Spriggan",
+    "status": "doc",
+    "docId": "creature-family-154",
+    "how": "importer:the doc this record was built from"
+   },
+   "squid": {
+    "name": "Squid",
+    "status": "doc",
+    "docId": "creature-family-155",
+    "how": "importer:the doc this record was built from"
+   },
+   "tick": {
+    "name": "Tick",
+    "status": "doc",
+    "docId": "creature-family-156",
+    "how": "importer:the doc this record was built from"
+   },
+   "vampire-vrykolakas": {
+    "name": "Vampire, Vrykolakas",
+    "status": "doc",
+    "docId": "creature-family-159",
+    "how": "importer:the doc this record was built from"
+   },
+   "wolverine": {
+    "name": "Wolverine",
+    "status": "doc",
+    "docId": "creature-family-160",
+    "how": "importer:the doc this record was built from"
+   },
+   "worm-that-walks": {
+    "name": "Worm That Walks",
+    "status": "doc",
+    "docId": "creature-family-161",
+    "how": "importer:the doc this record was built from"
+   },
+   "yellow-musk-creeper": {
+    "name": "Yellow Musk Creeper",
+    "status": "doc",
+    "docId": "creature-family-162",
+    "how": "importer:the doc this record was built from"
+   },
+   "wight": {
+    "name": "Wight",
+    "status": "doc",
+    "docId": "creature-family-163",
+    "how": "importer:the doc this record was built from"
+   },
+   "blightburn-genies": {
+    "name": "Blightburn Genies",
+    "status": "doc",
+    "docId": "creature-family-180",
+    "how": "importer:the doc this record was built from"
+   },
+   "foresters": {
+    "name": "Foresters",
+    "status": "doc",
+    "docId": "creature-family-186",
+    "how": "importer:the doc this record was built from"
+   },
+   "magistrates": {
+    "name": "Magistrates",
+    "status": "doc",
+    "docId": "creature-family-189",
+    "how": "importer:the doc this record was built from"
+   },
+   "officers": {
+    "name": "Officers",
+    "status": "doc",
+    "docId": "creature-family-192",
+    "how": "importer:the doc this record was built from"
+   },
+   "publicans": {
+    "name": "Publicans",
+    "status": "doc",
+    "docId": "creature-family-194",
+    "how": "importer:the doc this record was built from"
+   },
+   "firebrands": {
+    "name": "Firebrands",
+    "status": "doc",
+    "docId": "creature-family-199",
+    "how": "importer:the doc this record was built from"
+   },
+   "hellknights": {
+    "name": "Hellknights",
+    "status": "doc",
+    "docId": "creature-family-200",
+    "how": "importer:the doc this record was built from"
+   },
+   "knights-of-lastwall": {
+    "name": "Knights of Lastwall",
+    "status": "doc",
+    "docId": "creature-family-201",
+    "how": "importer:the doc this record was built from"
+   },
+   "magaambyan-adepts": {
+    "name": "Magaambyan Adepts",
+    "status": "doc",
+    "docId": "creature-family-202",
+    "how": "importer:the doc this record was built from"
+   },
+   "pathfinders": {
+    "name": "Pathfinders",
+    "status": "doc",
+    "docId": "creature-family-203",
+    "how": "importer:the doc this record was built from"
+   },
+   "saurian": {
+    "name": "Saurian",
+    "status": "doc",
+    "docId": "creature-family-204",
+    "how": "importer:the doc this record was built from"
+   },
+   "toad": {
+    "name": "Toad",
+    "status": "doc",
+    "docId": "creature-family-206",
+    "how": "importer:the doc this record was built from"
+   },
+   "bone-skipper": {
+    "name": "Bone Skipper",
+    "status": "doc",
+    "docId": "creature-family-207",
+    "how": "importer:the doc this record was built from"
+   },
+   "sphinx": {
+    "name": "Sphinx",
+    "status": "doc",
+    "docId": "creature-family-209",
+    "how": "importer:the doc this record was built from"
+   },
+   "will-o-wisp": {
+    "name": "Will-o'-Wisp",
+    "status": "doc",
+    "docId": "creature-family-210",
+    "how": "importer:the doc this record was built from"
+   },
+   "seugathi": {
+    "name": "Seugathi",
+    "status": "doc",
+    "docId": "creature-family-212",
+    "how": "importer:the doc this record was built from"
+   },
+   "gibtas": {
+    "name": "Gibtas",
+    "status": "doc",
+    "docId": "creature-family-213",
+    "how": "importer:the doc this record was built from"
+   },
+   "shanrigol": {
+    "name": "Shanrigol",
+    "status": "doc",
+    "docId": "creature-family-214",
+    "how": "importer:the doc this record was built from"
+   },
+   "android": {
+    "name": "Android",
+    "status": "doc",
+    "docId": "creature-family-217",
+    "how": "importer:the doc this record was built from"
+   },
+   "bore-worm": {
+    "name": "Bore Worm",
+    "status": "doc",
+    "docId": "creature-family-221",
+    "how": "importer:the doc this record was built from"
+   },
+   "cecaelia": {
+    "name": "Cecaelia",
+    "status": "doc",
+    "docId": "creature-family-222",
+    "how": "importer:the doc this record was built from"
+   },
+   "cobble-mite": {
+    "name": "Cobble Mite",
+    "status": "doc",
+    "docId": "creature-family-224",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-imperial": {
+    "name": "Dragon, Imperial",
+    "status": "doc",
+    "docId": "creature-family-226",
+    "how": "importer:the doc this record was built from"
+   },
+   "ennosite": {
+    "name": "Ennosite",
+    "status": "doc",
+    "docId": "creature-family-233",
+    "how": "importer:the doc this record was built from"
+   },
+   "eurypterid": {
+    "name": "Eurypterid",
+    "status": "doc",
+    "docId": "creature-family-234",
+    "how": "importer:the doc this record was built from"
+   },
+   "gathlain": {
+    "name": "Gathlain",
+    "status": "doc",
+    "docId": "creature-family-237",
+    "how": "importer:the doc this record was built from"
+   },
+   "ghoran": {
+    "name": "Ghoran",
+    "status": "doc",
+    "docId": "creature-family-238",
+    "how": "importer:the doc this record was built from"
+   },
+   "kovintus": {
+    "name": "Kovintus",
+    "status": "doc",
+    "docId": "creature-family-244",
+    "how": "importer:the doc this record was built from"
+   },
+   "living-symbol": {
+    "name": "Living Symbol",
+    "status": "doc",
+    "docId": "creature-family-245",
+    "how": "importer:the doc this record was built from"
+   },
+   "maftet": {
+    "name": "Maftet",
+    "status": "doc",
+    "docId": "creature-family-246",
+    "how": "importer:the doc this record was built from"
+   },
+   "mortic": {
+    "name": "Mortic",
+    "status": "doc",
+    "docId": "creature-family-248",
+    "how": "importer:the doc this record was built from"
+   },
+   "paaridar": {
+    "name": "Paaridar",
+    "status": "doc",
+    "docId": "creature-family-254",
+    "how": "importer:the doc this record was built from"
+   },
+   "ram": {
+    "name": "Ram",
+    "status": "doc",
+    "docId": "creature-family-256",
+    "how": "importer:the doc this record was built from"
+   },
+   "shabti": {
+    "name": "Shabti",
+    "status": "doc",
+    "docId": "creature-family-258",
+    "how": "importer:the doc this record was built from"
+   },
+   "siktempora": {
+    "name": "Siktempora",
+    "status": "doc",
+    "docId": "creature-family-259",
+    "how": "importer:the doc this record was built from"
+   },
+   "skelm": {
+    "name": "Skelm",
+    "status": "doc",
+    "docId": "creature-family-260",
+    "how": "importer:the doc this record was built from"
+   },
+   "skull-swarm": {
+    "name": "Skull Swarm",
+    "status": "doc",
+    "docId": "creature-family-261",
+    "how": "importer:the doc this record was built from"
+   },
+   "skunk": {
+    "name": "Skunk",
+    "status": "doc",
+    "docId": "creature-family-262",
+    "how": "importer:the doc this record was built from"
+   },
+   "stheno": {
+    "name": "Stheno",
+    "status": "doc",
+    "docId": "creature-family-266",
+    "how": "importer:the doc this record was built from"
+   },
+   "terra-cotta-warrior": {
+    "name": "Terra-Cotta Warrior",
+    "status": "doc",
+    "docId": "creature-family-268",
+    "how": "importer:the doc this record was built from"
+   },
+   "deep-gnome": {
+    "name": "Deep Gnome",
+    "status": "doc",
+    "docId": "creature-family-27",
+    "how": "importer:the doc this record was built from"
+   },
+   "tsukumogami": {
+    "name": "Tsukumogami",
+    "status": "doc",
+    "docId": "creature-family-272",
+    "how": "importer:the doc this record was built from"
+   },
+   "weasel": {
+    "name": "Weasel",
+    "status": "doc",
+    "docId": "creature-family-277",
+    "how": "importer:the doc this record was built from"
+   },
+   "deadly-puffball": {
+    "name": "Deadly Puffball",
+    "status": "doc",
+    "docId": "creature-family-282",
+    "how": "importer:the doc this record was built from"
+   },
+   "dhuthorex": {
+    "name": "Dhuthorex",
+    "status": "doc",
+    "docId": "creature-family-283",
+    "how": "importer:the doc this record was built from"
+   },
+   "anugobu": {
+    "name": "Anugobu",
+    "status": "doc",
+    "docId": "creature-family-284",
+    "how": "importer:the doc this record was built from"
+   },
+   "hantu": {
+    "name": "Hantu",
+    "status": "doc",
+    "docId": "creature-family-285",
+    "how": "importer:the doc this record was built from"
+   },
+   "vampire-jiang-shi": {
+    "name": "Vampire, Jiang-Shi",
+    "status": "doc",
+    "docId": "creature-family-286",
+    "how": "importer:the doc this record was built from"
+   },
+   "kaava": {
+    "name": "Kaava",
+    "status": "doc",
+    "docId": "creature-family-287",
+    "how": "importer:the doc this record was built from"
+   },
+   "giant-bee": {
+    "name": "Giant Bee",
+    "status": "doc",
+    "docId": "creature-family-288",
+    "how": "importer:the doc this record was built from"
+   },
+   "silverfish": {
+    "name": "Silverfish",
+    "status": "doc",
+    "docId": "creature-family-289",
+    "how": "importer:the doc this record was built from"
+   },
+   "karumzek": {
+    "name": "Karumzek",
+    "status": "doc",
+    "docId": "creature-family-290",
+    "how": "importer:the doc this record was built from"
+   },
+   "contemplative-of-ashok": {
+    "name": "Contemplative of Ashok",
+    "status": "doc",
+    "docId": "creature-family-292",
+    "how": "importer:the doc this record was built from"
+   },
+   "formian": {
+    "name": "Formian",
+    "status": "doc",
+    "docId": "creature-family-293",
+    "how": "importer:the doc this record was built from"
+   },
+   "ikeshti": {
+    "name": "Ikeshti",
+    "status": "doc",
+    "docId": "creature-family-294",
+    "how": "importer:the doc this record was built from"
+   },
+   "khefak": {
+    "name": "Khefak",
+    "status": "doc",
+    "docId": "creature-family-295",
+    "how": "importer:the doc this record was built from"
+   },
+   "shobhad": {
+    "name": "Shobhad",
+    "status": "doc",
+    "docId": "creature-family-296",
+    "how": "importer:the doc this record was built from"
+   },
+   "azarketi": {
+    "name": "Azarketi",
+    "status": "doc",
+    "docId": "creature-family-297",
+    "how": "importer:the doc this record was built from"
+   },
+   "threshold-of-knowledge-pregenerated-characters": {
+    "name": "Threshold of Knowledge Pregenerated Characters",
+    "status": "doc",
+    "docId": "creature-family-298",
+    "how": "importer:the doc this record was built from"
+   },
+   "somnalu": {
+    "name": "Somnalu",
+    "status": "doc",
+    "docId": "creature-family-299",
+    "how": "importer:the doc this record was built from"
+   },
+   "beaver": {
+    "name": "Beaver",
+    "status": "doc",
+    "docId": "creature-family-300",
+    "how": "importer:the doc this record was built from"
+   },
+   "elk": {
+    "name": "Elk",
+    "status": "doc",
+    "docId": "creature-family-301",
+    "how": "importer:the doc this record was built from"
+   },
+   "werecreature-wereant": {
+    "name": "Werecreature, Wereant",
+    "status": "doc",
+    "docId": "creature-family-302",
+    "how": "importer:the doc this record was built from"
+   },
+   "zombie-tar": {
+    "name": "Zombie, Tar",
+    "status": "doc",
+    "docId": "creature-family-303",
+    "how": "importer:the doc this record was built from"
+   },
+   "gigantic-ant": {
+    "name": "Gigantic Ant",
+    "status": "doc",
+    "docId": "creature-family-304",
+    "how": "importer:the doc this record was built from"
+   },
+   "deathless-acolyte": {
+    "name": "Deathless Acolyte",
+    "status": "doc",
+    "docId": "creature-family-306",
+    "how": "importer:the doc this record was built from"
+   },
+   "revenant": {
+    "name": "Revenant",
+    "status": "doc",
+    "docId": "creature-family-308",
+    "how": "importer:the doc this record was built from"
+   },
+   "risen-pet": {
+    "name": "Risen Pet",
+    "status": "doc",
+    "docId": "creature-family-309",
+    "how": "importer:the doc this record was built from"
+   },
+   "siabrae": {
+    "name": "Siabrae",
+    "status": "doc",
+    "docId": "creature-family-310",
+    "how": "importer:the doc this record was built from"
+   },
+   "vampire-vetalarana": {
+    "name": "Vampire, Vetalarana",
+    "status": "doc",
+    "docId": "creature-family-311",
+    "how": "importer:the doc this record was built from"
+   },
+   "verdorite": {
+    "name": "Verdorite",
+    "status": "doc",
+    "docId": "creature-family-312",
+    "how": "importer:the doc this record was built from"
+   },
+   "sluagh": {
+    "name": "Sluagh",
+    "status": "doc",
+    "docId": "creature-family-313",
+    "how": "importer:the doc this record was built from"
+   },
+   "mana-wastes-mutant": {
+    "name": "Mana Wastes Mutant",
+    "status": "doc",
+    "docId": "creature-family-315",
+    "how": "importer:the doc this record was built from"
+   },
+   "animated-bones": {
+    "name": "Animated Bones",
+    "status": "doc",
+    "docId": "creature-family-317",
+    "how": "importer:the doc this record was built from"
+   },
+   "virulak": {
+    "name": "Virulak",
+    "status": "doc",
+    "docId": "creature-family-318",
+    "how": "importer:the doc this record was built from"
+   },
+   "owlbear": {
+    "name": "Owlbear",
+    "status": "doc",
+    "docId": "creature-family-320",
+    "how": "importer:the doc this record was built from"
+   },
+   "thylacine": {
+    "name": "Thylacine",
+    "status": "doc",
+    "docId": "creature-family-321",
+    "how": "importer:the doc this record was built from"
+   },
+   "fetch": {
+    "name": "Fetch",
+    "status": "doc",
+    "docId": "creature-family-322",
+    "how": "importer:the doc this record was built from"
+   },
+   "wild-hunt": {
+    "name": "Wild Hunt",
+    "status": "doc",
+    "docId": "creature-family-323",
+    "how": "importer:the doc this record was built from"
+   },
+   "bandersnatch": {
+    "name": "Bandersnatch",
+    "status": "doc",
+    "docId": "creature-family-324",
+    "how": "importer:the doc this record was built from"
+   },
+   "vilderavn": {
+    "name": "Vilderavn",
+    "status": "doc",
+    "docId": "creature-family-325",
+    "how": "importer:the doc this record was built from"
+   },
+   "afziaka": {
+    "name": "Afziaka",
+    "status": "doc",
+    "docId": "creature-family-326",
+    "how": "importer:the doc this record was built from"
+   },
+   "facetbound": {
+    "name": "Facetbound",
+    "status": "doc",
+    "docId": "creature-family-327",
+    "how": "importer:the doc this record was built from"
+   },
+   "necrohulk": {
+    "name": "Necrohulk",
+    "status": "doc",
+    "docId": "creature-family-328",
+    "how": "importer:the doc this record was built from"
+   },
+   "fleshforged": {
+    "name": "Fleshforged",
+    "status": "doc",
+    "docId": "creature-family-329",
+    "how": "importer:the doc this record was built from"
+   },
+   "ratajin": {
+    "name": "Ratajin",
+    "status": "doc",
+    "docId": "creature-family-330",
+    "how": "importer:the doc this record was built from"
+   },
+   "bhanyada": {
+    "name": "Bhanyada",
+    "status": "doc",
+    "docId": "creature-family-335",
+    "how": "importer:the doc this record was built from"
+   },
+   "lilu": {
+    "name": "Lilu",
+    "status": "doc",
+    "docId": "creature-family-336",
+    "how": "importer:the doc this record was built from"
+   },
+   "demon-throng": {
+    "name": "Demon Throng",
+    "status": "doc",
+    "docId": "creature-family-337",
+    "how": "importer:the doc this record was built from"
+   },
+   "harrowkin": {
+    "name": "Harrowkin",
+    "status": "doc",
+    "docId": "creature-family-339",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-chromatic": {
+    "name": "Dragon, Chromatic",
+    "status": "doc",
+    "docId": "creature-family-34",
+    "how": "importer:the doc this record was built from"
+   },
+   "sporeborn": {
+    "name": "Sporeborn",
+    "status": "doc",
+    "docId": "creature-family-340",
+    "how": "importer:the doc this record was built from"
+   },
+   "xiomorn": {
+    "name": "Xiomorn",
+    "status": "doc",
+    "docId": "creature-family-341",
+    "how": "importer:the doc this record was built from"
+   },
+   "munsahir": {
+    "name": "Munsahir",
+    "status": "doc",
+    "docId": "creature-family-342",
+    "how": "importer:the doc this record was built from"
+   },
+   "elemental-metal": {
+    "name": "Elemental, Metal",
+    "status": "doc",
+    "docId": "creature-family-343",
+    "how": "importer:the doc this record was built from"
+   },
+   "elemental-wood": {
+    "name": "Elemental, Wood",
+    "status": "doc",
+    "docId": "creature-family-345",
+    "how": "importer:the doc this record was built from"
+   },
+   "bloodseeker": {
+    "name": "Bloodseeker",
+    "status": "doc",
+    "docId": "creature-family-347",
+    "how": "importer:the doc this record was built from"
+   },
+   "redcap": {
+    "name": "Redcap",
+    "status": "doc",
+    "docId": "creature-family-348",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-metallic": {
+    "name": "Dragon, Metallic",
+    "status": "doc",
+    "docId": "creature-family-35",
+    "how": "importer:the doc this record was built from"
+   },
+   "sinsludge": {
+    "name": "Sinsludge",
+    "status": "doc",
+    "docId": "creature-family-352",
+    "how": "importer:the doc this record was built from"
+   },
+   "animated-handcraft": {
+    "name": "Animated Handcraft",
+    "status": "doc",
+    "docId": "creature-family-354",
+    "how": "importer:the doc this record was built from"
+   },
+   "haunted-clockwork": {
+    "name": "Haunted Clockwork",
+    "status": "doc",
+    "docId": "creature-family-355",
+    "how": "importer:the doc this record was built from"
+   },
+   "orchid-mantis": {
+    "name": "Orchid Mantis",
+    "status": "doc",
+    "docId": "creature-family-356",
+    "how": "importer:the doc this record was built from"
+   },
+   "aeon": {
+    "name": "Aeon",
+    "status": "doc",
+    "docId": "creature-family-357",
+    "how": "importer:the doc this record was built from"
+   },
+   "alghollthu": {
+    "name": "Alghollthu",
+    "status": "doc",
+    "docId": "creature-family-358",
+    "how": "importer:the doc this record was built from"
+   },
+   "angel": {
+    "name": "Angel",
+    "status": "doc",
+    "docId": "creature-family-359",
+    "how": "importer:the doc this record was built from"
+   },
+   "animated-object": {
+    "name": "Animated Object",
+    "status": "doc",
+    "docId": "creature-family-360",
+    "how": "importer:the doc this record was built from"
+   },
+   "ankhrav": {
+    "name": "Ankhrav",
+    "status": "doc",
+    "docId": "creature-family-361",
+    "how": "importer:the doc this record was built from"
+   },
+   "ant": {
+    "name": "Ant",
+    "status": "doc",
+    "docId": "creature-family-362",
+    "how": "importer:the doc this record was built from"
+   },
+   "ape": {
+    "name": "Ape",
+    "status": "doc",
+    "docId": "creature-family-363",
+    "how": "importer:the doc this record was built from"
+   },
+   "arboreal": {
+    "name": "Arboreal",
+    "status": "doc",
+    "docId": "creature-family-364",
+    "how": "importer:the doc this record was built from"
+   },
+   "archon": {
+    "name": "Archon",
+    "status": "doc",
+    "docId": "creature-family-365",
+    "how": "importer:the doc this record was built from"
+   },
+   "athamaru": {
+    "name": "Athamaru",
+    "status": "doc",
+    "docId": "creature-family-366",
+    "how": "importer:the doc this record was built from"
+   },
+   "azarketi-monster-core": {
+    "name": "Azarketi",
+    "status": "doc",
+    "docId": "creature-family-367",
+    "how": "importer:the doc this record was built from"
+   },
+   "azata": {
+    "name": "Azata",
+    "status": "doc",
+    "docId": "creature-family-368",
+    "how": "importer:the doc this record was built from"
+   },
+   "bat": {
+    "name": "Bat",
+    "status": "doc",
+    "docId": "creature-family-369",
+    "how": "importer:the doc this record was built from"
+   },
+   "drow": {
+    "name": "Drow",
+    "status": "doc",
+    "docId": "creature-family-37",
+    "how": "importer:the doc this record was built from"
+   },
+   "bear": {
+    "name": "Bear",
+    "status": "doc",
+    "docId": "creature-family-370",
+    "how": "importer:the doc this record was built from"
+   },
+   "beetle": {
+    "name": "Beetle",
+    "status": "doc",
+    "docId": "creature-family-371",
+    "how": "importer:the doc this record was built from"
+   },
+   "boar": {
+    "name": "Boar",
+    "status": "doc",
+    "docId": "creature-family-372",
+    "how": "importer:the doc this record was built from"
+   },
+   "boggard": {
+    "name": "Boggard",
+    "status": "doc",
+    "docId": "creature-family-373",
+    "how": "importer:the doc this record was built from"
+   },
+   "bugbear": {
+    "name": "Bugbear",
+    "status": "doc",
+    "docId": "creature-family-374",
+    "how": "importer:the doc this record was built from"
+   },
+   "caligni": {
+    "name": "Caligni",
+    "status": "doc",
+    "docId": "creature-family-375",
+    "how": "importer:the doc this record was built from"
+   },
+   "cat": {
+    "name": "Cat",
+    "status": "doc",
+    "docId": "creature-family-376",
+    "how": "importer:the doc this record was built from"
+   },
+   "catfolk": {
+    "name": "Catfolk",
+    "status": "doc",
+    "docId": "creature-family-377",
+    "how": "importer:the doc this record was built from"
+   },
+   "cave-worm": {
+    "name": "Cave Worm",
+    "status": "doc",
+    "docId": "creature-family-378",
+    "how": "importer:the doc this record was built from"
+   },
+   "centaur": {
+    "name": "Centaur",
+    "status": "doc",
+    "docId": "creature-family-379",
+    "how": "importer:the doc this record was built from"
+   },
+   "centipede": {
+    "name": "Centipede",
+    "status": "doc",
+    "docId": "creature-family-380",
+    "how": "importer:the doc this record was built from"
+   },
+   "changeling": {
+    "name": "Changeling",
+    "status": "doc",
+    "docId": "creature-family-381",
+    "how": "importer:the doc this record was built from"
+   },
+   "coatl": {
+    "name": "Coatl",
+    "status": "doc",
+    "docId": "creature-family-382",
+    "how": "importer:the doc this record was built from"
+   },
+   "crawling-hand": {
+    "name": "Crawling hand",
+    "status": "doc",
+    "docId": "creature-family-383",
+    "how": "importer:the doc this record was built from"
+   },
+   "crocodile": {
+    "name": "Crocodile",
+    "status": "doc",
+    "docId": "creature-family-384",
+    "how": "importer:the doc this record was built from"
+   },
+   "cyclops": {
+    "name": "Cyclops",
+    "status": "doc",
+    "docId": "creature-family-385",
+    "how": "importer:the doc this record was built from"
+   },
+   "daemon": {
+    "name": "Daemon",
+    "status": "doc",
+    "docId": "creature-family-386",
+    "how": "importer:the doc this record was built from"
+   },
+   "demon": {
+    "name": "Demon",
+    "status": "doc",
+    "docId": "creature-family-387",
+    "how": "importer:the doc this record was built from"
+   },
+   "dero": {
+    "name": "Dero",
+    "status": "doc",
+    "docId": "creature-family-388",
+    "how": "importer:the doc this record was built from"
+   },
+   "devil": {
+    "name": "Devil",
+    "status": "doc",
+    "docId": "creature-family-389",
+    "how": "importer:the doc this record was built from"
+   },
+   "dhampir": {
+    "name": "Dhampir",
+    "status": "doc",
+    "docId": "creature-family-390",
+    "how": "importer:the doc this record was built from"
+   },
+   "dolphin": {
+    "name": "Dolphin",
+    "status": "doc",
+    "docId": "creature-family-393",
+    "how": "importer:the doc this record was built from"
+   },
+   "dominion-of-the-black": {
+    "name": "Dominion of the Black",
+    "status": "doc",
+    "docId": "creature-family-394",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon": {
+    "name": "Dragon",
+    "status": "doc",
+    "docId": "creature-family-395",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-adamantine": {
+    "name": "Dragon, Adamantine",
+    "status": "doc",
+    "docId": "creature-family-396",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-conspirator": {
+    "name": "Dragon, Conspirator",
+    "status": "doc",
+    "docId": "creature-family-397",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-diabolic": {
+    "name": "Dragon, Diabolic",
+    "status": "doc",
+    "docId": "creature-family-398",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-empyreal": {
+    "name": "Dragon, Empyreal",
+    "status": "doc",
+    "docId": "creature-family-399",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-fortune": {
+    "name": "Dragon, Fortune",
+    "status": "doc",
+    "docId": "creature-family-400",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-horned": {
+    "name": "Dragon, Horned",
+    "status": "doc",
+    "docId": "creature-family-401",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-mirage": {
+    "name": "Dragon, Mirage",
+    "status": "doc",
+    "docId": "creature-family-402",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-omen": {
+    "name": "Dragon, Omen",
+    "status": "doc",
+    "docId": "creature-family-403",
+    "how": "importer:the doc this record was built from"
+   },
+   "drake": {
+    "name": "Drake",
+    "status": "doc",
+    "docId": "creature-family-404",
+    "how": "importer:the doc this record was built from"
+   },
+   "dwarf": {
+    "name": "Dwarf",
+    "status": "doc",
+    "docId": "creature-family-405",
+    "how": "importer:the doc this record was built from"
+   },
+   "eagle": {
+    "name": "Eagle",
+    "status": "doc",
+    "docId": "creature-family-406",
+    "how": "importer:the doc this record was built from"
+   },
+   "eel": {
+    "name": "Eel",
+    "status": "doc",
+    "docId": "creature-family-407",
+    "how": "importer:the doc this record was built from"
+   },
+   "elemental-air": {
+    "name": "Elemental, Air",
+    "status": "doc",
+    "docId": "creature-family-408",
+    "how": "importer:the doc this record was built from"
+   },
+   "elemental-earth": {
+    "name": "Elemental, Earth",
+    "status": "doc",
+    "docId": "creature-family-409",
+    "how": "importer:the doc this record was built from"
+   },
+   "elemental-fire": {
+    "name": "Elemental, Fire",
+    "status": "doc",
+    "docId": "creature-family-410",
+    "how": "importer:the doc this record was built from"
+   },
+   "elemental-scamp": {
+    "name": "Elemental, Scamp",
+    "status": "doc",
+    "docId": "creature-family-411",
+    "how": "importer:the doc this record was built from"
+   },
+   "elemental-water": {
+    "name": "Elemental, Water",
+    "status": "doc",
+    "docId": "creature-family-412",
+    "how": "importer:the doc this record was built from"
+   },
+   "elephant": {
+    "name": "Elephant",
+    "status": "doc",
+    "docId": "creature-family-413",
+    "how": "importer:the doc this record was built from"
+   },
+   "elf": {
+    "name": "Elf",
+    "status": "doc",
+    "docId": "creature-family-414",
+    "how": "importer:the doc this record was built from"
+   },
+   "fleshwarp": {
+    "name": "Fleshwarp",
+    "status": "doc",
+    "docId": "creature-family-415",
+    "how": "importer:the doc this record was built from"
+   },
+   "flytrap": {
+    "name": "Flytrap",
+    "status": "doc",
+    "docId": "creature-family-416",
+    "how": "importer:the doc this record was built from"
+   },
+   "genie": {
+    "name": "Genie",
+    "status": "doc",
+    "docId": "creature-family-417",
+    "how": "importer:the doc this record was built from"
+   },
+   "ghost": {
+    "name": "Ghost",
+    "status": "doc",
+    "docId": "creature-family-418",
+    "how": "importer:the doc this record was built from"
+   },
+   "ghoul": {
+    "name": "Ghoul",
+    "status": "doc",
+    "docId": "creature-family-419",
+    "how": "importer:the doc this record was built from"
+   },
+   "giant": {
+    "name": "Giant",
+    "status": "doc",
+    "docId": "creature-family-420",
+    "how": "importer:the doc this record was built from"
+   },
+   "gnome": {
+    "name": "Gnome",
+    "status": "doc",
+    "docId": "creature-family-421",
+    "how": "importer:the doc this record was built from"
+   },
+   "goblin": {
+    "name": "Goblin",
+    "status": "doc",
+    "docId": "creature-family-422",
+    "how": "importer:the doc this record was built from"
+   },
+   "graveknight": {
+    "name": "Graveknight",
+    "status": "doc",
+    "docId": "creature-family-423",
+    "how": "importer:the doc this record was built from"
+   },
+   "gremlin": {
+    "name": "Gremlin",
+    "status": "doc",
+    "docId": "creature-family-424",
+    "how": "importer:the doc this record was built from"
+   },
+   "hag": {
+    "name": "Hag",
+    "status": "doc",
+    "docId": "creature-family-425",
+    "how": "importer:the doc this record was built from"
+   },
+   "halfling": {
+    "name": "Halfling",
+    "status": "doc",
+    "docId": "creature-family-426",
+    "how": "importer:the doc this record was built from"
+   },
+   "hell-hound": {
+    "name": "Hell Hound",
+    "status": "doc",
+    "docId": "creature-family-427",
+    "how": "importer:the doc this record was built from"
+   },
+   "herexen": {
+    "name": "Herexen",
+    "status": "doc",
+    "docId": "creature-family-428",
+    "how": "importer:the doc this record was built from"
+   },
+   "hippocampus": {
+    "name": "Hippocampus",
+    "status": "doc",
+    "docId": "creature-family-429",
+    "how": "importer:the doc this record was built from"
+   },
+   "hobgoblin": {
+    "name": "Hobgoblin",
+    "status": "doc",
+    "docId": "creature-family-430",
+    "how": "importer:the doc this record was built from"
+   },
+   "horse": {
+    "name": "Horse",
+    "status": "doc",
+    "docId": "creature-family-431",
+    "how": "importer:the doc this record was built from"
+   },
+   "hryngar": {
+    "name": "Hryngar",
+    "status": "doc",
+    "docId": "creature-family-432",
+    "how": "importer:the doc this record was built from"
+   },
+   "hyena": {
+    "name": "Hyena",
+    "status": "doc",
+    "docId": "creature-family-433",
+    "how": "importer:the doc this record was built from"
+   },
+   "kholo": {
+    "name": "Kholo",
+    "status": "doc",
+    "docId": "creature-family-434",
+    "how": "importer:the doc this record was built from"
+   },
+   "kobold": {
+    "name": "Kobold",
+    "status": "doc",
+    "docId": "creature-family-435",
+    "how": "importer:the doc this record was built from"
+   },
+   "lamia": {
+    "name": "Lamia",
+    "status": "doc",
+    "docId": "creature-family-436",
+    "how": "importer:the doc this record was built from"
+   },
+   "leshy": {
+    "name": "Leshy",
+    "status": "doc",
+    "docId": "creature-family-437",
+    "how": "importer:the doc this record was built from"
+   },
+   "lich": {
+    "name": "Lich",
+    "status": "doc",
+    "docId": "creature-family-438",
+    "how": "importer:the doc this record was built from"
+   },
+   "linnorm": {
+    "name": "Linnorm",
+    "status": "doc",
+    "docId": "creature-family-439",
+    "how": "importer:the doc this record was built from"
+   },
+   "lizardfolk": {
+    "name": "Lizardfolk",
+    "status": "doc",
+    "docId": "creature-family-441",
+    "how": "importer:the doc this record was built from"
+   },
+   "mantis": {
+    "name": "Mantis",
+    "status": "doc",
+    "docId": "creature-family-442",
+    "how": "importer:the doc this record was built from"
+   },
+   "merfolk": {
+    "name": "Merfolk",
+    "status": "doc",
+    "docId": "creature-family-443",
+    "how": "importer:the doc this record was built from"
+   },
+   "minotaur": {
+    "name": "Minotaur",
+    "status": "doc",
+    "docId": "creature-family-444",
+    "how": "importer:the doc this record was built from"
+   },
+   "mummy": {
+    "name": "Mummy",
+    "status": "doc",
+    "docId": "creature-family-445",
+    "how": "importer:the doc this record was built from"
+   },
+   "naga": {
+    "name": "Naga",
+    "status": "doc",
+    "docId": "creature-family-446",
+    "how": "importer:the doc this record was built from"
+   },
+   "nightmare": {
+    "name": "Nightmare",
+    "status": "doc",
+    "docId": "creature-family-447",
+    "how": "importer:the doc this record was built from"
+   },
+   "norn": {
+    "name": "Norn",
+    "status": "doc",
+    "docId": "creature-family-448",
+    "how": "importer:the doc this record was built from"
+   },
+   "nymph": {
+    "name": "Nymph",
+    "status": "doc",
+    "docId": "creature-family-449",
+    "how": "importer:the doc this record was built from"
+   },
+   "ofalth": {
+    "name": "Ofalth",
+    "status": "doc",
+    "docId": "creature-family-450",
+    "how": "importer:the doc this record was built from"
+   },
+   "ogre": {
+    "name": "Ogre",
+    "status": "doc",
+    "docId": "creature-family-451",
+    "how": "importer:the doc this record was built from"
+   },
+   "oni": {
+    "name": "Oni",
+    "status": "doc",
+    "docId": "creature-family-452",
+    "how": "importer:the doc this record was built from"
+   },
+   "ooze": {
+    "name": "Ooze",
+    "status": "doc",
+    "docId": "creature-family-453",
+    "how": "importer:the doc this record was built from"
+   },
+   "orc": {
+    "name": "Orc",
+    "status": "doc",
+    "docId": "creature-family-454",
+    "how": "importer:the doc this record was built from"
+   },
+   "phantom": {
+    "name": "Phantom",
+    "status": "doc",
+    "docId": "creature-family-455",
+    "how": "importer:the doc this record was built from"
+   },
+   "planar-scion": {
+    "name": "Planar Scion",
+    "status": "doc",
+    "docId": "creature-family-456",
+    "how": "importer:the doc this record was built from"
+   },
+   "protean": {
+    "name": "Protean",
+    "status": "doc",
+    "docId": "creature-family-457",
+    "how": "importer:the doc this record was built from"
+   },
+   "psychopomp": {
+    "name": "Psychopomp",
+    "status": "doc",
+    "docId": "creature-family-458",
+    "how": "importer:the doc this record was built from"
+   },
+   "pterosaur": {
+    "name": "Pterosaur",
+    "status": "doc",
+    "docId": "creature-family-459",
+    "how": "importer:the doc this record was built from"
+   },
+   "qlippoth": {
+    "name": "Qlippoth",
+    "status": "doc",
+    "docId": "creature-family-460",
+    "how": "importer:the doc this record was built from"
+   },
+   "rakshasa": {
+    "name": "Rakshasa",
+    "status": "doc",
+    "docId": "creature-family-461",
+    "how": "importer:the doc this record was built from"
+   },
+   "ratfolk": {
+    "name": "Ratfolk",
+    "status": "doc",
+    "docId": "creature-family-463",
+    "how": "importer:the doc this record was built from"
+   },
+   "rhinoceros": {
+    "name": "Rhinoceros",
+    "status": "doc",
+    "docId": "creature-family-464",
+    "how": "importer:the doc this record was built from"
+   },
+   "sargassum-heap": {
+    "name": "Sargassum Heap",
+    "status": "doc",
+    "docId": "creature-family-465",
+    "how": "importer:the doc this record was built from"
+   },
+   "scorpion": {
+    "name": "Scorpion",
+    "status": "doc",
+    "docId": "creature-family-466",
+    "how": "importer:the doc this record was built from"
+   },
+   "sedacthy": {
+    "name": "Sedacthy",
+    "status": "doc",
+    "docId": "creature-family-467",
+    "how": "importer:the doc this record was built from"
+   },
+   "serpentfolk": {
+    "name": "Serpentfolk",
+    "status": "doc",
+    "docId": "creature-family-468",
+    "how": "importer:the doc this record was built from"
+   },
+   "shadow": {
+    "name": "Shadow",
+    "status": "doc",
+    "docId": "creature-family-469",
+    "how": "importer:the doc this record was built from"
+   },
+   "shark": {
+    "name": "Shark",
+    "status": "doc",
+    "docId": "creature-family-470",
+    "how": "importer:the doc this record was built from"
+   },
+   "sinspawn": {
+    "name": "Sinspawn",
+    "status": "doc",
+    "docId": "creature-family-471",
+    "how": "importer:the doc this record was built from"
+   },
+   "skeleton": {
+    "name": "Skeleton",
+    "status": "doc",
+    "docId": "creature-family-472",
+    "how": "importer:the doc this record was built from"
+   },
+   "snake": {
+    "name": "Snake",
+    "status": "doc",
+    "docId": "creature-family-473",
+    "how": "importer:the doc this record was built from"
+   },
+   "sprite": {
+    "name": "Sprite",
+    "status": "doc",
+    "docId": "creature-family-475",
+    "how": "importer:the doc this record was built from"
+   },
+   "tengu": {
+    "name": "Tengu",
+    "status": "doc",
+    "docId": "creature-family-476",
+    "how": "importer:the doc this record was built from"
+   },
+   "tooth-fairy": {
+    "name": "Tooth Fairy",
+    "status": "doc",
+    "docId": "creature-family-477",
+    "how": "importer:the doc this record was built from"
+   },
+   "troll": {
+    "name": "Troll",
+    "status": "doc",
+    "docId": "creature-family-478",
+    "how": "importer:the doc this record was built from"
+   },
+   "twigjack": {
+    "name": "Twigjack",
+    "status": "doc",
+    "docId": "creature-family-479",
+    "how": "importer:the doc this record was built from"
+   },
+   "vampire": {
+    "name": "Vampire",
+    "status": "doc",
+    "docId": "creature-family-480",
+    "how": "importer:the doc this record was built from"
+   },
+   "vescavor": {
+    "name": "Vescavor",
+    "status": "doc",
+    "docId": "creature-family-481",
+    "how": "importer:the doc this record was built from"
+   },
+   "warg": {
+    "name": "Warg",
+    "status": "doc",
+    "docId": "creature-family-482",
+    "how": "importer:the doc this record was built from"
+   },
+   "wasp": {
+    "name": "Wasp",
+    "status": "doc",
+    "docId": "creature-family-483",
+    "how": "importer:the doc this record was built from"
+   },
+   "werecreature": {
+    "name": "Werecreature",
+    "status": "doc",
+    "docId": "creature-family-484",
+    "how": "importer:the doc this record was built from"
+   },
+   "wolf": {
+    "name": "Wolf",
+    "status": "doc",
+    "docId": "creature-family-485",
+    "how": "importer:the doc this record was built from"
+   },
+   "xulgath": {
+    "name": "Xulgath",
+    "status": "doc",
+    "docId": "creature-family-486",
+    "how": "importer:the doc this record was built from"
+   },
+   "zombie": {
+    "name": "Zombie",
+    "status": "doc",
+    "docId": "creature-family-487",
+    "how": "importer:the doc this record was built from"
+   },
+   "basilisk": {
+    "name": "Basilisk",
+    "status": "doc",
+    "docId": "creature-family-488",
+    "how": "importer:the doc this record was built from"
+   },
+   "chimera": {
+    "name": "Chimera",
+    "status": "doc",
+    "docId": "creature-family-489",
+    "how": "importer:the doc this record was built from"
+   },
+   "gargoyle": {
+    "name": "Gargoyle",
+    "status": "doc",
+    "docId": "creature-family-49",
+    "how": "importer:the doc this record was built from"
+   },
+   "dischoran": {
+    "name": "Dischoran",
+    "status": "doc",
+    "docId": "creature-family-490",
+    "how": "importer:the doc this record was built from"
+   },
+   "elemental-bird": {
+    "name": "Elemental Bird",
+    "status": "doc",
+    "docId": "creature-family-491",
+    "how": "importer:the doc this record was built from"
+   },
+   "ethereal-wildlife": {
+    "name": "Ethereal Wildlife",
+    "status": "doc",
+    "docId": "creature-family-492",
+    "how": "importer:the doc this record was built from"
+   },
+   "galvanoscale": {
+    "name": "Galvanoscale",
+    "status": "doc",
+    "docId": "creature-family-495",
+    "how": "importer:the doc this record was built from"
+   },
+   "gorgon": {
+    "name": "Gorgon",
+    "status": "doc",
+    "docId": "creature-family-496",
+    "how": "importer:the doc this record was built from"
+   },
+   "griffon": {
+    "name": "Griffon",
+    "status": "doc",
+    "docId": "creature-family-497",
+    "how": "importer:the doc this record was built from"
+   },
+   "hexmoth": {
+    "name": "Hexmoth",
+    "status": "doc",
+    "docId": "creature-family-498",
+    "how": "importer:the doc this record was built from"
+   },
+   "hydra": {
+    "name": "Hydra",
+    "status": "doc",
+    "docId": "creature-family-499",
+    "how": "importer:the doc this record was built from"
+   },
+   "manticore": {
+    "name": "Manticore",
+    "status": "doc",
+    "docId": "creature-family-500",
+    "how": "importer:the doc this record was built from"
+   },
+   "seal": {
+    "name": "Seal",
+    "status": "doc",
+    "docId": "creature-family-501",
+    "how": "importer:the doc this record was built from"
+   },
+   "spirit-guide": {
+    "name": "Spirit Guide",
+    "status": "doc",
+    "docId": "creature-family-502",
+    "how": "importer:the doc this record was built from"
+   },
+   "tardigrade": {
+    "name": "Tardigrade",
+    "status": "doc",
+    "docId": "creature-family-503",
+    "how": "importer:the doc this record was built from"
+   },
+   "unicorn": {
+    "name": "Unicorn",
+    "status": "doc",
+    "docId": "creature-family-504",
+    "how": "importer:the doc this record was built from"
+   },
+   "wardens-of-the-wild": {
+    "name": "Wardens of the Wild",
+    "status": "doc",
+    "docId": "creature-family-506",
+    "how": "importer:the doc this record was built from"
+   },
+   "longlegs": {
+    "name": "Longlegs",
+    "status": "doc",
+    "docId": "creature-family-507",
+    "how": "importer:the doc this record was built from"
+   },
+   "zoog": {
+    "name": "Zoog",
+    "status": "doc",
+    "docId": "creature-family-508",
+    "how": "importer:the doc this record was built from"
+   },
+   "servitors-of-gorum": {
+    "name": "Servitors of Gorum",
+    "status": "doc",
+    "docId": "creature-family-510",
+    "how": "importer:the doc this record was built from"
+   },
+   "artisan": {
+    "name": "Artisan",
+    "status": "doc",
+    "docId": "creature-family-531",
+    "how": "importer:the doc this record was built from"
+   },
+   "courtier": {
+    "name": "Courtier",
+    "status": "doc",
+    "docId": "creature-family-532",
+    "how": "importer:the doc this record was built from"
+   },
+   "criminal": {
+    "name": "Criminal",
+    "status": "doc",
+    "docId": "creature-family-533",
+    "how": "importer:the doc this record was built from"
+   },
+   "devotee": {
+    "name": "Devotee",
+    "status": "doc",
+    "docId": "creature-family-534",
+    "how": "importer:the doc this record was built from"
+   },
+   "downtrodden": {
+    "name": "Downtrodden",
+    "status": "doc",
+    "docId": "creature-family-535",
+    "how": "importer:the doc this record was built from"
+   },
+   "engineer": {
+    "name": "Engineer",
+    "status": "doc",
+    "docId": "creature-family-536",
+    "how": "importer:the doc this record was built from"
+   },
+   "explorer": {
+    "name": "Explorer",
+    "status": "doc",
+    "docId": "creature-family-537",
+    "how": "importer:the doc this record was built from"
+   },
+   "healer": {
+    "name": "Healer",
+    "status": "doc",
+    "docId": "creature-family-538",
+    "how": "importer:the doc this record was built from"
+   },
+   "laborer": {
+    "name": "Laborer",
+    "status": "doc",
+    "docId": "creature-family-539",
+    "how": "importer:the doc this record was built from"
+   },
+   "martial-artist": {
+    "name": "Martial Artist",
+    "status": "doc",
+    "docId": "creature-family-540",
+    "how": "importer:the doc this record was built from"
+   },
+   "maverick": {
+    "name": "Maverick",
+    "status": "doc",
+    "docId": "creature-family-541",
+    "how": "importer:the doc this record was built from"
+   },
+   "mercenary": {
+    "name": "Mercenary",
+    "status": "doc",
+    "docId": "creature-family-542",
+    "how": "importer:the doc this record was built from"
+   },
+   "military": {
+    "name": "Military",
+    "status": "doc",
+    "docId": "creature-family-543",
+    "how": "importer:the doc this record was built from"
+   },
+   "mystic": {
+    "name": "Mystic",
+    "status": "doc",
+    "docId": "creature-family-544",
+    "how": "importer:the doc this record was built from"
+   },
+   "official": {
+    "name": "Official",
+    "status": "doc",
+    "docId": "creature-family-545",
+    "how": "importer:the doc this record was built from"
+   },
+   "performer": {
+    "name": "Performer",
+    "status": "doc",
+    "docId": "creature-family-546",
+    "how": "importer:the doc this record was built from"
+   },
+   "primalist": {
+    "name": "Primalist",
+    "status": "doc",
+    "docId": "creature-family-547",
+    "how": "importer:the doc this record was built from"
+   },
+   "scholar": {
+    "name": "Scholar",
+    "status": "doc",
+    "docId": "creature-family-548",
+    "how": "importer:the doc this record was built from"
+   },
+   "seafarer": {
+    "name": "Seafarer",
+    "status": "doc",
+    "docId": "creature-family-549",
+    "how": "importer:the doc this record was built from"
+   },
+   "villain": {
+    "name": "Villain",
+    "status": "doc",
+    "docId": "creature-family-550",
+    "how": "importer:the doc this record was built from"
+   },
+   "tripkee": {
+    "name": "Tripkee",
+    "status": "doc",
+    "docId": "creature-family-551",
+    "how": "importer:the doc this record was built from"
+   },
+   "eyelet": {
+    "name": "Eyelet",
+    "status": "doc",
+    "docId": "creature-family-552",
+    "how": "importer:the doc this record was built from"
+   },
+   "woodblessed": {
+    "name": "Woodblessed",
+    "status": "doc",
+    "docId": "creature-family-553",
+    "how": "importer:the doc this record was built from"
+   },
+   "woodwarp": {
+    "name": "Woodwarp",
+    "status": "doc",
+    "docId": "creature-family-554",
+    "how": "importer:the doc this record was built from"
+   },
+   "blight-bonded": {
+    "name": "Blight Bonded",
+    "status": "doc",
+    "docId": "creature-family-555",
+    "how": "importer:the doc this record was built from"
+   },
+   "palinthanos": {
+    "name": "Palinthanos",
+    "status": "doc",
+    "docId": "creature-family-556",
+    "how": "importer:the doc this record was built from"
+   },
+   "floodslain-creature": {
+    "name": "Floodslain Creature",
+    "status": "doc",
+    "docId": "creature-family-557",
+    "how": "importer:the doc this record was built from"
+   },
+   "storm-spirits": {
+    "name": "Storm Spirits",
+    "status": "doc",
+    "docId": "creature-family-558",
+    "how": "importer:the doc this record was built from"
+   },
+   "war-beast": {
+    "name": "War Beast",
+    "status": "doc",
+    "docId": "creature-family-559",
+    "how": "importer:the doc this record was built from"
+   },
+   "wyvernsting-orc": {
+    "name": "Wyvernsting Orc",
+    "status": "doc",
+    "docId": "creature-family-560",
+    "how": "importer:the doc this record was built from"
+   },
+   "blight": {
+    "name": "Blight",
+    "status": "doc",
+    "docId": "creature-family-561",
+    "how": "importer:the doc this record was built from"
+   },
+   "cliftwood-fiend": {
+    "name": "Cliftwood Fiend",
+    "status": "doc",
+    "docId": "creature-family-562",
+    "how": "importer:the doc this record was built from"
+   },
+   "failed-prophet": {
+    "name": "Failed Prophet",
+    "status": "doc",
+    "docId": "creature-family-563",
+    "how": "importer:the doc this record was built from"
+   },
+   "vampire-strigoi": {
+    "name": "Vampire, Strigoi",
+    "status": "doc",
+    "docId": "creature-family-564",
+    "how": "importer:the doc this record was built from"
+   },
+   "velstrac": {
+    "name": "Velstrac",
+    "status": "doc",
+    "docId": "creature-family-565",
+    "how": "importer:the doc this record was built from"
+   },
+   "gigantic-bee": {
+    "name": "Gigantic Bee",
+    "status": "doc",
+    "docId": "creature-family-566",
+    "how": "importer:the doc this record was built from"
+   },
+   "stygian-guardian": {
+    "name": "Stygian Guardian",
+    "status": "doc",
+    "docId": "creature-family-567",
+    "how": "importer:the doc this record was built from"
+   },
+   "painted-creatures": {
+    "name": "Painted Creatures",
+    "status": "doc",
+    "docId": "creature-family-568",
+    "how": "importer:the doc this record was built from"
+   },
+   "nephilim": {
+    "name": "Nephilim",
+    "status": "doc",
+    "docId": "creature-family-569",
+    "how": "importer:the doc this record was built from"
+   },
+   "golem": {
+    "name": "Golem",
+    "status": "doc",
+    "docId": "creature-family-57",
+    "how": "importer:the doc this record was built from"
+   },
+   "aesir": {
+    "name": "Aesir",
+    "status": "doc",
+    "docId": "creature-family-570",
+    "how": "importer:the doc this record was built from"
+   },
+   "asura": {
+    "name": "Asura",
+    "status": "doc",
+    "docId": "creature-family-571",
+    "how": "importer:the doc this record was built from"
+   },
+   "automaton": {
+    "name": "Automaton",
+    "status": "doc",
+    "docId": "creature-family-572",
+    "how": "importer:the doc this record was built from"
+   },
+   "badger": {
+    "name": "Badger",
+    "status": "doc",
+    "docId": "creature-family-573",
+    "how": "importer:the doc this record was built from"
+   },
+   "beheaded": {
+    "name": "Beheaded",
+    "status": "doc",
+    "docId": "creature-family-574",
+    "how": "importer:the doc this record was built from"
+   },
+   "clockwork": {
+    "name": "Clockwork",
+    "status": "doc",
+    "docId": "creature-family-575",
+    "how": "importer:the doc this record was built from"
+   },
+   "cockroach": {
+    "name": "Cockroach",
+    "status": "doc",
+    "docId": "creature-family-576",
+    "how": "importer:the doc this record was built from"
+   },
+   "crab": {
+    "name": "Crab",
+    "status": "doc",
+    "docId": "creature-family-577",
+    "how": "importer:the doc this record was built from"
+   },
+   "darvakka": {
+    "name": "Darvakka",
+    "status": "doc",
+    "docId": "creature-family-578",
+    "how": "importer:the doc this record was built from"
+   },
+   "deep-one": {
+    "name": "Deep One",
+    "status": "doc",
+    "docId": "creature-family-579",
+    "how": "importer:the doc this record was built from"
+   },
+   "div": {
+    "name": "Div",
+    "status": "doc",
+    "docId": "creature-family-580",
+    "how": "importer:the doc this record was built from"
+   },
+   "divine-warden": {
+    "name": "Divine Warden",
+    "status": "doc",
+    "docId": "creature-family-581",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-cinder": {
+    "name": "Dragon, Cinder",
+    "status": "doc",
+    "docId": "creature-family-582",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-coral": {
+    "name": "Dragon, Coral",
+    "status": "doc",
+    "docId": "creature-family-583",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-despair": {
+    "name": "Dragon, Despair",
+    "status": "doc",
+    "docId": "creature-family-584",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-phase": {
+    "name": "Dragon, Phase",
+    "status": "doc",
+    "docId": "creature-family-585",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-requiem": {
+    "name": "Dragon, Requiem",
+    "status": "doc",
+    "docId": "creature-family-586",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-resurrection": {
+    "name": "Dragon, Resurrection",
+    "status": "doc",
+    "docId": "creature-family-587",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-rune": {
+    "name": "Dragon, Rune",
+    "status": "doc",
+    "docId": "creature-family-588",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-whisper": {
+    "name": "Dragon, Whisper",
+    "status": "doc",
+    "docId": "creature-family-589",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragonblood": {
+    "name": "Dragonblood",
+    "status": "doc",
+    "docId": "creature-family-590",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragonfly": {
+    "name": "Dragonfly",
+    "status": "doc",
+    "docId": "creature-family-591",
+    "how": "importer:the doc this record was built from"
+   },
+   "elemental-wisp": {
+    "name": "Elemental, Wisp",
+    "status": "doc",
+    "docId": "creature-family-592",
+    "how": "importer:the doc this record was built from"
+   },
+   "fetchling": {
+    "name": "Fetchling",
+    "status": "doc",
+    "docId": "creature-family-593",
+    "how": "importer:the doc this record was built from"
+   },
+   "fly": {
+    "name": "Fly",
+    "status": "doc",
+    "docId": "creature-family-594",
+    "how": "importer:the doc this record was built from"
+   },
+   "geniekin": {
+    "name": "Geniekin",
+    "status": "doc",
+    "docId": "creature-family-595",
+    "how": "importer:the doc this record was built from"
+   },
+   "girtablilu": {
+    "name": "Girtablilu",
+    "status": "doc",
+    "docId": "creature-family-596",
+    "how": "importer:the doc this record was built from"
+   },
+   "goblin-snake": {
+    "name": "Goblin Snake",
+    "status": "doc",
+    "docId": "creature-family-597",
+    "how": "importer:the doc this record was built from"
+   },
+   "grioth": {
+    "name": "Grioth",
+    "status": "doc",
+    "docId": "creature-family-598",
+    "how": "importer:the doc this record was built from"
+   },
+   "guardian-beast": {
+    "name": "Guardian Beast",
+    "status": "doc",
+    "docId": "creature-family-599",
+    "how": "importer:the doc this record was built from"
+   },
+   "hippopotamus": {
+    "name": "Hippopotamus",
+    "status": "doc",
+    "docId": "creature-family-600",
+    "how": "importer:the doc this record was built from"
+   },
+   "house-spirit": {
+    "name": "House Spirit",
+    "status": "doc",
+    "docId": "creature-family-601",
+    "how": "importer:the doc this record was built from"
+   },
+   "jellyfish": {
+    "name": "Jellyfish",
+    "status": "doc",
+    "docId": "creature-family-602",
+    "how": "importer:the doc this record was built from"
+   },
+   "jotunborn": {
+    "name": "Jotunborn",
+    "status": "doc",
+    "docId": "creature-family-603",
+    "how": "importer:the doc this record was built from"
+   },
+   "kami": {
+    "name": "Kami",
+    "status": "doc",
+    "docId": "creature-family-604",
+    "how": "importer:the doc this record was built from"
+   },
+   "kitsune": {
+    "name": "Kitsune",
+    "status": "doc",
+    "docId": "creature-family-605",
+    "how": "importer:the doc this record was built from"
+   },
+   "leech": {
+    "name": "Leech",
+    "status": "doc",
+    "docId": "creature-family-606",
+    "how": "importer:the doc this record was built from"
+   },
+   "living-topiary": {
+    "name": "Living Topiary",
+    "status": "doc",
+    "docId": "creature-family-607",
+    "how": "importer:the doc this record was built from"
+   },
+   "morlock": {
+    "name": "Morlock",
+    "status": "doc",
+    "docId": "creature-family-608",
+    "how": "importer:the doc this record was built from"
+   },
+   "mosasaur": {
+    "name": "Mosasaur",
+    "status": "doc",
+    "docId": "creature-family-609",
+    "how": "importer:the doc this record was built from"
+   },
+   "mosquito": {
+    "name": "Mosquito",
+    "status": "doc",
+    "docId": "creature-family-610",
+    "how": "importer:the doc this record was built from"
+   },
+   "munavri": {
+    "name": "Munavri",
+    "status": "doc",
+    "docId": "creature-family-611",
+    "how": "importer:the doc this record was built from"
+   },
+   "nagaji": {
+    "name": "Nagaji",
+    "status": "doc",
+    "docId": "creature-family-612",
+    "how": "importer:the doc this record was built from"
+   },
+   "opossum": {
+    "name": "Opossum",
+    "status": "doc",
+    "docId": "creature-family-613",
+    "how": "importer:the doc this record was built from"
+   },
+   "owb": {
+    "name": "Owb",
+    "status": "doc",
+    "docId": "creature-family-614",
+    "how": "importer:the doc this record was built from"
+   },
+   "poppet": {
+    "name": "Poppet",
+    "status": "doc",
+    "docId": "creature-family-615",
+    "how": "importer:the doc this record was built from"
+   },
+   "raven": {
+    "name": "Raven",
+    "status": "doc",
+    "docId": "creature-family-616",
+    "how": "importer:the doc this record was built from"
+   },
+   "ravener": {
+    "name": "Ravener",
+    "status": "doc",
+    "docId": "creature-family-617",
+    "how": "importer:the doc this record was built from"
+   },
+   "sahkil": {
+    "name": "Sahkil",
+    "status": "doc",
+    "docId": "creature-family-618",
+    "how": "importer:the doc this record was built from"
+   },
+   "samsaran": {
+    "name": "Samsaran",
+    "status": "doc",
+    "docId": "creature-family-619",
+    "how": "importer:the doc this record was built from"
+   },
+   "soulrider": {
+    "name": "Soulrider",
+    "status": "doc",
+    "docId": "creature-family-620",
+    "how": "importer:the doc this record was built from"
+   },
+   "spawn-of-rovagug": {
+    "name": "Spawn of Rovagug",
+    "status": "doc",
+    "docId": "creature-family-621",
+    "how": "importer:the doc this record was built from"
+   },
+   "sportlebore": {
+    "name": "Sportlebore",
+    "status": "doc",
+    "docId": "creature-family-622",
+    "how": "importer:the doc this record was built from"
+   },
+   "strix": {
+    "name": "Strix",
+    "status": "doc",
+    "docId": "creature-family-623",
+    "how": "importer:the doc this record was built from"
+   },
+   "swarm-strider": {
+    "name": "Swarm Strider",
+    "status": "doc",
+    "docId": "creature-family-624",
+    "how": "importer:the doc this record was built from"
+   },
+   "tanuki": {
+    "name": "Tanuki",
+    "status": "doc",
+    "docId": "creature-family-625",
+    "how": "importer:the doc this record was built from"
+   },
+   "terror-bird": {
+    "name": "Terror Bird",
+    "status": "doc",
+    "docId": "creature-family-626",
+    "how": "importer:the doc this record was built from"
+   },
+   "titan": {
+    "name": "Titan",
+    "status": "doc",
+    "docId": "creature-family-627",
+    "how": "importer:the doc this record was built from"
+   },
+   "trilobite": {
+    "name": "Trilobite",
+    "status": "doc",
+    "docId": "creature-family-628",
+    "how": "importer:the doc this record was built from"
+   },
+   "urdefhan": {
+    "name": "Urdefhan",
+    "status": "doc",
+    "docId": "creature-family-629",
+    "how": "importer:the doc this record was built from"
+   },
+   "vampire-nosferatu": {
+    "name": "Vampire, Nosferatu",
+    "status": "doc",
+    "docId": "creature-family-630",
+    "how": "importer:the doc this record was built from"
+   },
+   "vanara": {
+    "name": "Vanara",
+    "status": "doc",
+    "docId": "creature-family-631",
+    "how": "importer:the doc this record was built from"
+   },
+   "vishkanya": {
+    "name": "Vishkanya",
+    "status": "doc",
+    "docId": "creature-family-632",
+    "how": "importer:the doc this record was built from"
+   },
+   "wayang": {
+    "name": "Wayang",
+    "status": "doc",
+    "docId": "creature-family-633",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-barrage": {
+    "name": "Dragon, Barrage",
+    "status": "doc",
+    "docId": "creature-family-634",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-bog": {
+    "name": "Dragon, Bog",
+    "status": "doc",
+    "docId": "creature-family-635",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-brine": {
+    "name": "Dragon, Brine",
+    "status": "doc",
+    "docId": "creature-family-636",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-cloud": {
+    "name": "Dragon, Cloud",
+    "status": "doc",
+    "docId": "creature-family-637",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-crystal": {
+    "name": "Dragon, Crystal",
+    "status": "doc",
+    "docId": "creature-family-638",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-delight": {
+    "name": "Dragon, Delight",
+    "status": "doc",
+    "docId": "creature-family-639",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragonet": {
+    "name": "Dragonet",
+    "status": "doc",
+    "docId": "creature-family-640",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-executor": {
+    "name": "Dragon, Executor",
+    "status": "doc",
+    "docId": "creature-family-641",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-forest": {
+    "name": "Dragon, Forest",
+    "status": "doc",
+    "docId": "creature-family-642",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-magma": {
+    "name": "Dragon, Magma",
+    "status": "doc",
+    "docId": "creature-family-643",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-mocking": {
+    "name": "Dragon, Mocking",
+    "status": "doc",
+    "docId": "creature-family-644",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-oath": {
+    "name": "Dragon, Oath",
+    "status": "doc",
+    "docId": "creature-family-645",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-rime": {
+    "name": "Dragon, Rime",
+    "status": "doc",
+    "docId": "creature-family-647",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-sage": {
+    "name": "Dragon, Sage",
+    "status": "doc",
+    "docId": "creature-family-648",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-sea": {
+    "name": "Dragon, Sea",
+    "status": "doc",
+    "docId": "creature-family-649",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-sky": {
+    "name": "Dragon, Sky",
+    "status": "doc",
+    "docId": "creature-family-650",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-sovereign": {
+    "name": "Dragon, Sovereign",
+    "status": "doc",
+    "docId": "creature-family-652",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-stormcrown": {
+    "name": "Dragon, Stormcrown",
+    "status": "doc",
+    "docId": "creature-family-653",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-time": {
+    "name": "Dragon, Time",
+    "status": "doc",
+    "docId": "creature-family-655",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-umbral": {
+    "name": "Dragon, Umbral",
+    "status": "doc",
+    "docId": "creature-family-656",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-underworld": {
+    "name": "Dragon, Underworld",
+    "status": "doc",
+    "docId": "creature-family-657",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-vizier": {
+    "name": "Dragon, Vizier",
+    "status": "doc",
+    "docId": "creature-family-658",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-vorpal": {
+    "name": "Dragon, Vorpal",
+    "status": "doc",
+    "docId": "creature-family-659",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-wailing": {
+    "name": "Dragon, Wailing",
+    "status": "doc",
+    "docId": "creature-family-660",
+    "how": "importer:the doc this record was built from"
+   },
+   "dragon-wish": {
+    "name": "Dragon, Wish",
+    "status": "doc",
+    "docId": "creature-family-661",
+    "how": "importer:the doc this record was built from"
+   },
+   "wyrmwraith": {
+    "name": "Wyrmwraith",
+    "status": "doc",
+    "docId": "creature-family-662",
+    "how": "importer:the doc this record was built from"
+   },
+   "blackfrost-dead": {
+    "name": "Blackfrost Dead",
+    "status": "doc",
+    "docId": "creature-family-664",
+    "how": "importer:the doc this record was built from"
+   },
+   "elder-thing": {
+    "name": "Elder Thing",
+    "status": "doc",
+    "docId": "creature-family-665",
+    "how": "importer:the doc this record was built from"
+   },
+   "gorga": {
+    "name": "Gorga",
+    "status": "doc",
+    "docId": "creature-family-666",
+    "how": "importer:the doc this record was built from"
+   },
+   "skin-beetle": {
+    "name": "Skin Beetle",
+    "status": "doc",
+    "docId": "creature-family-667",
+    "how": "importer:the doc this record was built from"
+   },
+   "risen-runelord": {
+    "name": "Risen Runelord",
+    "status": "doc",
+    "docId": "creature-family-668",
+    "how": "importer:the doc this record was built from"
+   },
+   "hellbound-creature": {
+    "name": "Hellbound Creature",
+    "status": "doc",
+    "docId": "creature-family-670",
+    "how": "importer:the doc this record was built from"
+   },
+   "wraith": {
+    "name": "Wraith",
+    "status": "doc",
+    "docId": "creature-family-671",
+    "how": "importer:the doc this record was built from"
+   },
+   "wyrwood": {
+    "name": "Wyrwood",
+    "status": "doc",
+    "docId": "creature-family-672",
+    "how": "importer:the doc this record was built from"
+   },
+   "agathion": {
+    "name": "Agathion",
+    "status": "doc",
+    "docId": "creature-family-674",
+    "how": "importer:the doc this record was built from"
+   },
+   "nindoru": {
+    "name": "Nindoru",
+    "status": "doc",
+    "docId": "creature-family-676",
+    "how": "importer:the doc this record was built from"
+   },
+   "noppera-bo": {
+    "name": "Noppera-bo",
+    "status": "doc",
+    "docId": "creature-family-677",
+    "how": "importer:the doc this record was built from"
+   },
+   "thatchling": {
+    "name": "Thatchling",
+    "status": "doc",
+    "docId": "creature-family-678",
+    "how": "importer:the doc this record was built from"
+   },
+   "hellbreaker-troops": {
+    "name": "Hellbreaker Troops",
+    "status": "doc",
+    "docId": "creature-family-679",
+    "how": "importer:the doc this record was built from"
+   },
+   "sarcovalt": {
+    "name": "Sarcovalt",
+    "status": "doc",
+    "docId": "creature-family-680",
+    "how": "importer:the doc this record was built from"
+   },
+   "fumecrux": {
+    "name": "Fumecrux",
+    "status": "doc",
+    "docId": "creature-family-681",
+    "how": "importer:the doc this record was built from"
+   },
+   "hellcrown": {
+    "name": "Hellcrown",
+    "status": "doc",
+    "docId": "creature-family-682",
+    "how": "importer:the doc this record was built from"
+   },
+   "skeletal-hellknight": {
+    "name": "Skeletal Hellknight",
+    "status": "doc",
+    "docId": "creature-family-683",
+    "how": "importer:the doc this record was built from"
+   },
+   "arch-of-aroden-troops": {
+    "name": "Arch of Aroden Troops",
+    "status": "doc",
+    "docId": "creature-family-684",
+    "how": "importer:the doc this record was built from"
+   },
+   "aspodean-wall-troops": {
+    "name": "Aspodean Wall Troops",
+    "status": "doc",
+    "docId": "creature-family-685",
+    "how": "importer:the doc this record was built from"
+   },
+   "fangwood-troops": {
+    "name": "Fangwood Troops",
+    "status": "doc",
+    "docId": "creature-family-686",
+    "how": "importer:the doc this record was built from"
+   },
+   "troops-in-isger": {
+    "name": "Troops in Isger",
+    "status": "doc",
+    "docId": "creature-family-687",
+    "how": "importer:the doc this record was built from"
+   },
+   "troops-in-nidal": {
+    "name": "Troops in Nidal",
+    "status": "doc",
+    "docId": "creature-family-688",
+    "how": "importer:the doc this record was built from"
+   },
+   "thassilonian-sentinel": {
+    "name": "Thassilonian Sentinel",
+    "status": "doc",
+    "docId": "creature-family-689",
+    "how": "importer:the doc this record was built from"
+   },
+   "assist-pantheon": {
+    "name": "Assist Pantheon",
+    "status": "doc",
+    "docId": "cult-activity-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "create-wonders": {
+    "name": "Create Wonders",
+    "status": "doc",
+    "docId": "cult-activity-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "oversee-rites": {
+    "name": "Oversee Rites",
+    "status": "doc",
+    "docId": "cult-activity-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "recruit-adherents": {
+    "name": "Recruit Adherents",
+    "status": "doc",
+    "docId": "cult-activity-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "teach-doctrine": {
+    "name": "Teach Doctrine",
+    "status": "doc",
+    "docId": "cult-activity-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "provarion": {
+    "name": "Provarion",
+    "status": "doc",
+    "docId": "vehicle-151",
+    "how": "importer:the doc this record was built from"
+   },
+   "infantry-army": {
+    "name": "Infantry Army",
+    "status": "doc",
+    "docId": "warfare-army-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "greengripe-bombardiers": {
+    "name": "Greengripe Bombardiers",
+    "status": "doc",
+    "docId": "warfare-army-12",
+    "how": "importer:the doc this record was built from"
+   },
+   "lizardfolk-defenders": {
+    "name": "Lizardfolk Defenders",
+    "status": "doc",
+    "docId": "warfare-army-13",
+    "how": "importer:the doc this record was built from"
+   },
+   "mbotuu-frog-riders": {
+    "name": "M'Botuu Frog Riders",
+    "status": "doc",
+    "docId": "warfare-army-14",
+    "how": "importer:the doc this record was built from"
+   },
+   "nomen-scouts": {
+    "name": "Nomen Scouts",
+    "status": "doc",
+    "docId": "warfare-army-15",
+    "how": "importer:the doc this record was built from"
+   },
+   "sootscale-warriors": {
+    "name": "Sootscale Warriors",
+    "status": "doc",
+    "docId": "warfare-army-16",
+    "how": "importer:the doc this record was built from"
+   },
+   "tiger-lord-berserkers": {
+    "name": "Tiger Lord Berserkers",
+    "status": "doc",
+    "docId": "warfare-army-17",
+    "how": "importer:the doc this record was built from"
+   },
+   "tok-nikrat-scouts": {
+    "name": "Tok-Nikrat Scouts",
+    "status": "doc",
+    "docId": "warfare-army-18",
+    "how": "importer:the doc this record was built from"
+   },
+   "cavalry": {
+    "name": "Cavalry",
+    "status": "doc",
+    "docId": "warfare-army-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "skirmishers": {
+    "name": "Skirmishers",
+    "status": "doc",
+    "docId": "warfare-army-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "siege-engines": {
+    "name": "Siege Engines",
+    "status": "doc",
+    "docId": "warfare-army-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "ambush": {
+    "name": "Ambush",
+    "status": "doc",
+    "docId": "warfare-tactic-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "focused-devotion": {
+    "name": "Focused Devotion",
+    "status": "doc",
+    "docId": "warfare-tactic-10",
+    "how": "importer:the doc this record was built from"
+   },
+   "hold-the-line": {
+    "name": "Hold the Line",
+    "status": "doc",
+    "docId": "warfare-tactic-11",
+    "how": "importer:the doc this record was built from"
+   },
+   "increased-ammunition": {
+    "name": "Increased Ammunition",
+    "status": "doc",
+    "docId": "warfare-tactic-12",
+    "how": "importer:the doc this record was built from"
+   },
+   "keen-eyed": {
+    "name": "Keen Eyed",
+    "status": "doc",
+    "docId": "warfare-tactic-13",
+    "how": "importer:the doc this record was built from"
+   },
+   "keep-up-the-pressure": {
+    "name": "Keep up the Pressure",
+    "status": "doc",
+    "docId": "warfare-tactic-14",
+    "how": "importer:the doc this record was built from"
+   },
+   "live-off-the-land": {
+    "name": "Live off the Land",
+    "status": "doc",
+    "docId": "warfare-tactic-15",
+    "how": "importer:the doc this record was built from"
+   },
+   "low-light-vision-kingmaker-adventure-path": {
+    "name": "Low-Light Vision",
+    "status": "doc",
+    "docId": "warfare-tactic-16",
+    "how": "importer:the doc this record was built from"
+   },
+   "merciless": {
+    "name": "Merciless",
+    "status": "doc",
+    "docId": "warfare-tactic-17",
+    "how": "importer:the doc this record was built from"
+   },
+   "opening-salvo": {
+    "name": "Opening Salvo",
+    "status": "doc",
+    "docId": "warfare-tactic-18",
+    "how": "importer:the doc this record was built from"
+   },
+   "reckless-flankers": {
+    "name": "Reckless Flankers",
+    "status": "doc",
+    "docId": "warfare-tactic-19",
+    "how": "importer:the doc this record was built from"
+   },
+   "bloodied-but-unbroken": {
+    "name": "Bloodied but Unbroken",
+    "status": "doc",
+    "docId": "warfare-tactic-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "sharpshooter": {
+    "name": "Sharpshooter",
+    "status": "doc",
+    "docId": "warfare-tactic-20",
+    "how": "importer:the doc this record was built from"
+   },
+   "toughened-soldiers": {
+    "name": "Toughened Soldiers",
+    "status": "doc",
+    "docId": "warfare-tactic-21",
+    "how": "importer:the doc this record was built from"
+   },
+   "cavalry-experts": {
+    "name": "Cavalry Experts",
+    "status": "doc",
+    "docId": "warfare-tactic-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "darkvision-kingmaker-adventure-path": {
+    "name": "Darkvision",
+    "status": "doc",
+    "docId": "warfare-tactic-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "defensive-tactics": {
+    "name": "Defensive Tactics",
+    "status": "doc",
+    "docId": "warfare-tactic-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "explosive-shot": {
+    "name": "Explosive Shot",
+    "status": "doc",
+    "docId": "warfare-tactic-6",
+    "how": "importer:the doc this record was built from"
+   },
+   "field-triage": {
+    "name": "Field Triage",
+    "status": "doc",
+    "docId": "warfare-tactic-7",
+    "how": "importer:the doc this record was built from"
+   },
+   "flaming-shot": {
+    "name": "Flaming Shot",
+    "status": "doc",
+    "docId": "warfare-tactic-8",
+    "how": "importer:the doc this record was built from"
+   },
+   "flexible-tactics": {
+    "name": "Flexible Tactics",
+    "status": "doc",
+    "docId": "warfare-tactic-9",
+    "how": "importer:the doc this record was built from"
+   },
+   "blizzard": {
+    "name": "Blizzard",
+    "status": "doc",
+    "docId": "weather-hazard-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "tornado": {
+    "name": "Tornado",
+    "status": "doc",
+    "docId": "weather-hazard-10",
+    "how": "importer:the doc this record was built from"
+   },
+   "wildfire": {
+    "name": "Wildfire",
+    "status": "doc",
+    "docId": "weather-hazard-11",
+    "how": "importer:the doc this record was built from"
+   },
+   "windstorm": {
+    "name": "Windstorm",
+    "status": "doc",
+    "docId": "weather-hazard-12",
+    "how": "importer:the doc this record was built from"
+   },
+   "cold-snap": {
+    "name": "Cold Snap",
+    "status": "doc",
+    "docId": "weather-hazard-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "flash-flood": {
+    "name": "Flash Flood",
+    "status": "doc",
+    "docId": "weather-hazard-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "fog": {
+    "name": "Fog",
+    "status": "doc",
+    "docId": "weather-hazard-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "hailstorm-severe": {
+    "name": "Hailstorm, Severe",
+    "status": "doc",
+    "docId": "weather-hazard-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "heavy-downpour": {
+    "name": "Heavy Downpour",
+    "status": "doc",
+    "docId": "weather-hazard-6",
+    "how": "importer:the doc this record was built from"
+   },
+   "subsidence": {
+    "name": "Subsidence",
+    "status": "doc",
+    "docId": "weather-hazard-7",
+    "how": "importer:the doc this record was built from"
+   },
+   "supernatural-storm": {
+    "name": "Supernatural Storm",
+    "status": "doc",
+    "docId": "weather-hazard-8",
+    "how": "importer:the doc this record was built from"
+   },
+   "thunderstorm": {
+    "name": "Thunderstorm",
+    "status": "doc",
+    "docId": "weather-hazard-9",
     "how": "importer:the doc this record was built from"
    }
   },

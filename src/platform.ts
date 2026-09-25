@@ -11,3 +11,17 @@ const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
 export const isMobilePlatform = /android|iphone|ipad|ipod/i.test(ua);
 /** The Tauri DESKTOP shell — the only place with an OS window to minimize/maximize/close. */
 export const isDesktopApp = isTauri && !isMobilePlatform;
+
+/** A `target="_blank"` anchor's click, for the Tauri shells: their WebView swallows the navigation, so
+ *  the URL goes to the OS through tauri-plugin-opener (the same route as UpdateNotice). In a browser
+ *  this does nothing and the anchor opens its tab. */
+export async function openExternal(e: { preventDefault: () => void }, url: string): Promise<void> {
+  if (!isTauri) return;
+  e.preventDefault();
+  try {
+    const { openUrl } = await import('@tauri-apps/plugin-opener');
+    await openUrl(url);
+  } catch {
+    window.open(url, '_blank', 'noreferrer');
+  }
+}

@@ -85,6 +85,13 @@
 .ast-modal .ast-pop { border: none; }
 /* HH's Back/pin/close controls sit inline in the ast header */
 .ast-controls .info-back, .ast-controls .info-star, .ast-controls .picker-close { position: static; }
+/* The page's Archives of Nethys link, beside them — quiet like the star until hovered. */
+.ast-aon {
+  display: inline-flex; align-items: center; justify-content: center; font-size: 15px; padding: 2px 4px;
+  color: var(--app-text-faint); border-radius: var(--app-radius-sm); text-decoration: none;
+}
+.ast-aon:hover, .ast-aon:focus-visible { color: var(--app-accent); }
+@media (max-width: 720px) { .ast-aon { min-width: 40px; min-height: 40px; } }
 
 .ast-traits { display: flex; flex-wrap: wrap; gap: 5px; padding: 10px 13px 2px; }
 .ast-tr {

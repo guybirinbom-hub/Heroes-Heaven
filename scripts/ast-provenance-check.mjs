@@ -54,7 +54,7 @@ if (!buckets.length) {
 
 const rows = [];
 const bad = [];
-let unstampedBuckets = 0, parentOnly = 0, authored = 0, prefix = 0;
+let unstampedBuckets = 0, parentOnly = 0, authored = 0, prefix = 0, unaddressed = 0;
 
 for (const bucket of buckets) {
   const tree = JSON.parse(gunzipSync(readFileSync(join(AST_DIR, `${bucket}.json.gz`))).toString('utf8'));
@@ -63,6 +63,14 @@ for (const bucket of buckets) {
 
   const stamped = Object.values(tree).filter((p) => p && typeof p === 'object' && p.aon).length;
   let checked = 0, ok = 0, pre = 0, missing = 0, wrong = 0;
+  // …and every stamped page carries its Archives address (scripts/stamp-ast-urls.mjs, the last step of
+  // `npm run data`): the popup's Archives link. A bucket rewritten after that step has lost them.
+  for (const [slug, page] of Object.entries(tree)) {
+    if (page && typeof page === 'object' && page.aon && !/^\/\w+\.aspx/.test(String(page.url ?? ''))) {
+      unaddressed++;
+      if (bad.length < 4000) bad.push(`${bucket}/${slug}  page carries no Archives address (url) — run node scripts/stamp-ast-urls.mjs`);
+    }
+  }
 
   for (const [slug, rec] of Object.entries(recs)) {
     if (!rec || typeof rec !== 'object') continue;
@@ -102,6 +110,7 @@ for (const r of rows.sort((a, b) => b.wrong + b.missing - (a.wrong + a.missing) 
 console.log(`totals: ${t('checked')} record page(s) checked — ${t('ok')} on their own document, ${prefix} on its base page, `
   + `${t('missing')} unstamped, ${t('wrong')} WRONG.`);
 console.log(`(not in scope: ${parentOnly} record(s) stamped aonParentId — a section of a bigger page; ${authored} authored.)`);
+console.log(`${unaddressed} stamped page(s) without their Archives address.`);
 if (unstampedBuckets) console.log(`(${unstampedBuckets} bucket(s) carry no provenance at all — they predate the stamp and were not checked.)`);
 
 if (bad.length) {

@@ -24,7 +24,7 @@ export interface AstNode {
   /** merged table cells — 288 colspan and 62 rowspan ship, mostly in the class advancement tables */
   colspan?: string | number;
   rowspan?: string | number;
-  /** trait chip label / url */
+  /** trait chip label / url — and, on a page's root, its Archives address (scripts/stamp-ast-urls.mjs) */
   label?: string;
   url?: string;
 }

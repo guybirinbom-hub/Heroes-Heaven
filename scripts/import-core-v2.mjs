@@ -22,6 +22,10 @@ import { aonFacets, backgroundFacets, packOf, fillFrequencyCounters, prerequisit
 import { loadLivePages, liveEdition } from './lib/live-pages.mjs';
 import { buildReprintMap, repointDoc } from './lib/reprint.mjs';
 import { creationPlan, subclassLink, ancestryOf, appendSubclassOptions } from './lib/player-create.mjs';
+import {
+  BESTIARY_CATEGORIES, LABELLED_BUCKETS, REFERENCE, asPage as archivePage, createBucket, creationPlan as archivePlan, loadPages, namesBook, nonPlayerCategories, parentPageOf,
+  recordKey,
+} from './lib/archive-coverage.mjs';
 
 const DATA = 'C:/trying ai 2/hh-data-export/without-images/data';
 const OUT = 'public/core.json';
@@ -720,6 +724,10 @@ const shippedDesc = existsSync(SHIPPED_DESC) ? JSON.parse(readFileSync(SHIPPED_D
  *  leaves them to step 4, and step 4's rule does not count them as a page's presence. */
 const PLAYER_CREATED = 'scripts/migration/out/player-created.json';
 const prevPlayerCreated = existsSync(PLAYER_CREATED) ? JSON.parse(readFileSync(PLAYER_CREATED, 'utf8')) : {};
+/** …and the records step 5 created on the last run (scripts/migration/out/archive-created.json), for
+ *  the same two reasons. */
+const ARCHIVE_CREATED = 'scripts/migration/out/archive-created.json';
+const prevArchiveCreated = existsSync(ARCHIVE_CREATED) ? JSON.parse(readFileSync(ARCHIVE_CREATED, 'utf8')) : {};
 /** The record as it last SHIPPED, prose included — the two files rejoined. */
 const shippedFull = (bucket, s) => {
   const was = shippedCore[bucket]?.[s];
@@ -930,7 +938,7 @@ for (const bucket of AON_BUCKETS) {
      * stopped making the Player Core 2 record instead. Known by the last run's list, and by step 4's
      * own key shape `<page slug>-<book slug>` (a list that no longer names it cannot recall it; the
      * LEFTOVER check in scripts/player-coverage-check.mjs measured that shape on no other record). */
-    if (prevPlayerCreated[bucket]?.[s]) continue;
+    if (prevPlayerCreated[bucket]?.[s] || prevArchiveCreated[bucket]?.[s]) continue;
     const was = shippedFull(bucket, s);
     const d = was?.aonId ? docById.get(String(was.aonId)) : null;
     if (!d) continue;
@@ -1048,6 +1056,122 @@ const playerCreated = {}; // bucket -> key -> { doc, classId?, groupId? }
   const n = Object.values(playerCreated).reduce((a, m) => a + Object.keys(m).length, 0);
   console.log(`player pages created: ${n} (${Object.entries(playerCreated).map(([b, m]) => `${b} ${Object.keys(m).length}`).join(', ') || 'none'})`);
   if (unmade.length) console.warn(`!! ${unmade.length} missing player page(s) NOT created — scripts/player-coverage-check.mjs will fail on them:\n  ${unmade.join('\n  ')}`);
+}
+
+/*
+ * 5. EVERY OTHER PAGE NO SEARCHABLE RECORD ANSWERS FOR BECOMES A RECORD (owner, 2026-09-24: "every record
+ * of PF2e needs to be accessible to the GM in the tracker's search").
+ *
+ * Which pages: exactly those scripts/archive-coverage-check.mjs would call MISSING among the non-player
+ * categories — the rule in scripts/lib/archive-coverage.mjs, newest printing only, never an AoN-hidden
+ * page, a nameless stub, an allow-listed page or a bestiary kind (creatures and hazards are the tracker's
+ * public/data files). Presence is read off what the Search will reach: the last chain's artefact AND this
+ * run's records by the page each was built from (usedDocs), minus what this step made last time.
+ *
+ * Where: a kind with a glossary bucket (rules, sidebar, categoryPage, disease, …) gets its record there,
+ * in that bucket's shape plus the book — the reason the page is missing is almost always that another
+ * page of its name holds the slug, and the book is what tells the two apart in the Search. Every other
+ * kind — no bucket at all (article, class-sample, creature-family, …) or a bucket a picker reads
+ * (actions, vehicles) — goes to the ONE plain bucket `reference`: { id, name, kind (the Archives
+ * category), source.book, level?, traits?, rarity?, edition }, aonId by the usual stamp. No plain
+ * description: the page's display tree IS its text, written to public/ast/<bucket>.json.gz below and
+ * fetched only when the popup opens (the phone rule — nothing here grows core-descriptions.json).
+ *
+ * Every created record also carries `parentPage` when the Archives file the page under another one
+ * (parentPageOf), and its book page (`printedPage`): a book prints twelve "Key Terms" sidebars, one per
+ * class, and two "Backgrounds" rules pages in one chapter, and the GM Search's detail line
+ * (src/integration/hostSearchRecords.ts) is the only thing that tells those rows apart.
+ */
+// The name of the document that OWNS a url (`class-2` for /Classes.aspx?ID=2 — not the sidebars and
+// class features printed on that page, which carry the same url).
+const pageNameAt = (url) => {
+  const id = /[?&]ID=(\d+)/i.exec(String(url ?? ''))?.[1];
+  const own = id ? (byUrl.get(String(url).toLowerCase()) ?? []).find((d) => d.endsWith(`-${id}`)) : null;
+  return own ? String(docById.get(own)?.name ?? '').trim() : '';
+};
+/* The book a step-5 row names is its page's own Source line, spelt the app's way only where the app's
+ * spelling names that same book and printing (namesBook): book-names.json files a Bestiary 3 creature
+ * family under Monster Core 2, and the Search row is what tells the GM which page it opens. These
+ * buckets feed no source filter (src/rules/sources.ts CHOOSABLE_SOURCE_MAPS). */
+const pageBook = (book) => {
+  const b = String(book ?? '').trim();
+  const hh = mapBook(b);
+  return !hh || namesBook(hh, b) ? hh : /^Pathfinder /i.test(b) ? b : `Pathfinder ${b}`;
+};
+const archiveCreated = {}; // bucket -> key -> { doc }
+const archivePages = new Map(); // doc id -> page, display tree kept
+{
+  const ALLOW = 'scripts/data/archive-coverage-allow.json';
+  const allow = existsSync(ALLOW) ? JSON.parse(readFileSync(ALLOW, 'utf8')) : {};
+  const cats = nonPlayerCategories(DATA).filter((c) => !BESTIARY_CATEGORIES.has(c));
+  for (const [id, d] of docById) if (cats.includes(d.category)) archivePages.set(id, archivePage(d, true));
+  // The categories the load loop above skips (REF_SKIP) are read here, and only these.
+  for (const [id, p] of loadPages(DATA, cats.filter((c) => REF_SKIP.has(c)), true)) archivePages.set(id, p);
+  const view = {};
+  for (const [b, rows] of Object.entries(shippedCore)) if (rows && typeof rows === 'object' && !Array.isArray(rows)) view[b] = { ...rows };
+  for (const [b, rows] of Object.entries(db)) {
+    for (const [k, r] of Object.entries(rows ?? {})) {
+      if (r?.name) (view[b] ??= {})[`${k}#this-run`] = { name: r.name, source: r.source, aonId: usedDocs[b]?.[k] ?? r.aonId };
+    }
+  }
+  const skipKeys = new Set(Object.entries(prevArchiveCreated).flatMap(([b, m]) => Object.keys(m ?? {}).flatMap((k) => [`${b}/${k}`, `${b}/${k}#this-run`])));
+  for (const page of archivePlan({ pages: archivePages, core: view, desc: shippedDesc, allow, skipKeys })) {
+    const bucket = createBucket(page.category, db);
+    const map = (db[bucket] ||= {});
+    const key = recordKey(page, (k) => !!map[k]);
+    const traits = normTraits(page.traits);
+    const book = pageBook(page.book);
+    const parentPage = parentPageOf(page, pageNameAt);
+    map[key] = {
+      id: key, name: page.name,
+      ...(bucket === REFERENCE ? { kind: page.category } : {}),
+      ...(parentPage ? { parentPage } : {}),
+      ...(page.pg ? { printedPage: page.pg } : {}),
+      ...(traits.length ? { traits } : {}),
+      ...(RARITY.has(page.rarity) && page.rarity !== 'common' ? { rarity: page.rarity } : {}),
+      ...(bucket === REFERENCE && typeof page.level === 'number' ? { level: page.level } : {}),
+      ...(book ? { source: { book } } : {}),
+      edition: page.edition,
+    };
+    (usedDocs[bucket] ??= {})[key] = page.id;
+    (archiveCreated[bucket] ??= {})[key] = { doc: page.id };
+    /* A link to this page resolved to nothing, or to the record that holds its slug. It moves to the new
+     * record only from nothing, or from a record of ANOTHER name that merely shares the slug (High Seas
+     * "Attack!" answered Player Core's "Attack" links). A same-named record keeps its links: AoN auto-links
+     * "level" to Kingmaker's page and "hit points" to the Core Rulebook's, and the app has always sent
+     * them to its current record — moving them repointed 53,797 links (measured 2026-09-25). */
+    const was = idMap[page.id];
+    const wasName = was ? String(db[was.bucket]?.[was.slug]?.name ?? '').toLowerCase() : '';
+    if (!was || (was.bucket === bucket && wasName !== page.name.toLowerCase())) idMap[page.id] = { bucket, slug: key };
+  }
+  /*
+   * …and the records already there. A glossary record ships as {id, name, edition} (deriveReference: no
+   * book), so the Search listed it with no detail line — "Hero Points" led with a bare row that opens War
+   * of Immortals' alternate mythic rules, not the core rule, and "Scarlet Fever · DISEASE" named no book at
+   * all (2,519 bare rows in rules, sidebar, categoryPage and disease, measured 2026-09-25). Every record of
+   * LABELLED_BUCKETS carries what a created record carries: its book and the page it is filed under, off
+   * its own page. In any other bucket holding a created record, only one whose name another record of
+   * that bucket carries, or a created record of any bucket, does. scripts/archive-coverage-check.mjs
+   * (UNLABELLED) fails on one without its book.
+   */
+  const lower = (r) => (r?.name ? String(r.name).toLowerCase() : '');
+  const createdNames = new Set(Object.entries(archiveCreated).flatMap(([b, m]) => Object.keys(m).map((k) => lower(db[b][k]))));
+  for (const bucket of new Set([...LABELLED_BUCKETS, ...Object.keys(archiveCreated)])) {
+    const rows = db[bucket] ?? {};
+    const named = new Map();
+    for (const r of Object.values(rows)) named.set(lower(r), (named.get(lower(r)) ?? 0) + 1);
+    for (const [k, r] of Object.entries(rows)) {
+      if (!lower(r) || r.source?.book) continue;
+      if (!LABELLED_BUCKETS.has(bucket) && named.get(lower(r)) < 2 && !createdNames.has(lower(r))) continue;
+      const page = archivePages.get(String(usedDocs[bucket]?.[k] ?? r.aonId ?? ''));
+      if (!page) continue;
+      const book = pageBook(page.book);
+      const parentPage = parentPageOf(page, pageNameAt);
+      rows[k] ={ ...r, ...(parentPage ? { parentPage } : {}), ...(book ? { source: { ...r.source, book } } : {}) };
+    }
+  }
+  const n = Object.values(archiveCreated).reduce((a, m) => a + Object.keys(m).length, 0);
+  console.log(`archive pages created: ${n} (${Object.entries(archiveCreated).map(([b, m]) => `${b} ${Object.keys(m).length}`).join(', ') || 'none'})`);
 }
 
 // carry the hand-authored buckets over unchanged
@@ -1206,7 +1330,8 @@ const BUCKET_PRIORITY = ['conditions', 'actions', 'feats', 'classFeatures', 'spe
  */
 const BUCKET_LAST = ['grimFascination', 'fatalMethod', 'follower'];
 const astIndex = {}; // slug -> preferred bucket
-for (const bucket of AON_BUCKETS) {
+// `reference` holds step 5's records only, so it is in no category's pick — its trees come from the loop below.
+for (const bucket of [...AON_BUCKETS, REFERENCE]) {
   const newMap = bestByBucket[bucket] || {};
   const astOut = {};
   for (const s in newMap) {
@@ -1267,6 +1392,11 @@ for (const bucket of AON_BUCKETS) {
     const d = docById.get(doc);
     if (d?.ast) { astOut[s] = resolveAst(d.ast); astOut[s].aon = doc; }
   }
+  // …and step 5's, the same way (a suffixed key, or a category the load loop never reads).
+  for (const [s, { doc }] of Object.entries(archiveCreated[bucket] ?? {})) {
+    const d = archivePages.get(doc);
+    if (d?.ast) { astOut[s] = resolveAst(d.ast); astOut[s].aon = doc; }
+  }
   const json = JSON.stringify(astOut);
   writeFileSync('public/ast/' + bucket + '.json', json);
   // Ship the GZIPPED bucket (the raw JSON is far too large for static-host per-file limits — items is
@@ -1287,6 +1417,7 @@ for (const bucket of INDEX_ORDER) {
   }
 }
 for (const [bucket, m] of Object.entries(playerCreated)) for (const s of Object.keys(m)) if (!(s in astIndex)) astIndex[s] = bucket;
+// Step 5's records are NOT indexed: they open by key only (scripts/lib/archive-coverage.mjs createdRefs).
 writeFileSync('public/ast-index.json', JSON.stringify(astIndex));
 
 // ------------------------------------------------------------------ write + report
@@ -1414,6 +1545,8 @@ try {
   // The records step 4 created: import-siege-and-gaps.mjs re-appends their class options after its own
   // backfill re-apply (see appendSubclassOptions).
   writeFileSync('scripts/migration/out/player-created.json', JSON.stringify(playerCreated, null, 1));
+  // …and step 5's, which the next run's step 5 does not count as a page's presence.
+  writeFileSync(ARCHIVE_CREATED, JSON.stringify(archiveCreated, null, 1));
   const n = Object.values(usedDocs).reduce((a, o) => a + Object.keys(o).length, 0);
   console.log(`recorded the source doc for ${n} records -> scripts/migration/out/used-docs.json`);
 } catch (e) {

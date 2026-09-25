@@ -14,8 +14,8 @@ export function PinStar({ node }: { node: DescNode }) {
     <button
       type="button"
       className={'info-star' + (pinned ? ' on' : '')}
-      title={pinned ? 'Remove from Pinned' : 'Favorite — add to Pinned'}
-      aria-label={pinned ? 'Remove from Pinned' : 'Add to Pinned'}
+      title={pinned ? `Remove from ${pin.where ?? 'Pinned'}` : `Favorite — add to ${pin.where ?? 'Pinned'}`}
+      aria-label={pinned ? `Remove from ${pin.where ?? 'Pinned'}` : `Add to ${pin.where ?? 'Pinned'}`}
       aria-pressed={pinned}
       onClick={(e) => {
         e.stopPropagation();

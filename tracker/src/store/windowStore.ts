@@ -4,7 +4,9 @@ import { create } from 'zustand'
 // reference popups) AND — since auto-linked creature mentions in prose became
 // clickable — a floating window / hover preview showing a compact creature card
 // (rendered by WinContent → CreatureCard).
-export type WinType = 'spell' | 'ritual' | 'condition' | 'trait' | 'action' | 'skill' | 'equipment' | 'glossary' | 'creature' | 'rule' | 'widget'
+// 'host' is a page of the HOST app (Heroes Heaven), ref "bucket:id", pinned to the GM screen from the
+// host's own description popup; its body is the host's (HostSearch.render). Standalone never makes one.
+export type WinType = 'spell' | 'ritual' | 'condition' | 'trait' | 'action' | 'skill' | 'equipment' | 'glossary' | 'creature' | 'rule' | 'widget' | 'host'
 
 /** One reference popup (a tab inside a floating window or a docked pane). */
 export interface PopupTab {

@@ -33,6 +33,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readBackfill, writeBackfill } from './lib/write-backfill.mjs';
 import { buildDocIndex, resolveDoc, linkIsPlausible } from './lib/aonid-categories.mjs';
+import { createdRefs } from './lib/archive-coverage.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const EXPORT = process.env.AON_EXPORT || 'C:/trying ai 2/hh-data-export/without-images/data';
@@ -162,13 +163,15 @@ if (perBucket.length) {
 if (!WRITE) { console.log('\nreport only — pass --write to apply.'); process.exit(0); }
 
 // The ast-index maps a bare slug to its preferred bucket. Additive only: re-pointing an existing slug
-// would move an unrelated record's popup to a different bucket.
+// would move an unrelated record's popup to a different bucket. The pages import-core-v2's step 5
+// created share these bucket files and are never indexed (they open by key — createdRefs).
 const indexPath = join(ROOT, 'public/ast-index.json');
 const index = existsSync(indexPath) ? JSON.parse(readFileSync(indexPath, 'utf8')) : {};
+const created = createdRefs(ROOT);
 let idxAdded = 0;
 for (const { bucket } of perBucket) {
   const ast = readAst(bucket);
-  for (const s of Object.keys(ast ?? {})) if (!(s in index)) { index[s] = bucket; idxAdded++; }
+  for (const s of Object.keys(ast ?? {})) if (!(s in index) && !created.has(`${bucket}:${s}`)) { index[s] = bucket; idxAdded++; }
 }
 const orderedIndex = {};
 for (const s of Object.keys(index).sort()) orderedIndex[s] = index[s];

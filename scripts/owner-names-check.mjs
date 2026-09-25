@@ -29,8 +29,12 @@
  * substring) is not counted as a hit.
  *
  * SCOPE — `git ls-files` (tracked files only; nothing untracked or gitignored is ever read),
- * skipping node_modules, files over 5 MB, and anything that looks binary (a NUL byte in the first
- * 8 KB read).
+ * skipping node_modules. Every file is read whole, whatever its size, and a `.gz` is read
+ * decompressed: until 2026-09-25 this skipped files over 5 MB and anything with a NUL byte, which
+ * left the data the app ships unread — public/core.json, core-descriptions.json and every
+ * public/ast/*.json.gz page tree — while the last line still said they were "checked". A file that
+ * is not UTF-8 text (an image, a font) is skipped, and the last line counts those by extension, so
+ * what was not read is always said.
  *
  * ENV OVERRIDES (the test uses these — it cannot spin up a git repo or commit a real character
  * name, so it points the script at two throwaway scratch files instead):
@@ -43,10 +47,10 @@ import { readFileSync, statSync, existsSync } from 'node:fs';
 import { join, dirname, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
+import { gunzipSync } from 'node:zlib';
 
 const ROOT = process.env.HH_ROOT || join(dirname(fileURLToPath(import.meta.url)), '..');
 const NAMES_FILE = process.env.HH_OWNER_NAMES || join(ROOT, 'work/owner-names.local.txt');
-const MAX_BYTES = 5 * 1024 * 1024;
 
 if (!existsSync(NAMES_FILE)) {
   console.log('owner-names-check: no local list, skipped');
@@ -93,34 +97,49 @@ if (process.env.HH_OWNER_FILES) {
 }
 
 const hits = [];
+const utf8 = new TextDecoder('utf-8', { fatal: true });
+let read = 0;
+const unread = { 'outside every name\'s paths': 0, 'not a file on disk': 0 };
+const notText = {}; // extension -> files skipped as not UTF-8 text
 for (const rel of files) {
   if (rel.includes('node_modules/')) continue;
   const relNorm = rel.replace(/\\/g, '/');
   // Names with a `paths:` scope are skipped outright for a file outside every one of their prefixes —
   // cheaper than reading the file, and it's most of the names once an ordinary-English-word entry exists.
   const applicable = entries.filter((e) => !e.paths.length || e.paths.some((p) => relNorm.startsWith(p)));
-  if (!applicable.length) continue;
+  if (!applicable.length) { unread['outside every name\'s paths']++; continue; }
   const abs = isAbsolute(rel) ? rel : join(ROOT, rel);
   let st;
-  try { st = statSync(abs); } catch { continue; }
-  if (!st.isFile() || st.size > MAX_BYTES) continue;
-  let buf;
-  try { buf = readFileSync(abs); } catch { continue; }
-  if (buf.subarray(0, 8192).includes(0)) continue; // looks binary — skip
-  const lines = buf.toString('utf8').split(/\r\n|\r|\n/);
+  try { st = statSync(abs); } catch { unread['not a file on disk']++; continue; }
+  if (!st.isFile()) { unread['not a file on disk']++; continue; }
+  let text;
+  try {
+    const buf = readFileSync(abs);
+    text = utf8.decode(/\.gz$/i.test(rel) ? gunzipSync(buf) : buf);
+  } catch {
+    const ext = /\.([^./\\]+)$/.exec(relNorm)?.[1]?.toLowerCase() ?? '(none)';
+    notText[ext] = (notText[ext] ?? 0) + 1;
+    continue;
+  }
+  read++;
+  const lines = text.split(/\r\n|\r|\n/);
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const lower = line.toLowerCase();
     for (const e of applicable) {
       if (!e.re.test(line)) continue;
+      const lower = line.toLowerCase();
       if (e.allow.some((a) => lower.includes(a))) continue;
       hits.push(`${rel}:${i + 1}: ${e.name}`);
     }
   }
 }
+const skipped = [
+  ...Object.entries(unread).filter(([, n]) => n).map(([why, n]) => `${n} ${why}`),
+  ...(Object.keys(notText).length ? [`not text: ${Object.entries(notText).sort().map(([x, n]) => `${n} .${x}`).join(', ')}`] : []),
+].join('; ');
 
 if (!hits.length) {
-  console.log(`owner-names-check: ${files.length} tracked file(s) checked, clean`);
+  console.log(`owner-names-check: ${read} of ${files.length} tracked file(s) read, clean${skipped ? ` (not read: ${skipped})` : ''}`);
   process.exit(0);
 }
 
