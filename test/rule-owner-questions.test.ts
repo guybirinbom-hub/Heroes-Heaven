@@ -274,6 +274,21 @@ describe('rule-owner-questions.mjs applies the desk pass', () => {
       expect(ANSWERED.has(n)).toBe(true);
     }
   });
+
+  /* A print-lane batch's parity file sits beside its packet (work/print-batch-P09-parity.json). The
+   * --reverdict scan once matched only wg-batch-NNN files, so a ruling on a print record was never
+   * re-verdicted; and `Number(doc.batch)` would have turned "P09" into null. */
+  it('--reverdict also reads a print-lane parity file and keeps its P-style batch', () => {
+    const root = fixture();
+    writeFileSync(path.join(root, 'print-batch-P09-parity.json'), `${JSON.stringify({
+      batch: 'P09',
+      records: ANSWERED_IDS.map((id) => ({ id, verdict: 'OWNER-QUEUED', evidence: 'awaiting his ruling' })),
+    }, null, 1)}\n`);
+    run(root, ['--reverdict', '--write']);
+    const rows = JSON.parse(readFileSync(path.join(root, 'out.json'), 'utf8')) as { batch: unknown; id: string }[];
+    expect(rows.map((r) => r.id).sort()).toEqual([...ANSWERED_IDS].sort());
+    for (const row of rows) expect(row.batch).toBe('P09');
+  });
 });
 
 describe('rule-owner-questions.mjs refuses rather than guesses', () => {

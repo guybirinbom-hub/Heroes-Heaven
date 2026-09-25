@@ -34,6 +34,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { batchFiles } from './lib/batch-paths.mjs';
 
 const argv = process.argv.slice(2);
 const flag = (k) => argv.includes(k);
@@ -46,9 +47,10 @@ const args = (k) => argv.flatMap((v, i) => (v === k ? [argv[i + 1] ?? ''] : []))
 const rawBatch = arg('--batch');
 if (!rawBatch) { console.error('usage: node scripts/wg-batch-close.mjs --batch NNN [--write] [--root dir] [--reverdict id=VERDICT --reason "..."]'); process.exit(2); }
 
-/** Numeric batches are zero-padded to three digits (029); print batches keep their P01-style id. */
-const TAG = /^\d+$/.test(rawBatch) ? String(Number(rawBatch)).padStart(3, '0') : rawBatch.toUpperCase();
-const BATCH = /^\d+$/.test(rawBatch) ? Number(rawBatch) : TAG;
+/* TAG is 029 / P01; BATCH is what the parity file's `batch` field carries. The lane (WG or print) and the
+ * paths beside the packet come from scripts/lib/batch-paths.mjs, the rule every parity writer follows. */
+const FILES = batchFiles(ROOT, rawBatch);
+const { tag: TAG, batch: BATCH } = FILES;
 
 const refusals = [];
 const notes = [];
@@ -64,9 +66,8 @@ const text = (rel) => {
 const READ_PATH = `work/.b${TAG}-read.json`;
 const SPECS_PATH = `work/.b${TAG}-specs.json`;
 const GAPS_PATH = `work/.b${TAG}-gaps.json`;
-const BATCH_PATH = `work/wg-batch-${TAG}.json`;
-const PARITY_PATH = `work/wg-batch-${TAG}-parity.json`;
-const RESIDUAL_PATH = `work/wg-batch-${TAG}-residual.json`;
+/* A print-lane batch's packet is work/print-batch-<TAG>.json and its parity/residual sit beside it. */
+const { packet: BATCH_PATH, parity: PARITY_PATH, residual: RESIDUAL_PATH } = FILES;
 const QUESTIONS_PATH = 'work/owner-questions.json';
 const NUMBERING_PATH = 'work/rulings-numbering.json';
 /** The comparers whose settle registries ARE the instrument teach for a MATCHES verdict. */

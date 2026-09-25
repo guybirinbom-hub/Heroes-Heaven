@@ -40,6 +40,17 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
   or `--ids`; refuses if `work/wg-batch-NNN.json` exists unless `--recut`; records the sha256 of the
   id list, and every later stage asserts the batch file still hashes to it. Records the batch-start
   commit sha for the flip audit.
+  PRINT LANE (`--print`, 2026-09-25): the batch file IS the print packet `work/print-batch-PNN.json`,
+  built beforehand by `scripts/print-batch.mjs` (`--ids "bucket/id,…"` or `--bucket … --maxLevel …`), and
+  every derived artefact (`-catalogue`, `-parity`, `-residual`) sits beside it. The cut selects nothing:
+  it refuses `--ids` / `--count` / `--max-level`, refuses a missing packet (naming the print-batch.mjs
+  command), a packet record that names no `public/core.json` record, and a bare id shared by two
+  buckets (every later stage keys on the bare id); then it writes the field catalogue beside the packet
+  and pins `work/.bPNN-cut.json` (`print: true`, the packet's ids, `batchSha` = the packet's sha,
+  `predicate: { print: true, packet }`, `startSha`) plus the open marker, exactly as the WG cut does.
+  The packet exists by design, so the re-cut guard is on the cut record (`--recut`). A stage run with the
+  other lane's flag than the cut record's `print` refuses. WHY: the first print run (P02) ignored its
+  60-record packet and cut 40 unrelated WG-lane ids into `work/wg-batch-P02.json`.
 - `baseline` — parity dump, wg-values / wg-identity / wg-casting, wg-diff scoped to the batch ids
   (wg-diff has no `--batch`; intersect its `--out` dump), the experience sweep, the gate; copies the
   comparer dumps to `work/.bNNN-baseline/` so the close stage can diff "what went quiet".
@@ -80,7 +91,13 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
   `.bNNN-read.json` + the manifest: `FIXED` requires a cited row / code edit / named test for that
   finding id, `MATCHES` requires a file:symbol or an instrument teach, `OWNER-QUEUED` requires the
   desk `n`; merges — never drops or overwrites an existing verdict; refuses on a batch whose commit
-  already exists (`git log --grep "parity batch NNN"`). The two files leave `.gitignore`
+  already exists (`git log --grep "parity batch NNN"`). A print-lane batch (its cut record says
+  `print: true`) reads `work/print-batch-PNN.json` and writes `work/print-batch-PNN-parity.json` /
+  `-residual.json` beside it; `wg-batch-commit.mjs` stages either lane's pair. The lane rule lives in
+  `scripts/lib/batch-paths.mjs` (the cut record; with none, a print packet or print parity file on disk),
+  and every later parity writer follows it: `record-parity-verdict.mjs`, `record-parity-batch.mjs`,
+  `parse-parity-out.mjs`, and `rule-owner-questions.mjs --reverdict` reads both lanes' parity files.
+  The two files leave `.gitignore`
   (`!work/wg-batch-*-parity.json`, `!work/wg-batch-*-residual.json`) so a bad write shows in a diff.
   Also diffs the baseline comparer dumps against fresh ones: every record that went quiet must be in
   this batch or individually cited in the digest.
@@ -152,9 +169,12 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
 ## C. One saved workflow — `.claude/workflows/wg-batch.js`
 
 `Workflow({ name: 'wg-batch', args: { batch: 'NNN', count?: N, maxLevel?: L, ids?: 'a,b', print?: true } })`.
+`print: true` takes no `count` / `maxLevel` / `ids` (the workflow throws): the packet
+`work/print-batch-PNN.json` is the cut and must exist before launch.
 All agents Opus; effort high except the runner (low). Stages:
 
-1. runner: driver `cut` + `baseline`; returns the run.json tail.
+1. runner: driver `cut` + `baseline`; returns the run.json tail. In the print lane the cut command
+   carries no selection flag (`--stage cut --print`).
 2. readers (slices) → read-verifiers (adversarial, default REFUTED) — the batch-29 prompts.
    `print: true` drops the THEIRS step and the gates that need it, and the digest SAYS SO (the same
    green report must not stand for both lanes).
@@ -209,7 +229,8 @@ create-row correction or row removal that needs `npm run data`). Commit through
    unnumbered entries took 122–126), so the next question is #127.
 2. Run the saved workflow on batch 030 (the next level-8 slice, `count` small) with Fable reading only
    the digest; fix the closer checklist from what it needed.
-3. Then the print-read lane with `print: true`.
+3. Then the print-read lane with `print: true`: first `node scripts/print-batch.mjs … --out
+   work/print-batch-PNN.json`, then the workflow with `{ batch: 'PNN', print: true }` and nothing else.
 
 ## What stays with Fable
 

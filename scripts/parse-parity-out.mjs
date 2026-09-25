@@ -15,6 +15,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { batchFiles } from './lib/batch-paths.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = process.argv[2];
@@ -58,10 +59,11 @@ for (const r of results) {
   (byBatch[r.batch] ??= []).push({ id: r.id, verdict: v, evidence: String(r.evidence ?? '').slice(0, 600) });
 }
 
-for (const [batch, records] of Object.entries(byBatch)) {
-  const path = `work/wg-batch-${batch}-parity.json`;
+for (const [raw, records] of Object.entries(byBatch)) {
+  /* A print batch (P02) routes to its own parity file beside the packet — scripts/lib/batch-paths.mjs. */
+  const { parity: path, batch } = batchFiles(ROOT, raw);
   console.log(`  ${path}: ${records.length} settled verdict(s)`);
-  if (WRITE) writeFileSync(join(ROOT, path), JSON.stringify({ batch: Number(batch), records }, null, 1) + '\n');
+  if (WRITE) writeFileSync(join(ROOT, path), JSON.stringify({ batch, records }, null, 1) + '\n');
 }
 
 if ((j.confirmed ?? []).length) {

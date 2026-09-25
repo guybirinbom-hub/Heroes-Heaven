@@ -95,6 +95,24 @@ describe('wg-batch-close derives verdicts from evidence', () => {
     rmSync(root, { recursive: true, force: true });
   });
 
+  /* The print lane's packet is its batch file (the driver's print cut, 2026-09-25): a batch whose cut
+   * record says print:true is read from work/print-batch-<TAG>.json and closed beside it. */
+  it('a print-lane batch reads work/print-batch-900.json and writes its parity + residual beside it', () => {
+    const root = fixture({
+      'work/wg-batch-900.json': null,
+      'work/print-batch-900.json': [{ bucket: 'items', id: 'alpha' }, { bucket: 'items', id: 'beta' }, { bucket: 'items', id: 'gamma' }],
+      'work/.b900-cut.json': { batch: '900', print: true, ids: ['alpha', 'beta', 'gamma'] },
+      'work/.b900-report-items.txt': 'beta#two — settled: taught the VALUES comparer that beta is a table lift\n',
+    });
+    const r = close(root, '--batch', '900', '--write');
+    expect(r.code, r.out).toBe(0);
+    const parity = JSON.parse(readFileSync(join(root, 'work/print-batch-900-parity.json'), 'utf8'));
+    expect(parity.records.map((v: { id: string }) => v.id).sort()).toEqual(['alpha', 'beta', 'gamma']);
+    expect(existsSync(join(root, 'work/print-batch-900-residual.json'))).toBe(true);
+    expect(existsSync(join(root, 'work/wg-batch-900-parity.json'))).toBe(false);
+    rmSync(root, { recursive: true, force: true });
+  });
+
   it('a staged test naming the finding id is a citation on its own', () => {
     const root = fixture({
       'work/.b900-specs.json': [{ file: 'work/.b900-rows-items.json', kind: 'rows', family: 'items', stage: ['test/beta.test.ts'] }],

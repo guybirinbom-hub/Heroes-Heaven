@@ -42,6 +42,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname, isAbsolute, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { appendQuestions } from './add-owner-question.mjs';
+import { batchValue } from './lib/batch-paths.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ARRAYS = ['open', 'deferred', 'ruled', 'authorisedExceptions'];
@@ -276,9 +277,15 @@ if (REVERDICT) {
   const work = dirname(DESK);
   const idOf = new Map();
   for (const a of ARRAYS) for (const e of desk[a]) if (e.id) idOf.set(e.id, Number(e.n));
-  const files = existsSync(work) ? readdirSync(work).filter((f) => /^wg-batch-\d+-parity\.json$/.test(f)).sort() : [];
+  /* Both lanes: a print batch's parity file sits beside its packet, work/print-batch-<TAG>-parity.json.
+   * The batch comes from the FILE NAME, the key record-parity-verdict.mjs routes the row back by
+   * (scripts/lib/batch-paths.mjs); `Number(doc.batch)` turned "P02" into null. */
+  const PARITY_RE = /^(?:wg-batch-(\d+)|print-batch-([0-9A-Z]+))-parity\.json$/;
+  const files = existsSync(work) ? readdirSync(work).filter((f) => PARITY_RE.test(f)).sort() : [];
   for (const f of files) {
     const doc = JSON.parse(readFileSync(join(work, f), 'utf8'));
+    const [, wgTag, printTag] = PARITY_RE.exec(f);
+    const batch = batchValue(wgTag ?? printTag);
     for (const r of doc.records ?? []) {
       if (r.verdict !== 'OWNER-QUEUED') continue;
       const n = idOf.get(r.id);
@@ -288,7 +295,7 @@ if (REVERDICT) {
        * about WHAT was ruled — so a short answer carries the head of his note with it. */
       const full = ans.answer.length < 40 && ans.note ? `${ans.answer} — ${ans.note}` : ans.answer;
       const short = full.length > 180 ? `${full.slice(0, 177)}...` : full;
-      rows.push({ batch: Number(doc.batch), id: r.id, evidence: `owner ruled ${ans.ruledOn} (#${n}): ${short}`, verdict: 'OWNER-RULED' });
+      rows.push({ batch, id: r.id, evidence: `owner ruled ${ans.ruledOn} (#${n}): ${short}`, verdict: 'OWNER-RULED' });
     }
   }
 }

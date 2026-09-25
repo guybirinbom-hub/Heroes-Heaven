@@ -25,6 +25,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { batchTag, batchFiles } from './lib/batch-paths.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WRITE = process.argv.includes('--write');
@@ -46,8 +47,8 @@ for (const f of findings) {
   if (f.verification && f.verification.upheld === false) { skipped.refuted++; continue; }
   const verdict = MAP[f.verdict];
   if (!verdict) { skipped[f.verdict] = (skipped[f.verdict] ?? 0) + 1; continue; }
-  const b = String(f.batch ?? '').padStart(3, '0');
-  if (!/^\d{3}$/.test(b)) { skipped['no-batch']++; continue; }
+  const b = batchTag(f.batch);
+  if (!/^(\d{3}|P\d+)$/.test(b)) { skipped['no-batch']++; continue; }
   /* The agent's own evidence IS the verdict's justification — kept verbatim rather than summarised,
    * with the finder's original verdict preserved so a later reader can tell MATCHES from
    * ALREADY-FIXED, which the gate's vocabulary collapses. */
@@ -57,9 +58,10 @@ for (const f of findings) {
 
 let total = 0;
 for (const [b, list] of Object.entries(byBatch)) {
-  const path = `work/wg-batch-${b}-parity.json`;
+  /* A print batch (P02) routes to its own parity file beside the packet — scripts/lib/batch-paths.mjs. */
+  const { parity: path, batch } = batchFiles(ROOT, b);
   const full = join(ROOT, path);
-  const doc = existsSync(full) ? JSON.parse(readFileSync(full, 'utf8')) : { batch: Number(b), records: [] };
+  const doc = existsSync(full) ? JSON.parse(readFileSync(full, 'utf8')) : { batch, records: [] };
   doc.records ??= [];
   let n = 0;
   for (const row of list) {

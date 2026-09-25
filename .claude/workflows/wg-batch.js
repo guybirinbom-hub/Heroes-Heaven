@@ -48,7 +48,12 @@ const DEFAULT_COUNT = 40
 // Above this, a family is split into chunks - see chunkFamilies().
 const CHUNK_MAX = 12
 
+// The print lane selects nothing at the cut: its packet (built beforehand by scripts/print-batch.mjs) IS
+// the cut, and the driver refuses --ids / --count / --max-level under --print. P02 (2026-09-25) was run
+// with the default --count 40 added here and cut 40 unrelated WG-lane records instead of its packet.
+if (PRINT && args && (args.ids || args.count || args.maxLevel)) throw new Error('wg-batch: print: true takes no ids / count / maxLevel - the packet ' + PACKET + ' is the cut; build it with node scripts/print-batch.mjs --ids ... --out ' + PACKET)
 const cutFlags = () => {
+  if (PRINT) return ''
   let f = ''
   if (args && args.ids) f += ' --ids ' + String(args.ids)
   if (args && args.count) f += ' --count ' + String(args.count)
@@ -183,7 +188,8 @@ const cut = await agent([
   NEVER,
   'Do exactly this, in order, from the repo root:',
   '1. node scripts/wg-batch-run.mjs --batch ' + BATCH + ' --stage cut' + cutFlags() + PRINT_FLAG,
-  (args && (args.count || args.ids)) ? '' : 'The --count ' + DEFAULT_COUNT + ' above is the workflow default, not a guess: batch 033 cut 50 records, produced 78 findings, overloaded one family and ended with a red gate. Run the command exactly as written.',
+  PRINT ? 'This is the print lane: the cut takes no selection flags because the packet ' + PACKET + ' (built beforehand by scripts/print-batch.mjs) IS the cut. Run the command exactly as written; if the driver refuses because the packet is missing, stop and report that refusal - never build or edit the packet yourself.'
+    : (args && (args.count || args.ids)) ? '' : 'The --count ' + DEFAULT_COUNT + ' above is the workflow default, not a guess: batch 033 cut 50 records, produced 78 findings, overloaded one family and ended with a red gate. Run the command exactly as written.',
   '2. node scripts/wg-batch-run.mjs --batch ' + BATCH + ' --stage baseline' + PRINT_FLAG,
   'The driver takes the heavy-job lock itself and waits - do not kill it because it is quiet. If a stage exits non-zero, do NOT retry it more than once and do not work around it: report ok:false and put the driver\'s own "next" line into stopped.',
   'Then read work/' + B + '-run.json and return, verbatim, the entries these two stages appended (the whole JSON objects, not a summary) as runJson.',
@@ -238,7 +244,7 @@ const READ_STEPS_WG = [
 
 const READ_STEPS_PRINT = [
   'This is the PRINT-READ lane: there is NO Wanderer\'s Guide side. Do NOT run wg-show.mjs and do not reason about their encoding at all. Do exactly two reads and compare:',
-  '1. OURS: the packet ' + PACKET + ' (read it) holds each record\'s printed text, our fields (ourFields) and the registries that mention it (ourRegistries). Then dump the full record from public/core.json (8 MB minified - never read it raw): node -e "const c=require(\'./public/core.json\');console.log(JSON.stringify(c[\'<bucket>\'][\'<id>\']))" and its description: node -e "const d=require(\'./public/core-descriptions.json\');console.log(JSON.stringify(d[\'<bucket>/<id>\']))".',
+  '1. OURS: the packet ' + PACKET + ' (read it, written by scripts/print-batch.mjs) holds each record\'s printed text (printed), our description (ourDescription, clipped at 4000 chars), our fields (ourFields) and, for a class feature, the classes whose table grants it (owners). It carries NO registry list: grep the record id in src/rules yourself. Then dump the full record from public/core.json (8 MB minified - never read it raw): node -e "const c=require(\'./public/core.json\');console.log(JSON.stringify(c[\'<bucket>\'][\'<id>\']))" and its description: node -e "const d=require(\'./public/core-descriptions.json\');console.log(JSON.stringify(d[\'<bucket>/<id>\']))".',
   '2. PRINT: the AoN mirror at ' + MIRROR + '\\<category>\\<aonId>.json where <aonId> is the record\'s own aonId field and <category> is that id without its trailing number. The markdown/text field is the printed text; the packet\'s printed field is the same text and is fine unless it looks truncated or the record has a table.',
 ].join('\n')
 
@@ -494,7 +500,7 @@ const CLOSER_PROMPT = [
   '6b. A teach line in work/' + B + '-report-<family>.txt must name the FINDING id, not just the record id: scripts/wg-batch-close.mjs derives MATCHES from exactly that, and a record-only line turns every sibling finding on that record into MATCHES as well. If a family report you inherit names only the record, fix the line and say so in your notes.',
   '7. Your own src/ or scripts/ edits are LISTED: return closerEdits[] as {file, why (quote the printed clause or the refusal you were fixing), test (the test file and the it( name that pins it)}. An edit with no test does not ship. AND every file you create or edit - the src/ edit, its test file, a settle you add - goes into the manifest work/' + B + '-specs.json: append its path to the stage[] of the family whose finding you were closing (re-read the file immediately before writing it, keep every entry). Batch 030\'s closer wrote test/batch030-closer.test.ts and never listed it, so the commit script did not stage it and the mutation-proof test for its settle stayed out of history until a later commit picked it up.',
   '8. The regate stage is blocking: a newly failing EARLIER-batch record needs a disposition line (fixed here / queued with its owner-question n / next batch) in your notes, and you may not settle an id outside batch ' + BATCH + '.',
-  '9. The close stage derives work/wg-batch-' + BATCH + '-parity.json and -residual.json from work/' + B + '-read.json plus the manifest - never hand-write them, never overwrite an existing verdict.',
+  '9. The close stage derives ' + PACKET.replace(/\.json$/, '-parity.json') + ' and -residual.json from work/' + B + '-read.json plus the manifest - never hand-write them, never overwrite an existing verdict.',
   '10. Write work/' + B + '-commit.txt: the commit message, at least 200 characters, saying what the batch changed (families, row count, code lanes), what it settled and why, what is queued for the owner, and what is deferred. It is read by scripts/wg-batch-commit.mjs, which you do NOT run - the verify stage\'s "next" line names that script because it is the NEXT step in the protocol, and that step is Fable\'s: she approves the commit. Running it would stage and commit this batch unapproved. You run no git write command and no commit script.',
   '11. Your notes are displayed but never load-bearing: keep them under 3000 characters and put every fact that matters into the run.json digest, the reports and the commit file instead.',
   '12. A RED GATE AT THE END IS NEVER ACCEPTABLE, and neither is a red item you describe as "not assigned to any family". Every red item ends this run BUILT (a lane that reaches a built character, a data row, or a comparer teach/settle with a mutation-proof test) or PARKED with an artefact - an entry in work/' + B + '-queue.json or a flaggedResidue line with a reason - and then --stage gate re-run. Batch 033 ended with the gate red and its reds called unassigned; that is the failure this rule exists to stop.',

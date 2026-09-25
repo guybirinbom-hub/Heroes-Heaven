@@ -24,7 +24,9 @@
  *   node scripts/wg-batch-run.mjs --batch 030 --stage cut --count 40 --max-level 8
  *   node scripts/wg-batch-run.mjs --batch 030 --stage baseline
  *   node scripts/wg-batch-run.mjs --batch 030 --stage all
- *   node scripts/wg-batch-run.mjs --batch P01 --stage apply --print     # the print-read lane
+ *   node scripts/wg-batch-run.mjs --batch P02 --stage cut --print       # the print-read lane: the packet
+ *                                                   work/print-batch-P02.json (scripts/print-batch.mjs) IS the cut
+ *   node scripts/wg-batch-run.mjs --batch P01 --stage apply --print
  *
  * Stages: cut | baseline | read-digest | apply | apply-digest | gaps | close | experience | gate |
  *         regate | suite | verify | all   (`all` = apply onward, stopping at the first failure)
@@ -59,7 +61,13 @@ const BATCH = /^\d+$/.test(rawBatch) ? rawBatch.padStart(3, '0') : rawBatch.toUp
 const PRINT = flag('--print');
 const RECUT = flag('--recut');
 
-const BATCH_FILE = `work/wg-batch-${BATCH}.json`;
+/* ONE PACKET FILE PER BATCH. The print lane's batch file IS its print packet (scripts/print-batch.mjs
+ * writes it), and every derived artefact (-catalogue / -parity / -residual) sits beside it. WHY: the
+ * first print run (P02, 2026-09-25) had this fixed at wg-batch-*, so `--stage cut --print` ignored the
+ * 60-record work/print-batch-P02.json, cut 40 unrelated WG-lane ids into work/wg-batch-P02.json and
+ * baselined those instead. */
+const BATCH_FILE = PRINT ? `work/print-batch-${BATCH}.json` : `work/wg-batch-${BATCH}.json`;
+const beside = (suffix) => BATCH_FILE.replace(/\.json$/, `-${suffix}.json`);
 const P = (s) => `work/.b${BATCH}-${s}`;
 const RUN_JSON = P('run.json');
 const RUN_LOG = P('run.log');
@@ -216,7 +224,59 @@ const constNumber = (src, name) => { const m = src.match(new RegExp(`\\bconst\\s
  * ================================================================================================= */
 
 /* ---- cut ---------------------------------------------------------------------------------------- */
+/**
+ * THE PRINT PACKET IS THE CUT. scripts/print-batch.mjs already chose the records (by bucket and level, or
+ * by --ids), so under --print this stage selects nothing: it checks the packet and pins it exactly as the
+ * WG cut pins its batch file. The packet exists by design, so the re-cut guard is on the cut RECORD.
+ */
+const PRINT_BUILD = `node scripts/print-batch.mjs --ids "bucket/id,bucket/id,…" --out ${BATCH_FILE}`;
+function stagePrintCut() {
+  const cutArgs = ['--ids', '--count', '--max-level'].filter(flag);
+  if (cutArgs.length) refuse(`${cutArgs.join(' / ')} under --print: the print packet is the cut — build it with ${PRINT_BUILD} (or --bucket B --maxLevel N --count N --skipDone), then run --stage cut --print with no selection flags`);
+  if (!has(BATCH_FILE)) refuse(`no ${BATCH_FILE} — the print packet is the cut; build it first with ${PRINT_BUILD}`);
+  if (cutRecord() && !RECUT) refuse(`${P('cut.json')} already exists — pass --recut to pin ${BATCH_FILE} again (a silent re-cut changes which records a worked batch names)`);
+  const packets = read(BATCH_FILE);
+  if (!Array.isArray(packets) || !packets.length) refuse(`${BATCH_FILE} is not a non-empty array of print-batch.mjs records — rebuild it with ${PRINT_BUILD}`);
+  const core = read('public/core.json');
+  const orphans = packets.filter((r) => !core[r?.bucket]?.[r?.id]).map((r) => `${r?.bucket}/${r?.id}`);
+  if (orphans.length) refuse(`${orphans.length} record(s) in ${BATCH_FILE} name no public/core.json record: ${orphans.slice(0, 12).join(', ')} — rebuild the packet with ${PRINT_BUILD}`);
+  /* Every later stage keys a record on its BARE id (batchIds(), the read findings, wg-batch-close.mjs),
+   * so two buckets sharing an id would merge into one record there. */
+  const ids = packets.map((r) => r.id);
+  const twice = [...new Set(ids.filter((id, i) => ids.indexOf(id) !== i))];
+  if (twice.length) refuse(`${twice.length} id(s) appear in more than one record of ${BATCH_FILE}: ${twice.slice(0, 12).join(', ')} — every later stage keys on the bare id; split them into two packets`);
+  /* The field catalogue wg-batch.mjs writes beside a WG packet ("does anything read this field?"), beside
+   * this one. A convenience for the readers, so a failure is reported, not fatal — as wg-batch.mjs does. */
+  const cat = node_('scripts/wg-field-catalogue.mjs', ['--json', beside('catalogue')]);
+  const catNote = cat.status === 0 ? `field catalogue ${beside('catalogue')}` : `NO field catalogue (wg-field-catalogue.mjs exited ${cat.status})`;
+  return recordCut(ids, { print: true, packet: BATCH_FILE }, [],
+    `cut ${packets.length} packet(s) from ${BATCH_FILE} — the print packet is the cut, nothing was selected; ${catNote}.`);
+}
+
+/** Pin the cut (ids, the batch file's sha, the start commit) and open the batch — both lanes. */
+function recordCut(ids, predicate, missing, lead) {
+  write(P('cut.json'), {
+    batch: BATCH, print: PRINT, cutAt: new Date().toISOString(),
+    ids, idsSha: shaText(ids.join(',')), batchSha: shaFile(BATCH_FILE),
+    predicate, missing,
+    startSha: gitSnap().head, // the batch-start commit, for the flip audit and the overlay-loss check
+  });
+  /* THE BATCH IS NOW OPEN (2026-09-11). A marker file, not a git hook: a hook is untracked and a fresh
+   * clone would not have it. While this file exists the batch has been cut and not committed, so any
+   * commit on top of the cut is a MID-BATCH commit — which is what runStage below prints loudly and what
+   * scripts/wg-batch-commit.mjs (the only thing that removes this file) is gated on. */
+  write(P('open'), `batch ${BATCH} was cut at ${new Date().toISOString()} from ${gitSnap().head}\n`
+    + 'It is OPEN until scripts/wg-batch-commit.mjs commits it (HH_ORCHESTRATOR=1, the orchestrator only).\n'
+    + 'While this file exists, a commit on top of that start commit is a mid-batch commit — the 2026-09-11 incident.\n');
+  return {
+    counts: { requested: ids.length, packets: Object.values(read(BATCH_FILE)).length, noPacket: missing.length },
+    digest: `${lead} predicate ${JSON.stringify(predicate)}. batch sha ${String(shaFile(BATCH_FILE)).slice(0, 12)}, start commit ${gitSnap().head.slice(0, 8)}.`,
+    next: 'node scripts/wg-batch-run.mjs --batch ' + BATCH + ' --stage baseline' + (PRINT ? ' --print' : ''),
+  };
+}
+
 async function stageCut() {
+  if (PRINT) return stagePrintCut();
   if (has(BATCH_FILE) && !RECUT) refuse(`${BATCH_FILE} already exists — pass --recut to cut it again (a silent re-cut changes which records a worked batch names)`);
   const idsArg = arg('--ids');
   const count = arg('--count');
@@ -255,24 +315,8 @@ async function stageCut() {
     if (over.length) refuse(`--max-level ${predicate.maxLevel} was asked for and ${over.length} cut record(s) are above it: ${over.slice(0, 8).join(', ')}`);
   }
 
-  write(P('cut.json'), {
-    batch: BATCH, print: PRINT, cutAt: new Date().toISOString(),
-    ids, idsSha: shaText(ids.join(',')), batchSha: shaFile(BATCH_FILE),
-    predicate, missing,
-    startSha: gitSnap().head, // the batch-start commit, for the flip audit and the overlay-loss check
-  });
-  /* THE BATCH IS NOW OPEN (2026-09-11). A marker file, not a git hook: a hook is untracked and a fresh
-   * clone would not have it. While this file exists the batch has been cut and not committed, so any
-   * commit on top of the cut is a MID-BATCH commit — which is what runStage below prints loudly and what
-   * scripts/wg-batch-commit.mjs (the only thing that removes this file) is gated on. */
-  write(P('open'), `batch ${BATCH} was cut at ${new Date().toISOString()} from ${gitSnap().head}\n`
-    + 'It is OPEN until scripts/wg-batch-commit.mjs commits it (HH_ORCHESTRATOR=1, the orchestrator only).\n'
-    + 'While this file exists, a commit on top of that start commit is a mid-batch commit — the 2026-09-11 incident.\n');
-  return {
-    counts: { requested: ids.length, packets: packets.length, noPacket: missing.length },
-    digest: `cut ${packets.length} packet(s) into ${BATCH_FILE} from ${ids.length} id(s)${missing.length ? `; no packet for ${missing.slice(0, 6).join(', ')}` : ''}. predicate ${JSON.stringify(predicate)}. batch sha ${String(shaFile(BATCH_FILE)).slice(0, 12)}, start commit ${gitSnap().head.slice(0, 8)}.`,
-    next: 'node scripts/wg-batch-run.mjs --batch ' + BATCH + ' --stage baseline',
-  };
+  return recordCut(ids, predicate, missing,
+    `cut ${packets.length} packet(s) into ${BATCH_FILE} from ${ids.length} id(s)${missing.length ? `; no packet for ${missing.slice(0, 6).join(', ')}` : ''}.`);
 }
 
 /* ---- baseline ----------------------------------------------------------------------------------- */
@@ -1096,8 +1140,8 @@ async function stageClose() {
 
   const ledger = regenerateTrustLedger();
 
-  const parity = readMaybe(`work/wg-batch-${BATCH}-parity.json`);
-  const residual = readMaybe(`work/wg-batch-${BATCH}-residual.json`);
+  const parity = readMaybe(beside('parity'));
+  const residual = readMaybe(beside('residual'));
   const counts = {};
   for (const v of parity?.records ?? []) counts[v.verdict] = (counts[v.verdict] ?? 0) + 1;
   return {
@@ -1243,7 +1287,7 @@ async function stageVerify() {
 const VERIFY_ALLOW = verifyChecks(readMaybe('package.json')).map((c) => c.key);
 
 const STAGES = {
-  cut: { allow: ['scripts/wg-next-batch-ids.mjs', 'scripts/wg-batch.mjs'], run: stageCut },
+  cut: { allow: ['scripts/wg-next-batch-ids.mjs', 'scripts/wg-batch.mjs', 'scripts/wg-field-catalogue.mjs'], run: stageCut },
   baseline: { allow: ['scripts/wg-parity-dump.mjs', 'scripts/wg-values.mjs', 'scripts/wg-identity.mjs', 'scripts/wg-diff.mjs', 'scripts/wg-experience.mjs', 'scripts/wg-batch-gate.mjs', 'npx jiti scripts/wg-casting.mjs --out work/.b' + BATCH + '-baseline/casting.json', ...VERIFY_ALLOW], run: stageBaseline },
   'read-digest': { allow: [], run: stageReadDigest },
   apply: { allow: ['scripts/apply-parity-fixes.mjs', 'scripts/apply-backfill-now.mjs'], run: stageApply },
@@ -1326,6 +1370,10 @@ async function runStage(stage) {
   let next = '';
   const refusals = [];
   try {
+    /* A batch runs in the lane it was cut in: the packet path and everything derived from it follow
+     * --print, so a stage run with the other lane's flag would read the other lane's files. */
+    const cut = cutRecord();
+    if (cut && !!cut.print !== PRINT) refuse(`batch ${BATCH} was cut ${cut.print ? 'WITH' : 'without'} --print (${P('cut.json')}) — run every stage of it ${cut.print ? 'with' : 'without'} --print`);
     const r = await withHeavyLock(`wg-batch-run ${BATCH} ${stage}`, () => STAGES[stage].run());
     ok = r.ok !== false;
     counts = r.counts ?? {};

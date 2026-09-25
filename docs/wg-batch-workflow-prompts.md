@@ -15,7 +15,10 @@ Everything below writes `NNN` for that id and `.bNNN` for the run-file prefix.
 
 **`count` defaults to 40** when neither `count` nor `ids` is given (`DEFAULT_COUNT`), and the runner prompt
 says why in the prompt itself: batch 033 cut 50, produced 78 findings, overloaded one family and ended
-with a red gate.
+with a red gate. **WG lane only.** With `print: true` the packet `work/print-batch-NNN.json` (built
+beforehand by `scripts/print-batch.mjs`) *is* the cut: `cutFlags()` returns nothing, no default count is
+added, and the script throws at launch if `print` is combined with `ids`, `count` or `maxLevel` (P02 on
+2026-09-25 got the default `--count 40` and cut 40 unrelated WG-lane records instead of its packet).
 
 ## Shape
 
@@ -115,8 +118,16 @@ Ported from the batch-29 apply workflow, generalised off batch 29:
 > You are the RUNNER for parity batch NNN (WG-COMPARISON lane / PRINT-READ lane). Repo:
 > `C:\trying ai 2\pf2e codex`. You run the driver and report; you author nothing.
 > [prohibitions]
-> Do exactly this, in order: 1. `node scripts/wg-batch-run.mjs --batch NNN --stage cut [--ids … | --count … --max-level …] [--print]`
+> Do exactly this, in order: 1. WG lane: `node scripts/wg-batch-run.mjs --batch NNN --stage cut [--ids …] [--count …] [--max-level …]`
+> (`--count 40` added when neither `ids` nor `count` was given); print lane:
+> `node scripts/wg-batch-run.mjs --batch NNN --stage cut --print`, with no selection flag — the driver
+> refuses `--ids` / `--count` / `--max-level` under `--print`.
 > 2. `node scripts/wg-batch-run.mjs --batch NNN --stage baseline [--print]`
+> WG lane with the default count: "The --count 40 above is the workflow default, not a guess: batch 033
+> cut 50 records, produced 78 findings, overloaded one family and ended with a red gate." Print lane
+> instead: "the cut takes no selection flags because the packet `work/print-batch-NNN.json` (built
+> beforehand by scripts/print-batch.mjs) IS the cut. … if the driver refuses because the packet is
+> missing, stop and report that refusal - never build or edit the packet yourself."
 > The driver takes the heavy-job lock itself and waits — do not kill it because it is quiet. If a stage
 > exits non-zero, do NOT retry more than once and do not work around it: report `ok:false` and put the
 > driver's own "next" line into `stopped`.
@@ -147,7 +158,12 @@ Three reads (WG lane):
    (category = the aonId without its trailing number).
 
 With `print: true` **step 2 is dropped entirely** ("Do NOT run wg-show.mjs and do not reason about their
-encoding at all"), the packet is `work/print-batch-NNN.json`, and only two reads happen.
+encoding at all") and only two reads happen. Step 1 changes too: the packet is
+`work/print-batch-NNN.json` (written by `scripts/print-batch.mjs`), which holds `printed`,
+`ourDescription` (clipped at 4000 chars), `ourFields` and, for a class feature, `owners` (the classes whose
+table grants it) — **no `ourRegistries` and no `theirEncoding`**. The prompt says so ("It carries NO
+registry list") and tells the reader to grep the record id in `src/rules` itself, then dump the record
+and description exactly as in the WG lane.
 
 Finding kinds — WG lane:
 
@@ -348,8 +364,10 @@ entry or gap line. Writes `work/.bNNN-verify-gaps.txt`.
    script never stages it (batch 030's closer test file was left out of the batch commit this way).
 8. `regate` is blocking: a newly failing earlier-batch record gets a disposition line (fixed here /
    queued with its owner-question `n` / next batch), and no id outside batch NNN may be settled.
-9. `close` **derives** `wg-batch-NNN-parity.json` / `-residual.json` — never hand-written, never
-   overwriting an existing verdict.
+9. `close` **derives** the parity / residual files beside the packet — `work/wg-batch-NNN-parity.json` /
+   `-residual.json` in the WG lane, `work/print-batch-NNN-parity.json` / `-residual.json` in the print
+   lane (the prompt builds the name from `PACKET`) — never hand-written, never overwriting an existing
+   verdict.
 10. Write `work/.bNNN-commit.txt`, ≥ 200 characters: what changed (families, row count, code lanes),
     what was settled and why, what is queued for the owner, what is deferred. `wg-batch-commit.mjs`
     reads it and the closer does **not** run it — the `verify` stage's `next` line names that script

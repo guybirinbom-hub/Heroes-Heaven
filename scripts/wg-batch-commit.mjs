@@ -118,7 +118,8 @@ const KEEP = [
    * reached history cannot be checked afterwards. Written once per family, then read, never rewritten. */
   new RegExp(`^work/\\.b${TAG}-report-.*\\.txt$`),
   new RegExp(`^work/\\.b${TAG}-verify-.*\\.txt$`),
-  new RegExp(`^work/wg-batch-${TAG}-(parity|residual)\\.json$`),
+  /* A print-lane batch's parity/residual sit beside its packet, work/print-batch-<TAG>.json (2026-09-25). */
+  new RegExp(`^work/(wg|print)-batch-${TAG}-(parity|residual)\\.json$`),
 ];
 
 // ── the stage set ────────────────────────────────────────────────────────────────────────────────
@@ -149,8 +150,7 @@ const BATCH_EVIDENCE = ['work/experience-instrument-limits.json', 'work/wg-casti
 const staged = new Set([
   ...DATA_FILES,
   ...BATCH_EVIDENCE,
-  `work/wg-batch-${TAG}-parity.json`,
-  `work/wg-batch-${TAG}-residual.json`,
+  ...['wg', 'print'].flatMap((lane) => [`work/${lane}-batch-${TAG}-parity.json`, `work/${lane}-batch-${TAG}-residual.json`]),
   `work/.b${TAG}-read.json`,
   SPECS_PATH,
 ]);

@@ -22,6 +22,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { batchTag, batchFiles } from './lib/batch-paths.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WRITE = process.argv.includes('--write');
@@ -52,12 +53,14 @@ if (args[0] === '--bulk') {
 }
 
 const byBatch = {};
-for (const e of entries) (byBatch[String(e.batch).padStart(3, '0')] ??= []).push(e);
+for (const e of entries) (byBatch[batchTag(e.batch)] ??= []).push(e);
 
-for (const [batch, list] of Object.entries(byBatch)) {
-  const path = `work/wg-batch-${batch}-parity.json`;
+for (const [tag, list] of Object.entries(byBatch)) {
+  /* A print batch's parity file sits beside its packet (scripts/lib/batch-paths.mjs). Hard-coding
+   * work/wg-batch-${batch}-parity.json wrote a P02 verdict to a new file no gate reads. */
+  const { parity: path, batch } = batchFiles(ROOT, tag);
   const full = join(ROOT, path);
-  const doc = existsSync(full) ? JSON.parse(readFileSync(full, 'utf8')) : { batch: Number(batch), records: [] };
+  const doc = existsSync(full) ? JSON.parse(readFileSync(full, 'utf8')) : { batch, records: [] };
   doc.records ??= [];
   for (const e of list) {
     const at = doc.records.findIndex((r) => r.id === e.id);

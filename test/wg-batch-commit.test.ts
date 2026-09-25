@@ -145,6 +145,22 @@ describe('wg-batch-commit stages by explicit path or refuses', { timeout: 60_000
     rmSync(root, { recursive: true, force: true });
   });
 
+  /* A print-lane batch's parity/residual sit beside its packet, work/print-batch-<TAG>.json — the driver's
+   * print cut pins that packet as the batch file (2026-09-25), and wg-batch-close.mjs writes beside it. */
+  it('--dry-run plans a print-lane batch\'s parity + residual, which sit beside work/print-batch-<TAG>.json', () => {
+    const root = repo({
+      'work/wg-batch-900-parity.json': null,
+      'work/wg-batch-900-residual.json': null,
+      'work/print-batch-900-parity.json': '{"batch":900,"records":[]}\n',
+      'work/print-batch-900-residual.json': '{"complete":true}\n',
+    });
+    const r = commit(root, '--batch', '900', '--dry-run');
+    expect(r.code).toBe(0);
+    expect(r.out).toContain('work/print-batch-900-parity.json');
+    expect(r.out).toContain('work/print-batch-900-residual.json');
+    rmSync(root, { recursive: true, force: true });
+  });
+
   it('REFUSES a modified tracked path the batch does not account for, naming it', () => {
     const root = repo({ 'work/unrelated-notes.json': '{"someone":"edited this"}\n' });
     const r = commit(root, '--batch', '900');
