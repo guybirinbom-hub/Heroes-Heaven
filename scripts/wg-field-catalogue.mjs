@@ -49,7 +49,9 @@ const IDENTITY = new Set([
 
 /* ---------------------------------------------------------------- source, read once */
 const srcFiles = [];
-for (const dir of ['src/rules', 'src/sheet', 'src/builder', 'src/data']) {
+// src/integration holds the tracker's host-side readers (the GM search reads parentPage / printedPage
+// there and nowhere else); leaving it out reported those two fields inert after the every-record lane.
+for (const dir of ['src/rules', 'src/sheet', 'src/builder', 'src/data', 'src/integration']) {
   const d = join(ROOT, dir);
   if (!existsSync(d)) continue;
   for (const f of readdirSync(d)) {
