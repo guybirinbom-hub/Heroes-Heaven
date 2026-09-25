@@ -823,6 +823,10 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
     deityId,
     divineFont,
     keyAbility,
+    /* The matched per-class picks go in BEFORE the rebuild, not only after it (below): the rebuild
+     * slots feats against them. bug 2026-09-25: a kineticist's gate reached the rebuild empty, so
+     * every impulse was taken by every gate slot and a dual gate's two landed in each other's slots. */
+    extraChoices: matchedExtra,
     ...(Object.keys(importedVariants).length ? { variantRules: importedVariants } : {}),
     ...(Object.keys(importedOptions).length ? { options: importedOptions } : {}),
   };

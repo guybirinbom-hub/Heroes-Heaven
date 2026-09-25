@@ -11,9 +11,8 @@
  */
 import { searchMatches } from '../data/searchRank';
 import type { BuildState } from './build';
-import { backgroundGrantedFeats, levelGrants, loreKey, resolveBackground } from './build';
+import { backgroundGrantedFeats, kineticSlotAllows, levelGrants, loreKey, resolveBackground } from './build';
 import { maxTakes } from './featGrants';
-import { elementTraitsOf, impulseAllowedFor } from './kineticElements';
 import { mythicSlotAllows } from './mythic';
 import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey } from './types';
 import { SKILLS } from './types';
@@ -409,15 +408,12 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
      * made the list three long (or two for a single gate) and moved the binding the same way.
      */
     if (p.category === 'impulse') {
-      if (!f.traits.includes('impulse')) return false;
-      const els = elementTraitsOf(build, p.level);
-      if (!impulseAllowedFor(f.traits, els)) return false;
-      if (els.length > 1 && !f.traits.includes(els[impulseNth])) return false;
       /* SHORT-CIRCUITS the category test below, exactly as the archetype, mythic and bonus slots do:
        * an impulse feat ships as category 'class', so matching category against 'impulse' offers
-       * nothing and the slot would be unfillable. It skips the element gate at the end too, which is
-       * why `impulseAllowedFor` is asked above: without it a single gate offered all six elements. */
-      return true;
+       * nothing and the slot would be unfillable. The element rules (`kineticSlotAllows`, build.ts)
+       * ask `impulseAllowedFor` too: without it a single gate offered all six elements. The rebuild
+       * from a character asks the same function before it slots an imported impulse. */
+      return kineticSlotAllows(f.traits, build, p, impulseNth);
     }
     /*
      * A CLASS slot takes an ARCHETYPE feat. RAW an archetype feat is bought with a class feat, so a
@@ -524,8 +520,7 @@ function slotTakes(build: BuildState, content: ContentDatabase, p: FeatSlotRef):
     // then admits everything, so the guard the class check used to provide is the element list itself.
     // Keeping the check would have re-created the bug it was written beside — an archetype kineticist
     // has elements and was skipped by it.
-    if (f.traits.includes('impulse') && !impulseAllowedFor(f.traits, elementTraitsOf(build, build.level))) return false;
-    return true;
+    return kineticSlotAllows(f.traits, build, p, impulseNth);
   };
 }
 

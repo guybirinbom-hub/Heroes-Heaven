@@ -62,7 +62,7 @@ import { engineLaneOff } from './trustLanes';
 import { EXTRA_FEAT_TAKINGS, FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED, FEAT_GRANT_BOUND_CHOICE, FEAT_RANK_FEAT_GRANTS, FEAT_SUBSTITUTE_GRANTS, SKILL_RANK_BEFORE_OWN_GRANTS, featFeatGrantsFor } from './featFeatGrants';
 import { BACKGROUND_CANTRIP_GRANTS, BACKGROUND_GRANT_BOUND_CHOICE } from './backgroundGrants';
 import { FEAT_PICK_GRANTS, pickKeysFor, pickableFeats } from './featPickGrants';
-import { gateElementLimit, kineticistElements } from './kineticElements';
+import { elementTraitsOf, gateElementLimit, impulseAllowedFor, kineticistElements } from './kineticElements';
 import { FEAT_CANTRIP_GRANTS } from './featCantripGrants';
 import { FORMULA_BOOK_ITEM_ID, formulaBookSource, formulaGrantsOwned, grantsFormulaBook, isFormulaBook, withFormula } from './formulaBook';
 import { grantForSpellPick } from './spellChoice';
@@ -74,6 +74,28 @@ import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, arch
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { cpToCoins } from './wealth';
 import { apparitionSlots, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
+
+/**
+ * The kineticist's element rules for one feat slot: the test the Builder's picker asks (`slotTakes`,
+ * featSlots.ts) AND the one the rebuild from a character asks before it slots a feat
+ * (`deriveBuildFromCharacter`). One test, so an imported impulse lands only where the picker takes it.
+ * It lives here rather than in featSlots.ts because featSlots.ts imports from this file.
+ *
+ * A KINETIC GATE slot (`impulse`) takes only an impulse, and a dual gate binds one slot to each element:
+ * *"select two 1st-level impulse feats, one with the trait of the first element and one with the trait
+ * of the other."* `nth` is the slot's place among its level's impulse slots, and the nth takes the nth
+ * element. A single gate's two slots both take its one element. The elements are read at the slot's
+ * level, so one forked in at a later Gate's Threshold never joins the binding.
+ *
+ * Any other slot takes an impulse only for an element the character has at their level, and takes
+ * every feat that is not an impulse.
+ */
+export function kineticSlotAllows(traits: readonly string[], build: BuildState, slot: { level: number; category: string }, nth: number): boolean {
+  if (slot.category !== 'impulse') return !traits.includes('impulse') || impulseAllowedFor(traits, elementTraitsOf(build, build.level));
+  if (!traits.includes('impulse')) return false;
+  const els = elementTraitsOf(build, slot.level);
+  return impulseAllowedFor(traits, els) && (els.length < 2 || traits.includes(els[nth]));
+}
 
 /** The player's in-progress choices. The builder UI owns one of these. */
 export interface BuildState {
@@ -9967,7 +9989,11 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       if (ec.subclass && cc.group === ec.subclass.name) continue;
       const g = (ec.extraChoices ?? []).find((gg) => gg.name === cc.group);
       const o = g?.options.find((opt) => (cc.id ? opt.id === cc.id : opt.name === cc.name));
-      if (g && o && !(b.extraChoices[g.id] ?? []).includes(o.id)) (b.extraChoices[g.id] ??= []).push(o.id);
+      // A Fork the Path element rides in this list too, stamped with its Gate's Threshold level (the
+      // gate's own two are stamped 1). It goes back to gateForks: folded into the gate's list it was a
+      // third element the gate clamps away, and a single gate's fork was clamped away outright.
+      if (g?.id === 'element' && o && (GATE_THRESHOLD_LEVELS as readonly number[]).includes(cc.level)) (b.gateForks ??= {})[String(cc.level)] = o.id;
+      else if (g && o && !(b.extraChoices[g.id] ?? []).includes(o.id)) (b.extraChoices[g.id] ??= []).push(o.id);
     }
   }
 
@@ -10262,9 +10288,25 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     if ((cls?.features ?? []).some((f) => f.featureId === 'voice-of-nature')) {
       for (const fid of ['animal-empathy', 'plant-empathy']) if (c.feats.some((f) => f.featId === fid)) autoGrantedFeatIds.add(fid);
     }
-    // Kineticist Expand the Portal: bonus impulse feats gained at reached Gate's Thresholds (recovered
-    // into b.gateExpands via extraChoices reconstruction elsewhere). Subtract the chosen impulse ids.
-    for (const fid of Object.values(b.gateExpands ?? {})) if (fid) autoGrantedFeatIds.add(fid);
+    /*
+     * Kineticist Gate's Threshold: buildCharacter emits each reached threshold's feat (Expand the
+     * Portal's bonus impulse, or Fork the Path's impulse) as a row at the threshold's level with no
+     * slot. No kineticist class-feat slot sits at 5/9/13/17, so a slotless impulse row there IS that
+     * feat: it goes back to its branch's map (a fork's element came back from classChoices above) and
+     * is subtracted, so it takes no class slot and no chip. Nothing recovered these before, so a
+     * rebuilt kineticist lost both picks and the bonus impulse ate a class slot or became a chip.
+     */
+    if (dcOwns('kineticist')) {
+      for (const f of c.feats) {
+        const L = String(f.level);
+        if (f.slotKey || f.grantedBy || f.level > c.level || !(GATE_THRESHOLD_LEVELS as readonly number[]).includes(f.level)) continue;
+        if (!content.feats[f.featId]?.traits?.includes('impulse')) continue;
+        const branch = b.gateForks?.[L] ? (b.gateForkImpulses ??= {}) : (b.gateExpands ??= {});
+        if (branch[L]) continue;
+        branch[L] = f.featId;
+        autoGrantedFeatIds.add(f.featId);
+      }
+    }
   }
   const featsByLevel = new Map<number, FeatChoice[]>();
   // Pick-a-feat answers recovered from the granted feats, to be re-keyed onto whatever slot each
@@ -10359,12 +10401,14 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   // Enumerate every real slot across all levels up front so a feat filed under a colliding level (e.g.
   // several skill feats sharing a minimum level after a lossy import) can be redistributed into the
   // class's other same-category slots.
-  type RealSlot = { level: number; idx: number; category: FeatCategory };
+  type RealSlot = { level: number; idx: number; category: FeatCategory; nth: number };
   const realSlots: RealSlot[] = [];
   if (c.classId) {
     for (let lvl = 1; lvl <= c.level; lvl++) {
       const cats = levelGrants(lvl, c.classId, content, c.subclassId, c.variantRules, c.classId2, c.subclassId2, c.mythicEnabled, c.feats.map((f) => f.featId)).featSlots;
-      cats.forEach((category, idx) => realSlots.push({ level: lvl, idx, category }));
+      // `nth`: the slot's place among its level's slots of its category — what a dual gate binds an
+      // element to (`kineticSlotAllows`).
+      cats.forEach((category, idx) => realSlots.push({ level: lvl, idx, category, nth: cats.slice(0, idx).filter((x) => x === category).length }));
     }
   }
   const usedSlots = new Set<string>(); // `${level}:${idx}` of already-consumed real slots
@@ -10373,16 +10417,23 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   // feat, a 'class' slot taking an archetype-trait feat (multiclass/dedication feats are class-category),
   // and a fighter 'bonus' slot taking a fighter feat. We stay conservative (only widenings the builder's
   // picker already renders) so we never place a feat in a slot the UI would reject.
-  const slotAccepts = (slotCat: FeatCategory, f: FeatChoice): boolean => {
-    if (slotCat === f.category) return true;
-    const feat = content.feats[f.featId];
-    const traits = feat?.traits ?? [];
-    if (slotCat === 'general' && f.category === 'skill') return true;
-    if (slotCat === 'archetype' && traits.includes('archetype')) return true;
-    if (slotCat === 'class' && traits.includes('archetype')) return true;
-    if (slotCat === 'mythic' && traits.includes('mythic')) return true;
-    if (slotCat === 'bonus' && traits.includes('fighter')) return true;
-    if (slotCat === 'impulse' && traits.includes('impulse')) return true;
+  const slotAccepts = (s: RealSlot, f: FeatChoice): boolean => {
+    const traits = content.feats[f.featId]?.traits ?? [];
+    /*
+     * The kineticist's element rules, asked exactly as the slot's picker asks them — and FIRST, ahead
+     * of the category match. bug 2026-09-25: Wanderer's Guide import. Any impulse was taken by the
+     * first free gate slot, and a feat a gate slot held comes back with category 'impulse' and matched
+     * every gate slot outright, so a dual-gate kineticist whose water impulse was listed before the
+     * fire one got it in the fire slot and the fire impulse in the water slot: both flagged "Not valid
+     * for this slot" in the Builder. An impulse no slot takes goes to the visible chip below.
+     */
+    if (!kineticSlotAllows(traits, b, s, s.nth)) return false;
+    if (s.category === 'impulse' || s.category === f.category) return true;
+    if (s.category === 'general' && f.category === 'skill') return true;
+    if (s.category === 'archetype' && traits.includes('archetype')) return true;
+    if (s.category === 'class' && traits.includes('archetype')) return true;
+    if (s.category === 'mythic' && traits.includes('mythic')) return true;
+    if (s.category === 'bonus' && traits.includes('fighter')) return true;
     return false;
   };
   const featMinLevel = (f: FeatChoice): number => Math.max(1, content.feats[f.featId]?.level ?? 1);
@@ -10399,12 +10450,16 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     const free = realSlots.filter((s) => !usedSlots.has(`${s.level}:${s.idx}`));
     const minLvl = featMinLevel(f);
     const candidates = free
-      .filter((s) => s.level >= minLvl && s.level <= c.level && slotAccepts(s.category, f))
+      .filter((s) => s.level >= minLvl && s.level <= c.level && slotAccepts(s, f))
       .sort((s1, s2) => {
-        // Exact-category slots beat widened ones; then the slot nearest the feat's assigned level;
-        // then lower level — a stable, deterministic ordering.
-        const exact1 = s1.category === f.category ? 0 : 1;
-        const exact2 = s2.category === f.category ? 0 : 1;
+        // Exact-category slots beat widened ones — except that a feat with no slot of its own (a
+        // Wanderer's Guide import) takes a gate slot before a class slot: the gate slot takes nothing
+        // but impulses, and a class slot spent on one left that element's gate slot empty and the next
+        // impulse of the other element with nowhere to go. Then the slot nearest the feat's assigned
+        // level; then lower level — a stable, deterministic ordering.
+        const rank = (s: RealSlot) => (s.category === 'impulse' && !f.slotKey ? 0 : s.category === f.category ? 1 : 2);
+        const exact1 = rank(s1);
+        const exact2 = rank(s2);
         if (exact1 !== exact2) return exact1 - exact2;
         const d1 = Math.abs(s1.level - f.level);
         const d2 = Math.abs(s2.level - f.level);
