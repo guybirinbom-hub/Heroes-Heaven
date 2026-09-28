@@ -35,7 +35,7 @@ import {
 import { OPEN_SOURCE_LABEL, openChoiceOptions } from '../rules/openChoice';
 import { DOMAIN_SPELLS } from '../rules/domains';
 import { confirmDialog } from '../sheet/confirm';
-import { sourceCatalog, enabledBookSet, sourceIdToken } from '../rules/sources';
+import { sourceCatalog, enabledBookSet, sourceIdToken, storedSources } from '../rules/sources';
 import { eligibleFeatsForSlot, findHiddenFeatMatches, fitsSlot, moveTargetFor, swapSlotKeys } from '../rules/featSlots';
 import { classFeatureDescription } from '../rules/featureText';
 import {
@@ -3175,7 +3175,7 @@ export function Builder({
           });
           // A homebrew feat's source goes on by its id (sources.ts sourceIdToken): a rename keeps it on.
           const key = f.homebrewSourceId ? sourceIdToken(f.homebrewSourceId) : book;
-          if (ok) actions.patch({ enabledSources: [...new Set([...enabledBooks, key])].sort() });
+          if (ok) actions.patch({ enabledSources: storedSources([...enabledBooks, key]) });
         };
         return (
           <FilterableSelect

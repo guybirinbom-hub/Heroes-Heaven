@@ -8,6 +8,7 @@ import { sanitize } from './sanitizeHtml';
 import { htmlWithAutoDir } from './autoDir';
 import { AstRenderer } from './AstRenderer';
 import { useAstNode, withoutItemLists } from './useAst';
+import { RemasteredLine, type RemasteredAs } from './RemasteredLine';
 
 /** A description is treated as rich HTML (user-authored, from the item editor) if it carries any
  *  HTML tag; otherwise it's curated markdown and RichText parses + auto-linkifies it. */
@@ -24,23 +25,9 @@ const HTML_TAG = /<(a|strong|em|b|i|u|s|h[1-6]|ul|ol|li|blockquote|span|br|div|p
  */
 const isRichHtml = (s: string, dirAuto?: boolean) => HTML_TAG.test(s) || (!!dirAuto && /<table\b/i.test(s));
 
-/**
- * desk #158 — the reprint that ships beside a record built from the older printing.
- *
- * Written by the data chain (scripts/lib/reprint.mjs shippedTwin -> build-map.mjs -> stamp-aonid.mjs),
- * never by hand, and guarded by scripts/reprint-check.mjs.
- *
- * ⚠ DECLARED HERE, NOT IN src/rules/types.ts, only because that file is being edited in another lane
- * right now. It belongs beside the record types — move it there when they are free, and drop the casts
- * at the three call sites (ItemDetail, FeatDetail, SpellsTab).
- */
-export type RemasteredAs = { bucket: string; id: string; name: string };
-
-/** Read that link off a record when the caller holds a view model rather than the record itself. */
-export function remasteredAsOf(content: unknown, ref: { bucket?: string; id?: string }): RemasteredAs | undefined {
-  if (!ref.bucket || !ref.id) return undefined;
-  return (content as Record<string, Record<string, { remasteredAs?: RemasteredAs }> | undefined> | null)?.[ref.bucket]?.[ref.id]?.remasteredAs;
-}
+/* desk #158 — the "Remastered as" link. Lives in RemasteredLine.tsx (DescriptionModal needs it too, and
+ * this file already imports DescriptionModal); re-exported for ItemDetail, FeatDetail and SpellsTab. */
+export { remasteredAsOf, type RemasteredAs } from './RemasteredLine';
 
 /**
  * Renders an inline description with its cross-references linkified; clicking a link opens the
@@ -91,18 +78,7 @@ export function DescBody({
   };
   /* desk #158 — "Remastered as <name>", on every branch below, because a legacy record usually DOES
    * have text. Marked `sd-ours`: the book never printed this line, we did. */
-  const remastered = remasteredAs ? (
-    <p className="sd-ours sd-remastered">
-      Remastered as{' '}
-      <a
-        className="ref-link"
-        href="#"
-        onClick={(e) => { e.preventDefault(); openRecord(remasteredAs.bucket, remasteredAs.id); }}
-      >
-        {remasteredAs.name}
-      </a>
-    </p>
-  ) : null;
+  const remastered = remasteredAs ? <RemasteredLine ra={remasteredAs} onOpen={openRecord} /> : null;
   // Sanitizing (and, for notes, direction-tagging) parses the whole string, so do it once per value
   // rather than on every render — a long note re-renders on each keystroke of its title. Skipped
   // entirely unless the rich-HTML branch below is the one that will run.

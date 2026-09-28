@@ -53,6 +53,10 @@
  *      reported and skipped, not a failed precondition. A half-applied batch must be resumable.
  *   6. `--expect-rows N` — after the write the overlay must hold exactly N rows or the whole write
  *      is rolled back byte-for-byte. The 10% shrink guard in write-backfill.mjs still applies.
+ *   7. `retract: true` takes an overlay row back OUT — the row with the same category/id/path/field key
+ *      (its value is not needed). Unlike `value: null`, which stores a row that removes the field from
+ *      the record, this removes the row itself. Refused without a `why` naming a doc id like any row; a
+ *      key already gone from the overlay is reported and skipped (resume).
  *
  *   node scripts/apply-parity-fixes.mjs <specs.json>            # dry run: every check, nothing written
  *   node scripts/apply-parity-fixes.mjs <specs.json> --write
@@ -290,6 +294,15 @@ for (const f of findings) {
   for (const row of rowsOf(f)) {
     if (!row || !row.category || !row.id) { problems.push(`${f.id}: an overlay row is missing category/id`); continue; }
     const where = `${row.category}/${row.id}`;
+    /* 7 — a retraction removes a row; only its key and its reason are checked. */
+    if (row.retract) {
+      if (!docIdsIn(row.why).length && !/no AoN document/i.test(String(row.why ?? ''))) {
+        problems.push(`${f.id}: retraction of ${rowKey(row)} has a \`why\` naming no AoN doc id`);
+      } else if (!overlayByKey.has(rowKey(row))) {
+        alreadyApplied.push(`${f.id}: ${rowKey(row)} is not in the overlay (already retracted)`);
+      } else plannedRows.push({ from: f.id, row });
+      continue;
+    }
     /* `delete:true` retires a WHOLE record — the mirror of `create`, honoured by scripts/lib/apply-backfill.mjs
      * (the `if (fix.delete)` branch) and already in the overlay since batch 026 (classFeatures/nudging-whisper).
      * This applier had never been taught the shape, so a delete row failed BOTH checks below — "does not
@@ -420,6 +433,7 @@ for (const e of plannedEdits) (byFile[e.file] ??= []).push(e);
 console.log(`${findings.length} finding(s): ${plannedRows.length} overlay row(s), ${plannedEdits.length} code edit(s) across ${Object.keys(byFile).length} file(s).\n`);
 for (const { from, row } of plannedRows) {
   /* A delete row has no `value` at all, so JSON.stringify(undefined) is undefined, not a string. */
+  if (row.retract) { console.log(`   out   ${String(from).padEnd(34)} ${rowKey(row)} (retracted)`); continue; }
   console.log(`   row   ${String(from).padEnd(34)} ${row.category}/${row.id}.${row.field ?? (row.delete ? '(delete)' : '(create)')} = ${String(JSON.stringify(row.value)).slice(0, 84)}`);
 }
 for (const e of plannedEdits) console.log(`   edit  ${String(e.from).padEnd(34)} ${e.file}: ${JSON.stringify(e.find.slice(0, 56))}`);
@@ -446,7 +460,13 @@ if (plannedRows.length) {
   const priorCount = all.length;
   let added = 0;
   let replaced = 0;
+  let retracted = 0;
   for (const { row } of plannedRows) {
+    if (row.retract) {
+      const at = all.findIndex((r) => rowKey(r) === rowKey(row));
+      if (at >= 0) { all.splice(at, 1); retracted++; }
+      continue;
+    }
     const { supersedes: _s, ...stored } = row; // spec metadata, not overlay data
     // Path-aware, like the collision key above: eight rows setting the same field on different magus
     // subclass options (path ["subclass","options","id=…"]) used to REPLACE each other here, leaving one.
@@ -459,10 +479,10 @@ if (plannedRows.length) {
   if (EXPECT_ROWS !== null && onDisk !== EXPECT_ROWS) {
     writeFileSync(overlayFile, before);
     console.error(`\n--expect-rows ${EXPECT_ROWS} but the overlay holds ${onDisk} after the write — ROLLED BACK to ${priorCount} rows, no code edit ran.`);
-    console.error(`   (this spec was ${added} new + ${replaced} replaced)`);
+    console.error(`   (this spec was ${added} new + ${replaced} replaced + ${retracted} retracted)`);
     process.exit(1);
   }
-  console.log(`overlay: ${added} new, ${replaced} replaced (${onDisk} rows).`);
+  console.log(`overlay: ${added} new, ${replaced} replaced, ${retracted} retracted (${onDisk} rows).`);
 } else if (EXPECT_ROWS !== null && overlay.length !== EXPECT_ROWS) {
   console.error(`\n--expect-rows ${EXPECT_ROWS} but the overlay holds ${overlay.length} and this spec writes no rows.`);
   process.exit(1);

@@ -3,6 +3,7 @@ import { content } from './_content';
 import { exportWg, importCharacter } from '../src/data/transfer';
 import { CUSTOM_BACKGROUND_ID, signaturesAt } from '../src/rules/build';
 import { initialPlay } from '../src/rules/play';
+import { enabledBookSet } from '../src/rules/sources';
 
 /**
  * Guards the Wanderer's Guide v4 import mappings that read WG's compiled `content` dump:
@@ -399,6 +400,34 @@ describe('Wanderer’s Guide import — kitchen sink (overhaul mappings)', () =>
   it('enables matched non-Core source books', () => {
     expect(ch.enabledSources).toContain('Pathfinder Rage of Elements');
     expect(ch.enabledSources).toContain('Pathfinder Player Core');
+  });
+
+  /* The desk #166 split (src/rules/sources.ts): WG has its own Bestiary 3 toggle, so Monster Core 2 on and
+   * Bestiary 3 off is the WG player's choice. It was stored without the split mark and read back with
+   * Bestiary 3 on. */
+  it('keeps a WG character with Monster Core 2 on and Bestiary 3 off exactly that way', () => {
+    const obj = JSON.parse(wgKitchenSink());
+    obj.content.all_sources = [{ id: 1, name: 'Player Core' }, { id: 2, name: 'Monster Core 2' }, { id: 3, name: 'Bestiary 3' }];
+    obj.character.content_sources = { enabled: [1, 2] };
+    const on = enabledBookSet((importCharacter(JSON.stringify(obj), db).saved.character as any).enabledSources);
+    expect(on.has('Pathfinder Monster Core 2')).toBe(true);
+    expect(on.has('Pathfinder Bestiary 3')).toBe(false);
+  });
+
+  /* desk #166's fold: the Remastered printing of Guns & Gears is the Guns & Gears row, so WG's "Guns & Gears
+   * (Remastered)" toggle switches that row on rather than matching nothing — and WG's legacy "Dark Archive"
+   * the Dark Archive (Remastered) row. The WG player switched that book on; the import is a new selection. */
+  it('a WG character with Guns & Gears (Remastered) or legacy Dark Archive on imports with that book on', () => {
+    const obj = JSON.parse(wgKitchenSink());
+    obj.content.all_sources = [{ id: 1, name: 'Player Core' }, { id: 2, name: 'Guns & Gears (Remastered)' }, { id: 3, name: 'Dark Archive' }];
+    obj.character.content_sources = { enabled: [1, 2, 3] };
+    const on = enabledBookSet((importCharacter(JSON.stringify(obj), db).saved.character as any).enabledSources);
+    expect(on.has('Pathfinder Guns & Gears')).toBe(true);
+    expect(on.has('Pathfinder Dark Archive (Remastered)')).toBe(true);
+    // …and a book WG left off stays off
+    obj.character.content_sources = { enabled: [1, 2] };
+    const off = enabledBookSet((importCharacter(JSON.stringify(obj), db).saved.character as any).enabledSources);
+    expect(off.has('Pathfinder Dark Archive (Remastered)')).toBe(false);
   });
 
   it('matches companions by name and reports unmatched ones', () => {

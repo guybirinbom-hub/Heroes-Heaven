@@ -20,8 +20,11 @@
  * hand: see the re-run guard below.
  */
 import { existsSync, readFileSync, writeFileSync, statSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = 'C:/trying ai 2/pf2e codex/';
+/* This checkout, from this file's own location — never a hardcoded path: in a `git worktree` a
+ * hardcoded main path made `npm run data` rewrite MAIN's core.json and core-descriptions.json. */
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const CORE = ROOT + 'public/core.json';
 const DESC = ROOT + 'public/core-descriptions.json';
 

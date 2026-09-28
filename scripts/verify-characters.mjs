@@ -20,9 +20,11 @@
  * the header documented for months.
  */
 import { readFileSync, readdirSync } from 'node:fs';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const ROOT = 'C:/trying ai 2/pf2e codex/';
+/* This checkout, from this file's own location — never a hardcoded path: in a `git worktree` a
+ * hardcoded main path made `npm run verify` check MAIN's core.json instead of the lane's. */
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const AON = 'C:/wonderers guide/aon-2e-archive/data/by-category/class/';
 process.chdir(ROOT);
 const QUIET = process.argv.includes('--quiet');

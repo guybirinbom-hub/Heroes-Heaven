@@ -2,7 +2,7 @@ import { Fragment, useMemo, useRef, useState, type Dispatch, type ReactNode, typ
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
 import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
-import { enabledBookSet, sourceCatalog, sourceIdToken, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
+import { BOOK_SPLIT_MARK, enabledBookSet, sourceCatalog, sourceIdToken, storedSources, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { loadHomebrewSources, loadCampaigns, saveCampaigns, listCampaignHbSources } from '../data/storage';
@@ -1908,7 +1908,7 @@ export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }:
     const hasDefaults =
       !!d &&
       ((!!d.variantRules && Object.keys(d.variantRules).length > 0) ||
-        (!!d.enabledSources && d.enabledSources.length > 0) ||
+        (!!d.enabledSources && d.enabledSources.some((s) => s !== BOOK_SPLIT_MARK)) || // "Disable all" stores only the mark
         !!d.mythicEnabled ||
         !!d.kingmakerEnabled);
     if (hasDefaults) {
@@ -2178,7 +2178,7 @@ export function SourcesCard({
   const noMatches = sq !== '' && groups.length === 0 && hbShown.length === 0;
   // Searching forces sections open so matches show without manual expansion.
   const hbOpen = sq !== '' || expanded.has('__homebrew__');
-  const write = (next: Set<string>) => actions.patch({ enabledSources: [...next].sort() });
+  const write = (next: Set<string>) => actions.patch({ enabledSources: storedSources(next) });
   /**
    * Switching a book OFF when the character already took something from it.
    *
@@ -2222,7 +2222,7 @@ export function SourcesCard({
     if (!ok) return;
     // patch takes a Partial<BuildState>; a whole rebuilt build is a valid one, and it must be applied
     // in ONE write so the source list and the removals can never land out of step.
-    actions.patch(removeChosenIds({ ...build, enabledSources: [...n].sort() }, new Set(losing.map((c) => c.id))));
+    actions.patch(removeChosenIds({ ...build, enabledSources: storedSources(n) }, new Set(losing.map((c) => c.id))));
   };
   const setCategory = (g: SourceGroup, on: boolean) => setBooks(g.entries.flatMap((e) => e.books), on);
   // Homebrew goes ON by id only (a name would also switch on whatever source takes that name later) and

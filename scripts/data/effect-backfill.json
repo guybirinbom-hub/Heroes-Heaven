@@ -116497,7 +116497,8 @@
   "category": "classFeatures",
   "id": "greater-weapon-specialization-barbarian",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster",
+  "why": "class-feature-862 (Player Core 2) is a remaster printing; the legacy-era value belonged to class-feature-438, the magus page the record no longer points at."
  },
  {
   "category": "classFeatures",
@@ -116835,7 +116836,8 @@
   "category": "classFeatures",
   "id": "medium-armor-expertise-inventor",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster",
+  "why": "class-feature-497 (Guns & Gears (Remastered)) is a remaster printing; the legacy-era value belonged to class-feature-436, the magus page the record no longer points at."
  },
  {
   "category": "classFeatures",
@@ -117827,7 +117829,8 @@
   "category": "classFeatures",
   "id": "weapon-expertise-swashbuckler",
   "field": "edition",
-  "value": "legacy-era"
+  "value": "remaster",
+  "why": "class-feature-1019 (Player Core 2) is a remaster printing; the legacy-era value belonged to class-feature-430, the magus page the record no longer points at."
  },
  {
   "category": "classFeatures",
@@ -165521,40 +165524,40 @@
   "id": "child-of-the-twin-village",
   "field": "source",
   "value": {
-   "book": "Pathfinder Gatewalkers Player's Guide (Remastered)",
+   "book": "Pathfinder Dark Archive (Remastered)",
    "license": "ORC"
   },
-  "why": "wg-batch-022 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b022-findings.json"
+  "why": "background-587 \"Child of the Twin Village\" is printed in Dark Archives (Remastered) pg. 73 and nowhere else (export and live index, 2026-09-25). The batch-022 row filed it under the Gatewalkers Player's Guide (Remastered), a different book (desk #166: different books are never folded together), so a player with Dark Archive (Remastered) on never saw it. Licence carried over unchanged."
  },
  {
   "category": "backgrounds",
   "id": "empty-whispers",
   "field": "source",
   "value": {
-   "book": "Pathfinder Gatewalkers Player's Guide (Remastered)",
+   "book": "Pathfinder Dark Archive (Remastered)",
    "license": "ORC"
   },
-  "why": "wg-batch-022 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b022-findings.json"
+  "why": "background-588 \"Empty Whispers\" is printed in Dark Archives (Remastered) pg. 92 and nowhere else (export and live index, 2026-09-25). The batch-022 row filed it under the Gatewalkers Player's Guide (Remastered), a different book (desk #166). Licence carried over unchanged."
  },
  {
   "category": "backgrounds",
   "id": "legacy-of-the-hammer",
   "field": "source",
   "value": {
-   "book": "Pathfinder Gatewalkers Player's Guide (Remastered)",
+   "book": "Pathfinder Dark Archive (Remastered)",
    "license": "ORC"
   },
-  "why": "wg-batch-022 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b022-findings.json"
+  "why": "background-589 \"Legacy of the Hammer\" is printed in Dark Archives (Remastered) pg. 135 and nowhere else (export and live index, 2026-09-25). The batch-022 row filed it under the Gatewalkers Player's Guide (Remastered), a different book (desk #166). Licence carried over unchanged."
  },
  {
   "category": "backgrounds",
   "id": "reborn-soul",
   "field": "source",
   "value": {
-   "book": "Pathfinder Gatewalkers Player's Guide (Remastered)",
+   "book": "Pathfinder Dark Archive (Remastered)",
    "license": "ORC"
   },
-  "why": "wg-batch-022 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b022-findings.json"
+  "why": "background-590 \"Reborn Soul\" is printed in Dark Archives (Remastered) pg. 176 and nowhere else (export and live index, 2026-09-25). The batch-022 row filed it under the Gatewalkers Player's Guide (Remastered), a different book (desk #166). Licence carried over unchanged."
  },
  {
   "category": "actions",
@@ -176686,8 +176689,8 @@
   "category": "items",
   "id": "trackless-greater",
   "field": "description",
-  "value": "Trackless runes are common among hunters and trappers, as well as thieves and anyone fleeing pursuit. While wearing trackless footwear, you have a +4 item bonus to the DC to track you. However, this bonus doesn't stack with the status bonus from Vanishing Tracks.\n\n**Activate** ⟨2⟩ (concentrate)\n\n**Frequency** once per day\n\n---\n\n**Effect** You extend the effect of your rune out to a 20-foot emanation. The emanation remains for 8 hours, affecting up to 10 creatures of your choice within the area. You can Dismiss this effect.",
-  "why": "The import deleted the area size and its noun, so the rule read \"out to a …\" with nothing after the article; AoN prints \"out to a 20-foot emanation\" (restored by scripts/repair-stripped-skill-links.mjs, insertion only)."
+  "value": "Trackless runes are common among hunters and trappers, as well as thieves and anyone fleeing pursuit. While wearing trackless footwear, you are continuously affected by the vanishing tracks spell.\n\n**Activate** ⟨2⟩ (concentrate)\n\n**Frequency** once per day\n\n---\n\n**Effect** You extend the effect of your rune out to a 20-foot emanation. The emanation remains for 8 hours, affecting up to 10 creatures of your choice within the area. You can Dismiss this effect.",
+  "why": "equipment-2304-2150 (Trackless (Greater), Treasure Vault (Remastered) pg. 145) is the record's document, paired by desk #167 with equipment-4836-4452; its first paragraph was the older printing's (\"a +4 item bonus to the DC to track you …\", reprint-check CHECK 8). SUPERSEDES the shipped row, which restored the \"20-foot emanation\" and is carried whole: only the first paragraph becomes equipment-2304's (gold-set R12)."
  },
  {
   "category": "items",
@@ -186714,10 +186717,10 @@
   "id": "firework-technician-dedication",
   "field": "source",
   "value": {
-   "book": "Pathfinder Guns & Gears (Remastered)",
+   "book": "Pathfinder Guns & Gears",
    "license": "ORC"
   },
-  "why": "feat-8528 primary_source_raw is \"Guns & Gears (Remastered) pg. 134\". Whole-object re-emit because source is one field; license stays ORC."
+  "why": "feat-8528 primary_source_raw is \"Guns & Gears (Remastered) pg. 134\", and book-names.json folds that title into \"Pathfinder Guns & Gears\" (desk #166, a (Remastered) printing folds into its own book). SUPERSEDES the row that spelt the printing out, which put this feat under a second Guns & Gears row on the Sources card. Licence stays ORC."
  },
  {
   "category": "classes",
@@ -189323,5 +189326,239 @@
    }
   ],
   "why": "batch 039 magus#volatile-spark-reloading-cascade: hybrid-study-16 links Interact (action-4174); Arcane Cascade is the magus action (action-4261)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-weapon-specialization-barbarian",
+  "field": "aonId",
+  "value": "class-feature-862",
+  "why": "class-feature-862 is Greater Weapon Specialization, Class Barbarian, Player Core 2 (remaster, level 15) — the barbarian's own current printing. The record sat on class-feature-438, the MAGUS's Secrets of Magic page of the same name, so its popup read the magus's rules and its book (Player Core 2) named neither printing. The class hop cannot move it: the key names another class (scripts/lib/reprint.mjs repointDoc key guard). Gold-set R12, reprint lane 2026-09-25."
+ },
+ {
+  "category": "classFeatures",
+  "id": "medium-armor-expertise-inventor",
+  "field": "aonId",
+  "value": "class-feature-497",
+  "why": "class-feature-497 is Medium Armor Expertise, Class Inventor, Guns & Gears (Remastered) (remaster, level 11) — the inventor's own current printing. The record sat on class-feature-436, the MAGUS's Secrets of Magic page of the same name (book Guns & Gears on a Secrets of Magic document). The class hop cannot move it: the key names another class. Gold-set R12, reprint lane 2026-09-25."
+ },
+ {
+  "category": "classFeatures",
+  "id": "weapon-expertise-swashbuckler",
+  "field": "aonId",
+  "value": "class-feature-1019",
+  "why": "class-feature-1019 is Weapon Expertise, Class Swashbuckler, Player Core 2 (remaster, level 5) — the swashbuckler's own current printing. The record sat on class-feature-430, the MAGUS's Secrets of Magic page of the same name (book Player Core 2 on a Secrets of Magic document). The class hop cannot move it: the key names another class. Gold-set R12, reprint lane 2026-09-25."
+ },
+ {
+  "category": "classFeatures",
+  "id": "warden-spells",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Core Rulebook",
+   "license": "ORC"
+  },
+  "why": "The record's document is sidebar-1047 \"Warden Spells\", printed in the Core Rulebook only (its page link names class-36, the Player Core ranger page, where no sidebar of that title is printed). source.book read \"Pathfinder Player Core\" — the book of the reprint page, not of the record's own document; gold-set R12 says a record follows one printing whole, never a mix. Licence carried over unchanged (never derived from the Archives)."
+ },
+ {
+  "category": "items",
+  "id": "cantrip-deck-5-pack",
+  "field": "activationCost",
+  "value": {
+   "type": "variable",
+   "min": 1,
+   "max": 3
+  },
+  "why": "equipment-5140-4612 (Impossible Magic) prints the activation as \"Activate—Pick a Card <actions string=\"Single Action or more Actions\">\", the same cost equipment-1046-1000 (Secrets of Magic) printed as \"Activate <actions string=\"Single Action or more Actions\">\"; the activation takes as many actions as the chosen cantrip. The record moved to the reprint on 2026-09-25 (reprint lane, rule A) and the importer's activation reader (scripts/lib/aon-facets.mjs activationOf) matches only an UNNAMED **Activate** block, so the reprint read no cost and a stale single action surfaced. Print is unchanged, so the value is kept."
+ },
+ {
+  "category": "items",
+  "id": "judgment-thurible-greater",
+  "field": "aonId",
+  "value": "equipment-4766-4257",
+  "why": "equipment-4766-4257 is the legacy Treasure Vault block at Item 17, 14,000 gp, spell DC 35 — this record's level, price and held spells (the Greater's). The Archives title that block \"(Major)\" and the Item 20 / 65,000 gp / DC 43 block equipment-4766-4258 \"(Greater)\": the two TITLES are transposed, the numbers inside each block agree with each other (scripts/price-check.mjs ACCEPTED). Joined by title, the record sat on equipment-4766-4258, and its reprint link followed that block's own statement (remaster_name \"Judgement Thurible (Major)\") to the level-20 Major. Pinned to the block whose numbers it carries, the link follows equipment-4766-4257's remaster_name \"Judgement Thurible (Greater)\" — equipment-2232-1951, Item 17, 14,000 gp, whose legacy_name names this block back. Live index read 2026-09-25. Reprint lane."
+ },
+ {
+  "category": "items",
+  "id": "judgment-thurible-major",
+  "field": "aonId",
+  "value": "equipment-4766-4258",
+  "why": "equipment-4766-4258 is the legacy Treasure Vault block at Item 20, 65,000 gp, spell DC 43 — this record's level, price and held spells (the Major's). The Archives title it \"(Greater)\" and the Item 17 block equipment-4766-4257 \"(Major)\" (transposed titles, scripts/price-check.mjs ACCEPTED). Pinned to the block whose numbers it carries, the reprint link follows equipment-4766-4258's remaster_name \"Judgement Thurible (Major)\" — equipment-2232-1952, Item 20, 65,000 gp — instead of the level-17 Greater. Live index read 2026-09-25. Reprint lane."
+ },
+ {
+  "category": "classFeatures",
+  "id": "shadows-in-the-moonlight",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #223: Hell's Destiny",
+   "license": "ORC"
+  },
+  "why": "tactic-33 is printed in Pathfinder #223: Hell's Destiny pg. 227 only (live index, 2026-09-25). The record kept the Foundry label \"Pathfinder Adventure Path: Hell's Destiny\" — the fold desk #166 ended (different books are never folded together); a kept record's book is never re-read from its page, so it needs the row. Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "seek-and-destroy",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #223: Hell's Destiny",
+   "license": "ORC"
+  },
+  "why": "tactic-34 is printed in Pathfinder #223: Hell's Destiny pg. 227 only (live index, 2026-09-25); the record kept the Foundry fold label \"Pathfinder Adventure Path: Hell's Destiny\" (desk #166). Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "wait-for-it",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #223: Hell's Destiny",
+   "license": "ORC"
+  },
+  "why": "tactic-35 is printed in Pathfinder #223: Hell's Destiny pg. 227 only (live index, 2026-09-25); the record kept the Foundry fold label \"Pathfinder Adventure Path: Hell's Destiny\" (desk #166). Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "corpse-crenellation",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #223: Hell's Destiny",
+   "license": "ORC"
+  },
+  "why": "tactic-36 is printed in Pathfinder #223: Hell's Destiny pg. 227 only (live index, 2026-09-25); the record kept the Foundry fold label \"Pathfinder Adventure Path: Hell's Destiny\" (desk #166). Licence carried over unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "for-talmandor-for-freedom",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #223: Hell's Destiny",
+   "license": "ORC"
+  },
+  "why": "tactic-37 is printed in Pathfinder #223: Hell's Destiny pg. 227 only (live index, 2026-09-25); the record kept the Foundry fold label \"Pathfinder Adventure Path: Hell's Destiny\" (desk #166). Licence carried over unchanged."
+ },
+ {
+  "category": "actions",
+  "id": "shadows-in-the-moonlight",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #223: Hell's Destiny",
+   "license": "ORC"
+  },
+  "why": "tactic-33 is printed in Pathfinder #223: Hell's Destiny pg. 227 only (live index, 2026-09-25); the record kept the Foundry fold label \"Pathfinder Adventure Path: Hell's Destiny\" (desk #166). Licence carried over unchanged."
+ },
+ {
+  "category": "actions",
+  "id": "seek-and-destroy",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #223: Hell's Destiny",
+   "license": "ORC"
+  },
+  "why": "tactic-34 is printed in Pathfinder #223: Hell's Destiny pg. 227 only (live index, 2026-09-25); the record kept the Foundry fold label \"Pathfinder Adventure Path: Hell's Destiny\" (desk #166). Licence carried over unchanged."
+ },
+ {
+  "category": "actions",
+  "id": "wait-for-it",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #223: Hell's Destiny",
+   "license": "ORC"
+  },
+  "why": "tactic-35 is printed in Pathfinder #223: Hell's Destiny pg. 227 only (live index, 2026-09-25); the record kept the Foundry fold label \"Pathfinder Adventure Path: Hell's Destiny\" (desk #166). Licence carried over unchanged."
+ },
+ {
+  "category": "actions",
+  "id": "corpse-crenellation",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #223: Hell's Destiny",
+   "license": "ORC"
+  },
+  "why": "tactic-36 is printed in Pathfinder #223: Hell's Destiny pg. 227 only (live index, 2026-09-25); the record kept the Foundry fold label \"Pathfinder Adventure Path: Hell's Destiny\" (desk #166). Licence carried over unchanged."
+ },
+ {
+  "category": "actions",
+  "id": "for-talmandor-for-freedom",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #223: Hell's Destiny",
+   "license": "ORC"
+  },
+  "why": "tactic-37 is printed in Pathfinder #223: Hell's Destiny pg. 227 only (live index, 2026-09-25); the record kept the Foundry fold label \"Pathfinder Adventure Path: Hell's Destiny\" (desk #166). Licence carried over unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "opportune-trickster",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder #222: Hellbreakers",
+   "license": "ORC"
+  },
+  "why": "feat-8538 is printed in Pathfinder #222: Hellbreakers pg. 217 and the Hellbreakers Players Guide pg. 9 (live index, 2026-09-25) — the volume first, as the importer's shelf rule and its twin record feats/oppurtune-trickster already have it. The record kept the Foundry fold label \"Pathfinder Adventure Path: Hellbreakers\" (desk #166). Licence carried over unchanged."
+ },
+ {
+  "category": "items",
+  "id": "judgement-thurible",
+  "field": "price",
+  "value": {
+   "gp": 975
+  },
+  "why": "equipment-2232-1950 \"Judgement Thurible\" (Treasure Vault (Remastered) pg. 126) prints Item 10, 975 gp for the base spellheart — the record src/data/index.ts UMBRELLA_KEEP_IDS already calls \"this IS the base spellheart\". Its aonId is the family page equipment-2232, which carries no price, so the record shipped unpriced and the shop sold it for nothing. Found by scripts/reprint-check.mjs CHECK 5: items/judgment-thurible (975 gp) is \"Remastered as\" this record. Reprint lane 2026-09-25."
+ },
+ {
+  "category": "items",
+  "id": "cantrip-deck-5-pack",
+  "field": "description",
+  "value": "Worshippers of Nethys discovered a way to bind cantrips into cards, making them accessible even to non-spellcasters. The deck contains thick parchment cards, each roughly half the size of a typical playing card. In precise, no-nonsense script, each card simply states the name of its cantrip.\n\nThis pack contains 5 cards of a single common cantrip (such as light).\n\n---\n\n**Activate—Pick a Card** ⟨1⟩ or more (manipulate)\n\n---\n\n**Effect** You envision your desired cantrip, causing its card to rise to the top of the deck, and draw the card. The deck casts that cantrip as a 1st-rank spell, with a DC of 15 and a spell attack modifier of +5. The card crumbles into dust as the cantrip takes effect. This activation takes the same number of actions as the cantrip you chose takes to cast.",
+  "why": "equipment-5140-4612 (Impossible Magic pg. 232) is the record's document since the reprint lane moved it there (2026-09-25, rule A): page, book, traits, edition and display tree followed, but the plain description — the search text and the popup's fallback — was still the Secrets of Magic printing's (equipment-1046-1000: \"In an effort to spread the knowledge of magic…, color-coded based on its school\", Activate … (envision, Interact)). Gold-set R12 says a record follows one printing whole. Every sentence here is the Impossible Magic page's, in the layout the record already used."
+ },
+ {
+  "category": "classFeatures",
+  "id": "greater-weapon-specialization-barbarian",
+  "field": "description",
+  "value": "The weapons you've mastered become truly fearsome in your hands. Your damage from weapon specialization increases to 4 with weapons and unarmed attacks in which you're an expert, 6 if you're a master, and 8 if you're legendary. You gain a greater benefit from your instinct's specialization ability.",
+  "why": "class-feature-862 (Player Core 2 pg. 70) is the record's document since the reprint lane pinned it there (2026-09-25), but its plain description still carried the Core Rulebook printing's closing line \"See specific instincts for more information.\" (class-feature-49), which Player Core 2 does not print. Gold-set R12: one printing, whole. The text is class-feature-862's paragraph."
+ },
+ {
+  "category": "items",
+  "id": "trackless",
+  "field": "description",
+  "value": "Trackless runes are common among hunters and trappers, as well as thieves and anyone fleeing pursuit. While wearing trackless footwear, you are continuously affected by the vanishing tracks spell.",
+  "why": "equipment-2304-2149 (Trackless, Treasure Vault (Remastered) pg. 145) is the record's document; desk #167's same-suffix rule now pairs it with the block it reprints (equipment-4836-4451), and reprint-check CHECK 8 found the plain description (the search text and the popup's fallback) still the older printing's (\"a +4 item bonus to the DC to track you. However, this bonus doesn't stack with the status bonus from Vanishing Tracks\"). Gold-set R12: one printing, whole. The text is equipment-2304's paragraph."
+ },
+ {
+  "category": "items",
+  "id": "cooling-elixir-lesser",
+  "field": "description",
+  "value": "**Activate** ⟨1⟩ (manipulate)\n\n---\n\nThis elixir is made to help you withstand extreme environments. For 24 hours, you're protected from the effects of severe heat.",
+  "why": "equipment-3304-3180 (Cooling Elixir (Lesser), Player Core 2 pg. 287) is the record's document; desk #167's same-suffix rule pairs it with Salamander Elixir (Lesser), equipment-98-166, and reprint-check CHECK 8 found the prose still that printing's (\"made from salamander scales to withstand fire\"). Gold-set R12: the sentence is equipment-3304's."
+ },
+ {
+  "category": "items",
+  "id": "cooling-elixir-moderate",
+  "field": "description",
+  "value": "**Activate** ⟨1⟩ (manipulate)\n\n---\n\nThis elixir is made to help you withstand extreme environments. For 24 hours, you're protected from the effects of severe heat. You're also protected from extreme heat.",
+  "why": "equipment-3304-3181 (Cooling Elixir (Moderate), Player Core 2 pg. 287), paired by desk #167 with Salamander Elixir (Moderate), equipment-98-167, whose \"made from salamander scales to withstand fire\" the record still read (reprint-check CHECK 8). Gold-set R12: equipment-3304's sentence and its Moderate line."
+ },
+ {
+  "category": "items",
+  "id": "cooling-elixir-greater",
+  "field": "description",
+  "value": "**Activate** ⟨1⟩ (manipulate)\n\n---\n\nThis elixir is made to help you withstand extreme environments. For 24 hours, you're protected from the effects of severe heat. You're also protected from extreme and incredible heat.",
+  "why": "equipment-3304-3182 (Cooling Elixir (Greater), Player Core 2 pg. 287), paired by desk #167 with Salamander Elixir (Greater), equipment-98-168, whose \"made from salamander scales to withstand fire\" the record still read (reprint-check CHECK 8). Gold-set R12: equipment-3304's sentence and its Greater line."
+ },
+ {
+  "category": "items",
+  "id": "guise-of-the-smirking-devil",
+  "field": "description",
+  "value": "This ice-blue half-mask is adorned with a wicked silver grin that covers only the wearer's mouth. You gain a +2 item bonus to Intimidation checks.\n\n**Activate—Hideous Wail** ⟨2⟩ (concentrate, manipulate)\n\n**Frequency** once per day\n\n---\n\n**Effect** The mask emits a soul-chilling scream that deals 6d10 void damage to each living creature in a 20-foot emanation (DC 25 basic Fortitude save).",
+  "why": "equipment-3434-3304 (Guise of the Smirking Devil, Player Core 2 pg. 310) is the record's document; desk #167's same-suffix rule pairs it with Mask of the Banshee, equipment-738-721, and reprint-check CHECK 8 found the prose still that printing's, numbers deleted (\"deals damage to each living creature in a ( save)\", a Craft Requirements line the remaster does not print). Gold-set R12: every sentence is equipment-3434's."
+ },
+ {
+  "category": "items",
+  "id": "pyrotechnic-versatile-vial",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Guns & Gears",
+   "license": "ORC"
+  },
+  "why": "feat-8528 (Firework Technician Dedication) is printed in Guns & Gears (Remastered) pg. 134, and scripts/data/book-names.json folds that printing into \"Pathfinder Guns & Gears\" — desk #166, \"Middle way\": a (Remastered) printing folds into its own book. The create row above wrote \"Pathfinder Guns & Gears (Remastered)\", which the Sources card drew as a second Guns & Gears row holding 2 records beside the 700. Licence unchanged; the stored-selection side is src/rules/sources.ts BOOK_FOLDS."
  }
 ]

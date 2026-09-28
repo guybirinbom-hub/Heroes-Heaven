@@ -1,7 +1,12 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
+import { execFileSync } from 'node:child_process';
+import { mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { content } from './_content';
-import { applySources, collectChosenIds, emptyBuild } from '../src/rules/build';
-import { CORE_BOOKS, sourceCatalog, enabledBookSet, categoryOfBook, NICHE_CATEGORIES } from '../src/rules/sources';
+import { applySources, buildCharacter, collectChosenIds, emptyBuild } from '../src/rules/build';
+import { CORE_BOOKS, CHOOSABLE_SOURCE_MAPS, sourceCatalog, enabledBookSet, categoryOfBook, NICHE_CATEGORIES, BOOK_FOLDS, BOOK_SPLITS, BOOK_SPLIT_MARK, storedSources } from '../src/rules/sources';
 
 const db = content();
 
@@ -136,5 +141,247 @@ describe('collectChosenIds', () => {
     for (const id of ['human', 'fighter', 'power-attack', 'detect-magic', 'heal', 'longsword']) {
       expect(ids.has(id)).toBe(true);
     }
+  });
+});
+
+/*
+ * desk #166 (owner, 2026-09-25, "Middle way"): book aliases stopped folding different books together, so
+ * Bestiary 3's records left "Monster Core 2" for their own book. A saved Sources choice must never be
+ * narrowed by that — UNKNOWN ≠ EMPTY, and a player's choice is never overwritten by the app.
+ */
+describe('enabledBookSet — the 2026-09-25 book split never narrows a saved choice', () => {
+  const MC2 = 'Pathfinder Monster Core 2';
+  const B3 = 'Pathfinder Bestiary 3';
+
+  it('a stored selection with the old fold target ON gets the real book ON too', () => {
+    const on = enabledBookSet([...CORE_BOOKS, MC2]);
+    expect(on.has(MC2)).toBe(true);
+    expect(on.has(B3)).toBe(true);
+    expect(on.has(BOOK_SPLIT_MARK)).toBe(true);
+    // idempotent: the set it returns, stored and read again, is the same set
+    expect([...enabledBookSet([...on])].sort()).toEqual([...on].sort());
+  });
+
+  it('a stored selection with the old fold target OFF keeps the real book OFF', () => {
+    const off = enabledBookSet([...CORE_BOOKS, 'Pathfinder Bestiary 2']);
+    expect(off.has(MC2)).toBe(false);
+    expect(off.has(B3)).toBe(false);
+  });
+
+  /* The first-toggle defect (browser, 2026-09-25): from "Core only" the Sources card wrote
+   * [...Core, Monster Core 2] with no mark, and the next read switched Bestiary 3 on beside it. */
+  it('no selection stored is "Core only" as a NEW selection: toggling Monster Core 2 on leaves Bestiary 3 off', () => {
+    const none = enabledBookSet(undefined);
+    expect([...none].filter((b) => b !== BOOK_SPLIT_MARK).sort()).toEqual([...CORE_BOOKS].sort());
+    const n = new Set(none);
+    n.add(MC2); // SourcesCard.setBooks
+    const reread = enabledBookSet(storedSources(n));
+    expect(reread.has(MC2)).toBe(true);
+    expect(reread.has(B3)).toBe(false);
+  });
+
+  it('a saved OLD selection gains the new book once, then never again', () => {
+    const first = enabledBookSet([...CORE_BOOKS, MC2]); // stored before the split: no mark
+    expect(first.has(B3)).toBe(true);
+    const n = new Set(first);
+    n.delete(B3); // the player then switches Bestiary 3 off
+    const stored = storedSources(n);
+    expect(enabledBookSet(stored).has(B3)).toBe(false);
+    expect(enabledBookSet(storedSources(enabledBookSet(stored))).has(B3)).toBe(false);
+  });
+
+  /* The guard: a list stored any other way reads as pre-split. Copies of a stored list and the "Core only"
+   * reset (undefined) are fine; anything that BUILDS a list must go through storedSources. */
+  it('every writer of enabledSources in src/ stores through storedSources', () => {
+    const walk = (d: string): string[] =>
+      readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : /\.tsx?$/.test(e.name) ? [join(d, e.name)] : []));
+    const ok = /^(storedSources\(|undefined\b|string\[\]|\{?\[?(\.\.\.)?[\w!?.]+\.enabledSources\]?\}?)/; // a call, the reset, a type, a copy
+    const bad = walk('src').flatMap((f) =>
+      [...readFileSync(f, 'utf8').matchAll(/\benabledSources\s*(?::|=(?!=))\s*(.*)/g)].filter((m) => !ok.test(m[1])).map((m) => `${f}: ${m[0].slice(0, 90)}`),
+    );
+    expect(bad).toEqual([]);
+  });
+
+  it('every split names a book the shipped content really carries, and the mark names none', () => {
+    const books = new Set(sourceCatalog(db).allBooks);
+    const missing = BOOK_SPLITS.map(([, to]) => to).filter((to) => !books.has(to));
+    expect(missing, 'a split pair whose new book has no choosable record').toEqual([]);
+    expect(books.has(BOOK_SPLIT_MARK)).toBe(false);
+  });
+
+  /*
+   * …and never OVERWRITTEN either: a book with a Sources row of its own that the stored list leaves out was
+   * switched off by the player. The Gatewalkers Player's Guide (Remastered) had its own row (with its own
+   * backgrounds) before the split, so Dark Archive (Remastered) being on must not switch it on.
+   */
+  it('a book the player could switch on themselves is never derived on (Dark Archive (Remastered) on, the Gatewalkers guide off)', () => {
+    const DAR = 'Pathfinder Dark Archive (Remastered)';
+    const GPG = "Pathfinder Gatewalkers Player's Guide (Remastered)";
+    const set = enabledBookSet([...CORE_BOOKS, DAR]);
+    expect(set.has(DAR)).toBe(true);
+    expect(set.has(GPG)).toBe(false);
+    expect(BOOK_SPLITS.some(([, to]) => to === GPG)).toBe(false);
+  });
+
+  /* Not splits: one book under two titles folds (scripts/data/book-names-reasons.json). Secrets of the Unlit
+   * Star is the remastered Beginner Box; the Azarketi web supplement reprints Absalom's own chapter. A
+   * character with only the fold target on keeps every record, as before desk #166. */
+  it('the two Beginner Box guides, and the Azarketi supplement with Absalom, fold into one book', () => {
+    for (const id of ['pyrite-rat', 'belt-of-good-health', 'hunters-bow', 'smoking-sword', 'poisonous-dagger', 'storm-hammer']) {
+      expect(db.items[id]?.source?.book, id).toBe('Pathfinder Beginner Box: Secrets of the Unlit Star');
+    }
+    const ABSALOM = 'Pathfinder Lost Omens Absalom, City of Lost Omens';
+    expect(db.ancestries.azarketi?.source?.book).toBe(ABSALOM);
+    expect(db.items['boarding-axe']?.source?.book).toBe(ABSALOM);
+    expect(db.items['gill-hook']?.source?.book).toBe(ABSALOM);
+    expect(sourceCatalog(db).allBooks).not.toContain("Pathfinder Beginner Box: Game Master's Guide");
+    expect(BOOK_SPLITS.some(([, to]) => /Azarketi|Beginner Box/.test(to))).toBe(false);
+  });
+
+  /* A spelling that escaped its fold (desk #166, 2026-09-25): the Sources card showed "Guns & Gears
+   * (Remastered)" with 2 records beside Guns & Gears with 700, and a legacy Dark Archive and Gatewalkers guide
+   * row the same way. The records carry the fold target now, through scripts/data/book-names.json. */
+  it('the Guns & Gears, Dark Archive, Treasure Vault and Gatewalkers guide printings are one row each', () => {
+    const books = sourceCatalog(db).allBooks;
+    for (const b of ['Pathfinder Guns & Gears (Remastered)', 'Pathfinder Dark Archive', 'Pathfinder Treasure Vault', "Pathfinder Gatewalkers Player's Guide"]) {
+      expect(books, b).not.toContain(b);
+    }
+    expect(db.feats['firework-technician-dedication']?.source?.book).toBe('Pathfinder Guns & Gears');
+    expect(db.items['pyrotechnic-versatile-vial']?.source?.book).toBe('Pathfinder Guns & Gears');
+    for (const id of ['mind-weapon', 'mind-smiths-keepsake']) expect(db.items[id]?.source?.book, id).toBe('Pathfinder Dark Archive (Remastered)');
+    expect(db.actions['binding-vow']?.source?.book).toBe('Pathfinder Dark Archive (Remastered)');
+    expect(db.backgrounds['wish-for-riches']?.source?.book).toBe("Pathfinder Gatewalkers Player's Guide (Remastered)");
+  });
+
+  /*
+   * …and a fold never flips a row the player could set. Round 6 derived the fold target ON for an old
+   * selection with the folded spelling on, which switched Guns & Gears (700 records) or Dark Archive
+   * (Remastered) (425) back on for a player who had them off. The owner's standing rule — a player's change is
+   * never overwritten by the app — outranks "never narrowed" where the two conflict (desk #166): the target
+   * row keeps what the selection says, the folded-in records follow it, and a character that holds one keeps
+   * it (collectChosenIds; the sheet reads the unfiltered content).
+   *
+   * The Sources card at v0.1.40 — the rows every saved selection before this lane was made from — read from
+   * git, not listed by hand: that release's own sourceCatalog (41c2b05:src/rules/sources.ts; the shelves and
+   * the row merge have changed since) over its own public/core.json. A hand list of the rows a pair names
+   * missed the Gatewalkers row gaining two volumes (below), because no pair named them.
+   */
+  const V0_1_40 = '41c2b05';
+  let rows40 = new Map<string, string[]>(); // "category / label" -> books
+  let keys40 = new Set<string>();
+  let shipped40 = new Set<string>(); // every v0.1.40 record, as "bucket/id" and as its Archives page
+  beforeAll(async () => {
+    const at40 = (path: string) => execFileSync('git', ['show', `${V0_1_40}:${path}`], { encoding: 'utf8', maxBuffer: 1 << 26 });
+    const file = join(mkdtempSync(join(tmpdir(), 'sources-v0.1.40-')), 'sources.ts');
+    writeFileSync(file, at40('src/rules/sources.ts')); // its one import is `import type`, which the transform drops
+    const { sourceCatalog: catalog40 } = (await import(/* @vite-ignore */ pathToFileURL(file).href)) as { sourceCatalog: typeof sourceCatalog };
+    const core40 = JSON.parse(at40('public/core.json'));
+    const cat = catalog40(core40);
+    rows40 = new Map(cat.groups.flatMap((g) => g.entries.map((e) => [`${g.category} / ${e.label}`, e.books] as const)));
+    keys40 = new Set(cat.allBooks);
+    shipped40 = new Set(
+      Object.entries(core40).flatMap(([m, recs]) =>
+        recs && typeof recs === 'object' && !Array.isArray(recs)
+          ? Object.entries(recs as Record<string, { aonId?: string }>).flatMap(([id, r]) => [`${m}/${id}`, ...(r?.aonId ? [r.aonId] : [])])
+          : [],
+      ),
+    );
+  }, 120_000);
+  const rowAt = (book: string) => [...rows40].find(([, bs]) => bs.includes(book))?.[0];
+  const GATEWALKERS_VOLUME_GRADES = [
+    'stalk-goggles-greater', 'stalk-goggles-major', // #187: The Seventh Arch
+    'pickled-demon-tongue-greater', 'pickled-demon-tongue-major', 'polished-demon-horn-greater', 'polished-demon-horn-major', // #188
+  ];
+
+  it('every split or fold derives only a key that was never the player’s to set', () => {
+    expect(rows40.size).toBeGreaterThan(50);
+    for (const [from, to] of [...BOOK_SPLITS, ...BOOK_FOLDS]) {
+      expect(keys40.has(from), `${from}: no v0.1.40 selection could hold it`).toBe(true);
+      if (!keys40.has(to)) continue; // no row of its own then: never the player's to set
+      expect(rowAt(to), `${from} -> ${to} would switch on a row the player could set`).toBe(rowAt(from));
+    }
+    expect(BOOK_FOLDS.some(([from]) => BOOK_SPLITS.some(([f]) => f === from))).toBe(false);
+  });
+
+  /*
+   * …and no relabel inside a row narrows a saved choice in silence. A selection stored before this lane holds
+   * the book keys its rows had at v0.1.40. A key in a row now that no v0.1.40 row had is one that selection
+   * cannot hold, so every record under it hides from a player who had the whole row on — six Gatewalkers grades
+   * moved from "Adventure Path: Gatewalkers" to the #187 and #188 volumes (e26a64c) and read 5/7 books on.
+   * Each such key must be derived by a split or fold pair; a key that only moved rows (a shelf change) is still
+   * held by name. One case needs no pair, and is measured, not listed: a new book in a row no v0.1.40 card had,
+   * none of whose records shipped at v0.1.40 (by id or by Archives page) — nothing was taken from anyone, and
+   * a pair would switch on a row nobody was ever shown (the Bastion of Blasphemies Player's Guide: six
+   * backgrounds that arrived with 7e2e285, while its volume #224 sits in "Other Adventure Paths").
+   */
+  it('every book in every Sources row was a v0.1.40 key, or a split or fold derives it', () => {
+    const derived = new Set([...BOOK_SPLITS, ...BOOK_FOLDS].map(([, to]) => to));
+    const shippedUnder = (book: string) =>
+      CHOOSABLE_SOURCE_MAPS.flatMap((m) =>
+        Object.entries((db[m] ?? {}) as Record<string, { source?: { book?: string }; aonId?: string }>)
+          .filter(([id, r]) => r.source?.book?.trim() === book && (shipped40.has(`${m}/${id}`) || (!!r.aonId && shipped40.has(r.aonId))))
+          .map(([id]) => `${m}/${id}`),
+      );
+    const uncovered = sourceCatalog(db).groups.flatMap((g) =>
+      g.entries.flatMap((e) => {
+        const row = `${g.category} / ${e.label}`;
+        return e.books
+          .filter((b) => !keys40.has(b) && !derived.has(b) && (rows40.has(row) || shippedUnder(b).length > 0))
+          .map((b) => `${row}: ${b}${rows40.has(row) ? '' : ` (records that shipped at v0.1.40: ${shippedUnder(b).slice(0, 4).join(', ')})`}`);
+      }),
+    );
+    expect(uncovered, 'a book key no v0.1.40 selection could hold: cover it with a BOOK_SPLITS pair from the key its records left').toEqual([]);
+  });
+
+  it('an old whole-row Gatewalkers selection reads every book on, and the #187 / #188 grades stay in the pickers', () => {
+    const old = rows40.get('Adventure Paths / Gatewalkers')!;
+    expect(old).toContain('Pathfinder Adventure Path: Gatewalkers');
+    expect(old).not.toContain('Pathfinder #187: The Seventh Arch');
+    const on = enabledBookSet([...CORE_BOOKS, ...old]); // stored before the split: no mark
+    const row = sourceCatalog(db).groups.find((g) => g.category === 'Adventure Paths')!.entries.find((e) => e.label === 'Gatewalkers')!;
+    expect(row.books.filter((b) => !on.has(b))).toEqual([]);
+    const picker = applySources(db, on, collectChosenIds(emptyBuild(), db));
+    for (const id of GATEWALKERS_VOLUME_GRADES) expect(picker.items[id], id).toBeTruthy();
+    // …and once saved again (marked) it stays whole
+    expect(row.books.filter((b) => !enabledBookSet(storedSources(on)).has(b))).toEqual([]);
+  });
+
+  it('a marked selection with the Gatewalkers row off keeps it off', () => {
+    const on = enabledBookSet(storedSources(CORE_BOOKS));
+    const row = sourceCatalog(db).groups.find((g) => g.category === 'Adventure Paths')!.entries.find((e) => e.label === 'Gatewalkers')!;
+    expect(row.books.filter((b) => on.has(b))).toEqual([]);
+    const picker = applySources(db, on, collectChosenIds(emptyBuild(), db));
+    for (const id of GATEWALKERS_VOLUME_GRADES) expect(picker.items[id], id).toBeUndefined();
+  });
+
+  it('saved Core + Guns & Gears (Remastered), Guns & Gears off: it stays off, its 2 folded records leave the pickers, a held vial stays', () => {
+    const GG = 'Pathfinder Guns & Gears';
+    const saved = [...CORE_BOOKS, 'Pathfinder Guns & Gears (Remastered)']; // stored before the fold: no mark
+    const on = enabledBookSet(saved);
+    expect(on.has(GG)).toBe(false);
+    expect(enabledBookSet(storedSources(on)).has(GG)).toBe(false); // …and stays off once saved again
+    const picker = applySources(db, on, collectChosenIds(emptyBuild(), db));
+    expect(picker.items['pyrotechnic-versatile-vial']).toBeUndefined();
+    expect(picker.feats['firework-technician-dedication']).toBeUndefined();
+    const holder = { ...emptyBuild(), enabledSources: saved, inventory: [{ instanceId: 'v1', itemId: 'pyrotechnic-versatile-vial', quantity: 1 }] };
+    expect(applySources(db, on, collectChosenIds(holder, db)).items['pyrotechnic-versatile-vial']).toBeTruthy();
+    expect(buildCharacter(holder, db).inventory.map((i) => i.itemId)).toContain('pyrotechnic-versatile-vial');
+  });
+
+  it('saved Core + legacy Dark Archive, Dark Archive (Remastered) off: it stays off', () => {
+    const DAR = 'Pathfinder Dark Archive (Remastered)';
+    const on = enabledBookSet([...CORE_BOOKS, 'Pathfinder Dark Archive']);
+    expect(on.has(DAR)).toBe(false);
+    expect(enabledBookSet(storedSources(on)).has(DAR)).toBe(false);
+    expect(applySources(db, on, collectChosenIds(emptyBuild(), db)).items['mind-weapon']).toBeUndefined();
+    // …and a selection with it ON keeps it on, the folded records with it
+    const withDar = enabledBookSet([...CORE_BOOKS, DAR]);
+    expect(applySources(db, withDar, new Set()).items['mind-weapon']).toBeTruthy();
+  });
+
+  it('the Gatewalkers guide still folds for an old selection: both spellings were one row', () => {
+    const GPG = "Pathfinder Gatewalkers Player's Guide (Remastered)";
+    expect(enabledBookSet([...CORE_BOOKS, "Pathfinder Gatewalkers Player's Guide"]).has(GPG)).toBe(true);
+    expect(enabledBookSet(storedSources([...CORE_BOOKS, "Pathfinder Gatewalkers Player's Guide"])).has(GPG)).toBe(false);
   });
 });

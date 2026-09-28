@@ -44,6 +44,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { backgroundUnapplied, CLAUSE_FIELDS } from './lib/background-print.mjs';
+import { lostWords, reprintTwinGaps, ruleFields, TRACKER_FIELDS } from './lib/reprint-twin-gaps.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (k, d = null) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
@@ -549,8 +550,9 @@ function buildLedger(batchedOnly) {
    *
    * So the ledger names them, and the marker shows for them. A created record leaves the list by
    * itself the moment anything is encoded on it — a field the creator does not write, a boost, or its
-   * id on one of the code registries the lanes above scrape. Items are not listed: a created item is
-   * derived like every other new-only item (price, Bulk, level, weapon stats from the page's facets).
+   * id on one of the code registries the lanes above scrape. Created items are not listed: a created item
+   * is derived like every other new-only item (price, Bulk, level, weapon stats from the page's facets).
+   * An item that is a reprint TWIN doing less than its legacy printing is — see the end of this function.
    */
   const CREATED_CONTENT = new Set([
     'id', 'name', 'traits', 'rarity', 'source', 'description', 'descRefs', 'edition', 'level', 'category',
@@ -592,6 +594,35 @@ function buildLedger(batchedOnly) {
     if (missing) partly[`backgrounds/${id}`] = missing;
   }
 
+  /*
+   * ---- a REPRINT TWIN that does less than the printing it replaces (2026-09-25).
+   *
+   * Hide legacy data offers 56 reprints in their legacy half's place (findHiddenTwins, src/data/index.ts),
+   * and none showed a marker: Greater Singing Shortbow lands as an Equipment card with no Strike, beside
+   * Keep Pace's "Not yet verified". Nothing above can name them — they are not created records, and a
+   * record carrying no strippable path has nothing for `records` to list. (No trust is inherited from the
+   * legacy copy either: Wanderer's Guide has no row for any of the 56 and encodes nothing on their stand-ins.)
+   * So a same-level twin that lacks a rule field its legacy printing carries (scripts/lib/reprint-twin-gaps.mjs)
+   * is marked: `unencoded` when, once this gate has taken its OFF paths, nothing it carries applies beyond
+   * a uses tracker (all 56, Guiding Starknife …); `partly`, naming what the legacy printing does that it
+   * does not, when some of its own rules still apply and the two print the same price too (the Judgement
+   * Thurible keeps its spells and lacks its Armor/Weapon choice; the Dwarven Waraxe has a Strike and no
+   * hands). A repriced reprint that applies rules of its own is left alone: Arboreal Boots prints no
+   * activation, so "its activation" would be false. scripts/trust-ledger-check.mjs holds every same-price
+   * twin to a marker; test/hidden-reprint-twins.test.ts holds the 56.
+   */
+  const stripTop = (p) => p.split('.')[0].replace(/\[\]$/, '');
+  for (const { key, samePrice, lostSamePrice } of reprintTwinGaps(core)) {
+    const rec = core.items[key.slice('items/'.length)];
+    const off = new Set(records[key] ?? []);
+    const applies = ruleFields(rec).filter((f) => !TRACKER_FIELDS.has(f)).filter((f) => {
+      const paths = FIELDS.filter((p) => stripTop(p.path) === f && pathValues(rec, p.path).length);
+      return !paths.length || paths.some((p) => !off.has(p.path));
+    });
+    if (!applies.length) { if (!unencoded.includes(key)) unencoded.push(key); } else if (samePrice) partly[key] = lostWords(lostSamePrice);
+  }
+  unencoded.sort();
+
   return { ledger: { coreSha, wgSha, generator: 'scripts/trust-ledger.mjs', lanes, records, unencoded, partly }, stats };
 }
 
@@ -619,7 +650,7 @@ const census = (label, m, bytes) => {
 console.log(`-> ${OUT}  (${BATCHED_ONLY ? '--batched-only' : 'default'} mode)`);
 console.log(census('default        ', modes.default, Buffer.byteLength(stable(modes.default.ledger))));
 console.log(census('--batched-only ', modes.batchedOnly, Buffer.byteLength(stable(modes.batchedOnly.ledger))));
-console.log(`created records the marker names: ${chosen.ledger.unencoded.length} with nothing encoded · ${Object.keys(chosen.ledger.partly).length} partly encoded`);
+console.log(`records the marker names (created, and reprint twins doing less than their legacy printing): ${chosen.ledger.unencoded.length} with nothing encoded · ${Object.keys(chosen.ledger.partly).length} partly encoded`);
 /* The 2026-09-11 rules, per mode: how many records each one handed back paths on. A rule that is in
  * trust-approvals.json and rescues NOTHING is the silent failure this line exists to make loud. */
 for (const [label, m] of [['default        ', modes.default], ['--batched-only ', modes.batchedOnly]]) {

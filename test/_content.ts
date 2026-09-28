@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { seedContent } from '../src/rules/seed';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import type { Character, ContentDatabase } from '../src/rules/types';
-import { findDuplicateIds } from '../src/data';
+import { findCombinationFormIds, findDuplicateIds, findHiddenTwins, findUmbrellaIds } from '../src/data';
 import { applyTrustGate } from '../src/data/trustGate';
 
 /**
@@ -50,9 +50,14 @@ export function content(opts?: { trustGate?: boolean }): ContentDatabase {
     merged[k] = { ...((seedContent as Record<string, Record<string, unknown>>)[k] ?? {}), ...(gated[k] ?? {}) };
   }
   const db = merged as ContentDatabase;
-  // Same duplicate-scrape suppression the app computes in mergeWithSeed, using the SAME function, so
-  // tests see the lists the user actually sees.
+  // The four hidden-from-lists sets the app computes at the end of mergeWithSeed, with the SAME
+  // functions, so tests see the lists the user actually sees. The umbrella and combination-form sets
+  // were missing here once, and a measure of the hide-legacy shop counted family summaries nobody is
+  // offered (items/healers-gel) as buyable.
   db.duplicateIds = findDuplicateIds(db);
+  db.hiddenTwins = findHiddenTwins(db, db.duplicateIds);
+  db.umbrellaIds = findUmbrellaIds(db.items as unknown as Record<string, unknown>);
+  db.combinationFormIds = findCombinationFormIds(db.items as unknown as Record<string, unknown>);
   if (gate) cachedGated = db;
   else cached = db;
   return db;

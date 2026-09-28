@@ -274,9 +274,99 @@ export function sourceCatalog(content: ContentDatabase): {
   return { groups, allBooks: Object.keys(counts).sort(), homebrew };
 }
 
+/**
+ * desk #166 (owner, 2026-09-25, "Middle way"): scripts/data/book-names.json stopped folding different books
+ * together, so records that sat under the fold target now carry their own book — Bestiary 3's are no longer
+ * "Monster Core 2". [old key, new key] pairs: a selection that had the old key ON gets the new key ON too.
+ *
+ * ⚠ ONLY WHERE THE NEW KEY WAS NEVER THE PLAYER'S TO SET. A stored list holds what the player chose from the
+ * Sources card, so a book with a row of its own that is absent from the list was switched OFF — deriving it
+ * ON would overwrite that choice. A pair belongs here only when the player could not have chosen the new
+ * book on its own before the split: it held no choosable record (Bestiary 3, each blog post), or the card
+ * toggled it in the same row as the old key (the Hellbreakers and Hell's Destiny volumes, the "Blogs & web
+ * articles" row, and the Gatewalkers volumes #187 and #188: six Greater / Major grades moved to them from
+ * "Adventure Path: Gatewalkers" with the Archives refresh e26a64c, inside the one Gatewalkers row, so an old
+ * whole-row selection read 5 of 7 books on and lost them). test/sources.test.ts compares every Sources row
+ * with the v0.1.40 card read from git, so a key a relabel adds to a row fails until a pair here covers it.
+ *
+ * NOT here either, because they are not splits: the Azarketi Ancestry Web Supplement (a free reprint of
+ * Absalom, City of Lost Omens' own chapter) and the 2020 Beginner Box Game Master's Guide (Secrets of the
+ * Unlit Star is the remastered Beginner Box) are the SAME book as their fold target, so book-names.json
+ * still folds them (#166 applied, scripts/data/book-names-reasons.json).
+ *
+ * NOT here: Dark Archive (Remastered) -> Gatewalkers Player's Guide (Remastered). The guide already had a
+ * Gatewalkers row of its own with its own backgrounds, so a selection with Dark Archive (Remastered) on and
+ * the guide off had switched the guide off. Its eight feats (Sonic Dash … Feed the Void, feat-8030..8037,
+ * printed in the guide only) had shown under Dark Archive (Remastered) purely by the fold; they now show to
+ * whoever has the guide on — the choice that was made — and a character that took one keeps it
+ * (collectChosenIds). test/sources.test.ts pins both halves.
+ *
+ * A split moves only what the old book does NOT print: a new selection sees the two books as separate
+ * toggles, so a record printed in both that moved to the new key would vanish for a player with only the
+ * old one on (scripts/reprint-check.mjs CHECK 7 holds every pair here to that).
+ */
+export const BOOK_SPLITS: ReadonlyArray<readonly [string, string]> = [
+  ['Pathfinder Monster Core 2', 'Pathfinder Bestiary 3'],
+  ['Pathfinder Adventure Path: Hellbreakers', 'Pathfinder #222: Hellbreakers'],
+  ["Pathfinder Adventure Path: Hell's Destiny", "Pathfinder #223: Hell's Destiny"],
+  ['Pathfinder Adventure Path: Gatewalkers', 'Pathfinder #187: The Seventh Arch'],
+  ['Pathfinder Adventure Path: Gatewalkers', 'Pathfinder #188: They Watched the Stars'],
+  ["Pathfinder Extinction Curse Player's Guide", "Pathfinder Blog: Come One, Come All, to the Extinction Curse Player's Guide!"],
+  ...[
+    'Battle of the Pantheons Winner Announcement', 'Celebrating Hispanic Heritage Month', 'Friends in High Places',
+    "GM's Toolkit: Secret Keeper's Mask", 'Gods of the Expanse', 'Redpitch Alchemy',
+  ].map((t) => ['Pathfinder Blog', `Pathfinder Blog: ${t}`] as const),
+];
+/**
+ * The other direction (desk #166: a "(Remastered)" printing folds into its own book). A few records carried
+ * a printing's spelling that the table now folds — "Pathfinder Guns & Gears (Remastered)" (2 records) into
+ * "Pathfinder Guns & Gears", legacy "Pathfinder Dark Archive" (3) into "Dark Archive (Remastered)", legacy
+ * "Pathfinder Treasure Vault" (13) into "Treasure Vault (Remastered)", legacy "Pathfinder Gatewalkers
+ * Player's Guide" (1) into its (Remastered) key — and scripts/reprint-check.mjs CHECK 4 fails a choosable
+ * record that still differs from a fold target only by "(Remastered)".
+ *
+ * A fold carries the old spelling's RECORDS under the target key and nothing else. [old key, new key] here
+ * derives the target ON for a stored selection from before, which is the split's rule and has the split's
+ * limit: ONLY WHERE THE NEW KEY WAS NEVER THE PLAYER'S TO SET. At v0.1.40 (41c2b05, sourceCatalog measured)
+ * Guns & Gears (700), Dark Archive (Remastered) (425) and Treasure Vault (Remastered) (1,436) each had a
+ * Sources row of their own beside the folded spelling's row, so a selection without them had switched them
+ * off, and deriving them on would overwrite that (desk #166; the owner's standing rule that a player's change
+ * is never overwritten by the app outranks "never narrowed" where the two conflict). Those rows keep what the
+ * selection says; the folded-in records follow the target row, and a character that holds one keeps it
+ * (collectChosenIds, src/rules/build.ts). Only the Gatewalkers guide is here: both spellings sat in the one
+ * "Gatewalkers" row, which toggled them together. test/sources.test.ts pins both halves.
+ */
+export const BOOK_FOLDS: ReadonlyArray<readonly [string, string]> = [
+  ["Pathfinder Gatewalkers Player's Guide", "Pathfinder Gatewalkers Player's Guide (Remastered)"],
+];
+/**
+ * Marks a selection made with the split books as separate toggles. A stored list WITHOUT it is from before
+ * the split and gets the split once, on read; a list WITH it is taken as the player left it, so a book
+ * they switched off (Bestiary 3 while keeping Monster Core 2) stays off. Every writer stores through
+ * `storedSources`, so every list written from now on carries it. It names no book, so no filter matches it.
+ */
+export const BOOK_SPLIT_MARK = 'split:book-names-2026-09-25';
+
+/**
+ * The one way a selection is stored: the books chosen, plus the mark. A list written without the mark read
+ * as pre-split, so the first toggle from "Core only" (no list stored yet) saved `[...Core, Monster Core 2]`
+ * and the next read switched Bestiary 3 on beside it — a book the player never touched. test/sources.test.ts
+ * fails on a writer that builds `enabledSources` any other way.
+ */
+export function storedSources(books: Iterable<string>): string[] {
+  return [...new Set([...books, BOOK_SPLIT_MARK])].sort();
+}
+
 /** Resolve a build's enabled-books field to the concrete set (absent → Core-only). */
 export function enabledBookSet(enabledSources: string[] | undefined): Set<string> {
-  return new Set(enabledSources ?? CORE_BOOKS);
+  // unknown ≠ empty: no stored choice stays "Core only". A new selection, so the split never runs on it.
+  if (!enabledSources) return new Set([...CORE_BOOKS, BOOK_SPLIT_MARK]);
+  const set = new Set(enabledSources);
+  if (!set.has(BOOK_SPLIT_MARK)) {
+    for (const [from, to] of [...BOOK_SPLITS, ...BOOK_FOLDS]) if (set.has(from)) set.add(to);
+    set.add(BOOK_SPLIT_MARK);
+  }
+  return set;
 }
 
 /**

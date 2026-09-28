@@ -332,8 +332,24 @@ describe('apply-parity-fixes refusals', () => {
     expect(readFileSync(path.join(root, 'src/a.ts'), 'utf8')).toBe('const n = 1;\n');
   });
 
+  it('7 — retract:true removes the row with that key; refused with no doc id; skipped once gone', () => {
+    const kept = { category: 'items', id: 'spined-shield', field: 'price', value: 5 };
+    const root = fixture([clean(), kept, ...FILLER]);
+    const out = { category: 'items', id: 'spined-shield', field: 'bulk', retract: true };
+    expect(run(root, [{ id: 'f7a', backfillRows: [out] }], ['--write']).code).toBe(1); // no why
+    const r = run(root, [{ id: 'f7', backfillRows: [{ ...out, why: 'equipment-2827: the row existed only for a rule since reversed.' }] }], ['--write', '--expect-rows', '21']);
+    expect(r.code).toBe(0);
+    expect(r.out).toContain('1 retracted');
+    const rows = overlayRows(root);
+    expect(rows.some((x) => x.field === 'bulk')).toBe(false);
+    expect(rows).toContainEqual(kept); // only that key goes
+    const again = run(root, [{ id: 'f7', backfillRows: [{ ...out, why: 'equipment-2827' }] }], ['--write']);
+    expect(again.code).toBe(0);
+    expect(again.out).toContain('already retracted');
+  });
+
   it('keeps the 10% shrink guard on the path a hand run writes through', () => {
-    // The applier only appends and replaces, so it cannot shrink the file itself — the guard exists for
+    // The applier only appends, replaces and retracts single rows by key, so it cannot shrink the file wholesale — the guard exists for
     // the caller that builds its array from a PARTIAL read. Proved on the writer the applier calls, on a
     // fixture root, and by the applier never passing the { allowShrink } escape.
     const root = fixture(FILLER);

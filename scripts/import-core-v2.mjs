@@ -20,7 +20,7 @@ import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
 import { aonFacets, backgroundFacets, packOf, fillFrequencyCounters, prerequisitesFrom } from './lib/aon-facets.mjs';
 import { loadLivePages, liveEdition } from './lib/live-pages.mjs';
-import { buildReprintMap, repointDoc } from './lib/reprint.mjs';
+import { loadReprintIndex, repointDoc } from './lib/reprint.mjs';
 import { creationPlan, subclassLink, ancestryOf, appendSubclassOptions } from './lib/player-create.mjs';
 import {
   BESTIARY_CATEGORIES, LABELLED_BUCKETS, REFERENCE, asPage as archivePage, createBucket, creationPlan as archivePlan, loadPages, namesBook, nonPlayerCategories, parentPageOf,
@@ -502,8 +502,14 @@ for (const f of readdirSync(DATA).filter((x) => x.endsWith('.json'))) {
  * remaster and after remster data)"; gold-set R12). Built from the documents already loaded above —
  * `data.legacy_id` / `data.remaster_id` state the pairing, so no name matching is involved. See
  * scripts/lib/reprint.mjs for the rule and its two exceptions.
+ *
+ * Read from the WHOLE export (loadReprintIndex), not from `docById`: the sub-page rules resolve a sidebar
+ * through the page it is printed on, and `docById` skips the REF_SKIP categories, eidolon among them —
+ * built from it, the map lost exactly one pair build-map.mjs has (sidebar-1576 "Embodiments of Sin" ->
+ * sidebar-3755, printed on the eidolon page eidolon-19), so the record would have been stamped with the
+ * reprint's page while built from the old one. One map, the same in both places.
  */
-const reprints = buildReprintMap(docById);
+const reprints = loadReprintIndex(DATA);
 
 // ------------------------------------------------------------------ fresh-record derivation (new-only corpus)
 // New-only records (no old baseline) that Foundry never had. Added with facet-derived fields so they're
@@ -1270,6 +1276,35 @@ let backfillCount = 0;
   // …and only then a created class option into its class's list: a backfill row may set a whole list.
   const appended = appendSubclassOptions(db, playerCreated);
   if (appended) console.log(`[import-v2] appended ${appended} created class option(s) to their class's option list`);
+}
+
+/*
+ * EVERY RECORD'S BOOK GOES THROUGH THE TABLE'S PRINTING FOLDS — not only the ones built from a document.
+ *
+ * mapBook runs where a record is derived or overlaid from the Archives. A kept orphan carries the
+ * Foundry-era label (actions/binding-vow, backgrounds/wish-for-riches, classFeatures/psychic-weapon-expertise
+ * read "Pathfinder Dark Archive" / "Pathfinder Gatewalkers Player's Guide") and a create row carries what was
+ * typed (items/mind-weapon, items/mind-smiths-keepsake), so a legacy spelling the table folds (desk #166: a
+ * "(Remastered)" printing folds into its own book) escaped it, and the Sources card drew a second row of one
+ * book. Round 6 relabelled four of them by hand; the table now answers for all. A PRINTING fold only (the
+ * table's book differs by "(Remastered)" alone): a rename stays the importer's business, and the GM Search's
+ * page rows (LABELLED_BUCKETS) name the page's own printing on purpose (pageBook / namesBook).
+ * scripts/reprint-check.mjs CHECK 4 fails a choosable record that still escapes.
+ */
+{
+  const printing = (s) => String(s).replace(/\s*\((?:remastered|remaster)\)\s*/gi, ' ').trim();
+  let folded = 0;
+  for (const [bucket, rows] of Object.entries(db)) {
+    if (LABELLED_BUCKETS.has(bucket) || !rows || typeof rows !== 'object' || Array.isArray(rows)) continue;
+    for (const rec of Object.values(rows)) {
+      const b = rec?.source?.book;
+      const to = typeof b === 'string' ? mapBook(b) : undefined;
+      if (!to || to === b.trim() || printing(to) !== printing(b)) continue;
+      rec.source = { ...rec.source, book: to };
+      folded++;
+    }
+  }
+  console.log(`[import-v2] ${folded} record(s) outside the Archives' own derivation took the table's printing fold for their book`);
 }
 
 // ------------------------------------------------------------------ per-bucket ast (lazy-loaded, Step 1)

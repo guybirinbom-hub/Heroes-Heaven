@@ -434,7 +434,7 @@ function DocBody({ top, ctx, hideMeta }: { top: AstNode[]; ctx: Ctx; hideMeta?: 
  * Full description popup content for one record's ast — header (name + action glyph + badge),
  * AoN-ordered colour-coded trait chips, then the meta + prose body. Slots into HH's popup chrome.
  */
-export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, headerControls }: {
+export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, headerControls, footer }: {
   node: AstNode;
   /** "bucket:slug" of the open record, so its self-links render as plain text */
   selfRef?: string;
@@ -445,6 +445,8 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, head
   hideMeta?: boolean;
   /** controls (Back / pin / close) rendered at the right of the header, when the popup owns the chrome */
   headerControls?: ReactNode;
+  /** a line of ours after the page's prose, inside the scrolling body (desk #158's "Remastered as …") */
+  footer?: ReactNode;
 }): ReactNode {
   // A link's target must actually ship, or it renders inert rather than as a button that does nothing.
   const content = useContent();
@@ -453,7 +455,7 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, head
     : undefined;
   const ctx: Ctx = { selfRef, onOpenRef, hasRef };
   const top = node.c || [];
-  if (bodyOnly) return <div className="ast-body ast-embed"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} /></div>;
+  if (bodyOnly) return <div className="ast-body ast-embed"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} />{footer}</div>;
   const title = top.find((n) => n.t === 'title' && Number(n.level || 1) <= 1) || top.find((n) => n.t === 'title');
   const name = title ? textOf(title.c?.find((x) => x.t === 'link' || x.t === 'text') || title) : '';
   const badge = title?.right;
@@ -509,7 +511,7 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, head
           })}
         </div>
       )}
-      <div className="ast-body"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} /></div>
+      <div className="ast-body"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} />{footer}</div>
     </div>
   );
 }

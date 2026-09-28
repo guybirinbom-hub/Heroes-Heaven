@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
-import { listValues } from '../data';
+import { shopItems } from '../data';
 import type { Coins, ContentDatabase, Item } from '../rules/types';
 import { canAfford } from '../rules/play';
 import { formatItemPrice, parsePrice } from '../rules/wealth';
 import { confirmDialog } from './confirm';
 import { FilterableSelect, descNodeOf } from './FilterableSelect';
 import { ITEM_SPEC } from './filterSpecs';
+import { TrustMarker } from './TrustMarker';
 
 /** bug 2026-09-12 #7: homebrew-delete — an item THIS USER authored (or copy-on-wrote from a printed
  *  one), which is the only kind the delete control below may touch. Same two-part test the item
@@ -126,13 +127,10 @@ export function AddItemsModal({
           ),
         ]
       : [];
-    const items = listValues(content, content.items).filter((i) => {
-      const e = (i as { edition?: string }).edition;
-      if (e === 'superseded') return false; // renamed/outdated half of a remaster change — always hidden
-      if (i.retired) return false; // bug 2026-09-12 #7: deleted here, but still resolvable for anyone carrying one
-      if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) return false;
-      return true;
-    });
+    /* shopItems (src/data): superseded, retired and — under "Hide legacy data" — legacy items are filtered
+     * BEFORE listValues, so a desk #158 reprint the duplicate rules hide behind its legacy half is offered
+     * when that half is taken away (findHiddenTwins). */
+    const items = shopItems(content, hideLegacy);
     return [...items, ...svcEntries, ...vehicleEntries].sort(
       (a, b) => a.level - b.level || a.name.localeCompare(b.name),
     );
@@ -182,6 +180,9 @@ export function AddItemsModal({
               {svc ? svc.price ?? 'varies' : comp ? comp.price ?? 'free' : formatItemPrice(it)}
               {!svc && !comp && it.rarity !== 'common' ? ` · ${it.rarity}` : ''}
             </div>
+            {/* The row a player buys from says what the popup says: a reprint "Hide legacy data" offers in its
+                legacy half's place may be its page's text alone (Greater Singing Shortbow, no Strike). */}
+            {!svc && !comp && <TrustMarker bucket="items" id={it.id} />}
           </>
         );
         return (

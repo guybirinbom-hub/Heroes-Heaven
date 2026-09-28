@@ -233,13 +233,17 @@ describe('archives refresh — values that went missing', () => {
      * prints its id. None is this lane's — each is one of the 154 class-table rows still sitting on
      * another printing's document, which `scripts/class-table-diff.mjs` counts on every run and which
      * is its own batch. Pinned by name so a SIXTH cannot join them unnoticed.
+     *
+     * Reprint lane 2026-09-25: FIVE -> THREE. The barbarian's level-15 and the inventor's level-11 rows
+     * named records sitting on the MAGUS's Secrets of Magic pages (class-feature-438 / -436); overlay
+     * aonId rows now pin them to their own classes' current printings (class-feature-862, Player Core 2;
+     * class-feature-497, Guns & Gears Remastered), edition remaster, so hide-legacy keeps them. The three
+     * left are the class-table lane's, allow-listed with that reason in scripts/class-table-diff.mjs.
      */
     expect(nameless(true)).toEqual([
       'alchemist L1 formula-book',
-      'barbarian L15 greater-weapon-specialization-barbarian',
       'bard L1 occult-spellcasting',
       'champion L1 deific-weapon',
-      'inventor L11 medium-armor-expertise-inventor',
     ]);
   });
 
