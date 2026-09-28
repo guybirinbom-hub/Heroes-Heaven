@@ -12,6 +12,14 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview", "--", "--port", "4173", "--strictPort"],
       "port": 4173
+    },
+    {
+      "name": "hh-tracker",
+      "//": "The initiative tracker (its own Vite app under tracker/). Run vite's JS through node directly: the .cmd shim shells out to a bare 'node' that is not on PATH in the preview host.",
+      "runtimeExecutable": "C:/PROGRA~1/nodejs/node.exe",
+      "runtimeArgs": ["C:/trying ai 2/pf2e codex/tracker/node_modules/vite/bin/vite.js", "--config", "C:/trying ai 2/pf2e codex/tracker/vite.config.ts"],
+      "port": 1421,
+      "autoPort": false
     }
   ]
 }
