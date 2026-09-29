@@ -322,8 +322,11 @@ export const BOOK_SPLITS: ReadonlyArray<readonly [string, string]> = [
  * a printing's spelling that the table now folds — "Pathfinder Guns & Gears (Remastered)" (2 records) into
  * "Pathfinder Guns & Gears", legacy "Pathfinder Dark Archive" (3) into "Dark Archive (Remastered)", legacy
  * "Pathfinder Treasure Vault" (13) into "Treasure Vault (Remastered)", legacy "Pathfinder Gatewalkers
- * Player's Guide" (1) into its (Remastered) key — and scripts/reprint-check.mjs CHECK 4 fails a choosable
- * record that still differs from a fold target only by "(Remastered)".
+ * Player's Guide" (1) into its (Remastered) key. scripts/reprint-check.mjs CHECK 4 fails a choosable record
+ * whose book is not a fold target but has a fold target's title (bookTitle, scripts/lib/aon-facets.mjs:
+ * "(Remastered)", "(Hardcover)" / "Hardcover Compilation", a "Lost Omens" / "Adventure:" line, curly
+ * apostrophes …), and two shipped spellings of one title where neither is a target. Until 2026-09-29 it
+ * failed only a "(Remastered)" difference; it keeps that wording where that is the difference.
  *
  * A fold carries the old spelling's RECORDS under the target key and nothing else. [old key, new key] here
  * derives the target ON for a stored selection from before, which is the split's rule and has the split's
@@ -333,11 +336,33 @@ export const BOOK_SPLITS: ReadonlyArray<readonly [string, string]> = [
  * off, and deriving them on would overwrite that (desk #166; the owner's standing rule that a player's change
  * is never overwritten by the app outranks "never narrowed" where the two conflict). Those rows keep what the
  * selection says; the folded-in records follow the target row, and a character that holds one keeps it
- * (collectChosenIds, src/rules/build.ts). Only the Gatewalkers guide is here: both spellings sat in the one
- * "Gatewalkers" row, which toggled them together. test/sources.test.ts pins both halves.
+ * (collectChosenIds, src/rules/build.ts). A pair goes here only where both spellings sat in ONE v0.1.40 row,
+ * which toggled them together: the Gatewalkers guide was the first ("Gatewalkers" row); the 2026-09-29
+ * paragraph below adds six more of that shape. test/sources.test.ts pins both halves.
+ *
+ * 2026-09-29, the same rule over the other spellings of one book (scripts/data/book-names.json, folded in the
+ * chain by foldBookSpellings, scripts/lib/aon-facets.mjs). Read against the v0.1.40 card (41c2b05 sourceCatalog
+ * over its own core.json): ten of them had a row of their own beside their book's row — Grand Bazaar (25
+ * records then), Tian Xia Character Guide, Draconic Codex, The Fall of Plaguestone, Crown of the Kobold King,
+ * Night of the Gray Death, Troubles in Grayce, Shadows at Sundown, Gatewalkers (Hardcover), Season of Ghosts
+ * (Hardcover) — so they are the Guns & Gears case: no pair, the saved selection decides the book's row and the
+ * folded-in records follow it. Six sat in ONE row with their book's key, like the Gatewalkers guide, and are
+ * paired below: the curly and the unprefixed Gatewalkers Player's Guide (Remastered) ("Gatewalkers" row), the
+ * curly Season of Ghosts Player's Guide ("Season of Ghosts"), the Foolish Housekeeping blog post ("Blogs & web
+ * articles"), Fools Aplenty ("Fools Aplenty (April Fools)") and One-Shot #2 ("Pathfinder Society").
+ * Two more, through table rows that change the title (the refuter's pass, same day): "Pathfinder PFS Guide"
+ * (a "PFS Guide" row of its own beside "Lost Omens Pathfinder Society Guide") and "Pathfinder Society Year 4
+ * Rule Updates" (in the "Pathfinder Society" row, its Blog key in "Blogs & web articles") — each read at v0.1.40
+ * apart from its key's row, so no pair: the saved selection decides the key's row.
  */
 export const BOOK_FOLDS: ReadonlyArray<readonly [string, string]> = [
   ["Pathfinder Gatewalkers Player's Guide", "Pathfinder Gatewalkers Player's Guide (Remastered)"],
+  ['Gatewalkers Player’s Guide (Remastered)', "Pathfinder Gatewalkers Player's Guide (Remastered)"],
+  ["Gatewalkers Player's Guide (Remastered)", "Pathfinder Gatewalkers Player's Guide (Remastered)"],
+  ['Pathfinder Season of Ghosts Player’s Guide', "Pathfinder Season of Ghosts Player's Guide"],
+  ['Pathfinder Foolish Housekeeping and Other Articles', 'Paizo Blog: Foolish Housekeeping and Other Articles'],
+  ['Pathfinder Fools Aplenty', 'Pathfinder Lost Omens: Fools Aplenty'],
+  ['Pathfinder One-Shot #2: Dinner at Lionlodge', 'Pathfinder One-Shot 2: Dinner at Lionlodge'],
 ];
 /**
  * Marks a selection made with the split books as separate toggles. A stored list WITHOUT it is from before

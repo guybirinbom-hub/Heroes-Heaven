@@ -85,12 +85,24 @@ describe('the Sources card draws no two identical rows', () => {
   });
 
   it('a row that merges spellings carries every book behind it', () => {
-    const { groups } = sourceCatalog(content());
+    const { groups, allBooks } = sourceCatalog(content());
     const books = new Set(groups.flatMap((g) => g.entries).flatMap((e) => e.books));
-    // Both spellings are in the catalog, and both are reachable from some row — a merged row must not
-    // drop one of the names, or the content filed under it becomes unreachable.
-    for (const b of ["Pathfinder Season of Ghosts Player's Guide", 'Pathfinder Season of Ghosts Player’s Guide']) {
-      expect(books.has(b), `${b} is on no row`).toBe(true);
-    }
+    // Every book key is reachable from some row — a merged row must not drop one of the names, or the
+    // content filed under it becomes unreachable.
+    for (const b of allBooks) expect(books.has(b), `${b} is on no row`).toBe(true);
+    // The curly spelling itself is gone from the shipped data since 2026-09-29: scripts/data/book-names.json
+    // folds it into the straight one (desk #166 applied), so only the row merge below is left to pin.
+    expect(allBooks).toContain("Pathfinder Season of Ghosts Player's Guide");
+    expect(allBooks).not.toContain('Pathfinder Season of Ghosts Player’s Guide');
+    // …and the merge still holds for two apostrophes on a single-book shelf, where nothing else folds them.
+    const db = {
+      feats: {
+        a: { id: 'a', name: 'A', source: { book: "Pathfinder Test Book's Guide" } },
+        b: { id: 'b', name: 'B', source: { book: 'Pathfinder Test Book’s Guide' } },
+      },
+    } as unknown as Parameters<typeof sourceCatalog>[0];
+    const rows = sourceCatalog(db).groups.flatMap((g) => g.entries).filter((e) => /Test Book/.test(e.label));
+    expect(rows).toHaveLength(1);
+    expect(rows[0].books.sort()).toEqual(["Pathfinder Test Book's Guide", 'Pathfinder Test Book’s Guide'].sort());
   });
 });

@@ -1,0 +1,22 @@
+[
+ {
+  "id": "sources-lane-2026-09-29-gg-retract",
+  "summary": "Retract the two Guns & Gears `source` overlay rows the table's own fold now makes redundant (desk #166, applied 2026-09-29).",
+  "backfillRows": [
+   {
+    "category": "feats",
+    "id": "firework-technician-dedication",
+    "field": "source",
+    "retract": true,
+    "why": "feat-8528 (Firework Technician Dedication) is printed in 'Guns & Gears (Remastered)'; scripts/data/book-names.json folds that title into 'Pathfinder Guns & Gears' and the chain's same-book fold (foldBookSpellings, scripts/lib/aon-facets.mjs, run after each overlay pass) writes the key this row wrote by hand, so the row is redundant (desk #166)."
+   },
+   {
+    "category": "items",
+    "id": "pyrotechnic-versatile-vial",
+    "field": "source",
+    "retract": true,
+    "why": "the vial granted by feat-8528 (Firework Technician Dedication, 'Guns & Gears (Remastered)'): its create row spells the book 'Pathfinder Guns & Gears (Remastered)', which scripts/data/book-names.json folds into 'Pathfinder Guns & Gears' and the chain's same-book fold (foldBookSpellings, scripts/lib/aon-facets.mjs) writes after the create, so this `source` row is redundant (desk #166)."
+   }
+  ]
+ }
+]

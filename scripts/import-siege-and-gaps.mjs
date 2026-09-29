@@ -39,7 +39,8 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
-import { fillFrequencyCounters, canonBookName } from './lib/aon-facets.mjs';
+import { fillFrequencyCounters, canonBookName, foldBookSpellings } from './lib/aon-facets.mjs';
+import { LABELLED_BUCKETS } from './lib/archive-coverage.mjs';
 import { plain, unlink, decode, handlebarsLinks, ACTION_WORD } from './lib/aon-plain.mjs';
 import { appendSubclassOptions } from './lib/player-create.mjs';
 import { readBackfill } from './lib/write-backfill.mjs';
@@ -1244,6 +1245,20 @@ if (notes.length) console.log(`\nnotes:\n  ${notes.join('\n  ')}`);
   const createdPath = 'scripts/migration/out/player-created.json';
   const appended = existsSync(createdPath) ? appendSubclassOptions(core, JSON.parse(readFileSync(createdPath, 'utf8'))) : 0;
   if (appended) console.log(`re-appended ${appended} created class option(s) the re-apply had replaced`);
+  /*
+   * …and the re-apply wrote every overlay `source` row back, AFTER import-core-v2's same-book pass: fourteen
+   * rows spelt the Grand Bazaar "Pathfinder Grand Bazaar" (animalCompanions/beetle, familiarAbilities/snoop …),
+   * one the Foolish Housekeeping blog post "Pathfinder …" (familiarAbilities/kick-up-dust) and one a curly
+   * "Gatewalkers Player’s Guide (Remastered)" (backgrounds/sense-of-belonging), and each landed
+   * on the Sources card as a second row of one book (desk #166). So the pass runs again here, the last step of
+   * `npm run data` that writes a record's book from the overlay. foldBookSpellings, scripts/lib/aon-facets.mjs.
+   * The sixteen rows were respelt to the table's key once this pass shipped them (2026-09-29,
+   * work/sources-lane-2026-09-29-source-rows.json), so scripts/regen-durability-check.mjs — which holds every
+   * overlay row equal to the artefact — still fails a NEW row that spells a book another way.
+   */
+  const folded = foldBookSpellings(core, LABELLED_BUCKETS);
+  console.log(`${folded.length} record(s) the re-apply spelt another way took the table's spelling of their book`);
+  for (const m of folded) console.log(`   ${m}`);
 }
 
 /*

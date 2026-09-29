@@ -55,6 +55,103 @@ export function canonBookName(book, fold) {
   return BOOK_NAMES[b] ?? fold?.(b) ?? (/^Pathfinder /i.test(b) ? b : `Pathfinder ${b}`);
 }
 
+/*
+ * ONE BOOK, ONE KEY (desk #166: same book, newer or odd spelling folds; different books never fold).
+ *
+ * A book's title with every convention set aside that does not make it another book: the "Pathfinder" /
+ * "Paizo" prefix, a "Lost Omens" / "Adventure:" / "Adventure Path:" / "Blog:" line, a leading "The",
+ * "(Remastered)", "(Hardcover)" / "Hardcover Compilation", curly against straight apostrophes, "Player's"
+ * against "Players", colons and whitespace. A title that is nothing BUT those conventions ("Pathfinder
+ * Blog", "Paizo Blog") keeps its whole spelling instead of collapsing to "" beside every other such book.
+ *
+ * The title is the GUARD's instrument, not the fold's: scripts/reprint-check.mjs CHECK 4 fails a shipped
+ * choosable book that has a fold target's title without being that target, so a new stray spelling is
+ * caught at verify. What FOLDS a book is a row of scripts/data/book-names.json (foldedBook below), with its
+ * reason where CHECK 4 counts the row as renaming — a title match alone folds nothing, so a blog post
+ * titled like a book, or a book the table does not name, is never moved without a row someone wrote.
+ * Every row folds, the renaming ones too: each of those carries its same-book reason (CHECK 4 fails one
+ * without), so the row IS the ruling. Until the refuter's pass on 2026-09-29 the fold skipped a row whose key
+ * had another title, and 8 choosable records escaped through two such rows — "Pathfinder PFS Guide" (7:
+ * items/aon-astrolabe, feats/aon-innate-magic-intuition, specificFamiliars/dweomercat-cub …, its own Sources
+ * row beside "Lost Omens Pathfinder Society Guide") and "Pathfinder Society Year 4 Rule Updates" (1:
+ * backgrounds/aon-muesello-s-student, in the "Pathfinder Society" row while the other six backgrounds of that
+ * post sat in "Blogs & web articles"). CHECK 4 now also fails a choosable book the table folds elsewhere.
+ *
+ * Measured 2026-09-29 over public/core.json: 15 books reached the Sources card under two spellings
+ * ("Pathfinder Grand Bazaar" beside "Pathfinder Lost Omens The Grand Bazaar", "Pathfinder Season of Ghosts
+ * (Hardcover)" beside "… Hardcover Compilation", a curly "Player’s Guide" beside the straight one, …).
+ * Almost none were minted by an importer reading the table: they are overlay rows (a `source` row that
+ * import-siege-and-gaps re-applies after import-core-v2's own pass, or a `create` row) and records kept
+ * from the Foundry-era reference, none of which ever consulted it. Each stray now has its own table row,
+ * keyed by its exact spelling. Only two of those rows are load-bearing today ("Pathfinder Fools Aplenty",
+ * "Pathfinder One-Shot #2: Dinner at Lionlodge": no older row reaches them through rowKey); the other
+ * thirteen strays are also reached through an older row by the normalised lookup (measured by dropping each
+ * row in turn: the fold still moves the same 41 records). They are kept so every stray is named by its own
+ * spelling and a later narrowing of rowKey cannot silently unfold one — test/book-spelling-folds.test.ts
+ * requires the exact-spelling row for each.
+ */
+export const bookTitle = (s) => {
+  const whole = String(s || '').replace(/[’‘]/g, "'").toLowerCase();
+  const t = whole
+    .replace(/\s*\(hardcover\)\s*/g, ' ').replace(/\s+hardcover(?:\s+compilation)?\s*$/, '').trim()
+    .replace(/^(?:pathfinder|paizo)\s+/, '').replace(/^(?:lost omens|adventure paths?|adventures?|blog)\s*:?\s*/, '').replace(/^the\s+/, '')
+    .replace(/\((?:remastered|remaster)\)/g, '').replace(/[^a-z0-9]/g, '');
+  return t || whole.replace(/[^a-z0-9]/g, '');
+};
+
+/** The importer's own normalised lookup key (import-core-v2 normBook): the table's rows are found by it too,
+ *  so "Pathfinder Dark Archive" reaches the row keyed "Dark Archive" and a curly apostrophe its straight row. */
+const rowKey = (s) => String(s || '').toLowerCase()
+  .replace(/^pathfinder /, '').replace(/^lost omens:? /, '').replace(/\((?:remastered|remaster)\)/g, '').replace(/[^a-z0-9]/g, '');
+/** Every key the table folds to (its values). */
+const FOLD_TARGETS = new Set(Object.values(BOOK_NAMES).map((t) => String(t).trim()));
+/** rowKey(alias) -> every target a row under that key names. */
+const ROWS_BY_KEY = new Map();
+for (const [aon, hh] of Object.entries(BOOK_NAMES)) {
+  const k = rowKey(aon);
+  ROWS_BY_KEY.set(k, [...new Set([...(ROWS_BY_KEY.get(k) ?? []), String(hh).trim()])]);
+}
+
+/**
+ * The table's key for another spelling of the SAME book, or undefined. A ROW decides: the book's exact
+ * spelling in scripts/data/book-names.json, else the row the importer's normalised lookup finds — the same
+ * answer the importers give an Archives title. A row that changes the title ("PFS Guide" -> "Lost Omens
+ * Pathfinder Society Guide", "Azarketi Ancestry Web Supplement" -> Absalom) folds too: every such row names
+ * the same book by its reason in scripts/data/book-names-reasons.json, which CHECK 4 requires, and two
+ * different books have no row at all (Bestiary 3 is kept apart from Monster Core 2 by having none).
+ * Undefined when the book is a key already, no row names it, or two rows under one lookup key name
+ * different keys (never guessed).
+ */
+export function foldedBook(book) {
+  const b = String(book ?? '').trim();
+  if (!b || FOLD_TARGETS.has(b)) return undefined;
+  const exact = BOOK_NAMES[b] !== undefined ? [String(BOOK_NAMES[b]).trim()] : null;
+  const to = (exact ?? ROWS_BY_KEY.get(rowKey(b)) ?? []).filter((t) => t !== b);
+  return to.length === 1 ? to[0] : undefined;
+}
+
+/**
+ * Every record's book through foldedBook — kept orphans, carried buckets, overlay create and `source` rows
+ * included. `skip` holds the buckets that name a page's own printing on purpose (the GM Search's page rows,
+ * LABELLED_BUCKETS in scripts/lib/archive-coverage.mjs), which feed no source filter. Homebrew is the
+ * player's own source name and never folds. Returns the records it moved, as "bucket/key: from -> to".
+ */
+export function foldBookSpellings(db, skip = new Set()) {
+  const moved = [];
+  for (const [bucket, rows] of Object.entries(db)) {
+    if (skip.has(bucket) || !rows || typeof rows !== 'object' || Array.isArray(rows)) continue;
+    for (const [key, rec] of Object.entries(rows)) {
+      const b = rec?.source?.book;
+      if (typeof b !== 'string' || rec.source.license === 'homebrew') continue;
+      const to = foldedBook(b);
+      if (!to) continue;
+      rec.source = { ...rec.source, book: to };
+      moved.push(`${bucket}/${key}: ${b} -> ${to}`);
+    }
+  }
+  return moved;
+}
+
 /** HH's usage slug for an archive record, or null when the Archives say nothing. */
 export function usageOf(rec) {
   const raw = rec?.data?.usage;

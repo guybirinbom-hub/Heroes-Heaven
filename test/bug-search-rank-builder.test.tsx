@@ -28,6 +28,9 @@ import { emptyBuild, type BuildState } from '../src/rules/build';
  *   Add a language "osiriani": Ancient Osiriani, Osiriani                     → Osiriani first (exact)
  *   Sources "tian"      : Lost Omens Tian Xia Character Guide, Lost Omens Tian Xia World Guide,
  *                         Tian Xia Character Guide                            → Tian Xia CG first (prefix)
+ *     (that third row was a stray spelling of the Lost Omens book, folded into it on 2026-09-29 — desk #166
+ *     applied, scripts/data/book-names.json — so the case is now Rulebooks "secrets": Beginner Box: Secrets
+ *     of the Unlit Star, Secrets of Magic → Secrets of Magic first (prefix), the same shape)
  *   Sources homebrew "tomes": Ancient Tomes, Tomes                            → Tomes first (exact)
  *
  * ("elf", the query the report named, is not a case: this content has exactly ONE ancestry matching
@@ -126,15 +129,16 @@ describe('bug 2026-09-13: search-rank (builder pickers)', () => {
   it('Sources: the book whose title was typed leads its category', async () => {
     const r = open({ ...emptyBuild(), name: 'P', level: 1 });
     goPage(r, 'Setup');
-    type(r.host.querySelector<HTMLInputElement>('.src-search input'), 'tian');
-    const books = srcBooks(r, 'Lost Omens');
+    type(r.host.querySelector<HTMLInputElement>('.src-search input'), 'secrets');
+    const books = srcBooks(r, 'Rulebooks');
     r.stop();
 
-    // Alphabetically the two "Lost Omens Tian Xia …" titles came first and the book actually titled
-    // Tian Xia Character Guide was last of the three. It is the one the player typed.
-    expect(books[0]).toBe('Tian Xia Character Guide');
-    expect(books).toHaveLength(3);
-    expect(books).toContain('Lost Omens Tian Xia World Guide');
+    // Alphabetically "Beginner Box: Secrets of the Unlit Star" comes first and the book actually titled
+    // Secrets of Magic second. It is the one the player typed. (Was "tian" over Lost Omens until the stray
+    // "Tian Xia Character Guide" row folded into its Lost Omens book, 2026-09-29, desk #166 applied.)
+    expect(books[0]).toBe('Secrets of Magic');
+    expect(books).toHaveLength(2);
+    expect(books).toContain('Beginner Box: Secrets of the Unlit Star');
   });
 
   // bug 2026-09-13: search-rank (builder pickers)

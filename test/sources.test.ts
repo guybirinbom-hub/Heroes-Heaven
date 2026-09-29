@@ -88,11 +88,14 @@ describe('source catalog', () => {
     expect(categoryOfBook('Pathfinder Lost Omens Character Guide')).toBe('Lost Omens');
     // "Other" is the only niche category, so these are hidden unless niche sources are shown.
     expect(NICHE_CATEGORIES.has('Other')).toBe(true);
-    // Both Fools Aplenty titles collapse into ONE toggle rather than two stray rows.
+    // Fools Aplenty is ONE toggle rather than two stray rows. Its two titles used to meet in that row; since
+    // 2026-09-29 (desk #166 applied) scripts/data/book-names.json folds "Pathfinder Fools Aplenty" into the
+    // Lost Omens spelling, so the row holds the one key (and BOOK_FOLDS keeps an old selection of the other).
     const other = sourceCatalog(db).groups.find((g) => g.category === 'Other')!;
     const fools = other.entries.filter((e) => /Fools Aplenty/.test(e.label));
     expect(fools).toHaveLength(1);
-    expect(fools[0].books.length).toBeGreaterThanOrEqual(2);
+    expect(fools[0].books).toEqual(['Pathfinder Lost Omens: Fools Aplenty']);
+    expect(enabledBookSet(['Pathfinder Fools Aplenty']).has('Pathfinder Lost Omens: Fools Aplenty')).toBe(true);
   });
 });
 

@@ -18,7 +18,7 @@ import { readFileSync, writeFileSync, readdirSync, copyFileSync, existsSync, mkd
 import { gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { applyBackfill } from './lib/apply-backfill.mjs';
-import { aonFacets, backgroundFacets, packOf, fillFrequencyCounters, prerequisitesFrom } from './lib/aon-facets.mjs';
+import { aonFacets, backgroundFacets, packOf, fillFrequencyCounters, prerequisitesFrom, foldBookSpellings } from './lib/aon-facets.mjs';
 import { loadLivePages, liveEdition } from './lib/live-pages.mjs';
 import { loadReprintIndex, repointDoc } from './lib/reprint.mjs';
 import { creationPlan, subclassLink, ancestryOf, appendSubclassOptions } from './lib/player-create.mjs';
@@ -1286,25 +1286,19 @@ let backfillCount = 0;
  * read "Pathfinder Dark Archive" / "Pathfinder Gatewalkers Player's Guide") and a create row carries what was
  * typed (items/mind-weapon, items/mind-smiths-keepsake), so a legacy spelling the table folds (desk #166: a
  * "(Remastered)" printing folds into its own book) escaped it, and the Sources card drew a second row of one
- * book. Round 6 relabelled four of them by hand; the table now answers for all. A PRINTING fold only (the
- * table's book differs by "(Remastered)" alone): a rename stays the importer's business, and the GM Search's
- * page rows (LABELLED_BUCKETS) name the page's own printing on purpose (pageBook / namesBook).
+ * book. Round 6 relabelled four of them by hand; the table now answers for all. A SAME-BOOK fold only, and
+ * only through a row: the record's spelling has its row in the table (exactly, or by this importer's normBook
+ * lookup), a row that changes the title included, since each of those names the same book by its reason
+ * (scripts/data/book-names-reasons.json) — foldBookSpellings, scripts/lib/aon-facets.mjs. The GM Search's
+ * page rows (LABELLED_BUCKETS) name the page's own printing on purpose
+ * (pageBook / namesBook). Widened 2026-09-29 from "(Remastered)" alone: 15 books still reached the Sources
+ * card under a second spelling ("Pathfinder Grand Bazaar", a curly "Player’s Guide", "Season of Ghosts
+ * (Hardcover)" …). import-siege-and-gaps re-applies the overlay after this, so it runs the same pass again.
  * scripts/reprint-check.mjs CHECK 4 fails a choosable record that still escapes.
  */
 {
-  const printing = (s) => String(s).replace(/\s*\((?:remastered|remaster)\)\s*/gi, ' ').trim();
-  let folded = 0;
-  for (const [bucket, rows] of Object.entries(db)) {
-    if (LABELLED_BUCKETS.has(bucket) || !rows || typeof rows !== 'object' || Array.isArray(rows)) continue;
-    for (const rec of Object.values(rows)) {
-      const b = rec?.source?.book;
-      const to = typeof b === 'string' ? mapBook(b) : undefined;
-      if (!to || to === b.trim() || printing(to) !== printing(b)) continue;
-      rec.source = { ...rec.source, book: to };
-      folded++;
-    }
-  }
-  console.log(`[import-v2] ${folded} record(s) outside the Archives' own derivation took the table's printing fold for their book`);
+  const folded = foldBookSpellings(db, LABELLED_BUCKETS);
+  console.log(`[import-v2] ${folded.length} record(s) outside the Archives' own derivation took the table's spelling of their book`);
 }
 
 // ------------------------------------------------------------------ per-bucket ast (lazy-loaded, Step 1)

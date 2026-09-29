@@ -3,7 +3,7 @@
   "doc": 26148,
   "drop": 143,
   "subblock": 572,
-  "authored": 989,
+  "authored": 990,
   "table": 21,
   "scraped": 1,
   "derived": 22
@@ -121300,6 +121300,11 @@
    },
    "reloading-cascade": {
     "name": "Reloading Cascade",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "spiritual-scar": {
+    "name": "Spiritual Scar",
     "status": "authored",
     "how": "overlay-created record with no archive page"
    }

@@ -83110,8 +83110,9 @@
   "id": "beetle",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "animal-companion-25 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "animalCompanions",
@@ -83460,8 +83461,9 @@
   "id": "aon-capybara",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "animal-companion-26 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "animalCompanions",
@@ -83474,8 +83476,9 @@
   "id": "aon-moth",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "animal-companion-27 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "animalCompanions",
@@ -83488,8 +83491,9 @@
   "id": "aon-pangolin",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "animal-companion-28 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "animalCompanions",
@@ -83502,8 +83506,9 @@
   "id": "aon-terror-bird",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "animal-companion-29 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "animalCompanions",
@@ -83516,8 +83521,9 @@
   "id": "aon-legchair",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "animal-companion-30 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "animalCompanions",
@@ -84639,8 +84645,9 @@
   "id": "ambassador",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "familiar-ability-61 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "familiarAbilities",
@@ -84979,8 +84986,9 @@
   "id": "gills",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "familiar-ability-62 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "familiarAbilities",
@@ -84993,8 +85001,9 @@
   "id": "greater-resistance",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "familiar-ability-63 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "familiarAbilities",
@@ -85539,8 +85548,9 @@
   "id": "snoop",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "familiar-ability-66 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "familiarAbilities",
@@ -85592,8 +85602,9 @@
   "id": "kick-up-dust",
   "field": "source",
   "value": {
-   "book": "Pathfinder Foolish Housekeeping and Other Articles"
-  }
+   "book": "Paizo Blog: Foolish Housekeeping and Other Articles"
+  },
+  "why": "familiar-ability-181 is printed in the book scripts/data/book-names.json keys as \"Paizo Blog: Foolish Housekeeping and Other Articles\"; this row spelt it \"Pathfinder Foolish Housekeeping and Other Articles\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Paizo Blog: Foolish Housekeeping and Other Articles\"; the row now says what ships."
  },
  {
   "category": "familiarAbilities",
@@ -85827,8 +85838,9 @@
   "id": "tattoo-transformation",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "familiar-ability-72 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "familiarAbilities",
@@ -85841,8 +85853,9 @@
   "id": "threat-display",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "familiar-ability-67 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "familiarAbilities",
@@ -85919,8 +85932,9 @@
   "id": "tremorsense",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "familiar-ability-68 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "familiarAbilities",
@@ -85976,8 +85990,9 @@
   "id": "wavesense",
   "field": "source",
   "value": {
-   "book": "Pathfinder Grand Bazaar"
-  }
+   "book": "Pathfinder Lost Omens The Grand Bazaar"
+  },
+  "why": "familiar-ability-69 is printed in the book scripts/data/book-names.json keys as \"Pathfinder Lost Omens The Grand Bazaar\"; this row spelt it \"Pathfinder Grand Bazaar\", a second Sources row of one book (desk #166, applied 2026-09-29). The chain's same-book fold already ships \"Pathfinder Lost Omens The Grand Bazaar\"; the row now says what ships."
  },
  {
   "category": "familiarAbilities",
@@ -165162,10 +165177,10 @@
   "id": "sense-of-belonging",
   "field": "source",
   "value": {
-   "book": "Gatewalkers Player’s Guide (Remastered)",
+   "book": "Pathfinder Gatewalkers Player's Guide (Remastered)",
    "license": "ORC"
   },
-  "why": "wg-batch-021 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b021-findings.json"
+  "why": "wg-batch-021 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b021-findings.json. Respelt 2026-09-29, value otherwise unchanged: background-577 (the book and the ORC licence batch 021 confirmed) is printed in the book scripts/data/book-names.json keys as \"Pathfinder Gatewalkers Player's Guide (Remastered)\"; this row spelt it \"Gatewalkers Player’s Guide (Remastered)\", a second Sources row of one book (desk #166). The chain's fold already ships \"Pathfinder Gatewalkers Player's Guide (Remastered)\"; the row now says what ships."
  },
  {
   "category": "backgrounds",
@@ -186741,16 +186756,6 @@
   "why": "feat-8528 is the current printing (Guns & Gears (Remastered) pg. 134). VERIFIER FIX to this why: feat-8528's legacy_id is feat-8750 (the 2021 Guns & Gears page), NOT feat-3245 — what marks feat-3245 superseded is its own page, which prints \"There is a more recent version of this, click here to view\" pointing at Feats.aspx?ID=8528. The record's shipped description is already the feat-8528 text."
  },
  {
-  "category": "feats",
-  "id": "firework-technician-dedication",
-  "field": "source",
-  "value": {
-   "book": "Pathfinder Guns & Gears",
-   "license": "ORC"
-  },
-  "why": "feat-8528 primary_source_raw is \"Guns & Gears (Remastered) pg. 134\", and book-names.json folds that title into \"Pathfinder Guns & Gears\" (desk #166, a (Remastered) printing folds into its own book). SUPERSEDES the row that spelt the printing out, which put this feat under a second Guns & Gears row on the Sources card. Licence stays ORC."
- },
- {
   "category": "classes",
   "id": "magus",
   "field": "source",
@@ -189583,16 +189588,6 @@
   "field": "description",
   "value": "This ice-blue half-mask is adorned with a wicked silver grin that covers only the wearer's mouth. You gain a +2 item bonus to Intimidation checks.\n\n**Activate—Hideous Wail** ⟨2⟩ (concentrate, manipulate)\n\n**Frequency** once per day\n\n---\n\n**Effect** The mask emits a soul-chilling scream that deals 6d10 void damage to each living creature in a 20-foot emanation (DC 25 basic Fortitude save).",
   "why": "equipment-3434-3304 (Guise of the Smirking Devil, Player Core 2 pg. 310) is the record's document; desk #167's same-suffix rule pairs it with Mask of the Banshee, equipment-738-721, and reprint-check CHECK 8 found the prose still that printing's, numbers deleted (\"deals damage to each living creature in a ( save)\", a Craft Requirements line the remaster does not print). Gold-set R12: every sentence is equipment-3434's."
- },
- {
-  "category": "items",
-  "id": "pyrotechnic-versatile-vial",
-  "field": "source",
-  "value": {
-   "book": "Pathfinder Guns & Gears",
-   "license": "ORC"
-  },
-  "why": "feat-8528 (Firework Technician Dedication) is printed in Guns & Gears (Remastered) pg. 134, and scripts/data/book-names.json folds that printing into \"Pathfinder Guns & Gears\" — desk #166, \"Middle way\": a (Remastered) printing folds into its own book. The create row above wrote \"Pathfinder Guns & Gears (Remastered)\", which the Sources card drew as a second Guns & Gears row holding 2 records beside the 700. Licence unchanged; the stored-selection side is src/rules/sources.ts BOOK_FOLDS."
  },
  {
   "category": "backgrounds",

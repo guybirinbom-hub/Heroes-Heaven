@@ -27,8 +27,9 @@
  *     but such a link with NO reason fails, so a new one cannot slip in unexplained.
  *
  * Also CHECK 4: every scripts/data/book-names.json alias that renames the book carries a reason
- * (owner, desk #166 — see the check itself), and no choosable record's book differs from a fold target
- * only by "(Remastered)"; CHECK 5: an item's "Remastered as" opens a record with the
+ * (owner, desk #166 — see the check itself), and no choosable record's book is another spelling of a fold
+ * target's book ("(Remastered)", "(Hardcover)", a prefix, an apostrophe …) or of another shipped book with no
+ * fold target; CHECK 5: an item's "Remastered as" opens a record with the
  * same level and price, or says why not; CHECK 6: a record's book is one its own document is printed in
  * (a baseline of the older exceptions, which only shrinks); CHECK 7: a book split never moves a record the
  * old book also prints; CHECK 8: a record on a reprint does not keep the replaced printing's prose (a
@@ -50,6 +51,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadReprintIndex, repointDoc, shippedTwin, slugify, whyUnpaired } from './lib/reprint.mjs';
 import { movedProseVerdict } from './lib/moved-prose.mjs';
+import { bookTitle, foldedBook } from './lib/aon-facets.mjs';
 import { BOOK_SPLITS, CHOOSABLE_SOURCE_MAPS } from '../src/rules/sources';
 import { seedContent } from '../src/rules/seed';
 import { findCombinationFormIds, findDuplicateIds, findHiddenTwins, findUmbrellaIds, shopItems } from '../src/data';
@@ -331,26 +333,74 @@ const aliasProblems = [];
   /*
    * …and a record's book that ESCAPES a fold: the table folds "Guns & Gears (Remastered)" into "Pathfinder
    * Guns & Gears", yet two overlay rows wrote "Pathfinder Guns & Gears (Remastered)" and the Sources card drew
-   * it as a second Guns & Gears row. So a choosable record (src/rules/sources.ts CHOOSABLE_SOURCE_MAPS, the
-   * keys the filter runs on) whose book is no fold target but differs from one only by "(Remastered)" fails.
-   * The GM Search's page rows name the page's own printing on purpose (namesBook) and feed no filter.
+   * it as a second Guns & Gears row. Widened 2026-09-29 (desk #166: same book, newer or odd spelling folds):
+   * "(Remastered)" was one of the ways a spelling escapes, and 15 books still reached the card twice under
+   * others — "Pathfinder Grand Bazaar" (16 records, overlay `source` rows) beside "Pathfinder Lost Omens The
+   * Grand Bazaar", "Pathfinder Season of Ghosts (Hardcover)" beside "… Hardcover Compilation", a curly
+   * "Player’s Guide" beside the straight one, "Pathfinder One-Shot #2" beside "One-Shot 2". So, over the
+   * choosable records (src/rules/sources.ts CHOOSABLE_SOURCE_MAPS, the keys the filter runs on), homebrew aside:
+   *   · a book that is no fold target but has a fold target's TITLE fails — bookTitle, scripts/lib/aon-facets.mjs:
+   *     prefixes, a leading "The", "(Remastered)", "(Hardcover)" / "Hardcover Compilation", apostrophes, colons
+   *     and whitespace set aside. The title only DETECTS: the chain's fold (foldBookSpellings) moves a spelling
+   *     only through a row of book-names.json (its exact spelling's row, else the row the importer's normalised
+   *     lookup finds). It follows every row, title-changing rows included, and each title-changing row must
+   *     carry its same-book reason in book-names-reasons.json (the reason check above fails one without), so
+   *     a stray nobody has ruled on stops here until a row (and, where the row changes the title, its reason)
+   *     is written — never folded silently by a title match. The title strip (aliasTitle here, bookTitle
+   *     likewise) removes only a LEADING "the", so a mid-title "The" — "Pathfinder #207: The Resurrection
+   *     Flood" beside "Pathfinder #207: Resurrection Flood", both in one Triumph of the Tusk row — is not seen
+   *     by this check; that pair is queued for the next regenerating lane;
+   *   · two shipped spellings of one title where neither is a fold target fail, each naming the other;
+   *   · a book the table itself folds into another key fails, whatever its title (foldedBook: its exact
+   *     spelling's row, else the importer's normalised lookup). The title rule cannot see a row that renames:
+   *     the refuter's pass of 2026-09-29 found 8 choosable records the shipped core still carried under two
+   *     such rows — "Pathfinder PFS Guide" (7, a "PFS Guide" row of its own on the card beside "Lost Omens
+   *     Pathfinder Society Guide") and "Pathfinder Society Year 4 Rule Updates" (1, in the "Pathfinder Society"
+   *     row while the other six backgrounds of that post sat under the Blog key) — and this check passed them.
+   * A title is not a book's identity beyond that: Bestiary and Monster Core, a Player's Guide and its Adventure
+   * Path, a volume and its Adventure Path keep different titles and are never caught. The GM Search's page rows
+   * name the page's own printing on purpose (namesBook) and feed no filter.
    */
   const targets = new Set(Object.values(names));
   const unRemastered = (s) => String(s).replace(/\s*\((?:remastered|remaster)\)\s*/gi, ' ').trim();
   const targetOf = new Map();
-  for (const t of targets) targetOf.set(unRemastered(t), [...(targetOf.get(unRemastered(t)) ?? []), t]);
+  for (const t of targets) targetOf.set(bookTitle(t), [...(targetOf.get(bookTitle(t)) ?? []), t]);
+  const loose = new Map(); // title -> Map(spelling -> first record) for books no fold target has the title of
   let escaped = 0;
+  let rowed = 0;
   for (const bucket of CHOOSABLE_SOURCE_MAPS) {
     for (const [key, rec] of Object.entries(core[bucket] ?? {})) {
       const b = rec?.source?.book?.trim();
       if (!b || targets.has(b) || rec.source?.license === 'homebrew') continue;
-      const t = (targetOf.get(unRemastered(b)) ?? []).filter((x) => x !== b);
-      if (!t.length) continue;
+      const row = foldedBook(b);
+      const t = (targetOf.get(bookTitle(b)) ?? []).filter((x) => x !== b);
+      if (row && !t.includes(row)) {
+        rowed++;
+        aliasProblems.push(`${bucket}/${key} reads ${JSON.stringify(b)}, which scripts/data/book-names.json folds into ${JSON.stringify(row)} — the chain's fold did not reach it, and it is a second row of one book on the Sources card`);
+        continue;
+      }
+      if (!t.length) {
+        const m = loose.get(bookTitle(b)) ?? loose.set(bookTitle(b), new Map()).get(bookTitle(b));
+        if (!m.has(b)) m.set(b, []);
+        m.get(b).push(`${bucket}/${key}`);
+        continue;
+      }
       escaped++;
-      aliasProblems.push(`${bucket}/${key} reads ${JSON.stringify(b)}, which differs from the fold target ${JSON.stringify(t[0])} only by "(Remastered)" — a second row of one book on the Sources card`);
+      aliasProblems.push(unRemastered(b) === unRemastered(t[0])
+        ? `${bucket}/${key} reads ${JSON.stringify(b)}, which differs from the fold target ${JSON.stringify(t[0])} only by "(Remastered)" — a second row of one book on the Sources card`
+        : `${bucket}/${key} reads ${JSON.stringify(b)}, a spelling of the fold target ${JSON.stringify(t[0])} (one title once prefixes, "The", "(Hardcover)", apostrophes and punctuation are set aside) — a second row of one book on the Sources card`);
     }
   }
-  console.log(`${escaped} choosable record(s) name a book that differs from a fold target only by "(Remastered)".`);
+  let twice = 0;
+  for (const m of loose.values()) {
+    if (m.size < 2) continue;
+    for (const [b, where] of m) {
+      twice += where.length;
+      const others = [...m.keys()].filter((x) => x !== b).map((x) => JSON.stringify(x)).join(', ');
+      for (const w of where) aliasProblems.push(`${w} reads ${JSON.stringify(b)}, and ${others} is the same title with no fold target — one book under two keys; fold one into the other in scripts/data/book-names.json`);
+    }
+  }
+  console.log(`${escaped} choosable record(s) name a spelling of a fold target's book; ${rowed} carry a spelling the table folds into a key of another title; ${twice} carry one of two spellings of a book the table has no key for.`);
 }
 
 /*
@@ -617,10 +667,12 @@ if (bookProblems.length) {
 
 if (aliasProblems.length) {
   console.error('\nreprint-check: FAIL — a book alias moves records to another book without saying why, or a record escapes a fold (desk #166):');
-  for (const p of aliasProblems.slice(0, 40)) console.error('   ' + p);
-  console.error('   A "(Remastered)" printing may fold into its own book; different books are never folded together.');
-  console.error('   An escaped record takes the fold target through a `source` row (scripts/apply-parity-fixes.mjs) and its');
-  console.error('   old spelling a src/rules/sources.ts BOOK_FOLDS pair, so a stored selection keeps it.');
+  for (const p of aliasProblems.slice(0, 80)) console.error('   ' + p);
+  if (aliasProblems.length > 80) console.error(`   … and ${aliasProblems.length - 80} more`);
+  console.error('   A "(Remastered)" printing or another spelling may fold into its own book; different books are never folded together.');
+  console.error('   An escaped spelling gets its row in scripts/data/book-names.json (and a reason where it renames the title);');
+  console.error('   the chain\'s foldBookSpellings (scripts/lib/aon-facets.mjs) folds it at the next `npm run data`. Where the old');
+  console.error('   spelling shared its book\'s Sources row at v0.1.40, add a src/rules/sources.ts BOOK_FOLDS pair too.');
   process.exit(1);
 }
 
