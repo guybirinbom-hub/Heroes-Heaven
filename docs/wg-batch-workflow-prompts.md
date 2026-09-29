@@ -100,7 +100,8 @@ Ported from the batch-29 apply workflow, generalised off batch 29:
   1. Every changed or removed `it(` / `expect(` / settle-registry entry / ratchet constant sits within
      the 6 lines below `// batch NNN: <finding id>`, where `<finding id>` is an id from `confirmed[]` in
      `work/.bNNN-read.json` **and** that finding's RECORD id appears in the enclosing `describe`/`it`
-     title. The audit checks both halves.
+     title. The audit checks both halves. A wholly **new** test file gets no pass: the audit reads every
+     line of it as added, so every `it(` / `test(` / `expect(` in it needs this citation or form 2.
   2. Where print is the authority and no finding covers the change:
      `// batch NNN premise: <AoN doc id> "<clause>"` — the doc id must exist in the AoN mirror and the
      clause must be verbatim from that document.
@@ -350,7 +351,9 @@ entry or gap line. Writes `work/.bNNN-verify-gaps.txt`.
    `confirmed[]` in `work/.bNNN-read.json` **and** that finding's record id appears in the enclosing
    `describe`/`it` title; or, where print is the authority and no finding covers it,
    `// batch NNN premise: <AoN doc id> "<clause>"` with the doc id in the AoN mirror and the clause
-   quoted verbatim. Every test that proves a new settle or comparer teach still reports on a **stunted**
+   quoted verbatim. In a wholly **new** test file every `it(` / `test(` / `expect(` counts as added and
+   needs one of these citations too.
+   Every test that proves a new settle or comparer teach still reports on a **stunted**
    copy carries the marker comment `// mutation-proof` in its body, naming the settle key it stunts. No
    new `.skip`/`.only`/`.todo`, no deleted test file or describe block, no changed numeric literal
    inside an otherwise unchanged `it(`. A settle or teach without a mutation-proof test fails the audit

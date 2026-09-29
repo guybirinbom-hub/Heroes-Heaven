@@ -127,7 +127,9 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
   `experience-instrument-limits.json` against the `.bNNN-testbase/` snapshot. Every changed or
   removed `it(` / `expect(` / registry entry / baseline constant must sit under
   `// batch NNN: <finding id>` (a CONFIRMED finding in `.bNNN-read.json` whose record id appears in
-  the enclosing describe/it text) or `// batch NNN premise: <AoN doc id> "<clause>"`. Fails on any new
+  the enclosing describe/it text) or `// batch NNN premise: <AoN doc id> "<clause>"`. A wholly new
+  test file is diffed against the empty string, so every `it(` / `test(` / `expect(` in it needs that
+  citation too. Fails on any new
   `.skip` / `.only` / `.todo`, a deleted test file or describe block, or a changed numeric literal inside
   an otherwise unchanged `it(`. A settle or comparer teach added without a mutation-proof test (the
   batch-29 stunted-table pattern) fails the audit. RULING (2026-09-08): a test file listed in the

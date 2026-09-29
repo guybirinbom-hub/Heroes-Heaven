@@ -13,6 +13,11 @@
  *    inside an otherwise unchanged it(. A settle or comparer teach added without a mutation-proof
  *    test (the batch-29 stunted-table pattern) fails the audit."
  *
+ * A WHOLLY NEW test file is held to the same rule (ratchet lane, 2026-09-29): it is diffed against the
+ * empty string, so every it()/test() opener and every expect() in it is an added line that needs the
+ * citation above. It used to be scanned only for .skip / .only / .todo, which let a batch put any
+ * number of uncited assertions in a fresh file. The audit's own self-test (SELF_TEST) stays exempt.
+ *
  * The failure mode it guards: an agent that cannot make the batch green quietly loosens the
  * instrument instead of fixing the data — lowers an expectation, adds a settle key, raises a ratchet,
  * parks a record in the experience limits. Every one of those is legitimate ONCE, with a citation.
@@ -383,12 +388,14 @@ function auditTests({ root, b, base, ctx, snapDir, add }) {
       add(rel, 0, 'test file deleted', 'a batch never deletes a test file — restore it, or the removal needs an owner ruling');
       continue;
     }
-    /* A file the batch ADDED is a wholly new test file — the same exemption the untracked branch below
-     * gives, and the same file, only already committed. Without this, `git show startSha:<rel>` fails,
-     * the whole file reads as added lines, and every assertion in it demands a citation (batch 29
-     * replayed after its commit: 108 phantom violations in test/batch29-data.test.ts alone, burying
-     * the three real ones in test/build.test.ts). Still scanned for .skip / .only / .todo. */
-    if (st === 'A') { newFileScan({ root, rel, touched, add }); continue; }
+    /* A file the batch ADDED is a wholly new test file — the same file the untracked loop below
+     * handles, only already committed — so it goes through the same newFileScan, never
+     * `git show startSha:<rel>` (which fails for it). Since the ratchet lane of 2026-09-29 a new file is
+     * NOT exempt: newFileScan diffs it against the empty string, so every it()/test() opener and every
+     * expect() in it needs the batch citation, exactly like an added hunk of an existing file. (The
+     * exemption this replaced was added when replaying batch 29 after its commit produced 108 violations
+     * in test/batch29-data.test.ts; those were the uncited assertions a new file could carry unseen.) */
+    if (st === 'A') { newFileScan({ root, rel, touched, ctx, add }); continue; }
     // dirty at the batch's start → the byte copy is the baseline; clean at the start → startSha is.
     const oldText = dirty.has(rel) ? readIf(path.join(snapDir, rel)) : git(root, ['show', `${startSha}:${rel}`], true);
     const newText = readIf(path.join(root, rel));
@@ -421,23 +428,30 @@ function auditTests({ root, b, base, ctx, snapDir, add }) {
     scanTestFile({ rel, oldText, newText, ctx, add });
   }
 
-  // Wholly new test files: no citation needed, but a new .skip/.only/.todo in one still fails.
+  // Wholly new test files: audited like an added hunk — every it()/expect() cited, .skip/.only/.todo fail.
   for (const rel of currentUntracked) {
     if (untracked.has(rel) || rel === SELF_TEST) continue;
-    newFileScan({ root, rel, touched, add });
+    newFileScan({ root, rel, touched, ctx, add });
   }
 
   return touched;
 }
 
-/** A wholly new test file: nothing to diff it against, so only the never-citable shapes are checked. */
-function newFileScan({ root, rel, touched, add }) {
+/**
+ * A wholly new test file (untracked now, or committed as 'A' inside the batch window): diffed against
+ * the EMPTY STRING and handed to scanTestFile, so every line of it is an added line. Every it()/test()
+ * opener and every expect() needs `// batch NNN: <CONFIRMED finding id>` (record id in the enclosing
+ * title) or the premise form within the 6 lines above, and .skip / .only / .todo still fail outright.
+ *
+ * Before the ratchet lane of 2026-09-29 a new file was only scanned for .skip / .only / .todo, so a
+ * batch could park any number of uncited assertions in a fresh file — the one place the citation rule
+ * never looked.
+ */
+function newFileScan({ root, rel, touched, ctx, add }) {
   const newText = readIf(path.join(root, rel));
   if (newText == null) return;
   touched.push(rel);
-  lines(newText).forEach((t, i) => {
-    if (DISABLED_RE.test(t)) add(rel, i + 1, `disabled test: ${t.trim().slice(0, 80)}`, 'no batch may add .skip / .only / .todo — fix or delete the test');
-  });
+  scanTestFile({ rel, oldText: '', newText, ctx, add });
 }
 
 function scanTestFile({ rel, oldText, newText, ctx, add }) {

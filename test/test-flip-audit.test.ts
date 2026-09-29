@@ -182,25 +182,81 @@ describe('test-flip-audit — an untouched batch', () => {
     expect(changes(run())).toBe('');
   });
 
-  it('lets a wholly new test file through uncited', () => {
-    write(root, { 'test/gamma.test.ts': "import { expect, it } from 'vitest';\nit('new', () => { expect(1).toBe(1); });\n" });
+});
+
+/*
+ * RATCHET LANE (2026-09-29): a WHOLLY NEW test file is audited exactly like an added hunk of an existing
+ * one. It used to be scanned only for .skip / .only / .todo, so a batch could put any number of uncited
+ * assertions in a fresh file — the one place the citation rule never looked. The audit now diffs a new
+ * file against the empty string and runs the ordinary scan on it, in both places a new file turns up:
+ * untracked in the working tree, and committed inside the batch window (`git diff --name-status` 'A').
+ */
+const NEW_UNCITED = `import { describe, expect, it } from 'vitest';
+
+describe('spined-shield', () => {
+  it('grants the shield spikes', () => {
+    expect(1).toBe(1);
+  });
+});
+`;
+const NEW_CITED = `import { describe, expect, it } from 'vitest';
+
+describe('spined-shield', () => {
+  // batch ${B}: spined-shield#granted-spikes
+  it('grants the shield spikes', () => {
+    // batch ${B}: spined-shield#granted-spikes
+    expect(1).toBe(1);
+  });
+});
+`;
+
+describe('test-flip-audit — a wholly new test file needs the same citations as an added hunk', () => {
+  it('refuses an uncited it() and expect() in a new untracked test file, naming the file and the lines', () => {
+    write(root, { 'test/gamma.test.ts': NEW_UNCITED });
+    const r = run();
+    expect(r.violations.map((v) => `${v.file}:${v.line}`)).toEqual(['test/gamma.test.ts:4', 'test/gamma.test.ts:5']);
+    expect(r.violations[0].change).toContain('it()/test() changed/added');
+    expect(r.violations[1].change).toContain('expect() changed/added');
+    expect(r.violations[1].expected).toContain('no citation in the 6 lines above');
+    expect(r.violations[1].expected).toContain(`// batch ${B}: <CONFIRMED finding id>`);
+  });
+
+  it('accepts a new test file whose every it() and expect() cites the batch\'s CONFIRMED finding', () => {
+    write(root, { 'test/gamma.test.ts': NEW_CITED });
     expect(changes(run())).toBe('');
   });
 
+  it('still refuses a citation in a new file that names a finding that is not CONFIRMED', () => {
+    write(root, { 'test/gamma.test.ts': NEW_CITED.replace(/spined-shield#granted-spikes/g, 'hairpin-of-blooming-flowers#burst-text') });
+    const r = run();
+    expect(r.violations).toHaveLength(2);
+    expect(r.violations.every((v) => v.file === 'test/gamma.test.ts' && v.expected.includes('but is not CONFIRMED'))).toBe(true);
+  });
+
+  it('still fails a .skip in a new test file outright, citation or not', () => {
+    write(root, { 'test/gamma.test.ts': NEW_CITED.replace("  it('grants", "  it.skip('grants") });
+    const r = run();
+    expect(r.violations).toHaveLength(1);
+    expect(r.violations[0].file).toBe('test/gamma.test.ts');
+    expect(r.violations[0].line).toBe(5);
+    expect(r.violations[0].change).toContain('disabled test');
+    expect(r.violations[0].expected).toContain('no batch may add .skip');
+  });
+
   /*
-   * The same exemption once the new file has been COMMITTED inside the batch window — `git diff
-   * --name-status` calls it 'A', and treating that as a modification made `git show startSha:<rel>`
-   * fail, the whole file read as added lines, and every assertion in it demand a citation. Replaying
-   * batch 29 after its own commit produced 108 phantom violations in test/batch29-data.test.ts alone.
-   * Its .skip / .only / .todo scan still runs, so the exemption is not a hole.
+   * The same rule once the new file has been COMMITTED inside the batch window — `git diff
+   * --name-status` calls it 'A'. It must not be read through `git show startSha:<rel>` (the file has no
+   * blob there); it goes through the same new-file scan as the untracked case.
    */
-  it('exempts a new test file that has since been committed, but still bans .skip in it', () => {
-    write(root, { 'test/gamma.test.ts': "import { expect, it } from 'vitest';\nit('new', () => { expect(1).toBe(1); });\n" });
+  it('holds a new test file that has since been committed to the same rule: uncited refused, cited clean, .skip banned', () => {
+    write(root, { 'test/gamma.test.ts': NEW_UNCITED });
     git('add', 'test/gamma.test.ts');
     git('-c', 'commit.gpgsign=false', 'commit', '-qm', 'mid-batch: a new test file');
     try {
+      expect(run().violations.map((v) => `${v.file}:${v.line}`)).toEqual(['test/gamma.test.ts:4', 'test/gamma.test.ts:5']);
+      write(root, { 'test/gamma.test.ts': NEW_CITED });
       expect(changes(run())).toBe('');
-      write(root, { 'test/gamma.test.ts': "import { expect, it } from 'vitest';\nit.skip('new', () => { expect(1).toBe(1); });\n" });
+      write(root, { 'test/gamma.test.ts': NEW_CITED.replace("  it('grants", "  it.skip('grants") });
       const r = run();
       expect(r.violations).toHaveLength(1);
       expect(r.violations[0].change).toContain('disabled test');
@@ -347,10 +403,13 @@ describe('test-flip-audit — ratchets, registries and experience limits', () =>
     expect(cited.violations).toHaveLength(1);
     expect(cited.violations[0].change).toContain('with no mutation-proof test');
 
+    // A new test file is cited like any added hunk (ratchet lane 2026-09-29), so the proof carries the
+    // batch citation, and its it( title names the finding's record.
     write(root, {
       'test/gamma.test.ts': `import { expect, it } from 'vitest';\n`
         + `// mutation-proof: a stunted flying-animal must still be reported by the comparer\n`
-        + `it('reports a stunted flying-animal', () => { expect(1).toBe(1); });\n`,
+        + `// batch ${B}: climbing-animal#jaws\n`
+        + `it('climbing-animal settle: reports a stunted flying-animal', () => { expect(1).toBe(1); });\n`,
     });
     expect(changes(run())).toBe('');
   });

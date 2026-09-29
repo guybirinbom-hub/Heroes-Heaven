@@ -137,7 +137,8 @@ const SAVE_DC_BASELINE = 0;
    * scripts/repair-dropped-inline.mjs, but the remainder need a rung-aware pass (AoN gives every rung
    * of an item family one document) or a human. Lower it as rows land; never raise it.
    */
-  const FOOT_BASELINE = 96;
+  // ratchet lane 2026-09-29: measured 95 by node scripts/dropped-inline-check.mjs; pinned by test/dropped-inline-ratchets.test.ts
+  const FOOT_BASELINE = 95;
   if (dc && dc.footHoles.length > FOOT_BASELINE) {
     console.log(`dropped-inline: FAIL — ${dc.footHoles.length} description(s) drop a "<N>-foot" area the Archives print — more than the ${FOOT_BASELINE} the ratchet allows:`);
     for (const h of dc.footHoles.slice(0, 30)) console.log(`   ${h}`);
@@ -202,7 +203,8 @@ const ARTEFACT_BASELINE = 17;
  * (work/.b033-rows-repair.json, all eleven records) drive it to zero — lower it to 0 as they land,
  * and never raise it.
  */
-const DAMAGE_TYPE_BASELINE = 11;
+// ratchet lane 2026-09-29: measured 0 by node scripts/dropped-inline-check.mjs; pinned by test/dropped-inline-ratchets.test.ts
+const DAMAGE_TYPE_BASELINE = 0;
 {
   const dt = findDroppedDamageType(ROOT);
   if (!dt) console.log(`dropped-inline: stripped-damage-type ratchet SKIPPED — no AoN mirror at ${MIRROR}`);
