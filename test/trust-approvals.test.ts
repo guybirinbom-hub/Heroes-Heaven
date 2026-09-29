@@ -129,15 +129,22 @@ describe('trust-approvals.json — completeness', () => {
    * or master abilities each day, instead of two" beside five grants that print their own fixed number —
    * which wins when a character owns both). `open`, so `unruled` below. Roster 167 -> 168.
    */
+  /*
+   * Then the 2026-09-29 Sources lane filed ONE ruling the owner gave in chat, straight into `ruled`: #169
+   * shop-respects-sources ("i want the shop to respect sources" — the sheet's Add items shop offers only the
+   * character's enabled books, keeping what the character holds). The answers file does not speak for it,
+   * so `unruled` below. Roster 168 -> 169.
+   */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
   // batch P02: enhanced-familiar#ability-budget
-  it('the desk roster is every number in work/owner-questions.json — 168: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane and the three ruled in chat on 2026-09-25 — with no gaps or repeats', () => {
+  it('the desk roster is every number in work/owner-questions.json — 169: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25 and the one ruled in chat on 2026-09-29 — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
     // reprint lane 2026-09-25: #165 reprint-cross-kind-sub-pages, #166 book-names-different-book-folds, #167 reprint-grade-to-grade
     // batch P02: enhanced-familiar#ability-budget — #168 enhanced-familiar#fixed-budget-grants (open, so `unruled`)
-    expect(deskNumbers.length).toBe(168);
+    // Sources lane 2026-09-29: #169 shop-respects-sources (ruled in chat, so `unruled`)
+    expect(deskNumbers.length).toBe(169);
   });
 
   it('every desk number has exactly one disposition', () => {

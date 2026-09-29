@@ -7,6 +7,7 @@ import { renderDom } from './_render';
 import { DEDUPE_MAPS, listValues, shopItems } from '../src/data';
 import { trustPartly, trustUnencoded } from '../src/data/trustGate';
 import { hostSearchRecords } from '../src/integration/hostSearchRecords';
+import { CORE_BOOKS, storedSources } from '../src/rules/sources';
 import { AddItemsModal } from '../src/sheet/AddItemsModal';
 import { InventoryTab } from '../src/sheet/InventoryTab';
 import type { Character, ContentDatabase, InventoryItem } from '../src/rules/types';
@@ -93,7 +94,10 @@ describe('a hidden reprint twin stands in when its legacy record is filtered out
       services: {}, vehicles: {}, siegeWeapons: {},
     } as ContentDatabase;
     const bought: string[] = [];
-    const s = renderDom(createElement(AddItemsModal, { content: shop, currency: { pp: 5000 }, hideLegacy: true, onBuy: (id: string) => bought.push(id), onGive: () => undefined, onClose: () => undefined }));
+    // desk shop-respects-sources (2026-09-29): both halves' books on, so the legacy half is taken away by
+    // "Hide legacy data" alone, as this test means (test/shop-respects-sources.test.tsx covers the book).
+    const enabledSources = storedSources([...CORE_BOOKS, 'Pathfinder Secrets of Magic', 'Pathfinder Impossible Magic']);
+    const s = renderDom(createElement(AddItemsModal, { content: shop, currency: { pp: 5000 }, hideLegacy: true, enabledSources, onBuy: (id: string) => bought.push(id), onGive: () => undefined, onClose: () => undefined }));
     const rows = [...s.host.querySelectorAll('.ai-row')];
     const row = (name: string) => rows.find((e) => e.querySelector('.ai-name')?.textContent === name);
     expect(rows.map((e) => e.querySelector('.ai-name')?.textContent).sort()).toEqual(['Greater Singing Shortbow', 'Longsword']);

@@ -1901,6 +1901,7 @@ export function InventoryTab({
         <AddItemsModal
           content={content}
           hideLegacy={character.hideLegacy}
+          enabledSources={character.enabledSources}
           currency={coins}
           onBuy={(id) => void addMaybeToCompanion(id, true)}
           onGive={(id) => void addMaybeToCompanion(id, false)}

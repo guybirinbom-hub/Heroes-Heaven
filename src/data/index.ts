@@ -11,6 +11,7 @@
 import type { ContentDatabase, Item, SourceInfo } from '../rules/types';
 import { seedContent } from '../rules/seed';
 import { CATALOG_MODE_MAP } from '../rules/modes';
+import { entrySourceOn } from '../rules/sources';
 import {
   loadCampaignHbCache,
   loadHomebrewContent,
@@ -485,12 +486,22 @@ export function listValues<T>(content: ContentDatabase, map: Record<string, T>):
  * scripts/reprint-check.mjs (CHECK 9) and the tests measure the list the player is offered, not a copy
  * of its rules. Filtered BEFORE listValues, so a desk #158 reprint the duplicate rules hide behind its
  * legacy half is offered when "Hide legacy data" takes that half away (findHiddenTwins).
+ *
+ * `enabled` (desk shop-respects-sources, owner 2026-09-29: "i want the shop to respect sources") is the
+ * character's enabledBookSet: an item from a book that is off is not offered, the same entrySourceOn test
+ * the Builder's pickers apply (applySources) — homebrew by its source's name or id, a record with no book
+ * always. It filters in the same pass, before listValues, so a reprint twin whose legacy half's BOOK is off
+ * is offered in its place. Undefined = no book filter (reprint-check CHECK 9 measures the whole list). The
+ * sheet's content is never filtered, so an item the character already holds keeps resolving; the shop just
+ * stops offering more of it. Vehicles, siege weapons and services are not choosable source maps
+ * (CHOOSABLE_SOURCE_MAPS) and are not in this list — AddItemsModal adds them unfiltered, as before.
  */
-export function shopItems(content: ContentDatabase, hideLegacy?: boolean): Item[] {
+export function shopItems(content: ContentDatabase, hideLegacy?: boolean, enabled?: Set<string>): Item[] {
   const offered = (i: Item) => {
     const e = (i as { edition?: string }).edition;
     if (e === 'superseded') return false; // renamed/outdated half of a remaster change — always hidden
     if (i.retired) return false; // bug 2026-09-12 #7: deleted here, but still resolvable for anyone carrying one
+    if (enabled && !entrySourceOn(enabled, i)) return false; // its book is off for this character
     return !(hideLegacy && (e === 'legacy' || e === 'legacy-era'));
   };
   const view = { ...content, items: Object.fromEntries(Object.entries(content.items).filter(([, i]) => offered(i))) };

@@ -2222,7 +2222,19 @@ export function SourcesCard({
     if (!ok) return;
     // patch takes a Partial<BuildState>; a whole rebuilt build is a valid one, and it must be applied
     // in ONE write so the source list and the removals can never land out of step.
-    actions.patch(removeChosenIds({ ...build, enabledSources: storedSources(n) }, new Set(losing.map((c) => c.id))));
+    // Read off the LIVE build `b`, never the `build` the dialog was drawn from (as withoutPicks does): the
+    // confirm is async, and writing that snapshot back undid whatever changed meanwhile — a sync pull, an
+    // item bought, another book switched on. Only the books this click named go off, and only the ids the
+    // confirm named are removed.
+    // Keep-what-you-hold (desk shop-respects-sources, 2026-09-29): chosenFromBooks never lists a held item,
+    // and the live inventory is written back as it is, so a spell removed from the repertoire here does not
+    // also empty the scroll or wand that stores it.
+    const gone = new Set(losing.map((c) => c.id));
+    actions.patch((b) => {
+      const live = enabledBookSet(b.enabledSources);
+      for (const x of [...books, ...tokens]) live.delete(x);
+      return { ...removeChosenIds({ ...b, enabledSources: storedSources(live) }, gone), inventory: b.inventory };
+    });
   };
   const setCategory = (g: SourceGroup, on: boolean) => setBooks(g.entries.flatMap((e) => e.books), on);
   // Homebrew goes ON by id only (a name would also switch on whatever source takes that name later) and

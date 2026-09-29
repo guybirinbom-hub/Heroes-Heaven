@@ -3,6 +3,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { useEffect, useState, act } from 'react';
 import { createRoot } from 'react-dom/client';
 import { content } from './_content';
+import { shopItems } from '../src/data';
+import { enabledBookSet } from '../src/rules/sources';
 import { InventoryTab } from '../src/sheet/InventoryTab';
 import { normalizeCharacter } from '../src/rules/normalize';
 import { emptyPlay, packQuantity, type PlayState, type PlayUpdater } from '../src/rules/play';
@@ -32,7 +34,9 @@ import type { Character, CompanionConfig, InventoryItem } from '../src/rules/typ
  */
 const c = content();
 const packItem = Object.values(c.items).find((i) => (i.packOf ?? 1) > 1)!;
-const companionGear = Object.values(c.items).find((i) => (i.traits ?? []).includes('companion') && !(i.packOf && i.packOf > 1))!;
+// desk shop-respects-sources (2026-09-29): the shop offers only the character's enabled books, and this
+// character stores none (Core only), so the companion item is one the Core-only shop offers.
+const companionGear = shopItems(c, false, enabledBookSet(undefined)).find((i) => (i.traits ?? []).includes('companion') && !(i.packOf && i.packOf > 1))!;
 const REX: CompanionConfig = { id: 'c1', kind: 'animal', name: 'Rex' } as CompanionConfig;
 
 const character = (inventory: InventoryItem[], companions: CompanionConfig[]): Character =>

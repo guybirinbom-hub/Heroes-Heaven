@@ -15,6 +15,7 @@ import { MythicRules } from '../src/sheet/MythicRules';
 import { RefSearchModal } from '../src/sheet/RichEditor';
 import { SPELL_SPEC_BUILDER } from '../src/sheet/filterSpecs';
 import { NO_MATCH, rankBySearch, searchMatches, searchTier, splitNameText } from '../src/data/searchRank';
+import { sourceCatalog, storedSources } from '../src/rules/sources';
 import type { Character, Coins, Spell } from '../src/rules/types';
 
 /**
@@ -169,7 +170,10 @@ describe('bug 2026-09-13: search-rank — the rule', () => {
 describe('bug 2026-09-13: search-rank — Add items (the reported box)', () => {
   const purse: Coins = { gp: 5000 };
   const noop = () => undefined;
-  const open = () => renderDom(<AddItemsModal content={content()} currency={purse} onBuy={noop} onGive={noop} onClose={noop} />);
+  // desk shop-respects-sources (2026-09-29): the shop offers only the character's enabled books. The owner's
+  // screenshot counts rows from every book, so every book is on here, as this box always assumed.
+  const everyBook = storedSources(sourceCatalog(content()).allBooks);
+  const open = () => renderDom(<AddItemsModal content={content()} currency={purse} enabledSources={everyBook} onBuy={noop} onGive={noop} onClose={noop} />);
 
   // bug 2026-09-13: search-rank
   it('puts Waterskin first when you search "waterskin", with the kits that merely list one after it', () => {

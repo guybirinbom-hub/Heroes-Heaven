@@ -5,6 +5,7 @@ import { build, content } from './_content';
 import { renderDom } from './_render';
 import { AddItemsModal } from '../src/sheet/AddItemsModal';
 import { InventoryTab } from '../src/sheet/InventoryTab';
+import { CORE_BOOKS, storedSources } from '../src/rules/sources';
 import type { Character, Coins, ContentDatabase, InventoryItem, Item } from '../src/rules/types';
 
 /**
@@ -26,6 +27,9 @@ import type { Character, Coins, ContentDatabase, InventoryItem, Item } from '../
 const c = () => content();
 const noop = () => undefined;
 const purse: Coins = { gp: 500 };
+/** desk shop-respects-sources (2026-09-29): the shop offers only the character's enabled books, so the
+ *  authored item's own source ("My Homebrew", by name) is switched on beside the Core books. */
+const ON = storedSources([...CORE_BOOKS, 'My Homebrew']);
 
 /** An item the player authored: `source.license === 'homebrew'` is the stamp the homebrew merge puts
  *  on every stored entry, and `custom-…` the id the item editor mints. */
@@ -75,7 +79,7 @@ describe('bug 2026-09-12 #7: homebrew-delete — deleting an authored item in th
   it('offers Delete on the row the player authored, and on no other row', () => {
     const hb = authored();
     const { host, stop } = renderDom(
-      <AddItemsModal content={catalog(hb)} currency={purse} onBuy={noop} onGive={noop} onClose={noop} onSaveItem={noop} />,
+      <AddItemsModal content={catalog(hb)} currency={purse} enabledSources={ON} onBuy={noop} onGive={noop} onClose={noop} onSaveItem={noop} />,
     );
     const dels = [...host.querySelectorAll('.ai-buy button.del')];
     // Both rows render (so the single Delete is a CHOICE, not an empty catalog)…
@@ -92,7 +96,7 @@ describe('bug 2026-09-12 #7: homebrew-delete — deleting an authored item in th
     const hb = authored();
     const saved: Item[] = [];
     const { host, click, stop } = renderDom(
-      <AddItemsModal content={catalog(hb)} currency={purse} onBuy={noop} onGive={noop} onClose={noop} onSaveItem={(i) => saved.push(i)} />,
+      <AddItemsModal content={catalog(hb)} currency={purse} enabledSources={ON} onBuy={noop} onGive={noop} onClose={noop} onSaveItem={(i) => saved.push(i)} />,
     );
     click(host.querySelector('.ai-buy button.del'));
     await act(async () => undefined);
@@ -112,7 +116,7 @@ describe('bug 2026-09-12 #7: homebrew-delete — deleting an authored item in th
     const hb = authored();
     const saved: Item[] = [];
     const first = renderDom(
-      <AddItemsModal content={catalog(hb)} currency={purse} onBuy={noop} onGive={noop} onClose={noop} onSaveItem={(i) => saved.push(i)} />,
+      <AddItemsModal content={catalog(hb)} currency={purse} enabledSources={ON} onBuy={noop} onGive={noop} onClose={noop} onSaveItem={(i) => saved.push(i)} />,
     );
     first.click(first.host.querySelector('.ai-buy button.del'));
     await act(async () => undefined);
@@ -131,7 +135,7 @@ describe('bug 2026-09-12 #7: homebrew-delete — deleting an authored item in th
 
     // Re-open the search with what was written: the row is gone, the printed one is not.
     const second = renderDom(
-      <AddItemsModal content={catalog(saved[0])} currency={purse} onBuy={noop} onGive={noop} onClose={noop} onSaveItem={noop} />,
+      <AddItemsModal content={catalog(saved[0])} currency={purse} enabledSources={ON} onBuy={noop} onGive={noop} onClose={noop} onSaveItem={noop} />,
     );
     expect(second.host.textContent).toContain('Longsword');
     expect(second.host.textContent).not.toContain('Bottled Lightning');

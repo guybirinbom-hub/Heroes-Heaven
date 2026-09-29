@@ -9,6 +9,13 @@ import { content } from './_content';
  * on the sheet — so the source list said one thing and the character said another. Now the player is
  * told exactly what would go and it is removed only if they agree.
  *
+ * NOT THE INVENTORY (desk shop-respects-sources, owner 2026-09-29: "i want the shop to respect sources").
+ * Keep-what-you-hold: an item the character carries, and the spell stored in it, stays when its book goes
+ * off. chosenFromBooks leaves the inventory out and the Sources card writes the inventory back as it was,
+ * so the card never offers to remove held gear; the shop just stops offering more. removeChosenIds itself
+ * still clears whatever ids it is handed, inventory included, and that is what the tests below measure.
+ * The card's own behaviour is guarded in test/shop-respects-sources.test.tsx.
+ *
  * The dangerous half is the removal: dropping the WRONG pick silently destroys a player's choices.
  * removeChosenIds must clear exactly the listed ids and nothing else, and must be the true inverse of
  * collectChosenIds — anything that function can find must be removable, or a disabled book would
@@ -73,7 +80,9 @@ describe('removing a source that the character already used', () => {
     expect(after.inventory.map((i) => i.itemId)).toContain(itemId);
   });
 
-  it('drops an item from the inventory when its book goes', () => {
+  // desk shop-respects-sources (2026-09-29): retitled. removeChosenIds still drops an item it is handed, but
+  // the Sources card no longer hands it one (keep-what-you-hold), so "when its book goes" was no longer true.
+  it('drops an inventory item whose id it is handed (the Sources card never hands it one)', () => {
     const { b, itemId } = buildWithPicks();
     const after = removeChosenIds(b, new Set([itemId]));
     expect(after.inventory.map((i) => i.itemId)).not.toContain(itemId);

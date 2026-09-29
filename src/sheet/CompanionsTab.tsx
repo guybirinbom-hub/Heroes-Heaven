@@ -1794,6 +1794,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
         <AddItemsModal
           content={content}
           hideLegacy={character.hideLegacy}
+          enabledSources={character.enabledSources}
           currency={character.currency}
           // Ammunition is sold by the pack here too: one purchase is ten arrows for the one printed
           // price, exactly as on the character's own Inventory tab.

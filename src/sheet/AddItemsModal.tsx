@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { shopItems } from '../data';
 import type { Coins, ContentDatabase, Item } from '../rules/types';
 import { canAfford } from '../rules/play';
+import { enabledBookSet } from '../rules/sources';
 import { formatItemPrice, parsePrice } from '../rules/wealth';
 import { confirmDialog } from './confirm';
 import { FilterableSelect, descNodeOf } from './FilterableSelect';
@@ -40,11 +41,15 @@ export function AddItemsModal({
   onClose,
   onSaveItem,
   hideLegacy,
+  enabledSources,
 }: {
   content: ContentDatabase;
   currency: Coins;
   /** When true, legacy/legacy-era items are hidden from the browse list (per-character setting). */
   hideLegacy?: boolean;
+  /** The character's enabled source books (`Character.enabledSources`; absent = the Core books only).
+   *  Items from a book that is off are not offered; what the character already holds is untouched. */
+  enabledSources?: string[];
   onBuy: (itemId: string) => void;
   onGive: (itemId: string) => void;
   /** bug 2026-09-12 #7: homebrew-delete — persist a user-authored item (App's `addCustomItem`: into
@@ -58,6 +63,9 @@ export function AddItemsModal({
   onClose: () => void;
 }) {
   const companionCatalog = !!(onBuyCompanion || onGiveCompanion);
+  // desk shop-respects-sources (owner, 2026-09-29: "i want the shop to respect sources"): the shop offers
+  // only the character's enabled books, like every Builder picker. Absent = Core only, as everywhere.
+  const enabledBooks = useMemo(() => enabledBookSet(enabledSources), [enabledSources]);
   // Services rendered as look-only catalog rows: shape them as minimal "equipment" entries so they
   // pass the item filters, and keep the original (string price + the look-only flag) by id.
   const services = useMemo(() => Object.values(content.services ?? {}), [content]);
@@ -127,14 +135,15 @@ export function AddItemsModal({
           ),
         ]
       : [];
-    /* shopItems (src/data): superseded, retired and — under "Hide legacy data" — legacy items are filtered
-     * BEFORE listValues, so a desk #158 reprint the duplicate rules hide behind its legacy half is offered
-     * when that half is taken away (findHiddenTwins). */
-    const items = shopItems(content, hideLegacy);
+    /* shopItems (src/data): superseded, retired, items from a book this character has off, and — under
+     * "Hide legacy data" — legacy items are filtered BEFORE listValues, so a desk #158 reprint the duplicate
+     * rules hide behind its legacy half is offered when that half is taken away (findHiddenTwins). Services,
+     * vehicles and siege weapons are not source-filtered (not choosable source maps). */
+    const items = shopItems(content, hideLegacy, enabledBooks);
     return [...items, ...svcEntries, ...vehicleEntries].sort(
       (a, b) => a.level - b.level || a.name.localeCompare(b.name),
     );
-  }, [content, services, companionCatalog, hideLegacy]);
+  }, [content, services, companionCatalog, hideLegacy, enabledBooks]);
 
   /*
    * bug 2026-09-12 #7: homebrew-delete. Owner: *"for items that a user created and appear in search

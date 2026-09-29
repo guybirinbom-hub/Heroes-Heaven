@@ -3400,10 +3400,15 @@ export interface ChosenFromBook {
  * Turning a source off hides it from every picker, but the character may already have taken things
  * from it. Silently keeping them makes the source list a lie; silently dropping them deletes a
  * player's choices without asking. So the caller warns with this list first.
+ *
+ * NOT THE INVENTORY (desk shop-respects-sources, owner 2026-09-29: "i want the shop to respect sources").
+ * Keep-what-you-hold: an item the character carries — and the spell stored in it — stays when its book goes
+ * off; the shop (shopItems' book filter) simply stops offering more. Listing it here would have the card
+ * offer to delete gear the player owns, so the inventory is left out of what "would be lost".
  */
 export function chosenFromBooks(build: BuildState, content: ContentDatabase, books: ReadonlySet<string>): ChosenFromBook[] {
   if (!books.size) return [];
-  const chosen = collectChosenIds(build, content);
+  const chosen = collectChosenIds({ ...build, inventory: [] }, content);
   const out: ChosenFromBook[] = [];
   const seen = new Set<string>();
   for (const m of CHOOSABLE_SOURCE_MAPS) {

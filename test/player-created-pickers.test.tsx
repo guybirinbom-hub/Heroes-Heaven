@@ -9,7 +9,7 @@ import { Builder } from '../src/builder/Builder';
 import { emptyBuild, levelGrants, type BuildState } from '../src/rules/build';
 import { EXTRA_FEAT_TAKINGS } from '../src/rules/featFeatGrants';
 import { FEAT_SITUATIONAL } from '../src/rules/situationalBonuses';
-import { categoryOfBook, NICHE_CATEGORIES } from '../src/rules/sources';
+import { categoryOfBook, NICHE_CATEGORIES, sourceCatalog, storedSources } from '../src/rules/sources';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { AddItemsModal } from '../src/sheet/AddItemsModal';
 import { ContentContext } from '../src/sheet/ContentContext';
@@ -310,7 +310,10 @@ describe('a created record never shows the OTHER record of its name', () => {
   });
 
   it("Add items: the Travel Guide's Silver (Ingot) opens the Travel Guide page, not GM Core's Silver Ingot", async () => {
-    const r = renderDom(createElement(AddItemsModal, { content: db(), currency: { gp: 5000 }, onBuy: noop, onGive: noop, onClose: noop }));
+    // desk shop-respects-sources (2026-09-29): the shop offers only the character's enabled books, so the
+    // Travel Guide must be on for its row to be offered — every book on, as this test always assumed.
+    const enabledSources = storedSources(sourceCatalog(db()).allBooks);
+    const r = renderDom(createElement(AddItemsModal, { content: db(), currency: { gp: 5000 }, enabledSources, onBuy: noop, onGive: noop, onClose: noop }));
     type(r.host.querySelector<HTMLInputElement>('.fsel-results-search input'), 'silver (ingot)');
     const row = [...r.host.querySelectorAll('.ai-row')].find((x) => (x.querySelector('.ai-name')?.textContent ?? '').trim() === 'Silver (Ingot)');
     expect(row, 'no Silver (Ingot) row').toBeTruthy();

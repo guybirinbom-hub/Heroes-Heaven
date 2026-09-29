@@ -791,6 +791,19 @@ refused and printed, unless he named the pair himself (Arboreal Boots (Greater) 
 the Greater Boots of Elvenkind's Item 11, 1,250 gp). Of 554 grade pairs over the whole corpus, two change a shipped record: the Greater Cloak and the
 Greater Boots of Elvenkind now link to their own grade.
 
+**2026-09-29 — the sheet's Add items shop respects Sources (desk #169).** The Builder's pickers offered only
+the character's enabled books, and the Sources card says *"Disabled books are hidden from every picker"*, but
+the sheet's Add items shop listed every item from every book whatever the character's Sources said. His
+words: *"i want the shop to respect sources"*. So the shop — on the Inventory tab and for a companion's gear —
+offers only items from the character's enabled books, through the same test as the Builder's pickers
+(`shopItems` in src/data/index.ts, `entrySourceOn`): no stored choice means the Core books only, homebrew
+follows its own source's switch, and a reprint twin whose legacy half's book is off is offered in its place.
+Keep-what-you-hold: an item the character already carries from a book that is now off stays on the sheet and
+in the build — the shop just stops offering more — and switching a book off on the Sources card no longer
+lists a held item among what would be removed, nor removes it. "Hide legacy data" and the "not yet verified"
+marker on a shop row behave as before; services, vehicles and siege weapons are not source-filtered. The
+card's sentence is now true. Guard: `test/shop-respects-sources.test.tsx`.
+
 ### R13 · "either X or Y" / "your choice of X or Y" is ONE pick
 
 A feat or background printed *"you're trained in your choice of either the Crafting or Society skill"*
