@@ -39003,7 +39003,20 @@
   "value": [
    {
     "name": "Qi-Infused Fabric",
-    "die": "1d4",
+    "die": "d6",
+    "damageType": "slashing",
+    "traits": [
+     "disarm",
+     "finesse",
+     "reach",
+     "sweep",
+     "trip"
+    ],
+    "group": "flail"
+   },
+   {
+    "name": "Qi-Infused Fabric (one hand)",
+    "die": "d4",
     "damageType": "slashing",
     "traits": [
      "disarm",
@@ -39014,7 +39027,8 @@
     ],
     "group": "flail"
    }
-  ]
+  ],
+  "why": "batch P02 unfurling-brocade#two-handed-die: AoN hybrid-study-8 \"You can use the fabric as a bladed scarf. Unlike a normal bladed scarf, you have the option to wield the fabric in one hand instead of two. Its damage die is d4 if held in one hand.\" items/bladed-scarf is two-handed 1d6 slashing, so the default grip is a d6 Strike and the one-handed grip a d4. GrantedStrike has no hands field, so the two grips are two named rows (collectGrantedNaturals dedupes by name only). The die is written bare ('d6', 'd4' - the shape 266 of the 280 shipped grantedStrikes use): deriveUnarmedStrike prefixes the dice count, so the superseded row's '1d4' rendered on the Strikes tab as '11d4+1 S' (measured on a built level-1 magus). The default (bladed-scarf, two-handed d6) grip keeps the shipped name 'Qi-Infused Fabric' on purpose: a character saved before this row stores that name with die '1d4', and deriveBuildFromCharacter / buildCharacter drop a stored attack only when sameNaturalAttack matches it by NAME or by an identical die string - '1d4' never equals 'd4', so a renamed grip left the old row behind as a manual attack (measured by the P02 verifier: a pre-row save rebuilt to three fabric rows, one reading '11d4+1 S')."
  },
  {
   "category": "items",
@@ -160927,7 +160941,8 @@
   "category": "items",
   "id": "paradigm-cube",
   "field": "description",
-  "value": "A *paradigm cube* is a perfect 5-inch-square cube of stone. Each side is inlaid with precious crystals of a different color: red, orange, yellow, green, blue, and indigo. When one activates a *paradigm cube*, one of these sides is selected—it glows with the matching color and then darkens to a shade of violet once the activation ends, indicating that the magic from that particular side of the cube has been expended for the day.\n\n**Activate—Change Paradigm** ⟨1⟩ (manipulate)\n\n**Frequency** six times per day (but only once per day per color)\n\n---\n\n**Effect** Select one of the six colors of the cube that hasn't been activated today, then roll the cube on the ground at your feet and attempt a . On a success, your chosen color activates as detailed below. On a failure, roll 1d6 to randomly determine which effect manifests; if the result of the roll is a color that's already been activated today, no effect occurs. The *paradigm cube* then immediately returns to your hand. If you spend 1 Mythic Point as part of this activation, your chosen color automatically activates without requiring a flat check, and the chosen effect's mythic enhancement unlocks. Once activated, the illusion created fills a 60-foot emanation from you and lasts for 1 minute. You can end the effect early by activating Change Paradigm again by tapping the currently active color.\n\n**1—Red** (emotion, mental, visual) Red is the color of anger and impatience. A crimson haze covers the area, setting everyone within the area on edge. Allies in the area gain a +2 item bonus to Intimidation checks to Coerce. **Mythic Enhancement:** Allies' saving throws against mental and incapacitation effects are attempted at mythic proficiency.\n\n**2—Orange** (light, visual) Orange is the color of glory and opulence. The area becomes bedecked in elegant images, glamorous decor, and spectacular displays, and becomes brightly lit. Allies in the area gain a +2 item bonus to Performance checks, and allies who Rage in the area gain an additional 3 temporary Hit Points above what they would normally gain. **Mythic Enhancement:** Allies' Perception checks and Diplomacy checks to Make an Impression or Request are attempted at mythic proficiency.\n\n**3—Yellow** (emotion, fear, light, mental, visual) Yellow is the color of terror and discord. The area's illumination, if any, takes on an unnerving, murky yellow tinge and becomes dim light. Allies in the area gain a +2 item bonus to Intimidation checks to Demoralize. **Mythic Enhancement:** Enemy creatures in the area who gain the frightened condition become Slowed 1 as long as they remain frightened, as the yellow light seems to cling to them and slow their movements to a nightmarish crawl.\n\n**4—Green** (revelation, visual) Green is the color of logic and clarity. Visible text in the area becomes softly illuminated when read. Allies in the area gain a +2 item bonus to Lore checks to Recall Knowledge. **Mythic Enhancement:** Attempts made by allies to counteract or disbelieve illusions or to save against confusion effects are attempted at mythic proficiency.\n\n**5—Blue** (emotion, light, mental, visual) Blue is the color of debilitating sadness and fractures in one's emotional facade. Somber light replaces the normal lighting, filling the area with dim illumination, and moods darken. Allies in the area gain a +2 item bonus to Perception checks to Sense Motive. **Mythic Enhancement:** An enemy in the area that fails an attack roll, saving throw, or skill check becomes Stupefied 1 from sadness until the end of their next turn (Stupefied 2 on a critical failure).\n\n**6—Indigo** (darkness, shadow) Indigo is the color of ignorance and the unknown. The area becomes cloaked in darkness, as per the darkness spell heightened to 6th rank. Allies in the area gain a +2 item bonus to Stealth checks to Hide. **Mythic Enhancement:** Allies' saving throws against fear, curse, or visual effects are attempted at mythic proficiency.\n\n---\n\n**Craft Requirements** You must be a mythic arcane spellcaster capable of attempting Crafting checks at mythic proficiency."
+  "value": "A *paradigm cube* is a perfect 5-inch-square cube of stone. Each side is inlaid with precious crystals of a different color: red, orange, yellow, green, blue, and indigo. When one activates a *paradigm cube*, one of these sides is selected—it glows with the matching color and then darkens to a shade of violet once the activation ends, indicating that the magic from that particular side of the cube has been expended for the day.\n\n**Activate—Change Paradigm** ⟨1⟩ (manipulate)\n\n**Frequency** six times per day (but only once per day per color)\n\n---\n\n**Effect** Select one of the six colors of the cube that hasn't been activated today, then roll the cube on the ground at your feet and attempt a DC 11 flat check. On a success, your chosen color activates as detailed below. On a failure, roll 1d6 to randomly determine which effect manifests; if the result of the roll is a color that's already been activated today, no effect occurs. The *paradigm cube* then immediately returns to your hand. If you spend 1 Mythic Point as part of this activation, your chosen color automatically activates without requiring a flat check, and the chosen effect's mythic enhancement unlocks. Once activated, the illusion created fills a 60-foot emanation from you and lasts for 1 minute. You can end the effect early by activating Change Paradigm again by tapping the currently active color.\n\n**1—Red** (emotion, mental, visual) Red is the color of anger and impatience. A crimson haze covers the area, setting everyone within the area on edge. Allies in the area gain a +2 item bonus to Intimidation checks to Coerce. **Mythic Enhancement:** Allies' saving throws against mental and incapacitation effects are attempted at mythic proficiency.\n\n**2—Orange** (light, visual) Orange is the color of glory and opulence. The area becomes bedecked in elegant images, glamorous decor, and spectacular displays, and becomes brightly lit. Allies in the area gain a +2 item bonus to Performance checks, and allies who Rage in the area gain an additional 3 temporary Hit Points above what they would normally gain. **Mythic Enhancement:** Allies' Perception checks and Diplomacy checks to Make an Impression or Request are attempted at mythic proficiency.\n\n**3—Yellow** (emotion, fear, light, mental, visual) Yellow is the color of terror and discord. The area's illumination, if any, takes on an unnerving, murky yellow tinge and becomes dim light. Allies in the area gain a +2 item bonus to Intimidation checks to Demoralize. **Mythic Enhancement:** Enemy creatures in the area who gain the frightened condition become Slowed 1 as long as they remain frightened, as the yellow light seems to cling to them and slow their movements to a nightmarish crawl.\n\n**4—Green** (revelation, visual) Green is the color of logic and clarity. Visible text in the area becomes softly illuminated when read. Allies in the area gain a +2 item bonus to Lore checks to Recall Knowledge. **Mythic Enhancement:** Attempts made by allies to counteract or disbelieve illusions or to save against confusion effects are attempted at mythic proficiency.\n\n**5—Blue** (emotion, light, mental, visual) Blue is the color of debilitating sadness and fractures in one's emotional facade. Somber light replaces the normal lighting, filling the area with dim illumination, and moods darken. Allies in the area gain a +2 item bonus to Perception checks to Sense Motive. **Mythic Enhancement:** An enemy in the area that fails an attack roll, saving throw, or skill check becomes Stupefied 1 from sadness until the end of their next turn (Stupefied 2 on a critical failure).\n\n**6—Indigo** (darkness, shadow) Indigo is the color of ignorance and the unknown. The area becomes cloaked in darkness, as per the darkness spell heightened to 6th rank. Allies in the area gain a +2 item bonus to Stealth checks to Hide. **Mythic Enhancement:** Allies' saving throws against fear, curse, or visual effects are attempted at mythic proficiency.\n\n---\n\n**Craft Requirements** You must be a mythic arcane spellcaster capable of attempting Crafting checks at mythic proficiency.",
+  "why": "AoN prints \"DC 11 flat check\" on equipment-4041 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
  },
  {
   "category": "items",
@@ -161257,7 +161272,8 @@
   "category": "items",
   "id": "shadow-ash",
   "field": "description",
-  "value": "**Activate** Cast a Spell or successfully perform a ritual as the primary or secondary caster\n\n---\n\nThis small pile of ash glows with strange blue embers that coat whatever they touch with a thin layer of frost laced with veins of necrotic ichor. Adding this catalyst to an animate dead spell or create undead ritual wreathes the resulting undead creature in a shroud of frost that pulses with void energy. During a combat encounter, the first opponent to deal damage to the undead creature with a melee Strike takes 3d6 damage and becomes Drained 1 as the shroud of ice and rot shatters from the blow. If the undead creature survives the encounter, the shroud of frost reforms the next day. When an undead creature animated or created with this catalyst dies, it can return to animation with half of its Hit Points within 1d4 rounds of its death (unless it was killed in a manner that destroys it remains completely such as a Disintegrate spell) with a . If the undead creature rises again, a desperate, garbled screech resonates from within its corpse."
+  "value": "**Activate** Cast a Spell or successfully perform a ritual as the primary or secondary caster\n\n---\n\nThis small pile of ash glows with strange blue embers that coat whatever they touch with a thin layer of frost laced with veins of necrotic ichor. Adding this catalyst to an animate dead spell or create undead ritual wreathes the resulting undead creature in a shroud of frost that pulses with void energy. During a combat encounter, the first opponent to deal damage to the undead creature with a melee Strike takes 3d6 damage and becomes Drained 1 as the shroud of ice and rot shatters from the blow. If the undead creature survives the encounter, the shroud of frost reforms the next day. When an undead creature animated or created with this catalyst dies, it can return to animation with half of its Hit Points within 1d4 rounds of its death (unless it was killed in a manner that destroys it remains completely such as a Disintegrate spell) with a DC 11 flat check. If the undead creature rises again, a desperate, garbled screech resonates from within its corpse.",
+  "why": "AoN prints \"DC 11 flat check\" on equipment-1723 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
  },
  {
   "category": "items",
@@ -172003,10 +172019,10 @@
    {
     "id": "resurgent-maelstrom",
     "name": "Resurgent Maelstrom",
-    "description": "While fate may conspire to strip you of your armaments, you're never helpless. For you, anything can be a dangerous weapon, bolstered by the might of towering waves and crushing tides. You know these tools are transient, and so you think nothing of shattering and reforming them with your magic.\n\nYour attacks with improvised weapons do not take the normal –2 item penalty. While you wield an improvised weapon, streams of water flow from your limbs to surround the weapon, granting it the water trait. These improvised weapons have a minimum damage die of 1d6, or 1d4 if the improvised weapon is agile.\n\nEffects that apply runes to your unarmed attacks, like Runic Body and Handwraps of Might Blows, also apply those runes to your non-magical improvised weapons. The improvised weapon also gains an additional trait, depending on how many hands it takes to wield. A one-handed improvised weapon gains the backstabber trait; if it would already have the backstabber trait, double the amount of additional precision damage. A two-handed improvised weapon gains the forceful trait; if it would already have the forceful trait, treat the number of weapon damage dice the weapon has as 1 higher for the purpose of calculating the additional damage.\n\nWhile you're in Arcane Cascade stance , you can manipulate the water around your improvised weapon, making it cut like a knife or bash with the force of falling rocks. The weapon gains the versatile traits for the types of damage that it doesn't normally deal. For instance, an improvised weapon that normally deals bludgeoning damage gains the versatile P and versatile S traits.\n\n**Conflux Spell** Turbulent Tide",
+    "description": "While fate may conspire to strip you of your armaments, you're never helpless. For you, anything can be a dangerous weapon, bolstered by the might of towering waves and crushing tides. You know these tools are transient, and so you think nothing of shattering and reforming them with your magic.\n\nYour attacks with improvised weapons do not take the normal –2 item penalty. While you wield an improvised weapon, streams of water flow from your limbs to surround the weapon, granting it the water trait. These improvised weapons have a minimum damage die of 1d6, or 1d4 if the improvised weapon is agile.\n\nEffects that apply runes to your unarmed attacks, like Runic Body and Handwraps of Mighty Blows, also apply those runes to your non-magical improvised weapons. The improvised weapon also gains an additional trait, depending on how many hands it takes to wield. A one-handed improvised weapon gains the backstabber trait; if it would already have the backstabber trait, double the amount of additional precision damage. A two-handed improvised weapon gains the forceful trait; if it would already have the forceful trait, treat the number of weapon damage dice the weapon has as 1 higher for the purpose of calculating the additional damage.\n\nWhile you're in Arcane Cascade stance , you can manipulate the water around your improvised weapon, making it cut like a knife or bash with the force of falling rocks. The weapon gains the versatile traits for the types of damage that it doesn't normally deal. For instance, an improvised weapon that normally deals bludgeoning damage gains the versatile P and versatile S traits.\n\n**Conflux Spell** Turbulent Tide",
     "descRefs": [
      {
-      "label": "Handwraps of Might Blows",
+      "label": "Handwraps of Mighty Blows",
       "key": "items"
      },
      {
@@ -172054,10 +172070,22 @@
    {
     "id": "sparkling-targe",
     "name": "Sparkling Targe",
-    "description": "You've studied the applications of magic, training yourself to perform not just offensive maneuvers but defensive tactics as well. When magic flows through you, your shield can block impossible things, even a dragon's breath or a magic missile.\n\nYou gain the Shield Block general feat.\n\nWhen you're in Arcane Cascade stance with your shield raised, your circumstance bonus to AC from your shield also applies to your saves against spells and other magical effects. In addition, damage you take as a result of a spell or magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage in this way, increase your shield's Hardness by an amount equal to the extra damage from Arcane Cascade (typically 1, but 2 if you have weapon specialization, or 3 if you have greater weapon specialization). These benefits apply whether you're using an actual shield, the shield spell, or something else that works like a shield (such as a raised tome if you have the Raise a Tome feat).\n\n**Conflux Spell** Shielding Strike",
+    "description": "You've studied the applications of magic, training yourself to perform not just offensive maneuvers but defensive tactics as well. When magic flows through you, your shield can block impossible things, even a dragon's breath or a force barrage.\n\nYou gain the general Shield Block feat.\n\nWhen you're in Arcane Cascade stance with your shield raised, your circumstance bonus to AC from your shield also applies to your saves against spells and other magical effects. In addition, damage you take from a spell or other magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade. These benefits apply whether you're using an actual shield, the shield spell, or something else that works like a shield (such as a raised tome if you have the Raise a Tome feat).\n\n**Conflux Spell** Shielding Strike",
     "descRefs": [
      {
+      "label": "Force Barrage",
+      "key": "spells"
+     },
+     {
       "label": "Shield Block",
+      "key": "feats"
+     },
+     {
+      "label": "Arcane Cascade",
+      "key": "actions"
+     },
+     {
+      "label": "Raise a Tome",
       "key": "feats"
      },
      {
@@ -172373,7 +172401,7 @@
     }
    }
   ],
-  "why": "batch 039 magus#studious-spells-laughing-shadow + magus#studious-spells-starlit-span + magus#studious-spells-twisting-tree + magus#starlit-span-description + magus#twisting-tree-description, merged into ONE row (same key). AoN hybrid-study-11 (Laughing Shadow, Impossible Magic pg. 13) \"Studious Spell (11th) Ghostly Weapon\" (was shift-blame); hybrid-study-13 (Starlit Span, pg. 13) \"Studious Spell (7th) Telekinetic Maneuver\" (was darkvision) and its body \"This overrides the actual range of the spell. While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\"; hybrid-study-14 (Twisting Tree, pg. 14) \"Studious Spell (7th) Oaken Resilience\" (was embed-message) and its body \"While you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\" Supersedes the shipped row (hybrid-study-15 Twofold Tine and hybrid-study-16 Volatile Spark additions); every other option and field is carried through byte-for-byte."
+  "why": "batch P02 sparkling-targe#description + resurgent-maelstrom#handwraps-name, merged into ONE row (same key). AoN hybrid-study-12 (Sparkling Targe, Impossible Magic pg. 13): the option description becomes the printed text (\"force barrage\", \"from a spell or other magical effect\", \"the resistance you have from Arcane Cascade\"), ending at the Conflux Spell line like every sibling option (the Studious Spells ride spellSlotBonus). AoN hybrid-study-9 (Resurgent Maelstrom): \"handwraps of mighty blows\" - description and descRefs label corrected from \"Handwraps of Might Blows\". Supersedes the batch 039 row; every other option and field is carried through byte-for-byte."
  },
  {
   "category": "classes",
@@ -175877,8 +175905,8 @@
   "category": "feats",
   "id": "distracting-spellstrike",
   "field": "description",
-  "value": "**Requirements** You're in Arcane Cascade stance and have a hand free.\n\n---\n\nYou weave distracting magic with one hand to enhance your Spellstrike. Make a Spellstrike and Feint against the target of your Strike. Do this immediately before making the Strike, but after choosing your target.\n\nThe Feint gains the arcane, illusion, and visual traits, and it always has the basic effects of a Feint, rather than applying any adjustments or alternate effects from other feats or abilities.",
-  "why": "An importer collapsed AoN's action links to their slug plus query string, so this description printed \"feint traits=arcane,illusion,visual\" where the Archives print \"Feint\" (finding graceful-leaper; restored by scripts/repair-stripped-skill-links.mjs from the aligned mirror sentence, artefact spans only)."
+  "value": "**Requirements** You have a hand free, and your Spellstrike is charged.\n\n---\n\nYou weave distracting magic with one hand to enhance the efficacy of your Spellstrike. Make a Spellstrike and Feint against the target of your Strike. Execute your Feint immediately before making the Strike, but after choosing your target.\n\nThe Feint gains the arcane and visual traits, and it always has the basic effects of a Feint, rather than applying any adjustments or alternate effects from other feats or abilities. If you're in the Arcane Cascade stance, you gain a status bonus to your Deception check equal to your extra damage from Arcane Cascade (typically 1, increasing to 2 if you have weapon specialization and 3 if you have greater weapon specialization).",
+  "why": "batch P02 distracting-spellstrike#description: the record is AoN feat-9053 (remaster), which prints \"Requirements You have a hand free, and your Spellstrike is charged.\" and \"The Feint gains the arcane and visual traits\". The superseded row (the Feint link repair from repair-stripped-skill-links.mjs) restored the Secrets of Magic feat-2854 sentence; its repair - \"Feint\" as a plain word, not a slug plus query string - is kept here, and the rest follows feat-9053 whole (R12)."
  },
  {
   "category": "feats",
@@ -189181,9 +189209,14 @@
     "on": "action",
     "id": "arcane-cascade",
     "note": "While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target."
+   },
+   {
+    "on": "action",
+    "id": "spellstrike",
+    "note": "When you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. This overrides the actual range of the spell."
    }
   ],
-  "why": "batch 039 magus#starlit-span-description: AoN hybrid-study-13 \"While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\" A stance rider, so it goes on the Arcane Cascade action row (the chosen subclass is an owned class feature; explain.ts recordMarksFor)."
+  "why": "batch P02 starlit-span#spellstrike: AoN hybrid-study-13 \"When you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. This overrides the actual range of the spell.\" Appended to the batch 039 row (magus#starlit-span-description), whose arcane-cascade lesser-cover mark is carried through unchanged."
  },
  {
   "category": "classFeatures",
@@ -189560,5 +189593,1104 @@
    "license": "ORC"
   },
   "why": "feat-8528 (Firework Technician Dedication) is printed in Guns & Gears (Remastered) pg. 134, and scripts/data/book-names.json folds that printing into \"Pathfinder Guns & Gears\" — desk #166, \"Middle way\": a (Remastered) printing folds into its own book. The create row above wrote \"Pathfinder Guns & Gears (Remastered)\", which the Sources card drew as a second Guns & Gears row holding 2 records beside the 700. Licence unchanged; the stored-selection side is src/rules/sources.ts BOOK_FOLDS."
+ },
+ {
+  "category": "backgrounds",
+  "id": "friend-of-a-friend",
+  "field": "trainedLoreChoice",
+  "value": true,
+  "why": "AoN background-650: \"You're trained in the Athletics skill, and a Lore skill associated with any sort of food or drink\" - the subject is the player's, so the free-text Lore lane (backgroundChosenLoreKeys + the trainedLoreChoice arm in src/rules/build.ts) carries it; print names no default subject, so no trainedLoreChoiceDefault."
+ },
+ {
+  "category": "feats",
+  "id": "exploding-bullet",
+  "field": "description",
+  "value": "**Requirements** You’re wielding an unloaded firearm.\n\n---\n\nYou load your gun with a bullet forged of magic instead of matter, barely contained in an arcane shell. Interact to reload your firearm, creating an arcane round made from your choice of fire or sonic energy. When you shoot this round, the Strike gains the arcane trait and the corresponding energy trait. The firearm gains the scatter 5 feet trait, or gains a +1 status bonus to its splash damage if it already has the scatter trait. The scatter trait’s splash damage uses the energy type you chose. The bullet disappears if not fired by the end of your next turn.\n\nIf your firearm takes more than 1 action to reload, you need to use Exploding Bullet for all the actions needed to reload it to get the benefits.\n\n**Special** When you use volatile spark’s Reloading Cascade action, you can use Exploding Bullet instead of an Interact action to reload a firearm.",
+  "why": "AoN feat-9055 (Exploding Bullet, Impossible Magic pg. 19, this record's aonId): the page header (title, Source, Prerequisites) is page chrome the record's name/source/prerequisites fields already carry, so it is dropped the way pageProse() in scripts/import-siege-and-gaps.mjs drops it; the Requirements and Special lines have no field and stay, in the house '**Requirements** ...\\n\\n---\\n\\n' form. Every word left is the shipped text, unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "recharging-flurry",
+  "field": "description",
+  "value": "**Requirements** You’re wielding two melee weapons, each in a different hand.\n\n---\n\nThe clash of steel fuels your magic, preparing you to unleash another magic-infused assault. Make one Strike with each of your weapons, then recharge your Spellstrike (regardless of whether the Strikes hit). Your multiple attack penalty increases after each Strike as normal. If the second Strike targets a creature you haven’t attacked yet this turn, its multiple attack penalty is –4 if it’s your second attack this turn (–3 if you’re using an agile weapon) or –8 if it’s your third or further Strike (–6 with an agile weapon).",
+  "why": "AoN feat-9056 (Recharging Flurry, Impossible Magic pg. 19, this record's aonId): title, Source and Prerequisites header lines dropped (the record's own fields carry them); the Requirements line is kept in the house '**Requirements** ...\\n\\n---\\n\\n' form. No word is added."
+ },
+ {
+  "category": "feats",
+  "id": "running-recharge",
+  "field": "description",
+  "value": "Preparing in every way for your next assault, you both relocate yourself and ready your Spellstrike. You recharge your Spellstrike and either Stride up to half your Speed or Step.",
+  "why": "AoN feat-9057 (Running Recharge, Impossible Magic pg. 19, this record's aonId): the title and Source header lines are dropped (the record's own name/source fields carry them); the body is the shipped text unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "shattering-spellstrike",
+  "field": "description",
+  "value": "**Requirements** You're in Arcane Cascade stance and wielding an improvised weapon.\n\n---\n\nYou intentionally channel a rampaging cascade of magic through your weapon, breaking it to deal more damage. Make a Spellstrike against a target with your improvised weapon. If the attack hits, it deals an additional 2d6 force damage as your improvised weapon breaks. If the spell used with the Spellstrike wasn't a cantrip or focus spell, increase this additional damage by the spell's rank.\n\nIf the item has a Hardness greater than your level, or if it's an artifact, cursed item, or other item that's difficult to break or destroy, it doesn't break and you don't deal additional damage.",
+  "why": "AoN feat-7467 (Shattering Spellstrike, Rival Academies pg. 83, this record's aonId) prints \"If the attack hits, it deals an additional 2d6 force damage as your improvised weapon breaks\"; the shipped text lost the damage type to the @Damage cleaner. Only the word 'force' is restored."
+ },
+ {
+  "category": "feats",
+  "id": "strikers-scroll",
+  "field": "description",
+  "value": "You can attach a scroll to your weapon or *Handwraps of Mighty Blows* to blend its spell into an attack, carefully folding it around a part of the weapon or sealing it to the weapon's surface. Attaching a scroll requires using the Affix a Talisman action. You can have only one scroll affixed to a weapon at a time, and you can't have both a talisman and scroll attached.\n\nYou can Cast the Spell from the scroll as part of a Spellstrike, provided the spell is one you could normally use with Spellstrike. You can't Cast the Spell in any other way while it's affixed, though you can use Affix a Talisman again to remove the scroll and use it as a normal—if a bit crumpled—scroll.",
+  "why": "AoN feat-9059 (Striker's Scroll, Impossible Magic pg. 20, this record's aonId; legacy feat-2858) prints \"provided the spell is one you could normally use with Spellstrike\" and \"use it as a normal—if a bit crumpled—scroll\"; the shipped second paragraph was the feat-2858 wording ('assuming the spell ...', 'crumpled-scroll'). R12: the newest printing wins, whole. The first paragraph already reads as feat-9059 and is kept."
+ },
+ {
+  "category": "feats",
+  "id": "practical-magic-impossible-magic",
+  "field": "dailyTemporaryItems",
+  "value": [
+   {
+    "id": "catalyst",
+    "label": "Temporary spell catalyst",
+    "count": 2,
+    "filter": {
+     "traits": [
+      "catalyst"
+     ],
+     "maxLevel": "floor(@actor.level/2)",
+     "note": "Common spell catalysts only; you know their formulas without a formula book. It loses its magic at your next daily preparations if unused."
+    }
+   }
+  ],
+  "why": "AoN feat-9331 (Practical Magic, Impossible Magic pg. 95, this record's aonId): \"Each day during your daily preparations, you can make two spell catalysts with an item level no higher than half your level. ... A spell catalyst created this way is a temporary item and loses its magic the next time you make your daily preparations if you haven't already used it.\" Same shape as talisman-dabbler-dedication's dailyTemporaryItems row; read by src/rules/dailyItems.ts (dailyItemSlots/dailyItemOptions)."
+ },
+ {
+  "category": "spells",
+  "id": "dimensional-assault",
+  "field": "description",
+  "value": "You tumble through a small rift in space itself, making a short dimensional hop to better position yourself for a devastating surprise attack. Teleport to any space in range you can see that’s within reach of an enemy, and then make a melee Strike against that enemy. If you attempt to bring another creature with you when you teleport—even if you’re carrying it in an extradimensional container—the spell is disrupted.\n\n---\n\n**Heightened (5th)** The range is equal to your Speed.",
+  "why": "AoN spell-2877 (Dimensional Assault, Impossible Magic pg. 179, this record's aonId; legacy spell-1037): the remaster body verbatim plus its 'Heightened (5th) The range is equal to your Speed' entry. The shipped text was the spell-1037 body. R12: the newest printing wins, whole."
+ },
+ {
+  "category": "spells",
+  "id": "force-fang",
+  "field": "description",
+  "value": "You briefly transform your attack into pure force energy to bypass your opponent’s defenses. You magically shift your weapon or unarmed attack into a spike of pure force that deals 1d4+1 force damage to a target within your melee reach. If you can use Spellstrike with a ranged weapon (with the starlit span hybrid study, for example), you can instead target a creature in the first range increment of your ranged weapon.\n\n---\n\n**Heightened (+2)** The damage increases by 1d4+1.",
+  "why": "AoN spell-2878 (Force Fang, Impossible Magic pg. 179, this record's aonId; legacy spell-1038): the remaster body verbatim with its 'Heightened (+2) The damage increases by 1d4+1' entry. The shipped text was the spell-1038 body ('replacing all its normal statistics and abilities', 'automatically deals'). R12: the newest printing wins, whole."
+ },
+ {
+  "category": "spells",
+  "id": "booming-blast",
+  "field": "cast",
+  "value": {
+   "type": "actions",
+   "value": 1
+  },
+  "why": "AoN spell-2875 (Booming Blast, Impossible Magic pg. 179) prints the cast as 'Single Action'. Same shape as the spells/bloody-tendrils cast row."
+ },
+ {
+  "category": "spells",
+  "id": "booming-blast",
+  "field": "save",
+  "value": {
+   "type": "will",
+   "basic": false
+  },
+  "why": "AoN spell-2875: \"each enemy in a 20-foot emanation around you must succeed at a Will save against your spell DC or be frightened 1 (or frightened 2 on a critical failure)\" - a non-basic Will save."
+ },
+ {
+  "category": "spells",
+  "id": "booming-blast",
+  "field": "area",
+  "value": "20-foot emanation",
+  "why": "AoN spell-2875: \"each enemy in a 20-foot emanation around you\"."
+ },
+ {
+  "category": "spells",
+  "id": "booming-blast",
+  "field": "baseArea",
+  "value": {
+   "value": 20,
+   "kind": "emanation"
+  },
+  "why": "AoN spell-2875: \"each enemy in a 20-foot emanation around you\" - the same area/baseArea pair its sibling conflux spell thunderous-strike carries."
+ },
+ {
+  "category": "spells",
+  "id": "force-fling",
+  "field": "cast",
+  "value": {
+   "type": "actions",
+   "value": 1
+  },
+  "why": "AoN spell-2879 (Force Fling, Impossible Magic pg. 179) prints the cast as 'Single Action'."
+ },
+ {
+  "category": "spells",
+  "id": "inside-ropes",
+  "field": "description",
+  "value": "You pull a large handful of guts from your midsection. Removing these guts doesn't harm you. You can use the guts as 50 feet of rope to help you Climb, and they help attach you to a wall. You move half as quickly as usual while climbing with your guts (minimum 5 feet), but you can attempt a DC 5 flat check whenever you critically fail to prevent a fall. Other creatures can use your guts to climb like a squishy rope, but the guts don't help anyone but you attach to a wall. If you let go of your guts or your guts are damaged, the spell ends.\n\n---\n\n**Heightened (3rd)** You gain a +1 item bonus to Athletics checks to Climb while using your guts.",
+  "why": "AoN prints \"DC 5 flat\" on spell-1206 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "spells",
+  "id": "read-fate",
+  "field": "description",
+  "value": "You attempt to learn more about the target's fate in the short term, usually within the next day for most prosaic creatures, or the next hour or less for someone likely to have multiple rapid experiences, such as someone actively adventuring.\n\nYou learn a single enigmatic word connected to the creature's fate in that time frame. Fate is notoriously inscrutable, and the word isn't necessarily meant to be taken at face value, so the meaning is often clear only in hindsight. The GM rolls a secret DC 6 flat check. If the creature's fate is too uncertain, or on a failed flat check, the spell yields the word \"inconclusive.\" Either way, the creature is then temporarily immune for 24 hours.",
+  "why": "AoN prints \"DC 6 flat check\" on spell-1802 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "spells",
+  "id": "shattering-gem",
+  "field": "description",
+  "value": "A large gem floats around the target in an erratic pattern. The gem has 5 Hit Points. Each time a creature Strikes the target, the target attempts a DC 11 flat check. On a success, the gem blocks the attack, so the attack first damages the gem and then applies any remaining damage to the target. If the gem is reduced to 0 Hit Points, it shatters, immediately dealing 1d8 slashing damage (basic Reflex save) to the creature that destroyed it, as long as that creature is within 10 feet of the target.\n\n---\n\n**Heightened (+1)** The gem has 5 additional Hit Points, and the damage dealt by its detonation increases by 1d8.",
+  "why": "AoN prints \"DC 11 flat check\" on spell-2364 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "spells",
+  "id": "infectious-melody",
+  "field": "description",
+  "value": "You call forth the chords of a tune so catchy that foes hearing it can't help but sing along, making it harder for them to communicate. Each target must attempt a Will save.\n\n---\n\n**Critical Success** The creature is unaffected.\n\n**Success** For 1 round, the creature can communicate only by singing along to the melody. It can speak only on its turn, and it must take the Perform action when it does. The result of the Performance check determines how well it sang, but it stills communicate the information regardless of the result, which has no further mechanical impact than the time spent to take the action. A single Perform check is sufficient for any amount of speaking on the creature's turn. This effect might interfere with verbal components of spells or other linguistic abilities that rely on precise speech; in order to use such an ability successfully, the creature must succeed at a DC 5 flat check.\n\nIn addition, the creature takes a -2 status penalty on linguistic Intimidation checks, as singing its threats saps away some of the menace. The creature's constant humming of the tune also makes it nearly impossible for the creature to remain undetected.\n\n**Failure** As success, but the duration is 3 rounds.\n\n**Critical Failure** As success, but the duration is 1 hour.",
+  "why": "AoN prints \"DC 5 flat check\" on spell-2749 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "bag-of-devouring-type-i",
+  "field": "description",
+  "value": "This item appears to be and functions as a bag of holding, but is actually a feeding orifice of a bizarre extradimensional creature. Any animal or vegetable matter put in the bag has a chance of triggering the bag's interest. Whenever you reach into the bag to retrieve an item or place an animal or plant (or animal or plant product) within the bag, roll a DC 9 flat check. On a success, the bag ignores the intrusion. On a failure, the bag devours the triggering material, removing it from this realm of existence; the bag can't eat artifacts or other similarly hard-to-destroy items. If the triggering material is not entirely inside of the bag, such as when someone reaches a hand inside, the *bag of devouring* attempts to pull it completely inside the bag using a Grapple action, with an Athletics bonus determined by the type of bag. On a success, it devours the victim or object entirely.\n\n**Athletics Bonus** +15; acts as a *type II bag of holding*",
+  "why": "AoN prints \"DC 9 flat check\" on equipment-598-631 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "bag-of-devouring-type-ii",
+  "field": "description",
+  "value": "This item appears to be and functions as a bag of holding, but is actually a feeding orifice of a bizarre extradimensional creature. Any animal or vegetable matter put in the bag has a chance of triggering the bag's interest. Whenever you reach into the bag to retrieve an item or place an animal or plant (or animal or plant product) within the bag, roll a DC 9 flat check. On a success, the bag ignores the intrusion. On a failure, the bag devours the triggering material, removing it from this realm of existence; the bag can't eat artifacts or other similarly hard-to-destroy items. If the triggering material is not entirely inside of the bag, such as when someone reaches a hand inside, the *bag of devouring* attempts to pull it completely inside the bag using a Grapple action, with an Athletics bonus determined by the type of bag. On a success, it devours the victim or object entirely.\n\n**Athletics Bonus** +21; acts as a *type III bag of holding*",
+  "why": "AoN prints \"DC 9 flat check\" on equipment-598-632 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "bag-of-devouring-type-iii",
+  "field": "description",
+  "value": "This item appears to be and functions as a bag of holding, but is actually a feeding orifice of a bizarre extradimensional creature. Any animal or vegetable matter put in the bag has a chance of triggering the bag's interest. Whenever you reach into the bag to retrieve an item or place an animal or plant (or animal or plant product) within the bag, roll a DC 9 flat check. On a success, the bag ignores the intrusion. On a failure, the bag devours the triggering material, removing it from this realm of existence; the bag can't eat artifacts or other similarly hard-to-destroy items. If the triggering material is not entirely inside of the bag, such as when someone reaches a hand inside, the *bag of devouring* attempts to pull it completely inside the bag using a Grapple action, with an Athletics bonus determined by the type of bag. On a success, it devours the victim or object entirely.\n\n**Athletics Bonus** +24; acts as a *type IV bag of holding*",
+  "why": "AoN prints \"DC 9 flat check\" on equipment-598-633 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "buoyancy-vest",
+  "field": "description",
+  "value": "This canvas vest has been filled with cork shavings, tightly folded, and sewn shut. Wearing a buoyancy vest allows you to float in water with a lowered risk of sinking. If you end your turn in water while wearing a buoyancy vest and haven't succeeded at a Swim action that turn, attempt a DC 5 flat check.\n\nOn a success, you do not sink, though you can still get moved by the current, as determined by the GM. The GM can also determine whether the vest is more or less effective in different weather conditions, raising the DC in rough waters or lowering the DC in calm water.",
+  "why": "AoN prints \"DC 5 flat check\" on equipment-863 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "talisman-cord",
+  "field": "description",
+  "value": "This thin leather cord bears delicate runic markings and threads through an item that can bear affixed talismans.\n\nWhen you Affix a Talisman to that item, you can thread the talisman onto the cord, activating the cord's preserving effects. The cord is attuned to two particular schools of magic, chosen when the cord was created. It gains the corresponding trait for that school. When you activate a talisman threaded through a cord with the same magic school trait that's also the cord's level or lower, attempt a DC 16 flat check. On a success, that talisman is not consumed and can be used again.",
+  "why": "AoN prints \"DC 16 flat check\" on equipment-883-866 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "talisman-cord-lesser",
+  "field": "description",
+  "value": "This thin leather cord bears delicate runic markings and threads through an item that can bear affixed talismans.\n\nWhen you Affix a Talisman to that item, you can thread the talisman onto the cord, activating the cord's preserving effects. The cord is attuned to a particular school of magic, chosen when the cord was created. It gains the corresponding trait for that school. When you activate a talisman threaded through a cord with the same magic school trait that's also the cord's level or lower, attempt a DC 16 flat check. On a success, that talisman is not consumed and can be used again.",
+  "why": "AoN prints \"DC 16 flat check\" on equipment-883-865 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "talisman-cord-greater",
+  "field": "description",
+  "value": "This thin leather cord bears delicate runic markings and threads through an item that can bear affixed talismans.\n\nWhen you Affix a Talisman to that item, you can thread the talisman onto the cord, activating the cord's preserving effects. The cord is attuned to three particular schools of magic, chosen when the cord was created. It gains the corresponding trait for that school. When you activate a talisman threaded through a cord with the same magic school trait that's also the cord's level or lower, attempt a DC 16 flat check. On a success, that talisman is not consumed and can be used again.",
+  "why": "AoN prints \"DC 16 flat check\" on equipment-883-867 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "psychic-brigandine",
+  "field": "description",
+  "value": "Transparent crystals as hard as steel take the place of metal plates on this suit of +2 greater invisibility splint mail. Also known as a coat of a thousand thoughts in Vudra and Jalmeray, where it was first developed by psychic warriors, it makes your mind an indomitable fortress. You gain resistance 5 to mental damage.\n\nWhenever you use the armor to become invisible, you also become psychically invisible. Each time you would be affected by an effect with the mental trait while you are invisible, attempt a DC 17 flat check. On a success, it doesn't affect you.",
+  "why": "AoN prints \"DC 17 flat\" on equipment-1301 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "wheelbarrow",
+  "field": "description",
+  "value": "This small, hand-propelled vehicle has a single wheel and is designed to carry large loads over a distance. A wheelbarrow can typically hold up to 5 Bulk of objects without issue. The GM might rule that it can hold more Bulk of particular items, such as sand, or less Bulk of other items, like awkwardly shaped rocks.\n\nYou can raise or place a wheelbarrow using an Interact action and can Stride your normal Speed while you have the wheelbarrow raised, though you're encumbered while pushing a wheelbarrow. You can Release a wheelbarrow as normal, but a loaded wheelbarrow has a chance of tipping over if you don't place it down with care.\n\nWhen you Release a wheelbarrow, attempt a DC 7 flat check. On a failure, the wheelbarrow tips over, spilling its contents into a randomly determined adjacent space.",
+  "why": "AoN prints \"DC 7 flat\" on equipment-1404 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "winders-ring",
+  "field": "description",
+  "value": "This ring contains dozens of minute, interlocking bronze gears that buzz incessantly. The ring grants you a +1 item bonus to all Crafting checks to construct or repair clockworks.\n\n---\n\n**Activate** (varies) Interact\n\n---\n\n**Effect** The *winder's ring* extends a winding key that fits any clockwork contraption or creature, allowing you to fully wind a clockwork device or creature in half the usual time. When you activate a *winder's ring* in this way, attempt a DC 16 flat check. On a failure, the *winder's ring* exhausts itself, and you can't activate it again until the next time you make your daily preparations.\n\n---\n\n**Activate** ⟨1⟩ Interact\n\n**Frequency** once per day\n\n---\n\n**Effect** The *winder's ring* transforms into a Clockwork Spy that doesn't require winding and obeys your spoken commands for up to 1 hour. In this form, the *winder's ring* has the minion trait. You can use this action again to return the clockwork spy to *winder's ring* form as long as you're adjacent to the clockwork spy. If the clockwork spy is slain, it reverts to its ring shape, and the *winder's ring* can't be activated again until 1 week has passed.",
+  "why": "AoN prints \"DC 16 flat check\" on equipment-1596 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "vine-whip",
+  "field": "description",
+  "value": "This *+1 striking whip* is crafted from the vine of a dangerous plant creature. It deals bludgeoning or slashing damage, according to the vine attack of the creature it was harvested from. For example, collecting a vine from an assassin vine would result bludgeoning damage, while one from a mandragora or viper vine would deal piercing damage.\n\n**Activate** ⟨3⟩ (concentrate, manipulate)\n\n**Requirements** You have soil or sand within your reach\n\n---\n\n**Effect** You Release the weapon and plant it in the ground, where it takes root and fights on its own against the last enemy you attacked or the nearest enemy to it if your target has been defeated.\n\nThe weapon has a space of 5 feet, acts on your initiative, and gains two actions. It doesn't block or impede enemies attempting to move through that space, nor does it benefit from or provide flanking. The weapon can't use reactions, and it acts on your turn.\n\nWhile Activated, a vine whip makes Strikes with an attack modifier of +22 plus its item bonus to attack rolls (normally +24 total). It uses the weapon's normal damage but has a +0 Strength modifier. The whip's abilities that automatically trigger on a hit or critical hit still function, but the weapon can't be Activated or benefit from any of your abilities while rooted.\n\nEach round, when the vine whip is finished using its actions, attempt a DC 6 flat check. On a failure, the Activation ends and the vine whip becomes inanimate. You can't Activate the item again for 10 minutes. Removing the vine whip from the ground takes an Interact action.\n\nWhile rooted, the vine whip gains fast healing 1.\n\n---\n\n**Craft Requirements** The initial raw materials must include the vine from a plant creature with a vine attack.",
+  "why": "AoN prints \"DC 6 flat check\" on equipment-1889 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "fate-shot",
+  "field": "description",
+  "value": "**Ammunition** any\n\n**Activate** ⟨1⟩ (concentrate)\n\n---\n\n*Fate shot* is made of a nickel-steel alloy carved with the smiling face of a comedic player on one side, while the other side holds the frown of a tragic dramatist. When you hit a target with this ammunition, roll a DC 11 flat check. On a success, treat all the damage dice for your attack as though they rolled the average damage +1, rounded up (for example, a *fate shot* arrow fired from a shortbow would normally deal 1d6, which has an average of 3.5, so you deal 5 damage). This doesn't affect additional damage dice that only happen on a critical hit, such as those added by the deadly trait. On a failure, roll the damage, but your target takes half damage, and you take the remaining amount as mental damage.",
+  "why": "AoN prints \"DC 11 flat check\" on equipment-2050 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "imp-shot",
+  "field": "description",
+  "value": "**Ammunition** any\n\n**Activate** ⟨1⟩ (concentrate)\n\n---\n\nThis black-and-red ammunition contains an egg-shaped capsule. When an activated *imp shot* hits, the capsule cracks open and releases a manifestation that resembles a Tiny imp that can't act in any way or provide benefits outside those described here. If the Strike misses the target, the imp appears, makes a rude gesture at you, and vanishes in a puff of sulfuric smoke. On a hit, though, the imp harries the target for up to 1 minute, remaining in the target's space, slapping, nipping, hurling insults, and moving with the target as it moves. A creature harried by the imp is off-guard and takes a –2 circumstance penalty to attack rolls and skill checks. At the start of your turn on each round while the imp is active, you must attempt a DC 11 flat check. On a failure, the imp makes a final vulgar gesture at the target and vanishes in a cloud of brimstone.",
+  "why": "AoN prints \"DC 11 flat check\" on equipment-2052 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "mother-maw",
+  "field": "description",
+  "value": "This item appears to be and functions as a portable hole, but it's actually the maw of an alien extradimensional creature akin to and older than a *bag of devouring*. Any animal or vegetable matter put in the hole has a chance of triggering the creature's interest. Whenever you reach into the hole to retrieve an item or place an animal or plant product within the bag, roll a DC 11 flat check. On a success, the hole ignores the intrusion. On a failure, the *mother maw* devours the triggering material, removing it from existence. The maw can't eat artifacts. If the triggering material isn't entirely inside the maw, such as when someone reaches inside, the *mother maw* attempts to pull it completely inside using a Grapple action with a +28 Athletics bonus. On a success, it devours the victim or object.\n\nWhenever the maw critically fails the Athletics check, it regurgitates one creature or object it previously devoured. The condition of the vomited creature or object depends on its resilience and the time it has spent inside the maw. Typically, the maw spews forth items it finds difficult to digest, such as those made of adamantine or protected by magic. It can and does regurgitate remains, though.",
+  "why": "AoN prints \"DC 11 flat check\" on equipment-2384 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "the-carnival",
+  "field": "description",
+  "value": "**Suit** Star (Wis)\n\n**Alignment** chaotic neutral\n\n---\n\n*The Carnival* represents false dreams. When you have *The Carnival* invested, your flat check DCs to obtain reliable information from divination effects (such as Augury or Read Fate, or the activation of this card) are reduced by 2 (but not to less than 2). Casting a divination effect with a flat check, whether or not the flat check succeeds, gives a series of subtly different visions that don't confuse the meaning but make you Stupefied 1 for 1 round. If you're at least 17th level, the flat check is instead reduced by 3.\n\n**Activate** ⟨1⟩ (divination, prediction) envision\n\n**Frequency** once per day\n\n---\n\n**Effect** You peer into the future and witness yourself walking through a colorful but vaguely sinister carnival, meeting a variety of strange people. One of these people looks more genuine than the others and resembles someone you're likely to meet for the first time in the next 24 hours (if anyone). This resemblance might be metaphorical, such a clown signifying someone who is silly or a stilt-walker representing someone who is tall. You also get a sense for whether this person can be trusted, should be distrusted, or neither, based on how they're most likely to interact with you and your allies. The GM decides who this new person might be, then rolls a secret DC 6 flat check. On a failure, the result is always \"neither,\" making it hard to determine whether a \"neither\" result is accurate.",
+  "why": "AoN prints \"DC 6 flat check\" on equipment-2477 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "the-theater",
+  "field": "description",
+  "value": "**Suit** Crown (Cha)\n\n**Alignment** neutral good\n\n---\n\n*The Theater* represents prophecy and how prophets can't change the unfolding pageantry of fate. As long as you have *The Theater* invested and as long as you are not already doomed, when you would gain the doomed condition, attempt a DC 10 flat check. On a success, you do not gain the doomed condition.\n\n**Activate** ⟨5⟩ (fortune) envision\n\n**Trigger** You are targeted by a misfortune effect\n\n**Frequency** once per hour\n\n---\n\n**Effect** The Theater attempts to counter the misfortune effect before it affects you. It has a counteract rank equal to your level divided by 2 (rounded up), and a counteract modifier of your Class DC – 10.",
+  "why": "AoN prints \"DC 10 flat check\" on equipment-2490 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "scapular-of-shields",
+  "field": "description",
+  "value": "This fine scapular features the image of an ornate shield. While wearing the cloak, you feel protected and capable of withstanding even the deadliest blows. Each time you're critically hit while wearing the scapular, attempt a DC 17 flat check. On a success, it becomes a normal hit. When you invest the scapular, you either increase your Constitution score by 2 or increase it to 18, whichever would give you a higher score.\n\n**Activate** ⟨5⟩ envision\n\n**Frequency** once per minute\n\n**Trigger** You're critically hit with an attack\n\n**Effect** The shield on your scapular glows with light, helping reduce the effectiveness of the attack. You take normal damage from the triggering attack as if the attack were a normal hit instead. Other effects that trigger with critical hits such as the deadly weapon trait, additional conditions, and so on still occur.\n\n---\n\n**Activate** ⟨5⟩ envision\n\n**Frequency** once per day\n\n**Trigger** You would take damage from an attack\n\n**Effect** The shield on your scapular animates and intercedes on the attack. You gain 20 resistance to all damage against the triggering damage.",
+  "why": "AoN prints \"DC 17 flat check\" on equipment-2530 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "animated",
+  "field": "description",
+  "value": "An *animated* weapon flies autonomously and strikes your foes.\n\n**Activate—Set Free** ⟨2⟩ (concentrate, manipulate)\n\n---\n\n**Effect** You Release the weapon and it flutters through the air, fighting on its own against the last enemy you attacked, or the nearest enemy to it if your target has been defeated. At the end of your turn each round, the weapon can Fly up to its fly Speed of 40 feet, and then can either Fly again or Strike one creature within its reach.\n\nThe weapon has a space of 5 feet, but it doesn't block or impede enemies attempting to move though that space, nor does it benefit from or provide flanking. The weapon can't move through an enemy's space. The weapon can't use reactions, and its Fly actions don't trigger reactions.\n\nWhile it's activated, an *animated* weapon makes Strikes with an attack modifier of 1d20+24 plus its item bonus to attack rolls. It uses the weapon's normal damage but has a +0 Strength modifier. The weapon's abilities that automatically trigger on a hit or critical hit still function, but the weapon can't be activated or benefit from any of your abilities while animated.\n\nEach round, when the weapon finishes using its actions, attempt a DC 6 flat check. On a failure, the activation ends. The weapon falls to the ground and can't be Set Free again for 10 minutes.",
+  "why": "AoN prints \"DC 6 flat check\" on equipment-2831 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "bag-of-weasels",
+  "field": "description",
+  "value": "This item appears to be and functions as a *Spacious Pouch (Type I)*, until you try to retrieve an item from the bag. Whenever you retrieve an item from the *bag of weasels*, roll a DC 11 flat check. On a success, you retrieve the item as normal. On a failure, the item you retrieve is transformed into a weasel; this doesn't affect artifacts, cursed items, or other hard-to-destroy items.\n\nThis weasel uses either the weasel statistics or a giant rat statistics and exudes an aura of magic. The weasel has no loyalty to you and typically attempts to escape as quickly as possible. If the weasel is counteracted, it transforms back into the original item that was taken from the *bag of weasels*. If it dies or is slain, the weasel disappears and the item is permanently destroyed. Because the weasel is a transformed item, you don't gain any benefit you would receive from attacking a creature, defeating one, damaging one, or the like, but you do gain any benefit you would gain from destroying an item.",
+  "why": "AoN prints \"DC 11 flat check\" on equipment-3128 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "fake-blood-pack",
+  "field": "description",
+  "value": "Adventurers have found a number of uses for these animal blood–filled bladders, which were originally used in theatrical productions. Whenever you take slashing or piercing damage with the fake blood pack under your clothes or armor, roll a DC 11 flat check. On a success, the blood pack is punctured. You or an ally can puncture the hidden pack intentionally with an Interact action. When faking an injury, a punctured blood pack grants a +2 item bonus to relevant Deception checks, such as to Lie about being injured, for 4 hours after the pack has been punctured or until the blood is washed off, whichever comes first. Abilities that trigger when a creature deals bleed damage, that determine if a creature is bleeding, or are otherwise based on bleed damage don't trigger or apply for blood from a fake blood pack, which might mean creatures with such abilities automatically realize the ruse.",
+  "why": "AoN prints \"DC 11 flat check\" on equipment-3528 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "final-stand",
+  "field": "description",
+  "value": "The origins of this *+3 greater striking rapier* are shrouded in mystery, but it earned its name in the hands of an unknown hero who used it to singlehandedly defend a remote Nirmathi village from a vicious gang of bandits, shrugging off dozens of blows that would have felled any other mortal. Only when all of the bandits had been dispatched or driven off did the noble warrior finally succumb to their injuries.\n\nWhile wielding *Final Stand*, if you take damage that would reduce you to 0 Hit Points but not immediately kill you, attempt a DC 11 flat check. If you succeed, you avoid being knocked out and remain at 1 Hit Point instead. For the remainder of the encounter, you can't regain Hit Points in any way, though you can be stabilized if you gain the dying condition. If you're still conscious and there are no nearby enemies that you can perceive, you immediately drop to 0 Hit Points and are dying 1. If you have any other abilities that would allow you to remain at 1 Hit Point when you would be reduced to 0 Hit Points (such as Orc Ferocity), you must use those abilities before you can benefit from Final Stand's ability.\n\n---\n\n**Destruction** If the wielder of *Final Stand* surrenders to their enemies while any of their allies are still standing, the blade weakens and the DC of the flat check permanently increases by 2. Final Stand shatters into hundreds of pieces the moment the DC of the flat check is ever higher than 20.",
+  "why": "AoN prints \"DC 11 flat check\" on equipment-3844 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "items",
+  "id": "protective-netting",
+  "field": "description",
+  "value": "Troops fighting in locales filled with insects wear enchanted gauzy nets over their heads, draped from wide flat hats, to protect against swarms of stinging or biting creatures. While wearing protective netting, if you would be exposed to disease or injury poison from an attack, attempt a DC 17 flat check. On a success, you are not exposed.\n\n**Activate—Flutter Net** ⟨5⟩ (manipulate)\n\n**Frequency** once per day\n\n**Trigger** A swarm enters your space\n\n---\n\n**Effect** Your protective netting flutters rapidly, keeping the swarm away. You gain a +1 item bonus to saving throws against effects originating from swarms for 1 minute.",
+  "why": "AoN prints \"DC 17 flat check\" on equipment-3976 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "anchor-stance",
+  "field": "description",
+  "value": "**Requirements** You're in or under water.\n\n---\n\nYou tense your muscles to make yourself neutrally buoyant and more difficult to move. You gain a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to reposition or shove you. This bonus also applies to saving throws against spells or effects that attempt to force you to move. If any effect would force you to move 10 feet or more, attempt a DC 11 flat check. On a success, you move only 5 feet. Additionally, you don't have to take a Swim action each turn to avoid sinking or moving with the current.",
+  "why": "AoN prints \"DC 11 flat check\" on feat-8916 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "soul-flare",
+  "field": "description",
+  "value": "**Trigger** An attack you made with a soulforged weapon or shield misses a creature, or a creature hits you with an attack while you're either wearing manifested soulforged armor or have your soulforged shield raised.\n\n**Requirements** Your soulforged armament is manifested.\n\n---\n\nYou strive to change the outcome with sheer zeal. You gain a +1 status bonus to your attack roll if making an attack or to your AC if you were hit. This can change the outcome of the roll. If this bonus turns your missed attack into a hit or the hit against you into a miss, attempt a DC 5 flat check. If you fail, your soulforged armament is Dismissed-your weapon if you attacked or your armor or shield if you were defending.",
+  "why": "AoN prints \"DC 5 flat check\" on feat-9351 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "unexpected-shift",
+  "field": "description",
+  "value": "**Trigger** You would take damage from an attack, spell, or other effect.\n\n---\n\nYour supernatural connection sometimes causes you to phase from reality when under threat, disappearing for split seconds before reappearing-often surprising you as much as your enemies. Roll a DC 16 flat check. On a success, you gain resistance to all damage equal to your level against the triggering effect, you gain a +2 circumstance bonus to saving throws against that effect until the start of your turn, and you gain the dazzled condition for 1 round.",
+  "why": "AoN prints \"DC 16 flat check\" on feat-993 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "daredevils-gambit",
+  "field": "description",
+  "value": "If you critically succeed at your Daring Act, you can enter the target's space and remain there until the beginning of your next turn or until the target moves, whichever comes first. You gain a +2 circumstance bonus to AC, and your target is off-guard against your attacks while you are sharing its space in this way. If any creature other than your target hits you with an attack roll while you are sharing your target's space, attempt a DC 15 flat check. On a success, resolve the attack against the target instead of you, using the same attack roll result that hit you.",
+  "why": "AoN prints \"DC 15 flat check\" on feat-1074 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "steady-spellcasting-magus",
+  "field": "description",
+  "value": "Confident in your technique, you don't easily lose your concentration when you Cast a Spell.\n\nIf a reaction would disrupt your spellcasting action, attempt a DC 15 flat check. If you succeed, your action isn't disrupted.",
+  "why": "AoN prints \"DC 15 flat\" on feat-2857 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "fortified-mind",
+  "field": "description",
+  "value": "Your mind is unusually resilient and resistant to influence. When you would gain the fascinated or stupefied condition, you can attempt a DC 17 flat check. On a success, you don't gain the fascinated or stupefied condition.",
+  "why": "AoN prints \"DC 17 flat check\" on feat-3975 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "unbound-freedom",
+  "field": "description",
+  "value": "Your future is no other person's to control, and the cycles of your fate sometimes step in to protect you when that control would be taken from you. Whenever you would gain the controlled condition, you can attempt a DC 17 flat check. On a success, you don't gain the condition.",
+  "why": "AoN prints \"DC 17 flat check\" on feat-4017 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "fey-ascension",
+  "field": "description",
+  "value": "The fey influence on your form and features grows even more powerful and notable. You gain one of the following features and abilities; this must be the same animal or fey type as you chose for Fey Influence.\n\n- **Anteater** You become an expert in primal DCs and spell attack rolls. You can cast Slow as an innate primal spell once per day.\n- **Cat Sith** You laugh off the outraged curses of those you have tricked or wronged. Whenever a creature targets you with a misfortune effect, make a DC 13 flat check. On a success, you are unaffected.\n- **Cursed Bluebird** You have enough control over your curse to turn a bane into a minor blessing. Once per day, you can temporarily transform yourself or an ally into a blue bird, as a 4th-rank Pest Form (bird only) targeting one willing creature.\n- **Dryad** Your hair becomes intermixed with delicate but razor-edged leaves that move as you command. You gain a leaves ranged unarmed attack that deals 1d6 slashing damage. Your leaves are in the dart weapon group and have the magical and unarmed traits. *Note: A range was not provided for this strike in the source. For Foundry automation we have assumed a 20-foot range increment, to be in line with similar abilities.*\n- **Faun** You can cast Charm, Sleep, and Triple Time as innate primal spells once per day each. Whenever you cast one of these spells, you can Step or Stride as part of the activity.\n- **Gremlin** You become an expert in primal DCs and spell attack rolls. You can cast Mad Monkeys as an innate primal spell once per day.\n- **Monarch** Once per day, you gain the ability to manifest a pair of exquisite butterfly wings. These wings remain for 10 minutes. You gain a fly Speed equal to your Speed while you've manifested your wings.\n- **Unicorn** You become trained in Medicine, or an expert if you were already trained. You gain a +2 status bonus to saves against poison and charm effects.\n\n---\n\n**Special** This feat gains the trait appropriate for your ancestry (human for human, goblin for goblin, etc.).",
+  "why": "AoN prints \"DC 13 flat check\" on feat-4048 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "harrow-casting",
+  "field": "description",
+  "value": "**Requirements** You have an active harrow omen.\n\n---\n\nYou draw a card from your harrow deck just before you cast a spell to infuse your magic with its destined potential. If your next action is to Cast a Spell, the suit of the card you draw enhances the spell in one of the following ways. If the card you draw matches the suit of your active harrow omen, the effect is enhanced further as detailed below. When you Harrow Cast, attempt a DC 11 flat check. If you fail this check, you lose your active harrow omen at the end of your turn.\n\n**Hammer** The force of the spell is enhanced. This effect only enhances single-target offensive spells that require you to make a successful spell attack or require a saving throw from the target to resist. If you hit the target, or if they fail their saving throw, the spell inflicts additional force damage equal to the spell's rank. This additional damage doubles if your harrow omen is Hammers.\n\n**Key** Some of the magic remains behind, infusing your defenses. Until the start of your next turn, you gain a +1 status bonus to your AC and all saving throws. If your harrow omen is Keys, this increases to a +2 status bonus.\n\n**Shield** As the spell's magic takes effect, it heals you as well, restoring Hit Points equal to 2d6 + the spell's rank. If your harrow omen is Shields, the Hit Points restored increases to 4d6 + twice the spell's rank.\n\n**Book** The spell's magic infuses your mind with sudden insights about the target. You can attempt to Recall Knowledge about the target as a free action, using your spell attack roll to make the check. You gain a +2 status bonus to this roll if Books is your harrow omen.\n\n**Star** The spell's magic bolsters those it aids. This effect only enhances single-target spells cast on willing subjects. The magic restores Hit Points to the affected target equal to 2d6 + the spell's rank. If your harrow omen is Stars, the magic also grants the target a +2 status bonus to all saving throws until the start of your next turn.\n\n**Crown** The spell's magic is hidden and subtle, and observers may not realize you're doing anything more than manipulating cards in your harrow deck. Attempt a Fortune-Telling Lore check against all observer's Perception DCs. If your check is successful against an observer's Perception DC, that observer doesn't notice you are Casting a Spell, even though normally spells have sensory manifestations. This hides only the spell's spellcasting actions and manifestations, not its effects. If your harrow omen is Crowns, you gain a +2 status bonus to your Fortune-Telling Lore check.",
+  "why": "AoN prints \"DC 11 flat check\" on feat-4155 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "stone-bones",
+  "field": "description",
+  "value": "**Trigger** You are struck by a critical hit that deals physical damage.\n\n---\n\nYour intractable nature can help you shrug off even the most grievous injuries. Attempt a DC 17 flat check. If you are successful, the attack becomes a normal hit.",
+  "why": "AoN prints \"DC 17 flat check\" on feat-4399 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "stubborn-persistence",
+  "field": "description",
+  "value": "Humans are renowned for their ability to persist through the most grueling of trials that would leave others ready to drop. When you would become fatigued, attempt a DC 17 flat check. On a success, you aren't fatigued. If the fatigued condition has an underlying cause that you don't address, such as lack of rest, you must attempt the check again at an interval determined by the GM until you fail the flat check or address the underlying cause.",
+  "why": "AoN prints \"DC 17 flat check\" on feat-4491 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "steady-spellcasting",
+  "field": "description",
+  "value": "Confident in your technique, you don't lose spells easily. If a reaction would disrupt your spellcasting action, attempt a DC 15 flat check. If you succeed, your action isn't disrupted.",
+  "why": "AoN prints \"DC 15 flat check\" on feat-4602 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "evade-doom",
+  "field": "description",
+  "value": "You can elude supernatural disaster. When you would gain the doomed condition, you can attempt a DC 17 flat check. On a success, you don't gain the doomed condition.",
+  "why": "AoN prints \"DC 17 flat\" on feat-5558 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "ten-lives",
+  "field": "description",
+  "value": "When your character would die, you can attempt a DC 17 flat check. On a success, you're instead reduced to 0 HP and a dying value 1 less than what would normally kill you (typically dying 3). This doesn't change the result for any other creature affected.",
+  "why": "AoN prints \"DC 17 flat check\" on feat-5567 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "vigorous-health",
+  "field": "description",
+  "value": "You can withstand blood loss startlingly well. Whenever you would gain the drained condition, you can attempt a DC 17 flat check. On a success, you don't gain the drained condition.",
+  "why": "AoN prints \"DC 17 flat check\" on feat-5576 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "thundering-surge",
+  "field": "description",
+  "value": "**Requirements** Your Spellsurge aura is active.\n\n---\n\nYour magic explodes in bursts of excess energy, creating thunderous waves. If your next action is to Cast a Spell, attempt a DC 5 flat check.\n\n**Critical Success** Enemies within a 10-foot radius burst centered on the target of the spell or within the spell's area of effect take sonic damage equal to twice your level ( saving throw against your class DC or spell DC, whichever is higher). Those who fail the save are also knocked prone.\n\n**Success** Enemies within a 10-foot radius burst centered on the target of the spell or within the spell's area of effect take sonic damage equal to your level (basic Fortitude saving throw against your class DC or spell DC, whichever is higher). Those who critically fail the save are also knocked prone.\n\n**Failure** All creatures within a 10-foot radius burst centered on you take sonic damage equal to your level (basic Fortitude saving throw against your class DC or spell DC, whichever is higher). Those who fail the save are also knocked prone.",
+  "why": "AoN prints \"DC 5 flat check\" on feat-7428 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "iivlars-deflection",
+  "field": "description",
+  "value": "**Trigger** You are struck by a critical hit that deals physical damage.\n\n---\n\nYou're able to use the silk woven into your skin to deflect attacks, reducing the deadliness of grievous blows. Attempt a DC 17 flat check. If you are successful, the attack becomes a normal hit.",
+  "why": "AoN prints \"DC 17 flat check\" on feat-7782 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "saving-slash",
+  "field": "description",
+  "value": "**Trigger** An opponent critically hits you with a melee attack.\n\n---\n\nYou quickly whirl your blade, trying to deflect enough momentum to avoid the worst of the attack. Attempt a DC 15 flat check. If you succeed, the attack becomes a normal hit, instead of a critical hit.",
+  "why": "AoN prints \"DC 15 flat check\" on feat-7905 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "reliable-magic",
+  "field": "description",
+  "value": "Magic stored in written form or within wands is more reliable in your capable hands. Whenever you overcharge a wand, reduce the DC of the flat check to avoid destroying the wand by 4. It still gains the broken condition on a success.\n\nWhen you Cast a Spell from a scroll you can spend a Mythic Point as a free action. The spell is cast at mythic proficiency. Once you cast the spell using this ability, attempt a DC 11 flat check. If this check is successful, the scroll is not destroyed, and instead glows with light equivalent to that of a candle for 10 minutes. You can Cast a Spell from this scroll again, but if you do so you cannot enhance it in any way (such as by using this feat), and the scroll is destroyed. If not used before the end of the 10 minutes, the scroll is destroyed.",
+  "why": "AoN prints \"DC 11 flat check\" on feat-8141 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "cant-you-see",
+  "field": "description",
+  "value": "The eye rebels, the mind recoils—no matter how much those who can see you try to explain what's there, their friends' gazes just skitter over you, like a bird afraid to land. A character who attempts to Point Out your location must attempt a DC 14 flat check. If they fail, their allies misunderstand them and aren't sure where you are. On a critical failure, their allies think they pointed you out in a different location entirely, chosen by the GM. Similarly, when a creature critically fails to seek you while you're hidden to or undetected by it, it thinks you're in a different location chosen by the GM. In either case, you appear to be hidden to a creature that thinks you're in a different location, though you're actually undetected by it for targeting and further uses of the Seek action.",
+  "why": "AoN prints \"DC 14 flat check\" on feat-8418 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "chronoskimmer-dedication",
+  "field": "description",
+  "value": "You became partially unstuck from time and have learned how to manipulate your place in the flow of time. When you roll initiative, you can choose one of three options: either do nothing and roll initiative normally, stabilize your timestream, or destabilize your timestream and send it into intense fluctuations.\n\n- **Stabilize your Timestream** (fortune) You don't roll initiative, and instead your initiative is equal to 10 + the modifier you would have used for initiative.\n- **Destabilize your Timestream** (fortune) You don't roll initiative, and instead attempt a DC 11 flat check. On a success, your initiative is equal to 19 + the modifier you would have used for initiative, and on a failure, your initiative is equal to 1 + that modifier.\n\nAdditionally, if your initiative roll result is tied with an opponent's initiative roll, you go first.\n\nYour manipulation of time grants you access to a number of abilities, some of which require a saving throw. The DC for these abilities is either your class DC or spell DC, whichever is higher, and is called your chronoskimmer DC",
+  "why": "AoN prints \"DC 11 flat check\" on feat-8489 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "feats",
+  "id": "roll-with-it",
+  "field": "description",
+  "value": "**Trigger** A foe hits you with a melee weapon or unarmed attack.\n\n---\n\nWhen you take a big hit, your foe bounces you around like a rubber ball, but you escape the worst of the blow. Your foe can move you any distance of its choice up to 30 feet in a direction of its choice (this is not forced movement, and it triggers reactions as normal). You fall prone and are Stunned 1. Attempt a DC 6 flat check. On a success, you take minimum damage from the attack, and on a critical success, if the attack was a critical hit, you don't take double damage from the critical hit.",
+  "why": "AoN prints \"DC 6 flat check\" on feat-1009 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "heritages",
+  "id": "jinxed-tengu",
+  "field": "description",
+  "value": "Your lineage has been exposed to curse after curse, and now they slide off your feathers like rain. If you succeed at a saving throw against a curse or misfortune effect, you get a critical success instead. When you would gain the doomed condition, attempt a DC 17 flat check. On a success, reduce the value of the doomed condition you would gain by 1.",
+  "why": "AoN prints \"DC 17 flat check\" on heritage-355 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "actions",
+  "id": "chassis-deflection",
+  "field": "description",
+  "value": "**Trigger** A critical hit deals physical damage to you.\n\n---\n\nAttempt a DC 17 flat check. If you are successful, the attack becomes a normal hit.",
+  "why": "AoN prints \"DC 17 flat check\" on action-904 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "actions",
+  "id": "call-warshard-weapon",
+  "field": "description",
+  "value": "**Requirements** You are not holding your warshard weapon, and you have a hand or hands free to be able to wield your warshard weapon\n\n---\n\n**Effect** Your warshard weapon teleports into your hand, as long as you and your warshard weapon are on the same planet. At 15th level, you need only be on the same plane as your warshard weapon to call it, and at 18th level, you can call your warshard weapon across any distance. If your warshard weapon is in the possession of a mythic creature that's higher level than you or placed in an area where teleportation magic doesn't function, attempt a DC 16 flat check. On a success, your warshard weapon still teleports to your hand.",
+  "why": "AoN prints \"DC 16 flat check\" on action-3534 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+ },
+ {
+  "category": "spells",
+  "id": "shielding-strike",
+  "field": "description",
+  "value": "As you attack a foe, warding magic transforms your momentum into action and lifts your shield. You can either Raise your Shield if you're wielding one or cast shield if you have the spell. Then, make a melee Strike.",
+  "why": "AoN spell-2882 (Impossible Magic pg. 179, the remaster printing of legacy spell-1041) prints \"You can either Raise your Shield if you're wielding one or cast shield if you have the spell. Then, make a melee Strike.\" - the shield comes FIRST; ours shipped the legacy order (Strike, then shield)."
+ },
+ {
+  "category": "spells",
+  "id": "shielding-strike",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "Raise your Shield",
+    "key": "actions"
+   },
+   {
+    "label": "Shield",
+    "key": "spells"
+   }
+  ],
+  "why": "AoN spell-2882 links \"Raise your Shield\" to the Raise a Shield action; the shipped ref label \"Raise a Shield\" no longer occurs in the corrected prose, so the label follows the printed words (same label everstand-strike, reflexive-shield and shielded-attrition carry)."
+ },
+ {
+  "category": "spells",
+  "id": "shooting-star",
+  "field": "description",
+  "value": "**Requirements** You're wielding a ranged weapon or a thrown weapon.\n\n---\n\nYou let loose a projectile that flies true and leaves the blazing trail of a meteor behind it. Make a ranged Strike, ignoring the target's concealment and reducing the target's cover by one degree for only this Strike (greater to standard, standard to lesser, and lesser to none). If the Strike hits, the meteor trail hangs in the air. This gives the benefits of concealment negation and cover reduction to any attacks made against the creature (by anyone) until the start of your next turn.",
+  "why": "AoN spell-2883 prints \"Requirements You're wielding a ranged weapon or a thrown weapon.\" and \"reducing the target's cover by one degree for only this Strike\"; ours had no Requirements line and the legacy spell-1042 \"for this Strike only\"."
+ },
+ {
+  "category": "spells",
+  "id": "spinning-staff",
+  "field": "description",
+  "value": "**Requirements** You're wielding a staff.\n\n---\n\nYou spin your staff with an impossibly quick twirling flourish, attacking two foes and transforming the momentum into magical energy to charge for your next Spellstrike. Make a melee Strike with your staff against one foe and then a second melee Strike with your staff against a different foe. Your multiple attack penalty applies to both of these attacks as normal.",
+  "why": "AoN spell-2884 prints \"Requirements You're wielding a staff.\" and \"You spin your staff with an impossibly quick twirling flourish\"; ours had no Requirements line and the legacy spell-1043 \"with a twirling flourish\"."
+ },
+ {
+  "category": "spells",
+  "id": "thunderous-strike",
+  "field": "description",
+  "value": "**Requirements** You're wielding a melee weapon in two hands.\n\n---\n\nYou swing your massive weapon, creating a wave of sonic vibrations that topples creatures. Make a melee Strike with your two-handed weapon. Each creature in a 15-foot cone from you must attempt a basic Fortitude save against your spell DC or take 2 sonic damage. On a critical failure, the creature is knocked prone. The target of your Strike must be within the cone or the effect fails.\n\n---\n\n**Heightened (+1)** The damage increases by 1.",
+  "why": "AoN spell-2885 prints \"Requirements You're wielding a melee weapon in two hands.\"; ours began at the body. The body and Heightened entry are the shipped text unchanged."
+ },
+ {
+  "category": "spells",
+  "id": "thunderous-strike",
+  "field": "baseDamage",
+  "value": "2",
+  "why": "AoN spell-2885 prints \"take 2 sonic damage\" with \"Heightened (+1) The damage increases by 1.\"; without baseDamage, scaleDamage (src/rules/heightening.ts) returns null and the auto-heightened focus spell always shows 2."
+ },
+ {
+  "category": "spells",
+  "id": "thunderous-strike",
+  "field": "damageKind",
+  "value": "damage",
+  "why": "AoN spell-2885: the 2 sonic damage hurts (\"take 2 sonic damage\"); every spell carrying baseDamage also carries damageKind."
+ },
+ {
+  "category": "spells",
+  "id": "conjurers-countermeasure",
+  "field": "cast",
+  "value": {
+   "type": "actions",
+   "value": 1
+  },
+  "why": "AoN spell-2876 prints the Single Action glyph (actions \"Single Action\"); our record had no cast."
+ },
+ {
+  "category": "spells",
+  "id": "conjurers-countermeasure",
+  "field": "duration",
+  "value": "until the end of your next turn",
+  "why": "AoN spell-2876 prints \"Duration until the end of your next turn\"; our record had no duration, so the spell card had no Duration row."
+ },
+ {
+  "category": "spells",
+  "id": "conjurers-countermeasure",
+  "field": "level",
+  "value": 3,
+  "why": "AoN spell-2876 is \"Focus 3\" (level 3); every sibling magus focus spell carries level beside rank."
+ },
+ {
+  "category": "spells",
+  "id": "conjurers-countermeasure",
+  "field": "description",
+  "value": "You quickly create a barrier that protects you against the magic of spellcraft. You gain resistance 5 against damage from spells.\n\nThe resistance from this spell is cumulative with that of Arcane Cascade. If you’re in Arcane Cascade stance when the duration of conjurer’s countermeasure expires, the spell’s duration extends until Arcane Cascade ends.\n\n---\n\n**Heightened (+3)** The resistance increases by 5.",
+  "why": "AoN spell-2876: the body opens \"You quickly create a barrier\" and the entry prints \"--- Heightened (+3) The resistance increases by 5.\"; ours carried the scraped title/Source/Duration header as body text and ran the Heightened entry into the last paragraph."
+ },
+ {
+  "category": "spells",
+  "id": "turbulent-tide",
+  "field": "description",
+  "value": "**Requirements** You're wielding an improvised weapon.\n\n---\n\nYou cause the sheath of water and the improvised weapon it surrounds to surge outward with stupendous force as you attack. Make a melee Strike with your improvised weapon. The weapon then breaks, and each creature adjacent to you must succeed at a Fortitude saving throw against your spell DC or be pushed 5 feet away from you (10 feet on a critical failure). You can Stride after the target of your Strike if they are pushed but you must move the same distance and in the same direction.\n\nIf the item has a Hardness greater than your level, or if it's an artifact, cursed item, or other item that's difficult to break or destroy, it doesn't break and adjacent creatures don't need to attempt Fortitude saves.",
+  "why": "AoN spell-2311 (Rival Academies pg. 82) prints \"Requirements You're wielding an improvised weapon.\"; ours began at the body, which is kept unchanged."
+ },
+ {
+  "category": "spells",
+  "id": "cascade-countermeasure",
+  "field": "description",
+  "value": "**Requirements** You're benefiting from Arcane Cascade.\n\n---\n\nYou quickly adjust your Arcane Cascade to offer magical protection. You gain resistance 5 against damage from spells. As normal, using Arcane Cascade again means you've ended the stance, and the spell ends.\n\n---\n\n**Heightened (+3)** The resistance increases by 5.",
+  "why": "AoN spell-1036 (Secrets of Magic pg. 143) prints \"Requirements You're benefiting from Arcane Cascade.\"; ours began at the body, which is kept unchanged."
+ },
+ {
+  "category": "classFeatures",
+  "id": "sparkling-targe",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "feature",
+    "id": "shield-block",
+    "note": "While you're in Arcane Cascade, damage you take from a spell or other magical effect can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade. This applies whether you're using an actual shield, the shield spell, or something else that works like a shield."
+   },
+   {
+    "on": "action",
+    "id": "shield-block",
+    "note": "While you're in Arcane Cascade, damage you take from a spell or other magical effect can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade. This applies whether you're using an actual shield, the shield spell, or something else that works like a shield."
+   }
+  ],
+  "why": "batch P02 sparkling-targe#shield-block-magic: AoN hybrid-study-12 \"damage you take from a spell or other magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade.\" A rule that changes the Shield Block reaction, so it is a mark on Shield Block: the Feats-tab entry ('feature') and its Main-tab reaction row ('action', slug of the feat name) - the paired shape paragon-battle-medicine and return-fire already ship. The chosen subclass is an owned class feature (explain.ts recordMarksFor)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "unfurling-brocade",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "disarm",
+    "note": "While in Arcane Cascade stance: if you critically succeed at an Athletics check to Disarm, you can spend a single action immediately afterward to flick your fabric, causing the disarmed object to fall to the ground in your space rather than in your opponent's."
+   },
+   {
+    "on": "action",
+    "id": "grapple",
+    "note": "While in Arcane Cascade stance, your fabric gains the grapple trait. If you succeed at an Athletics check to Grapple using your fabric, you can spend a single action immediately afterward to pull the creature 5 feet toward you."
+   },
+   {
+    "on": "action",
+    "id": "trip",
+    "note": "While in Arcane Cascade stance: when you attempt to Trip a foe using your fabric, the target can be two sizes larger than you instead of one."
+   }
+  ],
+  "why": "batch P02 unfurling-brocade#cascade-tricks: AoN hybrid-study-8 \"While in Arcane Cascade stance, the magical energy flowing through your fabric partially animates it to accomplish an even greater range of tricks.\" - the Disarm flick, \"Your fabric gains the grapple trait\", the 5-foot Grapple pull and the two-sizes-larger Trip, each marked on the action it changes (titan-wrestler's disarm/trip shape)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "volatile-spark",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "spellstrike",
+    "note": "When you use Spellstrike, you can make a ranged firearm Strike, as long as the target is within the first range increment of your firearm. This overrides the actual range of the spell. If your firearm has the concussive trait, any damage from the spell you use in the Spellstrike uses the target's weakest resistance to any of the following: the spell's damage type, piercing, or bludgeoning (only against creatures you target with your firearm Strike during the Spellstrike)."
+   }
+  ],
+  "why": "batch P02 volatile-spark#spellstrike: AoN hybrid-study-16 \"When you use Spellstrike, you can make a ranged firearm Strike, as long as the target is within the first range increment of your firearm. This overrides the actual range of the spell. If your firearm has the concussive trait, any damage from the spell you use in the Spellstrike uses the target's weakest resistance to any of the following: the spell's damage type, piercing, or bludgeoning.\""
+ },
+ {
+  "category": "feats",
+  "id": "arcane-fists",
+  "field": "unarmedTraits",
+  "value": [
+   {
+    "match": [
+     "fist"
+    ],
+    "setDie": "d6"
+   },
+   {
+    "add": [
+     "arcane"
+    ]
+   }
+  ],
+  "why": "batch P02 arcane-fists#fist-die-and-arcane-trait: AoN feat-9044 \"The damage die for your fist changes to 1d6 instead of 1d4.\" and \"Your unarmed attacks gain the arcane trait, making them magical.\" The existing unarmedTraits lane (derive.ts applyUnarmedRiders; martial-artist-dedication's [{match:['fist'],setDie:'d6'}, ...] shape); the arcane rider has no match so it reaches every unarmed attack."
+ },
+ {
+  "category": "feats",
+  "id": "maguss-analysis",
+  "field": "description",
+  "value": "You make an assessment informed by your knowledge of how a creature fights. Attempt a check to Recall Knowledge about a creature, then recharge your Spellstrike. You gain a +1 circumstance bonus to your check if you previously hit the creature with a Strike this turn. The subject of your check is temporarily immune to Magus's Analysis for 1 day.",
+  "why": "batch P02 maguss-analysis#recharge-unconditional: the record is AoN feat-9045 (remaster), which prints \"Attempt a check to Recall Knowledge about a creature, then recharge your Spellstrike.\" Our body was the Secrets of Magic feat-2847 text (\"If your check is successful, recharge your Spellstrike\"); R12, the newest printing wins whole."
+ },
+ {
+  "category": "feats",
+  "id": "spirit-sheath",
+  "field": "description",
+  "value": "You've magically constructed an extradimensional sheath for your weapon that you access through your clothing, typically through a pocket, sleeve, or seam. This sheath is hard to notice, granting a +2 circumstance bonus to your Stealth checks to Conceal an Item within it. A spirit sheath can hold up to 1 Bulk worth of weapons.\n\nDuring a Spellstrike, you can Interact to draw one weapon from the sheath before you Cast the Spell. You can draw or return a weapon to a spirit sheath as an Interact action, as can anyone else holding or wearing the clothing that contains the sheath. A *dispel magic* spell or similar effect can be used against the spirit sheath to expel the weapon. The counteract check is made against your spell DC and the counteract rank is half your level rounded up. The weapon is also expelled if you become unconscious.",
+  "why": "batch P02 spirit-sheath#description: the record is AoN feat-9050 (remaster), which prints \"A spirit sheath can hold up to 1 Bulk worth of weapons\" and \"the counteract rank is half your level rounded up\". Our body was the Secrets of Magic feat-2852 text (one weapon, counteract rank 1); R12, the newest printing wins whole."
+ },
+ {
+  "category": "feats",
+  "id": "devastating-spellstrike",
+  "field": "description",
+  "value": "**Requirements** Your Spellstrike is charged.\n\n---\n\nYour Spellstrike sweeps are so wide and devastating, they smash into nearby foes. Make a Spellstrike with a spell that can deal damage. Enemies in a 5-foot emanation around the target (not including the target) take 2 damage of the same damage type your spell could deal. This damage increases to 3 at 9th level, 4 at 14th level, and 5 at 19th level. If you're in the Arcane Cascade stance, the emanation's damage gains a status bonus to damage equal to the extra damage from your Arcane Cascade.",
+  "why": "batch P02 devastating-spellstrike: the record is AoN feat-9052 (remaster), which prints \"Requirements Your Spellstrike is charged.\" and \"Enemies in a 5-foot emanation around the target (not including the target) take 2 damage of the same damage type your spell could deal.\" Our body was the Secrets of Magic feat-2853 text (Arcane Cascade requirement, splash 2 + cascade damage); R12, the newest printing wins whole."
+ },
+ {
+  "category": "feats",
+  "id": "emergency-targe",
+  "field": "description",
+  "value": "**Trigger** An enemy you're aware of hits you with a Strike or a spell attack, or you fail a save against an enemy's spell.\n\n**Requirements** You are wielding a shield or have the *shield* spell prepared.\n\n---\n\nYou immediately Raise a Shield or cast *shield*. The circumstance bonus applies to your defenses when determining the outcome of the triggering attack or spell.",
+  "why": "batch P02 emergency-targe#description: the record is AoN feat-9054 (remaster), whose trigger reads \"An enemy you're aware of hits you with a Strike or a spell attack, or you fail a save against an enemy's spell.\" Our trigger was the Secrets of Magic feat-2855 text (melee Strike or melee spell attack roll); R12, the newest printing wins whole."
+ },
+ {
+  "category": "feats",
+  "id": "recharging-flurry",
+  "field": "mapReduction",
+  "value": {
+   "step": 4,
+   "agileStep": 3,
+   "note": "Recharging Flurry",
+   "appliesWhen": "the second Strike of Recharging Flurry against a creature you haven't attacked yet this turn"
+  },
+  "why": "batch P02 recharging-flurry#map: AoN feat-9056 \"If the second Strike targets a creature you haven't attacked yet this turn, its multiple attack penalty is -4 if it's your second attack this turn (-3 if you're using an agile weapon) or -8 if it's your third or further Strike (-6 with an agile weapon).\" The Combination Finisher shape: appliesWhen, so mapStepFor never moves the -5/-10 on an ordinary Strike and mapNotesFor lists -4/-8 (agile -3/-6) as an alternative in the strike breakdown."
+ },
+ {
+  "category": "backgrounds",
+  "id": "art-collector",
+  "field": "choice",
+  "value": {
+   "flag": "artInspiration",
+   "prompt": "Art object chosen as today's inspiration (daily preparations, 24 hours)",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "new-piece",
+     "label": "A piece never chosen before",
+     "description": "+2 circumstance bonus to saving throws against mental effects for 24 hours."
+    },
+    {
+     "value": "repeat-piece",
+     "label": "A piece chosen before",
+     "description": "+1 circumstance bonus to saving throws against mental effects for 24 hours."
+    }
+   ]
+  },
+  "why": "AoN background-647 (Art \"Collector\", Bastion of Blasphemies Player's Guide): \"Whenever you do your daily preparations, select an art object ... to be that day's inspiration for you. For the next 24 hours, you gain a +2 circumstance bonus to saving throws against mental effects if this is the first time you've chosen that piece of artwork as your inspiration, or a +1 circumstance bonus if you've chosen this artwork more than once.\" The daily question on the runelord-researcher (background-564) shape; ownedDailyChoiceRecords (derive.ts) walks the background, so the Rest sheet asks it."
+ },
+ {
+  "category": "backgrounds",
+  "id": "art-collector",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against mental effects, for 24 hours, while you carry today's inspiration art object (worth 10 gp x your level)",
+    "bonus": "+2 circumstance (+1 if you've chosen that artwork before)"
+   }
+  ],
+  "why": "AoN background-647: \"you gain a +2 circumstance bonus to saving throws against mental effects if this is the first time you've chosen that piece of artwork as your inspiration, or a +1 circumstance bonus if you've chosen this artwork more than once.\" Record-level situational, read by authoredSituational (explain.ts) for the owned background."
+ },
+ {
+  "category": "backgrounds",
+  "id": "blooded-by-the-dead",
+  "field": "choice",
+  "value": {
+   "flag": "bloodedRoutine",
+   "prompt": "Morning routine (daily preparations, 24 hours)",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "blood",
+     "label": "Bolster the Blood",
+     "description": "Resistance 2 to persistent bleed; flat checks to end persistent bleed damage are DC 2 lower.",
+     "grant": {
+      "resistances": [
+       {
+        "type": "persistent bleed",
+        "value": 2
+       }
+      ]
+     }
+    },
+    {
+     "value": "fury",
+     "label": "Bolster the Fury",
+     "description": "+2 damage with melee Strikes that deal piercing damage against vampires or creatures that drink blood."
+    },
+    {
+     "value": "mind",
+     "label": "Bolster the Mind",
+     "description": "Treat your level as 2 higher against mental incapacitation effects; +2 circumstance to Will saves against a vampire's dominate ability."
+    }
+   ]
+  },
+  "why": "AoN background-648 (Blooded by the Dead): \"Every morning as you do your daily preparations, you can focus on one of the following three morning routines ... once chosen, the effect persists for 24 hours. Bolster the Blood: You gain resistance to persistent bleed 2 ... Bolster the Fury ... Bolster the Mind ...\" The Blood option's resistance is a real grant (dailyChoiceGrants -> deriveDefenses \"chosen this morning\"); the other two are conditional and ride the situational/recordMarks rows."
+ },
+ {
+  "category": "backgrounds",
+  "id": "blooded-by-the-dead",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "Bolster the Fury today: melee Strikes dealing piercing damage vs vampires or creatures that drink blood",
+    "bonus": "+2 damage"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "will"
+     }
+    ],
+    "when": "Bolster the Mind today: against a vampire's dominate ability",
+    "bonus": "+2 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "Bolster the Mind today: against mental effects with the incapacitation trait",
+    "bonus": "treat your level as 2 higher"
+   }
+  ],
+  "why": "AoN background-648: \"Bolster the Fury: You deal 2 additional damage with melee Strikes that deal piercing damage against vampires or creatures that drink blood. Bolster the Mind: You treat your level as 2 higher than it is to determine the effects of mental effects with the incapacitation trait utilized against you, and gain a +2 circumstance bonus to Will saving throws against a vampire's dominate ability.\""
+ },
+ {
+  "category": "backgrounds",
+  "id": "blooded-by-the-dead",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "condition",
+    "id": "persistent-damage",
+    "note": "Blooded by the Dead (Bolster the Blood today): flat checks to end persistent bleed damage are DC 2 lower"
+   }
+  ],
+  "why": "AoN background-648: \"Bolster the Blood: ... whenever you attempt a flat check to end persistent bleed damage, reduce the DC of the check by 2.\" No stat row holds that DC, so the mark sits on the persistent-damage condition (recordMarksFor walks the background)."
+ },
+ {
+  "category": "backgrounds",
+  "id": "curse-marked",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "to resist curses, while you aren't cursed (a class curse like the oracle's doesn't count)",
+    "bonus": "+2 circumstance (-2 circumstance instead while cursed)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "to disable a hazard capable of inflicting a curse, while you aren't cursed",
+    "bonus": "+2 circumstance (-2 circumstance instead while cursed)"
+   },
+   {
+    "targets": [
+     {
+      "kind": "spell",
+      "detail": "attack"
+     }
+    ],
+    "when": "on checks to counteract curses, while you aren't cursed",
+    "bonus": "+2 circumstance (-2 circumstance instead while cursed)"
+   }
+  ],
+  "why": "AoN background-649 (Curse-Marked): \"As long as you are not cursed yourself (barring a class-based curse, such as that granted by the oracle), you gain a +2 circumstance bonus on checks made to counteract curses, on saving throws to resist curses, and on any skill check to disable a hazard capable of inflicting a curse. If you are cursed, you instead gain a -2 circumstance penalty to these rolls.\" A spell's counteract check uses the spell attack modifier, so that half stars the spell attack."
+ },
+ {
+  "category": "backgrounds",
+  "id": "friend-of-a-friend",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against poison and disease",
+    "bonus": "+2 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "spell",
+      "detail": "attack"
+     }
+    ],
+    "when": "on checks to counteract a poison or disease",
+    "bonus": "+2 circumstance"
+   }
+  ],
+  "why": "AoN background-650 (Friend of a Friend): \"You gain a +2 circumstance bonus to saving throws against poison and disease, and to any checks made to counteract poison or disease.\" A spell's counteract check uses the spell attack modifier, so the counteract half stars the spell attack."
+ },
+ {
+  "category": "backgrounds",
+  "id": "once-possessed",
+  "field": "trainedLore",
+  "value": "fiend",
+  "why": "AoN background-651 (Once Possessed): \"You're trained in the Intimidation skill, and a Lore skill focused on all fiends ... This Fiend Lore skill can be used whenever you'd need to attempt a check against any fiend\". trainedLore is the same field its Bastion of Blasphemies siblings carry (blooded-by-the-dead \"vampire\")."
+ },
+ {
+  "category": "backgrounds",
+  "id": "once-possessed",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against mental effects from fiends",
+    "bonus": "+2 circumstance"
+   }
+  ],
+  "why": "AoN background-651: \"You gain a +2 circumstance bonus to saving throws against mental effects from fiends.\" Same shape as seer-of-the-dead (background-243)."
+ },
+ {
+  "category": "actions",
+  "id": "spiritual-scar",
+  "create": true,
+  "value": {
+   "id": "spiritual-scar",
+   "name": "Spiritual Scar",
+   "traits": [
+    "concentrate"
+   ],
+   "rarity": "common",
+   "actionCost": {
+    "type": "reaction"
+   },
+   "source": {
+    "book": "Pathfinder Bastion of Blasphemies Player's Guide"
+   },
+   "edition": "neutral",
+   "aonParentId": "background-651",
+   "aonSection": "Spiritual Scar"
+  },
+  "why": "AoN background-651 prints \"Spiritual Scar Reaction (concentrate) Frequency once per day; Trigger You would take spirit damage from a fiend; ...\" No core bucket holds the action. Shape mirrors the other background-granted actions (actions/wish-for-luck from background-241, actions/bestial-clarity from background-362); edition matches its parent background (neutral). Its prose is the created-desc spec."
+ },
+ {
+  "category": "backgrounds",
+  "id": "once-possessed",
+  "field": "grantsActions",
+  "value": [
+   "spiritual-scar"
+  ],
+  "why": "AoN background-651: \"In addition, you gain the following reaction. Spiritual Scar\". Same lane as genie-blessed (background-241) -> wish-for-luck; MainTab walks the background's grantsActions."
+ },
+ {
+  "category": "backgrounds",
+  "id": "once-possessed",
+  "field": "limitedUses",
+  "value": {
+   "max": 1,
+   "per": "day"
+  },
+  "why": "AoN background-651: Spiritual Scar \"Frequency once per day\". Same field genie-blessed (background-241) carries for its once-per-day action."
+ },
+ {
+  "category": "backgrounds",
+  "id": "trusted-rival",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "to Research a topic associated with Bastardhall (Research subsystem)",
+    "bonus": "+2 circumstance"
+   }
+  ],
+  "why": "AoN background-652 (Trusted Rival): \"whenever you attempt any check to Research a topic associated with Bastardhall using the Research subsystem, you gain a +2 circumstance bonus on the check.\""
+ },
+ {
+  "category": "classFeatures",
+  "id": "resurgent-maelstrom",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "with an improvised weapon that would already have backstabber (1H) or forceful (2H)",
+    "bonus": "backstabber: double its precision damage; forceful: count one more weapon damage die"
+   }
+  ],
+  "why": "AoN hybrid-study-9 (Resurgent Maelstrom): \"A one- handed improvised weapon gains the backstabber trait; if it would already have the backstabber trait, double the amount of additional precision damage. A two- handed improvised weapon gains the forceful trait; if it would already have the forceful trait, treat the number of weapon damage dice the weapon has as 1 higher for the purpose of calculating the additional damage.\""
+ },
+ {
+  "category": "classFeatures",
+  "id": "resurgent-maelstrom",
+  "field": "description",
+  "value": "While fate may conspire to strip you of your armaments, you're never helpless. For you, anything can be a dangerous weapon, bolstered by the might of towering waves and crushing tides. You know these tools are transient, and so you think nothing of shattering and reforming them with your magic.\n\nYour attacks with improvised weapons do not take the normal –2 item penalty. While you wield an improvised weapon, streams of water flow from your limbs to surround the weapon, granting it the water trait. These improvised weapons have a minimum damage die of 1d6, or 1d4 if the improvised weapon is agile.\n\nEffects that apply runes to your unarmed attacks, like Runic Body and Handwraps of Mighty Blows, also apply those runes to your non-magical improvised weapons. The improvised weapon also gains an additional trait, depending on how many hands it takes to wield. A one-handed improvised weapon gains the backstabber trait; if it would already have the backstabber trait, double the amount of additional precision damage. A two-handed improvised weapon gains the forceful trait; if it would already have the forceful trait, treat the number of weapon damage dice the weapon has as 1 higher for the purpose of calculating the additional damage.\n\nWhile you're in Arcane Cascade stance , you can manipulate the water around your improvised weapon, making it cut like a knife or bash with the force of falling rocks. The weapon gains the versatile traits for the types of damage that it doesn't normally deal. For instance, an improvised weapon that normally deals bludgeoning damage gains the versatile P and versatile S traits.\n\n**Conflux Spell** Turbulent Tide",
+  "why": "AoN hybrid-study-9 prints \"Effects that apply runes to your unarmed attacks, like runic body and handwraps of mighty blows, also apply those runes to your non-magical improvised weapons.\" The item is Handwraps of Mighty Blows (items/handwraps-of-mighty-blows); only that one word changes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "resurgent-maelstrom",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "Handwraps of Mighty Blows",
+    "key": "items"
+   },
+   {
+    "label": "Runic Body",
+    "key": "spells"
+   },
+   {
+    "label": "Turbulent Tide",
+    "key": "spells"
+   }
+  ],
+  "why": "AoN hybrid-study-9 links handwraps of mighty blows (Equipment ID 3086); the label \"Handwraps of Might Blows\" matched no item, so the link could not resolve."
+ },
+ {
+  "category": "classFeatures",
+  "id": "sparkling-targe",
+  "field": "description",
+  "value": "You've studied the applications of magic, training yourself to perform not just offensive maneuvers but defensive tactics as well. When magic flows through you, your shield can block impossible things, even a dragon's breath or a force barrage.\n\nYou gain the general Shield Block feat.\n\nWhen you're in Arcane Cascade stance with your shield raised, your circumstance bonus to AC from your shield also applies to your saves against spells and other magical effects. In addition, damage you take from a spell or other magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade. These benefits apply whether you're using an actual shield, the shield spell, or something else that works like a shield (such as a raised tome if you have the Raise a Tome feat).\n\n**Conflux Spell** Shielding Strike\n\n**Studious Spell (7th)** Resist Energy\n\n**Studious Spell (11th)** Warding Aggression\n\n**Studious Spell (13th)** Mountain Resilience",
+  "why": "AoN hybrid-study-12 (Sparkling Targe, Impossible Magic pg. 13), the record's aonId, verbatim: \"force barrage\", \"from a spell or other magical effect\", \"When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade\" and the three Studious Spell lines. The shipped text was the Secrets of Magic printing."
+ },
+ {
+  "category": "classFeatures",
+  "id": "sparkling-targe",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "Force Barrage",
+    "key": "spells"
+   },
+   {
+    "label": "Shield Block",
+    "key": "feats"
+   },
+   {
+    "label": "Arcane Cascade",
+    "key": "actions"
+   },
+   {
+    "label": "Raise a Tome",
+    "key": "feats"
+   },
+   {
+    "label": "Shielding Strike",
+    "key": "spells"
+   },
+   {
+    "label": "Resist Energy",
+    "key": "spells"
+   },
+   {
+    "label": "Warding Aggression",
+    "key": "spells"
+   },
+   {
+    "label": "Mountain Resilience",
+    "key": "spells"
+   }
+  ],
+  "why": "AoN hybrid-study-12 links force barrage (spell 1536), Shield Block (feat 5212), Arcane Cascade (action 4261), Raise a Tome (feat 9046), Shielding Strike, Resist Energy, Warding Aggression and Mountain Resilience."
+ },
+ {
+  "category": "hybridStudy",
+  "id": "sparkling-targe",
+  "field": "description",
+  "value": "You've studied the applications of magic, training yourself to perform not just offensive maneuvers but defensive tactics as well. When magic flows through you, your shield can block impossible things, even a dragon's breath or a force barrage.\n\nYou gain the general Shield Block feat.\n\nWhen you're in Arcane Cascade stance with your shield raised, your circumstance bonus to AC from your shield also applies to your saves against spells and other magical effects. In addition, damage you take from a spell or other magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade. These benefits apply whether you're using an actual shield, the shield spell, or something else that works like a shield (such as a raised tome if you have the Raise a Tome feat).\n\n**Conflux Spell** Shielding Strike\n\n**Studious Spell (7th)** Resist Energy\n\n**Studious Spell (11th)** Warding Aggression\n\n**Studious Spell (13th)** Mountain Resilience",
+  "why": "AoN hybrid-study-12 - the printed Sparkling Targe magus hybrid study entry (Impossible Magic pg. 13); same shape as the hybridStudy/twofold-tine (hybrid-study-15) and hybridStudy/volatile-spark (hybrid-study-16) rows."
+ },
+ {
+  "category": "feats",
+  "id": "heaven-earth-encompassing-sleeves",
+  "field": "grantsItems",
+  "value": [
+   {
+    "itemId": "sleeves-of-storage",
+    "worn": true,
+    "maxLevel": 8
+   },
+   {
+    "itemId": "sleeves-of-storage-greater",
+    "worn": true,
+    "minLevel": 9
+   }
+  ],
+  "why": "AoN feat-7082 (Heaven-Earth Encompassing Sleeves, Tian Xia Character Guide pg. 113): 'This clothing becomes a set of sleeves of storage ... At 9th level, the clothing becomes greater sleeves of storage instead.' One garment, so exactly one item in any level window; the level gate is the new grantsItems[].minLevel/maxLevel read by grantInLevelWindow in src/rules/build.ts. Worn: it is the magus's own suit of clothing. invested is left unset on purpose: both items carry the invested trait and the player invests them like any bought invested item - the feat does not say the clothing arrives invested."
+ },
+ {
+  "category": "actions",
+  "id": "spiritual-scar",
+  "field": "description",
+  "value": "**Frequency** once per day\n\n**Trigger** You would take spirit damage from a fiend\n\n---\n\n**Effect** You gain resistance to spirit damage equal to twice your level plus your Charisma modifier against the triggering damage. If this resistance prevents you from taking any damage at all, the spiritual backlash against the fiend who attempted to damage you forces them to attempt a Will save against your class DC to avoid being slowed 1 for one round.",
+  "why": "AoN background-651 (Once Possessed) prints the Spiritual Scar reaction verbatim; layout mirrors actions/wish-for-luck (Frequency / Trigger / --- / Effect)."
  }
 ]

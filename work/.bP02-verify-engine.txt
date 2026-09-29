@@ -1,0 +1,60 @@
+BATCH P02 - ENGINE FAMILY ADVERSARIAL VERIFY (findings: friend-of-a-friend#lore, enhanced-familiar#ability-budget, strikers-scroll#affix)
+
+Checks I ran myself: node scripts/vt.mjs test/batchP02-engine.test.ts -> 8 of 8 pass; npx tsc --noEmit -> exit 0, clean;
+node scripts/test-flip-audit.mjs --batch P02 -> "clean - 6 test file(s) touched, 0 new settle key(s), every flip cited".
+git status: the engine builder edited NO src/ file (its only files are test/batchP02-engine.test.ts and work/.bP02-rows-engine.json);
+the dirty src/rules/situationalBonuses.ts and scripts/dropped-inline-check.mjs belong to the situational and repair entries in the manifest.
+Family file grant (wg-batch.js FAMILY_FILES.engine): types.ts, build.ts, derive.ts, spellcasting.ts, advancement.ts, Builder.tsx, shared.tsx.
+src/rules/companions.ts and src/rules/attachments.ts are NOT in it, so the builder was right not to edit them, and I may not either.
+
+PER FINDING
+
+friend-of-a-friend#lore - DONE (pending the driver's apply of the row)
+  Print (mirror background-650, read by me): "You're trained in the Athletics skill, and a Lore skill associated with any sort of food or drink".
+  Row {backgrounds/friend-of-a-friend trainedLoreChoice: true, why cites background-650}: the record exists (dumped: trainedSkill athletics, no
+  trainedLore / trainedLoreChoice / trainedLoreOptions); the field is new, so there is no shipped value to diff and nothing to supersede;
+  effect-backfill.json holds no friend-of-a-friend row; the engine spec is the only spec (data-rows-2/3/4, repair, as of my first scan) naming it.
+  Shape matches the 59 shipped free-text-Lore backgrounds (all carry trainedLoreChoice: true, most with no default). Reader exists:
+  backgroundChosenLoreKeys + the trainedLoreChoice arm in build.ts, and the OriginPickers box in shared.tsx. Exercised on a BUILT fighter in the
+  test with the row patched into a content copy: typed "Cooking" -> lore:cooking trained beside Athletics; stripped copy -> no Lore; empty box ->
+  no invented Lore; Builder Origins page renders exactly one Lore box with the field and none without. No patched-vs-shipped delta, so the test
+  does not flip when the row lands.
+
+enhanced-familiar#ability-budget - NOT-DONE (reader outside this family's files; CROSS-FILE GAP below stands)
+  Print (mirror feat-4717, read by me): "You can select four familiar or master abilities each day, instead of two." plus the witch / wizard Special.
+  familiarAbilityBudget (src/rules/companions.ts:669) still returns grant.abilityBudget + growthLevels only; no reader of the feat anywhere in
+  build.ts / derive.ts, and no Character field there could change the number without companions.ts changing too. What the builder DID pin is
+  real: the feat lands on ch.feats when taken at a wizard 2nd-level slot and via Familiar Master Dedication "yes" (not "no").
+  My corrections to the gap spec (below): shaman needs more than an exclusion; draconic-familiar and enhanced-psychopomp-familiar print "four
+  ... instead of two" (so they must NOT take +2), while emissary-familiar prints "two additional familiar abilities" (additive, so +2 applies).
+
+strikers-scroll#affix - NOT-DONE (reader outside this family's files; CROSS-FILE GAP below stands)
+  Print (mirror feat-9059, read by me): "You can attach a scroll to your weapon or handwraps of mighty blows ... You can have only one scroll
+  affixed to a weapon at a time, and you can't have both a talisman and scroll attached."
+  attachments.ts isAttachable(item) (line 12) takes no character and accepts talismans only among consumables; attachKind (line 61) has no
+  scroll arm; the talismanic-sage check (line 212) is the only feat key. Premises pinned by the builder hold: handwraps-of-mighty-blows ->
+  affixHostType 'weapon'; strikers-scroll taken at a magus 4th-level slot lands on ch.feats. Callers the gap must thread `character` into,
+  confirmed by grep: InventoryTab.tsx:1140 and :1295 (isAttachable without character) and ItemEditorModal.tsx:1478 (canAttachTo without it).
+
+SPEC ROWS (work/.bP02-rows-engine.json)
+  1 row total. Target exists (no create needed); no path; no supersedes needed; why names AoN doc id background-650; no id it names is missing;
+  no same record+field key in the other P02 specs I scanned. The other two findings carry backfillRows: [] with a note - correct, both are
+  code-only and key on the feat id the way talismanic-sage does.
+  NOT RUN: the applier's own dry run (node scripts/apply-parity-fixes.mjs <spec>, no --write) was refused by this session's permission
+  classifier, and a second cross-spec scan after the situational spec appeared was refused too; the driver's apply stage runs both checks.
+
+MANIFEST (work/.bP02-specs.json)
+  Holds engine, data-rows-2, data-rows-3, data-rows-4, repair and situational entries - nothing dropped. The engine entry listed its spec and
+  test but NOT work/.bP02-report-engine.txt (batch 039's engine entry staged its report); I appended the report and this verify file to the
+  engine stage[]. No row in the engine spec supersedes anything.
+
+DATA STILL NEEDED
+(none - the one row friend-of-a-friend#lore needs is in work/.bP02-rows-engine.json for the driver to apply)
+
+CROSS-FILE GAPS
+- enhanced-familiar#ability-budget: src/rules/companions.ts familiarAbilityBudget must add +2 when character.feats owns 'enhanced-familiar' (feat-4717: "four ... instead of two"; witch Special: familiar-witch 3->5; wizard Special: improved-familiar-attunement 3->5; familiar 2->4, familiar-master-dedication 2->4; growthLevels still stack). Exclude grants whose own print already sets the four: 'draconic-familiar' (feat-8093 "four familiar or master abilities each day, instead of two"), 'enhanced-psychopomp-familiar' (feat-3471, same clause) and 'incredible-familiar-familiar-master' (feat-8005 "six ... instead of four"). Do NOT exclude 'emissary-familiar' (feat-7572 "gains two additional familiar abilities each day" is additive on the base). 'shaman' (flat 4) is wrong at BOTH ends on its own: practice-4 prints Spirit Familiar at 1st, "At 2nd level, you gain the Enhanced Familiar feat", Incredible Familiar at 9th - so the grant should be the base 2 and let featFeatGrants' enhanced-familiar (minLevel 2) and incredible-familiar (minLevel 9) add, or it shows 4 at 1st and 4 at 9th+. Incredible Familiar (feat-5004 "a base of six ... instead of four") is the same reader's next +2. The static note strings in companionGrants.ts ("Choose 2 familiar abilities") will then disagree with CompanionsTab.tsx:1316/1408/1415 and should be recomputed from the budget. Owner: whichever family owns companions.ts / companionGrants.ts / CompanionsTab.tsx.
+- strikers-scroll#affix: src/rules/attachments.ts - isAttachable(item, character?) accepts itemType 'consumable' + consumableType 'scroll' only when character.feats owns 'strikers-scroll'; attachHostTypes gives a scroll only 'weapon' (handwraps of mighty blows are already a weapon host, pinned); attachKind puts a scroll in the talisman slot so a host holds one scroll OR one talisman, never both, and the talismanic-sage two-talisman cap counts talismans only; planAttach threads character into isAttachable; InventoryTab.tsx:1140/1295 and ItemEditorModal.tsx:1478 must pass the character or a scroll is never offered as draggable. Owner: whichever family owns attachments.ts + src/sheet.
+
+WHAT WAS CHECKED: the three findings in full; the mirror text of background-650, feat-4717, feat-9059, and the print of shaman, draconic-familiar, emissary-familiar, enhanced-psychopomp-familiar, incredible-familiar and familiar-master-dedication; the builder's test file line by line; tsc, the family test file, the flip audit; the manifest.
+WHAT WAS ASSUMED: that the driver's apply stage runs the same refusals the applier's dry run would have (I could not run it here).
+WHAT WAS NOT TESTED: the familiar card number and scroll drag-to-attach in the running app - neither is built; the row itself is unapplied.

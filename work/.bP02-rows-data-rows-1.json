@@ -1,0 +1,1009 @@
+{
+ "findings": [
+  {
+   "id": "art-collector",
+   "backfillRows": [
+    {
+     "category": "backgrounds",
+     "id": "art-collector",
+     "field": "choice",
+     "value": {
+      "flag": "artInspiration",
+      "prompt": "Art object chosen as today's inspiration (daily preparations, 24 hours)",
+      "kind": "array",
+      "daily": true,
+      "options": [
+       {
+        "value": "new-piece",
+        "label": "A piece never chosen before",
+        "description": "+2 circumstance bonus to saving throws against mental effects for 24 hours."
+       },
+       {
+        "value": "repeat-piece",
+        "label": "A piece chosen before",
+        "description": "+1 circumstance bonus to saving throws against mental effects for 24 hours."
+       }
+      ]
+     },
+     "why": "AoN background-647 (Art \"Collector\", Bastion of Blasphemies Player's Guide): \"Whenever you do your daily preparations, select an art object ... to be that day's inspiration for you. For the next 24 hours, you gain a +2 circumstance bonus to saving throws against mental effects if this is the first time you've chosen that piece of artwork as your inspiration, or a +1 circumstance bonus if you've chosen this artwork more than once.\" The daily question on the runelord-researcher (background-564) shape; ownedDailyChoiceRecords (derive.ts) walks the background, so the Rest sheet asks it."
+    },
+    {
+     "category": "backgrounds",
+     "id": "art-collector",
+     "field": "situational",
+     "value": [
+      {
+       "targets": [
+        {
+         "kind": "save",
+         "detail": "all"
+        }
+       ],
+       "when": "against mental effects, for 24 hours, while you carry today's inspiration art object (worth 10 gp x your level)",
+       "bonus": "+2 circumstance (+1 if you've chosen that artwork before)"
+      }
+     ],
+     "why": "AoN background-647: \"you gain a +2 circumstance bonus to saving throws against mental effects if this is the first time you've chosen that piece of artwork as your inspiration, or a +1 circumstance bonus if you've chosen this artwork more than once.\" Record-level situational, read by authoredSituational (explain.ts) for the owned background."
+    }
+   ],
+   "note": "Two fields on one record, one row each: the daily choice (the Rest-sheet question) and the save star whose note carries the +2 / +1 split. The option grants nothing numeric on purpose: the bonus is conditional on the mental effect, so it is a star, not a number."
+  },
+  {
+   "id": "blooded-by-the-dead",
+   "backfillRows": [
+    {
+     "category": "backgrounds",
+     "id": "blooded-by-the-dead",
+     "field": "choice",
+     "value": {
+      "flag": "bloodedRoutine",
+      "prompt": "Morning routine (daily preparations, 24 hours)",
+      "kind": "array",
+      "daily": true,
+      "options": [
+       {
+        "value": "blood",
+        "label": "Bolster the Blood",
+        "description": "Resistance 2 to persistent bleed; flat checks to end persistent bleed damage are DC 2 lower.",
+        "grant": {
+         "resistances": [
+          {
+           "type": "persistent bleed",
+           "value": 2
+          }
+         ]
+        }
+       },
+       {
+        "value": "fury",
+        "label": "Bolster the Fury",
+        "description": "+2 damage with melee Strikes that deal piercing damage against vampires or creatures that drink blood."
+       },
+       {
+        "value": "mind",
+        "label": "Bolster the Mind",
+        "description": "Treat your level as 2 higher against mental incapacitation effects; +2 circumstance to Will saves against a vampire's dominate ability."
+       }
+      ]
+     },
+     "why": "AoN background-648 (Blooded by the Dead): \"Every morning as you do your daily preparations, you can focus on one of the following three morning routines ... once chosen, the effect persists for 24 hours. Bolster the Blood: You gain resistance to persistent bleed 2 ... Bolster the Fury ... Bolster the Mind ...\" The Blood option's resistance is a real grant (dailyChoiceGrants -> deriveDefenses \"chosen this morning\"); the other two are conditional and ride the situational/recordMarks rows."
+    },
+    {
+     "category": "backgrounds",
+     "id": "blooded-by-the-dead",
+     "field": "situational",
+     "value": [
+      {
+       "targets": [
+        {
+         "kind": "strikeDamage"
+        }
+       ],
+       "when": "Bolster the Fury today: melee Strikes dealing piercing damage vs vampires or creatures that drink blood",
+       "bonus": "+2 damage"
+      },
+      {
+       "targets": [
+        {
+         "kind": "save",
+         "detail": "will"
+        }
+       ],
+       "when": "Bolster the Mind today: against a vampire's dominate ability",
+       "bonus": "+2 circumstance"
+      },
+      {
+       "targets": [
+        {
+         "kind": "save",
+         "detail": "all"
+        }
+       ],
+       "when": "Bolster the Mind today: against mental effects with the incapacitation trait",
+       "bonus": "treat your level as 2 higher"
+      }
+     ],
+     "why": "AoN background-648: \"Bolster the Fury: You deal 2 additional damage with melee Strikes that deal piercing damage against vampires or creatures that drink blood. Bolster the Mind: You treat your level as 2 higher than it is to determine the effects of mental effects with the incapacitation trait utilized against you, and gain a +2 circumstance bonus to Will saving throws against a vampire's dominate ability.\""
+    },
+    {
+     "category": "backgrounds",
+     "id": "blooded-by-the-dead",
+     "field": "recordMarks",
+     "value": [
+      {
+       "on": "condition",
+       "id": "persistent-damage",
+       "note": "Blooded by the Dead (Bolster the Blood today): flat checks to end persistent bleed damage are DC 2 lower"
+      }
+     ],
+     "why": "AoN background-648: \"Bolster the Blood: ... whenever you attempt a flat check to end persistent bleed damage, reduce the DC of the check by 2.\" No stat row holds that DC, so the mark sits on the persistent-damage condition (recordMarksFor walks the background)."
+    }
+   ],
+   "note": "Three fields, one row each. Only the resistance is a number the sheet can own; the Fury damage, the Mind save and incapacitation clauses are conditional stars, and the bleed flat-check DC is a condition mark. Every when text names the routine, the runelord-researcher convention for a daily pick."
+  },
+  {
+   "id": "curse-marked",
+   "backfillRows": [
+    {
+     "category": "backgrounds",
+     "id": "curse-marked",
+     "field": "situational",
+     "value": [
+      {
+       "targets": [
+        {
+         "kind": "save",
+         "detail": "all"
+        }
+       ],
+       "when": "to resist curses, while you aren't cursed (a class curse like the oracle's doesn't count)",
+       "bonus": "+2 circumstance (-2 circumstance instead while cursed)"
+      },
+      {
+       "targets": [
+        {
+         "kind": "skill",
+         "detail": "all"
+        }
+       ],
+       "when": "to disable a hazard capable of inflicting a curse, while you aren't cursed",
+       "bonus": "+2 circumstance (-2 circumstance instead while cursed)"
+      },
+      {
+       "targets": [
+        {
+         "kind": "spell",
+         "detail": "attack"
+        }
+       ],
+       "when": "on checks to counteract curses, while you aren't cursed",
+       "bonus": "+2 circumstance (-2 circumstance instead while cursed)"
+      }
+     ],
+     "why": "AoN background-649 (Curse-Marked): \"As long as you are not cursed yourself (barring a class-based curse, such as that granted by the oracle), you gain a +2 circumstance bonus on checks made to counteract curses, on saving throws to resist curses, and on any skill check to disable a hazard capable of inflicting a curse. If you are cursed, you instead gain a -2 circumstance penalty to these rolls.\" A spell's counteract check uses the spell attack modifier, so that half stars the spell attack."
+    }
+   ],
+   "note": "One situational row, three clauses (saves, skills for the hazard, spell attack for counteracting). The -2-while-cursed half is in each bonus text, since being cursed is not a state the sheet tracks."
+  },
+  {
+   "id": "friend-of-a-friend#situational",
+   "backfillRows": [
+    {
+     "category": "backgrounds",
+     "id": "friend-of-a-friend",
+     "field": "situational",
+     "value": [
+      {
+       "targets": [
+        {
+         "kind": "save",
+         "detail": "all"
+        }
+       ],
+       "when": "against poison and disease",
+       "bonus": "+2 circumstance"
+      },
+      {
+       "targets": [
+        {
+         "kind": "spell",
+         "detail": "attack"
+        }
+       ],
+       "when": "on checks to counteract a poison or disease",
+       "bonus": "+2 circumstance"
+      }
+     ],
+     "why": "AoN background-650 (Friend of a Friend): \"You gain a +2 circumstance bonus to saving throws against poison and disease, and to any checks made to counteract poison or disease.\" A spell's counteract check uses the spell attack modifier, so the counteract half stars the spell attack."
+    }
+   ],
+   "note": "Field situational only. The engine family's friend-of-a-friend#lore writes trainedLoreChoice on the same record, a different field, so the two rows do not collide. The counteract half stars the spell attack rather than every skill (a skill-wide star would claim checks that are never counteract checks)."
+  },
+  {
+   "id": "once-possessed#fiend-lore",
+   "backfillRows": [
+    {
+     "category": "backgrounds",
+     "id": "once-possessed",
+     "field": "trainedLore",
+     "value": "fiend",
+     "why": "AoN background-651 (Once Possessed): \"You're trained in the Intimidation skill, and a Lore skill focused on all fiends ... This Fiend Lore skill can be used whenever you'd need to attempt a check against any fiend\". trainedLore is the same field its Bastion of Blasphemies siblings carry (blooded-by-the-dead \"vampire\")."
+    }
+   ],
+   "note": "trainedLore \"fiend\" -> lore:fiend, trained by build.ts's background pass."
+  },
+  {
+   "id": "once-possessed#mental-saves",
+   "backfillRows": [
+    {
+     "category": "backgrounds",
+     "id": "once-possessed",
+     "field": "situational",
+     "value": [
+      {
+       "targets": [
+        {
+         "kind": "save",
+         "detail": "all"
+        }
+       ],
+       "when": "against mental effects from fiends",
+       "bonus": "+2 circumstance"
+      }
+     ],
+     "why": "AoN background-651: \"You gain a +2 circumstance bonus to saving throws against mental effects from fiends.\" Same shape as seer-of-the-dead (background-243)."
+    }
+   ],
+   "note": "Record-level situational, read by authoredSituational (explain.ts)."
+  },
+  {
+   "id": "once-possessed#spiritual-scar",
+   "backfillRows": [
+    {
+     "category": "actions",
+     "id": "spiritual-scar",
+     "create": true,
+     "value": {
+      "id": "spiritual-scar",
+      "name": "Spiritual Scar",
+      "traits": [
+       "concentrate"
+      ],
+      "rarity": "common",
+      "actionCost": {
+       "type": "reaction"
+      },
+      "source": {
+       "book": "Pathfinder Bastion of Blasphemies Player's Guide"
+      },
+      "edition": "neutral",
+      "aonParentId": "background-651",
+      "aonSection": "Spiritual Scar"
+     },
+     "why": "AoN background-651 prints \"Spiritual Scar Reaction (concentrate) Frequency once per day; Trigger You would take spirit damage from a fiend; ...\" No core bucket holds the action. Shape mirrors the other background-granted actions (actions/wish-for-luck from background-241, actions/bestial-clarity from background-362); edition matches its parent background (neutral). Its prose is the created-desc spec."
+    },
+    {
+     "category": "backgrounds",
+     "id": "once-possessed",
+     "field": "grantsActions",
+     "value": [
+      "spiritual-scar"
+     ],
+     "why": "AoN background-651: \"In addition, you gain the following reaction. Spiritual Scar\". Same lane as genie-blessed (background-241) -> wish-for-luck; MainTab walks the background's grantsActions."
+    },
+    {
+     "category": "backgrounds",
+     "id": "once-possessed",
+     "field": "limitedUses",
+     "value": {
+      "max": 1,
+      "per": "day"
+     },
+     "why": "AoN background-651: Spiritual Scar \"Frequency once per day\". Same field genie-blessed (background-241) carries for its once-per-day action."
+    }
+   ],
+   "note": "Create row + the two background fields that hand it over. The create needs the regeneration path the driver/orchestrator owns; the description is in work/.bP02-created-desc-data-rows-1.json."
+  },
+  {
+   "id": "trusted-rival#research-bonus",
+   "backfillRows": [
+    {
+     "category": "backgrounds",
+     "id": "trusted-rival",
+     "field": "situational",
+     "value": [
+      {
+       "targets": [
+        {
+         "kind": "skill",
+         "detail": "all"
+        }
+       ],
+       "when": "to Research a topic associated with Bastardhall (Research subsystem)",
+       "bonus": "+2 circumstance"
+      }
+     ],
+     "why": "AoN background-652 (Trusted Rival): \"whenever you attempt any check to Research a topic associated with Bastardhall using the Research subsystem, you gain a +2 circumstance bonus on the check.\""
+    }
+   ],
+   "note": "Record-level situational. The situational family carries trusted-rival#daily-prep-skill as FEAT_SITUATIONAL[\"trusted-rival\"] in src/rules/situationalBonuses.ts; entriesFor concatenates the table entry and this record field (no situationalReplaces), so both stars show and the two carriers do not collide."
+  },
+  {
+   "id": "aloof-firmament#cat-fall-duplicate",
+   "backfillRows": [],
+   "note": "Code-only fix outside this chunk's files: the dead carrier is the auto-extracted FEAT_FEAT_GRANTS row src/rules/featFeatGrants.ts:693 'aloof-firmament': ['cat-fall'], regenerated by the featfeat extract, so the removal belongs in that extractor's exclusion list (CROSS-FILE GAPS). The subclass option's grantedFeats stays the one carrier. test/batchP02-data-rows-1.test.ts pins that Cat Fall arrives exactly once."
+  },
+  {
+   "id": "resurgent-maelstrom#trait-already-present",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "resurgent-maelstrom",
+     "field": "situational",
+     "value": [
+      {
+       "targets": [
+        {
+         "kind": "strikeDamage"
+        }
+       ],
+       "when": "with an improvised weapon that would already have backstabber (1H) or forceful (2H)",
+       "bonus": "backstabber: double its precision damage; forceful: count one more weapon damage die"
+      }
+     ],
+     "why": "AoN hybrid-study-9 (Resurgent Maelstrom): \"A one- handed improvised weapon gains the backstabber trait; if it would already have the backstabber trait, double the amount of additional precision damage. A two- handed improvised weapon gains the forceful trait; if it would already have the forceful trait, treat the number of weapon damage dice the weapon has as 1 higher for the purpose of calculating the additional damage.\""
+    }
+   ],
+   "note": "An added clause on the record-level situational field (read for owned class features by authoredSituational, explain.ts), concatenated after FEAT_SITUATIONAL[\"resurgent-maelstrom\"] by entriesFor. The situational family edits the table entry in situationalBonuses.ts (resurgent-maelstrom#stance-versatile); this row touches no src file and no field it writes."
+  },
+  {
+   "id": "resurgent-maelstrom#handwraps-name",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "resurgent-maelstrom",
+     "field": "description",
+     "value": "While fate may conspire to strip you of your armaments, you're never helpless. For you, anything can be a dangerous weapon, bolstered by the might of towering waves and crushing tides. You know these tools are transient, and so you think nothing of shattering and reforming them with your magic.\n\nYour attacks with improvised weapons do not take the normal –2 item penalty. While you wield an improvised weapon, streams of water flow from your limbs to surround the weapon, granting it the water trait. These improvised weapons have a minimum damage die of 1d6, or 1d4 if the improvised weapon is agile.\n\nEffects that apply runes to your unarmed attacks, like Runic Body and Handwraps of Mighty Blows, also apply those runes to your non-magical improvised weapons. The improvised weapon also gains an additional trait, depending on how many hands it takes to wield. A one-handed improvised weapon gains the backstabber trait; if it would already have the backstabber trait, double the amount of additional precision damage. A two-handed improvised weapon gains the forceful trait; if it would already have the forceful trait, treat the number of weapon damage dice the weapon has as 1 higher for the purpose of calculating the additional damage.\n\nWhile you're in Arcane Cascade stance , you can manipulate the water around your improvised weapon, making it cut like a knife or bash with the force of falling rocks. The weapon gains the versatile traits for the types of damage that it doesn't normally deal. For instance, an improvised weapon that normally deals bludgeoning damage gains the versatile P and versatile S traits.\n\n**Conflux Spell** Turbulent Tide",
+     "why": "AoN hybrid-study-9 prints \"Effects that apply runes to your unarmed attacks, like runic body and handwraps of mighty blows, also apply those runes to your non-magical improvised weapons.\" The item is Handwraps of Mighty Blows (items/handwraps-of-mighty-blows); only that one word changes."
+    },
+    {
+     "category": "classFeatures",
+     "id": "resurgent-maelstrom",
+     "field": "descRefs",
+     "value": [
+      {
+       "label": "Handwraps of Mighty Blows",
+       "key": "items"
+      },
+      {
+       "label": "Runic Body",
+       "key": "spells"
+      },
+      {
+       "label": "Turbulent Tide",
+       "key": "spells"
+      }
+     ],
+     "why": "AoN hybrid-study-9 links handwraps of mighty blows (Equipment ID 3086); the label \"Handwraps of Might Blows\" matched no item, so the link could not resolve."
+    }
+   ],
+   "note": "The subclass option half (option description + descRefs label) is inside the single classes/magus subclass.options row filed under sparkling-targe#description: both findings change that one field, so they share one row."
+  },
+  {
+   "id": "sparkling-targe#description",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "sparkling-targe",
+     "field": "description",
+     "value": "You've studied the applications of magic, training yourself to perform not just offensive maneuvers but defensive tactics as well. When magic flows through you, your shield can block impossible things, even a dragon's breath or a force barrage.\n\nYou gain the general Shield Block feat.\n\nWhen you're in Arcane Cascade stance with your shield raised, your circumstance bonus to AC from your shield also applies to your saves against spells and other magical effects. In addition, damage you take from a spell or other magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade. These benefits apply whether you're using an actual shield, the shield spell, or something else that works like a shield (such as a raised tome if you have the Raise a Tome feat).\n\n**Conflux Spell** Shielding Strike\n\n**Studious Spell (7th)** Resist Energy\n\n**Studious Spell (11th)** Warding Aggression\n\n**Studious Spell (13th)** Mountain Resilience",
+     "why": "AoN hybrid-study-12 (Sparkling Targe, Impossible Magic pg. 13), the record's aonId, verbatim: \"force barrage\", \"from a spell or other magical effect\", \"When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade\" and the three Studious Spell lines. The shipped text was the Secrets of Magic printing."
+    },
+    {
+     "category": "classFeatures",
+     "id": "sparkling-targe",
+     "field": "descRefs",
+     "value": [
+      {
+       "label": "Force Barrage",
+       "key": "spells"
+      },
+      {
+       "label": "Shield Block",
+       "key": "feats"
+      },
+      {
+       "label": "Arcane Cascade",
+       "key": "actions"
+      },
+      {
+       "label": "Raise a Tome",
+       "key": "feats"
+      },
+      {
+       "label": "Shielding Strike",
+       "key": "spells"
+      },
+      {
+       "label": "Resist Energy",
+       "key": "spells"
+      },
+      {
+       "label": "Warding Aggression",
+       "key": "spells"
+      },
+      {
+       "label": "Mountain Resilience",
+       "key": "spells"
+      }
+     ],
+     "why": "AoN hybrid-study-12 links force barrage (spell 1536), Shield Block (feat 5212), Arcane Cascade (action 4261), Raise a Tome (feat 9046), Shielding Strike, Resist Energy, Warding Aggression and Mountain Resilience."
+    },
+    {
+     "category": "hybridStudy",
+     "id": "sparkling-targe",
+     "field": "description",
+     "value": "You've studied the applications of magic, training yourself to perform not just offensive maneuvers but defensive tactics as well. When magic flows through you, your shield can block impossible things, even a dragon's breath or a force barrage.\n\nYou gain the general Shield Block feat.\n\nWhen you're in Arcane Cascade stance with your shield raised, your circumstance bonus to AC from your shield also applies to your saves against spells and other magical effects. In addition, damage you take from a spell or other magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade. These benefits apply whether you're using an actual shield, the shield spell, or something else that works like a shield (such as a raised tome if you have the Raise a Tome feat).\n\n**Conflux Spell** Shielding Strike\n\n**Studious Spell (7th)** Resist Energy\n\n**Studious Spell (11th)** Warding Aggression\n\n**Studious Spell (13th)** Mountain Resilience",
+     "why": "AoN hybrid-study-12 - the printed Sparkling Targe magus hybrid study entry (Impossible Magic pg. 13); same shape as the hybridStudy/twofold-tine (hybrid-study-15) and hybridStudy/volatile-spark (hybrid-study-16) rows."
+    },
+    {
+     "category": "classes",
+     "id": "magus",
+     "path": [
+      "subclass"
+     ],
+     "field": "options",
+     "value": [
+      {
+       "id": "aloof-firmament",
+       "name": "Aloof Firmament",
+       "description": "You're a philosopher of the sword who codifies your study of qinggong along principles arcane and martial. Your blade teaches morality and immortality, and you illustrate its lessons with an academician's rigor. Through your training, you've learned to move about with grace and create opportunity to strike foes.\n\nYou gain the Cat Fall general feat, though you benefit from it only as long as you aren't using a shield and are wearing light or no armor.\n\nWhile in Arcane Cascade stance, your steps become even lighter, giving you the benefits of the Quick Jump general feat. When you Fly, Leap, High Jump, or Long Jump while in that stance, your movement doesn't trigger reactions. If you take one of these actions, the next Strike you make before the end of your turn with a one-handed weapon in the sword group has greater damage from Arcane Cascade. Increase the extra damage to 4; increase it to 6 if you have weapon specialization, or to 8 if you have greater weapon specialization. You must have your other hand completely free; the extra damage doesn't apply if you have a free-hand weapon or other item in that hand, even if you would normally be able to use the hand for other things.\n\n**Conflux Spell** Sky Laughs at Waves",
+       "descRefs": [
+        {
+         "label": "Cat Fall",
+         "key": "feats"
+        },
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Quick Jump",
+         "key": "feats"
+        },
+        {
+         "label": "Leap",
+         "key": "actions"
+        },
+        {
+         "label": "High Jump",
+         "key": "actions"
+        },
+        {
+         "label": "Long Jump",
+         "key": "actions"
+        },
+        {
+         "label": "Sky Laughs at Waves",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "sky-laughs-at-waves"
+       ],
+       "grantedFeats": [
+        "cat-fall"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "water-walk"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "wall-of-wind"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "variable-gravity"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "inexorable-iron",
+       "name": "Inexorable Iron",
+       "description": "Once you begin along a path, nothing can stop you from reaching its end. You transform the mass of an enormous weapon into an unstoppable force to augment your own striking power or keep you standing on the battlefield.\n\nWhen you enter Arcane Cascade stance and at the start of each of your turns while you're in that stance, if you're wielding a melee weapon in two hands, you gain temporary Hit Points equal to half your level (minimum 1 temporary HP).\n\n**Conflux Spell** Thunderous Strike",
+       "descRefs": [
+        {
+         "label": "Thunderous Strike",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "thunderous-strike"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "enlarge"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "earthbind"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "planar-tether"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "laughing-shadow",
+       "name": "Laughing Shadow",
+       "description": "Magic is freeing, a means to your ends, and you can use it to go where you want, do as you please, and avoid the consequences. You are a laughing shadow of spell and blade, always one step ahead of your foes, always with a trick up your sleeve.\n\nWhile in Arcane Cascade stance, you gain a +5-foot status bonus to your Speeds, or a +10-foot bonus if you're unarmored. If you have a free hand while in the stance and are attacking an off-guard creature, you increase the extra damage to 3, to 5 if you have weapon specialization, or to 7 if you have greater weapon specialization. You must have your other hand completely free; the extra damage doesn't apply if you have a free-hand weapon or other item in that hand, even if you would normally be able to use the hand for other things.\n\n**Conflux Spell** Dimensional Assault",
+       "descRefs": [
+        {
+         "label": "off-guard",
+         "key": "conditions"
+        },
+        {
+         "label": "Dimensional Assault",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "dimensional-assault"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "blur"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "ghostly-weapon"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "translocate"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "resurgent-maelstrom",
+       "name": "Resurgent Maelstrom",
+       "description": "While fate may conspire to strip you of your armaments, you're never helpless. For you, anything can be a dangerous weapon, bolstered by the might of towering waves and crushing tides. You know these tools are transient, and so you think nothing of shattering and reforming them with your magic.\n\nYour attacks with improvised weapons do not take the normal –2 item penalty. While you wield an improvised weapon, streams of water flow from your limbs to surround the weapon, granting it the water trait. These improvised weapons have a minimum damage die of 1d6, or 1d4 if the improvised weapon is agile.\n\nEffects that apply runes to your unarmed attacks, like Runic Body and Handwraps of Mighty Blows, also apply those runes to your non-magical improvised weapons. The improvised weapon also gains an additional trait, depending on how many hands it takes to wield. A one-handed improvised weapon gains the backstabber trait; if it would already have the backstabber trait, double the amount of additional precision damage. A two-handed improvised weapon gains the forceful trait; if it would already have the forceful trait, treat the number of weapon damage dice the weapon has as 1 higher for the purpose of calculating the additional damage.\n\nWhile you're in Arcane Cascade stance , you can manipulate the water around your improvised weapon, making it cut like a knife or bash with the force of falling rocks. The weapon gains the versatile traits for the types of damage that it doesn't normally deal. For instance, an improvised weapon that normally deals bludgeoning damage gains the versatile P and versatile S traits.\n\n**Conflux Spell** Turbulent Tide",
+       "descRefs": [
+        {
+         "label": "Handwraps of Mighty Blows",
+         "key": "items"
+        },
+        {
+         "label": "Runic Body",
+         "key": "spells"
+        },
+        {
+         "label": "Turbulent Tide",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "turbulent-tide"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "water-walk"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "aqueous-orb"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "unfettered-movement"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "sparkling-targe",
+       "name": "Sparkling Targe",
+       "description": "You've studied the applications of magic, training yourself to perform not just offensive maneuvers but defensive tactics as well. When magic flows through you, your shield can block impossible things, even a dragon's breath or a force barrage.\n\nYou gain the general Shield Block feat.\n\nWhen you're in Arcane Cascade stance with your shield raised, your circumstance bonus to AC from your shield also applies to your saves against spells and other magical effects. In addition, damage you take from a spell or other magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade. These benefits apply whether you're using an actual shield, the shield spell, or something else that works like a shield (such as a raised tome if you have the Raise a Tome feat).\n\n**Conflux Spell** Shielding Strike",
+       "descRefs": [
+        {
+         "label": "Force Barrage",
+         "key": "spells"
+        },
+        {
+         "label": "Shield Block",
+         "key": "feats"
+        },
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Raise a Tome",
+         "key": "feats"
+        },
+        {
+         "label": "Shielding Strike",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "shielding-strike"
+       ],
+       "grantedFeats": [
+        "shield-block"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "resist-energy"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "warding-aggression"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "mountain-resilience"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "starlit-span",
+       "name": "Starlit Span",
+       "description": "With magic, the sky's the limit, and you can't be bound by the confines of physical proximity. Your power reaches as far as your senses can perceive, transcending the space between you and your target even with spells that normally require direct physical contact.\n\nWhen you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. This overrides the actual range of the spell.\n\nWhile you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target.\n\n**Conflux Spell** Shooting Star",
+       "descRefs": [
+        {
+         "label": "Spellstrike",
+         "key": "actions"
+        },
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Shooting Star",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "shooting-star"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "telekinetic-maneuver"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "wall-of-wind"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "unfettered-movement"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "twisting-tree",
+       "name": "Twisting Tree",
+       "description": "The staff is perhaps the simplest of weapons, but this simplicity belies its elegance and versatility. To you, a staff is casting implement and martial weapon alike—the foundation of a fighting style.\n\nWhile you wield a staff in one hand, the staff adjusts in shape and weight, gaining the agile trait and increasing its damage die size to 1d6. While you wield a staff in both hands, it lengthens, twists, and reshapes, gaining the parry, reach, and trip traits.\n\nWhile you're in Arcane Cascade stance, once per round you can Interact to change your grip on a staff as a free action.\n\n**Conflux Spell** Spinning Staff",
+       "descRefs": [
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Interact",
+         "key": "actions"
+        },
+        {
+         "label": "Spinning Staff",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "spinning-staff"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "oaken-resilience"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "slow"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "flicker"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "unfurling-brocade",
+       "name": "Unfurling Brocade",
+       "description": "You disdain others' reliance on crude contrivances of iron, instead favoring the elegance of fabric, with thread and brocade your panoply. Your mastery of qinggong allows qi-infused fabric to tear flesh, bind blades, and pierce steel.\n\nYou can create a special weapon, qi-infused fabric, by Interacting to grip a length of cloth of 1 Bulk or less and filling it with your qi. If you Interact to draw the object, you can do this as part of that action. For most unfurling brocade magi, this item is a scarf, sash, ribbon, or a similarly voluminous article of worn clothing, such as long sleeves. You can use the fabric as a Bladed Scarf. Unlike a normal bladed scarf, you have the option to wield the fabric in one hand instead of two. Its damage die is d4 if held in one hand. If you're wearing Handwraps of Mighty Blows, you can apply any of its runes to the fabric, provided those runes could be added to a bladed scarf. This begins when you wield the fabric and ends when you cease doing so.\n\nWhile in Arcane Cascade stance, the magical energy flowing through your fabric partially animates it to accomplish an even greater range of tricks.\n\n- If you critically succeed at an Athletics check to Disarm, you can spend a single action immediately afterward to flick your fabric, causing the disarmed object to fall to the ground in your space rather than in your opponent's.\n- Your fabric gains the grapple trait. If you succeed at an Athletics check to Grapple using your fabric, you can spend a single action immediately afterward to pull the creature 5 feet toward you.\n- When you attempt to Trip a foe using your fabric, the target can be two sizes larger than you instead of one.\n\n**Conflux Spell** Home Among Mulberry Leaves",
+       "descRefs": [
+        {
+         "label": "Bladed Scarf",
+         "key": "items"
+        },
+        {
+         "label": "Handwraps of Mighty Blows",
+         "key": "items"
+        },
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Disarm",
+         "key": "actions"
+        },
+        {
+         "label": "Grapple",
+         "key": "actions"
+        },
+        {
+         "label": "Trip",
+         "key": "actions"
+        },
+        {
+         "label": "Home Among Mulberry Leaves",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "home-among-mulberry-leaves"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "web"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "whirling-scarves"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "planar-tether"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "twofold-tine",
+       "name": "Twofold Tine",
+       "description": "Magic dances between the two weapons you wield with equally deadly grace. Fighting groups of enemies takes full advantage of your capabilities as you move from one foe to another.\n\nWhile in Arcane Cascade stance, if you make a Strike with a melee weapon you're holding, you can intensify the stance's power for another melee weapon of your choice you're holding in a different hand. Until the end of your turn, any extra damage the chosen weapon gains from Arcane Cascade is increased to 2. The extra damage increases to 4 if you have weapon specialization or 6 if you have greater weapon specialization.\n\n**Conflux Spell** Force Fling",
+       "descRefs": [
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Force Fling",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "force-fling"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "blur"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "gravity-well"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "unfettered-movement"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "id": "volatile-spark",
+       "name": "Volatile Spark",
+       "description": "Your crashing spells meet their match with booming gunshots in a magical fusillade. By modifying your shots with your magic, you create explosions and cut through defenses.\n\nWhen you use Spellstrike, you can make a ranged firearm Strike, as long as the target is within the first range increment of your firearm. This overrides the actual range of the spell. If your firearm has the concussive trait, any damage from the spell you use in the Spellstrike uses the target's weakest resistance to any of the following: the spell's damage type, piercing, or bludgeoning. This benefit applies only to creatures you target with your firearm Strike during the Spellstrike, so it wouldn't apply to other creatures damaged with Expansive Spellstrike or similar abilities.\n\nIn addition, you gain the Reloading Cascade action.\n\n**Reloading Cascade** (1 action) You use Arcane Cascade and Interact to reload a firearm.\n\n**Conflux Spell** Booming Blast",
+       "descRefs": [
+        {
+         "label": "Spellstrike",
+         "key": "actions"
+        },
+        {
+         "label": "Arcane Cascade",
+         "key": "actions"
+        },
+        {
+         "label": "Interact",
+         "key": "actions"
+        },
+        {
+         "label": "Booming Blast",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "booming-blast"
+       ],
+       "spellSlotBonus": {
+        "entryId": "magus-casting",
+        "restricted": {
+         "label": "Studious spells",
+         "ladder": [
+          {
+           "level": 7,
+           "byRank": {},
+           "addSpells": [
+            "entangling-flora"
+           ]
+          },
+          {
+           "level": 11,
+           "byRank": {},
+           "addSpells": [
+            "earthbind"
+           ]
+          },
+          {
+           "level": 13,
+           "byRank": {},
+           "addSpells": [
+            "seal-fate"
+           ]
+          }
+         ]
+        }
+       }
+      }
+     ],
+     "supersedes": true,
+     "why": "batch P02 sparkling-targe#description + resurgent-maelstrom#handwraps-name, merged into ONE row (same key). AoN hybrid-study-12 (Sparkling Targe, Impossible Magic pg. 13): the option description becomes the printed text (\"force barrage\", \"from a spell or other magical effect\", \"the resistance you have from Arcane Cascade\"), ending at the Conflux Spell line like every sibling option (the Studious Spells ride spellSlotBonus). AoN hybrid-study-9 (Resurgent Maelstrom): \"handwraps of mighty blows\" - description and descRefs label corrected from \"Handwraps of Might Blows\". Supersedes the batch 039 row; every other option and field is carried through byte-for-byte."
+    }
+   ],
+   "note": "The magus subclass.options row is one whole value: it is re-emitted with the two edits and supersedes the batch 039 row (index 13328 at the time of writing)."
+  }
+ ]
+}

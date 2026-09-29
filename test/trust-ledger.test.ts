@@ -516,7 +516,9 @@ describe('trust ledger — a created record that applies only part of its print 
   });
 
   // batch 038: azlanti-researcher#language
-  it('the shipped ledger lists the partly applied ones (azlanti-researcher until its Lore and language are encoded), in words, and none of the other created backgrounds', () => {
+  // batch P02: trusted-rival#daily-prep-skill
+  // batch P02: art-collector
+  it('the shipped ledger lists the partly applied ones (azlanti-researcher until its Lore and language are encoded; art-collector, blooded-by-the-dead, curse-marked, friend-of-a-friend and once-possessed until their batch P02 rows land), in words, and none of the other created backgrounds (trusted-rival left once its registry star landed)', () => {
     const created = JSON.parse(readFileSync(join(CLI_ROOT, 'scripts/migration/out/player-created.json'), 'utf8'));
     /* Batch 038 encodes AoN background-654 "Add Azlanti to your list of known languages." as
      * grantsLanguages ['azlanti'] (azlanti-researcher#language) and its Azlant Lore as trainedLore
@@ -528,20 +530,41 @@ describe('trust ledger — a created record that applies only part of its print 
     const azlantiMissing = backgroundUnapplied(azlanti, PRINT);
     // batch 038: azlanti-researcher#language
     expect(backgroundUnapplied({ ...azlanti, trainedLore: 'azlant', grantsLanguages: ['azlanti'] }, PRINT)).toBe('');
-    // batch 038: azlanti-researcher#language
-    // Created BACKGROUNDS only: reprint-twin items join `partly` too (2026-09-25, the describe below).
-    expect(Object.fromEntries(Object.entries(ledger.partly).filter(([k]) => k.startsWith('backgrounds/')))).toEqual({
-      'backgrounds/art-collector': 'its daily-preparation choice, its situational bonuses',
+    /* Batch P02 (print lane) writes a rule field beyond the facets on five of these backgrounds — the
+     * data-rows-1 rows art-collector (choice + situational), blooded-by-the-dead (choice + situational +
+     * recordMarks), curse-marked, friend-of-a-friend#situational, once-possessed#mental-saves /
+     * #spiritual-scar (situational, grantsActions, limitedUses). scripts/trust-ledger.mjs clears a
+     * background from `partly` the moment it carries such a field (otherRulesEncoded), so each entry
+     * below is its printed words while the record carries none of the fields its row writes, and gone
+     * once one lands — read off the SHIPPED record, exactly as azlantiMissing is, so this holds before
+     * and after the driver applies the rows instead of flipping when they land. */
+    const landed = (id: string, fields: string[]) => fields.some((f) => core.backgrounds[id]?.[f] !== undefined);
+    const until = (id: string, fields: string[], words: string) => (landed(id, fields) ? {} : { [`backgrounds/${id}`]: words });
+    const expectedPartly = {
+      ...until('art-collector', ['situational'], 'its daily-preparation choice, its situational bonuses'),
       ...(azlantiMissing ? { 'backgrounds/azlanti-researcher': azlantiMissing } : {}),
-      'backgrounds/blooded-by-the-dead': 'its daily-preparation choice',
-      'backgrounds/curse-marked': 'its situational bonuses and penalties',
-      'backgrounds/friend-of-a-friend': 'a Lore skill of your choice, its situational bonuses',
-      'backgrounds/once-possessed': 'Fiend Lore, the Spiritual Scar reaction, its situational bonuses',
-      'backgrounds/trusted-rival': 'its daily-preparation choice, its situational bonuses',
-    });
+      ...until('blooded-by-the-dead', ['situational', 'recordMarks'], 'its daily-preparation choice'),
+      ...until('curse-marked', ['situational'], 'its situational bonuses and penalties'),
+      ...until('friend-of-a-friend', ['situational'], 'a Lore skill of your choice, its situational bonuses'),
+      ...until('once-possessed', ['situational', 'grantsActions', 'limitedUses'], 'Fiend Lore, the Spiritual Scar reaction, its situational bonuses'),
+      // batch P02: trusted-rival#daily-prep-skill — FEAT_SITUATIONAL['trusted-rival'] now carries the
+      // daily-preparation star, and scripts/trust-ledger.mjs counts ANY registry entry as "other rules
+      // encoded" (onRegistry), so the background leaves `partly` whole. Its +2 Research star is the data
+      // row trusted-rival#research-bonus lands in the same batch.
+    };
+    // batch 038: azlanti-researcher#language
+    // batch P02: art-collector
+    // batch P02: curse-marked
+    // batch P02: friend-of-a-friend#situational
+    // batch P02: once-possessed#mental-saves
+    // Created BACKGROUNDS only: reprint-twin items join `partly` too (2026-09-25, the describe below).
+    expect(Object.fromEntries(Object.entries(ledger.partly).filter(([k]) => k.startsWith('backgrounds/')))).toEqual(expectedPartly);
     const full = Object.keys(created.backgrounds).map((id: string) => `backgrounds/${id}`).filter((k: string) => !ledger.partly[k]);
     // batch 038: azlanti-researcher#language — Azlanti Researcher joins the fully applied ones once both rows land.
-    expect(full).toHaveLength(azlantiMissing ? 18 : 19);
+    // batch P02: trusted-rival#daily-prep-skill — and Trusted Rival joins them with its registry star.
+    // batch P02: blooded-by-the-dead — and each P02 background joins them as its row lands: 25 created
+    // backgrounds, less whichever are still partly applied (20 today with Azlanti Researcher applied).
+    expect(full).toHaveLength(25 - Object.keys(expectedPartly).length);
     for (const k of full) expect(ledger.unencoded, k).not.toContain(k);
     // No key is on both lists.
     expect(Object.keys(ledger.partly).filter((k) => ledger.unencoded.includes(k))).toEqual([]);

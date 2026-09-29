@@ -1137,7 +1137,9 @@ export function InventoryTab({
   const draggedInv = dragId ? character.inventory.find((i) => i.instanceId === dragId) : null;
   const draggedItem = draggedInv ? resolve(draggedInv) : null;
   // The dragged item is a rune or an affixable → weapon/armor/shield cards become attach targets.
-  const draggingAttachable = !!draggedItem && (isAttachable(draggedItem) || !!content.runes[draggedItem.id]);
+  // `character` because Striker's Scroll makes a SCROLL affixable for this character only (batch P02:
+  // strikers-scroll#affix) — without it a scroll never lights a weapon card as a drop target.
+  const draggingAttachable = !!draggedItem && (isAttachable(draggedItem, character) || !!content.runes[draggedItem.id]);
   const isEquippable = (item?: Item) =>
     !!item &&
     (item.itemType === 'armor' ||
@@ -1292,7 +1294,7 @@ export function InventoryTab({
     const srcInv = character.inventory.find((i) => i.instanceId === did);
     const srcItem = srcInv ? resolve(srcInv) : null;
     if (!srcInv || !srcItem) return null;
-    if (!isAttachable(srcItem) && !content.runes[srcItem.id]) return null;
+    if (!isAttachable(srcItem, character) && !content.runes[srcItem.id]) return null;
     if (mpActive(character, hostInv)) return null; // Monster-Parts items ignore runes entirely
     return planAttach(srcItem, srcInv, hostItem, hostInv, character.inventory, content, character);
   };

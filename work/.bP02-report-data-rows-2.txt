@@ -1,0 +1,62 @@
+batch P02 - data-rows-2 (chunk 2 of 4 of the data-rows family)
+spec: work/.bP02-rows-data-rows-2.json (12 findings, 12 rows) - no created records, so no created-desc spec
+tests: test/batchP02-data-rows-2.test.ts (15 cases; 13 red now, each for the right reason: the field or text the row adds is absent; 2 are negative controls that already pass)
+
+DATA STILL NEEDED
+(none - every row is authored in work/.bP02-rows-data-rows-2.json)
+
+CROSS-FILE GAPS
+- scripts/data/moved-prose-baseline.json: remove "feats/spirit-sheath" (line 121), "feats/devastating-spellstrike" (line 122) and "feats/emergency-targe" (line 123) IN THE SAME COMMIT as these rows. reprint-check CHECK 8 fails on a listed entry that no longer reads like the older printing ("remove the entry - the list only shrinks"), so verify goes red the moment the three description rows land. Findings: spirit-sheath#description, devastating-spellstrike, emergency-targe#description.
+- scripts/reprint-check.mjs (guard proposed by distracting-spellstrike#description): feats/distracting-spellstrike carried the feat-2854 prose through an effect-backfill row and was never listed in moved-prose-baseline.json, so CHECK 8 did not see it. Whoever owns reprint-check should make sure CHECK 8 reads the post-overlay description (and add a test with a backfill-written legacy prose case). Not in my files.
+- 13 other shipped grantedStrikes write the die with a leading count ("1d8", "3d6"): items/phantom-shroud, piercing-horn, sharpened-canines, slashing-claws, deadly-slashing-claws, venom-glands, whip-tail, constricting-whip-tail, major-boots-of-the-secret-blade, taljjaes-mask-the-beast; feats/razorsharp-bite, hand-of-the-lich, flailtongue. deriveUnarmedStrike prefixes the dice count, and on unfurling-brocade that rendered "11d4+1 S" on a built level-1 magus (measured with deriveStrikes). The other 13 were not built and measured, but they go through the same collectGrantedNaturals -> deriveUnarmedStrike path. Needs a guard (a verify check or a normaliser in build.ts collectGrantedNaturals) plus rows. Out of scope for this chunk; the engine or repair family should own it.
+- test/subclass-owned.test.ts grantsOneStrike(): once unfurling-brocade grants two Strikes (the two grips), no subclass option has grantedStrikes.length === 1, so its two cases hit `return` and pass without checking anything. They need to change to "a subclass whose grantedStrikes carry no choiceValue" (every row granted). My test covers the same property for unfurling-brocade: both grips granted, each once, at level 5.
+
+PER FINDING
+sparkling-targe#shield-block-magic
+  row: classFeatures/sparkling-targe recordMarks = [{on:'feature',id:'shield-block',note}, {on:'action',id:'shield-block',note}] (new field). The note is the hybrid-study-12 clause: non-physical magical damage can trigger Shield Block while in Arcane Cascade, and Hardness goes up by the Arcane Cascade resistance. It goes on both the Feats-tab entry and the Main-tab reaction row, the same paired shape paragon-battle-medicine and return-fire use; feats/shield-block is a reaction feat, so the action row exists (rulings-dfgh featRows).
+  test: "sparkling-targe: a Sparkling Targe magus sees the non-physical trigger and Hardness rider on Shield Block (both surfaces)" plus a negative control for a starlit-span magus.
+starlit-span#spellstrike
+  row: classFeatures/starlit-span recordMarks, supersedes:true. The batch 039 arcane-cascade lesser-cover mark is kept, unchanged, as entry 1; entry 2 is {on:'action',id:'spellstrike'} with the hybrid-study-13 ranged Spellstrike clause.
+  test: "starlit-span: a Starlit Span magus sees the ranged Spellstrike rider and keeps the lesser-cover rider".
+unfurling-brocade#two-handed-die
+  row: classFeatures/unfurling-brocade grantedStrikes, supersedes:true = [Qi-Infused Fabric (two hands) d6, Qi-Infused Fabric (one hand) d4]. Both keep the old row's traits, group and damage type. The dice are written bare ('d6'/'d4'), which also fixes the old '1d4' rendering as "11d4+1 S".
+  tests: "unfurling-brocade: the fabric is a two-handed d6 bladed scarf with a one-handed d4 option" (derived damage ^1d6 / ^1d4) and "unfurling-brocade: each grip is granted once and survives a build round-trip without duplicating".
+unfurling-brocade#cascade-tricks
+  row: classFeatures/unfurling-brocade recordMarks (new field) = marks on the disarm, grapple and trip actions: the Disarm flick after a critical success, the grapple trait plus the 5-foot pull, and a Trip target up to two sizes larger. Each note opens with its Arcane Cascade gate.
+  test: "unfurling-brocade: the Arcane Cascade tricks sit on Disarm, Grapple and Trip".
+volatile-spark#spellstrike
+  row: classFeatures/volatile-spark recordMarks (new field) = [{on:'action',id:'spellstrike'}]: the firearm range rule and the concussive weakest-resistance rule, limited to the creature you target with the firearm Strike. The batch 039 grantsActions row is a different field and is untouched.
+  test: "volatile-spark: a Volatile Spark magus sees the firearm range and concussive-resistance rider on Spellstrike".
+arcane-fists#fist-die-and-arcane-trait
+  row: feats/arcane-fists unarmedTraits = [{match:['fist'],setDie:'d6'},{add:['arcane']}] (new field, the existing applyUnarmedRiders lane). The critSpec fields and the FEAT_SITUATIONAL lethal-attack note stay as they are.
+  tests: "arcane-fists: a magus with the feat strikes with a d6 fist that carries the arcane trait" plus a negative control (no feat: 1d4, no arcane).
+maguss-analysis#recharge-unconditional
+  row: feats/maguss-analysis description = the feat-9045 body verbatim (the recharge comes right after the Recall Knowledge attempt). No path; descRefs untouched.
+  test: "maguss-analysis: the Spellstrike recharge is unconditional (feat-9045)".
+spirit-sheath#description
+  row: feats/spirit-sheath description = the feat-9050 body (up to 1 Bulk worth of weapons; counteract rank is half your level rounded up). descRefs untouched: RichText matches labels case-insensitively, so "dispel magic" still links. Needs the baseline removal in CROSS-FILE GAPS.
+  test: "spirit-sheath: holds up to 1 Bulk worth of weapons and counteracts at half your level (feat-9050)".
+devastating-spellstrike
+  row: feats/devastating-spellstrike description = the feat-9052 body (Requirements: a charged Spellstrike; 2/3/4/5 damage in a 5-foot emanation; a status bonus in Arcane Cascade). Needs the baseline removal in CROSS-FILE GAPS.
+  test: "devastating-spellstrike: needs only a charged Spellstrike and deals 2/3/4/5 in a 5-foot emanation (feat-9052)".
+distracting-spellstrike#description
+  row: feats/distracting-spellstrike description, supersedes:true = the feat-9053 body (a hand free plus a charged Spellstrike; arcane and visual traits; the Deception status bonus). The superseded row's own repair, plain "Feint" in place of a slug, carries over.
+  test: "distracting-spellstrike: requires a charged Spellstrike, no illusion trait, and prints the Deception bonus (feat-9053)".
+emergency-targe#description
+  row: feats/emergency-targe description = the feat-9054 trigger ("An enemy you're aware of hits you with a Strike or a spell attack...") with the printed Requirements and body. Needs the baseline removal in CROSS-FILE GAPS.
+  test: "emergency-targe: triggers on any Strike or spell attack from an enemy you are aware of (feat-9054)".
+recharging-flurry#map
+  row: feats/recharging-flurry mapReduction = {step:4, agileStep:3, note:'Recharging Flurry', appliesWhen:"the second Strike of Recharging Flurry against a creature you haven't attacked yet this turn"}. This is the Combination Finisher shape, so the strike row stays at -5/-10 and the breakdown lists -4/-8 (agile -3/-6) as an unapplied alternative.
+  test: "recharging-flurry: the MAP breakdown lists -4/-8 (agile -3/-6) as an unapplied alternative, and the row stays -5/-10".
+
+CHECKED
+- Every row was applied in memory to content() by a scratch jiti script, which then read the real surfaces: recordMarkersFor for feature and action shield-block, spellstrike, disarm, grapple and trip; deriveStrikes for the fabric grips and the Fist; naturalAttacks at level 5; mapNotesFor and mapStepFor. Every value the tests assert came out as asserted, including 1d6+1 S / 1d4+1 S for the fabric, "1d6+1 B ... arcane" for the Fist, steps [4,8] and [3,6] with applied:false, and mapStep 5/4.
+- All prose rows were checked by hand against the mirror docs feat-9045/9050/9052/9053/9054. The notes were checked against hybrid-study-8/12/13/16 and feat-9044/9056.
+- There are no key collisions with the sibling specs data-rows-1, data-rows-3, data-rows-4, engine or repair. Sibling rows on the same records use other fields: sparkling-targe description/descRefs in data-rows-1, recharging-flurry description in data-rows-3.
+- node scripts/test-flip-audit.mjs --batch P02 (read-only, no --json) reports clean. node scripts/vt.mjs run on test/batchP02-data-rows-2.test.ts: 13 red for the right reason, 2 controls green. npx tsc --noEmit is clean.
+ASSUMED
+- The applier's added-prose check passes. Tokens were compared by eye against the mirror text; the applier dry run was not available to this agent (see below).
+- The paired feature+action mark on Shield Block is wanted on both surfaces, as the existing paired marks do.
+NOT TESTED
+- node scripts/apply-parity-fixes.mjs work/.bP02-rows-data-rows-2.json (dry run, no --write) was refused by the session's permission classifier, so the driver's own checks on this spec (supersedes, token backing, why doc ids) have not run yet.
+- The rendered sheet in the browser.

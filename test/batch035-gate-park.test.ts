@@ -182,7 +182,8 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
-  it('the widening is exactly seven records — the five still-open aspect keys, familiar under familiar#archetype-reach, and the deferred relic family', () => {
+  // batch P02: enhanced-familiar#ability-budget
+  it('the widening is exactly eight records — the five still-open aspect keys, familiar under familiar#archetype-reach, enhanced-familiar under enhanced-familiar#fixed-budget-grants, and the deferred relic family', () => {
     /*
      * The pin against silent growth. `--queued-parks` lists every record parked by a desk id that is
      * not its own; today that is five, and each is deliberate:
@@ -234,6 +235,10 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
       // batch 039: familiar#archetype-reach — desk #164 is filed under the FINDING id (record#aspect);
       // the resolver now strips the '#aspect' to park the record while the owner rules on the lane.
       familiar: 'familiar#archetype-reach',
+      // batch P02: enhanced-familiar#ability-budget — desk #168 is filed under record#aspect too
+      // (enhanced-familiar#fixed-budget-grants: which number wins when a fixed-budget familiar grant meets
+      // Enhanced Familiar), so it parks enhanced-familiar while the owner rules.
+      'enhanced-familiar': 'enhanced-familiar#fixed-budget-grants',
       relic: 'relic-gift-family-skysunder-sparkwarden-uniter-adamantine',
     };
     const deskNow = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));

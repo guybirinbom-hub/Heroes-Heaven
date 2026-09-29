@@ -1,0 +1,58 @@
+Print batch P02: Impossible Magic magus + Tian Xia backgrounds read against print, 39 records fixed
+
+Why: print batch P02 read 60 records (the Impossible Magic magus hybrid studies, conflux spells and
+feats, plus Tian Xia backgrounds) against their own AoN pages. The read confirmed 60 findings and
+refuted 2 (inexorable-iron; sparkling-targe#shield-block-duplicate), each with a second reader trying
+to disprove it. Nothing was asked of Wanderer's Guide. This is the print lane.
+
+What changed (measured, not planned):
+- Data: 14 spec files, 114 overlay rows (108 new, 6 superseding), all written by the driver.
+  effect-backfill.json went from 14683 to 14791 rows. Every row was read back from the shipped
+  core.json / core-descriptions.json, and no older row was lost or narrowed.
+  The rows restore prose to the record's own printing (maguss-analysis, spirit-sheath,
+  devastating-spellstrike, emergency-targe, force-fang, shielding-strike, conjurers-countermeasure,
+  sparkling-targe). They also add spell cast/area/save/duration/level (booming-blast,
+  conjurers-countermeasure), the two-handed d6 Qi-Infused Fabric Strike, Practical Magic's
+  dailyTemporaryItems, and background lore/research rows.
+- Repair: 53 records get back the "DC N flat check" that the import stripped (steady-spellcasting-magus
+  and 52 siblings). This goes through the new scripts/repair-flat-check-dc.mjs. The dropped-inline
+  ratchets were lowered to what was measured after apply: flat-check DC 53 -> 0, stripped-link
+  holes 162 -> 116. test/batchP02-repair.test.ts pins both and fails if either goes back up.
+- Code lanes:
+  - Situational stars in situationalBonuses.ts: trusted-rival, aloof-firmament, twisting-tree,
+    twofold-tine, distracting-spellstrike, exploding-bullet, and the resurgent-maelstrom versatile
+    clause.
+  - Enhanced Familiar +2/+4 on additive familiar budgets (companions.ts / companionGrants.ts).
+  - Striker's Scroll affixes a scroll to a weapon (attachments.ts, Inventory, ItemEditor).
+  - The unarmed-Strike die ladder takes a d6 / 1dN die (derive.ts / build.ts).
+  - Level-gated grantsItems.
+  - A possessive link label ("Raise your Shield") resolves.
+  - A duplicate featFeatGrants row was deleted.
+- New guards in verify:
+  - description-header-check (no description opens with its page header)
+  - spell-print-lines-check (printed Requirements lines)
+  - a verbatim reading in reprint-check CHECK 8, with its 151-record baseline
+- Closer fixes, each pinned by a test:
+  - The apply driver now finds variant mirror docs (equipment-598-631).
+  - add-owner-question.mjs accepts a print batch tag (P02).
+  - Four entries left moved-prose-baseline.json.
+  - 15 refresh-loss allow rows, one for each intended shrink or gain.
+  - The desk-count, gate-park, created-ledger and stunted-situational tests were updated, each
+    citing its finding.
+
+Verdicts: 60 records. 39 FIXED, 20 MATCHES (no finding), 1 OWNER-QUEUED.
+
+Queued for the owner: #168 enhanced-familiar#fixed-budget-grants. Five familiar grants print their
+own fixed ability count (Psychopomp, Basic Witchcraft, Undead, Enhanced Undead, Glyph). Which count
+wins beside Enhanced Familiar? Until he rules, they keep their shipped numbers.
+
+Deferred (8 flagged residues in print-batch-P02-residual.json):
+- a rarity key on dailyTemporaryItems.filter (Practical Magic "common" is shown only as a note)
+- a Spell.requirements carrier (needs npm run data)
+- stripping the importer's page header lane-wide
+- the trust-gate approval for four print-verified situational stars that the ledger lists as
+  conditional
+
+Checks: suite green (8285 passed, re-run after the ratchet pin test); verify 52 of 52 clean; flip audit clean; tsc clean.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

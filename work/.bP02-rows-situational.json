@@ -1,0 +1,15 @@
+{
+  "findings": [
+    { "id": "trusted-rival#daily-prep-skill", "backfillRows": [], "note": "Code-only: FEAT_SITUATIONAL['trusted-rival'] in src/rules/situationalBonuses.ts (skill 'all', the starstone-aspirant-dedication shape for a skill re-picked each day). No data row: a data-side situational row on backgrounds/trusted-rival belongs to trusted-rival#research-bonus (another family), and a code entry plus a record field concatenate in entriesFor, so both render without colliding. Cited to AoN background-652." },
+    { "id": "aloof-firmament#cascade-damage", "backfillRows": [], "note": "Code-only: FEAT_SITUATIONAL['aloof-firmament'] strikeDamage clause (4/6/8, laughing-shadow shape). The subclass id reaches characterSituationalIds through ownedFeatureIds. Cited to AoN hybrid-study-7." },
+    { "id": "aloof-firmament#stance-movement", "backfillRows": [], "note": "Code-only: FEAT_SITUATIONAL['aloof-firmament'] speed clause plus RECORD_MARKERS['aloof-firmament'] marks on the high-jump, long-jump, leap and fly actions (no value: the benefit is stance-gated). Cited to AoN hybrid-study-7." },
+    { "id": "aloof-firmament#cat-fall-condition", "backfillRows": [], "note": "Code-only: RECORD_MARKERS['aloof-firmament'] {on:'feature', id:'cat-fall'} mark, rendered on the granted Cat Fall entry by FeatsTab through recordMarkersFor. Cited to AoN hybrid-study-7." },
+    { "id": "resurgent-maelstrom#stance-versatile", "backfillRows": [], "note": "Code-only: a third strikeDamage clause on the existing FEAT_SITUATIONAL['resurgent-maelstrom'] entry, edited in place. Cited to AoN hybrid-study-9." },
+    { "id": "twisting-tree#staff-traits", "backfillRows": [], "note": "Code-only: FEAT_SITUATIONAL['twisting-tree'] strikeDamage clause naming both grips (resurgent-maelstrom shape). Cited to AoN hybrid-study-14." },
+    { "id": "twofold-tine#cascade-damage", "backfillRows": [], "note": "Code-only: FEAT_SITUATIONAL['twofold-tine'] strikeDamage clause (2/4/6, laughing-shadow shape). Cited to AoN hybrid-study-15." },
+    { "id": "spirit-sheath#situational", "backfillRows": [], "note": "Code-only: FEAT_SITUATIONAL['spirit-sheath'] when text changed in place to 'up to 1 Bulk worth of weapons'. The lane script skips an id already in the registry, so the hand edit survives. Cited to AoN feat-9050." },
+    { "id": "distracting-spellstrike#deception-bonus", "backfillRows": [], "note": "Code-only: FEAT_SITUATIONAL['distracting-spellstrike'] Deception clause (status bonus equal to the Arcane Cascade extra damage). Cited to AoN feat-9053." },
+    { "id": "emergency-targe#situational", "backfillRows": [], "note": "Code-only: FEAT_SITUATIONAL['emergency-targe'] AC when text changed in place from the legacy melee-only trigger to any Strike or spell attack from an enemy you're aware of. Cited to AoN feat-9054." },
+    { "id": "exploding-bullet#splash", "backfillRows": [], "note": "Code-only: FEAT_SITUATIONAL['exploding-bullet'] strikeDamage clause (scatter 5 feet, chosen energy splash, +1 status if already scatter), the expanded-splash / crossbow-crack-shot indication-only shape. Cited to AoN feat-9055." }
+  ]
+}

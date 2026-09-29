@@ -1,0 +1,305 @@
+{
+ "batch": "P02",
+ "records": [
+  {
+   "id": "silver-ingot-travel-guide",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "absalom-street-preacher",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "aloof-firmament",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] aloof-firmament#cascade-damage: The Aloof Firmament increase to Arcane Cascade's extra damage (4 / 6 / 8 on the next one-handed sword Strike after a Fly — cited by code-only spec work/.bP02-rows-situational.json finding aloof-firmament#cascade-damage (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added), test test/batchP02-gap-data-rows-1.test.ts (in what this batch added), code src/rules/featFeatGrants.ts (in what this batch added); aloof-firmament#stance-movement: The in-stance Quick Jump benefit and the rule that Fly / Leap / High Jump / Long Jump in Arcane Cascade do not trigger r — cited by code-only spec work/.bP02-rows-situational.json finding aloof-firmament#stance-movement (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added), test test/batchP02-gap-data-rows-1.test.ts (in what this batch added), code src/rules/featFeatGrants.ts (in what this batch added); aloof-firmament#cat-fall-condition: Cat Fall is granted unconditionally, with no marker that Aloof Firmament's Cat Fall only works while not using a shield  — cited by code-only spec work/.bP02-rows-situational.json finding aloof-firmament#cat-fall-condition (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added), test test/batchP02-gap-data-rows-1.test.ts (in what this batch added), code src/rules/featFeatGrants.ts (in what this batch added); aloof-firmament#cat-fall-duplicate: Cat Fall is delivered for Aloof Firmament by two carriers: the subclass option's grantedFeats and the FEAT_FEAT_GRANTS r — cited by code-only spec work/.bP02-rows-gap-data-rows-1.json finding aloof-firmament#cat-fall-duplicate (0 rows; family gap-data-rows-1 changed src/rules/featFeatGrants.ts in this batch), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added), test test/batchP02-gap-data-rows-1.test.ts (in what this batch added), code src/rules/featFeatGrants.ts (in what this batch added)"
+  },
+  {
+   "id": "ambitious-knave",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "arcane-fists",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] arcane-fists#fist-die-and-arcane-trait: Arcane Fists prints a d6 fist die and the arcane trait on every unarmed attack, but the record carries no unarmedTraits  — cited by row spec work/.bP02-rows-data-rows-2.json finding arcane-fists#fist-die-and-arcane-trait (1 row(s)), row feats/arcane-fists field:unarmedTraits in work/.bP02-rows-data-rows-2.json, test test/batchP02-data-rows-2.test.ts (in what this batch added)"
+  },
+  {
+   "id": "art-collector",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] art-collector: The printed daily-preparations art-object inspiration (+2 circumstance, or +1 on a repeat pick, to saves against mental  — cited by row spec work/.bP02-rows-data-rows-1.json finding art-collector (2 row(s)), row backgrounds/art-collector field:choice in work/.bP02-rows-data-rows-1.json, row backgrounds/art-collector field:situational in work/.bP02-rows-data-rows-1.json, test test/trust-ledger.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "blooded-by-the-dead",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] blooded-by-the-dead: The printed daily-preparations routine (Bolster the Blood / Fury / Mind) is not modelled: no daily `choice`, no grants ( — cited by row spec work/.bP02-rows-data-rows-1.json finding blooded-by-the-dead (3 row(s)), row backgrounds/blooded-by-the-dead field:choice in work/.bP02-rows-data-rows-1.json, row backgrounds/blooded-by-the-dead field:situational in work/.bP02-rows-data-rows-1.json, row backgrounds/blooded-by-the-dead field:recordMarks in work/.bP02-rows-data-rows-1.json, test test/trust-ledger.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "booming-blast",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] booming-blast#cast: The record has no cast field, so the printed single-action cost never shows (no action glyph on the focus-spell card, em — cited by row spec work/.bP02-rows-data-rows-3.json finding booming-blast#cast (1 row(s)), row spells/booming-blast field:cast in work/.bP02-rows-data-rows-3.json, row spells/booming-blast field:save in work/.bP02-rows-data-rows-3.json, row spells/booming-blast field:area in work/.bP02-rows-data-rows-3.json, row spells/booming-blast field:baseArea in work/.bP02-rows-data-rows-3.json, test test/batchP02-data-rows-3.test.ts (in what this batch added), test test/spell-print-lines-check.test.ts (in what this batch added); booming-blast#defense: The printed Will save against the spell DC and the 20-foot emanation are carried only in prose; the record has no save o — cited by row spells/booming-blast field:cast in work/.bP02-rows-data-rows-3.json, row spec work/.bP02-rows-data-rows-3.json finding booming-blast#defense (3 row(s)), row spells/booming-blast field:save in work/.bP02-rows-data-rows-3.json, row spells/booming-blast field:area in work/.bP02-rows-data-rows-3.json, row spells/booming-blast field:baseArea in work/.bP02-rows-data-rows-3.json, test test/batchP02-data-rows-3.test.ts (in what this batch added), test test/spell-print-lines-check.test.ts (in what this batch added)"
+  },
+  {
+   "id": "conflux-spells",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "curse-marked",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] curse-marked: The printed +2 circumstance bonus (or -2 circumstance penalty while cursed) to counteract curses, save against curses an — cited by row spec work/.bP02-rows-data-rows-1.json finding curse-marked (1 row(s)), row backgrounds/curse-marked field:situational in work/.bP02-rows-data-rows-1.json, test test/trust-ledger.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "destined-for-greatness",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "dimensional-assault",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] dimensional-assault#prose: Our description is the legacy Secrets of Magic text (spell-1037, pg. 143) on a remaster record whose own aonId spell-287 — cited by row spec work/.bP02-rows-data-rows-3.json finding dimensional-assault#prose (1 row(s)), row spells/dimensional-assault field:description in work/.bP02-rows-data-rows-3.json, test test/batchP02-data-rows-3.test.ts (in what this batch added)"
+  },
+  {
+   "id": "envoys-alliance",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "esoteric-bookworm",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "force-fang",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] force-fang#prose: Our description is the legacy Secrets of Magic text (spell-1038) on a remaster record whose own aonId spell-2878 prints  — cited by row spec work/.bP02-rows-data-rows-3.json finding force-fang#prose (1 row(s)), row spells/force-fang field:description in work/.bP02-rows-data-rows-3.json, code-only spec work/.bP02-rows-gap-data-rows-3.json finding force-fang#prose (0 rows; family gap-data-rows-3 changed src/rules/types.ts, src/rules/build.ts in this batch), test test/batchP02-data-rows-3.test.ts (in what this batch added)"
+  },
+  {
+   "id": "force-fling",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] force-fling#cast: The record has no cast field, so the printed single-action cost never shows (no action glyph on the focus-spell card, em — cited by row spec work/.bP02-rows-data-rows-3.json finding force-fling#cast (1 row(s)), row spells/force-fling field:cast in work/.bP02-rows-data-rows-3.json, test test/batchP02-data-rows-3.test.ts (in what this batch added), test test/spell-print-lines-check.test.ts (in what this batch added), test test/batchP02-gap-data-rows-3.test.ts (in what this batch added)"
+  },
+  {
+   "id": "friend-of-a-friend",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] friend-of-a-friend#lore: Print trains a Lore skill of the player's choice (food or drink), but the record carries no Lore grant at all, so the ch — cited by row spec work/.bP02-rows-engine.json finding friend-of-a-friend#lore (1 row(s)), row backgrounds/friend-of-a-friend field:trainedLoreChoice in work/.bP02-rows-engine.json, row backgrounds/friend-of-a-friend field:situational in work/.bP02-rows-data-rows-1.json, test test/batchP02-engine.test.ts (in what this batch added), test test/trust-ledger.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added); friend-of-a-friend#situational: Print grants a +2 circumstance bonus to saves against poison and disease and to checks to counteract poison or disease,  — cited by row backgrounds/friend-of-a-friend field:trainedLoreChoice in work/.bP02-rows-engine.json, row spec work/.bP02-rows-data-rows-1.json finding friend-of-a-friend#situational (1 row(s)), row backgrounds/friend-of-a-friend field:situational in work/.bP02-rows-data-rows-1.json, test test/batchP02-engine.test.ts (in what this batch added), test test/trust-ledger.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "home-among-mulberry-leaves",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "inexorable-iron",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "laughing-shadow",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "maguss-analysis",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] maguss-analysis#recharge-unconditional: Our description is the LEGACY Secrets of Magic text (feat-2847), which makes the Spellstrike recharge conditional on a s — cited by row spec work/.bP02-rows-data-rows-2.json finding maguss-analysis#recharge-unconditional (1 row(s)), row feats/maguss-analysis field:description in work/.bP02-rows-data-rows-2.json, test test/batchP02-data-rows-2.test.ts (in what this batch added)"
+  },
+  {
+   "id": "mystery-adept",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "once-possessed",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] once-possessed#fiend-lore: The printed Lore grant (Fiend Lore) is missing: the record carries trainedSkill intimidation but no trainedLore, so the  — cited by row spec work/.bP02-rows-data-rows-1.json finding once-possessed#fiend-lore (1 row(s)), row backgrounds/once-possessed field:trainedLore in work/.bP02-rows-data-rows-1.json, row backgrounds/once-possessed field:situational in work/.bP02-rows-data-rows-1.json, row backgrounds/once-possessed field:grantsActions in work/.bP02-rows-data-rows-1.json, row backgrounds/once-possessed field:limitedUses in work/.bP02-rows-data-rows-1.json, test test/trust-ledger.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added); once-possessed#mental-saves: The printed +2 circumstance bonus to saves against mental effects from fiends is not modelled on any carrier (no situati — cited by row backgrounds/once-possessed field:trainedLore in work/.bP02-rows-data-rows-1.json, row spec work/.bP02-rows-data-rows-1.json finding once-possessed#mental-saves (1 row(s)), row backgrounds/once-possessed field:situational in work/.bP02-rows-data-rows-1.json, row backgrounds/once-possessed field:grantsActions in work/.bP02-rows-data-rows-1.json, row backgrounds/once-possessed field:limitedUses in work/.bP02-rows-data-rows-1.json, test test/trust-ledger.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added); once-possessed#spiritual-scar: The printed Spiritual Scar reaction (once per day, resistance to spirit damage from a fiend) is not delivered: no action — cited by row backgrounds/once-possessed field:trainedLore in work/.bP02-rows-data-rows-1.json, row backgrounds/once-possessed field:situational in work/.bP02-rows-data-rows-1.json, row spec work/.bP02-rows-data-rows-1.json finding once-possessed#spiritual-scar (3 row(s)), row backgrounds/once-possessed field:grantsActions in work/.bP02-rows-data-rows-1.json, row backgrounds/once-possessed field:limitedUses in work/.bP02-rows-data-rows-1.json, row spec work/.bP02-created-desc-data-rows-1.json finding once-possessed#spiritual-scar (1 row(s)), test test/trust-ledger.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "puddles-carny",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "remote-detonation-impossible-magic",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "resurgent-maelstrom",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] resurgent-maelstrom#stance-versatile: The in-stance clause that an improvised weapon gains versatile traits for the damage types it doesn't normally deal is n — cited by code-only spec work/.bP02-rows-situational.json finding resurgent-maelstrom#stance-versatile (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), row classFeatures/resurgent-maelstrom field:situational in work/.bP02-rows-data-rows-1.json, row classFeatures/resurgent-maelstrom field:description in work/.bP02-rows-data-rows-1.json, row classFeatures/resurgent-maelstrom field:descRefs in work/.bP02-rows-data-rows-1.json, test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added), test test/batchP02-gap-situational.test.ts (in what this batch added); resurgent-maelstrom#trait-already-present: The riders for an improvised weapon that already has backstabber (double the precision damage) or forceful (count one mo — cited by row spec work/.bP02-rows-data-rows-1.json finding resurgent-maelstrom#trait-already-present (1 row(s)), row classFeatures/resurgent-maelstrom field:situational in work/.bP02-rows-data-rows-1.json, row classFeatures/resurgent-maelstrom field:description in work/.bP02-rows-data-rows-1.json, row classFeatures/resurgent-maelstrom field:descRefs in work/.bP02-rows-data-rows-1.json, test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added), test test/batchP02-gap-situational.test.ts (in what this batch added); resurgent-maelstrom#handwraps-name: Our Resurgent Maelstrom text and descRef name the item \"Handwraps of Might Blows\", which is not the printed name and mat — cited by row classFeatures/resurgent-maelstrom field:situational in work/.bP02-rows-data-rows-1.json, row spec work/.bP02-rows-data-rows-1.json finding resurgent-maelstrom#handwraps-name (2 row(s)), row classFeatures/resurgent-maelstrom field:description in work/.bP02-rows-data-rows-1.json, row classFeatures/resurgent-maelstrom field:descRefs in work/.bP02-rows-data-rows-1.json, test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added), test test/batchP02-gap-situational.test.ts (in what this batch added)"
+  },
+  {
+   "id": "shielding-strike",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] shielding-strike: Our description is the legacy Secrets of Magic text (spell-1041), which orders the Strike FIRST and the shield AFTER; th — cited by row spec work/.bP02-rows-data-rows-4.json finding shielding-strike (2 row(s)), row spells/shielding-strike field:description in work/.bP02-rows-data-rows-4.json, row spells/shielding-strike field:descRefs in work/.bP02-rows-data-rows-4.json, code-only spec work/.bP02-rows-gap-data-rows-4.json finding shielding-strike (0 rows; family gap-data-rows-4 changed src/sheet/descref.ts in this batch), test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/descref-possessive.test.ts (in what this batch added)"
+  },
+  {
+   "id": "shooting-star",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] shooting-star: The printed Requirements line is absent: the record has no requirements carrier and the description does not include it  — cited by row spec work/.bP02-rows-data-rows-4.json finding shooting-star (1 row(s)), row spells/shooting-star field:description in work/.bP02-rows-data-rows-4.json, test test/batchP02-data-rows-4.test.ts (in what this batch added)"
+  },
+  {
+   "id": "sky-laughs-at-waves",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sparkling-targe",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] sparkling-targe#description: Our Sparkling Targe description is the pre-remaster (Secrets of Magic) text, not the Impossible Magic printing the recor — cited by row classFeatures/sparkling-targe field:recordMarks in work/.bP02-rows-data-rows-2.json, row spec work/.bP02-rows-data-rows-1.json finding sparkling-targe#description (4 row(s)), row classFeatures/sparkling-targe field:description in work/.bP02-rows-data-rows-1.json, row classFeatures/sparkling-targe field:descRefs in work/.bP02-rows-data-rows-1.json, row hybridStudy/sparkling-targe field:description in work/.bP02-rows-data-rows-1.json, test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-closer.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added); sparkling-targe#shield-block-magic: The Arcane Cascade half of Sparkling Targe that changes Shield Block (non-physical spell damage can trigger it, and the  — cited by row spec work/.bP02-rows-data-rows-2.json finding sparkling-targe#shield-block-magic (1 row(s)), row classFeatures/sparkling-targe field:recordMarks in work/.bP02-rows-data-rows-2.json, row classFeatures/sparkling-targe field:description in work/.bP02-rows-data-rows-1.json, row classFeatures/sparkling-targe field:descRefs in work/.bP02-rows-data-rows-1.json, row hybridStudy/sparkling-targe field:description in work/.bP02-rows-data-rows-1.json, test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-closer.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "spinning-staff",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] spinning-staff: The printed Requirements line is absent from both the record and the description, so the player is never told the spell  — cited by row spec work/.bP02-rows-data-rows-4.json finding spinning-staff (1 row(s)), row spells/spinning-staff field:description in work/.bP02-rows-data-rows-4.json, test test/batchP02-data-rows-4.test.ts (in what this batch added)"
+  },
+  {
+   "id": "starlit-span",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] starlit-span#spellstrike: Starlit Span's ranged Spellstrike (a ranged weapon or ranged unarmed Strike within the first range increment, overriding — cited by row spec work/.bP02-rows-data-rows-2.json finding starlit-span#spellstrike (1 row(s)), row classFeatures/starlit-span field:recordMarks in work/.bP02-rows-data-rows-2.json, test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/batchP02-data-rows-2.test.ts (in what this batch added)"
+  },
+  {
+   "id": "thunderous-strike",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] thunderous-strike#requirements: The printed Requirements line is absent from both the record and the description, so the player is never told the spell  — cited by row spec work/.bP02-rows-data-rows-4.json finding thunderous-strike#requirements (1 row(s)), row spells/thunderous-strike field:description in work/.bP02-rows-data-rows-4.json, row spells/thunderous-strike field:baseDamage in work/.bP02-rows-data-rows-4.json, row spells/thunderous-strike field:damageKind in work/.bP02-rows-data-rows-4.json, test test/batchP02-data-rows-4.test.ts (in what this batch added); thunderous-strike#heightened-damage: The record carries heightening {type:interval, interval:1, damageIncr:\"1\"} but no baseDamage, so scaleDamage (src/rules/ — cited by row spells/thunderous-strike field:description in work/.bP02-rows-data-rows-4.json, row spec work/.bP02-rows-data-rows-4.json finding thunderous-strike#heightened-damage (2 row(s)), row spells/thunderous-strike field:baseDamage in work/.bP02-rows-data-rows-4.json, row spells/thunderous-strike field:damageKind in work/.bP02-rows-data-rows-4.json, test test/batchP02-data-rows-4.test.ts (in what this batch added)"
+  },
+  {
+   "id": "trusted-rival",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] trusted-rival#research-bonus: The printed +2 circumstance bonus to Research checks about Bastardhall is not modelled on any carrier. — cited by row spec work/.bP02-rows-data-rows-1.json finding trusted-rival#research-bonus (1 row(s)), row backgrounds/trusted-rival field:situational in work/.bP02-rows-data-rows-1.json, test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/trust-ledger.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added), test test/batchP02-gap-situational.test.ts (in what this batch added); trusted-rival#daily-prep-skill: The printed daily-preparation pick (one skill treated as expert, master at 7th level, for Research checks on Bastardhall — cited by code-only spec work/.bP02-rows-situational.json finding trusted-rival#daily-prep-skill (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), row backgrounds/trusted-rival field:situational in work/.bP02-rows-data-rows-1.json, test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/trust-ledger.test.ts (in what this batch added), test test/batchP02-data-rows-1.test.ts (in what this batch added), test test/batchP02-gap-situational.test.ts (in what this batch added)"
+  },
+  {
+   "id": "turbulent-tide",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] turbulent-tide#requirements: The printed Requirements line of Turbulent Tide (wielding an improvised weapon) appears nowhere on our record or in its  — cited by row spec work/.bP02-rows-data-rows-4.json finding turbulent-tide#requirements (1 row(s)), row spells/turbulent-tide field:description in work/.bP02-rows-data-rows-4.json, test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/spell-print-lines-check.test.ts (in what this batch added)"
+  },
+  {
+   "id": "twisting-tree",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] twisting-tree#staff-traits: Twisting Tree's staff changes (one-handed: agile and a 1d6 die; two-handed: parry, reach and trip) are not modelled anyw — cited by code-only spec work/.bP02-rows-situational.json finding twisting-tree#staff-traits (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "twofold-tine",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] twofold-tine#cascade-damage: Twofold Tine's increased Arcane Cascade extra damage for the off-hand melee weapon (2, 4 with weapon specialization, 6 w — cited by code-only spec work/.bP02-rows-situational.json finding twofold-tine#cascade-damage (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "unfurling-brocade",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] unfurling-brocade#two-handed-die: The Qi-Infused Fabric Strike carries only the one-handed d4 option; the printed default is a bladed scarf (two-handed, d — cited by row spec work/.bP02-rows-data-rows-2.json finding unfurling-brocade#two-handed-die (1 row(s)), row classFeatures/unfurling-brocade field:grantedStrikes in work/.bP02-rows-data-rows-2.json, row classFeatures/unfurling-brocade field:recordMarks in work/.bP02-rows-data-rows-2.json, code-only spec work/.bP02-rows-gap-data-rows-2.json finding unfurling-brocade#two-handed-die (0 rows; family gap-data-rows-2 changed src/rules/derive.ts, src/rules/build.ts in this batch), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-gap-data-rows-3.test.ts (in what this batch added), code src/rules/build.ts (in what this batch added), test test/batchP02-gap-data-rows-2.test.ts (in what this batch added), test test/subclass-owned.test.ts (in what this batch added), code src/rules/derive.ts (in what this batch added); unfurling-brocade#cascade-tricks: Unfurling Brocade's Arcane Cascade tricks (grapple trait on the fabric, the flick after a critical Disarm, the 5-foot pu — cited by row classFeatures/unfurling-brocade field:grantedStrikes in work/.bP02-rows-data-rows-2.json, row spec work/.bP02-rows-data-rows-2.json finding unfurling-brocade#cascade-tricks (1 row(s)), row classFeatures/unfurling-brocade field:recordMarks in work/.bP02-rows-data-rows-2.json, test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-gap-data-rows-3.test.ts (in what this batch added), code src/rules/build.ts (in what this batch added), test test/batchP02-gap-data-rows-2.test.ts (in what this batch added), test test/subclass-owned.test.ts (in what this batch added), code src/rules/derive.ts (in what this batch added)"
+  },
+  {
+   "id": "volatile-spark",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] volatile-spark#spellstrike: Volatile Spark's firearm Spellstrike (a ranged firearm Strike within the first range increment, and concussive firearms  — cited by row spec work/.bP02-rows-data-rows-2.json finding volatile-spark#spellstrike (1 row(s)), row classFeatures/volatile-spark field:recordMarks in work/.bP02-rows-data-rows-2.json, test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added)"
+  },
+  {
+   "id": "enhanced-familiar",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #168 (batch P02; n from entry.n via enhanced-familiar#fixed-budget-grants)"
+  },
+  {
+   "id": "spell-parry",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "spirit-sheath",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] spirit-sheath#description: Our description is the legacy Secrets of Magic text (feat-2852) on the remaster Impossible Magic record feat-9050: it sa — cited by row spec work/.bP02-rows-data-rows-2.json finding spirit-sheath#description (1 row(s)), row feats/spirit-sheath field:description in work/.bP02-rows-data-rows-2.json, test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-closer.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-gap-situational.test.ts (in what this batch added); spirit-sheath#situational: The situational Stealth entry's condition text repeats the legacy one-weapon limit, contradicting print's up to 1 Bulk w — cited by row feats/spirit-sheath field:description in work/.bP02-rows-data-rows-2.json, code-only spec work/.bP02-rows-situational.json finding spirit-sheath#situational (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-closer.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-gap-situational.test.ts (in what this batch added)"
+  },
+  {
+   "id": "devastating-spellstrike",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] devastating-spellstrike: Our description is the legacy Secrets of Magic text (feat-2853) on the remaster record feat-9052: it requires Arcane Cas — cited by row spec work/.bP02-rows-data-rows-2.json finding devastating-spellstrike (1 row(s)), row feats/devastating-spellstrike field:description in work/.bP02-rows-data-rows-2.json, test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-closer.test.ts (in what this batch added)"
+  },
+  {
+   "id": "distant-waterbirds-poise",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "distracting-spellstrike",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] distracting-spellstrike#description: Our description is the legacy Secrets of Magic text (feat-2854) on the remaster record feat-9053, pinned by an effect-ba — cited by row spec work/.bP02-rows-data-rows-2.json finding distracting-spellstrike#description (1 row(s)), row feats/distracting-spellstrike field:description in work/.bP02-rows-data-rows-2.json, code-only spec work/.bP02-rows-gap-data-rows-2.json finding distracting-spellstrike#description (0 rows; family gap-data-rows-2 changed src/rules/derive.ts, src/rules/build.ts in this batch), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-gap-data-rows-2.test.ts (in what this batch added); distracting-spellstrike#deception-bonus: Print grants a status bonus to the Feint's Deception check equal to the Arcane Cascade extra damage while in Arcane Casc — cited by row feats/distracting-spellstrike field:description in work/.bP02-rows-data-rows-2.json, code-only spec work/.bP02-rows-situational.json finding distracting-spellstrike#deception-bonus (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-gap-data-rows-2.test.ts (in what this batch added)"
+  },
+  {
+   "id": "emergency-targe",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] emergency-targe#description: Our description is the legacy Secrets of Magic trigger (feat-2855) on the remaster record feat-9054: it limits the trigg — cited by row spec work/.bP02-rows-data-rows-2.json finding emergency-targe#description (1 row(s)), row feats/emergency-targe field:description in work/.bP02-rows-data-rows-2.json, test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-closer.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-gap-situational.test.ts (in what this batch added); emergency-targe#situational: The situational AC entry's condition repeats the legacy melee-only trigger, so a player reading the AC line would think  — cited by row feats/emergency-targe field:description in work/.bP02-rows-data-rows-2.json, code-only spec work/.bP02-rows-situational.json finding emergency-targe#situational (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-closer.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-gap-situational.test.ts (in what this batch added)"
+  },
+  {
+   "id": "exploding-bullet",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] exploding-bullet#splash: Exploding Bullet's round changes the firearm Strike (gains scatter 5 feet, or +1 status bonus to splash damage if it alr — cited by row feats/exploding-bullet field:description in work/.bP02-rows-data-rows-3.json, code-only spec work/.bP02-rows-situational.json finding exploding-bullet#splash (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batchP02-data-rows-3.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-gap-data-rows-3.test.ts (in what this batch added); exploding-bullet#description-header: Our flat description opens with the page header (name, Source line, Prerequisites) that the record's own name/source/pre — cited by row spec work/.bP02-rows-data-rows-3.json finding exploding-bullet#description-header (1 row(s)), row feats/exploding-bullet field:description in work/.bP02-rows-data-rows-3.json, test test/batchP02-data-rows-3.test.ts (in what this batch added), test test/batchP02-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batchP02-gap-data-rows-3.test.ts (in what this batch added)"
+  },
+  {
+   "id": "heaven-earth-encompassing-sleeves",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] heaven-earth-encompassing-sleeves#sleeves-item: The feat's benefit IS an item (the prepared clothing becomes sleeves of storage, greater sleeves of storage from 9th lev — cited by row spec work/.bP02-rows-gap-data-rows-3.json finding heaven-earth-encompassing-sleeves#sleeves-item (1 row(s)), row feats/heaven-earth-encompassing-sleeves field:grantsItems in work/.bP02-rows-gap-data-rows-3.json, test test/batchP02-gap-data-rows-3.test.ts (in what this batch added)"
+  },
+  {
+   "id": "irezoko-tattoo",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "recharging-flurry",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] recharging-flurry#map: Recharging Flurry prints its own multiple attack penalty for the second Strike (-4/-8, agile -3/-6, when it targets a cr — cited by row feats/recharging-flurry field:description in work/.bP02-rows-data-rows-3.json, row spec work/.bP02-rows-data-rows-2.json finding recharging-flurry#map (1 row(s)), row feats/recharging-flurry field:mapReduction in work/.bP02-rows-data-rows-2.json, test test/batchP02-data-rows-3.test.ts (in what this batch added), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-gap-data-rows-3.test.ts (in what this batch added); recharging-flurry#description-header: Our flat description opens with the page header (name, Source line, Prerequisites) that the record's own name/source/pre — cited by row spec work/.bP02-rows-data-rows-3.json finding recharging-flurry#description-header (1 row(s)), row feats/recharging-flurry field:description in work/.bP02-rows-data-rows-3.json, row feats/recharging-flurry field:mapReduction in work/.bP02-rows-data-rows-2.json, test test/batchP02-data-rows-3.test.ts (in what this batch added), test test/batchP02-data-rows-2.test.ts (in what this batch added), test test/batchP02-gap-data-rows-3.test.ts (in what this batch added)"
+  },
+  {
+   "id": "running-recharge",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] running-recharge#description-header: Our flat description opens with the page header (name and Source line) that the record's own name/source fields already  — cited by row spec work/.bP02-rows-data-rows-3.json finding running-recharge#description-header (1 row(s)), row feats/running-recharge field:description in work/.bP02-rows-data-rows-3.json, test test/batchP02-data-rows-3.test.ts (in what this batch added), test test/batchP02-gap-data-rows-3.test.ts (in what this batch added)"
+  },
+  {
+   "id": "shattering-spellstrike",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] shattering-spellstrike: Our description drops the damage type from the printed extra damage: print says 2d6 FORCE damage, ours says 2d6 damage ( — cited by row spec work/.bP02-rows-data-rows-3.json finding shattering-spellstrike (1 row(s)), row feats/shattering-spellstrike field:description in work/.bP02-rows-data-rows-3.json, test test/batchP02-data-rows-3.test.ts (in what this batch added)"
+  },
+  {
+   "id": "steady-spellcasting-magus",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] steady-spellcasting-magus: Our description deletes the flat-check DC: print says a DC 15 flat check, ours says only 'attempt a check', so the playe — cited by row spec work/.bP02-rows-repair.json finding steady-spellcasting-magus (53 row(s)), row feats/steady-spellcasting-magus field:description in work/.bP02-rows-repair.json, test test/batchP02-repair.test.ts (in what this batch added), test test/wg-batch-run.test.ts (in what this batch added)"
+  },
+  {
+   "id": "strikers-scroll",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] strikers-scroll#affix: The feat lets a scroll be affixed to a weapon or handwraps of mighty blows with Affix a Talisman, but our attach lane (s — cited by row feats/strikers-scroll field:description in work/.bP02-rows-data-rows-3.json, code-only spec work/.bP02-rows-gap-engine.json finding strikers-scroll#affix (0 rows; family gap-engine changed src/rules/companions.ts, src/rules/companionGrants.ts, src/sheet/CompanionsTab.tsx, src/rules/attachments.ts, src/sheet/InventoryTab.tsx, src/sheet/ItemEditorModal.tsx in this batch), test test/batchP02-engine.test.ts (in what this batch added), test test/batchP02-data-rows-3.test.ts (in what this batch added), test test/batchP02-gap-engine.test.tsx (in what this batch added), code src/rules/attachments.ts (in what this batch added), code src/sheet/InventoryTab.tsx (in what this batch added), code src/sheet/ItemEditorModal.tsx (in what this batch added); strikers-scroll#prose: The record's aonId is the remaster printing (feat-9059, Impossible Magic) but its description is the legacy feat-2858 pr — cited by row spec work/.bP02-rows-data-rows-3.json finding strikers-scroll#prose (1 row(s)), row feats/strikers-scroll field:description in work/.bP02-rows-data-rows-3.json, test test/batchP02-engine.test.ts (in what this batch added), test test/batchP02-data-rows-3.test.ts (in what this batch added), test test/batchP02-gap-engine.test.tsx (in what this batch added), code src/rules/attachments.ts (in what this batch added), code src/sheet/InventoryTab.tsx (in what this batch added), code src/sheet/ItemEditorModal.tsx (in what this batch added)"
+  },
+  {
+   "id": "cascade-countermeasure",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] cascade-countermeasure#requirements: The printed Requirements line of the legacy Cascade Countermeasure (you must be benefiting from Arcane Cascade) appears  — cited by row spec work/.bP02-rows-data-rows-4.json finding cascade-countermeasure#requirements (1 row(s)), row spells/cascade-countermeasure field:description in work/.bP02-rows-data-rows-4.json, test test/batchP02-data-rows-4.test.ts (in what this batch added)"
+  },
+  {
+   "id": "conjurers-countermeasure",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] conjurers-countermeasure#cast-duration: Our remaster Conjurer's Countermeasure spell record has no cast and no duration (and no level), so the spell card's Cast — cited by row spec work/.bP02-rows-data-rows-4.json finding conjurers-countermeasure#cast-duration (3 row(s)), row spells/conjurers-countermeasure field:cast in work/.bP02-rows-data-rows-4.json, row spells/conjurers-countermeasure field:duration in work/.bP02-rows-data-rows-4.json, row spells/conjurers-countermeasure field:level in work/.bP02-rows-data-rows-4.json, row spells/conjurers-countermeasure field:description in work/.bP02-rows-data-rows-4.json, code-only spec work/.bP02-rows-gap-data-rows-4.json finding conjurers-countermeasure#cast-duration (0 rows; family gap-data-rows-4 changed src/sheet/descref.ts in this batch), test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/spell-print-lines-check.test.ts (in what this batch added); conjurers-countermeasure#description: Our Conjurer's Countermeasure description begins with scraped header lines (name, source, duration) as body text and run — cited by row spells/conjurers-countermeasure field:cast in work/.bP02-rows-data-rows-4.json, row spells/conjurers-countermeasure field:duration in work/.bP02-rows-data-rows-4.json, row spells/conjurers-countermeasure field:level in work/.bP02-rows-data-rows-4.json, row spec work/.bP02-rows-data-rows-4.json finding conjurers-countermeasure#description (1 row(s)), row spells/conjurers-countermeasure field:description in work/.bP02-rows-data-rows-4.json, test test/batchP02-data-rows-4.test.ts (in what this batch added), test test/spell-print-lines-check.test.ts (in what this batch added)"
+  },
+  {
+   "id": "keep-pace-player-core-2",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "practical-magic-impossible-magic",
+   "verdict": "FIXED",
+   "evidence": "[batch P02 read, adversarially confirmed] practical-magic-impossible-magic: The feat grants two temporary spell catalysts at each daily preparation (item level at most half your level), but the re — cited by row spec work/.bP02-rows-data-rows-3.json finding practical-magic-impossible-magic (1 row(s)), row feats/practical-magic-impossible-magic field:dailyTemporaryItems in work/.bP02-rows-data-rows-3.json, test test/batchP02-data-rows-3.test.ts (in what this batch added)"
+  },
+  {
+   "id": "runic-impression",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "hasted-assault",
+   "verdict": "MATCHES",
+   "evidence": "[batch P02 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  }
+ ]
+}

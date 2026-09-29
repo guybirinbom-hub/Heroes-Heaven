@@ -8,6 +8,7 @@ import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
 import { emptyBuild, levelGrants, type BuildState } from '../src/rules/build';
 import { EXTRA_FEAT_TAKINGS } from '../src/rules/featFeatGrants';
+import { FEAT_SITUATIONAL } from '../src/rules/situationalBonuses';
 import { categoryOfBook, NICHE_CATEGORIES } from '../src/rules/sources';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { AddItemsModal } from '../src/sheet/AddItemsModal';
@@ -373,7 +374,9 @@ describe('a created record says that none of its rules apply yet', () => {
   // batch 038: newly-minted-automaton#lore
   // batch 038: lamentation-of-sinister-deals#avatar
   // batch 039: magus#volatile-spark-reloading-cascade
-  it('the ledger names every created heritage, feat and class option not yet encoded (zombie-horde-impossible-magic, defensive-automaton, newly-minted-automaton, lamentation-of-sinister-deals leave in batch 038; the magus hybrid study volatile-spark in batch 039), and the marker shows for each', () => {
+  // batch P02: practical-magic-impossible-magic
+  // batch P02: twofold-tine#cascade-damage
+  it('the ledger names every created heritage, feat and class option not yet encoded (zombie-horde-impossible-magic, defensive-automaton, newly-minted-automaton, lamentation-of-sinister-deals leave in batch 038; the magus hybrid study volatile-spark in batch 039; practical-magic-impossible-magic and the magus hybrid study twofold-tine in print batch P02), and the marker shows for each', () => {
     const c = db();
     const unencoded = new Set((LEDGER as { unencoded?: string[] }).unencoded ?? []);
     const has = (bucket: string, id: string, field: string) => !!(c as unknown as Record<string, Record<string, Record<string, unknown>>>)[bucket]?.[id]?.[field];
@@ -391,6 +394,14 @@ describe('a created record says that none of its rules apply yet', () => {
       // batch 039: magus#volatile-spark-reloading-cascade — AoN hybrid-study-16 "In addition, you gain the
       // Reloading Cascade action": the created study now carries grantsActions ['reloading-cascade'].
       'classFeatures/volatile-spark': () => has('classFeatures', 'volatile-spark', 'grantsActions'),
+      // batch P02: practical-magic-impossible-magic — AoN feat-9331 "Each day during your daily
+      // preparations, you can make two spell catalysts with an item level no higher than half your
+      // level": the created feat now carries dailyTemporaryItems (the Rest sheet's catalyst pick).
+      'feats/practical-magic-impossible-magic': () => has('feats', 'practical-magic-impossible-magic', 'dailyTemporaryItems'),
+      // batch P02: twofold-tine#cascade-damage — AoN hybrid-study-15 "any extra damage the chosen weapon
+      // gains from Arcane Cascade is increased to 2": the created study is now on the situational registry
+      // (FEAT_SITUATIONAL['twofold-tine']), which the ledger's `onRegistry` reads.
+      'classFeatures/twofold-tine': () => !!FEAT_SITUATIONAL['twofold-tine']?.length,
     };
     // A created background carries its boosts, skills and feat, so it is not "nothing encoded".
     for (const id of BACKGROUNDS) expect(unencoded.has(`backgrounds/${id}`), `backgrounds/${id}`).toBe(false);
@@ -426,7 +437,8 @@ describe('a created record says that none of its rules apply yet', () => {
    * card carries it now, as the heritage card does. Both cases the refuter took: Remote Detonation in
    * a runesmith's level-1 class slot, Practical Magic in a level-6 free-archetype slot.
    */
-  it('a created feat in a filled Builder feat slot says so on the slot card', async () => {
+  // batch P02: practical-magic-impossible-magic
+  it('a created feat in a filled Builder feat slot says so on the slot card — and practical-magic-impossible-magic, encoded in print batch P02, no longer does', async () => {
     const c = db();
     const at = (lvl: number, classId: string, cat: string) =>
       levelGrants(lvl, classId, c, null, { freeArchetype: true }).featSlots.indexOf(cat as never);
@@ -436,14 +448,16 @@ describe('a created record says that none of its rules apply yet', () => {
         over: { classId: 'runesmith', keyAbility: c.classes.runesmith.keyAbility?.[0] ?? 'str', featPicks: { [`1:class:${at(1, 'runesmith', 'class')}`]: 'remote-detonation-impossible-magic' } },
       },
       {
-        name: 'Practical Magic', level: 6,
+        // batch P02: practical-magic-impossible-magic — its dailyTemporaryItems row took it off the
+        // ledger's `unencoded` list, so its filled slot card carries no "not yet verified" line.
+        name: 'Practical Magic', level: 6, encoded: true,
         over: { classId: 'wizard', keyAbility: 'int', featPicks: {
           [`2:archetype:${at(2, 'wizard', 'archetype')}`]: 'hedge-mage-dedication',
           [`6:archetype:${at(6, 'wizard', 'archetype')}`]: 'practical-magic-impossible-magic',
         } },
       },
     ];
-    for (const { name, level, over } of cases) {
+    for (const { name, level, over, encoded } of cases as { name: string; level: number; over: Record<string, unknown>; encoded?: boolean }[]) {
       const r = openBuilder({
         ...over, level, ancestryId: 'human', variantRules: { freeArchetype: true },
         enabledSources: ['Pathfinder Player Core', 'Pathfinder Impossible Magic'],
@@ -455,7 +469,8 @@ describe('a created record says that none of its rules apply yet', () => {
       const note = wrap?.querySelector('.sd-choice-note')?.textContent ?? '';
       r.stop();
       expect(wrap, `no filled ${name} slot on the level-${level} page`).toBeTruthy();
-      expect(note, name).toBe('Not yet verified — shown, not applied');
+      // batch P02: practical-magic-impossible-magic — an encoded created feat's card carries no such line.
+      expect(note, name).toBe(encoded ? '' : 'Not yet verified — shown, not applied');
     }
   }, 60_000);
 

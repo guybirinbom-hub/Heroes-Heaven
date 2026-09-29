@@ -1,0 +1,27 @@
+batch P02 - gap lane for data-rows-1
+Spec: work/.bP02-rows-gap-data-rows-1.json (zero overlay rows; one finding note recording a code fix)
+Code: src/rules/featFeatGrants.ts (FEAT_FEAT_GRANTS row deleted; WHY note above FEAT_FEAT_GRANTS_MARKER)
+Test: test/batchP02-gap-data-rows-1.test.ts (3 tests; with test/class-feature-registry-grants.test.ts, 8/8 green through scripts/vt.mjs).
+npx tsc --noEmit clean. scripts/test-flip-audit.mjs --batch P02: clean, every flip cited.
+
+GAP LINES
+- AUTHORED  ref: src/rules/featFeatGrants.ts:FEAT_FEAT_GRANTS + work/.bP02-rows-gap-data-rows-1.json  (work/.bP02-report-data-rows-1.txt:11)
+  aloof-firmament#cat-fall-duplicate: the dead `'aloof-firmament': ['cat-fall']` row is gone, so the magus subclass option's grantedFeats is the one carrier of AoN hybrid-study-7 "You gain the Cat Fall general feat". No extractor exclusion was needed, because the header's "scratch featfeat-extract.mjs" does not exist on disk and the in-repo regenerators rebuild the table from the imported object, so the deletion survives them.
+- AUTHORED  ref: src/rules/featFeatGrants.ts:FEAT_FEAT_GRANTS + test/batchP02-gap-data-rows-1.test.ts  (work/.bP02-verify-data-rows-1.txt:96)
+  aloof-firmament#cat-fall-duplicate: this is the same deletion, pinned the way the verifier asked. The test asserts that FEAT_FEAT_GRANTS has no 'aloof-firmament' key, that a built magus owns Cat Fall exactly once, and that a copy with the option's grantedFeats stripped owns none. That last check proves no second carrier remains.
+
+TEACH / SETTLE LINES
+(none - this lane adds no settle or comparer teach; aloof-firmament#cat-fall-duplicate is a carrier de-duplication with no player-visible change)
+
+OBSERVED, NOT A FINDING OF THIS LANE
+- sparkling-targe has the same double carrier: its subclass option has grantedFeats ['shield-block'], and FEAT_FEAT_GRANTS also has a 'sparkling-targe' row. No P02 finding covers it, so it was left alone.
+
+DATA STILL NEEDED
+(none)
+
+CROSS-FILE GAPS
+(none)
+
+CHECKED: the FEAT_FEAT_GRANTS readers (build.ts option grant loop plus the closure queue) still deliver Cat Fall once on a built aloof-firmament magus. The subclass-registry test still finds a subclass entry (alchemical-sciences-methodology comes first), and 19 class-feature keys remain against its floor of >10. No file under scripts/aon-verify names aloof-firmament.
+ASSUMED: the out-of-repo featfeat extractor will never be re-run. It is not on disk, so it cannot be.
+NOT TESTED: the full vitest suite (only the touched file plus the registry test were run) and the Builder UI.

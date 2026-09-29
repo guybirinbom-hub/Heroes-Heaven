@@ -130,6 +130,13 @@ const handEdited = new Set([
   'knowledge-is-power',
   'weapon-innovation',
   'reverse-engineer',
+  /* batch P02 (print lane), both edited in place against the remaster printing:
+   *   spirit-sheath (spirit-sheath#situational): AoN feat-9050 "A spirit sheath can hold up to 1 Bulk
+   *     worth of weapons" — the lane's "(one weapon of 1 Bulk or less)" was the legacy feat-2852 limit.
+   *   emergency-targe (emergency-targe#situational): AoN feat-9054's trigger is "An enemy you're aware
+   *     of hits you with a Strike or a spell attack" — the lane's "melee Strike or melee spell attack
+   *     roll" was the legacy feat-2855 trigger. */
+  'spirit-sheath', 'emergency-targe',
 ]);
 
 const src = readFileSync(REGISTRY, 'utf8');

@@ -1,0 +1,518 @@
+{
+ "batch": "work/print-batch-P02.json",
+ "examined": 60,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 14 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "art-collector",
+   "finding": "art-collector",
+   "severity": "player-visible",
+   "summary": "The printed daily-preparations art-object inspiration (+2 circumstance, or +1 on a repeat pick, to saves against mental effects for 24 hours) is not modelled: the record carries no daily `choice`, no `situational` entry, and nothing in src/",
+   "fixed": true
+  },
+  {
+   "id": "blooded-by-the-dead",
+   "finding": "blooded-by-the-dead",
+   "severity": "player-visible",
+   "summary": "The printed daily-preparations routine (Bolster the Blood / Fury / Mind) is not modelled: no daily `choice`, no grants (persistent bleed resistance 2), no `situational` entries, and nothing in src/rules or effect-backfill.json is keyed to b",
+   "fixed": true
+  },
+  {
+   "id": "curse-marked",
+   "finding": "curse-marked",
+   "severity": "player-visible",
+   "summary": "The printed +2 circumstance bonus (or -2 circumstance penalty while cursed) to counteract curses, save against curses and disable curse-inflicting hazards is not modelled: no `situational` entry on the record and nothing in src/rules or eff",
+   "fixed": true
+  },
+  {
+   "id": "friend-of-a-friend",
+   "finding": "friend-of-a-friend#lore",
+   "severity": "player-visible",
+   "summary": "Print trains a Lore skill of the player's choice (food or drink), but the record carries no Lore grant at all, so the character gets only Athletics and no Lore pick is ever offered.",
+   "fixed": true
+  },
+  {
+   "id": "friend-of-a-friend",
+   "finding": "friend-of-a-friend#situational",
+   "severity": "player-visible",
+   "summary": "Print grants a +2 circumstance bonus to saves against poison and disease and to checks to counteract poison or disease, but neither the record's situational field nor a SITUATIONAL_BONUSES entry keyed friend-of-a-friend exists, so the sheet",
+   "fixed": true
+  },
+  {
+   "id": "once-possessed",
+   "finding": "once-possessed#fiend-lore",
+   "severity": "player-visible",
+   "summary": "The printed Lore grant (Fiend Lore) is missing: the record carries trainedSkill intimidation but no trainedLore, so the sheet trains no Lore at all.",
+   "fixed": true
+  },
+  {
+   "id": "once-possessed",
+   "finding": "once-possessed#mental-saves",
+   "severity": "player-visible",
+   "summary": "The printed +2 circumstance bonus to saves against mental effects from fiends is not modelled on any carrier (no situational on the record, no src/rules/situationalBonuses.ts entry).",
+   "fixed": true
+  },
+  {
+   "id": "once-possessed",
+   "finding": "once-possessed#spiritual-scar",
+   "severity": "player-visible",
+   "summary": "The printed Spiritual Scar reaction (once per day, resistance to spirit damage from a fiend) is not delivered: no actions record exists and the background carries no grantsActions or limitedUses.",
+   "fixed": true
+  },
+  {
+   "id": "trusted-rival",
+   "finding": "trusted-rival#research-bonus",
+   "severity": "player-visible",
+   "summary": "The printed +2 circumstance bonus to Research checks about Bastardhall is not modelled on any carrier.",
+   "fixed": true
+  },
+  {
+   "id": "trusted-rival",
+   "finding": "trusted-rival#daily-prep-skill",
+   "severity": "player-visible",
+   "summary": "The printed daily-preparation pick (one skill treated as expert, master at 7th level, for Research checks on Bastardhall) has no carrier, so a player never sees the choice or its effect.",
+   "fixed": true
+  },
+  {
+   "id": "aloof-firmament",
+   "finding": "aloof-firmament#cascade-damage",
+   "severity": "player-visible",
+   "summary": "The Aloof Firmament increase to Arcane Cascade's extra damage (4 / 6 / 8 on the next one-handed sword Strike after a Fly, Leap, High Jump or Long Jump in the stance) has no carrier, so the sheet only ever shows the base stance's 1 / 2 / 3.",
+   "fixed": true
+  },
+  {
+   "id": "aloof-firmament",
+   "finding": "aloof-firmament#stance-movement",
+   "severity": "player-visible",
+   "summary": "The in-stance Quick Jump benefit and the rule that Fly / Leap / High Jump / Long Jump in Arcane Cascade do not trigger reactions are modelled nowhere, so a player sees neither on the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "aloof-firmament",
+   "finding": "aloof-firmament#cat-fall-condition",
+   "severity": "player-visible",
+   "summary": "Cat Fall is granted unconditionally, with no marker that Aloof Firmament's Cat Fall only works while not using a shield and wearing light or no armor.",
+   "fixed": true
+  },
+  {
+   "id": "aloof-firmament",
+   "finding": "aloof-firmament#cat-fall-duplicate",
+   "severity": "internal",
+   "summary": "Cat Fall is delivered for Aloof Firmament by two carriers: the subclass option's grantedFeats and the FEAT_FEAT_GRANTS row; the option loop runs first and adds it to takenFeats, so the FEAT_FEAT_GRANTS row is dead for this record.",
+   "fixed": true
+  },
+  {
+   "id": "resurgent-maelstrom",
+   "finding": "resurgent-maelstrom#stance-versatile",
+   "severity": "player-visible",
+   "summary": "The in-stance clause that an improvised weapon gains versatile traits for the damage types it doesn't normally deal is not carried by the Resurgent Maelstrom situational entry or anything else.",
+   "fixed": true
+  },
+  {
+   "id": "resurgent-maelstrom",
+   "finding": "resurgent-maelstrom#trait-already-present",
+   "severity": "player-visible",
+   "summary": "The riders for an improvised weapon that already has backstabber (double the precision damage) or forceful (count one more damage die) are dropped from the situational entry, which says only that the weapon gains the trait.",
+   "fixed": true
+  },
+  {
+   "id": "resurgent-maelstrom",
+   "finding": "resurgent-maelstrom#handwraps-name",
+   "severity": "player-visible",
+   "summary": "Our Resurgent Maelstrom text and descRef name the item \"Handwraps of Might Blows\", which is not the printed name and matches no item record, so the reference link cannot resolve.",
+   "fixed": true
+  },
+  {
+   "id": "sparkling-targe",
+   "finding": "sparkling-targe#description",
+   "severity": "player-visible",
+   "summary": "Our Sparkling Targe description is the pre-remaster (Secrets of Magic) text, not the Impossible Magic printing the record's aonId points to: it names magic missile instead of force barrage, words the trigger as 'as a result of a spell or ma",
+   "fixed": true
+  },
+  {
+   "id": "sparkling-targe",
+   "finding": "sparkling-targe#shield-block-magic",
+   "severity": "player-visible",
+   "summary": "The Arcane Cascade half of Sparkling Targe that changes Shield Block (non-physical spell damage can trigger it, and the shield's Hardness rises by the Arcane Cascade resistance) has no carrier: the record has no recordMarks and the only sit",
+   "fixed": true
+  },
+  {
+   "id": "starlit-span",
+   "finding": "starlit-span#spellstrike",
+   "severity": "player-visible",
+   "summary": "Starlit Span's ranged Spellstrike (a ranged weapon or ranged unarmed Strike within the first range increment, overriding the spell's range) has no carrier on the Spellstrike action; only the Arcane Cascade cover clause is marked.",
+   "fixed": true
+  },
+  {
+   "id": "twisting-tree",
+   "finding": "twisting-tree#staff-traits",
+   "severity": "player-visible",
+   "summary": "Twisting Tree's staff changes (one-handed: agile and a 1d6 die; two-handed: parry, reach and trip) are not modelled anywhere, so a Twisting Tree magus's staff Strike on the sheet keeps the plain staff's 1d4 non-agile profile and lacks reach",
+   "fixed": true
+  },
+  {
+   "id": "twofold-tine",
+   "finding": "twofold-tine#cascade-damage",
+   "severity": "player-visible",
+   "summary": "Twofold Tine's increased Arcane Cascade extra damage for the off-hand melee weapon (2, 4 with weapon specialization, 6 with greater) is not modelled, unlike the analogous Laughing Shadow increase, which has a strikeDamage situational entry.",
+   "fixed": true
+  },
+  {
+   "id": "unfurling-brocade",
+   "finding": "unfurling-brocade#two-handed-die",
+   "severity": "player-visible",
+   "summary": "The Qi-Infused Fabric Strike carries only the one-handed d4 option; the printed default is a bladed scarf (two-handed, d6) with the one-handed d4 as an option, so the two-handed d6 Strike is missing.",
+   "fixed": true
+  },
+  {
+   "id": "unfurling-brocade",
+   "finding": "unfurling-brocade#cascade-tricks",
+   "severity": "player-visible",
+   "summary": "Unfurling Brocade's Arcane Cascade tricks (grapple trait on the fabric, the flick after a critical Disarm, the 5-foot pull after a Grapple, Trip against a target two sizes larger) have no carrier on the actions they change.",
+   "fixed": true
+  },
+  {
+   "id": "volatile-spark",
+   "finding": "volatile-spark#spellstrike",
+   "severity": "player-visible",
+   "summary": "Volatile Spark's firearm Spellstrike (a ranged firearm Strike within the first range increment, and concussive firearms using the target's weakest resistance among the spell's type, piercing or bludgeoning) has no carrier on the Spellstrike",
+   "fixed": true
+  },
+  {
+   "id": "arcane-fists",
+   "finding": "arcane-fists#fist-die-and-arcane-trait",
+   "severity": "player-visible",
+   "summary": "Arcane Fists prints a d6 fist die and the arcane trait on every unarmed attack, but the record carries no unarmedTraits rider, so the Fist Strike stays 1d4 and no unarmed Strike gains arcane (the only carriers are critSpec/critSpecLevel/cri",
+   "fixed": true
+  },
+  {
+   "id": "maguss-analysis",
+   "finding": "maguss-analysis#recharge-unconditional",
+   "severity": "player-visible",
+   "summary": "Our description is the LEGACY Secrets of Magic text (feat-2847), which makes the Spellstrike recharge conditional on a successful check; the remaster record (aonId feat-9045, edition remaster) prints the recharge unconditionally, right afte",
+   "fixed": true
+  },
+  {
+   "id": "enhanced-familiar",
+   "finding": "enhanced-familiar#ability-budget",
+   "severity": "player-visible",
+   "summary": "Enhanced Familiar raises the familiar's daily abilities from two to four (witch: plus the witch's bonus abilities; wizard with improved familiar attunement: base four), but nothing reads the feat: familiarAbilityBudget in src/rules/companio",
+   "fixed": true
+  },
+  {
+   "id": "spirit-sheath",
+   "finding": "spirit-sheath#description",
+   "severity": "player-visible",
+   "summary": "Our description is the legacy Secrets of Magic text (feat-2852) on the remaster Impossible Magic record feat-9050: it says the sheath holds only one weapon and uses a fixed counteract rank of 1, where print allows up to 1 Bulk worth of weap",
+   "fixed": true
+  },
+  {
+   "id": "spirit-sheath",
+   "finding": "spirit-sheath#situational",
+   "severity": "player-visible",
+   "summary": "The situational Stealth entry's condition text repeats the legacy one-weapon limit, contradicting print's up to 1 Bulk worth of weapons.",
+   "fixed": true
+  },
+  {
+   "id": "devastating-spellstrike",
+   "finding": "devastating-spellstrike",
+   "severity": "player-visible",
+   "summary": "Our description is the legacy Secrets of Magic text (feat-2853) on the remaster record feat-9052: it requires Arcane Cascade stance and deals splash damage 2 + Arcane Cascade damage to adjacent foes, where print requires only a charged Spel",
+   "fixed": true
+  },
+  {
+   "id": "distracting-spellstrike",
+   "finding": "distracting-spellstrike#description",
+   "severity": "player-visible",
+   "summary": "Our description is the legacy Secrets of Magic text (feat-2854) on the remaster record feat-9053, pinned by an effect-backfill row: it requires Arcane Cascade stance instead of a charged Spellstrike, adds the illusion trait to the Feint, an",
+   "fixed": true
+  },
+  {
+   "id": "distracting-spellstrike",
+   "finding": "distracting-spellstrike#deception-bonus",
+   "severity": "player-visible",
+   "summary": "Print grants a status bonus to the Feint's Deception check equal to the Arcane Cascade extra damage while in Arcane Cascade stance; no situational entry (or other carrier) delivers it, so the Deception line never shows it.",
+   "fixed": true
+  },
+  {
+   "id": "emergency-targe",
+   "finding": "emergency-targe#description",
+   "severity": "player-visible",
+   "summary": "Our description is the legacy Secrets of Magic trigger (feat-2855) on the remaster record feat-9054: it limits the trigger to a melee Strike or melee spell attack roll, where print triggers on any Strike or spell attack by an enemy you're a",
+   "fixed": true
+  },
+  {
+   "id": "emergency-targe",
+   "finding": "emergency-targe#situational",
+   "severity": "player-visible",
+   "summary": "The situational AC entry's condition repeats the legacy melee-only trigger, so a player reading the AC line would think the reaction cannot answer a ranged Strike or ranged spell attack, which print allows.",
+   "fixed": true
+  },
+  {
+   "id": "recharging-flurry",
+   "finding": "recharging-flurry#map",
+   "severity": "player-visible",
+   "summary": "Recharging Flurry prints its own multiple attack penalty for the second Strike (-4/-8, agile -3/-6, when it targets a creature not yet attacked this turn), but the record carries no mapReduction, so the strike row and its MAP breakdown show",
+   "fixed": true
+  },
+  {
+   "id": "exploding-bullet",
+   "finding": "exploding-bullet#splash",
+   "severity": "player-visible",
+   "summary": "Exploding Bullet's round changes the firearm Strike (gains scatter 5 feet, or +1 status bonus to splash damage if it already has scatter, splash of the chosen fire/sonic type, plus the arcane and energy traits), but no situational entry put",
+   "fixed": true
+  },
+  {
+   "id": "heaven-earth-encompassing-sleeves",
+   "finding": "heaven-earth-encompassing-sleeves#sleeves-item",
+   "severity": "player-visible",
+   "summary": "The feat's benefit IS an item (the prepared clothing becomes sleeves of storage, greater sleeves of storage from 9th level) but the record carries no grantsItems, so nothing reaches the inventory: no container, no ignored Bulk for what the ",
+   "fixed": true
+  },
+  {
+   "id": "exploding-bullet",
+   "finding": "exploding-bullet#description-header",
+   "severity": "player-visible",
+   "summary": "Our flat description opens with the page header (name, Source line, Prerequisites) that the record's own name/source/prerequisites fields already deliver, so the Feats & Features preview reads 'Exploding Bullet Source Impossible Magic pg. 1",
+   "fixed": true
+  },
+  {
+   "id": "recharging-flurry",
+   "finding": "recharging-flurry#description-header",
+   "severity": "player-visible",
+   "summary": "Our flat description opens with the page header (name, Source line, Prerequisites) that the record's own name/source/prerequisites fields already deliver, so the list preview repeats them before the rules text.",
+   "fixed": true
+  },
+  {
+   "id": "running-recharge",
+   "finding": "running-recharge#description-header",
+   "severity": "player-visible",
+   "summary": "Our flat description opens with the page header (name and Source line) that the record's own name/source fields already deliver, so the list preview repeats them before the rules text.",
+   "fixed": true
+  },
+  {
+   "id": "shattering-spellstrike",
+   "finding": "shattering-spellstrike",
+   "severity": "player-visible",
+   "summary": "Our description drops the damage type from the printed extra damage: print says 2d6 FORCE damage, ours says 2d6 damage (the @Damage cleaner class that strips inline values).",
+   "fixed": true
+  },
+  {
+   "id": "steady-spellcasting-magus",
+   "finding": "steady-spellcasting-magus",
+   "severity": "player-visible",
+   "summary": "Our description deletes the flat-check DC: print says a DC 15 flat check, ours says only 'attempt a check', so the player cannot tell what to roll.",
+   "fixed": true
+  },
+  {
+   "id": "strikers-scroll",
+   "finding": "strikers-scroll#affix",
+   "severity": "player-visible",
+   "summary": "The feat lets a scroll be affixed to a weapon or handwraps of mighty blows with Affix a Talisman, but our attach lane (src/rules/attachments.ts isAttachable/planAttach) only accepts talismans, spellhearts, banners and affixed-usage items, a",
+   "fixed": true
+  },
+  {
+   "id": "strikers-scroll",
+   "finding": "strikers-scroll#prose",
+   "severity": "player-visible",
+   "summary": "The record's aonId is the remaster printing (feat-9059, Impossible Magic) but its description is the legacy feat-2858 prose ('assuming the spell is one you could normally use', a hyphen in 'crumpled-scroll'), so R12 (newest printing wins, w",
+   "fixed": true
+  },
+  {
+   "id": "practical-magic-impossible-magic",
+   "finding": "practical-magic-impossible-magic",
+   "severity": "player-visible",
+   "summary": "The feat grants two temporary spell catalysts at each daily preparation (item level at most half your level), but the record carries no dailyTemporaryItems entry, so the Rest sheet offers nothing; the carrier and catalyst-trait items (150 i",
+   "fixed": true
+  },
+  {
+   "id": "dimensional-assault",
+   "finding": "dimensional-assault#prose",
+   "severity": "player-visible",
+   "summary": "Our description is the legacy Secrets of Magic text (spell-1037, pg. 143) on a remaster record whose own aonId spell-2877 prints different rules: the Strike must target the enemy you teleported next to, the space must be one you can see, br",
+   "fixed": true
+  },
+  {
+   "id": "force-fang",
+   "finding": "force-fang#prose",
+   "severity": "player-visible",
+   "summary": "Our description is the legacy Secrets of Magic text (spell-1038) on a remaster record whose own aonId spell-2878 prints the rewritten Impossible Magic body (target within your melee reach; no 'replacing all its normal statistics and abiliti",
+   "fixed": true
+  },
+  {
+   "id": "booming-blast",
+   "finding": "booming-blast#cast",
+   "severity": "player-visible",
+   "summary": "The record has no cast field, so the printed single-action cost never shows (no action glyph on the focus-spell card, empty Cast row in the detail, excluded from the cast-time filter).",
+   "fixed": true
+  },
+  {
+   "id": "booming-blast",
+   "finding": "booming-blast#defense",
+   "severity": "player-visible",
+   "summary": "The printed Will save against the spell DC and the 20-foot emanation are carried only in prose; the record has no save or area field, so the detail's Defense and Area rows are empty and save/area filters miss it, unlike its sibling conflux ",
+   "fixed": true
+  },
+  {
+   "id": "force-fling",
+   "finding": "force-fling#cast",
+   "severity": "player-visible",
+   "summary": "The record has no cast field, so the printed single-action cost never shows (no action glyph on the focus-spell card, empty Cast row in the detail, excluded from the cast-time filter).",
+   "fixed": true
+  },
+  {
+   "id": "shielding-strike",
+   "finding": "shielding-strike",
+   "severity": "player-visible",
+   "summary": "Our description is the legacy Secrets of Magic text (spell-1041), which orders the Strike FIRST and the shield AFTER; the remaster printing (spell-2882) reverses it, so a player reading ours raises the shield at the wrong time relative to t",
+   "fixed": true
+  },
+  {
+   "id": "shooting-star",
+   "finding": "shooting-star",
+   "severity": "player-visible",
+   "summary": "The printed Requirements line is absent: the record has no requirements carrier and the description does not include it (sky-laughs-at-waves and 14 other spells carry it inline), so the sheet never tells the player the spell needs a ranged ",
+   "fixed": true
+  },
+  {
+   "id": "spinning-staff",
+   "finding": "spinning-staff",
+   "severity": "player-visible",
+   "summary": "The printed Requirements line is absent from both the record and the description, so the player is never told the spell needs a wielded staff; the body is the legacy spell-1043 wording (\"with a twirling flourish\" instead of \"with an impossi",
+   "fixed": true
+  },
+  {
+   "id": "thunderous-strike",
+   "finding": "thunderous-strike#requirements",
+   "severity": "player-visible",
+   "summary": "The printed Requirements line is absent from both the record and the description, so the player is never told the spell needs a melee weapon wielded in two hands.",
+   "fixed": true
+  },
+  {
+   "id": "thunderous-strike",
+   "finding": "thunderous-strike#heightened-damage",
+   "severity": "player-visible",
+   "summary": "The record carries heightening {type:interval, interval:1, damageIncr:\"1\"} but no baseDamage, so scaleDamage (src/rules/heightening.ts:116-117 returns null when baseDamage is absent) never scales it and the auto-heightened focus-spell view ",
+   "fixed": true
+  },
+  {
+   "id": "conjurers-countermeasure",
+   "finding": "conjurers-countermeasure#cast-duration",
+   "severity": "player-visible",
+   "summary": "Our remaster Conjurer's Countermeasure spell record has no cast and no duration (and no level), so the spell card's Cast row shows no action glyph, the action-cost filter cannot find it, and the Duration row is absent, although print gives ",
+   "fixed": true
+  },
+  {
+   "id": "conjurers-countermeasure",
+   "finding": "conjurers-countermeasure#description",
+   "severity": "player-visible",
+   "summary": "Our Conjurer's Countermeasure description begins with scraped header lines (name, source, duration) as body text and runs the Heightened entry into the last paragraph without the separator/bold every other spell uses.",
+   "fixed": true
+  },
+  {
+   "id": "turbulent-tide",
+   "finding": "turbulent-tide#requirements",
+   "severity": "player-visible",
+   "summary": "The printed Requirements line of Turbulent Tide (wielding an improvised weapon) appears nowhere on our record or in its description, so the spell card never states when it can be cast.",
+   "fixed": true
+  },
+  {
+   "id": "cascade-countermeasure",
+   "finding": "cascade-countermeasure#requirements",
+   "severity": "player-visible",
+   "summary": "The printed Requirements line of the legacy Cascade Countermeasure (you must be benefiting from Arcane Cascade) appears nowhere on our record or in its description.",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "inexorable-iron",
+   "finding": "inexorable-iron",
+   "summary": "Inexorable Iron's only mechanic, temporary Hit Points equal to half your level on entering Arcane Cascade and at the start of each turn in it while wielding a melee weapon in two hands, has no carrier",
+   "evidence": "public/core.json modes['inexorable-iron'] (from scripts/data/toggle-modes.json:2211) is a gated toggle, feats ['inexorable-iron'], duration 'while in Arcane Cascade', note 'Wielding a melee weapon in two hands: temporary HP equal to half your level (minimum 1) on entering Arcane Cascade and at the s"
+  },
+  {
+   "id": "sparkling-targe",
+   "finding": "sparkling-targe#shield-block-duplicate",
+   "summary": "Shield Block is delivered for Sparkling Targe by two carriers at once: the magus subclass option's grantedFeats and a FEAT_FEAT_GRANTS row keyed on the same id; the takenFeats dedupe hides it today, b",
+   "evidence": "Both carriers exist (option grantedFeats read at build.ts 5675/4591; featFeatGrants.ts 776 read by the queue seeded with classFeatureIdsOwned at ~6036), but the printed 'You gain the general Shield Block feat' is delivered exactly once, so there is no divergence from print and nothing player-visible"
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "flaggedResidue: Practical Magic's common-only clause needs BOTH a filter.rarity key (src/rules/types.ts + dailyItemOptions in src/rules/dailyItems.ts) AND a superseding feats/practical-magic-impossible-magic dailyTemporaryItems row; that row cannot ride this batch because work/.bP02-rows-data-rows-3.json already writes the same key and the driver's apply precheck (1) hard-refuses two rows on one key, and an engine key with no writer would be dead code. Next batch: the key plus a supersedes:true row (talisman-dabbler-dedication carries the same residual). Until then the picker note says common only.",
+   "finding": "flaggedResidue: Practical Magic's common-only clause needs BOTH a filter.rarity key (src/rules/types.ts + dailyItemOptions in src/rules/dailyItems.ts) AND a superseding feats/practical-magic-impossible-magic dailyTemporaryItems row; that row cannot ride this batch because work/.bP02-rows-data-rows-3.json already writes the same key and the driver's apply precheck (1) hard-refuses two rows on one key, and an engine key with no writer would be dead code. Next batch: the key plus a supersedes:true row (talisman-dabbler-dedication carries the same residual). Until then the picker note says common only.",
+   "severity": "internal",
+   "summary": "ENGINE (small): dailyTemporaryItems.filter has no rarity key (src/rules/types.ts + src/rules/dailyItems.ts dailyItemOptions), so Practical Magic's \"all common spell catalysts\" is carried only by the picker note; uncommon/rare catalysts at or below the level cap still appear in the picker (the same residual talisman-dabbler-dedication already carries).",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: a Spell.requirements field + SpellsTab stat row + importer fill is an optional engine-shape upgrade (the finding's own 'better for the family' half) that only takes effect through npm run data, which no batch agent may run; the defect it would fix is now held by scripts/spell-print-lines-check.mjs `requirements` - the five P02 spells show their printed Requirements inline, and the 18 other spells whose page prints one and whose record shows it nowhere are listed in scripts/data/spell-print-lines-baseline.json, so none can be added and each must be removed when fixed",
+   "finding": "flaggedResidue: a Spell.requirements field + SpellsTab stat row + importer fill is an optional engine-shape upgrade (the finding's own 'better for the family' half) that only takes effect through npm run data, which no batch agent may run; the defect it would fix is now held by scripts/spell-print-lines-check.mjs `requirements` - the five P02 spells show their printed Requirements inline, and the 18 other spells whose page prints one and whose record shows it nowhere are listed in scripts/data/spell-print-lines-baseline.json, so none can be added and each must be removed when fixed",
+   "severity": "internal",
+   "summary": "Spell requirements carrier (turbulent-tide#requirements / cascade-countermeasure#requirements \"better for the family\"): a Spell.requirements field in src/rules/types.ts, a Requirements stat row in src/sheet/SpellsTab.tsx SpellDetail and an importer fill from the mirror's `requirement` for all 44 spells - src/ and scripts/ are outside this chunk; engine family. This chunk shipped the inline **Requ…",
+   "fixed": false,
+   "family": "data-rows-4",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: src/data/trust-ledger.json is re-stamped by the driver's --stage close after the rows apply, and the generator already takes backgrounds/trusted-rival off `partly` through onRegistry (scripts/trust-ledger.mjs:591; the fresh ledger test/trust-ledger.test.ts builds shows it gone), so nothing is left to author before the re-stamp; test/batchP02-gap-situational.test.ts:79 checks the re-stamped result",
+   "finding": "flaggedResidue: src/data/trust-ledger.json is re-stamped by the driver's --stage close after the rows apply, and the generator already takes backgrounds/trusted-rival off `partly` through onRegistry (scripts/trust-ledger.mjs:591; the fresh ledger test/trust-ledger.test.ts builds shows it gone), so nothing is left to author before the re-stamp; test/batchP02-gap-situational.test.ts:79 checks the re-stamped result",
+   "severity": "internal",
+   "summary": "scripts/lib/background-print.mjs (trust ledger) reads only record fields, so backgrounds/trusted-rival stays \"partly: its daily-preparation choice, its situational bonuses\" in src/data/trust-ledger.json even with the code star; the ledger re-stamp after this batch should be read for that key (the data-rows research-bonus row sets a record field, which clears it through otherRulesEncoded).",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: print-verified stars on trust-gated records render dark until the trust generator's print-ledger source exists (docs/trust-gate.md:300, 'The print-read lane (later) adds a print-ledger source'), which is unbuilt; the only other route back is scripts/data/trust-approvals.json, an owner desk file no agent writes. Needs the orchestrator: build the print-ledger source (engine task), not a per-record fix",
+   "finding": "flaggedResidue: print-verified stars on trust-gated records render dark until the trust generator's print-ledger source exists (docs/trust-gate.md:300, 'The print-read lane (later) adds a print-ledger source'), which is unbuilt; the only other route back is scripts/data/trust-approvals.json, an owner desk file no agent writes. Needs the orchestrator: build the print-ledger source (engine task), not a per-record fix",
+   "severity": "internal",
+   "summary": "src/data/trust-ledger.json lanes.situational currently lists spirit-sheath and emergency-targe, so under the trust gate their (now corrected) shipped stars stay dark until the ledger re-stamp; the new keys (trusted-rival, aloof-firmament, twisting-tree, twofold-tine, distracting-spellstrike, exploding-bullet) are scraped by scripts/trust-ledger.mjs at the next re-stamp and may be gated the same w…",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the importer-side strip is a lane, not a gap - 1,764 shipped records in nine buckets from more than seventy books (not only Impossible Magic) open with the scraped '<Name>\\nSource' header; the strip belongs in the import chain (pageProse() in scripts/import-siege-and-gaps.mjs is the model) and only lands through npm run data, which this workflow forbids. The class is held shut meanwhile by scripts/description-header-check.mjs (non-spell buckets, 1,544-record baseline, in npm run verify) and scripts/spell-print-lines-check.mjs (spells).",
+   "finding": "flaggedResidue: the importer-side strip is a lane, not a gap - 1,764 shipped records in nine buckets from more than seventy books (not only Impossible Magic) open with the scraped '<Name>\\nSource' header; the strip belongs in the import chain (pageProse() in scripts/import-siege-and-gaps.mjs is the model) and only lands through npm run data, which this workflow forbids. The class is held shut meanwhile by scripts/description-header-check.mjs (non-spell buckets, 1,544-record baseline, in npm run verify) and scripts/spell-print-lines-check.mjs (spells).",
+   "severity": "internal",
+   "summary": "SCRIPTS (lane-wide): the importer path that built the Impossible Magic feats left the page header (\"<Name>\\nSource ... pg. N\\nPrerequisites ...\") on the flat description; strip it the way pageProse() in scripts/import-siege-and-gaps.mjs does, and add a verify guard that no description starts with \"<record name>\\nSource \" (870 records today). This chunk fixed only exploding-bullet, recharging-flur…",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: Practical Magic's common-only clause (16 uncommon/rare catalysts at or below the level-4 cap still offered) needs BOTH a filter.rarity key (src/rules/types.ts + dailyItemOptions in src/rules/dailyItems.ts) AND a superseding feats/practical-magic-impossible-magic dailyTemporaryItems row; that row cannot ride this batch because work/.bP02-rows-data-rows-3.json already writes the same key and the driver's apply precheck (1) hard-refuses two rows on one key, and an engine key with no writer would be dead code. Next batch: the key plus a supersedes:true row (talisman-dabbler-dedication carries the same residual).",
+   "finding": "flaggedResidue: Practical Magic's common-only clause (16 uncommon/rare catalysts at or below the level-4 cap still offered) needs BOTH a filter.rarity key (src/rules/types.ts + dailyItemOptions in src/rules/dailyItems.ts) AND a superseding feats/practical-magic-impossible-magic dailyTemporaryItems row; that row cannot ride this batch because work/.bP02-rows-data-rows-3.json already writes the same key and the driver's apply precheck (1) hard-refuses two rows on one key, and an engine key with no writer would be dead code. Next batch: the key plus a supersedes:true row (talisman-dabbler-dedication carries the same residual).",
+   "severity": "internal",
+   "summary": "ENGINE (small): dailyTemporaryItems.filter has no rarity key (src/rules/types.ts + src/rules/dailyItems.ts dailyItemOptions), so Practical Magic's \"all common spell catalysts\" is note-only; 16 uncommon/rare catalysts at or below the level-4 cap still appear in the picker (same residual as talisman-dabbler-dedication).",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: a Spell.requirements field + SpellsTab stat row + importer fill is an optional engine-shape upgrade (the finding's own 'better for the family' half) that only takes effect through npm run data, which no batch agent may run; its verify-check half is built - scripts/spell-print-lines-check.mjs `requirements` fails on any new spell whose page prints a Requirements line the record shows nowhere, with the 18 existing ones listed in scripts/data/spell-print-lines-baseline.json",
+   "finding": "flaggedResidue: a Spell.requirements field + SpellsTab stat row + importer fill is an optional engine-shape upgrade (the finding's own 'better for the family' half) that only takes effect through npm run data, which no batch agent may run; its verify-check half is built - scripts/spell-print-lines-check.mjs `requirements` fails on any new spell whose page prints a Requirements line the record shows nowhere, with the 18 existing ones listed in scripts/data/spell-print-lines-baseline.json",
+   "severity": "internal",
+   "summary": "Spell.requirements carrier (optional, the \"better for the family\" half of turbulent-tide#requirements / cascade-countermeasure#requirements): a Spell.requirements field (src/rules/types.ts), a Requirements stat row in SpellsTab SpellDetail, an importer fill from the mirror's `requirement` for all 44 spells, and a verify check. This chunk's six spells are served by inline prose meanwhile.",
+   "fixed": false,
+   "family": "data-rows-4",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: same as the lanes.situational line - spirit-sheath, emergency-targe, distracting-spellstrike and exploding-bullet stay dark under trustGate until the unbuilt print-ledger source of scripts/trust-ledger.mjs lands (docs/trust-gate.md:300); trust-approvals.json is the owner's desk file and no agent writes it. Needs the orchestrator",
+   "finding": "flaggedResidue: same as the lanes.situational line - spirit-sheath, emergency-targe, distracting-spellstrike and exploding-bullet stay dark under trustGate until the unbuilt print-ledger source of scripts/trust-ledger.mjs lands (docs/trust-gate.md:300); trust-approvals.json is the owner's desk file and no agent writes it. Needs the orchestrator",
+   "severity": "internal",
+   "summary": "Trust gate (needs the orchestrator): after the close-stage ledger re-stamp, lanes.situational will list distracting-spellstrike and exploding-bullet beside the already-listed spirit-sheath and emergency-targe, so these four print-verified stars render DARK on the default app (trustGate on). Only a scripts/data/trust-approvals.json entry (owner desk ruling) brings a conditional kind back; no agent…",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  }
+ ],
+ "rejected": 2,
+ "askOwner": [],
+ "complete": true
+}

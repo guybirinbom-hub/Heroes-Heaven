@@ -12,6 +12,7 @@ import {
   eidolonCantripSlots,
   huntersEdgeName,
   familiarAbilityBudget,
+  familiarFeatRaise,
   type AnimalCompanionBlock,
   type EidolonBlock,
   type FamiliarBlock,
@@ -1853,6 +1854,11 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
   const block = renderBlock(current);
   const canEdit = editable(current);
   const grant = current.grantSlug ? FEAT_COMPANION_GRANTS[current.grantSlug] : undefined;
+  // batch P02: enhanced-familiar#ability-budget. The grant's `note` is static ("Choose 2 familiar
+  // abilities"), so once Enhanced Familiar ("four ... instead of two", feat-4717) raises the budget the
+  // note and the "of 4 chosen" chip would disagree — say which feat raised it and to what.
+  const featRaise = current.kind === 'familiar' ? familiarFeatRaise(current, character) : { add: 0 };
+  const raisedTo = featRaise.add ? familiarAbilityBudget(current, character) : undefined;
   const currentOffer = current.offerSlug ? CREATURE_OFFERS[current.offerSlug] : undefined;
 
   return (
@@ -1923,7 +1929,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
             <div className="cmp-grantnote">
               {/* NAME the record. `kindMeta` gives the generic title ("Familiar"), so a player holding
                   two grants had no way to tell which one put this card here. */}
-              <i className="ti ti-info-circle" aria-hidden="true" /> <span>Granted by {grant.label}. {grant.note}</span>
+              <i className="ti ti-info-circle" aria-hidden="true" /> <span>Granted by {grant.label}. {grant.note}{raisedTo != null ? ` Your ${featRaise.by} feat raises the number you choose to ${raisedTo}.` : ''}</span>
             </div>
           )}
           {/* Not "granted": the record only made this addable. The player put it here when it happened

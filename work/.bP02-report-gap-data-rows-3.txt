@@ -1,0 +1,31 @@
+PRINT BATCH P02 - GAP agent, family data-rows-3 (9 gap lines: 6 AUTHORED, 3 PARKED, 0 open)
+Spec: work/.bP02-rows-gap-data-rows-3.json (manifest entry family "gap-data-rows-3")   Tests: test/batchP02-gap-data-rows-3.test.ts
+
+PER GAP LINE
+- AUTHORED work/.bP02-rows-gap-data-rows-3.json (gaps.json, report-data-rows-3.txt:8, grantsItems level gate) - finding heaven-earth-encompassing-sleeves#sleeves-item: src/rules/types.ts grantsItems[].minLevel/maxLevel + src/rules/build.ts grantInLevelWindow on every grantsItems carrier, and the row feats/heaven-earth-encompassing-sleeves grantsItems [{sleeves-of-storage, worn, maxLevel 8}, {sleeves-of-storage-greater, worn, minLevel 9}] (AoN feat-7082 "At 9th level, the clothing becomes greater sleeves of storage instead").
+- AUTHORED scripts/description-header-check.mjs (report-data-rows-3.txt:9, the verify-guard half of the page-header line) - findings exploding-bullet#description-header / recharging-flurry#description-header / running-recharge#description-header: a new guard in npm run verify fails on any NEW non-spell record whose description opens "<Name>\nSource ", baseline scripts/data/description-header-baseline.json (1,544 records, measured with every P02 spec's description rows applied in memory); the importer half is the PARKED line below.
+- AUTHORED scripts/spell-print-lines-check.mjs (report-data-rows-3.txt:10, spell cast guard) - built by the gap-data-rows-4 agent for its own identical lines (conjurers-countermeasure#cast-duration / #description): it fails on a NEW spell whose mirror doc prints actions and that carries no cast, and on a NEW spell description opening with the header; booming-blast and force-fling are in its header baseline and out of its cast baseline once data-rows-3's cast rows land. Not written by me - I checked it exists, is wired into npm run verify, and covers both records.
+- PARKED flaggedResidue (report-data-rows-3.txt:11, dailyTemporaryItems rarity key) - the common-only clause needs an engine key AND a superseding practical-magic-impossible-magic dailyTemporaryItems row; that row cannot go in this batch because data-rows-3's own spec already writes the same key (the driver's precheck (1) hard-refuses two rows on one key), and an engine key nothing writes would be dead code.
+- AUTHORED work/.bP02-rows-gap-data-rows-3.json (verify-data-rows-3.txt:44) - same as the first line (the verifier's copy): the level gate and the heaven-earth-encompassing-sleeves#sleeves-item row.
+- PARKED flaggedResidue (verify-data-rows-3.txt:45, importer strip) - measured 1,764 shipped records in nine buckets from more than seventy books, not an Impossible Magic quirk; the strip belongs in the import chain and only lands through npm run data, which this workflow forbids. The class is held shut meanwhile by the two guards above.
+- AUTHORED scripts/spell-print-lines-check.mjs (verify-data-rows-3.txt:46) - same as the spell cast guard line above (the verifier's copy).
+- PARKED flaggedResidue (verify-data-rows-3.txt:47) - same as the rarity line above (the verifier's copy, 16 uncommon/rare catalysts still offered at the level-4 cap).
+- AUTHORED work/.bP02-rows-gap-data-rows-3.json (verify-data-rows-3.txt:48, moved-prose baseline) - finding force-fang#prose: a codeEdit in the spec removes "spells/force-fang" from scripts/data/moved-prose-baseline.json, so the driver's apply lands it in the same pass as data-rows-3's force-fang#prose row and reprint-check CHECK 8 sees both together (CRLF kept; find matches once, replace once).
+
+No settle and no comparer teach was written. No owner question was queued (work/.bP02-queue.json untouched).
+
+CHECKED
+- node scripts/vt.mjs run test/batchP02-gap-data-rows-3.test.ts: 9/9 green. Five build real unfurling-brocade magi with the row's exact value patched in memory: lesser sleeves only at 4 and 8, greater only at 9 and 15, worn; an ungated copy hands a 4th-level magus BOTH (which is how the tests fail with the gate reverted); no sleeves without the feat. Four pin the header guard on a fixture, plus the baseline leaving out the three P02-fixed feats and all spells.
+- npx tsc --noEmit clean. node scripts/test-flip-audit.mjs --batch P02: clean, every flip cited.
+- node scripts/description-header-check.mjs: exits 1 today on exactly exploding-bullet / recharging-flurry / running-recharge (their rows are not applied yet); with --pending on every P02 spec it exits 0 at 1,544 = baseline.
+- Line endings kept: src/rules/build.ts, src/rules/types.ts, package.json all CRLF-only before and after. The moved-prose edit's find and replace each occur exactly once in the target file. Both granted item ids and the feat exist in core.json; no overlay row or other P02 spec writes feats/heaven-earth-encompassing-sleeves grantsItems.
+
+ASSUMED
+- That the driver applies the manifest in order, so data-rows-3's force-fang#prose row and my baseline edit land in the same apply pass before verify runs (wg-batch-run.mjs stageApply walks the manifest in order and verify is a later stage).
+- That no gap spec written after I measured adds a description row stripping the header from a non-spell record. If one does, description-header-check.mjs names it after apply ("remove the entry") and the fix is deleting that one line from the baseline.
+- That leaving `invested` unset on the granted sleeves is right: both items carry the invested trait, and nothing in the feat says the clothing arrives already invested.
+
+NOT TESTED
+- The applier's own dry run (node scripts/apply-parity-fixes.mjs on the gap spec) was blocked by this session's permission layer, so I checked the row's why (it cites feat-7082) and the edit's find uniqueness by hand instead.
+- The Inventory tab UI for the granted sleeves. The full npm run verify chain was not run; only the new guard, alone.
+- graphify update was not run (a workflow agent; it would touch files outside the manifest).

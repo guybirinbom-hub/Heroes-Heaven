@@ -1,0 +1,79 @@
+batch P02 - VERIFY data-rows-2 (chunk 2 of 4 of the data-rows family)
+verifier read: work/.bP02-read.json (all 12 findings, all CONFIRMED), work/.bP02-report-data-rows-2.txt, work/.bP02-rows-data-rows-2.json,
+the AoN mirror docs hybrid-study-8/12/13/16 and feat-9044/9045/9050/9052/9053/9054/9056, and the readers (explain.ts recordMarkersFor +
+recordMarksFor, MainTab actionId, FeatsTab 'feature' marks, derive.ts applyUnarmedRiders / mapNotesFor / mapStepFor, build.ts
+collectGrantedNaturals / sameNaturalAttack / deriveBuildFromCharacter).
+
+HOW IT WAS CHECKED
+- A throwaway jiti harness applied all 12 rows to the content in memory and built real magi (level 1/3/5): every mark, Strike and MAP
+  note came out as the builder reported. A second harness built a magus with the SHIPPED fabric row, then rebuilt that saved character
+  with the spec rows (deriveBuildFromCharacter -> buildCharacter). That exposed the one defect below. Both harnesses are deleted.
+- The applier's added-prose check (apply-parity-fixes.mjs unbackedRun) was reproduced read-only against the mirror: all 5 description
+  rows ok (no unbacked 3-word run). The applier itself was NOT run (any apply-*.mjs is prohibited to this agent).
+- Overlay keys: starlit-span recordMarks, unfurling-brocade grantedStrikes and distracting-spellstrike description already sit in
+  effect-backfill.json and carry supersedes:true; the other 9 keys are absent from the overlay and carry no supersedes flag. Correct.
+- The superseded starlit-span mark is carried through byte-identical as entry 1. The superseded fabric row keeps its traits, group and
+  damage type (die now bare, see below). The superseded distracting-spellstrike row's only job, plain "Feint", is carried through.
+- Collisions: no record+field+path key in this spec appears in data-rows-1/3/4, engine, repair or situational. Same-record rows in
+  siblings use other fields (sparkling-targe description/descRefs and classes/magus options in data-rows-1, recharging-flurry
+  description in data-rows-3, situational entries for distracting-spellstrike/emergency-targe/spirit-sheath in situational).
+- Target ids exist: classFeatures sparkling-targe/starlit-span/unfurling-brocade/volatile-spark, feats arcane-fists/maguss-analysis/
+  spirit-sheath/devastating-spellstrike/distracting-spellstrike/emergency-targe/recharging-flurry, feats/shield-block (reaction),
+  actions spellstrike/arcane-cascade/disarm/grapple/trip. No created records, so no created-prose spec is needed.
+- node scripts/vt.mjs test/batchP02-data-rows-2.test.ts: 19 tests. 13 red, each a shipped pin whose row has not landed yet. 6 green:
+  the 2 builder controls plus the 4 cases I added (patched in memory, so they hold before and after the driver applies).
+  npx tsc --noEmit clean. node scripts/test-flip-audit.mjs --batch P02: clean.
+
+VERDICTS
+sparkling-targe#shield-block-magic - DONE. On a built Sparkling Targe magus, recordMarkersFor gives the hybrid-study-12 note on both
+  feature:shield-block and action:shield-block. That is the paired shape paragon-battle-medicine and return-fire already ship.
+starlit-span#spellstrike - DONE. action:spellstrike carries the ranged Spellstrike clause. The batch 039 arcane-cascade mark is kept
+  unchanged. A twisting-tree magus gets no mark.
+unfurling-brocade#two-handed-die - FIXED-BY-ME. The mechanic worked on a fresh build (1d6+1 S and 1d4+1 S). But the builder renamed
+  the default grip "Qi-Infused Fabric (two hands)", and that broke existing saves. A magus saved before the row stores
+  {name:'Qi-Infused Fabric', die:'1d4'}. sameNaturalAttack matches a stored attack only by name or by the same die string, and '1d4'
+  never equals 'd4'. So after the row, the rebuilt save showed THREE fabric Strikes, one reading "11d4+1 S" (measured). The fix: the
+  default two-handed d6 grip keeps the shipped name "Qi-Infused Fabric", and the option stays "Qi-Infused Fabric (one hand)" d4. The
+  spec row, its why and its note are updated. The builder's two tests now use the new name. I added "a magus saved with the old
+  single fabric row rebuilds to exactly the two printed grips" (both states patched in memory; it gave 3 rows with the builder's
+  naming).
+unfurling-brocade#cascade-tricks - DONE. Marks on action:disarm, action:grapple and action:trip, each gated "While in Arcane Cascade
+  stance". The notes are verbatim hybrid-study-8.
+volatile-spark#spellstrike - DONE. action:spellstrike carries the hybrid-study-16 firearm range clause and the concussive
+  weakest-resistance clause, plus the printed limit to creatures you target with the firearm Strike. The grantsActions row is untouched.
+arcane-fists#fist-die-and-arcane-trait - DONE. unarmedTraits [{match:['fist'],setDie:'d6'},{add:['arcane']}] reaches the Strike. A
+  magus with the feat has Fist 1d6+1 B with traits agile, finesse, nonlethal, unarmed, arcane. Without the feat: 1d4, no arcane.
+maguss-analysis#recharge-unconditional - DONE. The description row is the feat-9045 body verbatim. The descRef "Recall Knowledge"
+  still occurs in it.
+spirit-sheath#description - DONE (row). The row is the feat-9050 body ("up to 1 Bulk worth of weapons", "half your level rounded
+  up"). The descRefs still resolve (RichText matches labels case-insensitively: RichText.tsx:366 'gi'). It needs the baseline removal
+  under CROSS-FILE GAPS.
+devastating-spellstrike - DONE (row). The row is the feat-9052 body (Requirements: charged Spellstrike; 5-foot emanation 2/3/4/5; a
+  status bonus in Arcane Cascade). The printed paragraph break before "If you're in the Arcane Cascade stance" is merged into one
+  paragraph; the words are all there. It needs the baseline removal.
+distracting-spellstrike#description - DONE (row). supersedes:true is correct. The row is the feat-9053 body: hand free plus a charged
+  Spellstrike, "arcane and visual traits", and the Deception status bonus. It adds a paragraph break after "choosing your target."
+  that print does not have (cosmetic). The finding's proposed reprint-check guard is still open (below).
+emergency-targe#description - DONE (row). The trigger is verbatim feat-9054: "An enemy you're aware of hits you with a Strike or a
+  spell attack". It needs the baseline removal. The "Shield" descRef also links the word "shield" in "wielding a shield". That was
+  already so before this row; it is not a regression.
+recharging-flurry#map - DONE. mapNotesFor gives {steps:[4,8], applied:false}, and agile gives [3,6]. mapStepFor stays 5 (4 for
+  agile). This is the Combination Finisher shape the finding asked for.
+
+DATA STILL NEEDED
+(none - all 12 rows are authored in work/.bP02-rows-data-rows-2.json)
+
+CROSS-FILE GAPS
+- scripts/data/moved-prose-baseline.json: remove "feats/spirit-sheath" (line 121), "feats/devastating-spellstrike" (line 122) and "feats/emergency-targe" (line 123) IN THE SAME COMMIT as these rows. I confirmed it in reprint-check.mjs CHECK 8: a listed entry that no longer reads like the older printing fails with "remove the entry", so npm run verify goes red once the three rows land. Findings: spirit-sheath#description, devastating-spellstrike, emergency-targe#description.
+- scripts/reprint-check.mjs (the guard proposed by distracting-spellstrike#description): CHECK 8 reads core-descriptions.json, which holds overlay-written prose after the chain runs, yet it never flagged feats/distracting-spellstrike carrying feat-2854 prose. Most likely its word-share margin (0.05) is too coarse for a short body; I did not measure this. The owner of reprint-check needs a test with a backfill-written legacy-prose case that fails.
+- src/rules/build.ts sameNaturalAttack (engine): the die comparison is a raw string compare, so '1d4' and 'd4' count as different Strikes. The rename fix above works around it for the fabric. Any other grantedStrikes row whose die is rewritten from '1dN' to 'dN', or renamed, will strand old saves the same way. Normalise the leading "1" in the compare, and add a test.
+- 13 other shipped grantedStrikes write the die with a leading count and render as "1" + die (for example "11d8"): items/phantom-shroud (3d6), piercing-horn, sharpened-canines, slashing-claws, deadly-slashing-claws, venom-glands, whip-tail, constricting-whip-tail, major-boots-of-the-secret-blade (3d4), taljjaes-mask-the-beast; feats/razorsharp-bite, hand-of-the-lich, flailtongue. They need a guard (a verify check or a normaliser in collectGrantedNaturals / deriveUnarmedStrike), and rows that keep each name so saves are not stranded (see the line above). This belongs to engine or repair.
+- test/subclass-owned.test.ts grantsOneStrike(): once unfurling-brocade grants two Strikes, no subclass option has grantedStrikes.length === 1 (barbarian/animal-instinct has 32). Both of its cases then hit `return` and pass without checking anything. They should look for "a subclass whose grantedStrikes carry no choiceValue". Until that lands, test/batchP02-data-rows-2.test.ts covers the same property for unfurling-brocade.
+
+MANIFEST
+- work/.bP02-specs.json still holds every family's entry (engine, data-rows-1/2/3/4, repair, situational, and the data-rows-1 created-prose entry). The data-rows-2 entry lists its spec, test and report. I appended this verify file to its stage[].
+- Files the verifier touched (all already in, or now added to, the data-rows-2 stage[]): work/.bP02-rows-data-rows-2.json, test/batchP02-data-rows-2.test.ts, work/.bP02-verify-data-rows-2.txt.
+
+NOT TESTED
+- The applier's own dry run on this spec (prohibited to this agent). Its supersedes, why-doc-id and added-prose checks were reproduced by hand, not run.
+- The rendered sheet in the browser (the Main-tab action rows and the Feats-tab entry were checked through recordMarkersFor, the function both surfaces call).

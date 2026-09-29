@@ -81,6 +81,29 @@ export interface CompanionGrant {
    * the feat, No grants the familiar.
    */
   suppressedByChoice?: string[];
+  /**
+   * How the character's Enhanced Familiar / Incredible Familiar feats meet THIS grant's budget.
+   *
+   * batch P02, enhanced-familiar#ability-budget. AoN feat-4717: *"You can select four familiar or
+   * master abilities each day, instead of two."* with a witch Special (*"Add the bonus familiar
+   * abilities you gain for being a witch to this amount"*) and a wizard Special (improved familiar
+   * attunement's base is four *"before adding any extra abilities from the arcane thesis"*) — i.e.
+   * the feat raises the BASE of two by two and every additive extra stays on top. That is how
+   * `familiarAbilityBudget` treats a grant by DEFAULT (field absent): `abilityBudget` is the base two
+   * plus the record's additive extras, and the feats add +2 (Enhanced) / +4 (Incredible, AoN
+   * feat-5004 *"a base of six ... instead of four"*).
+   *
+   * - 'baked': the record prints its own "four/six ... instead of two/four", the SAME number the feat
+   *   gives — Draconic Familiar (feat-8093), Enhanced Psychopomp Familiar (feat-3471), Adaptive Mask
+   *   Familiar (feat-1104), Incredible Familiar (Familiar Master, feat-8005). Adding again would count
+   *   one printed raise twice.
+   * - 'not-a-familiar': a PET (Pet, Friend of the Sea, Pirate's Pet). Enhanced Familiar's prerequisite
+   *   is "a familiar" and it raises familiar abilities; a pet's abilities are its own list.
+   * - 'unsettled': the record prints a FIXED replacement ("three/one ... instead of two/one") and print
+   *   does not say how Enhanced Familiar meets it; owner question enhanced-familiar#fixed-budget-grants
+   *   (batch P02 queue, work/.bP02-queue.json). Until answered the grant's own number stands, which is what shipped.
+   */
+  enhancedFamiliar?: 'baked' | 'not-a-familiar' | 'unsettled';
 }
 
 // Authored from a classify-and-adversarially-verify pass over all 363 companion-related feats/features
@@ -92,7 +115,7 @@ export interface CompanionGrant {
 // undead HORDE, not one persistent companion) and `moray-eel-mount` (a Bonded-Animal minion, weaker
 // than a companion). `abilityBudget` is a display hint (the picker isn't hard-capped).
 export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
-  "enhanced-psychopomp-familiar": {"kind":"familiar","label":"Enhanced Psychopomp Familiar","abilityBudget":4,"lockedAbilities":["speech"],"supersedes":["psychopomp-familiar"],"note":"Choose 4 familiar or master abilities each day. It always has Speech. Two of the four must come from the Psychopomp Familiar list (Soul Sight, Spirit Touch) or Augury (8th level or higher)."},
+  "enhanced-psychopomp-familiar": {"kind":"familiar","label":"Enhanced Psychopomp Familiar","abilityBudget":4,"enhancedFamiliar":"baked","lockedAbilities":["speech"],"supersedes":["psychopomp-familiar"],"note":"Choose 4 familiar or master abilities each day. It always has Speech. Two of the four must come from the Psychopomp Familiar list (Soul Sight, Spirit Touch) or Augury (8th level or higher)."},
   'additional-companion': { kind: 'animal', label: 'Additional Companion', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   // "You gain a familiar, which has the Construct familiar ability; this is permanent, doesn't require
   // the familiar to have the Tough familiar ability, and doesn't count against your usual limit of
@@ -124,7 +147,7 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   'crocodiles-twin': { kind: 'familiar', label: "Crocodile's Twin", abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'cultivation-order': { kind: 'familiar', label: 'Cultivation Order', abilityBudget: 2, supersedes: ['leshy-familiar'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'demon-hunting-companion': { kind: 'animal', label: 'Demon-Hunting Companion', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
-  'draconic-familiar': { kind: 'familiar', label: 'Draconic Familiar', abilityBudget: 4, lockedAbilities: ['dragon'], supersedes: ['pet'], note: 'Grants a familiar you configure here. Choose 4 familiar abilities. It always has Dragon.' },
+  'draconic-familiar': { kind: 'familiar', label: 'Draconic Familiar', abilityBudget: 4, enhancedFamiliar: 'baked', lockedAbilities: ['dragon'], supersedes: ['pet'], note: 'Grants a familiar you configure here. Choose 4 familiar abilities. It always has Dragon.' },
   'drake-rider-dedication': { kind: 'animal', label: 'Drake Rider Dedication', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   /* *"The familiar uses your CONSTITUTION modifier to determine its Perception, Acrobatics, and
    * Stealth modifiers."* The identical sentence on `alchemical-familiar` is carried by `statAbility`;
@@ -143,7 +166,7 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   // entirely (featGrantedCompanions), so the card renders THIS note and no other — a short note here
   // would silently delete the trait swap, the immunities and the trait-changing-ability restriction
   // from the sheet the moment the player takes the 2nd-level feat.
-  'enhanced-undead-familiar': { kind: 'familiar', label: 'Enhanced Undead Familiar', abilityBudget: 3, supersedes: ['undead-familiar'], note: "Your undead familiar, infused with void energy: select THREE familiar or master abilities each day instead of one. It still has the undead trait instead of the animal trait, is immune to bleed, death effects, disease, mental, and poison, and none of your picks may change the creature’s trait (construct, dragon, and the like). It can be targeted by spells and abilities that target your thralls, and you raise it back to undeath during your next daily preparations if it is destroyed." },
+  'enhanced-undead-familiar': { kind: 'familiar', label: 'Enhanced Undead Familiar', abilityBudget: 3, enhancedFamiliar: 'unsettled', supersedes: ['undead-familiar'], note: "Your undead familiar, infused with void energy: select THREE familiar or master abilities each day instead of one. It still has the undead trait instead of the animal trait, is immune to bleed, death effects, disease, mental, and poison, and none of your picks may change the creature’s trait (construct, dragon, and the like). It can be targeted by spells and abilities that target your thralls, and you raise it back to undeath during your next daily preparations if it is destroyed." },
   'faithful-steed': { kind: 'animal', label: 'Faithful Steed', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'familiar': { kind: 'familiar', label: 'Familiar', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'familiar-master-dedication': { kind: 'familiar', label: 'Familiar Master Dedication', abilityBudget: 2, suppressedByChoice: ['yes'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities. If you already had a familiar you gain the Enhanced Familiar feat instead, and no second familiar.' },
@@ -157,7 +180,7 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   // 6th, 12th, and 18th levels" — so this entry's behaviour is unchanged.
   'familiar-witch': { kind: 'familiar', label: 'Familiar (Witch)', abilityBudget: 3, growthLevels: [6, 12, 18], note: "Grants a familiar you configure here. Choose 3 familiar abilities — 4 at 6th, 5 at 12th, 6 at 18th; your patron's unique ability is always selected on top of them." },
   // "it gains the darkvision and tough abilities IN ADDITION TO the two abilities you normally choose".
-  'friend-of-the-sea': { kind: 'familiar', label: 'Friend of the Sea', abilityBudget: 2, lockedAbilities: ['darkvision', 'tough'], lockedFree: true, supersedes: ['pet'], note: 'Your pet must be an aquatic creature. It has Darkvision and Tough in addition to the two familiar abilities you choose.' },
+  'friend-of-the-sea': { kind: 'familiar', label: 'Friend of the Sea', abilityBudget: 2, enhancedFamiliar: 'not-a-familiar', lockedAbilities: ['darkvision', 'tough'], lockedFree: true, supersedes: ['pet'], note: 'Your pet must be an aquatic creature. It has Darkvision and Tough in addition to the two familiar abilities you choose.' },
   // "You gain a familiar. You choose one familiar or master ability per day instead of two, but your
   // familiar also always has three additional familiar abilities: construct, flier, and tough."
   // (Impossible Magic p48.) "ADDITIONAL" is the lockedFree wording — the same sentence shape as Friend
@@ -165,7 +188,7 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   // channel: they cost none of the 1 budget, the player cannot toggle them off, and `deriveFamiliar`'s
   // `has()` still sees them, so Tough raises the familiar to 7 HP/level and Flier gives it fly 25 feet.
   // Not in batch 003; found by the guard below, which cannot go green while it is missing.
-  'glyph-familiar': { kind: 'familiar', label: 'Glyph Familiar', abilityBudget: 1, lockedAbilities: ['construct', 'flier', 'tough'], lockedFree: true, note: 'A living rune taken as a familiar. Choose ONE familiar or master ability per day; it always has Construct, Flier and Tough in addition, and those do not count against that one.' },
+  'glyph-familiar': { kind: 'familiar', label: 'Glyph Familiar', abilityBudget: 1, enhancedFamiliar: 'unsettled', lockedAbilities: ['construct', 'flier', 'tough'], lockedFree: true, note: 'A living rune taken as a familiar. Choose ONE familiar or master ability per day; it always has Construct, Flier and Tough in addition, and those do not count against that one.' },
   'hyena-familiar': { kind: 'familiar', label: 'Hyena Familiar', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   /* batch 034, improved-familiar-attunement#ability-budget. AoN arcane-thesis-7: *"You gain the
    * Familiar wizard feat. Your familiar gains an EXTRA ability, and it gains an ADDITIONAL extra
@@ -179,14 +202,19 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   'marine-ally': { kind: 'familiar', label: 'Marine Ally', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'mask-familiar': { kind: 'familiar', label: 'Mask Familiar', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'minuscule-mentee': { kind: 'familiar', label: 'Minuscule Mentee', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
-  'pet': { kind: 'familiar', label: 'Pet', abilityBudget: 2, note: 'A Tiny animal (cat, bird, rodent, and so on) with the minion trait. Choose 2 familiar abilities.' },
-  'pirates-pet': { kind: 'familiar', label: "Pirate's Pet", abilityBudget: 3, supersedes: ['pet'], note: 'Grants a familiar you configure here. Choose 3 familiar abilities.' },
+  'pet': { kind: 'familiar', label: 'Pet', abilityBudget: 2, enhancedFamiliar: 'not-a-familiar', note: 'A Tiny animal (cat, bird, rodent, and so on) with the minion trait. Choose 2 familiar abilities.' },
+  'pirates-pet': { kind: 'familiar', label: "Pirate's Pet", abilityBudget: 3, enhancedFamiliar: 'not-a-familiar', supersedes: ['pet'], note: 'Grants a familiar you configure here. Choose 3 familiar abilities.' },
   'prototype-companion': { kind: 'animal', label: 'Prototype Companion', note: 'Grants a construct companion — choose its type and advance it in the Edit tab.' },
-  'psychopomp-familiar': { kind: 'familiar', label: 'Psychopomp Familiar', abilityBudget: 3, lockedAbilities: ['speech'], note: 'Grants a familiar you configure here. Choose 3 familiar abilities. It always has Speech.' },
+  'psychopomp-familiar': { kind: 'familiar', label: 'Psychopomp Familiar', abilityBudget: 3, enhancedFamiliar: 'unsettled', lockedAbilities: ['speech'], note: 'Grants a familiar you configure here. Choose 3 familiar abilities. It always has Speech.' },
   'rat-familiar': { kind: 'familiar', label: 'Rat Familiar', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'rise-my-creature': { kind: 'animal', label: 'Rise, My Creature!', note: 'Grants a construct companion — choose its type and advance it in the Edit tab.' },
   'scion-of-domora-dedication': { kind: 'familiar', label: 'Scion of Domora Dedication', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
-  'shaman': { kind: 'familiar', label: 'Shaman', abilityBudget: 4, supersedes: ['spirit-familiar-animist'], note: 'Grants a familiar you configure here. Choose 4 familiar abilities.' },
+  // batch P02: enhanced-familiar#ability-budget. AoN practice-4 prints a LADDER: "You gain the Spirit
+  // Familiar feat. At 2nd level, you gain the Enhanced Familiar feat." and, at Invocation of Growth
+  // (9th), "You gain the Incredible Familiar feat." A flat 4 read four at 1st (print: two) and four at
+  // 9th+ (print: six). The grant is the base two; FEAT_FEAT_GRANTS_LEVELED hands over the two feats
+  // at 2nd and 9th and `familiarAbilityBudget` adds them, so 2 → 4 → 6 on the printed levels.
+  'shaman': { kind: 'familiar', label: 'Shaman', abilityBudget: 2, supersedes: ['spirit-familiar-animist'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities — 4 from 2nd level (Enhanced Familiar) and 6 from 9th (Incredible Familiar).' },
   'spirit-companion': { kind: 'animal', label: 'Spirit Companion', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'spirit-familiar-animist': { kind: 'familiar', label: 'Spirit Familiar (Animist)', abilityBudget: 2, supersedes: ['pet'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   // The clause is printed on the feat this order GRANTS, which is why nobody had read it here. Leshy
@@ -217,7 +245,7 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   // The "can't choose an ability that changes the creature's trait" clause stays as text on purpose:
   // it filters the ability PICKER, and picker filtering is the one thing the WG parity rule leaves to
   // us — so it is a note today and a picker filter only if someone decides to build one.
-  'undead-familiar': { kind: 'familiar', label: 'Undead Familiar', abilityBudget: 1, note: "An undead familiar: it has the undead trait instead of the animal trait, and is immune to bleed, death effects, disease, mental, and poison. Choose only ONE familiar ability per day, and not one that changes the creature’s trait (construct, dragon, and the like). It can be targeted by spells and abilities that target your thralls. If it is destroyed, you raise it back to undeath during your next daily preparations." },
+  'undead-familiar': { kind: 'familiar', label: 'Undead Familiar', abilityBudget: 1, enhancedFamiliar: 'unsettled', note: "An undead familiar: it has the undead trait instead of the animal trait, and is immune to bleed, death effects, disease, mental, and poison. Choose only ONE familiar ability per day, and not one that changes the creature’s trait (construct, dragon, and the like). It can be targeted by spells and abilities that target your thralls. If it is destroyed, you raise it back to undeath during your next daily preparations." },
   'undead-master-dedication': { kind: 'animal', label: 'Undead Master Dedication', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'witch-dedication': { kind: 'familiar', label: 'Witch Dedication', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   /*
@@ -226,7 +254,7 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
    * The budget lives on the granting record and the tab reads a single grant, so raising it needs an
    * entry that SUPERSEDES the dedication's 2 rather than sitting beside it.
    */
-  'basic-witchcraft': { kind: 'familiar', label: 'Basic Witchcraft', abilityBudget: 3, supersedes: ['witch-dedication'], note: 'Grants a familiar you configure here. Choose 3 familiar abilities each day instead of 2.' },
+  'basic-witchcraft': { kind: 'familiar', label: 'Basic Witchcraft', abilityBudget: 3, enhancedFamiliar: 'unsettled', supersedes: ['witch-dedication'], note: 'Grants a familiar you configure here. Choose 3 familiar abilities each day instead of 2.' },
 
 
 
@@ -236,14 +264,14 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
 
   // ---- full feat audit — companion grants ----
   // 3 entries. The judge said "no lane exists"; the adversary found the lane.
-  'adaptive-mask-familiar': {"kind":"familiar","label":"Adaptive Mask Familiar","abilityBudget":4,"supersedes":["mask-familiar"],"note":"Your mask familiar adapts quickly to material form: select four master and familiar abilities each day instead of two."},
+  'adaptive-mask-familiar': {"kind":"familiar","label":"Adaptive Mask Familiar","abilityBudget":4,"enhancedFamiliar":"baked","supersedes":["mask-familiar"],"note":"Your mask familiar adapts quickly to material form: select four master and familiar abilities each day instead of two."},
   'additional-follower': {"kind":"follower","label":"Additional Follower","note":"Another novice follower with the minion trait joins you. Repeatable up to four followers in total — add the further ones by hand in the Companions tab."},
   /* Captain Dedication (feat-7994): *"You also gain the assistance of a dedicated follower, who has
    * agreed to accompany you on your journeys. They have the minion trait and begin as a novice
    * follower."* Additional Follower — the archetype's OWN later feat — had a grant here while the
    * dedication that starts the whole follower chain granted nothing. */
   'captain-dedication': {"kind":"follower","label":"Captain's Follower","note":"A dedicated novice follower with the minion trait accompanies you. Once you have a follower, you can never take a feat or class feature that grants an animal companion or a similar companion."},
-  'incredible-familiar-familiar-master': {"kind":"familiar","label":"Incredible Familiar","abilityBudget":6,"supersedes":["familiar-master-dedication"],"note":"Grants a familiar you configure here. Choose 6 familiar or master abilities each day."},
+  'incredible-familiar-familiar-master': {"kind":"familiar","label":"Incredible Familiar","abilityBudget":6,"enhancedFamiliar":"baked","supersedes":["familiar-master-dedication"],"note":"Grants a familiar you configure here. Choose 6 familiar or master abilities each day."},
 };
 
 /** The companion grants active on a character, given its taken feat ids. Deduped via `supersedes`

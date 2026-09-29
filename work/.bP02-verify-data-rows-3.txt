@@ -1,0 +1,55 @@
+PRINT BATCH P02 - VERIFY data-rows-3 (chunk 3 of 4 of the data-rows family)
+Spec checked: work/.bP02-rows-data-rows-3.json   Tests: test/batchP02-data-rows-3.test.ts   Builder report: work/.bP02-report-data-rows-3.txt
+No file edited by this verifier except this one (no FIXED-BY-ME, no manifest stage[] addition).
+
+PER FINDING
+
+heaven-earth-encompassing-sleeves#sleeves-item - NOT-DONE. No row (correctly: DefenseGrants.grantsItems in src/rules/types.ts:1108-1134 has only quantity/invested/worn/replaces/whenChoice, no level gate, and no P02 engine report mentions one), so neither sleeves item reaches a built character. Blocked on the engine-shape decision in CROSS-FILE GAPS line 1; the row waits in DATA STILL NEEDED. Both items/sleeves-of-storage and items/sleeves-of-storage-greater exist.
+
+exploding-bullet#description-header - DONE. Row value = shipped d minus the three header lines (title, Source, Prerequisites), Requirements/Special re-cast in the house bold form; every remaining word matches the shipped text and mirror feat-9055. Target exists; no other overlay row on the record; no spec collision.
+
+recharging-flurry#description-header - DONE. Same strip against feat-9056; body byte-equal to shipped; field description does not collide with any sibling row (all P02 spec files scanned: 92 keys, 0 collisions).
+
+running-recharge#description-header - DONE. Row = shipped d with "Running Recharge\nSource Impossible Magic pg. 19\n" removed, nothing else; matches feat-9057 body.
+
+shattering-spellstrike - DONE. Row = shipped d with only "2d6 damage" -> "2d6 force damage"; feat-7467 prints "an additional 2d6 force damage as your improvised weapon breaks".
+
+strikers-scroll#prose - DONE. Row = shipped d with exactly "assuming"->"provided" and "crumpled-scroll"->"crumpled—scroll"; both runs are in feat-9059. Not in scripts/data/moved-prose-baseline.json, so no ratchet follow-up.
+
+practical-magic-impossible-magic - DONE (with the note-only rarity residual, CROSS-FILE GAPS line 4). Row reuses the talisman-dabbler dailyTemporaryItems shape; reader src/rules/dailyItems.ts. Throwaway harness (row applied to a content copy, deleted after): BUILT wizards at 6/9/12 with the feat get exactly 2 slots, maxLevel 3/4/6, every option a catalyst at or under the cap; the unpatched content gives 0 slots. At the level-4 cap the picker still lists 16 uncommon/rare catalysts beside the 25 common ones (print: "all common spell catalysts"), carried by the note only.
+
+dimensional-assault#prose - DONE. Row = spell-2877 body verbatim + "**Heightened (5th)** The range is equal to your Speed." (mirror prints both). Simulated reprint-check CHECK 8 word share: shipped reads like spell-1037 (own 0.957 / old 1.000), row reads like its own (1.000 / 0.548); the record is not in moved-prose-baseline.json, so no ratchet follow-up.
+
+force-fang#prose - DONE for the row, but a guard follow-up is REQUIRED (CROSS-FILE GAPS line 5, missed by the builder). Row = spell-2878 body verbatim + its Heightened (+2) line. spells/force-fang IS listed in scripts/data/moved-prose-baseline.json line 48 ("spell-2878 reads like spell-1038"); the simulated CHECK 8 share flips from stale (own 0.791 / old 1.000) to clean (own 1.000 / old 0.868), and reprint-check.mjs:516 then fails "is in ... but its prose now reads like its own printing - remove the entry". reprint-check runs in npm run verify.
+
+booming-blast#cast - DONE. Row cast {type:'actions',value:1}; spell-2875 actions "Single Action"; shape equals bloody-tendrils/thunderous-strike; the record had no cast key; reader SpellsTab (ActionGlyph, castText, filterSpecs).
+
+booming-blast#defense - DONE. Rows save {type:'will',basic:false}, area '20-foot emanation', baseArea {value:20,kind:'emanation'}: three distinct fields, none on the shipped record, no collision. spell-2875: "each enemy in a 20-foot emanation around you must succeed at a Will save against your spell DC". Readers: SpellsTab.tsx:158 (save), Area row, heightening.ts scaleArea (the harness confirmed it returns null with no heightening, so no bogus heightened area shows).
+
+force-fling#cast - DONE. Row cast {type:'actions',value:1}; spell-2879 actions "Single Action".
+
+SPEC / MANIFEST CHECKS
+- Every target record exists (feats: exploding-bullet, recharging-flurry, running-recharge, shattering-spellstrike, strikers-scroll, practical-magic-impossible-magic; spells: dimensional-assault, force-fang, booming-blast, force-fling); no create/delete rows, so no created-prose spec is needed.
+- No existing effect-backfill row on any of those category/id pairs, so supersedes is not needed; no whole-value field (traits etc.) is re-emitted.
+- All P02 rows files scanned together (data-rows-2, data-rows-3, data-rows-4, engine, repair): 0 category+id+field+path collisions.
+- work/.bP02-specs.json: data-rows-3 entry lists its spec, test and report in stage[]; the engine entry is intact. The data-rows-2, data-rows-4 and repair spec files are NOT registered in the manifest yet - their own builders/verifiers own that; noted, not touched.
+- node scripts/vt.mjs run test/batchP02-data-rows-3.test.ts: 11 red (shipped fields absent / old prose, as intended before apply), 1 green (the in-memory mechanism test). With the rows applied in memory (throwaway harness), every pinned value holds and no other field on a touched record changed.
+- node scripts/test-flip-audit.mjs --batch P02 (read-only, no --json): clean, every flip cited.
+- npx tsc --noEmit: clean.
+
+DATA STILL NEEDED
+- feats/heaven-earth-encompassing-sleeves field grantsItems value [{"itemId":"sleeves-of-storage","worn":true,"maxLevel":8},{"itemId":"sleeves-of-storage-greater","worn":true,"minLevel":9}] (why: AoN feat-7082 "This clothing becomes a set of sleeves of storage ... At 9th level, the clothing becomes greater sleeves of storage instead") - author ONLY after the level gate in CROSS-FILE GAPS line 1 exists. Both items carry the invested trait: whoever authors the row must decide invested:true against the reader's semantics. Finding heaven-earth-encompassing-sleeves#sleeves-item.
+
+CROSS-FILE GAPS
+- ENGINE (orchestrator decision, engine family): DefenseGrants.grantsItems in src/rules/types.ts has no level gate and the build.ts feat reader checks whenChoice only; add minLevel/maxLevel to the entry type and skip the entry in the reader when character level is outside them. Blocks heaven-earth-encompassing-sleeves#sleeves-item.
+- SCRIPTS (lane-wide): the importer path that built the Impossible Magic feats left the page header ("<Name>\nSource ... pg. N\nPrerequisites ...") on the flat description; strip it the way pageProse() in scripts/import-siege-and-gaps.mjs does, and add a verify guard that no description starts with "<record name>\nSource " (870 records today). This chunk fixed only exploding-bullet, recharging-flurry, running-recharge by overlay row.
+- SCRIPTS (guard): 199 of the 200 spells whose description starts with the "<Name> \nSource" header have no cast field (the booming-blast#cast / force-fling#cast pattern); a creation-path fix or a verify guard (a spell whose mirror doc prints an actions string must carry cast) belongs in scripts/. spells/booming-blast and spells/force-fling descriptions still open with that header - no P02 finding covers it.
+- ENGINE (small): dailyTemporaryItems.filter has no rarity key (src/rules/types.ts + src/rules/dailyItems.ts dailyItemOptions), so Practical Magic's "all common spell catalysts" is note-only; 16 uncommon/rare catalysts at or below the level-4 cap still appear in the picker (same residual as talisman-dabbler-dedication).
+- ORCHESTRATOR (same commit as the apply, NEW - found by this verifier): remove "spells/force-fang" (line 48) from scripts/data/moved-prose-baseline.json once the force-fang#prose row lands. reprint-check.mjs CHECK 8 (in npm run verify) fails on a listed entry that no longer reads like the older printing, and the row makes it read like spell-2878 (share own 1.000 vs old 0.868). Removing it BEFORE the apply fails the same check the other way, so it must ride with the apply - the same follow-up data-rows-2 raised for spirit-sheath, devastating-spellstrike and emergency-targe. Finding force-fang#prose.
+
+CHECKED
+- All 12 findings read in full; every mirror doc (feat-9055/9056/9057/7467/9059/9331, spell-2875/2877/2878/2879) read against its row; every row diffed against the shipped value; the rows applied in memory and a real wizard built at 6/9/12 for Practical Magic.
+ASSUMED
+- That the driver's apply routes description rows into public/core-descriptions.json (scripts/lib/apply-backfill.mjs says apply-backfill-now does), which is what the shipped-data tests and reprint-check read.
+NOT TESTED
+- The applier's own dry run (node scripts/apply-parity-fixes.mjs <spec> without --write) was blocked by this session's permission layer, so its added-prose check was not re-run here; the rows' added runs were checked against the mirror by hand instead. The Rest sheet and SpellsTab UI were not opened.

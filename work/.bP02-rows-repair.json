@@ -1,0 +1,383 @@
+{
+  "findings": [
+    {
+      "id": "steady-spellcasting-magus",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "inside-ropes",
+          "field": "description",
+          "value": "You pull a large handful of guts from your midsection. Removing these guts doesn't harm you. You can use the guts as 50 feet of rope to help you Climb, and they help attach you to a wall. You move half as quickly as usual while climbing with your guts (minimum 5 feet), but you can attempt a DC 5 flat check whenever you critically fail to prevent a fall. Other creatures can use your guts to climb like a squishy rope, but the guts don't help anyone but you attach to a wall. If you let go of your guts or your guts are damaged, the spell ends.\n\n---\n\n**Heightened (3rd)** You gain a +1 item bonus to Athletics checks to Climb while using your guts.",
+          "why": "AoN prints \"DC 5 flat\" on spell-1206 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "spells",
+          "id": "read-fate",
+          "field": "description",
+          "value": "You attempt to learn more about the target's fate in the short term, usually within the next day for most prosaic creatures, or the next hour or less for someone likely to have multiple rapid experiences, such as someone actively adventuring.\n\nYou learn a single enigmatic word connected to the creature's fate in that time frame. Fate is notoriously inscrutable, and the word isn't necessarily meant to be taken at face value, so the meaning is often clear only in hindsight. The GM rolls a secret DC 6 flat check. If the creature's fate is too uncertain, or on a failed flat check, the spell yields the word \"inconclusive.\" Either way, the creature is then temporarily immune for 24 hours.",
+          "why": "AoN prints \"DC 6 flat check\" on spell-1802 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "spells",
+          "id": "shattering-gem",
+          "field": "description",
+          "value": "A large gem floats around the target in an erratic pattern. The gem has 5 Hit Points. Each time a creature Strikes the target, the target attempts a DC 11 flat check. On a success, the gem blocks the attack, so the attack first damages the gem and then applies any remaining damage to the target. If the gem is reduced to 0 Hit Points, it shatters, immediately dealing 1d8 slashing damage (basic Reflex save) to the creature that destroyed it, as long as that creature is within 10 feet of the target.\n\n---\n\n**Heightened (+1)** The gem has 5 additional Hit Points, and the damage dealt by its detonation increases by 1d8.",
+          "why": "AoN prints \"DC 11 flat check\" on spell-2364 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "spells",
+          "id": "infectious-melody",
+          "field": "description",
+          "value": "You call forth the chords of a tune so catchy that foes hearing it can't help but sing along, making it harder for them to communicate. Each target must attempt a Will save.\n\n---\n\n**Critical Success** The creature is unaffected.\n\n**Success** For 1 round, the creature can communicate only by singing along to the melody. It can speak only on its turn, and it must take the Perform action when it does. The result of the Performance check determines how well it sang, but it stills communicate the information regardless of the result, which has no further mechanical impact than the time spent to take the action. A single Perform check is sufficient for any amount of speaking on the creature's turn. This effect might interfere with verbal components of spells or other linguistic abilities that rely on precise speech; in order to use such an ability successfully, the creature must succeed at a DC 5 flat check.\n\nIn addition, the creature takes a -2 status penalty on linguistic Intimidation checks, as singing its threats saps away some of the menace. The creature's constant humming of the tune also makes it nearly impossible for the creature to remain undetected.\n\n**Failure** As success, but the duration is 3 rounds.\n\n**Critical Failure** As success, but the duration is 1 hour.",
+          "why": "AoN prints \"DC 5 flat check\" on spell-2749 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "bag-of-devouring-type-i",
+          "field": "description",
+          "value": "This item appears to be and functions as a bag of holding, but is actually a feeding orifice of a bizarre extradimensional creature. Any animal or vegetable matter put in the bag has a chance of triggering the bag's interest. Whenever you reach into the bag to retrieve an item or place an animal or plant (or animal or plant product) within the bag, roll a DC 9 flat check. On a success, the bag ignores the intrusion. On a failure, the bag devours the triggering material, removing it from this realm of existence; the bag can't eat artifacts or other similarly hard-to-destroy items. If the triggering material is not entirely inside of the bag, such as when someone reaches a hand inside, the *bag of devouring* attempts to pull it completely inside the bag using a Grapple action, with an Athletics bonus determined by the type of bag. On a success, it devours the victim or object entirely.\n\n**Athletics Bonus** +15; acts as a *type II bag of holding*",
+          "why": "AoN prints \"DC 9 flat check\" on equipment-598-631 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "bag-of-devouring-type-ii",
+          "field": "description",
+          "value": "This item appears to be and functions as a bag of holding, but is actually a feeding orifice of a bizarre extradimensional creature. Any animal or vegetable matter put in the bag has a chance of triggering the bag's interest. Whenever you reach into the bag to retrieve an item or place an animal or plant (or animal or plant product) within the bag, roll a DC 9 flat check. On a success, the bag ignores the intrusion. On a failure, the bag devours the triggering material, removing it from this realm of existence; the bag can't eat artifacts or other similarly hard-to-destroy items. If the triggering material is not entirely inside of the bag, such as when someone reaches a hand inside, the *bag of devouring* attempts to pull it completely inside the bag using a Grapple action, with an Athletics bonus determined by the type of bag. On a success, it devours the victim or object entirely.\n\n**Athletics Bonus** +21; acts as a *type III bag of holding*",
+          "why": "AoN prints \"DC 9 flat check\" on equipment-598-632 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "bag-of-devouring-type-iii",
+          "field": "description",
+          "value": "This item appears to be and functions as a bag of holding, but is actually a feeding orifice of a bizarre extradimensional creature. Any animal or vegetable matter put in the bag has a chance of triggering the bag's interest. Whenever you reach into the bag to retrieve an item or place an animal or plant (or animal or plant product) within the bag, roll a DC 9 flat check. On a success, the bag ignores the intrusion. On a failure, the bag devours the triggering material, removing it from this realm of existence; the bag can't eat artifacts or other similarly hard-to-destroy items. If the triggering material is not entirely inside of the bag, such as when someone reaches a hand inside, the *bag of devouring* attempts to pull it completely inside the bag using a Grapple action, with an Athletics bonus determined by the type of bag. On a success, it devours the victim or object entirely.\n\n**Athletics Bonus** +24; acts as a *type IV bag of holding*",
+          "why": "AoN prints \"DC 9 flat check\" on equipment-598-633 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "buoyancy-vest",
+          "field": "description",
+          "value": "This canvas vest has been filled with cork shavings, tightly folded, and sewn shut. Wearing a buoyancy vest allows you to float in water with a lowered risk of sinking. If you end your turn in water while wearing a buoyancy vest and haven't succeeded at a Swim action that turn, attempt a DC 5 flat check.\n\nOn a success, you do not sink, though you can still get moved by the current, as determined by the GM. The GM can also determine whether the vest is more or less effective in different weather conditions, raising the DC in rough waters or lowering the DC in calm water.",
+          "why": "AoN prints \"DC 5 flat check\" on equipment-863 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "talisman-cord",
+          "field": "description",
+          "value": "This thin leather cord bears delicate runic markings and threads through an item that can bear affixed talismans.\n\nWhen you Affix a Talisman to that item, you can thread the talisman onto the cord, activating the cord's preserving effects. The cord is attuned to two particular schools of magic, chosen when the cord was created. It gains the corresponding trait for that school. When you activate a talisman threaded through a cord with the same magic school trait that's also the cord's level or lower, attempt a DC 16 flat check. On a success, that talisman is not consumed and can be used again.",
+          "why": "AoN prints \"DC 16 flat check\" on equipment-883-866 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "talisman-cord-lesser",
+          "field": "description",
+          "value": "This thin leather cord bears delicate runic markings and threads through an item that can bear affixed talismans.\n\nWhen you Affix a Talisman to that item, you can thread the talisman onto the cord, activating the cord's preserving effects. The cord is attuned to a particular school of magic, chosen when the cord was created. It gains the corresponding trait for that school. When you activate a talisman threaded through a cord with the same magic school trait that's also the cord's level or lower, attempt a DC 16 flat check. On a success, that talisman is not consumed and can be used again.",
+          "why": "AoN prints \"DC 16 flat check\" on equipment-883-865 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "talisman-cord-greater",
+          "field": "description",
+          "value": "This thin leather cord bears delicate runic markings and threads through an item that can bear affixed talismans.\n\nWhen you Affix a Talisman to that item, you can thread the talisman onto the cord, activating the cord's preserving effects. The cord is attuned to three particular schools of magic, chosen when the cord was created. It gains the corresponding trait for that school. When you activate a talisman threaded through a cord with the same magic school trait that's also the cord's level or lower, attempt a DC 16 flat check. On a success, that talisman is not consumed and can be used again.",
+          "why": "AoN prints \"DC 16 flat check\" on equipment-883-867 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "psychic-brigandine",
+          "field": "description",
+          "value": "Transparent crystals as hard as steel take the place of metal plates on this suit of +2 greater invisibility splint mail. Also known as a coat of a thousand thoughts in Vudra and Jalmeray, where it was first developed by psychic warriors, it makes your mind an indomitable fortress. You gain resistance 5 to mental damage.\n\nWhenever you use the armor to become invisible, you also become psychically invisible. Each time you would be affected by an effect with the mental trait while you are invisible, attempt a DC 17 flat check. On a success, it doesn't affect you.",
+          "why": "AoN prints \"DC 17 flat\" on equipment-1301 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "wheelbarrow",
+          "field": "description",
+          "value": "This small, hand-propelled vehicle has a single wheel and is designed to carry large loads over a distance. A wheelbarrow can typically hold up to 5 Bulk of objects without issue. The GM might rule that it can hold more Bulk of particular items, such as sand, or less Bulk of other items, like awkwardly shaped rocks.\n\nYou can raise or place a wheelbarrow using an Interact action and can Stride your normal Speed while you have the wheelbarrow raised, though you're encumbered while pushing a wheelbarrow. You can Release a wheelbarrow as normal, but a loaded wheelbarrow has a chance of tipping over if you don't place it down with care.\n\nWhen you Release a wheelbarrow, attempt a DC 7 flat check. On a failure, the wheelbarrow tips over, spilling its contents into a randomly determined adjacent space.",
+          "why": "AoN prints \"DC 7 flat\" on equipment-1404 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "winders-ring",
+          "field": "description",
+          "value": "This ring contains dozens of minute, interlocking bronze gears that buzz incessantly. The ring grants you a +1 item bonus to all Crafting checks to construct or repair clockworks.\n\n---\n\n**Activate** (varies) Interact\n\n---\n\n**Effect** The *winder's ring* extends a winding key that fits any clockwork contraption or creature, allowing you to fully wind a clockwork device or creature in half the usual time. When you activate a *winder's ring* in this way, attempt a DC 16 flat check. On a failure, the *winder's ring* exhausts itself, and you can't activate it again until the next time you make your daily preparations.\n\n---\n\n**Activate** ⟨1⟩ Interact\n\n**Frequency** once per day\n\n---\n\n**Effect** The *winder's ring* transforms into a Clockwork Spy that doesn't require winding and obeys your spoken commands for up to 1 hour. In this form, the *winder's ring* has the minion trait. You can use this action again to return the clockwork spy to *winder's ring* form as long as you're adjacent to the clockwork spy. If the clockwork spy is slain, it reverts to its ring shape, and the *winder's ring* can't be activated again until 1 week has passed.",
+          "why": "AoN prints \"DC 16 flat check\" on equipment-1596 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "shadow-ash",
+          "field": "description",
+          "value": "**Activate** Cast a Spell or successfully perform a ritual as the primary or secondary caster\n\n---\n\nThis small pile of ash glows with strange blue embers that coat whatever they touch with a thin layer of frost laced with veins of necrotic ichor. Adding this catalyst to an animate dead spell or create undead ritual wreathes the resulting undead creature in a shroud of frost that pulses with void energy. During a combat encounter, the first opponent to deal damage to the undead creature with a melee Strike takes 3d6 damage and becomes Drained 1 as the shroud of ice and rot shatters from the blow. If the undead creature survives the encounter, the shroud of frost reforms the next day. When an undead creature animated or created with this catalyst dies, it can return to animation with half of its Hit Points within 1d4 rounds of its death (unless it was killed in a manner that destroys it remains completely such as a Disintegrate spell) with a DC 11 flat check. If the undead creature rises again, a desperate, garbled screech resonates from within its corpse.",
+          "why": "AoN prints \"DC 11 flat check\" on equipment-1723 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only).",
+          "supersedes": true
+        },
+        {
+          "category": "items",
+          "id": "vine-whip",
+          "field": "description",
+          "value": "This *+1 striking whip* is crafted from the vine of a dangerous plant creature. It deals bludgeoning or slashing damage, according to the vine attack of the creature it was harvested from. For example, collecting a vine from an assassin vine would result bludgeoning damage, while one from a mandragora or viper vine would deal piercing damage.\n\n**Activate** ⟨3⟩ (concentrate, manipulate)\n\n**Requirements** You have soil or sand within your reach\n\n---\n\n**Effect** You Release the weapon and plant it in the ground, where it takes root and fights on its own against the last enemy you attacked or the nearest enemy to it if your target has been defeated.\n\nThe weapon has a space of 5 feet, acts on your initiative, and gains two actions. It doesn't block or impede enemies attempting to move through that space, nor does it benefit from or provide flanking. The weapon can't use reactions, and it acts on your turn.\n\nWhile Activated, a vine whip makes Strikes with an attack modifier of +22 plus its item bonus to attack rolls (normally +24 total). It uses the weapon's normal damage but has a +0 Strength modifier. The whip's abilities that automatically trigger on a hit or critical hit still function, but the weapon can't be Activated or benefit from any of your abilities while rooted.\n\nEach round, when the vine whip is finished using its actions, attempt a DC 6 flat check. On a failure, the Activation ends and the vine whip becomes inanimate. You can't Activate the item again for 10 minutes. Removing the vine whip from the ground takes an Interact action.\n\nWhile rooted, the vine whip gains fast healing 1.\n\n---\n\n**Craft Requirements** The initial raw materials must include the vine from a plant creature with a vine attack.",
+          "why": "AoN prints \"DC 6 flat check\" on equipment-1889 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "fate-shot",
+          "field": "description",
+          "value": "**Ammunition** any\n\n**Activate** ⟨1⟩ (concentrate)\n\n---\n\n*Fate shot* is made of a nickel-steel alloy carved with the smiling face of a comedic player on one side, while the other side holds the frown of a tragic dramatist. When you hit a target with this ammunition, roll a DC 11 flat check. On a success, treat all the damage dice for your attack as though they rolled the average damage +1, rounded up (for example, a *fate shot* arrow fired from a shortbow would normally deal 1d6, which has an average of 3.5, so you deal 5 damage). This doesn't affect additional damage dice that only happen on a critical hit, such as those added by the deadly trait. On a failure, roll the damage, but your target takes half damage, and you take the remaining amount as mental damage.",
+          "why": "AoN prints \"DC 11 flat check\" on equipment-2050 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "imp-shot",
+          "field": "description",
+          "value": "**Ammunition** any\n\n**Activate** ⟨1⟩ (concentrate)\n\n---\n\nThis black-and-red ammunition contains an egg-shaped capsule. When an activated *imp shot* hits, the capsule cracks open and releases a manifestation that resembles a Tiny imp that can't act in any way or provide benefits outside those described here. If the Strike misses the target, the imp appears, makes a rude gesture at you, and vanishes in a puff of sulfuric smoke. On a hit, though, the imp harries the target for up to 1 minute, remaining in the target's space, slapping, nipping, hurling insults, and moving with the target as it moves. A creature harried by the imp is off-guard and takes a –2 circumstance penalty to attack rolls and skill checks. At the start of your turn on each round while the imp is active, you must attempt a DC 11 flat check. On a failure, the imp makes a final vulgar gesture at the target and vanishes in a cloud of brimstone.",
+          "why": "AoN prints \"DC 11 flat check\" on equipment-2052 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "mother-maw",
+          "field": "description",
+          "value": "This item appears to be and functions as a portable hole, but it's actually the maw of an alien extradimensional creature akin to and older than a *bag of devouring*. Any animal or vegetable matter put in the hole has a chance of triggering the creature's interest. Whenever you reach into the hole to retrieve an item or place an animal or plant product within the bag, roll a DC 11 flat check. On a success, the hole ignores the intrusion. On a failure, the *mother maw* devours the triggering material, removing it from existence. The maw can't eat artifacts. If the triggering material isn't entirely inside the maw, such as when someone reaches inside, the *mother maw* attempts to pull it completely inside using a Grapple action with a +28 Athletics bonus. On a success, it devours the victim or object.\n\nWhenever the maw critically fails the Athletics check, it regurgitates one creature or object it previously devoured. The condition of the vomited creature or object depends on its resilience and the time it has spent inside the maw. Typically, the maw spews forth items it finds difficult to digest, such as those made of adamantine or protected by magic. It can and does regurgitate remains, though.",
+          "why": "AoN prints \"DC 11 flat check\" on equipment-2384 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "the-carnival",
+          "field": "description",
+          "value": "**Suit** Star (Wis)\n\n**Alignment** chaotic neutral\n\n---\n\n*The Carnival* represents false dreams. When you have *The Carnival* invested, your flat check DCs to obtain reliable information from divination effects (such as Augury or Read Fate, or the activation of this card) are reduced by 2 (but not to less than 2). Casting a divination effect with a flat check, whether or not the flat check succeeds, gives a series of subtly different visions that don't confuse the meaning but make you Stupefied 1 for 1 round. If you're at least 17th level, the flat check is instead reduced by 3.\n\n**Activate** ⟨1⟩ (divination, prediction) envision\n\n**Frequency** once per day\n\n---\n\n**Effect** You peer into the future and witness yourself walking through a colorful but vaguely sinister carnival, meeting a variety of strange people. One of these people looks more genuine than the others and resembles someone you're likely to meet for the first time in the next 24 hours (if anyone). This resemblance might be metaphorical, such a clown signifying someone who is silly or a stilt-walker representing someone who is tall. You also get a sense for whether this person can be trusted, should be distrusted, or neither, based on how they're most likely to interact with you and your allies. The GM decides who this new person might be, then rolls a secret DC 6 flat check. On a failure, the result is always \"neither,\" making it hard to determine whether a \"neither\" result is accurate.",
+          "why": "AoN prints \"DC 6 flat check\" on equipment-2477 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "the-theater",
+          "field": "description",
+          "value": "**Suit** Crown (Cha)\n\n**Alignment** neutral good\n\n---\n\n*The Theater* represents prophecy and how prophets can't change the unfolding pageantry of fate. As long as you have *The Theater* invested and as long as you are not already doomed, when you would gain the doomed condition, attempt a DC 10 flat check. On a success, you do not gain the doomed condition.\n\n**Activate** ⟨5⟩ (fortune) envision\n\n**Trigger** You are targeted by a misfortune effect\n\n**Frequency** once per hour\n\n---\n\n**Effect** The Theater attempts to counter the misfortune effect before it affects you. It has a counteract rank equal to your level divided by 2 (rounded up), and a counteract modifier of your Class DC – 10.",
+          "why": "AoN prints \"DC 10 flat check\" on equipment-2490 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "scapular-of-shields",
+          "field": "description",
+          "value": "This fine scapular features the image of an ornate shield. While wearing the cloak, you feel protected and capable of withstanding even the deadliest blows. Each time you're critically hit while wearing the scapular, attempt a DC 17 flat check. On a success, it becomes a normal hit. When you invest the scapular, you either increase your Constitution score by 2 or increase it to 18, whichever would give you a higher score.\n\n**Activate** ⟨5⟩ envision\n\n**Frequency** once per minute\n\n**Trigger** You're critically hit with an attack\n\n**Effect** The shield on your scapular glows with light, helping reduce the effectiveness of the attack. You take normal damage from the triggering attack as if the attack were a normal hit instead. Other effects that trigger with critical hits such as the deadly weapon trait, additional conditions, and so on still occur.\n\n---\n\n**Activate** ⟨5⟩ envision\n\n**Frequency** once per day\n\n**Trigger** You would take damage from an attack\n\n**Effect** The shield on your scapular animates and intercedes on the attack. You gain 20 resistance to all damage against the triggering damage.",
+          "why": "AoN prints \"DC 17 flat check\" on equipment-2530 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "animated",
+          "field": "description",
+          "value": "An *animated* weapon flies autonomously and strikes your foes.\n\n**Activate—Set Free** ⟨2⟩ (concentrate, manipulate)\n\n---\n\n**Effect** You Release the weapon and it flutters through the air, fighting on its own against the last enemy you attacked, or the nearest enemy to it if your target has been defeated. At the end of your turn each round, the weapon can Fly up to its fly Speed of 40 feet, and then can either Fly again or Strike one creature within its reach.\n\nThe weapon has a space of 5 feet, but it doesn't block or impede enemies attempting to move though that space, nor does it benefit from or provide flanking. The weapon can't move through an enemy's space. The weapon can't use reactions, and its Fly actions don't trigger reactions.\n\nWhile it's activated, an *animated* weapon makes Strikes with an attack modifier of 1d20+24 plus its item bonus to attack rolls. It uses the weapon's normal damage but has a +0 Strength modifier. The weapon's abilities that automatically trigger on a hit or critical hit still function, but the weapon can't be activated or benefit from any of your abilities while animated.\n\nEach round, when the weapon finishes using its actions, attempt a DC 6 flat check. On a failure, the activation ends. The weapon falls to the ground and can't be Set Free again for 10 minutes.",
+          "why": "AoN prints \"DC 6 flat check\" on equipment-2831 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "bag-of-weasels",
+          "field": "description",
+          "value": "This item appears to be and functions as a *Spacious Pouch (Type I)*, until you try to retrieve an item from the bag. Whenever you retrieve an item from the *bag of weasels*, roll a DC 11 flat check. On a success, you retrieve the item as normal. On a failure, the item you retrieve is transformed into a weasel; this doesn't affect artifacts, cursed items, or other hard-to-destroy items.\n\nThis weasel uses either the weasel statistics or a giant rat statistics and exudes an aura of magic. The weasel has no loyalty to you and typically attempts to escape as quickly as possible. If the weasel is counteracted, it transforms back into the original item that was taken from the *bag of weasels*. If it dies or is slain, the weasel disappears and the item is permanently destroyed. Because the weasel is a transformed item, you don't gain any benefit you would receive from attacking a creature, defeating one, damaging one, or the like, but you do gain any benefit you would gain from destroying an item.",
+          "why": "AoN prints \"DC 11 flat check\" on equipment-3128 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "fake-blood-pack",
+          "field": "description",
+          "value": "Adventurers have found a number of uses for these animal blood–filled bladders, which were originally used in theatrical productions. Whenever you take slashing or piercing damage with the fake blood pack under your clothes or armor, roll a DC 11 flat check. On a success, the blood pack is punctured. You or an ally can puncture the hidden pack intentionally with an Interact action. When faking an injury, a punctured blood pack grants a +2 item bonus to relevant Deception checks, such as to Lie about being injured, for 4 hours after the pack has been punctured or until the blood is washed off, whichever comes first. Abilities that trigger when a creature deals bleed damage, that determine if a creature is bleeding, or are otherwise based on bleed damage don't trigger or apply for blood from a fake blood pack, which might mean creatures with such abilities automatically realize the ruse.",
+          "why": "AoN prints \"DC 11 flat check\" on equipment-3528 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "final-stand",
+          "field": "description",
+          "value": "The origins of this *+3 greater striking rapier* are shrouded in mystery, but it earned its name in the hands of an unknown hero who used it to singlehandedly defend a remote Nirmathi village from a vicious gang of bandits, shrugging off dozens of blows that would have felled any other mortal. Only when all of the bandits had been dispatched or driven off did the noble warrior finally succumb to their injuries.\n\nWhile wielding *Final Stand*, if you take damage that would reduce you to 0 Hit Points but not immediately kill you, attempt a DC 11 flat check. If you succeed, you avoid being knocked out and remain at 1 Hit Point instead. For the remainder of the encounter, you can't regain Hit Points in any way, though you can be stabilized if you gain the dying condition. If you're still conscious and there are no nearby enemies that you can perceive, you immediately drop to 0 Hit Points and are dying 1. If you have any other abilities that would allow you to remain at 1 Hit Point when you would be reduced to 0 Hit Points (such as Orc Ferocity), you must use those abilities before you can benefit from Final Stand's ability.\n\n---\n\n**Destruction** If the wielder of *Final Stand* surrenders to their enemies while any of their allies are still standing, the blade weakens and the DC of the flat check permanently increases by 2. Final Stand shatters into hundreds of pieces the moment the DC of the flat check is ever higher than 20.",
+          "why": "AoN prints \"DC 11 flat check\" on equipment-3844 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "protective-netting",
+          "field": "description",
+          "value": "Troops fighting in locales filled with insects wear enchanted gauzy nets over their heads, draped from wide flat hats, to protect against swarms of stinging or biting creatures. While wearing protective netting, if you would be exposed to disease or injury poison from an attack, attempt a DC 17 flat check. On a success, you are not exposed.\n\n**Activate—Flutter Net** ⟨5⟩ (manipulate)\n\n**Frequency** once per day\n\n**Trigger** A swarm enters your space\n\n---\n\n**Effect** Your protective netting flutters rapidly, keeping the swarm away. You gain a +1 item bonus to saving throws against effects originating from swarms for 1 minute.",
+          "why": "AoN prints \"DC 17 flat check\" on equipment-3976 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "paradigm-cube",
+          "field": "description",
+          "value": "A *paradigm cube* is a perfect 5-inch-square cube of stone. Each side is inlaid with precious crystals of a different color: red, orange, yellow, green, blue, and indigo. When one activates a *paradigm cube*, one of these sides is selected—it glows with the matching color and then darkens to a shade of violet once the activation ends, indicating that the magic from that particular side of the cube has been expended for the day.\n\n**Activate—Change Paradigm** ⟨1⟩ (manipulate)\n\n**Frequency** six times per day (but only once per day per color)\n\n---\n\n**Effect** Select one of the six colors of the cube that hasn't been activated today, then roll the cube on the ground at your feet and attempt a DC 11 flat check. On a success, your chosen color activates as detailed below. On a failure, roll 1d6 to randomly determine which effect manifests; if the result of the roll is a color that's already been activated today, no effect occurs. The *paradigm cube* then immediately returns to your hand. If you spend 1 Mythic Point as part of this activation, your chosen color automatically activates without requiring a flat check, and the chosen effect's mythic enhancement unlocks. Once activated, the illusion created fills a 60-foot emanation from you and lasts for 1 minute. You can end the effect early by activating Change Paradigm again by tapping the currently active color.\n\n**1—Red** (emotion, mental, visual) Red is the color of anger and impatience. A crimson haze covers the area, setting everyone within the area on edge. Allies in the area gain a +2 item bonus to Intimidation checks to Coerce. **Mythic Enhancement:** Allies' saving throws against mental and incapacitation effects are attempted at mythic proficiency.\n\n**2—Orange** (light, visual) Orange is the color of glory and opulence. The area becomes bedecked in elegant images, glamorous decor, and spectacular displays, and becomes brightly lit. Allies in the area gain a +2 item bonus to Performance checks, and allies who Rage in the area gain an additional 3 temporary Hit Points above what they would normally gain. **Mythic Enhancement:** Allies' Perception checks and Diplomacy checks to Make an Impression or Request are attempted at mythic proficiency.\n\n**3—Yellow** (emotion, fear, light, mental, visual) Yellow is the color of terror and discord. The area's illumination, if any, takes on an unnerving, murky yellow tinge and becomes dim light. Allies in the area gain a +2 item bonus to Intimidation checks to Demoralize. **Mythic Enhancement:** Enemy creatures in the area who gain the frightened condition become Slowed 1 as long as they remain frightened, as the yellow light seems to cling to them and slow their movements to a nightmarish crawl.\n\n**4—Green** (revelation, visual) Green is the color of logic and clarity. Visible text in the area becomes softly illuminated when read. Allies in the area gain a +2 item bonus to Lore checks to Recall Knowledge. **Mythic Enhancement:** Attempts made by allies to counteract or disbelieve illusions or to save against confusion effects are attempted at mythic proficiency.\n\n**5—Blue** (emotion, light, mental, visual) Blue is the color of debilitating sadness and fractures in one's emotional facade. Somber light replaces the normal lighting, filling the area with dim illumination, and moods darken. Allies in the area gain a +2 item bonus to Perception checks to Sense Motive. **Mythic Enhancement:** An enemy in the area that fails an attack roll, saving throw, or skill check becomes Stupefied 1 from sadness until the end of their next turn (Stupefied 2 on a critical failure).\n\n**6—Indigo** (darkness, shadow) Indigo is the color of ignorance and the unknown. The area becomes cloaked in darkness, as per the darkness spell heightened to 6th rank. Allies in the area gain a +2 item bonus to Stealth checks to Hide. **Mythic Enhancement:** Allies' saving throws against fear, curse, or visual effects are attempted at mythic proficiency.\n\n---\n\n**Craft Requirements** You must be a mythic arcane spellcaster capable of attempting Crafting checks at mythic proficiency.",
+          "why": "AoN prints \"DC 11 flat check\" on equipment-4041 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only).",
+          "supersedes": true
+        },
+        {
+          "category": "feats",
+          "id": "anchor-stance",
+          "field": "description",
+          "value": "**Requirements** You're in or under water.\n\n---\n\nYou tense your muscles to make yourself neutrally buoyant and more difficult to move. You gain a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to reposition or shove you. This bonus also applies to saving throws against spells or effects that attempt to force you to move. If any effect would force you to move 10 feet or more, attempt a DC 11 flat check. On a success, you move only 5 feet. Additionally, you don't have to take a Swim action each turn to avoid sinking or moving with the current.",
+          "why": "AoN prints \"DC 11 flat check\" on feat-8916 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "soul-flare",
+          "field": "description",
+          "value": "**Trigger** An attack you made with a soulforged weapon or shield misses a creature, or a creature hits you with an attack while you're either wearing manifested soulforged armor or have your soulforged shield raised.\n\n**Requirements** Your soulforged armament is manifested.\n\n---\n\nYou strive to change the outcome with sheer zeal. You gain a +1 status bonus to your attack roll if making an attack or to your AC if you were hit. This can change the outcome of the roll. If this bonus turns your missed attack into a hit or the hit against you into a miss, attempt a DC 5 flat check. If you fail, your soulforged armament is Dismissed-your weapon if you attacked or your armor or shield if you were defending.",
+          "why": "AoN prints \"DC 5 flat check\" on feat-9351 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "unexpected-shift",
+          "field": "description",
+          "value": "**Trigger** You would take damage from an attack, spell, or other effect.\n\n---\n\nYour supernatural connection sometimes causes you to phase from reality when under threat, disappearing for split seconds before reappearing-often surprising you as much as your enemies. Roll a DC 16 flat check. On a success, you gain resistance to all damage equal to your level against the triggering effect, you gain a +2 circumstance bonus to saving throws against that effect until the start of your turn, and you gain the dazzled condition for 1 round.",
+          "why": "AoN prints \"DC 16 flat check\" on feat-993 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "daredevils-gambit",
+          "field": "description",
+          "value": "If you critically succeed at your Daring Act, you can enter the target's space and remain there until the beginning of your next turn or until the target moves, whichever comes first. You gain a +2 circumstance bonus to AC, and your target is off-guard against your attacks while you are sharing its space in this way. If any creature other than your target hits you with an attack roll while you are sharing your target's space, attempt a DC 15 flat check. On a success, resolve the attack against the target instead of you, using the same attack roll result that hit you.",
+          "why": "AoN prints \"DC 15 flat check\" on feat-1074 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "steady-spellcasting-magus",
+          "field": "description",
+          "value": "Confident in your technique, you don't easily lose your concentration when you Cast a Spell.\n\nIf a reaction would disrupt your spellcasting action, attempt a DC 15 flat check. If you succeed, your action isn't disrupted.",
+          "why": "AoN prints \"DC 15 flat\" on feat-2857 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "fortified-mind",
+          "field": "description",
+          "value": "Your mind is unusually resilient and resistant to influence. When you would gain the fascinated or stupefied condition, you can attempt a DC 17 flat check. On a success, you don't gain the fascinated or stupefied condition.",
+          "why": "AoN prints \"DC 17 flat check\" on feat-3975 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "unbound-freedom",
+          "field": "description",
+          "value": "Your future is no other person's to control, and the cycles of your fate sometimes step in to protect you when that control would be taken from you. Whenever you would gain the controlled condition, you can attempt a DC 17 flat check. On a success, you don't gain the condition.",
+          "why": "AoN prints \"DC 17 flat check\" on feat-4017 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "fey-ascension",
+          "field": "description",
+          "value": "The fey influence on your form and features grows even more powerful and notable. You gain one of the following features and abilities; this must be the same animal or fey type as you chose for Fey Influence.\n\n- **Anteater** You become an expert in primal DCs and spell attack rolls. You can cast Slow as an innate primal spell once per day.\n- **Cat Sith** You laugh off the outraged curses of those you have tricked or wronged. Whenever a creature targets you with a misfortune effect, make a DC 13 flat check. On a success, you are unaffected.\n- **Cursed Bluebird** You have enough control over your curse to turn a bane into a minor blessing. Once per day, you can temporarily transform yourself or an ally into a blue bird, as a 4th-rank Pest Form (bird only) targeting one willing creature.\n- **Dryad** Your hair becomes intermixed with delicate but razor-edged leaves that move as you command. You gain a leaves ranged unarmed attack that deals 1d6 slashing damage. Your leaves are in the dart weapon group and have the magical and unarmed traits. *Note: A range was not provided for this strike in the source. For Foundry automation we have assumed a 20-foot range increment, to be in line with similar abilities.*\n- **Faun** You can cast Charm, Sleep, and Triple Time as innate primal spells once per day each. Whenever you cast one of these spells, you can Step or Stride as part of the activity.\n- **Gremlin** You become an expert in primal DCs and spell attack rolls. You can cast Mad Monkeys as an innate primal spell once per day.\n- **Monarch** Once per day, you gain the ability to manifest a pair of exquisite butterfly wings. These wings remain for 10 minutes. You gain a fly Speed equal to your Speed while you've manifested your wings.\n- **Unicorn** You become trained in Medicine, or an expert if you were already trained. You gain a +2 status bonus to saves against poison and charm effects.\n\n---\n\n**Special** This feat gains the trait appropriate for your ancestry (human for human, goblin for goblin, etc.).",
+          "why": "AoN prints \"DC 13 flat check\" on feat-4048 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "harrow-casting",
+          "field": "description",
+          "value": "**Requirements** You have an active harrow omen.\n\n---\n\nYou draw a card from your harrow deck just before you cast a spell to infuse your magic with its destined potential. If your next action is to Cast a Spell, the suit of the card you draw enhances the spell in one of the following ways. If the card you draw matches the suit of your active harrow omen, the effect is enhanced further as detailed below. When you Harrow Cast, attempt a DC 11 flat check. If you fail this check, you lose your active harrow omen at the end of your turn.\n\n**Hammer** The force of the spell is enhanced. This effect only enhances single-target offensive spells that require you to make a successful spell attack or require a saving throw from the target to resist. If you hit the target, or if they fail their saving throw, the spell inflicts additional force damage equal to the spell's rank. This additional damage doubles if your harrow omen is Hammers.\n\n**Key** Some of the magic remains behind, infusing your defenses. Until the start of your next turn, you gain a +1 status bonus to your AC and all saving throws. If your harrow omen is Keys, this increases to a +2 status bonus.\n\n**Shield** As the spell's magic takes effect, it heals you as well, restoring Hit Points equal to 2d6 + the spell's rank. If your harrow omen is Shields, the Hit Points restored increases to 4d6 + twice the spell's rank.\n\n**Book** The spell's magic infuses your mind with sudden insights about the target. You can attempt to Recall Knowledge about the target as a free action, using your spell attack roll to make the check. You gain a +2 status bonus to this roll if Books is your harrow omen.\n\n**Star** The spell's magic bolsters those it aids. This effect only enhances single-target spells cast on willing subjects. The magic restores Hit Points to the affected target equal to 2d6 + the spell's rank. If your harrow omen is Stars, the magic also grants the target a +2 status bonus to all saving throws until the start of your next turn.\n\n**Crown** The spell's magic is hidden and subtle, and observers may not realize you're doing anything more than manipulating cards in your harrow deck. Attempt a Fortune-Telling Lore check against all observer's Perception DCs. If your check is successful against an observer's Perception DC, that observer doesn't notice you are Casting a Spell, even though normally spells have sensory manifestations. This hides only the spell's spellcasting actions and manifestations, not its effects. If your harrow omen is Crowns, you gain a +2 status bonus to your Fortune-Telling Lore check.",
+          "why": "AoN prints \"DC 11 flat check\" on feat-4155 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "stone-bones",
+          "field": "description",
+          "value": "**Trigger** You are struck by a critical hit that deals physical damage.\n\n---\n\nYour intractable nature can help you shrug off even the most grievous injuries. Attempt a DC 17 flat check. If you are successful, the attack becomes a normal hit.",
+          "why": "AoN prints \"DC 17 flat check\" on feat-4399 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "stubborn-persistence",
+          "field": "description",
+          "value": "Humans are renowned for their ability to persist through the most grueling of trials that would leave others ready to drop. When you would become fatigued, attempt a DC 17 flat check. On a success, you aren't fatigued. If the fatigued condition has an underlying cause that you don't address, such as lack of rest, you must attempt the check again at an interval determined by the GM until you fail the flat check or address the underlying cause.",
+          "why": "AoN prints \"DC 17 flat check\" on feat-4491 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "steady-spellcasting",
+          "field": "description",
+          "value": "Confident in your technique, you don't lose spells easily. If a reaction would disrupt your spellcasting action, attempt a DC 15 flat check. If you succeed, your action isn't disrupted.",
+          "why": "AoN prints \"DC 15 flat check\" on feat-4602 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "evade-doom",
+          "field": "description",
+          "value": "You can elude supernatural disaster. When you would gain the doomed condition, you can attempt a DC 17 flat check. On a success, you don't gain the doomed condition.",
+          "why": "AoN prints \"DC 17 flat\" on feat-5558 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "ten-lives",
+          "field": "description",
+          "value": "When your character would die, you can attempt a DC 17 flat check. On a success, you're instead reduced to 0 HP and a dying value 1 less than what would normally kill you (typically dying 3). This doesn't change the result for any other creature affected.",
+          "why": "AoN prints \"DC 17 flat check\" on feat-5567 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "vigorous-health",
+          "field": "description",
+          "value": "You can withstand blood loss startlingly well. Whenever you would gain the drained condition, you can attempt a DC 17 flat check. On a success, you don't gain the drained condition.",
+          "why": "AoN prints \"DC 17 flat check\" on feat-5576 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "thundering-surge",
+          "field": "description",
+          "value": "**Requirements** Your Spellsurge aura is active.\n\n---\n\nYour magic explodes in bursts of excess energy, creating thunderous waves. If your next action is to Cast a Spell, attempt a DC 5 flat check.\n\n**Critical Success** Enemies within a 10-foot radius burst centered on the target of the spell or within the spell's area of effect take sonic damage equal to twice your level ( saving throw against your class DC or spell DC, whichever is higher). Those who fail the save are also knocked prone.\n\n**Success** Enemies within a 10-foot radius burst centered on the target of the spell or within the spell's area of effect take sonic damage equal to your level (basic Fortitude saving throw against your class DC or spell DC, whichever is higher). Those who critically fail the save are also knocked prone.\n\n**Failure** All creatures within a 10-foot radius burst centered on you take sonic damage equal to your level (basic Fortitude saving throw against your class DC or spell DC, whichever is higher). Those who fail the save are also knocked prone.",
+          "why": "AoN prints \"DC 5 flat check\" on feat-7428 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "iivlars-deflection",
+          "field": "description",
+          "value": "**Trigger** You are struck by a critical hit that deals physical damage.\n\n---\n\nYou're able to use the silk woven into your skin to deflect attacks, reducing the deadliness of grievous blows. Attempt a DC 17 flat check. If you are successful, the attack becomes a normal hit.",
+          "why": "AoN prints \"DC 17 flat check\" on feat-7782 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "saving-slash",
+          "field": "description",
+          "value": "**Trigger** An opponent critically hits you with a melee attack.\n\n---\n\nYou quickly whirl your blade, trying to deflect enough momentum to avoid the worst of the attack. Attempt a DC 15 flat check. If you succeed, the attack becomes a normal hit, instead of a critical hit.",
+          "why": "AoN prints \"DC 15 flat check\" on feat-7905 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "reliable-magic",
+          "field": "description",
+          "value": "Magic stored in written form or within wands is more reliable in your capable hands. Whenever you overcharge a wand, reduce the DC of the flat check to avoid destroying the wand by 4. It still gains the broken condition on a success.\n\nWhen you Cast a Spell from a scroll you can spend a Mythic Point as a free action. The spell is cast at mythic proficiency. Once you cast the spell using this ability, attempt a DC 11 flat check. If this check is successful, the scroll is not destroyed, and instead glows with light equivalent to that of a candle for 10 minutes. You can Cast a Spell from this scroll again, but if you do so you cannot enhance it in any way (such as by using this feat), and the scroll is destroyed. If not used before the end of the 10 minutes, the scroll is destroyed.",
+          "why": "AoN prints \"DC 11 flat check\" on feat-8141 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "cant-you-see",
+          "field": "description",
+          "value": "The eye rebels, the mind recoils—no matter how much those who can see you try to explain what's there, their friends' gazes just skitter over you, like a bird afraid to land. A character who attempts to Point Out your location must attempt a DC 14 flat check. If they fail, their allies misunderstand them and aren't sure where you are. On a critical failure, their allies think they pointed you out in a different location entirely, chosen by the GM. Similarly, when a creature critically fails to seek you while you're hidden to or undetected by it, it thinks you're in a different location chosen by the GM. In either case, you appear to be hidden to a creature that thinks you're in a different location, though you're actually undetected by it for targeting and further uses of the Seek action.",
+          "why": "AoN prints \"DC 14 flat check\" on feat-8418 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "chronoskimmer-dedication",
+          "field": "description",
+          "value": "You became partially unstuck from time and have learned how to manipulate your place in the flow of time. When you roll initiative, you can choose one of three options: either do nothing and roll initiative normally, stabilize your timestream, or destabilize your timestream and send it into intense fluctuations.\n\n- **Stabilize your Timestream** (fortune) You don't roll initiative, and instead your initiative is equal to 10 + the modifier you would have used for initiative.\n- **Destabilize your Timestream** (fortune) You don't roll initiative, and instead attempt a DC 11 flat check. On a success, your initiative is equal to 19 + the modifier you would have used for initiative, and on a failure, your initiative is equal to 1 + that modifier.\n\nAdditionally, if your initiative roll result is tied with an opponent's initiative roll, you go first.\n\nYour manipulation of time grants you access to a number of abilities, some of which require a saving throw. The DC for these abilities is either your class DC or spell DC, whichever is higher, and is called your chronoskimmer DC",
+          "why": "AoN prints \"DC 11 flat check\" on feat-8489 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "feats",
+          "id": "roll-with-it",
+          "field": "description",
+          "value": "**Trigger** A foe hits you with a melee weapon or unarmed attack.\n\n---\n\nWhen you take a big hit, your foe bounces you around like a rubber ball, but you escape the worst of the blow. Your foe can move you any distance of its choice up to 30 feet in a direction of its choice (this is not forced movement, and it triggers reactions as normal). You fall prone and are Stunned 1. Attempt a DC 6 flat check. On a success, you take minimum damage from the attack, and on a critical success, if the attack was a critical hit, you don't take double damage from the critical hit.",
+          "why": "AoN prints \"DC 6 flat check\" on feat-1009 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "heritages",
+          "id": "jinxed-tengu",
+          "field": "description",
+          "value": "Your lineage has been exposed to curse after curse, and now they slide off your feathers like rain. If you succeed at a saving throw against a curse or misfortune effect, you get a critical success instead. When you would gain the doomed condition, attempt a DC 17 flat check. On a success, reduce the value of the doomed condition you would gain by 1.",
+          "why": "AoN prints \"DC 17 flat check\" on heritage-355 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "actions",
+          "id": "chassis-deflection",
+          "field": "description",
+          "value": "**Trigger** A critical hit deals physical damage to you.\n\n---\n\nAttempt a DC 17 flat check. If you are successful, the attack becomes a normal hit.",
+          "why": "AoN prints \"DC 17 flat check\" on action-904 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        },
+        {
+          "category": "actions",
+          "id": "call-warshard-weapon",
+          "field": "description",
+          "value": "**Requirements** You are not holding your warshard weapon, and you have a hand or hands free to be able to wield your warshard weapon\n\n---\n\n**Effect** Your warshard weapon teleports into your hand, as long as you and your warshard weapon are on the same planet. At 15th level, you need only be on the same plane as your warshard weapon to call it, and at 18th level, you can call your warshard weapon across any distance. If your warshard weapon is in the possession of a mythic creature that's higher level than you or placed in an area where teleportation magic doesn't function, attempt a DC 16 flat check. On a success, your warshard weapon still teleports to your hand.",
+          "why": "AoN prints \"DC 16 flat check\" on action-3534 here and our import dropped it, so the player could not tell what to roll (finding steady-spellcasting-magus; restored by scripts/repair-flat-check-dc.mjs, insertions only)."
+        }
+      ],
+      "note": "53 description(s) repaired by INSERTION of the flat-check DC the Archives print (feats/steady-spellcasting-magus, feat-2857, is the finding; the other 52 are the same stripped-@Check class, measured by the FLAT_DC_BASELINE ratchet in scripts/dropped-inline-check.mjs). 2 supersede an existing description row whose text they carry whole. 101 site(s) refused (several DCs in one doc, or no unique anchor) — see the script's report."
+    }
+  ]
+}

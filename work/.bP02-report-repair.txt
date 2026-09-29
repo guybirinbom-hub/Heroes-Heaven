@@ -1,0 +1,61 @@
+batch P02 — family: repair — builder report
+
+DATA STILL NEEDED
+(none — every row this family needs is in work/.bP02-rows-repair.json; the driver applies it)
+
+CROSS-FILE GAPS
+(none)
+
+---
+
+steady-spellcasting-magus — DONE (spec rows + guard + test).
+  What was wrong: AoN feat-2857 prints "attempt a DC 15 flat check"; our core-descriptions.json
+  feats/steady-spellcasting-magus .d said "attempt a check". Same stripped-@Check cleaner as the
+  save-DC class, but scripts/repair-stripped-save-dc.mjs never saw it: its CHECK pattern lets only
+  basic/Fortitude/Reflex/Will/Perception sit between "DC <n>" and "check", so "DC <n> flat check" was
+  unmeasured corpus-wide.
+  Fix:
+  - NEW scripts/repair-flat-check-dc.mjs (dry-run by default; --write emits the spec, never the
+    overlay). Exports repairFlatChecks / repairTerminalHole / findStrippedFlatDc / buildSpec. Reuses
+    repairSite, plain and mirrorIndex from repair-stripped-save-dc.mjs, so the two passes share one
+    insertion-only matcher. Two shapes: (A) surviving sentence "attempt a check" -> "attempt a DC 15
+    flat check"; (B) terminal stripped-link hole "attempt a ." -> "attempt a DC 15 flat check." (only
+    when the Archives' own sentence ends right after "check"). Refuses: a doc naming more than one DC
+    (rung trap), two sites sharing a context with different DCs, a sentence that already prints a
+    different DC, any anchor that does not occur exactly once.
+  - Measured: 425 records whose Archives text prints a flat check; 53 repairable (5 shape A, 48
+    shape B), 101 sites refused. I read the before/after window of all 53 by hand; every one is the
+    printed run inserted into our own sentence and nothing else.
+  - Spec work/.bP02-rows-repair.json: one finding entry (id steady-spellcasting-magus), 53 description
+    rows, each why naming its own AoN doc id (feat-2857 for the finding; feat-4602 for the legacy
+    sibling feats/steady-spellcasting the read flagged; the rest their own docs). Emitted through the
+    script's own buildSpec(), so a later --write reproduces the file byte for byte.
+    Two rows carry supersedes:true — items/paradigm-cube and items/shadow-ash already have a pathless
+    description row in effect-backfill.json; I measured that each existing row's value is IDENTICAL to
+    the shipped .d, and buildSpec repairs from the overlay row's own text, so the superseded prose is
+    carried whole with only the flat-check run inserted.
+    No collision with any other P02 spec (checked every work/.bP02-rows-*.json present at 2:57 PM).
+  - GUARD: scripts/dropped-inline-check.mjs gains the ninth class, FLAT_DC_BASELINE = 53 (measured;
+    cited "// batch P02: steady-spellcasting-magus"). Fails when the count RISES; applying this spec
+    drives it to 0 — lower it then, never raise it. The check passes today (53 of 53).
+  - TEST: test/batchP02-repair.test.ts (7 tests, all green through scripts/vt.mjs):
+    the magus sentence regains exactly "DC 15 flat " (insertion-only proof: deleting it returns our
+    text byte for byte); the feat-4602 terminal hole regains the whole run; an already-correct
+    sentence is untouched; "a flat check" gains only the DC (no doubled "flat"); a sentence already
+    printing another DC is refused; a two-DC doc and a twice-occurring hole anchor are refused; and
+    the SHIPPED feats/steady-spellcasting-magus description, repaired-or-already-repaired, prints
+    "attempt a DC 15 flat check" — true both before and after the row lands, so it does not flip.
+  TEACH/SETTLE: none — this is a prose repair plus a ratchet, no comparer change.
+  Note for the orchestrator: once these rows land, HOLE_BASELINE (162) in dropped-inline-check.mjs can
+  be lowered — about 46 of the 48 shape-B records are "a ." holes it counts (read-fate and the-carnival
+  are "a secret ." and are not). Re-measure after `npm run data`; I did not lower it because the check
+  would fail until the rows are applied.
+
+What was checked: the finding in full; the mirror doc for every repaired record (through the script);
+all 53 before/after windows by eye; existing overlay rows for the 53 keys; other P02 specs for
+collisions; dropped-inline-check.mjs passes; test-flip-audit --batch P02 clean; npx tsc --noEmit clean;
+line endings kept (dropped-inline-check.mjs stays CRLF, the new script LF).
+What was assumed: that the AoN doc each record's aonId points at is the right printing for it (the
+same assumption the save-DC pass makes; newest-printing questions are the reprint lane's).
+What was not tested: apply-parity-fixes.mjs was not run even as a dry run (the run rules forbid any
+apply-*.mjs); the rows were not applied, so the app's rendered text was not checked in the browser.

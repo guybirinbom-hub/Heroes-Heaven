@@ -626,8 +626,14 @@ export const expectRowsFor = (overlayRows, specRows) => {
 };
 
 const AON_ID = /\b[a-z][a-z0-9]*(?:-[a-z0-9]+)*-\d+\b/g;
+/* A VARIANT doc id carries TWO numeric tails: equipment-598-631 (Bag of Devouring Type I) lives at
+ * by-category/equipment/equipment-598-631.json, beside its parent equipment-598. Stripping only the
+ * last tail looked in by-category/equipment-598/ and refused six correctly-cited batch-P02 repair rows
+ * ("no mirror document for equipment-598-631"). No mirror category name contains a digit, so every
+ * numeric tail is stripped. Exported for test/wg-batch-run.test.ts. */
+export const mirrorCategoryOf = (aonId) => aonId.replace(/(?:-\d+)+$/, '');
 const mirrorText = (aonId) => {
-  const category = aonId.replace(/-\d+$/, '');
+  const category = mirrorCategoryOf(aonId);
   const p = `${MIRROR}/${category}/${aonId}.json`;
   if (!existsSync(p)) return null;
   try {

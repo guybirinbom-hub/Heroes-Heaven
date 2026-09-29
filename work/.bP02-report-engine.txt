@@ -1,0 +1,35 @@
+BATCH P02 - ENGINE FAMILY REPORT (findings: friend-of-a-friend#lore, enhanced-familiar#ability-budget, strikers-scroll#affix)
+
+DATA STILL NEEDED
+(none outside my spec - the one row friend-of-a-friend#lore needs, backgrounds/friend-of-a-friend trainedLoreChoice = true, is authored in work/.bP02-rows-engine.json for the driver to apply)
+
+CROSS-FILE GAPS
+- enhanced-familiar#ability-budget: src/rules/companions.ts familiarAbilityBudget (line ~669) must return grant.abilityBudget + growth + (character.feats.some((f) => f.featId === 'enhanced-familiar') ? 2 : 0), EXCEPT for grant slugs whose abilityBudget already bakes the feat in: 'incredible-familiar-familiar-master' (6 = "six ... instead of four", supersedes familiar-master-dedication) and 'shaman' (flat 4; the practice grants Enhanced Familiar at 2nd and Incredible at 9th via featFeatGrants.ts, so +2 there would read 6 at 2nd) - the reader family should decide whether shaman's grant becomes 2 and lets the two feats add (that also fixes its level-1 value), or is excluded; also consider the grants whose own record already names a 4+ budget with Enhanced Familiar as a prerequisite (enhanced-psychopomp-familiar 4, draconic-familiar 4, emissary-familiar 4) before applying +2 to them. The +2 is uniform per print: familiar 2->4, familiar-master-dedication 2->4, familiar-witch 3->5 (Witch Special "Add the bonus familiar abilities you gain for being a witch"), improved-familiar-attunement 3->5 (Wizard Special: base four before the thesis extra); growthLevels still stack. The static `note` strings ("Choose 2 familiar abilities") in companionGrants.ts will then disagree with the number on CompanionsTab.tsx (~1316/1408/1415) - the note should be recomputed or reworded. Blast radius: every familiar grant for a character owning enhanced-familiar; test/batch034-gap-engine.test.ts "no other grant grows" builds a wizard WITHOUT the feat, so it is unaffected. Incredible Familiar (another +2, "base of six") is the next record on the same reader. Owning family: whichever owns src/rules/companions.ts (not in this family's file list). Input is pinned by test/batchP02-engine.test.ts (the feat reaches ch.feats when chosen and via Familiar Master Dedication "yes").
+- strikers-scroll#affix: src/rules/attachments.ts - isAttachable(item, character?) must accept itemType 'consumable' + consumableType 'scroll' when character.feats owns 'strikers-scroll'; attachHostTypes must give a scroll ONLY 'weapon' (print: "your weapon or handwraps of mighty blows"; handwraps-of-mighty-blows is itemType weapon, pinned by test/batchP02-engine.test.ts, so no new host route is needed); attachKind must put a scroll in the SAME slot as a talisman (print: "only one scroll affixed to a weapon at a time, and you can't have both a talisman and scroll attached"), and Talismanic Sage's cap of two must count talismans only, so a sage host with one talisman still refuses a scroll. planAttach must thread `character` into isAttachable. The UI gates that call isAttachable/canAttachTo without a character (src/sheet/InventoryTab.tsx drop-target test, ItemEditorModal Attached panel) must pass the character or a scroll is never offered as draggable. Owning family: whichever owns src/rules/attachments.ts + src/sheet (not in this family's file list).
+
+PER FINDING
+
+friend-of-a-friend#lore - DONE (data row + tests; no code change needed)
+  Print (AoN background-650): "You're trained in the Athletics skill, and a Lore skill associated with any sort of food or drink".
+  The reader already exists: backgroundChosenLoreKeys (src/rules/build.ts:1280) and the trainedLoreChoice arm of the proficiency walk (build.ts:3989); the builder box is OriginPickers in src/builder/shared.tsx:3453. The record simply lacked the field.
+  Row (work/.bP02-rows-engine.json): {category:"backgrounds", id:"friend-of-a-friend", field:"trainedLoreChoice", value:true}. No trainedLoreChoiceDefault - print names no default subject. No existing overlay row for this record, so no supersedes; the data-rows family's friend-of-a-friend#situational writes a different field.
+  Blast radius: this one background only.
+  Tests (test/batchP02-engine.test.ts, describe "friend-of-a-friend trains a food-or-drink Lore (background-650)"): typed "Cooking" trains lore:cooking beside Athletics on a built fighter (patched copy); the stripped copy trains no Lore; an unanswered box trains nothing; the Builder's Origins page shows exactly one free-text Lore box with the field and none without it.
+
+enhanced-familiar#ability-budget - NOT BUILT HERE (reader is outside my files; see CROSS-FILE GAPS)
+  The only reader of the budget is familiarAbilityBudget in src/rules/companions.ts, which is not in this family's file list; no reader in build.ts / derive.ts / types.ts can change the number the familiar card shows without that function changing. Adding a Character field here would be a field with no reader, so I did not.
+  What I did: pinned the reader's input on BUILT characters - Enhanced Familiar taken at a wizard's 2nd-level class slot, and granted by Familiar Master Dedication's "yes" answer (not by "no"), both land on ch.feats. Tests in describe "enhanced-familiar reaches the built character (feat-4717)".
+  No data row.
+
+strikers-scroll#affix - NOT BUILT HERE (reader is outside my files; see CROSS-FILE GAPS)
+  isAttachable / attachKind / planAffix live in src/rules/attachments.ts, not in this family's file list.
+  What I did: pinned the two premises the gap relies on - handwraps of mighty blows is already a weapon host (affixHostType), and Striker's Scroll taken at a magus 4th-level class slot lands on ch.feats. Tests in describe "strikers-scroll premises (feat-9059)".
+  No data row. The prose half (strikers-scroll#prose) is the data-rows family's.
+
+No teach or settle lines: this family wrote no settle-registry entry and no comparer teach. None of the three findings is MATCHES yet - friend-of-a-friend#lore matches once the driver applies the row; the other two stay open until the CROSS-FILE GAPS are built.
+
+Files: test/batchP02-engine.test.ts (new), work/.bP02-rows-engine.json (spec). No src/ file edited.
+
+WHAT WAS CHECKED: the three findings read in full; the Lore reader and builder box traced; companions.ts and attachments.ts read to write the gap specs; node scripts/vt.mjs run test/batchP02-engine.test.ts - 8 of 8 pass; npx tsc --noEmit clean; node scripts/test-flip-audit.mjs --batch P02 reports clean (every new test cited).
+WHAT WAS ASSUMED: that loreKey("Cooking") = lore:cooking is how a typed food subject should be stored (the same lane every other free-text Lore background uses); that the shaman / incredible-familiar-familiar-master budgets already include Enhanced Familiar (read from their notes and the shaman print, not measured in the app).
+WHAT WAS NOT TESTED: the familiar card's number and the scroll drag-to-attach in the running app - both need the companions.ts / attachments.ts changes that are outside this family's files; the row itself was not applied (the driver applies it).

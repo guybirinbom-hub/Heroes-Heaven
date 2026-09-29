@@ -1,0 +1,155 @@
+batch P02 - GAP VERIFIER (default REFUTE). work/.bP02-gaps.json: 42 lines (32 authored, 10 parked, 0 open on arrival).
+After this pass: 38 CLOSED, 2 REOPENED (now status "open" in gaps.json), 0 STILL-OPEN on arrival -> 2 open.
+
+BLOCKERS FOR THE CLOSER / ORCHESTRATOR (read first)
+B1. The gaps stage WILL REFUSE at the queue step. scripts/add-owner-question.mjs:121 rejects any batch that is not a number
+    (Number.isNaN(Number("P02"))), and :81 would store batch NaN anyway. Measured with the read-only dry run
+    `node scripts/add-owner-question.mjs --from work/.bP02-queue.json`: "REFUSED - 1 entry; nothing written:
+    enhanced-familiar#fixed-budget-grants: missing batch", exit 2. wg-batch-run.mjs stageGaps (:1044-1047) refuses on that
+    exit. This is the first print-lane batch to queue a question; test-flip-audit.mjs already normalises alphanumeric batch
+    tokens (normBatch) and add-owner-question.mjs needs the same fix. Reported by the gap-engine agent; confirmed here.
+    Not a gaps.json line, so it is not counted in gapsOpen - but nothing moves until it is fixed.
+B2. Lines 2 and 22 (REOPENED below): the four scripts/data/moved-prose-baseline.json removals must land with the rows or
+    reprint-check CHECK 8 (npm run verify) goes red after apply.
+B3. Expected, not a defect: BEFORE --stage apply, verify is red on purpose in three guards added by the gap lane -
+    description-header-check.mjs (exploding-bullet, recharging-flurry, running-recharge), spell-print-lines-check.mjs
+    (10 entries) and reprint-check CHECK 8 verbatim reading (distracting-spellstrike, maguss-analysis, strikers-scroll,
+    dimensional-assault). I re-ran the first two: red now, exit 0 with `--pending work/.bP02-rows-*.json`
+    (header 1544/1544; spells 216/196/176/18 = baseline). CHECK 8 was not re-run (no --pending mode); the agent's in-memory
+    measurement is the only evidence for it.
+
+WHOLE-FILE CHECKS
+- work/owner-questions.json: `git diff --stat HEAD` empty; mtime 13:53, before the P02 cut (14:40). Nobody edited it.
+- Gap lines: 42 now = 42 at apply-digest (work/.bP02-run.json counts.gaps). No line removed.
+- Manifest work/.bP02-specs.json: 15 entries; every one of the 14 work/.bP02-rows-*.json files plus the created-desc file
+  is listed, all 7 builder families + 6 gap families present; every file exists. No entry removed.
+- Collision scan across every manifest spec (category|id|field|path): none. Only gap spec with an overlay row is
+  gap-data-rows-3 (feats/heaven-earth-encompassing-sleeves grantsItems); the overlay has no row on that key (only `choice`),
+  so no supersedes is owed; the feat and both items exist in core.json.
+- node scripts/vt.mjs run on the 9 gap-touched test files (the six batchP02-gap-*, subclass-owned, trust-ledger,
+  descref-possessive, spell-print-lines-check): 9 files, 90 tests passed.
+- node scripts/test-flip-audit.mjs --batch P02: clean (16 test files, 0 new settle keys). npx tsc --noEmit: clean.
+
+PER LINE (index = position in work/.bP02-gaps.json)
+1  CLOSED    work/.bP02-rows-gap-data-rows-1.json (+ src/rules/featFeatGrants.ts) - no 'aloof-firmament' key in FEAT_FEAT_GRANTS
+             (only the WHY comment at :484); test/batchP02-gap-data-rows-1.test.ts:40 asserts the key is absent (fails on revert),
+             :47 Cat Fall exactly once, :67 none with the option grant stripped. Extractor-exclusion half: no featfeat-extract
+             file exists anywhere in the repo (searched), and no file under scripts/aon-verify names aloof-firmament.
+2  REOPENED  flaggedResidue "ORCHESTRATOR EDIT ... moved-prose-baseline.json" - the four entries are really there
+             (moved-prose-baseline.json:117 classFeatures/sparkling-targe, :121 feats/spirit-sheath, :122
+             feats/devastating-spellstrike, :123 feats/emergency-targe) and each has a P02 description row
+             (data-rows-2 x3, data-rows-1 sparkling-targe#description). This is not a residue: the batch's own verify fails
+             after apply without the edit, and no artefact carries it. The route exists and is proven: a `codeEdits` entry
+             (file/find/replace) in a spec - apply-parity-fixes.mjs:398-505 applies them, wg-batch-run.mjs:615 reads them, and
+             gap-data-rows-3 used exactly that on this same file for spells/force-fang (line 31). Fix: add one codeEdits entry
+             to work/.bP02-rows-gap-data-rows-2.json removing :117 and :121-:123 (file is CRLF-only, 246 CRLF / 0 LF; carry a
+             neighbour line in find/replace as force-fang's edit does so replace is non-empty), and add
+             scripts/data/moved-prose-baseline.json to that manifest entry's stage[]. The finds do not overlap line 48.
+3  CLOSED    scripts/reprint-check.mjs:512 - CHECK 8 now calls movedProseVerdict (scripts/lib/moved-prose.mjs:38) with a
+             verbatim reading and its own shrink-only baseline scripts/data/moved-prose-verbatim-baseline.json (151 entries,
+             distracting-spellstrike not listed). test/batchP02-gap-data-rows-2.test.ts:135/:143 pins a body inside the 0.05
+             margin judged "verbatim" (fails if the verbatim rule is reverted), :163 pins it is not grandfathered.
+             Weakness noted: the tests pin the library and the baseline, not reprint-check's call site; the call site is
+             exercised only by npm run verify.
+4  CLOSED    src/rules/derive.ts:4965 deriveUnarmedStrike - leading count split off and used as a floor. Revert is caught by
+             test/batchP02-gap-data-rows-2.test.ts:51-56 (3d6 must derive 3d6, strikingDice 2; build.ts strips only a count of
+             one, so a derive revert yields 13d6) and the corpus-wide guard :63-84.
+5  CLOSED    test/subclass-owned.test.ts:80 - grantsOneStrike replaced by grantsEveryStrike (no choiceValue on any row);
+             both cases now expect(granting?.opt?.id).toBeTruthy() instead of returning. Cited "// batch P02:
+             unfurling-brocade#two-handed-die"; flip audit clean.
+6  CLOSED    work/.bP02-rows-gap-data-rows-3.json - src/rules/types.ts:1143-1144 grantsItems[].minLevel/maxLevel;
+             src/rules/build.ts:8495 grantInLevelWindow on every grantsItems carrier (:8499/:8515/:8554/:8563/:8572/:8582);
+             row cites AoN feat-7082. test/batchP02-gap-data-rows-3.test.ts:90-95 is the revert detector (ungated value hands
+             a 4th-level magus both items); :67-86 pin 4/8 lesser, 9/15 greater on built magi with the row patched in memory.
+7  CLOSED    scripts/description-header-check.mjs - exists, wired into npm run verify (package.json, after
+             dropped-inline-check), baseline scripts/data/description-header-baseline.json. Ran it: exit 1 now on exactly the
+             three P02 feats, exit 0 with --pending at 1544 = baseline. Pinned by test/batchP02-gap-data-rows-3.test.ts:143-178.
+             (The importer-strip half is line 28, parked.)
+8  CLOSED    scripts/spell-print-lines-check.mjs - exists, in npm run verify after spell-check.mjs. Ran it: cast 199 vs baseline
+             196 now (booming-blast, force-fling, conjurers-countermeasure), 196 with --pending. Pinned by
+             test/spell-print-lines-check.test.ts.
+9  CLOSED    parked, flaggedResidue with a reason - verified: src/rules/dailyItems.ts has no rarity handling, and
+             work/.bP02-rows-data-rows-3.json already writes feats/practical-magic-impossible-magic dailyTemporaryItems (note:
+             "Common spell catalysts only"), so a second row on that key would be a hard precheck collision. Same carry as
+             talisman-dabbler-dedication. Next batch: filter.rarity + a supersedes:true row.
+10 CLOSED    src/sheet/descref.ts:108 - forms() substitutes a possessive with a/an after every earlier form.
+             test/descref-possessive.test.ts:19 lookupRef("Raise your Shield") -> "Raise a Shield" (fails on revert), :25-29 the
+             three feats, :34-50 every other shipped "your" label keeps its target.
+11 CLOSED    parked, flaggedResidue with a reason - Spell.requirements field is the optional "better for the family" half and
+             lands only through npm run data; the defect is held by spell-print-lines-check.mjs `requirements` (23 now ->
+             18 = baseline with --pending, measured).
+12 CLOSED    scripts/spell-print-lines-check.mjs - same artefact as line 8 (cast + duration halves; duration 177 -> 176 with
+             --pending). test/spell-print-lines-check.test.ts:24-33.
+13 CLOSED    scripts/data/spell-print-lines-baseline.json - header half: 217 now -> 216 = baseline with --pending;
+             test/spell-print-lines-check.test.ts:48-53. description-header-check.mjs excludes spells (its test :178), so each
+             record has one owner.
+14 CLOSED    work/.bP02-rows-gap-engine.json - src/rules/companions.ts:673 familiarAbilityBudget adds familiarFeatRaise (:698);
+             src/rules/companionGrants.ts:106 enhancedFamiliar baked/not-a-familiar/unsettled; CompanionsTab.tsx:1860 note.
+             test/batchP02-gap-engine.test.tsx:45-51 (wizard 4 with / 2 without - fails on revert), :58-63 witch/attunement 5,
+             :71-94 every plain grant +2, :101-109 shaman 2/4/6, :114-121 rendered card note. The five 'unsettled' grants are
+             the queued owner question enhanced-familiar#fixed-budget-grants (work/.bP02-queue.json) - see B1: it cannot be
+             filed until add-owner-question.mjs accepts "P02".
+15 CLOSED    work/.bP02-rows-gap-engine.json - src/rules/attachments.ts:19-20 isScroll/hasStrikersScroll, :38 weapon host only,
+             :80 attachKind 'scroll', :221-224 talisman/scroll exclusion; InventoryTab.tsx:1141 and ItemEditorModal.tsx:1481
+             pass the character. test/batchP02-gap-engine.test.tsx:150-160 (no feat -> not attachable; fails on revert),
+             :164-168 never armor/shield, :172-187 one scroll, never beside a talisman, :193-198 sage cap.
+16 CLOSED    test/batchP02-gap-situational.test.ts:68 - guard test: situationalReplaces would drop the daily star (in memory) and
+             the shipped record must not carry it. Checked every P02 spec: no row writes situationalReplaces (the one hit in
+             data-rows-1 is prose in a why). The research row the test patches in is verbatim the data-rows-1 row.
+17 CLOSED    test/batchP02-gap-situational.test.ts:105 - pins the three FEAT_SITUATIONAL clauses (:97) and the data-rows-1 rider
+             (classFeatures/resurgent-maelstrom.situational, verified present in that spec) beside them on a built magus 7.
+18 CLOSED    parked, flaggedResidue with a reason - verified: scripts/trust-ledger.mjs:591 otherRulesEncoded =
+             onRegistry.has(id) || ..., so the FEAT_SITUATIONAL star clears trusted-rival from `partly` at the close re-stamp.
+             Guarded by line 40's test.
+19 CLOSED    parked, flaggedResidue with a reason - verified: docs/trust-gate.md:300-301 names the print-ledger source as later
+             work, and trust-approvals.json is the owner's desk file. NEEDS THE ORCHESTRATOR: four print-verified stars
+             (spirit-sheath, emergency-targe, distracting-spellstrike, exploding-bullet) render dark under trustGate until that
+             source is built.
+20 CLOSED    scripts/apply-sweep-b2.mjs:311 - refusal block precedes the splice and every write; pinned textually by
+             test/batchP02-gap-situational.test.ts (refuse < splice < write; the sweep result's own row lacks the versatile
+             clause, so a re-run hits the refusal). work/sweep/b2/result.json is tracked. The script itself was not run.
+21 CLOSED    same artefact as line 1 (verifier's copy).
+22 REOPENED  same as line 2 (verifier's copy): one codeEdits entry closes both lines.
+23 CLOSED    scripts/lib/moved-prose.mjs - movedProseVerdict exported (:38), verbatim rule at :48; tests as line 3.
+24 CLOSED    src/rules/build.ts:3684 sameNaturalAttack - exported, drops only a leading "1". test/batchP02-gap-data-rows-2.test.ts:90-95
+             ('1d4' == 'd4' true; '3d6' vs 'd6' false - fails on revert) and :101-109 rebuilt save keeps one attack.
+25 CLOSED    src/rules/build.ts:3235 collectGrantedNaturals - baseDie drops a leading "1"; test/batchP02-gap-data-rows-2.test.ts:40-45
+             stored die must be 'd4' with no dieNote (fails on revert).
+26 CLOSED    same artefact as line 5.
+27 CLOSED    same artefact as line 6.
+28 CLOSED    parked, flaggedResidue with a reason - the importer strip lands only through npm run data (forbidden here); the
+             class is held shut by description-header-check.mjs and spell-print-lines-check.mjs (both run and measured above).
+29 CLOSED    same artefact as line 8.
+30 CLOSED    parked, same residue as line 9.
+31 CLOSED    work/.bP02-rows-gap-data-rows-3.json codeEdits (force-fang#prose) - find occurs exactly once in
+             scripts/data/moved-prose-baseline.json (CRLF matched), replace non-empty; applier supports codeEdits; manifest
+             orders data-rows-3 (index 1) before gap-data-rows-3 (index 11) and stages the baseline file; data-rows-3 carries
+             the force-fang description row.
+32 CLOSED    same artefact as line 10.
+33 CLOSED    parked, same residue as line 11.
+34 CLOSED    same artefact as line 12.
+35 CLOSED    same artefact as line 13.
+36 CLOSED    same artefact as line 14.
+37 CLOSED    same artefact as line 15.
+38 CLOSED    parked, same residue as line 19 (needs the orchestrator: print-ledger source).
+39 CLOSED    test/trust-ledger.test.ts:561 - expectedPartly built with until(id, fields) off the shipped record, and the full
+             count is 25 minus expectedPartly, so it holds before and after the rows apply; green now; flip audit clean.
+40 CLOSED    test/batchP02-gap-situational.test.ts:79 - once src/data/trust-ledger.json drops trusted-rival from `partly`, the
+             shipped record must carry the Bastardhall +2 star. Trivially passes until the close re-stamp, by design.
+41 CLOSED    scripts/apply-situational-lane.mjs:139 - handEdited names 'spirit-sheath', 'emergency-targe' with feat-9050/9054
+             quotes; pinned by test/batchP02-gap-situational.test.ts:120.
+42 CLOSED    same artefact as line 20.
+
+NOTED, NOT GAP LINES
+- gap-data-rows-1 observed sparkling-targe has the same double carrier as aloof-firmament (subclass grantedFeats plus a
+  FEAT_FEAT_GRANTS row); no P02 finding covers it.
+- gap-data-rows-2: spells/infectious-melody's repair description row still reads like spell-933 word for word (listed in
+  the verbatim baseline); 151 records owe description rows (a lane of its own).
+
+CHECKED: every ref opened at its file:symbol; both new guards run with and without the pending rows; the owner-question
+dry run; the 9 touched test files (90 green); flip audit; tsc; collisions; manifest and gap-line counts; owner-questions.json
+unchanged.
+ASSUMED: "fails on revert" was judged by reading each test against the change it pins, not by reverting code (I may not
+rewrite other agents' files). The CHECK 8 before/after behaviour is the gap agent's in-memory measurement; reprint-check
+was not re-run.
+NOT TESTED: the full suite, the applier's dry run on any spec, npm run verify as a whole, the UI in the browser.

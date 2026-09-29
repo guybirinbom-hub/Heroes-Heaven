@@ -1,0 +1,27 @@
+{
+  "findings": [
+    {
+      "id": "friend-of-a-friend#lore",
+      "backfillRows": [
+        {
+          "category": "backgrounds",
+          "id": "friend-of-a-friend",
+          "field": "trainedLoreChoice",
+          "value": true,
+          "why": "AoN background-650: \"You're trained in the Athletics skill, and a Lore skill associated with any sort of food or drink\" - the subject is the player's, so the free-text Lore lane (backgroundChosenLoreKeys + the trainedLoreChoice arm in src/rules/build.ts) carries it; print names no default subject, so no trainedLoreChoiceDefault."
+        }
+      ],
+      "note": "One new field on a record with no existing overlay rows (grep of scripts/data/effect-backfill.json finds no friend-of-a-friend row), so no supersedes. The data-rows family's friend-of-a-friend#situational row targets a different field (situational), so the two cannot collide. Reader already exists; pinned by test/batchP02-engine.test.ts on a patched and a stripped copy, engine + builder box."
+    },
+    {
+      "id": "enhanced-familiar#ability-budget",
+      "backfillRows": [],
+      "note": "Code-only fix, and the code is outside this family's files: familiarAbilityBudget in src/rules/companions.ts must add +2 when character.feats owns enhanced-familiar (see CROSS-FILE GAPS in work/.bP02-report-engine.txt). No data row: the feat record needs no field, the reader keys on the feat id as attachments.ts does for talismanic-sage."
+    },
+    {
+      "id": "strikers-scroll#affix",
+      "backfillRows": [],
+      "note": "Code-only fix, and the code is outside this family's files: isAttachable / attachKind / planAffix in src/rules/attachments.ts plus their UI callers (see CROSS-FILE GAPS in work/.bP02-report-engine.txt). No data row: the permission is feat-conditional, keyed on the feat id like talismanic-sage, and scroll items already carry consumableType 'scroll'."
+    }
+  ]
+}

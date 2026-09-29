@@ -670,7 +670,37 @@ export function familiarAbilityBudget(cfg: CompanionConfig, character: Character
   const grant = cfg.grantSlug ? FEAT_COMPANION_GRANTS[cfg.grantSlug] : undefined;
   if (grant?.abilityBudget == null) return undefined;
   const growth = (grant.growthLevels ?? []).filter((l) => character.level >= l).length;
-  return grant.abilityBudget + growth;
+  return grant.abilityBudget + growth + familiarFeatRaise(cfg, character).add;
+}
+
+/** The two feats that raise a familiar's BASE number of abilities, highest first. */
+const FAMILIAR_BASE_FEATS: { ids: string[]; label: string; add: number }[] = [
+  // batch P02 premise: feat-5004 "You can select a base of six familiar or master abilities each day, instead of four."
+  // Incredible Familiar's prerequisite is Enhanced Familiar, so its +4 over the base of two IS the whole raise —
+  // the two feats are never summed. The Familiar Master printing (feat-8005, "six ... instead of four") is the same.
+  { ids: ['incredible-familiar', 'incredible-familiar-familiar-master'], label: 'Incredible Familiar', add: 4 },
+  // batch P02: enhanced-familiar#ability-budget — AoN feat-4717 "You can select four familiar or master abilities
+  // each day, instead of two." The witch Special adds the witch's bonus abilities to that amount and the wizard
+  // Special makes improved familiar attunement's base four before its thesis extras, so it is +2 on the base and
+  // every additive extra (growthLevels, the witch's patron slot) stays on top: familiar 2→4, witch 3→5, IFA 3→5.
+  { ids: ['enhanced-familiar'], label: 'Enhanced Familiar', add: 2 },
+];
+
+/**
+ * How much the character's Enhanced Familiar / Incredible Familiar raise THIS familiar's budget, and
+ * which feat does it (for the card's note). Zero for a grant whose record already prints the raised
+ * number, for a pet, and for a fixed-number grant whose meeting with the feat is an open owner
+ * question — see `CompanionGrant.enhancedFamiliar`.
+ *
+ * batch P02, enhanced-familiar#ability-budget: the feat had NO reader, so a wizard who took it still
+ * read "of 2 chosen" on the familiar card.
+ */
+export function familiarFeatRaise(cfg: CompanionConfig, character: Character): { add: number; by?: string } {
+  const grant = cfg.grantSlug ? FEAT_COMPANION_GRANTS[cfg.grantSlug] : undefined;
+  if (!grant || grant.kind !== 'familiar' || grant.abilityBudget == null || grant.enhancedFamiliar) return { add: 0 };
+  const owned = new Set((character.feats ?? []).map((f) => f.featId));
+  const hit = FAMILIAR_BASE_FEATS.find((f) => f.ids.some((id) => owned.has(id)));
+  return hit ? { add: hit.add, by: hit.label } : { add: 0 };
 }
 
 /** A familiar is a Tiny minion: 5 HP per level, the master's AC/saves/Perception, plus its

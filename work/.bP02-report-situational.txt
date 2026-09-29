@@ -1,0 +1,71 @@
+batch P02 - SITUATIONAL builder report
+
+DATA STILL NEEDED
+(none - every finding in this family is a code-only change in src/rules/situationalBonuses.ts; spec work/.bP02-rows-situational.json carries backfillRows: [] for all 11)
+
+CROSS-FILE GAPS
+- trusted-rival#research-bonus (data-rows family) writes a data-side `situational` field on backgrounds/trusted-rival: that row must NOT set situationalReplaces: true, or entriesFor drops the FEAT_SITUATIONAL['trusted-rival'] daily-preparation star this family added (the two concatenate otherwise). My test filters to the daily-prep row so it holds either way.
+- resurgent-maelstrom#trait-already-present (data-rows family) proposes editing the same FEAT_SITUATIONAL['resurgent-maelstrom'] entry in src/rules/situationalBonuses.ts; that entry now has THREE clauses (this family added the Arcane Cascade versatile clause) and whoever lands the backstabber/forceful rider must add beside them, not rewrite the entry from the old two-clause text. My test asserts no total clause count, so an added clause does not flip it.
+- scripts/lib/background-print.mjs (trust ledger) reads only record fields, so backgrounds/trusted-rival stays "partly: its daily-preparation choice, its situational bonuses" in src/data/trust-ledger.json even with the code star; the ledger re-stamp after this batch should be read for that key (the data-rows research-bonus row sets a record field, which clears it through otherRulesEncoded).
+- src/data/trust-ledger.json lanes.situational currently lists spirit-sheath and emergency-targe, so under the trust gate their (now corrected) shipped stars stay dark until the ledger re-stamp; the new keys (trusted-rival, aloof-firmament, twisting-tree, twofold-tine, distracting-spellstrike, exploding-bullet) are scraped by scripts/trust-ledger.mjs at the next re-stamp and may be gated the same way if their records are trust-off. Nothing to author here - the re-stamp decides.
+- scripts/apply-sweep-b2.mjs strips and regenerates its block of FEAT_SITUATIONAL from its marker to the table close, and resurgent-maelstrom sits inside that block (hand-edited in place, as the finding proposed). Re-running that historical script would lose the third clause; it is not in the chain today. The same holds for spirit-sheath and emergency-targe only with respect to apply-situational-lane.mjs, which skips existing ids, so those two are safe.
+
+PER FINDING
+
+trusted-rival#daily-prep-skill
+  did: FEAT_SITUATIONAL["trusted-rival"] (hand block above the generated-lane banner), skill 'all' target - the starstone-aspirant-dedication shape for a skill re-picked each day: when "with the one skill you chose at today's daily preparations, to Research a topic associated with Bastardhall (24 hours)", bonus "treated as expert in that skill (master at 7th level)". Comment quotes AoN background-652. No effectChoices picker: a daily re-pick has no stored answer the sheet could key a CHOICE_SITUATIONAL on, and the record field is the other family's.
+  test: test/batchP02-situational.test.ts "trusted-rival: the background star reads the daily pick, expert and master at 7th" (a built fighter with backgroundId trusted-rival, three skill rows via explainStat) + the mutation-proof stunted copy.
+
+aloof-firmament#cascade-damage
+  did: FEAT_SITUATIONAL["aloof-firmament"] strikeDamage clause: when "in Arcane Cascade, next Strike this turn with a one-handed sword-group weapon after a Fly, Leap, High Jump or Long Jump", bonus "Arcane Cascade extra damage becomes 4 (6 with weapon specialization, 8 with greater weapon specialization); only with your other hand completely free (...)". Laughing-shadow shape. Quotes AoN hybrid-study-7.
+  test: "aloof-firmament: the Strike damage row reads the 4 / 6 / 8 one-handed sword increase" (built magus subclassId aloof-firmament, a laughing-shadow magus reads none) + mutation-proof stunted copy.
+
+aloof-firmament#stance-movement
+  did: FEAT_SITUATIONAL["aloof-firmament"] speed clause ("while in Arcane Cascade stance" / Quick Jump benefits, Fly/Leap/High Jump/Long Jump don't trigger reactions) AND RECORD_MARKERS["aloof-firmament"] action marks on high-jump and long-jump (Quick Jump + no reactions) and leap and fly (no reactions), no `value` because every benefit is stance-gated. Placed above the apply-feat-audit / apply-feature-audit mark sentinels. Quotes AoN hybrid-study-7.
+  test: "aloof-firmament: the Speed row and the four movement actions carry Quick Jump and no reactions" (explainStat speed + recordMarkersFor) + mutation-proof "aloof-firmament: the Speed row and the action marks come from the registries (stunted copy)".
+
+aloof-firmament#cat-fall-condition
+  did: RECORD_MARKERS["aloof-firmament"] {on:'feature', id:'cat-fall'} "you benefit from Cat Fall only as long as you aren't using a shield and are wearing light or no armor." - rendered on the granted Cat Fall entry by FeatsTab through recordMarkersFor('feature', 'cat-fall'). Principle C shape (improved-command-corpse precedent). Quotes AoN hybrid-study-7.
+  test: "aloof-firmament: the granted Cat Fall feat entry carries the shield and armor restriction" (built aloof magus owns cat-fall; a laughing-shadow magus who took cat-fall reads no mark); the stunted-copy test above also stunts this mark.
+
+resurgent-maelstrom#stance-versatile
+  did: third clause on the existing FEAT_SITUATIONAL["resurgent-maelstrom"]: strikeDamage, when "with an improvised weapon while in Arcane Cascade stance", bonus "gains the versatile traits for the damage types it doesn't normally deal (a bludgeoning weapon gains versatile P and versatile S)". Quotes AoN hybrid-study-9.
+  test: "resurgent-maelstrom: the Strike damage row adds the in-stance versatile traits beside the old clause" + mutation-proof stunted copy.
+
+twisting-tree#staff-traits
+  did: FEAT_SITUATIONAL["twisting-tree"] strikeDamage: when "wielding a staff", bonus "one-handed: gains agile and its damage die becomes 1d6; two-handed: gains parry, reach and trip". Display-only (the grip is chosen per Strike; the record's own recordMarks already covers the free-action grip change). Quotes AoN hybrid-study-14.
+  test: "twisting-tree: the Strike damage row names both grips and their traits" + mutation-proof stunted copy.
+
+twofold-tine#cascade-damage
+  did: FEAT_SITUATIONAL["twofold-tine"] strikeDamage: when "in Arcane Cascade, with the melee weapon you chose in a different hand, after a Strike with another melee weapon", bonus "until the end of your turn, Arcane Cascade extra damage becomes 2 (4 with weapon specialization, 6 with greater weapon specialization)". Quotes AoN hybrid-study-15.
+  test: "twofold-tine: the Strike damage row reads the 2 / 4 / 6 increase for the other-hand weapon" + mutation-proof stunted copy.
+
+spirit-sheath#situational
+  did: FEAT_SITUATIONAL["spirit-sheath"] when text edited in place: "(one weapon of 1 Bulk or less)" -> "(up to 1 Bulk worth of weapons)"; target and +2 circumstance unchanged. Quotes AoN feat-9050. (Gated dark by the trust ledger today - see CROSS-FILE GAPS.)
+  test: "spirit-sheath: the Stealth row says up to 1 Bulk worth of weapons, not one weapon" (built magus with the feat, Stealth row via explainStat).
+
+distracting-spellstrike#deception-bonus
+  did: FEAT_SITUATIONAL["distracting-spellstrike"] skill deception: when "on the Feint you make with Distracting Spellstrike, while in Arcane Cascade stance", bonus "+status equal to your Arcane Cascade extra damage (1; 2 with weapon specialization, 3 with greater weapon specialization)". Quotes AoN feat-9053.
+  test: "distracting-spellstrike: the Deception row reads the status bonus equal to the cascade damage" (Diplomacy reads none) + mutation-proof stunted copy.
+
+emergency-targe#situational
+  did: FEAT_SITUATIONAL["emergency-targe"] AC when text edited in place: "as a reaction, against the triggering melee Strike or melee spell attack roll..." -> "as a reaction, against the triggering Strike or spell attack roll from an enemy you're aware of"; the save clause and both bonuses unchanged. Quotes AoN feat-9054. (Gated dark by the trust ledger today - see CROSS-FILE GAPS.)
+  test: "emergency-targe: the AC row answers any Strike or spell attack from an enemy you are aware of" (no "melee" in the row).
+
+exploding-bullet#splash
+  did: FEAT_SITUATIONAL["exploding-bullet"] strikeDamage: when "on a firearm Strike firing your Exploding Bullet round (it gains the arcane trait and the fire or sonic trait you chose)", bonus "the firearm gains scatter 5 feet, its splash damage dealing the energy type you chose; if it already has scatter, +1 status to its splash damage instead". Indication-only (expanded-splash / crossbow-crack-shot precedent). Quotes AoN feat-9055.
+  test: "exploding-bullet: the Strike damage row reads scatter 5 feet, the chosen energy and the +1 status" (built volatile-spark magus with the feat) + mutation-proof stunted copy.
+
+TEACH / SETTLE LINES
+none - this family added no comparer settle and no teach; every finding above is carried by a registry entry read on the derived sheet.
+
+CHECKED
+- node scripts/vt.mjs run test/batchP02-situational.test.ts test/held-back-registry-fixes.test.ts: 45/45 pass (the ruling-H 120-character `when` cap failed on the first draft for four entries; the wording was shortened, detail moved into `bonus`).
+- The registry-wide invariant files also run once, green except that cap: situational-bonuses, situational-on-any-record, situational-reach, situational-target-kinds, situational-detail-rows, batch29-situational-siblings, triage-lane-close, batch039-situational.
+- node scripts/test-flip-audit.mjs --batch P02: clean.
+- npx tsc --noEmit: clean.
+- src/rules/situationalBonuses.ts line endings measured with node before and after: CRLF only (5008 -> 5088 lines, 0 bare LF).
+ASSUMED
+- The sheet renders a speed-row situational and the action/feature marks exactly as recordMarkersFor and explainStat return them (both are the readers MainTab, FeatsTab and StatDetailModal call).
+NOT TESTED
+- Not viewed in the browser preview. The trust-gated app (content({trustGate:true})) was not exercised; see the ledger lines in CROSS-FILE GAPS.

@@ -22,7 +22,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { clip, comparerFlags, copyTestbase, dumpBlocks, entryOf, expectRowsFor, familyOf, gapProblems, isFlagged, keyOf, midBatchLoudLine, missingGapsRefusal, newRunId, pendingQuestions, precheck, refusalTail, uncitedQuiet, verifyChecks, verifyVerdict, wentQuiet } from '../scripts/wg-batch-run.mjs';
+import { clip, comparerFlags, copyTestbase, dumpBlocks, entryOf, expectRowsFor, familyOf, gapProblems, isFlagged, keyOf, midBatchLoudLine, mirrorCategoryOf, missingGapsRefusal, newRunId, pendingQuestions, precheck, refusalTail, uncitedQuiet, verifyChecks, verifyVerdict, wentQuiet } from '../scripts/wg-batch-run.mjs';
 import { applyBackfill } from '../scripts/lib/apply-backfill.mjs';
 
 /* A row that passes every pre-check, so each fixture below differs from the clean case in ONE way. */
@@ -194,6 +194,18 @@ describe('apply pre-checks (docs/wg-batch-pipeline.md §A)', () => {
     );
     expect(invented.problems.join()).toContain('in NEITHER our current text nor the mirror');
     expect(invented.problems.join()).toContain('cone');
+  });
+
+  // batch P02: steady-spellcasting-magus
+  it('(5) steady-spellcasting-magus repair rows: a VARIANT doc id (equipment-598-631) is looked up in the equipment mirror folder, not equipment-598/', () => {
+    // The apply stage refused six correctly-cited repair rows because only the LAST numeric tail was
+    // stripped; the mirror keeps variants beside their parent (by-category/equipment/equipment-598-631.json).
+    expect(mirrorCategoryOf('equipment-598-631')).toBe('equipment');
+    expect(mirrorCategoryOf('equipment-883-866')).toBe('equipment');
+    expect(mirrorCategoryOf('equipment-598')).toBe('equipment');
+    // batch P02: steady-spellcasting-magus — a plain id (feat-2857, the finding's own doc) is unchanged
+    expect(mirrorCategoryOf('feat-2857')).toBe('feat');
+    expect(mirrorCategoryOf('class-feature-431')).toBe('class-feature');
   });
 });
 

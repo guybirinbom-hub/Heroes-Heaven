@@ -907,6 +907,57 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
    * `injectText type=mode` carrying this sentence. */
   "elemental-instinct": [{ targets: [{ kind: 'ac' }], when: "while raging, against ranged attacks", bonus: "you are concealed (the attacker must succeed at a DC 5 flat check); this concealment can't be used to Hide or Sneak" }],
 
+  /* ---- print batch P02: printed clauses with no carrier (situational builder) --------------------
+   * Every entry below sits ABOVE the generated-lane banner on purpose: apply-situational-lane.mjs
+   * appends below it and skips any id already spelled here, so these survive a regeneration.
+   *
+   * batch P02: trusted-rival#daily-prep-skill — AoN background-652: *"When you do your daily
+   * preparations, you can choose one skill to hone up your Bastardhall knowledge on. For the next 24
+   * hours, you treat that skill as if you were expert in its use when attempting checks to Research
+   * any topic associated with Bastardhall. If you're 7th level, you treat this skill as if you were
+   * master instead."* The skill is re-picked every day, so no fixed skill can carry it; `all` is the
+   * starstone-aspirant-dedication shape for exactly that ("the one untrained skill you chose during
+   * today's daily preparations"). No number moves — it is a proficiency the player applies. */
+  "trusted-rival": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "with the one skill you chose at today's daily preparations, to Research a topic associated with Bastardhall (24 hours)", bonus: "treated as expert in that skill (master at 7th level)" }],
+  /* batch P02: aloof-firmament#cascade-damage and aloof-firmament#stance-movement — AoN hybrid-study-7
+   * (Tian Xia Character Guide). The damage clause: *"the next Strike you make before the end of your
+   * turn with a one-handed weapon in the sword group has greater damage from Arcane Cascade. Increase
+   * the extra damage to 4; increase it to 6 if you have weapon specialization, or to 8 if you have
+   * greater weapon specialization. You must have your other hand completely free"*. The movement
+   * clause: *"While in Arcane Cascade stance, your steps become even lighter, giving you the benefits
+   * of the Quick Jump general feat. When you Fly, Leap, High Jump, or Long Jump while in that stance,
+   * your movement doesn't trigger reactions."* Both are stance-gated, so neither can be a flat number
+   * or a real grant of feats/quick-jump. The sibling laughing-shadow entry below carries the same two
+   * shapes (a speed row and a strikeDamage "extra damage becomes N" row). The Quick Jump / reaction
+   * clause ALSO marks the jump actions themselves (RECORD_MARKERS 'aloof-firmament'). */
+  "aloof-firmament": [{ targets: [{ kind: 'strikeDamage' }], when: "in Arcane Cascade, next Strike this turn with a one-handed sword-group weapon after a Fly, Leap, High Jump or Long Jump", bonus: "Arcane Cascade extra damage becomes 4 (6 with weapon specialization, 8 with greater weapon specialization); only with your other hand completely free (no free-hand weapon or other item in it)" }, { targets: [{ kind: 'speed' }], when: "while in Arcane Cascade stance", bonus: "you gain the benefits of Quick Jump, and your Fly, Leap, High Jump and Long Jump don't trigger reactions" }],
+  /* batch P02: twisting-tree#staff-traits — AoN hybrid-study-14: *"While you wield a staff in one hand,
+   * the staff adjusts in shape and weight, gaining the agile trait and increasing its damage die size
+   * to 1d6. While you wield a staff in both hands, it lengthens, twists, and reshapes, gaining the
+   * parry, reach, and trip traits."* The grip is chosen Strike by Strike (the record's own recordMarks
+   * lets you change it as a free action on Arcane Cascade), so the sheet cannot pick one profile; the
+   * resurgent-maelstrom shape — a strikeDamage row naming both grips — is the reading the player needs. */
+  "twisting-tree": [{ targets: [{ kind: 'strikeDamage' }], when: "wielding a staff", bonus: "one-handed: gains agile and its damage die becomes 1d6; two-handed: gains parry, reach and trip" }],
+  /* batch P02: twofold-tine#cascade-damage — AoN hybrid-study-15: *"While in Arcane Cascade stance, if
+   * you make a Strike with a melee weapon you're holding, you can intensify the stance's power for
+   * another melee weapon of your choice you're holding in a different hand. Until the end of your
+   * turn, any extra damage the chosen weapon gains from Arcane Cascade is increased to 2. The extra
+   * damage increases to 4 if you have weapon specialization or 6 if you have greater weapon
+   * specialization."* The laughing-shadow strikeDamage shape. */
+  "twofold-tine": [{ targets: [{ kind: 'strikeDamage' }], when: "in Arcane Cascade, with the melee weapon you chose in a different hand, after a Strike with another melee weapon", bonus: "until the end of your turn, Arcane Cascade extra damage becomes 2 (4 with weapon specialization, 6 with greater weapon specialization)" }],
+  /* batch P02: distracting-spellstrike#deception-bonus — AoN feat-9053: *"If you're in the Arcane
+   * Cascade stance, you gain a status bonus to your Deception check equal to your extra damage from
+   * Arcane Cascade (typically 1, increasing to 2 if you have weapon specialization and 3 if you have
+   * greater weapon specialization)."* The check is the Feint the feat makes, so the star sits on
+   * Deception and names the Feint. */
+  "distracting-spellstrike": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "on the Feint you make with Distracting Spellstrike, while in Arcane Cascade stance", bonus: "+status equal to your Arcane Cascade extra damage (1; 2 with weapon specialization, 3 with greater weapon specialization)" }],
+  /* batch P02: exploding-bullet#splash — AoN feat-9055: *"When you shoot this round, the Strike gains
+   * the arcane trait and the corresponding energy trait. The firearm gains the scatter 5 feet trait,
+   * or gains a +1 status bonus to its splash damage if it already has the scatter trait. The scatter
+   * trait's splash damage uses the energy type you chose."* One loaded round, one Strike — the
+   * expanded-splash / crossbow-crack-shot shape (indication only, no number folded in). */
+  "exploding-bullet": [{ targets: [{ kind: 'strikeDamage' }], when: "on a firearm Strike firing your Exploding Bullet round (it gains the arcane trait and the fire or sonic trait you chose)", bonus: "the firearm gains scatter 5 feet, its splash damage dealing the energy type you chose; if it already has scatter, +1 status to its splash damage instead" }],
+
   // ---- generated by scripts/apply-situational-lane.mjs — do not hand-edit below this line ----
   // 1758 records / 2620 bonuses from the adversarially verified pass.
   // Escalated, content-corrected and hand-authored ids are excluded by the script on purpose.
@@ -978,7 +1029,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "ceremony-of-protection": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn, after spending the 1-action Ceremony of Protection", bonus: "+1 circumstance" }],
   "defensive-instincts": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn, after using Defensive Instincts while adjacent to at least two enemies", bonus: "+1 circumstance" }],
   "bristle": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn, after using Bristle", bonus: "+1 circumstance" }, { targets: [{ kind: 'strikeDamage' }], when: "until the start of your next turn after using Bristle — Barbed Quills and quills unarmed Strikes only", bonus: "+1 circumstance" }],
-  "spirit-sheath": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "to Conceal an Item inside your spirit sheath (one weapon of 1 Bulk or less)", bonus: "+2 circumstance" }],
+  /* batch P02: spirit-sheath#situational — AoN feat-9050: *"A spirit sheath can hold up to 1 Bulk worth
+   * of weapons."* The lane's wording repeated the legacy one-weapon limit. Hand-edited in place: the
+   * lane skips an id already spelled in the registry, so this wording survives a regeneration. */
+  "spirit-sheath": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "to Conceal an Item inside your spirit sheath (up to 1 Bulk worth of weapons)", bonus: "+2 circumstance" }],
   "capture-magic": [{ targets: [{ kind: 'strikeDamage' }], when: "until the end of your next turn, to your Arcane Cascade damage only…", bonus: "+2 status" }],
   "preternatural-parry": [{ targets: [{ kind: 'ac' }], when: "as a reaction , against the triggering Strike or spell attack roll…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "as a reaction (one or more hands free), against the triggering spell effect, until the start of your next turn", bonus: "+2 circumstance" }],
   "defend-summoner": [{ targets: [{ kind: 'ac' }], when: "after your eidolon uses Defend Summoner, until the start of your next turn…", bonus: "+2 circumstance" }],
@@ -3004,7 +3058,11 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "deft-cooperation": [{ targets: [{ kind: 'strikeAttack' }], when: "against an enemy whose attack roll you successfully Aided, until the end of your next turn", bonus: "+1 circumstance" }, { targets: [{ kind: 'ac' }], when: "against an enemy whose AC you successfully Aided, until the end of your next turn", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "on your next turn, when you repeat the exact same skill check you successfully Aided", bonus: "+1 circumstance" }],
   "don-thy-fervor": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "for 1 minute after you activate Don thy Fervor", bonus: "+2 circumstance (+3 at 18th level)" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "for 1 minute after you activate Don thy Fervor", bonus: "+2 circumstance (+3 at 18th level)" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "for 1 minute after you activate Don thy Fervor", bonus: "+2 circumstance (+3 at 18th level)" }],
   "spell-parry": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn after using Spell Parry, as long as you keep a hand free", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against spells that target you, until the start of your next turn after using Spell…", bonus: "+1 circumstance" }],
-  "emergency-targe": [{ targets: [{ kind: 'ac' }], when: "as a reaction, against the triggering melee Strike or melee spell attack roll…", bonus: "your shield's circumstance bonus (+1 for a buckler or the shield spell, +2 for most shields including a tower shield)" }, { targets: [{ kind: 'save', detail: 'all' }], when: "as a reaction, against the enemy spell you failed a save against — the shield bonus applies retroactively to that save", bonus: "your shield's circumstance bonus (+1 for a buckler or the shield spell, +2 for most shields including a tower shield)" }],
+  /* batch P02: emergency-targe#situational — AoN feat-9054 prints the trigger as *"An enemy you're aware
+   * of hits you with a Strike or a spell attack, or you fail a save against an enemy's spell."* No
+   * melee limit: the old wording carried the legacy melee-only trigger, so a ranged Strike or ranged
+   * spell attack read as out of reach. Hand-edited in place (the lane skips an id already spelled). */
+  "emergency-targe": [{ targets: [{ kind: 'ac' }], when: "as a reaction, against the triggering Strike or spell attack roll from an enemy you're aware of", bonus: "your shield's circumstance bonus (+1 for a buckler or the shield spell, +2 for most shields including a tower shield)" }, { targets: [{ kind: 'save', detail: 'all' }], when: "as a reaction, against the enemy spell you failed a save against — the shield bonus applies retroactively to that save", bonus: "your shield's circumstance bonus (+1 for a buckler or the shield spell, +2 for most shields including a tower shield)" }],
   "nosois-mask": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while wearing a splendid psychopomp mask (the 50 gp version you can make with this feat)", bonus: "+1 item" }],
   "dragon-roar": [{ targets: [{ kind: 'strikeDamage' }], when: "on your first attack that hits a frightened creature after you Roar…", bonus: "+4 circumstance" }],
   "axe-of-the-dwarven-lords": [{ targets: [{ kind: 'skill', detail: 'crafting' }], when: "while the axe is in your possession, when Crafting armor, jewelry, metalwork, stonemasonry, snares, traps, or weapons", bonus: "+4 item" }, { targets: [{ kind: 'strikeDamage' }], when: "on Strikes with the axe against orcs", bonus: "+1d6 damage" }],
@@ -3402,7 +3460,11 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "lumber-lords-axe": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Lie while holding or carrying the lumber lord's axe", bonus: "-4 status" }, { targets: [{ kind: 'strikeDamage' }], when: "with this axe against undisguised fungus or plant creatures", bonus: "+1d6 slashing" }],
   "timepiece-standard-major": [{ targets: [{ kind: 'hp' }], when: "when you Delay or Ready, then immune to this effect for 10 minutes", bonus: "+10 temporary Hit Points for 1 minute" }],
   "reincarnated-ridiculer": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "Demoralizing a foe that critically hit you last turn", bonus: "+4 (the check's DC is reduced by 4)" }],
-  "resurgent-maelstrom": [{ targets: [{ kind: 'strikeAttack' }], when: "attacking with an improvised weapon", bonus: "the -2 item penalty does not apply" }, { targets: [{ kind: 'strikeDamage' }], when: "wielding an improvised weapon", bonus: "minimum damage die 1d6 (1d4 if agile); gains water plus backstabber (1H) or forceful (2H); unarmed runes apply" }],
+  /* batch P02: resurgent-maelstrom#stance-versatile — AoN hybrid-study-9: *"While you're in Arcane
+   * Cascade stance, you can manipulate the water around your improvised weapon… The weapon gains the
+   * versatile traits for the types of damage that it doesn't normally deal."* The third clause, added
+   * in place beside the two this entry already carried. */
+  "resurgent-maelstrom": [{ targets: [{ kind: 'strikeAttack' }], when: "attacking with an improvised weapon", bonus: "the -2 item penalty does not apply" }, { targets: [{ kind: 'strikeDamage' }], when: "wielding an improvised weapon", bonus: "minimum damage die 1d6 (1d4 if agile); gains water plus backstabber (1H) or forceful (2H); unarmed runes apply" }, { targets: [{ kind: 'strikeDamage' }], when: "with an improvised weapon while in Arcane Cascade stance", bonus: "gains the versatile traits for the damage types it doesn't normally deal (a bludgeoning weapon gains versatile P and versatile S)" }],
   "shockwave": [{ targets: [{ kind: 'strikeDamage' }], when: "on Strikes with the etched weapon", bonus: "bludgeoning splash damage equal to the number of weapon damage dice (you are immune to it)" }],
   "shootists-edge": [{ targets: [{ kind: 'strikeAttack' }], when: "with a ranged weapon you have master or greater proficiency in…", bonus: "ignore the range increment penalty" }],
   "skunk-bomb-moderate": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "to Track a creature this bomb sickened, while its odor lasts", bonus: "+1 item" }],
@@ -4385,6 +4447,24 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
    * row through FeatsTab.tsx:99 `recordMarkersFor(character, content, 'feature', recordId)`, where
    * recordId is the granted feat's own id.
    * ⚠ Above the generated-marks sentinel at :4094 on purpose (see the shore-step comment). */
+  /* batch P02: aloof-firmament#cat-fall-condition — AoN hybrid-study-7: *"You gain the Cat Fall general
+   * feat, though you benefit from it only as long as you aren't using a shield and are wearing light
+   * or no armor."* The grant (option grantedFeats + featFeatGrants.ts) hands the feat over plainly and
+   * the feat's own text has no such limit, so the restriction lived only in the study's prose.
+   * Principle C: mark the thing this record modifies — the granted Cat Fall row on the Feats tab.
+   * batch P02: aloof-firmament#stance-movement — the same study: *"While in Arcane Cascade stance, your
+   * steps become even lighter, giving you the benefits of the Quick Jump general feat. When you Fly,
+   * Leap, High Jump, or Long Jump while in that stance, your movement doesn't trigger reactions."*
+   * The action half of that clause, on the four action rows it changes, worded like 'quick-jump'.
+   * No `value`: every benefit is stance-gated, so no row may show a changed cost unconditionally.
+   * ⚠ Above the generated-marks sentinel on purpose (see the shore-step comment). */
+  "aloof-firmament": [
+    { on: 'feature', id: 'cat-fall', note: "you benefit from Cat Fall only as long as you aren't using a shield and are wearing light or no armor." },
+    { on: 'action', id: 'high-jump', note: "while in Arcane Cascade stance you have Quick Jump's benefits (High Jump as a single action, no 10-foot Stride first), and your High Jump doesn't trigger reactions." },
+    { on: 'action', id: 'long-jump', note: "while in Arcane Cascade stance you have Quick Jump's benefits (Long Jump as a single action, no 10-foot Stride first), and your Long Jump doesn't trigger reactions." },
+    { on: 'action', id: 'leap', note: "while in Arcane Cascade stance, your Leap doesn't trigger reactions." },
+    { on: 'action', id: 'fly', note: "while in Arcane Cascade stance, your Fly doesn't trigger reactions." },
+  ],
   "improved-command-corpse": [{ on: 'feature', id: 'command-undead', note: "when you use it on a mindless undead, a save that succeeds without critically succeeding makes the undead your minion for 1 round, a failure for 1 hour, and a critical failure for 24 hours — replacing the durations printed above." }],
 
 

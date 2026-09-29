@@ -1,0 +1,53 @@
+PRINT BATCH P02 - data-rows-3 (chunk 3 of 4 of the data-rows family)
+Spec: work/.bP02-rows-data-rows-3.json   Tests: test/batchP02-data-rows-3.test.ts   No created-prose spec (no create rows).
+
+DATA STILL NEEDED
+- feats/heaven-earth-encompassing-sleeves field grantsItems value [{"itemId":"sleeves-of-storage","worn":true,"maxLevel":8},{"itemId":"sleeves-of-storage-greater","worn":true,"minLevel":9}] (why: AoN feat-7082 "This clothing becomes a set of sleeves of storage ... At 9th level, the clothing becomes greater sleeves of storage instead") - author ONLY after the level gate in CROSS-FILE GAPS line 1 exists; with today's reader both items would arrive at every level. Finding heaven-earth-encompassing-sleeves#sleeves-item.
+
+CROSS-FILE GAPS
+- ENGINE (orchestrator decision, engine family): DefenseGrants.grantsItems in src/rules/types.ts has no level gate and the build.ts:8482 feat reader checks whenChoice only; add minLevel/maxLevel to the entry type and skip the entry in the reader when character level is outside them. Blocks heaven-earth-encompassing-sleeves#sleeves-item.
+- SCRIPTS (lane-wide, not a data-rows chunk): the importer path that built the Impossible Magic feats left the page header ("<Name>\nSource ... pg. N\nPrerequisites ...") on the flat description; strip it the way pageProse() in scripts/import-siege-and-gaps.mjs does, and add a verify guard that no description starts with "<record name>\nSource " (870 records match today). This chunk fixed only its three records by overlay row (exploding-bullet, recharging-flurry, running-recharge).
+- SCRIPTS (guard): 199 of the 200 spells whose description starts with the "<Name> \nSource" header have no cast field (the booming-blast#cast / force-fling#cast pattern); a creation-path fix or a verify guard (a spell whose mirror doc prints an actions string must carry cast) belongs in scripts/. spells/booming-blast and spells/force-fling descriptions themselves still open with that header - no P02 finding covers that, so no row was written for it here.
+- ENGINE (small): dailyTemporaryItems.filter has no rarity key (src/rules/types.ts + src/rules/dailyItems.ts dailyItemOptions), so Practical Magic's "all common spell catalysts" is carried only by the picker note; uncommon/rare catalysts at or below the level cap still appear in the picker (the same residual talisman-dabbler-dedication already carries).
+
+PER FINDING
+
+heaven-earth-encompassing-sleeves#sleeves-item - NO ROW (backfillRows []). The printed item changes at 9th level and the only grantsItems reader (build.ts:8482) has no level gate, so no correct row can be written today: an ungated pair hands a 4th-level magus the greater sleeves, a lesser-only row is wrong from 9th. Needs the orchestrator's engine-shape decision (CROSS-FILE GAPS line 1); the row is written out in DATA STILL NEEDED. No test (nothing lands this batch).
+
+exploding-bullet#description-header - row feats/exploding-bullet description (why AoN feat-9055): title, Source and Prerequisites lines dropped; Requirements and Special kept in the house "**Requirements** ...\n\n---\n\n" / "**Special**" form. Verified by inspection: the value's tokens equal the shipped tokens minus the 12 header tokens; the applier's added-prose rule finds no added run. Pinned by "exploding-bullet: the description opens on its Requirements line ..." (red until applied, fails on the header).
+
+recharging-flurry#description-header - row feats/recharging-flurry description (why AoN feat-9056): same strip, Requirements kept. Field description, so no collision with the sibling's recharging-flurry#map (mapReduction). Pinned by "recharging-flurry: the description opens on its Requirements line, the MAP clause intact".
+
+running-recharge#description-header - row feats/running-recharge description (why AoN feat-9057): title and Source lines dropped, body unchanged. Pinned by "running-recharge: the description is the rules text alone".
+
+shattering-spellstrike - row feats/shattering-spellstrike description (why AoN feat-7467): the shipped text with the single word "force" restored ("an additional 2d6 force damage as your improvised weapon breaks"); verified equal to shipped.replace('2d6 damage','2d6 force damage'). Pinned by "shattering-spellstrike: the breaking weapon deals 2d6 FORCE damage".
+
+strikers-scroll#prose - row feats/strikers-scroll description (why AoN feat-9059, legacy feat-2858): second paragraph now the feat-9059 wording ("provided the spell ...", "normal—if a bit crumpled—scroll"); first paragraph and descRefs unchanged. Verified equal to shipped with exactly those two substitutions. No collision with strikers-scroll#affix (engine code in src/rules/attachments.ts). Pinned by "strikers-scroll: the second paragraph is the feat-9059 wording".
+
+practical-magic-impossible-magic - row feats/practical-magic-impossible-magic dailyTemporaryItems (why AoN feat-9331) = [{id:'catalyst', label:'Temporary spell catalyst', count:2, filter:{traits:['catalyst'], maxLevel:'floor(@actor.level/2)', note:'Common spell catalysts only; ...'}}], the talisman-dabbler-dedication shape; reader src/rules/dailyItems.ts (dailyItemSlots / dailyItemOptions) confirmed. Pinned by "practical-magic-impossible-magic: the shipped record carries the daily catalyst slots" (red until applied) and the mechanism test "practical-magic-impossible-magic: the reader turns the row into two catalyst slots capped at half level" (patched in-memory copy; GREEN now and after: 2 slots, maxLevel 4 at 9th, every option a catalyst of level <= 4). Residual: common-only is note-only (CROSS-FILE GAPS line 4).
+
+dimensional-assault#prose - row spells/dimensional-assault description (why AoN spell-2877, legacy spell-1037): the spell-2877 body verbatim plus "**Heightened (5th)** The range is equal to your Speed."; every added run is in spell-2877. Range field left "half your Speed". Pinned by "dimensional-assault: the spell-2877 body and its Heightened (5th) entry".
+
+force-fang#prose - row spells/force-fang description (why AoN spell-2878, legacy spell-1038): the spell-2878 body verbatim plus "**Heightened (+2)** The damage increases by 1d4+1."; descRefs [Spellstrike] untouched. The existing overlay description row is feats/force-fang (different key), so no supersedes. Pinned by "force-fang: the spell-2878 body, target within your melee reach".
+
+booming-blast#cast - row spells/booming-blast cast {type:'actions', value:1} (why AoN spell-2875 'Single Action'), the bloody-tendrils shape. Pinned by "booming-blast: a single action".
+
+booming-blast#defense - rows spells/booming-blast save {type:'will', basic:false}, area '20-foot emanation', baseArea {value:20, kind:'emanation'} (why AoN spell-2875), the thunderous-strike field set. Pinned by "booming-blast: a non-basic Will save over a 20-foot emanation".
+
+force-fling#cast - row spells/force-fling cast {type:'actions', value:1} (why AoN spell-2879 'Single Action'). Pinned by "force-fling: a single action".
+
+No settle and no comparer teach was written by this chunk; every line above names its finding id.
+
+CHECKED
+- Every finding read in full from work/.bP02-read.json; every mirror doc (feat-9055/9056/9057/7467/9059/9331/7082, spell-2875/2877/2878/2879) read for the printed text.
+- No existing scripts/data/effect-backfill.json row shares a category/id/field key with any row here (so no supersedes); no sibling spec file existed at the time of the collision check.
+- The applier's added-prose rule re-run by inspection (copied logic, no write) over all 7 description rows: every added 3+ word run is in the cited doc; the 3 header strips and 2 one-word repairs add nothing unbacked.
+- node scripts/vt.mjs run test/batchP02-data-rows-3.test.ts: 11 red for the right reason (the shipped field is absent / still the old prose), 1 green (the mechanism test). npx tsc --noEmit clean.
+
+ASSUMED
+- The house description format "**Requirements** ...\n\n---\n\n" (203 overlay rows use it) renders the same in the Feats & Features preview as the other records that already carry it.
+- The driver re-runs the added-prose check with the real applier; my inspection copy may differ in entity decoding.
+
+NOT TESTED
+- The Rest sheet UI for Practical Magic (only the dailyItems.ts functions were exercised), and the SpellsTab glyph/Defense/Area rows for booming-blast and force-fling (only the fields).
+- The rows themselves were not applied (the driver applies them); the shipped-data tests stay red until then.

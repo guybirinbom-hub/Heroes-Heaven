@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 // @ts-expect-error — plain-ESM script, no type declarations (scripts/ is JS, test/ is TS).
-import { appendQuestions } from '../scripts/add-owner-question.mjs';
+import { appendQuestions, batchOf } from '../scripts/add-owner-question.mjs';
 
 /**
  * THE DESK NUMBERS ARE PERMANENT.
@@ -267,5 +267,21 @@ describe('add-owner-question.mjs allocates and refuses', () => {
     expect(r.code).toBe(2);
     expect(r.out).toContain('theirs quotes none of the ops');
     expect(r.out).toContain('MAX_HEALTH_BONUS'); // it prints what they DO carry
+  });
+
+  // batch P02: enhanced-familiar#ability-budget
+  it('enhanced-familiar: a PRINT-lane batch tag (P02) is a batch, kept as the string it is', () => {
+    /* The gaps stage of print batch P02 refused its one owner question ("missing batch") because
+     * Number("P02") is NaN. A WG batch stays a number; a print tag stays its tag; anything else is refused. */
+    expect(batchOf('P02')).toBe('P02');
+    expect(batchOf('30')).toBe(30);
+    expect(batchOf(31)).toBe(31);
+    // batch P02: enhanced-familiar#ability-budget — neither a number nor a P-tag is refused
+    expect(Number.isNaN(batchOf('residue'))).toBe(true);
+    expect(Number.isNaN(batchOf(''))).toBe(true);
+    const fixture: Record<string, Entry[]> = { open: [], ruled: [{ id: 'b', n: 9 }], deferred: [], authorisedExceptions: [] };
+    const { added } = appendQuestions(fixture, [{ id: 'enhanced-familiar#fixed-budget-grants', batch: 'P02', printed: 'p', theirs: 't', ours: 'o', question: 'q' }]);
+    // batch P02: enhanced-familiar#ability-budget — the desk entry keeps its print tag
+    expect(added[0].batch).toBe('P02');
   });
 });

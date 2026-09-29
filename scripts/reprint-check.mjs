@@ -49,6 +49,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadReprintIndex, repointDoc, shippedTwin, slugify, whyUnpaired } from './lib/reprint.mjs';
+import { movedProseVerdict } from './lib/moved-prose.mjs';
 import { BOOK_SPLITS, CHOOSABLE_SOURCE_MAPS } from '../src/rules/sources';
 import { seedContent } from '../src/rules/seed';
 import { findCombinationFormIds, findDuplicateIds, findHiddenTwins, findUmbrellaIds, shopItems } from '../src/data';
@@ -498,15 +499,24 @@ const proseProblems = [];
 {
   const BASELINE = 'scripts/data/moved-prose-baseline.json';
   const baseline = JSON.parse(readFileSync(join(ROOT, BASELINE), 'utf8'));
-  const words = (s) => new Set(String(s).toLowerCase().replace(/<[^>]*>/g, ' ').replace(/\([^)]*\.aspx[^)]*\)/gi, ' ').match(/[a-z]{4,}/g) ?? []);
-  const share = (w, text) => { const t = words(text); let n = 0; for (const x of w) if (t.has(x)) n++; return w.size ? n / w.size : 0; };
+  /*
+   * batch P02: distracting-spellstrike#description — the judgement lives in scripts/lib/moved-prose.mjs
+   * (pinned by test/batchP02-gap-data-rows-2.test.ts), and it has a second reading. The margin rule
+   * below is unchanged; the VERBATIM reading (every counted word on the replaced page, not every one on
+   * its own) catches the short near-identical reprints the 0.05 margin cannot: feats/distracting-spellstrike
+   * read feat-2854's "arcane, illusion, and visual traits" at own 0.951 / old 1.000 and passed.
+   * Its own baseline, scripts/data/moved-prose-verbatim-baseline.json, holds the records that read that
+   * way when the reading went in (measured with batch P02's description rows applied): a new one fails,
+   * a listed one whose pair changed fails, and a listed one now clean is reported for removal.
+   */
+  const VERBATIM_BASELINE = 'scripts/data/moved-prose-verbatim-baseline.json';
+  const verbatimBaseline = JSON.parse(readFileSync(join(ROOT, VERBATIM_BASELINE), 'utf8'));
   const stale = new Map();
+  const verbatim = new Map();
   for (const { where, D, olds, prose } of onReprint) {
-    const w = words(prose);
-    const own = share(w, index.docs.get(D)?.text ?? '');
-    let best = null; let bestShare = -1;
-    for (const o of olds) { const s = share(w, index.docs.get(o)?.text ?? ''); if (s > bestShare) { best = o; bestShare = s; } }
-    if (bestShare > own + 0.05) stale.set(where, `${D} reads like ${best}`);
+    const v = movedProseVerdict(prose, index.docs.get(D)?.text ?? '', olds.map((o) => [o, index.docs.get(o)?.text ?? '']));
+    if (v?.kind === 'margin') stale.set(where, `${D} reads like ${v.best}`);
+    else if (v?.kind === 'verbatim') verbatim.set(where, `${D} reads like ${v.best}`);
   }
   const listed = Object.keys(baseline).filter((k) => k !== '_');
   for (const [where, pair] of stale) {
@@ -515,6 +525,13 @@ const proseProblems = [];
   }
   for (const where of listed) if (!stale.has(where)) proseProblems.push(`${where} is in ${BASELINE} but its prose now reads like its own printing — remove the entry`);
   console.log(`${onReprint.length} record(s) with prose sit on a reprint; ${stale.size} read like the printing it replaced, ${listed.length} in the baseline (it only shrinks).`);
+  const vListed = Object.keys(verbatimBaseline).filter((k) => k !== '_');
+  for (const [where, pair] of verbatim) {
+    if (!(where in verbatimBaseline)) proseProblems.push(`${where}: ${pair} word for word (every counted word is on the replaced page, not every one on its own) — the prose is the printing its document replaced`);
+    else if (verbatimBaseline[where] !== pair) proseProblems.push(`${where}: now ${pair} word for word, ${VERBATIM_BASELINE} says ${verbatimBaseline[where]}`);
+  }
+  for (const where of vListed) if (!verbatim.has(where)) console.log(`   CHECK 8: ${where} no longer reads like its replaced printing word for word — remove its line from ${VERBATIM_BASELINE}`);
+  console.log(`${verbatim.size} more read like it word for word (inside the 0.05 margin); ${vListed.length} in ${VERBATIM_BASELINE} (it only shrinks).`);
 }
 
 /*

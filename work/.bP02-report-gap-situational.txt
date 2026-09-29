@@ -1,0 +1,31 @@
+batch P02 - GAP agent, family "situational" (10 gap lines: 7 AUTHORED, 3 PARKED, 0 open)
+
+PER GAP LINE
+1. report-situational.txt:7 (trusted-rival#research-bonus must not set situationalReplaces) - AUTHORED test/batchP02-gap-situational.test.ts:68 - no P02 row writes situationalReplaces anywhere (checked every spec); the test shows the flag WOULD drop the daily-prep star (in memory), pins that the shipped record does not carry it, and at :58 that with the trusted-rival#research-bonus row patched in memory Society reads both the +2 Bastardhall Research star and the trusted-rival#daily-prep-skill star.
+2. report-situational.txt:8 (resurgent-maelstrom#trait-already-present must add beside the three clauses) - AUTHORED test/batchP02-gap-situational.test.ts:105 - the data-rows-1 rider is a record field that concatenates after the table entry (it does not rewrite it); the test pins the three table clauses (:97) and, with the rider patched in memory on a built resurgent-maelstrom magus 7, the rider beside the resurgent-maelstrom#stance-versatile and minimum-die clauses, and no situationalReplaces.
+3. report-situational.txt:9 (trusted-rival stays `partly` in the tracked ledger) - PARKED flaggedResidue - the premise is superseded: scripts/trust-ledger.mjs:591 already clears trusted-rival through onRegistry (the fresh ledger test/trust-ledger.test.ts generates shows it gone), and src/data/trust-ledger.json is re-stamped by the driver's close stage after apply; line 8's test checks the re-stamped result.
+4. report-situational.txt:10 (lanes.situational gates spirit-sheath / emergency-targe; new keys may be gated) - PARKED flaggedResidue - print-verified stars come back only through the unbuilt print-ledger source of the trust generator (docs/trust-gate.md:300) or the owner's trust-approvals.json; needs the orchestrator (an engine task), not a per-record fix.
+5. report-situational.txt:11 (apply-sweep-b2.mjs would drop the third clause) - AUTHORED scripts/apply-sweep-b2.mjs:311 - the script now REFUSES, before its splice and before any write, when an entry line under its marker is not one it would write back byte-for-byte; measured 303 entry lines under that marker today, only 28 of them the sweep's, so a re-run would have deleted about 275 later entries, not just the resurgent-maelstrom#stance-versatile clause. Pinned by test/batchP02-gap-situational.test.ts:130 (refusal precedes the splice and the write; the sweep result's own resurgent-maelstrom row lacks the versatile clause, so it is the refusal case).
+6. verify-situational.txt:49 (trust gate darkens four print-verified stars) - PARKED flaggedResidue - same as line 4: the print-ledger source (docs/trust-gate.md:300) is unbuilt and trust-approvals.json is the owner's desk file; needs the orchestrator.
+7. verify-situational.txt:50 (trust-ledger.test.ts flips again when data-rows-1's background rows land) - AUTHORED test/trust-ledger.test.ts:561 - each of art-collector, blooded-by-the-dead, curse-marked, friend-of-a-friend#situational, once-possessed#mental-saves is now expected in `partly` only while the shipped record lacks the field its row writes (the azlantiMissing precedent), and the fully-applied count is 25 less the expected partly entries, so the test holds before and after the driver applies the rows.
+8. verify-situational.txt:51 (ledger over-reports trusted-rival if the research row is refused) - AUTHORED test/batchP02-gap-situational.test.ts:79 - once the tracked src/data/trust-ledger.json stops listing trusted-rival as partly, the test requires the shipped record to carry the trusted-rival#research-bonus +2 Bastardhall Research star, so a refused row fails it instead of shipping an over-report.
+9. verify-situational.txt:52 (handEdited set lacks spirit-sheath / emergency-targe) - AUTHORED scripts/apply-situational-lane.mjs:139 - both added with comments quoting AoN feat-9050 and feat-9054 (spirit-sheath#situational, emergency-targe#situational); pinned by test/batchP02-gap-situational.test.ts:120.
+10. verify-situational.txt:53 (apply-sweep-b2.mjs regenerates resurgent-maelstrom) - AUTHORED scripts/apply-sweep-b2.mjs:311 - same refusal guard as line 5.
+
+SPEC
+work/.bP02-rows-gap-situational.json - five findings, backfillRows [] (no data row; the guards are code and tests). Manifest entry appended to work/.bP02-specs.json (family gap-situational), staging the spec, this report, test/batchP02-gap-situational.test.ts, test/trust-ledger.test.ts, scripts/apply-situational-lane.mjs, scripts/apply-sweep-b2.mjs.
+
+TEACH / SETTLE LINES
+none - no comparer settle and no teach added.
+
+CHECKED
+- node scripts/vt.mjs run test/batchP02-gap-situational.test.ts test/trust-ledger.test.ts: 40/40 pass.
+- node scripts/test-flip-audit.mjs --batch P02: clean (every flip cited).
+- npx tsc --noEmit: clean. node --check on both edited scripts: clean (neither script was RUN).
+- Line endings kept: trust-ledger.test.ts and apply-situational-lane.mjs CRLF only, apply-sweep-b2.mjs and the new test LF only.
+ASSUMED
+- The close stage re-stamps src/data/trust-ledger.json AFTER the rows apply (scripts/wg-batch-run.mjs close stage), which is what makes the line-8 guard bite at the right time.
+- The refusal's byte-for-byte comparison matches how the script formats its own lines (`  "id": [clauses],`); if the sweep result would regenerate an identical line the entry passes, as intended.
+NOT TESTED
+- apply-sweep-b2.mjs's refusal was not executed (apply-*.mjs may not be run here); it is pinned textually and by syntax check only.
+- The trust-ledger expectations after the rows land were not observed (the rows are not applied yet); they are read off the shipped record, so they follow the rows either way.

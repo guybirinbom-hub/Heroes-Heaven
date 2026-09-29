@@ -1,0 +1,37 @@
+batch P02 - gap agent, family data-rows-2 (9 gap lines: report :9-:12, verify :67-:71)
+spec: work/.bP02-rows-gap-data-rows-2.json (no data rows - code, guard and test only), manifest entry family gap-data-rows-2
+tests: test/batchP02-gap-data-rows-2.test.ts (11 cases, green), test/subclass-owned.test.ts (9 cases, green)
+
+PER GAP LINE
+report :9  PARKED  flaggedResidue (orchestrator edit) - the three moved-prose-baseline.json removals (spirit-sheath, devastating-spellstrike, emergency-targe) were REFUSED to this agent by the session's permission classifier, so the file is unchanged; the orchestrator must remove them after --stage apply, with classFeatures/sparkling-targe (see CROSS-FILE GAPS).
+report :10 AUTHORED scripts/reprint-check.mjs:512 + scripts/lib/moved-prose.mjs:movedProseVerdict - finding distracting-spellstrike#description: CHECK 8 already read the post-overlay prose; the miss was the 0.05 margin (measured own 0.951 / old 1.000), so a constant-free VERBATIM reading was added with its own shrink-only baseline, pinned by test/batchP02-gap-data-rows-2.test.ts.
+report :11 AUTHORED src/rules/derive.ts:4965 deriveUnarmedStrike - finding unfurling-brocade#two-handed-die: a leading dice count is split off every unarmed Strike's die and used as a floor, so all 14 shipped '1dN' / '3dN' grantedStrikes render their printed count, not '11dN' / '13dN'; no rows needed, pinned by the corpus-wide die-shape guard in test/batchP02-gap-data-rows-2.test.ts.
+report :12 AUTHORED test/subclass-owned.test.ts:80 grantsEveryStrike - finding unfurling-brocade#two-handed-die: the helper now finds a subclass whose grantedStrikes carry no choiceValue and both cases fail when none exists, instead of returning silently.
+verify :67 PARKED  flaggedResidue (orchestrator edit) - same edit as report :9, refused to this agent by the permission classifier; the orchestrator removes the four baseline lines after --stage apply.
+verify :68 AUTHORED scripts/reprint-check.mjs:512 - finding distracting-spellstrike#description: same guard as report :10; the verifier's guess (the margin is too coarse for a short body) is confirmed by measurement, and the test has a legacy body that the margin passes and the verbatim reading catches.
+verify :69 AUTHORED src/rules/build.ts:3684 sameNaturalAttack - finding unfurling-brocade#two-handed-die: dice compare with a leading '1' dropped ('1d4' == 'd4', '3d6' != 'd6'), exported and pinned on a rebuilt save in test/batchP02-gap-data-rows-2.test.ts.
+verify :70 AUTHORED src/rules/derive.ts:4965 + src/rules/build.ts:3235 collectGrantedNaturals - finding unfurling-brocade#two-handed-die: the renderer fix plus a count of one stored as the bare size (so the die ladder can step it); guarded by the corpus-wide test, so rows renaming the 13 are not needed and no save is stranded.
+verify :71 AUTHORED test/subclass-owned.test.ts:80 grantsEveryStrike - finding unfurling-brocade#two-handed-die: same fix as report :12.
+
+TEACH / SETTLE LINES
+(none - no settle key and no comparer teach in this family's gap work)
+
+DATA STILL NEEDED
+- 151 records read like the printing their document replaced, word for word (the new CHECK 8 reading), and are listed in scripts/data/moved-prose-verbatim-baseline.json: 69 spells/rituals, 47 items, 28 feats, 6 class features, 1 action. Each is owed a description row with its own page's text (gold-set R12). This is a lane of its own, not a gap line; the baseline only shrinks, and a new one fails verify. Not started here.
+
+CROSS-FILE GAPS
+- ORCHESTRATOR, AFTER --stage apply, SAME COMMIT: remove these lines from scripts/data/moved-prose-baseline.json: "feats/spirit-sheath", "feats/devastating-spellstrike", "feats/emergency-targe" (this family's rows) AND "classFeatures/sparkling-targe" (data-rows-1's description row fixes it and no family filed it). "spells/force-fang" is data-rows-3's (their gap line 30 / manifest stage). Measured: with every P02 description row applied in memory, exactly these five listed entries stop reading like the older printing, no unlisted record starts to, and no pair changes. Until they are removed, reprint-check CHECK 8 fails with "remove the entry". My edit to that file was refused by the permission classifier; it was not retried by any other route.
+- ORDERING: before --stage apply, reprint-check CHECK 8 is RED on four records (feats/distracting-spellstrike, feats/maguss-analysis, feats/strikers-scroll, spells/dimensional-assault) - the records this batch's description rows fix. That is the guard working; it goes green on those four once apply lands the rows.
+- spells/infectious-melody: the repair family's description row still reads like spell-933 word for word (listed in the verbatim baseline). Worth a look by whoever owns that row.
+
+CHECKED
+- Measured CHECK 8's two readings over all 7,401 records on a reprint, before and after applying every P02 description row in memory (scratch script): margin reading unchanged (243 stale); verbatim reading 155 before, 151 after; scripts/lib/moved-prose.mjs agrees with the inline check exactly on both readings.
+- npx jiti scripts/reprint-check.mjs after the change: runs, prints the new line, fails only on the four records named above (pre-apply state).
+- The 14 leading-count grantedStrikes (all in effect-backfill rows) listed from core.json; phantom-shroud's 3d6 and the others checked against their mirror pages.
+- node scripts/vt.mjs run test/batchP02-gap-data-rows-2.test.ts test/subclass-owned.test.ts: 20 passed. node scripts/test-flip-audit.mjs --batch P02: clean. npx tsc --noEmit: clean. Line endings kept (build.ts CRLF, derive.ts LF).
+ASSUMED
+- A printed dice count on a granted Strike is a floor that a better striking rune can exceed (max, as a rune sets the dice count on any weapon), not a count runes add to.
+- The applier accepts a spec whose findings carry empty backfillRows (batches 038/039 shipped such gap specs).
+NOT TESTED
+- The full suite (not run, per the rules); the rendered sheet in the browser; the applier's dry run on this spec (apply-*.mjs is prohibited to this agent).
+- reprint-check after --stage apply (simulated in memory only).

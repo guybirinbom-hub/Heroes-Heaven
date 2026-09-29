@@ -1,0 +1,14 @@
+{
+  "findings": [
+    {
+      "id": "shielding-strike",
+      "backfillRows": [],
+      "note": "Gap lane (data-rows-4 report line 8 / verify line 50). No data row: closed in code. src/sheet/descref.ts lookupRef forms() now substitutes a possessive with the article (\"Raise your Shield\" -> \"Raise a Shield\"), tried after every earlier form, so the printed words of AoN spell-2882 \"You can either Raise your Shield if you're wielding one\" link to actions/raise-a-shield on spells/shielding-strike (its descRefs row is data-rows-4's) and on feats everstand-strike, reflexive-shield, shielded-attrition. Pinned by test/descref-possessive.test.ts, which also measures every other shipped \"your\" label (ten across core-descriptions.json) and shows none changes target."
+    },
+    {
+      "id": "conjurers-countermeasure#cast-duration",
+      "backfillRows": [],
+      "note": "Gap lane (data-rows-4 report lines 10-11 / verify lines 52-53). No data row: closed by a guard. scripts/spell-print-lines-check.mjs (added to npm run verify after spell-check.mjs) fails on any spell whose own AoN mirror page prints an action cost with no `cast`, prints a duration with no `duration`, prints a Requirements line shown nowhere, or whose description opens with the scraped \"<Name>\\nSource \" header. Baseline scripts/data/spell-print-lines-baseline.json, measured with every P02 spell row applied in memory (--pending): header 216, cast 196, duration 176, requirements 18; a new offender fails, a listed one that is now right fails until removed. Until the driver applies the P02 rows the check is red on exactly the ten P02-fixed entries (conjurers-countermeasure x3, booming-blast, force-fling, and five Requirements prefixes) - that is the check proving the rows land. scripts/description-header-check.mjs (gap-data-rows-3) skips the spells bucket and defers it here. Pinned by test/spell-print-lines-check.test.ts."
+    }
+  ]
+}

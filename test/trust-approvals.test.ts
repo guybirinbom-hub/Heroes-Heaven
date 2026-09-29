@@ -124,13 +124,20 @@ describe('trust-approvals.json — completeness', () => {
    * The same night, a THIRD: #167 reprint-grade-to-grade (a legacy grade linked only to its renamed family
    * pairs with the new family's grade of the same suffix — his "yes"). Filed the same way. Roster 166 -> 167.
    */
+  /*
+   * Then print batch P02 filed ONE: #168 enhanced-familiar#fixed-budget-grants (feat-4717 "four familiar
+   * or master abilities each day, instead of two" beside five grants that print their own fixed number —
+   * which wins when a character owns both). `open`, so `unruled` below. Roster 167 -> 168.
+   */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
-  it('the desk roster is every number in work/owner-questions.json — 167: 156 batch-filed questions (familiar#archetype-reach the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane and the three ruled in chat on 2026-09-25 — with no gaps or repeats', () => {
+  // batch P02: enhanced-familiar#ability-budget
+  it('the desk roster is every number in work/owner-questions.json — 168: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane and the three ruled in chat on 2026-09-25 — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
     // reprint lane 2026-09-25: #165 reprint-cross-kind-sub-pages, #166 book-names-different-book-folds, #167 reprint-grade-to-grade
-    expect(deskNumbers.length).toBe(167);
+    // batch P02: enhanced-familiar#ability-budget — #168 enhanced-familiar#fixed-budget-grants (open, so `unruled`)
+    expect(deskNumbers.length).toBe(168);
   });
 
   it('every desk number has exactly one disposition', () => {

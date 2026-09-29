@@ -3228,12 +3228,17 @@ function collectGrantedNaturals(
       /* batch 037: animal-instinct#spider-web — a DAMAGELESS granted attack has no die to step.
        * *"The spider's web attack deals no damage"* (AoN instinct-8): stepping `undefined` through
        * stepDie would invent one, so both damage fields ride through untouched and absent. */
-      let die = g.die;
+      /* batch P02: unfurling-brocade#two-handed-die — a count of one is not part of the die SIZE the
+       * ladder steps ('1d4' is not on DIE_LADDER, so stepDie left it unstepped) and deriveUnarmedStrike
+       * prefixes its own count. `baseDie` is what the dieNote test below compares against, so a note
+       * rides only on a real step, never on this normalisation. */
+      const baseDie = g.die?.replace(/^1(?=d\d)/, '');
+      let die = baseDie;
       for (let i = 0; die && i < dieSteps; i++) die = stepDie(die);
       /* batch 035: animal-instinct#rage-gate — *"WHILE RAGING, you gain your chosen animal's unarmed
        * attack (or attacks)"*. The gate rides onto the attack rather than being tested here, because
        * the live toggle only exists after the play overlay; deriveStrikes drops it while it is off. */
-      out.push({ name: g.name, source: sourceId, die, damageType: g.damageType, traits: g.traits, group: g.group, range: g.range, ...(g.onHit ? { onHit: g.onHit } : {}), ...(die !== g.die && dieNote ? { dieNote } : {}), ...(requiresState ? { requiresState } : {}) });
+      out.push({ name: g.name, source: sourceId, die, damageType: g.damageType, traits: g.traits, group: g.group, range: g.range, ...(g.onHit ? { onHit: g.onHit } : {}), ...(die !== baseDie && dieNote ? { dieNote } : {}), ...(requiresState ? { requiresState } : {}) });
     }
   };
   for (const f of feats) {
@@ -3676,9 +3681,14 @@ function bookGrantedSpellIds(content: ContentDatabase, cls: ClassDef | undefined
  * Armaments now grants "Fangs" (d8 piercing, brawling) for the same choice, and a name-only match
  * showed both — two Fangs on the sheet (2026-09-15). Same die, damage type and group is one attack.
  */
-function sameNaturalAttack(a: { name: string; die?: string; damageType?: string; group?: string }, b: { name: string; die?: string; damageType?: string; group?: string }): boolean {
+export function sameNaturalAttack(a: { name: string; die?: string; damageType?: string; group?: string }, b: { name: string; die?: string; damageType?: string; group?: string }): boolean {
   if (a.name.toLowerCase() === b.name.toLowerCase()) return true;
-  return !!a.die && a.die === b.die && !!a.damageType && a.damageType === b.damageType && (a.group ?? 'brawling') === (b.group ?? 'brawling');
+  /* batch P02: unfurling-brocade#two-handed-die — '1d4' and 'd4' are ONE die. 14 shipped granted
+   * Strikes wrote a leading count and the fix writes the bare size, so a raw string compare left a
+   * save stored before such a row as a second, manual copy of the same attack (the P02 verifier
+   * measured three fabric rows on a rebuilt pre-row save). Only a count of one is dropped: 3d6 is not d6. */
+  const die = (d?: string) => (d ?? '').replace(/^1(?=d\d)/, '');
+  return !!a.die && die(a.die) === die(b.die) && !!a.damageType && a.damageType === b.damageType && (a.group ?? 'brawling') === (b.group ?? 'brawling');
 }
 
 export function buildCharacter(build: BuildState, content: ContentDatabase): Character {
@@ -8478,8 +8488,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * carapace IS the character's body ("You can never wear other armor or remove your carapace"), so
    * arriving unworn left the one piece of armour they can never take off sitting in their pack. */
   const grantedItems: { itemId: string; quantity?: number; invested?: boolean; worn?: boolean; source: string }[] = [];
+  /* The per-entry level window, honoured on EVERY carrier below. Heaven-Earth Encompassing Sleeves
+   * prints one garment that changes at a level — *"This clothing becomes a set of sleeves of storage …
+   * At 9th level, the clothing becomes greater sleeves of storage instead"* (feat-7082) — so its two
+   * entries carry maxLevel 8 / minLevel 9 and exactly one of them may arrive at any level. */
+  const grantInLevelWindow = (g: { minLevel?: number; maxLevel?: number }) =>
+    (g.minLevel == null || level >= g.minLevel) && (g.maxLevel == null || level <= g.maxLevel);
   for (const fc of feats) {
     for (const g of content.feats[fc.featId]?.grantsItems ?? []) {
+      if (!grantInLevelWindow(g)) continue;
       /* …and the PER-ANSWER half: *"you receive a non-magical suit of Hellknight armor OF A TYPE YOU
        * BECOME TRAINED IN (Hellknight breastplate, Hellknight half plate, or Hellknight plate)"*
        * (Armiger's Protection, feat-8814) — one suit out of three, so the two the player did not pick
@@ -8495,7 +8512,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Unfurling Brocade grant no Strike.
   for (const fid of [...ownedFeatureIds, ...grantOptions.map((o) => o.id)]) {
     for (const g of content.classFeatures[fid]?.grantsItems ?? []) {
-      if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
+      if (!grantInLevelWindow(g) || !content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
       grantedItems.push({ ...g, source: content.classFeatures[fid].name });
     }
   }
@@ -8534,7 +8551,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const hid of [build.heritageId, secondHeritageId]) {
     const h = hid ? content.heritages[hid] : undefined;
     for (const g of h?.grantsItems ?? []) {
-      if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
+      if (!grantInLevelWindow(g) || !content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
       grantedItems.push({ ...g, source: h?.name ?? '' });
     }
   }
@@ -8543,7 +8560,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   {
     const a = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
     for (const g of a?.grantsItems ?? []) {
-      if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
+      if (!grantInLevelWindow(g) || !content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
       grantedItems.push({ ...g, source: a?.name ?? '' });
     }
   }
@@ -8552,7 +8569,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   {
     const bg = resolveBackground(build, content);
     for (const g of bg?.grantsItems ?? []) {
-      if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
+      if (!grantInLevelWindow(g) || !content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
       grantedItems.push({ ...g, source: bg?.name ?? '' });
     }
   }
@@ -8562,7 +8579,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * level-3 character holding the sword cane had exactly one thing in their inventory. */
   for (const inv of build.inventory) {
     for (const g of content.items[inv.itemId]?.grantsItems ?? []) {
-      if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
+      if (!grantInLevelWindow(g) || !content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
       grantedItems.push({ ...g, source: content.items[inv.itemId]?.name ?? inv.itemId });
     }
   }

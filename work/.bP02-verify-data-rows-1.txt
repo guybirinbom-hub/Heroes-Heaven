@@ -1,0 +1,102 @@
+batch P02 - VERIFY data-rows-1 (chunk 1 of 4 of the data-rows family), adversarial verifier
+Specs checked: work/.bP02-rows-data-rows-1.json (20 rows), work/.bP02-created-desc-data-rows-1.json (1 prose row)
+Tests: test/batchP02-data-rows-1.test.ts via scripts/vt.mjs, on shipped data: 12 red / 5 green, and every red one
+fails for the expected reason (field missing or old text). A throwaway harness applied BOTH specs' rows to an
+in-memory content() copy and imported the family test file: 17/17 green. 4 extra probes passed, on a fighter,
+wizard and magus built at level 1. The harness was then deleted. npx tsc --noEmit is clean.
+scripts/test-flip-audit.mjs --batch P02 (read-only, no --json): "clean - every flip cited".
+I edited no file other than this one.
+
+PER FINDING
+
+art-collector - DONE
+  choice (daily, flag artInspiration) + situational save:all rows target backgrounds/art-collector, which exists and had
+  neither field. Harness: ownedDailyChoiceRecords (the Rest-sheet walk) returns the daily question; Fortitude, Reflex and
+  Will each show "+2 circumstance (+1 if you've chosen that artwork before) from Art "Collector" - against mental effects...".
+blooded-by-the-dead - DONE
+  choice / situational / recordMarks are three new fields, one row each. Harness: "blood" this morning -> deriveDefenses
+  resistance persistent bleed 2 ("persistent bleed" has a precedent in modes/item-blood-booster-lesser); "fury" gives 0.
+  Will shows the dominate +2 and incapacitation stars; the Strike damage row shows +2 piercing; the persistent-damage
+  condition mark is present. The stars show whichever routine was picked, because no reader gates a background star on
+  a daily answer. Each "when" text names its routine, and the builder flagged this.
+curse-marked - DONE
+  situational row = save:all / skill:all / spell:attack, each "+2 circumstance (-2 circumstance instead while cursed)".
+  Harness: a wizard's spell attack (wizard-casting) and a skill both show the star; Will shows "to resist curses".
+friend-of-a-friend#situational - DONE
+  situational = save:all + spell:attack. Harness: the wizard spell-attack row shows the counteract star, and no skill star
+  (intended: a Treat Poison check is not a counteract check). The engine family's trainedLoreChoice is a different field
+  on the same record: no collision.
+once-possessed#fiend-lore - DONE
+  trainedLore "fiend" (no prior field or overlay row). Harness: built fighter has lore:fiend trained.
+once-possessed#mental-saves - DONE
+  situational save:all "against mental effects from fiends" +2 circumstance; harness Will star text exact.
+once-possessed#spiritual-scar - DONE
+  The create row for actions/spiritual-scar carries no description; its trait "concentrate" exists; its shape follows
+  actions/wish-for-luck. Its prose is in the created-prose spec, which the driver applies LAST, after a replay
+  (wg-batch-run.mjs stageApply), so the record exists by then. The background's grantsActions and limitedUses are read by
+  MainTab actionGranters, which walks backgroundId and takes usesFrom from the granter. Harness: the action exists as a
+  reaction, and the background carries the grant plus 1/day.
+trusted-rival#research-bonus - DONE
+  situational skill:all "to Research a topic associated with Bastardhall (Research subsystem)" +2 circumstance, with no
+  situationalReplaces, so it sits beside the situational family's FEAT_SITUATIONAL["trusted-rival"] daily-prep star.
+  Harness: Society shows the Research star.
+aloof-firmament#cat-fall-duplicate - NOT-DONE (code fix outside this family's files; correctly routed to CROSS-FILE GAPS)
+  src/rules/featFeatGrants.ts:693 still holds 'aloof-firmament': ['cat-fall']. The family test only pins "Cat Fall exactly
+  once" (green before and after), so no test proves the dead carrier is gone.
+resurgent-maelstrom#trait-already-present - DONE
+  classFeatures/resurgent-maelstrom.situational is a new field. Harness: the magus Strike damage row shows the table's two
+  clauses (incl. the situational family's new versatile clause) plus this rider, and the rider is absent on the stripped
+  copy. Nothing edits the src table, so it does not collide with the situational family's edit.
+resurgent-maelstrom#handwraps-name - DONE
+  I diffed the description row against the shipped core-descriptions text: the ONLY change is "Might" -> "Mighty"
+  (char 693; everything after it is identical). The descRefs row keeps the other two refs unchanged. The option half sits
+  inside the merged classes/magus subclass.options row. items/handwraps-of-mighty-blows exists.
+sparkling-targe#description - DONE
+  The classFeatures description, hybridStudy description (identical to it) and the 8-entry descRefs row add no path. Every
+  referenced spell/feat/action id exists (force-barrage, shield-block, raise-a-tome, shielding-strike, resist-energy,
+  warding-aggression, mountain-resilience, arcane-cascade). I diffed classes/magus [subclass].options against overlay
+  row #13328: same 10 options in the same order, and only sparkling-targe (description, descRefs) and
+  resurgent-maelstrom (description, descRefs label) changed. Every other option and field is byte-identical.
+  supersedes:true is declared, and no path:[...,'id=...'] rows sit on magus subclass.options.
+
+SPEC-ROW CHECKS
+- Every target record exists (backgrounds x6, classFeatures x2, hybridStudy/sparkling-targe, classes/magus), except
+  actions/spiritual-scar, which carries create:true.
+- No two rows share a record+field+path key, within this spec or across all 8 P02 spec files (checked by script).
+  The same records carry sibling rows on other fields: data-rows-2 classFeatures/sparkling-targe.recordMarks and
+  engine backgrounds/friend-of-a-friend.trainedLoreChoice.
+- Every situational "when" is 111 characters or fewer (ruling H cap 120).
+- Every "why" names an AoN doc id (background-647..652, hybrid-study-9/12).
+- Readers exist for every field: situational (explain.ts authoredSituational), choice.daily (derive.ts
+  ownedDailyChoiceRecords / dailyChoiceGrants), recordMarks (explain.ts recordMarksFor), trainedLore (build.ts),
+  grantsActions + limitedUses (MainTab.tsx actionGranters), description/descRefs (core-descriptions d/r).
+- Manifest work/.bP02-specs.json: all 8 entries (engine, data-rows-2/3/4, repair, situational, and this family's rows +
+  created-prose) are present. This family's stage[] lists both specs, the test and the report. wg-batch-commit.mjs picks
+  up work/.bP02-verify-*.txt by pattern. I touched no file, so I appended no stage paths.
+
+NOT VERIFIED (permission refused)
+- I could not dry-run scripts/apply-parity-fixes.mjs (the builder was refused the same way), and I could not read the
+  AoN mirror docs. So the verbatim-prose mirror check on the four description rows was reasoned, not run.
+  Supporting evidence: every changed phrase matches the verbatim "printed" field in work/.bP02-read.json, and
+  the print packet work/print-batch-P02.json contains "general Shield Block feat". The driver's apply
+  stage runs that check anyway.
+- The trust gate: backgrounds/* stay under src/data/trust-ledger.json until the post-apply re-stamp. I did not run the
+  gated content.
+- The Rest-sheet and Main-tab UI render (checked only through their data walks).
+
+OBSERVED, NOT A FINDING OF THIS CHUNK
+- The authored classFeatures/resurgent-maelstrom description ends at the Conflux Spell line, while hybrid-study-9 also
+  prints three Studious Spell lines. The spells arrive through spellSlotBonus; only the prose omits them. The
+  sparkling-targe feature row DOES include its Studious lines, so the two class features now differ in shape.
+
+DATA STILL NEEDED
+(none - every row this chunk's findings need is authored in the two spec files)
+
+CROSS-FILE GAPS
+- aloof-firmament#cat-fall-duplicate (engine/gap lane): delete `'aloof-firmament': ['cat-fall'],` at
+  src/rules/featFeatGrants.ts:693. The subclass option's grantedFeats (the classes/magus subclass.options[aloof-firmament]
+  entry) stays the one carrier. Correction to the builder's wording: the in-repo regenerators
+  (scripts/aon-verify/apply-fixes.ts, apply-reviewed.ts) rebuild the table FROM the imported FEAT_FEAT_GRANTS, so a
+  hand deletion survives them. Only the out-of-repo "scratch featfeat-extract.mjs" named in the file header would restore
+  the row, so any exclusion belongs wherever that script is kept. Add a test asserting FEAT_FEAT_GRANTS has no
+  'aloof-firmament' key, citing "// batch P02: aloof-firmament#cat-fall-duplicate".

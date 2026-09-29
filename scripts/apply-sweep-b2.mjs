@@ -286,6 +286,35 @@ for (const m of res.records) {
 
 // ---- splice the registry ----
 const MARKER = '  // ---- coverage sweep batch 2 (scripts/apply-sweep-b2.mjs)';
+/*
+ * REFUSE when the block is no longer this script's alone (batch P02 gap, situational family).
+ *
+ * The splice below deletes EVERYTHING from MARKER to the FEAT_SITUATIONAL close and writes back only
+ * what this sweep generates. Since the sweep ran, later batches and lanes appended their own entries
+ * below the marker and edited sweep rows in place against print — batch P02 added the third clause of
+ * "resurgent-maelstrom" (AoN hybrid-study-9: "The weapon gains the versatile traits for the types of
+ * damage that it doesn't normally deal."). A re-run would silently delete every one of them. So any
+ * entry line in the block that this run would not write back byte-for-byte stops the script before it
+ * writes anything, naming the ids; the fix is to move those entries above the marker (or re-author
+ * them into this sweep's result), never to delete the check. test/batchP02-gap-situational.test.ts
+ * pins that the refusal still sits in front of the splice.
+ */
+{
+  const at = regSrc.indexOf(MARKER);
+  if (at >= 0) {
+    const regenerated = new Set([...sitEntries.entries()].map(([id, out]) => `  "${id}": [${out.join(', ')}],`));
+    const block = regSrc.slice(at, regSrc.indexOf('\n};', at));
+    const foreign = block.split(/\r?\n/)
+      .filter((l) => /^ {2}"[a-z0-9-]+":\s\[/.test(l) && !regenerated.has(l))
+      .map((l) => l.match(/^ {2}"([a-z0-9-]+)"/)[1]);
+    if (foreign.length) {
+      console.error(`REFUSED: ${foreign.length} entr${foreign.length === 1 ? 'y' : 'ies'} below "${MARKER.trim()}" in src/rules/situationalBonuses.ts ` +
+        `would be deleted or rewritten by this re-run (hand-edited or appended since the sweep): ${foreign.join(', ')}. ` +
+        'Move them above the marker first. Nothing was written.');
+      process.exit(1);
+    }
+  }
+}
 {
   const at = regSrc.indexOf(MARKER);
   if (at >= 0) regSrc = regSrc.slice(0, regSrc.lastIndexOf('\n\n', at)) + regSrc.slice(regSrc.indexOf('\n};', at));

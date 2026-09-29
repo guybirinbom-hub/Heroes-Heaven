@@ -1,0 +1,17 @@
+{
+ "findings": [
+  {
+   "id": "once-possessed#spiritual-scar",
+   "backfillRows": [
+    {
+     "category": "actions",
+     "id": "spiritual-scar",
+     "field": "description",
+     "value": "**Frequency** once per day\n\n**Trigger** You would take spirit damage from a fiend\n\n---\n\n**Effect** You gain resistance to spirit damage equal to twice your level plus your Charisma modifier against the triggering damage. If this resistance prevents you from taking any damage at all, the spiritual backlash against the fiend who attempted to damage you forces them to attempt a Will save against your class DC to avoid being slowed 1 for one round.",
+     "why": "AoN background-651 (Once Possessed) prints the Spiritual Scar reaction verbatim; layout mirrors actions/wish-for-luck (Frequency / Trigger / --- / Effect)."
+    }
+   ],
+   "note": "Prose for the actions/spiritual-scar record created in work/.bP02-rows-data-rows-1.json."
+  }
+ ]
+}

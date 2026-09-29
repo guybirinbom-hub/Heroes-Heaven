@@ -1,0 +1,177 @@
+{
+  "findings": [
+    {
+      "id": "heaven-earth-encompassing-sleeves#sleeves-item",
+      "backfillRows": [],
+      "note": "No row this batch: the benefit is ONE item that changes at 9th level (\"This clothing becomes a set of sleeves of storage ... At 9th level, the clothing becomes greater sleeves of storage instead\", AoN feat-7082), and the only grantsItems reader (src/rules/build.ts:8482) gates on whenChoice alone - no minLevel/maxLevel. An ungated row with both items would hand a 4th-level magus the greater sleeves too; a row with only the lesser sleeves would be wrong from 9th. This needs the orchestrator's engine-shape decision (a level gate on DefenseGrants.grantsItems in src/rules/types.ts + the build.ts:8482 reader), after which the row in the report's DATA STILL NEEDED list lands."
+    },
+    {
+      "id": "exploding-bullet#description-header",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "exploding-bullet",
+          "field": "description",
+          "value": "**Requirements** You’re wielding an unloaded firearm.\n\n---\n\nYou load your gun with a bullet forged of magic instead of matter, barely contained in an arcane shell. Interact to reload your firearm, creating an arcane round made from your choice of fire or sonic energy. When you shoot this round, the Strike gains the arcane trait and the corresponding energy trait. The firearm gains the scatter 5 feet trait, or gains a +1 status bonus to its splash damage if it already has the scatter trait. The scatter trait’s splash damage uses the energy type you chose. The bullet disappears if not fired by the end of your next turn.\n\nIf your firearm takes more than 1 action to reload, you need to use Exploding Bullet for all the actions needed to reload it to get the benefits.\n\n**Special** When you use volatile spark’s Reloading Cascade action, you can use Exploding Bullet instead of an Interact action to reload a firearm.",
+          "why": "AoN feat-9055 (Exploding Bullet, Impossible Magic pg. 19, this record's aonId): the page header (title, Source, Prerequisites) is page chrome the record's name/source/prerequisites fields already carry, so it is dropped the way pageProse() in scripts/import-siege-and-gaps.mjs drops it; the Requirements and Special lines have no field and stay, in the house '**Requirements** ...\\n\\n---\\n\\n' form. Every word left is the shipped text, unchanged."
+        }
+      ],
+      "note": "Header strip only: the row REMOVES words and adds none (the applier's added-prose check finds no 3+ word run). The lane-wide importer fix and a verify guard ('no description starts with <name>\\nSource ') are scripts/ work outside this chunk - see CROSS-FILE GAPS."
+    },
+    {
+      "id": "recharging-flurry#description-header",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "recharging-flurry",
+          "field": "description",
+          "value": "**Requirements** You’re wielding two melee weapons, each in a different hand.\n\n---\n\nThe clash of steel fuels your magic, preparing you to unleash another magic-infused assault. Make one Strike with each of your weapons, then recharge your Spellstrike (regardless of whether the Strikes hit). Your multiple attack penalty increases after each Strike as normal. If the second Strike targets a creature you haven’t attacked yet this turn, its multiple attack penalty is –4 if it’s your second attack this turn (–3 if you’re using an agile weapon) or –8 if it’s your third or further Strike (–6 with an agile weapon).",
+          "why": "AoN feat-9056 (Recharging Flurry, Impossible Magic pg. 19, this record's aonId): title, Source and Prerequisites header lines dropped (the record's own fields carry them); the Requirements line is kept in the house '**Requirements** ...\\n\\n---\\n\\n' form. No word is added."
+        }
+      ],
+      "note": "Header strip only; description field, no collision with the sibling chunk's recharging-flurry#map row (field mapReduction)."
+    },
+    {
+      "id": "running-recharge#description-header",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "running-recharge",
+          "field": "description",
+          "value": "Preparing in every way for your next assault, you both relocate yourself and ready your Spellstrike. You recharge your Spellstrike and either Stride up to half your Speed or Step.",
+          "why": "AoN feat-9057 (Running Recharge, Impossible Magic pg. 19, this record's aonId): the title and Source header lines are dropped (the record's own name/source fields carry them); the body is the shipped text unchanged."
+        }
+      ],
+      "note": "Header strip only."
+    },
+    {
+      "id": "shattering-spellstrike",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "shattering-spellstrike",
+          "field": "description",
+          "value": "**Requirements** You're in Arcane Cascade stance and wielding an improvised weapon.\n\n---\n\nYou intentionally channel a rampaging cascade of magic through your weapon, breaking it to deal more damage. Make a Spellstrike against a target with your improvised weapon. If the attack hits, it deals an additional 2d6 force damage as your improvised weapon breaks. If the spell used with the Spellstrike wasn't a cantrip or focus spell, increase this additional damage by the spell's rank.\n\nIf the item has a Hardness greater than your level, or if it's an artifact, cursed item, or other item that's difficult to break or destroy, it doesn't break and you don't deal additional damage.",
+          "why": "AoN feat-7467 (Shattering Spellstrike, Rival Academies pg. 83, this record's aonId) prints \"If the attack hits, it deals an additional 2d6 force damage as your improvised weapon breaks\"; the shipped text lost the damage type to the @Damage cleaner. Only the word 'force' is restored."
+        }
+      ],
+      "note": "One-word prose restoration; everything else is the shipped text."
+    },
+    {
+      "id": "strikers-scroll#prose",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "strikers-scroll",
+          "field": "description",
+          "value": "You can attach a scroll to your weapon or *Handwraps of Mighty Blows* to blend its spell into an attack, carefully folding it around a part of the weapon or sealing it to the weapon's surface. Attaching a scroll requires using the Affix a Talisman action. You can have only one scroll affixed to a weapon at a time, and you can't have both a talisman and scroll attached.\n\nYou can Cast the Spell from the scroll as part of a Spellstrike, provided the spell is one you could normally use with Spellstrike. You can't Cast the Spell in any other way while it's affixed, though you can use Affix a Talisman again to remove the scroll and use it as a normal—if a bit crumpled—scroll.",
+          "why": "AoN feat-9059 (Striker's Scroll, Impossible Magic pg. 20, this record's aonId; legacy feat-2858) prints \"provided the spell is one you could normally use with Spellstrike\" and \"use it as a normal—if a bit crumpled—scroll\"; the shipped second paragraph was the feat-2858 wording ('assuming the spell ...', 'crumpled-scroll'). R12: the newest printing wins, whole. The first paragraph already reads as feat-9059 and is kept."
+        }
+      ],
+      "note": "descRefs (Handwraps of Mighty Blows, Affix a Talisman) untouched - both labels still occur in the text. No collision with strikers-scroll#affix, which is engine code in src/rules/attachments.ts."
+    },
+    {
+      "id": "practical-magic-impossible-magic",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "practical-magic-impossible-magic",
+          "field": "dailyTemporaryItems",
+          "value": [
+            {
+              "id": "catalyst",
+              "label": "Temporary spell catalyst",
+              "count": 2,
+              "filter": {
+                "traits": ["catalyst"],
+                "maxLevel": "floor(@actor.level/2)",
+                "note": "Common spell catalysts only; you know their formulas without a formula book. It loses its magic at your next daily preparations if unused."
+              }
+            }
+          ],
+          "why": "AoN feat-9331 (Practical Magic, Impossible Magic pg. 95, this record's aonId): \"Each day during your daily preparations, you can make two spell catalysts with an item level no higher than half your level. ... A spell catalyst created this way is a temporary item and loses its magic the next time you make your daily preparations if you haven't already used it.\" Same shape as talisman-dabbler-dedication's dailyTemporaryItems row; read by src/rules/dailyItems.ts (dailyItemSlots/dailyItemOptions)."
+        }
+      ],
+      "note": "Reuses the dailyTemporaryItems lane (dailyItems.ts). The filter has no rarity key, so 'common only' rides in the note the picker shows (the same residual talisman-dabbler carries). 'You know the formulas for all common spell catalysts of your level or lower' is not a formula-book grant here: the printed clause says you need no formula book for them, and the daily picker does not filter on known formulas."
+    },
+    {
+      "id": "dimensional-assault#prose",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "dimensional-assault",
+          "field": "description",
+          "value": "You tumble through a small rift in space itself, making a short dimensional hop to better position yourself for a devastating surprise attack. Teleport to any space in range you can see that’s within reach of an enemy, and then make a melee Strike against that enemy. If you attempt to bring another creature with you when you teleport—even if you’re carrying it in an extradimensional container—the spell is disrupted.\n\n---\n\n**Heightened (5th)** The range is equal to your Speed.",
+          "why": "AoN spell-2877 (Dimensional Assault, Impossible Magic pg. 179, this record's aonId; legacy spell-1037): the remaster body verbatim plus its 'Heightened (5th) The range is equal to your Speed' entry. The shipped text was the spell-1037 body. R12: the newest printing wins, whole."
+        }
+      ],
+      "note": "Prose only; range stays 'half your Speed' (the heightened range lives in the Heightened line - heightening.ts has no range scaler)."
+    },
+    {
+      "id": "force-fang#prose",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "force-fang",
+          "field": "description",
+          "value": "You briefly transform your attack into pure force energy to bypass your opponent’s defenses. You magically shift your weapon or unarmed attack into a spike of pure force that deals 1d4+1 force damage to a target within your melee reach. If you can use Spellstrike with a ranged weapon (with the starlit span hybrid study, for example), you can instead target a creature in the first range increment of your ranged weapon.\n\n---\n\n**Heightened (+2)** The damage increases by 1d4+1.",
+          "why": "AoN spell-2878 (Force Fang, Impossible Magic pg. 179, this record's aonId; legacy spell-1038): the remaster body verbatim with its 'Heightened (+2) The damage increases by 1d4+1' entry. The shipped text was the spell-1038 body ('replacing all its normal statistics and abilities', 'automatically deals'). R12: the newest printing wins, whole."
+        }
+      ],
+      "note": "spells/force-fang description; the existing effect-backfill description row is on feats/force-fang (a different category/id key), so no supersedes. descRefs [Spellstrike] untouched - the label still occurs."
+    },
+    {
+      "id": "booming-blast#cast",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "booming-blast",
+          "field": "cast",
+          "value": { "type": "actions", "value": 1 },
+          "why": "AoN spell-2875 (Booming Blast, Impossible Magic pg. 179) prints the cast as 'Single Action'. Same shape as the spells/bloody-tendrils cast row."
+        }
+      ],
+      "note": "SpellsTab reads spell.cast for the ActionGlyph, the Cast row and the cast filter."
+    },
+    {
+      "id": "booming-blast#defense",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "booming-blast",
+          "field": "save",
+          "value": { "type": "will", "basic": false },
+          "why": "AoN spell-2875: \"each enemy in a 20-foot emanation around you must succeed at a Will save against your spell DC or be frightened 1 (or frightened 2 on a critical failure)\" - a non-basic Will save."
+        },
+        {
+          "category": "spells",
+          "id": "booming-blast",
+          "field": "area",
+          "value": "20-foot emanation",
+          "why": "AoN spell-2875: \"each enemy in a 20-foot emanation around you\"."
+        },
+        {
+          "category": "spells",
+          "id": "booming-blast",
+          "field": "baseArea",
+          "value": { "value": 20, "kind": "emanation" },
+          "why": "AoN spell-2875: \"each enemy in a 20-foot emanation around you\" - the same area/baseArea pair its sibling conflux spell thunderous-strike carries."
+        }
+      ],
+      "note": "SpellDetail builds Defense from spell.save and Area from spell.area; filterSpecs reads s.save?.type and parseFeet(s.area)."
+    },
+    {
+      "id": "force-fling#cast",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "force-fling",
+          "field": "cast",
+          "value": { "type": "actions", "value": 1 },
+          "why": "AoN spell-2879 (Force Fling, Impossible Magic pg. 179) prints the cast as 'Single Action'."
+        }
+      ],
+      "note": "Same shape as booming-blast#cast."
+    }
+  ]
+}

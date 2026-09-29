@@ -480,6 +480,18 @@ export function isBoundGrant(granterId: string, grantedId: string): boolean {
  * training but NOT the 3rd/7th/15th-level increases, which live on Additional Lore, so those Lores
  * were frozen at trained forever. hellknight-dedication was worse: it has no direct grant either,
  * so its Hell Lore reached the sheet by no route at all. Measured by scripts/scan-granted-lore.mjs.
+ *
+ * batch P02: aloof-firmament#cat-fall-duplicate — 'aloof-firmament' is deliberately NOT in the table
+ * below. Hybrid study Aloof Firmament (AoN hybrid-study-7) prints *"You gain the Cat Fall general
+ * feat"*, and that grant is carried ONCE, by the magus subclass option's `grantedFeats: ['cat-fall']`
+ * (the carrier with the most readers: build.ts's option grant loop, the focus seed and the import
+ * subtraction). The row that used to sit here was dead — the option loop runs first and puts Cat Fall
+ * into takenFeats, so this closure skipped it — and two carriers for one printed grant is how a later
+ * edit fixes one and leaves the other. This note lives ABOVE `FEAT_FEAT_GRANTS_MARKER` so the
+ * aon-verify regenerators (which keep everything before the marker and re-serialise the table from
+ * the imported object) preserve it; they cannot restore the row, since they read it from this file.
+ * The header's "scratch featfeat-extract.mjs" does not exist on disk. Pinned by
+ * test/batchP02-gap-data-rows-1.test.ts.
  */
 export const FEAT_FEAT_GRANTS: Record<string, string[]> = {
   'aldori-duelist-dedication': ['additional-lore'],
@@ -690,7 +702,6 @@ export const FEAT_FEAT_GRANTS: Record<string, string[]> = {
   'alchemical-scholar': ['alchemical-crafting'],
   'alchemical-sciences-methodology': ['alchemical-crafting'],
   'alchemy': ['alchemical-crafting'],
-  'aloof-firmament': ['cat-fall'],
   'anvil-dwarf': ['specialty-crafting'],
   'appraisers-eye': ['quick-identification'],
   'artisan-android': ['specialty-crafting'],

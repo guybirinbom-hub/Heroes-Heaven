@@ -1,0 +1,32 @@
+{
+  "findings": [
+    {
+      "id": "heaven-earth-encompassing-sleeves#sleeves-item",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "heaven-earth-encompassing-sleeves",
+          "field": "grantsItems",
+          "value": [
+            { "itemId": "sleeves-of-storage", "worn": true, "maxLevel": 8 },
+            { "itemId": "sleeves-of-storage-greater", "worn": true, "minLevel": 9 }
+          ],
+          "why": "AoN feat-7082 (Heaven-Earth Encompassing Sleeves, Tian Xia Character Guide pg. 113): 'This clothing becomes a set of sleeves of storage ... At 9th level, the clothing becomes greater sleeves of storage instead.' One garment, so exactly one item in any level window; the level gate is the new grantsItems[].minLevel/maxLevel read by grantInLevelWindow in src/rules/build.ts. Worn: it is the magus's own suit of clothing. invested is left unset on purpose: both items carry the invested trait and the player invests them like any bought invested item - the feat does not say the clothing arrives invested."
+        }
+      ],
+      "note": "Closes the data-rows-3 CROSS-FILE GAP 'DefenseGrants.grantsItems has no level gate' (work/.bP02-gaps.json). Engine: src/rules/types.ts grantsItems[].minLevel/maxLevel (inclusive window, absent = unbounded) and src/rules/build.ts grantInLevelWindow, honoured on every grantsItems carrier (feats, class features, heritages, ancestry, background, items). No shipped grantsItems entry carries either key today, so nothing else changes. Pinned in test/batchP02-gap-data-rows-3.test.ts on built unfurling-brocade magi at 4/8/9/15 with this exact value patched in memory, plus an ungated control that hands a 4th-level magus both items. The garment's Hardness +level / HP +2x level stay text (no item-durability lane)."
+    },
+    {
+      "id": "force-fang#prose",
+      "backfillRows": [],
+      "codeEdits": [
+        {
+          "file": "scripts/data/moved-prose-baseline.json",
+          "find": " \"spells/web-of-eyes\": \"spell-2866 reads like spell-1032\",\r\n \"spells/force-fang\": \"spell-2878 reads like spell-1038\",\r\n",
+          "replace": " \"spells/web-of-eyes\": \"spell-2866 reads like spell-1032\",\r\n"
+        }
+      ],
+      "note": "Closes the data-rows-3 verifier's ORCHESTRATOR gap: work/.bP02-rows-data-rows-3.json's force-fang#prose row (AoN spell-2878) makes spells/force-fang read like its own page, and scripts/reprint-check.mjs CHECK 8 (npm run verify) fails on a listed moved-prose entry that no longer reads like the older printing. Removing the entry before the row lands fails the same check the other way, so the removal is a code edit in this spec: the driver's apply stage lands it in the same pass as the row (manifest order puts work/.bP02-rows-data-rows-3.json first), and verify runs after apply. The edit keeps the file's CRLF endings; the preceding web-of-eyes line is carried in find and replace so the replace is non-empty and the applier's resume rule (find gone + replace present once) recognises it as applied."
+    }
+  ]
+}

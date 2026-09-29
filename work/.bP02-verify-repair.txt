@@ -1,0 +1,31 @@
+batch P02 — family: repair — adversarial verify
+
+steady-spellcasting-magus — DONE. The row feats/steady-spellcasting-magus.description in work/.bP02-rows-repair.json turns our "attempt a check" into "attempt a DC 15 flat check". That is the printed run from feat-2857, and the row inserts it and changes nothing else. The field has a reader: scripts/lib/apply-backfill.mjs sends description rows to core-descriptions.json, which the app renders.
+
+How the 53 spec rows were checked (read only; nothing was applied):
+- Every target record exists in core.json. There are no create or delete rows, and every row sets field "description" with no path.
+- Insertion only: for each row I diffed its value against the text it replaces (the shipped .d, or the existing overlay row where there is one). All 53 are pure insertions. Each inserted run is "DC <n> flat" plus a space, or "DC <n> flat check". None doubles "flat" or a DC.
+- Every inserted run appears verbatim in the plain text of the row's own AoN mirror doc, using the record's aonId (the bag-of-devouring and talisman-cord rungs each use their own per-rung doc, equipment-598-63x and 883-86x, and each of those docs prints only one DC).
+- Every "why" names one doc id. I checked it with the applier's own docIdRe, built from the mirror's directory names, and every named doc exists in the mirror.
+- Supersedes: exactly 2 records already have a description row in effect-backfill.json (items/paradigm-cube and items/shadow-ash), and both rows carry supersedes:true. For each, the existing overlay value is byte-identical to the shipped .d, and the new value is that text with only the flat-check run inserted. No row claims supersedes without a prior row.
+- Collisions: no duplicate record+field+path key inside the spec. I checked against every other P02 spec on disk (data-rows-1/2/3/4, engine): none has a row, description row or delete on any of these 53 records. situational has no rows file.
+- I imported buildSpec() in memory, without --write. It reproduces work/.bP02-rows-repair.json byte for byte and skips nothing.
+
+Code and guards:
+- scripts/repair-flat-check-dc.mjs: read in full. It writes nothing unless given --write, and --write writes only the spec. It reuses repairSite, plain and mirrorIndex from repair-stripped-save-dc.mjs. It refuses docs that name more than one DC (the rung trap), repeated anchors, and sentences that already carry a DC. The dry run matches the builder: 425 records examined, 53 repairable, 101 sites refused.
+- scripts/dropped-inline-check.mjs: the diff is only the FLAT_DC_BASELINE block, cited "// batch P02: steady-spellcasting-magus". It passes today with 53 of 53. The CRLF working copy matches git: index LF, worktree CRLF under core.autocrlf=true.
+- test/batchP02-repair.test.ts, run through scripts/vt.mjs: 7 of 7 pass. None of the assertions flips when the rows land; the shipped-record test holds before and after.
+- npx tsc --noEmit: clean. scripts/test-flip-audit.mjs --batch P02: clean (every flip cited, no new settle keys).
+- Manifest (work/.bP02-specs.json): the repair entry lists the rows file, the test, the new script, dropped-inline-check.mjs and the report, which is every path this family touched. The entries for engine, data-rows-2, data-rows-3, data-rows-4 and situational are all present.
+- For the orchestrator (not repair's): work/.bP02-rows-data-rows-1.json exists on disk, but work/.bP02-specs.json has no data-rows-1 entry and there is no report-data-rows-1.txt yet. That family may still be running, or it may have failed to register.
+- Follow-up after the rows land (already in the builder's note): lower FLAT_DC_BASELINE (to 0) and HOLE_BASELINE (162, by about 46) to the re-measured counts. I did not lower them: the rows are not applied yet, so the check would fail.
+
+DATA STILL NEEDED
+(none; every row this family needs is in work/.bP02-rows-repair.json, and the driver applies it)
+
+CROSS-FILE GAPS
+(none)
+
+What was checked: the finding in full; all 53 rows as rows (records exist, insertion-only against the shipped or overlay text, inserted run in the record's own mirror doc, why doc id resolves, supersedes correct, no collisions inside the spec or across the other P02 specs); the spec reproduces from the script; the guard passes; tests pass; tsc is clean; the flip audit is clean; the manifest entry is complete.
+What was assumed: that each record's aonId is the right printing for it. The newest-printing question belongs to the reprint lane.
+What was not tested: the rows were not applied (the rules forbid any apply-*.mjs), so the rendered sheet text was not seen in the browser. The 101 refused sites were not reviewed; they are outside this finding.

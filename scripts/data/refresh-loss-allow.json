@@ -2248,5 +2248,95 @@
   "field": "description",
   "aon": "equipment-3434-3304",
   "why": "reprint lane 2026-09-25 (desk #167): the record read Mask of the Banshee's text (equipment-738-721) with its numbers deleted (\"deals damage to each living creature in a ( save)\") and a Craft Requirements line Player Core 2 does not print; it now reads equipment-3434's own paragraph and activation (6d10 void, 20-foot emanation, DC 25 basic Fortitude), which is shorter. Description row in effect-backfill.json (work/.xk-round6-rows.json), guarded by scripts/reprint-check.mjs CHECK 8."
+ },
+ {
+  "key": "spells/booming-blast",
+  "field": "area",
+  "aon": "spell-2875",
+  "why": "batch P02 booming-blast#defense: the record carried the area only in prose; spell-2875 prints \"each enemy in a 20-foot emanation around you must succeed at a Will save\", now the area field. A field gained, not a number moved (was absent)."
+ },
+ {
+  "key": "spells/booming-blast",
+  "field": "baseArea.value",
+  "aon": "spell-2875",
+  "why": "batch P02 booming-blast#defense: baseArea {value 20, kind emanation} gained from spell-2875's \"20-foot emanation around you\"; absent before."
+ },
+ {
+  "key": "spells/booming-blast",
+  "field": "baseArea.kind",
+  "aon": "spell-2875",
+  "why": "batch P02 booming-blast#defense: baseArea {value 20, kind emanation} gained from spell-2875's \"20-foot emanation around you\"; absent before."
+ },
+ {
+  "key": "spells/conjurers-countermeasure",
+  "field": "description",
+  "aon": "spell-2876",
+  "why": "batch P02 conjurers-countermeasure#description: the body opened with the scraped page header (name, Source, Duration lines) as text; it now reads spell-2876's own body from \"You quickly create a barrier that protects you against the magic of spellcraft\" with the Heightened (+3) entry separated, so it is shorter by the header."
+ },
+ {
+  "key": "spells/conjurers-countermeasure",
+  "field": "duration",
+  "aon": "spell-2876",
+  "why": "batch P02 conjurers-countermeasure#cast-duration: spell-2876 prints \"Duration until the end of your next turn\"; the record had no duration field. A field gained, not a number moved."
+ },
+ {
+  "key": "spells/conjurers-countermeasure",
+  "field": "level",
+  "aon": "spell-2876",
+  "why": "batch P02 conjurers-countermeasure#cast-duration: the record had no level at all; spell-2876 is a rank 3 focus spell, so level 3 is gained, not moved."
+ },
+ {
+  "key": "spells/force-fang",
+  "field": "description",
+  "aon": "spell-2878",
+  "why": "batch P02 force-fang#prose: the legacy Secrets of Magic body (spell-1038) replaced by the record's own printing spell-2878 (\"deals 1d4+1 force damage to a target within your melee reach\"), which is shorter. Guarded by scripts/reprint-check.mjs CHECK 8 (the moved-prose baseline entry left in the same batch)."
+ },
+ {
+  "key": "spells/shielding-strike",
+  "field": "descRefs",
+  "aon": "spell-2882",
+  "why": "batch P02 shielding-strike: the legacy spell-1041 body replaced by spell-2882 (\"You can either Raise your Shield if you're wielding one or cast shield if you have the spell. Then, make a melee Strike.\"); the Raise a Shield link now carries the printed label \"Raise your Shield\". Same two members, one relabelled — the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classFeatures/resurgent-maelstrom",
+  "field": "descRefs",
+  "aon": "hybrid-study-9",
+  "why": "batch P02 resurgent-maelstrom#handwraps-name: the misspelt link label \"Handwraps of Might Blows\" (no such item) corrected to hybrid-study-9's \"handwraps of mighty blows\"; same three members, one relabelled."
+ },
+ {
+  "key": "classFeatures/unfurling-brocade",
+  "field": "grantedStrikes",
+  "aon": "hybrid-study-8",
+  "why": "batch P02 unfurling-brocade#two-handed-die: hybrid-study-8 prints \"You can use the fabric as a bladed scarf. Unlike a normal bladed scarf, you have the option to wield the fabric in one hand instead of two. Its damage die is d4 if held in one hand.\" The single 1d4 Strike became the two-handed d6 Strike plus the one-hand d4 option; the guard counts the rewritten member as lost."
+ },
+ {
+  "key": "feats/maguss-analysis",
+  "field": "description",
+  "aon": "feat-9045",
+  "why": "batch P02 maguss-analysis#recharge-unconditional: the legacy feat-2847 body (recharge only on a success) replaced by the record's own printing feat-9045, \"Attempt a check to Recall Knowledge about a creature, then recharge your Spellstrike\", which is shorter."
+ },
+ {
+  "key": "feats/spirit-sheath",
+  "field": "description",
+  "aon": "feat-9050",
+  "why": "batch P02 spirit-sheath#description: the legacy feat-2852 body replaced by the record's own printing feat-9050 (\"A spirit sheath can hold up to 1 Bulk worth of weapons\"); 6 characters shorter. Its moved-prose baseline entry left in the same batch."
+ },
+ {
+  "key": "feats/exploding-bullet",
+  "field": "description",
+  "aon": "feat-9055",
+  "why": "batch P02 exploding-bullet#description-header: the body opened with the page header (name, Source, Prerequisites) its own fields already show; stripped so it opens with feat-9055's \"You load your gun with a bullet forged of magic instead of matter\". Shorter by the header; guarded by scripts/description-header-check.mjs."
+ },
+ {
+  "key": "feats/recharging-flurry",
+  "field": "description",
+  "aon": "feat-9056",
+  "why": "batch P02 recharging-flurry#description-header: page header (name, Source, Prerequisites) stripped so the body opens with feat-9056's \"The clash of steel fuels your magic\"; shorter by the header; guarded by scripts/description-header-check.mjs."
+ },
+ {
+  "key": "feats/running-recharge",
+  "field": "description",
+  "aon": "feat-9057",
+  "why": "batch P02 running-recharge#description-header: page header (name, Source) stripped so the body opens with feat-9057's \"Preparing in every way for your next assault\"; shorter by the header; guarded by scripts/description-header-check.mjs."
  }
 ]

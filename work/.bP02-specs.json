@@ -1,0 +1,86 @@
+[
+  {
+    "file": "work/.bP02-rows-engine.json",
+    "kind": "rows",
+    "family": "engine",
+    "stage": ["work/.bP02-rows-engine.json", "test/batchP02-engine.test.ts", "work/.bP02-report-engine.txt", "work/.bP02-verify-engine.txt"]
+  },
+  {
+    "file": "work/.bP02-rows-data-rows-3.json",
+    "kind": "rows",
+    "family": "data-rows-3",
+    "stage": ["work/.bP02-rows-data-rows-3.json", "test/batchP02-data-rows-3.test.ts", "work/.bP02-report-data-rows-3.txt", "test/player-created-pickers.test.tsx"]
+  },
+  {
+    "file": "work/.bP02-rows-repair.json",
+    "kind": "rows",
+    "family": "repair",
+    "stage": ["work/.bP02-rows-repair.json", "test/batchP02-repair.test.ts", "scripts/repair-flat-check-dc.mjs", "scripts/dropped-inline-check.mjs", "work/.bP02-report-repair.txt", "scripts/wg-batch-run.mjs", "test/wg-batch-run.test.ts"]
+  },
+  {
+    "file": "work/.bP02-rows-data-rows-4.json",
+    "kind": "rows",
+    "family": "data-rows-4",
+    "stage": ["work/.bP02-rows-data-rows-4.json", "test/batchP02-data-rows-4.test.ts", "work/.bP02-report-data-rows-4.txt", "work/.bP02-verify-data-rows-4.txt"]
+  },
+  {
+    "file": "work/.bP02-rows-data-rows-2.json",
+    "kind": "rows",
+    "family": "data-rows-2",
+    "stage": ["work/.bP02-rows-data-rows-2.json", "test/batchP02-data-rows-2.test.ts", "work/.bP02-report-data-rows-2.txt", "work/.bP02-verify-data-rows-2.txt", "scripts/data/moved-prose-baseline.json", "test/batchP02-closer.test.ts", "scripts/data/refresh-loss-allow.json"]
+  },
+  {
+    "file": "work/.bP02-rows-situational.json",
+    "kind": "rows",
+    "family": "situational",
+    "stage": ["work/.bP02-rows-situational.json", "test/batchP02-situational.test.ts", "src/rules/situationalBonuses.ts", "work/.bP02-report-situational.txt", "test/trust-ledger.test.ts", "work/.bP02-verify-situational.txt"]
+  },
+  {
+    "file": "work/.bP02-rows-data-rows-1.json",
+    "kind": "rows",
+    "family": "data-rows-1",
+    "stage": ["work/.bP02-rows-data-rows-1.json", "work/.bP02-created-desc-data-rows-1.json", "test/batchP02-data-rows-1.test.ts", "work/.bP02-report-data-rows-1.txt"]
+  },
+  {
+    "file": "work/.bP02-created-desc-data-rows-1.json",
+    "kind": "created-prose",
+    "family": "data-rows-1",
+    "stage": ["work/.bP02-created-desc-data-rows-1.json", "work/.bP02-rows-data-rows-1.json", "test/batchP02-data-rows-1.test.ts", "work/.bP02-report-data-rows-1.txt"]
+  },
+  {
+    "file": "work/.bP02-rows-gap-data-rows-1.json",
+    "kind": "rows",
+    "family": "gap-data-rows-1",
+    "stage": ["work/.bP02-rows-gap-data-rows-1.json", "work/.bP02-report-gap-data-rows-1.txt", "test/batchP02-gap-data-rows-1.test.ts", "src/rules/featFeatGrants.ts"]
+  },
+  {
+    "file": "work/.bP02-rows-gap-situational.json",
+    "kind": "rows",
+    "family": "gap-situational",
+    "stage": ["work/.bP02-rows-gap-situational.json", "work/.bP02-report-gap-situational.txt", "test/batchP02-gap-situational.test.ts", "test/trust-ledger.test.ts", "scripts/apply-situational-lane.mjs", "scripts/apply-sweep-b2.mjs"]
+  },
+  {
+    "file": "work/.bP02-rows-gap-data-rows-4.json",
+    "kind": "rows",
+    "family": "gap-data-rows-4",
+    "stage": ["work/.bP02-rows-gap-data-rows-4.json", "work/.bP02-report-gap-data-rows-4.txt", "src/sheet/descref.ts", "test/descref-possessive.test.ts", "scripts/spell-print-lines-check.mjs", "scripts/data/spell-print-lines-baseline.json", "test/spell-print-lines-check.test.ts", "package.json"]
+  },
+  {
+    "file": "work/.bP02-rows-gap-data-rows-3.json",
+    "kind": "rows",
+    "family": "gap-data-rows-3",
+    "stage": ["work/.bP02-rows-gap-data-rows-3.json", "work/.bP02-report-gap-data-rows-3.txt", "test/batchP02-gap-data-rows-3.test.ts", "src/rules/types.ts", "src/rules/build.ts", "scripts/description-header-check.mjs", "scripts/data/description-header-baseline.json", "package.json", "scripts/data/moved-prose-baseline.json"]
+  },
+  {
+    "file": "work/.bP02-rows-gap-engine.json",
+    "kind": "rows",
+    "family": "gap-engine",
+    "stage": ["work/.bP02-rows-gap-engine.json", "work/.bP02-report-gap-engine.txt", "test/batchP02-gap-engine.test.tsx", "src/rules/companions.ts", "src/rules/companionGrants.ts", "src/sheet/CompanionsTab.tsx", "src/rules/attachments.ts", "src/sheet/InventoryTab.tsx", "src/sheet/ItemEditorModal.tsx", "scripts/add-owner-question.mjs", "test/owner-questions-numbering.test.ts", "scripts/data/trust-approvals.json", "test/trust-approvals.test.ts", "test/batch035-gate-park.test.ts", "test/rule-owner-questions.test.ts"]
+  },
+  {
+    "file": "work/.bP02-rows-gap-data-rows-2.json",
+    "kind": "rows",
+    "family": "gap-data-rows-2",
+    "stage": ["work/.bP02-rows-gap-data-rows-2.json", "work/.bP02-report-gap-data-rows-2.txt", "test/batchP02-gap-data-rows-2.test.ts", "test/subclass-owned.test.ts", "src/rules/derive.ts", "src/rules/build.ts", "scripts/reprint-check.mjs", "scripts/lib/moved-prose.mjs", "scripts/data/moved-prose-verbatim-baseline.json"]
+  }
+]

@@ -1131,6 +1131,17 @@ export interface DefenseGrants {
      * escape hatch, and defaulting one would put a suit nobody chose in the inventory.
      */
     whenChoice?: string;
+    /**
+     * The character-level window this item is handed over in (inclusive; absent = no bound) — the
+     * same per-entry `minLevel` idiom as InnateSpellGrant.minLevel and the leveled feat grants.
+     *
+     * Heaven-Earth Encompassing Sleeves prints ONE garment that changes at a level: *"This clothing
+     * becomes a set of sleeves of storage … At 9th level, the clothing becomes greater sleeves of
+     * storage instead"* (feat-7082). Without a gate the only honest rows were both items at every
+     * level (a 4th-level magus holding the 9th-level container) or the lesser one forever.
+     */
+    minLevel?: number;
+    maxLevel?: number;
   }[];
   /**
    * "You gain all the mechanical benefits of the <X> heritage you selected at 1st level."

@@ -54,7 +54,8 @@ describe('a chosen subclass is owned', () => {
   });
 
   /*
-   * ⚠ ONE grantedStrike, not "the first of several".
+   * ⚠ ONE grantedStrike, not "the first of several" — superseded in batch P02 by "every row granted",
+   * see grantsEveryStrike below; the history is kept because the ordering trap it records still holds.
    *
    * Both cases below assert that grantedStrikes[0] is a Strike the character HAS, and that only holds
    * when the record grants exactly one. Two subclass options carry the field today:
@@ -68,25 +69,43 @@ describe('a chosen subclass is owned', () => {
    * and the two classes moved to the end of the bucket — barbarian was then found first and the case
    * failed on Fist. The order was never the thing being tested; "grants exactly one" is.
    */
-  const grantsOneStrike = () => Object.values(db.classes)
-    .map((c) => ({ cls: c, opt: (c.subclass?.options ?? []).find((o) => db.classFeatures[o.id]?.grantedStrikes?.length === 1) }))
+  /*
+   * batch P02: unfurling-brocade#two-handed-die — "exactly one" stopped being the right predicate when
+   * Unfurling Brocade came to grant TWO Strikes (the two-handed d6 grip and the one-handed d4 grip,
+   * hybrid-study-8), both always granted. With no subclass left at length 1 both cases below reached
+   * `return` and passed having checked nothing. The property is "every row is granted": a subclass
+   * whose grantedStrikes carry no `choiceValue` (Animal Instinct's 32 are all gated on the animal), and
+   * the cases now FAIL if no such subclass exists instead of returning.
+   */
+  const grantsEveryStrike = () => Object.values(db.classes)
+    .map((c) => ({ cls: c, opt: (c.subclass?.options ?? []).find((o) => {
+      const gs = db.classFeatures[o.id]?.grantedStrikes ?? [];
+      return gs.length > 0 && gs.every((g) => !g.choiceValue);
+    }) }))
     .find((x) => x.opt);
 
-  it('a subclass that grants a Strike actually grants it', () => {
-    const granting = grantsOneStrike();
-    if (!granting?.opt) return; // no subclass grants exactly one Strike; nothing to prove
-    const ch = build(granting.cls.id, 5, { subclassId: granting.opt.id });
-    const want = db.classFeatures[granting.opt.id].grantedStrikes![0].name.toLowerCase();
-    expect((ch.naturalAttacks ?? []).map((n) => n.name.toLowerCase())).toContain(want);
+  // batch P02: unfurling-brocade#two-handed-die
+  it('a subclass that grants its Strikes actually grants every one (unfurling-brocade today)', () => {
+    const granting = grantsEveryStrike();
+    // batch P02: unfurling-brocade#two-handed-die
+    expect(granting?.opt?.id).toBeTruthy();
+    const ch = build(granting!.cls.id, 5, { subclassId: granting!.opt!.id });
+    const have = (ch.naturalAttacks ?? []).map((n) => n.name.toLowerCase());
+    // batch P02: unfurling-brocade#two-handed-die
+    for (const g of db.classFeatures[granting!.opt!.id].grantedStrikes!) expect(have).toContain(g.name.toLowerCase());
   });
 
-  it('a granted Strike is not duplicated on a build round-trip', () => {
-    const granting = grantsOneStrike();
-    if (!granting?.opt) return;
-    const ch = build(granting.cls.id, 5, { subclassId: granting.opt.id });
-    const want = db.classFeatures[granting.opt.id].grantedStrikes![0].name.toLowerCase();
-    const times = (ch.naturalAttacks ?? []).filter((n) => n.name.toLowerCase() === want).length;
-    expect(times).toBe(1);
+  // batch P02: unfurling-brocade#two-handed-die
+  it('a granted Strike is not duplicated on a build round-trip (unfurling-brocade today)', () => {
+    const granting = grantsEveryStrike();
+    // batch P02: unfurling-brocade#two-handed-die
+    expect(granting?.opt?.id).toBeTruthy();
+    const ch = build(granting!.cls.id, 5, { subclassId: granting!.opt!.id });
+    for (const g of db.classFeatures[granting!.opt!.id].grantedStrikes!) {
+      const times = (ch.naturalAttacks ?? []).filter((n) => n.name.toLowerCase() === g.name.toLowerCase()).length;
+      // batch P02: unfurling-brocade#two-handed-die
+      expect(times).toBe(1);
+    }
   });
 });
 

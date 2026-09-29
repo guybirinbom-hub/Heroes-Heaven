@@ -1,0 +1,14 @@
+{
+  "findings": [
+    {
+      "id": "unfurling-brocade#two-handed-die",
+      "backfillRows": [],
+      "note": "Gap stage, code and test only, no data row. (1) Gap lines data-rows-2 report :11 / verify :69 / verify :70: src/rules/derive.ts deriveUnarmedStrike splits a leading dice count off every unarmed Strike's die (granted, stance, mode, stored) and treats it as a floor, so the 14 shipped grantedStrikes written '1dN' (13 besides the fabric) render 1dN instead of '11dN', and Phantom Shroud's printed 3d6 (equipment-1783) renders 3d6 instead of '13d6'; strikingDice reports the dice actually rolled. src/rules/build.ts collectGrantedNaturals stores a count of one as the bare size (so stepDie and the die ladder can step it; the dieNote test compares against the normalised base), and sameNaturalAttack (now exported) compares dice with a leading '1' dropped, so a save holding '1d4' and a grant of 'd4' are one attack. No rows for the 13 other records: every shape now renders right and their names are unchanged. Pinned by test/batchP02-gap-data-rows-2.test.ts, including the corpus-wide 'every die shape in the shipped grantedStrikes derives with its own count' guard. (2) Gap lines data-rows-2 report :12 / verify :71: test/subclass-owned.test.ts grantsOneStrike became grantsEveryStrike, a subclass whose grantedStrikes carry no choiceValue (every row granted); both cases now FAIL if none exists instead of returning, and hold before (one '1d4' row) and after (two grips) the data-rows-2 row lands."
+    },
+    {
+      "id": "distracting-spellstrike#description",
+      "backfillRows": [],
+      "note": "Gap stage, guard only (gap lines data-rows-2 report :10 / verify :68). scripts/reprint-check.mjs CHECK 8 reads the post-overlay prose (core-descriptions.json) as it always did; the miss was the 0.05 margin (measured on the mirror: own 0.951, old 1.000). The judgement moved to scripts/lib/moved-prose.mjs movedProseVerdict with a second, constant-free VERBATIM reading (every counted word on the replaced page, not every one on its own), baselined in scripts/data/moved-prose-verbatim-baseline.json (151 records, measured with every P02 description row applied in memory). Before --stage apply, CHECK 8 fails on exactly the four records this batch's description rows fix (feats/distracting-spellstrike, feats/maguss-analysis, feats/strikers-scroll, spells/dimensional-assault); after it, the verbatim reading is green. Pinned by test/batchP02-gap-data-rows-2.test.ts."
+    }
+  ]
+}

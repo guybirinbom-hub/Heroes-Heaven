@@ -1,0 +1,53 @@
+batch P02 - SITUATIONAL adversarial verify
+
+Checked against: the 11 confirmed findings in work/.bP02-read.json (full claim/printed/ours/proposal/evidence),
+the AoN mirror text of background-652, hybrid-study-7 / -9 / -14 / -15, feat-9050 / -9053 / -9054 / -9055,
+the git diff of src/rules/situationalBonuses.ts, test/batchP02-situational.test.ts, and
+work/.bP02-rows-situational.json (11 findings, backfillRows [] each - no rows to diff, no record+field
+collisions possible, no created records, JSON parses).
+
+Every id the code names exists in public/core.json: actions high-jump, long-jump, leap, fly; feats
+cat-fall, distracting-spellstrike, exploding-bullet, spirit-sheath, emergency-targe; backgrounds
+trusted-rival; classFeatures aloof-firmament, twisting-tree, twofold-tine, resurgent-maelstrom.
+Readers: FEAT_SITUATIONAL -> explain.ts entriesFor/explainStat (StatDetailModal); RECORD_MARKERS ->
+recordMarkersFor (MainTab action rows by actionId(name), FeatsTab feature rows).
+
+PER FINDING
+
+trusted-rival#daily-prep-skill: DONE - FEAT_SITUATIONAL['trusted-rival'] skill:all star reaches a built fighter with backgroundId trusted-rival; harness with data-rows-1's trusted-rival#research-bonus row patched in memory shows BOTH stars (no situationalReplaces, they concatenate).
+aloof-firmament#cascade-damage: DONE - strikeDamage star on a built aloof-firmament magus reads 4/6/8, one-handed sword group, other hand free, matching hybrid-study-7; absent on a laughing-shadow magus; lit under content({trustGate:true}) too.
+aloof-firmament#stance-movement: DONE - Speed star plus RECORD_MARKERS marks on high-jump / long-jump (Quick Jump: single action, no Stride first - matches the quick-jump feat's own marks) and leap / fly (no reactions), no `value`, so no unconditional cost change.
+aloof-firmament#cat-fall-condition: DONE - {on:'feature', id:'cat-fall'} mark with the shield / light-or-no-armor clause on the built magus's granted Cat Fall; not on another study's Cat Fall.
+resurgent-maelstrom#stance-versatile: DONE - third strikeDamage clause present; harness with data-rows-1's resurgent-maelstrom#trait-already-present record-field row applied shows all three strike-damage stars together (code entry untouched by that family - it went the record-field route).
+twisting-tree#staff-traits: DONE - strikeDamage star names both grips (1H agile + 1d6; 2H parry, reach, trip), verbatim to hybrid-study-14; indication only, as the finding proposed.
+twofold-tine#cascade-damage: DONE - strikeDamage star 2/4/6 until end of turn on the other-hand weapon, matches hybrid-study-15.
+spirit-sheath#situational: DONE - Stealth star now reads "up to 1 Bulk worth of weapons" (feat-9050). Dark under the default trust gate (pre-existing lanes.situational entry) - see CROSS-FILE GAPS.
+distracting-spellstrike#deception-bonus: DONE - Deception-only star, status equal to cascade damage 1/2/3 (feat-9053). Goes dark under the trust gate at the close re-stamp - see CROSS-FILE GAPS.
+emergency-targe#situational: DONE - AC star no longer melee-only: "Strike or spell attack roll from an enemy you're aware of" (feat-9054 trigger). Dark under the default trust gate (pre-existing) - see CROSS-FILE GAPS.
+exploding-bullet#splash: DONE - strikeDamage star: arcane + chosen fire/sonic trait, scatter 5 feet, +1 status splash if already scatter (feat-9055). Goes dark under the trust gate at the close re-stamp - see CROSS-FILE GAPS.
+
+FIXED-BY-ME
+trusted-rival#daily-prep-skill (sibling break): test/trust-ledger.test.ts FAILED with the builder's change. The builder's report said the ledger "reads only record fields, so backgrounds/trusted-rival stays partly" - wrong: scripts/trust-ledger.mjs:591 sets otherRulesEncoded = onRegistry.has(id) || ..., so the new FEAT_SITUATIONAL['trusted-rival'] key drops backgrounds/trusted-rival from `partly` entirely. Fixed the expectation (removed the trusted-rival entry, created-backgrounds-fully-applied count 18/19 -> 19/20), cited "// batch P02: trusted-rival#daily-prep-skill" and put trusted-rival in the it() title so the audit's record-id half holds. CRLF kept (575 -> 580 CRLF, 0 bare LF). 33/33 pass.
+
+CHECKED
+- node scripts/vt.mjs run test/batchP02-situational.test.ts: 19/19 pass.
+- node scripts/vt.mjs run situational-bonuses, situational-detail-rows, situational-target-kinds, situational-on-any-record, situational-reach, batch29-situational-siblings, held-back-registry-fixes, triage-lane-close, batch039-situational, trust-ledger, batch28-data, batch039-data-rows-2: 223/224 before my fix (the trust-ledger failure above), trust-ledger 33/33 after.
+- Throwaway in-memory harness (applied data-rows-1's trusted-rival and resurgent-maelstrom situational rows to a content copy; built characters; also read every star under content({trustGate:true})) - deleted after the run.
+- node scripts/test-flip-audit.mjs --batch P02: clean (8 test files touched, every flip cited).
+- npx tsc --noEmit: clean (before and after my edit).
+- conditional-speed-check, skill-clause-check, trust-lanes-check: ok. trust-ledger-check: FAILS "the tracked ledger is what the generator produces" - expected mid-batch; the close stage regenerates src/data/trust-ledger.json. Fresh-run diff: lanes.situational + distracting-spellstrike, exploding-bullet; partly - backgrounds/trusted-rival; unencoded - classFeatures/twofold-tine.
+- Manifest work/.bP02-specs.json holds every family (engine, data-rows-1 x2 [rows + created-prose], data-rows-2, -3, -4, repair, situational); situational's stage[] lists every path it touched; I appended test/trust-ledger.test.ts and work/.bP02-verify-situational.txt. No superseding rows in this family.
+ASSUMED
+- The trust gate staying ON by default (src/data/prefs.ts trustGate: true) is owner policy, so stars on records Wanderer's Guide does not encode shipping dark is by design, not a defect of this family.
+NOT TESTED
+- Not viewed in the browser preview.
+
+DATA STILL NEEDED
+(none - every finding in this family is code-only; spec rows are empty by design)
+
+CROSS-FILE GAPS
+- Trust gate (needs the orchestrator): after the close-stage ledger re-stamp, lanes.situational will list distracting-spellstrike and exploding-bullet beside the already-listed spirit-sheath and emergency-targe, so these four print-verified stars render DARK on the default app (trustGate on). Only a scripts/data/trust-approvals.json entry (owner desk ruling) brings a conditional kind back; no agent may write it. The aloof-firmament, twisting-tree, twofold-tine, resurgent-maelstrom and trusted-rival stars stay lit (checked under content({trustGate:true})).
+- test/trust-ledger.test.ts will flip AGAIN when the driver applies data-rows-1's background rows (art-collector, blooded-by-the-dead, curse-marked, friend-of-a-friend, once-possessed): each gains a rule field beyond its facets, so otherRulesEncoded clears it from `partly` and the "partly applied ones" expectation (and the fully-applied count) no longer holds. data-rows-1's report does not mention it; whoever lands those rows must update that it() with "// batch P02: <finding id>" citations and those record ids in its title.
+- Transient ledger truth: onRegistry clears ALL of trusted-rival's unapplied clauses once the code star exists, so the ledger calls the background fully applied even though its +2 Research star is only data-rows-1's trusted-rival#research-bonus row. True only if that row applies; if the applier refuses it, the ledger over-reports.
+- scripts/apply-situational-lane.mjs handEdited set: spirit-sheath and emergency-targe were hand-edited inside the generated block but not added to that list, which the script calls "the durable exclusion" (existingIds only protects them while the ids stay spelled). Add both there.
+- scripts/apply-sweep-b2.mjs regenerates its block, which holds resurgent-maelstrom; re-running it would drop the third clause. It is not in the chain today (builder's note stands).

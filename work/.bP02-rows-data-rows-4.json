@@ -1,0 +1,152 @@
+{
+  "findings": [
+    {
+      "id": "shielding-strike",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "shielding-strike",
+          "field": "description",
+          "value": "As you attack a foe, warding magic transforms your momentum into action and lifts your shield. You can either Raise your Shield if you're wielding one or cast shield if you have the spell. Then, make a melee Strike.",
+          "why": "AoN spell-2882 (Impossible Magic pg. 179, the remaster printing of legacy spell-1041) prints \"You can either Raise your Shield if you're wielding one or cast shield if you have the spell. Then, make a melee Strike.\" - the shield comes FIRST; ours shipped the legacy order (Strike, then shield)."
+        },
+        {
+          "category": "spells",
+          "id": "shielding-strike",
+          "field": "descRefs",
+          "value": [
+            { "label": "Raise your Shield", "key": "actions" },
+            { "label": "Shield", "key": "spells" }
+          ],
+          "why": "AoN spell-2882 links \"Raise your Shield\" to the Raise a Shield action; the shipped ref label \"Raise a Shield\" no longer occurs in the corrected prose, so the label follows the printed words (same label everstand-strike, reflexive-shield and shielded-attrition carry)."
+        }
+      ],
+      "note": "Whole-value prose row (no path) replacing the legacy spell-1041 sentence order with the spell-2882 order; descRefs re-labelled so the link sits on the printed words. No existing overlay row for either field on this record."
+    },
+    {
+      "id": "shooting-star",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "shooting-star",
+          "field": "description",
+          "value": "**Requirements** You're wielding a ranged weapon or a thrown weapon.\n\n---\n\nYou let loose a projectile that flies true and leaves the blazing trail of a meteor behind it. Make a ranged Strike, ignoring the target's concealment and reducing the target's cover by one degree for only this Strike (greater to standard, standard to lesser, and lesser to none). If the Strike hits, the meteor trail hangs in the air. This gives the benefits of concealment negation and cover reduction to any attacks made against the creature (by anyone) until the start of your next turn.",
+          "why": "AoN spell-2883 prints \"Requirements You're wielding a ranged weapon or a thrown weapon.\" and \"reducing the target's cover by one degree for only this Strike\"; ours had no Requirements line and the legacy spell-1042 \"for this Strike only\"."
+        }
+      ],
+      "note": "Spells carry no requirements field and no reader for one, so the Requirements line goes inline on the sky-laughs-at-waves shape (**Requirements** ...\\n\\n---\\n\\n body)."
+    },
+    {
+      "id": "spinning-staff",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "spinning-staff",
+          "field": "description",
+          "value": "**Requirements** You're wielding a staff.\n\n---\n\nYou spin your staff with an impossibly quick twirling flourish, attacking two foes and transforming the momentum into magical energy to charge for your next Spellstrike. Make a melee Strike with your staff against one foe and then a second melee Strike with your staff against a different foe. Your multiple attack penalty applies to both of these attacks as normal.",
+          "why": "AoN spell-2884 prints \"Requirements You're wielding a staff.\" and \"You spin your staff with an impossibly quick twirling flourish\"; ours had no Requirements line and the legacy spell-1043 \"with a twirling flourish\"."
+        }
+      ],
+      "note": "Inline Requirements line (sky-laughs-at-waves shape) plus the remaster body; the shipped descRefs (Spellstrike/actions) still matches the prose and is left untouched."
+    },
+    {
+      "id": "thunderous-strike#requirements",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "thunderous-strike",
+          "field": "description",
+          "value": "**Requirements** You're wielding a melee weapon in two hands.\n\n---\n\nYou swing your massive weapon, creating a wave of sonic vibrations that topples creatures. Make a melee Strike with your two-handed weapon. Each creature in a 15-foot cone from you must attempt a basic Fortitude save against your spell DC or take 2 sonic damage. On a critical failure, the creature is knocked prone. The target of your Strike must be within the cone or the effect fails.\n\n---\n\n**Heightened (+1)** The damage increases by 1.",
+          "why": "AoN spell-2885 prints \"Requirements You're wielding a melee weapon in two hands.\"; ours began at the body. The body and Heightened entry are the shipped text unchanged."
+        }
+      ],
+      "note": "Inline Requirements prefix only. The prefix carries no digit, so injectDamageArrow's first standalone \"2\" is still the damage number (see thunderous-strike#heightened-damage). descRefs (prone/conditions) untouched."
+    },
+    {
+      "id": "thunderous-strike#heightened-damage",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "thunderous-strike",
+          "field": "baseDamage",
+          "value": "2",
+          "why": "AoN spell-2885 prints \"take 2 sonic damage\" with \"Heightened (+1) The damage increases by 1.\"; without baseDamage, scaleDamage (src/rules/heightening.ts) returns null and the auto-heightened focus spell always shows 2."
+        },
+        {
+          "category": "spells",
+          "id": "thunderous-strike",
+          "field": "damageKind",
+          "value": "damage",
+          "why": "AoN spell-2885: the 2 sonic damage hurts (\"take 2 sonic damage\"); every spell carrying baseDamage also carries damageKind."
+        }
+      ],
+      "note": "Two separate top-level fields, one row each. addDice(\"2\",\"1\",n) handles a flat base (rank 3 -> \"4\"). The existing heightening {interval:1,damageIncr:\"1\"} is already right and is not re-emitted."
+    },
+    {
+      "id": "conjurers-countermeasure#cast-duration",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "conjurers-countermeasure",
+          "field": "cast",
+          "value": { "type": "actions", "value": 1 },
+          "why": "AoN spell-2876 prints the Single Action glyph (actions \"Single Action\"); our record had no cast."
+        },
+        {
+          "category": "spells",
+          "id": "conjurers-countermeasure",
+          "field": "duration",
+          "value": "until the end of your next turn",
+          "why": "AoN spell-2876 prints \"Duration until the end of your next turn\"; our record had no duration, so the spell card had no Duration row."
+        },
+        {
+          "category": "spells",
+          "id": "conjurers-countermeasure",
+          "field": "level",
+          "value": 3,
+          "why": "AoN spell-2876 is \"Focus 3\" (level 3); every sibling magus focus spell carries level beside rank."
+        }
+      ],
+      "note": "Same shape as the existing spells/bloody-tendrils cast row. The family-wide guard (every non-ritual spell whose mirror doc has actions carries cast) is a verify-check in scripts/, outside this chunk: see CROSS-FILE GAPS."
+    },
+    {
+      "id": "conjurers-countermeasure#description",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "conjurers-countermeasure",
+          "field": "description",
+          "value": "You quickly create a barrier that protects you against the magic of spellcraft. You gain resistance 5 against damage from spells.\n\nThe resistance from this spell is cumulative with that of Arcane Cascade. If you’re in Arcane Cascade stance when the duration of conjurer’s countermeasure expires, the spell’s duration extends until Arcane Cascade ends.\n\n---\n\n**Heightened (+3)** The resistance increases by 5.",
+          "why": "AoN spell-2876: the body opens \"You quickly create a barrier\" and the entry prints \"--- Heightened (+3) The resistance increases by 5.\"; ours carried the scraped title/Source/Duration header as body text and ran the Heightened entry into the last paragraph."
+        }
+      ],
+      "note": "Header stripped (the Duration now lives on the field from #cast-duration), Heightened entry separated and bolded on the thunderous-strike shape. Every word is either the shipped text or spell-2876's."
+    },
+    {
+      "id": "turbulent-tide#requirements",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "turbulent-tide",
+          "field": "description",
+          "value": "**Requirements** You're wielding an improvised weapon.\n\n---\n\nYou cause the sheath of water and the improvised weapon it surrounds to surge outward with stupendous force as you attack. Make a melee Strike with your improvised weapon. The weapon then breaks, and each creature adjacent to you must succeed at a Fortitude saving throw against your spell DC or be pushed 5 feet away from you (10 feet on a critical failure). You can Stride after the target of your Strike if they are pushed but you must move the same distance and in the same direction.\n\nIf the item has a Hardness greater than your level, or if it's an artifact, cursed item, or other item that's difficult to break or destroy, it doesn't break and adjacent creatures don't need to attempt Fortitude saves.",
+          "why": "AoN spell-2311 (Rival Academies pg. 82) prints \"Requirements You're wielding an improvised weapon.\"; ours began at the body, which is kept unchanged."
+        }
+      ],
+      "note": "Inline Requirements prefix on the sky-laughs-at-waves shape. The finding's alternative (a Spell.requirements field + SpellDetail row + importer fill for all 44 spells) needs src/ and scripts/ edits outside this chunk: see CROSS-FILE GAPS."
+    },
+    {
+      "id": "cascade-countermeasure#requirements",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "cascade-countermeasure",
+          "field": "description",
+          "value": "**Requirements** You're benefiting from Arcane Cascade.\n\n---\n\nYou quickly adjust your Arcane Cascade to offer magical protection. You gain resistance 5 against damage from spells. As normal, using Arcane Cascade again means you've ended the stance, and the spell ends.\n\n---\n\n**Heightened (+3)** The resistance increases by 5.",
+          "why": "AoN spell-1036 (Secrets of Magic pg. 143) prints \"Requirements You're benefiting from Arcane Cascade.\"; ours began at the body, which is kept unchanged."
+        }
+      ],
+      "note": "Inline Requirements prefix; the shipped descRefs (Arcane Cascade/actions) still matches and is left untouched."
+    }
+  ]
+}

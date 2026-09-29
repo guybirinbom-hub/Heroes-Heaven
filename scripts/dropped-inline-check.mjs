@@ -28,6 +28,7 @@ import { fileURLToPath } from 'node:url';
 import { findDroppedInline, MIRROR } from './lib/dropped-inline.mjs';
 import { findStrippedSaveDc } from './repair-stripped-save-dc.mjs';
 import { findDroppedDamageType } from './repair-damage-type.mjs';
+import { findStrippedFlatDc } from './repair-flat-check-dc.mjs';
 import { hasArtefact } from './repair-stripped-skill-links.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -58,8 +59,14 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
  * work/.b032-rows-data-rows.json, eleven in work/.b032-rows-gap-data-rows.json), which puts it back at
  * 162 — every remaining hole is an "a ." one. Until those rows are applied this check FAILS and names
  * them, which is the point: a ratchet that is widened and slackened in the same edit measures nothing.
+ *
+ * LOWERED 162 -> 116 BY PRINT BATCH P02. Its flat-check repair (scripts/repair-flat-check-dc.mjs) fills
+ * 48 terminal "attempt a ." holes with the printed "DC N flat check". 46 of them were "a ." sites this
+ * pattern counts; read-fate and the-carnival are "a secret .". Measured 116 on the shipped artefact
+ * after --stage apply.
  */
-const HOLE_BASELINE = 162;
+// batch P02: steady-spellcasting-magus
+const HOLE_BASELINE = 116;
 const HOLE = /\b(?:a|an|the|your) \.(?=\s|$)/;
 {
   const descs = JSON.parse(readFileSync(join(ROOT, 'public/core-descriptions.json'), 'utf8'));
@@ -205,6 +212,37 @@ const DAMAGE_TYPE_BASELINE = 11;
     console.log('\nFix with:  node scripts/repair-damage-type.mjs --write   (the orchestrator applies the rows); never raise DAMAGE_TYPE_BASELINE.');
     process.exit(1);
   } else console.log(`dropped-inline: ${dt.edits.length} stripped-damage-type hole(s) (ratchet ${DAMAGE_TYPE_BASELINE}; repair-damage-type.mjs drives it to zero)`);
+}
+
+/*
+ * THE STRIPPED FLAT-CHECK DC — a ninth class, and the one the save-DC pass above was blind to.
+ *
+ * AoN prints *"If a reaction would disrupt your spellcasting action, attempt a DC 15 flat check."*
+ * (feat-2857, Steady Spellcasting (Magus)); we shipped *"…attempt a check."* — the player cannot tell
+ * what to roll (batch P02 finding steady-spellcasting-magus). findStrippedSaveDc keys on
+ * `DC <n> [save type]* save|check` and "flat" is not one of the words it lets sit before "check", so
+ * every printed "DC <n> flat check" went unmeasured. Most sites are the terminal-hole shape ("attempt
+ * a .") the HOLE ratchet above counts without knowing what belongs there; a few kept a grammatical
+ * sentence ("attempt a check") that no hole pattern can see at all.
+ *
+ * A RATCHET over the count scripts/repair-flat-check-dc.mjs would repair CONFIDENTLY (insertion only;
+ * its refusals — docs naming several DCs, anchors that do not occur exactly once — are not counted).
+ * Measured at 53 on the day the detector was written (425 records whose Archives text prints a flat
+ * check; 101 sites refused). Applying that script's rows drives it to zero, and takes the same
+ * records' terminal holes out of HOLE_BASELINE's count — lower both as the rows land; never raise either.
+ */
+// batch P02: steady-spellcasting-magus — lowered 53 -> 0 once the driver applied the 53 repair rows
+// (work/.bP02-rows-repair.json); measured 0 on the shipped artefact after --stage apply.
+const FLAT_DC_BASELINE = 0;
+{
+  const fc = findStrippedFlatDc(ROOT);
+  if (!fc) console.log(`dropped-inline: stripped-flat-check-DC ratchet SKIPPED — no AoN mirror at ${MIRROR}`);
+  else if (fc.edits.length > FLAT_DC_BASELINE) {
+    console.log(`dropped-inline: FAIL — ${fc.edits.length} description(s) drop a flat-check DC the Archives print — more than the ${FLAT_DC_BASELINE} the ratchet allows:`);
+    for (const e of fc.edits.slice(0, 30)) for (const s of e.sites) console.log(`   ${(e.category + '/' + e.id).padEnd(40)} ${s.at.replace(' ▸ ', ` [missing: ${s.run}] `)}`);
+    console.log('\nFix with:  node scripts/repair-flat-check-dc.mjs --write   (the orchestrator applies the rows); never raise FLAT_DC_BASELINE.');
+    process.exit(1);
+  } else console.log(`dropped-inline: ${fc.edits.length} stripped-flat-check-DC hole(s) (ratchet ${FLAT_DC_BASELINE}; repair-flat-check-dc.mjs drives it to zero)`);
 }
 
 /*

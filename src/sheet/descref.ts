@@ -101,6 +101,11 @@ export function lookupRef(content: ContentDatabase, ref: DescRef): DescNode | nu
     // and descriptions write "Cast the Spell". Both directions, since either can be the printed form.
     if (/\bthe\b/i.test(s)) out.push(s.replace(/\bthe\b/i, 'a'), s.replace(/\bthe\b/i, 'an'));
     if (/\ba\b/i.test(s)) out.push(s.replace(/\ba\b/i, 'the'));
+    // …and a POSSESSIVE is substituted too. Impossible Magic prints "You can either Raise your Shield
+    // if you're wielding one" (spell-2882, Shielding Strike) and the action is "Raise a Shield";
+    // dropping "your" alone gives "Raise Shield", which is no record, so the link was dead there and on
+    // everstand-strike, reflexive-shield and shielded-attrition. Tried after every exact form above.
+    if (/\byour\b/i.test(s)) out.push(s.replace(/\byour\b/i, 'a'), s.replace(/\byour\b/i, 'an'));
     // A plural on the LAST word of a multi-word action: "Pick Locks" → Pick a Lock, "Disable
     // Devices" → Disable a Device.
     if (words.length > 1 && /s$/i.test(words[words.length - 1]) && !/ss$/i.test(words[words.length - 1])) {

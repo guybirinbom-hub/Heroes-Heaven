@@ -8,10 +8,23 @@ import { propertyRuneCapacity } from './derive';
 
 export type HostType = 'weapon' | 'armor' | 'shield';
 
-/** Whether an item can be affixed onto a weapon/armor/shield (vs worn on the body / placed). */
-export function isAttachable(item: Item): boolean {
+/*
+ * batch P02: strikers-scroll#affix. Striker's Scroll (AoN feat-9059): "You can attach a scroll to your
+ * weapon or handwraps of mighty blows to blend its spell into an attack ... Attaching a scroll requires
+ * using the Affix a Talisman action. You can have only one scroll affixed to a weapon at a time, and you
+ * can't have both a talisman and scroll attached." A scroll's own usage is "held-in-one-hand", so the
+ * permission is the CHARACTER's, not the item's — the same way Talismanic Sage's two-talisman cap is
+ * keyed on the feat below. Without the character (a caller that has none) a scroll is not attachable.
+ */
+const isScroll = (item: Item) => item.itemType === 'consumable' && item.consumableType === 'scroll';
+const hasStrikersScroll = (character?: Character) => !!character?.feats.some((f) => f.featId === 'strikers-scroll');
+
+/** Whether an item can be affixed onto a weapon/armor/shield (vs worn on the body / placed).
+ *  `character` is only needed for a permission the character holds rather than the item (Striker's Scroll). */
+export function isAttachable(item: Item, character?: Character): boolean {
   const u = item.usage ?? '';
   if (item.itemType === 'consumable' && item.consumableType === 'talisman') return true;
+  if (isScroll(item)) return hasStrikersScroll(character);
   if (item.traits?.includes('spellheart')) return true;
   // "affixed-to-…/attached-to-…" usages that target gear (not creatures, ground, walls, ships…).
   if (/^(affixed|attached)/.test(u) && /weapon|armor|shield|clothing|unarmored|instrument/.test(u)) return true;
@@ -22,6 +35,10 @@ export function isAttachable(item: Item): boolean {
 /** Which host item types this attachment can go on (parsed from its usage; talismans/spellhearts
  *  with no explicit gear word default to all three). */
 export function attachHostTypes(item: Item): HostType[] {
+  // batch P02: strikers-scroll#affix — "your weapon or handwraps of mighty blows": a weapon host only
+  // (handwraps are itemType 'weapon'). Never armor or a shield, which the no-gear-word default below
+  // would otherwise hand a scroll.
+  if (isScroll(item)) return ['weapon'];
   const u = item.usage ?? '';
   const out = new Set<HostType>();
   // Weapon-subtype synonyms — a usage like "affixed to a firearm/crossbow/bow/staff" means the weapon host.
@@ -42,8 +59,8 @@ export function attachHostTypes(item: Item): HostType[] {
 }
 
 /** Whether `attachment` may be affixed to a host of the given itemType. */
-export function canAttachTo(attachment: Item, hostType: string): boolean {
-  return isAttachable(attachment) && attachHostTypes(attachment).includes(hostType as HostType);
+export function canAttachTo(attachment: Item, hostType: string, character?: Character): boolean {
+  return isAttachable(attachment, character) && attachHostTypes(attachment).includes(hostType as HostType);
 }
 
 /* =========================================================================
@@ -58,8 +75,9 @@ const RESILIENT_TIER = ['', 'resilient', 'greater', 'major', 'mythic'] as const;
 const aOrAn = (w: string) => (/^[aeiou]/i.test(w) ? `an ${w}` : `a ${w}`);
 
 /** The kind of an affixable item — a host holds at most one of each (RAW: one talisman, etc.). */
-function attachKind(item: Item): 'talisman' | 'spellheart' | 'banner' | 'other' {
+function attachKind(item: Item): 'talisman' | 'scroll' | 'spellheart' | 'banner' | 'other' {
   if (item.itemType === 'consumable' && item.consumableType === 'talisman') return 'talisman';
+  if (isScroll(item)) return 'scroll';
   if (item.traits?.includes('spellheart')) return 'spellheart';
   if (/banner/i.test(item.name)) return 'banner';
   return 'other';
@@ -88,7 +106,7 @@ export function planAttach(
   // A capacity FUNCTION, not a number: etching a potency rune changes the potency, and the slot
   // count that matters there is the one the item is about to have.
   if (rune) return planRune(rune, attachment, host, hostInv, (potency) => propertyRuneCapacity(character, hostInv, content, potency));
-  if (isAttachable(attachment)) return planAffix(attachment, attachmentInv, host, hostInv, inventory, content, character);
+  if (isAttachable(attachment, character)) return planAffix(attachment, attachmentInv, host, hostInv, inventory, content, character);
   return { ok: false, reason: `${attachment.name} isn’t a rune or an attachment — there’s nothing to affix onto another item.` };
 }
 
@@ -200,6 +218,13 @@ function planAffix(
         .map((i) => content.items[i.itemId])
         .filter((d): d is Item => !!d);
     const same = affixedTo(hostInv.instanceId).filter((s) => attachKind(s) === kind).length;
+    // batch P02: strikers-scroll#affix — "you can't have both a talisman and scroll attached" (feat-9059).
+    // Checked BEFORE the Talismanic Sage cap, so a sage's specially treated host still refuses a scroll,
+    // and a host holding a scroll refuses even the sage's first talisman.
+    const rival = kind === 'scroll' ? 'talisman' : kind === 'talisman' ? 'scroll' : undefined;
+    if (rival && affixedTo(hostInv.instanceId).some((s) => attachKind(s) === rival)) {
+      return { ok: false, reason: `${host.name} already has a ${rival} affixed — a weapon can hold a talisman or a scroll, never both (Striker's Scroll).` };
+    }
     /*
      * Talismanic Sage: "when you Affix a Talisman, you can specially treat one item you're working
      * on, allowing it to have two active talismans at once. This special treatment ends if you use

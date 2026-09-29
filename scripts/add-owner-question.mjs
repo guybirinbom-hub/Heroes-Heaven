@@ -41,6 +41,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname, isAbsolute, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { batchValue } from './lib/batch-paths.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PATH = join(ROOT, 'work/owner-questions.json');
@@ -49,6 +50,18 @@ const MIRROR = 'C:/wonderers guide/aon-2e-archive/data/by-category';
 const ARRAYS = ['open', 'deferred', 'ruled', 'authorisedExceptions'];
 const REQUIRED = ['id', 'batch', 'printed', 'theirs', 'ours', 'question'];
 const IS_MAIN = !!process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+/**
+ * A batch is either a WG-parity batch NUMBER (30) or a PRINT-lane batch TAG (P02 — work/print-batch-P02.json).
+ * `Number(e.batch)` alone turned "P02" into NaN, so the gaps stage of print batch P02 could not file its
+ * one owner question ("missing batch") even though the entry named its batch. A print tag is kept as the
+ * string it is, through the same batchValue() every parity/residual writer uses (scripts/lib/batch-paths.mjs);
+ * anything else must be a number. Returns NaN for a value that is neither, which guard 1 refuses.
+ */
+export const batchOf = (v) => {
+  const value = batchValue(v);
+  return typeof value === 'number' || /^P\d+$/.test(value) ? value : NaN;
+};
 
 /**
  * THE desk-number allocator. Mutates `doc` (pushing onto `open`) and, when given, `numbers.numbers`.
@@ -78,7 +91,7 @@ export function appendQuestions(doc, entries, numbers = null) {
       refused.push(`${e.id}: already on the desk in \`${at}\` (n=${doc[at].find((q) => q.id === e.id)?.n}). A follow-up is a NEW entry: --id ${e.id}-2 --follow-up-of ${e.id}.`);
       continue;
     }
-    const entry = { n: next++, id: e.id, batch: Number(e.batch), printed: e.printed, theirs: e.theirs, ours: e.ours, question: e.question };
+    const entry = { n: next++, id: e.id, batch: batchOf(e.batch), printed: e.printed, theirs: e.theirs, ours: e.ours, question: e.question };
     if (e.followUpOf) entry.followUpOf = e.followUpOf;
     doc.open.push(entry);
     whereIs.set(entry.id, 'open');
@@ -101,7 +114,7 @@ function cli() {
     ? JSON.parse(readFileSync(isAbsolute(from) ? from : join(ROOT, from), 'utf8'))
     : [{
         id: arg('--id'),
-        batch: Number(arg('--batch')),
+        batch: batchOf(arg('--batch')),
         printed: arg('--printed'),
         theirs: arg('--theirs'),
         ours: arg('--ours'),
@@ -118,7 +131,7 @@ function cli() {
   for (const e of incoming) {
     for (const k of REQUIRED) {
       const v = e[k];
-      if (v === null || v === undefined || v === '' || (k === 'batch' && Number.isNaN(Number(v))))
+      if (v === null || v === undefined || v === '' || (k === 'batch' && Number.isNaN(batchOf(v))))
         refuse(e.id, `missing ${k}. Every field is required: a half-written question cannot be ruled on.`);
     }
   }

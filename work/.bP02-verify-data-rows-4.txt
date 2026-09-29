@@ -1,0 +1,57 @@
+BATCH P02 - VERIFY data-rows-4 (chunk 4 of 4 of the data-rows family)
+Spec checked: work/.bP02-rows-data-rows-4.json (13 rows, 9 findings)   Test: test/batchP02-data-rows-4.test.ts
+Builder report: work/.bP02-report-data-rows-4.txt
+
+HOW EACH ROW WAS CHECKED
+- Every target record exists in public/core.json (spells/shielding-strike, shooting-star, spinning-staff, thunderous-strike,
+  conjurers-countermeasure, turbulent-tide, cascade-countermeasure); no create rows, so no created-prose spec is needed.
+- Every description row, normalised (curly/straight apostrophes, ** and ---), equals the mirror doc body word for word
+  (spell-2882, 2883, 2884, 2885, 2311 exact; spell-2876 and spell-1036 differ only by the header fields the record carries
+  as cast/duration). A replica of apply-parity-fixes' added-run check found no unbacked 3+ word run.
+- Each whole-value row diffed against the shipped value: thunderous-strike, turbulent-tide and cascade-countermeasure
+  keep the shipped body byte-for-byte after the **Requirements** prefix; shielding-strike descRefs keeps Shield/spells and
+  only relabels Raise a Shield -> Raise your Shield.
+- No existing scripts/data/effect-backfill.json row on any of these record+field keys (the only row naming one is
+  feats/conjurers-countermeasure focusSpells), so no supersedes is needed. No collision with any key in the other five
+  P02 spec files (rows-data-rows-1/2/3, engine, repair).
+- Referenced ids exist: actions/raise-a-shield, spells/shield.
+- Readers: description/descRefs (RichText + lookupRef), baseDamage (heightening.ts scaleDamage + SpellsTab injectDamageArrow),
+  cast and duration (SpellsTab SpellDetail). damageKind is deliberately parked (test/parked-fields.test.ts) and spells' level
+  has no reader (rank carries the rank) - both kept only for record-shape consistency, harmless.
+- Throwaway harness (deleted): applied all 13 rows to an in-memory content copy, built an Inexorable Iron magus 5, and ran
+  the SpellDetail path: splitHeightening + a copy of injectDamageArrow gives "take 2 (-> 4) sonic damage" at rank 3 (rank 10
+  = 11); conjurers-countermeasure splits to one "**Heightened (+3)**" entry with cast 1 action and the Duration row.
+  All 11 red record assertions in the test file hold against the row values (checked one by one).
+- node scripts/vt.mjs test/batchP02-data-rows-4.test.ts: 9 pass, 11 red only because the rows are not applied yet (every
+  red one asserts a literal the rows write). npx tsc --noEmit clean. test-flip-audit --batch P02 clean.
+
+PER FINDING
+shielding-strike - DONE: description row is spell-2882 verbatim (shield first, "Then, make a melee Strike."); a built Sparkling Targe magus 5 owns the spell. The Raise your Shield link resolves to null in lookupRef (measured) - see CROSS-FILE GAPS; the prose fix itself does not depend on it.
+shooting-star - DONE: **Requirements** line + spell-2883 body ("for only this Strike") equal to the mirror; built Starlit Span magus owns it.
+spinning-staff - DONE: **Requirements** line + spell-2884 body ("with an impossibly quick twirling flourish") equal to the mirror; built Twisting Tree magus owns it.
+thunderous-strike#requirements - DONE: **Requirements** prefix + shipped body unchanged (equal to spell-2885); the prefix adds no digit, so the damage arrow still lands on "take 2".
+thunderous-strike#heightened-damage - FIXED-BY-ME (row was right; test added): rows baseDamage "2" + damageKind "damage" reach scaleDamage (rank 3 -> "4" on a built magus 5, harness-proven with the arrow in the prose). The builder's only pre-apply mechanism test was the stripped copy, which is trivially null before the row lands; I added "thunderous-strike: with the row PATCHED in memory, a built 5th-level magus heightens it to 4 and a 19th-level one to 11", green before and after apply.
+conjurers-countermeasure#cast-duration - DONE: cast {actions,1}, duration "until the end of your next turn", level 3 all match spell-2876; SpellDetail reads cast and duration; a built magus 6 with the feat owns the spell. The 218-spell guard is a CROSS-FILE GAP.
+conjurers-countermeasure#description - DONE: scraped name/Source/Duration header gone, Heightened split into one bold entry (splitHeightening measured); every word is spell-2876's. The 217-description header guard is a CROSS-FILE GAP.
+turbulent-tide#requirements - DONE: **Requirements** prefix + shipped body unchanged, backed by spell-2311; built Resurgent Maelstrom magus owns it.
+cascade-countermeasure#requirements - DONE: **Requirements** prefix + shipped body unchanged, backed by spell-1036; built magus 6 with the feat owns it.
+
+MANIFEST
+- work/.bP02-specs.json (re-read last) holds entries for engine, data-rows-1 (rows + created-prose), data-rows-2, data-rows-3,
+  data-rows-4, repair and situational; data-rows-4 stages its spec, test and report. A final collision sweep over all seven
+  P02 rows files found no shared category/id/field/path key.
+- No row in this spec supersedes anything. I appended work/.bP02-verify-data-rows-4.txt to the data-rows-4 stage[]; the only
+  other file I touched is test/batchP02-data-rows-4.test.ts, already staged.
+
+DATA STILL NEEDED
+(none - all 13 rows are authored and correct)
+
+CROSS-FILE GAPS
+- src/sheet/descref.ts lookupRef: "Raise your Shield" (actions) resolves to null - forms() drops "your" to "Raise Shield" but never substitutes the article "a"; measured null here, "Raise a Shield" resolves. Dead link on spells/shielding-strike once its row lands, and already on feats everstand-strike, reflexive-shield, shielded-attrition. Engine family (possessive -> article form in forms()).
+- Spell.requirements carrier (optional, the "better for the family" half of turbulent-tide#requirements / cascade-countermeasure#requirements): a Spell.requirements field (src/rules/types.ts), a Requirements stat row in SpellsTab SpellDetail, an importer fill from the mirror's `requirement` for all 44 spells, and a verify check. This chunk's six spells are served by inline prose meanwhile.
+- Guard (conjurers-countermeasure#cast-duration): a verify check that every non-ritual spell whose mirror doc has `actions` carries `cast` (and `duration` when the doc has duration_raw) - 218 spells lack cast today; scripts/, outside this chunk.
+- Guard (conjurers-countermeasure#description): a verify check that no spells description starts with "<name> \nSource " (217 today) - scripts/, outside this chunk; same guard as exploding-bullet#description-header.
+
+CHECKED: rows vs shipped values and mirror docs, collisions across all six P02 spec files, backfill supersedes, readers, a built-character harness with the rows applied in memory, the family test file, tsc, the flip audit.
+ASSUMED: apply-parity-fixes accepts the rows - it was not run (apply scripts are the driver's); its prose check was replicated read-only and passes.
+NOT TESTED: the rendered spell card in the browser; the post-apply run of the test file (proved by checking each assertion against the row values instead).

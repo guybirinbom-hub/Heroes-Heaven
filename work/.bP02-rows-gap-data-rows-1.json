@@ -1,0 +1,9 @@
+{
+  "findings": [
+    {
+      "id": "aloof-firmament#cat-fall-duplicate",
+      "backfillRows": [],
+      "note": "CROSS-FILE GAP closed in code, no overlay row. src/rules/featFeatGrants.ts: the auto FEAT_FEAT_GRANTS row 'aloof-firmament': ['cat-fall'] is deleted, so the magus subclass option's grantedFeats ['cat-fall'] (classes/magus subclass.options[aloof-firmament]) is the one carrier of AoN hybrid-study-7 \"You gain the Cat Fall general feat\". The row was dead (build.ts's option grant loop runs first and puts Cat Fall into takenFeats, so the FEAT_FEAT_GRANTS closure skipped it). The deletion is durable: the in-repo regenerators (scripts/aon-verify/apply-fixes.ts, apply-reviewed.ts) re-serialise the table FROM the imported FEAT_FEAT_GRANTS object, and no file under scripts/aon-verify names aloof-firmament; the header's 'scratch featfeat-extract.mjs' does not exist on disk (scripts/audit/batch-001-fix-plan.json notes the same). A WHY note sits in the preserved region above FEAT_FEAT_GRANTS_MARKER. Pinned in test/batchP02-gap-data-rows-1.test.ts: the registry has no 'aloof-firmament' key, a built magus owns Cat Fall exactly once, and a copy with the option's grantedFeats stripped in memory owns none. No player-visible change."
+    }
+  ]
+}

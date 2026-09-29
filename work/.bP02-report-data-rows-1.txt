@@ -1,0 +1,133 @@
+batch P02 - data-rows-1 report (chunk 1 of 4 of the data-rows family)
+Spec: work/.bP02-rows-data-rows-1.json   Created prose: work/.bP02-created-desc-data-rows-1.json
+Tests: test/batchP02-data-rows-1.test.ts (17 tests; run via scripts/vt.mjs before the rows land:
+12 shipped-data assertions red for the right reason - field absent / legacy text - and the 5 mechanism
+tests on stripped/patched in-memory copies green). npx tsc --noEmit clean. No src/ or scripts/ file edited.
+
+DATA STILL NEEDED
+(none - every row this chunk's findings need is authored in the two spec files above)
+
+CROSS-FILE GAPS
+- aloof-firmament#cat-fall-duplicate (engine family / gap lane): delete `'aloof-firmament': ['cat-fall']` from the auto FEAT_FEAT_GRANTS table in src/rules/featFeatGrants.ts (line 693) AND add aloof-firmament to the featfeat extractor's exclusion list (the file header names the regenerator as "scratch featfeat-extract.mjs", which is not under scripts/ - the exclusion has to live wherever that extractor is kept, or the row returns at the next regeneration). The subclass option's grantedFeats (classes/magus subclass.options[aloof-firmament]) stays the one carrier; no player-visible change.
+
+PER FINDING
+
+art-collector
+  rows: backgrounds/art-collector.choice = daily array choice {flag artInspiration, options new-piece / repeat-piece}
+        backgrounds/art-collector.situational = [save:all "+2 circumstance (+1 if you've chosen that artwork before)"
+        when "against mental effects, for 24 hours, while you carry today's inspiration art object (worth 10 gp x your level)"]
+  test: "art-collector: asks at daily preparations and stars saves against mental effects (+2, +1 on a repeat)"
+  why this shape: runelord-researcher (background-564) pattern; the bonus is conditional on a mental effect, so a star, not a number.
+
+blooded-by-the-dead
+  rows: backgrounds/blooded-by-the-dead.choice = daily array choice {flag bloodedRoutine; blood (grant resistances
+        [{type:'persistent bleed', value:2}]), fury, mind}
+        backgrounds/blooded-by-the-dead.situational = [strikeDamage "+2 damage" (Fury: piercing melee vs vampires/blood
+        drinkers); save:will "+2 circumstance" (Mind: vampire's dominate); save:all "treat your level as 2 higher" (Mind:
+        mental incapacitation effects)]
+        backgrounds/blooded-by-the-dead.recordMarks = [condition persistent-damage: "flat checks to end persistent bleed
+        damage are DC 2 lower" (Bolster the Blood today)]
+  tests: "Bolster the Blood chosen this morning gives resistance 2..." (shipped), "the daily choice is the carrier
+        (stripped copy resists nothing, patched copy resists 2)" (mechanism: dailyChoiceGrants -> deriveDefenses),
+        "Fury and Mind are stars, the bleed flat-check DC is a mark on persistent damage".
+  note: the stars and the mark show whatever routine was picked today (the when text names the routine) - no reader
+        gates a background's star or mark on a DAILY answer (recordMarks.choiceValue reads featureChoices, not dailyChoices).
+
+curse-marked
+  row: backgrounds/curse-marked.situational = [save:all (resist curses), skill:all (disable a curse-inflicting hazard),
+       spell:attack (counteract curses)], each bonus "+2 circumstance (-2 circumstance instead while cursed)".
+  test: "curse-marked: saves, skills (hazards) and spell attack (counteract) each carry the +2 / -2 star"
+  assumption: a counteract check with a spell uses the spell attack modifier, so that half stars spell:attack; a
+       non-caster's counteract (item, class DC) gets no star - a skill-wide star would claim checks that are not counteracts.
+
+friend-of-a-friend#situational
+  row: backgrounds/friend-of-a-friend.situational = [save:all "against poison and disease" +2 circumstance;
+       spell:attack "on checks to counteract a poison or disease" +2 circumstance]
+  tests: "friend-of-a-friend: the shipped background stars saves against poison and disease",
+       "friend-of-a-friend: the record field is the carrier (stripped copy shows no star)"
+  note: engine family's friend-of-a-friend#lore writes trainedLoreChoice on the same record - different field, no collision.
+
+once-possessed#fiend-lore
+  row: backgrounds/once-possessed.trainedLore = "fiend"
+  tests: "once-possessed: trains Fiend Lore", "once-possessed: trainedLore is the carrier (patched copy trains lore:fiend,
+       stripped copy does not)"
+
+once-possessed#mental-saves
+  row: backgrounds/once-possessed.situational = [save:all "against mental effects from fiends" +2 circumstance]
+  test: "once-possessed: +2 circumstance to saves against mental effects from fiends" (shipped + stripped-copy halves)
+
+once-possessed#spiritual-scar
+  rows: actions/spiritual-scar create:true {name Spiritual Scar, traits [concentrate], actionCost reaction, source Bastion of
+        Blasphemies Player's Guide, edition neutral, aonParentId background-651, aonSection Spiritual Scar}
+        backgrounds/once-possessed.grantsActions = ["spiritual-scar"]
+        backgrounds/once-possessed.limitedUses = {max:1, per:"day"}   (genie-blessed / wish-for-luck lane)
+        created prose: actions/spiritual-scar.description (Frequency / Trigger / --- / Effect, verbatim background-651)
+  test: "once-possessed: grants the Spiritual Scar reaction once per day"
+  note: the create row reaches core.json through the driver's apply of the overlay; if the apply stage needs the
+        regeneration path for a create, that is the orchestrator's call.
+
+trusted-rival#research-bonus
+  row: backgrounds/trusted-rival.situational = [skill:all "to Research a topic associated with Bastardhall (Research
+       subsystem)" +2 circumstance]
+  test: "trusted-rival: the record carries the Research star and a built character shows it on a skill"
+  note: the situational family carries trusted-rival#daily-prep-skill as FEAT_SITUATIONAL['trusted-rival'] in
+       src/rules/situationalBonuses.ts; entriesFor concatenates table + record field (no situationalReplaces), so both
+       stars show and the two carriers do not collide.
+
+aloof-firmament#cat-fall-duplicate
+  no row (backfillRows: []); code-only fix outside this chunk's files - see CROSS-FILE GAPS.
+  test: "aloof-firmament: a built magus owns Cat Fall exactly once" (holds before and after the gap fix; pins that the
+       option's grantedFeats remains the carrier).
+
+resurgent-maelstrom#trait-already-present
+  row: classFeatures/resurgent-maelstrom.situational = [strikeDamage, when "with an improvised weapon that would already
+       have backstabber (1H) or forceful (2H)", bonus "backstabber: double its precision damage; forceful: count one more
+       weapon damage die"]
+  tests: "resurgent-maelstrom: the strike-damage star carries the double-precision and one-more-die riders" (shipped),
+       "resurgent-maelstrom: the class-feature situational field is the carrier (stripped copy has no rider)" (mechanism:
+       authoredSituational reads owned class features; green now on the patched copy).
+  note: an added clause on the RECORD field, concatenated after FEAT_SITUATIONAL['resurgent-maelstrom'] (which the
+       situational family edits for #stance-versatile). This is the first classFeatures record to carry `situational`;
+       the reader (explain.ts authoredSituational, ownedFeatureIds walk) already exists and the mechanism test proves it.
+
+resurgent-maelstrom#handwraps-name
+  rows: classFeatures/resurgent-maelstrom.description (shipped text, "Might" -> "Mighty" only)
+        classFeatures/resurgent-maelstrom.descRefs (label "Handwraps of Mighty Blows", the other two refs unchanged)
+        + the option half inside the ONE classes/magus [subclass].options row filed under sparkling-targe#description
+  test: "resurgent-maelstrom: names Handwraps of Mighty Blows, and the ref label resolves to a real item"
+
+sparkling-targe#description
+  rows: classFeatures/sparkling-targe.description = hybrid-study-12 verbatim incl. the three Studious Spell lines
+        classFeatures/sparkling-targe.descRefs = Force Barrage, Shield Block, Arcane Cascade, Raise a Tome, Shielding Strike,
+        Resist Energy, Warding Aggression, Mountain Resilience
+        hybridStudy/sparkling-targe.description = same text (hybridStudy/twofold-tine shape)
+        classes/magus path [subclass] field options, supersedes: true - the batch 039 row's value with only two options
+        changed (sparkling-targe: printed description ending at the Conflux Spell line like every sibling option, descRefs
+        Force Barrage/Shield Block/Arcane Cascade/Raise a Tome/Shielding Strike; resurgent-maelstrom: name fix in
+        description and descRefs label). The other 8 options were checked byte-identical to the shipped row.
+  test: "sparkling-targe: class feature, hybrid-study record and subclass option all read hybrid-study-12"
+  note: data-rows-2's sparkling-targe#shield-block-magic writes classFeatures/sparkling-targe.recordMarks - a different
+       field, no collision. No other P02 spec touches classes/magus.
+
+CHECKED
+- Every finding read in full from work/.bP02-read.json; the printed text re-read from the AoN mirror (background-647..652,
+  hybrid-study-9, hybrid-study-12).
+- Readers exist for every field authored: situational (explain.ts authoredSituational: backgrounds + owned class
+  features), choice.daily (derive.ts ownedDailyChoiceRecords / dailyChoiceGrants -> deriveDefenses), recordMarks
+  (explain.ts recordMarksFor walks the background), trainedLore (build.ts background pass), grantsActions/limitedUses
+  (MainTab.tsx actionGranters walks the background).
+- Sibling specs (data-rows-2/3/4, engine, repair, situational) share no category/id/field key with this spec.
+- Every situational when/bonus is at most 120 characters (ruling H).
+- Every it( / expect( in the test file has a "// batch P02: <finding id>" comment within the 6 lines above it.
+ASSUMED
+- The descRefs row on classFeatures/* reaches core-descriptions' `r` the same way the existing descRefs rows do.
+- The prose rows pass the applier's mirror check: I could not dry-run scripts/apply-parity-fixes.mjs (the permission
+  system refused the read-only dry run), so the check was reasoned from the verbatim mirror text, not run.
+NOT TESTED
+- The Rest-sheet UI for the two new daily questions, and the Main tab listing Spiritual Scar (asserted on the data only).
+- The situational family's own trusted-rival and resurgent-maelstrom table entries (theirs).
+
+OBSERVED, NOT A FINDING OF THIS CHUNK
+- classFeatures/resurgent-maelstrom's description ends at the Conflux Spell line; hybrid-study-9 also prints three
+  Studious Spell lines (Water Walk, Aqueous Orb, Unfettered Movement). The spells are delivered by spellSlotBonus; only
+  the prose omits them. Left unchanged because no P02 finding covers it.

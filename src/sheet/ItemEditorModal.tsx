@@ -959,7 +959,7 @@ export function ItemEditorModal({
                         <>
                           <RuneEditor inv={inv} item={item} content={content} character={character} onPlay={onPlay} />
                           <BattleforgerRow inv={inv} item={item} character={character} onPlay={onPlay} />
-                          <AttachmentsSection host={inv} hostItem={item} inventory={inventory} content={content} onPlay={onPlay} />
+                          <AttachmentsSection host={inv} hostItem={item} inventory={inventory} content={content} onPlay={onPlay} character={character} />
                           <span className="ie-hint">Runes and attachments apply to this specific item right away.</span>
                         </>
                       )}
@@ -1458,12 +1458,15 @@ function AttachmentsSection({
   inventory,
   content,
   onPlay,
+  character,
 }: {
   host: InventoryItem;
   hostItem: Item;
   inventory: InventoryItem[];
   content: ContentDatabase;
   onPlay: PlayUpdater;
+  /** Only for permissions the CHARACTER holds (Striker's Scroll makes a scroll affixable). */
+  character?: Character;
 }) {
   const [picking, setPicking] = useState(false);
   const [descNode, setDescNode] = useState<DescNode | null>(null);
@@ -1475,7 +1478,9 @@ function AttachmentsSection({
   const candidates = inventory.filter((i) => {
     if (i.instanceId === host.instanceId || i.attachedTo) return false;
     const def = content.items[i.itemId];
-    return !!def && canAttachTo(def, hostAs);
+    // batch P02: strikers-scroll#affix — the character carries the scroll permission; without it the
+    // "Affix an item…" list never offers a scroll.
+    return !!def && canAttachTo(def, hostAs, character);
   });
 
   return (

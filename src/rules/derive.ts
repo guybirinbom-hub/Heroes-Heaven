@@ -4953,9 +4953,21 @@ function deriveUnarmedStrike(
   dsUnarmed = false,
   mpHandwraps?: InventoryItem['monsterPart'],
 ): Strike {
+  /*
+   * batch P02: unfurling-brocade#two-handed-die — the die is a die SIZE and the count is ours to
+   * prefix (`${dice}${die}` below), but 14 shipped granted Strikes wrote the count too: the fabric's
+   * '1d4' rendered "11d4+1 S" on a built magus, and a Phantom Shroud's Ghostly Touch ('3d6') would
+   * read "13d6". A leading count is split off here, where every unarmed Strike (granted, stance,
+   * mode, stored) passes, so no row shape can print a doubled count again. The printed count is a
+   * floor: Phantom Shroud's touch *"deals 3d6 negative damage"* (AoN equipment-1783), and handwraps
+   * whose striking rune names more dice than that still win, as a rune does on any weapon.
+   */
+  const counted = /^(\d+)(d\d+)$/.exec(p.die ?? '');
+  const printedDice = counted ? Math.max(1, Number(counted[1])) : 1;
+  const bareDie = counted ? counted[2] : p.die;
   // Deadly Simplicity: if the deity's favored weapon is this unarmed attack and its die is smaller
   // than d6, raise it to d6 (Player Core). dsUnarmed is set by the caller for the qualifying attack.
-  const die = p.die ? deadlySimplicityDie(p.die, dsUnarmed, true) : undefined;
+  const die = bareDie ? deadlySimplicityDie(bareDie, dsUnarmed, true) : undefined;
   const strMod = abilityModOf(c, 'str');
   const dexMod = abilityModOf(c, 'dex');
   // A RANGED natural attack (spine) is a ranged attack → Dexterity to the attack roll and no ability to damage.
@@ -5016,7 +5028,8 @@ function deriveUnarmedStrike(
     (isRanged ? 0 : conditionPenalty(c.conditions, thiefDexDamage ? 'dex' : 'str', 'damage')) +
     specDamage +
     modeNumberBonus(c.activeModes, { kind: 'damage' });
-  const dice = 1 + strikingExtra;
+  // batch P02: unfurling-brocade#two-handed-die — a printed count ('3d6') is a floor, see `counted`.
+  const dice = Math.max(printedDice, 1 + strikingExtra);
   // Property runes on the handwraps apply to unarmed attacks (no weapon-type restriction exists in
   // the data to gate on — see the property-applicability rule; gate here if a restriction is added).
   const runeDamage = (hwRunes?.property ?? [])
@@ -5090,7 +5103,9 @@ function deriveUnarmedStrike(
     potencyBonus,
     mpRefined: mpHandwraps ? true : undefined,
     dmgBonus,
-    strikingDice: strikingExtra,
+    // batch P02: unfurling-brocade#two-handed-die — the dice actually rolled beyond one, so a printed
+    // 3d6 touch reads "3 of its own dice" in StrikeDetailModal, the same as `dice` above.
+    strikingDice: dice - 1,
     mapStep: step,
     mapSources: mapSources.length ? mapSources : undefined,
     conditionalDamage: conditionalDamage.length ? conditionalDamage : undefined,

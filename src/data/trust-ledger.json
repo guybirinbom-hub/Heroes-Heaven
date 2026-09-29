@@ -1,5 +1,5 @@
 {
- "coreSha": "d56597d0a176f8421a93d0ee3e67852e264fb1f969f882ddb992488ba73f8c21",
+ "coreSha": "ffb65fd2515257f42f2b1ee6287591c58496b86acc085c674044bc82187e083e",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -1872,6 +1872,7 @@
    "disguise-kit-elite",
    "distant-archer",
    "distant-wandering",
+   "distracting-spellstrike",
    "divers-gloves",
    "divers-gloves-lesser",
    "divers-gloves-moderate",
@@ -2074,6 +2075,7 @@
    "expeditious-advance",
    "experimental-clothing",
    "expert-backstabber",
+   "exploding-bullet",
    "exploit-opening",
    "exploration-lens-detecting",
    "exploration-lens-investigating",
@@ -3982,12 +3984,6 @@
   ]
  },
  "partly": {
-  "backgrounds/art-collector": "its daily-preparation choice, its situational bonuses",
-  "backgrounds/blooded-by-the-dead": "its daily-preparation choice",
-  "backgrounds/curse-marked": "its situational bonuses and penalties",
-  "backgrounds/friend-of-a-friend": "a Lore skill of your choice, its situational bonuses",
-  "backgrounds/once-possessed": "Fiend Lore, the Spiritual Scar reaction, its situational bonuses",
-  "backgrounds/trusted-rival": "its daily-preparation choice, its situational bonuses",
   "items/dwarven-waraxe": "how it is worn or held",
   "items/judgement-thurible": "how it is worn or held, its choices",
   "items/judgement-thurible-greater": "how it is worn or held, its choices",
@@ -4221,7 +4217,8 @@
   ],
   "feats/arcane-fists": [
    "critSpec",
-   "critSpecWeapons"
+   "critSpecWeapons",
+   "unarmedTraits"
   ],
   "feats/arcane-school-spell": [
    "effectChoices[].options[].grant.focusSpells",
@@ -4946,6 +4943,9 @@
   "feats/heal-companion": [
    "focusSpells"
   ],
+  "feats/heaven-earth-encompassing-sleeves": [
+   "grantsItems"
+  ],
   "feats/hellknight-errant": [
    "grantsActions",
    "resistances"
@@ -5470,6 +5470,9 @@
   ],
   "feats/rebellious-existence": [
    "immunities"
+  ],
+  "feats/recharging-flurry": [
+   "mapReduction"
   ],
   "feats/red-mantis-school-spell": [
    "focusPoolBonus"
@@ -7497,9 +7500,7 @@
   ]
  },
  "unencoded": [
-  "classFeatures/twofold-tine",
   "feats/keep-pace-player-core-2",
-  "feats/practical-magic-impossible-magic",
   "feats/remote-detonation-impossible-magic",
   "items/absolute-solvent",
   "items/awakened-metal-shot",
@@ -7565,5 +7566,5 @@
   "items/waterproof-carrying-case",
   "items/wave-warding-tattoo"
  ],
- "wgSha": "bfdffb9336d001878c465771afacabdd2535f7db8a47b337a6991f56dd3bec53"
+ "wgSha": "05f9cc61181c4a39ed61e2dfe8b77ecac3f4e5315d11f2f0cffa4d300b3bf17e"
 }

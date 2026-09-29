@@ -1,0 +1,230 @@
+{
+  "findings": [
+    {
+      "id": "sparkling-targe#shield-block-magic",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "sparkling-targe",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "feature",
+              "id": "shield-block",
+              "note": "While you're in Arcane Cascade, damage you take from a spell or other magical effect can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade. This applies whether you're using an actual shield, the shield spell, or something else that works like a shield."
+            },
+            {
+              "on": "action",
+              "id": "shield-block",
+              "note": "While you're in Arcane Cascade, damage you take from a spell or other magical effect can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade. This applies whether you're using an actual shield, the shield spell, or something else that works like a shield."
+            }
+          ],
+          "why": "batch P02 sparkling-targe#shield-block-magic: AoN hybrid-study-12 \"damage you take from a spell or other magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage from a magical effect in this way, increase your shield's Hardness by an amount equal to the resistance you have from Arcane Cascade.\" A rule that changes the Shield Block reaction, so it is a mark on Shield Block: the Feats-tab entry ('feature') and its Main-tab reaction row ('action', slug of the feat name) - the paired shape paragon-battle-medicine and return-fire already ship. The chosen subclass is an owned class feature (explain.ts recordMarksFor)."
+        }
+      ],
+      "note": "New field on the record (no overlay row holds classFeatures/sparkling-targe recordMarks). The existing FEAT_SITUATIONAL save entry is left alone; this carries only the Shield Block half."
+    },
+    {
+      "id": "starlit-span#spellstrike",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "starlit-span",
+          "field": "recordMarks",
+          "supersedes": true,
+          "value": [
+            {
+              "on": "action",
+              "id": "arcane-cascade",
+              "note": "While you're in Arcane Cascade stance, your ranged attacks ignore any lesser cover your allies would grant to your target."
+            },
+            {
+              "on": "action",
+              "id": "spellstrike",
+              "note": "When you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. This overrides the actual range of the spell."
+            }
+          ],
+          "why": "batch P02 starlit-span#spellstrike: AoN hybrid-study-13 \"When you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. This overrides the actual range of the spell.\" Appended to the batch 039 row (magus#starlit-span-description), whose arcane-cascade lesser-cover mark is carried through unchanged."
+        }
+      ],
+      "note": "Supersedes the batch 039 recordMarks row; the superseded arcane-cascade mark is merged whole as the first entry."
+    },
+    {
+      "id": "unfurling-brocade#two-handed-die",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "unfurling-brocade",
+          "field": "grantedStrikes",
+          "supersedes": true,
+          "value": [
+            {
+              "name": "Qi-Infused Fabric",
+              "die": "d6",
+              "damageType": "slashing",
+              "traits": ["disarm", "finesse", "reach", "sweep", "trip"],
+              "group": "flail"
+            },
+            {
+              "name": "Qi-Infused Fabric (one hand)",
+              "die": "d4",
+              "damageType": "slashing",
+              "traits": ["disarm", "finesse", "reach", "sweep", "trip"],
+              "group": "flail"
+            }
+          ],
+          "why": "batch P02 unfurling-brocade#two-handed-die: AoN hybrid-study-8 \"You can use the fabric as a bladed scarf. Unlike a normal bladed scarf, you have the option to wield the fabric in one hand instead of two. Its damage die is d4 if held in one hand.\" items/bladed-scarf is two-handed 1d6 slashing, so the default grip is a d6 Strike and the one-handed grip a d4. GrantedStrike has no hands field, so the two grips are two named rows (collectGrantedNaturals dedupes by name only). The die is written bare ('d6', 'd4' - the shape 266 of the 280 shipped grantedStrikes use): deriveUnarmedStrike prefixes the dice count, so the superseded row's '1d4' rendered on the Strikes tab as '11d4+1 S' (measured on a built level-1 magus). The default (bladed-scarf, two-handed d6) grip keeps the shipped name 'Qi-Infused Fabric' on purpose: a character saved before this row stores that name with die '1d4', and deriveBuildFromCharacter / buildCharacter drop a stored attack only when sameNaturalAttack matches it by NAME or by an identical die string - '1d4' never equals 'd4', so a renamed grip left the old row behind as a manual attack (measured by the P02 verifier: a pre-row save rebuilt to three fabric rows, one reading '11d4+1 S')."
+        }
+      ],
+      "note": "Supersedes the existing grantedStrikes row (a single '1d4' entry). The default grip keeps the old row's name, traits and group with the printed two-handed d6 (so existing saves drop their stored copy by name); the one-hand d4 option is a second row. Dice are bare ('d6'/'d4') so neither renders as 11d4. Verifier change: the builder had renamed the default grip 'Qi-Infused Fabric (two hands)', which stranded the stored row on existing saves."
+    },
+    {
+      "id": "unfurling-brocade#cascade-tricks",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "unfurling-brocade",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "action",
+              "id": "disarm",
+              "note": "While in Arcane Cascade stance: if you critically succeed at an Athletics check to Disarm, you can spend a single action immediately afterward to flick your fabric, causing the disarmed object to fall to the ground in your space rather than in your opponent's."
+            },
+            {
+              "on": "action",
+              "id": "grapple",
+              "note": "While in Arcane Cascade stance, your fabric gains the grapple trait. If you succeed at an Athletics check to Grapple using your fabric, you can spend a single action immediately afterward to pull the creature 5 feet toward you."
+            },
+            {
+              "on": "action",
+              "id": "trip",
+              "note": "While in Arcane Cascade stance: when you attempt to Trip a foe using your fabric, the target can be two sizes larger than you instead of one."
+            }
+          ],
+          "why": "batch P02 unfurling-brocade#cascade-tricks: AoN hybrid-study-8 \"While in Arcane Cascade stance, the magical energy flowing through your fabric partially animates it to accomplish an even greater range of tricks.\" - the Disarm flick, \"Your fabric gains the grapple trait\", the 5-foot Grapple pull and the two-sizes-larger Trip, each marked on the action it changes (titan-wrestler's disarm/trip shape)."
+        }
+      ],
+      "note": "New field on the record. The grapple trait is stance-gated, so it rides as a note on Grapple rather than as a trait on the always-present Strike rows."
+    },
+    {
+      "id": "volatile-spark#spellstrike",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "volatile-spark",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "action",
+              "id": "spellstrike",
+              "note": "When you use Spellstrike, you can make a ranged firearm Strike, as long as the target is within the first range increment of your firearm. This overrides the actual range of the spell. If your firearm has the concussive trait, any damage from the spell you use in the Spellstrike uses the target's weakest resistance to any of the following: the spell's damage type, piercing, or bludgeoning (only against creatures you target with your firearm Strike during the Spellstrike)."
+            }
+          ],
+          "why": "batch P02 volatile-spark#spellstrike: AoN hybrid-study-16 \"When you use Spellstrike, you can make a ranged firearm Strike, as long as the target is within the first range increment of your firearm. This overrides the actual range of the spell. If your firearm has the concussive trait, any damage from the spell you use in the Spellstrike uses the target's weakest resistance to any of the following: the spell's damage type, piercing, or bludgeoning.\""
+        }
+      ],
+      "note": "New field on the record; the batch 039 grantsActions row is a different field and is untouched."
+    },
+    {
+      "id": "arcane-fists#fist-die-and-arcane-trait",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "arcane-fists",
+          "field": "unarmedTraits",
+          "value": [
+            { "match": ["fist"], "setDie": "d6" },
+            { "add": ["arcane"] }
+          ],
+          "why": "batch P02 arcane-fists#fist-die-and-arcane-trait: AoN feat-9044 \"The damage die for your fist changes to 1d6 instead of 1d4.\" and \"Your unarmed attacks gain the arcane trait, making them magical.\" The existing unarmedTraits lane (derive.ts applyUnarmedRiders; martial-artist-dedication's [{match:['fist'],setDie:'d6'}, ...] shape); the arcane rider has no match so it reaches every unarmed attack."
+        }
+      ],
+      "note": "New field. The critSpec fields and the situationalBonuses.ts lethal-attack note stay as they are."
+    },
+    {
+      "id": "maguss-analysis#recharge-unconditional",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "maguss-analysis",
+          "field": "description",
+          "value": "You make an assessment informed by your knowledge of how a creature fights. Attempt a check to Recall Knowledge about a creature, then recharge your Spellstrike. You gain a +1 circumstance bonus to your check if you previously hit the creature with a Strike this turn. The subject of your check is temporarily immune to Magus's Analysis for 1 day.",
+          "why": "batch P02 maguss-analysis#recharge-unconditional: the record is AoN feat-9045 (remaster), which prints \"Attempt a check to Recall Knowledge about a creature, then recharge your Spellstrike.\" Our body was the Secrets of Magic feat-2847 text (\"If your check is successful, recharge your Spellstrike\"); R12, the newest printing wins whole."
+        }
+      ],
+      "note": "Prose row, no path. descRefs (Recall Knowledge) are untouched; the label still occurs in the new text."
+    },
+    {
+      "id": "spirit-sheath#description",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "spirit-sheath",
+          "field": "description",
+          "value": "You've magically constructed an extradimensional sheath for your weapon that you access through your clothing, typically through a pocket, sleeve, or seam. This sheath is hard to notice, granting a +2 circumstance bonus to your Stealth checks to Conceal an Item within it. A spirit sheath can hold up to 1 Bulk worth of weapons.\n\nDuring a Spellstrike, you can Interact to draw one weapon from the sheath before you Cast the Spell. You can draw or return a weapon to a spirit sheath as an Interact action, as can anyone else holding or wearing the clothing that contains the sheath. A *dispel magic* spell or similar effect can be used against the spirit sheath to expel the weapon. The counteract check is made against your spell DC and the counteract rank is half your level rounded up. The weapon is also expelled if you become unconscious.",
+          "why": "batch P02 spirit-sheath#description: the record is AoN feat-9050 (remaster), which prints \"A spirit sheath can hold up to 1 Bulk worth of weapons\" and \"the counteract rank is half your level rounded up\". Our body was the Secrets of Magic feat-2852 text (one weapon, counteract rank 1); R12, the newest printing wins whole."
+        }
+      ],
+      "note": "Prose row, no path. descRefs (Conceal, Dispel Magic, unconscious) are untouched; RichText matches labels case-insensitively, so 'dispel magic' still links. The feats/spirit-sheath line in scripts/data/moved-prose-baseline.json must go in the same commit (CROSS-FILE GAPS)."
+    },
+    {
+      "id": "devastating-spellstrike",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "devastating-spellstrike",
+          "field": "description",
+          "value": "**Requirements** Your Spellstrike is charged.\n\n---\n\nYour Spellstrike sweeps are so wide and devastating, they smash into nearby foes. Make a Spellstrike with a spell that can deal damage. Enemies in a 5-foot emanation around the target (not including the target) take 2 damage of the same damage type your spell could deal. This damage increases to 3 at 9th level, 4 at 14th level, and 5 at 19th level. If you're in the Arcane Cascade stance, the emanation's damage gains a status bonus to damage equal to the extra damage from your Arcane Cascade.",
+          "why": "batch P02 devastating-spellstrike: the record is AoN feat-9052 (remaster), which prints \"Requirements Your Spellstrike is charged.\" and \"Enemies in a 5-foot emanation around the target (not including the target) take 2 damage of the same damage type your spell could deal.\" Our body was the Secrets of Magic feat-2853 text (Arcane Cascade requirement, splash 2 + cascade damage); R12, the newest printing wins whole."
+        }
+      ],
+      "note": "Prose row, no path. The feats/devastating-spellstrike line in scripts/data/moved-prose-baseline.json must go in the same commit (CROSS-FILE GAPS)."
+    },
+    {
+      "id": "distracting-spellstrike#description",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "distracting-spellstrike",
+          "field": "description",
+          "supersedes": true,
+          "value": "**Requirements** You have a hand free, and your Spellstrike is charged.\n\n---\n\nYou weave distracting magic with one hand to enhance the efficacy of your Spellstrike. Make a Spellstrike and Feint against the target of your Strike. Execute your Feint immediately before making the Strike, but after choosing your target.\n\nThe Feint gains the arcane and visual traits, and it always has the basic effects of a Feint, rather than applying any adjustments or alternate effects from other feats or abilities. If you're in the Arcane Cascade stance, you gain a status bonus to your Deception check equal to your extra damage from Arcane Cascade (typically 1, increasing to 2 if you have weapon specialization and 3 if you have greater weapon specialization).",
+          "why": "batch P02 distracting-spellstrike#description: the record is AoN feat-9053 (remaster), which prints \"Requirements You have a hand free, and your Spellstrike is charged.\" and \"The Feint gains the arcane and visual traits\". The superseded row (the Feint link repair from repair-stripped-skill-links.mjs) restored the Secrets of Magic feat-2854 sentence; its repair - \"Feint\" as a plain word, not a slug plus query string - is kept here, and the rest follows feat-9053 whole (R12)."
+        }
+      ],
+      "note": "Supersedes the existing description row; the superseded row's only purpose (a clean 'Feint' where a slug had been) is carried through - the new text prints plain 'Feint' three times."
+    },
+    {
+      "id": "emergency-targe#description",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "emergency-targe",
+          "field": "description",
+          "value": "**Trigger** An enemy you're aware of hits you with a Strike or a spell attack, or you fail a save against an enemy's spell.\n\n**Requirements** You are wielding a shield or have the *shield* spell prepared.\n\n---\n\nYou immediately Raise a Shield or cast *shield*. The circumstance bonus applies to your defenses when determining the outcome of the triggering attack or spell.",
+          "why": "batch P02 emergency-targe#description: the record is AoN feat-9054 (remaster), whose trigger reads \"An enemy you're aware of hits you with a Strike or a spell attack, or you fail a save against an enemy's spell.\" Our trigger was the Secrets of Magic feat-2855 text (melee Strike or melee spell attack roll); R12, the newest printing wins whole."
+        }
+      ],
+      "note": "Prose row, no path. The feats/emergency-targe line in scripts/data/moved-prose-baseline.json must go in the same commit (CROSS-FILE GAPS)."
+    },
+    {
+      "id": "recharging-flurry#map",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "recharging-flurry",
+          "field": "mapReduction",
+          "value": {
+            "step": 4,
+            "agileStep": 3,
+            "note": "Recharging Flurry",
+            "appliesWhen": "the second Strike of Recharging Flurry against a creature you haven't attacked yet this turn"
+          },
+          "why": "batch P02 recharging-flurry#map: AoN feat-9056 \"If the second Strike targets a creature you haven't attacked yet this turn, its multiple attack penalty is -4 if it's your second attack this turn (-3 if you're using an agile weapon) or -8 if it's your third or further Strike (-6 with an agile weapon).\" The Combination Finisher shape: appliesWhen, so mapStepFor never moves the -5/-10 on an ordinary Strike and mapNotesFor lists -4/-8 (agile -3/-6) as an alternative in the strike breakdown."
+        }
+      ],
+      "note": "New field. The third step is twice the second, which is what mapNotesFor prints and what feat-9056 prints."
+    }
+  ]
+}

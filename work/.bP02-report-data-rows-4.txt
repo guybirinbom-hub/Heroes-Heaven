@@ -1,0 +1,49 @@
+BATCH P02 - data-rows-4 (chunk 4 of 4 of the data-rows family)
+Spec: work/.bP02-rows-data-rows-4.json   Test: test/batchP02-data-rows-4.test.ts   Created prose: none (no create rows)
+
+DATA STILL NEEDED
+(none - every row this chunk's nine findings need is authored in work/.bP02-rows-data-rows-4.json)
+
+CROSS-FILE GAPS
+- src/sheet/descref.ts lookupRef does not resolve the label "Raise your Shield" in the actions bucket (it drops "your" to "Raise Shield" but never substitutes it with "a"), so the link on the printed words is dead for spells/shielding-strike (this batch) and already for feats everstand-strike, reflexive-shield and shielded-attrition; fix is a possessive->article form in forms() - engine family (measured: lookupRef({label:'Raise your Shield',key:'actions'}) = null, 'Raise a Shield' resolves).
+- Spell requirements carrier (turbulent-tide#requirements / cascade-countermeasure#requirements "better for the family"): a Spell.requirements field in src/rules/types.ts, a Requirements stat row in src/sheet/SpellsTab.tsx SpellDetail and an importer fill from the mirror's `requirement` for all 44 spells - src/ and scripts/ are outside this chunk; engine family. This chunk shipped the inline **Requirements** prose (sky-laughs-at-waves shape) for its six spells instead.
+- Guard (conjurers-countermeasure#cast-duration): a verify check that every non-ritual spell whose mirror doc has `actions` carries `cast` (and `duration` when the doc has duration_raw) - 218 spells lack cast today; lives in scripts/ (npm run verify), outside this chunk.
+- Guard (conjurers-countermeasure#description): a verify check that no spells description starts with "<name> \nSource " (217 today) - scripts/, outside this chunk; the same guard the exploding-bullet#description-header proposal names.
+
+PER FINDING
+shielding-strike
+  Rows: spells/shielding-strike description = the spell-2882 body (shield first: "You can either Raise your Shield ... Then, make a melee Strike."); spells/shielding-strike descRefs = [Raise your Shield/actions, Shield/spells] (the old "Raise a Shield" label no longer occurs in the prose).
+  Pinned: "shielding-strike: the description raises the shield BEFORE the melee Strike", "...the Raise your Shield link sits on the printed words", and a built Sparkling Targe magus owning the spell.
+  Not done: the Raise your Shield link resolves to nothing until the descref.ts gap above is fixed.
+shooting-star
+  Row: spells/shooting-star description = "**Requirements** You're wielding a ranged weapon or a thrown weapon.\n\n---\n\n" + the spell-2883 body ("for only this Strike").
+  Pinned: "shooting-star: the description opens with the ranged-or-thrown requirement and the remaster body"; built Starlit Span magus owns it.
+spinning-staff
+  Row: spells/spinning-staff description = "**Requirements** You're wielding a staff.\n\n---\n\n" + the spell-2884 body ("with an impossibly quick twirling flourish"). descRefs untouched (Spellstrike still in the prose).
+  Pinned: "spinning-staff: the description opens with the staff requirement and the remaster body"; built Twisting Tree magus owns it.
+thunderous-strike#requirements
+  Row: spells/thunderous-strike description = "**Requirements** You're wielding a melee weapon in two hands.\n\n---\n\n" + the shipped body and Heightened entry unchanged.
+  Pinned: "thunderous-strike: the description opens with the two-handed melee requirement"; built Inexorable Iron magus owns it.
+thunderous-strike#heightened-damage
+  Rows: spells/thunderous-strike baseDamage = "2"; spells/thunderous-strike damageKind = "damage". heightening is already right and not re-emitted. The Requirements prefix carries no digit, so injectDamageArrow still lands on "take 2 sonic damage".
+  Pinned: "thunderous-strike: the record carries the printed 2 as its base damage", "thunderous-strike: a 5th-level magus casts it at rank 3 for 4 sonic damage" (built Inexorable Iron magus, scaleDamage at rank ceil(5/2)=3 = "4", rank 1 = null), and a stripped-in-memory copy showing scaleDamage returns null without baseDamage (the defect).
+conjurers-countermeasure#cast-duration
+  Rows: spells/conjurers-countermeasure cast = {type:"actions",value:1}; duration = "until the end of your next turn"; level = 3 (the spells/bloody-tendrils cast-row shape).
+  Pinned: "conjurers-countermeasure: the spell is one action, lasts until the end of your next turn, level 3"; a built magus 6 with the feat owns it at focus rank 3.
+  Not done: the 218-spell guard (CROSS-FILE GAPS).
+conjurers-countermeasure#description
+  Row: spells/conjurers-countermeasure description = spell-2876 body with the scraped title/Source/Duration header removed and "\n\n---\n\n**Heightened (+3)** The resistance increases by 5." separated; curly apostrophes kept as shipped.
+  Pinned: "conjurers-countermeasure: the description has no scraped header and a separated Heightened entry".
+  Not done: the 217-description header guard (CROSS-FILE GAPS).
+turbulent-tide#requirements
+  Row: spells/turbulent-tide description = "**Requirements** You're wielding an improvised weapon.\n\n---\n\n" + shipped body unchanged.
+  Pinned: "turbulent-tide: the description opens with the improvised-weapon requirement"; built Resurgent Maelstrom magus owns it.
+cascade-countermeasure#requirements
+  Row: spells/cascade-countermeasure description = "**Requirements** You're benefiting from Arcane Cascade.\n\n---\n\n" + shipped body unchanged. descRefs untouched.
+  Pinned: "cascade-countermeasure: the description opens with the Arcane Cascade requirement"; a built magus 6 with the feat owns it.
+
+No existing scripts/data/effect-backfill.json row exists for any spells/<id> field this spec writes (the only rows naming these ids are feats focusSpells grants and starlit-eyes spellNotes), so no row declares supersedes. No two rows share a record+field.
+
+CHECKED: every row's why names its AoN doc id; every added word run in the prose rows was compared by hand against the mirror docs (spell-2882, 2883, 2884, 2885, 2876, 2311, 1036) - each prose value is either the mirror body verbatim or the shipped body plus the mirror's Requirements sentence. The test file runs: 11 record assertions fail for the right reason (rows not applied yet: missing text / baseDamage undefined / cast undefined), 8 built-character and stripped-copy tests pass. npx tsc --noEmit is clean (it does not cover test/).
+ASSUMED: the driver's apply-parity-fixes prose check accepts these rows - my dry run of `node scripts/apply-parity-fixes.mjs work/.bP02-rows-data-rows-4.json` (no --write) was refused by the session's permission classifier, so the mechanical check was not run here. Straight apostrophes follow the shipped convention (sky-laughs-at-waves); the tokenizer treats ' and ’ alike.
+NOT TESTED: the rendered spell card in the browser; the post-apply pass of the 11 red tests (they read the literal strings the rows write).
