@@ -25,6 +25,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { reprintTwinGaps } from './lib/reprint-twin-gaps.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const R = (p) => join(ROOT, p);
@@ -305,6 +306,21 @@ if (!existsSync(R(DESK))) {
     check('every rule `alsoRecords` entry is a real record with nothing switched off', bad.length === 0,
       bad.length ? some(bad) : named.map(([, rec]) => rec).join(', '));
   }
+}
+
+/* ---- 9c. a reprint twin that does less than its legacy printing is never trust-silent -----------
+ * "Hide legacy data" offers the reprint in the legacy half's place, and 56 of them arrived as their
+ * page's text alone — Greater Singing Shortbow an Equipment card with no Strike — with no marker, beside
+ * Keep Pace's "Not yet verified" (2026-09-25). Asserted from the shipped ledger's side: every same-level,
+ * same-price item twin lacking a rule field its legacy printing carries (scripts/lib/reprint-twin-gaps.mjs)
+ * is `unencoded` or `partly`. A repriced one is not held to it: its legacy printing is no evidence of what
+ * it lacks (Arboreal Boots prints no activation), though the ledger still marks it when it applies nothing. */
+{
+  const rows = reprintTwinGaps(core);
+  const marked = (k) => (ledger.unencoded ?? []).includes(k) || !!(ledger.partly ?? {})[k];
+  const silent = rows.filter((r) => r.samePrice && !marked(r.key)).map((r) => `${r.key} (lacks ${r.lost.join(', ')})`);
+  check('no reprint twin that does less than its legacy printing is trust-silent', silent.length === 0,
+    `${rows.filter((r) => r.samePrice).length} same-price twin(s) lack a rule field${silent.length ? ` — ${silent.length} unmarked: ${some(silent)}` : ', every one marked'}`);
 }
 
 /* ---- 10. regenerate and diff (the half a clean clone skips) -------------------------------------

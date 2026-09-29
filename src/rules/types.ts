@@ -5292,6 +5292,9 @@ export interface ContentDatabase {
    *  the database (so a saved character that already picked one still resolves) but are omitted from
    *  user-facing LISTS. Computed at load time — see findDuplicateIds in src/data/index.ts. */
   duplicateIds?: Set<string>;
+  /** desk #158 reprints the duplicate rules hide, each with the legacy record that stands in for it:
+   *  listValues offers the reprint whenever that stand-in is filtered out. See findHiddenTwins. */
+  hiddenTwins?: Map<string, { bucket: string; standIn: string }>;
   /** Item ids that are an AoN family SUMMARY, not an ownable item — hidden from every picker but
    *  still resolvable by id, so a character who added one keeps it. See findUmbrellaIds. */
   umbrellaIds?: Set<string>;

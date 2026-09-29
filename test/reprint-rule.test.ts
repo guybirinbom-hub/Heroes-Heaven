@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { buildReprintMap, newestPrinting, repointDoc, shippedTwin, slugify } from '../scripts/lib/reprint.mjs';
+import { buildReprintMap, newestPrinting, repointDoc, shippedTwin, slugify, whyUnpaired } from '../scripts/lib/reprint.mjs';
 
 /**
  * WHY THIS FILE EXISTS.
@@ -336,6 +336,227 @@ describe('reprint.mjs — the newest printing wins', () => {
       ]);
       expect(newestPrinting(index, 'hybrid-study-20')).toBeNull();
       expect(newestPrinting(index, 'hybrid-study-21')).toBeNull();
+    });
+  });
+
+  /*
+   * THE SUB-PAGE RULES (reprint lane 2026-09-25; desk #158, #165). The Archives link a bonus line, a
+   * grade and a sidebar mostly through their PAGE. The shapes below are the real documents, shrunk:
+   * Endless Grimoire (equipment-992 -> equipment-5127) with a base line and a named grade line, Sage's
+   * Lash (one line each side), Fulu Compendium (one line becomes four), and the magus page's sidebar.
+   */
+  describe('the sub-page rules', () => {
+    type D2 = Doc & { data?: Doc['data'] & { remaster_name?: string[]; legacy_name?: string[] } };
+    const d = (id: string, category: string, name: string, url: string, release_date: string, data: D2['data'] = {}): [string, D2] =>
+      [id, { id, category, name, url, release_date, edition: release_date > '2025' ? 'remaster' : 'legacy', data }];
+    const OLD = '2021-09-01';
+    const NEW = '2026-07-30';
+    const grimoire = () => buildReprintMap([
+      d('e-992', 'equipment', 'Endless Grimoire', '/E?ID=992', OLD, { remaster_id: ['e-5127'] }),
+      d('e-992-945', 'equipment', 'Endless Grimoire', '/E?ID=992', OLD, { remaster_id: ['e-5127'] }),
+      d('e-992-946', 'equipment', 'Endless Grimoire (Greater)', '/E?ID=992', OLD, { remaster_id: ['e-5127'], remaster_name: ['Greater Endless Grimoire'] }),
+      d('e-992-945-bonus-453', 'item-bonus', 'Endless Grimoire', '/E?ID=992', OLD, { remaster_id: ['e-5127'] }),
+      d('e-992-946-bonus-454', 'item-bonus', 'Endless Grimoire (Greater)', '/E?ID=992', OLD, { remaster_id: ['e-5127'], remaster_name: ['Greater Endless Grimoire'] }),
+      d('e-5127', 'equipment', 'Endless Grimoire', '/E?ID=5127', NEW, { legacy_id: ['e-992'] }),
+      d('e-5127-4603', 'equipment', 'Endless Grimoire', '/E?ID=5127', NEW, { legacy_id: ['e-992'] }),
+      d('e-5127-4604', 'equipment', 'Greater Endless Grimoire', '/E?ID=5127', NEW, { legacy_id: ['e-992'], legacy_name: ['Endless Grimoire (Greater)'] }),
+      d('e-5127-4603-bonus-1696', 'item-bonus', 'Endless Grimoire', '/E?ID=5127', NEW, { legacy_id: ['e-992'] }),
+      d('e-5127-4604-bonus-1697', 'item-bonus', 'Greater Endless Grimoire', '/E?ID=5127', NEW, { legacy_id: ['e-992'], legacy_name: ['Endless Grimoire (Greater)'] }),
+    ]);
+
+    it('A: the old grade names its reprint, so it links to that GRADE, not the base page', () => {
+      const index = grimoire();
+      expect(index.next.get('e-992-946')).toBe('e-5127-4604');
+      // the grade ships as its own record: a #158 twin naming the exact grade
+      const ships = (k: string) => k === 'greater-endless-grimoire';
+      expect(shippedTwin(index, 'e-992-946', 'endless-grimoire-greater', ships)).toEqual({ id: 'greater-endless-grimoire', name: 'Greater Endless Grimoire', docId: 'e-5127-4604' });
+      // a named pair is a STATED link: no key guard
+      expect(index.derived.has('e-992-946')).toBe(false);
+      // …and the bonus line of that grade follows the same statement across the category the link names
+      expect(index.next.get('e-992-946-bonus-454')).toBe('e-5127-4604-bonus-1697');
+    });
+
+    it('A is refused when the name is ambiguous on the linked page', () => {
+      const index = buildReprintMap([
+        d('e-1', 'equipment', 'Thing', '/E?ID=1', OLD, { remaster_id: ['e-2'] }),
+        d('e-1-1', 'equipment', 'Thing (Greater)', '/E?ID=1', OLD, { remaster_id: ['e-2'], remaster_name: ['Greater Thing'] }),
+        d('e-2', 'equipment', 'Thing', '/E?ID=2', NEW, { legacy_id: ['e-1'] }),
+        d('e-2-1', 'equipment', 'Greater Thing', '/E?ID=2', NEW, { legacy_id: ['e-1'] }),
+        d('e-2-2', 'equipment', 'Greater Thing', '/E?ID=2', NEW, { legacy_id: ['e-1'] }),
+      ]);
+      expect(index.next.get('e-1-1')).toBe('e-2'); // only the page link AoN states; no grade chosen
+    });
+
+    it('B (desk #165): a bonus line pairs with the one line of its title on the reprint page, after A took the named ones', () => {
+      const index = grimoire();
+      expect(index.next.get('e-992-945-bonus-453')).toBe('e-5127-4603-bonus-1696');
+      expect(index.derived.get('e-992-945-bonus-453')).toEqual({ name: 'Endless Grimoire', class: '', sub: true });
+      expect(repointDoc(index, 'e-992-945-bonus-453', 'endless-grimoire', (k) => k === 'endless-grimoire')).toBe('e-5127-4603-bonus-1696');
+    });
+
+    it('B is the ruled rule — one line WITH THAT TITLE on each page, not one line in all: two differently titled lines both pair', () => {
+      // The question he answered: "pair with the reprint page's line of the same title, only when exactly one
+      // line on each page has that title". A page with several lines of different titles pairs each of them.
+      const index = buildReprintMap([
+        d('e-1', 'equipment', 'Mutagen', '/E?ID=1', OLD, { remaster_id: ['e-2'] }),
+        d('e-1-1-bonus-1', 'item-bonus', 'Mutagen (Lesser)', '/E?ID=1', OLD, { remaster_id: ['e-2'] }),
+        d('e-1-2-bonus-2', 'item-bonus', 'Mutagen (Greater)', '/E?ID=1', OLD, { remaster_id: ['e-2'] }),
+        d('e-2', 'equipment', 'Mutagen', '/E?ID=2', NEW, { legacy_id: ['e-1'] }),
+        d('e-2-1-bonus-7', 'item-bonus', 'Mutagen (Lesser)', '/E?ID=2', NEW, { legacy_id: ['e-1'] }),
+        d('e-2-2-bonus-8', 'item-bonus', 'Mutagen (Greater)', '/E?ID=2', NEW, { legacy_id: ['e-1'] }),
+      ]);
+      expect(index.next.get('e-1-1-bonus-1')).toBe('e-2-1-bonus-7');
+      expect(index.next.get('e-1-2-bonus-2')).toBe('e-2-2-bonus-8');
+    });
+
+    it('B refuses one line that became four (Fulu Compendium) and says why', () => {
+      const index = buildReprintMap([
+        d('e-988', 'equipment', 'Fulu Compendium', '/E?ID=988', OLD, { remaster_id: ['e-5088'] }),
+        d('e-988-bonus-451', 'item-bonus', 'Fulu Compendium', '/E?ID=988', OLD, { remaster_id: ['e-5088'] }),
+        d('e-5088', 'equipment', 'Fulu Compendium', '/E?ID=5088', NEW, { legacy_id: ['e-988'] }),
+        ...[1676, 1677, 1678, 1679].map((k) => d(`e-5088-bonus-${k}`, 'item-bonus', 'Fulu Compendium', '/E?ID=5088', NEW, { legacy_id: ['e-988'] })),
+      ]);
+      expect(index.next.has('e-988-bonus-451')).toBe(false);
+      expect(whyUnpaired(index, 'e-988-bonus-451')).toContain('one line titled "Fulu Compendium" on each page is required (desk #165) — 1 on the old page, 4 on e-5088');
+    });
+
+    const magusPage = (extraNew: [string, D2][] = []) => buildReprintMap([
+      d('class-17', 'class', 'Magus', '/C?ID=17', OLD, { remaster_id: ['class-74'] }),
+      d('class-74', 'class', 'Magus', '/C?ID=74', NEW, { legacy_id: ['class-17'] }),
+      d('sidebar-1572', 'sidebar', 'Combining Your Abilities', '/C?ID=17', OLD, { remaster_id: ['class-74'] }),
+      d('sidebar-1573', 'sidebar', 'Spellstrike Options', '/C?ID=17', OLD, { remaster_id: ['class-74'] }),
+      d('sidebar-3749', 'sidebar', 'Combining your Abilities', '/C?ID=74', NEW, { legacy_id: ['class-17'] }),
+      ...extraNew,
+    ]);
+
+    it('B (desk #165), a sidebar: it pairs with the one sidebar of its title on the reprint page', () => {
+      const index = magusPage();
+      expect(index.next.get('sidebar-1572')).toBe('sidebar-3749');
+      expect(repointDoc(index, 'sidebar-1572', 'combining-your-abilities', (k) => k === 'combining-your-abilities')).toBe('sidebar-3749');
+    });
+
+    it('B refuses a sidebar whose title is not on the reprint page — the sole sidebar is NOT paired', () => {
+      // "Spellstrike Options" has no same-titled sidebar on class-74; pairing it with the only other one
+      // there would be the rejected sole-sidebar rule (Specific Armor and Weapons -> Upgrading Runes, 0%).
+      const index = magusPage();
+      expect(index.next.has('sidebar-1573')).toBe(false);
+      expect(whyUnpaired(index, 'sidebar-1573')).toContain('one line titled "Spellstrike Options" on each page is required (desk #165) — 1 on the old page, 0 on class-74');
+    });
+
+    it('B refuses a tie on the reprint page', () => {
+      const index = magusPage([d('sidebar-3750', 'sidebar', 'Combining Your Abilities', '/C?ID=74', NEW, { legacy_id: ['class-17'] })]);
+      expect(index.next.has('sidebar-1572')).toBe(false);
+    });
+
+    it('the key guard: only the record keyed by the old title follows a sub-page pair', () => {
+      const index = magusPage();
+      expect(repointDoc(index, 'sidebar-1572', 'some-other-record', never)).toBeNull();
+    });
+
+    it('a sub-page pair keeps the ordinary hasKey test: a reprint shipping under another slug is a #158 twin', () => {
+      const index = buildReprintMap([
+        d('e-1', 'equipment', 'Old Tool', '/E?ID=1', OLD, { remaster_id: ['e-2'] }),
+        d('e-1-bonus-1', 'item-bonus', 'Old Tool', '/E?ID=1', OLD, { remaster_id: ['e-2'] }),
+        d('e-2', 'equipment', 'Old Tool', '/E?ID=2', NEW, { legacy_id: ['e-1'] }),
+        d('e-2-bonus-9', 'item-bonus', 'Old Tool', '/E?ID=2', NEW, { legacy_id: ['e-1'] }),
+      ]);
+      expect(index.next.get('e-1-bonus-1')).toBe('e-2-bonus-9');
+      // same title, so the record simply moves; hasKey on its own slug does not block it
+      expect(repointDoc(index, 'e-1-bonus-1', 'old-tool', (k) => k === 'old-tool')).toBe('e-2-bonus-9');
+    });
+  });
+
+  /*
+   * RULE C (desk #167, owner 2026-09-25 "yes"): a legacy grade whose link names only the renamed FAMILY pairs
+   * with the new family's grade of the same suffix, when exactly one carries it on each side. The fixtures are
+   * the two pairs his question named, shrunk from the export (level and price as the Archives print them).
+   */
+  describe('rule C — a grade linked only to its family pairs by suffix (desk #167)', () => {
+    type D3 = Doc & { level?: number; price?: number; data?: Doc['data'] & { remaster_name?: string[]; legacy_name?: string[] } };
+    const g = (id: string, name: string, url: string, release_date: string, level: number, price: number | undefined, data: D3['data']): [string, D3] =>
+      [id, { id, category: 'equipment', name, url, release_date, level, price, edition: release_date > '2023' ? 'remaster' : 'legacy', data }];
+    const OLD = '2019-08-01';
+    const NEW = '2023-11-15';
+    const cloakOld = { remaster_id: ['equipment-3069'], remaster_name: ['Cloak of Illusions'] };
+    const cloakNew = { legacy_id: ['equipment-424'], legacy_name: ['Cloak of Elvenkind'] };
+    const bootsOld = { remaster_id: ['equipment-3056'], remaster_name: ['Arboreal Boots'] };
+    const bootsNew = { legacy_id: ['equipment-413'], legacy_name: ['Boots of Elvenkind'] };
+    const elvenkind = () => buildReprintMap([
+      g('equipment-424', 'Cloak of Elvenkind', '/E?ID=424', OLD, 7, undefined, cloakOld),
+      g('equipment-424-513', 'Cloak of Elvenkind', '/E?ID=424', OLD, 7, 36000, cloakOld),
+      g('equipment-424-514', 'Cloak of Elvenkind (Greater)', '/E?ID=424', OLD, 12, 175000, cloakOld),
+      g('equipment-3069', 'Cloak of Illusions', '/E?ID=3069', NEW, 7, undefined, cloakNew),
+      g('equipment-3069-3000', 'Cloak of Illusions', '/E?ID=3069', NEW, 7, 36000, cloakNew),
+      g('equipment-3069-3001', 'Cloak of Illusions (Greater)', '/E?ID=3069', NEW, 12, 175000, cloakNew),
+      g('equipment-413', 'Boots of Elvenkind', '/E?ID=413', OLD, 5, undefined, bootsOld),
+      g('equipment-413-502', 'Boots of Elvenkind', '/E?ID=413', OLD, 5, 14500, bootsOld),
+      g('equipment-413-503', 'Boots of Elvenkind (Greater)', '/E?ID=413', OLD, 11, 125000, bootsOld),
+      g('equipment-3056', 'Arboreal Boots', '/E?ID=3056', NEW, 5, undefined, bootsNew),
+      g('equipment-3056-2980', 'Arboreal Boots', '/E?ID=3056', NEW, 5, 16000, bootsNew),
+      g('equipment-3056-2981', 'Arboreal Boots (Greater)', '/E?ID=3056', NEW, 9, 70000, bootsNew),
+    ]);
+    const ships = (...ids: string[]) => (k: string) => ids.includes(k);
+
+    it('the two pairs he named: Cloak of Elvenkind (Greater) -> Cloak of Illusions (Greater), Boots of Elvenkind (Greater) -> Arboreal Boots (Greater)', () => {
+      const index = elvenkind();
+      expect(index.next.get('equipment-424-514')).toBe('equipment-3069-3001');
+      expect(index.next.get('equipment-413-503')).toBe('equipment-3056-2981');
+      // both reprints ship as records, so the old grades are #158 twins naming the grade, not the base
+      expect(shippedTwin(index, 'equipment-424-514', 'cloak-of-elvenkind-greater', ships('cloak-of-illusions', 'cloak-of-illusions-greater')))
+        .toEqual({ id: 'cloak-of-illusions-greater', name: 'Cloak of Illusions (Greater)', docId: 'equipment-3069-3001' });
+      expect(shippedTwin(index, 'equipment-413-503', 'boots-of-elvenkind-greater', ships('arboreal-boots', 'arboreal-boots-greater')))
+        .toEqual({ id: 'arboreal-boots-greater', name: 'Arboreal Boots (Greater)', docId: 'equipment-3056-2981' });
+      // the ungraded base pairs with the ungraded base where the numbers agree
+      expect(index.next.get('equipment-424-513')).toBe('equipment-3069-3000');
+    });
+
+    it('any other pair whose level or price disagrees is refused and said — the Boots base (145 gp against 160) keeps its family link', () => {
+      const index = elvenkind();
+      expect(index.next.get('equipment-413-502')).toBe('equipment-3056');
+      expect(index.gradeRefused.get('equipment-413-502')).toContain('level|price 5|14500 against 5|16000');
+      // the Greater Boots disagree too (Item 11 against 9) and pair only because the owner named them
+      expect(index.gradeRefused.has('equipment-413-503')).toBe(false);
+    });
+
+    it('refused when the suffix is ambiguous: two "(Greater)" blocks on the new page', () => {
+      const index = buildReprintMap([
+        g('equipment-1', 'Veil', '/E?ID=1', OLD, 4, undefined, { remaster_id: ['equipment-2'], remaster_name: ['Shroud'] }),
+        g('equipment-1-1', 'Veil (Greater)', '/E?ID=1', OLD, 9, 60000, { remaster_id: ['equipment-2'], remaster_name: ['Shroud'] }),
+        g('equipment-2', 'Shroud', '/E?ID=2', NEW, 4, undefined, { legacy_id: ['equipment-1'] }),
+        g('equipment-2-1', 'Shroud (Greater)', '/E?ID=2', NEW, 9, 60000, { legacy_id: ['equipment-1'] }),
+        g('equipment-2-2', 'Shroud (Greater)', '/E?ID=2', NEW, 9, 60000, { legacy_id: ['equipment-1'] }),
+      ]);
+      expect(index.next.get('equipment-1-1')).toBe('equipment-2');
+      expect(index.gradeRefused.get('equipment-1-1')).toContain('"(Greater)": 1 block(s) on the old page, 2 on equipment-2');
+    });
+
+    it('a suffix only: a prefix-spelt grade ("Greater Healer\'s Gel", a re-indexed ladder) is never read as one', () => {
+      const index = buildReprintMap([
+        g('equipment-7', 'Gel', '/E?ID=7', OLD, 5, undefined, { remaster_id: ['equipment-8'] }),
+        g('equipment-7-2', 'Gel (Greater)', '/E?ID=7', OLD, 13, 50000, { remaster_id: ['equipment-8'] }),
+        g('equipment-8', 'Gel', '/E?ID=8', NEW, 5, undefined, { legacy_id: ['equipment-7'] }),
+        g('equipment-8-2', 'Greater Gel', '/E?ID=8', NEW, 9, 12500, { legacy_id: ['equipment-7'] }),
+      ]);
+      expect(index.next.get('equipment-7-2')).toBe('equipment-8');
+    });
+
+    it('rule A wins where the Archives name the grade, and a derived pair keeps the key guard', () => {
+      const index = buildReprintMap([
+        g('equipment-5', 'Lamp', '/E?ID=5', OLD, 9, undefined, { remaster_id: ['equipment-6'] }),
+        g('equipment-5-1', 'Lamp (Greater)', '/E?ID=5', OLD, 12, 180000, { remaster_id: ['equipment-6'], remaster_name: ['Lantern (Greater)'] }),
+        g('equipment-5-2', 'Lamp (Major)', '/E?ID=5', OLD, 15, 600000, { remaster_id: ['equipment-6'] }),
+        g('equipment-6', 'Lantern', '/E?ID=6', NEW, 9, undefined, { legacy_id: ['equipment-5'] }),
+        g('equipment-6-1', 'Lantern (Greater)', '/E?ID=6', NEW, 12, 180000, { legacy_id: ['equipment-5'] }),
+        g('equipment-6-2', 'Lantern (Major)', '/E?ID=6', NEW, 15, 600000, { legacy_id: ['equipment-5'] }),
+      ]);
+      // the Archives name the Greater's reprint: a stated pair (rule A), not a derived one
+      expect(index.next.get('equipment-5-1')).toBe('equipment-6-1');
+      expect(index.derived.has('equipment-5-1')).toBe(false);
+      // the Major's link names only the family: rule C, derived, held to the old title's key
+      expect(index.next.get('equipment-5-2')).toBe('equipment-6-2');
+      expect(index.derived.get('equipment-5-2')).toEqual({ name: 'Lamp (Major)', class: '', sub: true, grade: true });
+      expect(repointDoc(index, 'equipment-5-2', 'some-other-record', never)).toBeNull();
+      expect(repointDoc(index, 'equipment-5-2', 'lamp-major', never)).toBe('equipment-6-2');
     });
   });
 

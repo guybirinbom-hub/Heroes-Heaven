@@ -64,9 +64,14 @@ for (const cat of [...Object.keys(KINDS), 'class']) {
       id, category: d.category ?? cat, name: String(d.name ?? '').trim(), url: d.url, book: d.book,
       books: [...new Set([d.book, ...(d.data?.source ?? [])].map((x) => String(x ?? '').trim()).filter(Boolean))],
       release_date: d.release_date ?? '', edition: d.edition ?? '', level: d.level,
+      price: d.data?.price, // the reprint map's rule C compares a grade pair's level and price (desk #167)
       exclude_from_search: d.exclude_from_search === 1 || d.exclude_from_search === true,
       superseded_by: d.superseded_by, text: String(d.data?.text ?? ''),
-      data: { legacy_id: d.data?.legacy_id, remaster_id: d.data?.remaster_id, class: d.data?.class, archetype: d.data?.archetype, ability_type: d.data?.ability_type },
+      // remaster_name / legacy_name: the reprint map's rule A reads them (scripts/lib/reprint.mjs header).
+      data: {
+        legacy_id: d.data?.legacy_id, remaster_id: d.data?.remaster_id, class: d.data?.class, archetype: d.data?.archetype, ability_type: d.data?.ability_type,
+        remaster_name: d.data?.remaster_name, legacy_name: d.data?.legacy_name,
+      },
     });
   }
 }

@@ -115,13 +115,22 @@ describe('trust-approvals.json — completeness', () => {
    * (Level 4), Shadowcaster (Level 4), Soul Warden (Level 4)" and the app has no class-feat-via-
    * archetype lane). `open`, so `unruled` below. Roster 163 -> 164.
    */
+  /*
+   * Then the 2026-09-25 reprint lane filed TWO rulings the owner gave in chat, straight into `ruled`:
+   * #165 reprint-cross-kind-sub-pages (a bonus line or a sidebar pairs with the one same-titled line on its
+   * page's reprint — his "what do you suggest?", the recommended yes) and #166 book-names-different-book-folds
+   * (book aliases: "Middle way" — a "(Remastered)" printing folds into its own book, different books never
+   * fold together). The answers file does not speak for either, so both are `unruled` below. Roster 164 -> 166.
+   * The same night, a THIRD: #167 reprint-grade-to-grade (a legacy grade linked only to its renamed family
+   * pairs with the new family's grade of the same suffix — his "yes"). Filed the same way. Roster 166 -> 167.
+   */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
-  it('the desk roster is every number in work/owner-questions.json — 164: 156 batch-filed questions (familiar#archetype-reach the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane and the two filed by the 2026-09-22 Spellshot lane — with no gaps or repeats', () => {
+  it('the desk roster is every number in work/owner-questions.json — 167: 156 batch-filed questions (familiar#archetype-reach the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane and the three ruled in chat on 2026-09-25 — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
-    // batch 039: familiar#archetype-reach
-    expect(deskNumbers.length).toBe(164);
+    // reprint lane 2026-09-25: #165 reprint-cross-kind-sub-pages, #166 book-names-different-book-folds, #167 reprint-grade-to-grade
+    expect(deskNumbers.length).toBe(167);
   });
 
   it('every desk number has exactly one disposition', () => {

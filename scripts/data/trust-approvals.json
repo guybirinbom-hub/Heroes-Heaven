@@ -470,6 +470,9 @@
   { "n": 161, "id": "spell-parry-badge", "status": "ruled" },
   { "n": 162, "id": "engine-second-archetype-pool-spellshot-beast-gunner", "status": "open" },
   { "n": 163, "id": "engine-no-route-riders-energy-fulminating-dispelling", "status": "open" },
-  { "n": 164, "id": "familiar#archetype-reach", "status": "open" }
+  { "n": 164, "id": "familiar#archetype-reach", "status": "open" },
+  { "n": 165, "id": "reprint-cross-kind-sub-pages", "status": "ruled" },
+  { "n": 166, "id": "book-names-different-book-folds", "status": "ruled" },
+  { "n": 167, "id": "reprint-grade-to-grade", "status": "ruled" }
  ]
 }

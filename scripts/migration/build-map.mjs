@@ -191,6 +191,16 @@ const MANUAL = {
    * against creature-family-448, which is the Norn creature family, not the deity entry.
    */
   'deities|Norns': { status: 'doc', docId: 'deity-322', how: 'manual:the Archives title it "Followers of Fate"' },
+  /*
+   * The metamagic TRAIT is trait-107 "Metamagic" (Core Rulebook, /Traits.aspx?ID=107), whose own
+   * `remaster_id` names trait-513 "Spellshape". The join had filed the record under sidebar-38, the Core
+   * Rulebook SIDEBAR of the same title on the Casting Spells page, whose only link is page-level (to
+   * rules-2233) — so the record had no reprint link at all. On its own page the same-category rule makes
+   * it spellshape's desk #158 twin ("Remastered as Spellshape"). A join fix, deliberately NOT an overlay
+   * aonId pin: a pin keeps the join's document as the one the importer BUILDS the record from
+   * (`joinDocId`, read by mapDocFor), and here the join itself is what was wrong.
+   */
+  'trait|Metamagic': { status: 'doc', docId: 'trait-107', how: 'manual:the trait page, not the sidebar of the same title' },
 };
 
 // Records recovered by the targeted #220 scrape, keyed by name.
@@ -352,6 +362,17 @@ for (const [bucket, records] of Object.entries(core)) {
     const pin = AON_PINNED.get(id);
     if ((entry.status === 'doc' || entry.status === 'scraped') && typeof pin === 'string' && entry.docId !== pin) {
       entry = { ...entry, docId: pin, joinDocId: entry.docId, how: `${entry.how} -> owner ruling (aonId row in effect-backfill.json)` };
+    }
+    /*
+     * …and a pinned page that is an old printing whose reprint ships beside it is desk #158 like any other:
+     * the pin only forbids MOVING the record (the repoint above), never the "Remastered as" label. Measured
+     * 2026-09-25: of the 79 string pins, only the two Judgment Thurible grades have a twin — pinned to the
+     * legacy blocks whose numbers they carry (the Archives transpose those two blocks' titles), so the link
+     * follows the numbers to the right grade instead of the title to the wrong one.
+     */
+    if ((entry.status === 'doc' || entry.status === 'scraped') && typeof pin === 'string') {
+      const twin = shippedTwin(reprints, pin, key, (k) => !!records[k]);
+      if (twin) { entry = { ...entry, remasteredAs: { bucket, id: twin.id, name: records[twin.id]?.name ?? twin.name } }; twinned++; }
     }
     (map[bucket] ??= {})[key] = { name, ...entry };
     tally[entry.status] = (tally[entry.status] ?? 0) + 1;

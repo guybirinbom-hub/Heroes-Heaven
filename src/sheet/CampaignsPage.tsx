@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import '../builder/builder.css';
 import type { ContentDatabase, ModeDef } from '../rules/types';
 import { emptyBuild, type BuildState } from '../rules/build';
-import { CORE_BOOKS, enabledBookSet, sourceCatalog, sourceIdToken } from '../rules/sources';
+import { enabledBookSet, sourceCatalog, sourceIdToken, storedSources } from '../rules/sources';
 import { useBuilderActions, RuleCards } from '../builder/shared';
 // ── The ONLY reference to the initiative tracker in Heroes Heaven. Removed by deleting
 // src/integration/ plus these imports and the TRACKER_IN_CAMPAIGN branches. See its README. ──
@@ -749,7 +749,7 @@ export function CampaignForm({ content, editing, onDelete, onCancel, onCreated, 
          * saving never unshares it — and the defaults players copy carry the id, so the rename never
          * switches it off on their characters either. */
         const tokens = (shared ?? []).map(sourceIdToken);
-        if (tokens.length) b.enabledSources = [...new Set([...(b.enabledSources ?? CORE_BOOKS), ...tokens])].sort();
+        if (tokens.length) b.enabledSources = storedSources([...enabledBookSet(b.enabledSources), ...tokens]);
         setBuild(b);
         setSharedIds(shared);
         setLoadedDefaults(true);

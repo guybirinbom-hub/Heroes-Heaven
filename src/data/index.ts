@@ -8,7 +8,7 @@
  * fills any gaps (so the example character keeps resolving even where Core lacks an
  * exact slug).
  */
-import type { ContentDatabase, SourceInfo } from '../rules/types';
+import type { ContentDatabase, Item, SourceInfo } from '../rules/types';
 import { seedContent } from '../rules/seed';
 import { CATALOG_MODE_MAP } from '../rules/modes';
 import {
@@ -39,8 +39,9 @@ function merge<T>(base: Record<string, T>, over: Record<string, T>): Record<stri
  *  depends on it. */
 export const EXCLUDED_FEATS = new Set(['arcane-tattoos', 'ornate-tattoo', 'virtue-forged-tattoos', 'hag-magic']);
 
-/** Collections where an `aon-`-prefixed scrape can shadow an existing record of the same name. */
-const DEDUPE_MAPS = ['items', 'feats', 'spells', 'actions', 'vehicles', 'backgrounds', 'heritages', 'deities'] as const;
+/** Collections where an `aon-`-prefixed scrape can shadow an existing record of the same name. `duplicateIds`
+ *  is one flat set of ids from THESE buckets only — a reader walking every bucket must scope it by them. */
+export const DEDUPE_MAPS = ['items', 'feats', 'spells', 'actions', 'vehicles', 'backgrounds', 'heritages', 'deities'] as const;
 const dedupeKey = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 /**
@@ -212,6 +213,32 @@ export function findDuplicateIds(db: ContentDatabase): Set<string> {
   }
   for (const id of gradeSpellingDuplicates(db)) dupes.add(id);
   return dupes;
+}
+
+/**
+ * desk #158 MEETS THE DUPLICATE RULES ABOVE. A shipped twin — the old printing kept `legacy`, carrying
+ * "Remastered as <reprint>" — is sometimes a pair those rules call ONE item and hide the reprint of: 56
+ * items measured 2026-09-25 (REMASTER_REPRINT_IDS, gradeSpellingDuplicates) — 48 Impossible Magic grades
+ * whose Secrets of Magic half carries the mechanics, 6 grades in the Gatewalkers hardcover whose volume
+ * (#187, #188) half does, and 2 in the Season of Ghosts compilation over its #199 half. While the old half is offered that is right. But the old
+ * half is exactly what "Hide legacy data" (or its book switched off) takes away, and then the item was gone
+ * from every list while its popup named a reprint no search could find.
+ *
+ * So: reprint id -> the bucket and the legacy record that stands in for it. listValues hides the reprint
+ * only while its stand-in is in the list it is building; the GM's search always lists it (it is a page of
+ * its own there). Nothing is un-hidden while the modelled half is on offer.
+ */
+export function findHiddenTwins(db: ContentDatabase, dupes: Set<string> | undefined): Map<string, { bucket: string; standIn: string }> {
+  const out = new Map<string, { bucket: string; standIn: string }>();
+  if (!dupes?.size) return out;
+  for (const bucket of DEDUPE_MAPS) {
+    const map = db[bucket] as unknown as Record<string, { remasteredAs?: { bucket?: string; id?: string } }> | undefined;
+    for (const [id, rec] of Object.entries(map ?? {})) {
+      const ra = rec?.remasteredAs;
+      if (ra?.id && ra.bucket === bucket && dupes.has(ra.id)) out.set(ra.id, { bucket, standIn: id });
+    }
+  }
+  return out;
 }
 
 /** The grade words PF2e puts on an item family, in both spellings. */
@@ -439,12 +466,35 @@ export function listValues<T>(content: ContentDatabase, map: Record<string, T>):
    */
   const forms = map === (content.items as unknown as Record<string, T>) ? content.combinationFormIds : undefined;
   if (!dupes?.size && !umbrellas?.size && !forms?.size) return Object.values(map);
+  /* A desk #158 reprint the duplicate rules hide comes back when its legacy stand-in is NOT in this list —
+   * filtered out by "Hide legacy data" or its book (see findHiddenTwins). */
+  const standInGone = (id: string) => {
+    const t = content.hiddenTwins?.get(id);
+    return !!t && map === (content as unknown as Record<string, unknown>)[t.bucket] && !(t.standIn in map);
+  };
   const out: T[] = [];
   for (const id in map) {
-    if (dupes?.has(id) || umbrellas?.has(id) || forms?.has(id)) continue;
+    if ((dupes?.has(id) && !standInGone(id)) || umbrellas?.has(id) || forms?.has(id)) continue;
     out.push(map[id]);
   }
   return out;
+}
+
+/**
+ * The items the shop (Inventory > Add item, src/sheet/AddItemsModal.tsx) offers. Exported so
+ * scripts/reprint-check.mjs (CHECK 9) and the tests measure the list the player is offered, not a copy
+ * of its rules. Filtered BEFORE listValues, so a desk #158 reprint the duplicate rules hide behind its
+ * legacy half is offered when "Hide legacy data" takes that half away (findHiddenTwins).
+ */
+export function shopItems(content: ContentDatabase, hideLegacy?: boolean): Item[] {
+  const offered = (i: Item) => {
+    const e = (i as { edition?: string }).edition;
+    if (e === 'superseded') return false; // renamed/outdated half of a remaster change — always hidden
+    if (i.retired) return false; // bug 2026-09-12 #7: deleted here, but still resolvable for anyone carrying one
+    return !(hideLegacy && (e === 'legacy' || e === 'legacy-era'));
+  };
+  const view = { ...content, items: Object.fromEntries(Object.entries(content.items).filter(([, i]) => offered(i))) };
+  return listValues(view, view.items);
 }
 
 /**
@@ -559,6 +609,7 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
   // Computed last, so it sees seed + core + homebrew (homebrew never uses the `aon-` prefix, but a
   // homebrew entry CAN be the canonical twin that unmasks a duplicate).
   db.duplicateIds = findDuplicateIds(db);
+  db.hiddenTwins = findHiddenTwins(db, db.duplicateIds);
   db.umbrellaIds = findUmbrellaIds(db.items as unknown as Record<string, unknown>);
   db.combinationFormIds = findCombinationFormIds(db.items as unknown as Record<string, unknown>);
   return db;

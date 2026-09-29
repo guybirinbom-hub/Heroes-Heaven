@@ -238,7 +238,13 @@ for (const [bucket, recs] of Object.entries(before.core)) {
       }
       if (typeof wv === 'string' && typeof nv === 'string') {
         if (wv.trim() && !nv.trim()) add('text-shrank', key, path, `${wv.length} chars`, 'empty');
-        else if (nv.length < wv.length - TEXT_SLACK) add('text-shrank', key, path, `${wv.length} chars`, `${nv.length} chars`);
+        /* `source.book` is a KEY, not prose — the source filter's toggle (src/rules/sources.ts) — so its
+         * length says nothing about loss: desk #166 (2026-09-25) relabelled 144 records from a fold target
+         * to their own book, "Pathfinder Adventure Path: Hellbreakers" -> "Pathfinder #222: Hellbreakers",
+         * ten characters shorter and nothing lost. A changed book is printed under CHANGED like every
+         * `source` change; an EMPTIED one still fails above; book identity is scripts/reprint-check.mjs's
+         * (CHECK 2 and CHECK 4). */
+        else if (nv.length < wv.length - TEXT_SLACK && path !== 'source.book') add('text-shrank', key, path, `${wv.length} chars`, `${nv.length} chars`);
         // A same-length rewrite of a numeric field is still a number change; NUMERIC_ROOTS below.
       }
       if (NUMERIC_ROOTS.has(root) && wv !== nv) add('number-changed', key, path, wv, nv);

@@ -9,6 +9,7 @@ import { AstRenderer } from './AstRenderer';
 import { TrustMarker } from './TrustMarker';
 import { unencodedNamed } from '../data/trustGate';
 import { astSlug, useAstNode } from './useAst';
+import { RemasteredLine, remasteredAsOf } from './RemasteredLine';
 
 /**
  * A description popup that can drill into the descriptions of terms it mentions. Each click on
@@ -72,6 +73,11 @@ export function DescriptionModal({
     const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[slug];
     if (rec) setStack((s) => [...s, { title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug }]);
   };
+  /* desk #158 — the old printing says what it was remastered as, and the name opens that record here, on
+     this stack, whatever its bucket. Read by bucket/slug off the content, because this popup holds a
+     node, not the record: an item-bonus line or a trait reaches the player no other way. */
+  const ra = remasteredAsOf(content, { bucket: cur.key, id: curSlug });
+  const remastered = ra ? <RemasteredLine ra={ra} onOpen={openRef} /> : null;
   const back = () => { if (stack.length > 1) setStack((s) => s.slice(0, -1)); else onClose(); };
   const showBack = stack.length > 1 || !!backToSource;
 
@@ -111,10 +117,10 @@ export function DescriptionModal({
     return (
       <div className="picker-overlay" onClick={exit}>
         <div ref={modalRef} className="ast-modal" onPointerDown={liftCapOnGrip} onClick={(e) => e.stopPropagation()}>
-          {/* The ast popup owns its own head + body markup, so the only slot this component can reach
-              is the header. That still puts the line beside the name and above the text — and, being
-              in the head rather than the scrolling body, it stays on screen on a long rules page. */}
-          <AstRenderer node={astNode} selfRef={`${astBucket}:${curSlug}`} onOpenRef={openRef} headerControls={<>{marker}{controls}</>} />
+          {/* The ast popup owns its own head + body markup; this component reaches it through two slots:
+              `headerControls` (the trust marker, pin and close) and `footer`, where desk #158's
+              "Remastered as" line goes — after the page's prose, inside the scrolling body. */}
+          <AstRenderer node={astNode} selfRef={`${astBucket}:${curSlug}`} onOpenRef={openRef} headerControls={<>{marker}{controls}</>} footer={remastered} />
         </div>
       </div>
     );
@@ -169,6 +175,7 @@ export function DescriptionModal({
         <div className="info-body">
           {marker}
           <RichText text={cur.description} refs={cur.descRefs} onOpen={open} selfLabel={cur.title} />
+          {remastered}
         </div>
       </div>
     </div>

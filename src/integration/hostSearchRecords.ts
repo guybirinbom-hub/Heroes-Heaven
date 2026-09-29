@@ -1,5 +1,8 @@
 import type { ContentDatabase } from '../rules/types';
 import type { HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
+import { DEDUPE_MAPS } from '../data';
+
+const DEDUPED: ReadonlySet<string> = new Set(DEDUPE_MAPS);
 
 /**
  * The GM's Search index (Campaigns → a table → Search): every content record Heroes Heaven has, as the
@@ -28,7 +31,12 @@ export function hostSearchRecords(content: ContentDatabase): HostSearchRecord[] 
     for (const id of Object.keys(rows)) {
       const r = rows[id];
       const name = r?.name;
-      if (typeof name !== 'string' || !name || content.duplicateIds?.has(id)) continue;
+      // `duplicateIds` is one flat set of ids from the deduplicated buckets, so it only speaks for those: the
+      // Impossible Magic bonus line itemBonus/greater-endless-grimoire shares its id with a hidden ITEM and
+      // was dropped here with it. And a desk #158 reprint hidden behind its legacy half (findHiddenTwins) is
+      // its own page, the one "Remastered as" names — a GM typing its name must find it.
+      if (typeof name !== 'string' || !name) continue;
+      if (DEDUPED.has(bucket) && content.duplicateIds?.has(id) && content.hiddenTwins?.get(id)?.bucket !== bucket) continue;
       const detail = [
         typeof r.rank === 'number' ? `Rank ${r.rank}` : typeof r.level === 'number' ? `Level ${r.level}` : '',
         // A `reference` record's Archives category ("creature-family" -> "Creature family"): the bucket

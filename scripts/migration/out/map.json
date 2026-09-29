@@ -47674,13 +47674,8 @@
    "cantrip-deck-5-pack": {
     "name": "Cantrip Deck (5-Pack)",
     "status": "doc",
-    "docId": "equipment-1046-1000",
-    "how": "importer:the doc this record was built from",
-    "remasteredAs": {
-     "bucket": "items",
-     "id": "cantrip-deck",
-     "name": "Cantrip Deck"
-    }
+    "docId": "equipment-5140-4612",
+    "how": "importer:the doc this record was built from"
    },
    "full-pack": {
     "name": "Full Pack",
@@ -51442,8 +51437,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "aeon-stone",
-     "name": "Aeon Stone"
+     "id": "aeon-stone-envisioning",
+     "name": "Aeon Stone (Envisioning)"
     }
    },
    "aerekostes": {
@@ -51763,8 +51758,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "backfire-mantle",
-     "name": "Backfire Mantle"
+     "id": "greater-backfire-mantle",
+     "name": "Greater Backfire Mantle"
     }
    },
    "bakuwa-lizardfolk-bony-plates": {
@@ -51863,8 +51858,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "binding-coil",
-     "name": "Binding Coil"
+     "id": "greater-binding-coil",
+     "name": "Greater Binding Coil"
     }
    },
    "black-ash-greater": {
@@ -51916,8 +51911,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "blade-of-four-energies",
-     "name": "Blade of Four Energies"
+     "id": "greater-blade-of-four-energies",
+     "name": "Greater Blade Of Four Energies"
     }
    },
    "blazing-banner-greater": {
@@ -52004,8 +51999,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "arboreal-boots",
-     "name": "Arboreal Boots"
+     "id": "arboreal-boots-greater",
+     "name": "Arboreal Boots (Greater)"
     }
    },
    "boots-of-elvenkind": {
@@ -52121,8 +52116,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "bravery-baldric",
-     "name": "Bravery Baldric"
+     "id": "bravery-baldric-healthful-greater",
+     "name": "Bravery Baldric (Healthful, Greater)"
     }
    },
    "bravery-baldric-restoration": {
@@ -52132,8 +52127,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "bravery-baldric",
-     "name": "Bravery Baldric"
+     "id": "bravery-baldric-healthful",
+     "name": "Bravery Baldric (Healthful)"
     }
    },
    "bronze-bowl-with-wave-imagery": {
@@ -52215,8 +52210,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "cantrip-deck",
-     "name": "Cantrip Deck"
+     "id": "full-pack",
+     "name": "Full Pack"
     }
    },
    "carnelian": {
@@ -52370,8 +52365,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "cloak-of-illusions",
-     "name": "Cloak of Illusions"
+     "id": "cloak-of-illusions-greater",
+     "name": "Cloak of Illusions (Greater)"
     }
    },
    "cloak-of-elvenkind": {
@@ -52392,8 +52387,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "codebreakers-parchment",
-     "name": "Codebreaker's Parchment"
+     "id": "greater-codebreakers-parchment",
+     "name": "Greater Codebreaker's Parchment"
     }
    },
    "codebreakers-parchment-major": {
@@ -52403,8 +52398,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "codebreakers-parchment",
-     "name": "Codebreaker's Parchment"
+     "id": "major-codebreakers-parchment",
+     "name": "Major Codebreaker's Parchment"
     }
    },
    "codex-of-unimpeded-sight-greater": {
@@ -52414,8 +52409,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "codex-of-unimpeded-sight",
-     "name": "Codex of Unimpeded Sight"
+     "id": "greater-codex-of-unimpeded-sight",
+     "name": "Greater Codex Of Unimpeded Sight"
     }
    },
    "colorful-pastoral-tapestry": {
@@ -52550,8 +52545,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "dazzling-rosary",
-     "name": "Dazzling Rosary"
+     "id": "greater-dazzling-rosary",
+     "name": "Greater Dazzling Rosary"
     }
    },
    "defoliation-bomb-greater": {
@@ -52934,8 +52929,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "endless-grimoire",
-     "name": "Endless Grimoire"
+     "id": "greater-endless-grimoire",
+     "name": "Greater Endless Grimoire"
     }
    },
    "endless-grimoire-major": {
@@ -52945,8 +52940,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "endless-grimoire",
-     "name": "Endless Grimoire"
+     "id": "major-endless-grimoire",
+     "name": "Major Endless Grimoire"
     }
    },
    "endless-grimoire-true": {
@@ -52956,8 +52951,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "endless-grimoire",
-     "name": "Endless Grimoire"
+     "id": "true-endless-grimoire",
+     "name": "True Endless Grimoire"
     }
    },
    "endless-quiver-greater": {
@@ -53191,8 +53186,8 @@
     "how": "slug-noparen",
     "remasteredAs": {
      "bucket": "items",
-     "id": "marvelous-miniature",
-     "name": "Marvelous Miniature"
+     "id": "marvelous-miniature-chest",
+     "name": "Marvelous Miniature (Chest)"
     }
    },
    "feather-token-holly-bush-ammunition": {
@@ -53208,8 +53203,8 @@
     "how": "slug-noparen",
     "remasteredAs": {
      "bucket": "items",
-     "id": "marvelous-miniature",
-     "name": "Marvelous Miniature"
+     "id": "marvelous-miniature-ladder",
+     "name": "Marvelous Miniature (Ladder)"
     }
    },
    "feather-token-swan-boat-ammunition": {
@@ -53219,8 +53214,8 @@
     "how": "slug-noparen",
     "remasteredAs": {
      "bucket": "items",
-     "id": "marvelous-miniature",
-     "name": "Marvelous Miniature"
+     "id": "marvelous-miniature-boat",
+     "name": "Marvelous Miniature (Boat)"
     }
    },
    "feather-token-tree-ammunition": {
@@ -53272,8 +53267,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "firestarter-pellets",
-     "name": "Firestarter Pellets"
+     "id": "greater-firestarter-pellets",
+     "name": "Greater Firestarter Pellets"
     }
    },
    "firestarter-pellets-major": {
@@ -53283,8 +53278,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "firestarter-pellets",
-     "name": "Firestarter Pellets"
+     "id": "major-firestarter-pellets",
+     "name": "Major Firestarter Pellets"
     }
    },
    "fireworks-display": {
@@ -53300,8 +53295,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "five-feather-wreath",
-     "name": "Five-Feather Wreath"
+     "id": "greater-five-feather-wreath",
+     "name": "Greater Five-feather Wreath"
     }
    },
    "five-feather-wreath-major": {
@@ -53311,8 +53306,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "five-feather-wreath",
-     "name": "Five-Feather Wreath"
+     "id": "major-five-feather-wreath",
+     "name": "Major Five-feather Wreath"
     }
    },
    "flag-of-the-stronghold-major": {
@@ -53328,8 +53323,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "flaming-star",
-     "name": "Flaming Star"
+     "id": "greater-flaming-star",
+     "name": "Greater Flaming Star"
     }
    },
    "flaming-star-major": {
@@ -53339,8 +53334,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "flaming-star",
-     "name": "Flaming Star"
+     "id": "major-flaming-star",
+     "name": "Major Flaming Star"
     }
    },
    "flowing-water-greater": {
@@ -53569,8 +53564,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "grim-sandglass",
-     "name": "Grim Sandglass"
+     "id": "greater-grim-sandglass",
+     "name": "Greater Grim Sandglass"
     }
    },
    "grim-sandglass-major": {
@@ -53580,8 +53575,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "grim-sandglass",
-     "name": "Grim Sandglass"
+     "id": "major-grim-sandglass",
+     "name": "Major Grim Sandglass"
     }
    },
    "guiding-star-orb-heroic": {
@@ -53653,8 +53648,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "healers-gel",
-     "name": "Healer's Gel"
+     "id": "major-healers-gel",
+     "name": "Major Healer's Gel"
     }
    },
    "healers-gel-lesser": {
@@ -53675,8 +53670,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "healers-gel",
-     "name": "Healer's Gel"
+     "id": "greater-healers-gel",
+     "name": "Greater Healer's Gel"
     }
    },
    "heartmoss-greater": {
@@ -53760,8 +53755,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "impactful",
-     "name": "Impactful"
+     "id": "greater-impactful",
+     "name": "Greater Impactful"
     }
    },
    "incense-bundle-of-annual-blessings": {
@@ -53935,23 +53930,25 @@
    "judgment-thurible-greater": {
     "name": "Judgment Thurible (Greater)",
     "status": "doc",
-    "docId": "equipment-4766-4258",
-    "how": "importer:the doc this record was built from",
+    "docId": "equipment-4766-4257",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "equipment-4766-4258",
     "remasteredAs": {
      "bucket": "items",
-     "id": "judgement-thurible",
-     "name": "Judgement Thurible"
+     "id": "judgement-thurible-greater",
+     "name": "Judgement Thurible (Greater)"
     }
    },
    "judgment-thurible-major": {
     "name": "Judgment Thurible (Major)",
     "status": "doc",
-    "docId": "equipment-4766-4257",
-    "how": "importer:the doc this record was built from",
+    "docId": "equipment-4766-4258",
+    "how": "importer:the doc this record was built from -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "equipment-4766-4257",
     "remasteredAs": {
      "bucket": "items",
-     "id": "judgement-thurible",
-     "name": "Judgement Thurible"
+     "id": "judgement-thurible-major",
+     "name": "Judgement Thurible (Major)"
     }
    },
    "judgment-thurible": {
@@ -54411,8 +54408,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "noxious-incense",
-     "name": "Noxious Incense"
+     "id": "greater-noxious-incense",
+     "name": "Greater Noxious Incense"
     }
    },
    "oathbow": {
@@ -54481,8 +54478,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "ouroboros-flail",
-     "name": "Ouroboros Flail"
+     "id": "greater-ouroboros-flail",
+     "name": "Greater Ouroboros Flail"
     }
    },
    "ouroboros-flail-major": {
@@ -54492,8 +54489,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "ouroboros-flail",
-     "name": "Ouroboros Flail"
+     "id": "major-ouroboros-flail",
+     "name": "Major Ouroboros Flail"
     }
    },
    "parade-armor-with-flourishes": {
@@ -54533,8 +54530,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "perfect-droplet",
-     "name": "Perfect Droplet"
+     "id": "greater-perfect-droplet",
+     "name": "Greater Perfect Droplet"
     }
    },
    "perfect-droplet-major": {
@@ -54544,8 +54541,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "perfect-droplet",
-     "name": "Perfect Droplet"
+     "id": "major-perfect-droplet",
+     "name": "Major Perfect Droplet"
     }
    },
    "peridot": {
@@ -54591,8 +54588,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "pickled-demon-tongue",
-     "name": "Pickled Demon Tongue"
+     "id": "greater-pickled-demon-tongue",
+     "name": "Greater Pickled Demon Tongue"
     }
    },
    "pickled-demon-tongue-major": {
@@ -54602,8 +54599,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "pickled-demon-tongue",
-     "name": "Pickled Demon Tongue"
+     "id": "major-pickled-demon-tongue",
+     "name": "Major Pickled Demon Tongue"
     }
    },
    "piercing-wind": {
@@ -54689,8 +54686,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "polished-demon-horn",
-     "name": "Polished Demon Horn"
+     "id": "greater-polished-demon-horn",
+     "name": "Greater Polished Demon Horn"
     }
    },
    "polished-demon-horn-major": {
@@ -54700,8 +54697,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "polished-demon-horn",
-     "name": "Polished Demon Horn"
+     "id": "major-polished-demon-horn",
+     "name": "Major Polished Demon Horn"
     }
    },
    "porcelain-doll-with-amber-eyes": {
@@ -54928,8 +54925,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "potion-of-stable-form",
-     "name": "Potion of Stable Form"
+     "id": "greater-potion-of-stable-form",
+     "name": "Greater Potion Of Stable Form"
     }
    },
    "power-suit": {
@@ -55120,8 +55117,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "retrieval-prism",
-     "name": "Retrieval Prism"
+     "id": "greater-retrieval-prism",
+     "name": "Greater Retrieval Prism"
     }
    },
    "rhodochrosite": {
@@ -55690,8 +55687,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "silversoul-bomb",
-     "name": "Silversoul Bomb"
+     "id": "greater-silversoul-bomb",
+     "name": "Greater Silversoul Bomb"
     }
    },
    "silversoul-bomb-major": {
@@ -55701,8 +55698,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "silversoul-bomb",
-     "name": "Silversoul Bomb"
+     "id": "major-silversoul-bomb",
+     "name": "Major Silversoul Bomb"
     }
    },
    "simple-painting": {
@@ -55730,8 +55727,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "singing-shortbow",
-     "name": "Singing Shortbow"
+     "id": "greater-singing-shortbow",
+     "name": "Greater Singing Shortbow"
     }
    },
    "skitter-knot-greater": {
@@ -55836,8 +55833,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "sonic-tuning-mace",
-     "name": "Sonic Tuning Mace"
+     "id": "greater-sonic-tuning-mace",
+     "name": "Greater Sonic Tuning Mace"
     }
    },
    "soulcutter-heroic": {
@@ -56011,8 +56008,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "spirit-sealing-fulu",
-     "name": "Spirit-Sealing Fulu"
+     "id": "greater-spirit-sealing-fulu",
+     "name": "Greater Spirit-sealing Fulu"
     }
    },
    "splendid-lyre-of-world-famous-lyrist": {
@@ -56092,8 +56089,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "staff-of-natures-cunning",
-     "name": "Staff of Nature's Cunning"
+     "id": "greater-staff-of-natures-cunning",
+     "name": "Greater Staff Of Nature's Cunning"
     }
    },
    "staff-of-natures-cunning-major": {
@@ -56103,8 +56100,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "staff-of-natures-cunning",
-     "name": "Staff of Nature's Cunning"
+     "id": "major-staff-of-natures-cunning",
+     "name": "Major Staff Of Nature's Cunning"
     }
    },
    "staff-of-power": {
@@ -56125,8 +56122,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "staff-of-the-desert-winds",
-     "name": "Staff of the Desert Winds"
+     "id": "greater-staff-of-the-desert-winds",
+     "name": "Greater Staff Of The Desert Winds"
     }
    },
    "staff-of-the-desert-winds-major": {
@@ -56136,8 +56133,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "staff-of-the-desert-winds",
-     "name": "Staff of the Desert Winds"
+     "id": "major-staff-of-the-desert-winds",
+     "name": "Major Staff Of The Desert Winds"
     }
    },
    "staff-of-the-desert-winds-true": {
@@ -56147,8 +56144,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "staff-of-the-desert-winds",
-     "name": "Staff of the Desert Winds"
+     "id": "true-staff-of-the-desert-winds",
+     "name": "True Staff Of The Desert Winds"
     }
    },
    "staff-storing-shield-greater": {
@@ -56191,8 +56188,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "stalk-goggles",
-     "name": "Stalk Goggles"
+     "id": "greater-stalk-goggles",
+     "name": "Greater Stalk Goggles"
     }
    },
    "stalk-goggles-major": {
@@ -56202,8 +56199,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "stalk-goggles",
-     "name": "Stalk Goggles"
+     "id": "major-stalk-goggles",
+     "name": "Major Stalk Goggles"
     }
    },
    "stalwarts-banner-greater": {
@@ -56225,8 +56222,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "stampede-medallion",
-     "name": "Stampede Medallion"
+     "id": "greater-stampede-medallion",
+     "name": "Greater Stampede Medallion"
     }
    },
    "stampede-medallion-major": {
@@ -56236,8 +56233,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "stampede-medallion",
-     "name": "Stampede Medallion"
+     "id": "major-stampede-medallion",
+     "name": "Major Stampede Medallion"
     }
    },
    "standard-book-of-translation-tien": {
@@ -56478,8 +56475,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "thunderbird-tuft",
-     "name": "Thunderbird Tuft"
+     "id": "greater-thunderbird-tuft",
+     "name": "Greater Thunderbird Tuft"
     }
    },
    "thunderbird-tuft-lesser": {
@@ -56489,8 +56486,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "thunderbird-tuft",
-     "name": "Thunderbird Tuft"
+     "id": "lesser-thunderbird-tuft",
+     "name": "Lesser Thunderbird Tuft"
     }
    },
    "thunderbird-tuft-major": {
@@ -56500,8 +56497,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "thunderbird-tuft",
-     "name": "Thunderbird Tuft"
+     "id": "major-thunderbird-tuft",
+     "name": "Major Thunderbird Tuft"
     }
    },
    "thunderbird-tuft-moderate": {
@@ -56511,8 +56508,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "thunderbird-tuft",
-     "name": "Thunderbird Tuft"
+     "id": "moderate-thunderbird-tuft",
+     "name": "Moderate Thunderbird Tuft"
     }
    },
    "tigers-eye": {
@@ -56612,8 +56609,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "trinity-geode",
-     "name": "Trinity Geode"
+     "id": "greater-trinity-geode",
+     "name": "Greater Trinity Geode"
     }
    },
    "trinity-geode-major": {
@@ -56623,8 +56620,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "trinity-geode",
-     "name": "Trinity Geode"
+     "id": "major-trinity-geode",
+     "name": "Major Trinity Geode"
     }
    },
    "trudds-strength-greater": {
@@ -57389,8 +57386,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "warding-tattoo",
-     "name": "Warding Tattoo"
+     "id": "fiend-warding-tattoo",
+     "name": "Fiend Warding Tattoo"
     }
    },
    "warding-tattoo-trail": {
@@ -57400,8 +57397,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "warding-tattoo",
-     "name": "Warding Tattoo"
+     "id": "trail-warding-tattoo",
+     "name": "Trail Warding Tattoo"
     }
    },
    "warding-tattoo-wave": {
@@ -57411,8 +57408,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "warding-tattoo",
-     "name": "Warding Tattoo"
+     "id": "wave-warding-tattoo",
+     "name": "Wave Warding Tattoo"
     }
    },
    "wasul-reed-mask": {
@@ -57498,8 +57495,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "wyrm-spindle",
-     "name": "Wyrm Spindle"
+     "id": "wyrm-spindle-greater",
+     "name": "Wyrm Spindle (Greater)"
     }
    },
    "wyrm-claw-major": {
@@ -57509,8 +57506,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "wyrm-spindle",
-     "name": "Wyrm Spindle"
+     "id": "wyrm-spindle-major",
+     "name": "Wyrm Spindle (Major)"
     }
    },
    "wyrm-claw": {
@@ -57531,8 +57528,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "wyrms-wingspan",
-     "name": "Wyrm's Wingspan"
+     "id": "wyrms-wingspan-greater",
+     "name": "Wyrm's Wingspan (Greater)"
     }
    },
    "wyrm-on-the-wing-major": {
@@ -57542,8 +57539,8 @@
     "how": "importer:the doc this record was built from",
     "remasteredAs": {
      "bucket": "items",
-     "id": "wyrms-wingspan",
-     "name": "Wyrm's Wingspan"
+     "id": "wyrms-wingspan-major",
+     "name": "Wyrm's Wingspan (Major)"
     }
    },
    "wyrm-on-the-wing": {
@@ -63675,8 +63672,9 @@
    "greater-weapon-specialization-barbarian": {
     "name": "Greater Weapon Specialization (Barbarian)",
     "status": "doc",
-    "docId": "class-feature-438",
-    "how": "slug-noparen"
+    "docId": "class-feature-862",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-438"
    },
    "greed": {
     "name": "Greed",
@@ -64195,8 +64193,9 @@
    "medium-armor-expertise-inventor": {
     "name": "Medium Armor Expertise (Inventor)",
     "status": "doc",
-    "docId": "class-feature-436",
-    "how": "slug-noparen"
+    "docId": "class-feature-497",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-436"
    },
    "medium": {
     "name": "Medium",
@@ -65612,8 +65611,9 @@
    "weapon-expertise-swashbuckler": {
     "name": "Weapon Expertise (Swashbuckler)",
     "status": "doc",
-    "docId": "class-feature-430",
-    "how": "slug-noparen"
+    "docId": "class-feature-1019",
+    "how": "slug-noparen -> owner ruling (aonId row in effect-backfill.json)",
+    "joinDocId": "class-feature-430"
    },
    "weapon-innovation": {
     "name": "Weapon Innovation",
@@ -134628,19 +134628,19 @@
    "sages-lash": {
     "name": "Sage's Lash",
     "status": "doc",
-    "docId": "equipment-1072-bonus-322",
+    "docId": "equipment-5117-bonus-1687",
     "how": "importer:the doc this record was built from"
    },
    "titans-grasp": {
     "name": "Titan's Grasp",
     "status": "doc",
-    "docId": "equipment-1082-bonus-328",
+    "docId": "equipment-5118-bonus-1688",
     "how": "importer:the doc this record was built from"
    },
    "endless-grimoire": {
     "name": "Endless Grimoire",
     "status": "doc",
-    "docId": "equipment-992-945-bonus-453",
+    "docId": "equipment-5127-4603-bonus-1696",
     "how": "importer:the doc this record was built from"
    },
    "greater-endless-grimoire": {
@@ -134664,19 +134664,19 @@
    "keymaking-tools": {
     "name": "Keymaking Tools",
     "status": "doc",
-    "docId": "equipment-1065-bonus-315",
+    "docId": "equipment-5145-bonus-1689",
     "how": "importer:the doc this record was built from"
    },
    "thousand-blade-thesis": {
     "name": "Thousand-Blade Thesis",
     "status": "doc",
-    "docId": "equipment-1081-bonus-327",
+    "docId": "equipment-5146-bonus-1690",
     "how": "importer:the doc this record was built from"
    },
    "five-feather-wreath": {
-    "name": "Five-Feather Wreath",
+    "name": "Five-feather Wreath",
     "status": "doc",
-    "docId": "equipment-1013-970-bonus-309",
+    "docId": "equipment-5152-4631-bonus-1700",
     "how": "importer:the doc this record was built from"
    },
    "greater-five-feather-wreath": {
@@ -134712,19 +134712,19 @@
    "glasses-of-sociability": {
     "name": "Glasses of Sociability",
     "status": "doc",
-    "docId": "equipment-1057-bonus-313",
+    "docId": "equipment-5185-bonus-1691",
     "how": "importer:the doc this record was built from"
    },
    "hat-of-many-minds": {
     "name": "Hat of Many Minds",
     "status": "doc",
-    "docId": "equipment-1060-bonus-457",
+    "docId": "equipment-5186-bonus-1692",
     "how": "importer:the doc this record was built from"
    },
    "stampede-medallion": {
     "name": "Stampede Medallion",
     "status": "doc",
-    "docId": "equipment-1080-1024-bonus-324",
+    "docId": "equipment-5189-4691-bonus-1706",
     "how": "importer:the doc this record was built from"
    },
    "greater-stampede-medallion": {
@@ -134791,43 +134791,78 @@
     "name": "Endless Grimoire (Greater)",
     "status": "doc",
     "docId": "equipment-992-946-bonus-454",
-    "how": "idmap"
+    "how": "idmap",
+    "remasteredAs": {
+     "bucket": "itemBonus",
+     "id": "greater-endless-grimoire",
+     "name": "Greater Endless Grimoire"
+    }
    },
    "endless-grimoire-major": {
     "name": "Endless Grimoire (Major)",
     "status": "doc",
     "docId": "equipment-992-947-bonus-455",
-    "how": "idmap"
+    "how": "idmap",
+    "remasteredAs": {
+     "bucket": "itemBonus",
+     "id": "major-endless-grimoire",
+     "name": "Major Endless Grimoire"
+    }
    },
    "endless-grimoire-true": {
     "name": "Endless Grimoire (True)",
     "status": "doc",
     "docId": "equipment-992-948-bonus-456",
-    "how": "idmap"
+    "how": "idmap",
+    "remasteredAs": {
+     "bucket": "itemBonus",
+     "id": "true-endless-grimoire",
+     "name": "True Endless Grimoire"
+    }
    },
    "five-feather-wreath-greater": {
     "name": "Five-Feather Wreath (Greater)",
     "status": "doc",
     "docId": "equipment-1013-971-bonus-310",
-    "how": "idmap"
+    "how": "idmap",
+    "remasteredAs": {
+     "bucket": "itemBonus",
+     "id": "greater-five-feather-wreath",
+     "name": "Greater Five-feather Wreath"
+    }
    },
    "five-feather-wreath-major": {
     "name": "Five-Feather Wreath (Major)",
     "status": "doc",
     "docId": "equipment-1013-972-bonus-311",
-    "how": "idmap"
+    "how": "idmap",
+    "remasteredAs": {
+     "bucket": "itemBonus",
+     "id": "major-five-feather-wreath",
+     "name": "Major Five-feather Wreath"
+    }
    },
    "stampede-medallion-greater": {
     "name": "Stampede Medallion (Greater)",
     "status": "doc",
     "docId": "equipment-1080-1025-bonus-325",
-    "how": "idmap"
+    "how": "idmap",
+    "remasteredAs": {
+     "bucket": "itemBonus",
+     "id": "greater-stampede-medallion",
+     "name": "Greater Stampede Medallion"
+    }
    },
    "stampede-medallion-major": {
     "name": "Stampede Medallion (Major)",
     "status": "doc",
     "docId": "equipment-1080-1026-bonus-326",
-    "how": "idmap"
+    "how": "idmap",
+    "remasteredAs": {
+     "bucket": "itemBonus",
+     "id": "major-stampede-medallion",
+     "name": "Major Stampede Medallion"
+    }
    }
   },
   "kingdomEvent": {
@@ -150865,7 +150900,7 @@
    "combining-your-abilities": {
     "name": "Combining your Abilities",
     "status": "doc",
-    "docId": "sidebar-1572",
+    "docId": "sidebar-3749",
     "how": "importer:the doc this record was built from"
    },
    "spellstrike-options": {
@@ -150877,7 +150912,7 @@
    "embodiments-of-sin": {
     "name": "Embodiments of Sin",
     "status": "doc",
-    "docId": "sidebar-1576",
+    "docId": "sidebar-3755",
     "how": "importer:the doc this record was built from"
    },
    "riding-sapient-creatures": {
@@ -151193,9 +151228,9 @@
     "how": "importer:the doc this record was built from"
    },
    "gear-and-your-eidolon": {
-    "name": "Gear and your Eidolon",
+    "name": "Gear and Your Eidolon",
     "status": "doc",
-    "docId": "sidebar-1688",
+    "docId": "sidebar-3747",
     "how": "importer:the doc this record was built from"
    },
    "what-counts-as-megafauna": {
@@ -158264,8 +158299,13 @@
    "metamagic": {
     "name": "Metamagic",
     "status": "doc",
-    "docId": "sidebar-38",
-    "how": "slug-any"
+    "docId": "trait-107",
+    "how": "manual:the trait page, not the sidebar of the same title",
+    "remasteredAs": {
+     "bucket": "trait",
+     "id": "spellshape",
+     "name": "Spellshape"
+    }
    },
    "tiny": {
     "name": "Tiny",

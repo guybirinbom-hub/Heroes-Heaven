@@ -529,7 +529,8 @@ describe('trust ledger — a created record that applies only part of its print 
     // batch 038: azlanti-researcher#language
     expect(backgroundUnapplied({ ...azlanti, trainedLore: 'azlant', grantsLanguages: ['azlanti'] }, PRINT)).toBe('');
     // batch 038: azlanti-researcher#language
-    expect(ledger.partly).toEqual({
+    // Created BACKGROUNDS only: reprint-twin items join `partly` too (2026-09-25, the describe below).
+    expect(Object.fromEntries(Object.entries(ledger.partly).filter(([k]) => k.startsWith('backgrounds/')))).toEqual({
       'backgrounds/art-collector': 'its daily-preparation choice, its situational bonuses',
       ...(azlantiMissing ? { 'backgrounds/azlanti-researcher': azlantiMissing } : {}),
       'backgrounds/blooded-by-the-dead': 'its daily-preparation choice',
@@ -544,5 +545,31 @@ describe('trust ledger — a created record that applies only part of its print 
     for (const k of full) expect(ledger.unencoded, k).not.toContain(k);
     // No key is on both lists.
     expect(Object.keys(ledger.partly).filter((k) => ledger.unencoded.includes(k))).toEqual([]);
+  });
+});
+
+/*
+ * 2026-09-25: "Hide legacy data" offers 56 reprints in their legacy half's place, and each arrived as its
+ * page's text alone with no marker — Greater Singing Shortbow an Equipment card with no Strike, beside Keep
+ * Pace's "Not yet verified". A same-level reprint twin lacking a rule field its legacy printing carries
+ * (scripts/lib/reprint-twin-gaps.mjs) is `unencoded` when nothing it carries applies past a uses tracker
+ * once the gate has run, `partly` (in words) when some of it applies and the price agrees too.
+ */
+describe('trust ledger — a reprint twin that does less than its legacy printing says so', () => {
+  it('the hollow twins are unencoded, in both modes', () => {
+    for (const id of ['greater-singing-shortbow', 'greater-healers-gel', 'major-grim-sandglass', 'greater-pickled-demon-tongue', 'guiding-starknife']) {
+      expect(ledger.unencoded, id).toContain(`items/${id}`);
+      expect(batched.unencoded, id).toContain(`items/${id}`);
+    }
+  });
+
+  it('a same-price twin that applies part of its rules is partly, naming what it lacks', () => {
+    expect(ledger.partly['items/judgement-thurible']).toBe('how it is worn or held, its choices');
+    expect(ledger.partly['items/dwarven-waraxe']).toBe('how it is worn or held');
+  });
+
+  it('a repriced twin with rules of its own is left alone — its legacy printing is no evidence (Arboreal Boots prints no activation)', () => {
+    expect(ledger.partly['items/arboreal-boots']).toBeUndefined();
+    expect(ledger.unencoded).not.toContain('items/arboreal-boots');
   });
 });

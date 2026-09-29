@@ -18,6 +18,7 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { CURRENT as CURRENT_EDITIONS, HIDDEN as HIDDEN_EDITIONS } from './lib/edition.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const MIRROR = 'C:/wonderers guide/aon-2e-archive/data/by-category/class';
@@ -260,6 +261,35 @@ console.log(`class-table rows the Builder would print as a raw slug: ${unreadabl
 for (const u of unreadable) console.log(`   ${u}`);
 
 /*
+ * …AND A REMASTERED CLASS TABLE OPENS CURRENT PRINTINGS (gold-set R12, reprint lane 2026-09-25).
+ *
+ * The reverse of the table diff above. A class whose own record is a current printing can still list a
+ * row whose classFeatures record is legacy — its popup then shows the old page: the barbarian's level-15
+ * row opened the MAGUS's Secrets of Magic page until its aonId was pinned to class-feature-862. The
+ * reprint rule cannot reach these (scripts/lib/reprint.mjs refuses a class-hop RENAME: "a rename is a
+ * class-TABLE change, not a record repoint"), so this is the net under that refusal: every such row is
+ * either fixed or listed below with the reason it waits.
+ */
+const LEGACY_ROW_ALLOW = {
+  'bard|occult-spellcasting': 'class-table lane: Player Core prints Bard Spellcasting (class-feature-623); the row is swapped when that lane creates the record. Nothing in src depends on the id.',
+  'champion|deific-weapon': 'class-table lane: Player Core prints Deific Weapon as a section of Deity (`deity-champion`, which the same table lists); the id stays (test/reach-fixes.test.ts pins the row), only which printing it shows is the lane\'s call.',
+  'alchemist|formula-book': 'class-table lane: Player Core prints the formula book as a section of Alchemy (`alchemy`, which the same table lists); the id stays — formulaBook.ts and saved formula picks key on it.',
+};
+const legacyRows = [];
+for (const [classId, cls] of Object.entries(db.classes ?? {})) {
+  if (!CURRENT_EDITIONS.has(cls.edition)) continue;
+  for (const row of cls.features ?? []) {
+    const rec = db.classFeatures?.[row.featureId];
+    if (!rec || !HIDDEN_EDITIONS.has(rec.edition)) continue;
+    legacyRows.push({ key: `${classId}|${row.featureId}`, line: `${classId} L${row.level} ${row.featureId} — ${rec.edition}, ${rec.aonId ?? 'no aonId'}` });
+  }
+}
+const legacyUnexplained = legacyRows.filter((r) => !LEGACY_ROW_ALLOW[r.key]);
+const allowStale = Object.keys(LEGACY_ROW_ALLOW).filter((k) => !legacyRows.some((r) => r.key === k));
+console.log(`remastered class tables naming a legacy record: ${legacyRows.length} (${legacyRows.length - legacyUnexplained.length} waiting on the class-table lane)`);
+for (const r of legacyRows) console.log(`   ${r.line}${LEGACY_ROW_ALLOW[r.key] ? `  [${LEGACY_ROW_ALLOW[r.key].split(':')[0]}]` : ''}`);
+
+/*
  * …AND THE CLASS-DETAILS POPUP MUST NAME THE SAME FEATURES AS THE TABLE IT SITS BESIDE.
  *
  * The class picker feeds `c.description` into a popup (src/builder/shared.tsx), and that prose carries
@@ -321,6 +351,15 @@ if (outIdx > -1 && process.argv[outIdx + 1]) {
  * name the app has always used). Anything left is a class table the Archives print and the app does
  * not build — a level the player reaches and gains nothing at.
  */
+if (legacyUnexplained.length || allowStale.length) {
+  console.error('\nclass-table-diff: FAIL — a remastered class table opens a legacy printing.');
+  for (const r of legacyUnexplained) console.error(`   ${r.line}`);
+  for (const k of allowStale) console.error(`   LEGACY_ROW_ALLOW names ${k}, which is no longer a legacy row — drop the entry`);
+  console.error('   Repair: point the record at its own class\'s current page (an aonId row through');
+  console.error('   scripts/apply-parity-fixes.mjs), or give the row its own record — or say why it waits in LEGACY_ROW_ALLOW.');
+  process.exit(1);
+}
+
 if (unreadable.length) {
   console.error('\nclass-table-diff: FAIL — a class table names a record the Builder filters out.');
   console.error('   `applyEditionFilter` drops edition "superseded" unconditionally, so the row renders as its id');

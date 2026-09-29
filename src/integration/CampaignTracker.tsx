@@ -5,6 +5,7 @@ import { loadRoster, type SavedChar } from '../data/storage';
 import { GmEditSheet, type GmEditHandle } from '../sheet/GmEditSheet';
 import { DescriptionModal } from '../sheet/DescriptionModal';
 import { DescBody } from '../sheet/DescBody';
+import { RemasteredLine, remasteredAsOf } from '../sheet/RemasteredLine';
 import { AstRenderer } from '../sheet/AstRenderer';
 import { astSlug, useAstNode } from '../sheet/useAst';
 import { bucketOf } from '../sheet/astStore';
@@ -112,10 +113,12 @@ function HostPage({ content, bucket, id, onOpen }: {
 }) {
   const rec = (content as unknown as Record<string, Record<string, { description?: string; descRefs?: DescRef[] }> | undefined>)[bucket]?.[id];
   const { node, loading } = useAstNode(bucket, id);
+  // desk #158: a pinned old printing says what it was remastered as; the name opens the reprint in HH's popup.
+  const ra = remasteredAsOf(content, { bucket, id });
   if (!rec) return <p className="sd-ours">This page is not in this version of Heroes Heaven.</p>;
-  if (node) return <AstRenderer node={node} bodyOnly selfRef={`${bucket}:${id}`} onOpenRef={onOpen} />;
+  if (node) return <AstRenderer node={node} bodyOnly selfRef={`${bucket}:${id}`} onOpenRef={onOpen} footer={ra ? <RemasteredLine ra={ra} onOpen={onOpen} /> : null} />;
   if (loading) return <div className="ast-body ast-loading" aria-busy="true" />;
-  return <DescBody description={rec.description} descRefs={rec.descRefs} />;
+  return <DescBody description={rec.description} descRefs={rec.descRefs} remasteredAs={ra} />;
 }
 
 /** True when this PC already has a row in the initiative order. Matched through the store's OWN

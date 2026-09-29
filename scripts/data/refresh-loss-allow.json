@@ -2122,5 +2122,131 @@
   "field": "requires.text",
   "aon": "action-4261",
   "why": "batch 039 arcane-cascade#requirement / magus#arcane-cascade-stance-requires: action-4261 prints no Requirements entry, so the authored hard gate is removed and the same-turn clause lives in the stance note."
+ },
+ {
+  "key": "items/cantrip-deck-5-pack",
+  "field": "traits",
+  "aon": "equipment-5140-4612",
+  "why": "reprint lane 2026-09-25 (gold-set R12, rule A): the record moved to its Impossible Magic reprint, which the Secrets of Magic grade names itself (remaster_name \"Cantrip Deck (5-pack)\"). The reprint prints traits [\"Magical\"] — the Evocation school trait is gone from print (desk #159)."
+ },
+ {
+  "key": "items/cantrip-deck-5-pack",
+  "field": "remasteredAs.bucket",
+  "aon": "equipment-5140-4612",
+  "why": "reprint lane 2026-09-25: the record IS its reprint now (rule A names the exact grade, whose slug is this record's own), so there is no other record to be \"Remastered as\"."
+ },
+ {
+  "key": "items/cantrip-deck-5-pack",
+  "field": "remasteredAs.id",
+  "aon": "equipment-5140-4612",
+  "why": "reprint lane 2026-09-25: the record IS its reprint now (rule A names the exact grade, whose slug is this record's own), so there is no other record to be \"Remastered as\"."
+ },
+ {
+  "key": "items/cantrip-deck-5-pack",
+  "field": "remasteredAs.name",
+  "aon": "equipment-5140-4612",
+  "why": "reprint lane 2026-09-25: the record IS its reprint now (rule A names the exact grade, whose slug is this record's own), so there is no other record to be \"Remastered as\"."
+ },
+ {
+  "key": "itemBonus/five-feather-wreath",
+  "field": "traits",
+  "aon": "equipment-5152-4631",
+  "why": "reprint lane 2026-09-25 (rule A: the Secrets of Magic line names its reprint \"Five-feather Wreath\"; the line is the item-bonus sub-document of this grade): the Impossible Magic line prints traits Air, Magical, Spellheart — the Transmutation school trait is gone from print (desk #159). Same +1 Acrobatics at level 4, 90 gp."
+ },
+ {
+  "key": "itemBonus/five-feather-wreath",
+  "field": "name",
+  "aon": "equipment-5152-4631",
+  "why": "reprint lane 2026-09-25: the Impossible Magic line (the item-bonus sub-document of this grade) is titled \"Five-feather Wreath\" (lower-case f); the record takes its reprint whole (gold-set R12)."
+ },
+ {
+  "key": "itemBonus/sages-lash",
+  "field": "traits",
+  "aon": "equipment-5117",
+  "why": "reprint lane 2026-09-25 (desk #165, one bonus line of this title on each linked page,equipment-1072 -> equipment-5117): the Impossible Magic line drops the Necromancy school trait (desk #159); bonus, skill, level and price unchanged."
+ },
+ {
+  "key": "itemBonus/titans-grasp",
+  "field": "traits",
+  "aon": "equipment-5118",
+  "why": "reprint lane 2026-09-25 (desk #165, one bonus line of this title on each linked page,equipment-1082 -> equipment-5118): the Impossible Magic line drops the Evocation school trait (desk #159); still +3 Athletics at 18th level for 24,000 gp."
+ },
+ {
+  "key": "itemBonus/endless-grimoire",
+  "field": "traits",
+  "aon": "equipment-5127-4603",
+  "why": "reprint lane 2026-09-25 (desk #165, one bonus line of this title on each linked page,equipment-992 -> equipment-5127, after the three named grades): the Impossible Magic line drops the Divination school trait (desk #159)."
+ },
+ {
+  "key": "itemBonus/keymaking-tools",
+  "field": "traits",
+  "aon": "equipment-5145",
+  "why": "reprint lane 2026-09-25 (desk #165, one bonus line of this title on each linked page,equipment-1065 -> equipment-5145): the Impossible Magic line drops the Conjuration school trait (desk #159)."
+ },
+ {
+  "key": "itemBonus/thousand-blade-thesis",
+  "field": "rarity",
+  "aon": "equipment-5146",
+  "why": "reprint lane 2026-09-25 (desk #165, one bonus line of this title on each linked page,equipment-1081 -> equipment-5146): the Impossible Magic line is common (equipment-1081-bonus-327 was uncommon); the record takes its reprint whole (gold-set R12)."
+ },
+ {
+  "key": "itemBonus/glasses-of-sociability",
+  "field": "traits",
+  "aon": "equipment-5185",
+  "why": "reprint lane 2026-09-25 (desk #165, one bonus line of this title on each linked page,equipment-1057 -> equipment-5185): the Impossible Magic line drops the Divination school trait (desk #159)."
+ },
+ {
+  "key": "itemBonus/hat-of-many-minds",
+  "field": "traits",
+  "aon": "equipment-5186",
+  "why": "reprint lane 2026-09-25 (desk #165, one bonus line of this title on each linked page,equipment-1060 -> equipment-5186): the Impossible Magic line drops the Conjuration school trait (desk #159) and gains Invested."
+ },
+ {
+  "key": "itemBonus/stampede-medallion",
+  "field": "traits",
+  "aon": "equipment-5189-4691",
+  "why": "reprint lane 2026-09-25 (desk #165, one bonus line of this title on each linked page,equipment-1080 -> equipment-5189, after the two named grades): the Impossible Magic line drops the Evocation school trait (desk #159)."
+ },
+ {
+  "key": "sidebar/gear-and-your-eidolon",
+  "field": "name",
+  "aon": "sidebar-3747",
+  "why": "reprint lane 2026-09-25 (desk #165, one sidebar of this title on each linked page, rules-1586 -> rules-3687): the Impossible Magic sidebar is titled \"Gear and Your Eidolon\"; the record takes its reprint whole (gold-set R12)."
+ },
+ {
+  "key": "items/judgement-thurible",
+  "field": "price.gp",
+  "aon": "equipment-2232-1950",
+  "why": "reprint lane 2026-09-25: a repair, not an Archives change. equipment-2232-1950 prints the base spellheart at Item 10, 975 gp; the record carries the family page's id (equipment-2232, no price) and shipped unpriced, so the shop sold it for nothing. Price row in effect-backfill.json (work/.xk-refute-fixes-2.json), found by scripts/reprint-check.mjs CHECK 5."
+ },
+ {
+  "key": "items/cantrip-deck-5-pack",
+  "field": "description",
+  "aon": "equipment-5140-4612",
+  "why": "reprint lane 2026-09-25: the record moved to its Impossible Magic reprint (rule A) and its plain description now follows: the Secrets of Magic sentences (equipment-1046-1000: \"In an effort to spread the knowledge of magic…\", \"color-coded based on its school\", envision, Interact) became the Impossible Magic page's, which is shorter. Description row in effect-backfill.json (work/.xk-refute-fixes-3.json), guarded by scripts/reprint-check.mjs CHECK 8."
+ },
+ {
+  "key": "classFeatures/greater-weapon-specialization-barbarian",
+  "field": "description",
+  "aon": "class-feature-862",
+  "why": "reprint lane 2026-09-25: the record is pinned to its Player Core 2 page, which does not print the Core Rulebook's closing line \"See specific instincts for more information.\" (class-feature-49); the plain description follows its own page. Description row in effect-backfill.json (work/.xk-refute-fixes-3.json), guarded by scripts/reprint-check.mjs CHECK 8."
+ },
+ {
+  "key": "items/trackless",
+  "field": "description",
+  "aon": "equipment-2304-2149",
+  "why": "reprint lane 2026-09-25 (desk #167): a repair, not an Archives change. Rule C paired the grade with the block it reprints (equipment-4836-4451), and CHECK 8 found the prose still that printing's: \"a +4 item bonus to the DC to track you. However, this bonus doesn't stack with the status bonus from Vanishing Tracks\" is Treasure Vault (Remastered)'s shorter \"you are continuously affected by the vanishing tracks spell\" now. Description row in effect-backfill.json (work/.xk-round6-rows.json), guarded by scripts/reprint-check.mjs CHECK 8."
+ },
+ {
+  "key": "items/trackless-greater",
+  "field": "description",
+  "aon": "equipment-2304-2150",
+  "why": "reprint lane 2026-09-25 (desk #167): the same first paragraph as items/trackless, now equipment-2304's, shorter than the older printing's (equipment-4836-4452) +4-to-the-DC sentences; the activation paragraph is unchanged. Description row in effect-backfill.json (work/.xk-round6-rows.json), guarded by scripts/reprint-check.mjs CHECK 8."
+ },
+ {
+  "key": "items/guise-of-the-smirking-devil",
+  "field": "description",
+  "aon": "equipment-3434-3304",
+  "why": "reprint lane 2026-09-25 (desk #167): the record read Mask of the Banshee's text (equipment-738-721) with its numbers deleted (\"deals damage to each living creature in a ( save)\") and a Craft Requirements line Player Core 2 does not print; it now reads equipment-3434's own paragraph and activation (6d10 void, 20-foot emanation, DC 25 basic Fortitude), which is shorter. Description row in effect-backfill.json (work/.xk-round6-rows.json), guarded by scripts/reprint-check.mjs CHECK 8."
  }
 ]

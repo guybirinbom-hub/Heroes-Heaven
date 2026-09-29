@@ -46,7 +46,7 @@ import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
 import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, loreKey, signaturesAt, type BuildState } from '../rules/build';
 import { maxTakes } from '../rules/featGrants';
-import { CORE_BOOKS, sourceCatalog } from '../rules/sources';
+import { CORE_BOOKS, sourceCatalog, storedSources } from '../rules/sources';
 import { applyPlayState } from '../rules/play';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
 import { sanitize } from '../sheet/sanitizeHtml';
@@ -979,17 +979,24 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
         bookIdx.set(norm(b), b);
         bookIdx.set(norm(b.replace(/^Pathfinder /, '')), b);
       }
+      // A printing folded into its own book (desk #166) still names that book from WG's side: "Guns & Gears
+      // (Remastered)" is the Guns & Gears row, "Dark Archive" the Dark Archive (Remastered) one — not no row.
+      // An exact name wins; this only answers a WG name that differs from one of our books by "(Remastered)".
+      const printing = (s: string) => s.replace(/\s*\((?:remastered|remaster)\)/gi, '');
+      for (const b of allBooks) {
+        for (const k of [norm(printing(b)), norm(printing(b.replace(/^Pathfinder /, '')))]) if (!bookIdx.has(k)) bookIdx.set(k, b);
+      }
       const matched = new Set<string>();
       for (const row of wgSourceRows) {
         if (typeof row?.id !== 'number' || !wgEnabled.includes(row.id)) continue;
         const nm = typeof row?.name === 'string' ? row.name : '';
         if (!nm) continue;
-        const hit = bookIdx.get(norm(nm)) ?? bookIdx.get(norm(`Pathfinder ${nm}`));
+        const hit = bookIdx.get(norm(nm)) ?? bookIdx.get(norm(`Pathfinder ${nm}`)) ?? bookIdx.get(norm(printing(nm)));
         if (hit) matched.add(hit);
       }
       const extra = [...matched].filter((b) => !CORE_BOOKS.includes(b));
       if (extra.length) {
-        build.enabledSources = [...CORE_BOOKS, ...extra];
+        build.enabledSources = storedSources([...CORE_BOOKS, ...extra]); // WG's own toggles: Monster Core 2 on never switches Bestiary 3 on
         resolved.push(`${extra.length} non-Core source book${extra.length === 1 ? '' : 's'} enabled to match the Wanderer’s Guide character.`);
       }
     }

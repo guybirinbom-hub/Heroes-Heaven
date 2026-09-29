@@ -701,6 +701,96 @@ legacy" hides it, never an always-hide) and give it a **"Remastered as …"** li
 The pipeline stamps it (build-map + stamp-aonid) and `scripts/reprint-check.mjs` in `npm run verify`
 guards both halves and the label.
 
+**Refined 2026-09-25 — a sub-page follows its PAGE's link (desk #165).** The Archives link a reprinted
+item's bonus lines, a reprinted page's sidebars and an item's grades mostly at page level (a bonus line
+says `remaster_id: ["equipment-5117"]`, the reprint's page). One case needs no ruling and is built: where
+the old document names its reprint itself (`remaster_name` / `legacy_name`) the join takes the document of
+that title on the linked page — item grades link to the exact grade and seven grade bonus lines became
+#158 twins. For everything else he was asked whether **bonus lines and sidebars** should also pair with the
+reprint page's line of the same title, only when exactly one line on each page has that title, and
+otherwise be refused; his words, *"what do you suggest?"* — the recommended yes, accepted. Forward in time
+only, never over a stated link, the record's key must be the old title. It moved eight bonus lines (Sage's
+Lash, Titan's Grasp, Endless Grimoire, Keymaking Tools, Thousand-Blade Thesis, Glasses of Sociability, Hat of
+Many Minds, Stampede Medallion — same bonus, skill, level and price; the legacy school trait drops) and three
+sidebars (Combining Your Abilities, Gear and Your Eidolon, Embodiments of Sin) to *Impossible Magic*; Fulu
+Compendium, Archivist's Gaze, Mask of Allure and Mercurial Mantle stay (several lines share the title). Every
+cross-kind link no rule resolves (renamed or folded sidebars, class-feature renames, a bonus line that became
+several) stays unlinked and `scripts/reprint-check.mjs` prints it with its reason; a new one with no reason
+fails. A grade's link must also open a record with its own level and price (CHECK 5) — the Archives
+transpose the titles of two legacy Judgment Thurible blocks, so each record is pinned to the block whose
+numbers it carries. Where the reprint a link names is one the app hides as a duplicate of its modelled
+legacy half (56 grades: 48 in *Impossible Magic* — Healer's Gel, Endless Grimoire … — 6 in the *Gatewalkers*
+hardcover and 2 in the *Season of Ghosts* compilation, each over its Adventure Path volume's copy), the reprint is offered whenever
+"Hide legacy data" or the book filter takes the legacy half away, and the GM's search always lists it
+(`findHiddenTwins`, src/data/index.ts). That does not cover every link: under "Hide legacy data", 10 legacy
+items link to a record the shop never offers. Nine link to a family page whose grades ship as their own
+records (Universal Solvent → Absolute Solvent ×5, Awakened … Shot → Awakened Metal Shot ×3, and Lantern
+Implement → Lantern, a wrong link that is parked). One is a real loss to the player: Healer's Gel (Lesser)
+links to `items/healers-gel`, the level-5 *Impossible Magic* Healer's Gel, which the app holds only as an
+unpriced family summary (hidden by `findUmbrellaIds`), so that grade is offered nowhere; it is queued as
+separate work. The ten sit in `scripts/data/never-offered-links-baseline.json` (reprint-check CHECK 9), where a
+new one fails. "Whole" includes the plain description (the search text and the popup's fallback), which a move does
+not re-read: a record on a reprint may not read like the printing it replaced (reprint-check CHECK 8). The two
+the lane moved (Cantrip Deck (5-pack), the barbarian's Greater Weapon Specialization) carry their new page's
+text; 243 older records that already read that way sit in a baseline that only shrinks.
+
+**2026-09-25 — a book alias never folds two books together (desk #166).** `scripts/data/book-names.json`
+turns the Archives' book title into `source.book`, the key the source filter runs on, and it had folded
+some books into another: Bestiary 3 into Monster Core 2, the Hellbreakers / Hell's Destiny volumes into
+their Adventure Path, the Gatewalkers Player's Guide (Remastered) into Dark Archive (Remastered). His
+answer: *"Middle way"* — a "(Remastered)" printing still folds into its own book (same book, newer
+printing); different books are never folded together. Every alias that still changes a title carries its
+same-book reason in `scripts/data/book-names-reasons.json` (reprint-check CHECK 4), and every record's book
+must be one its own document is printed in (CHECK 6 — the tactics of *#223*, a *#222* feat and four *Dark
+Archive (Remastered)* backgrounds were folded without the table and are relabelled; older exceptions sit in a
+baseline that only shrinks). A saved Sources choice is never narrowed or overwritten: a selection stored
+before the split that had the old fold target on gets the real book on too, once, where the player never had
+that book's toggle apart from the old one; a book with a row of its own (the Gatewalkers Player's Guide
+(Remastered)) is left as they set it; and a selection made since — the first toggle from "Core only"
+included, which stores nothing before it — is never split, so switching Monster Core 2 on leaves Bestiary 3
+off (every writer stores through `storedSources`; `BOOK_SPLITS` / `enabledBookSet`, src/rules/sources.ts). A
+split moves only what the old book does not print (reprint-check CHECK 7). The Gatewalkers volumes are the same
+case as Hellbreakers: six Greater and Major grades (stalk goggles, pickled demon tongue, polished demon horn)
+moved from "Adventure Path: Gatewalkers" to *#187* and *#188* with the Archives refresh, inside the one
+Gatewalkers row, so a selection stored with that row on gets both volumes on (decided by the orchestrator under
+the same rule, no new owner words). `test/sources.test.ts` compares every Sources row with the v0.1.40 card
+read from git, so a book a relabel adds to a row fails until a split covers it; a new book in a row that card
+never had, none of whose records shipped then (the six Bastion of Blasphemies Player's Guide backgrounds),
+needs none. The same rule, applied to two more
+aliases: the Azarketi Ancestry Web Supplement reprints the azarketi chapter of Absalom, City of Lost Omens,
+and *Secrets of the Unlit Star* is the remastered Beginner Box — each the same book as its fold target, so
+both still fold (the azarketi ancestry and its two weapons under Absalom; every Beginner Box Game Master's
+Guide item, the Storm Hammer included, under *Secrets of the Unlit Star*), as before #166. A spelling that
+escaped its fold is folded the same way, by the table: two records spelt "Pathfinder Guns & Gears (Remastered)"
+(the Firework Technician Dedication and its vial — the Sources card showed them as a second Guns & Gears row),
+three legacy "Pathfinder Dark Archive" and one legacy "Pathfinder Gatewalkers Player's Guide" carry their book's
+one key. `book-names.json` folds the legacy titles "Dark Archive" and "Gatewalkers Player's Guide", and the
+importer runs every record's book through the table's printing folds, kept orphans and create rows included;
+reprint-check CHECK 4 fails a choosable record whose book differs from a fold target only by "(Remastered)".
+Where "never narrowed" and "never overwritten" conflict, decided by the orchestrator under the owner's standing
+rule "a player's change must NEVER be overwritten by the app", which outranks "never narrowed" when the two
+conflict: a fold carries the old spelling's records under the target key and nothing else. Guns & Gears, Dark
+Archive (Remastered) and Treasure Vault (Remastered) each had a Sources row of their own at v0.1.40, so the saved
+selection decides that row — on stays on, off stays off — the folded-in records follow it, and a character that
+holds one keeps it. Five same-book spellings the table folded before this lane moved records between two
+v0.1.40 rows the same way and are left the same way (Grand Bazaar 9 records, PFS Guide 4, Shadows at Sundown 3,
+Gatewalkers (Hardcover) 2, Dark Archives (Remastered) 1). Only the Gatewalkers guide, whose two spellings were
+one row, is switched on for an old selection (`BOOK_FOLDS`). The GM Search's page rows keep naming the page's own printing, which is what tells
+the GM which page a row opens.
+
+**2026-09-25 — a grade linked only to its family pairs by suffix (desk #167).** A legacy grade block often
+names only its renamed family: Cloak of Elvenkind (Greater) says "Cloak of Illusions" and the family page, so
+it read "Remastered as" the level-7 base cloak. Asked whether each grade should pair with the new family's
+grade of the same suffix — his example, Cloak of Elvenkind (Greater) → Cloak of Illusions (Greater) and Boots
+of Elvenkind (Greater) → Arboreal Boots (Greater) — his answer: *"yes"*. So where the link still names the
+family after the Archives' own grade statement (which wins), "(Greater)" pairs with "(Greater)", "(Major)"
+with "(Major)", "(Lesser)"/"(Moderate)" likewise, and the ungraded base with the ungraded base, when exactly
+one such grade exists on each side (rule C, scripts/lib/reprint.mjs). A suffix only — Impossible Magic spells
+its grades "Greater Healer's Gel" on a re-indexed ladder — and a pair whose level or price disagrees is
+refused and printed, unless he named the pair himself (Arboreal Boots (Greater) is Item 9, 700 gp, against
+the Greater Boots of Elvenkind's Item 11, 1,250 gp). Of 554 grade pairs over the whole corpus, two change a shipped record: the Greater Cloak and the
+Greater Boots of Elvenkind now link to their own grade.
+
 ### R13 · "either X or Y" / "your choice of X or Y" is ONE pick
 
 A feat or background printed *"you're trained in your choice of either the Crafting or Society skill"*

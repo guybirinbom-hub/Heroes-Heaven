@@ -87,8 +87,14 @@ describe('new carriers', () => {
   });
 
   it('the Gatewalkers siblings are filed under their real book', () => {
-    for (const id of ['wanderlust', 'lost-loved-one', 'dreams-of-vengeance', 'total-power', 'empty-whispers', 'reborn-soul']) {
+    for (const id of ['wanderlust', 'lost-loved-one', 'dreams-of-vengeance', 'total-power']) {
       expect(db.backgrounds[id].source.book, id).toMatch(/Gatewalkers/);
+    }
+    /* reprint lane 2026-09-25 (desk #166): background-587..590 print in Dark Archives (Remastered) only
+     * (live index: pg. 73, 92, 135, 176). Batch 022's own verifier said so ("genuinely read 'Dark Archives
+     * (Remastered)' and must be left alone"), but the rows filed all four under the Gatewalkers guide. */
+    for (const id of ['child-of-the-twin-village', 'empty-whispers', 'legacy-of-the-hammer', 'reborn-soul']) {
+      expect(db.backgrounds[id].source.book, id).toBe('Pathfinder Dark Archive (Remastered)');
     }
   });
 });

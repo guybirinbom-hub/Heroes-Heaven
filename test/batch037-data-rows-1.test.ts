@@ -197,7 +197,9 @@ describe('feats/firework-technician-dedication — the pyrotechnic vial and the 
     // feat-8528 (Guns & Gears (Remastered) pg. 134); AoN lists feat-3245 as its legacy_id.
     const f = feat('firework-technician-dedication');
     expect(f.aonId).toBe('feat-8528');
-    expect(f.source).toEqual({ book: 'Pathfinder Guns & Gears (Remastered)', license: 'ORC' });
+    // desk #166 (2026-09-25): the Remastered printing folds into its own book, the key every other Guns &
+    // Gears record carries — the spelt-out printing drew a second Guns & Gears row on the Sources card.
+    expect(f.source).toEqual({ book: 'Pathfinder Guns & Gears', license: 'ORC' });
   });
 
   // batch 037: firework-technician-dedication#pyrotechnic-vial
