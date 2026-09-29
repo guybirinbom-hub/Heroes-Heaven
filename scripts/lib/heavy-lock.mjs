@@ -21,14 +21,30 @@
  * would deadlock against itself: same tree, different pid.
  */
 import { readFileSync, writeFileSync, unlinkSync, existsSync, mkdirSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
+/* ONE LOCK PER MACHINE, whichever checkout asks: the MAIN checkout's work/.heavy.lock, found as the parent
+ * of the .git dir every checkout of this repo shares — so vitest in a worktree lane (docs/worktree-lanes.md),
+ * even one made by a plain `git worktree add`, queues behind main's instead of loading the machine beside
+ * it. In main it is ROOT's own lock, as before. Asked once per process; when git cannot say (no git, or a
+ * git dir that is not a checkout's .git) it is this checkout's lock. */
+let machineRoot;
+const lockRoot = () => {
+  if (machineRoot === undefined) {
+    try {
+      const common = execFileSync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+      machineRoot = basename(common) === '.git' ? dirname(common) : ROOT;
+    } catch { machineRoot = ROOT; }
+  }
+  return machineRoot;
+};
 /* Read per call, not once at import: HEAVY_LOCK_PATH exists so test/wg-batch-run.test.ts can exercise
  * the waiting and takeover rules on a lock of its own — a test that grabbed work/.heavy.lock would
  * stall (or steal) a real batch run — and a test cannot set it before this module is evaluated. */
-export const lockPath = () => process.env.HEAVY_LOCK_PATH || join(ROOT, 'work/.heavy.lock');
+export const lockPath = () => process.env.HEAVY_LOCK_PATH || join(lockRoot(), 'work/.heavy.lock');
 const POLL_MS = 2000;
 
 /** EPERM means the pid exists and belongs to someone else — alive for our purposes. */
