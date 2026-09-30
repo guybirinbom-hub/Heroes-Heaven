@@ -387,4 +387,32 @@ describe('enabledBookSet — the 2026-09-25 book split never narrows a saved cho
     expect(enabledBookSet([...CORE_BOOKS, "Pathfinder Gatewalkers Player's Guide"]).has(GPG)).toBe(true);
     expect(enabledBookSet(storedSources([...CORE_BOOKS, "Pathfinder Gatewalkers Player's Guide"])).has(GPG)).toBe(false);
   });
+
+  /*
+   * The stray-spelling lane (2026-09-29, desk #166 applied): six more spellings sat in ONE v0.1.40 row with their
+   * book's key, like the Gatewalkers guide above, and got a BOOK_FOLDS pair. Each pair has a test of its own that
+   * names it, so deleting one pair fails exactly that test (proved by mutation on 2026-09-30 for two of them). The
+   * row each read in is the v0.1.40 card measured from git (rowAt), not a hand list.
+   */
+  const PAIRED_2026_09_29: [from: string, to: string, row: string][] = [
+    ['Gatewalkers Player’s Guide (Remastered)', "Pathfinder Gatewalkers Player's Guide (Remastered)", 'Adventure Paths / Gatewalkers'],
+    ["Gatewalkers Player's Guide (Remastered)", "Pathfinder Gatewalkers Player's Guide (Remastered)", 'Adventure Paths / Gatewalkers'],
+    ['Pathfinder Season of Ghosts Player’s Guide', "Pathfinder Season of Ghosts Player's Guide", 'Adventure Paths / Season of Ghosts'],
+    ['Pathfinder Foolish Housekeeping and Other Articles', 'Paizo Blog: Foolish Housekeeping and Other Articles', 'Other / Blogs & web articles'],
+    ['Pathfinder Fools Aplenty', 'Pathfinder Lost Omens: Fools Aplenty', 'Other / Fools Aplenty (April Fools)'],
+    ['Pathfinder One-Shot #2: Dinner at Lionlodge', 'Pathfinder One-Shot 2: Dinner at Lionlodge', 'Adventure Paths / Pathfinder Society'],
+  ];
+  for (const [from, to, row] of PAIRED_2026_09_29) {
+    it(`an old selection with "${from}" on reads "${to}" on: one v0.1.40 row (${row})`, () => {
+      const pair = `BOOK_FOLDS pair "${from}" -> "${to}"`;
+      expect(BOOK_FOLDS.some(([a, b]) => a === from && b === to), `${pair}: missing from src/rules/sources.ts`).toBe(true);
+      expect(rowAt(from), `${pair}: the stray's v0.1.40 row`).toBe(row);
+      expect(rowAt(to), `${pair}: the key's v0.1.40 row`).toBe(row);
+      const on = enabledBookSet([...CORE_BOOKS, from]); // stored before the fold: no mark
+      expect(on.has(to), `${pair}: a selection stored before the fold with the stray on reads the key off`).toBe(true);
+      expect(enabledBookSet(storedSources(on)).has(to), `${pair}: the key is lost once the selection is saved again`).toBe(true);
+      // a selection made since (marked) is taken as the player left it: the pair never runs on it
+      expect(enabledBookSet(storedSources([...CORE_BOOKS, from])).has(to), `${pair}: ran on a marked selection`).toBe(false);
+    });
+  }
 });

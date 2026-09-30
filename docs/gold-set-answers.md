@@ -778,6 +778,23 @@ Gatewalkers (Hardcover) 2, Dark Archives (Remastered) 1). Only the Gatewalkers g
 one row, is switched on for an old selection (`BOOK_FOLDS`). The GM Search's page rows keep naming the page's own printing, which is what tells
 the GM which page a row opens.
 
+**2026-09-29 — the same rule, applied by the table to every spelling (the stray-spelling lane).** Eighteen more
+same-book spellings folded, each through a `book-names.json` row keyed by the exact spelling its records carried:
+the five he listed (Gatewalkers (Hardcover), Draconic Codex, Tian Xia Character Guide, Season of Ghosts
+(Hardcover), Shadows at Sundown) and thirteen the corpus measure found (Grand Bazaar, Fools Aplenty, The Fall of
+Plaguestone, Crown of the Kobold King, the Season of Ghosts and Gatewalkers player's guides under a curly
+apostrophe or with no prefix, Night of the Gray Death, Foolish Housekeeping, Troubles in Grayce, One-Shot #2 — a
+one-to-one tie, given the Archives' own title — PFS Guide, Pathfinder Society Year 4 Rule Updates); 49 records
+changed their book and nothing else. The chain now folds through every row, title-changing rows included,
+because each such row carries its same-book reason and CHECK 4 refuses one without. CHECK 4 also fails a
+choosable record whose book carries a key's title under another spelling, one the table sends to a different
+key, and two spellings of one title that have no key. Six strays shared one v0.1.40 Sources row with their key
+and got a `BOOK_FOLDS` pair (decided by the orchestrator under the rule above, no new owner words); the rest
+follow the Guns & Gears precedent. The two Guns & Gears overlay source rows are retracted, since the fold
+produces the key on its own, and sixteen overlay source rows now spell their book's key. Still under two
+spellings, queued for the next regenerating lane: Pathfinder #207 (The) Resurrection Flood, 8 and 22 records in
+one Triumph of the Tusk row, which CHECK 4's title strip (a leading "the" only) does not see.
+
 **2026-09-25 — a grade linked only to its family pairs by suffix (desk #167).** A legacy grade block often
 names only its renamed family: Cloak of Elvenkind (Greater) says "Cloak of Illusions" and the family page, so
 it read "Remastered as" the level-7 base cloak. Asked whether each grade should pair with the new family's
