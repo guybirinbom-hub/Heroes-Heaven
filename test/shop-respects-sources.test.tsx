@@ -248,13 +248,18 @@ describe('shop-respects-sources: the Add items shop offers only the character\'s
     expect(somOnly.has('greater-singing-shortbow')).toBe(false);
   });
 
-  // (f) services, vehicles and siege weapons are not source-filtered
-  it('(f) a service, a vehicle and a Guns & Gears siege weapon are offered whatever the books', () => {
+  // (f) services and vehicles carry no book and are always offered. Siege weapons follow the books since desk
+  // sources-apply-to-everything (owner, 2026-09-30: "yes the player sources should aplly to everything he has
+  // accses to"); this case said "whatever the books" until then. test/sources-apply-to-everything.test.tsx.
+  it('(f) a service and a vehicle are offered whatever the books; a Guns & Gears siege weapon only with Guns & Gears on', () => {
     const rows = shopRows({ companions: true });
     expect(rows).toContain('Unskilled Hireling');
     expect(rows).toContain('Raft');
-    expect(rows).toContain('Ballista'); // printed in Guns & Gears, which is off
+    expect(rows).not.toContain('Ballista'); // printed in Guns & Gears, which is off
     expect(rows).not.toContain('Blade Launcher');
+    const gg = shopRows({ companions: true, enabledSources: books(GG) });
+    expect(gg).toContain('Ballista');
+    expect(gg).toContain('Raft');
   });
 
   // (g) hide-legacy still filters on top of the books

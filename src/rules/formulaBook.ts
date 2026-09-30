@@ -20,6 +20,7 @@
  */
 import { ownedFeatureIds, resolveFormula } from './derive';
 import { PROFICIENCY_RANKS, type Character, type ContentDatabase, type InventoryItem, type Item, type ProficiencyKey, type ProficiencyRank, type Rarity } from './types';
+import { entrySourceOn } from './sources';
 
 /** The blank Formula Book equipment record — what "you gain a formula book" hands over. */
 export const FORMULA_BOOK_ITEM_ID = 'formula-book-blank';
@@ -284,8 +285,18 @@ export function formulaSlots(c: Character, db: ContentDatabase): FormulaSlot[] {
   return out;
 }
 
-/** The items a slot may hold. A fixed slot offers exactly the one formula the record names. */
-export function formulaOptions(slot: FormulaSlot, c: Character, db: ContentDatabase): Item[] {
+/**
+ * The items a slot may hold. A fixed slot offers exactly the one formula the record names.
+ *
+ * `enabled` (the character's enabledBookSet; desk sources-apply-to-everything, owner 2026-09-30: "yes the player
+ * sources should aplly to everything he has accses to") narrows the OPEN pool — "common alchemical items of your
+ * level or lower" — to items whose book is on; an item with no book always stays (entrySourceOn), and so does an
+ * id in `keep` (the Builder's Formula book card keeps the formulas already written: build.formulaPicks). A fixed
+ * slot and a record's own list of ids are what the held record names, never narrowed. Left out, nothing is
+ * filtered: both callers pass it (the sheet's Formula Book and the Builder's card, which reads the unfiltered
+ * database so a fixed slot's named formula is always there).
+ */
+export function formulaOptions(slot: FormulaSlot, c: Character, db: ContentDatabase, enabled?: Set<string>, keep?: ReadonlySet<string>): Item[] {
   const part = FORMULA_GRANTS[slot.sourceId]?.parts[slot.partIndex];
   if (!part) return [];
   const byId = (ids: string[]) => ids.map((id) => db.items[id]).filter((it): it is Item => !!it);
@@ -294,6 +305,7 @@ export function formulaOptions(slot: FormulaSlot, c: Character, db: ContentDatab
   const maxLevel = part.maxLevel === 'self' ? c.level : part.maxLevel;
   return Object.values(db.items)
     .filter((it) => {
+      if (enabled && !entrySourceOn(enabled, it) && !keep?.has(it.id)) return false;
       if (maxLevel != null && (it.level ?? 0) > maxLevel) return false;
       if (part.rarities && !part.rarities.includes((it.rarity ?? 'common') as Rarity)) return false;
       const traits = new Set(it.traits ?? []);

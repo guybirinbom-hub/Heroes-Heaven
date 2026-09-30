@@ -26,6 +26,7 @@ import {
   dailyChoiceLabel,
 } from '../rules/dailyChoices';
 import { dailyItemSlots, dailyItemOptions } from '../rules/dailyItems';
+import { enabledBookSet } from '../rules/sources';
 import { PopupSelect } from '../builder/shared';
 import { roll as rollDice, rollCheck, type RollResult, type DicePreset } from '../rules/dice';
 import { PinContext, type PinDescApi } from './PinContext';
@@ -254,7 +255,10 @@ export function CharacterSheet({
   useBackHandler(partyOpen, () => setPartyOpen(false));
   const [restOpen, setRestOpen] = useState(false);
   // --- daily preparations: choices re-made each morning (Environmental Adaptability, Mask of Power) ---
-  const dailyChoices = useMemo(() => dailyChoicesFor(character, content), [character, content]);
+  // desk sources-apply-to-everything (2026-09-30): the morning's open lists and temporary-item slots follow the
+  // character's books like the Builder's pickers; a stored answer is always kept.
+  const dailyBooks = useMemo(() => enabledBookSet(character.enabledSources), [character.enabledSources]);
+  const dailyChoices = useMemo(() => dailyChoicesFor(character, content, { enabled: dailyBooks }), [character, content, dailyBooks]);
   const storedDaily = character.dailyChoices;
   // 'reuse' keeps last night's answers silently; but a choice never answered still has to be asked
   // once — that first answer is what there is to reuse.
@@ -909,7 +913,7 @@ export function CharacterSheet({
                 <div className="daily-choices">
                   <p className="confirm-note">Temporary items you make today:</p>
                   {dailyItems.map((slot) => {
-                    const opts = dailyItemOptions(slot, character, content);
+                    const opts = dailyItemOptions(slot, character, content, { enabled: dailyBooks, keep: dailyItemAnswer(slot.key) });
                     return (
                       <div className="daily-choice" key={slot.key}>
                         <div className="daily-choice-q">

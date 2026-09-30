@@ -821,6 +821,107 @@ lists a held item among what would be removed, nor removes it. "Hide legacy data
 marker on a shop row behave as before; services, vehicles and siege weapons are not source-filtered. The
 card's sentence is now true. Guard: `test/shop-respects-sources.test.tsx`.
 
+**2026-09-30 — the player's Sources apply to everything he has access to (desk #170).** After #169 the shop
+still offered every siege weapon to a Core-only character, and so did the Add companion picker's Siege tab: siege
+weapons, vehicles and the runesmith's runes were not maps the source filter ran on. Asked whether they should be,
+his words: *"yes the player sources should aplly to everything he has accses to"*. So siege weapons, vehicles and
+the runic repertoire join the filter (`CHOOSABLE_SOURCE_MAPS`, src/rules/sources.ts), and these places a player
+picks, buys or adds from now follow the character's enabled books through the same `entrySourceOn` test: the
+Builder's runic repertoire, the sheet's Add items shop (its vehicle and siege rows, beside the items #169 already
+filtered), the Add companion picker's Siege tab (its Vehicle tab already did), the companion editor's Type
+selects, familiar ability picker and specialization picker, and the Builder's Mythic Calling picker (below).
+Keep-what-you-hold, as in #169: a siege weapon or
+vehicle the character owns stays on the Companions tab and is never listed or removed by the Sources card; a
+companion's current type, familiar, abilities and specialization stay in their own pickers; a rune already in the
+repertoire stays, and — like a feat — is listed only when its book is switched off on the card, and removed only
+if the player agrees. A record with no book is never filtered: no vehicle carries one yet (0 of 107), so every
+vehicle is still offered to everyone until the import gives them one. A book that shows on the card only because
+of these maps is a key of its own with a row of its own (never a seat inside an Adventure Path, Society or blog
+bundle, where an old whole-row selection would suddenly read part-on), off for every existing selection, and never derived on or from: a stored selection is neither widened nor narrowed by
+it, and a player who wants it switches it on (measured: every siege weapon's book and Impossible Magic already had
+a row, so these maps add none, only counts). The class sub-picks
+follow the books too: the Builder offers a school, bloodline, patron, order, instinct, eidolon, apparition,
+epithet … from the class record's own option lists, and each option's book is its own class-feature record's
+(`classOptionRecords`; 250 options, every one with a book, 166 of them outside the Core books — a Core-only wizard
+had been offered the Impossible Magic, Rival Academies and Shining Kingdoms schools). The Builder's pickers, the
+Sources card's counts, the Add companion picker's Eidolon tab and the companion editor's eidolon select all read
+that book — or a later printing's: where the Archives print an option again in a newer book than its record
+names, it is offered through either (`CLASS_OPTION_REPRINTS`, derived from the Archives and pinned by
+`test/class-option-reprints.test.ts`). Eleven eidolon records still name Secrets of Magic or Book of the Dead
+although Impossible Magic, the summoner's own book, prints each again (eidolon-15 to eidolon-22 and eidolon-24 to
+eidolon-26; eidolon-23, the Ooze, is new there and its record already names Impossible Magic), and The Unseen
+Broker names Divine Mysteries although Dark Archive (Remastered) prints it again (patron-29). Before this lane no
+eidolon was filtered at all; a filter reading only the record's own book would have offered a summoner with
+Impossible Magic on just Aberrant and Ooze of the thirteen eidolons that book prints, which is R12 the wrong way
+round, so the later printing counts. An
+option printed in its class's own book goes with the class, so a class the character holds from a book since
+switched off can still be finished (a held psychic keeps its own subconscious minds, a held summoner its thirteen
+Impossible Magic eidolons), and a held runesmith or Runesmith Dedication keeps its own book's runes the same way,
+so its repertoire can still grow at level-up; a chosen option
+(subclass, second-class subclass, extra choices, primary apparition, the Summoner Dedication's eidolon) stays, and, being part of the class rather than a record of its own, is never listed or
+removed by the card. Their 26 books all had rows already, so again no row is added. The same sub-picks follow
+the books where a FEAT asks for them: a multiclass dedication's school, bloodline, order, patron, mystery,
+instinct or muse, Order Explorer's order and the witch's Basic, Greater and Major Lesson (a Core-only character's
+Arcane School picker had hidden School of Gates while Wizard Dedication still offered it). A feat's or class
+feature's choice counts when its answers ARE class features — the record says so (`ownsFeature`), or every option
+is a class sub-pick — so Advanced Domain's "time" (a domain) and Advanced Weapon Training's "shield" (a weapon
+group) are untouched; the stored answer, a granted feat's answer included, stays, and so does what the asking
+feat's own book prints (a held Psychic Dedication keeps its Dark Archive conscious minds). Measured Core only: 12
+such lists narrowed, 64 options hidden, none emptied. The Builder's Mythic Calling
+picker (Level 0, with Mythic on) follows the books too: its 18 callings are class-feature records with the
+`calling` trait (`mythicCallingRecords`) — War of Immortals 11, Revenge of the Runelords Player's Guide 4, Society
+Scenario #6-09: The Power of Legends 3 — so a Core-only character with Mythic on is offered none (as it is
+offered no mythic feat) and the picker names every Sources row that prints one (`sourceRowLabelsFor`); the chosen calling stays and is never listed
+or removed by the card. The Mythic on/off toggle itself is a separate switch and unchanged. Scenario #6-09 is the
+one book these changes add to the card: no other choosable record carries it, so it gets a row of its own
+("Society Scenario #6-09: The Power of Legends", shown right after the Pathfinder Society row), switched off for every existing selection and never derived on,
+while the Pathfinder Society row keeps exactly its old books (83 → 84 rows, 210 → 211 books). Its three Echoes callings
+had been offered to every character with Mythic on; now a player who wants one switches that row on, and a
+character that already chose one keeps it. The sheet's Formula Book (a slot's open pool — "common alchemical
+items of your level or lower" — and Add formula), the daily-preparation temporary-item slots (a scroll's spell, an
+item by trait) and the daily-preparation open choices (a general feat for the day, a spell, a weapon, a heritage,
+an ancestry, a background) follow the books the same way; a pool of what the character already holds (its
+spellbook, its known formulas, a record's own named formulas, the `own-*` choices) is never narrowed, and today's
+stored answer and a formula already in the book always stay. The pickers that still read a whole map follow the
+books the same way. Property runes: a rune record carries no book of its own, but its item twin does
+(142 property runes, 87 outside the Core books; the 18 fundamental runes are all GM Core, and the editor's potency,
+striking, resilient and reinforcing selects are fixed Core ladders), so the Builder's Living rune card and the
+sheet's item editor rune slot read the twin's book; the rune on a Living Rune body stays (its name and its own
+question with it) and is never listed or removed by the card, and a rune already etched on the item stays in its
+slot's list. The alchemist's Advanced and Quick Alchemy picker keeps every formula the character knows and whatever
+is already prepared. A generic scroll's or wand's stored-spell picker keeps the stored spell. The Magical
+Understudy eidolon cantrips keep a chosen cantrip, and — as with a feat's own sub-picks — the cantrips of the
+granting feat's own book (Impossible Magic), which stay offered even when that book is switched off on the
+card. The item editor's "Start from an existing item…" list keeps the item
+it is based on and anything the character carries, and its bound-spell list keeps the bound spell. The Spells tab's
+Prepare / Add a spell picker (every slot, cantrip opening and repertoire rank) and its Learn a spell picker, Rituals
+group included, offer the character's books (measured Core only: a level-5 cleric's rank-1 list 59 → 28, a
+sorcerer's 92 → 41); what the entry already holds (a prepared, repertoire, spellbook, learned or signature spell, a
+cantrip) and a spell a feat adds to the list by name stay, and a restricted slot's own list (a curriculum, Sin
+Reservoir) is never narrowed. The spells a TRAIT search put in a restricted slot are not a record's own list:
+Master Summoner's two summoning slots (Impossible Magic, "only summoning or incarnate spells") are filled from every
+spell in the database with those traits (arcane 21, 15 outside the Core books; divine 18 and 12; occult 17 and 12;
+primal 15 and 9), so those spells (`allowedByTrait`) follow the books like any other list, a spell already in the
+slot stays, and a summoner's extra-cast card names only what the picker would offer. Only what may be ADDED follows
+the books: the sheet keeps drawing a held spell from
+a book switched off since, because it never asks the books whether to draw it (`pickerSpellOptions` beside
+`spellOptions`). The Builder's Formula book card (a level-5 alchemist's first Alchemical Crafting slot 139 → 54) and
+Snare formulas card (the four base slots 8 → 6) follow the books too and keep a formula already written or chosen;
+a fixed slot's named formula is never narrowed. A property rune etched on held gear is kept in the Builder's content
+like the gear itself, so the Builder's stats read it as the sheet does; the card never lists or removes it. Out of
+scope, on purpose: the Builder's Overrides card, which stays unfiltered because its add-feat, add-feature and
+add-spell pickers exist to break the rules and browse every book; languages, which are open by rarity and by what
+grants them; conditions, which are applied in play; and the Main tab's Camping activity list, a reference list of
+the camping activities shown while Kingmaker is on, nothing the player picks or adds. NOT YET: the Homebrew page
+belongs to no character, so it has no Sources to read: the item editor it opens still offers every book in its
+"Start from an existing item…" and bound-spell lists, and its heritage editor's ancestry dropdown still offers
+every book's ancestries.
+None of these adds a book to the card: it has 84 rows and 211 books (83 and 210 before), Scenario #6-09's row
+being the one addition. Guard:
+`test/sources-apply-to-everything.test.tsx` (every mutation line in its header proven on a scratch copy),
+`test/class-option-reprints.test.ts`, and the one exception it makes to the every-row check in `test/sources.test.ts`
+(a new key is carried only by what joined that day, no split or fold names it, and it sits in a row of its own).
+
 ### R13 · "either X or Y" / "your choice of X or Y" is ONE pick
 
 A feat or background printed *"you're trained in your choice of either the Crafting or Society skill"*

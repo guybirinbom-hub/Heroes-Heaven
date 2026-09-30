@@ -1603,13 +1603,16 @@ function AbpPotencyEditor({ build, actions }: { build: BuildState; actions: Buil
  *  and the Mythic Calling. The on/off toggles stay in Setup (Variant Rules / Campaign cards); this
  *  renders only when at least one such toggle is on. Reads/writes the same build state as before, so a
  *  character configured under the old (Setup-side) UI shows its choice unchanged. */
-export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
+export function SetupUnlockedChoices({ build, actions, content, callingRows = [] }: EditorProps & { callingRows?: readonly string[] }) {
   const [mythicRulesOpen, setMythicRulesOpen] = useState(false);
   const dualClass = !!build.variantRules?.dualClass;
   const abp = !!build.variantRules?.abp;
   const mythic = !!build.mythicEnabled;
   if (!dualClass && !abp && !mythic) return null;
   const cls2 = build.classId2 ? content.classes[build.classId2] : undefined;
+  const callings = Object.values(content.classFeatures)
+    .filter((f) => (f.traits ?? []).includes('calling'))
+    .sort((a, b) => a.name.localeCompare(b.name));
   return (
     <>
       {dualClass && (
@@ -1652,11 +1655,19 @@ export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
             value={build.mythicCalling ?? ''}
             onChange={(v) => actions.patch({ mythicCalling: v || null })}
             clearLabel="Clear"
-            options={Object.values(content.classFeatures)
-              .filter((f) => (f.traits ?? []).includes('calling'))
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs }))}
+            options={callings.map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs }))}
           />
+          {/* 2026-09-30 (desk #170): `content` is the Builder's Sources-filtered content, so a calling whose book
+              is off is not offered (applySources); say why the list is empty rather than leave a bare picker, and name
+              EVERY Sources row that prints one (callingRows, read off the unfiltered database), not one book. */}
+          {callings.length === 0 && (
+            <p className="setup-hint">
+              Every Mythic Calling is printed in a book this character has switched off.{' '}
+              {callingRows.length
+                ? `Turn ${callingRows.length === 1 ? callingRows[0] : `${callingRows.slice(0, -1).join(', ')} or ${callingRows[callingRows.length - 1]}`} on in Sources to choose one.`
+                : 'Turn its book on in Sources to choose one.'}
+            </p>
+          )}
           <p className="setup-hint">
             You gain a mythic feat slot at every even level (2&ndash;20). At 12th level that slot must buy a mythic{' '}
             <strong>destiny</strong>, and you can only ever have one. Mythic points power rerolls (Rewrite Fate) and
@@ -2092,6 +2103,11 @@ const SOURCE_KIND_LABEL: Record<string, string> = {
   specificFamiliars: 'Familiars',
   familiarAbilities: 'Familiar abilities',
   companionAdvanced: 'Companion options',
+  // 2026-09-30 (desk sources-apply-to-everything). Only the runes can be listed: an owned siege weapon or
+  // vehicle is a companion, and chosenFromBooks never lists one (keep-what-you-hold).
+  runesmithRune: 'Runic repertoire',
+  siegeWeapons: 'Siege weapons',
+  vehicles: 'Vehicles',
 };
 
 export function SourcesCard({
@@ -2390,6 +2406,8 @@ export function SnareFormulasCard({ build, actions, content, character }: Editor
   // Plentiful Snares doubles what you can prepare; the formula alone could not be influenced.
   const { known, prepared } = snareAllowanceFor(drivingRank, character.feats.map((f) => f.featId), snareAllowance);
   const chosen = build.extraChoices?.[SNARE_FORMULA_KEY] ?? [];
+  const snareBooks = enabledBookSet(build.enabledSources);
+  const snareKeep = new Set(chosen.filter(Boolean));
   const setAt = (idx: number, id: string) => {
     const next = [...chosen];
     next[idx] = id;
@@ -2404,7 +2422,9 @@ export function SnareFormulasCard({ build, actions, content, character }: Editor
       </p>
       {Array.from({ length: known }).map((_, i) => {
         const base = isBaseSnareSlot(i);
-        const opts = snareFormulaOptions(content, base ? 1 : character.level, base).map((it) => ({
+        // desk #170 (owner 2026-09-30, "yes the player sources should aplly to everything he has accses to"): the
+        // character's books only (`content` here is the unfiltered database); a formula already chosen stays.
+        const opts = snareFormulaOptions(content, base ? 1 : character.level, base, snareBooks, snareKeep).map((it) => ({
           id: it.id,
           name: it.name,
           note: `Lvl ${it.level}`,
@@ -2441,11 +2461,16 @@ export function FormulaBookCard({ build, actions, content, character }: EditorPr
   // Pools are shared by every slot in a run, so they are resolved once per run rather than per slot —
   // an alchemist's book has forty slots and the alchemical-item pool is a thousand items long.
   const pools = new Map<string, { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[] }[]>();
+  // desk #170 (owner 2026-09-30, "yes the player sources should aplly to everything he has accses to"): an open
+  // pool offers the character's books only (`content` here is the unfiltered database, so a fixed slot's named
+  // formula is always found); a formula already written into any slot stays.
+  const openBooks = enabledBookSet(build.enabledSources);
+  const written = new Set(Object.values(picks).filter(Boolean));
   const optionsFor = (slot: FormulaSlot) => {
     const key = `${slot.sourceId}#${slot.partIndex}`;
     let pool = pools.get(key);
     if (!pool) {
-      pool = formulaOptions(slot, character, content).map((it) => ({
+      pool = formulaOptions(slot, character, content, openBooks, written).map((it) => ({
         id: it.id,
         name: it.name,
         note: `Lvl ${it.level ?? 0}`,

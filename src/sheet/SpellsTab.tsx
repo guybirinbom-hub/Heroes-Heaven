@@ -59,11 +59,14 @@ import {
   chosenAt,
   collectionUsed,
   hiddenAt,
+  pickerSpellOptions,
   repertoireCap,
+  restrictedAllowedOnBooks,
   signatureEchoIds,
-  spellOptions,
+  spellsHeldBy,
   traditionPool,
 } from '../rules/spellOptions';
+import { enabledBookSet, entrySourceOn } from '../rules/sources';
 import { heighteningApplies, splitHeightening, scaleDamage, scaleArea } from '../rules/heightening';
 
 function escapeRe(s: string): string {
@@ -371,11 +374,16 @@ function LearnSpellModal({
   // A caster who prepares from the whole tradition list (cleric, druid) has no spell to learn — the
   // picker is then the rituals route only (owner, 2026-09-02).
   const spellsLearnable = canLearnSpells(entry);
+  // desk #170 (owner 2026-09-30, "yes the player sources should aplly to everything he has accses to"): only the
+  // character's books (entrySourceOn: no book = always), except a spell a record adds to the list by name
+  // (spellsHeldBy); what is already known is left out above either way.
+  const books = enabledBookSet(character.enabledSources);
+  const named = spellsHeldBy(character, entry);
   const options = spellsLearnable
     ? [
         ...(pool.byRank[0] ?? []),
         ...(maxRank >= 1 ? pool.upTo[maxRank] ?? [] : []),
-      ].filter((s) => !known.has(s.id))
+      ].filter((s) => !known.has(s.id) && (entrySourceOn(books, s) || named.has(s.id)))
     : [];
 
   const learnedRanks = Object.keys(entry.learned ?? {})
@@ -393,12 +401,14 @@ function LearnSpellModal({
   // learn a ritual", so that picker's candidate list (every ritual the character doesn't already know)
   // rides along here as a labelled group at the end of the results. Learning one still goes through
   // toggleKnownRitual — the path the page's Rituals section reads from.
+  // …and, like the spells above, only from the character's books (desk #170); a known ritual is not offered anyway.
   const rituals = useMemo(() => {
     const have = new Set(character.knownRituals ?? []);
+    const ritualBooks = enabledBookSet(character.enabledSources);
     return listValues(content, content.spells)
-      .filter((s) => s.ritual && !have.has(s.id))
+      .filter((s) => s.ritual && !have.has(s.id) && entrySourceOn(ritualBooks, s))
       .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
-  }, [content, character.knownRituals]);
+  }, [content, character.knownRituals, character.enabledSources]);
 
   const learnRitual = (s: Spell) => {
     onPlay((p) => toggleKnownRitual(p, s.id));
@@ -592,7 +602,10 @@ function ManageSpellsModal({
    * `entry` is the OVERLAID entry, so `restrictedSlots` includes the ones a toggled mode grants.
    */
   const optionsFor = (rank: number, restrictedId?: string): Spell[] => {
-    const all = spellOptions({ character, entry, content }, rank, restrictedId);
+    // desk #170 (owner 2026-09-30, "yes the player sources should aplly to everything he has accses to"): the
+    // picker offers the character's books, keeping what the entry holds; the render still asks the book-blind
+    // `spellOptions`, so nothing held is pruned (pickerSpellOptions).
+    const all = pickerSpellOptions({ character, entry, content }, rank, restrictedId, enabledBookSet(character.enabledSources));
     if (!spontaneous || restrictedId) return all;
     const known = new Set(entry.repertoire?.[rank] ?? []);
     return all.filter((s) => !known.has(s.id));
@@ -1668,7 +1681,11 @@ export function SpellsTab({
     const cards = group
       .map((slot) => {
         const sp = slot.spellId ? content.spells[slot.spellId] : null;
-        const allowedNames = (slot.allowed ?? []).map((id) => content.spells[id]?.name ?? id);
+        // desk #170: an "extra cast" card names only what the picker would offer — a trait search's spells
+        // (Master Summoner) follow the character's books; a record's own list stays whole.
+        const allowedNames = restrictedAllowedOnBooks({ character, entry: main, content }, slot, enabledBookSet(character.enabledSources)).map(
+          (id) => content.spells[id]?.name ?? id,
+        );
         if (sp && !visible(sp)) return null;
         // Nothing is prepared into a spontaneous caster's restricted slot — it is one extra cast, so
         // the card names what it may be spent on rather than a spell.

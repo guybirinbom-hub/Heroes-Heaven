@@ -1986,6 +1986,10 @@ export interface RestrictedSlot {
   rankOptions?: number[];
   /** Only these spells may fill it. Absent = the restriction is prose only. */
   allowed?: string[];
+  /** The ids in `allowed` that a TRAIT search of the whole database found (Master Summoner's "only
+   *  summoning or incarnate spells"), not the granting record's own list. The sheet's picker narrows
+   *  these, and only these, to the character's books (desk #170, pickerSpellOptions). */
+  allowedByTrait?: string[];
   spellId: string | null;
   expended: boolean;
   /** The entry casts spontaneously, so nothing is prepared here — the slot is one extra cast drawn

@@ -9,7 +9,8 @@
  * temporary SCROLL — or a healing item, or a potion — had nowhere to live. The answers are play
  * state, re-picked every morning, exactly like the alchemist's.
  */
-import { PROFICIENCY_RANKS, type Character, type ContentDatabase, type Feat, type ProficiencyRank } from './types';
+import { PROFICIENCY_RANKS, type Character, type ContentDatabase, type Feat, type ProficiencyRank, type SourceInfo } from './types';
+import { entrySourceOn } from './sources';
 import { resolveFormula } from './derive';
 import { knownFormulas } from './formulaBook';
 import { maxTakes } from './featGrants';
@@ -141,13 +142,23 @@ export function dailyItemOptions(
   slot: DailyItemSlot,
   c: Character,
   db: ContentDatabase,
+  /**
+   * desk sources-apply-to-everything (owner, 2026-09-30: "yes the player sources should aplly to everything he
+   * has accses to"): `enabled` (the character's enabledBookSet) narrows an OPEN pool — every spell of the rank,
+   * every item with the traits — to records whose book is on; a record with no book always stays
+   * (entrySourceOn), and so does `keep`, the slot's stored answer. A pool of what the character already holds
+   * (its spellbook, its known formulas) is never narrowed. Left out, nothing is filtered.
+   */
+  opts?: { enabled?: Set<string>; keep?: string },
 ): { id: string; name: string; note?: string }[] {
+  const enabled = opts?.enabled;
+  const onBooks = (r: { id: string; source?: SourceInfo; homebrewSourceId?: string }) => !enabled || r.id === opts?.keep || entrySourceOn(enabled, r);
   if (slot.spellRank != null) {
     const known = new Set(
       c.spellcasting.flatMap((e) => [...e.cantrips, ...Object.values(e.repertoire ?? {}).flat(), ...Object.values(e.grantedRepertoire ?? {}).flat()]),
     );
     return Object.values(db.spells)
-      .filter((s) => s.rank === slot.spellRank && !s.ritual && (!slot.fromSpellbook || known.has(s.id)))
+      .filter((s) => s.rank === slot.spellRank && !s.ritual && (slot.fromSpellbook ? known.has(s.id) : onBooks(s)))
       .sort((a, b) => a.name.localeCompare(b.name))
       .map((s) => ({ id: s.id, name: s.name }));
   }
@@ -157,7 +168,7 @@ export function dailyItemOptions(
   const knownIds = slot.fromKnownFormulas ? new Set(knownFormulas(c.inventory, db)) : null;
   return Object.values(db.items)
     .filter((i) => {
-      if (knownIds && !knownIds.has(i.id)) return false;
+      if (knownIds ? !knownIds.has(i.id) : !onBooks(i)) return false;
       if (slot.maxLevel != null && (i.level ?? 0) > slot.maxLevel) return false;
       const traits = new Set(i.traits ?? []);
       return wantTraits.every((t) => traits.has(t));

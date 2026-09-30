@@ -122,11 +122,164 @@ export function categoryOfBook(book: string): SourceCategory {
  *  The companion maps joined this list once the AoN re-import gave every record a real `source.book`
  *  (they previously had NO source attribution at all, being Foundry-era leftovers). They are picked
  *  from the SHEET's Companions tab rather than the builder, so see companionSourceFilter() — the
- *  Add-companion picker applies the same enabled-books set explicitly. */
+ *  Add-companion picker applies the same enabled-books set explicitly.
+ *
+ *  2026-09-30 (desk sources-apply-to-everything, the owner: "yes the player sources should aplly to everything
+ *  he has accses to"): the maps a player buys, adds or picks from that were left out join, listed in
+ *  SOURCE_MAPS_ADDED_2026_09_30. Measured over public/core.json at 2a23c10: siegeWeapons 62 records, every one
+ *  with a book (Battlecry! 28, Guns & Gears 19, Howl of the Wild 13, #215 1, #223 1); runesmithRune 44, all
+ *  Impossible Magic (the Builder's runic repertoire, runesmithRuneOptions); vehicles 107, none with a book yet,
+ *  so the filter passes every one of them (entrySourceOn: no book = always) until the import gives them one,
+ *  and the card then carries that book's row the same day. Every one of those books already had a Sources row
+ *  and was a v0.1.40 key, so the card gains no row, only counts.
+ *
+ *  The CLASS SUB-PICKS join the same day, through classOptionRecords() below rather than this list: the
+ *  Builder does not pick a bloodline, patron, school, order, instinct, eidolon … from the `bloodline` /
+ *  `patron` / … maps (those carry no book, and no picker reads them) but from `classes.<id>.subclass.options`
+ *  and `classes.<id>.extraChoices[].options`, and every one of those options has its own classFeatures record
+ *  under the same id that carries the book (measured at 2a23c10: 250 options, 250 with a classFeatures record
+ *  and a book, 166 of them not Core — a wizard's Impossible Magic, Rival Academies and Shining Kingdoms
+ *  schools, a druid's Secrets of Magic and #202 orders, a sorcerer's eight non-Core bloodlines, the summoner's
+ *  Secrets of Magic / Battlecry! / Book of the Dead eidolons, the animist's #216 / #223 apparitions, the
+ *  exemplar's #217 epithets; their 26 books were every one a card key already and a v0.1.40 key). applySources
+ *  filters those nested lists, sourceCatalog counts them, and the sheet's eidolon rows and eidolon type select
+ *  (CompanionsTab) read the same record. Where the Archives print an option again in a later book than its
+ *  record names (the eleven eidolons in Impossible Magic, The Unseen Broker in Dark Archive (Remastered)),
+ *  CLASS_OPTION_REPRINTS adds that book and the option is on through either (classOptionOn). An option printed
+ *  in its class's own book goes with the class (a held psychic keeps its own subconscious minds when Dark
+ *  Archive is switched off), and so does a held runesmith's runic repertoire (CLASS_OWN_PICK_MAPS). A chosen option stays (collectChosenIds: subclassId, subclassId2,
+ *  extraChoices, primaryApparition, archetypeEidolonType) and, being part of the class rather than a record of
+ *  a choosable map, is never listed or removed by the Sources card. The Builder's Mythic Calling picker follows
+ *  the same way through mythicCallingRecords() (the `calling`-trait classFeatures), with the chosen calling kept.
+ *  So do the same sub-picks where a FEAT asks for them (a multiclass dedication's school, bloodline, order,
+ *  patron, mystery …, and the witch's Basic / Greater / Major Lesson): applySources narrows a choice whose
+ *  answers are class features (`ownsFeature`, or every option a class sub-pick), keeping the stored answer
+ *  (featChoices, grantedFeatChoices) and what the asking record's own book prints.
+ *
+ *  Languages and conditions stay out. A language is open to a character by its rarity and the ancestry or region
+ *  that grants it — its book is only where the Archives print its page; a condition is applied in play. Runes
+ *  are not in this list because the `runes` map carries no book of its own (0 of 160); every rune's item twin
+ *  does (160 of 160: the 142 property runes, 87 of them not Core, and the 18 fundamental runes, all GM Core). So
+ *  the closing pass filters the two property-rune pickers through the twin: the Builder's Living rune card
+ *  (applySources' runes pass, the chosen bodyRune kept) and the sheet's item editor rune slot (ItemEditorModal,
+ *  an etched rune kept). The same pass narrows the Advanced / Quick Alchemy picker (AlchemyPanel; a known
+ *  formula kept), a generic scroll's or wand's stored-spell picker (ItemDetail; the stored spell kept), the
+ *  Magical Understudy eidolon cantrips (CompanionsTab; a chosen one, and the granting feat's own book, kept) and
+ *  the item editor's "Start from an existing item…" and bound-spell lists (the base item, carried items and the
+ *  bound spell kept; the Homebrew page opens that editor with no character and offers every book).
+ *
+ *  The sheet's surfaces over these maps (AddItemsModal's vehicle / siege rows, the Add companion picker's Vehicle
+ *  and Siege tabs, the companion editor's Type selects) filter with the same entrySourceOn(enabledBookSet(...));
+ *  what the character already owns stays (the sheet's content is never filtered, and a companion is never among
+ *  chosenFromBooks). A record with no book at all is never filtered anywhere (entrySourceOn: no book = on). */
+export const SOURCE_MAPS_ADDED_2026_09_30 = ['siegeWeapons', 'vehicles', 'runesmithRune'] as const;
+/**
+ * 2026-09-30 (desk #170, refuter's pass): a map that IS one class's own pick list, with the records that open it
+ * (the class, or its dedication). An entry printed in the book of an opener the character HOLDS stays when that
+ * book is off, the rule a class sub-pick printed in its class's own book follows (applySources): a held runesmith
+ * — or a Runesmith Dedication — with Impossible Magic switched off (an imported character with no stored Sources
+ * reads as Core only) can still add runes to its repertoire at level-up, as it could before runesmithRune joined.
+ */
+export const CLASS_OWN_PICK_MAPS: Readonly<Partial<Record<string, readonly { map: 'classes' | 'feats'; id: string }[]>>> = {
+  runesmithRune: [
+    { map: 'classes', id: 'runesmith' },
+    { map: 'feats', id: 'runesmith-dedication' },
+  ],
+};
 export const CHOOSABLE_SOURCE_MAPS = [
   'ancestries', 'heritages', 'backgrounds', 'classes', 'feats', 'spells', 'items', 'deities', 'actions',
   'animalCompanions', 'companionSpecializations', 'specificFamiliars', 'familiarAbilities', 'companionAdvanced',
+  ...SOURCE_MAPS_ADDED_2026_09_30,
 ] as const;
+
+/** The name the class sub-picks go by where a map name is expected (the every-row guard's measure). */
+export const CLASS_OPTIONS_SOURCE_KEY = 'classOptions';
+
+/**
+ * 2026-09-30 (desk sources-apply-to-everything): the record that carries each class sub-pick's book, by option
+ * id — every `classes.<id>.subclass.options[]` and `extraChoices[].options[]` entry whose id has a classFeatures
+ * record. An option without one (a homebrew class's option, the kineticist's single / dual gate) is absent here,
+ * so it has no book and is never filtered. Each id once, whichever class lists it.
+ */
+export function classOptionRecords(content: ContentDatabase): Map<string, ClassOptionRecord> {
+  const out = new Map<string, ClassOptionRecord>();
+  const features = (content.classFeatures ?? {}) as Record<string, { source?: SourceInfo; homebrewSourceId?: string }>;
+  for (const c of Object.values(content.classes ?? {})) {
+    for (const opts of [c?.subclass?.options ?? [], ...(c?.extraChoices ?? []).map((g) => g?.options ?? [])]) {
+      for (const o of opts) {
+        const r = o?.id ? features[o.id] : undefined;
+        if (!r || out.has(o.id)) continue;
+        const reprints = CLASS_OPTION_REPRINTS[o.id];
+        out.set(o.id, reprints ? { ...r, reprintBooks: reprints.map((p) => p.book) } : r);
+      }
+    }
+  }
+  return out;
+}
+
+/** A class sub-pick's book record: its classFeatures record, plus the books of its later printings. */
+export type ClassOptionRecord = { source?: SourceInfo; homebrewSourceId?: string; reprintBooks?: readonly string[] };
+
+/**
+ * 2026-09-30 (desk #170, refuter's pass): the class sub-picks whose classFeatures record still names an EARLIER
+ * printing than the Archives hold. Impossible Magic (the remastered summoner's own book, pg. 71-77) prints eleven
+ * eidolons again that our records file under Secrets of Magic or Book of the Dead, and Dark Archive (Remastered)
+ * prints The Unseen Broker again after Divine Mysteries. The Archives link none of these pairs, so
+ * scripts/reprint-check.mjs cannot see them, and a filter keyed on the old book alone hid Angel, Beast, Dragon …
+ * from a summoner with Impossible Magic on (the owner's words, "everything he has accses to", and R12, the newest
+ * printing wins). An option is offered when ANY of its printings is in a book that is on (classOptionOn), the
+ * shop's rule for an item's printings, each by its own book.
+ *
+ * DERIVED, never hand-picked: scripts/lib/class-option-reprints.mjs reads the AoN mirror (same category, same
+ * name, a different book released strictly later than the record's own page), and test/class-option-reprints.test.ts
+ * fails when this table and the mirror differ (`npx jiti scripts/class-option-reprints.mjs` prints both). Every
+ * book here must be a Sources card key; the Sources card counts each option once, under its record's own book.
+ */
+export const CLASS_OPTION_REPRINTS: Readonly<Record<string, readonly { book: string; aonId: string }[]>> = {
+  'angel-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-15' }],
+  'anger-phantom-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-16' }],
+  'beast-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-17' }],
+  'construct-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-18' }],
+  'demon-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-19' }],
+  'devotion-phantom-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-20' }],
+  'dragon-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-21' }],
+  'fey-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-22' }],
+  'plant-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-24' }],
+  'psychopomp-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-25' }],
+  'undead-eidolon': [{ book: 'Pathfinder Impossible Magic', aonId: 'eidolon-26' }],
+  'the-unseen-broker': [{ book: 'Pathfinder Dark Archive (Remastered)', aonId: 'patron-29' }],
+};
+
+/** Is this class sub-pick on? Its record's book (entrySourceOn: no book = always), or any later printing's. */
+export function classOptionOn(enabled: Set<string>, r: ClassOptionRecord): boolean {
+  return entrySourceOn(enabled, r) || !!r.reprintBooks?.some((b) => enabled.has(b));
+}
+
+/** Is this class sub-pick printed in `book` — its record's book or a later printing's? */
+export function classOptionInBook(r: ClassOptionRecord, book: string | undefined): boolean {
+  const b = book?.trim();
+  return !!b && (r.source?.book?.trim() === b || !!r.reprintBooks?.includes(b));
+}
+
+/** The name the Mythic Calling records go by where a map name is expected (the every-row guard's measure). */
+export const MYTHIC_CALLINGS_SOURCE_KEY = 'mythicCallings';
+
+/**
+ * 2026-09-30 (desk #170, second refuter's pass): the records the Builder's Mythic Calling picker offers
+ * (SetupUnlockedChoices) — the classFeatures carrying the `calling` trait. They are not a class's sub-pick, so
+ * classOptionRecords never saw them, and classFeatures as a whole stays out of CHOOSABLE_SOURCE_MAPS (a class
+ * GRANTS its features; nothing picks them). Measured at 2a23c10: 18 callings, every one with a book — War of
+ * Immortals 11, Revenge of the Runelords Player's Guide 4, Pathfinder Society Scenario #6-09: The Power of
+ * Legends 3 (the three "Echoes of …"). applySources drops a calling whose book is off unless it is the chosen
+ * one (collectChosenIds: mythicCalling), and sourceCatalog counts them, so Scenario #6-09 — carried by no other
+ * choosable record — is a key no older selection holds: a row of its own on the card (sourceCatalog's ownRow),
+ * OFF until the player switches it on (test/_sources-added-maps.ts). A calling with no book would never be filtered.
+ * The Mythic on/off toggle is a separate axis and unchanged (applyContentToggles).
+ */
+export function mythicCallingRecords(content: ContentDatabase): { id: string; source?: SourceInfo }[] {
+  const features = (content.classFeatures ?? {}) as Record<string, { id: string; traits?: string[]; source?: SourceInfo }>;
+  return Object.values(features).filter((f) => !!f && (f.traits ?? []).includes('calling'));
+}
 
 /* ---- Adventure Path bundling -------------------------------------------------------------------
  * The catalog has ~127 Adventure Path books — mostly individual monthly volumes ("Pathfinder #219:
@@ -228,19 +381,42 @@ export function sourceCatalog(content: ContentDatabase): {
 } {
   const counts: Record<string, number> = {};
   const hbCounts: Record<string, number> = {};
+  // The choosable maps, then the class sub-picks and the Mythic Callings (2026-09-30), which applySources
+  // filters by the same books. Each list says whether it joined the filter on 2026-09-30.
+  const added = new Set<string>(SOURCE_MAPS_ADDED_2026_09_30);
+  const lists: [boolean, Iterable<{ source?: SourceInfo }>][] = [];
   for (const m of CHOOSABLE_SOURCE_MAPS) {
     const map = content[m] as Record<string, { source?: SourceInfo }> | undefined;
-    if (!map) continue;
-    for (const e of Object.values(map)) {
+    if (map) lists.push([added.has(m), Object.values(map)]);
+  }
+  lists.push([true, classOptionRecords(content).values()]);
+  lists.push([true, mythicCallingRecords(content)]);
+  /*
+   * 2026-09-30 (desk #170, third refuter's pass): a book ONLY what joined the filter that day carries is a key no
+   * stored selection holds, so it is OFF for every one of them (never derived — the every-row guard in
+   * test/sources.test.ts). It gets a ROW OF ITS OWN, never a seat inside an Adventure Path / Society / blog
+   * bundle: inside a bundle an old whole-row selection would read part-on (the Gatewalkers #187 / #188 loss that
+   * BOOK_SPLITS documents), and one checkbox would switch the old books and the new one together. Measured at
+   * 2a23c10: one such book, "Pathfinder Society Scenario #6-09: The Power of Legends" (the three Echoes
+   * callings). Once another choosable record carries the book it folds back into its bundle, held by name.
+   */
+  const lateBooks = new Set<string>();
+  const earlyBooks = new Set<string>();
+  for (const [isAdded, list] of lists) {
+    for (const e of list) {
       const b = e.source?.book?.trim(); // a few core.json book names carry stray whitespace
       if (e.source?.license === 'homebrew') {
         // Homebrew gets its own section in the Sources card (keyed by the Source's name).
         if (b) hbCounts[b] = (hbCounts[b] ?? 0) + 1;
         continue;
       }
-      if (b) counts[b] = (counts[b] ?? 0) + 1;
+      if (b) {
+        counts[b] = (counts[b] ?? 0) + 1;
+        (isAdded ? lateBooks : earlyBooks).add(b);
+      }
     }
   }
+  const ownRow = (book: string) => lateBooks.has(book) && !earlyBooks.has(book);
   const byCat: Partial<Record<SourceCategory, string[]>> = {};
   for (const book of Object.keys(counts)) (byCat[categoryOfBook(book)] ??= []).push(book);
 
@@ -252,26 +428,49 @@ export function sourceCatalog(content: ContentDatabase): {
     // every other shelf lists books individually.
     const bundles: Record<string, SourceEntry> = {};
     const singles: Record<string, SourceEntry> = {}; // keyed by the DISPLAY label with curly apostrophes folded — "Season of Ghosts Player's Guide" and "…Player’s Guide" are two book names and must be ONE row, not two the player cannot tell apart. Toggling the row toggles every book behind it.
+    // 2026-09-30 (desk #170, round-3 refuter): an own-row book is SHOWN right after the bundle it would otherwise
+    // have joined (Scenario #6-09 after "Pathfinder Society", not under "Standalone Adventures" at the shelf's end).
+    // Only where the row sits on the card changes; it stays a row of its own (ownRow above).
+    const homeOf = new Map<SourceEntry, string>();
     for (const book of [...books].sort((a, b) => a.localeCompare(b))) {
-      const label = cat === 'Adventure Paths' ? apBundleLabel(book) : cat === 'Other' ? otherBundleLabel(book) : null;
+      const home = cat === 'Adventure Paths' ? apBundleLabel(book) : cat === 'Other' ? otherBundleLabel(book) : null;
+      const label = ownRow(book) ? null : home;
       if (label) {
         const bd = (bundles[label] ??= { label, books: [], count: 0 });
         bd.books.push(book);
         bd.count += counts[book];
       } else {
-        { const l = book.replace(/^Pathfinder /, ''); const e = (singles[l.replace(/’/g, "'")] ??= { label: l, books: [], count: 0 }); e.books.push(book); e.count += counts[book]; }
+        { const l = book.replace(/^Pathfinder /, ''); const e = (singles[l.replace(/’/g, "'")] ??= { label: l, books: [], count: 0 }); e.books.push(book); e.count += counts[book]; if (home && ownRow(book)) homeOf.set(e, home); }
       }
     }
-    // Bundles first (alphabetical, "Standalone Adventures" last), then any individual books.
+    // Bundles first (alphabetical, "Standalone Adventures" last), each own-row book right after its home bundle,
+    // then any other individual books.
     const bundleEntries = Object.values(bundles)
       .map((e) => ({ ...e, books: e.books.sort() }))
       .sort((a, b) => (a.label === 'Standalone Adventures' ? 1 : b.label === 'Standalone Adventures' ? -1 : a.label.localeCompare(b.label)));
-    groups.push({ category: cat, entries: [...bundleEntries, ...Object.values(singles)], bookCount: books.length });
+    const singleEntries = Object.values(singles);
+    const placed = new Set<SourceEntry>();
+    const entries: SourceEntry[] = [];
+    for (const bd of bundleEntries) {
+      entries.push(bd);
+      for (const s of singleEntries) if (homeOf.get(s) === bd.label) { entries.push(s); placed.add(s); }
+    }
+    for (const s of singleEntries) if (!placed.has(s)) entries.push(s);
+    groups.push({ category: cat, entries, bookCount: books.length });
   }
   const homebrew = Object.entries(hbCounts)
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => a.name.localeCompare(b.name));
   return { groups, allBooks: Object.keys(counts).sort(), homebrew };
+}
+
+/** The Sources card rows (their labels, in card order) that hold any of these books. 2026-09-30 (desk #170,
+ *  round-3 refuter): the Builder's empty Mythic Calling hint names EVERY row that would unlock a calling — War
+ *  of Immortals, Revenge of the Runelords and Society Scenario #6-09 — not War of Immortals alone. */
+export function sourceRowLabelsFor(groups: readonly SourceGroup[], books: Iterable<string | undefined>): string[] {
+  const want = new Set<string>();
+  for (const b of books) if (b?.trim()) want.add(b.trim());
+  return groups.flatMap((g) => g.entries).filter((e) => e.books.some((b) => want.has(b))).map((e) => e.label);
 }
 
 /**

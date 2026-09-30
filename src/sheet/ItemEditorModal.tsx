@@ -4,6 +4,7 @@ import { attachItem, bumpItemQuantity, detachItem, removeInventoryItem, updateIn
 import { affixHostType, canAttachTo } from '../rules/attachments';
 import { propertyRuneCapacity } from '../rules/derive';
 import { loreKey } from '../rules/build';
+import { enabledBookSet, entrySourceOn } from '../rules/sources';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
 import type { DescNode } from './descref';
@@ -495,20 +496,29 @@ export function ItemEditorModal({
     setOpen((prev) => new Set([...prev, t, 'additional']));
   };
 
+  // desk #170 (2026-09-30, "yes the player sources should aplly to everything he has accses to"): opened from a
+  // character's sheet, the "Start from an existing item…" list and the bound-spell list offer that character's
+  // enabled books only (entrySourceOn: a record with no book always stays). Kept whatever its book: the item this
+  // one is based on, anything the character carries, and the spell already bound. The Homebrew page opens this
+  // editor with no character, so there is no character's books to read and it still offers every book.
+  const books = useMemo(() => (character ? enabledBookSet(character.enabledSources) : null), [character]);
+  const carried = useMemo(() => new Set([...(character?.inventory ?? []), ...inventory].map((i) => i.itemId)), [character, inventory]);
   const itemOpts = useMemo(
     () =>
       Object.values(content.items)
+        .filter((i) => !books || entrySourceOn(books, i) || i.id === baseId || carried.has(i.id))
         .map((i) => ({ id: i.id, name: i.name, note: `${TYPE_LABEL[i.itemType] ?? i.itemType} · lvl ${i.level}` }))
         .sort((a, b) => a.name.localeCompare(b.name)),
-    [content.items],
+    [content.items, books, baseId, carried],
   );
   const spellOpts = useMemo(
     () =>
       Object.values(content.spells)
         .filter((s) => s.rank >= 1 && s.rank <= maxSpellRank && !(s.traits ?? []).includes('focus') && !(s.traits ?? []).includes('ritual'))
+        .filter((s) => !books || entrySourceOn(books, s) || s.id === d.cSpellId)
         .map((s) => ({ id: s.id, name: s.name, note: `Rank ${s.rank} · ${(s.traditions ?? []).join('/')}` }))
         .sort((a, b) => a.name.localeCompare(b.name)),
-    [content.spells, maxSpellRank],
+    [content.spells, maxSpellRank, books, d.cSpellId],
   );
   const traitVocab = useMemo(() => {
     const set = new Set<string>();
@@ -1268,14 +1278,19 @@ function RuneEditor({
   const [pickingSlot, setPickingSlot] = useState<number | null>(null);
   // Property runes carry their rich data (description/traits/level) only on their equipment twin
   // content.items[runeId]; join here so the search popup can show + filter them.
-  const propItems = useMemo(
-    () =>
-      Object.values(content.runes)
-        .filter((r) => r.slot === item.itemType && r.kind === 'property')
-        .map((r) => content.items[r.id])
-        .filter((it): it is Item => !!it),
-    [content, item.itemType],
-  );
+  // desk #170 (2026-09-30, "yes the player sources should aplly to everything he has accses to"): the twin also
+  // carries the rune's book (the `runes` record has none of its own), so the slot offers the character's enabled
+  // books only (entrySourceOn: no book = always); a rune already etched on this item stays. The fundamental
+  // selects below (potency, striking, resilient, reinforcing) are the fixed Core ladders, not records.
+  const etched = (inv.runes as { property?: string[] } | undefined)?.property;
+  const propItems = useMemo(() => {
+    const books = character ? enabledBookSet(character.enabledSources) : null;
+    return Object.values(content.runes)
+      .filter((r) => r.slot === item.itemType && r.kind === 'property')
+      .map((r) => content.items[r.id])
+      .filter((it): it is Item => !!it)
+      .filter((it) => !books || entrySourceOn(books, it) || !!etched?.includes(it.id));
+  }, [content, item.itemType, character, etched]);
   if (item.itemType !== 'weapon' && item.itemType !== 'armor' && item.itemType !== 'shield') return null;
   const runes = (inv.runes ?? {}) as WeaponRunes & ArmorRunes;
   const apply = (next: WeaponRunes | ArmorRunes) => onPlay((p) => updateInventoryItem(p, inv.instanceId, { runes: next }));

@@ -10,6 +10,7 @@
  * builder renders the pickers.
  */
 import type { ContentDatabase, Item, ProficiencyRank } from './types';
+import { entrySourceOn } from './sources';
 
 export const SNARE_FORMULA_KEY = 'snare-formulas';
 
@@ -30,10 +31,15 @@ export function snareAllowance(craftingRank: ProficiencyRank): { known: number; 
 }
 
 /** Snare items offered for a formula slot. The base four slots are common 1st-level snares; slots gained
- *  from higher Crafting proficiency may be any snare of the character's level or lower. */
-export function snareFormulaOptions(content: ContentDatabase, maxLevel: number, commonOnly: boolean): Item[] {
+ *  from higher Crafting proficiency may be any snare of the character's level or lower.
+ *
+ *  `enabled` (the character's enabledBookSet; desk #170, owner 2026-09-30: "yes the player sources should aplly to
+ *  everything he has accses to") leaves out a snare whose book is off, unless it is in `keep` (the formulas already
+ *  chosen); a snare with no book always stays (entrySourceOn). Left out, nothing is filtered. */
+export function snareFormulaOptions(content: ContentDatabase, maxLevel: number, commonOnly: boolean, enabled?: Set<string>, keep?: ReadonlySet<string>): Item[] {
   return Object.values(content.items)
     .filter((it) => (it.traits ?? []).map((t) => String(t).toLowerCase()).includes('snare'))
+    .filter((it) => !enabled || entrySourceOn(enabled, it) || !!keep?.has(it.id))
     .filter((it) => (it.level ?? 0) <= maxLevel)
     .filter((it) => !commonOnly || (it.rarity ?? 'common').toLowerCase() === 'common')
     .sort((a, b) => (a.level ?? 0) - (b.level ?? 0) || a.name.localeCompare(b.name));

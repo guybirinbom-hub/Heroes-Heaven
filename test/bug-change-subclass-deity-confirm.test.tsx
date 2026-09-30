@@ -240,12 +240,15 @@ describe('changing the subclass asks before it drops answered picks', () => {
   it('a swap that keeps the tradition loses nothing, so it must not interrupt', async () => {
     const h = open(SORC);
     page(h.r, '0');
-    // Genie is arcane, same as Draconic — the reducer keeps every spell, so there is nothing to warn about.
-    await pick(h.r, 'Bloodline', 'Bloodline: Genie');
+    // Imperial is arcane, same as Draconic — the reducer keeps every spell, so there is nothing to warn about.
+    // desk #170 (sources-apply-to-everything, 2026-09-30): the bloodline picker follows the character's Sources
+    // now, and this sorcerer has none stored (Core only), so Genie (Advanced Player's Guide) is no longer offered;
+    // Imperial is the Player Core 2 arcane bloodline and carries the same premise.
+    await pick(h.r, 'Bloodline', 'Bloodline: Imperial');
     expect(dialog(), 'a swap with nothing to lose must not be interrupted').toBeFalsy();
     await save(h.r);
     const out = h.saved()!;
-    expect(out.subclassId).toBe('bloodline-genie');
+    expect(out.subclassId).toBe('bloodline-imperial');
     expect(out.cantrips).toEqual(SORC.cantrips);
     expect(out.spells).toEqual(SORC.spells);
     h.r.stop();

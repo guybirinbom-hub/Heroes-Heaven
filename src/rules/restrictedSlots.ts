@@ -81,11 +81,17 @@ export function resolveRestrictedSlots(
   // "…from which you can cast only summoning or incarnate spells": a TRAIT restriction, resolved
   // against the live spell list so it never goes stale, and narrowed to the entry's own tradition —
   // a summoner cannot cast an arcane summoning spell just because it has the trait.
+  // Kept apart as `allowedByTrait`: a database search is not the record's own list, so the sheet's
+  // picker narrows these ids to the character's books (desk #170) while a named list stays whole.
+  const byTrait: string[] = [];
   if (grant.traits?.length && db) {
     for (const sp of Object.values(db.spells)) {
       if (sp.ritual || !(sp.traits ?? []).some((t) => grant.traits!.includes(t))) continue;
       if (entry.tradition && !(sp.traditions ?? []).includes(entry.tradition)) continue;
-      if (!allowed.includes(sp.id)) allowed.push(sp.id);
+      if (!allowed.includes(sp.id)) {
+        allowed.push(sp.id);
+        byTrait.push(sp.id);
+      }
     }
   }
 
@@ -104,6 +110,7 @@ export function resolveRestrictedSlots(
         rank,
         ...(rankOptions && rankOptions.length > 1 ? { rankOptions } : {}),
         ...(allowed.length ? { allowed } : {}),
+        ...(byTrait.length ? { allowedByTrait: byTrait } : {}),
         // Spell Combination: two spells in one slot, each "2 or more spell ranks below the slot's rank".
         ...(grant.pairs ? { pairs: true, spellId2: null } : {}),
         ...(grant.ranksBelow ? { maxRank: Math.max(1, rank - grant.ranksBelow) } : {}),

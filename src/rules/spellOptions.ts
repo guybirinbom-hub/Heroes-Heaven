@@ -26,6 +26,7 @@
  */
 import type { Character, ContentDatabase, RestrictedSlot, Spell, SpellcastingEntry, Tradition } from './types';
 import { listValues } from '../data';
+import { entrySourceOn } from './sources';
 
 /** Everything the answer depends on. `restrictedSlots` defaults to the entry's own — the SHEET passes
  *  the list it is SHOWING instead, which includes the slots a toggled MODE grants (a lit Candle of
@@ -232,6 +233,77 @@ export function spellOptions(ctx: SpellOptionCtx, rank: number, restrictedId?: s
 /** Would that picker offer THIS spell — the render's half of the same question. */
 export function offersSpell(ctx: SpellOptionCtx, rank: number, id: string, restrictedId?: string): boolean {
   return spellOptions(ctx, rank, restrictedId).some((s) => s.id === id);
+}
+
+/**
+ * Every spell this entry already HOLDS or a record names for it — what the sheet's pickers keep whatever its book.
+ *
+ * Cantrips (the openings, the build's pool, the granted and traded ones), the spellbook, the repertoire (its
+ * grants too), learned spells, what the slots and restricted slots hold today, signature spells, and the spells a
+ * feat adds to the list by name (Fey Caller's illusions: a record's own list, never narrowed).
+ */
+export function spellsHeldBy(character: Character, entry: SpellcastingEntry): Set<string> {
+  const out = new Set<string>();
+  const add = (id: string | null | undefined) => {
+    if (id) out.add(id);
+  };
+  for (const id of [...entry.cantrips, ...(entry.cantripPool ?? []), ...(entry.grantedCantrips ?? [])]) add(id);
+  for (const id of [...(entry.tradedCantrips ?? []), ...(entry.cantripSlots ?? [])]) add(id);
+  for (const rec of [entry.spellbook, entry.repertoire, entry.grantedRepertoire, entry.learned])
+    for (const ids of Object.values(rec ?? {})) for (const id of ids) add(id);
+  for (const slots of Object.values(entry.prepared ?? {})) for (const s of slots) add(s.spellId);
+  for (const rs of entry.restrictedSlots ?? []) {
+    add(rs.spellId);
+    add(rs.spellId2);
+  }
+  for (const id of entry.signature ?? []) add(id);
+  for (const id of [...(character.spellListAdditions?.['*'] ?? []), ...(character.spellListAdditions?.[entry.id] ?? [])]) add(id);
+  return out;
+}
+
+/**
+ * THE SHEET PICKER'S LIST: `spellOptions` narrowed to the character's books — desk #170, owner 2026-09-30: "yes the
+ * player sources should aplly to everything he has accses to".
+ *
+ * `books` is the character's enabledBookSet. A spell whose book is off is left out unless the entry already holds
+ * it or a record names it (`spellsHeldBy`); a spell with no book always stays (entrySourceOn). A restricted slot's
+ * `allowed` list is the granting record's own list (a curriculum, Sin Reservoir) and is never narrowed — except the
+ * ids a TRAIT search of the whole database put there (`allowedByTrait`, Master Summoner), which follow the books
+ * like any other list (restrictedAllowedOnBooks).
+ *
+ * ⛔ The RENDER never asks this. applyPlayState keeps asking `spellOptions` / `offersSpell`, which read no book, so
+ * a prepared or repertoire spell from a book switched off since is still drawn and never pruned; this list only
+ * decides what may be ADDED, and it is always a subset of what the render draws (the rule in this file's header).
+ */
+export function pickerSpellOptions(ctx: SpellOptionCtx, rank: number, restrictedId: string | undefined, books: Set<string>): Spell[] {
+  const all = spellOptions(ctx, rank, restrictedId);
+  const rs = restrictedId
+    ? (ctx.restrictedSlots ?? ctx.entry.restrictedSlots)?.find((s) => s.id === restrictedId.replace(/#2$/, ''))
+    : undefined;
+  if (rs?.allowed?.length) {
+    const ok = new Set(restrictedAllowedOnBooks(ctx, rs, books));
+    return all.filter((s) => ok.has(s.id));
+  }
+  const held = spellsHeldBy(ctx.character, ctx.entry);
+  return all.filter((s) => entrySourceOn(books, s) || held.has(s.id));
+}
+
+/**
+ * A restricted slot's `allowed` ids as the character's books see them — desk #170. The granting record's own named
+ * list stays whole; an id a trait search found (`allowedByTrait`) stays only when its book is on, it has no book,
+ * or the entry already holds it (`spellsHeldBy`, which counts what every restricted slot holds today). Both the
+ * picker and the spontaneous "extra cast" card read this, so the card never names a spell the picker would refuse.
+ */
+export function restrictedAllowedOnBooks(ctx: SpellOptionCtx, rs: RestrictedSlot, books: Set<string>): string[] {
+  const allowed = rs.allowed ?? [];
+  if (!rs.allowedByTrait?.length) return allowed;
+  const byTrait = new Set(rs.allowedByTrait);
+  const held = spellsHeldBy(ctx.character, ctx.entry);
+  return allowed.filter((id) => {
+    if (!byTrait.has(id) || held.has(id)) return true;
+    const sp = ctx.content.spells[id];
+    return !sp || entrySourceOn(books, sp);
+  });
 }
 
 /**

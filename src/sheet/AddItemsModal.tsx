@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { shopItems } from '../data';
-import type { Coins, ContentDatabase, Item } from '../rules/types';
+import type { Coins, ContentDatabase, Item, SourceInfo } from '../rules/types';
 import { canAfford } from '../rules/play';
-import { enabledBookSet } from '../rules/sources';
+import { enabledBookSet, entrySourceOn } from '../rules/sources';
 import { formatItemPrice, parsePrice } from '../rules/wealth';
 import { confirmDialog } from './confirm';
 import { FilterableSelect, descNodeOf } from './FilterableSelect';
@@ -27,7 +27,8 @@ export interface CompanionPick {
  *  also appear here (searchable by name/description) but are REFERENCE-ONLY — they aren't inventory
  *  you carry, so they have no Buy/Give, just a description to read.
  *
- *  Vehicles & siege weapons ALSO appear here (they live in the companion catalog, not content.items).
+ *  Vehicles & siege weapons ALSO appear here (they live in the companion catalog, not content.items),
+ *  filtered by the character's books like the items (desk sources-apply-to-everything, 2026-09-30).
  *  When `onBuyCompanion`/`onGiveCompanion` are provided, picking one routes to the companion-add path
  *  (it becomes a companion, not an inventory item). Without those callbacks — e.g. the companion-gear
  *  Add-item picker — vehicles/siege are omitted, since a companion can't carry a vehicle. */
@@ -99,9 +100,14 @@ export function AddItemsModal({
           description: s.description ?? '',
         }) as Item,
     );
+    // desk sources-apply-to-everything (owner, 2026-09-30: "yes the player sources should aplly to everything he
+    // has accses to"): vehicles and siege weapons follow the character's books through the same entrySourceOn as
+    // the items below. A record with no book (every vehicle today) is always offered; an owned one is a
+    // companion, which the sheet resolves from its unfiltered content, so it stays whatever its book says.
+    const bookOn = (r: { source?: SourceInfo }) => entrySourceOn(enabledBooks, r);
     const vehicleEntries: Item[] = companionCatalog
       ? [
-          ...Object.values(content.vehicles ?? {}).map(
+          ...Object.values(content.vehicles ?? {}).filter(bookOn).map(
             (v) =>
               ({
                 id: v.id,
@@ -116,7 +122,7 @@ export function AddItemsModal({
                 description: v.description ?? '',
               }) as Item,
           ),
-          ...Object.values(content.siegeWeapons ?? {}).map(
+          ...Object.values(content.siegeWeapons ?? {}).filter(bookOn).map(
             (s) =>
               ({
                 id: s.id,
@@ -137,8 +143,8 @@ export function AddItemsModal({
       : [];
     /* shopItems (src/data): superseded, retired, items from a book this character has off, and — under
      * "Hide legacy data" — legacy items are filtered BEFORE listValues, so a desk #158 reprint the duplicate
-     * rules hide behind its legacy half is offered when that half is taken away (findHiddenTwins). Services,
-     * vehicles and siege weapons are not source-filtered (not choosable source maps). */
+     * rules hide behind its legacy half is offered when that half is taken away (findHiddenTwins). Services
+     * carry no book and are not source-filtered; vehicles and siege weapons are, above. */
     const items = shopItems(content, hideLegacy, enabledBooks);
     return [...items, ...svcEntries, ...vehicleEntries].sort(
       (a, b) => a.level - b.level || a.name.localeCompare(b.name),

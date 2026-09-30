@@ -21,6 +21,7 @@ import { MpPathTerm, MpPropertyTerm } from './MpTermLinks';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
 import { isFormulaBook } from '../rules/formulaBook';
+import { enabledBookSet, entrySourceOn } from '../rules/sources';
 import { FormulaBookPanel } from './FormulaBookPanel';
 
 const ordinalRank = (n: number): string => (n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`);
@@ -308,12 +309,16 @@ export function ItemDetail({
   });
   const storedSpell = inv.heldSpell ? content.spells[inv.heldSpell] : undefined;
   // Spells legal for a generic scroll/wand: the slot's rank, the right tradition (if locked), no rituals.
+  // desk #170 (2026-09-30, "yes the player sources should aplly to everything he has accses to"): and from the
+  // character's enabled books (entrySourceOn: no book = always); the spell already stored stays whatever its book.
+  const slotBooks = character ? enabledBookSet(character.enabledSources) : null;
   const slotSpellOptions = item.spellSlot
     ? Object.values(content.spells).filter(
         (s) =>
           s.rank === item.spellSlot!.rank &&
           !s.ritual &&
-          (!item.spellSlot!.traditions?.length || (s.traditions ?? []).some((t) => item.spellSlot!.traditions!.includes(t))),
+          (!item.spellSlot!.traditions?.length || (s.traditions ?? []).some((t) => item.spellSlot!.traditions!.includes(t))) &&
+          (!slotBooks || s.id === inv.heldSpell || entrySourceOn(slotBooks, s)),
       )
     : [];
   // Any item can be edited when an editor is wired in. A homebrew item edits in place;

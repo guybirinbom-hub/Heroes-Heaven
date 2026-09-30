@@ -493,8 +493,9 @@ export function listValues<T>(content: ContentDatabase, map: Record<string, T>):
  * always. It filters in the same pass, before listValues, so a reprint twin whose legacy half's BOOK is off
  * is offered in its place. Undefined = no book filter (reprint-check CHECK 9 measures the whole list). The
  * sheet's content is never filtered, so an item the character already holds keeps resolving; the shop just
- * stops offering more of it. Vehicles, siege weapons and services are not choosable source maps
- * (CHOOSABLE_SOURCE_MAPS) and are not in this list — AddItemsModal adds them unfiltered, as before.
+ * stops offering more of it. Vehicles, siege weapons and services are not in this list: AddItemsModal adds
+ * them, and filters the vehicles and siege weapons by the same entrySourceOn (desk sources-apply-to-everything,
+ * 2026-09-30); services carry no book.
  */
 export function shopItems(content: ContentDatabase, hideLegacy?: boolean, enabled?: Set<string>): Item[] {
   const offered = (i: Item) => {

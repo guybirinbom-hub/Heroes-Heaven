@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useMemo, useRef, useState, type ReactNode } from 'react';
 import { isMobileNow } from './useIsMobile';
 import { traitDesc, senseDesc } from '../rules/glossary';
-import type { ActionCost, ActiveCondition, Character, Coins, ContentDatabase, CompanionConfig, CompanionKind, DamageType, EidolonConfig, Item, ModeDef, SimpleCompanion, VehicleStat, SiegeWeaponStat } from '../rules/types';
+import type { ActionCost, ActiveCondition, Character, Coins, ContentDatabase, CompanionConfig, CompanionKind, DamageType, EidolonConfig, Item, ModeDef, SimpleCompanion, SourceInfo, VehicleStat, SiegeWeaponStat } from '../rules/types';
 import {
   deriveAnimalCompanion,
   deriveEidolon,
@@ -18,7 +18,7 @@ import {
   type FamiliarBlock,
 } from '../rules/companions';
 import { parsePrice } from '../rules/wealth';
-import { enabledBookSet } from '../rules/sources';
+import { classOptionOn, classOptionRecords, enabledBookSet, entrySourceOn } from '../rules/sources';
 import { confirmDialog } from './confirm';
 import {
   addCompanionCondition,
@@ -148,12 +148,12 @@ function addRows(content: ContentDatabase, enabled?: Set<string>, offers: { offe
    *  app-only familiar abilities), which belong to no book and so can't be gated. `enabled`
    *  undefined = no filtering (a character that never picked sources). Duplicate `aon-` scrapes are
    *  dropped here too, so a companion can't be offered twice. */
-  const allowed = (r: { id?: string; source?: { book?: string } } | undefined): boolean => {
+  const allowed = (r: { id?: string; source?: SourceInfo; homebrewSourceId?: string } | undefined): boolean => {
     if (!r) return false;
     if (r.id && content.duplicateIds?.has(r.id)) return false;
     if (!enabled) return true;
-    const book = r.source?.book?.trim();
-    return !book || enabled.has(book);
+    // The Builder's test (applySources): its book by name, a homebrew source by id, no book = always.
+    return entrySourceOn(enabled, r);
   };
   const animalsAll = Object.values(content.animalCompanions).filter(allowed);
   const animals: AddRow[] = animalsAll.filter((t) => t.category !== 'construct').map((t) => ({ kind: 'animal', cat: 'animal', typeId: t.id, name: t.name }));
@@ -162,14 +162,25 @@ function addRows(content: ContentDatabase, enabled?: Set<string>, offers: { offe
     { kind: 'familiar', cat: 'familiar', typeId: '', name: 'Familiar (generic)' },
     ...specificFamiliars(content).filter(allowed).map((f) => ({ kind: 'familiar' as const, cat: 'familiar' as const, typeId: f.id, name: f.name })),
   ];
-  const eidolons: AddRow[] = (content.classes.summoner?.subclass?.options ?? []).map((o) => ({ kind: 'eidolon', cat: 'eidolon', typeId: o.id, name: o.name }));
+  // desk sources-apply-to-everything (2026-09-30): an eidolon type is a summoner sub-pick, and its book is its
+  // classFeatures record's (classOptionRecords) — Secrets of Magic, Battlecry!, Book of the Dead … An option with
+  // no such record has no book and is always offered.
+  const optionRecs = classOptionRecords(content);
+  const eidolons: AddRow[] = (content.classes.summoner?.subclass?.options ?? [])
+    // classOptionOn: its record's book, or a later printing's (the eidolons Impossible Magic prints again).
+    .filter((o) => !enabled || !optionRecs.has(o.id) || classOptionOn(enabled, optionRecs.get(o.id)!))
+    .map((o) => ({ kind: 'eidolon', cat: 'eidolon', typeId: o.id, name: o.name }));
   const followers: AddRow[] = Object.values(content.followers ?? {}).map((f) => ({ kind: 'follower', cat: 'follower', typeId: f.id, name: f.name }));
   const pets: AddRow[] = Object.values(content.pets ?? {}).map((p) => ({ kind: 'pet', cat: 'pet', typeId: p.id, name: p.name }));
   const vehicles: AddRow[] = Object.values(content.vehicles ?? {})
     .filter(allowed)
     .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
     .map((v) => ({ kind: 'vehicle', cat: 'vehicle', typeId: v.id, name: v.name, price: v.price, note: `Level ${v.level}` }));
+  // desk sources-apply-to-everything (owner, 2026-09-30: "yes the player sources should aplly to everything he
+  // has accses to"): siege weapons follow the character's books like every row above. Vehicles already did;
+  // none carries a book yet (0 of 107), so all of them pass until the import gives them one.
   const siege: AddRow[] = Object.values(content.siegeWeapons ?? {})
+    .filter(allowed)
     .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
     .map((s) => ({ kind: 'siege', cat: 'siege', typeId: s.id, name: s.name, price: s.price, note: `Level ${s.level}` }));
   // Offered creatures lead the list: they are the ones this particular character's records unlocked,
@@ -354,6 +365,7 @@ function FamiliarAbilityPicker({
   onToggle,
   abilityChoices,
   onAbilityChoice,
+  enabled,
   onClose,
 }: {
   content: ContentDatabase;
@@ -368,6 +380,9 @@ function FamiliarAbilityPicker({
   /** Answers to the sub-questions in `ABILITY_SUB_CHOICE`, keyed by ability id. */
   abilityChoices?: Record<string, string>;
   onAbilityChoice?: (abilityId: string, value: string) => void;
+  /** The character's enabled books (enabledBookSet). desk sources-apply-to-everything (2026-09-30): an ability
+   *  from a book that is off is not offered; one the familiar already has (chosen or granted) stays listed. */
+  enabled: Set<string>;
   onClose: () => void;
 }) {
   const [q, setQ] = useState('');
@@ -377,6 +392,7 @@ function FamiliarAbilityPicker({
   // bug 2026-09-13: search-rank — alphabetical, with the typed ability lifted to the top.
   const list = rankBySearch(
     Object.values(content.familiarAbilities)
+      .filter((a) => has.has(a.id) || free.has(a.id) || entrySourceOn(enabled, a))
       .filter((a) => searchMatches(q, a.name))
       .sort((a, b) => a.name.localeCompare(b.name)),
     q,
@@ -448,9 +464,10 @@ function FamiliarAbilityPicker({
   );
 }
 
-function SpecializationPicker({ content, chosen, onPick, onClose }: { content: ContentDatabase; chosen?: string; onPick: (id: string | undefined) => void; onClose: () => void }) {
+function SpecializationPicker({ content, chosen, enabled, onPick, onClose }: { content: ContentDatabase; chosen?: string; /** enabledBookSet — see FamiliarAbilityPicker. */ enabled: Set<string>; onPick: (id: string | undefined) => void; onClose: () => void }) {
   const [descNode, setDescNode] = useState<DescNode | null>(null);
-  const list = Object.values(content.companionSpecializations ?? {});
+  // desk sources-apply-to-everything (2026-09-30): the character's books only; the chosen one stays listed.
+  const list = Object.values(content.companionSpecializations ?? {}).filter((s) => s.id === chosen || entrySourceOn(enabled, s));
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker cond-modal" onClick={(e) => e.stopPropagation()}>
@@ -1290,15 +1307,30 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
   // eidolon type's own tradition, which is what the feat says ("two cantrips of its tradition").
   const eidCantripSlots = cfg.kind === 'eidolon' ? eidolonCantripSlots(character, content) : 0;
   const eidTradition = cfg.typeId ? content.classes.summoner?.subclass?.options?.find((o) => o.id === cfg.typeId)?.tradition : undefined;
-  const eidCantripOptions = useMemo(
-    () =>
-      eidCantripSlots === 0
-        ? []
-        : Object.values(content.spells)
-            .filter((sp) => sp.rank === 0 && !sp.ritual && (!eidTradition || (sp.traditions ?? []).includes(eidTradition)))
-            .sort((a, b) => a.name.localeCompare(b.name)),
-    [content, eidTradition, eidCantripSlots],
-  );
+  // desk sources-apply-to-everything (2026-09-30): every Type select below offers the character's books only,
+  // like the Add companion picker; the companion's CURRENT choice is always kept in the list (keep-what-you-hold).
+  const enabledBooks = useMemo(() => enabledBookSet(character.enabledSources), [character.enabledSources]);
+  // Same desk, closing pass: so do the eidolon's cantrips (entrySourceOn: no book = always). Kept whatever its
+  // book: a cantrip already chosen, and one printed in the book of the held feat that grants the slots (Magical
+  // Understudy is Impossible Magic's) — the rule a feat's own class sub-picks follow.
+  const eidCantripsHeld = cfg.eidolon?.cantrips;
+  const eidCantripOptions = useMemo(() => {
+    if (eidCantripSlots === 0) return [];
+    const ownBooks = new Set(
+      (character.feats ?? [])
+        .map((f) => content.feats[f.featId])
+        .filter((f) => !!f?.eidolonCantrips)
+        .map((f) => f!.source?.book?.trim())
+        .filter((b): b is string => !!b),
+    );
+    return Object.values(content.spells)
+      .filter((sp) => sp.rank === 0 && !sp.ritual && (!eidTradition || (sp.traditions ?? []).includes(eidTradition)))
+      .filter(
+        (sp) =>
+          entrySourceOn(enabledBooks, sp) || !!eidCantripsHeld?.includes(sp.id) || ownBooks.has(sp.source?.book?.trim() ?? ''),
+      )
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [content, eidTradition, eidCantripSlots, enabledBooks, eidCantripsHeld, character.feats]);
   // The eidolon TYPE's own printed Language line, when it is a question rather than a fixed list.
   const eidLanguageSlots = cfg.kind === 'eidolon' && cfg.typeId ? COMPANION_MODS[cfg.typeId]?.languageChoices ?? 0 : 0;
   const eidLanguageOptions = useMemo(
@@ -1318,7 +1350,10 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
   const famFree = new Set(famGrant?.lockedFree ? famGrant.lockedAbilities ?? [] : []);
   const type = cfg.kind === 'animal' && cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
   const isConstruct = type?.category === 'construct';
-  const animalOpts = Object.values(content.animalCompanions).filter((t) => (t.category === 'construct') === isConstruct);
+  const offeredOrHeld = (current: string | undefined) => (r: { id: string; source?: SourceInfo; homebrewSourceId?: string }) =>
+    r.id === current || entrySourceOn(enabledBooks, r);
+  const animalOpts = Object.values(content.animalCompanions).filter((t) => (t.category === 'construct') === isConstruct).filter(offeredOrHeld(cfg.typeId));
+  const eidolonRecs = useMemo(() => classOptionRecords(content), [content]);
   const spec = cfg.specialization ? content.companionSpecializations?.[cfg.specialization] : undefined;
   return (
     <div className="cmp-edit">
@@ -1394,7 +1429,7 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
             <span className="cmp-lbl">Familiar</span>
             <select className="osel" aria-label="Specific familiar" value={cfg.specificFamiliarId ?? ''} onChange={(e) => set({ specificFamiliarId: e.target.value || undefined })}>
               <option value="">Generic familiar</option>
-              {specificFamiliars(content).map((f) => (
+              {specificFamiliars(content).filter(offeredOrHeld(cfg.specificFamiliarId)).map((f) => (
                 <option key={f.id} value={f.id}>{f.name}</option>
               ))}
             </select>
@@ -1425,9 +1460,16 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
           <div className="cmp-crow">
             <span className="cmp-lbl">Eidolon</span>
             <select className="osel" aria-label="Eidolon type" value={cfg.typeId ?? ''} onChange={(e) => set({ typeId: e.target.value })}>
-              {(content.classes.summoner?.subclass?.options ?? []).map((o) => (
-                <option key={o.id} value={o.id}>{o.name}</option>
-              ))}
+              {(content.classes.summoner?.subclass?.options ?? [])
+                .filter((o) => {
+                  // An eidolon type's book is its classFeatures record's (classOptionRecords), or a later printing's
+                  // (classOptionOn); the current one stays.
+                  const r = eidolonRecs.get(o.id);
+                  return o.id === cfg.typeId || !r || classOptionOn(enabledBooks, r);
+                })
+                .map((o) => (
+                  <option key={o.id} value={o.id}>{o.name}</option>
+                ))}
             </select>
           </div>
 
@@ -1571,6 +1613,7 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
           <span className="cmp-lbl">Type</span>
           <select className="osel" aria-label="Type" value={cfg.typeId ?? ''} onChange={(e) => set({ typeId: e.target.value })}>
             {Object.values((cfg.kind === 'vehicle' ? content.vehicles : content.siegeWeapons) ?? {})
+              .filter(offeredOrHeld(cfg.typeId))
               .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
               .map((v) => (
                 <option key={v.id} value={v.id}>
@@ -1822,6 +1865,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
             onAbilityChoice={(aid, value) =>
               onPlay((p) => updatePlayCompanion(p, abilityFor, { abilityChoices: { ...(comp?.abilityChoices ?? {}), [aid]: value } }))
             }
+            enabled={enabledBookSet(character.enabledSources)}
             onClose={() => setAbilityFor(null)}
           />
         );
@@ -1832,6 +1876,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           <SpecializationPicker
             content={content}
             chosen={comp?.specialization}
+            enabled={enabledBookSet(character.enabledSources)}
             onPick={(id) => onPlay((p) => updatePlayCompanion(p, specFor, { specialization: id }))}
             onClose={() => setSpecFor(null)}
           />

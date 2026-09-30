@@ -18,6 +18,7 @@ import {
   featChoiceLabel,
   featChoicePrompt,
   buildChoiceOptions,
+  classSubPickOrder,
   cantripBonusFor,
   classArchetypeSpellMods,
   legacyArchetypeCantrips,
@@ -35,7 +36,7 @@ import {
 import { OPEN_SOURCE_LABEL, openChoiceOptions } from '../rules/openChoice';
 import { DOMAIN_SPELLS } from '../rules/domains';
 import { confirmDialog } from '../sheet/confirm';
-import { sourceCatalog, enabledBookSet, sourceIdToken, storedSources } from '../rules/sources';
+import { sourceCatalog, enabledBookSet, mythicCallingRecords, sourceIdToken, sourceRowLabelsFor, storedSources } from '../rules/sources';
 import { eligibleFeatsForSlot, findHiddenFeatMatches, fitsSlot, moveTargetFor, swapSlotKeys } from '../rules/featSlots';
 import { classFeatureDescription } from '../rules/featureText';
 import {
@@ -232,6 +233,9 @@ export function Builder({
   // always kept so disabling a book a character already used never breaks it.
   const ovContent = useMemo(() => applyOverrides(baseContent, build.overrides), [baseContent, build.overrides]);
   const sourceCat = useMemo(() => sourceCatalog(baseContent), [baseContent]);
+  // desk #170: the Sources rows that print a Mythic Calling, named by the Level 0 picker's hint when every
+  // calling's book is off (read off the unfiltered database; `content` below has them removed).
+  const callingRows = useMemo(() => sourceRowLabelsFor(sourceCat.groups, mythicCallingRecords(ovContent).map((f) => f.source?.book)), [sourceCat, ovContent]);
   const content = useMemo(() => {
     const keep = collectChosenIds(build, ovContent);
     const enabled = enabledBookSet(build.enabledSources);
@@ -562,8 +566,13 @@ export function Builder({
                               if (def.minLevel != null && build.level < def.minLevel) return null;
                               // Annotated because the branches inside buildChoiceOptions are structurally
                               // different and the generic in choiceOptionsFor would otherwise narrow away `label`.
-                              const opts: NarrowedOption[] =
-                                buildChoiceOptions(recordId, def, build, content, featPrereqChar, key);
+                              // …in the class's own picker's order when the answers are class sub-picks
+                              // (desk #170: Wizard Dedication's schools, alphabetical like Arcane School's).
+                              const opts: NarrowedOption[] = classSubPickOrder(
+                                buildChoiceOptions(recordId, def, build, content, featPrereqChar, key),
+                                def,
+                                content,
+                              );
                               // See the granted-feat picker: a narrowed menu has to say who narrowed it.
                               const limitReasons = effectiveChoiceLimits(recordId, def, featPrereqChar, content).map((l) => l.reason);
                               /*
@@ -848,7 +857,12 @@ export function Builder({
             // …and NARROWED the same way (ruling Q9). This is where the three narrowing backgrounds
             // land: Toymaker, Isgeri Reclaimer and Reputation Seeker all restrict a feat they GRANT,
             // so a limit applied only on the picked-feat path would never have reached them.
-            narrowChoiceOptions(grantedId, def, effectiveChoiceOptions(grantedId, def, featPrereqChar, content), featPrereqChar, content);
+            // …and a class sub-pick in the class's own picker's order, as on the slot path (desk #170).
+            classSubPickOrder(
+              narrowChoiceOptions(grantedId, def, effectiveChoiceOptions(grantedId, def, featPrereqChar, content), featPrereqChar, content),
+              def,
+              content,
+            );
     if (!opts.length) return null;
     const answerKey = grantedChoiceKey(grantedId, grantVariant);
     // The second taking says so on the card, or the player sees the same question twice with no way
@@ -1727,7 +1741,7 @@ export function Builder({
                       <i className="ti ti-adjustments-alt" aria-hidden="true" /> Variant &amp; campaign choices
                     </div>
                     <div className="lvl-cards">
-                      <SetupUnlockedChoices build={build} actions={actions} content={content} />
+                      <SetupUnlockedChoices build={build} actions={actions} content={content} callingRows={callingRows} />
                       {renderSecondClassSpells()}
                     </div>
                   </div>

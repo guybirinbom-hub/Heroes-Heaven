@@ -8,6 +8,7 @@ import {
   type FormulaSlot,
 } from '../rules/formulaBook';
 import { rankBySearch, searchMatches } from '../data/searchRank';
+import { enabledBookSet, entrySourceOn } from '../rules/sources';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
 import { ITEM_SPEC } from './filterSpecs';
@@ -58,8 +59,15 @@ export function FormulaBookPanel({
     );
   }, [formulas, content.items, q]);
 
-  const slotPool = useMemo(() => (slot ? formulaOptions(slot, character, content) : []), [slot, character, content]);
-  const allItems = useMemo(() => Object.values(content.items), [content.items]);
+  // desk sources-apply-to-everything (owner, 2026-09-30: "yes the player sources should aplly to everything he has
+  // accses to"): both pickers offer items from the character's books, like the shop; an item with no book always
+  // stays (entrySourceOn), and a formula this book already holds stays listed, marked as held.
+  const enabledBooks = useMemo(() => enabledBookSet(character.enabledSources), [character.enabledSources]);
+  const slotPool = useMemo(() => (slot ? formulaOptions(slot, character, content, enabledBooks) : []), [slot, character, content, enabledBooks]);
+  const allItems = useMemo(
+    () => Object.values(content.items).filter((it) => entrySourceOn(enabledBooks, it) || !!inv.formulas?.includes(it.id)),
+    [content.items, enabledBooks, inv.formulas],
+  );
 
   return (
     <div className="sd-uses sd-formulas">

@@ -5,6 +5,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { content } from './_content';
+import { addedKeyRowViolations, addedMapKeyViolations, booksOnlyInAddedMaps } from './_sources-added-maps';
+import { classOptionRecords, mythicCallingRecords } from '../src/rules/sources';
 import { applySources, buildCharacter, collectChosenIds, emptyBuild } from '../src/rules/build';
 import { CORE_BOOKS, CHOOSABLE_SOURCE_MAPS, sourceCatalog, enabledBookSet, categoryOfBook, NICHE_CATEGORIES, BOOK_FOLDS, BOOK_SPLITS, BOOK_SPLIT_MARK, storedSources } from '../src/rules/sources';
 
@@ -121,11 +123,16 @@ describe('applySources', () => {
     expect(applySources(db, all, new Set())).toBe(db);
   });
 
-  it('does not touch non-choosable maps (languages, runes, conditions)', () => {
+  // desk #170 closing pass (2026-09-30, "yes the player sources should aplly to everything he has accses to"):
+  // runes left this list. A rune record carries no book, but its item twin does, and the Builder's Living rune card
+  // offers them from `runes`, so applySources' runes pass reads the twin's book (test/sources-apply-to-everything).
+  it('does not touch languages or conditions; runes follow their item twin\'s book', () => {
     const filtered = applySources(db, coreSet, new Set());
     expect(filtered.languages).toBe(db.languages);
-    expect(filtered.runes).toBe(db.runes);
     expect(filtered.conditions).toBe(db.conditions);
+    expect(db.items['assisting']?.source?.book).toBe('Pathfinder Treasure Vault (Remastered)');
+    expect(filtered.runes['assisting']).toBeUndefined();
+    expect(filtered.runes['energy-resistant']).toBe(db.runes['energy-resistant']); // GM Core
   });
 });
 
@@ -319,21 +326,46 @@ describe('enabledBookSet — the 2026-09-25 book split never narrows a saved cho
    */
   it('every book in every Sources row was a v0.1.40 key, or a split or fold derives it', () => {
     const derived = new Set([...BOOK_SPLITS, ...BOOK_FOLDS].map(([, to]) => to));
-    const shippedUnder = (book: string) =>
-      CHOOSABLE_SOURCE_MAPS.flatMap((m) =>
+    // desk #170 (2026-09-30, third refuter's pass): the class sub-picks and the Mythic Callings are classFeatures
+    // records the card counts too (classOptionRecords, mythicCallingRecords), so one that shipped at v0.1.40 counts
+    // as shipped: the three Echoes callings were offered to every character before their book had a switch.
+    const addedFeatureIds = new Set([...classOptionRecords(db).keys(), ...mythicCallingRecords(db).map((f) => f.id)]);
+    const shippedUnder = (book: string) => [
+      ...CHOOSABLE_SOURCE_MAPS.flatMap((m) =>
         Object.entries((db[m] ?? {}) as Record<string, { source?: { book?: string }; aonId?: string }>)
           .filter(([id, r]) => r.source?.book?.trim() === book && (shipped40.has(`${m}/${id}`) || (!!r.aonId && shipped40.has(r.aonId))))
           .map(([id]) => `${m}/${id}`),
-      );
+      ),
+      ...Object.entries(db.classFeatures as Record<string, { source?: { book?: string }; aonId?: string }>)
+        .filter(([id, r]) => addedFeatureIds.has(id) && r.source?.book?.trim() === book && (shipped40.has(`classFeatures/${id}`) || (!!r.aonId && shipped40.has(r.aonId))))
+        .map(([id]) => `classFeatures/${id}`),
+    ];
+    // desk sources-apply-to-everything (2026-09-30): the one exception, measured (test/_sources-added-maps.ts).
+    // A key carried ONLY by what joined the filter that day is a ROW OF ITS OWN, OFF for every existing selection
+    // and never derived; it needs no pair, no pair may name it, and it never sits inside a bundle (asserted below).
+    const onlyAdded = booksOnlyInAddedMaps(db);
+    const exempt: string[] = [];
     const uncovered = sourceCatalog(db).groups.flatMap((g) =>
       g.entries.flatMap((e) => {
         const row = `${g.category} / ${e.label}`;
         return e.books
           .filter((b) => !keys40.has(b) && !derived.has(b) && (rows40.has(row) || shippedUnder(b).length > 0))
+          .filter((b) => !(onlyAdded.has(b) && exempt.push(b)))
           .map((b) => `${row}: ${b}${rows40.has(row) ? '' : ` (records that shipped at v0.1.40: ${shippedUnder(b).slice(0, 4).join(', ')})`}`);
       }),
     );
     expect(uncovered, 'a book key no v0.1.40 selection could hold: cover it with a BOOK_SPLITS pair from the key its records left').toEqual([]);
+    expect(addedMapKeyViolations(exempt, onlyAdded, [...BOOK_SPLITS, ...BOOK_FOLDS]), 'the 2026-09-30 exception').toEqual([]);
+    expect(addedKeyRowViolations(sourceCatalog(db).groups, onlyAdded), 'a 2026-09-30 key has a row of its own').toEqual([]);
+    // Measured 2026-09-30 (2a23c10): every siege weapon's book, Impossible Magic (the runesmith runes) and the 26
+    // books of the 250 class sub-picks (classOptionRecords) already had a row. A book that shows up here later is
+    // allowed by the rule above; add it with its date once the clauses hold for it.
+    // 2026-09-30, the Mythic Callings (mythicCallingRecords, desk #170's second refuter's pass): Scenario #6-09's
+    // three Echoes callings bring its book, which no other choosable record carries. Third refuter's pass: it is a
+    // row of its own ("Society Scenario #6-09: The Power of Legends"), OFF for every stored selection, and the
+    // Pathfinder Society row keeps exactly its v0.1.40 books (83 -> 84 rows, 210 -> 211 books). It is exempted above.
+    expect([...onlyAdded].sort(), 'books only the 2026-09-30 maps carry').toEqual(['Pathfinder Society Scenario #6-09: The Power of Legends']);
+    expect(exempt, 'the Scenario #6-09 key is a real exemption: its callings shipped at v0.1.40').toEqual(['Pathfinder Society Scenario #6-09: The Power of Legends']);
   });
 
   it('an old whole-row Gatewalkers selection reads every book on, and the #187 / #188 grades stay in the pickers', () => {

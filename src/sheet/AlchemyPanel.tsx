@@ -3,7 +3,8 @@ import type { AbilityId, Character, ContentDatabase } from '../rules/types';
 import { abilityMod } from '../rules/derive';
 import { resourceMaxFor, resourcesForCharacter } from '../rules/classResources';
 import { setAlchemyItem, quickAlchemy, type PlayUpdater } from '../rules/play';
-import { craftableFormulas } from '../rules/formulaBook';
+import { craftableFormulas, knownFormulas } from '../rules/formulaBook';
+import { enabledBookSet, entrySourceOn } from '../rules/sources';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
@@ -170,7 +171,16 @@ export function AlchemyPicker({
   const [descNode, setDescNode] = useState<DescNode | null>(null);
   const alchLevel = alchemyLevel(character);
   const eligible = useMemo(() => {
-    const out = Object.values(content.items).filter((it) => (it.traits ?? []).includes('alchemical') && (it.level ?? 0) <= alchLevel);
+    // desk #170 (2026-09-30, "yes the player sources should aplly to everything he has accses to"): the open pool
+    // ("alchemical items of your level or lower") offers the character's enabled books only (entrySourceOn: no book
+    // = always). Kept whatever its book: a formula the character knows (every formula book it carries), and an
+    // item already prepared today or in this draft.
+    const books = enabledBookSet(character.enabledSources);
+    const known = new Set(knownFormulas(character.inventory, content));
+    const held = (id: string) => known.has(id) || (prep[id] ?? 0) > 0 || (character.alchemyPrep?.[id] ?? 0) > 0;
+    const out = Object.values(content.items).filter(
+      (it) => (it.traits ?? []).includes('alchemical') && (it.level ?? 0) <= alchLevel && (entrySourceOn(books, it) || held(it.id)),
+    );
     // Ruling Q19: a formula the book holds "as alchemical consumables" is makeable even though the
     // item is not itself alchemical — Improbable Elixirs' potions are the case. Pool membership only:
     // the formula never becomes an inventory copy, and losing the book empties this again.
@@ -180,7 +190,7 @@ export function AlchemyPicker({
       if (it && !have.has(id) && (it.level ?? 0) <= alchLevel) out.push(it);
     }
     return out;
-  }, [content, character, alchLevel]);
+  }, [content, character, alchLevel, prep]);
   const shown = useMemo(() => {
     // bug 2026-09-13: search-rank — ranked BEFORE the 80-row cap, so the item the player typed can
     // never be the one the cap cuts off (alphabetical order alone decided that).

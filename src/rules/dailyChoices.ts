@@ -10,7 +10,8 @@
  * A record opts in with `choice.daily = true`; everything here is driven by that flag, so wiring a
  * new feat is a data edit, not a code edit.
  */
-import type { Character, ContentDatabase } from './types';
+import type { Character, ContentDatabase, SourceInfo } from './types';
+import { entrySourceOn } from './sources';
 import { askedAtDailyPrep, dailyChoiceKey, effectiveChoiceOptions, narrowChoiceOptions, ownedDailyChoiceRecords as ownedRecords } from './derive';
 import { openChoiceOptions } from './openChoice';
 
@@ -39,10 +40,33 @@ export interface DailyChoice {
 
 
 
-/** Every daily-preparation choice this character has to make, deduped by key. */
-export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[] {
+/**
+ * The content map an OPEN daily choice's answer is a record of, for the Sources filter below. Only the kinds a
+ * player picks from a book: a language is open by rarity and region (it stays out of the Sources, see
+ * CHOOSABLE_SOURCE_MAPS), and every `own-*` kind offers what the character already holds.
+ */
+const OPEN_CHOICE_BOOK_MAP: Partial<Record<string, 'spells' | 'feats' | 'items' | 'heritages' | 'ancestries' | 'backgrounds'>> = {
+  spell: 'spells',
+  feat: 'feats',
+  weapon: 'items',
+  heritage: 'heritages',
+  ancestry: 'ancestries',
+  background: 'backgrounds',
+};
+
+/**
+ * Every daily-preparation choice this character has to make, deduped by key.
+ *
+ * `opts.enabled` (the character's enabledBookSet): desk sources-apply-to-everything (owner, 2026-09-30: "yes the
+ * player sources should aplly to everything he has accses to") — an OPEN choice's list (a daily spell, feat,
+ * weapon …) offers only records whose book is on, like the Builder's pickers; a record with no book always stays
+ * (entrySourceOn), and so does this morning's stored answer, so switching a book off never blanks a pick the
+ * character made. Left out, nothing is filtered (the Builder passes its own already-filtered content).
+ */
+export function dailyChoicesFor(c: Character, db: ContentDatabase, opts?: { enabled?: Set<string> }): DailyChoice[] {
   const seen = new Set<string>();
   const out: DailyChoice[] = [];
+  const enabled = opts?.enabled;
   for (const rec of ownedRecords(c, db)) {
     const def = rec.choice;
     // 'domains'/'skills' resolve against the BUILD, not the morning, so they never belong at rest —
@@ -96,6 +120,14 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
                     !c.dailyLanguages?.includes(o.id)
                   ),
               )
+              // desk sources-apply-to-everything (2026-09-30): a record from a book this character has off is
+              // not offered (opts.enabled above), unless it is the stored answer; one with no book always is.
+              .filter((o) => {
+                const m = enabled ? OPEN_CHOICE_BOOK_MAP[def.from?.type ?? ''] : undefined;
+                if (!enabled || !m) return true;
+                const r = (db[m] as Record<string, { source?: SourceInfo; homebrewSourceId?: string }> | undefined)?.[o.id];
+                return !r || entrySourceOn(enabled, r) || c.dailyChoices?.[dailyChoiceKey(rec.id, def.flag)] === o.id;
+              })
               .map((o) => ({ value: o.id, label: o.name, description: o.description, ...(o.note ? { note: o.note } : {}) }))
           : [];
     // An array/open choice with nothing to offer is malformed or unresolvable — skip it rather than

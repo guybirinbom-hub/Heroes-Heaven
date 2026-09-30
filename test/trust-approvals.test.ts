@@ -135,16 +135,31 @@ describe('trust-approvals.json — completeness', () => {
    * character's enabled books, keeping what the character holds). The answers file does not speak for it,
    * so `unruled` below. Roster 168 -> 169.
    */
+  /*
+   * Then the 2026-09-30 Sources lane filed ONE more ruling the owner gave in chat, straight into `ruled`: #170
+   * sources-apply-to-everything ("yes the player sources should aplly to everything he has accses to" — siege
+   * weapons, vehicles, the runic repertoire, the class sub-picks (schools, bloodlines, patrons, eidolons … by
+   * each option's own record, and any later printing of it), the Mythic Calling picker, the Formula Book and daily
+   * preparations, the property runes (the Living rune card, the item editor's rune slot), Advanced and Quick
+   * Alchemy, a scroll's or wand's stored spell, the Magical Understudy eidolon cantrips, the item editor's
+   * copy-from and bound-spell lists, the Spells tab's Prepare / Add and Learn a spell pickers (rituals included,
+   * and Master Summoner's trait-searched summoning slots) and the Builder's Formula book and Snare formulas cards follow the character's enabled books, keeping what the
+   * character holds — a rune etched on held gear included — and Magical Understudy's own-book cantrips offered
+   * with that book off; out of scope on purpose: the Overrides card, languages, conditions and the Main tab's
+   * Camping list; not yet: the Homebrew page's item editor lists and heritage editor's ancestry dropdown, which
+   * belong to no character). The answers file does not speak for it, so `unruled` below. Roster 169 -> 170.
+   */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
   // batch P02: enhanced-familiar#ability-budget
-  it('the desk roster is every number in work/owner-questions.json — 169: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25 and the one ruled in chat on 2026-09-29 — with no gaps or repeats', () => {
+  it('the desk roster is every number in work/owner-questions.json — 170: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25, the one ruled in chat on 2026-09-29 and the one ruled in chat on 2026-09-30 — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
     // reprint lane 2026-09-25: #165 reprint-cross-kind-sub-pages, #166 book-names-different-book-folds, #167 reprint-grade-to-grade
     // batch P02: enhanced-familiar#ability-budget — #168 enhanced-familiar#fixed-budget-grants (open, so `unruled`)
     // Sources lane 2026-09-29: #169 shop-respects-sources (ruled in chat, so `unruled`)
-    expect(deskNumbers.length).toBe(169);
+    // Sources lane 2026-09-30: desk #170 sources-apply-to-everything (ruled in chat, so `unruled`)
+    expect(deskNumbers.length).toBe(170);
   });
 
   it('every desk number has exactly one disposition', () => {

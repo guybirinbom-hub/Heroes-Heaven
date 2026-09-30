@@ -50,7 +50,7 @@ import type {
 } from './types';
 import type { Ancestry, ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, Heritage, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, RestrictedSlotGrant, Size, SourceInfo, SpellChoiceFilter, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
-import { CHOOSABLE_SOURCE_MAPS, entrySourceOn } from './sources';
+import { CHOOSABLE_SOURCE_MAPS, CLASS_OWN_PICK_MAPS, classOptionInBook, classOptionOn, classOptionRecords, entrySourceOn, mythicCallingRecords, type ClassOptionRecord } from './sources';
 import { abilityMod, askedAtDailyPrep, belongsToArchetype, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, narrowChoiceOptions, outsideDomains, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
 import { advancementRows } from './advancement';
 import { applyCounterMods } from './counterMods';
@@ -3346,6 +3346,10 @@ export function collectChosenIds(build: BuildState, content: ContentDatabase): S
   if (build.backgroundId && build.backgroundId !== CUSTOM_BACKGROUND_ID) add(build.backgroundId);
   for (const v of Object.values(build.featPicks)) add(v);
   for (const v of Object.values(build.featChoices)) add(v);
+  // 2026-09-30 (desk sources-apply-to-everything, third refuter's pass): a GRANTED feat's answer (a cloistered
+  // cleric's doctrine Domain Initiate, a granted dedication's school) is kept like a slot feat's, now that a
+  // choice whose answers are class features follows the Sources (applySources). Mirrored in removeChosenIds.
+  for (const v of Object.values(build.grantedFeatChoices ?? {})) add(v);
   // A feat taken THROUGH another feat's pick (Order Training → Devil Allies) is as chosen as a slot
   // pick. Left out, a source/edition filter dropped it from the builder's content while the built
   // character still had it — so its own question (Devil Allies' Tradition) rendered nowhere.
@@ -3360,6 +3364,18 @@ export function collectChosenIds(build: BuildState, content: ContentDatabase): S
   add(build.devotionSpell);
   add(build.dragonExemplar);
   for (const v of build.commanderTactics ?? []) add(v);
+  // 2026-09-30 (desk sources-apply-to-everything): runesmithRune joined CHOOSABLE_SOURCE_MAPS, so a rune in the
+  // repertoire is kept in the picker when Impossible Magic goes off, like a feat.
+  for (const v of build.runesmithRunes ?? []) add(v);
+  // Same day: the class sub-picks follow the Sources (applySources), and the Summoner Dedication's eidolon type
+  // is one of them (classes.summoner.subclass.options) — kept like the class's own subclass.
+  add(build.archetypeEidolonType);
+  // Same day: the Mythic Calling picker follows the Sources (applySources), so the chosen calling is kept.
+  add(build.mythicCalling);
+  // Same day, closing pass: the Living rune card follows the Sources (applySources' runes pass), so the rune on
+  // the body is kept, and with it its item twin (its name and its own question). A held rune, like held gear:
+  // chosenFromBooks leaves it out, so the Sources card never lists or removes it.
+  add(build.bodyRune);
   for (const v of Object.values(build.gateForks ?? {})) add(v);
   for (const v of Object.values(build.gateExpands ?? {})) add(v);
   if (build.inventorModifications) {
@@ -3377,6 +3393,11 @@ export function collectChosenIds(build: BuildState, content: ContentDatabase): S
   for (const it of build.inventory) {
     add(it.itemId);
     add(it.heldSpell);
+    // 2026-09-30 (desk #170, closing round): a property rune etched on held gear is held too. The runes pass in
+    // applySources would otherwise drop it from the Builder's content, and the Builder's stats read etched runes
+    // off that content (propertyRuneDefs), so its sidebar disagreed with the sheet. chosenFromBooks passes no
+    // inventory, so like the gear itself the Sources card never lists or removes it.
+    for (const r of it.runes?.property ?? []) add(r);
   }
   for (const a of build.overrides?.addedFeats ?? []) add(a.featId);
   for (const id of build.overrides?.allowedFeats ?? []) add(id);
@@ -3408,7 +3429,8 @@ export interface ChosenFromBook {
  */
 export function chosenFromBooks(build: BuildState, content: ContentDatabase, books: ReadonlySet<string>): ChosenFromBook[] {
   if (!books.size) return [];
-  const chosen = collectChosenIds({ ...build, inventory: [] }, content);
+  // Held, like the inventory: the rune on a Living Rune body (desk #170's closing pass) is never "lost".
+  const chosen = collectChosenIds({ ...build, inventory: [], bodyRune: null }, content);
   const out: ChosenFromBook[] = [];
   const seen = new Set<string>();
   for (const m of CHOOSABLE_SOURCE_MAPS) {
@@ -3472,8 +3494,13 @@ export function removeChosenIds(build: BuildState, ids: ReadonlySet<string>): Bu
     primaryApparition: clear(build.primaryApparition),
     devotionSpell: clear(build.devotionSpell),
     dragonExemplar: clear(build.dragonExemplar),
+    archetypeEidolonType: clear(build.archetypeEidolonType),
+    mythicCalling: clear(build.mythicCalling),
+    // Cleared when handed (the inverse of collectChosenIds); the Sources card never hands it (chosenFromBooks).
+    bodyRune: clear(build.bodyRune),
     featPicks: filterRec(build.featPicks) ?? build.featPicks,
     featChoices: filterRec(build.featChoices) ?? build.featChoices,
+    grantedFeatChoices: filterRec(build.grantedFeatChoices),
     dedicationSkillFeats: filterRec(build.dedicationSkillFeats),
     // Filtered per-rank: a rank may now hold several ids, and dropping the whole rank because one
     // of them referenced removed content would silently delete the others.
@@ -3484,6 +3511,7 @@ export function removeChosenIds(build: BuildState, ids: ReadonlySet<string>): Bu
     spells: filterArrRec(build.spells) ?? build.spells,
     cantrips: build.cantrips.filter((v) => !gone(v)),
     commanderTactics: build.commanderTactics?.filter((v) => !gone(v)),
+    runesmithRunes: build.runesmithRunes?.filter((v) => !gone(v)),
     // An item is dropped outright; a held spell inside a kept item is just cleared.
     inventory: build.inventory.filter((it) => !gone(it.itemId)).map((it) => (gone(it.heldSpell) ? { ...it, heldSpell: undefined } : it)),
   };
@@ -3514,6 +3542,42 @@ export function removeChosenIds(build: BuildState, ids: ReadonlySet<string>): Bu
   return next;
 }
 
+/** A record's own choice whose answers are class sub-picks (see choiceAnswersAreClassFeatures). */
+export type ClassFeatureChoiceDef = FeatChoiceDef & { options: NonNullable<FeatChoiceDef['options']> };
+
+/**
+ * Whether a record's own choice asks for a CLASS SUB-PICK — a school, bloodline, order, patron, lesson … —
+ * rather than a word that merely shares an id with one. `ownsFeature` (the record's own opt-in: the lessons,
+ * Hellknight orders, Manifold Modifications) or EVERY option a class sub-pick (`optionRecs`, from
+ * classOptionRecords). Matching one value that merely resolves would be wrong: Advanced Domain's "time" is a
+ * domain, not the Time mystery. One predicate for applySources' book filter and the Builder's order, so the two
+ * can never disagree on which pickers are class sub-picks.
+ */
+export function choiceAnswersAreClassFeatures(
+  def: FeatChoiceDef | undefined,
+  optionRecs: ReadonlyMap<string, unknown>,
+): def is ClassFeatureChoiceDef {
+  return !!def && def.kind === 'array' && !!def.options?.length && (!!def.ownsFeature || def.options.every((o) => optionRecs.has(o.value.replace(/^aon-/, ''))));
+}
+
+/**
+ * 2026-09-30 (desk #170, the final refuter's pass): a class sub-pick a record asks for is offered in the SAME
+ * order as the class's own picker — alphabetical by name. Wizard Dedication's stored list is the Player Core
+ * schools in order and then every later book's appended (School of Gates and School of Kalistrade after School
+ * of Unified Magical Theory), so switching Shining Kingdoms on added its schools at the foot of the list while the
+ * wizard's own Arcane School picker placed them among the rest. Order only: nothing is added or removed, a
+ * disabled row keeps its reason, and any other choice keeps its printed order. The Builder's two record-choice
+ * pickers (a slot's feat, a granted feat) call this; buildChoiceOptions does not, so its callers' order is as it was.
+ */
+export function classSubPickOrder<T extends { value: string; label: string }>(
+  opts: T[],
+  def: FeatChoiceDef | undefined,
+  content: ContentDatabase,
+): T[] {
+  if (opts.length < 2 || !choiceAnswersAreClassFeatures(def, classOptionRecords(content))) return opts;
+  return [...opts].sort((a, b) => a.label.localeCompare(b.label));
+}
+
 /** Hide content from disabled source books (the BUILDER's picker content only — never the sheet's).
  *  Keeps any entry whose book is enabled OR whose id is already chosen (`keepIds`). Returns the same
  *  ref when nothing is dropped (memo-safe, like applyOverrides). */
@@ -3523,16 +3587,134 @@ export function applySources(content: ContentDatabase, enabled: Set<string>, kee
   for (const m of CHOOSABLE_SOURCE_MAPS) {
     const map = content[m] as Record<string, { source?: SourceInfo; homebrewSourceId?: string }> | undefined;
     if (!map) continue;
+    // A class's own pick list (CLASS_OWN_PICK_MAPS: the runic repertoire) keeps what is printed in a held
+    // opener's book — the class or its dedication — the way a held class keeps its own-book sub-picks below.
+    const ownBooks = new Set<string>();
+    for (const o of CLASS_OWN_PICK_MAPS[m] ?? []) {
+      const b = keepIds.has(o.id) ? (content[o.map] as Record<string, { source?: SourceInfo }> | undefined)?.[o.id]?.source?.book?.trim() : undefined;
+      if (b) ownBooks.add(b);
+    }
     let dropped = false;
     const filtered: Record<string, unknown> = {};
     for (const [id, e] of Object.entries(map)) {
-      if (entrySourceOn(enabled, e) || keepIds.has(id)) filtered[id] = e;
+      const book = e.source?.book?.trim();
+      if (entrySourceOn(enabled, e) || keepIds.has(id) || (!!book && ownBooks.has(book))) filtered[id] = e;
       else dropped = true;
     }
     if (dropped) {
       (next as unknown as Record<string, unknown>)[m] = filtered;
       changed = true;
     }
+  }
+  /*
+   * Same desk, closing pass: the Builder's Living rune card offers property runes from `runes`, whose records carry
+   * no book of their own (0 of 160); each property rune's book is its item twin's (`items[id]`, 142 of 142). A rune
+   * whose twin's book is off leaves the picker's content unless it is kept (keepIds: the chosen bodyRune); a rune
+   * with no twin, or a twin with no book, always stays (entrySourceOn). The twin is read from the unfiltered input.
+   */
+  let runesOut: ContentDatabase['runes'] | null = null;
+  for (const id of Object.keys(content.runes ?? {})) {
+    const twin = content.items?.[id];
+    if (!twin || entrySourceOn(enabled, twin) || keepIds.has(id)) continue;
+    delete (runesOut ??= { ...content.runes })[id];
+  }
+  if (runesOut) {
+    next.runes = runesOut;
+    changed = true;
+  }
+  /*
+   * 2026-09-30 (desk sources-apply-to-everything, "yes the player sources should aplly to everything he has
+   * accses to"): the class sub-picks. The Builder offers a bloodline, patron, school, order, eidolon, apparition,
+   * epithet … from the class record's own `subclass.options` / `extraChoices[].options`, nested where the map
+   * loop above never looked, so a Core-only wizard was offered the Impossible Magic schools. Each option's book
+   * is its classFeatures record's (classOptionRecords); an option with no such record, or no book, always stays,
+   * and so does a chosen one (keepIds). An option printed in its CLASS's own book goes with the class: a class
+   * reaches this loop only when its book is on or the character holds it (the map loop above), and a held psychic
+   * whose book was switched off must still be able to answer its own required subconscious mind — the class card
+   * reads the key attribute off those options. A class object is copied only when one of its lists loses one.
+   */
+  const optionRecs = classOptionRecords(content);
+  const classes = next.classes;
+  let classesOut: Record<string, ClassDef> | null = null;
+  for (const [cid, c] of Object.entries(classes ?? {})) {
+    const classBook = c.source?.book?.trim();
+    // classOptionOn / classOptionInBook read the option's later printings too (CLASS_OPTION_REPRINTS): the
+    // eleven eidolons our records file under Secrets of Magic / Book of the Dead are printed in Impossible Magic.
+    const keepOpt = (o: SubclassOption) => {
+      const r = optionRecs.get(o.id);
+      return !r || classOptionOn(enabled, r) || keepIds.has(o.id) || classOptionInBook(r, classBook);
+    };
+    const subDrops = !!c.subclass?.options.some((o) => !keepOpt(o));
+    const extraDrops = !!c.extraChoices?.some((g) => g.options.some((o) => !keepOpt(o)));
+    if (!subDrops && !extraDrops) continue;
+    (classesOut ??= { ...classes })[cid] = {
+      ...c,
+      subclass: subDrops && c.subclass ? { ...c.subclass, options: c.subclass.options.filter(keepOpt) } : c.subclass,
+      extraChoices: extraDrops
+        ? c.extraChoices?.map((g) => (g.options.some((o) => !keepOpt(o)) ? { ...g, options: g.options.filter(keepOpt) } : g))
+        : c.extraChoices,
+    };
+  }
+  if (classesOut) {
+    next.classes = classesOut;
+    changed = true;
+  }
+  /*
+   * Same desk, third refuter's pass: the SAME sub-picks offered through a record's own choice. A multiclass
+   * dedication (Wizard Dedication's school, Sorcerer Dedication's bloodline, Druid Dedication and Order Explorer's
+   * order, Witch Dedication's patron, Oracle Dedication's mystery …) and the witch's Basic / Greater / Major
+   * Lesson ask from `feats.<id>.choice.options`, which the class pass above never reached, so a Core-only
+   * character's class picker hid School of Gates while Wizard Dedication still offered it, and every lesson was
+   * offered whatever its book. A choice counts when its answers ARE class features: `ownsFeature` (the record's
+   * own opt-in — the lessons, Hellknight orders, Manifold Modifications) or EVERY option a class sub-pick
+   * (classOptionRecords). Matching one value that merely resolves would be wrong: Advanced Domain's "time" is a
+   * domain, not the Time mystery, and Advanced Weapon Training's "shield" is a weapon group (FeatChoiceDef.
+   * ownsFeature says the same). An option stays when it has no record or no book, when any printing's book is on
+   * (classOptionOn), when it is the stored answer (keepIds: featChoices, grantedFeatChoices; bare or `aon-`), or
+   * when it is printed in the asking record's own book — the rule a class's own sub-picks follow, since a record
+   * reaches here only with its book on or held. Feats and class features both; a record is copied only when its
+   * list loses one.
+   */
+  const allFeatures = (content.classFeatures ?? {}) as Record<string, ClassOptionRecord>;
+  const bare = (v: string) => v.replace(/^aon-/, '');
+  const namesClassFeatures = (def: FeatChoiceDef | undefined): def is ClassFeatureChoiceDef => choiceAnswersAreClassFeatures(def, optionRecs);
+  const filterChoiceMap = <R extends { source?: SourceInfo; choice?: FeatChoiceDef }>(map: Record<string, R> | undefined): Record<string, R> | null => {
+    let out: Record<string, R> | null = null;
+    for (const [id, r] of Object.entries(map ?? {})) {
+      const def = r?.choice;
+      if (!namesClassFeatures(def)) continue;
+      const ownBook = r.source?.book?.trim();
+      const keepOpt = (o: { value: string }) => {
+        const rec = optionRecs.get(bare(o.value)) ?? allFeatures[bare(o.value)];
+        return !rec || classOptionOn(enabled, rec) || keepIds.has(o.value) || keepIds.has(bare(o.value)) || classOptionInBook(rec, ownBook);
+      };
+      if (def.options.every(keepOpt)) continue;
+      (out ??= { ...map })[id] = { ...r, choice: { ...def, options: def.options.filter(keepOpt) } };
+    }
+    return out;
+  };
+  const featsChoiceOut = filterChoiceMap(next.feats);
+  if (featsChoiceOut) {
+    next.feats = featsChoiceOut;
+    changed = true;
+  }
+  const featuresChoiceOut = filterChoiceMap(next.classFeatures);
+  if (featuresChoiceOut) {
+    next.classFeatures = featuresChoiceOut;
+    changed = true;
+  }
+  // Same desk, second refuter's pass: the Mythic Calling picker (SetupUnlockedChoices) reads the `calling`-trait
+  // classFeatures, which no pass above reaches. A calling whose book is off leaves the picker's content unless it
+  // is the chosen one (keepIds: mythicCalling); a calling with no book always stays (entrySourceOn). Only those
+  // records go — every other classFeature is granted by a class, not picked, and stays whole.
+  let featuresOut: Record<string, ClassFeature> | null = null;
+  for (const f of mythicCallingRecords(content)) {
+    if (entrySourceOn(enabled, f) || keepIds.has(f.id)) continue;
+    delete (featuresOut ??= { ...next.classFeatures })[f.id];
+  }
+  if (featuresOut) {
+    next.classFeatures = featuresOut;
+    changed = true;
   }
   return changed ? next : content;
 }
