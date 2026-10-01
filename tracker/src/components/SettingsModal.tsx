@@ -917,7 +917,7 @@ export function TimerSection() {
     <div>
       <ToggleRow
         label="Enable turn timer"
-        hint="Show a timer chip in the top bar that records how long each turn takes. Starts when combat begins, splits at each turn, and lets you review per-turn times, player averages, and a universal DM average."
+        hint="Show a timer chip in the top bar that records how long each turn takes. Starts when combat begins, splits at each turn, and lets you review per-turn times, player averages, and a universal DM average. Also shows each player's average turn time on their party card; turned off, those card chips are hidden and the saved averages are kept."
         checked={enabled}
         onChange={v => setSetting('turnTimerEnabled', v)}
       />

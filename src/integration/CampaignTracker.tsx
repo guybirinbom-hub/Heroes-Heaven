@@ -1013,17 +1013,24 @@ export function CampaignTracker({
    *  columns (saves under AC on the left, everything else on the right).
    *
    *  `canAdd` is false for the pane card: a PC only HAS a pane because they are in the initiative
-   *  order, so the "+" there could never be anything but permanently disabled. */
+   *  order, so the "+" there could never be anything but permanently disabled.
+   *
+   *  The turn chip is there only while "Enable turn timer" is on (no timer icon on a player card
+   *  when the timer is off). With it off AND no "+", the header slot is null rather than an empty
+   *  fragment: PartyMembers draws `.party-card-tools` for any truthy header, and `.party-card-h` is a
+   *  flex row with a 10px gap, so an empty span would push the chevron 10px off the card's edge. */
+  const turnTimerEnabled = useSettingsStore((s) => s.turnTimerEnabled);
   const cardExtra = useCallback(
     (mem: PartyMember, canAdd = true): PartyCardSlots => {
       const st = pcStats.byId.get(mem.charId);
       return {
-        header: (
-          <>
-            <MemberTurnButton campaignId={m.id} charId={mem.charId} name={mem.name} />
-            {canAdd && <PartyAddToOrderButton member={mem} />}
-          </>
-        ),
+        header:
+          !turnTimerEnabled && !canAdd ? null : (
+            <>
+              {turnTimerEnabled && <MemberTurnButton campaignId={m.id} charId={mem.charId} name={mem.name} />}
+              {canAdd && <PartyAddToOrderButton member={mem} />}
+            </>
+          ),
         saves: st ? <PcSavesCells stats={st} detail={pcDetail} /> : null,
         // Emptiness is decided HERE, before the slot exists: the card splits into two columns off
         // the slot itself, so handing it an element that renders null (every right-column section
@@ -1031,7 +1038,7 @@ export function CampaignTracker({
         right: st && hasRightColumn(st, pcDetail) ? <PcStatsCardExtra stats={st} detail={pcDetail} /> : null,
       };
     },
-    [pcStats, pcDetail, m.id],
+    [pcStats, pcDetail, m.id, turnTimerEnabled],
   );
 
   // ── A PC's pane IS their party card ──────────────────────────────────────────

@@ -58,6 +58,9 @@ function MemberCard({ player, partyId, onLinkStatBlock, detail }: MemberCardProp
   const [confirmRemove, setConfirmRemove] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
   const [showTimeline, setShowTimeline] = useState(false)
+  // The ⏱ chip follows "Enable turn timer": no timer icon on a player card while the timer is off.
+  // Display-only — the saved averages stay, and the chip comes back when the timer is turned on.
+  const timerOn = useSettingsStore(s => s.turnTimerEnabled)
 
   useEffect(() => { setName(player.name) }, [player.name])
 
@@ -120,9 +123,9 @@ function MemberCard({ player, partyId, onLinkStatBlock, detail }: MemberCardProp
             padding: '2px 0', outline: 'none', minWidth: 0,
           }}
         />
-        {/* Turn-time average — shown once turns have been saved for this name.
-            Click to open the timeline of session averages over time. */}
-        {player.turnAvgSeconds != null && (player.turnCount ?? 0) > 0 && (
+        {/* Turn-time average — shown once turns have been saved for this name, and only while
+            the turn timer is on. Click to open the timeline of session averages over time. */}
+        {timerOn && player.turnAvgSeconds != null && (player.turnCount ?? 0) > 0 && (
           <button
             onClick={() => setShowTimeline(true)}
             title={`Average turn time over ${player.turnCount} saved turn${player.turnCount === 1 ? '' : 's'} — click for the timeline`}
