@@ -38,8 +38,46 @@ import type { SourceInfo } from '../rules/types';
  * PinContext exists), close, and the TrustMarker. There is NO "Full page" button (owner ruling
  * 2026-10-02, section 13). The card owns drill-in: each click on a linked word pushes that term onto
  * a stack; Back pops one level; Escape, the X and a click outside close the whole chain (onExit).
+ *
+ * Step 6 builds `mode: 'gm'` with `chrome: 'embed'` (EmbedRecordCard below): the GM screen page.
  */
-export function RecordCard({ record, node, mode, printed, headerActions, ours, footer, fallbackText, onExit, onBackToSource }: RecordCardProps) {
+export function RecordCard(props: RecordCardProps) {
+  // Two components, not one with a branch: the popup registers on the dismiss stack (useEscapeClose)
+  // and an embedded page must not, so the choice is made before any hook runs.
+  return props.chrome === 'embed' ? <EmbedRecordCard {...props} /> : <PopupRecordCard {...props} />;
+}
+
+/**
+ * Card step 6 — mode 'gm', chrome 'embed' (docs/card-design.md section 6: "gm: HostPage … The whole page
+ * with its stat lines, embed chrome"). The page a GM pinned to the GM screen (CampaignTracker.tsx
+ * HostPage), drawn byte for byte as HostPage drew it before the card (test/card-hostpage.test.tsx):
+ *  - the tracker window owns the frame, so there is no overlay, header, Back, star or close, and nothing
+ *    goes on the dismiss stack (useEscapeClose would arm the phone's Back trap on mount);
+ *  - the whole page with its stat lines (Range, Duration, Source …) — nothing is dropped, as on browse;
+ *  - a linked word and the "Remastered as" name open through the host (onOpenRef: the GM's own popup),
+ *    since an embedded page has no stack to drill into;
+ *  - a record with no page shows its text (DescBody); one this version does not ship says so.
+ * The record is read off the host's `content` when given (the tracker holds its own), else the context.
+ */
+function EmbedRecordCard({ record, content: hostContent, onOpenRef }: RecordCardProps) {
+  const ctxContent = useContent();
+  const db = hostContent ?? ctxContent;
+  const ref = record && isRecordRef(record) ? record : undefined;
+  const rec = ref ? (db as unknown as Record<string, Record<string, { description?: string; descRefs?: DescRef[] }> | undefined> | null)?.[ref.bucket]?.[ref.id] : undefined;
+  const { node, loading } = useAstNode(ref?.bucket, ref?.id);
+  const open = onOpenRef ?? noOpen;
+  // desk #158: a pinned old printing says what it was remastered as; the name opens the reprint through the host.
+  const ra = ref ? remasteredAsOf(db, ref) : undefined;
+  if (record && !isRecordRef(record)) return <DescBody description={record.text} descRefs={record.refs} />;
+  if (!ref || !rec) return <p className="sd-ours">This page is not in this version of Heroes Heaven.</p>;
+  if (node) return <AstRenderer node={node} bodyOnly selfRef={`${ref.bucket}:${ref.id}`} onOpenRef={open} footer={ra ? <RemasteredLine ra={ra} onOpen={open} /> : null} />;
+  if (loading) return <div className="ast-body ast-loading" aria-busy="true" />;
+  return <DescBody description={rec.description} descRefs={rec.descRefs} remasteredAs={ra} />;
+}
+const noOpen = () => undefined;
+
+/** The popup card (modes 'browse' and 'mine', chrome 'popup'). */
+function PopupRecordCard({ record, node, mode, printed, headerActions, ours, footer, fallbackText, onExit, onBackToSource }: RecordCardProps) {
   const content = useContent();
   const exit = onExit;
   useEscapeClose(exit);

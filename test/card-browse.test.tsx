@@ -393,7 +393,10 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     // so the page's own use lines reach that popup; a landed switch may stand either way (section 9:
     // turning it back is one line and the tests still hold), every surface not yet landed is off.
     // batch card premise: feat-4458 "Frequency once per day"
-    const landed = new Set(['statDetail']);
+    // Card step 6 turns the GM screen page (CampaignTracker HostPage) into the 'gm' embed card, drawn
+    // byte for byte as before with its stat lines (test/card-hostpage.test.tsx).
+    // batch card premise: spell-6 "Range touch"
+    const landed = new Set(['statDetail', 'hostPage']);
     for (const [surface, on] of Object.entries(CARD_ON)) if (!landed.has(surface)) expect(on, surface).toBe(false);
   });
 });

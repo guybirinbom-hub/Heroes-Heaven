@@ -7,6 +7,8 @@ import { DescriptionModal } from '../sheet/DescriptionModal';
 import { DescBody } from '../sheet/DescBody';
 import { RemasteredLine, remasteredAsOf } from '../sheet/RemasteredLine';
 import { AstRenderer } from '../sheet/AstRenderer';
+import { RecordCard } from '../sheet/RecordCard';
+import { cardOn } from '../sheet/cardSurfaces';
 import { astSlug, useAstNode } from '../sheet/useAst';
 import { bucketOf } from '../sheet/astStore';
 import { PinContext, type PinDescApi } from '../sheet/PinContext';
@@ -107,8 +109,20 @@ const hostRefOf = (n: DescNode): string | null => {
 };
 
 /** A page pinned to the GM screen: the record's own page (its Range/Duration lines kept — the GM reads
- *  them off it mid-fight), links opening HH's popup; a record with no page shows its text. */
-function HostPage({ content, bucket, id, onOpen }: {
+ *  them off it mid-fight), links opening HH's popup; a record with no page shows its text.
+ *  Card step 6 (docs/card-design.md section 6 "gm"): it is the record card in mode 'gm' with chrome
+ *  'embed' (CARD_ON.hostPage) — the whole page, no popup frame (the tracker window owns it), drawn byte
+ *  for byte as before (test/card-hostpage.test.tsx). Switched off, the legacy page below. */
+export function HostPage({ content, bucket, id, onOpen }: {
+  content: ContentDatabase; bucket: string; id: string; onOpen: (bucket: string, id: string) => void;
+}) {
+  return cardOn('hostPage')
+    ? <RecordCard record={{ bucket, id }} mode="gm" chrome="embed" content={content} onOpenRef={onOpen} />
+    : <HostPageLegacy content={content} bucket={bucket} id={id} onOpen={onOpen} />;
+}
+
+/** The pre-card GM screen page, kept while CARD_ON.hostPage can be turned back (card step 22 removes it). */
+export function HostPageLegacy({ content, bucket, id, onOpen }: {
   content: ContentDatabase; bucket: string; id: string; onOpen: (bucket: string, id: string) => void;
 }) {
   const rec = (content as unknown as Record<string, Record<string, { description?: string; descRefs?: DescRef[] }> | undefined>)[bucket]?.[id];

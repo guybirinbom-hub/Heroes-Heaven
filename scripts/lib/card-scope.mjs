@@ -794,6 +794,8 @@ export function baselineProblems(found, baseline, file, cardOn = CARD_ON) {
 
 /** The surfaces section 6 names, each modelled from the component's own props. */
 export const SURFACES = ['featDetail', 'itemDetail', 'spellDetail', 'actionDetail', 'statDetail', 'browse', 'choiceDetails', 'builderOrigin', 'pin'];
+/** Section 6's 'gm' surface (card step 6): the ledger judges it (surfaceRows), card-parity does not sample it. */
+export const GM_SURFACE = 'gm';
 
 const isActionCost = (c) => !!c && (c.type === 'actions' || c.type === 'reaction' || c.type === 'free' || c.type === 'variable' || c.type === 'duration');
 const actionId = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -934,6 +936,15 @@ export function surfaceRows(deps) {
       rows.push({ surface: 'browse', bucket: b, id, own: { bucket: b, id }, read: { bucket: b, slug: id }, hideMeta: false, itemLists: true, md: rec.description ?? '', printed: [], mode: 'browse' });
     }
   }
+
+  // The GM screen page (CampaignTracker.tsx HostPage → RecordCard mode 'gm', chrome 'embed'; card step 6):
+  // a `host` pane tab names any "bucket:slug" the GM Search or a GM-screen pin can reach, and draws that
+  // record's page through useAstNode(bucket, id), bodyOnly, with its stat lines and item lists — the
+  // whole page, nothing dropped. It reads exactly as browse does, so it is modelled as browse; it is the
+  // same with CARD_ON.hostPage on or off (the card reproduces the legacy page byte for byte), so it keeps
+  // no `legacy` entries. Not in SURFACES: test/card-parity.test.tsx draws and renders a sample per
+  // SURFACES entry and has no renderer for the GM page (test/card-hostpage.test.tsx renders it).
+  for (const r of rows.filter((x) => x.surface === 'browse')) rows.push({ ...r, surface: GM_SURFACE });
 
   // A PinStar from FeatDetail / ItemDetail / SpellDetail: {title, key} and no slug → key + astSlug(title).
   const pinKey = { feats: 'feats', classFeatures: 'classFeatures', heritages: 'classFeatures', items: 'items', spells: 'spells' };

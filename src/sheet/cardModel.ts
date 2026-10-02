@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { DescRef } from '../rules/types';
+import type { ContentDatabase, DescRef } from '../rules/types';
 import type { AstNode } from './astStore';
 import type { DescNode } from './descref';
 
@@ -11,6 +11,8 @@ import type { DescNode } from './descref';
  * The other modes, the embed chrome and the reserved props are declared here so later steps add
  * behaviour without reshaping the component's contract. Step 5 builds `mode: 'mine'` with
  * `chrome: 'popup'` (StatDetailModal's full text): `printed`, the footer and `fallbackText` are read.
+ * Step 6 builds `mode: 'gm'` with `chrome: 'embed'` (CampaignTracker's HostPage, the GM screen page):
+ * `record`, `content` and `onOpenRef` are read; no frame, no stack, nothing on the dismiss stack.
  */
 
 /** browse = today's search popup, never scoped; mine = the sheet's "what is yours"; gm = HostPage. */
@@ -127,8 +129,21 @@ export interface RecordCardProps {
   fallbackText?: string;
   /** Extra footer content, after the RemasteredLine, inside the scrolling body. */
   footer?: ReactNode;
-  /** Dismiss the WHOLE popup chain: the X, Escape, and clicking outside. */
-  onExit: () => void;
+  /**
+   * Chrome 'popup': dismiss the WHOLE popup chain — the X, Escape, and clicking outside. Every popup
+   * caller passes it. Chrome 'embed' has no exit (the host window owns the frame) and omits it.
+   */
+  onExit?: () => void;
+  /**
+   * Chrome 'embed' (card step 6): where a linked word or the "Remastered as" name opens. An embedded page
+   * has no stack to drill into, so the host opens it (HostPage: the GM's own description popup).
+   */
+  onOpenRef?: (bucket: string, id: string) => void;
+  /**
+   * Chrome 'embed': the host's content database, read for the record. The campaign tracker holds its
+   * own (CampaignTracker's `content` prop) and is not always mounted under the app's ContentContext.
+   */
+  content?: ContentDatabase;
   /** When given, Back shows at the first level too and calls this (returns to the popup this opened from). */
   onBackToSource?: () => void;
 }
