@@ -15,6 +15,7 @@ import type { ContentDatabase, DescRef } from '../src/rules/types';
 import { CARD_ON } from '../src/sheet/cardSurfaces';
 import { RecordCard } from '../src/sheet/RecordCard';
 import type { OursLine } from '../src/sheet/cardModel';
+import { textOf, variantSection } from '../src/sheet/astVisibility';
 
 /**
  * Card step 3 (docs/card-design.md section 9, row 3): the BROWSE card is extracted from
@@ -55,6 +56,9 @@ import type { OursLine } from '../src/sheet/cardModel';
  *  - DescriptionModal: `onExit={onExit ?? onClose}` → `onExit={onClose}` → Escape test red.
  *  - RecordCard: a "Full page" button in the controls → Full-page test red.
  *  - RecordCard: the ours box dropped from the body's tail → slots test red.
+ *  - (card step 4, refuter nit: the drill-in clicks its COMPUTED target and checks it opened) RecordCard
+ *    openRef opening the bucket's second record instead of the clicked one → drill-in test red
+ *    ("expected ' Aberrant Form ' to be ' Locate '"); the old "any link, name changed" test passed it.
  */
 const SEED = 20261002;
 const BUCKETS = ['feats', 'classFeatures', 'items', 'actions', 'spells', 'trait'] as const;
@@ -182,6 +186,14 @@ async function allRenders(): Promise<Record<string, { first: string; settled?: s
   return out;
 }
 
+/** A node's text as AstRenderer prints it (astVisibility's textOf), and the header name it draws. */
+const flat = (n: AstNode): string => textOf(n);
+function headName(tree: AstNode): string {
+  const top = tree.c ?? [];
+  const title = top.find((n) => n.t === 'title' && Number(n.level || 1) <= 1) || top.find((n) => n.t === 'title');
+  return title ? textOf(title.c?.find((x) => x.t === 'link' || x.t === 'text') || title) : '';
+}
+
 /** The first page record (sorted) carrying a live cross-link to another feats/actions/spells page. */
 function linkedRecord(): { slug: string; target: string } {
   for (const slug of Object.keys(trees.feats).filter((s) => recs('feats')[s]).sort()) {
@@ -246,11 +258,32 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     expect(first).toBeTruthy();
     expect(host.querySelector('.info-back'), 'no Back at the first level').toBeNull();
     const [tb, ts] = target.split(':');
-    const link = [...host.querySelectorAll<HTMLElement>('.ast-body a.ast-lk')].find((a) => a.textContent && trees[tb][ts]);
-    expect(link, `${slug} → ${target}`).toBeTruthy();
-    await act(async () => { link!.click(); });
+    // card step 4 (refuter nit): click the COMPUTED target, not any live link. The body's live links in
+    // render order are the tree's body links (title and trait chips excluded) whose ref is not the page
+    // itself and names a shipped record — the anchors AstRenderer draws, in the same order.
+    const liveRefs: { ref: string; label: string }[] = [];
+    (function walk(n: AstNode, inTitle: boolean) {
+      if (n.t === 'traits') return;
+      const title = inTitle || (n.t === 'title' && Number(n.level ?? 1) <= 1);
+      if (!title && n.t === 'link' && n.ref && n.ref !== `feats:${slug}`) {
+        const [b, s] = n.ref.split(':');
+        if (recs(b)[s]) liveRefs.push({ ref: n.ref, label: flat(n) });
+      }
+      (n.c ?? []).forEach((c) => walk(c, title));
+    })(trees.feats[slug], false);
+    const at = liveRefs.findIndex((l) => l.ref === target);
+    // batch card premise: feat-6457 "you can spend 8 hours to locate a resident"
+    expect(at, `${slug} carries a live link to ${target}`).toBeGreaterThanOrEqual(0);
+    const anchors = [...host.querySelectorAll<HTMLElement>('.ast-body a.ast-lk')];
+    expect(anchors.length, 'one anchor per live body link').toBe(liveRefs.length);
+    const link = anchors[at];
+    // batch card premise: feat-6457 "you can spend 8 hours to locate a resident"
+    expect(link.textContent, `${slug} → ${target}`).toBe(liveRefs[at].label);
+    await act(async () => { link.click(); });
     await act(async () => { await new Promise((r) => setTimeout(r, 0)); });
+    // batch card premise: feat-6457 "you can spend 8 hours to locate a resident"
     expect(name(), 'the drilled-in page is open').not.toBe(first);
+    expect(name(), 'and it is the computed target').toBe(headName(variantSection(trees[tb][ts], ts)));
     const back = host.querySelector<HTMLElement>('.info-back');
     expect(back, 'Back shows once drilled in').toBeTruthy();
     await act(async () => { back!.click(); });

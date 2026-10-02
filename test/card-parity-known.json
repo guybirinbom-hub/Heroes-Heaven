@@ -1,0 +1,50 @@
+{
+  "_rule": "Card step 4 (docs/card-design.md section 8, check 2). The named cases the guard must flag TODAY, each with the verdict test/card-parity.test.tsx reads off the real popup AND computes from the ledger (scripts/lib/card-scope.mjs). SHRINK-ONLY, checked both ways: a case whose verdict changes fails (update it only in the commit that changes that popup), and a case that is now right fails until its entry is removed. Never add an entry to make a red test green.",
+  "cases": [
+    {
+      "key": "featDetail|feats:halfling-luck",
+      "why": "owner case 1: the Feats-tab popup drops the page's Frequency and Trigger lines (hideMeta drops the leading Source column whole), so it reads as a free action usable any time",
+      "verdict": { "labels": { "Frequency": "MISSING", "Trigger": "MISSING" }, "unnamed": ["Source"] }
+    },
+    {
+      "key": "spellDetail|spells:buzzing-servants",
+      "why": "owner case 2: the Duration row prints the field's \"1 minute\" where the page prints \"sustained up to 1 minute\", and an Area row the page does not print",
+      "verdict": { "labels": { "Duration": "DIFFERS", "Area": "EXTRA" } }
+    },
+    {
+      "key": "featDetail|classFeatures:second-doctrine-cloistered-cleric",
+      "why": "owner case 3: the record's tree is the whole Cloistered Cleric page, every doctrine level on it",
+      "verdict": { "s2": "WRONG_FAMILY_OVERSHOW" }
+    },
+    {
+      "key": "spellDetail|spells:approximate",
+      "why": "owner case 4: \"Area 1 cubic foot\" is printed in the prose (the description's bold preamble), not in the stat rows",
+      "verdict": { "placement": ["Area"] }
+    },
+    {
+      "key": "featDetail|heritages:gutsy-halfling",
+      "why": "a heritage row: FeatDetail reads classFeatures by the slug of the heritage's name, finds nothing, and falls back to the old text while the heritages bucket holds its page",
+      "verdict": { "identity": true }
+    },
+    {
+      "key": "featDetail|classFeatures:expert-spellcaster@wizard",
+      "why": "a wizard's Expert Spellcaster row shows the shared record's page, which is the Psychic's",
+      "verdict": { "s2": "CLASS_MISMATCH" }
+    },
+    {
+      "key": "builderOrigin|backgrounds:acolyte",
+      "why": "the builder background picker opens its popup with key 'origin', a bucket that does not exist, so every background falls back to the old text",
+      "verdict": { "identity": true }
+    },
+    {
+      "key": "itemDetail|items:bag-of-devouring~hidden",
+      "why": "a hidden Bag of Devouring wears Spacious Pouch's name and text, but the popup reads the cursed item's own page by its id",
+      "verdict": { "identity": true, "labels": { "Usage": "MISSING" } }
+    },
+    {
+      "key": "actionDetail|actions:treat-wounds",
+      "why": "trained Treat Wounds from the Main tab: the page's Requirements line is dropped with the header, and nothing says what the trained rank gives",
+      "verdict": { "labels": { "Requirements": "MISSING" }, "unnamed": ["Source"] }
+    }
+  ]
+}

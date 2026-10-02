@@ -158,6 +158,9 @@ export function RecordCard({ record, node, headerActions, ours, footer, onExit, 
     <div className="picker-overlay" onClick={exit}>
       <div ref={modalRef} className="picker info-modal" onClick={(e) => e.stopPropagation()}>
         <div className="picker-head">
+          {/* headerActions sit where the page branch puts them: straight before Back, so a caller's
+              buttons keep one order — actions, Back, star, close — on every branch (card step 4). */}
+          {headerActions}
           {showBack && (
             <button className="info-back" aria-label="Back to previous description"
               onClick={(e) => { e.stopPropagation(); back(); }}>
@@ -165,7 +168,6 @@ export function RecordCard({ record, node, headerActions, ours, footer, onExit, 
             </button>
           )}
           <span className="info-title">{cur.title}</span>
-          {headerActions}
           {pin && (
             <button className={'info-star' + (pinned ? ' on' : '')}
               title={pinned ? 'Remove from Pinned' : 'Favorite — add to Pinned'}
