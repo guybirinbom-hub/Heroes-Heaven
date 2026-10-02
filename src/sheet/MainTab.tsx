@@ -101,7 +101,7 @@ function skillLabel(key: ProficiencyKey): string {
   return key.charAt(0).toUpperCase() + key.slice(1);
 }
 
-interface Act {
+export interface Act {
   name: string;
   cost?: ActionCost;
   desc: string;
@@ -126,7 +126,7 @@ interface Act {
 
 /** An action opened in the compact-mode detail popup. `prepare` carries a Commander tactic's
  *  prepared state + toggle so the popup keeps that control (it has no place on a chip). */
-interface DetailAction {
+export interface DetailAction {
   a: Act;
   pinnable: boolean;
   prepare?: { prepared: boolean; disabled: boolean; onToggle: () => void };
@@ -163,6 +163,110 @@ function saveActionsSub(v: ActionsSub): void {
   } catch {
     /* storage unavailable — the tab still switches, it just isn't remembered */
   }
+}
+
+/** The kebab-cased id an action's NAME maps to in content.actions (and in the record-marker index). */
+const actionId = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+/** The pin key of an action row: what `character.pinned` holds for it. */
+const actionKey = (name: string) => `action:${name}`;
+
+/** The favourite star on a strike row, an action row and the action popup. Renders nothing without
+ *  `onPlay` (a read-only sheet has nothing to pin into). */
+function PinToggle({ k, pinned, onPlay }: { k: string; pinned: ReadonlySet<string>; onPlay?: PlayUpdater }) {
+  if (!onPlay) return null;
+  const on = pinned.has(k);
+  return (
+    <button
+      className={'pin-star' + (on ? ' on' : '')}
+      title={on ? 'Unpin' : 'Pin to top'}
+      aria-label={on ? 'Unpin' : 'Pin to top'}
+      onClick={(e) => {
+        e.stopPropagation();
+        onPlay((p) => togglePin(p, k));
+      }}
+    >
+      <i className="ti ti-star" aria-hidden="true" />
+    </button>
+  );
+}
+
+/** Action popup (compact chips + full rows both open it): cost glyph + name in the header, the
+ *  favorite star + (for tactics) the prepare toggle inside, the trait tags, and the full
+ *  linkified description in the body.
+ *
+ *  Module-level (card step 2): it was a closure inside MainTab that read character, content, onPlay
+ *  and the pinned set from there. Every one of them is a prop now, so the popup can be rendered — and
+ *  moved onto the card — without MainTab. */
+export function ActionDetailModal({
+  detail,
+  onClose,
+  character,
+  content,
+  onPlay,
+  pinned,
+}: {
+  detail: DetailAction;
+  onClose: () => void;
+  character: Character;
+  content: ContentDatabase;
+  /** Without it the popup is read-only: no pin star, no prepare toggle. */
+  onPlay?: PlayUpdater;
+  /** The character's pin keys (`character.pinned`), which light the star. */
+  pinned: ReadonlySet<string>;
+}) {
+  useEscapeClose(onClose);
+  const { a, pinnable, prepare } = detail;
+  const traits = a.traits ?? [];
+  /* …the SAME cost the chip that opened this popup shows. A record marker whose value is a cost
+   * replaces the action's own (Quick Jump: High Jump becomes ◆), and the chip already routes it —
+   * this header read `a.cost` straight off the table, so tapping a ◆ chip opened a ◆◆ popup. One
+   * action, two costs, one click apart: the same defect the row fix exists for. */
+  const cost = markedActionCost(recordMarkersFor(character, content, 'action', actionId(a.name))) ?? a.cost;
+  return (
+    <div className="picker-overlay" onClick={onClose}>
+      <div className="picker info-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="picker-head">
+          <span className="action-cost action-detail-cost">
+            {cost ? <ActionGlyph cost={cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
+          </span>
+          <span className="info-title">
+            {a.name}
+            {a.skill && <span className="action-skill">{a.skill}</span>}
+          </span>
+          {prepare && onPlay && (
+            <button
+              className={'prep-toggle' + (prepare.prepared ? ' on' : '')}
+              title={prepare.prepared ? 'Prepared today — click to unprepare' : 'Prepare this tactic'}
+              aria-label={prepare.prepared ? 'Unprepare tactic' : 'Prepare tactic'}
+              disabled={!prepare.prepared && prepare.disabled}
+              onClick={() => {
+                prepare.onToggle();
+                onClose();
+              }}
+            >
+              <i className={'ti ' + (prepare.prepared ? 'ti-circle-check-filled' : 'ti-circle')} aria-hidden="true" />
+            </button>
+          )}
+          {pinnable && <PinToggle k={actionKey(a.name)} pinned={pinned} onPlay={onPlay} />}
+          <button className="picker-close" onClick={onClose} aria-label="Close">
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="info-body">
+          {traits.length > 0 && (
+            <div className="action-detail-traits">
+              {traits.map((t) => (
+                <InfoTerm key={t} className="strike-trait" title={capWord(t)} description={traitDesc(t, content)}>
+                  {t}
+                </InfoTerm>
+              ))}
+            </div>
+          )}
+          <DescBody description={a.fullDesc ?? a.desc} descRefs={a.fullRefs ?? a.descRefs} className="action-detail-desc" onExit={onClose} astKey={a.astKey} astId={a.astId} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export function MainTab({
@@ -237,7 +341,6 @@ export function MainTab({
   // Curated activities carry only a short summary; the detail popup wants the FULL rules text +
   // its cross-references (conditions, etc.) + traits, which live in content.actions under the
   // kebab-cased name. Keep the summary inline; surface the full version (when found) in the popup.
-  const actionId = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   const enrichActivity = (a: ActivityDef): Act => {
     const full = content.actions[actionId(a.name)];
     // A feat-activity (Bon Mot, Battle Medicine) has no action record — its full text lives on the
@@ -495,7 +598,6 @@ export function MainTab({
   const stanceIssue = stanceRequirementIssue(character, content);
 
   const strikeKey = (instanceId: string) => `strike:${instanceId}`;
-  const actionKey = (name: string) => `action:${name}`;
 
   const matchText = (name: string, desc = '') => searchMatches(query, name, desc);
   const matchCost = (c?: ActionCost) => {
@@ -565,21 +667,7 @@ export function MainTab({
   }
 
   function Star({ k }: { k: string }) {
-    if (!onPlay) return null;
-    const on = pinned.has(k);
-    return (
-      <button
-        className={'pin-star' + (on ? ' on' : '')}
-        title={on ? 'Unpin' : 'Pin to top'}
-        aria-label={on ? 'Unpin' : 'Pin to top'}
-        onClick={(e) => {
-          e.stopPropagation();
-          onPlay((p) => togglePin(p, k));
-        }}
-      >
-        <i className="ti ti-star" aria-hidden="true" />
-      </button>
-    );
+    return <PinToggle k={k} pinned={pinned} onPlay={onPlay} />;
   }
 
   /**
@@ -852,65 +940,6 @@ export function MainTab({
             wrap={false} and supplies its own per-skill rows so each skill gets its own line(s). */}
         {open && (compactActions && wrap ? <div className="action-chip-row">{children}</div> : children)}
       </>
-    );
-  }
-
-  /** Action popup (compact chips + full rows both open it): cost glyph + name in the header, the
-   *  favorite star + (for tactics) the prepare toggle inside, the trait tags, and the full
-   *  linkified description in the body. */
-  function ActionDetailModal({ detail, onClose }: { detail: DetailAction; onClose: () => void }) {
-    useEscapeClose(onClose);
-    const { a, pinnable, prepare } = detail;
-    const traits = a.traits ?? [];
-    /* …the SAME cost the chip that opened this popup shows. A record marker whose value is a cost
-     * replaces the action's own (Quick Jump: High Jump becomes ◆), and the chip already routes it —
-     * this header read `a.cost` straight off the table, so tapping a ◆ chip opened a ◆◆ popup. One
-     * action, two costs, one click apart: the same defect the row fix exists for. */
-    const cost = markedActionCost(recordMarkersFor(character, content, 'action', actionId(a.name))) ?? a.cost;
-    return (
-      <div className="picker-overlay" onClick={onClose}>
-        <div className="picker info-modal" onClick={(e) => e.stopPropagation()}>
-          <div className="picker-head">
-            <span className="action-cost action-detail-cost">
-              {cost ? <ActionGlyph cost={cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
-            </span>
-            <span className="info-title">
-              {a.name}
-              {a.skill && <span className="action-skill">{a.skill}</span>}
-            </span>
-            {prepare && onPlay && (
-              <button
-                className={'prep-toggle' + (prepare.prepared ? ' on' : '')}
-                title={prepare.prepared ? 'Prepared today — click to unprepare' : 'Prepare this tactic'}
-                aria-label={prepare.prepared ? 'Unprepare tactic' : 'Prepare tactic'}
-                disabled={!prepare.prepared && prepare.disabled}
-                onClick={() => {
-                  prepare.onToggle();
-                  onClose();
-                }}
-              >
-                <i className={'ti ' + (prepare.prepared ? 'ti-circle-check-filled' : 'ti-circle')} aria-hidden="true" />
-              </button>
-            )}
-            {pinnable && <Star k={actionKey(a.name)} />}
-            <button className="picker-close" onClick={onClose} aria-label="Close">
-              <i className="ti ti-x" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="info-body">
-            {traits.length > 0 && (
-              <div className="action-detail-traits">
-                {traits.map((t) => (
-                  <InfoTerm key={t} className="strike-trait" title={capWord(t)} description={traitDesc(t, content)}>
-                    {t}
-                  </InfoTerm>
-                ))}
-              </div>
-            )}
-            <DescBody description={a.fullDesc ?? a.desc} descRefs={a.fullRefs ?? a.descRefs} className="action-detail-desc" onExit={onClose} astKey={a.astKey} astId={a.astId} />
-          </div>
-        </div>
-      </div>
     );
   }
 
@@ -1358,7 +1387,16 @@ export function MainTab({
       </section>
 
       {openDesc && <DescriptionModal root={openDesc} onClose={() => setOpenDesc(null)} />}
-      {detailAction && <ActionDetailModal detail={detailAction} onClose={() => setDetailAction(null)} />}
+      {detailAction && (
+        <ActionDetailModal
+          detail={detailAction}
+          onClose={() => setDetailAction(null)}
+          character={character}
+          content={content}
+          onPlay={onPlay}
+          pinned={pinned}
+        />
+      )}
       {strikeDetail && (
         <StrikeDetailModal
           strike={strikeDetail}
