@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import type { Combatant } from '../types/pf2e'
 import { useCombatStore } from '../store/combatStore'
 import { usePartyStore } from '../store/partyStore'
-import { saveCustomCreature } from '../data/dataStore'
+import { saveCustomCreatureImage } from '../data/dataStore'
 import { StatBlock } from './StatBlock'
 import { CreatureDescription } from './CreatureDescription'
 import { useGameData } from '../data/gameDataContext'
@@ -24,6 +24,8 @@ function HamburgerMenu({ combatant, onEditClick }: {
   const { setEliteWeak, setScaledLevel, setCombatantImage } = useCombatStore()
   const [open, setOpen] = useState(false)
   const [levelInput, setLevelInput] = useState('')
+  // Said when an uploaded image could not reach the creature's saved homebrew entry.
+  const [imageNote, setImageNote] = useState('')
   const ref = useRef<HTMLDivElement>(null)
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -50,7 +52,8 @@ function HamburgerMenu({ combatant, onEditClick }: {
     reader.onload = ev => {
       const dataUrl = ev.target?.result as string
       setCombatantImage(combatant.id, dataUrl)
-      saveCustomCreature({ ...combatant.creature!, image: dataUrl })
+      setImageNote(saveCustomCreatureImage(combatant.creature!, dataUrl) ? ''
+        : 'Image shown on the board only: this creature\'s homebrew stat block can\'t be read, so it was not changed.')
     }
     reader.readAsDataURL(file)
     e.target.value = ''
@@ -76,9 +79,23 @@ function HamburgerMenu({ combatant, onEditClick }: {
     <div ref={ref} style={{ position: 'relative' }}>
       <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageUpload} />
 
+      {imageNote && (
+        <div
+          role="alert"
+          onClick={() => setImageNote('')}
+          title="Click to dismiss"
+          style={{
+            position: 'absolute', top: '100%', right: 0, zIndex: 400, marginTop: 4, width: 240,
+            background: 'var(--danger-soft)', border: 'var(--app-bw) solid var(--danger)',
+            borderRadius: 'var(--radius-sm)', color: 'var(--danger)',
+            fontSize: 11.5, padding: '7px 10px', cursor: 'pointer',
+          }}
+        >{imageNote}</div>
+      )}
+
       {/* 3-line hamburger */}
       <button
-        onClick={() => setOpen(v => !v)}
+        onClick={() => { setOpen(v => !v); setImageNote('') }}
         style={{
           background: 'none', border: 'none', cursor: 'pointer',
           padding: '5px 4px', display: 'flex', flexDirection: 'column',

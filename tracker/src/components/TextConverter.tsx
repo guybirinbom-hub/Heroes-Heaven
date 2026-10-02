@@ -2,11 +2,12 @@ import { useState, useCallback, useMemo } from 'react'
 import type { Creature, Combatant } from '../types/pf2e'
 import { parseStatBlockText } from '../utils/parseStatBlockText'
 import { creatureToText } from '../utils/creatureToText'
-import { saveCustomCreature, deleteCustomCreature, loadCustomCreatures } from '../data/dataStore'
+import { saveCustomCreature, deleteCustomCreature, loadCustomCreatures, toStatBlock, statBlockProblem, isCustomIdTaken } from '../data/dataStore'
 import { readCustomCreaturesFromFilePicker } from '../utils/dataTransfer'
 import { useCombatStore } from '../store/combatStore'
 import { StatBlock } from './StatBlock'
 import { StatBlockBuilder } from './StatBlockBuilder'
+import { ErrorBoundary } from './ErrorBoundary'
 
 // ── Help dialog ────────────────────────────────────────────────────────────
 // Opened by the "?" button in the bottom-left of the footer. Explains the
@@ -197,6 +198,12 @@ function mockCombatant(creature: Creature): Combatant {
 
 let _uid = 0
 const uid = () => `custom-${Date.now()}-${++_uid}`
+/** `id` when the homebrew list can address it (a non-empty string), else a fresh one: saveCustomCreature
+ *  refuses an entry without its own id, and a pasted or linked stat block may carry none. */
+const ownId = (id: unknown) => (typeof id === 'string' && id ? id : uid())
+/** The id a NEW entry is saved under: a pasted one only while no stored entry holds it. Save never
+ *  writes over another creature — a pasted copy of one's JSON, renamed, replaced it with no prompt. */
+const newId = (id: unknown) => (typeof id === 'string' && id && !isCustomIdTaken(id) ? id : uid())
 
 interface Props {
   onClose: () => void
@@ -233,7 +240,12 @@ export function TextConverter({ onClose, existing }: Props) {
   const [importQueue, setImportQueue] = useState<Creature[]>([])
   const [isImportDraft, setIsImportDraft] = useState(false)
 
-  const [inputText, setInputText] = useState(() => existing ? creatureToText(existing) : '')
+  // A board combatant's creature can be one the homebrew lists skip (no traits list, say): the text
+  // pane then starts empty rather than crashing the panel; its JSON still shows below.
+  const [inputText, setInputText] = useState(() => {
+    const c = existing ? toStatBlock(existing) : null
+    return c ? creatureToText(c) : ''
+  })
   const [outputJson, setOutputJson] = useState(
     existing ? JSON.stringify(existing, null, 2) : ''
   )
@@ -254,13 +266,24 @@ export function TextConverter({ onClose, existing }: Props) {
 
   const previewCombatant = useMemo(() => {
     if (!preview || !outputJson.trim()) return null
-    try { return mockCombatant(JSON.parse(outputJson) as Creature) }
+    try {
+      const c = toStatBlock(JSON.parse(outputJson))
+      return c ? mockCombatant(c) : null
+    }
     catch { return null }
   }, [preview, outputJson])
 
   const getCreature = useCallback((): Creature | null => {
     try {
-      const c = JSON.parse(outputJson) as Creature
+      const parsed: unknown = JSON.parse(outputJson)
+      // One stat block in the tracker's own format, never a list, a bare value or a raw bestiary
+      // entry: a pasted bestiary LIST was saved as an entry with no name, and every homebrew list in
+      // the tracker crashed on it. What comes back has every field the board reads filled in.
+      const c = toStatBlock(parsed)
+      if (!c) {
+        setJsonError(`That JSON is not a stat block: ${statBlockProblem(parsed)}.`)
+        return null
+      }
       setJsonError('')
       return c
     } catch (e) {
@@ -299,7 +322,7 @@ export function TextConverter({ onClose, existing }: Props) {
     // otherwise parse the pasted text as a convenience so nothing is lost.
     let seed: Creature | null = null
     if (outputJson.trim()) {
-      try { seed = JSON.parse(outputJson) as Creature } catch { seed = null }
+      try { seed = toStatBlock(JSON.parse(outputJson)) } catch { seed = null }
     }
     if (!seed && inputText.trim()) {
       const { creature } = parseStatBlockText(inputText)
@@ -315,7 +338,10 @@ export function TextConverter({ onClose, existing }: Props) {
     // Reflect what was built into the text box if it's empty, so flipping back
     // shows the equivalent plain-text stat block instead of a blank textarea.
     if (!inputText.trim() && outputJson.trim()) {
-      try { setInputText(creatureToText(JSON.parse(outputJson) as Creature)) } catch { /* keep as-is */ }
+      try {
+        const c = toStatBlock(JSON.parse(outputJson))
+        if (c) setInputText(creatureToText(c))
+      } catch { /* keep as-is */ }
     }
     setInputMode('text')
   }
@@ -354,10 +380,12 @@ export function TextConverter({ onClose, existing }: Props) {
     loadCreatureIntoEditor(first)
     setImportQueue(rest)
     setIsImportDraft(true)
+    const left = r.skipped ?? []
     setImportMsg({
       kind: 'ok',
       text: `Loaded "${first.name}" for review${rest.length ? ` — ${rest.length} more queued` : ''}. ` +
-        'Check it over and edit if needed, then Save to add it to your homebrew.',
+        'Check it over and edit if needed, then Save to add it to your homebrew.' +
+        (left.length ? ` Not loaded (${left.length}): ${left.map(s => s.replace(/\.+$/, '')).join('; ')}.` : ''),
     })
   }, [loadCreatureIntoEditor])
 
@@ -406,7 +434,7 @@ export function TextConverter({ onClose, existing }: Props) {
       setSaveStep('confirmDupName')
       return
     }
-    if (!c.id) c.id = uid()
+    c.id = newId(c.id)
     saveCustomCreature(c)
     advanceOrClose()
   }
@@ -423,7 +451,7 @@ export function TextConverter({ onClose, existing }: Props) {
         return
       }
     }
-    if (!c.id) c.id = uid()
+    c.id = existing ? ownId(c.id) : newId(c.id)
     saveCustomCreature(c)
     addCombatant(c)
     advanceOrClose()
@@ -454,7 +482,9 @@ export function TextConverter({ onClose, existing }: Props) {
   const handleOverwrite = () => {
     const c = getCreature()
     if (!c || !existing) return
-    c.id = existing.id
+    // An `existing` with no id of its own is no stored entry's — it is saved as a new one, never over
+    // every entry that lacks an id.
+    c.id = ownId(existing.id)
     saveCustomCreature(c)
     onClose()
   }
@@ -620,9 +650,12 @@ export function TextConverter({ onClose, existing }: Props) {
 
             {preview ? (
               <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg-base)' }}>
+                {/* toStatBlock reads every field the stat block uses; a renderer failure it could
+                    not foresee fails here, not the whole app (this panel sits outside the
+                    tracker's own boundary in Heroes Heaven). */}
                 {previewCombatant
-                  ? <StatBlock combatant={previewCombatant} />
-                  : <div style={{ padding: 16, color: 'var(--danger)', fontSize: 12 }}>Invalid JSON — cannot preview</div>
+                  ? <ErrorBoundary label="this preview" resetKeys={[outputJson]}><StatBlock combatant={previewCombatant} /></ErrorBoundary>
+                  : <div style={{ padding: 16, color: 'var(--danger)', fontSize: 12 }}>Not a stat block — cannot preview</div>
                 }
               </div>
             ) : (
@@ -640,7 +673,8 @@ export function TextConverter({ onClose, existing }: Props) {
               />
             )}
 
-            {!preview && jsonError && (
+            {/* Shown under the preview too: a save refused there would otherwise do nothing silently. */}
+            {jsonError && (
               <div style={{
                 padding: '5px 12px', background: 'var(--danger-soft)',
                 borderTop: 'var(--app-bw) solid var(--border)', flexShrink: 0,

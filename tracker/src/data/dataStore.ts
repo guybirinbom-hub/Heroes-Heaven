@@ -1,4 +1,4 @@
-import type { Creature, RawCondition, RawTrait, RawCreature, RawHazard } from '../types/pf2e'
+import type { Creature, RawCondition, RawTrait, RawCreature, RawHazard, Attack, Ability, SpellBlock, SpellSlotEntry } from '../types/pf2e'
 import { parseCreature, parseHazard } from '../utils/parseCreature'
 import { entriesToText } from '../utils/tags'
 import { searchMatches } from '../utils/searchRank'
@@ -349,43 +349,257 @@ export async function loadCreatureByName(name: string): Promise<Creature | null>
 
 // ── Custom creatures ──────────────────────────────────────────────────────
 // In-memory cache so we don't JSON.parse the whole list on every read/write.
+// `_storedCustom` is the list exactly as stored, every entry; `_customCreatures` is the usable view
+// every reader gets. Writers work on the stored list, so a skipped entry is never dropped by them.
+let _storedCustom: unknown[] | null = null
 let _customCreatures: Creature[] | null = null
 const CUSTOM_KEY = 'pf2e-custom-creatures'
 
-export function loadCustomCreatures(): Creature[] {
-  if (_customCreatures) return _customCreatures
+// ── Reading a stat block ──────────────────────────────────────────────────
+// A homebrew stat block reaches the board from storage, the GM mirror, a backup, a pasted JSON or an
+// imported file, and the board reads EVERY field of it: the lists read name/traits/source/level, the
+// stat block reads senses.flatMap and languages.join, Elite/Weak reads Object.entries(skills). One
+// field of the wrong type took the whole tracker down (2026-10-02), so a stat block is read whole,
+// field by field, against the types Creature declares:
+//   • a REQUIRED field that is missing gets the value every app writer gives it (the builder, the
+//     text parser, the file importer's normalizeCreature) — a thin paste works instead of crashing;
+//   • an OPTIONAL one (`?` in the type) may be missing or null, and is passed through as it is;
+//   • a field present with the wrong type refuses the whole block, with the reason: guessing what it
+//     meant would show the GM a stat block that is not theirs.
+// `name`, `traits` and a `defenses` block must be there (the file importer's own test for "looks like
+// a creature"). Unknown fields ride along untouched.
+
+type Fields = Record<string, unknown>
+const isFields = (v: unknown): v is Fields => !!v && typeof v === 'object' && !Array.isArray(v)
+const isWords = (v: unknown): v is string[] => Array.isArray(v) && v.every(t => typeof t === 'string')
+
+class NotAStatBlock extends Error {}
+const refuse = (why: string): never => { throw new NotAStatBlock(why) }
+
+const text = (v: unknown, at: string, d = '') =>
+  v === undefined ? d : typeof v === 'string' ? v : refuse(`"${at}" must be text`)
+const num = (v: unknown, at: string, d = 0) =>
+  v === undefined ? d : typeof v === 'number' ? v : refuse(`"${at}" must be a number`)
+const flag = (v: unknown, at: string) =>
+  typeof v === 'boolean' ? v : refuse(`"${at}" must be true or false`)
+const words = (v: unknown, at: string): string[] =>
+  v === undefined ? [] : isWords(v) ? v : refuse(`"${at}" must be a list of words`)
+const numbers = (v: unknown, at: string): Record<string, number> =>
+  v === undefined ? {} : isFields(v) && Object.values(v).every(n => typeof n === 'number')
+    ? v as Record<string, number> : refuse(`"${at}" must be names with numbers`)
+const listOf = <T>(v: unknown, at: string, read: (o: Fields, at: string) => T): T[] =>
+  v === undefined ? [] : !Array.isArray(v) ? refuse(`"${at}" must be a list`)
+    : v.map((o, i) => (isFields(o) ? read(o, `${at}[${i}]`) : refuse(`"${at}[${i}]" must be an object`)))
+/** Optional fields: missing or null is fine, anything else must pass `check`. */
+const optional = (o: Fields, at: string, keys: string[], check: (v: unknown, at: string) => unknown) => {
+  for (const k of keys) if (o[k] != null) check(o[k], `${at}${k}`)
+}
+
+const attackOf = (a: Fields, at: string): Attack => {
+  optional(a, `${at}.`, ['activity'], text)
+  return {
+    ...a, range: text(a.range, `${at}.range`, 'Melee') as Attack['range'], name: text(a.name, `${at}.name`),
+    attack: num(a.attack, `${at}.attack`), traits: words(a.traits, `${at}.traits`),
+    damage: text(a.damage, `${at}.damage`), types: words(a.types, `${at}.types`),
+    effects: words(a.effects, `${at}.effects`), isAgile: a.isAgile === undefined ? false : flag(a.isAgile, `${at}.isAgile`),
+  }
+}
+const abilityOf = (a: Fields, at: string): Ability => {
+  optional(a, `${at}.`, ['activity', 'trigger'], text)
+  return { ...a, name: text(a.name, `${at}.name`), traits: words(a.traits, `${at}.traits`), entries: text(a.entries, `${at}.entries`) }
+}
+const spellOf = (s: Fields, at: string): SpellSlotEntry['spells'][number] => {
+  optional(s, `${at}.`, ['note'], text)
+  optional(s, `${at}.`, ['uses'], num)
+  optional(s, `${at}.`, ['atWill'], flag)
+  return { ...s, name: text(s.name, `${at}.name`) }
+}
+const spellRankOf = (r: Fields, at: string): SpellSlotEntry => {
+  optional(r, `${at}.`, ['slots'], num)
+  optional(r, `${at}.`, ['isCantrip', 'isConstant'], flag)
+  return { ...r, label: text(r.label, `${at}.label`), level: num(r.level, `${at}.level`), spells: listOf(r.spells, `${at}.spells`, spellOf) }
+}
+const spellBlockOf = (b: Fields, at: string): SpellBlock => {
+  optional(b, `${at}.`, ['tradition'], text)
+  optional(b, `${at}.`, ['DC', 'attack', 'focusPoints'], num)
+  return {
+    ...b, name: text(b.name, `${at}.name`), type: text(b.type, `${at}.type`), spells: text(b.spells, `${at}.spells`),
+    spellsByLevel: listOf(b.spellsByLevel, `${at}.spellsByLevel`, spellRankOf),
+  }
+}
+const amountOf = (r: Fields, at: string) => {
+  optional(r, `${at}.`, ['amount'], num)
+  optional(r, `${at}.`, ['note'], text)
+  return { ...r, name: text(r.name, `${at}.name`), amount: (r.amount ?? null) as number | null }
+}
+
+function readStatBlock(x: unknown): Creature {
+  if (Array.isArray(x)) refuse('paste one creature, not a list')
+  if (!isFields(x)) return refuse('paste one creature as a JSON object')
+  const c = x
+  if (typeof c.name !== 'string') refuse('"name" must be text')
+  if (!isWords(c.traits)) refuse('"traits" must be a list of words')
+  const d = isFields(c.defenses) ? c.defenses : refuse('it needs a "defenses" block')
+  optional(c, '', ['image', 'perceptionNote', 'speedNote', 'flavor', 'family', 'recallKnowledge', 'aonUrl', 'rawMarkdown'], text)
+  optional(c, '', ['isHazard'], flag)
+  optional(d, 'defenses.', ['hpNote', 'saveNote', 'acNote'], text)
+  optional(d, 'defenses.', ['hardness', 'bt'], num)
+  if (c.hazardData != null) {
+    const h = isFields(c.hazardData) ? c.hazardData : refuse('"hazardData" must be an object')
+    optional(h, 'hazardData.', ['stealth', 'description', 'disable', 'routine', 'reset'], text)
+    optional(h, 'hazardData.', ['complex'], flag)
+  }
+  let rituals = c.rituals
+  if (rituals != null) {
+    const r = isFields(rituals) ? rituals : refuse('"rituals" must be an object')
+    optional(r, 'rituals.', ['dc'], num)
+    rituals = {
+      ...r,
+      casts: listOf(r.casts, 'rituals.casts', (k, at) =>
+        ({ ...k, rank: text(k.rank, `${at}.rank`), level: num(k.level, `${at}.level`), names: words(k.names, `${at}.names`) })),
+    }
+  }
+  return {
+    ...c,
+    source: text(c.source, 'source', 'Homebrew'),
+    level: num(c.level, 'level'),
+    perception: num(c.perception, 'perception'),
+    senses: words(c.senses, 'senses'),
+    languages: words(c.languages, 'languages'),
+    skills: numbers(c.skills, 'skills'),
+    str: num(c.str, 'str'), dex: num(c.dex, 'dex'), con: num(c.con, 'con'),
+    int: num(c.int, 'int'), wis: num(c.wis, 'wis'), cha: num(c.cha, 'cha'),
+    items: words(c.items, 'items'),
+    speed: numbers(c.speed, 'speed'),
+    attacks: listOf(c.attacks, 'attacks', attackOf),
+    spellcasting: listOf(c.spellcasting, 'spellcasting', spellBlockOf),
+    ...(rituals !== undefined ? { rituals } : {}),
+    abilities: listOf(c.abilities, 'abilities', abilityOf),
+    defenses: {
+      ...d,
+      ac: num(d.ac, 'defenses.ac'), fort: num(d.fort, 'defenses.fort'), ref: num(d.ref, 'defenses.ref'),
+      will: num(d.will, 'defenses.will'), hp: num(d.hp, 'defenses.hp'),
+      immunities: words(d.immunities, 'defenses.immunities'),
+      resistances: listOf(d.resistances, 'defenses.resistances', amountOf),
+      weaknesses: listOf(d.weaknesses, 'defenses.weaknesses', amountOf),
+    },
+  } as Creature
+}
+
+/** `x` as a stat block every surface of the tracker can read (missing fields filled in, see above),
+ *  or null when it is not one. A copy: `x` itself is never changed. */
+export function toStatBlock(x: unknown): Creature | null {
+  try { return readStatBlock(x) } catch (e) { if (e instanceof NotAStatBlock) return null; throw e }
+}
+
+/** Why `x` is not a stat block, in words for the GM, or null when it is one. */
+export function statBlockProblem(x: unknown): string | null {
+  try { readStatBlock(x); return null } catch (e) { if (e instanceof NotAStatBlock) return e.message; throw e }
+}
+
+/** A stored entry's own id: a non-empty string, else null. */
+const idOf = (x: unknown): string | null => {
+  const id = isFields(x) ? x.id : undefined
+  return typeof id === 'string' && id !== '' ? id : null
+}
+
+/** A stored entry as the tracker uses it: a stat block with its own id — the id is how every list,
+ *  edit and delete addresses it (two entries without one were edited and deleted together). Anything
+ *  else — an array, null, a string, an object with no name, a field of the wrong type — is SKIPPED by
+ *  every reader (2026-10-02: one array entry crashed the whole tracker each time it was opened) and
+ *  refused by saveCustomCreature. Skipped is not deleted: it stays in storage as it was. */
+function usableEntry(x: unknown): Creature | null {
+  return idOf(x) === null ? null : toStatBlock(x)
+}
+
+export function isCustomCreature(x: unknown): boolean {
+  return usableEntry(x) !== null
+}
+
+function storedCustomList(): unknown[] {
+  if (_storedCustom) return _storedCustom
+  let list: unknown[] = []
   try {
     const raw = localStorage.getItem(CUSTOM_KEY)
-    _customCreatures = raw ? JSON.parse(raw) : []
-  } catch { _customCreatures = [] }
-  return _customCreatures!
+    if (raw) {
+      let parsed: unknown
+      try { parsed = JSON.parse(raw) } catch { parsed = raw }
+      // A stored value that isn't a list rides along as one entry, so a save keeps it rather than
+      // writing over it.
+      list = Array.isArray(parsed) ? parsed : [parsed]
+    }
+  } catch { list = [] }
+  _storedCustom = list
+  return list
 }
 
-export function saveCustomCreature(creature: Creature): void {
+/** The usable view of the stored list: each usable entry as toStatBlock reads it. Never written back. */
+const usableList = (list: unknown[]): Creature[] =>
+  list.map(usableEntry).filter((c): c is Creature => c !== null)
+
+function writeCustomList(next: unknown[]): void {
+  _storedCustom = next
+  _customCreatures = usableList(next)
+  localStorage.setItem(CUSTOM_KEY, JSON.stringify(next))
+  notifyPersist(CUSTOM_KEY)
+}
+
+export function loadCustomCreatures(): Creature[] {
+  if (_customCreatures) return _customCreatures
+  _customCreatures = usableList(storedCustomList())
+  return _customCreatures
+}
+
+/** True when some stored entry, usable or skipped, holds `id`. A NEW save picks a fresh id instead
+ *  (TextConverter): a pasted copy of another creature's JSON, renamed, used to replace that creature. */
+export function isCustomIdTaken(id: string): boolean {
+  return storedCustomList().some(c => idOf(c) === id)
+}
+
+/** Store `creature`, replacing the entry with its id or appending. Returns false and writes nothing
+ *  for a value that isn't a stat block with its own id; what is stored is the stat block as
+ *  toStatBlock reads it. The entry replaced is the one the lists show under that id, else a skipped
+ *  entry holding it — an explicit Overwrite of a creature whose stored copy is skipped replaces that
+ *  copy rather than sitting beside it under the same id. Exactly one entry is replaced, and an entry
+ *  without an id of its own is never matched. */
+export function saveCustomCreature(creature: Creature): boolean {
+  const entry = usableEntry(creature)
+  if (!entry) return false
   // Always re-allocate so React components that received the cached array as
   // their state value see a new reference (forcing the re-render they expect).
-  const current = loadCustomCreatures()
-  const idx = current.findIndex(c => c.id === creature.id)
-  const next = idx >= 0
-    ? current.map(c => (c.id === creature.id ? creature : c))
-    : [...current, creature]
-  _customCreatures = next
-  localStorage.setItem(CUSTOM_KEY, JSON.stringify(next))
-  notifyPersist(CUSTOM_KEY)
+  const current = storedCustomList()
+  let at = current.findIndex(c => usableEntry(c)?.id === entry.id)
+  if (at < 0) at = current.findIndex(c => idOf(c) === entry.id)
+  writeCustomList(at < 0 ? [...current, entry] : current.map((c, i) => (i === at ? entry : c)))
+  return true
 }
 
+/** Put an uploaded image on the stored homebrew entry for a board combatant's creature. The image
+ *  goes onto the STORED entry — the board's copy written over it reverted every edit made to the
+ *  homebrew since the combatant was added. A creature with no stored entry is added, as before.
+ *  Returns false, writing nothing, when the entry holding that id is one the lists skip: it is kept
+ *  as it is, never replaced by the board's copy. */
+export function saveCustomCreatureImage(creature: Creature, image: string): boolean {
+  const id = idOf(creature)
+  if (id === null) return false
+  const shown = usableList(storedCustomList()).find(c => c.id === id)
+  if (shown) return saveCustomCreature({ ...shown, image })
+  if (isCustomIdTaken(id)) return false
+  return saveCustomCreature({ ...creature, image })
+}
+
+/** Remove the entry the lists show under `id`. A skipped entry is never deleted: nothing lists it. */
 export function deleteCustomCreature(id: string): void {
-  const current = loadCustomCreatures()
-  const next = current.filter(c => c.id !== id)
+  const current = storedCustomList()
+  const next = current.filter(c => { const u = usableEntry(c); return !u || u.id !== id })
   if (next.length === current.length) return
-  _customCreatures = next
-  localStorage.setItem(CUSTOM_KEY, JSON.stringify(next))
-  notifyPersist(CUSTOM_KEY)
+  writeCustomList(next)
 }
 
 /** Drop the in-memory cache so the next read re-parses localStorage — the GM-device mirror
  *  (src/data/trackerSync.ts) wrote a newer list there. */
 export function reloadCustomCreatures(): void {
+  _storedCustom = null
   _customCreatures = null
 }
 

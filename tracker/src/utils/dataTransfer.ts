@@ -1,5 +1,6 @@
 import type { Creature } from '../types/pf2e'
 import { notifyPersist, notifyReset } from '../store/persistBus'
+import { isCustomCreature, statBlockProblem, toStatBlock } from '../data/dataStore'
 
 // ── Full backup / restore + custom-creature import ─────────────────────────
 // All app data lives in localStorage under `pf2e-*` keys (parties, encounters,
@@ -100,11 +101,55 @@ export function isMergeableKey(key: string): boolean {
   return MERGE_BY_ID.has(key) || MERGE_STRING_SET.has(key) || MERGE_OBJECT_MAP.has(key)
 }
 
+const CUSTOM_CREATURES_KEY = 'pf2e-custom-creatures'
+
+/** The homebrew stat blocks keep EVERY entry through a merge, the malformed ones the tracker's readers
+ *  skip included (tracker/src/data/dataStore.ts isCustomCreature): they are still the user's data, and
+ *  dropping them here deleted them from both devices on the GM mirror's first contact.
+ *   • An entry the lists use is matched by its id, as in every other collection; the incoming copy
+ *     wins. Only the first such entry per id on each side: a second one under the same id on the
+ *     same side is not a newer copy of the first, and keying it by id dropped one of the two.
+ *   • Any other entry — skipped, or that second one — is matched only by its content, occurrence by
+ *     occurrence: the same entry on both sides comes out once, and two copies on one side stay two.
+ *     Content, not text: the cloud copy is jsonb, which hands every object back with its keys
+ *     re-ordered, so the same entry never had the same text on both sides and came out twice.
+ *   • A side that isn't a list, or isn't JSON, rides along as one entry (dataStore reads such a value
+ *     the same way) instead of being written over by the other side.
+ *  Only this key: the other collections' stores load NOTHING past one malformed entry (partyStore's
+ *  loader returns [] and the next write empties the list), so for them a merge still drops it. */
+function mergeCustomCreatures(current: string, incoming: string): string {
+  const asList = (text: string): unknown[] => {
+    let v: unknown
+    try { v = JSON.parse(text) } catch { v = text }
+    return Array.isArray(v) ? v : [v]
+  }
+  /** JSON with every object's keys sorted, so key order never makes two copies of one entry differ. */
+  const content = (v: unknown): string => JSON.stringify(v, (_k, x: unknown) =>
+    x && typeof x === 'object' && !Array.isArray(x)
+      ? Object.fromEntries(Object.keys(x).sort().map(k => [k, (x as Record<string, unknown>)[k]]))
+      : x)
+  const merged = new Map<string, unknown>()
+  for (const side of [asList(current), asList(incoming)]) {
+    const copies = new Map<string, number>()
+    const ids = new Set<string>()
+    for (const it of side) {
+      const id = isCustomCreature(it) ? (it as Creature).id : null
+      if (id !== null && !ids.has(id)) { ids.add(id); merged.set(`id:${id}`, it); continue }
+      const text = content(it)
+      const n = copies.get(text) ?? 0
+      copies.set(text, n + 1)
+      merged.set(`entry:${n}:${text}`, it)
+    }
+  }
+  return JSON.stringify([...merged.values()])
+}
+
 /** Combine one key's current value with the imported value for merge mode. Exported for the same
  *  first-contact union; `incoming` wins a clash on the same id. */
 export function mergeValue(key: string, current: string | null, incoming: string): string {
   if (current == null) return incoming  // nothing local yet → take the import
   try {
+    if (key === CUSTOM_CREATURES_KEY) return mergeCustomCreatures(current, incoming)
     if (MERGE_BY_ID.has(key)) {
       const cur = JSON.parse(current), inc = JSON.parse(incoming)
       if (Array.isArray(cur) && Array.isArray(inc)) {
@@ -187,6 +232,8 @@ export interface ParsedCreaturesResult {
   ok: boolean
   creatures: Creature[]
   error?: string
+  /** Why each creature (or file) that was refused was left out — set whether or not others loaded. */
+  skipped?: string[]
 }
 
 function normalizeCreature(o: any): Creature | null {
@@ -363,20 +410,40 @@ export function parseCreaturesFromText(text: string): ParsedCreaturesResult {
   else if (Array.isArray(parsed?.creatures)) candidates = parsed.creatures
   else if (parsed?.kind === BACKUP_KIND && typeof parsed?.data?.['pf2e-custom-creatures'] === 'string') {
     try { candidates = JSON.parse(parsed.data['pf2e-custom-creatures']) } catch { candidates = [] }
+    // A stored value that isn't a list is one candidate, as dataStore reads it — never a crash here.
+    if (!Array.isArray(candidates)) candidates = [candidates]
   } else if (parsed && typeof parsed === 'object') {
     candidates = [parsed]
   }
 
   const creatures: Creature[] = []
+  const skipped: string[] = []
   for (const raw of candidates) {
-    const c = coerceCreature(raw)
-    if (!c) continue
+    const coerced = coerceCreature(raw)
+    if (!coerced) {
+      // Junk with no name (null, a stray value) is passed over quietly; a NAMED creature is the GM's
+      // and is named with the reason, as a paste of it is.
+      const name = raw && typeof raw === 'object' && typeof raw.name === 'string' ? raw.name.trim() : ''
+      if (name) skipped.push(`"${name}": ${statBlockProblem(raw) ?? 'not a stat block'}`)
+      continue
+    }
+    // Read whole, as the homebrew list reads it: normalizeCreature fills the top level only, and an
+    // attack or ability of the wrong shape crashed the panel the draft opens in.
+    const c = toStatBlock(coerced)
+    if (!c) { skipped.push(`"${coerced.name}": ${statBlockProblem(coerced)}`); continue }
     c.id = uid()  // fresh id — these are drafts; saving decides overwrite-by-name
     creatures.push(c)
   }
 
-  if (!creatures.length) return { ok: false, creatures: [], error: 'No creatures found in that file.' }
-  return { ok: true, creatures }
+  // Every refused creature is named, whether or not others loaded — left out silently, the GM never knew.
+  const why = skipped.length ? { skipped } : {}
+  if (!creatures.length) {
+    const error = !skipped.length ? 'No creatures found in that file.'
+      : skipped.length === 1 ? `That file's creature is not a stat block: ${skipped[0]}.`
+        : `None of that file's ${skipped.length} creatures is a stat block: ${skipped.join('; ')}.`
+    return { ok: false, creatures: [], error, ...why }
+  }
+  return { ok: true, creatures, ...why }
 }
 
 /** Prompt for one or more JSON files and return every creature parsed from them
@@ -391,14 +458,19 @@ export function readCustomCreaturesFromFilePicker(): Promise<ParsedCreaturesResu
       const files = Array.from(input.files ?? [])
       if (!files.length) { resolve({ ok: false, creatures: [], error: 'No file selected.' }); return }
       const creatures: Creature[] = []
+      const skipped: string[] = []
       let lastError: string | undefined
       for (const f of files) {
         const r = parseCreaturesFromText(await f.text())
         if (r.ok) creatures.push(...r.creatures)
         else lastError = r.error
+        // Each refused creature by name; a file that held none (bad JSON, nothing creature-shaped) by its own.
+        skipped.push(...(r.skipped ?? (r.ok ? [] : [`${f.name}: ${r.error}`])))
       }
-      if (creatures.length) resolve({ ok: true, creatures })
-      else resolve({ ok: false, creatures: [], error: lastError ?? 'No creatures found.' })
+      if (creatures.length) resolve({ ok: true, creatures, ...(skipped.length ? { skipped } : {}) })
+      else if (files.length > 1 && skipped.length) {
+        resolve({ ok: false, creatures: [], error: `Nothing loaded: ${skipped.map(s => s.replace(/\.+$/, '')).join('; ')}.`, skipped })
+      } else resolve({ ok: false, creatures: [], error: lastError ?? 'No creatures found.' })
     }
     input.click()
   })
