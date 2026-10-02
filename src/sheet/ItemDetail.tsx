@@ -210,6 +210,25 @@ function wornSlot(usage?: string): string | undefined {
   return rest ? cap(rest.replace(/-/g, ' ')) : 'Worn';
 }
 
+/**
+ * The item popup's stat rows, in the order it prints them: the per-type rows, then Material, Worn slot,
+ * Price, Bulk, Usage (only when no worn slot says it) and Hands — only the rows that print (`Stat`'s own
+ * empty test). Card step 1: exported so the card's printed set (docs/card-design.md section 2 rule 4.2)
+ * reads the SAME rows the popup renders; ItemDetail renders from this and nothing else.
+ */
+export function itemStatRows(item: Item, content: ContentDatabase): { k: string; v: string | number }[] {
+  const rows: { k: string; v: string | number | undefined }[] = [
+    ...typeStats(item, content),
+    { k: 'Material', v: materialLabel(item) },
+    { k: 'Worn slot', v: wornSlot(item.usage) },
+    { k: 'Price', v: formatItemPrice(item) },
+    { k: 'Bulk', v: formatBulk(item.bulk) },
+    { k: 'Usage', v: wornSlot(item.usage) ? undefined : usageLabel(item.usage) },
+    { k: 'Hands', v: item.hands ? String(item.hands) : undefined },
+  ];
+  return rows.filter((r): r is { k: string; v: string | number } => !(r.v === undefined || r.v === '' || r.v === null));
+}
+
 /** Full item detail overlay (reuses the .picker / .sd-* chrome). */
 export function ItemDetail({
   inv,
@@ -460,15 +479,9 @@ export function ItemDetail({
             </div>
           )}
           <div className="sd-stats">
-            {typeStats(item, content).map((s) => (
+            {itemStatRows(item, content).map((s) => (
               <Stat key={s.k} k={s.k} v={s.v} />
             ))}
-            <Stat k="Material" v={materialLabel(item)} />
-            <Stat k="Worn slot" v={wornSlot(item.usage)} />
-            <Stat k="Price" v={formatItemPrice(item)} />
-            <Stat k="Bulk" v={formatBulk(item.bulk)} />
-            <Stat k="Usage" v={wornSlot(item.usage) ? undefined : usageLabel(item.usage)} />
-            <Stat k="Hands" v={item.hands ? String(item.hands) : undefined} />
           </div>
           {shieldEffLine && <div className="sd-rune-hint sd-shield-eff">{shieldEffLine}</div>}
           {attached.length > 0 && (

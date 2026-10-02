@@ -69,6 +69,23 @@ function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+/** One stat row of the feat popup. `Activate` carries the cost its glyph draws instead of a value. */
+export type FeatStatRow = { k: 'Activate'; cost: ActionCost } | { k: 'Prerequisites' | 'Enhancement'; v: string };
+
+/**
+ * The feat / feature / heritage popup's stat rows, in the order it prints them: the Activate glyph line,
+ * Prerequisites, and the running Enhancement tier. Card step 1: exported so the card's printed set
+ * (docs/card-design.md section 2 rule 4.2) reads the SAME rows the popup renders; FeatDetail renders
+ * from this and nothing else.
+ */
+export function featStatRows(entry: FeatEntry): FeatStatRow[] {
+  const rows: FeatStatRow[] = [];
+  if (entry.actionCost && isActionCost(entry.actionCost)) rows.push({ k: 'Activate', cost: entry.actionCost });
+  if (entry.prerequisites?.length) rows.push({ k: 'Prerequisites', v: entry.prerequisites.join(', ') });
+  if (entry.enhancedBy) rows.push({ k: 'Enhancement', v: `active — granted by ${entry.enhancedBy}` });
+  return rows;
+}
+
 /** Read-only detail overlay for a feat / feature / heritage (reuses the .picker / .sd-* chrome). */
 export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () => void }) {
   const content = useContent();
@@ -80,6 +97,12 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
   const astKey = entry.isFeature ? 'classFeatures' : 'feats';
   const ref = trustRefOf(entry);
   const astId = ref.bucket === astKey && ref.id ? ref.id : astSlug(entry.name);
+  const stats = featStatRows(entry);
+  const activate = stats.find((r): r is Extract<FeatStatRow, { k: 'Activate' }> => r.k === 'Activate');
+  const valueOf = (k: 'Prerequisites' | 'Enhancement') =>
+    stats.find((r): r is Extract<FeatStatRow, { v: string }> => r.k === k)?.v;
+  const prerequisites = valueOf('Prerequisites');
+  const enhancement = valueOf('Enhancement');
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker spell-detail" onClick={(e) => e.stopPropagation()}>
@@ -110,16 +133,16 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
               ))}
             </div>
           )}
-          {isActionCost(entry.actionCost) && (
+          {activate && (
             <div className="sd-activate">
-              <strong>Activate</strong> <ActionGlyph cost={entry.actionCost} />
+              <strong>Activate</strong> <ActionGlyph cost={activate.cost} />
             </div>
           )}
-          {entry.prerequisites?.length ? (
+          {prerequisites !== undefined ? (
             <div className="sd-stats">
               <div className="sd-stat">
                 <span className="sd-stat-k">Prerequisites</span>
-                <span className="sd-stat-v">{entry.prerequisites.join(', ')}</span>
+                <span className="sd-stat-v">{prerequisites}</span>
               </div>
             </div>
           ) : null}
@@ -127,11 +150,11 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
               description because a record with an ast renders from the ast and DescBody discards the
               description string entirely — the Enhancement paragraph itself is already in that prose,
               so what this adds is the one fact the printed text cannot carry: that YOU have it. */}
-          {entry.enhancedBy ? (
+          {enhancement !== undefined ? (
             <div className="sd-stats">
               <div className="sd-stat">
                 <span className="sd-stat-k">Enhancement</span>
-                <span className="sd-stat-v">active — granted by {entry.enhancedBy}</span>
+                <span className="sd-stat-v">{enhancement}</span>
               </div>
             </div>
           ) : null}

@@ -12,28 +12,15 @@ import { Fragment, type ReactNode } from 'react';
 import type { AstNode } from './astStore';
 import { useContent } from './ContentContext';
 import { openExternal } from '../platform';
+/* Card step 1: the text hygiene (clean, textOf) and the meta predicates (META, isMetaP, isSourceP,
+ * STAT_LABELS, isMetaishBlock) live in astVisibility.ts, a plain .ts file the card's guard imports
+ * through jiti, so the guard and this renderer read one copy. */
+import { clean, textOf, isMetaP, isSourceP, isMetaishBlock } from './astVisibility';
 import './ast.css';
 
 /** The Archives of Nethys; a page's own address (`/Rules.aspx?ID=1503`) is stamped on its tree root by
  *  scripts/stamp-ast-urls.mjs. */
 const AON = 'https://2e.aonprd.com';
-
-/* ---------- text hygiene: strip AoN template artifacts + markdown backslash-escapes ---------- */
-function clean(s: string): string {
-  let out = String(s == null ? '' : s);
-  if (out.indexOf('<%') !== -1) out = out.replace(/<%[^>]*?>/g, '').replace(/ {2,}/g, ' ');
-  // Strip HTML tags that leaked into the text as literal characters — AoN artifacts like `</ br>`, `<br>`,
-  // `<i>` that the parser didn't consume. Left in, they render as visible "</ br>" garbage.
-  if (out.indexOf('<') !== -1)
-    out = out.replace(/<\/?\s*(?:br|hr|p|div|span|i|b|em|strong|sup|sub|ul|ol|li|table|tr|td|th|a)\b[^>]*>/gi, ' ').replace(/ {2,}/g, ' ');
-  if (out.indexOf('\\') !== -1) out = out.replace(/\\([!-/:-@[-`{-~])/g, '$1');
-  return out;
-}
-function textOf(n: AstNode | undefined): string {
-  if (!n) return '';
-  if (n.t === 'text') return clean(n.v ?? '');
-  return (n.c || []).map(textOf).join('');
-}
 
 /* ---------- action cost -> the digit the Pathfinder action font renders (1/2/3, 4 free, 5 reaction) ---------- */
 const DIGIT: Record<string, string> = {
@@ -163,30 +150,8 @@ function successTier(p: AstNode): { kind: string; label: string; idx: number } |
   return TIERS[t] ? { kind: TIERS[t], label: textOf(first).trim(), idx } : null;
 }
 
-/* ---------- meta line (bold label + value: Source/Range/Prerequisites/…) ---------- */
-const META = /^(source|traditions?|deities|range|area|defense|target|targets|duration|cast|trigger|requirements?|prerequisites?|price|usage|bulk|access|frequency|cost|craft requirements)/i;
-function isMetaP(p: AstNode): boolean {
-  if (p.t !== 'p') return false;
-  const first = (p.c || []).find((x) => !(x.t === 'text' && !textOf(x).trim()));
-  return !!first && first.t === 'b' && META.test(textOf(first).trim());
-}
-function isSourceP(p: AstNode): boolean {
-  const first = (p.c || []).find((x) => !(x.t === 'text' && !textOf(x).trim()));
-  return !!first && first.t === 'b' && textOf(first).trim().toLowerCase() === 'source';
-}
-
-/** A leading META/STAT layout block (a Source line, or a compact stat line with several item/armor/weapon
- *  fields) — the kind a DETAIL view already shows in its own stat panel, so `hideMeta` drops it to avoid a
- *  duplicate stat block. Scoped to row/column LAYOUT nodes so it never touches prose paragraphs. */
-const STAT_LABELS = /\b(?:AC Bonus|Dex Cap|Check Penalty|Speed Penalty|Strength|Bulk|Group|Category|Hardness|Hit Points|HP|BT|Damage|Hands|Reload|Ammunition|Capacity|Range|Price|Usage|Craft Requirements)\b/gi;
-function isMetaishBlock(n: AstNode): boolean {
-  const t = textOf(n);
-  // A Source-led header block is ALWAYS meta — even when a long PFS Note or Favored-Weapon deity list is
-  // appended (those pushed it past a length cap and leaked into detail views).
-  if (/^\s*Source\b/i.test(t) && /\bpg\.?\s*\d/i.test(t)) return true;
-  if (t.length > 500) return false; // otherwise a long block is prose/content (e.g. an effect table), keep it
-  return (t.match(STAT_LABELS) || []).length >= 2; // a compact stat line (≥2 fields)
-}
+/* meta line (bold label + value: Source/Range/Prerequisites/…) — isMetaP / isSourceP / isMetaishBlock
+   are in astVisibility.ts (card step 1). */
 
 /* A title node holds its text inside a <p>; unwrap it to inline content for a heading. */
 function titleInline(n: AstNode): AstNode[] {

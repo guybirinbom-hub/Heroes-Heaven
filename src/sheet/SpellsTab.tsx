@@ -94,6 +94,35 @@ function ord(r: number): string {
   return r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`;
 }
 
+/**
+ * The spell popup's stat rows, in the order it prints them, as [label, value]. `Cast` always prints
+ * (its value is the cast glyph or castText, drawn by the popup); every other row prints only when its
+ * value is set. Card step 1: exported so the card's printed set (docs/card-design.md section 2 rule 4.2)
+ * reads the SAME rows the popup renders; SpellDetail renders from this and nothing else.
+ */
+export function spellStatRows(spell: Spell): [string, string | undefined][] {
+  // These are printed as raw strings (not through the description renderer), so run them through the
+  // same cleaner — a few records ship an unsubstituted AoN marker, e.g. Discomfiting Whisper's area
+  // is "5-foot <%RULES%2387%%>emanation<%END>".
+  return [
+    ['Cast', undefined],
+    ['Range', spell.range && cleanRun(spell.range)],
+    ['Area', spell.area && cleanRun(spell.area)],
+    ['Targets', spell.targets && cleanRun(spell.targets)],
+    ['Duration', spell.duration && cleanRun(spell.duration)],
+    [
+      'Defense',
+      // A spell attack (defense: 'ac') needs a spell attack roll vs AC; it may ALSO have a save.
+      [
+        spell.defense === 'ac' ? 'spell attack vs AC' : undefined,
+        spell.save ? `${spell.save.basic ? 'basic ' : ''}${cap(spell.save.type)} save` : undefined,
+      ]
+        .filter(Boolean)
+        .join(' + ') || undefined,
+    ],
+  ];
+}
+
 /** Detail overlay for a single spell, including its heightening entries. */
 function castText(c?: ActionCost): string {
   if (!c) return '';
@@ -144,26 +173,7 @@ export function SpellDetail({
   const upArea = scaleArea(spell, r);
   const shownBase = upDamage && spell.baseDamage ? injectDamageArrow(base, spell.baseDamage, upDamage) : base;
   const rankLabel = spell.rank === 0 ? 'Cantrip' : `${ord(spell.rank)} rank`;
-  // These are printed as raw strings (not through the description renderer), so run them through the
-  // same cleaner — a few records ship an unsubstituted AoN marker, e.g. Discomfiting Whisper's area
-  // is "5-foot <%RULES%2387%%>emanation<%END>".
-  const stats: [string, string | undefined][] = [
-    ['Cast', undefined],
-    ['Range', spell.range && cleanRun(spell.range)],
-    ['Area', spell.area && cleanRun(spell.area)],
-    ['Targets', spell.targets && cleanRun(spell.targets)],
-    ['Duration', spell.duration && cleanRun(spell.duration)],
-    [
-      'Defense',
-      // A spell attack (defense: 'ac') needs a spell attack roll vs AC; it may ALSO have a save.
-      [
-        spell.defense === 'ac' ? 'spell attack vs AC' : undefined,
-        spell.save ? `${spell.save.basic ? 'basic ' : ''}${cap(spell.save.type)} save` : undefined,
-      ]
-        .filter(Boolean)
-        .join(' + ') || undefined,
-    ],
-  ];
+  const stats = spellStatRows(spell);
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker spell-detail" onClick={(e) => e.stopPropagation()}>
