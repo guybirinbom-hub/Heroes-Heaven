@@ -1,0 +1,127 @@
+import type { ReactNode } from 'react';
+import type { DescRef } from '../rules/types';
+import type { AstNode } from './astStore';
+import type { DescNode } from './descref';
+
+/**
+ * Types for the record card (docs/card-design.md sections 2, 4 and 6). A plain .ts file, so the
+ * step-4 guard can import the same shapes through jiti (jiti cannot parse .tsx).
+ *
+ * Step 3 builds only `mode: 'browse'` with `chrome: 'popup'` — DescriptionModal's popup, unchanged.
+ * The other modes, the embed chrome and the reserved props are declared here so later steps add
+ * behaviour without reshaping the component's contract.
+ */
+
+/** browse = today's search popup, never scoped; mine = the sheet's "what is yours"; gm = HostPage. */
+export type CardMode = 'browse' | 'mine' | 'gm';
+/** popup = an overlay with its own header and close; embed = inside another page (HostPage). */
+export type CardChrome = 'popup' | 'embed';
+
+/** A record by identity: the card reads its name and text off the content, by {bucket, id}. */
+export interface CardRecordRef {
+  bucket: string;
+  id: string;
+}
+/** A record by its words: homebrew and glossary pages, which have no Archives page of their own. */
+export interface CardRecordText {
+  title: string;
+  text: string;
+  /** The text is the homebrew editor's rich HTML. Step 3: rendered by the same fallback as today. */
+  html?: boolean;
+  refs?: DescRef[];
+}
+export type CardRecord = CardRecordRef | CardRecordText;
+
+export const isRecordRef = (r: CardRecord): r is CardRecordRef =>
+  typeof (r as CardRecordRef).bucket === 'string' && typeof (r as CardRecordRef).id === 'string';
+
+/**
+ * Everything the app adds to a card sits in ONE ours box after the body (section 4), each line
+ * attributed to the record it came from. Kinds, in the design's words:
+ */
+export type OursKind =
+  /** "Your choice: Fire — note". */
+  | 'choice'
+  /** Principles A and C; the ally-facing marker of Ruling F. */
+  | 'mark'
+  /** The note for a marked action cost (today only a row star). */
+  | 'actionMark'
+  /** The record's own note. */
+  | 'note'
+  /** enhancedBy, out of a print-styled stat row. */
+  | 'enhancement'
+  /** A spell note, as SpellsTab prints it today. */
+  | 'spellNote'
+  /** "At your level (7): 2d6", only where derive computes the value. */
+  | 'atYourLevel'
+  /** upgradedBy / maxByLevel retunes of a use counter. */
+  | 'usesRetune'
+  /** "Your rank (trained): DC 15". */
+  | 'skillTier'
+  /** Critical specialization, only where the page prints none. */
+  | 'critSpec'
+  /** Strike's fist / blast / natural-attack blurbs. */
+  | 'blurb'
+  /** desk #158 "Remastered as". */
+  | 'remastered'
+  /** desk #152 empty note. */
+  | 'empty'
+  /** "No Archives page — text from our older import". */
+  | 'noPage';
+
+export const OURS_KINDS: readonly OursKind[] = [
+  'choice', 'mark', 'actionMark', 'note', 'enhancement', 'spellNote', 'atYourLevel',
+  'usesRetune', 'skillTier', 'critSpec', 'blurb', 'remastered', 'empty', 'noPage',
+];
+
+export interface OursLine {
+  kind: OursKind;
+  /** The record this line comes from (another feat's marker names that feat). */
+  from?: { bucket: string; id: string; name: string };
+  text: string;
+}
+
+/** What a 'mine' card is scoped by (section 6). Reserved: browse never scopes. */
+export interface CardScope {
+  level: number;
+  classId?: string;
+  subclassId?: string;
+  picks?: Record<string, string>;
+  ranks?: Record<string, number>;
+  /** Implements / kineticist gates / innovations the build owns. Unknown = absent (UNKNOWN ≠ EMPTY). */
+  owned?: string[];
+}
+
+/** Section 2 rule 1: the card's props. */
+export interface RecordCardProps {
+  /** The record, by {bucket, id} or by its words. Exactly one of `record` / `node`. */
+  record?: CardRecord;
+  /**
+   * A description-stack node handed over as-is: today's browse callers (DescriptionModal's `root`).
+   * The card never rebuilds it, so the pin it stores and the title it matches are the caller's own
+   * object. Steps 7a/19 move callers to `record` ids.
+   */
+  node?: DescNode;
+  mode: CardMode;
+  chrome: CardChrome;
+  /** Reserved for 'mine' (step 5+). */
+  scope?: CardScope;
+  /** Reserved: the surface's stat rows (step 5+). */
+  stats?: ReactNode;
+  /** Reserved: controls above the text — use counters, Cast-at, item choices (step 5+). */
+  controls?: ReactNode;
+  /** Extra buttons in the header, before Back / pin / close. */
+  headerActions?: ReactNode;
+  /** Reserved: a tree transform (heightening, step 17). */
+  transform?: (node: AstNode) => AstNode;
+  /** The ours box, after the body. */
+  ours?: OursLine[];
+  /** Reserved: text shown when the record has no page and no description (step 5+). */
+  fallbackText?: string;
+  /** Extra footer content, after the RemasteredLine, inside the scrolling body. */
+  footer?: ReactNode;
+  /** Dismiss the WHOLE popup chain: the X, Escape, and clicking outside. */
+  onExit: () => void;
+  /** When given, Back shows at the first level too and calls this (returns to the popup this opened from). */
+  onBackToSource?: () => void;
+}
