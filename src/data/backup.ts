@@ -8,6 +8,7 @@
  */
 import { APP_VERSION } from '../version';
 import { notifyReset } from '../../tracker/src/store/persistBus';
+import type { HomebrewContent, HomebrewSource } from './storage';
 
 /** The GM-device mirror's per-key history (src/data/trackerSync.ts's STAMP_PREFIX, one file per
  *  account). Named here so a restore can leave it out — see restoreBackup. */
@@ -16,6 +17,13 @@ const TRACKER_SYNC_STAMP_PREFIX = 'wanderers-codex:tracker-sync:';
 export const BACKUP_APP = 'heroes-heaven';
 export const BACKUP_KIND = 'full-backup';
 export const BACKUP_FORMAT_VERSION = 1;
+
+/** The storage keys the homebrew lives under (src/data/storage.ts writes them). A backup carries them
+ *  like every other key; Homebrew → Import reads ONLY these out of a backup file (readHomebrewFile). */
+export const BACKUP_HOMEBREW_SOURCES_KEY = 'wanderers-codex:homebrew-sources:v1';
+export const BACKUP_HOMEBREW_CONTENT_KEY = 'wanderers-codex:homebrew-content:v1';
+/** Items saved before homebrew had sources; loadHomebrewContent still folds them in. */
+const LEGACY_HOMEBREW_ITEMS_KEY = 'wanderers-codex:homebrew-items:v1';
 
 export interface BackupEnvelope {
   app: typeof BACKUP_APP;
@@ -35,8 +43,8 @@ export interface BackupEnvelope {
  *  but a '' value is skipped on write so we don't materialize a bogus key. */
 const ALWAYS_KEYS: Record<string, string> = {
   'wanderers-codex:roster:v1': '[]',
-  'wanderers-codex:homebrew-sources:v1': '{}',
-  'wanderers-codex:homebrew-content:v1': '{}',
+  [BACKUP_HOMEBREW_SOURCES_KEY]: '{}',
+  [BACKUP_HOMEBREW_CONTENT_KEY]: '{}',
   'wanderers-codex:modes:v1': '{}',
   'wanderers-codex:active:v1': '',
   'pf2e-codex.prefs': '',
@@ -83,10 +91,107 @@ export function createBackup(now = new Date()): string {
   return JSON.stringify(envelope, null, 2);
 }
 
+/** YYYY-MM-DD in the device's local time. */
+function localDate(now: Date): string {
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+}
+
 /** heroes-heaven-backup-YYYY-MM-DD.json (local date). */
 export function backupFilename(now = new Date()): string {
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `heroes-heaven-backup-${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}.json`;
+  return `heroes-heaven-backup-${localDate(now)}.json`;
+}
+
+/** heroes-heaven-homebrew-YYYY-MM-DD.json (local date) — the Homebrew page's Export. */
+export function homebrewFilename(now = new Date()): string {
+  return `heroes-heaven-homebrew-${localDate(now)}.json`;
+}
+
+/** The whole text of every file Homebrew → Export saved from v0.1.9 until 2026-10: the export handed
+ *  downloadText its two arguments the wrong way round, so the file was NAMED after the JSON and HELD
+ *  only its own intended name. Such a file carries no homebrew at all. */
+export const OLD_EMPTY_HOMEBREW_EXPORT = 'heroes-heaven-homebrew.json';
+
+/** The `kind` of a Homebrew → Export file (its `app` is BACKUP_APP). */
+export const HOMEBREW_EXPORT_KIND = 'homebrew';
+
+/** What Homebrew → Import found in a file. */
+export type HomebrewFileRead =
+  | {
+      /** 'export' = a Homebrew → Export file; 'backup' = a Settings → "Export everything" file, of which
+       *  only the homebrew was read. */
+      from: 'export' | 'backup';
+      sources: Record<string, HomebrewSource>;
+      content: Partial<HomebrewContent>;
+    }
+  | { from: 'old-empty-export' };
+
+const isPlainObject = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
+
+/** One stored value of a backup, parsed; {} when absent or unreadable. */
+function backupObject(data: Record<string, string>, key: string): Record<string, unknown> {
+  try {
+    const v: unknown = JSON.parse(data[key] ?? '');
+    return isPlainObject(v) ? v : {};
+  } catch {
+    return {};
+  }
+}
+
+/** A file that IS a Heroes Heaven backup but that this version can't read (a newer format version, no
+ *  data section). Its message is parseBackup's own, for the player: "Update the app, then try again"
+ *  is the truth about such a file — "not a homebrew export or backup" is not. */
+export class UnreadableBackupError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'UnreadableBackupError';
+  }
+}
+
+/** Read a file handed to Homebrew → Import: a homebrew export, OR a full backup — from which ONLY the
+ *  homebrew sources and content are taken (nothing else in it is returned, so nothing else can be
+ *  written; a full Restore stays the one way to replace everything) — OR the empty file older versions
+ *  saved. Throws UnreadableBackupError for a backup this version can't read, and an Error when the file
+ *  is none of these. */
+export function readHomebrewFile(text: string): HomebrewFileRead {
+  if (text.trim() === OLD_EMPTY_HOMEBREW_EXPORT) return { from: 'old-empty-export' };
+  let obj: unknown;
+  try {
+    obj = JSON.parse(text);
+  } catch {
+    throw new Error('That file is not valid JSON.');
+  }
+  if (!isPlainObject(obj)) throw new Error('That file is not a homebrew export.');
+  if (obj.app === BACKUP_APP && obj.kind === BACKUP_KIND) {
+    let env: BackupEnvelope;
+    try {
+      env = parseBackup(text);
+    } catch (e) {
+      throw new UnreadableBackupError((e as Error).message);
+    }
+    const content = backupObject(env.data, BACKUP_HOMEBREW_CONTENT_KEY) as Partial<HomebrewContent>;
+    // An old device may still hold items under the pre-sources key; loadHomebrewContent folds them in
+    // the same way (the newer key wins).
+    const legacy = backupObject(env.data, LEGACY_HOMEBREW_ITEMS_KEY) as HomebrewContent['items'];
+    if (Object.keys(legacy).length) content.items = { ...legacy, ...(isPlainObject(content.items) ? content.items : {}) };
+    return {
+      from: 'backup',
+      sources: backupObject(env.data, BACKUP_HOMEBREW_SOURCES_KEY) as Record<string, HomebrewSource>,
+      content,
+    };
+  }
+  // A homebrew export says so: every file Homebrew → Export ever wrote with its homebrew in it carries
+  // kind 'homebrew' (the 27-byte files before that are told apart above). A top-level `content` alone
+  // proves nothing — the sheet's own Wanderer's Guide character export is { version, character, content }.
+  if (obj.kind !== HOMEBREW_EXPORT_KIND || (obj.app !== undefined && obj.app !== BACKUP_APP)) {
+    throw new Error('That file is not a homebrew export.');
+  }
+  if (!isPlainObject(obj.sources) && !isPlainObject(obj.content)) throw new Error('That file is not a homebrew export.');
+  return {
+    from: 'export',
+    sources: (isPlainObject(obj.sources) ? obj.sources : {}) as Record<string, HomebrewSource>,
+    content: (isPlainObject(obj.content) ? obj.content : {}) as Partial<HomebrewContent>,
+  };
 }
 
 /** Parse + validate a backup file. Throws an Error with a user-facing message when it isn't one of ours. */

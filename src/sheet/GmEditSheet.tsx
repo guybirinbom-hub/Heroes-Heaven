@@ -6,16 +6,12 @@ import { applyPlayState, initialPlay, playForRebuild, reconcileFormulaBook, type
 import { Builder } from '../builder/Builder';
 import { CharacterSheet } from './CharacterSheet';
 import { exportNative } from '../data/transfer';
-import { downloadText } from './download';
+import { downloadText, fileSlug } from './download';
 import { pushGmEdit, fetchPublishedSheet } from '../data/party';
 import { confirmDialog, chooseDialog } from './confirm';
 import { gmPendingEdit, gmPendingVersion, reconcileGmWork, subscribeGmPending } from './gmSync';
 import { memberConditions, type PartySummary } from './partySummary';
 import { carryStoredOverrides } from '../data/rebuild';
-
-function fileSlug(name: string): string {
-  return (name || 'character').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'character';
-}
 
 export interface GmEditHandle {
   /**
@@ -311,7 +307,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
 
   const doExport = () => {
     try {
-      downloadText(`${fileSlug(work.character.name)}.codex.json`, exportNative(work));
+      downloadText({ filename: `${fileSlug(work.character.name)}.codex.json`, text: exportNative(work) });
     } catch (e) {
       void confirmDialog({ title: 'Export failed', message: (e as Error).message, confirmLabel: 'OK' });
     }

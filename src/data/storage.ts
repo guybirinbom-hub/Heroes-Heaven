@@ -312,11 +312,44 @@ export function loadCampaignHbCache(): Record<string, CampaignHbCampaign> {
   return c && typeof c === 'object' ? (c as Record<string, CampaignHbCampaign>) : {};
 }
 
-export function saveCampaignHbCache(uid: string, campaigns: Record<string, CampaignHbCampaign>): void {
+/** This account's real (server-side) campaign ids in one role — never the signed-out Local table, never
+ *  a membership with no id — once each, sorted so the list compares as a string. The ids a campaign
+ *  homebrew pull reads for ('player') and publishes for ('gm'), data/campaignHomebrew.ts. */
+export function campaignMemberIds(role: 'gm' | 'player'): string[] {
+  return [...new Set(loadCampaigns().filter((m) => m?.role === role && !m.local && !!m.id).map((m) => m.id))].sort();
+}
+
+/**
+ * UNKNOWN ≠ EMPTY: does this device KNOW `uid`'s campaign homebrew? loadCampaignHbCache reads {} both
+ * for "pulled for this account, and nothing is shared" and for "never pulled here / pulled for another
+ * account / unreadable"; only the stored copy's stamps tell them apart. Known = a copy stamped for `uid`
+ * (no account is never one) that holds a campaigns object AND a full read of every campaign this account
+ * plays in now (campaignMemberIds('player')) — what saveCampaignHbCache writes after a pull that went
+ * through, even when nothing is shared. A campaign joined after the last pull, one with a row the pull
+ * couldn't read, or one whose conversion didn't finish is not in `pulledFor`, so the copy is unknown
+ * until a pull reads it whole. The cache's format stays in this file: callers (the Homebrew page's
+ * import) ask this, never read the key themselves.
+ */
+export function campaignHbCacheKnown(uid: string | null): boolean {
+  const raw = loadJsonRaw(CAMPAIGN_HB_CACHE_KEY) as { uid?: unknown; campaigns?: unknown; pulledFor?: unknown } | null | undefined;
+  if (uid === null || raw?.uid !== uid) return false;
+  const c = raw.campaigns;
+  // saveCampaignHbCache writes a keyed object: an array is not one this build wrote.
+  if (!c || typeof c !== 'object' || Array.isArray(c)) return false;
+  const read = raw.pulledFor;
+  if (!Array.isArray(read)) return false; // a copy from before the list existed: which campaigns it read is unknown
+  return campaignMemberIds('player').every((id) => read.includes(id));
+}
+
+/** `pulledFor`: the player campaigns this copy holds a FULL read of (see campaignHbCacheKnown). Left
+ *  out, the copy vouches for none of them. False when the device refused the write (a full storage):
+ *  the copy on disk is still the previous one. */
+export function saveCampaignHbCache(uid: string, campaigns: Record<string, CampaignHbCampaign>, pulledFor: readonly string[] = []): boolean {
   try {
-    localStorage.setItem(CAMPAIGN_HB_CACHE_KEY, JSON.stringify({ uid, campaigns }));
+    localStorage.setItem(CAMPAIGN_HB_CACHE_KEY, JSON.stringify({ uid, campaigns, pulledFor }));
+    return true;
   } catch {
-    /* non-fatal: the next pull writes it again */
+    return false; // non-fatal: the next pull writes it again
   }
 }
 

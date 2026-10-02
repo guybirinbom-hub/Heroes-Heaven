@@ -11,7 +11,7 @@ import { sanitizeImportedPortrait } from './imageUtil';
 import { useAvatar } from './usePortrait';
 import { confirmDialog, chooseDialog } from './confirm';
 import { HeroesHeavenLogo } from './Logo';
-import { downloadText } from './download';
+import { downloadText, fileSlug } from './download';
 
 type Filter = 'all' | 'active' | 'archived';
 
@@ -21,10 +21,6 @@ function RosterCardPortrait({ appearance, initials }: { appearance?: CharacterAp
   // A card's portrait is a small square, so it wants the player's own avatar crop (see useAvatar).
   const shown = useAvatar(appearance);
   return shown ? <img src={shown} alt="" /> : <>{initials}</>;
-}
-
-function fileSlug(name: string): string {
-  return (name || 'character').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'character';
 }
 
 /** Shrink any embedded data-URL portraits an imported file carries (a WG export stores the image
@@ -158,7 +154,7 @@ export function RosterScreen({
     if (target === 'wg' && !content) return; // WG export resolves against the content database
     try {
       const text = target === 'wg' && content ? exportWg(c, content) : exportNative(c);
-      downloadText(`${fileSlug(c.character.name)}${target === 'wg' ? '.wg' : '.codex'}.json`, text);
+      downloadText({ filename: `${fileSlug(c.character.name)}${target === 'wg' ? '.wg' : '.codex'}.json`, text });
     } catch (e) {
       setError(`Export failed: ${(e as Error).message}`);
     }

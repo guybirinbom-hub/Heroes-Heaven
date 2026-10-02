@@ -28,6 +28,7 @@ import { isPrintedId, printedIdsReady } from './index';
 import { onCampaignHbDirty } from './syncBus';
 import {
   HOMEBREW_TYPES,
+  campaignMemberIds,
   clearCampaignHbDirty,
   loadCampaignHbCache,
   loadCampaignHbDirty,
@@ -98,10 +99,9 @@ async function bounded<T>(start: (signal: AbortSignal) => PromiseLike<T>): Promi
   }
 }
 
-/** This account's real (server-side) campaign ids in one role, sorted so the list compares as a string. */
-function memberIds(role: 'gm' | 'player'): string[] {
-  return [...new Set(loadCampaigns().filter((m) => m.role === role && !m.local && m.id).map((m) => m.id))].sort();
-}
+/** This account's real (server-side) campaign ids in one role, sorted so the list compares as a string.
+ *  One definition (storage.ts), so the ids a pull reads for are the ids campaignHbCacheKnown checks. */
+const memberIds = campaignMemberIds;
 
 let started = false;
 /** Bumped by every start and stop: a pull captures it before its first await and drops what it read
@@ -113,6 +113,36 @@ let lastPullAt = 0;
 /** The player-membership ids the last pull that reached the network asked for ('hh-synced' re-pulls
  *  only when they change — it fires on every cloud adopt). */
 let pulledIds: string | null = null;
+/** Did the LAST pull leave a campaign unread because this device refused a write (a full storage)? */
+let pullFull = false;
+
+/**
+ * True when the last pull read every row but could not keep what it read: a conversion of something the
+ * GM took away, or the cache's own write, was refused by a full storage — so a campaign stays out of the
+ * copy's read list (storage.ts campaignHbCacheKnown) for want of room, not of a connection. Every pull
+ * answers afresh: one that stops short (offline, before the first cloud sync) says false, and so does a
+ * stopped session (a sign-out), whose pulls no longer run.
+ */
+export function campaignHomebrewStorageFull(): boolean {
+  return pullFull;
+}
+
+/** Signed in, positively signed out, or no cloud at all: see accountStateHere. */
+export type AccountHere = 'no-cloud' | 'signed-out' | 'signed-in';
+
+/**
+ * Is this device signed in right now, positively SIGNED OUT, or without a cloud at all? The Homebrew
+ * import's UNKNOWN check (sheet/HomebrewPage.tsx) waits for this session's first cloud pull only while
+ * signed in. An auth client that can't answer — it threw, gave up after CALL_MS, or reported an error
+ * with no session (what supabase-js does for an expired token it couldn't refresh offline) — is NOT
+ * signed out: the app may still be signed in, with its first pull not landed.
+ */
+export async function accountStateHere(): Promise<AccountHere> {
+  const client = supabase;
+  if (!client) return 'no-cloud';
+  const res = await bounded(() => client.auth.getSession()).catch(() => null);
+  return !!res && !res.error && !res.data.session ? 'signed-out' : 'signed-in';
+}
 
 /* ---- PULL ------------------------------------------------------------------------------------------ */
 
@@ -146,6 +176,7 @@ export function refreshCampaignHomebrew(): Promise<boolean> {
 }
 
 async function pullOnce(g: number): Promise<boolean> {
+  pullFull = false; // this pull's own answer, from the save below; one that stops short has none
   const client = supabase;
   // Before the first cloud sync the membership list may be stale or empty — reading it as "left every
   // campaign" would convert them all.
@@ -251,7 +282,17 @@ async function pullOnce(g: number): Promise<boolean> {
   // and the next pull converts the rest. Dropped from the cache, what didn't land would be gone.
   const { wrote, unfinished } = convertGone(old, next);
   for (const cid of unfinished) next[cid] = old[cid];
-  saveCampaignHbCache(uid, next);
+  // The campaigns this copy now holds a FULL read of (storage.ts campaignHbCacheKnown): every one asked
+  // for, less one with a row we couldn't read and one whose conversion didn't finish — both hold their
+  // OLD copy (or none), not what the GM shares now.
+  const saved = saveCampaignHbCache(
+    uid,
+    next,
+    ids.filter((cid) => !bad.has(cid) && !unfinished.has(cid)),
+  );
+  // Only a campaign the player is still in counts: one left since converts too, but the read list never
+  // asks about it.
+  pullFull = !saved || ids.some((cid) => unfinished.has(cid));
   if (!wrote && JSON.stringify(old) === JSON.stringify(next)) return false;
   onChanged?.();
   return true;
@@ -695,6 +736,12 @@ export function startCampaignHomebrew(opts: { onChanged: () => void }): () => vo
     channelUnsub?.();
     channelUnsub = null;
     subKey = null;
+    // The storage-full answer was this session's: after a sign-out no pull runs to answer afresh until the
+    // next start, and an import in between (signed in again, its first cloud pull not landed) must hear
+    // about the sync, not about a storage that may have room by now. A start needs no reset of its own: a
+    // session still current is stopped here first, and the pull the start fires (or one already on the
+    // network, which it queues behind) resets the flag in its first statement.
+    pullFull = false;
   };
   stopCurrent = stop;
   void refreshCampaignHomebrew();

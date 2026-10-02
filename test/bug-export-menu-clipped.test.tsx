@@ -26,7 +26,11 @@ vi.mock('../src/data/transfer', async (orig) => ({
   exportWg: vi.fn(() => '{"wg":true}'),
   exportNative: vi.fn(() => '{"codex":true}'),
 }));
-vi.mock('../src/sheet/download', () => ({ downloadText: vi.fn() }));
+// Only the download itself is faked; fileSlug (which names the file) stays the real one.
+vi.mock('../src/sheet/download', async (orig) => ({
+  ...(await orig<typeof import('../src/sheet/download')>()),
+  downloadText: vi.fn(),
+}));
 
 /* Every selector in the REAL stylesheet whose block clips its children. jsdom has no CSS engine, so
  * "would this be clipped" can only be answered by reading the rules the app actually ships. */
@@ -138,7 +142,8 @@ describe('the roster export choice is not clipped by the card', () => {
 
     expect(vi.mocked(exportWg)).toHaveBeenCalledTimes(1);
     expect(vi.mocked(exportNative)).not.toHaveBeenCalled();
-    expect(vi.mocked(downloadText).mock.calls[0][0]).toBe('kyra.wg.json');
+    expect(vi.mocked(downloadText).mock.calls[0][0].filename).toBe('kyra.wg.json');
+    expect(vi.mocked(downloadText).mock.calls[0][0].text).toBe('{"wg":true}');
     expect(wgChoice(), 'the choice stayed open after choosing').toBeNull();
     r.stop();
   });
@@ -151,7 +156,8 @@ describe('the roster export choice is not clipped by the card', () => {
 
     expect(vi.mocked(exportNative)).toHaveBeenCalledTimes(1);
     expect(vi.mocked(exportWg)).not.toHaveBeenCalled();
-    expect(vi.mocked(downloadText).mock.calls[0][0]).toBe('kyra.codex.json');
+    expect(vi.mocked(downloadText).mock.calls[0][0].filename).toBe('kyra.codex.json');
+    expect(vi.mocked(downloadText).mock.calls[0][0].text).toBe('{"codex":true}');
     expect(nativeChoice(), 'the choice stayed open after choosing').toBeNull();
     r.stop();
   });

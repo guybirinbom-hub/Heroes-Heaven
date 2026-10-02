@@ -260,7 +260,7 @@ function BackupSection() {
       // first — otherwise a just-made change (still in the debounce window) would be missing from
       // the exported backup. See data/persist.ts.
       flushPersist();
-      downloadText(backupFilename(), createBackup());
+      downloadText({ filename: backupFilename(), text: createBackup() });
     } catch (e) {
       showError(`Export failed: ${(e as Error).message}`);
     }
