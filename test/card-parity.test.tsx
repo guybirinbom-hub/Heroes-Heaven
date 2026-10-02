@@ -25,6 +25,7 @@ import { classFeatureDescription } from '../src/rules/featureText';
 import { splitHeightening } from '../src/rules/heightening';
 import { trustUnencoded } from '../src/data/trustGate';
 import { foldsOf } from '../src/sheet/cardScope';
+import { cardOn } from '../src/sheet/cardSurfaces';
 import type { Character, ContentDatabase, InventoryItem } from '../src/rules/types';
 import type { DescNode } from '../src/sheet/descref';
 import * as lib from '../scripts/lib/card-scope.mjs';
@@ -41,7 +42,8 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *   ItemDetail      every item with a page, and a hidden cursed item through playerFacingContent
  *   SpellDetail     the spell popup (stat rows from fields, body from the description string)
  *   ActionDetail    opened by clicking its chip on MainTab (curated activities + feat actions)
- *   StatDetail      "Full text" of a situational line
+ *   StatDetail      "Full text" of a situational line — since card step 5 the 'mine' RecordCard
+ *                   (CARD_ON.statDetail), modelled by the ledger with the same printed set (empty)
  *   browse          DescriptionModal (the search popup) for {bucket, id}
  *   ChoiceDetails   the builder's "Details" button for a granted class feature / background feat
  *   builderOrigin   the builder's Background picker (SearchSelect, its filled value opens the popup)
@@ -84,6 +86,12 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *    reads) → "nothing in a mine popup body is drawn outside … the named regions" red (div.sd-injected).
  *  - AstRenderer.tsx column: `if (hideMeta && isMetaishBlock(n)) return null;` → `if (hideMeta) return
  *    null;` (the old whole-column drop) → the agreement test red (1 disagreement), the ledger unchanged.
+ *  - (card step 5) RecordCard.tsx mine page lane: `card={{ printed: printedSet(printed) }}` → `hideMeta`
+ *    (the legacy drop on the switched-on statDetail card) → the agreement test red (60 disagreements,
+ *    every sampled statDetail row: the ledger models the card).
+ *  - (card step 5) astVisibility.ts isCardFurnitureP: `if (t.length < 120) return true;` (a shared
+ *    predicate leaving out every short paragraph) → card-truth-check red (S1-MISSING 10,464 → 16,099,
+ *    S1-UNNAMED 20,884 → 25,998): the classifier names each line from its own words.
  * Measured in round 0 (that code is unchanged since):
  *  - RecordCard.tsx fallback: headerActions moved back after the title → the headerActions test red.
  *  - RecordCard.tsx page branch: the TrustMarker dropped from headerControls → the TrustMarker test red.
@@ -252,7 +260,10 @@ const REGIONS_MEASURED: Record<string, string[]> = {
   itemDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-stats', 'div.sd-uses', 'div.sd-choice-note'],
   spellDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-stats', 'div.sd-heighten-h'],
   actionDetail: ['div.action-detail-traits'],
-  statDetail: [],
+  // Card step 5: the 'mine' card's own header (name, cost, chips, Back / PinStar / close) sits beside its
+  // body, as on the browse card; the legacy popup read only its body.
+  // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+  statDetail: cardOn('statDetail') ? ['div.ast-head', 'div.ast-traits', 'div.picker-head'] : [],
 };
 const txt = (el: Element | null | undefined) => (el?.textContent ?? '').replace(/\s+/g, ' ').trim();
 
@@ -456,6 +467,17 @@ async function renderStat(row: Row): Promise<Read> {
   const breakdown = { title: 'Stat', totalText: '+0', parts: [], timeline: [], situational: [{ text: 'a situational line', sourceId: row.id, sourceCollection: row.bucket as never }] };
   const m = await mount(<StatDetailModal breakdown={breakdown} character={base} content={db} onClose={noop} />);
   await click(m.host.querySelector('.sd-sit-more'));
+  if (cardOn('statDetail')) {
+    // Card step 5: the full text is RecordCard mode 'mine' — the page lane's body is the card's .ast-body
+    // (its footer's ours lines are [data-ours], outside the read); the no-page lane's is .info-body.
+    const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
+    const pop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
+    const body = page ? page.querySelector(':scope > .ast-body') : pop?.querySelector('.info-body') ?? null;
+    noteRegions('statDetail', pop, body ? [body] : []);
+    const r: Read = { lane: page ? 'tree' : 'md', body, blocks: domBlocks(body), printed: [], leak: leakIn(body) };
+    m.stop();
+    return r;
+  }
   const bodies = [...m.host.querySelectorAll('.confirm-body > .sd-desc')];
   noteRegions('statDetail', m.host.querySelector('.confirm-body'), bodies);
   const r = readBody(bodies, []);
@@ -591,7 +613,10 @@ describe('card step 4: the rendered parity check (report mode)', () => {
    * rows, both ways — the full-corpus check's two-way rule, applied to the 540 rows rendered here.
    */
   it('the sample\'s findings equal the card-truth baseline\'s entries for the same rows, both ways', () => {
-    const baseline = JSON.parse(readFileSync('scripts/data/card-truth-baseline.json', 'utf8')) as Record<string, string[]>;
+    // Card step 5: a landed surface whose switch is turned back is expected at the baseline's legacy
+    // entries for it (lib expectedEntries), so the one-line switch keeps this test green both ways.
+    // batch card premise: feat-4458 "Frequency once per day"
+    const baseline = lib.expectedEntries(JSON.parse(readFileSync('scripts/data/card-truth-baseline.json', 'utf8'))) as Record<string, string[]>;
     const problems: string[] = [];
     for (const [key, { row }] of results) {
       const now = new Set(lib.rowEntries(row, ledgerFull(row), foldsOf).map(([s, e]: [string, string]) => `${s}\t${e}`));

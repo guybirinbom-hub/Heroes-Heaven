@@ -16,6 +16,13 @@ import { openExternal } from '../platform';
  * STAT_LABELS, isMetaishBlock) live in astVisibility.ts, a plain .ts file the card's guard imports
  * through jiti, so the guard and this renderer read one copy. */
 import { clean, textOf, isMetaP, isSourceP, isMetaishBlock } from './astVisibility';
+/* Card step 5: the 'mine' card's cuts (printed set, furniture, dim lines) — the same functions the guard
+ * models the card with (scripts/lib/card-scope.mjs). Reached only through the `card` prop; the hideMeta
+ * path below never reads them. */
+import {
+  cardDropsMetaP, cardFurnitureSectionEnd, cardHeadUntil, cardRowParts, isCardDimP, isCardFurnitureP,
+  isCardFurnitureTitle, type CardWalk,
+} from './astVisibility';
 import './ast.css';
 
 /** The Archives of Nethys; a page's own address (`/Rules.aspx?ID=1503`) is stamped on its tree root by
@@ -204,11 +211,16 @@ function TableEl({ node, ctx }: { node: AstNode; ctx: Ctx }): ReactNode {
  * a full class/ancestry page renders in full, not just its loose paragraphs. `hideMeta` drops only the
  * Source/Range/… meta lines (detail views show their own stat block) — flavor prose is NEVER dimmed.
  */
-function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead }: { nodes: AstNode[]; ctx: Ctx; hideMeta?: boolean; kb?: string; lead?: boolean }): ReactNode {
+function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil }: { nodes: AstNode[]; ctx: Ctx; hideMeta?: boolean; kb?: string; lead?: boolean; card?: CardWalk; headUntil?: number }): ReactNode {
   const out: ReactNode[] = [];
   for (let i = 0; i < nodes.length; i++) {
     const n = nodes[i];
     const key = `${kb}.${i}`;
+    /* Card step 5 ('mine' card only): at the top of the body, a block before the page's first rule is
+     * header (`cw.head`); nested runs inherit their container's. The S-furniture "<X> leads to…" section
+     * leaves with its heading and the link paragraph under it. */
+    const cw: CardWalk | undefined = card && headUntil !== undefined ? { printed: card.printed, head: headUntil >= 0 && i < headUntil } : card;
+    if (cw && isCardFurnitureTitle(n)) { i = cardFurnitureSectionEnd(nodes, i) - 1; continue; }
     /* bug 2026-09-12 #8: popup-divider — a rule with NOTHING above it.
      *
      * An AoN page is <stat header> <hr> <prose>, and a detail popup passes `hideMeta` because it prints
@@ -246,6 +258,14 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead }: { nodes: AstNode[]; ct
          * "flavor prose is NEVER dimmed" is this renderer's rule; the glyph rows are not prose. */
         if (frags.length && (!meta || frags.some((f) => f.t === 'actions'))) {
           i = j - 1;
+          // Card step 5: the reunited line follows the card's rules — left out only as furniture or
+          // S-printed, otherwise drawn whole at full weight (a dim label dims it).
+          if (cw) {
+            if (isCardFurnitureP(n, cw.head) || (meta && cardDropsMetaP(n, cw))) continue;
+            const joined: AstNode[] = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' ? [pp] : pp.c || []));
+            out.push(<p key={key} className={isCardDimP(n) ? 'card-dim' : meta ? 'card-use' : undefined}>{joined.map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />)}</p>);
+            continue;
+          }
           // A reunited meta row keeps the meta branch's styling AND its hideMeta drop — which used to
           // leave the glyph and the second half of the row behind as orphan blocks once the label went.
           if (meta && hideMeta) continue;
@@ -258,7 +278,7 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead }: { nodes: AstNode[]; ct
         }
       }
     }
-    const el = renderBlock(n, ctx, hideMeta, key, lead && !out.length);
+    const el = renderBlock(n, ctx, hideMeta, key, lead && !out.length, cw);
     if (el != null) out.push(el);
   }
   /* Rendered nothing ⇒ render NOTHING, not an empty fragment. A container whose children all drop out
@@ -298,7 +318,7 @@ function isInlineFrag(n: AstNode | undefined, next?: AstNode): boolean {
   return t.length > 0 && t.length < 400 && /^[,.;:)\]]|^[a-z]/.test(t);
 }
 
-function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: string, lead?: boolean): ReactNode {
+function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: string, lead?: boolean, card?: CardWalk): ReactNode {
   switch (n.t) {
     case 'traits':
       return null; // shown as chips in the header
@@ -324,6 +344,13 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       if (!raw) return null;
       // A leaked markdown marker on its own (`##`, `---`, `***`) — drop it rather than print the symbols.
       if (/^#{1,6}$/.test(raw) || /^[-*_]{3,}$/.test(raw)) return null;
+      // Card step 5: every labelled page line shows once, in the page's words, at full weight —
+      // unless it is furniture, or a header line the surface's own stat rows printed (S-printed).
+      if (card) {
+        if (isCardFurnitureP(n, card.head)) return null;
+        if (isMetaP(n)) return cardDropsMetaP(n, card) ? null : <p key={key} className={isCardDimP(n) ? 'card-dim' : 'card-use'}><Kids node={n} ctx={ctx} /></p>;
+        if (isCardDimP(n)) return <p key={key} className="card-dim"><Kids node={n} ctx={ctx} /></p>;
+      }
       if (isMetaP(n)) return hideMeta ? null : <div key={key} className={'ast-meta' + (isSourceP(n) ? ' src' : '')}><Kids node={n} ctx={ctx} /></div>;
       const t = successTier(n);
       if (t) {
@@ -335,39 +362,46 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
     case 'actions':
       return String(n.string || '').trim() ? <div key={key} className="ast-actline"><Glyph str={n.string} /></div> : null;
     case 'spoilers':
+      if (card) return null; // S-furniture: a spoiler banner is navigation, not the record's rules
       return hideMeta ? null : <div key={key} className="ast-meta src"><Kids node={n.c && n.c[0] ? n.c[0] : n} ctx={ctx} /></div>;
     case 'ul':
     case 'ol': {
       const items = (n.c || []).filter((c) => c.t === 'li');
       if (!items.length) return null;
-      const inner = items.map((li, i) => <li key={i}><Blocks nodes={li.c || []} ctx={ctx} hideMeta={hideMeta} kb={`${key}.${i}`} /></li>);
+      const inner = items.map((li, i) => <li key={i}><Blocks nodes={li.c || []} ctx={ctx} hideMeta={hideMeta} kb={`${key}.${i}`} card={card} /></li>);
       return n.t === 'ol' ? <ol key={key} className="ast-list">{inner}</ol> : <ul key={key} className="ast-list">{inner}</ul>;
     }
     case 'table':
       return <TableEl key={key} node={n} ctx={ctx} />;
     case 'aside':
-      return <aside key={key} className="ast-aside"><Blocks nodes={n.c || []} ctx={ctx} hideMeta={hideMeta} kb={key} /></aside>;
+      return <aside key={key} className="ast-aside"><Blocks nodes={n.c || []} ctx={ctx} hideMeta={hideMeta} kb={key} card={card} /></aside>;
     case 'row': {
       // A detail view shows its own stat panel, so drop a leading Source/stat layout row to avoid a
-      // duplicate stat block.
-      if (hideMeta && isMetaishBlock(n)) return null;
+      // duplicate stat block. (Card step 5: a 'mine' card never drops a block whole — it recurses.)
+      if (!card && hideMeta && isMetaishBlock(n)) return null;
       const kids = n.c || [];
       // A row that holds BLOCK children (columns, a TABLE, paragraphs, lists…) is a layout/content row —
       // render those as blocks. (A row wrapping a table was the bug that mashed the whole exemplars table
       // into one inline run.) Only a row of purely inline bits is a compact "A; B; C" stat line.
-      if (kids.some((c) => BLOCK_TYPES.has(c.t))) return subBlocks({ nodes: kids, ctx, hideMeta, kb: key, lead }, key);
+      if (kids.some((c) => BLOCK_TYPES.has(c.t))) return subBlocks({ nodes: kids, ctx, hideMeta, kb: key, lead, card }, key);
       const parts = kids.filter((f) => textOf(f).trim());
+      if (card) {
+        // Card step 5: filtered per bold-label segment (S-printed), the rest drawn at full weight.
+        const keep = cardRowParts(parts, card);
+        if (!keep.length) return null;
+        return <p key={key} className={keep.every(isCardDimP) ? 'card-dim' : 'card-use'}>{keep.map((f, m) => <Fragment key={m}>{m > 0 ? '; ' : ''}<Kids node={f} ctx={ctx} /></Fragment>)}</p>;
+      }
       if (!parts.length) return null;
       return hideMeta ? null : <div key={key} className="ast-meta">{parts.map((f, m) => <Fragment key={m}>{m > 0 ? '; ' : ''}<Kids node={f} ctx={ctx} /></Fragment>)}</div>;
     }
     case 'column':
       // The leading Source + stat column (armor/weapon/gear header) duplicates a detail view's own stat
       // panel — drop it when hiding meta; otherwise render its children as blocks.
-      if (hideMeta && isMetaishBlock(n)) return null;
-      return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead }, key);
+      if (!card && hideMeta && isMetaishBlock(n)) return null;
+      return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key);
     case 'document':
     case 'doc':
-      return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead }, key);
+      return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key);
     case 'view':
       return <p key={key}><Kids node={n} ctx={ctx} /></p>;
     default:
@@ -376,7 +410,7 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       // the whole Ethnicities section) instead of being flattened into one inline run. Otherwise it's an
       // inline node — render its children inline.
       return (n.c || []).some((c) => BLOCK_TYPES.has(c.t))
-        ? subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead }, key)
+        ? subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key)
         : <Fragment key={key}><Kids node={n} ctx={ctx} /></Fragment>;
   }
 }
@@ -389,9 +423,10 @@ const BLOCK_TYPES = new Set([
 ]);
 
 /** Render the doc's body faithfully (see Blocks). */
-function DocBody({ top, ctx, hideMeta }: { top: AstNode[]; ctx: Ctx; hideMeta?: boolean }): ReactNode {
+function DocBody({ top, ctx, hideMeta, card }: { top: AstNode[]; ctx: Ctx; hideMeta?: boolean; card?: CardWalk }): ReactNode {
   /* `lead` starts true here and only here: this run IS the top of the popup body, so a divider it
    * reaches before anything else has nothing above it (bug #8). */
+  if (card) return <Blocks nodes={top} ctx={ctx} kb="d" lead card={card} headUntil={cardHeadUntil(top)} />;
   return <Blocks nodes={top} ctx={ctx} hideMeta={hideMeta} kb="d" lead />;
 }
 
@@ -399,7 +434,7 @@ function DocBody({ top, ctx, hideMeta }: { top: AstNode[]; ctx: Ctx; hideMeta?: 
  * Full description popup content for one record's ast — header (name + action glyph + badge),
  * AoN-ordered colour-coded trait chips, then the meta + prose body. Slots into HH's popup chrome.
  */
-export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, headerControls, footer }: {
+export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, card, headerControls, footer }: {
   node: AstNode;
   /** "bucket:slug" of the open record, so its self-links render as plain text */
   selfRef?: string;
@@ -408,6 +443,10 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, head
   bodyOnly?: boolean;
   /** drop the Source/Range/… meta lines (detail views show their own stat block) */
   hideMeta?: boolean;
+  /** Card step 5 — a 'mine' card: the surface's printed set replaces `hideMeta` (docs/card-design.md
+   *  section 2 rules 4–5). Every labelled page line shows unless its label is printed; furniture leaves;
+   *  Source / Archetype / Access / Craft Requirements / PFS Note are dimmed. Ignores `hideMeta`. */
+  card?: { printed: ReadonlySet<string> };
   /** controls (Back / pin / close) rendered at the right of the header, when the popup owns the chrome */
   headerControls?: ReactNode;
   /** a line of ours after the page's prose, inside the scrolling body (desk #158's "Remastered as …") */
@@ -420,7 +459,8 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, head
     : undefined;
   const ctx: Ctx = { selfRef, onOpenRef, hasRef };
   const top = node.c || [];
-  if (bodyOnly) return <div className="ast-body ast-embed"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} />{footer}</div>;
+  const cw: CardWalk | undefined = card ? { printed: card.printed, head: false } : undefined;
+  if (bodyOnly) return <div className="ast-body ast-embed"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} card={cw} />{footer}</div>;
   const title = top.find((n) => n.t === 'title' && Number(n.level || 1) <= 1) || top.find((n) => n.t === 'title');
   const name = title ? textOf(title.c?.find((x) => x.t === 'link' || x.t === 'text') || title) : '';
   const badge = title?.right;
@@ -476,7 +516,7 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, head
           })}
         </div>
       )}
-      <div className="ast-body"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} />{footer}</div>
+      <div className="ast-body"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} card={cw} />{footer}</div>
     </div>
   );
 }

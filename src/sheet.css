@@ -12992,3 +12992,25 @@ button.strike-name:hover {
 .sd-ours .ref-link {
   font-style: normal;
 }
+
+/* Card step 5 (docs/card-design.md section 2 rule 5): on a 'mine' card the page's Source line, Archetype
+   label, Access, Craft Requirements and PFS Note are kept but dimmed — the same faint look the browse
+   popup gives a Source line (.ast-meta.src), so they read as reference, not as rules. The other labelled
+   page lines (Trigger, Frequency, Requirements …) stay at the body's full weight. */
+.card-dim {
+  font-size: 12.6px;
+  line-height: 1.55;
+  color: var(--app-text-faint);
+}
+.card-dim strong {
+  color: var(--app-text-dim);
+}
+/* The no-page line ("No Archives page — text from our older import"), marked ours (.sd-ours), at the
+   foot of a 'mine' card whose record has no Archives page. */
+.card-nopage {
+  margin-top: 9px;
+}
+/* The fallback lane's body: the card body resets .info-body's pre-wrap (section 6, Shells). */
+.card-mine .info-body.card-body {
+  white-space: normal;
+}

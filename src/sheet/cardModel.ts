@@ -9,7 +9,8 @@ import type { DescNode } from './descref';
  *
  * Step 3 builds only `mode: 'browse'` with `chrome: 'popup'` — DescriptionModal's popup, unchanged.
  * The other modes, the embed chrome and the reserved props are declared here so later steps add
- * behaviour without reshaping the component's contract.
+ * behaviour without reshaping the component's contract. Step 5 builds `mode: 'mine'` with
+ * `chrome: 'popup'` (StatDetailModal's full text): `printed`, the footer and `fallbackText` are read.
  */
 
 /** browse = today's search popup, never scoped; mine = the sheet's "what is yours"; gm = HostPage. */
@@ -108,6 +109,12 @@ export interface RecordCardProps {
   scope?: CardScope;
   /** Reserved: the surface's stat rows (step 5+). */
   stats?: ReactNode;
+  /**
+   * 'mine' only (card step 5): the labels the surface's own stat rows print — the PRINTED SET that
+   * replaces hideMeta (section 2 rule 4.2, plan F1). A page header line is left off only when its label
+   * is in this set. Absent = empty: every labelled page line shows (StatDetailModal prints no rows).
+   */
+  printed?: readonly string[];
   /** Reserved: controls above the text — use counters, Cast-at, item choices (step 5+). */
   controls?: ReactNode;
   /** Extra buttons in the header, before Back / pin / close. */
@@ -116,7 +123,7 @@ export interface RecordCardProps {
   transform?: (node: AstNode) => AstNode;
   /** The ours box, after the body. */
   ours?: OursLine[];
-  /** Reserved: text shown when the record has no page and no description (step 5+). */
+  /** 'mine': text shown (marked as ours, desk #152) when the record has no page and no description. */
   fallbackText?: string;
   /** Extra footer content, after the RemasteredLine, inside the scrolling body. */
   footer?: ReactNode;

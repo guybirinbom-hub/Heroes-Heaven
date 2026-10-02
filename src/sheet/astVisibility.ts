@@ -11,6 +11,7 @@
  * move byte-equal on 600 seeded records.
  */
 import type { AstNode } from './astStore';
+import { canonLabel } from './cardScope';
 
 /* ---------- text hygiene: strip AoN template artifacts + markdown backslash-escapes ---------- */
 export function clean(s: string): string {
@@ -136,4 +137,143 @@ export function withoutItemLists(node: AstNode): AstNode {
     if (!dropping) keep.push(n);
   }
   return keep.length === top.length ? node : { ...node, c: keep };
+}
+
+/* ---------- card step 5: what a 'mine' card leaves out, dims, or keeps ----------
+ *
+ * docs/card-design.md section 2 rules 4–5 and section 13. A 'mine' card (the sheet's own popups) no
+ * longer drops the page's header with `hideMeta`: the surface's PRINTED SET replaces it. Every labelled
+ * page line shows — Trigger, Frequency, Requirements, Prerequisites, Access, Cost … — each in the page's
+ * words, at full weight, in the page's order, unless the surface's own stat rows printed that label
+ * (S-printed). A row/column block is never dropped whole: it recurses. Only S-furniture leaves text out
+ * on its own: spoiler banners, the "<X> leads to…" section, Related Feats lists, short "Click here for
+ * the full rules…" / "… can be found here" lines, and the Class / Parent header labels. Kept but DIMMED:
+ * the Source line, the Archetype label, Access, Craft Requirements and the PFS Note.
+ *
+ * These are the ONLY copy of those rules: AstRenderer.tsx draws with them, and the guard
+ * (scripts/lib/card-scope.mjs, through jiti) models the card with them. No rule acts inside a sentence:
+ * each one keeps or leaves out a whole block.
+ */
+
+/** The walk state of a 'mine' card: the surface's printed set, and "this block sits before the page's
+ *  first rule" (the stat header of `<header> <hr> <prose>`). */
+export interface CardWalk {
+  printed: ReadonlySet<string>;
+  head: boolean;
+}
+
+/** The bold run a block opens with (its label), or null — the same "first non-blank child" test as
+ *  isMetaP / isSourceP. */
+export function leadOf(p: AstNode): string | null {
+  const first = (p.c || []).find((x) => !(x.t === 'text' && !textOf(x).trim()));
+  if (!first || first.t !== 'b') return null;
+  return textOf(first).replace(/\s+/g, ' ').trim().replace(/[:：]$/, '').trim();
+}
+
+/** Every bold run that OPENS a segment of a block — at its start, or after a ";" ("Price 3 gp; Bulk L"
+ *  is led by Price and Bulk). */
+export function nodeLeads(n: AstNode): string[] {
+  const out: string[] = [];
+  let before = '';
+  const visit = (k: AstNode) => {
+    if (k.t === 'b') {
+      const t = textOf(k);
+      if (t.trim() && (!before.trim() || /;\s*$/.test(before))) {
+        out.push(t.replace(/\s+/g, ' ').trim().replace(/[:：]$/, '').trim());
+        before = '';
+      } else before += t;
+      return;
+    }
+    if (k.t === 'text') { before += clean(k.v ?? ''); return; }
+    if (k.t === 'br') { before += ' '; return; }
+    if (k.t === 'actions') { before += String(k.string ?? '').trim(); return; }
+    for (const c of k.c || []) visit(c);
+  };
+  for (const c of n.c || []) visit(c);
+  return out;
+}
+
+/** Kept but dimmed on a 'mine' card (section 2 rule 5): the Source line, the Archetype label, Access,
+ *  Craft Requirements and the PFS Note. */
+export const CARD_DIM_LEAD = /^(?:source|archetypes?|access|craft requirements|pfs note)$/i;
+export function isCardDimP(p: AstNode): boolean {
+  const l = dimLeadOf(p);
+  return !!l && CARD_DIM_LEAD.test(l);
+}
+
+/** The label a block opens with, looked for through the italic / view wrappers it may sit in. Every PFS
+ *  Note on the shipped trees is wrapped (measured over 8 buckets: `p > i > view > b` 954, `p > view > b`
+ *  1, `p > i > b` 2), so leadOf alone never saw one and the note drew at full weight. Only a wrapper that
+ *  OPENS the block is entered, so a bold word inside italic prose is never a label. */
+export function dimLeadOf(p: AstNode): string | null {
+  let n: AstNode | undefined = p;
+  for (let depth = 0; n && depth < 4; depth++) {
+    const l = leadOf(n);
+    if (l !== null) return l;
+    const first: AstNode | undefined = (n.c || []).find((x) => !(x.t === 'text' && !textOf(x).trim()));
+    n = first && (first.t === 'i' || first.t === 'em' || first.t === 'view') ? first : undefined;
+  }
+  return null;
+}
+
+/** Index of the page's first top-level rule; blocks before it are the stat header. -1 = no rule, so
+ *  nothing counts as header and the printed set leaves nothing out (never cut what we cannot place). */
+export function cardHeadUntil(top: AstNode[]): number {
+  return top.findIndex((n) => n.t === 'hr');
+}
+
+/** "Halfling Luck leads to..." — the navigation section's heading (a level-2 title on 986 pages). */
+export function isCardFurnitureTitle(n: AstNode): boolean {
+  return (n.t === 'title' || n.t === 'heading') && /\bleads to\b\.{0,3}\s*$/i.test(textOf(n).trim());
+}
+/** A furniture section runs from its heading up to the next heading (one link paragraph on all 986). */
+export function cardFurnitureSectionEnd(nodes: AstNode[], i: number): number {
+  let j = i + 1;
+  while (j < nodes.length && nodes[j].t !== 'title' && nodes[j].t !== 'heading') j++;
+  return j;
+}
+
+/** A furniture LINE: a short "Click here for the full rules on …" / "… can be found here" line (452
+ *  lines, all 80 characters or fewer — the 5 longer matches are sentences inside prose and stay), a
+ *  Related Feats / Related Bloodlines list, or — in the header only — a Class / Parent page label. */
+export function isCardFurnitureP(p: AstNode, head: boolean): boolean {
+  if (p.t !== 'p') return false;
+  const t = textOf(p).replace(/\s+/g, ' ').trim();
+  if (t.length <= 80 && /\bclick here\b|\bcan be found here\b/i.test(t)) return true;
+  if (/^Related (?:Feats|Bloodlines?)\b/i.test(t)) return true;
+  const l = leadOf(p);
+  return head && !!l && /^(?:class|parent)$/i.test(l);
+}
+
+/** S-printed: a META header line whose every label the surface's stat rows printed, and only before
+ *  the first rule. With an empty printed set (StatDetailModal) this never drops anything. */
+export function cardDropsMetaP(p: AstNode, walk: CardWalk): boolean {
+  if (!walk.head || !isMetaP(p)) return false;
+  const leads = nodeLeads(p);
+  return leads.length > 0 && leads.every((l) => {
+    const c = canonLabel(l);
+    return !!c && walk.printed.has(c);
+  });
+}
+
+/** An inline-only stat row ("A; B; C"), filtered per bold-label segment: a part whose label the surface
+ *  printed leaves (S-printed, header only); every other part stays. */
+export function cardRowParts(parts: AstNode[], walk: CardWalk): AstNode[] {
+  if (!walk.head) return parts;
+  return parts.filter((f) => {
+    const l = leadOf(f);
+    const c = l ? canonLabel(l) : null;
+    return !(c && walk.printed.has(c));
+  });
+}
+
+/** Does the page print a Source line anywhere? (the card's footer shows our Source only when it does not) */
+export function treeHasSource(node: AstNode): boolean {
+  let found = false;
+  (function walk(n: AstNode) {
+    if (found) return;
+    if (n.t === 'p' && isSourceP(n)) { found = true; return; }
+    for (const c of n.c || []) walk(c);
+  })(node);
+  return found;
 }

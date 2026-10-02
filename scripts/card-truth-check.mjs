@@ -72,6 +72,16 @@
  * wall clock; 273 unresolved stub occurrences (272 distinct page|stub entries). test/card-parity.test.tsx
  * renders a seeded 540 of them through the real popups, agrees with every one, and checks that those
  * rows' findings equal this baseline's entries for them.
+ *
+ * Card step 5 (re-stamped 2026-10-02): StatDetailModal's full text is the 'mine' card (CARD_ON.statDetail)
+ * and its 2,774 rows are modelled with the card's rules. Their entries fell from S1-MISSING 5,642 →
+ * 0, S1-UNNAMED 3,559 → 0 and CUT-IN-SENTENCE 2 → 0; no other surface's entry moved. What the card
+ * leaves out on those rows is 878 lines on 677 rows, every one named S-furniture by its own words
+ * (461 spoiler banners; 176 "leads to…" headings and their 176 link lists; 43 Class labels; 14 Related
+ * Feats lists; 8 "Click here …" lines).
+ * The switch turns back in one line (section 9): --write-baseline measures every landed surface
+ * (lib SWITCHED_SURFACES) with its switch on for the main sections AND with it off for
+ * `legacy[surface]`; the check expects the legacy entries while that switch is off (lib expectedEntries).
  */
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -79,7 +89,8 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { gunzipSync } from 'node:zlib';
-import { SECTIONS, baselineProblems, computeLedger } from './lib/card-scope.mjs';
+import { SECTIONS, SWITCHED_SURFACES, baselineProblems, computeLedger, expectedEntries, surfaceEntries } from './lib/card-scope.mjs';
+import { CARD_ON } from '../src/sheet/cardSurfaces.ts';
 import { foldsOf } from '../src/sheet/cardScope.ts';
 import { ACTIVITIES } from '../src/rules/actions.ts';
 import { FEAT_SITUATIONAL } from '../src/rules/situationalBonuses.ts';
@@ -153,12 +164,13 @@ export async function loadTsxFunctions(root = ROOT) {
   }
 }
 
-export async function runLedger(root = ROOT) {
+/** The ledger's inputs, loaded once (runLedger measures them under one set of switches each call). */
+export async function loadDeps(root = ROOT) {
   const content = loadContent(root);
   const trees = loadTrees(root);
   const astIndex = existsSync(join(root, 'public/ast-index.json')) ? JSON.parse(readFileSync(join(root, 'public/ast-index.json'), 'utf8')) : {};
   const fns = await loadTsxFunctions(root);
-  return computeLedger({
+  return {
     content,
     trees,
     astIndex,
@@ -170,7 +182,12 @@ export async function runLedger(root = ROOT) {
     classFeatureDescription,
     splitHeightening,
     foldsOf,
-  });
+  };
+}
+
+/** The ledger under `cardOn` (default: the switches as they are in src/sheet/cardSurfaces.ts). */
+export async function runLedger(root = ROOT, cardOn = CARD_ON, deps = undefined) {
+  return computeLedger({ ...(deps ?? (await loadDeps(root))), cardOn });
 }
 
 const argv = process.argv.slice(2);
@@ -178,23 +195,34 @@ const argv = process.argv.slice(2);
 const IS_MAIN = process.argv.some((a) => /(^|\/)card-truth-check\.mjs$/.test(String(a).replace(/\\/g, '/')));
 if (IS_MAIN) {
   const t0 = Date.now();
-  const { found, counts, stubOccurrences } = await runLedger();
+  const deps = await loadDeps();
+  const writing = argv.includes('--write-baseline');
+  // The baseline's main sections hold every landed surface with its switch ON (the card), whatever the
+  // switch says right now; the check itself always measures the switches as they are.
+  const mainOn = writing ? { ...CARD_ON, ...Object.fromEntries(SWITCHED_SURFACES.map((s) => [s, true])) } : CARD_ON;
+  const { found, counts, stubOccurrences } = await runLedger(ROOT, mainOn, deps);
   const ms = Date.now() - t0;
   console.error(`card truth: ${stubOccurrences} unresolved stub occurrences across every shipped tree (${found.STUBS.length} distinct page|stub entries).`);
   if (argv.includes('--list')) {
     console.log(JSON.stringify(found, null, 2));
-  } else if (argv.includes('--write-baseline')) {
+  } else if (writing) {
+    // Each landed surface measured with its switch OFF: what the check expects while it is turned back.
+    const legacy = {};
+    for (const s of SWITCHED_SURFACES) legacy[s] = surfaceEntries((await runLedger(ROOT, { ...mainOn, [s]: false }, deps)).found, s);
     const out = {
       _measured: `card-truth-check --write-baseline, ${new Date().toISOString().slice(0, 10)}; on a working tree with another lane's regen output uncommitted — re-stamp when it commits`,
       ...found,
+      legacy,
     };
     writeFileSync(join(ROOT, BASELINE), JSON.stringify(out, null, 1) + '\n');
-    console.log(`card truth: baseline written (${SECTIONS.map((s) => `${s} ${found[s].length}`).join(', ')}) in ${ms} ms.`);
+    console.log(`card truth: baseline written (${SECTIONS.map((s) => `${s} ${found[s].length}`).join(', ')}) in ${Date.now() - t0} ms.`);
+    for (const s of SWITCHED_SURFACES) console.log(`card truth: legacy ${s} (switch off): ${Object.entries(legacy[s]).map(([k, v]) => `${k} ${v.length}`).join(', ') || 'none'}.`);
   } else {
     const baseline = existsSync(join(ROOT, BASELINE)) ? JSON.parse(readFileSync(join(ROOT, BASELINE), 'utf8')) : {};
     const problems = baselineProblems(found, baseline, BASELINE);
     console.log(`card truth: ${Object.entries(counts).map(([s, n]) => `${s} ${n}`).join(', ')} rows judged in ${ms} ms.`);
-    console.log(`card truth: ${SECTIONS.map((s) => `${s} ${found[s].length} (baseline ${(baseline[s] ?? []).length})`).join(', ')}.`);
+    const expected = expectedEntries(baseline);
+    console.log(`card truth: ${SECTIONS.map((s) => `${s} ${found[s].length} (baseline ${expected[s].length})`).join(', ')}.`);
     for (const p of problems.slice(0, 200)) console.log(`   ${p}`);
     if (problems.length > 200) console.log(`   … and ${problems.length - 200} more`);
     if (problems.length) process.exitCode = 1;

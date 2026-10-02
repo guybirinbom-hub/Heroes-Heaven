@@ -39,7 +39,7 @@ import { textOf, variantSection } from '../src/sheet/astVisibility';
  *     closes the whole chain (useEscapeClose → onExit, never onClose); the PinStar sits in the header
  *     and pins the caller's own node object; the loading placeholder branch; a record with no page
  *     renders the markdown fallback; no "Full page" button anywhere (owner ruling, section 13); every
- *     CARD_ON surface switch is off.
+ *     CARD_ON surface switch is off except the ones whose step has landed (step 5: statDetail).
  *
  * Measured 2026-10-02: the snapshot was written on HEAD dc67738 before any edit (300 first frames +
  * 20 settled frames: 273 page popups with a name, 20 loading placeholders, 25 markdown fallbacks,
@@ -386,9 +386,14 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     expect(body.lastElementChild!.matches('.slot-foot')).toBe(true);
   });
 
-  it('there is no "Full page" button (owner ruling 2026-10-02) and every per-surface switch is off', () => {
+  it('there is no "Full page" button (owner ruling 2026-10-02) and every per-surface switch is off but the ones whose step landed', () => {
     for (const [i, e] of sample.slice(0, 60).entries()) expect(staticRender(e.node, i), e.key).not.toMatch(/Full page/i);
     expect(Object.keys(CARD_ON).length).toBeGreaterThan(0);
-    for (const [surface, on] of Object.entries(CARD_ON)) expect(on, surface).toBe(false);
+    // Card step 5 turns StatDetailModal's full text into the 'mine' card (test/card-statdetail.test.tsx),
+    // so the page's own use lines reach that popup; a landed switch may stand either way (section 9:
+    // turning it back is one line and the tests still hold), every surface not yet landed is off.
+    // batch card premise: feat-4458 "Frequency once per day"
+    const landed = new Set(['statDetail']);
+    for (const [surface, on] of Object.entries(CARD_ON)) if (!landed.has(surface)) expect(on, surface).toBe(false);
   });
 });

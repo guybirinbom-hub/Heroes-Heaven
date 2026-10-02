@@ -16,6 +16,8 @@ import { DescriptionModal } from './DescriptionModal';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { useEscapeClose } from './useEscapeClose';
 import { DescBody } from './DescBody';
+import { RecordCard } from './RecordCard';
+import { cardOn } from './cardSurfaces';
 
 /** An action name to its core.json id — the same kebab-casing MainTab uses, so a marker authored
  *  against "treat-wounds" is found from either surface. */
@@ -222,7 +224,18 @@ export function StatDetailModal({
 
       {/* The full printed text of a note that was capped to one line. Stacked over this modal rather
           than replacing it, so closing it returns you to the stat you were reading. */}
-      {fullText && (
+      {/* Card step 5 (docs/card-design.md section 9 row 5): with CARD_ON.statDetail the full text is the
+          record's card in mode 'mine' — its page with every labelled line once (this popup prints no
+          stat rows, so its printed set is empty), the furniture left out, Source dimmed, PinStar, Back
+          and the TrustMarker in its header. The legacy popup below stays for the switch's off position. */}
+      {fullText && cardOn('statDetail') && fullText.bucket && fullText.id && (
+        // Stacked over this modal like the legacy popup: a click outside the card closes the card only
+        // (its overlay's click must not bubble on to this modal's), so you return to the stat.
+        <div style={{ display: 'contents' }} onClick={(e) => e.stopPropagation()}>
+          <RecordCard record={{ bucket: fullText.bucket, id: fullText.id }} mode="mine" chrome="popup" onExit={() => setFullText(null)} />
+        </div>
+      )}
+      {fullText && !(cardOn('statDetail') && fullText.bucket && fullText.id) && (
         <div className="picker-overlay" onClick={(e) => { e.stopPropagation(); setFullText(null); }}>
           <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()}>
             <div className="picker-head">

@@ -18,60 +18,30 @@
  * drift between this port and the renderer is exactly what the rendered test exists to catch: the DOM
  * verdict is read from the real component, so a renderer that stops agreeing with this walk turns
  * test/card-parity.test.tsx red.
+ *
+ * Card step 5: a surface switched onto the 'mine' card (src/sheet/cardSurfaces.ts CARD_ON; today
+ * statDetail) is modelled with the card's own rules — the printed set in place of hideMeta, S-furniture,
+ * no whole-block drop — by calling the SAME predicates the renderer calls (astVisibility.ts
+ * cardDropsMetaP / isCardFurnitureP / isCardFurnitureTitle / cardRowParts / cardHeadUntil, and
+ * cardScope.ts canonLabel / printedSet). The walk tags what the card leaves out with its path
+ * (card-furniture, card-printed, spoiler) only; classifyOmission still names each line from its own
+ * words, so a predicate that starts leaving out more page text is counted (S1-UNNAMED / S1-MISSING).
  */
-import { clean, isMetaP, isMetaishBlock, textOf, variantSection, withoutItemLists, astSlug } from '../../src/sheet/astVisibility.ts';
-import { OMISSION_RULES } from '../../src/sheet/cardScope.ts';
+import {
+  clean, isMetaP, isMetaishBlock, textOf, variantSection, withoutItemLists, astSlug,
+  cardDropsMetaP, cardFurnitureSectionEnd, cardHeadUntil, cardRowParts, isCardFurnitureP, isCardFurnitureTitle,
+} from '../../src/sheet/astVisibility.ts';
+import { OMISSION_RULES, LABEL_ALIASES, canonLabel, printedSet } from '../../src/sheet/cardScope.ts';
+import { CARD_ON } from '../../src/sheet/cardSurfaces.ts';
 
 /* ------------------------------------------------------------------------------------------------ */
 /* 1. The label vocabulary: the printed "use lines" and stat lines (section 2 rule 4.2).             */
 /* ------------------------------------------------------------------------------------------------ */
 
-/** Canonical labels, each with the spellings a page or a stat row uses for it. */
-const ALIASES = {
-  Trigger: ['trigger'],
-  Frequency: ['frequency'],
-  Requirements: ['requirements', 'requirement'],
-  Prerequisites: ['prerequisites', 'prerequisite'],
-  Cost: ['cost'],
-  Access: ['access'],
-  'Craft Requirements': ['craft requirements'],
-  Cast: ['cast'],
-  // A ritual's header lines (docs/display-truth-plan.md F4's vocabulary).
-  'Secondary Casters': ['secondary casters'],
-  'Primary Check': ['primary check'],
-  'Secondary Checks': ['secondary checks'],
-  Range: ['range'],
-  Area: ['area'],
-  Targets: ['targets', 'target', 'target(s)'],
-  Duration: ['duration'],
-  Defense: ['defense', 'saving throw'],
-  Price: ['price'],
-  Bulk: ['bulk'],
-  Usage: ['usage', 'worn slot'],
-  Hands: ['hands'],
-  Category: ['category'],
-  Group: ['group'],
-  Damage: ['damage'],
-  Reload: ['reload'],
-  'AC Bonus': ['ac bonus'],
-  'Dex Cap': ['dex cap'],
-  'Check Penalty': ['check penalty'],
-  'Speed Penalty': ['speed penalty'],
-  Strength: ['strength'],
-  Hardness: ['hardness'],
-  HP: ['hp', 'hit points'],
-  BT: ['bt'],
-};
-const BY_ALIAS = new Map(Object.entries(ALIASES).flatMap(([canon, al]) => al.map((a) => [a, canon])));
-export const LABELS = Object.keys(ALIASES);
-
-/** A bold run's text → its canonical label, or null. "Activate", "Activate—Name" are Activate. */
-export function canonLabel(text) {
-  const t = String(text ?? '').replace(/\s+/g, ' ').trim().replace(/[:：]$/, '').trim().toLowerCase();
-  if (!t) return null;
-  if (/^activat(e|ion)\b/.test(t)) return 'Activate';
-  return BY_ALIAS.get(t) ?? null;
-}
+/* Card step 5: the label table and canonLabel moved to src/sheet/cardScope.ts (LABEL_ALIASES), because
+ * the 'mine' card reads the same table to decide what its surface's stat rows printed. */
+export const LABELS = Object.keys(LABEL_ALIASES);
+export { canonLabel };
 
 /**
  * Labels whose VALUE is compared with the page (DIFFERS). The rest are judged on presence only: an
@@ -243,7 +213,9 @@ const FURNITURE_LEADS = new Set([
   'mystery', 'mysteries', 'lesson', 'lessons', 'patron', 'patrons', 'patron theme', 'patron themes', 'spell list', 'spell lists',
   'related feats',
 ]);
-const FURNITURE_TEXT = [/\bleads to\b/i, /\bclick here\b/i, /\bcan be found here\b/i];
+const FURNITURE_TEXT = [/\bleads to\b/i, /\bclick here\b/i, /\bcan be found here\b/i, /^Related (?:Feats|Bloodlines?)\b/i];
+/** The heading of a "<X> leads to…" navigation section, read from its own words. */
+const LEADS_TO_HEADING = /\bleads to\b\.{0,3}\s*$/i;
 
 /**
  * Why one dropped page line may be dropped. `b.rule` is the legacy path that dropped it (or 'S-items'),
@@ -253,6 +225,9 @@ const FURNITURE_TEXT = [/\bleads to\b/i, /\bclick here\b/i, /\bcan be found here
 export function classifyOmission(b, printed) {
   if (b.rule === 'S-items') return { rule: 'S-items', unnamed: [] };
   if (b.rule === 'spoiler') return { rule: 'S-furniture', unnamed: [] };
+  // Card step 5: the card walk's own paths (card-furniture, card-printed) are NOT trusted as names, like
+  // the legacy paths: a line the card leaves out is classified by its own words here, so a predicate in
+  // astVisibility.ts that starts leaving out more is counted, not excused.
   if (FURNITURE_TEXT.some((re) => re.test(b.text))) return { rule: 'S-furniture', unnamed: [] };
   const leads = leadsOf(b.runs);
   if (!leads.length) return { rule: null, unnamed: [`¶${squash(b.text).slice(0, 32)}`] };
@@ -295,6 +270,16 @@ export function omissionLog(pageBlocks, shownBlocks, hidden, printed) {
     if (prev && (prev.lead || prev.cont) && rec.unnamed.length && !rec.lead && t.length <= 80 && c.rule === null) {
       rec = { ...rec, rule: prev.rule, unnamed: [], cont: true };
     }
+    // Card step 5: the link list under a dropped "<X> leads to…" heading belongs to that navigation
+    // section (S-furniture) — read from the page's structure (the ONE lead-less line straight after the
+    // dropped heading), not from the card's own drop path. Only that single line: a second dropped line
+    // after it (a sidebar heading, its prose) is named by its own words, so a section end that swallows
+    // past the link list is counted, never excused (measured 2026-10-02: narrowing the chain to this one
+    // line moved no entry of the ledger; test/card-statdetail.test.tsx pins the rule).
+    else if (prev && prev.leadsTo && rec.unnamed.length && !rec.lead && c.rule === null) {
+      rec = { ...rec, rule: 'S-furniture', unnamed: [], section: true };
+    }
+    if (rec.rule === 'S-furniture' && LEADS_TO_HEADING.test(String(b.text).trim())) rec = { ...rec, leadsTo: true };
     out.push(rec);
     prev = rec;
   }
@@ -332,9 +317,18 @@ const titleInline = (n) => (n.c || []).flatMap((c) => (c.t === 'p' ? c.c || [] :
  * rule that dropped it (meta-line, metaish-block, inline-row, spoiler). `seq` numbers siblings so the
  * cut-in-sentence check can see what follows a dropped block.
  */
-export function walkBlocks(nodes, hideMeta, out = [], hiddenBy = null) {
+export function walkBlocks(nodes, hideMeta, out = [], hiddenBy = null, card = undefined, headUntil = undefined) {
   for (let i = 0; i < nodes.length; i++) {
     const n = nodes[i];
+    // Card step 5 ('mine' card): AstRenderer's Blocks — header-ness per top-level block, nested runs
+    // inherit; the "<X> leads to…" section leaves whole (S-furniture).
+    const cw = card && headUntil !== undefined ? { printed: card.printed, head: headUntil >= 0 && i < headUntil } : card;
+    if (cw && isCardFurnitureTitle(n)) {
+      const end = cardFurnitureSectionEnd(nodes, i);
+      for (let k = i; k < end; k++) walkHidden(nodes[k], out, hiddenBy ?? 'card-furniture');
+      i = end - 1;
+      continue;
+    }
     if (n.t === 'p') {
       const bold0 = firstNonBlank(n);
       if (bold0 && bold0.t === 'b' && /^activate/i.test(textOf(bold0).trim()) && nodes[i + 1]?.t === 'actions') {
@@ -352,12 +346,17 @@ export function walkBlocks(nodes, hideMeta, out = [], hiddenBy = null) {
         if (frags.length && (!meta || frags.some((f) => f.t === 'actions'))) {
           i = j - 1;
           const combined = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' ? [pp] : pp.c || []));
+          if (cw) {
+            const drop = isCardFurnitureP(n, cw.head) ? 'card-furniture' : meta && cardDropsMetaP(n, cw) ? 'card-printed' : null;
+            emit(out, inlineRuns(combined), hiddenBy, drop, meta ? 'meta' : 'p');
+            continue;
+          }
           emit(out, inlineRuns(combined), hiddenBy, meta && hideMeta ? 'meta-line' : null, meta ? 'meta' : 'p');
           continue;
         }
       }
     }
-    renderBlock(n, hideMeta, out, hiddenBy);
+    renderBlock(n, hideMeta, out, hiddenBy, cw);
   }
   return out;
 }
@@ -367,7 +366,7 @@ function emit(out, runs, hiddenBy, rule, kind) {
   out.push({ runs, text: runsText(runs), shown: !why, rule: why ?? undefined, kind });
 }
 
-function renderBlock(n, hideMeta, out, hiddenBy) {
+function renderBlock(n, hideMeta, out, hiddenBy, card = undefined) {
   switch (n.t) {
     case 'traits':
       return;
@@ -388,6 +387,12 @@ function renderBlock(n, hideMeta, out, hiddenBy) {
     case 'p': {
       const raw = textOf(n).trim();
       if (!raw || markerOnly(raw)) return;
+      if (card) {
+        // Card step 5: AstRenderer's card branch — furniture leaves; a META line shows (full weight or
+        // dim) unless the surface printed every label it leads with, in the header.
+        if (isCardFurnitureP(n, card.head)) { emit(out, inlineRuns(n.c), hiddenBy, 'card-furniture', 'p'); return; }
+        if (isMetaP(n)) { emit(out, inlineRuns(n.c), hiddenBy, cardDropsMetaP(n, card) ? 'card-printed' : null, 'meta'); return; }
+      }
       if (isMetaP(n)) { emit(out, inlineRuns(n.c), hiddenBy, hideMeta ? 'meta-line' : null, 'meta'); return; }
       if (successTier(n)) {
         // The degree-of-success row: its label and the rest, joined by a space (ast-ds).
@@ -404,12 +409,12 @@ function renderBlock(n, hideMeta, out, hiddenBy) {
       return;
     case 'spoilers': {
       const inner = n.c && n.c[0] ? n.c[0] : n;
-      emit(out, inlineRuns(inner.c ?? []), hiddenBy, hideMeta ? 'spoiler' : null, 'spoiler');
+      emit(out, inlineRuns(inner.c ?? []), hiddenBy, card || hideMeta ? 'spoiler' : null, 'spoiler');
       return;
     }
     case 'ul':
     case 'ol':
-      for (const li of (n.c || []).filter((c) => c.t === 'li')) walkBlocks(li.c || [], hideMeta, out, hiddenBy);
+      for (const li of (n.c || []).filter((c) => c.t === 'li')) walkBlocks(li.c || [], hideMeta, out, hiddenBy, card);
       return;
     case 'table': {
       const rows = [];
@@ -423,31 +428,39 @@ function renderBlock(n, hideMeta, out, hiddenBy) {
       return;
     }
     case 'aside':
-      walkBlocks(n.c || [], hideMeta, out, hiddenBy);
+      walkBlocks(n.c || [], hideMeta, out, hiddenBy, card);
       return;
     case 'row': {
-      if (hideMeta && isMetaishBlock(n)) { walkHidden(n, out, hiddenBy ?? 'metaish-block'); return; }
+      // Card step 5: a 'mine' card never drops a block whole — it recurses.
+      if (!card && hideMeta && isMetaishBlock(n)) { walkHidden(n, out, hiddenBy ?? 'metaish-block'); return; }
       const kids = n.c || [];
-      if (kids.some((c) => BLOCK_TYPES.has(c.t))) { walkBlocks(kids, hideMeta, out, hiddenBy); return; }
+      if (kids.some((c) => BLOCK_TYPES.has(c.t))) { walkBlocks(kids, hideMeta, out, hiddenBy, card); return; }
       const parts = kids.filter((f) => textOf(f).trim());
+      if (card) {
+        // Filtered per bold-label segment: the kept parts as one line, each printed part left out (S-printed).
+        const keep = cardRowParts(parts, card);
+        for (const f of parts) if (!keep.includes(f)) emit(out, inlineRuns(f.c ?? []), hiddenBy, 'card-printed', 'row');
+        if (keep.length) emit(out, keep.flatMap((f, m) => [...(m > 0 ? [{ t: '; ' }] : []), ...inlineRuns(f.c ?? [])]), hiddenBy, null, 'row');
+        return;
+      }
       if (!parts.length) return;
       const runs = parts.flatMap((f, m) => [...(m > 0 ? [{ t: '; ' }] : []), ...inlineRuns(f.c ?? [])]);
       emit(out, runs, hiddenBy, hideMeta ? 'inline-row' : null, 'row');
       return;
     }
     case 'column':
-      if (hideMeta && isMetaishBlock(n)) { walkHidden(n, out, hiddenBy ?? 'metaish-block'); return; }
-      walkBlocks(n.c || [], hideMeta, out, hiddenBy);
+      if (!card && hideMeta && isMetaishBlock(n)) { walkHidden(n, out, hiddenBy ?? 'metaish-block'); return; }
+      walkBlocks(n.c || [], hideMeta, out, hiddenBy, card);
       return;
     case 'document':
     case 'doc':
-      walkBlocks(n.c || [], hideMeta, out, hiddenBy);
+      walkBlocks(n.c || [], hideMeta, out, hiddenBy, card);
       return;
     case 'view':
       emit(out, inlineRuns(n.c), hiddenBy, null, 'p');
       return;
     default:
-      if ((n.c || []).some((c) => BLOCK_TYPES.has(c.t))) walkBlocks(n.c || [], hideMeta, out, hiddenBy);
+      if ((n.c || []).some((c) => BLOCK_TYPES.has(c.t))) walkBlocks(n.c || [], hideMeta, out, hiddenBy, card);
       else emit(out, inlineRuns(n.c ?? (n.t === 'text' ? [n] : [])), hiddenBy, null, 'loose');
   }
 }
@@ -457,10 +470,15 @@ function walkHidden(n, out, rule) {
   walkBlocks([n], false, out, rule);
 }
 
-/** The body of a tree as a popup draws it (no header title, no trait chips). */
-export function treeBlocks(tree, { hideMeta = false, itemLists = true } = {}) {
+/**
+ * The body of a tree as a popup draws it (no header title, no trait chips). `card` ({printed: Set of
+ * canonical labels}) draws it as a 'mine' card does (card step 5): the printed set replaces hideMeta.
+ */
+export function treeBlocks(tree, { hideMeta = false, itemLists = true, card = undefined } = {}) {
   const t = itemLists ? tree : withoutItemLists(tree);
-  return walkBlocks(t.c || [], hideMeta).filter((b) => /[A-Za-z0-9]/.test(b.text));
+  const top = t.c || [];
+  if (card) return walkBlocks(top, false, [], null, { printed: card.printed, head: false }, cardHeadUntil(top)).filter((b) => /[A-Za-z0-9]/.test(b.text));
+  return walkBlocks(top, hideMeta).filter((b) => /[A-Za-z0-9]/.test(b.text));
 }
 
 /** The action glyph hoisted into the level-1 title (the popup header's cost). */
@@ -725,10 +743,44 @@ export function cutInSentence(blocks) {
 
 export const SECTIONS = ['S1-MISSING', 'S1-UNNAMED', 'DIFFERS', 'DUPLICATED', 'EXTRA', 'S2-NOT-OWN', 'S3-PLACEMENT', 'S5-IDENTITY', 'CUT-IN-SENTENCE', 'FOLDED-UNLISTED', 'OURS-LEAK', 'STUBS'];
 
-export function baselineProblems(found, baseline, file) {
+/**
+ * Surfaces whose card step has landed and whose switch can be turned back (docs/card-design.md section 9:
+ * "Turning a surface back is therefore one line, and its tests still hold"). For each, the baseline keeps
+ * under `legacy[surface]` that surface's row entries as measured with its switch OFF; while the switch
+ * is off they stand in for the surface's entries in the main sections. Step 22 removes both.
+ */
+export const SWITCHED_SURFACES = ['statDetail'];
+
+/**
+ * The entries the baseline expects under the switches as they are now (`cardOn`, default CARD_ON): the
+ * main sections, except that a switched surface that is OFF is expected at its `legacy` entries.
+ */
+export function expectedEntries(baseline, cardOn = CARD_ON) {
+  const out = {};
+  for (const s of SECTIONS) out[s] = [...(baseline?.[s] ?? [])];
+  for (const surface of SWITCHED_SURFACES) {
+    const legacy = baseline?.legacy?.[surface];
+    if (cardOn[surface] || !legacy) continue;
+    for (const s of SECTIONS) out[s] = out[s].filter((e) => !e.startsWith(`${surface}|`)).concat(legacy[s] ?? []);
+  }
+  return out;
+}
+
+/** A switched surface's row entries in a ledger (`found`), the shape `legacy[surface]` stores. */
+export function surfaceEntries(found, surface) {
+  const out = {};
+  for (const s of ROW_SECTIONS) {
+    const e = (found[s] ?? []).filter((x) => x.startsWith(`${surface}|`));
+    if (e.length) out[s] = e;
+  }
+  return out;
+}
+
+export function baselineProblems(found, baseline, file, cardOn = CARD_ON) {
   const problems = [];
+  const expected = expectedEntries(baseline, cardOn);
   for (const s of SECTIONS) {
-    const listed = new Set(baseline?.[s] ?? []);
+    const listed = new Set(expected[s]);
     const now = new Set(found[s] ?? []);
     for (const id of now) if (!listed.has(id)) problems.push(`${s}: ${id} — a NEW offender; fix the record or the surface, never the baseline`);
     for (const id of listed) if (!now.has(id)) problems.push(`${s}: ${id} is in ${file} but is right now — remove the entry (the list only shrinks)`);
@@ -829,11 +881,15 @@ export function surfaceRows(deps) {
     rows.push({ surface: 'actionDetail', bucket: 'actions', id, own: { bucket: 'actions', id }, read: null, md: act.description ?? '', printed: [], mode: 'mine' });
   }
 
-  // StatDetailModal full text — the record behind a situational line (DescBody astKey/astId, hideMeta).
+  // StatDetailModal full text — the record behind a situational line. With CARD_ON.statDetail (card step
+  // 5) it is RecordCard mode 'mine': the printed set (empty — the popup prints no stat rows) replaces
+  // hideMeta, and the item lists are cut as before. Switched off, it is the legacy DescBody (hideMeta).
+  // `deps.cardOn` (default CARD_ON) lets --write-baseline also measure the switch's off position.
+  const statCard = (deps.cardOn ?? CARD_ON).statDetail ? { printed: [] } : undefined;
   for (const sid of situationalIds) {
     const b = SITUATIONAL_COLLECTIONS.find((k) => db[k]?.[sid]);
     if (!b || !has(b, sid) || !db[b][sid].description) continue;
-    rows.push({ surface: 'statDetail', bucket: b, id: sid, own: { bucket: b, id: sid }, read: { bucket: b, slug: sid }, hideMeta: true, itemLists: false, md: db[b][sid].description, printed: [], mode: 'mine' });
+    rows.push({ surface: 'statDetail', bucket: b, id: sid, own: { bucket: b, id: sid }, read: { bucket: b, slug: sid }, hideMeta: !statCard, itemLists: false, card: statCard, md: db[b][sid].description, printed: [], mode: 'mine' });
   }
 
   // Builder ChoiceDetails — DescriptionModal root {title, description} with no key: the ast index by name.
@@ -919,14 +975,17 @@ export function judgeRow(row, trees, mdFns) {
     bodyBlocks = (row.mdParts ?? [row.md]).flatMap((t) => markdownBlocks(t, parseBlocks, cleanRun));
     res.lane = 'md';
   } else if (resolved) {
-    const all = treeBlocks(resolved, { hideMeta: row.hideMeta, itemLists: row.itemLists });
+    // A 'mine' card row (card step 5) draws with the surface's printed set instead of hideMeta.
+    const card = row.card ? { printed: printedSet(row.card.printed) } : undefined;
+    const all = treeBlocks(resolved, { hideMeta: row.hideMeta, itemLists: row.itemLists, card });
     bodyBlocks = all.filter((b) => b.shown);
     res.lane = 'tree';
-    // What the surface's own walk dropped, with the legacy path that dropped it (meta-line, …).
+    // What the surface's own walk dropped, with the path that dropped it (meta-line, … or, on a card,
+    // the section 2 rule 5 name: S-furniture, S-printed).
     res.hidden = all.filter((b) => !b.shown).map((b) => ({ text: b.text, rule: b.rule }));
     // S-items: what withoutItemLists cut (DescBody, the popup of a thing the character HAS).
     if (!row.itemLists) {
-      const kept = new Set(treeBlocks(resolved, { hideMeta: row.hideMeta }).map((b) => b.text));
+      const kept = new Set(treeBlocks(resolved, { hideMeta: row.hideMeta, card }).map((b) => b.text));
       for (const b of all) kept.delete(b.text);
       for (const t of kept) res.hidden.push({ text: t, rule: 'S-items' });
     }
