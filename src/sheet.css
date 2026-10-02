@@ -11937,8 +11937,7 @@ button.strike-name:hover {
     user-select: text;
   }
   .ws-app > .chrome { display: none; }
-  .identity .tabs,
-  .identity .level-stack { display: none; }
+  .identity .tabs { display: none; } /* NOT .level-stack: the JS gate (CharacterSheet's isMobile) is the header XP field's only width-based hide, and a CSS hide here could only zero the XP; campaign-tracker.css's narrow-pane rule for it is keyed to the same boolean as that pane's ForceMobileContext, so it cannot disagree */
   .identity { flex: 0 0 auto; padding: calc(8px + env(safe-area-inset-top, 0px) / var(--zoom, 1)) 12px 8px; }
   .identity-name { flex: 1 1 auto; max-width: none; }
 

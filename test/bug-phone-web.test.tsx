@@ -8,7 +8,9 @@ import { CustomizeModal } from '../src/sheet/CustomizeModal';
 import { NotesTab } from '../src/sheet/NotesTab';
 import type { Character } from '../src/rules/types';
 import { ForceMobileContext, useIsMobile } from '../src/sheet/useIsMobile';
+import { CharacterSheet } from '../src/sheet/CharacterSheet';
 import { renderDom } from './_render';
+import { build, content } from './_content';
 
 /**
  * The phone WEBSITE (owner, 2026-09-22): popups that would not dismiss, a Notes page "completely
@@ -35,7 +37,11 @@ import { renderDom } from './_render';
  *    2026-09-23, in an emulated browser tab and only after a scripted resize — never on a fresh load at
  *    375x812, and rewriting the hook did not stop it happening in that tab. So the instrument is the
  *    suspect, not the hook, and the hook is unchanged. Pinned below is only what holds either way: the
- *    subscription is live, and a ForceMobileContext still wins.
+ *    subscription is live, and a ForceMobileContext still wins. And one surface no longer has two
+ *    mechanisms that could disagree: the header XP field (`.identity .level-stack`) is shown or not by
+ *    CharacterSheet's useIsMobile answer alone, the same answer that puts XP in the rail on a phone, so
+ *    the 720px block does not hide it any more — in that disagreeing state the CSS hide could only take
+ *    the last XP off the screen ("the header XP field is the JS gate's alone", below).
  *
  * jsdom has no layout, so (1) is asserted on the CSS text. NOT by looking for the rule: the first cut of
  * this fix was written and shipped while doing nothing at all, because a `height` can be reverted by a
@@ -799,6 +805,78 @@ describe('useIsMobile', () => {
     expect(host.textContent).toBe('phone');
     stop();
     restore();
+  });
+});
+
+/**
+ * The header XP field is the JS gate's alone (owner's list, item 9, second settle).
+ *
+ * CharacterSheet renders `.identity .level-stack` — XP, top right — only when its useIsMobile answer is
+ * "computer", and hands that same answer to the vitals rail, which carries the phone layout's XP. One
+ * value decides both, so the sheet never shows XP twice (test/bug-xp-in-rail.test.tsx). The 720px block
+ * used to hide `.identity .level-stack` as well. With the JS gate in place that rule could only ever act
+ * in the state (3) above records — useIsMobile saying "computer", so the rail carries no XP, while the
+ * phone rules apply — and there it hid the one XP left. So it is gone, and this pins that on the REAL
+ * header markup: render the sheet the way JS lays out a computer, resolve the PHONE cascade over it, and
+ * nothing from the shell down to the XP number may resolve `display: none`. The tab strip beside it is
+ * still the CSS's to hide: on a phone the bottom bar replaces it.
+ *
+ * MUTATION PROOF (applied once, seen red, restored): putting `.identity .level-stack` back into
+ * sheet.css's `@media (max-width: 720px)` rule beside `.identity .tabs` fails the first leg below.
+ */
+describe("phone website: the header XP field is the JS gate's alone (item 9)", () => {
+  /** The real sheet, laid out by JS as a computer (ForceMobileContext false). A synthetic level-5 fighter. */
+  function computerSheet(readOnly: boolean) {
+    const character = { ...build('fighter', 5), xp: 340 } as Character;
+    return renderDom(
+      <ForceMobileContext.Provider value={false}>
+        <CharacterSheet
+          character={character}
+          content={content()}
+          charKey="phone-web-xp"
+          readOnly={readOnly}
+          onPlay={readOnly ? undefined : () => undefined}
+        />
+      </ForceMobileContext.Provider>,
+    );
+  }
+
+  it('no phone rule hides the header XP field, or anything between the shell and its number', () => {
+    for (const readOnly of [false, true]) {
+      const { host, stop } = computerSheet(readOnly);
+      const stack = host.querySelector('.identity .level-stack');
+      expect(stack, `fixture (${readOnly ? 'read-only' : 'play'}): JS renders the header XP field`).toBeTruthy();
+      const xp = stack!.querySelector(readOnly ? 'span.xp' : 'input.xp-input');
+      expect(xp, 'fixture: and the XP number in it').toBeTruthy();
+      const chain: Element[] = [];
+      for (let el: Element | null = xp; el && el !== host; el = el.parentElement) chain.push(el);
+      expect(chain, 'fixture: the chain runs through the header field').toContain(stack);
+      const hidden = chain.filter((el) => value(el, 'display') === 'none').map((el) => el.className || el.tagName);
+      expect(hidden, `${readOnly ? 'read-only' : 'play'}: hidden on a phone, so a JS/CSS disagreement shows no XP`).toEqual([]);
+      stop();
+    }
+  });
+
+  it('…while the tab strip beside it is still hidden on a phone', () => {
+    const { host, stop } = computerSheet(false);
+    const tabs = host.querySelector('.identity .tabs');
+    expect(tabs, 'fixture: JS renders the computer tab strip').toBeTruthy();
+    expect(value(tabs!, 'display'), 'the bottom bar replaces it on a phone').toBe('none');
+    stop();
+  });
+
+  it('the instrument sees the rule this replaced', () => {
+    // A guard that cannot see a descendant selector inside the 720px block would pass with the old rule
+    // back in place; this is the old rule, verbatim, on a synthetic header.
+    const old = parse(
+      '.level-stack { display: flex; } @media (max-width: 720px) { .identity .tabs,\n  .identity .level-stack { display: none; } }',
+    );
+    const identity = document.createElement('div');
+    identity.className = 'identity';
+    const stack = document.createElement('div');
+    stack.className = 'level-stack';
+    identity.appendChild(stack);
+    expect(winner(stack, 'display', false, old)?.value).toBe('none');
   });
 });
 

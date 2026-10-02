@@ -429,6 +429,23 @@ export function CharacterSheet({
   const [xpAdd, setXpAdd] = useState('');
   // Keep the editable XP field in sync when the value changes elsewhere (rest, edit, …).
   useEffect(() => setXpDraft(String(character.xp)), [character.xp]);
+  // The header XP field is not rendered on the phone layout (see .level-stack below). When the window
+  // narrows past 720px with a number typed but not applied, that draft is DISCARDED — nothing was written,
+  // so it is not a player's change — rather than kept here to reappear when the window widens again.
+  // The vitals rail's XP editor makes the same choice in the other direction (VitalsRail, railXp), on
+  // this same isMobile value, which the sheet passes to the rail.
+  // A typed-but-unapplied total is in practice a FOCUSED field (leaving it applies, onBlur={commitXp}),
+  // and some browsers fire blur on a focused field as it is removed. That blur must not apply the draft,
+  // and nothing on this side stops it: the discard relies on react-dom turning its own event dispatch
+  // off for the length of a commit (prepareForCommit → setEnabled(false)), and the `!isMobile` gate
+  // removes the field inside the commit where the layout changes. test/bug-xp-in-rail.test.tsx emulates
+  // that removal blur, with a control showing the same event outside a commit does apply.
+  useEffect(() => {
+    if (!isMobile) return;
+    setXpDraft(String(character.xp));
+    setXpAdd('');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile]);
   const [rolls, setRolls] = useState<RollResult[]>(initialRolls);
   const [presets, setPresets] = useState<DicePreset[]>(initialPresets);
   const [diceOpen, setDiceOpen] = useState(false);
@@ -604,6 +621,21 @@ export function CharacterSheet({
             </button>
           )}
         </div>
+        {/* XP, top right — the computer layout's XP, on every tab. The phone layout (a window 720px or
+            narrower) shows it in the vitals rail's Hit points card instead (VitalsRail's railXp). Both
+            halves are decided by this sheet's one `isMobile` value: it gates this field here and is passed
+            to VitalsRail as its isMobile prop, so the sheet never shows XP twice. Never two is not always
+            one: the phone layout renders the rail on the Main tab only (below), so there XP is on Main
+            only, and a Hit points card hidden in Customize takes it off the phone layout altogether (both
+            as in v0.1.41). This gate is the field's only WIDTH-based hide: sheet.css's 720px block no
+            longer hides .identity .level-stack, because a CSS answer that disagreed with this value could
+            only ever take the last XP off the screen. One CSS rule still names the field —
+            campaign-tracker.css's `.ct-pc-pane.is-narrow .identity .level-stack { display: none }` — and
+            it is keyed to the same `narrow` boolean as that pane's ForceMobileContext, which makes this
+            `isMobile` true: it can only match where this gate has already removed the field, so it never
+            hides one this value shows. test/bug-xp-in-rail.test.tsx and test/bug-phone-web.test.tsx pin
+            both. */}
+        {!isMobile && (
         <div className="level-stack">
           {onPlay ? (
             <div className="xp-group">
@@ -653,6 +685,7 @@ export function CharacterSheet({
             <span className="xp">{character.xp.toLocaleString()} xp</span>
           )}
         </div>
+        )}
         {/* Phone: Party lives in the top bar beside Rest (this .icon-btn row is hidden-ish on desktop's
             wide bar; the desktop entry is the .tabs Party button above). */}
         {showParty && isMobile && (
@@ -749,7 +782,9 @@ export function CharacterSheet({
           writing one (Customize → "Vitals rail on Notes" brings it back). */}
       <div className={'body' + (notesFull ? ' body-notes' : '')} ref={bodyRef}>
         {(!isMobile || tab === 'Main') && !notesFull && (
-          <VitalsRail character={character} content={content} charKey={charKey} onPlay={onPlay} onOpenStat={setStatRef} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} onCreateItem={onCreateItem} />
+          // isMobile: the sheet's own answer, so the rail's XP and the header's XP above are one decision
+          // (a rail that asked its own hook could mount later and read the width before this one heard).
+          <VitalsRail character={character} content={content} charKey={charKey} onPlay={onPlay} onOpenStat={setStatRef} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} onCreateItem={onCreateItem} isMobile={isMobile} />
         )}
         <main className="content">
           {tab === 'Main' ? (

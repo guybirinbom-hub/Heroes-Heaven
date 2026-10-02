@@ -169,6 +169,7 @@ export function VitalsRail({
   onSaveMode,
   onDeleteMode,
   onCreateItem,
+  isMobile: isMobileFromSheet,
 }: {
   character: Character;
   content: ContentDatabase;
@@ -181,6 +182,12 @@ export function VitalsRail({
   onDeleteMode?: (id: string) => void;
   /** Register an edited item (enables editing the shield from its rail name). */
   onCreateItem?: (item: Item) => void;
+  /** The phone-layout answer of the sheet that renders this rail. CharacterSheet passes its own
+   *  useIsMobile() here, so its header XP field and this card's XP are decided by ONE value. Two hook
+   *  instances could disagree: one mounted later reads matchMedia fresh while the earlier one keeps its
+   *  answer until the change event is delivered, and that window showed zero XP or two. When absent (a
+   *  rail rendered on its own, as the tests do) the rail asks useIsMobile itself. */
+  isMobile?: boolean;
 }) {
   const [hpAmt, setHpAmt] = useState('');
   // Shield-HP draft (null = show the live value): a controlled number input that wrote on every keystroke
@@ -206,8 +213,12 @@ export function VitalsRail({
   const deathBase = character.dyingThreshold ?? 4;
   // …and how much less Doomed counts (Vivacious Gnome: 1). Both ride into every death-threshold read.
   const doomedCut = character.doomedReduction ?? 0;
+  // The sheet's answer when it gave one (see the `isMobile` prop); the hook is still called every render,
+  // as the rules of hooks require, but its answer is used only when the sheet gave none. Every phone-only
+  // control in this rail (the HP row, the numpad, XP) follows this one value.
+  const ownIsMobile = useIsMobile();
+  const isMobile = isMobileFromSheet ?? ownIsMobile;
   // Editable current-HP field (click the number to set it directly).
-  const isMobile = useIsMobile();
   const [numpadOpen, setNumpadOpen] = useState(false);
   const [hpDraft, setHpDraft] = useState(String(character.hitPoints.current));
   useEffect(() => setHpDraft(String(character.hitPoints.current)), [character.hitPoints.current]);
@@ -225,11 +236,21 @@ export function VitalsRail({
     else setTempDraft(String(character.hitPoints.temp));
   };
   const hpPct = hpMax > 0 ? Math.round((character.hitPoints.current / hpMax) * 100) : 0;
-  // XP in the Hit points card (Customize → XP display): a chip in the title row by default, or a thin
-  // line with a bar. Pressing either opens the editor below, which offers the same two moves the header
-  // XP field does — SET the total, or ADD to it — through the same play setters, so there is one write
-  // path for XP and not a second one that could drift. Unlike the HP damage/heal row this is NOT hidden
-  // on a phone: XP is exactly what gets awarded at a table where the phone is the sheet.
+  // XP in the Hit points card is the PHONE layout's XP: a window 720px or narrower, decided by
+  // useIsMobile — the same width test every phone-only control in this card uses, never the device flag
+  // (html.is-mobile), so a phone turned sideways past 720px gets the computer look. On a wider window XP
+  // stays where it always was, in the sheet's top bar beside the tabs (CharacterSheet's .level-stack
+  // field). On the sheet, railXp is the `isMobile` CharacterSheet passes in — the very variable that gates
+  // its header field — so the two XP surfaces are decided by one value and the sheet never shows both
+  // (owner's list, item 9: top right on a PC as before; the rail chip only on the phone layout). Never
+  // two is not always one: on the phone layout this card is the only XP, so wherever it is not on screen
+  // — any tab but Main (the sheet renders the rail on Main only there) or a Hit points card hidden in
+  // Customize — the phone layout shows no XP, as in v0.1.41. On a computer the header field is on every tab.
+  // A rail rendered without that prop decides by its own hook. Customize → XP display picks the phone
+  // look: a chip in the title row (default) or a thin line with a bar. Pressing either opens the editor
+  // below, which offers the same two moves the header field does — SET the total, or ADD to it — through
+  // the same play setters, so there is one write path for XP and not a second one that could drift.
+  const railXp = isMobile;
   const [xpOpen, setXpOpen] = useState(false);
   const [xpTotalDraft, setXpTotalDraft] = useState(String(character.xp));
   const [xpAddDraft, setXpAddDraft] = useState('');
@@ -254,6 +275,16 @@ export function VitalsRail({
     setXpAddDraft('');
     setXpOpen(false);
   };
+  // The layout can leave the phone with the editor open (a phone turned to landscape wider than 720px).
+  // The railXp gate unmounts the editor in that same render; this then closes it and DISCARDS the drafts,
+  // so they do not come back when the window narrows again. A typed-but-unapplied number is not a
+  // player's change — nothing was written — and the unmount writes nothing either: react-dom ignores a
+  // blur the browser fires while it removes the focused Total field (its events are off during a commit),
+  // so the Total's apply-on-blur cannot run then. Gated on xpOpen, so an ordinary desktop mount does nothing.
+  useEffect(() => {
+    if (!railXp && xpOpen) cancelXp();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [railXp, xpOpen]);
   const ac = deriveAc(character, content);
   const classDc = deriveClassDc(character);
   // The rail shows one Spell DC: prefer a full tradition pool (prepared/spontaneous/innate) over a
@@ -430,7 +461,7 @@ export function VitalsRail({
       </span>
     </>,
   );
-  const xpEditor = onPlay && xpOpen && (
+  const xpEditor = onPlay && railXp && xpOpen && (
     // Escape is handled HERE, once, for the whole editor (any field, or the +XP button) rather than
     // per-input — a keydown bubbles up to this container from wherever focus actually is.
     <div className="hp-edit xp-rail-edit" onKeyDown={(e) => { if (e.key === 'Escape') cancelXp(); }}>
@@ -479,7 +510,7 @@ export function VitalsRail({
   const cards: Record<string, ReactNode> = {};
   cards.hp = (
       <section className="card">
-        {xpDisplay === 'line' && xpLine}
+        {railXp && xpDisplay === 'line' && xpLine}
         <div
           className={
             'ct' +
@@ -492,7 +523,7 @@ export function VitalsRail({
           <i className="ti ti-heart" aria-hidden="true" />
           Hit points
           {statHasSituational(character, { kind: 'hp' }, content) && <SituationalStar />}
-          {xpDisplay !== 'line' && xpChip}
+          {railXp && xpDisplay !== 'line' && xpChip}
         </div>
         {xpEditor}
         <div className="hp-line">

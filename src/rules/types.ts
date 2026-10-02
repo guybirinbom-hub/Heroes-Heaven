@@ -6664,7 +6664,10 @@ export interface Customization {
    *  entering DAMAGE, and only for a character that actually has a resistance or weakness.
    *  Immunity is deliberately absent — immune damage is 0, so there is nothing to type. */
   hpIwrButtons?: boolean;
-  /** How XP is shown in the vitals rail's Hit points card:
+  /** How XP is shown in the vitals rail's Hit points card on the PHONE layout (a window 720px or
+   *  narrower, useIsMobile). On a wider window the rail shows no XP at all — XP is the header field
+   *  beside the tabs — so this setting changes nothing there, but it stays editable on every width
+   *  because it is per character and synced:
    *    'chip' — a small "XP 340" chip riding in the card's title row, costing no height (DEFAULT, and
    *             what an ABSENT key means, so nothing has to be written to get it);
    *    'line' — a thin "XP 340 / 1000" row above the HP numbers with a 3 px progress bar (PF2e is a

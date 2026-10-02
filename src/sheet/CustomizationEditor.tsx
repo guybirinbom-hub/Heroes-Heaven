@@ -379,10 +379,14 @@ export function CustomizationEditor({
           </button>
         ))}
       </div>
+      {/* Shown on every width, like the reorder arrows below: the value is per character and synced, so a
+          player at a computer can set his phone's look. */}
       <p className="settings-desc" style={{ marginTop: 0 }}>
-        XP sits in the Hit points card. <strong>Chip in the title</strong> rides in the card's title row and costs no
-        height; <strong>Line with a bar</strong> adds a thin <strong>XP 340 / 1000</strong> row with a progress bar above
-        the HP numbers. Press either one to set the total or add XP — on the phone too.
+        How XP looks on a <strong>phone</strong> (a window 720px wide or narrower), where it sits in the Hit points
+        card. <strong>Chip in the title</strong> rides in the card's title row and costs no height;{' '}
+        <strong>Line with a bar</strong> adds a thin <strong>XP 340 / 1000</strong> row with a progress bar above the HP
+        numbers. Press either one to set the total or add XP. On a computer XP stays in the top bar beside the tabs, so
+        neither is shown there.
       </p>
 
       <div className="menu-label">Daily preparations</div>
