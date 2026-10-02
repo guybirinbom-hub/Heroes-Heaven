@@ -62,7 +62,7 @@ function typeStats(item: Item, content: ContentDatabase): { k: string; v: string
   switch (item.itemType) {
     case 'weapon':
       return [
-        { k: 'Category', v: cap(item.category) },
+        { k: 'Category', v: item.category ? cap(item.category) : undefined },
         { k: 'Group', v: item.group ? cap(item.group) : undefined },
         { k: 'Damage', v: `${item.damage.dice}${item.damage.die} ${item.damage.type}` },
         { k: 'Range', v: item.range ? `${item.range} ft` : undefined },
@@ -70,7 +70,7 @@ function typeStats(item: Item, content: ContentDatabase): { k: string; v: string
       ];
     case 'armor':
       return [
-        { k: 'Category', v: cap(item.category) },
+        { k: 'Category', v: item.category ? cap(item.category) : undefined },
         { k: 'AC bonus', v: `+${item.acBonus}` },
         { k: 'Dex cap', v: item.dexCap != null ? `+${item.dexCap}` : undefined },
         { k: 'Check penalty', v: item.checkPenalty ? String(item.checkPenalty) : undefined },
