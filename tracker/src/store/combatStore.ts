@@ -321,8 +321,10 @@ interface CombatStore {
   setCombatantImage: (id: string, image: string) => void
   addDiceResult: (r: DiceResult) => void
   clearDiceResults: () => void
-  /** Revert / re-apply the last combat edit (damage, conditions, defeat, etc.).
-   *  Turn navigation is not part of this history. */
+  /** Revert / re-apply the last combat edit (damage, conditions, defeat, etc.) — and a whole Next
+   *  Turn, which records too (prevTurn does not). Neither is a vitals gesture (see
+   *  takeVitalsGesture): putting a board back is a load, not the GM editing a player — and a Next
+   *  Turn snapshot can predate a player's own change to their sheet. */
   undo: () => void
   redo: () => void
   saveEncounter: (name: string) => void
@@ -519,9 +521,10 @@ if (typeof window !== 'undefined') window.addEventListener('pagehide', flushPers
 
 // ── Undo / redo for combat edits ────────────────────────────────────────────
 // Snapshots live at module scope (kept OUT of the persisted state) and share
-// structure with immer's frozen state, so each one is cheap. Turn navigation is
-// deliberately excluded — only state edits (damage, conditions, defeat, …) are
-// recorded, matching the "undo a mis-typed number" use case.
+// structure with immer's frozen state, so each one is cheap. State edits (damage,
+// conditions, defeat, …) are recorded, matching the "undo a mis-typed number" use
+// case — and so is Next Turn, whose condition ticks and persistent damage prevTurn
+// can't recreate (see nextTurn). Stepping back with prevTurn is not recorded.
 interface CombatSnapshot { combatants: Combatant[]; round: number; activeIndex: number }
 const _undoStack: CombatSnapshot[] = []
 const _redoStack: CombatSnapshot[] = []
@@ -545,6 +548,52 @@ function invalidateRedo(s: CombatStore) {
   _redoStack.length = 0
   s.canRedo = false
 }
+
+// ── GM vitals gestures ───────────────────────────────────────────────────────
+/**
+ * WHICH CHANGES TO A PC ROW THE GM ACTUALLY MADE — for a host that mirrors PC rows onto the players'
+ * own sheets (Heroes Heaven's campaign seam, src/integration/pcSheetTruth.ts).
+ *
+ * That seam used to publish ANY difference between a PC row and the player's sheet as a GM edit, so
+ * every path that rebuilds a row — Clear and re-add, Remove and re-add, Load encounter, Undo / Redo, a
+ * board arriving from the GM's other device — published a stale row, or a fresh full-HP row with no
+ * conditions, over the player's own damage and conditions. It now publishes only what the GM DID, and
+ * this is how it knows.
+ *
+ * A gesture lives exactly as long as the `set()` that made it is being dispatched. The host's store
+ * subscriber runs INSIDE that dispatch and takes it (`takeVitalsGesture`); `asGesture` forgets whatever
+ * is left the moment the dispatch returns. Nothing is written on the row, so nothing reaches the
+ * persisted board, an undo snapshot, a saved encounter or the GM-device mirror — no path that REPLACES
+ * rows can ever carry one. Safe by construction, not by every new loader remembering to clear a flag.
+ *
+ * A gesture is an explicit GM vitals action on a PC row: damage, healing, temp HP, max HP, Mark
+ * defeated / Restore, a condition added or removed, a condition's value or duration set.
+ *
+ * Deliberately NOT gestures: Undo / Redo (putting an older board back is a load, and its snapshot can
+ * predate the player's own changes — the GM takes a change back with the opposite gesture instead),
+ * the turn engine (end-of-turn ticks, persistent damage, Delay, combat start), the party bridge's
+ * max-HP sync (setPcMaxHP), adds, removals, clears, loads, scope switches, reloads and renames. The
+ * standalone tracker has no subscriber that takes them, so there this is inert.
+ */
+let _gesture: Set<string> | null = null
+/** Run one store action as a GM vitals gesture: the rows its recipe marks are takeable by the store's
+ *  subscribers while that action's `set()` dispatches, and by nobody once it has returned. */
+function asGesture(run: () => void) {
+  const outer = _gesture
+  _gesture = new Set()
+  try { run() } finally { _gesture = outer }
+}
+/** Inside a gesture's recipe: this PC row is what the gesture changed. A no-op anywhere else. */
+function markGesture(c: Combatant | undefined | null) {
+  if (c?.isPC && _gesture) _gesture.add(c.id)
+}
+/** For a store subscriber: did the dispatch now running make a GM vitals gesture on this row? Handed
+ *  out ONCE (a second ask in the same dispatch answers false). Outside a gesture's own dispatch there
+ *  is never one. */
+export function takeVitalsGesture(id: string): boolean {
+  return !!_gesture && _gesture.delete(id)
+}
+
 /** Push a PC's current HP back to its party-card sheet (matched by name). */
 function syncPcHp(c: Combatant | undefined) {
   if (c?.isPC) usePartyStore.getState().syncCurrentHpByName(c.name, c.currentHP)
@@ -1095,10 +1144,11 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   selectCombatant(id) { set(s => { s.selectedId = id }) },
 
   applyDamage(id, amt) {
-    set(s => {
+    asGesture(() => set(s => {
       const c = s.combatants.find(c => c.id === id)
       if (!c) return
       record(s)
+      markGesture(c)
       let rem = amt
       if (c.tempHP > 0) { const abs = Math.min(c.tempHP, rem); c.tempHP -= abs; rem -= abs }
       c.currentHP = Math.max(0, c.currentHP - rem)
@@ -1109,15 +1159,16 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
           c.isDefeated = true
         }
       }
-    })
+    }))
     syncPcHp(get().combatants.find(c => c.id === id))
   },
 
   applyHealing(id, amt) {
-    set(s => {
+    asGesture(() => set(s => {
       const c = s.combatants.find(c => c.id===id)
       if (!c) return
       record(s)
+      markGesture(c)
       c.currentHP = Math.min(c.maxHP, c.currentHP + amt)
       if (c.currentHP > 0) {
         c.isDefeated = false
@@ -1126,19 +1177,20 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         // doesn't keep its -4 Perception/Reflex + off-guard.
         if (c.isPC) reviveConditions(c)
       }
-    })
+    }))
     syncPcHp(get().combatants.find(c => c.id === id))
   },
 
   setTempHP(id, amt) {
-    set(s => { const c = s.combatants.find(c => c.id===id); if (!c) return; record(s); c.tempHP = Math.max(0,amt) })
+    asGesture(() => set(s => { const c = s.combatants.find(c => c.id===id); if (!c) return; record(s); markGesture(c); c.tempHP = Math.max(0,amt) }))
   },
 
   setDefeated(id, val) {
-    set(s => {
+    asGesture(() => set(s => {
       const c = s.combatants.find(c => c.id === id)
       if (!c) return
       record(s)
+      markGesture(c)
       if (val && c.isPC) {
         applyPCDefeat(s, id)
       } else {
@@ -1146,18 +1198,19 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         // Restoring a PC: remove Unconscious + Dying (and take the Wounded bump).
         if (!val && c.isPC) reviveConditions(c)
       }
-    })
+    }))
     syncPcHp(get().combatants.find(c => c.id === id))
   },
 
   setMaxHP(id, val) {
-    set(s => {
+    asGesture(() => set(s => {
       const c = s.combatants.find(c => c.id===id)
       if (!c) return
       record(s)
+      markGesture(c)
       c.maxHP = val
       if (c.currentHP > val) c.currentHP = val
-    })
+    }))
     syncPcHp(get().combatants.find(c => c.id === id))
   },
 
@@ -1175,35 +1228,36 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   },
 
   addCondition(id, cond) {
-    set(s => {
+    asGesture(() => set(s => {
       const c = s.combatants.find(c => c.id===id)
       if (!c) return
       record(s)
+      markGesture(c)
       const ei = c.conditions.findIndex(x => x.name.toLowerCase()===cond.name.toLowerCase())
       const nc = { ...cond, id: ncid() }
       if (ei >= 0) c.conditions[ei] = nc
       else c.conditions.push(nc)
-    })
+    }))
   },
 
   removeCondition(id, condId) {
-    set(s => { const c = s.combatants.find(c => c.id===id); if (!c) return; record(s); c.conditions = c.conditions.filter(x => x.id!==condId) })
+    asGesture(() => set(s => { const c = s.combatants.find(c => c.id===id); if (!c) return; record(s); markGesture(c); c.conditions = c.conditions.filter(x => x.id!==condId) }))
   },
 
   updateConditionValue(id, condId, v) {
-    set(s => {
+    asGesture(() => set(s => {
       const c = s.combatants.find(c => c.id===id)
       const cond = c?.conditions.find(x => x.id===condId)
-      if (cond) { record(s); cond.value = v }
-    })
+      if (cond) { record(s); markGesture(c); cond.value = v }
+    }))
   },
 
   updateConditionDuration(id, condId, d) {
-    set(s => {
+    asGesture(() => set(s => {
       const c = s.combatants.find(c => c.id===id)
       const cond = c?.conditions.find(x => x.id===condId)
-      if (cond) { record(s); cond.duration = d; cond.isPermanent = d===undefined }
-    })
+      if (cond) { record(s); markGesture(c); cond.duration = d; cond.isPermanent = d===undefined }
+    }))
   },
 
   setEliteWeak(id, mode) {

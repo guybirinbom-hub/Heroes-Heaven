@@ -84,8 +84,9 @@ export function useMemberSheets(campaignId: string, members: PartyMember[]): Map
    * THE SUBSCRIPTIONS — one channel per member, and nothing about a GM's own edit belongs in here.
    *
    * `pendingVersion` used to be a dep of this effect, which meant every Update AND every point of
-   * damage the GM applied (pushVitals → pushGmEdit → rememberGmEdit) tore down and instantly re-joined
-   * one channel per member, each on the same deterministic topic, with the leave still in flight.
+   * damage the GM applied (the tracker seam's push → pushGmEdit → rememberGmEdit) tore down and
+   * instantly re-joined one channel per member, each on the same deterministic topic, with the leave
+   * still in flight.
    * Mid-combat that is N leave/join pairs per damage entry on identical topic names — and a Realtime
    * feed that quietly stops delivering is precisely the "the GM is looking at stale data" fault this
    * whole change exists to remove.
@@ -107,10 +108,10 @@ export function useMemberSheets(campaignId: string, members: PartyMember[]): Map
    * and this map would keep answering with the pre-edit sheet until the player's device came online.
    * `fetchMemberSheet` overlays the pending edit (src/data/party.ts); this is what makes it re-ask.
    *
-   * It also closes a clobber door on the way past: the tracker seam's `pushVitals`
-   * (../integration/pcSheetTruth.ts) re-bases on the overlaid sheet, so a damage push that arrived
-   * while a sheet edit was still pending used to be built on the published (pre-edit) sheet and
-   * upserted over the GM's own waiting row, silently dropping it.
+   * The tracker seam (../integration/pcSheetTruth.ts) reads this map for what a PC row SHOWS, and
+   * his own push coming back through this re-pull is how the row keeps following it. What a push is
+   * BUILT on is not this map's business: the seam reads the published row afresh before every push
+   * (its header, rule C).
    *
    * ⚠ The counter is campaign-wide, so a bare re-run of this refetched EVERY member on every push —
    * and every single point of damage is a push. That is N HTTP reads per damage entry mid-combat,

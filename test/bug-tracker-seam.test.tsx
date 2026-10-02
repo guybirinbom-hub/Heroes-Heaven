@@ -17,6 +17,7 @@ import { usePartyStore, type Party } from '../tracker/src/store/partyStore';
 import { useLayoutStore } from '../tracker/src/store/layoutStore';
 import { trackerUi } from '../src/integration/trackerUiStore';
 import { rememberCampaign, setOnCampaignsPage } from '../src/integration/lastCampaignView';
+import { clearGmPendingEdits } from '../src/sheet/gmSync';
 
 /**
  * THE SEAM between Heroes Heaven and the initiative tracker, as a GM actually meets it.
@@ -69,6 +70,13 @@ vi.mock('../src/data/party', async (importOriginal) => ({
     return srv.party;
   },
   fetchMemberSheet: async (_campaignId: string, charId: string) => srv.sheets.get(charId) ?? null,
+  // owner's list 2026-10-01, item 3: the seam reads the published sheet before any push.
+  fetchPublishedSheet: async (_campaignId: string, charId: string) => {
+    const sheet = srv.sheets.get(charId);
+    return sheet
+      ? { sheet, ownerId: srv.party.find((m) => m.charId === charId)?.ownerId, updatedAt: '2026-09-15T10:00:00.000Z' }
+      : null;
+  },
   subscribeMemberSheet: (_campaignId: string, charId: string, cb: () => void) => {
     srv.sheetCbs.set(charId, cb);
     return () => srv.sheetCbs.delete(charId);
@@ -79,9 +87,14 @@ vi.mock('../src/data/party', async (importOriginal) => ({
   fetchGmEdits: async () => [],
   deleteGmEdit: async () => 1,
   subscribeGmEdits: () => () => undefined,
-  pushGmEdit: async (_campaignId: string, charId: string, ownerId: string, sheet: SavedChar) => {
+  pushGmEdit: async (campaignId: string, charId: string, ownerId: string, sheet: SavedChar, baseUpdatedAt?: string) => {
     srv.pushes.push({ charId, ownerId, sheet });
-    return srv.pushOk ? { ok: true, value: null } : { ok: false, error: 'new row violates row-level security policy' };
+    if (!srv.pushOk) return { ok: false, error: 'new row violates row-level security policy' };
+    // As the real one does once the server took it: the GM's own pending copy of what it now holds,
+    // which the seam's next push builds on (owner's list 2026-10-01, item 3 — gmSync.gmPushBase).
+    const { rememberGmEdit } = await import('../src/sheet/gmSync');
+    rememberGmEdit(campaignId, charId, sheet, new Date().toISOString(), baseUpdatedAt, ownerId);
+    return { ok: true, value: null };
   },
 }));
 
@@ -251,6 +264,7 @@ beforeEach(() => {
   srv.sheets.clear();
   srv.pushes.length = 0;
   srv.sheetCbs.clear();
+  clearGmPendingEdits(); // the mocked push records the GM's pending copy, as the real one does
   rememberCampaign(null);
   setOnCampaignsPage(false);
   trackerUi.reset();
@@ -679,7 +693,8 @@ describe('the campaign ↔ tracker seam', () => {
   it('re-pushes a GM change the server refused', async () => {
     // tracker 2026-09-15: sheet truth — the row was stamped "agreed" before the push was even sent,
     // and the result was thrown away, so a refusal was silently permanent.
-    // Without the fix (discard pushVitals' result):
+    // Without the fix (take every answer for a landing — `if (true)` for `if (res.ok)` in `send`,
+    // src/integration/pcSheetTruth.ts; re-tried 2026-10-01, round 10):
     //   AssertionError: expected 1 to be greater than or equal to 2
     const a = PC_A();
     srv.party = [publish(a, 'owner-a')];

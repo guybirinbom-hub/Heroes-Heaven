@@ -199,7 +199,7 @@ export function useMemberViewer(
    * The SUBSCRIPTION's own effect — and `pendingVersion` is deliberately not one of its deps.
    *
    * Every Update bumps that counter, and so does every point of damage the GM applies in the tracker
-   * (pushVitals → pushGmEdit → rememberGmEdit). Having it here tore this channel down and re-joined
+   * (its push → pushGmEdit → rememberGmEdit). Having it here tore this channel down and re-joined
    * the same deterministic topic in the same tick, with the leave still in flight — a Supabase
    * footgun whose symptom is a feed that quietly stops delivering, which is the very "the GM is
    * looking at stale data" complaint being fixed. Only the re-PULL needs to follow the store.

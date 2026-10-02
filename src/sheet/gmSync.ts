@@ -104,10 +104,19 @@ export interface PendingGmEdit {
    * newer publish was older and keep the overlay up. Both values here come off the player's own
    * clock, so "did they publish after I pushed?" is answered by a comparison that skew cannot break.
    *
-   * Undefined on an edit seeded from the server (another GM device pushed it, or this one forgot):
-   * there is no base to compare against, and the fallback below is best-effort. Nothing that WRITES
-   * depends on it — every push re-reads the published row itself (`fetchPublishedSheet`) — so the
-   * worst a wrong answer here costs is a chip that lingers or clears early.
+   * It is the stamp of the publish the push was BUILT on (`rememberGmEdit`).
+   *
+   * Undefined on an edit seeded from the server (another GM device pushed it, a sign-in re-seeded it,
+   * or a reload whose disk copy was trimmed), and on one pushed after a read that failed with no
+   * earlier base to keep: there is no base to compare against, and the fallback below is best-effort
+   * and for what is DRAWN only. `gmPushBase` never builds a push on such an edit, whatever it says.
+   *
+   * ⚠ A WRITE DEPENDS ON IT. The tracker seam builds every push on what `gmPushBase` answers — his
+   * edit while it stands on this base, else the published sheet — and `gm_character_edits` keeps one
+   * row per character, so this stamp decides whether his next push is built ON his last edit or
+   * REPLACES it. Wrongly standing, a stale edit goes out over a newer sheet of the player's; wrongly
+   * overtaken, his edit is replaced. That is why a base, once proved, is never downgraded by a read
+   * that failed, nor aged by the edit a push replaces (`rememberGmEdit`).
    */
   baseUpdatedAt?: string;
   /**
@@ -150,13 +159,18 @@ export function pendingGmKey(campaignId: string, charId: string): string {
   return `${campaignId}|${charId}`;
 }
 
-/** The EARLIER of two published stamps, either of which may be missing. Both are
- *  `campaign_characters.updated_at` — the PLAYER's own clock — and they are ISO-8601 UTC off the
- *  same column, so comparing them as strings compares instants (the same test every other stamp
- *  comparison in this file makes). */
-function olderStamp(a?: string, b?: string): string | undefined {
-  if (!a || !b) return a || b;
-  return a < b ? a : b;
+/**
+ * JSON with every object's keys in one order. `campaign_characters.sheet` is jsonb, which hands an
+ * object's keys back in its OWN order, never the order they were written in — so a plain
+ * `JSON.stringify` of the published sheet and of the very sheet that was pushed differ even when
+ * every value is the same.
+ */
+function canonicalJson(value: unknown): string {
+  return JSON.stringify(value, (_key, v: unknown) =>
+    v && typeof v === 'object' && !Array.isArray(v)
+      ? Object.fromEntries(Object.keys(v).sort().map((k) => [k, (v as Record<string, unknown>)[k]]))
+      : v,
+  );
 }
 
 /**
@@ -168,16 +182,18 @@ function olderStamp(a?: string, b?: string): string | undefined {
  *     `baseUpdatedAt`, the published stamp we saw at push time, so both sides of the comparison come
  *     off the PLAYER's clock and a GM device running fast or slow cannot change the answer;
  *   • the published sheet IS the edit — their app applied it and published the result, so the
- *     overlay has nothing left to add. No clock at all in that one.
+ *     overlay has nothing left to add. No clock at all in that one, and no key order either
+ *     (`canonicalJson`): compared as written, a sheet that came back through jsonb never matched.
  * A read that FAILED (`null`) is not an answer, so the edit stands: dropping it on a bad response
  * would flip the GM's screen back to the pre-edit character for no reason at all.
  */
 export function pendingEditStillStands(edit: PendingGmEdit, published: PublishedRow | null): boolean {
   if (!published) return true;
-  // No base (an edit seeded from the server, so we never saw the row it was built on): fall back to
-  // our own push stamp. Cross-device, therefore best-effort — and display-only, see `baseUpdatedAt`.
+  // No base (we never saw the row it was built on): fall back to its own push stamp — the GM's clock
+  // against the player's, so best-effort, and for what is DRAWN only: `gmPushBase` never builds on
+  // an edit with no base.
   if (published.updatedAt && published.updatedAt > (edit.baseUpdatedAt ?? edit.pushedAt)) return false;
-  if (published.sheet && JSON.stringify(published.sheet) === JSON.stringify(edit.sheet)) return false;
+  if (published.sheet && canonicalJson(published.sheet) === canonicalJson(edit.sheet)) return false;
   return true;
 }
 
@@ -236,11 +252,11 @@ let persistTimer: ReturnType<typeof setTimeout> | null = null;
 
 /**
  * Scheduled, never synchronous — because EVERY point of damage the GM enters in the tracker lands
- * here (pushVitals → pushGmEdit → rememberGmEdit → pendingChanged), and the write below stringifies
- * every pending edit, each of which is a whole character sheet that can carry an inline portrait.
- * Doing that on the main thread per keystroke of damage is a stall mid-combat. A burst now collapses
- * into one write; the delay costs nothing, because this copy is only ever read at startup and is
- * best-effort there too (the server read re-seeds what it misses).
+ * here (the tracker seam's push → pushGmEdit → rememberGmEdit → pendingChanged), and the write below
+ * stringifies every pending edit, each of which is a whole character sheet that can carry an inline
+ * portrait. Doing that on the main thread per keystroke of damage is a stall mid-combat. A burst now
+ * collapses into one write; the delay costs nothing, because this copy is only ever read at startup
+ * and is best-effort there too (the server read re-seeds what it misses).
  */
 function persistPending(): void {
   if (!pendingStoreKey() || persistTimer) return;
@@ -345,26 +361,30 @@ export function rememberGmEdit(
   const had = pendingMap().get(key);
   droppedPending.delete(key); // a fresh push is a new edit, whatever we dropped before
   /*
-   * ⚠ A MISSING BASE NEVER REPLACES ONE WE ALREADY HAVE.
+   * ⚠ RECORDED ON THE PUBLISH IT WAS BUILT ON — AND A MISSING BASE NEVER REPLACES ONE WE HAVE.
    *
-   * Both push paths read the published row themselves and pass its stamp — but that read returns
-   * `null` when it FAILS (offline, a blip), and the push still goes ahead on the newest thing this
-   * device holds. Writing `undefined` over a base an earlier push had proved would downgrade a
-   * protected edit to the `pushedAt` fallback, i.e. to the GM's clock against the player's: the
-   * exact comparison `baseUpdatedAt` exists to remove. One blip on a damage push (which has no
-   * confirm dialog to catch it) and a GM machine running fast would keep a stale overlay standing,
-   * and the next push would re-base on it, straight over whatever the player published since.
+   * Both push paths read the published row themselves and pass the stamp of that read: the tracker
+   * seam builds on what `gmPushBase` answers for it, and the full-sheet Update (./GmEditSheet.tsx)
+   * asks "Overwrite anyway?" when that read shows the player moved since the sheet was opened. So a
+   * publish of theirs from before the read is one the push was built on, or one the GM chose to
+   * overwrite, and the stamp is recorded as it is. This used to keep the OLDER of it and the replaced
+   * edit's base, "so the overlay only stands down sooner" — but a newer stamp means that read had
+   * already seen the replaced edit overtaken, and the older base made the push built on their newer
+   * publish look overtaken by that very publish: the next read dropped it, the row snapped back, and
+   * the seam's next gesture, built on the published sheet, replaced it on the server (a push built on
+   * their republish of his earlier one; an Update he confirmed over their newer sheet).
    *
-   * So we keep the OLDER of the two, which is the safe way in EVERY case and not just the missing
-   * one: an older base can only make the overlay stand down sooner, so the player's own work is the
-   * version that survives. A newer stamp arriving cannot quietly extend an overlay's life over it.
+   * A read that FAILS (offline, a blip) passes no stamp, and the full-sheet Update still goes ahead on
+   * its working copy. Writing `undefined` over a base an earlier push had proved would downgrade a
+   * protected edit to the `pushedAt` fallback, i.e. to the GM's clock against the player's: the exact
+   * comparison `baseUpdatedAt` exists to remove. So a missing base keeps the one we already have.
    */
   pendingMap().set(key, {
     campaignId,
     charId,
     sheet,
     pushedAt,
-    baseUpdatedAt: olderStamp(baseUpdatedAt, had?.baseUpdatedAt),
+    baseUpdatedAt: baseUpdatedAt ?? had?.baseUpdatedAt,
     // Same reasoning as the base stamp: a push that didn't say whose character this is must never
     // un-hide an edit we already knew was our own.
     ownerId: ownerId ?? had?.ownerId,
@@ -416,7 +436,8 @@ export function reconcileGmPendingEdits(campaignId: string, rows: PendingGmEdit[
 
 /**
  * The edit to SHOW for this character — the one read every GM-side surface goes through (the cards,
- * the pane card's chip, the sheet, the seam's echo test, and `resolvePendingGmEdit` below).
+ * the pane card's chip, the sheet, the tracker seam's test for a push of its own coming back — which
+ * asks only whether that sheet IS this edit's, by object — and `resolvePendingGmEdit` below).
  *
  * ⚠ NEVER OUR OWN CHARACTER. The store is already private to the account that pushed, which keeps a
  * GM's silent edit away from the player it is about; this is the other half, for the one account
@@ -461,7 +482,7 @@ function learnPendingOwner(campaignId: string, charId: string, ownerId?: string)
   const edit = pendingMap().get(key);
   if (!edit || edit.ownerId) return; // an owner the push itself recorded is the better one
   // Mutate in place — `reconcileGmPendingEdits` tells "pushed while the read was in flight" apart
-  // from "the server dropped it" by object identity (`before.get(key) !== have`, ~line 392).
+  // from "the server dropped it" by object identity (`before.get(key) !== have`, ~line 416).
   // Replacing the entry here would forge a false "pushed since" for every edit this learns an
   // owner for, and a delete that should happen gets skipped.
   edit.ownerId = ownerId;
@@ -470,17 +491,22 @@ function learnPendingOwner(campaignId: string, charId: string, ownerId?: string)
 
 /**
  * The one call the party layer makes: give it what the server answered, get back the sheet the GM
- * should see. A pending edit the published row has overtaken is dropped here — that is the single
- * place the chip goes away, so the card, the pane and the sheet all stop showing it together.
+ * should see. A pending edit the published row has overtaken is dropped here — that is where the
+ * chip goes away, so the card, the pane and the sheet all stop showing it together.
+ *
+ * ⚠ Judged on what is HELD, his own character's edit included. `gmPendingEdit` hides that one from
+ * every surface that draws, and judged through it, it was never dropped at all: it was held, on its
+ * first base, for the whole session.
  */
 export function resolvePendingGmEdit(campaignId: string, charId: string, published: PublishedRow | null): SavedChar | null {
   // The row knows whose character this is even when an older edit row didn't.
   learnPendingOwner(campaignId, charId, published?.ownerId);
-  const edit = gmPendingEdit(campaignId, charId);
-  if (edit && !pendingEditStillStands(edit, published)) {
+  const held = pendingMap().get(pendingGmKey(campaignId, charId));
+  if (held && !pendingEditStillStands(held, published)) {
     dropGmPendingEdit(campaignId, charId);
     return published?.sheet ?? null;
   }
+  const edit = gmPendingEdit(campaignId, charId);
   /*
    * ⚠ AND NEVER ONTO OUR OWN CHARACTER — from HERE, not from each surface that draws the result.
    *
@@ -498,6 +524,36 @@ export function resolvePendingGmEdit(campaignId: string, charId: string, publish
   if (edit && (published?.ownerId ? published.ownerId === pendingAccount : !edit.ownerId))
     return published?.sheet ?? null;
   return withPendingGmEdit(published, edit);
+}
+
+/**
+ * The sheet a GM's next push must be BUILT on, given the published row the push's own fresh read just
+ * answered: his pending edit while it stands against that read ON A PROVED BASE, else the published
+ * sheet.
+ *
+ * Judged on what is HELD, his OWN character included. `resolvePendingGmEdit` never DRAWS an edit over
+ * the signed-in account's own character, and for what is shown that is right: their own app applies
+ * it and republishes. A push is another question. Until that app has applied it, his last edit is
+ * still the newest thing the server holds for the character, and `gm_character_edits` keeps one row
+ * per character, so the next push REPLACES it: built on the published sheet instead, it carries his
+ * earlier change away.
+ *
+ * The published sheet, then, in two cases:
+ *   • the edit has STOOD DOWN against this read (a publish of theirs after its base, or the published
+ *     sheet IS it): theirs is the newer sheet, and the push is recorded on this read's stamp
+ *     (`rememberGmEdit`), so it stands. Nothing is dropped or announced from here — that told every
+ *     watcher mid-push, and the member re-pull it set off answered with their publish (no push of
+ *     his) while his push was out, so the tracker row took it for a sheet arriving and kept his landed
+ *     push off the row. The push replaces the edit when it lands; if it never lands, the next read
+ *     drops it (`resolvePendingGmEdit`).
+ *   • the edit has NO PROVED BASE (see `baseUpdatedAt`): only the GM's clock says whether it stands,
+ *     and built on, a stale copy went out whole over a newer sheet of theirs whenever that clock ran
+ *     fast. So the push is built on their sheet and REPLACES the edit on the server: a loss of his,
+ *     never of theirs (the tracker seam's header, rule C, lists it).
+ */
+export function gmPushBase(campaignId: string, charId: string, published: PublishedRow): SavedChar | null {
+  const edit = pendingMap().get(pendingGmKey(campaignId, charId));
+  return edit?.baseUpdatedAt && pendingEditStillStands(edit, published) ? edit.sheet : published.sheet;
 }
 
 /** Tests only — the store is module state. */

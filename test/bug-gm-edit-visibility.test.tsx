@@ -489,6 +489,33 @@ describe('(d/e) whose version wins', () => {
     expect(pendingEditStillStands(edit, { sheet: edit.sheet, updatedAt: '2026-09-18T09:00:00.000Z' })).toBe(false);
   });
 
+  it('the published sheet IS the edit whatever order jsonb hands its keys back in', () => {
+    /*
+     * `campaign_characters.sheet` is jsonb, which returns an object's keys in its own order, never
+     * the order they were written in. Compared as plain JSON text, the player's app publishing the
+     * edit exactly as applied never matched it, and that half of the rule only ever held in a test
+     * harness that kept key order.
+     *
+     * MUTATION (tried 2026-10-01, round 7): compare `JSON.stringify(published.sheet) ===
+     * JSON.stringify(edit.sheet)` again in
+     * `pendingEditStillStands` (src/sheet/gmSync.ts) and this fails —
+     *   AssertionError: the same sheet, keys reordered: expected true to be false
+     */
+    const edit = { campaignId: CAMPAIGN, charId: CHAR, sheet: light(), pushedAt: '2026-09-18T10:00:00.000Z', baseUpdatedAt: '2026-09-18T10:00:00.000Z' };
+    const reversed = (v: unknown): unknown =>
+      Array.isArray(v)
+        ? v.map(reversed)
+        : v && typeof v === 'object'
+          ? Object.fromEntries(Object.keys(v).reverse().map((k) => [k, reversed((v as Record<string, unknown>)[k])]))
+          : v;
+    const back = reversed(JSON.parse(JSON.stringify(edit.sheet))) as SavedChar;
+    expect(JSON.stringify(back), 'the copy really is in another key order').not.toBe(JSON.stringify(edit.sheet));
+    const older = '2026-09-18T09:00:00.000Z'; // no stamp says the player published after it
+    expect(pendingEditStillStands(edit, { sheet: back, updatedAt: older }), 'the same sheet, keys reordered').toBe(false);
+    // …and one value apart, it is still the GM's edit to show.
+    expect(pendingEditStillStands(edit, { sheet: { ...back, play: { ...back.play!, damage: 3 } }, updatedAt: older })).toBe(true);
+  });
+
   it('the GM’s clock cannot decide it — the comparison is the player’s clock on both sides', () => {
     /*
      * MUTATION: compare against `edit.pushedAt` instead of `edit.baseUpdatedAt` in
@@ -525,9 +552,10 @@ describe('(d/e) whose version wins', () => {
      *
      * The overlay is this device's own unapplied edit. A WRITE that re-reads through it is comparing
      * the GM's work against itself: it finds nothing changed and can overwrite whatever the player
-     * published since. So `pushToPlayer` and `pushVitals` both read THIS call, and it is a separate
-     * function rather than a flag precisely so the difference survives the next refactor. It is also
-     * where the published stamp comes from, which is the skew-free base every later comparison uses.
+     * published since. So `pushToPlayer` and the tracker seam's push both read THIS call, and it is a
+     * separate function rather than a flag precisely so the difference survives the next refactor. It
+     * is also where the published stamp comes from, which is the skew-free base every later comparison
+     * uses.
      */
     publish(light(), '2026-09-18T10:00:00.000Z');
     const base = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
@@ -653,7 +681,7 @@ describe('(h) the GM’s own Update must not churn the Realtime channels', () =>
      *   AssertionError: expected 2 to be 1
      *
      * Every Update bumps that counter, and so does every point of damage the GM applies in the
-     * tracker (pushVitals → pushGmEdit → rememberGmEdit). Having it in a SUBSCRIPTION effect tore the
+     * tracker (its push → pushGmEdit → rememberGmEdit). Having it in a SUBSCRIPTION effect tore the
      * channel down and re-joined the same deterministic topic in the same tick, leave still in
      * flight — and a Realtime feed that quietly stops delivering is the very "the GM is looking at
      * stale data" fault being fixed here. Only the re-PULL follows the store.
@@ -803,15 +831,17 @@ describe('(l) the tracker seam — one push, one read, and an echo is not the sh
 
   it('a push echoing back never drags the row to an earlier value', async () => {
     /*
-     * MUTATION: drop the `echo` test from `reconcile` (src/integration/pcSheetTruth.ts) — back to
-     * `if (!st || st.sheet !== skey)` — and this fails:
+     * MUTATION (tried 2026-10-01, round 8): follow every sheet that arrives — `if (true)` for
+     * `if (!ours.has(sheet))` in the arrival test in `reconcile` (src/integration/pcSheetTruth.ts) —
+     * and this fails:
      *   AssertionError: the second five must survive the first push coming back: expected 33 to be 28
+     * So does never recording the sheet a landed push sent (`ours.add(sent);` dropped from `send`):
+     * a late echo is recognised by that very object, which is what this leg hands back — never by
+     * the value it carries.
      *
      * `fetchMemberSheet` overlays this device's own pending edit, so a GM push MOVES the sheet this
-     * seam reads: our own value arrives looking exactly like the player publishing it. Two damage
-     * entries inside one round trip therefore ran V1 → V2 → (push 1 lands) V1, in front of the GM.
-     * And if push 2 were refused, the rollback would restore `agreed` while `sheet` had already
-     * advanced, dropping V2 with nothing left to re-push it.
+     * seam reads. Two damage entries inside one round trip, then a read that answered while the
+     * first was the pending edit, ran V1 → V2 → V1 in front of the GM.
      */
     publish(light(), '2026-09-18T10:00:00.000Z');
     const members = (await fetchParty(CAMPAIGN))!;
@@ -849,8 +879,10 @@ describe('(l) the tracker seam — one push, one read, and an echo is not the sh
 
   it('one push costs ONE member read, not one per member', async () => {
     /*
-     * MUTATION: drop the per-member stamp test from the re-pull effect in
-     * src/integration/pcSheetTruth.ts and this fails:
+     * MUTATION (re-tried 2026-10-01 through a throwaway copy): drop the per-member stamp test from
+     * the re-pull effect of `useMemberSheets` in src/sheet/memberSheets.ts (where it moved from
+     * pcSheetTruth.ts) — `if (had === undefined) continue;` for
+     * `if (had === undefined || had === sig) continue;` — and this fails:
      *   AssertionError: one push, one re-read — not one per member: expected 3 to be 1
      *
      * Every single point of damage bumps the pending counter, and the counter is campaign-wide. A
@@ -1142,39 +1174,39 @@ describe('(n) a GM’s pending edit is private to the account that pushed it', (
   });
 });
 
-describe('(o) a newer base stamp never extends an overlay’s life', () => {
-  it('the OLDER of the two is kept, so a publish between them still wins', async () => {
+describe('(o) a push is recorded on the publish its own read saw', () => {
+  it('a push built on their newer publish keeps THAT base, so the next read does not take it for overtaken — and a publish after it still wins', async () => {
     /*
-     * MUTATION: back to `baseUpdatedAt ?? had?.baseUpdatedAt` in `rememberGmEdit`
-     * (src/sheet/gmSync.ts) and this fails —
-     *   AssertionError: the older base is the one that is kept: expected '2026-09-18T12:00:00.000Z' to be '2026-09-18T10:00:00.000Z'
-     * and the player's 11:00 work then loses to the overlay on the lines after it.
+     * MUTATION (tried 2026-10-02, S0c round 11): keep the OLDER of the push's base and the replaced
+     * edit's in `rememberGmEdit` (src/sheet/gmSync.ts), the rule this leg pinned until then —
+     * `baseUpdatedAt && had?.baseUpdatedAt && had.baseUpdatedAt < baseUpdatedAt ? had.baseUpdatedAt :
+     * baseUpdatedAt ?? had?.baseUpdatedAt` — and this fails —
+     *   AssertionError: recorded on the publish it read: expected '2026-09-18T10:00:00.000Z' to be '2026-09-18T11:00:00.000Z'
      *
-     * The comment there promised "keeping the older one errs towards the player's work winning" —
-     * but the code only kept it when the NEW one was missing, so a newer stamp (a second GM screen,
-     * a re-read between two pushes) silently replaced a base the player's own publish had already
-     * passed. An older base can only make the overlay stand down SOONER, which is the safe way.
+     * The older base was kept "so the overlay only stands down sooner". But a push's base is the
+     * stamp its own read saw, so a newer one means that read had already seen the earlier edit
+     * overtaken: kept older, the push built on (or confirmed over) the player's newer publish was
+     * dropped at the next read for that very publish, and the tracker seam's next gesture replaced it
+     * on the server (test/bug-tracker-seam-never-overwrite.test.tsx, PX1 and PZ3).
      */
     publish(light(), '2026-09-18T10:00:00.000Z');
     const base = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
     await gmPush({ ...base, play: addCondition(base.play!, 'frightened', 2) });
     expect(gmPendingEdit(CAMPAIGN, CHAR)!.baseUpdatedAt).toBe('2026-09-18T10:00:00.000Z');
 
-    // A second push arriving with a NEWER base than the one we already hold.
-    await pushGmEdit(
-      CAMPAIGN,
-      CHAR,
-      PLAYER,
-      { ...base, play: addCondition(base.play!, 'sickened', 1) },
-      '2026-09-18T12:00:00.000Z',
-    );
-    expect(gmPendingEdit(CAMPAIGN, CHAR)!.baseUpdatedAt, 'the older base is the one that is kept').toBe(
-      '2026-09-18T10:00:00.000Z',
-    );
+    // The player publishes after it; his next push reads that publish and is built on it.
+    const theirs = { ...base, play: addCondition(base.play!, 'fatigued') };
+    publish(theirs, '2026-09-18T11:00:00.000Z');
+    await gmPush({ ...theirs, play: addCondition(theirs.play!, 'sickened', 1) });
+    expect(gmPendingEdit(CAMPAIGN, CHAR)!.baseUpdatedAt, 'recorded on the publish it read').toBe('2026-09-18T11:00:00.000Z');
+    expect((await fetchMemberSheet(CAMPAIGN, CHAR))!.play?.conditions, 'the next read keeps it').toEqual([
+      { id: 'fatigued' },
+      { id: 'sickened', value: 1 },
+    ]);
 
-    // …so the player, who published between the two, is still the one who wins.
-    publish({ ...base, play: addCondition(base.play!, 'fatigued') }, '2026-09-18T11:00:00.000Z');
-    expect((await fetchMemberSheet(CAMPAIGN, CHAR))!.play?.conditions).toEqual([{ id: 'fatigued' }]);
+    // …and a publish of theirs after THAT base still wins.
+    publish({ ...base, play: addCondition(base.play!, 'clumsy', 1) }, '2026-09-18T12:00:00.000Z');
+    expect((await fetchMemberSheet(CAMPAIGN, CHAR))!.play?.conditions).toEqual([{ id: 'clumsy', value: 1 }]);
     expect(gmPendingEdit(CAMPAIGN, CHAR), 'and the chip goes with it').toBeUndefined();
   });
 });
@@ -1191,16 +1223,16 @@ describe('(p) an echo is recognised by the PUSH, not by the value it carried', (
 
   it('a player publish that lands on a value we pushed is still the player moving', async () => {
     /*
-     * MUTATION: back to the value test in `reconcile` (src/integration/pcSheetTruth.ts) —
-     * `const echo = !!st && st.sheet !== skey && st.pushed.has(skey)` — and this fails:
+     * MUTATION (tried 2026-10-01, round 8): set aside every sheet that is not the pending edit —
+     * `if (false)` for `if (!ours.has(sheet))` in the arrival test in `reconcile`
+     * (src/integration/pcSheetTruth.ts) — and this fails:
      *   AssertionError: the player’s own healing is not our echo: expected 28 to be 33
      *
-     * `pushed` held the VALUES we had put on the server, so any later player publish that happened
-     * to land on one of them — they healed back to where they were, they took the same five — was
-     * swallowed as our own echo, and the GM went on reading an HP the player no longer had. Whether
-     * a sheet is our push is a question about the ROW, not its contents: a pending edit only stands
-     * while no newer publish exists, so "a push of ours is still standing" answers it on the
-     * player's own clock, and their newer publish can never read as an echo of ours.
+     * A record of the VALUES we had put on the server once swallowed any later player publish that
+     * happened to land on one of them — they healed back to where they were, they took the same
+     * five — as our own echo, and the GM went on reading an HP the player no longer had. Whether a
+     * sheet is a push of ours is a question about THAT SHEET, not its contents: the overlay hands back
+     * the very object our push sent, and a publish of theirs is always a new one.
      */
     publish(light(), '2026-09-18T10:00:00.000Z');
     const members = (await fetchParty(CAMPAIGN))!;

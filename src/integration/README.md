@@ -18,6 +18,8 @@ detail panel. Nothing else changes.
 |---|---|---|
 | `src/sheet/CampaignsPage.tsx` | `integration/` imports (`TrackerTools` + `CampaignTracker` are `React.lazy`, each in its own `<Suspense fallback={null}>`, so a player who never opens a campaign doesn't download the tracker); `<TrackerTools/>` + the `ti-palette` Customize button in the chrome; the `cmp-body-tracker` class; `<CampaignTracker>` in place of `<CampaignDetail>` on desktop; the two `TRACKER_IN_CAMPAIGN`-gated last-campaign-memory blocks; `CampaignForm`'s `localOnly` fallback | Delete the imports and restore `<CampaignDetail>` (which already has its own Settings / Delete / share code); drop `localOnly` and its branches |
 | `src/sheet/CampaignsPage.tsx` (phone) | `useIsMobile` → `isPhone`, which hides every GM tool at ≤720px (Create/Edit, the tracker, the tools row, the Customize button) and renders `<CampaignDetail gmTools={false}>` + `<JoinRow/>` instead. NOT part of the seam — it is HH's own player-facing campaigns page | Keep. Only the `TRACKER_IN_CAMPAIGN && !isPhone` terms go with the integration |
+| `src/sheet/gmSync.ts` | `pendingEditStillStands` compares the published sheet with the pending edit through `canonicalJson` (key order ignored — the `sheet` column is jsonb, which hands keys back in its own order), found while closing the seam's never-overwrite door; `gmPushBase` — the sheet a GM push builds on: his pending edit while it stands on a PROVED base, on his OWN character too (where `resolvePendingGmEdit` never draws it), else the published sheet; `rememberGmEdit` records a push on the base it was built on (it used to keep the older of that and the replaced edit's, which made a push built on their newer publish look overtaken); `resolvePendingGmEdit` judges its drop on the edit it HOLDS, so his own character's edit is pruned like any other (it was never dropped at all); the `gmPendingEdit` doc names the seam's own-push test as a reader, and the `baseUpdatedAt` / `pendingEditStillStands` docs say a seam push depends on those rules | Keep `canonicalJson`, the held-edit drop and the recorded base: HH's own overlay rules, with no tracker names in them. `gmPushBase` has no other caller: delete it with the seam. The docs' mentions of the seam go too |
+| `src/sheet/memberSheets.ts` | comments only: two notes name the tracker seam (its pushes as what used to re-join every channel, and the seam as a reader of the re-pulled map) | Delete those two mentions; nothing in the code knows the tracker |
 | `src/theme/theme-manager.ts` | `resolveAppearanceVars` — the token-resolution half of `applyResolved`, extracted + exported so a scoped appearance (the tracker's own theme) can be built without writing `<html>` | A pure refactor with no tracker names in it; harmless to keep. To fully revert, inline it back into `applyResolved` |
 | `src/sheet/SettingsPage.tsx` | the `'tracker'` section (id, `ALL_SECTIONS` entry, `renderSection` case); `TrackerSettingsSection` is `React.lazy` + `<Suspense>` so opening Settings doesn't pull the tracker's stores in | Delete the three `'tracker'` references and the lazy import |
 | `src/sheet/PartyMembers.tsx` | optional `localMembers?: PartyMember[]` prop; optional `renderExtra?` render-prop returning `PartyCardSlots` (`header` = the turn chip + "+" button in `.party-card-tools`, `saves` = extra tiles in the turn band's `.party-defs` block, `right` = the whole `.party-row-ref` band — the card's second row — whose presence is what puts `.has-right` on `.party-card-body`); optional `onMembers?` callback (every loaded list, so the tracker's party can be built from the server party — this component mounts INSIDE the tracker's party view, which needs that party to exist first) | Delete the three props + `PartyCardSlots`; use `members`; drop the `extra` slots and the `.has-right` term, which leaves the card its turn band and nothing else |
@@ -59,14 +61,33 @@ There is otherwise deliberately **nothing else to unwind**:
   cards' extra sections render via `PcStatsCardExtra` (integration), passed to `PartyMembers`'
   `renderExtra` prop.
 
-  Two more tracker-side, standalone-safe touches for the embed:
+  Four more tracker-side, standalone-safe touches for the embed:
   - `InitiativeTracker`'s mini HP bar falls back to the host `pcStats` HP for a PC row when the
     combatant itself has no HP (`c.maxHP === 0`) — which is always true for an embedded PC, since HH
     feeds HP through the context, not the party store. A standalone PC gets `maxHP` at add-time, so
     its own HP still wins; the fallback only fills the gap.
-  - `CampaignTracker` mounts the tracker's own `TurnTimerWidget` (self-gated on the timer setting) and
-    a small `RailFooter` (quick-add a name-only combatant + Clear the order) — both pure combat-store
-    features from the original toolbar/sidebar that the embed hadn't wired. Deleted with the seam.
+  - `TrackerTools` mounts the tracker's own `TurnTimerWidget` in HH's chrome (gated on the timer
+    setting there, and self-gated as well), and `CampaignTracker` mounts a small `RailFooter` (the
+    Add-combatants button + Clear the order) — both pure combat-store features from the original
+    toolbar/sidebar that the embed hadn't wired. Deleted with the seam.
+  - The per-player turn chip on a campaign party card (`MemberTurnButton`, in `CampaignTracker`'s
+    `cardExtra` header slot) follows the same "Enable turn timer" setting: off, no chip is drawn and
+    a pane card with nothing else in its header gets `header: null`, so no empty `.party-card-tools`
+    gap. The tracker's own `PartyView` member-card "⏱ m:ss" chip follows it too. Display-only — the
+    saved turn history is never cleared.
+  - `combatStore` exports a **vitals-gesture API** for the never-overwrite door in `pcSheetTruth.ts`:
+    `takeVitalsGesture(id)`, which answers whether the dispatch now running is a GM gesture on that
+    row. Inside the store, `asGesture` wraps each explicit GM vitals action (damage, healing, temp HP,
+    max HP, Mark defeated / Restore, a condition added or removed, a condition's value or duration
+    set) and `markGesture` marks the PC row it changed. **Undo / Redo are not gestures and never
+    push**: putting an older board back is a load, so the seam re-bases a PC row on the player's sheet,
+    and the GM takes a change back with the opposite gesture (Restore, heal, remove the condition).
+    Nor does an Undo call back a change of his that is already on its way to the server. A
+    gesture lives only while that action's own `set()` dispatches and is never written onto a row, so
+    nothing persisted, saved or mirrored carries one; the standalone tracker has no subscriber that
+    takes them, so there it is inert. Pinned by `tracker/src/store/vitalsGesture.test.ts`. To remove:
+    drop the export, unwrap each `asGesture(…)` back to its bare `set(…)` and delete the `markGesture`
+    calls — or keep it, harmless.
 
 ## Ctrl+Z belongs to whatever is on screen
 
@@ -80,6 +101,15 @@ handler against `combatStore.undo/redo`; `App.tsx` checks `combatOwnsUndo()` and
 = one action, and it's the action you just took where you're looking. Outside the campaign the claim is
 released and Ctrl+Z is the character undo exactly as before. Both stay window listeners — the claim is
 the only thing stopping them from both firing.
+
+**Except on a player character's row.** Its HP and conditions are the player's sheet (below), and an
+Undo there never reaches that sheet: the same pass puts the row back on what the sheet holds — the GM's
+own change included once it is on its way — so Ctrl+Z takes back nothing of his that has reached, or
+is on its way to, the server. What it does take off the row is a change of his not sent yet: one that
+reached nobody and is waiting for a retry, or one made while another of his was still on its way —
+neither then ever goes out. Monster rows, initiative, turns and everything else undo as before. To
+take back what he did to a player, the GM uses the opposite action (Restore, heal, remove the
+condition), which reaches their sheet like any other.
 
 ## Why the `.tracker-root` wrapper is load-bearing — do not remove it
 
@@ -177,15 +207,32 @@ number that defaulted to 1.
 **The sheet is the truth for PCs** (`pcSheetTruth.ts`). A PC row's HP and conditions are READ from
 the player's published sheet (`fetchMemberSheet` + `subscribeMemberSheet` per member), and a
 condition or damage the GM applies to a PC in the tracker is written back to that sheet through
-`pushGmEdit`. Read that file's header before touching either direction: it is where the
-never-overwrite rules live.
+`pushGmEdit` — only on the GM's own gesture (the combat store's vitals-gesture API, above), never
+because a row merely differs from the sheet, and never on Ctrl+Z / Ctrl+Y. Each push first reads the
+published sheet (with the GM's own pending edit, `gmPushBase`) and lands only while it still carries
+what the row showed when he made the gesture; otherwise the sheet wins. Read that file's header before
+touching either direction: it is where the never-overwrite rules live.
 
 **Known gaps.**
 
-- **Combatant → character matching is BY NAME** (`CampaignTracker.tsx`). The initiative order has no
-  character id to join on, and this matches the tracker's own convention (`partyStore.importCharacter`
-  also matches on lower-cased name) — but two same-named characters in one campaign are ambiguous.
-  A stable `characterId` on the combatant is the real fix; see `tracker/DEFERRED.md` §3.
+- **The seam's row is matched charId first** (`isSamePc`, the tracker's own rule): a PC row added
+  from the party carries the character's id, so two same-named characters get two rows, each driven
+  by its own sheet. A row with no id (typed in by hand, or saved before ids were kept) falls back to
+  the name — and a row two members' names both match is driven by NEITHER sheet: nothing is written
+  to it and nothing is pushed from it. Other surfaces in `CampaignTracker.tsx` (the PC stats strip,
+  the live-member lookup) still match by name; see `tracker/DEFERRED.md` §3.
+- **A GM change can still be lost** (the seam header, rule C) — never the player's. Visibly, his row
+  snapping to their sheet, in one ordering no stamp can tell apart: the player's app applies an
+  EARLIER push of his after a LATER one was already built on it; only the sheets' content could tell
+  that republish from a change of the player's own, which the seam's rule E rules out. (A push built
+  ON such a republish is recorded on it and stands.) Unseen: an owed gesture the seam never got to
+  send before it unmounted. And on the server: an edit of his with no proved base (seeded from his
+  other device or by a sign-in, or pushed after a failed read) is never built on — only the GM's
+  clock says it still stands, and a fast one put a stale copy over a newer sheet of theirs — so his
+  next tracker gesture on that character goes out on their sheet and replaces it. Where that edit
+  changed vitals, the first gesture stands down and the row snaps to their sheet; where it did not
+  (an XP award, an item), it goes without a sign. Only a base stamp carried on the
+  `gm_character_edits` row itself (`src/data/party.ts` + SQL) would prove such an edit.
 - **Creature data isn't wired up** — `Link Stat Block` reports "Data not loaded. Run: npm run
   setup-data". Creatures can still be authored via the **Custom** text converter, which is how the
   stat-block pane was verified.

@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { initialPlay } from '../rules/play';
-import { gmPendingEdit, resolvePendingGmEdit } from '../sheet/gmSync';
+import { gmPendingEdit, gmPushBase } from '../sheet/gmSync';
 import { deriveMaxHp } from '../rules/derive';
 import { fetchPublishedSheet, pushGmEdit, type PartyMember } from '../data/party';
 import { livePlay } from '../sheet/memberSheets';
 import type { SavedChar } from '../data/storage';
 import type { Character, ContentDatabase } from '../rules/types';
-import { useCombatStore } from '../../tracker/src/store/combatStore';
+import { isSamePc, takeVitalsGesture, useCombatStore } from '../../tracker/src/store/combatStore';
 import type { Combatant } from '../../tracker/src/types/pf2e';
 
 /*
@@ -28,23 +28,93 @@ export { memberCardSummary, livePlay, useMemberSheets } from '../sheet/memberShe
  * it is a WINDOW onto the player's published sheet:
  *
  *   sheet → tracker  the player's live sheet (fetchMemberSheet + subscribeMemberSheet) writes the
- *                    PC combatant's HP and conditions. Whenever the sheet moves, the sheet wins.
- *   tracker → sheet  a condition or damage the GM applies to a PC in the tracker is pushed to the
- *                    player through the existing GM-edit channel (pushGmEdit → gm_character_edits),
- *                    so it lands on their sheet like any other condition.
+ *                    PC combatant's HP and conditions. Whenever a sheet arrives, the sheet wins.
+ *   tracker → sheet  a condition or damage the GM APPLIES to a PC in the tracker — a gesture the
+ *                    combat store marks as his — is pushed to the player through the existing GM-edit
+ *                    channel (pushGmEdit → gm_character_edits), so it lands on their sheet like any
+ *                    other condition. Nothing else on the row is ever pushed.
  *
  * NPC / monster rows are untouched — they have no sheet and stay entirely tracker-local.
  *
- * ⚠ NEVER OVERWRITE A PLAYER'S OWN NEWER EDIT. Three rules keep that true:
- *   1. a push re-bases on a FRESH read of the server (`fetchPublishedSheet`), never on the snapshot
- *      this screen happens to be holding — the same guard GmEditSheet.pushToPlayer uses. When the GM
- *      has an edit of their own still waiting, that unapplied edit is the newer version and is what
- *      the push builds on; otherwise it is the player's published sheet;
- *   2. a push writes ONLY `play.damage` and `play.conditions`, so nothing else of theirs is carried;
- *   3. when the sheet and the tracker have BOTH moved since the last agreement, the sheet wins and
- *      the tracker's value is discarded — the player's own edit is never the one that loses.
- * The applied-once stamps on the player's side (`editsToApply` in ../sheet/gmSync.ts) then make the
- * landing idempotent however long the row lingers.
+ * ⚠ NEVER OVERWRITE A PLAYER'S OWN CHANGE — AND A LOAD IS NOT AN EDIT. Five rules keep that true:
+ *   A. UNDO AND REDO NEVER PUSH. Ctrl+Z / Ctrl+Y act on the board only. For a PC row an Undo or a
+ *      Redo is a LOAD of an older board — the snapshot can predate the player's own changes (Next
+ *      Turn records one) — so it carries no gesture, and the same pass re-bases the row on the
+ *      player's sheet. To take back a Mark defeated or a hit, the GM uses the opposite GESTURE
+ *      (Restore, heal, remove the condition), which pushes like any other. Five rounds of letting an
+ *      Undo push "only over his own last push" each opened a new timing hole; there is no licence
+ *      left to get wrong. Nor does a load call back a change of his that is already OUT (rule C):
+ *      nothing can stop what is on its way to the server, so the row goes on showing it. A change of
+ *      his NOT SENT YET — owed after it reached nobody, or made while another was out and waiting
+ *      behind it — lives on the row alone: a load takes it off the row, and it never goes out.
+ *   B. A GESTURE IS THE ONLY THING THAT PUSHES. The combat store marks every explicit GM vitals
+ *      action on a PC row (`takeVitalsGesture`): damage, healing, temp HP, max HP, Mark defeated /
+ *      Restore, a condition added or removed, a condition's value or duration set. EVERY OTHER way a
+ *      row can come to differ from the sheet — Clear then re-add, Remove then re-add, Load encounter,
+ *      Undo / Redo, a board from the GM's other device (reloadFromStorage), a campaign switch
+ *      (setScope), the party bridge's max-HP sync, the turn engine, and any row-replacing path added
+ *      later — carries none, so it is safe BY CONSTRUCTION: the row is rewritten from the sheet
+ *      (`writeVitals`) and nothing is pushed. A gesture that changes nothing a push carries (temp HP,
+ *      max HP alone) pushes nothing either.
+ *   C. A PUSH NEEDS A FRESH READ. Before anything is sent, the seam reads the published sheet
+ *      (`fetchPublishedSheet`) and builds on what that read answers for the GM (`gmPushBase`): his
+ *      own pending edit while it stands against that read on a PROVED base — on his own character
+ *      too, where that edit is never drawn but is still on the server — else the published sheet. The
+ *      push is recorded on the stamp of that read, so one built on their newer publish stands. A read
+ *      that FAILED (offline, a blip, no server), or one that finds no published sheet (they
+ *      unpublished, or left), is NO ANSWER: nothing is sent, the gesture is OWED on its row, and a
+ *      later pass — the next board change, or the next sheet handed in — sends it through a fresh
+ *      read of its own.
+ *      The push writes the gesture onto that sheet — only `play.damage` and `play.conditions`,
+ *      nothing else of theirs — and only while it still carries the vitals the ROW SHOWED when the GM
+ *      made the gesture. If it does not, the sheet moved since: THE SHEET WINS, the gesture (and any
+ *      made on top of it) is DROPPED, and the row is re-based on what the read returned — the GM sees
+ *      it snap and can hit again. That one test compares VALUES, and safely: a push carries the row's
+ *      whole vitals, so it is exactly his change only on top of exactly the vitals he made it on —
+ *      and on top of those it loses nothing, whoever wrote them.
+ *      One change per character is OUT at a time, from its fresh read to the server's answer: two
+ *      upserts racing let an earlier one land last, so the server ended on a hit the GM had already
+ *      gone past. A gesture made meanwhile is a new change made ON the one that is out. It goes out
+ *      next, with its own fresh read: on top of what that push wrote if it landed, together with it if
+ *      it reached nobody, and not at all if the sheet won.
+ *      Nothing of the PLAYER's is written over. A change of HIS can still be lost, in these ways:
+ *      visibly, when the sheet wins and his row snaps to it — including one ordering no stamp can
+ *      tell apart: their app applying an earlier push of his AFTER a later one was already built on
+ *      it (fetched before the later one replaced it on the server), which IS after the later push's
+ *      base, and only the sheets' content could tell from a change of their own (rule E rules that
+ *      out); unseen, when an owed gesture never got its turn before the seam unmounted; and on the
+ *      server, when an edit of his has NO proved base (seeded from his other device or by a sign-in,
+ *      or pushed after a read that failed). Only the GM's clock says such an edit still stands, and a
+ *      fast one put a stale copy over a newer sheet of theirs, so no push is built on it: his next
+ *      push is built on their sheet and replaces it. Where it changed vitals, the gesture made on
+ *      them stands down first and the row snaps to their sheet; where it did not (an XP award, an
+ *      item), it goes without a sign. A base stamp on the `gm_character_edits` row itself would prove
+ *      such an edit — src/data/party.ts and the SQL, not this seam.
+ *   D. AN UNMOUNTED SEAM WRITES NOTHING. Every pass first asks whether the seam is still mounted, and
+ *      a read that answers after it unmounted (the GM left the campaign) sends nothing — the next
+ *      board can hold a row of the same name.
+ *   E. NO VALUE IDENTITY. Nothing here decides "did the player move this character" or "is this our
+ *      echo" by comparing vitals: rule C's test never asks who wrote a sheet. Sheets of our own
+ *      pushes are told apart by OBJECT (the overlay hands back the very object a push sent): one that
+ *      is still the pending edit is his newest push coming back, and the row follows it — but it is
+ *      no sheet ARRIVING, because a push that is out was made on top of it; one that is no longer
+ *      the pending edit is a LATE ECHO, an older answer than one this screen already has, and is set
+ *      aside. Following either as an arrival dragged the row back to an earlier hit of the GM's.
+ *
+ * WHICH ROW. The row a member's sheet drives is the PC row that is the same character by the
+ * tracker's own rule (`isSamePc`: the charId both carry, the name only for a row that has none). A
+ * row two members answer to — a hand-typed name they share — is a window onto neither sheet: nothing
+ * is written to it or pushed from it. Two sheets fighting over one row never settled.
+ *
+ * WHAT THE ROW SHOWS. The GM's change while it is not sent or out. Otherwise the newest sheet that
+ * arrived — or his own push once it landed, until the next sheet arrives (a push does not change the
+ * published row: the player's app applies it and republishes, and until then a member read answers
+ * with the pre-push sheet — always, on the GM's own character, where no overlay is drawn — which would
+ * drag his change straight back off the row). A push whose answer comes back after a sheet arrived
+ * leaves the row on that sheet: this screen cannot tell which of the two is newer, and the next read
+ * — the one his landed push itself triggers — settles it. One write puts what it shows on the row (a
+ * sheet's HP is already inside its own max, the row is written with that max, and a row's own vitals
+ * are what it holds), so the pass that write sets off finds nothing left to write.
  *
  * Part of the removable seam; see ./README.md.
  */
@@ -153,49 +223,38 @@ function writeVitals(cid: string, v: PcVitals, content: ContentDatabase): void {
   });
 }
 
-/** Push the GM's change to the player. Re-based on their newest sheet, carrying only the vitals.
- *
- *  Answers with the PUSH's own stamp (`pendingAt`), or `null` when the server refused it — a
- *  refusal (RLS, offline) must not be mistaken for a landed change, or the GM's damage is silently
- *  dropped. The stamp is what the echo test below recognises a push by; `''` means the server took
- *  it but left us no stamp to recognise it with, which costs a re-read and never a value. */
-async function pushVitals(
-  campaignId: string,
-  mem: PartyMember,
-  v: PcVitals,
-  content: ContentDatabase,
-  fallback: SavedChar,
-): Promise<string | null> {
-  // One read of the PUBLISHED row, then the overlay applied here rather than inside the fetch, so
-  // this push gets two things from the same look: the newest sheet to build on (which is the GM's
-  // own still-unapplied edit when there is one — re-basing on the pre-edit row would upsert straight
-  // over it), and the published stamp that edit was based on, which is what lets the overlay stand
-  // down later without ever comparing two devices' clocks.
-  const row = await fetchPublishedSheet(campaignId, mem.charId);
-  const current = resolvePendingGmEdit(campaignId, mem.charId, row);
-  const base = current?.character ? current : fallback;
-  // `mem.updatedAt` is the fallback when that read FAILED: it is the same column, off the same
-  // (player's) clock, read by the party list — older, therefore safe. What it must never be is
-  // nothing, because an edit with no base falls back to comparing the GM's clock against the
-  // player's, which is the one comparison this whole path exists to avoid. rememberGmEdit also
-  // refuses to overwrite a base it already holds; this is the other half.
-  const res = await pushGmEdit(
-    campaignId,
-    mem.charId,
-    mem.ownerId,
-    sheetWithVitals(base, v, content),
-    row?.updatedAt ?? mem.updatedAt,
-  );
-  // The push we just recorded, by the stamp it carries — `rememberGmEdit` ran inside `pushGmEdit`,
-  // synchronously, the moment the server accepted it.
-  return res.ok ? gmPendingEdit(campaignId, mem.charId)?.pushedAt ?? '' : null;
+/** One change of the GM's to one PC (rule C). */
+interface Change {
+  /** The row it was made on, by id. A row that is not this one never carries it (rule B). */
+  rowId: string;
+  /** The row's vitals — what the push writes. */
+  v: PcVitals;
+  /** The vitals key of what the row showed when he made it: the only sheet it may land on. */
+  on: string;
+}
+
+/** What the seam remembers per character, keyed `campaign|character` — rules A–E at the top of this file. */
+interface SeenPc {
+  /** The sheet object `sheetById` last handed in. A different object is a read that answered since. */
+  sheet: SavedChar;
+  /** What the row shows while the GM has nothing not sent or out (WHAT THE ROW SHOWS). */
+  shown: PcVitals;
+  /** Counts the sheets from the player's side that `shown` has followed, so a push's answer can tell
+   *  whether one arrived while it was out (WHAT THE ROW SHOWS). His own pushes coming back are not
+   *  counted (rule E). */
+  arrived: number;
+  /** His change that has not gone out: made while another was out, or OWED. A load drops it (rule A). */
+  want?: Change;
+  /** His change that is OUT, from its fresh read to the server's answer. No load drops it (rule A). */
+  out?: Change;
 }
 
 /**
  * Hold the PC rows and the players' sheets in step, in both directions.
  *
- * Runs on every combat-store change (the GM applying damage or a condition) and whenever a sheet
- * arrives, so neither side can drift. See the conflict rules at the top of this file.
+ * Runs on every combat-store change and whenever a sheet arrives, so neither side can drift — but
+ * only a GM GESTURE is ever published (rule B); every other difference is the sheet winning. See
+ * the rules at the top of this file.
  */
 export function usePcSheetTruth(args: {
   campaignId: string;
@@ -205,86 +264,131 @@ export function usePcSheetTruth(args: {
 }): void {
   const { campaignId, members, sheetById, content } = args;
   /*
-   * charId → what we last saw on each side.
-   *  `sheet`  the sheet's vitals as of the last look. A DIFFERENT value means the sheet really moved.
-   *  `agreed` the value the row is expected to hold — the sheet's, or the GM's own change once pushed.
-   *
-   * Two keys rather than one because a push doesn't change the published sheet: the player's app
-   * applies the edit and re-publishes, and until it does `fetchMemberSheet` still answers with the
-   * pre-edit sheet. Comparing against `agreed` alone would read that unchanged sheet as "the sheet
-   * moved" and revert the GM's damage on the spot, then un-revert when the echo landed.
-   *
-   *  `pushed` the STAMPS of the pushes we made and are still waiting to see come back.
-   *
-   * ⚠ That third field is not optional any more. `fetchMemberSheet` overlays this device's own
-   * pending edit, so a push now DOES move the sheet we read — our own value arrives here looking
-   * exactly like the player publishing it. With two damage entries inside one round trip the row
-   * goes V1, V2, and then push 1's overlay lands, reads as "the sheet moved", and drags the row
-   * visibly back to V1. Worse, if push 2 is then refused, the rollback below restores `agreed` while
-   * `sheet` has already advanced — and the GM's V2 is dropped with nothing left to re-push it.
-   *
-   * ⚠⚠ STAMPS, NOT VALUES. It held the vitals we had pushed, and asked "is this the same HP and
-   * conditions as something of ours?" — so a genuine PLAYER publish that happened to land on a value
-   * we pushed at some point (they healed back to full, they took the same five) was swallowed as our
-   * own echo, and the GM went on reading an HP the player no longer had. Whether the sheet in hand
-   * is our push is a question about the ROW, not about its contents, and `updated_at` is what
-   * answers it: a pending edit only stands while no newer player publish exists (see
-   * `pendingEditStillStands`), so "a push of ours is still standing" is that comparison, made on the
-   * player's own clock, and a publish newer than our push can never read as an echo.
+   * `campaign|character` → `SeenPc`. It outlives every ROW: Clear, Remove, Load encounter, Undo and
+   * a board from the GM's other device each put a different (or an older) row under the same
+   * character — and while "the row differs from what the seam last agreed" was enough to publish,
+   * each of them published that row, full HP and no conditions or a stale snapshot, over the
+   * player's own damage and conditions. Only a gesture pushes now (rule B), so this map is what to
+   * SHOW, never a licence to push. Keyed by campaign too, so nothing of one campaign's can reach
+   * another's.
    */
-  const [seen] = useState(() => new Map<string, { sheet: string; agreed: string; pushed: Set<string> }>());
+  const [seen] = useState(() => new Map<string, SeenPc>());
+  /** Every sheet a push of ours sent, by object — how a sheet coming back is told from the player's
+   *  side moving (rule E). Weak, so a sheet goes the moment nothing else holds it. */
+  const [ours] = useState(() => new WeakSet<SavedChar>());
+  /** False once the seam unmounts (rule D). Set back on every effect run, which a deps change makes
+   *  synchronously after its own cleanup, so a push that is out across a re-render keeps going. */
+  const alive = useRef(true);
+  /** The newest `reconcile`, so a push's answer re-runs the pass this seam has NOW. */
+  const again = useRef<() => void>(() => undefined);
 
   const reconcile = useCallback(() => {
+    // Rule D. A push's answer re-runs this pass, and it can come back after the GM left.
+    if (!alive.current) return;
     const combatants = useCombatStore.getState().combatants;
+    /**
+     * Send one change for one character (rules C and D). Answers whether the pass should run again
+     * at once: the push landed, or the sheet won. A change that reached nobody — the read failed or
+     * found no published sheet, the server refused it, the push threw — is OWED again, back on its
+     * row with any gesture made on it while it was out, and goes out on a later pass. Never retried
+     * from here, which would spin against a server that is still refusing.
+     */
+    const send = async (mem: PartyMember, st: SeenPc, w: Change): Promise<boolean> => {
+      try {
+        const row = await fetchPublishedSheet(campaignId, mem.charId);
+        if (!alive.current) return false;
+        const fresh = row?.sheet && gmPushBase(campaignId, mem.charId, row);
+        if (row && fresh) {
+          const now = vitalsFromSheet(fresh, content);
+          if (vitalsKey(now) !== w.on) {
+            // The sheet moved since he made it: it wins, over anything made on top of it too.
+            st.want = undefined;
+            st.shown = now;
+            return true;
+          }
+          const arrived = st.arrived;
+          const sent = sheetWithVitals(fresh, w.v, content);
+          // `row.updatedAt` is the published stamp this edit is built on. `mem.updatedAt` (the same
+          // column, off the same player's clock, read by the party list — older, therefore safe) only
+          // when the read gave none; never nothing, or the overlay falls back to comparing the GM's
+          // clock against the player's.
+          const res = await pushGmEdit(campaignId, mem.charId, mem.ownerId, sent, row.updatedAt ?? mem.updatedAt);
+          if (res.ok) {
+            ours.add(sent);
+            // What the server holds now — the sheet may not hold the row whole (a heal past its max).
+            const held = vitalsFromSheet(sent, content);
+            if (st.arrived === arrived) st.shown = held;
+            if (st.want) st.want.on = vitalsKey(held); // a gesture made on this push lands on it
+            return true;
+          }
+        }
+      } catch {
+        /* a push that THREW reached nobody */
+      }
+      st.want = st.want ? { ...st.want, on: w.on } : w;
+      return false;
+    };
+    // WHICH ROW: the tracker's own "same character" rule, the one its add dedupe and the "+" button use.
+    const rowOf = (mem: PartyMember) => combatants.find((x) => x.isPC && isSamePc(x, mem));
     for (const mem of members) {
       const sheet = sheetById.get(mem.charId);
       if (!sheet) continue;
-      // The tracker joins combatants to characters by name — the same join the rest of the seam uses.
-      const c = combatants.find((x) => x.isPC && x.name.trim().toLowerCase() === mem.name.trim().toLowerCase());
-      if (!c) continue;
+      const c = rowOf(mem);
+      // A row another member answers to as well is nobody's window (WHICH ROW).
+      if (!c || members.some((o) => o !== mem && rowOf(o) === c)) continue;
+      // Taken FIRST, whatever this pass then decides: a gesture is acted on by the pass that sees it
+      // or by nobody (the store forgets it the moment its own dispatch returns, either way).
+      const gesture = takeVitalsGesture(c.id);
       const sv = vitalsFromSheet(sheet, content);
-      const skey = vitalsKey(sv);
-      const st = seen.get(mem.charId);
-      // Our own push, coming back through the overlay. The row already holds it (or something newer
-      // we pushed after it), so there is nothing to write — only the "last seen" mark moves on.
-      // Not doing this is what let a late echo drag the row back to an earlier value.
-      //
-      // The overlay is the ONLY way a push of ours can come back looking like a sheet move, and it
-      // only stands while the player has published nothing newer — so a push of ours still standing
-      // IS the echo, and a publish with a newer `campaign_characters.updated_at` has already
-      // dropped it (`resolvePendingGmEdit`, inside the read that handed us this sheet) and is the
-      // player moving, whatever value it carries.
-      const pend = gmPendingEdit(campaignId, mem.charId);
-      const echo = !!st && st.sheet !== skey && !!pend && st.pushed.has(pend.pushedAt);
-      // The sheet moved (or this PC has never been synced): the sheet wins, always. This is also what
-      // makes a simultaneous change safe — the player's edit is never the one discarded.
-      if (!st || (st.sheet !== skey && !echo)) {
-        seen.set(mem.charId, { sheet: skey, agreed: skey, pushed: new Set() });
-        writeVitals(c.id, sv, content);
-        continue;
+      const key = `${campaignId}|${mem.charId}`;
+      const st = seen.get(key) ?? { sheet, shown: sv, arrived: 0 };
+      if (!seen.has(key)) {
+        seen.set(key, st);
+      } else if (sheet !== st.sheet) {
+        st.sheet = sheet;
+        // A read answered (rule E): the player's side moved, and the row follows it; or his newest
+        // push came back, which the row follows too — but it is no arrival, since a push of his still
+        // out was made on top of it; or a LATE ECHO, which is set aside.
+        if (!ours.has(sheet)) {
+          st.shown = sv;
+          st.arrived++;
+        } else if (sheet === gmPendingEdit(campaignId, mem.charId)?.sheet) {
+          st.shown = sv;
+        }
       }
-      if (echo) seen.set(mem.charId, { ...st, sheet: skey });
       const cv = vitalsFromCombatant(c, content);
-      const ckey = vitalsKey(cv);
-      if (ckey === st.agreed) continue; // in step
-      // the GM moved it here → publish, once
-      seen.set(mem.charId, { sheet: skey, agreed: ckey, pushed: st.pushed });
-      void pushVitals(campaignId, mem, cv, content, sheet).then((stamp) => {
-        // A REFUSED push must not leave the row stamped as agreed — that is what made a failed push
-        // unrepeatable, so a GM whose edit the server rejected never found out and the player never
-        // got it. Roll the stamp back (unless a newer pass has already moved it on) and the next
-        // pass re-pushes. Deliberately no retry from here: the pass runs on the next change anyway,
-        // and re-entering it would spin hot against a server that is still refusing.
-        const cur = seen.get(mem.charId);
-        if (stamp) cur?.pushed.add(stamp); // …so this PUSH is recognised when it echoes back
-        else if (stamp === null && cur?.agreed === ckey)
-          seen.set(mem.charId, { sheet: cur.sheet, agreed: st.agreed, pushed: cur.pushed });
-      });
+      const ck = vitalsKey(cv);
+      const was = st.want?.v ?? st.out?.v ?? st.shown;
+      if (gesture && ck !== vitalsKey(was)) {
+        // Rule B: the GM's own change, made on what the row showed. One of his not sent yet on this
+        // row carries it along.
+        if (st.want?.rowId === c.id) st.want.v = cv;
+        else st.want = { rowId: c.id, v: cv, on: vitalsKey(was) };
+      } else if (!gesture && st.want && (st.want.rowId !== c.id || ck !== vitalsKey(st.want.v))) {
+        // A load took his unsent change off the row (rules A and B): not his doing, so the sheet wins.
+        st.want = undefined;
+      }
+      const show = st.want?.v ?? st.out?.v ?? st.shown;
+      if (ck !== vitalsKey(show)) writeVitals(c.id, show, content);
+      if (st.want && !st.out) {
+        const w = (st.out = st.want);
+        st.want = undefined;
+        void send(mem, st, w).then((rerun) => {
+          st.out = undefined;
+          if (rerun) again.current();
+        });
+      }
     }
-  }, [seen, campaignId, members, sheetById, content]);
+  }, [seen, ours, campaignId, members, sheetById, content]);
 
   useEffect(() => {
+    alive.current = true;
+    again.current = reconcile;
     reconcile();
-    return useCombatStore.subscribe(reconcile);
+    const off = useCombatStore.subscribe(reconcile);
+    return () => {
+      off();
+      alive.current = false;
+    };
   }, [reconcile]);
 }
