@@ -101,7 +101,7 @@ function castText(c?: ActionCost): string {
   return ''; // actions / reaction / free / variable are all shown by the action glyph
 }
 
-function SpellDetail({
+export function SpellDetail({
   spell,
   maxRank,
   atRank,

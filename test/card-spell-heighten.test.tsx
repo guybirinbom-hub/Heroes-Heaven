@@ -1,0 +1,268 @@
+// @vitest-environment jsdom
+import { afterEach, describe, expect, it } from 'vitest';
+import type { ReactElement } from 'react';
+import { content } from './_content';
+import { renderDom } from './_render';
+import { SpellDetail } from '../src/sheet/SpellsTab';
+import { ContentContext } from '../src/sheet/ContentContext';
+import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
+import { splitHeightening } from '../src/rules/heightening';
+import type { Spell } from '../src/rules/types';
+
+/**
+ * Card step 0 (docs/card-design.md section 9, row 0; section 5, the first four rows): pin what the
+ * spell popup does TODAY, before any card work touches it.
+ *
+ * Owner, on the card design: *"don't break spell heightening"*. Nothing guarded the popup itself — the
+ * pure helpers have heightening.test.ts, but the four things a player actually reads off the popup
+ * (the Heightened entries that apply at the cast rank, the damage arrow spliced into the prose, the
+ * area suffix on the Area row, and the Cast-at picker or chip) were asserted nowhere. Every later step
+ * that moves the spell popup (16, 17) must keep this file green; a deliberate change flips an
+ * assertion with a `// batch card premise:` citation.
+ *
+ * Rendered through the REAL SpellDetail (exported from SpellsTab.tsx for this file, no other change),
+ * on the shipped records from public/core.json. These are the string lane: SpellDetail never asks for
+ * a page tree, so no AST is served here and none is needed.
+ *
+ * MUTATION LINES (each measured red on 2026-10-02, then restored byte-exact):
+ *  - SpellsTab.tsx, `shownBase`: replace the injectDamageArrow call with `base` → 7 of 17 red.
+ *  - SpellsTab.tsx, the Heightening DescBody className: drop `' applies'` → 6 of 17 red.
+ *  - SpellsTab.tsx, the Area row: never render the `.up-heighten` suffix span → 1 of 17 red (thunderburst).
+ */
+const db = content();
+const spell = (id: string): Spell => {
+  const s = db.spells[id];
+  if (!s) throw new Error(`no spell ${id} in the shipped data`);
+  return s;
+};
+
+const pin: PinDescApi = { has: () => false, toggle: () => undefined };
+let stops: (() => void)[] = [];
+afterEach(() => {
+  for (const s of stops) s();
+  stops = [];
+});
+
+function open(el: ReactElement) {
+  const r = renderDom(
+    <ContentContext.Provider value={db}>
+      <PinContext.Provider value={pin}>{el}</PinContext.Provider>
+    </ContentContext.Provider>,
+  );
+  stops.push(r.stop);
+  const popup = r.host.querySelector('.picker.spell-detail') as HTMLElement | null;
+  if (!popup) throw new Error('no spell popup rendered');
+  return { ...r, popup };
+}
+
+const txt = (el: Element | null | undefined) => (el?.textContent ?? '').replace(/\s+/g, ' ').trim();
+/** The prose body: the first DescBody after the stat rows / rank selector, i.e. NOT inside the Heightening box or a note. */
+const body = (popup: HTMLElement) =>
+  [...popup.querySelectorAll('.sd-body > div')].find(
+    (d) => !d.matches('.sd-sub, .sd-traits, .sd-stats, .sd-rank-sel, .sd-heighten, .sd-addnote'),
+  ) as HTMLElement | undefined;
+const entries = (popup: HTMLElement) => [...popup.querySelectorAll('.sd-heighten > .sd-desc')] as HTMLElement[];
+const applying = (popup: HTMLElement) => entries(popup).filter((e) => e.classList.contains('applies'));
+/** Every arrow the popup spliced in, in document order (prose arrow + Area suffix). */
+const arrows = (popup: HTMLElement) => [...popup.querySelectorAll('.up-heighten')].map((e) => txt(e));
+const stat = (popup: HTMLElement, label: string) =>
+  [...popup.querySelectorAll('.sd-stat')].find((s) => txt(s.querySelector('.sd-stat-k')) === label) as HTMLElement | undefined;
+/** The value cell of a stat row (the label sits in its own span with no space before the value). */
+const val = (popup: HTMLElement, label: string) => txt(stat(popup, label)?.querySelector('.sd-stat-v'));
+const chips = (popup: HTMLElement) => [...popup.querySelectorAll('.sd-rank-sel .sd-rank-chip')] as HTMLElement[];
+
+describe('the shipped records these cases stand on (otherwise the popup assertions measure nothing)', () => {
+  it('fireball, electric-arc, thunderburst, ghostly-shift and summon-animal are shaped as the cases assume', () => {
+    const fb = spell('fireball');
+    expect([fb.rank, fb.baseDamage, fb.heightening]).toEqual([3, '6d6', { type: 'interval', interval: 1, damageIncr: '2d6' }]);
+    const ea = spell('electric-arc');
+    expect([ea.rank, ea.baseDamage, ea.traits.includes('cantrip')]).toEqual([0, '2d4', true]);
+    const tb = spell('thunderburst');
+    expect([tb.rank, tb.traits.includes('focus'), tb.baseDamage, tb.baseArea]).toEqual([3, true, '2d6', { value: 20, kind: 'burst' }]);
+    expect(tb.heightening).toEqual({ type: 'interval', interval: 2, damageIncr: '2d6', areaIncr: 5 });
+    // Ghostly Shift's Amp column is printed on its Archives page (public/ast/spells.json) but not in
+    // the description string, so the string lane splits exactly one ordinary Heightened entry.
+    expect(splitHeightening(spell('ghostly-shift').description).heightening).toEqual(['**Heightened (+2)** The resistance increases by 1.']);
+    // A summon prints "**Heightened** As listed in the trait." with no parentheses: splitHeightening
+    // finds no entry, so the line stays in the prose body.
+    expect(splitHeightening(spell('summon-animal').description).heightening).toEqual([]);
+    expect(spell('summon-animal').description).toContain('**Heightened** As listed in the trait.');
+  });
+});
+
+describe('fireball at a 3rd, 5th and 9th slot (atRank: a prepared slot heightens what it holds)', () => {
+  it('at its own rank: no chip, no arrow, the one Heightened entry listed but not applying', () => {
+    const { popup } = open(<SpellDetail spell={spell('fireball')} maxRank={9} atRank={3} onClose={() => undefined} />);
+    expect(txt(popup.querySelector('.picker-head'))).toContain('Fireball');
+    expect(popup.querySelector('.picker-head .info-star'), 'PinStar is in the header').not.toBeNull();
+    expect(txt(popup.querySelector('.sd-sub'))).toBe('3rd rank · Arcane, Primal');
+    expect(val(popup, 'Range')).toBe('500 feet');
+    expect(val(popup, 'Area')).toBe('20-foot burst');
+    expect(val(popup, 'Defense')).toBe('basic Reflex save');
+    expect(stat(popup, 'Cast')?.querySelector('.sd-stat-v')).not.toBeNull();
+    expect(popup.querySelector('.sd-rank-sel'), 'no rank selector at the base rank').toBeNull();
+    expect(arrows(popup)).toEqual([]);
+    expect(txt(body(popup))).toBe('A roaring blast of fire detonates at a spot you designate, dealing 6d6 fire damage.');
+    expect(txt(popup.querySelector('.sd-heighten-h'))).toBe('Heightening');
+    expect(entries(popup).map((e) => txt(e))).toEqual(['Heightened (+1) The damage increases by 2d6.']);
+    expect(applying(popup)).toHaveLength(0);
+  });
+
+  it.each([
+    [5, '5th', '10d6'],
+    [9, '9th', '18d6'],
+  ])('from a rank-%i slot: a fixed "%s" chip, the arrow (→ %s) after the base dice, the entry applies', (rank, label, dmg) => {
+    const { popup } = open(<SpellDetail spell={spell('fireball')} maxRank={9} atRank={rank} onClose={() => undefined} />);
+    const sel = popup.querySelector('.sd-rank-sel')!;
+    expect(txt(sel.querySelector('.sd-rank-lbl'))).toBe('Cast at');
+    expect(chips(popup).map((c) => [txt(c), c.className])).toEqual([[label, 'sd-rank-chip on sd-rank-static']]);
+    expect(sel.querySelector('button'), 'a fixed chip is not a picker').toBeNull();
+    expect(arrows(popup)).toEqual([`(→ ${dmg})`]);
+    expect(txt(body(popup))).toBe(`A roaring blast of fire detonates at a spot you designate, dealing 6d6 (→ ${dmg}) fire damage.`);
+    // The arrow is spliced into the PROSE, never onto a stat row; fireball's area does not grow.
+    expect(body(popup)!.querySelector('.up-heighten')).not.toBeNull();
+    expect(val(popup, 'Area')).toBe('20-foot burst');
+    expect(applying(popup).map((e) => txt(e))).toEqual(['Heightened (+1) The damage increases by 2d6.']);
+  });
+
+  it('a slot below the spell rank is clamped to the spell rank, and one above the entry top to the top', () => {
+    const low = open(<SpellDetail spell={spell('fireball')} maxRank={9} atRank={1} onClose={() => undefined} />).popup;
+    expect(low.querySelector('.sd-rank-sel')).toBeNull();
+    expect(arrows(low)).toEqual([]);
+    const high = open(<SpellDetail spell={spell('fireball')} maxRank={6} atRank={9} onClose={() => undefined} />).popup;
+    expect(chips(high).map((c) => txt(c))).toEqual(['6th']);
+    expect(arrows(high)).toEqual(['(→ 12d6)']);
+  });
+});
+
+describe('electric-arc, a cantrip, auto-heightened to an 8th-rank maximum', () => {
+  it('shows the fixed "8th" chip, exactly one applying entry, and (→ 9d4) inside the sentence', () => {
+    const { popup } = open(<SpellDetail spell={spell('electric-arc')} maxRank={8} onClose={() => undefined} />);
+    expect(txt(popup.querySelector('.sd-sub'))).toBe('Cantrip · Arcane, Primal');
+    expect(chips(popup).map((c) => [txt(c), c.className])).toEqual([['8th', 'sd-rank-chip on sd-rank-static']]);
+    expect(entries(popup)).toHaveLength(1);
+    expect(applying(popup).map((e) => txt(e))).toEqual(['Heightened (+1) The damage increases by 1d4.']);
+    expect(arrows(popup)).toEqual(['(→ 9d4)']);
+    expect(txt(body(popup))).toBe(
+      'An arc of lightning leaps from one target to another. Each target takes 2d4 (→ 9d4) electricity damage with a basic Reflex save.',
+    );
+    expect(val(popup, 'Targets')).toBe('1 or 2 creatures');
+  });
+
+  it('a cantrip ignores the slot it was opened from: it always heightens to the maximum', () => {
+    const { popup } = open(<SpellDetail spell={spell('electric-arc')} maxRank={8} atRank={2} onClose={() => undefined} />);
+    expect(chips(popup).map((c) => txt(c))).toEqual(['8th']);
+    expect(arrows(popup)).toEqual(['(→ 9d4)']);
+  });
+
+  it('with no maximum it is viewed at its printed rank: no chip, no arrow, nothing applies', () => {
+    const { popup } = open(<SpellDetail spell={spell('electric-arc')} onClose={() => undefined} />);
+    expect(popup.querySelector('.sd-rank-sel')).toBeNull();
+    expect(arrows(popup)).toEqual([]);
+    expect(applying(popup)).toHaveLength(0);
+  });
+});
+
+describe('thunderburst, a focus spell, heightens to the maximum like a cantrip', () => {
+  it('at a 7th-rank maximum: chip "7th", the prose arrow (→ 6d6), the Area suffix (→ 30-foot burst), the entry applies', () => {
+    const { popup } = open(<SpellDetail spell={spell('thunderburst')} maxRank={7} atRank={3} onClose={() => undefined} />);
+    expect(chips(popup).map((c) => txt(c))).toEqual(['7th']);
+    // Document order: the Area row's suffix comes before the prose arrow.
+    expect(arrows(popup)).toEqual(['(→ 30-foot burst)', '(→ 6d6)']);
+    expect(val(popup, 'Area')).toBe('20-foot burst (→ 30-foot burst)');
+    expect(stat(popup, 'Area')!.querySelector('.sd-stat-v .up-heighten')).not.toBeNull();
+    // Only the FIRST standalone "2d6" carries the arrow; the sonic 2d6 right after it is left alone.
+    expect(txt(body(popup))).toContain('dealing 2d6 (→ 6d6) bludgeoning damage and 2d6 sonic damage.');
+    expect(body(popup)!.querySelectorAll('.up-heighten')).toHaveLength(1);
+    expect(applying(popup).map((e) => txt(e))).toEqual([
+      'Heightened (+2) Each type of damage increases by 2d6, and the area increases by 5 feet.',
+    ]);
+  });
+
+  it('at a 4th-rank maximum, one rank short of the first (+2) step: the chip shows, but nothing scales and the entry does not apply', () => {
+    const { popup } = open(<SpellDetail spell={spell('thunderburst')} maxRank={4} onClose={() => undefined} />);
+    expect(chips(popup).map((c) => txt(c))).toEqual(['4th']);
+    expect(arrows(popup)).toEqual([]);
+    expect(val(popup, 'Area')).toBe('20-foot burst');
+    expect(applying(popup)).toHaveLength(0);
+  });
+});
+
+describe('a signature spell gets the Cast-at picker', () => {
+  it('fireball as a signature spell with a 9th-rank maximum: buttons 3rd to 9th, starting on 3rd', () => {
+    const { popup, click } = open(<SpellDetail spell={spell('fireball')} maxRank={9} signature onClose={() => undefined} />);
+    const buttons = [...popup.querySelectorAll('.sd-rank-sel button.sd-rank-chip')] as HTMLElement[];
+    expect(buttons.map((b) => txt(b))).toEqual(['3rd', '4th', '5th', '6th', '7th', '8th', '9th']);
+    expect(buttons.filter((b) => b.classList.contains('on')).map((b) => txt(b))).toEqual(['3rd']);
+    expect(popup.querySelector('.sd-rank-static')).toBeNull();
+    expect(arrows(popup)).toEqual([]);
+    expect(applying(popup)).toHaveLength(0);
+
+    click(buttons[3]); // 6th
+    const after = [...popup.querySelectorAll('.sd-rank-sel button.sd-rank-chip')] as HTMLElement[];
+    expect(after.filter((b) => b.classList.contains('on')).map((b) => txt(b))).toEqual(['6th']);
+    expect(arrows(popup)).toEqual(['(→ 12d6)']);
+    expect(applying(popup)).toHaveLength(1);
+
+    click(after[0]); // back to 3rd
+    expect(arrows(popup)).toEqual([]);
+    expect(applying(popup)).toHaveLength(0);
+  });
+
+  it('a signature spell already at the maximum has no picker', () => {
+    const { popup } = open(<SpellDetail spell={spell('fireball')} maxRank={3} signature onClose={() => undefined} />);
+    expect(popup.querySelector('.sd-rank-sel')).toBeNull();
+  });
+
+  it('the same spell without the signature flag is viewed at its rank, with no picker', () => {
+    const { popup } = open(<SpellDetail spell={spell('fireball')} maxRank={9} onClose={() => undefined} />);
+    expect(popup.querySelector('.sd-rank-sel')).toBeNull();
+    expect(arrows(popup)).toEqual([]);
+  });
+});
+
+describe('ghostly-shift: the ordinary Heightened group holds no Amp entry', () => {
+  it('at a 5th-rank maximum, exactly one Heightened (+2) entry, applying, and nothing Amp inside the group', () => {
+    const { popup } = open(<SpellDetail spell={spell('ghostly-shift')} maxRank={5} onClose={() => undefined} />);
+    expect(chips(popup).map((c) => txt(c))).toEqual(['5th']);
+    expect(entries(popup).map((e) => txt(e))).toEqual(['Heightened (+2) The resistance increases by 1.']);
+    expect(applying(popup)).toHaveLength(1);
+    expect(txt(popup.querySelector('.sd-heighten'))).not.toMatch(/\bAmp\b/);
+  });
+
+  it('TODAY the Amp text reaches no part of the popup (the string lane does not carry it; step 17 adds it from the page)', () => {
+    // Measured 2026-10-02: 0 of the shipped spell description strings contain the word "Amp"; the Amp
+    // and "Amp Heightened (+2)" paragraphs exist only in the page tree. When step 17 brings them in
+    // as their own group, this assertion flips with a `// batch card premise: spell-2563 "Amp"` line.
+    const { popup } = open(<SpellDetail spell={spell('ghostly-shift')} maxRank={5} onClose={() => undefined} />);
+    expect(txt(popup)).not.toMatch(/\bAmp\b/);
+    expect(txt(body(popup))).toBe('Your body becomes insubstantial as you partially phase out. You gain resistance 2 to all damage (except force).');
+  });
+});
+
+describe('a summon printed "Heightened As listed in the trait"', () => {
+  it('summon-animal from a 5th-rank slot: the chip shows 5th, but there is no Heightening box; the line stays in the prose', () => {
+    const { popup } = open(<SpellDetail spell={spell('summon-animal')} maxRank={9} atRank={5} onClose={() => undefined} />);
+    expect(chips(popup).map((c) => txt(c))).toEqual(['5th']);
+    expect(popup.querySelector('.sd-heighten')).toBeNull();
+    expect(arrows(popup)).toEqual([]);
+    const prose = txt(body(popup));
+    expect(prose).toContain('You summon a creature that has the animal trait and whose level is –1 to fight for you.');
+    expect(prose).toContain('Heightened As listed in the trait.');
+    // The bold label survives as bold in the prose body.
+    expect([...body(popup)!.querySelectorAll('strong, b')].map((b) => txt(b))).toContain('Heightened');
+  });
+});
+
+describe('closing', () => {
+  it('the overlay and the close button call onClose; a click inside the popup does not', () => {
+    let closed = 0;
+    const { host, popup, click } = open(<SpellDetail spell={spell('fireball')} onClose={() => (closed += 1)} />);
+    click(popup.querySelector('.sd-body'));
+    expect(closed).toBe(0);
+    click(popup.querySelector('.picker-close'));
+    expect(closed).toBe(1);
+    click(host.querySelector('.picker-overlay'));
+    expect(closed).toBe(2);
+  });
+});
