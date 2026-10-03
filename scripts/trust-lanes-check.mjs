@@ -54,6 +54,13 @@ const blank = (text) => text
   .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '))
   .split('\n').map((l) => l.replace(/(^|[^:'"\\])\/\/.*$/, '$1')).join('\n');
 
+/* A TYPE index is not a lane: `ContentDatabase['runes']` is the TYPE of core.json's `runes` map — a
+ * ContentDatabase key is a bucket name by definition, never a record id (applySources' property-rune pass,
+ * src/rules/build.ts, a787fb0, where this guard went red on the classFeatures record `runes`). Blanked like a
+ * comment, keeping line numbers, so `runes` read as a lane key anywhere else is still seen (2026-09-30: this
+ * replaced a `notIds` entry that hid the id in every engine file). */
+const TYPE_INDEX = /\bContentDatabase\s*\[\s*'[^']*'\s*\]/g;
+
 const ID = "([a-z0-9][a-z0-9-]{2,})";
 const PATTERNS = [
   // an equality against a quoted id: `f.featId === 'sneak-attack'`, `mode.id !== 'cat-raise-shield'`
@@ -79,7 +86,7 @@ for (const f of readdirSync(R('src/rules')).sort()) {
   const rel = `src/rules/${f}`;
   const engine = ENGINE_FILES.has(rel);
   if (!engine && skipFiles.has(rel)) continue;
-  const text = blank(readFileSync(R(rel), 'utf8'));
+  const text = blank(readFileSync(R(rel), 'utf8')).replace(TYPE_INDEX, (m) => ' '.repeat(m.length));
   const lineAt = (index) => text.slice(0, index).split('\n').length;
   const note = (id, index) => {
     if (!recordIds.has(id) || notIds.has(id)) return;
