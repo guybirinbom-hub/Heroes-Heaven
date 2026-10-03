@@ -26,12 +26,24 @@
  * cardScope.ts canonLabel / printedSet). The walk tags what the card leaves out with its path
  * (card-furniture, card-printed, spoiler) only; classifyOmission still names each line from its own
  * words, so a predicate that starts leaving out more page text is counted (S1-UNNAMED / S1-MISSING).
+ *
+ * Card step 13a: a card row whose page has level folds (scripts/data/level-folds.json) is judged again at
+ * the scope grid (src/sheet/cardScope.ts SCOPE_LEVELS × every class, no picks) through the SAME scopeTree
+ * and ledger the card renders with, and its entries are the union. A `card-fold` node is shown text under
+ * FUTURE_TREATMENT 'fold' / 'grey' (the folded words stay in the DOM) and hidden text named S-future /
+ * S-pick under 'hide'; FOLDED-UNLISTED comes from cardScope.ts foldsOf, which re-hashes every folded
+ * section against the ledger. Measured 2026-10-03 in the lane: 26 statDetail rows scoped (17 fold, 9 only
+ * highlight impulse entries), 122 grid folds, 0 unlisted; no section moved under 'fold' or 'grey'; under
+ * 'hide' the 280 left-out lines are all named S-future, so S1 does not move either.
  */
 import {
   clean, isMetaP, isMetaishBlock, textOf, variantSection, withoutItemLists, astSlug,
   cardDropsMetaP, cardFurnitureSectionEnd, cardHeadUntil, cardRowParts, isCardFurnitureP, isCardFurnitureTitle,
 } from '../../src/sheet/astVisibility.ts';
-import { OMISSION_RULES, LABEL_ALIASES, canonLabel, printedSet } from '../../src/sheet/cardScope.ts';
+import {
+  OMISSION_RULES, LABEL_ALIASES, canonLabel, printedSet,
+  FOLD_RULE, FUTURE_TREATMENT, LEVEL_FOLDS, SCOPE_LEVELS, scopeTree,
+} from '../../src/sheet/cardScope.ts';
 import { CARD_ON } from '../../src/sheet/cardSurfaces.ts';
 
 /* ------------------------------------------------------------------------------------------------ */
@@ -225,6 +237,11 @@ const LEADS_TO_HEADING = /\bleads to\b\.{0,3}\s*$/i;
 export function classifyOmission(b, printed) {
   if (b.rule === 'S-items') return { rule: 'S-items', unnamed: [] };
   if (b.rule === 'spoiler') return { rule: 'S-furniture', unnamed: [] };
+  // Card step 13a: a section a card folds away under FUTURE_TREATMENT 'hide' (S-future, a later level;
+  // S-pick, an option the build does not have). The walk names it only for a `card-fold` node, which
+  // src/sheet/cardScope.ts scopeTree makes for ledger sections alone — and foldsOf re-checks every fold
+  // against scripts/data/level-folds.json, so a fold of text the ledger does not list is FOLDED-UNLISTED.
+  if (b.rule === 'S-future' || b.rule === 'S-pick') return { rule: b.rule, unnamed: [] };
   // Card step 5: the card walk's own paths (card-furniture, card-printed) are NOT trusted as names, like
   // the legacy paths: a line the card leaves out is classified by its own words here, so a predicate in
   // astVisibility.ts that starts leaving out more is counted, not excused.
@@ -459,6 +476,23 @@ function renderBlock(n, hideMeta, out, hiddenBy, card = undefined) {
     case 'view':
       emit(out, inlineRuns(n.c), hiddenBy, null, 'p');
       return;
+    case 'card-fold':
+      // Card step 13a (AstRenderer CardFoldEl): 'fold' keeps the text in the DOM inside a closed
+      // <details> and 'grey' draws it in place, so both are SHOWN text; 'hide' draws none of it — each
+      // line hidden with the fold's rule (S-future / S-pick). The fold's line is ours (data-ours).
+      if (!card) return;
+      if (n.treatment === 'hide') { walkBlocks(n.c || [], false, out, hiddenBy ?? FOLD_RULE[n.foldReason ?? 'future']); return; }
+      walkBlocks(n.c || [], hideMeta, out, hiddenBy, card);
+      return;
+    case 'card-pointer': {
+      // Card step 13a: a pointer row's subclass section — print, but another page's: tagged so the
+      // identity test does not count it as this record's page drawing someone else's words.
+      if (!card) return;
+      const from = out.length;
+      walkBlocks(n.c || [], hideMeta, out, hiddenBy, card);
+      for (let k = from; k < out.length; k++) out[k].pointer = n.pointerFrom ?? true;
+      return;
+    }
     default:
       if ((n.c || []).some((c) => BLOCK_TYPES.has(c.t))) walkBlocks(n.c || [], hideMeta, out, hiddenBy, card);
       else emit(out, inlineRuns(n.c ?? (n.t === 'text' ? [n] : [])), hiddenBy, null, 'loose');
@@ -1014,7 +1048,10 @@ export function judgeRow(row, trees, mdFns) {
   } else if (resolved) {
     // A 'mine' card row (card step 5) draws with the surface's printed set instead of hideMeta.
     const card = row.card ? { printed: printedSet(row.card.printed) } : undefined;
-    const all = treeBlocks(resolved, { hideMeta: row.hideMeta, itemLists: row.itemLists, card });
+    // Card step 13a: a card row judged at a scope (computeLedger's grid) draws the tree scopeTree makes —
+    // the same function and ledger the card renders with; `row.treatment` lets a measurement try 'hide'.
+    const drawn = card && row.scope ? scopeTree(resolved, row.scope, LEVEL_FOLDS, row.treatment ?? FUTURE_TREATMENT) : resolved;
+    const all = treeBlocks(drawn, { hideMeta: row.hideMeta, itemLists: row.itemLists, card });
     bodyBlocks = all.filter((b) => b.shown);
     res.lane = 'tree';
     // What the surface's own walk dropped, with the path that dropped it (meta-line, … or, on a card,
@@ -1022,13 +1059,14 @@ export function judgeRow(row, trees, mdFns) {
     res.hidden = all.filter((b) => !b.shown).map((b) => ({ text: b.text, rule: b.rule }));
     // S-items: what withoutItemLists cut (DescBody, the popup of a thing the character HAS).
     if (!row.itemLists) {
-      const kept = new Set(treeBlocks(resolved, { hideMeta: row.hideMeta, card }).map((b) => b.text));
+      const kept = new Set(treeBlocks(drawn, { hideMeta: row.hideMeta, card }).map((b) => b.text));
       for (const b of all) kept.delete(b.text);
       for (const t of kept) res.hidden.push({ text: t, rule: 'S-items' });
     }
     res.cut = cutInSentence(all);
-    // Identity: every block the surface draws must be the own page's.
-    identity = !!ownTree && bodyBlocks.some((b) => !ownText.includes(squash(b.text)));
+    // Identity: every block the surface draws must be the own page's — except a pointer row's subclass
+    // section (card step 13a), which is another page's print by design.
+    identity = !!ownTree && bodyBlocks.some((b) => !b.pointer && !ownText.includes(squash(b.text)));
     if (row.mode === 'browse') identity = !!ownTree && (identity || squash(all.map((b) => b.text).join(' ')) !== squash(pageBlocks.map((b) => b.text).join(' ')));
   } else {
     // A read that finds no tree falls back to the description string — wrong only while the record HAS a page.
@@ -1060,7 +1098,7 @@ export const rowKey = (row) => `${row.surface}|${row.bucket}:${row.id}`;
  * One judged row's baseline entries, as [section, entry] pairs — the per-row sections only (S2 and
  * STUBS are keyed by record). test/card-parity.test.tsx checks its sample against the baseline with this.
  */
-export function rowEntries(row, r, foldsOf) {
+export function rowEntries(row, r, foldsOf, foldCtx = undefined) {
   const key = rowKey(row);
   const out = [];
   for (const [L, v] of Object.entries(r.labels)) out.push([v === 'MISSING' ? 'S1-MISSING' : v, `${key}|${L}`]);
@@ -1069,9 +1107,23 @@ export function rowEntries(row, r, foldsOf) {
   if (r.identity) out.push(['S5-IDENTITY', key]);
   for (const c of r.cut ?? []) out.push(['CUT-IN-SENTENCE', `${key}|${c}`]);
   for (const o of r.oursLeak) out.push(['OURS-LEAK', `${key}|${o}`]);
-  // FOLDED-UNLISTED: a fold cardScope makes that level-folds.json does not list. No surface folds yet
-  // (step 13); foldsOf comes from src/sheet/cardScope.ts, so the day it folds, this section measures it.
-  for (const f of foldsOf?.(row) ?? []) if (!f.listed) out.push(['FOLDED-UNLISTED', `${key}|${f.id}`]);
+  // FOLDED-UNLISTED: a fold cardScope makes that level-folds.json does not list. Card step 13a: foldsOf
+  // (src/sheet/cardScope.ts) scopes the row's tree at the grid (SCOPE_LEVELS × every class) and re-hashes
+  // each folded section against the ledger. `foldCtx` = {tree, classIds}; without it nothing is scoped.
+  for (const f of foldsOf?.(row, foldCtx?.tree, foldCtx?.classIds) ?? []) if (!f.listed) out.push(['FOLDED-UNLISTED', `${key}|${f.id}`]);
+  return out;
+}
+
+/**
+ * The guard's scope grid for one card row (section 8 check 1: levels 1/5/9/13/17/20 per class, no
+ * picks). Only a 'mine' row drawn as a card whose tree scopeTree changes at some level is scoped; every
+ * other row's grid is empty, because its card is the same at every scope.
+ */
+export function scopeGrid(row, tree, classIds) {
+  if (row.mode !== 'mine' || !row.card || !tree) return [];
+  if (scopeTree(tree, { level: 1 }, LEVEL_FOLDS) === tree && scopeTree(tree, { level: 20 }, LEVEL_FOLDS) === tree) return [];
+  const out = [];
+  for (const level of SCOPE_LEVELS) for (const classId of classIds.length ? classIds : [undefined]) out.push(classId ? { level, classId } : { level });
   return out;
 }
 /** Sections whose entries are keyed by row (and so can be compared on a sample of rows). */
@@ -1084,11 +1136,31 @@ export function computeLedger(deps) {
   const found = Object.fromEntries(SECTIONS.map((s) => [s, []]));
   const counts = {};
   const judged = [];
+  // Card step 13a: a card row whose page has level folds is judged again at every scope of the grid, and
+  // its entries are the union (the row key is the same; a scope's omissions carry their rule's name).
+  const classIds = Object.keys(db.classes ?? {}).sort();
+  let scopedRows = 0;
+  let scopedJudgements = 0;
   for (const row of rows) {
     const r = judgeRow(row, trees, { parseBlocks, cleanRun });
     judged.push(r);
     counts[row.surface] = (counts[row.surface] ?? 0) + 1;
-    for (const [sec, e] of rowEntries(row, r, foldsOf)) found[sec].push(e);
+    const tree = row.card && row.read ? readTree(trees, row.read) : undefined;
+    for (const [sec, e] of rowEntries(row, r, foldsOf, { tree, classIds })) found[sec].push(e);
+    const grid = scopeGrid(row, tree, classIds);
+    if (grid.length) scopedRows++;
+    // A scope whose drawn tree equals one already judged (same folds, same highlights — with no picks the
+    // class never changes it) adds nothing: judged once per distinct drawing.
+    const drawnSeen = new Set();
+    for (const scope of grid) {
+      const drawn = scopeTree(tree, scope, LEVEL_FOLDS, deps.treatment ?? FUTURE_TREATMENT);
+      const sig = JSON.stringify((drawn.c ?? []).map((n) => (n.t === 'card-fold' ? `F:${n.foldReason}:${(n.foldIds ?? []).join(',')}` : n.applies ? 'A' : '.')));
+      if (drawnSeen.has(sig)) continue;
+      drawnSeen.add(sig);
+      scopedJudgements++;
+      const rs = judgeRow({ ...row, scope, treatment: deps.treatment }, trees, { parseBlocks, cleanRun });
+      for (const [sec, e] of rowEntries(row, rs, undefined)) found[sec].push(e);
+    }
   }
   // S2 and STUBS are properties of a record's page, the same on every surface that draws it: keyed by
   // record. Both run over EVERY shipped bucket, not only the ones a modelled surface draws: the search
@@ -1111,5 +1183,5 @@ export function computeLedger(deps) {
   }
   for (const k of classMismatch) found['S2-NOT-OWN'].push(`${k}|CLASS_MISMATCH`);
   for (const s of SECTIONS) found[s] = [...new Set(found[s])].sort();
-  return { found, counts, judged, rows, stubOccurrences };
+  return { found, counts, judged, rows, stubOccurrences, scopedRows, scopedJudgements };
 }

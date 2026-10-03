@@ -13,7 +13,7 @@ import { loadAstIndex, loadBucketAst } from './astStore';
 import { RemasteredLine, remasteredAsOf } from './RemasteredLine';
 import { isRecordRef, type CardRecord, type OursLine, type RecordCardProps } from './cardModel';
 import { treeHasSource, withoutItemLists } from './astVisibility';
-import { printedSet } from './cardScope';
+import { FUTURE_TREATMENT, LEVEL_FOLDS, pointerOf, printedSet, scopeTree, withPointer } from './cardScope';
 import { DescBody } from './DescBody';
 import type { SourceInfo } from '../rules/types';
 
@@ -77,7 +77,7 @@ function EmbedRecordCard({ record, content: hostContent, onOpenRef }: RecordCard
 const noOpen = () => undefined;
 
 /** The popup card (modes 'browse' and 'mine', chrome 'popup'). */
-function PopupRecordCard({ record, node, mode, printed, headerActions, ours, footer, fallbackText, onExit, onBackToSource }: RecordCardProps) {
+function PopupRecordCard({ record, node, mode, scope, printed, headerActions, ours, footer, fallbackText, onExit, onBackToSource }: RecordCardProps) {
   const content = useContent();
   const exit = onExit;
   useEscapeClose(exit);
@@ -175,6 +175,11 @@ function PopupRecordCard({ record, node, mode, printed, headerActions, ours, foo
      where the page prints none), the RemasteredLine, the desk #152 empty note, the no-page /
      could-not-load line — and the caller's footer last. */
   const mine = mode === 'mine' && stack.length === 1;
+  /* Card step 13a (section 3; owner ruling Q1 = A): a pointer row ("listed in your cause") shows the
+     matching section of the character's subclass page — loaded here, before any branch returns. */
+  const ptr = mine ? pointerOf(astBucket ?? cur.key, curSlug, scope) : null;
+  const ptrAt = ptr ? ptr.pageKey.indexOf(':') : -1;
+  const { node: ptrPage } = useAstNode(ptr ? ptr.pageKey.slice(0, ptrAt) : undefined, ptr ? ptr.pageKey.slice(ptrAt + 1) : undefined);
   const pageFailed = usePageLoadFailed(mine && !astLoading && !astNode, astBucket ?? cur.key, curSlug);
   const curRec = mine && cur.key ? (content as unknown as Record<string, Record<string, { source?: SourceInfo; id?: string } | undefined> | undefined> | null)?.[cur.key]?.[curSlug] : undefined;
   const homebrew = mine && (curSlug.startsWith('hb-') || curRec?.source?.license === 'homebrew');
@@ -186,7 +191,10 @@ function PopupRecordCard({ record, node, mode, printed, headerActions, ours, foo
   const emptyNote = !cur.description && fallbackText ? <p className="sd-ours sd-unprinted">{fallbackText}</p> : null;
 
   if (mine && astNode) {
-    const shown = withoutItemLists(astNode);
+    /* Card step 13a: with the character's scope, the sections it does not have yet fold (scopeTree reads
+       only scripts/data/level-folds.json; FUTURE_TREATMENT is the one switch), applying impulse "Level"
+       entries are highlighted, and a pointer row gains its subclass section. No scope → the page whole. */
+    const shown = withPointer(scopeTree(withoutItemLists(astNode), scope, LEVEL_FOLDS, FUTURE_TREATMENT), ptrPage, ptr, scope, LEVEL_FOLDS, FUTURE_TREATMENT);
     // Our Source line stands in only where the page prints none. (Measured: 0 of the 2,774 statDetail
     // page rows lack a Source line today, so it is kept for the surfaces still to come.)
     const ownSource = sourceLine && !treeHasSource(shown) ? sourceLine : null;

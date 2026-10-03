@@ -84,15 +84,35 @@ export interface OursLine {
   text: string;
 }
 
-/** What a 'mine' card is scoped by (section 6). Reserved: browse never scopes. */
+/**
+ * What a 'mine' card is scoped by (section 6). Browse never scopes. Card step 13a reads `level`,
+ * `classId`, `subclassId` and the three ownership sets below (src/sheet/cardScope.ts scopeTree).
+ * Every ownership set is OPTIONAL and an absent one means UNKNOWN, never "owns nothing" (UNKNOWN ≠
+ * EMPTY): with it absent, a section gated on ownership follows the level rule alone, so it is shown
+ * once the character's level reaches it.
+ */
 export interface CardScope {
   level: number;
   classId?: string;
   subclassId?: string;
   picks?: Record<string, string>;
   ranks?: Record<string, number>;
-  /** Implements / kineticist gates / innovations the build owns. Unknown = absent (UNKNOWN ≠ EMPTY). */
+  /** The class-choice option ids the character owns at its level (Character.classChoices ids). */
   owned?: string[];
+  /**
+   * Thaumaturge implements, as build.ts pushBenefit decided them (Character.classChoices): `owned` the
+   * implements (initiate benefit), `adept` / `paragon` the implements whose adept / paragon benefit the
+   * build granted. Absent = UNKNOWN (no implement pick on the character).
+   */
+  implements?: { owned: string[]; adept: string[]; paragon: string[] };
+  /**
+   * Kineticist kinetic elements (air, earth, fire, metal, water, wood) from the gate picks, forks
+   * included; `single` is the element of a SINGLE gate (exactly one element taken at level 1), absent
+   * for a dual gate. Absent = UNKNOWN (no gate pick on the character).
+   */
+  elements?: { owned: string[]; single?: string };
+  /** Inventor innovation type ('armor' | 'weapon' | 'construct' | 'light-mortar'). Absent = UNKNOWN. */
+  innovation?: string;
 }
 
 /** Section 2 rule 1: the card's props. */

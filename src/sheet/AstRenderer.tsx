@@ -23,6 +23,10 @@ import {
   cardDropsMetaP, cardFurnitureSectionEnd, cardHeadUntil, cardRowParts, isCardDimP, isCardFurnitureP,
   isCardFurnitureTitle, type CardWalk,
 } from './astVisibility';
+/* Card step 13a: the level folds' node types (card-fold, card-pointer, `applies`), made only by
+ * src/sheet/cardScope.ts scopeTree for a 'mine' card — a stored tree never carries them, so the hideMeta
+ * and browse paths never meet them. */
+import { FOLD_LABEL, type ScopedNode } from './cardScope';
 import './ast.css';
 
 /** The Archives of Nethys; a page's own address (`/Rules.aspx?ID=1503`) is stamped on its tree root by
@@ -263,7 +267,7 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil }: { nod
           if (cw) {
             if (isCardFurnitureP(n, cw.head) || (meta && cardDropsMetaP(n, cw))) continue;
             const joined: AstNode[] = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' ? [pp] : pp.c || []));
-            out.push(<p key={key} className={isCardDimP(n) ? 'card-dim' : meta ? 'card-use' : undefined}>{joined.map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />)}</p>);
+            out.push(<p key={key} className={(n as ScopedNode).applies ? 'card-applies' : isCardDimP(n) ? 'card-dim' : meta ? 'card-use' : undefined}>{joined.map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />)}</p>);
             continue;
           }
           // A reunited meta row keeps the meta branch's styling AND its hideMeta drop — which used to
@@ -348,6 +352,9 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       // unless it is furniture, or a header line the surface's own stat rows printed (S-printed).
       if (card) {
         if (isCardFurnitureP(n, card.head)) return null;
+        // Card step 13a: an impulse "Level (+N)" / "Level (Nth)" entry that applies at the character's
+        // level is highlighted — a class on the page's own paragraph; not a word changes.
+        if ((n as ScopedNode).applies) return <p key={key} className="card-applies"><Kids node={n} ctx={ctx} /></p>;
         if (isMetaP(n)) return cardDropsMetaP(n, card) ? null : <p key={key} className={isCardDimP(n) ? 'card-dim' : 'card-use'}><Kids node={n} ctx={ctx} /></p>;
         if (isCardDimP(n)) return <p key={key} className="card-dim"><Kids node={n} ctx={ctx} /></p>;
       }
@@ -404,6 +411,13 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key);
     case 'view':
       return <p key={key}><Kids node={n} ctx={ctx} /></p>;
+    case 'card-fold':
+      // Card step 13a: a folded run of later-level / not-owned sections (made only for a 'mine' card).
+      return card ? <CardFoldEl key={key} node={n} ctx={ctx} card={card} kb={key} /> : null;
+    case 'card-pointer':
+      // Card step 13a: the subclass section a pointer row shows ("listed in your cause"), print from
+      // the subclass page named in data-pointer.
+      return card ? <div key={key} className="card-pointer" data-pointer={(n as ScopedNode).pointerFrom}><Blocks nodes={n.c || []} ctx={ctx} kb={key} card={card} /></div> : null;
     default:
       // Any other container (raw <h2>/<center>/<a> wrappers, etc.): if it holds BLOCK children, recurse as
       // blocks so its paragraphs/lists/tables/headings render properly (a raw <h2> on the Human page wraps
@@ -413,6 +427,30 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
         ? subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key)
         : <Fragment key={key}><Kids node={n} ctx={ctx} /></Fragment>;
   }
+}
+
+/**
+ * Card step 13a (docs/card-design.md section 3; owner ruling Q1 = A): a run of sections the character
+ * does not have yet, as src/sheet/cardScope.ts FUTURE_TREATMENT says —
+ *  - 'fold': ONE closed, dimmed line "At higher levels (k)" (or "Other options (k)" for an option the
+ *    build does not have) that opens on a tap or the keyboard (a <details>/<summary>); the folded text
+ *    stays in the DOM. The line is ours (data-ours); the wrapper carries data-fold for the guard.
+ *  - 'hide': nothing drawn — a marker element (data-fold, no text) stays where the run was.
+ *  - 'grey': the text in place, dimmed.
+ */
+function CardFoldEl({ node, ctx, card, kb }: { node: AstNode; ctx: Ctx; card: CardWalk; kb: string }): ReactNode {
+  const f = node as ScopedNode;
+  const reason = f.foldReason ?? 'future';
+  const count = f.foldIds?.length ?? 0;
+  if (f.treatment === 'hide') return <span className="card-fold-hidden" data-fold={reason} data-fold-count={count} hidden />;
+  const body = <Blocks nodes={f.c || []} ctx={ctx} kb={kb} card={card} />;
+  if (f.treatment === 'grey') return <div className="card-fold-grey card-dim" data-fold={reason}>{body}</div>;
+  return (
+    <details className="card-fold" data-fold={reason}>
+      <summary className="card-fold-line" data-ours="">{FOLD_LABEL[reason]} ({count})</summary>
+      <div className="card-fold-body">{body}</div>
+    </details>
+  );
 }
 
 /** Node types that render as their own block — used to decide whether an unrecognized container should

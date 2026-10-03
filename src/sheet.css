@@ -13014,3 +13014,40 @@ button.strike-name:hover {
 .card-mine .info-body.card-body {
   white-space: normal;
 }
+
+/* Card step 13a (docs/card-design.md section 3; owner ruling Q1 = A): the parts of a page the character
+   does not have yet sit under ONE closed, dimmed line — "At higher levels (2)" — that opens on a tap
+   (a <details>; the folded text stays in the page). The line is ours, so it borrows the faint look of
+   the other app lines; the text inside, once open, is print and keeps the body's weight. */
+.card-fold {
+  margin: 0.5em 0;
+}
+.card-fold-line {
+  cursor: pointer;
+  font-size: 12.6px;
+  font-style: italic;
+  color: var(--app-text-faint);
+  padding: 2px 0 2px 9px;
+  border-left: 2px solid var(--app-border);
+  list-style-position: inside;
+}
+.card-fold-line:hover,
+.card-fold-line:focus-visible {
+  color: var(--app-text-dim);
+}
+.card-fold[open] > .card-fold-line {
+  margin-bottom: 0.4em;
+}
+/* FUTURE_TREATMENT 'grey': the same text in place, dimmed (.card-dim gives the colour). */
+.card-fold-grey {
+  opacity: 0.85;
+}
+/* A kineticist impulse "Level (+N)" / "Level (Nth)" entry that applies at the character's level: the
+   accent rail the spell popup gives an applying Heightened entry (.sd-desc.applies) — a class on the
+   page's own paragraph, never a changed word. */
+.card-applies {
+  border-left: 2px solid var(--app-accent);
+  padding-left: 9px;
+  background: color-mix(in srgb, var(--app-accent) 8%, transparent);
+  border-radius: 0 var(--app-radius-sm) var(--app-radius-sm) 0;
+}

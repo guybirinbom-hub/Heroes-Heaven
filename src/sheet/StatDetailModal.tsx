@@ -18,6 +18,7 @@ import { useEscapeClose } from './useEscapeClose';
 import { DescBody } from './DescBody';
 import { RecordCard } from './RecordCard';
 import { cardOn } from './cardSurfaces';
+import { scopeOfCharacter } from './cardScope';
 
 /** An action name to its core.json id — the same kebab-casing MainTab uses, so a marker authored
  *  against "treat-wounds" is found from either surface. */
@@ -232,7 +233,9 @@ export function StatDetailModal({
         // Stacked over this modal like the legacy popup: a click outside the card closes the card only
         // (its overlay's click must not bubble on to this modal's), so you return to the stat.
         <div style={{ display: 'contents' }} onClick={(e) => e.stopPropagation()}>
-          <RecordCard record={{ bucket: fullText.bucket, id: fullText.id }} mode="mine" chrome="popup" onExit={() => setFullText(null)} />
+          {/* Card step 13a: scoped to this character — its level, class, subclass and the options its
+              build owns — so the parts it does not have yet fold (docs/card-design.md section 3). */}
+          <RecordCard record={{ bucket: fullText.bucket, id: fullText.id }} mode="mine" chrome="popup" scope={scopeOfCharacter(character)} onExit={() => setFullText(null)} />
         </div>
       )}
       {fullText && !(cardOn('statDetail') && fullText.bucket && fullText.id) && (
