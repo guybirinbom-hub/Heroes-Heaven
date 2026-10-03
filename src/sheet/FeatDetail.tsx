@@ -3,11 +3,13 @@ import { ActionGlyph, isActionCost } from './widgets';
 import { DescBody, remasteredAsOf } from './DescBody';
 import { InfoTerm } from './InfoTerm';
 import { PinStar } from './PinStar';
+import { usePinDesc, type PinDescApi } from './PinContext';
 import { TrustMarker } from './TrustMarker';
 import { useContent } from './ContentContext';
 import { useEscapeClose } from './useEscapeClose';
 import { traitDesc, traitLabel } from '../rules/glossary';
 import { astSlug } from './useAst';
+import type { DescNode } from './descref';
 
 export interface FeatEntry {
   key: string;
@@ -86,6 +88,56 @@ export function featStatRows(entry: FeatEntry): FeatStatRow[] {
   return rows;
 }
 
+/**
+ * The node this popup's PinStar hands to the pin, by {bucket, id} (card step 7a, docs/card-design.md
+ * section 2 rule 2): a pinned popup opens the record the row was opened FROM, never whichever record
+ * its display name slugs to. The name carries the pick ("Caustic Nectar (Acid)") and can be another
+ * record's name ("Zombie Horde" is also the Clockwork Reanimator feat), so the slug of the title missed
+ * or landed on the wrong page; a heritage row was keyed 'classFeatures' and never found its page at
+ * all. A row with no record id of its own keeps the key and the title lookup it always had.
+ *
+ * ⚠ What the player reopens today is the STORED pin, and togglePinnedDesc (play.ts) stores
+ * {title, description, descRefs, key} — the slug is dropped until card step 19 stores it. So of this
+ * node only the KEY reaches the Pinned list now: a heritage pin (key 'heritages') reopens the heritages
+ * page by the slug of its name; a pick in the title or a shared name still reopens by name until step 19.
+ *
+ * The title is left exactly as shown, so a pin saved earlier (identity `key:title`, play.ts descId) is
+ * still found by the star of the same feat or feature; only a heritage row's key changes, to the
+ * bucket its page lives in (featStarNode keeps the old heritage pins found).
+ */
+export function featPinNode(entry: FeatEntry): DescNode {
+  const ref = trustRefOf(entry);
+  return {
+    title: entry.name,
+    description: entry.description,
+    descRefs: entry.descRefs,
+    key: ref.bucket ?? featLegacyPinKey(entry),
+    ...(ref.id ? { slug: ref.id } : {}),
+  };
+}
+
+/** The key this popup's pin carried before card step 7a (a heritage row was keyed 'classFeatures'). */
+function featLegacyPinKey(entry: FeatEntry): string {
+  return entry.isFeature ? 'classFeatures' : 'feats';
+}
+
+/**
+ * The node the star SHOWS and TOGGLES. Never-overwrite (CLAUDE.md): a pin saved before card step 7a
+ * carries the key the row had then, and pin identity is `key:title` (play.ts descId), so a heritage
+ * pinned earlier ({key:'classFeatures', title}) would not match the new 'heritages' node: the star would
+ * read "not pinned", the old pin could not be removed from here, and pressing it would pin it twice.
+ * When the character holds that old pin (and not a new one), the star shows it as pinned and pressing
+ * it removes THAT pin; no stored pin is rewritten. Matching stored pins by id is card step 19.
+ */
+export function featStarNode(entry: FeatEntry, pin: PinDescApi | null): DescNode {
+  const node = featPinNode(entry);
+  const legacyKey = featLegacyPinKey(entry);
+  if (!pin || node.key === legacyKey) return node;
+  const { slug: _slug, ...rest } = node;
+  const legacy: DescNode = { ...rest, key: legacyKey };
+  return !pin.has(node) && pin.has(legacy) ? legacy : node;
+}
+
 /** Read-only detail overlay for a feat / feature / heritage (reuses the .picker / .sd-* chrome). */
 export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () => void }) {
   const content = useContent();
@@ -103,13 +155,14 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
     stats.find((r): r is Extract<FeatStatRow, { v: string }> => r.k === k)?.v;
   const prerequisites = valueOf('Prerequisites');
   const enhancement = valueOf('Enhancement');
+  const pinNode = featStarNode(entry, usePinDesc());
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker spell-detail" onClick={(e) => e.stopPropagation()}>
         <div className="picker-head">
           {entry.name}
           <span style={{ marginLeft: 'auto', display: 'inline-flex', gap: 8, alignItems: 'center' }}>
-            <PinStar node={{ title: entry.name, description: entry.description, descRefs: entry.descRefs, key: entry.isFeature ? 'classFeatures' : 'feats' }} />
+            <PinStar node={pinNode} />
             <button className="picker-close" onClick={onClose} aria-label="Close">
               <i className="ti ti-x" aria-hidden="true" />
             </button>

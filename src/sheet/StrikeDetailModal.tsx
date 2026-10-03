@@ -1,6 +1,7 @@
 import type { Character, ContentDatabase } from '../rules/types';
 import { formatMod, critSpecSources, strikeShowsCritSpec, type Strike } from '../rules/derive';
 import { critSpec } from '../rules/critSpec';
+import { shownItemId } from '../rules/cursedItems';
 import type { StatRef } from '../rules/explain';
 import { useEscapeClose } from './useEscapeClose';
 import { PinStar } from './PinStar';
@@ -41,7 +42,10 @@ export function StrikeDetailModal({
   const item = inv ? content.items[inv.itemId] : undefined;
   const description = item?.description ?? strikeBlurb(strike);
   const descRefs = item?.descRefs;
-  const node = { title: strike.name, description, descRefs, key: 'items' };
+  // card step 7a (docs/card-design.md section 2 rule 2): the pin opens the WEAPON's own page by its id
+  // (the twin's for a hidden cursed weapon) — the strike's name can carry runes or be renamed, so its
+  // slug finds another page or none. A strike with no item (Fist, a blast) keeps the title lookup.
+  const node = { title: strike.name, description, descRefs, key: 'items', ...(item ? { slug: shownItemId(item, content) } : {}) };
   // Crit specialization — shown in Strikes ONLY when the character actually has it (matching the row).
   const critText = critSpec(strike.group);
   const showsCrit = !!critText && strikeShowsCritSpec(strike, critSpecSources(character, content));

@@ -14,6 +14,7 @@ import { CritSpecText } from './CritSpecText';
 import { critSpec } from '../rules/critSpec';
 import { PinStar } from './PinStar';
 import { TrustMarker } from './TrustMarker';
+import { shownItemId } from '../rules/cursedItems';
 import { ActionGlyph } from './widgets';
 import { mpApplied } from '../rules/monsterParts';
 import { MpProse } from './MpProse';
@@ -283,6 +284,10 @@ export function ItemDetail({
   useEscapeClose(onClose);
   const isMobile = useIsMobile();
   const [pickingSpell, setPickingSpell] = useState(false);
+  // card step 7a (docs/card-design.md section 2 rule 2c): the record this popup SHOWS. A hidden cursed
+  // item wears its twin's name and text, so its page and its pin are the twin's too; for any other item
+  // this is its own id.
+  const pageId = shownItemId(item, content);
   const runes = runeLines(inv);
   // The mode this item carries, if any. A consumable switches its own on when used; anything else
   // needs the Activate control below, or the mode is unreachable.
@@ -420,7 +425,7 @@ export function ItemDetail({
         <div className="picker-head">
           <span className="sd-head-name">{item.name}</span>
           <span className="sd-head-actions">
-            <PinStar node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items' }} />
+            <PinStar node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items', slug: pageId }} />
             {editable && (
               <i className="ti ti-pencil" style={{ cursor: 'pointer' }} title="Edit item" onClick={() => onEdit!(item, inv)} aria-label="Edit item" />
             )}
@@ -444,8 +449,10 @@ export function ItemDetail({
           </div>
           {/* Under the name, above the text — the shared position (see TrustMarker). An item's
               chassis (damage, AC, bulk, price) is never gated, so this line is only ever about the
-              magic on top of it. */}
-          <TrustMarker bucket="items" id={item.id} />
+              magic on top of it. Card step 7a (section 2 rule 2c): the SHOWN record's line, like the
+              page and the pin — a hidden cursed item reads its disguise twin's, so the line cannot
+              tell the player the item is not what it says. */}
+          <TrustMarker bucket="items" id={pageId} />
           {item.traits?.length > 0 && (
             <div className="sd-traits">
               {[...item.traits]
@@ -912,7 +919,7 @@ export function ItemDetail({
             descRefs={item.descRefs}
             onExit={onClose}
             astKey="items"
-            astId={item.id}
+            astId={pageId}
             remasteredAs={(item as { remasteredAs?: RemasteredAs }).remasteredAs}
             emptyNote="The book prints no rules text for this item."
           />

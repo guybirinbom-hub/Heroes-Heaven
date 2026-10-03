@@ -28,6 +28,8 @@ import { foldsOf } from '../src/sheet/cardScope';
 import { cardOn } from '../src/sheet/cardSurfaces';
 import type { Character, ContentDatabase, InventoryItem } from '../src/rules/types';
 import type { DescNode } from '../src/sheet/descref';
+import { togglePinnedDesc, type PlayState } from '../src/rules/play';
+import { astSlug } from '../src/sheet/astVisibility';
 import * as lib from '../scripts/lib/card-scope.mjs';
 
 /**
@@ -92,6 +94,13 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *  - (card step 5) astVisibility.ts isCardFurnitureP: `if (t.length < 120) return true;` (a shared
  *    predicate leaving out every short paragraph) → card-truth-check red (S1-MISSING 10,464 → 16,099,
  *    S1-UNNAMED 20,884 → 25,998): the classifier names each line from its own words.
+ *  - (card step 7a, fixer round 3, 2026-10-03) ItemDetail.tsx DescBody `astId={pageId}` → `astId={item.id}`
+ *    → the hidden-Bag-of-Devouring case red (DOM vs ledger: identity, and "devour" on screen) and nothing
+ *    else: the seeded sample draws no `~hidden` row, which is why that case is always rendered. Writing it
+ *    found renderItem's `~hidden` rows rendered the RAW cursed item (no `hiddenCurse` on the instance).
+ *  - (card step 7a, fixer round 3) FeatDetail.tsx featPinNode `title: entry.name` →
+ *    `entry.name.split(" (")[0]` (the stored pin loses the pick) → the named-case test red on
+ *    'pin|feats:caustic-nectar' (pick "Acid"): DOM identity false vs the ledger's true.
  * Measured in round 0 (that code is unchanged since):
  *  - RecordCard.tsx fallback: headerActions moved back after the title → the headerActions test red.
  *  - RecordCard.tsx page branch: the TrustMarker dropped from headerControls → the TrustMarker test red.
@@ -104,7 +113,10 @@ const noop = () => undefined;
 type Rec = { name: string; description?: string; descRefs?: never; level?: number; category?: string; ancestryId?: string | null };
 const recs = (b: string) => (db as unknown as Record<string, Record<string, Rec>>)[b] ?? {};
 const known = JSON.parse(readFileSync('test/card-parity-known.json', 'utf8')) as {
-  cases: { key: string; why: string; verdict: Verdict }[];
+  /** `pick` (pin rows of feats only): the row is pinned from FeatDetail with that effect pick, so its
+   *  title carries the pick suffix ("Caustic Nectar (Acid)") — the ledger models it by reading the slug
+   *  of that title, as the stored pin does until card step 19. */
+  cases: { key: string; why: string; verdict: Verdict; pick?: string }[];
 };
 
 type Run = { t?: string; b?: string };
@@ -444,7 +456,9 @@ async function renderFeat(entry: FeatEntry): Promise<Read> {
 async function renderItem(row: Row): Promise<Read> {
   const hidden = row.id.endsWith('~hidden');
   const id = hidden ? row.id.slice(0, -'~hidden'.length) : row.id;
-  const inv: InventoryItem = { instanceId: 'i-card', itemId: id, quantity: 1 } as InventoryItem;
+  // `hiddenCurse` is what makes playerFacingContent disguise it (cursedItems.ts hiddenCursedIds): without
+  // it a `~hidden` row rendered the RAW cursed item (found by the hidden-bag case, card step 7a fixer).
+  const inv: InventoryItem = { instanceId: 'i-card', itemId: id, quantity: 1, ...(hidden ? { hiddenCurse: true } : {}) } as InventoryItem;
   const cdb = hidden ? playerFacingContent(db, [inv]) : db;
   const m = await mount(<ItemDetail inv={inv} item={cdb.items[id]} content={cdb} onClose={noop} />, cdb);
   const pop = m.host.querySelector('.picker.spell-detail')!;
@@ -510,13 +524,16 @@ async function renderOrigin(row: Row): Promise<Read> {
     '.ss-filled-body',
   );
 }
-async function renderPin(row: Row): Promise<Read> {
+async function renderPin(row: Row, extra?: Partial<Character>): Promise<Read> {
   let pinned: DescNode | null = null;
-  const pin: PinDescApi = { has: () => false, toggle: (n) => { pinned = n; } };
+  // The pin the player REOPENS is the one stored by togglePinnedDesc (MainTab PinnedDescRow opens the
+  // stored node), not the node the star hands over: storage keeps {title, description, descRefs, key}
+  // and drops a slug until card step 19 (refuter, card step 7a round 1).
+  const pin: PinDescApi = { has: () => false, toggle: (n) => { pinned = togglePinnedDesc({} as PlayState, n).pinnedDescs?.[0] ?? null; } };
   let el: ReactElement;
   if (row.bucket === 'items') el = <ItemDetail inv={{ instanceId: 'i-pin', itemId: row.id, quantity: 1 } as InventoryItem} item={db.items[row.id]} content={db} onClose={noop} />;
   else if (row.bucket === 'spells') el = <SpellDetail spell={db.spells[row.id]} onClose={noop} />;
-  else el = <FeatDetail entry={featEntryFor(row)!} onClose={noop} />;
+  else el = <FeatDetail entry={featEntryFor(row, extra)!} onClose={noop} />;
   const m = await mount(el, db, pin);
   await click(m.host.querySelector('.picker-head .info-star'));
   m.stop();
@@ -699,10 +716,19 @@ describe('card step 4: the rendered parity check (report mode)', () => {
         if (cls) expect(words, `${c.key}: the page on screen is another class's`).toMatch(/psychic power/);
         else expect(words, `${c.key}: the page on screen carries other doctrines`).toMatch(/Third Doctrine/);
       } else {
-        const row = rows.find((r) => keyOf(r) === c.key);
-        expect(row, `${c.key} is a ledger row`).toBeTruthy();
+        const ledgerRow = rows.find((r) => keyOf(r) === c.key);
+        expect(ledgerRow, `${c.key} is a ledger row`).toBeTruthy();
+        let row = ledgerRow;
         let s: Read | null;
-        if (surface === 'actionDetail') s = (await renderActions([row!])).get(c.key) ?? null;
+        if (c.pick) {
+          // A pin made on a row whose name carries a pick: the stored pin (no slug) reads the slug of
+          // that title. Card step 7a refuter round 2 (T4): the star's node names the record; the stored
+          // pin does not until step 19.
+          expect(surface === 'pin' && ledgerRow!.bucket === 'feats', `${c.key}: a pick case is a feats pin row`).toBe(true);
+          const title = `${recs('feats')[ledgerRow!.id].name} (${c.pick})`;
+          row = { ...ledgerRow!, read: { bucket: 'feats', slug: astSlug(title) } };
+          s = await renderPin(row, { effectPicks: [{ recordId: ledgerRow!.id, choiceId: 'card-parity-pick', label: c.pick }] } as Partial<Character>);
+        } else if (surface === 'actionDetail') s = (await renderActions([row!])).get(c.key) ?? null;
         else s = await renderRow(row!, new Map());
         expect(s, `${c.key} renders`).toBeTruthy();
         const ref = await refOf(row!.own.bucket, row!.own.id);
@@ -743,6 +769,26 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     const { unnamed: _counted, ...rest } = pick(dom);
     expect(rest).toEqual({});
     expect(txt(s.body)).not.toMatch(/Your choice|\| ?---/);
+  });
+
+  /*
+   * Card step 7a (section 2 rule 2c, T7): a hidden cursed item reads the page of the record it SHOWS.
+   * The sample may not draw a `~hidden` row, so this case is always rendered: a hidden Bag of Devouring
+   * (shown as Spacious Pouch) must read Spacious Pouch's page — DOM and ledger agree, no identity flag,
+   * and the word "devour" is nowhere on screen. (It left test/card-parity-known.json when 7a fixed it.)
+   */
+  it('a hidden Bag of Devouring (itemDetail ~hidden) reads Spacious Pouch\'s page and never says "devour" (T7)', async () => {
+    const row = rows.find((r) => keyOf(r) === 'itemDetail|items:bag-of-devouring~hidden');
+    expect(row, 'the ledger has the hidden row').toBeTruthy();
+    expect(row!.read).toEqual({ bucket: 'items', slug: 'spacious-pouch' });
+    const s = await renderItem(row!);
+    const dom = domJudge(row!, s, await refOf(row!.own.bucket, row!.own.id), hiddenOf(row!));
+    expect(norm(dom)).toBe(norm(ledgerJudge(row!)));
+    expect(dom.identity, 'the popup reads its own (shown) page').toBe(false);
+    expect(s.lane).toBe('tree');
+    const words = s.blocks.map((b) => b.text).join(' ');
+    expect(words.length, 'the body draws the page').toBeGreaterThan(40);
+    expect(words).not.toMatch(/devour/i);
   });
 
   it('a case missing from the sample and the list both counts: every owner case is flagged', () => {

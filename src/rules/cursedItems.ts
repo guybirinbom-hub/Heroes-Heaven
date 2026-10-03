@@ -49,9 +49,32 @@ export function playerFacingContent(db: ContentDatabase, inventory: readonly Inv
     const twin = db.items[db.items[id]!.disguisedAs!]!;
     // Keep the cursed id so inventory instances still resolve; take everything else from the twin,
     // including its name and description — the disguise has to survive being read, not just glanced at.
-    items[id] = { ...twin, id };
+    const shown: Item = { ...twin, id };
+    // …and stamp the id of the record it is WEARING, so the popup's page and its pin open the twin's
+    // Archives page, not the cursed item's (card step 7a, docs/card-design.md section 2 rule 2c: a
+    // hidden Bag of Devouring printed "devours the victim" under the name Spacious Pouch).
+    SHOWN_ID.set(shown, twin.id);
+    items[id] = shown;
   }
   return { ...db, items };
+}
+
+/*
+ * The stamp is kept beside the record, not on it: the record must stay exactly `{ ...twin, id }` (every
+ * reader treats it as the twin), and the disguised database is never stored or synced — it is rebuilt
+ * from the raw one on every derive, so a stamp living only as long as the record object is the right
+ * lifetime.
+ */
+const SHOWN_ID = new WeakMap<Item, string>();
+
+/**
+ * The id of the record an item SHOWS — the one whose Archives page, pin and title the player sees. For a
+ * hidden cursed item in a player-facing database (playerFacingContent) that is its disguise twin's id;
+ * for every other item it is its own. `content` lets a caller holding a copy of the record (a spread)
+ * still find the stamp through the database's own record of the same id.
+ */
+export function shownItemId(item: Item, content?: ContentDatabase): string {
+  return SHOWN_ID.get(item) ?? (content?.items[item.id] ? SHOWN_ID.get(content.items[item.id]!) : undefined) ?? item.id;
 }
 
 /**

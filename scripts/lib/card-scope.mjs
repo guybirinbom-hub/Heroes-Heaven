@@ -721,6 +721,16 @@ export function unresolvedStubs(tree, aonIds) {
   return out;
 }
 
+/** Any EMPTY embedded document stub below the root, resolvable or not: AstRenderer draws each as nothing
+ *  until card step 14. The twin of src/builder/shared.tsx hasEmptyEmbeddedPage (test/card-identity checks
+ *  the two agree on every classFeatures and feats page). */
+export function hasEmptyEmbeddedPage(tree) {
+  if (!tree) return false;
+  const walk = (n, d) => ((n.t === 'document' || n.t === 'doc') && d > 0 && !(n.c && n.c.length)) || (n.c ?? []).some((c) => walk(c, d + 1));
+  return walk(tree, 0);
+}
+
+
 /** App-authored wording that must never sit inside page text (section 4). */
 export const OURS_MARKERS = [/⟦/, /\bYour choice:/, /Not yet verified/, /Remastered as\b/, /\(→ /];
 export function oursInPage(tree) {
@@ -808,7 +818,7 @@ const SITUATIONAL_COLLECTIONS = ['feats', 'items', 'heritages', 'backgrounds', '
  *           body:'tree'|'md', md?, printed:[[label,value]], mode:'mine'|'browse' }
  */
 export function surfaceRows(deps) {
-  const { content: db, trees, astIndex, statRows, activities, situationalIds, classFeatureDescription, splitHeightening } = deps;
+  const { content: db, trees, astIndex = {}, statRows, activities, situationalIds, classFeatureDescription, splitHeightening } = deps;
   const rows = [];
   const has = (b, id) => !!trees[b]?.[id];
   const featEntryLike = (rec) => ({ actionCost: rec.actionCost, prerequisites: rec.prerequisites, traits: rec.traits ?? [] });
@@ -827,6 +837,7 @@ export function surfaceRows(deps) {
   for (const [id, rec] of Object.entries(db.heritages ?? {})) {
     if (!has('heritages', id)) continue;
     // A heritage row is `isFeature`, so FeatDetail reads classFeatures by the slug of its NAME (FeatDetail.tsx:97-99).
+    // Card step 7a fixed only its PIN (key 'heritages', slug = id); the body's lane moves in step 11.
     rows.push({ surface: 'featDetail', bucket: 'heritages', id, own: { bucket: 'heritages', id }, read: { bucket: 'classFeatures', slug: astSlug(rec.name) }, hideMeta: true, itemLists: false, md: rec.description ?? '', printed: statRows.featStatRows(featEntryLike(rec)).map((r) => [r.k, r.v ?? '']), mode: 'mine' });
   }
   // A shared class feature shown to a class whose page it is not (the class-feature rows of every class).
@@ -847,7 +858,8 @@ export function surfaceRows(deps) {
     const twin = item.disguisedAs ? db.items[item.disguisedAs] : undefined;
     if (twin && has('items', twin.id)) {
       const shown = { ...twin, id };
-      rows.push({ surface: 'itemDetail', bucket: 'items', id: `${id}~hidden`, own: { bucket: 'items', id: twin.id }, read: { bucket: 'items', slug: id }, hideMeta: true, itemLists: false, md: shown.description ?? '', printed: statRows.itemStatRows(shown, db).map((r) => [r.k, r.v]), mode: 'mine' });
+      // Card step 7a: the popup reads the page of the record it SHOWS (cursedItems.ts shownItemId).
+      rows.push({ surface: 'itemDetail', bucket: 'items', id: `${id}~hidden`, own: { bucket: 'items', id: twin.id }, read: { bucket: 'items', slug: twin.id }, hideMeta: true, itemLists: false, md: shown.description ?? '', printed: statRows.itemStatRows(shown, db).map((r) => [r.k, r.v]), mode: 'mine' });
     }
   }
 
@@ -894,17 +906,24 @@ export function surfaceRows(deps) {
     rows.push({ surface: 'statDetail', bucket: b, id: sid, own: { bucket: b, id: sid }, read: { bucket: b, slug: sid }, hideMeta: !statCard, itemLists: false, card: statCard, md: db[b][sid].description, printed: [], mode: 'mine' });
   }
 
-  // Builder ChoiceDetails — DescriptionModal root {title, description} with no key: the ast index by name.
+  // Builder ChoiceDetails — DescriptionModal root {title, description, key: bucket, slug: id} (card step
+  // 7a: both callers name the record, so the popup reads its own page by {bucket, id}, not the ast index
+  // by name; the title no longer decides which page opens).
+  // Held until card step 14 (refuter, step 7a round 2): when the record's own page embeds an EMPTY
+  // document stub (drawn as nothing until step 14) and the pre-step title lookup lands on a different
+  // page, ChoiceDetailsModal keeps the title lookup (shared.tsx holdOnTitleLookup) — Rage's popup kept
+  // the Rage action's rules instead of one sentence. Such a row still reads by name and stays in S5.
   const seenChoice = new Set();
   const choiceRow = (bucket, id, name, flavor) => {
     const k = `${bucket}:${id}`;
     if (seenChoice.has(k) || !flavor || !flavor.trim() || !has(bucket, id)) return;
     seenChoice.add(k);
-    const slug = astSlug(name);
-    // No index entry: the popup resolves no tree and falls back — a read that lands nowhere, never the
-    // string lane (`read: null`), so it still counts as IDENTITY while the record has a page.
-    const rb = astIndex[slug] ?? '(no index entry)';
-    rows.push({ surface: 'choiceDetails', bucket, id, own: { bucket, id }, read: { bucket: rb, slug }, hideMeta: false, itemLists: true, md: flavor, printed: [], mode: 'browse' });
+    const ownRead = { bucket, slug: id };
+    const titleSlug = astSlug(name);
+    const titleBucket = astIndex[titleSlug];
+    const held = hasEmptyEmbeddedPage(readTree(trees, ownRead)) && !!titleBucket && !(titleBucket === bucket && titleSlug === id);
+    const read = held ? { bucket: titleBucket, slug: titleSlug } : ownRead;
+    rows.push({ surface: 'choiceDetails', bucket, id, own: { bucket, id }, read, hideMeta: false, itemLists: true, md: flavor, printed: [], mode: 'browse' });
   };
   for (const cls of Object.values(db.classes ?? {})) {
     for (const f of cls.features ?? []) {
@@ -946,12 +965,19 @@ export function surfaceRows(deps) {
   // SURFACES entry and has no renderer for the GM page (test/card-hostpage.test.tsx renders it).
   for (const r of rows.filter((x) => x.surface === 'browse')) rows.push({ ...r, surface: GM_SURFACE });
 
-  // A PinStar from FeatDetail / ItemDetail / SpellDetail: {title, key} and no slug → key + astSlug(title).
-  const pinKey = { feats: 'feats', classFeatures: 'classFeatures', heritages: 'classFeatures', items: 'items', spells: 'spells' };
-  for (const [b, key] of Object.entries(pinKey)) {
+  // A PinStar pressed on FeatDetail / ItemDetail / SpellDetail, and the pin REOPENED from the Main tab's
+  // Pinned list (MainTab PinnedDescRow → DescriptionModal on the STORED node). togglePinnedDesc (play.ts)
+  // stores {title, description, descRefs, key} and drops any slug, so the reopened pin reads
+  // key + astSlug(title) — whatever the star's node carried. Card step 7a changed only the KEY that
+  // reaches storage: a heritage row is keyed 'heritages' (it was 'classFeatures', and found nothing).
+  // The slug the node now carries ({key: bucket, slug: id}) reaches the Pinned list only once card
+  // step 19 stores it; until then a pick in the title or a shared name still reopens by name, and this
+  // row keeps counting it (refuter, card step 7a round 1: modelling the node instead dropped 170 rows
+  // that the player still sees open the wrong page or none).
+  for (const b of ['feats', 'classFeatures', 'heritages', 'items', 'spells']) {
     for (const [id, rec] of Object.entries(db[b] ?? {})) {
       if (!has(b, id)) continue;
-      rows.push({ surface: 'pin', bucket: b, id, own: { bucket: b, id }, read: { bucket: key, slug: astSlug(rec.name) }, hideMeta: false, itemLists: true, md: rec.description ?? '', printed: [], mode: 'browse' });
+      rows.push({ surface: 'pin', bucket: b, id, own: { bucket: b, id }, read: { bucket: b, slug: astSlug(rec.name) }, hideMeta: false, itemLists: true, md: rec.description ?? '', printed: [], mode: 'browse' });
     }
   }
 

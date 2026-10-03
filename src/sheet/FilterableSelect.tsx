@@ -8,6 +8,7 @@ import { ActionGlyph } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
 import { useEscapeClose } from './useEscapeClose';
 import type { DescNode } from './descref';
+import { bucketOf, getCachedAst, isBucketLoaded } from './astStore';
 
 /** An internal sentinel smuggled into a game-data string list (convention: a `__` prefix), never a
  *  real PF2e trait. Markers belong in dedicated fields (see `Item.catalogKind`) — this is the safety
@@ -30,8 +31,20 @@ export function descNodeOf(
 ): DescNode | null {
   const hasText = !!it.description && it.description.trim().length > 0;
   const hasRefs = !!it.descRefs && it.descRefs.length > 0;
-  if (!hasText && !hasRefs) return null;
+  // card step 7a (docs/card-design.md section 6): the record's own Archives page counts as something to
+  // show — 89 records ship no description string but have a page of their own (Chalk, Hammer, Mirror …; measured
+  // 2026-10-02 over feats, spells, items, familiar abilities, origins, class features and actions), and their
+  // rows opened nothing. Resolved by the record's id in its own bucket, never by name; known only once
+  // that bucket or the slug index has loaded, and until then the row behaves as it always did.
+  if (!hasText && !hasRefs && !hasOwnPage(it.id, key)) return null;
   return { title: it.name, description: it.description ?? '', descRefs: it.descRefs, key, ...(it.id ? { slug: it.id } : {}) };
+}
+
+/** Whether `id` has its own page in bucket `key`, from what is already loaded (synchronous). */
+function hasOwnPage(id: string | undefined, key: string | undefined): boolean {
+  if (!id || !key) return false;
+  if (isBucketLoaded(key)) return !!getCachedAst(key, id);
+  return bucketOf(id) === key;
 }
 
 /**

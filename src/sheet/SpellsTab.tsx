@@ -180,7 +180,9 @@ export function SpellDetail({
         <div className="picker-head">
           {spell.name}
           <span style={{ marginLeft: 'auto', display: 'inline-flex', gap: 8, alignItems: 'center' }}>
-            <PinStar node={{ title: spell.name, description: spell.description, descRefs: spell.descRefs, key: 'spells' }} />
+            {/* card step 7a: `slug` = the spell's own id, so the pinned popup opens THIS spell's page
+                (section 2 rule 2), never the page its name slugs to. */}
+            <PinStar node={{ title: spell.name, description: spell.description, descRefs: spell.descRefs, key: 'spells', slug: spell.id }} />
             <button className="picker-close" onClick={onClose} aria-label="Close">
               <i className="ti ti-x" aria-hidden="true" />
             </button>

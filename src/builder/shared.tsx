@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useRef, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
 import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
@@ -89,6 +89,9 @@ import { RankPill, SituationalStar } from '../sheet/widgets';
 import { StatDetailModal } from '../sheet/StatDetailModal';
 import { DefensesPills } from '../sheet/DefensesPills';
 import { DescriptionModal } from '../sheet/DescriptionModal';
+import { PinContext, usePinDesc, type PinDescApi } from '../sheet/PinContext';
+import { astSlug, useAstNode } from '../sheet/useAst';
+import { bucketOf, loadAstIndex, type AstNode } from '../sheet/astStore';
 import { TrustMarker } from '../sheet/TrustMarker';
 import { MythicRules } from '../sheet/MythicRules';
 import { PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -145,10 +148,89 @@ export function ChoiceDetails({
         </button>
       )}
       {open && hasFlavor && (
-        <DescriptionModal root={{ title: name ?? 'Details', description: flavor!, descRefs }} onClose={() => setOpen(false)} />
+        // card step 7a (docs/card-design.md section 2 rule 2): when the caller names the record, the
+        // popup opens THAT record's page by {bucket, id}. Without them it looked the title up in the
+        // slug index, which names one bucket per slug: the background feat Cascade Countermeasure
+        // opened the spell of the same name. A caller that names no record keeps the title lookup, and
+        // so, until card step 14, does a page whose rules sit in an embedded stub (ChoiceDetailsModal).
+        <ChoiceDetailsModal
+          root={{ title: name ?? 'Details', description: flavor!, descRefs, ...(bucket && id ? { key: bucket, slug: id } : {}) }}
+          onClose={() => setOpen(false)}
+        />
       )}
     </>
   );
+}
+
+/**
+ * ChoiceDetails' popup. Never-overwrite (CLAUDE.md): before card step 7a its root carried no key, so a
+ * pin starred from it was stored as {title, key: undefined} (identity `:title`, play.ts descId). Now the
+ * root is keyed by its bucket, and that old pin would no longer match: the star would read "not pinned"
+ * and pressing it would pin the record twice. For the ROOT node only, when the build holds the old
+ * key-less pin (and not a keyed one), the star shows it as pinned and pressing it removes THAT pin; no
+ * stored pin is rewritten. Matching stored pins by id is card step 19.
+ */
+export function ChoiceDetailsModal({ root: byId, onClose }: { root: DescNode; onClose: () => void }) {
+  const outer = usePinDesc();
+  // Card step 7a, refuter round 2: HOLD the {bucket, id} switch for a page that embeds another page as
+  // an empty document stub (Rage's class-feature page is one sentence plus a stub of the Rage action).
+  // Stubs render nothing until card step 14 resolves them (docs/card-design.md section 2 rule 6), so
+  // opening such a page by id showed one sentence where the title lookup showed the action's rules
+  // (rage 768 → 102 characters). Until step 14 such a row keeps the pre-step title lookup — byte for
+  // byte the popup it had — and the guard keeps counting it in S5-IDENTITY (scripts/lib/card-scope.mjs
+  // choiceRow models the same hold). Step 14 deletes this hold.
+  const { node } = useAstNode(byId.key, byId.key ? byId.slug : undefined);
+  const [indexReady, setIndexReady] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    void loadAstIndex().then(() => { if (alive) setIndexReady(true); });
+    return () => { alive = false; };
+  }, []);
+  const held = !!byId.key && indexReady && holdOnTitleLookup(node, byId.key, byId.slug, byId.title);
+  const root: DescNode = held ? { title: byId.title, description: byId.description, descRefs: byId.descRefs } : byId;
+  const pin = useMemo<PinDescApi | null>(() => {
+    if (!outer || !root.key) return outer;
+    const isRoot = (n: DescNode) => n.key === root.key && n.title === root.title;
+    const legacyOf = (n: DescNode): DescNode => ({ title: n.title, description: n.description, descRefs: n.descRefs });
+    const heldAsLegacy = (n: DescNode) => isRoot(n) && !outer.has(n) && outer.has(legacyOf(n));
+    return {
+      ...outer,
+      has: (n) => outer.has(n) || heldAsLegacy(n),
+      toggle: (n) => outer.toggle(heldAsLegacy(n) ? legacyOf(n) : n),
+    };
+  }, [outer, root.key, root.title]);
+  return (
+    <PinContext.Provider value={pin}>
+      {/* Remounted when the hold decides (the id page and the index load first), so the popup's own
+          drill-in stack starts from the root it will keep. */}
+      <DescriptionModal key={held ? 'by-title' : 'by-id'} root={root} onClose={onClose} />
+    </PinContext.Provider>
+  );
+}
+
+/** True when a page holds an EMPTY embedded document stub below its root ({t:'document', id:'action-2802'}
+ *  with no children). AstRenderer draws such a stub as nothing until card step 14 resolves it. */
+export function hasEmptyEmbeddedPage(tree: AstNode | undefined): boolean {
+  if (!tree) return false;
+  const walk = (n: AstNode, depth: number): boolean =>
+    ((n.t === 'document' || n.t === 'doc') && depth > 0 && !(n.c && n.c.length)) || (n.c ?? []).some((c) => walk(c, depth + 1));
+  return walk(tree, 0);
+}
+
+/** ChoiceDetails' step-14 hold on the pre-step title lookup: the record's own page (already variant-cut)
+ *  embeds an EMPTY stub (Rage: one sentence + a stub of the Rage action; stubs draw nothing until card
+ *  step 14) AND the pre-step title lookup lands on a DIFFERENT page. The id read would show the player
+ *  less than the popup had, so the row keeps the title lookup. Every other row opens by id: on the 35
+ *  class features this re-points (test/card-identity measures every one), the id popup is never shorter
+ *  than the record's own description, and where it is shorter than the pre-step popup (29), that popup
+ *  was ANOTHER record's page (another class's Weapon Expertise; the Shield Block feat for the guardian's
+ *  Shield Block class feature, which its page names and links). Mirrored by scripts/lib/card-scope.mjs
+ *  choiceRow. */
+export function holdOnTitleLookup(ownPage: AstNode | undefined, bucket: string, id: string | undefined, title: string): boolean {
+  if (!hasEmptyEmbeddedPage(ownPage)) return false;
+  const titleSlug = astSlug(title);
+  const titleBucket = bucketOf(titleSlug);
+  return !!titleBucket && !(titleBucket === bucket && titleSlug === id);
 }
 
 export const ABILITY_LABEL: Record<AbilityId, string> = {
