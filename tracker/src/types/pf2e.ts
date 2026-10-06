@@ -138,6 +138,8 @@ export interface RawHazard {
   routine?: (string | object)[]
   reset?: (string | object)[]
   complex?: boolean
+  /** Structured hazard strikes, merged with the description[0] strikes by parseHazard (APP-DEFECTS: hazard strikes, 97 of 140 lost). */
+  attacks?: RawAttack[]
 }
 
 export interface RawTrait {
@@ -162,6 +164,8 @@ export interface Creature {
   /** Qualifier shown beside the Perception modifier (see RawCreature.perceptionNote). */
   perceptionNote?: string
   languages: string[]
+  /** raw.languages.abilities (telepathy, truespeech), printed after '; ' on the Languages line (APP-DEFECTS: languages.abilities, 1,049). */
+  languageAbilities?: string[]
   skills: Record<string, number>
   str: number; dex: number; con: number; int: number; wis: number; cha: number
   items: string[]
@@ -190,6 +194,10 @@ export interface Creature {
    * data (attacks, abilities) was not fully parsed.
    */
   rawMarkdown?: string
+  /** Set by the Archives adapter: the record IS a page, so its Recall Knowledge row prints only
+   *  what the page prints (never a computed DC). Survives the persist slimming that strips
+   *  rawMarkdown from saved encounters and the live board. */
+  fromArchivesPage?: boolean
   raw: RawCreature | RawHazard
 }
 
@@ -206,6 +214,11 @@ export interface Attack {
   types: string[]
   effects: string[]
   isAgile: boolean
+  /** Hazards only: how many of creature.abilities the page prints BEFORE this strike (Poisoned
+   *  Lock: "Spring", then "Melee spine", then "Cladis Poison" → 1). Set by parseHazard from the
+   *  page's bold labels; StatBlock draws the strike right there. Absent (no page, or a page whose
+   *  order could not be read) → the strike is drawn after every ability, before the Routine. */
+  afterAbility?: number
 }
 
 export interface Defenses {
@@ -220,6 +233,14 @@ export interface Defenses {
   saveNote?: string
   /** AoN's qualifier beside the AC — "all-around vision", "(19 when broken)". 272 creatures. */
   acNote?: string
+  /** Every HP pool in page order, printed together on the HP line; hp/hpNote stay pools[0] (APP-DEFECTS: HP pools, 20+ records). */
+  hpPools?: Array<{ hp: number; name?: string }>
+  /** Hazards only: the saves the page prints; the renderer draws only these boxes (APP-DEFECTS: hazard saves, 291). */
+  savesPrinted?: Array<'fort' | 'ref' | 'will'>
+  /** Hazards only: the page prints an AC (raw.defenses.ac.std is a number), set by parseHazard on
+   *  the UNADJUSTED record — weak / elite / level scaling never make an AC appear. Absent on
+   *  hand-built and pasted hazards, which keep the rule "AC box when the base ac > 0". */
+  acPrinted?: boolean
   hardness?: number
   bt?: number
   immunities: string[]
@@ -233,6 +254,8 @@ export interface Ability {
   traits: string[]
   trigger?: string
   entries: string
+  /** Page section the ability was printed in; StatBlock places it there (APP-DEFECTS: ability placement, 3,608 records). Absent on hand-built, pasted and hazard abilities. */
+  slot?: 'top' | 'mid' | 'bot'
 }
 
 export interface SpellSlotEntry {

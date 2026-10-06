@@ -300,13 +300,32 @@ export async function searchCreatures(query: string, max = 60): Promise<IndexEnt
   return idx.filter(e => searchMatches(query, e.name)).slice(0, max)
 }
 
+/** A source without its page suffix: "GM Core pg. 102" and "GM Core p.102" both read "GM Core". */
+const sourceWithoutPage = (s: unknown): string =>
+  String(s ?? '').replace(/\s*(?:pg\.|p\.)\s*\d+.*$/i, '').trim()
+
+/**
+ * The hazard printing an index row names. hazards.json keeps EVERY printing of a hazard (a byte copy of
+ * the corpus, legacy copy first), and the index row names one of them by name, level and source; a
+ * find by name alone opened the first copy whatever the row said (90 rows: "Hidden Pit" (GM Core) loaded
+ * the Core Rulebook page). Match all three, and fall back to the first copy with that name only when no
+ * copy matches the row's level and source.
+ */
+export function pickHazardPrinting<H extends { name: string; level?: number; source?: string }>(
+  hazards: H[], entry: Pick<IndexEntry, 'name' | 'level' | 'source'>,
+): H | undefined {
+  const named = hazards.filter(h => h.name === entry.name)
+  const src = sourceWithoutPage(entry.source)
+  return named.find(h => h.level === entry.level && sourceWithoutPage(h.source) === src) ?? named[0]
+}
+
 export async function loadCreature(entry: IndexEntry): Promise<Creature> {
   const key = `${entry.file}::${entry.name}`
   if (_creatureCache.has(key)) return _creatureCache.get(key)!
 
   if (entry.isHazard) {
     const data = await fetchJSON<{ hazard: RawHazard[] }>('hazards.json')
-    const raw = data.hazard.find(h => h.name === entry.name)
+    const raw = pickHazardPrinting(data.hazard, entry)
     if (!raw) throw new Error(`Hazard "${entry.name}" not found`)
     const c = parseHazard(raw)
     _creatureCache.set(key, c)
@@ -404,8 +423,15 @@ const attackOf = (a: Fields, at: string): Attack => {
     effects: words(a.effects, `${at}.effects`), isAgile: a.isAgile === undefined ? false : flag(a.isAgile, `${at}.isAgile`),
   }
 }
+/** One of a fixed set of words (an ability's page slot, a printed save). */
+const oneOf = <T extends string>(allowed: readonly T[]) => (v: unknown, at: string): T =>
+  typeof v === 'string' && (allowed as readonly string[]).includes(v) ? v as T
+    : refuse(`"${at}" must be one of ${allowed.join(', ')}`)
+const SLOTS = ['top', 'mid', 'bot'] as const
+const SAVES = ['fort', 'ref', 'will'] as const
 const abilityOf = (a: Fields, at: string): Ability => {
   optional(a, `${at}.`, ['activity', 'trigger'], text)
+  optional(a, `${at}.`, ['slot'], oneOf(SLOTS))
   return { ...a, name: text(a.name, `${at}.name`), traits: words(a.traits, `${at}.traits`), entries: text(a.entries, `${at}.entries`) }
 }
 const spellOf = (s: Fields, at: string): SpellSlotEntry['spells'][number] => {
@@ -441,9 +467,19 @@ function readStatBlock(x: unknown): Creature {
   if (!isWords(c.traits)) refuse('"traits" must be a list of words')
   const d = isFields(c.defenses) ? c.defenses : refuse('it needs a "defenses" block')
   optional(c, '', ['image', 'perceptionNote', 'speedNote', 'flavor', 'family', 'recallKnowledge', 'aonUrl', 'rawMarkdown'], text)
-  optional(c, '', ['isHazard'], flag)
+  optional(c, '', ['isHazard', 'fromArchivesPage'], flag)
+  optional(c, '', ['languageAbilities'], words)
   optional(d, 'defenses.', ['hpNote', 'saveNote', 'acNote'], text)
   optional(d, 'defenses.', ['hardness', 'bt'], num)
+  optional(d, 'defenses.', ['acPrinted'], flag)
+  // The fields the verified-bestiary adapter added (2026-10-06): the renderer reads every HP pool and
+  // every printed save, so one of the wrong shape refuses the block like any other field.
+  optional(d, 'defenses.', ['hpPools'], (v, at) => listOf(v, at, (p, pat) => {
+    optional(p, `${pat}.`, ['name'], text)
+    return typeof p.hp === 'number' ? p : refuse(`"${pat}.hp" must be a number`)
+  }))
+  optional(d, 'defenses.', ['savesPrinted'], (v, at) =>
+    Array.isArray(v) ? v.map((s, i) => oneOf(SAVES)(s, `${at}[${i}]`)) : refuse(`"${at}" must be a list`))
   if (c.hazardData != null) {
     const h = isFields(c.hazardData) ? c.hazardData : refuse('"hazardData" must be an object')
     optional(h, 'hazardData.', ['stealth', 'description', 'disable', 'routine', 'reset'], text)

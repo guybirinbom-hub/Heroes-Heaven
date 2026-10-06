@@ -265,14 +265,27 @@ function normalizeCreature(o: any): Creature | null {
       immunities: Array.isArray(d.immunities) ? d.immunities : [],
       resistances: Array.isArray(d.resistances) ? d.resistances : [],
       weaknesses: Array.isArray(d.weaknesses) ? d.weaknesses : [],
+      // What the page printed beside the numbers (labels, every HP pool, which hazard saves and AC it
+      // prints). Passed through as they are: toStatBlock after this refuses a wrong shape.
+      ...pass(d, ['hpNote', 'acNote', 'saveNote', 'hpPools', 'savesPrinted', 'acPrinted']),
     },
     isHazard: !!o.isHazard,
     hazardData: o.hazardData,
     recallKnowledge: typeof o.recallKnowledge === 'string' ? o.recallKnowledge : undefined,
     aonUrl: typeof o.aonUrl === 'string' ? o.aonUrl : undefined,
     rawMarkdown: typeof o.rawMarkdown === 'string' ? o.rawMarkdown : undefined,
+    // The page marker outlives the persist slimming that drops rawMarkdown; without it an exported
+    // page record came back with a computed Recall Knowledge row its page never printed.
+    ...pass(o, ['languageAbilities', 'fromArchivesPage', 'perceptionNote', 'speedNote']),
     raw: o.raw ?? ({} as Creature['raw']),
   }
+}
+
+/** The listed fields of `o` that are present (not undefined / null), copied as they are. */
+function pass(o: any, keys: string[]): Record<string, unknown> {
+  const out: Record<string, unknown> = {}
+  for (const k of keys) if (o[k] != null) out[k] = o[k]
+  return out
 }
 
 // ── Third-party "monster maker" format ─────────────────────────────────────

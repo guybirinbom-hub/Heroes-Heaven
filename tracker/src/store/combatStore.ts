@@ -1534,11 +1534,14 @@ export function writeEncounterStore(store: Record<string, SavedEncounter>): void
 //                            re-fetched if the creature is reloaded from
 //                            bestiary).
 // For a 10-monster fight this typically cuts the snapshot from ~1MB to <50KB.
+// A record that HAD a page keeps that fact as `fromArchivesPage` (StatBlock's Recall Knowledge
+// rule: a page record prints only the page's sidebar, never a computed DC), so the reloaded copy
+// of a page with no sidebar does not grow a computed row once rawMarkdown is gone.
 function slimCombatantForPersist(c: Combatant): Combatant {
   if (!c.creature) return c
-  const { raw: _raw, rawMarkdown: _md, ...slim } = c.creature
-  void _raw; void _md
-  return { ...c, creature: slim as typeof c.creature }
+  const { raw: _raw, rawMarkdown: md, ...slim } = c.creature
+  void _raw
+  return { ...c, creature: (md ? { ...slim, fromArchivesPage: true } : slim) as typeof c.creature }
 }
 
 // Persist live combat state (debounced) whenever the relevant slice changes.

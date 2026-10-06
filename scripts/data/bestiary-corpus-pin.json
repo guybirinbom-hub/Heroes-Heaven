@@ -1,0 +1,59 @@
+{
+  "repo": "https://github.com/guybirinbom-hub/hh-bestiary-corpus",
+  "commit": "f61709049acf018644444f389845391115ead44c",
+  "fetchedAt": "2026-09-24T12:58:59.886Z",
+  "counts": {
+    "creatures": 4697,
+    "hazards": 663,
+    "shards": 138,
+    "indexRows": 4339,
+    "indexHazardRows": 559
+  },
+  "skippedShards": [
+    {
+      "file": "creatures-core-rulebook.json",
+      "records": 1,
+      "reason": "every record superseded by a linked remaster"
+    },
+    {
+      "file": "creatures-dark-archive.json",
+      "records": 3,
+      "reason": "every record superseded by a linked remaster"
+    },
+    {
+      "file": "creatures-pathfinder-187-the-seventh-arch.json",
+      "records": 13,
+      "reason": "every record superseded by a linked remaster"
+    },
+    {
+      "file": "creatures-pathfinder-188-they-watched-the-stars.json",
+      "records": 12,
+      "reason": "every record superseded by a linked remaster"
+    },
+    {
+      "file": "creatures-pathfinder-189-dreamers-of-the-nameless-spires.json",
+      "records": 19,
+      "reason": "every record superseded by a linked remaster"
+    },
+    {
+      "file": "creatures-pathfinder-196-the-summer-that-never-was.json",
+      "records": 15,
+      "reason": "every record superseded by a linked remaster"
+    },
+    {
+      "file": "creatures-pathfinder-197-let-the-leaves-fall.json",
+      "records": 10,
+      "reason": "every record superseded by a linked remaster"
+    },
+    {
+      "file": "creatures-pathfinder-198-no-breath-to-cry.json",
+      "records": 11,
+      "reason": "every record superseded by a linked remaster"
+    },
+    {
+      "file": "creatures-pathfinder-199-to-bloom-below-the-web.json",
+      "records": 10,
+      "reason": "every record superseded by a linked remaster"
+    }
+  ]
+}

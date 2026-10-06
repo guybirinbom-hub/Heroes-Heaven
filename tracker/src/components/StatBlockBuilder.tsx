@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import type { Creature, SpellBlock, SpellSlotEntry } from '../types/pf2e'
+import type { Ability, Creature, Defenses, SpellBlock, SpellSlotEntry } from '../types/pf2e'
+import { shiftRecallKnowledge } from './StatBlock'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Form-based stat-block builder. Lives on the *input* side of the Text
@@ -90,7 +91,9 @@ const spellsToText = (a: SpEntry[]) =>
 
 // ── Editable (string-backed) shapes ──────────────────────────────────────────
 interface EAttack { id: string; range: 'Melee' | 'Ranged'; name: string; attack: string; damage: string; traits: string; types: string }
-interface EAbility { id: string; name: string; activity: string; traits: string; trigger: string; entries: string }
+/** `slot` is the page section an Archives ability was printed in; the form has no field for it, it
+ *  rides along so an edited page record still prints each ability where the page put it. */
+interface EAbility { id: string; name: string; activity: string; traits: string; trigger: string; entries: string; slot?: Ability['slot'] }
 interface ERank { level: number; text: string }
 interface EBlock { id: string; tradition: string; type: string; DC: string; attack: string; focusPoints: string; ranks: ERank[] }
 interface ECast { id: string; rank: string; names: string }
@@ -189,6 +192,14 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
     resistances: drToText(initial?.defenses?.resistances),
     weaknesses: drToText(initial?.defenses?.weaknesses),
   }))
+  // What a hazard's page PRINTS, beside the numbers: the AC box draws only when acPrinted, and only
+  // the saves in savesPrinted draw (a page hazard). The AC field starts at 10, so a hazard whose AC the
+  // GM never typed drew a made-up "AC 10"; typing an AC (or a save) makes it printed.
+  const [acSet, setAcSet] = useState(initial?.defenses?.acPrinted === true)
+  const [savesSet, setSavesSet] = useState<Defenses['savesPrinted']>(() =>
+    Array.isArray(initial?.defenses?.savesPrinted) ? [...initial.defenses.savesPrinted] : undefined)
+  const markSave = (k: 'fort' | 'ref' | 'will') =>
+    setSavesSet(p => (p && !p.includes(k) ? (['fort', 'ref', 'will'] as const).filter(s => s === k || p.includes(s)) : p))
   // Creature ⟷ hazard mode + their distinct extra fields. A creature has a
   // lore "Description" (flavor); a hazard has Stealth/Disable/Routine/Reset/etc.
   const [isHaz, setIsHaz] = useState(initial?.isHazard ?? false)
@@ -209,7 +220,7 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
   const [eAbilities, setEAbilities] = useState<EAbility[]>(() =>
     (initial?.abilities ?? []).map(a => ({
       id: bid(), name: a.name, activity: a.activity ?? '', traits: listToText(a.traits),
-      trigger: a.trigger ?? '', entries: a.entries,
+      trigger: a.trigger ?? '', entries: a.entries, ...(a.slot ? { slot: a.slot } : {}),
     })))
   const [blocks, setBlocks] = useState<EBlock[]>(() => seedBlocks(initial?.spellcasting))
   const [ritual, setRitual] = useState(() => ({
@@ -273,12 +284,29 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
     if (basic.climb) speed.climb = basic.climb
     const spellcasting = blocks.map(buildBlock).filter(b => b.spellsByLevel.length > 0)
     const ritualCasts = ritual.casts.filter(c => c.names.trim())
+    const level = num(basic.level, 1)
+    const hp = num(def.hp, 1)
+    // A page record's Recall Knowledge line holds the DCs for its PRINTED level; the form has no field
+    // for it, so a level edit moves every DC by the level table, as elite / weak / scaling do (an edited
+    // level-1 page creature raised to 6 kept reading its level-1 DC).
+    const pageRk = base?.recallKnowledge != null && (base.rawMarkdown || base.fromArchivesPage)
+      && base.level !== level
+      ? { recallKnowledge: shiftRecallKnowledge(base.recallKnowledge, base.level, level) } : {}
+    // Every HP pool the page printed; the first pool IS the HP field, so an edit moves it with it.
+    const pools = base?.defenses?.hpPools
+    const hpPools = Array.isArray(pools) && pools.length
+      ? { hpPools: [{ ...pools[0], hp }, ...pools.slice(1)], ...(base?.defenses?.hpNote ? { hpNote: base.defenses.hpNote } : {}) }
+      : {}
+    const { languageAbilities: _la, ...rest } = base ?? ({} as Partial<Creature>)
+    void _la
     return {
-      ...(base ?? {}),
+      ...rest,
+      ...(!isHaz && base?.languageAbilities ? { languageAbilities: base.languageAbilities } : {}),
+      ...pageRk,
       id: base?.id ?? draftId.current,
       name: basic.name.trim() || (isHaz ? 'Unnamed Hazard' : 'Unnamed Creature'),
       source: base?.source ?? 'Custom',
-      level: num(basic.level, 1),
+      level,
       traits: parseList(basic.traits),
       // Creature lore blurb (Description tab). Hazards use hazardData.description
       // instead, so keep any passthrough flavor untouched in hazard mode.
@@ -305,11 +333,13 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
       abilities: eAbilities.filter(a => a.name.trim()).map(a => ({
         name: a.name.trim(), activity: a.activity || undefined,
         traits: parseList(a.traits), trigger: a.trigger.trim() || undefined,
-        entries: a.entries,
+        entries: a.entries, ...(a.slot ? { slot: a.slot } : {}),
       })),
       defenses: {
         ac: num(def.ac, 10), fort: num(def.fort), ref: num(def.ref), will: num(def.will),
-        hp: num(def.hp, 1),
+        hp,
+        ...hpPools,
+        ...(isHaz ? { acPrinted: acSet, ...(savesSet ? { savesPrinted: savesSet } : {}) } : {}),
         hardness: def.hardness ? num(def.hardness) : undefined,
         bt: isHaz && def.bt ? num(def.bt) : undefined,
         immunities: parseList(def.immunities),
@@ -334,7 +364,7 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
     // Rebuild whenever any form section changes. onChange is intentionally
     // excluded — it's a stable setter and including build() would loop.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [basic, def, eAttacks, eAbilities, blocks, ritual, isHaz, flavor, haz])
+  }, [basic, def, eAttacks, eAbilities, blocks, ritual, isHaz, flavor, haz, acSet, savesSet])
 
   // ── render ───────────────────────────────────────────────────────────────────
   const segStyle = (active: boolean): React.CSSProperties => ({
@@ -405,16 +435,16 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
         {tab === 'defense' && (
           <>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <Field label="AC" w={80}><Num v={def.ac} on={n => setD({ ac: n })} /></Field>
+              <Field label="AC" w={80}><Num v={def.ac} on={n => { setD({ ac: n }); setAcSet(true) }} /></Field>
               <Field label="HP" w={90}><Num v={def.hp} on={n => setD({ hp: n })} /></Field>
               <Field label="Hardness" w={90}><Num v={def.hardness} on={n => setD({ hardness: n })} /></Field>
               {isHaz && <Field label="Broken Threshold" w={120}><Num v={def.bt} on={n => setD({ bt: n })} /></Field>}
             </div>
             <Sec>Saving throws</Sec>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <Field label="Fortitude" w={90}><Num v={def.fort} on={n => setD({ fort: n })} /></Field>
-              <Field label="Reflex" w={90}><Num v={def.ref} on={n => setD({ ref: n })} /></Field>
-              <Field label="Will" w={90}><Num v={def.will} on={n => setD({ will: n })} /></Field>
+              <Field label="Fortitude" w={90}><Num v={def.fort} on={n => { setD({ fort: n }); markSave('fort') }} /></Field>
+              <Field label="Reflex" w={90}><Num v={def.ref} on={n => { setD({ ref: n }); markSave('ref') }} /></Field>
+              <Field label="Will" w={90}><Num v={def.will} on={n => { setD({ will: n }); markSave('will') }} /></Field>
             </div>
             <Sec>Damage adjustments</Sec>
             <Field label="Immunities" w="100%"><Txt v={def.immunities} on={v => setD({ immunities: v })} ph="fire, paralyzed, sleep" /></Field>
