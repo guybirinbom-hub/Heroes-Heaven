@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
 import { characterSituationalIds, explainStat, recordMarkersFor } from '../src/rules/explain';
 import { featSituationalFor } from '../src/rules/situationalBonuses';
-import { featEntries } from '../src/sheet/FeatsTab';
+import { featEntries, oursSearchText } from '../src/sheet/FeatsTab';
 import { featFeatGrantsFor } from '../src/rules/featFeatGrants';
 import { deriveStrikes } from '../src/rules/derive';
 import type { Character, InventoryItem } from '../src/rules/types';
@@ -59,8 +59,12 @@ describe('improved-command-corpse marks the command-undead entry it rewrites', (
     const c = withFeats(['command-undead', 'improved-command-corpse'], 'cleric', 8);
     const row = featEntries(c, db).find((e) => e.featId === 'command-undead');
     expect(row, 'Command Undead is a row on the Feats tab').toBeTruthy();
-    expect(row!.description).toContain('Improved Command Corpse');
-    expect(row!.description).toContain('24 hours');
+    // Card step 8: the mark is one of the row's ours lines (the popup's [data-ours] box), no longer
+    // appended to the description string — test/card-ours.test.tsx proves the box on screen.
+    // batch card premise: feat-3886 "If it critically fails, it becomes your minion for 24 hours"
+    expect(oursSearchText(row!)).toContain('Improved Command Corpse');
+    // batch card premise: feat-3886 "If it critically fails, it becomes your minion for 24 hours"
+    expect(oursSearchText(row!)).toContain('24 hours');
     // …and the printed text it supersedes is still there, so the player can see WHAT changed.
     expect(row!.description).toContain('Failure');
     // The row exists in play because Command Corpse hands the feat over — the prerequisite chain the
@@ -84,8 +88,10 @@ describe('improved-command-corpse marks the command-undead entry it rewrites', (
     expect(c.feats.map((f) => f.featId), 'the grant lane put Command Undead on the sheet').toContain('command-undead');
     expect(recordMarkersFor(c, db, 'feature', 'command-undead').some((m) => m.sourceId === 'improved-command-corpse')).toBe(true);
     const row = featEntries(c, db).find((e) => e.featId === 'command-undead');
-    expect(row!.description).toContain('Improved Command Corpse');
-    expect(row!.description).toContain('24 hours');
+    // batch card premise: feat-3886 "If it critically fails, it becomes your minion for 24 hours"
+    expect(oursSearchText(row!)).toContain('Improved Command Corpse');
+    // batch card premise: feat-3886 "If it critically fails, it becomes your minion for 24 hours"
+    expect(oursSearchText(row!)).toContain('24 hours');
   });
 });
 

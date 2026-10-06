@@ -269,7 +269,10 @@ function noteRegions(surface: string, container: Element | null, bodies: Element
 }
 const sig = (e: Element) => `${e.tagName.toLowerCase()}${e.classList.length ? '.' + e.classList[0] : ''}`;
 const REGIONS_MEASURED: Record<string, string[]> = {
-  featDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-activate', 'div.sd-stats'],
+  // Card step 8: FeatDetail's ours box ([data-ours], after the body) and a homebrew record's use lines
+  // ([data-ours], above it) — our words, read by the ours case below, never by the line checks.
+  // batch card premise: feat-7612 "On a critical hit, the target is additionally sickened 1"
+  featDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-activate', 'div.sd-stats', 'div.card-ours', 'div.card-uselines'],
   itemDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-stats', 'div.sd-uses', 'div.sd-choice-note'],
   spellDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-stats', 'div.sd-heighten-h'],
   actionDetail: ['div.action-detail-traits'],
@@ -772,6 +775,31 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     const { unnamed: _counted, ...rest } = pick(dom);
     expect(rest).toEqual({});
     expect(txt(s.body)).not.toMatch(/Your choice|\| ?---/);
+  });
+
+  /*
+   * Card step 8 (section 4): a record's own note is an ours line in FeatDetail's [data-ours] box after the
+   * body — never appended to the description, where the page lane discarded it. DOM and ledger agree, the
+   * body (the read lines) holds nothing of ours, and the box is a listed region.
+   */
+  // batch card premise: feat-7612 "On a critical hit, the target is additionally sickened 1"
+  it('card step 8: Caustic Nectar\'s note is drawn in [data-ours] — DOM equals ledger, nothing of ours in the body', async () => {
+    const row = rows.find((r) => keyOf(r) === 'featDetail|feats:caustic-nectar');
+    expect(row, 'the ledger has the row').toBeTruthy();
+    const entry = featEntryFor(row!)!;
+    const m = await mount(<FeatDetail entry={entry} onClose={noop} />);
+    const box = txt(m.host.querySelector('.picker.spell-detail .sd-body > .card-ours[data-ours]'));
+    m.stop();
+    // batch card premise: feat-7612 "On a critical hit, the target is additionally sickened 1"
+    expect(box).toContain(`Note: ${db.feats['caustic-nectar'].note}`);
+    const s = await renderFeat(entry);
+    const dom = domJudge(row!, s, await refOf('feats', 'caustic-nectar'), hiddenOf(row!));
+    // batch card premise: feat-7612 "Your nectar doesn’t add critical specialization effects"
+    expect(norm(dom)).toBe(norm(ledgerJudge(row!)));
+    // batch card premise: feat-7612 "Your nectar doesn’t add critical specialization effects"
+    expect(dom.oursLeak).toEqual([]);
+    // batch card premise: feat-7612 "You’re immune to your own nectar"
+    expect(s.blocks.map((b) => b.text).join(' ')).not.toContain(db.feats['caustic-nectar'].note!.slice(0, 30));
   });
 
   /*

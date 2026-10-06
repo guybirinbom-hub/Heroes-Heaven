@@ -13010,6 +13010,18 @@ button.strike-name:hover {
 .card-nopage {
   margin-top: 9px;
 }
+/* Card step 8 (docs/card-design.md section 4): the ours box after a popup's body, and a homebrew
+   record's typed use lines above it. Each line is .sd-ours (our italic, accent-railed voice); a player's
+   Overrides text keeps its own line breaks. */
+.card-ours {
+  margin-top: 10px;
+}
+.card-uselines {
+  margin: 4px 0 6px;
+}
+.card-ours-override {
+  white-space: pre-line;
+}
 /* The fallback lane's body: the card body resets .info-body's pre-wrap (section 6, Shells). */
 .card-mine .info-body.card-body {
   white-space: normal;

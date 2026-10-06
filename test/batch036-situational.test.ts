@@ -4,7 +4,7 @@ import { build, content } from './_content';
 import { characterSituationalIds, explainStat } from '../src/rules/explain';
 import { featSituationalFor } from '../src/rules/situationalBonuses';
 import { deriveDefenses } from '../src/rules/derive';
-import { featEntries } from '../src/sheet/FeatsTab';
+import { featEntries, oursSearchText } from '../src/sheet/FeatsTab';
 import type { Character, ContentDatabase, InventoryItem } from '../src/rules/types';
 
 /**
@@ -201,9 +201,14 @@ describe("cultivators-keen-eye senses cultivation materials and pays ritual cost
   it('cultivators-keen-eye: the ritual-cost substitution reaches the feat entry the player reads', () => {
     const entry = featEntries(cultivator, patched).find((e) => e.featId === 'cultivators-keen-eye');
     expect(entry, 'the feat has to be on the Feats tab at all').toBeTruthy();
-    expect(entry!.description).toContain('substitute all or part of its cost');
-    expect(entry!.description).toContain('diamonds');
-    expect(entry!.description).toContain('specific items');
+    // Card step 8: the record's note is an ours line (the popup's [data-ours] box), no longer appended to
+    // the description string — test/card-ours.test.tsx proves the box on screen.
+    // batch card premise: feat-7090 "you can substitute all or part of the ritual’s cost with an equivalent value of precious materials"
+    expect(oursSearchText(entry!)).toContain('substitute all or part of its cost');
+    // batch card premise: feat-7090 "This applies only to costs in valuable substances like diamonds"
+    expect(oursSearchText(entry!)).toContain('diamonds');
+    // batch card premise: feat-7090 "This applies only to costs in valuable substances like diamonds"
+    expect(oursSearchText(entry!)).toContain('specific items');
   });
 
   // batch 036: cultivators-keen-eye#materials

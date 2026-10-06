@@ -70,19 +70,39 @@ export type OursKind =
   /** desk #152 empty note. */
   | 'empty'
   /** "No Archives page — text from our older import". */
-  | 'noPage';
+  | 'noPage'
+  /**
+   * Card step 8: the player's Overrides edit of this record's text ("Change an existing feat/feature",
+   * BuildOverrides.contentEdits, applied by build.ts applyOverrides). Shown wherever the card draws the
+   * Archives page instead of the edited text, so the edit is never silently lost.
+   */
+  | 'override'
+  /**
+   * Card step 8: a homebrew record's typed Trigger / Requirements / Frequency / Access field
+   * (types.ts Feat.trigger …, written by homebrewSchemas.ts), drawn as a use line above the body —
+   * marked ours, never styled as print. `label` carries the line's label.
+   */
+  | 'useLine';
 
 export const OURS_KINDS: readonly OursKind[] = [
   'choice', 'mark', 'actionMark', 'note', 'enhancement', 'spellNote', 'atYourLevel',
   'usesRetune', 'skillTier', 'critSpec', 'blurb', 'remastered', 'empty', 'noPage',
+  'override', 'useLine',
 ];
 
 export interface OursLine {
   kind: OursKind;
   /** The record this line comes from (another feat's marker names that feat). */
   from?: { bucket: string; id: string; name: string };
+  /** A use line's label ("Trigger", "Frequency" …); the other kinds leave it unset. */
+  label?: string;
   text: string;
 }
+
+/** The words of one ours line as the box prints them (attribution, label, text) — what a search over a
+ *  row's ours lines matches, so the box and the search read the same string. */
+export const oursLineText = (l: OursLine): string =>
+  `${l.from ? `${l.from.name}: ` : ''}${l.label ? `${l.label} ` : ''}${l.text}`;
 
 /**
  * What a 'mine' card is scoped by (section 6). Browse never scopes. Card step 13a reads `level`,

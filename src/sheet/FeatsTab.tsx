@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react';
-import type { Character, ContentDatabase } from '../rules/types';
+import type { Character, ContentDatabase, Feat, LimitedUses } from '../rules/types';
 import { classFeatureDescription } from '../rules/featureText';
 import { ownedFeatureIds, subclassFeatureIds } from '../rules/derive';
 import { markNote, nameOfRecord, recordMarkersFor } from '../rules/explain';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { ActionGlyph, isActionCost } from './widgets';
-import { FeatDetail, trustRefOf, type FeatEntry } from './FeatDetail';
+import { FeatDetail, enhancementText, trustRefOf, type FeatEntry } from './FeatDetail';
+import { oursLineText, type OursLine } from './cardModel';
 import { TrustMarker } from './TrustMarker';
 import { toPlainText } from './RichText';
 import { InfoTerm } from './InfoTerm';
@@ -105,37 +106,99 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
     const p = picksOf(recordId).filter((x) => !own || !same(x.label));
     return p.length ? ` (${p.map((x) => x.label).join(', ')})` : '';
   };
-  const withPicks = (recordId: string, description: string) => {
+  /**
+   * Card step 8 (docs/card-design.md section 4, row F2): what the app adds to a row, as OURS LINES —
+   * never appended to the description as HTML. Appending was the T3 bug: one `<p>` made a markdown body
+   * with a table read as rich HTML, so the kineticist gates printed raw `| --- |` and `**`; and on a
+   * record with a page the appended text vanished, because DescBody draws the page and discards the
+   * string — 90 of the 91 record notes never reached the popup.
+   *
+   * Returns the ours lines and the row PREVIEW: the plain description followed by the pick, marker and
+   * note words, which is exactly what toPlainText made of the appended string, so the Feats-tab row reads
+   * as before.
+   */
+  const withPicks = (recordId: string, description: string): { ours: OursLine[]; preview: string } => {
+    const ours: OursLine[] = [];
     const notes = picksOf(recordId).filter((p) => p.note);
-    let out = notes.length ? `${description}<p><strong>Your choice:</strong> ${notes.map((p) => `${p.label} — ${p.note}`).join('; ')}</p>` : description;
+    if (notes.length) ours.push({ kind: 'choice', text: `Your choice: ${notes.map((p) => `${p.label} — ${p.note}`).join('; ')}` });
     /*
-     * The record's OWN note — "this feat works; here is the part you apply yourself".
-     *
-     * Rendered nowhere until now, so every `note` authored on a feat was inert: the one Captivating
-     * Intensity clause that is not tracked, where a Sanctified Relic's bonus actually lands, Caustic
-     * Nectar's critical-hit rider. Distinct from `dataWarning`, which says something is BROKEN and
-     * shows in the red "Missing data" panel.
-     */
-    /*
-     * Marks another record put ON THIS ONE (Principle A / Principle C). The record's own `note`
-     * below says "here is the part you apply yourself"; this says "something ELSE of yours changed
-     * this", attributed to the source so the player can tell the two apart — which is exactly what
-     * gold answer #1 asked for on Lay on Hands.
+     * Marks another record put ON THIS ONE (Principle A / Principle C; Ruling F's ally-facing marker).
+     * The record's own `note` below says "here is the part you apply yourself"; this says "something
+     * ELSE of yours changed this", attributed to the source so the player can tell the two apart —
+     * which is exactly what gold answer #1 asked for on Lay on Hands.
      *
      * `markNote` rather than `m.note`: 40 of the shipped marks open with their own record's name, and
-     * this line prints that name itself, so the raw note would render "Weapon Supremacy: Weapon
+     * the box prints that name itself (`from`), so the raw note would render "Weapon Supremacy: Weapon
      * Supremacy: …" for a third of the table.
      */
     for (const m of recordMarkersFor(character, content, 'feature', recordId)) {
-      out += `<p><strong>${nameOfRecord(content, m.sourceId)}:</strong> ${markNote(content, m)}</p>`;
+      ours.push({ kind: 'mark', from: { bucket: bucketOfRecord(m.sourceId), id: m.sourceId, name: nameOfRecord(content, m.sourceId) }, text: markNote(content, m) });
     }
+    /*
+     * The record's OWN note — "this feat works; here is the part you apply yourself": the one
+     * Captivating Intensity clause that is not tracked, where a Sanctified Relic's bonus actually
+     * lands, Caustic Nectar's critical-hit rider. Distinct from `dataWarning`, which says something is
+     * BROKEN and shows in the red "Missing data" panel.
+     */
     const own = (content.feats[recordId] ?? content.classFeatures[recordId])?.note;
-    if (own) out += `<p><strong>Note:</strong> ${own}</p>`;
+    if (own) ours.push({ kind: 'note', text: `Note: ${own}` });
+    const preview = [toPlainText(description), ...ours.map((l) => toPlainText(oursLineText(l)))].filter(Boolean).join(' ');
+    return { ours, preview };
+  };
+  /** The collection a marker's source record lives in, for its attribution. */
+  const bucketOfRecord = (id: string): string =>
+    content.feats[id] ? 'feats' : content.classFeatures[id] ? 'classFeatures' : content.heritages[id] ? 'heritages' : content.items[id] ? 'items' : content.backgrounds[id] ? 'backgrounds' : 'classFeatures';
+  /**
+   * A use counter a SECOND record retunes (section 4 kind `usesRetune`; computed by featUses.ts
+   * effectiveUses and drawn nowhere before this step): "You can use Cat's Luck once per hour, rather
+   * than once per day" (Reliable Luck), a count that grows with level (maxByLevel), or a limit another
+   * feat removes outright. The printed Frequency stays the page's; this line says what the counter does.
+   */
+  const usesRetune = (rec: { id?: string; limitedUses?: LimitedUses } | undefined): OursLine[] => {
+    if (!rec?.id || !rec.limitedUses) return [];
+    const upgrader = (character.feats ?? []).map((f) => content.feats[f.featId]).find((f) => f?.usesUpgrade?.featId === rec.id);
+    if (upgrader?.usesUpgrade?.unlimited) return [{ kind: 'usesRetune', from: { bucket: 'feats', id: upgrader.id, name: upgrader.name }, text: 'removes this limit; there is no use counter.' }];
+    const use = featUse(character, rec as Feat, content);
+    if (!use) return [];
+    if (use.upgradedBy && upgrader) return [{ kind: 'usesRetune', from: { bucket: 'feats', id: upgrader.id, name: upgrader.name }, text: `changes this to ${usesLabel(use)}; your use counter follows it.` }];
+    if (rec.limitedUses.maxByLevel && use.max !== rec.limitedUses.max) return [{ kind: 'usesRetune', text: `At your level (${character.level}): ${usesLabel(use)}; your use counter follows it.` }];
+    return [];
+  };
+  /**
+   * The player's own Overrides edit of this record's text (Overrides → "Change an existing
+   * feat/feature"). applyOverrides (build.ts) writes it into the description, but a record with a page
+   * draws the page and discards the description — so the edit is carried as an ours line, and
+   * FeatDetail shows it wherever the page is shown instead of the edited text.
+   */
+  const overrideOf = (map: 'feats' | 'classFeatures', id: string | undefined): OursLine[] => {
+    const edited = id ? character.overrides?.contentEdits?.[map]?.[id]?.description : undefined;
+    if (typeof edited !== 'string' || !edited.trim()) return [];
+    const text = edited
+      .split(/\n\s*\n|<\/p>|<br\s*\/?>/i)
+      .map((s) => toPlainText(s))
+      .filter(Boolean)
+      .join('\n');
+    return text ? [{ kind: 'override', text: `Your override: ${text}` }] : [];
+  };
+  /**
+   * A homebrew record's typed use lines — Trigger, Requirements, Frequency, Access (types.ts Feat,
+   * written by homebrewSchemas.ts). Read by nothing before this step; FeatDetail draws them above the
+   * body, marked ours, and only where the record's own text does not already print the label.
+   */
+  const useLinesOf = (rec: { trigger?: string; requirements?: string; frequency?: string; access?: string } | undefined): OursLine[] => {
+    if (!rec) return [];
+    const out: OursLine[] = [];
+    for (const [label, v] of [['Trigger', rec.trigger], ['Requirements', rec.requirements], ['Frequency', rec.frequency], ['Access', rec.access]] as const) {
+      if (typeof v === 'string' && v.trim()) out.push({ kind: 'useLine', label, text: v.trim() });
+    }
     return out;
   };
   for (const fc of character.feats) {
     const feat = content.feats[fc.featId];
     if (!feat) continue;
+    const picked = withPicks(fc.featId, feat.description);
+    // The enhancement tier, if an augmentation is pointing at this feat.
+    const enhancedBy = (character.enhancements ?? []).find((e) => e.featId === fc.featId)?.from;
     entries.push({
       key: `feat:${fc.featId}:${fc.level}`,
       featId: fc.featId,
@@ -143,10 +206,18 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       level: fc.level,
       traits: feat.traits,
       actionCost: feat.actionCost,
-      description: withPicks(fc.featId, feat.description),
+      description: feat.description,
+      ours: [
+        ...picked.ours,
+        // The running ENHANCEMENT tier (section 4 kind `enhancement`), out of the print-styled stat row.
+        ...(enhancedBy ? [{ kind: 'enhancement' as const, text: `Enhancement ${enhancementText(enhancedBy)}` }] : []),
+        ...usesRetune(feat),
+        ...overrideOf('feats', fc.featId),
+        ...useLinesOf(feat),
+      ],
+      preview: picked.preview,
       descRefs: feat.descRefs,
-      // The enhancement tier, if an augmentation is pointing at this feat.
-      enhancedBy: (character.enhancements ?? []).find((e) => e.featId === fc.featId)?.from,
+      enhancedBy,
       isFeature: false,
       // build.ts sets `grantedBy` from heritages, class features, invested items and subclass /
       // extra-choice options as well as feats — so resolving the name through `content.feats` alone
@@ -191,6 +262,9 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       const variantId = subId && content.classFeatures[`${f.featureId}-${subId}`] ? `${f.featureId}-${subId}` : f.featureId;
       const feature = content.classFeatures[variantId];
       if (!feature) continue;
+      // Strip class-specific addenda for OTHER classes (shared features like Reflex Expertise).
+      const shown = classFeatureDescription(feature.description, clsId, content);
+      const picked = withPicks(variantId, shown);
       entries.push({
         key: `feature:${clsId}:${f.featureId}`,
         // Carried so a class feature printing "Frequency once per day" can draw use pips like a feat.
@@ -202,8 +276,9 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         level: f.level,
         traits: feature.traits,
         actionCost: feature.actionCost,
-        // Strip class-specific addenda for OTHER classes (shared features like Reflex Expertise).
-        description: withPicks(variantId, classFeatureDescription(feature.description, clsId, content)),
+        description: shown,
+        ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...overrideOf('classFeatures', variantId)],
+        preview: picked.preview,
         descRefs: feature.descRefs,
         isFeature: true,
         bucket: 'Class',
@@ -218,6 +293,8 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       if (suppressed.has(fid)) continue;
       const feature = content.classFeatures[fid];
       if (!feature || entries.some((e) => e.featureId === fid)) continue;
+      const shown = classFeatureDescription(feature.description, clsId, content);
+      const picked = withPicks(fid, shown);
       entries.push({
         key: `feature:${clsId}:${fid}`,
         featureId: fid,
@@ -230,7 +307,9 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         ),
         traits: feature.traits,
         actionCost: feature.actionCost,
-        description: withPicks(fid, classFeatureDescription(feature.description, clsId, content)),
+        description: shown,
+        ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...overrideOf('classFeatures', fid)],
+        preview: picked.preview,
         descRefs: feature.descRefs,
         isFeature: true,
         bucket: 'Class',
@@ -241,6 +320,9 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
   }
   // Subclass + extra-choice picks (bloodline, ikons, apparitions, elements, minds…).
   for (const c of character.classChoices ?? []) {
+    // Card step 8: a pick ON the option (a kineticist gate's junction), a marker on it and its own note
+    // reach the popup as ours lines too — before, a choice row carried none of them.
+    const picked = c.id ? withPicks(c.id, c.description) : undefined;
     entries.push({
       key: `choice:${c.group}:${c.name}`,
       name: c.name,
@@ -249,6 +331,8 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       traits: [],
       groupLabel: c.group,
       description: c.description,
+      ours: picked?.ours ?? [],
+      ...(picked ? { preview: picked.preview } : {}),
       // Without these every cross-reference inside a bloodline / mystery / implement / apparition
       // description rendered as plain text — 1,199 dead links across the choice options.
       descRefs: c.descRefs,
@@ -273,6 +357,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         traits: f.traits,
         actionCost: f.actionCost,
         description: f.description,
+        ours: overrideOf('classFeatures', f.id),
         descRefs: f.descRefs,
         isFeature: true,
         bucket: 'Class',
@@ -290,6 +375,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       traits: g.traits,
       actionCost: g.actionCost,
       description: g.description,
+      ours: [],
       descRefs: g.descRefs,
       isFeature: true,
       bucket: 'Class',
@@ -309,6 +395,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       level: 1,
       traits: heritage.traits,
       description: heritage.description,
+      ours: [],
       descRefs: heritage.descRefs,
       isFeature: true,
       bucket: 'Ancestry & heritage',
@@ -347,6 +434,9 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
  * in `test/bug-feats-long-text-collapsed.test.tsx` fails if the data creeps up on the threshold again.
  */
 export const LONG_NOTE_CHARS = 275;
+
+/** A row's ours lines as one searchable string, in the words the box prints (card step 8). */
+export const oursSearchText = (e: FeatEntry): string => (e.ours ?? []).map(oursLineText).join(' | ');
 
 /**
  * One class-archetype note. A long one starts CUT to three lines with its own Show more / Show less;
@@ -398,7 +488,9 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
       // bug 2026-09-13: search-rank — the same fields as before, through the shared rule, so the
       // owner's "water skin" spelling finds a row here too. The group heading stays searchable (it
       // used to match via the fake trait entry), and rarity keeps its own exact term.
-      (searchMatches(query, e.name, [...e.traits, e.groupLabel ?? '', e.description].join(' | ')) ||
+      // Card step 8: the ours lines are searched too — a pick, a marker or a note left the description
+      // string, and must stay findable.
+      (searchMatches(query, e.name, [...e.traits, e.groupLabel ?? '', e.description, oursSearchText(e)].join(' | ')) ||
         (e.rarity ?? '').includes(q)),
   );
 
@@ -479,7 +571,7 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
             filtered.filter((e) => e.bucket === b).sort((a, c) => a.level - c.level),
             query,
             (e) => e.name,
-            (e) => [...e.traits, e.groupLabel ?? '', e.rarity ?? '', e.description].join(' | '),
+            (e) => [...e.traits, e.groupLabel ?? '', e.rarity ?? '', e.description, oursSearchText(e)].join(' | '),
           );
           if (rows.length === 0) return null;
           return (
@@ -592,7 +684,7 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
                         </span>
                       );
                     })()}
-                    <div className="ff-desc">{toPlainText(e.description)}</div>
+                    <div className="ff-desc">{e.preview ?? toPlainText(e.description)}</div>
                   </div>
                   <i className="ti ti-chevron-right ff-chev" aria-hidden="true" />
                 </div>

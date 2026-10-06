@@ -8,8 +8,12 @@ import { TrustMarker } from './TrustMarker';
 import { useContent } from './ContentContext';
 import { useEscapeClose } from './useEscapeClose';
 import { traitDesc, traitLabel } from '../rules/glossary';
-import { astSlug } from './useAst';
+import { astSlug, useAstNode } from './useAst';
 import type { DescNode } from './descref';
+import type { AstNode } from './astStore';
+import { textOf } from './astVisibility';
+import { oursLineText, type OursLine } from './cardModel';
+import { OursBox, OursUseLines } from './OursBox';
 
 export interface FeatEntry {
   key: string;
@@ -54,6 +58,22 @@ export interface FeatEntry {
    *  override-granted feature. Deliberately NOT `featureId`: that field also drives the use pips, and
    *  a "not yet verified" line must not put a new control on the row. */
   trustFeatureId?: string;
+  /**
+   * Card step 8 (docs/card-design.md section 4, row F2): everything the app adds to this row — the
+   * player's pick ("Your choice: …"), another record's marker (principles A / C, Ruling F), the record's
+   * own note, the running enhancement tier, a use-counter retune, an Overrides text edit, a homebrew
+   * record's typed use lines. FeatDetail draws them in ONE box marked `data-ours` after the body (use
+   * lines above it), on the page lane and the markdown lane alike; none of it is ever appended to
+   * `description` as text, so a pick can no longer turn a markdown table into raw `| --- |` (T3).
+   *
+   * Optional, because a dozen places build a FeatEntry: one built without it (a test fixture, an older
+   * caller) renders exactly as it did before this step — featStatRows keeps its Enhancement row for it.
+   * featEntries always sets it (an empty list when the row has nothing of ours).
+   */
+  ours?: OursLine[];
+  /** The Feats-tab row's plain-text preview: the description plus the pick / marker / note words that
+   *  used to be appended to it, so the row reads exactly as before. Absent = toPlainText(description). */
+  preview?: string;
 }
 
 /** Which core.json record a row is showing, for TrustMarker. A row built from something with no id
@@ -84,8 +104,53 @@ export function featStatRows(entry: FeatEntry): FeatStatRow[] {
   const rows: FeatStatRow[] = [];
   if (entry.actionCost && isActionCost(entry.actionCost)) rows.push({ k: 'Activate', cost: entry.actionCost });
   if (entry.prerequisites?.length) rows.push({ k: 'Prerequisites', v: entry.prerequisites.join(', ') });
-  if (entry.enhancedBy) rows.push({ k: 'Enhancement', v: `active — granted by ${entry.enhancedBy}` });
+  // Card step 8 (section 4, kind `enhancement`): the running tier is OURS — the book prints the
+  // Enhancement paragraph, the app adds only that you have it — so an entry that carries ours lines
+  // (every featEntries row) says it in the ours box, not in this print-styled stat row. An entry built
+  // without ours lines keeps the row it always had.
+  if (entry.enhancedBy && entry.ours === undefined) rows.push({ k: 'Enhancement', v: enhancementText(entry.enhancedBy) });
   return rows;
+}
+
+/** The enhancement tier's words, one copy for the stat row and the ours line. */
+export const enhancementText = (from: string) => `active — granted by ${from}`;
+
+/** A use line's label printed on the record's own text: a paragraph of the page tree that opens with
+ *  that bold label, or (no page) a markdown / HTML line of the description that does. */
+function labelPrinted(label: string, ast: AstNode | null, description: string): boolean {
+  const want = label.toLowerCase();
+  if (ast) {
+    let found = false;
+    (function walk(n: AstNode) {
+      if (found) return;
+      if (n.t === 'p') {
+        const first = (n.c || []).find((x) => !(x.t === 'text' && !textOf(x).trim()));
+        if (first?.t === 'b' && textOf(first).trim().toLowerCase().startsWith(want)) { found = true; return; }
+      }
+      for (const c of n.c || []) walk(c);
+    })(ast);
+    return found;
+  }
+  const esc = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`(^|\\n|>)\\s*(\\*\\*|<strong>|<b>)?\\s*${esc}\\b`, 'i').test(description);
+}
+
+/**
+ * The ours lines this popup draws, split by where they go (card step 8):
+ *  - `use`: a homebrew record's typed use lines, above the body — only those whose label the record's
+ *    own text does not already print (the page tree when one is drawn, else the description), and none
+ *    while the page is still loading;
+ *  - `box`: everything else, after the body. An Overrides text edit (`override`) is drawn only where the
+ *    PAGE is shown: on the markdown lane the body already IS the edited text.
+ */
+export function featOursSplit(
+  entry: FeatEntry,
+  page: { ast: AstNode | null; loading: boolean },
+): { use: OursLine[]; box: OursLine[] } {
+  const ours = entry.ours ?? [];
+  const use = page.loading ? [] : ours.filter((l) => l.kind === 'useLine' && !labelPrinted(l.label ?? '', page.ast, entry.description));
+  const box = ours.filter((l) => l.kind !== 'useLine' && (l.kind !== 'override' || !!page.ast));
+  return { use, box };
 }
 
 /**
@@ -105,16 +170,55 @@ export function featStatRows(entry: FeatEntry): FeatStatRow[] {
  * still found by the star of the same feat or feature; only a heritage row's key changes, to the
  * bucket its page lives in (featStarNode keeps the old heritage pins found).
  */
-export function featPinNode(entry: FeatEntry): DescNode {
+export function featPinNode(entry: FeatEntry): FeatPinNode {
   const ref = trustRefOf(entry);
   return {
     title: entry.name,
-    description: entry.description,
+    description: pinDescriptionOf(entry),
     descRefs: entry.descRefs,
     key: ref.bucket ?? featLegacyPinKey(entry),
     ...(ref.id ? { slug: ref.id } : {}),
+    // Card step 8 (section 4): the pin carries the same ours lines the popup draws, as data beside the
+    // node. ⚠ What reaches the reopened pin is decided by the store (play.ts togglePinnedDesc keeps
+    // title / description / descRefs / key) and by the popup that opens it (DescriptionModal hands
+    // RecordCard no `ours`); both are outside this step — see card step 19, and pinDescriptionOf below.
+    ...(entry.ours?.length ? { ours: entry.ours } : {}),
   };
 }
+
+/** DescBody's rich-HTML test (DescBody.tsx:15 HTML_TAG, not exported): a description it would draw as
+ *  HTML rather than markdown. Kept in step with that one so the bridge below never switches a lane. */
+const PIN_HTML_TAG = /<(a|strong|em|b|i|u|s|h[1-6]|ul|ol|li|blockquote|span|br|div|p|hr|mark)\b/i;
+const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/**
+ * The STORED pin's description — a BRIDGE until card step 19 stores `ours` on the pin.
+ *
+ * Before card step 8 the pin's description was the row's description with the pick, the markers and the
+ * note appended, and that is all togglePinnedDesc (play.ts:2235) keeps. A reopened pin whose record has
+ * no page draws that description, so dropping the appended words lost them from the pin (dedication-to-
+ * the-five's note, any no-page pick or marker). So the pin — and only the pin — still carries the box's
+ * words after the record's text, as before; the popup itself never does (its box is `data-ours`).
+ *
+ * Unlike the old concatenation it never changes DescBody's lane: on a markdown description each line is
+ * a markdown paragraph with `<` escaped, so a kineticist gate's table stays a table (T3); only an HTML
+ * description gets `<p>` lines. Left out: an Overrides edit (on the no-page lane the description already
+ * IS the edited text) and a homebrew use line whose label the text already prints.
+ *
+ * Step 19 drops this: the stored pin keeps `ours`, and the reopened card draws the box.
+ */
+export function pinDescriptionOf(entry: FeatEntry): string {
+  const lines = (entry.ours ?? []).filter(
+    (l) => l.kind !== 'override' && (l.kind !== 'useLine' || !labelPrinted(l.label ?? '', null, entry.description)),
+  );
+  if (lines.length === 0) return entry.description;
+  const words = lines.map(oursLineText);
+  if (PIN_HTML_TAG.test(entry.description)) return entry.description + words.map((w) => `<p>${escapeHtml(w)}</p>`).join('');
+  return [entry.description, ...words.map((w) => w.replace(/</g, '&lt;'))].filter(Boolean).join('\n\n');
+}
+
+/** The node FeatDetail's star hands to the pin: a description node plus the row's ours lines. */
+export type FeatPinNode = DescNode & { ours?: OursLine[] };
 
 /** The key this popup's pin carried before card step 7a (a heritage row was keyed 'classFeatures'). */
 function featLegacyPinKey(entry: FeatEntry): string {
@@ -129,12 +233,12 @@ function featLegacyPinKey(entry: FeatEntry): string {
  * When the character holds that old pin (and not a new one), the star shows it as pinned and pressing
  * it removes THAT pin; no stored pin is rewritten. Matching stored pins by id is card step 19.
  */
-export function featStarNode(entry: FeatEntry, pin: PinDescApi | null): DescNode {
+export function featStarNode(entry: FeatEntry, pin: PinDescApi | null): FeatPinNode {
   const node = featPinNode(entry);
   const legacyKey = featLegacyPinKey(entry);
   if (!pin || node.key === legacyKey) return node;
   const { slug: _slug, ...rest } = node;
-  const legacy: DescNode = { ...rest, key: legacyKey };
+  const legacy: FeatPinNode = { ...rest, key: legacyKey };
   return !pin.has(node) && pin.has(legacy) ? legacy : node;
 }
 
@@ -156,6 +260,10 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
   const prerequisites = valueOf('Prerequisites');
   const enhancement = valueOf('Enhancement');
   const pinNode = featStarNode(entry, usePinDesc());
+  // Which lane DescBody draws (the same hook, the same cache): the page decides whether an Overrides
+  // edit needs its ours line and which homebrew use lines the record's own text already prints.
+  const { node: pageAst, loading: pageLoading } = useAstNode(astKey, astId);
+  const ours = featOursSplit(entry, { ast: pageAst ?? null, loading: !!pageLoading });
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker spell-detail" onClick={(e) => e.stopPropagation()}>
@@ -211,6 +319,9 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
               </div>
             </div>
           ) : null}
+          {/* Card step 8: a homebrew record's typed use lines (Trigger, Requirements, Frequency, Access) —
+              their first reader. Above the body, where use lines go, but ours: never styled as print. */}
+          <OursUseLines lines={ours.use} />
           {/* desk #158: read the link off the record this row is showing, via the SAME ref TrustMarker
               above already resolves — a FeatEntry is a view model built in a dozen places, and
               threading one more field through all of them would be a far bigger change than a lookup. */}
@@ -222,6 +333,9 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
             astId={astId}
             remasteredAs={remasteredAsOf(content, ref)}
           />
+          {/* Card step 8 (section 4): the ours box, after the body on BOTH lanes — DescBody picks the
+              page or the markdown, and this box follows either. */}
+          <OursBox lines={ours.box} />
         </div>
       </div>
     </div>

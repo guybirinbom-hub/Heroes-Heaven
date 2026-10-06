@@ -1,10 +1,12 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
 import { build, content } from './_content';
-import { renderText } from './_render';
+import { renderDom, renderText } from './_render';
 import { MainTab } from '../src/sheet/MainTab';
 import { ActionGlyph } from '../src/sheet/widgets';
 import { featEntries } from '../src/sheet/FeatsTab';
+import { FeatDetail, type FeatEntry } from '../src/sheet/FeatDetail';
+import { ContentContext } from '../src/sheet/ContentContext';
 import { deriveStrikes, derivePerception, deriveSave } from '../src/rules/derive';
 import { recordMarkersFor, spellNotesFor } from '../src/rules/explain';
 import { FEAT_SITUATIONAL } from '../src/rules/situationalBonuses';
@@ -32,6 +34,17 @@ const withFeats = (ch: Character, ...featIds: string[]): Character => ({
   ...ch,
   feats: featIds.map((featId) => ({ featId, level: 1, source: 'class' as const })),
 });
+/** Card step 8: what the popup's ours box ([data-ours]) shows for a row — FeatDetail rendered for real. */
+const oursOnScreen = (entry: FeatEntry): string => {
+  const view = renderDom(
+    <ContentContext.Provider value={c()}>
+      <FeatDetail entry={entry} onClose={noop} />
+    </ContentContext.Provider>,
+  );
+  const text = [...view.host.querySelectorAll('[data-ours]')].map((el) => el.textContent ?? '').join(' | ');
+  view.stop();
+  return text;
+};
 
 describe('Agile Shield Grip — a weapon rider that can be switched off', () => {
   const fighter = () =>
@@ -172,18 +185,29 @@ describe("Ancestral Blood Magic — Principle C, on a record that is not an acti
     expect(recordMarkersFor(withIt, c(), 'condition', 'bloodline')).toEqual([]);
   });
 
-  it("reaches the Bloodline entry's description on the Feats tab, named once", () => {
+  // batch card premise: feat-1810 "in addition to the normal circumstances that trigger your blood magic"
+  it("reaches the Bloodline popup's ours box on the Feats tab, named once", () => {
     const withIt = withFeats(sorcerer(), 'ancestral-blood-magic');
     const entry = featEntries(withIt, c()).find((e) => e.featureId === 'bloodline')!;
     expect(entry).toBeTruthy();
-    expect(entry.description).toContain('Ancestral Blood Magic');
-    expect(entry.description).toContain('heritage or an ancestry feat');
+    // Card step 8: the marker is an ours line drawn in the popup's [data-ours] box, never text appended
+    // to the description (on a record with a page DescBody discarded that string, so it never showed).
+    // batch card premise: feat-1810 "You gain your blood magic effect when you cast a non-cantrip spell you gained from a heritage or an ancestry feat"
+    const shown = oursOnScreen(entry);
+    // batch card premise: feat-1810 "You gain your blood magic effect when you cast a non-cantrip spell you gained from a heritage or an ancestry feat"
+    expect(shown).toContain('Ancestral Blood Magic');
+    // batch card premise: feat-1810 "a heritage or an ancestry feat"
+    expect(shown).toContain('heritage or an ancestry feat');
     // ⚠ All three mark renderers prefix the record's name themselves. 40 of the shipped marks also
     // open with it, which printed "Weapon Supremacy: Weapon Supremacy: …"; this line is the guard.
-    expect(entry.description.match(/Ancestral Blood Magic/g)).toHaveLength(1);
+    // batch card premise: feat-1810 "The magic of your bloodline mixes with that of your ancestry"
+    expect(shown.match(/Ancestral Blood Magic/g)).toHaveLength(1);
+    // batch card premise: feat-1810 "The magic of your bloodline mixes with that of your ancestry"
+    expect(entry.description).not.toContain('Ancestral Blood Magic');
 
     const without = featEntries(sorcerer(), c()).find((e) => e.featureId === 'bloodline')!;
-    expect(without.description).not.toContain('Ancestral Blood Magic');
+    // batch card premise: feat-1810 "The magic of your bloodline mixes with that of your ancestry"
+    expect(oursOnScreen(without)).not.toContain('Ancestral Blood Magic');
   });
 
   /**
@@ -200,8 +224,13 @@ describe("Ancestral Blood Magic — Principle C, on a record that is not an acti
       grantMarkers: { toughness: [{ on: 'feature', id: 'bloodline', note: 'Toughness: your maximum HP increases.' }] },
     };
     const entry = featEntries(ch, c()).find((e) => e.featureId === 'bloodline')!;
-    expect(entry.description).toContain('<strong>Toughness:</strong> your maximum HP increases.');
-    expect(entry.description.match(/Toughness/g)).toHaveLength(1);
+    // Card step 8: attributed once, by the box (`from`), on screen inside [data-ours].
+    // batch card premise: feat-5227 "Increase your maximum Hit Points by your level"
+    const shown = oursOnScreen(entry);
+    // batch card premise: feat-5227 "Increase your maximum Hit Points by your level"
+    expect(shown).toContain('Toughness: your maximum HP increases.');
+    // batch card premise: feat-5227 "Increase your maximum Hit Points by your level"
+    expect(shown.match(/Toughness/g)).toHaveLength(1);
   });
 });
 
