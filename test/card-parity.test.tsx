@@ -48,7 +48,8 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *                   (CARD_ON.statDetail), modelled by the ledger with the same printed set (empty)
  *   browse          DescriptionModal (the search popup) for {bucket, id}
  *   ChoiceDetails   the builder's "Details" button for a granted class feature / background feat
- *   builderOrigin   the builder's Background picker (SearchSelect, its filled value opens the popup)
+ *   builderOrigin   the builder's Background picker (SearchSelect, its filled value opens the popup; since
+ *                   card step 7b each option names its record, so the popup reads {backgrounds, id})
  *   pin             a PinStar pressed on FeatDetail / ItemDetail / SpellDetail, reopened by DescriptionModal
  *
  * The verdict per printed label (OK / MISSING / DIFFERS / DUPLICATED / EXTRA), the IDENTITY flag, spell
@@ -520,7 +521,9 @@ async function renderChoice(row: Row): Promise<Read> {
 async function renderOrigin(row: Row): Promise<Read> {
   const rec = recs(row.bucket)[row.id];
   return renderPopupOf(
-    <SearchSelect bare label="Background" value={row.id} onChange={noop} options={[{ id: row.id, name: rec.name, description: rec.description, descRefs: rec.descRefs }]} />,
+    // The option as OriginPickers builds it (shared.tsx, the Background SetupCard): it names its record
+    // (card step 7b). test/card-origin.test.tsx opens the same popup from the real OriginPickers.
+    <SearchSelect bare label="Background" value={row.id} onChange={noop} options={[{ id: row.id, name: rec.name, description: rec.description, descRefs: rec.descRefs, record: { bucket: 'backgrounds', id: row.id } }]} />,
     '.ss-filled-body',
   );
 }
@@ -789,6 +792,22 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     const words = s.blocks.map((b) => b.text).join(' ');
     expect(words.length, 'the body draws the page').toBeGreaterThan(40);
     expect(words).not.toMatch(/devour/i);
+  });
+
+  /*
+   * Card step 7b (section 2 rule 2b, T3): the builder's Background picker opens the background's own
+   * page by {backgrounds, id}. builderOrigin|backgrounds:acolyte left test/card-parity-known.json when
+   * 7b fixed it (S5-IDENTITY builderOrigin 523 → 0); the sample may not draw it, so it is always rendered.
+   */
+  it('the builder Background popup (Acolyte) reads its own page — DOM equals ledger, no identity flag (T3)', async () => {
+    const row = rows.find((r) => keyOf(r) === 'builderOrigin|backgrounds:acolyte');
+    expect(row, 'the ledger has the row').toBeTruthy();
+    expect(row!.read).toEqual({ bucket: 'backgrounds', slug: 'acolyte' });
+    const s = await renderOrigin(row!);
+    const dom = domJudge(row!, s, await refOf('backgrounds', 'acolyte'), hiddenOf(row!));
+    expect(norm(dom)).toBe(norm(ledgerJudge(row!)));
+    expect(dom.identity, 'the popup reads its own page').toBe(false);
+    expect(s.lane).toBe('tree');
   });
 
   it('a case missing from the sample and the list both counts: every owner case is flagged', () => {

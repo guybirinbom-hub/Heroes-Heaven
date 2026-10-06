@@ -975,10 +975,13 @@ export function surfaceRows(deps) {
     }
   }
 
-  // The builder's background picker — descNodeOf(…, 'origin'): key 'origin', no id (shared.tsx:956).
+  // The builder's background picker. Card step 7b: each option names its record (shared.tsx optionNode,
+  // `record: { bucket: 'backgrounds', id }`), so the popup reads the background's own page by {bucket, id}.
+  // Before it the option opened as `key: 'origin'` with no id — a bucket that does not exist, so every
+  // background fell back to the old text (523 S5-IDENTITY rows).
   for (const [id, bg] of Object.entries(db.backgrounds ?? {})) {
     if (!has('backgrounds', id) || !(bg.description || bg.descRefs?.length)) continue;
-    rows.push({ surface: 'builderOrigin', bucket: 'backgrounds', id, own: { bucket: 'backgrounds', id }, read: { bucket: 'origin', slug: astSlug(bg.name) }, hideMeta: false, itemLists: true, md: bg.description ?? '', printed: [], mode: 'browse' });
+    rows.push({ surface: 'builderOrigin', bucket: 'backgrounds', id, own: { bucket: 'backgrounds', id }, read: { bucket: 'backgrounds', slug: id }, hideMeta: false, itemLists: true, md: bg.description ?? '', printed: [], mode: 'browse' });
   }
 
   // The browse popup (DescriptionModal / RecordCard) by {bucket, id}: the whole page, never scoped.

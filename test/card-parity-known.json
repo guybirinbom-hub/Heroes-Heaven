@@ -32,11 +32,6 @@
       "verdict": { "s2": "CLASS_MISMATCH" }
     },
     {
-      "key": "builderOrigin|backgrounds:acolyte",
-      "why": "the builder background picker opens its popup with key 'origin', a bucket that does not exist, so every background falls back to the old text",
-      "verdict": { "identity": true }
-    },
-    {
       "key": "actionDetail|actions:treat-wounds",
       "why": "trained Treat Wounds from the Main tab: the page's Requirements line is dropped with the header, and nothing says what the trained rank gives",
       "verdict": { "labels": { "Requirements": "MISSING" }, "unnamed": ["Source"] }

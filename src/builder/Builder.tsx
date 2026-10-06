@@ -69,7 +69,7 @@ import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, cap, loreLabel, requestRemovePick, requestSubclassChange, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, cap, choiceOptionRecord, loreLabel, openOptionsWithRecords, requestRemovePick, requestSubclassChange, useBuilderActions, type OptionRecord } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
 import { formulaSlots } from '../rules/formulaBook';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -92,10 +92,12 @@ import { descId } from '../rules/play';
  * was written against); the picker wants a boolean plus the sentence, so the translation lives in one
  * place rather than being re-spelled at each of the two call sites.
  */
-const pickerOption = (o: NarrowedOption) => ({
+const pickerOption = (o: NarrowedOption, record: OptionRecord | null) => ({
   value: o.value,
   label: featChoiceLabel(o.label),
   description: o.description,
+  // card step 7b: the record the answer names (choiceOptionRecord), so its popup opens that page.
+  record,
   disabled: !!o.disabled,
   disabledReason: o.disabled,
 });
@@ -634,7 +636,7 @@ export function Builder({
                                             placeholder={`Search ${OPEN_SOURCE_LABEL[def.from?.type ?? ''] ?? 'options'}…`}
                                             value={build.featChoices[k] ?? null}
                                             onChange={(v) => actions.setFeatChoice(k, v)}
-                                            options={all.filter((o) => !taken.has(o.id))}
+                                            options={openOptionsWithRecords(all.filter((o) => !taken.has(o.id)), def.from)}
                                           />
                                         );
                                       });
@@ -661,7 +663,7 @@ export function Builder({
                                           // show it — applied per PICK, after `distinct` has removed the other
                                           // picks' answers, so pick 2 never re-offers what pick 1 typed.
                                           options={withCustomAnswer(
-                                            choiceOptionsFor(opts, def, answers, i).map(pickerOption),
+                                            choiceOptionsFor(opts, def, answers, i).map((o) => pickerOption(o, choiceOptionRecord(def, o.value, content))),
                                             def,
                                             answers[i],
                                           )}
@@ -731,7 +733,7 @@ export function Builder({
                                         placeholder={`${gsc.prompt}…`}
                                         value={gsc.options.includes(build.featSpellChoices?.[sk] ?? '') ? build.featSpellChoices![sk] : ''}
                                         onChange={(v) => actions.patch({ featSpellChoices: { ...(build.featSpellChoices ?? {}), [sk]: v } })}
-                                        options={gsc.options.map((id) => ({ value: id, label: content.spells[id]?.name ?? id, description: content.spells[id]?.description }))}
+                                        options={gsc.options.map((id) => ({ value: id, label: content.spells[id]?.name ?? id, description: content.spells[id]?.description, record: { bucket: 'spells', id } }))}
                                       />
                                     );
                                   })()}
@@ -883,7 +885,7 @@ export function Builder({
           onChange={setAnswer}
           // Trailblazer's "one terrain you've explored (such as forest or underground)" arrives on this
           // lane, not the slot one — a granted feat's question is as open as a picked one's.
-          options={withCustomAnswer(opts.map(pickerOption), def, answer)}
+          options={withCustomAnswer(opts.map((o) => pickerOption(o, choiceOptionRecord(def, o.value, content))), def, answer)}
           // A narrowed list with a "type your own" row is not narrowed. Terrain Stalker carries
           // `allowCustom` because the book lets a GM name a tenth terrain — but Isgeri Reclaimer says
           // "either rubble or underbrush", so while its limit is in force the typing row goes away.
@@ -1109,7 +1111,7 @@ export function Builder({
       listValues(content, content.feats)
         .filter((f) => f.category === 'class' && f.level <= 1 && (f.traits ?? []).includes('wizard'))
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map((f) => ({ value: f.id, label: f.name, description: f.description })),
+        .map((f) => ({ value: f.id, label: f.name, description: f.description, record: { bucket: 'feats', id: f.id } })),
     [content.feats],
   );
   const isUmtSchool = build.classId === 'wizard' && build.subclassId === 'school-of-unified-magical-theory';
@@ -1119,7 +1121,7 @@ export function Builder({
       listValues(content, content.feats)
         .filter((f) => f.category === 'skill')
         .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
-        .map((f) => ({ value: f.id, label: f.name, description: f.description })),
+        .map((f) => ({ value: f.id, label: f.name, description: f.description, record: { bucket: 'feats', id: f.id } })),
     [content.feats],
   );
 
@@ -2011,7 +2013,7 @@ export function Builder({
                                   evolution feat — a granted feature that hands you a feat to pick. */}
                               {FEAT_PICK_GRANTS[f.id] && (() => {
                                 const spec = FEAT_PICK_GRANTS[f.id];
-                                const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description }));
+                                const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description, record: { bucket: 'feats', id: o.id } }));
                                 /* A spec may grant SEVERAL feats (*"choose up to two…"*). Answers past
                                  * the first are keyed `<id>#<i>`, so index 0 keeps the bare key and no
                                  * saved character loses its pick. See FeatPickSpec.picks. */
@@ -2073,7 +2075,7 @@ export function Builder({
                                      subclass picker (the level page's card). Same helper as the
                                      Setup one in shared.tsx, so both ask before dropping spells. */
                                   onChange={(v) => requestSubclassChange(v, build, content, actions)}
-                                  options={cls.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
+                                  options={cls.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id } }))}
                                 />
                               </div>
                               {!build.subclassId && <span className="lvl-pending">!</span>}
@@ -2113,7 +2115,7 @@ export function Builder({
                           {cls?.subclass && subAnchorId && build.subclassId && FEAT_PICK_GRANTS[build.subclassId] && (() => {
                             const sid = build.subclassId!;
                             const spec = FEAT_PICK_GRANTS[sid];
-                            const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description }));
+                            const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description, record: { bucket: 'feats', id: o.id } }));
                             return (
                               <SubCard icon="ti-medal" label={spec.prompt}>
                                 {pickKeysFor(sid, spec.picks).map((k, i) => (
@@ -2269,7 +2271,7 @@ export function Builder({
                               .filter((oid) => FEAT_PICK_GRANTS[oid])
                               .flatMap((oid) => {
                                 const spec = FEAT_PICK_GRANTS[oid];
-                                const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description }));
+                                const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description, record: { bucket: 'feats', id: o.id } }));
                                 return pickKeysFor(oid, spec.picks).map((key, i) => (
                                   <PopupSelect
                                     key={`ecp-${key}`}
@@ -2580,6 +2582,7 @@ export function Builder({
                                           value: id,
                                           label: content.feats[id]!.name,
                                           description: content.feats[id]!.description,
+                                          record: { bucket: 'feats', id },
                                           disabled: held,
                                           disabledReason: held ? 'Already have this feat — pick a different one.' : undefined,
                                         };
@@ -2644,7 +2647,7 @@ export function Builder({
                             FEAT_PICK_GRANTS[picked] &&
                             (() => {
                               const spec = FEAT_PICK_GRANTS[picked];
-                              const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description }));
+                              const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description, record: { bucket: 'feats', id: f.id } }));
                               // Stored per SLOT, so a repeatable grant taken twice shows two pickers
                               // rather than two views of one answer. The bare feat-id key is still
                               // READ, so a character saved before this keeps the pick it had.
@@ -2763,6 +2766,8 @@ export function Builder({
                                         value: o.value,
                                         label: o.label,
                                         description: o.note,
+                                        // The note is the option's own text, not a record's (card step 7b).
+                                        record: null,
                                         disabled: missing || !!gateWhy,
                                         ...(missing ? { disabledReason: 'You do not have this feat.' } : {}),
                                         ...(!missing && gateWhy ? { disabledReason: gateWhy } : {}),
@@ -2781,7 +2786,7 @@ export function Builder({
                                 .map((id) => content.spells[id])
                                 .filter(Boolean)
                                 .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name))
-                                .map((s) => ({ value: s.id, label: s.name, description: s.description }));
+                                .map((s) => ({ value: s.id, label: s.name, description: s.description, record: { bucket: 'spells', id: s.id } }));
                               return (
                                 <SubCard icon="ti-sparkles" label={spec.prompt}>
                                   <PopupSelect

@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
-import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
+import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, FeatChoiceDef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { BOOK_SPLIT_MARK, enabledBookSet, sourceCatalog, sourceIdToken, storedSources, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
@@ -56,7 +56,7 @@ import {
 } from '../rules/build';
 import { choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, legacyArchetypeCantrips, narrowSpellFilter, resolveClassArchetype, subclassOptionAllowed } from '../rules/build';
 import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
-import { openChoiceOptions } from '../rules/openChoice';
+import { openChoiceOptions, type OpenOption } from '../rules/openChoice';
 import { cantripsKnown } from '../rules/spellcasting';
 import { spellsMatching } from '../rules/spellChoice';
 import { abpSkillBudget } from '../rules/abp';
@@ -961,6 +961,113 @@ export interface EditorProps {
   content: ContentDatabase;
 }
 
+/**
+ * The record a picker option IS (card step 7b, docs/card-design.md section 2 rule 2b: "The builder's fake
+ * `origin` bucket becomes the real bucket").
+ *
+ * An option that names a record — an ancestry, a background, a class, a deity, a subclass, a feat, a
+ * spell — passes `record: { bucket, id }`, and its description popup opens THAT record's own Archives
+ * page by bucket and id (browse mode, the whole page: this is the builder's picking screen, section 6).
+ * Before this every such popup opened as `key: 'origin'`, a bucket that does not exist: the card asked
+ * for `ast/origin.json`, got a 404, and fell back to the old imported text.
+ *
+ * `record: null` says the option is NOT a record: its text is the option's own (an inline choice
+ * option's description, an effect choice's note). It opens as before, on NO_RECORD_KEY.
+ */
+export type OptionRecord = { bucket: string; id: string };
+/**
+ * The key an option that is no record opens on — today's `'origin'`, kept: it names no bucket, so the
+ * popup shows the option's own text and never a same-named page, and RecordCard's TrustMarker still
+ * resolves such a node by exact name (trustGate.ts unencodedNamed).
+ */
+const NO_RECORD_KEY = 'origin';
+/** The option fields a description popup reads (PopupSelect). `record` is optional here only because a
+ *  caller outside the builder (CharacterSheet's effect-choice picker) passes bare text; every builder
+ *  PopupSelect that carries text says which record it is, or `null` — checked by making this type strict
+ *  for a moment: `npx tsc --noEmit` then lists CharacterSheet.tsx alone. */
+type OptionDesc = { description?: string; descRefs?: DescRef[]; record?: OptionRecord | null };
+/** SearchSelect and MultiPickRows have no caller outside the builder that carries text, so for them the
+ *  type itself demands the answer: an option with a description or links must say `record`. */
+type OptionDescStrict =
+  | { description?: undefined; descRefs?: undefined; record?: undefined }
+  | { description?: string; descRefs?: DescRef[]; record: OptionRecord | null };
+
+/** The description node for a picker option: its record's own page by {bucket, id}, else its own text. */
+function optionNode(o: { name: string; description?: string; descRefs?: DescRef[]; record?: OptionRecord | null }): DescNode | null {
+  return o.record
+    ? descNodeOf({ id: o.record.id, name: o.name, description: o.description, descRefs: o.descRefs }, o.record.bucket)
+    : descNodeOf({ name: o.name, description: o.description, descRefs: o.descRefs }, NO_RECORD_KEY);
+}
+
+/**
+ * A picker option's description popup. Never-overwrite (CLAUDE.md), as ChoiceDetailsModal does for 7a:
+ * before card step 7b a record option opened on `legacyKey` ('origin', or a MultiPickRows group name), so
+ * a pin starred from it was stored as {title, key: legacyKey} (play.ts descId `key:title`). Its node is now
+ * keyed by the record's bucket, and that old pin would no longer match: the star would read "not pinned"
+ * and pressing it would pin the record twice. For the ROOT node only, when the build holds the old pin
+ * (and not a new one), the star shows it as pinned and pressing it removes THAT pin; no stored pin is
+ * rewritten. Matching stored pins by id is card step 19.
+ */
+function OptionDescModal({ root, legacyKey, onClose }: { root: DescNode; legacyKey: string | undefined; onClose: () => void }) {
+  const outer = usePinDesc();
+  const pin = useMemo<PinDescApi | null>(() => {
+    if (!outer || !legacyKey || root.key === legacyKey) return outer;
+    const isRoot = (n: DescNode) => n.key === root.key && n.title === root.title;
+    const legacyOf = (n: DescNode): DescNode => ({ title: n.title, description: n.description, descRefs: n.descRefs, key: legacyKey });
+    const heldAsLegacy = (n: DescNode) => isRoot(n) && !outer.has(n) && outer.has(legacyOf(n));
+    return {
+      ...outer,
+      has: (n) => outer.has(n) || heldAsLegacy(n),
+      toggle: (n) => outer.toggle(heldAsLegacy(n) ? legacyOf(n) : n),
+    };
+  }, [outer, legacyKey, root.key, root.title]);
+  return (
+    <PinContext.Provider value={pin}>
+      <DescriptionModal root={root} onClose={onClose} />
+    </PinContext.Provider>
+  );
+}
+
+/** The bucket an OPEN choice's options live in (openChoiceOptions, rules/openChoice.ts), by its source
+ *  type. Languages and companions carry no text; an unknown type is no record. */
+const OPEN_SOURCE_BUCKET: Record<string, string> = {
+  spell: 'spells',
+  'own-deity-spell': 'spells',
+  'own-spell': 'spells',
+  feat: 'feats',
+  'own-feat': 'feats',
+  weapon: 'items',
+  'own-item': 'items',
+  heritage: 'heritages',
+  ancestry: 'ancestries',
+  background: 'backgrounds',
+};
+
+/** The record one answer of a build choice names: an OPEN choice's option is a record of its source's
+ *  bucket; an `ownsFeature` option's value IS a classFeature id (build.ts buildChoiceOptions reads its
+ *  description off that record). Every other option's text is the choice's own: null. */
+export function choiceOptionRecord(
+  def: Pick<FeatChoiceDef, 'kind' | 'from' | 'ownsFeature'>,
+  value: string,
+  content: ContentDatabase,
+): OptionRecord | null {
+  if (def.kind === 'open') {
+    const bucket = OPEN_SOURCE_BUCKET[def.from?.type ?? ''];
+    return bucket ? { bucket, id: value } : null;
+  }
+  if (def.ownsFeature) {
+    const id = content.classFeatures[value] ? value : value.replace(/^aon-/, '');
+    return content.classFeatures[id] ? { bucket: 'classFeatures', id } : null;
+  }
+  return null;
+}
+
+/** An open choice's options, each naming its record (see OPEN_SOURCE_BUCKET). */
+export function openOptionsWithRecords(opts: OpenOption[], from: { type?: string } | undefined) {
+  const bucket = OPEN_SOURCE_BUCKET[from?.type ?? ''];
+  return opts.map((o) => ({ ...o, record: bucket ? { bucket, id: o.id } : null }));
+}
+
 export function AbilitySelect({
   value,
   options,
@@ -1012,7 +1119,7 @@ export function SearchSelect({
    *  the stored answer is never disabled by the caller, so a pick cannot vanish under the player.
    *  `group` puts the option under a heading; sections follow the order the groups first appear in
    *  this array, and SEARCH STILL SPANS ALL OF THEM (the filter runs before the split). */
-  options: { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[]; disabled?: string; group?: string }[];
+  options: ({ id: string; name: string; note?: string; disabled?: string; group?: string } & OptionDescStrict)[];
   onChange: (id: string) => void;
   placeholder?: string;
   /** Render just the control (no .ocard/label wrapper) — for use inside a SetupCard. */
@@ -1030,12 +1137,13 @@ export function SearchSelect({
   // read-first: pressing a row (or the filled value) opens its description card; a dedicated Select /
   // Replace button does the committing — so "press an option" never silently chooses it.
   const [descNode, setDescNode] = useState<DescNode | null>(null);
-  // Build a description node — the full ast page when descBucket is set (key=bucket, slug=id), else the
-  // plain-text description card.
-  const mkNode = (o: { id: string; name: string; description?: string; descRefs?: DescRef[] }): DescNode | null =>
+  // Build a description node — the full ast page when descBucket is set (key=bucket, slug=id, always
+  // openable), else the option's record's own page by {bucket, id} (card step 7b), else the plain-text
+  // description card.
+  const mkNode = (o: { id: string; name: string; description?: string; descRefs?: DescRef[]; record?: OptionRecord | null }): DescNode | null =>
     descBucket
-      ? { title: o.name, description: o.description ?? '', descRefs: o.descRefs, key: descBucket, slug: o.id }
-      : descNodeOf({ name: o.name, description: o.description, descRefs: o.descRefs }, 'origin');
+      ? { title: o.name, description: o.description ?? '', descRefs: o.descRefs, key: o.record?.bucket ?? descBucket, slug: o.record?.id ?? o.id }
+      : optionNode(o);
   const current = options.find((o) => o.id === value);
   const needle = q.trim().toLowerCase();
   // bug 2026-09-13: search-rank — ranked BEFORE the 100-row cap below, so the option the player
@@ -1183,7 +1291,7 @@ export function SearchSelect({
           </div>
         </div>
       )}
-      {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
+      {descNode && <OptionDescModal root={descNode} legacyKey={descBucket ?? NO_RECORD_KEY} onClose={() => setDescNode(null)} />}
     </>
   );
   if (bare) return control;
@@ -1216,7 +1324,7 @@ export function PopupSelect({
   /** `disabled` greys the option out; `disabledReason` is the short sentence saying WHY, printed in
    *  the row and repeated as its tooltip. Q27: an option that cannot be picked must look unpickable
    *  and, where the reason is knowable, say so — never render identically and be silently inert. */
-  options: { value: string; label: string; note?: string; disabled?: boolean; disabledReason?: string; description?: string; descRefs?: DescRef[] }[];
+  options: ({ value: string; label: string; note?: string; disabled?: boolean; disabledReason?: string } & OptionDesc)[];
   onChange: (value: string) => void;
   placeholder?: string;
   title?: string;
@@ -1273,8 +1381,9 @@ export function PopupSelect({
   const current = options.find((o) => o.value === value && o.value !== '');
   // A describable current pick (slot variant) gets the read-first filled control: the value opens its
   // description, a Replace button re-opens the picker — so pressing the value reads it, never re-chooses.
+  // card step 7b: an option that names its record opens that record's own page (optionNode).
   const currentNode = current && (current.description || current.descRefs?.length)
-    ? descNodeOf({ name: current.label, description: current.description, descRefs: current.descRefs }, 'origin')
+    ? optionNode({ ...current, name: current.label })
     : null;
   const useSearch = search ?? options.length > 6;
   const needle = q.trim().toLowerCase();
@@ -1413,7 +1522,7 @@ export function PopupSelect({
                   {filtered.some((o) => o.description)
                     ? // Read-first rows: press the option to read its description; the Select button chooses it.
                       filtered.map((o) => {
-                        const node = o.description ? descNodeOf({ name: o.label, description: o.description, descRefs: o.descRefs }, 'origin') : null;
+                        const node = o.description ? optionNode({ ...o, name: o.label }) : null;
                         return (
                           <PickerRow
                             key={o.value || '__none'}
@@ -1489,7 +1598,7 @@ export function PopupSelect({
       )}
       {/* At the fragment level (not inside {open}) so the FILLED slot's body can open a description
           without the picker being open. */}
-      {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
+      {descNode && <OptionDescModal root={descNode} legacyKey={NO_RECORD_KEY} onClose={() => setDescNode(null)} />}
     </>
   );
 }
@@ -1505,10 +1614,13 @@ export function MultiPickRows({
   onToggle,
   keyName = 'origin',
 }: {
-  options: { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[] }[];
+  options: ({ id: string; name: string; note?: string } & OptionDescStrict)[];
   selected: string[];
   max: number;
   onToggle: (id: string) => void;
+  /** The group's title for the experience harness (data-ctl-title). It was also the description popup's
+   *  bucket key — a group name like "Elements" names no bucket, so the card asked for `ast/Elements.json`
+   *  and fell back; since card step 7b each option names its own record instead. */
   keyName?: string;
 }) {
   const [descNode, setDescNode] = useState<DescNode | null>(null);
@@ -1527,7 +1639,7 @@ export function MultiPickRows({
       >
       {options.map((o) => {
         const on = selected.includes(o.id);
-        const node = descNodeOf({ name: o.name, description: o.description, descRefs: o.descRefs }, keyName);
+        const node = optionNode(o);
         return (
           <PickerRow
             key={o.id}
@@ -1543,7 +1655,7 @@ export function MultiPickRows({
         );
       })}
       </div>
-      {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
+      {descNode && <OptionDescModal root={descNode} legacyKey={keyName} onClose={() => setDescNode(null)} />}
     </>
   );
 }
@@ -1613,7 +1725,7 @@ function CustomBackgroundForm({ build, actions, content }: EditorProps) {
         label="Skill feat"
         value={cb.skillFeatId}
         onChange={(id) => set({ skillFeatId: id })}
-        options={skillFeats.map((f) => ({ id: f.id, name: f.name, description: f.description, descRefs: f.descRefs }))}
+        options={skillFeats.map((f) => ({ id: f.id, name: f.name, description: f.description, descRefs: f.descRefs, record: { bucket: 'feats', id: f.id } }))}
       />
     </div>
   );
@@ -1707,7 +1819,7 @@ export function SetupUnlockedChoices({ build, actions, content, callingRows = []
             options={Object.values(content.classes)
               .filter((cl) => cl.id !== build.classId)
               .sort((a, b) => a.name.localeCompare(b.name))
-              .map((cl) => ({ value: cl.id, label: cl.name, description: cl.description, descRefs: cl.descRefs }))}
+              .map((cl) => ({ value: cl.id, label: cl.name, description: cl.description, descRefs: cl.descRefs, record: { bucket: 'classes', id: cl.id } }))}
           />
           {cls2?.subclass && (
             <PopupSelect
@@ -1715,7 +1827,7 @@ export function SetupUnlockedChoices({ build, actions, content, callingRows = []
               value={build.subclassId2 ?? ''}
               onChange={(v) => actions.patch({ subclassId2: v || null })}
               clearLabel="Clear"
-              options={cls2.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
+              options={cls2.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id } }))}
             />
           )}
         </SetupCard>
@@ -1737,7 +1849,7 @@ export function SetupUnlockedChoices({ build, actions, content, callingRows = []
             value={build.mythicCalling ?? ''}
             onChange={(v) => actions.patch({ mythicCalling: v || null })}
             clearLabel="Clear"
-            options={callings.map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs }))}
+            options={callings.map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs, record: { bucket: 'classFeatures', id: f.id } }))}
           />
           {/* 2026-09-30 (desk #170): `content` is the Builder's Sources-filtered content, so a calling whose book
               is off is not offered (applySources); say why the list is empty rather than leave a bare picker, and name
@@ -1772,6 +1884,8 @@ export function SetupUnlockedChoices({ build, actions, content, callingRows = []
               label: f.name.replace(/ Dedication$/i, ''),
               description: f.description,
               descRefs: f.descRefs,
+              // The value is the archetype; the text is the dedication feat's (card step 7b).
+              record: { bucket: 'feats', id: f.id },
             }))}
           />
           <p className="setup-hint">
@@ -2512,6 +2626,7 @@ export function SnareFormulasCard({ build, actions, content, character }: Editor
           note: `Lvl ${it.level}`,
           description: it.description,
           descRefs: it.descRefs,
+          record: { bucket: 'items', id: it.id },
         }));
         return (
           <SubCard key={i} icon="ti-bulb" label={base ? `Formula ${i + 1} — common, 1st level` : `Formula ${i + 1} — up to level ${character.level}`}>
@@ -2542,7 +2657,7 @@ export function FormulaBookCard({ build, actions, content, character }: EditorPr
   const slots = formulaSlots(character, content);
   // Pools are shared by every slot in a run, so they are resolved once per run rather than per slot —
   // an alchemist's book has forty slots and the alchemical-item pool is a thousand items long.
-  const pools = new Map<string, { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[] }[]>();
+  const pools = new Map<string, { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[]; record: OptionRecord }[]>();
   // desk #170 (owner 2026-09-30, "yes the player sources should aplly to everything he has accses to"): an open
   // pool offers the character's books only (`content` here is the unfiltered database, so a fixed slot's named
   // formula is always found); a formula already written into any slot stays.
@@ -2558,6 +2673,7 @@ export function FormulaBookCard({ build, actions, content, character }: EditorPr
         note: `Lvl ${it.level ?? 0}`,
         description: it.description,
         descRefs: it.descRefs,
+        record: { bucket: 'items', id: it.id },
       }));
       pools.set(key, pool);
     }
@@ -2646,8 +2762,8 @@ export function OverridesCard({ build, actions, content, character }: EditorProp
   const unremove = (id: string) => writeOv({ removedFeatIds: (ov.removedFeatIds ?? []).filter((x) => x !== id) });
 
   const grantOptions = [
-    ...Object.values(content.feats).filter((f) => f.level <= build.level && !ov.addedFeats?.some((a) => a.featId === f.id)).map((f) => ({ id: `feat:${f.id}`, name: f.name, note: `Feat · ${cap(f.category)} · lvl ${f.level}`, description: f.description, descRefs: f.descRefs })),
-    ...Object.values(content.classFeatures).filter((f) => !ov.addedFeatures?.some((a) => a.featureId === f.id)).map((f) => ({ id: `feature:${f.id}`, name: f.name, note: `Feature · lvl ${f.level}`, description: f.description, descRefs: f.descRefs })),
+    ...Object.values(content.feats).filter((f) => f.level <= build.level && !ov.addedFeats?.some((a) => a.featId === f.id)).map((f) => ({ id: `feat:${f.id}`, name: f.name, note: `Feat · ${cap(f.category)} · lvl ${f.level}`, description: f.description, descRefs: f.descRefs, record: { bucket: 'feats', id: f.id } })),
+    ...Object.values(content.classFeatures).filter((f) => !ov.addedFeatures?.some((a) => a.featureId === f.id)).map((f) => ({ id: `feature:${f.id}`, name: f.name, note: `Feature · lvl ${f.level}`, description: f.description, descRefs: f.descRefs, record: { bucket: 'classFeatures', id: f.id } })),
   ].sort((a, b) => a.name.localeCompare(b.name));
   const removeOptions = character.feats
     .filter((f, i, arr) => arr.findIndex((x) => x.featId === f.featId) === i && !ov.removedFeatIds?.includes(f.featId))
@@ -2696,7 +2812,7 @@ export function OverridesCard({ build, actions, content, character }: EditorProp
   const spellOptions = Object.values(content.spells)
     .filter((s) => !ov.addedSpells?.some((a) => a.spellId === s.id))
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((s) => ({ id: s.id, name: s.name, note: (s.ritual ? 'Ritual' : cap(s.traditions[0] ?? 'spell')) + ` · rank ${s.rank}`, description: s.description, descRefs: s.descRefs }));
+    .map((s) => ({ id: s.id, name: s.name, note: (s.ritual ? 'Ritual' : cap(s.traditions[0] ?? 'spell')) + ` · rank ${s.rank}`, description: s.description, descRefs: s.descRefs, record: { bucket: 'spells', id: s.id } }));
 
   // --- Change an existing feat/feature (edit its name + description text) ---
   type EditMap = 'feats' | 'classFeatures';
@@ -3116,7 +3232,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       Object.values(content.feats)
         .filter((f) => f.level <= 1 && (f.category === 'general' || f.category === 'skill'))
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map((f) => ({ id: f.id, name: f.name, note: f.category === 'skill' ? 'skill feat' : undefined, description: f.description, descRefs: f.descRefs })),
+        .map((f) => ({ id: f.id, name: f.name, note: f.category === 'skill' ? 'skill feat' : undefined, description: f.description, descRefs: f.descRefs, record: { bucket: 'feats', id: f.id } })),
     [content.feats],
   );
   // Surface non-common rarity (uncommon/rare from adventure-path content) as a note.
@@ -3188,7 +3304,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           value={build.ancestryId}
           onChange={requestAncestryChange}
           descBucket="ancestries"
-          options={Object.values(content.ancestries).map((a) => ({ id: a.id, name: a.name, note: note(a.rarity), description: a.description, descRefs: a.descRefs }))}
+          options={Object.values(content.ancestries).map((a) => ({ id: a.id, name: a.name, note: note(a.rarity), description: a.description, descRefs: a.descRefs, record: { bucket: 'ancestries', id: a.id } }))}
         />
         {ancestry && (
           <ChoiceGrants
@@ -3257,6 +3373,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             note: note(h.rarity),
             description: h.description,
             descRefs: h.descRefs,
+            record: { bucket: 'heritages', id: h.id },
             group: h.ancestryId === null ? 'Versatile heritages' : `${ancestry?.name ?? 'Ancestry'} heritages`,
           }))}
         />
@@ -3350,7 +3467,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   placeholder={`${def.prompt}…`}
                   value={build.featChoices[key] ?? ''}
                   onChange={(v) => actions.setFeatChoice(key, v)}
-                  options={(def.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description }))}
+                  options={(def.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description, record: choiceOptionRecord(def, o.value, content) }))}
                 />
               )}
               {def.note && <p className="setup-hint">{def.note}</p>}
@@ -3390,7 +3507,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   placeholder={`${def.prompt}…`}
                   value={build.featChoices[key] ?? ''}
                   onChange={(v) => actions.setFeatChoice(key, v)}
-                  options={narrowed.map((o) => ({ value: o.value, label: o.label, description: o.description, disabled: !!(o as { disabled?: string }).disabled, disabledReason: (o as { disabled?: string }).disabled }))}
+                  options={narrowed.map((o) => ({ value: o.value, label: o.label, description: o.description, record: choiceOptionRecord(def, o.value, content), disabled: !!(o as { disabled?: string }).disabled, disabledReason: (o as { disabled?: string }).disabled }))}
                 />
               )}
               {reasons.map((r, i) => (
@@ -3409,7 +3526,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         FEAT_PICK_GRANTS[build.heritageId] &&
         (() => {
           const spec = FEAT_PICK_GRANTS[build.heritageId!];
-          const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description }));
+          const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description, record: { bucket: 'feats', id: f.id } }));
           return (
             <SubCard icon="ti-medal" label={spec.prompt}>
               <PopupSelect
@@ -3464,6 +3581,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               note: note(b.rarity),
               description: b.description,
               descRefs: b.descRefs,
+              // card step 7b: the popup opens the background's own page (it opened as 'origin' and fell back).
+              record: { bucket: 'backgrounds', id: b.id },
               // A printed ancestry gate (Sewer Dragon: kobold only) greys the option with its reason.
               disabled:
                 b.ancestryPrerequisite?.length && build.ancestryId && !b.ancestryPrerequisite.includes(build.ancestryId)
@@ -3472,9 +3591,10 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             })),
           ]}
         />
-        {/* The chosen background's TrustMarker on the card itself: this picker opens its rows as
-            `origin` (no descBucket), so SearchSelect cannot draw it, and a created background whose
-            print is only partly applied must say so where the player looks. */}
+        {/* The chosen background's TrustMarker on the card itself: SearchSelect draws none on its
+            filled control, and a created background whose print is only partly applied must say so
+            where the player looks. (Its popup opens the record by {backgrounds, id} since card step
+            7b, so the popup's own marker finds it too.) */}
         {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && <TrustMarker bucket="backgrounds" id={background.id} />}
         {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && (
           <ChoiceGrants
@@ -3616,7 +3736,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             options={withCustomAnswer(
               background.choice.kind === 'skills'
                 ? trainedSkillOptions(buildCharacter(build, content), background.choice.minRank ?? 'trained')
-                : (background.choice.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description })),
+                : (background.choice.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description, record: choiceOptionRecord(background.choice!, o.value, content) })),
               background.choice,
               backgroundChoiceValue(build, background),
             )}
@@ -3668,7 +3788,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           picker: without one the answer can never be given and the feat is never granted. */}
       {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && FEAT_PICK_GRANTS[background.id] && (() => {
         const spec = FEAT_PICK_GRANTS[background.id];
-        const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description }));
+        const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description, record: { bucket: 'feats', id: f.id } }));
         return (
           <SubCard icon="ti-medal" label={spec.prompt}>
             <PopupSelect
@@ -3726,7 +3846,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           value={build.classId}
           onChange={requestClassChange}
           descBucket="classes"
-          options={Object.values(content.classes).map((c) => ({ id: c.id, name: c.name, note: note(c.rarity), description: c.description, descRefs: c.descRefs }))}
+          options={Object.values(content.classes).map((c) => ({ id: c.id, name: c.name, note: note(c.rarity), description: c.description, descRefs: c.descRefs, record: { bucket: 'classes', id: c.id } }))}
         />
         {cls && (
           <ChoiceGrants
@@ -3809,6 +3929,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 label: o.name,
                 description: o.description,
                 descRefs: o.descRefs,
+                record: { bucket: 'classFeatures', id: o.id },
                 ...(allowed ? {} : { disabled: true, disabledReason: `Needs a ${need} sanctification.` }),
               };
             })}
@@ -3873,7 +3994,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               title={gsc.prompt}
               value={gsc.options.includes(cur) ? cur : ''}
               onChange={(v) => actions.patch({ subclassSpellChoice: { ...(build.subclassSpellChoice ?? {}), [subOpt.id]: v } })}
-              options={gsc.options.map((id) => ({ value: id, label: content.spells[id]?.name ?? id, description: content.spells[id]?.description }))}
+              options={gsc.options.map((id) => ({ value: id, label: content.spells[id]?.name ?? id, description: content.spells[id]?.description, record: { bucket: 'spells', id } }))}
             />
           </SubCard>
         );
@@ -3920,11 +4041,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 title={g.name}
                 value={selected[0] ?? ''}
                 onChange={(v) => actions.toggleExtraChoice(g.id, v, 1)}
-                options={offered.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
+                options={offered.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id } }))}
               />
             ) : (
               <MultiPickRows
-                options={offered.map((o) => ({ id: o.id, name: o.name, description: o.description, descRefs: o.descRefs }))}
+                options={offered.map((o) => ({ id: o.id, name: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id } }))}
                 selected={selected}
                 max={max}
                 onToggle={(id) => actions.toggleExtraChoice(g.id, id, max)}
@@ -3995,6 +4116,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                     value: id,
                     label: label(id),
                     description: content.classFeatures[`adept-benefit-${id}`]?.description,
+                    // Its own text, not a page: the adept-benefit record's tree is the WHOLE implement page
+                    // (Paragon included) until card step 12 cuts shared pages (not-own-page.json).
+                    record: null,
                   }))}
                 />
                 {/* Gated on the pick as well as the level: with no Adept chosen, "the other one" is
@@ -4018,6 +4142,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                         value: id,
                         label: label(id),
                         description: content.classFeatures[`paragon-benefit-${id}`]?.description,
+                        // Its own text: the tree is the whole implement page until card step 12 (see Adept above).
+                        record: null,
                       }))}
                     />
                   )}
@@ -4053,6 +4179,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   note: o.tacticTier && o.tacticTier !== 'basic' ? o.tacticTier : undefined,
                   description: o.description,
                   descRefs: o.descRefs,
+                  record: { bucket: 'actions', id: o.id },
                 }))}
                 selected={selected}
                 max={max}
@@ -4091,6 +4218,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   note: o.diacritic ? `diacritic · level ${o.level}` : `level ${o.level}`,
                   description: o.description,
                   descRefs: o.descRefs,
+                  record: { bucket: 'runesmithRune', id: o.id },
                 }))}
                 selected={selected}
                 max={max}
@@ -4173,7 +4301,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                           inventorModifications: { ...(build.inventorModifications ?? {}), [t.key]: v || null },
                         })
                       }
-                      options={opts.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
+                      options={opts.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id } }))}
                     />
                   </SubCard>
                 );
@@ -4233,7 +4361,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   onChange={(v) => actions.patch({ gateForks: { ...(build.gateForks ?? {}), [key]: v } })}
                   options={[
                     { value: '', label: '— Expand the Portal (bonus impulse)' },
-                    ...opts.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs })),
+                    ...opts.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id } })),
                   ]}
                 />
                 {cur === '' &&
@@ -4261,7 +4389,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                           title="Expand the Portal — bonus impulse feat"
                           value={build.gateExpands?.[key] ?? ''}
                           onChange={(v) => actions.patch({ gateExpands: { ...(build.gateExpands ?? {}), [key]: v } })}
-                          options={impulses.map((f) => ({ value: f.id, label: `${f.name} (L${f.level})`, description: f.description, descRefs: f.descRefs }))}
+                          options={impulses.map((f) => ({ value: f.id, label: `${f.name} (L${f.level})`, description: f.description, descRefs: f.descRefs, record: { bucket: 'feats', id: f.id } }))}
                         />
                       </div>
                     );
@@ -4296,7 +4424,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                           title="Fork the Path — bonus impulse feat (that element, non-composite)"
                           value={build.gateForkImpulses?.[key] ?? ''}
                           onChange={(v) => actions.patch({ gateForkImpulses: { ...(build.gateForkImpulses ?? {}), [key]: v } })}
-                          options={impulses.map((f) => ({ value: f.id, label: `${f.name} (L${f.level})`, description: f.description, descRefs: f.descRefs }))}
+                          options={impulses.map((f) => ({ value: f.id, label: `${f.name} (L${f.level})`, description: f.description, descRefs: f.descRefs, record: { bucket: 'feats', id: f.id } }))}
                         />
                       </div>
                     );
@@ -4313,7 +4441,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           const opts = attuned
             .map((id) => group.options.find((o) => o.id === id))
             .filter(Boolean)
-            .map((o) => ({ value: o!.id, label: o!.name, description: o!.description, descRefs: o!.descRefs }));
+            .map((o) => ({ value: o!.id, label: o!.name, description: o!.description, descRefs: o!.descRefs, record: { bucket: 'classFeatures', id: o!.id } }));
           // Empty until picked. Showing the first attuned apparition made an unmade choice look made;
           // buildCharacter falls back to that same first one, so the character still works meanwhile.
           const current = attuned.includes(build.primaryApparition ?? '') ? build.primaryApparition! : '';
@@ -4347,6 +4475,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               note: [note(d.rarity), d.domains?.slice(0, 3).join(', ')].filter(Boolean).join(' · ') || undefined,
               description: d.description,
               descRefs: d.descRefs,
+              record: { bucket: 'deities', id: d.id },
             }))}
           />
           {/* A deity can ask a question of its own — Lurlup's "Sanctification: can be Unholy". Deities
@@ -4382,6 +4511,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                     label: content.items[r.id]?.name ?? r.id,
                     description: content.items[r.id]?.description,
                     descRefs: content.items[r.id]?.descRefs,
+                    record: { bucket: 'items', id: r.id },
                   })),
                 ]}
               />
@@ -4419,7 +4549,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 title="Eidolon type"
                 value={cur}
                 onChange={(v) => actions.patch({ archetypeEidolonType: v })}
-                options={opts.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
+                options={opts.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs, record: { bucket: 'classFeatures', id: o.id } }))}
               />
             </SetupCard>
           );
@@ -4522,7 +4652,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   title="Add a cantrip"
                   value=""
                   onChange={(v) => v && writeArchetypeCantrip(v)}
-                  options={cantripList.map((s) => ({ value: s.id, label: s.name, description: s.description, descRefs: s.descRefs }))}
+                  options={cantripList.map((s) => ({ value: s.id, label: s.name, description: s.description, descRefs: s.descRefs, record: { bucket: 'spells', id: s.id } }))}
                 />
                 {rowCantrips.length > 0 && (
                   <div className="spr-chips" style={{ marginTop: 6 }}>
@@ -4562,7 +4692,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                         options={Object.values(content.spells)
                           .filter((s) => s.rank === rank && s.traditions.includes(trad))
                           .sort((a, b) => a.name.localeCompare(b.name))
-                          .map((s) => ({ value: s.id, label: s.name, description: s.description, descRefs: s.descRefs }))}
+                          .map((s) => ({ value: s.id, label: s.name, description: s.description, descRefs: s.descRefs, record: { bucket: 'spells', id: s.id } }))}
                       />
                     ))}
                 </SubCard>
@@ -4583,6 +4713,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               label: content.spells[id]?.name ?? id,
               description: content.spells[id]?.description,
               descRefs: content.spells[id]?.descRefs,
+              record: { bucket: 'spells', id },
             }))}
           />
         </SetupCard>
@@ -4596,8 +4727,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             value={build.voiceOfNature ?? ''}
             onChange={(v) => actions.patch({ voiceOfNature: v || null })}
             options={[
-              { value: 'animal-empathy', label: content.feats['animal-empathy']?.name ?? 'Animal Empathy', description: content.feats['animal-empathy']?.description, descRefs: content.feats['animal-empathy']?.descRefs },
-              { value: 'plant-empathy', label: content.feats['plant-empathy']?.name ?? 'Plant Empathy', description: content.feats['plant-empathy']?.description, descRefs: content.feats['plant-empathy']?.descRefs },
+              { value: 'animal-empathy', label: content.feats['animal-empathy']?.name ?? 'Animal Empathy', description: content.feats['animal-empathy']?.description, descRefs: content.feats['animal-empathy']?.descRefs, record: { bucket: 'feats', id: 'animal-empathy' } },
+              { value: 'plant-empathy', label: content.feats['plant-empathy']?.name ?? 'Plant Empathy', description: content.feats['plant-empathy']?.description, descRefs: content.feats['plant-empathy']?.descRefs, record: { bucket: 'feats', id: 'plant-empathy' } },
             ]}
           />
         </SetupCard>
@@ -5260,7 +5391,7 @@ export function EffectChoicesPicker({
           const opts = openChoiceOptions(ch.openFrom, content, { hideLegacy: build.hideLegacy });
           return (
             <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt} pending={pending}>
-              <SearchSelect bare label={ch.prompt} placeholder="Search…" value={build.effectChoices?.[ecKey] ?? null} onChange={set} options={opts} />
+              <SearchSelect bare label={ch.prompt} placeholder="Search…" value={build.effectChoices?.[ecKey] ?? null} onChange={set} options={openOptionsWithRecords(opts, ch.openFrom)} />
             </SubCard>
           );
         }
@@ -5291,7 +5422,8 @@ export function EffectChoicesPicker({
               onChange={set}
               // An option may carry a note instead of a grant (a kineticist gate junction: only
               // Elemental Resistance moves a stat), so the note is shown as the description.
-              options={effectChoiceOptions(ch, build, content).map((o) => ({ value: o.value, label: o.label, description: o.note }))}
+              // The note is the option's own text, not a record's (card step 7b).
+              options={effectChoiceOptions(ch, build, content).map((o) => ({ value: o.value, label: o.label, description: o.note, record: null }))}
             />
           </SubCard>
         );
