@@ -32,11 +32,6 @@
       "verdict": { "s2": "CLASS_MISMATCH" }
     },
     {
-      "key": "actionDetail|actions:treat-wounds",
-      "why": "trained Treat Wounds from the Main tab: the page's Requirements line is dropped with the header, and nothing says what the trained rank gives",
-      "verdict": { "labels": { "Requirements": "MISSING" }, "unnamed": ["Source"] }
-    },
-    {
       "key": "pin|feats:zombie-horde-impossible-magic",
       "why": "stored pin is key:title until step 19 (play.ts togglePinnedDesc, Builder.tsx pin toggle) — an Impossible Magic Zombie Horde pinned from the feat popup and reopened from the Main tab's Pinned list opens the Clockwork Reanimator feat of the same name: the store keeps {title, description, descRefs, key} and drops the slug the star's node carries, so the reopened pin reads feats + the slug of its title (refuter, card step 7a round 1; a pre-existing S5 row, kept as a guard)",
       "verdict": { "identity": true }

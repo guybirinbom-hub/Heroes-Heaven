@@ -43,7 +43,9 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *   FeatDetail      feats / class features / heritage rows, built by FeatsTab's own featEntries
  *   ItemDetail      every item with a page, and a hidden cursed item through playerFacingContent
  *   SpellDetail     the spell popup (stat rows from fields, body from the description string)
- *   ActionDetail    opened by clicking its chip on MainTab (curated activities + feat actions)
+ *   ActionDetail    opened by clicking its chip on MainTab (curated activities + feat actions) — since
+ *                   card step 9 the record's 'mine' RecordCard (CARD_ON.actionDetail), modelled by the
+ *                   ledger with the same printed set (empty), the tree read by {bucket, id}
  *   StatDetail      "Full text" of a situational line — since card step 5 the 'mine' RecordCard
  *                   (CARD_ON.statDetail), modelled by the ledger with the same printed set (empty)
  *   browse          DescriptionModal (the search popup) for {bucket, id}
@@ -102,6 +104,9 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *  - (card step 7a, fixer round 3) FeatDetail.tsx featPinNode `title: entry.name` →
  *    `entry.name.split(" (")[0]` (the stored pin loses the pick) → the named-case test red on
  *    'pin|feats:caustic-nectar' (pick "Acid"): DOM identity false vs the ledger's true.
+ *  - (card step 9, 2026-10-06) scripts/lib/card-scope.mjs `actCard` forced undefined (the ledger models
+ *    the legacy action popup while the card is on) → the agreement test red (44 disagreements) and the
+ *    baseline test red (48 sample rows differ).
  * Measured in round 0 (that code is unchanged since):
  *  - RecordCard.tsx fallback: headerActions moved back after the title → the headerActions test red.
  *  - RecordCard.tsx page branch: the TrustMarker dropped from headerControls → the TrustMarker test red.
@@ -275,7 +280,10 @@ const REGIONS_MEASURED: Record<string, string[]> = {
   featDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-activate', 'div.sd-stats', 'div.card-ours', 'div.card-uselines'],
   itemDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-stats', 'div.sd-uses', 'div.sd-choice-note'],
   spellDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-stats', 'div.sd-heighten-h'],
-  actionDetail: ['div.action-detail-traits'],
+  // Card step 9: the action popup is the 'mine' card — its header (name, glyph, chips, the skill label,
+  // prepare toggle and action pin, Back / PinStar / close) sits beside its body, as on statDetail.
+  // batch card premise: action-2292 "Trigger An ally is about to use an action that requires a skill check or attack roll"
+  actionDetail: cardOn('actionDetail') ? ['div.ast-head', 'div.ast-traits', 'div.picker-head'] : ['div.action-detail-traits'],
   // Card step 5: the 'mine' card's own header (name, cost, chips, Back / PinStar / close) sits beside its
   // body, as on the browse card; the legacy popup read only its body.
   // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
@@ -575,6 +583,19 @@ async function renderActions(list: Row[], extraFeats: string[] = []): Promise<Ma
     }
     if (!found) { out.set(keyOf(row), null); continue; }
     await click(found);
+    if (cardOn('actionDetail')) {
+      // Card step 9: the popup is the record's 'mine' RecordCard (CARD_ON.actionDetail), read as the
+      // statDetail card is — the page lane's body is the card's .ast-body (its ours box and our Source line
+      // are [data-ours], outside the read); the no-page lane's is .info-body.
+      // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+      const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
+      const cpop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
+      const body = page ? page.querySelector(':scope > .ast-body') : cpop?.querySelector('.info-body') ?? null;
+      noteRegions('actionDetail', cpop, body ? [body] : []);
+      out.set(keyOf(row), { lane: page ? 'tree' : 'md', body, blocks: domBlocks(body), printed: [], leak: leakIn(body) });
+      await click(m.host.querySelector('.card-mine .picker-close'));
+      continue;
+    }
     const pop = m.host.querySelector('.picker.info-modal')!;
     const bodies = [...pop.querySelectorAll('.action-detail-desc')];
     noteRegions('actionDetail', pop.querySelector('.info-body'), bodies);

@@ -6,6 +6,8 @@ import type { ReactElement } from 'react';
 import { build, content } from './_content';
 import { renderDom } from './_render';
 import { ActionDetailModal, MainTab } from '../src/sheet/MainTab';
+import { ACTIVITIES } from '../src/rules/actions';
+import { CARD_ON } from '../src/sheet/cardSurfaces';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
@@ -45,6 +47,21 @@ import type { Character, ContentDatabase, InventoryItem } from '../src/rules/typ
  * Measured 2026-10-02: snapshot written on HEAD 525af84 before any edit (693 popups: 2 Pinned rows,
  * 425 encounter chips, 203 exploration, 63 downtime), then compared after the hoist: 0 differences.
  *
+ * Card step 9 (CARD_ON.actionDetail): an action that names its record opens that record's 'mine' card,
+ * so the named-case assertions read either popup (the card's .ast-head or the legacy .picker-head), and
+ * the snapshot block is re-baselined: a popup that moved onto the card is listed as changed for that
+ * reason, every other popup stays byte-equal. Measured 2026-10-06 against a snapshot written on HEAD
+ * 7945973 before any step-9 edit: 693 popups, 672 changed — every one of them now the record's mine
+ * card — and the other 21 (Recover, Recover (Bed Rest) and Retrain for each of the 7 characters: curated
+ * downtime activities with no action or feat record) byte-equal.
+ * Fixer round 3 pins that independently of the new markup: exactly 672 changed / 21 unchanged, the
+ * changed rows by surface (activity 645, feat 15, granted 3, rune 4, tactic 5 — each name resolves to a
+ * record on a surface step 9 switched), and the unchanged rows exactly Recover, Recover (Bed Rest) and
+ * Retrain. MUTATION LINE (measured red 2026-10-06, MainTab.tsx restored from a scratch copy, sha1
+ * matched): a curated activity with no record handed `{ bucket: 'actions', id: actionId(a.name) }` (so
+ * Recover and Retrain open a card) → this block red on the counts (693 / 0); the 'card-mine' rule
+ * before it stayed green.
+ *
  * MUTATION LINES (each measured red on 2026-10-02, then restored byte-exact):
  *  - MainTab render site: drop `onPlay={onPlay}` → blocks 1, 2 (both cases) and 4 red.
  *  - ActionDetailModal: `pinned={new Set()}` on the star → blocks 1, 3 (the pinned case) and 4 red.
@@ -59,6 +76,8 @@ import type { Character, ContentDatabase, InventoryItem } from '../src/rules/typ
  */
 const SNAP = process.env.CARD_ACTION_HOIST_SNAPSHOT;
 const WRITE = process.env.CARD_ACTION_HOIST_WRITE === '1';
+/** Card step 9, measured 2026-10-06 against the pre-step-9 snapshot: the 672 changed popups by surface. */
+const CHANGED_BY_SURFACE: Record<string, number> = { activity: 645, feat: 15, granted: 3, rune: 4, tactic: 5 };
 
 const db: ContentDatabase = content();
 const readGz = (p: string) => JSON.parse(gunzipSync(readFileSync(p)).toString('utf8')) as Record<string, AstNode>;
@@ -92,6 +111,15 @@ function mount(el: ReactElement) {
 }
 const txt = (el: Element | null | undefined) => (el?.textContent ?? '').replace(/\s+/g, ' ').trim();
 const glyphs = (el: Element | null | undefined) => [...(el?.querySelectorAll('.pf2-action') ?? [])].map((g) => g.getAttribute('aria-label'));
+/** The chip's cost as a popup's header shows it, lower-cased: ActionGlyph's label in .action-detail-cost
+ *  (the legacy popup's glyph; on the step-9 card our marked glyph, drawn where the page's print is not the
+ *  chip's cost), else the step-9 card's printed page glyph (.ast-ag.head, its words). */
+const headCost = (pop: Element | null | undefined) => {
+  const ours = glyphs(pop?.querySelector('.action-detail-cost')).map((l) => (l ?? '').toLowerCase());
+  return ours.length ? ours : [...(pop?.querySelectorAll('.ast-head .ast-ag.head') ?? [])].map((g) => (g.getAttribute('title') ?? '').toLowerCase());
+};
+/** The popup's header row: the card's .ast-head (page lane) or the .picker-head (legacy, no-page lane). */
+const HEAD = '.picker-head, .ast-head';
 const noPlay: PlayUpdater = () => undefined;
 
 /* ------------------------------------------------------------------ the synthesized characters */
@@ -153,7 +181,9 @@ function collect(s: Scenario): Record<string, string> {
       const el = r.host.querySelectorAll(sel)[i];
       r.click(el);
       const overlay = r.host.querySelector('.picker-overlay');
-      if (!overlay || !overlay.querySelector('.info-modal')) throw new Error(`${s.id} ${place} #${i}: no popup`);
+      // Card step 9: an action that names its record opens its 'mine' card — the page lane's shell is
+      // .ast-modal.card-mine, the no-page lane's .picker.info-modal.card-mine.
+      if (!overlay || !overlay.querySelector('.info-modal, .ast-modal')) throw new Error(`${s.id} ${place} #${i}: no popup`);
       out[`${s.id}|${place}|${i}|${nameOf(el)}`] = overlay.outerHTML;
       r.click(overlay.querySelector('.picker-close'));
       if (r.host.querySelector('.picker-overlay')) throw new Error(`${s.id} ${place} #${i}: popup did not close`);
@@ -197,20 +227,26 @@ describe('every Main-tab action popup, opened through MainTab', () => {
     expect(keys.length).toBeGreaterThan(200);
     for (const s of SCENARIOS) expect(keys.some((k) => k.startsWith(`${s.id}|enc|`)), s.id).toBe(true);
     // Halfling Luck, from its chip and from its Pinned row, with the star ON (it is pinned).
+    // Card step 9: read off whichever popup the switch opens — the card's page header or the legacy head.
+    // batch card premise: feat-4458 "Frequency once per day"
     for (const place of ['enc', 'pinned']) {
       const hl = frag(find('halfling-pinned', place, 'Halfling Luck'));
-      expect(glyphs(hl.querySelector('.action-detail-cost'))).toEqual(['Free action']);
-      expect(hl.querySelector('.picker-head .pin-star.on'), `${place}: pinned star`).not.toBeNull();
+      // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+      expect(headCost(hl)).toEqual(['free action']);
+      expect(hl.querySelector('.picker-head .pin-star.on, .ast-head .pin-star.on'), `${place}: pinned star`).not.toBeNull();
     }
     expect(frag(find('halfling-noplay', 'enc', 'Halfling Luck')).querySelector('.pin-star'), 'no onPlay, no star').toBeNull();
-    expect(frag(find('halfling-pinned', 'enc', 'Aid')).querySelector('.action-detail-desc > .ast-body')).not.toBeNull();
-    expect(glyphs(frag(find('halfling-pinned', 'enc', 'High Jump')).querySelector('.action-detail-cost'))).toEqual(['One action']);
-    expect(glyphs(frag(find('fighter-plain', 'enc', 'High Jump')).querySelector('.action-detail-cost'))).toEqual(['Two actions']);
+    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+    expect(frag(find('halfling-pinned', 'enc', 'Aid')).querySelector('.action-detail-desc > .ast-body, .ast-pop > .ast-body')).not.toBeNull();
+    expect(headCost(frag(find('halfling-pinned', 'enc', 'High Jump')))).toEqual(['one action']);
+    expect(headCost(frag(find('fighter-plain', 'enc', 'High Jump')))).toEqual(['two actions']);
     expect(frag(find('fighter-boosted', 'enc', 'Leap')).querySelector('.ast-body')).not.toBeNull();
-    expect(txt(frag(find('fighter-plain', 'enc', 'Shield Block')).querySelector('.info-title'))).toBe('Shield Block');
+    // batch card premise: feat-5212 "Trigger While you have your shield raised"
+    expect(txt(frag(find('fighter-plain', 'enc', 'Shield Block')).querySelector('.info-title, .ast-name'))).toBe('Shield Block');
     // Tactics: prepared ones show an ON toggle, the rest a disabled one (all prepared slots are full).
     const tacticPops = tactics.map((id) => frag(find('commander', 'enc', db.actions[id]!.name)));
-    const toggles = tacticPops.map((p) => p.querySelector('.picker-head .prep-toggle') as HTMLButtonElement | null);
+    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+    const toggles = tacticPops.map((p) => p.querySelector(`${HEAD.split(', ').map((h) => `${h} .prep-toggle`).join(', ')}`) as HTMLButtonElement | null);
     expect(toggles.every((t) => !!t)).toBe(true);
     expect(toggles.some((t) => t!.classList.contains('on'))).toBe(true);
     expect(toggles.some((t) => !t!.classList.contains('on') && t!.disabled)).toBe(true);
@@ -219,7 +255,8 @@ describe('every Main-tab action popup, opened through MainTab', () => {
     expect(runePops.filter((p) => p.querySelector('.prep-toggle.on')).length).toBe(1);
     expect(runePops.filter((p) => p.querySelector('.prep-toggle') && !p.querySelector('.prep-toggle.on')).length).toBe(3);
     // The resonant weapon's granted free action.
-    expect(glyphs(frag(find('wish-blade', 'enc', 'Conduct Energy')).querySelector('.action-detail-cost'))).toEqual(['Free action']);
+    // batch card premise: action-704 "You channel energy into your weapon"
+    expect(headCost(frag(find('wish-blade', 'enc', 'Conduct Energy')))).toEqual(['free action']);
     expect(Object.keys(popups).some((k) => k.includes('|exp|')) && Object.keys(popups).some((k) => k.includes('|dt|'))).toBe(true);
   });
 
@@ -231,12 +268,54 @@ describe('every Main-tab action popup, opened through MainTab', () => {
     expect(existsSync(SNAP!), `snapshot ${SNAP} missing — write it on the pre-hoist tree with CARD_ACTION_HOIST_WRITE=1`).toBe(true);
     const before = JSON.parse(readFileSync(SNAP!, 'utf8')) as Record<string, string>;
     expect(Object.keys(popups)).toEqual(Object.keys(before));
-    let diffs = 0;
-    for (const k of Object.keys(before)) {
-      if (popups[k] !== before[k]) diffs++;
-      expect(popups[k], k).toBe(before[k]);
+    /* Card step 9 re-baseline (honest, like card-browse's): a snapshot written BEFORE step 9 legitimately
+       differs for every popup that now opens its record's 'mine' card (CARD_ON.actionDetail) — the
+       reason for each changed row is that one. Every other popup (an action naming no record: a curated
+       activity with no action / feat record, an item's activation) must still be byte-equal, and no
+       card may equal the legacy markup it replaced. A snapshot written on the step-9 tree (or with the
+       switch off) compares byte-equal outright: no row is on the card list then. Measured 2026-10-06
+       against the pre-step-9 snapshot (HEAD 7945973): the counts are pinned below. */
+    const onCard = Object.keys(before).filter((k) => popups[k].includes('card-mine') && !before[k].includes('card-mine'));
+    const changed = Object.keys(before).filter((k) => popups[k] !== before[k]);
+    const unchanged = Object.keys(before).filter((k) => popups[k] === before[k]);
+    console.log(`card-action-hoist: ${Object.keys(before).length} popups, ${changed.length} changed, ${onCard.length} now the record's mine card`);
+    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+    expect(changed.filter((k) => !onCard.includes(k)), 'a popup that did not move onto the card changed').toEqual([]);
+    for (const k of Object.keys(before)) if (!onCard.includes(k)) expect(popups[k], k).toBe(before[k]);
+    // batch card premise: action-2292 "Trigger An ally is about to use an action that requires a skill check or attack roll"
+    expect(onCard.filter((k) => !changed.includes(k))).toEqual([]);
+    /* Pinned independently of the new markup (fixer round 3): the rule above lets any popup that now
+       contains 'card-mine' change, so it alone would let a no-record popup (Recover, Retrain) start
+       opening a card unnoticed. The counts are exact (measured 2026-10-06 against the pre-step-9
+       snapshot, HEAD 7945973), each changed row's name resolves to a record on one of the surfaces step 9
+       switched, and the unchanged rows are exactly the curated activities that name no record. */
+    // Applies to a snapshot written before step 9 (no card markup in it) while the switch is on.
+    const preStep9 = !Object.values(before).some((h) => h.includes('card-mine'));
+    if (preStep9 && CARD_ON.actionDetail) {
+      expect(Object.keys(before).length, 'the pre-step-9 snapshot').toBe(693);
+      expect([changed.length, unchanged.length], 'changed / unchanged').toEqual([672, 21]);
+      const slug = (n: string) => n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const byName = (b: Record<string, { name: string } | undefined> | undefined, n: string) => Object.values(b ?? {}).find((r) => r?.name === n);
+      const surfaceOf = (k: string): string => {
+        const n = k.split('|').slice(3).join('|');
+        if (byName(db.runesmithRune as never, n)) return 'rune';
+        const act = byName(db.actions as never, n) as { traits?: string[] } | undefined;
+        if (act?.traits?.includes('tactic')) return 'tactic';
+        const cur = ACTIVITIES.find((a) => a.name === n);
+        if (cur) return db.actions[slug(n)] || (cur.featId && db.feats[cur.featId]) ? 'activity' : 'none';
+        if (byName(db.feats as never, n)) return 'feat';
+        if (byName(db.classFeatures as never, n)) return 'classFeature';
+        if (act) return 'granted';
+        return 'none';
+      };
+      const SURFACES = ['activity', 'feat', 'classFeature', 'granted', 'tactic', 'rune'];
+      const tally: Record<string, number> = {};
+      for (const k of changed) tally[surfaceOf(k)] = (tally[surfaceOf(k)] ?? 0) + 1;
+      expect(changed.filter((k) => !SURFACES.includes(surfaceOf(k))), 'a changed popup on no switched surface').toEqual([]);
+      expect(tally).toEqual(CHANGED_BY_SURFACE);
+      expect(unchanged.map((k) => surfaceOf(k)).every((s) => s === 'none')).toBe(true);
+      expect([...new Set(unchanged.map((k) => k.split('|').slice(3).join('|')))].sort()).toEqual(['Recover', 'Recover (Bed Rest)', 'Retrain']);
     }
-    expect(diffs).toBe(0);
   });
 });
 
@@ -301,13 +380,15 @@ describe('the row stars on strike rows and full action rows', () => {
 /* -------------------------------------------------------- the exported component on its own */
 
 describe('ActionDetailModal as a module-level component', () => {
+  // Card step 9: MainTab now hands each feat action and tactic its record (Act.record), which opens the
+  // record's card; these build the same props.
   const featAct = (id: string) => {
     const f = db.feats[id]!;
-    return { name: f.name, cost: f.actionCost, desc: f.description, descRefs: f.descRefs, traits: f.traits };
+    return { name: f.name, cost: f.actionCost, desc: f.description, descRefs: f.descRefs, traits: f.traits, record: { bucket: 'feats', id } };
   };
   const actionAct = (id: string) => {
     const a = db.actions[id]!;
-    return { id: a.id, name: a.name, cost: a.actionCost, desc: a.description, descRefs: a.descRefs, traits: a.traits };
+    return { id: a.id, name: a.name, cost: a.actionCost, desc: a.description, descRefs: a.descRefs, traits: a.traits, record: { bucket: 'actions', id } };
   };
 
   it('with the props MainTab hands it, it prints exactly MainTab\'s popup (feat action, pinned)', () => {
@@ -346,9 +427,11 @@ describe('ActionDetailModal as a module-level component', () => {
   it('character drives the marked cost: High Jump is one action with Quick Jump, two without', () => {
     const hj = { ...actionAct('high-jump'), skill: 'Athletics' };
     const one = mount(<ActionDetailModal detail={{ a: hj, pinnable: true }} onClose={() => undefined} character={halfling()} content={db} onPlay={noPlay} pinned={new Set()} />);
-    expect(glyphs(one.host.querySelector('.action-detail-cost'))).toEqual(['One action']);
+    // Card step 9: the card's header glyph (the page's, with the marked cost swapped in) or the legacy one.
+    // batch card premise: feat-5196 "You can use High Jump and Long Jump as a single action instead of 2 actions"
+    expect(headCost(one.host)).toEqual(['one action']);
     const two = mount(<ActionDetailModal detail={{ a: hj, pinnable: true }} onClose={() => undefined} character={build('fighter', 2)} content={db} onPlay={noPlay} pinned={new Set()} />);
-    expect(glyphs(two.host.querySelector('.action-detail-cost'))).toEqual(['Two actions']);
+    expect(headCost(two.host)).toEqual(['two actions']);
   });
 
   it('pinned drives the star, onPlay receives the pin, and without onPlay neither star nor prepare toggle renders', () => {
@@ -357,14 +440,17 @@ describe('ActionDetailModal as a module-level component', () => {
     const calls: ((p: PlayState) => PlayState)[] = [];
     const record: PlayUpdater = (fn) => void calls.push(fn);
     const off = mount(<ActionDetailModal detail={{ a, pinnable: true }} onClose={() => undefined} character={c} content={db} onPlay={record} pinned={new Set()} />);
-    const star = off.host.querySelector('.picker-head .pin-star') as HTMLElement;
+    // Card step 9: the star is a header action — in the card's .ast-head or the legacy .picker-head.
+    // batch card premise: feat-4458 "Frequency once per day"
+    const star = off.host.querySelector('.picker-head .pin-star, .ast-head .pin-star') as HTMLElement;
     expect(star.classList.contains('on')).toBe(false);
     expect(star.getAttribute('aria-label')).toBe('Pin to top');
     off.click(star);
     expect(calls).toHaveLength(1);
     expect(calls[0]({ pinned: [] } as unknown as PlayState).pinned).toEqual(['action:Halfling Luck']);
     const on = mount(<ActionDetailModal detail={{ a, pinnable: true }} onClose={() => undefined} character={c} content={db} onPlay={record} pinned={new Set(['action:Halfling Luck'])} />);
-    expect(on.host.querySelector('.picker-head .pin-star.on')?.getAttribute('aria-label')).toBe('Unpin');
+    // batch card premise: feat-4458 "Frequency once per day"
+    expect(on.host.querySelector('.picker-head .pin-star.on, .ast-head .pin-star.on')?.getAttribute('aria-label')).toBe('Unpin');
     const unpinnable = mount(<ActionDetailModal detail={{ a, pinnable: false }} onClose={() => undefined} character={c} content={db} onPlay={record} pinned={new Set()} />);
     expect(unpinnable.host.querySelector('.pin-star')).toBeNull();
     const prepare = { prepared: false, disabled: false, onToggle: () => undefined };

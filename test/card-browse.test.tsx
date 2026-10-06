@@ -396,7 +396,10 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     // Card step 6 turns the GM screen page (CampaignTracker HostPage) into the 'gm' embed card, drawn
     // byte for byte as before with its stat lines (test/card-hostpage.test.tsx).
     // batch card premise: spell-6 "Range touch"
-    const landed = new Set(['statDetail', 'hostPage']);
+    // Card step 9 turns the Main-tab action popup into the record's 'mine' card, so Aid's printed Trigger
+    // and Requirements reach it (test/card-action.test.tsx).
+    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+    const landed = new Set(['statDetail', 'hostPage', 'actionDetail']);
     for (const [surface, on] of Object.entries(CARD_ON)) if (!landed.has(surface)) expect(on, surface).toBe(false);
   });
 });

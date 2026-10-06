@@ -26,7 +26,14 @@ import { AlchemyPanel } from './AlchemyPanel';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
-import { assuranceNote, assuranceResult, markTooltip, markedActionCost, recordMarkersFor, sheetLoreKeys, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
+import { assuranceNote, assuranceResult, markNote, markTooltip, markedActionCost, nameOfRecord, recordMarkersFor, sheetLoreKeys, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
+import { SKILL_ACTIONS, rankAtLeast } from '../rules/skillActions';
+import { RecordCard } from './RecordCard';
+import { cardOn } from './cardSurfaces';
+import { scopeOfCharacter } from './cardScope';
+import { useAstNode } from './useAst';
+import type { OursLine } from './cardModel';
+import type { AstNode } from './astStore';
 import { stanceRequirementIssue, modeGateIds } from '../rules/derive';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
@@ -122,6 +129,11 @@ export interface Act {
    *  action (Genie-Blessed → Wish for Luck); the pip lookup only ever took a feat or a class feature,
    *  and a background has neither id, so every one of them showed an untracked action. */
   usesFrom?: { id: string; name: string; limitedUses?: LimitedUses };
+  /** The record this action IS, by {bucket, id} (card step 9): what its popup opens as the record's
+   *  'mine' card (CARD_ON.actionDetail). Activities name the action / feat record their full text comes
+   *  from; feat, class-feature and granted actions, tactics and runes name their own. An action with
+   *  none (a curated activity with no record, an item's activation) keeps the legacy popup. */
+  record?: { bucket: string; id: string };
 }
 
 /** An action opened in the compact-mode detail popup. `prepare` carries a Commander tactic's
@@ -190,21 +202,143 @@ function PinToggle({ k, pinned, onPlay }: { k: string; pinned: ReadonlySet<strin
   );
 }
 
+/* ------------------------------------------------------------------ card step 9: the action card */
+
+/** Which collection a Feat-actions record came from (card step 9): a feat or class feature the
+ *  character owns is the content object itself; a granted action is content.actions' record (or a copy
+ *  of it carrying `usesFrom`). Undefined for anything else, which keeps the legacy popup. */
+function actionRecordOf(db: ContentDatabase, f: { id?: string; name: string }): Act['record'] {
+  const id = f.id;
+  if (!id) return undefined;
+  if (db.feats[id] === f) return { bucket: 'feats', id };
+  if (db.classFeatures[id] === f) return { bucket: 'classFeatures', id };
+  if (db.actions[id]?.name === f.name) return { bucket: 'actions', id };
+  if (db.feats[id]?.name === f.name) return { bucket: 'feats', id };
+  if (db.classFeatures[id]?.name === f.name) return { bucket: 'classFeatures', id };
+  return undefined;
+}
+
+/** The collections a record marker's source can live in — explain.ts nameOfRecord's order. */
+const MARK_SOURCE_BUCKETS = ['feats', 'items', 'heritages', 'backgrounds', 'ancestries', 'classFeatures'] as const;
+
+/**
+ * The action card's ours lines (docs/card-design.md section 4), in this order:
+ *  - `actionMark`, one per record marker on the action (Ruling D): the note that lives only in the row
+ *    star's tooltip today — Quick Jump's marked cost, Black Powder Boost's "+10 feet" — attributed to
+ *    the record that makes it;
+ *  - `skillTier` (section 3, skill-action rank tiers): for a SKILL_ACTIONS entry with rank tiers that the
+ *    character can use, what its rank in the action's skill gives — the highest tier its rank unlocks,
+ *    or, below the first tier, the action's base DC ("Your rank (trained): DC 15" on Treat Wounds).
+ *    The printed sentence that lists every tier stays whole on the page; this only says which applies.
+ */
+export function actionOursLines(character: Character, db: ContentDatabase, a: Pick<Act, 'name' | 'skill'>): OursLine[] {
+  const out: OursLine[] = [];
+  for (const m of recordMarkersFor(character, db, 'action', actionId(a.name))) {
+    const bucket = MARK_SOURCE_BUCKETS.find((k) => !!(db[k] as Record<string, unknown> | undefined)?.[m.sourceId]);
+    out.push({ kind: 'actionMark', from: { bucket: bucket ?? '', id: m.sourceId, name: nameOfRecord(db, m.sourceId) }, text: markNote(db, m) });
+  }
+  const tier = skillTierLine(character, db, a);
+  if (tier) out.push(tier);
+  return out;
+}
+
+/** The `skillTier` ours line for an action, or null (see actionOursLines). */
+export function skillTierLine(character: Character, db: ContentDatabase, a: Pick<Act, 'name' | 'skill'>): OursLine | null {
+  if (!a.skill) return null;
+  const key = a.skill.toLowerCase() as ProficiencyKey;
+  const def = (SKILL_ACTIONS[key] ?? []).find((s) => s.name === a.name && (s.tiers?.length ?? 0) > 0);
+  if (!def) return null;
+  const rank = dailySkillRank(character, db, key) ?? character.proficiencies.skills?.[key] ?? 'untrained';
+  if (!rankAtLeast(rank, def.minRank)) return null;
+  const unlocked = (def.tiers ?? []).filter((t) => rankAtLeast(rank, t.rank));
+  const text = unlocked.length ? unlocked[unlocked.length - 1].note : /\bDC \d+\b/.exec(def.desc)?.[0];
+  return text ? { kind: 'skillTier', text: `Your rank (${rank}): ${text}` } : null;
+}
+
+/** The digits AstRenderer's header Glyph draws for a printed cost (its DIGIT table, AstRenderer.tsx:37-50). */
+const GLYPH_DIGIT: Record<string, string> = {
+  'single action': '1', 'one action': '1', 'two actions': '2', 'three actions': '3',
+  'free action': '4', reaction: '5', '1 action': '1', '2 actions': '2', '3 actions': '3',
+};
+
+/** A printed cost string as the glyph it draws: "1".."5", "1-3" for a range; null for words it draws as text. */
+function glyphKey(str: string | null | undefined): string | null {
+  const s = String(str || '').trim().toLowerCase();
+  if (!s) return null;
+  if (GLYPH_DIGIT[s]) return GLYPH_DIGIT[s];
+  const p = s.split(/\s+(?:to|or)\s+/);
+  return p.length === 2 && GLYPH_DIGIT[p[0]] && GLYPH_DIGIT[p[1]] ? `${GLYPH_DIGIT[p[0]]}-${GLYPH_DIGIT[p[1]]}` : null;
+}
+
+/** An ActionCost as the same glyph key; null for a cost no printed title glyph spells (a duration). */
+function costKey(c: ActionCost): string | null {
+  const one = (n: number) => (n >= 1 && n <= 3 ? String(n) : null);
+  if (c.type === 'actions') return one(c.value);
+  if (c.type === 'free') return '4';
+  if (c.type === 'reaction') return '5';
+  if (c.type === 'variable') {
+    const lo = one(c.min);
+    const hi = one(c.max);
+    return lo && hi ? `${lo}-${hi}` : null;
+  }
+  return null;
+}
+
+/**
+ * The cost a page's header prints: its title's first non-empty `actions` node, found the way AstRenderer
+ * hoists it into the header (AstRenderer.tsx:505-507); null with no title or no glyph.
+ */
+export function printedHeaderCost(page: AstNode | null | undefined): string | null {
+  const top = page?.c ?? [];
+  const title = top.find((n) => n.t === 'title' && Number(n.level || 1) <= 1) ?? top.find((n) => n.t === 'title');
+  let cost: string | null = null;
+  const find = (x: AstNode): void => {
+    if (cost) return;
+    if (x.t === 'actions' && String(x.string || '').trim()) cost = String(x.string);
+    (x.c ?? []).forEach(find);
+  };
+  if (title) find(title);
+  return cost;
+}
+
+/**
+ * Whether the action card's header draws OUR cost glyph (marked data-ours) beside the page's.
+ *
+ * The page's own title glyph is print: it is never rewritten, added or removed (principle 1; section 4:
+ * everything we add sits in a marked place and cannot pass for print). The chip's cost — the MARKED cost
+ * where a record marker changes it (section 2 rule 4.1) — must still be in the header one tap from the
+ * chip, so ours is drawn whenever the page's header does not already print exactly that cost:
+ *  - no page drawn (none, or still loading);
+ *  - a title that prints no glyph (Flurry of Blows, Cast a Spell) or no title (fire-in-the-hole);
+ *  - a chip cost no title glyph spells (none, drawn as the hourglass; a duration);
+ *  - a different printed cost: Quick Jump's marked ◆ beside High Jump's printed ◆◆, and the stored cost
+ *    that differs from print (Sheltering Hand: stored ◆, printed ◆ to ◆◆). That difference is a data
+ *    question for the owner; the card shows both, print as print and ours marked, and decides nothing.
+ */
+export function oursHeaderCost(cost: ActionCost | undefined, page: AstNode | null | undefined): boolean {
+  if (!page || !cost) return true;
+  const want = costKey(cost);
+  return !want || want !== glyphKey(printedHeaderCost(page));
+}
+
 /** Action popup (compact chips + full rows both open it): cost glyph + name in the header, the
  *  favorite star + (for tactics) the prepare toggle inside, the trait tags, and the full
  *  linkified description in the body.
  *
  *  Module-level (card step 2): it was a closure inside MainTab that read character, content, onPlay
  *  and the pinned set from there. Every one of them is a prop now, so the popup can be rendered — and
- *  moved onto the card — without MainTab. */
-export function ActionDetailModal({
-  detail,
-  onClose,
-  character,
-  content,
-  onPlay,
-  pinned,
-}: {
+ *  moved onto the card — without MainTab.
+ *
+ *  Card step 9 (docs/card-design.md section 9 row 9, F1b): with CARD_ON.actionDetail an action that
+ *  names its record (Act.record) opens that record's 'mine' card — ActionCard below. The legacy popup
+ *  stays for the switch's off position and for actions that name no record. */
+export function ActionDetailModal(props: ActionDetailProps) {
+  // Two components, not one with a branch: each registers its own dismiss entry (the card's is
+  // RecordCard's), so the choice is made before any hook runs.
+  return cardOn('actionDetail') && props.detail.a.record ? <ActionCard {...props} /> : <LegacyActionDetail {...props} />;
+}
+
+interface ActionDetailProps {
   detail: DetailAction;
   onClose: () => void;
   character: Character;
@@ -213,7 +347,83 @@ export function ActionDetailModal({
   onPlay?: PlayUpdater;
   /** The character's pin keys (`character.pinned`), which light the star. */
   pinned: ReadonlySet<string>;
-}) {
+}
+
+/**
+ * Card step 9 — the action's record as a 'mine' card (section 2 rules 4–5): the page's use lines
+ * (Trigger, Requirements, Frequency, Cost …) once each, in page order, at full weight — this popup prints
+ * no stat rows, so its printed set is empty; S-furniture leaves; Source and the other reference lines are
+ * dimmed; the parts the character does not have yet fold (scopeOfCharacter). The page's own header glyph
+ * stays as printed; where it is not the chip's cost — the MARKED cost where a record marker changes it —
+ * our glyph, marked data-ours, joins the header (oursHeaderCost). The header also carries the skill label,
+ * the prepare toggle (tactics, runes) and the action pin as headerActions, before Back / PinStar / close,
+ * on the action's own page only (RecordCard drops them on a linked page). The ours box holds the marker
+ * notes and the skill-rank line (actionOursLines). A record with no page shows its old text through the
+ * card's no-page lane, with our glyph in the header and the trait chips above the text (the page lane
+ * draws the page's own).
+ */
+function ActionCard({ detail, onClose, character, content, onPlay, pinned }: ActionDetailProps) {
+  const { a, pinnable, prepare } = detail;
+  const rec = a.record!;
+  const traits = a.traits ?? [];
+  const marked = markedActionCost(recordMarkersFor(character, content, 'action', actionId(a.name)));
+  const cost = marked ?? a.cost;
+  // The same tree lookup the card makes (cached): whether the record has a page decides who draws the
+  // chips (the page's header, or ours on the no-page lane) and whether the page's header already prints
+  // the chip's cost. Our glyph is drawn whenever no page is drawn too (also while it loads, so the cost is
+  // never missing for a beat).
+  const { node: page, loading } = useAstNode(rec.bucket, rec.id);
+  const noPage = !page && !loading;
+  const headerActions = (
+    <>
+      {oursHeaderCost(cost, page) && (
+        <span className="action-cost action-detail-cost card-ours-cost" data-ours="" title="The cost on your sheet">
+          {cost ? <ActionGlyph cost={cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
+        </span>
+      )}
+      {a.skill && <span className="action-skill">{a.skill}</span>}
+      {prepare && onPlay && (
+        <button
+          className={'prep-toggle' + (prepare.prepared ? ' on' : '')}
+          title={prepare.prepared ? 'Prepared today — click to unprepare' : 'Prepare this tactic'}
+          aria-label={prepare.prepared ? 'Unprepare tactic' : 'Prepare tactic'}
+          disabled={!prepare.prepared && prepare.disabled}
+          onClick={() => {
+            prepare.onToggle();
+            onClose();
+          }}
+        >
+          <i className={'ti ' + (prepare.prepared ? 'ti-circle-check-filled' : 'ti-circle')} aria-hidden="true" />
+        </button>
+      )}
+      {pinnable && <PinToggle k={actionKey(a.name)} pinned={pinned} onPlay={onPlay} />}
+    </>
+  );
+  const chips = noPage && traits.length > 0 ? (
+    <div className="action-detail-traits">
+      {traits.map((t) => (
+        <InfoTerm key={t} className="strike-trait" title={capWord(t)} description={traitDesc(t, content)}>
+          {t}
+        </InfoTerm>
+      ))}
+    </div>
+  ) : undefined;
+  return (
+    <RecordCard
+      record={rec}
+      mode="mine"
+      chrome="popup"
+      scope={scopeOfCharacter(character)}
+      printed={[]}
+      headerActions={headerActions}
+      controls={chips}
+      ours={actionOursLines(character, content, a)}
+      onExit={onClose}
+    />
+  );
+}
+
+function LegacyActionDetail({ detail, onClose, character, content, onPlay, pinned }: ActionDetailProps) {
   useEscapeClose(onClose);
   const { a, pinnable, prepare } = detail;
   const traits = a.traits ?? [];
@@ -356,6 +566,7 @@ export function MainTab({
       fullRefs: full?.descRefs ?? rec?.descRefs,
       astKey: full ? 'actions' : rec ? 'feats' : undefined,
       astId: full ? full.id : a.featId,
+      record: full ? { bucket: 'actions', id: full.id } : rec && a.featId ? { bucket: 'feats', id: a.featId } : undefined,
     };
   };
   /* …and a feat-activity is shown only to a character who OWNS the feat: Battle Medicine sat in
@@ -467,6 +678,9 @@ export function MainTab({
       desc: f!.description,
       descRefs: f!.descRefs,
       traits: f!.traits,
+      // Card step 9: the record itself — a feat or class feature you own (the content object), or a
+      // granted action (content.actions, sometimes a copy carrying usesFrom).
+      record: actionRecordOf(content, f!),
       // …and a record that carries its OWN limit (Halfling Luck: free action + limitedUses 1/day).
       // Only GRANTED actions were handed a usesFrom above, so a feat whose own record holds the
       // frequency drew use pips on the Feats tab and none here — the page it is spent from.
@@ -480,7 +694,7 @@ export function MainTab({
   const tacticActions: (Act & { id: string })[] = (character.commanderTactics?.folio ?? [])
     .map((id) => content.actions[id])
     .filter((a): a is NonNullable<typeof a> => !!a)
-    .map((a) => ({ id: a.id, name: a.name, cost: a.actionCost, desc: a.description, descRefs: a.descRefs, traits: a.traits }));
+    .map((a) => ({ id: a.id, name: a.name, cost: a.actionCost, desc: a.description, descRefs: a.descRefs, traits: a.traits, record: { bucket: 'actions', id: a.id } }));
   const preparedTactics = new Set(character.commanderTactics?.prepared ?? []);
   const tacticPreparedMax = character.commanderTactics?.preparedMax ?? 3;
   /* The runesmith's runic repertoire, in the same shape: the runes you KNOW are the rows, the ones
@@ -490,7 +704,7 @@ export function MainTab({
   const runeActs: (Act & { id: string })[] = (character.runicRepertoire?.known ?? [])
     .map((id) => content.runesmithRune?.[id])
     .filter((r): r is NonNullable<typeof r> => !!r)
-    .map((r) => ({ id: r.id, name: r.name, desc: r.description, descRefs: r.descRefs, traits: r.traits }));
+    .map((r) => ({ id: r.id, name: r.name, desc: r.description, descRefs: r.descRefs, traits: r.traits, record: { bucket: 'runesmithRune', id: r.id } }));
   const etchedRunes = new Set(character.runicRepertoire?.etched ?? []);
   const runeEtchedCap = character.runicRepertoire?.etchedMax ?? 2;
   // Signature resource STATES the character has (rage / panache, from the base class or an archetype
@@ -635,7 +849,7 @@ export function MainTab({
     ? listValues(content, content.actions)
         .filter((a) => (a.traits ?? []).includes('camping'))
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map((a) => ({ name: a.name, desc: campingSummary(a.description), traits: a.traits, fullDesc: a.description, fullRefs: a.descRefs }))
+        .map((a) => ({ name: a.name, desc: campingSummary(a.description), traits: a.traits, fullDesc: a.description, fullRefs: a.descRefs, record: { bucket: 'actions', id: a.id } }))
     : [];
   const shownCamping = rank(campingActs.filter((a) => matchText(a.name, a.desc))); // bug 2026-09-13: search-rank
   // Camping is an extra activity mode, only offered while Kingmaker is on. If the mode is left on

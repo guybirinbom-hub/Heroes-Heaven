@@ -7,6 +7,7 @@ import { build, content } from './_content';
 import { renderDom } from './_render';
 import { MainTab } from '../src/sheet/MainTab';
 import { StrikeDetailModal } from '../src/sheet/StrikeDetailModal';
+import { cardOn } from '../src/sheet/cardSurfaces';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
@@ -34,6 +35,10 @@ import type { DescNode } from '../src/sheet/descref';
  * opened here and the cache primed, which is the state the app is in once the bucket has loaded. Every
  * other bucket 404s; feat actions carry no astKey and render their description string either way.
  *
+ * Card step 9: with CARD_ON.actionDetail the action popup is the record's 'mine' card. The legacy
+ * popup's six cases stay as they were, in a block that runs only with the switch off; the same six,
+ * re-pointed at the card, run with it on (Halfling Luck's feats page is served for them).
+ *
  * MUTATION LINES (each measured red on 2026-10-02, then restored byte-exact):
  *  - StrikeDetailModal.tsx: drop the gate (`{critText && (` for `{showsCrit && (`) → the level-1
  *    "no crit block" test goes red.
@@ -47,8 +52,11 @@ const readBucket = (b: string) =>
 
 beforeAll(async () => {
   const actions = readBucket('actions');
+  // Card step 9: Halfling Luck's page too — on the card a feat action reads its tree (the legacy popup
+  // never asked for one, so serving it changes nothing there).
   const served: Record<string, Record<string, AstNode>> = {
     actions: { aid: actions.aid, leap: actions.leap, 'high-jump': actions['high-jump'] },
+    feats: { 'halfling-luck': readBucket('feats')['halfling-luck'] },
   };
   globalThis.fetch = (async (input: unknown) => {
     const m = /ast\/([A-Za-z0-9_-]+)\.json$/.exec(String(input));
@@ -215,7 +223,11 @@ function actionsOf(c: Character) {
 }
 const glyphs = (el: Element | null | undefined) => [...(el?.querySelectorAll('.pf2-action') ?? [])].map((g) => g.getAttribute('aria-label'));
 
-describe('the Main-tab action popup, opened from its chip', () => {
+// Card step 9: these are the LEGACY popup's assertions, kept for the switch's off position (section 9:
+// "That surface's legacy assertions stay in a block that runs when the switch is off"). With
+// CARD_ON.actionDetail the popup is the record's mine card — the block after this one.
+// batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+describe.skipIf(cardOn('actionDetail'))('the Main-tab action popup, opened from its chip', () => {
   it('Halfling Luck (a feat action, on its description string): free-action glyph, both traits, Frequency and Trigger once each, then the rule', () => {
     const { chip, popup } = actionsOf(halfling());
     expect(txt(chip('Halfling Luck').querySelector('.ff-uses-n')), 'the use counter rides the chip').toBe('1/1');
@@ -299,6 +311,131 @@ describe('the Main-tab action popup, opened from its chip', () => {
     r.popup('Aid');
     r.click(r.host.querySelector('.picker.info-modal .picker-close'));
     expect(r.host.querySelector('.picker.info-modal')).toBeNull();
+    expect(r.chip('Aid')).toBeTruthy();
+  });
+});
+
+/*
+ * Card step 9 (docs/card-design.md section 9 row 9): the same six popups, re-pointed at the record's
+ * 'mine' card (CARD_ON.actionDetail). The page's use lines now reach the popup once each, the page's
+ * printed glyph stays and the marked cost is our marked glyph beside it, and a record marker's note is an `actionMark` line in the ours box
+ * ([data-ours]) instead of living only in the row star's tooltip. test/card-action.test.tsx holds the
+ * step's full refuter set.
+ */
+/** The card a chip opens (page lane: .ast-modal.card-mine). */
+const cardOf = (r: ReturnType<typeof actionsOf>, name: string) => {
+  r.click(r.chip(name));
+  const card = r.host.querySelector('.ast-modal.card-mine') as HTMLElement | null;
+  if (!card) throw new Error(`no card for ${name}`);
+  return card;
+};
+const headGlyph = (card: Element) => [...card.querySelectorAll('.ast-head .ast-ag.head')].map((g) => g.getAttribute('title'));
+// batch card premise: action-2292 "Trigger An ally is about to use an action that requires a skill check or attack roll"
+describe.runIf(cardOn('actionDetail'))('the Main-tab action popup, opened from its chip — the record\'s mine card (step 9)', () => {
+  // batch card premise: feat-4458 "Frequency once per day"
+  it('Halfling Luck (a feat action, now on its page tree): free-action glyph, both traits, Frequency and Trigger once each, then the rule', () => {
+    const r = actionsOf(halfling());
+    // batch card premise: feat-4458 "Frequency once per day"
+    expect(txt(r.chip('Halfling Luck').querySelector('.ff-uses-n')), 'the use counter rides the chip').toBe('1/1');
+    const pop = cardOf(r, 'Halfling Luck');
+    // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+    expect(headGlyph(pop)).toEqual(['Free Action']);
+    expect(txt(pop.querySelector('.ast-name'))).toBe('Halfling Luck');
+    expect(pop.querySelector('.ast-head .ast-controls .pin-star'), 'the action pin (PinToggle) is a header action').not.toBeNull();
+    expect([...pop.querySelectorAll('.ast-traits .ast-tr')].map((t) => txt(t))).toEqual(['Fortune', 'Halfling']);
+    const body = pop.querySelector('.ast-pop > .ast-body') as HTMLElement;
+    // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+    expect([...body.children].map((k) => [k.tagName.toLowerCase(), k.className, txt(k)])).toEqual([
+      ['p', 'card-dim', 'Source Player Core pg. 60'],
+      ['p', 'card-use', 'Frequency once per day'],
+      ['p', 'card-use', 'Trigger You fail a skill check or saving throw'],
+      ['hr', 'ast-hr', ''],
+      [
+        'p',
+        '',
+        "Your happy-go-lucky nature makes it seem like misfortune avoids you, and to an extent, that might even be true. You can reroll the triggering check, but you must use the new result, even if it's worse.",
+      ],
+    ]);
+    // batch card premise: feat-4458 "Frequency once per day"
+    expect(count(txt(pop), 'Frequency')).toBe(1);
+    expect(count(txt(pop), 'Trigger')).toBe(1);
+  });
+
+  // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+  it('Aid (an activity, on its page tree): reaction glyph, no trait row, the page prose and degrees — and its Trigger and Requirements once each', () => {
+    const pop = cardOf(actionsOf(halfling()), 'Aid');
+    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+    expect(headGlyph(pop)).toEqual(['Reaction']);
+    expect(pop.querySelector('.ast-traits')).toBeNull();
+    const tree = pop.querySelector('.ast-pop > .ast-body') as HTMLElement;
+    expect(txt(tree.querySelector('p:not(.card-dim):not(.card-use)'))).toBe(
+      "You try to help your ally with a task. To use this reaction, you must first prepare to help, usually by using an action during your turn. You must explain to the GM exactly how you're trying to help, and they determine whether you can Aid your ally.",
+    );
+    // batch card premise: action-2292 "Trigger An ally is about to use an action that requires a skill check or attack roll"
+    expect([...tree.querySelectorAll('.ast-ds .ast-ds-lbl')].map((l) => txt(l))).toEqual(['Critical Success', 'Success', 'Critical Failure']);
+    expect(count(txt(pop), 'Trigger')).toBe(1);
+    expect(count(txt(pop), 'Requirements')).toBe(1);
+  });
+
+  // batch card premise: action-2377 "You Stride, then attempt a DC 30 Athletics check to jump vertically"
+  it('a mark whose value IS a cost (Quick Jump on High Jump): one-action glyph on the chip AND the card header; the note is an actionMark line in the ours box', () => {
+    const r = actionsOf(halfling());
+    const ch = r.chip('High Jump');
+    // batch card premise: action-2377 "You Stride, then attempt a DC 30 Athletics check to jump vertically"
+    expect(glyphs(ch.querySelector('.action-cost'))).toEqual(['One action']);
+    expect(ch.querySelector('.action-mark-val'), 'no parenthetical second cost').toBeNull();
+    const note = 'Quick Jump: you can High Jump as a single action instead of 2, and you do not need to Stride 10 feet first.';
+    expect(ch.querySelector('.action-mark')?.getAttribute('title')).toBe(note);
+    const pop = cardOf(r, 'High Jump');
+    // The page's printed glyph stays as printed; the marked cost is OUR glyph beside it, marked data-ours.
+    // batch card premise: action-2377 "You Stride, then attempt a DC 30 Athletics check to jump vertically"
+    expect(headGlyph(pop)).toEqual(['Two Actions']);
+    // batch card premise: feat-5196 "You can use High Jump and Long Jump as a single action instead of 2 actions"
+    expect(glyphs(pop.querySelector('.ast-head .card-ours-cost[data-ours]'))).toEqual(['One action']);
+    expect(txt(pop.querySelector('.ast-name'))).toBe('High Jump');
+    expect(txt(pop.querySelector('.ast-head .action-skill'))).toBe('Athletics');
+    expect(txt(pop.querySelector('[data-ours] [data-ours-kind="actionMark"]'))).toBe(note);
+    // batch card premise: action-2377 "You Stride, then attempt a DC 30 Athletics check to jump vertically"
+    expect(pop.querySelector('.action-mark, .sit-star')).toBeNull();
+    expect(txt(pop.querySelector('.ast-pop > .ast-body > p:not(.card-dim)'))).toContain('You Stride, then attempt a DC 30 Athletics check to jump vertically.');
+  });
+
+  // batch card premise: action-2377 "You Stride, then attempt a DC 30 Athletics check to jump vertically"
+  it('without Quick Jump the same chip and card keep the printed two actions and no mark', () => {
+    const r = actionsOf({ ...build('fighter', 2), inventory: SWORD });
+    // batch card premise: action-2377 "You Stride, then attempt a DC 30 Athletics check to jump vertically"
+    expect(glyphs(r.chip('High Jump').querySelector('.action-cost'))).toEqual(['Two actions']);
+    expect(r.chip('High Jump').querySelector('.action-mark')).toBeNull();
+    const pop = cardOf(r, 'High Jump');
+    expect(headGlyph(pop)).toEqual(['Two Actions']);
+    expect(pop.querySelector('[data-ours-kind="actionMark"]')).toBeNull();
+  });
+
+  // batch card premise: feat-3166 "You Leap and discharge your firearm to add a +10-foot status bonus to the distance traveled"
+  it('a mark whose value is NOT a cost (Black Powder Boost on Leap): "(+10 feet)" and the star on the chip; the card header shows the chip\'s one action and names the mark in the ours box', () => {
+    const r = actionsOf(boosted());
+    const ch = r.chip('Leap');
+    // batch card premise: feat-3166 "You Leap and discharge your firearm to add a +10-foot status bonus to the distance traveled"
+    expect(glyphs(ch.querySelector('.action-cost'))).toEqual(['One action']);
+    expect(txt(ch.querySelector('.action-mark-val'))).toBe('(+10 feet)');
+    const pop = cardOf(r, 'Leap');
+    // The page's printed "Single Action" is the chip's ◆, so the header draws no glyph of ours.
+    // batch card premise: action-2298 "You take a short horizontal or vertical jump"
+    expect(headGlyph(pop)).toEqual(['Single Action']);
+    expect(pop.querySelector('.card-ours-cost')).toBeNull();
+    // batch card premise: feat-3166 "You Leap and discharge your firearm to add a +10-foot status bonus to the distance traveled"
+    expect(txt(pop.querySelector('[data-ours] [data-ours-kind="actionMark"] .card-ours-from'))).toBe('Black Powder Boost:');
+    expect([...pop.querySelectorAll('.ast-pop > .ast-body p, .ast-pop > .ast-body li')].filter((p) => !p.closest('[data-ours]')).some((p) => txt(p).includes('Black Powder Boost'))).toBe(false);
+    expect([...pop.querySelectorAll('.ast-body li strong')].map((s) => txt(s))).toEqual(['Horizontal Jump', 'Vertical Jump']);
+  });
+
+  // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+  it('the card closes from its close button and leaves the sheet behind it', () => {
+    const r = actionsOf(halfling());
+    cardOf(r, 'Aid');
+    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+    r.click(r.host.querySelector('.ast-modal.card-mine .picker-close'));
+    expect(r.host.querySelector('.picker-overlay')).toBeNull();
     expect(r.chip('Aid')).toBeTruthy();
   });
 });

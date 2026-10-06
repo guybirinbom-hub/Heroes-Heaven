@@ -9,6 +9,8 @@
  * own (the browse popup) — and that is not a switch: DescriptionModal now IS the browse card.
  * Step 5: statDetail is on (StatDetailModal's full text renders RecordCard mode 'mine').
  * Step 6: hostPage is on (CampaignTracker's HostPage renders RecordCard mode 'gm', chrome 'embed').
+ * Step 9: actionDetail is on (the Main-tab action popup renders RecordCard mode 'mine' for an action
+ * that names its record: activities, feat / class-feature / granted actions, tactics, runes).
  * Step 22 removes this file together with the legacy paths.
  *
  * Names follow section 6 ("mine" sheet popups, the builder rows, the GM page).
@@ -18,8 +20,8 @@ export const CARD_ON = {
   statDetail: true,
   /** HostPage in the campaign tracker, gm mode with embed chrome (step 6) — ON: the GM screen page is the card. */
   hostPage: true,
-  /** ActionDetailModal on the Main tab (step 9). */
-  actionDetail: false,
+  /** ActionDetailModal on the Main tab (step 9) — ON: an action that names its record opens its 'mine' card. */
+  actionDetail: true,
   /** StrikeDetailModal (step 10). */
   strikeDetail: false,
   /** FeatDetail: feats, class features, heritages, choice rows (step 11). */

@@ -25,7 +25,7 @@ import type { SourceInfo } from '../rules/types';
  * Step 3 builds `mode: 'browse'` with `chrome: 'popup'` only: today's search popup, byte for byte
  * (test/card-browse.test.tsx). Its class names stay exactly DescriptionModal's (.ast-modal,
  * .picker.info-modal …), so PopupSizeLock's SELF_SIZED list and sheet.css need no change. The other
- * modes / chrome and the reserved props (scope, stats, controls, transform) are declared in
+ * modes / chrome came in later steps (below); the reserved props still unread here (stats, transform) are declared in
  * cardModel.ts and not read yet.
  *
  * Step 5 builds `mode: 'mine'` (StatDetailModal's full text, CARD_ON.statDetail): the same shells with a
@@ -77,7 +77,7 @@ function EmbedRecordCard({ record, content: hostContent, onOpenRef }: RecordCard
 const noOpen = () => undefined;
 
 /** The popup card (modes 'browse' and 'mine', chrome 'popup'). */
-function PopupRecordCard({ record, node, mode, scope, printed, headerActions, ours, footer, fallbackText, onExit, onBackToSource }: RecordCardProps) {
+function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyControls, headerActions, ours, footer, fallbackText, onExit, onBackToSource }: RecordCardProps) {
   const content = useContent();
   const exit = onExit;
   useEscapeClose(exit);
@@ -141,11 +141,14 @@ function PopupRecordCard({ record, node, mode, scope, printed, headerActions, ou
   // The ours box (section 4) sits after the body; the caller's footer after the RemasteredLine. With
   // neither, the body's tail is the RemasteredLine alone, exactly as DescriptionModal rendered it.
   const oursBox = ours && ours.length > 0 ? <OursBox lines={ours} /> : null;
-  const tail: ReactNode = oursBox || footer ? <>{oursBox}{remastered}{footer}</> : remastered;
+  const tail: ReactNode = stack.length === 1 && (oursBox || footer) ? <>{oursBox}{remastered}{footer}</> : remastered;
 
+  /* The surface's headerActions belong to the record it opened — the stack's first node. A page opened
+     from a link inside the card is a browse card (section 6), so it never carries them: the action pin
+     there would pin the action, the prepare toggle would prepare it (card step 9, refuter round 2). */
   const controls = (
     <>
-      {headerActions}
+      {stack.length === 1 ? headerActions : null}
       {showBack && (
         <button className="info-back" aria-label="Back to previous description"
           onClick={(e) => { e.stopPropagation(); back(); }}>
@@ -234,6 +237,8 @@ function PopupRecordCard({ record, node, mode, scope, printed, headerActions, ou
           </div>
           <div className="info-body card-body">
             {marker}
+            {/* Card step 9 (section 2 rule 4.3): the surface's controls, above the text. */}
+            {bodyControls ? <div className="card-controls">{bodyControls}</div> : null}
             {/* The fallback lane is DescBody's own markdown / rich-HTML branches, untouched (section 5):
                 no tree key, so it never reaches a page. desk #152's empty note is drawn below, in the
                 footer's place (rule 4.6), with DescBody's markup, rather than as DescBody's emptyNote. */}
@@ -298,8 +303,10 @@ function PopupRecordCard({ record, node, mode, scope, printed, headerActions, ou
       <div ref={modalRef} className="picker info-modal" onClick={(e) => e.stopPropagation()}>
         <div className="picker-head">
           {/* headerActions sit where the page branch puts them: straight before Back, so a caller's
-              buttons keep one order — actions, Back, star, close — on every branch (card step 4). */}
-          {headerActions}
+              buttons keep one order — actions, Back, star, close — on every branch (card step 4). Like the
+              page and loading branches, only on the stack's first node: a linked page whose bucket
+              failed to load lands here as a browse card and carries none (card step 9, fixer round 3). */}
+          {stack.length === 1 ? headerActions : null}
           {showBack && (
             <button className="info-back" aria-label="Back to previous description"
               onClick={(e) => { e.stopPropagation(); back(); }}>

@@ -125,7 +125,10 @@ describe('a skill-action row states ONE cost', () => {
           popup: '',
         };
         r.click(chip);
-        out.popup = glyphsIn(document.querySelector('.picker.info-modal .action-detail-cost'));
+        // Card step 9: the popup is the record's mine card, whose shell is not `.picker.info-modal` while its
+        // page loads (this file loads no trees); our cost glyph (.action-detail-cost) is read in either shell.
+        // batch card premise: action-2377 "You Stride, then attempt a DC 30 Athletics check to jump vertically"
+        out.popup = glyphsIn(document.querySelector('.picker-overlay .action-detail-cost'));
         return out;
       } finally {
         r.stop();

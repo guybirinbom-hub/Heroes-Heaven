@@ -13,6 +13,7 @@ import type { DescNode } from './descref';
  * `chrome: 'popup'` (StatDetailModal's full text): `printed`, the footer and `fallbackText` are read.
  * Step 6 builds `mode: 'gm'` with `chrome: 'embed'` (CampaignTracker's HostPage, the GM screen page):
  * `record`, `content` and `onOpenRef` are read; no frame, no stack, nothing on the dismiss stack.
+ * Step 9 (the Main-tab action popup, CARD_ON.actionDetail) reads `controls` and `headerActions`.
  */
 
 /** browse = today's search popup, never scoped; mine = the sheet's "what is yours"; gm = HostPage. */
@@ -157,9 +158,19 @@ export interface RecordCardProps {
    * is in this set. Absent = empty: every labelled page line shows (StatDetailModal prints no rows).
    */
   printed?: readonly string[];
-  /** Reserved: controls above the text — use counters, Cast-at, item choices (step 5+). */
+  /**
+   * Controls above the text — use counters, Cast-at, item choices (section 2 rule 4.3). Card step 9
+   * draws them on the 'mine' NO-PAGE lane, between the TrustMarker and the old text (the action popup's
+   * trait chips: a page draws its own chips in its header). The page lane has no slot above its body
+   * yet — AstRenderer owns that markup — so a page-lane control (Strike's Attack / Damage, step 10; the
+   * item controls, step 14) needs that slot first; nothing is drawn there today.
+   */
   controls?: ReactNode;
-  /** Extra buttons in the header, before Back / pin / close. */
+  /**
+   * Extra buttons in the header, before Back / pin / close, on the record the surface opened (the
+   * stack's first node) only: a page opened from a link inside the card is a browse card (section 6).
+   * Card step 9: the action popup's own cost glyph (data-ours), skill label, prepare toggle and action pin.
+   */
   headerActions?: ReactNode;
   /** Reserved: a tree transform (heightening, step 17). */
   transform?: (node: AstNode) => AstNode;

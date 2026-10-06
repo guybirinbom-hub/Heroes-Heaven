@@ -793,7 +793,7 @@ export const SECTIONS = ['S1-MISSING', 'S1-UNNAMED', 'DIFFERS', 'DUPLICATED', 'E
  * under `legacy[surface]` that surface's row entries as measured with its switch OFF; while the switch
  * is off they stand in for the surface's entries in the main sections. Step 22 removes both.
  */
-export const SWITCHED_SURFACES = ['statDetail'];
+export const SWITCHED_SURFACES = ['statDetail', 'actionDetail'];
 
 /**
  * The entries the baseline expects under the switches as they are now (`cardOn`, default CARD_ON): the
@@ -905,6 +905,11 @@ export function surfaceRows(deps) {
   }
 
   // ActionDetailModal — curated activities (page through astKey) and feat / class-feature / granted actions (string).
+  // With CARD_ON.actionDetail (card step 9) every one of them is RecordCard mode 'mine' for its record:
+  // the tree by {bucket, id}, the printed set (empty — the popup prints no stat rows) in place of hideMeta,
+  // the item lists cut. Switched off, activities read the tree with hideMeta and the rest the string.
+  const actCard = (deps.cardOn ?? CARD_ON).actionDetail ? { printed: [] } : undefined;
+  const actRead = (bucket, id, legacy) => (actCard ? { read: { bucket, slug: id }, hideMeta: false, itemLists: false, card: actCard } : legacy);
   const activityNames = new Set(activities.map((a) => a.name));
   for (const a of activities) {
     const full = db.actions?.[actionId(a.name)];
@@ -912,21 +917,21 @@ export function surfaceRows(deps) {
     const bucket = full ? 'actions' : rec ? 'feats' : null;
     const id = full ? full.id : a.featId;
     if (!bucket || !has(bucket, id)) continue;
-    rows.push({ surface: 'actionDetail', bucket, id, own: { bucket, id }, read: { bucket, slug: id }, hideMeta: true, itemLists: false, md: full?.description ?? rec?.description ?? a.desc, printed: [], mode: 'mine', activity: a.name });
+    rows.push({ surface: 'actionDetail', bucket, id, own: { bucket, id }, ...actRead(bucket, id, { read: { bucket, slug: id }, hideMeta: true, itemLists: false }), md: full?.description ?? rec?.description ?? a.desc, printed: [], mode: 'mine', activity: a.name });
   }
   const granted = new Set();
   for (const b of ['feats', 'classFeatures', 'ancestries', 'heritages', 'backgrounds', 'items']) for (const r of Object.values(db[b] ?? {})) for (const g of r?.grantsActions ?? []) granted.add(g);
   for (const b of ['feats', 'classFeatures']) {
     for (const [id, rec] of Object.entries(db[b] ?? {})) {
       if (!has(b, id) || !isActionCost(rec.actionCost) || activityNames.has(rec.name)) continue;
-      rows.push({ surface: 'actionDetail', bucket: b, id, own: { bucket: b, id }, read: null, md: rec.description ?? '', printed: [], mode: 'mine' });
+      rows.push({ surface: 'actionDetail', bucket: b, id, own: { bucket: b, id }, ...actRead(b, id, { read: null }), md: rec.description ?? '', printed: [], mode: 'mine' });
     }
   }
   for (const id of granted) {
     const act = db.actions?.[id];
     if (!act || !has('actions', id) || !isActionCost(act.actionCost) || activityNames.has(act.name)) continue;
     if (rows.some((r) => r.surface === 'actionDetail' && r.bucket === 'actions' && r.id === id)) continue;
-    rows.push({ surface: 'actionDetail', bucket: 'actions', id, own: { bucket: 'actions', id }, read: null, md: act.description ?? '', printed: [], mode: 'mine' });
+    rows.push({ surface: 'actionDetail', bucket: 'actions', id, own: { bucket: 'actions', id }, ...actRead('actions', id, { read: null }), md: act.description ?? '', printed: [], mode: 'mine' });
   }
 
   // StatDetailModal full text — the record behind a situational line. With CARD_ON.statDetail (card step

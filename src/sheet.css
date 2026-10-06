@@ -13026,6 +13026,19 @@ button.strike-name:hover {
 .card-mine .info-body.card-body {
   white-space: normal;
 }
+/* Card step 9: the action popup's header actions on the card — the skill label sits with the action pin
+   and the prepare toggle in the page header's controls, so it takes their spacing, not the row's. */
+.card-mine .ast-controls .action-skill {
+  margin: 0 4px 0 0;
+}
+/* Our cost glyph in a card header (the chip's cost where the page's printed glyph is not it): ours, so it
+   wears the accent rail of the ours voice (.sd-ours) and can never pass for the page's own glyph. */
+.card-mine .card-ours-cost[data-ours] {
+  padding: 0 4px 0 6px;
+  margin-right: 4px;
+  border-left: 2px solid var(--app-accent);
+  color: var(--app-muted);
+}
 
 /* Card step 13a (docs/card-design.md section 3; owner ruling Q1 = A): the parts of a page the character
    does not have yet sit under ONE closed, dimmed line — "At higher levels (2)" — that opens on a tap
