@@ -55,3 +55,68 @@ describe('classFeatureDescription — shared-feature contamination guard', () =>
     expect(offenders, offenders.join('; ')).toEqual([]);
   });
 });
+
+/**
+ * Card step 12 (docs/card-design.md section 5, the classFeatureDescription row): a lead may name several
+ * classes — "**Witch, Wizard**", "**Champion, Exemplar, Investigator, Magus**". The single-name rule kept
+ * such a paragraph for EVERY class (a wizard 11 read the champion's "martial weapons"), and the guard above
+ * compares whole leads, so it never saw one. Mutation (measured red 2026-10-06, restored byte-exact):
+ * featureText.ts leadClasses back to one name per lead → every case below red but the cleric one.
+ */
+describe('classFeatureDescription — a lead that names several classes', () => {
+  const we = c.classFeatures['weapon-expertise'].description;
+  const pm = c.classFeatures['perception-mastery'].description;
+  const rx = c.classFeatures['reflex-expertise'].description;
+  const paragraphs = (s: string) => s.split(/\n{2,}/).map((p) => (p.match(/^\s*\*\*([^*]+)\*\*/) ?? [])[1] ?? '(generic)');
+
+  it('Weapon Expertise: one paragraph per class, its own', () => {
+    expect(we).toMatch(/\*\*Witch, Wizard\*\*/);
+    const want: Record<string, string> = {
+      wizard: 'Witch, Wizard', witch: 'Witch, Wizard', druid: 'Druid, Kineticist', kineticist: 'Druid, Kineticist',
+      champion: 'Champion, Exemplar, Investigator, Magus', magus: 'Champion, Exemplar, Investigator, Magus',
+      guardian: 'Guardian', oracle: 'Oracle', psychic: 'Psychic', sorcerer: 'Sorcerer', swashbuckler: 'Swashbuckler', thaumaturge: 'Thaumaturge',
+    };
+    for (const [cls, lead] of Object.entries(want)) expect(paragraphs(classFeatureDescription(we, cls, c)), cls).toEqual([lead]);
+    expect(classFeatureDescription(we, 'wizard', c)).not.toMatch(/martial/);
+    expect(classFeatureDescription(we, 'druid', c)).not.toMatch(/martial/);
+    expect(classFeatureDescription(we, 'champion', c)).toMatch(/martial weapons/);
+  });
+
+  it('Perception Mastery: one paragraph per class, its own', () => {
+    const want: Record<string, string> = {
+      barbarian: 'Barbarian', bard: 'Bard, Gunslinger, Rogue', gunslinger: 'Bard, Gunslinger, Rogue', rogue: 'Bard, Gunslinger, Rogue',
+      commander: 'Commander', exemplar: 'Exemplar', investigator: 'Investigator, Swashbuckler, Thaumaturge',
+      swashbuckler: 'Investigator, Swashbuckler, Thaumaturge', thaumaturge: 'Investigator, Swashbuckler, Thaumaturge', ranger: 'Ranger',
+    };
+    for (const [cls, lead] of Object.entries(want)) expect(paragraphs(classFeatureDescription(pm, cls, c)), cls).toEqual([lead]);
+  });
+
+  it('Reflex Expertise: the generic paragraph for every class, the Guardian note for the guardian only', () => {
+    for (const cls of ['bard', 'wizard', 'rogue', 'monk']) expect(paragraphs(classFeatureDescription(rx, cls, c)), cls).toEqual(['(generic)']);
+    expect(paragraphs(classFeatureDescription(rx, 'guardian', c))).toEqual(['(generic)', 'Guardian']);
+  });
+
+  it('a cleric\'s Perception Expertise says expert (no class addenda: the text is whole)', () => {
+    const pe = c.classFeatures['perception-expertise'].description;
+    expect(classFeatureDescription(pe, 'cleric', c)).toBe(pe);
+    expect(pe).toMatch(/Perception increases to expert/);
+  });
+
+  it('no class sees a paragraph led by OTHER classes only, comma lists included', () => {
+    const classNames = new Set(Object.values(c.classes).map((cl) => cl.name.toLowerCase()));
+    const offenders: string[] = [];
+    for (const cls of Object.values(c.classes)) {
+      const me = cls.name.toLowerCase();
+      for (const f of cls.features) {
+        const feat = c.classFeatures[f.featureId];
+        if (!feat) continue;
+        for (const para of classFeatureDescription(feat.description, cls.id, c).split(/\n{2,}/)) {
+          const lead = para.match(/^\s*\*\*([^*]+)\*\*/);
+          const names = lead ? lead[1].split(/\s*,\s*|\s+and\s+/i).map((n) => n.trim().toLowerCase()) : [];
+          if (names.length && names.every((n) => classNames.has(n)) && !names.includes(me)) offenders.push(`${cls.id}/${f.featureId} → ${lead![1].trim()}`);
+        }
+      }
+    }
+    expect(offenders, offenders.join('; ')).toEqual([]);
+  });
+});

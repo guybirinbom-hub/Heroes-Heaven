@@ -37,7 +37,7 @@
  * 'hide' the 280 left-out lines are all named S-future, so S1 does not move either.
  */
 import {
-  clean, isMetaP, isMetaishBlock, textOf, variantSection, withoutItemLists, astSlug,
+  clean, isMetaP, isMetaishBlock, textOf, recordTree, withoutItemLists, astSlug,
   cardDropsMetaP, cardFurnitureSectionEnd, cardHeadUntil, cardRowParts, isCardFurnitureP, isCardFurnitureTitle,
 } from '../../src/sheet/astVisibility.ts';
 import {
@@ -45,6 +45,11 @@ import {
   FOLD_RULE, FUTURE_TREATMENT, LEVEL_FOLDS, SCOPE_LEVELS, scopeTree,
 } from '../../src/sheet/cardScope.ts';
 import { CARD_ON } from '../../src/sheet/cardSurfaces.ts';
+import {
+  flatText, sharedPageCensus, computePageSlices, notOwnPageProblems, pageSliceProblems, residueWithoutSlices,
+} from './shared-page-census.mjs';
+import NOT_OWN_PAGE from '../../src/data/not-own-page.json';
+import PAGE_SLICES from '../../src/data/page-slices.json';
 
 /* ------------------------------------------------------------------------------------------------ */
 /* 1. The label vocabulary: the printed "use lines" and stat lines (section 2 rule 4.2).             */
@@ -640,99 +645,9 @@ export function printedMap(rows) {
 /* 6. S2 — the record's own page? (promoted from the refuters' shared-page census).                   */
 /* ------------------------------------------------------------------------------------------------ */
 
-const flatText = (n) => (n.t === 'text' ? n.v ?? '' : (n.c ?? []).map(flatText).join(''));
-const isSection = (n) => n.t === 'title' && Number(n.level ?? 1) === 2;
-const flatTitle = (node) => {
-  const t = (node.c ?? []).find((n) => n.t === 'title' && Number(n.level ?? 1) <= 1);
-  return t ? flatText(t).replace(/\s+/g, ' ').trim() : '';
-};
-const words = (s) => String(s ?? '').toLowerCase().replace(/\{@[a-z]+ ([^}|]+)(\|[^}]*)?\}/gi, '$1').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[^a-z0-9]+/g, ' ').trim();
-const lev = (a, b) => {
-  if (Math.abs(a.length - b.length) > 3) return 99;
-  const d = Array.from({ length: b.length + 1 }, (_, j) => j);
-  for (let i = 1; i <= a.length; i++) {
-    let prev = d[0]; d[0] = i;
-    for (let j = 1; j <= b.length; j++) { const t = d[j]; d[j] = Math.min(d[j] + 1, d[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = t; }
-  }
-  return d[b.length];
-};
-const dedupeKey = (name) => String(name).toLowerCase().replace(/[^a-z0-9]/g, '');
-
-/**
- * The census rule (docs/display-truth-plan.md S2): among records whose tree shares its page (`url`)
- * with another record of the bucket, the shown tree (after variantSection) is NOT the record's own when
- * it is byte-identical to a differently named record's, or lacks the record's own text, or is a family /
- * other record's page. Returns slug → verdict for the WRONG (and UNDECIDED) ones only. A port of the
- * refuters' scratch shared-page-census.mjs, whose port of variantSection was checked identical on
- * 18,666 slugs; here variantSection is the real one.
- */
-export function sharedPageCensus(trees, recs) {
-  const out = {};
-  const byUrl = new Map();
-  for (const [slug, node] of Object.entries(trees)) {
-    if (!node?.url) continue;
-    if (!byUrl.has(node.url)) byUrl.set(node.url, []);
-    byUrl.get(node.url).push(slug);
-  }
-  const shownOf = new Map();
-  const byContent = new Map();
-  for (const [slug, node] of Object.entries(trees)) {
-    const shown = variantSection(node, slug);
-    const key = JSON.stringify(shown);
-    shownOf.set(slug, { shown, key, cut: shown !== node });
-    if (!byContent.has(key)) byContent.set(key, new Set());
-    byContent.get(key).add(dedupeKey(recs[slug]?.name ?? slug));
-  }
-  for (const slugs of byUrl.values()) {
-    if (slugs.length < 2) continue;
-    for (const slug of slugs) {
-      const node = trees[slug];
-      const rec = recs[slug];
-      if (!rec?.name) continue;
-      const { shown, key, cut } = shownOf.get(slug);
-      const shownTitle = flatTitle(shown);
-      const nameSlug = astSlug(rec.name);
-      const tSlug = astSlug(shownTitle);
-      const bare = astSlug(rec.name.replace(/\s*\([^)]*\)\s*$/, ''));
-      const qual = (rec.name.match(/\(([^)]*)\)\s*$/) ?? [])[1];
-      const myKey = dedupeKey(rec.name);
-      const digits = (x) => x.replace(/\D/g, '');
-      const identicalOtherName = [...byContent.get(key)].some((k) => k !== myKey && (lev(k, myKey) > 2 || digits(k) !== digits(myKey)));
-      const sectionByName = (node.c ?? []).some((n) => isSection(n) && astSlug(flatText(n)) === nameSlug);
-      const dRaw = String(rec.description ?? '').replace(/⟨[^⟩]*⟩/g, ' ').replace(/\n\s*---\s*\n/g, '\n');
-      const sents = dRaw.split(/(?<=[.!?])\s+|\n+/).map(words).filter((w) => w.split(' ').length >= 6);
-      const pageW = ' ' + words(flatText(shown)) + ' ';
-      const coverage = sents.length ? sents.filter((w) => pageW.includes(' ' + w + ' ') || pageW.includes(w)).length / sents.length : null;
-      const ownOn = coverage === null ? null : coverage >= 0.6;
-      let cls;
-      if (cut) cls = 'RIGHT_CUT';
-      else if (tSlug === nameSlug) cls = 'RIGHT_TITLE';
-      else if (sectionByName && (node.c ?? []).filter(isSection).length >= 2) cls = 'WRONG_MISSED';
-      else if (lev(tSlug, nameSlug) <= 3 && ownOn !== false) cls = 'RIGHT_SPELLING';
-      else if (identicalOtherName) cls = 'WRONG_SHARED';
-      else if (tSlug === bare && ownOn !== false) cls = 'RIGHT_QUALIFIER';
-      else if (tSlug === bare) cls = 'QUALIFIER_PARTIAL';
-      else if (ownOn === false) cls = 'WRONG_OTHER';
-      else cls = 'CHECK';
-      const own = ownOn === null ? 'none' : ownOn ? 'present' : 'absent';
-      const ownW = words(dRaw).split(' ').filter(Boolean).length;
-      const bodyW = (shown.c ?? []).filter((n) => !(n.t === 'title' && Number(n.level ?? 1) <= 1) && n.t !== 'traits')
-        .map((n) => words(flatText(n))).join(' ').replace(/^.*?\bsource\b.*?\bpg \d+/, '').split(' ').filter(Boolean).length;
-      const ratio = ownW ? Math.round((bodyW / ownW) * 10) / 10 : null;
-      const family = tSlug === bare || (!!qual && astSlug(qual) === tSlug) || (tSlug.length >= 4 && nameSlug.startsWith(tSlug + '-'));
-      const verdict =
-        cls.startsWith('RIGHT') ? 'RIGHT'
-        : cls === 'WRONG_MISSED' ? 'WRONG_FAMILY_PAGE_AON'
-        : family && coverage !== null && coverage < 1 && ratio != null && ratio <= 1.6 ? 'WRONG_FAMILY_VARIANT_TEXT_ABSENT'
-        : own === 'present' && ratio != null && ratio <= 1.6 ? 'RIGHT_SAME_TEXT'
-        : own === 'present' ? (family ? 'WRONG_FAMILY_OVERSHOW' : 'WRONG_OTHER_OVERSHOW')
-        : own === 'absent' ? (family ? 'WRONG_FAMILY_VARIANT_TEXT_ABSENT' : 'WRONG_OTHER_PAGE')
-        : 'UNDECIDED';
-      if (!verdict.startsWith('RIGHT')) out[slug] = verdict;
-    }
-  }
-  return out;
-}
+/* Card step 12: the census moved to scripts/lib/shared-page-census.mjs (one copy for this guard, the
+ * no-own-page list generator scripts/not-own-page.mjs and the slice map scripts/page-slices.mjs). */
+export { sharedPageCensus };
 
 /** The page's "Class <Name>" header label (an AoN Classes.aspx slice), or undefined. */
 export function pageClassName(tree, classNames) {
@@ -1026,11 +941,12 @@ export function surfaceRows(deps) {
   return { rows, classMismatch };
 }
 
-/** The tree a read lands on, through useAstNode's variantSection cut. */
+/** The tree a read lands on, as useAstNode resolves it (astVisibility.ts recordTree): the record's slice
+ *  of a bigger page (src/data/page-slices.json), none when its page is not its own
+ *  (src/data/not-own-page.json), else its own tree through the variantSection cut. Card step 12. */
 export function readTree(trees, read) {
   if (!read) return undefined;
-  const t = trees[read.bucket]?.[read.slug];
-  return t ? variantSection(t, read.slug) : undefined;
+  return recordTree(read.bucket, read.slug, (b, s) => trees[b]?.[s]);
 }
 
 /**
@@ -1091,7 +1007,9 @@ export function judgeRow(row, trees, mdFns) {
   const body = bodyLabels(bodyBlocks, row.surface);
   // A browse-mode popup on another record's page is an identity failure; comparing its lines with the
   // own page would be comparing two records.
-  res.labels = row.mode === 'browse' && identity ? {} : labelVerdicts({ page, body, printed, glyph, base: refsBase(pageBlocks) });
+  // Card step 12: a record whose page is not its own (src/data/not-own-page.json) reads no tree — like a
+  // record with no page, it has no page to judge its lines against, so it gets no label verdicts.
+  res.labels = (row.mode === 'browse' && identity) || !ownTree ? {} : labelVerdicts({ page, body, printed, glyph, base: refsBase(pageBlocks) });
   res.placement = row.surface === 'spellDetail' ? [...body].sort() : [];
   // OURS-LEAK: ours wording in the page itself, or the string lane carrying appended ours HTML into a
   // body that is not an ours box (withPicks' "Note:" on a record with no tree to read).
@@ -1177,10 +1095,23 @@ export function computeLedger(deps) {
   const aonIds = new Set();
   for (const recs of Object.values(db)) if (recs && typeof recs === 'object') for (const r of Object.values(recs)) if (r && typeof r.aonId === 'string') aonIds.add(r.aonId);
   let stubOccurrences = 0;
+  // Card step 12: a residue record listed in src/data/not-own-page.json (it falls back to its own text) or
+  // given a slice in src/data/page-slices.json (it reads its paragraph of a bigger page) no longer draws
+  // the page that is not its own, so it leaves S2; both files are checked two ways against the census and
+  // the slice computation (NOT-OWN-* / SLICE-* entries — a new entry is a new offender, so the check goes
+  // red). `deps.notOwnPageFile` / `deps.pageSlicesFile` stand in for the files (test mutations only).
+  const notOwnFile = deps.notOwnPageFile ?? NOT_OWN_PAGE;
+  const slicesFile = deps.pageSlicesFile ?? PAGE_SLICES;
+  const listedNotOwn = new Set(notOwnFile.ids ?? []);
+  const sliced = new Set(Object.keys(slicesFile.slices ?? {}));
+  const residue = {};
   for (const b of Object.keys(trees).sort()) {
     if (db[b] && typeof db[b] === 'object') {
       const census = sharedPageCensus(trees[b] ?? {}, db[b]);
-      for (const [slug, v] of Object.entries(census)) found['S2-NOT-OWN'].push(`${b}:${slug}|${v}`);
+      for (const [slug, v] of Object.entries(census)) {
+        residue[`${b}:${slug}`] = v;
+        if (!listedNotOwn.has(`${b}:${slug}`) && !sliced.has(`${b}:${slug}`)) found['S2-NOT-OWN'].push(`${b}:${slug}|${v}`);
+      }
     }
     // The whole stored tree (a stub is unresolved wherever it sits), whether or not a record owns it.
     for (const [slug, t] of Object.entries(trees[b] ?? {})) {
@@ -1189,6 +1120,10 @@ export function computeLedger(deps) {
       for (const s of new Set(stubs)) found.STUBS.push(`${b}:${slug}|${s}`);
     }
   }
+  // The slice computation first: a residue record with a slice belongs in neither half of not-own-page.json.
+  const computedSlices = computePageSlices(db, trees, residue);
+  for (const e of notOwnPageProblems(notOwnFile, residueWithoutSlices(residue, computedSlices))) found['S2-NOT-OWN'].push(e);
+  for (const e of pageSliceProblems(slicesFile, computedSlices)) found['S2-NOT-OWN'].push(e);
   for (const k of classMismatch) found['S2-NOT-OWN'].push(`${k}|CLASS_MISMATCH`);
   for (const s of SECTIONS) found[s] = [...new Set(found[s])].sort();
   return { found, counts, judged, rows, stubOccurrences, scopedRows, scopedJudgements };

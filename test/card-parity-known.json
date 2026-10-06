@@ -12,11 +12,6 @@
       "verdict": { "labels": { "Duration": "DIFFERS", "Area": "EXTRA" } }
     },
     {
-      "key": "featDetail|classFeatures:second-doctrine-cloistered-cleric",
-      "why": "owner case 3: the record's tree is the whole Cloistered Cleric page, every doctrine level on it",
-      "verdict": { "s2": "WRONG_FAMILY_OVERSHOW" }
-    },
-    {
       "key": "spellDetail|spells:approximate",
       "why": "owner case 4: \"Area 1 cubic foot\" is printed in the prose (the description's bold preamble), not in the stat rows",
       "verdict": { "placement": ["Area"] }

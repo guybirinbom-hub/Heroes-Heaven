@@ -1,0 +1,6402 @@
+{
+ "_generated": "scripts/page-slices.mjs --write — never hand-edit; the card guard (scripts/lib/card-scope.mjs S2-NOT-OWN) checks it both ways",
+ "_counts": {
+  "slices": 498,
+  "officialNoPage": 778,
+  "officialNoPageSliced": 327,
+  "residue": 242,
+  "residueSliced": 171,
+  "byRoute": {
+   "R1": 271,
+   "R3": 31,
+   "R4": 28,
+   "R2": 28,
+   "R0": 140
+  }
+ },
+ "slices": {
+  "actions:a-challenge-for-heroes": {
+   "bucket": "feats",
+   "page": "mark-of-the-sage",
+   "path": [
+    5
+   ],
+   "anchor": "Transcendence—A Challenge for Heroes",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:a-quick-glimpse-beyond": {
+   "bucket": "backgrounds",
+   "page": "writ-in-the-stars",
+   "path": [
+    7
+   ],
+   "anchor": "A Quick Glimpse Beyond",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:accept-echo": {
+   "bucket": "feats",
+   "page": "echo-of-the-fallen",
+   "path": [
+    5
+   ],
+   "anchor": "Accept Echo",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:accidental-shot": {
+   "bucket": "feats",
+   "page": "unexpected-sharpshooter-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Accidental Shot",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:acrid-barrage": {
+   "bucket": "feats",
+   "page": "form-a-flock",
+   "path": [
+    6
+   ],
+   "anchor": "Acrid Barrage",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.77
+  },
+  "actions:administer-ambient-magic": {
+   "bucket": "feats",
+   "page": "soothing-pulse",
+   "path": [
+    5
+   ],
+   "anchor": "Administer Ambient Magic",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:adopt-persona": {
+   "bucket": "feats",
+   "page": "talons-mark",
+   "path": [
+    8
+   ],
+   "anchor": "Activate—Adopt Persona",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:amassed-assault": {
+   "bucket": "feats",
+   "page": "pack-of-the-beast-lord",
+   "path": [
+    5
+   ],
+   "anchor": "Amassed Assault",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0,
+   "grams": 0.89
+  },
+  "actions:anchor": {
+   "bucket": "feats",
+   "page": "anchoring-roots",
+   "path": [
+    5
+   ],
+   "anchor": "Anchor",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:apparition-sense": {
+   "bucket": "feats",
+   "page": "apparition-sense",
+   "kind": "run",
+   "path": [
+    5
+   ],
+   "anchor": "You can allow a spirit or undead otherwise incapable of spee",
+   "n": 1,
+   "title": "Apparition Sense",
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:armor-up": {
+   "bucket": "spells",
+   "page": "instant-armor",
+   "path": [
+    5
+   ],
+   "anchor": "Armor Up!",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:assume-a-role": {
+   "bucket": "feats",
+   "page": "alter-ego-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Assume a Role",
+   "kind": "block",
+   "n": 2,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:avoid-dire-fate": {
+   "bucket": "feats",
+   "page": "harrower-dedication",
+   "path": [
+    7
+   ],
+   "anchor": "Avoid Dire Fate",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:banshee-cry": {
+   "bucket": "feats",
+   "page": "banshee-cry-display",
+   "path": [
+    5
+   ],
+   "anchor": "Banshee Cry",
+   "kind": "block",
+   "n": 8,
+   "route": "R3",
+   "coverage": 0.6
+  },
+  "actions:bend-time": {
+   "bucket": "backgrounds",
+   "page": "time-traveler",
+   "path": [
+    6
+   ],
+   "anchor": "Bend Time",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:bestial-clarity": {
+   "bucket": "backgrounds",
+   "page": "beast-blessed",
+   "path": [
+    6
+   ],
+   "anchor": "Bestial Clarity",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:binding-vow": {
+   "bucket": "feats",
+   "page": "pactbinder-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Binding Vow",
+   "kind": "block",
+   "n": 4,
+   "route": "R1",
+   "coverage": 0.89
+  },
+  "actions:bite-and-sting": {
+   "bucket": "feats",
+   "page": "swarmkeeper-dedication",
+   "path": [
+    10
+   ],
+   "anchor": "Bite and Sting",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:bless-ally": {
+   "bucket": "feats",
+   "page": "ascended-celestial-dedication",
+   "path": [
+    6
+   ],
+   "anchor": "Bless Ally",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:blinding-of-the-needle": {
+   "bucket": "feats",
+   "page": "through-the-needles-eye",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Blinding of the Needle",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:blizzard-evasion": {
+   "bucket": "feats",
+   "page": "bound-in-ice",
+   "path": [
+    6
+   ],
+   "anchor": "Blizzard Evasion",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.83
+  },
+  "actions:boarding-assault": {
+   "bucket": "feats",
+   "page": "pirate-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Boarding Assault",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:bounce-away": {
+   "bucket": "heritages",
+   "page": "pearl-dragonet",
+   "path": [
+    4
+   ],
+   "anchor": "Bounce Away",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:brandish-the-gorgons-gaze": {
+   "bucket": "feats",
+   "page": "shield-of-stone",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Brandish the Gorgon’s Gaze",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "actions:break-the-suns-legs": {
+   "bucket": "feats",
+   "page": "sunwrecker",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Break the Sun’s Legs",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "actions:bullet-dancer-stance": {
+   "bucket": "feats",
+   "page": "bullet-dancer-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Bullet Dancer Stance",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:burn-out-of-time": {
+   "bucket": "feats",
+   "page": "eternity-incinerating-blaze",
+   "path": [
+    5
+   ],
+   "anchor": "Transcendence—Burn out of Time",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:catharsis": {
+   "bucket": "feats",
+   "page": "cathartic-mage-dedication",
+   "path": [
+    8
+   ],
+   "anchor": "Catharsis",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:channel-draconic-essence": {
+   "bucket": "feats",
+   "page": "draconic-acolyte-dedication",
+   "path": [
+    7
+   ],
+   "anchor": "Channel Draconic Essence",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:chaotic-destiny": {
+   "bucket": "backgrounds",
+   "page": "crown-of-chaos",
+   "path": [
+    7
+   ],
+   "anchor": "Chaotic Destiny",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:claw-stance": {
+   "bucket": "feats",
+   "page": "clawdancer-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Claw Stance",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:cobble-together": {
+   "bucket": "feats",
+   "page": "scrounger-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Cobble Together",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "actions:consume-flesh": {
+   "bucket": "feats",
+   "page": "ghoul-dedication",
+   "path": [
+    7
+   ],
+   "anchor": "Consume Flesh",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:crescent-spray": {
+   "bucket": "feats",
+   "page": "crescent-cross-training",
+   "path": [
+    6
+   ],
+   "anchor": "Crescent Spray",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:dancing-dodge": {
+   "bucket": "feats",
+   "page": "virtuosic-dancer",
+   "path": [
+    6
+   ],
+   "anchor": "Dancing Dodge",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:daydream-trance": {
+   "bucket": "feats",
+   "page": "sleepwalker-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Daydream Trance",
+   "kind": "block",
+   "n": 4,
+   "route": "R1",
+   "coverage": 0.89
+  },
+  "actions:dazzle-seeker": {
+   "bucket": "heritages",
+   "page": "kaleidoscopic-athamaru",
+   "path": [
+    4
+   ],
+   "anchor": "Dazzle Seeker",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:death-drone": {
+   "bucket": "feats",
+   "page": "buzzing-death-cicadas",
+   "path": [
+    5
+   ],
+   "anchor": "Death Drone",
+   "kind": "block",
+   "n": 10,
+   "route": "R1",
+   "coverage": 0.83
+  },
+  "actions:decompose": {
+   "bucket": "feats",
+   "page": "moldersoul",
+   "path": [
+    5
+   ],
+   "anchor": "Decompose",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0,
+   "grams": 0.83
+  },
+  "actions:defend-life": {
+   "bucket": "spells",
+   "page": "life-connection",
+   "path": [
+    7
+   ],
+   "anchor": "Defend Life",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:designate-ally": {
+   "bucket": "feats",
+   "page": "ulfen-guard-dedication",
+   "path": [
+    6
+   ],
+   "anchor": "Designate Ally",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:devour-ambient-magic": {
+   "bucket": "feats",
+   "page": "spell-swallow",
+   "path": [
+    5
+   ],
+   "anchor": "Devour Ambient Magic",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:divert-lightning": {
+   "bucket": "items",
+   "page": "potion-of-grounding",
+   "path": [
+    7
+   ],
+   "anchor": "Divert Lightning",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 0.88
+  },
+  "actions:draconic-salvation": {
+   "bucket": "feats",
+   "page": "draconic-acolyte-dedication",
+   "path": [
+    10
+   ],
+   "anchor": "Draconic Salvation",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:dragon-breath-dragon-form": {
+   "bucket": "spells",
+   "page": "dragon-form",
+   "kind": "run",
+   "path": [
+    6,
+    7
+   ],
+   "anchor": "Dragon Breath You exhale deadly magical energy in an area, d",
+   "n": 1,
+   "title": "Dragon Breath (Dragon Form)",
+   "route": "R4",
+   "coverage": 0.67
+  },
+  "actions:dragons-protection": {
+   "bucket": "spells",
+   "page": "divine-dragons-watch",
+   "path": [
+    5
+   ],
+   "anchor": "Dragon’s Protection",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:drain-realm": {
+   "bucket": "feats",
+   "page": "manipulate-realm",
+   "path": [
+    5
+   ],
+   "anchor": "Drain Realm",
+   "kind": "block",
+   "n": 6,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:drape-ambient-magic": {
+   "bucket": "feats",
+   "page": "cloaking-pulse",
+   "path": [
+    5
+   ],
+   "anchor": "Drape Ambient Magic",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:empty-vessel": {
+   "bucket": "feats",
+   "page": "clone-risen",
+   "path": [
+    5
+   ],
+   "anchor": "Empty Vessel",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:engineers-efficiency": {
+   "bucket": "feats",
+   "page": "munitions-master-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Engineer's Efficiency",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:enter-runewell": {
+   "bucket": "feats",
+   "page": "craft-runewell",
+   "path": [
+    8
+   ],
+   "anchor": "Enter Runewell",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:enter-seat-of-power": {
+   "bucket": "feats",
+   "page": "seat-of-power",
+   "path": [
+    5
+   ],
+   "anchor": "Enter Seat of Power",
+   "kind": "block",
+   "n": 2,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:enter-spirit-trance": {
+   "bucket": "feats",
+   "page": "rivethun-invoker-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Enter Spirit Trance",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.83
+  },
+  "actions:entitys-resurgence": {
+   "bucket": "feats",
+   "page": "living-vessel-dedication",
+   "path": [
+    7
+   ],
+   "anchor": "Entity's Resurgence",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:fated-not-to-die": {
+   "bucket": "backgrounds",
+   "page": "shielded-fortune",
+   "path": [
+    7
+   ],
+   "anchor": "Fated Not to Die",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:feys-fortune": {
+   "bucket": "backgrounds",
+   "page": "feybound",
+   "path": [
+    6
+   ],
+   "anchor": "Fey's Fortune",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:fight-with-fear": {
+   "bucket": "spells",
+   "page": "mind-of-menace",
+   "path": [
+    7
+   ],
+   "anchor": "Fight with Fear",
+   "kind": "block",
+   "n": 8,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:final-spite": {
+   "bucket": "backgrounds",
+   "page": "tomb-born",
+   "path": [
+    6
+   ],
+   "anchor": "Final Spite",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:find-fault": {
+   "bucket": "feats",
+   "page": "faultspawn",
+   "path": [
+    5
+   ],
+   "anchor": "Find Fault",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:fleeting-arc-through-heaven-and-earth": {
+   "bucket": "feats",
+   "page": "seven-colored-cosmic-bridge",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Fleeting Arc through Heaven and Earth",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.81
+  },
+  "actions:for-my-house": {
+   "bucket": "feats",
+   "page": "aristocratic-arms",
+   "path": [
+    21
+   ],
+   "anchor": "For My House!",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:fortify-focus": {
+   "bucket": "feats",
+   "page": "bond-companion",
+   "path": [
+    5
+   ],
+   "anchor": "Fortify Focus",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:glimpse-vulnerability": {
+   "bucket": "feats",
+   "page": "thaumaturge-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Glimpse Vulnerability",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 0.75
+  },
+  "actions:guerrilla-assault": {
+   "bucket": "feats",
+   "page": "guerrilla-weaponry",
+   "path": [
+    5
+   ],
+   "anchor": "Guerrilla Assault",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:harrow-the-fiend": {
+   "bucket": "backgrounds",
+   "page": "hammered-by-fate",
+   "path": [
+    7
+   ],
+   "anchor": "Harrow the Fiend",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:heaven-rains-an-ending": {
+   "bucket": "feats",
+   "page": "infinite-blades-celestial-arrow",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Heaven Rains an Ending",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:hellbreaker-strike": {
+   "bucket": "feats",
+   "page": "defy-hell",
+   "path": [
+    5
+   ],
+   "anchor": "Hellbreaker Strike",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:host-spirit": {
+   "bucket": "backgrounds",
+   "page": "willing-host",
+   "path": [
+    6
+   ],
+   "anchor": "Host Spirit",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:i-defy-you": {
+   "bucket": "feats",
+   "page": "stubborn-defiance",
+   "path": [
+    5
+   ],
+   "anchor": "I Defy You!",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:impromptu-investment": {
+   "bucket": "feats",
+   "page": "costume-change",
+   "path": [
+    6
+   ],
+   "anchor": "Impromptu Investment",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:indomitable-act": {
+   "bucket": "backgrounds",
+   "page": "dauntless",
+   "path": [
+    6
+   ],
+   "anchor": "Indomitable Act",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:infiltrators-draw": {
+   "bucket": "feats",
+   "page": "crossbow-infiltrator-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Infiltrator's Draw",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:inscribe-shadow-pamor": {
+   "bucket": "heritages",
+   "page": "shadow-of-the-smith",
+   "path": [
+    5
+   ],
+   "anchor": "Activate—Inscribe Shadow Pamor",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:intercession-spell": {
+   "bucket": "feats",
+   "page": "assume-godhood",
+   "path": [
+    6
+   ],
+   "anchor": "Intercession Spell",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:jumping-jenny": {
+   "bucket": "feats",
+   "page": "jumping-jenny-display",
+   "path": [
+    5
+   ],
+   "anchor": "Jumping Jenny",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 0.67
+  },
+  "actions:launch-fireworks": {
+   "bucket": "feats",
+   "page": "firework-technician-dedication",
+   "path": [
+    7
+   ],
+   "anchor": "Launch Fireworks",
+   "kind": "block",
+   "n": 12,
+   "route": "R1",
+   "coverage": 0.94
+  },
+  "actions:lay-down-arms": {
+   "bucket": "feats",
+   "page": "out-of-hand",
+   "path": [
+    6
+   ],
+   "anchor": "Lay Down Arms",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:life-block": {
+   "bucket": "spells",
+   "page": "protect-companion",
+   "path": [
+    7
+   ],
+   "anchor": "Life Block",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 0.6
+  },
+  "actions:makes-me-stronger": {
+   "bucket": "feats",
+   "page": "heroic-weakness",
+   "path": [
+    8
+   ],
+   "anchor": "Makes Me Stronger",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:manifest-soulforged-armament": {
+   "bucket": "feats",
+   "page": "soulforger-dedication",
+   "path": [
+    6
+   ],
+   "anchor": "Manifest Soulforged Armament",
+   "kind": "block",
+   "n": 4,
+   "route": "R3",
+   "coverage": 0.83
+  },
+  "actions:mist-blending": {
+   "bucket": "feats",
+   "page": "mistsoul",
+   "path": [
+    5
+   ],
+   "anchor": "Mist Blending",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:mobbing-assault": {
+   "bucket": "feats",
+   "page": "necrologist-dedication",
+   "path": [
+    10
+   ],
+   "anchor": "Mobbing Assault",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:my-legend-must-be-told": {
+   "bucket": "backgrounds",
+   "page": "student-of-apotheosis",
+   "path": [
+    6
+   ],
+   "anchor": "My Legend Must Be Told",
+   "kind": "block",
+   "n": 6,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:mystic-aegis": {
+   "bucket": "feats",
+   "page": "palatine-detective-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Mystic Aegis",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:mythic-echo": {
+   "bucket": "backgrounds",
+   "page": "student-of-apotheosis",
+   "path": [
+    9
+   ],
+   "anchor": "Mythic Echo",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:nudging-whisper": {
+   "bucket": "heritages",
+   "page": "palace-echoes-kitsune",
+   "path": [
+    5
+   ],
+   "anchor": "Activate—Nudging Whisper",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:objection": {
+   "bucket": "feats",
+   "page": "devils-eye",
+   "path": [
+    5
+   ],
+   "anchor": "Objection",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:only-you-and-i": {
+   "bucket": "feats",
+   "page": "destined-victory",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Only You and I",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.8
+  },
+  "actions:overawe-crowd": {
+   "bucket": "feats",
+   "page": "one-among-the-masses",
+   "path": [
+    5
+   ],
+   "anchor": "Overawe Crowd",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:overload-vision": {
+   "bucket": "spells",
+   "page": "ocular-overload",
+   "path": [
+    5
+   ],
+   "anchor": "Overload Vision",
+   "kind": "block",
+   "n": 10,
+   "route": "R1",
+   "coverage": 0.83
+  },
+  "actions:overwhelming-combination": {
+   "bucket": "feats",
+   "page": "spirit-warrior-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Activate—Overwhelming Combination",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:pacifying-infusion": {
+   "bucket": "feats",
+   "page": "safe-elements",
+   "path": [
+    6
+   ],
+   "anchor": "Pacifying Infusion",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:part-the-veil": {
+   "bucket": "feats",
+   "page": "veil-dancer-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Part the Veil",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:pitch-perfect-projection": {
+   "bucket": "feats",
+   "page": "perfect-pitch",
+   "path": [
+    6
+   ],
+   "anchor": "Pitch-Perfect Projection",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:prophecys-pawn": {
+   "bucket": "backgrounds",
+   "page": "chosen-one",
+   "path": [
+    6
+   ],
+   "anchor": "Prophecy's Pawn",
+   "kind": "block",
+   "n": 6,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:psychometric-assessment": {
+   "bucket": "feats",
+   "page": "read-psychometric-resonance",
+   "path": [
+    5
+   ],
+   "anchor": "Psychometric Assessment",
+   "kind": "block",
+   "n": 1,
+   "route": "R3",
+   "coverage": 0.67
+  },
+  "actions:race-the-skies": {
+   "bucket": "feats",
+   "page": "journey-of-the-sky-chariot",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Race the Skies",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:raise-slabs": {
+   "bucket": "heritages",
+   "page": "slabsoul-minotaur",
+   "path": [
+    4
+   ],
+   "anchor": "Raise Slabs",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:raise-the-horde": {
+   "bucket": "feats",
+   "page": "necrologist-dedication",
+   "path": [
+    7
+   ],
+   "anchor": "Raise the Horde",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:reactive-falsehood": {
+   "bucket": "feats",
+   "page": "play-to-the-crowd-dandy",
+   "path": [
+    6
+   ],
+   "anchor": "Reactive Falsehood",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:recall-under-pressure": {
+   "bucket": "backgrounds",
+   "page": "bookish-providence",
+   "path": [
+    7
+   ],
+   "anchor": "Recall Under Pressure",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:reclaim-destiny": {
+   "bucket": "backgrounds",
+   "page": "starless-one",
+   "path": [
+    6
+   ],
+   "anchor": "Reclaim Destiny",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:rejoin-in-flight": {
+   "bucket": "feats",
+   "page": "mated-birds-in-paired-flight",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Rejoin in Flight",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:relentless-assault": {
+   "bucket": "backgrounds",
+   "page": "scholar-of-battlefields",
+   "path": [
+    6
+   ],
+   "anchor": "Relentless Assault",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:reloading-cascade": {
+   "bucket": "classFeatures",
+   "page": "volatile-spark",
+   "path": [
+    6
+   ],
+   "anchor": "Reloading Cascade",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:remove-head": {
+   "bucket": "feats",
+   "page": "headless-haunt",
+   "path": [
+    5
+   ],
+   "anchor": "Remove Head",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:repel-ambient-magic": {
+   "bucket": "feats",
+   "page": "ostilli-host-dedication",
+   "path": [
+    7
+   ],
+   "anchor": "Repel Ambient Magic",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:ringing-challenge": {
+   "bucket": "feats",
+   "page": "steel-on-steel",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Ringing Challenge",
+   "kind": "block",
+   "n": 4,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:royal-grace": {
+   "bucket": "feats",
+   "page": "prophesied-monarch-dedication",
+   "path": [
+    6
+   ],
+   "anchor": "Royal Grace",
+   "kind": "block",
+   "n": 6,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:salt-wound": {
+   "bucket": "feats",
+   "page": "brinesoul",
+   "path": [
+    5
+   ],
+   "anchor": "Salt Wound",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.4,
+   "grams": 0.88
+  },
+  "actions:scrappy-defiance": {
+   "bucket": "backgrounds",
+   "page": "embargo-survivor",
+   "path": [
+    6
+   ],
+   "anchor": "Scrappy Defiance",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "actions:set-explosives": {
+   "bucket": "feats",
+   "page": "demolitionist-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Set Explosives",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.86
+  },
+  "actions:settle-emotions": {
+   "bucket": "feats",
+   "page": "cathartic-mage-dedication",
+   "path": [
+    11
+   ],
+   "anchor": "Settle Emotions",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:sever-conduit": {
+   "bucket": "spells",
+   "page": "summoners-precaution",
+   "path": [
+    6
+   ],
+   "anchor": "Sever Conduit",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 0.75
+  },
+  "actions:sever-four-dragonfly-wings": {
+   "bucket": "feats",
+   "page": "motionless-cutter",
+   "path": [
+    5
+   ],
+   "anchor": "Transcendence—Sever Four Dragonfly Wings",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:shatter-glass": {
+   "bucket": "feats",
+   "page": "glass-skin",
+   "path": [
+    6
+   ],
+   "anchor": "Shatter Glass",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.6
+  },
+  "actions:shed-spirit": {
+   "bucket": "feats",
+   "page": "spirit-familiar-witch",
+   "path": [
+    5
+   ],
+   "anchor": "Shed Spirit",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "actions:shed-the-mortal-skin": {
+   "bucket": "feats",
+   "page": "gift-of-the-immortal-herb",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Shed the Mortal Skin",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:shielding-wave": {
+   "bucket": "heritages",
+   "page": "pelagic-merfolk",
+   "path": [
+    4
+   ],
+   "anchor": "Shielding Wave",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:size-up": {
+   "bucket": "feats",
+   "page": "steel-falcon-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Size Up",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:skirt-the-underworld": {
+   "bucket": "feats",
+   "page": "shroud-of-ghosts",
+   "path": [
+    5
+   ],
+   "anchor": "Transcendence—Skirt the Underworld",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "actions:slayers-identification": {
+   "bucket": "feats",
+   "page": "undead-slayer-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Slayer's Identification",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:smoke-blending": {
+   "bucket": "feats",
+   "page": "smokesoul",
+   "path": [
+    5
+   ],
+   "anchor": "Smoke Blending",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:solitary-invocation": {
+   "bucket": "feats",
+   "page": "runesmith-dedication",
+   "path": [
+    6
+   ],
+   "anchor": "Solitary Invocation",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:spasm-of-the-berserker": {
+   "bucket": "feats",
+   "page": "warped-by-rage",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Spasm of the Berserker",
+   "kind": "block",
+   "n": 4,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:speed-of-arms": {
+   "bucket": "feats",
+   "page": "legend-of-combat",
+   "path": [
+    5
+   ],
+   "anchor": "Speed of Arms",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:spellsling": {
+   "bucket": "feats",
+   "page": "beast-gunner-dedication",
+   "path": [
+    8
+   ],
+   "anchor": "Spellsling",
+   "kind": "block",
+   "n": 4,
+   "route": "R1",
+   "coverage": 0.88
+  },
+  "actions:spin-tale": {
+   "bucket": "feats",
+   "page": "folklorist-dedication",
+   "path": [
+    6
+   ],
+   "anchor": "Spin Tale",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:spirit-sanctification": {
+   "bucket": "feats",
+   "page": "faith-in-the-fallen",
+   "path": [
+    6
+   ],
+   "anchor": "Spirit Sanctification",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:spirits-mercy": {
+   "bucket": "feats",
+   "page": "exorcist-dedication",
+   "path": [
+    8
+   ],
+   "anchor": "Spirit's Mercy",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:spiritual-scar": {
+   "bucket": "backgrounds",
+   "page": "once-possessed",
+   "path": [
+    6
+   ],
+   "anchor": "Spiritual Scar",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:spit-ambient-magic": {
+   "bucket": "feats",
+   "page": "ostilli-host-dedication",
+   "path": [
+    10
+   ],
+   "anchor": "Spit Ambient Magic",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:spread-propaganda": {
+   "bucket": "feats",
+   "page": "field-propagandist-dedication",
+   "path": [
+    6
+   ],
+   "anchor": "Spread Propaganda",
+   "kind": "block",
+   "n": 9,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:spread-realm": {
+   "bucket": "feats",
+   "page": "manipulate-realm",
+   "path": [
+    8
+   ],
+   "anchor": "Spread Realm",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:starlit-transformation": {
+   "bucket": "feats",
+   "page": "starlit-sentinel-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Activate—Starlit Transformation",
+   "kind": "block",
+   "n": 4,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:stellar-misfortune": {
+   "bucket": "backgrounds",
+   "page": "doomcaller",
+   "path": [
+    6
+   ],
+   "anchor": "Stellar Misfortune",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:stitching-strike": {
+   "bucket": "feats",
+   "page": "stitched-familiar",
+   "path": [
+    5
+   ],
+   "anchor": "Stitching Strike",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "actions:stonestrike-stance": {
+   "bucket": "feats",
+   "page": "stone-brawler-dedication",
+   "path": [
+    6
+   ],
+   "anchor": "Stonestrike Stance",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:swarm-forth": {
+   "bucket": "feats",
+   "page": "swarmkeeper-dedication",
+   "path": [
+    6
+   ],
+   "anchor": "Swarm Forth",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:swift-choreography": {
+   "bucket": "feats",
+   "page": "fight-choreography",
+   "path": [
+    6
+   ],
+   "anchor": "Swift Choreography",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:swirl-crimson-shroud": {
+   "bucket": "feats",
+   "page": "crimson-shroud",
+   "kind": "run",
+   "path": [
+    4
+   ],
+   "anchor": "You swathe yourself in a veil of red mist for 1 minute. Whil",
+   "n": 1,
+   "title": "Swirl Crimson Shroud",
+   "route": "R4",
+   "coverage": 1
+  },
+  "actions:tactical-retreat": {
+   "bucket": "heritages",
+   "page": "courageous-tanuki",
+   "path": [
+    5
+   ],
+   "anchor": "Activate—Tactical Retreat",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:talon-stance": {
+   "bucket": "feats",
+   "page": "clawdancer-dedication",
+   "path": [
+    8
+   ],
+   "anchor": "Talon Stance",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "actions:tangle-in-riddle": {
+   "bucket": "feats",
+   "page": "riddle-the-sphinx",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Tangle in Riddle",
+   "kind": "block",
+   "n": 11,
+   "route": "R1",
+   "coverage": 0.86
+  },
+  "actions:tap-the-past": {
+   "bucket": "heritages",
+   "page": "sanctuary-samsaran",
+   "path": [
+    5
+   ],
+   "anchor": "Activate—Tap the Past",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:tell-me-more": {
+   "bucket": "feats",
+   "page": "venture-gossip-dedication",
+   "path": [
+    12
+   ],
+   "anchor": "Tell Me More",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:tenacious-stance": {
+   "bucket": "feats",
+   "page": "stalwart-defender-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Tenacious Stance",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:thats-my-number": {
+   "bucket": "spells",
+   "page": "lucky-number",
+   "path": [
+    7
+   ],
+   "anchor": "That's My Number!",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 1
+  },
+  "actions:thermal-eruption": {
+   "bucket": "feats",
+   "page": "dormant-eruption",
+   "path": [
+    5
+   ],
+   "anchor": "Thermal Eruption",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 0.67
+  },
+  "actions:thundering-roar": {
+   "bucket": "spells",
+   "page": "thundering-dominance",
+   "path": [
+    6
+   ],
+   "anchor": "Thundering Roar",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 0.67
+  },
+  "actions:timely-dodge": {
+   "bucket": "items",
+   "page": "prey-mutagen",
+   "path": [
+    8
+   ],
+   "anchor": "Timely Dodge",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.81
+  },
+  "actions:topple-the-pillar-of-heaven": {
+   "bucket": "feats",
+   "page": "compliant-gold",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Topple the Pillar of Heaven",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "actions:toxic-touch": {
+   "bucket": "feats",
+   "page": "quicksoul",
+   "path": [
+    5
+   ],
+   "anchor": "Toxic Touch",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:transform-ammunition": {
+   "bucket": "feats",
+   "page": "magic-ammunition",
+   "path": [
+    5
+   ],
+   "anchor": "Transform Ammunition",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:true-shapeshift": {
+   "bucket": "feats",
+   "page": "true-shapeshifter",
+   "path": [
+    5
+   ],
+   "anchor": "True Shapeshift",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:turn-aside-ambient-magic": {
+   "bucket": "feats",
+   "page": "deflecting-pulse",
+   "path": [
+    5
+   ],
+   "anchor": "Turn Aside Ambient Magic",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:twist-design": {
+   "bucket": "feats",
+   "page": "talons-mark",
+   "path": [
+    5
+   ],
+   "anchor": "Activate—Twist Design",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:ultimatum-of-liberation": {
+   "bucket": "feats",
+   "page": "broken-chain-dedication",
+   "path": [
+    6
+   ],
+   "anchor": "Ultimatum of Liberation",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.86
+  },
+  "actions:unleash-realm": {
+   "bucket": "feats",
+   "page": "manipulate-realm",
+   "path": [
+    11
+   ],
+   "anchor": "Unleash Realm",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "actions:unravel-the-future": {
+   "bucket": "feats",
+   "page": "follow-the-threads-of-fate",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Unravel the Future",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:unwavering-resilience": {
+   "bucket": "feats",
+   "page": "unbowed-unbroken",
+   "path": [
+    6
+   ],
+   "anchor": "Unwavering Resilience",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:verdant-rest": {
+   "bucket": "feats",
+   "page": "verdant-metamorphosis",
+   "path": [
+    5
+   ],
+   "anchor": "Verdant Rest",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.8
+  },
+  "actions:warding-shift": {
+   "bucket": "feats",
+   "page": "hellknight-errant",
+   "path": [
+    6
+   ],
+   "anchor": "Warding Shift",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:warding-sign": {
+   "bucket": "backgrounds",
+   "page": "cursed",
+   "path": [
+    6
+   ],
+   "anchor": "Warding Sign",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "actions:wish-for-luck": {
+   "bucket": "backgrounds",
+   "page": "genie-blessed",
+   "path": [
+    6
+   ],
+   "anchor": "Wish for Luck",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:a-challenge-for-heroes": {
+   "bucket": "feats",
+   "page": "mark-of-the-sage",
+   "path": [
+    5
+   ],
+   "anchor": "Transcendence—A Challenge for Heroes",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:accelerated-mobility": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    7
+   ],
+   "anchor": "Accelerated Mobility",
+   "kind": "item",
+   "seg": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:advanced-design": {
+   "bucket": "classFeatures",
+   "page": "weapon-innovation",
+   "path": [
+    5
+   ],
+   "anchor": "Advanced Design",
+   "kind": "item",
+   "seg": 129,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:advanced-rangefinder": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    7
+   ],
+   "anchor": "Advanced Rangefinder (Ranged Only)",
+   "kind": "item",
+   "seg": 1,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.93
+  },
+  "classFeatures:advanced-vials-bomber": {
+   "bucket": "classFeatures",
+   "page": "bomber",
+   "path": [
+    11
+   ],
+   "anchor": "Advanced Vials",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:advanced-vials-chirurgeon": {
+   "bucket": "classFeatures",
+   "page": "chirurgeon",
+   "path": [
+    16
+   ],
+   "anchor": "Advanced Vials",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:advanced-vials-mutagenist": {
+   "bucket": "classFeatures",
+   "page": "mutagenist",
+   "path": [
+    11
+   ],
+   "anchor": "Advanced Vials",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:advanced-vials-toxicologist": {
+   "bucket": "classFeatures",
+   "page": "toxicologist",
+   "path": [
+    12
+   ],
+   "anchor": "Advanced Vials",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:advanced-weaponry-construct": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Advanced Weaponry",
+   "kind": "item",
+   "seg": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:aerodynamic-construction": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    7
+   ],
+   "anchor": "Aerodynamic Construction (Melee Only)",
+   "kind": "item",
+   "seg": 11,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:air-gate": {
+   "bucket": "element",
+   "page": "air",
+   "kind": "run",
+   "path": [
+    7
+   ],
+   "anchor": "Impulse Junction (Single Gate)",
+   "n": 4,
+   "title": "Air Gate",
+   "route": "R4",
+   "coverage": 0.75
+  },
+  "classFeatures:all-consuming-hunger": {
+   "bucket": "deviantAbilityClassification",
+   "page": "leech",
+   "path": [
+    8
+   ],
+   "anchor": "Backlash: All-Consuming Hunger",
+   "kind": "section",
+   "n": 2,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:amphibious-construction": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    7
+   ],
+   "anchor": "Amphibious Construction",
+   "kind": "item",
+   "seg": 7,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:anathema-cleric": {
+   "bucket": "classes",
+   "page": "cleric",
+   "path": [
+    63
+   ],
+   "anchor": "Anathema",
+   "kind": "section",
+   "n": 3,
+   "route": "R2",
+   "coverage": 0.4,
+   "grams": 0.58
+  },
+  "classFeatures:antimagic-construction": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Antimagic Construction",
+   "kind": "item",
+   "seg": 15,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:antimagic-plating": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Antimagic Plating",
+   "kind": "item",
+   "seg": 1,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "classFeatures:arcane-bond-school-of-unified-magical-theory": {
+   "bucket": "classFeatures",
+   "page": "arcane-bond-school-of-unified-magical-theory",
+   "kind": "run",
+   "path": [
+    6
+   ],
+   "anchor": "Your studies into the very nature of magic itself have let y",
+   "n": 1,
+   "title": "Arcane Bond (Unified Magical Theory)",
+   "head": true,
+   "route": "R0",
+   "coverage": 1
+  },
+  "classFeatures:attack-refiner": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    9
+   ],
+   "anchor": "Attack Refiner",
+   "kind": "item",
+   "seg": 1,
+   "route": "R1",
+   "coverage": 0,
+   "grams": 0.59
+  },
+  "classFeatures:automated-impediments": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    13
+   ],
+   "anchor": "Automated Impediments",
+   "kind": "item",
+   "seg": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:blessed-armament": {
+   "bucket": "classFeatures",
+   "page": "blessing-of-the-devoted",
+   "path": [
+    4
+   ],
+   "anchor": "Blessed Armament",
+   "kind": "block",
+   "n": 2,
+   "route": "R3",
+   "coverage": 0.8
+  },
+  "classFeatures:blessed-shield": {
+   "bucket": "classFeatures",
+   "page": "blessing-of-the-devoted",
+   "path": [
+    7
+   ],
+   "anchor": "Blessed Shield",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:blessed-swiftness": {
+   "bucket": "classFeatures",
+   "page": "blessing-of-the-devoted",
+   "path": [
+    8
+   ],
+   "anchor": "Blessed Swiftness",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:blinding-of-the-needle": {
+   "bucket": "feats",
+   "page": "through-the-needles-eye",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Blinding of the Needle",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "classFeatures:brandish-the-gorgons-gaze": {
+   "bucket": "feats",
+   "page": "shield-of-stone",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Brandish the Gorgon’s Gaze",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "classFeatures:break-the-suns-legs": {
+   "bucket": "feats",
+   "page": "sunwrecker",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Break the Sun’s Legs",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "classFeatures:burn-out-of-time": {
+   "bucket": "feats",
+   "page": "eternity-incinerating-blaze",
+   "path": [
+    5
+   ],
+   "anchor": "Transcendence—Burn out of Time",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:camouflage-pigmentation": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Camouflage Pigmentation (Subterfuge Suit Only)",
+   "kind": "item",
+   "seg": 15,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:champions-aura": {
+   "bucket": "classFeatures",
+   "page": "deity-champion",
+   "path": [
+    19
+   ],
+   "anchor": "Champion's Aura",
+   "kind": "section",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:climbing-limbs": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Climbing Limbs",
+   "kind": "item",
+   "seg": 29,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:complex-simplicity": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    5
+   ],
+   "anchor": "Complex Simplicity (Simple Weapon Only)",
+   "kind": "item",
+   "seg": 21,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.79
+  },
+  "classFeatures:curse-of-ancestral-meddling": {
+   "bucket": "classFeatures",
+   "page": "ancestors",
+   "path": [
+    5
+   ],
+   "anchor": "Curse of Ancestral Meddling",
+   "kind": "section",
+   "n": 2,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:curse-of-creeping-ashes": {
+   "bucket": "mystery",
+   "page": "ash",
+   "path": [
+    5
+   ],
+   "anchor": "Curse Of Creeping Ashes",
+   "kind": "section",
+   "n": 6,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:curse-of-engulfing-flames": {
+   "bucket": "classFeatures",
+   "page": "flames",
+   "path": [
+    4
+   ],
+   "anchor": "Curse of Engulfing Flames",
+   "kind": "section",
+   "n": 2,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:curse-of-inclement-headwinds": {
+   "bucket": "classFeatures",
+   "page": "tempest",
+   "path": [
+    4
+   ],
+   "anchor": "Curse of Inclement Headwinds",
+   "kind": "section",
+   "n": 6,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:curse-of-inevitable-rot": {
+   "bucket": "classFeatures",
+   "page": "blight",
+   "path": [
+    5
+   ],
+   "anchor": "Curse Of Inevitable Rot",
+   "kind": "section",
+   "n": 6,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:curse-of-outpouring-life": {
+   "bucket": "classFeatures",
+   "page": "life",
+   "path": [
+    4
+   ],
+   "anchor": "Curse of Outpouring Life",
+   "kind": "section",
+   "n": 2,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:curse-of-the-mortal-warrior": {
+   "bucket": "classFeatures",
+   "page": "battle",
+   "path": [
+    4
+   ],
+   "anchor": "Curse of the Mortal Warrior",
+   "kind": "section",
+   "n": 6,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:curse-of-the-skys-call": {
+   "bucket": "classFeatures",
+   "page": "cosmos",
+   "path": [
+    4
+   ],
+   "anchor": "Curse of the Sky's Call",
+   "kind": "section",
+   "n": 2,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:curse-of-torrential-knowledge": {
+   "bucket": "classFeatures",
+   "page": "lore",
+   "path": [
+    4
+   ],
+   "anchor": "Curse of Torrential Knowledge",
+   "kind": "section",
+   "n": 2,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:curse-of-turbulent-moments": {
+   "bucket": "classFeatures",
+   "page": "time",
+   "path": [
+    4
+   ],
+   "anchor": "Curse Of Turbulent Moments",
+   "kind": "section",
+   "n": 2,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:decay-instinct": {
+   "bucket": "instinct",
+   "page": "decay",
+   "path": [
+    0
+   ],
+   "anchor": "Decay",
+   "kind": "page",
+   "route": "R4",
+   "coverage": 1
+  },
+  "classFeatures:dense-plating": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Dense Plating",
+   "kind": "item",
+   "seg": 21,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:desynchronized-motions": {
+   "bucket": "deviantAbilityClassification",
+   "page": "flicker",
+   "path": [
+    8
+   ],
+   "anchor": "Backlash: Desynchronized Motions",
+   "kind": "section",
+   "n": 2,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:durable-construction": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Durable Construction",
+   "kind": "item",
+   "seg": 35,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:dynamic-weighting": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    5
+   ],
+   "anchor": "Dynamic Weighting (One-handed Melee Weapon Only; Can’t Have the Agile, Attached, or Free-hand Trait)",
+   "kind": "item",
+   "seg": 27,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.62
+  },
+  "classFeatures:elemental-magic": {
+   "bucket": "archetype",
+   "page": "elementalist",
+   "path": [
+    2
+   ],
+   "anchor": "Elemental Magic (1st)",
+   "kind": "section",
+   "n": 8,
+   "route": "R3",
+   "coverage": 0.61
+  },
+  "classFeatures:energetic-meltdown": {
+   "bucket": "deviantAbilityClassification",
+   "page": "dragon",
+   "path": [
+    8
+   ],
+   "anchor": "Backlash: Energetic Meltdown",
+   "kind": "section",
+   "n": 2,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:energy-barrier": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    13
+   ],
+   "anchor": "Energy Barrier",
+   "kind": "item",
+   "seg": 7,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:enhanced-resistance": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Enhanced Resistance",
+   "kind": "item",
+   "seg": 23,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:entangling-form": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    5
+   ],
+   "anchor": "Entangling Form (Melee Only)",
+   "kind": "item",
+   "seg": 41,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.83
+  },
+  "classFeatures:envy": {
+   "bucket": "sidebar",
+   "page": "sin-curriculums",
+   "path": [
+    3
+   ],
+   "anchor": "Envy",
+   "kind": "section",
+   "n": 25,
+   "route": "R3",
+   "coverage": 1
+  },
+  "classFeatures:extensible-weapon": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    9
+   ],
+   "anchor": "Extensible Weapon (Melee Only)",
+   "kind": "item",
+   "seg": 13,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:field-discovery-bomber": {
+   "bucket": "classFeatures",
+   "page": "bomber",
+   "path": [
+    9
+   ],
+   "anchor": "Field Discovery",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:field-discovery-chirurgeon": {
+   "bucket": "classFeatures",
+   "page": "chirurgeon",
+   "path": [
+    14
+   ],
+   "anchor": "Field Discovery",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:field-discovery-mutagenist": {
+   "bucket": "classFeatures",
+   "page": "mutagenist",
+   "path": [
+    9
+   ],
+   "anchor": "Field Discovery",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:field-discovery-toxicologist": {
+   "bucket": "classFeatures",
+   "page": "toxicologist",
+   "path": [
+    10
+   ],
+   "anchor": "Field Discovery",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:fifth-doctrine-cloistered-cleric": {
+   "bucket": "classFeatures",
+   "page": "cloistered-cleric",
+   "path": [
+    4
+   ],
+   "anchor": "Fifth Doctrine (15th)",
+   "kind": "item",
+   "seg": 37,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:fifth-doctrine-warpriest": {
+   "bucket": "classFeatures",
+   "page": "warpriest",
+   "path": [
+    4
+   ],
+   "anchor": "Fifth Doctrine (15th)",
+   "kind": "item",
+   "seg": 63,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:final-creed": {
+   "bucket": "classFeatures",
+   "page": "battle-creed",
+   "path": [
+    23
+   ],
+   "anchor": "Final Creed (19th)",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:final-doctrine-cloistered-cleric": {
+   "bucket": "classFeatures",
+   "page": "cloistered-cleric",
+   "path": [
+    4
+   ],
+   "anchor": "Final Doctrine (19th)",
+   "kind": "item",
+   "seg": 39,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:final-doctrine-warpriest": {
+   "bucket": "classFeatures",
+   "page": "warpriest",
+   "path": [
+    4
+   ],
+   "anchor": "Final Doctrine (19th)",
+   "kind": "item",
+   "seg": 67,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:fire-gate": {
+   "bucket": "element",
+   "page": "fire",
+   "kind": "run",
+   "path": [
+    7
+   ],
+   "anchor": "Impulse Junction (Single Gate)",
+   "n": 4,
+   "title": "Fire Gate",
+   "route": "R4",
+   "coverage": 0.8
+  },
+  "classFeatures:first-doctrine-cloistered-cleric": {
+   "bucket": "classFeatures",
+   "page": "cloistered-cleric",
+   "path": [
+    4
+   ],
+   "anchor": "First Doctrine (1st)",
+   "kind": "item",
+   "seg": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:first-doctrine-warpriest": {
+   "bucket": "classFeatures",
+   "page": "warpriest",
+   "path": [
+    4
+   ],
+   "anchor": "First Doctrine (1st)",
+   "kind": "item",
+   "seg": 1,
+   "route": "R2",
+   "coverage": 0.75
+  },
+  "classFeatures:fleeting-arc-through-heaven-and-earth": {
+   "bucket": "feats",
+   "page": "seven-colored-cosmic-bridge",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Fleeting Arc through Heaven and Earth",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.81
+  },
+  "classFeatures:flexible-spell-preparation": {
+   "bucket": "archetype",
+   "page": "flexible-spellcaster",
+   "path": [
+    2
+   ],
+   "anchor": "Flexible Spell Preparation (1st)",
+   "kind": "section",
+   "n": 4,
+   "route": "R1",
+   "coverage": 0.92
+  },
+  "classFeatures:flicker-deviant-classification": {
+   "bucket": "deviantAbilityClassification",
+   "page": "flicker",
+   "path": [
+    0
+   ],
+   "anchor": "Flicker",
+   "kind": "page",
+   "route": "R4",
+   "coverage": 1
+  },
+  "classFeatures:flight-chassis": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Flight Chassis",
+   "kind": "item",
+   "seg": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:fourth-doctrine-cloistered-cleric": {
+   "bucket": "classFeatures",
+   "page": "cloistered-cleric",
+   "path": [
+    4
+   ],
+   "anchor": "Fourth Doctrine (11th)",
+   "kind": "item",
+   "seg": 19,
+   "route": "R2",
+   "coverage": 0.5,
+   "grams": 0.89
+  },
+  "classFeatures:fourth-doctrine-warpriest": {
+   "bucket": "classFeatures",
+   "page": "warpriest",
+   "path": [
+    4
+   ],
+   "anchor": "Fourth Doctrine (11th)",
+   "kind": "item",
+   "seg": 59,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:fourth-gates-threshold": {
+   "bucket": "classFeatures",
+   "page": "gates-threshold",
+   "kind": "run",
+   "path": [
+    3
+   ],
+   "anchor": "You reach a new milestone in your odyssey to become in tune ",
+   "n": 3,
+   "title": "Fourth Gate's Threshold",
+   "route": "R4",
+   "coverage": 1
+  },
+  "classFeatures:gate-junction": {
+   "bucket": "classFeatures",
+   "page": "gates-threshold",
+   "path": [
+    5
+   ],
+   "anchor": "Gate Junctions",
+   "kind": "section",
+   "n": 4,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:glimpse-vulnerability": {
+   "bucket": "feats",
+   "page": "thaumaturge-dedication",
+   "path": [
+    5
+   ],
+   "anchor": "Glimpse Vulnerability",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 0.75
+  },
+  "classFeatures:gluttony": {
+   "bucket": "sidebar",
+   "page": "sin-curriculums",
+   "path": [
+    29
+   ],
+   "anchor": "Gluttony",
+   "kind": "section",
+   "n": 25,
+   "route": "R3",
+   "coverage": 1
+  },
+  "classFeatures:greater-creed": {
+   "bucket": "classFeatures",
+   "page": "battle-creed",
+   "path": [
+    17
+   ],
+   "anchor": "Greater Creed (11th)",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:greater-field-discovery-bomber": {
+   "bucket": "classFeatures",
+   "page": "bomber",
+   "path": [
+    13
+   ],
+   "anchor": "Greater Field Discovery",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:greater-field-discovery-chirurgeon": {
+   "bucket": "classFeatures",
+   "page": "chirurgeon",
+   "path": [
+    18
+   ],
+   "anchor": "Greater Field Discovery",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:greater-field-discovery-mutagenist": {
+   "bucket": "classFeatures",
+   "page": "mutagenist",
+   "path": [
+    13
+   ],
+   "anchor": "Greater Field Discovery",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:greater-field-discovery-toxicologist": {
+   "bucket": "classFeatures",
+   "page": "toxicologist",
+   "path": [
+    14
+   ],
+   "anchor": "Greater Field Discovery",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:greed": {
+   "bucket": "sidebar",
+   "page": "sin-curriculums",
+   "path": [
+    55
+   ],
+   "anchor": "Greed",
+   "kind": "section",
+   "n": 25,
+   "route": "R3",
+   "coverage": 1
+  },
+  "classFeatures:hampering-spikes": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    5
+   ],
+   "anchor": "Hampering Spikes (Melee Only)",
+   "kind": "item",
+   "seg": 49,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.84
+  },
+  "classFeatures:harmonic-oscillator": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Harmonic Oscillator",
+   "kind": "item",
+   "seg": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:heaven-rains-an-ending": {
+   "bucket": "feats",
+   "page": "infinite-blades-celestial-arrow",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Heaven Rains an Ending",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:heavy-construction": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Heavy Construction (Power Suit Only)",
+   "kind": "item",
+   "seg": 25,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "classFeatures:hefty-composition": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    5
+   ],
+   "anchor": "Hefty Composition (Melee Only)",
+   "kind": "item",
+   "seg": 59,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.79
+  },
+  "classFeatures:hyper-boosters": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Hyper Boosters",
+   "kind": "item",
+   "seg": 43,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:inconspicuous-appearance": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    7
+   ],
+   "anchor": "Inconspicuous Appearance (Melee Only)",
+   "kind": "item",
+   "seg": 23,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:increased-size": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    7
+   ],
+   "anchor": "Increased Size",
+   "kind": "item",
+   "seg": 17,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:incredible-resistance": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    14
+   ],
+   "anchor": "Incredible Resistance",
+   "kind": "item",
+   "seg": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:initial-creed": {
+   "bucket": "classFeatures",
+   "page": "battle-creed",
+   "path": [
+    11
+   ],
+   "anchor": "Initial Creed (1st)",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:integrated-gauntlet": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    7
+   ],
+   "anchor": "Integrated Gauntlet (One-Handed Weapon Only; Can’t Have the Two-Hand or Fatal Aim Trait )",
+   "kind": "item",
+   "seg": 33,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "classFeatures:layered-mesh": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Layered Mesh",
+   "kind": "item",
+   "seg": 47,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:leech-deviant-classification": {
+   "bucket": "deviantAbilityClassification",
+   "page": "leech",
+   "path": [
+    0
+   ],
+   "anchor": "Leech",
+   "kind": "page",
+   "route": "R4",
+   "coverage": 1
+  },
+  "classFeatures:lesser-creed": {
+   "bucket": "classFeatures",
+   "page": "battle-creed",
+   "path": [
+    13
+   ],
+   "anchor": "Lesser Creed (5th)",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:light-mortar-innovation": {
+   "bucket": "archetype",
+   "page": "munitions-master",
+   "path": [
+    2
+   ],
+   "anchor": "Light Mortar Innovation",
+   "kind": "section",
+   "n": 10,
+   "route": "R1",
+   "coverage": 0.62
+  },
+  "classFeatures:ligneous-instinct": {
+   "bucket": "instinct",
+   "page": "ligneous",
+   "path": [
+    0
+   ],
+   "anchor": "Ligneous",
+   "kind": "page",
+   "route": "R4",
+   "coverage": 1
+  },
+  "classFeatures:lust": {
+   "bucket": "sidebar",
+   "page": "sin-curriculums",
+   "path": [
+    81
+   ],
+   "anchor": "Lust",
+   "kind": "section",
+   "n": 25,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:major-creed": {
+   "bucket": "classFeatures",
+   "page": "battle-creed",
+   "path": [
+    19
+   ],
+   "anchor": "Major Creed (13th)",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:manifold-alloy": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    7
+   ],
+   "anchor": "Manifold Alloy",
+   "kind": "item",
+   "seg": 39,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:manual-dexterity": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    7
+   ],
+   "anchor": "Manual Dexterity",
+   "kind": "item",
+   "seg": 23,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:marvelous-gears": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Marvelous Gears",
+   "kind": "item",
+   "seg": 41,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:masterful-hunter-flurry": {
+   "bucket": "classFeatures",
+   "page": "flurry",
+   "path": [
+    3
+   ],
+   "anchor": "Masterful Hunter",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:masterful-hunter-outwit": {
+   "bucket": "classFeatures",
+   "page": "outwit",
+   "path": [
+    3
+   ],
+   "anchor": "Masterful Hunter",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:masterful-hunter-precision": {
+   "bucket": "classFeatures",
+   "page": "precision",
+   "path": [
+    3
+   ],
+   "anchor": "Masterful Hunter",
+   "kind": "section",
+   "n": 1,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:metal-gate": {
+   "bucket": "element",
+   "page": "metal",
+   "kind": "run",
+   "path": [
+    7
+   ],
+   "anchor": "Impulse Junction (Single Gate)",
+   "n": 4,
+   "title": "Metal Gate",
+   "route": "R4",
+   "coverage": 0.8
+  },
+  "classFeatures:metallic-reactance": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Metallic Reactance",
+   "kind": "item",
+   "seg": 17,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:miracle-gears": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Miracle Gears",
+   "kind": "item",
+   "seg": 5,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:moderate-creed": {
+   "bucket": "classFeatures",
+   "page": "battle-creed",
+   "path": [
+    15
+   ],
+   "anchor": "Moderate Creed (9th)",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:modular-head": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    5
+   ],
+   "anchor": "Modular Head",
+   "kind": "item",
+   "seg": 67,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:momentum-enhancer": {
+   "bucket": "classFeatures",
+   "page": "weapon-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Momentum Enhancer",
+   "kind": "item",
+   "seg": 41,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:multisensory-mask": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    14
+   ],
+   "anchor": "Multisensory Mask (Subterfuge Suit Only)",
+   "kind": "item",
+   "seg": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:muscular-exoskeleton": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Muscular Exoskeleton (Power Suit Only)",
+   "kind": "item",
+   "seg": 27,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:omnirange-stabilizers": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    9
+   ],
+   "anchor": "Omnirange Stabilizers (Ranged Only)",
+   "kind": "item",
+   "seg": 47,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:only-you-and-i": {
+   "bucket": "feats",
+   "page": "destined-victory",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Only You and I",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.8
+  },
+  "classFeatures:oracular-curse": {
+   "bucket": "classFeatures",
+   "page": "mystery",
+   "path": [
+    11
+   ],
+   "anchor": "Oracular Curse",
+   "kind": "section",
+   "n": 4,
+   "route": "R3",
+   "coverage": 0.76
+  },
+  "classFeatures:otherworldly-protection": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Otherworldly Protection",
+   "kind": "item",
+   "seg": 39,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:pacification-tools": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    5
+   ],
+   "anchor": "Pacification Tools (Melee Only)",
+   "kind": "item",
+   "seg": 77,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "classFeatures:pacifying-infusion": {
+   "bucket": "feats",
+   "page": "safe-elements",
+   "path": [
+    6
+   ],
+   "anchor": "Pacifying Infusion",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:perfect-fortification": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    14
+   ],
+   "anchor": "Perfect Fortification (Power Suit Only)",
+   "kind": "item",
+   "seg": 27,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:phlogistonic-regulator": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Phlogistonic Regulator",
+   "kind": "item",
+   "seg": 75,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:physical-protections": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    14
+   ],
+   "anchor": "Physical Protections",
+   "kind": "item",
+   "seg": 43,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:projectile-launcher": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    7
+   ],
+   "anchor": "Projectile Launcher",
+   "kind": "item",
+   "seg": 41,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:race-the-skies": {
+   "bucket": "feats",
+   "page": "journey-of-the-sky-chariot",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Race the Skies",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:razor-prongs": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    5
+   ],
+   "anchor": "Razor Prongs (Melee Only)",
+   "kind": "item",
+   "seg": 89,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.63
+  },
+  "classFeatures:rejoin-in-flight": {
+   "bucket": "feats",
+   "page": "mated-birds-in-paired-flight",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Rejoin in Flight",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:resistant-coating": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Resistant Coating",
+   "kind": "item",
+   "seg": 19,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:ringing-challenge": {
+   "bucket": "feats",
+   "page": "steel-on-steel",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Ringing Challenge",
+   "kind": "block",
+   "n": 4,
+   "route": "R1",
+   "coverage": 0.67
+  },
+  "classFeatures:rope-shot": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    7
+   ],
+   "anchor": "Rope Shot (Ranged Only)",
+   "kind": "item",
+   "seg": 55,
+   "route": "R1",
+   "coverage": 0.5,
+   "grams": 0.8
+  },
+  "classFeatures:rune-capacity": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    9
+   ],
+   "anchor": "Rune Capacity",
+   "kind": "item",
+   "seg": 55,
+   "route": "R1",
+   "coverage": 0,
+   "grams": 0.82
+  },
+  "classFeatures:runic-keystone": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Runic Keystone",
+   "kind": "item",
+   "seg": 25,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:second-doctrine-cloistered-cleric": {
+   "bucket": "classFeatures",
+   "page": "cloistered-cleric",
+   "path": [
+    4
+   ],
+   "anchor": "Second Doctrine (3rd)",
+   "kind": "item",
+   "seg": 7,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:second-doctrine-warpriest": {
+   "bucket": "classFeatures",
+   "page": "warpriest",
+   "path": [
+    4
+   ],
+   "anchor": "Second Doctrine (3rd)",
+   "kind": "item",
+   "seg": 41,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:second-gates-threshold": {
+   "bucket": "classFeatures",
+   "page": "gates-threshold",
+   "kind": "run",
+   "path": [
+    3
+   ],
+   "anchor": "You reach a new milestone in your odyssey to become in tune ",
+   "n": 3,
+   "title": "Second Gate's Threshold",
+   "route": "R4",
+   "coverage": 1
+  },
+  "classFeatures:segmented-frame": {
+   "bucket": "innovation",
+   "page": "weapon",
+   "path": [
+    5
+   ],
+   "anchor": "Segmented Frame",
+   "kind": "item",
+   "seg": 95,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:sensory-array": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    7
+   ],
+   "anchor": "Sensory Array",
+   "kind": "item",
+   "seg": 59,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:sever-conduit": {
+   "bucket": "spells",
+   "page": "summoners-precaution",
+   "path": [
+    6
+   ],
+   "anchor": "Sever Conduit",
+   "kind": "block",
+   "n": 3,
+   "route": "R3",
+   "coverage": 0.75
+  },
+  "classFeatures:sever-four-dragonfly-wings": {
+   "bucket": "feats",
+   "page": "motionless-cutter",
+   "path": [
+    5
+   ],
+   "anchor": "Transcendence—Sever Four Dragonfly Wings",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:shed-spirit": {
+   "bucket": "feats",
+   "page": "spirit-familiar-witch",
+   "path": [
+    5
+   ],
+   "anchor": "Shed Spirit",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "classFeatures:shed-the-mortal-skin": {
+   "bucket": "feats",
+   "page": "gift-of-the-immortal-herb",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Shed the Mortal Skin",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:skirt-the-underworld": {
+   "bucket": "feats",
+   "page": "shroud-of-ghosts",
+   "path": [
+    5
+   ],
+   "anchor": "Transcendence—Skirt the Underworld",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "classFeatures:spasm-of-the-berserker": {
+   "bucket": "feats",
+   "page": "warped-by-rage",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Spasm of the Berserker",
+   "kind": "block",
+   "n": 4,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:speed-boosters": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Speed Boosters",
+   "kind": "item",
+   "seg": 83,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:stitching-strike": {
+   "bucket": "feats",
+   "page": "stitched-familiar",
+   "path": [
+    5
+   ],
+   "anchor": "Stitching Strike",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "classFeatures:strained-metabolism": {
+   "bucket": "deviantAbilityClassification",
+   "page": "troll",
+   "path": [
+    8
+   ],
+   "anchor": "Backlash: Strained Metabolism",
+   "kind": "section",
+   "n": 2,
+   "route": "R1",
+   "coverage": 0.86
+  },
+  "classFeatures:subtle-dampeners": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Subtle Dampeners (Subterfuge Suit Only)",
+   "kind": "item",
+   "seg": 87,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:tangle-in-riddle": {
+   "bucket": "feats",
+   "page": "riddle-the-sphinx",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Tangle in Riddle",
+   "kind": "block",
+   "n": 11,
+   "route": "R1",
+   "coverage": 0.86
+  },
+  "classFeatures:tensile-absorption": {
+   "bucket": "classFeatures",
+   "page": "armor-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Tensile Absorption",
+   "kind": "item",
+   "seg": 49,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:third-doctrine-cloistered-cleric": {
+   "bucket": "classFeatures",
+   "page": "cloistered-cleric",
+   "path": [
+    4
+   ],
+   "anchor": "Third Doctrine (7th)",
+   "kind": "item",
+   "seg": 11,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:third-doctrine-warpriest": {
+   "bucket": "classFeatures",
+   "page": "warpriest",
+   "path": [
+    4
+   ],
+   "anchor": "Third Doctrine (7th)",
+   "kind": "item",
+   "seg": 45,
+   "route": "R2",
+   "coverage": 1
+  },
+  "classFeatures:third-gates-threshold": {
+   "bucket": "classFeatures",
+   "page": "gates-threshold",
+   "kind": "run",
+   "path": [
+    3
+   ],
+   "anchor": "You reach a new milestone in your odyssey to become in tune ",
+   "n": 3,
+   "title": "Third Gate's Threshold",
+   "route": "R4",
+   "coverage": 1
+  },
+  "classFeatures:topple-the-pillar-of-heaven": {
+   "bucket": "feats",
+   "page": "compliant-gold",
+   "path": [
+    7
+   ],
+   "anchor": "Transcendence—Topple the Pillar of Heaven",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "classFeatures:true-creed": {
+   "bucket": "classFeatures",
+   "page": "battle-creed",
+   "path": [
+    21
+   ],
+   "anchor": "True Creed (15th)",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:true-shapeshift": {
+   "bucket": "feats",
+   "page": "true-shapeshifter",
+   "path": [
+    5
+   ],
+   "anchor": "True Shapeshift",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:turret-configuration": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    9
+   ],
+   "anchor": "Turret Configuration",
+   "kind": "item",
+   "seg": 59,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:unravel-the-future": {
+   "bucket": "feats",
+   "page": "follow-the-threads-of-fate",
+   "path": [
+    6
+   ],
+   "anchor": "Transcendence—Unravel the Future",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:verdant-rest": {
+   "bucket": "feats",
+   "page": "verdant-metamorphosis",
+   "path": [
+    5
+   ],
+   "anchor": "Verdant Rest",
+   "kind": "block",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.8
+  },
+  "classFeatures:versatile-vials": {
+   "bucket": "classFeatures",
+   "page": "alchemy",
+   "path": [
+    11
+   ],
+   "anchor": "Versatile Vials",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.9
+  },
+  "classFeatures:wall-configuration": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    11
+   ],
+   "anchor": "Wall Configuration",
+   "kind": "item",
+   "seg": 43,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:water-gate": {
+   "bucket": "element",
+   "page": "water",
+   "kind": "run",
+   "path": [
+    7
+   ],
+   "anchor": "Impulse Junction (Single Gate)",
+   "n": 4,
+   "title": "Water Gate",
+   "route": "R4",
+   "coverage": 0.67
+  },
+  "classFeatures:wonder-gears": {
+   "bucket": "classFeatures",
+   "page": "construct-innovation",
+   "path": [
+    7
+   ],
+   "anchor": "Wonder Gears",
+   "kind": "item",
+   "seg": 71,
+   "route": "R1",
+   "coverage": 1
+  },
+  "classFeatures:wood-gate": {
+   "bucket": "element",
+   "page": "wood",
+   "kind": "run",
+   "path": [
+    7
+   ],
+   "anchor": "Impulse Junction (Single Gate)",
+   "n": 4,
+   "title": "Wood Gate",
+   "route": "R4",
+   "coverage": 0.75
+  },
+  "classFeatures:wrath": {
+   "bucket": "sidebar",
+   "page": "sin-curriculums",
+   "path": [
+    159
+   ],
+   "anchor": "Wrath",
+   "kind": "section",
+   "n": 25,
+   "route": "R3",
+   "coverage": 1
+  },
+  "familiarAbilities:elemental-familiar-air": {
+   "bucket": "familiarAbilities",
+   "page": "elemental-familiar-air",
+   "path": [
+    6,
+    0
+   ],
+   "anchor": "Air If your familiar stays completely still for 1 round, it ",
+   "kind": "line",
+   "title": "Elemental Familiar (Air)",
+   "drop": [
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     6,
+     5
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "familiarAbilities:elemental-familiar-earth": {
+   "bucket": "familiarAbilities",
+   "page": "elemental-familiar-earth",
+   "path": [
+    6,
+    1
+   ],
+   "anchor": "Earth Your familiar gains resistance to physical damage (exc",
+   "kind": "line",
+   "title": "Elemental Familiar (Earth)",
+   "drop": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     6,
+     5
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.5,
+   "grams": 0.61
+  },
+  "familiarAbilities:elemental-familiar-fire": {
+   "bucket": "familiarAbilities",
+   "page": "elemental-familiar-fire",
+   "path": [
+    6,
+    2
+   ],
+   "anchor": "Fire Your familiar sheds bright light in a 20-foot radius (a",
+   "kind": "line",
+   "title": "Elemental Familiar (Fire)",
+   "drop": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     6,
+     5
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "familiarAbilities:elemental-familiar-metal": {
+   "bucket": "familiarAbilities",
+   "page": "elemental-familiar-metal",
+   "path": [
+    6,
+    3
+   ],
+   "anchor": "Metal Your familiar gains resistance to physical damage from",
+   "kind": "line",
+   "title": "Elemental Familiar (Metal)",
+   "drop": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     6,
+     5
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.5,
+   "grams": 0.63
+  },
+  "familiarAbilities:elemental-familiar-water": {
+   "bucket": "familiarAbilities",
+   "page": "elemental-familiar-water",
+   "path": [
+    6,
+    4
+   ],
+   "anchor": "Water Your familiar can move through a gap at least 2 inches",
+   "kind": "line",
+   "title": "Elemental Familiar (Water)",
+   "drop": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     5
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.5,
+   "grams": 0.76
+  },
+  "familiarAbilities:elemental-familiar-wood": {
+   "bucket": "familiarAbilities",
+   "page": "elemental-familiar-wood",
+   "path": [
+    6,
+    5
+   ],
+   "anchor": "Wood If your familiar remains in bright light for 1 round, i",
+   "kind": "line",
+   "title": "Elemental Familiar (Wood)",
+   "drop": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "familiarAbilities:erudite": {
+   "bucket": "feats",
+   "page": "divine-emissary",
+   "path": [
+    5
+   ],
+   "anchor": "Erudite",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "familiarAbilities:luminous": {
+   "bucket": "feats",
+   "page": "divine-emissary",
+   "path": [
+    6
+   ],
+   "anchor": "Luminous",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "familiarAbilities:mask-freeze": {
+   "bucket": "feats",
+   "page": "mask-familiar",
+   "path": [
+    5
+   ],
+   "anchor": "Mask Freeze",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "familiarAbilities:synchronize-spirit": {
+   "bucket": "feats",
+   "page": "emissary-familiar",
+   "path": [
+    6
+   ],
+   "anchor": "Synchronize Spirit",
+   "kind": "block",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "feats:blessing-of-the-five": {
+   "bucket": "classFeatures",
+   "page": "order-of-the-godclaw",
+   "path": [
+    7
+   ],
+   "anchor": "Blessing of the Five",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.4,
+   "grams": 0.83
+  },
+  "feats:breath-of-the-dragon-dragonblood": {
+   "bucket": "feats",
+   "page": "breath-of-the-dragon",
+   "path": [
+    0
+   ],
+   "anchor": "Breath of the Dragon",
+   "kind": "page",
+   "route": "R4",
+   "coverage": 1
+  },
+  "feats:devil-allies": {
+   "bucket": "classFeatures",
+   "page": "order-of-the-gate",
+   "path": [
+    7
+   ],
+   "anchor": "Devil Allies",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.25,
+   "grams": 0.58
+  },
+  "feats:disillusionment": {
+   "bucket": "hellknightOrder",
+   "page": "order-of-the-rack",
+   "path": [
+    3
+   ],
+   "anchor": "Disillusionment",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "feats:fear-no-law-fear-no-one": {
+   "bucket": "hellknightOrder",
+   "page": "order-of-the-scourge",
+   "path": [
+    3
+   ],
+   "anchor": "Fear No Law, Fear No One",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "feats:haunting-memories-skill-feat": {
+   "bucket": "feats",
+   "page": "haunting-memories",
+   "path": [
+    0
+   ],
+   "anchor": "Haunting Memories",
+   "kind": "page",
+   "route": "R1",
+   "coverage": 1
+  },
+  "feats:locate-lawbreakers": {
+   "bucket": "classFeatures",
+   "page": "order-of-the-gate",
+   "path": [
+    3
+   ],
+   "anchor": "Locate Lawbreakers",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.33,
+   "grams": 0.81
+  },
+  "feats:many-guises-kitsune": {
+   "bucket": "feats",
+   "page": "many-guises",
+   "path": [
+    0
+   ],
+   "anchor": "Many Guises",
+   "kind": "page",
+   "route": "R4",
+   "coverage": 1
+  },
+  "feats:righteous-resistance": {
+   "bucket": "hellknightOrder",
+   "page": "order-of-the-pyre",
+   "path": [
+    3
+   ],
+   "anchor": "Righteous Resistance",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "feats:seek-injustice": {
+   "bucket": "hellknightOrder",
+   "page": "order-of-the-scourge",
+   "path": [
+    7
+   ],
+   "anchor": "Seek Injustice",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0,
+   "grams": 0.8
+  },
+  "feats:shackles-of-law": {
+   "bucket": "classFeatures",
+   "page": "order-of-the-chain",
+   "path": [
+    3
+   ],
+   "anchor": "Shackles of Law",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "feats:silence-heresy": {
+   "bucket": "hellknightOrder",
+   "page": "order-of-the-rack",
+   "path": [
+    7
+   ],
+   "anchor": "Silence Heresy",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.4,
+   "grams": 0.81
+  },
+  "feats:spiritual-disruption": {
+   "bucket": "hellknightOrder",
+   "page": "order-of-the-pyre",
+   "path": [
+    7
+   ],
+   "anchor": "Spiritual Disruption",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 0.75
+  },
+  "feats:sturdy-bindings": {
+   "bucket": "classFeatures",
+   "page": "order-of-the-chain",
+   "path": [
+    7
+   ],
+   "anchor": "Sturdy Bindings",
+   "kind": "section",
+   "n": 3,
+   "route": "R1",
+   "coverage": 1
+  },
+  "items:advanced-book-of-translation-tien": {
+   "bucket": "items",
+   "page": "aon-book-of-translation",
+   "path": [
+    9
+   ],
+   "anchor": "Book of Translation (Advanced)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R4",
+   "coverage": 1
+  },
+  "items:aon-stone-object-low-grade": {
+   "bucket": "items",
+   "page": "aon-stone-object-low-grade",
+   "path": [
+    8
+   ],
+   "anchor": "Stone Object (Low-Grade)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.8
+  },
+  "items:arboreal-wand-rank-2": {
+   "bucket": "items",
+   "page": "arboreal-wand-rank-2",
+   "path": [
+    11
+   ],
+   "anchor": "Arboreal Wand (2nd-rank spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:arboreal-wand-rank-3": {
+   "bucket": "items",
+   "page": "arboreal-wand-rank-3",
+   "path": [
+    14
+   ],
+   "anchor": "Arboreal Wand (3rd-rank spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:arboreal-wand-rank-4": {
+   "bucket": "items",
+   "page": "arboreal-wand-rank-4",
+   "path": [
+    17
+   ],
+   "anchor": "Arboreal Wand (4th-rank spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:arboreal-wand-rank-5": {
+   "bucket": "items",
+   "page": "arboreal-wand-rank-5",
+   "path": [
+    20
+   ],
+   "anchor": "Arboreal Wand (5th-rank spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:arboreal-wand-rank-6": {
+   "bucket": "items",
+   "page": "arboreal-wand-rank-6",
+   "path": [
+    23
+   ],
+   "anchor": "Arboreal Wand (6th-rank spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:arboreal-wand-rank-7": {
+   "bucket": "items",
+   "page": "arboreal-wand-rank-7",
+   "path": [
+    26
+   ],
+   "anchor": "Arboreal Wand (7th-rank spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:awakened-adamantine-shot": {
+   "bucket": "items",
+   "page": "awakened-adamantine-shot",
+   "path": [
+    6
+   ],
+   "anchor": "Awakened Metal Shot (Awakened Adamantine Shot)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.83
+  },
+  "items:awakened-cold-iron-shot": {
+   "bucket": "items",
+   "page": "awakened-cold-iron-shot",
+   "path": [
+    11
+   ],
+   "anchor": "Awakened Metal Shot (Awakened Cold Iron Shot)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.5,
+   "grams": 0.81
+  },
+  "items:awakened-silver-shot": {
+   "bucket": "items",
+   "page": "awakened-silver-shot",
+   "path": [
+    16
+   ],
+   "anchor": "Awakened Metal Shot (Awakened Silver Shot)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.88
+  },
+  "items:bakuwa-lizardfolk-bony-plates": {
+   "bucket": "heritages",
+   "page": "bakuwa-lizardfolk",
+   "kind": "run",
+   "path": [
+    4
+   ],
+   "anchor": "Your body is covered in bony plates. Your plates are medium ",
+   "n": 1,
+   "title": "Bakuwa Lizardfolk Bony Plates",
+   "route": "R4",
+   "coverage": 1
+  },
+  "items:bloodhound-olfactory-stimulators": {
+   "bucket": "items",
+   "page": "olfactory-stimulators",
+   "path": [
+    9
+   ],
+   "anchor": "Olfactory Stimulators (Bloodhound)",
+   "kind": "section",
+   "n": 7,
+   "route": "R3",
+   "coverage": 1
+  },
+  "items:cordelias-greater-construct-key": {
+   "bucket": "items",
+   "page": "cordelias-construct-key",
+   "path": [
+    16
+   ],
+   "anchor": "Cordelia's Construct Key (Greater)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R4",
+   "coverage": 0.88
+  },
+  "items:drake-rifle-acid": {
+   "bucket": "items",
+   "page": "drake-rifle-acid",
+   "path": [
+    9,
+    0
+   ],
+   "anchor": "Acid Clinging acid makes it painful and sickening to move. T",
+   "kind": "line",
+   "title": "Drake Rifle (Acid)",
+   "drop": [
+    [
+     9,
+     1
+    ],
+    [
+     9,
+     2
+    ],
+    [
+     9,
+     3
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.92
+  },
+  "items:drake-rifle-cold": {
+   "bucket": "items",
+   "page": "drake-rifle-cold",
+   "path": [
+    9,
+    1
+   ],
+   "anchor": "Cold Frozen spittle clings to the target. The target takes a",
+   "kind": "line",
+   "title": "Drake Rifle (Cold)",
+   "drop": [
+    [
+     9,
+     0
+    ],
+    [
+     9,
+     2
+    ],
+    [
+     9,
+     3
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.93
+  },
+  "items:drake-rifle-electricity": {
+   "bucket": "items",
+   "page": "drake-rifle-electricity",
+   "path": [
+    9,
+    2
+   ],
+   "anchor": "Electricity Small bursts of electricity continue to spark an",
+   "kind": "line",
+   "title": "Drake Rifle (Electricity)",
+   "drop": [
+    [
+     9,
+     0
+    ],
+    [
+     9,
+     1
+    ],
+    [
+     9,
+     3
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.93
+  },
+  "items:drake-rifle-fire": {
+   "bucket": "items",
+   "page": "drake-rifle-fire",
+   "path": [
+    9,
+    3
+   ],
+   "anchor": "Fire A massive explosion knocks the target back. The target ",
+   "kind": "line",
+   "title": "Drake Rifle (Fire)",
+   "drop": [
+    [
+     9,
+     0
+    ],
+    [
+     9,
+     1
+    ],
+    [
+     9,
+     2
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.93
+  },
+  "items:drake-rifle-poison": {
+   "bucket": "items",
+   "page": "drake-rifle-poison",
+   "path": [
+    9,
+    4
+   ],
+   "anchor": "Poison Noxious vapors fill the target's lungs. The target be",
+   "kind": "line",
+   "title": "Drake Rifle (Poison)",
+   "drop": [
+    [
+     9,
+     0
+    ],
+    [
+     9,
+     1
+    ],
+    [
+     9,
+     2
+    ],
+    [
+     9,
+     3
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.93
+  },
+  "items:energy-robe-of-acid": {
+   "bucket": "items",
+   "page": "aon-energy-robe",
+   "path": [
+    19
+   ],
+   "anchor": "Energy Robe (Acid)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R4",
+   "coverage": 1
+  },
+  "items:energy-robe-of-cold": {
+   "bucket": "items",
+   "page": "aon-energy-robe",
+   "path": [
+    14
+   ],
+   "anchor": "Energy Robe (Cold)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R4",
+   "coverage": 1
+  },
+  "items:energy-robe-of-electricity": {
+   "bucket": "items",
+   "page": "aon-energy-robe",
+   "path": [
+    24
+   ],
+   "anchor": "Energy Robe (Electricity)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R4",
+   "coverage": 1
+  },
+  "items:energy-robe-of-fire": {
+   "bucket": "items",
+   "page": "aon-energy-robe",
+   "path": [
+    9
+   ],
+   "anchor": "Energy Robe (Fire)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R4",
+   "coverage": 1
+  },
+  "items:hardshell-surki-carapace": {
+   "bucket": "heritages",
+   "page": "hardshell-surki",
+   "kind": "run",
+   "path": [
+    3
+   ],
+   "anchor": "Your carapace is much denser than that of other surkis, offe",
+   "n": 1,
+   "title": "Hardshell Surki Carapace",
+   "route": "R4",
+   "coverage": 1
+  },
+  "items:head-gem": {
+   "bucket": "ancestries",
+   "page": "sarangay",
+   "path": [
+    34
+   ],
+   "anchor": "Head Gem",
+   "kind": "section",
+   "n": 1,
+   "route": "R1",
+   "coverage": 1
+  },
+  "items:instinct-crown-animal": {
+   "bucket": "items",
+   "page": "instinct-crown-animal",
+   "path": [
+    11
+   ],
+   "anchor": "Animal: Your bestial instincts take over, granting you great",
+   "kind": "line",
+   "title": "Instinct Crown (Animal)",
+   "drop": [
+    [
+     12
+    ],
+    [
+     13
+    ],
+    [
+     14
+    ],
+    [
+     15
+    ],
+    [
+     16
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.9
+  },
+  "items:instinct-crown-dragon": {
+   "bucket": "items",
+   "page": "instinct-crown-dragon",
+   "path": [
+    12
+   ],
+   "anchor": "Dragon: The might of dragons surrounds you in the form of da",
+   "kind": "line",
+   "title": "Instinct Crown (Dragon)",
+   "drop": [
+    [
+     11
+    ],
+    [
+     13
+    ],
+    [
+     14
+    ],
+    [
+     15
+    ],
+    [
+     16
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.9
+  },
+  "items:instinct-crown-fury": {
+   "bucket": "items",
+   "page": "instinct-crown-fury",
+   "path": [
+    13
+   ],
+   "anchor": "Fury: Your boundless fury allows you push past your natural ",
+   "kind": "line",
+   "title": "Instinct Crown (Fury)",
+   "drop": [
+    [
+     11
+    ],
+    [
+     12
+    ],
+    [
+     14
+    ],
+    [
+     15
+    ],
+    [
+     16
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.9
+  },
+  "items:instinct-crown-giant": {
+   "bucket": "items",
+   "page": "instinct-crown-giant",
+   "path": [
+    14
+   ],
+   "anchor": "Giant: If you have the space to do so and aren’t already, yo",
+   "kind": "line",
+   "title": "Instinct Crown (Giant)",
+   "drop": [
+    [
+     11
+    ],
+    [
+     12
+    ],
+    [
+     13
+    ],
+    [
+     15
+    ],
+    [
+     16
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.93
+  },
+  "items:instinct-crown-spirit": {
+   "bucket": "items",
+   "page": "instinct-crown-spirit",
+   "path": [
+    15
+   ],
+   "anchor": "Spirit: You take on the partial form of a spirit, becoming s",
+   "kind": "line",
+   "title": "Instinct Crown (Spirit)",
+   "drop": [
+    [
+     11
+    ],
+    [
+     12
+    ],
+    [
+     13
+    ],
+    [
+     14
+    ],
+    [
+     16
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.89
+  },
+  "items:instinct-crown-superstition": {
+   "bucket": "items",
+   "page": "instinct-crown-superstition",
+   "path": [
+    16
+   ],
+   "anchor": "Superstition: Your body fights off the effects of magic with",
+   "kind": "line",
+   "title": "Instinct Crown (Superstition)",
+   "drop": [
+    [
+     11
+    ],
+    [
+     12
+    ],
+    [
+     13
+    ],
+    [
+     14
+    ],
+    [
+     15
+    ]
+   ],
+   "route": "R0",
+   "coverage": 0.9
+  },
+  "items:land-delvers-chair": {
+   "bucket": "items",
+   "page": "land-delvers-chair",
+   "path": [
+    24
+   ],
+   "anchor": "Wheelchair (Land-Delver's Chair)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:plate-of-yled-greater": {
+   "bucket": "items",
+   "page": "plate-of-yled-greater",
+   "path": [
+    14
+   ],
+   "anchor": "Plate of Yled (Greater Graveknight Plate)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.43,
+   "grams": 0.87
+  },
+  "items:plate-of-yled-major": {
+   "bucket": "items",
+   "page": "plate-of-yled-major",
+   "path": [
+    19
+   ],
+   "anchor": "Plate of Yled (Major Graveknight Plate)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.43,
+   "grams": 0.86
+  },
+  "items:plate-of-yled-true": {
+   "bucket": "items",
+   "page": "plate-of-yled-true",
+   "path": [
+    24
+   ],
+   "anchor": "Plate of Yled (True Graveknight Plate)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.43,
+   "grams": 0.86
+  },
+  "items:puzzle-box-challenging-hollow": {
+   "bucket": "items",
+   "page": "puzzle-box-challenging-hollow",
+   "path": [
+    16
+   ],
+   "anchor": "Puzzle Box (Challenging)",
+   "n": 4,
+   "kind": "variant",
+   "also": [
+    {
+     "path": [
+      21
+     ],
+     "anchor": "Puzzle Box (Hollow)",
+     "n": 4
+    }
+   ],
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:puzzle-box-complex-hollow": {
+   "bucket": "items",
+   "page": "puzzle-box-complex-hollow",
+   "path": [
+    11
+   ],
+   "anchor": "Puzzle Box (Complex)",
+   "n": 4,
+   "kind": "variant",
+   "also": [
+    {
+     "path": [
+      21
+     ],
+     "anchor": "Puzzle Box (Hollow)",
+     "n": 4
+    }
+   ],
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:puzzle-box-simple-hollow": {
+   "bucket": "items",
+   "page": "puzzle-box-simple-hollow",
+   "path": [
+    6
+   ],
+   "anchor": "Puzzle Box (Simple)",
+   "n": 4,
+   "kind": "variant",
+   "also": [
+    {
+     "path": [
+      21
+     ],
+     "anchor": "Puzzle Box (Hollow)",
+     "n": 4
+    }
+   ],
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:rite-of-reinforcement-exoskeleton": {
+   "bucket": "heritages",
+   "page": "rite-of-reinforcement",
+   "path": [
+    0
+   ],
+   "anchor": "Rite of Reinforcement",
+   "kind": "page",
+   "route": "R4",
+   "coverage": 0.6
+  },
+  "items:smoky-hag-eye": {
+   "bucket": "items",
+   "page": "hag-eye",
+   "path": [
+    32
+   ],
+   "anchor": "Hag Eye (Smokey)",
+   "kind": "variant",
+   "n": 14,
+   "route": "R4",
+   "coverage": 0.81
+  },
+  "items:splintering-spear-greater": {
+   "bucket": "items",
+   "page": "splintering-spear-greater",
+   "path": [
+    12
+   ],
+   "anchor": "Splinter Spear (Greater)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:splintering-spear-major": {
+   "bucket": "items",
+   "page": "splintering-spear-major",
+   "path": [
+    17
+   ],
+   "anchor": "Splinter Spear (Major)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:standard-book-of-translation-tien": {
+   "bucket": "items",
+   "page": "aon-book-of-translation",
+   "path": [
+    6
+   ],
+   "anchor": "Book of Translation (Standard)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R4",
+   "coverage": 1
+  },
+  "items:stony-hag-eye": {
+   "bucket": "items",
+   "page": "hag-eye",
+   "path": [
+    47
+   ],
+   "anchor": "Hag Eye (Stoney)",
+   "kind": "variant",
+   "n": 7,
+   "route": "R4",
+   "coverage": 0.85
+  },
+  "items:supramarine-chair": {
+   "bucket": "items",
+   "page": "supramarine-chair",
+   "path": [
+    19
+   ],
+   "anchor": "Wheelchair (Supramarine Chair)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-choking-mist-2nd-rank": {
+   "bucket": "items",
+   "page": "wand-of-choking-mist-2nd-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Choking Mist (2nd-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.8
+  },
+  "items:wand-of-choking-mist-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-choking-mist-4th-rank",
+   "path": [
+    15
+   ],
+   "anchor": "Wand of Choking Mist (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.6
+  },
+  "items:wand-of-chromatic-burst-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-chromatic-burst-4th-rank",
+   "path": [
+    13
+   ],
+   "anchor": "Wand of Chromatic Burst (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.82
+  },
+  "items:wand-of-chromatic-burst-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-chromatic-burst-7th-rank",
+   "path": [
+    18
+   ],
+   "anchor": "Wand of Chromatic Burst (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.82
+  },
+  "items:wand-of-clinging-rime-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-clinging-rime-7th-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Clinging Rime (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-clinging-rime-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-clinging-rime-8th-rank",
+   "path": [
+    15
+   ],
+   "anchor": "Wand of Clinging Rime (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-clinging-rime-9th-rank": {
+   "bucket": "items",
+   "page": "wand-of-clinging-rime-9th-rank",
+   "path": [
+    20
+   ],
+   "anchor": "Wand of Clinging Rime (9th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-dazzling-rays-3rd-rank": {
+   "bucket": "items",
+   "page": "wand-of-dazzling-rays-3rd-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Dazzling Rays (3rd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.8
+  },
+  "items:wand-of-dazzling-rays-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dazzling-rays-4th-rank",
+   "path": [
+    13
+   ],
+   "anchor": "Wand of Dazzling Rays (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.8
+  },
+  "items:wand-of-dazzling-rays-5th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dazzling-rays-5th-rank",
+   "path": [
+    16
+   ],
+   "anchor": "Wand of Dazzling Rays (5th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.8
+  },
+  "items:wand-of-dazzling-rays-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dazzling-rays-6th-rank",
+   "path": [
+    19
+   ],
+   "anchor": "Wand of Dazzling Rays (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.8
+  },
+  "items:wand-of-dazzling-rays-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dazzling-rays-7th-rank",
+   "path": [
+    22
+   ],
+   "anchor": "Wand of Dazzling Rays (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.8
+  },
+  "items:wand-of-dazzling-rays-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dazzling-rays-8th-rank",
+   "path": [
+    25
+   ],
+   "anchor": "Wand of Dazzling Rays (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.8
+  },
+  "items:wand-of-dazzling-rays-9th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dazzling-rays-9th-rank",
+   "path": [
+    28
+   ],
+   "anchor": "Wand of Dazzling Rays (9th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.8
+  },
+  "items:wand-of-dumbfounding-doom-3rd-rank": {
+   "bucket": "items",
+   "page": "wand-of-dumbfounding-doom-3rd-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Dumbfounding Doom (3rd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.83
+  },
+  "items:wand-of-dumbfounding-doom-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dumbfounding-doom-4th-rank",
+   "path": [
+    13
+   ],
+   "anchor": "Wand of Dumbfounding Doom (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.83
+  },
+  "items:wand-of-dumbfounding-doom-5th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dumbfounding-doom-5th-rank",
+   "path": [
+    16
+   ],
+   "anchor": "Wand of Dumbfounding Doom (5th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.83
+  },
+  "items:wand-of-dumbfounding-doom-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dumbfounding-doom-6th-rank",
+   "path": [
+    19
+   ],
+   "anchor": "Wand of Dumbfounding Doom (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.83
+  },
+  "items:wand-of-dumbfounding-doom-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dumbfounding-doom-7th-rank",
+   "path": [
+    22
+   ],
+   "anchor": "Wand of Dumbfounding Doom (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.83
+  },
+  "items:wand-of-dumbfounding-doom-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dumbfounding-doom-8th-rank",
+   "path": [
+    25
+   ],
+   "anchor": "Wand of Dumbfounding Doom (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.83
+  },
+  "items:wand-of-dumbfounding-doom-9th-rank": {
+   "bucket": "items",
+   "page": "wand-of-dumbfounding-doom-9th-rank",
+   "path": [
+    28
+   ],
+   "anchor": "Wand of Dumbfounding Doom (9th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.83
+  },
+  "items:wand-of-hawthorn-2nd-rank": {
+   "bucket": "items",
+   "page": "wand-of-hawthorn-2nd-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Hawthorn (2nd-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-hawthorn-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-hawthorn-4th-rank",
+   "path": [
+    15
+   ],
+   "anchor": "Wand of Hawthorn (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-hawthorn-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-hawthorn-6th-rank",
+   "path": [
+    20
+   ],
+   "anchor": "Wand of Hawthorn (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-hawthorn-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-hawthorn-8th-rank",
+   "path": [
+    25
+   ],
+   "anchor": "Wand of Hawthorn (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-hybrid-form-2nd-rank": {
+   "bucket": "items",
+   "page": "wand-of-hybrid-form-2nd-rank",
+   "path": [
+    22
+   ],
+   "anchor": "Wand of Hybrid Form (2nd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-hybrid-form-3rd-rank": {
+   "bucket": "items",
+   "page": "wand-of-hybrid-form-3rd-rank",
+   "path": [
+    25
+   ],
+   "anchor": "Wand of Hybrid Form (3rd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-hybrid-form-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-hybrid-form-4th-rank",
+   "path": [
+    28
+   ],
+   "anchor": "Wand of Hybrid Form (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-hybrid-form-5th-rank": {
+   "bucket": "items",
+   "page": "wand-of-hybrid-form-5th-rank",
+   "path": [
+    31
+   ],
+   "anchor": "Wand of Hybrid Form (5th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-hybrid-form-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-hybrid-form-6th-rank",
+   "path": [
+    34
+   ],
+   "anchor": "Wand of Hybrid Form (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-hybrid-form-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-hybrid-form-7th-rank",
+   "path": [
+    37
+   ],
+   "anchor": "Wand of Hybrid Form (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-hybrid-form-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-hybrid-form-8th-rank",
+   "path": [
+    40
+   ],
+   "anchor": "Wand of Hybrid Form (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-hybrid-form-9th-rank": {
+   "bucket": "items",
+   "page": "wand-of-hybrid-form-9th-rank",
+   "path": [
+    43
+   ],
+   "anchor": "Wand of Hybrid Form (9th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-mental-purification-1st-rank": {
+   "bucket": "items",
+   "page": "wand-of-mental-purification-1st-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Mental Purification (1st-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-mental-purification-2nd-rank": {
+   "bucket": "items",
+   "page": "wand-of-mental-purification-2nd-rank",
+   "path": [
+    13
+   ],
+   "anchor": "Wand of Mental Purification (2nd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-mental-purification-3rd-rank": {
+   "bucket": "items",
+   "page": "wand-of-mental-purification-3rd-rank",
+   "path": [
+    16
+   ],
+   "anchor": "Wand of Mental Purification (3rd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-mental-purification-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mental-purification-4th-rank",
+   "path": [
+    19
+   ],
+   "anchor": "Wand of Mental Purification (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-mental-purification-5th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mental-purification-5th-rank",
+   "path": [
+    22
+   ],
+   "anchor": "Wand of Mental Purification (5th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-mental-purification-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mental-purification-6th-rank",
+   "path": [
+    25
+   ],
+   "anchor": "Wand of Mental Purification (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-mental-purification-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mental-purification-7th-rank",
+   "path": [
+    28
+   ],
+   "anchor": "Wand of Mental Purification (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-mental-purification-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mental-purification-8th-rank",
+   "path": [
+    31
+   ],
+   "anchor": "Wand of Mental Purification (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-mental-purification-9th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mental-purification-9th-rank",
+   "path": [
+    34
+   ],
+   "anchor": "Wand of Mental Purification (9th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-mercy-1st-rank": {
+   "bucket": "items",
+   "page": "wand-of-mercy-1st-rank",
+   "path": [
+    22
+   ],
+   "anchor": "Wand of Mercy (1st-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.88
+  },
+  "items:wand-of-mercy-2nd-rank": {
+   "bucket": "items",
+   "page": "wand-of-mercy-2nd-rank",
+   "path": [
+    25
+   ],
+   "anchor": "Wand of Mercy (2nd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.88
+  },
+  "items:wand-of-mercy-3rd-rank": {
+   "bucket": "items",
+   "page": "wand-of-mercy-3rd-rank",
+   "path": [
+    28
+   ],
+   "anchor": "Wand of Mercy (3rd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.88
+  },
+  "items:wand-of-mercy-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mercy-4th-rank",
+   "path": [
+    31
+   ],
+   "anchor": "Wand of Mercy (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.88
+  },
+  "items:wand-of-mercy-5th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mercy-5th-rank",
+   "path": [
+    34
+   ],
+   "anchor": "Wand of Mercy (5th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.88
+  },
+  "items:wand-of-mercy-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mercy-6th-rank",
+   "path": [
+    37
+   ],
+   "anchor": "Wand of Mercy (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.88
+  },
+  "items:wand-of-mercy-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mercy-7th-rank",
+   "path": [
+    40
+   ],
+   "anchor": "Wand of Mercy (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.88
+  },
+  "items:wand-of-mercy-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mercy-8th-rank",
+   "path": [
+    43
+   ],
+   "anchor": "Wand of Mercy (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.88
+  },
+  "items:wand-of-mercy-9th-rank": {
+   "bucket": "items",
+   "page": "wand-of-mercy-9th-rank",
+   "path": [
+    46
+   ],
+   "anchor": "Wand of Mercy (9th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.88
+  },
+  "items:wand-of-noisome-acid-2nd-rank": {
+   "bucket": "items",
+   "page": "wand-of-noisome-acid-2nd-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Noisome Acid (2nd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.5,
+   "grams": 0.83
+  },
+  "items:wand-of-noisome-acid-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-noisome-acid-6th-rank",
+   "path": [
+    16
+   ],
+   "anchor": "Wand of Noisome Acid (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.5,
+   "grams": 0.83
+  },
+  "items:wand-of-noisome-acid-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-noisome-acid-8th-rank",
+   "path": [
+    19
+   ],
+   "anchor": "Wand of Noisome Acid (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.5,
+   "grams": 0.83
+  },
+  "items:wand-of-paralytic-shock-3rd-rank": {
+   "bucket": "items",
+   "page": "wand-of-paralytic-shock-3rd-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Paralytic Shock (3rd-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:wand-of-paralytic-shock-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-paralytic-shock-7th-rank",
+   "path": [
+    15
+   ],
+   "anchor": "Wand of Paralytic Shock (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-pernicious-poison-1st-rank": {
+   "bucket": "items",
+   "page": "wand-of-pernicious-poison-1st-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Pernicious Poison (1st-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.75
+  },
+  "items:wand-of-pernicious-poison-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-pernicious-poison-6th-rank",
+   "path": [
+    15
+   ],
+   "anchor": "Wand of Pernicious Poison (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 5,
+   "route": "R0",
+   "coverage": 0.38,
+   "grams": 0.83
+  },
+  "items:wand-of-reaching-1st-rank": {
+   "bucket": "items",
+   "page": "wand-of-reaching-1st-rank",
+   "path": [
+    22
+   ],
+   "anchor": "Wand of Reaching (1st-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-reaching-2nd-rank": {
+   "bucket": "items",
+   "page": "wand-of-reaching-2nd-rank",
+   "path": [
+    25
+   ],
+   "anchor": "Wand of Reaching (2nd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-reaching-3rd-rank": {
+   "bucket": "items",
+   "page": "wand-of-reaching-3rd-rank",
+   "path": [
+    28
+   ],
+   "anchor": "Wand of Reaching (3rd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-reaching-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-reaching-4th-rank",
+   "path": [
+    31
+   ],
+   "anchor": "Wand of Reaching (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-reaching-5th-rank": {
+   "bucket": "items",
+   "page": "wand-of-reaching-5th-rank",
+   "path": [
+    34
+   ],
+   "anchor": "Wand of Reaching (5th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-reaching-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-reaching-6th-rank",
+   "path": [
+    37
+   ],
+   "anchor": "Wand of Reaching (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-reaching-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-reaching-7th-rank",
+   "path": [
+    40
+   ],
+   "anchor": "Wand of Reaching (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-reaching-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-reaching-8th-rank",
+   "path": [
+    43
+   ],
+   "anchor": "Wand of Reaching (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-reaching-9th-rank": {
+   "bucket": "items",
+   "page": "wand-of-reaching-9th-rank",
+   "path": [
+    46
+   ],
+   "anchor": "Wand of Reaching (9th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 1
+  },
+  "items:wand-of-refracting-rays-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-refracting-rays-4th-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Refracting Rays (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.9
+  },
+  "items:wand-of-refracting-rays-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-refracting-rays-7th-rank",
+   "kind": "run",
+   "path": [
+    4
+   ],
+   "anchor": "This wand is short and wide with a hexagonal, crystal shaft ",
+   "n": 5,
+   "title": "Wand of Refracting Rays (7th-Rank)",
+   "head": true,
+   "route": "R0",
+   "coverage": 0.9
+  },
+  "items:wand-of-rolling-flames-2nd-rank": {
+   "bucket": "items",
+   "page": "wand-of-rolling-flames-2nd-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Rolling Flames (2nd-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.78
+  },
+  "items:wand-of-rolling-flames-3rd-rank": {
+   "bucket": "items",
+   "page": "wand-of-rolling-flames-3rd-rank",
+   "path": [
+    15
+   ],
+   "anchor": "Wand of Rolling Flames (3rd-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.78
+  },
+  "items:wand-of-rolling-flames-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-rolling-flames-4th-rank",
+   "path": [
+    20
+   ],
+   "anchor": "Wand of Rolling Flames (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.78
+  },
+  "items:wand-of-rolling-flames-5th-rank": {
+   "bucket": "items",
+   "page": "wand-of-rolling-flames-5th-rank",
+   "path": [
+    25
+   ],
+   "anchor": "Wand of Rolling Flames (5th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.78
+  },
+  "items:wand-of-rolling-flames-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-rolling-flames-6th-rank",
+   "path": [
+    30
+   ],
+   "anchor": "Wand of Rolling Flames (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.78
+  },
+  "items:wand-of-rolling-flames-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-rolling-flames-7th-rank",
+   "path": [
+    35
+   ],
+   "anchor": "Wand of Rolling Flames (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.78
+  },
+  "items:wand-of-rolling-flames-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-rolling-flames-8th-rank",
+   "path": [
+    40
+   ],
+   "anchor": "Wand of Rolling Flames (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.78
+  },
+  "items:wand-of-rolling-flames-9th-rank": {
+   "bucket": "items",
+   "page": "wand-of-rolling-flames-9th-rank",
+   "path": [
+    45
+   ],
+   "anchor": "Wand of Rolling Flames (9th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.78
+  },
+  "items:wand-of-spiritual-warfare-2nd-rank-spell": {
+   "bucket": "items",
+   "page": "wand-of-spiritual-warfare-2nd-rank-spell",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Spiritual Warfare (2nd-Level)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-spiritual-warfare-4th-rank-spell": {
+   "bucket": "items",
+   "page": "wand-of-spiritual-warfare-4th-rank-spell",
+   "path": [
+    13
+   ],
+   "anchor": "Wand of Spiritual Warfare (4th-Level)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-spiritual-warfare-6th-rank-spell": {
+   "bucket": "items",
+   "page": "wand-of-spiritual-warfare-6th-rank-spell",
+   "path": [
+    16
+   ],
+   "anchor": "Wand of Spiritual Warfare (6th-Level)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-spiritual-warfare-8th-rank-spell": {
+   "bucket": "items",
+   "page": "wand-of-spiritual-warfare-8th-rank-spell",
+   "path": [
+    19
+   ],
+   "anchor": "Wand of Spiritual Warfare (8th-Level)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-splintered-sorrows-rank-2": {
+   "bucket": "items",
+   "page": "wand-of-splintered-sorrows-rank-2",
+   "path": [
+    11
+   ],
+   "anchor": "Wand of Splintered Sorrows (2nd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:wand-of-splintered-sorrows-rank-4": {
+   "bucket": "items",
+   "page": "wand-of-splintered-sorrows-rank-4",
+   "path": [
+    14
+   ],
+   "anchor": "Wand of Splintered Sorrows (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:wand-of-splintered-sorrows-rank-6": {
+   "bucket": "items",
+   "page": "wand-of-splintered-sorrows-rank-6",
+   "path": [
+    17
+   ],
+   "anchor": "Wand of Splintered Sorrows (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:wand-of-splintered-sorrows-rank-8": {
+   "bucket": "items",
+   "page": "wand-of-splintered-sorrows-rank-8",
+   "path": [
+    20
+   ],
+   "anchor": "Wand of Splintered Sorrows (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.86
+  },
+  "items:wand-of-teeming-ghosts-2nd-rank": {
+   "bucket": "items",
+   "page": "wand-of-teeming-ghosts-2nd-rank",
+   "path": [
+    13
+   ],
+   "anchor": "Wand of Teeming Ghosts (2nd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-teeming-ghosts-3rd-rank": {
+   "bucket": "items",
+   "page": "wand-of-teeming-ghosts-3rd-rank",
+   "path": [
+    16
+   ],
+   "anchor": "Wand of Teeming Ghosts (3rd-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-teeming-ghosts-4th-rank": {
+   "bucket": "items",
+   "page": "wand-of-teeming-ghosts-4th-rank",
+   "path": [
+    19
+   ],
+   "anchor": "Wand of Teeming Ghosts (4th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-teeming-ghosts-5th-rank": {
+   "bucket": "items",
+   "page": "wand-of-teeming-ghosts-5th-rank",
+   "path": [
+    22
+   ],
+   "anchor": "Wand of Teeming Ghosts (5th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-teeming-ghosts-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-teeming-ghosts-6th-rank",
+   "path": [
+    25
+   ],
+   "anchor": "Wand of Teeming Ghosts (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-teeming-ghosts-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-teeming-ghosts-7th-rank",
+   "path": [
+    28
+   ],
+   "anchor": "Wand of Teeming Ghosts (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-teeming-ghosts-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-teeming-ghosts-8th-rank",
+   "path": [
+    31
+   ],
+   "anchor": "Wand of Teeming Ghosts (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-teeming-ghosts-9th-rank": {
+   "bucket": "items",
+   "page": "wand-of-teeming-ghosts-9th-rank",
+   "path": [
+    34
+   ],
+   "anchor": "Wand of Teeming Ghosts (9th-Rank Spell)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.67
+  },
+  "items:wand-of-thundering-echoes-3rd-rank-spell": {
+   "bucket": "items",
+   "page": "wand-of-thundering-echoes-3rd-rank-spell",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Thundering Echoes (3rd-Level)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-thundering-echoes-4th-rank-spell": {
+   "bucket": "items",
+   "page": "wand-of-thundering-echoes-4th-rank-spell",
+   "path": [
+    13
+   ],
+   "anchor": "Wand of Thundering Echoes (4th-Level)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-thundering-echoes-5th-rank-spell": {
+   "bucket": "items",
+   "page": "wand-of-thundering-echoes-5th-rank-spell",
+   "path": [
+    16
+   ],
+   "anchor": "Wand of Thundering Echoes (5th-Level)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-thundering-echoes-6th-rank-spell": {
+   "bucket": "items",
+   "page": "wand-of-thundering-echoes-6th-rank-spell",
+   "path": [
+    19
+   ],
+   "anchor": "Wand of Thundering Echoes (6th-Level)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-thundering-echoes-7th-rank-spell": {
+   "bucket": "items",
+   "page": "wand-of-thundering-echoes-7th-rank-spell",
+   "path": [
+    22
+   ],
+   "anchor": "Wand of Thundering Echoes (7th-Level)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-thundering-echoes-8th-rank-spell": {
+   "bucket": "items",
+   "page": "wand-of-thundering-echoes-8th-rank-spell",
+   "path": [
+    25
+   ],
+   "anchor": "Wand of Thundering Echoes (8th-Level)",
+   "kind": "variant",
+   "n": 2,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-toxic-blades-6th-rank": {
+   "bucket": "items",
+   "page": "wand-of-toxic-blades-6th-rank",
+   "path": [
+    10
+   ],
+   "anchor": "Wand of Toxic Blades (6th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-toxic-blades-7th-rank": {
+   "bucket": "items",
+   "page": "wand-of-toxic-blades-7th-rank",
+   "path": [
+    15
+   ],
+   "anchor": "Wand of Toxic Blades (7th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.71
+  },
+  "items:wand-of-toxic-blades-8th-rank": {
+   "bucket": "items",
+   "page": "wand-of-toxic-blades-8th-rank",
+   "path": [
+    20
+   ],
+   "anchor": "Wand of Toxic Blades (8th-Rank Spell)",
+   "kind": "variant",
+   "n": 4,
+   "route": "R0",
+   "coverage": 0.71
+  }
+ }
+}

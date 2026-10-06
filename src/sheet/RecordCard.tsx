@@ -11,8 +11,10 @@ import { unencodedNamed } from '../data/trustGate';
 import { astSlug, useAstNode } from './useAst';
 import { loadAstIndex, loadBucketAst } from './astStore';
 import { RemasteredLine, remasteredAsOf } from './RemasteredLine';
-import { isRecordRef, type CardRecord, type OursLine, type RecordCardProps } from './cardModel';
-import { treeHasSource, withoutItemLists } from './astVisibility';
+import { isRecordRef, type CardRecord, type CardScope, type OursLine, type RecordCardProps } from './cardModel';
+import { textOf, treeHasSource, withoutItemLists } from './astVisibility';
+import type { AstNode } from './astStore';
+import { SHARED_FEATURE_FOOTER, sharedFeatureFallback } from '../rules/featureText';
 import { FUTURE_TREATMENT, LEVEL_FOLDS, pointerOf, printedSet, scopeTree, withPointer } from './cardScope';
 import { DescBody } from './DescBody';
 import type { SourceInfo } from '../rules/types';
@@ -192,8 +194,14 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
     : null;
   // desk #152: the old text is empty and there is no page — said once, in the footer (rule 4.6).
   const emptyNote = !cur.description && fallbackText ? <p className="sd-ours sd-unprinted">{fallbackText}</p> : null;
+  /* Card step 12 (section 7, "Shared class features"): a class feature the viewer's class shares whose
+     page is another class's (Weapon Specialization's is the Thaumaturge's, Reflex Expertise's the
+     Guardian's — featureText.ts sharedFeatureFallback, the guard's CLASS_MISMATCH rule) is drawn from our
+     older text, cut to the viewer's own class paragraph, with its own footer — a page exists, just not
+     for this class. Per-class pages come with the data rebuild. Not decided while the page loads. */
+  const shared = mine && !astLoading ? sharedFeatureView(cur, curSlug, astNode, scope, content) : null;
 
-  if (mine && astNode) {
+  if (mine && astNode && !shared?.otherClassPage) {
     /* Card step 13a: with the character's scope, the sections it does not have yet fold (scopeTree reads
        only scripts/data/level-folds.json; FUTURE_TREATMENT is the one switch), applying impulse "Level"
        entries are highlighted, and a pointer row gains its subclass section. No scope → the page whole. */
@@ -242,18 +250,20 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
             {/* The fallback lane is DescBody's own markdown / rich-HTML branches, untouched (section 5):
                 no tree key, so it never reaches a page. desk #152's empty note is drawn below, in the
                 footer's place (rule 4.6), with DescBody's markup, rather than as DescBody's emptyNote. */}
-            <DescBody description={cur.description} descRefs={cur.descRefs} onExit={exit} />
+            <DescBody description={shared ? shared.text : cur.description} descRefs={cur.descRefs} onExit={exit} />
             {oursBox}
             {sourceLine}
             {remastered}
             {emptyNote}
             {homebrew
               ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">Homebrew</p>
-              : !cur.key || pageFailed === undefined
-                ? null
-                : pageFailed
-                  ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="pageFailed">The Archives page could not load on this device — text from our older import</p>
-                  : <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">No Archives page — text from our older import</p>}
+              : shared
+                ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">{SHARED_FEATURE_FOOTER}</p>
+                : !cur.key || pageFailed === undefined
+                  ? null
+                  : pageFailed
+                    ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="pageFailed">The Archives page could not load on this device — text from our older import</p>
+                    : <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">No Archives page — text from our older import</p>}
             {footer}
           </div>
         </div>
@@ -369,6 +379,16 @@ function nodeOfRecord(record: CardRecord | undefined, content: ContentDatabase |
     return { title: rec?.name ?? record.id, description: rec?.description ?? '', descRefs: rec?.descRefs, key: record.bucket, slug: record.id };
   }
   return { title: record.title, description: record.text, descRefs: record.refs };
+}
+
+/** Card step 12: the viewer's view of a shared class feature on a 'mine' card (featureText.ts
+ *  sharedFeatureFallback) — null unless the record is a class feature, the scope names the viewer's class,
+ *  and the fallback applies. `text` is the record's own text cut to the viewer's class paragraph. */
+function sharedFeatureView(cur: DescNode, slug: string, page: AstNode | undefined, scope: CardScope | undefined, content: ContentDatabase | null):
+  { text: string; otherClassPage: boolean } | null {
+  if (!content || cur.key !== 'classFeatures' || !scope?.classId) return null;
+  const text = sharedFeatureFallback(slug, scope.classId, page ? textOf(page) : undefined, content);
+  return text === null ? null : { text, otherClassPage: !!page };
 }
 
 /** Section 4: one box after the body, marked `data-ours`, each line attributed to its source record. */

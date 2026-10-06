@@ -12,6 +12,8 @@
  */
 import type { AstNode } from './astStore';
 import { canonLabel } from './cardScope';
+import NOT_OWN_PAGE_JSON from '../data/not-own-page.json';
+import PAGE_SLICES_JSON from '../data/page-slices.json';
 
 /* ---------- text hygiene: strip AoN template artifacts + markdown backslash-escapes ---------- */
 export function clean(s: string): string {
@@ -95,12 +97,105 @@ export function variantSection(node: AstNode, slug: string): AstNode {
     if (first < 0) first = i;
     if (mine < 0 && astSlug(flatText(top[i])) === slug) mine = i;
   }
-  if (mine < 0 || sections < 2) return node;
+  if (sections < 2) return node;
+  if (mine < 0) mine = widerSectionMatch(node, slug);
+  if (mine < 0) return node;
   let end = top.length;
   for (let i = mine + 1; i < top.length; i++) if (isSection(top[i])) { end = i; break; }
   // The family's own level-1 title is dropped — the variant's title takes its place (and its badge).
   const shared = top.slice(0, first).filter((n) => !(n.t === 'title' && Number(n.level ?? 1) <= 1));
   return { ...node, c: [{ ...top[mine], level: 1 }, ...shared, ...top.slice(mine + 1, end)] };
+}
+
+/**
+ * Card step 12 (F5, docs/card-design.md section 9 row 12; docs/display-truth-plan.md F5): the record's
+ * own level-2 section when its title does not slug to the record's slug exactly. Four looser keys, tried
+ * in order, each accepted only when EXACTLY ONE section of the page qualifies (two or more → no cut:
+ * a wrong cut is worse than the whole page). All of them on the slug with a leading "aon-" removed:
+ *   (a) that bare slug itself — the importer's prefix for a record whose canonical twin holds the bare
+ *       slug ("aon-1st-rank-scroll" → the Magic Scroll page's "1st-rank Scroll");
+ *   (b) the same words in any order, "of" / "the" dropped ("aether-marbles-greater" → "Greater Aether
+ *       Marbles");
+ *   (c) a section of two or more words, every one a word of the record's name and at least one not a
+ *       word of the page title (so the family's unnamed base grade "Olfactory Obfuscator" never stands
+ *       in for "Olfactory Obfuscator (Lesser)", and a combination weapon's one-word "Melee" / "Ranged"
+ *       mode section never retitles "Axe Musket (Melee)"), only on the record's FAMILY page:
+ *       the page title is the record's bracketed qualifier ("Adept Benefit (Amulet)" on the Amulet page
+ *       → "Adept Benefit", not "Initiate Benefit" or "Paragon Benefit") or the record's name without its
+ *       qualifier ("Energy Breath Potion (Acid, Greater)" on the Energy Breath Potion page → "Energy
+ *       Breath Potion (Greater)"; "Demon Bone Tiles (Pusk)" → "Pusk Bone Tiles"). The hook reads a slug,
+ *       never the name, so "qualifier" is the slug's tail and "name without it" the slug's head;
+ *       scripts/lib/shared-page-census.mjs ruleCWithoutQualifier lists every (c) cut whose record NAME
+ *       is not "<page title> (…)" or "… (<page title>)";
+ *   (d) the same words with at most two letters of spelling slack in all, the same number of words (two
+ *       or more: a one-word "Dragonet" is not the "Dragon" section) and the same digits (AoN's "Peshspine Grenade (Greater)" for our "Peshpine Grenade (Greater)",
+ *       "Greater Mat of Resilence", "Treats (Standard)").
+ * (a) and (b) are the plan's F5 wording; (c)'s "or the name without its qualifier" and (d) are the two
+ * shapes the refuters' census counted in its −290 (45 + 8 items) that the narrower wording leaves out.
+ * Returns the section's index in node.c, or -1.
+ */
+const SECTION_STOP_WORDS = new Set(['of', 'the']);
+const sectionWords = (s: string): string[] => astSlug(s).split('-').filter((w) => w && !SECTION_STOP_WORDS.has(w));
+const wordBag = (s: string): string => sectionWords(s).sort().join(' ');
+
+export function widerSectionMatch(node: AstNode, slug: string): number {
+  return widerSectionRule(node, slug).i;
+}
+
+/** widerSectionMatch with the key that decided: 'a' | 'b' | 'c' | 'd', or null (no section / ambiguous). */
+export function widerSectionRule(node: AstNode, slug: string): { i: number; rule: 'a' | 'b' | 'c' | 'd' | null } {
+  const none = { i: -1, rule: null };
+  const top = node.c ?? [];
+  const secs: Array<{ i: number; key: string }> = [];
+  for (let i = 0; i < top.length; i++) if (isSection(top[i])) secs.push({ i, key: astSlug(flatText(top[i])) });
+  if (secs.length < 2) return none;
+  // A key with one hit decides; a key with two or more stops the search (ambiguous → no cut).
+  const decide = (hits: Array<{ i: number }>, rule: 'a' | 'b' | 'c' | 'd') =>
+    (hits.length === 1 ? { i: hits[0].i, rule } : hits.length > 1 ? none : null);
+  const bare = slug.replace(/^aon-/, '');
+  // (a)
+  if (bare !== slug) {
+    const a = decide(secs.filter((s) => s.key === bare), 'a');
+    if (a) return a;
+  }
+  const bag = wordBag(bare);
+  if (!bag) return none;
+  // (b)
+  const b = decide(secs.filter((s) => wordBag(s.key) === bag), 'b');
+  if (b) return b;
+  // (c)
+  const t1 = top.find((n) => n.t === 'title' && Number(n.level ?? 1) <= 1);
+  const page = t1 ? astSlug(flatText(t1)) : '';
+  if (page && bare.length > page.length + 1 && (bare.endsWith('-' + page) || bare.startsWith(page + '-'))) {
+    const nameWords = new Set(sectionWords(bare));
+    const pageWords = new Set(sectionWords(page));
+    const c = decide(secs.filter((s) => {
+      const w = sectionWords(s.key);
+      return w.length >= 2 && w.every((x) => nameWords.has(x)) && w.some((x) => !pageWords.has(x));
+    }), 'c');
+    if (c) return c;
+  }
+  // (d)
+  const n = bag.split(' ').length;
+  if (n < 2) return none;
+  const digits = bag.replace(/\D/g, '');
+  return decide(secs.filter((s) => {
+    const sb = wordBag(s.key);
+    return sb.split(' ').length === n && sb.replace(/\D/g, '') === digits && editDistanceAtMost2(sb, bag);
+  }), 'd') ?? none;
+}
+
+/** Levenshtein distance <= 2 (the census's spelling slack: "Peshpine" / "Peshspine", "Resilience" /
+ *  "Resilence", "Treat" / "Treats"). */
+function editDistanceAtMost2(a: string, b: string): boolean {
+  if (Math.abs(a.length - b.length) > 2) return false;
+  let row = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const next = [i];
+    for (let j = 1; j <= b.length; j++) next[j] = Math.min(row[j] + 1, next[j - 1] + 1, row[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    row = next;
+  }
+  return row[b.length] <= 2;
 }
 
 /**
@@ -276,4 +371,308 @@ export function treeHasSource(node: AstNode): boolean {
     for (const c of n.c || []) walk(c);
   })(node);
   return found;
+}
+
+/* ---------- card step 12: which tree a record reads (F6 not-own-page, F6b page slices) ----------
+ *
+ * docs/card-design.md section 9 row 12, section 2 rule 2 (d), section 13 ("raised bar on no own page
+ * records"). Two generated lists decide what a record whose page is not its own reads, and both are
+ * checked two ways by the card guard (scripts/lib/card-scope.mjs, S2-NOT-OWN) against the census they
+ * come from (scripts/lib/shared-page-census.mjs):
+ *   - src/data/page-slices.json (scripts/page-slices.mjs): records with no page of their own that LIVE
+ *     INSIDE a bigger Archives page (an action printed inside its feat, an inventor modification inside
+ *     its innovation, a research field's Field Discovery, a family variant), and records whose shared
+ *     page holds a section carrying their whole name (a wand rank's "(4th-Rank Spell)") — they read THAT
+ *     paragraph / section / run, cut out of the bigger page at display time;
+ *   - src/data/not-own-page.json (scripts/not-own-page.mjs): records whose shared page, after the F5
+ *     cut, is still not their own and which have no slice — they read NO tree, so every popup falls back
+ *     to their own text.
+ * A record on neither reads its own tree through variantSection. useAstNode (src/sheet/useAst.ts) and the
+ * guard's readTree both go through recordTree.
+ */
+
+/** One record's slice of a bigger page: the page (bucket + slug), the path of child indexes from the
+ *  page root to the anchor node, the anchor's own words (checked at display time: a regenerated page
+ *  whose anchor moved yields no tree, never a wrong cut) and what the anchor is:
+ *   - 'page'    the whole page — only where the page IS the record's text (no line of it is another
+ *               record's: an action whose feat is the action, an instinct page — census foreignLines);
+ *   - 'section' a title / heading and the `n` nodes after it;
+ *   - 'variant' a level-2 section of a family page, the family's shared header before the first section
+ *               kept (exactly what variantSection shows a record of that page): "Hag Eye (Smokey)" with
+ *               the Hag Eye prose, never Frightful or Oracular; with `also`, the record's further sections
+ *               of the page follow under their own titles (a hollow puzzle box's grade, then "Hollow");
+ *   - 'block'   a bold-led paragraph and the `n - 1` sibling lines that continue it (its action glyph, its
+ *               Frequency / Effect lines, and prose that IS the record's text);
+ *   - 'item'    one bullet of a run-together list (bulletItems);
+ *   - 'run'     `n` consecutive units (top-level nodes, a list's items counting one each — pageUnits) whose
+ *               words are the record's, for a record printed inside a page with no anchor of its own
+ *               (Air Gate's junctions on the Air element page, Dragon Breath inside Dragon Form's list);
+ *               titled with the record's name (`title`), since the run has no heading; a run of the record's
+ *               OWN page (`head`) carries that page's header in front (traits, stat column, Source);
+ *   - 'line'    a family page whose variants are lines, not sections ("Animal: …", "Fury: …" on the Instinct
+ *               Crown page; "Acid …", "Cold …" items of the Drake Rifle list): the page with the other
+ *               variants' lines (`drop`) left out, titled with the record's name — the family's shared text
+ *               and the record's own line, as 'variant' does for a page of sections.
+ *  A paragraph's or bullet's title is its own bold lead, so the lead is taken off the first line (withoutLead):
+ *  the card never reads "Second Doctrine (3rd)Second Doctrine (3rd) Your proficiency rank …".
+ *  Where a slice ends is decided when the map is generated, from the record's own text
+ *  (scripts/lib/shared-page-census.mjs computePageSlices), and stored as `n`: the screen only cuts. */
+export interface PageSlice {
+  bucket: string;
+  page: string;
+  path: number[];
+  anchor: string;
+  kind: 'page' | 'section' | 'variant' | 'block' | 'item' | 'run' | 'line';
+  /** kind 'item': the index, in the paragraph's children, of the bold run that opens the bullet. */
+  seg?: number;
+  /** 'section' / 'variant': nodes kept after the title; 'block': nodes from the anchor on; 'run': units. */
+  n?: number;
+  /** kind 'run' / 'line': the card's title. */
+  title?: string;
+  /** kind 'line': the other variants' lines (paths, as `path`) dropped from the page. */
+  drop?: number[][];
+  /** kind 'variant': the record's further level-2 sections of the same family page, in page order after the
+   *  first, each drawn under its own title — a name carrying several qualifiers, each a section ("Puzzle Box
+   *  (Simple) (Hollow)": its "Puzzle Box (Simple)" grade section, then "Puzzle Box (Hollow)"). */
+  also?: Array<{ path: number[]; anchor: string; n: number }>;
+  /** kind 'run' on the record's OWN page: the page's header (its traits and leading stat column / Source
+   *  line, up to and with the first rule) is drawn in front of the run, as the page prints it. */
+  head?: boolean;
+}
+
+const NOT_OWN_PAGE = new Set<string>((NOT_OWN_PAGE_JSON as { ids?: string[] }).ids ?? []);
+const PAGE_SLICES: Record<string, PageSlice> = (PAGE_SLICES_JSON as unknown as { slices?: Record<string, PageSlice> }).slices ?? {};
+const SLICE_BUCKETS = new Map<string, string[]>();
+for (const k of Object.keys(PAGE_SLICES)) {
+  const at = k.indexOf(':');
+  const slug = k.slice(at + 1);
+  SLICE_BUCKETS.set(slug, [...(SLICE_BUCKETS.get(slug) ?? []), k.slice(0, at)]);
+}
+
+export const isNotOwnPage = (bucket: string, slug: string): boolean => NOT_OWN_PAGE.has(`${bucket}:${slug}`);
+export const pageSliceOf = (bucket: string, slug: string): PageSlice | undefined => PAGE_SLICES[`${bucket}:${slug}`];
+/** A slug-only read (no bucket key, not in the page index): the one bucket whose record of that slug has
+ *  a slice, or undefined when none or several do. */
+export function sliceBucketOf(slug: string): string | undefined {
+  const b = SLICE_BUCKETS.get(slug);
+  return b && b.length === 1 ? b[0] : undefined;
+}
+
+export const titleLevel = (n: AstNode): number => Number(n.level ?? (n.t === 'heading' ? 3 : 1));
+export const isTitleNode = (n: AstNode): boolean => n.t === 'title' || n.t === 'heading';
+/** The structural end of a section opened by `sib[i]`: the next title / heading of the same or a higher
+ *  level (exclusive), or the end of the siblings. */
+export function sectionEnd(sib: AstNode[], i: number): number {
+  const lvl = titleLevel(sib[i]);
+  let end = i + 1;
+  while (end < sib.length && !(isTitleNode(sib[end]) && titleLevel(sib[end]) <= lvl)) end++;
+  return end;
+}
+
+/** A page as a run of units: each top-level node, except a list, whose items count one unit each. */
+export interface PageUnit { node: AstNode; path: number[] }
+export function pageUnits(page: AstNode): PageUnit[] {
+  const out: PageUnit[] = [];
+  (page.c ?? []).forEach((n, i) => {
+    if ((n.t === 'ul' || n.t === 'ol') && (n.c ?? []).length) (n.c ?? []).forEach((li, j) => out.push({ node: li, path: [i, j] }));
+    else out.push({ node: n, path: [i] });
+  });
+  return out;
+}
+/** A run's anchor: the first 60 characters of its first unit's words. */
+export const runAnchor = (n: AstNode): string => flatText(n).replace(/\s+/g, ' ').trim().slice(0, 60);
+
+/** The anchor a node offers a slice: a title / heading by its words, a paragraph or list item by the bold
+ *  run it opens with (after an optional "- " bullet: the innovation pages print "- **Advanced
+ *  Rangefinder (Ranged Only)** …"). */
+export function anchorOf(n: AstNode): { text: string; kind: 'page' | 'section' | 'block' } | null {
+  if (n.t === 'title' || n.t === 'heading') {
+    const text = flatText(n).replace(/\s+/g, ' ').trim();
+    return text ? { text, kind: n.t === 'title' && titleLevel(n) <= 1 ? 'page' : 'section' } : null;
+  }
+  if (n.t !== 'p' && n.t !== 'li') return null;
+  const kids = n.c ?? [];
+  let k = 0;
+  while (k < kids.length && kids[k].t === 'text' && /^[\s\-–—•]*$/.test(kids[k].v ?? '')) k++;
+  const first = kids[k];
+  if (!first || first.t !== 'b') return null;
+  const text = flatText(first).replace(/\s+/g, ' ').trim().replace(/[:.]$/, '').trim();
+  return text ? { text, kind: 'block' } : null;
+}
+
+/** The bullets of a paragraph whose list lost its line breaks in the scrape: "- **First Doctrine (1st)**
+ *  You gain … feat. - **Second Doctrine (3rd)** Your proficiency rank …" (every doctrine of a cleric
+ *  doctrine page, every modification of an innovation page, in ONE paragraph). A bullet opens at a bold
+ *  run that follows a "- " marker at the paragraph's start or after a space. Two or more make a list;
+ *  each bullet is a printed list item, so a slice of one never cuts a sentence. */
+const BULLET_END = /(?:^|\s)[-–•]\s*$/;
+export function bulletItems(p: AstNode): Array<{ seg: number; text: string }> {
+  if (p.t !== 'p') return [];
+  const kids = p.c ?? [];
+  const out: Array<{ seg: number; text: string }> = [];
+  for (let k = 0; k < kids.length; k++) {
+    if (kids[k].t !== 'b' || k === 0) continue;
+    const prev = kids[k - 1];
+    if (prev.t !== 'text' || !BULLET_END.test(prev.v ?? '')) continue;
+    const text = flatText(kids[k]).replace(/\s+/g, ' ').trim().replace(/[:.]$/, '').trim();
+    if (text) out.push({ seg: k, text });
+  }
+  return out.length >= 2 ? out : [];
+}
+
+/** A bold-led line without its lead (the blank / bullet text before it, the bold run, and the ":" / "." and
+ *  spaces after it) — the line under a title made of that lead. Undefined when nothing is left (a line that
+ *  was only its title: "Activate—Drake Shot" before its glyph). A line not led by a bold run is returned as is. */
+export function withoutLead(n: AstNode): AstNode | undefined {
+  const kids = n.c ?? [];
+  let k = 0;
+  while (k < kids.length && kids[k].t === 'text' && /^[\s\-–—•]*$/.test(kids[k].v ?? '')) k++;
+  if (kids[k]?.t !== 'b') return n;
+  const rest = kids.slice(k + 1);
+  if (rest[0]?.t === 'text') rest[0] = { ...rest[0], v: String(rest[0].v ?? '').replace(/^[\s:.]+/, '') };
+  const left = rest.filter((x) => !(x.t === 'br' || (x.t === 'text' && !String(x.v ?? '').trim())));
+  return left.length ? { ...n, c: rest } : undefined;
+}
+
+/** The node at a path of child indexes, or undefined. */
+const nodeAt = (root: AstNode, path: number[]): AstNode | undefined => {
+  let node: AstNode | undefined = root;
+  for (const i of path) node = node?.c?.[i];
+  return node;
+};
+
+/**
+ * Cut a record's slice out of the bigger page (PageSlice says what each kind keeps; the extent `n` was
+ * decided from the record's own text when the map was generated). The anchor becomes the card's level-1
+ * title (a paragraph's title is its own bold words; a run's is the record's name), as variantSection
+ * retitles a family page. Undefined when the path no longer lands on the anchor's words, or the extent
+ * runs past the page — a regenerated page yields no tree, never a wrong cut.
+ */
+export function sliceOf(page: AstNode, s: PageSlice): AstNode | undefined {
+  const { c: _drop, ...rest } = page;
+  void _drop;
+  const n = s.n ?? 0;
+  if (s.kind === 'run') {
+    const us = pageUnits(page);
+    const at = us.findIndex((u) => u.path.length === s.path.length && u.path.every((x, k) => x === s.path[k]));
+    if (at < 0 || n < 1 || at + n > us.length || runAnchor(us[at].node) !== s.anchor) return undefined;
+    const body: AstNode[] = [];
+    let openList = -1;
+    for (const u of us.slice(at, at + n)) {
+      if (u.path.length === 2) {
+        // Consecutive items of one list stay one list.
+        if (openList === u.path[0]) (body[body.length - 1].c as AstNode[]).push(u.node);
+        else body.push({ ...(page.c ?? [])[u.path[0]], c: [u.node] });
+        openList = u.path[0];
+      } else {
+        body.push(u.node);
+        openList = -1;
+      }
+    }
+    if (!s.head) return { ...rest, c: [{ t: 'title', level: 1, c: [{ t: 'text', v: s.title ?? '' }] }, ...body] };
+    // A run of the record's OWN page carries the page's header in front, as the page prints it: the top-level
+    // nodes before the run up to and with the page's first rule; on a page with no rule before the run, its
+    // leading traits and stat / Source lines. The page's level-1 title is retitled with the record's name
+    // (its badge and action glyphs kept, as kind 'line' does).
+    const top = page.c ?? [];
+    const start = us[at].path[0];
+    const hr = top.findIndex((x) => x.t === 'hr');
+    let end = 0;
+    if (hr >= 0 && hr < start) end = hr + 1;
+    else while (end < start && ((top[end].t === 'title' && titleLevel(top[end]) <= 1) || top[end].t === 'traits' || isMetaP(top[end]) || isMetaishBlock(top[end]))) end++;
+    const t1 = top.slice(0, end).find((x) => x.t === 'title' && titleLevel(x) <= 1);
+    const title: AstNode = t1
+      ? { ...t1, c: [{ t: 'text', v: s.title ?? '' }, ...(t1.c ?? []).filter((x) => x.t === 'actions')] }
+      : { t: 'title', level: 1, c: [{ t: 'text', v: s.title ?? '' }] };
+    return { ...rest, c: [title, ...top.slice(0, end).filter((x) => x !== t1), ...body] };
+  }
+  if (s.kind === 'line') {
+    // The family page less the other variants' lines (top-level paragraphs, or items of a top-level list).
+    const own = nodeAt(page, s.path);
+    const drops = s.drop ?? [];
+    if (!own || runAnchor(own) !== s.anchor || !drops.length || s.path.length > 2) return undefined;
+    if (drops.some((d) => d.length < 1 || d.length > 2 || !nodeAt(page, d) || d.join('.') === s.path.join('.'))) return undefined;
+    const gone = new Set(drops.map((d) => d.join('.')));
+    let titled = false;
+    const body = (page.c ?? []).flatMap((n, i): AstNode[] => {
+      if (gone.has(`${i}`)) return [];
+      if (!titled && n.t === 'title' && titleLevel(n) <= 1) {
+        titled = true;
+        return [{ ...n, c: [{ t: 'text', v: s.title ?? '' }, ...(n.c ?? []).filter((x) => x.t === 'actions')] }];
+      }
+      if ((n.t === 'ul' || n.t === 'ol') && n.c) {
+        const c = n.c.filter((_, j) => !gone.has(`${i}.${j}`));
+        return c.length ? [{ ...n, c }] : [];
+      }
+      return [n];
+    });
+    return titled ? { ...rest, c: body } : undefined;
+  }
+  let parent: AstNode | undefined;
+  let node: AstNode | undefined = page;
+  for (const i of s.path) { parent = node; node = node?.c?.[i]; }
+  if (!node) return undefined;
+  if (s.kind === 'item') {
+    // One bullet of a run-together list: from its bold run to the next bullet's marker (dropped).
+    const items = bulletItems(node);
+    const at = items.findIndex((x) => x.seg === s.seg);
+    if (at < 0 || items[at].text !== s.anchor) return undefined;
+    const kids = node.c ?? [];
+    const next = items[at + 1];
+    const part = kids.slice(items[at].seg, next ? next.seg : kids.length);
+    if (next) {
+      const last = part[part.length - 1];
+      part[part.length - 1] = { ...last, v: String(last.v ?? '').replace(/\s*[-–•]\s*$/, '') };
+    }
+    // The bullet's bold run IS the title: the line under it starts after it.
+    const line = withoutLead({ ...node, c: part });
+    return { ...rest, c: [{ t: 'title', level: 1, c: [{ t: 'text', v: s.anchor }] }, ...(line ? [line] : [])] };
+  }
+  const a = anchorOf(node);
+  if (!a || a.text !== s.anchor || a.kind !== (s.kind === 'variant' ? 'section' : s.kind)) return undefined;
+  if (s.kind === 'page') return page;
+  if (!parent) return undefined;
+  const sib = parent.c ?? [];
+  const i = s.path[s.path.length - 1];
+  if (s.kind === 'section' || s.kind === 'variant') {
+    if (i + 1 + n > sib.length) return undefined;
+    const title: AstNode = { ...node, t: 'title', level: 1 };
+    const body = sib.slice(i + 1, i + 1 + n);
+    if (s.kind === 'section') return { ...rest, c: [title, ...body] };
+    // A family page's shared header + prose (before its first level-2 section), its level-1 title dropped.
+    if (parent !== page || !isSection(node)) return undefined;
+    const first = sib.findIndex(isSection);
+    const shared = sib.slice(0, first).filter((x) => !(x.t === 'title' && Number(x.level ?? 1) <= 1));
+    // The record's further sections (`also`), in page order, each under its own (level-2) title; each must
+    // still be a section with its anchor's words and lie after the one before, or the slice gives no tree.
+    const more: AstNode[] = [];
+    let after = i + n;
+    for (const x of s.also ?? []) {
+      const k = x.path.length === 1 ? x.path[0] : -1;
+      const sec = sib[k];
+      if (k <= after || !sec || !isSection(sec) || anchorOf(sec)?.text !== x.anchor || x.n < 0 || k + 1 + x.n > sib.length) return undefined;
+      more.push(sec, ...sib.slice(k + 1, k + 1 + x.n));
+      after = k + x.n;
+    }
+    return { ...rest, c: [title, ...shared, ...body, ...more] };
+  }
+  // The paragraph's bold lead IS the title: the anchor line keeps only what follows it.
+  const title: AstNode = { t: 'title', level: 1, c: [{ t: 'text', v: a.text }] };
+  const line = withoutLead(node);
+  if (parent.t === 'ul' || parent.t === 'ol') return { ...rest, c: [title, ...(line ? [{ ...parent, c: [line] }] : [])] };
+  if (n < 1 || i + n > sib.length) return undefined;
+  return { ...rest, c: [title, ...(line ? [line] : []), ...sib.slice(i + 1, i + n)] };
+}
+
+/** The tree a record reads, as useAstNode resolves it: its slice of a bigger page; none when its page is
+ *  listed as not its own; else its own tree through the variantSection cut. `treeOf` reads a stored tree. */
+export function recordTree(bucket: string, slug: string, treeOf: (bucket: string, slug: string) => AstNode | undefined): AstNode | undefined {
+  const s = pageSliceOf(bucket, slug);
+  if (s) {
+    const p = treeOf(s.bucket, s.page);
+    return p ? sliceOf(p, s) : undefined;
+  }
+  if (isNotOwnPage(bucket, slug)) return undefined;
+  const t = treeOf(bucket, slug);
+  return t ? variantSection(t, slug) : undefined;
 }

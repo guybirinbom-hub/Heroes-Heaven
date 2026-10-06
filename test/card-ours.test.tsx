@@ -13,6 +13,7 @@ import type { FeatPinNode } from '../src/sheet/FeatDetail';
 import { applyOverrides } from '../src/rules/build';
 import { togglePinnedDesc, type PlayState } from '../src/rules/play';
 import { DescriptionModal } from '../src/sheet/DescriptionModal';
+import { recordTree } from '../src/sheet/astVisibility';
 import type { Character, ContentDatabase, Feat } from '../src/rules/types';
 
 /**
@@ -62,6 +63,8 @@ function treeOf(b: string): Record<string, AstNode> | undefined {
   trees[b] = JSON.parse(gunzipSync(readFileSync(p)).toString('utf8'));
   return trees[b];
 }
+/** One stored tree, for recordTree (src/sheet/astVisibility.ts): the tree the card reads, slice or own page. */
+const readTree = (b: string, s: string): AstNode | undefined => treeOf(b)?.[s];
 
 async function settle() {
   await act(async () => { await new Promise((r) => setTimeout(r, 0)); });
@@ -158,7 +161,7 @@ describe('card step 8: the ours box on FeatDetail', () => {
     w.stop();
   });
 
-  it('Air Gate with a junction picked (kineticist 5): the gate\'s table renders as a table — no raw markdown — and the pick sits in the box', async () => {
+  it('Air Gate with a junction picked (kineticist 5): the gate\'s run of the Air element page — every junction of the old table, no raw markdown — and the pick sits in the box', async () => {
     const gate = db.classes.kineticist.extraChoices?.find((g) => g.options?.some((o) => o.id === 'air-gate'));
     const choice = (db.classFeatures['air-gate'] as { effectChoices?: { id: string; options: { label: string; note?: string }[] }[] }).effectChoices![0];
     const ch0 = build('kineticist', 5, { extraChoices: { [gate!.id]: ['air-gate'] } } as never);
@@ -172,19 +175,41 @@ describe('card step 8: the ours box on FeatDetail', () => {
     expect(body.length, 'the body draws the gate text').toBeGreaterThan(40);
     expect(body).not.toMatch(/\|\s*-{3}/);
     expect(body).not.toContain('**');
-    expect(v.body?.querySelector('table'), 'its table is a table').toBeTruthy();
+    // Card step 12 (section 13, "raised bar on no own page records"): Air Gate has no page of its own and
+    // reads its run of the Air element page (src/data/page-slices.json, kind 'run'). The Archives print the
+    // junctions as a "Gate Junction" section of bold-led lines, not as a table — the old import's
+    // "| Air Gate Junction |" table was its own layout — so the card draws the page, and the bar is that it
+    // never shows LESS than the old text: every junction row of the old table is on the card, label and words.
+    // batch card premise: element-1 "Gate Junction"
+    expect(v.body?.querySelector('.ast-body'), 'Air Gate reads its slice of the Air element page').toBeTruthy();
+    expect(v.body?.querySelector('table'), 'the Archives page prints no table for the gate').toBeNull();
+    // batch card premise: element-1 "Before or after the other effects of the impulse, you can either Stride up to half your Speed or Step"
+    expect(body).toContain('Impulse Junction (Single Gate)');
+    expect(body).toContain('Gate Junction');
+    const rows = String(db.classFeatures['air-gate'].description ?? '').split('\n')
+      .map((l) => /^\|\s*\*\*(.+?)\*\*\s*(.*?)\s*\|$/.exec(l.trim()))
+      .filter((m): m is RegExpExecArray => !!m);
+    expect(rows.map((m) => m[1]), 'the old table\'s junction rows').toEqual(['Critical Blast', 'Elemental Resistance', 'Impulse Junction', 'Aura Junction', 'Skill Junction']);
+    for (const [, label, words] of rows) {
+      expect(body, `the card keeps "${label}"`).toContain(label);
+      expect(body, `the card keeps the words of "${label}"`).toContain(words.replace(/\.$/, ''));
+    }
+    // The run is the gate's own: the page's impulse-feat link line before it is not on the card.
+    expect(body).not.toContain('pre-filtered list');
     expect(v.ours).toContain(`Your choice: ${opt.label} — ${opt.note}`);
     expect(entry!.description).not.toContain('Your choice');
     v.stop();
   });
 
-  it('a pinned record with NO page keeps its pick / note when reopened from Pinned (dedication-to-the-five; Air Gate + junction stays a table)', async () => {
+  it('a pinned record with NO page keeps its pick / note when reopened from Pinned (dedication-to-the-five; a no-page record with a table + a pick stays a table)', async () => {
     // dedication-to-the-five: the one noted feat with no page. Before card step 8 its pin carried
     // "Note: …" in the stored description; the stored-pin bridge (pinDescriptionOf) keeps it there.
     const id = 'dedication-to-the-five';
     const note = db.feats[id].note!;
     expect(note, `${id} carries a note`).toBeTruthy();
     expect(treeOf('feats')![id], `${id} has no page`).toBeUndefined();
+    // Card step 12: and no slice of a bigger page either (the tree the card reads, as useAstNode resolves it).
+    expect(recordTree('feats', id, readTree), `${id} reads no tree (no page, no slice)`).toBeUndefined();
     let pinned: FeatPinNode | null = null;
     const pin: PinDescApi = { has: () => false, toggle: (n) => { pinned = n; } };
     const v = await openRow(withFeats(base, id), db.feats[id].name, db, pin);
@@ -197,17 +222,26 @@ describe('card step 8: the ours box on FeatDetail', () => {
     expect(txt(r.host)).toContain(`Note: ${note}`);
     r.stop();
 
-    // Air Gate (no page, a markdown table) with a junction picked: the reopened pin carries the pick and
-    // its table is still a table — the bridge adds markdown paragraphs, never the `<p>` that flipped the
-    // lane (T3).
-    const gate = db.classes.kineticist.extraChoices?.find((g) => g.options?.some((o) => o.id === 'air-gate'));
-    const choice = (db.classFeatures['air-gate'] as { effectChoices?: { id: string; options: { label: string; note?: string }[] }[] }).effectChoices![0];
-    const ch0 = build('kineticist', 5, { extraChoices: { [gate!.id]: ['air-gate'] } } as never);
-    const opt = choice.options[0];
-    const ch = { ...ch0, effectPicks: [...(ch0.effectPicks ?? []), { recordId: 'air-gate', choiceId: choice.id, label: opt.label, note: opt.note }] } as Character;
-    const entry = featEntries(ch, db).find((e) => e.trustFeatureId === 'air-gate' || e.featureId === 'air-gate')!;
+    // A record with NO page and a markdown table, with a pick: the reopened pin carries the pick and its
+    // table is still a table — the bridge adds markdown paragraphs, never the `<p>` that flipped the lane
+    // (T3). This case used Air Gate until card step 12 gave Air Gate its run of the Air element page
+    // (Archives doc element-1). Every shipped no-page record with a table (Earth Gate,
+    // Dragon Instinct, Elemental Instinct, measured 2026-10-06 through recordTree) is printed inside a bigger
+    // Archives page and is owed a slice by section 13's raised bar, so the case uses a SYNTHESIZED record the
+    // Archives do not have at all (what section 13 keeps old text for), shaped like the gates' table.
+    // batch card premise: element-1 "Gate Junction"
+    const tid = 't-card-step12-no-page-table';
+    const table = '| T Gate Junction |\n| --- |\n| **Critical Blast** Synthesized blast words. |\n| **Skill Junction** Athletics |';
+    const tdb = { ...db, feats: { ...db.feats, [tid]: { ...db.feats[id], id: tid, name: 'T No Page Table', description: table, note: undefined, descRefs: undefined } } } as ContentDatabase;
+    expect(recordTree('feats', tid, readTree), `${tid} reads no tree (no page, no slice)`).toBeUndefined();
+    const opt = { label: 'T Junction', note: 'synthesized junction note' };
+    const ch = { ...withFeats(base, tid), effectPicks: [{ recordId: tid, choiceId: 't-junction', label: opt.label, note: opt.note }] } as Character;
+    const entry = featEntries(ch, tdb).find((e) => e.featId === tid)!;
+    expect(entry, 'the synthesized record lists a row').toBeTruthy();
     pinned = null;
-    const w = await openRow(ch, entry.name, db, pin);
+    const w = await openRow(ch, entry.name, tdb, pin);
+    expect(w.body?.querySelector('.ast-body'), 'the popup has no page').toBeNull();
+    expect(w.body?.querySelector('table'), 'the popup draws its table as a table').toBeTruthy();
     await click(w.pop.querySelector('.picker-head .info-star'));
     w.stop();
     // The stored description stays markdown: no HTML tag, so DescBody (the mine card's fallback lane,
@@ -216,7 +250,7 @@ describe('card step 8: the ours box on FeatDetail', () => {
     expect(pinned!.description).not.toMatch(/<(p|strong|br|div)\b/i);
     expect(pinned!.description).toContain(`Your choice: ${opt.label} — ${opt.note}`);
     const g = await reopenPin(pinned!);
-    expect(g.host.querySelector('.ast-body'), 'Air Gate has no page').toBeNull();
+    expect(g.host.querySelector('.ast-body'), 'the reopened pin has no page').toBeNull();
     expect(g.host.querySelector('table'), 'its table is a table').toBeTruthy();
     expect(txt(g.host)).not.toMatch(/\|\s*-{3}/);
     expect(txt(g.host)).toContain(`Your choice: ${opt.label} — ${opt.note}`);

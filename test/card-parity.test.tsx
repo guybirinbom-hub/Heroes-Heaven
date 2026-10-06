@@ -344,7 +344,10 @@ function domJudge(row: Row, s: Read, ref: Read, hidden: { text: string; rule: st
   if (row.mode === 'browse') identity = ref.kind === 'page' && (s.kind !== 'page' || lib.squash(s.blocks.map((b) => b.text).join(' ')) !== lib.squash(pageBlocks.map((b) => b.text).join(' ')));
   else if (s.lane === 'tree') identity = ref.kind === 'page' && s.blocks.some((b) => !ownSq.includes(lib.squash(b.text)));
   else identity = row.read !== null && ref.kind === 'page';
-  const labels = row.mode === 'browse' && identity ? {} : lib.labelVerdicts({ page, body, printed, glyph: !!ref.glyph, base: lib.refsBase(pageBlocks) });
+  // batch card premise: doctrine-4 "Second Doctrine (3rd)" — card step 12: a record whose page is not its
+  // own (src/data/not-own-page.json) has no page on its browse card either, so, as in the ledger's
+  // judgeRow, there is no page to judge its lines against and no label verdicts.
+  const labels = (row.mode === 'browse' && identity) || ref.kind === 'fallback' ? {} : lib.labelVerdicts({ page, body, printed, glyph: !!ref.glyph, base: lib.refsBase(pageBlocks) });
   const omitted: Omission[] = row.mode === 'mine' && s.lane === 'tree' && !identity && ref.kind === 'page' ? lib.omissionLog(pageBlocks, s.blocks, hidden, printed) : [];
   const unnamed = [...new Set(omitted.flatMap((o) => o.unnamed))].sort();
   return { labels, identity, placement: row.surface === 'spellDetail' ? [...body].sort() : [], oursLeak: s.leak ? ['appended-ours-html'] : [], unnamed, omitted };
@@ -861,7 +864,11 @@ describe('card step 4: the rendered parity check (report mode)', () => {
 
   it('a case missing from the sample and the list both counts: every owner case is flagged', () => {
     const keys = known.cases.map((c) => c.key);
-    for (const k of ['featDetail|feats:halfling-luck', 'spellDetail|spells:buzzing-servants', 'featDetail|classFeatures:second-doctrine-cloistered-cleric', 'spellDetail|spells:approximate'])
+    // Owner case 3 (featDetail|classFeatures:second-doctrine-cloistered-cleric) is right since card step 12:
+    // the record reads its slice of the doctrine page, so it left the shrink-only list; test/card-sections
+    // asserts it positively on the mine, browse and Feats-tab popups.
+    // batch card premise: doctrine-4 "Second Doctrine (3rd)** Your proficiency rank for Fortitude saves increases to expert"
+    for (const k of ['featDetail|feats:halfling-luck', 'spellDetail|spells:buzzing-servants', 'spellDetail|spells:approximate'])
       expect(keys, `owner case ${k}`).toContain(k);
   });
 });

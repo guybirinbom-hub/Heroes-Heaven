@@ -15,7 +15,7 @@ import type { ContentDatabase, DescRef } from '../src/rules/types';
 import { CARD_ON } from '../src/sheet/cardSurfaces';
 import { RecordCard } from '../src/sheet/RecordCard';
 import type { OursLine } from '../src/sheet/cardModel';
-import { textOf, variantSection } from '../src/sheet/astVisibility';
+import { isNotOwnPage, pageSliceOf, recordTree, textOf, variantSection } from '../src/sheet/astVisibility';
 
 /**
  * Card step 3 (docs/card-design.md section 9, row 3): the BROWSE card is extracted from
@@ -186,6 +186,60 @@ async function allRenders(): Promise<Record<string, { first: string; settled?: s
   return out;
 }
 
+/** Card step 12: the read every popup made BEFORE step 12 — variantSection as it stood at 9612a13 (the
+ *  exact-slug key only; verbatim), no not-own-page list, no page slices. */
+const flatRaw = (n: AstNode): string => (n.t === 'text' ? n.v ?? '' : (n.c ?? []).map(flatRaw).join(''));
+const slugOf = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+function preStep12Cut(node: AstNode, slug: string): AstNode {
+  const isSection = (n: AstNode) => n.t === 'title' && Number(n.level ?? 1) === 2;
+  const top = node.c ?? [];
+  let sections = 0, first = -1, mine = -1;
+  for (let i = 0; i < top.length; i++) {
+    if (!isSection(top[i])) continue;
+    sections++;
+    if (first < 0) first = i;
+    if (mine < 0 && slugOf(flatRaw(top[i])) === slug) mine = i;
+  }
+  if (mine < 0 || sections < 2) return node;
+  let end = top.length;
+  for (let i = mine + 1; i < top.length; i++) if (isSection(top[i])) { end = i; break; }
+  const shared = top.slice(0, first).filter((n) => !(n.t === 'title' && Number(n.level ?? 1) <= 1));
+  return { ...node, c: [{ ...top[mine], level: 1 }, ...shared, ...top.slice(mine + 1, end)] };
+}
+/** The sample records whose read step 12 changed, with why (on this file's loaded buckets). */
+function step12Changed(): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const e of sample) {
+    if (e.kind === 'homebrew') continue;
+    const [b, s] = e.key.split(':');
+    const old = trees[b]?.[s] ? preStep12Cut(trees[b][s], s) : undefined;
+    const now = recordTree(b, s, (x, y) => trees[x]?.[y]);
+    if (JSON.stringify(old) === JSON.stringify(now)) continue;
+    out[e.key] = pageSliceOf(b, s) ? 'F6b page slice' : isNotOwnPage(b, s) ? 'F6 not own page: own text' : 'F5 own section';
+  }
+  return out;
+}
+/** Measured 2026-10-06 in the step-12 lane on the shipped data (see the re-baseline block): 10 of the 300.
+ *  The two implement benefits now show their own section of the implement page (F5 rule c); the two
+ *  doctrines, the creed and the inventor modification show their bullet of the doctrine / creed /
+ *  innovation page, the curse its section of the mystery page, the two actions their paragraph of the feat
+ *  that prints them (F6b); the drake rifle shows the family page with only its own line of the variant list
+ *  (F6b kind 'line', round 3: round 2 had it on old text although its page prints the "Cold …" line).
+ *  Before step 12 each drew the whole family page, or (no page) the old text. */
+const STEP12_CHANGED: Record<string, string> = {
+  'actions:overawe-crowd': 'F6b page slice',
+  'actions:stonestrike-stance': 'F6b page slice',
+  'classFeatures:adept-benefit-regalia': 'F5 own section',
+  'classFeatures:curse-of-turbulent-moments': 'F6b page slice',
+  'classFeatures:initiate-benefit-amulet': 'F5 own section',
+  'classFeatures:major-creed': 'F6b page slice',
+  'classFeatures:second-doctrine-cloistered-cleric': 'F6b page slice',
+  'classFeatures:tensile-absorption': 'F6b page slice',
+  'classFeatures:third-doctrine-warpriest': 'F6b page slice',
+  // batch card premise: equipment-1166 "Cold Frozen spittle clings to the target" — its own line.
+  'items:drake-rifle-cold': 'F6b page slice',
+};
+
 /** A node's text as AstRenderer prints it (astVisibility's textOf), and the header name it draws. */
 const flat = (n: AstNode): string => textOf(n);
 function headName(tree: AstNode): string {
@@ -229,19 +283,39 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     expect(existsSync(SNAP!), `snapshot ${SNAP} missing — write it on the pre-extraction tree with CARD_BROWSE_WRITE=1`).toBe(true);
     const before = JSON.parse(readFileSync(SNAP!, 'utf8')) as typeof now;
     expect(Object.keys(now)).toEqual(Object.keys(before));
+    // Card step 12 re-baseline: the browse popup of a record whose READ step 12 changed is no longer the
+    // pre-extraction popup, by design — its family page is cut to its own section (F5), its page that is
+    // not its own gives way to its own text (F6, src/data/not-own-page.json) or to its paragraph of a
+    // bigger page (F6b, src/data/page-slices.json). Those records are pinned with their reason in
+    // STEP12_CHANGED and must differ; every other record stays byte-equal.
+    // batch card premise: equipment-3769 "Greater Bolka's Blessing" — a family page's own variant section is the record's page.
+    const changed = step12Changed();
+    expect(changed).toEqual(STEP12_CHANGED);
     let diffs = 0;
     for (const k of Object.keys(now)) {
       if (now[k].first !== before[k].first || now[k].settled !== before[k].settled) diffs++;
+      if (k in changed) {
+        expect(now[k].first === before[k].first && now[k].settled === before[k].settled, `${k} (${changed[k]}) changed`).toBe(false);
+        continue;
+      }
       expect(now[k].first, `${k} first frame`).toBe(before[k].first);
       expect(now[k].settled, `${k} settled frame`).toBe(before[k].settled);
     }
-    expect(diffs).toBe(0);
+    expect(diffs).toBe(Object.keys(STEP12_CHANGED).length);
   });
 
   it('every branch is in the sample: page, loading placeholder, markdown fallback', async () => {
-    const page = sample.filter((s) => s.kind === 'page');
+    // batch card premise: doctrine-4 "Second Doctrine (3rd)" — a record whose read step 12 changed
+    // (STEP12_CHANGED) is drawn by its new lane: its own section or slice is a page, its own text a fallback.
+    const step12 = (e: Entry) => e.key in STEP12_CHANGED;
+    for (const [i, e] of sample.filter(step12).entries()) {
+      const html = staticRender(e.node, i);
+      if (STEP12_CHANGED[e.key].startsWith('F6 ')) expect(html, e.key).toMatch(/^<div class="picker-overlay"><div class="picker info-modal">/);
+      else expect(html.startsWith('<div class="picker-overlay"><div class="ast-modal"><div class="ast-pop">'), e.key).toBe(true);
+    }
+    const page = sample.filter((s) => s.kind === 'page' && !step12(s));
     for (const [i, e] of page.entries()) expect(staticRender(e.node, i).startsWith('<div class="picker-overlay"><div class="ast-modal"><div class="ast-pop">'), e.key).toBe(true);
-    const np = sample.filter((s) => s.kind === 'nopage');
+    const np = sample.filter((s) => s.kind === 'nopage' && !step12(s));
     for (const [i, e] of np.entries()) {
       expect(staticRender(e.node, i), `${e.key} first frame`).toContain('<div class="ast-body ast-loading" aria-busy="true">');
       expect(await mountedRender(e.node, i), `${e.key} settled`).toMatch(/^<div class="picker-overlay"><div class="picker info-modal"><div class="picker-head">/);

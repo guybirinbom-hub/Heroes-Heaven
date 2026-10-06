@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { act, type ReactElement } from 'react';
@@ -8,6 +8,7 @@ import { renderDom } from './_render';
 import { ActionDetailModal, MainTab, actionOursLines, oursHeaderCost, printedHeaderCost, skillTierLine, type Act } from '../src/sheet/MainTab';
 import { CARD_ON } from '../src/sheet/cardSurfaces';
 import { variantSection } from '../src/sheet/useAst';
+import { recordTree } from '../src/sheet/astVisibility';
 import { ACTIVITIES } from '../src/rules/actions';
 import { isActionCost } from '../src/sheet/widgets';
 import { DescriptionModal } from '../src/sheet/DescriptionModal';
@@ -118,6 +119,14 @@ vi.mock('../src/sheet/cardSurfaces', async (importOriginal) => {
  */
 const db: ContentDatabase = content();
 const BUCKETS = ['actions', 'feats', 'classFeatures', 'runesmithRune'];
+const diskTrees: Record<string, Record<string, AstNode>> = {};
+/** One stored tree read from disk, for recordTree (src/sheet/astVisibility.ts): the tree a card reads —
+ *  the record's slice of a bigger page, or its own page. */
+const readTree = (b: string, s: string): AstNode | undefined => {
+  const p = `public/ast/${b}.json.gz`;
+  if (!(b in diskTrees)) diskTrees[b] = existsSync(p) ? JSON.parse(gunzipSync(readFileSync(p)).toString('utf8')) : {};
+  return diskTrees[b][s];
+};
 beforeAll(async () => {
   const trees: Record<string, Record<string, AstNode>> = {};
   for (const b of BUCKETS) trees[b] = JSON.parse(gunzipSync(readFileSync(`public/ast/${b}.json.gz`)).toString('utf8'));
@@ -138,9 +147,9 @@ afterEach(() => {
   stops = [];
   sw.actionDetail = undefined;
 });
-function mount(el: ReactElement) {
+function mount(el: ReactElement, cdb: ContentDatabase = db) {
   const r = renderDom(
-    <ContentContext.Provider value={db}>
+    <ContentContext.Provider value={cdb}>
       <PinContext.Provider value={pin}>{el}</PinContext.Provider>
     </ContentContext.Provider>,
   );
@@ -495,10 +504,21 @@ describe.runIf(CARD_ON.actionDetail)('card step 9: the Main-tab action popup is 
   });
 
   it('a record with no page opens the card\'s no-page lane: our glyph in the header, the trait chips above the old text, the no-page line', async () => {
-    const id = 'a-challenge-for-heroes';
-    const rec = db.classFeatures[id]!;
+    // This case used classFeatures:a-challenge-for-heroes until card step 12 gave it its block of the Mark of
+    // the Sage page (src/data/page-slices.json, kind 'block'; section 13's raised bar).
+    // batch card premise: feat-7185 "Transcendence—A Challenge for Heroes"
+    // The shipped no-page action records left (Heavy is the Crown, Coiling Serpents, … measured 2026-10-06
+    // through recordTree) are printed inside bigger Archives pages too (Heavy is the Crown in feat-7183) and
+    // are owed slices, so the case reads a SYNTHESIZED record the Archives do not have at all — the record
+    // section 13 keeps the old text for — shaped as that two-action class feature was.
+    const src = db.classFeatures['a-challenge-for-heroes']!;
+    const id = 't-card-step12-no-page-action';
+    const rec = { ...src, id, name: 'T No Page Action' };
+    const tdb = { ...db, classFeatures: { ...db.classFeatures, [id]: rec } } as ContentDatabase;
+    expect(recordTree('classFeatures', src.id, readTree), 'a-challenge-for-heroes now reads its slice').toBeTruthy();
+    expect(recordTree('classFeatures', id, readTree), `${id} reads no tree (no page, no slice)`).toBeUndefined();
     const a: Act = { name: rec.name, cost: rec.actionCost as never, desc: rec.description, descRefs: rec.descRefs, traits: rec.traits, record: { bucket: 'classFeatures', id } };
-    const r = mount(<ActionDetailModal detail={{ a, pinnable: true }} onClose={() => undefined} character={build('fighter', 2)} content={db} onPlay={() => undefined} pinned={new Set()} />);
+    const r = mount(<ActionDetailModal detail={{ a, pinnable: true }} onClose={() => undefined} character={build('fighter', 2)} content={tdb} onPlay={() => undefined} pinned={new Set()} />, tdb);
     await settle();
     const card = r.host.querySelector('.picker.info-modal.card-mine') as HTMLElement;
     expect(card).not.toBeNull();
