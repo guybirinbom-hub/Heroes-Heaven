@@ -13,6 +13,7 @@ import { FeatDetail, featStatRows, type FeatEntry } from '../src/sheet/FeatDetai
 import { SpellDetail, spellStatRows } from '../src/sheet/SpellsTab';
 import { ActionGlyph } from '../src/sheet/widgets';
 import { ContentContext } from '../src/sheet/ContentContext';
+import { cardOn } from '../src/sheet/cardSurfaces';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { isNotOwnPage, pageSliceOf, recordTree, withoutItemLists } from '../src/sheet/astVisibility';
 import type { ActionCost, ContentDatabase, InventoryItem } from '../src/rules/types';
@@ -302,8 +303,18 @@ describe('card step 1 (G0): the move changes no markup', () => {
       expect(shownRows(itemPopup(id)), `item ${id}`).toEqual(want);
       rows += want.length;
     }
+    // Card step 11 (docs/card-design.md section 9: a surface's legacy assertions run while its switch is
+    // off): with CARD_ON.featDetail the row is the record's mine card, which prints NO stat rows over a page
+    // (its printed set is empty, so the page's own use lines show) and, on the no-page lane, only the
+    // Prerequisites row of the same function (the glyph sits in the header, the enhancement in the box).
+    // The seeded sample need not hold a no-page row WITH prerequisites (on 2026-10-07 none of its rows
+    // did); test/card-feat.test.tsx pins that lane on dedication-to-the-five ("Order of the Godclaw").
+    // batch card premise: feat-928 "Prerequisites Charisma 14"
     featRows.forEach((r, i) => {
-      const want = featRowsFn(r, i);
+      const want = cardOn('featDetail')
+        ? (recordTree(r.bucket, r.id, (b, s) => trees[b]?.[s]) ? [] : featRowsFn(r, i).filter(([k]) => k === 'Prerequisites'))
+        : featRowsFn(r, i);
+      // batch card premise: feat-928 "Prerequisites Charisma 14"
       expect(shownRows(featPopup(r, i)), `${r.bucket} ${r.id}`).toEqual(want);
       rows += want.length;
     });
@@ -349,7 +360,10 @@ describe('card step 1 (G0): the move changes no markup', () => {
       }
       if (k in changed) expect(now.ast[k].descBody, `${k} (${changed[k]}) changed`).not.toBe(before.ast[k].descBody);
     }
-    for (const surface of ['items', 'feats', 'spells'] as const) {
+    // Card step 11: with CARD_ON.featDetail the feat popups are the mine card by design (60 of 60 differ);
+    // their byte-equality is the legacy assertion and runs while the switch is off. Items and spells stay.
+    // batch card premise: feat-928 "Prerequisites Charisma 14"
+    for (const surface of (cardOn('featDetail') ? ['items', 'spells'] : ['items', 'feats', 'spells']) as ('items' | 'feats' | 'spells')[]) {
       expect(Object.keys(now[surface])).toEqual(Object.keys(before[surface]));
       for (const k of Object.keys(now[surface])) {
         const key = surface === 'items' ? `items:${k}` : k;

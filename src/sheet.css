@@ -13039,6 +13039,16 @@ button.strike-name:hover {
   border-left: 2px solid var(--app-accent);
   color: var(--app-muted);
 }
+/* Card step 11: the player's pick ("Athletics" of Assurance) as the header subtitle over a page — ours,
+   with the same accent rail, since the page's own header prints only the record's name. */
+.card-mine .card-pick-sub[data-ours] {
+  padding: 0 4px 0 6px;
+  margin-right: 4px;
+  border-left: 2px solid var(--app-accent);
+  color: var(--app-muted);
+  font-size: 0.9em;
+  font-style: italic;
+}
 
 /* Card step 13a (docs/card-design.md section 3; owner ruling Q1 = A): the parts of a page the character
    does not have yet sit under ONE closed, dimmed line — "At higher levels (2)" — that opens on a tap

@@ -695,7 +695,7 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
         {filtered.length === 0 && <div className="ff-empty">No feats or features found.</div>}
       </section>
 
-      {detail && <FeatDetail entry={detail} onClose={() => setDetail(null)} />}
+      {detail && <FeatDetail entry={detail} character={character} onClose={() => setDetail(null)} />}
     </div>
   );
 }

@@ -1,9 +1,13 @@
-import type { ActionCost, DescRef, LimitedUses } from '../rules/types';
+import type { ActionCost, Character, DescRef, LimitedUses } from '../rules/types';
 import { ActionGlyph, isActionCost } from './widgets';
 import { DescBody, remasteredAsOf } from './DescBody';
 import { InfoTerm } from './InfoTerm';
 import { PinStar } from './PinStar';
-import { usePinDesc, type PinDescApi } from './PinContext';
+import { PinContext, usePinDesc, type PinDescApi } from './PinContext';
+import { RecordCard } from './RecordCard';
+import { cardOn } from './cardSurfaces';
+import { scopeOfCharacter } from './cardScope';
+import { oursHeaderCost } from './MainTab';
 import { TrustMarker } from './TrustMarker';
 import { useContent } from './ContentContext';
 import { useEscapeClose } from './useEscapeClose';
@@ -242,8 +246,177 @@ export function featStarNode(entry: FeatEntry, pin: PinDescApi | null): FeatPinN
   return !pin.has(node) && pin.has(legacy) ? legacy : node;
 }
 
-/** Read-only detail overlay for a feat / feature / heritage (reuses the .picker / .sd-* chrome). */
-export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () => void }) {
+/** FeatDetail's props. `character` scopes the card (card step 11); a caller without one gets the page whole. */
+export interface FeatDetailProps {
+  entry: FeatEntry;
+  onClose: () => void;
+  /** The character whose row this is: the 'mine' card folds what it does not have yet (scopeOfCharacter). */
+  character?: Character | null;
+}
+
+/**
+ * The feat / feature / heritage / choice-row popup.
+ *
+ * Card step 11 (docs/card-design.md section 9 row 11, plan F1): with CARD_ON.featDetail the row opens its
+ * record's 'mine' card — FeatCard below. The legacy popup stays for the switch's off position, unchanged.
+ * Two components, not one with a branch: each registers its own dismiss entry (the card's is RecordCard's),
+ * so the choice is made before any hook runs.
+ */
+export function FeatDetail(props: FeatDetailProps) {
+  return cardOn('featDetail') ? <FeatCard {...props} /> : <LegacyFeatDetail {...props} />;
+}
+
+/**
+ * The record a row's card opens, by {bucket, id} (section 2 rule 2): a feat by its feat id, a class
+ * feature (or a subclass / choice row) by its classFeatures id, and a HERITAGE row by its heritage id in
+ * the heritages bucket — rule 2(a): the legacy popup looked in classFeatures by the slug of the heritage's
+ * name and resolved 0 of 336, though 333 have a page. A row with no record id of its own keeps the name
+ * lookup it always had.
+ */
+export function featPageOf(entry: FeatEntry): { bucket: string; id: string } {
+  const ref = trustRefOf(entry);
+  if (ref.bucket === 'heritages' && ref.id) return { bucket: 'heritages', id: ref.id };
+  const bucket = entry.isFeature ? 'classFeatures' : 'feats';
+  return { bucket, id: ref.bucket === bucket && ref.id ? ref.id : astSlug(entry.name) };
+}
+
+/**
+ * The player's pick, as the card header's subtitle (section 2 rule 4.1: "the pick suffix as a subtitle,
+ * never part of the lookup"; section 5 "pickSuffix in the name — header subtitle only; lookup by id").
+ * FeatsTab writes a feat's choice label and any pick into the row's NAME ("Assurance (Athletics)",
+ * "Caustic Nectar (Acid)"); the page lane draws the page's own name, so without this the pick was on no
+ * part of the card. It is what the row's name adds after the record's own name — each "(…)" group, joined
+ * — and undefined when the name adds nothing or does not start with the record's name (a row with no
+ * record id of its own, a renamed record: nothing is guessed).
+ */
+export function featPickSuffix(entry: FeatEntry, content: unknown): string | undefined {
+  const ref = trustRefOf(entry);
+  const own = ref.bucket && ref.id
+    ? (content as Record<string, Record<string, { name?: string } | undefined> | undefined> | null)?.[ref.bucket]?.[ref.id]?.name
+    : undefined;
+  if (!own) return undefined;
+  const name = entry.name.trim();
+  if (!name.toLowerCase().startsWith(own.trim().toLowerCase())) return undefined;
+  const rest = name.slice(own.trim().length).trim();
+  if (!rest) return undefined;
+  const groups = [...rest.matchAll(/\(([^()]*)\)/g)];
+  return groups.length && groups.map((m) => m[0]).join(' ') === rest.replace(/\s+/g, ' ') ? groups.map((m) => m[1].trim()).join(', ') : rest;
+}
+
+/**
+ * The pin the card's built-in star works on. RecordCard's star toggles the node it opened (the stack's
+ * first node), which carries the row's own text so the no-page lane draws it; the pin must stay the one
+ * the legacy star stored — featStarNode: the ours lines, the stored-pin bridge description, and an old
+ * heritage pin found under its old key (never-overwrite). So, for that first node only, `has` and
+ * `toggle` see the star's node; a page opened from a link inside the card pins as it always did.
+ */
+export function featCardPin(pin: PinDescApi, cardNode: DescNode, starNode: FeatPinNode): PinDescApi {
+  const isCardNode = (n: DescNode) => n.key === cardNode.key && n.slug === cardNode.slug && n.title === cardNode.title;
+  return { ...pin, has: (n) => pin.has(isCardNode(n) ? starNode : n), toggle: (n) => pin.toggle(isCardNode(n) ? starNode : n) };
+}
+
+/**
+ * Card step 11 — the row's record as a 'mine' card (section 2 rules 4–5; plan F1).
+ *  - The page's use lines (Frequency, Trigger, Requirements, Access, Cost, Prerequisites) show once each,
+ *    in the page's words, before the prose: the popup prints NO stat rows over a page, so its printed set
+ *    is empty — the Prerequisites field row is not drawn when a page exists, so the page's own
+ *    Prerequisites wording shows (102 worded differently, 11 empty fields; print wins, R12).
+ *  - The page header's own cost glyph is print; ours (data-ours) joins the header only where the page's
+ *    header does not print the row's cost (MainTab oursHeaderCost, the action card's rule).
+ *  - S-furniture leaves ("… leads to", navigation); Source and the reference lines are dimmed (the card).
+ *  - The parts the character does not have yet fold (scopeOfCharacter).
+ *  - The ours box after the body: picks, markers, notes, the running enhancement, use-counter retunes,
+ *    an Overrides edit where the page is drawn (featOursSplit, card step 8).
+ *  - No page (or a page that is not the record's own): the old text through the card's no-page lane, with
+ *    the legacy popup's sub-line, trait chips, Prerequisites field row and a homebrew record's typed use
+ *    lines above it (the card draws its controls on that lane only).
+ * The builder card heading this pick came from (groupLabel) is ours, a tag in the header; so is the pick
+ * itself over a page (featPickSuffix — the page's header prints the record's name, never the row's).
+ */
+function FeatCard({ entry, onClose, character }: FeatDetailProps) {
+  const content = useContent();
+  const page = featPageOf(entry);
+  // The same lookup the card makes (cached): whether a page is drawn decides which homebrew use lines
+  // the record's own text already prints, whether an Overrides edit needs its ours line, and whether the
+  // page's header already prints the row's cost.
+  const { node: pageAst, loading: pageLoading } = useAstNode(page.bucket, page.id);
+  const ours = featOursSplit(entry, { ast: pageAst ?? null, loading: !!pageLoading });
+  const stats = featStatRows(entry);
+  const activate = stats.find((r): r is Extract<FeatStatRow, { k: 'Activate' }> => r.k === 'Activate');
+  const prerequisites = stats.find((r): r is Extract<FeatStatRow, { v: string }> => r.k === 'Prerequisites')?.v;
+  // An entry built without ours lines (featStatRows gives it an Enhancement stat row) keeps that fact on the
+  // card as the ours line featEntries would have made — the card prints no stat rows of its own.
+  const enhancement = stats.find((r): r is Extract<FeatStatRow, { v: string }> => r.k === 'Enhancement')?.v;
+  const box: OursLine[] = enhancement !== undefined ? [...ours.box, { kind: 'enhancement', text: `Enhancement ${enhancement}` }] : ours.box;
+  const cardNode: DescNode = { title: entry.name, description: entry.description, descRefs: entry.descRefs, key: page.bucket, slug: page.id };
+  const pin = usePinDesc();
+  const starNode = featStarNode(entry, pin);
+  const cardPin = pin ? featCardPin(pin, cardNode, starNode) : null;
+  // The pick, as the header subtitle — only over a page: the loading and no-page lanes title the card
+  // with the row's name, which already carries it.
+  const pickSub = pageAst ? featPickSuffix(entry, content) : undefined;
+  const headerActions = (
+    <>
+      {pickSub && (
+        <span className="card-pick-sub" data-ours="" data-ours-kind="pick" title="Your pick">{pickSub}</span>
+      )}
+      {activate && oursHeaderCost(activate.cost, pageAst ?? null) && (
+        <span className="action-cost action-detail-cost card-ours-cost" data-ours="" title="The cost on your sheet">
+          <ActionGlyph cost={activate.cost} />
+        </span>
+      )}
+      {entry.groupLabel && (
+        <span className="ff-tag card-ours-group" data-ours="" title={`Chosen for ${entry.groupLabel}`}>{entry.groupLabel}</span>
+      )}
+    </>
+  );
+  const kind = entry.isFeature ? 'Feature' : `${entry.bucket} feat`;
+  const controls = (
+    <>
+      <div className="sd-sub" data-ours="">
+        {kind} · level {entry.level}
+        {entry.rarity && entry.rarity !== 'common' ? ` · ${cap(entry.rarity)}` : ''}
+      </div>
+      {entry.traits.length > 0 && (
+        <div className="sd-traits">
+          {entry.traits.map((t) => (
+            <InfoTerm className="ff-trait" key={t} title={traitLabel(t)} description={traitDesc(t, content)}>
+              {traitLabel(t)}
+            </InfoTerm>
+          ))}
+        </div>
+      )}
+      {prerequisites !== undefined ? (
+        <div className="sd-stats">
+          <div className="sd-stat">
+            <span className="sd-stat-k">Prerequisites</span>
+            <span className="sd-stat-v">{prerequisites}</span>
+          </div>
+        </div>
+      ) : null}
+      <OursUseLines lines={ours.use} />
+    </>
+  );
+  return (
+    <PinContext.Provider value={cardPin}>
+      <RecordCard
+        node={cardNode}
+        mode="mine"
+        chrome="popup"
+        scope={scopeOfCharacter(character)}
+        printed={[]}
+        headerActions={headerActions}
+        controls={controls}
+        ours={box}
+        onExit={onClose}
+      />
+    </PinContext.Provider>
+  );
+}
+
+/** Read-only detail overlay for a feat / feature / heritage (reuses the .picker / .sd-* chrome) — the
+ *  legacy popup, kept behind CARD_ON.featDetail (card step 11). */
+function LegacyFeatDetail({ entry, onClose }: FeatDetailProps) {
   const content = useContent();
   useEscapeClose(onClose);
   const kind = entry.isFeature ? 'Feature' : `${entry.bucket} feat`;

@@ -123,7 +123,15 @@ const known = JSON.parse(readFileSync('test/card-parity-known.json', 'utf8')) as
    *  title carries the pick suffix ("Caustic Nectar (Acid)") — the ledger models it by reading the slug
    *  of that title, as the stored pin does until card step 19. */
   cases: { key: string; why: string; verdict: Verdict; pick?: string }[];
+  /** Card step 11: cases right on a surface's card and wrong again with its switch turned back. */
+  legacy?: Record<string, { key: string; why: string; verdict: Verdict; pick?: string }[]>;
 };
+/** The named cases expected under the switches as they are now: a landed surface whose switch is turned
+ *  back is expected at its `legacy` cases too (the baseline's own rule, lib expectedEntries). */
+const knownCases = [
+  ...known.cases,
+  ...Object.entries(known.legacy ?? {}).flatMap(([surface, cases]) => (cardOn(surface as Parameters<typeof cardOn>[0]) ? [] : cases)),
+];
 
 type Run = { t?: string; b?: string };
 type Block = { runs: Run[]; text: string };
@@ -277,7 +285,10 @@ const REGIONS_MEASURED: Record<string, string[]> = {
   // Card step 8: FeatDetail's ours box ([data-ours], after the body) and a homebrew record's use lines
   // ([data-ours], above it) — our words, read by the ours case below, never by the line checks.
   // batch card premise: feat-7612 "On a critical hit, the target is additionally sickened 1"
-  featDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-activate', 'div.sd-stats', 'div.card-ours', 'div.card-uselines'],
+  // Card step 11: the Feats-tab popup is the 'mine' card — its header (name, glyph, chips, Back / PinStar /
+  // close) sits beside its body, as on the statDetail and action cards.
+  // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+  featDetail: cardOn('featDetail') ? ['div.ast-head', 'div.ast-traits', 'div.picker-head'] : ['div.sd-sub', 'div.sd-traits', 'div.sd-activate', 'div.sd-stats', 'div.card-ours', 'div.card-uselines'],
   itemDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-stats', 'div.sd-uses', 'div.sd-choice-note'],
   spellDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-stats', 'div.sd-heighten-h'],
   // Card step 9: the action popup is the 'mine' card — its header (name, glyph, chips, the skill label,
@@ -461,6 +472,20 @@ function featEntryFor(row: Row, extra?: Partial<Character>): FeatEntry | undefin
 
 async function renderFeat(entry: FeatEntry): Promise<Read> {
   const m = await mount(<FeatDetail entry={entry} onClose={noop} />);
+  if (cardOn('featDetail')) {
+    // Card step 11: the popup is the row's 'mine' RecordCard (CARD_ON.featDetail), read as the statDetail
+    // and action cards are — the page lane's body is the card's .ast-body (its ours box and our Source line
+    // are [data-ours], outside the read); the no-page lane's is .info-body. No character is passed, so the
+    // card is unscoped, as the ledger's row is (the scope grid is the ledger's own pass).
+    // batch card premise: feat-4458 "Frequency once per day"
+    const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
+    const cpop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
+    const body = page ? page.querySelector(':scope > .ast-body') : cpop?.querySelector('.info-body') ?? null;
+    noteRegions('featDetail', cpop, body ? [body] : []);
+    const r: Read = { lane: page ? 'tree' : 'md', body, blocks: domBlocks(body), printed: [], leak: leakIn(body) };
+    m.stop();
+    return r;
+  }
   const pop = m.host.querySelector('.picker.spell-detail')!;
   const bodies = [...pop.querySelectorAll(':scope .sd-body > .sd-desc')];
   noteRegions('featDetail', pop.querySelector('.sd-body'), bodies);
@@ -552,7 +577,9 @@ async function renderPin(row: Row, extra?: Partial<Character>): Promise<Read> {
   else if (row.bucket === 'spells') el = <SpellDetail spell={db.spells[row.id]} onClose={noop} />;
   else el = <FeatDetail entry={featEntryFor(row, extra)!} onClose={noop} />;
   const m = await mount(el, db, pin);
-  await click(m.host.querySelector('.picker-head .info-star'));
+  // Card step 11: FeatDetail is the 'mine' card — its star sits in the page header (.ast-head) or, on the
+  // no-page lane, in .picker-head; it hands over the same node the legacy star did (FeatDetail featCardPin).
+  await click(m.host.querySelector('.picker-head .info-star, .ast-head .info-star'));
   m.stop();
   expect(pinned, `${keyOf(row)}: the star pinned a node`).toBeTruthy();
   const p = await mount(<DescriptionModal root={pinned!} onClose={noop} />);
@@ -729,7 +756,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     const t0 = Date.now();
     const problems: string[] = [];
     const census = lib.sharedPageCensus(trees.classFeatures, recs('classFeatures') as never);
-    for (const c of known.cases) {
+    for (const c of knownCases) {
       const [surface, rest] = c.key.split('|');
       const [bucket, idRaw] = rest.split(':');
       const want = JSON.stringify(canon(c.verdict));
@@ -791,14 +818,20 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     const ch = { ...ch0, effectPicks: [...(ch0.effectPicks ?? []), { recordId: 'air-gate', choiceId: choice.id, label: choice.options[0].label, note: choice.options[0].note }] } as Character;
     const entry = featEntries(ch, db).find((e) => e.trustFeatureId === 'air-gate' || e.featureId === 'air-gate');
     expect(entry, 'a kineticist with the Air gate lists an Air Gate row').toBeTruthy();
-    const row = { surface: 'featDetail', bucket: 'classFeatures', id: 'air-gate', own: { bucket: 'classFeatures', id: 'air-gate' }, read: { bucket: 'classFeatures', slug: 'air-gate' }, hideMeta: true, itemLists: false, md: entry!.description, printed: [], mode: 'mine' } as unknown as Row;
+    // Card step 11: switched on, the row is the 'mine' card's (printed set empty, no hideMeta), as the ledger models it.
+    const drawn = cardOn('featDetail') ? { hideMeta: false, card: { printed: [] } } : { hideMeta: true };
+    const row = { surface: 'featDetail', bucket: 'classFeatures', id: 'air-gate', own: { bucket: 'classFeatures', id: 'air-gate' }, read: { bucket: 'classFeatures', slug: 'air-gate' }, ...drawn, itemLists: false, md: entry!.description, printed: [], mode: 'mine' } as unknown as Row;
     const s = await renderFeat(entry!);
     const dom = domJudge(row, s, await refOf('classFeatures', 'air-gate'), hiddenOf(row));
     expect(norm(dom)).toBe(norm(ledgerJudge(row)));
     // Its dropped Source line is counted in S1-UNNAMED like every other mine popup's; nothing else is off.
     const { unnamed: _counted, ...rest } = pick(dom);
     expect(rest).toEqual({});
-    expect(txt(s.body)).not.toMatch(/Your choice|\| ?---/);
+    // Card step 11: the card's ours box sits inside its .ast-body (RecordCard's footer slot), [data-ours];
+    // the page's own lines are the read blocks, which leave every [data-ours] node out.
+    // batch card premise: element-1 "Before or after the other effects of the impulse, you can either Stride up to half your Speed or Step"
+    expect(s.blocks.map((b) => b.text).join(' ')).not.toMatch(/Your choice|\| ?---/);
+    if (cardOn('featDetail')) expect(txt(s.body?.querySelector('.card-ours[data-ours]'))).toMatch(/Your choice: Elemental Resistance/);
   });
 
   /*
@@ -812,7 +845,9 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     expect(row, 'the ledger has the row').toBeTruthy();
     const entry = featEntryFor(row!)!;
     const m = await mount(<FeatDetail entry={entry} onClose={noop} />);
-    const box = txt(m.host.querySelector('.picker.spell-detail .sd-body > .card-ours[data-ours]'));
+    // Card step 11: on the 'mine' card the ours box follows the page body (RecordCard), still [data-ours].
+    // batch card premise: feat-7612 "Your nectar doesn’t add critical specialization effects"
+    const box = txt(m.host.querySelector(cardOn('featDetail') ? '.card-mine .card-ours[data-ours]' : '.picker.spell-detail .sd-body > .card-ours[data-ours]'));
     m.stop();
     // batch card premise: feat-7612 "On a critical hit, the target is additionally sickened 1"
     expect(box).toContain(`Note: ${db.feats['caustic-nectar'].note}`);
@@ -863,13 +898,18 @@ describe('card step 4: the rendered parity check (report mode)', () => {
   });
 
   it('a case missing from the sample and the list both counts: every owner case is flagged', () => {
-    const keys = known.cases.map((c) => c.key);
+    const keys = knownCases.map((c) => c.key);
     // Owner case 3 (featDetail|classFeatures:second-doctrine-cloistered-cleric) is right since card step 12:
     // the record reads its slice of the doctrine page, so it left the shrink-only list; test/card-sections
     // asserts it positively on the mine, browse and Feats-tab popups.
     // batch card premise: doctrine-4 "Second Doctrine (3rd)** Your proficiency rank for Fortitude saves increases to expert"
-    for (const k of ['featDetail|feats:halfling-luck', 'spellDetail|spells:buzzing-servants', 'spellDetail|spells:approximate'])
-      expect(keys, `owner case ${k}`).toContain(k);
+    // Owner case 1 (featDetail|feats:halfling-luck) is right since card step 11: the Feats-tab popup is the
+    // 'mine' card and shows the page's Frequency and Trigger once each, so it left the shrink-only list;
+    // test/card-feat.test.tsx asserts it positively through FeatsTab. Switched back, it is wrong again.
+    // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+    const owner = [...(cardOn('featDetail') ? [] : ['featDetail|feats:halfling-luck']), 'spellDetail|spells:buzzing-servants', 'spellDetail|spells:approximate'];
+    for (const k of owner) expect(keys, `owner case ${k}`).toContain(k);
+    if (cardOn('featDetail')) expect(keys, 'halfling-luck is right on the card').not.toContain('featDetail|feats:halfling-luck');
   });
 });
 

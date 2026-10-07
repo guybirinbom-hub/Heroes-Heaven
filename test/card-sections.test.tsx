@@ -22,6 +22,7 @@ import { FEAT_SITUATIONAL } from '../src/rules/situationalBonuses';
 import { SHARED_FEATURE_FOOTER, classFeatureDescription, pageClassName, sharedFeatureFallback } from '../src/rules/featureText';
 import { splitHeightening } from '../src/rules/heightening';
 import { foldsOf } from '../src/sheet/cardScope';
+import { cardOn } from '../src/sheet/cardSurfaces';
 import { astSlug, bulletItems, isMetaP, isMetaishBlock, recordTree, runAnchor, sliceOf, textOf, variantSection, widerSectionRule, withoutLead, type PageSlice } from '../src/sheet/astVisibility';
 import type { Character, ContentDatabase } from '../src/rules/types';
 import { loadContent } from '../scripts/card-truth-check.mjs';
@@ -646,7 +647,10 @@ describe('rendered: records open their own section, own slice or own text', () =
     const entry = featEntries(ch, db).find((e) => e.featureId === 'second-doctrine-cloistered-cleric');
     expect(entry, 'a cloistered cleric 20 lists the Second Doctrine row').toBeTruthy();
     const host = await mount(<FeatDetail entry={entry!} onClose={noop} />);
-    const body = host.querySelector('.picker.spell-detail .sd-body > .sd-desc');
+    // Card step 11: with CARD_ON.featDetail the row opens its mine card (page lane .ast-modal.card-mine);
+    // switched off, the legacy popup's body as before.
+    // batch card premise: doctrine-4 "Second Doctrine (3rd)** Your proficiency rank for Fortitude saves increases to expert"
+    const body = host.querySelector(cardOn('featDetail') ? '.ast-modal.card-mine' : '.picker.spell-detail .sd-body > .sd-desc');
     expect(body?.querySelector('.ast-body'), 'the popup draws the slice of the doctrine page').toBeTruthy();
     const text = squash(body?.textContent);
     expect(text).toMatch(/Your proficiency rank for Fortitude saves increases to expert/);

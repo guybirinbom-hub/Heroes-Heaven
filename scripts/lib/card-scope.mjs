@@ -708,7 +708,7 @@ export const SECTIONS = ['S1-MISSING', 'S1-UNNAMED', 'DIFFERS', 'DUPLICATED', 'E
  * under `legacy[surface]` that surface's row entries as measured with its switch OFF; while the switch
  * is off they stand in for the surface's entries in the main sections. Step 22 removes both.
  */
-export const SWITCHED_SURFACES = ['statDetail', 'actionDetail'];
+export const SWITCHED_SURFACES = ['statDetail', 'actionDetail', 'featDetail'];
 
 /**
  * The entries the baseline expects under the switches as they are now (`cardOn`, default CARD_ON): the
@@ -775,19 +775,29 @@ export function surfaceRows(deps) {
   const withNote = (rec, d) => (rec?.note ? `${d}<p><strong>Note:</strong> ${rec.note}</p>` : d);
 
   // FeatDetail — feats, class features, heritage rows (FeatsTab featEntries → FeatDetail).
+  // With CARD_ON.featDetail (card step 11) every row is RecordCard mode 'mine' for its record (FeatDetail.tsx
+  // featPageOf): the tree by {bucket, id} — a heritage row by its id in the heritages bucket — the item
+  // lists cut, and the printed set EMPTY: over a page the popup prints no stat rows (the Prerequisites
+  // field row is drawn only on the no-page lane, the glyph is the page header's), so every page use line
+  // shows. The record's note is in the ours box, never in the text. Switched off, the legacy popup: the
+  // tree with hideMeta, the stat rows from featStatRows, a heritage read in classFeatures by its name.
+  const featCard = (deps.cardOn ?? CARD_ON).featDetail ? { printed: [] } : undefined;
+  const featRow = (bucket, id, rec, legacy) => (featCard
+    ? { read: { bucket, slug: id }, hideMeta: false, itemLists: false, card: featCard, md: rec.description ?? '', printed: [] }
+    : legacy);
   for (const [id, rec] of Object.entries(db.feats ?? {})) {
     if (!has('feats', id)) continue;
-    rows.push({ surface: 'featDetail', bucket: 'feats', id, own: { bucket: 'feats', id }, read: { bucket: 'feats', slug: id }, hideMeta: true, itemLists: false, md: withNote(rec, rec.description ?? ''), printed: statRows.featStatRows(featEntryLike(rec)).filter((r) => r.k !== 'Enhancement').map((r) => [r.k, r.v ?? '']), mode: 'mine' });
+    rows.push({ surface: 'featDetail', bucket: 'feats', id, own: { bucket: 'feats', id }, ...featRow('feats', id, rec, { read: { bucket: 'feats', slug: id }, hideMeta: true, itemLists: false, md: withNote(rec, rec.description ?? ''), printed: statRows.featStatRows(featEntryLike(rec)).filter((r) => r.k !== 'Enhancement').map((r) => [r.k, r.v ?? '']) }), mode: 'mine' });
   }
   for (const [id, rec] of Object.entries(db.classFeatures ?? {})) {
     if (!has('classFeatures', id)) continue;
-    rows.push({ surface: 'featDetail', bucket: 'classFeatures', id, own: { bucket: 'classFeatures', id }, read: { bucket: 'classFeatures', slug: id }, hideMeta: true, itemLists: false, md: withNote(rec, rec.description ?? ''), printed: statRows.featStatRows(featEntryLike(rec)).map((r) => [r.k, r.v ?? '']), mode: 'mine' });
+    rows.push({ surface: 'featDetail', bucket: 'classFeatures', id, own: { bucket: 'classFeatures', id }, ...featRow('classFeatures', id, rec, { read: { bucket: 'classFeatures', slug: id }, hideMeta: true, itemLists: false, md: withNote(rec, rec.description ?? ''), printed: statRows.featStatRows(featEntryLike(rec)).map((r) => [r.k, r.v ?? '']) }), mode: 'mine' });
   }
   for (const [id, rec] of Object.entries(db.heritages ?? {})) {
     if (!has('heritages', id)) continue;
-    // A heritage row is `isFeature`, so FeatDetail reads classFeatures by the slug of its NAME (FeatDetail.tsx:97-99).
-    // Card step 7a fixed only its PIN (key 'heritages', slug = id); the body's lane moves in step 11.
-    rows.push({ surface: 'featDetail', bucket: 'heritages', id, own: { bucket: 'heritages', id }, read: { bucket: 'classFeatures', slug: astSlug(rec.name) }, hideMeta: true, itemLists: false, md: rec.description ?? '', printed: statRows.featStatRows(featEntryLike(rec)).map((r) => [r.k, r.v ?? '']), mode: 'mine' });
+    // Legacy: a heritage row is `isFeature`, so the legacy popup reads classFeatures by the slug of its NAME.
+    // Card step 7a fixed its PIN (key 'heritages', slug = id); card step 11 moves the body onto its page.
+    rows.push({ surface: 'featDetail', bucket: 'heritages', id, own: { bucket: 'heritages', id }, ...featRow('heritages', id, rec, { read: { bucket: 'classFeatures', slug: astSlug(rec.name) }, hideMeta: true, itemLists: false, md: rec.description ?? '', printed: statRows.featStatRows(featEntryLike(rec)).map((r) => [r.k, r.v ?? '']) }), mode: 'mine' });
   }
   // A shared class feature shown to a class whose page it is not (the class-feature rows of every class).
   const classNames = Object.values(db.classes ?? {}).map((c) => c.name);

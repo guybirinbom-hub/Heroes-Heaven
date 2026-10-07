@@ -1,11 +1,21 @@
 {
   "_rule": "Card step 4 (docs/card-design.md section 8, check 2). The named cases the guard must flag TODAY, each with the verdict test/card-parity.test.tsx reads off the real popup AND computes from the ledger (scripts/lib/card-scope.mjs). SHRINK-ONLY, checked both ways: a case whose verdict changes fails (update it only in the commit that changes that popup), and a case that is now right fails until its entry is removed. Never add an entry to make a red test green.",
+  "_legacy": "Card step 11: `legacy[surface]` holds the cases that are right on the card and wrong again when that surface's switch is turned back (src/sheet/cardSurfaces.ts CARD_ON; docs/card-design.md section 9: turning a surface back is one line and its tests still hold). test/card-parity.test.tsx checks them only while that switch is off.",
+  "legacy": {
+    "featDetail": [
+      {
+        "key": "featDetail|feats:halfling-luck",
+        "why": "owner case 1: the legacy Feats-tab popup drops the page's Frequency and Trigger lines (hideMeta drops the leading Source column whole), so it reads as a free action usable any time; right on the card since step 11",
+        "verdict": { "labels": { "Frequency": "MISSING", "Trigger": "MISSING" }, "unnamed": ["Source"] }
+      },
+      {
+        "key": "featDetail|heritages:gutsy-halfling",
+        "why": "a heritage row: the legacy popup's BODY reads classFeatures by the slug of the heritage's name, finds nothing, and falls back to the old text while the heritages bucket holds its page; the card (step 11) reads the heritages page by the heritage's id",
+        "verdict": { "identity": true }
+      }
+    ]
+  },
   "cases": [
-    {
-      "key": "featDetail|feats:halfling-luck",
-      "why": "owner case 1: the Feats-tab popup drops the page's Frequency and Trigger lines (hideMeta drops the leading Source column whole), so it reads as a free action usable any time",
-      "verdict": { "labels": { "Frequency": "MISSING", "Trigger": "MISSING" }, "unnamed": ["Source"] }
-    },
     {
       "key": "spellDetail|spells:buzzing-servants",
       "why": "owner case 2: the Duration row prints the field's \"1 minute\" where the page prints \"sustained up to 1 minute\", and an Area row the page does not print",
@@ -15,11 +25,6 @@
       "key": "spellDetail|spells:approximate",
       "why": "owner case 4: \"Area 1 cubic foot\" is printed in the prose (the description's bold preamble), not in the stat rows",
       "verdict": { "placement": ["Area"] }
-    },
-    {
-      "key": "featDetail|heritages:gutsy-halfling",
-      "why": "a heritage row: FeatDetail's BODY reads classFeatures by the slug of the heritage's name, finds nothing, and falls back to the old text while the heritages bucket holds its page. Card step 7a fixed only its pin: the pin is now stored with key 'heritages' (the slug the star's node carries is dropped by the store until step 19), so the pin reopened from the Pinned list reads the heritages page by the slug of its name; the body stays on the markdown lane until FeatDetail becomes the card (step 11), because moving it onto the hideMeta page path now would drop its Frequency / Trigger lines",
-      "verdict": { "identity": true }
     },
     {
       "key": "featDetail|classFeatures:expert-spellcaster@wizard",

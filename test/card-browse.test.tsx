@@ -473,7 +473,10 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     // Card step 9 turns the Main-tab action popup into the record's 'mine' card, so Aid's printed Trigger
     // and Requirements reach it (test/card-action.test.tsx).
     // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
-    const landed = new Set(['statDetail', 'hostPage', 'actionDetail']);
+    // Card step 11 turns the Feats-tab popup (FeatDetail) into the row's record's 'mine' card, so Halfling
+    // Luck's printed Frequency and Trigger reach it (test/card-feat.test.tsx).
+    // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+    const landed = new Set(['statDetail', 'hostPage', 'actionDetail', 'featDetail']);
     for (const [surface, on] of Object.entries(CARD_ON)) if (!landed.has(surface)) expect(on, surface).toBe(false);
   });
 });

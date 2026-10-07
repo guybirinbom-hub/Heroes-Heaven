@@ -299,8 +299,9 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
             </div>
             {/* Inside the body, so it picks up the body's padding rather than sitting flush against
                 the popup edge — and so the warning is there from the first frame, not after the ast
-                lands. */}
-            <div className="ast-body ast-loading" aria-busy="true">{marker}</div>
+                lands. Card step 11 (section 5, "footer and ours slot on every branch"): a mine card keeps
+                its ours box here too, so the pick / marker / note is on screen from the first frame. */}
+            <div className="ast-body ast-loading" aria-busy="true">{marker}{mine ? oursBox : null}</div>
           </div>
         </div>
       </div>

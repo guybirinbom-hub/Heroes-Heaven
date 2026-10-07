@@ -11,6 +11,8 @@
  * Step 6: hostPage is on (CampaignTracker's HostPage renders RecordCard mode 'gm', chrome 'embed').
  * Step 9: actionDetail is on (the Main-tab action popup renders RecordCard mode 'mine' for an action
  * that names its record: activities, feat / class-feature / granted actions, tactics, runes).
+ * Step 11: featDetail is on (the Feats-tab popup — feats, class features, heritages, choice rows — renders
+ * RecordCard mode 'mine' for the row's record; a heritage row reads the heritages bucket by its id).
  * Step 22 removes this file together with the legacy paths.
  *
  * Names follow section 6 ("mine" sheet popups, the builder rows, the GM page).
@@ -24,8 +26,8 @@ export const CARD_ON = {
   actionDetail: true,
   /** StrikeDetailModal (step 10). */
   strikeDetail: false,
-  /** FeatDetail: feats, class features, heritages, choice rows (step 11). */
-  featDetail: false,
+  /** FeatDetail: feats, class features, heritages, choice rows (step 11) — ON: the row's record opens its 'mine' card. */
+  featDetail: true,
   /** ItemDetail (step 14). */
   itemDetail: false,
   /** Builder ChoiceDetails for granted features (step 15). */

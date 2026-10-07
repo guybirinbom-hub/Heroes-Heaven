@@ -14,6 +14,7 @@ import { ItemDetail } from '../src/sheet/ItemDetail';
 import { SpellDetail } from '../src/sheet/SpellsTab';
 import { StrikeDetailModal } from '../src/sheet/StrikeDetailModal';
 import { DescriptionModal } from '../src/sheet/DescriptionModal';
+import { cardOn } from '../src/sheet/cardSurfaces';
 import { DescBody } from '../src/sheet/DescBody';
 import { RecordCard } from '../src/sheet/RecordCard';
 import { ChoiceDetails, hasEmptyEmbeddedPage, holdOnTitleLookup } from '../src/builder/shared';
@@ -171,12 +172,17 @@ async function browseText(bucket: string, id: string): Promise<string | null> {
   m.stop();
   return t;
 }
+/** A popup's PinStar: the legacy header's, or the card's page header's (card step 11). */
+const STAR = '.picker-head .info-star, .ast-head .info-star';
 /** Press the popup's PinStar and return the node it handed to the pin. */
 async function pinnedNodeOf(el: ReactElement, cdb: ContentDatabase = db): Promise<DescNode> {
   let pinned: DescNode | null = null;
   const pin: PinDescApi = { has: () => false, toggle: (n) => { pinned = n; } };
   const m = await mount(el, cdb, pin);
-  await click(m.host.querySelector('.picker-head .info-star'));
+  // Card step 11: FeatDetail on the card carries its star in the page header (.ast-head); the legacy
+  // popups (and the card's no-page lane) in .picker-head — whichever the popup drew.
+  // batch card premise: heritage-21 "When you roll a success on a saving throw against an emotion effect, you get a critical success instead"
+  await click(m.host.querySelector(STAR));
   m.stop();
   expect(pinned, 'the star pinned a node').toBeTruthy();
   return pinned!;
@@ -265,7 +271,8 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     // The STORED pin (step 19) is test/card-parity-known.json's 'pin|feats:zombie-horde-impossible-magic'.
   });
 
-  it('a pinned heritage reopens the heritages page from the STORED pin (T1, pin only); the FeatDetail body stays on the markdown lane', async () => {
+  // batch card premise: heritage-21 "When you roll a success on a saving throw against an emotion effect, you get a critical success instead"
+  it('a pinned heritage reopens the heritages page from the STORED pin (T1, pin only); the FeatDetail body is the heritages page on the card (the markdown lane with the switch off)', async () => {
     const e = heritageRow('gutsy-halfling');
     const node = await pinnedNodeOf(<FeatDetail entry={e} onClose={noop} />);
     const own = await browseText('heritages', 'gutsy-halfling');
@@ -276,7 +283,20 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     expect({ key: stored.key, title: stored.title }).toEqual({ key: 'heritages', title: 'Gutsy Halfling' });
     expect((await pinnedPopupText(stored)).page, 'the reopened pin is the heritage\'s page').toBe(own);
 
-    // The body did not move (step 11 moves it): it is DescBody's markdown lane over the row's description.
+    // Card step 11 moves the body: with CARD_ON.featDetail the heritage row opens its heritages page by id
+    // (section 2 rule 2(a)) as a mine card. Switched off, the legacy body is DescBody's markdown lane over the
+    // row's description, as below.
+    // batch card premise: heritage-21 "When you roll a success on a saving throw against an emotion effect, you get a critical success instead"
+    if (cardOn('featDetail')) {
+      const card = await mount(<FeatDetail entry={e} onClose={noop} />);
+      const page = card.host.querySelector('.ast-modal.card-mine .ast-pop > .ast-body');
+      const shown = txt(page);
+      card.stop();
+      // batch card premise: heritage-21 "When you roll a success on a saving throw against an emotion effect, you get a critical success instead"
+      expect(page, 'the heritage row draws its heritages page').toBeTruthy();
+      expect(shown).toContain('When you roll a success on a saving throw against an emotion effect, you get a critical success instead');
+      return;
+    }
     const pop = await mount(<FeatDetail entry={e} onClose={noop} />);
     const body = pop.host.querySelector('.picker.spell-detail .sd-body > .sd-desc');
     const html = body?.outerHTML;
@@ -302,14 +322,16 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     const legacy: PinnedDesc = { title: e.name, description: e.description, descRefs: e.descRefs, key: 'classFeatures' };
     const { api, state } = sheetPin([legacy]);
     const m = await mount(<FeatDetail entry={e} onClose={noop} />, db, api);
-    const star = m.host.querySelector('.picker-head .info-star');
+    // batch card premise: heritage-21 "When you roll a success on a saving throw against an emotion effect, you get a critical success instead"
+    const star = m.host.querySelector(STAR);
     expect(star?.getAttribute('aria-pressed'), 'the old pin reads as pinned').toBe('true');
     await click(star);
     m.stop();
     expect(state.list, 'pressing the star removed the old pin, and added none').toEqual([]);
     // With no old pin, the star pins the heritage under its own bucket.
     const m2 = await mount(<FeatDetail entry={e} onClose={noop} />, db, api);
-    const star2 = m2.host.querySelector('.picker-head .info-star');
+    // batch card premise: heritage-21 "When you roll a success on a saving throw against an emotion effect, you get a critical success instead"
+    const star2 = m2.host.querySelector(STAR);
     expect(star2?.getAttribute('aria-pressed')).toBe('false');
     await click(star2);
     m2.stop();

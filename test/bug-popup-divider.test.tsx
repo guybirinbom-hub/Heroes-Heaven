@@ -8,6 +8,8 @@ import { DescBody } from '../src/sheet/DescBody';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import type { ContentDatabase } from '../src/rules/types';
+import { FeatDetail, type FeatEntry } from '../src/sheet/FeatDetail';
+import { cardOn } from '../src/sheet/cardSurfaces';
 
 /**
  * bug 2026-09-12 #8: popup-divider.
@@ -200,6 +202,71 @@ describe('bug #8 — through DescBody, the component the popups actually mount',
     try {
       expect(host.querySelector('.sd-unprinted')?.textContent).toBe('The book prints no rules text for this item.');
       expect(rules(host)).toHaveLength(0);
+    } finally { stop(); }
+  });
+});
+
+/* ---- card step 11: the Feats-tab popup is the 'mine' card, with no hideMeta ---- */
+
+/*
+ * The legacy Feats-tab popup (FeatDetail through DescBody, hideMeta) dropped a feat page's whole header
+ * column and with it the rule under it — the case above. That also dropped the feat's Frequency and
+ * Trigger: gold-set principle E wants a reaction's trigger and requirements in its popup. Since card
+ * step 11 FeatDetail is the record's 'mine' card (CARD_ON.featDetail): the printed set is empty, so the
+ * page's use lines print above the rule, and the rule separates them from the prose — something precedes
+ * it, which is this guard's own rule. Halfling Luck (Archives feat-4458) is shaped column / hr / p.
+ */
+const feats = readBucket('feats');
+const LUCK = feats['halfling-luck'];
+
+// batch card premise: feat-4458 "Frequency once per day"
+describe('bug #8 — on the Feats-tab card, the use lines are what the rule separates', () => {
+  beforeAll(async () => {
+    const before = globalThis.fetch;
+    globalThis.fetch = (async (input: unknown) => {
+      if (/ast\/feats\.json$/.test(String(input))) return new Response(JSON.stringify({ 'halfling-luck': LUCK }), { status: 200, headers: { 'content-type': 'application/json' } });
+      return before(input as RequestInfo);
+    }) as typeof fetch;
+    await loadBucketAst('feats');
+  });
+
+  const luckPopup = () => {
+    const cdb = { ...db, feats: { 'halfling-luck': { id: 'halfling-luck', name: 'Halfling Luck', source: { book: 'Player Core', page: 60 } } } } as unknown as ContentDatabase;
+    const entry: FeatEntry = { key: 'halfling-luck', name: 'Halfling Luck', level: 1, traits: [], description: '', isFeature: false, bucket: 'ancestry', featId: 'halfling-luck', ours: [] };
+    return renderDom(<ContentContext.Provider value={cdb}><FeatDetail entry={entry} onClose={() => undefined} /></ContentContext.Provider>);
+  };
+
+  // Turned back (section 9: turning a surface back is one line and its tests still hold), the legacy
+  // popup is the hideMeta path above: the header column and the rule under it both go.
+  // batch card premise: feat-4458 "Your happy-go-lucky nature makes it seem like misfortune avoids you"
+  it.skipIf(cardOn('featDetail'))('halfling-luck, switch off: the legacy popup opens on the prose, with no rule', () => {
+    const { host, stop } = luckPopup();
+    try {
+      const body = host.querySelector('.picker.spell-detail .sd-desc .ast-body');
+      expect(body, 'the legacy popup draws the page tree').toBeTruthy();
+      expect(rules(body!)).toHaveLength(0);
+      // batch card premise: feat-4458 "Your happy-go-lucky nature makes it seem like misfortune avoids you"
+      expect(body!.firstElementChild?.textContent).toContain('Your happy-go-lucky nature');
+    } finally { stop(); }
+  });
+
+  // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+  it.runIf(cardOn('featDetail'))('halfling-luck: Source, Frequency and Trigger print above the page\'s rule, which divides them from the prose', () => {
+    expect(LUCK.c?.map((n) => n.t).slice(0, 5)).toEqual(['title', 'traits', 'column', 'hr', 'p']);
+    const { host, stop } = luckPopup();
+    try {
+      const body = host.querySelector('.ast-modal.card-mine .ast-pop > .ast-body');
+      // batch card premise: feat-4458 "Frequency once per day"
+      expect(body, 'the Feats-tab popup is the mine card, page lane').toBeTruthy();
+      const hr = rules(body!);
+      expect(hr, 'the page\'s rule stays: something precedes it').toHaveLength(1);
+      expect(hr[0].previousElementSibling, 'the header lines precede it').not.toBeNull();
+      expect(hr[0].previousElementSibling!.textContent).toContain('Trigger');
+      const above: string[] = [];
+      for (let el = hr[0].previousElementSibling; el; el = el.previousElementSibling) above.unshift(el.textContent ?? '');
+      // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+      expect(above.join(' | ')).toMatch(/Source.*\|.*Frequency once per day.*\|.*Trigger You fail a/);
+      expect(hr[0].nextElementSibling?.textContent).toContain('Your happy-go-lucky nature');
     } finally { stop(); }
   });
 });
