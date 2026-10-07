@@ -24,6 +24,23 @@
  * Without the citation it is a silently widened gate, and the whole parity programme rests on those
  * gates staying honest.
  *
+ * THE PREMISE FORM CITES WORDS, NOT A PAGE (card step 10's refuter, 2026-10-07): a premise citation
+ * used to pass as soon as the mirror file for its doc id EXISTED. A test cited weapon-group-15 with
+ * our own src/rules/critSpec.ts wording ("The target is off-guard until the start of your next turn")
+ * while the page prints "The target is made off-balance by your attack, becoming off-guard until the
+ * start of your next turn", and the audit passed. A premise that is not in the cited page is a false
+ * premise, so checkPremise now also requires the quoted clause to appear in the document's own text
+ * (clauseInDoc below — both sides normalised the same way, parsed docs cached per run). An empty
+ * clause cites nothing and fails.
+ *
+ * Two holes the first refuter of that check found (2026-10-07), both closed in clauseInDoc:
+ *   • "a" and "the" passed for weapon-group-15 — a substring of one word is in every page. A clause
+ *     is evidence only from 2 words AND 8 characters (after normalisation); shorter fails as too short.
+ *   • "/Feats.aspx?ID=4458", "feat-54" (legacy_id) and "2023-11-15" (release_date) passed for
+ *     feat-4458, because the check read EVERY string field of the doc. It now skips the mirror's
+ *     bookkeeping fields (BOOKKEEPING below — ids, urls, dates, filing categories, derived scales)
+ *     and reads only what the page prints.
+ *
  * Usage:  node scripts/test-flip-audit.mjs --batch NNN [--root DIR] [--json]
  * Exit 1 on any violation (each one names the file, the line, what changed and what was expected).
  */
@@ -47,8 +64,12 @@ const AON_ROOT_DEFAULT = 'C:/wonderers guide/aon-2e-archive/data/by-category';
 export const normBatch = (t) => (/^\d+$/.test(String(t ?? '')) ? String(t).padStart(3, '0') : String(t ?? '').toUpperCase());
 
 /* `// batch 030 premise: item-1234 "the clause"` — checked BEFORE the plain form, whose colon must
- * follow the token directly. */
-const PREMISE_RE = /\/\/\s*batch\s+([0-9A-Za-z]+)\s+premise\s*:\s*([a-z0-9]+(?:-[a-z0-9]+)*-\d+)\s+"([^"]*)"/i;
+ * follow the token directly. Exported so a corpus sweep reads citations with the audit's own eyes.
+ * The clause's quotes may each carry a JSON escape (`\"the clause\"`): inside an experience-limits
+ * `"_cite"` string that is the only way a quote can be written, and until 2026-10-07 the premise form
+ * the auditLimits message offers never parsed there (found by the clause-check test). On a bare line the
+ * optional backslashes match nothing and the lazy group reads exactly what the greedy one did. */
+export const PREMISE_RE = /\/\/\s*batch\s+([0-9A-Za-z]+)\s+premise\s*:\s*([a-z0-9]+(?:-[a-z0-9]+)*-\d+)\s+\\?"([^"]*?)\\?"/i;
 /* The id stops at whitespace or a quote so the JSON form (`"_cite": "// batch 030: a#b"`) parses. */
 const CITE_RE = /\/\/\s*batch\s+([0-9A-Za-z]+)\s*:\s*([^\s"'`,;]+)/i;
 
@@ -297,12 +318,181 @@ function citationFor(ls, line, ctx, titleText) {
 }
 
 function checkPremise(m, ctx) {
-  const [, batch, docId] = m;
+  const [, batch, docId, clause] = m;
   if (normBatch(batch) !== ctx.batch) return { ok: false, why: `premise cites batch ${normBatch(batch)}, this is batch ${ctx.batch}` };
-  const dm = /^(.*)-(\d+)$/.exec(docId);
+  return clauseInDoc({ aonRoot: ctx.aonRoot, docId, clause, cache: ctx.docCache });
+}
+
+// ---------------------------------------------------------------------------- the clause check
+
+/*
+ * HOW THE MIRROR STORES A PAGE (read across feat / weapon / weapon-group / spell / class-feature /
+ * action / doctrine / element docs, 2026-10-07): every doc carries the page as `markdown` — AoN's own
+ * tags (`<title …>`, `<trait label="…" />`, `<actions string="…" />`, `<column>`, `<row>`, `<ul><li>`,
+ * `<br />`, `<document id="…" />`), links `[label](/X.aspx?ID=n)`, the newer `{{index n "label"}}`
+ * cross-reference, `**bold**`, `\n` paragraphing, `&amp;`-style entities, curly quotes and em dashes —
+ * plus a flattened `text`, and the same prose again under `summary`, `summary_markdown`,
+ * `search_markdown`, `trigger`, `trigger_markdown` and whichever per-category fields the page has. So
+ * the check reads every string value of the doc, at any depth — EXCEPT the bookkeeping fields named in
+ * BOOKKEEPING below — normalises each the same way as the clause, and asks whether the clause is a
+ * substring of any one of them (never of two joined — the fields are separated by a newline the
+ * clause's own normalisation can never contain).
+ *
+ * WHY A DENY-LIST, AND WHICH KEYS (measured 2026-10-07 over 1,067 docs, 12 per category, 97
+ * categories: for every string-valued key, how often its normalised value is a substring of the
+ * normalised `markdown` + `text` — the page itself):
+ *   • `id`, `url`, `release_date`: 0 of 970; `legacy_id` 0 of 221, `remaster_id` 0 of 195. The page
+ *     links to itself as `[name](url)`, which the normaliser folds to the name, so the url string is
+ *     never printed; the twin ids and the date are the mirror's own.
+ *   • `category`, `primary_source_category`, `source_category`, `item_category`, `item_subcategory`,
+ *     `archetype_category`, `trait_group`, `pfs`, `rarity`, `breadcrumbs`, `deity_category_order`:
+ *     the mirror's FILING ("Rulebooks", "Base Weapons", "Standard", "common", "chapter 3: subsystems"),
+ *     0.00–0.39 in page, the hits coincidental substrings. `rarity` prints only as a trait pill, which
+ *     `trait` and the markdown carry. NOT a `*_category` glob: `weapon_category` ("Martial"),
+ *     `armor_category`, `deity_category`, `plane_category`, `siege_weapon_category` are printed, 1.00.
+ *   • `heighten_group` ("5th rank" — a 2-word, 8-character label the page never prints: 0 of 22),
+ *     `damage_type` ("piercing" where the page prints "1d8 P": 0 of 11), the creature `*_scale` keys
+ *     with `strongest_save` / `weakest_save` ("high" / "moderate" / "low": AoN's derived ratings),
+ *     `legacy_name` / `remaster_name` (the OTHER printing's name), `image`, `icon_image`,
+ *     `item_parent_id`, `item_child_id`: derived or cross-record, never the page's words.
+ *   An ALLOW-list was the alternative and loses: the sample holds 211 string-valued keys, 145 of them
+ *   in the page 0.80 or more of the time — per-category text fields (`trigger`, `cost`, `primary_check`,
+ *   `usage`, `stage`, `primary_source_raw`, …) that are the page's words, and a new category
+ *   brings new ones an allow-list would silently refuse. `*_raw` is NOT denied
+ *   either — `primary_source_raw` "Player Core pg. 60", `price_raw` "4 gp", `duration_raw` "see text"
+ *   ARE the printed forms (0.81–1.00); the parsed twin (`price: 400`) is a number and never read.
+ *   `summary`, `summary_markdown` and `search_markdown` stay: for spells the one-line summary is in
+ *   `search_markdown` and not in `markdown` (0.29 overall), and it is still this doc's own words —
+ *   kept on the refuter's ask. Only string values are read; booleans and numbers never enter.
+ *
+ * Normalisation, in this order, on BOTH sides:
+ *   1. `{{index n "label"}}` and `<%…%>` cross-reference templates → their label / nothing;
+ *   2. `[label](url)` → label (a label may wrap across a line);
+ *   3. the three tags whose ATTRIBUTE is what the page prints keep it as text — `<title right="Ritual 3">`
+ *      (the level badge), `<trait label="Fortune" />` (the pill), `<actions string="Two Actions" />`
+ *      (the glyph) — then every other tag `<…>` → a space (never a bare `<` in prose: the tag needs a
+ *      letter or `/` after it);
+ *   4. emphasis markers (`*`, and `_` at a word's edge) → removed;
+ *   5. HTML entities (`&amp;` `&nbsp;` `&#39;` `&#x2019;` …) → the character;
+ *   6. curly quotes → straight, every dash → `-`, `…` → `...`, NBSP and thin spaces → space,
+ *      zero-width characters → removed;
+ *   7. whitespace runs (including line breaks) → one space, trimmed, lower-cased.
+ *
+ * A match on the NORMALISED text is a match on the printed words: nothing above changes a letter,
+ * a digit or the order of words, so "Frequency once per day" matches `**Frequency**\nonce per day`,
+ * and our own paraphrase of a sentence still fails.
+ */
+const ENTITY = {
+  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', ndash: '-', mdash: '-', hellip: '...',
+  lsquo: "'", rsquo: "'", ldquo: '"', rdquo: '"', thinsp: ' ', ensp: ' ', emsp: ' ',
+};
+
+export function normalizeText(s) {
+  let t = String(s ?? '');
+  if (t.indexOf('{{') !== -1) t = t.replace(/\{\{[A-Za-z][A-Za-z0-9_]*\s+[^\s}]+\s+"([^"]*)"\s*\}\}/g, '$1');
+  if (t.indexOf('<%') !== -1) t = t.replace(/<%[^>]*?>/g, '');
+  t = t.replace(/!?\[([^\]]*)\]\((?:[^()]|\([^()]*\))*\)/g, '$1');
+  t = t.replace(/<(?:title|trait|actions)\b[^<>]*?\s(?:right|label|string)="([^"]*)"[^<>]*>/g, ' $1 ');
+  t = t.replace(/<\/?[A-Za-z][^<>]*>/g, ' ');
+  t = t.replace(/\*/g, '');
+  t = t.replace(/(^|[\s(["'])_+(?=\S)/g, '$1').replace(/(?<=\S)_+(?=$|[\s)\].,;:!?"'])/g, '');
+  t = t.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, e) => {
+    if (e[0] === '#') {
+      const cp = /^#x/i.test(e) ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
+      return Number.isFinite(cp) && cp > 0 && cp <= 0x10ffff ? String.fromCodePoint(cp) : m;
+    }
+    return ENTITY[e.toLowerCase()] ?? m;
+  });
+  t = t.replace(/[‘’‚‛′]/g, "'")
+    .replace(/[“”„‟″]/g, '"')
+    .replace(/[‐‑‒–—―−]/g, '-')
+    .replace(/…/g, '...')
+    .replace(/[​-‍﻿]/g, '')
+    .replace(/[  -   　]/g, ' ');
+  return t.replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
+/** The mirror's bookkeeping keys — never the page's words (the list is justified in the comment above). */
+export const BOOKKEEPING = new Set([
+  'id', 'url', 'legacy_id', 'remaster_id', 'legacy_name', 'remaster_name', 'item_parent_id', 'item_child_id',
+  'image', 'icon_image', 'release_date',
+  'category', 'primary_source_category', 'source_category', 'item_category', 'item_subcategory',
+  'archetype_category', 'trait_group', 'pfs', 'rarity', 'breadcrumbs', 'deity_category_order',
+  'heighten_group', 'damage_type', 'strongest_save', 'weakest_save',
+  // Filing and attribute fields the page never prints (refuter, 2026-10-07): the adventure-path or
+  // series name (action-1274 "Blood Lords" prints only "Pathfinder #182: Graveclaw"), a deity's
+  // symbol / sacred animal / colour (deity-374 "rolling boulder": 0 of 5 in the page), and a
+  // familiar's ability list the page omits (familiar-specific-12 "Divinatory Linguist"). Where a page
+  // DOES print one of these, the words are in its markdown too, so a true clause still passes.
+  'source_group', 'primary_source_group', 'religious_symbol', 'sacred_animal', 'sacred_color',
+  'familiar_ability', 'familiar_ability_markdown',
+]);
+const isBookkeeping = (key) => BOOKKEEPING.has(key) || key.endsWith('_id') || key.endsWith('_scale');
+
+/** Every string value of a parsed mirror doc, at any depth, skipping the bookkeeping keys at every level. */
+function docStrings(node, out) {
+  if (typeof node === 'string') out.push(node);
+  else if (Array.isArray(node)) for (const v of node) docStrings(v, out);
+  else if (node && typeof node === 'object') {
+    for (const [k, v] of Object.entries(node)) if (!isBookkeeping(k)) docStrings(v, out);
+  }
+  return out;
+}
+
+/*
+ * A clause is evidence only from 2 words AND 8 characters, both measured on the NORMALISED clause (the
+ * single spaces between words count — "by your" is 7). "a", "the", "off-guard" are substrings of
+ * nearly any page, so finding them proves nothing about the premise; the order of the checks is
+ * in-doc FIRST, then length, so a clause that is not on the page is reported as not on the page
+ * (the truer complaint — "/Feats.aspx?ID=4458" is not the page's words, not merely short).
+ */
+const MIN_WORDS = 2;
+const MIN_CHARS = 8;
+const tooShort = (needle) => needle.split(' ').length < MIN_WORDS || needle.length < MIN_CHARS;
+
+/**
+ * The normalised text of one mirror doc: each string field normalised on its own, joined by `\n`.
+ * `null` when the file is not readable JSON. Cached per audit run in `cache` (a Map keyed by file),
+ * because the same doc is cited by dozens of lines in a batch and parsing it once is what keeps the
+ * audit cheap. `undefined` for a file that does not exist (the caller keeps its own message for that).
+ */
+export function docText(file, cache) {
+  if (cache?.has(file)) return cache.get(file);
+  let text;
+  if (!existsSync(file)) text = undefined;
+  else {
+    try {
+      const doc = JSON.parse(readFileSync(file, 'utf8').replace(/^﻿/, ''));
+      text = docStrings(doc, []).map(normalizeText).filter(Boolean).join('\n');
+    } catch {
+      text = null;
+    }
+  }
+  cache?.set(file, text);
+  return text;
+}
+
+/**
+ * Is `clause` in the mirror doc `docId`, and long enough to be evidence? `{ ok: true }`, or
+ * `{ ok: false, why }` where `why` names the doc id and the clause. The category folder is the id
+ * minus its trailing `-<digits>` (so `weapon-group-15` lives under `weapon-group/`), exactly as
+ * before the clause check existed.
+ */
+export function clauseInDoc({ aonRoot = AON_ROOT_DEFAULT, docId, clause, cache } = {}) {
+  const dm = /^(.*)-(\d+)$/.exec(docId ?? '');
   const category = dm ? dm[1] : null;
-  const file = category ? path.join(ctx.aonRoot, category, `${docId}.json`) : null;
-  if (!file || !existsSync(file)) return { ok: false, why: `premise doc ${docId} has no mirror file (${file ?? 'unparseable id'})` };
+  const file = category ? path.join(aonRoot, category, `${docId}.json`) : null;
+  const text = file ? docText(file, cache) : undefined;
+  if (text === undefined) return { ok: false, why: `premise doc ${docId} has no mirror file (${file ?? 'unparseable id'})` };
+  if (text === null) return { ok: false, why: `premise doc ${docId} has a mirror file that is not readable JSON (${file})` };
+  const needle = normalizeText(clause);
+  if (!needle) return { ok: false, why: `premise cites ${docId} with an empty clause — a premise with no clause cites nothing` };
+  if (!text.includes(needle)) {
+    return { ok: false, why: `premise doc ${docId} does not contain the clause "${clause}" — quote the page's own words, not ours` };
+  }
+  if (tooShort(needle)) {
+    return { ok: false, why: `premise cites ${docId} with the clause "${clause}" — too short to be evidence (a clause needs at least ${MIN_WORDS} words and ${MIN_CHARS} characters)` };
+  }
   return { ok: true };
 }
 
@@ -345,7 +535,7 @@ export function auditBatch({ root = REPO_ROOT, batch, aonRoot = AON_ROOT_DEFAULT
     (read.confirmed ?? []).filter((f) => (f.verdict ?? 'CONFIRMED') === 'CONFIRMED').map((f) => f.id),
   );
   const known = new Set([...(read.confirmed ?? []), ...(read.refuted ?? []), ...(read.askOwner ?? [])].map((f) => f.id));
-  const ctx = { batch: b, confirmed, known, aonRoot };
+  const ctx = { batch: b, confirmed, known, aonRoot, docCache: new Map() };   // one parse per cited doc per run
 
   const snapDir = path.join(root, 'work', `.b${b}-testbase`);
   const testFiles = auditTests({ root, b, base, ctx, snapDir, add });

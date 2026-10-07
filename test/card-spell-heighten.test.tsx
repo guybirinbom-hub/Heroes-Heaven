@@ -247,7 +247,8 @@ describe('ghostly-shift: the ordinary Heightened group holds no Amp entry', () =
   it('TODAY the Amp text reaches no part of the popup (the string lane does not carry it; step 17 adds it from the page)', () => {
     // Measured 2026-10-02: 0 of the shipped spell description strings contain the word "Amp"; the Amp
     // and "Amp Heightened (+2)" paragraphs exist only in the page tree. When step 17 brings them in
-    // as their own group, this assertion flips with a `// batch card premise: spell-2563 "Amp"` line.
+    // as their own group, this assertion flips with a premise line citing spell-2563's own "Amp" paragraph
+    // (the flip audit needs the page's words, at least two of them: "Your insubstantiality is complete").
     const { popup } = open(<SpellDetail spell={spell('ghostly-shift')} maxRank={5} onClose={() => undefined} />);
     expect(txt(popup)).not.toMatch(/\bAmp\b/);
     expect(txt(body(popup))).toBe('Your body becomes insubstantial as you partially phase out. You gain resistance 2 to all damage (except force).');
