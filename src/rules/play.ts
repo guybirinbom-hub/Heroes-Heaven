@@ -2216,24 +2216,86 @@ export function togglePin(play: PlayState, key: string): PlayState {
   return { ...play, pinned: pinned.includes(key) ? pinned.filter((k) => k !== key) : [...pinned, key] };
 }
 
-/** Stable identity for a pinned description: its source-map name + lowercased title. The map name
+/** The LEGACY identity of a pinned description: its source-map name + lowercased title. The map name
  *  disambiguates cross-map name collisions (a feat + a same-named spell). Entries pinned before the
- *  `key` discriminator existed have no key and fall back to title-only matching. */
+ *  `key` discriminator existed have no key and fall back to title-only matching. Card step 19: this is
+ *  the identity of a pin saved before step 19, and the one samePin falls back to; a pin that knows its
+ *  record is identified by pinId. */
 export function descId(n: { key?: string; title: string }): string {
   return `${n.key ?? ''}:${n.title.toLowerCase()}`;
 }
 
-/** Pin/unpin a description popup (starred from a description page), keyed by source-map + title. */
+/**
+ * Card step 19 (docs/card-design.md section 7 "Old pins", section 2 rule 2): the identity of a pin —
+ * `bucket:id` (`key:slug`) when the node knows its record, since a display name carries the pick
+ * ("Caustic Nectar (Acid)") and can be another record's name ("Weapon Expertise" names four class
+ * features); otherwise the legacy `key:title` (descId). Two pins are matched by samePin, never by
+ * comparing these strings, because a new pin must also match the legacy pin of its own record.
+ */
+export function pinId(n: { key?: string; title: string; slug?: string }): string {
+  return n.slug ? `${n.key ?? ''}:${n.slug}` : descId(n);
+}
+
+/**
+ * Do two pin nodes name the same record? By {bucket, id} when BOTH know their id; otherwise by the legacy
+ * `key:title`, so a pin saved before step 19 (no id) is found — and unpinned — by the new star of the same
+ * record, and a new pin by a node that knows only its title. One pin per record. The mode is never compared.
+ */
+export function samePin(a: { key?: string; title: string; slug?: string }, b: { key?: string; title: string; slug?: string }): boolean {
+  if (a.slug && b.slug) return (a.key ?? '') === (b.key ?? '') && a.slug === b.slug;
+  return descId(a) === descId(b);
+}
+
+/** The ours kinds a pin keeps (card step 19): the player's pick, another record's marker, the record's note. */
+const PIN_OURS_KINDS = new Set(['choice', 'mark', 'note']);
+
+/**
+ * The object a pin STORES for a node. Every copy site that builds a pin from a node goes through this, so a
+ * field added to the pin is never dropped by a field-by-field copy (the bug class card step 19 closes).
+ * Additive only: the pre-step-19 fields keep their shape (synced data), and slug / mode / ours are present
+ * only when the node carries them.
+ */
+export function pinOf(node: PinnedDesc): PinnedDesc {
+  const ours = (node.ours ?? []).filter((l) => PIN_OURS_KINDS.has(l.kind)).map((l) => ({ ...l, ...(l.from ? { from: { ...l.from } } : {}) }));
+  return {
+    title: node.title,
+    description: node.description,
+    descRefs: node.descRefs,
+    key: node.key,
+    ...(node.slug ? { slug: node.slug } : {}),
+    ...(node.mode ? { mode: node.mode } : {}),
+    ...(ours.length ? { ours } : {}),
+  };
+}
+
+/** Pin/unpin a description popup (starred from a description page), keyed by record (samePin). */
 export function togglePinnedDesc(play: PlayState, node: PinnedDesc): PlayState {
   const list = play.pinnedDescs ?? [];
-  const id = descId(node);
-  const exists = list.some((d) => descId(d) === id);
+  const exists = list.some((d) => samePin(d, node));
   return {
     ...play,
-    pinnedDescs: exists
-      ? list.filter((d) => descId(d) !== id)
-      : [...list, { title: node.title, description: node.description, descRefs: node.descRefs, key: node.key }],
+    pinnedDescs: exists ? list.filter((d) => !samePin(d, node)) : [...list, pinOf(node)],
   };
+}
+
+/**
+ * The node a STORED pin reopens as — computed at READ time, never written back (CLAUDE.md never-overwrite:
+ * a load is not an edit). A pin that knows its id is returned as stored. A pin saved before card step 19
+ * (no id) is re-resolved by key + title: when the title names exactly one record of that bucket (hidden
+ * `aon-` duplicates do not count while a canonical record holds the name), the returned COPY carries that
+ * record's id, so it opens the record's own page. Otherwise — no key, a bucket the content does not have,
+ * no record or several of that name — the copy carries `slug: ''`, so the popup shows the stored snapshot
+ * (its description) instead of whichever page the slug of its title happens to name. samePin treats `''`
+ * as "no id", so the star still matches the stored pin by its legacy `key:title`.
+ */
+export function pinForRead(pin: PinnedDesc, content: ContentDatabase | null | undefined): PinnedDesc {
+  if (pin.slug) return pin;
+  const map = pin.key && content ? (content as unknown as Record<string, Record<string, { name?: string } | undefined> | undefined>)[pin.key] : undefined;
+  const title = pin.title.toLowerCase();
+  const hits = map && typeof map === 'object' ? Object.entries(map).filter(([, r]) => typeof r?.name === 'string' && r.name.toLowerCase() === title) : [];
+  const canon = hits.filter(([id]) => !content?.duplicateIds?.has(id));
+  const pool = canon.length ? canon : hits;
+  return { ...pin, slug: pool.length === 1 ? pool[0][0] : '' };
 }
 
 /**

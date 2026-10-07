@@ -20,17 +20,6 @@
       "key": "featDetail|classFeatures:expert-spellcaster@wizard",
       "why": "a wizard's Expert Spellcaster row shows the shared record's page, which is the Psychic's",
       "verdict": { "s2": "CLASS_MISMATCH" }
-    },
-    {
-      "key": "pin|feats:zombie-horde-impossible-magic",
-      "why": "stored pin is key:title until step 19 (play.ts togglePinnedDesc, Builder.tsx pin toggle) — an Impossible Magic Zombie Horde pinned from the feat popup and reopened from the Main tab's Pinned list opens the Clockwork Reanimator feat of the same name: the store keeps {title, description, descRefs, key} and drops the slug the star's node carries, so the reopened pin reads feats + the slug of its title (refuter, card step 7a round 1; a pre-existing S5 row, kept as a guard)",
-      "verdict": { "identity": true }
-    },
-    {
-      "key": "pin|feats:caustic-nectar",
-      "pick": "Acid",
-      "why": "stored pin is key:title until step 19 (play.ts togglePinnedDesc, Builder.tsx pin toggle) — T4: \"Caustic Nectar (Acid)\" pinned from the Feats tab and reopened from the Pinned list reads feats + the slug of its title, which carries the pick, and finds no page; the star's node already names caustic-nectar (card step 7a, test/card-identity)",
-      "verdict": { "identity": true }
     }
   ]
 }

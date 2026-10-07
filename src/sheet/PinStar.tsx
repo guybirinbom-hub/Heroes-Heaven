@@ -1,12 +1,11 @@
-import { usePinDesc } from './PinContext';
-import type { DescNode } from './descref';
+import { usePinDesc, type PinNode } from './PinContext';
 
 /**
  * Favorite star for a description detail modal — pins/unpins it to the Main-tab Pinned section.
  * Uses the PinContext, so it renders nothing outside play mode (e.g. the builder), matching the
  * star already shown by the recursive DescriptionModal. Drop it into any detail-modal header.
  */
-export function PinStar({ node }: { node: DescNode }) {
+export function PinStar({ node }: { node: PinNode }) {
   const pin = usePinDesc();
   if (!pin) return null;
   const pinned = pin.has(node);

@@ -1,5 +1,12 @@
 import { createContext, useContext } from 'react';
+import type { PinnedDesc } from '../rules/types';
 import type { DescNode } from './descref';
+
+/**
+ * The node a star hands to the pin: a description node, plus (card step 19) the mode it was pinned from
+ * and the popup's ours lines — both stored on the pin by play.ts pinOf; neither is part of its identity.
+ */
+export type PinNode = DescNode & Pick<PinnedDesc, 'mode' | 'ours'>;
 
 /**
  * Lets any DescriptionModal — wherever it is opened from — offer a "favorite" star that pins the
@@ -9,10 +16,10 @@ import type { DescNode } from './descref';
  * where no star is shown.
  */
 export interface PinDescApi {
-  /** Is this description currently pinned? (matched by title) */
-  has: (node: DescNode) => boolean;
+  /** Is this description currently pinned? (matched by record — play.ts samePin) */
+  has: (node: PinNode) => boolean;
   /** Pin/unpin this description. */
-  toggle: (node: DescNode) => void;
+  toggle: (node: PinNode) => void;
   /** Where the star pins to, for its tooltip — the character's "Pinned" section unless said otherwise. */
   where?: string;
 }

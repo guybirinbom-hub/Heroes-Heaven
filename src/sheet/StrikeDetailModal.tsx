@@ -45,7 +45,8 @@ export function StrikeDetailModal({
   // card step 7a (docs/card-design.md section 2 rule 2): the pin opens the WEAPON's own page by its id
   // (the twin's for a hidden cursed weapon) — the strike's name can carry runes or be renamed, so its
   // slug finds another page or none. A strike with no item (Fist, a blast) keeps the title lookup.
-  const node = { title: strike.name, description, descRefs, key: 'items', ...(item ? { slug: shownItemId(item, content) } : {}) };
+  // Card step 19: stored with the pin (play.ts pinOf) — the mode it was pinned from, never its identity.
+  const node = { title: strike.name, description, descRefs, key: 'items', mode: 'mine' as const, ...(item ? { slug: shownItemId(item, content) } : {}) };
   // Crit specialization — shown in Strikes ONLY when the character actually has it (matching the row).
   const critText = critSpec(strike.group);
   const showsCrit = !!critText && strikeShowsCritSpec(strike, critSpecSources(character, content));

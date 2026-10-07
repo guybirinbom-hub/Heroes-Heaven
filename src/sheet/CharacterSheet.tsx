@@ -5,7 +5,7 @@ import {
   setXp,
   setTempSpeed,
   togglePinnedDesc,
-  descId,
+  samePin,
   setItemCounter,
   updateInventoryItem,
   setAlchemyItem,
@@ -498,10 +498,9 @@ export function CharacterSheet({
   const pinApi: PinDescApi | null = useMemo(() => {
     if (!onPlay) return null;
     return {
-      has: (node) => {
-        const id = descId(node);
-        return (character.pinnedDescs ?? []).some((d) => descId(d) === id);
-      },
+      // Card step 19: matched by record (play.ts samePin — {bucket, id}, or the legacy key:title of a pin
+      // saved before step 19); the toggle stores the node through play.ts pinOf (slug / mode / ours kept).
+      has: (node) => (character.pinnedDescs ?? []).some((d) => samePin(d, node)),
       toggle: (node) => onPlay((p) => togglePinnedDesc(p, node)),
     };
   }, [onPlay, character.pinnedDescs]);

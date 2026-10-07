@@ -425,7 +425,7 @@ export function ItemDetail({
         <div className="picker-head">
           <span className="sd-head-name">{item.name}</span>
           <span className="sd-head-actions">
-            <PinStar node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items', slug: pageId }} />
+            <PinStar node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items', slug: pageId, mode: 'mine' }} />
             {editable && (
               <i className="ti ti-pencil" style={{ cursor: 'pointer' }} title="Edit item" onClick={() => onEdit!(item, inv)} aria-label="Edit item" />
             )}

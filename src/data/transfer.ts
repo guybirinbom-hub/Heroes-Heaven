@@ -1545,8 +1545,10 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
           const id = src.idx.get(norm(nm));
           const entry = id ? src.map[id] : undefined;
           if (!entry) continue;
-          if (!pins.some((p) => p.title === entry.name && p.key === src.key)) {
-            pins.push({ title: entry.name, description: entry.description ?? '', ...(entry.descRefs ? { descRefs: entry.descRefs } : {}), key: src.key });
+          // Card step 19 (docs/card-design.md section 7): the pin keeps the record it resolved to — {bucket
+          // key, id slug} — so it reopens that record, not whichever one its name slugs to.
+          if (!pins.some((p) => p.key === src.key && (p.slug === id || p.title === entry.name))) {
+            pins.push({ title: entry.name, description: entry.description ?? '', ...(entry.descRefs ? { descRefs: entry.descRefs } : {}), key: src.key, slug: id });
           }
           break;
         }

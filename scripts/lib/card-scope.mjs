@@ -757,7 +757,45 @@ export const SURFACES = ['featDetail', 'itemDetail', 'spellDetail', 'actionDetai
 /** Section 6's 'gm' surface (card step 6): the ledger judges it (surfaceRows), card-parity does not sample it. */
 export const GM_SURFACE = 'gm';
 
-const isActionCost = (c) => !!c && (c.type === 'actions' || c.type === 'reaction' || c.type === 'free' || c.type === 'variable' || c.type === 'duration');
+/**
+ * Card step 19 — the pin model, mirroring src/rules/play.ts (pinOf / samePin / pinForRead) so the ledger
+ * reads a stored pin exactly as MainTab's PinnedDescCard does.
+ *
+ * pinStarNode: the stored pin of the record `b:id` as its star hands it over and pinOf keeps it — the
+ * record id always (FeatDetail featPinNode: trustRefOf's id, a heritage keyed 'heritages'; ItemDetail:
+ * shownItemId, the item's own id outside a hidden curse; SpellsTab: spell.id), mode 'mine' from the sheet's
+ * FeatDetail / ItemDetail stars, no mode from the Spells tab's.
+ */
+export function pinStarNode(b, id, rec) {
+  return { title: rec?.name ?? '', key: b, slug: id, ...(b === 'spells' ? {} : { mode: 'mine' }) };
+}
+
+/** play.ts descId: the LEGACY identity `key:title` (lowercased). */
+const pinLegacyId = (n) => `${n.key ?? ''}:${String(n.title ?? '').toLowerCase()}`;
+
+/** play.ts samePin: by {bucket, id} when BOTH know their id, otherwise by the legacy key:title. */
+export function samePinModel(a, bb) {
+  if (a.slug && bb.slug) return (a.key ?? '') === (bb.key ?? '') && a.slug === bb.slug;
+  return pinLegacyId(a) === pinLegacyId(bb);
+}
+
+/**
+ * play.ts pinForRead, as a read: a pin that stores its id reads {bucket: key, slug}; a pin saved before
+ * step 19 (no id) is re-resolved by key + title — exactly one record of that name in the bucket (hidden
+ * `aon-` duplicates do not count while a canonical record holds it) → that record; otherwise slug '' (no
+ * tree: the popup shows the stored snapshot, never the page the title's slug happens to name).
+ */
+export function pinReadOf(pin, db) {
+  if (pin.slug) return { bucket: pin.key ?? '', slug: pin.slug };
+  const map = pin.key && db ? db[pin.key] : undefined;
+  const title = String(pin.title ?? '').toLowerCase();
+  const hits = map && typeof map === 'object' ? Object.entries(map).filter(([, r]) => typeof r?.name === 'string' && r.name.toLowerCase() === title) : [];
+  const canon = hits.filter(([hid]) => !db?.duplicateIds?.has?.(hid));
+  const pool = canon.length ? canon : hits;
+  return { bucket: pin.key ?? '', slug: pool.length === 1 ? pool[0][0] : '' };
+}
+
+const isActionCost = (c) => !!c &&(c.type === 'actions' || c.type === 'reaction' || c.type === 'free' || c.type === 'variable' || c.type === 'duration');
 const actionId = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 const SITUATIONAL_COLLECTIONS = ['feats', 'items', 'heritages', 'backgrounds', 'ancestries', 'classFeatures'];
 
@@ -936,18 +974,24 @@ export function surfaceRows(deps) {
   for (const r of rows.filter((x) => x.surface === 'browse')) rows.push({ ...r, surface: GM_SURFACE });
 
   // A PinStar pressed on FeatDetail / ItemDetail / SpellDetail, and the pin REOPENED from the Main tab's
-  // Pinned list (MainTab PinnedDescRow → DescriptionModal on the STORED node). togglePinnedDesc (play.ts)
-  // stores {title, description, descRefs, key} and drops any slug, so the reopened pin reads
-  // key + astSlug(title) — whatever the star's node carried. Card step 7a changed only the KEY that
-  // reaches storage: a heritage row is keyed 'heritages' (it was 'classFeatures', and found nothing).
-  // The slug the node now carries ({key: bucket, slug: id}) reaches the Pinned list only once card
-  // step 19 stores it; until then a pick in the title or a shared name still reopens by name, and this
-  // row keeps counting it (refuter, card step 7a round 1: modelling the node instead dropped 170 rows
-  // that the player still sees open the wrong page or none).
+  // Pinned list (MainTab PinnedDescRow → PinnedDescCard on the STORED pin). Card step 19: the store
+  // (play.ts togglePinnedDesc → pinOf) keeps the star node's record id and mode, so the stored pin is
+  // modelled from the node each star hands over (pinStarNode) and read back the way PinnedDescCard reads
+  // it (pinReadOf, play.ts pinForRead): by its {key, slug} — bucket + id — whatever its title says. A pin
+  // made from the sheet (FeatDetail / ItemDetail stars: mode 'mine') reopens as the 'mine' card (section
+  // 6: "A pin made from the sheet reopens as mine"): printed set empty, item lists cut, as FeatDetail's
+  // card; the Spells tab's star stores no mode, so a spell pin reopens as the browse card it always did.
+  // Before step 19 the store dropped the slug and the reopened pin read key + astSlug(title) (107
+  // S5-IDENTITY rows on 2026-10-07: a pick in the title, a shared name).
   for (const b of ['feats', 'classFeatures', 'heritages', 'items', 'spells']) {
     for (const [id, rec] of Object.entries(db[b] ?? {})) {
       if (!has(b, id)) continue;
-      rows.push({ surface: 'pin', bucket: b, id, own: { bucket: b, id }, read: { bucket: b, slug: astSlug(rec.name) }, hideMeta: false, itemLists: true, md: rec.description ?? '', printed: [], mode: 'browse' });
+      const stored = pinStarNode(b, id, rec);
+      const read = pinReadOf(stored, db);
+      const drawn = stored.mode === 'mine'
+        ? { hideMeta: false, itemLists: false, card: { printed: [] }, mode: 'mine' }
+        : { hideMeta: false, itemLists: true, mode: 'browse' };
+      rows.push({ surface: 'pin', bucket: b, id, own: { bucket: b, id }, read, md: rec.description ?? '', printed: [], ...drawn });
     }
   }
 

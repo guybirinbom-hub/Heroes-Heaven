@@ -211,6 +211,29 @@ export interface PinnedDesc {
    *  identity, so two same-named entries from different maps (a feat + a spell) don't collide.
    *  Absent on entries pinned before this discriminator existed (they fall back to title-only). */
   key?: string;
+  /**
+   * Card step 19 (docs/card-design.md section 7 "Old pins", section 2 rule 2): the record's id inside
+   * `key` — the pin's identity is {bucket: key, id: slug}, never its display name. Same field name as the
+   * sheet's DescNode.slug, so the stored pin reopens the record it was pinned FROM. Absent on pins saved
+   * before step 19; those are re-resolved at read time only (play.ts pinForRead) and never written back.
+   */
+  slug?: string;
+  /** Card step 19: the card mode the record was pinned from. Stored, NOT part of the identity. */
+  mode?: 'browse' | 'mine' | 'gm';
+  /**
+   * Card step 19: the popup's ours lines of kind choice / mark / note (src/sheet/cardModel.ts OursLine),
+   * so the reopened popup draws its own box. Structural here so the rules layer imports nothing from the
+   * sheet.
+   */
+  ours?: PinnedOursLine[];
+}
+
+/** One stored ours line of a pin (structurally src/sheet/cardModel.ts OursLine). */
+export interface PinnedOursLine {
+  kind: string;
+  from?: { bucket: string; id: string; name: string };
+  label?: string;
+  text: string;
 }
 
 interface ContentBase {

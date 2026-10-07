@@ -83,7 +83,7 @@ import { PinContext, type PinDescApi } from '../sheet/PinContext';
 import { WindowControls } from '../sheet/WindowControls';
 import { useUndoableState } from '../useUndoableState';
 import { claimUndo } from '../undoClaim';
-import { descId } from '../rules/play';
+import { pinOf, samePin } from '../rules/play';
 
 /**
  * A narrowed option as `PopupSelect` wants it.
@@ -326,12 +326,13 @@ export function Builder({
   const pinApi: PinDescApi = useMemo(() => {
     const list = build.pinnedDescs ?? [];
     return {
-      has: (node) => list.some((d) => descId(d) === descId(node)),
+      // Card step 19: the same identity and stored shape as the sheet's star (play.ts samePin / pinOf), so a
+      // pin made here keeps its record id, mode and ours lines all the way to the Pinned list.
+      has: (node) => list.some((d) => samePin(d, node)),
       toggle: (node) => {
-        const id = descId(node);
-        const next = list.some((d) => descId(d) === id)
-          ? list.filter((d) => descId(d) !== id)
-          : [...list, { title: node.title, description: node.description, descRefs: node.descRefs, key: node.key }];
+        const next = list.some((d) => samePin(d, node))
+          ? list.filter((d) => !samePin(d, node))
+          : [...list, pinOf(node)];
         actions.patch({ pinnedDescs: next });
       },
     };

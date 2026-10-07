@@ -17,7 +17,7 @@ import {
   strikesBlockedBy,
   type Strike,
 } from '../rules/derive';
-import { togglePin, togglePinnedDesc, toggleTactic, toggleEtchedRune, setActiveStance, toggleMode, descId, type PlayUpdater } from '../rules/play';
+import { togglePin, togglePinnedDesc, toggleTactic, toggleEtchedRune, setActiveStance, toggleMode, pinId, pinForRead, type PlayUpdater } from '../rules/play';
 import { resourcesForCharacter } from '../rules/classResources';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { featUse, spendFeatUse, refundFeatUse } from '../rules/featUses';
@@ -31,12 +31,11 @@ import { SKILL_ACTIONS, rankAtLeast } from '../rules/skillActions';
 import { RecordCard } from './RecordCard';
 import { cardOn } from './cardSurfaces';
 import { scopeOfCharacter } from './cardScope';
-import { useAstNode } from './useAst';
-import type { OursLine } from './cardModel';
+import { astSlug, useAstNode } from './useAst';
+import { OURS_KINDS, type OursLine } from './cardModel';
 import type { AstNode } from './astStore';
 import { stanceRequirementIssue, modeGateIds } from '../rules/derive';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
-import { DescriptionModal } from './DescriptionModal';
 import { DescBody } from './DescBody';
 import { toPlainText } from './RichText';
 import { StrikeDetailModal } from './StrikeDetailModal';
@@ -44,7 +43,6 @@ import { CritSpecText } from './CritSpecText';
 import { InfoTerm } from './InfoTerm';
 import { useEscapeClose } from './useEscapeClose';
 import { useCustomization } from '../data/customization';
-import type { DescNode } from './descref';
 
 const capWord = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -91,6 +89,33 @@ const PINNED_SOURCE_LABEL: Record<string, string> = {
   deities: 'deity',
   archetype: 'archetype',
 };
+
+/**
+ * Card step 19 (docs/card-design.md section 7 "Old pins", section 2 rule 2): a pin reopened from the
+ * Pinned list, by the pin's record. A pin made from the sheet (stored mode 'mine': FeatDetail, ItemDetail,
+ * StrikeDetailModal) reopens as the 'mine' card at the character's current level — section 6: "A pin made
+ * from the sheet reopens as mine at the character's current level" — scoped and drawn as FeatDetail's and
+ * the action card are (scopeOfCharacter, printed set empty). Any other pin (search, the Spells tab, a pin
+ * saved before step 19) opens the browse card it opened before (what DescriptionModal rendered). Either:
+ *  - a pin that stores its id (play.ts pinOf) opens that record's own page, whatever its title says
+ *    ("Caustic Nectar (Acid)" is caustic-nectar);
+ *  - a pin saved before step 19 is re-resolved HERE, at read time, by key + title (play.ts pinForRead):
+ *    one record of that name → its page; otherwise the stored snapshot. The resolved copy is display
+ *    only — the stored pin is never rewritten (never-overwrite; a load is not an edit).
+ * The pin's stored ours lines (choice / mark / note) go in the card's box when the card draws the PAGE.
+ * On the no-page lane the stored description already carries those words (FeatDetail pinDescriptionOf,
+ * kept for older pins and older devices), so the box is left off there rather than said twice.
+ */
+export function PinnedDescCard({ pin, content, character, onClose }: { pin: PinnedDesc; content: ContentDatabase; character?: Character | null; onClose: () => void }) {
+  const node = useMemo(() => pinForRead(pin, content), [pin, content]);
+  // The same tree lookup RecordCard makes for this node (cached), to know whether the page is drawn.
+  const { node: page } = useAstNode(node.key, node.slug ?? astSlug(node.title));
+  const ours = (pin.ours ?? []).filter((l): l is OursLine => (OURS_KINDS as readonly string[]).includes(l.kind));
+  const box = page && ours.length ? ours : undefined;
+  if (pin.mode === 'mine')
+    return <RecordCard node={node} mode="mine" chrome="popup" scope={scopeOfCharacter(character)} printed={[]} ours={box} onExit={onClose} />;
+  return <RecordCard node={node} mode="browse" chrome="popup" ours={box} onExit={onClose} />;
+}
 
 /** Map an action cost to its filter-chip id, or null if it can't be filtered (variable/duration). */
 function costId(c: ActionCost): string | null {
@@ -510,8 +535,9 @@ export function MainTab({
   const [filters, setFilters] = useState<Set<string>>(new Set());
   const [filtersOpen, setFiltersOpen] = useState(false); // mobile: filter row toggles open over the results
   const [query, setQuery] = useState('');
-  // A pinned description re-opened from the Pinned section.
-  const [openDesc, setOpenDesc] = useState<DescNode | null>(null);
+  // A pinned description re-opened from the Pinned section: the STORED pin, as stored (card step 19 —
+  // PinnedDescCard resolves it for display only; nothing here writes it back).
+  const [openDesc, setOpenDesc] = useState<PinnedDesc | null>(null);
   // The strike whose detail popup is open (clicked from a strike row).
   const [strikeDetail, setStrikeDetail] = useState<Strike | null>(null);
   const { compactActions } = useCustomization();
@@ -1301,7 +1327,7 @@ export function MainTab({
             <ActionRow key={a.name} a={a} full />
           ))}
           {pinnedDescs.map((n) => (
-            <PinnedDescRow key={descId(n)} node={n} />
+            <PinnedDescRow key={pinId(n)} node={n} />
           ))}
         </section>
       )}
@@ -1600,7 +1626,7 @@ export function MainTab({
         )}
       </section>
 
-      {openDesc && <DescriptionModal root={openDesc} onClose={() => setOpenDesc(null)} />}
+      {openDesc && <PinnedDescCard pin={openDesc} content={content} character={character} onClose={() => setOpenDesc(null)} />}
       {detailAction && (
         <ActionDetailModal
           detail={detailAction}

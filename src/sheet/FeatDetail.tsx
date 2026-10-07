@@ -165,10 +165,9 @@ export function featOursSplit(
  * or landed on the wrong page; a heritage row was keyed 'classFeatures' and never found its page at
  * all. A row with no record id of its own keeps the key and the title lookup it always had.
  *
- * ⚠ What the player reopens today is the STORED pin, and togglePinnedDesc (play.ts) stores
- * {title, description, descRefs, key} — the slug is dropped until card step 19 stores it. So of this
- * node only the KEY reaches the Pinned list now: a heritage pin (key 'heritages') reopens the heritages
- * page by the slug of its name; a pick in the title or a shared name still reopens by name until step 19.
+ * Card step 19: the store (play.ts togglePinnedDesc → pinOf) keeps the slug, the mode ('mine': the
+ * character's own record) and the choice / mark / note ours lines, so the Pinned list reopens THIS record
+ * (MainTab PinnedDescCard) and draws its box on the page lane.
  *
  * The title is left exactly as shown, so a pin saved earlier (identity `key:title`, play.ts descId) is
  * still found by the star of the same feat or feature; only a heritage row's key changes, to the
@@ -182,34 +181,37 @@ export function featPinNode(entry: FeatEntry): FeatPinNode {
     descRefs: entry.descRefs,
     key: ref.bucket ?? featLegacyPinKey(entry),
     ...(ref.id ? { slug: ref.id } : {}),
+    mode: 'mine',
     // Card step 8 (section 4): the pin carries the same ours lines the popup draws, as data beside the
-    // node. ⚠ What reaches the reopened pin is decided by the store (play.ts togglePinnedDesc keeps
-    // title / description / descRefs / key) and by the popup that opens it (DescriptionModal hands
-    // RecordCard no `ours`); both are outside this step — see card step 19, and pinDescriptionOf below.
+    // node; card step 19 stores the choice / mark / note ones (play.ts pinOf) and MainTab's PinnedDescCard
+    // draws them in the reopened card's box. The description keeps pinDescriptionOf's words for the
+    // no-page lane and for a device still on an older version (additive synced shape).
     ...(entry.ours?.length ? { ours: entry.ours } : {}),
   };
 }
 
 /** DescBody's rich-HTML test (DescBody.tsx:15 HTML_TAG, not exported): a description it would draw as
- *  HTML rather than markdown. Kept in step with that one so the bridge below never switches a lane. */
+ *  HTML rather than markdown. Kept in step with that one so pinDescriptionOf never switches a lane. */
 const PIN_HTML_TAG = /<(a|strong|em|b|i|u|s|h[1-6]|ul|ol|li|blockquote|span|br|div|p|hr|mark)\b/i;
 const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 /**
- * The STORED pin's description — a BRIDGE until card step 19 stores `ours` on the pin.
+ * The STORED pin's description: the row's text plus the box's words.
  *
  * Before card step 8 the pin's description was the row's description with the pick, the markers and the
- * note appended, and that is all togglePinnedDesc (play.ts:2235) keeps. A reopened pin whose record has
- * no page draws that description, so dropping the appended words lost them from the pin (dedication-to-
- * the-five's note, any no-page pick or marker). So the pin — and only the pin — still carries the box's
- * words after the record's text, as before; the popup itself never does (its box is `data-ours`).
+ * note appended. Card step 19 stores the choice / mark / note lines on the pin as `ours` (play.ts pinOf),
+ * and MainTab's PinnedDescCard draws them in the reopened card's box — but only over a PAGE. A reopened
+ * pin whose record has no page draws this description (the box is left off there, so its words are said
+ * once), and a device still on an older version reads only the description (additive synced shape). So
+ * the pin — and only the pin — still carries the box's words after the record's text; the popup itself
+ * never does (its box is `data-ours`).
  *
  * Unlike the old concatenation it never changes DescBody's lane: on a markdown description each line is
  * a markdown paragraph with `<` escaped, so a kineticist gate's table stays a table (T3); only an HTML
  * description gets `<p>` lines. Left out: an Overrides edit (on the no-page lane the description already
  * IS the edited text) and a homebrew use line whose label the text already prints.
  *
- * Step 19 drops this: the stored pin keeps `ours`, and the reopened card draws the box.
+ * Card step 19 kept this (it did not drop it): the no-page lane and older devices still read it.
  */
 export function pinDescriptionOf(entry: FeatEntry): string {
   const lines = (entry.ours ?? []).filter(
@@ -222,7 +224,7 @@ export function pinDescriptionOf(entry: FeatEntry): string {
 }
 
 /** The node FeatDetail's star hands to the pin: a description node plus the row's ours lines. */
-export type FeatPinNode = DescNode & { ours?: OursLine[] };
+export type FeatPinNode = DescNode & { ours?: OursLine[]; mode?: 'browse' | 'mine' | 'gm' };
 
 /** The key this popup's pin carried before card step 7a (a heritage row was keyed 'classFeatures'). */
 function featLegacyPinKey(entry: FeatEntry): string {
@@ -231,11 +233,13 @@ function featLegacyPinKey(entry: FeatEntry): string {
 
 /**
  * The node the star SHOWS and TOGGLES. Never-overwrite (CLAUDE.md): a pin saved before card step 7a
- * carries the key the row had then, and pin identity is `key:title` (play.ts descId), so a heritage
- * pinned earlier ({key:'classFeatures', title}) would not match the new 'heritages' node: the star would
- * read "not pinned", the old pin could not be removed from here, and pressing it would pin it twice.
- * When the character holds that old pin (and not a new one), the star shows it as pinned and pressing
- * it removes THAT pin; no stored pin is rewritten. Matching stored pins by id is card step 19.
+ * carries the key the row had then and no record id, and such a pin is matched by its legacy `key:title`
+ * (play.ts samePin falls back to descId when either side lacks an id), so a heritage pinned earlier
+ * ({key:'classFeatures', title}) would not match the new 'heritages' node: the star would read "not
+ * pinned", the old pin could not be removed from here, and pressing it would pin it twice. When the
+ * character holds that old pin (and not a new one), the star shows it as pinned and pressing it removes
+ * THAT pin; no stored pin is rewritten. A pin that stores its id is matched by {bucket, id} (card step 19,
+ * play.ts samePin), whatever its title says.
  */
 export function featStarNode(entry: FeatEntry, pin: PinDescApi | null): FeatPinNode {
   const node = featPinNode(entry);
@@ -306,7 +310,7 @@ export function featPickSuffix(entry: FeatEntry, content: unknown): string | und
 /**
  * The pin the card's built-in star works on. RecordCard's star toggles the node it opened (the stack's
  * first node), which carries the row's own text so the no-page lane draws it; the pin must stay the one
- * the legacy star stored — featStarNode: the ours lines, the stored-pin bridge description, and an old
+ * the legacy star stored — featStarNode: the ours lines, the stored pin's description (pinDescriptionOf), the mode, and an old
  * heritage pin found under its old key (never-overwrite). So, for that first node only, `has` and
  * `toggle` see the star's node; a page opened from a link inside the card pins as it always did.
  */

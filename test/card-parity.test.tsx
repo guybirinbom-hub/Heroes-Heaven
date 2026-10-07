@@ -11,7 +11,7 @@ import { loadAstIndex, loadBucketAst, type AstNode } from '../src/sheet/astStore
 import { FeatDetail, featStatRows, type FeatEntry } from '../src/sheet/FeatDetail';
 import { ItemDetail, itemStatRows } from '../src/sheet/ItemDetail';
 import { SpellDetail, spellStatRows } from '../src/sheet/SpellsTab';
-import { MainTab } from '../src/sheet/MainTab';
+import { MainTab, PinnedDescCard } from '../src/sheet/MainTab';
 import { StatDetailModal } from '../src/sheet/StatDetailModal';
 import { DescriptionModal } from '../src/sheet/DescriptionModal';
 import { RecordCard } from '../src/sheet/RecordCard';
@@ -26,10 +26,9 @@ import { splitHeightening } from '../src/rules/heightening';
 import { trustUnencoded } from '../src/data/trustGate';
 import { foldsOf } from '../src/sheet/cardScope';
 import { cardOn } from '../src/sheet/cardSurfaces';
-import type { Character, ContentDatabase, InventoryItem } from '../src/rules/types';
+import type { Character, ContentDatabase, InventoryItem, PinnedDesc } from '../src/rules/types';
 import type { DescNode } from '../src/sheet/descref';
 import { togglePinnedDesc, type PlayState } from '../src/rules/play';
-import { astSlug } from '../src/sheet/astVisibility';
 import * as lib from '../scripts/lib/card-scope.mjs';
 
 /**
@@ -52,7 +51,8 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *   ChoiceDetails   the builder's "Details" button for a granted class feature / background feat
  *   builderOrigin   the builder's Background picker (SearchSelect, its filled value opens the popup; since
  *                   card step 7b each option names its record, so the popup reads {backgrounds, id})
- *   pin             a PinStar pressed on FeatDetail / ItemDetail / SpellDetail, reopened by DescriptionModal
+ *   pin             a PinStar pressed on FeatDetail / ItemDetail / SpellDetail, the STORED pin reopened by
+ *                   MainTab's PinnedDescCard (card step 19: by its {key, slug}; 'mine' from the sheet)
  *
  * The verdict per printed label (OK / MISSING / DIFFERS / DUPLICATED / EXTRA), the IDENTITY flag, spell
  * PLACEMENT (bold preamble and scraped plain header), OURS-LEAK and the UNNAMED omissions read off the
@@ -110,6 +110,9 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *  - (card step 16 fixer, 2026-10-07) spellCard.ts spellCardModel lane forced 'field' → the owner-case test
  *    red on the ledger ("ledger findings for spellDetail|spells:buzzing-servants": 2 entries) and the
  *    baseline test red (62 sample rows differ).
+ *  - (card step 19 merge fixer, 2026-10-07) scripts/lib/card-scope.mjs pin rows `stored.mode === 'mine'` →
+ *    `false && …` (the ledger models a pin made from the sheet as the browse card PinnedDescCard no longer
+ *    draws) → the agreement test red (11 disagreements, first pin|items:warcallers-chime-of-refuge).
  * Measured in round 0 (that code is unchanged since):
  *  - RecordCard.tsx fallback: headerActions moved back after the title → the headerActions test red.
  *  - RecordCard.tsx page branch: the TrustMarker dropped from headerControls → the TrustMarker test red.
@@ -570,10 +573,11 @@ async function renderOrigin(row: Row): Promise<Read> {
   );
 }
 async function renderPin(row: Row, extra?: Partial<Character>): Promise<Read> {
-  let pinned: DescNode | null = null;
+  let pinned: PinnedDesc | null = null;
   // The pin the player REOPENS is the one stored by togglePinnedDesc (MainTab PinnedDescRow opens the
-  // stored node), not the node the star hands over: storage keeps {title, description, descRefs, key}
-  // and drops a slug until card step 19 (refuter, card step 7a round 1).
+  // stored pin), not the node the star hands over. Card step 19: storage (play.ts pinOf) keeps the node's
+  // record id and mode, and MainTab's PinnedDescCard reopens it — the 'mine' card for a pin made from the
+  // sheet, browse otherwise. No character here, so the card is unscoped, as the ledger's row is.
   const pin: PinDescApi = { has: () => false, toggle: (n) => { pinned = togglePinnedDesc({} as PlayState, n).pinnedDescs?.[0] ?? null; } };
   let el: ReactElement;
   if (row.bucket === 'items') el = <ItemDetail inv={{ instanceId: 'i-pin', itemId: row.id, quantity: 1 } as InventoryItem} item={db.items[row.id]} content={db} onClose={noop} />;
@@ -585,7 +589,7 @@ async function renderPin(row: Row, extra?: Partial<Character>): Promise<Read> {
   await click(m.host.querySelector('.picker-head .info-star, .ast-head .info-star'));
   m.stop();
   expect(pinned, `${keyOf(row)}: the star pinned a node`).toBeTruthy();
-  const p = await mount(<DescriptionModal root={pinned!} onClose={noop} />);
+  const p = await mount(<PinnedDescCard pin={pinned!} content={db} onClose={noop} />);
   const r = readPopup(p.host);
   p.stop();
   return r;
@@ -781,13 +785,12 @@ describe('card step 4: the rendered parity check (report mode)', () => {
         let row = ledgerRow;
         let s: Read | null;
         if (c.pick) {
-          // A pin made on a row whose name carries a pick: the stored pin (no slug) reads the slug of
-          // that title. Card step 7a refuter round 2 (T4): the star's node names the record; the stored
-          // pin does not until step 19.
+          // A pin made on a row whose name carries a pick. Card step 19: the stored pin keeps the record id
+          // the star's node names (play.ts pinOf), so it reads the record by {bucket, id} whatever its title
+          // carries — the ledger's own row (card-scope.mjs pinReadOf). Before step 19 it read the slug of
+          // the title (card step 7a refuter round 2, T4).
           expect(surface === 'pin' && ledgerRow!.bucket === 'feats', `${c.key}: a pick case is a feats pin row`).toBe(true);
-          const title = `${recs('feats')[ledgerRow!.id].name} (${c.pick})`;
-          row = { ...ledgerRow!, read: { bucket: 'feats', slug: astSlug(title) } };
-          s = await renderPin(row, { effectPicks: [{ recordId: ledgerRow!.id, choiceId: 'card-parity-pick', label: c.pick }] } as Partial<Character>);
+          s = await renderPin(row!, { effectPicks: [{ recordId: ledgerRow!.id, choiceId: 'card-parity-pick', label: c.pick }] } as Partial<Character>);
         } else if (surface === 'actionDetail') s = (await renderActions([row!])).get(c.key) ?? null;
         else s = await renderRow(row!, new Map());
         expect(s, `${c.key} renders`).toBeTruthy();
