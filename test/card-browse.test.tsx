@@ -476,7 +476,10 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     // Card step 11 turns the Feats-tab popup (FeatDetail) into the row's record's 'mine' card, so Halfling
     // Luck's printed Frequency and Trigger reach it (test/card-feat.test.tsx).
     // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
-    const landed = new Set(['statDetail', 'hostPage', 'actionDetail', 'featDetail']);
+    // Card step 10 turns the strike popup (StrikeDetailModal) into the weapon's 'mine' card, so the
+    // longsword reads its own page's words (test/card-strike.test.tsx).
+    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    const landed = new Set(['statDetail', 'hostPage', 'actionDetail', 'featDetail', 'strikeDetail']);
     for (const [surface, on] of Object.entries(CARD_ON)) if (!landed.has(surface)) expect(on, surface).toBe(false);
   });
 });

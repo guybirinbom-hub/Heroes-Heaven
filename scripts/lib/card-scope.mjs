@@ -709,7 +709,7 @@ export const SECTIONS = ['S1-MISSING', 'S1-UNNAMED', 'DIFFERS', 'DUPLICATED', 'E
  * under `legacy[surface]` that surface's row entries as measured with its switch OFF; while the switch
  * is off they stand in for the surface's entries in the main sections. Step 22 removes both.
  */
-export const SWITCHED_SURFACES = ['statDetail', 'actionDetail', 'featDetail'];
+export const SWITCHED_SURFACES = ['statDetail', 'actionDetail', 'featDetail', 'strikeDetail'];
 
 /**
  * The entries the baseline expects under the switches as they are now (`cardOn`, default CARD_ON): the
@@ -753,7 +753,9 @@ export function baselineProblems(found, baseline, file, cardOn = CARD_ON) {
 /* ------------------------------------------------------------------------------------------------ */
 
 /** The surfaces section 6 names, each modelled from the component's own props. */
-export const SURFACES = ['featDetail', 'itemDetail', 'spellDetail', 'actionDetail', 'statDetail', 'browse', 'choiceDetails', 'builderOrigin', 'pin'];
+// strikeDetail (card step 10) is last: test/card-parity.test.tsx draws every surface's sample from ONE seeded
+// generator in this order, so appending keeps every earlier surface's sample exactly what it was.
+export const SURFACES = ['featDetail', 'itemDetail', 'spellDetail', 'actionDetail', 'statDetail', 'browse', 'choiceDetails', 'builderOrigin', 'pin', 'strikeDetail'];
 /** Section 6's 'gm' surface (card step 6): the ledger judges it (surfaceRows), card-parity does not sample it. */
 export const GM_SURFACE = 'gm';
 
@@ -993,6 +995,29 @@ export function surfaceRows(deps) {
         : { hideMeta: false, itemLists: true, mode: 'browse' };
       rows.push({ surface: 'pin', bucket: b, id, own: { bucket: b, id }, read, md: rec.description ?? '', printed: [], ...drawn });
     }
+  }
+
+  // StrikeDetailModal (card step 10) — the Strikes tab's popup for a weapon that makes a Strike of its own
+  // (derive.ts deriveStrikes: every equipped item but handwraps, isHandwraps derive.ts:3372 — handwraps etch
+  // onto the unarmed attacks and make none), plus a hidden cursed weapon wearing its twin (playerFacingContent).
+  // With CARD_ON.strikeDetail the popup is RecordCard mode 'mine' for the weapon's page by its id — the twin's
+  // for a hidden cursed weapon (StrikeDetailModal.tsx strikeParts, cursedItems.ts shownItemId) — with the
+  // printed set EMPTY and the item lists cut. Attack bonus, Damage and the gated critical specialization are
+  // controls above the page (RecordCard leadControls): the character's computed numbers, not page lines, so
+  // they are not judged here (test/card-parity.test.tsx reads them as a named region). Switched off, the
+  // legacy popup draws the imported description string (DescBody with no astId: no tree). Pushed last so the
+  // rows (and entries) of every other surface keep their order.
+  const strikeCard = (deps.cardOn ?? CARD_ON).strikeDetail ? { printed: [] } : undefined;
+  const makesStrike = (it) => it?.itemType === 'weapon' && !(it.category === 'unarmed' && it.usage === 'worngloves');
+  const strikeRow = (id, ownId, rec) => ({
+    surface: 'strikeDetail', bucket: 'items', id, own: { bucket: 'items', id: ownId },
+    ...(strikeCard ? { read: { bucket: 'items', slug: ownId }, hideMeta: false, itemLists: false, card: strikeCard } : { read: null, hideMeta: false, itemLists: false }),
+    md: rec.description ?? '', printed: [], mode: 'mine',
+  });
+  for (const [id, item] of Object.entries(db.items ?? {})) {
+    if (makesStrike(item) && has('items', id)) rows.push(strikeRow(id, id, item));
+    const twin = item?.disguisedAs ? db.items[item.disguisedAs] : undefined;
+    if (twin && makesStrike(twin) && has('items', twin.id)) rows.push(strikeRow(`${id}~hidden`, twin.id, { ...twin, id }));
   }
 
   return { rows, classMismatch };

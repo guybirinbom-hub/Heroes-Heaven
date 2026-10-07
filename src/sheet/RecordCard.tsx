@@ -42,6 +42,10 @@ import type { SourceInfo } from '../rules/types';
  * a stack; Back pops one level; Escape, the X and a click outside close the whole chain (onExit).
  *
  * Step 6 builds `mode: 'gm'` with `chrome: 'embed'` (EmbedRecordCard below): the GM screen page.
+ *
+ * Step 10 adds `leadControls` (the strike popup's Attack / Damage and gated critical specialization):
+ * drawn above the text on every 'mine' lane — first in the page's body (AstRenderer `lead`), in the
+ * loading placeholder, and above the no-page text — never on a page opened from a link inside the card.
  */
 export function RecordCard(props: RecordCardProps) {
   // Two components, not one with a branch: the popup registers on the dismiss stack (useEscapeClose)
@@ -79,7 +83,7 @@ function EmbedRecordCard({ record, content: hostContent, onOpenRef }: RecordCard
 const noOpen = () => undefined;
 
 /** The popup card (modes 'browse' and 'mine', chrome 'popup'). */
-function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyControls, headerActions, ours, footer, fallbackText, onExit, onBackToSource }: RecordCardProps) {
+function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyControls, leadControls, headerActions, ours, footer, fallbackText, onExit, onBackToSource }: RecordCardProps) {
   const content = useContent();
   const exit = onExit;
   useEscapeClose(exit);
@@ -200,6 +204,10 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
      older text, cut to the viewer's own class paragraph, with its own footer — a page exists, just not
      for this class. Per-class pages come with the data rebuild. Not decided while the page loads. */
   const shared = mine && !astLoading ? sharedFeatureView(cur, curSlug, astNode, scope, content) : null;
+  /* Card step 10: the surface's controls that stay above the text on every mine lane (cardModel
+     leadControls — Strike's Attack / Damage and its gated critical specialization). The record the
+     surface opened only: a page opened from a link inside the card is a browse card (section 6). */
+  const lead = mine && leadControls ? <div className="card-controls card-lead">{leadControls}</div> : null;
 
   if (mine && astNode && !shared?.otherClassPage) {
     /* Card step 13a: with the character's scope, the sections it does not have yet fold (scopeTree reads
@@ -213,7 +221,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
       <div className="picker-overlay" onClick={exit}>
         <div ref={modalRef} className="ast-modal card-mine" onPointerDown={liftCapOnGrip} onClick={(e) => e.stopPropagation()}>
           <AstRenderer node={shown} selfRef={`${astBucket}:${curSlug}`} onOpenRef={openRef} card={{ printed: printedSet(printed) }}
-            headerControls={<>{marker}{controls}</>} footer={<>{oursBox}{ownSource}{remastered}{footer}</>} />
+            headerControls={<>{marker}{controls}</>} footer={<>{oursBox}{ownSource}{remastered}{footer}</>} lead={lead ?? undefined} />
         </div>
       </div>
     );
@@ -245,6 +253,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
           </div>
           <div className="info-body card-body">
             {marker}
+            {lead}
             {/* Card step 9 (section 2 rule 4.3): the surface's controls, above the text. */}
             {bodyControls ? <div className="card-controls">{bodyControls}</div> : null}
             {/* The fallback lane is DescBody's own markdown / rich-HTML branches, untouched (section 5):
@@ -301,7 +310,8 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
                 the popup edge — and so the warning is there from the first frame, not after the ast
                 lands. Card step 11 (section 5, "footer and ours slot on every branch"): a mine card keeps
                 its ours box here too, so the pick / marker / note is on screen from the first frame. */}
-            <div className="ast-body ast-loading" aria-busy="true">{marker}{mine ? oursBox : null}</div>
+            {/* Card step 10: the lead controls too (Strike's Attack / Damage), so they never vanish for a beat. */}
+            <div className="ast-body ast-loading" aria-busy="true">{marker}{mine ? lead : null}{mine ? oursBox : null}</div>
           </div>
         </div>
       </div>

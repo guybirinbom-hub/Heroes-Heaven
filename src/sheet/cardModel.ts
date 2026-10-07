@@ -14,6 +14,7 @@ import type { DescNode } from './descref';
  * Step 6 builds `mode: 'gm'` with `chrome: 'embed'` (CampaignTracker's HostPage, the GM screen page):
  * `record`, `content` and `onOpenRef` are read; no frame, no stack, nothing on the dismiss stack.
  * Step 9 (the Main-tab action popup, CARD_ON.actionDetail) reads `controls` and `headerActions`.
+ * Step 10 (the strike popup, CARD_ON.strikeDetail) reads `leadControls`.
  */
 
 /** browse = today's search popup, never scoped; mine = the sheet's "what is yours"; gm = HostPage. */
@@ -163,9 +164,18 @@ export interface RecordCardProps {
    * draws them on the 'mine' NO-PAGE lane, between the TrustMarker and the old text (the action popup's
    * trait chips: a page draws its own chips in its header). The page lane has no slot above its body
    * yet — AstRenderer owns that markup — so a page-lane control (Strike's Attack / Damage, step 10; the
-   * item controls, step 14) needs that slot first; nothing is drawn there today.
+   * item controls, step 14) needs that slot first; nothing is drawn there today. Card step 10 built that
+   * slot as `leadControls` below (AstRenderer `lead`), leaving this prop's lane as it was.
    */
   controls?: ReactNode;
+  /**
+   * Card step 10: controls that stay above the text on EVERY lane of a 'mine' card — over the page (first
+   * in its body), in the loading placeholder and above the no-page text — because the player uses them
+   * whether or not the page is drawn: Strike's Attack bonus and Damage (each a button into its breakdown)
+   * and its gated critical specialization. `controls` stays the no-page lane's own (FeatCard's sub-line,
+   * trait chips and field Prerequisites row would repeat a page's header).
+   */
+  leadControls?: ReactNode;
   /**
    * Extra buttons in the header, before Back / pin / close, on the record the surface opened (the
    * stack's first node) only: a page opened from a link inside the card is a browse card (section 6).

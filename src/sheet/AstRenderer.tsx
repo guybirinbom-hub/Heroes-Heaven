@@ -472,7 +472,7 @@ function DocBody({ top, ctx, hideMeta, card }: { top: AstNode[]; ctx: Ctx; hideM
  * Full description popup content for one record's ast — header (name + action glyph + badge),
  * AoN-ordered colour-coded trait chips, then the meta + prose body. Slots into HH's popup chrome.
  */
-export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, card, headerControls, footer }: {
+export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, card, headerControls, footer, lead }: {
   node: AstNode;
   /** "bucket:slug" of the open record, so its self-links render as plain text */
   selfRef?: string;
@@ -489,6 +489,10 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, card
   headerControls?: ReactNode;
   /** a line of ours after the page's prose, inside the scrolling body (desk #158's "Remastered as …") */
   footer?: ReactNode;
+  /** Card step 10 — the 'mine' card's controls that stay above the page (RecordCard leadControls:
+   *  Strike's Attack / Damage and its gated critical specialization), first inside the scrolling body.
+   *  Absent = nothing drawn, so every other popup's markup is unchanged. */
+  lead?: ReactNode;
 }): ReactNode {
   // A link's target must actually ship, or it renders inert rather than as a button that does nothing.
   const content = useContent();
@@ -554,7 +558,7 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, card
           })}
         </div>
       )}
-      <div className="ast-body"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} card={cw} />{footer}</div>
+      <div className="ast-body">{lead}<DocBody top={top} ctx={ctx} hideMeta={hideMeta} card={cw} />{footer}</div>
     </div>
   );
 }

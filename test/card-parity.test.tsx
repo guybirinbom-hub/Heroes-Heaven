@@ -13,6 +13,8 @@ import { ItemDetail, itemStatRows } from '../src/sheet/ItemDetail';
 import { SpellDetail, spellStatRows } from '../src/sheet/SpellsTab';
 import { MainTab, PinnedDescCard } from '../src/sheet/MainTab';
 import { StatDetailModal } from '../src/sheet/StatDetailModal';
+import { StrikeDetailModal } from '../src/sheet/StrikeDetailModal';
+import { deriveStrikes } from '../src/rules/derive';
 import { DescriptionModal } from '../src/sheet/DescriptionModal';
 import { RecordCard } from '../src/sheet/RecordCard';
 import { ChoiceDetails, SearchSelect } from '../src/builder/shared';
@@ -53,6 +55,10 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *                   card step 7b each option names its record, so the popup reads {backgrounds, id})
  *   pin             a PinStar pressed on FeatDetail / ItemDetail / SpellDetail, the STORED pin reopened by
  *                   MainTab's PinnedDescCard (card step 19: by its {key, slug}; 'mine' from the sheet)
+ *   strikeDetail    the Strikes-tab popup of a weapon wielded by a level-20 fighter — since card step 10 the
+ *                   weapon's 'mine' RecordCard by its id (CARD_ON.strikeDetail), its Attack / Damage / crit
+ *                   specialization controls read as regions, not page lines; drawn LAST from the seeded
+ *                   generator, so the nine earlier surfaces' samples are the ones drawn before it existed
  *
  * The verdict per printed label (OK / MISSING / DIFFERS / DUPLICATED / EXTRA), the IDENTITY flag, spell
  * PLACEMENT (bold preamble and scraped plain header), OURS-LEAK and the UNNAMED omissions read off the
@@ -113,6 +119,13 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *  - (card step 19 merge fixer, 2026-10-07) scripts/lib/card-scope.mjs pin rows `stored.mode === 'mine'` →
  *    `false && …` (the ledger models a pin made from the sheet as the browse card PinnedDescCard no longer
  *    draws) → the agreement test red (11 disagreements, first pin|items:warcallers-chime-of-refuge).
+ *  - (card step 10 fixer, 2026-10-07) scripts/lib/card-scope.mjs `strikeCard` forced undefined (the ledger
+ *    models the legacy strike popup while the card is on) → the agreement test red (59 disagreements) and
+ *    the baseline test red (255 sample rows differ); card-truth-check red (new strikeDetail offenders).
+ *  - (card step 10 fixer) StrikeDetailModal.tsx: a `<div className="sd-injected">` added inside the card's
+ *    controls → the regions test red ('strikeDetail: div.sd-injected').
+ *  - (card step 10 fixer) cardSurfaces.ts strikeDetail → false: this file 16 of 16 green on the legacy
+ *    popup, and card-truth-check green against the baseline's legacy strikeDetail entries.
  * Measured in round 0 (that code is unchanged since):
  *  - RecordCard.tsx fallback: headerActions moved back after the title → the headerActions test red.
  *  - RecordCard.tsx page branch: the TrustMarker dropped from headerControls → the TrustMarker test red.
@@ -305,6 +318,13 @@ const REGIONS_MEASURED: Record<string, string[]> = {
   // body, as on the browse card; the legacy popup read only its body.
   // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
   statDetail: cardOn('statDetail') ? ['div.ast-head', 'div.ast-traits', 'div.picker-head'] : [],
+  // Card step 10: the strike popup is the weapon's 'mine' card — its header as on the other cards, and its
+  // controls (RecordCard leadControls: Attack bonus / Damage, the gated critical specialization) read as
+  // regions, never as page lines; the legacy popup drew the same two control blocks beside its text.
+  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  strikeDetail: cardOn('strikeDetail')
+    ? ['div.ast-head', 'div.ast-traits', 'div.picker-head', 'div.strike-detail-stats', 'div.strike-detail-crit']
+    : ['div.strike-detail-stats', 'div.strike-detail-crit'],
 };
 const txt = (el: Element | null | undefined) => (el?.textContent ?? '').replace(/\s+/g, ' ').trim();
 
@@ -438,6 +458,7 @@ beforeAll(async () => {
     choiceDetails: () => true,
     builderOrigin: () => true,
     pin: (r) => r.bucket !== 'classFeatures' || featureHome.has(r.id),
+    strikeDetail: () => true,
   };
   const rng = mulberry32(SEED);
   for (const s of lib.SURFACES) {
@@ -540,6 +561,42 @@ async function renderStat(row: Row): Promise<Read> {
   }
   const bodies = [...m.host.querySelectorAll('.confirm-body > .sd-desc')];
   noteRegions('statDetail', m.host.querySelector('.confirm-body'), bodies);
+  const r = readBody(bodies, []);
+  m.stop();
+  return r;
+}
+/**
+ * Card step 10: the Strikes-tab popup for the row's weapon, wielded by the level-20 fighter (a hidden cursed
+ * weapon through playerFacingContent, as renderItem). Switched on it is the weapon's 'mine' card: the read
+ * body is the card's .ast-body (no-page lane: .info-body) WITHOUT its controls — Attack / Damage / the crit
+ * specialization are the character's computed numbers above the page, recorded as regions (a string slipped
+ * in beside them turns the regions test red); everything else in the body is read line by line.
+ */
+async function renderStrike(row: Row): Promise<Read> {
+  const hidden = row.id.endsWith('~hidden');
+  const id = hidden ? row.id.slice(0, -'~hidden'.length) : row.id;
+  const inv: InventoryItem = { instanceId: 'i-strike', itemId: id, quantity: 1, equipped: true, ...(hidden ? { hiddenCurse: true } : {}) } as InventoryItem;
+  const ch = { ...base, inventory: [inv] } as Character;
+  const cdb = hidden ? playerFacingContent(db, [inv]) : db;
+  const strike = deriveStrikes(ch, cdb).find((s) => s.instanceId === 'i-strike');
+  expect(strike, `${keyOf(row)}: the weapon makes a Strike`).toBeTruthy();
+  const m = await mount(<StrikeDetailModal strike={strike!} character={ch} content={cdb} onClose={noop} />, cdb);
+  if (cardOn('strikeDetail')) {
+    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
+    const cpop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
+    const body = page ? page.querySelector(':scope > .ast-body') : cpop?.querySelector('.info-body') ?? null;
+    noteRegions('strikeDetail', cpop, body ? [body] : []);
+    noteRegions('strikeDetail', body?.querySelector('.card-lead') ?? null, []);
+    const read = body ? (body.cloneNode(true) as Element) : null;
+    read?.querySelector('.card-lead')?.remove();
+    const r: Read = { lane: page ? 'tree' : 'md', body: read, blocks: domBlocks(read), printed: [], leak: leakIn(read) };
+    m.stop();
+    return r;
+  }
+  const pop = m.host.querySelector('.picker.info-modal')!;
+  const bodies = [...pop.querySelectorAll(':scope .info-body > .sd-desc')];
+  noteRegions('strikeDetail', pop.querySelector('.info-body'), bodies);
   const r = readBody(bodies, []);
   m.stop();
   return r;
@@ -654,6 +711,7 @@ async function renderRow(row: Row, actionReads: Map<string, Read | null>): Promi
     case 'choiceDetails': return renderChoice(row);
     case 'builderOrigin': return renderOrigin(row);
     case 'pin': return renderPin(row);
+    case 'strikeDetail': return renderStrike(row);
   }
   return null;
 }

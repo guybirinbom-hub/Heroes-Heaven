@@ -54,9 +54,12 @@ beforeAll(async () => {
   const actions = readBucket('actions');
   // Card step 9: Halfling Luck's page too — on the card a feat action reads its tree (the legacy popup
   // never asked for one, so serving it changes nothing there).
+  // Card step 10: the longsword's page too — on the card the strike popup reads its weapon's tree (the
+  // legacy popup never asked for one, so serving it changes nothing there).
   const served: Record<string, Record<string, AstNode>> = {
     actions: { aid: actions.aid, leap: actions.leap, 'high-jump': actions['high-jump'] },
     feats: { 'halfling-luck': readBucket('feats')['halfling-luck'] },
+    items: { longsword: readBucket('items').longsword },
   };
   globalThis.fetch = (async (input: unknown) => {
     const m = /ast\/([A-Za-z0-9_-]+)\.json$/.exec(String(input));
@@ -66,6 +69,7 @@ beforeAll(async () => {
   }) as typeof fetch;
   await loadBucketAst('actions');
   await loadBucketAst('feats');
+  await loadBucketAst('items');
 });
 
 const toggled: DescNode[] = [];
@@ -100,7 +104,11 @@ const strikeOf = (c: Character, id: string): Strike => {
 const LONGSWORD_TEXT =
   "Longswords, also known as arming swords, can be one-edged or two-edged swords. Their blades are heavy and they're between 3 and 4 feet in length.";
 
-describe('StrikeDetailModal', () => {
+// Card step 10: these are the LEGACY popup's assertions, kept for the switch's off position (section 9:
+// "That surface's legacy assertions stay in a block that runs when the switch is off"). With
+// CARD_ON.strikeDetail the popup is the weapon's mine card — the block after this one runs the same six.
+// batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+describe.skipIf(cardOn('strikeDetail'))('StrikeDetailModal', () => {
   it('a level-1 fighter\'s longsword: name, PinStar, Attack bonus and Damage as derived, the item text, and NO crit block', () => {
     const c = fighter(1);
     const s = strikeOf(c, 'i-sword');
@@ -191,6 +199,143 @@ describe('StrikeDetailModal', () => {
     expect(txt(pop.querySelector('.info-title'))).toBe('Longsword');
     expect(txt(pop.querySelector('.strike-detail-crit .sds-label'))).toBe('Critical specialization · Sword');
     expect(txt(pop.querySelector('.info-body')!.lastElementChild)).toBe(LONGSWORD_TEXT);
+  });
+});
+
+/*
+ * Card step 10 (docs/card-design.md section 9 row 10): the same six cases, re-pointed at the weapon's
+ * 'mine' card (CARD_ON.strikeDetail). The numbers, the buttons, the crit gate and the pin are the legacy
+ * popup's, unchanged; the weapon's words now come from its Archives page (weapon-386, Player Core) — the
+ * old import's "also known as arming swords" is gone — and the Fist's blurb sits in the ours box.
+ * test/card-strike.test.tsx holds the step's full refuter set.
+ */
+/** The page's own prose paragraph for the longsword (weapon-386). */
+const LONGSWORD_PAGE = "Longswords can be one-edged or two-edged swords. Their blades are heavy and they're between 3 and 4 feet in length.";
+const strikeCard = (host: HTMLElement) => {
+  const card = host.querySelector('.ast-modal.card-mine') as HTMLElement | null;
+  if (!card) throw new Error('no strike card on the page lane');
+  return card;
+};
+/** The page's prose paragraphs on the card: the body's paragraphs after the page's first rule (its header lines sit above it). */
+const prose = (card: Element) => {
+  const kids = [...(card.querySelector('.ast-pop > .ast-body')?.children ?? [])];
+  const hr = kids.findIndex((k) => k.tagName === 'HR');
+  return kids.slice(hr + 1).filter((k) => k.tagName === 'P' && !k.closest('[data-ours]') && !k.classList.contains('card-dim')).map((p) => txt(p));
+};
+// batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+describe.runIf(cardOn('strikeDetail'))('StrikeDetailModal — the weapon\'s mine card (step 10)', () => {
+  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  it('a level-1 fighter\'s longsword: name, PinStar, Attack bonus and Damage as derived, the PAGE text, and NO crit block', () => {
+    const c = fighter(1);
+    const s = strikeOf(c, 'i-sword');
+    const { host } = mount(<StrikeDetailModal strike={s} character={c} content={db} onClose={() => undefined} />);
+    const pop = strikeCard(host);
+    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    expect(txt(pop.querySelector('.ast-head .ast-name'))).toBe('Longsword');
+    expect(pop.querySelector('.ast-head .info-star'), 'PinStar is in the header').not.toBeNull();
+    const stats = [...pop.querySelectorAll('.strike-detail-stat')].map((b) => [txt(b.querySelector('.sds-label')), txt(b.querySelector('.sds-value'))]);
+    expect(stats).toEqual([
+      ['Attack bonus', formatMod(s.attack[0])],
+      ['Damage', s.damage],
+    ]);
+    // The numbers the derive measured on 2026-10-02 for this build, so a silent engine change shows here too.
+    // batch card premise: weapon-386 "Damage 1d8 S"
+    expect(stats.map(([, v]) => v)).toEqual(['+5', '1d8 S']);
+    expect(pop.querySelectorAll('.strike-detail-stat.clickable')).toHaveLength(0);
+    expect(pop.querySelector('.sds-hint')).toBeNull();
+    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    expect(pop.querySelector('.strike-detail-crit'), 'a level-1 fighter has no crit specialization').toBeNull();
+    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    expect(prose(pop)[0]).toBe(LONGSWORD_PAGE);
+    expect(txt(pop)).not.toContain('also known as arming swords');
+    expect(txt(pop)).not.toContain('Critical specialization');
+  });
+
+  // batch card premise: weapon-group-15 "The target is made off-balance by your attack, becoming off-guard until the start of your next turn"
+  it('at level 5 (Fighter Weapon Mastery) the sword group\'s crit specialization shows above the page', () => {
+    const c = fighter(5);
+    const s = strikeOf(c, 'i-sword');
+    const { host } = mount(<StrikeDetailModal strike={s} character={c} content={db} onClose={() => undefined} />);
+    const crit = host.querySelector('.strike-detail-crit') as HTMLElement;
+    // batch card premise: weapon-group-15 "The target is made off-balance by your attack, becoming off-guard until the start of your next turn"
+    expect(crit).not.toBeNull();
+    expect(txt(crit.querySelector('.sds-label'))).toBe('Critical specialization · Sword');
+    expect(txt(crit.querySelector('.sd-critspec-text'))).toBe('The target is off-guard until the start of your next turn.');
+    // Order: the controls (stats, crit block) first in the page's body, then the page.
+    const body = strikeCard(host).querySelector('.ast-pop > .ast-body') as HTMLElement;
+    // batch card premise: weapon-group-15 "The target is made off-balance by your attack, becoming off-guard until the start of your next turn"
+    expect([...(body.firstElementChild?.children ?? [])].map((k) => k.className)).toEqual(['strike-detail-stats', 'strike-detail-crit']);
+    expect(body.firstElementChild?.className).toBe('card-controls card-lead');
+    expect(prose(strikeCard(host))[0]).toBe(LONGSWORD_PAGE);
+  });
+
+  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  it('with onOpenStat, each stat is a button into its breakdown, keyed by the strike', () => {
+    const c = fighter(1);
+    const s = strikeOf(c, 'i-sword');
+    const opened: StatRef[] = [];
+    const { host, click } = mount(
+      <StrikeDetailModal strike={s} character={c} content={db} onOpenStat={(r) => opened.push(r)} onClose={() => undefined} />,
+    );
+    const buttons = [...strikeCard(host).querySelectorAll('.strike-detail-stat.clickable')];
+    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    expect(buttons).toHaveLength(2);
+    expect(buttons.map((b) => txt(b.querySelector('.sds-hint')))).toEqual(['show calculation', 'show calculation']);
+    click(buttons[0]);
+    click(buttons[1]);
+    expect(opened).toEqual([
+      { kind: 'strikeAttack', instanceId: 'i-sword' },
+      { kind: 'strikeDamage', instanceId: 'i-sword' },
+    ]);
+  });
+
+  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  it('the Fist has no item, so it shows the built-in blurb — in the ours box, with no page looked up by its name', () => {
+    const c = fighter(1);
+    const s = strikeOf(c, 'fist');
+    const { host } = mount(<StrikeDetailModal strike={s} character={c} content={db} onClose={() => undefined} />);
+    const pop = host.querySelector('.picker.info-modal.card-mine') as HTMLElement;
+    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    expect(txt(pop.querySelector('.info-title'))).toBe('Fist');
+    expect(txt(pop.querySelector('[data-ours] [data-ours-kind="blurb"]'))).toBe(
+      'An unarmed Strike with your fist — every creature can make unarmed attacks. It uses your unarmed proficiency, and Handwraps of Mighty Blows can etch potency, striking, and property runes onto it.',
+    );
+    expect(pop.querySelectorAll('.strike-detail-stat')).toHaveLength(2);
+    expect(pop.querySelector('.card-nopage'), 'app-authored, never print: no "older import" line').toBeNull();
+  });
+
+  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  it('the PinStar pins {title, key: items, description} as before (plus the step-19 slug and mode); the overlay closes, the popup body does not', () => {
+    const c = fighter(1);
+    const s = strikeOf(c, 'i-sword');
+    let closed = 0;
+    const { host, click } = mount(<StrikeDetailModal strike={s} character={c} content={db} onClose={() => (closed += 1)} />);
+    click(strikeCard(host).querySelector('.info-star'));
+    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    expect(toggled.map((n) => [n.title, n.key, n.description])).toEqual([['Longsword', 'items', LONGSWORD_TEXT]]);
+    expect(toggled.map((n) => [n.slug, (n as { mode?: string }).mode])).toEqual([['longsword', 'mine']]);
+    expect(closed, 'the star does not close the popup').toBe(0);
+    click(strikeCard(host).querySelector('.ast-body'));
+    expect(closed).toBe(0);
+    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    click(strikeCard(host).querySelector('.picker-close'));
+    expect(closed).toBe(1);
+    click(host.querySelector('.picker-overlay'));
+    expect(closed).toBe(2);
+  });
+
+  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  it('through MainTab: the Strikes sub-tab\'s name button opens this card for that strike', () => {
+    const c = fighter(5);
+    const { host, click } = mount(<MainTab character={c} content={db} onPlay={() => undefined} />);
+    click([...host.querySelectorAll('.stab')].find((t) => t.textContent?.trim() === 'Strikes') ?? null);
+    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    expect(host.querySelector('.ast-modal.card-mine')).toBeNull();
+    click([...host.querySelectorAll('.strike-name')].find((b) => txt(b).startsWith('Longsword')) ?? null);
+    const pop = strikeCard(host);
+    expect(txt(pop.querySelector('.ast-name'))).toBe('Longsword');
+    expect(txt(pop.querySelector('.strike-detail-crit .sds-label'))).toBe('Critical specialization · Sword');
+    expect(prose(pop)[0]).toBe(LONGSWORD_PAGE);
   });
 });
 
