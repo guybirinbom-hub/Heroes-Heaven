@@ -3,8 +3,10 @@
  *
  * The effect that triggers on a critical hit with a weapon of the given group,
  * IF the attacker has critical specialization with it (granted by certain class
- * features/feats). Shown as reference on each Strike — the sheet does not assert
- * the character has access. One concise sentence per group.
+ * features/feats). Shown on a Strike when the character has it, and in the item
+ * popup only where the weapon's own page does not give the record's group effect
+ * itself (card step 14, rule C2: CRIT_SPEC_PAGE_BUCKET below). One concise sentence
+ * per group.
  *
  * Source: Archives of Nethys "Critical Specialization Effects"
  * (https://2e.aonprd.com/WeaponGroups.aspx), cross-checked against the Grievous
@@ -33,4 +35,22 @@ export const CRIT_SPEC: Record<string, string> = {
 /** The critical specialization effect for a weapon group, if known. */
 export function critSpec(group?: string): string | undefined {
   return group ? CRIT_SPEC[group] : undefined;
+}
+
+/**
+ * Card step 14 (docs/card-design.md section 5, "Crit-spec block"): the bucket of the weapon group pages
+ * a weapon's page embeds under "Critical Specialization Effects" (src/sheet/astStubs.ts). Rule C2 (the page
+ * is the truth, read whole; src/sheet/ItemDetail.tsx showCrit): the item popup leaves out its own sentence
+ * above where (i) the card draws the record's OWN group page (the effect shown once, in the page's words),
+ * or (ii) the card draws another group's page and the page prints no "Group" line naming the record's group
+ * (true record drift: alchemical-crossbow's record says crossbow, its page prints and draws Bow — the
+ * `drift` list of work/card-step14-weapon-group-drift.json). Otherwise the sentence stays, marked as ours:
+ * a combination weapon's melee half prints its own group ("Group Axe") but embeds only the ranged group's
+ * page (the `combination` list), so the page gives the firearm effect and we give the axe one.
+ */
+export const CRIT_SPEC_PAGE_BUCKET = 'weaponGroup';
+
+/** The group's own Archives page, "weaponGroup:<group>" (card step 14). */
+export function critSpecPageRef(group?: string): string | undefined {
+  return group ? `${CRIT_SPEC_PAGE_BUCKET}:${group}` : undefined;
 }

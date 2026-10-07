@@ -38,7 +38,7 @@
  */
 import {
   clean, isMetaP, isMetaishBlock, textOf, recordTree, withoutItemLists, astSlug,
-  cardDropsMetaP, cardFurnitureSectionEnd, cardHeadUntil, cardRowParts, isCardFurnitureP, isCardFurnitureTitle,
+  cardDropsMetaP, cardDropsPrintedP, cardFurnitureSectionEnd, cardHeadUntil, cardRowParts, cardStatHeadMask, isCardFurnitureP, isCardFurnitureTitle,
 } from '../../src/sheet/astVisibility.ts';
 import {
   OMISSION_RULES, LABEL_ALIASES, canonLabel, printedSet,
@@ -340,12 +340,13 @@ const titleInline = (n) => (n.c || []).flatMap((c) => (c.t === 'p' ? c.c || [] :
  * rule that dropped it (meta-line, metaish-block, inline-row, spoiler). `seq` numbers siblings so the
  * cut-in-sentence check can see what follows a dropped block.
  */
-export function walkBlocks(nodes, hideMeta, out = [], hiddenBy = null, card = undefined, headUntil = undefined) {
+export function walkBlocks(nodes, hideMeta, out = [], hiddenBy = null, card = undefined, headUntil = undefined, statMask = undefined) {
   for (let i = 0; i < nodes.length; i++) {
     const n = nodes[i];
     // Card step 5 ('mine' card): AstRenderer's Blocks — header-ness per top-level block, nested runs
-    // inherit; the "<X> leads to…" section leaves whole (S-furniture).
-    const cw = card && headUntil !== undefined ? { printed: card.printed, head: headUntil >= 0 && i < headUntil } : card;
+    // inherit; the "<X> leads to…" section leaves whole (S-furniture). Card step 14: `statMask`
+    // (astVisibility.ts cardStatHeadMask) marks a variant section's stat header for the printed-set drops.
+    const cw = card && headUntil !== undefined ? { printed: card.printed, head: headUntil >= 0 && i < headUntil, ...(statMask ? { statHead: !!statMask[i] } : {}) } : card;
     if (cw && isCardFurnitureTitle(n)) {
       const end = cardFurnitureSectionEnd(nodes, i);
       for (let k = i; k < end; k++) walkHidden(nodes[k], out, hiddenBy ?? 'card-furniture');
@@ -370,7 +371,7 @@ export function walkBlocks(nodes, hideMeta, out = [], hiddenBy = null, card = un
           i = j - 1;
           const combined = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' ? [pp] : pp.c || []));
           if (cw) {
-            const drop = isCardFurnitureP(n, cw.head) ? 'card-furniture' : meta && cardDropsMetaP(n, cw) ? 'card-printed' : null;
+            const drop = isCardFurnitureP(n, cw.head) ? 'card-furniture' : cardDropsPrintedP(n, cw) ? 'card-printed' : null;
             emit(out, inlineRuns(combined), hiddenBy, drop, meta ? 'meta' : 'p');
             continue;
           }
@@ -414,6 +415,8 @@ function renderBlock(n, hideMeta, out, hiddenBy, card = undefined) {
         // Card step 5: AstRenderer's card branch — furniture leaves; a META line shows (full weight or
         // dim) unless the surface printed every label it leads with, in the header.
         if (isCardFurnitureP(n, card.head)) { emit(out, inlineRuns(n.c), hiddenBy, 'card-furniture', 'p'); return; }
+        // Card step 14: a header line outside META whose every label the stat rows printed (cardDropsPrintedP).
+        if (!isMetaP(n) && cardDropsPrintedP(n, card)) { emit(out, inlineRuns(n.c), hiddenBy, 'card-printed', 'p'); return; }
         if (isMetaP(n)) { emit(out, inlineRuns(n.c), hiddenBy, cardDropsMetaP(n, card) ? 'card-printed' : null, 'meta'); return; }
       }
       if (isMetaP(n)) { emit(out, inlineRuns(n.c), hiddenBy, hideMeta ? 'meta-line' : null, 'meta'); return; }
@@ -517,7 +520,7 @@ function walkHidden(n, out, rule) {
 export function treeBlocks(tree, { hideMeta = false, itemLists = true, card = undefined } = {}) {
   const t = itemLists ? tree : withoutItemLists(tree);
   const top = t.c || [];
-  if (card) return walkBlocks(top, false, [], null, { printed: card.printed, head: false }, cardHeadUntil(top)).filter((b) => /[A-Za-z0-9]/.test(b.text));
+  if (card) return walkBlocks(top, false, [], null, { printed: card.printed, head: false }, cardHeadUntil(top), cardStatHeadMask(top)).filter((b) => /[A-Za-z0-9]/.test(b.text));
   return walkBlocks(top, hideMeta).filter((b) => /[A-Za-z0-9]/.test(b.text));
 }
 
@@ -709,7 +712,7 @@ export const SECTIONS = ['S1-MISSING', 'S1-UNNAMED', 'DIFFERS', 'DUPLICATED', 'E
  * under `legacy[surface]` that surface's row entries as measured with its switch OFF; while the switch
  * is off they stand in for the surface's entries in the main sections. Step 22 removes both.
  */
-export const SWITCHED_SURFACES = ['statDetail', 'actionDetail', 'featDetail', 'strikeDetail'];
+export const SWITCHED_SURFACES = ['statDetail', 'actionDetail', 'featDetail', 'strikeDetail', 'itemDetail'];
 
 /**
  * The entries the baseline expects under the switches as they are now (`cardOn`, default CARD_ON): the
@@ -853,13 +856,21 @@ export function surfaceRows(deps) {
   }
 
   // ItemDetail — every item with a page, plus a hidden cursed item wearing its twin (playerFacingContent).
+  // With CARD_ON.itemDetail (card step 14) the description is RecordCard mode 'mine' (chrome 'inset') for the
+  // shown record's page: the printed set is the labels of the popup's own stat block (itemStatRows) in place
+  // of hideMeta, the item lists cut. The page's embedded stubs are drawn there (src/sheet/astStubs.ts) but
+  // are another record's page, never judged as this one's: the ledger reads the stored tree (stubs empty)
+  // and test/card-parity.test.tsx reads past [data-stub]. Switched off, the legacy DescBody (hideMeta).
+  const itemDrawn = (rec) => ((deps.cardOn ?? CARD_ON).itemDetail
+    ? { hideMeta: false, card: { printed: statRows.itemStatRows(rec, db).map((r) => r.k) } }
+    : { hideMeta: true });
   for (const [id, item] of Object.entries(db.items ?? {})) {
-    if (has('items', id)) rows.push({ surface: 'itemDetail', bucket: 'items', id, own: { bucket: 'items', id }, read: { bucket: 'items', slug: id }, hideMeta: true, itemLists: false, md: item.description ?? '', printed: statRows.itemStatRows(item, db).map((r) => [r.k, r.v]), mode: 'mine' });
+    if (has('items', id)) rows.push({ surface: 'itemDetail', bucket: 'items', id, own: { bucket: 'items', id }, read: { bucket: 'items', slug: id }, ...itemDrawn(item), itemLists: false, md: item.description ?? '', printed: statRows.itemStatRows(item, db).map((r) => [r.k, r.v]), mode: 'mine' });
     const twin = item.disguisedAs ? db.items[item.disguisedAs] : undefined;
     if (twin && has('items', twin.id)) {
       const shown = { ...twin, id };
       // Card step 7a: the popup reads the page of the record it SHOWS (cursedItems.ts shownItemId).
-      rows.push({ surface: 'itemDetail', bucket: 'items', id: `${id}~hidden`, own: { bucket: 'items', id: twin.id }, read: { bucket: 'items', slug: twin.id }, hideMeta: true, itemLists: false, md: shown.description ?? '', printed: statRows.itemStatRows(shown, db).map((r) => [r.k, r.v]), mode: 'mine' });
+      rows.push({ surface: 'itemDetail', bucket: 'items', id: `${id}~hidden`, own: { bucket: 'items', id: twin.id }, read: { bucket: 'items', slug: twin.id }, ...itemDrawn(shown), itemLists: false, md: shown.description ?? '', printed: statRows.itemStatRows(shown, db).map((r) => [r.k, r.v]), mode: 'mine' });
     }
   }
 

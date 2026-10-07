@@ -42,7 +42,9 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  * the browse card (RecordCard mode 'browse') for the same {bucket, id}, and reads a verdict off the DOM:
  *
  *   FeatDetail      feats / class features / heritage rows, built by FeatsTab's own featEntries
- *   ItemDetail      every item with a page, and a hidden cursed item through playerFacingContent
+ *   ItemDetail      every item with a page, and a hidden cursed item through playerFacingContent — since
+ *                   card step 14 its description is the shown record's inset 'mine' card
+ *                   (CARD_ON.itemDetail), modelled with the printed set of its own stat block
  *   SpellDetail     the spell popup (stat rows from fields, body from the description string)
  *   ActionDetail    opened by clicking its chip on MainTab (curated activities + feat actions) — since
  *                   card step 9 the record's 'mine' RecordCard (CARD_ON.actionDetail), modelled by the
@@ -126,6 +128,12 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *    controls → the regions test red ('strikeDetail: div.sd-injected').
  *  - (card step 10 fixer) cardSurfaces.ts strikeDetail → false: this file 16 of 16 green on the legacy
  *    popup, and card-truth-check green against the baseline's legacy strikeDetail entries.
+ *  - (card step 14, 2026-10-07) scripts/lib/card-scope.mjs `itemDrawn` forced to the legacy model (the
+ *    ledger models the hideMeta item popup while the card is on) → the agreement test red (60
+ *    disagreements, first itemDetail|items:jiang-shi-bell), the baseline test and the hidden-bag case red.
+ *  - (card step 14) RecordCard.tsx inset page lane `card={{ printed: printedSet(printed) }}` →
+ *    `printedSet([])` (the item card stops leaving out what its stat block printed) → the agreement test
+ *    red (59 disagreements) and the hidden-bag case red; the ledger unchanged.
  * Measured in round 0 (that code is unchanged since):
  *  - RecordCard.tsx fallback: headerActions moved back after the title → the headerActions test red.
  *  - RecordCard.tsx page branch: the TrustMarker dropped from headerControls → the TrustMarker test red.
@@ -218,6 +226,14 @@ async function click(el: Element | null | undefined) {
 /* ------------------------------------------------------------------------------ reading the DOM */
 const BLOCK_SEL = 'p, li, td, th, h1, h2, h3, h4, h5, h6, .ast-meta, .ast-ds, .ast-h2, .ast-h3, .ast-actline, .rt-h, .rt-ds';
 const OURS_SEL = '[data-ours], .sd-ours, .sd-choice-note';
+/**
+ * Card step 14 (docs/card-design.md section 2 rule 6): an embedded page stub drawn inline ([data-stub],
+ * src/sheet/astStubs.ts) is ANOTHER record's page — a weapon's group effect, an armor's specialization —
+ * so the reader leaves it out on both sides (the surface and the browse card), exactly as the ledger, which
+ * reads the stored tree with its stubs empty. test/card-item.test.tsx checks the embedded words against the
+ * target page itself.
+ */
+const SKIP_SEL = `${OURS_SEL}, [data-stub]`;
 /** Elements that hold blocks rather than inline text: their own loose text is read as a block of its own. */
 const CONTAINERS = new Set(['DIV', 'UL', 'OL', 'TABLE', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'HR', 'ASIDE', 'SECTION', 'ARTICLE', 'HEADER', 'FOOTER', 'NAV', 'DETAILS', 'SUMMARY', 'FIGURE', 'BLOCKQUOTE', 'DL', 'DT', 'DD', 'FORM', 'FIELDSET', 'CENTER']);
 /**
@@ -229,14 +245,14 @@ const CONTAINERS = new Set(['DIV', 'UL', 'OL', 'TABLE', 'THEAD', 'TBODY', 'TFOOT
 function domBlocks(root: Element | null | undefined): Block[] {
   if (!root) return [];
   const seen = new Set<Node>();
-  const isOurs = (e: Element) => !!e.closest(OURS_SEL);
+  const isOurs = (e: Element) => !!e.closest(SKIP_SEL);
   const markSeen = (e: Element) => { const w = document.createTreeWalker(e, NodeFilter.SHOW_TEXT); while (w.nextNode()) seen.add(w.currentNode); };
   const runsOf = (el: Node, out: Run[] = []): Run[] => {
     for (const n of Array.from(el.childNodes)) {
       if (n.nodeType === 3) { out.push({ t: n.textContent ?? '' }); seen.add(n); }
       else if (n.nodeType === 1) {
         const e = n as Element;
-        if (e.matches(OURS_SEL)) continue;
+        if (e.matches(SKIP_SEL)) continue;
         if (e.tagName === 'STRONG') { out.push({ b: e.textContent ?? '' }); markSeen(e); }
         else runsOf(e, out);
       }
@@ -258,7 +274,7 @@ function domBlocks(root: Element | null | undefined): Block[] {
       if (n.nodeType === 3) { runs.push({ t: n.textContent ?? '' }); seen.add(n); if ((n.textContent ?? '').trim()) at ??= n; }
       else if (n.nodeType === 1) {
         const e = n as Element;
-        if (e.matches(BLOCK_SEL) || e.matches(OURS_SEL) || e.querySelector(BLOCK_SEL) || CONTAINERS.has(e.tagName)) continue;
+        if (e.matches(BLOCK_SEL) || e.matches(SKIP_SEL) || e.querySelector(BLOCK_SEL) || CONTAINERS.has(e.tagName)) continue;
         at ??= e;
         if (e.tagName === 'STRONG') { runs.push({ b: e.textContent ?? '' }); markSeen(e); }
         else runsOf(e, runs);
@@ -529,6 +545,10 @@ async function renderItem(row: Row): Promise<Read> {
   const cdb = hidden ? playerFacingContent(db, [inv]) : db;
   const m = await mount(<ItemDetail inv={inv} item={cdb.items[id]} content={cdb} onClose={noop} />, cdb);
   const pop = m.host.querySelector('.picker.spell-detail')!;
+  // Card step 14: with CARD_ON.itemDetail the last .sd-desc is the record's inset 'mine' card (RecordCard
+  // chrome 'inset', .sd-desc.card-inset) — its ours box and footer lines are [data-ours], its embedded page
+  // stubs [data-stub], both outside the read; the frame around it (sub-line, chips, stat block, controls)
+  // is the same regions as before.
   const descs = [...pop.querySelectorAll(':scope .sd-body > .sd-desc')];
   noteRegions('itemDetail', pop.querySelector('.sd-body'), descs.slice(-1));
   const r = readBody(descs.slice(-1), readStats(pop));

@@ -15,6 +15,8 @@
  * id, Attack / Damage / the gated critical specialization as controls above it; no weapon → the blurb, ours).
  * Step 11: featDetail is on (the Feats-tab popup — feats, class features, heritages, choice rows — renders
  * RecordCard mode 'mine' for the row's record; a heritage row reads the heritages bucket by its id).
+ * Step 14: itemDetail is on (ItemDetail keeps its frame, stat block and controls; its description is the
+ * shown record's 'mine' card — RecordCard chrome 'inset' — with the page's embedded stubs drawn).
  * Step 22 removes this file together with the legacy paths.
  *
  * Names follow section 6 ("mine" sheet popups, the builder rows, the GM page).
@@ -30,8 +32,8 @@ export const CARD_ON = {
   strikeDetail: true,
   /** FeatDetail: feats, class features, heritages, choice rows (step 11) — ON: the row's record opens its 'mine' card. */
   featDetail: true,
-  /** ItemDetail (step 14). */
-  itemDetail: false,
+  /** ItemDetail (step 14) — ON: the description is the shown record's 'mine' card inside the item popup's own frame. */
+  itemDetail: true,
   /** Builder ChoiceDetails for granted features (step 15). */
   choiceDetails: false,
   /** SpellDetail (steps 16-17). */

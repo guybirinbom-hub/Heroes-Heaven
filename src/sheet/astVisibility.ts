@@ -255,6 +255,12 @@ export function withoutItemLists(node: AstNode): AstNode {
 export interface CardWalk {
   printed: ReadonlySet<string>;
   head: boolean;
+  /**
+   * Card step 14: this block sits in a STAT header — `head`, or a later header run of the page (a
+   * variant section's own traits + stat column before its rule; cardStatHeadMask). Only the printed-set
+   * drops (S-printed) read it; furniture keeps `head`. Absent = `head`.
+   */
+  statHead?: boolean;
 }
 
 /** The bold run a block opens with (its label), or null — the same "first non-blank child" test as
@@ -340,10 +346,22 @@ export function isCardFurnitureP(p: AstNode, head: boolean): boolean {
   return head && !!l && /^(?:class|parent)$/i.test(l);
 }
 
-/** S-printed: a META header line whose every label the surface's stat rows printed, and only before
- *  the first rule. With an empty printed set (StatDetailModal) this never drops anything. */
+/** S-printed: a META header line whose every label the surface's stat rows printed, and only in a stat
+ *  header (before the first rule; card step 14 adds a variant section's own header — cardStatHeadMask).
+ *  With an empty printed set (StatDetailModal) this never drops anything. */
 export function cardDropsMetaP(p: AstNode, walk: CardWalk): boolean {
-  if (!walk.head || !isMetaP(p)) return false;
+  return isMetaP(p) && cardDropsPrintedP(p, walk);
+}
+
+/**
+ * Card step 14 — S-printed for ANY header line, META or not: a paragraph in a stat header whose every
+ * label the surface's stat rows printed. The item popup prints Damage, Hands, Category, Group, AC Bonus …
+ * in its own stat block; on the page those lines are paragraphs outside META ("Damage 1d10 S"), so the
+ * META-only test drew them a second time beside the block. With an empty printed set (every other card)
+ * it drops nothing.
+ */
+export function cardDropsPrintedP(p: AstNode, walk: CardWalk): boolean {
+  if (!(walk.statHead ?? walk.head) || p.t !== 'p') return false;
   const leads = nodeLeads(p);
   return leads.length > 0 && leads.every((l) => {
     const c = canonLabel(l);
@@ -351,10 +369,40 @@ export function cardDropsMetaP(p: AstNode, walk: CardWalk): boolean {
   });
 }
 
+/**
+ * Card step 14: which top-level blocks are STAT HEADER — before the page's first rule (cardHeadUntil),
+ * and, after it, every variant header: a run that opens with a top-level `traits` node (AoN opens every
+ * record's header with its trait chips) and runs to the next rule, title or the page's end. On a family
+ * page that is each variant's "Source … Price 70 gp; Bulk 1" block ("Ablative Armor Plating (Greater)";
+ * a scroll rank's "Price 8,000 gp", the last thing on its page; "Abysium Chunk"/"Abysium Ingot" listed
+ * under the Abysium page). The item popup's stat block prints those labels for the record the player holds,
+ * so they leave as S-printed — what the legacy popup's hideMeta left out too; the search popup keeps them.
+ * A page with no rule (the class kits) has one header only if its first block after the title and trait
+ * chips is a Source-led layout block ("Source Player Core 2 pg. 277 Price 8 gp … Bulk 3"); otherwise none
+ * (never cut what we cannot place).
+ */
+export function cardStatHeadMask(top: AstNode[]): boolean[] {
+  const first = cardHeadUntil(top);
+  const mask = top.map((_, i) => first >= 0 && i < first);
+  if (first < 0) {
+    const k = top.findIndex((n) => !(n.t === 'traits' || (n.t === 'title' && Number(n.level ?? 1) <= 1)));
+    const lead = k >= 0 ? top[k] : undefined;
+    if (lead && (lead.t === 'row' || lead.t === 'column') && /^\s*Source\b[\s\S]*?\bpg\.?\s*\d/i.test(textOf(lead))) mask[k] = true;
+    return mask;
+  }
+  for (let i = first + 1; i < top.length; i++) {
+    if (top[i].t !== 'traits') continue;
+    let j = i;
+    while (j < top.length && top[j].t !== 'hr' && top[j].t !== 'title' && top[j].t !== 'heading') { mask[j] = true; j++; }
+    i = j;
+  }
+  return mask;
+}
+
 /** An inline-only stat row ("A; B; C"), filtered per bold-label segment: a part whose label the surface
  *  printed leaves (S-printed, header only); every other part stays. */
 export function cardRowParts(parts: AstNode[], walk: CardWalk): AstNode[] {
-  if (!walk.head) return parts;
+  if (!(walk.statHead ?? walk.head)) return parts;
   return parts.filter((f) => {
     const l = leadOf(f);
     const c = l ? canonLabel(l) : null;

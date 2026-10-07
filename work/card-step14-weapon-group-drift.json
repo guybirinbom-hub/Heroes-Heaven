@@ -1,0 +1,291 @@
+{
+  "_about": "Card step 14, rule C2 (orchestrator round 2, 2026-10-08; replaces decision C): the page is the truth, read whole. Weapons whose record `group` names no weaponGroup page their own Archives page embeds under \"Critical Specialization Effects\", split by what the page PRINTS on its own \"Group\" lines (src/sheet/astStubs.ts printedWeaponGroups). `drift`: the page prints only the embedded group, never the record's — true record drift; the card shows the page's group effect and hides our sentence (src/sheet/ItemDetail.tsx showCrit), and these records are input for the rebuild lane. `combination`: the melee half of a combination weapon — the page prints the record's group (\"Group Axe\") under Melee and embeds only the ranged group's page; our sentence for the record's group stays, marked ours, beside the embedded page. Measured by the scratch script card-step14-fx2-drift.mjs over public/core.json + public/ast/*.json.gz.",
+  "measured": {
+    "date": "2026-10-08",
+    "weapons": 1049,
+    "withPage": 1036,
+    "embedsAGroupPage": 330,
+    "embedsOwnGroupPage": 307,
+    "drift": 5,
+    "combination": 18,
+    "noGroupPage_printsOwn": 0,
+    "noGroupPage_printsOther": 0,
+    "noGroupPage_printsNone": 686,
+    "noGroupOnRecord": 20
+  },
+  "drift": [
+    {
+      "id": "alchemical-crossbow",
+      "aonId": "weapon-118",
+      "recordGroup": "crossbow",
+      "pagePrintedGroups": [
+        "bow"
+      ],
+      "embeddedGroupPages": [
+        "bow"
+      ]
+    },
+    {
+      "id": "repeating-crossbow",
+      "aonId": "weapon-176",
+      "recordGroup": "crossbow",
+      "pagePrintedGroups": [
+        "bow"
+      ],
+      "embeddedGroupPages": [
+        "bow"
+      ]
+    },
+    {
+      "id": "rotary-bow",
+      "aonId": "weapon-338",
+      "recordGroup": "crossbow",
+      "pagePrintedGroups": [
+        "bow"
+      ],
+      "embeddedGroupPages": [
+        "bow"
+      ]
+    },
+    {
+      "id": "taw-launcher",
+      "aonId": "weapon-342",
+      "recordGroup": "crossbow",
+      "pagePrintedGroups": [
+        "bow"
+      ],
+      "embeddedGroupPages": [
+        "bow"
+      ]
+    },
+    {
+      "id": "tri-bladed-katar",
+      "aonId": "weapon-540",
+      "recordGroup": "knife",
+      "pagePrintedGroups": [
+        "brawling"
+      ],
+      "embeddedGroupPages": [
+        "brawling"
+      ]
+    }
+  ],
+  "combination": [
+    {
+      "id": "axe-musket-melee",
+      "aonId": "weapon-213--melee",
+      "recordGroup": "axe",
+      "pagePrintedGroups": [
+        "axe",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "black-powder-knuckle-dusters-melee",
+      "aonId": "weapon-214--melee",
+      "recordGroup": "brawling",
+      "pagePrintedGroups": [
+        "brawling",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "bow-staff-melee",
+      "aonId": "weapon-344--melee",
+      "recordGroup": "club",
+      "pagePrintedGroups": [
+        "club",
+        "bow"
+      ],
+      "embeddedGroupPages": [
+        "bow"
+      ]
+    },
+    {
+      "id": "cane-pistol-melee",
+      "aonId": "weapon-215--melee",
+      "recordGroup": "club",
+      "pagePrintedGroups": [
+        "club",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "crescent-cross-melee",
+      "aonId": "weapon-345--melee",
+      "recordGroup": "knife",
+      "pagePrintedGroups": [
+        "knife",
+        "bow"
+      ],
+      "embeddedGroupPages": [
+        "bow"
+      ]
+    },
+    {
+      "id": "dagger-pistol-melee",
+      "aonId": "weapon-216--melee",
+      "recordGroup": "knife",
+      "pagePrintedGroups": [
+        "knife",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "explosive-dogslicer-melee",
+      "aonId": "weapon-224--melee",
+      "recordGroup": "sword",
+      "pagePrintedGroups": [
+        "sword",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "gnome-amalgam-musket-melee",
+      "aonId": "weapon-217--melee",
+      "recordGroup": "hammer",
+      "pagePrintedGroups": [
+        "hammer",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "gun-sword-melee",
+      "aonId": "weapon-218--melee",
+      "recordGroup": "sword",
+      "pagePrintedGroups": [
+        "sword",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "hammer-gun-melee",
+      "aonId": "weapon-219--melee",
+      "recordGroup": "hammer",
+      "pagePrintedGroups": [
+        "hammer",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "lancer-melee",
+      "aonId": "weapon-346--melee",
+      "recordGroup": "spear",
+      "pagePrintedGroups": [
+        "spear",
+        "bow"
+      ],
+      "embeddedGroupPages": [
+        "bow"
+      ]
+    },
+    {
+      "id": "mace-multipistol-melee",
+      "aonId": "weapon-220--melee",
+      "recordGroup": "club",
+      "pagePrintedGroups": [
+        "club",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "mikazuki-melee",
+      "aonId": "weapon-347--melee",
+      "recordGroup": "flail",
+      "pagePrintedGroups": [
+        "flail",
+        "bow"
+      ],
+      "embeddedGroupPages": [
+        "bow"
+      ]
+    },
+    {
+      "id": "piercing-wind-melee",
+      "aonId": "weapon-221--melee",
+      "recordGroup": "sword",
+      "pagePrintedGroups": [
+        "sword",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "rapier-pistol-melee",
+      "aonId": "weapon-222--melee",
+      "recordGroup": "sword",
+      "pagePrintedGroups": [
+        "sword",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "three-peaked-tree-melee",
+      "aonId": "weapon-223--melee",
+      "recordGroup": "spear",
+      "pagePrintedGroups": [
+        "spear",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "triggerbrand-melee",
+      "aonId": "weapon-257--melee",
+      "recordGroup": "sword",
+      "pagePrintedGroups": [
+        "sword",
+        "firearm"
+      ],
+      "embeddedGroupPages": [
+        "firearm"
+      ]
+    },
+    {
+      "id": "wrecker-melee",
+      "aonId": "weapon-348--melee",
+      "recordGroup": "flail",
+      "pagePrintedGroups": [
+        "flail",
+        "sling"
+      ],
+      "embeddedGroupPages": [
+        "sling"
+      ]
+    }
+  ]
+}

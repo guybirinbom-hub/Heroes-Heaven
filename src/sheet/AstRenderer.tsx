@@ -20,13 +20,16 @@ import { clean, textOf, isMetaP, isSourceP, isMetaishBlock } from './astVisibili
  * models the card with (scripts/lib/card-scope.mjs). Reached only through the `card` prop; the hideMeta
  * path below never reads them. */
 import {
-  cardDropsMetaP, cardFurnitureSectionEnd, cardHeadUntil, cardRowParts, isCardDimP, isCardFurnitureP,
+  cardDropsMetaP, cardDropsPrintedP, cardFurnitureSectionEnd, cardHeadUntil, cardRowParts, cardStatHeadMask, isCardDimP, isCardFurnitureP,
   isCardFurnitureTitle, type CardWalk,
 } from './astVisibility';
 /* Card step 13a: the level folds' node types (card-fold, card-pointer, `applies`), made only by
  * src/sheet/cardScope.ts scopeTree for a 'mine' card — a stored tree never carries them, so the hideMeta
  * and browse paths never meet them. */
 import { FOLD_LABEL, type ScopedNode } from './cardScope';
+/* Card step 14: an embedded page stub resolved by astStubs.ts (made only where a card switches it on —
+ * a stored tree's stubs are empty, so every other path draws them as nothing, as before). */
+import type { StubbedNode } from './astStubs';
 import './ast.css';
 
 /** The Archives of Nethys; a page's own address (`/Rules.aspx?ID=1503`) is stamped on its tree root by
@@ -215,15 +218,18 @@ function TableEl({ node, ctx }: { node: AstNode; ctx: Ctx }): ReactNode {
  * a full class/ancestry page renders in full, not just its loose paragraphs. `hideMeta` drops only the
  * Source/Range/… meta lines (detail views show their own stat block) — flavor prose is NEVER dimmed.
  */
-function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil }: { nodes: AstNode[]; ctx: Ctx; hideMeta?: boolean; kb?: string; lead?: boolean; card?: CardWalk; headUntil?: number }): ReactNode {
+function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil, statMask }: { nodes: AstNode[]; ctx: Ctx; hideMeta?: boolean; kb?: string; lead?: boolean; card?: CardWalk; headUntil?: number; statMask?: readonly boolean[] }): ReactNode {
   const out: ReactNode[] = [];
   for (let i = 0; i < nodes.length; i++) {
     const n = nodes[i];
     const key = `${kb}.${i}`;
     /* Card step 5 ('mine' card only): at the top of the body, a block before the page's first rule is
      * header (`cw.head`); nested runs inherit their container's. The S-furniture "<X> leads to…" section
-     * leaves with its heading and the link paragraph under it. */
-    const cw: CardWalk | undefined = card && headUntil !== undefined ? { printed: card.printed, head: headUntil >= 0 && i < headUntil } : card;
+     * leaves with its heading and the link paragraph under it. Card step 14: `statMask` (astVisibility.ts
+     * cardStatHeadMask) adds a variant section's own stat header for the printed-set drops (`statHead`). */
+    const cw: CardWalk | undefined = card && headUntil !== undefined
+      ? { printed: card.printed, head: headUntil >= 0 && i < headUntil, ...(statMask ? { statHead: !!statMask[i] } : {}) }
+      : card;
     if (cw && isCardFurnitureTitle(n)) { i = cardFurnitureSectionEnd(nodes, i) - 1; continue; }
     /* bug 2026-09-12 #8: popup-divider — a rule with NOTHING above it.
      *
@@ -265,7 +271,8 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil }: { nod
           // Card step 5: the reunited line follows the card's rules — left out only as furniture or
           // S-printed, otherwise drawn whole at full weight (a dim label dims it).
           if (cw) {
-            if (isCardFurnitureP(n, cw.head) || (meta && cardDropsMetaP(n, cw))) continue;
+            // Card step 14: S-printed for any header line, META or not (cardDropsPrintedP).
+            if (isCardFurnitureP(n, cw.head) || cardDropsPrintedP(n, cw)) continue;
             const joined: AstNode[] = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' ? [pp] : pp.c || []));
             out.push(<p key={key} className={(n as ScopedNode).applies ? 'card-applies' : isCardDimP(n) ? 'card-dim' : meta ? 'card-use' : undefined}>{joined.map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />)}</p>);
             continue;
@@ -352,6 +359,9 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       // unless it is furniture, or a header line the surface's own stat rows printed (S-printed).
       if (card) {
         if (isCardFurnitureP(n, card.head)) return null;
+        // Card step 14: a header line outside META whose every label the stat rows printed ("Damage 1d10 S"
+        // under the item popup's own Damage row) leaves too — S-printed, as a META line does below.
+        if (cardDropsPrintedP(n, card)) return null;
         // Card step 13a: an impulse "Level (+N)" / "Level (Nth)" entry that applies at the character's
         // level is highlighted — a class on the page's own paragraph; not a word changes.
         if ((n as ScopedNode).applies) return <p key={key} className="card-applies"><Kids node={n} ctx={ctx} /></p>;
@@ -407,8 +417,15 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       if (!card && hideMeta && isMetaishBlock(n)) return null;
       return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key);
     case 'document':
-    case 'doc':
-      return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key);
+    case 'doc': {
+      // Card step 14 (section 2 rule 6): a stub resolved by src/sheet/astStubs.ts resolveStubs carries the
+      // page it embeds (`stubOf`) — another record's page, drawn inline as AoN draws it, inside a wrapper
+      // that names it ([data-stub]). A stub nobody resolved stays empty and draws nothing, as before.
+      const from = (n as StubbedNode).stubOf;
+      if (!from) return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key);
+      const inner = Blocks({ nodes: n.c || [], ctx, hideMeta, kb: key, card });
+      return inner == null ? null : <div key={key} className="ast-stub" data-stub={from}>{inner}</div>;
+    }
     case 'view':
       return <p key={key}><Kids node={n} ctx={ctx} /></p>;
     case 'card-fold':
@@ -464,7 +481,7 @@ const BLOCK_TYPES = new Set([
 function DocBody({ top, ctx, hideMeta, card }: { top: AstNode[]; ctx: Ctx; hideMeta?: boolean; card?: CardWalk }): ReactNode {
   /* `lead` starts true here and only here: this run IS the top of the popup body, so a divider it
    * reaches before anything else has nothing above it (bug #8). */
-  if (card) return <Blocks nodes={top} ctx={ctx} kb="d" lead card={card} headUntil={cardHeadUntil(top)} />;
+  if (card) return <Blocks nodes={top} ctx={ctx} kb="d" lead card={card} headUntil={cardHeadUntil(top)} statMask={cardStatHeadMask(top)} />;
   return <Blocks nodes={top} ctx={ctx} hideMeta={hideMeta} kb="d" lead />;
 }
 

@@ -11,7 +11,12 @@ import { traitDesc, traitLabel } from '../rules/glossary';
 import { InfoTerm } from './InfoTerm';
 import { DescBody, type RemasteredAs } from './DescBody';
 import { CritSpecText } from './CritSpecText';
-import { critSpec } from '../rules/critSpec';
+import { CRIT_SPEC_PAGE_BUCKET, critSpec, critSpecPageRef } from '../rules/critSpec';
+import { RecordCard } from './RecordCard';
+import { cardOn } from './cardSurfaces';
+import { scopeOfCharacter } from './cardScope';
+import { useAstNode, withoutItemLists } from './useAst';
+import { aonIndex, embedsFromBucket, embedsPage, printedWeaponGroups, refInBucket, stubRefs, useStubbedTree } from './astStubs';
 import { PinStar } from './PinStar';
 import { TrustMarker } from './TrustMarker';
 import { shownItemId } from '../rules/cursedItems';
@@ -230,7 +235,10 @@ export function itemStatRows(item: Item, content: ContentDatabase): { k: string;
   return rows.filter((r): r is { k: string; v: string | number } => !(r.v === undefined || r.v === '' || r.v === null));
 }
 
-/** Full item detail overlay (reuses the .picker / .sd-* chrome). */
+/** Full item detail overlay (reuses the .picker / .sd-* chrome). Card step 14 (docs/card-design.md section 9
+ *  row 14): with CARD_ON.itemDetail the frame — header, sub-line, TrustMarker, chips, stat block, every
+ *  control, the phone Remove bar — stays exactly as it was, and the description below it is the shown
+ *  record's 'mine' card (RecordCard chrome 'inset'). */
 export function ItemDetail({
   inv,
   item,
@@ -288,6 +296,39 @@ export function ItemDetail({
   // item wears its twin's name and text, so its page and its pin are the twin's too; for any other item
   // this is its own id.
   const pageId = shownItemId(item, content);
+  /* Card step 14 (docs/card-design.md section 9 row 14; section 5 "Crit-spec block"): with
+   * CARD_ON.itemDetail the description is the record's card (RecordCard chrome 'inset', below) and its page
+   * draws the pages its stubs embed — a weapon's group effect under "Critical Specialization Effects". The
+   * same tree is read here (the hooks share their caches) for ONE gate: the item's own critical
+   * specialization sentence is left out where the page already gives the record's effect — never twice,
+   * never in two wordings — by rule C2 below (the page is the truth, read whole: its embedded group page
+   * AND its printed "Group" lines). While the page or a stub bucket is still loading
+   * the gate waits on what the stubs name (stubRefs), so the sentence does not flash in and out. Switched
+   * off, the block shows for every weapon with a known group, as before. */
+  const itemCard = cardOn('itemDetail');
+  const { node: ownPage, loading: pageLoading } = useAstNode(itemCard ? 'items' : undefined, itemCard ? pageId : undefined);
+  const cardPage = ownPage ? withoutItemLists(ownPage) : undefined;
+  const { tree: drawnPage, pending: stubsPending } = useStubbedTree(cardPage, `items:${pageId}`, content, itemCard);
+  const weaponGroup = item.itemType === 'weapon' ? item.group : undefined;
+  const critText = critSpec(weaponGroup);
+  const ownGroupRef = critSpecPageRef(weaponGroup);
+  const expectedRefs = critText && cardPage && stubsPending ? stubRefs(cardPage, aonIndex(content)) : [];
+  // Rule C2 (orchestrator, round 2): the page is the truth, read whole. (i) It draws the record's OWN group
+  // page → the effect is the page's, ours leaves. (ii) It draws another group's page and prints no "Group"
+  // line naming the record's group (true record drift, work/card-step14-weapon-group-drift.json `drift`)
+  // → the page's group is the one shown, ours leaves. Otherwise ours stays, marked ours, beside whatever
+  // page the item embeds: a combination weapon's melee half prints its own group ("Group Axe") but embeds
+  // only the ranged group's page (the `combination` list), so the axe effect is ours and the firearm one
+  // the page's.
+  const pageDrawsOwnGroup = !!critText && !!cardPage && !!ownGroupRef && (stubsPending
+    ? expectedRefs.includes(ownGroupRef)
+    : embedsPage(drawnPage, ownGroupRef));
+  const pageDrawsAGroup = !!critText && !!cardPage && (stubsPending
+    ? expectedRefs.some((r) => refInBucket(r, CRIT_SPEC_PAGE_BUCKET))
+    : embedsFromBucket(drawnPage, CRIT_SPEC_PAGE_BUCKET));
+  const pagePrintsOwnGroup = !!cardPage && !!weaponGroup && printedWeaponGroups(cardPage).includes(weaponGroup);
+  const pageDrawsCrit = pageDrawsOwnGroup || (pageDrawsAGroup && !pagePrintsOwnGroup);
+  const showCrit = !!critText && (!itemCard || (!pageLoading && !pageDrawsCrit));
   const runes = runeLines(inv);
   // The mode this item carries, if any. A consumable switches its own on when used; anything else
   // needs the Activate control below, or the mode is unreachable.
@@ -865,11 +906,13 @@ export function ItemDetail({
               </span>
             </div>
           )}
-          {item.itemType === 'weapon' && critSpec(item.group) && (
-            <div className="sd-uses sd-critspec">
-              <span className="sd-uses-title">Critical specialization · {cap(item.group ?? '')}</span>
+          {/* Card step 14: on the card the sentence is ours (data-ours, kind critSpec — section 4) and drawn
+              only where the page does not give the record's group effect itself (rule C2, showCrit above). */}
+          {showCrit && (
+            <div className="sd-uses sd-critspec" {...(itemCard ? { 'data-ours': '', 'data-ours-kind': 'critSpec' } : {})}>
+              <span className="sd-uses-title">Critical specialization · {cap(weaponGroup ?? '')}</span>
               <div className="sd-critspec-text">
-                <CritSpecText text={critSpec(item.group)!} content={content} />
+                <CritSpecText text={critText!} content={content} />
               </div>
               <span className="sd-uses-hint">Applies on a critical hit if you have critical specialization with this weapon group.</span>
             </div>
@@ -914,15 +957,35 @@ export function ItemDetail({
             * ships beside a legacy item, and (for an item the book gives no rules text and no archive
             * page) a line saying so rather than a blank space. The casts go away when `remasteredAs`
             * can be declared in src/rules/types.ts; see DescBody.tsx. */}
-          <DescBody
-            description={item.description}
-            descRefs={item.descRefs}
-            onExit={onClose}
-            astKey="items"
-            astId={pageId}
-            remasteredAs={(item as { remasteredAs?: RemasteredAs }).remasteredAs}
-            emptyNote="The book prints no rules text for this item."
-          />
+          {/* Card step 14 (docs/card-design.md section 9 row 14): with CARD_ON.itemDetail the description is
+              the SHOWN record's 'mine' card, inside this popup's own frame (RecordCard chrome 'inset'): the
+              page by {items, pageId} with the printed set of the stat block above (a page header line that
+              block printed is left off; Activate, Access, Craft Requirements, Usage … show once, in the
+              page's words), the page's embedded stubs drawn (`stubs`: the group's specialization effect),
+              the item lists cut, the character's folds; no page → the old text with the no-page line. The
+              legacy DescBody stays for the switch's off position. */}
+          {itemCard ? (
+            <RecordCard
+              node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items', slug: pageId }}
+              mode="mine"
+              chrome="inset"
+              scope={scopeOfCharacter(character)}
+              printed={itemStatRows(item, content).map((r) => r.k)}
+              fallbackText="The book prints no rules text for this item."
+              stubs
+              onExit={onClose}
+            />
+          ) : (
+            <DescBody
+              description={item.description}
+              descRefs={item.descRefs}
+              onExit={onClose}
+              astKey="items"
+              astId={pageId}
+              remasteredAs={(item as { remasteredAs?: RemasteredAs }).remasteredAs}
+              emptyNote="The book prints no rules text for this item."
+            />
+          )}
         </div>
         {/* Remove: a PHONE-only bar, and deliberately a sibling of .sd-body rather than the last thing
          * inside it. As part of the scrolling panel it sat below the item's full description — a long

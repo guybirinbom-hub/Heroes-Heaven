@@ -491,7 +491,17 @@ describe('card step 1 (G0): the move changes no markup', () => {
       const model = spellCardModel(db.spells[k], trees.spells[k], spellStatRows(db.spells[k]));
       expect(model.base !== splitHeightening(db.spells[k].description || '').base, `spell ${k} body stripped`).toBe(why.includes('preamble stripped'));
     }
-    for (const surface of (cardOn('featDetail') ? ['items'] : ['items', 'feats']) as ('items' | 'feats')[]) {
+    // Card step 14: with CARD_ON.itemDetail the item popup's description is the shown record's mine card by
+    // design (its page lines by the printed-set rule, the embedded group page, the no-page line), so its
+    // markup's byte-equality is the legacy assertion and runs while the switch is off. Its STAT ROWS do not
+    // move: the frame prints the same itemStatRows, checked against the pre-move rows here either way.
+    // batch card premise: weapon-group-15 "becoming off-guard until the start of your next turn"
+    if (cardOn('itemDetail')) {
+      expect(Object.keys(now.items)).toEqual(Object.keys(before.items));
+      for (const k of Object.keys(now.items)) expect(now.items[k].rows, `items ${k} rows`).toEqual(before.items[k].rows);
+    }
+    const legacySurfaces = [...(cardOn('itemDetail') ? [] : ['items']), ...(cardOn('featDetail') ? [] : ['feats'])];
+    for (const surface of legacySurfaces as ('items' | 'feats')[]) {
       expect(Object.keys(now[surface])).toEqual(Object.keys(before[surface]));
       for (const k of Object.keys(now[surface])) {
         const key = surface === 'items' ? `items:${k}` : k;

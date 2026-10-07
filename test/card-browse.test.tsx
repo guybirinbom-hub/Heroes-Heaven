@@ -16,6 +16,7 @@ import { CARD_ON } from '../src/sheet/cardSurfaces';
 import { RecordCard } from '../src/sheet/RecordCard';
 import type { OursLine } from '../src/sheet/cardModel';
 import { isNotOwnPage, pageSliceOf, recordTree, textOf, variantSection } from '../src/sheet/astVisibility';
+import { aonIndex, stubIds, stubRefs } from '../src/sheet/astStubs';
 
 /**
  * Card step 3 (docs/card-design.md section 9, row 3): the BROWSE card is extracted from
@@ -479,7 +480,110 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     // Card step 10 turns the strike popup (StrikeDetailModal) into the weapon's 'mine' card, so the
     // longsword reads its own page's words (test/card-strike.test.tsx).
     // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
-    const landed = new Set(['statDetail', 'hostPage', 'actionDetail', 'featDetail', 'strikeDetail']);
+    // Card step 14 turns the item popup's description into the shown record's 'mine' card, so the
+    // longsword's popup draws its group's page where the longsword page embeds it (test/card-item.test.tsx).
+    // batch card premise: weapon-group-15 "becoming off-guard until the start of your next turn"
+    const landed = new Set(['statDetail', 'hostPage', 'actionDetail', 'featDetail', 'strikeDetail', 'itemDetail']);
     for (const [surface, on] of Object.entries(CARD_ON)) if (!landed.has(surface)) expect(on, surface).toBe(false);
+  });
+});
+
+/*
+ * Card step 14 — THE BROWSE RE-BASELINE (docs/card-design.md section 2 rule 6: "This changes the approved
+ * browse popup, so browse is re-baselined in the same commit"). An item page's browse card draws the pages
+ * its stubs embed (src/sheet/astStubs.ts STUB_HOST_BUCKETS). Measured 2026-10-07: the snapshot block above
+ * stays byte-equal on all 320 renders — its first frames are drawn before a stub's bucket (weaponGroup,
+ * armorGroup …) has arrived, when the stubs still draw nothing — so the change is pinned here instead: for
+ * every sampled item page that embeds a page, plus the longsword and full plate, the settled browse card
+ * with every stub bucket loaded is the pre-step popup (the first frame, byte-equal to the pre-extraction
+ * snapshot) with the embedded pages added at the stubs' places, and NOTHING ELSE changed. Every other
+ * bucket's browse card draws its stubs as nothing, as before (the 2,664 archetype feat stubs want a
+ * compact list first — a later step).
+ *
+ * MUTATION LINE (measured red on 2026-10-07, restored byte-exact): RecordCard.tsx browse lane
+ * `node={browseTree ?? astNode}` → `node={astNode}` → red (no page embedded).
+ */
+describe('card step 14: an item page\'s browse card adds its embedded pages and changes nothing else', () => {
+  it('the sampled item pages with stubs, the longsword and full plate', async () => {
+    const idx = aonIndex(db);
+    const withStubs = sample
+      .map((e, i) => ({ e, i }))
+      .filter(({ e }) => e.kind === 'page' && e.key.startsWith('items:') && stubRefs(recordTree('items', e.key.slice(6), (b, s) => trees[b]?.[s]), idx).length > 0);
+    const named = ['longsword', 'full-plate'].map((slug, k) => ({ e: { kind: 'page' as const, key: `items:${slug}`, node: nodeOf('items', slug) }, i: 1000 + k }));
+    const cases = [...withStubs, ...named];
+    // The pre-step popup: the first frame before any stub bucket has arrived (a stub already resolvable
+    // from a loaded bucket is taken out below, on both sides).
+    const strip = (html: string) => {
+      const host = document.createElement('div');
+      host.innerHTML = html;
+      host.querySelectorAll('[data-stub]').forEach((s) => s.remove());
+      return host.innerHTML;
+    };
+    const before = cases.map(({ e, i }) => strip(staticRender(e.node, i)));
+    // Every bucket a stub on these pages may draw from, loaded through the same fetch stub.
+    const need = new Set<string>();
+    for (const { e } of cases) for (const id of stubIds(recordTree('items', e.key.slice(6), (b, s) => trees[b]?.[s]))) for (const t of idx.get(id) ?? []) need.add(t.bucket);
+    for (const b of need) {
+      if (!trees[b]) trees[b] = readGz(`public/ast/${b}.json.gz`);
+      await loadBucketAst(b);
+    }
+    let embedded = 0;
+    for (const [k, { e, i }] of cases.entries()) {
+      const host = await mount(modalEl(e.node, i));
+      const refs = stubRefs(recordTree('items', e.key.slice(6), (b, s) => trees[b]?.[s]), idx);
+      for (const ref of refs) expect(host.querySelector(`.ast-pop > .ast-body [data-stub="${ref}"]`), `${e.key} draws ${ref}`).toBeTruthy();
+      embedded += host.querySelectorAll('[data-stub]').length;
+      expect(strip(host.innerHTML), `${e.key}: only the embedded pages changed`).toBe(before[k]);
+      mounted.pop()!.stop();
+    }
+    // Measured 2026-10-07: 2 of the 46 sampled item pages embed a page (their groups' pages), plus the two
+    // named cases — 4 pages embedded, each on its own card, nothing else moved.
+    expect(withStubs.map(({ e }) => e.key)).toEqual(['items:dwarven-waraxe', 'items:sling-bullets']);
+    expect(embedded).toBe(4);
+    // batch card premise: weapon-group-15 "becoming off-guard until the start of your next turn"
+    const sword = await mount(modalEl(nodeOf('items', 'longsword'), 1));
+    expect(sword.querySelector('[data-stub="weaponGroup:sword"]')?.textContent).toContain('becoming off-guard until the start of your next turn');
+  });
+
+  /*
+   * The other half of the re-baseline (step 14's round-2 refute): only ITEM pages resolve their stubs.
+   * The snapshot block above cannot see this (its first frames draw before any stub bucket arrives), so
+   * here every bucket these stubs draw from (actions, feats) is already loaded and each page's stubs are
+   * proven resolvable first — yet the browse card draws them as nothing, byte-equal to its first frame.
+   * Pages (scratch scan of public/ast, 2026-10-07: 68 class-feature, 28 feat, 1 action and 1 spell page
+   * carry a stub that resolves): Rage (embeds the Rage action), Arcane Safeguards (Resist Magic), the
+   * Knight Vigilant archetype page (21 feat stubs — the compact list case), Bone Flense (Erupting Spurs).
+   *
+   * MUTATION LINE (measured red on 2026-10-07, restored byte-exact): RecordCard.tsx browse lane
+   * `STUB_HOST_BUCKETS.has(stubHost)` → `(STUB_HOST_BUCKETS.has(stubHost) || true)` → red. Since the
+   * step-14 fixer the browse lane asks astStubs.ts browseResolvesStubs (the bucket test behind
+   * CARD_ON.itemDetail); the same mutation there, `STUB_HOST_BUCKETS.has(bucket)` →
+   * `(STUB_HOST_BUCKETS.has(bucket) || true)`, measured red again.
+   */
+  it('a non-item page with resolvable stubs draws them as nothing on its browse card', async () => {
+    const idx = aonIndex(db);
+    const cases: [string, string, string][] = [
+      ['classFeatures', 'rage', 'actions:rage'],
+      ['feats', 'arcane-safeguards', 'actions:resist-magic'],
+      ['feats', 'aon-knight-vigilant', 'feats:knight-vigilant'],
+      ['spells', 'bone-flense', 'actions:erupting-spurs'],
+    ];
+    for (const [k, [bucket, slug, first]] of cases.entries()) {
+      const tree = recordTree(bucket, slug, (b, s) => trees[b]?.[s]);
+      const refs = stubRefs(tree, idx);
+      // The stub resolves: its first candidate's page ships in a bucket this file has loaded.
+      expect(refs[0], `${bucket}:${slug} first stub`).toBe(first);
+      const [tb, ts] = first.split(':');
+      expect(trees[tb]?.[ts], `${first} ships`).toBeTruthy();
+      // The first frame, re-serialized through the DOM so void tags print alike on both sides.
+      const first0 = document.createElement('div');
+      first0.innerHTML = staticRender(nodeOf(bucket, slug), 2000 + k);
+      const before = first0.innerHTML;
+      const host = await mount(modalEl(nodeOf(bucket, slug), 2000 + k));
+      expect(host.querySelector('.ast-pop > .ast-body'), `${bucket}:${slug} draws its page`).toBeTruthy();
+      expect(host.querySelectorAll('[data-stub]').length, `${bucket}:${slug} embeds nothing`).toBe(0);
+      expect(host.innerHTML, `${bucket}:${slug} is its first frame`).toBe(before);
+      mounted.pop()!.stop();
+    }
   });
 });

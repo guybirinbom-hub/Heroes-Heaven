@@ -18,6 +18,7 @@ import { SHARED_FEATURE_FOOTER, sharedFeatureFallback } from '../rules/featureTe
 import { FUTURE_TREATMENT, LEVEL_FOLDS, pointerOf, printedSet, scopeTree, withPointer } from './cardScope';
 import { DescBody } from './DescBody';
 import type { SourceInfo } from '../rules/types';
+import { browseResolvesStubs, useStubbedTree } from './astStubs';
 
 /**
  * THE record card (docs/card-design.md section 2 rule 1). Card step 3 extracted it, unchanged, from
@@ -46,11 +47,18 @@ import type { SourceInfo } from '../rules/types';
  * Step 10 adds `leadControls` (the strike popup's Attack / Damage and gated critical specialization):
  * drawn above the text on every 'mine' lane — first in the page's body (AstRenderer `lead`), in the
  * loading placeholder, and above the no-page text — never on a page opened from a link inside the card.
+ *
+ * Step 14 adds `chrome: 'inset'` (InsetRecordCard below: the 'mine' card's body inside ItemDetail's own
+ * frame) and embedded page stubs (src/sheet/astStubs.ts): the inset card draws them when asked (`stubs`),
+ * the browse card draws them on an item page.
  */
 export function RecordCard(props: RecordCardProps) {
   // Two components, not one with a branch: the popup registers on the dismiss stack (useEscapeClose)
-  // and an embedded page must not, so the choice is made before any hook runs.
-  return props.chrome === 'embed' ? <EmbedRecordCard {...props} /> : <PopupRecordCard {...props} />;
+  // and an embedded page must not, so the choice is made before any hook runs. Card step 14's inset
+  // card (inside ItemDetail's own popup frame, which owns the dismiss entry) registers none either.
+  if (props.chrome === 'embed') return <EmbedRecordCard {...props} />;
+  if (props.chrome === 'inset') return <InsetRecordCard {...props} />;
+  return <PopupRecordCard {...props} />;
 }
 
 /**
@@ -81,6 +89,94 @@ function EmbedRecordCard({ record, content: hostContent, onOpenRef }: RecordCard
   return <DescBody description={rec.description} descRefs={rec.descRefs} remasteredAs={ra} />;
 }
 const noOpen = () => undefined;
+
+/**
+ * Card step 14 — chrome 'inset', mode 'mine' (docs/card-design.md section 2 rules 4–6, section 5 "Item
+ * controls and computed rows", section 9 row 14): the card's BODY where ItemDetail drew the item's
+ * description. ItemDetail keeps its frame — header (name, PinStar, edit, remove, close), sub-line,
+ * TrustMarker, trait / rune chips, the stat block (itemStatRows), every control in its order, and the
+ * phone Remove bar outside the scrolling body — and owns the dismiss entry, so this registers none.
+ *  - Page lane: the record's page by {bucket, id} through the same cuts as the popup 'mine' card — the
+ *    printed set (`printed`, the frame's stat-row labels) in place of hideMeta, so a header line the stat
+ *    block already printed is left off (S-printed) and every other page line shows once, in the page's
+ *    words (Activate, Access, Craft Requirements, Usage …); S-furniture; the item lists cut (S-items);
+ *    the character's folds (scopeTree). With `stubs` the embedded page stubs draw their pages
+ *    (astStubs.ts): a weapon's group effect, an armor's specialization.
+ *  - While the page loads: the quiet placeholder ItemDetail always showed (no flash of the old text).
+ *  - No-page lane: the old text through DescBody's own branches, then the footer lines every mine card
+ *    carries (our Source line, the RemasteredLine, desk #152's empty note, "Homebrew" / "No Archives page
+ *    — text from our older import" / the could-not-load line).
+ *  - A linked word (and the "Remastered as" name) opens the browse card over the item, Back returning to
+ *    it — what the item's DescBody did.
+ */
+function InsetRecordCard({ record, node, scope, printed, ours, footer, fallbackText, stubs, onExit }: RecordCardProps) {
+  const content = useContent();
+  const root = node ?? nodeOfRecord(record, content);
+  const slug = root.slug ?? astSlug(root.title);
+  const { node: astNode, bucket: astBucket, loading } = useAstNode(root.key, slug);
+  const host = astBucket ?? root.key ?? '';
+  const ptr = pointerOf(host, slug, scope);
+  const ptrAt = ptr ? ptr.pageKey.indexOf(':') : -1;
+  const { node: ptrPage } = useAstNode(ptr ? ptr.pageKey.slice(0, ptrAt) : undefined, ptr ? ptr.pageKey.slice(ptrAt + 1) : undefined);
+  const shared = !loading ? sharedFeatureView(root, slug, astNode, scope, content) : null;
+  const scoped = astNode && !shared?.otherClassPage
+    ? withPointer(scopeTree(withoutItemLists(astNode), scope, LEVEL_FOLDS, FUTURE_TREATMENT), ptrPage, ptr, scope, LEVEL_FOLDS, FUTURE_TREATMENT)
+    : undefined;
+  const { tree: page } = useStubbedTree(scoped, `${host}:${slug}`, content, !!stubs);
+  const pageFailed = usePageLoadFailed(!loading && !astNode, host || undefined, slug);
+  const [drill, setDrill] = useState<DescNode | null>(null);
+  const openRef = (bucket: string, s: string) => {
+    const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[s];
+    if (rec) setDrill({ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug: s });
+  };
+  const close = () => setDrill(null);
+  const drillCard = drill ? <RecordCard node={drill} mode="browse" chrome="popup" onExit={onExit ?? close} onBackToSource={onExit ? close : undefined} /> : null;
+  const ra = remasteredAsOf(content, { bucket: root.key, id: slug });
+  const remastered = ra ? <RemasteredLine ra={ra} onOpen={openRef} /> : null;
+  const oursBox = ours && ours.length > 0 ? <OursBox lines={ours} /> : null;
+  const curRec = root.key ? (content as unknown as Record<string, Record<string, { source?: SourceInfo } | undefined> | undefined> | null)?.[root.key]?.[slug] : undefined;
+  const homebrew = slug.startsWith('hb-') || curRec?.source?.license === 'homebrew';
+  const sourceLine = curRec?.source?.book
+    ? <div data-ours="" className="card-foot-source"><p className="card-dim card-source"><strong>Source</strong> {curRec.source.book}{curRec.source.page ? ` pg. ${curRec.source.page}` : ''}</p></div>
+    : null;
+
+  if (page) {
+    return (
+      <>
+        <div className="sd-desc card-inset">
+          <AstRenderer node={page} bodyOnly selfRef={`${astBucket}:${slug}`} onOpenRef={openRef} card={{ printed: printedSet(printed) }}
+            footer={<>{oursBox}{sourceLine && !treeHasSource(page) ? sourceLine : null}{remastered}{footer}</>} />
+        </div>
+        {drillCard}
+      </>
+    );
+  }
+  if (loading) return <div className="sd-desc card-inset ast-loading" aria-busy="true">{oursBox}</div>;
+  const emptyNote = !root.description && fallbackText ? <p className="sd-ours sd-unprinted">{fallbackText}</p> : null;
+  return (
+    <>
+      <div className="sd-desc card-inset">
+        {/* DescBody's own markdown / rich-HTML branches, no tree key (section 5): it never reaches a page. */}
+        <DescBody description={shared ? shared.text : root.description} descRefs={root.descRefs} className="card-inset-text" onExit={onExit} />
+        {oursBox}
+        {sourceLine}
+        {remastered}
+        {emptyNote}
+        {homebrew
+          ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">Homebrew</p>
+          : shared
+            ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">{SHARED_FEATURE_FOOTER}</p>
+            : !root.key || pageFailed === undefined
+              ? null
+              : pageFailed
+                ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="pageFailed">The Archives page could not load on this device — text from our older import</p>
+                : <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">No Archives page — text from our older import</p>}
+        {footer}
+      </div>
+      {drillCard}
+    </>
+  );
+}
 
 /** The popup card (modes 'browse' and 'mine', chrome 'popup'). */
 function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyControls, leadControls, headerActions, ours, footer, fallbackText, onExit, onBackToSource }: RecordCardProps) {
@@ -208,6 +304,12 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
      leadControls — Strike's Attack / Damage and its gated critical specialization). The record the
      surface opened only: a page opened from a link inside the card is a browse card (section 6). */
   const lead = mine && leadControls ? <div className="card-controls card-lead">{leadControls}</div> : null;
+  /* Card step 14 (section 2 rule 6; src/sheet/astStubs.ts): the browse card of an item page draws the
+     pages its stubs embed — a weapon's group effect, an armor's specialization — one level deep, as the
+     item's own card does. A page whose stub buckets are still loading draws its stubs empty for a beat.
+     Behind CARD_ON.itemDetail (browseResolvesStubs): switched off, the browse card is the one before step 14. */
+  const stubHost = astBucket ?? cur.key ?? '';
+  const { tree: browseTree } = useStubbedTree(astNode, `${stubHost}:${curSlug}`, content, !mine && !!astNode && browseResolvesStubs(stubHost));
 
   if (mine && astNode && !shared?.otherClassPage) {
     /* Card step 13a: with the character's scope, the sections it does not have yet fold (scopeTree reads
@@ -288,7 +390,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
           {/* The ast popup owns its own head + body markup; this component reaches it through two slots:
               `headerControls` (the trust marker, pin and close) and `footer`, where desk #158's
               "Remastered as" line goes — after the page's prose, inside the scrolling body. */}
-          <AstRenderer node={astNode} selfRef={`${astBucket}:${curSlug}`} onOpenRef={openRef} headerControls={<>{marker}{controls}</>} footer={tail} />
+          <AstRenderer node={browseTree ?? astNode} selfRef={`${astBucket}:${curSlug}`} onOpenRef={openRef} headerControls={<>{marker}{controls}</>} footer={tail} />
         </div>
       </div>
     );

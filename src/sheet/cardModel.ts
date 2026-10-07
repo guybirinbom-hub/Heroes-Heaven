@@ -15,12 +15,19 @@ import type { DescNode } from './descref';
  * `record`, `content` and `onOpenRef` are read; no frame, no stack, nothing on the dismiss stack.
  * Step 9 (the Main-tab action popup, CARD_ON.actionDetail) reads `controls` and `headerActions`.
  * Step 10 (the strike popup, CARD_ON.strikeDetail) reads `leadControls`.
+ * Step 14 (the item popup, CARD_ON.itemDetail) builds `chrome: 'inset'` and reads `stubs`.
  */
 
 /** browse = today's search popup, never scoped; mine = the sheet's "what is yours"; gm = HostPage. */
 export type CardMode = 'browse' | 'mine' | 'gm';
-/** popup = an overlay with its own header and close; embed = inside another page (HostPage). */
-export type CardChrome = 'popup' | 'embed';
+/**
+ * popup = an overlay with its own header and close; embed = inside another page (HostPage); inset (card
+ * step 14) = the card's BODY inside a surface's own popup frame — ItemDetail keeps its header (name, star,
+ * edit, remove, close), its stat block, its controls and its phone Remove bar outside the scrolling body,
+ * and the card draws the page (or the old text with its no-page line), the ours box and the footer where
+ * the item's description was. A linked word opens the browse card over it, Back returning to the item.
+ */
+export type CardChrome = 'popup' | 'embed' | 'inset';
 
 /** A record by identity: the card reads its name and text off the content, by {bucket, id}. */
 export interface CardRecordRef {
@@ -182,6 +189,13 @@ export interface RecordCardProps {
    * Card step 9: the action popup's own cost glyph (data-ours), skill label, prepare toggle and action pin.
    */
   headerActions?: ReactNode;
+  /**
+   * Card step 14 (section 2 rule 6): draw the page's embedded page stubs on a 'mine' card (src/sheet/
+   * astStubs.ts — one level deep, a visited set). ItemDetail's card sets it, so a weapon or armor shows
+   * its group's specialization effect; the other mine cards leave it off (Strike keeps its gate). The
+   * browse card resolves the stubs of an item page without being asked (astStubs.ts STUB_HOST_BUCKETS).
+   */
+  stubs?: boolean;
   /** Reserved: a tree transform (heightening, step 17). */
   transform?: (node: AstNode) => AstNode;
   /** The ours box, after the body. */
