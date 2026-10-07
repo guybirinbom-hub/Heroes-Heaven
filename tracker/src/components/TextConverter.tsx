@@ -127,8 +127,15 @@ Goblin Scuttle [reaction] Trigger An ally ends a move
                 <code style={code}>Melee [action] &lt;name&gt; +&lt;bonus&gt; (&lt;traits&gt;), Damage &lt;dice&gt; &lt;type&gt;</code>.
                 <code style={code}>Ranged</code> uses the same syntax.</li>
             <li><strong style={{ color: 'var(--accent)' }}>Abilities</strong>: <code style={code}>Name [action] (&lt;traits&gt;) Trigger …; Effect …</code>.
-                <strong style={{ color: 'var(--text)' }}>Trigger</strong> and <strong style={{ color: 'var(--text)' }}>Effect</strong> headers
-                are detected and split into separate fields automatically.</li>
+                A name the parser would misread can be written <code style={code}>**Breath of Life** [reaction] …</code>.</li>
+            <li><strong style={{ color: 'var(--accent)' }}>Indented lines</strong> (two spaces) continue the line above: an
+                ability's further paragraphs and its own <code style={code}>Trigger …</code> line, a hazard's Routine or Disable,
+                a strike's <code style={code}>Effects grab</code>. A <code style={code}>\</code> after the indent keeps the line as written.</li>
+            <li><strong style={{ color: 'var(--accent)' }}>More on the page</strong>: <code style={code}>Languages Common; telepathy 100 feet</code>,
+                every HP pool <code style={code}>HP 90 (body); 15 (head)</code>, <code style={code}>Hardness 10; HP 40; BT 20</code>,
+                <code style={code}>Recall Knowledge DC 18 • …</code> as printed, and two <code style={code}>---</code> lines that put
+                abilities where the page prints them (after Items, after HP, after the strikes). A hazard shows an AC or a save
+                only when its text has one.</li>
             <li><strong style={{ color: 'var(--accent)' }}>Spellcasting</strong>: lines like
                 <code style={code}>Arcane Innate Spells DC 19, attack +9; 3rd fireball; Cantrips (3rd) light, mage hand</code>.</li>
             <li><strong style={{ color: 'var(--accent)' }}>Saving throws &amp; damage types</strong> use the standard PF2e words

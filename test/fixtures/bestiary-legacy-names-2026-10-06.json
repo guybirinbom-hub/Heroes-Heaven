@@ -1,0 +1,1279 @@
+{
+  "note": "Names the HEAD index (7cfb323, old in-app builder) offered that the corpus index (f617090) does not. Each was resolvable by loadCreatureByName (saved encounter tables, portable encounter files, prose creature links) before the import. remaster = the indexed record its Archives page links as the remaster (AoN legacy-remaster.json).",
+  "names": [
+    {
+      "name": "Adamantine Golem",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 18,
+      "remaster": [
+        "Adamant Sentinel"
+      ]
+    },
+    {
+      "name": "Adhukait",
+      "hazard": false,
+      "source": "Bestiary 3",
+      "level": 7,
+      "remaster": [
+        "Hārakasura"
+      ]
+    },
+    {
+      "name": "Adult Black Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 11,
+      "remaster": [
+        "Adult Bog Dragon"
+      ]
+    },
+    {
+      "name": "Adult Blue Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 13,
+      "remaster": [
+        "Adult Stormcrown Dragon"
+      ]
+    },
+    {
+      "name": "Adult Brass Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 11,
+      "remaster": [
+        "Adult Whisper Dragon"
+      ]
+    },
+    {
+      "name": "Adult Bronze Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 13,
+      "remaster": [
+        "Adult Sage Dragon"
+      ]
+    },
+    {
+      "name": "Adult Copper Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 12,
+      "remaster": [
+        "Adult Mocking Dragon"
+      ]
+    },
+    {
+      "name": "Adult Gold Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 15,
+      "remaster": [
+        "Adult Vizier Dragon"
+      ]
+    },
+    {
+      "name": "Adult Green Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 12,
+      "remaster": [
+        "Adult Horned Dragon"
+      ]
+    },
+    {
+      "name": "Adult Red Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 14,
+      "remaster": [
+        "Adult Cinder Dragon"
+      ]
+    },
+    {
+      "name": "Adult Silver Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 14,
+      "remaster": [
+        "Adult Oath Dragon"
+      ]
+    },
+    {
+      "name": "Adult White Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 10,
+      "remaster": [
+        "Adult Rime Dragon"
+      ]
+    },
+    {
+      "name": "Aeolaeka (Stone Azata)",
+      "hazard": false,
+      "source": "Pathfinder #183: Field of Maidens",
+      "level": 12,
+      "remaster": [
+        "Aeolaeka"
+      ]
+    },
+    {
+      "name": "Air Mephit",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 1,
+      "remaster": [
+        "Air Scamp"
+      ]
+    },
+    {
+      "name": "Alchemical Golem",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 9,
+      "remaster": [
+        "Noxious Needler"
+      ]
+    },
+    {
+      "name": "Ancient Black Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 16,
+      "remaster": [
+        "Ancient Bog Dragon"
+      ]
+    },
+    {
+      "name": "Ancient Blue Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 18,
+      "remaster": [
+        "Ancient Stormcrown Dragon"
+      ]
+    },
+    {
+      "name": "Ancient Brass Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 16,
+      "remaster": [
+        "Ancient Whisper Dragon"
+      ]
+    },
+    {
+      "name": "Ancient Bronze Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 18,
+      "remaster": [
+        "Ancient Sage Dragon"
+      ]
+    },
+    {
+      "name": "Ancient Copper Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 17,
+      "remaster": [
+        "Ancient Mocking Dragon"
+      ]
+    },
+    {
+      "name": "Ancient Gold Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 20,
+      "remaster": [
+        "Ancient Vizier Dragon"
+      ]
+    },
+    {
+      "name": "Ancient Green Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 17,
+      "remaster": [
+        "Ancient Horned Dragon"
+      ]
+    },
+    {
+      "name": "Ancient Red Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 19,
+      "remaster": [
+        "Ancient Cinder Dragon"
+      ]
+    },
+    {
+      "name": "Ancient Silver Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 19,
+      "remaster": [
+        "Ancient Oath Dragon"
+      ]
+    },
+    {
+      "name": "Ancient White Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 15,
+      "remaster": [
+        "Ancient Rime Dragon"
+      ]
+    },
+    {
+      "name": "Ankou",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 14,
+      "remaster": [
+        "Ozthoom"
+      ]
+    },
+    {
+      "name": "Annis Hag",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 6,
+      "remaster": [
+        "Iron Hag"
+      ]
+    },
+    {
+      "name": "Antipaladin",
+      "hazard": false,
+      "source": "Gamemastery Guide",
+      "level": 5,
+      "remaster": [
+        "Champion of Rovagug"
+      ]
+    },
+    {
+      "name": "Astral Deva",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 14,
+      "remaster": [
+        "Tabellia"
+      ]
+    },
+    {
+      "name": "Azure Worm",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 15,
+      "remaster": [
+        "Benthic Worm"
+      ]
+    },
+    {
+      "name": "Babau",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 6,
+      "remaster": [
+        "Kalakaigh"
+      ]
+    },
+    {
+      "name": "Ball Python",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 1,
+      "remaster": [
+        "Python"
+      ]
+    },
+    {
+      "name": "Ban-Niang \"Granny\" Hu",
+      "hazard": false,
+      "source": "Pathfinder #196: The Summer That Never Was",
+      "level": 5,
+      "remaster": [
+        "Hu Ban-Niang"
+      ]
+    },
+    {
+      "name": "Barbazu",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 5,
+      "remaster": [
+        "Vordine"
+      ]
+    },
+    {
+      "name": "Black Pudding",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 7,
+      "remaster": [
+        "Living Tar"
+      ]
+    },
+    {
+      "name": "Brain Collector",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 8,
+      "remaster": [
+        "Jah-Tohl"
+      ]
+    },
+    {
+      "name": "Brown Mold",
+      "hazard": true,
+      "source": "Gamemastery Guide",
+      "level": 2,
+      "remaster": [
+        "Poisonous Mold"
+      ]
+    },
+    {
+      "name": "Bugbear Thug",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 2,
+      "remaster": [
+        "Bugbear Prowler"
+      ]
+    },
+    {
+      "name": "Caligni Creeper",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 2,
+      "remaster": [
+        "Caligni Skulker"
+      ]
+    },
+    {
+      "name": "Caligni Stalker",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 4,
+      "remaster": [
+        "Caligni Hunter"
+      ]
+    },
+    {
+      "name": "Clay Golem",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 10,
+      "remaster": [
+        "Clay Effigy"
+      ]
+    },
+    {
+      "name": "Crimson Worm",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 18,
+      "remaster": [
+        "Magma Worm"
+      ]
+    },
+    {
+      "name": "Deep Gnome Rockwarden",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 5,
+      "remaster": [
+        "Umbral Gnome Rockwarden"
+      ]
+    },
+    {
+      "name": "Deep Gnome Scout",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 1,
+      "remaster": [
+        "Umbral Gnome Scout"
+      ]
+    },
+    {
+      "name": "Deep Gnome Warrior",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 2,
+      "remaster": [
+        "Umbral Gnome Warrior"
+      ]
+    },
+    {
+      "name": "Djinni",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 5,
+      "remaster": [
+        "Jaathoom"
+      ]
+    },
+    {
+      "name": "Dread Wraith",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 9,
+      "remaster": [
+        "War Wraith"
+      ]
+    },
+    {
+      "name": "Dream-Poisoned Door",
+      "hazard": true,
+      "source": "Pathfinder #189: Dreamers of the Nameless Spires",
+      "level": 12,
+      "remaster": [
+        "Dream-Poisoned Doors"
+      ]
+    },
+    {
+      "name": "Dretch",
+      "hazard": false,
+      "source": "Bestiary 3",
+      "level": 2,
+      "remaster": [
+        "Pusk"
+      ]
+    },
+    {
+      "name": "Duergar Bombardier",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 1,
+      "remaster": [
+        "Hryngar Bombardier"
+      ]
+    },
+    {
+      "name": "Duergar Sharpshooter",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 0,
+      "remaster": [
+        "Hryngar Sharpshooter"
+      ]
+    },
+    {
+      "name": "Duergar Taskmaster",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 2,
+      "remaster": [
+        "Hryngar Taskmaster"
+      ]
+    },
+    {
+      "name": "Earth Mephit",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 1,
+      "remaster": [
+        "Earth Scamp"
+      ]
+    },
+    {
+      "name": "Efreeti",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 9,
+      "remaster": [
+        "Ifrit"
+      ]
+    },
+    {
+      "name": "Faceless Stalker",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 4,
+      "remaster": [
+        "Ugothol"
+      ]
+    },
+    {
+      "name": "Faerie Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 2,
+      "remaster": [
+        "Fey Dragonet"
+      ]
+    },
+    {
+      "name": "Fire Mephit",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 1,
+      "remaster": [
+        "Fire Scamp"
+      ]
+    },
+    {
+      "name": "Fire Yai",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 14,
+      "remaster": [
+        "Caldera Oni"
+      ]
+    },
+    {
+      "name": "Flesh Golem",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 8,
+      "remaster": [
+        "Charnel Creation"
+      ]
+    },
+    {
+      "name": "Fossil Golem",
+      "hazard": false,
+      "source": "Bestiary 3",
+      "level": 12,
+      "remaster": [
+        "Paleohemoth"
+      ]
+    },
+    {
+      "name": "Frost Troll",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 4,
+      "remaster": [
+        "Ice Troll"
+      ]
+    },
+    {
+      "name": "Gelatinous Cube",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 3,
+      "remaster": [
+        "String Slime"
+      ]
+    },
+    {
+      "name": "Ghoul",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 1,
+      "remaster": [
+        "Ghoul Stalker"
+      ]
+    },
+    {
+      "name": "Glabrezu",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 13,
+      "remaster": [
+        "Degholau"
+      ]
+    },
+    {
+      "name": "Gnoll Cultist",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 3,
+      "remaster": [
+        "Kholo Bonekeeper"
+      ]
+    },
+    {
+      "name": "Gnoll Hunter",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 2,
+      "remaster": [
+        "Kholo Hunter"
+      ]
+    },
+    {
+      "name": "Gnoll Sergeant",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 4,
+      "remaster": [
+        "Kholo Sergeant"
+      ]
+    },
+    {
+      "name": "Goh' Shame",
+      "hazard": true,
+      "source": "Pathfinder #197: Let the Leaves Fall",
+      "level": 5,
+      "remaster": [
+        "Goh's Shame"
+      ]
+    },
+    {
+      "name": "Greedspawn Soldiers",
+      "hazard": false,
+      "source": "Pathfinder Adventure Path #219: Lord of the Trinity Star",
+      "level": 10,
+      "remaster": []
+    },
+    {
+      "name": "Green Hag",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 4,
+      "remaster": [
+        "Sweet Hag"
+      ]
+    },
+    {
+      "name": "Guardian Naga",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 10,
+      "remaster": [
+        "Vicharamuni"
+      ]
+    },
+    {
+      "name": "Heh Shan-Bao (Murderous Fiendish Vessel)",
+      "hazard": false,
+      "source": "Pathfinder #199: To Bloom Below the Web",
+      "level": 13,
+      "remaster": [
+        "Heh Shan-Bao (Murderous Agent)"
+      ]
+    },
+    {
+      "name": "Hezrou",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 11,
+      "remaster": [
+        "Miastrilek"
+      ]
+    },
+    {
+      "name": "Hive Mother",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 8,
+      "remaster": [
+        "Ankhrav Hive Mother"
+      ]
+    },
+    {
+      "name": "Horned Archon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 4,
+      "remaster": [
+        "Qarna"
+      ]
+    },
+    {
+      "name": "Ice Yai",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 13,
+      "remaster": [
+        "Snow Oni"
+      ]
+    },
+    {
+      "name": "Ifrit Pyrochemist",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 1,
+      "remaster": [
+        "Naari Pyrochemist"
+      ]
+    },
+    {
+      "name": "Intellect Devourer",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 8,
+      "remaster": [
+        "Xoarian"
+      ]
+    },
+    {
+      "name": "Invisible Stalker",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 7,
+      "remaster": [
+        "Phade"
+      ]
+    },
+    {
+      "name": "Iron Golem",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 13,
+      "remaster": [
+        "Iron Warden"
+      ]
+    },
+    {
+      "name": "Janni",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 4,
+      "remaster": [
+        "Jann"
+      ]
+    },
+    {
+      "name": "Kobold Dragon Mage",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 2,
+      "remaster": [
+        "Kobold Cavern Mage"
+      ]
+    },
+    {
+      "name": "Legion Archon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 7,
+      "remaster": [
+        "Aesra"
+      ]
+    },
+    {
+      "name": "Lemure",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 0,
+      "remaster": [
+        "Ort"
+      ]
+    },
+    {
+      "name": "Lillend",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 7,
+      "remaster": [
+        "Kanya"
+      ]
+    },
+    {
+      "name": "Locathah Hunter",
+      "hazard": false,
+      "source": "Bestiary 3",
+      "level": 3,
+      "remaster": [
+        "Athamaru Hunter"
+      ]
+    },
+    {
+      "name": "Manor Wards",
+      "hazard": true,
+      "source": "Pathfinder #198: No Breath to Cry",
+      "level": 10,
+      "remaster": [
+        "Major Wards"
+      ]
+    },
+    {
+      "name": "Marid",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 9,
+      "remaster": [
+        "Faydhaan"
+      ]
+    },
+    {
+      "name": "Marilith",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 17,
+      "remaster": [
+        "Vansidieth"
+      ]
+    },
+    {
+      "name": "Minotaur",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 4,
+      "remaster": [
+        "Minotaur Hunter"
+      ]
+    },
+    {
+      "name": "Mix Couatl",
+      "hazard": false,
+      "source": "Bestiary 3",
+      "level": 8,
+      "remaster": [
+        "Mix Coatl"
+      ]
+    },
+    {
+      "name": "Morrowkin",
+      "hazard": false,
+      "source": "Dark Archive",
+      "level": 14,
+      "remaster": [
+        "The Morrowkin"
+      ]
+    },
+    {
+      "name": "Nessian Warhound",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 9,
+      "remaster": [
+        "Greater Hell Hound"
+      ]
+    },
+    {
+      "name": "Ochre Jelly",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 5,
+      "remaster": [
+        "Tomb Jelly"
+      ]
+    },
+    {
+      "name": "Orc Brute",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 0,
+      "remaster": [
+        "Orc Scrapper"
+      ]
+    },
+    {
+      "name": "Orc Warchief",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 2,
+      "remaster": [
+        "Orc Commander"
+      ]
+    },
+    {
+      "name": "Orc Warrior",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 1,
+      "remaster": [
+        "Orc Veteran"
+      ]
+    },
+    {
+      "name": "Pit Fiend",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 20,
+      "remaster": [
+        "Nessari"
+      ]
+    },
+    {
+      "name": "Purple Worm",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 13,
+      "remaster": [
+        "Cave Worm"
+      ]
+    },
+    {
+      "name": "Quasit",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 1,
+      "remaster": [
+        "Imp"
+      ]
+    },
+    {
+      "name": "Quetz Couatl",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 10,
+      "remaster": [
+        "Quetz Coatl"
+      ]
+    },
+    {
+      "name": "Raja Rakshasa",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 10,
+      "remaster": [
+        "Raja-Krodha"
+      ]
+    },
+    {
+      "name": "Raven",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": -1,
+      "remaster": [
+        "Trained Raven"
+      ]
+    },
+    {
+      "name": "Sea Devil Baron",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 6,
+      "remaster": [
+        "Sedacthy Speaker"
+      ]
+    },
+    {
+      "name": "Sea Devil Brute",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 4,
+      "remaster": [
+        "Sedacthy Marauder"
+      ]
+    },
+    {
+      "name": "Sea Devil Scout",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 2,
+      "remaster": [
+        "Sedacthy Scout"
+      ]
+    },
+    {
+      "name": "Serpentfolk Granitescale",
+      "hazard": false,
+      "source": "Pathfinder #170: Spoken on the Song Wind",
+      "level": 6,
+      "remaster": [
+        "Aapoph Granitescale"
+      ]
+    },
+    {
+      "name": "Shaitan",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 7,
+      "remaster": [
+        "Jabali"
+      ]
+    },
+    {
+      "name": "Shaukeen",
+      "hazard": false,
+      "source": "Bestiary 3",
+      "level": 1,
+      "remaster": [
+        "Shokasura"
+      ]
+    },
+    {
+      "name": "Shield Archon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 10,
+      "remaster": [
+        "Rekhep"
+      ]
+    },
+    {
+      "name": "Shou \"Old\" Matsuki",
+      "hazard": false,
+      "source": "Pathfinder #196: The Summer That Never Was",
+      "level": 5,
+      "remaster": [
+        "Matsuki Shou"
+      ]
+    },
+    {
+      "name": "Stone Golem",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 11,
+      "remaster": [
+        "Stone Bulwark"
+      ]
+    },
+    {
+      "name": "Tendriculos",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 7,
+      "remaster": [
+        "Praskith"
+      ]
+    },
+    {
+      "name": "Tiefling Adept",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 3,
+      "remaster": [
+        "Pitborn Adept"
+      ]
+    },
+    {
+      "name": "Toshigami",
+      "hazard": false,
+      "source": "Bestiary 3",
+      "level": 15,
+      "remaster": [
+        "Sakugami"
+      ]
+    },
+    {
+      "name": "Tree Fisher",
+      "hazard": false,
+      "source": "Pathfinder #187: The Seventh Arch",
+      "level": 3,
+      "remaster": [
+        "Gokeki"
+      ]
+    },
+    {
+      "name": "Trinity Initiates",
+      "hazard": false,
+      "source": "Pathfinder Adventure Path #219: Lord of the Trinity Star",
+      "level": 0,
+      "remaster": []
+    },
+    {
+      "name": "Troll",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 5,
+      "remaster": [
+        "Forest Troll"
+      ]
+    },
+    {
+      "name": "Troll King",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 10,
+      "remaster": [
+        "Troll Warleader"
+      ]
+    },
+    {
+      "name": "Unseen Servant",
+      "hazard": false,
+      "source": "Core Rulebook",
+      "level": -1,
+      "remaster": [
+        "Phantasmal Minion"
+      ]
+    },
+    {
+      "name": "Vampire Spawn",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 4,
+      "remaster": [
+        "Vampire Servitor"
+      ]
+    },
+    {
+      "name": "Vavakia",
+      "hazard": false,
+      "source": "Pathfinder #156: The Apocalypse Prophet",
+      "level": 18,
+      "remaster": [
+        "Imvath"
+      ]
+    },
+    {
+      "name": "Veiled Master",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 14,
+      "remaster": [
+        "Vidileth"
+      ]
+    },
+    {
+      "name": "Vrock",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 9,
+      "remaster": [
+        "Eshmok"
+      ]
+    },
+    {
+      "name": "Water Mephit",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 1,
+      "remaster": [
+        "Water Scamp"
+      ]
+    },
+    {
+      "name": "Water Yai",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 17,
+      "remaster": [
+        "Island Oni"
+      ]
+    },
+    {
+      "name": "Wheel Archon",
+      "hazard": false,
+      "source": "Pathfinder #183: Field of Maidens",
+      "level": 16,
+      "remaster": [
+        "Giylea"
+      ]
+    },
+    {
+      "name": "Will-o’-Wisp",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 6,
+      "remaster": [
+        "Will-O'-Wisp"
+      ]
+    },
+    {
+      "name": "Winter Wolf",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 5,
+      "remaster": [
+        "Witchwarg"
+      ]
+    },
+    {
+      "name": "Xill",
+      "hazard": false,
+      "source": "Bestiary 2",
+      "level": 6,
+      "remaster": [
+        "Zecui"
+      ]
+    },
+    {
+      "name": "Xiuh Couatl",
+      "hazard": false,
+      "source": "Bestiary 3",
+      "level": 12,
+      "remaster": [
+        "Xiuh Coatl"
+      ]
+    },
+    {
+      "name": "Yaiafineti",
+      "hazard": false,
+      "source": "Pathfinder #189: Dreamers of the Nameless Spires",
+      "level": 8,
+      "remaster": [
+        "Arctic Bloom"
+      ]
+    },
+    {
+      "name": "Young Black Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 7,
+      "remaster": [
+        "Young Bog Dragon"
+      ]
+    },
+    {
+      "name": "Young Blue Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 9,
+      "remaster": [
+        "Young Stormcrown Dragon"
+      ]
+    },
+    {
+      "name": "Young Brass Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 7,
+      "remaster": [
+        "Young Whisper Dragon"
+      ]
+    },
+    {
+      "name": "Young Bronze Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 9,
+      "remaster": [
+        "Young Sage Dragon"
+      ]
+    },
+    {
+      "name": "Young Copper Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 8,
+      "remaster": [
+        "Young Mocking Dragon"
+      ]
+    },
+    {
+      "name": "Young Gold Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 11,
+      "remaster": [
+        "Young Vizier Dragon"
+      ]
+    },
+    {
+      "name": "Young Green Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 8,
+      "remaster": [
+        "Young Horned Dragon"
+      ]
+    },
+    {
+      "name": "Young Red Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 10,
+      "remaster": [
+        "Young Cinder Dragon"
+      ]
+    },
+    {
+      "name": "Young Silver Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 10,
+      "remaster": [
+        "Young Oath Dragon"
+      ]
+    },
+    {
+      "name": "Young White Dragon",
+      "hazard": false,
+      "source": "Bestiary",
+      "level": 6,
+      "remaster": [
+        "Young Rime Dragon"
+      ]
+    }
+  ]
+}

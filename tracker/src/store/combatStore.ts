@@ -7,6 +7,7 @@ import { applyWeakElite, scaleByLevel } from '../utils/weakElite'
 import { CONDITION_META } from '../utils/conditionEffects'
 import { roundTurnAbilityKeys } from '../utils/limitedUses'
 import { rollDamageExpr } from '../utils/dice'
+import { recallKnowledgeFromPage } from '../utils/parseCreature'
 import { useSettingsStore } from './settingsStore'
 import { usePartyStore } from './partyStore'
 import { useDmAverageStore } from './dmAverageStore'
@@ -1404,11 +1405,17 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       record(s)
       s.combatants = saved.combatants.map(sc => {
         const creature = sc.creature ?? null
-        const hp = creature?.defenses.hp ?? sc.maxHP
+        // The maximum the board gives this combatant: the ADJUSTED stat block's (setEliteWeak /
+        // setScaledLevel), never the printed one. Reading `creature.defenses.hp` here loaded an
+        // Elite combatant with the base HP bar (pre-existing at 7cfb323; combatStore.eliteLoad.test).
+        // A hand-written save's `"scaledToLevel": null` means unscaled; every reader tests
+        // `!== undefined`, so it is normalised here.
+        const scaledToLevel = sc.scaledToLevel ?? undefined
+        const hp = creature ? adjustedCreature(creature, { ...sc, scaledToLevel }).defenses.hp : sc.maxHP
         return {
           id: nid(), name: sc.name, creature, isPC: sc.isPC, isAlly: sc.isAlly ?? false, charId: sc.charId,
           initiative: null, currentHP: hp, maxHP: hp, tempHP: 0, conditions: [],
-          isElite: sc.isElite, isWeak: sc.isWeak, scaledToLevel: sc.scaledToLevel,
+          isElite: sc.isElite, isWeak: sc.isWeak, scaledToLevel,
           notes: sc.notes, isDefeated: false,
         }
       })
@@ -1514,6 +1521,18 @@ export function invalidateEncounterCache(): void {
   _encStoreCache = null
 }
 
+/** The stat block as the board adjusts it: scaled to a level (which wins, as in every reader —
+ *  setScaledLevel clears Elite / Weak), else Elite or Weak, else the printed one. The load paths
+ *  (loadEncounter, encounterTransfer's import) take a combatant's HP maximum from it, so a loaded
+ *  combatant matches the one setEliteWeak / setScaledLevel made on the board. */
+export function adjustedCreature(
+  creature: Creature,
+  how: { isElite?: boolean; isWeak?: boolean; scaledToLevel?: number | null },
+): Creature {
+  if (how.scaledToLevel != null) return scaleByLevel(creature, how.scaledToLevel)
+  return applyWeakElite(creature, how.isElite ? 'elite' : how.isWeak ? 'weak' : 'normal')
+}
+
 /** Shared read of the encounters store — exported so external helpers (e.g.
  *  encounterTransfer) can hit the same in-memory cache instead of re-parsing
  *  localStorage on every export/import. */
@@ -1534,11 +1553,18 @@ export function writeEncounterStore(store: Record<string, SavedEncounter>): void
 //                            re-fetched if the creature is reloaded from
 //                            bestiary).
 // For a 10-monster fight this typically cuts the snapshot from ~1MB to <50KB.
+// A record that HAD a page keeps that fact as `fromArchivesPage` (StatBlock's Recall Knowledge
+// rule: a page record prints only the page's sidebar, never a computed DC), so the reloaded copy
+// of a page with no sidebar does not grow a computed row once rawMarkdown is gone. A page record
+// with no recallKnowledge yet (homebrew saved from a bestiary combatant before the adapter filled
+// it) gets its sidebar read off the page BEFORE the page is dropped, or its row would vanish.
 function slimCombatantForPersist(c: Combatant): Combatant {
   if (!c.creature) return c
-  const { raw: _raw, rawMarkdown: _md, ...slim } = c.creature
-  void _raw; void _md
-  return { ...c, creature: slim as typeof c.creature }
+  const { raw: _raw, rawMarkdown: md, ...slim } = c.creature
+  void _raw
+  if (!md) return { ...c, creature: slim as typeof c.creature }
+  const rk = slim.recallKnowledge || recallKnowledgeFromPage(md)
+  return { ...c, creature: { ...slim, fromArchivesPage: true, ...(rk ? { recallKnowledge: rk } : {}) } as typeof c.creature }
 }
 
 // Persist live combat state (debounced) whenever the relevant slice changes.

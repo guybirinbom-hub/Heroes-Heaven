@@ -1,4 +1,4 @@
-import { useRef, createContext, useContext, useState, useEffect } from 'react'
+import { useRef, createContext, useContext, useState, useEffect, Fragment } from 'react'
 import { useWindowStore, type FloatingWin, type WinType, type PopupTab } from '../store/windowStore'
 import { CombatantDetail } from './CombatantDetail'
 import { useSettingsStore } from '../store/settingsStore'
@@ -450,6 +450,7 @@ function EquipmentDisplay({ item }: { item: EquipmentInfo }) {
 // full <StatBlock> (which imports this file — a circular import — and is too
 // heavy for a hover preview). ──────────────────────────────────────────────
 const fmtMod = (n: number) => (n >= 0 ? `+${n}` : `${n}`)
+const SAVE_LABEL = { fort: 'Fort', ref: 'Ref', will: 'Will' } as const
 function CreatureCard({ name }: { name: string }) {
   const [loaded, setLoaded] = useState<{ c: Creature | null; done: boolean }>({ c: null, done: false })
   useEffect(() => {
@@ -462,8 +463,25 @@ function CreatureCard({ name }: { name: string }) {
   if (!loaded.done) return <p style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontSize: 12 }}>Loading…</p>
   const c = loaded.c
   if (!c) return <p style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontSize: 12 }}>Creature not found.</p>
+  return <CreatureCardBody c={c} />
+}
 
+/** The card's body for a loaded record (exported so a test can draw it without the loader). */
+export function CreatureCardBody({ c }: { c: Creature }) {
   const d = c.defenses
+  // D17 (2026-10-07): a hazard's card prints only the AC and saves its page prints. AC: when
+  // acPrinted is true, or — no flag at all — when the base AC is above 0; acPrinted false (a page
+  // with no AC line, every flagless homebrew hazard read back from the store) draws none. Saves: the
+  // ones in savesPrinted; with no list, the stat block's own fallback (all three when any is set).
+  // Both flags are read defensively (a homebrew JSON can hold anything there). Creatures: unchanged.
+  const acFlag: unknown = d.acPrinted
+  const showAc = !c.isHazard || acFlag === true || (acFlag == null && d.ac > 0)
+  const printed: unknown = d.savesPrinted
+  const saveKeys: Array<'fort' | 'ref' | 'will'> = !c.isHazard
+    ? ['fort', 'ref', 'will']
+    : Array.isArray(printed)
+      ? (['fort', 'ref', 'will'] as const).filter(k => printed.includes(k))
+      : (d.fort || d.ref || d.will) ? ['fort', 'ref', 'will'] : []
   const sp = c.speed
   const speed = [
     sp.walk && `${sp.walk} ft`, sp.fly && `fly ${sp.fly}`, sp.swim && `swim ${sp.swim}`,
@@ -484,13 +502,17 @@ function CreatureCard({ name }: { name: string }) {
       </div>
       {row('Perception', `${fmtMod(c.perception)}${c.senses.length ? ` (${c.senses.join(', ')})` : ''}`)}
       {Object.keys(c.skills).length > 0 && row('Skills', Object.entries(c.skills).map(([k, v]) => `${k} ${fmtMod(v)}`).join(', '))}
-      <div style={{ fontSize: 12.5, lineHeight: 1.5 }}>
-        <span style={labelStyle}>AC</span><span style={{ color: 'var(--text-muted)' }}>{d.ac}</span>
-        <span style={{ color: 'var(--text-faded)', margin: '0 6px' }}>·</span>
-        <span style={labelStyle}>Fort</span><span style={{ color: 'var(--text-muted)', marginRight: 8 }}>{fmtMod(d.fort)}</span>
-        <span style={labelStyle}>Ref</span><span style={{ color: 'var(--text-muted)', marginRight: 8 }}>{fmtMod(d.ref)}</span>
-        <span style={labelStyle}>Will</span><span style={{ color: 'var(--text-muted)' }}>{fmtMod(d.will)}</span>
-      </div>
+      {(showAc || saveKeys.length > 0) && (
+        <div style={{ fontSize: 12.5, lineHeight: 1.5 }}>
+          {showAc && <><span style={labelStyle}>AC</span><span style={{ color: 'var(--text-muted)' }}>{d.ac}</span></>}
+          {showAc && saveKeys.length > 0 && <span style={{ color: 'var(--text-faded)', margin: '0 6px' }}>·</span>}
+          {saveKeys.map((k, i) => (
+            <Fragment key={k}>
+              <span style={labelStyle}>{SAVE_LABEL[k]}</span><span style={{ color: 'var(--text-muted)', marginRight: i < saveKeys.length - 1 ? 8 : 0 }}>{fmtMod(d[k])}</span>
+            </Fragment>
+          ))}
+        </div>
+      )}
       {row('HP', d.hp > 0 ? String(d.hp) : null)}
       {row('Speed', speed || null)}
       {c.attacks.length > 0 && row('Attacks', c.attacks.map(a => `${a.name} ${fmtMod(a.attack)}${a.damage ? ` (${a.damage})` : ''}`).join('; '))}

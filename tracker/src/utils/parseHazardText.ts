@@ -46,9 +46,47 @@ const SECTION_TERMINATOR = '(?:AC\\s+\\d|Hardness\\b|HP\\s+\\d|Immunities\\b|Res
 // fails, which would force the engine to skip the paren capture and leave
 // the trait list in the ability body. Bounded instead by a positive
 // lookahead for whitespace / punctuation / end of string.
-const ABILITY_HEAD_RE = /\b([A-Z][\w' -]{1,40}?)\s+(?:\(([^)]+)\)\s+)?(Reaction|Two Actions|Three Actions|Free Action|Action|Activate)\b(?:\s+\(([^)]+)\))?(?=\s|$|;|,)/g
-const ATTACK_HEAD_RE  = /\b(Ranged|Melee)\s+([^,+]+?)\s+([+-]\d+)(?:\s*\(([^)]+)\))?\s*,\s*Damage\s+([^.]+?)(?=\.\s|$|\s+(?:Ranged|Melee)\s+|\s+[A-Z][\w' -]{1,40}\s+(?:Reaction|Two Actions|Three Actions|Free Action|Action|Activate)|\s+Routine\b|\s+---\s+Reset\b)/gi
+//
+// "Single Action" is listed before the bare "Action": without it the lazy name
+// swallowed "Single" ("Spikes Single ◆", "Constrict Single ◆") and a strike line
+// "Melee Single Action jaws +17" became an ability named "Melee Single ◆".
+const ABILITY_HEAD_RE = /\b([A-Z][\w' -]{1,40}?)\s+(?:\(([^)]+)\)\s+)?(Reaction|Single Action|Two Actions|Three Actions|Free Action|Action|Activate)\b(?:\s+\(([^)]+)\))?(?=\s|$|;|,)/g
 const SECTION_HEAD_RE = /\b(Routine|---\s+Reset|Reset)\b/
+
+// ── Strikes ──────────────────────────────────────────────────────────────────
+// A hazard strike as the Archives print it, every variant seen in the 663
+// corpus hazards: "Melee spine +13, Damage 1 piercing", "Melee spikes +17;
+// Damage …" (semicolon), "Melee Single Action jaws +17, Effect devour" (action
+// cost, Effect instead of Damage), "Ranged (agile, thrown 10 feet) dagger +40,
+// Damage …" (traits before the name), "Melee Melee ghostly arms +12" (doubled
+// label), "Melee grapple +15 Damage grapple" (no separator), "[one-action]".
+// Case-SENSITIVE on purpose: the old /i regex read prose such as "ranged
+// attack against each creature … Ranged spike +14" as one strike.
+const STRIKE_ACTIVITY = '(?:Single Action|One Action|Two Actions|Three Actions|Free Action|Reaction|\\[(?:one|two|three|free)-actions?\\]|\\[reaction\\]|[◆◇↺]+)'
+const STRIKE_HEAD_RE = new RegExp(
+  "(?<![\\w'’])(Melee|Ranged)[ \\t]+(?:(?:Melee|Ranged)[ \\t]+)?"
+  + `(?:(${STRIKE_ACTIVITY})[ \\t]+)?`
+  // The doubled label can also sit AFTER the cost: "**Melee** <actions …/>**Melee** ghostly arms
+  // +12" flattens to "Melee Single Action Melee ghostly arms +12" (Arms of the Drowned).
+  + '(?:(?:Melee|Ranged)[ \\t]+)?'
+  + '(?:\\(([^()\\n]*)\\)[ \\t]+)?'
+  + '([^,;+()\\n.]{1,60}?)[ \\t]+([+-]\\d+)\\b'
+  + '(?:[ \\t]*\\(([^()\\n]*)\\))?',
+  'g',
+)
+const STRIKE_LABEL_RE = /^[ \t]*[,;]?[ \t]*(Damage|Effect)\b[ \t]*/
+// Where a strike's Damage/Effect text stops when the page's line break was
+// flattened to a space: the next ability, i.e. a Title Case run NOT introduced
+// by "plus"/"and"/… (riders such as "plus Improved Grab" stay in the damage)
+// and followed by an action cost, a lower-case trait list, or the start of a
+// sentence ("Decapitation On a critical hit", "Cladis Poison (poison)",
+// "Constrict Single Action", "Devour The target …").
+const NEXT_ABILITY_ACT = 'Single Action|One Action|Two Actions|Three Actions|Free Action|Reaction|Action|Activate'
+const NEXT_ABILITY_STARTERS = 'A|An|The|On|When|Whenever|If|Each|Any|This|While|Until|Trigger|Effect|Requirements|Frequency|Saving Throw'
+const NEXT_ABILITY_RE = new RegExp(
+  "\\s(?<!\\b(?:plus|and|or|with|DC|of|by|the)\\s)[A-Z][\\w'’-]*(?:\\s+(?:of|the|and|[A-Z][\\w'’-]*)){0,4}?\\s+"
+  + `(?=(?:${NEXT_ABILITY_ACT})\\b|\\([a-z]|(?:${NEXT_ABILITY_STARTERS})\\s)`,
+)
 
 function cleanWhitespace(s: string): string {
   return s.replace(/\s+/g, ' ').trim()
@@ -67,10 +105,12 @@ function stripDefenseBlock(s: string): { text: string; bt: number | undefined } 
   text = text.replace(/\bAC\s+\d+(?:\s*,\s*(?:Fort|Ref|Will)\s+[+-]\d+)*\s*/g, ' ')
   // Hardness — optionally prefixed by a part name like "Trapdoor Hardness 3"
   text = text.replace(/(?:\b[A-Z][\w ]*?\s+)?Hardness\s+\d+\s*/g, ' ')
-  // HP with optional "(BT N)"
-  const hpM = text.match(/(?:\b[A-Z][\w ]*?\s+)?HP\s+\d+\s*\(BT\s+(\d+)\)/)
+  // HP with optional "(BT N)". The closing bracket is optional: Hall of Mirrors prints
+  // "HP 60 (BT 30" and its unclosed "BT 30" ran into the next ability's name
+  // ("BT 30 Ghostly Images"), which then drew a second time beside the structured one.
+  const hpM = text.match(/(?:\b[A-Z][\w ]*?\s+)?HP\s+\d+\s*\(BT\s+(\d+)\)?/)
   if (hpM) bt = parseInt(hpM[1], 10)
-  text = text.replace(/(?:\b[A-Z][\w ]*?\s+)?HP\s+\d+\s*(?:\(BT\s+\d+\))?\s*/g, ' ')
+  text = text.replace(/(?:\b[A-Z][\w ]*?\s+)?HP\s+\d+\s*(?:\(BT\s+\d+\)?)?\s*/g, ' ')
   // Immunities / Resistances / Weaknesses — already on raw.defenses, just
   // strip from the prose so abilities surface cleanly.
   text = text.replace(/\bImmunities\s+[^.]+?(?=\s+(?:Resistances\s|Weaknesses\s|Routine\s|---\s|Reset\s|Ranged\s|Melee\s|[A-Z][\w' -]{1,40}\s+(?:Reaction|Two Actions|Three Actions|Free Action|Action|Activate)\b|$))/g, ' ')
@@ -87,9 +127,23 @@ function activityToGlyph(activity: string): string {
   if (a === 'free action')   return ' ◇'
   if (a === 'three actions') return ' ◆◆◆'
   if (a === 'two actions')   return ' ◆◆'
-  if (a === 'action')        return ' ◆'
+  if (a === 'action' || a === 'single action') return ' ◆'
   if (a === 'activate')      return ''
   return ''
+}
+
+/** A strike's printed action cost ("Single Action", "[one-action]", "◆") as
+ *  the same leading-space glyph string activitySymbol gives creature strikes. */
+function strikeActivityGlyph(raw: string | undefined): string | undefined {
+  if (!raw) return undefined
+  if (/^[◆◇↺]+$/.test(raw)) return ' ' + raw
+  const a = raw.toLowerCase().replace(/^\[|\]$/g, '')
+  if (a === 'single action' || a === 'one action' || a === 'one-action') return ' ◆'
+  if (a === 'two actions' || a === 'two-actions') return ' ◆◆'
+  if (a === 'three actions' || a === 'three-actions') return ' ◆◆◆'
+  if (a === 'free action' || a === 'free-action') return ' ◇'
+  if (a === 'reaction') return ' ↺'
+  return undefined
 }
 
 /**
@@ -105,6 +159,8 @@ function extractAbilities(s: string): { abilities: Ability[]; remaining: string 
   ABILITY_HEAD_RE.lastIndex = 0
   let m: RegExpExecArray | null
   while ((m = ABILITY_HEAD_RE.exec(s)) !== null) {
+    // "Melee Single Action jaws +17" is a strike line, never an ability.
+    if (/^(?:Melee|Ranged)$/.test(m[1].trim())) continue
     heads.push({
       name: m[1].trim(),
       preParen: m[2]?.trim(),
@@ -168,22 +224,52 @@ function extractAbilities(s: string): { abilities: Ability[]; remaining: string 
   return { abilities, remaining }
 }
 
-/** Extract attack lines ("Ranged spear +14, Damage 2d6+6 piercing"). */
+/** Index in `rest` where a strike's Damage/Effect text ends: a line break
+ *  (the page's `<br />` when the scrape kept it), a `---` rule, Routine/Reset,
+ *  or the next ability heading run on after a flattened break. */
+function strikeTextEnd(rest: string): number {
+  let end = rest.length
+  const cut = (i: number) => { if (i >= 0 && i < end) end = i }
+  cut(rest.indexOf('\n'))
+  cut(rest.search(/\s---(?=\s|$)/))
+  cut(rest.search(/\s(?=(?:Routine|Reset)\b)/))
+  cut(rest.search(NEXT_ABILITY_RE))
+  return end
+}
+
+/** Extract strike lines ("Ranged spear +14, Damage 2d6+6 piercing") from the
+ *  hazard text. `s` keeps its line breaks: a strike printed after a break
+ *  ends at the next one instead of swallowing the ability that follows. */
 function extractAttacks(s: string): Attack[] {
-  const attacks: Attack[] = []
-  ATTACK_HEAD_RE.lastIndex = 0
+  const heads: Array<{ m: RegExpExecArray; end: number }> = []
+  STRIKE_HEAD_RE.lastIndex = 0
   let m: RegExpExecArray | null
-  while ((m = ATTACK_HEAD_RE.exec(s)) !== null) {
-    const range = m[1] as 'Ranged' | 'Melee'
-    const name = m[2].trim()
-    const bonus = parseInt(m[3], 10)
-    const traitsRaw = m[4]?.trim() ?? ''
-    const damage = m[5].trim()
+  while ((m = STRIKE_HEAD_RE.exec(s)) !== null) heads.push({ m, end: STRIKE_HEAD_RE.lastIndex })
+
+  const attacks: Attack[] = []
+  for (let i = 0; i < heads.length; i++) {
+    const { m: h, end } = heads[i]
+    const nextStart = i + 1 < heads.length ? heads[i + 1].m.index : s.length
+    let rest = s.slice(end, nextStart)
+    const label = rest.match(STRIKE_LABEL_RE)
+    if (label) rest = rest.slice(label[0].length)
+    // strikeTextEnd's boundaries start with a whitespace; the leading ' ' lets a
+    // boundary at the very start of `rest` be found (index 0 of the padded copy).
+    const stop = strikeTextEnd(' ' + rest) - 1
+    const text = rest.slice(0, Math.max(0, stop)).replace(/\s+/g, ' ').replace(/[\s;,]+$/, '').trim()
+
+    const range = h[1] as 'Ranged' | 'Melee'
+    const name = h[4].replace(/_([^_]+)_/g, '$1').trim()
+    const traitsRaw = [h[3], h[6]].filter(Boolean).join(', ')
     const traits = traitsRaw ? traitsRaw.split(',').map(t => t.trim()).filter(Boolean) : []
+    const isEffect = label?.[1] === 'Effect'
     attacks.push({
-      range, name, attack: bonus,
-      traits, damage,
-      types: [], effects: [],
+      range, name, attack: parseInt(h[5], 10),
+      activity: strikeActivityGlyph(h[2]),
+      traits,
+      damage: label && !isEffect ? text : '',
+      types: [],
+      effects: isEffect && text ? [text] : [],
       isAgile: traits.some(t => t.toLowerCase().includes('agile')),
     })
   }
@@ -203,6 +289,10 @@ export function parseHazardDescription(rawDesc: string, name: string): ParsedHaz
   // embedded in their description blob and they'd otherwise render as raw
   // unparsed markup at the top of the stat block.
   s = s.replace(/<%[A-Z]+%\d+%%>([\s\S]*?)<%END>/g, '$1').trim()
+  // A page line break survives as `<br />` or `\n`; keep it as `\n` (the strike
+  // reader ends a strike there) and drop any other inline HTML ("<span
+  // class="action" …>[one-action]</span>" keeps its bracketed text).
+  s = s.replace(/<br\s*\/?>/gi, '\n').replace(/<\/?[a-z][^>]*>/gi, '').trim()
 
   // Strip "<Name> Source <book> pg. N" header (sometimes "Name" is missing,
   // sometimes the source line has weird trailing text).
@@ -236,6 +326,11 @@ export function parseHazardDescription(rawDesc: string, name: string): ParsedHaz
     flavor = s.slice(0, endOfFlavor).trim()
     s = s.slice(endOfFlavor).replace(/^\s*---\s*/, '').trim()
   }
+
+  // Strikes are read from the whole stat-block text, line breaks intact,
+  // BEFORE the section cuts below: a strike inside Routine (Trapped Lathe) or
+  // after a line break used to be lost to the "remaining text" scan.
+  const attacks = extractAttacks(s)
 
   // Stealth: "Stealth DC 18 (or 0 if disabled)" / "Stealth +12 (master)" /
   // "Stealth +10 (trained); DC 22 (expert) to notice ...". The terminator
@@ -297,12 +392,8 @@ export function parseHazardDescription(rawDesc: string, name: string): ParsedHaz
     s = s.slice(0, s.indexOf(routineM[0])).trim()
   }
 
-  // Remaining text is abilities + interleaved attacks.
-  const { abilities, remaining } = extractAbilities(s)
-  // Attacks can appear inline within the abilities prose; we scan the full
-  // remaining (post-section) string for them too.
-  const attackSearch = remaining ? remaining : s
-  const attacks = extractAttacks(attackSearch)
+  // Remaining text is abilities (strikes were read above).
+  const { abilities } = extractAbilities(s)
 
   return { flavor, stealth, disable, bt, complex, abilities, attacks, routine, reset }
 }

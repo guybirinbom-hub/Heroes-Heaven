@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import type { Creature, SpellBlock, SpellSlotEntry } from '../types/pf2e'
+import type { Ability, Attack, Creature, Defenses, SpellBlock, SpellSlotEntry } from '../types/pf2e'
+import { shiftRecallKnowledge } from './StatBlock'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Form-based stat-block builder. Lives on the *input* side of the Text
@@ -89,11 +90,33 @@ const spellsToText = (a: SpEntry[]) =>
   a.map(s => s.name + (s.atWill ? ' (at will)' : s.uses ? ` (×${s.uses})` : '')).join(', ')
 
 // ── Editable (string-backed) shapes ──────────────────────────────────────────
-interface EAttack { id: string; range: 'Melee' | 'Ranged'; name: string; attack: string; damage: string; traits: string; types: string }
-interface EAbility { id: string; name: string; activity: string; traits: string; trigger: string; entries: string }
-interface ERank { level: number; text: string }
-interface EBlock { id: string; tradition: string; type: string; DC: string; attack: string; focusPoints: string; ranks: ERank[] }
+/** `orig` is the strike the form was opened on: what the form has no field for (its action cost, its
+ *  effects, any field a page record carries) rides along from it. `before` holds the ids of the
+ *  abilities the page prints BEFORE this strike (a hazard's Attack.afterAbility, D13), so the strike
+ *  keeps its place among the abilities when one of them is removed. */
+interface EAttack { id: string; range: 'Melee' | 'Ranged'; name: string; attack: string; damage: string; traits: string; types: string; orig?: Attack; before?: string[] }
+/** `slot` is the page section an Archives ability was printed in; the form has no field for it, it
+ *  rides along so an edited page record still prints each ability where the page put it. */
+interface EAbility { id: string; name: string; activity: string; traits: string; trigger: string; entries: string; slot?: Ability['slot'] }
+/** A spell rank's kind. A page cantrip carries the rank it is heightened to ("Cantrips (3rd)", level 3)
+ *  and a constant spell its rank ("Constant (6th)"), so the level alone cannot say which it is. */
+type RankKind = 'rank' | 'cantrip' | 'constant'
+/** `orig` / `origText`: the rank as opened. A rank left as it was is saved exactly as it was (label,
+ *  flags, per-spell notes, spontaneous slots); an edited one is rebuilt from the form. */
+interface ERank { level: number; text: string; kind: RankKind; orig?: SpellSlotEntry; origText?: string }
+/** `orig`: the block as opened. Its printed name ("Champion Devotion Spells") stays while the
+ *  tradition and type are the ones it was opened with. */
+interface EBlock { id: string; tradition: string; type: string; DC: string; attack: string; focusPoints: string; ranks: ERank[]; orig?: SpellBlock }
 interface ECast { id: string; rank: string; names: string }
+
+const kindOf = (sl: SpellSlotEntry): RankKind =>
+  sl.isConstant ? 'constant' : (sl.isCantrip || sl.level === 0) ? 'cantrip' : 'rank'
+/** The rank select's value: kind and level in one string ('c' Cantrips, 'k6' Constant (6th), '6'). */
+const rankKey = (r: ERank) => (r.kind === 'cantrip' ? 'c' : r.kind === 'constant' ? `k${r.level}` : String(r.level))
+const fromRankKey = (k: string): Pick<ERank, 'kind' | 'level'> =>
+  k === 'c' ? { kind: 'cantrip', level: 0 }
+    : k.startsWith('k') ? { kind: 'constant', level: parseInt(k.slice(1)) || 1 }
+      : { kind: 'rank', level: parseInt(k) || 1 }
 
 const seedBlocks = (sbs?: SpellBlock[]): EBlock[] =>
   (sbs ?? []).map(sb => ({
@@ -103,7 +126,11 @@ const seedBlocks = (sbs?: SpellBlock[]): EBlock[] =>
     DC: sb.DC != null ? String(sb.DC) : '',
     attack: sb.attack != null ? String(sb.attack) : '',
     focusPoints: sb.focusPoints != null ? String(sb.focusPoints) : '',
-    ranks: (sb.spellsByLevel ?? []).map(sl => ({ level: sl.level, text: spellsToText(sl.spells as SpEntry[]) })),
+    ranks: (sb.spellsByLevel ?? []).map(sl => {
+      const text = spellsToText(sl.spells as SpEntry[])
+      return { level: sl.level, text, kind: kindOf(sl), orig: sl, origText: text }
+    }),
+    orig: sb,
   }))
 
 // ── Shared styles + tiny presentational helpers (module scope = stable
@@ -189,6 +216,17 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
     resistances: drToText(initial?.defenses?.resistances),
     weaknesses: drToText(initial?.defenses?.weaknesses),
   }))
+  // What a hazard's page PRINTS, beside the numbers: the AC box draws only when acPrinted, and only
+  // the saves in savesPrinted draw (a page hazard). The AC field starts at 10, so a hazard whose AC the
+  // GM never typed drew a made-up "AC 10"; typing an AC (or a save) makes it printed.
+  // A hazard that carries no flag starts from the stat block's own rule for it — anything but
+  // acPrinted: true draws no AC box (a hazard stored before the flag existed) — so an untouched save
+  // never moves the box.
+  const [acSet, setAcSet] = useState(initial?.defenses?.acPrinted === true)
+  const [savesSet, setSavesSet] = useState<Defenses['savesPrinted']>(() =>
+    Array.isArray(initial?.defenses?.savesPrinted) ? [...initial.defenses.savesPrinted] : undefined)
+  const markSave = (k: 'fort' | 'ref' | 'will') =>
+    setSavesSet(p => (p && !p.includes(k) ? (['fort', 'ref', 'will'] as const).filter(s => s === k || p.includes(s)) : p))
   // Creature ⟷ hazard mode + their distinct extra fields. A creature has a
   // lore "Description" (flavor); a hazard has Stealth/Disable/Routine/Reset/etc.
   const [isHaz, setIsHaz] = useState(initial?.isHazard ?? false)
@@ -201,15 +239,16 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
     reset: initial?.hazardData?.reset ?? '',
     complex: initial?.hazardData?.complex ?? false,
   }))
-  const [eAttacks, setEAttacks] = useState<EAttack[]>(() =>
-    (initial?.attacks ?? []).map(a => ({
-      id: bid(), range: a.range, name: a.name, attack: String(a.attack),
-      damage: a.damage, traits: listToText(a.traits), types: listToText(a.types),
-    })))
   const [eAbilities, setEAbilities] = useState<EAbility[]>(() =>
     (initial?.abilities ?? []).map(a => ({
       id: bid(), name: a.name, activity: a.activity ?? '', traits: listToText(a.traits),
-      trigger: a.trigger ?? '', entries: a.entries,
+      trigger: a.trigger ?? '', entries: a.entries, ...(a.slot ? { slot: a.slot } : {}),
+    })))
+  const [eAttacks, setEAttacks] = useState<EAttack[]>(() =>
+    (initial?.attacks ?? []).map(a => ({
+      id: bid(), range: a.range, name: a.name, attack: String(a.attack),
+      damage: a.damage, traits: listToText(a.traits), types: listToText(a.types), orig: a,
+      ...(typeof a.afterAbility === 'number' ? { before: eAbilities.slice(0, a.afterAbility).map(x => x.id) } : {}),
     })))
   const [blocks, setBlocks] = useState<EBlock[]>(() => seedBlocks(initial?.spellcasting))
   const [ritual, setRitual] = useState(() => ({
@@ -230,10 +269,10 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
   const addAb = () => setEAbilities(p => [...p, { id: bid(), name: '', activity: '', traits: '', trigger: '', entries: '' }])
   const delAb = (id: string) => setEAbilities(p => p.filter(a => a.id !== id))
   const setBlk = (id: string, patch: Partial<EBlock>) => setBlocks(p => p.map(b => b.id === id ? { ...b, ...patch } : b))
-  const addBlk = () => setBlocks(p => [...p, { id: bid(), tradition: 'arcane', type: 'Innate', DC: '', attack: '', focusPoints: '', ranks: [{ level: 0, text: '' }] }])
+  const addBlk = () => setBlocks(p => [...p, { id: bid(), tradition: 'arcane', type: 'Innate', DC: '', attack: '', focusPoints: '', ranks: [{ level: 0, text: '', kind: 'cantrip' }] }])
   const delBlk = (id: string) => setBlocks(p => p.filter(b => b.id !== id))
   const setRank = (id: string, i: number, patch: Partial<ERank>) => setBlocks(p => p.map(b => b.id === id ? { ...b, ranks: b.ranks.map((r, j) => j === i ? { ...r, ...patch } : r) } : b))
-  const addRank = (id: string) => setBlocks(p => p.map(b => b.id === id ? { ...b, ranks: [...b.ranks, { level: 1, text: '' }] } : b))
+  const addRank = (id: string) => setBlocks(p => p.map(b => b.id === id ? { ...b, ranks: [...b.ranks, { level: 1, text: '', kind: 'rank' }] } : b))
   const delRank = (id: string, i: number) => setBlocks(p => p.map(b => b.id === id ? { ...b, ranks: b.ranks.filter((_, j) => j !== i) } : b))
   const setRit = (patch: Partial<typeof ritual>) => setRitual(p => ({ ...p, ...patch }))
   const setCast = (id: string, patch: Partial<ECast>) => setRitual(p => ({ ...p, casts: p.casts.map(c => c.id === id ? { ...c, ...patch } : c) }))
@@ -241,25 +280,48 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
   const delCast = (id: string) => setRitual(p => ({ ...p, casts: p.casts.filter(c => c.id !== id) }))
 
   // ── build a Creature from the form + emit on every change ────────────────────
+  /** One rank. Left as it was opened → exactly what it was (its label, the cantrip / constant flag,
+   *  per-spell notes). Edited → rebuilt from the form; a spell kept by name keeps its note. */
+  const buildRank = (r: ERank): SpellSlotEntry => {
+    const o = r.orig
+    if (o && r.text === r.origText && r.level === o.level && r.kind === kindOf(o)) {
+      return r.kind === 'cantrip' && !o.isCantrip ? { ...o, isCantrip: true } : o
+    }
+    const spells = parseSpells(r.text).map(sp => {
+      const was = o?.spells.find(x => x.name.toLowerCase() === sp.name.toLowerCase())
+      return was?.note ? { ...sp, note: was.note } : sp
+    })
+    if (r.kind === 'cantrip') return { label: 'Cantrips', level: r.level, isCantrip: true, spells }
+    if (r.kind === 'constant') return { label: `Constant (${ordinal(r.level)})`, level: r.level, isConstant: true, spells }
+    // A spontaneous rank's slot pool belongs to its rank; it stays while the rank does.
+    const slots = o && kindOf(o) === 'rank' && o.level === r.level && o.slots != null ? { slots: o.slots } : {}
+    return { label: rankLabel(r.level), level: r.level, ...slots, spells }
+  }
+  /** Cantrips first, constant spells last, numbered ranks low → high — the adapter's own order, so a
+   *  page block comes back in the order it was opened in (the sort is stable). */
+  const rankOrder = (r: SpellSlotEntry) => (r.isCantrip ? -1 : r.isConstant ? 1e6 : r.level)
+
   const buildBlock = (b: EBlock): SpellBlock => {
     const tradition = b.tradition.trim(), type = b.type.trim()
-    const name = [cap(tradition), cap(type), 'Spells'].filter(Boolean).join(' ')
+    // The page's own name ("Champion Devotion Spells", "Druid Order Focus Spells") stays while the
+    // block keeps the tradition and type it was opened with; a new or retyped block is named from them.
+    const o = b.orig
+    const same = !!o && tradition === (o.tradition ?? '').trim() && type === (o.type ?? '').trim()
+    const name = same && o!.name ? o!.name : [cap(tradition), cap(type), 'Spells'].filter(Boolean).join(' ')
     const spellsByLevel: SpellSlotEntry[] = b.ranks
       .filter(r => r.text.trim())
-      .slice()
-      .sort((x, y) => (x.level === 0 ? -1 : y.level === 0 ? 1 : x.level - y.level))
-      .map(r => ({
-        label: rankLabel(r.level), level: r.level,
-        ...(r.level === 0 ? { isCantrip: true } : {}),
-        spells: parseSpells(r.text),
-      }))
+      .map(buildRank)
+      .sort((x, y) => rankOrder(x) - rankOrder(y))
     const isFocus = type.toLowerCase() === 'focus'
+    const unchanged = same && spellsByLevel.length === o!.spellsByLevel.length
+      && spellsByLevel.every((r, i) => r === o!.spellsByLevel[i])
     return {
+      ...(o ?? {}),
       name: name || 'Spells', type, tradition: tradition || undefined,
       DC: b.DC.trim() ? parseInt(b.DC) : undefined,
       attack: b.attack.trim() ? parseInt(b.attack) : undefined,
-      ...(isFocus && b.focusPoints.trim() ? { focusPoints: parseInt(b.focusPoints) } : {}),
-      spells: '', spellsByLevel,
+      focusPoints: isFocus && b.focusPoints.trim() ? parseInt(b.focusPoints) : undefined,
+      spells: unchanged ? o!.spells : '', spellsByLevel,
     }
   }
 
@@ -273,12 +335,30 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
     if (basic.climb) speed.climb = basic.climb
     const spellcasting = blocks.map(buildBlock).filter(b => b.spellsByLevel.length > 0)
     const ritualCasts = ritual.casts.filter(c => c.names.trim())
+    const level = num(basic.level, 1)
+    const hp = num(def.hp, 1)
+    // A page record's Recall Knowledge line holds the DCs for its PRINTED level; the form has no field
+    // for it, so a level edit moves every DC by the level table, as elite / weak / scaling do (an edited
+    // level-1 page creature raised to 6 kept reading its level-1 DC).
+    const pageRk = base?.recallKnowledge != null && (base.rawMarkdown || base.fromArchivesPage)
+      && base.level !== level
+      ? { recallKnowledge: shiftRecallKnowledge(base.recallKnowledge, base.level, level) } : {}
+    // Every HP pool the page printed; the first pool IS the HP field, so an edit moves it with it.
+    const pools = base?.defenses?.hpPools
+    const hpPools = Array.isArray(pools) && pools.length
+      ? { hpPools: [{ ...pools[0], hp }, ...pools.slice(1)], ...(base?.defenses?.hpNote ? { hpNote: base.defenses.hpNote } : {}) }
+      : {}
+    const { languageAbilities: _la, ...rest } = base ?? ({} as Partial<Creature>)
+    void _la
+    const keptAbilities = eAbilities.filter(a => a.name.trim())
     return {
-      ...(base ?? {}),
+      ...rest,
+      ...(!isHaz && base?.languageAbilities ? { languageAbilities: base.languageAbilities } : {}),
+      ...pageRk,
       id: base?.id ?? draftId.current,
       name: basic.name.trim() || (isHaz ? 'Unnamed Hazard' : 'Unnamed Creature'),
       source: base?.source ?? 'Custom',
-      level: num(basic.level, 1),
+      level,
       traits: parseList(basic.traits),
       // Creature lore blurb (Description tab). Hazards use hazardData.description
       // instead, so keep any passthrough flavor untouched in hazard mode.
@@ -292,24 +372,30 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
       int: isHaz ? 0 : num(basic.int), wis: isHaz ? 0 : num(basic.wis), cha: isHaz ? 0 : num(basic.cha),
       items: isHaz ? [] : parseList(basic.items),
       speed: isHaz ? {} : speed,
+      // What the form has no field for (the strike's action cost, its effects) comes from the strike it
+      // was opened on; a hazard strike's page place counts the abilities still printed before it (D13).
       attacks: eAttacks.filter(a => a.name.trim()).map(a => ({
+        ...(a.orig ?? {}),
         range: a.range, name: a.name.trim(), attack: num(a.attack),
         traits: parseList(a.traits), damage: a.damage.trim(),
-        types: parseList(a.types), effects: [], isAgile: /\bagile\b/i.test(a.traits),
+        types: parseList(a.types), effects: a.orig?.effects ?? [], isAgile: /\bagile\b/i.test(a.traits),
+        afterAbility: a.before ? keptAbilities.filter(x => a.before!.includes(x.id)).length : undefined,
       })),
       spellcasting: isHaz ? [] : spellcasting,
       rituals: !isHaz && ritualCasts.length ? {
         dc: ritual.dc.trim() ? num(ritual.dc) : undefined,
         casts: ritualCasts.map(c => ({ rank: c.rank.trim(), level: ordToLevel(c.rank), names: parseList(c.names) })),
       } : undefined,
-      abilities: eAbilities.filter(a => a.name.trim()).map(a => ({
+      abilities: keptAbilities.map(a => ({
         name: a.name.trim(), activity: a.activity || undefined,
         traits: parseList(a.traits), trigger: a.trigger.trim() || undefined,
-        entries: a.entries,
+        entries: a.entries, ...(a.slot ? { slot: a.slot } : {}),
       })),
       defenses: {
         ac: num(def.ac, 10), fort: num(def.fort), ref: num(def.ref), will: num(def.will),
-        hp: num(def.hp, 1),
+        hp,
+        ...hpPools,
+        ...(isHaz ? { acPrinted: acSet, ...(savesSet ? { savesPrinted: savesSet } : {}) } : {}),
         hardness: def.hardness ? num(def.hardness) : undefined,
         bt: isHaz && def.bt ? num(def.bt) : undefined,
         immunities: parseList(def.immunities),
@@ -334,7 +420,7 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
     // Rebuild whenever any form section changes. onChange is intentionally
     // excluded — it's a stable setter and including build() would loop.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [basic, def, eAttacks, eAbilities, blocks, ritual, isHaz, flavor, haz])
+  }, [basic, def, eAttacks, eAbilities, blocks, ritual, isHaz, flavor, haz, acSet, savesSet])
 
   // ── render ───────────────────────────────────────────────────────────────────
   const segStyle = (active: boolean): React.CSSProperties => ({
@@ -405,16 +491,16 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
         {tab === 'defense' && (
           <>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <Field label="AC" w={80}><Num v={def.ac} on={n => setD({ ac: n })} /></Field>
+              <Field label="AC" w={80}><Num v={def.ac} on={n => { setD({ ac: n }); setAcSet(true) }} /></Field>
               <Field label="HP" w={90}><Num v={def.hp} on={n => setD({ hp: n })} /></Field>
               <Field label="Hardness" w={90}><Num v={def.hardness} on={n => setD({ hardness: n })} /></Field>
               {isHaz && <Field label="Broken Threshold" w={120}><Num v={def.bt} on={n => setD({ bt: n })} /></Field>}
             </div>
             <Sec>Saving throws</Sec>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <Field label="Fortitude" w={90}><Num v={def.fort} on={n => setD({ fort: n })} /></Field>
-              <Field label="Reflex" w={90}><Num v={def.ref} on={n => setD({ ref: n })} /></Field>
-              <Field label="Will" w={90}><Num v={def.will} on={n => setD({ will: n })} /></Field>
+              <Field label="Fortitude" w={90}><Num v={def.fort} on={n => { setD({ fort: n }); markSave('fort') }} /></Field>
+              <Field label="Reflex" w={90}><Num v={def.ref} on={n => { setD({ ref: n }); markSave('ref') }} /></Field>
+              <Field label="Will" w={90}><Num v={def.will} on={n => { setD({ will: n }); markSave('will') }} /></Field>
             </div>
             <Sec>Damage adjustments</Sec>
             <Field label="Immunities" w="100%"><Txt v={def.immunities} on={v => setD({ immunities: v })} ph="fire, paralyzed, sleep" /></Field>
@@ -474,9 +560,10 @@ export function StatBlockBuilder({ initial, onChange }: Props) {
                 </div>
                 {b.ranks.map((r, i) => (
                   <div key={i} style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 5 }}>
-                    <select style={{ ...inputStyle, width: 100 }} value={r.level} onChange={e => setRank(b.id, i, { level: parseInt(e.target.value) })}>
-                      <option value={0}>Cantrips</option>
-                      {Array.from({ length: 10 }, (_, k) => k + 1).map(l => <option key={l} value={l}>{ordinal(l)} rank</option>)}
+                    <select style={{ ...inputStyle, width: 120 }} value={rankKey(r)} onChange={e => setRank(b.id, i, fromRankKey(e.target.value))}>
+                      <option value="c">Cantrips{r.kind === 'cantrip' && r.level > 0 ? ` (${ordinal(r.level)})` : ''}</option>
+                      {Array.from({ length: 10 }, (_, k) => k + 1).map(l => <option key={l} value={String(l)}>{ordinal(l)} rank</option>)}
+                      {Array.from({ length: 10 }, (_, k) => k + 1).map(l => <option key={`k${l}`} value={`k${l}`}>Constant ({ordinal(l)})</option>)}
                     </select>
                     <input style={{ ...inputStyle, flex: 1 }} value={r.text} placeholder="fireball, heal (×3), light (at will)" onChange={e => setRank(b.id, i, { text: e.target.value })} />
                     <button onClick={() => delRank(b.id, i)} style={xBtn} title="Remove rank">✕</button>

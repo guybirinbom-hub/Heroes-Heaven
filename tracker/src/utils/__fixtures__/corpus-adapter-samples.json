@@ -1,0 +1,1453 @@
+{
+ "_note": "Verbatim records from the verified bestiary corpus (hh-bestiary-corpus, data/bestiary/*.json and data/hazards.json), keyed by role. Read by parseCreature.corpus.test.ts. Do not hand-edit: re-copy from the corpus.",
+ "creatures": {
+  "multiPool": {
+   "name": "Hydra",
+   "source": "Bestiary",
+   "page": 210,
+   "level": 6,
+   "traits": [
+    "N",
+    "Huge",
+    "Beast"
+   ],
+   "perception": {
+    "std": 17
+   },
+   "senses": [
+    {
+     "name": "low-light vision"
+    },
+    {
+     "name": "scent (imprecise) 30 feet"
+    }
+   ],
+   "languages": {
+    "languages": [],
+    "abilities": []
+   },
+   "skills": {
+    "athletics": 17,
+    "stealth": 12
+   },
+   "abilityMods": {
+    "str": 7,
+    "dex": 4,
+    "con": 5,
+    "int": -3,
+    "wis": 2,
+    "cha": -1
+   },
+   "items": [],
+   "speed": {
+    "walk": 25,
+    "swim": 25
+   },
+   "attacks": [
+    {
+     "range": "Melee",
+     "name": "fangs",
+     "attack": 16,
+     "traits": [
+      "reach 10 feet"
+     ],
+     "damage": "2d6+7 piercing",
+     "types": [],
+     "effects": [],
+     "activity": {
+      "number": 1,
+      "unit": "action"
+     }
+    }
+   ],
+   "spellcasting": [],
+   "abilities": {
+    "top": [],
+    "mid": [
+     {
+      "name": "Attack of Opportunity",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "entries": [
+       ""
+      ]
+     },
+     {
+      "name": "Head Regrowth",
+      "traits": [],
+      "entries": [
+       "A hydra ordinarily has five heads. A creature can attempt to sever one of the hydra’s heads by specifically targeting it and dealing damage equal to the head’s Hit Points. A head that is not completely severed returns to full Hit Points at the end of any creature’s turn.\nA hydra can regrow a severed head using Hydra Regeneration. A creature can prevent this regrowth by dealing acid or fire damage to the stump, cauterizing it. Single-target acid or fire effects need to be targeted at a specific stump, but effects that deal splash damage or affect areas covering the hydra’s whole space cauterize all stumps if they deal acid or fire damage. If the attack that severs a head deals any acid or fire damage, the stump is cauterized instantly. If all five heads are cauterized, the hydra dies."
+      ]
+     },
+     {
+      "name": "Hydra Regeneration",
+      "traits": [],
+      "entries": [
+       "The hydra has regeneration equal to 3 x the number of heads it has. If a hydra’s body is missing any heads and the remaining stumps have not been cauterized, the hydra attempts a DC 25 Fortitude save after it regains Hit Points from regeneration. On a success, one uncauterized stump regrows two heads; on a critical success, two uncauterized stumps regrow into two heads each. The hydra can never grow more than double the number of heads it ordinarily has. The hydra’s regeneration only fully deactivates if all its heads are severed and all stumps are cauterized, at which point it dies."
+      ]
+     },
+     {
+      "name": "Multiple Opportunities",
+      "traits": [],
+      "entries": [
+       "A hydra gains an extra reaction per round for each of its heads beyond the first, which it can use only to make Attacks of Opportunity. It can’t use more than 1 reaction on the same triggering action, even if a creature leaves several squares within its reach, and the hydra must use a different head for each Attack of Opportunity it makes. Whenever one of the hydra’s heads is severed, the hydra loses 1 of its extra reactions per round."
+      ]
+     }
+    ],
+    "bot": [
+     {
+      "name": "Focused Assault",
+      "activity": {
+       "number": 2,
+       "unit": "action"
+      },
+      "traits": [],
+      "entries": [
+       "The hydra attacks a single target with its heads, overwhelming its foe with multiple attacks and leaving almost nowhere to dodge. The hydra Strikes with its fangs. On a successful attack, the hydra deals damage from its fangs Strike to the target, plus an additional 1d6 damage for every head it has beyond the first. Even on a failed attack, the hydra deals the damage from one fangs Strike to the target creature, though it still misses completely on a critical failure. This counts toward the hydra’s multiple attack penalty as a number of attacks equal to the number of heads the hydra has."
+      ]
+     },
+     {
+      "name": "Storm of Jaws",
+      "activity": {
+       "number": 2,
+       "unit": "action"
+      },
+      "traits": [],
+      "entries": [
+       "The hydra makes a number of Strikes up to its number of heads, each against a different target. These attacks count toward the hydra’s multiple attack penalty, but the multiple attack penalty doesn’t increase until after the hydra makes all its attacks."
+      ]
+     }
+    ]
+   },
+   "defenses": {
+    "ac": {
+     "std": 23
+    },
+    "acNote": "all-around vision",
+    "savingThrows": {
+     "fort": {
+      "std": 15
+     },
+     "ref": {
+      "std": 12
+     },
+     "will": {
+      "std": 10
+     }
+    },
+    "hp": [
+     {
+      "hp": 90,
+      "name": "body, hydra regeneration"
+     },
+     {
+      "hp": 15,
+      "name": "head, head regrowth"
+     }
+    ],
+    "immunities": [
+     "area damage"
+    ],
+    "resistances": [],
+    "weaknesses": [
+     {
+      "name": "slashing",
+      "amount": 5
+     }
+    ]
+   },
+   "flavor": "Hydras are multiheaded, foul-tempered serpentine beasts with voracious appetites, widely feared for their regeneration abilities.\n\nVariant Hydras\n\nScholars of bestial lore can describe several hydra variations. Though rare, hydras with more than five heads live in very isolated areas, sometimes guarding incredibly powerful artifacts. Explorers who have visited colder swamps and frozen glaciers tell tales of hydras with blue-tinged scales that are immune to the cold and can exhale clouds of icy death. Similar stories describe fiery hydras that breathe gouts of flame and swim in the molten lava of active volcanoes.",
+   "_aon": {
+    "id": "creature-269",
+    "url": "https://2e.aonprd.com/Monsters.aspx?ID=269",
+    "markdown": "<title level=\"1\" pfs=\"Standard\">[Hydra](/Monsters.aspx?ID=269)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nHydras are multiheaded, foul-tempered serpentine beasts with voracious appetites, widely feared for their regeneration abilities.\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Beast](/Rules.aspx?ID=563)**\n([Arcana](/Skills.aspx?ID=2), [Nature](/Skills.aspx?ID=10)): DC 22\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 20\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 17\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 6\">[Hydra](/Monsters.aspx?ID=269)</title>\n\n<traits>\n<trait label=\"N\" url=\"/Rules.aspx?ID=95\" />\n<trait label=\"Huge\" />\n<trait label=\"Beast\" url=\"/Traits.aspx?ID=20\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Bestiary](/Sources.aspx?ID=2) pg. 210\n\n**Perception** +17; low-light vision, scent (imprecise) 30 feet\n\n**Languages**\n\n**Skills**\n[Athletics](/Skills.aspx?ID=3) +17, [Stealth](/Skills.aspx?ID=15) +12\n\n<row gap=\"medium\">\n**Str** +7\n\n**Dex** +4\n\n**Con** +5\n\n**Int** -3\n\n**Wis** +2\n\n**Cha** -1\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 23 all-around vision\n\n**Fort** +15 \n\n**Ref** +12 \n\n**Will** +10 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 90\n((body), hydra regeneration)<br /> **HP** 15 ((head), head regrowth)\n\n</row>\n\n**Immunities**\narea damage\n\n**Weaknesses**\nslashing 5\n\n**Attack of Opportunity** <actions string=\"Reaction\" /><br /> **Head Regrowth** A hydra ordinarily has five heads. A creature can attempt to sever one of the hydra’s heads by specifically targeting it and dealing damage equal to the head’s Hit Points. A head that is not completely severed returns to full Hit Points at the end of any creature’s turn.<br /> A hydra can regrow a severed head using Hydra Regeneration. A creature can prevent this regrowth by dealing acid or fire damage to the stump, cauterizing it. Single-target acid or fire effects need to be targeted at a specific stump, but effects that deal splash damage or affect areas covering the hydra’s whole space cauterize all stumps if they deal acid or fire damage. If the attack that severs a head deals any acid or fire damage, the stump is cauterized instantly. If all five heads are cauterized, the hydra dies.<br /> **Hydra Regeneration** The hydra has regeneration equal to 3 x the number of heads it has. If a hydra’s body is missing any heads and the remaining stumps have not been cauterized, the hydra attempts a DC 25 Fortitude save after it regains Hit Points from regeneration. On a success, one uncauterized stump regrows two heads; on a critical success, two uncauterized stumps regrow into two heads each. The hydra can never grow more than double the number of heads it ordinarily has. The hydra’s regeneration only fully deactivates if all its heads are severed and all stumps are cauterized, at which point it dies.<br /> **Multiple Opportunities** A hydra gains an extra reaction per round for each of its heads beyond the first, which it can use only to make Attacks of Opportunity. It can’t use more than 1 reaction on the same triggering action, even if a creature leaves several squares within its reach, and the hydra must use a different head for each Attack of Opportunity it makes. Whenever one of the hydra’s heads is severed, the hydra loses 1 of its extra reactions per round.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 25 feet, swim 25 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nfangs +16 ([reach 10 feet](/Traits.aspx?ID=192)),\n**Damage** 2d6+7 piercing\n\n**Focused Assault** <actions string=\"Two Actions\" />  The hydra attacks a single target with its heads, overwhelming its foe with multiple attacks and leaving almost nowhere to dodge. The hydra Strikes with its fangs. On a successful attack, the hydra deals damage from its fangs Strike to the target, plus an additional 1d6 damage for every head it has beyond the first. Even on a failed attack, the hydra deals the damage from one fangs Strike to the target creature, though it still misses completely on a critical failure. This counts toward the hydra’s multiple attack penalty as a number of attacks equal to the number of heads the hydra has.\n\n**Storm of Jaws** <actions string=\"Two Actions\" />  The hydra makes a number of Strikes up to its number of heads, each against a different target. These attacks count toward the hydra’s multiple attack penalty, but the multiple attack penalty doesn’t increase until after the hydra makes all its attacks.\n\n</column>\n\n<aside>\n<title level=\"2\" noclass=\"true\" icon=\"/images/Icons/Sidebar_4_RelatedCreatures.png\">Variant Hydras</title>\n\nScholars of bestial lore can describe several hydra variations. Though rare, hydras with more than five heads live in very isolated areas, sometimes guarding incredibly powerful artifacts. Explorers who have visited colder swamps and frozen glaciers tell tales of hydras with blue-tinged scales that are immune to the cold and can exhale clouds of icy death. Similar stories describe fiery hydras that breathe gouts of flame and swim in the molten lava of active volcanoes.\n</aside>"
+   }
+  },
+  "topMidBot": {
+   "name": "Elysian Sheep",
+   "source": "Pathfinder #156: The Apocalypse Prophet",
+   "page": 32,
+   "level": 7,
+   "traits": [
+    "Rare",
+    "NG",
+    "Large",
+    "Animal"
+   ],
+   "perception": {
+    "std": 18
+   },
+   "senses": [
+    {
+     "name": "low-light vision"
+    }
+   ],
+   "languages": {
+    "languages": [],
+    "abilities": []
+   },
+   "skills": {
+    "acrobatics": 17,
+    "athletics": 15,
+    "survival": 16
+   },
+   "abilityMods": {
+    "str": 2,
+    "dex": 6,
+    "con": 4,
+    "int": -4,
+    "wis": 3,
+    "cha": -1
+   },
+   "items": [],
+   "speed": {
+    "walk": 40
+   },
+   "attacks": [
+    {
+     "range": "Melee",
+     "name": "horn",
+     "attack": 16,
+     "traits": [],
+     "damage": "2d8+5 plus 1d6 good",
+     "types": [],
+     "effects": [],
+     "activity": {
+      "number": 1,
+      "unit": "action"
+     }
+    },
+    {
+     "range": "Melee",
+     "name": "hoof",
+     "attack": 16,
+     "traits": [],
+     "damage": "2d6+5 plus 1d6 good",
+     "types": [],
+     "effects": [],
+     "activity": {
+      "number": 1,
+      "unit": "action"
+     }
+    }
+   ],
+   "spellcasting": [],
+   "abilities": {
+    "top": [
+     {
+      "name": "Nimble Grazer",
+      "traits": [],
+      "entries": [
+       "Inclines and rocky areas are not difficult terrain for an Elysian sheep."
+      ]
+     }
+    ],
+    "mid": [
+     {
+      "name": "Cowardly",
+      "traits": [],
+      "entries": [
+       "An Elysian sheep gains the fleeing condition whenever it has the frightened condition."
+      ]
+     }
+    ],
+    "bot": [
+     {
+      "name": "Trample",
+      "activity": {
+       "number": 3,
+       "unit": "action"
+      },
+      "traits": [],
+      "entries": [
+       "Medium or smaller, hoof, DC 24"
+      ]
+     }
+    ]
+   },
+   "defenses": {
+    "ac": {
+     "std": 25
+    },
+    "savingThrows": {
+     "fort": {
+      "std": 15
+     },
+     "ref": {
+      "std": 18
+     },
+     "will": {
+      "std": 12
+     },
+     "note": "+1 status to all saves vs. magic"
+    },
+    "hp": [
+     {
+      "hp": 140
+     }
+    ],
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [
+     {
+      "name": "evil",
+      "amount": 5
+     }
+    ]
+   },
+   "_aon": {
+    "id": "creature-2139",
+    "url": "https://2e.aonprd.com/Monsters.aspx?ID=2139",
+    "markdown": "<title level=\"1\" pfs=\"\">[Elysian Sheep](/Monsters.aspx?ID=2139)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Animal](/Rules.aspx?ID=563)**\n([Nature](/Skills.aspx?ID=10)): DC 28\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 26\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 23\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 7\">[Elysian Sheep](/Monsters.aspx?ID=2139)</title>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=137\" />\n<trait label=\"NG\" url=\"/Rules.aspx?ID=95\" />\n<trait label=\"Large\" />\n<trait label=\"Animal\" url=\"/Traits.aspx?ID=9\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #156: The Apocalypse Prophet](/Sources.aspx?ID=36) pg. 32\n\n**Perception** +18; [low-light vision](/MonsterAbilities.aspx?ID=23)\n\n**Languages**\n\n**Skills**\n[Acrobatics](/Skills.aspx?ID=1) +17, [Athletics](/Skills.aspx?ID=3) +15, [Survival](/Skills.aspx?ID=16) +16\n\n<row gap=\"medium\">\n**Str** +2\n\n**Dex** +6\n\n**Con** +4\n\n**Int** -4\n\n**Wis** +3\n\n**Cha** -1\n</row>\n\n**Nimble Grazer** Inclines and rocky areas are not difficult terrain for an Elysian sheep.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 25 \n\n**Fort** +15 \n\n**Ref** +18 \n\n**Will** +12 \n\n+1 status to all saves vs. [magic](/Traits.aspx?ID=103)\n</row>\n\n<row gap=\"medium\">\n**HP** 140\n\n</row>\n\n**Weaknesses**\nevil 5\n\n**Cowardly** An Elysian sheep gains the [fleeing](/Conditions.aspx?ID=17) condition whenever it has the [frightened](/Conditions.aspx?ID=19) condition.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 40 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nhorn +16,\n**Damage** 2d8+5 plus 1d6 good\n\n**Melee**\n<actions string=\"Single Action\" />\nhoof +16,\n**Damage** 2d6+5 plus 1d6 good\n\n**[Trample](/MonsterAbilities.aspx?ID=39)** <actions string=\"Three Actions\" />  Medium or smaller, hoof, DC 24\n\n</column>"
+   }
+  },
+  "languageAbilities": {
+   "name": "Grandfather Mantis",
+   "source": "Pathfinder #167: Ready? Fight!",
+   "page": 35,
+   "level": 15,
+   "traits": [
+    "Unique",
+    "NG",
+    "Medium",
+    "Minion",
+    "Monitor",
+    "Spirit"
+   ],
+   "perception": {
+    "std": 27
+   },
+   "senses": [],
+   "languages": {
+    "languages": [
+     "Arcadian"
+    ],
+    "abilities": [
+     "telepathy 100 feet"
+    ]
+   },
+   "skills": {
+    "athletics": 28,
+    "occultism": 25,
+    "religion": 25
+   },
+   "abilityMods": {
+    "str": 5,
+    "dex": 5,
+    "con": 3,
+    "int": 2,
+    "wis": 4,
+    "cha": 2
+   },
+   "items": [],
+   "speed": {
+    "walk": 35,
+    "climb": 35
+   },
+   "attacks": [
+    {
+     "range": "Melee",
+     "name": "claw",
+     "attack": 28,
+     "traits": [
+      "Agile",
+      "Magical"
+     ],
+     "damage": "3d10+13 slashing plus Improved Grab",
+     "types": [],
+     "effects": [],
+     "activity": {
+      "number": 1,
+      "unit": "action"
+     }
+    }
+   ],
+   "spellcasting": [
+    {
+     "name": "Occult Innate Spells",
+     "tradition": "occult",
+     "type": "Innate",
+     "DC": 35,
+     "entry": {
+      "5": {
+       "level": 5,
+       "spells": [
+        {
+         "name": "Fly"
+        },
+        {
+         "name": "Shadow Blast"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "abilities": {
+    "top": [],
+    "mid": [
+     {
+      "name": "Mantis Ambush",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "A creature within Grandfather Mantis's reach is hit by an ally's melee attack",
+      "entries": [
+       "Effect Grandfather Mantis makes a claw Strike against the triggering creature."
+      ]
+     }
+    ],
+    "bot": [
+     {
+      "name": "Pounce",
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      },
+      "traits": [],
+      "entries": [
+       "Grandfather Mantis Strides, then Strikes."
+      ]
+     }
+    ]
+   },
+   "defenses": {
+    "ac": {
+     "std": 36
+    },
+    "savingThrows": {
+     "fort": {
+      "std": 26
+     },
+     "ref": {
+      "std": 30
+     },
+     "will": {
+      "std": 25
+     }
+    },
+    "hp": [
+     {
+      "hp": 300
+     }
+    ],
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [
+     {
+      "name": "force",
+      "amount": 15
+     },
+     {
+      "name": "positive",
+      "amount": 15
+     }
+    ]
+   },
+   "_aon": {
+    "id": "creature-1489",
+    "url": "https://2e.aonprd.com/Monsters.aspx?ID=1489",
+    "markdown": "<title level=\"1\" pfs=\"\">[Grandfather Mantis](/Monsters.aspx?ID=1489)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Monitor](/Rules.aspx?ID=563)**\n([Religion](/Skills.aspx?ID=13)): DC 44\n\n**[Recall Knowledge - Spirit](/Rules.aspx?ID=563)**\n([Occultism](/Skills.aspx?ID=11)): DC 44\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 42\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 39\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 15\">[Grandfather Mantis](/Monsters.aspx?ID=1489)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=161\" />\n<trait label=\"NG\" url=\"/Rules.aspx?ID=95\" />\n<trait label=\"Medium\" />\n<trait label=\"Minion\" url=\"/Traits.aspx?ID=109\" />\n<trait label=\"Monitor\" url=\"/Traits.aspx?ID=111\" />\n<trait label=\"Spirit\" url=\"/Traits.aspx?ID=149\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #167: Ready? Fight!](/Sources.aspx?ID=86) pg. 35\n\n**Perception** +27\n\n**Languages**\n[Arcadian](/Languages.aspx?ID=88); [telepathy](/MonsterAbilities.aspx?ID=37) 100 feet\n\n**Skills**\n[Athletics](/Skills.aspx?ID=3) +28, [Occultism](/Skills.aspx?ID=11) +25, [Religion](/Skills.aspx?ID=13) +25\n\n<row gap=\"medium\">\n**Str** +5\n\n**Dex** +5\n\n**Con** +3\n\n**Int** +2\n\n**Wis** +4\n\n**Cha** +2\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 36 \n\n**Fort** +26 \n\n**Ref** +30 \n\n**Will** +25 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 300\n\n</row>\n\n**Weaknesses**\n[force](/Traits.aspx?ID=75) 15, [positive](/Traits.aspx?ID=128) 15\n\n**Mantis Ambush** <actions string=\"Reaction\" /> **Trigger** A creature within Grandfather Mantis's reach is hit by an ally's melee attack; **Effect** Grandfather Mantis makes a claw Strike against the triggering creature.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 35 feet, climb 35 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nclaw +28 ([Agile](/Traits.aspx?ID=170), [Magical](/Traits.aspx?ID=103)),\n**Damage** 3d10+13 slashing plus [Improved Grab](/MonsterAbilities.aspx?ID=27)\n\n**Occult Innate Spells** DC 35\n- **5th**\n[Fly](/Spells.aspx?ID=125), [Shadow Blast](/Spells.aspx?ID=273)\n\n**Pounce** <actions string=\"Single Action\" />  Grandfather Mantis Strides, then Strikes.\n\n</column>"
+   }
+  },
+  "hardness": {
+   "name": "Animated Axe",
+   "source": "Pathfinder #198: No Breath to Cry",
+   "page": 60,
+   "level": 5,
+   "traits": [
+    "LN",
+    "Tiny",
+    "Construct",
+    "Mindless"
+   ],
+   "perception": {
+    "std": 9
+   },
+   "senses": [
+    {
+     "name": "darkvision"
+    }
+   ],
+   "languages": {
+    "languages": [],
+    "abilities": []
+   },
+   "skills": {
+    "acrobatics": 13
+   },
+   "abilityMods": {
+    "str": 5,
+    "dex": 4,
+    "con": 2,
+    "int": -5,
+    "wis": 0,
+    "cha": -5
+   },
+   "items": [],
+   "speed": {
+    "fly": 20
+   },
+   "attacks": [
+    {
+     "range": "Melee",
+     "name": "battle axe",
+     "attack": 14,
+     "traits": [
+      "Sweep"
+     ],
+     "damage": "1d8+7 slashing plus 1d6 persistent bleed",
+     "types": [],
+     "effects": [],
+     "activity": {
+      "number": 1,
+      "unit": "action"
+     }
+    }
+   ],
+   "spellcasting": [],
+   "abilities": {
+    "top": [],
+    "mid": [
+     {
+      "name": "Construct Armor",
+      "traits": [],
+      "entries": [
+       "As animated broom, but reduced to AC 19 when broken."
+      ]
+     }
+    ],
+    "bot": []
+   },
+   "defenses": {
+    "ac": {
+     "std": 23
+    },
+    "acNote": "(19 when broken)",
+    "savingThrows": {
+     "fort": {
+      "std": 11
+     },
+     "ref": {
+      "std": 13
+     },
+     "will": {
+      "std": 7
+     }
+    },
+    "hp": [
+     {
+      "hp": 65
+     }
+    ],
+    "immunities": [
+     "bleed",
+     "death effects",
+     "disease",
+     "doomed",
+     "drained",
+     "fatigued",
+     "healing",
+     "mental",
+     "necromancy",
+     "nonlethal attacks",
+     "paralyzed",
+     "poison",
+     "sickened",
+     "unconscious"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "hardness": {
+     "std": 8
+    }
+   },
+   "_aon": {
+    "id": "creature-2789",
+    "url": "https://2e.aonprd.com/Monsters.aspx?ID=2789",
+    "markdown": "<title level=\"1\" pfs=\"\">[Animated Axe](/Monsters.aspx?ID=2789)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Construct](/Rules.aspx?ID=563)**\n([Arcana](/Skills.aspx?ID=2), [Crafting](/Skills.aspx?ID=4)): DC 20\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 18\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 15\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 5\">[Animated Axe](/Monsters.aspx?ID=2789)</title>\n\n<traits>\n<trait label=\"LN\" url=\"/Rules.aspx?ID=95\" />\n<trait label=\"Tiny\" />\n<trait label=\"Construct\" url=\"/Traits.aspx?ID=35\" />\n<trait label=\"Mindless\" url=\"/Traits.aspx?ID=108\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #198: No Breath to Cry](/Sources.aspx?ID=224) pg. 60\n\n**Perception** +9; [darkvision](/MonsterAbilities.aspx?ID=59)\n\n**Languages**\n\n**Skills**\n[Acrobatics](/Skills.aspx?ID=1) +13\n\n<row gap=\"medium\">\n**Str** +5\n\n**Dex** +4\n\n**Con** +2\n\n**Int** -5\n\n**Wis** +0\n\n**Cha** -5\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 23 (19 when broken)\n\n**Fort** +11 \n\n**Ref** +13 \n\n**Will** +7 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 65\n\n**Hardness**\n8\n</row>\n\n**Immunities**\nbleed, death effects, disease, doomed, drained, fatigued, healing, mental, necromancy, nonlethal attacks, paralyzed, poison, sickened, unconscious\n\n**Construct Armor** As animated broom, but reduced to AC 19 when broken.<br />\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** fly 20 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nbattle axe +14 ([Sweep](/Traits.aspx?ID=194)),\n**Damage** 1d8+7 slashing plus 1d6 [persistent bleed](/Conditions.aspx?ID=29)\n\n</column>"
+   }
+  },
+  "noRecall": {
+   "name": "Unseen Servant",
+   "source": "Core Rulebook",
+   "page": 380,
+   "level": -1,
+   "traits": [
+    "No Alignment",
+    "Medium",
+    "Mindless"
+   ],
+   "perception": {
+    "std": 0
+   },
+   "senses": [
+    {
+     "name": "darkvision"
+    }
+   ],
+   "languages": {
+    "languages": [
+     "- (understands its creator)"
+    ],
+    "abilities": []
+   },
+   "skills": {
+    "stealth": 8
+   },
+   "abilityMods": {
+    "str": -4,
+    "dex": 2,
+    "con": 0,
+    "int": -5,
+    "wis": 0,
+    "cha": 0
+   },
+   "items": [],
+   "speed": {
+    "fly": 30
+   },
+   "attacks": [],
+   "spellcasting": [],
+   "abilities": {
+    "top": [
+     {
+      "name": "Invisible",
+      "traits": [],
+      "entries": [
+       "An unseen servant is invisible, though it normally doesn’t Sneak, so it is usually only hidden."
+      ]
+     }
+    ],
+    "mid": [],
+    "bot": [
+     {
+      "name": "Force Body",
+      "traits": [],
+      "entries": [
+       "An unseen servant’s physical body is made of force. It can’t use attack actions. It can move and use Interact actions to do things such as fetch objects, open unstuck or unlocked doors, hold chairs, and clean. It can’t pass through solid objects."
+      ]
+     }
+    ]
+   },
+   "defenses": {
+    "ac": {
+     "std": 13
+    },
+    "savingThrows": {
+     "fort": {
+      "std": 0
+     },
+     "ref": {
+      "std": 4
+     },
+     "will": {
+      "std": 0
+     }
+    },
+    "hp": [
+     {
+      "hp": 4
+     }
+    ],
+    "immunities": [
+     "disease",
+     "mental",
+     "non-magical attacks",
+     "paralysis",
+     "poison",
+     "precision",
+     "unconscious"
+    ],
+    "resistances": [
+     {
+      "name": "all damage",
+      "amount": 5,
+      "note": "except force or ghost touch"
+     }
+    ],
+    "weaknesses": []
+   },
+   "flavor": "This creature can be summoned with the spell Unseen Servant.",
+   "_aon": {
+    "id": "creature-1",
+    "url": "https://2e.aonprd.com/Monsters.aspx?ID=1",
+    "markdown": "<title level=\"1\" pfs=\"Standard\">[Unseen Servant](/Monsters.aspx?ID=1)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nThis creature can be summoned with the spell _[Unseen Servant](/Spells.aspx?ID=352)_.\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature -1\">[Unseen Servant](/Monsters.aspx?ID=1)</title>\n\n<traits>\n<trait label=\"No Alignment\" url=\"/Rules.aspx?ID=95\" />\n<trait label=\"Medium\" />\n<trait label=\"Mindless\" url=\"/Traits.aspx?ID=108\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Core Rulebook](/Sources.aspx?ID=1) pg. 380\n\n**Perception** +0; darkvision\n\n**Languages**\n- (understands its creator)\n\n**Skills**\n[Stealth](/Skills.aspx?ID=15) +8\n\n<row gap=\"medium\">\n**Str** -4\n\n**Dex** +2\n\n**Con** +0\n\n**Int** -5\n\n**Wis** +0\n\n**Cha** +0\n</row>\n\n**Invisible**  An unseen servant is invisible, though it normally doesn’t Sneak, so it is usually only hidden.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 13 \n\n**Fort** +0 \n\n**Ref** +4 \n\n**Will** +0 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 4\n\n</row>\n\n**Immunities**\n[disease](/Traits.aspx?ID=46), [mental](/Traits.aspx?ID=106), non-[magical](/Traits.aspx?ID=103) attacks, [paralysis](/Conditions.aspx?ID=28), [poison](/Traits.aspx?ID=126), precision, [unconscious](/Conditions.aspx?ID=38)\n\n**Resistances**\nall damage 5 (except [force](/Traits.aspx?ID=75) or [_ghost touch_](/Equipment.aspx?ID=297))\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** fly 30 feet\n\n**Force Body**   An unseen servant’s physical body is made of force. It can’t use attack actions. It can move and use Interact actions to do things such as fetch objects, open unstuck or unlocked doors, hold chairs, and clean. It can’t pass through solid objects.\n\n</column>"
+   }
+  },
+  "recallSingle": {
+   "name": "Svetlana",
+   "source": "Kingmaker Adventure Path",
+   "page": 53,
+   "level": 1,
+   "traits": [
+    "Unique",
+    "NG",
+    "Medium",
+    "Human",
+    "Humanoid"
+   ],
+   "perception": {
+    "std": 5
+   },
+   "senses": [],
+   "languages": {
+    "languages": [
+     "Common"
+    ],
+    "abilities": []
+   },
+   "skills": {
+    "brevoy lore": 6,
+    "diplomacy": 7,
+    "medicine": 5,
+    "society": 6,
+    "survival": 3
+   },
+   "abilityMods": {
+    "str": 0,
+    "dex": 3,
+    "con": 3,
+    "int": 1,
+    "wis": 0,
+    "cha": 2
+   },
+   "items": [
+    "cleaver",
+    "Leather Armor"
+   ],
+   "speed": {
+    "walk": 25
+   },
+   "attacks": [
+    {
+     "range": "Melee",
+     "name": "cleaver",
+     "attack": 6,
+     "traits": [
+      "Agile"
+     ],
+     "damage": "1d6 slashing",
+     "types": [],
+     "effects": [],
+     "activity": {
+      "number": 1,
+      "unit": "action"
+     }
+    }
+   ],
+   "spellcasting": [],
+   "abilities": {
+    "top": [],
+    "mid": [],
+    "bot": []
+   },
+   "defenses": {
+    "ac": {
+     "std": 15
+    },
+    "savingThrows": {
+     "fort": {
+      "std": 6
+     },
+     "ref": {
+      "std": 8
+     },
+     "will": {
+      "std": 5
+     }
+    },
+    "hp": [
+     {
+      "hp": 20
+     }
+    ],
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": []
+   },
+   "_aon": {
+    "id": "creature-2223",
+    "url": "https://2e.aonprd.com/NPCs.aspx?ID=2223",
+    "markdown": "<title level=\"1\" pfs=\"\">[Svetlana](/NPCs.aspx?ID=2223)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Humanoid](/Rules.aspx?ID=563)**\n([Society](/Skills.aspx?ID=14)): DC 25\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 23\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 20\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 1\">[Svetlana](/NPCs.aspx?ID=2223)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=161\" />\n<trait label=\"NG\" url=\"/Rules.aspx?ID=95\" />\n<trait label=\"Medium\" />\n<trait label=\"Human\" url=\"/Traits.aspx?ID=90\" />\n<trait label=\"Humanoid\" url=\"/Traits.aspx?ID=91\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Kingmaker Adventure Path](/Sources.aspx?ID=150) pg. 53\n\n**Perception** +5\n\n**Languages**\n[Common](/Languages.aspx?ID=1)\n\n**Skills**\n[Brevoy Lore](/Skills.aspx?ID=8) +6, [Diplomacy](/Skills.aspx?ID=6) +7, [Medicine](/Skills.aspx?ID=9) +5, [Society](/Skills.aspx?ID=14) +6, [Survival](/Skills.aspx?ID=16) +3\n\n<row gap=\"medium\">\n**Str** +0\n\n**Dex** +3\n\n**Con** +3\n\n**Int** +1\n\n**Wis** +0\n\n**Cha** +2\n</row>\n\n**Items**\ncleaver, [Leather Armor](/Armor.aspx?ID=4)\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 15 \n\n**Fort** +6 \n\n**Ref** +8 \n\n**Will** +5 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 20\n\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 25 feet\n\n**Melee**\n<actions string=\"Single Action\" />\ncleaver +6 ([Agile](/Traits.aspx?ID=170)),\n**Damage** 1d6 slashing\n\n</column>"
+   }
+  },
+  "recallMulti": {
+   "name": "Sigrid Jandevik",
+   "source": "Pathfinder #201: Pactbreaker",
+   "page": 39,
+   "level": 7,
+   "traits": [
+    "Unique",
+    "Large",
+    "Beast",
+    "Human",
+    "Humanoid",
+    "Werecreature"
+   ],
+   "perception": {
+    "std": 15
+   },
+   "senses": [
+    {
+     "name": "low-light vision"
+    },
+    {
+     "name": "scent (imprecise) 30 feet"
+    }
+   ],
+   "languages": {
+    "languages": [],
+    "abilities": []
+   },
+   "skills": {
+    "athletics": 17,
+    "medicine": 11,
+    "mercantile lore": 13,
+    "nature": 15,
+    "stealth": 12,
+    "survival": 15
+   },
+   "abilityMods": {
+    "str": 6,
+    "dex": 3,
+    "con": 5,
+    "int": 2,
+    "wis": 4,
+    "cha": 0
+   },
+   "items": [],
+   "speed": {
+    "walk": 25
+   },
+   "attacks": [
+    {
+     "range": "Melee",
+     "name": "claw",
+     "attack": 16,
+     "traits": [
+      "Agile",
+      "reach 10 feet"
+     ],
+     "damage": "2d8+10 slashing plus Grab",
+     "types": [],
+     "effects": [],
+     "activity": {
+      "number": 1,
+      "unit": "action"
+     }
+    },
+    {
+     "range": "Melee",
+     "name": "jaws",
+     "attack": 16,
+     "traits": [
+      "reach 10 feet"
+     ],
+     "damage": "2d10+10 piercing",
+     "types": [],
+     "effects": [],
+     "activity": {
+      "number": 1,
+      "unit": "action"
+     }
+    }
+   ],
+   "spellcasting": [],
+   "abilities": {
+    "top": [],
+    "mid": [],
+    "bot": [
+     {
+      "name": "Change Shape",
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      },
+      "traits": [
+       "Concentrate",
+       "Polymorph",
+       "Primal"
+      ],
+      "entries": [
+       "Medium human with fist +16 for 1d4+10 bludgeoning, or grizzly bear with Speed 35 feet."
+      ]
+     }
+    ]
+   },
+   "defenses": {
+    "ac": {
+     "std": 24
+    },
+    "savingThrows": {
+     "fort": {
+      "std": 18
+     },
+     "ref": {
+      "std": 13
+     },
+     "will": {
+      "std": 14
+     }
+    },
+    "hp": [
+     {
+      "hp": 140
+     }
+    ],
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": [
+     {
+      "name": "silver",
+      "amount": 8
+     }
+    ]
+   },
+   "_aon": {
+    "id": "creature-3687",
+    "url": "https://2e.aonprd.com/NPCs.aspx?ID=3687",
+    "markdown": "<title level=\"1\" pfs=\"\">[Sigrid Jandevik](/NPCs.aspx?ID=3687)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Beast](/Rules.aspx?ID=563)**\n([Arcana](/Skills.aspx?ID=35), [Nature](/Skills.aspx?ID=43)): DC 33\n\n**[Recall Knowledge - Humanoid](/Rules.aspx?ID=563)**\n([Society](/Skills.aspx?ID=47)): DC 33\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 31\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 28\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 7\">[Sigrid Jandevik](/NPCs.aspx?ID=3687)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Large\" />\n<trait label=\"Beast\" url=\"/Traits.aspx?ID=547\" />\n<trait label=\"Human\" url=\"/Traits.aspx?ID=627\" />\n<trait label=\"Humanoid\" url=\"/Traits.aspx?ID=628\" />\n<trait label=\"Werecreature\" url=\"/Traits.aspx?ID=733\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #201: Pactbreaker](/Sources.aspx?ID=241) pg. 39\n\n**Perception** +15; [low-light vision](/MonsterAbilities.aspx?ID=69), [scent](/MonsterAbilities.aspx?ID=74) ([imprecise](/Rules.aspx?ID=412)) 30 feet\n\n**Languages**\n\n**Skills**\n[Athletics](/Skills.aspx?ID=36) +17, [Medicine](/Skills.aspx?ID=42) +11, [Mercantile Lore](/Skills.aspx?ID=41) +13, [Nature](/Skills.aspx?ID=43) +15, [Stealth](/Skills.aspx?ID=48) +12, [Survival](/Skills.aspx?ID=49) +15\n\n<row gap=\"medium\">\n**Str** +6\n\n**Dex** +3\n\n**Con** +5\n\n**Int** +2\n\n**Wis** +4\n\n**Cha** +0\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 24 \n\n**Fort** +18 \n\n**Ref** +13 \n\n**Will** +14 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 140\n\n</row>\n\n**Weaknesses**\n[silver](/Equipment.aspx?ID=379) 8\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 25 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nclaw +16 ([Agile](/Traits.aspx?ID=526), [reach 10 feet](/Traits.aspx?ID=684)),\n**Damage** 2d8+10 slashing plus [Grab](/MonsterAbilities.aspx?ID=45)\n\n**Melee**\n<actions string=\"Single Action\" />\njaws +16 ([reach 10 feet](/Traits.aspx?ID=684)),\n**Damage** 2d10+10 piercing\n\n**[Change Shape](/MonsterAbilities.aspx?ID=55)** <actions string=\"Single Action\" /> ([Concentrate](/Traits.aspx?ID=561), [Polymorph](/Traits.aspx?ID=670), [Primal](/Traits.aspx?ID=676)) Medium human with fist +16 for 1d4+10 bludgeoning, or grizzly bear with Speed 35 feet.\n\n</column>"
+   }
+  }
+ },
+ "hazards": {
+  "components": {
+   "name": "Hammer of Forbiddance",
+   "source": "Core Rulebook",
+   "page": 525,
+   "level": 11,
+   "traits": [
+    "Magical",
+    "Mechanical",
+    "Trap"
+   ],
+   "stealth": {
+    "dc": 30,
+    "minProf": "expert"
+   },
+   "description": [
+    " Hammer of Forbiddance Source Core Rulebook pg. 525 Complexity Simple An enormous hammer at an edifice’s entrance swings down in an attempt to damage a creature entering an area, push it back, and prevent it from going any further. --- Stealth DC 30 (expert) Disable Thievery DC 28 (expert) once on the hammer itself and once on its joint to prevent the hammer from swinging AC 32, Fort +24, Ref +15 Hammer Hardness 22 Hammer HP 88 (44); Joint Hardness 16, Joint HP 64 (BT 32) Immunities critical hits, object immunities, precision damage Forbid Entry Reaction (abjuration, attack, divine); Trigger A creature attempts to enter through the entrance. Effect The hammer swings down, making an attack against the triggering creature. Melee hammer +28, Damage 6d8+20 bludgeoning plus the target is knocked back 10 feet and must succeed at a DC 30 Will save or be unable to enter the edifice through any entrance for 24 hours (on a critical hit, the target automatically fails the Will save); no multiple attack penalty --- Reset The trap resets over the course of the round, and is ready to swing again 1 round later."
+   ],
+   "disable": {
+    "entries": [
+     "Thievery DC 28 (expert) once on the hammer itself and once on its joint to prevent the hammer from swinging"
+    ]
+   },
+   "routine": [],
+   "reset": [
+    "The trap resets over the course of the round, and is ready to swing again 1 round later."
+   ],
+   "complex": false,
+   "defenses": {
+    "ac": {
+     "std": 32
+    },
+    "savingThrows": {
+     "fort": {
+      "std": 24
+     },
+     "ref": {
+      "std": 15
+     },
+     "will": {}
+    },
+    "hp": [
+     {
+      "hp": 88,
+      "name": "Hammer (BT 44)"
+     },
+     {
+      "hp": 64,
+      "name": "Joint (BT 32)"
+     }
+    ],
+    "immunities": [
+     "critical hits",
+     "object immunities",
+     "precision damage"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "hardness": {
+     "std": 22
+    },
+    "bt": {
+     "std": 44
+    }
+   },
+   "actions": [
+    {
+     "name": "Forbid Entry",
+     "activity": {
+      "number": 1,
+      "unit": "reaction"
+     },
+     "traits": [
+      "abjuration",
+      "attack",
+      "divine"
+     ],
+     "trigger": "A creature attempts to enter through the entrance.",
+     "entries": [
+      "Effect The hammer swings down, making an attack against the triggering creature."
+     ]
+    }
+   ],
+   "_aon": {
+    "id": "hazard-13",
+    "url": "https://2e.aonprd.com/Hazards.aspx?ID=13",
+    "markdown": "<title level=\"1\" right=\"Hazard 11\" pfs=\"\">[Hammer of Forbiddance](/Hazards.aspx?ID=13)</title>\n\n<traits>\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=103\" />\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Core Rulebook](/Sources.aspx?ID=1) pg. 525\n\n**Complexity** Simple\n\n</column>\n\nAn enormous hammer at an edifice’s entrance swings down in an attempt to damage a creature entering an area, push it back, and prevent it from going any further.\n\n---\n\n**Stealth**\nDC 30 (expert)\n\n**Disable**\n[Thievery](/Skills.aspx?ID=17) DC 28 (expert) once on the hammer itself and once on its joint to prevent the hammer from swinging\n\n<column gap=\"tiny\">\n\n**AC** 32, **Fort** +24, **Ref** +15\n\n**Hammer Hardness**\n22\n\n**Hammer HP**\n88 (44); **Joint Hardness** 16, **Joint HP** 64 (BT 32)\n\n**Immunities**\ncritical hits, object immunities, precision damage\n\n</column>\n\n**Forbid Entry** <actions string=\"Reaction\" /> (abjuration, attack, divine); **Trigger** A creature attempts to enter through the entrance. **Effect** The hammer swings down, making an attack against the triggering creature.<br /> **Melee** hammer +28, **Damage** 6d8+20 bludgeoning plus the target is knocked back 10 feet and must succeed at a DC 30 Will save or be unable to enter the edifice through any entrance for 24 hours (on a critical hit, the target automatically fails the Will save); no multiple attack penalty\n\n---\n**Reset**\nThe trap resets over the course of the round, and is ready to swing again 1 round later."
+   }
+  },
+  "strikeAfterBreak": {
+   "name": "Vorpal Executioner",
+   "source": "Core Rulebook",
+   "page": 525,
+   "level": 19,
+   "traits": [
+    "Mechanical",
+    "Trap"
+   ],
+   "stealth": {
+    "dc": 43,
+    "minProf": "expert"
+   },
+   "description": [
+    " Vorpal Executioner Source Core Rulebook pg. 525 Complexity Simple A wickedly sharp saw blade descends and travels along grooves in a complex path throughout the room, attempting to decapitate everyone within. --- Stealth DC 43 (expert) Disable Thievery DC 41 (expert) at four different junctions to jam all the saw blade’s possible paths, preventing it from traveling through the room AC 43, Fort +32, Ref +32 Hardness 30 HP 120 (60) per junction Immunities critical hits, object immunities, precision damage Total Decapitation Reaction Trigger A creature attempts to exit the room. Effect The saw blade travels along its path, making one Strike against each creature in the room, twisting and varying its height for a maximum chance of beheading its targets. Melee saw blade +40 (deadly d12, death), Damage 6d12+25 slashing plus decapitation; no multiple attack penalty Decapitation On a critical hit, a target must succeed at a DC 39 Fortitude save or be decapitated, dying instantly unless it can survive without a head. --- Reset The trap resets over the course of the round and can be triggered again 1 round later."
+   ],
+   "disable": {
+    "entries": [
+     "Thievery DC 41 (expert) at four different junctions to jam all the saw blade’s possible paths, preventing it from traveling through the room"
+    ]
+   },
+   "routine": [],
+   "reset": [
+    "The trap resets over the course of the round and can be triggered again 1 round later."
+   ],
+   "complex": false,
+   "defenses": {
+    "ac": {
+     "std": 43
+    },
+    "savingThrows": {
+     "fort": {
+      "std": 32
+     },
+     "ref": {
+      "std": 32
+     },
+     "will": {}
+    },
+    "hp": [
+     {
+      "hp": 120,
+      "name": "per junction"
+     }
+    ],
+    "immunities": [
+     "critical hits",
+     "object immunities",
+     "precision damage"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "hardness": {
+     "std": 30
+    },
+    "bt": {
+     "std": 60
+    }
+   },
+   "actions": [
+    {
+     "name": "Total Decapitation",
+     "activity": {
+      "number": 1,
+      "unit": "reaction"
+     },
+     "traits": [],
+     "trigger": "A creature attempts to exit the room.",
+     "entries": [
+      "Effect The saw blade travels along its path, making one Strike against each creature in the room, twisting and varying its height for a maximum chance of beheading its targets."
+     ]
+    },
+    {
+     "name": "Decapitation",
+     "traits": [],
+     "entries": [
+      "On a critical hit, a target must succeed at a DC 39 Fortitude save or be decapitated, dying instantly unless it can survive without a head."
+     ]
+    }
+   ],
+   "_aon": {
+    "id": "hazard-17",
+    "url": "https://2e.aonprd.com/Hazards.aspx?ID=17",
+    "markdown": "<title level=\"1\" right=\"Hazard 19\" pfs=\"\">[Vorpal Executioner](/Hazards.aspx?ID=17)</title>\n\n<traits>\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Core Rulebook](/Sources.aspx?ID=1) pg. 525\n\n**Complexity** Simple\n\n</column>\n\nA wickedly sharp saw blade descends and travels along grooves in a complex path throughout the room, attempting to decapitate everyone within.\n\n---\n\n**Stealth**\nDC 43 (expert)\n\n**Disable**\n[Thievery](/Skills.aspx?ID=17) DC 41 (expert) at four different junctions to jam all the saw blade’s possible paths, preventing it from traveling through the room\n\n<column gap=\"tiny\">\n\n**AC** 43, **Fort** +32, **Ref** +32\n\n**Hardness**\n30\n\n**HP**\n120 (60) per junction\n\n**Immunities**\ncritical hits, object immunities, precision damage\n\n</column>\n\n**Total Decapitation** <actions string=\"Reaction\" /> **Trigger** A creature attempts to exit the room. **Effect** The saw blade travels along its path, making one Strike against each creature in the room, twisting and varying its height for a maximum chance of beheading its targets.<br /> **Melee** saw blade +40 ([deadly d12](/Traits.aspx?ID=174), [death](/Traits.aspx?ID=40)), **Damage** 6d12+25 slashing plus decapitation; no multiple attack penalty<br /> **Decapitation** On a critical hit, a target must succeed at a DC 39 Fortitude save or be decapitated, dying instantly unless it can survive without a head.\n\n---\n**Reset**\nThe trap resets over the course of the round and can be triggered again 1 round later."
+   }
+  },
+  "singleActionEffectStrike": {
+   "name": "Titanic Flytrap",
+   "source": "Gamemastery Guide",
+   "page": 78,
+   "level": 4,
+   "traits": [
+    "Environmental"
+   ],
+   "stealth": {
+    "dc": 25,
+    "minProf": "trained"
+   },
+   "description": [
+    " Titanic Flytrap Source Gamemastery Guide pg. 78 Complexity Simple On the surface, a titanic flytrap appears to be a patch of the more common flytrap plant, but beneath murky waters it hides a far larger set of jaws, reaching 10 feet across and reinforced with woody branches and lined with paralytic hairs. --- Stealth DC 25 (trained) Disable DC 22 Survival (trained) to mislead the flytrap’s sense of weight and pressure AC 21, Fort +15, Ref +8 HP 56 (BT 28) Immunities mental Resistances acid 20, fire 10 Snap Shut Reaction Trigger A Small or Medium creature moves into a square that is within reach of the flytrap’s hidden jaws; Effect The flytrap’s jaws snap shut, making a jaws Strike against the triggering creature. Melee Single Action jaws +17, Effect devour Devour The target is trapped by the flytrap’s jaws, gaining the grabbed condition until it Escapes (DC 21). Additionally, it is exposed to the titanic flytrap toxin from the hundreds of tiny hairs that line the inside of its leaves. If the flytrap’s jaws Strike was a critical success, the target takes a –2 circumstance penalty to its saving throws against this poison. At the end of each of target’s turns that it remains grabbed, the target takes 3d6 acid damage. Titanic Flytrap Toxin (contact, poison) Saving Throw DC 21 Fortitude; Maximum Duration 4 rounds; Stage 1 2d6 poison damage and stunned 1 (1 round); Stage 2 3d6 poison damage and stunned 2 (1 round); Stage 3 4d6 poison damage and paralyzed (1 round) --- Reset 1 hour (or longer, after a large meal)"
+   ],
+   "disable": {
+    "entries": [
+     "DC 22 Survival (trained) to mislead the flytrap’s sense of weight and pressure"
+    ]
+   },
+   "routine": [],
+   "reset": [
+    "1 hour (or longer, after a large meal)"
+   ],
+   "complex": false,
+   "defenses": {
+    "ac": {
+     "std": 21
+    },
+    "savingThrows": {
+     "fort": {
+      "std": 15
+     },
+     "ref": {
+      "std": 8
+     },
+     "will": {}
+    },
+    "hp": [
+     {
+      "hp": 56
+     }
+    ],
+    "immunities": [
+     "mental"
+    ],
+    "resistances": [
+     {
+      "name": "acid",
+      "amount": 20
+     },
+     {
+      "name": "fire",
+      "amount": 10
+     }
+    ],
+    "weaknesses": [],
+    "bt": {
+     "std": 28
+    }
+   },
+   "actions": [
+    {
+     "name": "Snap Shut",
+     "activity": {
+      "number": 1,
+      "unit": "reaction"
+     },
+     "traits": [],
+     "trigger": "A Small or Medium creature moves into a square that is within reach of the flytrap’s hidden jaws",
+     "entries": [
+      "Effect The flytrap’s jaws snap shut, making a jaws Strike against the triggering creature."
+     ]
+    },
+    {
+     "name": "Devour",
+     "traits": [],
+     "entries": [
+      "The target is trapped by the flytrap’s jaws, gaining the grabbed condition until it Escapes (DC 21). Additionally, it is exposed to the titanic flytrap toxin from the hundreds of tiny hairs that line the inside of its leaves. If the flytrap’s jaws Strike was a critical success, the target takes a –2 circumstance penalty to its saving throws against this poison. At the end of each of target’s turns that it remains grabbed, the target takes 3d6 acid damage."
+     ]
+    },
+    {
+     "name": "Titanic Flytrap Toxin",
+     "traits": [
+      "contact",
+      "poison"
+     ],
+     "entries": [
+      "Saving Throw DC 21 Fortitude\nMaximum Duration 4 rounds\nStage 1 2d6 poison damage and stunned 1 (1 round)\nStage 2 3d6 poison damage and stunned 2 (1 round)\nStage 3 4d6 poison damage and paralyzed (1 round)"
+     ]
+    }
+   ],
+   "_aon": {
+    "id": "hazard-37",
+    "url": "https://2e.aonprd.com/Hazards.aspx?ID=37",
+    "markdown": "<title level=\"1\" right=\"Hazard 4\" pfs=\"\">[Titanic Flytrap](/Hazards.aspx?ID=37)</title>\n\n<traits>\n<trait label=\"Environmental\" url=\"/Traits.aspx?ID=62\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Gamemastery Guide](/Sources.aspx?ID=22) pg. 78\n\n**Complexity** Simple\n\n</column>\n\nOn the surface, a titanic flytrap appears to be a patch of the more common flytrap plant, but beneath murky waters it hides a far larger set of jaws, reaching 10 feet across and reinforced with woody branches and lined with paralytic hairs.\n\n---\n\n**Stealth**\nDC 25 (trained)\n\n**Disable**\nDC 22 [Survival](/Skills.aspx?ID=16) (trained) to mislead the flytrap’s sense of weight and pressure\n\n<column gap=\"tiny\">\n\n**AC** 21, **Fort** +15, **Ref** +8\n\n**HP**\n56 (BT 28)\n\n**Immunities**\nmental\n\n**Resistances**\nacid 20, fire 10\n\n</column>\n\n**Snap Shut** <actions string=\"Reaction\" /> **Trigger** A Small or Medium creature moves into a square that is within reach of the flytrap’s hidden jaws; **Effect** The flytrap’s jaws snap shut, making a jaws Strike against the triggering creature.\n\n **Melee** <actions string=\"Single Action\" /> jaws +17, **Effect** devour \n\n**Devour** The target is trapped by the flytrap’s jaws, gaining the [grabbed](/Conditions.aspx?ID=20) condition until it [Escapes](/Actions.aspx?ID=79) (DC 21). Additionally, it is exposed to the titanic flytrap toxin from the hundreds of tiny hairs that line the inside of its leaves. If the flytrap’s jaws Strike was a critical success, the target takes a –2 circumstance penalty to its saving throws against this poison. At the end of each of target’s turns that it remains grabbed, the target takes 3d6 acid damage.\n\n **Titanic Flytrap Toxin** ([contact](/Traits.aspx?ID=37), [poison](/Traits.aspx?ID=126)) **Saving Throw** DC 21 Fortitude; **Maximum Duration** 4 rounds; **Stage 1** 2d6 poison damage and [stunned 1](/Conditions.aspx?ID=36) (1 round); **Stage 2** 3d6 poison damage and stunned 2 (1 round); **Stage 3** 4d6 poison damage and [paralyzed](/Conditions.aspx?ID=28) (1 round)\n\n---\n**Reset**\n1 hour (or longer, after a large meal)"
+   }
+  },
+  "semicolonStrike": {
+   "name": "Spiked Doorframe",
+   "source": "Pathfinder #145: Hellknight Hill",
+   "page": 46,
+   "level": 4,
+   "traits": [
+    "Mechanical",
+    "Trap"
+   ],
+   "stealth": {
+    "dc": 25,
+    "minProf": "trained"
+   },
+   "description": [
+    " Spiked Doorframe Source Pathfinder #145: Hellknight Hill pg. 46 Complexity Simple Spikes lance out of the doorframe to skewer anyone who attempts to open the door. --- Stealth DC 25 (trained) Disable Thievery DC 20 (trained) to deactivate a trigger built into the door's handle AC 21, Fort +12, Ref +8 Hardness 11 HP 44 (BT 22) Immunities critical hits, object immunities, precision damage Spikes Single Action (attack); Trigger The door is opened. Effect The trap makes an attack against the creature that opened the door. Melee spikes +17; Damage 4d6+3 piercing"
+   ],
+   "disable": {
+    "entries": [
+     "Thievery DC 20 (trained) to deactivate a trigger built into the door's handle"
+    ]
+   },
+   "routine": [],
+   "reset": [],
+   "complex": false,
+   "defenses": {
+    "ac": {
+     "std": 21
+    },
+    "savingThrows": {
+     "fort": {
+      "std": 12
+     },
+     "ref": {
+      "std": 8
+     },
+     "will": {}
+    },
+    "hp": [
+     {
+      "hp": 44
+     }
+    ],
+    "immunities": [
+     "critical hits",
+     "object immunities",
+     "precision damage"
+    ],
+    "resistances": [],
+    "weaknesses": [],
+    "hardness": {
+     "std": 11
+    },
+    "bt": {
+     "std": 22
+    }
+   },
+   "actions": [
+    {
+     "name": "Spikes",
+     "activity": {
+      "number": 1,
+      "unit": "action"
+     },
+     "traits": [
+      "attack"
+     ],
+     "trigger": "The door is opened.",
+     "entries": [
+      "Effect The trap makes an attack against the creature that opened the door."
+     ]
+    }
+   ],
+   "_aon": {
+    "id": "hazard-64",
+    "url": "https://2e.aonprd.com/Hazards.aspx?ID=64",
+    "markdown": "<title level=\"1\" right=\"Hazard 4\" pfs=\"\">[Spiked Doorframe](/Hazards.aspx?ID=64)</title>\n\n<traits>\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #145: Hellknight Hill](/Sources.aspx?ID=4) pg. 46\n\n**Complexity** Simple\n\n</column>\n\nSpikes lance out of the doorframe to skewer anyone who attempts to open the door.\n\n---\n\n**Stealth**\nDC 25 (trained)\n\n**Disable**\n[Thievery](/Skills.aspx?ID=17) DC 20 (trained) to deactivate a trigger built into the door's handle\n\n<column gap=\"tiny\">\n\n**AC** 21, **Fort** +12, **Ref** +8\n\n**Hardness**\n11\n\n**HP**\n44 (BT 22)\n\n**Immunities**\ncritical hits, object immunities, precision damage\n\n</column>\n\n**Spikes** <actions string=\"Single Action\" /> ([attack](/Traits.aspx?ID=15)); **Trigger** The door is opened. **Effect** The trap makes an attack against the creature that opened the door.\n\n **Melee** spikes +17; **Damage** 4d6+3 piercing"
+   }
+  },
+  "noSaves": {
+   "name": "Glyph of Warding",
+   "source": "Pathfinder #184: The Ghouls Hunger",
+   "page": 50,
+   "level": 14,
+   "traits": [
+    "Magical",
+    "Trap"
+   ],
+   "stealth": {
+    "dc": 34,
+    "minProf": "trained"
+   },
+   "description": [
+    " Glyph of Warding Source Pathfinder #184: The Ghouls Hunger pg. 50, Kingmaker Companion Guide pg. 79 Complexity Simple A magical glyph flashes before triggering a spell. --- Stealth DC 34 (trained) Disable DC 34 Thievery (trained) to disable the glyph, or dispel magic (7th level, counteract DC 34) to counteract the glyph Discharge Glyph Reaction (abjuration, divine) Trigger A creature opens the door to area D6; Effect The creature is targeted by a spirit blast spell (DC 34)."
+   ],
+   "disable": {
+    "entries": [
+     "DC 34 Thievery (trained) to disable the glyph, or dispel magic (7th level, counteract DC 34) to counteract the glyph"
+    ]
+   },
+   "routine": [],
+   "reset": [],
+   "complex": false,
+   "defenses": {
+    "ac": {},
+    "savingThrows": {
+     "fort": {},
+     "ref": {},
+     "will": {}
+    },
+    "hp": [],
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": []
+   },
+   "actions": [
+    {
+     "name": "Discharge Glyph",
+     "activity": {
+      "number": 1,
+      "unit": "reaction"
+     },
+     "traits": [
+      "abjuration",
+      "divine"
+     ],
+     "trigger": "A creature opens the door to area D6",
+     "entries": [
+      "Effect The creature is targeted by a spirit blast spell (DC 34)."
+     ]
+    }
+   ],
+   "_aon": {
+    "id": "hazard-266",
+    "url": "https://2e.aonprd.com/Hazards.aspx?ID=266",
+    "markdown": "<title level=\"1\" right=\"Hazard 14\" pfs=\"\">[Glyph of Warding](/Hazards.aspx?ID=266)</title>\n\n<traits>\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=103\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #184: The Ghouls Hunger](/Sources.aspx?ID=147) pg. 50, [Kingmaker Companion Guide](/Sources.aspx?ID=151) pg. 79\n\n**Complexity** Simple\n\n</column>\n\nA magical glyph flashes before triggering a spell.\n\n---\n\n**Stealth**\nDC 34 (trained)\n\n**Disable**\nDC 34 [Thievery](/Skills.aspx?ID=17) (trained) to disable the glyph, or [_dispel magic_](/Spells.aspx?ID=78) (7th level, [counteract](/Rules.aspx?ID=371) DC 34) to counteract the glyph\n\n<column gap=\"tiny\">\n\n</column>\n\n**Discharge Glyph** <actions string=\"Reaction\" /> ([abjuration](/Traits.aspx?ID=2), [divine](/Traits.aspx?ID=48)) **Trigger** A creature opens the door to area D6; **Effect** The creature is targeted by a [_spirit blast_](/Spells.aspx?ID=301) spell (DC 34)."
+   }
+  },
+  "withAc": {
+   "name": "Web Lurker Deadfall",
+   "source": "Bestiary",
+   "page": 325,
+   "level": 3,
+   "traits": [
+    "Mechanical",
+    "Trap"
+   ],
+   "stealth": {
+    "dc": 23
+   },
+   "description": [
+    " Web Lurker Deadfall Source Bestiary pg. 325 Complexity Simple A web tripwire lets loose a bundle of boulders that fall on all targets within a 10-foot square. --- Stealth DC 23 Disable Survival (trained) or Thievery (expert) DC 20 to rearrange the webbing AC 19, Fort +9, Ref +9 Deadfall Reaction Trigger A creature steps into the square with the web tripwire. Effect All creatures in the trap’s 10-foot square take 2d6 bludgeoning damage (DC 20 basic Reflex save)."
+   ],
+   "disable": {
+    "entries": [
+     "Survival (trained) or Thievery (expert) DC 20 to rearrange the webbing"
+    ]
+   },
+   "routine": [],
+   "reset": [],
+   "complex": false,
+   "defenses": {
+    "ac": {
+     "std": 19
+    },
+    "savingThrows": {
+     "fort": {
+      "std": 9
+     },
+     "ref": {
+      "std": 9
+     },
+     "will": {}
+    },
+    "hp": [],
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": []
+   },
+   "actions": [
+    {
+     "name": "Deadfall",
+     "activity": {
+      "number": 1,
+      "unit": "reaction"
+     },
+     "traits": [],
+     "trigger": "A creature steps into the square with the web tripwire.",
+     "entries": [
+      "Effect All creatures in the trap’s 10-foot square take 2d6 bludgeoning damage (DC 20 basic Reflex save)."
+     ]
+    }
+   ],
+   "_aon": {
+    "id": "hazard-30",
+    "url": "https://2e.aonprd.com/Hazards.aspx?ID=30",
+    "markdown": "<title level=\"1\" right=\"Hazard 3\" pfs=\"\">[Web Lurker Deadfall](/Hazards.aspx?ID=30)</title>\n\n<traits>\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Bestiary](/Sources.aspx?ID=2) pg. 325\n\n**Complexity** Simple\n\n</column>\n\nA web tripwire lets loose a bundle of boulders that fall on all targets within a 10-foot square.\n\n---\n\n**Stealth**\nDC 23\n\n**Disable**\n[Survival](/Skills.aspx?ID=16) (trained) or [Thievery](/Skills.aspx?ID=17) (expert) DC 20 to rearrange the webbing\n\n<column gap=\"tiny\">\n\n**AC** 19, **Fort** +9, **Ref** +9\n\n</column>\n\n**Deadfall** <actions string=\"Reaction\" /> **Trigger** A creature steps into the square with the web tripwire. **Effect** All creatures in the trap’s 10-foot square take 2d6 bludgeoning damage (DC 20 basic Reflex save)."
+   }
+  },
+  "noAc": {
+   "name": "Shrieking Souls",
+   "source": "Pathfinder #186: Ghost King's Rage",
+   "page": 56,
+   "level": 18,
+   "traits": [
+    "Uncommon",
+    "Haunt"
+   ],
+   "stealth": {
+    "dc": 48,
+    "minProf": "master"
+   },
+   "description": [
+    " Shrieking Souls Source Pathfinder #186: Ghost King's Rage pg. 56 Complexity Simple A terrified soul releases an earsplitting scream. --- Stealth DC 48 (master) Disable DC 44 Diplomacy (master) to comfort the spirit or DC 45 Occultism (master) to ward off the spirit Scream Reaction (evocation, sonic, occult) Trigger A creature enters the area; Effect The spirit screams, dealing 6d12+41 sonic damage to all creatures in a 30-foot cone (DC 40 basic Fortitude save). --- Reset 1 hour."
+   ],
+   "disable": {
+    "entries": [
+     "DC 44 Diplomacy (master) to comfort the spirit or DC 45 Occultism (master) to ward off the spirit"
+    ]
+   },
+   "routine": [],
+   "reset": [
+    "1 hour."
+   ],
+   "complex": false,
+   "defenses": {
+    "ac": {},
+    "savingThrows": {
+     "fort": {},
+     "ref": {},
+     "will": {}
+    },
+    "hp": [],
+    "immunities": [],
+    "resistances": [],
+    "weaknesses": []
+   },
+   "actions": [
+    {
+     "name": "Scream",
+     "activity": {
+      "number": 1,
+      "unit": "reaction"
+     },
+     "traits": [
+      "evocation",
+      "sonic",
+      "occult"
+     ],
+     "trigger": "A creature enters the area",
+     "entries": [
+      "Effect The spirit screams, dealing 6d12+41 sonic damage to all creatures in a 30-foot cone (DC 40 basic Fortitude save)."
+     ]
+    }
+   ],
+   "_aon": {
+    "id": "hazard-325",
+    "url": "https://2e.aonprd.com/Hazards.aspx?ID=325",
+    "markdown": "<title level=\"1\" right=\"Hazard 18\" pfs=\"\">[Shrieking Souls](/Hazards.aspx?ID=325)</title>\n\n<traits>\n<trait label=\"Uncommon\" url=\"/Traits.aspx?ID=159\" />\n<trait label=\"Haunt\" url=\"/Traits.aspx?ID=88\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #186: Ghost King's Rage](/Sources.aspx?ID=189) pg. 56\n\n**Complexity** Simple\n\n</column>\n\nA terrified soul releases an earsplitting scream.\n\n---\n\n**Stealth**\nDC 48 (master)\n\n**Disable**\nDC 44 [Diplomacy](/Skills.aspx?ID=6) (master) to comfort the spirit or DC 45 [Occultism](/Skills.aspx?ID=11) (master) to ward off the spirit\n\n<column gap=\"tiny\">\n\n</column>\n\n**Scream** <actions string=\"Reaction\" /> ([evocation](/Equipment.aspx?ID=1671), [sonic](/Traits.aspx?ID=147), [occult](/Traits.aspx?ID=120)) **Trigger** A creature enters the area; **Effect** The spirit screams, dealing 6d12+41 sonic damage to all creatures in a 30-foot cone (DC 40 [basic](/Rules.aspx?ID=329) Fortitude save).\n\n---\n**Reset**\n1 hour."
+   }
+  }
+ }
+}

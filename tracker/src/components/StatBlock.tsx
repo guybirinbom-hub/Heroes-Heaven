@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState, useLayoutEffect, Fragment } from 'react'
-import type { Creature, Combatant, SpellSlotEntry } from '../types/pf2e'
+import type { Ability, Attack, Creature, Combatant, SpellSlotEntry } from '../types/pf2e'
 import { applyWeakElite, scaleByLevel } from '../utils/weakElite'
 import { computeConditionMods, conditionalModsFor, resolveStatMod, resolveAttackMod, type ConditionalModEntry } from '../utils/conditionEffects'
 import { fmtSave, traitDisplay, traitBaseName, joinCriticalDegrees } from '../utils/tags'
@@ -23,6 +23,7 @@ import {
   parseAbilityFrequency, periodLabel,
   abilityKey, spellSlotKey, spellUseKey, focusKey,
 } from '../utils/limitedUses'
+import { recallKnowledgeFromPage } from '../utils/parseCreature'
 
 // ── Trait color coding (uniform style — accent only for size) ──────────────
 // ── Same-line ("merge") layout — items merged onto one row render as spaced
@@ -453,9 +454,16 @@ function parseFlavorRK(flavor?: string): RkInfo | null {
   }
 }
 
+/** The DC-by-level table, continued past its ends at its own end slopes: one DC per level below
+ *  −1 (Weak on a level −1 creature reads −2, which the table does not print; the old
+ *  "14 + max(0, level)" gave DC 14 there, ABOVE level −1's 13, so weakening a creature made it
+ *  harder to identify), two per level above 30 (the old rule gave level 31 DC 45, under level 30's 60). */
+const rkDcAt = (level: number): number =>
+  RK_DC_BY_LEVEL[level] ?? (level < -1 ? RK_DC_BY_LEVEL[-1] + (level + 1) : RK_DC_BY_LEVEL[30] + 2 * (level - 30))
+
 function getRecallKnowledge(level: number, traits: string[]): RkInfo {
   const lowerTraits = traits.map(t => t.toLowerCase())
-  let baseDC = RK_DC_BY_LEVEL[level] ?? (14 + Math.max(0, level))
+  let baseDC = rkDcAt(level)
   if (lowerTraits.includes('unique')) baseDC += 10
   else if (lowerTraits.includes('rare')) baseDC += 5
   else if (lowerTraits.includes('uncommon')) baseDC += 2
@@ -474,6 +482,83 @@ function getRecallKnowledge(level: number, traits: string[]): RkInfo {
   // render a usable Recall Knowledge row at the top of the stat block.
   if (!skills.size) return { dc: baseDC, skills: ['Lore'], type }
   return { dc: baseDC, skills: [...skills], type, byType }
+}
+
+/** A page's Recall Knowledge line moved to an adjusted level (elite, weak, scaled): every DC it
+ *  prints shifts by the level-DC table's difference, as the computed row always did (an elite
+ *  level-1 humanoid's DC 15 reads 16, a weak one 14). The lore DCs hang off the same DC. */
+export function shiftRecallKnowledge(line: string, baseLevel: number, level: number): string {
+  const delta = rkDcAt(level) - rkDcAt(baseLevel)
+  if (!delta) return line
+  return line.replace(/\bDC\s*(\d+)/g, (_m, n: string) => `DC ${parseInt(n, 10) + delta}`)
+}
+
+// ── HP pools ──────────────────────────────────────────────────────────────────
+/** One HP pool as printed: its number, its own label ("Joint", "head, head regrowth") and its own
+ *  Broken Threshold when the page gives one ("Joint (BT 32)" → label "Joint", bt 32). */
+interface HpPoolView { hp: number; label?: string; bt?: number }
+
+/** defenses.hpPools read defensively (a homebrew JSON can hold anything: a string, nulls), each
+ *  pool's "(BT n)" pulled out of its name and a corpus name's own outer brackets dropped. */
+export function hpPoolViews(pools: unknown): HpPoolView[] {
+  if (!Array.isArray(pools)) return []
+  const out: HpPoolView[] = []
+  for (const p of pools) {
+    if (!p || typeof p !== 'object' || typeof (p as { hp?: unknown }).hp !== 'number') continue
+    const rawName = (p as { name?: unknown }).name
+    let label = typeof rawName === 'string' ? rawName.trim() : ''
+    let bt: number | undefined
+    const btM = label.match(/\(\s*BT\s*(\d+)\s*\)|^BT\s*(\d+)$/)
+    if (btM) {
+      bt = parseInt(btM[1] ?? btM[2], 10)
+      label = label.replace(btM[0], ' ')
+    }
+    label = label.replace(/\s{2,}/g, ' ').replace(/^[\s,;]+|[\s,;]+$/g, '').replace(/\s+,/g, ',')
+    label = label.replace(/^\(([^()]*)\)$/, '$1').trim()
+    out.push({ hp: (p as { hp: number }).hp, ...(label ? { label } : {}), ...(bt !== undefined ? { bt } : {}) })
+  }
+  return out
+}
+
+/** A pool label in ONE pair of brackets: "body, hydra regeneration" → "(body, hydra
+ *  regeneration)". A label that already carries brackets wraps only its bare parts, so
+ *  "tentacle, (tentacle regrowth)" prints as the page does, "(tentacle), (tentacle regrowth)". */
+export function hpPoolLabelText(label: string): string {
+  if (!/[()]/.test(label)) return `(${label})`
+  return label.split(/,\s*(?![^()]*\))/).map(part => /[()]/.test(part) ? part : `(${part})`).join(', ')
+}
+
+// ── Hazard Routine ────────────────────────────────────────────────────────────
+const COST_TOKEN_GLYPH: Record<string, string> = {
+  'one-action': ' ◆', 'two-actions': ' ◆◆', 'three-actions': ' ◆◆◆', 'reaction': ' ↺', 'free-action': ' ◇',
+}
+/** "\nLightning Arc\n[one-action]\n(electricity) …" / "\n2: Nozzle Spray [one-action] …": an entry
+ *  the page prints in bold, with its own cost, inside a Routine (Rune Sentries, Covetous Corridor).
+ *  The name is a whole line; a strike line ("Melee [one-action]") is not an entry. */
+const ROUTINE_ENTRY_RE = /(^|\n)[ \t]*([A-Z0-9][^\n[\]]{0,60}?)[ \t]*\n?[ \t]*\[(one-action|two-actions|three-actions|reaction|free-action)\][ \t]*/g
+
+/** A Routine's text split into its opening prose and the entries printed inside it. A cost token
+ *  left in the prose (a strike line's "[one-action]") becomes its glyph, never the raw token. */
+export function splitRoutine(text: string): { intro: string; entries: Ability[] } {
+  const heads: Array<{ at: number; end: number; name: string; cost: string }> = []
+  ROUTINE_ENTRY_RE.lastIndex = 0
+  let m: RegExpExecArray | null
+  while ((m = ROUTINE_ENTRY_RE.exec(text)) !== null) {
+    const name = m[2].trim()
+    if (/^(?:Melee|Ranged)$/.test(name)) continue
+    heads.push({ at: m.index + m[1].length, end: ROUTINE_ENTRY_RE.lastIndex, name, cost: m[3] })
+  }
+  const glyphTokens = (s: string) =>
+    s.replace(/\[(one-action|two-actions|three-actions|reaction|free-action)\]/g, (_x, k: string) => COST_TOKEN_GLYPH[k].trim())
+  if (!heads.length) return { intro: glyphTokens(text), entries: [] }
+  const entries: Ability[] = heads.map((h, i) => {
+    let body = text.slice(h.end, i + 1 < heads.length ? heads[i + 1].at : text.length).trim()
+    let traits: string[] = []
+    const tr = body.match(/^\(([^()]*)\)\s*/)
+    if (tr) { traits = tr[1].split(/\s*,\s*/).filter(Boolean); body = body.slice(tr[0].length) }
+    return { name: h.name, activity: COST_TOKEN_GLYPH[h.cost], traits, entries: glyphTokens(body.trim()) }
+  })
+  return { intro: glyphTokens(text.slice(0, heads[0].at).trim()), entries }
 }
 
 // Resolve attack trait with progressive key stripping
@@ -934,6 +1019,39 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
   // Spell link
   const spellLink: React.CSSProperties = { color: 'var(--linked)', fontWeight: 500, cursor: 'pointer', borderBottom: '1px dotted var(--linked)' }
 
+  // The HP value as the page prints it. One pool: "90 <note>" as always. Several pools (a hydra's
+  // body and head, a hazard's components): every pool in page order, "90 (body, hydra
+  // regeneration); 15 (head, head regrowth)". The first number is defenses.hp — the combat pool,
+  // weak/elite adjusted — so combat and the first printed number never disagree.
+  // (APP-DEFECTS: HP pools — the second pool was dropped.)
+  // A hazard prints every pool it has, ONE pool included, each with its own label and its own BT
+  // right after it: "88 (Hammer) BT 44; 64 (Joint) BT 32", "12 (Trapdoor) BT 6" — the page's
+  // "Hammer HP 88 (BT 44); Joint HP 64 (BT 32)". A pool's BT comes from its name ("(BT 32)") or,
+  // for the first pool, defenses.bt; the separate BT after the line is then not printed again.
+  // Pools are read defensively (hpPoolViews): a homebrew JSON's string or null pools are skipped.
+  const hpViews = hpPoolViews(creature.defenses.hpPools)
+  const extraHpPools = hpViews.length > 1 ? hpViews.slice(1) : []
+  const btInPoolLine = isHazard && hpViews.length > 0
+  const hpPoolNode = (hp: number, v: HpPoolView, bt: number | undefined) => (
+    <>
+      {hp}
+      {v.label && <>{' '}<span style={muted}>{hpPoolLabelText(v.label)}</span></>}
+      {isHazard && bt !== undefined && <span style={{ marginLeft: 6 }}><span className="stat-label">BT</span> {bt}</span>}
+    </>
+  )
+  const hpValueNodes: React.ReactNode = (btInPoolLine || extraHpPools.length > 0) ? (
+    <>
+      {hpViews.map((v, pi) => (
+        <Fragment key={pi}>
+          {pi > 0 && '; '}
+          {hpPoolNode(pi === 0 ? creature.defenses.hp : v.hp, v, v.bt ?? (pi === 0 ? creature.defenses.bt : undefined))}
+        </Fragment>
+      ))}
+    </>
+  ) : (
+    <>{creature.defenses.hp}{creature.defenses.hpNote && <span style={{ ...muted, marginLeft: 4 }}>{creature.defenses.hpNote}</span>}</>
+  )
+
   // Senses rendered once here so they can sit inline after Perception, OR on
   // their own "Senses" row when Perception is pulled into a defense cube.
   // The scraped data often crams several senses (with ranges and stray text)
@@ -999,15 +1117,141 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
       ? <SectionHdr right={right}>{children}</SectionHdr>
       : (right ? <div className="stat-line" style={{ textAlign: 'right' }}>{right}</div> : null)
 
+  // ── One ability row ──────────────────────────────────────────────────────
+  // Used in all three places an ability can print (top, mid, bottom), so the cooldown chip,
+  // inline rolls, traits and tooltips behave the same wherever the page put the ability.
+  // `i` is the ability's index in creature.abilities (stable key); `style` is the
+  // 'specials' item's style ('compact' hides trigger and body).
+  const renderAbility = (ab: Ability, i: number, style?: string): React.ReactNode => {
+    // Some scraped ability names carry the action-cost markup inline
+    // (e.g. "Earth Block <actions string=\"Reaction\" />"). Strip it from
+    // the displayed name and turn it into the proper ◆/↺ glyph instead
+    // of leaking the literal tag into the stat block.
+    const costInName = ab.name.match(/<actions\b[^>]*\bstring\s*=\s*"([^"]*)"[^>]*>/i)
+    const cleanName = ab.name.replace(/<actions\b[^>]*>/gi, '').replace(/\s+/g, ' ').trim()
+    const displayActivity = ab.activity || (costInName ? costInName[1] : '')
+    const ruleKey = cleanName.toLowerCase()
+    const ruleTip = actions.get(ruleKey)
+    const limit = parseAbilityFrequency(`${cleanName} ${ab.entries} ${ab.trigger ?? ''}`)
+    const abKey = abilityKey(cleanName)
+    // The page prints Frequency and Requirements BEFORE the Trigger ("Frequency once per day;
+    // Trigger An allied creature …; Effect …", Valkyrie's Recall the Fallen); the record keeps
+    // them as the opening lines of entries. With a trigger, those lines draw above it.
+    let leadClauses = ''
+    let bodyText = ab.entries ?? ''
+    if (ab.trigger) {
+      const lines = bodyText.split('\n')
+      let k = 0
+      while (k < lines.length - 1 && /^\s*(?:Frequency|Requirements?)\b/.test(lines[k])) k++
+      if (k > 0) { leadClauses = lines.slice(0, k).join('\n'); bodyText = lines.slice(k).join('\n') }
+    }
+    return (
+      <StatRow key={i}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 4, marginBottom: 2 }}>
+          {ruleTip
+            ? <Tooltip
+                content={<PopupPreview type="action" ref_={ruleKey} title={cleanName} />}
+                onActivate={pos => openWin('action', ruleKey, cleanName, pos.x, pos.y, { noCascade: true })}
+              >
+                <span style={goldLink}>{cleanName}</span>
+              </Tooltip>
+            : <span style={{ fontWeight: 600, color: 'var(--text)' }}>{cleanName}</span>
+          }
+          {displayActivity && <ActionGlyph act={displayActivity} />}
+          {limit && (
+            <span style={{ marginLeft: 2 }}>
+              <UsesChip
+                used={usedOf(abKey)}
+                max={limit.max}
+                onChange={v => setResourceUse(combatant.id, abKey, v)}
+                hint={`${limit.max}${periodLabel(limit.period)}`}
+              />
+            </span>
+          )}
+          {ab.traits.length > 0 && (
+            <span style={{ fontSize: 12, ...muted }}>(
+              {ab.traits.map((t, ti) => {
+                const stripped = stripTraitLink(t)
+                const base = traitBaseName(stripped).toLowerCase()
+                const tip = traits.get(base)
+                return (
+                  <span key={t}>
+                    {ti > 0 && ', '}
+                    <TraitTag name={stripped} traitKey={tip ? base : undefined} />
+                  </span>
+                )
+              })}
+            )</span>
+          )}
+        </div>
+        {style !== 'compact' && leadClauses && (
+          <AbilityText text={leadClauses} label={ab.name} onRoll={rollAbilityDamage} onCooldownRoll={rollAbilityCooldown} onCheck={handleCheck} />
+        )}
+        {style !== 'compact' && ab.trigger && (
+          <div style={{ fontSize: 12, ...muted, marginBottom: 2 }}>
+            <span style={{ fontWeight: 600, color: 'var(--text)' }}>Trigger</span> {ab.trigger}
+          </div>
+        )}
+        {style !== 'compact' && (
+          <AbilityText text={bodyText} label={ab.name} onRoll={rollAbilityDamage} onCooldownRoll={rollAbilityCooldown} onCheck={handleCheck} />
+        )}
+      </StatRow>
+    )
+  }
+
+  // ── Ability placement by page section ─────────────────────────────────────
+  // AoN prints a creature's abilities in three places: after Items (auras, wards — 'top'),
+  // after the HP / IWR line (reactions such as Attack of Opportunity — 'mid'), and after the
+  // strikes and spells ('bot'). Every one of them used to print at the bottom
+  // (APP-DEFECTS: ability placement). creature.abilities stays ONE flat array in page order;
+  // only this renderer splits it. Slot-less abilities (hand-built, pasted, hazard) stay at the
+  // bottom where they always were.
+  const indexedAbilities = creature.abilities.map((ab, i) => ({ ab, i }))
+  const topAbilities = indexedAbilities.filter(x => x.ab.slot === 'top')
+  const midAbilities = indexedAbilities.filter(x => x.ab.slot === 'mid')
+  const botAbilities = indexedAbilities.filter(x => x.ab.slot !== 'top' && x.ab.slot !== 'mid')
+  const specialsItem = sb.items.find(it => it.id === 'specials')
+  // Where the top / mid groups go in the user's (reorderable) body: top right after the Items
+  // row; mid right after the last of the Defense strip, HP and IWR rows. Anchors are positions in
+  // sb.items, so a hidden anchor row still holds its place. Sorted, top before mid on a tie.
+  const slotPlan = (): Array<{ key: 'top' | 'mid'; anchor: number; list: typeof indexedAbilities }> => {
+    const pos = (id: SbItemId) => sb.items.findIndex(it => it.id === id)
+    const midIds: SbItemId[] = ['defense', 'hp', 'immunities', 'resistances', 'weaknesses']
+    const plan: Array<{ key: 'top' | 'mid'; anchor: number; list: typeof indexedAbilities }> = []
+    if (topAbilities.length) plan.push({ key: 'top', anchor: pos('items'), list: topAbilities })
+    if (midAbilities.length) plan.push({ key: 'mid', anchor: Math.max(...midIds.map(pos)), list: midAbilities })
+    return plan.sort((a, b) => a.anchor - b.anchor)
+  }
+  const renderSlotAbilities = (list: typeof indexedAbilities): React.ReactNode =>
+    list.map(({ ab, i }) => renderAbility(ab, i, specialsItem?.style))
+
   const renderInline = (id: SbItemId): React.ReactNode => {
     switch (id) {
       case 'recall': {
         if (isHazard) return null
-        // Prefer a verbatim pasted/imported RK line; else the precise block from
-        // the AoN flavor (type + lore DCs); else a computed DC + type from traits.
-        if (creature.recallKnowledge) {
-          return <><span className="stat-label">Recall Knowledge</span> <span style={{ color: 'var(--text-muted)' }}>{creature.recallKnowledge}</span></>
+        // Prefer a verbatim pasted/imported RK line — for Archives records the adapter fills it from
+        // the page's own Recall Knowledge sidebar. A record WITH a page (rawMarkdown) whose page
+        // prints no Recall Knowledge shows none: a DC computed from level and traits was printed as
+        // if the page said it (APP-DEFECTS: recall knowledge). The flavor block and the computed DC
+        // stay for records with no page — hand-built, pasted, homebrew.
+        // "A page record" is keyed on rawMarkdown OR fromArchivesPage: the persist slimming strips
+        // rawMarkdown from saved encounters and the reloaded board, fromArchivesPage survives it.
+        const fromPage = Boolean(creature.rawMarkdown || creature.fromArchivesPage)
+        // A record that carries its page but no recallKnowledge (homebrew saved from a bestiary
+        // combatant before the adapter filled the field: the builder kept rawMarkdown) reads the
+        // sidebar off the page it carries, so its row does not vanish.
+        const pageLine = creature.recallKnowledge
+          || (creature.rawMarkdown ? recallKnowledgeFromPage(creature.rawMarkdown) : undefined)
+        if (pageLine) {
+          // A page line follows an elite / weak / level-scaled combatant the way the computed row
+          // always did: every DC moves by the level-DC table's difference. A pasted line is verbatim.
+          const baseLevel = combatant.creature?.level ?? creature.level
+          const line = fromPage && baseLevel !== creature.level
+            ? shiftRecallKnowledge(pageLine, baseLevel, creature.level)
+            : pageLine
+          return <><span className="stat-label">Recall Knowledge</span> <span style={{ color: 'var(--text-muted)' }}>{line}</span></>
         }
+        if (fromPage) return null
         const rk = parseFlavorRK(creature.flavor) ?? getRecallKnowledge(creature.level, creature.traits)
         const lore = [
           rk.unspecific != null ? `Unspecific Lore DC ${rk.unspecific}` : null,
@@ -1043,9 +1287,18 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
             {senseNodes && <span style={muted}> ({senseNodes})</span>}
           </>
         )
-      case 'languages':
-        if (isHazard || creature.languages.length === 0) return null
-        return <><span className="stat-label">Languages</span> {creature.languages.join(', ')}</>
+      case 'languages': {
+        // AoN prints language abilities (telepathy 100 feet, truespeech) after a ';' on the
+        // Languages line; a creature with abilities but no languages prints just the abilities.
+        // Read defensively: the homebrew JSON guard does not vet this field, and a string here
+        // ("telepathy 100 feet") must not crash the stat block — it prints as the one ability.
+        const langRaw: unknown = creature.languageAbilities
+        const langAbilities = (Array.isArray(langRaw) ? langRaw : [langRaw])
+          .filter((s): s is string => typeof s === 'string' && s.trim() !== '')
+        if (isHazard || (creature.languages.length === 0 && langAbilities.length === 0)) return null
+        const langText = [creature.languages.join(', '), langAbilities.join(', ')].filter(Boolean).join('; ')
+        return <><span className="stat-label">Languages</span> {langText}</>
+      }
       case 'skills': {
         if (isHazard || Object.keys(creature.skills).length === 0) return null
         return (
@@ -1104,8 +1357,8 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
         const bt = creature.defenses.bt
         return (
           <>
-            <span className="stat-label">HP</span> {creature.defenses.hp}{creature.defenses.hpNote && <span style={{ ...muted, marginLeft: 4 }}>{creature.defenses.hpNote}</span>}
-            {bt !== undefined && <span style={{ marginLeft: 10 }}><span className="stat-label">BT</span> {bt}</span>}
+            <span className="stat-label">HP</span> {hpValueNodes}
+            {bt !== undefined && !btInPoolLine && <span style={{ marginLeft: 10 }}><span className="stat-label">BT</span> {bt}</span>}
           </>
         )
       }
@@ -1132,7 +1385,11 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
     return { className: `${base} fixed-cubes`, style: { ['--cube-width']: `${w}px` } as React.CSSProperties }
   }
 
-  const renderBlock = (id: SbItemId, style?: string): React.ReactNode => {
+  // `tail`: a hazard's abilities and strikes are drawn by the hazard tail (renderHazardTail: after
+  // the defenses, strikes at their page place among the abilities, before the Routine), never in
+  // the reorderable body. `only` limits the rows (indices into creature.attacks / .abilities);
+  // `header: false` drops the section header of a group that continues the one above it.
+  const renderBlock = (id: SbItemId, style?: string, tail?: { only?: number[]; header?: boolean }): React.ReactNode => {
     switch (id) {
       case 'perception': { // cube form (text form is inline)
         if (isHazard) return null
@@ -1171,36 +1428,57 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
         const d = creature.defenses
         const cnd = combatant.conditions
         const hasHardness = d.hardness !== undefined
-        const hasSaves    = Boolean(d.fort || d.ref || d.will)
-        const showSection = !isHazard || (hasHardness || hasSaves || d.hp > 0 || d.resistances.length > 0 || d.weaknesses.length > 0 || d.immunities.length > 0)
+        // Which save boxes to draw. A creature: all three. A hazard: only the saves its page prints
+        // (savesPrinted, filled by the adapter — a hazard printing only "Fort +10" drew "Ref +0" and
+        // "Will +0" beside it, APP-DEFECTS: hazard saves). A hazard with no savesPrinted at all
+        // (hand-built, pasted, an older snapshot) keeps the old rule: all three when any is set.
+        // savesPrinted is read defensively (a homebrew JSON may hold a number or a string there):
+        // anything but a list counts as absent and takes the old rule.
+        const printed: unknown = d.savesPrinted
+        const saveKeys: Array<'fort' | 'ref' | 'will'> = !isHazard
+          ? ['fort', 'ref', 'will']
+          : Array.isArray(printed)
+            ? (['fort', 'ref', 'will'] as const).filter(k => printed.includes(k))
+            : (d.fort || d.ref || d.will) ? ['fort', 'ref', 'will'] : []
+        const hasSaves    = saveKeys.length > 0
+        // A hazard's AC prints only when its page prints one: defenses.acPrinted, set by the adapter
+        // from the UNADJUSTED record (elite / weak / level scaling move a hazard's 0 to 2 or 11,
+        // which is no printed AC). Every writer sets the flag now (the adapter, the paste parser,
+        // the builder); a hazard WITHOUT it was made before the change and draws no AC box, as
+        // every hazard did then — the old builder and paste parser both started ac at 10, so an
+        // "ac > 0" fallback grew an "AC 10" the GM never typed on nearly every stored homebrew
+        // hazard. The builder starts acSet from this same rule (acPrinted === true), so an
+        // untouched save never moves the box. Read defensively: anything but true is no AC box.
+        const acPrinted: unknown = combatant.creature?.defenses?.acPrinted ?? d.acPrinted
+        const showAc      = !isHazard || acPrinted === true
+        const showSection = !isHazard || (showAc || hasHardness || hasSaves || d.hp > 0 || d.resistances.length > 0 || d.weaknesses.length > 0 || d.immunities.length > 0)
         if (!showSection) return null
         type DefEntry =
           | { kind: 'val'; key: string; label: string; base: number; mod: number; plain?: boolean; signed?: boolean; title?: string; onRoll?: () => void; star?: React.ReactNode }
           | { kind: 'speed'; key: string; sp: SpeedSet }
         const entries: DefEntry[] = []
-        if (!isHazard) {
+        if (showAc) {
           entries.push({ kind: 'val', key: 'ac', label: 'AC', base: d.ac, mod: mods.ac, signed: false,
             star: <CondStar entries={condFor(['ac'])} rollTotal={d.ac + resolveStatMod(cnd, 'ac', true)} /> })
         }
         if (hasHardness) {
           entries.push({ kind: 'val', key: 'hard', label: 'Hardness', base: d.hardness!, mod: 0, plain: true })
         }
-        if (!isHazard || hasSaves) {
-          entries.push(
-            { kind: 'val', key: 'fort', label: 'Fort', base: d.fort, mod: mods.fort, title: 'Roll Fortitude',
-              onRoll: () => handleCheck('Fortitude', d.fort + mods.fort),
-              star: <CondStar entries={condFor(['fort', 'allChecks'])} rollTotal={d.fort + resolveStatMod(cnd, 'fort', true)}
-                onRoll={() => handleCheck('Fortitude (situational)', d.fort + resolveStatMod(cnd, 'fort', true))} /> },
-            { kind: 'val', key: 'ref', label: 'Ref', base: d.ref, mod: mods.ref, title: 'Roll Reflex',
-              onRoll: () => handleCheck('Reflex', d.ref + mods.ref),
-              star: <CondStar entries={condFor(['ref', 'allChecks'])} rollTotal={d.ref + resolveStatMod(cnd, 'ref', true)}
-                onRoll={() => handleCheck('Reflex (situational)', d.ref + resolveStatMod(cnd, 'ref', true))} /> },
-            { kind: 'val', key: 'will', label: 'Will', base: d.will, mod: mods.will, title: 'Roll Will',
-              onRoll: () => handleCheck('Will', d.will + mods.will),
-              star: <CondStar entries={condFor(['will', 'allChecks'])} rollTotal={d.will + resolveStatMod(cnd, 'will', true)}
-                onRoll={() => handleCheck('Will (situational)', d.will + resolveStatMod(cnd, 'will', true))} /> },
-          )
+        const saveEntry: Record<'fort' | 'ref' | 'will', DefEntry> = {
+          fort: { kind: 'val', key: 'fort', label: 'Fort', base: d.fort, mod: mods.fort, title: 'Roll Fortitude',
+            onRoll: () => handleCheck('Fortitude', d.fort + mods.fort),
+            star: <CondStar entries={condFor(['fort', 'allChecks'])} rollTotal={d.fort + resolveStatMod(cnd, 'fort', true)}
+              onRoll={() => handleCheck('Fortitude (situational)', d.fort + resolveStatMod(cnd, 'fort', true))} /> },
+          ref: { kind: 'val', key: 'ref', label: 'Ref', base: d.ref, mod: mods.ref, title: 'Roll Reflex',
+            onRoll: () => handleCheck('Reflex', d.ref + mods.ref),
+            star: <CondStar entries={condFor(['ref', 'allChecks'])} rollTotal={d.ref + resolveStatMod(cnd, 'ref', true)}
+              onRoll={() => handleCheck('Reflex (situational)', d.ref + resolveStatMod(cnd, 'ref', true))} /> },
+          will: { kind: 'val', key: 'will', label: 'Will', base: d.will, mod: mods.will, title: 'Roll Will',
+            onRoll: () => handleCheck('Will', d.will + mods.will),
+            star: <CondStar entries={condFor(['will', 'allChecks'])} rollTotal={d.will + resolveStatMod(cnd, 'will', true)}
+              onRoll={() => handleCheck('Will (situational)', d.will + resolveStatMod(cnd, 'will', true))} /> },
         }
+        for (const k of saveKeys) entries.push(saveEntry[k])
         {
           const sp = creature.speed
           if (!isHazard && (sp.walk || sp.fly || sp.swim || sp.burrow || sp.climb)) {
@@ -1275,28 +1553,42 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
         if (isHazard) {
           return (
             <StatRow>
-              <span className="stat-label">HP</span> {creature.defenses.hp}{creature.defenses.hpNote && <span style={{ ...muted, marginLeft: 4 }}>{creature.defenses.hpNote}</span>}
-              {bt !== undefined && <span style={{ marginLeft: 10 }}><span className="stat-label">BT</span> {bt}</span>}
+              <span className="stat-label">HP</span> {hpValueNodes}
+              {bt !== undefined && !btInPoolLine && <span style={{ marginLeft: 10 }}><span className="stat-label">BT</span> {bt}</span>}
             </StatRow>
           )
         }
         return (
-          <div {...cubeProps('hp', 'stat-line def-strip def-strip-solo')}>
-            <div className="def-box">
-              <div className="def-box-label">HP</div>
-              <div className="def-box-val">{creature.defenses.hp}</div>
-            </div>
-            {bt !== undefined && (
+          <>
+            <div {...cubeProps('hp', 'stat-line def-strip def-strip-solo')}>
               <div className="def-box">
-                <div className="def-box-label">BT</div>
-                <div className="def-box-val">{bt}</div>
+                <div className="def-box-label">HP</div>
+                <div className="def-box-val">{creature.defenses.hp}</div>
+              </div>
+              {bt !== undefined && (
+                <div className="def-box">
+                  <div className="def-box-label">BT</div>
+                  <div className="def-box-val">{bt}</div>
+                </div>
+              )}
+            </div>
+            {/* The cube holds the combat pool only; every further pool (a hydra's head) is
+                printed under it so the cube form loses nothing the text form shows. */}
+            {extraHpPools.length > 0 && (
+              <div className="stat-line" style={{ fontSize: 12 }}>
+                <span className="stat-label">HP</span> {hpValueNodes}
               </div>
             )}
-          </div>
+          </>
         )
       }
       case 'attacks': {
         if (creature.attacks.length === 0) return null
+        // A hazard page prints its Melee / Ranged line inside or right after the ability (or the
+        // Routine) that makes it — the reaction comes first, the strike is its effect (Hammer of
+        // Forbiddance, Spinning Blade Pillar). Drawn before the abilities, every such reaction
+        // read as coming after its own strike. The hazard tail draws them instead.
+        if (isHazard && !tail) return null
         // Per-item overrides (set on the 'attacks' row in Settings) win over the
         // global Attacks-per-line / spacing; fall back to the globals otherwise.
         const atkItem = sb.items.find(i => i.id === 'attacks')
@@ -1304,11 +1596,12 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
         const effAtkGap = atkItem?.gapPx ?? lineGapPx(sb.sameLineGap, 'attacks')
         return (
           <>
-            <Hdr>Attacks</Hdr>
+            {tail?.header !== false && <Hdr>Attacks</Hdr>}
             <div
               className={effPerLine > 1 ? 'attacks-grid' : undefined}
               style={effPerLine > 1 ? { gridTemplateColumns: `repeat(${effPerLine}, minmax(0, 1fr))`, columnGap: effAtkGap } : undefined}>
             {creature.attacks.map((atk, i) => {
+              if (tail?.only && !tail.only.includes(i)) return null
               // attackBonus + melee/ranged pooled in ONE typed bucket — adding the two resolved
               // numbers double-counted Frightened (see resolveAttackMod).
               const totalAtk = atk.attack + resolveAttackMod(combatant.conditions, atk.range==='Melee' ? 'melee' : 'ranged')
@@ -1577,78 +1870,87 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
         )
       }
       case 'specials': {
-        if (creature.abilities.length === 0) return null
+        // Only the abilities printed at the bottom of the page (and every slot-less one:
+        // hand-built, pasted, hazard). 'top' and 'mid' abilities render at their own anchors
+        // (see slotPlan) — this section is what is left.
+        // A hazard's abilities are drawn by the hazard tail, with its strikes at their page places.
+        if (isHazard && !tail) return null
+        if (tail?.only) {
+          const part = botAbilities.filter(x => tail.only!.includes(x.i))
+          if (!part.length) return null
+          return (
+            <>
+              {tail.header !== false && <Hdr right={creature.spellcasting.length === 0 ? resetSlot(anyUsesSpent) : undefined}>Abilities &amp; Actions</Hdr>}
+              {part.map(({ ab, i }) => renderAbility(ab, i, style))}
+            </>
+          )
+        }
+        if (botAbilities.length === 0) {
+          // Every ability sits higher up. Keep the long-rest reset reachable when this header
+          // was its only home (no Spellcasting header) and something is spent.
+          if (creature.abilities.length > 0 && creature.spellcasting.length === 0 && anyUsesSpent) {
+            return <div className="stat-line" style={{ textAlign: 'right' }}>{resetAllBtn}</div>
+          }
+          return null
+        }
         return (
           <>
             <Hdr right={creature.spellcasting.length === 0 ? resetSlot(anyUsesSpent) : undefined}>Abilities &amp; Actions</Hdr>
-            {creature.abilities.map((ab, i) => {
-              // Some scraped ability names carry the action-cost markup inline
-              // (e.g. "Earth Block <actions string=\"Reaction\" />"). Strip it from
-              // the displayed name and turn it into the proper ◆/↺ glyph instead
-              // of leaking the literal tag into the stat block.
-              const costInName = ab.name.match(/<actions\b[^>]*\bstring\s*=\s*"([^"]*)"[^>]*>/i)
-              const cleanName = ab.name.replace(/<actions\b[^>]*>/gi, '').replace(/\s+/g, ' ').trim()
-              const displayActivity = ab.activity || (costInName ? costInName[1] : '')
-              const ruleKey = cleanName.toLowerCase()
-              const ruleTip = actions.get(ruleKey)
-              const limit = parseAbilityFrequency(`${cleanName} ${ab.entries} ${ab.trigger ?? ''}`)
-              const abKey = abilityKey(cleanName)
-              return (
-                <StatRow key={i}>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 4, marginBottom: 2 }}>
-                    {ruleTip
-                      ? <Tooltip
-                          content={<PopupPreview type="action" ref_={ruleKey} title={cleanName} />}
-                          onActivate={pos => openWin('action', ruleKey, cleanName, pos.x, pos.y, { noCascade: true })}
-                        >
-                          <span style={goldLink}>{cleanName}</span>
-                        </Tooltip>
-                      : <span style={{ fontWeight: 600, color: 'var(--text)' }}>{cleanName}</span>
-                    }
-                    {displayActivity && <ActionGlyph act={displayActivity} />}
-                    {limit && (
-                      <span style={{ marginLeft: 2 }}>
-                        <UsesChip
-                          used={usedOf(abKey)}
-                          max={limit.max}
-                          onChange={v => setResourceUse(combatant.id, abKey, v)}
-                          hint={`${limit.max}${periodLabel(limit.period)}`}
-                        />
-                      </span>
-                    )}
-                    {ab.traits.length > 0 && (
-                      <span style={{ fontSize: 12, ...muted }}>(
-                        {ab.traits.map((t, ti) => {
-                          const stripped = stripTraitLink(t)
-                          const base = traitBaseName(stripped).toLowerCase()
-                          const tip = traits.get(base)
-                          return (
-                            <span key={t}>
-                              {ti > 0 && ', '}
-                              <TraitTag name={stripped} traitKey={tip ? base : undefined} />
-                            </span>
-                          )
-                        })}
-                      )</span>
-                    )}
-                  </div>
-                  {style !== 'compact' && ab.trigger && (
-                    <div style={{ fontSize: 12, ...muted, marginBottom: 2 }}>
-                      <span style={{ fontWeight: 600, color: 'var(--text)' }}>Trigger</span> {ab.trigger}
-                    </div>
-                  )}
-                  {style !== 'compact' && (
-                    <AbilityText text={ab.entries} label={ab.name} onRoll={rollAbilityDamage} onCooldownRoll={rollAbilityCooldown} onCheck={handleCheck} />
-                  )}
-                </StatRow>
-              )
-            })}
+            {botAbilities.map(({ ab, i }) => renderAbility(ab, i, style))}
           </>
         )
       }
       default:
         return null
     }
+  }
+
+  // ── Hazard tail: abilities and strikes ───────────────────────────────────
+  // A hazard page prints its Melee / Ranged line inside or right after the ability that makes it
+  // and its riders after it (Poisoned Lock: Spring, Melee spine, Cladis Poison). A strike with a
+  // page place (Attack.afterAbility, from the adapter) is drawn right there among the abilities;
+  // one without (hand-built, pasted, a page whose order could not be read) after every ability.
+  // All of it before the Routine. The Attacks and Abilities & Actions items keep their own
+  // visibility and style; their place in the reorderable body does not apply to a hazard.
+  const renderHazardTail = (): React.ReactNode => {
+    const atkItem = sb.items.find(it => it.id === 'attacks')
+    const abItem = specialsItem
+    const atkOn = !atkItem?.hidden && creature.attacks.length > 0
+    const abOn = !abItem?.hidden && botAbilities.length > 0
+    const n = creature.abilities.length
+    // Read defensively: a homebrew JSON can hold anything there.
+    const placeOf = (a: Attack): number => {
+      const k: unknown = a.afterAbility
+      return typeof k === 'number' && Number.isInteger(k) && k >= 0 && k < n ? k : n
+    }
+    if (!atkOn || !abOn || creature.attacks.every(a => placeOf(a) >= n)) {
+      return (
+        <>
+          {abOn && renderBlock('specials', abItem?.style, {})}
+          {atkOn && renderBlock('attacks', atkItem?.style, {})}
+        </>
+      )
+    }
+    const out: React.ReactNode[] = []
+    let run: number[] = []
+    let abHeader = true, atkHeader = true
+    const flushRun = () => {
+      if (!run.length) return
+      out.push(<Fragment key={`ab:${run[0]}`}>{renderBlock('specials', abItem?.style, { only: run, header: abHeader })}</Fragment>)
+      if (botAbilities.some(x => run.includes(x.i))) abHeader = false
+      run = []
+    }
+    for (let k = 0; k <= n; k++) {
+      const strikes = creature.attacks.map((a, i) => ({ a, i })).filter(x => placeOf(x.a) === k).map(x => x.i)
+      if (strikes.length) {
+        flushRun()
+        out.push(<Fragment key={`atk:${k}`}>{renderBlock('attacks', atkItem?.style, { only: strikes, header: atkHeader })}</Fragment>)
+        atkHeader = false
+      }
+      if (k < n) run.push(k)
+    }
+    flushRun()
+    return out
   }
 
   // Group the visible items into lines: an item flagged "same line" merges onto
@@ -1668,29 +1970,44 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
 
     if (edit) return renderEditMode(lines)
 
-    return lines.map((group, gi) => {
-      if (!sbItemIsInline(group[0]) || group[0].hidden) {
-        const it = group[0]
-        const node = sbItemIsInline(it)
-          ? <StatRow>{renderInline(it.id) ?? <span style={{ color: 'var(--text-faded)', fontStyle: 'italic' }}>({SB_ITEM_META[it.id].label})</span>}</StatRow>
-          : renderBlock(it.id, it.style)
-        return <Fragment key={gi}>{node}</Fragment>
+    // Top / mid abilities ride on the Abilities & Actions item: hidden with it, styled with it.
+    const pending = specialsItem?.hidden ? [] : slotPlan()
+    const out: React.ReactNode[] = []
+    const flush = (beforeIdx: number) => {
+      while (pending.length && pending[0].anchor < beforeIdx) {
+        const p = pending.shift()!
+        out.push(<Fragment key={`slot:${p.key}`}>{renderSlotAbilities(p.list)}</Fragment>)
       }
-      // One or more inline text items sharing a single row.
-      const parts = group.map(it => ({ it, node: renderInline(it.id) })).filter(p => p.node != null)
-      if (parts.length === 0) return null
-      if (parts.length === 1) return <StatRow key={gi}>{parts[0].node}</StatRow>
-      const g = group[0].gapPx ?? lineGapPx(sb.sameLineGap, 'merged')
-      return (
-        <StatRow key={gi}>
-          <div style={mergeContainer(sb.mergeStyle, g)}>
-            {parts.map((p, i) => (
-              <div key={p.it.id} style={mergeItemStyle(sb.mergeStyle, i, g)}>{p.node}</div>
-            ))}
-          </div>
-        </StatRow>
-      )
+    }
+    lines.forEach((group, gi) => {
+      flush(sb.items.findIndex(it => it.id === group[0].id))
+      out.push(<Fragment key={gi}>{renderLine(group)}</Fragment>)
     })
+    flush(Infinity)
+    return out
+  }
+
+  const renderLine = (group: SbItem[]): React.ReactNode => {
+    if (!sbItemIsInline(group[0]) || group[0].hidden) {
+      const it = group[0]
+      return sbItemIsInline(it)
+        ? <StatRow>{renderInline(it.id) ?? <span style={{ color: 'var(--text-faded)', fontStyle: 'italic' }}>({SB_ITEM_META[it.id].label})</span>}</StatRow>
+        : renderBlock(it.id, it.style)
+    }
+    // One or more inline text items sharing a single row.
+    const parts = group.map(it => ({ it, node: renderInline(it.id) })).filter(p => p.node != null)
+    if (parts.length === 0) return null
+    if (parts.length === 1) return <StatRow>{parts[0].node}</StatRow>
+    const g = group[0].gapPx ?? lineGapPx(sb.sameLineGap, 'merged')
+    return (
+      <StatRow>
+        <div style={mergeContainer(sb.mergeStyle, g)}>
+          {parts.map((p, i) => (
+            <div key={p.it.id} style={mergeItemStyle(sb.mergeStyle, i, g)}>{p.node}</div>
+          ))}
+        </div>
+      </StatRow>
+    )
   }
 
   // ── Settings-only editor ──────────────────────────────────────────────────
@@ -1796,15 +2113,36 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
       )
     }
 
+    // Top / mid abilities in the preview: drawn where they will print, not draggable on their
+    // own (they belong to Abilities & Actions — a click selects that item, and the capture
+    // handler keeps their rolls and chips inert like every other preview row).
+    const pending = slotPlan()
+    const slotWrap = (p: ReturnType<typeof slotPlan>[number]) => (
+      <div key={`slot:${p.key}`}
+        onClickCapture={ev => { ev.preventDefault(); ev.stopPropagation(); e.onSelect('specials') }}
+        className={`sb-edit-item${e.selectedId === 'specials' ? ' selected' : ''}`}
+        title="Printed here by the page — part of Abilities & Actions · click to edit"
+        style={{ opacity: specialsItem?.hidden ? 0.45 : 1 }}>
+        {renderSlotAbilities(p.list)}
+      </div>
+    )
+    const flush = (beforeIdx: number): React.ReactNode[] => {
+      const nodes: React.ReactNode[] = []
+      while (pending.length && pending[0].anchor < beforeIdx) nodes.push(slotWrap(pending.shift()!))
+      return nodes
+    }
+
     return (
       <div style={{ padding: '6px 0' }}>
         {strip(0)}
         {lines.map((group, li) => (
           <Fragment key={group[0].id}>
+            {flush(sb.items.findIndex(it => it.id === group[0].id))}
             {sbItemIsInline(group[0]) && !group[0].hidden ? chipLine(group) : blockWrap(group[0])}
             {strip(li + 1)}
           </Fragment>
         ))}
+        {flush(Infinity)}
       </div>
     )
   }
@@ -1876,6 +2214,9 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
            through Abilities & Actions, including Attacks and Spellcasting. ── */}
       {renderBody()}
 
+      {/* ── Hazard abilities and strikes, before the Routine ── */}
+      {isHazard && renderHazardTail()}
+
       {/* ── Hazard routine / reset ── */}
       {isHazard && hd && (
         <>
@@ -1884,17 +2225,27 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
             //   "<Name> (N actions) <body>"  — a named routine action
             //   "(N actions) <body>"         — bare action-cost prefix
             // Either way we pull the name+cost out so the body reads cleanly.
-            const namedM = hd.routine.match(/^([A-Z][\w' -]{1,80}?)\s+\((\d+\s+actions?|Reaction|Free Action|action|actions)\)\s*(.*)$/i)
-            const bareM  = !namedM ? hd.routine.match(/^\((\d+\s+actions?|Reaction|Free Action|action|actions)\)\s*(.*)$/i) : null
+            // The body may run over several lines (the structured raw.routine keeps the page's
+            // breaks), so the body capture is [\s\S]*, not .*; a cost may carry traits
+            // ("(2 actions; death, divine)").
+            const namedM = hd.routine.match(/^([A-Z][\w' -]{1,80}?)\s+\((\d+\s+actions?|Reaction|Free Action|action|actions)(?:;\s*([^)]*))?\)\s*([\s\S]*)$/i)
+            const bareM  = !namedM ? hd.routine.match(/^\((\d+\s+actions?|Reaction|Free Action|action|actions)(?:;\s*([^)]*))?\)\s*([\s\S]*)$/i) : null
             const headName = namedM ? namedM[1].trim() : ''
             const headCost = namedM ? namedM[2].trim() : (bareM ? bareM[1].trim() : '')
-            const body     = namedM ? namedM[3] : (bareM ? bareM[2] : hd.routine)
+            const headTraits = (namedM ? namedM[3] : bareM?.[2])?.trim() ?? ''
+            const routineText = namedM ? namedM[4] : (bareM ? bareM[3] : hd.routine)
             const costGlyph = headCost === 'Reaction'    ? '↺'
                           : headCost === 'Free Action'  ? '◇'
                           : /^3\s/.test(headCost) ? '◆◆◆'
                           : /^2\s/.test(headCost) ? '◆◆'
                           : /^1?\s*action/i.test(headCost) ? '◆'
                           : ''
+            // The glyph font has one to three actions; a Routine of 4, 6 or 9 actions prints its
+            // count as words, as the page does ("(9 actions)"), never nothing.
+            const costWords = !costGlyph && /^\d+\s+actions?$/i.test(headCost) ? `(${headCost})` : ''
+            // Entries the page prints in bold inside the Routine, with their own cost ("Lightning
+            // Arc [one-action] (electricity) …"), draw as ability rows after the opening prose.
+            const { intro: body, entries: routineEntries } = splitRoutine(routineText)
             return (
               <>
                 <SectionHdr>Routine</SectionHdr>
@@ -1905,7 +2256,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                   marginLeft: 12, marginRight: 12,
                   borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
                 }}>
-                  {(headName || costGlyph) && (
+                  {(headName || costGlyph || costWords) && (
                     <div style={{
                       fontFamily: 'var(--font-display)',
                       fontWeight: 600, fontSize: 13.5,
@@ -1918,6 +2269,8 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                           shows the same AoN Pathfinder2eActions font glyph
                           as everywhere else, not a raw unicode character. */}
                       {costGlyph && <ActionGlyph act={costGlyph} />}
+                      {costWords && <span>{costWords}</span>}
+                      {headTraits && <span style={{ fontSize: 12, fontWeight: 400, ...muted }}>({headTraits})</span>}
                     </div>
                   )}
                   <ProseBlock text={body}
@@ -1925,6 +2278,8 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                     onCooldownRoll={rollAbilityCooldown}
                     onCheck={handleCheck}
                     rollLabel={headName ? `${creature.name} — ${headName}` : `${creature.name} — Routine`} />
+                  {/* Keys past every creature.abilities index, so a row never shares one. */}
+                  {routineEntries.map((ab, ri) => renderAbility(ab, creature.abilities.length + ri))}
                 </div>
               </>
             )
