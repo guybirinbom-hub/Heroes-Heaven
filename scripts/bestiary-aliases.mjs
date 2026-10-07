@@ -154,11 +154,17 @@ console.log(`aliases: ${Object.keys(sorted).length} (${renamed} for pages rename
 for (const u of unreached) console.log(`  no row: ${u}`);
 for (const c of conflicts) console.log(`  two targets: ${c}`);
 
+/* Line endings are the checkout's, not the content's: main checks out CRLF (core.autocrlf=true) and a
+ * lane LF (autocrlf=input), and the same commit sits in both. The check compares the CONTENT, and a
+ * write keeps the style the file already has, so neither checkout reports a difference that is not one
+ * (2026-10-07: --check went red on main right after the merge, over nothing but \r). */
+const lf = (s) => s.replace(/\r\n/g, '\n');
+const now = existsSync(OUT) ? readFileSync(OUT, 'utf8') : '';
 if (CHECK) {
-  const now = existsSync(OUT) ? readFileSync(OUT, 'utf8') : '';
-  if (now !== text) stop(`${OUT} differs from what the mirror gives — run node scripts/bestiary-aliases.mjs`);
+  if (lf(now) !== lf(text)) stop(`${OUT} differs from what the mirror gives — run node scripts/bestiary-aliases.mjs`);
   console.log('bestiary-aliases.json matches the mirror');
 } else {
-  writeFileSync(OUT, text);
+  const crlf = now.includes('\r\n');
+  writeFileSync(OUT, crlf ? text.replace(/\n/g, '\r\n') : text);
   console.log(`wrote ${OUT}`);
 }

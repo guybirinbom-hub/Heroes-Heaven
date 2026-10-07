@@ -209,6 +209,28 @@ describe('(A3) pages renamed in place keep their old name as an entry (D15)', ()
     } finally { rmSync(bad, { recursive: true, force: true }); }
   }, 120_000);
 
+  // 2026-10-07: --check went red on main minutes after the merge, over nothing but \r — main checks out
+  // CRLF (core.autocrlf=true), the lane LF, same commit. The check compares content; a write keeps the
+  // file's own style. Mutation-proof: a real content change still fails the check.
+  it.skipIf(!HAS_MIRROR)('--check compares content, not the checkout\'s line endings', () => {
+    const dir = fixtureData();
+    try {
+      expect(run(['--data', dir]).status).toBe(0);
+      const out = join(dir, 'bestiary-aliases.json');
+      const lfText = readFileSync(out, 'utf8');
+      expect(lfText).not.toContain('\r');
+      writeFileSync(out, lfText.replace(/\n/g, '\r\n'));
+      const crlf = run(['--check', '--data', dir]);
+      expect(crlf.status, `${crlf.stdout}\n${crlf.stderr}`).toBe(0);
+      // a write into a CRLF file keeps CRLF
+      expect(run(['--data', dir]).status).toBe(0);
+      expect(readFileSync(out, 'utf8')).toContain('\r\n');
+      // content change: still caught
+      writeFileSync(out, lfText.replace('"Greedspawn Soldiers": "Greedspawn Soldier"', '"Greedspawn Soldiers": "Greedspawn Soldier (edited)"'));
+      expect(run(['--check', '--data', dir]).status).toBe(1);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  }, 180_000);
+
   it.skipIf(!HAS_MIRROR)('the script STOPS when the mirror no longer holds a declared id (a dropped page is D15\'s legacy-kept branch)', () => {
     const mirror = mkdtempSync(join(tmpdir(), 'hh-mirror-'));
     const data = fixtureData();
