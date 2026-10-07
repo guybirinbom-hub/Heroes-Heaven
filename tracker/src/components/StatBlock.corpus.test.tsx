@@ -188,10 +188,21 @@ describe('StatBlock — every HP pool prints', () => {
 })
 
 describe('StatBlock — hazard AC and saves follow the page', () => {
-  it('draws a hazard AC box iff ac > 0', () => {
+  it('draws a hazard AC box when its record prints one (acPrinted)', () => {
     // Without the change: no hazard ever drew AC (a `!isHazard` guard), so the first expect fails.
-    expect(render(hazard({ ac: 21, hardness: 9, hp: 36 }))).toContain(defBox('AC'))
-    expect(render(hazard({ ac: 0, hardness: 9, hp: 36 }))).not.toContain(defBox('AC'))
+    expect(render(hazard({ ac: 21, acPrinted: true, hardness: 9, hp: 36 }))).toContain(defBox('AC'))
+    expect(render(hazard({ ac: 0, acPrinted: false, hardness: 9, hp: 36 }))).not.toContain(defBox('AC'))
+  })
+
+  it('a hazard with no acPrinted (made before the flag) draws no AC box, whatever its ac', () => {
+    // D4 replaced the interface's "ac > 0" rule with the flag, and every writer sets it now. A hazard
+    // without it was made before, when no hazard drew AC and the old builder / paste parser
+    // stored an untyped ac 10: an "ac > 0" fallback grew an "AC 10" box on nearly every one
+    // (StatBlock.regression2.test.tsx). Without the fix the first expect fails.
+    expect(render(hazard({ ac: 10, hardness: 5, hp: 20 }))).not.toContain(defBox('AC'))
+    expect(render(hazard({ ac: 21, hardness: 9, hp: 36 }))).not.toContain(defBox('AC'))
+    // Read defensively: a homebrew JSON's "yes" is not true.
+    expect(render(hazard({ ac: 21, acPrinted: 'yes' as unknown as boolean, hp: 36 }))).not.toContain(defBox('AC'))
   })
 
   it('acPrinted decides the hazard AC box, not the ac value (decided on the unadjusted record)', () => {
@@ -237,6 +248,32 @@ describe('StatBlock — Recall Knowledge comes from the page', () => {
     // Guard (passes before and after): hand-built / pasted / homebrew still get a computed DC.
     const t = text(render(creature({ level: 1 })))
     expect(t).toContain('Recall Knowledge DC 15')
+  })
+
+  it('a record carrying its page but no recallKnowledge reads the sidebar off that page', () => {
+    // Homebrew saved from a bestiary combatant before the adapter filled recallKnowledge keeps
+    // rawMarkdown (the builder spreads the record). Without the fix it showed NO row: "has a page"
+    // was read as "the page prints none" (StatBlock.regression2.test.tsx).
+    const t = text(render(creature({
+      traits: ['humanoid'],
+      attacks: [{ range: 'Melee', name: 'synthclub', attack: 7, traits: [], damage: '1d6+3', types: [], effects: [], isAgile: false }],
+      rawMarkdown: '**[Recall Knowledge - Humanoid](/Rules.aspx?ID=563)**\n([Society](/Skills.aspx?ID=48)): DC 17\n\n<title level="2" right="Creature 1">Synthetic Beast</title>',
+    })))
+    expect(t).toContain('Recall Knowledge DC 17')
+  })
+
+  it('weak on a level −1 creature never raises a Recall Knowledge DC (the table prints no level −2)', () => {
+    // rkDcAt(−2) was 14 + max(0, −2) = 14, above level −1's 13, so the delta was +1: a weak Ether
+    // Sprite read "DC 14 … Unspecific Lore DC 12 … Specific Lore DC 9" against the page's 13/11/8.
+    const weak = (c: Creature) => text(renderToStaticMarkup(<StatBlock combatant={{ ...combatantOf(c), isWeak: true }} />))
+    const page = creature({
+      level: -1, rawMarkdown: '# Synthetic Sprite',
+      recallKnowledge: 'DC 13 • Fey (Nature) • Unspecific Lore DC 11 • Specific Lore DC 8',
+    })
+    const dcs = [...weak(page).matchAll(/DC (\d+)/g)].map(m => Number(m[1]))
+    expect(dcs).toEqual([12, 10, 7])
+    // The computed row of a page-less level −1 creature moves the same way.
+    expect(weak(creature({ level: -1, traits: ['fey'] }))).toContain('Recall Knowledge DC 12')
   })
 })
 

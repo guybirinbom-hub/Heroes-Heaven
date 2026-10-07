@@ -7,6 +7,7 @@ import { useSettingsStore, STATBLOCK_DEFAULT } from '../store/settingsStore'
 import { useCombatStore, invalidateEncounterCache } from '../store/combatStore'
 import { statBlockProblem, toStatBlock } from '../data/dataStore'
 import { parseCreaturesFromText } from '../utils/dataTransfer'
+import { parseStatBlockText } from '../utils/parseStatBlockText'
 import type { Ability, Combatant, Creature, Defenses } from '../types/pf2e'
 
 /*
@@ -133,8 +134,35 @@ describe('regression: an elite or level-scaled hazard grows an AC box its page n
   })
 
   it('a hazard whose page prints AC keeps it when elite (guard)', () => {
-    expect(text(html(hazard({ ac: 19, fort: 11, hp: 20, savesPrinted: ['fort'] }), { isElite: true }))).toContain('21')
-    expect(html(hazard({ ac: 19, fort: 11, hp: 20, savesPrinted: ['fort'] }), { isElite: true })).toContain(defBox('AC'))
+    // "Prints AC" is acPrinted: true, which parseHazard sets on every page that prints one (D4);
+    // a hazard with no flag was made before the change and draws none (StatBlock.corpus.test).
+    expect(text(html(hazard({ ac: 19, acPrinted: true, fort: 11, hp: 20, savesPrinted: ['fort'] }), { isElite: true }))).toContain('21')
+    expect(html(hazard({ ac: 19, acPrinted: true, fort: 11, hp: 20, savesPrinted: ['fort'] }), { isElite: true })).toContain(defBox('AC'))
+  })
+})
+
+describe('regression: a PASTED hazard draws the AC and saves its text never printed (D4)', () => {
+  // parseStatBlockText starts at ac = 10 and saves +0; before acPrinted / savesPrinted were set on
+  // the paste path, a pasted hazard with no defence line drew "AC 10" and three "+0" save boxes.
+  it('no defence line: no AC box and no save boxes', () => {
+    const { creature: hz } = parseStatBlockText('Synthetic Pit\nHazard 1\nTrap Mechanical\nStealth DC 18 (trained)\nHP 20')
+    expect(hz?.isHazard).toBe(true)
+    const h = html(hz!)
+    for (const l of ['AC', 'Fort', 'Ref', 'Will']) expect(h, l).not.toContain(defBox(l))
+  })
+  it('"AC 20; Fort +12": the AC box and the Fort box only', () => {
+    const { creature: hz } = parseStatBlockText('Synthetic Spikes\nHazard 3\nTrap Mechanical\nStealth +10\nAC 20; Fort +12\nHP 30')
+    const h = html(hz!)
+    expect(h).toContain(defBox('AC'))
+    expect(h).toContain(defBox('Fort'))
+    expect(h).not.toContain(defBox('Ref'))
+    expect(h).not.toContain(defBox('Will'))
+  })
+  it('guard: a pasted CREATURE keeps all three saves and its AC', () => {
+    const { creature: c } = parseStatBlockText('Synthetic Raider\nCreature 1\nHumanoid\nPerception +6\nAC 16; Fort +7\nHP 20')
+    expect(c?.isHazard).toBe(false)
+    const h = html(c!)
+    for (const l of ['AC', 'Fort', 'Ref', 'Will']) expect(h, l).toContain(defBox(l))
   })
 })
 

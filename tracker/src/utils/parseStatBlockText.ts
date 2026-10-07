@@ -232,6 +232,10 @@ export function parseStatBlockText(text: string): ParseResult {
   const items: string[] = []
   const speed: Creature['speed'] = { walk: 25 }
   let ac = 10, fort = 0, ref = 0, will = 0, hp = 10
+  // What a pasted HAZARD prints (decision D4): its AC box and save boxes draw only when its text
+  // has them. The `ac = 10` default above would otherwise show as a printed AC 10.
+  let acPrinted = false
+  const savesPrinted: Array<'fort' | 'ref' | 'will'> = []
   const immunities: string[] = []
   const resistances: Array<{ amount: number; name: string }> = []
   const weaknesses: Array<{ amount: number; name: string }> = []
@@ -385,9 +389,13 @@ export function parseStatBlockText(text: string): ParseResult {
     // ── AC + saves (may include trailing "+N status vs. ..." which is ignored) ─
     if (/^AC\s+\d+/i.test(line)) {
       ac   = parseInt(line.match(/AC\s+(\d+)/i)?.[1] ?? '10')
+      acPrinted = true
       fort = parseBonus(line.match(/Fort\s+([+-]\d+)/i)?.[1] ?? '+0')
       ref  = parseBonus(line.match(/Ref\s+([+-]\d+)/i)?.[1]  ?? '+0')
       will = parseBonus(line.match(/Will\s+([+-]\d+)/i)?.[1] ?? '+0')
+      for (const [k, re] of [['fort', /Fort\s+[+-]\d+/i], ['ref', /Ref\s+[+-]\d+/i], ['will', /Will\s+[+-]\d+/i]] as const) {
+        if (re.test(line)) savesPrinted.push(k)
+      }
       continue
     }
 
@@ -518,7 +526,10 @@ export function parseStatBlockText(text: string): ParseResult {
 
   finalizeSpell()
 
-  const defenses: Defenses = { ac, fort, ref, will, hp, immunities, resistances, weaknesses }
+  const defenses: Defenses = {
+    ac, fort, ref, will, hp, immunities, resistances, weaknesses,
+    ...(isHazard ? { acPrinted, savesPrinted } : {}),
+  }
 
   const creature: Creature = {
     id: uid(),

@@ -10,7 +10,7 @@
 // keeps just its display name and goes into the tracker without a stat block.
 
 import type { SavedEncounter } from '../types/pf2e'
-import { loadCustomCreatures, loadIndex, loadCreature, type IndexEntry } from '../data/dataStore'
+import { loadCustomCreatures, loadIndex, loadCreature, loadCreatureByName, type IndexEntry } from '../data/dataStore'
 import { readEncounterStore, writeEncounterStore } from '../store/combatStore'
 
 const FILE_VERSION = 1
@@ -133,7 +133,10 @@ async function resolveCreature(
   if (idx) {
     try { return await loadCreature(idx) } catch { return null }
   }
-  return null
+  // A name the index no longer offers: a legacy printing, opened as the remaster the index serves in
+  // its place (the legacy → remaster alias, D11). A file exported before the verified bestiary names
+  // "Troll" or "Adult Red Dragon", which the index now holds only as their remasters.
+  return await loadCreatureByName(ref.creatureName)
 }
 
 /**

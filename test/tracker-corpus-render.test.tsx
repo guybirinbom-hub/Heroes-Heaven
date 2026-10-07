@@ -1,10 +1,16 @@
 // @vitest-environment jsdom
-import { appendFileSync } from 'node:fs'
-import { afterAll, describe, expect, it } from 'vitest'
+import { appendFileSync, existsSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { renderDom } from './_render'
 import fixture from './fixtures/corpus-render-samples.json'
 import { parseCreature, parseHazard } from '../tracker/src/utils/parseCreature'
 import { StatBlock } from '../tracker/src/components/StatBlock'
+import { StatBlockBuilder } from '../tracker/src/components/StatBlockBuilder'
+import { CombatantDetail } from '../tracker/src/components/CombatantDetail'
+import { creatureToText } from '../tracker/src/utils/creatureToText'
+import { parseStatBlockText } from '../tracker/src/utils/parseStatBlockText'
 import type { Combatant, Creature, RawCreature, RawHazard } from '../tracker/src/types/pf2e'
 
 /*
@@ -30,7 +36,8 @@ import type { Combatant, Creature, RawCreature, RawHazard } from '../tracker/src
  *   - the Recall Knowledge row iff the page has the sidebar, with every DC the sidebar prints;
  *   - one strike per Melee/Ranged line on a hazard's page, by name;
  *   - a hazard Routine's "(N actions)" is drawn, and "N action(s)" in its prose stays words;
- *   - every constant spell under its "Constant (Nth)" rank;
+ *   - every constant spell under its "Constant (Nth)" rank, every cantrip under a Cantrips rank;
+ *   - every spell block under the name the page prints ("Champion Devotion Spells");
  *   - a spell block whose page line prints "N Focus Points" draws a pool of N pips;
  *   - every Hardness the page prints is drawn, a second component's ("Joint Hardness 16") too;
  *   - each ability's own opening words are drawn exactly once (not lost, not repeated in a hazard's
@@ -41,9 +48,22 @@ import type { Combatant, Creature, RawCreature, RawHazard } from '../tracker/src
  * The page oracle reads only bold entry labels; an unbolded header is not checked. Measured against
  * the adapter and StatBlock of the base commit (7cfb323), an earlier revision of this file (before the
  * HP-label, Speed, Routine-prose and doubled-bracket checks were added) failed 53 of its 57 tests.
+ *
+ * Round 2 (END TO END) adds, below the per-record tests, the same oracle over the record the tracker
+ * SERVES, carried through every path a GM takes (loader, board, Elite / Weak / scale, reload, saved
+ * encounter, export → import, builder), with a mutation proof that the oracle sees each loss a path
+ * could cause.
+ *
+ * Round 3 (END TO END vs the page, the SURFACE the GM reads) adds: the combat panel (CombatantDetail,
+ * the only place the board shows a bestiary stat block: it hides the stat block's HP line for a
+ * creature and prints HP as a bar plus the first pool's note), opening by name (prose links, random
+ * encounters), the portable encounter file (export → import), Edit → Save over the homebrew store
+ * (TextConverter: toStatBlock → saveCustomCreature → a reload of the list), and the TextConverter's
+ * text pane (creatureToText → Parse). It also checks that no HP pool label prints more often than the
+ * page prints it on its HP line.
  */
 
-type Sample = { id: string; class: string; kind: 'creature' | 'hazard'; record: Record<string, unknown> }
+type Sample = { id: string; class: string; kind: 'creature' | 'hazard'; twinOf?: string; record: Record<string, unknown> }
 const SAMPLES = (fixture as unknown as { samples: Sample[] }).samples
 
 // ── the page side ─────────────────────────────────────────────────────────────
@@ -100,7 +120,15 @@ const CLAUSES = new Set([
 ])
 const DEF_COMPONENT = /\s(?:HP|AC|Hardness|BT|Fort|Fortitude|Ref|Reflex|Will)$/
 const RANK = /^(?:cantrips?|constant|\d+(?:st|nd|rd|th))\b/i
-const SPELL_BLOCK = /(?:Spells?|Cantrips|Hexes)$/
+// A spell block's bold label; a page may print its pool inside the bold ("**Champion Devotion Spells
+// 2 Focus Points,**", Einherji).
+const SPELL_BLOCK = /(?:Spells?|Cantrips|Hexes)(?:\s+\d+\s+Focus Points?)?$/
+/** A spell block's label is followed by its DC, attack or pool; "**Release Spell** <reaction> Trigger…"
+ *  (Glyph of Warding) is an ability whose name merely ends in "Spell". */
+const isSpellBlock = (b: Bold, body: string) => SPELL_BLOCK.test(b.label)
+  && (/Focus Points?$/i.test(b.label) || /^\s*,?\s*(?:DC\s*\d|attack\b|\(?\d+\s+Focus)/i.test(body.slice(b.end, b.end + 40)))
+/** A bold HP label: "HP", a component's "Joint HP", or one with its qualifier inside the bold ("HP (per mannequin)"). */
+const HP_LABEL = /(?:^|\s)HP(?:\s*\([^)]*\))?$/
 
 /** Every bold label with its position; lineStart when it opens a line (or follows <br />, a list dash or a closed list). */
 interface Bold { label: string; at: number; end: number; lineStart: boolean }
@@ -130,6 +158,9 @@ interface PageFacts {
   languages: string | null
   hpPools: number[]
   hpLabels: string[]
+  /** The page's HP text: from its first HP label to the end of that row ("HP 90 (body, head regrowth),
+   *  regeneration hydra HP (head) 15"). How often a pool label may print. */
+  hpText: string
   speeds: string[]
   hardness: number[]
   acValue: number | null
@@ -137,6 +168,10 @@ interface PageFacts {
   recall: number[] | null
   strikes: string[]
   constants: Array<{ label: string; spells: string[] }>
+  /** Every spell the page lists under a "Cantrips (Nth)" rank: at will, never a slot of rank N. */
+  cantrips: string[]
+  /** The spell blocks' own names, as the page prints them ("Champion Devotion Spells"). */
+  spellBlocks: string[]
   focus: Array<{ block: string; points: number }>
   /** The opening words of each ability's own text (traits and cost dropped). */
   abilityOpenings: Array<{ name: string; words: string }>
@@ -192,8 +227,8 @@ function pageFacts(md: string, hazard: boolean, name: string): PageFacts {
     const l = b.label
     const lc = l.toLowerCase()
     if (!/^[A-Z]/.test(l)) continue
-    if (STAT_LABELS.has(lc) || CLAUSES.has(lc) || /^stage \d/.test(lc)) continue
-    if (DEF_COMPONENT.test(l) || RANK.test(l) || SPELL_BLOCK.test(l)) continue
+    if (STAT_LABELS.has(lc) || STAT_LABELS.has(abilityName(l).toLowerCase()) || CLAUSES.has(lc) || /^stage \d/.test(lc)) continue
+    if (DEF_COMPONENT.test(l) || RANK.test(l) || isSpellBlock(b, body)) continue
     if (/^Recall Knowledge/.test(l)) continue
     // "**Rituals** DC 36" is the rituals block; "**Green Rituals** A green man…" is an ability.
     if (/Rituals$/.test(l) && /^\s*DC\s*\d/.test(body.slice(b.end, b.end + 12))) continue
@@ -214,7 +249,7 @@ function pageFacts(md: string, hazard: boolean, name: string): PageFacts {
     const m = body.slice(b.end, b.end + 80).match(/^\s*(?:\([^)]*\)\s*)?[+]?(\d+)/)
     return m ? parseInt(m[1], 10) : null
   }
-  const hpPools = bs.filter(b => /(?:^|\s)HP$/.test(b.label)).map(numAfter).filter((n): n is number => n != null)
+  const hpPools = bs.filter(b => HP_LABEL.test(b.label)).map(numAfter).filter((n): n is number => n != null)
   // A further pool the page prints UNBOLDED after a break: "<br /> HP (head) 60" (Orochi),
   // "<br /> HP 20 (tentacle)" (Trighoul).
   const unboldedPoolLabels: string[] = []
@@ -224,11 +259,20 @@ function pageFacts(md: string, hazard: boolean, name: string): PageFacts {
   }
   // A pool's own label: a component ("**Joint HP** 64") or a qualifier ("**HP** (head) 15").
   const hpLabels: string[] = [...unboldedPoolLabels]
-  for (const b of bs.filter(x => /(?:^|\s)HP$/.test(x.label))) {
+  for (const b of bs.filter(x => HP_LABEL.test(x.label))) {
     const comp = b.label.match(/^(.+)\sHP$/)
     if (comp) { hpLabels.push(comp[1]); continue }
+    const inBold = b.label.match(/HP\s*\(([^)]*)\)$/)
+    if (inBold) { hpLabels.push(plain(inBold[1])); continue }
     const q = body.slice(b.end, b.end + 60).match(/^\s*\(([^)]*)\)\s*\d/)
     if (q) hpLabels.push(plain(q[1]))
+  }
+  const firstHp = bs.find(x => HP_LABEL.test(x.label))
+  let hpText = ''
+  if (firstHp) {
+    const rest = body.slice(firstHp.at)
+    const stop = rest.search(/\n\s*\n|<\/row>|\n---|\n\s*\*\*(?:Immunities|Resistances|Weaknesses)\b/)
+    hpText = plain(stop >= 0 ? rest.slice(0, stop) : rest)
   }
   const speeds = hazard
     ? bs.filter(b => b.label === 'Speed').map(b => plain(body.slice(b.end).split(/<br\s*\/?>|\n|\*\*/)[0])).filter(Boolean)
@@ -260,6 +304,13 @@ function pageFacts(md: string, hazard: boolean, name: string): PageFacts {
   const strikes = hazard ? strikeLabels.map(b => strikeNameAfter(body, b.end)) : []
 
   const constants: PageFacts['constants'] = []
+  const cantrips: PageFacts['cantrips'] = []
+  for (const b of bs.filter(x => /^Cantrips\b/.test(x.label))) {
+    const rest = body.slice(b.end)
+    const stop = rest.search(/\n\s*-?\s*\*\*|\n\s*\n\s*\*\*|<\/column>/)
+    const seg = stop >= 0 ? rest.slice(0, stop) : rest
+    for (const m of seg.matchAll(/\[([^\]]+)\]\(\/Spells/g)) cantrips.push(plain(m[1]))
+  }
   for (const b of bs.filter(x => /^Constant\b/.test(x.label))) {
     const rest = body.slice(b.end)
     const stop = rest.search(/\n\s*-?\s*\*\*|\n\s*\n\s*\*\*|<\/column>/)
@@ -269,10 +320,12 @@ function pageFacts(md: string, hazard: boolean, name: string): PageFacts {
   }
 
   const focus: PageFacts['focus'] = []
-  for (const b of bs.filter(x => SPELL_BLOCK.test(x.label) && !RANK.test(x.label))) {
+  const spellBlocks = bs.filter(x => x.lineStart && isSpellBlock(x, body) && !RANK.test(x.label))
+    .map(x => x.label.replace(/\s+\d+\s+Focus Points?$/i, ''))
+  for (const b of bs.filter(x => isSpellBlock(x, body) && !RANK.test(x.label))) {
     const line = body.slice(b.end).split('\n')[0]
-    const m = plain(line).match(/(\d+)\s+Focus Points?/i)
-    if (m) focus.push({ block: b.label, points: parseInt(m[1], 10) })
+    const m = `${b.label} ${plain(line)}`.match(/(\d+)\s+Focus Points?/i)
+    if (m) focus.push({ block: b.label.replace(/\s+\d+\s+Focus Points?$/i, ''), points: parseInt(m[1], 10) })
   }
 
   const disable = hazard ? sectionText(body, bs.find(b => b.label === 'Disable')) : null
@@ -285,7 +338,7 @@ function pageFacts(md: string, hazard: boolean, name: string): PageFacts {
     flavor = plain(stop >= 0 ? after.slice(0, stop) : after) || null
   }
 
-  return { abilities, ac, hp, firstStrike, languages, hpPools, hpLabels, speeds, hardness, acValue, saves, recall, strikes, constants, focus, abilityOpenings, disable, reset, flavor }
+  return { abilities, ac, hp, firstStrike, languages, hpPools, hpLabels, hpText, speeds, hardness, acValue, saves, recall, strikes, constants, cantrips, spellBlocks, focus, abilityOpenings, disable, reset, flavor }
 }
 
 // ── the rendered side ─────────────────────────────────────────────────────────
@@ -345,16 +398,54 @@ const defBoxValue = (html: string, label: string): string | null => {
   const m = html.match(new RegExp(`<div class="def-box-label">${label}</div><div class="def-box-val">([\\s\\S]*?)</div>`))
   return m ? decode(m[1].replace(/<[^>]+>/g, '')).trim() : null
 }
+/** The combat panel's HP bar maximum ("90 / 90" → "90"), or '' when the panel draws no bar. */
+function panelHpMax(html: string): string {
+  const i = html.indexOf('flex-shrink:0">HP</span>')
+  if (i < 0) return ''
+  const seg = decode(html.slice(i, html.indexOf('</span></span>', i)).replace(/<[^>]+>/g, ' '))
+  return seg.match(/\/\s*(\d+)/)?.[1] ?? ''
+}
+/** The note the combat panel prints under its HP bar (defenses.hpNote), or ''. */
+function panelHpNote(html: string): string {
+  const m = html.match(/<div style="font-size:11px;color:var\(--text-muted\);margin-top:2px">([\s\S]*?)<\/div>/)
+  return m ? decode(m[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim() : ''
+}
+/** How often `word` appears in `text` as whole words, case and punctuation folded. */
+function wordCount(text: string, word: string): number {
+  const w = norm(word)
+  if (!w) return 0
+  const esc = w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return (norm(text).match(new RegExp(`(?<![a-z0-9])${esc}(?![a-z0-9])`, 'g')) ?? []).length
+}
 
 // ── the comparison ───────────────────────────────────────────────────────────
 
-interface Failure { id: string; name: string; heading: string; expected: unknown; rendered: unknown }
+interface Failure { id: string; name: string; path: string; heading: string; expected: unknown; rendered: unknown }
 const failures: Failure[] = []
 let assertions = 0
 
 /*
- * Accepted 'order' residues: a check that fails because the renderer's fixed layout cannot follow
- * this page's order, settled by the orchestrator (decision D5). Each entry names the record, the
+ * How the record reached the stat block. 'base' is the fixture record through the adapter. The
+ * end-to-end paths (below) take the record the tracker SERVES and carry it the way a GM does: the
+ * real loader, the board, a reload, a saved encounter, export → import, the builder, Elite / Weak /
+ * a level scale. An adjusted path (Elite, Weak, scaled) moves numbers on purpose, so it skips the
+ * printed-value checks (AC, saves, HP), compares prose with its digits folded, and expects every
+ * printed Recall Knowledge DC moved by the level-DC table's difference (decision D3).
+ */
+/** `surface: 'panel'` draws the combatant the way the board does (CombatantDetail), not the bare StatBlock. */
+interface Mode { path: string; adjustedLevel?: number; count?: boolean; surface?: 'panel' }
+const BASE: Mode = { path: 'base' }
+/** The DC-by-level table (GM Core), copied here so the expected shift does not come from the code under test. */
+const DC_BY_LEVEL: Record<number, number> = {
+  [-1]: 13, 0: 14, 1: 15, 2: 16, 3: 18, 4: 19, 5: 20, 6: 22, 7: 23, 8: 24, 9: 26, 10: 27, 11: 28, 12: 30,
+  13: 31, 14: 32, 15: 34, 16: 35, 17: 36, 18: 38, 19: 39, 20: 40, 21: 42, 22: 44, 23: 46, 24: 48, 25: 50,
+  26: 52, 27: 54, 28: 56, 29: 58, 30: 60,
+}
+
+/*
+ * Accepted residues: a check that fails because the renderer's fixed layout cannot follow this
+ * page's order (decision D5), or a defect the orchestrator left out of this lane (D9, listed per
+ * record under D14). Each entry names the record, the
  * exact heading and the page order it exempts, quoted. An entry whose check no longer fails is
  * stale and fails the "allow-list is live" test below, so the list can only shrink.
  */
@@ -364,25 +455,65 @@ const ALLOW: Array<{ id: string; heading: string; premise: string }> = [
     heading: 'ability "Earth Vulnerability" vs AC',
     premise: 'D5: the page prints "**Disable** DC 38 Arcana … **Earth Vulnerability** The Elemental Plane of Air is opposed … <column> **AC** 35, **Fort** +30" — a hazard ability BEFORE the defences; the tracker draws a hazard\'s abilities after its Defense strip.',
   },
+  // D9 / D14 residue, not this lane's work: a component's own Hardness beyond the first (the tracker
+  // holds one defenses.hardness and draws the first component's), and an "N action(s)" count inside
+  // a Routine sentence, which the shared glyph pass (ActionGlyph) turns into an action glyph.
+  ...([
+    ['hazard-13', 16, '**Hammer Hardness** 22  **Hammer HP** 88 (44); **Joint Hardness** 16, **Joint HP** 64 (BT 32)'],
+    ['hazard-472', 16, '**Hammer Hardness** 22  **Hamer HP** 88 (BT 44); **Joint Hardness** 16; **Joint HP** 64 (BT 32)'],
+    ['hazard-21', 8, '**Trapdoor Hardness** 15  **Trapdoor HP** 60 (BT 30); **Spout Hardness** 8, **Spout HP** 32 (BT 16)'],
+    ['hazard-489', 8, '**Trapdoor Hardness** 15  **Trapdoor HP** 60 (BT 30); **Spout Hardness** 8; **Spout** HP 32 (BT 16)'],
+    ['hazard-23', 5, '**Pillar Hardness** 12  **Pillar HP** 48 (BT 24); **Panel Hardness** 5, **Panel HP** 20 (BT 10)'],
+    ['hazard-494', 5, '**Pillar Hardness** 12  **Pillar HP** 48 (BT 24); **Panel Hardness** 5; **Panel HP** 20 (BT 10)'],
+  ] as const).map(([id, n, quote]) => ({
+    id, heading: `Hardness ${n} drawn`,
+    premise: `D9: the page prints a second component's own Hardness, "${quote}"; the tracker draws only the first component's.`,
+  })),
+  ...([
+    ['hazard-21', '1 action', '**Routine** (4 actions) The trap loses 1 action each turn for each disabled water spout.'],
+    ['hazard-489', '1 action', '**Routine** (4 actions) The trap loses 1 action each turn for each disabled water spout.'],
+    ['hazard-72', '1 action', '**Routine** (4 actions) The lathe attempts four sharpened fragment attacks … The trap loses 1 action each turn as its springs wind down'],
+    ['hazard-774', '1 action', '**Routine** (6 actions) Each Rune Sentry grants the hazard 1 action; a Rune Sentry that’s plummeted …'],
+    ['hazard-130', '1 action', '**Routine** (1 action) The hazard fires one bolt at every creature in a 30-foot-by-30-foot area in front of the gate as 1 action.'],
+    ['hazard-428', '3 actions', '**Routine** (3 actions) Ghostly arms flail about … Each round, the haunt uses 3 actions to attempt to grapple a PC'],
+    ['hazard-654', '3 actions', '**Routine** (3 actions) Ghostly arms flail about … Each round, the haunt uses 3 actions to attempt to grapple a PC'],
+    ['hazard-47', '3 actions', '**Routine** (3 actions) The tornado of blades uses 3 actions to move, traveling up to 30 feet'],
+    ['hazard-491', '3 actions', '**Routine** (3 actions) The tornado of blades uses 3 actions to move, traveling up to 30 feet'],
+  ] as const).map(([id, ph, quote]) => ({
+    id, heading: `Routine prose "${ph}"`,
+    premise: `D9: the page prints "${ph}" as words inside the Routine sentence, "${quote}"; the glyph pass draws it as an action glyph.`,
+  })),
 ]
 const allowHits = new Set<string>()
 const allowKey = (id: string, heading: string) => `${id}\u0000${heading}`
 
+const parseSample = (s: Sample): Creature => s.kind === 'hazard'
+  ? parseHazard(s.record as unknown as RawHazard)
+  : parseCreature(s.record as unknown as RawCreature)
+
 function compare(s: Sample): Failure[] {
+  return compareWith(s, combatantOf(parseSample(s)), BASE)
+}
+
+/** The page oracle: `cb` rendered by the real StatBlock, against the page of the fixture record `s`. */
+function compareWith(s: Sample, cb: Combatant, mode: Mode): Failure[] {
   const out: Failure[] = []
   const raw = s.record
   const name = String(raw.name)
   const md = String((raw._aon as { markdown: string }).markdown)
   const hazard = s.kind === 'hazard'
-  const creature = hazard ? parseHazard(raw as unknown as RawHazard) : parseCreature(raw as unknown as RawCreature)
-  const html = renderToStaticMarkup(<StatBlock combatant={combatantOf(creature)} />)
+  const panel = mode.surface === 'panel'
+  const html = renderToStaticMarkup(panel ? <CombatantDetail combatant={cb} /> : <StatBlock combatant={cb} />)
   const r = rendered(html)
   const p = pageFacts(md, hazard, name)
+  const adjusted = mode.adjustedLevel !== undefined
+  /** Prose as compared on an adjusted path: its numbers (DCs, damage) are allowed to move. */
+  const fold = (t: string) => (adjusted ? t.replace(/\d+/g, '#') : t)
   const check = (ok: boolean, heading: string, expected: unknown, got: unknown) => {
-    assertions++
+    if (mode.count !== false) assertions++
     if (ok) return
     if (ALLOW.some(a => a.id === s.id && a.heading === heading)) { allowHits.add(allowKey(s.id, heading)); return }
-    out.push({ id: s.id, name, heading, expected, rendered: got })
+    out.push({ id: s.id, name, path: mode.path, heading, expected, rendered: got })
   }
 
   // Abilities: drawn as headings, in page order, on the page's side of AC / HP / first strike.
@@ -420,12 +551,24 @@ function compare(s: Sample): Failure[] {
   }
 
   // HP pools: every number, and every pool's own label ("Joint HP 64", "HP (head) 15").
-  const hpRow = rowText(html, '<span class="stat-label">HP</span>') ?? ''
+  // On the panel the HP a GM reads is the bar's maximum, the note under the bar and (a hazard's) the
+  // stat block's own HP line.
+  const hpLine = rowText(html, '<span class="stat-label">HP</span>') ?? ''
+  const hpRow = panel ? [panelHpMax(html), panelHpNote(html), hpLine].filter(Boolean).join(' ; ') : hpLine
   const hpNums = (hpRow.match(/\d+/g) ?? []).map(Number)
-  for (const n of p.hpPools) check(hpNums.includes(n), `HP pool ${n}`, n, hpRow || '(no HP line)')
+  if (!adjusted) for (const n of p.hpPools) check(hpNums.includes(n), `HP pool ${n}`, n, hpRow || '(no HP line)')
+  // Every pool stays on the line when Elite / Weak / a scale moves its numbers.
+  else check(hpNums.length >= p.hpPools.length, 'HP pool count', `${p.hpPools.length} pool number(s)`, hpRow || '(no HP line)')
   for (const q of p.hpLabels) check(norm(hpRow).includes(norm(q)), `HP pool label "${q}"`, q, hpRow || '(no HP line)')
   // The page prints a pool's note in one pair of brackets ("100 (body)"); never "((body))".
   check(!/\(\s*\(/.test(hpRow), 'HP line doubled brackets', 'one pair of brackets per pool note', hpRow)
+  // A pool's label prints no more often than the page's HP text prints it: "Trapdoor" once, not under
+  // the panel's HP bar AND on the HP line.
+  for (const q of new Set(p.hpLabels)) {
+    const want = wordCount(p.hpText, q)
+    const got = wordCount(hpRow, q)
+    check(got <= Math.max(1, want), `HP pool label "${q}" printed once`, `${Math.max(1, want)}× (page: "${p.hpText}")`, `${got}× in "${hpRow}"`)
+  }
 
   // A hazard that moves prints its Speed ("Speed 10 feet", Spinning Blade Pillar).
   if (hazard) {
@@ -445,9 +588,9 @@ function compare(s: Sample): Failure[] {
   // Each ability's own text is drawn once: neither lost nor printed twice (once in a hazard's
   // Description or Disable prose and again as an ability entry).
   {
-    const vis = norm(r.text.replace(/⟦[^⟧]*⟧/g, ' '))
+    const vis = fold(norm(r.text.replace(/⟦[^⟧]*⟧/g, ' ')))
     for (const a of p.abilityOpenings) {
-      const w = norm(a.words)
+      const w = fold(norm(a.words))
       const n = w ? vis.split(w).length - 1 : 1
       check(n === 1, `ability "${a.name}" text drawn once`, `1× "${a.words}"`, `${n}×`)
     }
@@ -455,10 +598,10 @@ function compare(s: Sample): Failure[] {
 
   // A hazard's Description, Disable and Reset read as the page prints them (nothing cut off).
   if (hazard) {
-    const vis = norm(r.text.replace(/⟦[^⟧]*⟧/g, ' '))
+    const vis = fold(norm(r.text.replace(/⟦[^⟧]*⟧/g, ' ')))
     for (const [label, want] of [['Description', p.flavor], ['Disable', p.disable], ['Reset', p.reset]] as const) {
       if (!want) continue
-      check(vis.includes(norm(want)), `hazard ${label} text`, want, (r.text.match(new RegExp(`${label}[^⟦]{0,260}`)) ?? ['(none)'])[0])
+      check(vis.includes(fold(norm(want))), `hazard ${label} text`, want, (r.text.match(new RegExp(`${label}[^⟦]{0,260}`)) ?? ['(none)'])[0])
     }
   }
 
@@ -466,12 +609,12 @@ function compare(s: Sample): Failure[] {
     // Hazard AC iff printed, with its value; each save iff printed, with its value.
     const acR = defBoxValue(html, 'AC')
     check((acR != null) === (p.acValue != null), 'hazard AC', p.acValue ?? 'none', acR ?? 'none')
-    if (acR != null && p.acValue != null) check(parseInt(acR, 10) === p.acValue, 'hazard AC value', p.acValue, acR)
+    if (!adjusted && acR != null && p.acValue != null) check(parseInt(acR, 10) === p.acValue, 'hazard AC value', p.acValue, acR)
     for (const [k, label] of [['fort', 'Fort'], ['ref', 'Ref'], ['will', 'Will']] as const) {
       const v = defBoxValue(html, label)
       const pv = p.saves[k]
       check((v != null) === (pv != null), `hazard ${label}`, pv ?? 'none', v ?? 'none')
-      if (v != null && pv != null) check(parseInt(v.replace(/[−–]/, '-'), 10) === pv, `hazard ${label} value`, pv, v)
+      if (!adjusted && v != null && pv != null) check(parseInt(v.replace(/[−–]/, '-'), 10) === pv, `hazard ${label} value`, pv, v)
     }
     // One strike per Melee/Ranged line, by name.
     const got = r.strikes.map(x => norm(x.name)).sort()
@@ -483,7 +626,24 @@ function compare(s: Sample): Failure[] {
     check((rk != null) === (p.recall != null), 'Recall Knowledge', p.recall ? `DCs ${p.recall.join(', ')}` : 'none', rk ?? 'none')
     if (rk != null && p.recall) {
       const dcs = [...rk.matchAll(/DC\s*(\d+)/g)].map(m => parseInt(m[1], 10))
-      for (const dc of new Set(p.recall)) check(dcs.includes(dc), `Recall Knowledge DC ${dc}`, dc, rk)
+      // Elite / Weak / scaled: every printed DC moves by DC(adjusted level) − DC(printed level) (D3).
+      const lv = Number(raw.level)
+      const to = mode.adjustedLevel
+      if (adjusted && DC_BY_LEVEL[to!] === undefined) {
+        // A level the table does not print (Weak on a level −1 creature reads −2). No number to expect,
+        // but the direction is certain: a weaker creature is never HARDER to identify, a stronger one
+        // never easier. The rendered line is the page's line with its DCs moved, in the page's order.
+        p.recall.forEach((dc, i) => {
+          const got = dcs[i]
+          check(got !== undefined && (to! < lv ? got <= dc : got >= dc), `Recall Knowledge DC ${dc} at level ${to}`,
+            to! < lv ? `≤ ${dc} (level ${lv} → ${to})` : `≥ ${dc} (level ${lv} → ${to})`, rk)
+        })
+      } else {
+        const delta = adjusted ? DC_BY_LEVEL[to!] - DC_BY_LEVEL[lv] : 0
+        for (const dc of new Set(p.recall)) {
+          check(dcs.includes(dc + delta), `Recall Knowledge DC ${dc}${delta ? ` ${delta > 0 ? '+' : ''}${delta}` : ''}`, dc + delta, rk)
+        }
+      }
     }
   }
 
@@ -495,6 +655,16 @@ function compare(s: Sample): Failure[] {
     const next = html.indexOf('<div class="spell-rank"', i)
     const seg = norm(html.slice(i, next < 0 ? undefined : next).replace(/<[^>]+>/g, ' '))
     for (const sp of c.spells) check(seg.includes(norm(sp)), `constant spell "${sp}"`, sp, seg)
+  }
+  // Cantrips under a Cantrips rank (at will), not under a numbered rank.
+  if (p.cantrips.length) {
+    const segs: string[] = []
+    for (const m of html.matchAll(/<span class="spell-rank-label">Cantrips\b/g)) {
+      const next = html.indexOf('<div class="spell-rank"', m.index!)
+      segs.push(norm(html.slice(m.index!, next < 0 ? undefined : next).replace(/<[^>]+>/g, ' ')))
+    }
+    const all = segs.join(' | ')
+    for (const sp of new Set(p.cantrips)) check(all.includes(norm(sp)), `cantrip "${sp}"`, `${sp} under a Cantrips rank`, segs.length ? all : 'no Cantrips rank drawn')
   }
 
   // The page shows no markup: a cost token, a link or bold marker left in the rendered text is a
@@ -535,6 +705,10 @@ function compare(s: Sample): Failure[] {
     }
   }
 
+  // Every spell block is drawn under the name the page prints ("Champion Devotion Spells").
+  for (const b of p.spellBlocks) {
+    check(html.includes(`>${esc(b)}<`), `spell block "${b}"`, b, (html.match(/class="spell-block-name"[^>]*>[^<]*/g) ?? []).join(' | ') || [...r.text.matchAll(/\b[\w ]{0,30}Spells\b/g)].map(m => m[0].trim()).join(' | '))
+  }
   // A spell block printing "N Focus Points" draws a pool of N pips in its own heading row.
   for (const f of p.focus) {
     const at = html.indexOf(`>${esc(f.block)}<`)
@@ -547,7 +721,7 @@ function compare(s: Sample): Failure[] {
   // Debugging aid: CORPUS_RENDER_DUMP=<id,id> CORPUS_RENDER_DUMP_FILE=<path> writes the rendered text
   // and the page facts of those records to that file.
   if (process.env.CORPUS_RENDER_DUMP_FILE && (process.env.CORPUS_RENDER_DUMP ?? '').split(',').includes(s.id)) {
-    appendFileSync(process.env.CORPUS_RENDER_DUMP_FILE, `DUMP ${s.id}\n${r.text}\n${JSON.stringify(p, null, 1)}\n${process.env.CORPUS_RENDER_DUMP_HTML ? html + '\n' : ''}`)
+    appendFileSync(process.env.CORPUS_RENDER_DUMP_FILE, `DUMP ${s.id} [${mode.path}]\n${r.text}\n${JSON.stringify(p, null, 1)}\n${process.env.CORPUS_RENDER_DUMP_HTML ? html + '\n' : ''}`)
   }
   return out
 }
@@ -577,10 +751,441 @@ describe('tracker stat block vs the Archives page (verified corpus records)', ()
       expect(allowHits.has(allowKey(a.id, a.heading)), `${a.id} ${a.heading} no longer fails`).toBe(true)
     }
   })
+})
+
+// ── end to end: the record the tracker SERVES, carried the way a GM carries it ─────────────
+/*
+ * The adapter-level check above reads the fixture record. A GM never holds that object: they open an
+ * index row (the real loader, against the lane's public/data, a byte copy of the corpus), put it on the
+ * board, Elite / Weak / scale it, reload the page, save and load an encounter, export and import it as
+ * homebrew, and open it in the builder. Each of those hands StatBlock a different object, and every one
+ * of them is drawn against the same PAGE here.
+ *
+ * Only a SERVED sample walks the paths: one whose own printing has an index row. 26 of the round-1
+ * picks are legacy printings the index never offers (R12: the newest printing wins); the fixture
+ * carries, for each, the printing the tracker serves in its place ("twinOf"), and that twin walks the
+ * paths instead. A path test fails on what the path LOSES: a page check that passes for the fixture
+ * record and fails after the path. A check that already fails for the fixture record is reported once,
+ * by the base test above, not again on every path.
+ */
+const ROOT = join(__dirname, '..')
+const DATA = join(ROOT, 'public/data')
+type Row = { name: string; level: number; source: string; file: string; isHazard?: boolean }
+const INDEX: Row[] = JSON.parse(readFileSync(join(DATA, 'index.json'), 'utf8'))
+const noPage = (s: unknown) => String(s ?? '').replace(/\s*(?:pg\.|p\.)\s*\d+.*$/i, '').trim()
+/** The index row naming this very printing (name, kind, level and source), if the tracker serves it. */
+const rowOf = (s: Sample): Row | undefined => INDEX.find(r => r.name === s.record.name
+  && !!r.isHazard === (s.kind === 'hazard') && r.level === s.record.level && noPage(r.source) === noPage(s.record.source))
+const SERVED = SAMPLES.filter(s => rowOf(s))
+const LEGACY = SAMPLES.filter(s => !rowOf(s))
+const aonIdOf = (c: Creature | null | undefined) => ((c?.raw as unknown as { _aon?: { id?: string } } | undefined)?._aon?.id) ?? null
+
+const PATHS = [
+  'loader', 'board', 'board elite', 'board weak', 'board scaled +2',
+  'reload', 'reload elite', 'reload weak', 'reload scaled +2', 'saved encounter', 'export → import', 'builder',
+  // Round 3: the surface the GM reads, and the remaining ways a record reaches it.
+  'panel', 'panel elite', 'panel reload', 'by name', 'encounter file', 'saved encounter elite',
+  'encounter file elite', 'edit → save',
+] as const
+type PathName = typeof PATHS[number]
+interface Walked { cb?: Combatant; adjustedLevel?: number; problem?: string; surface?: 'panel' }
+const walked = new Map<string, Walked>()
+const wkey = (id: string, path: PathName) => `${id}\u0000${path}`
+const e2eNumbers = { combatSnapshotChars: 0, encounterChars: 0, importedEncounterChars: 0 }
+
+const baseHeadings = new Map<string, Set<string>>()
+function headingsAtBase(s: Sample): Set<string> {
+  if (!baseHeadings.has(s.id)) {
+    baseHeadings.set(s.id, new Set(compareWith(s, combatantOf(parseSample(s)), { ...BASE, count: false }).map(f => f.heading)))
+  }
+  return baseHeadings.get(s.id)!
+}
+
+describe('end to end: the served record, through every path a GM takes, vs its Archives page', () => {
+  beforeAll(async () => {
+    vi.stubGlobal('fetch', async (url: string) => {
+      const p = join(DATA, decodeURIComponent(String(url).replace(/^\/data\//, '')))
+      if (!existsSync(p)) return { ok: false, status: 404, json: async () => ({}) }
+      const body = readFileSync(p, 'utf8')
+      return { ok: true, status: 200, json: async () => JSON.parse(body) }
+    })
+    try { localStorage.clear() } catch { /* jsdom always has it */ }
+
+    // 1. The real loader, by the index row.
+    const ds = await import('../tracker/src/data/dataStore')
+    const loaded = new Map<string, Creature>()
+    for (const s of SERVED) {
+      try {
+        const c = await ds.loadCreature(rowOf(s)! as never)
+        loaded.set(s.id, c)
+        walked.set(wkey(s.id, 'loader'), aonIdOf(c) === s.id
+          ? { cb: combatantOf(c) }
+          : { cb: combatantOf(c), problem: `the row opens ${aonIdOf(c)}, not ${s.id}` })
+      } catch (e) {
+        walked.set(wkey(s.id, 'loader'), { problem: `loadCreature threw: ${(e as Error).message}` })
+      }
+    }
+
+    // 2. The board: added, saved as an encounter, then Elite / Weak / scaled copies beside it.
+    const store = await import('../tracker/src/store/combatStore')
+    const st = () => store.useCombatStore.getState()
+    st().clearAllCombatants()
+    const ids = new Map<string, string>()
+    const add = (s: Sample, tag: PathName) => {
+      st().addCombatant(loaded.get(s.id)!)
+      const all = st().combatants
+      ids.set(wkey(s.id, tag), all[all.length - 1].id)
+      return all[all.length - 1].id
+    }
+    const live = SERVED.filter(s => loaded.has(s.id))
+    for (const s of live) add(s, 'board')
+    st().saveEncounter('corpus-e2e')
+    const level = (s: Sample) => Number(s.record.level)
+    const adjustedOf: Partial<Record<PathName, (s: Sample) => number>> = {
+      'board elite': s => level(s) + 1, 'board weak': s => level(s) - 1, 'board scaled +2': s => level(s) + 2,
+    }
+    for (const s of live) st().setEliteWeak(add(s, 'board elite'), 'elite')
+    for (const s of live) st().setEliteWeak(add(s, 'board weak'), 'weak')
+    for (const s of live) st().setScaledLevel(add(s, 'board scaled +2'), level(s) + 2)
+    const onBoard = (id: string) => st().combatants.find(c => c.id === id)
+    for (const s of live) {
+      for (const tag of ['board', 'board elite', 'board weak', 'board scaled +2'] as const) {
+        const cb = onBoard(ids.get(wkey(s.id, tag))!)
+        walked.set(wkey(s.id, tag), cb ? { cb, adjustedLevel: adjustedOf[tag]?.(s) } : { problem: 'not on the board' })
+      }
+      // The combat panel: what the GM reads when the combatant is selected (CombatantDetail).
+      for (const [from, to] of [['board', 'panel'], ['board elite', 'panel elite']] as const) {
+        const w = walked.get(wkey(s.id, from))!
+        walked.set(wkey(s.id, to), { ...w, surface: 'panel' })
+      }
+    }
+
+    // 1b. By name: a creature mention in prose, a random-encounter pick (loadCreatureByName).
+    for (const s of SERVED) {
+      const c = await ds.loadCreatureByName(String(s.record.name))
+      walked.set(wkey(s.id, 'by name'), !c ? { problem: `"${String(s.record.name)}" opens nothing` }
+        : aonIdOf(c) === s.id ? { cb: combatantOf(c) }
+        : { cb: combatantOf(c), problem: `"${String(s.record.name)}" opens ${aonIdOf(c)}, not ${s.id}` })
+    }
+    store.flushPersist()
+    e2eNumbers.combatSnapshotChars = (localStorage.getItem('pf2e-current-combat') ?? '').length
+    e2eNumbers.encounterChars = (localStorage.getItem('pf2e-encounters') ?? '').length
+
+    // 3. A reload: a fresh module graph reads the persisted board back.
+    vi.resetModules()
+    const store2 = await import('../tracker/src/store/combatStore')
+    const st2 = () => store2.useCombatStore.getState()
+    const reloaded = store2.useCombatStore.getState().combatants
+    const pairs = [['board', 'reload'], ['board elite', 'reload elite'], ['board weak', 'reload weak'], ['board scaled +2', 'reload scaled +2']] as const
+    for (const s of live) {
+      for (const [from, to] of pairs) {
+        const cb = reloaded.find(c => c.id === ids.get(wkey(s.id, from)))
+        walked.set(wkey(s.id, to), cb ? { cb, adjustedLevel: adjustedOf[from]?.(s) } : { problem: `not on the reloaded board (${reloaded.length} combatants came back)` })
+      }
+      walked.set(wkey(s.id, 'panel reload'), { ...walked.get(wkey(s.id, 'reload'))!, surface: 'panel' })
+    }
+
+    // 4. The export → import round trip, from the board's copy (the one a GM saves as homebrew).
+    const dt = await import('../tracker/src/utils/dataTransfer')
+    for (const s of live) {
+      const cb = walked.get(wkey(s.id, 'reload'))?.cb
+      if (!cb?.creature) { walked.set(wkey(s.id, 'export → import'), { problem: 'no reloaded copy to export' }); continue }
+      const r = dt.parseCreaturesFromText(JSON.stringify([cb.creature]))
+      walked.set(wkey(s.id, 'export → import'), r.ok && r.creatures[0]
+        ? { cb: combatantOf(r.creatures[0]) }
+        : { problem: `import refused it: ${r.error ?? (r.skipped ?? []).join('; ')}` })
+    }
+
+    // 5. The saved encounter, loaded on the reloaded app (same order as saved).
+    store2.useCombatStore.getState().loadEncounter('corpus-e2e', new Map())
+    const enc = store2.useCombatStore.getState().combatants
+    live.forEach((s, i) => {
+      const cb = enc[i]
+      walked.set(wkey(s.id, 'saved encounter'), cb && cb.creature?.name === s.record.name
+        ? { cb }
+        : { problem: `encounter slot ${i} holds ${cb?.creature?.name ?? 'nothing'} (${enc.length} loaded)` })
+    })
+
+    // 5b. The portable encounter file: exported (names only), imported on the reloaded app, loaded.
+    // Run before any homebrew exists, so a name resolves to the bestiary, as on a fresh install.
+    const et = await import('../tracker/src/utils/encounterTransfer')
+    const ds2 = await import('../tracker/src/data/dataStore')
+    const file = et.buildExportPayload(['corpus-e2e'])
+    for (const e of file.encounters) e.name = 'corpus-e2e-file'
+    const encChars = () => (localStorage.getItem('pf2e-encounters') ?? '').length
+    const beforeImport = encChars()
+    const imp = await et.importEncountersFromText(JSON.stringify(file))
+    e2eNumbers.importedEncounterChars = encChars() - beforeImport
+    store2.useCombatStore.getState().loadEncounter('corpus-e2e-file', new Map())
+    const fromFile = store2.useCombatStore.getState().combatants
+    live.forEach((s, i) => {
+      const cb = fromFile[i]
+      const miss = imp.missing.find(m => m.creature === s.record.name)
+      walked.set(wkey(s.id, 'encounter file'), !imp.ok ? { problem: `the file import failed: ${imp.error}` }
+        : miss ? { problem: `the import found no stat block for "${miss.creature}"` }
+        : cb && cb.creature?.name === s.record.name
+          ? (aonIdOf(cb.creature) && aonIdOf(cb.creature) !== s.id ? { cb, problem: `the file reopened ${aonIdOf(cb.creature)}, not ${s.id}` } : { cb })
+          : { problem: `file slot ${i} holds ${cb?.creature?.name ?? 'nothing'} (${fromFile.length} loaded)` })
+    })
+
+    st2().deleteSavedEncounter('corpus-e2e-file')
+
+    // 5d. Elite combatants through a saved encounter (read back from storage) and through the
+    // encounter file: a board of each served record's reloaded copy made Elite.
+    st2().clearAllCombatants()
+    for (const s of live) {
+      const c = walked.get(wkey(s.id, 'reload'))?.cb?.creature
+      if (!c) continue
+      st2().addCombatant(c)
+      const added = st2().combatants
+      st2().setEliteWeak(added[added.length - 1].id, 'elite')
+    }
+    st2().saveEncounter('corpus-e2e-elite')
+    st2().clearAllCombatants()
+    store2.invalidateEncounterCache()
+    const eliteSlot = (list: Combatant[], s: Sample, i: number, path: PathName): Walked => {
+      const cb = list[i]
+      return cb && cb.creature?.name === s.record.name && cb.isElite
+        ? { cb, adjustedLevel: level(s) + 1 }
+        : { problem: `${path} slot ${i} holds ${cb?.creature?.name ?? 'nothing'}${cb && !cb.isElite ? ' (not Elite)' : ''}` }
+    }
+    st2().loadEncounter('corpus-e2e-elite', new Map())
+    const elites = st2().combatants
+    live.forEach((s, i) => walked.set(wkey(s.id, 'saved encounter elite'), eliteSlot(elites, s, i, 'saved encounter elite')))
+    const fileElite = et.buildExportPayload(['corpus-e2e-elite'])
+    for (const e of fileElite.encounters) e.name = 'corpus-e2e-elite-file'
+    const impElite = await et.importEncountersFromText(JSON.stringify(fileElite))
+    st2().loadEncounter('corpus-e2e-elite-file', new Map())
+    const elitesFromFile = st2().combatants
+    live.forEach((s, i) => walked.set(wkey(s.id, 'encounter file elite'), impElite.ok
+      ? eliteSlot(elitesFromFile, s, i, 'encounter file elite')
+      : { problem: `the file import failed: ${impElite.error}` }))
+    st2().deleteSavedEncounter('corpus-e2e-elite-file')
+
+    // 5c. Edit → Save on the board (TextConverter on the reloaded combatant, nothing changed): the JSON
+    // pane holds the combatant's creature, Save reads it with toStatBlock and overwrites the homebrew
+    // entry with that id; the homebrew list is then read back from storage, as after a restart.
+    for (const s of live) {
+      const existing = walked.get(wkey(s.id, 'reload'))?.cb?.creature
+      if (!existing) { walked.set(wkey(s.id, 'edit → save'), { problem: 'no reloaded copy to edit' }); continue }
+      const c = ds2.toStatBlock(JSON.parse(JSON.stringify(existing, null, 2)))
+      if (!c) { walked.set(wkey(s.id, 'edit → save'), { problem: `Save refused it: ${ds2.statBlockProblem(JSON.parse(JSON.stringify(existing)))}` }); continue }
+      c.id = typeof existing.id === 'string' && existing.id ? existing.id : `corpus-${s.id}`
+      if (!ds2.saveCustomCreature(c)) { walked.set(wkey(s.id, 'edit → save'), { problem: 'saveCustomCreature refused it' }); continue }
+    }
+    ds2.reloadCustomCreatures()
+    const brews = ds2.loadCustomCreatures()
+    for (const s of live) {
+      if (walked.has(wkey(s.id, 'edit → save'))) continue
+      const id = walked.get(wkey(s.id, 'reload'))!.cb!.creature!.id
+      const c = brews.find(b => b.id === (id || `corpus-${s.id}`))
+      walked.set(wkey(s.id, 'edit → save'), c ? { cb: combatantOf(c) } : { problem: `the homebrew list read back has no entry ${id}` })
+    }
+
+    // 6. The builder, opened on the loaded record and left unchanged: what it emits is what it saves.
+    for (const s of live) {
+      let last = null as Creature | null
+      try {
+        renderDom(<StatBlockBuilder initial={loaded.get(s.id)!} onChange={c => { last = c }} />).stop()
+      } catch (e) {
+        walked.set(wkey(s.id, 'builder'), { problem: `builder threw: ${(e as Error).message}` })
+        continue
+      }
+      walked.set(wkey(s.id, 'builder'), last ? { cb: combatantOf(last) } : { problem: 'the builder emitted nothing' })
+    }
+  }, 600_000)
 
   afterAll(() => {
-    // The measurement the refute round reports: records, assertions, failures.
-    console.log(`CORPUS-RENDER records=${SAMPLES.length} assertions=${assertions} failures=${failures.length}`)
-    for (const f of failures) console.log(`CORPUS-RENDER-FAIL ${f.id} ${f.name} | ${f.heading} | expected ${JSON.stringify(f.expected)} | rendered ${JSON.stringify(f.rendered)}`)
+    vi.unstubAllGlobals()
+    try { localStorage.clear() } catch { /* nothing to clear */ }
   })
+
+  it('the selection: every legacy pick has its served twin in the fixture, and every twin is served', () => {
+    expect(SERVED.length).toBeGreaterThanOrEqual(30)
+    for (const s of LEGACY) {
+      const twin = SAMPLES.find(t => t.twinOf === s.id)
+      expect(twin, `${s.id} ${String(s.record.name)} has no served twin in the fixture`).toBeDefined()
+      expect(rowOf(twin!), `${twin!.id} (twin of ${s.id}) has no index row of its own`).toBeDefined()
+    }
+  })
+
+  it('a legacy pick\'s name opens its served twin (loadCreatureByName, D11)', async () => {
+    const ds = await import('../tracker/src/data/dataStore')
+    const wrong: string[] = []
+    for (const s of LEGACY) {
+      const twin = SAMPLES.find(t => t.twinOf === s.id)!
+      const c = await ds.loadCreatureByName(String(s.record.name))
+      if (aonIdOf(c) !== twin.id) wrong.push(`${s.id} "${String(s.record.name)}" opens ${aonIdOf(c) ?? 'nothing'}, its served printing is ${twin.id} "${String(twin.record.name)}"`)
+    }
+    expect(wrong, wrong.join('\n')).toEqual([])
+  })
+
+  /*
+   * Mutation proof for the path tests: each loss a path could cause (the field a round trip drops) is
+   * applied by hand to a served record, and the page oracle must name it. A path test that passes is
+   * then evidence the path kept the field, not that the oracle cannot see it.
+   */
+  it('the oracle sees each loss a path could cause (mutation proof)', () => {
+    const clone = (c: Creature): Creature => JSON.parse(JSON.stringify(c))
+    const factsOf = (s: Sample) => pageFacts(String((s.record._aon as { markdown: string }).markdown), s.kind === 'hazard', String(s.record.name))
+    const mutations: Array<{ what: string; pick: (s: Sample, c: Creature) => boolean; mutate: (c: Creature) => void; heading: RegExp; surface?: 'panel' }> = [
+      { what: 'the panel loses the note under its HP bar (round 3)',
+        surface: 'panel',
+        pick: (s, c) => s.kind === 'creature' && !!c.defenses.hpNote && factsOf(s).hpLabels.length > 0,
+        mutate: c => { delete c.defenses.hpNote },
+        heading: /^HP pool label "[^"]*"$/ },
+      { what: 'an HP pool label printed twice (round 3)',
+        pick: (s, c) => s.kind === 'hazard' && factsOf(s).hpLabels.some(l => norm(l) === norm(c.defenses.hpPools?.[0]?.name ?? '')),
+        mutate: c => { const p0 = c.defenses.hpPools![0]; p0.name = `${p0.name}, ${p0.name}` },
+        heading: /printed once$/ },
+      { what: 'persist slimming drops the page marker (D3)',
+        pick: (s, c) => s.kind === 'creature' && !c.recallKnowledge,
+        mutate: c => { delete c.rawMarkdown; delete c.fromArchivesPage },
+        heading: /^Recall Knowledge$/ },
+      { what: 'a round trip drops languageAbilities',
+        pick: (_s, c) => (c.languageAbilities ?? []).length > 0,
+        mutate: c => { delete c.languageAbilities },
+        heading: /^Languages$/ },
+      { what: 'a round trip drops Ability.slot',
+        pick: (_s, c) => c.abilities.some(a => a.slot === 'top'),
+        mutate: c => { for (const a of c.abilities) delete a.slot },
+        heading: /^ability ".*" vs (AC|HP|first strike)$/ },
+      { what: 'a round trip keeps only the first HP pool',
+        pick: (_s, c) => (c.defenses.hpPools ?? []).length > 1,
+        mutate: c => { c.defenses.hpPools = c.defenses.hpPools!.slice(0, 1) },
+        heading: /^HP pool (\d+|label ".*")$/ },
+      { what: 'a round trip drops a hazard\'s savesPrinted',
+        pick: (s, c) => s.kind === 'hazard' && (c.defenses.savesPrinted ?? []).length > 0 && (c.defenses.savesPrinted ?? []).length < 3,
+        mutate: c => { delete c.defenses.savesPrinted },
+        heading: /^hazard (Fort|Ref|Will)$/ },
+      { what: 'a round trip drops isConstant and the "Constant" label',
+        pick: (_s, c) => c.spellcasting.some(b => b.spellsByLevel.some(r => r.isConstant)),
+        mutate: c => { for (const b of c.spellcasting) for (const r of b.spellsByLevel) if (r.isConstant) { delete r.isConstant; r.label = `Level ${r.level}` } },
+        heading: /^spells "Constant/ },
+      { what: 'a round trip drops a hazard strike\'s page place (Attack.afterAbility)',
+        // A page that prints an ability AFTER the strike, so the default place (after every ability) differs.
+        pick: (s, c) => {
+          if (s.kind !== 'hazard' || !c.attacks.some(a => a.afterAbility !== undefined)) return false
+          const p = pageFacts(String((s.record._aon as { markdown: string }).markdown), true, String(s.record.name))
+          return p.firstStrike >= 0 && p.abilities.some(a => a.at > p.firstStrike)
+        },
+        mutate: c => { for (const a of c.attacks) delete a.afterAbility },
+        heading: /^ability ".*" vs first strike$/ },
+    ]
+    for (const m of mutations) {
+      const s = SERVED.find(x => m.pick(x, parseSample(x)))
+      expect(s, `no served sample to try "${m.what}" on`).toBeDefined()
+      const c = clone(parseSample(s!))
+      const before = compareWith(s!, combatantOf(c), { path: 'mutation', count: false, surface: m.surface }).filter(f => m.heading.test(f.heading))
+      expect(before, `${s!.id}: the unmutated record already fails ${m.heading}`).toEqual([])
+      m.mutate(c)
+      const after = compareWith(s!, combatantOf(c), { path: 'mutation', count: false, surface: m.surface }).filter(f => m.heading.test(f.heading))
+      expect(after.length, `${s!.id}: "${m.what}" went unseen`).toBeGreaterThan(0)
+    }
+  })
+
+  /*
+   * The TextConverter's text pane (round 3). Edit on a board combatant fills the text pane with
+   * creatureToText(the creature); a GM who corrects a number there presses Parse, and Save then stores
+   * what parseStatBlockText read back (id and source kept, TextConverter.handleParse). This is the one
+   * edit route that goes through text, so every page check it loses is lost to a GM who edits that way.
+   * One test for all served records: the losses are listed by check, with the records that lose each.
+   */
+  it('text edit → Parse keeps what the page prints (TextConverter text pane)', async () => {
+    const ds = await import('../tracker/src/data/dataStore')
+    const byHeading = new Map<string, string[]>()
+    let records = 0
+    for (const s of SERVED) {
+      const existing = parseSample(s)
+      const seed = ds.toStatBlock(JSON.parse(JSON.stringify(existing)))
+      const { creature } = parseStatBlockText(creatureToText(seed ?? existing))
+      const base = headingsAtBase(s)
+      const lost = creature
+        ? compareWith(s, combatantOf({ ...creature, id: existing.id, source: existing.source }), { path: 'text edit → parse' }).filter(f => !base.has(f.heading))
+        : [{ id: s.id, name: String(s.record.name), path: 'text edit → parse', heading: 'Parse read no creature', expected: 'a creature', rendered: null }]
+      if (lost.length) records++
+      for (const f of lost) {
+        const k = f.heading.replace(/"[^"]*"/g, '"…"').replace(/\b\d+\b/g, 'N')
+        byHeading.set(k, [...(byHeading.get(k) ?? []), s.id])
+      }
+      failures.push(...lost.map(f => ({ ...f, path: 'text edit → parse' })))
+    }
+    const report = [...byHeading].sort((a, b) => b[1].length - a[1].length)
+      .map(([k, ids]) => `${k}: ${new Set(ids).size} record(s) — ${[...new Set(ids)].slice(0, 8).join(', ')}`)
+    expect(report, `${records} of ${SERVED.length} served records lose a page check through text edit → Parse:\n${report.join('\n')}`).toEqual([])
+  })
+
+  /*
+   * The creature card (round 3): global search lists every index row, hazards included, and a creature
+   * mention in prose or a random-encounter pick opens the same card (FloatingWindow CreatureCard, via
+   * PopupPreview). It is a compact summary by design, so only what it does print is held to the page:
+   * a hazard's AC and each save appear iff the page prints them.
+   */
+  it('the creature card (global search, prose link) shows a hazard\'s AC and saves only as printed', async () => {
+    const { PopupPreview } = await import('../tracker/src/components/FloatingWindow')
+    const { act } = await import('react')
+    const wrong: string[] = []
+    let cards = 0
+    for (const s of SERVED.filter(x => x.kind === 'hazard')) {
+      const name = String(s.record.name)
+      const view = renderDom(<PopupPreview type="creature" ref_={name.toLowerCase()} title={name} />)
+      for (let k = 0; k < 50 && /Loading…/.test(view.host.textContent ?? ''); k++) {
+        await act(async () => { await new Promise(r => setTimeout(r, 0)) })
+      }
+      const html = view.host.innerHTML
+      view.stop()
+      const shown = new Map([...html.matchAll(/>(AC|Fort|Ref|Will)<\/span><span[^>]*>([^<]*)<\/span>/g)].map(m => [m[1], decode(m[2]).trim()]))
+      if (!/Hazard \d/.test(decode(html.replace(/<[^>]+>/g, ' ')))) { wrong.push(`${s.id} ${name}: the card did not open as a hazard`); continue }
+      cards++
+      const p = pageFacts(String((s.record._aon as { markdown: string }).markdown), true, name)
+      const want: Array<[string, number | null | undefined]> = [['AC', p.acValue], ['Fort', p.saves.fort], ['Ref', p.saves.ref], ['Will', p.saves.will]]
+      for (const [label, pv] of want) {
+        assertions++
+        const got = shown.get(label)
+        if ((got != null) !== (pv != null)) {
+          const f: Failure = { id: s.id, name, path: 'creature card', heading: `hazard ${label}`, expected: pv ?? 'none', rendered: got ?? 'none' }
+          failures.push(f)
+          wrong.push(`${s.id} ${name}: ${label} expected ${pv ?? 'none'}, card shows ${got ?? 'none'}`)
+        }
+      }
+    }
+    expect(cards, 'hazard cards opened').toBeGreaterThan(0)
+    expect(wrong, `${new Set(wrong.map(w => w.split(':')[0])).size} of ${cards} hazard cards print an AC or save the page does not:\n${wrong.join('\n')}`).toEqual([])
+  })
+
+  // The HP bar of an Elite combatant after its encounter is loaded (saved in the app, or from a file)
+  // reads the Elite maximum it had on the board, not the printed one (round 3; not a page check: the
+  // page prints the base HP, Elite adds to it).
+  it('a loaded Elite combatant keeps its Elite HP maximum (saved encounter, encounter file)', () => {
+    const wrong: string[] = []
+    for (const s of SERVED) {
+      const board = walked.get(wkey(s.id, 'board elite'))?.cb
+      if (!board) continue
+      for (const path of ['saved encounter elite', 'encounter file elite'] as const) {
+        const cb = walked.get(wkey(s.id, path))?.cb
+        if (cb && cb.maxHP !== board.maxHP) wrong.push(`${s.id} ${String(s.record.name)} [${path}]: HP max ${cb.maxHP}, on the board ${board.maxHP}`)
+      }
+    }
+    expect(wrong, `${wrong.length} loaded Elite combatants lost their Elite HP:\n${wrong.slice(0, 20).join('\n')}`).toEqual([])
+  })
+
+  for (const s of SERVED) {
+    for (const path of PATHS) {
+      it(`${s.id} ${String(s.record.name)} — ${path}`, () => {
+        const w = walked.get(wkey(s.id, path))
+        expect(w?.problem ?? (w?.cb ? null : 'never reached this path'), `${s.id} ${path}`).toBeNull()
+        const base = headingsAtBase(s)
+        const got = compareWith(s, w!.cb!, { path, adjustedLevel: w!.adjustedLevel, surface: w!.surface })
+        const lost = got.filter(f => !base.has(f.heading))
+        failures.push(...lost)
+        expect(lost, lost.map(x => `[${path}] ${x.heading}: expected ${JSON.stringify(x.expected)}, rendered ${JSON.stringify(x.rendered)}`).join('\n')).toEqual([])
+      })
+    }
+  }
+})
+
+afterAll(() => {
+  // The measurement the refute round reports: records, assertions, failures.
+  console.log(`CORPUS-RENDER records=${SAMPLES.length} served=${SERVED.length} paths=${PATHS.length} assertions=${assertions} failures=${failures.length} snapshotChars=${e2eNumbers.combatSnapshotChars} encounterChars=${e2eNumbers.encounterChars} importedEncounterChars=${e2eNumbers.importedEncounterChars}`)
+  for (const f of failures) console.log(`CORPUS-RENDER-FAIL ${f.id} ${f.name} | ${f.path} | ${f.heading} | expected ${JSON.stringify(f.expected)} | rendered ${JSON.stringify(f.rendered)}`)
 })

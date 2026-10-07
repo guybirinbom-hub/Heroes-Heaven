@@ -23,6 +23,7 @@ import {
   parseAbilityFrequency, periodLabel,
   abilityKey, spellSlotKey, spellUseKey, focusKey,
 } from '../utils/limitedUses'
+import { recallKnowledgeFromPage } from '../utils/parseCreature'
 
 // ── Trait color coding (uniform style — accent only for size) ──────────────
 // ── Same-line ("merge") layout — items merged onto one row render as spaced
@@ -453,9 +454,16 @@ function parseFlavorRK(flavor?: string): RkInfo | null {
   }
 }
 
+/** The DC-by-level table, continued past its ends at its own end slopes: one DC per level below
+ *  −1 (Weak on a level −1 creature reads −2, which the table does not print; the old
+ *  "14 + max(0, level)" gave DC 14 there, ABOVE level −1's 13, so weakening a creature made it
+ *  harder to identify), two per level above 30 (the old rule gave level 31 DC 45, under level 30's 60). */
+const rkDcAt = (level: number): number =>
+  RK_DC_BY_LEVEL[level] ?? (level < -1 ? RK_DC_BY_LEVEL[-1] + (level + 1) : RK_DC_BY_LEVEL[30] + 2 * (level - 30))
+
 function getRecallKnowledge(level: number, traits: string[]): RkInfo {
   const lowerTraits = traits.map(t => t.toLowerCase())
-  let baseDC = RK_DC_BY_LEVEL[level] ?? (14 + Math.max(0, level))
+  let baseDC = rkDcAt(level)
   if (lowerTraits.includes('unique')) baseDC += 10
   else if (lowerTraits.includes('rare')) baseDC += 5
   else if (lowerTraits.includes('uncommon')) baseDC += 2
@@ -475,8 +483,6 @@ function getRecallKnowledge(level: number, traits: string[]): RkInfo {
   if (!skills.size) return { dc: baseDC, skills: ['Lore'], type }
   return { dc: baseDC, skills: [...skills], type, byType }
 }
-
-const rkDcAt = (level: number) => RK_DC_BY_LEVEL[level] ?? (14 + Math.max(0, level))
 
 /** A page's Recall Knowledge line moved to an adjusted level (elite, weak, scaled): every DC it
  *  prints shifts by the level-DC table's difference, as the computed row always did (an elite
@@ -1231,13 +1237,18 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
         // "A page record" is keyed on rawMarkdown OR fromArchivesPage: the persist slimming strips
         // rawMarkdown from saved encounters and the reloaded board, fromArchivesPage survives it.
         const fromPage = Boolean(creature.rawMarkdown || creature.fromArchivesPage)
-        if (creature.recallKnowledge) {
+        // A record that carries its page but no recallKnowledge (homebrew saved from a bestiary
+        // combatant before the adapter filled the field: the builder kept rawMarkdown) reads the
+        // sidebar off the page it carries, so its row does not vanish.
+        const pageLine = creature.recallKnowledge
+          || (creature.rawMarkdown ? recallKnowledgeFromPage(creature.rawMarkdown) : undefined)
+        if (pageLine) {
           // A page line follows an elite / weak / level-scaled combatant the way the computed row
           // always did: every DC moves by the level-DC table's difference. A pasted line is verbatim.
           const baseLevel = combatant.creature?.level ?? creature.level
           const line = fromPage && baseLevel !== creature.level
-            ? shiftRecallKnowledge(creature.recallKnowledge, baseLevel, creature.level)
-            : creature.recallKnowledge
+            ? shiftRecallKnowledge(pageLine, baseLevel, creature.level)
+            : pageLine
           return <><span className="stat-label">Recall Knowledge</span> <span style={{ color: 'var(--text-muted)' }}>{line}</span></>
         }
         if (fromPage) return null
@@ -1432,11 +1443,14 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
         const hasSaves    = saveKeys.length > 0
         // A hazard's AC prints only when its page prints one: defenses.acPrinted, set by the adapter
         // from the UNADJUSTED record (elite / weak / level scaling move a hazard's 0 to 2 or 11,
-        // which is no printed AC). A hazard without the flag (hand-built, pasted, an older
-        // snapshot) falls back to its BASE record's ac > 0. Read defensively (homebrew JSON).
+        // which is no printed AC). Every writer sets the flag now (the adapter, the paste parser,
+        // the builder); a hazard WITHOUT it was made before the change and draws no AC box, as
+        // every hazard did then — the old builder and paste parser both started ac at 10, so an
+        // "ac > 0" fallback grew an "AC 10" the GM never typed on nearly every stored homebrew
+        // hazard. The builder starts acSet from this same rule (acPrinted === true), so an
+        // untouched save never moves the box. Read defensively: anything but true is no AC box.
         const acPrinted: unknown = combatant.creature?.defenses?.acPrinted ?? d.acPrinted
-        const baseAc      = combatant.creature?.defenses?.ac ?? d.ac
-        const showAc      = !isHazard || (typeof acPrinted === 'boolean' ? acPrinted : baseAc > 0)
+        const showAc      = !isHazard || acPrinted === true
         const showSection = !isHazard || (showAc || hasHardness || hasSaves || d.hp > 0 || d.resistances.length > 0 || d.weaknesses.length > 0 || d.immunities.length > 0)
         if (!showSection) return null
         type DefEntry =

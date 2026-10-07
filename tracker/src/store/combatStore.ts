@@ -7,6 +7,7 @@ import { applyWeakElite, scaleByLevel } from '../utils/weakElite'
 import { CONDITION_META } from '../utils/conditionEffects'
 import { roundTurnAbilityKeys } from '../utils/limitedUses'
 import { rollDamageExpr } from '../utils/dice'
+import { recallKnowledgeFromPage } from '../utils/parseCreature'
 import { useSettingsStore } from './settingsStore'
 import { usePartyStore } from './partyStore'
 import { useDmAverageStore } from './dmAverageStore'
@@ -1536,12 +1537,16 @@ export function writeEncounterStore(store: Record<string, SavedEncounter>): void
 // For a 10-monster fight this typically cuts the snapshot from ~1MB to <50KB.
 // A record that HAD a page keeps that fact as `fromArchivesPage` (StatBlock's Recall Knowledge
 // rule: a page record prints only the page's sidebar, never a computed DC), so the reloaded copy
-// of a page with no sidebar does not grow a computed row once rawMarkdown is gone.
+// of a page with no sidebar does not grow a computed row once rawMarkdown is gone. A page record
+// with no recallKnowledge yet (homebrew saved from a bestiary combatant before the adapter filled
+// it) gets its sidebar read off the page BEFORE the page is dropped, or its row would vanish.
 function slimCombatantForPersist(c: Combatant): Combatant {
   if (!c.creature) return c
   const { raw: _raw, rawMarkdown: md, ...slim } = c.creature
   void _raw
-  return { ...c, creature: (md ? { ...slim, fromArchivesPage: true } : slim) as typeof c.creature }
+  if (!md) return { ...c, creature: slim as typeof c.creature }
+  const rk = slim.recallKnowledge || recallKnowledgeFromPage(md)
+  return { ...c, creature: { ...slim, fromArchivesPage: true, ...(rk ? { recallKnowledge: rk } : {}) } as typeof c.creature }
 }
 
 // Persist live combat state (debounced) whenever the relevant slice changes.

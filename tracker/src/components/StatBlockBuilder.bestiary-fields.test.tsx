@@ -260,3 +260,134 @@ describe('D8: the builder keeps the page fields through an edit', () => {
     expect(b.last().recallKnowledge).toBe('DC 30 (Arcana)')
   })
 })
+
+/*
+ * Fix round 2 (2026-10-07): what the builder REBUILT from its form and so lost on an untouched save of a
+ * page record — heightened cantrips, constant spells, the page's spell block name, a hazard strike's
+ * page place (D13), a strike's action cost and effects — and the AC box of a hazard with no flag.
+ */
+const caster = (): Creature => creature({
+  name: 'Synthetic Redeemer', level: 5,
+  spellcasting: [
+    {
+      name: 'Champion Devotion Spells', type: 'Focus', tradition: 'divine', DC: 21, focusPoints: 1, spells: 'Level 3: lay on hands',
+      spellsByLevel: [{ label: 'Level 3', level: 3, spells: [{ name: 'lay on hands' }] }],
+    },
+    {
+      name: 'Divine Innate Spells', type: 'Innate', tradition: 'divine', DC: 20, spells: '',
+      spellsByLevel: [
+        { label: 'Cantrips', level: 3, isCantrip: true, spells: [{ name: 'light' }, { name: 'stabilize' }] },
+        { label: 'Level 2', level: 2, spells: [{ name: 'invisibility', note: 'self only' }, { name: 'see the unseen' }] },
+        { label: 'Constant (6th)', level: 6, isConstant: true, spells: [{ name: 'truesight' }] },
+      ],
+    },
+  ],
+})
+const strikeHazard = (): Creature => creature({
+  id: 'synth-lock', name: 'Synthetic Lock', isHazard: true, traits: ['trap'], languages: [], perception: 0,
+  abilities: [
+    { name: 'Synthetic Spring', traits: [], entries: 'A spine extends.' },
+    { name: 'Synthetic Venom', traits: ['poison'], entries: 'Saving Throw DC 19 Fortitude.' },
+  ],
+  attacks: [{ range: 'Melee', name: 'synthspine', attack: 13, activity: '◆', traits: [], damage: '1 piercing', types: ['piercing'], effects: ['synthetic venom'], isAgile: false, afterAbility: 1 }],
+  defenses: { ...DEF, ac: 15, hp: 24, acPrinted: true, savesPrinted: ['fort'] },
+  hazardData: { stealth: '+10', description: 'A lock.', disable: 'DC 20 Thievery', complex: false },
+})
+const rankLabels = (h: string) => [...h.matchAll(/<span class="spell-rank-label">(.*?)<\/span>/g)].map(m => m[1].replace(/<[^>]+>/g, ''))
+
+describe('fix round 2: an untouched builder save keeps what the page printed', () => {
+  it('a heightened cantrip rank stays a Cantrips rank (level 3, at will), not "3rd rank"', () => {
+    const out = builder(caster()).last()
+    expect(out.spellcasting[1].spellsByLevel[0]).toEqual(caster().spellcasting[1].spellsByLevel[0])
+    expect(rankLabels(html(out))).toContain('Cantrips 3rd')
+  })
+
+  it('a constant rank keeps isConstant and its "Constant (6th)" label', () => {
+    const out = builder(caster()).last()
+    const r = out.spellcasting[1].spellsByLevel.find(x => x.level === 6)!
+    expect(r.isConstant).toBe(true)
+    expect(r.label).toBe('Constant (6th)')
+    expect(rankLabels(html(out))).toContain('Constant (6th)')
+  })
+
+  it('the page\'s spell block name stays ("Champion Devotion Spells"), focus pool included', () => {
+    const out = builder(caster()).last()
+    expect(out.spellcasting.map(b => b.name)).toEqual(['Champion Devotion Spells', 'Divine Innate Spells'])
+    expect(out.spellcasting[0].focusPoints).toBe(1)
+    expect(out.spellcasting).toEqual(caster().spellcasting)
+  })
+
+  it('an edited rank is rebuilt with its kind: a cantrip edit stays a heightened cantrip, a spell kept by name keeps its note', () => {
+    const b = builder(caster())
+    b.tab('Spells')
+    const lists = b.view.container.querySelectorAll('input[placeholder="fireball, heal (×3), light (at will)"]') as NodeListOf<HTMLInputElement>
+    fireEvent.change(lists[1], { target: { value: 'light, stabilize, detect magic' } })
+    fireEvent.change(lists[2], { target: { value: 'invisibility, see the unseen, synthetic veil' } })
+    const ranks = b.last().spellcasting[1].spellsByLevel
+    expect(ranks[0]).toMatchObject({ label: 'Cantrips', level: 3, isCantrip: true })
+    expect(ranks[0].spells.map(s => s.name)).toEqual(['light', 'stabilize', 'detect magic'])
+    expect(ranks[1].spells[0]).toMatchObject({ name: 'invisibility', note: 'self only' })
+    expect(ranks[2]).toMatchObject({ label: 'Constant (6th)', isConstant: true })
+  })
+
+  it('retyping a block names it from its tradition and type', () => {
+    const b = builder(caster())
+    b.tab('Spells')
+    const selects = b.view.container.querySelectorAll('select') as NodeListOf<HTMLSelectElement>
+    // [tradition, type, rank…] per block: block 2's type select follows block 1's selects.
+    const typeOfSecond = [...selects].filter(s => [...s.options].some(o => o.value === 'Prepared'))[1]
+    fireEvent.change(typeOfSecond, { target: { value: 'Prepared' } })
+    expect(b.last().spellcasting[1].name).toBe('Divine Prepared Spells')
+  })
+
+  it('a hazard strike keeps its page place, action cost and effects; removing the ability before it moves it with the list', () => {
+    const b = builder(strikeHazard())
+    expect(b.last().attacks[0]).toEqual(strikeHazard().attacks[0])
+    const h = html(b.last())
+    expect(h.indexOf('Synthetic Spring')).toBeLessThan(h.indexOf('synthspine'))
+    expect(h.indexOf('synthspine')).toBeLessThan(h.indexOf('Synthetic Venom'))
+    b.tab('Abilities')
+    fireEvent.click(b.view.getAllByTitle('Remove ability')[0])
+    expect(b.last().abilities.map(a => a.name)).toEqual(['Synthetic Venom'])
+    expect(b.last().attacks[0].afterAbility).toBe(0)
+  })
+
+  it('an untouched save never moves a hazard\'s AC box, flag or no flag', () => {
+    for (const flag of [undefined, true, false]) {
+      for (const ac of [20, 0]) {
+        const h = creature({ isHazard: true, traits: ['trap'], languages: [], defenses: { ...DEF, ac, ...(flag !== undefined ? { acPrinted: flag } : {}) }, hazardData: { description: 'x', complex: false } })
+        const before = html(h).includes('class="def-box-label">AC</div>')
+        const out = builder(h).last()
+        expect(html(out).includes('class="def-box-label">AC</div>'), `acPrinted ${flag}, ac ${ac}`).toBe(before)
+        cleanup()
+      }
+    }
+  })
+})
+
+describe('fix round 2: the homebrew guard (D13) and the stored-hazard read', () => {
+  it('a stored hazard without acPrinted reads as acPrinted: false (the AC box the old app never drew)', () => {
+    const stored = JSON.parse(JSON.stringify(strikeHazard()))
+    delete stored.defenses.acPrinted
+    expect(toStatBlock(stored)!.defenses.acPrinted).toBe(false)
+    // A creature never gets the hazard flag, and a hazard's own flag is never overwritten.
+    expect(toStatBlock(JSON.parse(JSON.stringify(creature())))!.defenses.acPrinted).toBeUndefined()
+    expect(toStatBlock(JSON.parse(JSON.stringify(strikeHazard())))!.defenses.acPrinted).toBe(true)
+  })
+
+  it('afterAbility: 0 … abilities.length and null pass; anything else is refused by name', () => {
+    for (const v of [0, 1, 2, null]) {
+      const c = JSON.parse(JSON.stringify(strikeHazard())); c.attacks[0].afterAbility = v
+      expect(statBlockProblem(c), String(v)).toBeNull()
+    }
+    for (const v of ['1', -1, 1.5, 3, true]) {
+      const c = JSON.parse(JSON.stringify(strikeHazard())); c.attacks[0].afterAbility = v
+      expect(statBlockProblem(c), String(v)).toMatch(/attacks\[0\]\.afterAbility/)
+    }
+  })
+
+  it('export → import keeps a hazard strike\'s afterAbility', () => {
+    const [back] = parseCreaturesFromText(JSON.stringify([strikeHazard()])).creatures
+    expect(back.attacks[0].afterAbility).toBe(1)
+  })
+})

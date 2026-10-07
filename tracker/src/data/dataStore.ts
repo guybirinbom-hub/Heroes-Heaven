@@ -357,11 +357,38 @@ export async function loadCreatureNameIndex(): Promise<Map<string, IndexEntry>> 
   return m
 }
 
-/** Load a creature's full stat block by (case-insensitive) name, or null if no
- *  bestiary entry matches. Cached via loadCreature's own cache. */
-export async function loadCreatureByName(name: string): Promise<Creature | null> {
+let _aliases: Map<string, string> | null = null
+/** Legacy name (lowercased) → the name of the index row that serves its remaster (decision D11).
+ *  The index offers the newest printing only (R12), so "Adult Red Dragon" or "Troll" is not in it;
+ *  public/data/bestiary-aliases.json, built by scripts/bestiary-aliases.mjs from the Archives' own
+ *  legacy → remaster links, says which row stands in for it. Empty when the file can't load. */
+export async function loadBestiaryAliases(): Promise<Map<string, string>> {
+  if (_aliases) return _aliases
+  const m = new Map<string, string>()
+  try {
+    const data = await fetchJSON<Record<string, unknown>>('bestiary-aliases.json')
+    for (const [k, v] of Object.entries(data ?? {})) if (typeof v === 'string' && v) m.set(k.toLowerCase(), v)
+  } catch { /* no aliases if the file can't load — the exact name still resolves */ }
+  _aliases = m
+  return m
+}
+
+/** The index row a (case-insensitive) name opens: its own row, else the row its legacy → remaster
+ *  alias names (D11). Null when neither exists. */
+export async function findBestiaryEntry(name: string): Promise<IndexEntry | null> {
   const m = await loadCreatureNameIndex()
-  const entry = m.get(name.toLowerCase())
+  const key = name.toLowerCase()
+  const own = m.get(key)
+  if (own) return own
+  const alias = (await loadBestiaryAliases()).get(key)
+  return alias ? m.get(alias.toLowerCase()) ?? null : null
+}
+
+/** Load a creature's full stat block by (case-insensitive) name, or null if no
+ *  bestiary entry matches. A legacy name opens the remaster the index serves in its place
+ *  (findBestiaryEntry). Cached via loadCreature's own cache. */
+export async function loadCreatureByName(name: string): Promise<Creature | null> {
+  const entry = await findBestiaryEntry(name)
   if (!entry) return null
   try { return await loadCreature(entry) } catch { return null }
 }
@@ -495,7 +522,7 @@ function readStatBlock(x: unknown): Creature {
         ({ ...k, rank: text(k.rank, `${at}.rank`), level: num(k.level, `${at}.level`), names: words(k.names, `${at}.names`) })),
     }
   }
-  return {
+  const out = {
     ...c,
     source: text(c.source, 'source', 'Homebrew'),
     level: num(c.level, 'level'),
@@ -513,6 +540,10 @@ function readStatBlock(x: unknown): Creature {
     abilities: listOf(c.abilities, 'abilities', abilityOf),
     defenses: {
       ...d,
+      // A hazard stored before acPrinted existed (2026-10-06) holds the ac: 10 the old builder and
+      // text parser started every hazard at, which the GM never typed — and the stat block then drew
+      // no hazard AC at all. Read without the flag, it keeps drawing none.
+      ...(c.isHazard === true && d.acPrinted == null ? { acPrinted: false } : {}),
       ac: num(d.ac, 'defenses.ac'), fort: num(d.fort, 'defenses.fort'), ref: num(d.ref, 'defenses.ref'),
       will: num(d.will, 'defenses.will'), hp: num(d.hp, 'defenses.hp'),
       immunities: words(d.immunities, 'defenses.immunities'),
@@ -520,6 +551,15 @@ function readStatBlock(x: unknown): Creature {
       weaknesses: listOf(d.weaknesses, 'defenses.weaknesses', amountOf),
     },
   } as Creature
+  // A hazard strike's page place (D13): how many abilities the page prints before it — a whole
+  // number from 0 to the number of abilities. Null is "absent", as for every optional field.
+  out.attacks.forEach((a, i) => {
+    const n: unknown = a.afterAbility
+    if (n != null && !(typeof n === 'number' && Number.isInteger(n) && n >= 0 && n <= out.abilities.length)) {
+      refuse(`"attacks[${i}].afterAbility" must be a whole number from 0 to ${out.abilities.length}`)
+    }
+  })
+  return out
 }
 
 /** `x` as a stat block every surface of the tracker can read (missing fields filled in, see above),

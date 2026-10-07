@@ -290,6 +290,26 @@ describe('parseHazardDescription — a strike printed after a line break', () =>
       .toEqual([['Melee', 'spine', 13, '1 piercing plus cladis poison']])
   })
 
+  it('ends the strike at the newline itself when the next line is a cost-less ability no other boundary sees', () => {
+    // Mutation proof (2026-10-07): with the newline cut removed the test above stayed green, because
+    // "Cladis Poison (poison)" is also caught by the next-ability boundary. A line opening with a
+    // plain name and a non-starter word ("Lingering Venom Creatures hit …") is ended ONLY by the break.
+    const desc = HEAD + '\nSpring Reaction Trigger A creature tries to unlock the lock. Effect A spine extends.'
+      + '\nMelee spine +13, Damage 1 piercing'
+      + '\nLingering Venom Creatures hit by the spine are sickened 1.'
+    const p = parseHazardDescription(desc, 'Poisoned Lock')
+    expect(p.attacks.map(a => [a.name, a.damage])).toEqual([['spine', '1 piercing']])
+  })
+
+  it('reads a page <br /> as that same line break (not a space) so it ends the strike', () => {
+    // Mutation proof (2026-10-07): turning <br /> into a space instead of "\n" stayed green — the
+    // <br /> test below is also ended by the next-ability boundary ("Decapitation On …").
+    const desc = HEAD + ' Spring Reaction Trigger A creature tries to unlock the lock. Effect A spine extends.'
+      + '<br /> Melee spine +13, Damage 1 piercing<br/>Lingering Venom Creatures hit by the spine are sickened 1.'
+    const p = parseHazardDescription(desc, 'Poisoned Lock')
+    expect(p.attacks.map(a => [a.name, a.damage])).toEqual([['spine', '1 piercing']])
+  })
+
   it('reads a strike between two <br /> tags whose following ability ends the text with a full stop', () => {
     // Old: no strike at all — the damage regex needed ". " or the end of the string straight after
     // the rider, and "…without a head." ends on a bare full stop.
@@ -360,5 +380,22 @@ describe('parseHazardDescription — a strike printed after a line break', () =>
     ])
     // "Melee Single Action" is a strike line, never an ability named "Melee".
     expect(p.abilities.some(a => /^(Melee|Ranged)\b/.test(a.name))).toBe(false)
+  })
+})
+
+describe('parseHazardDescription — an HP line whose "(BT N" the page never closes', () => {
+  it('reads the BT and leaves the next ability its own name (Hall of Mirrors prints "HP 60 (BT 30")', () => {
+    // Before: the unclosed "(BT 30" was not stripped, so the ability read "BT 30 Ghostly Images ↺";
+    // parseHazard's de-dupe by name then kept it beside the structured "Ghostly Images ↺" (drawn twice).
+    const p = parseHazardDescription([
+      'Synthetic Hall Source Test pg. 1 Complexity Complex',
+      'Mirrors line the walls. --- Stealth +16',
+      'Disable DC 24 Occultism (expert) to realign a mirror',
+      'AC 24, Fort +13, Ref +19 Hardness 15 HP 60 (BT 30 Immunities critical hits, object immunities',
+      'Ghostly Images Reaction (occult) Trigger Two or more creatures enter the room; Effect Trapped souls appear in the mirrors.',
+      '--- Routine (3 actions) Each trapped soul makes a Strike.',
+    ].join(' '), 'Synthetic Hall')
+    expect(p.bt).toBe(30)
+    expect(p.abilities.map(a => a.name)).toEqual(['Ghostly Images ↺'])
   })
 })

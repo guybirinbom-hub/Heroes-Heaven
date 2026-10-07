@@ -28,6 +28,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 vi.mock('../tracker/src/utils/parseCreature', () => ({
   parseCreature: (raw: unknown) => raw,
@@ -54,6 +55,32 @@ for (const row of index) {
   if (hit?.r._aon?.id) indexedIds.add(hit.r._aon.id);
 }
 
+/*
+ * D11 (2026-10-07): an OLD name resolves to the remaster the index serves through
+ * public/data/bestiary-aliases.json (scripts/bestiary-aliases.mjs, from the Archives' own remaster_id
+ * links), never through a legacy index row. A name the mirror links to nothing stays red here, listed
+ * with its Archives id, for the owner. Two such names were measured on 2026-10-07: the old index's
+ * "Greedspawn Soldiers" and "Trinity Initiates" are the base commit's records creature-4266 and
+ * creature-4267 (their _aon.id at 7cfb323), which the Archives have since RENAMED in place to "Greedspawn
+ * Soldier" / "Trinity Initiate" — the same documents, carrying no remaster link. The mirror no longer
+ * holds the old names, so their ids are pinned here for the failure message.
+ */
+const MIRROR_FOR_IDS = process.env.HH_AON_MIRROR ?? 'C:/wonderers guide/aon-2e-archive/data';
+const PINNED_IDS: Record<string, string> = { 'greedspawn soldiers': 'creature-4266', 'trinity initiates': 'creature-4267' };
+let mirrorIds: Map<string, string> | null = null;
+function archivesIdOf(name: string): string {
+  if (!mirrorIds) {
+    mirrorIds = new Map();
+    for (const cat of ['creature', 'hazard']) {
+      const p = join(MIRROR_FOR_IDS, 'by-category', cat, '_index.json');
+      if (!existsSync(p)) continue;
+      for (const d of readJson(p) as Array<{ id: string; name: string }>) if (!mirrorIds.has(d.name.toLowerCase())) mirrorIds.set(d.name.toLowerCase(), d.id);
+    }
+  }
+  const k = name.toLowerCase();
+  return mirrorIds.get(k) ?? PINNED_IDS[k] ?? 'id unknown';
+}
+
 describe('(A) every name the old index offered still loads by name', () => {
   const fixture = readJson(join(ROOT, 'test/fixtures/bestiary-legacy-names-2026-10-06.json')) as {
     names: Array<{ name: string; source: string; level: number; hazard: boolean; remaster: string[] }>;
@@ -69,12 +96,41 @@ describe('(A) every name the old index offered still loads by name', () => {
     const lost: string[] = [];
     for (const n of fixture.names) {
       const c = await loadCreatureByName(n.name);
-      if (!c) lost.push(`${n.name} (${n.source} L${n.level})${n.remaster.length ? ` — remastered as ${n.remaster.join(', ')}` : ''}`);
+      if (!c) lost.push(`${n.name} (${n.source} L${n.level}, Archives ${archivesIdOf(n.name)})${n.remaster.length ? ` — remastered as ${n.remaster.join(', ')}` : ' — no remaster link in the mirror: an owner finding (D11), never an alias guessed from the name'}`);
     }
     vi.unstubAllGlobals();
     expect(fixture.names.length).toBe(142);
     expect(lost.length, `${lost.length} names a saved encounter table could hold no longer load, e.g.\n  ${lost.slice(0, 12).join('\n  ')}`).toBe(0);
   }, 120_000);
+});
+
+describe('(A2) the legacy → remaster alias file (D11)', () => {
+  const aliases = readJson(join(DATA, 'bestiary-aliases.json')) as Record<string, string>;
+  const rowNames = new Set(index.map((r) => r.name.toLowerCase()));
+  it('every alias names an index row, and no alias shadows a name the index holds itself', () => {
+    const entries = Object.entries(aliases);
+    expect(entries.length).toBeGreaterThan(100);
+    expect(entries.filter(([, v]) => !rowNames.has(v.toLowerCase())).map(([k, v]) => `${k} → ${v}`)).toEqual([]);
+    expect(entries.filter(([k]) => rowNames.has(k.toLowerCase())).map(([k]) => k)).toEqual([]);
+  });
+  it('an old name opens its remaster, and a name with no alias still opens nothing', async () => {
+    vi.stubGlobal('fetch', async (url: string) => {
+      const p = join(DATA, String(url).replace(/^\/data\//, ''));
+      if (!existsSync(p)) return { ok: false, status: 404, json: async () => ({}) };
+      const body = readFileSync(p, 'utf8');
+      return { ok: true, status: 200, json: async () => JSON.parse(body) };
+    });
+    const { findBestiaryEntry } = await import('../tracker/src/data/dataStore');
+    expect((await findBestiaryEntry('Troll'))?.name).toBe(aliases.Troll);
+    expect((await findBestiaryEntry('troll'))?.name).toBe(aliases.Troll);
+    expect(await findBestiaryEntry('Synthetic Name Nobody Printed')).toBeNull();
+    vi.unstubAllGlobals();
+  });
+  it.skipIf(!existsSync(join(process.env.HH_AON_MIRROR ?? 'C:/wonderers guide/aon-2e-archive/data', 'by-category/creature/_index.json')))(
+    'the shipped file is what scripts/bestiary-aliases.mjs builds from the mirror (--check)', () => {
+      const r = spawnSync(process.execPath, [join(ROOT, 'scripts/bestiary-aliases.mjs'), '--check'], { encoding: 'utf8' });
+      expect(r.status, `${r.stdout}\n${r.stderr}`).toBe(0);
+    }, 120_000);
 });
 
 const MIRROR = process.env.HH_AON_MIRROR ?? 'C:/wonderers guide/aon-2e-archive/data';

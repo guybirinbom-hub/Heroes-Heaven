@@ -105,10 +105,12 @@ function stripDefenseBlock(s: string): { text: string; bt: number | undefined } 
   text = text.replace(/\bAC\s+\d+(?:\s*,\s*(?:Fort|Ref|Will)\s+[+-]\d+)*\s*/g, ' ')
   // Hardness — optionally prefixed by a part name like "Trapdoor Hardness 3"
   text = text.replace(/(?:\b[A-Z][\w ]*?\s+)?Hardness\s+\d+\s*/g, ' ')
-  // HP with optional "(BT N)"
-  const hpM = text.match(/(?:\b[A-Z][\w ]*?\s+)?HP\s+\d+\s*\(BT\s+(\d+)\)/)
+  // HP with optional "(BT N)". The closing bracket is optional: Hall of Mirrors prints
+  // "HP 60 (BT 30" and its unclosed "BT 30" ran into the next ability's name
+  // ("BT 30 Ghostly Images"), which then drew a second time beside the structured one.
+  const hpM = text.match(/(?:\b[A-Z][\w ]*?\s+)?HP\s+\d+\s*\(BT\s+(\d+)\)?/)
   if (hpM) bt = parseInt(hpM[1], 10)
-  text = text.replace(/(?:\b[A-Z][\w ]*?\s+)?HP\s+\d+\s*(?:\(BT\s+\d+\))?\s*/g, ' ')
+  text = text.replace(/(?:\b[A-Z][\w ]*?\s+)?HP\s+\d+\s*(?:\(BT\s+\d+\)?)?\s*/g, ' ')
   // Immunities / Resistances / Weaknesses — already on raw.defenses, just
   // strip from the prose so abilities surface cleanly.
   text = text.replace(/\bImmunities\s+[^.]+?(?=\s+(?:Resistances\s|Weaknesses\s|Routine\s|---\s|Reset\s|Ranged\s|Melee\s|[A-Z][\w' -]{1,40}\s+(?:Reaction|Two Actions|Three Actions|Free Action|Action|Activate)\b|$))/g, ' ')

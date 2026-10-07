@@ -1,5 +1,5 @@
 {
- "_note": "Verbatim records from the verified bestiary corpus (hh-bestiary-corpus data/, _aon.markdown kept). Named picks per docs/APP-DEFECTS.md class; random picks by mulberry32 seed 20261006 over the records sorted by Archives id. Read by test/tracker-corpus-render.test.tsx.",
+ "_note": "Verbatim records from the verified bestiary corpus (hh-bestiary-corpus data/, _aon.markdown kept). Named picks per docs/APP-DEFECTS.md class; random picks by mulberry32 seed 20261006 over the records sorted by Archives id. Read by test/tracker-corpus-render.test.tsx. Samples with \"twinOf\" are the printing the tracker SERVES for a sample whose own printing has no index row (the index keeps the newest printing, R12): the index row by name, or for a name with no row the Archives mirror's remaster_id link.",
  "samples": [
   {
    "id": "creature-537",
@@ -8298,6 +8298,3520 @@
      "id": "hazard-130",
      "url": "https://2e.aonprd.com/Hazards.aspx?ID=130",
      "markdown": "<title level=\"1\" right=\"Hazard 8\" pfs=\"\">[Spectral Archers](/Hazards.aspx?ID=130)</title>\n\n<traits>\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Haunt\" url=\"/Traits.aspx?ID=88\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Pathfinder #177: Burning Tundra](/Sources.aspx?ID=116) pg. 49\n\n**Complexity** Complex\n\n</column>\n\nGhostly soldiers wielding crossbows manifest within the towers that flank the gatehouse and rain bolts down upon intruders.\n\n---\n\n**Stealth**\n+28 (expert)\n\n**Disable**\nDC 31 [Intimidation](/Skills.aspx?ID=7) (expert) to cow the archers into fleeing or DC 28 [Religion](/Skills.aspx?ID=13) (expert) to temporarily banish the spirits\n\n<column gap=\"tiny\">\n\n</column>\n\n**Rain of Bolts** <actions string=\"Reaction\" /> **Trigger** A creature attacks the graveknights in area G1 or enters the castle; **Effect** The haunt makes a spectral bolt Strike against the triggering creature, then rolls initiative.\n\n---\n**Routine**\n(1 action) The hazard fires one bolt at every creature in a 30-foot-by-30-foot area in front of the gate as 1 action. Because the spectral archers fire bolts continuously, the haunt can also use the Continuous Barrage free action (below) to fire bolts at each creature during that creature's turn.<br /> **Ranged** spectral bolt  +20, **Damage** 2d10+11 negative; no multiple attack penalty<br /> **Continuous Barrage** <actions string=\"Free Action\" /> **Trigger** A creature in front of the gate finishes an action; **Effect** The haunt makes a spectral bolt Strike against the triggering creature.\n\n---\n**Reset**\nThe haunt vanishes permanently if the graveknights are destroyed. Otherwise, it returns after 1 hour."
+    }
+   }
+  },
+  {
+   "id": "creature-4684",
+   "class": "served twin (hardness)",
+   "kind": "creature",
+   "twinOf": "creature-2789",
+   "record": {
+    "name": "Animated Axe",
+    "source": "Season of Ghosts (Hardcover)",
+    "page": 208,
+    "level": 5,
+    "traits": [
+     "Tiny",
+     "Construct",
+     "Mindless"
+    ],
+    "perception": {
+     "std": 9
+    },
+    "senses": [
+     {
+      "name": "darkvision"
+     }
+    ],
+    "languages": {
+     "languages": [],
+     "abilities": []
+    },
+    "skills": {
+     "acrobatics": 13
+    },
+    "abilityMods": {
+     "str": 5,
+     "dex": 4,
+     "con": 2,
+     "int": -5,
+     "wis": 0,
+     "cha": -5
+    },
+    "items": [],
+    "speed": {
+     "fly": 20
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "battle axe",
+      "attack": 14,
+      "traits": [
+       "Sweep"
+      ],
+      "damage": "1d8+7 slashing plus 1d6 persistent bleed",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [],
+    "abilities": {
+     "top": [],
+     "mid": [
+      {
+       "name": "Construct Armor",
+       "traits": [],
+       "entries": [
+        "As animated object, but reduced to AC 19 when broken."
+       ]
+      }
+     ],
+     "bot": []
+    },
+    "defenses": {
+     "ac": {
+      "std": 23
+     },
+     "acNote": "(19 when broken)",
+     "savingThrows": {
+      "fort": {
+       "std": 11
+      },
+      "ref": {
+       "std": 13
+      },
+      "will": {
+       "std": 7
+      }
+     },
+     "hp": [
+      {
+       "hp": 65
+      }
+     ],
+     "immunities": [
+      "bleed",
+      "death effects",
+      "disease",
+      "doomed",
+      "drained",
+      "fatigued",
+      "healing",
+      "mental",
+      "nonlethal attacks",
+      "paralyzed",
+      "poison",
+      "sickened",
+      "unconscious"
+     ],
+     "resistances": [],
+     "weaknesses": [],
+     "hardness": {
+      "std": 8
+     }
+    },
+    "_aon": {
+     "id": "creature-4684",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=4684",
+     "markdown": "<title level=\"1\" pfs=\"\">[Animated Axe](/Monsters.aspx?ID=4684)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\n_Nethys Note: No description has been provided for this creature._\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Construct](/Rules.aspx?ID=563)**\n([Arcana](/Skills.aspx?ID=35), [Crafting](/Skills.aspx?ID=37)): DC 20\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 18\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 15\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 5\">[Animated Axe](/Monsters.aspx?ID=4684)</title>\n\n<traits>\n<trait label=\"Tiny\" />\n<trait label=\"Construct\" url=\"/Traits.aspx?ID=563\" />\n<trait label=\"Mindless\" url=\"/Traits.aspx?ID=652\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Season of Ghosts (Hardcover)](/Sources.aspx?ID=294) pg. 208\n\n**Perception** +9; [darkvision](/MonsterAbilities.aspx?ID=59)\n\n**Languages**\n\n**Skills**\n[Acrobatics](/Skills.aspx?ID=34) +13\n\n<row gap=\"medium\">\n**Str** +5\n\n**Dex** +4\n\n**Con** +2\n\n**Int** -5\n\n**Wis** +0\n\n**Cha** -5\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 23 (19 when broken)\n\n**Fort** +11 \n\n**Ref** +13 \n\n**Will** +7 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 65\n\n**Hardness**\n8\n</row>\n\n**Immunities**\n[bleed](/Conditions.aspx?ID=86), [death effects](/Rules.aspx?ID=2331), [disease](/Traits.aspx?ID=578), [doomed](/Conditions.aspx?ID=67), [drained](/Conditions.aspx?ID=68), [fatigued](/Conditions.aspx?ID=73), [healing](/Traits.aspx?ID=623), [mental](/Traits.aspx?ID=647), [nonlethal attacks](/Rules.aspx?ID=2315), [paralyzed](/Conditions.aspx?ID=85), [poison](/Traits.aspx?ID=669), [sickened](/Conditions.aspx?ID=91), [unconscious](/Conditions.aspx?ID=95)\n\n**Construct Armor** As animated object, but reduced to AC 19 when broken.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** fly 20 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nbattle axe +14 ([Sweep](/Traits.aspx?ID=708)),\n**Damage** 1d8+7 slashing plus 1d6 [persistent bleed](/Conditions.aspx?ID=86)\n\n</column>"
+    }
+   }
+  },
+  {
+   "id": "creature-4059",
+   "class": "served twin (hardness)",
+   "kind": "creature",
+   "twinOf": "creature-1064",
+   "record": {
+    "name": "Animated Furnace",
+    "source": "Monster Core 2",
+    "page": 32,
+    "level": 9,
+    "traits": [
+     "Huge",
+     "Construct",
+     "Mindless"
+    ],
+    "perception": {
+     "std": 15
+    },
+    "senses": [
+     {
+      "name": "darkvision"
+     }
+    ],
+    "languages": {
+     "languages": [],
+     "abilities": []
+    },
+    "skills": {
+     "athletics": 18
+    },
+    "abilityMods": {
+     "str": 7,
+     "dex": -2,
+     "con": 6,
+     "int": -5,
+     "wis": 0,
+     "cha": -5
+    },
+    "items": [],
+    "speed": {
+     "walk": 15
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "door",
+      "attack": 21,
+      "traits": [
+       "Magical"
+      ],
+      "damage": "2d12+9 bludgeoning plus 1d8 fire and Improved Grab",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [],
+    "abilities": {
+     "top": [],
+     "mid": [
+      {
+       "name": "Construct Armor",
+       "traits": [],
+       "entries": [
+        "Like normal objects, an animated furnace has Hardness. This Hardness reduces any damage the swarm takes by an amount equal to the Hardness. Once an animated furnace is reduced to fewer than half its Hit Points or immediately upon being damaged by a critical hit, its construct armor breaks, removing the Hardness and reducing its Armor Class to 26."
+       ]
+      }
+     ],
+     "bot": [
+      {
+       "name": "Fan the Flames",
+       "activity": {
+        "number": 2,
+        "unit": "action"
+       },
+       "traits": [],
+       "entries": [
+        "The animated furnace opens its door and fans its flames in a 30-foot cone that deals 5d6 fire damage (DC 28 basic Reflex save)."
+       ]
+      },
+      {
+       "name": "Swallow Whole",
+       "activity": {
+        "number": 1,
+        "unit": "action"
+       },
+       "traits": [
+        "Attack"
+       ],
+       "entries": [
+        "Large, 2d8+9 fire, Rupture 15"
+       ]
+      }
+     ]
+    },
+    "defenses": {
+     "ac": {
+      "std": 30
+     },
+     "acNote": "(26 when broken)",
+     "savingThrows": {
+      "fort": {
+       "std": 21
+      },
+      "ref": {
+       "std": 11
+      },
+      "will": {
+       "std": 13
+      },
+      "note": "construct armor"
+     },
+     "hp": [
+      {
+       "hp": 135
+      }
+     ],
+     "immunities": [
+      "bleed",
+      "death effects",
+      "disease",
+      "doomed",
+      "drained",
+      "fatigued",
+      "healing",
+      "mental",
+      "nonlethal attacks",
+      "paralyzed",
+      "poison",
+      "sickened",
+      "spirit",
+      "unconscious",
+      "vitality",
+      "void"
+     ],
+     "resistances": [],
+     "weaknesses": [],
+     "hardness": {
+      "std": 10
+     }
+    },
+    "flavor": "This huge forge or oven is animated to protect a workspace or kitchen, travel alongside its owner, or both.",
+    "family": "Animated Object",
+    "_aon": {
+     "id": "creature-4059",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=4059",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Animated Furnace](/Monsters.aspx?ID=4059)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nThis huge forge or oven is animated to protect a workspace or kitchen, travel alongside its owner, or both.\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Construct](/Rules.aspx?ID=563)**\n([Arcana](/Skills.aspx?ID=35), [Crafting](/Skills.aspx?ID=37)): DC 26\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 24\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 21\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 9\">[Animated Furnace](/Monsters.aspx?ID=4059)</title>\n\n<traits>\n<trait label=\"Huge\" />\n<trait label=\"Construct\" url=\"/Traits.aspx?ID=563\" />\n<trait label=\"Mindless\" url=\"/Traits.aspx?ID=652\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core 2](/Sources.aspx?ID=276) pg. 32\n\n**Perception** +15; [darkvision](/MonsterAbilities.aspx?ID=59)\n\n**Languages**\n\n**Skills**\n[Athletics](/Skills.aspx?ID=36) +18\n\n<row gap=\"medium\">\n**Str** +7\n\n**Dex** -2\n\n**Con** +6\n\n**Int** -5\n\n**Wis** +0\n\n**Cha** -5\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 30 (26 when broken)\n\n**Fort** +21 \n\n**Ref** +11 \n\n**Will** +13 \n\nconstruct armor\n</row>\n\n<row gap=\"medium\">\n**HP** 135\n\n**Hardness**\n10\n</row>\n\n**Immunities**\n[bleed](/Conditions.aspx?ID=86), [death](/Traits.aspx?ID=571) effects, [disease](/Traits.aspx?ID=578), [doomed](/Conditions.aspx?ID=67), [drained](/Conditions.aspx?ID=68), [fatigued](/Conditions.aspx?ID=73), [healing](/Traits.aspx?ID=623), [mental](/Traits.aspx?ID=647), [nonlethal](/Traits.aspx?ID=661) attacks, [paralyzed](/Conditions.aspx?ID=85), [poison](/Traits.aspx?ID=669), [sickened](/Conditions.aspx?ID=91), [spirit](/Traits.aspx?ID=737), [unconscious](/Conditions.aspx?ID=95), [vitality](/Traits.aspx?ID=509), [void](/Traits.aspx?ID=510)\n\n**Construct Armor** Like normal objects, an animated furnace has Hardness. This Hardness reduces any damage the swarm takes by an amount equal to the Hardness. Once an animated furnace is reduced to fewer than half its Hit Points or immediately upon being damaged by a critical hit, its construct armor breaks, removing the Hardness and reducing its Armor Class to 26.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 15 feet\n\n**Melee**\n<actions string=\"Single Action\" />\ndoor +21 ([Magical](/Traits.aspx?ID=644)),\n**Damage** 2d12+9 bludgeoning plus 1d8 fire and [Improved Grab](/MonsterAbilities.aspx?ID=66)\n\n**Fan the Flames** <actions string=\"Two Actions\" />  The animated furnace opens its door and fans its flames in a 30-foot [cone](/Rules.aspx?ID=2386) that deals 5d6 fire damage (DC 28 [basic](/Rules.aspx?ID=329) Reflex save).\n\n**[Swallow Whole](/MonsterAbilities.aspx?ID=77)** <actions string=\"Single Action\" /> ([Attack](/Traits.aspx?ID=540)) Large, 2d8+9 fire, Rupture 15\n\n</column>\n\n<document level=\"2\" id=\"creature-family-360\" />"
+    }
+   }
+  },
+  {
+   "id": "creature-4563",
+   "class": "served twin (hardness)",
+   "kind": "creature",
+   "twinOf": "creature-815",
+   "record": {
+    "name": "Spiral Centurion",
+    "source": "Monster Core 2",
+    "page": 303,
+    "level": 11,
+    "traits": [
+     "Medium",
+     "Construct",
+     "Mindless"
+    ],
+    "perception": {
+     "std": 20
+    },
+    "senses": [
+     {
+      "name": "darkvision"
+     }
+    ],
+    "languages": {
+     "languages": [],
+     "abilities": []
+    },
+    "skills": {
+     "acrobatics": 23,
+     "athletics": 23
+    },
+    "abilityMods": {
+     "str": 6,
+     "dex": 6,
+     "con": 5,
+     "int": -5,
+     "wis": 2,
+     "cha": -5
+    },
+    "items": [],
+    "speed": {
+     "walk": 40
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "blade",
+      "attack": 23,
+      "traits": [
+       "Agile",
+       "sweep"
+      ],
+      "damage": "2d12+12 slashing",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [],
+    "abilities": {
+     "top": [],
+     "mid": [
+      {
+       "name": "Top-Heavy",
+       "traits": [],
+       "entries": [
+        "A spiral centurion's top-like design makes it susceptible to effects that would cause it to fall prone. The DC of any attempt to knock the spiral centurion prone is reduced by 5. If the spiral centurion attempts a check or saving throw to resist being knocked prone, it takes a –5 status penalty. A spiral centurion that has been knocked prone can't use any actions other than to attempt to Stand, but it must succeed at a DC 30 Acrobatics check to do so."
+       ]
+      }
+     ],
+     "bot": [
+      {
+       "name": "Hurl Blade",
+       "activity": {
+        "number": 2,
+        "unit": "action"
+       },
+       "traits": [],
+       "entries": [
+        "The spiral centurion hurls one of its blades with an angled spin to ensure a swooping flight path. The blade deals 6d6 slashing damage to each creature in a 40-foot line (DC 30 basic Reflex save). At the start of the spiral centurion's next turn, the blade swoops around and returns along the same flight path, again dealing 6d6 slashing damage (DC 30 basic Reflex save) to each creature along the same line."
+       ]
+      },
+      {
+       "name": "Rev Up",
+       "activity": {
+        "number": 1,
+        "unit": "action"
+       },
+       "traits": [],
+       "entries": [
+        "Requirements The spiral centurion hasn't acted yet this turn\nEffect The spiral centurion Strides up to its Speed. It then gains a +2 circumstance bonus to attack and damage rolls until the end of its turn."
+       ]
+      },
+      {
+       "name": "Trample",
+       "activity": {
+        "number": 3,
+        "unit": "action"
+       },
+       "traits": [],
+       "entries": [
+        "Medium or smaller, blade, DC 30"
+       ]
+      },
+      {
+       "name": "Whirling Death",
+       "activity": {
+        "number": 3,
+        "unit": "action"
+       },
+       "traits": [],
+       "entries": [
+        "The spiral centurion spins furiously in place, its blades extended to slice through nearby creatures. It makes up to five melee blade Strikes. No single creature can be targeted by more than one blade Strike during one use of this ability. These attacks count toward the spiral centurion's multiple attack penalty, but the multiple attack penalty doesn't increase until after all the attacks are made."
+       ]
+      }
+     ]
+    },
+    "defenses": {
+     "ac": {
+      "std": 31
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 22
+      },
+      "ref": {
+       "std": 25
+      },
+      "will": {
+       "std": 16
+      }
+     },
+     "hp": [
+      {
+       "hp": 170
+      }
+     ],
+     "immunities": [
+      "bleed",
+      "death effects",
+      "disease",
+      "doomed",
+      "drained",
+      "fatigued",
+      "healing",
+      "mental",
+      "nonlethal attacks",
+      "paralyzed",
+      "poison",
+      "sickened",
+      "spirit",
+      "unconscious",
+      "vitality",
+      "void"
+     ],
+     "resistances": [],
+     "weaknesses": [],
+     "hardness": {
+      "std": 10
+     }
+    },
+    "flavor": "These mechanical constructs were created to serve as guardians in an ancient and bygone era, although exactly who made them and the secrets of their construction have long since been lost to history. From the waist up, they resemble humanoids made of metal, but from the waist down, their bodies take the form of spinning metal tops ringed with blades that excel at cutting down nearby foes. Most spiral centurions can be directed to stand down with a password, but often these command phrases have been lost to the mists of time. In rare cases, a spiral centurion can also wield manufactured weapons or a shield in addition to its built-in weapons, giving it access to additional actions besides those listed below.\n\nMost spiral centurions are hundreds or even thousands of years old, only staying functional because of the powerful magic used in their creation. Still, millennia of neglect have caused many spiral centurions to develop small glitches or malfunctions.\n\nSpiral Centurion Glitches\n\nA spiral centurion might have one of the following glitches.\n\nDulled Blades Its blade Strike deals only 2d10+5 bludgeoning damage.\n\nMisaligned Gears It loses Rev Up, and if it Strides more than once per round, it takes 1d10 damage.\n\nStuck in a Rut It uses the same actions each round, regardless of the circumstances.",
+    "_aon": {
+     "id": "creature-4563",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=4563",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Spiral Centurion](/Monsters.aspx?ID=4563)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nThese mechanical constructs were created to serve as guardians in an ancient and bygone era, although exactly who made them and the secrets of their construction have long since been lost to history. From the waist up, they resemble humanoids made of metal, but from the waist down, their bodies take the form of spinning metal tops ringed with blades that excel at cutting down nearby foes. Most spiral centurions can be directed to stand down with a password, but often these command phrases have been lost to the mists of time. In rare cases, a spiral centurion can also wield manufactured weapons or a shield in addition to its built-in weapons, giving it access to additional actions besides those listed below.\n\nMost spiral centurions are hundreds or even thousands of years old, only staying functional because of the powerful magic used in their creation. Still, millennia of neglect have caused many spiral centurions to develop small glitches or malfunctions.\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Construct](/Rules.aspx?ID=563)**\n([Arcana](/Skills.aspx?ID=35), [Crafting](/Skills.aspx?ID=37)): DC 28\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 26\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 23\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 11\">[Spiral Centurion](/Monsters.aspx?ID=4563)</title>\n\n<traits>\n<trait label=\"Medium\" />\n<trait label=\"Construct\" url=\"/Traits.aspx?ID=563\" />\n<trait label=\"Mindless\" url=\"/Traits.aspx?ID=652\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core 2](/Sources.aspx?ID=276) pg. 303\n\n**Perception** +20; [darkvision](/MonsterAbilities.aspx?ID=59)\n\n**Languages**\n\n**Skills**\n[Acrobatics](/Skills.aspx?ID=34) +23, [Athletics](/Skills.aspx?ID=36) +23\n\n<row gap=\"medium\">\n**Str** +6\n\n**Dex** +6\n\n**Con** +5\n\n**Int** -5\n\n**Wis** +2\n\n**Cha** -5\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 31 \n\n**Fort** +22 \n\n**Ref** +25 \n\n**Will** +16 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 170\n\n**Hardness**\n10\n</row>\n\n**Immunities**\n[bleed](/Conditions.aspx?ID=86), [death effects](/Rules.aspx?ID=2331), [disease](/Traits.aspx?ID=578), [doomed](/Conditions.aspx?ID=67), [drained](/Conditions.aspx?ID=68), [fatigued](/Conditions.aspx?ID=73), [healing](/Traits.aspx?ID=623), [mental](/Traits.aspx?ID=647), [nonlethal attacks](/Rules.aspx?ID=2311), [paralyzed](/Conditions.aspx?ID=85), [poison](/Traits.aspx?ID=669), [sickened](/Conditions.aspx?ID=91), [spirit](/Traits.aspx?ID=737), [unconscious](/Conditions.aspx?ID=95), [vitality](/Traits.aspx?ID=509), [void](/Traits.aspx?ID=510)\n\n**Top-Heavy** A spiral centurion's top-like design makes it susceptible to effects that would cause it to fall [prone](/Conditions.aspx?ID=88). The DC of any attempt to knock the spiral centurion prone is reduced by 5. If the spiral centurion attempts a check or saving throw to resist being knocked prone, it takes a –5 status penalty. A spiral centurion that has been knocked prone can't use any actions other than to attempt to [Stand](/Actions.aspx?ID=2303), but it must succeed at a DC 30 [Acrobatics](/Skills.aspx?ID=34) check to do so.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 40 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nblade +23 ([Agile](/Traits.aspx?ID=526), [sweep](/Traits.aspx?ID=708)),\n**Damage** 2d12+12 slashing\n\n**Hurl Blade** <actions string=\"Two Actions\" />  The spiral centurion hurls one of its blades with an angled spin to ensure a swooping flight path. The blade deals 6d6 slashing damage to each creature in a 40-foot [line](/Rules.aspx?ID=2388) (DC 30 [basic](/Rules.aspx?ID=2297) Reflex save). At the start of the spiral centurion's next turn, the blade swoops around and returns along the same flight path, again dealing 6d6 slashing damage (DC 30 basic Reflex save) to each creature along the same line.\n\n**Rev Up** <actions string=\"Single Action\" />  **Requirements** The spiral centurion hasn't acted yet this turn; **Effect** The spiral centurion [Strides](/Actions.aspx?ID=2305) up to its Speed. It then gains a +2 circumstance bonus to attack and damage rolls until the end of its turn.\n\n**[Trample](/MonsterAbilities.aspx?ID=81)** <actions string=\"Three Actions\" />  Medium or smaller, blade, DC 30\n\n**Whirling Death** <actions string=\"Three Actions\" />  The spiral centurion spins furiously in place, its blades extended to slice through nearby creatures. It makes up to five melee blade Strikes. No single creature can be targeted by more than one blade Strike during one use of this ability. These attacks count toward the spiral centurion's multiple attack penalty, but the multiple attack penalty doesn't increase until after all the attacks are made.\n\n</column>\n\n<aside>\n<title level=\"2\" noclass=\"true\" icon=\"\">Spiral Centurion Glitches</title>\n\nA spiral centurion might have one of the following glitches. \n\n**Dulled Blades** Its blade Strike deals only 2d10+5 bludgeoning damage. \n\n**Misaligned Gears** It loses Rev Up, and if it Strides more than once per round, it takes 1d10 damage. \n\n**Stuck in a Rut** It uses the same actions each round, regardless of the circumstances.\n</aside>"
+    }
+   }
+  },
+  {
+   "id": "hazard-472",
+   "class": "served twin (hp pools)",
+   "kind": "hazard",
+   "twinOf": "hazard-13",
+   "record": {
+    "name": "Hammer Of Forbiddance",
+    "source": "GM Core",
+    "page": 102,
+    "level": 11,
+    "traits": [
+     "Magical",
+     "Mechanical",
+     "Trap"
+    ],
+    "stealth": {
+     "dc": 30,
+     "minProf": "expert"
+    },
+    "description": [
+     " Hammer Of Forbiddance Source GM Core pg. 102 Complexity Simple An enormous hammer at an edifice’s entrance swings down in an attempt to damage a creature entering an area, push it back, and prevent it from going any further. --- Stealth DC 30 (expert) Disable DC 28 Thievery (expert) once on the hammer itself and once on its joint to prevent the hammer from swinging AC 32, Fort +24, Ref +15 Hammer Hardness 22 Hamer HP 88 (BT 44); Joint Hardness 16; Joint HP 64 (BT 32) Immunities critical hits, object immunities, precision damage Forbid Entry Reaction (divine) Trigger A creature attempts to enter through the entrance; Effect The hammer swings down, making a Strike against the triggering creature. Melee hammer +28, Damage 6d8+20 bludgeoning plus the target is knocked back 10 feet and must succeed at a DC 30 Will save or be unable to enter the edifice through any entrance for 24 hours (on a critical hit, the target automatically fails the Will save); no multiple attack penalty --- Reset The trap resets over the course of the round, and is ready to swing again 1 round later."
+    ],
+    "disable": {
+     "entries": [
+      "DC 28 Thievery (expert) once on the hammer itself and once on its joint to prevent the hammer from swinging"
+     ]
+    },
+    "routine": [],
+    "reset": [
+     "The trap resets over the course of the round, and is ready to swing again 1 round later."
+    ],
+    "complex": false,
+    "defenses": {
+     "ac": {
+      "std": 32
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 24
+      },
+      "ref": {
+       "std": 15
+      },
+      "will": {}
+     },
+     "hp": [
+      {
+       "hp": 88,
+       "name": "Hamer (BT 44)"
+      },
+      {
+       "hp": 64,
+       "name": "Joint (BT 32)"
+      }
+     ],
+     "immunities": [
+      "critical hits",
+      "object immunities",
+      "precision damage"
+     ],
+     "resistances": [],
+     "weaknesses": [],
+     "hardness": {
+      "std": 22
+     },
+     "bt": {
+      "std": 44
+     }
+    },
+    "actions": [
+     {
+      "name": "Forbid Entry",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [
+       "divine"
+      ],
+      "trigger": "A creature attempts to enter through the entrance",
+      "entries": [
+       "Effect The hammer swings down, making a Strike against the triggering creature."
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-472",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=472",
+     "markdown": "<title level=\"1\" right=\"Hazard 11\" pfs=\"\">[Hammer Of Forbiddance](/Hazards.aspx?ID=472)</title>\n\n<traits>\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=103\" />\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [GM Core](/Sources.aspx?ID=218) pg. 102\n\n**Complexity** Simple\n\n</column>\n\nAn enormous hammer at an edifice’s entrance swings down in an attempt to damage a creature entering an area, push it back, and prevent it from going any further.\n\n---\n\n**Stealth**\nDC 30 (expert)\n\n**Disable**\nDC 28 [Thievery](/Skills.aspx?ID=50) (expert) once on the hammer itself and once on its joint to prevent the hammer from swinging\n\n<column gap=\"tiny\">\n\n**AC** 32, **Fort** +24, **Ref** +15\n\n**Hammer Hardness**\n22\n\n**Hamer HP**\n88 (BT 44); **Joint Hardness** 16; **Joint HP** 64 (BT 32)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2190), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n</column>\n\n**Forbid Entry** <actions string=\"Reaction\" /> ([divine](/Traits.aspx?ID=579)) **Trigger** A creature attempts to enter through the entrance; **Effect** The hammer swings down, making a [Strike](/Actions.aspx?ID=2306) against the triggering creature.<br /> **Melee** hammer +28, **Damage** 6d8+20 bludgeoning plus the target is knocked back 10 feet and must succeed at a DC 30 Will save or be unable to enter the edifice through any entrance for 24 hours (on a critical hit, the target automatically fails the Will save); no multiple attack penalty\n\n---\n**Reset**\nThe trap resets over the course of the round, and is ready to swing again 1 round later."
+    }
+   }
+  },
+  {
+   "id": "hazard-489",
+   "class": "served twin (hp pools)",
+   "kind": "hazard",
+   "twinOf": "hazard-21",
+   "record": {
+    "name": "Drowning Pit",
+    "source": "GM Core",
+    "page": 106,
+    "level": 3,
+    "traits": [
+     "Complex",
+     "Mechanical",
+     "Trap"
+    ],
+    "stealth": {
+     "bonus": 10,
+     "minProf": "trained"
+    },
+    "description": [
+     " Drowning Pit Source GM Core pg. 106 Complexity Complex A trapdoor covers a 10-foot-square pit that’s 30 feet deep and has 5 feet of water at the bottom. Four water spouts in the walls connect to hidden water tanks. Each water spout extends out of a different wall, 6 inches from the top of the pit. --- Stealth +10 (trained); DC 22 (expert) to notice the water spouts once the pit opens Disable DC 18 Thievery (trained) to seal each water spout, DC 22 Thievery (trained) to open the trapdoor, or DC 22 Athletics to Force Open the trapdoor AC 19, Fort +8, Ref +5 Trapdoor Hardness 15 Trapdoor HP 60 (BT 30); Spout Hardness 8; Spout HP 32 (BT 16) Immunities critical hits, object immunities, precision damage Pitfall Reaction Trigger A creature walks onto the trapdoor; Effect The triggering creature falls in and takes damage from the fall, reduced by 5 feet for falling into the water (typically 12 bludgeoning damage). A creature can Grab an Edge to avoid falling. The trapdoor then slams shut, and the hazard rolls initiative. --- Routine (4 actions) The trap loses 1 action each turn for each disabled water spout. On each of the trap’s actions, a spout pours water, increasing the depth of the water by 5 feet. Once the pit is full of water, the pit stops using actions, but creatures in the pit begin drowning. --- Reset The trap can be reset if the door is manually reengaged and the water tanks are refilled; it can be reset without draining the pit, but doing so renders the pit less effective."
+    ],
+    "disable": {
+     "entries": [
+      "DC 18 Thievery (trained) to seal each water spout, DC 22 Thievery (trained) to open the trapdoor, or DC 22 Athletics to Force Open the trapdoor"
+     ]
+    },
+    "routine": [
+     "(4 actions) The trap loses 1 action each turn for each disabled water spout. On each of the trap’s actions, a spout pours water, increasing the depth of the water by 5 feet. Once the pit is full of water, the pit stops using actions, but creatures in the pit begin drowning."
+    ],
+    "reset": [
+     "The trap can be reset if the door is manually reengaged and the water tanks are refilled; it can be reset without draining the pit, but doing so renders the pit less effective."
+    ],
+    "complex": true,
+    "defenses": {
+     "ac": {
+      "std": 19
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 8
+      },
+      "ref": {
+       "std": 5
+      },
+      "will": {}
+     },
+     "hp": [
+      {
+       "hp": 60,
+       "name": "Trapdoor (BT 30)"
+      },
+      {
+       "hp": 32,
+       "name": "Spout (BT 16)"
+      }
+     ],
+     "immunities": [
+      "critical hits",
+      "object immunities",
+      "precision damage"
+     ],
+     "resistances": [],
+     "weaknesses": [],
+     "hardness": {
+      "std": 15
+     },
+     "bt": {
+      "std": 30
+     }
+    },
+    "actions": [
+     {
+      "name": "Pitfall",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "A creature walks onto the trapdoor",
+      "entries": [
+       "Effect The triggering creature falls in and takes damage from the fall, reduced by 5 feet for falling into the water (typically 12 bludgeoning damage). A creature can Grab an Edge to avoid falling. The trapdoor then slams shut, and the hazard rolls initiative."
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-489",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=489",
+     "markdown": "<title level=\"1\" right=\"Hazard 3\" pfs=\"\">[Drowning Pit](/Hazards.aspx?ID=489)</title>\n\n<traits>\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [GM Core](/Sources.aspx?ID=218) pg. 106\n\n**Complexity** Complex\n\n</column>\n\nA trapdoor covers a 10-foot-square pit that’s 30 feet deep and has 5 feet of water at the bottom. Four water spouts in the walls connect to hidden water tanks. Each water spout extends out of a different wall, 6 inches from the top of the pit.\n\n---\n\n**Stealth**\n+10 (trained); DC 22 (expert) to notice the water spouts once the pit opens\n\n**Disable**\nDC 18 [Thievery](/Skills.aspx?ID=50) (trained) to seal each water spout, DC 22 Thievery (trained) to open the trapdoor, or DC 22 [Athletics](/Skills.aspx?ID=36) to [Force Open](/Actions.aspx?ID=2375) the trapdoor\n\n<column gap=\"tiny\">\n\n**AC** 19, **Fort** +8, **Ref** +5\n\n**Trapdoor Hardness**\n15\n\n**Trapdoor HP**\n60 (BT 30); **Spout Hardness** 8; **Spout** HP 32 (BT 16)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2190), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n</column>\n\n**Pitfall** <actions string=\"Reaction\" /> **Trigger** A creature walks onto the trapdoor; **Effect** The triggering creature falls in and takes damage from the fall, reduced by 5 feet for falling into the water (typically 12 bludgeoning damage). A creature can [Grab an Edge](/Actions.aspx?ID=2313) to avoid falling. The trapdoor then slams shut, and the hazard rolls initiative.\n\n---\n**Routine**\n(4 actions) The trap loses 1 action each turn for each disabled water spout. On each of the trap’s actions, a spout pours water, increasing the depth of the water by 5 feet. Once the pit is full of water, the pit stops using actions, but creatures in the pit begin [drowning](/Rules.aspx?ID=2439).\n\n---\n**Reset**\nThe trap can be reset if the door is manually reengaged and the water tanks are refilled; it can be reset without draining the pit, but doing so renders the pit less effective."
+    }
+   }
+  },
+  {
+   "id": "hazard-494",
+   "class": "served twin (hp pools)",
+   "kind": "hazard",
+   "twinOf": "hazard-23",
+   "record": {
+    "name": "Spinning Blade Pillar",
+    "source": "GM Core",
+    "page": 107,
+    "level": 4,
+    "traits": [
+     "Complex",
+     "Mechanical",
+     "Trap"
+    ],
+    "stealth": {
+     "bonus": 11,
+     "minProf": "trained"
+    },
+    "description": [
+     " Spinning Blade Pillar Source GM Core pg. 107 Complexity Complex A metal pole with three razor-sharp spinning blades is hidden in the floor, connected to trigger plates in up to eight floor tiles and a hidden control panel within 30 feet. --- Stealth +11 (trained) or DC 26 (expert) to notice the control panel Disable DC 21 Thievery (trained) twice on the pillar, or DC 19 Thievery (expert) once on the control panel deactivates the whole trap. Breaking the control panel prevents anyone from disabling the trap using the control panel and prevents the trap from deactivating automatically (see Reset below). AC 21, Fort +10, Ref +12 Pillar Hardness 12 Pillar HP 48 (BT 24); Panel Hardness 5; Panel HP 20 (BT 10) Immunities critical hits, object immunities, precision damage Rising Pillar Reaction Trigger A creature steps on one of the trapped floor tiles; Effect The trap pops up in a grid intersection and makes a spinning blade Strike against one adjacent creature (if any), then rolls initiative. --- Routine (3 actions) The trap uses its first action to make a spinning blade Strike against each adjacent creature, its second action to move straight in a random direction (roll 1d4 to determine the direction), and its third to make a spinning blade Strike against each adjacent creature. This trap doesn’t take a multiple attack penalty. Speed 10 feet Melee Single Action spinning blade +12, Damage 2d10+5 slashing --- Reset The trap deactivates and resets after 1 minute."
+    ],
+    "disable": {
+     "entries": [
+      "DC 21 Thievery (trained) twice on the pillar, or DC 19 Thievery (expert) once on the control panel deactivates the whole trap. Breaking the control panel prevents anyone from disabling the trap using the control panel and prevents the trap from deactivating automatically (see Reset below)."
+     ]
+    },
+    "routine": [
+     "(3 actions) The trap uses its first action to make a spinning blade Strike against each adjacent creature, its second action to move straight in a random direction (roll 1d4 to determine the direction), and its third to make a spinning blade Strike against each adjacent creature. This trap doesn’t take a multiple attack penalty."
+    ],
+    "reset": [
+     "The trap deactivates and resets after 1 minute."
+    ],
+    "complex": true,
+    "defenses": {
+     "ac": {
+      "std": 21
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 10
+      },
+      "ref": {
+       "std": 12
+      },
+      "will": {}
+     },
+     "hp": [
+      {
+       "hp": 48,
+       "name": "Pillar (BT 24)"
+      },
+      {
+       "hp": 20,
+       "name": "Panel (BT 10)"
+      }
+     ],
+     "immunities": [
+      "critical hits",
+      "object immunities",
+      "precision damage"
+     ],
+     "resistances": [],
+     "weaknesses": [],
+     "hardness": {
+      "std": 12
+     },
+     "bt": {
+      "std": 24
+     }
+    },
+    "actions": [
+     {
+      "name": "Rising Pillar",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "A creature steps on one of the trapped floor tiles",
+      "entries": [
+       "Effect The trap pops up in a grid intersection and makes a spinning blade Strike against one adjacent creature (if any), then rolls initiative."
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-494",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=494",
+     "markdown": "<title level=\"1\" right=\"Hazard 4\" pfs=\"\">[Spinning Blade Pillar](/Hazards.aspx?ID=494)</title>\n\n<traits>\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [GM Core](/Sources.aspx?ID=218) pg. 107\n\n**Complexity** Complex\n\n</column>\n\nA metal pole with three razor-sharp spinning blades is hidden in the floor, connected to trigger plates in up to eight floor tiles and a hidden control panel within 30 feet.\n\n---\n\n**Stealth**\n+11 (trained) or DC 26 (expert) to notice the control panel\n\n**Disable**\nDC 21 [Thievery](/Skills.aspx?ID=50) (trained) twice on the pillar, or DC 19 Thievery (expert) once on the control panel deactivates the whole trap. Breaking the control panel prevents anyone from disabling the trap using the control panel and prevents the trap from deactivating automatically (see Reset below).\n\n<column gap=\"tiny\">\n\n**AC** 21, **Fort** +10, **Ref** +12\n\n**Pillar Hardness**\n12\n\n**Pillar HP**\n48 (BT 24); **Panel Hardness** 5; **Panel HP** 20 (BT 10)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2190), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n</column>\n\n**Rising Pillar** <actions string=\"Reaction\" /> **Trigger** A creature steps on one of the trapped floor tiles; **Effect** The trap pops up in a grid intersection and makes a spinning blade [Strike](/Actions.aspx?ID=2306) against one adjacent creature (if any), then rolls initiative.\n\n---\n**Routine**\n(3 actions) The trap uses its first action to make a spinning blade Strike against each adjacent creature, its second action to move straight in a random direction (roll 1d4 to determine the direction), and its third to make a spinning blade Strike against each adjacent creature. This trap doesn’t take a multiple attack penalty.\n\n**Speed** 10 feet \n\n**Melee** <actions string=\"Single Action\" /> spinning blade +12, **Damage** 2d10+5 slashing\n\n---\n**Reset**\nThe trap deactivates and resets after 1 minute."
+    }
+   }
+  },
+  {
+   "id": "hazard-486",
+   "class": "served twin (hazard strikes)",
+   "kind": "hazard",
+   "twinOf": "hazard-17",
+   "record": {
+    "name": "Vorpal Executioner",
+    "source": "GM Core",
+    "page": 105,
+    "level": 19,
+    "traits": [
+     "Mechanical",
+     "Trap"
+    ],
+    "stealth": {
+     "dc": 43,
+     "minProf": "expert"
+    },
+    "description": [
+     " Vorpal Executioner Source GM Core pg. 105 Complexity Simple A wickedly sharp saw blade descends and travels along grooves in a complex path throughout the room, attempting to decapitate everyone within. --- Stealth DC 43 (expert) Disable DC 41 Thievery (expert) at four different junctions to jam all the saw blade’s possible paths, preventing it from traveling through the room AC 43, Fort +32, Ref +32 Hardness 30 HP 120 (BT 60) per junction Immunities critical hits, object immunities, precision damage Total Decapitation Reaction Trigger A creature attempts to exit the room; Effect The saw blade travels along its path, making one Strike against each creature in the room, twisting and varying its height for a maximum chance of beheading its targets. Melee saw blade +40 (deadly d12, death), Damage 6d12+25 slashing plus decapitation; no multiple attack penalty Decapitation On a critical hit, a target must succeed at a DC 39 Fortitude save or be decapitated, dying instantly unless it can survive without a head --- Reset The trap resets over the course of the round and can be triggered again 1 round later."
+    ],
+    "disable": {
+     "entries": [
+      "DC 41 Thievery (expert) at four different junctions to jam all the saw blade’s possible paths, preventing it from traveling through the room"
+     ]
+    },
+    "routine": [],
+    "reset": [
+     "The trap resets over the course of the round and can be triggered again 1 round later."
+    ],
+    "complex": false,
+    "defenses": {
+     "ac": {
+      "std": 43
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 32
+      },
+      "ref": {
+       "std": 32
+      },
+      "will": {}
+     },
+     "hp": [
+      {
+       "hp": 120,
+       "name": "per junction"
+      }
+     ],
+     "immunities": [
+      "critical hits",
+      "object immunities",
+      "precision damage"
+     ],
+     "resistances": [],
+     "weaknesses": [],
+     "hardness": {
+      "std": 30
+     },
+     "bt": {
+      "std": 60
+     }
+    },
+    "actions": [
+     {
+      "name": "Total Decapitation",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "A creature attempts to exit the room",
+      "entries": [
+       "Effect The saw blade travels along its path, making one Strike against each creature in the room, twisting and varying its height for a maximum chance of beheading its targets."
+      ]
+     },
+     {
+      "name": "Decapitation",
+      "traits": [],
+      "entries": [
+       "On a critical hit, a target must succeed at a DC 39 Fortitude save or be decapitated, dying instantly unless it can survive without a head"
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-486",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=486",
+     "markdown": "<title level=\"1\" right=\"Hazard 19\" pfs=\"\">[Vorpal Executioner](/Hazards.aspx?ID=486)</title>\n\n<traits>\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [GM Core](/Sources.aspx?ID=218) pg. 105\n\n**Complexity** Simple\n\n</column>\n\nA wickedly sharp saw blade descends and travels along grooves in a complex path throughout the room, attempting to decapitate everyone within.\n\n---\n\n**Stealth**\nDC 43 (expert)\n\n**Disable**\nDC 41 [Thievery](/Skills.aspx?ID=50) (expert) at four different junctions to jam all the saw blade’s possible paths, preventing it from traveling through the room\n\n<column gap=\"tiny\">\n\n**AC** 43, **Fort** +32, **Ref** +32\n\n**Hardness**\n30\n\n**HP**\n120 (BT 60) per junction\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2190), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n</column>\n\n**Total Decapitation** <actions string=\"Reaction\" /> **Trigger** A creature attempts to exit the room; **Effect** The saw blade travels along its path, making one [Strike](/Actions.aspx?ID=2306) against each creature in the room, twisting and varying its height for a maximum chance of beheading its targets.\n\n**Melee** saw blade +40 ([deadly d12](/Traits.aspx?ID=570), [death](/Traits.aspx?ID=571)), **Damage** 6d12+25 slashing plus decapitation; no multiple attack penalty \n\n**Decapitation** On a critical hit, a target must succeed at a DC 39 Fortitude save or be decapitated, dying instantly unless it can survive without a head\n\n---\n**Reset**\nThe trap resets over the course of the round and can be triggered again 1 round later."
+    }
+   }
+  },
+  {
+   "id": "hazard-485",
+   "class": "served twin (hazard strikes)",
+   "kind": "hazard",
+   "twinOf": "hazard-37",
+   "record": {
+    "name": "Titanic Flytrap",
+    "source": "GM Core",
+    "page": 105,
+    "level": 4,
+    "traits": [
+     "Environmental"
+    ],
+    "stealth": {
+     "dc": 25,
+     "minProf": "trained"
+    },
+    "description": [
+     " Titanic Flytrap Source GM Core pg. 105 Complexity Simple On the surface, a titanic flytrap appears to be a patch of the more common flytrap plant, but beneath murky waters it hides a far larger set of jaws, reaching 10 feet across, reinforced with woody branches and lined with paralytic hairs. --- Stealth DC 25 (trained) Disable DC 22 Survival (trained) to mislead the flytrap’s sense of weight and pressure AC 21, Fort +15, Ref +8 HP 56 (BT 28) Immunities mental Resistances acid 20, fire 10 Snap Shut Reaction Trigger A Small or Medium creature moves into a square that is within reach of the flytrap’s hidden jaws; Effect The flytrap’s jaws snap shut, making a jaws Strike against the triggering creature. Melee Single Action jaws +17, Effect devour Devour The target is trapped by the flytrap’s jaws, gaining the grabbed condition until it Escapes (DC 21). Additionally, it is exposed to the titanic flytrap toxin from the hundreds of tiny hairs that line the inside of its leaves. If the flytrap’s jaws Strike was a critical success, the target takes a –2 circumstance penalty to its saving throws against this poison. At the end of each of the target’s turns that it remains grabbed, the target takes 3d6 acid damage. Titanic Flytrap Toxin (contact, poison) Saving Throw DC 21 Fortitude; Maximum Duration 4 rounds; Stage 1 2d6 poison damage and stunned 1 (1 round); Stage 2 3d6 poison damage and stunned 2 (1 round); Stage 3 4d6 poison damage and paralyzed (1 round) --- Reset 1 hour (or longer, after a large meal)"
+    ],
+    "disable": {
+     "entries": [
+      "DC 22 Survival (trained) to mislead the flytrap’s sense of weight and pressure"
+     ]
+    },
+    "routine": [],
+    "reset": [
+     "1 hour (or longer, after a large meal)"
+    ],
+    "complex": false,
+    "defenses": {
+     "ac": {
+      "std": 21
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 15
+      },
+      "ref": {
+       "std": 8
+      },
+      "will": {}
+     },
+     "hp": [
+      {
+       "hp": 56
+      }
+     ],
+     "immunities": [
+      "mental"
+     ],
+     "resistances": [
+      {
+       "name": "acid",
+       "amount": 20
+      },
+      {
+       "name": "fire",
+       "amount": 10
+      }
+     ],
+     "weaknesses": [],
+     "bt": {
+      "std": 28
+     }
+    },
+    "actions": [
+     {
+      "name": "Snap Shut",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "A Small or Medium creature moves into a square that is within reach of the flytrap’s hidden jaws",
+      "entries": [
+       "Effect The flytrap’s jaws snap shut, making a jaws Strike against the triggering creature."
+      ]
+     },
+     {
+      "name": "Devour",
+      "traits": [],
+      "entries": [
+       "The target is trapped by the flytrap’s jaws, gaining the grabbed condition until it Escapes (DC 21). Additionally, it is exposed to the titanic flytrap toxin from the hundreds of tiny hairs that line the inside of its leaves. If the flytrap’s jaws Strike was a critical success, the target takes a –2 circumstance penalty to its saving throws against this poison. At the end of each of the target’s turns that it remains grabbed, the target takes 3d6 acid damage."
+      ]
+     },
+     {
+      "name": "Titanic Flytrap Toxin",
+      "traits": [
+       "contact",
+       "poison"
+      ],
+      "entries": [
+       "Saving Throw DC 21 Fortitude\nMaximum Duration 4 rounds\nStage 1 2d6 poison damage and stunned 1 (1 round)\nStage 2 3d6 poison damage and stunned 2 (1 round)\nStage 3 4d6 poison damage and paralyzed (1 round)"
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-485",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=485",
+     "markdown": "<title level=\"1\" right=\"Hazard 4\" pfs=\"\">[Titanic Flytrap](/Hazards.aspx?ID=485)</title>\n\n<traits>\n<trait label=\"Environmental\" url=\"/Traits.aspx?ID=62\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [GM Core](/Sources.aspx?ID=218) pg. 105\n\n**Complexity** Simple\n\n</column>\n\nOn the surface, a titanic flytrap appears to be a patch of the more common flytrap plant, but beneath murky waters it hides a far larger set of jaws, reaching 10 feet across, reinforced with woody branches and lined with paralytic hairs.\n\n---\n\n**Stealth**\nDC 25 (trained)\n\n**Disable**\nDC 22 [Survival](/Skills.aspx?ID=49) (trained) to mislead the flytrap’s sense of weight and pressure\n\n<column gap=\"tiny\">\n\n**AC** 21, **Fort** +15, **Ref** +8\n\n**HP**\n56 (BT 28)\n\n**Immunities**\n[mental](/Traits.aspx?ID=647)\n\n**Resistances**\n[acid 20](/Traits.aspx?ID=524), [fire 10](/Traits.aspx?ID=604)\n\n</column>\n\n**Snap Shut** <actions string=\"Reaction\" /> **Trigger** A Small or Medium creature moves into a square that is within reach of the flytrap’s hidden jaws; **Effect** The flytrap’s jaws snap shut, making a jaws [Strike](/Actions.aspx?ID=2306) against the triggering creature.\n\n**Melee** <actions string=\"Single Action\" /> jaws +17, **Effect** devour \n\n**Devour** The target is trapped by the flytrap’s jaws, gaining the [grabbed](/Conditions.aspx?ID=77) condition until it [Escapes](/Actions.aspx?ID=2296) (DC 21). Additionally, it is exposed to the titanic flytrap toxin from the hundreds of tiny hairs that line the inside of its leaves. If the flytrap’s jaws Strike was a critical success, the target takes a –2 circumstance penalty to its saving throws against this poison. At the end of each of the target’s turns that it remains grabbed, the target takes 3d6 [acid](/Traits.aspx?ID=524) damage.\n\n**Titanic Flytrap Toxin** ([contact](/Traits.aspx?ID=565), [poison](/Traits.aspx?ID=669)) **Saving Throw** DC 21 Fortitude; **Maximum Duration** 4 rounds; **Stage 1** 2d6 poison damage and [stunned](/Conditions.aspx?ID=93) 1 (1 round); **Stage 2** 3d6 poison damage and stunned 2 (1 round); **Stage 3** 4d6 poison damage and [paralyzed](/Conditions.aspx?ID=85) (1 round)\n\n---\n**Reset**\n1 hour (or longer, after a large meal)"
+    }
+   }
+  },
+  {
+   "id": "hazard-654",
+   "class": "served twin (hazard strikes)",
+   "kind": "hazard",
+   "twinOf": "hazard-428",
+   "record": {
+    "name": "Arms of the Drowned",
+    "source": "Season of Ghosts (Hardcover)",
+    "page": 120,
+    "level": 3,
+    "traits": [
+     "Unique",
+     "Unique",
+     "Complex",
+     "Haunt"
+    ],
+    "stealth": {
+     "bonus": 20,
+     "minProf": "expert"
+    },
+    "description": [
+     " Arms of the Drowned Source Season of Ghosts (Hardcover) pg. 120 Complexity Complex Ghostly arms rise up from the water to clutch and grab, while a geyser of leech-infested water sprays up into the central shrine. --- Stealth +20 (expert) to catch glimpses of ghostly figures drowning in the water below Disable DC 20 Religion to offer prayers to calm the haunt, or DC 23 Intimidation to threaten the unquiet spirits away AC 19, Fort +6, Ref +12 HP 46 (BT 23) Immunities critical hits, precision damage Weaknesses vitality 5 Rising Waters Reaction Trigger A creature swims more than halfway across the river, ends their turn in the bridge shrine, or sets foot onto the northern bridge; Effect Ghostly arms rise up from the river to grab and shake both bridges. Creatures standing on the bridge must attempt a DC 20 Reflex save or be knocked prone. A blast of river water sprays up inside the shrine to deposit two brood leech swarms in the shrine. The haunt and the leech swarms then roll initiative. --- Routine (3 actions) Ghostly arms flail about and attempt to grab creatures in the shrine or on either bridge. Each round, the haunt uses 3 actions to attempt to grapple a PC on the bridge or in the shrine. If a PC is restrained, the haunt can use one of its actions to drag a PC into the river. A PC who’s restrained in the river risks drowning. Melee Single Action ghostly arms +12, Effect grapple --- Reset The haunt deactivates and resets at the start of any round in which the PCs aren’t in the river, on the bridges, or in the shrines, but the leech swarms remain in the shrine for 10 minutes before retreating back into the water below."
+    ],
+    "disable": {
+     "entries": [
+      "DC 20 Religion to offer prayers to calm the haunt, or DC 23 Intimidation to threaten the unquiet spirits away"
+     ]
+    },
+    "routine": [
+     "(3 actions) Ghostly arms flail about and attempt to grab creatures in the shrine or on either bridge. Each round, the haunt uses 3 actions to attempt to grapple a PC on the bridge or in the shrine. If a PC is restrained, the haunt can use one of its actions to drag a PC into the river. A PC who’s restrained in the river risks drowning."
+    ],
+    "reset": [
+     "The haunt deactivates and resets at the start of any round in which the PCs aren’t in the river, on the bridges, or in the shrines, but the leech swarms remain in the shrine for 10 minutes before retreating back into the water below."
+    ],
+    "complex": true,
+    "defenses": {
+     "ac": {
+      "std": 19
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 6
+      },
+      "ref": {
+       "std": 12
+      },
+      "will": {}
+     },
+     "hp": [
+      {
+       "hp": 46
+      }
+     ],
+     "immunities": [
+      "critical hits",
+      "precision damage"
+     ],
+     "resistances": [],
+     "weaknesses": [
+      {
+       "name": "vitality",
+       "amount": 5
+      }
+     ],
+     "bt": {
+      "std": 23
+     }
+    },
+    "actions": [
+     {
+      "name": "Rising Waters",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "A creature swims more than halfway across the river, ends their turn in the bridge shrine, or sets foot onto the northern bridge",
+      "entries": [
+       "Effect Ghostly arms rise up from the river to grab and shake both bridges. Creatures standing on the bridge must attempt a DC 20 Reflex save or be knocked prone. A blast of river water sprays up inside the shrine to deposit two brood leech swarms in the shrine. The haunt and the leech swarms then roll initiative."
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-654",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=654",
+     "markdown": "<title level=\"1\" right=\"Hazard 3\" pfs=\"\">[Arms of the Drowned](/Hazards.aspx?ID=654)</title>\n\n<traits>\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Unique\" url=\"/Traits.aspx?ID=723\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Haunt\" url=\"/Traits.aspx?ID=622\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Season of Ghosts (Hardcover)](/Sources.aspx?ID=294) pg. 120\n\n**Complexity** Complex\n\n</column>\n\nGhostly arms rise up from the water to clutch and grab, while a geyser of leech-infested water sprays up into the central shrine.\n\n---\n\n**Stealth**\n+20 (expert) to catch glimpses of ghostly figures drowning in the water below\n\n**Disable**\nDC 20 [Religion](/Skills.aspx?ID=46) to offer prayers to calm the haunt, or DC 23 [Intimidation](/Skills.aspx?ID=40) to threaten the unquiet spirits away\n\n<column gap=\"tiny\">\n\n**AC** 19, **Fort** +6, **Ref** +12\n\n**HP**\n46 (BT 23)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2314), precision damage\n\n**Weaknesses**\n[vitality](/Traits.aspx?ID=509) 5\n\n</column>\n\n**Rising Waters** <actions string=\"Reaction\" /> **Trigger** A creature swims more than halfway across the river, ends their turn in the bridge shrine, or sets foot onto the northern bridge; **Effect** Ghostly arms rise up from the river to grab and shake both bridges. Creatures standing on the bridge must attempt a DC 20 Reflex save or be knocked [prone](/Conditions.aspx?ID=88). A blast of river water sprays up inside the shrine to deposit two brood leech swarms in the shrine. The haunt and the leech swarms then roll initiative.\n\n---\n**Routine**\n(3 actions) Ghostly arms flail about and attempt to grab creatures in the shrine or on either bridge. Each round, the haunt uses 3 actions to attempt to grapple a PC on the bridge or in the shrine. If a PC is [restrained](/Conditions.aspx?ID=90), the haunt can use one of its actions to drag a PC into the river. A PC who’s restrained in the river risks drowning. <br />**Melee** <actions string=\"Single Action\" /> ghostly arms +12, **Effect** [grapple](/Actions.aspx?ID=2376)\n\n---\n**Reset**\nThe haunt deactivates and resets at the start of any round in which the PCs aren’t in the river, on the bridges, or in the shrines, but the leech swarms remain in the shrine for 10 minutes before retreating back into the water below."
+    }
+   }
+  },
+  {
+   "id": "hazard-477",
+   "class": "served twin (hazard strikes)",
+   "kind": "hazard",
+   "twinOf": "hazard-2",
+   "record": {
+    "name": "Poisoned Lock",
+    "source": "GM Core",
+    "page": 103,
+    "level": 1,
+    "traits": [
+     "Mechanical",
+     "Trap"
+    ],
+    "stealth": {
+     "dc": 17,
+     "minProf": "trained"
+    },
+    "description": [
+     " Poisoned Lock Source GM Core pg. 103 Complexity Simple A spring-loaded, poisoned spine is hidden near the keyhole of a lock. Disabling or breaking the trap does not disable or break the lock. --- Stealth DC 17 (trained) Disable DC 17 Thievery (trained) on the spring mechanism AC 15, Fort +8, Ref +4 Hardness 6 HP 24 (BT 12) Immunities Critical hits, object immunities, precision damage Spring Reaction Trigger A creature tries to unlock or Pick the Lock; Effect A spine extends to Strike the triggering creature. Melee spine +13, Damage 1 piercing plus cladis poison Cladis Poison (poison) Saving Throw DC 19 Fortitude; Maximum Duration 4 hours; Stage 1 1d6 poison damage and drained 1 (1 hour); Stage 2 2d6 poison damage and drained 2 (1 hour); Stage 3 3d6 poison damage and drained 2 (1 hour)"
+    ],
+    "disable": {
+     "entries": [
+      "DC 17 Thievery (trained) on the spring mechanism"
+     ]
+    },
+    "routine": [],
+    "reset": [],
+    "complex": false,
+    "defenses": {
+     "ac": {
+      "std": 15
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 8
+      },
+      "ref": {
+       "std": 4
+      },
+      "will": {}
+     },
+     "hp": [
+      {
+       "hp": 24
+      }
+     ],
+     "immunities": [
+      "Critical hits",
+      "object immunities",
+      "precision damage"
+     ],
+     "resistances": [],
+     "weaknesses": [],
+     "hardness": {
+      "std": 6
+     },
+     "bt": {
+      "std": 12
+     }
+    },
+    "actions": [
+     {
+      "name": "Spring",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "A creature tries to unlock or Pick the Lock",
+      "entries": [
+       "Effect A spine extends to Strike the triggering creature."
+      ]
+     },
+     {
+      "name": "Cladis Poison",
+      "traits": [
+       "poison"
+      ],
+      "entries": [
+       "Saving Throw DC 19 Fortitude\nMaximum Duration 4 hours\nStage 1 1d6 poison damage and drained 1 (1 hour)\nStage 2 2d6 poison damage and drained 2 (1 hour)\nStage 3 3d6 poison damage and drained 2 (1 hour)"
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-477",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=477",
+     "markdown": "<title level=\"1\" right=\"Hazard 1\" pfs=\"\">[Poisoned Lock](/Hazards.aspx?ID=477)</title>\n\n<traits>\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [GM Core](/Sources.aspx?ID=218) pg. 103\n\n**Complexity** Simple\n\n</column>\n\nA spring-loaded, poisoned spine is hidden near the keyhole of a lock. Disabling or breaking the trap does not disable or break the lock.\n\n---\n\n**Stealth**\nDC 17 (trained)\n\n**Disable**\nDC 17 [Thievery](/Skills.aspx?ID=50) (trained) on the spring mechanism\n\n<column gap=\"tiny\">\n\n**AC** 15, **Fort** +8, **Ref** +4\n\n**Hardness**\n6\n\n**HP**\n24 (BT 12)\n\n**Immunities**\n[Critical hits](/Rules.aspx?ID=2190), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n</column>\n\n**Spring** <actions string=\"Reaction\" /> **Trigger** A creature tries to unlock or [Pick the Lock](/Actions.aspx?ID=2412); **Effect** A spine extends to [Strike](/Actions.aspx?ID=2306) the triggering creature. \n\n**Melee** spine +13, **Damage** 1 piercing plus cladis poison \n\n**Cladis Poison** ([poison](/Traits.aspx?ID=669)) **Saving Throw** DC 19 Fortitude; **Maximum Duration** 4 hours; **Stage 1** 1d6 poison damage and [drained](/Conditions.aspx?ID=68) 1 (1 hour); **Stage 2** 2d6 poison damage and drained 2 (1 hour); **Stage 3** 3d6 poison damage and drained 2 (1 hour)"
+    }
+   }
+  },
+  {
+   "id": "hazard-474",
+   "class": "served twin (hazard AC)",
+   "kind": "hazard",
+   "twinOf": "hazard-1",
+   "record": {
+    "name": "Hidden Pit",
+    "source": "GM Core",
+    "page": 102,
+    "level": 0,
+    "traits": [
+     "Mechanical",
+     "Trap"
+    ],
+    "stealth": {
+     "dc": 18
+    },
+    "description": [
+     " Hidden Pit Source GM Core pg. 102 Complexity Simple A wooden trapdoor covers a pit that’s 10 feet square and 20 feet deep. --- Stealth DC 18 (or 0 if the trapdoor is disabled or broken) Disable DC 12 Thievery to remove the trapdoor AC 10, Fort +1, Ref +1 Trapdoor Hardness 3 Trapdoor HP 12 (BT 6) Immunities critical hits, object immunities, precision damage Pitfall Reaction Trigger A creature walks onto the trapdoor; Effect The triggering creature falls in and takes falling damage (typically 10 bludgeoning damage). That creature can use the Grab an Edge reaction to avoid falling. --- Reset Creatures can still fall into the trap, but the trapdoor must be reset manually for the trap to become hidden again."
+    ],
+    "disable": {
+     "entries": [
+      "DC 12 Thievery to remove the trapdoor"
+     ]
+    },
+    "routine": [],
+    "reset": [
+     "Creatures can still fall into the trap, but the trapdoor must be reset manually for the trap to become hidden again."
+    ],
+    "complex": false,
+    "defenses": {
+     "ac": {
+      "std": 10
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 1
+      },
+      "ref": {
+       "std": 1
+      },
+      "will": {}
+     },
+     "hp": [
+      {
+       "hp": 12,
+       "name": "Trapdoor"
+      }
+     ],
+     "immunities": [
+      "critical hits",
+      "object immunities",
+      "precision damage"
+     ],
+     "resistances": [],
+     "weaknesses": [],
+     "hardness": {
+      "std": 3
+     },
+     "bt": {
+      "std": 6
+     }
+    },
+    "actions": [
+     {
+      "name": "Pitfall",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "A creature walks onto the trapdoor",
+      "entries": [
+       "Effect The triggering creature falls in and takes falling damage (typically 10 bludgeoning damage). That creature can use the Grab an Edge reaction to avoid falling."
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-474",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=474",
+     "markdown": "<title level=\"1\" right=\"Hazard 0\" pfs=\"\">[Hidden Pit](/Hazards.aspx?ID=474)</title>\n\n<traits>\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [GM Core](/Sources.aspx?ID=218) pg. 102\n\n**Complexity** Simple\n\n</column>\n\nA wooden trapdoor covers a pit that’s 10 feet square and 20 feet deep.\n\n---\n\n**Stealth**\nDC 18 (or 0 if the trapdoor is disabled or [broken](/Conditions.aspx?ID=60))\n\n**Disable**\nDC 12 [Thievery](/Skills.aspx?ID=50) to remove the trapdoor\n\n<column gap=\"tiny\">\n\n**AC** 10, **Fort** +1, **Ref** +1\n\n**Trapdoor Hardness**\n3\n\n**Trapdoor HP**\n12 (BT 6)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2190), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n</column>\n\n**Pitfall** <actions string=\"Reaction\" /> **Trigger** A creature walks onto the trapdoor; **Effect** The triggering creature falls in and takes falling damage (typically 10 bludgeoning damage). That creature can use the [Grab an Edge](/Actions.aspx?ID=2313) reaction to avoid falling.\n\n---\n**Reset**\nCreatures can still fall into the trap, but the trapdoor must be reset manually for the trap to become hidden again."
+    }
+   }
+  },
+  {
+   "id": "hazard-469",
+   "class": "served twin (hazard AC)",
+   "kind": "hazard",
+   "twinOf": "hazard-7",
+   "record": {
+    "name": "Fireball Rune",
+    "source": "GM Core",
+    "page": 101,
+    "level": 5,
+    "traits": [
+     "Fire",
+     "Magical",
+     "Trap"
+    ],
+    "stealth": {
+     "dc": 24,
+     "minProf": "expert"
+    },
+    "description": [
+     " Fireball Rune Source GM Core pg. 101 Complexity Simple An invisible rune creates an invisible, spherical magical sensor with a 20-foot radius. --- Stealth DC 24 (expert) Disable DC 22 Thievery (expert) to erase the rune without triggering the sensor, or dispel magic (3rd rank; counteract DC 20) to counteract the rune Fireball Reaction (arcane, fire) Trigger A living creature enters the sensor area; Effect The rune detonates a fireball centered on the triggering creature’s square. This is a 3rd-rank fireball spell that deals 6d6 fire damage (DC 22 basic Reflex save)."
+    ],
+    "disable": {
+     "entries": [
+      "DC 22 Thievery (expert) to erase the rune without triggering the sensor, or dispel magic (3rd rank; counteract DC 20) to counteract the rune"
+     ]
+    },
+    "routine": [],
+    "reset": [],
+    "complex": false,
+    "defenses": {
+     "ac": {},
+     "savingThrows": {
+      "fort": {},
+      "ref": {},
+      "will": {}
+     },
+     "hp": [],
+     "immunities": [],
+     "resistances": [],
+     "weaknesses": []
+    },
+    "actions": [
+     {
+      "name": "Fireball",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [
+       "arcane",
+       "fire"
+      ],
+      "trigger": "A living creature enters the sensor area",
+      "entries": [
+       "Effect The rune detonates a fireball centered on the triggering creature’s square. This is a 3rd-rank fireball spell that deals 6d6 fire damage (DC 22 basic Reflex save)."
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-469",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=469",
+     "markdown": "<title level=\"1\" right=\"Hazard 5\" pfs=\"\">[Fireball Rune](/Hazards.aspx?ID=469)</title>\n\n<traits>\n<trait label=\"Fire\" url=\"/Traits.aspx?ID=72\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=103\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [GM Core](/Sources.aspx?ID=218) pg. 101\n\n**Complexity** Simple\n\n</column>\n\nAn invisible rune creates an invisible, spherical magical sensor with a 20-foot radius.\n\n---\n\n**Stealth**\nDC 24 (expert)\n\n**Disable**\nDC 22 [Thievery](/Skills.aspx?ID=50) (expert) to erase the rune without triggering the sensor, or [_dispel magic_](/Spells.aspx?ID=1493) (3rd rank; [counteract](/Rules.aspx?ID=3280) DC 20) to counteract the rune\n\n<column gap=\"tiny\">\n\n</column>\n\n**Fireball** <actions string=\"Reaction\" /> ([arcane](/Traits.aspx?ID=534), [fire](/Traits.aspx?ID=604)) **Trigger** A living creature enters the sensor area; **Effect** The rune detonates a fireball centered on the triggering creature’s square. This is a 3rd-rank [_fireball_](/Spells.aspx?ID=1530) spell that deals 6d6 fire damage (DC 22 [basic](/Rules.aspx?ID=2297) Reflex save)."
+    }
+   }
+  },
+  {
+   "id": "hazard-302",
+   "class": "served twin (hazard saves)",
+   "kind": "hazard",
+   "twinOf": "hazard-263",
+   "record": {
+    "name": "Glyph of Warding",
+    "source": "Kingmaker Companion Guide",
+    "page": 79,
+    "level": 13,
+    "traits": [
+     "Magical",
+     "Trap"
+    ],
+    "stealth": {
+     "dc": 34,
+     "minProf": "trained"
+    },
+    "description": [
+     " Glyph of Warding Source Kingmaker Companion Guide pg. 79, Pathfinder #184: The Ghouls Hunger pg. 50, Pathfinder #184: The Ghouls Hunger pg. 28 Complexity Simple An hourglass-shaped glyph flashes with mauve light, then seems to quickly drain its sand away, as if to indicate time has suddenly run out. --- Stealth DC 34 (trained) Disable DC 34 Thievery (trained) to remove the glyph without triggering it, or dispel magic (7th level, counteract DC 34) to counteract the glyph. Release Spell Reaction Trigger A creature attempting to open the desk drawer or the secret door to area D6 triggers the associated glyph; Effect The glyph of warding targets the creature with a spirit blast (save DC 34)."
+    ],
+    "disable": {
+     "entries": [
+      "DC 34 Thievery (trained) to remove the glyph without triggering it, or dispel magic (7th level, counteract DC 34) to counteract the glyph."
+     ]
+    },
+    "routine": [],
+    "reset": [],
+    "complex": false,
+    "defenses": {
+     "ac": {},
+     "savingThrows": {
+      "fort": {},
+      "ref": {},
+      "will": {}
+     },
+     "hp": [],
+     "immunities": [],
+     "resistances": [],
+     "weaknesses": []
+    },
+    "actions": [
+     {
+      "name": "Release Spell",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "A creature attempting to open the desk drawer or the secret door to area D6 triggers the associated glyph",
+      "entries": [
+       "Effect The glyph of warding targets the creature with a spirit blast (save DC 34)."
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-302",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=302",
+     "markdown": "<title level=\"1\" right=\"Hazard 13\" pfs=\"\">[Glyph of Warding](/Hazards.aspx?ID=302)</title>\n\n<traits>\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=103\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Kingmaker Companion Guide](/Sources.aspx?ID=151) pg. 79, [Pathfinder #184: The Ghouls Hunger](/Sources.aspx?ID=147) pg. 50, [Pathfinder #184: The Ghouls Hunger](/Sources.aspx?ID=147) pg. 28\n\n**Complexity** Simple\n\n</column>\n\nAn hourglass-shaped glyph flashes with mauve light, then seems to quickly drain its sand away, as if to indicate time has suddenly run out.\n\n---\n\n**Stealth**\nDC 34 (trained)\n\n**Disable**\nDC 34 [Thievery](/Skills.aspx?ID=17) (trained) to remove the glyph without triggering it, or [_dispel magic_](/Spells.aspx?ID=78) (7th level, counteract DC 34) to counteract the glyph.\n\n<column gap=\"tiny\">\n\n</column>\n\n**Release Spell** <actions string=\"Reaction\" /> **Trigger** A creature attempting to open the desk drawer or the secret door to area D6 triggers the associated glyph; **Effect** The glyph of warding targets the creature with a [_spirit blast_](/Spells.aspx?ID=301) (save DC 34)."
+    }
+   }
+  },
+  {
+   "id": "hazard-491",
+   "class": "served twin (hazard saves)",
+   "kind": "hazard",
+   "twinOf": "hazard-47",
+   "record": {
+    "name": "Flensing Blades",
+    "source": "GM Core",
+    "page": 107,
+    "level": 12,
+    "traits": [
+     "Complex",
+     "Haunt"
+    ],
+    "stealth": {
+     "bonus": 25,
+     "minProf": "expert"
+    },
+    "description": [
+     " Flensing Blades Source GM Core pg. 107 Complexity Complex A whirling tornado of spectrally propelled glass and steel slices whatever it touches to ribbons. --- Stealth +25 (expert) Disable DC 35 Thievery (master) to precisely adjust the blades so that they destroy each other, or DC 38 Religion (expert) to weaken the haunt; four successes are required to disable it AC 33, Fort +27, Ref +25, Will +22 Hardness 20 HP 100 (BT 50) Immunities critical hits, object immunities, precision damage Weaknesses vitality 15 Whirling Blades Reaction Trigger Three or more creatures enter the area of the haunt; Effect Sharp fragments lift up from the ground and begin to spin in rapid circles taking up one 5-foot square. The haunt rolls initiative. --- Routine (3 actions) The tornado of blades uses 3 actions to move, traveling up to 30 feet with each action and dealing 2d10+10 slashing damage. Each creature in its path must attempt a DC 33 Reflex save. Each successful check to disable this hazard reduces the haunt’s movement by 30 feet, and the fourth success disables it completely. Critical Success The creature is unaffected. Success The creature is unaffected. Failure The creature takes full damage plus 1d10 persistent bleed damage. Critical Failure The creature takes double damage and 1d10 persistent bleed damage. It also becomes wounded 1 (or increases its wounded value by 1, if it is already wounded). --- Reset The haunt draws jagged shards back into its area over the course of an hour, after which it can trigger again."
+    ],
+    "disable": {
+     "entries": [
+      "DC 35 Thievery (master) to precisely adjust the blades so that they destroy each other, or DC 38 Religion (expert) to weaken the haunt; four successes are required to disable it"
+     ]
+    },
+    "routine": [
+     "(3 actions) The tornado of blades uses 3 actions to move, traveling up to 30 feet with each action and dealing 2d10+10 slashing damage. Each creature in its path must attempt a DC 33 Reflex save. Each successful check to disable this hazard reduces the haunt’s movement by 30 feet, and the fourth success disables it completely.\nCritical Success The creature is unaffected.\nSuccess The creature is unaffected.\nFailure The creature takes full damage plus 1d10 persistent bleed damage.\nCritical Failure The creature takes double damage and 1d10 persistent bleed damage. It also becomes wounded 1 (or increases its wounded value by 1, if it is already wounded)."
+    ],
+    "reset": [
+     "The haunt draws jagged shards back into its area over the course of an hour, after which it can trigger again."
+    ],
+    "complex": true,
+    "defenses": {
+     "ac": {
+      "std": 33
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 27
+      },
+      "ref": {
+       "std": 25
+      },
+      "will": {
+       "std": 22
+      }
+     },
+     "hp": [
+      {
+       "hp": 100
+      }
+     ],
+     "immunities": [
+      "critical hits",
+      "object immunities",
+      "precision damage"
+     ],
+     "resistances": [],
+     "weaknesses": [
+      {
+       "name": "vitality",
+       "amount": 15
+      }
+     ],
+     "hardness": {
+      "std": 20
+     },
+     "bt": {
+      "std": 50
+     }
+    },
+    "actions": [
+     {
+      "name": "Whirling Blades",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "Three or more creatures enter the area of the haunt",
+      "entries": [
+       "Effect Sharp fragments lift up from the ground and begin to spin in rapid circles taking up one 5-foot square. The haunt rolls initiative."
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-491",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=491",
+     "markdown": "<title level=\"1\" right=\"Hazard 12\" pfs=\"\">[Flensing Blades](/Hazards.aspx?ID=491)</title>\n\n<traits>\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Haunt\" url=\"/Traits.aspx?ID=88\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [GM Core](/Sources.aspx?ID=218) pg. 107\n\n**Complexity** Complex\n\n</column>\n\nA whirling tornado of spectrally propelled glass and steel slices whatever it touches to ribbons.\n\n---\n\n**Stealth**\n+25 (expert)\n\n**Disable**\nDC 35 [Thievery](/Skills.aspx?ID=50) (master) to precisely adjust the blades so that they destroy each other, or DC 38 [Religion](/Skills.aspx?ID=46) (expert) to weaken the haunt; four successes are required to disable it\n\n<column gap=\"tiny\">\n\n**AC** 33, **Fort** +27, **Ref** +25, **Will** +22\n\n**Hardness**\n20\n\n**HP**\n100 (BT 50)\n\n**Immunities**\n[critical hits](/Rules.aspx?ID=2190), [object immunities](/Rules.aspx?ID=2161), precision damage\n\n**Weaknesses**\n[vitality](/Traits.aspx?ID=509) 15\n\n</column>\n\n**Whirling Blades** <actions string=\"Reaction\" /> **Trigger** Three or more creatures enter the area of the haunt; **Effect** Sharp fragments lift up from the ground and begin to spin in rapid circles taking up one 5-foot square. The haunt rolls initiative.\n\n---\n**Routine**\n(3 actions) The tornado of blades uses 3 actions to move, traveling up to 30 feet with each action and dealing 2d10+10 slashing damage. Each creature in its path must attempt a DC 33 Reflex save. Each successful check to [disable](/Actions.aspx?ID=2411) this hazard reduces the haunt’s movement by 30 feet, and the fourth success disables it completely. \n\n**Critical Success** The creature is unaffected.<br />\n**Success** The creature is unaffected.<br />\n**Failure** The creature takes full damage plus 1d10 {{conditions 86 \"persistent bleed damage\"}}.<br />\n**Critical Failure** The creature takes double damage and 1d10 persistent bleed damage. It also becomes {{conditions 99 \"wounded\"}} 1 (or increases its wounded value by 1, if it is already wounded).\n\n---\n**Reset**\nThe haunt draws jagged shards back into its area over the course of an hour, after which it can trigger again."
+    }
+   }
+  },
+  {
+   "id": "hazard-468",
+   "class": "served twin (hazard saves)",
+   "kind": "hazard",
+   "twinOf": "hazard-5",
+   "record": {
+    "name": "Electric Latch Rune",
+    "source": "GM Core",
+    "page": 101,
+    "level": 3,
+    "traits": [
+     "Electricity",
+     "Magical",
+     "Trap"
+    ],
+    "stealth": {
+     "dc": 20,
+     "minProf": "trained"
+    },
+    "description": [
+     " Electric Latch Rune Source GM Core pg. 101 Complexity Simple An invisible rune imprinted on a door latch releases a powerful electric discharge. --- Stealth DC 20 (trained) Disable DC 20 Thievery (expert) to scratch out the rune without allowing electricity to flow, or dispel magic (2nd rank; counteract DC 18) to counteract the rune Electrocution Reaction (arcane, electricity) Trigger A creature grasps the door latch directly or with a tool; Effect The trap deals 3d12 electricity damage to the triggering creature (DC 22 basic Reflex save)."
+    ],
+    "disable": {
+     "entries": [
+      "DC 20 Thievery (expert) to scratch out the rune without allowing electricity to flow, or dispel magic (2nd rank; counteract DC 18) to counteract the rune"
+     ]
+    },
+    "routine": [],
+    "reset": [],
+    "complex": false,
+    "defenses": {
+     "ac": {},
+     "savingThrows": {
+      "fort": {},
+      "ref": {},
+      "will": {}
+     },
+     "hp": [],
+     "immunities": [],
+     "resistances": [],
+     "weaknesses": []
+    },
+    "actions": [
+     {
+      "name": "Electrocution",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [
+       "arcane",
+       "electricity"
+      ],
+      "trigger": "A creature grasps the door latch directly or with a tool",
+      "entries": [
+       "Effect The trap deals 3d12 electricity damage to the triggering creature (DC 22 basic Reflex save)."
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-468",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=468",
+     "markdown": "<title level=\"1\" right=\"Hazard 3\" pfs=\"\">[Electric Latch Rune](/Hazards.aspx?ID=468)</title>\n\n<traits>\n<trait label=\"Electricity\" url=\"/Traits.aspx?ID=56\" />\n<trait label=\"Magical\" url=\"/Traits.aspx?ID=103\" />\n<trait label=\"Trap\" url=\"/Traits.aspx?ID=158\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [GM Core](/Sources.aspx?ID=218) pg. 101\n\n**Complexity** Simple\n\n</column>\n\nAn invisible rune imprinted on a door latch releases a powerful electric discharge.\n\n---\n\n**Stealth**\nDC 20 (trained)\n\n**Disable**\nDC 20 [Thievery](/Skills.aspx?ID=50) (expert) to scratch out the rune without allowing electricity to flow, or [_dispel magic_](/Spells.aspx?ID=1493) (2nd rank; [counteract](/Rules.aspx?ID=2250) DC 18) to counteract the rune\n\n<column gap=\"tiny\">\n\n</column>\n\n**Electrocution** <actions string=\"Reaction\" /> ([arcane](/Traits.aspx?ID=534), [electricity](/Traits.aspx?ID=586)) **Trigger** A creature grasps the door latch directly or with a tool; **Effect** The trap deals 3d12 electricity damage to the triggering creature (DC 22 [basic](/Rules.aspx?ID=2297) Reflex save)."
+    }
+   }
+  },
+  {
+   "id": "creature-3108",
+   "class": "served twin (recall knowledge)",
+   "kind": "creature",
+   "twinOf": "creature-742",
+   "record": {
+    "name": "Norn",
+    "source": "Monster Core",
+    "page": 240,
+    "level": 20,
+    "traits": [
+     "Rare",
+     "Large",
+     "Fey"
+    ],
+    "perception": {
+     "std": 41
+    },
+    "senses": [
+     {
+      "name": "detect magic"
+     },
+     {
+      "name": "greater darkvision"
+     },
+     {
+      "name": "lifesense 120 feet"
+     },
+     {
+      "name": "truesight"
+     }
+    ],
+    "languages": {
+     "languages": [
+      "Common",
+      "Fey",
+      "Jotun"
+     ],
+     "abilities": [
+      "truespeech"
+     ]
+    },
+    "skills": {
+     "crafting": 36,
+     "deception": 35,
+     "intimidation": 37,
+     "lore": 28,
+     "medicine": 38,
+     "occultism": 34,
+     "performance": 31,
+     "religion": 34
+    },
+    "abilityMods": {
+     "str": 7,
+     "dex": 6,
+     "con": 6,
+     "int": 6,
+     "wis": 10,
+     "cha": 7
+    },
+    "items": [
+     "Shears (see favored weapon)"
+    ],
+    "speed": {
+     "walk": 35,
+     "fly": 35
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "shears",
+      "attack": 38,
+      "traits": [
+       "deadly 2d8",
+       "Magical",
+       "reach 10 feet",
+       "versatile P"
+      ],
+      "damage": "4d4+15 slashing plus 6d6 void and sever fate",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     },
+     {
+      "range": "Melee",
+      "name": "hand of fate",
+      "attack": 38,
+      "traits": [
+       "Agile",
+       "Magical",
+       "reach 10 feet"
+      ],
+      "damage": "4d10+15 void plus sever fate",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [
+     {
+      "name": "Occult Innate Spells",
+      "tradition": "occult",
+      "type": "Innate",
+      "DC": 42,
+      "entry": {
+       "7": {
+        "level": 7,
+        "spells": [
+         {
+          "name": "Dispel Magic",
+          "atWill": true
+         },
+         {
+          "name": "Read Omens",
+          "atWill": true
+         },
+         {
+          "name": "Spellwrack",
+          "atWill": true
+         }
+        ]
+       },
+       "8": {
+        "level": 8,
+        "spells": [
+         {
+          "name": "Migration"
+         },
+         {
+          "name": "Quandary"
+         }
+        ]
+       },
+       "9": {
+        "level": 9,
+        "spells": [
+         {
+          "name": "Execute"
+         },
+         {
+          "name": "Phantasmagoria"
+         },
+         {
+          "name": "Retrocognition"
+         }
+        ]
+       },
+       "10": {
+        "level": 10,
+        "spells": [
+         {
+          "name": "Freeze Time"
+         }
+        ]
+       },
+       "constant": {
+        "10": {
+         "level": 10,
+         "spells": [
+          {
+           "name": "Detect Magic"
+          },
+          {
+           "name": "Hidden Mind"
+          },
+          {
+           "name": "Truesight"
+          },
+          {
+           "name": "Truespeech"
+          }
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "rituals": {
+     "dc": 42,
+     "casts": [
+      {
+       "rank": "3rd",
+       "level": 3,
+       "names": [
+        "Geas"
+       ]
+      },
+      {
+       "rank": "7th",
+       "level": 7,
+       "names": [
+        "Collective Memories"
+       ]
+      }
+     ]
+    },
+    "abilities": {
+     "top": [
+      {
+       "name": "Sense Fate",
+       "traits": [
+        "fortune"
+       ],
+       "entries": [
+        "A norn automatically rolls a 20 when she rolls initiative."
+       ]
+      },
+      {
+       "name": "Triumvirate",
+       "traits": [],
+       "entries": [
+        "This functions as the coven ability, except only norns can join a triumvirate, and it functions only as long as exactly three norns are part of the triumvirate. A triumvirate grants the following spells: cataclysm, foresight, manifestation (once per day), pinpoint, and revival."
+       ]
+      }
+     ],
+     "mid": [],
+     "bot": [
+      {
+       "name": "Fated",
+       "traits": [],
+       "entries": [
+        "When a creature is subject to a fortune effect from a norn and a misfortune effect from any source other than a norn (or vice versa), the norn's effect automatically counteracts the other effect and then takes place normally, rather than the two effects canceling each other out. If both the fortune and misfortune effect are from a norn, then the two cancel each other out as normal. At the GM's discretion, powerful entities related to fate or luck, like Desna, Magdh, or Pharasma, can't have their effects negated by this ability."
+       ]
+      },
+      {
+       "name": "Sever Fate",
+       "traits": [
+        "Occult"
+       ],
+       "entries": [
+        "When a norn deals void damage with a Strike, she regains 10 Hit Points. The target must succeed at a DC 39 Fortitude save or become drained 1 (drained 2 on a critical failure). Further void damage dealt by the norn increases the drained condition value by 1 on a failed save (or by 2 on a critical failure), to a maximum of drained 4."
+       ]
+      },
+      {
+       "name": "Shift Fate",
+       "activity": {
+        "number": 1,
+        "unit": "reaction"
+       },
+       "traits": [
+        "Occult"
+       ],
+       "trigger": "A creature within 120 feet attempts a saving throw",
+       "entries": [
+        "Effect The creature rolls the saving throw twice, and then the norn decides which result applies. If the norn chooses the lower roll, this is a misfortune effect; if she chooses the higher roll, it's a fortune effect; if they're the same, she decides which trait to apply."
+       ]
+      },
+      {
+       "name": "Snip Thread",
+       "activity": {
+        "number": 2,
+        "unit": "action"
+       },
+       "traits": [
+        "Death",
+        "Manipulate",
+        "Occult"
+       ],
+       "entries": [
+        "Frequency three times per day\nEffect The norn produces a golden thread linked to the fate of a creature within 100 feet of her, then snips it short with her shears. The target takes 100 void damage (DC 42 basic Fortitude save). If the target is reduced to 0 Hit Points from this damage, the thread is completely severed and the creature dies immediately. A creature slain by Snip Thread can't be restored to life except by a wish ritual or similarly powerful magic; or by divine intervention. Regardless of the outcome of their saving throw, a creature targeted by Snip Thread then becomes temporarily immune for 24 hours. The norn can't use Snip Thread again for 1d4 rounds."
+       ]
+      }
+     ]
+    },
+    "defenses": {
+     "ac": {
+      "std": 46
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 34
+      },
+      "ref": {
+       "std": 30
+      },
+      "will": {
+       "std": 38
+      },
+      "note": "+1 status to all saves vs. magic"
+     },
+     "hp": [
+      {
+       "hp": 375,
+       "name": "regeneration 20 (deactivated by cold iron)"
+      }
+     ],
+     "immunities": [
+      "off-guard",
+      "void"
+     ],
+     "resistances": [],
+     "weaknesses": [
+      {
+       "name": "cold iron",
+       "amount": 20
+      }
+     ]
+    },
+    "flavor": "Ancient beyond imagining, norns are powerful fey women who hold in their hands the physical manifestation of fate and destiny in the form of golden thread. They watch over all life, intervening with reluctance when called upon—or with a vengeance when the strands of fate are twisted and abused by lesser beings. They cut imposing figures, standing 14 feet tall and weighing 800 pounds.\n\nNorns' relationship with the Eldest of the First World is complex. Many among norns serve Magdh the Three, the triune Eldest who some norns believe to be the first norn triumvirate bound together into one entity, as Magdh has three bodies: a Maiden, a Mother, and a Matriarch. Magdh claims to be watching the threads of fate for some ominous prophesied cataclysm, and in addition to assisting in her divinations, Magdh expects the norns who serve her to follow her cryptic commands to help nudge the future away from the brink. However, norns are powerful beings in their own right, themselves capable of granting divine power, and many balk at serving the enigmatic demigod. These norns find the other Eldest even more alien and challenging to interact with, for they believe that while the Eldest wield great power, even these powerful beings should not be granted leave to meddle with fate as much as they desire.\n\nWhile even the weakest of the Eldest could destroy an unaffiliated norn with ease, they tend to obey the proclamations and judgments of norns when they are spoken. These norns, for their part, use their perceived neutrality judiciously. They know better than to issue too many demands to the Eldest, lest the capricious demigods grow frustrated. And so the balance of power remains tenuous between unaffiliated norns and the Eldest, as it has for eons. Norns know that it's merely a matter of time before the Eldest lose their respect for this tradition and start acting entirely as they please, despite norns' best efforts to rein in their most disruptive actions.",
+    "family": "Norn",
+    "_aon": {
+     "id": "creature-3108",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=3108",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Norn](/Monsters.aspx?ID=3108)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nAncient beyond imagining, norns are powerful fey women who hold in their hands the physical manifestation of fate and destiny in the form of golden thread. They watch over all life, intervening with reluctance when called upon—or with a vengeance when the strands of fate are twisted and abused by lesser beings. They cut imposing figures, standing 14 feet tall and weighing 800 pounds.\n\n Norns' relationship with the Eldest of the [First World](/Planes.aspx?ID=35) is complex. Many among norns serve [Magdh](/Deities.aspx?ID=97) the Three, the triune Eldest who some norns believe to be the first norn triumvirate bound together into one entity, as Magdh has three bodies: a Maiden, a Mother, and a Matriarch. Magdh claims to be watching the threads of fate for some ominous prophesied cataclysm, and in addition to assisting in her divinations, Magdh expects the norns who serve her to follow her cryptic commands to help nudge the future away from the brink. However, norns are powerful beings in their own right, themselves capable of granting divine power, and many balk at serving the enigmatic demigod. These norns find the other Eldest even more alien and challenging to interact with, for they believe that while the Eldest wield great power, even these powerful beings should not be granted leave to meddle with fate as much as they desire.\n\n While even the weakest of the Eldest could destroy an unaffiliated norn with ease, they tend to obey the proclamations and judgments of norns when they are spoken. These norns, for their part, use their perceived neutrality judiciously. They know better than to issue too many demands to the Eldest, lest the capricious demigods grow frustrated. And so the balance of power remains tenuous between unaffiliated norns and the Eldest, as it has for eons. Norns know that it's merely a matter of time before the Eldest lose their respect for this tradition and start acting entirely as they please, despite norns' best efforts to rein in their most disruptive actions.\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Fey](/Rules.aspx?ID=563)**\n([Nature](/Skills.aspx?ID=43)): DC 45\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 43\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 40\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 20\">[Norn](/Monsters.aspx?ID=3108)</title>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Large\" />\n<trait label=\"Fey\" url=\"/Traits.aspx?ID=599\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core](/Sources.aspx?ID=221) pg. 240\n\n**Perception** +41; [_detect magic_](/Spells.aspx?ID=1485), [greater darkvision](/MonsterAbilities.aspx?ID=59), [lifesense](/MonsterAbilities.aspx?ID=67) 120 feet, [_truesight_](/Spells.aspx?ID=1727)\n\n**Languages**\n[Common](/Languages.aspx?ID=1), [Fey](/Languages.aspx?ID=119), [Jotun](/Languages.aspx?ID=8); [_truespeech_](/Spells.aspx?ID=1728)\n\n**Skills**\n[Crafting](/Skills.aspx?ID=4) +36, [Deception](/Skills.aspx?ID=5) +35, [Intimidation](/Skills.aspx?ID=7) +37, [Lore](/Skills.aspx?ID=8) +28, [Medicine](/Skills.aspx?ID=9) +38, [Occultism](/Skills.aspx?ID=11) +34, [Performance](/Skills.aspx?ID=12) +31, [Religion](/Skills.aspx?ID=13) +34\n\n<row gap=\"medium\">\n**Str** +7\n\n**Dex** +6\n\n**Con** +6\n\n**Int** +6\n\n**Wis** +10\n\n**Cha** +7\n</row>\n\n**Sense Fate** ([fortune](/Traits.aspx?ID=612)) A norn automatically rolls a 20 when she rolls initiative.<br />**Triumvirate** This functions as the [coven](/MonsterAbilities.aspx?ID=58) ability, except only norns can join a triumvirate, and it functions only as long as exactly three norns are part of the triumvirate. A triumvirate grants the following spells: [_cataclysm_](/Spells.aspx?ID=1460), [_foresight_](/Spells.aspx?ID=1537), [_manifestation_](/Spells.aspx?ID=1592) (once per day), [_pinpoint_](/Spells.aspx?ID=1633), and [_revival_](/Spells.aspx?ID=1654).\n\n**Items**\n[Shears](/Weapons.aspx?ID=119) (see favored weapon)\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 46 \n\n**Fort** +34 \n\n**Ref** +30 \n\n**Will** +38 \n\n+1 status to all saves vs. [magic](/Traits.aspx?ID=644)\n</row>\n\n<row gap=\"medium\">\n**HP** 375\n\n, regeneration 20 (deactivated by [cold iron](/Equipment.aspx?ID=2916))\n\n</row>\n\n**Immunities**\n[off-guard](/Conditions.aspx?ID=58), [void](/Traits.aspx?ID=510)\n\n**Weaknesses**\ncold iron 20\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 35 feet, fly 35 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nshears +38 ([deadly 2d8](/Traits.aspx?ID=570), [Magical](/Traits.aspx?ID=644), [reach 10 feet](/Traits.aspx?ID=684), [versatile P](/Traits.aspx?ID=724)),\n**Damage** 4d4+15 slashing plus 6d6 void and sever fate\n\n**Melee**\n<actions string=\"Single Action\" />\nhand of fate +38 ([Agile](/Traits.aspx?ID=526), [Magical](/Traits.aspx?ID=644), [reach 10 feet](/Traits.aspx?ID=684)),\n**Damage** 4d10+15 void plus sever fate\n\n**Occult Innate Spells** DC 42\n- **7th**\n[Dispel Magic](/Spells.aspx?ID=1493) (at will), [Read Omens](/Spells.aspx?ID=1647) (at will), [Spellwrack](/Spells.aspx?ID=1683) (at will)\n- **8th**\n[Migration](/Spells.aspx?ID=1600), [Quandary](/Spells.aspx?ID=1644)\n- **9th**\n[Execute](/Spells.aspx?ID=1519), [Phantasmagoria](/Spells.aspx?ID=1629), [Retrocognition](/Spells.aspx?ID=1652)\n- **10th**\n[Freeze Time](/Spells.aspx?ID=1538)\n- **Constant (10th)**\n[Detect Magic](/Spells.aspx?ID=1485), [Hidden Mind](/Spells.aspx?ID=1556), [Truesight](/Spells.aspx?ID=1727), [Truespeech](/Spells.aspx?ID=1728)\n\n**Rituals** DC 42\n\n- **3rd**\n[Geas](/Rituals.aspx?ID=12)\n- **7th**\n[Collective Memories](/Rituals.aspx?ID=113)\n\n**Fated**   When a creature is subject to a [fortune](/Traits.aspx?ID=612) effect from a norn and a [misfortune](/Traits.aspx?ID=654) effect from any source other than a norn (or vice versa), the norn's effect automatically [counteracts](/Rules.aspx?ID=371) the other effect and then takes place normally, rather than the two effects canceling each other out. If both the fortune and misfortune effect are from a norn, then the two cancel each other out as normal. At the GM's discretion, powerful entities related to fate or luck, like [Desna](/Deities.aspx?ID=281), [Magdh](/Deities.aspx?ID=97), or [Pharasma](/Deities.aspx?ID=290), can't have their effects negated by this ability.\n\n**Sever Fate**  ([Occult](/Traits.aspx?ID=662)) When a norn deals void damage with a Strike, she regains 10 Hit Points. The target must succeed at a DC 39 Fortitude save or become [drained 1](/Conditions.aspx?ID=68) (drained 2 on a critical failure). Further void damage dealt by the norn increases the drained condition value by 1 on a failed save (or by 2 on a critical failure), to a maximum of drained 4.\n\n**Shift Fate** <actions string=\"Reaction\" /> ([Occult](/Traits.aspx?ID=662)) **Trigger** A creature within 120 feet attempts a saving throw; **Effect** The creature rolls the saving throw twice, and then the norn decides which result applies. If the norn chooses the lower roll, this is a [misfortune](/Traits.aspx?ID=654) effect; if she chooses the higher roll, it's a [fortune](/Traits.aspx?ID=612) effect; if they're the same, she decides which trait to apply.\n\n**Snip Thread** <actions string=\"Two Actions\" /> ([Death](/Traits.aspx?ID=571), [Manipulate](/Traits.aspx?ID=645), [Occult](/Traits.aspx?ID=662)) **Frequency** three times per day; **Effect** The norn produces a golden thread linked to the fate of a creature within 100 feet of her, then snips it short with her shears. The target takes 100 void damage (DC 42 [basic](/Rules.aspx?ID=329) Fortitude save). If the target is reduced to 0 Hit Points from this damage, the thread is completely severed and the creature dies immediately. A creature slain by Snip Thread can't be restored to life except by a [_wish_](/Rituals.aspx?ID=125) ritual or similarly powerful magic; or by divine intervention. Regardless of the outcome of their saving throw, a creature targeted by Snip Thread then becomes temporarily immune for 24 hours. The norn can't use Snip Thread again for 1d4 rounds.\n\n</column>\n\n<document level=\"2\" id=\"creature-family-448\" />"
+    }
+   }
+  },
+  {
+   "id": "creature-2750",
+   "class": "served twin (recall knowledge absent)",
+   "kind": "creature",
+   "twinOf": "creature-1",
+   "record": {
+    "name": "Phantasmal Minion",
+    "source": "Player Core",
+    "page": 349,
+    "level": -1,
+    "traits": [
+     "Medium",
+     "Force",
+     "Mindless"
+    ],
+    "perception": {
+     "std": 0
+    },
+    "senses": [
+     {
+      "name": "darkvision"
+     }
+    ],
+    "languages": {
+     "languages": [
+      "none (understands its creator)"
+     ],
+     "abilities": []
+    },
+    "skills": {
+     "stealth": 8
+    },
+    "abilityMods": {
+     "str": -4,
+     "dex": 2,
+     "con": 0,
+     "int": -5,
+     "wis": 0,
+     "cha": 0
+    },
+    "items": [],
+    "speed": {
+     "fly": 30
+    },
+    "attacks": [],
+    "spellcasting": [],
+    "abilities": {
+     "top": [
+      {
+       "name": "Force Body",
+       "traits": [],
+       "entries": [
+        "A phantasmal minion's body is made of magical force. It can't use attack actions. Though it has no physical weight, it can move and use Interact actions to do things such as fetch objects, open unstuck or unlocked doors, hold chairs, and clean. It can't pass through solid objects."
+       ]
+      }
+     ],
+     "mid": [],
+     "bot": []
+    },
+    "defenses": {
+     "ac": {
+      "std": 13
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 0
+      },
+      "ref": {
+       "std": 4
+      },
+      "will": {
+       "std": 0
+      }
+     },
+     "hp": [
+      {
+       "hp": 4
+      }
+     ],
+     "immunities": [
+      "disease",
+      "mental",
+      "non-magical attacks",
+      "paralysis",
+      "poison",
+      "precision",
+      "spirit",
+      "unconscious"
+     ],
+     "resistances": [
+      {
+       "name": "all damage",
+       "amount": 5,
+       "note": "except force or ghost touch"
+      }
+     ],
+     "weaknesses": []
+    },
+    "_aon": {
+     "id": "creature-2750",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=2750",
+     "markdown": "<title level=\"1\" pfs=\"\">[Phantasmal Minion](/Monsters.aspx?ID=2750)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature -1\">[Phantasmal Minion](/Monsters.aspx?ID=2750)</title>\n\n<traits>\n<trait label=\"Medium\" />\n<trait label=\"Force\" url=\"/Traits.aspx?ID=75\" />\n<trait label=\"Mindless\" url=\"/Traits.aspx?ID=108\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Player Core](/Sources.aspx?ID=216) pg. 349\n\n**Perception** +0; [darkvision](/MonsterAbilities.aspx?ID=12)\n\n**Languages**\nnone (understands its creator)\n\n**Skills**\n[Stealth](/Skills.aspx?ID=15) +8\n\n<row gap=\"medium\">\n**Str** -4\n\n**Dex** +2\n\n**Con** +0\n\n**Int** -5\n\n**Wis** +0\n\n**Cha** +0\n</row>\n\n**Force Body** A phantasmal minion's body is made of magical force. It can't use [attack](/Traits.aspx?ID=15) actions. Though it has no physical weight, it can move and use Interact actions to do things such as fetch objects, open unstuck or unlocked doors, hold chairs, and clean. It can't pass through solid objects.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 13 \n\n**Fort** +0 \n\n**Ref** +4 \n\n**Will** +0 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 4\n\n</row>\n\n**Immunities**\n[disease](/Traits.aspx?ID=46), [mental](/Traits.aspx?ID=106), non-[magical](/Traits.aspx?ID=103) attacks, paralysis, [poison](/Traits.aspx?ID=669), precision, [spirit](/Traits.aspx?ID=737), unconscious\n\n**Resistances**\nall damage 5 (except [force](/Traits.aspx?ID=75) or [_ghost touch_](/Equipment.aspx?ID=297))\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** fly 30 feet\n\n</column>"
+    }
+   }
+  },
+  {
+   "id": "creature-3219",
+   "class": "served twin (recall knowledge absent)",
+   "kind": "creature",
+   "twinOf": "creature-395",
+   "record": {
+    "name": "Forest Troll",
+    "source": "Monster Core",
+    "page": 330,
+    "level": 5,
+    "traits": [
+     "Large",
+     "Giant",
+     "Humanoid",
+     "Troll",
+     "Wood"
+    ],
+    "perception": {
+     "std": 11
+    },
+    "senses": [
+     {
+      "name": "darkvision"
+     }
+    ],
+    "languages": {
+     "languages": [
+      "Jotun"
+     ],
+     "abilities": []
+    },
+    "skills": {
+     "athletics": 12,
+     "intimidation": 12
+    },
+    "abilityMods": {
+     "str": 5,
+     "dex": 2,
+     "con": 6,
+     "int": -2,
+     "wis": 0,
+     "cha": -2
+    },
+    "items": [],
+    "speed": {
+     "walk": 30
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "jaws",
+      "attack": 14,
+      "traits": [
+       "reach 10 feet"
+      ],
+      "damage": "2d10+5 piercing",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     },
+     {
+      "range": "Melee",
+      "name": "claw",
+      "attack": 14,
+      "traits": [
+       "Agile",
+       "reach 10 feet"
+      ],
+      "damage": "2d8+5 slashing",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [],
+    "abilities": {
+     "top": [
+      {
+       "name": "Easily Misled",
+       "traits": [],
+       "entries": [
+        "The forest troll gets a –4 circumstance penalty to their Perception DC against Deception checks."
+       ]
+      }
+     ],
+     "mid": [
+      {
+       "name": "Furious Flailing",
+       "activity": {
+        "number": 1,
+        "unit": "reaction"
+       },
+       "traits": [],
+       "trigger": "The forest troll takes electricity or fire damage",
+       "entries": [
+        "Effect The troll makes a claw Strike against a random creature within its reach. If the troll has persistent fire damage, they attempt a DC 15 flat check to remove it."
+       ]
+      }
+     ],
+     "bot": [
+      {
+       "name": "Chase Prey",
+       "activity": {
+        "number": 2,
+        "unit": "action"
+       },
+       "traits": [],
+       "entries": [
+        "The forest troll rushes forward on all fours, Striding and then making two claw Strikes."
+       ]
+      },
+      {
+       "name": "Rend",
+       "activity": {
+        "number": 1,
+        "unit": "action"
+       },
+       "traits": [],
+       "entries": [
+        "claw"
+       ]
+      }
+     ]
+    },
+    "defenses": {
+     "ac": {
+      "std": 20
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 17
+      },
+      "ref": {
+       "std": 11
+      },
+      "will": {
+       "std": 7
+      }
+     },
+     "hp": [
+      {
+       "hp": 125,
+       "name": "regeneration 20 (deactivated by electricity or fire)"
+      }
+     ],
+     "immunities": [],
+     "resistances": [],
+     "weaknesses": [
+      {
+       "name": "electricity",
+       "amount": 10
+      },
+      {
+       "name": "fire",
+       "amount": 10
+      }
+     ]
+    },
+    "flavor": "Forest trolls are gangly giants who stalk the fringes of civilization. They rely on their incredible strength to overpower foes with their vicious claws and toothy maws. These trolls stand anywhere from 12 to 16 feet tall, though they prefer to hunch for comfort and to lull foes into a false sense of security. Trolls are truly creatures of the forest, deeply linked in flesh and blood to the verdant habitats they consider their territory. In fact, when a forest troll is killed, their flesh turns into blackened lumps of charcoal, often still glowing with coals. Despite that, these creatures roam farther and wider than most of their kin, to the extent that they're the first creatures a common person thinks of when they hear the word “troll.”",
+    "family": "Troll",
+    "_aon": {
+     "id": "creature-3219",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=3219",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Forest Troll](/Monsters.aspx?ID=3219)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nForest trolls are gangly giants who stalk the fringes of civilization. They rely on their incredible strength to overpower foes with their vicious claws and toothy maws. These trolls stand anywhere from 12 to 16 feet tall, though they prefer to hunch for comfort and to lull foes into a false sense of security. Trolls are truly creatures of the forest, deeply linked in flesh and blood to the verdant habitats they consider their territory. In fact, when a forest troll is killed, their flesh turns into blackened lumps of charcoal, often still glowing with coals. Despite that, these creatures roam farther and wider than most of their kin, to the extent that they're the first creatures a common person thinks of when they hear the word “troll.”\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Humanoid](/Rules.aspx?ID=563)**\n([Society](/Skills.aspx?ID=47)): DC 20\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 18\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 15\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 5\">[Forest Troll](/Monsters.aspx?ID=3219)</title>\n\n<traits>\n<trait label=\"Large\" />\n<trait label=\"Giant\" url=\"/Traits.aspx?ID=616\" />\n<trait label=\"Humanoid\" url=\"/Traits.aspx?ID=628\" />\n<trait label=\"Troll\" url=\"/Traits.aspx?ID=777\" />\n<trait label=\"Wood\" url=\"/Traits.aspx?ID=508\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core](/Sources.aspx?ID=221) pg. 330\n\n**Perception** +11; [darkvision](/MonsterAbilities.aspx?ID=59)\n\n**Languages**\n[Jotun](/Languages.aspx?ID=8)\n\n**Skills**\n[Athletics](/Skills.aspx?ID=3) +12, [Intimidation](/Skills.aspx?ID=7) +12\n\n<row gap=\"medium\">\n**Str** +5\n\n**Dex** +2\n\n**Con** +6\n\n**Int** -2\n\n**Wis** +0\n\n**Cha** -2\n</row>\n\n**Easily Misled** The forest troll gets a –4 circumstance penalty to their Perception DC against [Deception](/Skills.aspx?ID=38) checks.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 20 \n\n**Fort** +17 \n\n**Ref** +11 \n\n**Will** +7 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 125\n\n, regeneration 20 (deactivated by [electricity](/Traits.aspx?ID=586) or [fire](/Traits.aspx?ID=604))\n\n</row>\n\n**Weaknesses**\nelectricity 10, fire 10\n\n**Furious Flailing** <actions string=\"Reaction\" /> **Trigger** The forest troll takes electricity or fire damage; **Effect** The troll makes a claw Strike against a random creature within its reach. If the troll has [persistent fire damage](/Conditions.aspx?ID=29), they attempt a DC 15 flat check to remove it.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 30 feet\n\n**Melee**\n<actions string=\"Single Action\" />\njaws +14 ([reach 10 feet](/Traits.aspx?ID=684)),\n**Damage** 2d10+5 piercing\n\n**Melee**\n<actions string=\"Single Action\" />\nclaw +14 ([Agile](/Traits.aspx?ID=526), [reach 10 feet](/Traits.aspx?ID=684)),\n**Damage** 2d8+5 slashing\n\n**Chase Prey** <actions string=\"Two Actions\" />  The forest troll rushes forward on all fours, Striding and then making two claw Strikes.\n\n**[Rend](/MonsterAbilities.aspx?ID=73)** <actions string=\"Single Action\" />  claw\n\n</column>\n\n<document level=\"2\" id=\"creature-family-478\" />"
+    }
+   }
+  },
+  {
+   "id": "creature-4286",
+   "class": "served twin (recall knowledge absent)",
+   "kind": "creature",
+   "twinOf": "creature-1085",
+   "record": {
+    "name": "Brainchild",
+    "source": "Monster Core 2",
+    "page": 62,
+    "level": 11,
+    "traits": [
+     "Rare",
+     "Large",
+     "Illusion",
+     "Mental"
+    ],
+    "perception": {
+     "std": 18
+    },
+    "senses": [
+     {
+      "name": "darkvision"
+     }
+    ],
+    "languages": {
+     "languages": [
+      "telepathy 100 feet",
+      "universal language"
+     ],
+     "abilities": []
+    },
+    "skills": {
+     "deception": 22,
+     "intimidation": 24,
+     "performance": 22,
+     "society": 21,
+     "stealth": 20
+    },
+    "abilityMods": {
+     "str": 4,
+     "dex": 5,
+     "con": 4,
+     "int": 2,
+     "wis": 3,
+     "cha": 7
+    },
+    "items": [],
+    "speed": {
+     "walk": 30,
+     "fly": 30
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "illusory weapon",
+      "attack": 24,
+      "traits": [
+       "Illusion",
+       "mental",
+       "occult"
+      ],
+      "damage": "4d6+10 mental plus urban legend",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     },
+     {
+      "range": "Ranged",
+      "name": "illusory weapon",
+      "attack": 24,
+      "traits": [
+       "Illusion",
+       "mental",
+       "occult",
+       "range 100 feet"
+      ],
+      "damage": "4d6+6 mental plus urban legend",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [
+     {
+      "name": "Occult Innate Spells",
+      "tradition": "occult",
+      "type": "Innate",
+      "DC": 30,
+      "entry": {
+       "0": {
+        "level": 6,
+        "spells": [
+         {
+          "name": "Figment"
+         },
+         {
+          "name": "Message"
+         }
+        ]
+       },
+       "4": {
+        "level": 4,
+        "spells": [
+         {
+          "name": "Translocate",
+          "amount": 2
+         }
+        ]
+       },
+       "5": {
+        "level": 5,
+        "spells": [
+         {
+          "name": "Vision of Death",
+          "amount": 3,
+          "note": "image resembles the brainchild"
+         }
+        ]
+       }
+      }
+     }
+    ],
+    "abilities": {
+     "top": [
+      {
+       "name": "Universal Language",
+       "traits": [],
+       "entries": [
+        "Anything spoken by the brainchild is perceived by the listener in its native language"
+       ]
+      },
+      {
+       "name": "Urban Legend",
+       "traits": [],
+       "entries": [
+        "A brainchild is sustained by only the reputation that precedes them. Mindless creatures are immune to a brainchild and can't perceive them. The brainchild's size, features, and items, as well as the appearance of their attacks, match what the foes perceiving them expect. If multiple foes expect to see different things, the brainchild chooses which to manifest. If any creature that can perceive the brainchild believes the brainchild has one of the abilities below, the brainchild has that ability. A creature can Seek or Sense Motive (against the brainchild's Deception DC) to attempt to disbelieve an individual ability. If at any point no creature perceiving the brainchild believes in the ability, the brainchild loses that ability immediately. If foes expect different particulars, such as one believing the brainchild is immune to fire and another believing they're immune to detection, revelation, or scrying effects, the brainchild chooses one to have.\n• Tremorsense (imprecise) 100 feet\n• Immunity to one damage type, trait, or condition\n• Weakness 10 to one damage type other than mental\n• Resistance 10 to physical damage, with an exception for either cold iron or silver\n• Frightful Presence (aura, emotion, fear, mental) 100 feet, DC 28\n• 1d6 extra damage on Strikes, of a type one foe believes in\n• Additional spells of phantom pain and shadow blast at 6th rank"
+       ]
+      }
+     ],
+     "mid": [
+      {
+       "name": "Persistence of Memory",
+       "traits": [
+        "illusion",
+        "mental",
+        "occult"
+       ],
+       "entries": [
+        "When a brainchild is destroyed, it returns if anyone still fully believes it exists, re-forming within 100 feet of any believer after 2d4 days."
+       ]
+      }
+     ],
+     "bot": []
+    },
+    "defenses": {
+     "ac": {
+      "std": 30
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 21
+      },
+      "ref": {
+       "std": 22
+      },
+      "will": {
+       "std": 18
+      }
+     },
+     "hp": [
+      {
+       "hp": 200
+      }
+     ],
+     "immunities": [
+      "death effects",
+      "detection",
+      "disease",
+      "doomed",
+      "scrying",
+      "spirit",
+      "vitality",
+      "void"
+     ],
+     "resistances": [],
+     "weaknesses": [
+      {
+       "name": "mental",
+       "amount": 10
+      }
+     ]
+    },
+    "flavor": "A rumor can become so vivid and persistent that it comes to life, creating a brainchild—a living illusion that hatches from an intense belief in a remorseless and implacable killer. Often, these rumors are borne from victims of a vision of death spell. A brainchild's capabilities grow when they pursue a believer but deflate against skeptics, making them only as dangerous as one believes them to be. A simple drive to stalk, terrify, and kill propels a brainchild, but the creature might also exhibit other behaviors ascribed to them through gossip.\n\nSpreading Rumors\n\nBrainchildren require setup. Create some rumors the PCs might hear around town, adding more if they Gather Information. Take note of what rumors they share and who believes which ones. Don’t include too many—if the PCs believe them all, the brainchild will be too powerful! Examples include “I hear the Beast of Chimney Hill can walk through a fire unburnt” and “Woke with a pounding headache. Old Selby’s Dog must be lurking about again.” Depending on the nature of the legends surrounding a brainchild, attempts to Recall Knowledge about it can use almost any skill, but Occultism and Society are likely the most relevant.",
+    "_aon": {
+     "id": "creature-4286",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=4286",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Brainchild](/Monsters.aspx?ID=4286)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nA rumor can become so vivid and persistent that it comes to life, creating a brainchild—a living illusion that hatches from an intense belief in a remorseless and implacable killer. Often, these rumors are borne from victims of a [_vision of death_](/Spells.aspx?ID=1742) spell. A brainchild's capabilities grow when they pursue a believer but deflate against skeptics, making them only as dangerous as one believes them to be. A simple drive to stalk, terrify, and kill propels a brainchild, but the creature might also exhibit other behaviors ascribed to them through gossip.\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 11\">[Brainchild](/Monsters.aspx?ID=4286)</title>\n\n<traits>\n<trait label=\"Rare\" url=\"/Traits.aspx?ID=683\" />\n<trait label=\"Large\" />\n<trait label=\"Illusion\" url=\"/Traits.aspx?ID=629\" />\n<trait label=\"Mental\" url=\"/Traits.aspx?ID=647\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core 2](/Sources.aspx?ID=276) pg. 62\n\n**Perception** +18; [darkvision](/MonsterAbilities.aspx?ID=59)\n\n**Languages**\n[telepathy](/MonsterAbilities.aspx?ID=79) 100 feet, universal language\n\n**Skills**\n[Deception](/Skills.aspx?ID=38) +22, [Intimidation](/Skills.aspx?ID=40) +24, [Performance](/Skills.aspx?ID=45) +22, [Society](/Skills.aspx?ID=47) +21, [Stealth](/Skills.aspx?ID=48) +20\n\n<row gap=\"medium\">\n**Str** +4\n\n**Dex** +5\n\n**Con** +4\n\n**Int** +2\n\n**Wis** +3\n\n**Cha** +7\n</row>\n\n**Universal Language** Anything spoken by the brainchild is perceived by the listener in its native language<br />**Urban Legend** A brainchild is sustained by only the reputation that precedes them. [Mindless](/Traits.aspx?ID=652) creatures are immune to a brainchild and can't perceive them. The brainchild's size, features, and items, as well as the appearance of their attacks, match what the foes perceiving them expect. If multiple foes expect to see different things, the brainchild chooses which to manifest. If any creature that can perceive the brainchild believes the brainchild has one of the abilities below, the brainchild has that ability. A creature can [Seek](/Actions.aspx?ID=2301) or [Sense Motive](/Actions.aspx?ID=2302) (against the brainchild's Deception DC) to attempt to disbelieve an individual ability. If at any point no creature perceiving the brainchild believes in the ability, the brainchild loses that ability immediately. If foes expect different particulars, such as one believing the brainchild is immune to [fire](/Traits.aspx?ID=604) and another believing they're immune to [detection](/Traits.aspx?ID=574), [revelation](/Traits.aspx?ID=686), or [scrying](/Traits.aspx?ID=689) effects, the brainchild chooses one to have. \n<ul><li>[Tremorsense](/MonsterAbilities.aspx?ID=82) (imprecise) 100 feet</li><li>[Immunity](/Rules.aspx?ID=2312) to one damage type, trait, or condition</li><li>[Weakness](/Rules.aspx?ID=2317) 10 to one damage type other than mental</li><li>[Resistance](/Rules.aspx?ID=2318) 10 to physical damage, with an exception for either [cold iron](/Equipment.aspx?ID=2916) or [silver](/Equipment.aspx?ID=2920)</li><li>[Frightful Presence](/MonsterAbilities.aspx?ID=64) ([aura](/Traits.aspx?ID=542), [emotion](/Traits.aspx?ID=590), [fear](/Traits.aspx?ID=598), [mental](/Traits.aspx?ID=647)) 100 feet, DC 28</li><li>1d6 extra damage on Strikes, of a type one foe believes in</li><li>Additional spells of [_phantom pain_](/Spells.aspx?ID=1632) and [_shadow blast_](/Spells.aspx?ID=1666) at 6th rank</li></ul>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 30 \n\n**Fort** +21 \n\n**Ref** +22 \n\n**Will** +18 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 200\n\n</row>\n\n**Immunities**\n[death effects](/Rules.aspx?ID=2331), [detection](/Traits.aspx?ID=574), [disease](/Traits.aspx?ID=578), [doomed](/Conditions.aspx?ID=67), [scrying](/Traits.aspx?ID=689), [spirit](/Traits.aspx?ID=737), [vitality](/Traits.aspx?ID=509), [void](/Traits.aspx?ID=510)\n\n**Weaknesses**\n[mental](/Traits.aspx?ID=647) 10\n\n**Persistence of Memory** ([illusion](/Traits.aspx?ID=629), [mental](/Traits.aspx?ID=647), [occult](/Traits.aspx?ID=662)) When a brainchild is destroyed, it returns if anyone still fully believes it exists, re-forming within 100 feet of any believer after 2d4 days.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 30 feet, fly 30 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nillusory weapon +24 ([Illusion](/Traits.aspx?ID=629), [mental](/Traits.aspx?ID=647), [occult](/Traits.aspx?ID=662)),\n**Damage** 4d6+10 mental plus urban legend\n\n**Ranged**\n<actions string=\"Single Action\" />\nillusory weapon +24 ([Illusion](/Traits.aspx?ID=629), [mental](/Traits.aspx?ID=647), [occult](/Traits.aspx?ID=662), [range 100 feet](/Traits.aspx?ID=248)),\n**Damage** 4d6+6 mental plus urban legend\n\n**Occult Innate Spells** DC 30\n- **Cantrips (6th)**\n[Figment](/Spells.aspx?ID=1528), [Message](/Spells.aspx?ID=1598)\n- **4th**\n[Translocate](/Spells.aspx?ID=1724) (×2)\n- **5th**\n[Vision of Death](/Spells.aspx?ID=1742) (×3; image resembles the brainchild)\n\n</column>\n\n<aside>\n<title level=\"2\" noclass=\"true\" icon=\"\">Spreading Rumors</title>\n\nBrainchildren require setup. Create some rumors the PCs might hear around town, adding more if they [Gather Information](/Actions.aspx?ID=2391). Take note of what rumors they share and who believes which ones. Don’t include too many—if the PCs believe them all, the brainchild will be too powerful! Examples include “I hear the Beast of Chimney Hill can walk through a fire unburnt” and “Woke with a pounding headache. Old Selby’s Dog must be lurking about again.” Depending on the nature of the legends surrounding a brainchild, attempts to [Recall Knowledge](/Actions.aspx?ID=2367) about it can use almost any skill, but [Occultism](/Skills.aspx?ID=44) and [Society](/Skills.aspx?ID=47) are likely the most relevant.\n</aside>"
+    }
+   }
+  },
+  {
+   "id": "creature-4503",
+   "class": "served twin (recall knowledge absent)",
+   "kind": "creature",
+   "twinOf": "creature-1257",
+   "record": {
+    "name": "Owb",
+    "source": "Monster Core 2",
+    "page": 246,
+    "level": 6,
+    "traits": [
+     "Uncommon",
+     "Medium",
+     "Shadow"
+    ],
+    "perception": {
+     "std": 13
+    },
+    "senses": [
+     {
+      "name": "greater darkvision"
+     }
+    ],
+    "languages": {
+     "languages": [
+      "Caligni"
+     ],
+     "abilities": [
+      "(can't speak any languages)",
+      "telepathy 100 feet"
+     ]
+    },
+    "skills": {
+     "acrobatics": 15,
+     "deception": 13,
+     "diplomacy": 11,
+     "occultism": 12,
+     "religion": 11,
+     "stealth": 15
+    },
+    "abilityMods": {
+     "str": 4,
+     "dex": 5,
+     "con": 4,
+     "int": 0,
+     "wis": 3,
+     "cha": 3
+    },
+    "items": [],
+    "speed": {
+     "walk": 5,
+     "fly": 30
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "claw",
+      "attack": 16,
+      "traits": [
+       "Agile",
+       "magical"
+      ],
+      "damage": "1d8+7 slashing plus 1d8 cold",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     },
+     {
+      "range": "Ranged",
+      "name": "burning cold",
+      "attack": 17,
+      "traits": [
+       "Magical",
+       "range 120 feet"
+      ],
+      "damage": "2d8 cold plus 1d8 persistent cold",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [
+     {
+      "name": "Occult Innate Spells",
+      "tradition": "occult",
+      "type": "Innate",
+      "DC": 23,
+      "attack": 15,
+      "entry": {
+       "0": {
+        "level": 3,
+        "spells": [
+         {
+          "name": "Daze"
+         },
+         {
+          "name": "Read Aura"
+         },
+         {
+          "name": "Shield"
+         },
+         {
+          "name": "Void Warp"
+         }
+        ]
+       },
+       "3": {
+        "level": 3,
+        "spells": [
+         {
+          "name": "Mind Reading",
+          "atWill": true
+         }
+        ]
+       },
+       "4": {
+        "level": 4,
+        "spells": [
+         {
+          "name": "Darkness",
+          "atWill": true
+         },
+         {
+          "name": "Invisibility"
+         }
+        ]
+       },
+       "5": {
+        "level": 5,
+        "spells": [
+         {
+          "name": "Shadow Blast"
+         },
+         {
+          "name": "Umbral Journey"
+         }
+        ]
+       },
+       "7": {
+        "level": 7,
+        "spells": [
+         {
+          "name": "Interplanar Teleport",
+          "note": "self only; to or from the Netherworld only"
+         }
+        ]
+       }
+      }
+     }
+    ],
+    "abilities": {
+     "top": [
+      {
+       "name": "Light Blindness",
+       "traits": [],
+       "entries": [
+        ""
+       ]
+      }
+     ],
+     "mid": [],
+     "bot": [
+      {
+       "name": "Curse of Darkness",
+       "activity": {
+        "number": 1,
+        "unit": "action"
+       },
+       "traits": [
+        "Curse",
+        "darkness",
+        "occult"
+       ],
+       "entries": [
+        "The owb inflicts a curse on one creature taking persistent cold damage from their burning cold Strike, stealing the victim's vibrancy. The creature must attempt a DC 23 Fortitude save. On a failure, the creature gains light blindness, and its coloration turns to washed out shades of gray, along with all equipment it carries, wields, or wears. These effects have an unlimited duration. Regardless of the result of its save, the creature is temporarily immune for 1 minute.\nIf the owb uses this ability on a caligni, the curse can't be removed short of a wish ritual or similar powerful magic."
+       ]
+      }
+     ]
+    },
+    "defenses": {
+     "ac": {
+      "std": 24
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 14
+      },
+      "ref": {
+       "std": 15
+      },
+      "will": {
+       "std": 13
+      }
+     },
+     "hp": [
+      {
+       "hp": 90
+      }
+     ],
+     "immunities": [
+      "cold"
+     ],
+     "resistances": [],
+     "weaknesses": []
+    },
+    "flavor": "Commonly called owbs, or lesser owbs by more powerful owb prophets, most of these mysterious creatures focus on manipulating caligni culture. Among calignis, an owb hides from mortals they deem beneath them—even including calignis in their charge. Instead, they listen in on the thoughts of those around them, searching for fears and worries they can capitalize on. An owb prefers to select one caligni leader to control from the shadows, manipulating them using charisma and magic. Through coercion of such agents, owbs maintain a steady hand in the politics of the community, either blessing and breaking pacts with other creatures or acting as intermediaries and ambassadors between calignis and powerful external entities.\n\nShadows Among Shadows\n\nLittle is known about owbs' lives on the Netherworld. They keep to themselves so much that most other shadowy denizens either remain unaware of their presence or disbelieve they even exist. Some rumors suggest that these creatures lack any real power on the Netherworld and thus spend most of their time manipulating their strange caligni “children” in the Universe.",
+    "family": "Owb",
+    "_aon": {
+     "id": "creature-4503",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=4503",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Owb](/Monsters.aspx?ID=4503)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nCommonly called owbs, or lesser owbs by more powerful owb prophets, most of these mysterious creatures focus on manipulating caligni culture. Among calignis, an owb hides from mortals they deem beneath them—even including calignis in their charge. Instead, they listen in on the thoughts of those around them, searching for fears and worries they can capitalize on. An owb prefers to select one [caligni](/MonsterFamilies.aspx?ID=375) leader to control from the shadows, manipulating them using charisma and magic. Through coercion of such agents, owbs maintain a steady hand in the politics of the community, either blessing and breaking pacts with other creatures or acting as intermediaries and ambassadors between calignis and powerful external entities.\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 6\">[Owb](/Monsters.aspx?ID=4503)</title>\n\n<traits>\n<trait label=\"Uncommon\" url=\"/Traits.aspx?ID=721\" />\n<trait label=\"Medium\" />\n<trait label=\"Shadow\" url=\"/Traits.aspx?ID=693\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core 2](/Sources.aspx?ID=276) pg. 246\n\n**Perception** +13; [greater darkvision](/MonsterAbilities.aspx?ID=59)\n\n**Languages**\n[Caligni](/Languages.aspx?ID=28); (can't speak any languages), [telepathy](/MonsterAbilities.aspx?ID=79) 100 feet\n\n**Skills**\n[Acrobatics](/Skills.aspx?ID=34) +15, [Deception](/Skills.aspx?ID=38) +13, [Diplomacy](/Skills.aspx?ID=39) +11, [Occultism](/Skills.aspx?ID=44) +12, [Religion](/Skills.aspx?ID=46) +11, [Stealth](/Skills.aspx?ID=48) +15\n\n<row gap=\"medium\">\n**Str** +4\n\n**Dex** +5\n\n**Con** +4\n\n**Int** +0\n\n**Wis** +3\n\n**Cha** +3\n</row>\n\n**[Light Blindness](/MonsterAbilities.aspx?ID=68)** \n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 24 \n\n**Fort** +14 \n\n**Ref** +15 \n\n**Will** +13 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 90\n\n</row>\n\n**Immunities**\n[cold](/Traits.aspx?ID=555)\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 5 feet, fly 30 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nclaw +16 ([Agile](/Traits.aspx?ID=526), [magical](/Traits.aspx?ID=644)),\n**Damage** 1d8+7 slashing plus 1d8 cold\n\n**Ranged**\n<actions string=\"Single Action\" />\nburning cold +17 ([Magical](/Traits.aspx?ID=644), [range 120 feet](/Traits.aspx?ID=248)),\n**Damage** 2d8 cold plus 1d8 [persistent cold](/Conditions.aspx?ID=86)\n\n**Occult Innate Spells** DC 23, attack +15\n- **Cantrips (3rd)**\n[Daze](/Spells.aspx?ID=1482), [Read Aura](/Spells.aspx?ID=1646), [Shield](/Spells.aspx?ID=1671), [Void Warp](/Spells.aspx?ID=1745)\n- **3rd**\n[Mind Reading](/Spells.aspx?ID=1602) (at will)\n- **4th**\n[Darkness](/Spells.aspx?ID=1480) (at will), [Invisibility](/Spells.aspx?ID=1577)\n- **5th**\n[Shadow Blast](/Spells.aspx?ID=1666), [Umbral Journey](/Spells.aspx?ID=1729)\n- **7th**\n[Interplanar Teleport](/Spells.aspx?ID=1576) (self only;to or from [the Netherworld](/Planes.aspx?ID=36) only)\n\n**Curse of Darkness** <actions string=\"Single Action\" /> ([Curse](/Traits.aspx?ID=566), [darkness](/Traits.aspx?ID=569), [occult](/Traits.aspx?ID=662)) The owb inflicts a curse on one creature taking [persistent cold damage](/Conditions.aspx?ID=86) from their burning cold Strike, stealing the victim's vibrancy. The creature must attempt a DC 23 Fortitude save. On a failure, the creature gains [light blindness](/MonsterAbilities.aspx?ID=68), and its coloration turns to washed out shades of gray, along with all equipment it carries, wields, or wears. These effects have an unlimited duration. Regardless of the result of its save, the creature is temporarily immune for 1 minute.<br />If the owb uses this ability on a [caligni](/MonsterFamilies.aspx?ID=375), the curse can't be removed short of a [_wish_](/Rituals.aspx?ID=125) ritual or similar powerful magic.\n\n</column>\n\n<aside>\n<title level=\"2\" noclass=\"true\" icon=\"/images/Icons/Sidebar_2_AdditionalLore.png\">Shadows Among Shadows</title>\n\nLittle is known about owbs' lives on [the Netherworld](/Planes.aspx?ID=36). They keep to themselves so much that most other shadowy denizens either remain unaware of their presence or disbelieve they even exist. Some rumors suggest that these creatures lack any real power on the Netherworld and thus spend most of their time manipulating their strange [caligni](/MonsterFamilies.aspx?ID=375) “children” in [the Universe](/Planes.aspx?ID=26).\n</aside>\n\n<document level=\"2\" id=\"creature-family-614\" />"
+    }
+   }
+  },
+  {
+   "id": "creature-4511",
+   "class": "served twin (focus pool)",
+   "kind": "creature",
+   "twinOf": "creature-763",
+   "record": {
+    "name": "Undine Hydromancer",
+    "source": "Monster Core 2",
+    "page": 253,
+    "level": 1,
+    "traits": [
+     "Medium",
+     "Amphibious",
+     "Human",
+     "Humanoid",
+     "Undine"
+    ],
+    "perception": {
+     "std": 5
+    },
+    "senses": [],
+    "languages": {
+     "languages": [
+      "Common",
+      "Thalassic"
+     ],
+     "abilities": []
+    },
+    "skills": {
+     "arcana": 3,
+     "athletics": 3,
+     "diplomacy": 7,
+     "intimidation": 7,
+     "nature": 5,
+     "survival": 5
+    },
+    "abilityMods": {
+     "str": 0,
+     "dex": 2,
+     "con": 1,
+     "int": 0,
+     "wis": 2,
+     "cha": 4
+    },
+    "items": [
+     "Dagger"
+    ],
+    "speed": {
+     "walk": 25,
+     "swim": 25
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "dagger",
+      "attack": 7,
+      "traits": [
+       "Agile",
+       "Finesse",
+       "versatile S"
+      ],
+      "damage": "1d4 piercing",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     },
+     {
+      "range": "Ranged",
+      "name": "dagger",
+      "attack": 7,
+      "traits": [
+       "Agile",
+       "thrown 10 feet",
+       "versatile S"
+      ],
+      "damage": "1d4 piercing",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [
+     {
+      "name": "Primal Spontaneous Spells",
+      "tradition": "primal",
+      "type": "Spontaneous",
+      "DC": 17,
+      "attack": 9,
+      "entry": {
+       "0": {
+        "level": 1,
+        "spells": [
+         {
+          "name": "Caustic Blast"
+         },
+         {
+          "name": "Detect Magic"
+         },
+         {
+          "name": "Know the Way"
+         },
+         {
+          "name": "Stabilize"
+         },
+         {
+          "name": "Tangle Vine"
+         }
+        ]
+       },
+       "1": {
+        "level": 1,
+        "spells": [
+         {
+          "name": "Create Water"
+         },
+         {
+          "name": "Heal"
+         },
+         {
+          "name": "Hydraulic Push"
+         }
+        ]
+       }
+      }
+     },
+     {
+      "name": "Sorcerer Bloodline Spells",
+      "tradition": "",
+      "type": "Focus",
+      "DC": 17,
+      "focusPoints": 1,
+      "attack": 9,
+      "entry": {
+       "1": {
+        "level": 1,
+        "spells": [
+         {
+          "name": "Elemental Toss",
+          "note": "bludgeoning damage"
+         }
+        ]
+       }
+      }
+     }
+    ],
+    "abilities": {
+     "top": [],
+     "mid": [],
+     "bot": []
+    },
+    "defenses": {
+     "ac": {
+      "std": 15
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 4
+      },
+      "ref": {
+       "std": 5
+      },
+      "will": {
+       "std": 7
+      }
+     },
+     "hp": [
+      {
+       "hp": 15
+      }
+     ],
+     "immunities": [],
+     "resistances": [],
+     "weaknesses": []
+    },
+    "flavor": "Undines are infused with elemental water—the churning power of the briny deep flows through them. These planar scions are often athletic and lithe, but they're easily distracted by auditory sensations because of how much louder and clearer sound rings above the waves.\n\nUndines are perhaps the most settled of all geniekin, often forming communities along the coast or even on the water itself. In the latter case, they prefer to settle in ship-towns that sometimes number dozens of vessels in all shapes and sizes. The undines who fill these communities are similarly diverse, bringing aspects of multiple cultures together to form one whole. Ship-towns are permanent, but fluid—they grow, recede, and migrate constantly as undine families add their ships to or remove them from the flotilla. An undine town like this can remain at sea for years, its residents coming ashore only on rare occasions to collect wood for cooking fires or to repair their homes. The paradoxically ever-shifting permanence of these communities reflects the undine virtues of adaptability and freedom while also maintaining the prime importance of the community.\n\nUndine hydromancers are quite valued on these floating settlements to protect residents from the dangers of the tides. Even novice hydromancers provide a crucial service with their ability to create drinkable fresh water while adrift on the sea.",
+    "family": "Geniekin",
+    "_aon": {
+     "id": "creature-4511",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=4511",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Undine](/Monsters.aspx?ID=4511)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nUndines are infused with elemental water—the churning power of the briny deep flows through them. These planar scions are often athletic and lithe, but they're easily distracted by auditory sensations because of how much louder and clearer sound rings above the waves.\n\n Undines are perhaps the most settled of all geniekin, often forming communities along the coast or even on the water itself. In the latter case, they prefer to settle in ship-towns that sometimes number dozens of vessels in all shapes and sizes. The undines who fill these communities are similarly diverse, bringing aspects of multiple cultures together to form one whole. Ship-towns are permanent, but fluid—they grow, recede, and migrate constantly as undine families add their ships to or remove them from the flotilla. An undine town like this can remain at sea for years, its residents coming ashore only on rare occasions to collect wood for cooking fires or to repair their homes. The paradoxically ever-shifting permanence of these communities reflects the undine virtues of adaptability and freedom while also maintaining the prime importance of the community.\n\n Undine hydromancers are quite valued on these floating settlements to protect residents from the dangers of the tides. Even novice hydromancers provide a crucial service with their ability to create drinkable fresh water while adrift on the sea.\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Humanoid](/Rules.aspx?ID=563)**\n([Society](/Skills.aspx?ID=47)): DC 15\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 13\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 10\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 1\">[Undine Hydromancer](/Monsters.aspx?ID=4511)</title>\n\n<traits>\n<trait label=\"Medium\" />\n<trait label=\"Amphibious\" url=\"/Traits.aspx?ID=529\" />\n<trait label=\"Human\" url=\"/Traits.aspx?ID=627\" />\n<trait label=\"Humanoid\" url=\"/Traits.aspx?ID=628\" />\n<trait label=\"Undine\" url=\"/Traits.aspx?ID=314\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core 2](/Sources.aspx?ID=276) pg. 253\n\n**Perception** +5\n\n**Languages**\n[Common](/Languages.aspx?ID=1), [Thalassic](/Languages.aspx?ID=113)\n\n**Skills**\n[Arcana](/Skills.aspx?ID=35) +3, [Athletics](/Skills.aspx?ID=36) +3, [Diplomacy](/Skills.aspx?ID=39) +7, [Intimidation](/Skills.aspx?ID=40) +7, [Nature](/Skills.aspx?ID=43) +5, [Survival](/Skills.aspx?ID=49) +5\n\n<row gap=\"medium\">\n**Str** +0\n\n**Dex** +2\n\n**Con** +1\n\n**Int** +0\n\n**Wis** +2\n\n**Cha** +4\n</row>\n\n**Items**\n[Dagger](/Weapons.aspx?ID=3)\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 15 \n\n**Fort** +4 \n\n**Ref** +5 \n\n**Will** +7 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 15\n\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 25 feet, swim 25 feet\n\n**Melee**\n<actions string=\"Single Action\" />\ndagger +7 ([Agile](/Traits.aspx?ID=526), [Finesse](/Traits.aspx?ID=602), [versatile S](/Traits.aspx?ID=724)),\n**Damage** 1d4 piercing\n\n**Ranged**\n<actions string=\"Single Action\" />\ndagger +7 ([Agile](/Traits.aspx?ID=526), [thrown 10 feet](/Traits.aspx?ID=711), [versatile S](/Traits.aspx?ID=724)),\n**Damage** 1d4 piercing\n\n**Primal Spontaneous Spells** DC 17, attack +9\n- **Cantrips (1st)**\n[Caustic Blast](/Spells.aspx?ID=1461), [Detect Magic](/Spells.aspx?ID=1485), [Know the Way](/Spells.aspx?ID=1582), [Stabilize](/Spells.aspx?ID=1689), [Tangle Vine](/Spells.aspx?ID=1713)\n- **1st**\n[Create Water](/Spells.aspx?ID=1476), [Heal](/Spells.aspx?ID=1554), [Hydraulic Push](/Spells.aspx?ID=1561)\n\n**Sorcerer Bloodline Spells** DC 17, attack +9, 1 Focus Point\n- **1st**\n[Elemental Toss](/Spells.aspx?ID=2105) (bludgeoning damage)\n\n</column>\n\n<document level=\"2\" id=\"creature-family-595\" />"
+    }
+   }
+  },
+  {
+   "id": "creature-4018",
+   "class": "served twin (focus pool)",
+   "kind": "creature",
+   "twinOf": "creature-1055",
+   "record": {
+    "name": "Silvanshee",
+    "source": "Monster Core 2",
+    "page": 16,
+    "level": 1,
+    "traits": [
+     "Tiny",
+     "Agathion",
+     "Celestial",
+     "Holy"
+    ],
+    "perception": {
+     "std": 8
+    },
+    "senses": [
+     {
+      "name": "darkvision"
+     }
+    ],
+    "languages": {
+     "languages": [
+      "Common",
+      "Diabolic",
+      "Draconic",
+      "Empyrean"
+     ],
+     "abilities": [
+      "speak with animals"
+     ]
+    },
+    "skills": {
+     "acrobatics": 7,
+     "arcana": 3,
+     "medicine": 6,
+     "nirvana lore": 3,
+     "stealth": 7
+    },
+    "abilityMods": {
+     "str": -2,
+     "dex": 4,
+     "con": 2,
+     "int": 0,
+     "wis": 3,
+     "cha": 2
+    },
+    "items": [],
+    "speed": {
+     "walk": 25,
+     "fly": 40
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "jaws",
+      "attack": 9,
+      "traits": [
+       "Finesse",
+       "Holy",
+       "Magical"
+      ],
+      "damage": "1d6–2 piercing plus 1d4 spirit",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     },
+     {
+      "range": "Melee",
+      "name": "claw",
+      "attack": 9,
+      "traits": [
+       "Agile",
+       "Finesse",
+       "Holy",
+       "Magical"
+      ],
+      "damage": "1d4–2 slashing plus 1d4 spirit",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [
+     {
+      "name": "Divine Innate Spells",
+      "tradition": "divine",
+      "type": "Innate",
+      "DC": 17,
+      "entry": {
+       "0": {
+        "level": 1,
+        "spells": [
+         {
+          "name": "Know the Way"
+         },
+         {
+          "name": "Light"
+         },
+         {
+          "name": "Prestidigitation"
+         },
+         {
+          "name": "Stabilize"
+         }
+        ]
+       },
+       "4": {
+        "level": 4,
+        "spells": [
+         {
+          "name": "Read Omens"
+         },
+         {
+          "name": "Vapor Form",
+          "amount": 3
+         }
+        ]
+       },
+       "constant": {
+        "2": {
+         "level": 2,
+         "spells": [
+          {
+           "name": "Speak with Animals"
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "name": "Champion Focus Spell",
+      "tradition": "",
+      "type": "Focus",
+      "DC": 17,
+      "focusPoints": 1,
+      "entry": {
+       "1": {
+        "level": 1,
+        "spells": [
+         {
+          "name": "Lay on Hands"
+         }
+        ]
+       }
+      }
+     }
+    ],
+    "abilities": {
+     "top": [
+      {
+       "name": "Cat's Curiosity",
+       "traits": [],
+       "entries": [
+        "A silvanshee's core value is curiosity. This enables them to seek out new experiences and information beyond their current understanding. A silvanshee can use trained skill actions for all skills, even if they're untrained."
+       ]
+      }
+     ],
+     "mid": [],
+     "bot": [
+      {
+       "name": "Cat's Poise",
+       "traits": [],
+       "entries": [
+        "When a silvanshee uses their vapor form spell, the mist form remains roughly the size and shape of a cat, and the silvanshee retains their fly Speed in this form."
+       ]
+      }
+     ]
+    },
+    "defenses": {
+     "ac": {
+      "std": 16
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 5
+      },
+      "ref": {
+       "std": 9
+      },
+      "will": {
+       "std": 6
+      }
+     },
+     "hp": [
+      {
+       "hp": 20
+      }
+     ],
+     "immunities": [],
+     "resistances": [],
+     "weaknesses": [
+      {
+       "name": "unholy",
+       "amount": 3
+      }
+     ]
+    },
+    "flavor": "Silvanshees are a stealthy and extremely inquisitive contingent of agathions who gather information about the mortal world for other agathions. While they love to explore the Universe and sate their curiosity, they're generally reclusive and skittish. These dual instincts war with each other whenever something exciting piques their interest. Because of their small size, they don't pose a combat threat to most creatures; instead, silvanshees act as Nirvana's eyes and ears in the mortal world, reporting back to superiors or calling for help should they run into danger.\n\nSilvanshees appear indistinguishable from domestic felines, save for their violet eyes and the telltale blaze of differently colored fur on their chests. Of course, flying gives them away outright, so if at all possible, they only do so while in trusted company to avoid detection.\n\nTheir fur color runs the spectrum of normal feline colorations. They can also transform into mist when necessary to maintain discretion or make a hasty getaway.\n\nSilvanshee Allies\n\nSilvanshees will work with heroes who remain patient with their curiosity and skittishness. They're inquisitive, alternating between affection and aloofness. They do what they can to aid and defend their companions, but their strong sense of self-preservation means they'll likely flee if they sense they can't win a fight.",
+    "family": "Agathion",
+    "_aon": {
+     "id": "creature-4018",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=4018",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Silvanshee (Cat Agathion)](/Monsters.aspx?ID=4018)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nSilvanshees are a stealthy and extremely inquisitive contingent of agathions who gather information about the mortal world for other agathions. While they love to explore the Universe and sate their curiosity, they're generally reclusive and skittish. These dual instincts war with each other whenever something exciting piques their interest. Because of their small size, they don't pose a combat threat to most creatures; instead, silvanshees act as Nirvana's eyes and ears in the mortal world, reporting back to superiors or calling for help should they run into danger.\n\n Silvanshees appear indistinguishable from domestic felines, save for their violet eyes and the telltale blaze of differently colored fur on their chests. Of course, flying gives them away outright, so if at all possible, they only do so while in trusted company to avoid detection.\n\n Their fur color runs the spectrum of normal feline colorations. They can also transform into mist when necessary to maintain discretion or make a hasty getaway.\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Celestial](/Rules.aspx?ID=563)**\n([Religion](/Skills.aspx?ID=46)): DC 15\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 13\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 10\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 1\">[Silvanshee](/Monsters.aspx?ID=4018)</title>\n\n<traits>\n<trait label=\"Tiny\" />\n<trait label=\"Agathion\" url=\"/Traits.aspx?ID=866\" />\n<trait label=\"Celestial\" url=\"/Traits.aspx?ID=551\" />\n<trait label=\"Holy\" url=\"/Traits.aspx?ID=517\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core 2](/Sources.aspx?ID=276) pg. 16\n\n**Perception** +8; [darkvision](/MonsterAbilities.aspx?ID=59)\n\n**Languages**\n[Common](/Languages.aspx?ID=1), [Diabolic](/Languages.aspx?ID=117), [Draconic](/Languages.aspx?ID=2), [Empyrean](/Languages.aspx?ID=115); [_speak with animals_](/Spells.aspx?ID=1680)\n\n**Skills**\n[Acrobatics](/Skills.aspx?ID=34) +7, [Arcana](/Skills.aspx?ID=35) +3, [Medicine](/Skills.aspx?ID=42) +6, [Nirvana Lore](/Skills.aspx?ID=41) +3, [Stealth](/Skills.aspx?ID=48) +7\n\n<row gap=\"medium\">\n**Str** -2\n\n**Dex** +4\n\n**Con** +2\n\n**Int** +0\n\n**Wis** +3\n\n**Cha** +2\n</row>\n\n**Cat's Curiosity** A silvanshee's core value is curiosity. This enables them to seek out new experiences and information beyond their current understanding. A silvanshee can use trained skill actions for all skills, even if they're untrained.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 16 \n\n**Fort** +5 \n\n**Ref** +9 \n\n**Will** +6 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 20\n\n</row>\n\n**Weaknesses**\n[unholy](/Traits.aspx?ID=521) 3\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 25 feet, fly 40 feet\n\n**Melee**\n<actions string=\"Single Action\" />\njaws +9 ([Finesse](/Traits.aspx?ID=602), [Holy](/Traits.aspx?ID=517), [Magical](/Traits.aspx?ID=644)),\n**Damage** 1d6–2 piercing plus 1d4 spirit\n\n**Melee**\n<actions string=\"Single Action\" />\nclaw +9 ([Agile](/Traits.aspx?ID=526), [Finesse](/Traits.aspx?ID=602), [Holy](/Traits.aspx?ID=517), [Magical](/Traits.aspx?ID=644)),\n**Damage** 1d4–2 slashing plus 1d4 spirit\n\n**Divine Innate Spells** DC 17\n- **Cantrips (1st)**\n[Know the Way](/Spells.aspx?ID=1582), [Light](/Spells.aspx?ID=1585), [Prestidigitation](/Spells.aspx?ID=1639), [Stabilize](/Spells.aspx?ID=1689)\n- **4th**\n[Read Omens](/Spells.aspx?ID=1647), [Vapor Form](/Spells.aspx?ID=1738) (×3)\n- **Constant (2nd)**\n[Speak with Animals](/Spells.aspx?ID=1680)\n\n**Champion Focus Spell** DC 17, 1 Focus Point\n- **1st**\n[Lay on Hands](/Spells.aspx?ID=2047)\n\n**Cat's Poise**   When a silvanshee uses their [_vapor form_](/Spells.aspx?ID=1738) spell, the mist form remains roughly the size and shape of a cat, and the silvanshee retains their fly Speed in this form.\n\n</column>\n\n<aside>\n<title level=\"2\" noclass=\"true\" icon=\"/images/Icons/Sidebar_2_AdditionalLore.png\">Silvanshee Allies</title>\n\nSilvanshees will work with heroes who remain patient with their curiosity and skittishness. They're inquisitive, alternating between affection and aloofness. They do what they can to aid and defend their companions, but their strong sense of self-preservation means they'll likely flee if they sense they can't win a fight.\n</aside>\n\n<document level=\"2\" id=\"creature-family-674\" />"
+    }
+   }
+  },
+  {
+   "id": "creature-4016",
+   "class": "served twin (focus pool)",
+   "kind": "creature",
+   "twinOf": "creature-1141",
+   "record": {
+    "name": "Einherji",
+    "source": "Monster Core 2",
+    "page": 14,
+    "level": 10,
+    "traits": [
+     "Medium",
+     "Aesir",
+     "Monitor"
+    ],
+    "perception": {
+     "std": 17
+    },
+    "senses": [
+     {
+      "name": "darkvision"
+     }
+    ],
+    "languages": {
+     "languages": [
+      "Common",
+      "Hallit",
+      "Jotun"
+     ],
+     "abilities": []
+    },
+    "skills": {
+     "athletics": 25,
+     "crafting": 16,
+     "intimidation": 21
+    },
+    "abilityMods": {
+     "str": 7,
+     "dex": 4,
+     "con": 6,
+     "int": 0,
+     "wis": 1,
+     "cha": 3
+    },
+    "items": [
+     "+1 striking returning dagger",
+     "+1 striking longsword",
+     "standard-grade duskwood shield (Hardness 5, HP 20, BT 10)"
+    ],
+    "speed": {
+     "walk": 40
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "longsword",
+      "attack": 23,
+      "traits": [
+       "Magical",
+       "versatile P"
+      ],
+      "damage": "2d8+13 slashing",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     },
+     {
+      "range": "Melee",
+      "name": "fist",
+      "attack": 22,
+      "traits": [
+       "Agile"
+      ],
+      "damage": "2d6+13 bludgeoning",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     },
+     {
+      "range": "Melee",
+      "name": "dagger",
+      "attack": 23,
+      "traits": [
+       "Agile",
+       "Magical",
+       "versatile S"
+      ],
+      "damage": "2d4+13 piercing",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     },
+     {
+      "range": "Ranged",
+      "name": "dagger",
+      "attack": 20,
+      "traits": [
+       "Agile",
+       "Magical",
+       "thrown 10 feet",
+       "versatile S"
+      ],
+      "damage": "2d4+13 piercing",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [
+     {
+      "name": "Champion Devotion Spells",
+      "tradition": "",
+      "type": "Focus",
+      "DC": 29,
+      "focusPoints": 2,
+      "entry": {
+       "5": {
+        "level": 5,
+        "spells": [
+         {
+          "name": "Spectral Advance"
+         }
+        ]
+       }
+      }
+     }
+    ],
+    "abilities": {
+     "top": [],
+     "mid": [
+      {
+       "name": "Reactive Strike",
+       "activity": {
+        "number": 1,
+        "unit": "reaction"
+       },
+       "traits": [],
+       "entries": [
+        ""
+       ]
+      },
+      {
+       "name": "Shield Block",
+       "activity": {
+        "number": 1,
+        "unit": "reaction"
+       },
+       "traits": [],
+       "entries": [
+        ""
+       ]
+      }
+     ],
+     "bot": [
+      {
+       "name": "Challenge Foe",
+       "activity": {
+        "number": 1,
+        "unit": "action"
+       },
+       "traits": [],
+       "entries": [
+        "The einherji challenges one creature they can see to single combat, attempting to Demoralize that target. This target remains the einherji's foe until it's defeated, it flees, or the encounter ends. The einherji gains a circumstance bonus to damage equal to their number of weapon damage dice against their designated foe but takes an equivalent circumstance penalty to damage against any other creature. If the einherji is defeated by their challenged foe, the shame causes them to lose use of their champion devotion spells for 1 week or until they challenge the same foe again and emerge victorious, whichever comes first."
+       ]
+      },
+      {
+       "name": "Instant Repair",
+       "activity": {
+        "number": 1,
+        "unit": "action"
+       },
+       "traits": [],
+       "entries": [
+        "The einherji Repairs their shield. They can't use this ability if the shield is destroyed."
+       ]
+      },
+      {
+       "name": "Jotun Slayer",
+       "traits": [],
+       "entries": [
+        "The einherji has a +4 circumstance bonus to damage rolls made against giants and creatures that are at least two sizes larger than the einherji."
+       ]
+      }
+     ]
+    },
+    "defenses": {
+     "ac": {
+      "std": 30
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 22
+      },
+      "ref": {
+       "std": 18
+      },
+      "will": {
+       "std": 17
+      },
+      "note": "Will (+21 vs. fear)"
+     },
+     "hp": [
+      {
+       "hp": 175
+      }
+     ],
+     "immunities": [],
+     "resistances": [
+      {
+       "name": "piercing",
+       "amount": 10
+      }
+     ],
+     "weaknesses": []
+    },
+    "flavor": "Einherjar are mighty warriors chosen by valkyries from the ranks of those slain in terrible and legendary battles. Forged from the souls of the greatest warriors, the implacable einherjar serve as the foot soldiers of pantheons, skilled in hand-to-hand combat and slaying monsters.\n\nEinherjar often come from warrior cultures, including Ulfen vikings (like the einherji represented in this entry), particularly fierce pirates from the Shackles, and even Osirian conquerors. They're chosen from wherever war and might hold sway, and many deities who hold the call of battle and the pursuit of physical power more sacred than concepts of good and evil might count einherjar warriors and valkyrie uplifters of the slain among their chosen servitors. For example, Gorum, Besmara, and Sekhmet have all elevated fallen worshippers as einherjar. Einherjar dedicated to different deities often wield weapons or possess varying cosmetic appearances based on their deity's preferred weapon and their place of death; however, they're universally stalwart, implacable, and efficiently deadly. Einherjar with two-handed weapons or who arise from other backgrounds often have different abilities in place of jotun slayer and Instant Repair.\n\nThe Final Battle\n\nRegardless of the deity they serve, all einherjar follow certain beliefs and mythologies. They assert that, in the final days of existence, Pharasma will judge the last soul and spark the beginning of a new existence. Einherjar believe they will be among the last souls left prior to this event, fighting alongside their gods against the forces of entropy. To einherjar, victory in this war—defined as thorough mutual destruction—is the only way to ensure a proper transition into the new existence.",
+    "family": "Aesir",
+    "_aon": {
+     "id": "creature-4016",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=4016",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Einherji](/Monsters.aspx?ID=4016)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nEinherjar are mighty warriors chosen by valkyries from the ranks of those slain in terrible and legendary battles. Forged from the souls of the greatest warriors, the implacable einherjar serve as the foot soldiers of pantheons, skilled in hand-to-hand combat and slaying monsters.\n\n Einherjar often come from warrior cultures, including Ulfen vikings (like the einherji represented in this entry), particularly fierce pirates from the Shackles, and even Osirian conquerors. They're chosen from wherever war and might hold sway, and many deities who hold the call of battle and the pursuit of physical power more sacred than concepts of good and evil might count einherjar warriors and valkyrie uplifters of the slain among their chosen servitors. For example, Gorum, Besmara, and Sekhmet have all elevated fallen worshippers as einherjar. Einherjar dedicated to different deities often wield weapons or possess varying cosmetic appearances based on their deity's preferred weapon and their place of death; however, they're universally stalwart, implacable, and efficiently deadly. Einherjar with two-handed weapons or who arise from other backgrounds often have different abilities in place of jotun slayer and Instant Repair.\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Monitor](/Rules.aspx?ID=563)**\n([Religion](/Skills.aspx?ID=46)): DC 27\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 25\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 22\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 10\">[Einherji](/Monsters.aspx?ID=4016)</title>\n\n<traits>\n<trait label=\"Medium\" />\n<trait label=\"Aesir\" url=\"/Traits.aspx?ID=872\" />\n<trait label=\"Monitor\" url=\"/Traits.aspx?ID=655\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core 2](/Sources.aspx?ID=276) pg. 14\n\n**Perception** +17; [darkvision](/MonsterAbilities.aspx?ID=59)\n\n**Languages**\n[Common](/Languages.aspx?ID=1), [Hallit](/Languages.aspx?ID=37), [Jotun](/Languages.aspx?ID=8)\n\n**Skills**\n[Athletics](/Skills.aspx?ID=36) +25, [Crafting](/Skills.aspx?ID=37) +16, [Intimidation](/Skills.aspx?ID=40) +21\n\n<row gap=\"medium\">\n**Str** +7\n\n**Dex** +4\n\n**Con** +6\n\n**Int** +0\n\n**Wis** +1\n\n**Cha** +3\n</row>\n\n**Items**\n_[+1 striking](/Equipment.aspx?ID=2861) [ returning](/Equipment.aspx?ID=2845) [ dagger](/Weapons.aspx?ID=358)_, _[+1 striking](/Equipment.aspx?ID=2861) [longsword](/Weapons.aspx?ID=386)_, [standard-grade duskwood shield](/Equipment.aspx?ID=2815) (Hardness 5, HP 20, BT 10)\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 30 \n\n**Fort** +22 \n\n**Ref** +18 \n\n**Will** +17 (+21 vs. [fear](/Traits.aspx?ID=598))\n\n</row>\n\n<row gap=\"medium\">\n**HP** 175\n\n</row>\n\n**Resistances**\npiercing 10\n\n**[Reactive Strike](/MonsterAbilities.aspx?ID=48)** <actions string=\"Reaction\" /> <br />**[Shield Block](/MonsterAbilities.aspx?ID=75)** <actions string=\"Reaction\" /> \n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 40 feet\n\n**Melee**\n<actions string=\"Single Action\" />\n_longsword_ +23 ([Magical](/Traits.aspx?ID=644), [versatile P](/Traits.aspx?ID=724)),\n**Damage** 2d8+13 slashing\n\n**Melee**\n<actions string=\"Single Action\" />\nfist +22 ([Agile](/Traits.aspx?ID=526)),\n**Damage** 2d6+13 bludgeoning\n\n**Melee**\n<actions string=\"Single Action\" />\n_dagger_ +23 ([Agile](/Traits.aspx?ID=526), [Magical](/Traits.aspx?ID=644), [versatile S](/Traits.aspx?ID=724)),\n**Damage** 2d4+13 piercing\n\n**Ranged**\n<actions string=\"Single Action\" />\n_dagger_ +20 ([Agile](/Traits.aspx?ID=526), [Magical](/Traits.aspx?ID=644), [thrown 10 feet](/Traits.aspx?ID=711), [versatile S](/Traits.aspx?ID=724)),\n**Damage** 2d4+13 piercing\n\n**Champion Devotion Spells 2 Focus Points,** DC 29\n- **5th**\n[Spectral Advance](/Spells.aspx?ID=2052)\n\n**Challenge Foe** <actions string=\"Single Action\" />  The einherji challenges one creature they can see to single combat, attempting to [Demoralize](/Actions.aspx?ID=2395) that target. This target remains the einherji's foe until it's defeated, it flees, or the encounter ends. The einherji gains a circumstance bonus to damage equal to their number of weapon damage dice against their designated foe but takes an equivalent circumstance penalty to damage against any other creature. If the einherji is defeated by their challenged foe, the shame causes them to lose use of their champion devotion spells for 1 week or until they challenge the same foe again and emerge victorious, whichever comes first.\n\n**Instant Repair** <actions string=\"Single Action\" />  The einherji [Repairs](/Actions.aspx?ID=2384) their shield. They can't use this ability if the shield is destroyed.\n\n**Jotun Slayer**   The einherji has a +4 circumstance bonus to damage rolls made against [giants](/Traits.aspx?ID=616) and creatures that are at least two sizes larger than the einherji.\n\n</column>\n\n<aside>\n<title level=\"2\" noclass=\"true\" icon=\"/images/Icons/Sidebar_2_AdditionalLore.png\">The Final Battle</title>\n\nRegardless of the deity they serve, all einherjar follow certain beliefs and mythologies. They assert that, in the final days of existence, [Pharasma](/Deities.aspx?ID=290) will judge the last soul and spark the beginning of a new existence. Einherjar believe they will be among the last souls left prior to this event, fighting alongside their gods against the forces of entropy. To einherjar, victory in this war—defined as thorough mutual destruction—is the only way to ensure a proper transition into the new existence.\n</aside>\n\n<document level=\"2\" id=\"creature-family-570\" />"
+    }
+   }
+  },
+  {
+   "id": "creature-3224",
+   "class": "served twin (random)",
+   "kind": "creature",
+   "twinOf": "creature-399",
+   "record": {
+    "name": "Vampire Servitor",
+    "source": "Monster Core",
+    "page": 336,
+    "level": 4,
+    "traits": [
+     "Medium",
+     "Undead",
+     "Unholy",
+     "Vampire"
+    ],
+    "perception": {
+     "std": 12
+    },
+    "senses": [
+     {
+      "name": "darkvision"
+     }
+    ],
+    "languages": {
+     "languages": [
+      "Common"
+     ],
+     "abilities": [
+      "plus one regional language"
+     ]
+    },
+    "skills": {
+     "acrobatics": 11,
+     "athletics": 9,
+     "intimidation": 8,
+     "society": 5,
+     "stealth": 12
+    },
+    "abilityMods": {
+     "str": 3,
+     "dex": 5,
+     "con": 1,
+     "int": -1,
+     "wis": 3,
+     "cha": 2
+    },
+    "items": [],
+    "speed": {
+     "walk": 25,
+     "climb": 25
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "claw",
+      "attack": 14,
+      "traits": [
+       "Agile"
+      ],
+      "damage": "1d8+6 slashing plus Grab",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [],
+    "abilities": {
+     "top": [],
+     "mid": [
+      {
+       "name": "Vampire Vulnerabilities",
+       "traits": [],
+       "entries": [
+        ""
+       ]
+      }
+     ],
+     "bot": [
+      {
+       "name": "Drink Blood",
+       "activity": {
+        "number": 1,
+        "unit": "action"
+       },
+       "traits": [
+        "Divine"
+       ],
+       "entries": [
+        "When Drinking Blood, the servitor regains 5 HP."
+       ]
+      },
+      {
+       "name": "Sneak Attack",
+       "traits": [],
+       "entries": [
+        "The servitor deals 1d6 extra precision damage to off-guard creatures."
+       ]
+      }
+     ]
+    },
+    "defenses": {
+     "ac": {
+      "std": 22
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 9
+      },
+      "ref": {
+       "std": 13
+      },
+      "will": {
+       "std": 11
+      }
+     },
+     "hp": [
+      {
+       "hp": 40,
+       "name": "(coffin restoration, fast healing 5, void healing)"
+      }
+     ],
+     "immunities": [
+      "death effects",
+      "disease",
+      "paralyzed",
+      "poison",
+      "sleep"
+     ],
+     "resistances": [
+      {
+       "name": "physical",
+       "amount": 5,
+       "note": "except silver"
+      }
+     ],
+     "weaknesses": []
+    },
+    "flavor": "Vampires use their servitor pawns for infiltration and reconnaissance.",
+    "family": "Vampire",
+    "_aon": {
+     "id": "creature-3224",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=3224",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Vampire Servitor](/Monsters.aspx?ID=3224)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nVampires use their servitor pawns for infiltration and reconnaissance.\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Undead](/Rules.aspx?ID=563)**\n([Religion](/Skills.aspx?ID=46)): DC 19\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 17\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 14\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 4\">[Vampire Servitor](/Monsters.aspx?ID=3224)</title>\n\n<traits>\n<trait label=\"Medium\" />\n<trait label=\"Undead\" url=\"/Traits.aspx?ID=722\" />\n<trait label=\"Unholy\" url=\"/Traits.aspx?ID=521\" />\n<trait label=\"Vampire\" url=\"/Traits.aspx?ID=778\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core](/Sources.aspx?ID=221) pg. 336\n\n**Perception** +12; [darkvision](/MonsterAbilities.aspx?ID=59)\n\n**Languages**\n[Common](/Languages.aspx?ID=1); plus one regional language\n\n**Skills**\n[Acrobatics](/Skills.aspx?ID=1) +11, [Athletics](/Skills.aspx?ID=3) +9, [Intimidation](/Skills.aspx?ID=7) +8, [Society](/Skills.aspx?ID=14) +5, [Stealth](/Skills.aspx?ID=15) +12\n\n<row gap=\"medium\">\n**Str** +3\n\n**Dex** +5\n\n**Con** +1\n\n**Int** -1\n\n**Wis** +3\n\n**Cha** +2\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 22 \n\n**Fort** +9 \n\n**Ref** +13 \n\n**Will** +11 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 40\n(coffin restoration, [fast healing](/MonsterAbilities.aspx?ID=62) 5, [void healing](/MonsterAbilities.aspx?ID=83))\n\n</row>\n\n**Immunities**\n[death](/Traits.aspx?ID=571) effects, [disease](/Traits.aspx?ID=578), [paralyzed](/Conditions.aspx?ID=85), [poison](/Traits.aspx?ID=669), [sleep](/Traits.aspx?ID=696)\n\n**Resistances**\nphysical 5 (except [silver](/Equipment.aspx?ID=2920))\n\n**Vampire Vulnerabilities** \n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 25 feet, climb 25 feet\n\n**Melee**\n<actions string=\"Single Action\" />\nclaw +14 ([Agile](/Traits.aspx?ID=526)),\n**Damage** 1d8+6 slashing plus [Grab](/MonsterAbilities.aspx?ID=45)\n\n**Drink Blood** <actions string=\"Single Action\" /> ([Divine](/Traits.aspx?ID=579)) When Drinking Blood, the servitor regains 5 HP.\n\n**[Sneak Attack](/MonsterAbilities.aspx?ID=34)**   The servitor deals 1d6 extra precision damage to [off-guard](/Conditions.aspx?ID=58) creatures.\n\n</column>\n\n<document level=\"2\" id=\"creature-family-480\" />"
+    }
+   }
+  },
+  {
+   "id": "creature-3230",
+   "class": "served twin (random)",
+   "kind": "creature",
+   "twinOf": "creature-402",
+   "record": {
+    "name": "Warg",
+    "source": "Monster Core",
+    "page": 341,
+    "level": 2,
+    "traits": [
+     "Medium",
+     "Beast"
+    ],
+    "perception": {
+     "std": 8
+    },
+    "senses": [
+     {
+      "name": "darkvision"
+     },
+     {
+      "name": "scent (imprecise) 30 feet"
+     }
+    ],
+    "languages": {
+     "languages": [
+      "Common",
+      "Goblin",
+      "Orcish"
+     ],
+     "abilities": []
+    },
+    "skills": {
+     "acrobatics": 7,
+     "athletics": 8,
+     "deception": 6,
+     "intimidation": 6,
+     "stealth": 7,
+     "survival": 8
+    },
+    "abilityMods": {
+     "str": 4,
+     "dex": 3,
+     "con": 3,
+     "int": -1,
+     "wis": 2,
+     "cha": 2
+    },
+    "items": [],
+    "speed": {
+     "walk": 40
+    },
+    "attacks": [
+     {
+      "range": "Melee",
+      "name": "jaws",
+      "attack": 11,
+      "traits": [],
+      "damage": "1d8+4 piercing plus Grab",
+      "types": [],
+      "effects": [],
+      "activity": {
+       "number": 1,
+       "unit": "action"
+      }
+     }
+    ],
+    "spellcasting": [],
+    "abilities": {
+     "top": [],
+     "mid": [
+      {
+       "name": "Avenging Bite",
+       "activity": {
+        "number": 1,
+        "unit": "reaction"
+       },
+       "traits": [],
+       "trigger": "A creature within reach of the warg's jaws attacks one of the warg's allies",
+       "entries": [
+        "Effect The warg makes a jaws Strike against the triggering creature."
+       ]
+      }
+     ],
+     "bot": [
+      {
+       "name": "Pack Attack",
+       "traits": [],
+       "entries": [
+        "The warg's Strikes deal 1d4 extra damage to creatures within the reach of at least two of the warg's allies."
+       ]
+      },
+      {
+       "name": "Swallow Whole",
+       "activity": {
+        "number": 1,
+        "unit": "action"
+       },
+       "traits": [
+        "Attack"
+       ],
+       "entries": [
+        "Small, 1d6+2 bludgeoning, Rupture 9"
+       ]
+      }
+     ]
+    },
+    "defenses": {
+     "ac": {
+      "std": 17
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 11
+      },
+      "ref": {
+       "std": 9
+      },
+      "will": {
+       "std": 6
+      }
+     },
+     "hp": [
+      {
+       "hp": 36
+      }
+     ],
+     "immunities": [],
+     "resistances": [],
+     "weaknesses": []
+    },
+    "flavor": "Wargs hunt in packs like wolves, but their penchant for taunting victims makes them easy to distinguish from their cousins. Orcs and hobgoblins frequently recruit wargs. Most wargs are amenable to this arrangement, but if food should run out, wargs are more than willing to integrate goblinoid flesh into their diet.",
+    "family": "Warg",
+    "_aon": {
+     "id": "creature-3230",
+     "url": "https://2e.aonprd.com/Monsters.aspx?ID=3230",
+     "markdown": "<title level=\"1\" pfs=\"Standard\">[Warg](/Monsters.aspx?ID=3230)</title>\n\n<row gap=\"medium\">\n\n<column gap=\"medium\" flex=\"1 1 400px\">\n\nWargs hunt in packs like [wolves](/MonsterFamilies.aspx?ID=485), but their penchant for taunting victims makes them easy to distinguish from their cousins. [Orcs](/MonsterFamilies.aspx?ID=454) and [hobgoblins](/MonsterFamilies.aspx?ID=430) frequently recruit wargs. Most wargs are amenable to this arrangement, but if food should run out, wargs are more than willing to integrate goblinoid flesh into their diet.\n\n<column gap=\"tiny\">\n**[Recall Knowledge - Beast](/Rules.aspx?ID=563)**\n([Arcana](/Skills.aspx?ID=35), [Nature](/Skills.aspx?ID=43)): DC 16\n\n**[Unspecific Lore](/Rules.aspx?ID=563)**: DC 14\n\n**[Specific Lore](/Rules.aspx?ID=563)**: DC 11\n</column>\n\n</column>\n\n<column gap=\"medium\">\n\n</column>\n\n</row>\n\n<title level=\"2\" right=\"Creature 2\">[Warg](/Monsters.aspx?ID=3230)</title>\n\n<traits>\n<trait label=\"Medium\" />\n<trait label=\"Beast\" url=\"/Traits.aspx?ID=547\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Monster Core](/Sources.aspx?ID=221) pg. 341\n\n**Perception** +8; [darkvision](/MonsterAbilities.aspx?ID=59), [scent](/MonsterAbilities.aspx?ID=74) ([imprecise](/Rules.aspx?ID=412)) 30 feet\n\n**Languages**\n[Common](/Languages.aspx?ID=1), [Goblin](/Languages.aspx?ID=6), [Orcish](/Languages.aspx?ID=9)\n\n**Skills**\n[Acrobatics](/Skills.aspx?ID=1) +7, [Athletics](/Skills.aspx?ID=3) +8, [Deception](/Skills.aspx?ID=5) +6, [Intimidation](/Skills.aspx?ID=7) +6, [Stealth](/Skills.aspx?ID=15) +7, [Survival](/Skills.aspx?ID=16) +8\n\n<row gap=\"medium\">\n**Str** +4\n\n**Dex** +3\n\n**Con** +3\n\n**Int** -1\n\n**Wis** +2\n\n**Cha** +2\n</row>\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n<row gap=\"medium\">\n**AC** 17 \n\n**Fort** +11 \n\n**Ref** +9 \n\n**Will** +6 \n\n</row>\n\n<row gap=\"medium\">\n**HP** 36\n\n</row>\n\n**Avenging Bite** <actions string=\"Reaction\" /> **Trigger** A creature within reach of the warg's jaws attacks one of the warg's allies; **Effect** The warg makes a jaws Strike against the triggering creature.\n\n</column>\n\n---\n\n<column gap=\"tiny\">\n\n**Speed** 40 feet\n\n**Melee**\n<actions string=\"Single Action\" />\njaws +11,\n**Damage** 1d8+4 piercing plus [Grab](/MonsterAbilities.aspx?ID=45)\n\n**Pack Attack**   The warg's Strikes deal 1d4 extra damage to creatures within the reach of at least two of the warg's allies.\n\n**[Swallow Whole](/MonsterAbilities.aspx?ID=77)** <actions string=\"Single Action\" /> ([Attack](/Traits.aspx?ID=540)) Small, 1d6+2 bludgeoning, Rupture 9\n\n</column>\n\n<document level=\"2\" id=\"creature-family-482\" />"
+    }
+   }
+  },
+  {
+   "id": "hazard-97",
+   "class": "served twin (random)",
+   "kind": "hazard",
+   "twinOf": "hazard-694",
+   "record": {
+    "name": "Malevolent Mannequins",
+    "source": "Guns & Gears (Remastered)",
+    "page": 81,
+    "level": 14,
+    "traits": [
+     "Uncommon",
+     "Clockwork",
+     "Complex",
+     "Haunt",
+     "Mechanical"
+    ],
+    "stealth": {
+     "bonus": 27
+    },
+    "description": [
+     " Malevolent Mannequins Source Guns &amp; Gears (Remastered) pg. 81 Complexity Complex A host of violent spirits possess three clockwork mannequins, and each lashes out at any creatures that dare walk near. --- Stealth +27 Disable DC 37 Thievery (master) to jam a mannequin's clockwork mechanisms or Religion DC 35 (expert) twice to exorcise a spirit from a mannequin. AC 35, Fort +26, Ref +28 Hardness 10 HP (per mannequin) 70 (BT 35) Immunities critical hits, object immunities, precision damage Weaknesses electricity 20 Awaken Reaction Trigger A creature comes within 30 feet of a mannequin; Effect The mannequins all lurch towards the triggering creature, Striding up to 50 feet, then roll initiative. --- Routine (9 actions) Each of the mannequins uses three of the haunt's actions on each turn, and the haunt loses three actions each turn for every disabled or destroyed mannequin. Each mannequin uses its first action to Stride up to 50 feet and its remaining two actions to make clockwork fist Strikes. Each has its own separate multiple attack penalty. Melee Single Action clockwork fist +29, Damage 2d10+18 bludgeoning --- Reset The haunt deactivates after it has no target creatures and resets, usually over the course of 1 round, as the mannequins move to their original positions. If a mannequin is more than 150 feet from its original position, the haunt takes longer to reset, as the mannequin moves back 150 feet each round."
+    ],
+    "disable": {
+     "entries": [
+      "DC 37 Thievery (master) to jam a mannequin's clockwork mechanisms or Religion DC 35 (expert) twice to exorcise a spirit from a mannequin."
+     ]
+    },
+    "routine": [
+     "(9 actions) Each of the mannequins uses three of the haunt's actions on each turn, and the haunt loses three actions each turn for every disabled or destroyed mannequin. Each mannequin uses its first action to Stride up to 50 feet and its remaining two actions to make clockwork fist Strikes. Each has its own separate multiple attack penalty."
+    ],
+    "reset": [
+     "The haunt deactivates after it has no target creatures and resets, usually over the course of 1 round, as the mannequins move to their original positions. If a mannequin is more than 150 feet from its original position, the haunt takes longer to reset, as the mannequin moves back 150 feet each round."
+    ],
+    "complex": true,
+    "defenses": {
+     "ac": {
+      "std": 35
+     },
+     "savingThrows": {
+      "fort": {
+       "std": 26
+      },
+      "ref": {
+       "std": 28
+      },
+      "will": {}
+     },
+     "hp": [
+      {
+       "hp": 70,
+       "name": "(per mannequin)"
+      }
+     ],
+     "immunities": [
+      "critical hits",
+      "object immunities",
+      "precision damage"
+     ],
+     "resistances": [],
+     "weaknesses": [
+      {
+       "name": "electricity",
+       "amount": 20
+      }
+     ],
+     "hardness": {
+      "std": 10
+     },
+     "bt": {
+      "std": 35
+     }
+    },
+    "actions": [
+     {
+      "name": "Awaken",
+      "activity": {
+       "number": 1,
+       "unit": "reaction"
+      },
+      "traits": [],
+      "trigger": "A creature comes within 30 feet of a mannequin",
+      "entries": [
+       "Effect The mannequins all lurch towards the triggering creature, Striding up to 50 feet, then roll initiative."
+      ]
+     }
+    ],
+    "_aon": {
+     "id": "hazard-97",
+     "url": "https://2e.aonprd.com/Hazards.aspx?ID=97",
+     "markdown": "<title level=\"1\" right=\"Hazard 14\" pfs=\"\">[Malevolent Mannequins](/Hazards.aspx?ID=97)</title>\n\n<traits>\n<trait label=\"Uncommon\" url=\"/Traits.aspx?ID=159\" />\n<trait label=\"Clockwork\" url=\"/Traits.aspx?ID=331\" />\n<trait label=\"Complex\" url=\"/Traits.aspx?ID=30\" />\n<trait label=\"Haunt\" url=\"/Traits.aspx?ID=88\" />\n<trait label=\"Mechanical\" url=\"/Traits.aspx?ID=105\" />\n</traits>\n\n<column gap=\"tiny\">\n\n**Source** [Guns &amp; Gears (Remastered)](/Sources.aspx?ID=98) pg. 81\n\n**Complexity** Complex\n\n</column>\n\nA host of violent spirits possess three clockwork mannequins, and each lashes out at any creatures that dare walk near.\n\n---\n\n**Stealth**\n+27\n\n**Disable**\nDC 37 [Thievery](/Skills.aspx?ID=17) (master) to jam a mannequin's clockwork mechanisms or [Religion](/Skills.aspx?ID=13) DC 35 (expert) twice to exorcise a spirit from a mannequin.\n\n<column gap=\"tiny\">\n\n**AC** 35, **Fort** +26, **Ref** +28\n\n**Hardness**\n10\n\n**HP (per mannequin)**\n70 (BT 35)\n\n**Immunities**\ncritical hits, object immunities, precision damage\n\n**Weaknesses**\n[electricity](/Traits.aspx?ID=56) 20\n\n</column>\n\n**Awaken** <actions string=\"Reaction\" /> **Trigger** A creature comes within 30 feet of a mannequin; **Effect** The mannequins all lurch towards the triggering creature, Striding up to 50 feet, then roll initiative.\n\n---\n**Routine**\n(9 actions) Each of the mannequins uses three of the haunt's actions on each turn, and the haunt loses three actions each turn for every disabled or destroyed mannequin. Each mannequin uses its first action to Stride up to 50 feet and its remaining two actions to make clockwork fist Strikes. Each has its own separate multiple attack penalty.<br /> **Melee** <actions string=\"Single Action\" /> clockwork fist +29, **Damage** 2d10+18 bludgeoning\n\n---\n**Reset**\nThe haunt deactivates after it has no target creatures and resets, usually over the course of 1 round, as the mannequins move to their original positions. If a mannequin is more than 150 feet from its original position, the haunt takes longer to reset, as the mannequin moves back 150 feet each round."
     }
    }
   }

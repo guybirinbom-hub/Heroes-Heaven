@@ -185,7 +185,14 @@ export interface Creature {
   flavor?: string
   /** AoN creature-family name; its description is looked up in the family data. */
   family?: string
-  /** Pasted/imported Recall Knowledge line (overrides computed display when set) */
+  /** The Recall Knowledge line to print. Pasted / imported: verbatim. An Archives record: the
+   *  page's own sidebar (recallKnowledgeFromPage), its DCs shifted by the level table for elite /
+   *  weak / scaled combatants. The three states of a record, read by StatBlock:
+   *  - set → print it;
+   *  - unset on a PAGE record (rawMarkdown or fromArchivesPage) → the page prints none: no row
+   *    (a record still carrying rawMarkdown reads the sidebar off it first);
+   *  - unset on a page-less record (hand-built, pasted without the line, homebrew) → computed
+   *    from level, rarity and type traits. */
   recallKnowledge?: string
   /** AoN URL for linking to the original page */
   aonUrl?: string
@@ -237,9 +244,11 @@ export interface Defenses {
   hpPools?: Array<{ hp: number; name?: string }>
   /** Hazards only: the saves the page prints; the renderer draws only these boxes (APP-DEFECTS: hazard saves, 291). */
   savesPrinted?: Array<'fort' | 'ref' | 'will'>
-  /** Hazards only: the page prints an AC (raw.defenses.ac.std is a number), set by parseHazard on
-   *  the UNADJUSTED record — weak / elite / level scaling never make an AC appear. Absent on
-   *  hand-built and pasted hazards, which keep the rule "AC box when the base ac > 0". */
+  /** Hazards only: the record prints an AC. Set by parseHazard on the UNADJUSTED record
+   *  (raw.defenses.ac.std is a number — weak / elite / level scaling never make an AC appear), by
+   *  the paste parser when the text has an AC line, and by the builder. The hazard AC box draws
+   *  only when this is true: a hazard without it was made before the flag existed, when no hazard
+   *  drew an AC box (and the old builder and paste parser stored an untyped ac 10). */
   acPrinted?: boolean
   hardness?: number
   bt?: number

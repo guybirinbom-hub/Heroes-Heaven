@@ -203,6 +203,19 @@ describe('parseHazard on corpus records', () => {
       ['Ranged', 'splinter', 12, '1d4 piercing', ''],
     ])
   })
+
+  it('dedupes a prose strike against a structured one by LOWER-CASED name, whichever side is capitalised', () => {
+    // Mutation proof (2026-10-07): comparing the prose name as printed ("Spikes") with the
+    // lower-cased structured set kept both strikes; every earlier fixture printed the prose name
+    // lower-case, so that mutation stayed green.
+    const raw: RawHazard = {
+      ...H.semicolonStrike,
+      description: [String(H.semicolonStrike.description?.[0]).replace('Melee spikes +17', 'Melee Spikes +17')],
+      attacks: [{ range: 'Melee', name: 'spikes', attack: 18, damage: '4d6+4 piercing' }],
+    }
+    const h = parseHazard(raw)
+    expect(h.attacks.map(a => [a.name, a.attack])).toEqual([['spikes', 18]])
+  })
 })
 
 const bareName = (n: string) => n.replace(/[◆◇↺]/g, '').trim()
@@ -264,5 +277,48 @@ describe('parseHazard: what the page prints, decided on the record (fix round 1)
     expect(h.abilities.map(a => bareName(a.name))).toContain('Continuous Barrage')
     expect(h.hazardData?.routine).toContain('fires one bolt at every creature')
     expect(h.hazardData?.routine).not.toContain('A creature in front of the gate finishes an action')
+  })
+})
+
+/** A synthetic hazard shaped like a corpus record: structured fields plus the flattened page text. */
+function synthHazard(over: { routine: string; tail: string; actions: Array<{ name: string; unit: string; traits?: string[]; text: string }> }): RawHazard {
+  return {
+    name: 'Synthetic Mural', source: 'Test', level: 5, traits: ['haunt'],
+    description: [` Synthetic Mural Source Test pg. 1 Complexity Complex A painted wall. --- Stealth +13 (expert) Disable DC 22 Occultism to calm it AC 20, Fort +12, Ref +10 Hardness 8 HP 40 (BT 20) Immunities critical hits Routine ${over.routine}${over.tail} --- Reset The haunt resets after 1 minute.`],
+    disable: { entries: ['DC 22 Occultism to calm it'] },
+    routine: [over.routine], reset: ['The haunt resets after 1 minute.'],
+    actions: over.actions.map(a => ({ name: a.name, activity: { number: 1, unit: a.unit }, traits: a.traits ?? [], entries: [a.text] })),
+    defenses: { ac: { std: 20 }, savingThrows: { fort: { std: 12 }, ref: { std: 10 } }, hardness: { std: 8 }, hp: [{ hp: 40 }], bt: { std: 20 } },
+  } as unknown as RawHazard
+}
+
+describe('parseHazard: an ability printed under the Routine is cut from the Routine prose (fix round 1, refute 2)', () => {
+  it('a long trait list between the name and the text does not stop the cut, and a MENTION of the name is not cut', () => {
+    // Before: the name had to reach the first words within 60 characters, so "Captivate Single Action
+    // (charm, enchantment, incapacitation, mental, occult) The faintly …" (Endless Elven Aging)
+    // stayed in the Routine AND drew as an ability; with that fixed alone, the cut for the next
+    // ability started at its mention ("…with Live Many Lives.") and ate the sentence's end.
+    const h = parseHazard(synthHazard({
+      routine: '(2 actions) The haunt uses Captivate. Leftover actions drain a creature with Live Many Lives.',
+      tail: ' Captivate Single Action (charm, enchantment, incapacitation, mental, occult) The faintly moving images compel one creature to move into the room. Live Many Lives Single Action (mental, occult) The haunt causes a creature to live a full life in seconds.',
+      actions: [
+        { name: 'Captivate', unit: 'action', traits: ['charm', 'enchantment', 'incapacitation', 'mental', 'occult'], text: 'The faintly moving images compel one creature to move into the room.' },
+        { name: 'Live Many Lives', unit: 'action', traits: ['mental', 'occult'], text: 'The haunt causes a creature to live a full life in seconds.' },
+      ],
+    }))
+    expect(h.abilities.map(a => bareName(a.name))).toEqual(['Captivate', 'Live Many Lives'])
+    expect(h.hazardData?.routine).toBe('(2 actions) The haunt uses Captivate. Leftover actions drain a creature with Live Many Lives.')
+  })
+
+  it('a strike printed as a short ability ("blade +18, Damage 2d8+9 slashing") is drawn once', () => {
+    // Before: an ability under six words was never cut, so Clockwork Dancers' "Spinning Blade" and
+    // Temptation of Glory's "Cruel Temptation" printed in the Routine and again as an entry.
+    const h = parseHazard(synthHazard({
+      routine: '(1 action) The dancers make a spinning blade Strike.',
+      tail: ' Spinning Blade Single Action blade +18, Damage 2d8+9 slashing',
+      actions: [{ name: 'Spinning Blade', unit: 'action', text: 'blade +18, Damage 2d8+9 slashing' }],
+    }))
+    expect(h.abilities.map(a => bareName(a.name))).toEqual(['Spinning Blade'])
+    expect(h.hazardData?.routine).toBe('(1 action) The dancers make a spinning blade Strike.')
   })
 })

@@ -85,7 +85,20 @@ const creature = (name: string, family = 'Demon') => ({
   abilities: { top: [], mid: [], bot: [] }, defenses: { hp: [{ hp: 10 }] },
 });
 
-function fixture(opts: { extraShard?: boolean; pinCreatures?: number; noPin?: boolean; shipSkipped?: boolean; family?: string } = {}) {
+type PinCounts = { creatures: number; hazards: number; shards: number; indexRows: number; indexHazardRows: number };
+function fixture(opts: {
+  extraShard?: boolean; pinCreatures?: number; noPin?: boolean; shipSkipped?: boolean; family?: string;
+  /** mutation proof 2026-10-07: one pin count set off by hand (every key, not only creatures). */
+  pinCounts?: Partial<PinCounts>;
+  /** the hazard row without isHazard (the loader branches on the flag, not the file). */
+  hazardRowNoFlag?: boolean;
+  /** the creature row's name, when it should name a record its file does not hold. */
+  rowName?: string;
+  /** index.json written as an object wrapping the rows, not the array the tracker reads. */
+  indexObject?: boolean;
+  /** creature-families.json's only entry has no `text` (the tracker never keys it). */
+  familyNoText?: boolean;
+} = {}) {
   const dir = temp();
   put(dir, 'public/data/bestiary/creatures-a.json', { creature: [creature('Alpha', opts.family)] });
   if (opts.extraShard) put(dir, 'public/data/bestiary/creatures-b.json', { creature: [creature('Beta')] });
@@ -93,12 +106,13 @@ function fixture(opts: { extraShard?: boolean; pinCreatures?: number; noPin?: bo
   put(dir, 'public/data/hazards.json', { hazard: [{ name: 'Pit', description: ['A pit.'] }] });
   // refute 2026-10-06: a hazard row carries isHazard, as every shipped one does — the tracker's loader
   // branches on the flag, and the check now fails a hazard row without it.
-  put(dir, 'public/data/index.json', [
-    { name: 'Alpha', file: 'creatures-a.json' },
+  const rows = [
+    { name: opts.rowName ?? 'Alpha', file: 'creatures-a.json' },
     ...(opts.shipSkipped ? [{ name: 'Alpha (legacy)', file: 'creatures-old.json' }] : []),
-    { name: 'Pit', file: HAZARD_FILE, isHazard: true },
-  ]);
-  put(dir, 'public/data/creature-families.json', { demon: { name: 'Demon', text: 'Demons.' } });
+    opts.hazardRowNoFlag ? { name: 'Pit', file: HAZARD_FILE } : { name: 'Pit', file: HAZARD_FILE, isHazard: true },
+  ];
+  put(dir, 'public/data/index.json', opts.indexObject ? { rows } : rows);
+  put(dir, 'public/data/creature-families.json', { demon: opts.familyNoText ? { name: 'Demon' } : { name: 'Demon', text: 'Demons.' } });
   if (!opts.noPin) {
     const shards = opts.shipSkipped ? 2 : 1;
     put(dir, 'scripts/data/bestiary-corpus-pin.json', {
@@ -106,6 +120,7 @@ function fixture(opts: { extraShard?: boolean; pinCreatures?: number; noPin?: bo
       counts: {
         creatures: opts.pinCreatures ?? (opts.shipSkipped ? 2 : 1), hazards: 1, shards,
         indexRows: opts.shipSkipped ? 3 : 2, indexHazardRows: 1,
+        ...opts.pinCounts,
       },
       skippedShards: [{ file: 'creatures-old.json', records: 1, reason: 'every record superseded by a linked remaster' }],
     });
@@ -113,8 +128,11 @@ function fixture(opts: { extraShard?: boolean; pinCreatures?: number; noPin?: bo
   return dir;
 }
 const text = (r: { lines: Array<{ text: string }> }) => r.lines.map((l) => l.text).join('\n');
+/* A fixture test writes a temp dir; under machine load one took 7.4 s against the 5 s default
+ * (mutation-proof run 2026-10-07), a red that measured nothing. */
+const SLOW_IO = { timeout: 30_000 };
 
-describe('(d) bestiary-fields-check goes red on each mutation, green on a correct fixture', () => {
+describe('(d) bestiary-fields-check goes red on each mutation, green on a correct fixture', SLOW_IO, () => {
   it('a correct tiny fixture passes', () => {
     const r = check(fixture(), { floors: TINY });
     expect(text(r)).toContain('all fields present');
@@ -156,6 +174,41 @@ describe('(d) bestiary-fields-check goes red on each mutation, green on a correc
     expect(text(r)).toMatch(/family join rate\s+1\.0000.*ok/);
   });
 
+  /* Mutation proof 2026-10-07: each check below was turned off in turn and no test went red. */
+  it.each(['creatures', 'hazards', 'shards', 'indexRows', 'indexHazardRows'] as const)(
+    'a pin whose %s count is off fails (every count is compared, not only creatures)',
+    (key) => {
+      const ok: PinCounts = { creatures: 1, hazards: 1, shards: 1, indexRows: 2, indexHazardRows: 1 };
+      const r = check(fixture({ pinCounts: { [key]: ok[key] + 5 } }), { floors: TINY });
+      expect(r.bad).toBeGreaterThan(0);
+      expect(text(r)).toContain(`${key}: pin ${ok[key] + 5}, shipped ${ok[key]}`);
+    },
+  );
+
+  it('a hazard row without isHazard fails (the loader branches on the flag, not the file)', () => {
+    const r = check(fixture({ hazardRowNoFlag: true }), { floors: TINY });
+    expect(r.bad).toBeGreaterThan(0);
+    expect(text(r)).toMatch(/1 index row\(s\) whose isHazard does not match their file: Pit/);
+  });
+
+  it('an index row naming a record its file does not hold fails', () => {
+    const r = check(fixture({ rowName: 'Alpha (typo)' }), { floors: TINY });
+    expect(r.bad).toBeGreaterThan(0);
+    expect(text(r)).toMatch(/1 index row\(s\) name a record their file does not hold: creatures-a\.json: Alpha \(typo\)/);
+  });
+
+  it('an index.json that is not the array itself fails, even when its rows are all good', () => {
+    const r = check(fixture({ indexObject: true }), { floors: TINY });
+    expect(r.bad).toBeGreaterThan(0);
+    expect(text(r)).toMatch(/index\.json is not an array/);
+  });
+
+  it('a creature-families.json entry with no text joins nothing (the tracker never keys it)', () => {
+    const r = check(fixture({ familyNoText: true }), { floors: TINY });
+    expect(r.bad).toBeGreaterThan(0);
+    expect(text(r)).toMatch(/family join rate\s+0\.0000.*BELOW FLOOR/);
+  });
+
   it('the real shipped data passes with the real floors', () => {
     const r = check(ROOT);
     expect(r.lines.filter((l) => (l as { err: boolean }).err).map((l) => l.text)).toEqual([]);
@@ -163,7 +216,7 @@ describe('(d) bestiary-fields-check goes red on each mutation, green on a correc
   });
 });
 
-describe('(d) the importer refuses an incomplete corpus', () => {
+describe('(d) the importer refuses an incomplete corpus', SLOW_IO, () => {
   const run = (corpus: string) => {
     try {
       execFileSync(process.execPath, [join(ROOT, 'scripts/import-bestiary-corpus.mjs'), corpus, '--dry-run'], { stdio: 'pipe', encoding: 'utf8' });
@@ -189,5 +242,40 @@ describe('(d) the importer refuses an incomplete corpus', () => {
     const r = run(dir);
     expect(r.code).toBe(1);
     expect(r.err).toMatch(/REFUSED: coverage\.live\.creature \(2\) != coverage\.corpus\.creature \(1\)/);
+  });
+});
+
+/*
+ * Mutation proof 2026-10-07: the importer's PLAN had no test — shipping the orphan shards (ruling R12's
+ * superseded printings) or pinning the corpus creature count without the skipped records both stayed
+ * green, because (a)–(c) read the files an earlier import left behind. This runs the importer's
+ * read-only --dry-run against the verified corpus checkout beside the repo (HH_BESTIARY_CORPUS
+ * overrides the path) and reads its plan. The only git command it runs is `git rev-parse HEAD`.
+ */
+const CORPUS = process.env.HH_BESTIARY_CORPUS ?? join(ROOT, '..', 'hh-bestiary-corpus');
+const haveCorpus = existsSync(join(CORPUS, 'report/coverage.json')) && existsSync(join(CORPUS, 'STATUS.md'));
+describe.skipIf(!haveCorpus)('(d) the importer plan against the verified corpus (--dry-run)', SLOW_IO, () => {
+  const plan = () => execFileSync(process.execPath, [join(ROOT, 'scripts/import-bestiary-corpus.mjs'), CORPUS, '--dry-run'], { stdio: 'pipe', encoding: 'utf8' });
+
+  it('skips every orphan shard, plans to add none of them, and pins the creatures without them', () => {
+    const out = plan();
+    const coverage = readJson(join(CORPUS, 'report/coverage.json'));
+    const orphans: Array<{ file: string; records: number }> = coverage.orphanShards ?? [];
+    expect(orphans.length).toBeGreaterThan(0);
+    for (const o of orphans) {
+      expect(out).toContain(`  skip ${o.file}  (${o.records} record`);
+      expect(out).not.toContain(`add    ${o.file}`);
+    }
+    const corpusShards = readdirSync(join(CORPUS, 'data/bestiary')).filter((f) => f.endsWith('.json'));
+    const skippedRecords = orphans.reduce((a, o) => a + o.records, 0);
+    expect(out).toContain(`  ships:  ${corpusShards.length - orphans.length} shards, ${coverage.corpus.creature - skippedRecords} creatures`);
+  });
+
+  it('at the pinned corpus commit the plan is "nothing to do": the shipped files and the pin equal it', () => {
+    const out = plan();
+    const at = /@ ([0-9a-f]{7}) /.exec(out)?.[1];
+    if (at !== pin.commit.slice(0, 7)) return; // a newer corpus is a re-import, not a defect of this tree
+    expect(out).toContain('pin unchanged');
+    expect(out).toContain('nothing to do; the shipped files already equal the corpus');
   });
 });

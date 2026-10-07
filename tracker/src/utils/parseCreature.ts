@@ -261,8 +261,17 @@ function withoutAbilityText(prose: string, abilities: Ability[]): string {
     const name = ab.name.replace(/[◆◇↺]/g, ' ').replace(/\s+/g, ' ').trim()
     const body = `${ab.trigger ? `Trigger ${ab.trigger} ` : ''}${ab.entries ?? ''}`.replace(/\s+/g, ' ').trim()
     const words = body.split(' ').filter(Boolean)
-    if (!name || words.length < 6) continue
-    const head = new RegExp(`(^|[\\s.;:])${wordsRe(name.split(' '))}(?![\\w'’])[\\s\\S]{0,60}?${wordsRe(words.slice(0, 4))}`)
+    // Four words at least: a strike printed as an ability ("Spinning Blade ◆ blade +18, Damage
+    // 2d8+9 slashing", Clockwork Dancers) is short and was drawn again in the Routine.
+    if (!name || words.length < 4) continue
+    // Between the name and the first words: a printed cost and a trait list of any length
+    // ("Captivate Single Action (charm, enchantment, incapacitation, mental, occult) The faintly…",
+    // Endless Elven Aging's Routine), then at most 60 characters of clause labels, never across a
+    // line or a sentence end: there the name is only MENTIONED ("…with Live a Thousand Lives.\nLive a
+    // Thousand Lives Single Action …"), and a cut from the mention ate the sentence's last words.
+    const head = new RegExp(`(^|[\\s.;:])${wordsRe(name.split(' '))}(?![\\w'’])`
+      + `(?:\\s*(?:Single Action|One Action|Two Actions|Three Actions|Free Action|Reaction|Action))?`
+      + `(?:\\s*\\([^()]{0,200}\\))?[^\\n.]{0,60}?${wordsRe(words.slice(0, 4))}`)
     const m = head.exec(out)
     if (!m) continue
     const start = m.index + m[1].length
