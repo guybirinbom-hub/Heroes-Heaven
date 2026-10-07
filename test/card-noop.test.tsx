@@ -11,6 +11,8 @@ import { DescriptionModal } from '../src/sheet/DescriptionModal';
 import { ItemDetail, itemStatRows } from '../src/sheet/ItemDetail';
 import { FeatDetail, featStatRows, type FeatEntry } from '../src/sheet/FeatDetail';
 import { SpellDetail, spellStatRows } from '../src/sheet/SpellsTab';
+import { spellCardModel } from '../src/sheet/spellCard';
+import { splitHeightening } from '../src/rules/heightening';
 import { ActionGlyph } from '../src/sheet/widgets';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { cardOn } from '../src/sheet/cardSurfaces';
@@ -54,6 +56,12 @@ import type { ActionCost, ContentDatabase, InventoryItem } from '../src/rules/ty
  *  - ItemDetail.tsx itemStatRows: drop the Bulk row → block 3 red (the popup follows the function).
  *  - FeatDetail.tsx: the Enhancement cell prints entry.enhancedBy instead of the row → block 2 red.
  *  - SpellsTab.tsx spellStatRows: drop the Duration row → block 3 red (spells gravity-weapon).
+ *  - (card step 16, 2026-10-07) SpellsTab.tsx SpellDetail: spellCardModel(spell, undefined, …) — the popup
+ *    ignores its page and prints the field rows → block 2 red (spell reinforced-rations, 3 rows vs 4).
+ *  - (card step 16 re-baseline, 2026-10-07, with the snapshot) spellCard.ts stripPrintedPreamble returns
+ *    its input → block 3 red (STEP16_CHANGED_NOOP: the 7 'preamble stripped' spells no longer match).
+ *  - (same) SpellsTab.tsx SpellDetail: drop data-lane from .sd-stats → block 3 red (46 changed vs 60 pinned:
+ *    the 14 lane-only spells become byte-equal again).
  */
 const SEED = 20261002;
 const BUCKETS = ['feats', 'classFeatures', 'items', 'actions', 'spells'] as const;
@@ -189,6 +197,103 @@ const STEP12_CHANGED_NOOP: Record<string, string> = {
   'items:wand-of-teeming-ghosts-5th-rank': 'F6b page slice',
 };
 
+/** Card step 16 (spells phase A, docs/card-design.md section 9 row 16): what changed in a spell popup
+ *  against the pre-move snapshot, as a "; "-joined list of classes, '' when nothing did.
+ *   - 'lane marker': the stat block now says which lane its rows came from (data-lane="page" | "field");
+ *     with that attribute taken out of today's markup the rest is compared.
+ *   - 'page rows': the rows read off the DOM differ — they are the page's own labelled lines now, in
+ *     printed order and the page's words (Saving Throw as Defense, a field-only row not printed).
+ *   - 'preamble stripped': the body (from .sd-desc on) differs — the leading "**Area** …" / scraped
+ *     "Name / Source … pg. N / Cast …" lines the rows now print came off the description string.
+ *   - 'stats markup': the stat block's markup differs while its rows do not (never measured; pinned so it
+ *     cannot appear unnoticed). */
+const LANE_ATTR = / data-lane="(?:page|field)"/;
+function step16SpellChange(now: { markup: string; rows: [string, string][] }, before: { markup: string; rows: [string, string][] }): string {
+  const out: string[] = [];
+  const bare = now.markup.replace(LANE_ATTR, '');
+  if (bare !== now.markup) out.push('lane marker');
+  if (bare === before.markup) return out.join('; ');
+  const rowsDiffer = JSON.stringify(now.rows) !== JSON.stringify(before.rows);
+  const bodyAt = (m: string) => m.slice(m.indexOf('<div class="sd-desc">'));
+  const bodyDiffer = bodyAt(bare) !== bodyAt(before.markup);
+  if (rowsDiffer) out.push('page rows');
+  if (bodyDiffer) out.push('preamble stripped');
+  if (!rowsDiffer && bare.slice(0, bare.length - bodyAt(bare).length) !== before.markup.slice(0, before.markup.length - bodyAt(before.markup).length)) out.push('stats markup');
+  return out.join('; ');
+}
+/** Measured 2026-10-07 on main at c67ccd6 + the step-16 tree, against the 2026-10-02 pre-move snapshot:
+ *  every one of the 60 sampled spell popups changed on purpose (all 60 stat blocks carry their lane, 14
+ *  with nothing else changed); the rows of 46 differ because they are the page's own; 7 bodies lost the
+ *  printed preamble the rows now show (all 7 also page rows). No 'stats markup' change. Every other
+ *  surface (the 600 tree renders, the 60 item popups, and the 60 feat popups while CARD_ON.featDetail is
+ *  off) stays byte-equal.
+ *  batch card premise: spell-2315 "Duration sustained up to 1 minute" — the page's own Duration line is the row. */
+const L = 'lane marker';
+const LR = 'lane marker; page rows';
+const LRP = 'lane marker; page rows; preamble stripped';
+const STEP16_CHANGED_NOOP: Record<string, string> = {
+  'aberrant-form': L,
+  'animus-mine': LR,
+  'befitting-attire': LR,
+  benediction: L,
+  'blackfingers-blades': LR,
+  'boots-on-the-ground': LR,
+  'burning-blossoms': LRP,
+  'commanding-lash': LR,
+  'confound-the-eye-and-confuse-the-mind': LRP,
+  'cutting-insult': LR,
+  'dancing-blade': LR,
+  'divine-aura': LR,
+  'drain-planar-connection': LR,
+  'draw-ire': LR,
+  'embodied-font': LR,
+  'embrace-the-pit': L,
+  'ephemeral-hazards': LRP,
+  'extend-blood-magic': L,
+  'false-nature': LR,
+  'familiars-resurrection': LRP,
+  'flowing-strike': L,
+  'foraging-friends': LR,
+  'frenzied-revelry': L,
+  'gale-blast': LR,
+  'gentle-breeze': LR,
+  'glimpse-weakness': LR,
+  'gravity-weapon': L,
+  'grim-tendrils': LR,
+  'hand-of-the-apprentice': LR,
+  'illusory-creature': LR,
+  'implement-of-destruction': LR,
+  'infectious-ennui': LR,
+  'iron-gut': LR,
+  knock: L,
+  'lashing-rope': LR,
+  'pack-attack': LR,
+  'pillar-of-water': L,
+  'planar-displacement': LR,
+  pyrotechnics: LR,
+  'qi-blast': LR,
+  'reinforced-rations': LR,
+  'remake-physiology': LRP,
+  'rite-of-cleansing-flame': L,
+  'rite-of-the-red-star': LR,
+  'scouting-eye': LR,
+  'shambling-horror': LR,
+  'sky-laughs-at-waves': LRP,
+  'soothing-words': L,
+  'spiritual-epidemic': LR,
+  'subconscious-suggestion': LR,
+  'telekinetic-maneuver': L,
+  'teleportation-circle': LR,
+  'tesseract-tunnel': LR,
+  'time-jump': L,
+  'unbreaking-wave-advance': LR,
+  'wanderers-guide': L,
+  'weapon-surge': LR,
+  'wooden-double': LRP,
+  'word-of-truth': LR,
+  'world-in-shadow': LR,
+};
+
 /** The three tree renders for one record: what a held record's popup body shows (the real DescBody),
  *  the same body rendered straight from the cuts, and the search popup (the real DescriptionModal). */
 function astRenders(bucket: string, slug: string) {
@@ -270,8 +375,12 @@ const featRowsFn = (r: { bucket: 'feats' | 'classFeatures'; id: string }, i: num
       ? ['Activate', viaDom(renderToStaticMarkup(<><strong>Activate</strong> <ActionGlyph cost={row.cost} /></>))]
       : [row.k, row.v],
   );
+// Card step 16 (spells phase A): the popup's rows come from the spell's own page through spellCardModel
+// (src/sheet/spellCard.ts), falling back to spellStatRows only when there is no spell/ritual page — so the
+// ONE copy the popup prints is spellCardModel's rows, judged here with the same warm tree it renders from.
+// batch card premise: ritual-213 "Area 50-foot radius emanation centered on you"
 const spellRowsFn = (id: string): [string, string][] =>
-  spellStatRows(db.spells[id]).filter(([k, v]) => k === 'Cast' || v).map(([k, v]) => [k, k === 'Cast' ? '' : v!]);
+  blankCast(spellCardModel(db.spells[id], trees.spells[id], spellStatRows(db.spells[id])).rows);
 const blankCast = (rows: [string, string][]): [string, string][] => rows.map(([k, v]) => [k, k === 'Cast' ? '' : v]);
 
 describe('card step 1 (G0): the move changes no markup', () => {
@@ -361,13 +470,32 @@ describe('card step 1 (G0): the move changes no markup', () => {
       if (k in changed) expect(now.ast[k].descBody, `${k} (${changed[k]}) changed`).not.toBe(before.ast[k].descBody);
     }
     // Card step 11: with CARD_ON.featDetail the feat popups are the mine card by design (60 of 60 differ);
-    // their byte-equality is the legacy assertion and runs while the switch is off. Items and spells stay.
+    // their byte-equality is the legacy assertion and runs while the switch is off. Items stay.
     // batch card premise: feat-928 "Prerequisites Charisma 14"
-    for (const surface of (cardOn('featDetail') ? ['items', 'spells'] : ['items', 'feats', 'spells']) as ('items' | 'feats' | 'spells')[]) {
+    // Card step 16: the spell popups changed on purpose — each is pinned with its classes in
+    // STEP16_CHANGED_NOOP and must differ exactly so (below); the byte-equal loop runs over the rest.
+    // batch card premise: spell-2315 "Duration sustained up to 1 minute"
+    expect(Object.keys(now.spells)).toEqual(Object.keys(before.spells));
+    const spellChanged = Object.fromEntries(
+      Object.keys(now.spells).map((k) => [k, step16SpellChange(now.spells[k], before.spells[k])] as const).filter(([, why]) => why),
+    );
+    expect(spellChanged).toEqual(STEP16_CHANGED_NOOP);
+    for (const k of Object.keys(now.spells)) {
+      const why = STEP16_CHANGED_NOOP[k] ?? '';
+      // The lane marker names the lane spellCardModel chose — the one the rows came from.
+      const lane = spellCardModel(db.spells[k], trees.spells[k], spellStatRows(db.spells[k])).lane;
+      expect(now.spells[k].markup.includes(`data-lane="${lane}"`), `spell ${k} carries data-lane="${lane}"`).toBe(why.includes('lane marker'));
+      // Only a page-lane popup changes its rows; the field lane prints the pre-move rows.
+      if (why.includes('page rows')) expect(lane, `spell ${k} rows changed only on the page lane`).toBe('page');
+      // A stripped preamble is exactly the model's body differing from the plain heightening split.
+      const model = spellCardModel(db.spells[k], trees.spells[k], spellStatRows(db.spells[k]));
+      expect(model.base !== splitHeightening(db.spells[k].description || '').base, `spell ${k} body stripped`).toBe(why.includes('preamble stripped'));
+    }
+    for (const surface of (cardOn('featDetail') ? ['items'] : ['items', 'feats']) as ('items' | 'feats')[]) {
       expect(Object.keys(now[surface])).toEqual(Object.keys(before[surface]));
       for (const k of Object.keys(now[surface])) {
         const key = surface === 'items' ? `items:${k}` : k;
-        if (surface !== 'spells' && key in changed) {
+        if (key in changed) {
           expect(now[surface][k].markup, `${surface} ${k} (${changed[key]}) changed`).not.toBe(before[surface][k].markup);
           expect(now[surface][k].rows, `${surface} ${k} rows`).toEqual(before[surface][k].rows);
           continue;
@@ -380,6 +508,13 @@ describe('card step 1 (G0): the move changes no markup', () => {
     // The exported functions reproduce TODAY's rows — the rows the pre-move popups printed.
     for (const id of itemIds) expect(itemRowsFn(id), `item ${id} vs pre-move`).toEqual(before.items[id].rows);
     featRows.forEach((r, i) => expect(featRowsFn(r, i), `${r.bucket} ${r.id} vs pre-move`).toEqual(before.feats[`${r.bucket}:${r.id}`].rows));
-    for (const id of spellIds) expect(spellRowsFn(id), `spell ${id} vs pre-move`).toEqual(blankCast(before.spells[id].rows));
+    // Card step 16: a spell whose rows step 16 did not change still prints the pre-move rows through the
+    // ONE copy; a 'page rows' spell prints today's page rows through that same copy (they differ from the
+    // pre-move rows by the classification above).
+    // batch card premise: spell-2315 "Duration sustained up to 1 minute"
+    for (const id of spellIds) {
+      if ((STEP16_CHANGED_NOOP[id] ?? '').includes('page rows')) expect(spellRowsFn(id), `spell ${id} page rows`).toEqual(blankCast(now.spells[id].rows));
+      else expect(spellRowsFn(id), `spell ${id} vs pre-move`).toEqual(blankCast(before.spells[id].rows));
+    }
   });
 });

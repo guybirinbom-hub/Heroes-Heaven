@@ -1,5 +1,7 @@
 // @vitest-environment jsdom
-import { afterEach, describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import type { ReactElement } from 'react';
 import { content } from './_content';
 import { renderDom } from './_render';
@@ -8,6 +10,7 @@ import { ContentContext } from '../src/sheet/ContentContext';
 import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { splitHeightening } from '../src/rules/heightening';
 import type { Spell } from '../src/rules/types';
+import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 
 /**
  * Card step 0 (docs/card-design.md section 9, row 0; section 5, the first four rows): pin what the
@@ -21,8 +24,12 @@ import type { Spell } from '../src/rules/types';
  * assertion with a `// batch card premise:` citation.
  *
  * Rendered through the REAL SpellDetail (exported from SpellsTab.tsx for this file, no other change),
- * on the shipped records from public/core.json. These are the string lane: SpellDetail never asks for
- * a page tree, so no AST is served here and none is needed.
+ * on the shipped records from public/core.json. The BODY is the string lane (heightening, the arrow).
+ * Card step 16: the stat rows come from the spell's own page, so the tracked public/ast/spells bucket is
+ * served through a fetch stub and warmed before any render (the state the app is in once the bucket has
+ * loaded); without it the first popup drew the rows' loading placeholder (measured: 1 of 17 red, fireball
+ * at its own rank, "expected '' to be '500 feet'"). One row value changed wording with the page
+ * (fireball's Defense, cited at the assertion); every heightening assertion is unchanged.
  *
  * MUTATION LINES (each measured red on 2026-10-02, then restored byte-exact):
  *  - SpellsTab.tsx, `shownBase`: replace the injectDamageArrow call with `base` → 7 of 17 red.
@@ -35,6 +42,12 @@ const spell = (id: string): Spell => {
   if (!s) throw new Error(`no spell ${id} in the shipped data`);
   return s;
 };
+
+beforeAll(async () => {
+  const trees: Record<string, AstNode> = JSON.parse(gunzipSync(readFileSync('public/ast/spells.json.gz')).toString('utf8'));
+  vi.stubGlobal('fetch', async (url: string) => (/ast\/spells\.json$/.test(String(url)) ? { ok: true, json: async () => trees } : { ok: false }));
+  await loadBucketAst('spells');
+});
 
 const pin: PinDescApi = { has: () => false, toggle: () => undefined };
 let stops: (() => void)[] = [];
@@ -98,7 +111,8 @@ describe('fireball at a 3rd, 5th and 9th slot (atRank: a prepared slot heightens
     expect(txt(popup.querySelector('.sd-sub'))).toBe('3rd rank · Arcane, Primal');
     expect(val(popup, 'Range')).toBe('500 feet');
     expect(val(popup, 'Area')).toBe('20-foot burst');
-    expect(val(popup, 'Defense')).toBe('basic Reflex save');
+    // batch card premise: spell-1530 "Defense basic Reflex"
+    expect(val(popup, 'Defense')).toBe('basic Reflex');
     expect(stat(popup, 'Cast')?.querySelector('.sd-stat-v')).not.toBeNull();
     expect(popup.querySelector('.sd-rank-sel'), 'no rank selector at the base rank').toBeNull();
     expect(arrows(popup)).toEqual([]);

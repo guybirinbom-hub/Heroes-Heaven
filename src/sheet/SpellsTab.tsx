@@ -67,7 +67,10 @@ import {
   traditionPool,
 } from '../rules/spellOptions';
 import { enabledBookSet, entrySourceOn } from '../rules/sources';
-import { heighteningApplies, splitHeightening, scaleDamage, scaleArea } from '../rules/heightening';
+import { heighteningApplies, scaleDamage, scaleArea } from '../rules/heightening';
+import { useAstNode } from './useAst';
+import { isBucketLoaded } from './astStore';
+import { spellCardModel } from './spellCard';
 
 function escapeRe(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -98,7 +101,9 @@ function ord(r: number): string {
  * The spell popup's stat rows, in the order it prints them, as [label, value]. `Cast` always prints
  * (its value is the cast glyph or castText, drawn by the popup); every other row prints only when its
  * value is set. Card step 1: exported so the card's printed set (docs/card-design.md section 2 rule 4.2)
- * reads the SAME rows the popup renders; SpellDetail renders from this and nothing else.
+ * reads the SAME rows the popup renders. Card step 16: SpellDetail renders these only on its FIELD lane
+ * (no tree, or a tree that is not a spell / ritual page); with a page, its rows are the page's own
+ * (src/sheet/spellCard.ts pageStatLines). The fields themselves are unchanged — the engine reads them.
  */
 export function spellStatRows(spell: Spell): [string, string | undefined][] {
   // These are printed as raw strings (not through the description renderer), so run them through the
@@ -149,7 +154,23 @@ export function SpellDetail({
 }) {
   const content = useContent();
   useEscapeClose(onClose);
-  const { base, heightening } = splitHeightening(spell.description || '');
+  // Card step 16 (spells phase A, docs/card-design.md section 9 row 16; section 5): the stat rows come
+  // from the spell's own Archives page (src/sheet/spellCard.ts pageStatLines), in printed order, in the
+  // page's words. The stored fields stay for the engine and are printed only when the spell has no tree,
+  // or its tree is not a spell / ritual page (the field lane). Until the tree loads the rows are a
+  // placeholder. A homebrew id never resolves a page (section 2 rule 2f).
+  const pageId = spell.id && !spell.id.startsWith('hb-') ? spell.id : undefined;
+  const { node: tree, loading } = useAstNode(pageId ? 'spells' : undefined, pageId);
+  // useAstNode seeds `loading` for a bucket that is loaded but holds no tree for this id; a loaded
+  // bucket has answered, so only a bucket still on its way is a load.
+  const rowsLoading = !!pageId && !!loading && !isBucketLoaded('spells');
+  // ONE copy: the popup renders spellCardModel, the same function the card guard (card-scope.mjs's
+  // spellDetail surface) and test/card-noop judge it with. The body is still the description string
+  // (phase B, step 17, moves it to the tree); the preamble the rows now print comes off its front, label
+  // by label (S-printed), with the scrape's name, Source and where-to-get lines (S-furniture). While the
+  // rows load it is stripped as the field lane would be.
+  const { lane, rows, base, heightening } = spellCardModel(spell, tree, spellStatRows(spell));
+  const fromPage = lane === 'page';
   const baseRank = spell.rank;
   const isCantrip = baseRank === 0;
   // "Focus spells are automatically heightened to half your level rounded up" — the same treatment
@@ -173,7 +194,15 @@ export function SpellDetail({
   const upArea = scaleArea(spell, r);
   const shownBase = upDamage && spell.baseDamage ? injectDamageArrow(base, spell.baseDamage, upDamage) : base;
   const rankLabel = spell.rank === 0 ? 'Cantrip' : `${ord(spell.rank)} rank`;
-  const stats = spellStatRows(spell);
+  // The page's own Cast line ("somatic, verbal", "1 hour"); the glyph beside it stays the field's.
+  const pageCast = fromPage ? (rows.find(([k]) => k === 'Cast')?.[1] ?? '') : '';
+  // The area suffix rides on whichever Area row renders; on a page row only when the page's Area names
+  // the whole base area ("<base>-foot <kind>"), so it never claims a shape the page does not print
+  // (section 5: footholds-and-foothills prints a "30-foot radius", not a burst, and gets no suffix).
+  const areaSuffix = (val: string) =>
+    upArea != null && spell.baseArea && (!fromPage || val.includes(`${spell.baseArea.value}-foot ${spell.baseArea.kind}`)) ? (
+      <span className="up-heighten"> (→ {upArea}-foot {spell.baseArea.kind})</span>
+    ) : null;
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker spell-detail" onClick={(e) => e.stopPropagation()}>
@@ -202,26 +231,39 @@ export function SpellDetail({
               ))}
             </div>
           )}
-          <div className="sd-stats">
-            {stats.map(([label, val]) =>
-              label === 'Cast' ? (
-                <div className="sd-stat" key="Cast">
-                  <span className="sd-stat-k">Cast</span>
-                  <span className="sd-stat-v">{castText(spell.cast) || <ActionGlyph cost={spell.cast} />}</span>
-                </div>
-              ) : val ? (
-                <div className="sd-stat" key={label}>
-                  <span className="sd-stat-k">{label}</span>
-                  <span className="sd-stat-v">
-                    {val}
-                    {label === 'Area' && upArea != null && spell.baseArea && (
-                      <span className="up-heighten"> (→ {upArea}-foot {spell.baseArea.kind})</span>
-                    )}
-                  </span>
-                </div>
-              ) : null,
-            )}
-          </div>
+          {rowsLoading ? (
+            // The page is on its way: a quiet placeholder, never the field rows it will replace.
+            <div className="sd-stats ast-loading" aria-busy="true" />
+          ) : (
+            <div className="sd-stats" data-lane={fromPage ? 'page' : 'field'}>
+              {rows.map(([label, val], i) =>
+                label === 'Cast' ? (
+                  <div className="sd-stat" key={`${i}:Cast`}>
+                    <span className="sd-stat-k">Cast</span>
+                    <span className="sd-stat-v">
+                      {pageCast ? (
+                        <>
+                          {/* A duration cast prints as the page's words alone; an action cost keeps its glyph. */}
+                          {castText(spell.cast) ? null : <ActionGlyph cost={spell.cast} />}
+                          {castText(spell.cast) || !spell.cast ? pageCast : ` ${pageCast}`}
+                        </>
+                      ) : (
+                        castText(spell.cast) || <ActionGlyph cost={spell.cast} />
+                      )}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="sd-stat" key={`${i}:${label}`}>
+                    <span className="sd-stat-k">{label}</span>
+                    <span className="sd-stat-v">
+                      {val}
+                      {label === 'Area' && areaSuffix(val)}
+                    </span>
+                  </div>
+                ),
+              )}
+            </div>
+          )}
           {showPicker ? (
             // Signature spells: pick the cast rank.
             <div className="sd-rank-sel">

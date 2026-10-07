@@ -45,6 +45,7 @@ import {
   FOLD_RULE, FUTURE_TREATMENT, LEVEL_FOLDS, SCOPE_LEVELS, scopeTree,
 } from '../../src/sheet/cardScope.ts';
 import { CARD_ON } from '../../src/sheet/cardSurfaces.ts';
+import { spellCardModel } from '../../src/sheet/spellCard.ts';
 import {
   flatText, sharedPageCensus, computePageSlices, notOwnPageProblems, pageSliceProblems, residueWithoutSlices,
 } from './shared-page-census.mjs';
@@ -767,7 +768,7 @@ const SITUATIONAL_COLLECTIONS = ['feats', 'items', 'heritages', 'backgrounds', '
  *           body:'tree'|'md', md?, printed:[[label,value]], mode:'mine'|'browse' }
  */
 export function surfaceRows(deps) {
-  const { content: db, trees, astIndex = {}, statRows, activities, situationalIds, classFeatureDescription, splitHeightening } = deps;
+  const { content: db, trees, astIndex = {}, statRows, activities, situationalIds, classFeatureDescription } = deps;
   const rows = [];
   const has = (b, id) => !!trees[b]?.[id];
   const featEntryLike = (rec) => ({ actionCost: rec.actionCost, prerequisites: rec.prerequisites, traits: rec.traits ?? [] });
@@ -822,11 +823,13 @@ export function surfaceRows(deps) {
     }
   }
 
-  // SpellDetail — stat rows from fields, the body is the description string (no tree).
+  // SpellDetail — card step 16 (spells phase A): the popup renders spellCardModel (src/sheet/spellCard.ts),
+  // so the ledger judges that same copy: the page's stat rows (field rows only with no spell / ritual
+  // page), the body still the description string with the printed preamble taken off its front.
   for (const [id, sp] of Object.entries(db.spells ?? {})) {
     if (!has('spells', id)) continue;
-    const { base, heightening } = splitHeightening(sp.description || '');
-    rows.push({ surface: 'spellDetail', bucket: 'spells', id, own: { bucket: 'spells', id }, read: null, mdParts: [base, ...heightening], printed: statRows.spellStatRows(sp).filter(([k, v]) => k === 'Cast' || v).map(([k, v]) => [k, v ?? '']), mode: 'mine' });
+    const model = spellCardModel(sp, trees.spells?.[id], statRows.spellStatRows(sp));
+    rows.push({ surface: 'spellDetail', bucket: 'spells', id, own: { bucket: 'spells', id }, read: null, mdParts: [model.base, ...model.heightening], printed: model.rows, mode: 'mine' });
   }
 
   // ActionDetailModal — curated activities (page through astKey) and feat / class-feature / granted actions (string).

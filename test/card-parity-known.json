@@ -17,16 +17,6 @@
   },
   "cases": [
     {
-      "key": "spellDetail|spells:buzzing-servants",
-      "why": "owner case 2: the Duration row prints the field's \"1 minute\" where the page prints \"sustained up to 1 minute\", and an Area row the page does not print",
-      "verdict": { "labels": { "Duration": "DIFFERS", "Area": "EXTRA" } }
-    },
-    {
-      "key": "spellDetail|spells:approximate",
-      "why": "owner case 4: \"Area 1 cubic foot\" is printed in the prose (the description's bold preamble), not in the stat rows",
-      "verdict": { "placement": ["Area"] }
-    },
-    {
       "key": "featDetail|classFeatures:expert-spellcaster@wizard",
       "why": "a wizard's Expert Spellcaster row shows the shared record's page, which is the Psychic's",
       "verdict": { "s2": "CLASS_MISMATCH" }

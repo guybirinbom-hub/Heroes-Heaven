@@ -107,6 +107,9 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *  - (card step 9, 2026-10-06) scripts/lib/card-scope.mjs `actCard` forced undefined (the ledger models
  *    the legacy action popup while the card is on) → the agreement test red (44 disagreements) and the
  *    baseline test red (48 sample rows differ).
+ *  - (card step 16 fixer, 2026-10-07) spellCard.ts spellCardModel lane forced 'field' → the owner-case test
+ *    red on the ledger ("ledger findings for spellDetail|spells:buzzing-servants": 2 entries) and the
+ *    baseline test red (62 sample rows differ).
  * Measured in round 0 (that code is unchanged since):
  *  - RecordCard.tsx fallback: headerActions moved back after the title → the headerActions test red.
  *  - RecordCard.tsx page branch: the TrustMarker dropped from headerControls → the TrustMarker test red.
@@ -907,9 +910,22 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     // 'mine' card and shows the page's Frequency and Trigger once each, so it left the shrink-only list;
     // test/card-feat.test.tsx asserts it positively through FeatsTab. Switched back, it is wrong again.
     // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
-    const owner = [...(cardOn('featDetail') ? [] : ['featDetail|feats:halfling-luck']), 'spellDetail|spells:buzzing-servants', 'spellDetail|spells:approximate'];
+    const owner = [...(cardOn('featDetail') ? [] : ['featDetail|feats:halfling-luck'])];
     for (const k of owner) expect(keys, `owner case ${k}`).toContain(k);
     if (cardOn('featDetail')) expect(keys, 'halfling-luck is right on the card').not.toContain('featDetail|feats:halfling-luck');
+    // Owner cases 2 and 4 are right since card step 16 (spells phase A): SpellDetail prints the page's
+    // own rows (spellCardModel) and takes the printed preamble off the prose, so both left the
+    // shrink-only list and must stay off it; test/card-spell.test.tsx asserts them positively.
+    // batch card premise: spell-2315 "Duration sustained up to 1 minute"
+    // batch card premise: spell-2631 "Area 1 cubic foot"
+    for (const k of ['spellDetail|spells:buzzing-servants', 'spellDetail|spells:approximate']) {
+      expect(keys, `fixed owner case ${k}`).not.toContain(k);
+      // And the ledger agrees: the row it builds for the case (the same spellCardModel the popup renders)
+      // carries no finding at all, so forcing the field lane turns THIS test red, not only the list's.
+      const row = rows.find((r) => keyOf(r) === k);
+      expect(row, `the ledger builds a row for ${k}`).toBeTruthy();
+      expect(lib.rowEntries(row!, ledgerFull(row!), foldsOf), `ledger findings for ${k}`).toEqual([]);
+    }
   });
 });
 
