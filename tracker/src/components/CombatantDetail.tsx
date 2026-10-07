@@ -3,7 +3,7 @@ import type { Combatant } from '../types/pf2e'
 import { useCombatStore } from '../store/combatStore'
 import { usePartyStore } from '../store/partyStore'
 import { saveCustomCreatureImage } from '../data/dataStore'
-import { StatBlock } from './StatBlock'
+import { StatBlock, hpPoolViews, hpPoolLabelText } from './StatBlock'
 import { CreatureDescription } from './CreatureDescription'
 import { useGameData } from '../data/gameDataContext'
 import { Chip } from './Chip'
@@ -243,6 +243,19 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
     : combatant.isWeak ? (combatant.creature?.level ?? 0) - 1
     : combatant.creature?.level
 
+  // HP under the bar (D16). The bar is the first pool (defenses.hp, Elite / Weak adjusted by the
+  // store); further pools print as stored, as the stat block's own HP line prints them. A hazard
+  // whose stat block draws its HP line (hp > 0) prints its pool labels there, so nothing here.
+  // Fix round 5: the stat block draws that line only while its 'Hit Points' row is in the layout and
+  // not hidden (Settings → stat block, canHide). With the row hidden the panel is the only place
+  // left, so a hazard then prints its note and every further pool here, as a creature does.
+  const def = combatant.creature?.defenses
+  const isHazard = !!combatant.creature?.isHazard
+  const hpRowShown = useSettingsStore(s => s.statBlock.items.some(it => it.id === 'hp' && !it.hidden))
+  const hazardHpLineDrawn = isHazard && hpRowShown && (def?.hp ?? 0) > 0
+  const hpNoteUnderBar = !hazardHpLineDrawn && typeof def?.hpNote === 'string' && def.hpNote.trim() ? def.hpNote : ''
+  const furtherHpPools = hazardHpLineDrawn ? [] : hpPoolViews(def?.hpPools).slice(1)
+
   const openImageWindow = () => {
     const img = combatant.creature?.image
     if (!img) return
@@ -420,9 +433,24 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
               regeneration, negative healing (808 creatures). StatBlock has an HP line for it, but
               CombatantDetail passes hideHP for every non-hazard, so for creatures that line never
               renders and the note had nowhere to appear. It belongs beside the bar that replaced it. */}
-          {combatant.creature?.defenses?.hpNote && (
+          {/* D16 (2026-10-07). A creature prints every pool here: the first is the bar (its note
+              beside it, as before), each further pool ("15 (head, head regrowth)", a hydra) is listed
+              under it with its own name — CombatantDetail hides the stat block's HP line for creatures,
+              so this is the only place a second pool can reach the GM in a fight. A hazard's stat block
+              DOES draw its HP line, every pool with its own label ("30 (Synthgate)"), so the note is
+              not printed again under the bar: the first component's label prints exactly once. With
+              the stat block's Hit Points row hidden in Settings, a hazard lists here as a creature does.
+              Spans only inside this box: it is one block the corpus oracle reads as the note. */}
+          {(hpNoteUnderBar || furtherHpPools.length > 0) && (
             <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
-              {combatant.creature.defenses.hpNote}
+              {hpNoteUnderBar}
+              {furtherHpPools.map((v, i) => (
+                <span key={i} data-hp-pool={i + 1} style={{ display: 'block' }}>
+                  <span style={{ fontWeight: 600, color: 'var(--text)' }}>HP</span> {v.hp}
+                  {v.label && <>{' '}{hpPoolLabelText(v.label)}</>}
+                  {v.bt !== undefined && <>{' '}<span style={{ fontWeight: 600, color: 'var(--text)' }}>BT</span> {v.bt}</>}
+                </span>
+              ))}
             </div>
           )}
         </div>

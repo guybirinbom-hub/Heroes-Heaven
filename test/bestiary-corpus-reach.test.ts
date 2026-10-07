@@ -26,8 +26,9 @@
  *     (the old index was one row per name too), so this pins the known set and fails if it grows.
  */
 import { describe, expect, it, vi } from 'vitest';
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 
 vi.mock('../tracker/src/utils/parseCreature', () => ({
@@ -64,6 +65,11 @@ for (const row of index) {
  * creature-4267 (their _aon.id at 7cfb323), which the Archives have since RENAMED in place to "Greedspawn
  * Soldier" / "Trinity Initiate" — the same documents, carrying no remaster link. The mirror no longer
  * holds the old names, so their ids are pinned here for the failure message.
+ * D15 (owner ruling 2026-10-07, "keep a legacy entry for them"): the live pages ?ID=4266 / ?ID=4267 were
+ * checked that day — live, no 404, no redirect, printing the singular names — so the old names keep an
+ * entry as aliases resolved through the Archives id (scripts/bestiary-aliases.mjs RENAMED_IN_PLACE), not
+ * as legacy rows: a legacy row would put the same document in Add Combatants twice, once at the base
+ * record's wrong level 0 for Trinity Initiate. (A3) below pins that route.
  */
 const MIRROR_FOR_IDS = process.env.HH_AON_MIRROR ?? 'C:/wonderers guide/aon-2e-archive/data';
 const PINNED_IDS: Record<string, string> = { 'greedspawn soldiers': 'creature-4266', 'trinity initiates': 'creature-4267' };
@@ -131,6 +137,96 @@ describe('(A2) the legacy → remaster alias file (D11)', () => {
       const r = spawnSync(process.execPath, [join(ROOT, 'scripts/bestiary-aliases.mjs'), '--check'], { encoding: 'utf8' });
       expect(r.status, `${r.stdout}\n${r.stderr}`).toBe(0);
     }, 120_000);
+});
+
+/*
+ * (A3) D15: pages the Archives renamed in place. Each test below fails without the fix:
+ *   - the first: without the RENAMED_IN_PLACE aliases, findBestiaryEntry('Greedspawn Soldiers') is null;
+ *   - the second: the alias must open the record that carries the SAME Archives id the base record had
+ *     (creature-4266 / creature-4267), so an alias picked by name similarity to another record fails it;
+ *   - the third and fourth: a fixture data dir / mirror missing the id makes the script STOP naming it,
+ *     where a script that dropped an unresolvable declared alias silently would exit 0.
+ */
+const MIRROR_DIR = process.env.HH_AON_MIRROR ?? 'C:/wonderers guide/aon-2e-archive/data';
+const HAS_MIRROR = existsSync(join(MIRROR_DIR, 'by-category/creature/_index.json'));
+const RENAMED = [
+  { old: 'Greedspawn Soldiers', id: 'creature-4266' },
+  { old: 'Trinity Initiates', id: 'creature-4267' },
+];
+const SHARD_219 = 'creatures-pathfinder-219-lord-of-the-trinity-star.json';
+
+describe('(A3) pages renamed in place keep their old name as an entry (D15)', () => {
+  it('the old name opens the index row serving the same Archives document', async () => {
+    vi.stubGlobal('fetch', async (url: string) => {
+      const p = join(DATA, String(url).replace(/^\/data\//, ''));
+      if (!existsSync(p)) return { ok: false, status: 404, json: async () => ({}) };
+      const body = readFileSync(p, 'utf8');
+      return { ok: true, status: 200, json: async () => JSON.parse(body) };
+    });
+    const { findBestiaryEntry, loadCreatureByName } = await import('../tracker/src/data/dataStore');
+    for (const { old, id } of RENAMED) {
+      const row = await findBestiaryEntry(old);
+      expect(row, `${old} opens no index row`).not.toBeNull();
+      const rec = records.find(({ file, r }) => file === row!.file && r.name === row!.name && r.level === row!.level);
+      expect(rec?.r._aon?.id, `${old} → ${row!.name}`).toBe(id);
+      expect((await loadCreatureByName(old.toUpperCase()))?.name).toBe(row!.name);
+    }
+    vi.unstubAllGlobals();
+  });
+
+  it('no legacy-kept shard or legacy row ships for them (the alias route, not D15\'s dropped-page branch)', () => {
+    expect(existsSync(join(DATA, 'bestiary/creatures-legacy-kept.json'))).toBe(false);
+    expect(existsSync(join(DATA, 'bestiary-legacy-rows.json'))).toBe(false);
+    for (const { old } of RENAMED) expect(index.some((r) => r.name.toLowerCase() === old.toLowerCase())).toBe(false);
+  });
+
+  /** A data dir holding only the #219 shard, its index rows minus `dropRow`, and an empty hazard file. */
+  function fixtureData(dropRow?: string): string {
+    const dir = mkdtempSync(join(tmpdir(), 'hh-aliases-'));
+    mkdirSync(join(dir, 'bestiary'));
+    copyFileSync(join(DATA, 'bestiary', SHARD_219), join(dir, 'bestiary', SHARD_219));
+    writeFileSync(join(dir, 'hazards.json'), JSON.stringify({ hazard: [] }));
+    writeFileSync(join(dir, 'index.json'), JSON.stringify(index.filter((r) => r.file === SHARD_219 && r.name !== dropRow)));
+    return dir;
+  }
+  const run = (extra: string[]) => spawnSync(process.execPath, [join(ROOT, 'scripts/bestiary-aliases.mjs'), ...extra], { encoding: 'utf8' });
+
+  it.skipIf(!HAS_MIRROR)('the script resolves them through the id, and STOPS when no row serves that id', () => {
+    const ok = fixtureData();
+    try {
+      const r = run(['--data', ok]);
+      expect(r.status, `${r.stdout}\n${r.stderr}`).toBe(0);
+      const written = readJson(join(ok, 'bestiary-aliases.json')) as Record<string, string>;
+      expect(written['Greedspawn Soldiers']).toBe('Greedspawn Soldier');
+      expect(written['Trinity Initiates']).toBe('Trinity Initiate');
+    } finally { rmSync(ok, { recursive: true, force: true }); }
+    const bad = fixtureData('Greedspawn Soldier');
+    try {
+      const r = run(['--data', bad]);
+      expect(r.status).toBe(1);
+      expect(r.stderr).toContain('creature-4266');
+      expect(existsSync(join(bad, 'bestiary-aliases.json'))).toBe(false);
+    } finally { rmSync(bad, { recursive: true, force: true }); }
+  }, 120_000);
+
+  it.skipIf(!HAS_MIRROR)('the script STOPS when the mirror no longer holds a declared id (a dropped page is D15\'s legacy-kept branch)', () => {
+    const mirror = mkdtempSync(join(tmpdir(), 'hh-mirror-'));
+    const data = fixtureData();
+    try {
+      for (const cat of ['creature', 'hazard']) {
+        mkdirSync(join(mirror, 'by-category', cat), { recursive: true });
+        const list = readJson(join(MIRROR_DIR, 'by-category', cat, '_index.json')) as Array<{ id: string }>;
+        writeFileSync(join(mirror, 'by-category', cat, '_index.json'), JSON.stringify(list.filter((d) => d.id !== 'creature-4267')));
+      }
+      const r = run(['--data', data, '--mirror', mirror]);
+      expect(r.status).toBe(1);
+      expect(r.stderr).toContain('creature-4267');
+      expect(r.stderr).toContain('legacy-kept');
+    } finally {
+      rmSync(mirror, { recursive: true, force: true });
+      rmSync(data, { recursive: true, force: true });
+    }
+  }, 120_000);
 });
 
 const MIRROR = process.env.HH_AON_MIRROR ?? 'C:/wonderers guide/aon-2e-archive/data';

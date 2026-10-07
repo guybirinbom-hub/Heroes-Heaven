@@ -11,6 +11,9 @@
  * name-only row with no stat block. D11 adds the legacy → remaster alias to loadCreatureByName only;
  * this test turns green only when the alias also reaches the encounter import.
  * Read with test/bestiary-corpus-reach.test.ts (A), which pins loadCreatureByName.
+ * D15 (2026-10-07): the last two reds, "Greedspawn Soldiers" and "Trinity Initiates" (Archives pages
+ * renamed in place to the singular), now resolve through scripts/bestiary-aliases.mjs RENAMED_IN_PLACE;
+ * with the alias file from before D15 this test fails on exactly those two names (measured).
  */
 import { describe, expect, it, vi } from 'vitest';
 import { existsSync, readFileSync } from 'node:fs';

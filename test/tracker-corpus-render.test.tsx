@@ -265,7 +265,16 @@ function pageFacts(md: string, hazard: boolean, name: string): PageFacts {
     const inBold = b.label.match(/HP\s*\(([^)]*)\)$/)
     if (inBold) { hpLabels.push(plain(inBold[1])); continue }
     const q = body.slice(b.end, b.end + 60).match(/^\s*\(([^)]*)\)\s*\d/)
-    if (q) hpLabels.push(plain(q[1]))
+    if (q) { hpLabels.push(plain(q[1])); continue }
+    // Round 4: a creature's first pool names itself AFTER its number, "**HP** 90\n(body, head regrowth)"
+    // (Hydra), "**HP** 135\n(4 segments)" (troops). Read up to the next break, so a qualifier holding a
+    // link ("(coffin restoration, [fast healing](…) 5, …)") is read whole. A hazard's "(BT 30)" or
+    // "(44)" after its number is a Broken Threshold, not a label: creatures only.
+    if (!hazard) {
+      const after = plain(body.slice(b.end, b.end + 400).split(/\n\s*\n|<br\s*\/?>|<\/row>/)[0])
+      const t = after.match(/^(\d+)\s*\(([^)]*)\)/)
+      if (t && /[a-z]/i.test(t[2])) hpLabels.push(t[2].replace(/^\(/, '').trim())
+    }
   }
   const firstHp = bs.find(x => HP_LABEL.test(x.label))
   let hpText = ''
@@ -273,6 +282,14 @@ function pageFacts(md: string, hazard: boolean, name: string): PageFacts {
     const rest = body.slice(firstHp.at)
     const stop = rest.search(/\n\s*\n|<\/row>|\n---|\n\s*\*\*(?:Immunities|Resistances|Weaknesses)\b/)
     hpText = plain(stop >= 0 ? rest.slice(0, stop) : rest)
+    // Round 4: a further pool the page prints on a line of its own, outside that row ("<br /> **HP** 35
+    // (head), head regrowth; …", Mocking Chorus), is HP text too: its own line is added.
+    const firstEnd = firstHp.at + (stop >= 0 ? stop : rest.length)
+    for (const b of bs.filter(x => HP_LABEL.test(x.label) && x.at >= firstEnd)) {
+      const line = body.slice(b.at)
+      const end = line.search(/\n\s*\n|<br\s*\/?>|<\/row>|\n---/)
+      hpText += ` ${plain(end >= 0 ? line.slice(0, end) : line)}`
+    }
   }
   const speeds = hazard
     ? bs.filter(b => b.label === 'Speed').map(b => plain(body.slice(b.end).split(/<br\s*\/?>|\n|\*\*/)[0])).filter(Boolean)
@@ -301,7 +318,9 @@ function pageFacts(md: string, hazard: boolean, name: string): PageFacts {
     if (prev && /^(?:\s|<actions\b[^>]*>)*$/.test(body.slice(prev.end, b.at))) strikeLabels[strikeLabels.length - 1] = b
     else strikeLabels.push(b)
   }
-  const strikes = hazard ? strikeLabels.map(b => strikeNameAfter(body, b.end)) : []
+  // Round 4: a creature's strikes are read too (checked by name, "creature strikes"), so a text edit or
+  // any other path that drops or renames a strike is seen.
+  const strikes = strikeLabels.map(b => strikeNameAfter(body, b.end))
 
   const constants: PageFacts['constants'] = []
   const cantrips: PageFacts['cantrips'] = []
@@ -570,6 +589,12 @@ function compareWith(s: Sample, cb: Combatant, mode: Mode): Failure[] {
     check(got <= Math.max(1, want), `HP pool label "${q}" printed once`, `${Math.max(1, want)}× (page: "${p.hpText}")`, `${got}× in "${hpRow}"`)
   }
 
+  // Round 4: a hazard whose page prints no HP draws no Hit Points anywhere (the stat block's HP line, a
+  // panel bar): one with no HP made Elite must not read "HP 20" — the page has no Hit Points to adjust.
+  if (hazard && p.hpPools.length === 0) {
+    check(!hpNums.some(n => n > 0), 'HP drawn with no page HP', 'no HP (the page prints none)', hpRow)
+  }
+
   // A hazard that moves prints its Speed ("Speed 10 feet", Spinning Blade Pillar).
   if (hazard) {
     for (const sp of p.speeds) check(norm(r.text).includes(norm(`Speed ${sp}`)), 'hazard Speed', `Speed ${sp}`, (r.text.match(/Speed[^⟦]{0,40}/) ?? ['none'])[0])
@@ -621,6 +646,10 @@ function compareWith(s: Sample, cb: Combatant, mode: Mode): Failure[] {
     const want = p.strikes.map(norm).sort()
     check(JSON.stringify(got) === JSON.stringify(want), 'hazard strikes', p.strikes, r.strikes.map(x => x.name))
   } else {
+    // Round 4: one strike per Melee/Ranged line, by name, for a creature too.
+    const got = r.strikes.map(x => norm(x.name)).sort()
+    const want = p.strikes.map(norm).sort()
+    check(JSON.stringify(got) === JSON.stringify(want), 'creature strikes', p.strikes, r.strikes.map(x => x.name))
     // Recall Knowledge iff the page has the sidebar, with every DC it prints.
     const rk = rowText(html, '<span class="stat-label">Recall Knowledge</span>')
     check((rk != null) === (p.recall != null), 'Recall Knowledge', p.recall ? `DCs ${p.recall.join(', ')}` : 'none', rk ?? 'none')
@@ -786,12 +815,20 @@ const PATHS = [
   // Round 3: the surface the GM reads, and the remaining ways a record reaches it.
   'panel', 'panel elite', 'panel reload', 'by name', 'encounter file', 'saved encounter elite',
   'encounter file elite', 'edit → save',
+  // Round 4: Weak and a level scale through the same two load routes (D19), and the text pane's
+  // full route: Parse, then Save (JSON → toStatBlock → the homebrew store, read back), drawn as the
+  // stat block and as the combat panel, and a second edit of what the first one saved.
+  'saved encounter weak', 'saved encounter scaled +2', 'encounter file weak', 'encounter file scaled +2',
+  'text edit → save', 'text edit → save (panel)', 'text edit twice',
 ] as const
 type PathName = typeof PATHS[number]
 interface Walked { cb?: Combatant; adjustedLevel?: number; problem?: string; surface?: 'panel' }
 const walked = new Map<string, Walked>()
+/** The board's own HP maximum per record and adjustment ("<id>\0elite"), taken right after the board
+ *  made it (round 4: what a load must give back, D19). */
+const boardMax = new Map<string, number>()
 const wkey = (id: string, path: PathName) => `${id}\u0000${path}`
-const e2eNumbers = { combatSnapshotChars: 0, encounterChars: 0, importedEncounterChars: 0 }
+const e2eNumbers = { combatSnapshotChars: 0, encounterChars: 0, importedEncounterChars: 0, oldNames: 0, oldNamesFoundBySearch: 0 }
 
 const baseHeadings = new Map<string, Set<string>>()
 function headingsAtBase(s: Sample): Set<string> {
@@ -931,36 +968,48 @@ describe('end to end: the served record, through every path a GM takes, vs its A
     st2().deleteSavedEncounter('corpus-e2e-file')
 
     // 5d. Elite combatants through a saved encounter (read back from storage) and through the
-    // encounter file: a board of each served record's reloaded copy made Elite.
-    st2().clearAllCombatants()
-    for (const s of live) {
-      const c = walked.get(wkey(s.id, 'reload'))?.cb?.creature
-      if (!c) continue
-      st2().addCombatant(c)
-      const added = st2().combatants
-      st2().setEliteWeak(added[added.length - 1].id, 'elite')
+    // encounter file: a board of each served record's reloaded copy made Elite. Round 4: the same for
+    // Weak and for a scale to level + 2; the board's own maximum is kept beside each (D19).
+    const variants = [
+      { tag: 'elite', adjust: (id: string) => st2().setEliteWeak(id, 'elite'), to: (s: Sample) => level(s) + 1,
+        is: (cb: Combatant, _s: Sample) => cb.isElite, saved: 'saved encounter elite', file: 'encounter file elite' },
+      { tag: 'weak', adjust: (id: string) => st2().setEliteWeak(id, 'weak'), to: (s: Sample) => level(s) - 1,
+        is: (cb: Combatant, _s: Sample) => cb.isWeak, saved: 'saved encounter weak', file: 'encounter file weak' },
+      { tag: 'scaled +2', adjust: (id: string, s: Sample) => st2().setScaledLevel(id, level(s) + 2), to: (s: Sample) => level(s) + 2,
+        is: (cb: Combatant, s: Sample) => cb.scaledToLevel === level(s) + 2, saved: 'saved encounter scaled +2', file: 'encounter file scaled +2' },
+    ] as const
+    for (const v of variants) {
+      st2().clearAllCombatants()
+      for (const s of live) {
+        const c = walked.get(wkey(s.id, 'reload'))?.cb?.creature
+        if (!c) continue
+        st2().addCombatant(c)
+        const added = st2().combatants
+        v.adjust(added[added.length - 1].id, s)
+        boardMax.set(`${s.id}\u0000${v.tag}`, st2().combatants[added.length - 1].maxHP)
+      }
+      st2().saveEncounter(`corpus-e2e-${v.tag}`)
+      st2().clearAllCombatants()
+      store2.invalidateEncounterCache()
+      const slot = (list: Combatant[], s: Sample, i: number, path: PathName): Walked => {
+        const cb = list[i]
+        return cb && cb.creature?.name === s.record.name && v.is(cb, s)
+          ? { cb, adjustedLevel: v.to(s) }
+          : { problem: `${path} slot ${i} holds ${cb?.creature?.name ?? 'nothing'}${cb && !v.is(cb, s) ? ` (not ${v.tag})` : ''}` }
+      }
+      st2().loadEncounter(`corpus-e2e-${v.tag}`, new Map())
+      const fromSave = st2().combatants
+      live.forEach((s, i) => walked.set(wkey(s.id, v.saved), slot(fromSave, s, i, v.saved)))
+      const fileV = et.buildExportPayload([`corpus-e2e-${v.tag}`])
+      for (const e of fileV.encounters) e.name = `corpus-e2e-${v.tag}-file`
+      const impV = await et.importEncountersFromText(JSON.stringify(fileV))
+      st2().loadEncounter(`corpus-e2e-${v.tag}-file`, new Map())
+      const fromFileV = st2().combatants
+      live.forEach((s, i) => walked.set(wkey(s.id, v.file), impV.ok
+        ? slot(fromFileV, s, i, v.file)
+        : { problem: `the file import failed: ${impV.error}` }))
+      st2().deleteSavedEncounter(`corpus-e2e-${v.tag}-file`)
     }
-    st2().saveEncounter('corpus-e2e-elite')
-    st2().clearAllCombatants()
-    store2.invalidateEncounterCache()
-    const eliteSlot = (list: Combatant[], s: Sample, i: number, path: PathName): Walked => {
-      const cb = list[i]
-      return cb && cb.creature?.name === s.record.name && cb.isElite
-        ? { cb, adjustedLevel: level(s) + 1 }
-        : { problem: `${path} slot ${i} holds ${cb?.creature?.name ?? 'nothing'}${cb && !cb.isElite ? ' (not Elite)' : ''}` }
-    }
-    st2().loadEncounter('corpus-e2e-elite', new Map())
-    const elites = st2().combatants
-    live.forEach((s, i) => walked.set(wkey(s.id, 'saved encounter elite'), eliteSlot(elites, s, i, 'saved encounter elite')))
-    const fileElite = et.buildExportPayload(['corpus-e2e-elite'])
-    for (const e of fileElite.encounters) e.name = 'corpus-e2e-elite-file'
-    const impElite = await et.importEncountersFromText(JSON.stringify(fileElite))
-    st2().loadEncounter('corpus-e2e-elite-file', new Map())
-    const elitesFromFile = st2().combatants
-    live.forEach((s, i) => walked.set(wkey(s.id, 'encounter file elite'), impElite.ok
-      ? eliteSlot(elitesFromFile, s, i, 'encounter file elite')
-      : { problem: `the file import failed: ${impElite.error}` }))
-    st2().deleteSavedEncounter('corpus-e2e-elite-file')
 
     // 5c. Edit → Save on the board (TextConverter on the reloaded combatant, nothing changed): the JSON
     // pane holds the combatant's creature, Save reads it with toStatBlock and overwrites the homebrew
@@ -980,6 +1029,37 @@ describe('end to end: the served record, through every path a GM takes, vs its A
       const id = walked.get(wkey(s.id, 'reload'))!.cb!.creature!.id
       const c = brews.find(b => b.id === (id || `corpus-${s.id}`))
       walked.set(wkey(s.id, 'edit → save'), c ? { cb: combatantOf(c) } : { problem: `the homebrew list read back has no entry ${id}` })
+    }
+
+    // 5e. Round 4: Edit on the board, text pane (TextConverter as written): the pane opens with
+    // creatureToText(toStatBlock(combatant.creature)); Parse keeps id and source (handleParse); the JSON
+    // pane holds JSON.stringify(parsed); Save reads it with toStatBlock and writes it over the entry
+    // with the existing id (handleOverwrite: ownId(existing.id)); the homebrew list is read back.
+    // "text edit twice" edits what that save stored, the same way again.
+    const textEdit = (existing: Creature, fallbackId: string): { c?: Creature; problem?: string } => {
+      const seed = ds2.toStatBlock(existing)
+      if (!seed) return { problem: `the text pane opens empty: ${ds2.statBlockProblem(existing)}` }
+      const { creature, errors } = parseStatBlockText(creatureToText(seed))
+      if (!creature) return { problem: `Parse read no creature: ${errors.join('; ')}` }
+      creature.id = existing.id
+      creature.source = existing.source
+      const c = ds2.toStatBlock(JSON.parse(JSON.stringify(creature, null, 2)))
+      if (!c) return { problem: `Save refused the parsed JSON: ${ds2.statBlockProblem(JSON.parse(JSON.stringify(creature)))}` }
+      c.id = typeof existing.id === 'string' && existing.id ? existing.id : fallbackId
+      if (!ds2.saveCustomCreature(c)) return { problem: 'saveCustomCreature refused it' }
+      ds2.reloadCustomCreatures()
+      const back = ds2.loadCustomCreatures().find(b => b.id === c.id)
+      return back ? { c: back } : { problem: `the homebrew list read back has no entry ${c.id}` }
+    }
+    for (const s of live) {
+      const existing = walked.get(wkey(s.id, 'reload'))?.cb?.creature
+      if (!existing) { walked.set(wkey(s.id, 'text edit → save'), { problem: 'no reloaded copy to edit' }); continue }
+      const once = textEdit(existing, `text-${s.id}`)
+      const w1: Walked = once.c ? { cb: combatantOf(once.c) } : { problem: once.problem }
+      walked.set(wkey(s.id, 'text edit → save'), w1)
+      walked.set(wkey(s.id, 'text edit → save (panel)'), { ...w1, surface: 'panel' })
+      const twice = once.c ? textEdit(once.c, `text-${s.id}`) : { problem: `the first edit failed: ${once.problem}` }
+      walked.set(wkey(s.id, 'text edit twice'), twice.c ? { cb: combatantOf(twice.c) } : { problem: twice.problem })
     }
 
     // 6. The builder, opened on the loaded record and left unchanged: what it emits is what it saves.
@@ -1021,6 +1101,75 @@ describe('end to end: the served record, through every path a GM takes, vs its A
   })
 
   /*
+   * Round 4 (D15, END TO END): every name the old index offered (test/fixtures/bestiary-legacy-names-
+   * 2026-10-06.json, 142 names) opens the record that stands in for it, by name and from an old
+   * portable encounter file loaded onto the board. The expected record comes from the fixture's own
+   * remaster links, and for the two pages the Archives renamed in place ("Greedspawn Soldiers",
+   * "Trinity Initiates", no remaster link) from the Archives document id the base record carried —
+   * never from the alias file under test. A loaded slot's HP maximum is the opened stat block's, not the
+   * file's stale number (D19). How many old names the Add Combatants search box finds is measured and
+   * printed (CORPUS-RENDER-SEARCH), not asserted: D15 did not ask for search.
+   */
+  it('every old name opens its stand-in, by name and from an old encounter file (D11, D15)', async () => {
+    const legacy = (JSON.parse(readFileSync(join(ROOT, 'test/fixtures/bestiary-legacy-names-2026-10-06.json'), 'utf8')) as {
+      names: Array<{ name: string; source: string; level: number; hazard: boolean; remaster: string[] }>
+    }).names
+    expect(legacy).toHaveLength(142)
+    const RENAMED_IN_PLACE: Record<string, string> = { 'Greedspawn Soldiers': 'creature-4266', 'Trinity Initiates': 'creature-4267' }
+    const ds = await import('../tracker/src/data/dataStore')
+    const opens = (n: typeof legacy[number], c: Creature | null | undefined): string | null => {
+      if (!c) return 'opens nothing'
+      if (RENAMED_IN_PLACE[n.name]) return aonIdOf(c) === RENAMED_IN_PLACE[n.name] ? null : `opens ${aonIdOf(c)} "${c.name}", not ${RENAMED_IN_PLACE[n.name]}`
+      if (!n.remaster.length) return `no expected record for "${n.name}" (no remaster link, not renamed in place)`
+      return n.remaster.includes(c.name) ? null : `opens "${c.name}", not one of ${JSON.stringify(n.remaster)}`
+    }
+    const wrong: string[] = []
+    let searchFinds = 0
+    for (const n of legacy) {
+      assertions++
+      const c = await ds.loadCreatureByName(n.name)
+      const bad = opens(n, c)
+      if (bad) {
+        wrong.push(`by name: "${n.name}" ${bad}`)
+        failures.push({ id: n.name, name: n.name, path: 'old name by name', heading: 'old name opens its stand-in', expected: RENAMED_IN_PLACE[n.name] ?? n.remaster, rendered: bad })
+      }
+      if (c && (await ds.searchCreatures(n.name, 500)).some(r => r.name === c.name)) searchFinds++
+    }
+    // An encounter file exported before the update: names only, the old source, a stale maxHP.
+    const et = await import('../tracker/src/utils/encounterTransfer')
+    const store = await import('../tracker/src/store/combatStore')
+    const file = {
+      version: 1, exportedAt: '2026-09-01T00:00:00.000Z',
+      encounters: [{
+        name: 'corpus-e2e-old-names', savedAt: '2026-09-01T00:00:00.000Z',
+        combatants: legacy.map(n => ({ name: n.name, creatureName: n.name, creatureSource: n.source, isPC: false, maxHP: 10, isElite: false, isWeak: false, notes: '' })),
+      }],
+    }
+    const imp = await et.importEncountersFromText(JSON.stringify(file))
+    expect(imp.ok, imp.error).toBe(true)
+    store.useCombatStore.getState().loadEncounter('corpus-e2e-old-names', new Map())
+    const board = store.useCombatStore.getState().combatants
+    expect(board).toHaveLength(legacy.length)
+    legacy.forEach((n, i) => {
+      const cb = board[i]
+      assertions += 2
+      const bad = opens(n, cb?.creature)
+      if (bad) {
+        wrong.push(`encounter file: "${n.name}" ${bad}`)
+        failures.push({ id: n.name, name: n.name, path: 'old name encounter file', heading: 'old name opens its stand-in', expected: RENAMED_IN_PLACE[n.name] ?? n.remaster, rendered: bad })
+      }
+      if (cb?.creature && cb.maxHP !== cb.creature.defenses.hp) {
+        wrong.push(`encounter file: "${n.name}" HP max ${cb.maxHP}, its stat block ${cb.creature.defenses.hp}`)
+        failures.push({ id: n.name, name: n.name, path: 'old name encounter file', heading: 'HP max', expected: cb.creature.defenses.hp, rendered: cb.maxHP })
+      }
+    })
+    store.useCombatStore.getState().deleteSavedEncounter('corpus-e2e-old-names')
+    e2eNumbers.oldNames = legacy.length
+    e2eNumbers.oldNamesFoundBySearch = searchFinds
+    expect(wrong, `${wrong.length} old-name routes differ:\n${wrong.slice(0, 30).join('\n')}`).toEqual([])
+  })
+
+  /*
    * Mutation proof for the path tests: each loss a path could cause (the field a round trip drops) is
    * applied by hand to a served record, and the page oracle must name it. A path test that passes is
    * then evidence the path kept the field, not that the oracle cannot see it.
@@ -1034,6 +1183,15 @@ describe('end to end: the served record, through every path a GM takes, vs its A
         pick: (s, c) => s.kind === 'creature' && !!c.defenses.hpNote && factsOf(s).hpLabels.length > 0,
         mutate: c => { delete c.defenses.hpNote },
         heading: /^HP pool label "[^"]*"$/ },
+      { what: 'the panel gives a hazard with no page HP Hit Points (round 4)',
+        surface: 'panel',
+        pick: (s, c) => s.kind === 'hazard' && c.defenses.hp === 0 && factsOf(s).hpPools.length === 0,
+        mutate: c => { c.defenses.hp = 20 },
+        heading: /^HP drawn with no page HP$/ },
+      { what: 'a round trip drops a creature\'s last strike (round 4)',
+        pick: (s, c) => s.kind === 'creature' && c.attacks.length > 1,
+        mutate: c => { c.attacks.pop() },
+        heading: /^creature strikes$/ },
       { what: 'an HP pool label printed twice (round 3)',
         pick: (s, c) => s.kind === 'hazard' && factsOf(s).hpLabels.some(l => norm(l) === norm(c.defenses.hpPools?.[0]?.name ?? '')),
         mutate: c => { const p0 = c.defenses.hpPools![0]; p0.name = `${p0.name}, ${p0.name}` },
@@ -1115,6 +1273,30 @@ describe('end to end: the served record, through every path a GM takes, vs its A
     expect(report, `${records} of ${SERVED.length} served records lose a page check through text edit → Parse:\n${report.join('\n')}`).toEqual([])
   })
 
+  // Round 4: the same text round trip for the fixture's legacy printings (26 records the index never
+  // serves, but an old saved encounter's snapshot or an imported homebrew copy still carries), twice in
+  // a row, so a second edit of a first edit's result keeps the page too.
+  it('text edit → Parse, twice, keeps what the page prints for the legacy printings too', async () => {
+    const ds = await import('../tracker/src/data/dataStore')
+    const lost: string[] = []
+    for (const s of LEGACY) {
+      const existing = parseSample(s)
+      let c: Creature | null = existing
+      for (let round = 1; round <= 2 && c; round++) {
+        const seed = ds.toStatBlock(JSON.parse(JSON.stringify(c)))
+        const parsed: Creature | null = parseStatBlockText(creatureToText(seed ?? c)).creature
+        c = parsed ? { ...parsed, id: existing.id, source: existing.source } : null
+      }
+      if (!c) { lost.push(`${s.id}: Parse read no creature`); continue }
+      const base = headingsAtBase(s)
+      const f = compareWith(s, combatantOf(c), { path: 'text edit twice (legacy)' }).filter(x => !base.has(x.heading))
+      failures.push(...f)
+      for (const x of f) lost.push(`${s.id} ${x.heading}: expected ${JSON.stringify(x.expected)}, rendered ${JSON.stringify(x.rendered)}`)
+    }
+    expect(LEGACY.length).toBeGreaterThanOrEqual(20)
+    expect(lost, lost.join('\n')).toEqual([])
+  })
+
   /*
    * The creature card (round 3): global search lists every index row, hazards included, and a creature
    * mention in prose or a random-encounter pick opens the same card (FloatingWindow CreatureCard, via
@@ -1169,6 +1351,93 @@ describe('end to end: the served record, through every path a GM takes, vs its A
     expect(wrong, `${wrong.length} loaded Elite combatants lost their Elite HP:\n${wrong.slice(0, 20).join('\n')}`).toEqual([])
   })
 
+  /*
+   * Round 4 (D19): every adjusted combatant — Elite, Weak, scaled to level + 2 — comes back from a
+   * saved encounter, an encounter file and a reload with the maximum the board gave it. And the board's
+   * Elite / Weak maximum is the PAGE's HP moved by GM Core's Elite / Weak table (copied here, not taken
+   * from weakElite.ts): Elite +10 at level 1 or lower, +15 at 2–4, +20 at 5–19, +30 at 20 or higher;
+   * Weak −10 at 1–2, −15 at 3–5, −20 at 6–20, −30 at 21 or higher (creatures; Weak below level 1 and
+   * hazards are not in the table).
+   */
+  it('a loaded or reloaded Elite, Weak or scaled combatant keeps the board\'s maximum, and the board\'s is the page HP ± GM Core\'s table', () => {
+    const wrong: string[] = []
+    const eliteDelta = (lv: number) => (lv <= 1 ? 10 : lv <= 4 ? 15 : lv <= 19 ? 20 : 30)
+    const weakDelta = (lv: number) => (lv <= 2 ? 10 : lv <= 5 ? 15 : lv <= 20 ? 20 : 30)
+    let checked = 0
+    for (const s of SERVED) {
+      const tagOf = { elite: ['board elite', 'reload elite', 'saved encounter elite', 'encounter file elite'],
+        weak: ['board weak', 'reload weak', 'saved encounter weak', 'encounter file weak'],
+        'scaled +2': ['board scaled +2', 'reload scaled +2', 'saved encounter scaled +2', 'encounter file scaled +2'] } as const
+      for (const [tag, paths] of Object.entries(tagOf)) {
+        const board = boardMax.get(`${s.id}\u0000${tag}`)
+        if (board === undefined) continue
+        for (const path of paths) {
+          const cb = walked.get(wkey(s.id, path as PathName))?.cb
+          if (!cb) continue
+          checked++
+          assertions++
+          if (cb.maxHP !== board) {
+            wrong.push(`${s.id} ${String(s.record.name)} [${path}]: HP max ${cb.maxHP}, the board gave ${board}`)
+            failures.push({ id: s.id, name: String(s.record.name), path, heading: `${tag} HP max`, expected: board, rendered: cb.maxHP })
+          }
+        }
+      }
+      if (s.kind !== 'creature') continue
+      const lv = Number(s.record.level)
+      const pageHp = pageFacts(String((s.record._aon as { markdown: string }).markdown), false, String(s.record.name)).hpPools[0]
+      if (pageHp === undefined) continue
+      for (const [tag, want] of [['elite', pageHp + eliteDelta(lv)], ['weak', lv >= 1 ? pageHp - weakDelta(lv) : null]] as const) {
+        const board = boardMax.get(`${s.id}\u0000${tag}`)
+        if (want === null || board === undefined) continue
+        checked++
+        assertions++
+        if (board !== want) {
+          wrong.push(`${s.id} ${String(s.record.name)} [board ${tag}]: HP max ${board}, the page's ${pageHp} with GM Core's ${tag} table gives ${want}`)
+          failures.push({ id: s.id, name: String(s.record.name), path: `board ${tag}`, heading: `${tag} HP vs GM Core`, expected: want, rendered: board })
+        }
+      }
+    }
+    expect(checked, 'adjusted combatants checked').toBeGreaterThan(100)
+    expect(wrong, `${wrong.length} adjusted HP maxima differ:\n${wrong.slice(0, 30).join('\n')}`).toEqual([])
+  })
+
+  /*
+   * Round 4 (D17, END TO END): the card is opened the way a GM opens it (PopupPreview by name, the real
+   * loader) for EVERY served record. A creature's card prints its AC and all three saves with the page's
+   * values (D17: creatures unchanged); a hazard's prints the page's value for each one it shows.
+   */
+  it('the creature card prints the page\'s AC and save values (creatures all four, hazards the printed ones)', async () => {
+    const { PopupPreview } = await import('../tracker/src/components/FloatingWindow')
+    const { act } = await import('react')
+    const wrong: string[] = []
+    let cards = 0
+    for (const s of SERVED) {
+      const name = String(s.record.name)
+      const view = renderDom(<PopupPreview type="creature" ref_={name.toLowerCase()} title={name} />)
+      for (let k = 0; k < 50 && /Loading…/.test(view.host.textContent ?? ''); k++) {
+        await act(async () => { await new Promise(r => setTimeout(r, 0)) })
+      }
+      const html = view.host.innerHTML
+      view.stop()
+      const shown = new Map([...html.matchAll(/>(AC|Fort|Ref|Will)<\/span><span[^>]*>([^<]*)<\/span>/g)].map(m => [m[1], decode(m[2]).trim()]))
+      cards++
+      const p = pageFacts(String((s.record._aon as { markdown: string }).markdown), s.kind === 'hazard', name)
+      const want: Array<[string, number | null | undefined]> = [['AC', p.acValue], ['Fort', p.saves.fort], ['Ref', p.saves.ref], ['Will', p.saves.will]]
+      for (const [label, pv] of want) {
+        if (pv == null && s.kind === 'hazard') continue // presence is the test above's
+        assertions++
+        const got = shown.get(label)
+        const n = got == null ? null : parseInt(got.replace(/[−–]/, '-'), 10)
+        if (n !== pv) {
+          failures.push({ id: s.id, name, path: 'creature card', heading: `card ${label} value`, expected: pv ?? 'none', rendered: got ?? 'none' })
+          wrong.push(`${s.id} ${name}: ${label} page ${pv ?? 'none'}, card ${got ?? 'none'}`)
+        }
+      }
+    }
+    expect(cards).toBe(SERVED.length)
+    expect(wrong, `${wrong.length} card values differ from the page:\n${wrong.join('\n')}`).toEqual([])
+  })
+
   for (const s of SERVED) {
     for (const path of PATHS) {
       it(`${s.id} ${String(s.record.name)} — ${path}`, () => {
@@ -1186,6 +1455,6 @@ describe('end to end: the served record, through every path a GM takes, vs its A
 
 afterAll(() => {
   // The measurement the refute round reports: records, assertions, failures.
-  console.log(`CORPUS-RENDER records=${SAMPLES.length} served=${SERVED.length} paths=${PATHS.length} assertions=${assertions} failures=${failures.length} snapshotChars=${e2eNumbers.combatSnapshotChars} encounterChars=${e2eNumbers.encounterChars} importedEncounterChars=${e2eNumbers.importedEncounterChars}`)
+  console.log(`CORPUS-RENDER records=${SAMPLES.length} served=${SERVED.length} paths=${PATHS.length} assertions=${assertions} failures=${failures.length} snapshotChars=${e2eNumbers.combatSnapshotChars} encounterChars=${e2eNumbers.encounterChars} importedEncounterChars=${e2eNumbers.importedEncounterChars} oldNames=${e2eNumbers.oldNames} oldNamesFoundBySearch=${e2eNumbers.oldNamesFoundBySearch}`)
   for (const f of failures) console.log(`CORPUS-RENDER-FAIL ${f.id} ${f.name} | ${f.path} | ${f.heading} | expected ${JSON.stringify(f.expected)} | rendered ${JSON.stringify(f.rendered)}`)
 })

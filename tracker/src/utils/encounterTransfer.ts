@@ -11,7 +11,7 @@
 
 import type { SavedEncounter } from '../types/pf2e'
 import { loadCustomCreatures, loadIndex, loadCreature, loadCreatureByName, type IndexEntry } from '../data/dataStore'
-import { readEncounterStore, writeEncounterStore } from '../store/combatStore'
+import { readEncounterStore, writeEncounterStore, adjustedCreature } from '../store/combatStore'
 
 const FILE_VERSION = 1
 
@@ -183,7 +183,12 @@ export async function importEncountersFromText(text: string): Promise<ImportResu
         creatureId: creature?.id ?? null,
         isPC: !!sc.isPC,
         isAlly: !!sc.isAlly,
-        maxHP: typeof sc.maxHP === 'number' ? sc.maxHP : (creature?.defenses.hp ?? 0),
+        // A resolved stat block's maximum is the ADJUSTED one, as Load Encounter and the board set
+        // it (adjustedCreature); the printed `defenses.hp` stored an Elite combatant's base HP when
+        // the file carried no maxHP, and a re-export wrote it on (encounterTransfer.test). A row
+        // with no stat block (a PC, an unresolved name) keeps the file's number.
+        maxHP: creature ? adjustedCreature(creature, sc).defenses.hp
+          : typeof sc.maxHP === 'number' ? sc.maxHP : 0,
         isElite: !!sc.isElite,
         isWeak: !!sc.isWeak,
         scaledToLevel: sc.scaledToLevel ?? undefined,

@@ -221,6 +221,9 @@ describe('the combat detail panel (CombatantDetail), where the GM reads a combat
   // CombatantDetail passes hideHP to StatBlock for every creature, so the stat block's HP line — the
   // only place the further HP pools print — never renders there; the panel prints only
   // defenses.hpNote (pools[0].name) under the HP bar. For hazards the HP line does render.
+  // Fixed by D16 (fix round 4, 2026-10-07): both tests below fail at cc7ff45 and pass after it; the
+  // finer cases (order, BT, Elite, malformed pools, a hazard with no HP line) are in
+  // CombatantDetail.corpus.test.tsx.
   const mount = (c: Creature) => domRender(<CombatantDetail combatant={combatantOf(c)} />).container.textContent ?? ''
 
   it('gap: a hydra\'s second pool (head) reaches the panel', () => {

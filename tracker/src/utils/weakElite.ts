@@ -18,7 +18,10 @@ export function applyWeakElite(creature: Creature, mode: 'weak' | 'elite' | 'nor
   const hpMod = mode === 'elite'
     ? (lv <= 1 ? 10 : lv <= 4 ? 15 : lv <= 19 ? 20 : 30)
     : (lv <= 2 ? 10 : lv <= 5 ? 15 : lv <= 20 ? 20 : 30)
-  c.defenses.hp = Math.max(1, creature.defenses.hp + s * hpMod)
+  // A stat block that prints no Hit Points (a haunt, a magical trap: hp 0) has none to adjust. The
+  // old Math.max(1, 0 ± n) gave it Elite 10–30 / Weak 1, drawn on the stat block and carried into
+  // the HP bar on the board and on every load (corpus round 4 finding; combatStore.eliteLoad.test 'no HP').
+  if (creature.defenses.hp > 0) c.defenses.hp = Math.max(1, creature.defenses.hp + s * hpMod)
   c.attacks = creature.attacks.map(a => ({ ...a, attack: a.attack + s * 2 }))
   c.spellcasting = creature.spellcasting.map(sc => ({
     ...sc,
@@ -275,10 +278,13 @@ export function scaleByLevel(creature: Creature, toLvl: number): Creature {
   c.defenses.ref  = Math.round(scaleValue(lvlIn, toLvl, creature.defenses.ref,  LvlSavingThrows))
   c.defenses.will = Math.round(scaleValue(lvlIn, toLvl, creature.defenses.will, LvlSavingThrows))
 
-  // HP — round to nearest 5 when > 100
-  let hp = scaleValue(lvlIn, toLvl, creature.defenses.hp, LvlHP)
-  if (hp > 100) { hp += 2; hp -= hp % 5 }
-  c.defenses.hp = Math.max(1, Math.round(hp))
+  // HP — round to nearest 5 when > 100. A stat block with no Hit Points (hp 0: a haunt, a magical
+  // trap) keeps none: scaling 0 used to invent 1–30 HP (applyWeakElite, same finding).
+  if (creature.defenses.hp > 0) {
+    let hp = scaleValue(lvlIn, toLvl, creature.defenses.hp, LvlHP)
+    if (hp > 100) { hp += 2; hp -= hp % 5 }
+    c.defenses.hp = Math.max(1, Math.round(hp))
+  }
 
   // Resistances & weaknesses — clamp to a minimum of 1 (like HP above): scaling
   // a low amount far down can round to 0 or negative, which is nonsensical.

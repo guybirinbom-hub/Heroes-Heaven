@@ -5,7 +5,10 @@ import { useSettingsStore, STATBLOCK_DEFAULT, type SbEditApi } from '../store/se
 import { useCombatStore, invalidateEncounterCache, writeEncounterStore } from '../store/combatStore'
 import { creatureToText } from '../utils/creatureToText'
 import { parseStatBlockText } from '../utils/parseStatBlockText'
-import type { Ability, Combatant, Creature, Defenses, SavedEncounter } from '../types/pf2e'
+import { parseCreature, parseHazard } from '../utils/parseCreature'
+import { toStatBlock } from '../data/dataStore'
+import renderSamples from '../../../test/fixtures/corpus-render-samples.json'
+import type { Ability, Combatant, Creature, Defenses, RawCreature, RawHazard, SavedEncounter } from '../types/pf2e'
 
 /*
  * REFUTE ROUND 3, REGRESSION LENS — the verified-bestiary adapter + renderer change, walked through
@@ -16,6 +19,11 @@ import type { Ability, Combatant, Creature, Defenses, SavedEncounter } from '../
  * `regression` = worked before the change, broken now. `gap` = a field the change added that this
  * consumer drops (before the change the field did not exist, so nothing visible got worse there).
  * `guard` = still works; pinned so a fix cannot break it. Every record here is synthetic.
+ *
+ * FIX ROUND 4 (D18): the text format now carries every field these tests name (creatureToText /
+ * parseStatBlockText); the six `regression` / `gap` tests below failed at cc7ff45 and pass with it,
+ * unchanged. The last describe adds the same check over the 82 verified corpus records of the render
+ * fixture: the stat block drawn after a text edit reads exactly as the one drawn before it.
  */
 
 const DEF: Defenses = { ac: 18, fort: 9, ref: 7, will: 5, hp: 40, immunities: [], resistances: [], weaknesses: [] }
@@ -142,6 +150,39 @@ describe('TextConverter text path on an Archives creature: the page fields the c
     })
     expect(text(html(hydra))).toContain('15 (head, head regrowth)')
     expect(text(html(throughText(hydra)))).toContain('15 (head, head regrowth)')
+  })
+})
+
+describe('fix round 4 (D18): a text edit of a verified corpus record draws the same stat block', () => {
+  type Sample = { id: string; kind: 'creature' | 'hazard'; record: Record<string, unknown> }
+  const SAMPLES = (renderSamples as unknown as { samples: Sample[] }).samples
+  /** The record the tracker serves, as the TextConverter seeds its text pane with it. */
+  const served = (s: Sample): Creature => toStatBlock(JSON.parse(JSON.stringify(s.kind === 'hazard'
+    ? parseHazard(s.record as unknown as RawHazard)
+    : parseCreature(s.record as unknown as RawCreature))))!
+  /** The drawn text with all whitespace removed: a strike's "2d6+7 piercing" may come back as the
+   *  formula and its type in two spans ("2d6+7" + "piercing"), the same words in the same order. */
+  const flat = (c: Creature) => text(html(c)).replace(/\s+/g, '')
+
+  it('every record: the drawn text after creatureToText → Parse equals the drawn text before', () => {
+    // Fails at cc7ff45 on 82 of 82 records (HP pools, Recall Knowledge, language abilities, ability
+    // sections, hazard sections, spell ranks … all lost). Compared: the record as the board carries it
+    // after a save (rawMarkdown / aonUrl / raw are not part of a text edit), against what Parse reads
+    // back with the record's id and source kept (TextConverter.handleParse).
+    const differ: string[] = []
+    for (const s of SAMPLES) {
+      const c = served(s)
+      const before: Creature = { ...c, rawMarkdown: undefined, aonUrl: undefined, raw: {} as Creature['raw'] }
+      const back: Creature = { ...throughText(c), id: c.id, source: c.source }
+      const a = flat(before)
+      const b = flat(back)
+      if (a !== b) {
+        let k = 0
+        while (k < a.length && a[k] === b[k]) k++
+        differ.push(`${s.id} ${c.name}: …${a.slice(Math.max(0, k - 40), k + 40)}… vs …${b.slice(Math.max(0, k - 40), k + 40)}…`)
+      }
+    }
+    expect(differ).toEqual([])
   })
 })
 

@@ -1405,11 +1405,17 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       record(s)
       s.combatants = saved.combatants.map(sc => {
         const creature = sc.creature ?? null
-        const hp = creature?.defenses.hp ?? sc.maxHP
+        // The maximum the board gives this combatant: the ADJUSTED stat block's (setEliteWeak /
+        // setScaledLevel), never the printed one. Reading `creature.defenses.hp` here loaded an
+        // Elite combatant with the base HP bar (pre-existing at 7cfb323; combatStore.eliteLoad.test).
+        // A hand-written save's `"scaledToLevel": null` means unscaled; every reader tests
+        // `!== undefined`, so it is normalised here.
+        const scaledToLevel = sc.scaledToLevel ?? undefined
+        const hp = creature ? adjustedCreature(creature, { ...sc, scaledToLevel }).defenses.hp : sc.maxHP
         return {
           id: nid(), name: sc.name, creature, isPC: sc.isPC, isAlly: sc.isAlly ?? false, charId: sc.charId,
           initiative: null, currentHP: hp, maxHP: hp, tempHP: 0, conditions: [],
-          isElite: sc.isElite, isWeak: sc.isWeak, scaledToLevel: sc.scaledToLevel,
+          isElite: sc.isElite, isWeak: sc.isWeak, scaledToLevel,
           notes: sc.notes, isDefeated: false,
         }
       })
@@ -1513,6 +1519,18 @@ function setEncStore(store: Record<string, SavedEncounter>): void {
  *  pf2e-encounters localStorage key directly (e.g. the import helper). */
 export function invalidateEncounterCache(): void {
   _encStoreCache = null
+}
+
+/** The stat block as the board adjusts it: scaled to a level (which wins, as in every reader —
+ *  setScaledLevel clears Elite / Weak), else Elite or Weak, else the printed one. The load paths
+ *  (loadEncounter, encounterTransfer's import) take a combatant's HP maximum from it, so a loaded
+ *  combatant matches the one setEliteWeak / setScaledLevel made on the board. */
+export function adjustedCreature(
+  creature: Creature,
+  how: { isElite?: boolean; isWeak?: boolean; scaledToLevel?: number | null },
+): Creature {
+  if (how.scaledToLevel != null) return scaleByLevel(creature, how.scaledToLevel)
+  return applyWeakElite(creature, how.isElite ? 'elite' : how.isWeak ? 'weak' : 'normal')
 }
 
 /** Shared read of the encounters store — exported so external helpers (e.g.
