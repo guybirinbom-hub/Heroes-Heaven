@@ -37,7 +37,8 @@
  *   CUT-IN-SENTENCE  a dropped line followed by a shown half-sentence (must stay 0)
  *   FOLDED-UNLISTED  a fold not listed in level-folds.json (0: nothing folds before step 13)
  *   OURS-LEAK        our wording inside page text, or our appended HTML in a body that is not an ours box
- *   STUBS            an embedded page stub whose aon id names no record (or that has no id), in EVERY
+ *   STUBS            an embedded page stub that draws as a PLAIN NAME: its aon id names no record and
+ *                    src/data/stub-names.json links it to none (step 14b: a name link is not an offender), in EVERY
  *                    shipped tree of every bucket — archetype, rules, way and sidebar pages included
  *                    (section 2 rule 6 lists all of them). Keyed by page. S2 likewise runs over every
  *                    bucket that has records and pages, and browse rows exist for all of them.

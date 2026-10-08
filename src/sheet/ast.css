@@ -192,6 +192,11 @@
 .ast-list { margin: .5em 0; padding-left: 1.5em; }
 .ast-list li { margin: .25em 0; }
 .ast-list li > p { margin: 0; }
+/* Card step 14b: an archetype page's feats as a compact list (name link + level badge), and an embedded
+   page's own trait chips (inside the body, so none of the header's side padding). */
+.ast-stub-list { list-style: none; padding-left: 0; columns: 2 14em; column-gap: 1.5em; }
+.ast-stub-item { break-inside: avoid; }
+.ast-stub-traits { padding: 2px 0 6px; }
 
 /* ---- tables (proficiency tables etc.) — scroll horizontally inside the popup when wide ---- */
 .ast-tablewrap { overflow-x: auto; margin: .8em 0; }

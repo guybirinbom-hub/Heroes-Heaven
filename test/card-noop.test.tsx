@@ -312,6 +312,28 @@ const STEP16_CHANGED_NOOP: Record<string, string> = {
   'world-in-shadow': LR,
 };
 
+/** Card step 14b (docs/card-design.md section 2 rule 6), measured 2026-10-08 in the lane against a snapshot
+ *  written on 3c7cca0 before any step-14b edit: 10 renders changed, every one only where a stub now draws.
+ *  Seven are search popups (`modal`) of the 600 tree renders — two of them (initiate-benefit-wand
+ *  "aon:action-1233", initiate-benefit-weapon "aon:action-1234", both name links) are STEP12_CHANGED_NOOP
+ *  records, so they differ from the pre-move popup anyway; the five below are pinned. The other three are
+ *  feat popups (kinetic-aura, master-strike, mature-trained-companion: their 'mine' card embeds the page),
+ *  which this block compares only while CARD_ON.featDetail is off. */
+const STEP14B_CHANGED_NOOP: Record<string, string> = {
+  'classFeatures:alchemical-sciences-methodology': 'embeds actions:quick-tincture',
+  'classFeatures:alchemy': 'embeds classFeatures:quick-alchemy',
+  'classFeatures:double-spellstrike': 'embeds actions:double-spellstrike',
+  'classFeatures:explode': 'the name of aon:action-902',
+  'classFeatures:first-implement-and-esoterica': 'embeds actions:exploit-vulnerability',
+};
+/** The markup with every embedded stub element (page, compact list, name) taken out, through the DOM. */
+function without14bStubs(markup: string): string {
+  const host = document.createElement('div');
+  host.innerHTML = markup;
+  host.querySelectorAll('[data-stub-list], [data-stub]').forEach((e) => e.remove());
+  return host.innerHTML;
+}
+
 /** The three tree renders for one record: what a held record's popup body shows (the real DescBody),
  *  the same body rendered straight from the cuts, and the search popup (the real DescriptionModal). */
 function astRenders(bucket: string, slug: string) {
@@ -478,11 +500,24 @@ describe('card step 1 (G0): the move changes no markup', () => {
     const keys = [...sample.map(({ bucket, slug }) => `${bucket}:${slug}`), ...itemIds.map((id) => `items:${id}`), ...featRows.map((r) => `${r.bucket}:${r.id}`)];
     const changed = step12Changed(keys);
     expect(changed).toEqual(STEP12_CHANGED_NOOP);
+    // Card step 14b re-baseline: the search popup (modal) of a non-item page whose stubs resolve from a loaded
+    // bucket draws them (an embedded page, a name) — pinned in STEP14B_CHANGED_NOOP; with those elements
+    // taken out it is the pre-move popup, byte for byte. The held-record body paths never resolve stubs.
+    // batch card premise: class-feature-1281 "You gain the Double Spellstrike activity"
+    const drawsStubs = Object.keys(now.ast).filter((k) => !k.startsWith('items:') && !(k in changed) && /data-stub/.test(now.ast[k].modal));
+    expect(drawsStubs.sort()).toEqual(Object.keys(STEP14B_CHANGED_NOOP).sort());
+    for (const k of Object.keys(now.ast)) expect(/data-stub/.test(now.ast[k].descBody + now.ast[k].body), `${k} body paths`).toBe(false);
     let diffs = 0;
     for (const k of Object.keys(now.ast)) {
       for (const f of ['descBody', 'body', 'modal'] as const) {
         if (now.ast[k][f] !== before.ast[k][f]) diffs++;
         if (k in changed) continue;
+        if (f === 'modal' && k in STEP14B_CHANGED_NOOP) {
+          // batch card premise: class-feature-479 "all at least know how to make their innovation Explode"
+          expect(now.ast[k][f], `${k} modal (${STEP14B_CHANGED_NOOP[k]}) changed`).not.toBe(before.ast[k][f]);
+          expect(without14bStubs(now.ast[k][f]), `${k} modal: only the stubs changed`).toBe(viaDom(before.ast[k][f]));
+          continue;
+        }
         expect(now.ast[k][f], `${k} ${f}`).toBe(before.ast[k][f]);
       }
       if (k in changed) expect(now.ast[k].descBody, `${k} (${changed[k]}) changed`).not.toBe(before.ast[k].descBody);
@@ -541,7 +576,8 @@ describe('card step 1 (G0): the move changes no markup', () => {
         expect(now[surface][k].rows, `${surface} ${k} rows`).toEqual(before[surface][k].rows);
       }
     }
-    expect(diffs).toBe(Object.keys(now.ast).filter((k) => k in changed).reduce((n, k) => n + ['descBody', 'body', 'modal'].filter((f) => now.ast[k][f as 'body'] !== before.ast[k][f as 'body']).length, 0));
+    // batch card premise: methodology-5 "You gain the Quick Tincture action"
+    expect(diffs).toBe(Object.keys(now.ast).filter((k) => k in changed).reduce((n, k) => n + ['descBody', 'body', 'modal'].filter((f) => now.ast[k][f as 'body'] !== before.ast[k][f as 'body']).length, 0) + Object.keys(STEP14B_CHANGED_NOOP).length);
     // The exported functions reproduce TODAY's rows — the rows the pre-move popups printed.
     for (const id of itemIds) expect(itemRowsFn(id), `item ${id} vs pre-move`).toEqual(before.items[id].rows);
     featRows.forEach((r, i) => expect(featRowsFn(r, i), `${r.bucket} ${r.id} vs pre-move`).toEqual(before.feats[`${r.bucket}:${r.id}`].rows));

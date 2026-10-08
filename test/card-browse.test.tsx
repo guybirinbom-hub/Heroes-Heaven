@@ -241,6 +241,27 @@ const STEP12_CHANGED: Record<string, string> = {
   'items:drake-rifle-cold': 'F6b page slice',
 };
 
+/** Card step 14b (docs/card-design.md section 2 rule 6), measured 2026-10-08 in the lane against a
+ *  snapshot written on 3c7cca0 before any step-14b edit: of the 320 renders, 2 first frames draw stubs
+ *  their loaded buckets resolve — classFeatures:initiate-benefit-amulet (the name link "Amulet's Abeyance",
+ *  aon:action-1229; already a STEP12_CHANGED record, so it differs from the pre-extraction frame anyway)
+ *  and the one below. Every other render is byte-equal; with the stub elements taken out these are too. */
+const STEP14B_CHANGED: Record<string, string> = {
+  'classFeatures:swarm-eidolon': 'embeds 4 class-feature pages (Haunting Visage, Swarming Assault, Redistribute, Sickening Assault)',
+};
+/** The markup with every embedded stub element (page, compact list, name) taken out, through the DOM. */
+function without14bStubs(html: string): string {
+  const host = document.createElement('div');
+  host.innerHTML = html;
+  host.querySelectorAll('[data-stub-list], [data-stub]').forEach((e) => e.remove());
+  return host.innerHTML;
+}
+function viaDomHtml(html: string): string {
+  const host = document.createElement('div');
+  host.innerHTML = html;
+  return host.innerHTML;
+}
+
 /** A node's text as AstRenderer prints it (astVisibility's textOf), and the header name it draws. */
 const flat = (n: AstNode): string => textOf(n);
 function headName(tree: AstNode): string {
@@ -293,16 +314,30 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     const changed = step12Changed();
     expect(changed).toEqual(STEP12_CHANGED);
     let diffs = 0;
+    // Card step 14b re-baseline: a non-item page whose stubs resolve from a loaded bucket draws them in its
+    // first frame (the embedded page, a compact list, a name) — pinned in STEP14B_CHANGED; with those
+    // elements taken out it is the pre-extraction frame, byte for byte.
+    // batch card premise: eidolon-13 "your eidolon gains the Sickening Assault action"
+    const drawsStubs = Object.keys(now).filter((k) => !k.startsWith('items:') && !(k in changed) && /data-stub/.test(now[k].first));
+    expect(drawsStubs).toEqual(Object.keys(STEP14B_CHANGED));
     for (const k of Object.keys(now)) {
       if (now[k].first !== before[k].first || now[k].settled !== before[k].settled) diffs++;
       if (k in changed) {
         expect(now[k].first === before[k].first && now[k].settled === before[k].settled, `${k} (${changed[k]}) changed`).toBe(false);
         continue;
       }
+      if (k in STEP14B_CHANGED) {
+        // batch card premise: eidolon-13 "While dispersed, it can use the Swarming Assault activity"
+        expect(now[k].first, `${k} (${STEP14B_CHANGED[k]}) changed`).not.toBe(before[k].first);
+        expect(without14bStubs(now[k].first), `${k}: only the stubs changed`).toBe(viaDomHtml(before[k].first));
+        expect(now[k].settled, `${k} settled frame`).toBe(before[k].settled);
+        continue;
+      }
       expect(now[k].first, `${k} first frame`).toBe(before[k].first);
       expect(now[k].settled, `${k} settled frame`).toBe(before[k].settled);
     }
-    expect(diffs).toBe(Object.keys(STEP12_CHANGED).length);
+    // batch card premise: eidolon-13 "your eidolon gains the Redistribute reaction"
+    expect(diffs).toBe(Object.keys(STEP12_CHANGED).length + Object.keys(STEP14B_CHANGED).length);
   });
 
   it('every branch is in the sample: page, loading placeholder, markdown fallback', async () => {
@@ -503,8 +538,8 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
  * every sampled item page that embeds a page, plus the longsword and full plate, the settled browse card
  * with every stub bucket loaded is the pre-step popup (the first frame, byte-equal to the pre-extraction
  * snapshot) with the embedded pages added at the stubs' places, and NOTHING ELSE changed. Every other
- * bucket's browse card draws its stubs as nothing, as before (the 2,664 archetype feat stubs want a
- * compact list first — a later step).
+ * bucket's browse card drew its stubs as nothing until card step 14b, which turns them on (the last test
+ * below; test/card-stubs.test.tsx).
  *
  * MUTATION LINE (measured red on 2026-10-07, restored byte-exact): RecordCard.tsx browse lane
  * `node={browseTree ?? astNode}` → `node={astNode}` → red (no page embedded).
@@ -566,7 +601,18 @@ describe('card step 14: an item page\'s browse card adds its embedded pages and 
    * CARD_ON.itemDetail); the same mutation there, `STUB_HOST_BUCKETS.has(bucket)` →
    * `(STUB_HOST_BUCKETS.has(bucket) || true)`, measured red again.
    */
-  it('a non-item page with resolvable stubs draws them as nothing on its browse card', async () => {
+  /*
+   * Card step 14b turns this test over (docs/card-design.md section 2 rule 6, section 9 row 14b): every
+   * bucket now resolves its stubs (STUB_HOST_BUCKETS), so each of these pages DRAWS its first stub — Rage
+   * the Rage action, Arcane Safeguards Resist Magic, Bone Flense Erupting Spurs as embedded pages, the
+   * Knight Vigilant archetype page its feats as a compact linked list — and the settled card is its first
+   * frame (the buckets are loaded, so nothing waits). Per-bucket cases, the compact list, the names and the
+   * "only the stubs changed" comparison against the card with step 14b off are test/card-stubs.test.tsx.
+   * MUTATION LINE (measured red on 2026-10-08, restored byte-exact): astStubs.ts STUB_HOST_BUCKETS back to
+   * `new Set(['items'])` → red (Rage embeds nothing).
+   */
+  // batch card premise: class-feature-844 "You gain the Rage action, which lets you fly into a frenzy"
+  it('a non-item page with resolvable stubs draws them on its browse card (step 14b)', async () => {
     const idx = aonIndex(db);
     const cases: [string, string, string][] = [
       ['classFeatures', 'rage', 'actions:rage'],
@@ -587,9 +633,17 @@ describe('card step 14: an item page\'s browse card adds its embedded pages and 
       const before = first0.innerHTML;
       const host = await mount(modalEl(nodeOf(bucket, slug), 2000 + k));
       expect(host.querySelector('.ast-pop > .ast-body'), `${bucket}:${slug} draws its page`).toBeTruthy();
-      expect(host.querySelectorAll('[data-stub]').length, `${bucket}:${slug} embeds nothing`).toBe(0);
+      // batch card premise: feat-3096 "You gain the Resist Magic reaction"
+      expect(host.querySelector(`.ast-pop > .ast-body [data-stub="${first}"]`), `${bucket}:${slug} draws ${first}`).toBeTruthy();
+      // An archetype page's feats are a compact list entry (name link + badge), every other stub its page.
+      // batch card premise: archetype-27 "This archetype has some feats at a level other than"
+      expect(!!host.querySelector(`[data-stub-list] > li[data-stub="${first}"]`), `${bucket}:${slug} compact`).toBe(bucket === 'feats' && slug === 'aon-knight-vigilant');
+      // batch card premise: spell-2123 "You can use the Erupting Spurs reaction"
       expect(host.innerHTML, `${bucket}:${slug} is its first frame`).toBe(before);
       mounted.pop()!.stop();
     }
+    // batch card premise: action-2802 "You tap into your inner fury and begin raging"
+    const rage = await mount(modalEl(nodeOf('classFeatures', 'rage'), 2010));
+    expect(rage.querySelector('[data-stub="actions:rage"]')?.textContent).toContain('You tap into your inner fury and begin raging');
   });
 });

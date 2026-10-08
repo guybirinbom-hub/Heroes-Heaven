@@ -79,6 +79,9 @@ interface Ctx {
    *  anchor whose click did nothing — 3,692 of them, led by classFeatures:anathema (617 times) and
    *  actions:command (601). Absent ⇒ assume everything resolves, which is the old behaviour. */
   hasRef?: (bucket: string, slug: string) => boolean;
+  /** Card step 14b: inside an embedded page ([data-stub]) — its trait chips draw where the page prints
+   *  them (the host's own chips are the popup header's). */
+  inStub?: boolean;
 }
 
 /** The engine/importer slug for a name — must match import-core-v2's slug() so a trait chip's label
@@ -114,6 +117,39 @@ function traitRef(label: string, has?: (bucket: string, slug: string) => boolean
   ];
   for (const c of candidates) if (c && c !== full && has('trait', c)) return c;
   return full;
+}
+
+/** A page's trait chips, AoN-ordered and colour-coded (the popup header's; card step 14b also draws an
+ *  embedded page's own, inside its [data-stub], with `className` added). */
+function TraitChips({ labels, ctx, className }: { labels: string[]; ctx: Ctx; className?: string }): ReactNode {
+  if (!labels.length) return null;
+  return (
+    <div className={'ast-traits' + (className ? ' ' + className : '')}>
+      {sortTraits(labels).map((tn, i) => {
+        const kind = traitKind(tn);
+        const cls = 'ast-tr' + (kind ? ' ast-tr-' + kind : '');
+        // Every trait chip links to its trait rules (traits are a shipped reference bucket), the
+        // way the archives app renders them — but ONLY when the target ships. The inline-link path
+        // has always fallen back to an inert style for a missing target; this one did not, so 484
+        // chips across 439 pages looked and behaved like buttons (hover state, keyboard focus) and
+        // did nothing on click. Looking clickable and doing nothing is worse than looking inert.
+        const slug = traitRef(tn, ctx.hasRef);
+        if (ctx.hasRef && !ctx.hasRef('trait', slug))
+          return <span key={i} className={cls + ' ast-tr-dead'}>{tn}</span>;
+        return (
+          <a key={i} className={cls + ' ast-tr-link'} role="button" tabIndex={0}
+             onClick={(e) => { e.preventDefault(); ctx.onOpenRef('trait', slug); }}
+             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ctx.onOpenRef('trait', slug); } }}>
+            {tn}
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+/** The chip labels of a `traits` node. */
+function traitLabelsOf(traitsNode: AstNode | undefined): string[] {
+  return traitsNode ? (traitsNode.c || []).map((t) => t.label || textOf(t)).filter(Boolean) as string[] : [];
 }
 
 /* ---------- inline rendering ---------- */
@@ -236,6 +272,16 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil, statMas
       ? { printed: card.printed, head: headUntil >= 0 && i < headUntil, ...(statMask ? { statHead: !!statMask[i] } : {}) }
       : card;
     if (cw && isCardFurnitureTitle(n)) { i = cardFurnitureSectionEnd(nodes, i) - 1; continue; }
+    /* Card step 14b: a run of an archetype page's feat stubs draws as ONE compact linked list. */
+    if (isListStub(n)) {
+      // An empty stub inside the run (a repeat the visited set drew as nothing) does not split the list.
+      let j = i;
+      while (isListStub(nodes[j]) || isBareStub(nodes[j])) j++;
+      while (j > i && !isListStub(nodes[j - 1])) j--;
+      out.push(<ul key={key} className="ast-list ast-stub-list" data-stub-list="">{nodes.slice(i, j).filter(isListStub).map((m, k) => <StubListItem key={k} node={m as StubbedNode} ctx={ctx} />)}</ul>);
+      i = j - 1;
+      continue;
+    }
     /* bug 2026-09-12 #8: popup-divider — a rule with NOTHING above it.
      *
      * An AoN page is <stat header> <hr> <prose>, and a detail popup passes `hideMeta` because it prints
@@ -337,7 +383,9 @@ function isInlineFrag(n: AstNode | undefined, next?: AstNode): boolean {
 function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: string, lead?: boolean, card?: CardWalk): ReactNode {
   switch (n.t) {
     case 'traits':
-      return null; // shown as chips in the header
+      // Shown as chips in the header — the host page's. Card step 14b: an embedded page's own chips draw
+      // where it prints them, inside its [data-stub] (they are not the host record's traits).
+      return ctx.inStub ? <TraitChips key={key} labels={traitLabelsOf(n)} ctx={ctx} className="ast-stub-traits" /> : null;
     case 'title': {
       const lvl = Number(n.level ?? 1);
       if (lvl <= 1) return null; // the page name is the popup header
@@ -426,9 +474,18 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       // Card step 14 (section 2 rule 6): a stub resolved by src/sheet/astStubs.ts resolveStubs carries the
       // page it embeds (`stubOf`) — another record's page, drawn inline as AoN draws it, inside a wrapper
       // that names it ([data-stub]). A stub nobody resolved stays empty and draws nothing, as before.
-      const from = (n as StubbedNode).stubOf;
+      const sn = n as StubbedNode;
+      // Card step 14b: a stub drawn as its name (no record's page answers it), or a lone compact list entry
+      // (Blocks draws a run of them as one list).
+      if (sn.stubKind === 'name') return <StubName key={key} node={sn} ctx={ctx} />;
+      if (sn.stubKind === 'list') return <ul key={key} className="ast-list ast-stub-list" data-stub-list=""><StubListItem node={sn} ctx={ctx} /></ul>;
+      const from = sn.stubOf;
       if (!from) return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key);
-      const inner = Blocks({ nodes: n.c || [], ctx, hideMeta, kb: key, card });
+      // Card step 14b (orchestrator ruling, round 3): an embedded page is drawn AS PRINTED — neither the
+      // card walk (S-furniture cuts, dim / use classes, the host's printed-set drops) nor the host's
+      // hideMeta reaches inside it, so its spoiler banner and its "click here" line stay on a mine card as
+      // they do on browse. It is another record's page, not the character's.
+      const inner = Blocks({ nodes: n.c || [], ctx: { ...ctx, inStub: true }, kb: key });
       return inner == null ? null : <div key={key} className="ast-stub" data-stub={from}>{inner}</div>;
     }
     case 'view':
@@ -474,6 +531,38 @@ function CardFoldEl({ node, ctx, card, kb }: { node: AstNode; ctx: Ctx; card: Ca
     </details>
   );
 }
+
+/**
+ * Card step 14b (docs/card-design.md section 2 rule 6): the stubs drawn without a page body, made only by
+ * src/sheet/astStubs.ts resolveStubs (a stored tree never carries `stubKind`). The name is a link that
+ * opens the record's card (the same anchor a page cross-link draws, through Inline) when a record exists
+ * for it, else plain text. Each element names what it draws in `data-stub` — the record's page
+ * ("bucket:slug") for a list entry that resolved, "aon:<id>" for a stub no record's page answers — so a
+ * reader (test/card-parity.test.tsx SKIP_SEL) reads past it as it does past an embedded page.
+ */
+function stubLabel(node: StubbedNode, ctx: Ctx): ReactNode {
+  const text: AstNode = { t: 'text', v: node.stubName ?? '' };
+  return node.stubLink ? <Inline node={{ t: 'link', ref: node.stubLink, c: [text] }} ctx={ctx} k={0} /> : <Inline node={text} ctx={ctx} k={0} />;
+}
+function StubListItem({ node, ctx }: { node: StubbedNode; ctx: Ctx }): ReactNode {
+  return (
+    <li className="ast-stub-item" data-stub={node.stubOf ?? `aon:${node.id}`}>
+      {stubLabel(node, ctx)}
+      {node.stubRight ? <> <span className="ast-hbadge">{node.stubRight}</span></> : null}
+    </li>
+  );
+}
+function StubName({ node, ctx }: { node: StubbedNode; ctx: Ctx }): ReactNode {
+  return (
+    <div className={(Number(node.level ?? 2) <= 2 ? 'ast-h2' : 'ast-h3') + ' ast-stub-name'} data-stub={`aon:${node.id}`}>
+      <span className="ast-hname">{stubLabel(node, ctx)}</span>
+      {node.stubRight ? <span className="ast-hbadge">{node.stubRight}</span> : null}
+    </div>
+  );
+}
+const isListStub = (n: AstNode | undefined) => !!n && (n.t === 'document' || n.t === 'doc') && (n as StubbedNode).stubKind === 'list';
+/** An embedded stub nothing resolved: it draws nothing. */
+const isBareStub = (n: AstNode | undefined) => !!n && (n.t === 'document' || n.t === 'doc') && !(n.c && n.c.length) && !(n as StubbedNode).stubKind;
 
 /** Node types that render as their own block — used to decide whether an unrecognized container should
  *  recurse as blocks (preserving paragraph/heading/table structure) or render inline. */
@@ -532,8 +621,7 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, card
   let cost: AstNode | undefined;
   if (title) (function find(x: AstNode) { if (cost) return; if (x.t === 'actions' && String(x.string || '').trim()) cost = x; (x.c || []).forEach(find); })(title);
   // trait chips
-  const traitsNode = top.find((n) => n.t === 'traits');
-  const traitLabels = traitsNode ? (traitsNode.c || []).map((t) => t.label || textOf(t)).filter(Boolean) as string[] : [];
+  const traitLabels = traitLabelsOf(top.find((n) => n.t === 'traits'));
   // The page on the Archives, where the record came from.
   const aonUrl = /^\/\w+\.aspx/.test(String(node.url ?? '')) ? AON + node.url : '';
 
@@ -557,29 +645,7 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, card
           </span>
         )}
       </div>
-      {traitLabels.length > 0 && (
-        <div className="ast-traits">
-          {sortTraits(traitLabels).map((tn, i) => {
-            const kind = traitKind(tn);
-            const cls = 'ast-tr' + (kind ? ' ast-tr-' + kind : '');
-            // Every trait chip links to its trait rules (traits are a shipped reference bucket), the
-            // way the archives app renders them — but ONLY when the target ships. The inline-link path
-            // has always fallen back to an inert style for a missing target; this one did not, so 484
-            // chips across 439 pages looked and behaved like buttons (hover state, keyboard focus) and
-            // did nothing on click. Looking clickable and doing nothing is worse than looking inert.
-            const slug = traitRef(tn, ctx.hasRef);
-            if (ctx.hasRef && !ctx.hasRef('trait', slug))
-              return <span key={i} className={cls + ' ast-tr-dead'}>{tn}</span>;
-            return (
-              <a key={i} className={cls + ' ast-tr-link'} role="button" tabIndex={0}
-                 onClick={(e) => { e.preventDefault(); ctx.onOpenRef('trait', slug); }}
-                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ctx.onOpenRef('trait', slug); } }}>
-                {tn}
-              </a>
-            );
-          })}
-        </div>
-      )}
+      <TraitChips labels={traitLabels} ctx={ctx} />
       <div className="ast-body">{lead}<DocBody top={top} ctx={ctx} hideMeta={hideMeta} card={cw} />{footer}</div>
     </div>
   );

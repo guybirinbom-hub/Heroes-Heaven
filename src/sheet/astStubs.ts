@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getCachedAst, isBucketLoaded, loadBucketAst, type AstNode } from './astStore';
 import { cardOn } from './cardSurfaces';
+import STUB_NAMES_JSON from '../data/stub-names.json';
 
 /**
  * Card step 14 (docs/card-design.md section 2 rule 6, section 9 row 14): EMBEDDED PAGE STUBS.
@@ -28,10 +29,21 @@ import { cardOn } from './cardSurfaces';
  *
  * Where it is switched on (step 14): pages of the buckets in STUB_HOST_BUCKETS ('items') on the browse
  * card (RecordCard mode 'browse', a page opened from a link inside any card included) and on ItemDetail's
- * card — both behind CARD_ON.itemDetail (browseResolvesStubs), so the switch turns both back. Other buckets' stubs (archetype pages' 2,664 feat stubs want a compact list first; rules, class
- * and feat pages embed actions), the other 'mine' cards and the name links for unresolved stubs are step
- * 14b (docs/card-design.md section 2 rule 6, section 9); Strike keeps its "only if you have it" gate for
- * the critical specialization in both.
+ * card — both behind CARD_ON.itemDetail (browseResolvesStubs), so the switch turns both back.
+ * Step 14b (docs/card-design.md section 2 rule 6, section 9 row 14b) widens STUB_HOST_BUCKETS to every
+ * bucket whose pages carry a stub, on the browse card and on the 'mine' POPUP cards (mineResolvesStubs:
+ * StatDetail's full text, FeatDetail, the action popup, the builder's granted rows, a pinned card — every
+ * bucket but items, so the Strike card keeps its "only if you have it" gate for the critical
+ * specialization, and spells, whose stubs draw on the browse card only), and adds three ways a stub is drawn:
+ *  - an archetype page's feat stubs (2,664 on the archetype pages) as ONE compact linked list — the feat's
+ *    name as a link to its card and its level badge, never the feat's body (`stubKind: 'list'`);
+ *  - a stub whose aon id names no record (273 occurrences) as its page's name, a link when a record
+ *    exists for it, plain text when none does (`stubKind: 'name'`, src/data/stub-names.json);
+ *  - an embedded page's own trait chips, inside it (AstRenderer, ctx.inStub).
+ * A 'mine' card resolves its stubs AFTER scoping its host page (RecordCard), so the folds apply to the
+ * host page only and an embedded page is drawn as it ships — it is not the character's record; and
+ * AstRenderer draws it AS PRINTED: the card walk (S-furniture cuts, dim / use classes, the printed-set
+ * drops) never reaches inside a [data-stub], so its spoiler banner and its "click here" line stay.
  *
  * The card guard (scripts/lib/card-scope.mjs) judges a record's OWN page: an embedded page is another
  * record's, drawn verbatim by this rule, so the ledger never resolves stubs and test/card-parity.test.tsx
@@ -45,19 +57,94 @@ export interface StubTarget {
   slug: string;
 }
 
-/** A resolved stub: the stub node with the embedded page's children and the page it came from. */
-export type StubbedNode = AstNode & { stubOf?: string; id?: string };
-
-/** Buckets whose pages resolve their stubs on the browse card (card step 14). */
-export const STUB_HOST_BUCKETS: ReadonlySet<string> = new Set(['items']);
+/**
+ * A resolved stub: the stub node with the embedded page's children and the page it came from.
+ * Card step 14b adds the stubs drawn WITHOUT the page's body (`stubKind`):
+ *  - 'list': an entry of an archetype page's compact feat list — the feat's printed name as a link that
+ *    opens its record's card, and the level badge (the stub's own "Feat 4*" where the page overrides it,
+ *    else the feat page's), never the feat's body; consecutive entries draw as one list;
+ *  - 'name': a stub whose aon id names no record (STUB_NAMES, src/data/stub-names.json) — the embedded
+ *    page's name where its heading would be, a link when a record exists for it (`stubLink`), plain text
+ *    when none does.
+ */
+export type StubbedNode = AstNode & {
+  stubOf?: string;
+  id?: string;
+  stubKind?: 'list' | 'name';
+  /** 'list' / 'name': the name drawn. */
+  stubName?: string;
+  /** 'list' / 'name': the level badge drawn after it. */
+  stubRight?: string;
+  /** 'list' / 'name': the record the name opens ("bucket:slug"); absent = a plain name. */
+  stubLink?: string;
+};
 
 /**
- * Does the browse card draw the page stubs of a page in this bucket? Tied to the item popup's switch
- * (docs/card-design.md section 9: a landed surface turns back in one line): with CARD_ON.itemDetail off
- * the browse card of an item page is the one it was before step 14, its stubs drawn as nothing.
+ * Buckets whose pages resolve their stubs (card step 14: 'items'; card step 14b: every bucket whose
+ * shipped pages carry a stub — measured 2026-10-08 on the lane's data: 5,856 stubs on 1,657 pages of 23
+ * buckets). Each bucket is here behind its own case in test/card-stubs.test.tsx (STUB_BUCKET_CASES:
+ * the two lists must be equal), and that file fails when a shipped page of a bucket NOT listed carries a
+ * resolvable stub, so a new bucket is added with its test or not at all.
+ */
+export const STUB_HOST_BUCKETS: ReadonlySet<string> = new Set([
+  'actions', 'ancestries', 'animalCompanions', 'archetype', 'backgrounds', 'cause', 'classes', 'classFeatures',
+  'deviantAbilityClassification', 'familiarAbilities', 'feats', 'heritages', 'implement', 'innovation', 'items',
+  'methodology', 'rules', 'sidebar', 'skill', 'skillGeneralAction', 'spells', 'subconsciousMind', 'way',
+]);
+
+/**
+ * Does the browse card draw the page stubs of a page in this bucket? An item page's are tied to the item
+ * popup's switch (docs/card-design.md section 9: a landed surface turns back in one line): with
+ * CARD_ON.itemDetail off the browse card of an item page is the one it was before step 14, its stubs drawn
+ * as nothing. Every other bucket's (step 14b) turn back by leaving STUB_HOST_BUCKETS.
  */
 export function browseResolvesStubs(bucket: string): boolean {
-  return cardOn('itemDetail') && STUB_HOST_BUCKETS.has(bucket);
+  return STUB_HOST_BUCKETS.has(bucket) && (bucket !== 'items' || cardOn('itemDetail'));
+}
+
+/**
+ * Does a 'mine' POPUP card (StatDetail's full text, FeatDetail, the action popup, the builder's granted
+ * rows, a pinned card) draw the page stubs of the record it opened? Every listed bucket but 'items' and
+ * 'spells': an item's 'mine' card is ItemDetail's inset card, which asks for its stubs itself
+ * (RecordCardProps `stubs`), and the one 'mine' popup of an item page is the Strike card, which keeps its
+ * "only if you have it" gate on the critical specialization (card step 10) — so the Strike card never
+ * draws a stub. A spell page's stubs draw on its BROWSE card only (docs/card-design.md section 9 row 14b
+ * names the mine cards StatDetail, FeatDetail and the action popup; a spell's own card is SpellDetail's,
+ * which its own steps own).
+ */
+export function mineResolvesStubs(bucket: string): boolean {
+  return bucket !== 'items' && bucket !== 'spells' && STUB_HOST_BUCKETS.has(bucket);
+}
+
+/** The name and record of a stub whose aon id names no record (src/data/stub-names.json). */
+export interface StubName { name: string; ref: string | null; right?: string }
+/** Card step 14b: the shipped names of the unresolved stubs, by aon id (scripts/stub-names.mjs). */
+export const STUB_NAMES: Readonly<Record<string, StubName>> = (STUB_NAMES_JSON as { names: Record<string, StubName> }).names;
+
+/** An archetype page (its tree's root `aon` is "archetype-N") — its feat stubs draw as a compact list. */
+export function isArchetypePage(tree: AstNode | undefined): boolean {
+  return /^archetype-\d+$/.test(String((tree as { aon?: unknown } | undefined)?.aon ?? ''));
+}
+/** A stub an archetype page lists compactly: a feat ("feat-N"). */
+export function isListStubId(id: unknown): boolean {
+  return /^feat-\d+$/.test(String(id ?? ''));
+}
+
+/** The printed name of a page (its level-1 title's first link or text) and its title's badge. */
+export function pageHead(tree: AstNode | undefined): { name: string; right?: string } {
+  const top = tree?.c ?? [];
+  const title = top.find((n) => n.t === 'title' && Number(n.level || 1) <= 1) || top.find((n) => n.t === 'title');
+  if (!title) return { name: '' };
+  const flat = (n: AstNode): string => (n.t === 'text' ? String(n.v ?? '') : (n.c ?? []).map(flat).join(''));
+  const first = (function find(n: AstNode): AstNode | undefined {
+    for (const c of n.c ?? []) {
+      if (c.t === 'link' || (c.t === 'text' && String(c.v ?? '').trim())) return c;
+      const r = find(c);
+      if (r) return r;
+    }
+    return undefined;
+  })(title);
+  return { name: flat(first ?? title).trim(), ...(title.right ? { right: String(title.right) } : {}) };
 }
 
 /** Is this node an empty embedded-page stub (below the root, no children, an aon id)? */
@@ -129,30 +216,55 @@ function demoted(nodes: AstNode[], stubLevel: number): AstNode[] {
   return nodes.map(walk);
 }
 
+/** Card step 14b: how resolveStubs names a stub that draws no page. */
+export interface ResolveOptions {
+  /** The name and record of a stub id no record's page answers (absent: the stub stays empty). */
+  nameOf?: (id: string) => StubName | undefined;
+}
+
 /**
  * The tree with its stubs resolved (see the header): one level deep, never the host page or a page
  * already embedded. `hostRef` is the host page's "bucket:slug". Returns the input object when nothing
- * resolved, so a page with no stub is drawn from the very same tree.
+ * resolved, so a page with no stub is drawn from the very same tree. Card step 14b: on an archetype page
+ * a feat stub becomes a compact list entry (`stubKind: 'list'`), and a stub no page answers takes its
+ * name from `opts.nameOf` (`stubKind: 'name'`, or a list entry on an archetype page).
  */
 export function resolveStubs(
   tree: AstNode,
   hostRef: string,
   candidatesOf: (id: string) => readonly StubTarget[] | undefined,
   treeOf: (bucket: string, slug: string) => AstNode | undefined,
+  opts: ResolveOptions = {},
 ): AstNode {
   const visited = new Set<string>([hostRef]);
+  // Card step 14b: an archetype page lists its feats compactly (name + badge, no body).
+  const listHost = isArchetypePage(tree);
   const walk = (n: AstNode, depth: number): AstNode => {
     if (isEmptyStub(n, depth)) {
       const stub = n as StubbedNode;
-      for (const t of candidatesOf(String(stub.id)) ?? []) {
+      const id = String(stub.id);
+      const list = listHost && isListStubId(id);
+      const override = (stub as { 'override-title-right'?: unknown })['override-title-right'];
+      const right = (fallback?: string) => {
+        const r = override != null && String(override).trim() ? String(override) : fallback;
+        return r ? { stubRight: r } : {};
+      };
+      for (const t of candidatesOf(id) ?? []) {
         const page = treeOf(t.bucket, t.slug);
         if (!page) continue;
         const ref = `${t.bucket}:${t.slug}`;
         if (visited.has(ref)) return n;
         visited.add(ref);
+        if (list) {
+          const head = pageHead(page);
+          return { ...stub, stubOf: ref, stubKind: 'list', stubName: head.name || t.slug, stubLink: ref, ...right(head.right) } as StubbedNode;
+        }
         // The embedded page's children as they ship: its own stubs stay empty (one level deep).
         return { ...stub, stubOf: ref, c: demoted(page.c ?? [], Number(stub.level ?? 2)) } as StubbedNode;
       }
+      // Card step 14b: no record's page for this id — its name, linked when a record exists for it.
+      const named = opts.nameOf?.(id);
+      if (named?.name) return { ...stub, stubKind: list ? 'list' : 'name', stubName: named.name, ...(named.ref ? { stubLink: named.ref } : {}), ...right(named.right) } as StubbedNode;
       return n;
     }
     if (!n.c || !n.c.length) return n;
@@ -251,8 +363,25 @@ export function useStubbedTree(
     return () => { alive = false; };
   }, [key]);
   const resolved = useMemo(
-    () => (index && tree && !key ? resolveStubs(tree, hostRef, (id) => index.get(id), getCachedAst) : tree),
-    [index, tree, key, hostRef],
+    // The embedded page is read AS IT SHIPS (getCachedAst): never scoped, never cut — it is another
+    // record's page, not the character's (card step 14b; a 'mine' card scopes its host page BEFORE this).
+    () => (index && tree && !key ? resolveStubs(tree, hostRef, (id) => index.get(id), getCachedAst, { nameOf: (id) => stubNameOf(id, index, content) }) : tree),
+    [index, tree, key, hostRef, content],
   );
   return { tree: resolved, pending: !!key };
+}
+
+/**
+ * Card step 14b: the name a stub draws when no record's page answers it — the shipped STUB_NAMES entry
+ * (an aon id no record carries), else, for an id a record carries whose page does not ship, that
+ * record's name and link.
+ */
+export function stubNameOf(id: string, index: Map<string, StubTarget[]>, content: Db): StubName | undefined {
+  const named = STUB_NAMES[id];
+  if (named) return named;
+  for (const t of index.get(id) ?? []) {
+    const rec = (content as Record<string, Record<string, { name?: unknown } | undefined> | undefined> | null)?.[t.bucket]?.[t.slug];
+    if (rec && typeof rec.name === 'string' && rec.name) return { name: rec.name, ref: `${t.bucket}:${t.slug}` };
+  }
+  return undefined;
 }

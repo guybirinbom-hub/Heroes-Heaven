@@ -18,7 +18,7 @@ import { SHARED_FEATURE_FOOTER, sharedFeatureFallback } from '../rules/featureTe
 import { FUTURE_TREATMENT, LEVEL_FOLDS, pointerOf, printedSet, scopeTree, withPointer } from './cardScope';
 import { DescBody } from './DescBody';
 import type { SourceInfo } from '../rules/types';
-import { browseResolvesStubs, useStubbedTree } from './astStubs';
+import { browseResolvesStubs, mineResolvesStubs, useStubbedTree } from './astStubs';
 
 /**
  * THE record card (docs/card-design.md section 2 rule 1). Card step 3 extracted it, unchanged, from
@@ -307,19 +307,33 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
   /* Card step 14 (section 2 rule 6; src/sheet/astStubs.ts): the browse card of an item page draws the
      pages its stubs embed — a weapon's group effect, an armor's specialization — one level deep, as the
      item's own card does. A page whose stub buckets are still loading draws its stubs empty for a beat.
-     Behind CARD_ON.itemDetail (browseResolvesStubs): switched off, the browse card is the one before step 14. */
+     Behind CARD_ON.itemDetail (browseResolvesStubs): switched off, the browse card is the one before step 14.
+     Card step 14b: every bucket in STUB_HOST_BUCKETS, an archetype page's feats as a compact linked list,
+     and a stub no record's page answers as its name (a link when a record exists for it). */
   const stubHost = astBucket ?? cur.key ?? '';
-  const { tree: browseTree } = useStubbedTree(astNode, `${stubHost}:${curSlug}`, content, !mine && !!astNode && browseResolvesStubs(stubHost));
+  /* Card step 13a: with the character's scope, the sections it does not have yet fold (scopeTree reads
+     only scripts/data/level-folds.json; FUTURE_TREATMENT is the one switch), applying impulse "Level"
+     entries are highlighted, and a pointer row gains its subclass section. No scope → the page whole.
+     Card step 13c: the record's own pick (scope.picks["bucket:id"]) scopes its choose-one blocks. */
+  const mineTree = mine && astNode && !shared?.otherClassPage
+    ? withPointer(scopeTree(withoutItemLists(astNode), scope, LEVEL_FOLDS, FUTURE_TREATMENT, `${cur.key}:${curSlug}`), ptrPage, ptr, scope, LEVEL_FOLDS, FUTURE_TREATMENT)
+    : undefined;
+  /* Card step 14b (section 2 rule 6): the 'mine' popup draws the pages its record's stubs embed too —
+     Rage's class feature shows the Rage action — for every bucket but items (mineResolvesStubs: the Strike
+     card keeps its gate; an item's own card is ItemDetail's inset). The stubs resolve AFTER the host page
+     is scoped, so the folds (13a / 13c) apply to the host page only and an embedded page is drawn as it
+     ships: it is another record's page, never the character's. */
+  const stubBase = mine ? mineTree : astNode;
+  const { tree: stubbed } = useStubbedTree(stubBase, `${stubHost}:${curSlug}`, content,
+    !!stubBase && (mine ? mineResolvesStubs(stubHost) : browseResolvesStubs(stubHost)));
+  const browseTree = mine ? undefined : stubbed;
 
-  if (mine && astNode && !shared?.otherClassPage) {
-    /* Card step 13a: with the character's scope, the sections it does not have yet fold (scopeTree reads
-       only scripts/data/level-folds.json; FUTURE_TREATMENT is the one switch), applying impulse "Level"
-       entries are highlighted, and a pointer row gains its subclass section. No scope → the page whole.
-       Card step 13c: the record's own pick (scope.picks["bucket:id"]) scopes its choose-one blocks. */
-    const shown = withPointer(scopeTree(withoutItemLists(astNode), scope, LEVEL_FOLDS, FUTURE_TREATMENT, `${cur.key}:${curSlug}`), ptrPage, ptr, scope, LEVEL_FOLDS, FUTURE_TREATMENT);
-    // Our Source line stands in only where the page prints none. (Measured: 0 of the 2,774 statDetail
-    // page rows lack a Source line today, so it is kept for the surfaces still to come.)
-    const ownSource = sourceLine && !treeHasSource(shown) ? sourceLine : null;
+  if (mine && astNode && mineTree) {
+    const shown = stubbed ?? mineTree;
+    // Our Source line stands in only where the page prints none — the host page's own lines, never an
+    // embedded page's. (Measured: 0 of the 2,774 statDetail page rows lack a Source line today, so it is
+    // kept for the surfaces still to come.)
+    const ownSource = sourceLine && !treeHasSource(mineTree) ? sourceLine : null;
     return (
       <div className="picker-overlay" onClick={exit}>
         <div ref={modalRef} className="ast-modal card-mine" onPointerDown={liftCapOnGrip} onClick={(e) => e.stopPropagation()}>

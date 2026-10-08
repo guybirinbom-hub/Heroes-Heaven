@@ -1,0 +1,1233 @@
+{
+ "_generated": "scripts/stub-names.mjs --write — never hand-edit; the name of each embedded page stub whose aon id names no record (Archives mirror), and the record that page is (by the mirror's printing link, from either side, in the page's own category; never by name); two-way checked by test/card-stubs.test.tsx",
+ "_counts": {
+  "ids": 244,
+  "linked": 171,
+  "plain": 73
+ },
+ "_notes": {
+  "action-902": "Mirror-data defect: \"Explode\" (action-902) carries legacy_id action-3666 \"Interact\", and action-3666 carries remaster_id action-902 - the printing link joins two different actions. No record is action-3666, so the stub draws a plain name; not special-cased."
+ },
+ "names": {
+  "action-1043": {
+   "name": "Defensive Curl",
+   "ref": null,
+   "right": "Action"
+  },
+  "action-1170": {
+   "name": "Gallop",
+   "ref": null,
+   "right": "Action"
+  },
+  "action-1229": {
+   "name": "Amulet's Abeyance",
+   "ref": "actions:amulets-abeyance",
+   "right": "Action"
+  },
+  "action-1230": {
+   "name": "Ring Bell",
+   "ref": "actions:ring-bell",
+   "right": "Action"
+  },
+  "action-1231": {
+   "name": "Drink from the Chalice",
+   "ref": "actions:drink-from-the-chalice",
+   "right": "Action"
+  },
+  "action-1232": {
+   "name": "Mirror's Reflection",
+   "ref": "actions:mirrors-reflection",
+   "right": "Action"
+  },
+  "action-1233": {
+   "name": "Fling Magic",
+   "ref": "actions:fling-magic",
+   "right": "Action"
+  },
+  "action-1234": {
+   "name": "Implement's Interruption",
+   "ref": "actions:implements-interruption",
+   "right": "Action"
+  },
+  "action-1652": {
+   "name": "Extend Pseudopod",
+   "ref": "actions:extend-pseudopod",
+   "right": "Action"
+  },
+  "action-1653": {
+   "name": "Seedpod Spring",
+   "ref": "actions:seedpod-spring",
+   "right": "Action"
+  },
+  "action-2": {
+   "name": "Quick Alchemy",
+   "ref": "actions:quick-alchemy",
+   "right": "Action"
+  },
+  "action-3674": {
+   "name": "Reloading Strike",
+   "ref": "actions:reloading-strike",
+   "right": "Action"
+  },
+  "action-3675": {
+   "name": "Into the Fray",
+   "ref": "actions:into-the-fray",
+   "right": "Action"
+  },
+  "action-3676": {
+   "name": "Finish the Job",
+   "ref": "actions:finish-the-job",
+   "right": "Action"
+  },
+  "action-3677": {
+   "name": "Drifter's Wake",
+   "ref": "actions:drifters-wake",
+   "right": "Action"
+  },
+  "action-3679": {
+   "name": "Raconteur's Reload",
+   "ref": "actions:raconteurs-reload",
+   "right": "Action"
+  },
+  "action-3680": {
+   "name": "Ten Paces",
+   "ref": "actions:ten-paces",
+   "right": "Action"
+  },
+  "action-3682": {
+   "name": "Grim Swagger",
+   "ref": "actions:grim-swagger",
+   "right": "Action"
+  },
+  "action-3683": {
+   "name": "Covered Reload",
+   "ref": "actions:covered-reload",
+   "right": "Action"
+  },
+  "action-3684": {
+   "name": "One Shot, One Kill",
+   "ref": "actions:one-shot-one-kill",
+   "right": "Action"
+  },
+  "action-3685": {
+   "name": "Vital Shot",
+   "ref": "actions:vital-shot",
+   "right": "Action"
+  },
+  "action-3686": {
+   "name": "Ghost Shot",
+   "ref": "actions:ghost-shot",
+   "right": "Action"
+  },
+  "action-3687": {
+   "name": "Clear a Path",
+   "ref": "actions:clear-a-path",
+   "right": "Action"
+  },
+  "action-3688": {
+   "name": "Living Fortification",
+   "ref": "actions:living-fortification",
+   "right": "Action"
+  },
+  "action-3689": {
+   "name": "Spinning Crush",
+   "ref": "actions:spinning-crush",
+   "right": "Action"
+  },
+  "action-3690": {
+   "name": "Siegebreaker",
+   "ref": "actions:siegebreaker",
+   "right": "Action"
+  },
+  "action-3691": {
+   "name": "Thoughtful Reload",
+   "ref": "actions:thoughtful-reload",
+   "right": "Action"
+  },
+  "action-3692": {
+   "name": "Energy Shot",
+   "ref": "actions:energy-shot",
+   "right": "Action"
+  },
+  "action-3694": {
+   "name": "Recall Ammunition",
+   "ref": "actions:recall-ammunition",
+   "right": "Action"
+  },
+  "action-3695": {
+   "name": "Dispelling Bullet",
+   "ref": "actions:dispelling-bullet",
+   "right": "Action"
+  },
+  "action-3755": {
+   "name": "Deconstruct",
+   "ref": "actions:deconstruct",
+   "right": "Action"
+  },
+  "action-3756": {
+   "name": "Grow",
+   "ref": "actions:grow",
+   "right": "Action"
+  },
+  "action-464": {
+   "name": "Rally",
+   "ref": null,
+   "right": "Action"
+  },
+  "action-601": {
+   "name": "Call Companion",
+   "ref": "actions:call-companion",
+   "right": "Action"
+  },
+  "action-902": {
+   "name": "Explode",
+   "ref": null,
+   "right": "Action"
+  },
+  "familiar-ability-105": {
+   "name": "Elemental Mobility",
+   "ref": null,
+   "right": "Familiar Ability"
+  },
+  "familiar-ability-106": {
+   "name": "Elemental Mobility",
+   "ref": null,
+   "right": "Familiar Ability"
+  },
+  "familiar-ability-179": {
+   "name": "Ink Spray",
+   "ref": null,
+   "right": "Familiar Ability"
+  },
+  "familiar-ability-186": {
+   "name": "Stylus Claws",
+   "ref": null,
+   "right": "Familiar Ability"
+  },
+  "familiar-ability-57": {
+   "name": "Constructed",
+   "ref": null,
+   "right": "Familiar Ability"
+  },
+  "familiar-ability-82": {
+   "name": "Anchored Incorporeality",
+   "ref": null,
+   "right": "Familiar Ability"
+  },
+  "familiar-ability-85": {
+   "name": "Breath Weapon",
+   "ref": null,
+   "right": "Familiar Ability"
+  },
+  "feat-104": {
+   "name": "Directional Bombs",
+   "ref": "feats:directional-bombs",
+   "right": "Feat 6"
+  },
+  "feat-1172": {
+   "name": "Expanded Domain Initiate",
+   "ref": "feats:expanded-domain-initiate",
+   "right": "Feat 4"
+  },
+  "feat-1493": {
+   "name": "Spiritual Sense",
+   "ref": "feats:spiritual-sense",
+   "right": "Feat 6"
+  },
+  "feat-1499": {
+   "name": "Surging Might",
+   "ref": "feats:surging-might",
+   "right": "Feat 10"
+  },
+  "feat-1604": {
+   "name": "Bashing Charge",
+   "ref": "feats:bashing-charge",
+   "right": "Feat 2"
+  },
+  "feat-1640": {
+   "name": "Assured Knowledge",
+   "ref": "feats:assured-knowledge",
+   "right": "Feat 6"
+  },
+  "feat-1652": {
+   "name": "Enigma's Knowledge",
+   "ref": "feats:enigmas-knowledge",
+   "right": "Feat 12"
+  },
+  "feat-1721": {
+   "name": "Combat Assessment",
+   "ref": "feats:combat-assessment",
+   "right": "Feat 1"
+  },
+  "feat-1781": {
+   "name": "Plant Evidence",
+   "ref": "feats:plant-evidence",
+   "right": "Feat 1"
+  },
+  "feat-1782": {
+   "name": "Clever Gambit",
+   "ref": "feats:clever-gambit",
+   "right": "Feat 2"
+  },
+  "feat-1817": {
+   "name": "Spell Relay",
+   "ref": "feats:spell-relay",
+   "right": "Feat 6"
+  },
+  "feat-1829": {
+   "name": "Scintillating Spell",
+   "ref": "feats:scintillating-spell",
+   "right": "Feat 16"
+  },
+  "feat-1831": {
+   "name": "Echoing Spell",
+   "ref": "feats:echoing-spell",
+   "right": "Feat 18"
+  },
+  "feat-186": {
+   "name": "Loremaster's Etude",
+   "ref": "feats:loremasters-etude",
+   "right": "Feat 2"
+  },
+  "feat-1901": {
+   "name": "Additional Companion",
+   "ref": "feats:additional-companion",
+   "right": "Feat 4"
+  },
+  "feat-1903": {
+   "name": "Mature Beastmaster Companion",
+   "ref": "feats:mature-beastmaster-companion",
+   "right": "Feat 4"
+  },
+  "feat-1905": {
+   "name": "Incredible Beastmaster Companion",
+   "ref": "feats:incredible-beastmaster-companion",
+   "right": "Feat 8"
+  },
+  "feat-1908": {
+   "name": "Specialized Beastmaster Companion",
+   "ref": "feats:specialized-beastmaster-companion",
+   "right": "Feat 14"
+  },
+  "feat-1909": {
+   "name": "Lead the Pack",
+   "ref": "feats:lead-the-pack",
+   "right": "Feat 16"
+  },
+  "feat-1923": {
+   "name": "Quick Mount",
+   "ref": "feats:quick-mount",
+   "right": "Feat 4"
+  },
+  "feat-1927": {
+   "name": "Trampling Charge",
+   "ref": "feats:trampling-charge",
+   "right": "Feat 10"
+  },
+  "feat-1930": {
+   "name": "Legendary Rider",
+   "ref": "feats:legendary-rider",
+   "right": "Feat 20"
+  },
+  "feat-205": {
+   "name": "True Hypercognition",
+   "ref": "feats:true-hypercognition",
+   "right": "Feat 14"
+  },
+  "feat-2063": {
+   "name": "Steel Skin",
+   "ref": "feats:steel-skin",
+   "right": "Feat 4"
+  },
+  "feat-2065": {
+   "name": "Armored Rebuff",
+   "ref": "feats:armored-rebuff",
+   "right": "Feat 8"
+  },
+  "feat-2066": {
+   "name": "Mighty Bulwark",
+   "ref": "feats:mighty-bulwark",
+   "right": "Feat 10"
+  },
+  "feat-2083": {
+   "name": "Vigilante Dedication",
+   "ref": "feats:vigilante-dedication",
+   "right": "Feat 2"
+  },
+  "feat-229": {
+   "name": "Shield Warden",
+   "ref": "feats:shield-warden",
+   "right": "Feat 6"
+  },
+  "feat-236": {
+   "name": "Sense Evil",
+   "ref": "feats:sense-unholiness",
+   "right": "Feat 8"
+  },
+  "feat-265": {
+   "name": "Domain Initiate",
+   "ref": "feats:domain-initiate",
+   "right": "Feat 1"
+  },
+  "feat-285": {
+   "name": "Advanced Domain",
+   "ref": "feats:advanced-domain",
+   "right": "Feat 8"
+  },
+  "feat-318": {
+   "name": "Enhanced Familiar",
+   "ref": "feats:enhanced-familiar",
+   "right": "Feat 2"
+  },
+  "feat-3245": {
+   "name": "Firework Technician Dedication",
+   "ref": null,
+   "right": "Feat 2"
+  },
+  "feat-3586": {
+   "name": "Keep up the Good Fight",
+   "ref": "feats:keep-up-the-good-fight",
+   "right": "Feat 14"
+  },
+  "feat-366": {
+   "name": "Combat Grab",
+   "ref": "feats:combat-grab",
+   "right": "Feat 2"
+  },
+  "feat-3711": {
+   "name": "Thaumaturgic Ritualist",
+   "ref": "feats:thaumaturgic-ritualist",
+   "right": "Feat 4"
+  },
+  "feat-388": {
+   "name": "Blind-Fight",
+   "ref": "feats:blind-fight",
+   "right": "Feat 8"
+  },
+  "feat-404": {
+   "name": "Mirror Shield",
+   "ref": "feats:mirror-shield",
+   "right": "Feat 10"
+  },
+  "feat-4078": {
+   "name": "Sixth Pillar Mastery",
+   "ref": null,
+   "right": "Feat 14"
+  },
+  "feat-4079": {
+   "name": "Touch Focus",
+   "ref": null,
+   "right": "Feat 16"
+  },
+  "feat-4344": {
+   "name": "Current Spell",
+   "ref": null,
+   "right": "Feat 6"
+  },
+  "feat-4351": {
+   "name": "Water Step",
+   "ref": "feats:water-step",
+   "right": "Feat 8"
+  },
+  "feat-439": {
+   "name": "Crushing Grab",
+   "ref": "feats:crushing-grab",
+   "right": "Feat 2"
+  },
+  "feat-446": {
+   "name": "Guarded Movement",
+   "ref": "feats:guarded-movement",
+   "right": "Feat 4"
+  },
+  "feat-462": {
+   "name": "Wall Run",
+   "ref": "feats:wall-run",
+   "right": "Feat 8"
+  },
+  "feat-496": {
+   "name": "Hunter's Aim",
+   "ref": "feats:hunters-aim",
+   "right": "Feat 2"
+  },
+  "feat-498": {
+   "name": "Quick Draw",
+   "ref": "feats:quick-draw",
+   "right": "Feat 2"
+  },
+  "feat-499": {
+   "name": "Wild Empathy",
+   "ref": "feats:animal-empathy-druid",
+   "right": "Feat 2"
+  },
+  "feat-500": {
+   "name": "Companion's Cry",
+   "ref": "feats:companions-cry",
+   "right": "Feat 4"
+  },
+  "feat-504": {
+   "name": "Running Reload",
+   "ref": "feats:running-reload",
+   "right": "Feat 4"
+  },
+  "feat-505": {
+   "name": "Scout's Warning",
+   "ref": "feats:scouts-warning",
+   "right": "Feat 4"
+  },
+  "feat-511": {
+   "name": "Snap Shot",
+   "ref": "feats:snap-shot",
+   "right": "Feat 6"
+  },
+  "feat-517": {
+   "name": "Terrain Master",
+   "ref": "feats:terrain-master",
+   "right": "Feat 8"
+  },
+  "feat-519": {
+   "name": "Camouflage",
+   "ref": "feats:camouflage",
+   "right": "Feat 10"
+  },
+  "feat-524": {
+   "name": "Warden's Step",
+   "ref": "feats:wardens-step",
+   "right": "Feat 10"
+  },
+  "feat-526": {
+   "name": "Double Prey",
+   "ref": "feats:double-prey",
+   "right": "Feat 12"
+  },
+  "feat-530": {
+   "name": "Sense the Unseen",
+   "ref": "feats:sense-the-unseen",
+   "right": "Feat 14"
+  },
+  "feat-561": {
+   "name": "Dread Striker",
+   "ref": "feats:dread-striker",
+   "right": "Feat 4"
+  },
+  "feat-564": {
+   "name": "Reactive Pursuit",
+   "ref": "feats:reactive-pursuit",
+   "right": "Feat 4"
+  },
+  "feat-579": {
+   "name": "Sneak Savant",
+   "ref": "feats:sneak-adept",
+   "right": "Feat 10"
+  },
+  "feat-586": {
+   "name": "Spring from the Shadows",
+   "ref": "feats:spring-from-the-shadows",
+   "right": "Feat 12"
+  },
+  "feat-588": {
+   "name": "Instant Opening",
+   "ref": "feats:instant-opening",
+   "right": "Feat 14"
+  },
+  "feat-593": {
+   "name": "Cognitive Loophole",
+   "ref": "feats:cognitive-loophole",
+   "right": "Feat 16"
+  },
+  "feat-5997": {
+   "name": "Advanced Monastic Weaponry",
+   "ref": null,
+   "right": "Feat 6"
+  },
+  "feat-604": {
+   "name": "Familiar",
+   "ref": "feats:familiar",
+   "right": "Feat 1"
+  },
+  "feat-6209": {
+   "name": "Master Spotter",
+   "ref": "feats:master-spotter-investigator",
+   "right": "Feat 12"
+  },
+  "feat-622": {
+   "name": "Magic Sense",
+   "ref": "feats:magic-sense",
+   "right": "Feat 12"
+  },
+  "feat-732": {
+   "name": "Uncanny Dodge",
+   "ref": "feats:uncanny-dodge",
+   "right": "Feat 10"
+  },
+  "feat-7380": {
+   "name": "Death from Above",
+   "ref": null,
+   "right": "Feat 16"
+  },
+  "feat-8529": {
+   "name": "Coughing Dragon Display",
+   "ref": null,
+   "right": "Feat 4"
+  },
+  "feat-8530": {
+   "name": "Expert Fireworks Crafter",
+   "ref": null,
+   "right": "Feat 6"
+  },
+  "feat-8531": {
+   "name": "Jumping Jenny Display",
+   "ref": null,
+   "right": "Feat 8"
+  },
+  "feat-8532": {
+   "name": "Goblin Jubilee Display",
+   "ref": null,
+   "right": "Feat 10"
+  },
+  "feat-8533": {
+   "name": "Banshee Cry Display",
+   "ref": null,
+   "right": "Feat 12"
+  },
+  "rules-1317": {
+   "name": "Traits",
+   "ref": "rules:traits",
+   "right": "Rules"
+  },
+  "rules-1333": {
+   "name": "Free Archetype",
+   "ref": "rules:free-archetype-gm-core",
+   "right": "Rules"
+  },
+  "rules-1357": {
+   "name": "Automatic Bonus Progression",
+   "ref": "rules:automatic-bonus-progression",
+   "right": "Rules"
+  },
+  "rules-1417": {
+   "name": "Versatile Heritages",
+   "ref": "rules:versatile-heritages",
+   "right": "Rules"
+  },
+  "rules-1561": {
+   "name": "Binding an Armament",
+   "ref": "rules:binding-an-armament",
+   "right": "Rules"
+  },
+  "rules-1562": {
+   "name": "Soul Path",
+   "ref": "rules:soul-path",
+   "right": "Rules"
+  },
+  "rules-1566": {
+   "name": "Essence Powers",
+   "ref": "rules:essence-powers",
+   "right": "Rules"
+  },
+  "rules-1634": {
+   "name": "Wheelchairs",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2069": {
+   "name": "The Inner Sea Region",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2071": {
+   "name": "Religion",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2176": {
+   "name": "Bulk",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2187": {
+   "name": "Attack Rolls",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2194": {
+   "name": "Damage",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2210": {
+   "name": "Alchemical Bombs",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2255": {
+   "name": "Rituals",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2265": {
+   "name": "The Pathfinder Baseline",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2267": {
+   "name": "Modes of Play",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2268": {
+   "name": "Actions",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2271": {
+   "name": "Movement",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2275": {
+   "name": "Spells",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2276": {
+   "name": "Skills",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2278": {
+   "name": "Checks",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2280": {
+   "name": "Attribute Modifier",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2281": {
+   "name": "Bonuses",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2320": {
+   "name": "Hit Points",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2366": {
+   "name": "Difficult Terrain",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2389": {
+   "name": "Afflictions",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2441": {
+   "name": "Travel Speed",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2442": {
+   "name": "Exploration Activities",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-248": {
+   "name": "Scrolls",
+   "ref": "rules:magic-scroll",
+   "right": "Rules"
+  },
+  "rules-249": {
+   "name": "Talismans",
+   "ref": "rules:talismans",
+   "right": "Rules"
+  },
+  "rules-2530": {
+   "name": "Rarity",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2565": {
+   "name": "Social Encounters",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2576": {
+   "name": "Hazards",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2655": {
+   "name": "Treasure",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2738": {
+   "name": "Treasure by Encounter",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2757": {
+   "name": "Hit Points",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2764": {
+   "name": "Adjusting Treasure",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2768": {
+   "name": "Environment",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2782": {
+   "name": "Undergrowth",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2791": {
+   "name": "Undergrowth",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2821": {
+   "name": "Wind",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2929": {
+   "name": "Constant Abilities",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2937": {
+   "name": "Held Items",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2938": {
+   "name": "Oils",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2939": {
+   "name": "Potions",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2942": {
+   "name": "Shields",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-2947": {
+   "name": "Worn Items",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-3050": {
+   "name": "Obstacles",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-3092": {
+   "name": "Ending the Duel",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-3094": {
+   "name": "Initiative and Dueling Actions",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-3149": {
+   "name": "Multiple Types",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-3200": {
+   "name": "Varying Statistics",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-321": {
+   "name": "Attack Rolls",
+   "ref": "rules:attacking",
+   "right": "Rules"
+  },
+  "rules-3230": {
+   "name": "Artifacts",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-325": {
+   "name": "Spell Attack Rolls",
+   "ref": "rules:spell-attack-rolls",
+   "right": "Rules"
+  },
+  "rules-326": {
+   "name": "Perception",
+   "ref": "rules:perception-and-detection-player-core",
+   "right": "Rules"
+  },
+  "rules-3262": {
+   "name": "Adjusting Creatures",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-328": {
+   "name": "Saving Throws",
+   "ref": "rules:saving-throws-rules-2296",
+   "right": "Rules"
+  },
+  "rules-330": {
+   "name": "Skill Checks and Skill DCs",
+   "ref": "rules:skill-checks",
+   "right": "Rules"
+  },
+  "rules-3614": {
+   "name": "Nature Crafting",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-3631": {
+   "name": "Story-Based Crafting",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-377": {
+   "name": "Dying",
+   "ref": "rules:dying",
+   "right": "Rules"
+  },
+  "rules-425": {
+   "name": "Concealed",
+   "ref": "rules:concealed",
+   "right": "Rules"
+  },
+  "rules-426": {
+   "name": "Invisible",
+   "ref": "rules:invisible",
+   "right": "Rules"
+  },
+  "rules-481": {
+   "name": "Game Mastering",
+   "ref": "rules:chapter-1-running-the-game",
+   "right": "Rules"
+  },
+  "rules-483": {
+   "name": "Campaign Length",
+   "ref": "rules:campaign-length",
+   "right": "Rules"
+  },
+  "rules-485": {
+   "name": "Themes",
+   "ref": "rules:themes",
+   "right": "Rules"
+  },
+  "rules-486": {
+   "name": "A Welcoming Environment",
+   "ref": "rules:a-welcoming-environment",
+   "right": "Rules"
+  },
+  "rules-490": {
+   "name": "Character Creation",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-502": {
+   "name": "Planning a Session",
+   "ref": "rules:planning-a-session",
+   "right": "Rules"
+  },
+  "rules-503": {
+   "name": "Starting a Session",
+   "ref": "rules:starting-a-session",
+   "right": "Rules"
+  },
+  "rules-504": {
+   "name": "Running a Session",
+   "ref": "rules:running-a-session",
+   "right": "Rules"
+  },
+  "rules-508": {
+   "name": "Special Circumstances",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-513": {
+   "name": "Choosing Adversaries' Actions",
+   "ref": "rules:choosing-adversaries-actions",
+   "right": "Rules"
+  },
+  "rules-515": {
+   "name": "Ending Encounters",
+   "ref": "rules:ending-the-encounter",
+   "right": "Rules"
+  },
+  "rules-518": {
+   "name": "Initiative and Actions",
+   "ref": "rules:initiative-and-actions",
+   "right": "Rules"
+  },
+  "rules-519": {
+   "name": "Measuring Success and Progress",
+   "ref": "rules:measuring-success-and-progress",
+   "right": "Rules"
+  },
+  "rules-520": {
+   "name": "Consequences",
+   "ref": "rules:consequences",
+   "right": "Rules"
+  },
+  "rules-521": {
+   "name": "Exploration",
+   "ref": "rules:running-exploration",
+   "right": "Rules"
+  },
+  "rules-523": {
+   "name": "Detect Magic",
+   "ref": "rules:detect-magic",
+   "right": "Rules"
+  },
+  "rules-524": {
+   "name": "Follow the Expert",
+   "ref": "rules:follow-the-expert",
+   "right": "Rules"
+  },
+  "rules-525": {
+   "name": "Investigate",
+   "ref": "rules:investigate",
+   "right": "Rules"
+  },
+  "rules-526": {
+   "name": "Search",
+   "ref": "rules:search",
+   "right": "Rules"
+  },
+  "rules-538": {
+   "name": "Downtime",
+   "ref": "rules:goals",
+   "right": "Rules"
+  },
+  "rules-552": {
+   "name": "Difficulty Classes",
+   "ref": "rules:difficulty-classes",
+   "right": "Rules"
+  },
+  "rules-575": {
+   "name": "XP Awards",
+   "ref": "rules:xp-awards",
+   "right": "Rules"
+  },
+  "rules-578": {
+   "name": "Party Size",
+   "ref": "rules:party-size",
+   "right": "Rules"
+  },
+  "rules-579": {
+   "name": "Group Parity and Party Level",
+   "ref": "rules:group-parity-and-party-level",
+   "right": "Rules"
+  },
+  "rules-581": {
+   "name": "Treasure by Level",
+   "ref": "rules:treasure-by-level",
+   "right": "Rules"
+  },
+  "rules-587": {
+   "name": "Treasure for New Characters",
+   "ref": "rules:treasure-for-new-characters",
+   "right": "Rules"
+  },
+  "rules-591": {
+   "name": "Environmental Damage",
+   "ref": "rules:environmental-damage",
+   "right": "Rules"
+  },
+  "rules-592": {
+   "name": "Aquatic",
+   "ref": "rules:aquatic-gm-core",
+   "right": "Rules"
+  },
+  "rules-595": {
+   "name": "Arctic",
+   "ref": "rules:arctic",
+   "right": "Rules"
+  },
+  "rules-598": {
+   "name": "Desert",
+   "ref": "rules:desert",
+   "right": "Rules"
+  },
+  "rules-601": {
+   "name": "Forest",
+   "ref": "rules:forest",
+   "right": "Rules"
+  },
+  "rules-605": {
+   "name": "Mountain",
+   "ref": "rules:mountain",
+   "right": "Rules"
+  },
+  "rules-611": {
+   "name": "Plains",
+   "ref": "rules:plains",
+   "right": "Rules"
+  },
+  "rules-614": {
+   "name": "Swamp",
+   "ref": "rules:swamp",
+   "right": "Rules"
+  },
+  "rules-617": {
+   "name": "Urban",
+   "ref": "rules:urban",
+   "right": "Rules"
+  },
+  "rules-630": {
+   "name": "Underground",
+   "ref": "rules:underground",
+   "right": "Rules"
+  },
+  "rules-636": {
+   "name": "Climate",
+   "ref": "rules:climate",
+   "right": "Rules"
+  },
+  "rules-644": {
+   "name": "Moving in Wind",
+   "ref": "rules:moving-in-wind",
+   "right": "Rules"
+  },
+  "rules-645": {
+   "name": "Natural Disasters",
+   "ref": "rules:natural-disasters",
+   "right": "Rules"
+  },
+  "rules-668": {
+   "name": "Hazards",
+   "ref": null,
+   "right": "Rules"
+  },
+  "rules-726": {
+   "name": "Affixing a Talisman",
+   "ref": "rules:affixing-a-talisman",
+   "right": "Rules"
+  },
+  "rules-775": {
+   "name": "Condition Values",
+   "ref": "rules:condition-values",
+   "right": "Rules"
+  },
+  "rules-776": {
+   "name": "Overriding Conditions",
+   "ref": "rules:overriding-conditions",
+   "right": "Rules"
+  },
+  "rules-801": {
+   "name": "Rules Elements",
+   "ref": "rules:rules-elements",
+   "right": "Rules"
+  },
+  "rules-815": {
+   "name": "Session Zero",
+   "ref": "rules:character-creation",
+   "right": "Rules"
+  },
+  "rules-816": {
+   "name": "Pacing Game Session",
+   "ref": "rules:pacing-game-sessions",
+   "right": "Rules"
+  },
+  "rules-817": {
+   "name": "Stakes and Consequences",
+   "ref": "rules:stakes-and-consequences",
+   "right": "Rules"
+  },
+  "rules-819": {
+   "name": "Improvisation",
+   "ref": "rules:improvisation",
+   "right": "Rules"
+  },
+  "rules-821": {
+   "name": "Secret Checks",
+   "ref": "rules:secret-checks",
+   "right": "Rules"
+  },
+  "rules-822": {
+   "name": "Hero Points",
+   "ref": "rules:hero-points-gm-core",
+   "right": "Rules"
+  },
+  "rules-823": {
+   "name": "Metagaming",
+   "ref": "rules:metagaming",
+   "right": "Rules"
+  },
+  "rules-824": {
+   "name": "Portraying NPCs",
+   "ref": "rules:roleplaying-npcs",
+   "right": "Rules"
+  },
+  "rules-886": {
+   "name": "The Basics",
+   "ref": "rules:the-basics",
+   "right": "Rules"
+  },
+  "rules-887": {
+   "name": "Consistency and Fairness",
+   "ref": "rules:consistency-and-fairness",
+   "right": "Rules"
+  },
+  "rules-888": {
+   "name": "Looking Up Rules",
+   "ref": "rules:looking-up-rules-gm-core",
+   "right": "Rules"
+  },
+  "rules-889": {
+   "name": "Listen to the Players",
+   "ref": "rules:listen-to-the-players",
+   "right": "Rules"
+  },
+  "rules-890": {
+   "name": "Make the Call",
+   "ref": "rules:make-the-call",
+   "right": "Rules"
+  },
+  "rules-891": {
+   "name": "Take Time for Review",
+   "ref": "rules:take-time-for-review",
+   "right": "Rules"
+  },
+  "rules-915": {
+   "name": "The Four Rarities",
+   "ref": "rules:the-four-rarities",
+   "right": "Rules"
+  },
+  "rules-916": {
+   "name": "Different Contexts",
+   "ref": "rules:different-contexts",
+   "right": "Rules"
+  },
+  "rules-918": {
+   "name": "Starting Elements",
+   "ref": "rules:starting-elements",
+   "right": "Rules"
+  },
+  "rules-919": {
+   "name": "Story Telling",
+   "ref": "rules:storytelling",
+   "right": "Rules"
+  },
+  "rules-920": {
+   "name": "Worldbuilding",
+   "ref": "rules:world-building",
+   "right": "Rules"
+  }
+ }
+}

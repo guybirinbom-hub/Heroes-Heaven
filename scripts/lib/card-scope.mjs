@@ -68,6 +68,7 @@ import {
 } from './shared-page-census.mjs';
 import NOT_OWN_PAGE from '../../src/data/not-own-page.json';
 import PAGE_SLICES from '../../src/data/page-slices.json';
+import STUB_NAMES from '../../src/data/stub-names.json';
 
 /* ------------------------------------------------------------------------------------------------ */
 /* 1. The label vocabulary: the printed "use lines" and stat lines (section 2 rule 4.2).             */
@@ -1406,6 +1407,8 @@ export function computeLedger(deps) {
   const slicesFile = deps.pageSlicesFile ?? PAGE_SLICES;
   const listedNotOwn = new Set(notOwnFile.ids ?? []);
   const sliced = new Set(Object.keys(slicesFile.slices ?? {}));
+  // `deps.stubNamesFile` stands in for src/data/stub-names.json (test mutations only).
+  const stubNames = (deps.stubNamesFile ?? STUB_NAMES).names ?? {};
   const residue = {};
   for (const b of Object.keys(trees).sort()) {
     if (db[b] && typeof db[b] === 'object') {
@@ -1416,8 +1419,11 @@ export function computeLedger(deps) {
       }
     }
     // The whole stored tree (a stub is unresolved wherever it sits), whether or not a record owns it.
+    // Card step 14b: a stub whose src/data/stub-names.json entry carries a ref draws a NAME LINK to that
+    // record (astStubs.ts stubNameOf), so it is no longer an offender; what stays is a stub drawn as a
+    // plain name (no record is that page) or one with no id. `stubOccurrences` counts what stays.
     for (const [slug, t] of Object.entries(trees[b] ?? {})) {
-      const stubs = unresolvedStubs(t, aonIds);
+      const stubs = unresolvedStubs(t, aonIds).filter((s) => !stubNames[s]?.ref);
       stubOccurrences += stubs.length;
       for (const s of new Set(stubs)) found.STUBS.push(`${b}:${slug}|${s}`);
     }
