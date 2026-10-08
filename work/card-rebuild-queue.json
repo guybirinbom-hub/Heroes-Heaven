@@ -1,0 +1,55 @@
+{
+  "_about": "Every record-data defect the card steps (docs/card-design.md, 2026-10-02 → 2026-10-09) surfaced and deliberately did NOT fix on the display side: the card shows the page as printed and lists the record here for the rebuild lane (overlay rows through scripts/apply-parity-fixes.mjs, then ONE npm run data when the other lane's regen is committed). Ruling R12: the newest printing wins, whole. Mechanics (engine numbers) are out of scope on the card, so the engine entries below are the lane's to fix, not the card's.",
+  "wands": {
+    "wand-of-refracting-rays-7th-rank": "Foundry's mislabelled 6th-rank copy; parity-fix spec at work/wand-refracting-rays-fix.json (dry run accepted 2026-10-04); its field Usage/Price rows print on no page (card-truth EXTRA).",
+    "duplicateRankWands": "39 duplicate '(Nth-Rank)' wand records need a computed rule rather than per-record rows (memory: project_hh_display_truth_2026_10_02)."
+  },
+  "weaponGroupDrift": {
+    "_from": "work/card-step14-weapon-group-drift.json (step 14 round 2): the record's group is a group the weapon's own page never prints; the card shows the page's embedded group effect and hides ours.",
+    "ids": ["alchemical-crossbow", "repeating-crossbow", "rotary-bow", "taw-launcher", "tri-bladed-katar"]
+  },
+  "heighteningDrift": {
+    "_from": "work/card-step17-heighten-reprint-drift.json (step 17 rounds 1-3): the spell's engine heightening (public/core.json heightening fields) disagrees with the newest printing; the card withholds or re-counts the arrow (displaySuppressed) and shows the page's numbers; the engine still computes the old ones.",
+    "reprint": ["purify-soul-path", "quick-sort", "sea-of-thought"],
+    "engine": ["breath-of-life", "celestial-brand", "draw-the-lightning", "gluttonous-growth", "inner-upheaval", "positive-attunement", "wall-of-ice"],
+    "printedInsideAnotherPage": {
+      "_what": "spell records whose Archives page is a feat / rules / hazard page (the record is printed inside it); the card shows our text with a 'Printed inside <title>' footer until the spells surface draws slices (step 12's slice tables extended to spells).",
+      "ids": ["aon-dread-aura", "aon-litany-against-sloth", "aon-litany-against-wrath", "aon-litany-of-depravity", "aon-litany-of-righteousness", "aon-litany-of-self-interest", "aon-misdirection", "aon-vindicator-s-judgement"]
+    }
+  },
+  "actionCost": {
+    "_from": "test/card-action.test.tsx PRINT_DIFFERS (step 9): the stored action cost is not the page's printed title glyph; the card header reads the page's glyph and draws ours beside it, marked.",
+    "dataFixes": {
+      "_what": "the page prints ONE cost and the record stores another: plain record errors.",
+      "actions/pick-a-lock": "printed Two Actions, stored none",
+      "classFeatures/drain-life": "printed Single Action, stored Two Actions",
+      "classFeatures/for-talmandor-for-freedom": "printed Two Actions, stored One Action",
+      "feats/death-from-above-eternal-legend": "printed Single Action, stored Two Actions",
+      "feats/riptide-undersea-privateer": "printed Reaction, stored One Action"
+    },
+    "variableCost": {
+      "_what": "the page prints a RANGE or an EITHER/OR cost that the engine's single cost field cannot hold: an engine-shape decision (a cost range), not a data row. Mechanics are out of scope on the card; the card already shows the printed glyph.",
+      "classFeatures/act-together": "printed Single Action to Three Actions, stored One Action",
+      "classFeatures/shadows-in-the-moonlight": "printed Single Action or Two Actions, stored One Action",
+      "feats/aon-dad-joke": "printed Single Action to Two Actions, stored One Action",
+      "feats/body-of-air": "printed Reaction or Two Actions, stored Reaction",
+      "feats/bullet-and-a-broadside": "printed Single Action or Two Actions, stored One Action",
+      "feats/marine-jet": "printed Two Actions or Three Actions, stored Two Actions",
+      "feats/sheltering-hand": "printed Single Action or Two Actions, stored One Action"
+    }
+  },
+  "wrongAonId": {
+    "_from": "archive-coverage settle round (2026-10-09): player-bucket records whose aonId is a CREATURE page, so their card draws a creature-family page.",
+    "feats/phalanx-formation": "creature-3527",
+    "items/aon-guide": "creature-3472",
+    "items/magical-medal-wolf-pack": "creature-3943"
+  },
+  "mirrorDefects": {
+    "_what": "wrong printing links in the AoN mirror itself (not our data); listed in src/data/stub-names.json _notes.",
+    "action-902": "'Explode' (Guns & Gears Remastered) carries legacy_id action-3666 'Interact'; its own Guns & Gears printing action-3656 has no link either way, so the stub stays a plain name."
+  },
+  "spellFields": "spell duration / area / range fields that the page prints differently from the record (step 16: the card draws the page's rows, the record's fields stay for the engine) — the ledger's spellDetail EXTRA/DIFFERS lists in scripts/data/card-truth-baseline.json name them.",
+  "sliceGaps": {
+    "earth-gate": "Earth Gate got no page slice although its element page has Air's shape (step 12 known)."
+  }
+}
