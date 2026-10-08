@@ -8,6 +8,7 @@ import { build, content } from './_content';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { StatDetailModal } from '../src/sheet/StatDetailModal';
+import { FeatsTab } from '../src/sheet/FeatsTab';
 import { CARD_ON } from '../src/sheet/cardSurfaces';
 import type { Character, ContentDatabase } from '../src/rules/types';
 
@@ -32,6 +33,18 @@ import type { Character, ContentDatabase } from '../src/rules/types';
  *  - AstRenderer.tsx CardFoldEl: the 'hide' branch removed (falls through to the fold) → the hide case
  *    red; the 'grey' branch removed → the grey case red.
  *  - RecordCard.tsx: `withPointer(…)` unwrapped to the scoped tree alone → the pointer case red.
+ *
+ * Card step 13c (choose-one blocks on the FeatDetail card, opened from the real Feats tab; owner ruling
+ * Q2 = A). MUTATION LINES, each measured red on 2026-10-07 in lane hh-lane-13c, restored byte-exact (cmp):
+ *  - FeatDetail.tsx FeatCard: the pick passed to withPick → `undefined` → the Iruxi and Dragonet cases red.
+ *  - RecordCard.tsx: scopeTree's record key `${cur.key}:${curSlug}` dropped → the same two cases red.
+ *  - cardScope.ts scopeChoiceBlock: the picked list item also folded → the Iruxi case red.
+ *  - cardScope.ts runFold: pick folds count sections again → the thaumaturge case red ("Other options (3)").
+ *  - (fixer round 1) cardScope.ts scopeTree: the class-pick branch → `[]` → the Fencer and kineticist
+ *    class-pick cases (StatDetailModal, no row pick) red.
+ *  - (fixer round 2) cardScope.ts scopeOfCharacter: kinetic-gate's element picks read every owned element
+ *    (not only the single gate's) → the dual-gate case red; classPicksOf: the element picks read on every
+ *    classFeatures page → the elemental-eidolon case red.
  */
 const noop = () => undefined;
 const db: ContentDatabase = content();
@@ -151,7 +164,9 @@ describe.runIf(CARD_ON.statDetail)('card step 13a: level folds on the mine card'
     const bell = await openCard(ch, 'classFeatures', 'bell');
     expect(openText(bell)).not.toMatch(/Adept Benefit|Paragon Benefit|Intensify Benefit/);
     const f = folds(bell);
-    expect(f.map((d) => [d.dataset.fold, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['pick', 'Other options (3)']]);
+    // Card step 13c: the line counts OPTIONS — the bell's three benefits are ONE other implement.
+    // batch card premise: implement-18 "Your bell resonates powerfully, causing the effect to last longer"
+    expect(f.map((d) => [d.dataset.fold, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['pick', 'Other options (1)']]);
     expect(squash(f[0].textContent)).toMatch(/Adept Benefit.*Intensify Benefit.*Paragon Benefit/);
   });
 
@@ -170,6 +185,100 @@ describe.runIf(CARD_ON.statDetail)('card step 13a: level folds on the mine card'
     const at2 = await openCard(build('kineticist', 2, { extraChoices: { element: ['air-gate'] } }), 'feats', 'aerial-boomerang');
     expect(at2.querySelector('.card-applies')).toBeNull();
     expect(openText(at2)).toMatch(/Level \(\+2\) The damage increases by 1d4\./);
+  });
+});
+
+/** A synthesized character (test/_content build, name 't') holding one feat with its choice answered. */
+function withPickedFeat(featId: string, label: string): Character {
+  const ch = build('fighter', 5, {});
+  return { ...ch, feats: [{ featId, level: 1, category: 'ancestry', choice: { value: label.toLowerCase(), label } }] } as Character;
+}
+/** The real Feats tab for `ch`, its row `name` opened: the FeatDetail 'mine' card, page lane. */
+async function openFeatRow(ch: Character, name: string): Promise<HTMLElement> {
+  const host = await mount(<FeatsTab character={ch} content={db} />);
+  const row = [...host.querySelectorAll('.ff-row')].find((r) => squash(r.querySelector('.ff-name')?.textContent) === name);
+  expect(row, `the Feats tab lists ${name}`).toBeTruthy();
+  await click(row);
+  const modal = host.querySelector('.ast-modal.card-mine') as HTMLElement | null;
+  expect(modal, `${name} opens the mine card, page lane`).toBeTruthy();
+  return modal!;
+}
+
+describe.runIf(CARD_ON.featDetail)('card step 13c: choose-one blocks on the FeatDetail card (owner ruling Q2 = A)', () => {
+  it('Iruxi Armaments (Claw): Claws open and highlighted; Fangs and Tail under ONE closed "Other options (2)" line', async () => {
+    const modal = await openFeatRow(withPickedFeat('iruxi-armaments', 'Claw'), 'Iruxi Armaments (Claw)');
+    const hi = [...modal.querySelectorAll('.card-applies')];
+    expect(hi.map((p) => squash(p.textContent))).toEqual(['Claws Your claw attack deals 1d6 slashing damage instead of 1d4 and gains the versatile P trait.']);
+    expect(hi[0].closest('li'), 'the highlight sits on the list item the page prints').toBeTruthy();
+    expect(hi[0].closest('details'), 'the picked option is never folded').toBeNull();
+    const f = folds(modal);
+    expect(f.map((d) => [d.dataset.fold, d.open, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['pick', false, 'Other options (2)']]);
+    expect(f[0].querySelector(':scope > summary')?.hasAttribute('data-ours'), 'the line is ours').toBe(true);
+    // Folded, never deleted: the other options are in the DOM, inside the fold, still a list.
+    expect([...f[0].querySelectorAll('li')].map((li) => squash(li.textContent).split(' ')[0])).toEqual(['Fangs', 'Tail']);
+    expect(openText(modal)).not.toMatch(/Fangs You gain|Tail You gain/);
+    expect(openText(modal)).toMatch(/Choose one of the following options: Claws Your claw attack/);
+    expect(openText(modal)).toMatch(/At 5th level, whenever you get a critical hit/);
+  });
+
+  it('a pick whose label holds its own parentheses (the row reads "Dragonet Breath (Fey Dragonet (arcane, poison))") still names its option', async () => {
+    const modal = await openFeatRow(withPickedFeat('dragonet-breath', 'Fey Dragonet (arcane, poison)'), 'Dragonet Breath (Fey Dragonet (arcane, poison))');
+    expect([...modal.querySelectorAll('.card-applies')].map((p) => squash(p.textContent).split(' ').slice(0, 2).join(' '))).toEqual(['Fey Dragonet']);
+    expect(folds(modal).map((d) => squash(d.querySelector(':scope > summary')?.textContent))).toEqual(['Other options (4)']);
+  });
+
+  it('dragon-disciple-dedication: a pick the page prints only in a group falls back to the whole text — no fold, no highlight', async () => {
+    const modal = await openFeatRow(withPickedFeat('dragon-disciple-dedication', 'Red (fire)'), 'Dragon Disciple Dedication (Red (fire))');
+    expect(folds(modal)).toEqual([]);
+    expect(modal.querySelector('.card-applies')).toBeNull();
+    expect(openText(modal)).toMatch(/Black, Brine\*, or Copper Acid.*Brass, Gold, Magma\*, Red, or Underworld\* Fire.*Silver or White Cold/);
+  });
+});
+
+describe.runIf(CARD_ON.statDetail)('card step 13c: class picks on a classFeatures card (StatDetailModal, no row pick)', () => {
+  it('a Fencer swashbuckler: exemplary-finisher shows Fencer open and highlighted, the five other styles under "Other options (5)"', async () => {
+    const modal = await openCard(build('swashbuckler', 9, { subclassId: 'fencer' }), 'classFeatures', 'exemplary-finisher');
+    const hi = [...modal.querySelectorAll('.card-applies')];
+    expect(hi.map((p) => squash(p.textContent).split(' ')[0])).toEqual(['Fencer:']);
+    expect(hi[0].closest('details'), 'the picked style is never folded').toBeNull();
+    const f = folds(modal);
+    expect(f.map((d) => [d.dataset.fold, d.open, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['pick', false, 'Other options (5)']]);
+    expect(squash(f[0].textContent)).toMatch(/Battledancer.*Braggart.*Gymnast.*Rascal.*Wit/);
+    expect(openText(modal)).not.toMatch(/Battledancer:|Braggart:|Gymnast:|Rascal:|Wit:/);
+  });
+
+  it('a single-gate air kineticist: kinetic-gate shows Air\'s impulse junction highlighted, the other five under ONE line', async () => {
+    // batch card premise: class-feature-596 "In addition, you gain an impulse junction"
+    const modal = await openCard(build('kineticist', 5, { extraChoices: { element: ['air-gate'] } }), 'classFeatures', 'kinetic-gate');
+    expect([...modal.querySelectorAll('.card-applies')].map((p) => squash(p.textContent).split(' ')[0])).toEqual(['Air']);
+    expect(folds(modal).map((d) => squash(d.querySelector(':scope > summary')?.textContent))).toEqual(['Other options (5)']);
+  });
+
+  it('an air + fire DUAL-gate kineticist: kinetic-gate whole (no junction owned); elemental-blast shows both blasts, the other four under ONE line', async () => {
+    // batch card premise: class-feature-596 "In addition, you gain an impulse junction" (printed under Single Gate only)
+    const ch = build('kineticist', 1, { extraChoices: { element: ['air-gate', 'fire-gate'] } });
+    const gate = await openCard(ch, 'classFeatures', 'kinetic-gate');
+    expect(folds(gate)).toEqual([]);
+    expect(gate.querySelector('.card-applies')).toBeNull();
+    // batch card premise: action-2125 "Choose one of your kinetic elements"
+    const blast = await openCard(ch, 'classFeatures', 'elemental-blast');
+    expect([...blast.querySelectorAll('.card-applies')].map((p) => squash(p.textContent).split(' ')[0])).toEqual(['Air', 'Fire']);
+    expect(folds(blast).map((d) => squash(d.querySelector(':scope > summary')?.textContent))).toEqual(['Other options (4)']);
+  });
+
+  it('a kineticist opening elemental-eidolon (another class\'s Air … Wood) sees it whole', async () => {
+    // batch card premise: eidolon-12 "Your eidolon is formed from elemental air"
+    const modal = await openCard(build('kineticist', 5, { extraChoices: { element: ['air-gate'] } }), 'classFeatures', 'elemental-eidolon');
+    expect(folds(modal).filter((d) => d.dataset.fold === 'pick')).toEqual([]); // (its level folds, step 13a, are another matter)
+    expect(openText(modal)).toMatch(/Air: Your eidolon is formed from elemental air.*Fire: Your eidolon is formed from elemental fire/);
+    expect(modal.querySelector('.card-applies')).toBeNull();
+  });
+
+  it('a swashbuckler with no style on record sees exemplary-finisher whole', async () => {
+    const ch = build('swashbuckler', 9, { subclassId: 'fencer' });
+    const modal = await openCard({ ...ch, subclassId: null, classChoices: [] } as Character, 'classFeatures', 'exemplary-finisher');
+    expect(folds(modal)).toEqual([]);
+    expect(modal.querySelector('.card-applies')).toBeNull();
   });
 });
 

@@ -35,6 +35,15 @@
  * section against the ledger. Measured 2026-10-03 in the lane: 26 statDetail rows scoped (17 fold, 9 only
  * highlight impulse entries), 122 grid folds, 0 unlisted; no section moved under 'fold' or 'grey'; under
  * 'hide' the 280 left-out lines are all named S-future, so S1 does not move either.
+ *
+ * Card step 13c: a FeatDetail card row (the surface that hands its card the row's pick, cardScope.ts
+ * PICK_SURFACES) whose page prints choose-one blocks is judged again with each printed option picked
+ * (cardScope.ts pickScopes), through the same scopeTree keyed by the read as RecordCard keys it
+ * (pickOwnOf); foldsOf re-checks every choose-one fold (pickFoldsOf), so a fold of anything but an
+ * unpicked printed option is FOLDED-UNLISTED. A classFeatures page on any card row is also judged with
+ * each class pick (subclass name, kinetic element, divine font: classPickLabels) that names one of its
+ * printed options — scopeOfCharacter hands those to every card (cardScope.ts CLASS_PICKS; an element
+ * only on cardScope.ts ELEMENT_PICK_PAGES).
  */
 import {
   clean, isMetaP, isMetaishBlock, textOf, recordTree, withoutItemLists, astSlug,
@@ -42,7 +51,8 @@ import {
 } from '../../src/sheet/astVisibility.ts';
 import {
   OMISSION_RULES, LABEL_ALIASES, canonLabel, printedSet,
-  FOLD_RULE, FUTURE_TREATMENT, LEVEL_FOLDS, SCOPE_LEVELS, scopeTree,
+  FOLD_RULE, FUTURE_TREATMENT, LEVEL_FOLDS, SCOPE_LEVELS, scopeTree, PICK_SURFACES, pickScopes,
+  CLASS_PICK_BUCKET, FONT_LABELS, ELEMENT_LABELS, classPickScopes,
 } from '../../src/sheet/cardScope.ts';
 import { CARD_ON } from '../../src/sheet/cardSurfaces.ts';
 import { spellCardModel } from '../../src/sheet/spellCard.ts';
@@ -712,7 +722,7 @@ export const SECTIONS = ['S1-MISSING', 'S1-UNNAMED', 'DIFFERS', 'DUPLICATED', 'E
  * under `legacy[surface]` that surface's row entries as measured with its switch OFF; while the switch
  * is off they stand in for the surface's entries in the main sections. Step 22 removes both.
  */
-export const SWITCHED_SURFACES = ['statDetail', 'actionDetail', 'featDetail', 'strikeDetail', 'itemDetail'];
+export const SWITCHED_SURFACES = ['statDetail', 'actionDetail', 'featDetail', 'strikeDetail', 'itemDetail', 'choiceDetails'];
 
 /**
  * The entries the baseline expects under the switches as they are now (`cardOn`, default CARD_ON): the
@@ -931,6 +941,12 @@ export function surfaceRows(deps) {
   // document stub (drawn as nothing until step 14) and the pre-step title lookup lands on a different
   // page, ChoiceDetailsModal keeps the title lookup (shared.tsx holdOnTitleLookup) — Rage's popup kept
   // the Rage action's rules instead of one sentence. Such a row still reads by name and stays in S5.
+  // Card step 15: with CARD_ON.choiceDetails every one of these rows is a GRANTED row (Builder hands it
+  // `character={featPrereqChar}`), so a row that is not held opens RecordCard mode 'mine' for its record
+  // (shared.tsx ChoiceDetailsModal): the printed set empty (the row prints no stat rows), the item lists
+  // cut (the mine popup draws withoutItemLists), the character's folds through the scope grid. A held row
+  // keeps the title lookup's browse popup. Switched off, every row is the browse popup it was.
+  const choiceCard = (deps.cardOn ?? CARD_ON).choiceDetails ? { printed: [] } : undefined;
   const seenChoice = new Set();
   const choiceRow = (bucket, id, name, flavor) => {
     const k = `${bucket}:${id}`;
@@ -941,7 +957,9 @@ export function surfaceRows(deps) {
     const titleBucket = astIndex[titleSlug];
     const held = hasEmptyEmbeddedPage(readTree(trees, ownRead)) && !!titleBucket && !(titleBucket === bucket && titleSlug === id);
     const read = held ? { bucket: titleBucket, slug: titleSlug } : ownRead;
-    rows.push({ surface: 'choiceDetails', bucket, id, own: { bucket, id }, read, hideMeta: false, itemLists: true, md: flavor, printed: [], mode: 'browse' });
+    rows.push(choiceCard && !held
+      ? { surface: 'choiceDetails', bucket, id, own: { bucket, id }, read, hideMeta: false, itemLists: false, card: choiceCard, md: flavor, printed: [], mode: 'mine' }
+      : { surface: 'choiceDetails', bucket, id, own: { bucket, id }, read, hideMeta: false, itemLists: true, md: flavor, printed: [], mode: 'browse' });
   };
   for (const cls of Object.values(db.classes ?? {})) {
     for (const f of cls.features ?? []) {
@@ -1067,7 +1085,9 @@ export function judgeRow(row, trees, mdFns) {
     const card = row.card ? { printed: printedSet(row.card.printed) } : undefined;
     // Card step 13a: a card row judged at a scope (computeLedger's grid) draws the tree scopeTree makes —
     // the same function and ledger the card renders with; `row.treatment` lets a measurement try 'hide'.
-    const drawn = card && row.scope ? scopeTree(resolved, row.scope, LEVEL_FOLDS, row.treatment ?? FUTURE_TREATMENT) : resolved;
+    // Card step 13c: the scope's pick for the record the card opened (scope.picks["bucket:id"], keyed as
+    // RecordCard keys it: the read's bucket and slug) scopes the page's choose-one blocks.
+    const drawn = card && row.scope ? scopeTree(resolved, row.scope, LEVEL_FOLDS, row.treatment ?? FUTURE_TREATMENT, pickOwnOf(row)) : resolved;
     const all = treeBlocks(drawn, { hideMeta: row.hideMeta, itemLists: row.itemLists, card });
     bodyBlocks = all.filter((b) => b.shown);
     res.lane = 'tree';
@@ -1134,16 +1154,55 @@ export function rowEntries(row, r, foldsOf, foldCtx = undefined) {
 }
 
 /**
- * The guard's scope grid for one card row (section 8 check 1: levels 1/5/9/13/17/20 per class, no
- * picks). Only a 'mine' row drawn as a card whose tree scopeTree changes at some level is scoped; every
- * other row's grid is empty, because its card is the same at every scope.
+ * The guard's scope grid for one card row (section 8 check 1: levels 1/5/9/13/17/20 per class, and —
+ * card step 13c — one pick per printed option on a pick surface). Only a 'mine' row drawn as a card
+ * whose tree scopeTree changes at some level or pick is scoped; every other row's grid is empty,
+ * because its card is the same at every scope.
  */
-export function scopeGrid(row, tree, classIds) {
+export function scopeGrid(row, tree, classIds, pickLabels = [], classLabels = []) {
   if (row.mode !== 'mine' || !row.card || !tree) return [];
-  if (scopeTree(tree, { level: 1 }, LEVEL_FOLDS) === tree && scopeTree(tree, { level: 20 }, LEVEL_FOLDS) === tree) return [];
+  // Card step 13c: a row whose surface hands its card the row's pick (FeatDetail, cardScope.ts
+  // PICK_SURFACES) is also judged with each pick its row can carry — `pickLabels`, the record's own
+  // choice option labels (recordPickLabels) — through the same scopeTree, keyed by the read as
+  // RecordCard keys it (cardScope.ts pickScopes). A classFeatures page on ANY card is also judged with
+  // each class pick a character can carry that names one of its printed options (`classLabels`,
+  // classPickLabels; cardScope.ts classPickScopes), the way scopeOfCharacter hands them to every card —
+  // an element only on the pages a kinetic gate answers (cardScope.ts ELEMENT_PICK_PAGES).
+  const own = pickOwnOf(row);
+  const picks = [
+    ...(own && pickLabels.length && PICK_SURFACES.includes(row.surface) ? pickScopes(tree, own, pickLabels) : []),
+    ...(own && classLabels.length && own.startsWith(CLASS_PICK_BUCKET) ? classPickScopes(tree, classLabels, own) : []),
+  ];
+  if (scopeTree(tree, { level: 1 }, LEVEL_FOLDS) === tree && scopeTree(tree, { level: 20 }, LEVEL_FOLDS) === tree) return picks;
   const out = [];
   for (const level of SCOPE_LEVELS) for (const classId of classIds.length ? classIds : [undefined]) out.push(classId ? { level, classId } : { level });
-  return out;
+  return [...out, ...picks];
+}
+/** The picks a row of record `own` ({bucket, id}) can carry: its `choice` option labels (a feat's
+ *  featChoices answer) and its `effectChoices` option labels (character.effectPicks) — the two lanes
+ *  FeatsTab writes into the row's name, which FeatDetail.tsx featPickSuffix reads back. */
+export function recordPickLabels(db, own) {
+  const rec = own ? db?.[own.bucket]?.[own.id] : undefined;
+  if (!rec) return [];
+  return [...(rec.choice?.options ?? []), ...(rec.effectChoices ?? []).flatMap((c) => c?.options ?? [])]
+    .map((o) => (typeof o?.label === 'string' ? o.label : '')).filter((l) => l.trim());
+}
+/** The grid computeLedger judges one row at: its levels, its record's own picks (a pick surface) and the
+ *  class picks (a classFeatures page) — scopeGrid fed from the database, so a test runs the same call. */
+export function ledgerGrid(db, row, tree, classIds, classLabels = classPickLabels(db)) {
+  return scopeGrid(row, tree, classIds, recordPickLabels(db, row.own), classLabels);
+}
+/** The class picks any character can carry (cardScope.ts scopeOfCharacter): every class's subclass option
+ *  names (the classChoices row name build.ts writes) and the two divine fonts (picks[CLASS_PICKS]), and
+ *  the six kinetic elements (stored per page; classPickScopes keeps them to ELEMENT_PICK_PAGES). */
+export function classPickLabels(db) {
+  const subclass = Object.values(db?.classes ?? {}).flatMap((c) => (c?.subclass?.options ?? []).map((o) => (typeof o?.name === 'string' ? o.name : '')));
+  return [...new Set([...subclass, ...ELEMENT_LABELS, ...Object.values(FONT_LABELS)])].filter((l) => l.trim()).sort();
+}
+/** The record key a card's pick is stored under (cardScope.ts withPick; RecordCard passes
+ *  `${cur.key}:${curSlug}`): the row's read, bucket and slug. */
+export function pickOwnOf(row) {
+  return row?.read?.bucket && row.read.slug ? `${row.read.bucket}:${row.read.slug}` : undefined;
 }
 /** Sections whose entries are keyed by row (and so can be compared on a sample of rows). */
 export const ROW_SECTIONS = ['S1-MISSING', 'S1-UNNAMED', 'DIFFERS', 'DUPLICATED', 'EXTRA', 'S3-PLACEMENT', 'S5-IDENTITY', 'CUT-IN-SENTENCE', 'FOLDED-UNLISTED', 'OURS-LEAK'];
@@ -1158,6 +1217,7 @@ export function computeLedger(deps) {
   // Card step 13a: a card row whose page has level folds is judged again at every scope of the grid, and
   // its entries are the union (the row key is the same; a scope's omissions carry their rule's name).
   const classIds = Object.keys(db.classes ?? {}).sort();
+  const classLabels = classPickLabels(db);
   let scopedRows = 0;
   let scopedJudgements = 0;
   for (const row of rows) {
@@ -1166,14 +1226,16 @@ export function computeLedger(deps) {
     counts[row.surface] = (counts[row.surface] ?? 0) + 1;
     const tree = row.card && row.read ? readTree(trees, row.read) : undefined;
     for (const [sec, e] of rowEntries(row, r, foldsOf, { tree, classIds })) found[sec].push(e);
-    const grid = scopeGrid(row, tree, classIds);
+    const grid = ledgerGrid(db, row, tree, classIds, classLabels);
     if (grid.length) scopedRows++;
     // A scope whose drawn tree equals one already judged (same folds, same highlights — with no picks the
     // class never changes it) adds nothing: judged once per distinct drawing.
     const drawnSeen = new Set();
     for (const scope of grid) {
-      const drawn = scopeTree(tree, scope, LEVEL_FOLDS, deps.treatment ?? FUTURE_TREATMENT);
-      const sig = JSON.stringify((drawn.c ?? []).map((n) => (n.t === 'card-fold' ? `F:${n.foldReason}:${(n.foldIds ?? []).join(',')}` : n.applies ? 'A' : '.')));
+      const drawn = scopeTree(tree, scope, LEVEL_FOLDS, deps.treatment ?? FUTURE_TREATMENT, pickOwnOf(row));
+      // Card step 13c: a fold is told apart by its sections (a pick fold of ledger sections counts its
+      // options, which several drawings share) or, for a choose-one fold, by its options.
+      const sig = JSON.stringify((drawn.c ?? []).map((n) => (n.t === 'card-fold' ? `F:${n.foldReason}:${(n.sectionIds ?? n.foldIds ?? []).join(',')}` : n.applies ? 'A' : '.')));
       if (drawnSeen.has(sig)) continue;
       drawnSeen.add(sig);
       scopedJudgements++;

@@ -16,6 +16,13 @@
  * scripts/level-folds-check.mjs) — never a regex at run time. `foldsOf` now reports the folds a 'mine'
  * row draws at the guard's scope grid, so FOLDED-UNLISTED measures them.
  *
+ * Card step 13c adds the CHOOSE-ONE BLOCKS (section 3; owner ruling Q2 = A): where a record's page
+ * prints its options as separate bold-led blocks and the row's pick names exactly one of them, the
+ * picked option stays open and highlighted and the other options fold under ONE "Other options (k)"
+ * line whose k counts OPTIONS. A pick that matches no printed option (or a block that groups several
+ * options under one label, dragon-disciple-dedication) folds nothing: the whole text stays open. An
+ * "Other options" line always counts options now, the ledger's gated sections included.
+ *
  * A plain .ts file with no JSX and no stylesheet, because the guard imports it through jiti.
  */
 import type { AstNode } from './astStore';
@@ -163,15 +170,29 @@ export const FOLD_LABEL: Record<FoldReason, string> = { future: 'At higher level
 export const FOLD_RULE: Record<FoldReason, OmissionRule> = { future: 'S-future', pick: 'S-pick' };
 
 /** A node scopeTree adds or marks. `card-fold` wraps a folded run; `card-pointer` wraps a subclass
- *  section a pointer row shows; `applies` marks an impulse "Level" paragraph that applies. */
+ *  section a pointer row shows; `applies` marks an impulse "Level" paragraph that applies, and the
+ *  picked option's paragraph of a choose-one block (card step 13c). */
 export interface ScopedNode extends AstNode {
   foldReason?: FoldReason;
   treatment?: FutureTreatment;
-  /** The ledger ids ("bucket:slug#i") of the sections inside a fold. */
+  /**
+   * What the fold's line counts, one id each (AstRenderer draws "<label> (foldIds.length)"):
+   *  - 'future': the ledger ids ("bucket:slug#i") of the sections inside — "At higher levels (2)";
+   *  - 'pick': the OPTIONS inside — a gated ledger run's option ("implement:bell"), or a choose-one
+   *    block's option ("<record>#<block>.<option>") — so "Other options (k)" counts options, never the
+   *    sections of one option (card step 13c).
+   */
   foldIds?: string[];
+  /** The ledger ids ("bucket:slug#i") of the sections inside a fold (any reason). */
+  sectionIds?: string[];
+  /** A choose-one fold: the printed labels of the options inside it (card step 13c). */
+  options?: string[];
   /** The page key a card-pointer's section comes from. */
   pointerFrom?: string;
   applies?: boolean;
+  /** Card step 13c: the picked option of a choose-one block (the list item or paragraph) and the list
+   *  holding it. Its own paragraph carries `applies`, the highlight the renderer draws. */
+  picked?: boolean;
 }
 
 /** Raw text of a node (no hygiene: the hash only needs to be deterministic). */
@@ -299,6 +320,16 @@ export function impulseApplies(entry: ImpulseEntry, level: number): boolean {
   return false;
 }
 
+/** The option a gated ledger section belongs to ("implement:bell"), or the section's own id: what an
+ *  "Other options (k)" line counts for a run of ledger sections (card step 13c). */
+function gateOptionId(entry: FoldSection, sectionId: string): string {
+  return entry.gate ? `${entry.gate.kind}:${entry.gate.option}` : sectionId;
+}
+/** The fold node of a run: 'future' counts its sections, 'pick' the distinct options among them. */
+function runFold(reason: FoldReason, nodes: AstNode[], ids: string[], options: string[], treatment: FutureTreatment): ScopedNode {
+  return { t: 'card-fold', c: nodes, foldReason: reason, treatment, foldIds: reason === 'pick' ? [...new Set(options)] : ids, sectionIds: ids };
+}
+
 /**
  * Scope a page tree for a 'mine' card. Every ledger section whose verdict is not 'open' is moved, with
  * its title and text, into a `card-fold` node — consecutive folded sections with the same reason share
@@ -307,21 +338,34 @@ export function impulseApplies(entry: ImpulseEntry, level: number): boolean {
  * DOM; hide: a marker element only; grey: in place, dimmed). Impulse "Level" entries that apply are
  * marked `applies` (a highlight; nothing is hidden). No scope (browse, search, the builder's pickers)
  * returns the tree itself.
+ *
+ * Card step 13c: `own` ("bucket:id", the record the card opened) names the record whose pick
+ * (scope.picks[own]) scopes the page's choose-one blocks — see scopeChoiceBlock. A classFeatures page
+ * with no pick of its own is scoped by the character's class picks (classPicksOf: the subclass and the
+ * divine font, and the gate's elements on ELEMENT_PICK_PAGES only — scopeOfCharacter). Without `own`, or with no pick
+ * for it, no choose-one block is touched. Nor is a block inside a ledger section: such a
+ * block can be a LATER question than the row's pick (initiate-benefit-wand's Adept Benefit asks for "a
+ * second" damage type from the same three), so matching it would highlight the wrong option.
  */
-export function scopeTree(tree: AstNode, scope: CardScope | undefined, ledger: LevelFoldLedger = LEVEL_FOLDS, treatment: FutureTreatment = FUTURE_TREATMENT): AstNode {
+export function scopeTree(tree: AstNode, scope: CardScope | undefined, ledger: LevelFoldLedger = LEVEL_FOLDS, treatment: FutureTreatment = FUTURE_TREATMENT, own?: string): AstNode {
   if (!scope) return tree;
   const ix = indexOf(ledger);
   const top = tree.c ?? [];
   const out: AstNode[] = [];
-  let run: { reason: FoldReason; nodes: AstNode[]; ids: string[] } | null = null;
+  let run: { reason: FoldReason; nodes: AstNode[]; ids: string[]; options: string[] } | null = null;
   let changed = false;
   const flush = () => {
     if (!run) return;
-    const fold: ScopedNode = { t: 'card-fold', c: run.nodes, foldReason: run.reason, treatment, foldIds: run.ids };
-    out.push(fold);
+    out.push(runFold(run.reason, run.nodes, run.ids, run.options, treatment));
     run = null;
     changed = true;
   };
+  // Card step 13c: the choose-one blocks the row's pick scopes, by the index they start at. The row's own
+  // pick wins; a classFeatures page without one is scoped by the character's class picks (CLASS_PICKS).
+  const rowPick = own ? scope.picks?.[own] : undefined;
+  const pick: readonly string[] = rowPick ? pickCandidates(rowPick) : own?.startsWith(CLASS_PICK_BUCKET) ? classPicksOf(scope, own) : [];
+  const blocks = new Map<number, ChoiceBlock>();
+  if (pick.length) for (const b of choiceBlocksOf(top)) blocks.set(b.start, b);
   for (let j = 0; j < top.length; j++) {
     const n = top[j];
     if (isLevelTitle(n)) {
@@ -334,15 +378,27 @@ export function scopeTree(tree: AstNode, scope: CardScope | undefined, ledger: L
           out.push(...top.slice(j, end));
         } else {
           if (run && run.reason !== v) flush();
-          run ??= { reason: v, nodes: [], ids: [] };
+          run ??= { reason: v, nodes: [], ids: [], options: [] };
           run.nodes.push(...top.slice(j, end));
-          run.ids.push(`${hit.key}#${hit.entry.i}`);
+          const id = `${hit.key}#${hit.entry.i}`;
+          run.ids.push(id);
+          run.options.push(gateOptionId(hit.entry, id));
         }
         j = end - 1;
         continue;
       }
     }
     flush();
+    const block = blocks.get(j);
+    if (block && pick.length) {
+      const scoped = scopeChoiceBlock(top, block, pick, own!, treatment);
+      if (scoped) {
+        out.push(...scoped);
+        changed = true;
+        j = block.end - 1;
+        continue;
+      }
+    }
     if (n.t === 'p') {
       const imp = ix.impulses.get(paragraphHash(top, j));
       if (imp && impulseApplies(imp.entry, scope.level)) {
@@ -386,7 +442,8 @@ export function withPointer(tree: AstNode, pageTree: AstNode | undefined, ptr: {
     if (!hit || hit.entry.title !== ptr.title) continue;
     const section: ScopedNode = { t: 'card-pointer', c: top.slice(j, sectionEnd(top, j)), pointerFrom: ptr.pageKey };
     const v = sectionVerdict(hit.entry, scope);
-    const add: ScopedNode = v === 'open' ? section : { t: 'card-fold', c: [section], foldReason: v, treatment, foldIds: [`${hit.key}#${hit.entry.i}`] };
+    const id = `${hit.key}#${hit.entry.i}`;
+    const add: ScopedNode = v === 'open' ? section : runFold(v, [section], [id], [gateOptionId(hit.entry, id)], treatment);
     return { ...tree, c: [...(tree.c ?? []), add] };
   }
   return tree;
@@ -398,6 +455,8 @@ export function withPointer(tree: AstNode, pageTree: AstNode | undefined, ptr: {
  * benefits pushBenefit placed in classChoices (initiate-/adept-/paragon-benefit-<implement>), the
  * kinetic gate's elements (<element>-gate, forks included; one element at level 1 = a single gate) and
  * the inventor's innovation type. A set with nothing on the character stays ABSENT (UNKNOWN ≠ EMPTY).
+ * Card step 13c: also the class picks (picks[CLASS_PICKS]) that scope a classFeatures page's choose-one
+ * blocks.
  */
 export function scopeOfCharacter(ch: Character | null | undefined): CardScope | undefined {
   if (!ch) return undefined;
@@ -417,7 +476,352 @@ export function scopeOfCharacter(ch: Character | null | undefined): CardScope | 
     if (atOne.length === 1) scope.elements.single = (atOne[0].id as string).replace(/-gate$/, '');
   }
   if (ch.inventor?.innovationType) scope.innovation = ch.inventor.innovationType;
+  // Card step 13c: the class picks a classFeatures page's choose-one block may name (CLASS_PICKS) — the
+  // subclass row's name ("Fencer": exemplary-finisher's styles) and the divine font (divine-font's
+  // Healing / Harmful Font) — and, per page (ELEMENT_PICK_PAGES), the gate's elements. Only what the
+  // character stores; nothing stored → no class picks (UNKNOWN ≠ EMPTY: the page stays whole).
+  const subclassRows = rows.filter((r) => !!r.id && (r.id === ch.subclassId || r.id === ch.subclassId2));
+  const font = (ch.spellcasting ?? []).find((e) => e.font)?.font?.type;
+  const classPicks = [
+    ...subclassRows.map((r) => r.name),
+    ...(font && FONT_LABELS[font] ? [FONT_LABELS[font]] : []),
+  ].filter((l) => typeof l === 'string' && l.trim() && !l.includes('\n'));
+  const picks: Record<string, string> = {};
+  if (classPicks.length) picks[CLASS_PICKS] = [...new Set(classPicks)].join('\n');
+  const elementLabel = (e: string) => e.charAt(0).toUpperCase() + e.slice(1);
+  for (const [slug, which] of Object.entries(ELEMENT_PICK_PAGES)) {
+    const els = which === 'single' ? (scope.elements?.single ? [scope.elements.single] : []) : (scope.elements?.owned ?? []);
+    if (els.length) picks[elementPicksKey(slug)] = [...new Set(els.map(elementLabel))].join('\n');
+  }
+  if (Object.keys(picks).length) scope.picks = picks;
   return scope;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Choose-one blocks (section 3; owner ruling Q2 = A) — card step 13c.                                */
+/* ------------------------------------------------------------------------------------------------ */
+
+/**
+ * A choose-one block: the page prints a record's options as separate bold-led blocks — the items of one
+ * top-level list (Iruxi Armaments: "Claws …", "Fangs …", "Tail …") or a run of top-level paragraphs
+ * (Dragonblood Paragon: "Dracomancer …", "Kobold Breath …"; Elemental Spark's, with line breaks between).
+ *  - list: `start` is the list's index in the page's top level (`end` = start + 1); an option's `at` is
+ *    its index among the list's items.
+ *  - paras: `start` / `end` bound the run in the top level; an option's `at` is its paragraph's index.
+ *  - grouped: some label names several options at once ("Black, Brine*, or Copper" on
+ *    dragon-disciple-dedication) — a grouped table, not one block per option; no pick is matched on it.
+ */
+export interface ChoiceBlock {
+  kind: 'list' | 'paras';
+  start: number;
+  end: number;
+  options: { at: number; label: string }[];
+  grouped: boolean;
+}
+
+/** Bold leads that are the page's own labels, never options (the use lines are canonLabel's). */
+const NOT_OPTION = /^(?:special|source|archetype|effect|note|critical success|success|failure|critical failure|amp|heightened\b.*|level\b.*)$/i;
+const isBlankText = (n: AstNode | undefined) => !!n && n.t === 'text' && !foldText(n).trim();
+
+/** A paragraph's option label: its first non-blank inline is bold, words follow it, and the bold run is
+ *  not one of the page's own labels. Otherwise null. */
+export function optionLeadOf(p: AstNode | undefined): string | null {
+  if (!p || p.t !== 'p') return null;
+  const kids = p.c ?? [];
+  const at = kids.findIndex((k) => !isBlankText(k));
+  const b = kids[at];
+  if (!b || b.t !== 'b') return null;
+  const label = foldText(b).replace(/\s+/g, ' ').trim().replace(/[:：]$/, '').trim();
+  if (!label || canonLabel(label) || NOT_OPTION.test(label)) return null;
+  if (!kids.slice(at + 1).some((k) => foldText(k).trim())) return null;
+  return label;
+}
+/** A list item's option label: its first block is a paragraph with an option label. */
+function itemLeadOf(li: AstNode): string | null {
+  return optionLeadOf((li.c ?? []).find((k) => !isBlankText(k)));
+}
+const listItems = (list: AstNode) => (list.c ?? []).filter((k) => k.t === 'li');
+
+/** A label as a comparison key: lower case, no accents, no footnote stars or apostrophes, words only. */
+export function optionKey(s: unknown): string {
+  return String(s ?? '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[*’‘']/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+}
+const withoutTrailingParen = (s: string) => s.replace(/\s*\([^()]*\)\s*$/, '');
+/** A label that names several options ("Black, Brine*, or Copper", "Forest, Mountain, or Underground"). */
+const isGroupedLabel = (label: string) => /,|\s+or\s+|\//i.test(withoutTrailingParen(label));
+/** The forms a label or a pick may be compared in: the whole key, the key without a trailing
+ *  parenthesis ("Red (fire)" → red), the key before an app note after a dash ("Holy — gain the holy
+ *  trait" → holy), and each without a plural ending ("Claws" → claw). */
+function keyForms(s: string): Set<string> {
+  const out = new Set<string>();
+  const beforeNote = s.split(/\s+[—–]\s+/)[0];
+  for (const k of [optionKey(s), optionKey(withoutTrailingParen(s)), optionKey(beforeNote), optionKey(withoutTrailingParen(beforeNote))]) {
+    if (!k) continue;
+    out.add(k);
+    if (/[^s]s$/.test(k)) out.add(k.slice(0, -1));
+    if (/es$/.test(k)) out.add(k.slice(0, -2));
+  }
+  return out;
+}
+const sameOption = (a: string, b: string) => {
+  const fb = keyForms(b);
+  for (const f of keyForms(a)) if (fb.has(f)) return true;
+  return false;
+};
+
+/** The choose-one blocks printed at a page's top level (a list or a run of ≥ 2 bold-led options with
+ *  distinct labels). */
+export function choiceBlocksOf(top: readonly AstNode[]): ChoiceBlock[] {
+  const out: ChoiceBlock[] = [];
+  const distinct = (options: { label: string }[]) => options.length >= 2 && new Set(options.map((o) => optionKey(o.label))).size === options.length;
+  for (let j = 0; j < top.length; j++) {
+    const n = top[j];
+    if (n.t === 'ul' || n.t === 'ol') {
+      const labels = listItems(n).map(itemLeadOf);
+      if (labels.length && labels.every((l) => !!l)) {
+        const options = labels.map((label, at) => ({ at, label: label! }));
+        if (distinct(options)) out.push({ kind: 'list', start: j, end: j + 1, options, grouped: options.some((o) => isGroupedLabel(o.label)) });
+      }
+      continue;
+    }
+    if (!optionLeadOf(n)) continue;
+    const options: { at: number; label: string }[] = [];
+    let end = j;
+    for (let k = j; k < top.length; k++) {
+      const label = optionLeadOf(top[k]);
+      if (label) { options.push({ at: k, label }); end = k + 1; continue; }
+      if (top[k].t === 'br' || isBlankText(top[k])) continue;
+      break;
+    }
+    // A run whose last paragraph goes on past it (an action glyph, a sup, a lower-case continuation — the
+    // renderer joins those into one line, AstRenderer isInlineFrag) is a stat block's lines, not options:
+    // moving its paragraphs apart would split a printed line (the Animist apparitions' "Avatar … Melee").
+    const next = top[end];
+    const continues = !!next && (next.t === 'sup' || next.t === 'sub' || next.t === 'actions' || (next.t === 'p' && /^[,.;:)\]]|^[a-z]/.test(foldText(next).trim())));
+    if (!continues && distinct(options)) out.push({ kind: 'paras', start: j, end, options, grouped: options.some((o) => isGroupedLabel(o.label)) });
+    j = end - 1;
+  }
+  return out;
+}
+
+/** A pick wrapped whole in one pair of parentheses, unwrapped: FeatDetail.tsx featPickSuffix returns the
+ *  row name's rest as is when a label holds its own "(…)" — "Dragonet Breath (Fey Dragonet (arcane,
+ *  poison))" → "(Fey Dragonet (arcane, poison))". */
+function unwrapParens(s: string): string {
+  const t = s.trim();
+  if (!t.startsWith('(') || !t.endsWith(')')) return t;
+  let depth = 0;
+  for (let i = 0; i < t.length; i++) {
+    depth += t[i] === '(' ? 1 : t[i] === ')' ? -1 : 0;
+    if (depth === 0 && i < t.length - 1) return t; // the first "(" closes before the end: not one pair
+  }
+  return t.slice(1, -1).trim();
+}
+/** The labels a row's pick may name: the whole pick, and each part of a comma-joined pick
+ *  (FeatDetail.tsx featPickSuffix joins several "(…)" groups with ", "). */
+export function pickCandidates(pick: string): string[] {
+  const whole = unwrapParens(pick);
+  const parts = whole.split(/\s*,\s*/).map((s) => s.trim()).filter(Boolean);
+  return [...new Set([whole, ...(parts.length > 1 ? parts : [])])].filter(Boolean);
+}
+/**
+ * The options of a block the pick names: each candidate counts only when it names EXACTLY ONE option of
+ * the block (an ambiguous candidate names none). Null when no option is named, or the block is grouped —
+ * then nothing folds and the whole text stays open (never a wrong highlight). `pick` is a row's pick
+ * (its candidates are pickCandidates') or a list of candidates already (the class picks).
+ */
+export function pickedOptions(block: ChoiceBlock, pick: string | readonly string[]): Set<number> | null {
+  if (block.grouped) return null;
+  const picked = new Set<number>();
+  for (const cand of typeof pick === 'string' ? pickCandidates(pick) : pick) {
+    const hits = block.options.flatMap((o, i) => (sameOption(o.label, cand) ? [i] : []));
+    if (hits.length === 1) picked.add(hits[0]);
+  }
+  return picked.size ? picked : null;
+}
+
+/** The picked option's node with its highlight: the list item marked `picked` and its first paragraph
+ *  marked `applies` (the renderer draws that class on the page's own paragraph; not a word changes). */
+function markPicked(n: AstNode): ScopedNode {
+  if (n.t === 'p') return { ...n, applies: true, picked: true };
+  const kids = n.c ?? [];
+  const first = kids.findIndex((k) => !isBlankText(k));
+  return { ...n, picked: true, c: kids.map((k, i) => (i === first ? ({ ...k, applies: true } as ScopedNode) : k)) };
+}
+
+/**
+ * One choose-one block scoped by the row's pick: the picked option stays where the page prints it, open
+ * and highlighted; every other option moves, unchanged, into ONE `card-fold` (reason 'pick') right after
+ * the block — its `foldIds` one per option, so the line reads "Other options (k)" with k = options. A
+ * list keeps its list markup on both sides. Null when the pick names no option of the block (the caller
+ * then draws the block as printed).
+ */
+export function scopeChoiceBlock(top: readonly AstNode[], block: ChoiceBlock, pick: string | readonly string[], own: string, treatment: FutureTreatment = FUTURE_TREATMENT): AstNode[] | null {
+  const picked = pickedOptions(block, pick);
+  if (!picked) return null;
+  const ids: string[] = [];
+  const labels: string[] = [];
+  const open: AstNode[] = [];
+  const folded: AstNode[] = [];
+  if (block.kind === 'list') {
+    const list = top[block.start];
+    const items = listItems(list);
+    const keep: AstNode[] = [];
+    const others: AstNode[] = [];
+    block.options.forEach((o, i) => {
+      if (picked.has(i)) keep.push(markPicked(items[o.at]));
+      else { others.push(items[o.at]); ids.push(`${own}#${block.start}.${i}`); labels.push(o.label); }
+    });
+    open.push({ ...list, c: keep, picked: true } as ScopedNode);
+    if (others.length) folded.push({ ...list, c: others });
+  } else {
+    const byAt = new Map(block.options.map((o, i) => [o.at, i] as const));
+    let between: AstNode[] = [];
+    for (let k = block.start; k < block.end; k++) {
+      const i = byAt.get(k);
+      if (i === undefined) { between.push(top[k]); continue; }
+      if (picked.has(i)) open.push(...between, markPicked(top[k]));
+      else { folded.push(...between, top[k]); ids.push(`${own}#${block.start}.${i}`); labels.push(block.options[i].label); }
+      between = [];
+    }
+  }
+  if (!ids.length) return open;
+  const fold: ScopedNode = { t: 'card-fold', c: folded, foldReason: 'pick', treatment, foldIds: ids, options: labels };
+  return [...open, fold];
+}
+
+/**
+ * The scope a row's card opens with when the row carries the player's pick (FeatDetail.tsx FeatCard:
+ * "Iruxi Armaments (Claw)" → "Claw", featPickSuffix): `picks["bucket:id"]` for the record the card
+ * opens. No scope (no character) or no pick → the scope unchanged.
+ */
+export function withPick(scope: CardScope | undefined, bucket: string, id: string, pick: string | undefined): CardScope | undefined {
+  const p = pick?.trim();
+  if (!scope || !p) return scope;
+  return { ...scope, picks: { ...(scope.picks ?? {}), [`${bucket}:${id}`]: p } };
+}
+
+/** The surfaces whose card is handed the row's pick (FeatDetail.tsx FeatCard → withPick): the guard's
+ *  pick grid runs on their rows only. */
+export const PICK_SURFACES: readonly string[] = ['featDetail'];
+
+/**
+ * The reserved `picks` key under which scopeOfCharacter stores the character's CLASS picks, one label
+ * per line: the subclass (style, doctrine, order …: its classChoices row name) and the cleric's divine
+ * font. They scope the choose-one blocks of a classFeatures page (`own` starts with CLASS_PICK_BUCKET)
+ * that has no pick of its own — exemplary-finisher's six styles, divine-font's two fonts — on EVERY card
+ * that passes `own` (RecordCard), not only FeatDetail. The kinetic gate's elements are stored per page
+ * instead (elementPicksKey; ELEMENT_PICK_PAGES names the only two pages they answer). Each label still
+ * has to name exactly ONE printed option of a block (pickedOptions), else the block stays as printed.
+ */
+export const CLASS_PICKS = 'classFeatures:*';
+export const CLASS_PICK_BUCKET = 'classFeatures:';
+/** The divine font a cleric's casting entry stores (build.ts entry.font.type), as divine-font prints it. */
+export const FONT_LABELS: Readonly<Record<string, string>> = { heal: 'Healing Font', harm: 'Harmful Font' };
+/** The six kinetic elements, as the kineticist's pages print them (an element class pick's labels). */
+export const ELEMENT_LABELS: readonly string[] = ['Air', 'Earth', 'Fire', 'Metal', 'Water', 'Wood'];
+/**
+ * The ONLY pages a kinetic gate's elements scope, and with which of them (card step 13c, refuter round 2).
+ * Owning an element answers these two questions and no other:
+ *  - elemental-blast (action-2125) "Choose one of your kinetic elements": one blast per element the gate
+ *    holds, forks included → every owned element;
+ *  - kinetic-gate (class-feature-596): its Air … Wood list is the SINGLE gate's impulse junction ("In
+ *    addition, you gain an impulse junction" is printed under Single Gate only; Dual Gate grants none,
+ *    Fork the Path adds an element with no junction) → only a single gate's element (scope.elements.single;
+ *    a dual gate leaves the list as printed — the same answer step 13a gives "Impulse Junction (Single Gate)").
+ * Any other page's Air … Wood asks something else (elemental-eidolon: the eidolon's Elemental Core) and is
+ * never scoped by the gate.
+ */
+export const ELEMENT_PICK_PAGES: Readonly<Record<string, 'owned' | 'single'>> = { 'elemental-blast': 'owned', 'kinetic-gate': 'single' };
+/** The reserved `picks` key of one ELEMENT_PICK_PAGES page's element picks ("classFeatures:*kinetic-gate"). */
+export function elementPicksKey(slug: string): string {
+  return `${CLASS_PICKS}${slug}`;
+}
+/** The ELEMENT_PICK_PAGES slug of a record key, if it is one. */
+function elementPage(own: string | undefined): string | undefined {
+  const slug = own?.startsWith(CLASS_PICK_BUCKET) ? own.slice(CLASS_PICK_BUCKET.length) : undefined;
+  return slug && Object.prototype.hasOwnProperty.call(ELEMENT_PICK_PAGES, slug) ? slug : undefined;
+}
+const pickLines = (s: string | undefined) => (s ?? '').split('\n').map((x) => x.trim()).filter(Boolean);
+/** A scope's class picks (scopeOfCharacter) for the page `own`, as pick candidates: the subclass and font
+ *  (every classFeatures page) and, on an ELEMENT_PICK_PAGES page only, that page's element picks. */
+export function classPicksOf(scope: CardScope | undefined, own?: string): string[] {
+  const page = elementPage(own);
+  return [...new Set([...pickLines(scope?.picks?.[CLASS_PICKS]), ...(page ? pickLines(scope?.picks?.[elementPicksKey(page)]) : [])])];
+}
+/**
+ * The guard's class-pick grid for one page `own`: one scope per label that names a printed option of a
+ * choose-one block (a label naming none draws the page whole, so it is not judged), stored the way
+ * scopeOfCharacter stores it — an element label under the page's element key, and only on an
+ * ELEMENT_PICK_PAGES page (elsewhere no character's gate reaches it); any other label under CLASS_PICKS.
+ * `labels` are the class picks a character can carry (the guard passes every subclass name, the six
+ * elements and the two fonts); without them, every printed option label is tried.
+ */
+export function classPickScopes(tree: AstNode, labels?: readonly string[], own?: string): CardScope[] {
+  const blocks = choiceBlocksOf(tree.c ?? []).filter((b) => !b.grouped);
+  if (!blocks.length) return [];
+  const all = labels ?? blocks.flatMap((b) => b.options.map((o) => o.label));
+  const page = elementPage(own);
+  return [...new Set(all)].filter((l) => l.trim() && !l.includes('\n') && blocks.some((b) => pickedOptions(b, [l])))
+    .flatMap((l) => {
+      const key = ELEMENT_LABELS.includes(l) ? (page ? elementPicksKey(page) : undefined) : CLASS_PICKS;
+      return key ? [{ level: 20, picks: { [key]: l } }] : [];
+    });
+}
+/** The one label a class-pick grid scope carries (classPickScopes). */
+export function classPickOf(scope: CardScope): string {
+  return Object.values(scope.picks ?? {})[0] ?? '';
+}
+
+/**
+ * The guard's pick grid for one page (section 8 check 1, card step 13c): one scope per pick, at level 20
+ * so no level fold mixes in. `labels` are the picks to try — the guard passes the record's own choice
+ * option labels (what a row's name can carry); without them, every printed option of every choose-one
+ * block is tried.
+ */
+export function pickScopes(tree: AstNode, own: string, labels?: readonly string[]): CardScope[] {
+  const picks = labels ?? choiceBlocksOf(tree.c ?? []).flatMap((b) => b.options.map((o) => o.label));
+  return [...new Set(picks)].filter((p) => p.trim()).map((p) => ({ level: 20, picks: { [own]: p } }));
+}
+
+/**
+ * The guard's re-check of the choose-one folds a page draws at its pick grid: each folded node must be
+ * an option node of a choose-one block of the ORIGINAL page (by identity — scopeChoiceBlock moves the
+ * page's own nodes) and must not be the picked option. `listed: false` is FOLDED-UNLISTED.
+ * `opts.rowPicks` checks the row-pick grid (a PICK_SURFACES row), `opts.classPicks` the class-pick grid
+ * (a classFeatures page on any card); `opts.draw` is the drawing under test (scopeTree by default — a
+ * test hands in a broken one to prove the verdict reads the folded nodes, not the drawer's word).
+ */
+export function pickFoldsOf(
+  tree: AstNode, own: string, ledger: LevelFoldLedger = LEVEL_FOLDS,
+  opts: { rowPicks?: boolean; classPicks?: boolean; draw?: (tree: AstNode, scope: CardScope, own: string) => AstNode } = {},
+): CardFold[] {
+  const top = tree.c ?? [];
+  const optionNodes = new Map<AstNode, string>();
+  for (const b of choiceBlocksOf(top)) {
+    for (const o of b.options) optionNodes.set(b.kind === 'list' ? listItems(top[b.start])[o.at] : top[o.at], o.label);
+  }
+  const draw = opts.draw ?? ((t: AstNode, s: CardScope, o: string) => scopeTree(t, s, ledger, 'fold', o));
+  const grid: { scope: CardScope; pick: string; tag: string }[] = [
+    ...((opts.rowPicks ?? true) ? pickScopes(tree, own).map((scope) => ({ scope, pick: scope.picks![own], tag: 'pick' })) : []),
+    ...((opts.classPicks ?? own.startsWith(CLASS_PICK_BUCKET)) ? classPickScopes(tree, undefined, own).map((scope) => ({ scope, pick: classPickOf(scope), tag: 'class' })) : []),
+  ];
+  const out: CardFold[] = [];
+  const seen = new Set<string>();
+  for (const { scope, pick, tag } of grid) {
+    for (const f of foldNodesOf(draw(tree, scope, own))) {
+      if (f.foldReason !== 'pick' || !f.options) continue;
+      const kids = (f.c ?? []).flatMap((k) => (k.t === 'ul' || k.t === 'ol' ? listItems(k) : [k])).filter((k) => k.t !== 'br' && !isBlankText(k));
+      for (const k of kids) {
+        const label = optionNodes.get(k);
+        const id = `${label ?? foldText(k).trim().slice(0, 40)}@${tag}:${pick}`;
+        if (seen.has(id)) continue;
+        seen.add(id);
+        out.push({ id, listed: label !== undefined && !sameOption(label, pick) });
+      }
+    }
+  }
+  return out;
 }
 
 /** The ownership gate of a section on an option page, decided by the generator from the page's own
@@ -455,14 +859,21 @@ export function foldNodesOf(tree: AstNode): ScopedNode[] {
  * drawn as a card (`row.card`) scopes; `tree` is the tree the row reads. Each folded section is
  * re-hashed from the fold's OWN nodes and looked up in the ledger — `listed: false` means the card folded
  * text the ledger does not list (FOLDED-UNLISTED). Kept total (never throws) so the guard can call it
- * for every row.
+ * for every row. Card step 13c: a row on a PICK_SURFACES surface also reports its choose-one folds at
+ * the pick grid (pickFoldsOf).
  */
 export function foldsOf(row: unknown, tree?: AstNode, classIds: readonly string[] = [], ledger: LevelFoldLedger = LEVEL_FOLDS): CardFold[] {
-  const r = row as { mode?: string; card?: unknown } | null;
+  const r = row as { mode?: string; card?: unknown; surface?: string; read?: { bucket?: string; slug?: string } | null } | null;
   if (!r || r.mode !== 'mine' || !r.card || !tree) return [];
+  // Card step 13c: on a surface that hands its card the row's pick, every choose-one fold at the pick
+  // grid is re-checked (pickFoldsOf) — a folded node that is not an unpicked printed option is unlisted.
+  // A classFeatures page on any card is re-checked at the class-pick grid too (CLASS_PICKS).
+  const own = r.read?.bucket && r.read.slug ? `${r.read.bucket}:${r.read.slug}` : undefined;
+  const rowPicks = !!own && !!r.surface && PICK_SURFACES.includes(r.surface);
+  const classPicks = !!own && own.startsWith(CLASS_PICK_BUCKET);
+  const out: CardFold[] = own && (rowPicks || classPicks) ? pickFoldsOf(tree, own, ledger, { rowPicks, classPicks }) : [];
   // A page with no ledger section folds at no level: the lowest level folds every listed section.
-  if (!foldNodesOf(scopeTree(tree, { level: 0 }, ledger)).length) return [];
-  const out: CardFold[] = [];
+  if (!foldNodesOf(scopeTree(tree, { level: 0 }, ledger)).length) return out;
   const seen = new Set<string>();
   for (const level of SCOPE_LEVELS) {
     for (const classId of classIds.length ? classIds : [undefined]) {

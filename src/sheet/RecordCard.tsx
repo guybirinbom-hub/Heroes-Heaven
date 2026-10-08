@@ -314,8 +314,9 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
   if (mine && astNode && !shared?.otherClassPage) {
     /* Card step 13a: with the character's scope, the sections it does not have yet fold (scopeTree reads
        only scripts/data/level-folds.json; FUTURE_TREATMENT is the one switch), applying impulse "Level"
-       entries are highlighted, and a pointer row gains its subclass section. No scope → the page whole. */
-    const shown = withPointer(scopeTree(withoutItemLists(astNode), scope, LEVEL_FOLDS, FUTURE_TREATMENT), ptrPage, ptr, scope, LEVEL_FOLDS, FUTURE_TREATMENT);
+       entries are highlighted, and a pointer row gains its subclass section. No scope → the page whole.
+       Card step 13c: the record's own pick (scope.picks["bucket:id"]) scopes its choose-one blocks. */
+    const shown = withPointer(scopeTree(withoutItemLists(astNode), scope, LEVEL_FOLDS, FUTURE_TREATMENT, `${cur.key}:${curSlug}`), ptrPage, ptr, scope, LEVEL_FOLDS, FUTURE_TREATMENT);
     // Our Source line stands in only where the page prints none. (Measured: 0 of the 2,774 statDetail
     // page rows lack a Source line today, so it is kept for the surfaces still to come.)
     const ownSource = sourceLine && !treeHasSource(shown) ? sourceLine : null;

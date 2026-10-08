@@ -6,7 +6,7 @@ import { PinStar } from './PinStar';
 import { PinContext, usePinDesc, type PinDescApi } from './PinContext';
 import { RecordCard } from './RecordCard';
 import { cardOn } from './cardSurfaces';
-import { scopeOfCharacter } from './cardScope';
+import { scopeOfCharacter, withPick } from './cardScope';
 import { oursHeaderCost } from './MainTab';
 import { TrustMarker } from './TrustMarker';
 import { useContent } from './ContentContext';
@@ -328,7 +328,8 @@ export function featCardPin(pin: PinDescApi, cardNode: DescNode, starNode: FeatP
  *  - The page header's own cost glyph is print; ours (data-ours) joins the header only where the page's
  *    header does not print the row's cost (MainTab oursHeaderCost, the action card's rule).
  *  - S-furniture leaves ("… leads to", navigation); Source and the reference lines are dimmed (the card).
- *  - The parts the character does not have yet fold (scopeOfCharacter).
+ *  - The parts the character does not have yet fold (scopeOfCharacter); the row's pick (featPickSuffix,
+ *    card step 13c) highlights its printed option and folds the other options (withPick).
  *  - The ours box after the body: picks, markers, notes, the running enhancement, use-counter retunes,
  *    an Overrides edit where the page is drawn (featOursSplit, card step 8).
  *  - No page (or a page that is not the record's own): the old text through the card's no-page lane, with
@@ -407,7 +408,7 @@ function FeatCard({ entry, onClose, character }: FeatDetailProps) {
         node={cardNode}
         mode="mine"
         chrome="popup"
-        scope={scopeOfCharacter(character)}
+        scope={withPick(scopeOfCharacter(character), page.bucket, page.id, featPickSuffix(entry, content))}
         printed={[]}
         headerActions={headerActions}
         controls={controls}
