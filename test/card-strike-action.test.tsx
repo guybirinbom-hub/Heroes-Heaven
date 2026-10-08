@@ -301,7 +301,7 @@ describe.runIf(cardOn('strikeDetail'))('StrikeDetailModal — the weapon\'s mine
       'An unarmed Strike with your fist — every creature can make unarmed attacks. It uses your unarmed proficiency, and Handwraps of Mighty Blows can etch potency, striking, and property runes onto it.',
     );
     expect(pop.querySelectorAll('.strike-detail-stat')).toHaveLength(2);
-    expect(pop.querySelector('.card-nopage'), 'app-authored, never print: no "older import" line').toBeNull();
+    expect(pop.querySelector('.card-nopage'), 'app-authored, never print: no no-page line').toBeNull();
   });
 
   // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"

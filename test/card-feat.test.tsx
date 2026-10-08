@@ -446,7 +446,7 @@ describe.runIf(CARD_ON.featDetail)('card step 11: the Feats-tab popup is the row
     expect(squash(modal!.textContent).split('Order of the Godclaw').length - 1, 'the prerequisite text appears once on the card').toBe(1);
     const line = modal!.querySelector('.card-nopage');
     // batch card premise: feat-4458 "Frequency once per day"
-    expect(line && squash(line.textContent)).toBe('No Archives page — text from our older import');
+    expect(line && squash(line.textContent)).toBe('Not from the Archives — our text');
     expect(line!.matches('[data-ours].sd-ours'), 'marked ours').toBe(true);
     expect(modal!.querySelector('.picker-head .info-star'), 'PinStar on the no-page lane').toBeTruthy();
   });

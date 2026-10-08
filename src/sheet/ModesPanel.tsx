@@ -41,7 +41,7 @@ export interface ScopeOption {
 }
 
 /** The "Modes" tab: toggle predefined class/ancestry/archetype modes (gated to your character), plus
- *  your own saved modes. Pin a star to keep a mode visible at the top even when it's gated out. */
+ *  your own saved modes. "Pin to top" (a pin) keeps a mode visible at the top even when it's gated out. */
 export function ModesPanel({
   library: libraryProp,
   predefined: predefinedProp,
@@ -190,7 +190,9 @@ export function ModesPanel({
           title={isPinned ? 'Unpin' : 'Pin to top'}
           onClick={() => togglePinnedMode(mode.id)}
         >
-          <i className="ti ti-star" aria-hidden="true" />
+          {/* A PIN, never the star: the star is the PinStar ("Add to Pinned") everywhere else, and "Pin to
+              top" wears the same pin glyph as the sheet's other Pin to top toggles (MainTab.tsx PinToggle). */}
+          <i className="ti ti-pin" aria-hidden="true" />
         </button>
         {editable && (
           <button className="mode-edit" aria-label="Edit" onClick={() => setEditing(structuredClone(mode))}>

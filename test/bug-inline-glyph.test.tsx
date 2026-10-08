@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import { renderDom } from './_render';
 import { AstRenderer } from '../src/sheet/AstRenderer';
@@ -26,8 +27,9 @@ import type { AstNode } from '../src/sheet/astStore';
  * nodes (9,419 of them inside a title/heading), 2,099 on 853 pages are followed by a continuation
  * fragment at all, and the fold reunites 1,351 of them across 815 pages in the hideMeta path (1,393 on
  * 847 in the modal path). 3,846 glyph lines still render as their own block under hideMeta, down from
- * 5,885 (the modal path, 5,745): a glyph that ends its run is an ability heading's cost and must keep
- * its line. actions/call-gun is one of those and is asserted below.
+ * 5,885 (the modal path, 5,745). That a glyph ending its run "is an ability heading's cost and must keep
+ * its line" did not survive the mirror (2026-10-08): the page prints every such glyph inside its header's
+ * line, so actions/call-gun's "Call Gun ⟨1⟩ (magical) Effect …" is now asserted as ONE line below.
  *
  * The 1–5 digit mapping (reaction = 5, single action = 1) is settled and is asserted, not changed.
  */
@@ -92,16 +94,22 @@ describe('bug #9 — a split-out glyph rejoins its sentence', () => {
     } finally { stop(); }
   });
 
-  it('an ability heading\'s glyph KEEPS its own line — actions/call-gun, unchanged', () => {
+  // Card step "wording" round 2 (2026-10-08): the page prints an embedded activity's glyph INSIDE its header
+  // line — the mirror's markdown for feat-3269 is one line, "**Call Gun** <actions string="Single Action" />
+  // ([magical]…) **Effect** You hold aloft…" — so the heading, the glyph and the line after it are ONE line
+  // (cardModel.ts lineFrags). The old premise ("a glyph that ends its run keeps its block line") was never
+  // checked against print; all 792 such glyphs sit inside a line of their page.
+  it('an ability heading\'s glyph sits INSIDE its header line, as the page prints it — actions/call-gun', () => {
     const { host, stop } = renderDom(<AstRenderer node={CALL_GUN} bodyOnly hideMeta onOpenRef={() => undefined} />);
     try {
       const body = bodyOf(host);
-      const line = body.querySelector('.ast-actline');
-      expect(line, 'a glyph that ends its run is a block line, as before').not.toBeNull();
-      expect(line!.querySelector('.ast-ag')!.textContent).toBe('1');
-      // the heading above it is still its own paragraph — the fold did not swallow it
-      expect(line!.previousElementSibling!.textContent!.trim()).toBe('Call Gun');
-      expect(line!.nextElementSibling!.textContent).toContain('(magical) Effect You hold aloft');
+      // batch card premise: feat-3269 "Effect You hold aloft a free hand"
+      expect(body.querySelector('.ast-actline'), 'no glyph line of its own').toBeNull();
+      const glyph = body.querySelector('.ast-ag[title="Single Action"]') as HTMLElement;
+      expect(glyph.textContent).toBe('1');
+      const line = glyph.parentElement!;
+      expect(line.tagName).toBe('P');
+      expect(line.textContent!.replace(/\s+/g, ' ').trim()).toMatch(/^Call Gun 1 \(magical\) Effect You hold aloft a free hand/);
     } finally { stop(); }
   });
 
@@ -172,4 +180,188 @@ describe('bug #9 — a split-out glyph rejoins its sentence', () => {
       expect(body.textContent).toContain('These fiends are physical manifestations');
     } finally { stop(); }
   });
+});
+
+/*
+ * Card step "wording" round 2 (2026-10-08; the orchestrator's approval 2): a block-level glyph the page
+ * prints INSIDE a line flows inline exactly as the page prints it. Measured against the mirror's markdown
+ * over all 20,787 shipped pages: the 792 block-level glyphs still drawn on a line of their own all sit
+ * inside a line of their page, and so does the text after every one of the 2,216 bold "Activate ⟨g⟩" lines.
+ * The lines live in src/sheet/cardModel.ts (lineFrags, glyphLedLine, activateLine), read by AstRenderer
+ * and by the row preview alike.
+ *
+ * MUTATION LINES (each measured red on 2026-10-08, then cardModel.ts restored byte-exact from a scratch
+ * copy, sha1 checked):
+ *  - lineFrags: the glyph join off (`&& false` on its actions branch) → call-gun, gleaming-blade, patron's
+ *    claim and the wand red, and the corpus case (3 pages draw a glyph line of its own again).
+ *  - activateLine: `rest` always [] → the wand of hybrid form case red.
+ *  - glyphLedLine: always null → the banishing-touch case red, and the corpus case (41 pages).
+ */
+describe('wording round 2 — a glyph the page prints inside a line stays in that line', () => {
+  const CARD = { printed: new Set<string>() };
+  const words = (el: Element) => {
+    const c = el.cloneNode(true) as Element;
+    c.querySelectorAll('.ast-ag').forEach((g) => g.remove());
+    return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
+  };
+  const glyphLine = (body: Element, title: string) => {
+    const g = body.querySelector(`.ast-ag[title="${title}"]`);
+    expect(g, `a ${title} glyph`).not.toBeNull();
+    return g!.parentElement!;
+  };
+
+  it('an embedded activity header is ONE line: classFeatures:gleaming-blade\'s "Transcendence ⟨2⟩ (Spirit, Transcendence) …"', () => {
+    const tree = readBucket('classFeatures')['gleaming-blade'];
+    for (const props of [{ card: CARD }, { hideMeta: true }]) {
+      const { host, stop } = renderDom(<AstRenderer node={tree} bodyOnly {...props} onOpenRef={() => undefined} />);
+      try {
+        const body = bodyOf(host);
+        expect(body.querySelector('.ast-actline'), 'no glyph line of its own').toBeNull();
+        const line = glyphLine(body, 'Two Actions');
+        expect(line.tagName).toBe('P');
+        // batch card premise: ikon-6 "Make two Strikes with the gleaming blade"
+        expect(words(line)).toMatch(/^Transcendence \(Spirit, Transcendence\) ?Flowing Spirit Strike; Effect Make two Strikes with the gleaming blade/);
+      } finally { stop(); }
+    }
+  });
+
+  it('a header whose next line opens on a use label joins it too, and keeps it: feats:patrons-claim', () => {
+    const tree = readBucket('feats')['patrons-claim'];
+    // The held-record path (hideMeta) used to drop the activity's "Frequency … Effect …" paragraph whole as
+    // a META line; on the header's line it is the activity's own text and shows.
+    const { host, stop } = renderDom(<AstRenderer node={tree} bodyOnly hideMeta onOpenRef={() => undefined} />);
+    try {
+      const body = bodyOf(host);
+      expect(body.querySelector('.ast-actline')).toBeNull();
+      // batch card premise: feat-5019 "Frequency once per hour"
+      expect(words(glyphLine(body, 'Two Actions'))).toMatch(/^Patron’s Claim Frequency once per hour; Effect Your familiar’s mouth opens impossibly wide/);
+    } finally { stop(); }
+  });
+
+  it('the wand of hybrid form\'s Activate sentence is ONE line, every glyph inside it (items:wand-of-hybrid-form)', () => {
+    const tree = readBucket('items')['wand-of-hybrid-form'];
+    for (const props of [{ card: CARD }, { hideMeta: true }]) {
+      const { host, stop } = renderDom(<AstRenderer node={tree} bodyOnly {...props} onOpenRef={() => undefined} />);
+      try {
+        const body = bodyOf(host);
+        const lines = [...body.querySelectorAll('p')].filter((p) => (p.textContent ?? '').includes('This activation takes'));
+        expect(lines, 'one line holds the sentence').toHaveLength(1);
+        const act = lines[0];
+        expect(act.className).toBe('ast-act');
+        // batch card premise: equipment-2280 "Frequency once per day, plus overcharge"
+        expect(words(act)).toMatch(/^Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; ?Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms/);
+        expect([...act.querySelectorAll('.ast-ag')].map((g) => g.getAttribute('title'))).toEqual(['Two Actions', 'Single Action', 'Three Actions', 'Two Actions']);
+      } finally { stop(); }
+    }
+  });
+
+  it('a glyph that opens its line leads it: spells:banishing-touch\'s "⟨1⟩ The target is launched 10 feet into the air …"', () => {
+    const tree = readBucket('spells')['banishing-touch'];
+    const { host, stop } = renderDom(<AstRenderer node={tree} bodyOnly card={CARD} onOpenRef={() => undefined} />);
+    try {
+      const body = bodyOf(host);
+      expect(body.querySelector('.ast-actline')).toBeNull();
+      const line = glyphLine(body, 'Single Action');
+      expect(line.tagName).toBe('P');
+      expect(line.firstElementChild!.classList.contains('ast-ag'), 'the glyph opens the line').toBe(true);
+      // batch card premise: spell-2152 "The target is launched 10 feet into the air"
+      expect(words(line)).toMatch(/^The target is launched 10 feet into the air and knocked back 10 feet\.$/);
+      expect(words(glyphLine(body, 'Three Actions'))).toMatch(/^Your touch deals 2d6 bludgeoning damage instead\. The target is launched 30 feet/);
+    } finally { stop(); }
+  });
+
+  /*
+   * Wording merge, refuter must-fix 2 (the orchestrator's ruling, 2026-10-08): under hideMeta only the META
+   * label of a joined line leaves, never the line's other words. rules:reading-creature-statistics prints
+   * "Ranged ⟨1⟩ As Melee, but also lists range…" as one line and "Ranged" opens on META's "range", so the
+   * joined line dropped whole and the held-record popup lost the explanation it had always drawn — the one
+   * page (of 116 whose hideMeta words changed) that lost words. What leaves is the META paragraph with the
+   * continuation the parser split off it (cardModel.ts lineFrags `own`), as hideMeta always dropped it.
+   * MUTATION LINES (each measured red on 2026-10-08, then AstRenderer.tsx restored from a scratch copy,
+   * sha1 checked): lineEl's hideMeta branch back to `return null` (the whole line drops) → the Ranged case
+   * red; only the label leaves (`withoutLabel(lead)` in place of the unit) → the wand case red.
+   * Whole corpus, every shipped page in four modes against HEAD 2f6ee78: card 0, modal 0 and every-label-
+   * printed 0 pages whose words change; hideMeta 115 pages that only GAIN words (Trigger 55, Frequency 34,
+   * Requirements 29, Cost 6 open the gained runs), 0 that lose one.
+   */
+  // batch card premise: rules-3260 "As Melee, but also lists range or range increment with traits"
+  it('hideMeta keeps the words after a META label\'s glyph: rules:reading-creature-statistics "Ranged ⟨1⟩ As Melee…"', () => {
+    const tree = readBucket('rules')['reading-creature-statistics'];
+    const { host, stop } = renderDom(<AstRenderer node={tree} bodyOnly hideMeta onOpenRef={() => undefined} />);
+    try {
+      const body = bodyOf(host);
+      const lines = [...body.querySelectorAll('p')].filter((p) => words(p).includes('As Melee, but also lists range'));
+      // batch card premise: rules-3260 "As Melee, but also lists range or range increment with traits"
+      expect(lines, 'the Ranged explanation is drawn, once').toHaveLength(1);
+      // batch card premise: rules-3260 "As Melee, but also lists range or range increment with traits"
+      expect(words(lines[0])).toMatch(/^As Melee, but also lists range or range increment with traits, Damage as Melee\.$/);
+      expect(lines[0].querySelector('.ast-ag')?.getAttribute('title'), 'the glyph stays in its line').toBe('Single Action');
+      expect(body.querySelector('.ast-actline')).toBeNull();
+    } finally { stop(); }
+  });
+
+  // batch card premise: equipment-2280 "Supply a casting of a spell of the appropriate rank"
+  it('hideMeta still drops a META row whole with its own continuation — never label-less words (items:wand-of-hybrid-form)', () => {
+    const tree = readBucket('items')['wand-of-hybrid-form'];
+    const { host, stop } = renderDom(<AstRenderer node={tree} bodyOnly hideMeta onOpenRef={() => undefined} />);
+    try {
+      const text = words(bodyOf(host));
+      // The modal path draws the wand's "Craft Requirements Supply a casting of a spell of the appropriate
+      // rank. The spell must have a casting time of ⟨1⟩ or ⟨2⟩, must …" line; the held-record path never did.
+      // batch card premise: equipment-2280 "Supply a casting of a spell of the appropriate rank"
+      expect(text).toContain('This activation takes');
+      expect(text).not.toContain('Supply a casting');
+      expect(text).not.toContain('casting time of');
+    } finally { stop(); }
+  });
+
+  /*
+   * Wording merge, refuter nit: a glyph ROW whose first paragraph is a label the surface printed lost the
+   * whole row (glyph and words) once the row became one line — the three blocks before it lost only the
+   * label's paragraph. FeatDetail prints "Activate", so a feat page's header row "Activate ⟨1⟩ (manipulate)"
+   * would have vanished. Synthetic trees. MUTATION LINES (each measured red, then restored): the card
+   * branch back to `return null` on a printed first leaf → the printed case red; the hideMeta branch back
+   * to `return null` → the META case red.
+   */
+  // batch card premise: equipment-2943 "A healing potion is a vial of a ruby-red liquid" — its row "Activate ⟨1⟩ (manipulate)" is the shape the synthetic trees copy.
+  it('a glyph row whose first leaf is a printed label drops only that label (synthetic)', () => {
+    const p = (...c: AstNode[]): AstNode => ({ t: 'p', c });
+    const txt = (v: string): AstNode => ({ t: 'text', v });
+    const bold = (v: string): AstNode => ({ t: 'b', c: [txt(v)] });
+    const row = (first: AstNode): AstNode => ({ t: 'document', c: [
+      { t: 'row', c: [{ t: 'row', c: [first] }, { t: 'actions', string: 'Single Action' }, { t: 'row', c: [p(txt('(manipulate) Zorblat turns the dial'))] }] },
+      { t: 'hr' },
+      p(txt('The body of the synthetic page.')),
+    ] });
+    const line = (node: AstNode, props: object) => {
+      const { host, stop } = renderDom(<AstRenderer node={node} bodyOnly {...props} onOpenRef={() => undefined} />);
+      try {
+        const g = bodyOf(host).querySelector('.ast-ag[title="Single Action"]');
+        return g ? { tag: g.parentElement!.tagName, words: words(g.parentElement!) } : null;
+      } finally { stop(); }
+    };
+    const act = row(p(bold('Activate')));
+    // batch card premise: equipment-2943 "A healing potion is a vial of a ruby-red liquid"
+    expect(line(act, { card: CARD })).toEqual({ tag: 'P', words: 'Activate (manipulate) Zorblat turns the dial' });
+    expect(line(act, { card: { printed: new Set(['Activate']) } })).toEqual({ tag: 'P', words: '(manipulate) Zorblat turns the dial' });
+    // hideMeta drops a META first paragraph whole (label and its words), and keeps the glyph and the rest.
+    const req = row(p(bold('Requirements'), txt(' You hold the synthetic dial')));
+    expect(line(req, { hideMeta: true })).toEqual({ tag: 'P', words: '(manipulate) Zorblat turns the dial' });
+    expect(line(req, {})?.words).toBe('Requirements You hold the synthetic dial (manipulate) Zorblat turns the dial');
+  });
+
+  it('across every shipped page, no card draws a glyph on a line of its own', () => {
+    let pages = 0;
+    const alone: string[] = [];
+    for (const f of readdirSync('public/ast').filter((x) => x.endsWith('.json.gz'))) {
+      const b = f.replace('.json.gz', '');
+      for (const [slug, tree] of Object.entries(readBucket(b))) {
+        pages++;
+        const html = renderToStaticMarkup(<AstRenderer node={tree} bodyOnly card={CARD} onOpenRef={() => undefined} />);
+        if (html.includes('class="ast-actline"')) alone.push(`${b}:${slug}`);
+      }
+    }
+    expect(pages, 'the corpus was read').toBeGreaterThan(20000);
+    expect(alone.slice(0, 20), `${alone.length} pages still draw a glyph line of its own`).toEqual([]);
+  }, 300_000);
 });

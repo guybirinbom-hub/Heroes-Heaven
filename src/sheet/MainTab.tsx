@@ -214,8 +214,10 @@ const actionId = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-'
 /** The pin key of an action row: what `character.pinned` holds for it. */
 const actionKey = (name: string) => `action:${name}`;
 
-/** The favourite star on a strike row, an action row and the action popup. Renders nothing without
- *  `onPlay` (a read-only sheet has nothing to pin into). */
+/** The "Pin to top" toggle on a strike row, an action row and the action popup. Renders nothing without
+ *  `onPlay` (a read-only sheet has nothing to pin into). Its glyph is a PIN, never the star: the action
+ *  card's header also carries the PinStar ("Add to Pinned"), and two identical stars side by side read as
+ *  one control (the owner, 2026-10-08). The class stays `pin-star` for the styling and the tests. */
 function PinToggle({ k, pinned, onPlay }: { k: string; pinned: ReadonlySet<string>; onPlay?: PlayUpdater }) {
   if (!onPlay) return null;
   const on = pinned.has(k);
@@ -229,7 +231,7 @@ function PinToggle({ k, pinned, onPlay }: { k: string; pinned: ReadonlySet<strin
         onPlay((p) => togglePin(p, k));
       }}
     >
-      <i className="ti ti-star" aria-hidden="true" />
+      <i className="ti ti-pin" aria-hidden="true" />
     </button>
   );
 }

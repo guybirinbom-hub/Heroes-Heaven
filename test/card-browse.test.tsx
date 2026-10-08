@@ -249,6 +249,12 @@ const STEP12_CHANGED: Record<string, string> = {
 const STEP14B_CHANGED: Record<string, string> = {
   'classFeatures:swarm-eidolon': 'embeds 4 class-feature pages (Haunting Visage, Swarming Assault, Redistribute, Sickening Assault)',
 };
+/** Wording merge (docs/card-design.md section 13, "A glyph sits in the line the page prints it in",
+ *  2026-10-08): a glyph the page prints inside a line now draws inside that line, so a frame whose glyph
+ *  stood on a block of its own moves its <p>/<div> boundaries — accepted only when its inline content (every
+ *  word, link and glyph span, in order) is the snapshot's. The browse card is the search popup: no use line
+ *  is hidden there, so no frame may gain or lose a word. */
+const inlineOf = (html: string) => html.replace(/<\/?(?:p|div)\b[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 /** The markup with every embedded stub element (page, compact list, name) taken out, through the DOM. */
 function without14bStubs(html: string): string {
   const host = document.createElement('div');
@@ -320,6 +326,7 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     // batch card premise: eidolon-13 "your eidolon gains the Sickening Assault action"
     const drawsStubs = Object.keys(now).filter((k) => !k.startsWith('items:') && !(k in changed) && /data-stub/.test(now[k].first));
     expect(drawsStubs).toEqual(Object.keys(STEP14B_CHANGED));
+    let moved = 0;
     for (const k of Object.keys(now)) {
       if (now[k].first !== before[k].first || now[k].settled !== before[k].settled) diffs++;
       if (k in changed) {
@@ -329,15 +336,23 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
       if (k in STEP14B_CHANGED) {
         // batch card premise: eidolon-13 "While dispersed, it can use the Swarming Assault activity"
         expect(now[k].first, `${k} (${STEP14B_CHANGED[k]}) changed`).not.toBe(before[k].first);
-        expect(without14bStubs(now[k].first), `${k}: only the stubs changed`).toBe(viaDomHtml(before[k].first));
+        // Wording merge: with the stubs out, the pre-extraction frame — its block boundaries alone may move.
+        // batch card premise: eidolon-13 "your eidolon gains the Sickening Assault action"
+        expect(inlineOf(without14bStubs(now[k].first)), `${k}: only the stubs changed`).toBe(inlineOf(viaDomHtml(before[k].first)));
         expect(now[k].settled, `${k} settled frame`).toBe(before[k].settled);
         continue;
       }
-      expect(now[k].first, `${k} first frame`).toBe(before[k].first);
-      expect(now[k].settled, `${k} settled frame`).toBe(before[k].settled);
+      if (now[k].first === before[k].first && now[k].settled === before[k].settled) continue;
+      // batch card premise: eidolon-13 "your eidolon gains the Redistribute reaction" — a glyph the page prints
+      // in a line draws in it; the words, links and glyphs stay, in order.
+      expect(inlineOf(now[k].first), `${k} first frame`).toBe(inlineOf(before[k].first));
+      expect(inlineOf(now[k].settled ?? ''), `${k} settled frame`).toBe(inlineOf(before[k].settled ?? ''));
+      moved++;
     }
+    // Measured 2026-10-08 on main (2f6ee78 + the wording round) against card-step3-browse-snapshot.json.
     // batch card premise: eidolon-13 "your eidolon gains the Redistribute reaction"
-    expect(diffs).toBe(Object.keys(STEP12_CHANGED).length + Object.keys(STEP14B_CHANGED).length);
+    expect(moved, 'records whose block boundaries moved').toBe(35);
+    expect(diffs).toBe(Object.keys(STEP12_CHANGED).length + Object.keys(STEP14B_CHANGED).length + moved);
   });
 
   it('every branch is in the sample: page, loading placeholder, markdown fallback', async () => {

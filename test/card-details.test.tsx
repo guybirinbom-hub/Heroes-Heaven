@@ -46,6 +46,9 @@ import type { Character, ContentDatabase } from '../src/rules/types';
  *    case red (2 records).
  *  - FeatsTab.tsx rowPreview's `if (rowPagePending(page.bucket, page.id, loaded)) return '';` removed (the row
  *    reads the old import while its page loads) → the "while the page loads" case red.
+ *  - (wording round 2, 2026-10-08) cardModel.ts treeFirst stops reading glyph rows through the renderer's own
+ *    glyphLineLeaves (`n.t === 'row' && false`) — the preview diverging from the popup's joined "Activate
+ *    (manipulate)" line → the corpus case red (1,600 records), then restored byte-exact (sha1 checked).
  */
 const db: ContentDatabase = content();
 const noop = () => undefined;

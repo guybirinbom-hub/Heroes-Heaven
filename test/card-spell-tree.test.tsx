@@ -265,7 +265,8 @@ describe('the popup on the tree lane', () => {
     expect(entries(popup)).toHaveLength(1);
     expect(txt(popup)).not.toMatch(/400 objects|800 objects/);
     expect(popup.querySelector('[data-ours-kind="stringLane"]')).toBeNull();
-    expect(txt(popup)).not.toContain('older import');
+    // batch card premise: spell-2797 "sort up to 500 objects in a minute" — the page draws whole, so no ours footer (its words are "our text" since 2026-10-08).
+    expect(txt(popup)).not.toContain('our text');
     // The other two reprints draw their page too (the page prints no Heightened line at all).
     for (const id of ['sea-of-thought', 'purify-soul-path']) {
       const p = at(spell(id), 6);
@@ -277,14 +278,16 @@ describe('the popup on the tree lane', () => {
 
   it('a same-printing page that omits a Heightened line keeps the string, and its footer names the missing line (rite-of-repatriation)', () => {
     expect(HEIGHTEN_STRING_LANE.has('rite-of-repatriation')).toBe(true);
-    expect(stringLaneFooter('rite-of-repatriation')).toBe("Text from our older import: this spell's Archives page prints no Heightened line for (+1)");
+    // batch card premise: ritual-105 "1 object of up to 4th level" — the owner (2026-10-08): the ours footer speaks player words, no "import".
+    expect(stringLaneFooter('rite-of-repatriation')).toBe('Not from the Archives — our text; the Archives page prints no Heightened line for (+1)');
     expect(stringLaneFooter('fireball')).toBeNull();
     const popup = at(spell('rite-of-repatriation'), 4);
     expect(body(popup)?.getAttribute('data-body')).toBeNull();
     expect(applying(popup)).toHaveLength(1);
     expect(txt(applying(popup)[0])).toMatch(/^Heightened \(\+1\) Increase the maximum target level by 2, the cast time by 1 hour/);
     const foot = popup.querySelector('.sd-body > [data-ours-kind="stringLane"][data-ours]');
-    expect(txt(foot)).toBe("Text from our older import: this spell's Archives page prints no Heightened line for (+1)");
+    // batch card premise: ritual-105 "1 object of up to 4th level" — the owner (2026-10-08).
+    expect(txt(foot)).toBe('Not from the Archives — our text; the Archives page prints no Heightened line for (+1)');
     // The page really prints no Heightened line: the tree cut holds no entry.
     expect(splitSpellTree(trees['rite-of-repatriation'])!.heightening).toEqual([]);
   });
@@ -463,7 +466,8 @@ describe('the popup on the tree lane', () => {
     expect([...popup.querySelectorAll('.up-heighten')].map((e) => txt(e))).toEqual(['(→ 10d6)']);
     // Fixer round 3 (nit 7; section 7 "No own page"): the no-page footer, marked ours, last.
     const foot = popup.querySelector('.sd-body > [data-ours-kind="noPage"][data-ours]');
-    expect(txt(foot)).toBe('No Archives page — text from our older import');
+    // batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate" — the owner (2026-10-08): player words, no "import".
+    expect(txt(foot)).toBe('Not from the Archives — our text');
     expect([...popup.querySelectorAll('.sd-body > *')].pop()).toBe(foot);
     const hb = at({ ...spell('fireball'), id: 'hb-lane17-blast' }, 5);
     expect(body(hb)?.getAttribute('data-body')).toBeNull();
@@ -474,7 +478,8 @@ describe('the popup on the tree lane', () => {
     const official = noTree.filter((id) => spell(id).source?.book);
     expect(official).toEqual(['anima-invocation-modified', 'aspirational-state', 'commune-with-nature', 'create-mycoguardian', 'destroy-mindscape', 'rite-of-cleansing-flame', 'unfettered-mark']);
     expect(noTree.filter((id) => !official.includes(id))).toEqual(['restore-senses', 'searing-light', 'wall-of-light']);
-    for (const id of official) expect(txt(at(spell(id), 10).querySelector('[data-ours-kind="noPage"]')), id).toBe('No Archives page — text from our older import');
+    // batch card premise: ritual-7 "natural resources within a 3-mile radius" — commune-with-nature, one of the 7; the owner (2026-10-08).
+    for (const id of official) expect(txt(at(spell(id), 10).querySelector('[data-ours-kind="noPage"]')), id).toBe('Not from the Archives — our text');
     for (const id of noTree.filter((x) => !official.includes(x))) expect(at(spell(id), 10).querySelector('[data-ours-kind="noPage"]'), id).toBeNull();
     expect(at(spell('fireball'), 5).querySelector('[data-ours-kind="noPage"]')).toBeNull();
   });
@@ -487,7 +492,8 @@ describe('the popup on the tree lane', () => {
     const popup = at(spell('aon-litany-against-sloth'), 5);
     expect(body(popup)?.getAttribute('data-body')).toBeNull();
     const foot = popup.querySelector('.sd-body > [data-ours-kind="notOwnPage"][data-ours]');
-    expect(txt(foot)).toBe('Printed inside Litany Against Sloth — text from our older import');
+    // batch card premise: feat-239 "you can cast the litany against sloth devotion spell" — the owner (2026-10-08): player words, no "import".
+    expect(txt(foot)).toBe('Printed inside Litany Against Sloth — our text');
     expect([...popup.querySelectorAll('.sd-body > *')].pop()).toBe(foot);
     expect(popup.querySelector('[data-ours-kind="noPage"]'), 'it has a page: not the no-page footer').toBeNull();
     // The 8, exactly the drift file's notOwnPage list; a spell page and a no-page spell carry no such footer.

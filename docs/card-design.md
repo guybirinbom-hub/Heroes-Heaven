@@ -136,7 +136,7 @@ Repo rules that hold throughout:
 | Spell notes N2 | ours `spellNote` after the page; the note's own DescBody never gets a tree key | spell-notes.test.tsx (8); its "You instantly transport yourself" assertion is re-pointed with a premise citation only if the tree wording differs |
 | withPicks "Your choice" / A-C markers / record note | ours `choice` / `mark` / `note` | card-ours: air-gate + junction shows no raw markdown; sorcerer 3's Bloodline marker in the popup AND the pin; caustic-nectar shows its note. batch001-surfaces assertions move from string to screen with flip-audit citations |
 | pickSuffix in the name | Header subtitle only; lookup by id | Pinned "Caustic Nectar (Acid)" resolves its tree (T4); builder-choice-sets (34) |
-| classFeatureDescription per-class strip (featureText.ts:16-34) | For the 25 shared features, the fallback lane shows the viewer's own class paragraph. The comma-list lead bug ("Witch, Wizard"; the file matches single class names only) is fixed. Footer: "No Archives page for your class — text from our older import". After the regen, per-class pages (161 of 175 pairs found) | feature-text.test.ts gets one case per class for weapon-expertise / reflex-expertise / perception-mastery. Render: wizard 11 Weapon Expertise has no "martial weapons"; cleric Perception Expertise says expert; druid Weapon Expertise has no "martial" |
+| classFeatureDescription per-class strip (featureText.ts:16-34) | For the 25 shared features, the fallback lane shows the viewer's own class paragraph. The comma-list lead bug ("Witch, Wizard"; the file matches single class names only) is fixed. Footer: "Not from the Archives — our text for your class". After the regen, per-class pages (161 of 175 pairs found) | feature-text.test.ts gets one case per class for weapon-expertise / reflex-expertise / perception-mastery. Render: wizard 11 Weapon Expertise has no "martial weapons"; cleric Perception Expertise says expert; druid Weapon Expertise has no "martial" |
 | Subclass variant swap (FeatsTab.tsx:186-192) | Kept as the "which benefit" key; S-own cut or the F6 fallback | second-doctrine-cloistered-cleric has "Fortitude", no "Final Doctrine" |
 | FeatDetail glyph + Prerequisites field | The page's Prerequisites line replaces the field row when a tree exists (102 worded differently, 11 empty); glyph kept | bellflower-dedication: Prerequisites once, page wording |
 | enhancedBy | ours `enhancement` | automaton-enhancement (23) plus a render with `data-ours` |
@@ -179,8 +179,10 @@ Repo rules that hold throughout:
 - **No own page.** This covers 811 official records (344 items, 199 class features, 199 actions, 26 familiar abilities, 25 feats, 7 spells …), ids on not-own-page.json, and spells still on the string lane.
   - The same shell renders the fallback text through DescBody's markdown / rich-HTML / dirAuto branches.
   - Header and stat lines come from fields plus the description's bold preamble (`stripPrintedPreamble`), so no label shows twice.
-  - Footer: "No Archives page — text from our older import". Decided under R9: every option is acceptable, and the player can tell unchecked text from print.
-- **Shared class features.** Footer: "No Archives page for your class — text from our older import", because a page exists, just another class's.
+  - Footer: "Not from the Archives — our text". Decided under R9: every option is acceptable, and the player can tell unchecked text from print. If the page could not load on this device: "The Archives page could not load on this device — our text".
+- **Shared class features.** Footer: "Not from the Archives — our text for your class", because a page exists, just another class's.
+- **Spells kept on the string lane.** Footer: "Not from the Archives — our text; the Archives page prints no Heightened line for <X>".
+- **A record printed inside another page.** Footer: "Printed inside <title> — our text".
 - **App-authored records** (modes 571, runes 160, stances 131 …). No no-page line, because they were never print.
 - **Homebrew.**
   - Footer "Homebrew". Looked up by id only, so it never matches an official page by name.
@@ -338,7 +340,7 @@ Decided without asking:
 
 **Wrong claims dropped from the three designs:**
 - The heightening cut does not catch the summons by a parenthesis rule. A separate matcher is added.
-- The shared-feature footer no longer says "No Archives page".
+- The shared-feature footer names the viewer's class instead of saying the record has no page.
 - Q27 is not cited for skill tiers.
 - The browse card needs no SELF_SIZED change; the mine shell does.
 - ActionDetailModal needs a hoist, not just an export.
@@ -372,6 +374,23 @@ Decided without asking:
   engine-page-agree check is deferred to the rebuild lane; step 4 builds only card-truth-check, card-parity and
   card-only-check.
 - **Vocabulary for the owner:** he does not know "pip" — say "use counter".
+- **Footer words are player words (2026-10-08).** Owner, on a footer that said our text came from an import:
+  "why is it talking about the import in the app? the user doesn't need to see that." The ours marker stays;
+  its words never say "import", "older", "lane" or anything a developer says. Section 7 holds the decided lines;
+  test/card-footer-wording.test.ts keeps every card footer free of those words.
+- **A glyph sits in the line the page prints it in (2026-10-08).** Measured against the mirror's markdown over
+  all 20,787 shipped pages: every block-level glyph the card still drew on a line of its own (792) sits inside a
+  line of its page — an embedded activity's header ("Transcendence ⟨2⟩ (Spirit, Transcendence) …"), a glyph that
+  opens its line ("⟨1⟩ The target is launched …") — and so does the text after every bold "Activate ⟨g⟩" (2,216).
+  src/sheet/cardModel.ts holds those lines once (lineFrags, glyphLedLine, activateLine, glyphLineLeaves); the
+  renderer and the row preview both read them. A glyph keeps a line of its own only where the page prints it
+  alone; on 2026-10-08 no shipped page does (test/bug-inline-glyph.test.tsx renders the corpus).
+  On the held-record legacy path (hideMeta) a joined line loses only its META label: the META paragraph and
+  the continuation the parser split off it leave, as before; the glyph and the words the page prints after it
+  stay ("Ranged ⟨1⟩ As Melee, but also lists range…" on rules:reading-creature-statistics). A glyph row whose
+  first label the surface printed loses that label only. Measured over every shipped page in four modes
+  against 2f6ee78: the card, the search popup and the every-label-printed card change no word; hideMeta
+  pages only gain words (115, the activity headers' own Trigger / Frequency / Requirements / Cost lines).
 - **Tree hygiene:** another chat is live in this tree (it edits test/bug-homebrew-stat-block-skipped.test.tsx and owns the
   26 modified tracked files listed by `git status`, among them package.json, scripts/data/effect-backfill.json,
   scripts/import-core-v2.mjs, scripts/dropped-inline-check.mjs, src/sheet/CompanionsTab.tsx, src/rules/sources.ts). Never

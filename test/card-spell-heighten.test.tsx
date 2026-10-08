@@ -279,7 +279,7 @@ describe('ghostly-shift: the ordinary Heightened group holds no Amp entry', () =
     expect(txt(amp)).toContain('Amp Heightened (+2) Increase the damage dealt by phasing through a creature by 1d6.');
     expect(amp!.closest('.sd-heighten'), 'never inside the ordinary Heightening box').toBeNull();
     expect(txt(popup.querySelector('.sd-heighten'))).not.toMatch(/\bAmp\b/);
-    // The page's own body (the description string's "Your body becomes insubstantial …" is the older import).
+    // The page's own body (the description string's "Your body becomes insubstantial …" is our older text).
     // batch card premise: spell-2563 "You gain resistance 2 to all damage"
     expect(txt(body(popup))).toBe('You gain resistance 2 to all damage (except force).');
   });

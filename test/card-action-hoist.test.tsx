@@ -275,13 +275,22 @@ describe('every Main-tab action popup, opened through MainTab', () => {
        card may equal the legacy markup it replaced. A snapshot written on the step-9 tree (or with the
        switch off) compares byte-equal outright: no row is on the card list then. Measured 2026-10-06
        against the pre-step-9 snapshot (HEAD 7945973): the counts are pinned below. */
+    /* Wording merge (2026-10-08, the owner: the two stars differ): a popup's "Pin to top" button draws a pin
+       glyph (ti-pin), no longer the PinStar's ti-star. Compared with that one glyph put back, a popup that
+       did not move onto the card is byte-equal — measured on the pre-hoist snapshot: the glyph alone
+       changed 6 popups, "Recover" in each of the six scenarios; every count below is unchanged by it. */
+    const PIN_NOW = 'title="Pin to top" aria-label="Pin to top"><i class="ti ti-pin';
+    const legacyOf = (html: string) => html.split(PIN_NOW).join('title="Pin to top" aria-label="Pin to top"><i class="ti ti-star');
     const onCard = Object.keys(before).filter((k) => popups[k].includes('card-mine') && !before[k].includes('card-mine'));
-    const changed = Object.keys(before).filter((k) => popups[k] !== before[k]);
-    const unchanged = Object.keys(before).filter((k) => popups[k] === before[k]);
+    const changed = Object.keys(before).filter((k) => legacyOf(popups[k]) !== before[k]);
+    const unchanged = Object.keys(before).filter((k) => legacyOf(popups[k]) === before[k]);
+    const pinOnly = unchanged.filter((k) => popups[k] !== before[k]);
     console.log(`card-action-hoist: ${Object.keys(before).length} popups, ${changed.length} changed, ${onCard.length} now the record's mine card`);
     // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
     expect(changed.filter((k) => !onCard.includes(k)), 'a popup that did not move onto the card changed').toEqual([]);
-    for (const k of Object.keys(before)) if (!onCard.includes(k)) expect(popups[k], k).toBe(before[k]);
+    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid" — "Pin to top" draws a pin, the PinStar a star (owner, 2026-10-08).
+    for (const k of Object.keys(before)) if (!onCard.includes(k)) expect(legacyOf(popups[k]), k).toBe(before[k]);
+    if (CARD_ON.actionDetail) expect(pinOnly.map((k) => k.split('|').slice(3).join('|')), 'popups changed only by the pin glyph').toEqual(Array(6).fill('Recover'));
     // batch card premise: action-2292 "Trigger An ally is about to use an action that requires a skill check or attack roll"
     expect(onCard.filter((k) => !changed.includes(k))).toEqual([]);
     /* Pinned independently of the new markup (fixer round 3): the rule above lets any popup that now

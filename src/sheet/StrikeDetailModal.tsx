@@ -146,11 +146,11 @@ export function strikeCardPin(pin: PinDescApi, cardNode: DescNode, starNode: Des
  *    (leadControls): the same buttons, the same numbers, the same gate — on the page, loading and no-page
  *    lanes alike.
  *  - A weapon with no own page (homebrew, a record the Archives do not have, a not-own-page id) shows its
- *    old text through the card's no-page lane with that lane's footer line ("Homebrew" / "No Archives
- *    page — text from our older import").
+ *    old text through the card's no-page lane with that lane's footer line ("Homebrew" / "Not from the
+ *    Archives — our text").
  *  - A strike with no weapon (Fist, blast, natural attack) names no record: no page is looked up by its
  *    name (rule 2), and the app's blurb is an ours line (strikeOursLines). It is app-authored, never
- *    print, so it carries no "older import" line (section 7, "App-authored records").
+ *    print, so it carries no no-page footer (section 7, "App-authored records").
  *  - The PinStar pins the step-19 node it always pinned ({key:'items', slug, title, mode:'mine'} for a
  *    weapon; the key-only node for a strike with no weapon), through strikeCardPin.
  */

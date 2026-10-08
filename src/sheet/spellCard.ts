@@ -296,12 +296,12 @@ const LANE_FILE = HEIGHTEN_STRING_LANE_JSON as HeightenStringLaneFile;
  *  scripts/heighten-tree-parity.mjs --write; shrink-only, checked both ways by test/card-spell-tree.test.tsx). */
 export const HEIGHTEN_STRING_LANE: ReadonlySet<string> = new Set(LANE_FILE.ids);
 
-/** The marked footer of a spell kept on the string lane: the text is our older import, and the reason is
+/** The marked footer of a spell kept on the string lane: the text is ours, not the page's, and the reason is
  *  the line its (same-printing) Archives page does not print. Null for any spell not on the string lane. */
 export function stringLaneFooter(id: string, file: HeightenStringLaneFile = LANE_FILE): string | null {
   if (!file.ids.includes(id)) return null;
   const missing = file.missing?.[id] ?? [];
-  return `Text from our older import: this spell's Archives page prints no Heightened line for ${missing.length ? missing.join(' or ') : 'what this text heightens'}`;
+  return `Not from the Archives — our text; the Archives page prints no Heightened line for ${missing.length ? missing.join(' or ') : 'what this text heightens'}`;
 }
 
 /** The page cut a spell's tree body would draw, ignoring the parity list: a spell / ritual page with a
@@ -370,11 +370,11 @@ export function printedInsideTitle(spell: Pick<Spell, 'id'>, tree: AstNode | und
 }
 
 /** The ours footer such a record carries until the spells surface draws page slices (the orchestrator's
- *  round-3 ruling): its text is the string, our older import. Null when the record is not printed inside
+ *  round-3 ruling): its text is the string, ours. Null when the record is not printed inside
  *  another page. */
 export function printedInsideFooter(spell: Pick<Spell, 'id'>, tree: AstNode | undefined): string | null {
   const title = printedInsideTitle(spell, tree);
-  return title ? `Printed inside ${title} — text from our older import` : null;
+  return title ? `Printed inside ${title} — our text` : null;
 }
 
 /* ---------------------------------------------------------------------------------------------- */

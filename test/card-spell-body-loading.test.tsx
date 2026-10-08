@@ -22,8 +22,8 @@ import type { Spell } from '../src/rules/types';
  *    way — never the old imported description, never the old string Heightened entries — and the page body
  *    once it lands.
  *  - A spell the parity gate keeps on the string lane (src/data/heighten-string-lane.json) shows its string
- *    body at once (that IS what it will show) and carries a marked ours footer line saying the text is our
- *    older import and why; a tree-lane spell carries no such line.
+ *    body at once (that IS what it will show) and carries a marked ours footer line saying the text is ours,
+ *    not the Archives', and why; a tree-lane spell carries no such line.
  *
  * Rendered through the REAL SpellDetail on the shipped records; the tracked public/ast/spells bucket is
  * served through a fetch stub held back by a gate for the first case (the same pattern as
@@ -127,7 +127,8 @@ describe('while the spells page loads', () => {
 });
 
 describe('the spells the parity gate keeps on the string lane are marked as our older text', () => {
-  it('each of the listed spells ends with the ours older-import line, after its string body and entries', async () => {
+  // batch card premise: ritual-105 "1 object of up to 4th level" — the owner (2026-10-08): the ours line speaks player words, no "import".
+  it('each of the listed spells ends with the ours "Not from the Archives" line, after its string body and entries', async () => {
     await loaded();
     expect(HEIGHTEN_STRING_LANE.size).toBeGreaterThan(0);
     for (const id of HEIGHTEN_STRING_LANE) {
@@ -136,26 +137,30 @@ describe('the spells the parity gate keeps on the string lane are marked as our 
       expect(line, id).not.toBeNull();
       expect(line!.hasAttribute('data-ours'), id).toBe(true);
       expect(txt(line), id).toBe(OLDER(id));
-      expect(txt(line), id).toMatch(/^Text from our older import: this spell's Archives page prints no Heightened line for \S/);
+      // batch card premise: ritual-105 "1 object of up to 4th level" — the owner (2026-10-08): player words, no "import".
+      expect(txt(line), id).toMatch(/^Not from the Archives — our text; the Archives page prints no Heightened line for \S/);
       const kids = [...popup.querySelectorAll('.sd-body > *')];
       expect(kids[kids.length - 1], `${id}: the line is the footer, last`).toBe(line);
       expect(popup.querySelector('[data-body="tree"]'), id).toBeNull();
     }
   });
 
-  it('a tree-lane spell, a spell with no page and a homebrew spell carry no older-import string-lane line; the no-page spell carries the no-page footer', async () => {
+  // batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate" — the owner (2026-10-08): player words, no "import".
+  it('a tree-lane spell, a spell with no page and a homebrew spell carry no string-lane line; the no-page spell carries the no-page footer', async () => {
     await loaded();
     for (const s of [spell('fireball'), { ...spell('fireball'), id: 'lane17-synth-no-page' }, { ...spell('fireball'), id: 'hb-lane17-blast' }]) {
       const popup = open(<SpellDetail spell={s} maxRank={5} atRank={5} onClose={() => undefined} />);
       expect(popup.querySelector('[data-ours-kind="stringLane"]'), s.id).toBeNull();
       // Fixer round 3 (orchestrator decision on nit 7): a spell with no page now says so — section 7's
-      // "No Archives page — text from our older import", marked ours — so "older import" is expected
-      // there and only there; the tree-lane spell and the homebrew id still never say it.
+      // "Not from the Archives — our text", marked ours — so "our text" is expected there and only
+      // there; the tree-lane spell and the homebrew id still never say it.
       if (s.id === 'lane17-synth-no-page') {
         const foot = popup.querySelector('.sd-body > [data-ours-kind="noPage"][data-ours]');
-        expect(txt(foot), s.id).toBe('No Archives page — text from our older import');
+        // batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate" — the owner (2026-10-08).
+        expect(txt(foot), s.id).toBe('Not from the Archives — our text');
       } else {
-        expect(txt(popup), s.id).not.toContain('older import');
+        // batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate" — the owner (2026-10-08).
+        expect(txt(popup), s.id).not.toContain('our text');
       }
     }
   });

@@ -28,7 +28,7 @@ import type { DescNode } from '../src/sheet/descref';
  *    no-page lanes; never on a page opened from a link inside the card (a browse card, section 6).
  *  - A weapon with no own page shows its old text with the no-page line; a homebrew weapon with
  *    "Homebrew"; a strike with no weapon (Fist, blast, natural attack) looks no page up by its name and
- *    shows the app's blurb as an ours line (section 4 kind `blurb`), with no "older import" line.
+ *    shows the app's blurb as an ours line (section 4 kind `blurb`), with no no-page line.
  *  - A seeded sample (mulberry32 20261002, 60 weapons with a page): every line the strike card draws
  *    outside its controls and its ours box is a line of the weapon's page (the browse card for the same
  *    {items, id}); the old imported text never shows where the page does not print it; the controls
@@ -299,7 +299,7 @@ describe.runIf(cardOn('strikeDetail'))('card step 10: the strike popup is the we
     expect(old.length).toBeGreaterThan(0);
     // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
     expect(txt(body.querySelector('.sd-desc'))).toContain(old);
-    expect(txt(body.querySelector('[data-ours-kind="noPage"]'))).toBe('No Archives page — text from our older import');
+    expect(txt(body.querySelector('[data-ours-kind="noPage"]'))).toBe('Not from the Archives — our text');
   });
 
   // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
@@ -318,7 +318,7 @@ describe.runIf(cardOn('strikeDetail'))('card step 10: the strike popup is the we
   });
 
   // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
-  it('the Fist: the blurb is an ours line (kind blurb), no page, no "older import" line; the star pins the key-only node it always pinned', async () => {
+  it('the Fist: the blurb is an ours line (kind blurb), no page, no no-page line; the star pins the key-only node it always pinned', async () => {
     const { c } = wielder('longsword', 1);
     const fist = deriveStrikes(c, db).find((x) => x.instanceId === 'fist')!;
     const host = await mount(strikeEl(fist, c));

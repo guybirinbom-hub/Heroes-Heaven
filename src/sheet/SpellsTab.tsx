@@ -164,7 +164,7 @@ export function SpellDetail({
   const fromPage = lane === 'page';
   const onTree = bodyLane === 'tree' && !!cut;
   // A spell the parity gate keeps on the string lane HAS a page — the same printing, which prints no line for
-  // a Heightened entry our text carries; the text it shows is our older import, so it carries a marked footer
+  // a Heightened entry our text carries; the text it shows is ours, not the page's, so it carries a marked footer
   // line naming that entry (section 7, section 10: "show our older text, marked as such"). A spell whose page
   // is a newer printing than our text is not kept: the page wins (owner rule R12; heighten-tree-parity.mjs).
   const keptOnString = !!pageId && HEIGHTEN_STRING_LANE.has(spell.id);
@@ -409,7 +409,7 @@ export function SpellDetail({
           {noPage && (
             // Section 7 "No own page": the footer RecordCard draws for the same case, marked ours.
             <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">
-              No Archives page — text from our older import
+              Not from the Archives — our text
             </p>
           )}
           {insideFooter && (

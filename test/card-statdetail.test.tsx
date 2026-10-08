@@ -301,11 +301,12 @@ describe.runIf(CARD_ON.statDetail)('card step 5: StatDetailModal full text is th
     const body = modal!.querySelector('.info-body')!;
     expect(squash(body.querySelector('.sd-desc')?.textContent).length, 'the old text is shown').toBeGreaterThan(20);
     const line = body.querySelector('.card-nopage');
-    expect(line && squash(line.textContent)).toBe('No Archives page — text from our older import');
+    // batch card premise: rules-1431 "as long as you meet its prerequisites" — the owner (2026-10-08): player words, no "import".
+    expect(line && squash(line.textContent)).toBe('Not from the Archives — our text');
     expect(line!.matches('[data-ours].sd-ours'), 'marked ours').toBe(true);
   });
 
-  it('a record whose page bucket could not load says so, never "No Archives page" (section 2 rule 3)', async () => {
+  it('a record whose page bucket could not load says so, never "Not from the Archives" (section 2 rule 3)', async () => {
     // A heritage's bucket is not served here, so it loads as {} — what loadBucketAst gives on any fetch
     // or decode error. The index names the slug, so the record HAS a page this device could not read.
     const id = Object.keys(recs('heritages')).filter((s) => astIndex[s] === 'heritages' && (recs('heritages')[s].description ?? '').length > 40).sort()[0];
@@ -315,9 +316,10 @@ describe.runIf(CARD_ON.statDetail)('card step 5: StatDetailModal full text is th
     expect(modal, 'the fallback lane of the mine card').toBeTruthy();
     expect(squash(modal!.querySelector('.sd-desc')?.textContent).length, 'the old text is shown').toBeGreaterThan(20);
     const line = modal!.querySelector('.card-nopage');
-    expect(line && squash(line.textContent)).toBe('The Archives page could not load on this device — text from our older import');
+    // batch card premise: rules-128 "You select a heritage at 1st level" — the owner (2026-10-08): player words, no "import".
+    expect(line && squash(line.textContent)).toBe('The Archives page could not load on this device — our text');
     expect(line!.matches('[data-ours].sd-ours[data-ours-kind="pageFailed"]'), 'marked ours').toBe(true);
-    expect(squash(modal!.textContent)).not.toMatch(/No Archives page/);
+    expect(squash(modal!.textContent)).not.toMatch(/Not from the Archives/);
   });
 
   it('closing the card returns to the stat popup (the X, a click outside, Escape)', async () => {
@@ -402,7 +404,8 @@ describe('card step 5: the mine card footer order (section 2 rule 4.6), on both 
     expect(increasing(at), sels.map((s, i) => `${s}@${at[i]}`).join(' ')).toBe(true);
     expect(card.querySelectorAll('.sd-unprinted').length, 'the empty note is said once').toBe(1);
     expect(squash(card.querySelector('.sd-unprinted')!.textContent)).toBe('Synthetic empty note.');
-    expect(squash(card.querySelector('.card-nopage')!.textContent)).toBe('No Archives page — text from our older import');
+    // batch card premise: rules-1431 "as long as you meet its prerequisites" — the owner (2026-10-08): player words, no "import".
+    expect(squash(card.querySelector('.card-nopage')!.textContent)).toBe('Not from the Archives — our text');
   });
 
   it('both lanes mark our field-derived Source line ours, with the same markup', async () => {

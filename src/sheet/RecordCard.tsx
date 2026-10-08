@@ -104,8 +104,8 @@ const noOpen = () => undefined;
  *    (astStubs.ts): a weapon's group effect, an armor's specialization.
  *  - While the page loads: the quiet placeholder ItemDetail always showed (no flash of the old text).
  *  - No-page lane: the old text through DescBody's own branches, then the footer lines every mine card
- *    carries (our Source line, the RemasteredLine, desk #152's empty note, "Homebrew" / "No Archives page
- *    — text from our older import" / the could-not-load line).
+ *    carries (our Source line, the RemasteredLine, desk #152's empty note, "Homebrew" / "Not from the
+ *    Archives — our text" / the could-not-load line).
  *  - A linked word (and the "Remastered as" name) opens the browse card over the item, Back returning to
  *    it — what the item's DescBody did.
  */
@@ -169,8 +169,8 @@ function InsetRecordCard({ record, node, scope, printed, ours, footer, fallbackT
             : !root.key || pageFailed === undefined
               ? null
               : pageFailed
-                ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="pageFailed">The Archives page could not load on this device — text from our older import</p>
-                : <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">No Archives page — text from our older import</p>}
+                ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="pageFailed">The Archives page could not load on this device — our text</p>
+                : <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">Not from the Archives — our text</p>}
         {footer}
       </div>
       {drillCard}
@@ -388,8 +388,8 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
                 : !cur.key || pageFailed === undefined
                   ? null
                   : pageFailed
-                    ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="pageFailed">The Archives page could not load on this device — text from our older import</p>
-                    : <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">No Archives page — text from our older import</p>}
+                    ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="pageFailed">The Archives page could not load on this device — our text</p>
+                    : <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">Not from the Archives — our text</p>}
             {footer}
           </div>
         </div>
@@ -474,7 +474,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
   );
 }
 
-/** Section 2 rule 3: "No Archives page" is a claim, so the mine card makes it only when the record's
+/** Section 2 rule 3: "Not from the Archives" is a claim, so the mine card makes it only when the record's
  *  page bucket ARRIVED and does not hold it. loadBucketAst resolves {} on any fetch or decode error (no
  *  DecompressionStream on an old WebView, offline with the bucket not cached — astStore.ts
  *  fetchBucketAst), and no shipped bucket is empty, so an empty bucket means "did not load". A slug the

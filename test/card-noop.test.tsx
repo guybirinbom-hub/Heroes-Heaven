@@ -211,11 +211,12 @@ const STEP12_CHANGED_NOOP: Record<string, string> = {
  *  (spellCardModel body 'tree'); its body differing is then 'tree body', never 'preamble stripped'. The
  *  body starts at the first `<div class="sd-desc"` (the tree body carries data-body="tree").
  *   - 'no-page footer' (step 17 fixer round 3, the orchestrator's decision on nit 7): an official spell with
- *     no page ends with section 7's ours footer "No Archives page — text from our older import"; with that
+ *     no page ends with section 7's ours footer "Not from the Archives — our text"; with that
  *     one line taken out the rest is compared. */
 const LANE_ATTR = / data-lane="(?:page|field)"/;
 // batch card: step17-nit7 — the no-page spell's section-7 footer is ours (data-ours-kind="noPage"), never print.
-const NOPAGE_FOOTER = '<p class="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">No Archives page — text from our older import</p>';
+// batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate" — the owner (2026-10-08): its words are player words, no "import".
+const NOPAGE_FOOTER = '<p class="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">Not from the Archives — our text</p>';
 function step16SpellChange(now: { markup: string; rows: [string, string][] }, before: { markup: string; rows: [string, string][] }, treeBody = false): string {
   const out: string[] = [];
   const unfooted = now.markup.replace(NOPAGE_FOOTER, '');
@@ -326,6 +327,33 @@ const STEP14B_CHANGED_NOOP: Record<string, string> = {
   'classFeatures:explode': 'the name of aon:action-902',
   'classFeatures:first-implement-and-esoterica': 'embeds actions:exploit-vulnerability',
 };
+/** Wording merge (docs/card-design.md section 13, "A glyph sits in the line the page prints it in",
+ *  2026-10-08): a glyph the page prints inside a line now draws inside that line, so a render whose glyph
+ *  stood on a block of its own moves its <p>/<div> boundaries — accepted only when its inline content (every
+ *  word, link and glyph span, in order) is the snapshot's (`inlineOf`). A held-record body (hideMeta) may
+ *  also GAIN the page's own use lines its activity header now carries ("Trigger …", "Frequency …"): those
+ *  records are named here with the line they gain, and must keep every word they drew before, in order. */
+const WORDING_GAINED_NOOP: Record<string, string> = {
+  // batch card premise: feat-6134 "Trigger You fall at least 10 feet and take no damage from the fall"
+  'actions:plummeting-roll': 'gains "Trigger You fall at least 10 feet…; Effect…" on its "Plummeting Roll ⟨r⟩" line',
+  // batch card premise: background-396 "Trigger You're about to roll initiative"
+  'actions:seasonal-boon-outskirt': 'gains "Trigger You\'re about to roll initiative; Effect…" on its "Seasonal Boon ⟨r⟩" line',
+  // batch card premise: feat-8104 "Frequency once per round"
+  'actions:winged-leap': 'gains "Frequency once per round; Effect…" on its "Winged Leap ⟨1⟩" line',
+  // batch card premise: feat-5019 "Frequency once per hour"
+  'feats:patrons-claim': 'gains "Frequency once per hour; Effect…" on its "Patron’s Claim ⟨2⟩" line',
+};
+/** The inline content of a render: its <p>/<div> tags taken out, whitespace collapsed. */
+const inlineOf = (markup: string) => markup.replace(/<\/?(?:p|div)\b[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+/** Its words, a glyph as ⟨g⟩. */
+const wordsOf = (markup: string) => inlineOf(markup).replace(/<span class="ast-ag"[^>]*>[^<]*<\/span>/g, ' ⟨g⟩ ').replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean);
+/** Every word of `before` is in `now`, in order (only gains). */
+function keepsEveryWord(before: string, now: string): boolean {
+  const a = wordsOf(before);
+  let i = 0;
+  for (const w of wordsOf(now)) if (i < a.length && w === a[i]) i++;
+  return i === a.length;
+}
 /** The markup with every embedded stub element (page, compact list, name) taken out, through the DOM. */
 function without14bStubs(markup: string): string {
   const host = document.createElement('div');
@@ -508,6 +536,8 @@ describe('card step 1 (G0): the move changes no markup', () => {
     expect(drawsStubs.sort()).toEqual(Object.keys(STEP14B_CHANGED_NOOP).sort());
     for (const k of Object.keys(now.ast)) expect(/data-stub/.test(now.ast[k].descBody + now.ast[k].body), `${k} body paths`).toBe(false);
     let diffs = 0;
+    let moved = 0;
+    const gained: string[] = [];
     for (const k of Object.keys(now.ast)) {
       for (const f of ['descBody', 'body', 'modal'] as const) {
         if (now.ast[k][f] !== before.ast[k][f]) diffs++;
@@ -515,13 +545,27 @@ describe('card step 1 (G0): the move changes no markup', () => {
         if (f === 'modal' && k in STEP14B_CHANGED_NOOP) {
           // batch card premise: class-feature-479 "all at least know how to make their innovation Explode"
           expect(now.ast[k][f], `${k} modal (${STEP14B_CHANGED_NOOP[k]}) changed`).not.toBe(before.ast[k][f]);
-          expect(without14bStubs(now.ast[k][f]), `${k} modal: only the stubs changed`).toBe(viaDom(before.ast[k][f]));
+          // Wording merge: with the stubs out, the pre-move popup — byte for byte, or with only its block
+          // boundaries moved (inlineOf).
+          // batch card premise: class-feature-1281 "You gain the Double Spellstrike activity"
+          expect(inlineOf(without14bStubs(now.ast[k][f])), `${k} modal: only the stubs changed`).toBe(inlineOf(viaDom(before.ast[k][f])));
           continue;
         }
-        expect(now.ast[k][f], `${k} ${f}`).toBe(before.ast[k][f]);
+        if (now.ast[k][f] === before.ast[k][f]) continue;
+        // batch card premise: class-feature-1281 "You gain the Double Spellstrike activity" — a glyph the
+        // page prints in a line draws in it; the words, links and glyphs stay, in order.
+        if (inlineOf(now.ast[k][f]) === inlineOf(before.ast[k][f])) { moved++; continue; }
+        gained.push(`${k} ${f}`);
+        expect(f, `${k} modal: only its block boundaries may move`).not.toBe('modal');
+        expect(keepsEveryWord(before.ast[k][f], now.ast[k][f]), `${k} ${f} keeps every word it drew`).toBe(true);
       }
       if (k in changed) expect(now.ast[k].descBody, `${k} (${changed[k]}) changed`).not.toBe(before.ast[k].descBody);
     }
+    // Wording merge: the records that gained use lines are exactly the named ones; the boundary moves counted.
+    // batch card premise: feat-5019 "Frequency once per hour"
+    expect([...new Set(gained.map((g) => g.split(' ')[0]))].sort()).toEqual(Object.keys(WORDING_GAINED_NOOP).sort());
+    // Measured 2026-10-08 on main (2f6ee78 + the wording round) against card-step1-premove.json.
+    expect(moved, 'renders whose block boundaries moved').toBe(224);
     // Card step 11: with CARD_ON.featDetail the feat popups are the mine card by design (60 of 60 differ);
     // their byte-equality is the legacy assertion and runs while the switch is off. Items stay.
     // batch card premise: feat-928 "Prerequisites Charisma 14"
@@ -577,7 +621,7 @@ describe('card step 1 (G0): the move changes no markup', () => {
       }
     }
     // batch card premise: methodology-5 "You gain the Quick Tincture action"
-    expect(diffs).toBe(Object.keys(now.ast).filter((k) => k in changed).reduce((n, k) => n + ['descBody', 'body', 'modal'].filter((f) => now.ast[k][f as 'body'] !== before.ast[k][f as 'body']).length, 0) + Object.keys(STEP14B_CHANGED_NOOP).length);
+    expect(diffs).toBe(Object.keys(now.ast).filter((k) => k in changed).reduce((n, k) => n + ['descBody', 'body', 'modal'].filter((f) => now.ast[k][f as 'body'] !== before.ast[k][f as 'body']).length, 0) + Object.keys(STEP14B_CHANGED_NOOP).length + moved + gained.length);
     // The exported functions reproduce TODAY's rows — the rows the pre-move popups printed.
     for (const id of itemIds) expect(itemRowsFn(id), `item ${id} vs pre-move`).toEqual(before.items[id].rows);
     featRows.forEach((r, i) => expect(featRowsFn(r, i), `${r.bucket} ${r.id} vs pre-move`).toEqual(before.feats[`${r.bucket}:${r.id}`].rows));

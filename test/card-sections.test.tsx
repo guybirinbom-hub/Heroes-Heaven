@@ -61,7 +61,7 @@ import PAGE_SLICES from '../src/data/page-slices.json';
  *       exactly those classes; the mine card draws a class feature the viewer's class shares whose page is
  *       another class's (sharedFeatureFallback — the guard's CLASS_MISMATCH rule: Weapon Specialization's
  *       page is the Thaumaturge's, Reflex Expertise's the Guardian's) from our older text, cut to the
- *       viewer's class, with "No Archives page for your class — text from our older import".
+ *       viewer's class, with "Not from the Archives — our text for your class".
  *
  * Every rendered case goes through the REAL StatDetailModal "Full text" (the mine card, scoped by the
  * synthesized character) or the real RecordCard (browse), never a re-implementation. Characters are
@@ -703,7 +703,8 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(text).toMatch(/Stride up to half your Speed or Step/);
     expect(text).not.toMatch(/Initial Proficiencies/);
     expect(text).not.toMatch(/Dual Gate/);
-    expect(text).not.toMatch(/No Archives page/);
+    // batch card premise: element-1 "Push the target up to 10 feet" — the owner (2026-10-08): the no-page footer's words changed.
+    expect(text).not.toMatch(/Not from the Archives/);
     // Round 2: the whole Air element page was shown.
     for (const t of [await browseCard('classFeatures', 'air-gate'), text]) {
       expect(t).not.toMatch(/Impulse Feats/);
@@ -755,7 +756,8 @@ describe('rendered: records open their own section, own slice or own text', () =
     const text = await browseCard('items', 'wand-of-mercy-4th-rank');
     expect(text).toMatch(/Wand of Mercy \(4th-Rank Spell\)/);
     expect(text).not.toMatch(/Wand of Mercy \(6th-Rank Spell\)/);
-    expect(text).not.toMatch(/No Archives page/);
+    // batch card premise: equipment-2283 "Wand of Mercy (4th-Rank Spell)" — the owner (2026-10-08): the no-page footer's words changed.
+    expect(text).not.toMatch(/Not from the Archives/);
     const echoes = await browseCard('items', 'wand-of-thundering-echoes-3rd-rank-spell');
     expect(echoes).toMatch(/Wand of Thundering Echoes \(3rd-Level\)/);
     expect(echoes).not.toMatch(/Wand of Thundering Echoes \(4th-Level\)/);
@@ -799,7 +801,8 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(crown).toMatch(/magical headpiece/);
     expect(crown).toMatch(/Your bestial instincts take over/);
     for (const other of [/The might of dragons/, /Your boundless fury/, /you become Large/, /partial form of a spirit/, /fights off the effects of magic/]) expect(crown).not.toMatch(other);
-    expect(crown).not.toMatch(/No Archives page/);
+    // batch card premise: equipment-2338 "Your bestial instincts take over" — the owner (2026-10-08): the no-page footer's words changed.
+    expect(crown).not.toMatch(/Not from the Archives/);
     const mineCrown = await mount(<RecordCard record={{ bucket: 'items', id: 'instinct-crown-fury' }} mode="mine" chrome="popup" onExit={noop} />);
     expect(squash(mineCrown.textContent)).toMatch(/Your boundless fury/);
     expect(squash(mineCrown.textContent)).not.toMatch(/Your bestial instincts/);
@@ -817,7 +820,8 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(spear).toMatch(/16d6/);
     expect(spear).not.toMatch(/18d6/);
     expect(spear).not.toMatch(/Splinter Spear \(Major\)/);
-    expect(spear).not.toMatch(/No Archives page/);
+    // batch card premise: equipment-2646 "Splinter Spear (Greater)" — the owner (2026-10-08): the no-page footer's words changed.
+    expect(spear).not.toMatch(/Not from the Archives/);
   });
 
   // batch card premise: class-feature-15 "See specific research fields for more information" — round 4: the
@@ -830,12 +834,13 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(textOf(trees.classFeatures[id])).not.toMatch(/bombs/);
     const host = await mount(<RecordCard record={{ bucket: 'classFeatures', id }} mode="mine" chrome="popup" onExit={noop} />);
     expect(host.querySelector('.ast-modal'), 'no page drawn').toBeNull();
-    expect(squash(host.querySelector('.card-nopage')?.textContent)).toBe('No Archives page — text from our older import');
+    // batch card premise: class-feature-15 "See specific research fields for more information" — the owner (2026-10-08): player words, no "import".
+    expect(squash(host.querySelector('.card-nopage')?.textContent)).toBe('Not from the Archives — our text');
     expect(squash(host.textContent)).toMatch(/Choose two 1st-level bombs/);
   });
 
   it('round 4: a page byte-identical to a differently named record\'s, with no line of another record\'s, is the record\'s page — Oil (1 pint), the Ganjay Book bulk variants', async () => {
-    // The refuter's MUST-FIX 1 (a): these went to old text with "No Archives page" although equipment-2739 /
+    // The refuter's MUST-FIX 1 (a): these went to old text with the no-page footer although equipment-2739 /
     // equipment-859 print their text word for word.
     for (const id of ['oil-1-pint', 'ganjay-book-1-bulk-book', 'ganjay-book-light-bulk-book']) {
       const k = `items:${id}`;
@@ -868,7 +873,8 @@ describe('rendered: records open their own section, own slice or own text', () =
       for (const g of Object.keys(DC).filter((x) => x !== grade)) expect(text, `${id} lacks the ${g} grade`).not.toContain(`The DC to solve this puzzle box is ${DC[g]}.`);
       // Page order: the grade section, then the hollow section.
       expect(text.indexOf(`is ${DC[grade]}.`), id).toBeLessThan(text.indexOf('A hollow puzzle box is designed'));
-      expect(text, id).not.toMatch(/No Archives page/);
+      // batch card premise: equipment-1340 "A hollow puzzle box is designed to have an empty compartment" — the owner (2026-10-08): footer words changed.
+      expect(text, id).not.toMatch(/Not from the Archives/);
     }
     expect(new Set(texts).size).toBe(3);
     // The rule on the page: one section per qualifier ("Simple", "Hollow"), both kept in page order.
@@ -891,7 +897,8 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(umt).toMatch(/you can use it once per day for each rank of spell you can cast/);
     expect(umt).not.toMatch(/No Curriculum/);
     expect(umt).not.toMatch(/Hand of the Apprentice/);
-    expect(umt).not.toMatch(/No Archives page/);
+    // batch card premise: arcane-school-21 "you can use it once per day for each rank of spell you can cast" — the owner (2026-10-08): footer words changed.
+    expect(umt).not.toMatch(/Not from the Archives/);
     // batch card premise: arcane-school-21 "Source Player Core pg. 200" — round 5: an own-page run carries
     // its page's header, so the Source line is drawn in front of the run.
     expect(umt).toMatch(/Source Player Core pg\. 200/);
@@ -915,7 +922,8 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(kv).toMatch(/You cannot select another dedication feat until you have gained two other feats/);
     expect(kv).toMatch(/Prerequisites\s*Trained in Religion/);
     expect(kv).toMatch(/Access\s*A character who is a member of the Knights of Lastwall/);
-    expect(kv).not.toMatch(/No Archives page/);
+    // batch card premise: feat-1092 "You are dedicated to the cause of the Shining Sentinels" — the owner (2026-10-08): footer words changed.
+    expect(kv).not.toMatch(/Not from the Archives/);
   });
 
   it('round 5: an own-page run carries its page\'s header — Wand of Refracting Rays (7th-Rank) shows its traits, Usage, Bulk and Source in its FIRST frame, never the other ranks', () => {

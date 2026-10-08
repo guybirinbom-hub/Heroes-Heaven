@@ -18,7 +18,8 @@ import { loadAstIndex, loadBucketAst, type AstNode } from '../src/sheet/astStore
 import { markNote, recordMarkersFor } from '../src/rules/explain';
 import type { PlayState, PlayUpdater } from '../src/rules/play';
 import type { BuildState } from '../src/rules/build';
-import type { Character, ContentDatabase } from '../src/rules/types';
+import type { Character, ContentDatabase, ModeDef } from '../src/rules/types';
+import { ModesPanel } from '../src/sheet/ModesPanel';
 
 /** The action switch, read through a mock so one case can turn it back (section 9: "Turning a surface
  *  back is therefore one line, and its tests still hold") without editing src/sheet/cardSurfaces.ts. */
@@ -116,6 +117,10 @@ vi.mock('../src/sheet/cardSurfaces', async (importOriginal) => {
  *    classFeatures:for-talmandor-for-freedom, classFeatures:shadows-in-the-moonlight, feats:aon-dad-joke,
  *    feats:body-of-air, feats:bullet-and-a-broadside, feats:death-from-above-eternal-legend,
  *    feats:marine-jet, feats:riptide-undersea-privateer, feats:sheltering-hand (PRINT_DIFFERS below).
+ *
+ * Wording round 2 (2026-10-08): the Modes list's "Pin to top" (ModesPanel.tsx) wears the same pin.
+ *  MUTATION LINE (measured red, ModesPanel.tsx restored from a scratch copy, sha1 matched): its icon back to
+ *  `ti ti-star` → the Modes "Pin to top" case red (alone).
  */
 const db: ContentDatabase = content();
 const BUCKETS = ['actions', 'feats', 'classFeatures', 'runesmithRune'];
@@ -325,6 +330,43 @@ describe.runIf(CARD_ON.actionDetail)('card step 9: the Main-tab action popup is 
     expect(sheet(halfling(), null).open('Aid').querySelector('.pin-star')).toBeNull();
   });
 
+  it('the header\'s two pin buttons differ at a glance: "Pin to top" is a pin, "Add to Pinned" the star — page lane and no-page lane', async () => {
+    // The owner (2026-10-08): two identical stars side by side in the action card header read as one control.
+    const icon = (b: Element | null) => b?.querySelector('i')?.className ?? '';
+    const pair = (card: Element, head: string) => {
+      const top = card.querySelector(`${head} [aria-label="Pin to top"]`);
+      const fav = card.querySelector(`${head} [aria-label="Add to Pinned"]`);
+      expect(top, `${head}: the Pin to top button`).not.toBeNull();
+      expect(fav, `${head}: the Add to Pinned star (PinStar)`).not.toBeNull();
+      expect(icon(top), `${head}: a pin glyph`).toBe('ti ti-pin');
+      expect(icon(fav), `${head}: the PinStar keeps its star`).toBe('ti ti-star');
+      expect(icon(top), `${head}: the two header buttons do not share an icon`).not.toBe(icon(fav));
+    };
+    pair(sheet(halfling()).open('Halfling Luck'), '.ast-head');
+    // The no-page lane draws its header as .picker-head (a synthesized record the Archives do not have).
+    const src = db.classFeatures['a-challenge-for-heroes']!;
+    const id = 't-card-wording-no-page-action';
+    const rec = { ...src, id, name: 'T Wording No Page Action' };
+    const tdb = { ...db, classFeatures: { ...db.classFeatures, [id]: rec } } as ContentDatabase;
+    const a: Act = { name: rec.name, cost: rec.actionCost as never, desc: rec.description, descRefs: rec.descRefs, traits: rec.traits, record: { bucket: 'classFeatures', id } };
+    const r = mount(<ActionDetailModal detail={{ a, pinnable: true }} onClose={() => undefined} character={build('fighter', 2)} content={tdb} onPlay={() => undefined} pinned={new Set()} />, tdb);
+    await settle();
+    pair(r.host.querySelector('.picker.info-modal.card-mine')!, '.picker-head');
+  });
+
+  it('the Modes list\'s "Pin to top" is the same pin, never the PinStar\'s star', () => {
+    // Our own control's glyph (no printed page involved): every "Pin to top" toggle on the sheet wears one icon.
+    const mode: ModeDef = { id: 't-card-wording-mode', name: 'T Wording Mode', modifiers: [] };
+    const { host, stop } = renderDom(<ModesPanel library={[mode]} predefined={[]} catalog={[]} activeIds={[]} onToggle={() => undefined} onSave={() => undefined} onDelete={() => undefined} />);
+    try {
+      const top = host.querySelector('.mode-row [aria-label="Pin to top"]');
+      expect(top, 'the mode row\'s Pin to top button').not.toBeNull();
+      const icon = top!.querySelector('i')?.className ?? '';
+      expect(icon).toBe('ti ti-pin');
+      expect(icon, 'Pin to top and the PinStar ("Add to Pinned", ti-star) do not share an icon').not.toBe('ti ti-star');
+    } finally { stop(); }
+  });
+
   it('Quick Jump: the page\'s printed two actions stay; the marked cost (one action) is OUR glyph, marked, in the header; its note is an actionMark line in the ours box', () => {
     const card = sheet(halfling()).open('High Jump');
     expect(headGlyphs(card)).toEqual(['Two Actions']);
@@ -526,7 +568,8 @@ describe.runIf(CARD_ON.actionDetail)('card step 9: the Main-tab action popup is 
     expect(txt(card.querySelector('.picker-head .info-title'))).toBe(rec.name);
     expect([...card.querySelectorAll('.info-body > .card-controls .action-detail-traits .strike-trait')].map((t) => txt(t))).toEqual(rec.traits);
     expect(txt(card.querySelector('.info-body'))).toContain('You declare an enemy within 60 feet to be a heroic test.');
-    expect(txt(card.querySelector('[data-ours-kind="noPage"]'))).toBe('No Archives page — text from our older import');
+    // batch card premise: feat-7185 "to be a heroic test" — the owner (2026-10-08): the ours footer speaks player words, no "import".
+    expect(txt(card.querySelector('[data-ours-kind="noPage"]'))).toBe('Not from the Archives — our text');
     expect(card.querySelector('.picker-head .pin-star'), 'the action pin rides the no-page header too').not.toBeNull();
   });
 

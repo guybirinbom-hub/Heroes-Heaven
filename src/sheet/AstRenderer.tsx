@@ -30,6 +30,10 @@ import { FOLD_LABEL, type ScopedNode } from './cardScope';
 /* Card step 14: an embedded page stub resolved by astStubs.ts (made only where a card switches it on —
  * a stored tree's stubs are empty, so every other path draws them as nothing, as before). */
 import type { StubbedNode } from './astStubs';
+/* The lines a page's glyphs sit in (a split sentence, an activity header, a glyph that opens its line, an
+ * Activate line, a glyph row) live in cardModel.ts, a plain .ts file, so the row preview (cardPreview) reads
+ * the very same lines this renderer draws — one copy. */
+import { BLOCK_TYPES, activateLine, glyphLedLine, glyphLineLeaves, lineFrags, lineInline } from './cardModel';
 import './ast.css';
 
 /** The Archives of Nethys; a page's own address (`/Rules.aspx?ID=1503`) is stamped on its tree root by
@@ -294,22 +298,22 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil, statMas
      * thing on screen. A divider is only a divider when it divides. */
     if (n.t === 'hr' && lead && !out.length) continue;
     if (n.t === 'p') {
-      const bold0 = (n.c || []).find((x) => !(x.t === 'text' && !textOf(x).trim()));
-      // Activate—X immediately followed by an <actions> glyph → one inline (unboxed) activation line.
-      if (bold0 && bold0.t === 'b' && /^activate/i.test(textOf(bold0).trim()) && nodes[i + 1]?.t === 'actions') {
-        out.push(<p key={key} className="ast-act"><Kids node={n} ctx={ctx} /> <Glyph str={nodes[i + 1].string} /></p>);
-        i++;
+      // Activate—X immediately followed by an <actions> glyph → one inline (unboxed) activation line, with
+      // what the page prints after the glyph on the same line (cardModel.ts activateLine).
+      const act = activateLine(nodes, i);
+      if (act) {
+        out.push(<p key={key} className="ast-act"><Kids node={n} ctx={ctx} /> <Glyph str={act.glyph.string} />{lineInline(act.rest).map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />)}</p>);
+        i = act.end - 1;
         continue;
       }
       // Reunite a sentence the parser split across sibling blocks by inline <sup>/continuation fragments
       // (AoN artifact: "…Fortitude" / sup"(F)" / ", Reflex" / sup"(R)" / … each became its own block, so
-      // they stacked one-per-line). Greedily fold following sup/sub + continuation-p nodes into one <p>.
+      // they stacked one-per-line), and an activity header split at its glyph ("Transcendence" ⟨2⟩
+      // "(Spirit, Transcendence) …"). cardModel.ts lineFrags says which following blocks share the line.
       const raw = textOf(n).trim();
       const meta = isMetaP(n);
       if (raw && !successTier(n) && !/^#{1,6}$/.test(raw) && !/^[-*_]{3,}$/.test(raw)) {
-        let j = i + 1;
-        const frags: AstNode[] = [];
-        while (j < nodes.length && isInlineFrag(nodes[j], nodes[j + 1])) { frags.push(nodes[j]); j++; }
+        const { frags, end: j, own } = lineFrags(nodes, i);
         /* A META line joins the fold ONLY to collect a split-out glyph — 78 rows in the modal path (77
          * under hideMeta): 4 "Range ⟨1⟩ shortbow …" stat rows and 74 "Craft Requirements Supply a casting
          * of ⟨2⟩ …" wand lines, meta either way, so hideMeta now drops each one WITH its label instead of
@@ -319,26 +323,20 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil, statMas
          * "flavor prose is NEVER dimmed" is this renderer's rule; the glyph rows are not prose. */
         if (frags.length && (!meta || frags.some((f) => f.t === 'actions'))) {
           i = j - 1;
-          // Card step 5: the reunited line follows the card's rules — left out only as furniture or
-          // S-printed, otherwise drawn whole at full weight (a dim label dims it).
-          if (cw) {
-            // Card step 14: S-printed for any header line, META or not (cardDropsPrintedP).
-            if (isCardFurnitureP(n, cw.head) || cardDropsPrintedP(n, cw)) continue;
-            const joined: AstNode[] = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' ? [pp] : pp.c || []));
-            out.push(<p key={key} className={(n as ScopedNode).applies ? 'card-applies' : isCardDimP(n) ? 'card-dim' : meta ? 'card-use' : undefined}>{joined.map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />)}</p>);
-            continue;
-          }
-          // A reunited meta row keeps the meta branch's styling AND its hideMeta drop — which used to
-          // leave the glyph and the second half of the row behind as orphan blocks once the label went.
-          if (meta && hideMeta) continue;
-          const combined: AstNode[] = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' ? [pp] : pp.c || []));
-          const kids = combined.map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />);
-          out.push(meta
-            ? <div key={key} className={'ast-meta' + (isSourceP(n) ? ' src' : '')}>{kids}</div>
-            : <p key={key}>{kids}</p>);
+          const el = lineEl(n, [n, ...frags], [0, 1 + own], key, ctx, hideMeta, cw);
+          if (el != null) out.push(el);
           continue;
         }
       }
+    }
+    // A glyph that opens its line ("⟨1⟩ The target is launched 10 feet…", cardModel.ts glyphLedLine): one
+    // line with its paragraph, drawn as that paragraph's line. Without one it keeps its .ast-actline.
+    const led = n.t === 'actions' ? glyphLedLine(nodes, i) : null;
+    if (led) {
+      i = led.end - 1;
+      const el = lineEl(led.lead, led.pieces, led.unit, key, ctx, hideMeta, cw);
+      if (el != null) out.push(el);
+      continue;
     }
     const el = renderBlock(n, ctx, hideMeta, key, lead && !out.length, cw);
     if (el != null) out.push(el);
@@ -351,6 +349,46 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil, statMas
   return out.length ? <>{out}</> : null;
 }
 
+/** One reunited LINE (cardModel.ts lineFrags / glyphLedLine): `pieces` drawn inline, styled as its `lead`
+ *  paragraph. Card step 5: on a card it follows the card's rules — left out only as furniture or S-printed
+ *  (card step 14: for any header line, META or not), otherwise drawn whole at full weight (a dim label dims
+ *  it). Elsewhere a reunited meta row keeps the meta branch's styling AND its hideMeta drop — which used to
+ *  leave the glyph and the second half of the row behind as orphan blocks once the label went. */
+function lineEl(lead: AstNode, pieces: AstNode[], unit: readonly [number, number], key: string, ctx: Ctx, hideMeta: boolean | undefined, cw: CardWalk | undefined): ReactNode {
+  const meta = isMetaP(lead);
+  const kids = lineInline(pieces).map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />);
+  if (cw) {
+    if (isCardFurnitureP(lead, cw.head) || cardDropsPrintedP(lead, cw)) return null;
+    return <p key={key} className={(lead as ScopedNode).applies ? 'card-applies' : isCardDimP(lead) ? 'card-dim' : meta ? 'card-use' : undefined}>{kids}</p>;
+  }
+  /* hideMeta drops a joined line's META label, never the line's other words (orchestrator ruling,
+   * 2026-10-08): rules:reading-creature-statistics prints "Ranged ⟨1⟩ As Melee, but also lists range…" as
+   * one line, and "Ranged" opens with META's "range" — dropping the line whole lost the explanation the
+   * popup had always drawn. What leaves is the META paragraph `unit` = [from, to) of `pieces`: its label
+   * and the continuation the parser split off it (cardModel.ts lineFrags `own`), which hideMeta always
+   * dropped together — a wand's "Craft Requirements Supply a casting of a spell… of ⟨1⟩ or ⟨2⟩, must…"
+   * still leaves whole, never as label-less words. The glyph and the words the page prints after it on
+   * the same line stay, drawn as plain prose; nothing left draws nothing. */
+  if (meta && hideMeta) {
+    const rest = lineInline(pieces.filter((_, m) => m < unit[0] || m >= unit[1]));
+    if (!rest.some(drawsWords)) return null;
+    return <p key={key}>{rest.map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />)}</p>;
+  }
+  return meta
+    ? <div key={key} className={'ast-meta' + (isSourceP(lead) ? ' src' : '')}>{kids}</div>
+    : <p key={key}>{kids}</p>;
+}
+
+/** A paragraph without its leading bold label (the META / printed label a line opens on) — what a dropped
+ *  label leaves behind; the paragraph itself when it opens on no bold label. */
+function withoutLabel(p: AstNode): AstNode {
+  const c = p.c || [];
+  const i = c.findIndex((x) => !(x.t === 'text' && !textOf(x).trim()));
+  return i >= 0 && c[i].t === 'b' ? { ...p, c: c.slice(i + 1) } : p;
+}
+/** An inline piece that draws something: words, or a glyph with a cost. */
+const drawsWords = (c: AstNode): boolean => (c.t === 'actions' ? !!String(c.string || '').trim() : !!textOf(c).trim());
+
 /** A container that renders as its children — and as nothing at all when they all render nothing, so it
  *  never stands in for content above a divider (see the end of Blocks). */
 function subBlocks(props: Parameters<typeof Blocks>[0], key: string): ReactNode {
@@ -358,27 +396,12 @@ function subBlocks(props: Parameters<typeof Blocks>[0], key: string): ReactNode 
   return inner == null ? null : <Fragment key={key}>{inner}</Fragment>;
 }
 
-/** A block node that is really an inline continuation of the previous paragraph — an AoN artifact where a
- *  sentence was split at a <sup> or after a soft break. A `sup`/`sub`, or a `p` whose text opens with
- *  punctuation or a lowercase letter (never a real new paragraph, which starts capitalized).
- *
- *  bug 2026-09-12 #9: inline-glyph — an `actions` node counts too, but ONLY when `next` carries the
- *  sentence on ("…for example, “" / ⟨reaction⟩ / " command.”" arrived as three sibling blocks, so the
- *  glyph got a line of its own between two half-sentences). A glyph that ENDS the run, or is followed by
- *  a real new paragraph, is an ability heading's cost ("A Moment Unending" ⟨1⟩) and keeps its block line.
- *  Measured on the shipped artefact: 19,017 `actions` nodes, 9,419 of them inside a title/heading; the
- *  fold reunites 1,351 glyphs on 815 pages in the hideMeta path (1,393 on 847 in the modal path), where
- *  3,846 glyph lines still render as their own block — down from 5,885 (the modal path, 5,745). No
- *  cost-string test: 8 of the reunited glyphs carry no cost at all, and those broke a stat row in two
- *  around a glyph that draws nothing. */
-function isInlineFrag(n: AstNode | undefined, next?: AstNode): boolean {
-  if (!n) return false; // `next` past the end of the run
-  if (n.t === 'sup' || n.t === 'sub') return true;
-  if (n.t === 'actions') return isInlineFrag(next);
-  if (n.t !== 'p') return false;
-  const t = textOf(n).trim();
-  return t.length > 0 && t.length < 400 && /^[,.;:)\]]|^[a-z]/.test(t);
-}
+/* isInlineFrag (bug 2026-09-12 #9, inline-glyph: a continuation fragment, a split-out glyph included) moved
+ * to cardModel.ts with lineFrags, which it feeds. Its old claim — "a glyph that ENDS the run, or is followed
+ * by a real new paragraph, is an ability heading's cost and keeps its block line" — did not survive the
+ * mirror: every one of the 792 block-level glyphs still drawn alone on 2026-10-08 sits INSIDE a line of the
+ * page's markdown ("**Call Gun** <actions string="Single Action" /> ([magical]…"), so lineFrags and
+ * glyphLedLine draw them inline. */
 
 function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: string, lead?: boolean, card?: CardWalk): ReactNode {
   switch (n.t) {
@@ -450,6 +473,36 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       // duplicate stat block. (Card step 5: a 'mine' card never drops a block whole — it recurses.)
       if (!card && hideMeta && isMetaishBlock(n)) return null;
       const kids = n.c || [];
+      // A glyph line (glyphLineLeaves): ONE line, the glyph inline, as AoN's flex row draws it — the element
+      // and class renderBlock 'p' gives its label's paragraph alone (an "Activate" line is a plain <p>).
+      const leaves = glyphLineLeaves(n);
+      if (leaves) {
+        const fi = leaves.findIndex((f) => f.t === 'p');
+        const first = fi >= 0 ? leaves[fi] : undefined;
+        const meta = !!first && isMetaP(first);
+        const draw = (ls: AstNode[]) => ls.map((f, m) => <Fragment key={m}>{m > 0 ? ' ' : ''}{f.t === 'actions' ? <Glyph str={f.string} /> : <Kids node={f} ctx={ctx} />}</Fragment>);
+        /* A paragraph the surface leaves out never takes the glyph and the other words of the line along:
+         * the row's PRINTED label leaves alone (with every label printed the row "Activate ⟨1⟩ (manipulate)"
+         * still draws "⟨1⟩ (manipulate)", as the three blocks did before the row became one line); a later
+         * printed paragraph, card furniture, and the META paragraph hideMeta drops leave as the whole
+         * paragraph they are — what each one did as a block of its own (and as lineEl's unit). */
+        if (card) {
+          const ls = leaves.flatMap((f, m): AstNode[] => {
+            if (f.t !== 'p') return [f];
+            if (isCardFurnitureP(f, card.head)) return [];
+            if (cardDropsPrintedP(f, card)) return m === fi ? [withoutLabel(f)] : [];
+            return [f];
+          }).filter(drawsWords);
+          if (!ls.length) return null;
+          return <p key={key} className={first && isCardDimP(first) ? 'card-dim' : meta ? 'card-use' : undefined}>{draw(ls)}</p>;
+        }
+        if (meta && hideMeta) {
+          const ls = leaves.filter((_, m) => m !== fi);
+          return ls.length ? <p key={key}>{draw(ls)}</p> : null;
+        }
+        if (meta) return <div key={key} className={'ast-meta' + (isSourceP(first!) ? ' src' : '')}>{draw(leaves)}</div>;
+        return <p key={key}>{draw(leaves)}</p>;
+      }
       // A row that holds BLOCK children (columns, a TABLE, paragraphs, lists…) is a layout/content row —
       // render those as blocks. (A row wrapping a table was the bug that mashed the whole exemplars table
       // into one inline run.) Only a row of purely inline bits is a compact "A; B; C" stat line.
@@ -564,12 +617,8 @@ const isListStub = (n: AstNode | undefined) => !!n && (n.t === 'document' || n.t
 /** An embedded stub nothing resolved: it draws nothing. */
 const isBareStub = (n: AstNode | undefined) => !!n && (n.t === 'document' || n.t === 'doc') && !(n.c && n.c.length) && !(n as StubbedNode).stubKind;
 
-/** Node types that render as their own block — used to decide whether an unrecognized container should
- *  recurse as blocks (preserving paragraph/heading/table structure) or render inline. */
-const BLOCK_TYPES = new Set([
-  'p', 'title', 'heading', 'h2', 'h3', 'ul', 'ol', 'li', 'table', 'thead', 'tbody', 'tfoot', 'tr',
-  'aside', 'row', 'column', 'document', 'doc', 'hr', 'center', 'spoilers',
-]);
+/* glyphLineLeaves (a glyph ROW drawn as one line) and BLOCK_TYPES (the node types that render as their own
+ * block) live in cardModel.ts, imported above, so the row preview reads the same lines. */
 
 /** Render the doc's body faithfully (see Blocks). */
 function DocBody({ top, ctx, hideMeta, card }: { top: AstNode[]; ctx: Ctx; hideMeta?: boolean; card?: CardWalk }): ReactNode {

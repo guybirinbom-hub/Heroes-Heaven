@@ -85,7 +85,7 @@ export type OursKind =
   | 'remastered'
   /** desk #152 empty note. */
   | 'empty'
-  /** "No Archives page — text from our older import". */
+  /** "Not from the Archives — our text" (section 7's no-page footer). */
   | 'noPage'
   /**
    * Card step 8: the player's Overrides edit of this record's text ("Change an existing feat/feature",
@@ -270,10 +270,12 @@ export function cardPreview(lane: PreviewLane): string {
   return (s ?? '').replace(/\s+/g, ' ').trim();
 }
 
-/* ---- the page lane: AstRenderer's card walk (printed set empty — every surface a preview stands for) ---- */
+/* ---- THE LINES A PAGE'S GLYPHS SIT IN: one copy, read by AstRenderer's Blocks / renderBlock AND by the
+ * preview walk below, so a row's preview and its popup can never disagree about where a line ends. ---- */
 
-/** AstRenderer BLOCK_TYPES: a container holding one of these renders its children as blocks. */
-const PV_BLOCKS = new Set([
+/** Node types that render as their own block — a container holding one of these renders its children as
+ *  blocks (AstRenderer imports this set; it is not a copy). */
+export const BLOCK_TYPES: ReadonlySet<string> = new Set([
   'p', 'title', 'heading', 'h2', 'h3', 'ul', 'ol', 'li', 'table', 'thead', 'tbody', 'tfoot', 'tr',
   'aside', 'row', 'column', 'document', 'doc', 'hr', 'center', 'spoilers',
 ]);
@@ -284,15 +286,149 @@ function pvTier(p: AstNode): boolean {
   const f = firstKid(p);
   return !!f && f.t === 'b' && PV_TIERS.has(textOf(f).trim().toLowerCase().replace(/:$/, ''));
 }
-/** AstRenderer isInlineFrag: a block that continues the paragraph before it. */
-function pvFrag(n: AstNode | undefined, next?: AstNode): boolean {
-  if (!n) return false;
+const drawsGlyph = (n: AstNode | undefined) => !!n && n.t === 'actions' && !!String(n.string || '').trim();
+
+/** A block node that is really an inline continuation of the previous paragraph — an AoN artifact where a
+ *  sentence was split at a <sup> or after a soft break. A `sup`/`sub`, or a `p` whose text opens with
+ *  punctuation or a lowercase letter (never a real new paragraph, which starts capitalized).
+ *
+ *  bug 2026-09-12 #9: inline-glyph — an `actions` node counts too, when `next` carries the sentence on
+ *  ("…for example, “" / ⟨reaction⟩ / " command.”" arrived as three sibling blocks). */
+export function isInlineFrag(n: AstNode | undefined, next?: AstNode): boolean {
+  if (!n) return false; // `next` past the end of the run
   if (n.t === 'sup' || n.t === 'sub') return true;
-  if (n.t === 'actions') return pvFrag(next);
+  if (n.t === 'actions') return isInlineFrag(next);
   if (n.t !== 'p') return false;
   const t = textOf(n).trim();
   return t.length > 0 && t.length < 400 && /^[,.;:)\]]|^[a-z]/.test(t);
 }
+
+/** A paragraph that can carry on a glyph's line: words, not a degree-of-success row, not a leaked markdown
+ *  marker, not a "- " list line (classFeatures:aberrant-eidolon's next anatomy line starts its own). */
+function isLineP(n: AstNode | undefined): n is AstNode {
+  if (!n || n.t !== 'p') return false;
+  const raw = textOf(n).trim();
+  return !!raw && !pvTier(n) && !/^#{1,6}$/.test(raw) && !/^[-*_]{3,}$/.test(raw) && !/^-\s/.test(raw);
+}
+/** One space, where the parser dropped the one the page prints beside a glyph. */
+const SPACE: AstNode = { t: 'text', v: ' ' };
+const startsSpaced = (n: AstNode) => /^\s/.test(textOf(n));
+const endsSpaced = (n: AstNode) => /\s$/.test(textOf(n));
+
+/**
+ * The blocks after the paragraph `nodes[i]` that the page prints on ITS line, in order (SPACE nodes where
+ * the parser dropped the page's space beside a glyph). Two joins:
+ *  - a continuation fragment (isInlineFrag): "…for example, “Activate" ⟨reaction⟩ " command.”";
+ *  - a glyph after a line that does not end its sentence with a full stop, with the paragraph after it:
+ *    an embedded activity's header "Transcendence" ⟨2⟩ "(Spirit, Transcendence) Flowing Spirit Strike; Effect…"
+ *    (classFeatures:gleaming-blade, ikon-6), "Patron’s Claim" ⟨2⟩ "Frequency once per hour; …" (feat-5019).
+ *    The AoN markdown holds every such glyph INSIDE its paragraph's line ("**Transcendence** <actions
+ *    string="Two Actions" /> ([Spirit]…"); the tree's parser split it into three sibling blocks.
+ * Measured 2026-10-08 over the shipped trees against the mirror's markdown (all 20,787 paired pages): 792
+ * block-level glyphs drew on a line of their own, and the mirror prints all 792 inside a line; with this rule
+ * and glyphLedLine the line before and after agree with the mirror for 788. The 4 others are list items
+ * whose markdown keeps every item on one line (spells:kinetic-ram's "⟨1⟩ The spell targets…"); there the
+ * glyph opens its item, as glyphLedLine draws it.
+ * `frags` = the pieces after `nodes[i]`; `end` = the index after the line; `own` = how many of `frags` come
+ * before the first glyph join — the continuation the parser split off `nodes[i]` itself (all of them when
+ * no glyph join happens). hideMeta drops a META paragraph with its own continuation, as it always did, and
+ * keeps what a glyph join brought onto its line (AstRenderer lineEl).
+ */
+export function lineFrags(nodes: AstNode[], i: number): { frags: AstNode[]; end: number; own: number } {
+  const frags: AstNode[] = [];
+  let own = -1;
+  let last = nodes[i];
+  let j = i + 1;
+  while (j < nodes.length) {
+    const n = nodes[j];
+    if (isInlineFrag(n, nodes[j + 1])) {
+      frags.push(n);
+      if (n.t !== 'actions') last = n;
+      j++;
+      continue;
+    }
+    if (n.t === 'actions' && last.t !== 'actions' && !/\.\s*$/.test(textOf(last))) {
+      const nx = nodes[j + 1];
+      const before = !endsSpaced(last);
+      if (own < 0) own = frags.length;
+      if (drawsGlyph(n) && before) frags.push(SPACE);
+      frags.push(n);
+      j++;
+      if (isLineP(nx)) {
+        // A glyph that draws nothing still stands between two words: one space, not two.
+        if (!startsSpaced(nx) && (drawsGlyph(n) || before)) frags.push(SPACE);
+        frags.push(nx);
+        last = nx;
+        j++;
+      }
+      continue;
+    }
+    break;
+  }
+  return { frags, end: j, own: own < 0 ? frags.length : own };
+}
+
+/** A glyph that OPENS its line — "⟨1⟩ The target is launched 10 feet into the air…" (spells:banishing-touch,
+ *  spell-2152, whose markdown prints `<actions string="Single Action" /> The target is launched…` as one
+ *  line) — and the paragraph it leads, with that paragraph's own continuation. `lead` gives the line its
+ *  class; `pieces` = the glyph, the paragraph and its continuation; `end` = the index after the line;
+ *  `unit` = [from, to) of `pieces`: the paragraph and the continuation the parser split off it (lineFrags
+ *  `own`). Null when the glyph draws nothing or no paragraph follows it (then it keeps the .ast-actline it
+ *  always had). */
+export function glyphLedLine(nodes: AstNode[], i: number): { lead: AstNode; pieces: AstNode[]; end: number; unit: [number, number] } | null {
+  const nx = nodes[i + 1];
+  if (!drawsGlyph(nodes[i]) || !isLineP(nx)) return null;
+  const { frags, end, own } = lineFrags(nodes, i + 1);
+  const from = startsSpaced(nx) ? 1 : 2;
+  return { lead: nx, pieces: [nodes[i], ...(startsSpaced(nx) ? [] : [SPACE]), nx, ...frags], end, unit: [from, from + 1 + own] };
+}
+
+/** An "Activate" paragraph led by its bold label and followed by its glyph, drawn as ONE line with what the
+ *  page prints after the glyph — "Activate ⟨1⟩ command; Frequency once per day; Effect…", the wand of hybrid
+ *  form's "Activate Cast a Spell; This activation takes ⟨2⟩ if the spell normally takes ⟨1⟩ to cast…"
+ *  (equipment-2280). Measured 2026-10-08: 2,216 such lines in the shipped trees, and the mirror's markdown
+ *  prints words after the glyph on the same line for all 2,216. `rest` = the pieces after the glyph on that
+ *  line; `end` = the index after the line. Null when `nodes[i]` is no Activate line. */
+export function activateLine(nodes: AstNode[], i: number): { glyph: AstNode; rest: AstNode[]; end: number } | null {
+  const n = nodes[i];
+  const b0 = n?.t === 'p' ? firstKid(n) : undefined;
+  if (!b0 || b0.t !== 'b' || !/^activate/i.test(textOf(b0).trim()) || nodes[i + 1]?.t !== 'actions') return null;
+  const nx = nodes[i + 2];
+  if (!isLineP(nx)) return { glyph: nodes[i + 1], rest: [], end: i + 2 };
+  const { frags, end } = lineFrags(nodes, i + 2);
+  return { glyph: nodes[i + 1], rest: [...(startsSpaced(nx) ? [] : [SPACE]), nx, ...frags], end };
+}
+
+/** A line's pieces as one inline run: a paragraph gives its children; a glyph, a sup/sub and a SPACE stay. */
+export function lineInline(pieces: AstNode[]): AstNode[] {
+  return pieces.flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' || pp.t === 'text' ? [pp] : pp.c || []));
+}
+
+/** The bits of a GLYPH LINE, in order, or null. The page nests "Activate" ⟨1⟩ "(manipulate)" as
+ *  row > [row > p "Activate", actions, row > p "(manipulate)"], which AoN lays out as one flex line. Read as
+ *  blocks, every nested row is a `p` (a block type) and a block-level `actions` is a .ast-actline of its own,
+ *  so the card drew three lines (the owner, 2026-10-08). A glyph line is a row with a drawn `actions` child
+ *  whose every other child is a `p` of inline content or a row of the same, at any depth; any other block
+ *  inside leaves it a layout row, drawn as before. Every path draws it so (the 'mine' card, the browse
+ *  card the card guards read as the page, the legacy popups), and the row preview reads the same line
+ *  ("Activate (manipulate)"). 1,914 rows on 1,904 shipped pages, 1,906 of them "Activate" lines
+ *  (measured 2026-10-08 over public/ast). */
+export function glyphLineLeaves(n: AstNode): AstNode[] | null {
+  if (!(n.c || []).some(drawsGlyph)) return null;
+  const out: AstNode[] = [];
+  const walk = (r: AstNode): boolean => (r.c || []).every((c) => {
+    if (c.t === 'row') return walk(c);
+    if (c.t === 'actions' || (c.t === 'p' && !(c.c || []).some((k) => BLOCK_TYPES.has(k.t)))) {
+      if (c.t === 'actions' ? String(c.string || '').trim() : textOf(c).trim()) out.push(c);
+      return true;
+    }
+    return c.t === 'text' && !textOf(c).trim();
+  });
+  return walk(n) ? out : null;
+}
+
+/* ---- the page lane: AstRenderer's card walk (printed set empty — every surface a preview stands for) ---- */
+
 /** What AstRenderer's Inline draws, as text: a line break is a space, an action glyph is left out. */
 function pvInline(nodes: AstNode[]): string {
   return nodes.map((n) => (n.t === 'text' ? clean(n.v ?? '') : n.t === 'br' ? ' ' : n.t === 'actions' ? '' : pvInline(n.c || []))).join('');
@@ -306,20 +442,18 @@ function treeFirst(nodes: AstNode[], top: boolean, inherited: boolean): string |
     const head = top ? headUntil >= 0 && i < headUntil : inherited;
     if (isCardFurnitureTitle(n)) { i = cardFurnitureSectionEnd(nodes, i) - 1; continue; }
     if (n.t === 'p') {
-      const b0 = firstKid(n);
-      if (b0 && b0.t === 'b' && /^activate/i.test(textOf(b0).trim()) && nodes[i + 1]?.t === 'actions') { i++; continue; }
+      // An Activate line (activateLine) is drawn with a class (.ast-act), so it is never the first line.
+      const act = activateLine(nodes, i);
+      if (act) { i = act.end - 1; continue; }
       const raw = textOf(n).trim();
       const meta = isMetaP(n);
       const marker = /^#{1,6}$/.test(raw) || /^[-*_]{3,}$/.test(raw);
       if (raw && !pvTier(n) && !marker) {
-        let j = i + 1;
-        const frags: AstNode[] = [];
-        while (j < nodes.length && pvFrag(nodes[j], nodes[j + 1])) { frags.push(nodes[j]); j++; }
+        const { frags, end } = lineFrags(nodes, i);
         if (frags.length && (!meta || frags.some((f) => f.t === 'actions'))) {
-          i = j - 1;
+          i = end - 1;
           if (isCardFurnitureP(n, head) || (n as ScopedNode).applies || isCardDimP(n) || meta) continue;
-          const joined = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' ? [pp] : pp.c || []));
-          const s = pvSome(pvInline(joined));
+          const s = pvSome(pvInline(lineInline([n, ...frags])));
           if (s !== null) return s;
           continue;
         }
@@ -334,11 +468,30 @@ function treeFirst(nodes: AstNode[], top: boolean, inherited: boolean): string |
       if (s !== null) return s;
       continue;
     }
+    // A glyph that opens its line (glyphLedLine): the line takes its paragraph's class, as AstRenderer draws it.
+    const led = n.t === 'actions' ? glyphLedLine(nodes, i) : null;
+    if (led) {
+      i = led.end - 1;
+      const p = led.lead;
+      if (isCardFurnitureP(p, head) || (p as ScopedNode).applies || isCardDimP(p) || isMetaP(p)) continue;
+      const s = pvSome(pvInline(lineInline(led.pieces)));
+      if (s !== null) return s;
+      continue;
+    }
+    // A glyph row (glyphLineLeaves): ONE line, its first paragraph's class — "Activate (manipulate)".
+    const leaves = n.t === 'row' ? glyphLineLeaves(n) : null;
+    if (leaves) {
+      const first = leaves.find((f) => f.t === 'p');
+      if (!first || isCardFurnitureP(first, head) || isCardDimP(first) || isMetaP(first)) continue;
+      const s = pvSome(leaves.map((f) => (f.t === 'actions' ? '' : pvInline(f.c || []))).join(' '));
+      if (s !== null) return s;
+      continue;
+    }
     // Not a paragraph of the record's own prose (or drawn with a class: a use / dim row, a heading).
     if (['title', 'heading', 'hr', 'traits', 'actions', 'spoilers', 'ul', 'ol', 'table', 'aside', 'card-fold'].includes(n.t)) continue;
     const kids = n.c || [];
-    const recurse = n.t === 'row' ? kids.some((c) => PV_BLOCKS.has(c.t))
-      : n.t === 'column' || n.t === 'document' || n.t === 'doc' || n.t === 'card-pointer' || kids.some((c) => PV_BLOCKS.has(c.t));
+    const recurse = n.t === 'row' ? kids.some((c) => BLOCK_TYPES.has(c.t))
+      : n.t === 'column' || n.t === 'document' || n.t === 'doc' || n.t === 'card-pointer' || kids.some((c) => BLOCK_TYPES.has(c.t));
     if (!recurse) continue;
     const s = treeFirst(kids, false, head);
     if (s !== null) return s;

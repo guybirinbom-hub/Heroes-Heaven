@@ -13005,7 +13005,7 @@ button.strike-name:hover {
 .card-dim strong {
   color: var(--app-text-dim);
 }
-/* The no-page line ("No Archives page — text from our older import"), marked ours (.sd-ours), at the
+/* The no-page line ("Not from the Archives — our text"), marked ours (.sd-ours), at the
    foot of a 'mine' card whose record has no Archives page. */
 .card-nopage {
   margin-top: 9px;

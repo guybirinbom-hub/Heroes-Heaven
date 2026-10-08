@@ -58,9 +58,9 @@ export function isSharedClassFeature(desc: string | undefined, content: ContentD
 }
 
 /** The mine card's footer for a shared feature drawn from our older text (section 7): a page exists,
- *  just another class's — so it does not say "No Archives page" alone. Per-class pages come with the
- *  data rebuild (card step R). */
-export const SHARED_FEATURE_FOOTER = 'No Archives page for your class — text from our older import';
+ *  just another class's — so it names the class. Player words only (the owner, 2026-10-08: no "import").
+ *  Per-class pages come with the data rebuild (card step R). */
+export const SHARED_FEATURE_FOOTER = 'Not from the Archives — our text for your class';
 
 /** The class a shared feature's page belongs to: the Archives prints "Class <Name>" in the page header
  *  (the same reading as the card guard's pageClassName, scripts/lib/card-scope.mjs). */

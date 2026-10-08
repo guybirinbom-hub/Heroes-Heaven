@@ -448,6 +448,25 @@ describe.skipIf(!cardOn('itemDetail'))('card step 14: the item popup is the reco
     expect(txt(body)).toContain('A healing potion is a vial of a ruby-red liquid');
   });
 
+  // batch card premise: equipment-2943 "Activate Single Action (manipulate)" — the page prints it as one line.
+  it('healing potion (lesser): the Activate line is ONE block — "Activate ⟨glyph⟩ (manipulate)", the glyph inline as the page prints it', async () => {
+    // The owner (2026-10-08): the card drew "Activate" / the glyph / "(manipulate)" on three lines. The page
+    // nests each bit in its own little row (row > [row > p "Activate", actions, row > p "(manipulate)"]),
+    // which AoN lays out as one flex line; the card made every nested row and the glyph a block of its own.
+    const host = await itemPopup('healing-potion-lesser');
+    const body = cardBody(host)!;
+    const glyphs = [...body.querySelectorAll('.ast-body .ast-ag')];
+    expect(glyphs.map((g) => g.getAttribute('title')), 'the page\'s one Activate glyph').toEqual(['Single Action']);
+    const block = glyphs[0].parentElement!;
+    expect(block.tagName, 'the glyph sits inside the line, not in a block of its own').toBe('P');
+    expect(txt(block.querySelector('strong')), 'the line opens with the page\'s bold label').toBe('Activate');
+    expect(txt(block)).toBe(`Activate ${txt(glyphs[0])} (manipulate)`);
+    expect(body.querySelector('.ast-actline'), 'no glyph line of its own').toBeNull();
+    const lines = [...body.querySelectorAll('.ast-body p')].map(txt);
+    expect(lines.filter((l) => /^Activate\b/.test(l)), 'one Activate line').toHaveLength(1);
+    expect(lines, '"(manipulate)" is not a line of its own').not.toContain('(manipulate)');
+  });
+
   it('longsword: Damage, Category, Group and Hands are the stat block\'s, never repeated by the page; Type stays', async () => {
     const host = await itemPopup('longsword');
     const lines = [...cardBody(host)!.querySelectorAll('.ast-body p')].map(txt);
@@ -481,7 +500,9 @@ describe.skipIf(!cardOn('itemDetail'))('card step 14: the item popup is the reco
   /* The no-page footer (section 2 rule 4.6; RecordCard.tsx InsetRecordCard's no-page lane): desk #152's
    * empty note, then "Homebrew" or the no-page line — all marked as ours, never as printed text. */
   const NO_TEXT = 'The book prints no rules text for this item.';
-  const NO_PAGE = 'No Archives page — text from our older import';
+  // batch card premise: rules-1111 "lesser semiprecious stones are level 0 items" — agate is such a gem, a
+  // table row with no page of its own; the owner (2026-10-08): the ours footer speaks player words, no "import".
+  const NO_PAGE = 'Not from the Archives — our text';
   it('an item with no rules text and no page (agate): desk #152\'s note, then the no-page line, both ours', async () => {
     expect(recordTree('items', 'agate', (b, s) => trees[b]?.[s]), 'agate ships no page').toBeUndefined();
     const host = await itemPopup('agate');
