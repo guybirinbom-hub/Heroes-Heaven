@@ -34,6 +34,8 @@ import type { AstNode } from './astStore';
 import type { CardScope } from './cardModel';
 import type { Character } from '../rules/types';
 import LEVEL_FOLDS_JSON from '../../scripts/data/level-folds.json';
+// Read here, not through astVisibility.ts pageSliceOf: astVisibility imports canonLabel from this module.
+import PAGE_SLICES_JSON from '../data/page-slices.json';
 
 export type FutureTreatment = 'fold' | 'hide' | 'grey';
 /**
@@ -263,32 +265,86 @@ export function paragraphHash(top: AstNode[], j: number): string {
   return foldHash(`${pageTitleOf(top)}|${squashAll(foldText(top[j]))}`);
 }
 
+/** Hash → page key → entry. */
+type ByPage<E> = Map<string, Map<string, E>>;
 interface LedgerIndex {
-  sections: Map<string, { key: string; entry: FoldSection }>;
-  impulses: Map<string, { key: string; entry: ImpulseEntry }>;
-  /** Card step 13b: paragraph hash → page key → gate. Keyed by BOTH: two pages that print the same
-   *  paragraph under the same title (actions:furious-strike and its classFeatures copy, the implement
-   *  pages and their classFeatures benefit copies) share a hash, and a fold must name its own page. */
-  prose: Map<string, Map<string, ProseGate>>;
+  /** Every index is keyed by (hash, page): two pages that print the same words under the same title
+   *  (actions:furious-strike and its classFeatures copy; implement:shield and classFeatures:shield with
+   *  its three benefit copies) share a hash, and a fold must name its own page (card step 13b for prose;
+   *  the follow-ups round for the 13a sections and the impulses). */
+  sections: ByPage<FoldSection>;
+  impulses: ByPage<ImpulseEntry>;
+  prose: ByPage<ProseGate>;
+  /** Every page key with at least one entry (sections, impulses or prose). */
+  listed: Set<string>;
 }
 const INDEXES = new WeakMap<LevelFoldLedger, LedgerIndex>();
+function byPageOf<E extends { hash: string }>(lists: Record<string, E[]> | undefined): ByPage<E> {
+  const m: ByPage<E> = new Map();
+  for (const [key, list] of Object.entries(lists ?? {})) {
+    for (const entry of list) {
+      let byPage = m.get(entry.hash);
+      if (!byPage) m.set(entry.hash, (byPage = new Map()));
+      byPage.set(key, entry);
+    }
+  }
+  return m;
+}
 function indexOf(ledger: LevelFoldLedger): LedgerIndex {
   let ix = INDEXES.get(ledger);
   if (!ix) {
-    ix = { sections: new Map(), impulses: new Map(), prose: new Map() };
-    for (const [key, list] of Object.entries(ledger.pages ?? {})) for (const entry of list) ix.sections.set(entry.hash, { key, entry });
-    for (const [key, list] of Object.entries(ledger.impulses ?? {})) for (const entry of list) ix.impulses.set(entry.hash, { key, entry });
-    for (const [key, list] of Object.entries(ledger.prose ?? {})) {
-      for (const entry of list) {
-        let byPage = ix.prose.get(entry.hash);
-        if (!byPage) ix.prose.set(entry.hash, (byPage = new Map()));
-        byPage.set(key, entry);
-      }
-    }
+    const listed = new Set<string>();
+    for (const part of [ledger.pages, ledger.impulses, ledger.prose]) for (const [key, list] of Object.entries(part ?? {})) if (list.length) listed.add(key);
+    ix = { sections: byPageOf(ledger.pages), impulses: byPageOf(ledger.impulses), prose: byPageOf(ledger.prose), listed };
     INDEXES.set(ledger, ix);
   }
   return ix;
 }
+const PAGE_SLICES = (PAGE_SLICES_JSON as unknown as { slices?: Record<string, { bucket: string; page: string }> }).slices ?? {};
+/**
+ * The ledger page a record the card opened (`own`, "bucket:slug") is judged on: THE PAGE WHOSE TREE IT
+ * DRAWS. A record with a slice in src/data/page-slices.json draws (a cut of) that page — the resolution
+ * useAstNode and recordTree make — so classFeatures:decay-instinct (route R4, kind 'page') is judged on
+ * instinct:decay and folds exactly as that page does. A record listed in not-own-page.json draws no tree,
+ * and every other record draws its own, so for both the key is the record itself. When a drawn page that
+ * is NOT the record's own has no ledger entry at all, the lookups go on as if no record were named (the
+ * title page, then identical copies); a record drawing its own tree never borrows (FIX 2: the synthetic
+ * classes page). Orchestrator ruling, follow-ups round 2.
+ */
+export function ledgerKeyOf(own: string | undefined, ledger: LevelFoldLedger = LEVEL_FOLDS): string | undefined {
+  if (!own) return undefined;
+  const s = PAGE_SLICES[own];
+  const drawn = s ? `${s.bucket}:${s.page}` : own;
+  return drawn === own || indexOf(ledger).listed.has(drawn) ? drawn : undefined;
+}
+/**
+ * One ledger entry for a hash ON ONE PAGE (sections, impulses and prose alike).
+ *  - `own` given (the page the record the card opened draws, ledgerKeyOf — a key the generator read): ONLY that page's
+ *    entry counts. The generator judged that page's tree under that key, so a hash it did not list there
+ *    was left whole on purpose (PROSE_EXCLUDED, an excluded bucket such as classes, the ungated-sentence
+ *    rule) — another page listing the same words never folds it (follow-ups FIX 2).
+ *  - no `own`: the page the tree's own title links to (`named`, pageRefOf) when it lists the hash; else a
+ *    hash several pages list folds only when every one of them agrees (`same`) — identical copies — and
+ *    the fold names them all ("a|b|c#5"), never one of them by guess; otherwise nothing folds.
+ */
+function entryAt<E>(byHash: ByPage<E>, hash: string, own: string | undefined, named: () => string | undefined, same: (a: E, b: E) => boolean): { key: string; entry: E } | undefined {
+  const byPage = byHash.get(hash);
+  if (!byPage) return undefined;
+  if (own) {
+    const entry = byPage.get(own);
+    return entry ? { key: own, entry } : undefined;
+  }
+  const n = named();
+  const hit = n ? byPage.get(n) : undefined;
+  if (hit) return { key: n!, entry: hit };
+  const all = [...byPage];
+  const [, first] = all[0];
+  if (all.some(([, e]) => !same(e, first))) return undefined;
+  return { key: all.map(([k]) => k).join('|'), entry: first };
+}
+const sameSection = (a: FoldSection, b: FoldSection) => a.i === b.i && a.level === b.level && a.title === b.title && JSON.stringify(a.gate ?? null) === JSON.stringify(b.gate ?? null);
+const sameImpulse = (a: ImpulseEntry, b: ImpulseEntry) => a.i === b.i && a.featLevel === b.featLevel && a.plus === b.plus && a.at === b.at;
+const sameProse = (a: ProseGate, b: ProseGate) => a.i === b.i && a.level === b.level;
 /** The page key a tree's own level-1 title links to ("actions:furious-strike" — the Archives page the
  *  tree IS, whichever bucket holds a copy of it), or undefined. */
 export function pageRefOf(top: readonly AstNode[]): string | undefined {
@@ -300,26 +356,6 @@ export function pageRefOf(top: readonly AstNode[]): string | undefined {
     for (const c of n.c ?? []) walk(c);
   })(title);
   return ref;
-}
-/**
- * Card step 13b: the ledger's prose gate for one paragraph hash ON ONE PAGE. The page is the record the
- * card opened (`own`) when the ledger lists the hash under it, else the page the tree's own title links to
- * (pageRefOf), else the one page that lists the hash. A hash several pages list and neither names (the
- * thaumaturge's adept/initiate/paragon-benefit-weapon copies of implement-9, whose title link has no ref)
- * folds only when every one of those pages lists it at the same paragraph and level — identical pages —
- * and the fold names them all ("a|b|c#5"), never one of them by guess; otherwise the paragraph stays open.
- */
-function proseGateAt(ix: LedgerIndex, hash: string, pages: readonly (string | undefined)[]): { key: string; entry: ProseGate } | undefined {
-  const byPage = ix.prose.get(hash);
-  if (!byPage) return undefined;
-  for (const k of pages) {
-    const entry = k ? byPage.get(k) : undefined;
-    if (entry) return { key: k!, entry };
-  }
-  const all = [...byPage];
-  const [, first] = all[0];
-  if (all.some(([, e]) => e.i !== first.i || e.level !== first.level)) return undefined;
-  return { key: all.map(([k]) => k).join('|'), entry: first };
 }
 /** Is this section hash in the ledger? (the guard's FOLDED-UNLISTED test) */
 export function ledgerHasSection(hash: string, ledger: LevelFoldLedger = LEVEL_FOLDS): boolean {
@@ -431,11 +467,15 @@ export function scopeTree(tree: AstNode, scope: CardScope | undefined, ledger: L
   const pick: readonly string[] = rowPick ? pickCandidates(rowPick) : own?.startsWith(CLASS_PICK_BUCKET) ? classPicksOf(scope, own) : [];
   const blocks = new Map<number, ChoiceBlock>();
   if (pick.length) for (const b of choiceBlocksOf(top)) blocks.set(b.start, b);
+  // The ledger page the record draws (ledgerKeyOf): instinct:decay for classFeatures:decay-instinct.
+  const lk = ledgerKeyOf(own, ledger);
+  // The page the tree's own title links to, read once and only when a lookup without a page needs it.
   let titleRef: string | undefined;
+  const named = () => (titleRef ??= pageRefOf(top) ?? '') || undefined;
   for (let j = 0; j < top.length; j++) {
     const n = top[j];
     if (isLevelTitle(n)) {
-      const hit = ix.sections.get(sectionHash(top, j));
+      const hit = entryAt(ix.sections, sectionHash(top, j), lk, named, sameSection);
       if (hit) {
         const end = sectionEnd(top, j);
         const v = sectionVerdict(hit.entry, scope);
@@ -456,9 +496,9 @@ export function scopeTree(tree: AstNode, scope: CardScope | undefined, ledger: L
     }
     // Card step 13b: a ledger prose gate below the character's level joins the run of folded parts —
     // the whole paragraph, alone (the ledger never lists a paragraph a later block goes on from). Looked
-    // up by (page, hash): the record the card opened, else the page the tree's title links to.
+    // up by (page, hash): the record the card opened, else the page the tree's title links to (entryAt).
     const ph = n.t === 'p' ? paragraphHash(top, j) : undefined;
-    const gate = ph ? proseGateAt(ix, ph, [own, (titleRef ??= pageRefOf(top) ?? '')]) : undefined;
+    const gate = ph ? entryAt(ix.prose, ph, lk, named, sameProse) : undefined;
     if (gate && proseVerdict(gate.entry, scope) !== 'open') {
       if (run && run.reason !== 'future') flush();
       run ??= { reason: 'future', nodes: [], ids: [], options: [] };
@@ -480,7 +520,7 @@ export function scopeTree(tree: AstNode, scope: CardScope | undefined, ledger: L
       }
     }
     if (ph) {
-      const imp = ix.impulses.get(ph);
+      const imp = entryAt(ix.impulses, ph, lk, named, sameImpulse);
       if (imp && impulseApplies(imp.entry, scope.level)) {
         const marked: ScopedNode = { ...n, applies: true };
         out.push(marked);
@@ -518,7 +558,8 @@ export function withPointer(tree: AstNode, pageTree: AstNode | undefined, ptr: {
   const top = pageTree.c ?? [];
   for (let j = 0; j < top.length; j++) {
     if (!isLevelTitle(top[j])) continue;
-    const hit = ix.sections.get(sectionHash(top, j));
+    // The pointer's own page entry (ptr.pageKey, e.g. classFeatures:justice), never the identical cause:justice copy's id.
+    const hit = entryAt(ix.sections, sectionHash(top, j), ptr.pageKey, () => undefined, sameSection);
     if (!hit || hit.entry.title !== ptr.title) continue;
     const section: ScopedNode = { t: 'card-pointer', c: top.slice(j, sectionEnd(top, j)), pointerFrom: ptr.pageKey };
     const v = sectionVerdict(hit.entry, scope);
@@ -963,10 +1004,13 @@ export function foldsOf(row: unknown, tree?: AstNode, classIds: readonly string[
         const head = (tree.c ?? []).filter((n) => n.t === 'title' && Number(n.level ?? 1) <= 1).slice(0, 1);
         for (let j = 0; j < kids.length; j++) {
           // Card step 13b: a paragraph outside every folded section is a prose gate — re-hashed in its
-          // page's context and looked up in the ledger's `prose`, or it is FOLDED-UNLISTED.
+          // page's context and looked up in the ledger's `prose` ON THE PAGE THE ROW DRAWS (ledgerKeyOf; the
+          // drawing above has no `own`, as RecordCard's peek and cardModel draw it, so a fold another page's
+          // identical words lent it is FOLDED-UNLISTED here). The id carries the paragraph's index in the tree:
+          // two gate paragraphs of one level that open with the same words are two folds, each judged.
           if (kids[j].t === 'p') {
-            const listed = ledgerHasProse(paragraphHash([...head, kids[j]], head.length), ledger);
-            const id = `¶${foldText(kids[j]).replace(/\s+/g, ' ').trim().slice(0, 40)}@${level}`;
+            const listed = ledgerHasProse(paragraphHash([...head, kids[j]], head.length), ledger, ledgerKeyOf(own, ledger));
+            const id = `¶${foldText(kids[j]).replace(/\s+/g, ' ').trim().slice(0, 40)}#${(tree.c ?? []).indexOf(kids[j])}@${level}`;
             if (seen.has(id)) continue;
             seen.add(id);
             out.push({ id, listed });

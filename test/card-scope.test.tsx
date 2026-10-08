@@ -9,8 +9,10 @@ import {
   sectionVerdict, withPointer, type LevelFoldLedger, type ScopedNode,
   choiceBlocksOf, pickCandidates, withPick, type ChoiceBlock,
   CLASS_PICKS, classPicksOf, classPickScopes, pickFoldsOf, classPickOf,
-  sectionEnd, paragraphHash, proseVerdict, ledgerHasProse, pageRefOf,
+  sectionEnd, paragraphHash, proseVerdict, ledgerHasProse, pageRefOf, sectionHash, ledgerKeyOf,
 } from '../src/sheet/cardScope';
+import { recordTree, withoutItemLists } from '../src/sheet/astVisibility';
+import PAGE_SLICES_JSON from '../src/data/page-slices.json';
 import { generateLevelFolds, serialize, proseGatesOf, PROSE_EXCLUDED, PROSE_EXCLUDED_BUCKETS, loadTrees, loadCore } from '../scripts/level-folds.mjs';
 import { levelFoldProblems } from '../scripts/level-folds-check.mjs';
 import { scopeGrid, recordPickLabels, pickOwnOf, classPickLabels, judgeRow, ledgerGrid, treeBlocks, bodyLabels, plainHeaderLabels } from '../scripts/lib/card-scope.mjs';
@@ -107,6 +109,34 @@ import { spellCardModel } from '../src/sheet/spellCard';
  *    synthetic header case. plainHeaderLabels read unmasked (bold runs as header text) → 3 red: grease
  *    (Cast), perfection-of-essence (Duration), the synthetic case. A label's words no longer cut at the next
  *    bold run → the synthetic reaction-line case red.
+ *
+ * Card follow-ups round (every ledger index keyed by page and hash; own page only; prose fold ids by
+ * paragraph). MUTATION LINES, each measured red on 2026-10-08 in lane hh-lane-followups, restored
+ * byte-exact from a scratch copy (cmp):
+ *  - cardScope.ts scopeTree (round 1, when the lookup still took `own`): `own` → `undefined` (page key dropped) → 3 red: the
+ *    classFeatures:shield case, the shared-section corpus case, the 13b shared-gate corpus case.
+ *  - cardScope.ts entryAt: `return entry ? { key: own, entry } : undefined;` → `if (entry) return …;`
+ *    (an own page without the entry falls through to the title page / identical copies) → 1 red: the
+ *    synthetic classes page folds the feat's gate.
+ *  - cardScope.ts foldsOf: `own` dropped from ledgerHasProse → 2 red: the borrowed fold is called listed
+ *    (synthetic classes page; the twin paragraphs' second one).
+ *  - cardScope.ts foldsOf: the `#<index>` dropped from a prose fold's id → 3 red: both twin-paragraph
+ *    cases (two folds collapse to one id) and the Iruxi foldsOf id case.
+ *
+ * Follow-ups round 2 (orchestrator ruling: a record is judged on the page whose tree it DRAWS —
+ * cardScope.ts ledgerKeyOf, through src/data/page-slices.json). MUTATION LINES, each measured red on
+ * 2026-10-08 in lane hh-lane-followups, restored byte-exact from a scratch copy (cmp):
+ *  - ledgerKeyOf: `const drawn = s ? … : own;` → `const drawn = own;` (resolution dropped) → 3 red: the
+ *    decay/ligneous-instinct case, the GUARD (every row drawing a ledger page folds its listed sections),
+ *    the no-entry fallback case.
+ *  - ledgerKeyOf: the return → `return drawn;` (no fallback for a drawn page with no entry) → 1 red: the
+ *    no-entry fallback case.
+ *  - ledgerKeyOf: the return → `listed.has(drawn) ? drawn : undefined` (an own tree may borrow) → 3 red:
+ *    both synthetic classes-page cases and the no-entry fallback case's own-tree half.
+ *  - scopeTree: the section lookup's `lk` → `undefined` → 5 red: the shield case, both shared-hash corpus
+ *    cases, the GUARD, the no-entry fallback case.
+ *  - scopeTree: the impulse lookup's `lk` → `undefined` → 1 red: the synthetic two-page impulse case.
+ *  - withPointer: `ptr.pageKey` → `undefined` → 1 red: the pointer section names classFeatures:justice.
  */
 const trees: Record<string, Record<string, AstNode>> = {};
 const tree = (key: string): AstNode => {
@@ -455,7 +485,9 @@ describe('the guard\'s view of choose-one folds', () => {
     // Card step 13b: the page's 5th-level prose gate also folds at the level grid (below 5: level 1).
     // batch card premise: feat-5633 "At 5th level, whenever you get a critical hit"
     expect(folds.map((f) => f.id).filter((id) => !id.startsWith('¶')).sort()).toEqual(['Claws@pick:Fangs', 'Claws@pick:Tail', 'Fangs@pick:Claws', 'Fangs@pick:Tail', 'Tail@pick:Claws', 'Tail@pick:Fangs']);
-    expect(folds.filter((f) => f.id.startsWith('¶')).map((f) => f.id)).toEqual(['¶At 5th level, whenever you get a critica@1']);
+    // Follow-ups FIX 3: a prose fold's id carries the paragraph's index in the tree (#6).
+    // batch card premise: feat-5633 "At 5th level, whenever you get a critical hit"
+    expect(folds.filter((f) => f.id.startsWith('¶')).map((f) => f.id)).toEqual(['¶At 5th level, whenever you get a critica#6@1']);
     expect(folds.every((f) => f.listed)).toBe(true);
     // A surface that never hands its card a pick has no pick grid (the level grid's prose fold only).
     // batch card premise: feat-5633 "At 5th level, whenever you get a critical hit"
@@ -1006,6 +1038,203 @@ describe('card step 13b: a prose fold names its OWN page (the ledger\'s prose ke
   it('ledgerHasProse asked for a page answers for that page only', () => {
     const h = paragraphHash(tree('actions:furious-strike').c ?? [], 5);
     expect([ledgerHasProse(h), ledgerHasProse(h, LEVEL_FOLDS, 'actions:furious-strike'), ledgerHasProse(h, LEVEL_FOLDS, 'classFeatures:furious-strike'), ledgerHasProse(h, LEVEL_FOLDS, 'feats:osteo-armaments')]).toEqual([true, true, true, false]);
+  });
+});
+
+describe('follow-ups: a level SECTION fold names its own page too (the 13a index keyed by page and hash)', () => {
+  const ids = (t: AstNode) => foldNodesOf(t).flatMap((f) => f.sectionIds ?? []);
+  const at = (key: string) => [5, 6, 8, 10].map((i) => `${key}#${i}`);
+  it('classFeatures:shield prints implement:shield\'s sections word for word: opened as itself, every fold id names classFeatures:shield', () => {
+    const src = tree('classFeatures:shield');
+    const h = LEVEL_FOLDS.pages['classFeatures:shield'][0].hash;
+    expect(Object.keys(LEVEL_FOLDS.pages).filter((k) => LEVEL_FOLDS.pages[k].some((e) => e.hash === h)).sort()).toEqual([
+      'classFeatures:adept-benefit-shield', 'classFeatures:initiate-benefit-shield', 'classFeatures:paragon-benefit-shield', 'classFeatures:shield', 'implement:shield',
+    ]);
+    // The prose gate (#5) and the three level sections (#6, #8, #10), all of the record the card opened.
+    expect(ids(scopeTree(src, { level: 4 }, LEVEL_FOLDS, FUTURE_TREATMENT, 'classFeatures:shield'))).toEqual(at('classFeatures:shield'));
+    expect(ids(scopeTree(tree('implement:shield'), { level: 4 }, LEVEL_FOLDS, FUTURE_TREATMENT, 'implement:shield'))).toEqual(at('implement:shield'));
+    expect(ids(scopeTree(tree('classFeatures:adept-benefit-shield'), { level: 4 }, LEVEL_FOLDS, FUTURE_TREATMENT, 'classFeatures:adept-benefit-shield'))).toEqual(at('classFeatures:adept-benefit-shield'));
+    // With no record named: the page the copy's title links to, for sections and prose alike (never a mix).
+    expect(pageRefOf(src.c ?? [])).toBe('implement:shield');
+    expect(ids(scopeTree(src, { level: 4 }))).toEqual(at('implement:shield'));
+  });
+  it('on every loaded ledger page whose section hash another page shares, every section fold names the record the card opened', () => {
+    const byHash = new Map<string, string[]>();
+    for (const [key, list] of Object.entries(LEVEL_FOLDS.pages)) for (const e of list) byHash.set(e.hash, [...(byHash.get(e.hash) ?? []), key]);
+    const wrong: string[] = [];
+    let shared = 0;
+    for (const [key, list] of Object.entries(LEVEL_FOLDS.pages)) {
+      if (!trees[key.split(':')[0]] || !list.some((e) => (byHash.get(e.hash) ?? []).length > 1)) continue;
+      shared++;
+      // Level 0: every listed section of the page folds (an ownership gate folds it as 'pick' — still its id).
+      const got = ids(scopeTree(tree(key), { level: 0 }, LEVEL_FOLDS, FUTURE_TREATMENT, key));
+      const want = list.map((e) => `${key}#${e.i}`);
+      if (!want.every((id) => got.includes(id)) || got.some((id) => !id.startsWith(`${key}#`))) wrong.push(`${key}: ${JSON.stringify(got)}`);
+    }
+    expect(wrong).toEqual([]);
+    expect(shared).toBeGreaterThanOrEqual(20);
+  });
+});
+
+describe('follow-ups: a page the generator left whole never borrows another page\'s identical gate', () => {
+  const para = (v: string): AstNode => ({ t: 'p', c: [{ t: 'text', v }] });
+  /** A synthetic classes page whose title and one paragraph equal osteo-armaments' title and its listed
+   *  8th-level gate (#5): the same hash. The generator never lists a classes page (an excluded bucket). */
+  const synthetic = (): AstNode => {
+    const ftop = tree(OSTEO).c ?? [];
+    const title = ftop.find((n) => n.t === 'title' && Number(n.level ?? 1) <= 1)!;
+    return { t: 'doc', c: [{ t: 'title', level: '1', right: title.right, c: [{ t: 'text', v: foldText(title) }] }, para('You can do the base thing.'), ftop[5]] };
+  };
+  const KEY = 'classes:synthetic-class';
+  it('opened as its own key it folds NOTHING — whether the ledger lists that page not at all or with another paragraph', () => {
+    const t = synthetic();
+    const h = paragraphHash(tree(OSTEO).c ?? [], 5);
+    expect(paragraphHash(t.c ?? [], 2)).toBe(h);
+    expect(Object.keys(LEVEL_FOLDS.prose ?? {}).filter((k) => LEVEL_FOLDS.prose![k].some((g) => g.hash === h))).toEqual([OSTEO]);
+    expect(scopeTree(t, { level: 7 }, LEVEL_FOLDS, FUTURE_TREATMENT, KEY)).toBe(t);
+    const listedOther: LevelFoldLedger = { ...LEVEL_FOLDS, prose: { ...LEVEL_FOLDS.prose, [KEY]: [{ i: 1, level: 8, hash: paragraphHash(t.c ?? [], 1) }] } };
+    expect(foldNodesOf(scopeTree(t, { level: 7 }, listedOther, FUTURE_TREATMENT, KEY)).map((f) => f.sectionIds)).toEqual([[`${KEY}#1`]]);
+    // Control: the feat itself, opened as itself, folds its gate.
+    expect(foldNodesOf(scopeTree(tree(OSTEO), { level: 7 }, LEVEL_FOLDS, FUTURE_TREATMENT, OSTEO)).map((f) => f.sectionIds)).toEqual([[`${OSTEO}#5`, `${OSTEO}#6`]]);
+  });
+  it('a drawing with no record named still takes the identical copy — and the guard, judging on the row\'s own page, calls that fold unlisted', () => {
+    const t = synthetic();
+    expect(foldNodesOf(scopeTree(t, { level: 7 })).map((f) => f.sectionIds)).toEqual([[`${OSTEO}#5`]]);
+    const row = (bucket: string, slug: string) => ({ mode: 'mine', card: { printed: [] }, read: { bucket, slug } });
+    const own = foldsOf(row('classes', 'synthetic-class'), t);
+    expect(own.length).toBe(2); // folded at grid levels 1 and 5
+    expect(own.every((f) => !f.listed)).toBe(true);
+    // Control: judged as the feat's own page, the same fold is listed.
+    expect(foldsOf(row('feats', 'osteo-armaments'), t).every((f) => f.listed)).toBe(true);
+  });
+});
+
+describe('follow-ups: two same-level gate paragraphs that open alike are two folds, each judged', () => {
+  const para = (v: string): AstNode => ({ t: 'p', c: [{ t: 'text', v }] });
+  const KEY = 'feats:synthetic-twin';
+  const twin = (): AstNode => ({ t: 'doc', c: [
+    { t: 'title', c: [{ t: 'text', v: 'Synthetic Twin' }], level: '1', right: 'Feat 4' },
+    para('You can do the base thing.'),
+    para('At 8th level, you gain a +1 circumstance bonus to Athletics checks.'),
+    para('At 8th level, you gain a +1 circumstance bonus to Acrobatics checks.'),
+  ] });
+  const row = { mode: 'mine', card: { printed: [] }, read: { bucket: 'feats', slug: 'synthetic-twin' } };
+  it('both listed on the page: four folds judged (two paragraphs × grid levels 1 and 5), all listed', () => {
+    const t = twin();
+    const top = t.c ?? [];
+    expect(foldText(top[2]).slice(0, 40)).toBe(foldText(top[3]).slice(0, 40));
+    const ledger: LevelFoldLedger = { ...LEVEL_FOLDS, prose: { ...LEVEL_FOLDS.prose, [KEY]: [{ i: 2, level: 8, hash: paragraphHash(top, 2) }, { i: 3, level: 8, hash: paragraphHash(top, 3) }] } };
+    const f = foldsOf(row, t, [], ledger);
+    expect(f.length).toBe(4);
+    expect(f.every((x) => x.listed)).toBe(true);
+  });
+  it('one listed on the page, one only on another page: the second is judged too, and unlisted', () => {
+    const t = twin();
+    const top = t.c ?? [];
+    const ledger: LevelFoldLedger = { ...LEVEL_FOLDS, prose: { ...LEVEL_FOLDS.prose, [KEY]: [{ i: 2, level: 8, hash: paragraphHash(top, 2) }], 'feats:synthetic-other': [{ i: 3, level: 8, hash: paragraphHash(top, 3) }] } };
+    const f = foldsOf(row, t, [], ledger);
+    expect(f.map((x) => x.listed)).toEqual([true, false, true, false]);
+  });
+});
+
+describe('follow-ups round 2: a record is judged on the page whose tree it DRAWS (page slices)', () => {
+  /** Every bucket a ledger page or a slice onto one lives in, read once, apart from the shared `trees`. */
+  const drawnTrees: Record<string, Record<string, AstNode>> = {};
+  const SLICES = (PAGE_SLICES_JSON as unknown as { slices: Record<string, { bucket: string; page: string; kind: string }> }).slices;
+  const treeOf = (b: string, s: string): AstNode | undefined => drawnTrees[b]?.[s];
+  /** The tree a row draws, as RecordCard draws it (recordTree, then withoutItemLists), and its page key. */
+  const drawn = (key: string): { tree?: AstNode; page: string; whole: boolean } => {
+    const at = key.indexOf(':');
+    const s = SLICES[key];
+    const t = recordTree(key.slice(0, at), key.slice(at + 1), treeOf);
+    return { tree: t ? withoutItemLists(t) : undefined, page: s ? `${s.bucket}:${s.page}` : key, whole: s?.kind === 'page' };
+  };
+  const ids = (t: AstNode) => foldNodesOf(t).flatMap((f) => f.sectionIds ?? []);
+  beforeAll(() => {
+    const buckets = new Set(Object.keys(LEVEL_FOLDS.pages).map((k) => k.split(':')[0]));
+    for (const s of Object.values(SLICES)) if (LEVEL_FOLDS.pages[`${s.bucket}:${s.page}`]) buckets.add(s.bucket);
+    for (const b of buckets) drawnTrees[b] = JSON.parse(gunzipSync(readFileSync(`public/ast/${b}.json.gz`)).toString('utf8'));
+  });
+  it('classFeatures:decay-instinct and ligneous-instinct, opened as themselves, fold exactly as the instinct page they draw', () => {
+    expect(ledgerKeyOf('classFeatures:decay-instinct')).toBe('instinct:decay');
+    expect(ledgerKeyOf('classFeatures:ligneous-instinct')).toBe('instinct:ligneous');
+    for (const [key, want] of [['classFeatures:decay-instinct', ['Specialization Ability', 'Raging Resistance']], ['classFeatures:ligneous-instinct', ['Raging Resistance']]] as const) {
+      const d = drawn(key);
+      const page = drawnTrees.instinct[d.page.split(':')[1]];
+      for (const level of [0, 4, 6, 8]) {
+        const mine = scopeTree(d.tree!, { level }, LEVEL_FOLDS, FUTURE_TREATMENT, key);
+        const asPage = scopeTree(withoutItemLists(page), { level }, LEVEL_FOLDS, FUTURE_TREATMENT, d.page);
+        // Specialization Ability is a 7th-level section, Raging Resistance a 9th-level one.
+        const folded = want.filter((title) => level < (title === 'Specialization Ability' ? 7 : 9));
+        expect(foldNodesOf(mine).flatMap((f) => (f.c ?? []).filter(isLevelTitle).map((x) => foldText(x).trim())), `${key}@${level}`).toEqual(folded);
+        expect(JSON.stringify(mine), `${key}@${level} draws as ${d.page}`).toBe(JSON.stringify(asPage));
+      }
+    }
+  });
+  it('GUARD: for every row that draws a ledger page, drawing it with the record named at level 0 folds every section the ledger lists for that page', () => {
+    const rows = [...Object.keys(LEVEL_FOLDS.pages), ...Object.keys(SLICES).filter((k) => LEVEL_FOLDS.pages[`${SLICES[k].bucket}:${SLICES[k].page}`])];
+    const wrong: string[] = [];
+    let judged = 0, sliced = 0;
+    for (const key of rows) {
+      const d = drawn(key);
+      if (!d.tree) { wrong.push(`${key}: draws no tree`); continue; }
+      const top = d.tree.c ?? [];
+      const inTree = new Set<string>();
+      for (let j = 0; j < top.length; j++) if (isLevelTitle(top[j])) inTree.add(sectionHash(top, j));
+      // A slice of kind 'page' draws the whole page, so it holds every listed section. Any other row holds
+      // the listed sections its drawn tree prints: a cut (a section / item slice, or the variantSection cut
+      // that leaves an implement benefit row only its own benefit section) folds the ones it keeps.
+      const want = LEVEL_FOLDS.pages[d.page].filter((e) => d.whole || inTree.has(e.hash));
+      if (!want.length) continue;
+      judged++;
+      if (key !== d.page) sliced++;
+      const got = ids(scopeTree(d.tree, { level: 0 }, LEVEL_FOLDS, FUTURE_TREATMENT, key));
+      const missing = want.filter((e) => !got.includes(`${d.page}#${e.i}`)).map((e) => `${e.title}#${e.i}`);
+      if (missing.length) wrong.push(`${key} (draws ${d.page}): ${missing.join(', ')} not folded; got ${JSON.stringify(got)}`);
+    }
+    expect(wrong).toEqual([]);
+    // Measured 2026-10-08: 160 of the 190 ledger pages draw at least one listed section (the 30 implement
+    // benefit rows draw their own benefit section only); decay- and ligneous-instinct are the sliced rows.
+    expect(judged).toBeGreaterThanOrEqual(162);
+    expect(sliced).toBeGreaterThanOrEqual(2);
+  });
+  it('a drawn page with no ledger entry at all falls back to the identical copy; a record drawing its own tree never does', () => {
+    const KEY = 'classFeatures:decay-instinct';
+    const d = drawn(KEY);
+    const { ['instinct:decay']: listed, ...rest } = LEVEL_FOLDS.pages;
+    const moved: LevelFoldLedger = { ...LEVEL_FOLDS, pages: { ...rest, 'instinct:decay-copy': listed } };
+    expect(ledgerKeyOf(KEY, moved)).toBeUndefined();
+    expect(ids(scopeTree(d.tree!, { level: 0 }, moved, FUTURE_TREATMENT, KEY))).toEqual(['instinct:decay-copy#7', 'instinct:decay-copy#9']);
+    // The page itself, opened as itself, is its own tree: it borrows nothing from the copy.
+    expect(ledgerKeyOf('instinct:decay', moved)).toBe('instinct:decay');
+    expect(ids(scopeTree(withoutItemLists(drawnTrees.instinct.decay), { level: 0 }, moved, FUTURE_TREATMENT, 'instinct:decay'))).toEqual([]);
+  });
+  it('a pointer section names the subclass page the pointer reads (ptr.pageKey), never the identical copies of it', () => {
+    const s5 = scopeOfCharacter(build('champion', 5, { subclassId: 'justice' }))!;
+    const ptr = pointerOf('classFeatures', 'relentless-reaction', s5)!;
+    expect(ptr.pageKey).toBe('classFeatures:justice');
+    const h = LEVEL_FOLDS.pages['classFeatures:justice'].find((e) => e.title === 'Relentless Reaction')!.hash;
+    expect(Object.keys(LEVEL_FOLDS.pages).filter((k) => LEVEL_FOLDS.pages[k].some((e) => e.hash === h)).sort()).toEqual(['cause:justice', 'classFeatures:justice']);
+    const t5 = withPointer(tree('classFeatures:relentless-reaction'), tree(ptr.pageKey), ptr, s5);
+    const f = (t5.c ?? [])[(t5.c ?? []).length - 1] as ScopedNode;
+    expect(f.t).toBe('card-fold');
+    expect(f.sectionIds).toEqual(['classFeatures:justice#8']);
+  });
+  it('an impulse "Level" line two pages list under one hash is read on the page the card opened', () => {
+    const top: AstNode[] = [
+      { t: 'title', c: [{ t: 'text', v: 'Synthetic Impulse' }], level: '1', right: 'Feat 4' },
+      { t: 'p', c: [{ t: 'text', v: 'Level (+2) The damage increases by 1d6.' }] },
+    ];
+    const t: AstNode = { t: 'doc', c: top };
+    const h = paragraphHash(top, 1);
+    const ledger: LevelFoldLedger = { ...LEVEL_FOLDS, impulses: { ...LEVEL_FOLDS.impulses, 'feats:synthetic-impulse': [{ i: 1, hash: h, featLevel: 4, plus: 2 }], 'feats:synthetic-impulse-other': [{ i: 1, hash: h, featLevel: 4, plus: 10 }] } };
+    const applies = (own: string | undefined, level: number) => !!((scopeTree(t, { level }, ledger, FUTURE_TREATMENT, own).c ?? [])[1] as ScopedNode).applies;
+    expect(applies('feats:synthetic-impulse', 6)).toBe(true);
+    expect(applies('feats:synthetic-impulse', 5)).toBe(false);
+    expect(applies('feats:synthetic-impulse-other', 6)).toBe(false);
+    expect(applies('feats:synthetic-impulse-other', 14)).toBe(true);
+    // No record named: the two pages disagree, so neither entry is taken.
+    expect(applies(undefined, 14)).toBe(false);
   });
 });
 

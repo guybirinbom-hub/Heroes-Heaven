@@ -75,9 +75,6 @@ export interface FeatEntry {
    * featEntries always sets it (an empty list when the row has nothing of ours).
    */
   ours?: OursLine[];
-  /** The Feats-tab row's plain-text preview: the description plus the pick / marker / note words that
-   *  used to be appended to it, so the row reads exactly as before. Absent = toPlainText(description). */
-  preview?: string;
 }
 
 /** Which core.json record a row is showing, for TrustMarker. A row built from something with no id
