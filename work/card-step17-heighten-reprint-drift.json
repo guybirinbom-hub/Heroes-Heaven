@@ -1,0 +1,582 @@
+{
+ "_generated": "scripts/heighten-tree-parity.mjs --write — card step 17. reprintDrift: spells whose Archives page is a newer printing than the text the string lane was imported from; the page wins (they draw the tree), and this lists, for the rebuild lane, the heightening entries the string had that the page no longer prints (stringOnly) and the engine's heightening fields in public/core.json that now disagree with print (engineDisagrees). engineDrift: tree-lane spells whose engine heightens at an interval the page does not print (the page prints another \"(+N)\", or only \"(Nth)\" entries that grant fewer steps). On both, per the orchestrator's round-3 ruling (src/sheet/spellCard.ts arrowAt): displaySuppressed = the cast ranks at which the popup withholds the damage arrow / area suffix the engine computes, because no printed Heightened entry of the page the player reads backs it; displayFromPrint = rank -> [the value the popup draws, counted by the page's own entries; the engine's value]. notOwnPage: spell records whose tree is a page of another category (they are printed inside it); the popup keeps the string with an ours footer \"Printed inside <title> — text from our older import\" until the spells surface draws page slices. The engine's numbers are NOT changed by step 17 (mechanics out of scope)",
+ "reprintDrift": [
+  {
+   "id": "purify-soul-path",
+   "old": {
+    "doc": "ritual-67",
+    "book": "Secrets of Magic",
+    "release": "2021-09-01"
+   },
+   "new": {
+    "doc": "ritual-243",
+    "book": "Impossible Magic",
+    "release": "2026-07-30"
+   },
+   "stringOnly": [
+    "**Heightened (+1)** Increase the maximum target level by 2 and the base cost by 10 gp."
+   ],
+   "pageEntries": [],
+   "engine": null,
+   "engineDisagrees": [],
+   "displaySuppressed": {
+    "damage": [],
+    "area": []
+   },
+   "displayFromPrint": {}
+  },
+  {
+   "id": "quick-sort",
+   "old": {
+    "doc": "spell-978",
+    "book": "Secrets of Magic",
+    "release": "2021-09-01"
+   },
+   "new": {
+    "doc": "spell-2797",
+    "book": "Impossible Magic",
+    "release": "2026-07-30"
+   },
+   "stringOnly": [
+    "**Heightened (5th)** The spell can sort up to 800 objects in a minute, or 120 objects in a round."
+   ],
+   "pageEntries": [
+    "Heightened (3rd) The spell can sort up to 500 objects in a minute, or 75 objects in a round."
+   ],
+   "engine": {
+    "type": "fixed",
+    "levels": {
+     "3": {
+      "target": "up to 400 unattended objects in range, each of light Bulk or less"
+     },
+     "5": {
+      "target": "up to 800 unattended objects in range, each of light Bulk or less"
+     }
+    }
+   },
+   "engineDisagrees": [
+    "the engine's 3rd {\"target\":\"up to 400 unattended objects in range, each of light Bulk or less\"}; the page's (3rd) entry prints \"Heightened (3rd) The spell can sort up to 500 objects in a minute, or 75 objects in a round.\"",
+    "the engine heightens at 5th; the page prints no (5th) entry"
+   ],
+   "displaySuppressed": {
+    "damage": [],
+    "area": []
+   },
+   "displayFromPrint": {}
+  },
+  {
+   "id": "sea-of-thought",
+   "old": {
+    "doc": "spell-1162",
+    "book": "Dark Archive",
+    "release": "2022-07-27"
+   },
+   "new": {
+    "doc": "spell-2579",
+    "book": "Dark Archives (Remastered)",
+    "release": "2026-02-04"
+   },
+   "stringOnly": [
+    "**Heightened (+1)** The radius of the spell's area increases by 5 feet."
+   ],
+   "pageEntries": [],
+   "engine": {
+    "type": "interval",
+    "interval": 1,
+    "areaIncr": 5
+   },
+   "engineDisagrees": [
+    "the engine heightens every +1; the page prints no Heightened line"
+   ],
+   "displaySuppressed": {
+    "damage": [],
+    "area": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "displayFromPrint": {}
+  }
+ ],
+ "engineDrift": [
+  {
+   "id": "breath-of-life",
+   "page": {
+    "doc": "spell-1456",
+    "book": "Player Core",
+    "release": "2023-11-15"
+   },
+   "older": [
+    {
+     "doc": "spell-29",
+     "book": "Core Rulebook",
+     "release": "2019-08-01",
+     "heightened": []
+    }
+   ],
+   "pageEntries": [
+    "Heightened (+2) The healing increases by 1d8."
+   ],
+   "engine": {
+    "type": "interval",
+    "interval": 1,
+    "damageIncr": "1d8"
+   },
+   "engineDisagrees": [
+    "the engine heightens every +1; the page prints Heightened (+2)"
+   ],
+   "displaySuppressed": {
+    "damage": [
+     6
+    ],
+    "area": []
+   },
+   "displayFromPrint": {
+    "7": {
+     "damage": [
+      "6d8",
+      "7d8"
+     ]
+    },
+    "8": {
+     "damage": [
+      "6d8",
+      "8d8"
+     ]
+    },
+    "9": {
+     "damage": [
+      "7d8",
+      "9d8"
+     ]
+    },
+    "10": {
+     "damage": [
+      "7d8",
+      "10d8"
+     ]
+    }
+   }
+  },
+  {
+   "id": "celestial-brand",
+   "page": {
+    "doc": "spell-2095",
+    "book": "Player Core 2",
+    "release": "2024-08-01"
+   },
+   "older": [
+    {
+     "doc": "spell-497",
+     "book": "Core Rulebook",
+     "release": "2019-08-01",
+     "heightened": [
+      "**Heightened (+2)** The good damage increases by 1."
+     ]
+    }
+   ],
+   "pageEntries": [
+    "Heightened (+1) The spirit damage increases by 1."
+   ],
+   "engine": {
+    "type": "interval",
+    "interval": 2,
+    "damageIncr": "1"
+   },
+   "engineDisagrees": [
+    "the engine heightens every +2; the page prints Heightened (+1)"
+   ],
+   "displaySuppressed": {
+    "damage": [],
+    "area": []
+   },
+   "displayFromPrint": {
+    "6": {
+     "damage": [
+      "1d4+1",
+      null
+     ]
+    },
+    "7": {
+     "damage": [
+      "1d4+2",
+      "1d4+1"
+     ]
+    },
+    "8": {
+     "damage": [
+      "1d4+3",
+      "1d4+1"
+     ]
+    },
+    "9": {
+     "damage": [
+      "1d4+4",
+      "1d4+2"
+     ]
+    },
+    "10": {
+     "damage": [
+      "1d4+5",
+      "1d4+2"
+     ]
+    }
+   }
+  },
+  {
+   "id": "draw-the-lightning",
+   "page": {
+    "doc": "spell-2683",
+    "book": "Impossible Magic",
+    "release": "2026-07-30"
+   },
+   "older": [
+    {
+     "doc": "spell-898",
+     "book": "Secrets of Magic",
+     "release": "2021-09-01",
+     "heightened": [
+      "**Heightened (8th)** The damage dealt to the initial target increases by 4d12, and the additional damage dealt on the first Strike each turn increases by 1d12."
+     ]
+    }
+   ],
+   "pageEntries": [
+    "Heightened (8th) The damage dealt to the initial target increases by 4d12, and the additional damage dealt on the first Strike each turn increases by 1d12."
+   ],
+   "engine": {
+    "type": "interval",
+    "interval": 1,
+    "damageIncr": "4d12"
+   },
+   "engineDisagrees": [
+    "the engine heightens every +1; the page prints Heightened (8th)"
+   ],
+   "displaySuppressed": {
+    "damage": [
+     5,
+     6,
+     7
+    ],
+    "area": []
+   },
+   "displayFromPrint": {
+    "8": {
+     "damage": [
+      "7d12",
+      "19d12"
+     ]
+    },
+    "9": {
+     "damage": [
+      "7d12",
+      "23d12"
+     ]
+    },
+    "10": {
+     "damage": [
+      "7d12",
+      "27d12"
+     ]
+    }
+   }
+  },
+  {
+   "id": "gluttonous-growth",
+   "page": {
+    "doc": "spell-1935",
+    "book": "Howl of the Wild",
+    "release": "2024-05-29"
+   },
+   "older": [],
+   "pageEntries": [
+    "Heightened (+1) The damage dealt by the plants when you Sustain the spell increases by 2d6."
+   ],
+   "engine": {
+    "type": "interval",
+    "interval": 2,
+    "damageIncr": "2d6"
+   },
+   "engineDisagrees": [
+    "the engine heightens every +2; the page prints Heightened (+1)"
+   ],
+   "displaySuppressed": {
+    "damage": [],
+    "area": []
+   },
+   "displayFromPrint": {
+    "6": {
+     "damage": [
+      "6d6",
+      null
+     ]
+    },
+    "7": {
+     "damage": [
+      "8d6",
+      "6d6"
+     ]
+    },
+    "8": {
+     "damage": [
+      "10d6",
+      "6d6"
+     ]
+    },
+    "9": {
+     "damage": [
+      "12d6",
+      "8d6"
+     ]
+    },
+    "10": {
+     "damage": [
+      "14d6",
+      "8d6"
+     ]
+    }
+   }
+  },
+  {
+   "id": "inner-upheaval",
+   "page": {
+    "doc": "spell-2053",
+    "book": "Player Core 2",
+    "release": "2024-08-01"
+   },
+   "older": [
+    {
+     "doc": "spell-486",
+     "book": "Core Rulebook",
+     "release": "2019-08-01",
+     "heightened": [
+      "**Heightened (+4)** The extra damage increases by 1d6."
+     ]
+    }
+   ],
+   "pageEntries": [
+    "Heightened (+4) The extra damage increases by 1d6."
+   ],
+   "engine": {
+    "type": "interval",
+    "interval": 1,
+    "damageIncr": "1d6"
+   },
+   "engineDisagrees": [
+    "the engine heightens every +1; the page prints Heightened (+4)"
+   ],
+   "displaySuppressed": {
+    "damage": [
+     2,
+     3,
+     4
+    ],
+    "area": []
+   },
+   "displayFromPrint": {
+    "5": {
+     "damage": [
+      "2d6",
+      "5d6"
+     ]
+    },
+    "6": {
+     "damage": [
+      "2d6",
+      "6d6"
+     ]
+    },
+    "7": {
+     "damage": [
+      "2d6",
+      "7d6"
+     ]
+    },
+    "8": {
+     "damage": [
+      "2d6",
+      "8d6"
+     ]
+    },
+    "9": {
+     "damage": [
+      "3d6",
+      "9d6"
+     ]
+    },
+    "10": {
+     "damage": [
+      "3d6",
+      "10d6"
+     ]
+    }
+   }
+  },
+  {
+   "id": "positive-attunement",
+   "page": {
+    "doc": "spell-972",
+    "book": "Secrets of Magic",
+    "release": "2021-09-01"
+   },
+   "older": [],
+   "pageEntries": [
+    "Heightened (+3) The damage and healing each increase by 1d8."
+   ],
+   "engine": {
+    "type": "interval",
+    "interval": 1,
+    "damageIncr": "1d8"
+   },
+   "engineDisagrees": [
+    "the engine heightens every +1; the page prints Heightened (+3)"
+   ],
+   "displaySuppressed": {
+    "damage": [
+     4,
+     5
+    ],
+    "area": []
+   },
+   "displayFromPrint": {
+    "6": {
+     "damage": [
+      "2d8",
+      "4d8"
+     ]
+    },
+    "7": {
+     "damage": [
+      "2d8",
+      "5d8"
+     ]
+    },
+    "8": {
+     "damage": [
+      "2d8",
+      "6d8"
+     ]
+    },
+    "9": {
+     "damage": [
+      "3d8",
+      "7d8"
+     ]
+    },
+    "10": {
+     "damage": [
+      "3d8",
+      "8d8"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wall-of-ice",
+   "page": {
+    "doc": "spell-1750",
+    "book": "Player Core",
+    "release": "2023-11-15"
+   },
+   "older": [
+    {
+     "doc": "spell-364",
+     "book": "Core Rulebook",
+     "release": "2019-08-01",
+     "heightened": [
+      "**Heightened (+2)** The Hit Points of each section of the wall increase by 10, and the cold damage dealt to creatures crossing a destroyed section increases by 1d6."
+     ]
+    }
+   ],
+   "pageEntries": [
+    "Heightened (+2) The Hit Points of each section of the wall increase by 10, and the cold damage dealt to creatures crossing a destroyed section increases by 1d6."
+   ],
+   "engine": {
+    "type": "interval",
+    "interval": 1,
+    "damageIncr": "1d6"
+   },
+   "engineDisagrees": [
+    "the engine heightens every +1; the page prints Heightened (+2)"
+   ],
+   "displaySuppressed": {
+    "damage": [
+     6
+    ],
+    "area": []
+   },
+   "displayFromPrint": {
+    "7": {
+     "damage": [
+      "3d6",
+      "4d6"
+     ]
+    },
+    "8": {
+     "damage": [
+      "3d6",
+      "5d6"
+     ]
+    },
+    "9": {
+     "damage": [
+      "4d6",
+      "6d6"
+     ]
+    },
+    "10": {
+     "damage": [
+      "4d6",
+      "7d6"
+     ]
+    }
+   }
+  }
+ ],
+ "notOwnPage": [
+  {
+   "id": "aon-dread-aura",
+   "page": "hazard-278",
+   "title": "Dread Aura"
+  },
+  {
+   "id": "aon-litany-against-sloth",
+   "page": "feat-239",
+   "title": "Litany Against Sloth"
+  },
+  {
+   "id": "aon-litany-against-wrath",
+   "page": "feat-227",
+   "title": "Litany Against Wrath"
+  },
+  {
+   "id": "aon-litany-of-depravity",
+   "page": "feat-1689",
+   "title": "Litany of Depravity"
+  },
+  {
+   "id": "aon-litany-of-righteousness",
+   "page": "feat-254",
+   "title": "Litany of Righteousness"
+  },
+  {
+   "id": "aon-litany-of-self-interest",
+   "page": "feat-1681",
+   "title": "Litany of Self-Interest"
+  },
+  {
+   "id": "aon-misdirection",
+   "page": "rules-2735",
+   "title": "Misdirection"
+  },
+  {
+   "id": "aon-vindicator-s-judgement",
+   "page": "feat-7259",
+   "title": "Vindicator's Judgement"
+  }
+ ]
+}

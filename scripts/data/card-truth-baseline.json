@@ -7,13 +7,7 @@
   "spellDetail|spells:aon-litany-of-righteousness|Prerequisites",
   "spellDetail|spells:aon-litany-of-self-interest|Prerequisites",
   "spellDetail|spells:aon-vindicator-s-judgement|Prerequisites",
-  "spellDetail|spells:avatar|Damage",
-  "spellDetail|spells:dragon-form|Defense",
-  "spellDetail|spells:foresight|Trigger",
-  "spellDetail|spells:fungal-exhalation|Targets",
-  "spellDetail|spells:life-connection|Requirements",
-  "spellDetail|spells:protect-companion|Trigger",
-  "spellDetail|spells:rainbow-fumarole|Damage"
+  "spellDetail|spells:fungal-exhalation|Targets"
  ],
  "S1-UNNAMED": [],
  "DIFFERS": [],
@@ -60,9 +54,10 @@
   "itemDetail|items:light-barding|Price",
   "itemDetail|items:light-barding|Speed Penalty",
   "itemDetail|items:light-barding|Strength",
-  "spellDetail|spells:blightburn-blast|Defense",
-  "spellDetail|spells:cordyceps-command|Defense",
-  "spellDetail|spells:crimson-breath|Defense"
+  "spellDetail|spells:grease|Area",
+  "spellDetail|spells:grease|Cast",
+  "spellDetail|spells:grease|Targets",
+  "spellDetail|spells:perfection-of-essence|Duration"
  ],
  "EXTRA": [
   "itemDetail|items:abysium-buckler-high-grade|AC Bonus",
@@ -3113,11 +3108,7 @@
   "spellDetail|spells:aon-vindicator-s-judgement|Defense",
   "spellDetail|spells:aon-vindicator-s-judgement|Duration",
   "spellDetail|spells:aon-vindicator-s-judgement|Range",
-  "spellDetail|spells:aon-vindicator-s-judgement|Targets",
-  "spellDetail|spells:crown-of-prophets|Requirements",
-  "spellDetail|spells:mosquito-blight|Defense",
-  "spellDetail|spells:pest-swarm|Defense",
-  "spellDetail|spells:shadow-blast|Defense"
+  "spellDetail|spells:aon-vindicator-s-judgement|Targets"
  ],
  "S2-NOT-OWN": [
   "classFeatures:armor-expertise@champion|CLASS_MISMATCH",
@@ -3333,17 +3324,20 @@
   "items:wintershot-heroic|WRONG_FAMILY_VARIANT_TEXT_ABSENT"
  ],
  "S3-PLACEMENT": [
-  "spellDetail|spells:blightburn-blast|Defense",
+  "spellDetail|spells:avatar|Damage",
   "spellDetail|spells:conjured-conveyance|Hardness",
-  "spellDetail|spells:cordyceps-command|Defense",
-  "spellDetail|spells:crimson-breath|Defense",
-  "spellDetail|spells:crown-of-prophets|Requirements",
-  "spellDetail|spells:mosquito-blight|Defense",
+  "spellDetail|spells:dragon-form|Defense",
+  "spellDetail|spells:foresight|Trigger",
+  "spellDetail|spells:grease|Area",
+  "spellDetail|spells:grease|Cast",
+  "spellDetail|spells:grease|Targets",
+  "spellDetail|spells:life-connection|Requirements",
   "spellDetail|spells:perfection-of-essence|Defense",
-  "spellDetail|spells:pest-swarm|Defense",
+  "spellDetail|spells:perfection-of-essence|Duration",
   "spellDetail|spells:plague-shot|Defense",
-  "spellDetail|spells:rewrite-possibility|Trigger",
-  "spellDetail|spells:shadow-blast|Defense"
+  "spellDetail|spells:protect-companion|Trigger",
+  "spellDetail|spells:rainbow-fumarole|Damage",
+  "spellDetail|spells:rewrite-possibility|Trigger"
  ],
  "S5-IDENTITY": [
   "choiceDetails|classFeatures:arcane-cascade",

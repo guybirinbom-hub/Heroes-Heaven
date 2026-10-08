@@ -1,0 +1,46 @@
+{
+ "_generated": "scripts/heighten-tree-parity.mjs --write — never hand-edit. ids: the spells whose page tree would show fewer applying Heightened entries at some cast rank (or lose the inline damage arrow) than the description string while being the SAME printing; SpellDetail draws their body from the string (src/sheet/spellCard.ts spellCardModel) with a footer naming what the page prints no Heightened line for (missing). reprints: the spells whose page is a NEWER printing than the string (owner rule R12, the page wins: they draw the tree), with the older printing's Heightened lines as the gate's evidence; the full drift is work/card-step17-heighten-reprint-drift.json. test/card-spell-tree.test.tsx checks it both ways",
+ "_counts": {
+  "spells": 2031,
+  "candidates": 2016,
+  "failing": 4,
+  "stay": 1,
+  "reprintDrift": 3,
+  "tree": 2015
+ },
+ "ids": [
+  "rite-of-repatriation"
+ ],
+ "reasons": {
+  "rite-of-repatriation": "applied set shrinks at 3/4/5/6/7/8/9/10"
+ },
+ "missing": {
+  "rite-of-repatriation": [
+   "(+1)"
+  ]
+ },
+ "reprints": {
+  "purify-soul-path": {
+   "from": "ritual-67",
+   "to": "ritual-243",
+   "entries": [
+    "**Heightened (+1)** Increase the maximum target level by 2 and the base cost by 10 gp"
+   ]
+  },
+  "quick-sort": {
+   "from": "spell-978",
+   "to": "spell-2797",
+   "entries": [
+    "**Heightened (3rd)** The spell can sort up to 400 objects in a minute, or 60 objects in a round.",
+    "**Heightened (5th)** The spell can sort up to 800 objects in a minute, or 120 objects in a round."
+   ]
+  },
+  "sea-of-thought": {
+   "from": "spell-1162",
+   "to": "spell-2579",
+   "entries": [
+    "**Heightened (+1)** The radius of the spell's area increases by 5 feet."
+   ]
+  }
+ }
+}

@@ -206,18 +206,29 @@ const STEP12_CHANGED_NOOP: Record<string, string> = {
  *   - 'preamble stripped': the body (from .sd-desc on) differs — the leading "**Area** …" / scraped
  *     "Name / Source … pg. N / Cast …" lines the rows now print came off the description string.
  *   - 'stats markup': the stat block's markup differs while its rows do not (never measured; pinned so it
- *     cannot appear unnoticed). */
+ *     cannot appear unnoticed).
+ *  Card step 17 (spells phase B, row 17): `treeBody` — the popup draws its body from the page tree
+ *  (spellCardModel body 'tree'); its body differing is then 'tree body', never 'preamble stripped'. The
+ *  body starts at the first `<div class="sd-desc"` (the tree body carries data-body="tree").
+ *   - 'no-page footer' (step 17 fixer round 3, the orchestrator's decision on nit 7): an official spell with
+ *     no page ends with section 7's ours footer "No Archives page — text from our older import"; with that
+ *     one line taken out the rest is compared. */
 const LANE_ATTR = / data-lane="(?:page|field)"/;
-function step16SpellChange(now: { markup: string; rows: [string, string][] }, before: { markup: string; rows: [string, string][] }): string {
+// batch card: step17-nit7 — the no-page spell's section-7 footer is ours (data-ours-kind="noPage"), never print.
+const NOPAGE_FOOTER = '<p class="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">No Archives page — text from our older import</p>';
+function step16SpellChange(now: { markup: string; rows: [string, string][] }, before: { markup: string; rows: [string, string][] }, treeBody = false): string {
   const out: string[] = [];
-  const bare = now.markup.replace(LANE_ATTR, '');
-  if (bare !== now.markup) out.push('lane marker');
+  const unfooted = now.markup.replace(NOPAGE_FOOTER, '');
+  const bare = unfooted.replace(LANE_ATTR, '');
+  if (bare !== unfooted) out.push('lane marker');
+  if (unfooted !== now.markup) out.push('no-page footer');
   if (bare === before.markup) return out.join('; ');
   const rowsDiffer = JSON.stringify(now.rows) !== JSON.stringify(before.rows);
-  const bodyAt = (m: string) => m.slice(m.indexOf('<div class="sd-desc">'));
+  // batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate"
+  const bodyAt = (m: string) => m.slice(m.indexOf('<div class="sd-desc"'));
   const bodyDiffer = bodyAt(bare) !== bodyAt(before.markup);
   if (rowsDiffer) out.push('page rows');
-  if (bodyDiffer) out.push('preamble stripped');
+  if (bodyDiffer) out.push(treeBody ? 'tree body' : 'preamble stripped');
   if (!rowsDiffer && bare.slice(0, bare.length - bodyAt(bare).length) !== before.markup.slice(0, before.markup.length - bodyAt(before.markup).length)) out.push('stats markup');
   return out.join('; ');
 }
@@ -227,10 +238,17 @@ function step16SpellChange(now: { markup: string; rows: [string, string][] }, be
  *  printed preamble the rows now show (all 7 also page rows). No 'stats markup' change. Every other
  *  surface (the 600 tree renders, the 60 item popups, and the 60 feat popups while CARD_ON.featDetail is
  *  off) stays byte-equal.
- *  batch card premise: spell-2315 "Duration sustained up to 1 minute" — the page's own Duration line is the row. */
-const L = 'lane marker';
-const LR = 'lane marker; page rows';
-const LRP = 'lane marker; page rows; preamble stripped';
+ *  batch card premise: spell-2315 "Duration sustained up to 1 minute" — the page's own Duration line is the row.
+ *  Card step 17, measured 2026-10-08 in the lane at ee517bc + step 17 against the same snapshot: 59 of the
+ *  60 draw their body from the page ('tree body' added; the 7 step-16 'preamble stripped' bodies are the
+ *  page's too, so that class is gone); rite-of-cleansing-flame has no page (field lane) and is unchanged
+ *  but for section 7's no-page footer (fixer round 3, nit 7).
+ *  batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate" */
+// batch card: step17-nit7 — rite-of-cleansing-flame (no page in the spells bucket) gains only the ours footer.
+const L0 = 'lane marker; no-page footer';
+const L = 'lane marker; tree body';
+const LR = 'lane marker; page rows; tree body';
+const LRP = 'lane marker; page rows; tree body';
 const STEP16_CHANGED_NOOP: Record<string, string> = {
   'aberrant-form': L,
   'animus-mine': LR,
@@ -274,7 +292,7 @@ const STEP16_CHANGED_NOOP: Record<string, string> = {
   'qi-blast': LR,
   'reinforced-rations': LR,
   'remake-physiology': LRP,
-  'rite-of-cleansing-flame': L,
+  'rite-of-cleansing-flame': L0,
   'rite-of-the-red-star': LR,
   'scouting-eye': LR,
   'shambling-horror': LR,
@@ -476,8 +494,12 @@ describe('card step 1 (G0): the move changes no markup', () => {
     // STEP16_CHANGED_NOOP and must differ exactly so (below); the byte-equal loop runs over the rest.
     // batch card premise: spell-2315 "Duration sustained up to 1 minute"
     expect(Object.keys(now.spells)).toEqual(Object.keys(before.spells));
+    // Card step 17: a spell on the tree body (spellCardModel body 'tree') draws the page's prose, so its
+    // body differs from the pre-move string by design ('tree body', pinned per spell below).
+    // batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate"
+    const treeBodyOf = (k: string) => spellCardModel(db.spells[k], trees.spells[k], spellStatRows(db.spells[k])).body === 'tree';
     const spellChanged = Object.fromEntries(
-      Object.keys(now.spells).map((k) => [k, step16SpellChange(now.spells[k], before.spells[k])] as const).filter(([, why]) => why),
+      Object.keys(now.spells).map((k) => [k, step16SpellChange(now.spells[k], before.spells[k], treeBodyOf(k))] as const).filter(([, why]) => why),
     );
     expect(spellChanged).toEqual(STEP16_CHANGED_NOOP);
     for (const k of Object.keys(now.spells)) {
@@ -487,9 +509,14 @@ describe('card step 1 (G0): the move changes no markup', () => {
       expect(now.spells[k].markup.includes(`data-lane="${lane}"`), `spell ${k} carries data-lane="${lane}"`).toBe(why.includes('lane marker'));
       // Only a page-lane popup changes its rows; the field lane prints the pre-move rows.
       if (why.includes('page rows')) expect(lane, `spell ${k} rows changed only on the page lane`).toBe('page');
-      // A stripped preamble is exactly the model's body differing from the plain heightening split.
       const model = spellCardModel(db.spells[k], trees.spells[k], spellStatRows(db.spells[k]));
-      expect(model.base !== splitHeightening(db.spells[k].description || '').base, `spell ${k} body stripped`).toBe(why.includes('preamble stripped'));
+      // Card step 17: every tree-body spell's body is the page's; a string-body spell keeps step 16's rule
+      // — a stripped preamble is exactly the model's body differing from the plain heightening split.
+      // batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate"
+      if (model.body === 'tree') expect(why.includes('tree body'), `spell ${k} draws the page body`).toBe(true);
+      else expect(model.base !== splitHeightening(db.spells[k].description || '').base, `spell ${k} body stripped`).toBe(why.includes('preamble stripped'));
+      // batch card: step17-nit7 — the no-page footer exactly on an official spell the spells bucket holds no page for.
+      expect(why.includes('no-page footer'), `spell ${k} no-page footer`).toBe(!trees.spells[k] && !!db.spells[k].source?.book);
     }
     // Card step 14: with CARD_ON.itemDetail the item popup's description is the shown record's mine card by
     // design (its page lines by the printed-set rule, the embedded group page, the no-page line), so its

@@ -67,28 +67,16 @@ import {
   traditionPool,
 } from '../rules/spellOptions';
 import { enabledBookSet, entrySourceOn } from '../rules/sources';
-import { heighteningApplies, scaleDamage, scaleArea } from '../rules/heightening';
+import { heighteningApplies } from '../rules/heightening';
 import { useAstNode } from './useAst';
-import { isBucketLoaded } from './astStore';
-import { spellCardModel } from './spellCard';
-
-function escapeRe(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-/**
- * Splice a highlighted "(→ heightened)" right after the FIRST standalone occurrence of the base damage
- * formula in the spell prose (the ⟦…⟧ markers become a .up-heighten span in RichText). Tries the full
- * formula then the dice-only part; leaves the text unchanged when the formula isn't found (best-effort).
- */
-function injectDamageArrow(text: string, baseFormula: string, heightened: string): string {
-  const dice = baseFormula.replace(/\s*[+-]\s*\d+$/, '');
-  for (const pat of dice === baseFormula ? [baseFormula] : [baseFormula, dice]) {
-    const body = escapeRe(pat).replace(/\\\+/g, '\\s*\\+\\s*');
-    const re = new RegExp(`(?<![\\dd])(${body})(?![\\dd])`);
-    if (re.test(text)) return text.replace(re, `$1 ⟦(→ ${heightened})⟧`);
-  }
-  return text;
-}
+import { isBucketLoaded, type AstNode } from './astStore';
+import { HEIGHTEN_STRING_LANE, arrowAt, printedInsideFooter, spellCardModel, stringLaneFooter } from './spellCard';
+import { isNotOwnPage } from './astVisibility';
+/* Card step 17: the string lane's damage arrow (injectDamageArrow, moved unchanged so the parity gate
+ * scripts/heighten-tree-parity.mjs reads the same function) and its tree twin. */
+import { injectDamageArrow, injectTreeArrow, treeEntryApplies } from './heighteningTree';
+import { AstRenderer } from './AstRenderer';
+import { RemasteredLine } from './RemasteredLine';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -165,12 +153,41 @@ export function SpellDetail({
   // bucket has answered, so only a bucket still on its way is a load.
   const rowsLoading = !!pageId && !!loading && !isBucketLoaded('spells');
   // ONE copy: the popup renders spellCardModel, the same function the card guard (card-scope.mjs's
-  // spellDetail surface) and test/card-noop judge it with. The body is still the description string
-  // (phase B, step 17, moves it to the tree); the preamble the rows now print comes off its front, label
-  // by label (S-printed), with the scrape's name, Source and where-to-get lines (S-furniture). While the
-  // rows load it is stripped as the field lane would be.
-  const { lane, rows, base, heightening } = spellCardModel(spell, tree, spellStatRows(spell));
+  // spellDetail surface) and test/card-noop judge it with. Card step 17 (spells phase B): the body, the
+  // Heightened entries and the psychic Amp group come from the page tree (`tree` — heighteningTree.ts
+  // splitSpellTree) for every spell page except the few the parity gate keeps on the string lane
+  // (src/data/heighten-string-lane.json, scripts/heighten-tree-parity.mjs); there, and with no page or
+  // while the page loads, the body is the description string with the preamble the rows print taken
+  // off its front, label by label (S-printed), as in phase A.
+  const model = spellCardModel(spell, tree, spellStatRows(spell));
+  const { lane, rows, base, heightening, body: bodyLane, tree: cut } = model;
   const fromPage = lane === 'page';
+  const onTree = bodyLane === 'tree' && !!cut;
+  // A spell the parity gate keeps on the string lane HAS a page — the same printing, which prints no line for
+  // a Heightened entry our text carries; the text it shows is our older import, so it carries a marked footer
+  // line naming that entry (section 7, section 10: "show our older text, marked as such"). A spell whose page
+  // is a newer printing than our text is not kept: the page wins (owner rule R12; heighten-tree-parity.mjs).
+  const keptOnString = !!pageId && HEIGHTEN_STRING_LANE.has(spell.id);
+  const keptFooter = keptOnString ? stringLaneFooter(spell.id) : null;
+  // Section 7 "No own page": an official spell (it names its book) whose page the loaded spells bucket does
+  // not hold (or one on the not-own-page list) shows our older text, footed as such. Never while the bucket
+  // is still on its way; never on an app-authored record (the seed's demo spells name no book: "never print").
+  const noPage = !!pageId && !tree && !!spell.source?.book && (isBucketLoaded('spells') || isNotOwnPage('spells', pageId));
+  // The orchestrator's round-3 ruling: a record whose tree is a page of another category (a feat, a rules
+  // entry, a hazard) is printed inside that page; until the spells surface draws slices it keeps the string,
+  // footed as ours with that page's title (work/card-step17-heighten-reprint-drift.json notOwnPage).
+  const insideFooter = pageId ? printedInsideFooter(spell, tree) : null;
+  // Every other spell page draws the page's body: while that page is on its way the body is a placeholder
+  // too, never the old imported text it will replace (section 1: "not even while the page loads"; section 2
+  // rule 3). A spell with no page, or whose loaded bucket holds no tree for it, keeps the string at once.
+  const bodyLoading = rowsLoading && !keptOnString;
+  // A cross-link in the page's prose opens that record's description popup, as DescBody's page path does.
+  const [drill, setDrill] = useState<DescNode | null>(null);
+  const openRecord = (bucket: string, slug: string) => {
+    const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: Spell['descRefs'] }> | undefined> | null)?.[bucket]?.[slug];
+    if (rec) setDrill({ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug });
+  };
+  const remasteredAs = (spell as { remasteredAs?: RemasteredAs }).remasteredAs;
   const baseRank = spell.rank;
   const isCantrip = baseRank === 0;
   // "Focus spells are automatically heightened to half your level rounded up" — the same treatment
@@ -189,10 +206,20 @@ export function SpellDetail({
   const autoRank = isCantrip || isFocus ? top : Math.min(top, Math.max(baseRank, atRank ?? baseRank));
   const [castRank, setCastRank] = useState<number>(showPicker ? baseRank : autoRank);
   const r = showPicker ? castRank : autoRank;
-  // Upcast scaling at the viewed rank — inline damage in the prose, area on the stat.
-  const upDamage = scaleDamage(spell, r);
-  const upArea = scaleArea(spell, r);
+  // Upcast scaling at the viewed rank — inline damage in the prose, area on the stat. The orchestrator's
+  // round-3 ruling (spellCard.ts arrowAt): drawn only where a printed Heightened entry of the text the player
+  // reads applies at this rank and backs it — never at a rank the page does not grant (an engine interval the
+  // page does not print, a newer printing with no Heightened line); the engine's values stay as they are.
+  const { damage: upDamage, area: upArea } = arrowAt(spell, model, r);
   const shownBase = upDamage && spell.baseDamage ? injectDamageArrow(base, spell.baseDamage, upDamage) : base;
+  // The tree lane's arrow: the same value (arrowAt) split into the first body text node holding the
+  // base formula (heighteningTree.ts injectTreeArrow). Where no text node holds it, the arrow is an ours
+  // line under the prose instead of lost (section 5: electrified-crystal-ward, shadow-illusion).
+  const treeArrow = onTree && upDamage && spell.baseDamage ? injectTreeArrow(cut!.body, spell.baseDamage, upDamage) : null;
+  const treeBody: AstNode | null = onTree ? { t: 'doc', c: treeArrow ? treeArrow.body : cut!.body } : null;
+  const cardWalk = { printed: new Set(rows.map(([k]) => k)) };
+  const selfRef = `spells:${spell.id}`;
+  const applies = (e: { trigger: { type: 'rel' | 'abs'; n: number } | null }) => r > baseRank && treeEntryApplies(e, baseRank, r);
   const rankLabel = spell.rank === 0 ? 'Cantrip' : `${ord(spell.rank)} rank`;
   // The page's own Cast line ("somatic, verbal", "1 hour"); the glyph beside it stays the field's.
   const pageCast = fromPage ? (rows.find(([k]) => k === 'Cast')?.[1] ?? '') : '';
@@ -201,7 +228,7 @@ export function SpellDetail({
   // (section 5: footholds-and-foothills prints a "30-foot radius", not a burst, and gets no suffix).
   const areaSuffix = (val: string) =>
     upArea != null && spell.baseArea && (!fromPage || val.includes(`${spell.baseArea.value}-foot ${spell.baseArea.kind}`)) ? (
-      <span className="up-heighten"> (→ {upArea}-foot {spell.baseArea.kind})</span>
+      <span className="up-heighten" data-ours=""> (→ {upArea}-foot {spell.baseArea.kind})</span>
     ) : null;
   return (
     <div className="picker-overlay" onClick={onClose}>
@@ -281,15 +308,55 @@ export function SpellDetail({
               <span className="sd-rank-chip on sd-rank-static">{ord(r)}</span>
             </div>
           ) : null}
-          {/* desk #158 — the `shownBase &&` guard was dropped so a spell whose text is empty can still
-              show the "Remastered as …" line; DescBody still renders nothing when there is neither. */}
-          <DescBody
-            description={shownBase}
-            descRefs={spell.descRefs}
-            onExit={onClose}
-            remasteredAs={(spell as { remasteredAs?: RemasteredAs }).remasteredAs}
-          />
-          {heightening.length > 0 && (
+          {onTree ? (
+            /* Card step 17: the page's own prose, drawn by the mine card's walk (printed set = the rows).
+               The arrow is an inline node of the page text (marked ours); an arrow with no anchor in the
+               page is a line of the ours box after the page (below). desk #158's "Remastered as …" stays in
+               the body, as DescBody draws it. */
+            <div className="sd-desc" data-body="tree">
+              <AstRenderer node={treeBody!} bodyOnly card={cardWalk} selfRef={selfRef} onOpenRef={openRecord} />
+              {remasteredAs ? <RemasteredLine ra={remasteredAs} onOpen={openRecord} /> : null}
+            </div>
+          ) : bodyLoading ? (
+            // The page body is on its way: a quiet placeholder, as for the rows above.
+            <div className="sd-desc ast-loading" data-body="loading" aria-busy="true" />
+          ) : (
+            /* desk #158 — the `shownBase &&` guard was dropped so a spell whose text is empty can still
+               show the "Remastered as …" line; DescBody still renders nothing when there is neither. */
+            <DescBody description={shownBase} descRefs={spell.descRefs} onExit={onClose} remasteredAs={remasteredAs} />
+          )}
+          {onTree && cut!.heightening.length > 0 && (
+            // Card step 17: every printed Heightened entry, each with what the page prints under it; the ones
+            // that apply at the cast rank carry the rail (heightenTrigger on the entry's bold label).
+            <div className="sd-heighten">
+              <div className="sd-heighten-h">Heightening</div>
+              {cut!.heightening.map((e, i) => (
+                <div key={i} className={'sd-desc' + (applies(e) ? ' applies' : '')}>
+                  <AstRenderer node={{ t: 'doc', c: e.nodes }} bodyOnly card={cardWalk} selfRef={selfRef} onOpenRef={openRecord} />
+                </div>
+              ))}
+            </div>
+          )}
+          {onTree && cut!.after.length > 0 && (
+            // Card step 17: a sidebar the page prints after its Heightened entries (Dragon Form's "Monster
+            // Core Dragons" table) describes the spell, not one rank: drawn after the box, never railed.
+            <div className="sd-desc sd-after" data-body="tree-after">
+              <AstRenderer node={{ t: 'doc', c: cut!.after }} bodyOnly card={cardWalk} selfRef={selfRef} onOpenRef={openRecord} />
+            </div>
+          )}
+          {onTree && cut!.amp.length > 0 && (
+            // Card step 17: the psychic Amp paragraphs are their own group, never ordinary heightening; the
+            // page's own bold "Amp" heads it (no heading of ours). An "Amp Heightened (+N)" entry carries the
+            // rail at the ranks it applies to (when the spell is amped).
+            <div className="sd-desc sd-amp">
+              {cut!.amp.map((e, i) => (
+                <div key={i} className={'sd-desc' + (applies(e) ? ' applies' : '')}>
+                  <AstRenderer node={{ t: 'doc', c: e.nodes }} bodyOnly card={cardWalk} selfRef={selfRef} onOpenRef={openRecord} />
+                </div>
+              ))}
+            </div>
+          )}
+          {!onTree && !bodyLoading && heightening.length > 0 && (
             <div className="sd-heighten">
               <div className="sd-heighten-h">Heightening</div>
               {heightening.map((h, i) => (
@@ -303,6 +370,16 @@ export function SpellDetail({
               ))}
             </div>
           )}
+          {treeArrow && !treeArrow.found ? (
+            // Card step 17 (section 4: one ours box after the body; section 5 "Damage arrow"): a heightened
+            // damage the page prose gives no anchor for (electrified-crystal-ward, shadow-illusion) is a line
+            // of ours after the page, never spliced into the page's body.
+            <div className="card-ours sd-arrow-box" data-ours="">
+              <p className="sd-ours sd-arrow-line card-ours-atYourLevel" data-ours="" data-ours-kind="atYourLevel">
+                Heightened damage {spell.baseDamage} <span className="up-heighten">(→ {upDamage})</span>
+              </p>
+            </div>
+          ) : null}
           {/* Last, boxed and headed by the record's name: everything above is the spell as printed,
               everything here is what one of YOUR records adds to it. Principle N2 — "make sure that
               it's under that feat in the spell description so the user won't think it's a part of the
@@ -315,7 +392,34 @@ export function SpellDetail({
               <DescBody description={n.note} className="sd-desc sd-addnote-body" onExit={onClose} />
             </div>
           ))}
+          {onTree && cut!.foot.length > 0 && (
+            // Card step 17 (section 2 rule 4.6): the page header's lines the rows do not print — its Source
+            // line and a PFS Note, dimmed by the card walk — as the footer, after the ours box.
+            <div className="sd-desc sd-foot">
+              <AstRenderer node={{ t: 'doc', c: cut!.foot }} bodyOnly card={cardWalk} selfRef={selfRef} onOpenRef={openRecord} />
+            </div>
+          )}
+          {keptFooter && (
+            // Card step 17 (section 7 fallbacks; section 2 rule 4.6 footer): a spell kept on the string lane
+            // shows our older text — said plainly, last, as ours, naming what its same-printing page omits.
+            <p className="sd-ours card-nopage" data-ours="" data-ours-kind="stringLane">
+              {keptFooter}
+            </p>
+          )}
+          {noPage && (
+            // Section 7 "No own page": the footer RecordCard draws for the same case, marked ours.
+            <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">
+              No Archives page — text from our older import
+            </p>
+          )}
+          {insideFooter && (
+            // The round-3 ruling: a record printed inside a bigger page of another category, footed as ours.
+            <p className="sd-ours card-nopage" data-ours="" data-ours-kind="notOwnPage">
+              {insideFooter}
+            </p>
+          )}
         </div>
+        {drill && <DescriptionModal root={drill} onClose={() => setDrill(null)} onExit={onClose} backToSource />}
       </div>
     </div>
   );

@@ -31,6 +31,19 @@ import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
  * at its own rank, "expected '' to be '500 feet'"). One row value changed wording with the page
  * (fireball's Defense, cited at the assertion); every heightening assertion is unchanged.
  *
+ * Card step 17 (spells phase B): the body, the Heightened entries and the Amp group come from the PAGE
+ * TREE (src/sheet/heighteningTree.ts), behind the per-spell parity gate (scripts/heighten-tree-parity.mjs,
+ * src/data/heighten-string-lane.json). Every case here is on the tree lane (asserted below) and every
+ * heightening, arrow, chip and suffix assertion holds unchanged on it; two assertions flip with the page,
+ * each cited: ghostly-shift's Amp paragraphs now reach the popup as their own group (and its body is the
+ * page's sentence), and summon-animal's page lists a level per rank where the string said "As listed".
+ *
+ * MUTATION LINES on the tree lane (each measured red on 2026-10-08, then restored byte-exact):
+ *  - SpellsTab.tsx `treeArrow`: `injectTreeArrow(…)` → `null` (no tree arrow) → 7 of 18 red.
+ *  - SpellsTab.tsx tree Heightening box: `applies(e)` → `false && applies(e)` → 7 of 18 red.
+ *  - SpellsTab.tsx the Area row: `false &&` before the suffix condition → 1 of 18 red (thunderburst).
+ *  - heighteningTree.ts splitSpellTree: the Amp matcher off (`false && isAmpBlock(n)`) → 2 of 18 red (ghostly-shift).
+ *
  * MUTATION LINES (each measured red on 2026-10-02, then restored byte-exact):
  *  - SpellsTab.tsx, `shownBase`: replace the injectDamageArrow call with `base` → 7 of 17 red.
  *  - SpellsTab.tsx, the Heightening DescBody className: drop `' applies'` → 6 of 17 red.
@@ -100,6 +113,16 @@ describe('the shipped records these cases stand on (otherwise the popup assertio
     // finds no entry, so the line stays in the prose body.
     expect(splitHeightening(spell('summon-animal').description).heightening).toEqual([]);
     expect(spell('summon-animal').description).toContain('**Heightened** As listed in the trait.');
+  });
+});
+
+describe('card step 17: every case in this file draws the page body (the tree lane)', () => {
+  it('fireball, electric-arc, thunderburst, ghostly-shift and summon-animal render [data-body="tree"], none is on the string-lane list', () => {
+    for (const id of ['fireball', 'electric-arc', 'thunderburst', 'ghostly-shift', 'summon-animal']) {
+      const { popup } = open(<SpellDetail spell={spell(id)} maxRank={9} onClose={() => undefined} />);
+      expect(body(popup)?.getAttribute('data-body'), id).toBe('tree');
+      expect(body(popup)?.querySelector('.ast-body'), `${id} draws the page tree`).not.toBeNull();
+    }
   });
 });
 
@@ -244,28 +267,48 @@ describe('ghostly-shift: the ordinary Heightened group holds no Amp entry', () =
     expect(txt(popup.querySelector('.sd-heighten'))).not.toMatch(/\bAmp\b/);
   });
 
-  it('TODAY the Amp text reaches no part of the popup (the string lane does not carry it; step 17 adds it from the page)', () => {
+  it('since step 17 the Amp paragraphs reach the popup from the page, as their own group outside the Heightening box', () => {
     // Measured 2026-10-02: 0 of the shipped spell description strings contain the word "Amp"; the Amp
-    // and "Amp Heightened (+2)" paragraphs exist only in the page tree. When step 17 brings them in
-    // as their own group, this assertion flips with a premise line citing spell-2563's own "Amp" paragraph
-    // (the flip audit needs the page's words, at least two of them: "Your insubstantiality is complete").
+    // and "Amp Heightened (+2)" paragraphs exist only in the page tree. Card step 17 draws the body from
+    // the page, and the Amp column is its own group (.sd-amp), never an ordinary Heightened entry.
+    // batch card premise: spell-2563 "Your insubstantiality is complete"
     const { popup } = open(<SpellDetail spell={spell('ghostly-shift')} maxRank={5} onClose={() => undefined} />);
-    expect(txt(popup)).not.toMatch(/\bAmp\b/);
-    expect(txt(body(popup))).toBe('Your body becomes insubstantial as you partially phase out. You gain resistance 2 to all damage (except force).');
+    const amp = popup.querySelector('.sd-body > .sd-amp') as HTMLElement | null;
+    expect(amp, 'the Amp group').not.toBeNull();
+    expect(txt(amp)).toContain('Your insubstantiality is complete enough that you can pass through other creatures');
+    expect(txt(amp)).toContain('Amp Heightened (+2) Increase the damage dealt by phasing through a creature by 1d6.');
+    expect(amp!.closest('.sd-heighten'), 'never inside the ordinary Heightening box').toBeNull();
+    expect(txt(popup.querySelector('.sd-heighten'))).not.toMatch(/\bAmp\b/);
+    // The page's own body (the description string's "Your body becomes insubstantial …" is the older import).
+    // batch card premise: spell-2563 "You gain resistance 2 to all damage"
+    expect(txt(body(popup))).toBe('You gain resistance 2 to all damage (except force).');
   });
 });
 
 describe('a summon printed "Heightened As listed in the trait"', () => {
-  it('summon-animal from a 5th-rank slot: the chip shows 5th, but there is no Heightening box; the line stays in the prose', () => {
+  it('summon-animal from a 5th-rank slot: since step 17 the page lists its levels, so the Heightening box holds them and (2nd)–(5th) apply', () => {
+    // The description string carries the older "**Heightened** As listed in the trait." (asserted on the
+    // record above); the page — the newest printing — lists a creature level per rank, and step 17 draws
+    // the page. The summon-list entries stay entries (heightenTrigger on each bold label).
+    // batch card premise: spell-1694 "Heightened (5th) Level 5"
     const { popup } = open(<SpellDetail spell={spell('summon-animal')} maxRank={9} atRank={5} onClose={() => undefined} />);
     expect(chips(popup).map((c) => txt(c))).toEqual(['5th']);
-    expect(popup.querySelector('.sd-heighten')).toBeNull();
+    expect(entries(popup).map((e) => txt(e))).toEqual([
+      'Heightened (2nd) Level 1.',
+      'Heightened (3rd) Level 2.',
+      'Heightened (4th) Level 3.',
+      'Heightened (5th) Level 5.',
+      'Heightened (6th) Level 7.',
+      'Heightened (7th) Level 9.',
+      'Heightened (8th) Level 11.',
+      'Heightened (9th) Level 13.',
+      'Heightened (10th) Level 15.',
+    ]);
+    expect(applying(popup).map((e) => txt(e))).toEqual(['Heightened (2nd) Level 1.', 'Heightened (3rd) Level 2.', 'Heightened (4th) Level 3.', 'Heightened (5th) Level 5.']);
     expect(arrows(popup)).toEqual([]);
     const prose = txt(body(popup));
-    expect(prose).toContain('You summon a creature that has the animal trait and whose level is –1 to fight for you.');
-    expect(prose).toContain('Heightened As listed in the trait.');
-    // The bold label survives as bold in the prose body.
-    expect([...body(popup)!.querySelectorAll('strong, b')].map((b) => txt(b))).toContain('Heightened');
+    expect(prose).toBe('You summon a creature that has the animal trait and whose level is –1 to fight for you.');
+    expect(prose).not.toContain('As listed in the trait');
   });
 });
 

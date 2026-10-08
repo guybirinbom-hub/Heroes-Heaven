@@ -1,5 +1,7 @@
 // @vitest-environment jsdom
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { gunzipSync } from 'node:zlib';
+import { loadBucketAst } from '../src/sheet/astStore';
 import { build, content } from './_content';
 import { renderText } from './_render';
 import { SpellsTab } from '../src/sheet/SpellsTab';
@@ -171,6 +173,16 @@ describe('the authored notes', () => {
 });
 
 describe('the spell popup prints the note after the spell, under the record that wrote it', () => {
+  // Card step 17: a spell with its own page draws the page body, and while the spells bucket is on its way
+  // that body is a placeholder (docs/card-design.md section 1, section 2 rule 3) — so the popup is read
+  // with the tracked bucket loaded, as a player reads it once the page lands. Translocate's own sentence
+  // is the page's: batch card premise: spell-1724 "You instantly transport yourself"
+  beforeAll(async () => {
+    const trees = JSON.parse(gunzipSync(readFileSync('public/ast/spells.json.gz')).toString('utf8'));
+    vi.stubGlobal('fetch', async (url: string) => (/ast\/spells\.json$/.test(String(url)) ? { ok: true, json: async () => trees } : { ok: false }));
+    await loadBucketAst('spells');
+  });
+
   it("Translocate's popup carries Realm Strider's clause, attributed and last", () => {
     const ch = build('fighter', 16, { featPicks: { '16:class': 'realm-strider' } });
     const text = renderText(<SpellsTab character={ch} content={c()} onPlay={noop} />, ['Translocate']);

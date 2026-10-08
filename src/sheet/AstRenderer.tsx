@@ -147,6 +147,11 @@ function Inline({ node, ctx, k }: { node: AstNode; ctx: Ctx; k: number }): React
     }
     case 'xlink': // external URL (no in-app entry) — show its text, styled as an external reference
       return <span key={k} className="ast-lk-ext" title={String(node.url ?? '')}><Kids node={node} ctx={ctx} /></span>;
+    case 'up-heighten':
+      // Card step 17: the heightened damage arrow "(→ 10d6)" that src/sheet/heighteningTree.ts
+      // injectTreeArrow splits into a spell page's prose — ours, never the page's (section 4: one of the two
+      // inline insertions, `<span class="up-heighten" data-ours>`). A stored tree never carries this node.
+      return <span key={k} className="up-heighten" data-ours="">{node.v}</span>;
     default: return <Fragment key={k}><Kids node={node} ctx={ctx} /></Fragment>;
   }
 }

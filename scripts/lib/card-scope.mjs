@@ -1137,6 +1137,19 @@ export function surfaceRows(deps) {
     if (twin && makesStrike(twin) && has('items', twin.id)) rows.push(strikeRow(`${id}~hidden`, twin.id, { ...twin, id }));
   }
 
+  // Card step 17 (spells phase B): a spell popup on the tree body draws its page — the ledger judges the
+  // tree the popup draws (spellCardModel's `drawn`) as a 'mine' card with the rows' printed set; a spell
+  // on the string lane (src/data/heighten-string-lane.json, no spell page, no rule) keeps its md row above.
+  for (let k = 0; k < rows.length; k++) {
+    const row = rows[k];
+    if (row.surface !== 'spellDetail') continue;
+    const sp = db.spells[row.id];
+    const model = spellCardModel(sp, trees.spells?.[row.id], statRows.spellStatRows(sp));
+    if (model.body !== 'tree') continue;
+    const { mdParts: _md, ...rest } = row;
+    rows[k] = { ...rest, read: { bucket: 'spells', slug: row.id }, drawn: model.drawn, card: { printed: model.rows.map(([l]) => l) }, hideMeta: false, itemLists: true, md: sp.description ?? '' };
+  }
+
   return { rows, classMismatch };
 }
 
@@ -1160,7 +1173,9 @@ export function judgeRow(row, trees, mdFns) {
   const ownText = pageBlocks.map((b) => squash(b.text)).join('|');
   const printed = printedMap(row.printed);
   const glyph = titleGlyph(ownTree);
-  const resolved = row.read ? readTree(trees, row.read) : undefined;
+  // Card step 17: a row may carry the tree its surface draws (`drawn` — the spell popup's page body,
+  // Heightened entries, Amp group and footer, src/sheet/spellCard.ts spellDrawnTree) instead of a read.
+  const resolved = row.drawn ?? (row.read ? readTree(trees, row.read) : undefined);
   let bodyBlocks;
   let identity = false;
   const res = { surface: row.surface, bucket: row.bucket, id: row.id };
