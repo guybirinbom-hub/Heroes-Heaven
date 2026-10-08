@@ -10969,14 +10969,30 @@ export function levelGrants(
   // A subclass can remove class features (cleric Battle Creed drops Resolute Faith + Miraculous Spell).
   const suppressed = new Set(cls?.subclass?.options.find((o) => o.id === subclassId)?.suppressedFeatures ?? []);
   const suppressed2 = new Set(cls2?.subclass?.options.find((o) => o.id === subclassId2)?.suppressedFeatures ?? []);
+  /*
+   * Card step 15, F3b (docs/display-truth-plan.md F3b): once a subclass is chosen, a row whose subclass
+   * has its OWN variant record lists that variant — `${featureId}-${subclassId}`, the rule the Feats tab
+   * already uses (FeatsTab.tsx variantId) and `ownedFeatureIds` already owns — so the level-3 cleric row
+   * names the actual benefit (second-doctrine-cloistered-cleric: "Your proficiency rank for Fortitude
+   * saves increases to expert.") instead of the generic prose record. No subclass chosen, or no variant
+   * record: the generic record, as before. The suppression and archetype filters still read the generic
+   * id the class lists; the variant is only which record the row shows. Measured on the shipped data:
+   * 28 variants (cleric doctrines 12, alchemist 12, ranger 3, wizard 1), none carrying a choice,
+   * effectChoices, a FEAT_PICK_GRANTS or FEAT_GRANTS entry, so no question moves.
+   */
+  const variantOf = (featureId: string, sub: string | null | undefined): string =>
+    sub && content.classFeatures[`${featureId}-${sub}`] ? `${featureId}-${sub}` : featureId;
   const features = [
-    ...(cls?.features ?? []).filter((f) => f.level === level && !suppressed.has(f.featureId)),
-    ...(cls2?.features ?? []).filter((f) => f.level === level && !suppressed2.has(f.featureId)),
+    ...(cls?.features ?? []).filter((f) => f.level === level && !suppressed.has(f.featureId)).map((f) => ({ featureId: f.featureId, sub: subclassId })),
+    ...(cls2?.features ?? []).filter((f) => f.level === level && !suppressed2.has(f.featureId)).map((f) => ({ featureId: f.featureId, sub: subclassId2 })),
     // The archetype's substitutes, at the level its record gives them (`addFeatures[].level`).
-    ...(arch?.added ?? []).filter((a) => a.level === level),
+    ...(arch?.added ?? []).filter((a) => a.level === level).map((a) => ({ featureId: a.featureId, sub: null })),
   ]
     .filter((f) => !arch?.suppressed.has(f.featureId) || substituted.has(f.featureId))
-    .map((f) => ({ id: f.featureId, name: content.classFeatures[f.featureId]?.name ?? f.featureId }));
+    .map((f) => {
+      const id = variantOf(f.featureId, f.sub);
+      return { id, name: content.classFeatures[id]?.name ?? id };
+    });
   const featSlots: FeatCategory[] = [];
   if (cls) {
     // Ancestry Paragon REPLACES the standard ancestry progression: 2 feats at L1, then 1 at each odd
