@@ -1,12 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Character, ContentDatabase, Feat, LimitedUses } from '../rules/types';
 import { classFeatureDescription } from '../rules/featureText';
 import { ownedFeatureIds, subclassFeatureIds } from '../rules/derive';
 import { markNote, nameOfRecord, recordMarkersFor } from '../rules/explain';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { ActionGlyph, isActionCost } from './widgets';
-import { FeatDetail, enhancementText, trustRefOf, type FeatEntry } from './FeatDetail';
-import { oursLineText, type OursLine } from './cardModel';
+import { FeatDetail, enhancementText, featPageOf, trustRefOf, type FeatEntry } from './FeatDetail';
+import { cardPreview, cardPreviewLane, oursLineText, type CardScope, type OursLine } from './cardModel';
+import { scopeOfCharacter } from './cardScope';
+import { isNotOwnPage, pageSliceOf, recordTree } from './astVisibility';
+import { getCachedAst, isBucketLoaded, loadBucketAst } from './astStore';
 import { TrustMarker } from './TrustMarker';
 import { toPlainText } from './RichText';
 import { InfoTerm } from './InfoTerm';
@@ -113,11 +116,11 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
    * record with a page the appended text vanished, because DescBody draws the page and discards the
    * string — 90 of the 91 record notes never reached the popup.
    *
-   * Returns the ours lines and the row PREVIEW: the plain description followed by the pick, marker and
-   * note words, which is exactly what toPlainText made of the appended string, so the Feats-tab row reads
-   * as before.
+   * Card step 20: the row's preview is no longer built here — it is the card's first own body paragraph
+   * (cardModel.ts cardPreview, rowPreview below), and these lines' words sit beside it as a tag
+   * (rowOursTag), never inside the sentence.
    */
-  const withPicks = (recordId: string, description: string): { ours: OursLine[]; preview: string } => {
+  const withPicks = (recordId: string): { ours: OursLine[] } => {
     const ours: OursLine[] = [];
     const notes = picksOf(recordId).filter((p) => p.note);
     if (notes.length) ours.push({ kind: 'choice', text: `Your choice: ${notes.map((p) => `${p.label} — ${p.note}`).join('; ')}` });
@@ -142,8 +145,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
      */
     const own = (content.feats[recordId] ?? content.classFeatures[recordId])?.note;
     if (own) ours.push({ kind: 'note', text: `Note: ${own}` });
-    const preview = [toPlainText(description), ...ours.map((l) => toPlainText(oursLineText(l)))].filter(Boolean).join(' ');
-    return { ours, preview };
+    return { ours };
   };
   /** The collection a marker's source record lives in, for its attribution. */
   const bucketOfRecord = (id: string): string =>
@@ -196,7 +198,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
   for (const fc of character.feats) {
     const feat = content.feats[fc.featId];
     if (!feat) continue;
-    const picked = withPicks(fc.featId, feat.description);
+    const picked = withPicks(fc.featId);
     // The enhancement tier, if an augmentation is pointing at this feat.
     const enhancedBy = (character.enhancements ?? []).find((e) => e.featId === fc.featId)?.from;
     entries.push({
@@ -215,7 +217,6 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         ...overrideOf('feats', fc.featId),
         ...useLinesOf(feat),
       ],
-      preview: picked.preview,
       descRefs: feat.descRefs,
       enhancedBy,
       isFeature: false,
@@ -264,7 +265,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       if (!feature) continue;
       // Strip class-specific addenda for OTHER classes (shared features like Reflex Expertise).
       const shown = classFeatureDescription(feature.description, clsId, content);
-      const picked = withPicks(variantId, shown);
+      const picked = withPicks(variantId);
       entries.push({
         key: `feature:${clsId}:${f.featureId}`,
         // Carried so a class feature printing "Frequency once per day" can draw use pips like a feat.
@@ -278,7 +279,6 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         actionCost: feature.actionCost,
         description: shown,
         ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...overrideOf('classFeatures', variantId)],
-        preview: picked.preview,
         descRefs: feature.descRefs,
         isFeature: true,
         bucket: 'Class',
@@ -294,7 +294,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       const feature = content.classFeatures[fid];
       if (!feature || entries.some((e) => e.featureId === fid)) continue;
       const shown = classFeatureDescription(feature.description, clsId, content);
-      const picked = withPicks(fid, shown);
+      const picked = withPicks(fid);
       entries.push({
         key: `feature:${clsId}:${fid}`,
         featureId: fid,
@@ -309,7 +309,6 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         actionCost: feature.actionCost,
         description: shown,
         ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...overrideOf('classFeatures', fid)],
-        preview: picked.preview,
         descRefs: feature.descRefs,
         isFeature: true,
         bucket: 'Class',
@@ -322,7 +321,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
   for (const c of character.classChoices ?? []) {
     // Card step 8: a pick ON the option (a kineticist gate's junction), a marker on it and its own note
     // reach the popup as ours lines too — before, a choice row carried none of them.
-    const picked = c.id ? withPicks(c.id, c.description) : undefined;
+    const picked = c.id ? withPicks(c.id) : undefined;
     entries.push({
       key: `choice:${c.group}:${c.name}`,
       name: c.name,
@@ -332,7 +331,6 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       groupLabel: c.group,
       description: c.description,
       ours: picked?.ours ?? [],
-      ...(picked ? { preview: picked.preview } : {}),
       // Without these every cross-reference inside a bloodline / mystery / implement / apparition
       // description rendered as plain text — 1,199 dead links across the choice options.
       descRefs: c.descRefs,
@@ -439,6 +437,60 @@ export const LONG_NOTE_CHARS = 275;
 export const oursSearchText = (e: FeatEntry): string => (e.ours ?? []).map(oursLineText).join(' | ');
 
 /**
+ * Card step 20 (docs/card-design.md section 4 "Row previews"): the row's one-line preview is the FIRST LINE
+ * OF ITS POPUP — the card's first own body paragraph (cardModel.ts cardPreview), read from the same tree
+ * the row's 'mine' card draws (featPageOf → astVisibility recordTree, the resolution useAstNode makes; the
+ * same lane choice, item-list cut and scope as RecordCard). While the page's bucket is still on its way the
+ * preview is EMPTY, never the old imported text (section 1: "not even while the page loads") — the popup at
+ * that moment draws its loading placeholder, which has no first line either (rowPagePending).
+ */
+export function rowPreview(
+  e: FeatEntry, scope: CardScope | undefined, content: ContentDatabase | null,
+  loaded: (bucket: string) => boolean = isBucketLoaded,
+): string {
+  const page = featPageOf(e);
+  if (rowPagePending(page.bucket, page.id, loaded)) return '';
+  const tree = recordTree(page.bucket, page.id, getCachedAst);
+  return cardPreview(cardPreviewLane({ bucket: page.bucket, id: page.id, text: e.description, tree, scope, content }));
+}
+
+/**
+ * Whether a row's page is still on its way — useAstNode's seed (useAst.ts), the state in which the popup
+ * shows its loading placeholder: a record printed inside a bigger page waits for THAT page's bucket; a
+ * record on not-own-page reads no tree and never waits; every other record waits for its own bucket. Once
+ * the bucket is in, a record absent from it reads its own text, as its popup does.
+ */
+export function rowPagePending(bucket: string, id: string, loaded: (bucket: string) => boolean = isBucketLoaded): boolean {
+  const slice = pageSliceOf(bucket, id);
+  if (slice) return !loaded(slice.bucket);
+  if (isNotOwnPage(bucket, id)) return false;
+  return !loaded(bucket);
+}
+
+/** The ours kinds the row tags beside its preview — the pick, another record's marker, the record's note:
+ *  the words the row used to append to its preview sentence, now a marked tag (section 4). */
+const ROW_TAG_KINDS = new Set(['choice', 'mark', 'note']);
+export const rowOursTag = (e: FeatEntry): string =>
+  (e.ours ?? []).filter((l) => ROW_TAG_KINDS.has(l.kind)).map((l) => toPlainText(oursLineText(l))).filter(Boolean).join(' ');
+
+/** Load the page buckets the rows' cards read (a slice reads its bigger page's bucket); the returned count
+ *  changes when they arrive, so the previews are recomputed from the pages. */
+function useRowPageBuckets(entries: FeatEntry[]): number {
+  const need = useMemo(
+    () => [...new Set(entries.map((e) => { const p = featPageOf(e); return pageSliceOf(p.bucket, p.id)?.bucket ?? p.bucket; }))].filter((b) => !isBucketLoaded(b)),
+    [entries],
+  );
+  const [arrived, setArrived] = useState(0);
+  useEffect(() => {
+    if (!need.length) return;
+    let alive = true;
+    void Promise.all(need.map((b) => loadBucketAst(b))).then(() => { if (alive) setArrived((n) => n + 1); });
+    return () => { alive = false; };
+  }, [need]);
+  return arrived;
+}
+
+/**
  * One class-archetype note. A long one starts CUT to three lines with its own Show more / Show less;
  * a short one renders exactly as it did before, with no control to read past.
  *
@@ -470,6 +522,13 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
   // Rebuilding this list is independent of the local query/filter state — memoize on
   // [character, content] so typing in the search box doesn't re-derive every feat/feature row.
   const entries = useMemo<FeatEntry[]>(() => featEntries(character, content), [character, content]);
+  // Card step 20: each row's preview = its popup's first line, recomputed when the page buckets arrive.
+  const pagesArrived = useRowPageBuckets(entries);
+  const previews = useMemo(() => {
+    const scope = scopeOfCharacter(character);
+    return new Map(entries.map((e) => [e.key, rowPreview(e, scope, content)]));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- pagesArrived is the trigger: the trees live in astStore's cache
+  }, [entries, character, content, pagesArrived]);
   /** The archetype's suppressions the character did NOT get back from an owned record. */
   const replacedFeatures = useMemo<string[]>(() => {
     const regranted = regrantedFeatureIds(character, content);
@@ -684,7 +743,12 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
                         </span>
                       );
                     })()}
-                    <div className="ff-desc">{e.preview ?? toPlainText(e.description)}</div>
+                    {/* Card step 20: the popup's first line; the pick / marker / note words are a marked tag
+                        in front of it (first, so the one-line ellipsis cuts the preview, never the tag). */}
+                    <div className="ff-desc">
+                      {rowOursTag(e) && <span className="ff-tag ff-ours-tag" data-ours="" title="Yours — not the book's words" style={{ marginRight: 6 }}>{rowOursTag(e)}</span>}
+                      <span className="ff-preview">{previews.get(e.key) ?? ''}</span>
+                    </div>
                   </div>
                   <i className="ti ti-chevron-right ff-chev" aria-hidden="true" />
                 </div>

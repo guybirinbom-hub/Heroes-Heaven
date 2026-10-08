@@ -483,7 +483,13 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     // Card step 14 turns the item popup's description into the shown record's 'mine' card, so the
     // longsword's popup draws its group's page where the longsword page embeds it (test/card-item.test.tsx).
     // batch card premise: weapon-group-15 "becoming off-guard until the start of your next turn"
-    const landed = new Set(['statDetail', 'hostPage', 'actionDetail', 'featDetail', 'strikeDetail', 'itemDetail']);
+    // Card step 20 turns the Details tab's Class term into the class record's 'mine' card, so a fighter 3's
+    // level-19 feature sits folded (test/card-details.test.tsx).
+    // batch card premise: class-35 "You are nigh-unmatched with any weapon"
+    // Card step 15 turns the builder's granted ChoiceDetails rows into the record's 'mine' card, so a level-3
+    // cloistered cleric's Second Doctrine row shows its own doctrine only (test/card-choicedetails.test.tsx).
+    // batch card premise: doctrine-4 "Your proficiency rank for Fortitude saves increases to expert"
+    const landed = new Set(['statDetail', 'hostPage', 'actionDetail', 'featDetail', 'strikeDetail', 'itemDetail', 'detailsClassCard', 'choiceDetails']);
     for (const [surface, on] of Object.entries(CARD_ON)) if (!landed.has(surface)) expect(on, surface).toBe(false);
   });
 });

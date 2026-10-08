@@ -1,11 +1,20 @@
 import { useState, type ReactNode } from 'react';
 import type { DescRef } from '../rules/types';
 import { DescriptionModal } from './DescriptionModal';
+import { RecordCard } from './RecordCard';
+import { PinContext, usePinDesc, type PinDescApi, type PinNode } from './PinContext';
+import type { CardScope } from './cardModel';
+import type { DescNode } from './descref';
 
 /**
  * A term that reveals its description when clicked. Renders a subtly-underlined, focusable
  * span that opens a description popup (with cross-reference navigation — see DescriptionModal).
  * When no description is available, it renders the children as plain text (not clickable).
+ *
+ * Card step 20 (docs/card-design.md section 2 rule 2, section 6): a caller that knows the record passes
+ * its id (`descSlug`, with `descKey` its bucket), so the popup opens THAT record's page — never whichever
+ * record the display name slugs to. With `mine` the popup is the record's 'mine' card (the Details-tab
+ * class card): scoped to the character, its star pinning {key, slug, title, mode: 'mine'}.
  */
 export function InfoTerm({
   children,
@@ -14,6 +23,8 @@ export function InfoTerm({
   descRefs,
   className,
   descKey,
+  descSlug,
+  mine,
 }: {
   children: ReactNode;
   title: string;
@@ -24,9 +35,16 @@ export function InfoTerm({
    *  same-named entries from different maps don't collide. (Named `descKey`, not `key`, which React
    *  reserves.) */
   descKey?: string;
+  /** Card step 20: the record's own id in `descKey` — the popup and its pin are that record, by id.
+   *  Absent = the name lookup it always had. */
+  // card step 20: CompanionsTab wiring waits for the companions lane
+  descSlug?: string;
+  /** Card step 20: open the record's 'mine' card at this scope (needs `descKey` and `descSlug`). */
+  mine?: { scope?: CardScope };
 }) {
   const [open, setOpen] = useState(false);
   if (!description) return <span className={className}>{children}</span>;
+  const node: DescNode = { title, description, descRefs, key: descKey, ...(descSlug ? { slug: descSlug } : {}) };
   return (
     <>
       <span
@@ -51,7 +69,32 @@ export function InfoTerm({
       >
         {children}
       </span>
-      {open && <DescriptionModal root={{ title, description, descRefs, key: descKey }} onClose={() => setOpen(false)} />}
+      {open && (mine && descKey && descSlug
+        ? <MineTermCard node={node} scope={mine.scope} onClose={() => setOpen(false)} />
+        : <DescriptionModal root={node} onClose={() => setOpen(false)} />)}
     </>
+  );
+}
+
+/**
+ * The pin a 'mine' term card's built-in star works on: for the record the card opened (its first node),
+ * the node carries mode 'mine' — stored on the pin by play.ts pinOf, so the Pinned list reopens it as the
+ * 'mine' card at the character's level (card step 19, MainTab PinnedDescCard). A page opened from a link
+ * inside the card is a browse card and pins as it always did. The mode is never part of the identity.
+ */
+export function mineTermPin(pin: PinDescApi, cardNode: DescNode): PinDescApi {
+  const mark = (n: PinNode): PinNode =>
+    n.key === cardNode.key && n.slug === cardNode.slug && n.title === cardNode.title ? { ...n, mode: 'mine' } : n;
+  return { ...pin, has: (n) => pin.has(mark(n)), toggle: (n) => pin.toggle(mark(n)) };
+}
+
+/** Card step 20: a term's record as a 'mine' card — printed set empty (no stat rows of its own), the
+ *  parts the character does not have yet folded (owner ruling Q1 = A), no "Full page" button (section 13). */
+function MineTermCard({ node, scope, onClose }: { node: DescNode; scope?: CardScope; onClose: () => void }) {
+  const pin = usePinDesc();
+  return (
+    <PinContext.Provider value={pin ? mineTermPin(pin, node) : null}>
+      <RecordCard node={node} mode="mine" chrome="popup" scope={scope} printed={[]} onExit={onClose} />
+    </PinContext.Provider>
   );
 }

@@ -17,6 +17,9 @@
  * RecordCard mode 'mine' for the row's record; a heritage row reads the heritages bucket by its id).
  * Step 14: itemDetail is on (ItemDetail keeps its frame, stat block and controls; its description is the
  * shown record's 'mine' card — RecordCard chrome 'inset' — with the page's embedded stubs drawn).
+ * Step 15: choiceDetails is on (the builder's granted rows — a class feature the level grants, a feat the
+ * background hands out — open the record's 'mine' card scoped to the character being built).
+ * Step 20: detailsClassCard is on (the Details tab's Class term opens the class record's 'mine' card by its id).
  * Step 22 removes this file together with the legacy paths.
  *
  * Names follow section 6 ("mine" sheet popups, the builder rows, the GM page).
@@ -34,12 +37,12 @@ export const CARD_ON = {
   featDetail: true,
   /** ItemDetail (step 14) — ON: the description is the shown record's 'mine' card inside the item popup's own frame. */
   itemDetail: true,
-  /** Builder ChoiceDetails for granted features (step 15). */
-  choiceDetails: false,
+  /** Builder ChoiceDetails for granted features (step 15) — ON: a granted row shown for a build opens its record's 'mine' card. */
+  choiceDetails: true,
   /** SpellDetail (steps 16-17). */
   spellDetail: false,
-  /** Details-tab class card (step 20). */
-  detailsClassCard: false,
+  /** Details-tab class card (step 20) — ON: the class record's 'mine' card, later-level features folded. */
+  detailsClassCard: true,
 } as const satisfies Record<string, boolean>;
 
 export type CardSurface = keyof typeof CARD_ON;

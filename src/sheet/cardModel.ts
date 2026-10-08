@@ -2,6 +2,12 @@ import type { ReactNode } from 'react';
 import type { ContentDatabase, DescRef } from '../rules/types';
 import type { AstNode } from './astStore';
 import type { DescNode } from './descref';
+import {
+  META, cardFurnitureSectionEnd, cardHeadUntil, clean, isCardDimP, isCardFurnitureP, isCardFurnitureTitle, isMetaP, textOf,
+  withoutItemLists,
+} from './astVisibility';
+import { scopeTree, type ScopedNode } from './cardScope';
+import { sharedFeatureFallback } from '../rules/featureText';
 
 /**
  * Types for the record card (docs/card-design.md sections 2, 4 and 6). A plain .ts file, so the
@@ -221,4 +227,181 @@ export interface RecordCardProps {
   content?: ContentDatabase;
   /** When given, Back shows at the first level too and calls this (returns to the popup this opened from). */
   onBackToSource?: () => void;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Card step 20 — the row preview (docs/card-design.md section 4 "Row previews", section 5 row       */
+/* "Row previews"): a pure function of the card's FIRST OWN BODY PARAGRAPH, so a row's one-line       */
+/* preview is the first prose line its 'mine' popup draws — one source, never the old import beside   */
+/* the page. Ours markers are a tag on the row (FeatsTab), never inside the sentence.                 */
+/*                                                                                                    */
+/* "First own body paragraph" = the first plain prose paragraph of the popup body. Not it: use and    */
+/* dimmed lines (Trigger, Frequency, Prerequisites, Source …), headings, tables, lists, sidebars      */
+/* (aside), degree-of-success rows, an Activate line, furniture, a closed fold, and the ours box.     */
+/* test/card-details.test.tsx renders the REAL popup for every feat, class feature, item and spell    */
+/* and requires its first such <p> to equal this function's answer — the walk below mirrors           */
+/* AstRenderer's card Blocks / renderBlock and RichText's parseBlocks / inline, and that test is what */
+/* keeps the mirror honest (a plain .ts file: no JSX, so jiti can import it).                         */
+/* ------------------------------------------------------------------------------------------------ */
+
+/** The lane a 'mine' card draws a record's body on: its page tree, or its text (no page of its own). */
+export type PreviewLane = { tree: AstNode } | { text: string };
+
+/**
+ * Which lane RecordCard's 'mine' popup draws (RecordCard.tsx PopupRecordCard): a class feature the
+ * viewer's class shares whose page is another class's — or that has no page — is drawn from its text cut
+ * to the viewer's class paragraph (featureText.ts sharedFeatureFallback, card step 12); a record whose
+ * page tree arrived is drawn from that tree, item lists cut and scoped to the character (scopeTree);
+ * anything else from its own text. `tree` is the tree useAstNode resolves (astVisibility recordTree:
+ * the slice, none for a not-own page, else variantSection); `text` the node's description.
+ */
+export function cardPreviewLane(r: { bucket: string; id: string; text: string; tree?: AstNode; scope?: CardScope; content?: ContentDatabase | null }): PreviewLane {
+  if (r.content && r.bucket === 'classFeatures' && r.scope?.classId) {
+    const shared = sharedFeatureFallback(r.id, r.scope.classId, r.tree ? textOf(r.tree) : undefined, r.content);
+    if (shared !== null) return { text: shared };
+  }
+  return r.tree ? { tree: scopeTree(withoutItemLists(r.tree), r.scope) } : { text: r.text };
+}
+
+/** The preview line of a lane: the card's first own body paragraph as plain text ('' when it has none). */
+export function cardPreview(lane: PreviewLane): string {
+  const s = 'tree' in lane ? treeFirst(lane.tree.c ?? [], true, false) : textFirst(lane.text);
+  return (s ?? '').replace(/\s+/g, ' ').trim();
+}
+
+/* ---- the page lane: AstRenderer's card walk (printed set empty — every surface a preview stands for) ---- */
+
+/** AstRenderer BLOCK_TYPES: a container holding one of these renders its children as blocks. */
+const PV_BLOCKS = new Set([
+  'p', 'title', 'heading', 'h2', 'h3', 'ul', 'ol', 'li', 'table', 'thead', 'tbody', 'tfoot', 'tr',
+  'aside', 'row', 'column', 'document', 'doc', 'hr', 'center', 'spoilers',
+]);
+const PV_TIERS = new Set(['critical success', 'success', 'failure', 'critical failure']);
+const firstKid = (p: AstNode) => (p.c || []).find((x) => !(x.t === 'text' && !textOf(x).trim()));
+/** AstRenderer successTier: a degree-of-success row (drawn as a div, not a paragraph). */
+function pvTier(p: AstNode): boolean {
+  const f = firstKid(p);
+  return !!f && f.t === 'b' && PV_TIERS.has(textOf(f).trim().toLowerCase().replace(/:$/, ''));
+}
+/** AstRenderer isInlineFrag: a block that continues the paragraph before it. */
+function pvFrag(n: AstNode | undefined, next?: AstNode): boolean {
+  if (!n) return false;
+  if (n.t === 'sup' || n.t === 'sub') return true;
+  if (n.t === 'actions') return pvFrag(next);
+  if (n.t !== 'p') return false;
+  const t = textOf(n).trim();
+  return t.length > 0 && t.length < 400 && /^[,.;:)\]]|^[a-z]/.test(t);
+}
+/** What AstRenderer's Inline draws, as text: a line break is a space, an action glyph is left out. */
+function pvInline(nodes: AstNode[]): string {
+  return nodes.map((n) => (n.t === 'text' ? clean(n.v ?? '') : n.t === 'br' ? ' ' : n.t === 'actions' ? '' : pvInline(n.c || []))).join('');
+}
+const pvSome = (s: string) => (s.replace(/\s+/g, ' ').trim() ? s : null);
+
+function treeFirst(nodes: AstNode[], top: boolean, inherited: boolean): string | null {
+  const headUntil = top ? cardHeadUntil(nodes) : -1;
+  for (let i = 0; i < nodes.length; i++) {
+    const n = nodes[i];
+    const head = top ? headUntil >= 0 && i < headUntil : inherited;
+    if (isCardFurnitureTitle(n)) { i = cardFurnitureSectionEnd(nodes, i) - 1; continue; }
+    if (n.t === 'p') {
+      const b0 = firstKid(n);
+      if (b0 && b0.t === 'b' && /^activate/i.test(textOf(b0).trim()) && nodes[i + 1]?.t === 'actions') { i++; continue; }
+      const raw = textOf(n).trim();
+      const meta = isMetaP(n);
+      const marker = /^#{1,6}$/.test(raw) || /^[-*_]{3,}$/.test(raw);
+      if (raw && !pvTier(n) && !marker) {
+        let j = i + 1;
+        const frags: AstNode[] = [];
+        while (j < nodes.length && pvFrag(nodes[j], nodes[j + 1])) { frags.push(nodes[j]); j++; }
+        if (frags.length && (!meta || frags.some((f) => f.t === 'actions'))) {
+          i = j - 1;
+          if (isCardFurnitureP(n, head) || (n as ScopedNode).applies || isCardDimP(n) || meta) continue;
+          const joined = [n, ...frags].flatMap((pp) => (pp.t === 'sup' || pp.t === 'sub' || pp.t === 'actions' ? [pp] : pp.c || []));
+          const s = pvSome(pvInline(joined));
+          if (s !== null) return s;
+          continue;
+        }
+      }
+      if (!raw || marker || isCardFurnitureP(n, head) || (n as ScopedNode).applies || meta || isCardDimP(n) || pvTier(n)) continue;
+      const s = pvSome(pvInline(n.c || []));
+      if (s !== null) return s;
+      continue;
+    }
+    if (n.t === 'view') {
+      const s = pvSome(pvInline(n.c || []));
+      if (s !== null) return s;
+      continue;
+    }
+    // Not a paragraph of the record's own prose (or drawn with a class: a use / dim row, a heading).
+    if (['title', 'heading', 'hr', 'traits', 'actions', 'spoilers', 'ul', 'ol', 'table', 'aside', 'card-fold'].includes(n.t)) continue;
+    const kids = n.c || [];
+    const recurse = n.t === 'row' ? kids.some((c) => PV_BLOCKS.has(c.t))
+      : n.t === 'column' || n.t === 'document' || n.t === 'doc' || n.t === 'card-pointer' || kids.some((c) => PV_BLOCKS.has(c.t));
+    if (!recurse) continue;
+    const s = treeFirst(kids, false, head);
+    if (s !== null) return s;
+  }
+  return null;
+}
+
+/* ---- the text lane: DescBody's markdown (RichText parseBlocks / inline) and rich-HTML branches ---- */
+
+/** DescBody.tsx HTML_TAG (not exported there): a description it draws as rich HTML, not markdown. */
+const PV_HTML_TAG = /<(a|strong|em|b|i|u|s|h[1-6]|ul|ol|li|blockquote|span|br|div|p|hr|mark)\b/i;
+const PV_ENTITIES: Record<string, string> = {
+  nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", rsquo: '’', lsquo: '‘',
+  rdquo: '”', ldquo: '“', mdash: '—', ndash: '–', times: '×', deg: '°',
+  hellip: '…', frac12: '½', frac14: '¼', frac34: '¾', plusmn: '±', minus: '−',
+};
+/** RichText decodeEntities + stripAonMarkers + the residual-tag strip (cleanRun). */
+function pvCleanRun(s: string): string {
+  return s
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+    .replace(/&([a-z][a-z0-9]*);/gi, (m, name: string) => PV_ENTITIES[name.toLowerCase()] ?? m)
+    .replace(/<%[^>]*%>([\s\S]*?)<%END>/g, '$1')
+    .replace(/<%[^>]*%>/g, '')
+    .replace(/<%END>/g, '')
+    .replace(/<\/?[a-z][^>]*>/gi, '');
+}
+/** RichText inline, as text: emphasis markers go, a ⟦highlight⟧ keeps its words, a ⟨N⟩ glyph is left out. */
+const pvMdInline = (s: string) => pvCleanRun(s).replace(/\*\*([^*]+)\*\*|\*([^*]+)\*|⟦([^⟧]+)⟧|⟨([^⟩]+)⟩/g, (_, b, i, h) => b ?? i ?? h ?? '');
+const PV_DS = /^\*\*(?:Critical Success|Critical Failure|Success|Failure)\*\*:?\s*/;
+
+/** RichText parseBlocks, stopping at the first paragraph that is prose — not a degree-of-success row, and
+ *  not led by a bold use / Source label (the text lane's twin of the page lane's use rows). */
+function textFirst(text: string): string | null {
+  if (!text) return null;
+  if (PV_HTML_TAG.test(text)) return htmlFirst(text);
+  const lines = text.replace(/\r/g, '').split('\n');
+  let para: string[] = [];
+  const flush = (): string | null => {
+    if (!para.length) return null;
+    const joined = para.join(' ').replace(/\s+/g, ' ').trim();
+    para = [];
+    if (!joined || PV_DS.test(joined)) return null;
+    const lead = /^\*\*([^*]+)\*\*/.exec(pvCleanRun(joined));
+    if (lead && META.test(lead[1].trim())) return null;
+    return pvSome(pvMdInline(joined));
+  };
+  for (let i = 0; i < lines.length; i++) {
+    const t = lines[i].trim();
+    const isTable = t.startsWith('|') && i + 1 < lines.length && /^\|?[\s:|-]+\|?$/.test(lines[i + 1].trim()) && lines[i + 1].includes('-');
+    if (!t || /^(-{3,}|\*{3,}|_{3,})$/.test(t) || /^(#{1,4})\s+(.*)$/.test(t) || isTable || /^[-*]\s+(.*)$/.test(t) || /^\d+\.\s+(.*)$/.test(t)) {
+      const s = flush();
+      if (s !== null) return s;
+      if (isTable) { let j = i + 2; while (j < lines.length && lines[j].trim().startsWith('|')) j++; i = j - 1; }
+      continue;
+    }
+    para.push(t);
+  }
+  return flush();
+}
+
+/** The rich-HTML branch (user-authored text): its first <p>, else the run before the first line break. */
+function htmlFirst(html: string): string | null {
+  const p = /<p\b[^>]*>([\s\S]*?)<\/p>/i.exec(html);
+  const run = p ? p[1] : html.split(/<br\s*\/?>|<\/?(?:div|h[1-6]|ul|ol|li|blockquote|hr|table)\b[^>]*>/i).find((x) => pvCleanRun(x).trim()) ?? '';
+  return pvSome(pvCleanRun(run));
 }

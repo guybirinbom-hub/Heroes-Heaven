@@ -13,6 +13,8 @@ import { useIsMobile } from './useIsMobile';
 import { DefensesPills } from './DefensesPills';
 import { AvatarCropModal } from './AvatarCropModal';
 import { CharacterImages } from './CharacterImages';
+import { cardOn } from './cardSurfaces';
+import { scopeOfCharacter } from './cardScope';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -77,6 +79,14 @@ export function DetailsTab({
 
   const bgName = background?.name ?? character.customBackground?.name;
   const bgDesc = background?.description ?? character.customBackground?.description;
+  /* Card step 20 (docs/card-design.md section 3 "Class card (Details tab)", section 6; CARD_ON.detailsClassCard):
+     the Class term opens the class record's 'mine' card by its id — the intro, the initial proficiencies and
+     the features up to the character's level open, every later-level feature folded under one "At higher
+     levels (k)" line (owner ruling Q1 = A), its star pinning {key: 'classes', slug, title, mode: 'mine'}.
+     Switched off, the term is the browse popup it always was (title + text, found by name). */
+  const classTerm = cls && cardOn('detailsClassCard')
+    ? { descKey: 'classes', descSlug: cls.id, mine: { scope: scopeOfCharacter(character) } }
+    : {};
 
   // Portrait import: clicking the slot opens a file picker, then the frame-the-avatar step. The image
   // is stored BEFORE the crop dialog, so cancelling the dialog keeps the upload (with a centre crop)
@@ -215,12 +225,12 @@ export function DetailsTab({
                 { icon: 'ti-user', label: 'Ancestry', name: ancestry?.name, title: ancestry?.name ?? 'Ancestry', desc: ancestry?.description, refs: ancestry?.descRefs },
                 { icon: 'ti-sparkles', label: 'Heritage', name: heritage?.name, title: heritage?.name ?? 'Heritage', desc: heritage?.description, refs: heritage?.descRefs },
                 { icon: 'ti-book-2', label: 'Background', name: bgName, title: bgName ?? 'Background', desc: bgDesc, refs: background?.descRefs },
-                { icon: 'ti-shield-half', label: 'Class', name: cls?.name, title: cls?.name ?? 'Class', desc: cls?.description, refs: cls?.descRefs },
+                { icon: 'ti-shield-half', label: 'Class', name: cls?.name, title: cls?.name ?? 'Class', desc: cls?.description, refs: cls?.descRefs, term: classTerm },
               ].map((o) => (
                 <div className="obox" key={o.label}>
                   <i className={'ti ' + o.icon + ' olead'} aria-hidden="true" />
                   <div className="olabel">{o.label}</div>
-                  <InfoTerm className="oval" title={o.title} description={o.desc} descRefs={o.refs}>
+                  <InfoTerm className="oval" title={o.title} description={o.desc} descRefs={o.refs} {...(o.term ?? {})}>
                     {o.name ?? '—'}
                   </InfoTerm>
                 </div>
@@ -236,7 +246,7 @@ export function DetailsTab({
                   { icon: 'ti-sparkles', label: 'Heritage', name: heritage?.name, desc: heritage?.description, refs: heritage?.descRefs },
                 ],
                 [
-                  { icon: 'ti-shield-half', label: 'Class', name: cls?.name, desc: cls?.description, refs: cls?.descRefs },
+                  { icon: 'ti-shield-half', label: 'Class', name: cls?.name, desc: cls?.description, refs: cls?.descRefs, term: classTerm },
                   { icon: 'ti-book-2', label: 'Background', name: bgName, desc: bgDesc, refs: background?.descRefs },
                 ],
               ].map((row, i) => (
@@ -248,7 +258,7 @@ export function DetailsTab({
                         <i className={'ti ' + o.icon + ' olead'} aria-hidden="true" />
                         <div className="ocell-text">
                           <div className="olabel">{o.label}</div>
-                          <InfoTerm className="oval" title={o.name ?? o.label} description={o.desc} descRefs={o.refs}>
+                          <InfoTerm className="oval" title={o.name ?? o.label} description={o.desc} descRefs={o.refs} {...(o.term ?? {})}>
                             {o.name ?? '—'}
                           </InfoTerm>
                         </div>
