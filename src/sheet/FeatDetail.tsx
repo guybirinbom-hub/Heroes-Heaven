@@ -212,10 +212,18 @@ const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
  * IS the edited text) and a homebrew use line whose label the text already prints.
  *
  * Card step 19 kept this (it did not drop it): the no-page lane and older devices still read it.
+ *
+ * Card step 18: an `atYourLevel` line is NEVER stored. It is derive's CURRENT value for the character at
+ * its level; frozen into the description it would go stale at the next level and read as the record's own
+ * words (unmarked). MainTab's PinnedDescCard draws it live, marked ours, from the same builder
+ * (cardAtLevel.ts atLevelLines) whenever the character still holds the record.
  */
 export function pinDescriptionOf(entry: FeatEntry): string {
   const lines = (entry.ours ?? []).filter(
-    (l) => l.kind !== 'override' && (l.kind !== 'useLine' || !labelPrinted(l.label ?? '', null, entry.description)),
+    (l) =>
+      l.kind !== 'override' &&
+      l.kind !== 'atYourLevel' &&
+      (l.kind !== 'useLine' || !labelPrinted(l.label ?? '', null, entry.description)),
   );
   if (lines.length === 0) return entry.description;
   const words = lines.map(oursLineText);

@@ -8,6 +8,7 @@ import { ActionGlyph, isActionCost } from './widgets';
 import { FeatDetail, enhancementText, featPageOf, trustRefOf, type FeatEntry } from './FeatDetail';
 import { cardPreview, cardPreviewLane, oursLineText, type CardScope, type OursLine } from './cardModel';
 import { scopeOfCharacter } from './cardScope';
+import { atLevelLines } from './cardAtLevel';
 import { isNotOwnPage, pageSliceOf, recordTree } from './astVisibility';
 import { getCachedAst, isBucketLoaded, loadBucketAst } from './astStore';
 import { TrustMarker } from './TrustMarker';
@@ -214,6 +215,8 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         // The running ENHANCEMENT tier (section 4 kind `enhancement`), out of the print-styled stat row.
         ...(enhancedBy ? [{ kind: 'enhancement' as const, text: `Enhancement ${enhancementText(enhancedBy)}` }] : []),
         ...usesRetune(feat),
+        // Card step 18: the value derive computes at your level where the page prints one that scales.
+        ...atLevelLines(character, content, 'feats', fc.featId),
         ...overrideOf('feats', fc.featId),
         ...useLinesOf(feat),
       ],
@@ -278,7 +281,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         traits: feature.traits,
         actionCost: feature.actionCost,
         description: shown,
-        ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...overrideOf('classFeatures', variantId)],
+        ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...atLevelLines(character, content, 'classFeatures', variantId), ...overrideOf('classFeatures', variantId)],
         descRefs: feature.descRefs,
         isFeature: true,
         bucket: 'Class',
@@ -308,7 +311,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         traits: feature.traits,
         actionCost: feature.actionCost,
         description: shown,
-        ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...overrideOf('classFeatures', fid)],
+        ours: [...picked.ours, ...usesRetune(feature as unknown as Feat), ...atLevelLines(character, content, 'classFeatures', fid), ...overrideOf('classFeatures', fid)],
         descRefs: feature.descRefs,
         isFeature: true,
         bucket: 'Class',
@@ -330,7 +333,8 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       traits: [],
       groupLabel: c.group,
       description: c.description,
-      ours: picked?.ours ?? [],
+      // Card step 18: a barbarian's instinct and a ranger's hunter's edge are choice rows; their at-level line.
+      ours: [...(picked?.ours ?? []), ...(c.id && content.classFeatures[c.id] ? atLevelLines(character, content, 'classFeatures', c.id) : [])],
       // Without these every cross-reference inside a bloodline / mystery / implement / apparition
       // description rendered as plain text — 1,199 dead links across the choice options.
       descRefs: c.descRefs,
@@ -355,7 +359,8 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         traits: f.traits,
         actionCost: f.actionCost,
         description: f.description,
-        ours: overrideOf('classFeatures', f.id),
+        // Card step 18: an armour modification's level-sized resistance (Dense Plating: "equal to half your level").
+        ours: [...atLevelLines(character, content, 'classFeatures', f.id), ...overrideOf('classFeatures', f.id)],
         descRefs: f.descRefs,
         isFeature: true,
         bucket: 'Class',
@@ -393,7 +398,8 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       level: 1,
       traits: heritage.traits,
       description: heritage.description,
-      ours: [],
+      // Card step 18: a heritage's level-sized resistance (Arctic Elf: "cold resistance equal to half your level").
+      ours: atLevelLines(character, content, 'heritages', heritage.id),
       descRefs: heritage.descRefs,
       isFeature: true,
       bucket: 'Ancestry & heritage',

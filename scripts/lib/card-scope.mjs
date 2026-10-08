@@ -44,6 +44,12 @@
  * each class pick (subclass name, kinetic element, divine font: classPickLabels) that names one of its
  * printed options — scopeOfCharacter hands those to every card (cardScope.ts CLASS_PICKS; an element
  * only on cardScope.ts ELEMENT_PICK_PAGES).
+ *
+ * Card step 18: the "At your level (N): …" line (ours kind `atYourLevel`, src/sheet/cardAtLevel.ts) sits in
+ * the card's ours box ([data-ours]), never in the page, so no line check reads it and no fold is made for it
+ * (FOLDED-UNLISTED cannot move). The ledger knows it two ways: its opening words are an OURS_MARKERS entry
+ * (inside a page's own text they are OURS-LEAK), and atLevelProblems checks cardScope.ts AT_LEVEL — the
+ * records that may carry the line — both ways against the shipped data.
  */
 import {
   clean, isMetaP, isMetaishBlock, textOf, recordTree, withoutItemLists, astSlug,
@@ -53,6 +59,7 @@ import {
   OMISSION_RULES, LABEL_ALIASES, canonLabel, printedSet,
   FOLD_RULE, FUTURE_TREATMENT, LEVEL_FOLDS, SCOPE_LEVELS, scopeTree, PICK_SURFACES, pickScopes,
   CLASS_PICK_BUCKET, FONT_LABELS, ELEMENT_LABELS, classPickScopes,
+  AT_LEVEL, AT_LEVEL_FAMILIES, AT_LEVEL_LEAD, AT_LEVEL_DEFERRED, levelDefenseKeys,
 } from '../../src/sheet/cardScope.ts';
 import { CARD_ON } from '../../src/sheet/cardSurfaces.ts';
 import { spellCardModel } from '../../src/sheet/spellCard.ts';
@@ -694,11 +701,92 @@ export function hasEmptyEmbeddedPage(tree) {
 }
 
 
-/** App-authored wording that must never sit inside page text (section 4). */
-export const OURS_MARKERS = [/⟦/, /\bYour choice:/, /Not yet verified/, /Remastered as\b/, /\(→ /];
+/** App-authored wording that must never sit inside page text (section 4). Card step 18 adds the
+ *  at-level line's opening words ("At your level (7):"), which the usesRetune line shares. */
+export const OURS_MARKERS = [/⟦/, /\bYour choice:/, /Not yet verified/, /Remastered as\b/, /\(→ /, new RegExp(`\\b${AT_LEVEL_LEAD} \\(\\d+\\):`)];
 export function oursInPage(tree) {
   const t = flatText(tree);
   return OURS_MARKERS.filter((re) => re.test(t)).map(String);
+}
+
+/**
+ * Card step 18: the at-level ledger (src/sheet/cardScope.ts AT_LEVEL), checked both ways against the shipped
+ * data. A record may carry an "At your level" line only if
+ *   1. it exists, and the text its card draws — its page tree (recordTree: own page or slice), or its own
+ *      text where it has none — prints its family's scaling clause (AT_LEVEL_FAMILIES[family].printed);
+ * and every record derive pays a family for is listed:
+ *   2. every class feature id derive.ts weaponSpecialization pays Weapon Specialization by ('weapon-
+ *      specialization', 'weapon-specialization-<class>', '<class>-weapon-specialization', 'greater-weapon-
+ *      specialization*') on any class's feature list, and every class's own 'sneak-attack' feature;
+ *   3. every barbarian instinct (derive.ts RAGE_DAMAGE scales Rage by the barbarian's subclass);
+ *   4. every feat whose precisionDice steps up at a level (precisionDice.upgradeAt: derive reads it) — and a
+ *      listed feat must carry precisionDice;
+ *   5. every feat, class feature and heritage whose OWN resistances / weaknesses derive sizes by level
+ *      (cardScope.ts levelDefenseKeys: a value formula naming @actor.level, which deriveDefenses resolves and
+ *      attributes to the record by name) is in AT_LEVEL as levelDefense or in AT_LEVEL_DEFERRED — never both,
+ *      never neither — and so is every heritage / background with a level-sized `choiceResistance` (derive
+ *      resolves it unattributed). A listed levelDefense record must carry such a value; a deferred one must
+ *      exist, and an `unprinted` one must indeed print no sizing (else it belongs in AT_LEVEL).
+ * Returns `key|why` strings; empty = agree.
+ */
+export function atLevelProblems(db, trees) {
+  const out = [];
+  const read = (b, s) => trees?.[b]?.[s];
+  for (const [key, family] of Object.entries(AT_LEVEL)) {
+    const i = key.indexOf(':');
+    const bucket = key.slice(0, i);
+    const id = key.slice(i + 1);
+    const rec = db?.[bucket]?.[id];
+    const def = AT_LEVEL_FAMILIES[family];
+    if (!def) { out.push(`${key}|unknown family ${family}`); continue; }
+    if (!rec) { out.push(`${key}|no record`); continue; }
+    const { text, tree } = drawnText(bucket, id, rec);
+    if (!def.printed.test(text)) out.push(`${key}|its ${tree ? 'page' : 'text'} prints no ${family} scaling clause`);
+    if (bucket === 'feats' && family === 'sneakAttack' && !rec.precisionDice) out.push(`${key}|listed, but derive reads no precisionDice on it`);
+    if (family === 'levelDefense' && !levelDefenseKeys(rec).length) out.push(`${key}|listed, but derive sizes none of its resistances / weaknesses by level`);
+    if (AT_LEVEL_DEFERRED[key]) out.push(`${key}|both listed and deferred`);
+  }
+  function drawnText(bucket, id, rec) {
+    const tree = recordTree(bucket, id, read);
+    return { tree, text: (tree ? flatText(tree) : String(rec?.description ?? '')).replace(/\s+/g, ' ') };
+  }
+  // 5. Level-sized resistances / weaknesses: listed or deferred, and a deferral's reason holds.
+  const paidDefense = new Set();
+  for (const bucket of ['feats', 'classFeatures', 'heritages']) {
+    for (const [id, rec] of Object.entries(db?.[bucket] ?? {})) if (levelDefenseKeys(rec).length) paidDefense.add(`${bucket}:${id}`);
+  }
+  for (const bucket of ['heritages', 'backgrounds']) {
+    for (const [id, rec] of Object.entries(db?.[bucket] ?? {})) if (rec?.choiceResistance && rec.choiceResistance.halfLevel !== false) paidDefense.add(`${bucket}:${id}`);
+  }
+  for (const key of paidDefense) {
+    if (AT_LEVEL[key] !== 'levelDefense' && !AT_LEVEL_DEFERRED[key]) out.push(`${key}|derive sizes its resistance / weakness by level, neither listed nor deferred`);
+  }
+  for (const [key, why] of Object.entries(AT_LEVEL_DEFERRED)) {
+    const i = key.indexOf(':');
+    const bucket = key.slice(0, i);
+    const id = key.slice(i + 1);
+    const rec = db?.[bucket]?.[id];
+    if (!rec) { out.push(`${key}|deferred, but no record`); continue; }
+    if (!paidDefense.has(key)) out.push(`${key}|deferred, but derive sizes nothing of it by level`);
+    if (why === 'unprinted') {
+      const { text, tree } = drawnText(bucket, id, rec);
+      if (AT_LEVEL_FAMILIES.levelDefense.printed.test(text)) out.push(`${key}|deferred as unprinted, but its ${tree ? 'page' : 'text'} prints the sizing`);
+    }
+    if (why === 'unattributed' && !rec.choiceResistance) out.push(`${key}|deferred as unattributed, but it carries no choiceResistance`);
+  }
+  const need = (key, why) => { if (!AT_LEVEL[key]) out.push(`${key}|${why}`); };
+  for (const [clsId, cls] of Object.entries(db?.classes ?? {})) {
+    for (const f of cls?.features ?? []) {
+      const id = f.featureId;
+      if (id === 'weapon-specialization' || id === `weapon-specialization-${clsId}` || id === `${clsId}-weapon-specialization` || String(id).startsWith('greater-weapon-specialization')) {
+        need(`classFeatures:${id}`, `derive pays weapon specialization by it (${clsId}), not listed`);
+      }
+      if (id === 'sneak-attack') need(`classFeatures:${id}`, `derive pays Sneak Attack by it (${clsId}), not listed`);
+    }
+  }
+  for (const o of db?.classes?.barbarian?.subclass?.options ?? []) need(`classFeatures:${o.id}`, 'a barbarian instinct derive scales Rage by, not listed');
+  for (const [id, f] of Object.entries(db?.feats ?? {})) if (f?.precisionDice?.upgradeAt) need(`feats:${id}`, 'its precisionDice steps up at a level, not listed');
+  return [...new Set(out)].sort();
 }
 
 /** A dropped block whose next sibling block is shown and opens mid-sentence (lowercase / punctuation). */

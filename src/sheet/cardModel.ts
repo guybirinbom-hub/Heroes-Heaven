@@ -70,7 +70,8 @@ export type OursKind =
   | 'enhancement'
   /** A spell note, as SpellsTab prints it today. */
   | 'spellNote'
-  /** "At your level (7): 2d6", only where derive computes the value. */
+  /** "At your level (7): 2d6", only where derive computes the value (card step 18: src/sheet/cardAtLevel.ts
+   *  reads it off derive's Strikes for the records in cardScope.ts AT_LEVEL; never computed by the card). */
   | 'atYourLevel'
   /** upgradedBy / maxByLevel retunes of a use counter. */
   | 'usesRetune'

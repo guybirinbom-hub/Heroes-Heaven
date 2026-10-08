@@ -898,3 +898,220 @@ export function foldsOf(row: unknown, tree?: AstNode, classIds: readonly string[
   }
   return out;
 }
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Card step 18 — "At your level" lines (docs/card-design.md section 3 row "Sentence that scales      */
+/* inside itself", section 4 kind `atYourLevel`). Where a record's page prints a value that scales    */
+/* with level INSIDE its prose (Sneak Attack's dice, a barbarian instinct's Rage damage, Weapon        */
+/* Specialization by rank), the card keeps the printed words whole and adds ONE ours line with the     */
+/* value the ENGINE computes for this character at its level. The card never computes the number: it  */
+/* reads src/rules/derive.ts's existing Strike and Defenses output (src/sheet/cardAtLevel.ts).         */
+/* Mechanics are out of                                                                               */
+/* scope (section 13), so a record derive does not compute is not in this table and gets no line.      */
+/*                                                                                                    */
+/* This table is the LEDGER: the line builder reads it, and scripts/lib/card-scope.mjs atLevelProblems */
+/* checks it both ways against the shipped data (every listed record's drawn text prints its family's  */
+/* scaling clause; every record derive pays the family for is listed). A plain table, here and not in  */
+/* cardAtLevel.ts, because the guard imports this file through jiti and must not load the engine.      */
+/* ------------------------------------------------------------------------------------------------ */
+
+/** The derive outputs a line can read, one per family. */
+export type AtLevelFamily = 'sneakAttack' | 'precision' | 'rage' | 'weaponSpec' | 'levelDefense';
+
+export interface AtLevelFamilyDef {
+  /** The derive output the line reads (src/sheet/cardAtLevel.ts) — documentation for the guard's report. */
+  reads: string;
+  /** The scaling clause the record's drawn text prints (page, or its own text where it has no page). */
+  printed: RegExp;
+}
+
+export const AT_LEVEL_FAMILIES: Readonly<Record<AtLevelFamily, AtLevelFamilyDef>> = {
+  sneakAttack: {
+    reads: 'deriveStrikes → Strike.conditionalDamage, the "sneak attack when target is off-guard" rider (derive.ts strikePrecisionRiders)',
+    printed: /\b1d[46]\b[\s\S]*\b(?:5th|6th)\b/i,
+  },
+  precision: {
+    reads: 'deriveStrikes with Hunt Prey on → Strike.conditionalDamage, the "first hit vs hunted prey" rider (derive.ts strikePrecisionRiders)',
+    printed: /\b1d8\b[\s\S]*\b11th level\b[\s\S]*\b2d8\b/i,
+  },
+  rage: {
+    reads: 'deriveStrikes with Rage on → Strike.conditionalDamage, the "while raging" rider (derive.ts rageStrikeRider)',
+    printed: /damage from Rage from 2 to \d/i,
+  },
+  weaponSpec: {
+    reads: 'deriveStrikes → Strike.specDamage (derive.ts weaponSpecDamage, folded into the Strike)',
+    printed: /increases? to \d+,? (?:if you['’]re a master|with weapons)/i,
+  },
+  // A resistance or weakness the record's own text sizes by level, in ONE sentence ("resistance to cold
+  // equal to half your level", "resistance equal to 3 + half your level", "This resistance increases to 3
+  // at 13th level"). The guard reads the sentence, not the whole page, so a page that only names your
+  // level elsewhere ("Your maximum HP is reduced by your level") does not pass on that alone.
+  levelDefense: {
+    reads: 'deriveDefenses → sources["resistance:<type>" | "weakness:<type>"], the entry derive attributes to the record by its name, for each type the record\'s own resistances / weaknesses size by level',
+    printed: /(?:resist|weak)[^.]*?(?:your level|\b\d+(?:st|nd|rd|th) level\b)|(?:your level|\b\d+(?:st|nd|rd|th) level\b)[^.]*?(?:resist|weak)/i,
+  },
+};
+
+/** Record (`bucket:id`) → the family whose derived value its card's line shows. */
+export const AT_LEVEL: Readonly<Record<string, AtLevelFamily>> = {
+  // Sneak Attack: the rogue's feature ("Increase the number of dice by one at 5th, 11th, and 17th levels")
+  // and the one feat that hands it over with a printed level step ("1d4 damage, increasing to 1d6 at 6th
+  // level"). Butterfly's Sting and Shadow Sneak Attack print a fixed die, so they get no line.
+  'classFeatures:sneak-attack': 'sneakAttack',
+  'feats:sneak-attacker': 'sneakAttack',
+  // The ranger's Precision hunter's edge ("At 11th level, the extra damage increases to 2d8").
+  'classFeatures:precision': 'precision',
+  // Every barbarian instinct: each prints "the additional damage from Rage from 2 to N", raised again at
+  // the level derive's RAGE_DAMAGE tiers follow.
+  'classFeatures:animal-instinct': 'rage',
+  'classFeatures:bloodrager': 'rage',
+  'classFeatures:decay-instinct': 'rage',
+  'classFeatures:dragon-instinct': 'rage',
+  'classFeatures:elemental-instinct': 'rage',
+  'classFeatures:fury-instinct': 'rage',
+  'classFeatures:giant-instinct': 'rage',
+  'classFeatures:ligneous-instinct': 'rage',
+  'classFeatures:spirit-instinct': 'rage',
+  'classFeatures:superstition-instinct': 'rage',
+  // Weapon Specialization and Greater Weapon Specialization, under every id derive.ts weaponSpecialization
+  // pays them by (the shared records and the per-class ones).
+  'classFeatures:weapon-specialization': 'weaponSpec',
+  'classFeatures:greater-weapon-specialization': 'weaponSpec',
+  'classFeatures:greater-weapon-specialization-barbarian': 'weaponSpec',
+  'classFeatures:greater-weapon-specialization-magus': 'weaponSpec',
+  'classFeatures:psychic-weapon-specialization': 'weaponSpec',
+  'classFeatures:weapon-specialization-magus': 'weaponSpec',
+  'classFeatures:weapon-specialization-necromancer': 'weaponSpec',
+  'classFeatures:weapon-specialization-summoner': 'weaponSpec',
+  // Level-scaled resistances and weaknesses: every feat, class feature and heritage whose OWN resistances /
+  // weaknesses carry a value sized by level (derive.ts deriveDefenses resolves it with the character's
+  // level and attributes it to the record by name) AND whose drawn text prints that sizing in a sentence
+  // (AT_LEVEL_FAMILIES.levelDefense.printed). The ones derive pays but whose text prints no sizing are in
+  // AT_LEVEL_DEFERRED below, with the reason; the guard requires every such record in one table or the other.
+  'classFeatures:dense-plating': 'levelDefense',
+  'classFeatures:energy-barrier': 'levelDefense',
+  'classFeatures:field-discovery-toxicologist': 'levelDefense',
+  'classFeatures:guardians-armor': 'levelDefense',
+  'classFeatures:harmonic-oscillator': 'levelDefense',
+  'classFeatures:layered-mesh': 'levelDefense',
+  'classFeatures:metallic-reactance': 'levelDefense',
+  'classFeatures:otherworldly-protection': 'levelDefense',
+  'classFeatures:perfect-fortification': 'levelDefense',
+  'classFeatures:phlogistonic-regulator': 'levelDefense',
+  'classFeatures:physical-protections': 'levelDefense',
+  'classFeatures:seer': 'levelDefense',
+  'classFeatures:tensile-absorption': 'levelDefense',
+  'classFeatures:toxicologist': 'levelDefense',
+  'feats:aura-of-confidence': 'levelDefense',
+  'feats:bound-in-ice': 'levelDefense',
+  'feats:death-warden': 'levelDefense',
+  'feats:fey-transcendence': 'levelDefense',
+  'feats:fire-resistance': 'levelDefense',
+  'feats:fumesoul': 'levelDefense',
+  'feats:ghostly-resistance': 'levelDefense',
+  'feats:grave-mummification': 'levelDefense',
+  'feats:irriseni-ice-witch': 'levelDefense',
+  'feats:jelly-body': 'levelDefense',
+  'feats:lingering-chill': 'levelDefense',
+  'feats:mental-buffer': 'levelDefense',
+  'feats:mummy-dedication': 'levelDefense',
+  'feats:necromantic-resistance': 'levelDefense',
+  'feats:necromantic-resistance-undead-slayer': 'levelDefense',
+  'feats:norgorbers-secret': 'levelDefense',
+  'feats:nothing-but-fluff': 'levelDefense',
+  'feats:one-among-the-masses': 'levelDefense',
+  'feats:only-my-doom-may-claim-me': 'levelDefense',
+  'feats:pactbound-dedication': 'levelDefense',
+  'feats:pain-tolerance': 'levelDefense',
+  'feats:peculiar-anatomy': 'levelDefense',
+  'feats:poison-resistance': 'levelDefense',
+  'feats:rimesoul': 'levelDefense',
+  'feats:scholarly-defense': 'levelDefense',
+  'feats:skeletal-resistance': 'levelDefense',
+  'feats:spirit-walk': 'levelDefense',
+  'feats:stormsoul': 'levelDefense',
+  'feats:swallow-pain': 'levelDefense',
+  'feats:the-dead-tell-tales': 'levelDefense',
+  'feats:timeless-body': 'levelDefense',
+  'feats:unassailable-enforcer': 'levelDefense',
+  'feats:warding-jewel': 'levelDefense',
+  'feats:werecreature-dedication': 'levelDefense',
+  'feats:winters-kiss': 'levelDefense',
+  'heritages:aon-ifrit': 'levelDefense',
+  'heritages:arctic-elf': 'levelDefense',
+  'heritages:benthic-azarketi': 'levelDefense',
+  'heritages:charhide-goblin': 'levelDefense',
+  'heritages:deny-the-firstborn-pursuit': 'levelDefense',
+  'heritages:desert-elf': 'levelDefense',
+  'heritages:forge-dwarf': 'levelDefense',
+  'heritages:frozen-wind-kitsune': 'levelDefense',
+  'heritages:ghost-poppet': 'levelDefense',
+  'heritages:glacier-cavern-minotaur': 'levelDefense',
+  'heritages:grave-orc': 'levelDefense',
+  'heritages:inured-azarketi': 'levelDefense',
+  'heritages:mountaineer-samsaran': 'levelDefense',
+  'heritages:reef-merfolk': 'levelDefense',
+  'heritages:sandstrider-lizardfolk': 'levelDefense',
+  'heritages:shapewrought-fleshwarp': 'levelDefense',
+  'heritages:smokeworker-hobgoblin': 'levelDefense',
+  'heritages:snow-goblin': 'levelDefense',
+  'heritages:snow-rat': 'levelDefense',
+  'heritages:stormtossed-tengu': 'levelDefense',
+  'heritages:strong-blooded-dwarf': 'levelDefense',
+  'heritages:talos': 'levelDefense',
+  'heritages:thickcoat-shoony': 'levelDefense',
+  'heritages:venom-resistant-vishkanya': 'levelDefense',
+  'heritages:venomshield-nagaji': 'levelDefense',
+  'heritages:virtuous-tanuki': 'levelDefense',
+  'heritages:vivacious-gnome': 'levelDefense',
+  'heritages:winter-catfolk': 'levelDefense',
+  'heritages:winter-kholo': 'levelDefense',
+  'heritages:wintertouched-human': 'levelDefense',
+};
+
+/**
+ * Records derive DOES pay a level-scaled resistance for, that get NO at-level line, each with why. The guard
+ * (scripts/lib/card-scope.mjs atLevelProblems) requires every such record in AT_LEVEL or here, never both,
+ * so a new one cannot slip past unlisted. Two reasons only:
+ *  - `unprinted`: the record's drawn text prints no sizing — the value comes from a rule printed on another
+ *    page ("You gain the advanced undead benefits"), or the page prints a fixed number and leaves the step to
+ *    another record (Orchard's Endurance's stance). A line would show a number this card's text never states.
+ *  - `unattributed`: derive resolves the value but keeps no per-record attribution for it (deriveDefenses
+ *    sets `choiceResistance` straight into the totals), so the card cannot read THIS record's own value
+ *    without computing it — and the card never computes. Left for a step that gives derive the attribution.
+ */
+export const AT_LEVEL_DEFERRED: Readonly<Record<string, 'unprinted' | 'unattributed'>> = {
+  'feats:daywalker': 'unprinted',
+  'feats:ghostly-grasp-ghost': 'unprinted',
+  'feats:grave-strength': 'unprinted',
+  'feats:numb': 'unprinted',
+  'feats:orchards-endurance': 'unprinted',
+  'heritages:naari': 'unprinted',
+  'heritages:deep-fetchling': 'unattributed',
+  'heritages:elementheart-kobold': 'unattributed',
+  'backgrounds:energy-scarred': 'unattributed',
+};
+
+/** A record's own resistances / weaknesses whose value is sized by level, as derive's attribution keys
+ *  ("resistance:cold", "weakness:silver"). The one reading of "level-scaled" the line builder and the guard
+ *  share: a formula string naming `@actor.level`. A plain number is never level-scaled. */
+export function levelDefenseKeys(rec: unknown): string[] {
+  const r = rec as { resistances?: { type?: string; value?: unknown }[]; weaknesses?: { type?: string; value?: unknown }[] } | null | undefined;
+  const out: string[] = [];
+  for (const [kind, list] of [['resistance', r?.resistances], ['weakness', r?.weaknesses]] as const) {
+    for (const e of Array.isArray(list) ? list : []) {
+      if (e?.type && typeof e.value === 'string' && /@actor\.level\b/.test(e.value)) out.push(`${kind}:${e.type}`);
+    }
+  }
+  return [...new Set(out)];
+}
+
+/** The family of a record's at-level line, or undefined (no line: derive computes nothing for it). */
+export function atLevelFamilyOf(bucket: string, id: string): AtLevelFamily | undefined {
+  return Object.prototype.hasOwnProperty.call(AT_LEVEL, `${bucket}:${id}`) ? AT_LEVEL[`${bucket}:${id}`] : undefined;
+}
+
+/** The words every at-level line opens with, "At your level (7):" — one copy for the line builder and the
+ *  guard's OURS-LEAK marker (these words inside a page's own text would be ours dressed as print). */
+export const AT_LEVEL_LEAD = 'At your level';
+export const atLevelLead = (level: number): string => `${AT_LEVEL_LEAD} (${level}):`;

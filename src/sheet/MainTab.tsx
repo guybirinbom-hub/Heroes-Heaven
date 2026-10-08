@@ -33,6 +33,7 @@ import { cardOn } from './cardSurfaces';
 import { scopeOfCharacter } from './cardScope';
 import { astSlug, useAstNode } from './useAst';
 import { OURS_KINDS, type OursLine } from './cardModel';
+import { atLevelLines } from './cardAtLevel';
 import type { AstNode } from './astStore';
 import { stanceRequirementIssue, modeGateIds } from '../rules/derive';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
@@ -105,13 +106,19 @@ const PINNED_SOURCE_LABEL: Record<string, string> = {
  * The pin's stored ours lines (choice / mark / note) go in the card's box when the card draws the PAGE.
  * On the no-page lane the stored description already carries those words (FeatDetail pinDescriptionOf,
  * kept for older pins and older devices), so the box is left off there rather than said twice.
+ * Card step 18: a 'mine' pin's "At your level" line is never stored (FeatDetail pinDescriptionOf, play.ts
+ * PIN_OURS_KINDS) — it is derive's CURRENT value, so it is built here at read time by the same builder the
+ * row uses (cardAtLevel.ts atLevelLines), on both lanes, marked ours, and only while the character still
+ * holds the record (the builder gives nothing otherwise).
  */
 export function PinnedDescCard({ pin, content, character, onClose }: { pin: PinnedDesc; content: ContentDatabase; character?: Character | null; onClose: () => void }) {
   const node = useMemo(() => pinForRead(pin, content), [pin, content]);
   // The same tree lookup RecordCard makes for this node (cached), to know whether the page is drawn.
   const { node: page } = useAstNode(node.key, node.slug ?? astSlug(node.title));
-  const ours = (pin.ours ?? []).filter((l): l is OursLine => (OURS_KINDS as readonly string[]).includes(l.kind));
-  const box = page && ours.length ? ours : undefined;
+  const ours = (pin.ours ?? []).filter((l): l is OursLine => (OURS_KINDS as readonly string[]).includes(l.kind) && l.kind !== 'atYourLevel');
+  const live = pin.mode === 'mine' && node.key ? atLevelLines(character, content, node.key, node.slug) : [];
+  const all = [...(page ? ours : []), ...live];
+  const box = all.length ? all : undefined;
   if (pin.mode === 'mine')
     return <RecordCard node={node} mode="mine" chrome="popup" scope={scopeOfCharacter(character)} printed={[]} ours={box} onExit={onClose} />;
   return <RecordCard node={node} mode="browse" chrome="popup" ours={box} onExit={onClose} />;
