@@ -52,7 +52,9 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *   StatDetail      "Full text" of a situational line — since card step 5 the 'mine' RecordCard
  *                   (CARD_ON.statDetail), modelled by the ledger with the same printed set (empty)
  *   browse          DescriptionModal (the search popup) for {bucket, id}
- *   ChoiceDetails   the builder's "Details" button for a granted class feature / background feat
+ *   ChoiceDetails   the builder's "Details" button for a granted class feature / background feat — since
+ *                   card step 15 opened with a character, the record's 'mine' RecordCard
+ *                   (CARD_ON.choiceDetails; a row held on the title lookup stays the browse popup)
  *   builderOrigin   the builder's Background picker (SearchSelect, its filled value opens the popup; since
  *                   card step 7b each option names its record, so the popup reads {backgrounds, id})
  *   pin             a PinStar pressed on FeatDetail / ItemDetail / SpellDetail, the STORED pin reopened by
@@ -334,6 +336,9 @@ const REGIONS_MEASURED: Record<string, string[]> = {
   // body, as on the browse card; the legacy popup read only its body.
   // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
   statDetail: cardOn('statDetail') ? ['div.ast-head', 'div.ast-traits', 'div.picker-head'] : [],
+  // Card step 15: a granted builder row opens the record's 'mine' card — its header sits beside its body,
+  // as on statDetail; switched off (or a held row) it is the browse popup, which records no regions.
+  choiceDetails: cardOn('choiceDetails') ? ['div.ast-head', 'div.ast-traits', 'div.picker-head'] : [],
   // Card step 10: the strike popup is the weapon's 'mine' card — its header as on the other cards, and its
   // controls (RecordCard leadControls: Attack bonus / Damage, the gated critical specialization) read as
   // regions, never as page lines; the legacy popup drew the same two control blocks beside its text.
@@ -636,9 +641,28 @@ async function renderBrowse(row: Row): Promise<Read> {
   m.stop();
   return r;
 }
+/**
+ * Card step 15: the builder's granted row, as Builder hands it to ChoiceDetails — WITH the character being
+ * built (`character={featPrereqChar}`), so with CARD_ON.choiceDetails the popup is the live path: the
+ * record's 'mine' RecordCard (a held row keeps the browse popup). The character is a synthesized level-20
+ * build with no class (name 't'): its scope ({level: 20}) folds no level section and names no class slice
+ * or pick, so the card draws what the ledger's unscoped row draws; the levels and picks are the scope
+ * grid's (ledgerGrid), judged by the ledger. The mine card's header regions are recorded as on statDetail.
+ */
+const CHOICE_CHAR = { name: 't', level: 20 } as unknown as Character;
 async function renderChoice(row: Row): Promise<Read> {
   const rec = recs(row.bucket)[row.id];
-  return renderPopupOf(<ChoiceDetails name={rec.name} flavor={row.md} descRefs={rec.descRefs} bucket={row.bucket} id={row.id} />, '.cc-det');
+  const m = await mount(<ChoiceDetails name={rec.name} flavor={row.md} descRefs={rec.descRefs} bucket={row.bucket} id={row.id} character={CHOICE_CHAR} />);
+  await click(m.host.querySelector('.cc-det'));
+  const r = readPopup(m.host);
+  const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
+  const pop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
+  if (row.mode === 'mine') noteRegions('choiceDetails', pop, r.body ? [r.body] : []);
+  m.stop();
+  // The popup is the one the ledger models: a 'mine' row opens the mine card, a held row the browse popup
+  // (the DOM verdict alone cannot tell them apart: a browse popup shows every line a mine card keeps).
+  expect(!!pop, `${keyOf(row)}: the ledger's ${row.mode} row opens ${row.mode === 'mine' ? 'the mine card' : 'the browse popup'}`).toBe(row.mode === 'mine');
+  return r;
 }
 async function renderOrigin(row: Row): Promise<Read> {
   const rec = recs(row.bucket)[row.id];

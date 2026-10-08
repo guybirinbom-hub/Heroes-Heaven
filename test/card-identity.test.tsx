@@ -43,16 +43,15 @@ vi.mock('../src/data/trustGate', async (orig) => {
  *
  *  - The PinStar of FeatDetail / SpellDetail / ItemDetail / StrikeDetailModal hands the pin a node that
  *    carries `slug` = the record's id and the record's own bucket as `key` (a heritage row: 'heritages').
- *    ⚠ The pin the player REOPENS from the Main tab's Pinned list is the STORED one, and togglePinnedDesc
- *    (play.ts) stores {title, description, descRefs, key} — the slug is dropped until card step 19. So
- *    TODAY only the key reaches the player: a heritage pin reopens the heritages page (it was keyed
- *    'classFeatures' and found nothing). A pick in the title ("Caustic Nectar (Acid)") or a shared name
- *    ("Zombie Horde", "Discomfiting Whisper") still reopens by name, because play.ts togglePinnedDesc
- *    and Builder.tsx's pin toggle store key:title — those files are card step 19 and out of this step's
- *    bounds. So this file asserts only what 7a controls (the node objects, the cursed twin, ChoiceDetails,
- *    descNodeOf); the stored-pin cases live in test/card-parity-known.json ('pin|feats:caustic-nectar'
- *    with pick "Acid", 'pin|feats:zombie-horde-impossible-magic', why "stored pin is key:title until
- *    step 19 …") and in the ledger's S5-IDENTITY (card-scope.mjs 'pin' rows model the stored pin).
+ *    ⚠ The pin the player REOPENS from the Main tab's Pinned list is the STORED one. When 7a landed,
+ *    togglePinnedDesc (play.ts) stored {title, description, descRefs, key} and dropped the slug, so a
+ *    pick in the title ("Caustic Nectar (Acid)") or a shared name ("Zombie Horde", "Discomfiting
+ *    Whisper") reopened by name. Card step 19 (committed) closed that: play.ts pinOf keeps the node's
+ *    slug and mode, MainTab's PinnedDescCard reopens the record by {key, slug}, and Builder.tsx's pin
+ *    toggle keeps the record id — test/card-pins.test.tsx owns those stored-pin cases (the
+ *    'pin|feats:caustic-nectar' and 'pin|feats:zombie-horde-impossible-magic' entries left
+ *    test/card-parity-known.json when it landed). This file asserts what 7a controls (the node objects,
+ *    the cursed twin, ChoiceDetails, descNodeOf) and the heritage pin's stored key.
  *  - Never-overwrite: a heritage pinned before this step ({key:'classFeatures', title}) still shows as
  *    pinned on the heritage popup's star, and pressing it removes THAT pin, never a second one
  *    (FeatDetail featStarNode); likewise a key-less pin starred from the builder's ChoiceDetails
@@ -77,8 +76,9 @@ vi.mock('../src/data/trustGate', async (orig) => {
  *    step fixes. The 18 class features with no page of their own are unchanged (measured 0 of 18).
  *  - descNodeOf counts the record's own page (by id, in its own bucket) as something to show.
  *
- * LEFT AS IS (refuter round 2, noted): test/card-parity-known.json keeps 'pin|feats:zombie-horde-
- * impossible-magic' as a pre-existing S5 row turned guard; and the card-truth baseline's S1-MISSING moved
+ * LEFT AS IS (refuter round 2, noted): test/card-parity-known.json kept 'pin|feats:zombie-horde-
+ * impossible-magic' as a pre-existing S5 row turned guard (removed by card step 19, which made it right);
+ * and the card-truth baseline's S1-MISSING moved
  * 10,464 → 10,462 and S1-UNNAMED 20,884 → 20,893 against HEAD because the nine hidden cursed items now read
  * their twin's page (re-stamped 2026-10-03 after fixer round 3: no further delta; S5-IDENTITY 1,416 → 1,047,
  * choiceDetails 56 → 21, pin 495 → 170, itemDetail 9 → 0).
@@ -87,7 +87,8 @@ vi.mock('../src/data/trustGate', async (orig) => {
  * lane (its card conversion is step 11) — pinned here and proved byte-equal for all 336 heritage rows
  * when the step was built; a pin STORED earlier ({key, title}, no slug) reopens exactly as before, and
  * the title a new pin carries is unchanged, so its `key:title` identity (play.ts descId) still matches
- * an old pin of the same feat. Storing the slug with a pin is step 19.
+ * an old pin of the same feat. Storing the slug with a pin came with step 19 (play.ts pinOf;
+ * test/card-pins.test.tsx), which still matches such an old pin by its key and title (play.ts samePin).
  *
  * Every character is synthesized through build() (name 't'); the "(Acid)" pick on Caustic Nectar is a
  * synthesized effect pick, as any pick reaches FeatsTab's row name.
@@ -246,7 +247,8 @@ beforeAll(async () => {
 afterAll(() => { vi.unstubAllGlobals(); });
 
 describe('card step 7a: a pin opens the record it was made from', () => {
-  it('"Caustic Nectar (Acid)": the star\'s node names caustic-nectar and opens its page (T4, the node; the stored pin is step 19)', async () => {
+  // batch card premise: feat-7612 "On a critical hit, the target is additionally sickened 1"
+  it('"Caustic Nectar (Acid)": the star\'s node names caustic-nectar and opens its page (T4, the node; the stored pin: test/card-pins.test.tsx)', async () => {
     const e = featRow('caustic-nectar', { effectPicks: [{ recordId: 'caustic-nectar', choiceId: 'synthesized', label: 'Acid' }] });
     expect(e.name).toBe('Caustic Nectar (Acid)');
     const node = await pinnedNodeOf(<FeatDetail entry={e} onClose={noop} />);
@@ -256,11 +258,12 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     expect({ key: node.key, slug: node.slug, title: node.title }).toEqual({ key: 'feats', slug: 'caustic-nectar', title: 'Caustic Nectar (Acid)' });
     // Never-overwrite: the title is unchanged, so the pin's identity is the one an old pin of this row has.
     expect(descId(node)).toBe(descId({ key: 'feats', title: 'Caustic Nectar (Acid)' }));
-    // The pin STORED from this node (play.ts togglePinnedDesc, step 19) still reopens by the slug of its
-    // title: that is test/card-parity-known.json's 'pin|feats:caustic-nectar' (pick "Acid"), not 7a's.
+    // The pin STORED from this node (play.ts togglePinnedDesc → pinOf) keeps its slug since card step 19
+    // and reopens caustic-nectar's own page, pick "Acid" and all: test/card-pins.test.tsx, not 7a's.
   });
 
-  it('"Zombie Horde" (Impossible Magic): the star\'s node opens its own page, not Clockwork Reanimator\'s (the stored pin is step 19)', async () => {
+  // batch card premise: feat-9122 "You learn the zombie horde grave spell"
+  it('"Zombie Horde" (Impossible Magic): the star\'s node opens its own page, not Clockwork Reanimator\'s (the stored pin: test/card-pins.test.tsx)', async () => {
     expect(db.feats['zombie-horde'].name).toBe(db.feats['zombie-horde-impossible-magic'].name);
     const node = await pinnedNodeOf(<FeatDetail entry={featRow('zombie-horde-impossible-magic')} onClose={noop} />);
     const own = await browseText('feats', 'zombie-horde-impossible-magic');
@@ -268,7 +271,8 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     expect(own && other && own !== other, 'the two pages differ').toBe(true);
     expect((await pinnedPopupText(node)).page, 'the star\'s node opens the record\'s page').toBe(own);
     expect(node.slug).toBe('zombie-horde-impossible-magic');
-    // The STORED pin (step 19) is test/card-parity-known.json's 'pin|feats:zombie-horde-impossible-magic'.
+    // The STORED pin reopens this record by its slug since card step 19 (test/card-pins.test.tsx); it was
+    // test/card-parity-known.json's 'pin|feats:zombie-horde-impossible-magic' until then.
   });
 
   // batch card premise: heritage-21 "When you roll a success on a saving throw against an emotion effect, you get a critical success instead"
@@ -338,7 +342,8 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     expect(state.list.map((d) => `${d.key}:${d.title}`)).toEqual(['heritages:Gutsy Halfling']);
   });
 
-  it('a spell: the star\'s node opens its own page (the stored pin is step 19)', async () => {
+  // batch card premise: spell-2139 "You are surrounded by an aura of spiteful murmurings"
+  it('a spell: the star\'s node opens its own page (the stored pin keeps its slug since step 19)', async () => {
     const sp = db.spells['discomfiting-whispers'];
     expect(sp.name).toBe('Discomfiting Whisper');
     const node = await pinnedNodeOf(<SpellDetail spell={sp} onClose={noop} />);
@@ -346,7 +351,7 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     expect(own, 'the spell has a page').toBeTruthy();
     expect((await pinnedPopupText(node)).page, 'the star\'s node opens the spell\'s page').toBe(own);
     expect({ key: node.key, slug: node.slug }).toEqual({ key: 'spells', slug: 'discomfiting-whispers' });
-    // The STORED pin (step 19) still reopens by name; the ledger's S5 'pin|spells' row keeps counting it.
+    // The STORED pin keeps the spell's slug since card step 19 (play.ts pinOf) and reopens this page by it.
   });
 
   it('a strike\'s pin opens its weapon\'s page by id; a strike with no item keeps the title lookup', async () => {

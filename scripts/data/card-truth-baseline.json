@@ -1,5 +1,5 @@
 {
- "_measured": "card-truth-check --write-baseline, 2026-10-07; on a working tree with another lane's regen output uncommitted — re-stamp when it commits",
+ "_measured": "card-truth-check --write-baseline, 2026-10-08; on a working tree with another lane's regen output uncommitted — re-stamp when it commits",
  "S1-MISSING": [
   "spellDetail|spells:aon-litany-against-sloth|Prerequisites",
   "spellDetail|spells:aon-litany-against-wrath|Prerequisites",
@@ -51872,6 +51872,31 @@
     "itemDetail|items:seed-pod-of-rooted-wisdom|his tiny magic item looks like a ripe brown fruit from a kap",
     "itemDetail|items:silver-armor-low-grade|silver worth at least 70 sp + 7 sp per Bulk",
     "itemDetail|items:silver-armor|silver worth at least 70 sp + 7 sp per Bulk"
+   ]
+  },
+  "choiceDetails": {
+   "S5-IDENTITY": [
+    "choiceDetails|classFeatures:arcane-cascade",
+    "choiceDetails|classFeatures:confident-finisher",
+    "choiceDetails|classFeatures:debilitating-strike",
+    "choiceDetails|classFeatures:devise-a-stratagem",
+    "choiceDetails|classFeatures:double-spellstrike",
+    "choiceDetails|classFeatures:explode",
+    "choiceDetails|classFeatures:extract-element",
+    "choiceDetails|classFeatures:flurry-of-blows",
+    "choiceDetails|classFeatures:hunt-prey",
+    "choiceDetails|classFeatures:inevitable-return",
+    "choiceDetails|classFeatures:intensify-vulnerability",
+    "choiceDetails|classFeatures:master-strike",
+    "choiceDetails|classFeatures:opportune-riposte",
+    "choiceDetails|classFeatures:overdrive",
+    "choiceDetails|classFeatures:quick-tempered",
+    "choiceDetails|classFeatures:rage",
+    "choiceDetails|classFeatures:reactive-strike",
+    "choiceDetails|classFeatures:runes",
+    "choiceDetails|classFeatures:spellstrike",
+    "choiceDetails|classFeatures:taunt",
+    "choiceDetails|classFeatures:unleash-psyche"
    ]
   }
  }

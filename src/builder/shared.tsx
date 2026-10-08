@@ -89,6 +89,10 @@ import { RankPill, SituationalStar } from '../sheet/widgets';
 import { StatDetailModal } from '../sheet/StatDetailModal';
 import { DefensesPills } from '../sheet/DefensesPills';
 import { DescriptionModal } from '../sheet/DescriptionModal';
+import { RecordCard } from '../sheet/RecordCard';
+import { scopeOfCharacter } from '../sheet/cardScope';
+import { cardOn } from '../sheet/cardSurfaces';
+import type { CardScope } from '../sheet/cardModel';
 import { PinContext, usePinDesc, type PinDescApi } from '../sheet/PinContext';
 import { astSlug, useAstNode } from '../sheet/useAst';
 import { bucketOf, loadAstIndex, type AstNode } from '../sheet/astStore';
@@ -121,6 +125,7 @@ export function ChoiceDetails({
   grants,
   bucket,
   id,
+  character,
 }: {
   /** The option's name — the popup title. */
   name?: string;
@@ -132,6 +137,16 @@ export function ChoiceDetails({
    *  neither and gets silence — a "not verified" line on a verified record is worse than none. */
   bucket?: string;
   id?: string;
+  /**
+   * Card step 15 (docs/card-design.md section 9 row 15; section 6 "Builder rows: ChoiceDetails, scoped to
+   * the build's level, subclass and picks"): the character being built — Builder's `featPrereqChar`,
+   * buildCharacter over the in-progress build at the builder's current level. Given (with the record's
+   * bucket and id), the row opens its record's 'mine' card scoped by scopeOfCharacter: parts the build
+   * does not have yet fold (owner ruling Q1 = A), a pointer row shows its subclass section, an option the
+   * build did not pick folds (Q2 = A, where cardScope supports it). Absent (or with CARD_ON.choiceDetails
+   * off), the popup is the browse popup it always was, byte for byte.
+   */
+  character?: Character | null;
 }) {
   const [open, setOpen] = useState(false);
   const hasFlavor = !!flavor && flavor.trim().length > 0;
@@ -153,8 +168,11 @@ export function ChoiceDetails({
         // slug index, which names one bucket per slug: the background feat Cascade Countermeasure
         // opened the spell of the same name. A caller that names no record keeps the title lookup, and
         // so, until card step 14, does a page whose rules sit in an embedded stub (ChoiceDetailsModal).
+        // Card step 15: a row that names its record and is shown for a build opens the 'mine' card —
+        // while CARD_ON.choiceDetails is on; switched off, the popup is the browse popup it was.
         <ChoiceDetailsModal
           root={{ title: name ?? 'Details', description: flavor!, descRefs, ...(bucket && id ? { key: bucket, slug: id } : {}) }}
+          mine={cardOn('choiceDetails') && bucket && id && character ? { scope: scopeOfCharacter(character) } : undefined}
           onClose={() => setOpen(false)}
         />
       )}
@@ -169,8 +187,14 @@ export function ChoiceDetails({
  * and pressing it would pin the record twice. For the ROOT node only, when the build holds the old
  * key-less pin (and not a keyed one), the star shows it as pinned and pressing it removes THAT pin; no
  * stored pin is rewritten. Matching stored pins by id is card step 19.
+ *
+ * Card step 15: with `mine` (the builder's granted row, shown for a build), the record opens as its 'mine'
+ * RecordCard scoped by `mine.scope` — the printed set empty (the row prints no stat rows), no Full page
+ * button (owner ruling, section 13), the PinStar node {key: bucket, slug: id, title, mode: 'mine'} so a pin
+ * made here reopens on the sheet as mine at the character's level. The hold below is decided first: a
+ * held row keeps the pre-step title lookup's browse popup, byte for byte (step 14 deletes the hold).
  */
-export function ChoiceDetailsModal({ root: byId, onClose }: { root: DescNode; onClose: () => void }) {
+export function ChoiceDetailsModal({ root: byId, mine, onClose }: { root: DescNode; mine?: { scope: CardScope | undefined }; onClose: () => void }) {
   const outer = usePinDesc();
   // Card step 7a, refuter round 2: HOLD the {bucket, id} switch for a page that embeds another page as
   // an empty document stub (Rage's class-feature page is one sentence plus a stub of the Rage action).
@@ -199,6 +223,14 @@ export function ChoiceDetailsModal({ root: byId, onClose }: { root: DescNode; on
       toggle: (n) => outer.toggle(heldAsLegacy(n) ? legacyOf(n) : n),
     };
   }, [outer, root.key, root.title]);
+  if (mine && !held && byId.key) {
+    const cardNode: DescNode & { mode: 'mine' } = { ...byId, mode: 'mine' };
+    return (
+      <PinContext.Provider value={pin}>
+        <RecordCard node={cardNode} mode="mine" chrome="popup" scope={mine.scope} printed={[]} onExit={onClose} />
+      </PinContext.Provider>
+    );
+  }
   return (
     <PinContext.Provider value={pin}>
       {/* Remounted when the hold decides (the id page and the index load first), so the popup's own
