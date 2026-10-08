@@ -204,10 +204,15 @@ export function plainHeaderLabels(blocks) {
   const out = new Set();
   for (const b of blocks.slice(0, 4)) {
     const t = norm(b.text);
+    // Card step 13b-merge (ledger hygiene queued at step 17): the header is UNBOLDED text, so its labels
+    // are read with every bold run masked — a bold label is labelSegments' (a line of the page's own body:
+    // grease's choose-one option "Target If you Cast the Spell …" is not a header carrying "Cast", and a
+    // poison's bold "Maximum Duration" in perfection-of-essence is not a "Duration" header).
+    const plain = norm(b.runs ? b.runs.map((r) => (r.b != null ? r.b.replace(/\S/g, '·') : r.t ?? '')).join('') : b.text);
     const scraped = /\bSource\s.{1,120}?\bpg\.?\s*\d+/.test(t.slice(0, 160));
-    if (!scraped && !PLAIN_HEADER_OPEN.test(t)) continue;
-    const end = t.search(/(?<!\bpg)\.\s+[A-Z]/);
-    const head = end < 0 ? t : t.slice(0, end);
+    if (!scraped && !PLAIN_HEADER_OPEN.test(plain)) continue;
+    const end = plain.search(/(?<!\bpg)\.\s+[A-Z]/);
+    const head = end < 0 ? plain : plain.slice(0, end);
     for (const m of head.matchAll(PLAIN_HEADER_LABEL)) {
       const lab = canonLabel(m[1]);
       if (lab) out.add(lab);
@@ -216,10 +221,49 @@ export function plainHeaderLabels(blocks) {
   return out;
 }
 
-/** The labels a surface's body draws: label lines, plus — on the spell popup — the scraped plain header. */
+/**
+ * Card step 13b-merge: a spell body's label line whose words run on as PROSE — two sentences or more
+ * after the label — is a line of the page's own body (a choose-one option: grease's "Area All solid
+ * ground in the area is covered with grease. Each creature …" and "Target If you Cast the Spell on an
+ * unattended object …"), never a stat row drawn a second time: a stat header's value is a phrase
+ * ("4 contiguous 5-foot squares or", "1 minute"). A label's words end at the next bold run of any kind,
+ * so a reaction line "Trigger The target takes damage; Effect After calculating …" keeps its Trigger
+ * (foresight, life-connection, protect-companion). Spell popup only — the one surface whose body prints
+ * options led by its own stat labels.
+ */
+const PROSE_VALUE = /[.!?]\s+[A-Z(]/;
+function spellBodyStatLabels(blocks) {
+  const s = new Set();
+  for (const b of blocks) {
+    const segs = [];
+    let before = '';
+    let cur = null;
+    for (const r of b.runs) {
+      if (r.b != null && r.b.trim()) {
+        const lab = canonLabel(r.b);
+        if (lab && (!before.trim() || /;\s*$/.test(before))) {
+          cur = { label: lab, value: '', open: true };
+          segs.push(cur);
+          before = '';
+          continue;
+        }
+        if (cur) cur.open = false;
+      }
+      const t = r.t ?? r.b ?? '';
+      before += t;
+      if (cur?.open) cur.value += t;
+    }
+    for (const seg of segs) if (!PROSE_VALUE.test(norm(seg.value))) s.add(seg.label);
+  }
+  return s;
+}
+
+/** The labels a surface's body draws: label lines, plus — on the spell popup — the scraped plain header
+ *  (and, there, never a label line that runs on as prose: spellBodyStatLabels). */
 export function bodyLabels(blocks, surface) {
-  const s = new Set(labelsOf(blocks).keys());
-  if (surface === 'spellDetail') for (const l of plainHeaderLabels(blocks)) s.add(l);
+  if (surface !== 'spellDetail') return new Set(labelsOf(blocks).keys());
+  const s = spellBodyStatLabels(blocks);
+  for (const l of plainHeaderLabels(blocks)) s.add(l);
   return s;
 }
 

@@ -53,11 +53,7 @@
   "itemDetail|items:light-barding|Dex Cap",
   "itemDetail|items:light-barding|Price",
   "itemDetail|items:light-barding|Speed Penalty",
-  "itemDetail|items:light-barding|Strength",
-  "spellDetail|spells:grease|Area",
-  "spellDetail|spells:grease|Cast",
-  "spellDetail|spells:grease|Targets",
-  "spellDetail|spells:perfection-of-essence|Duration"
+  "itemDetail|items:light-barding|Strength"
  ],
  "EXTRA": [
   "itemDetail|items:abysium-buckler-high-grade|AC Bonus",
@@ -3328,12 +3324,8 @@
   "spellDetail|spells:conjured-conveyance|Hardness",
   "spellDetail|spells:dragon-form|Defense",
   "spellDetail|spells:foresight|Trigger",
-  "spellDetail|spells:grease|Area",
-  "spellDetail|spells:grease|Cast",
-  "spellDetail|spells:grease|Targets",
   "spellDetail|spells:life-connection|Requirements",
   "spellDetail|spells:perfection-of-essence|Defense",
-  "spellDetail|spells:perfection-of-essence|Duration",
   "spellDetail|spells:plague-shot|Defense",
   "spellDetail|spells:protect-companion|Trigger",
   "spellDetail|spells:rainbow-fumarole|Damage",

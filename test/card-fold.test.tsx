@@ -45,6 +45,15 @@ import type { Character, ContentDatabase } from '../src/rules/types';
  *  - (fixer round 2) cardScope.ts scopeOfCharacter: kinetic-gate's element picks read every owned element
  *    (not only the single gate's) → the dual-gate case red; classPicksOf: the element picks read on every
  *    classFeatures page → the elemental-eidolon case red.
+ *
+ * Card step 13b (prose gates on the mine card). MUTATION LINES, each measured red on 2026-10-08 in lane
+ * hh-lane-13b, restored byte-exact from a scratch copy (cmp):
+ *  - cardScope.ts scopeTree: the fold also takes the block after the gate paragraph → osteo at 7 and the
+ *    Feats-tab Osteo Armaments row red.
+ *  - cardScope.ts proseVerdict: `>=` → `>` (one level late) → osteo at 8, halfling-weapon-familiarity at 5
+ *    and the 13c Iruxi (Claw) row at 5 red.
+ *  - cardScope.ts scopeTree: a run-time "At Nth level" regex in place of the ledger hash → the
+ *    breath-of-the-dragon case red (a partly gated paragraph folded).
  */
 const noop = () => undefined;
 const db: ContentDatabase = content();
@@ -279,6 +288,54 @@ describe.runIf(CARD_ON.statDetail)('card step 13c: class picks on a classFeature
     const modal = await openCard({ ...ch, subclassId: null, classChoices: [] } as Character, 'classFeatures', 'exemplary-finisher');
     expect(folds(modal)).toEqual([]);
     expect(modal.querySelector('.card-applies')).toBeNull();
+  });
+});
+
+/** A synthesized character (test/_content build, name 't') at `level` holding one feat with no choice. */
+function withFeat(featId: string, level: number): Character {
+  const ch = build('fighter', level, {});
+  return { ...ch, feats: [{ featId, level: 1, category: 'class' }] } as Character;
+}
+
+describe.runIf(CARD_ON.statDetail)('card step 13b: prose gates fold WHOLE on the mine card', () => {
+  // batch card premise: feat-9110 "If you do, the action gains the thrall trait"
+  it('osteo-armaments at 7: ONE closed "At higher levels (2)" line holds both gated paragraphs; no orphan "If you do" is open', async () => {
+    const modal = await openCard(build('fighter', 7, {}), 'feats', 'osteo-armaments');
+    const f = folds(modal);
+    expect(f.map((d) => [d.dataset.fold, d.open, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['future', false, 'At higher levels (2)']]);
+    expect(f[0].querySelector(':scope > summary')?.hasAttribute('data-ours'), 'the line is ours').toBe(true);
+    expect(squash(f[0].textContent)).toMatch(/At 8th level, you can destroy an adjacent thrall as part of using this action\. If you do, the action gains the thrall trait.*At 10th level, the weapon improves to a \+2 striking weapon/);
+    expect(openText(modal)).not.toMatch(/If you do|At 8th level|At 10th level/);
+    expect(openText(modal)).toMatch(/whichever comes first\./);
+  });
+  it('osteo-armaments at 8: the 8th-level paragraph is open whole, "If you do" with it; only the 10th-level one folds', async () => {
+    const modal = await openCard(build('fighter', 8, {}), 'feats', 'osteo-armaments');
+    expect(openText(modal)).toMatch(/At 8th level, you can destroy an adjacent thrall as part of using this action\. If you do, the action gains the thrall trait/);
+    expect(openText(modal)).not.toMatch(/At 10th level/);
+    expect(folds(modal).map((d) => squash(d.querySelector(':scope > summary')?.textContent))).toEqual(['At higher levels (1)']);
+  });
+  it('a hand-checked ancestry feat: halfling-weapon-familiarity folds its 5th-level paragraph at 4 and shows it at 5', async () => {
+    // batch card premise: feat-4459 "At 5th level, whenever you get a critical hit with one of these weapons"
+    const m4 = await openCard(build('fighter', 4, {}), 'feats', 'halfling-weapon-familiarity');
+    expect(folds(m4).map((d) => squash(d.querySelector(':scope > summary')?.textContent))).toEqual(['At higher levels (1)']);
+    expect(openText(m4)).not.toMatch(/critical specialization/);
+    expect(openText(m4)).toMatch(/You favor traditional halfling weapons/);
+    const m5 = await openCard(build('fighter', 5, {}), 'feats', 'halfling-weapon-familiarity');
+    expect(folds(m5)).toEqual([]);
+    expect(openText(m5)).toMatch(/At 5th level, whenever you get a critical hit with one of these weapons, you get its critical specialization effect\./);
+  });
+  it('a partly gated paragraph is never folded: breath-of-the-dragon at 1 shows its 3rd-level paragraph whole (the breath\'s shape and save are level-1 rules)', async () => {
+    const modal = await openCard(build('fighter', 1, {}), 'feats', 'breath-of-the-dragon');
+    expect(folds(modal)).toEqual([]);
+    expect(openText(modal)).toMatch(/At 3rd level and every 2 levels thereafter, the damage increases by 1d4\. The shape of the breath, the damage type, and the saving throw match/);
+  });
+});
+
+describe.runIf(CARD_ON.featDetail)('card step 13b: the sheet\'s own feat row (FeatsTab → FeatDetail card)', () => {
+  it('a level-7 character\'s Osteo Armaments row folds both gated paragraphs under one line', async () => {
+    const modal = await openFeatRow(withFeat('osteo-armaments', 7), 'Osteo Armaments');
+    expect(folds(modal).map((d) => [d.dataset.fold, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['future', 'At higher levels (2)']]);
+    expect(openText(modal)).not.toMatch(/If you do/);
   });
 });
 

@@ -247,8 +247,8 @@ function step16SpellChange(now: { markup: string; rows: [string, string][] }, be
 // batch card: step17-nit7 — rite-of-cleansing-flame (no page in the spells bucket) gains only the ours footer.
 const L0 = 'lane marker; no-page footer';
 const L = 'lane marker; tree body';
+// batch card: step13b-merge — the dead LRP alias (the same string as LR since step 17) folded into LR.
 const LR = 'lane marker; page rows; tree body';
-const LRP = 'lane marker; page rows; tree body';
 const STEP16_CHANGED_NOOP: Record<string, string> = {
   'aberrant-form': L,
   'animus-mine': LR,
@@ -256,9 +256,9 @@ const STEP16_CHANGED_NOOP: Record<string, string> = {
   benediction: L,
   'blackfingers-blades': LR,
   'boots-on-the-ground': LR,
-  'burning-blossoms': LRP,
+  'burning-blossoms': LR,
   'commanding-lash': LR,
-  'confound-the-eye-and-confuse-the-mind': LRP,
+  'confound-the-eye-and-confuse-the-mind': LR,
   'cutting-insult': LR,
   'dancing-blade': LR,
   'divine-aura': LR,
@@ -266,10 +266,10 @@ const STEP16_CHANGED_NOOP: Record<string, string> = {
   'draw-ire': LR,
   'embodied-font': LR,
   'embrace-the-pit': L,
-  'ephemeral-hazards': LRP,
+  'ephemeral-hazards': LR,
   'extend-blood-magic': L,
   'false-nature': LR,
-  'familiars-resurrection': LRP,
+  'familiars-resurrection': LR,
   'flowing-strike': L,
   'foraging-friends': LR,
   'frenzied-revelry': L,
@@ -291,12 +291,12 @@ const STEP16_CHANGED_NOOP: Record<string, string> = {
   pyrotechnics: LR,
   'qi-blast': LR,
   'reinforced-rations': LR,
-  'remake-physiology': LRP,
+  'remake-physiology': LR,
   'rite-of-cleansing-flame': L0,
   'rite-of-the-red-star': LR,
   'scouting-eye': LR,
   'shambling-horror': LR,
-  'sky-laughs-at-waves': LRP,
+  'sky-laughs-at-waves': LR,
   'soothing-words': L,
   'spiritual-epidemic': LR,
   'subconscious-suggestion': LR,
@@ -307,7 +307,7 @@ const STEP16_CHANGED_NOOP: Record<string, string> = {
   'unbreaking-wave-advance': LR,
   'wanderers-guide': L,
   'weapon-surge': LR,
-  'wooden-double': LRP,
+  'wooden-double': LR,
   'word-of-truth': LR,
   'world-in-shadow': LR,
 };

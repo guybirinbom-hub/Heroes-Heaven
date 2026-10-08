@@ -9,10 +9,12 @@ import {
   sectionVerdict, withPointer, type LevelFoldLedger, type ScopedNode,
   choiceBlocksOf, pickCandidates, withPick, type ChoiceBlock,
   CLASS_PICKS, classPicksOf, classPickScopes, pickFoldsOf, classPickOf,
+  sectionEnd, paragraphHash, proseVerdict, ledgerHasProse, pageRefOf,
 } from '../src/sheet/cardScope';
-import { generateLevelFolds, serialize } from '../scripts/level-folds.mjs';
+import { generateLevelFolds, serialize, proseGatesOf, PROSE_EXCLUDED, PROSE_EXCLUDED_BUCKETS, loadTrees, loadCore } from '../scripts/level-folds.mjs';
 import { levelFoldProblems } from '../scripts/level-folds-check.mjs';
-import { scopeGrid, recordPickLabels, pickOwnOf, classPickLabels, judgeRow, ledgerGrid } from '../scripts/lib/card-scope.mjs';
+import { scopeGrid, recordPickLabels, pickOwnOf, classPickLabels, judgeRow, ledgerGrid, treeBlocks, bodyLabels, plainHeaderLabels } from '../scripts/lib/card-scope.mjs';
+import { spellCardModel } from '../src/sheet/spellCard';
 
 /**
  * Card step 13a (docs/card-design.md section 3, section 9 row 13a; owner ruling Q1 = A, section 13):
@@ -74,6 +76,37 @@ import { scopeGrid, recordPickLabels, pickOwnOf, classPickLabels, judgeRow, ledg
  *    instead of dropped → the elemental-eidolon case and the 20-pair corpus case red.
  *  - scripts/lib/card-scope.mjs scopeGrid: `own` not passed to classPickScopes → the class-grid case red
  *    (kinetic-gate and elemental-blast lose their element scopes).
+ *
+ * Card step 13b (prose gates). MUTATION LINES, each measured red on 2026-10-08 in lane hh-lane-13b, then
+ * restored byte-exact from a scratch copy (cmp):
+ *  - cardScope.ts scopeTree: the fold also takes the block AFTER the gate paragraph (`run.nodes.push(n);
+ *    if (top[j + 1]) { run.nodes.push(top[j + 1]); j++; }` — the boundary moved one block) → 6 red here:
+ *    the 60-record every-level case, the fold-is-the-paragraph case, osteo at 7, the guard's corpus
+ *    foldsOf case (FOLDED-UNLISTED sees the extra paragraph), the unlisted case, and Iruxi's foldsOf case.
+ *  - cardScope.ts proseVerdict: `scope.level >= entry.level` → `>` (a gate applied one level late) → 7 red:
+ *    the 60-record case, osteo at 8, the verdict case, and the four 13c Iruxi cases drawn at level 5.
+ *  - cardScope.ts scopeTree: the ledger lookup by paragraph hash replaced by a run-time regex on "At Nth
+ *    level" → 5 red: the 60-record cases, osteo at 7, the changed-page case (the edited paragraph folds
+ *    and foldsOf calls it unlisted), the unlisted case.
+ *  - scripts/level-folds.mjs proseGatesOf: the ungated-sentence rule removed → 3 red: the
+ *    breath-of-the-dragon rule case, the census, the generator-equals-ledger case (and
+ *    scripts/level-folds-check.mjs names the 14 pages it would add).
+ *  - scripts/level-folds-check.mjs: the prose hash comparison removed → 2 red: the changed-record case and
+ *    the tampered-hash case.
+ *
+ * Card step 13b-merge (fixer). MUTATION LINES, each measured red on 2026-10-08 on main + the step's tree,
+ * restored byte-exact from a scratch copy (cmp):
+ *  - level-folds.mjs PROSE_EXCLUDED: 'feats:mobile-thralls#5' removed → the listed-in-PROSE_EXCLUDED case red.
+ *  - level-folds.mjs proseGatesOf: each of the OTHER_SUBJECT, next-block-continues, BACK_REFERENCE and
+ *    list-introduction lines deleted (one at a time) → that rule's synthetic case red (1 each).
+ *  - cardScope.ts proseGateAt: the hash's LAST page taken whatever the page (the old hash-only index) → 3
+ *    red: furious-strike, the shared-hash corpus case, the identical-copies case.
+ *  - cardScope.ts proseGateAt: no fold for a hash several unnamed pages list → 3 red: the 60-record
+ *    every-level case and the fold-is-the-paragraph case (adept-benefit-weapon), the identical-copies case.
+ *  - scripts/lib/card-scope.mjs spellBodyStatLabels: the prose-value test dropped → 2 red: grease, the
+ *    synthetic header case. plainHeaderLabels read unmasked (bold runs as header text) → 3 red: grease
+ *    (Cast), perfection-of-essence (Duration), the synthetic case. A label's words no longer cut at the next
+ *    bold run → the synthetic reaction-line case red.
  */
 const trees: Record<string, Record<string, AstNode>> = {};
 const tree = (key: string): AstNode => {
@@ -83,7 +116,7 @@ const tree = (key: string): AstNode => {
   return t;
 };
 beforeAll(() => {
-  for (const b of ['classFeatures', 'implement', 'element', 'innovation', 'feats', 'cause', 'archetype', 'heritages']) {
+  for (const b of ['classFeatures', 'implement', 'element', 'innovation', 'feats', 'cause', 'archetype', 'heritages', 'actions', 'bloodline', 'categoryPage', 'classes', 'spells']) {
     trees[b] = JSON.parse(gunzipSync(readFileSync(`public/ast/${b}.json.gz`)).toString('utf8'));
   }
 });
@@ -419,18 +452,26 @@ describe('the guard\'s view of choose-one folds', () => {
   const featRow = { surface: 'featDetail', mode: 'mine', card: { printed: [] }, read: { bucket: 'feats', slug: 'iruxi-armaments' }, own: { bucket: 'feats', id: 'iruxi-armaments' } };
   it('foldsOf re-checks every choose-one fold of a FeatDetail row at the pick grid: all listed', () => {
     const folds = foldsOf(featRow, tree('feats:iruxi-armaments'));
-    expect(folds.map((f) => f.id).sort()).toEqual(['Claws@pick:Fangs', 'Claws@pick:Tail', 'Fangs@pick:Claws', 'Fangs@pick:Tail', 'Tail@pick:Claws', 'Tail@pick:Fangs']);
+    // Card step 13b: the page's 5th-level prose gate also folds at the level grid (below 5: level 1).
+    // batch card premise: feat-5633 "At 5th level, whenever you get a critical hit"
+    expect(folds.map((f) => f.id).filter((id) => !id.startsWith('¶')).sort()).toEqual(['Claws@pick:Fangs', 'Claws@pick:Tail', 'Fangs@pick:Claws', 'Fangs@pick:Tail', 'Tail@pick:Claws', 'Tail@pick:Fangs']);
+    expect(folds.filter((f) => f.id.startsWith('¶')).map((f) => f.id)).toEqual(['¶At 5th level, whenever you get a critica@1']);
     expect(folds.every((f) => f.listed)).toBe(true);
-    // A surface that never hands its card a pick has no pick grid.
-    expect(foldsOf({ ...featRow, surface: 'statDetail' }, tree('feats:iruxi-armaments'))).toEqual([]);
+    // A surface that never hands its card a pick has no pick grid (the level grid's prose fold only).
+    // batch card premise: feat-5633 "At 5th level, whenever you get a critical hit"
+    expect(foldsOf({ ...featRow, surface: 'statDetail' }, tree('feats:iruxi-armaments')).filter((f) => /@pick:/.test(f.id))).toEqual([]);
   });
   it('the ledger judges a FeatDetail row once per pick its record can carry (its own choice labels)', () => {
     const labels = recordPickLabels(content(), featRow.own);
     expect(labels).toEqual(['Claw', 'Fangs', 'Tail']);
     expect(pickOwnOf(featRow)).toBe('feats:iruxi-armaments');
     const grid = scopeGrid(featRow, tree('feats:iruxi-armaments'), [], labels);
-    expect(grid).toEqual(labels.map((p) => ({ level: 20, picks: { 'feats:iruxi-armaments': p } })));
-    expect(scopeGrid({ ...featRow, surface: 'statDetail' }, tree('feats:iruxi-armaments'), [], labels)).toEqual([]);
+    // Card step 13b: the page now folds a prose gate at some level, so the level grid joins the picks.
+    // batch card premise: feat-5633 "At 5th level, whenever you get a critical hit"
+    const levels = [1, 5, 9, 13, 17, 20].map((level) => ({ level }));
+    expect(grid).toEqual([...levels, ...labels.map((p) => ({ level: 20, picks: { 'feats:iruxi-armaments': p } }))]);
+    // batch card premise: feat-5633 "At 5th level, whenever you get a critical hit"
+    expect(scopeGrid({ ...featRow, surface: 'statDetail' }, tree('feats:iruxi-armaments'), [], labels)).toEqual(levels);
   });
 
   it('the guard\'s verdict reads the folded nodes, not the drawer\'s word: a fold of the pick or of a non-option is unlisted', () => {
@@ -601,7 +642,410 @@ describe('class picks reach a classFeatures page\'s choose-one blocks (the subcl
     // computeLedger's own call (ledgerGrid): the class grid on a classFeatures row, the row picks on a FeatDetail row.
     expect(ledgerGrid(content(), cfRow, t, [])).toEqual(grid);
     const featRow = { surface: 'featDetail', mode: 'mine', card: { printed: [] }, read: { bucket: 'feats', slug: 'iruxi-armaments' }, own: { bucket: 'feats', id: 'iruxi-armaments' } };
-    expect(ledgerGrid(content(), featRow, tree('feats:iruxi-armaments'), [])).toEqual(['Claw', 'Fangs', 'Tail'].map((p) => ({ level: 20, picks: { 'feats:iruxi-armaments': p } })));
+    // Card step 13b: iruxi-armaments' 5th-level prose gate puts the level grid in front of its picks.
+    // batch card premise: feat-5633 "At 5th level, whenever you get a critical hit"
+    expect(ledgerGrid(content(), featRow, tree('feats:iruxi-armaments'), [])).toEqual([...[1, 5, 9, 13, 17, 20].map((level) => ({ level })), ...['Claw', 'Fangs', 'Tail'].map((p) => ({ level: 20, picks: { 'feats:iruxi-armaments': p } }))]);
+  });
+});
+
+/* ------------------------------------------------------------------------------------------------ */
+/* Card step 13b: PROSE GATES (docs/card-design.md section 3; section 9 row 13b).                      */
+/* ------------------------------------------------------------------------------------------------ */
+
+/**
+ * The seeded 60-record hand check on the TREES (mulberry32 20261008, Fisher-Yates over the 164 pages whose
+ * top-level prose opens with a level gate the parser names — every bucket; the scratch sheet
+ * card-step13b-handcheck.json holds each record's clauses, paragraph hashes and the reading). Each entry:
+ * the paragraphs that must fold WHOLE, each with the level it opens at — read off the page, written
+ * before the ledger. [] = nothing of the page's prose may fold at any level: a 1st-level gate (every
+ * character meets it), a class page (excluded bucket: the right fold is the class card's SECTION), a
+ * paragraph only partly gated (breath-of-the-dragon: the breath's shape and save are the level-1 rules),
+ * or a gate whose right fold the parser cannot read (marked "left whole, listed": shown whole, never
+ * hidden, and LISTED in scripts/level-folds.mjs PROSE_EXCLUDED with the sheet's reason — RIGHT_FOLD_NOT_ENCODED).
+ */
+const HAND_CHECK: Record<string, [number, number][]> = {
+  'actions:breath-weapon': [[5, 3]],
+  'actions:swarming-assault': [[5, 3]],
+  'archetype:munitions-master': [[7, 5]],
+  'bloodline:draconic': [],
+  'bloodline:wyrmblessed': [],
+  'categoryPage:practices': [],
+  'classFeatures:ability-boosts': [], // left whole, listed: the right fold is #3+#4 at 5 ("… at these levels")
+  'classFeatures:adept-benefit-weapon': [[5, 5]],
+  'classFeatures:bloodline-draconic': [],
+  'classFeatures:bloodline-genie': [],
+  'classFeatures:bloodline-wyrmblessed': [],
+  'classFeatures:cleric-spellcasting': [],
+  'classFeatures:druid-spellcasting': [],
+  'classFeatures:esoteric-lore': [[4, 3]],
+  'classFeatures:initiate-benefit-shield': [[5, 5]],
+  'classFeatures:patron': [],
+  'classFeatures:shield': [[5, 5]],
+  'classFeatures:skillful-lessons': [], // left whole, listed: the right fold is #3 at 3 ("This feat must be …")
+  'classFeatures:weapon': [[5, 5]],
+  'classes:animist': [],
+  'classes:commander': [],
+  'classes:guardian': [],
+  'classes:gunslinger': [],
+  'classes:inventor': [],
+  'classes:investigator': [],
+  'classes:magus': [],
+  'classes:monk': [],
+  'classes:oracle': [],
+  'classes:psychic': [],
+  'classes:ranger': [],
+  'classes:sorcerer': [],
+  'classes:witch': [],
+  'classes:wizard': [],
+  'feats:advanced-red-mantis-magic': [], // left whole, listed: the right fold is #5+#6 at 8 / 10 ("You gain a … slot")
+  'feats:analyze-weakness': [[5, 11]],
+  'feats:bolster-soul-cage': [[5, 20]],
+  'feats:breath-of-the-dragon': [],
+  'feats:centaur-weapon-familiarity': [[5, 5]],
+  'feats:covet-hoard': [[5, 11]],
+  'feats:crimson-shroud': [[5, 10]],
+  'feats:dragon-transformation': [[5, 18]],
+  'feats:fleeing-shriek': [[5, 11]],
+  'feats:halfling-weapon-familiarity': [[5, 5]],
+  'feats:heaven-earth-encompassing-sleeves': [[6, 9]],
+  'feats:iruxi-armaments': [[6, 5]],
+  'feats:marshall-fiendish-forces': [[5, 20]],
+  'feats:merfolk-weapon-familiarity': [[5, 5]],
+  'feats:mobile-thralls': [], // left whole, listed: the right fold is #5 at 8 ("A flying thrall …")
+  'feats:oni-weapon-familiarity': [[6, 5]],
+  'feats:orc-weapon-familiarity': [[5, 5]],
+  'feats:pirate-combat-training': [[5, 5]],
+  'feats:ritualist-dedication': [[6, 8]],
+  'feats:slayers-blessing': [[5, 14]],
+  'feats:speak-with-days-long-dead': [[5, 12]],
+  'feats:spell-gem': [[5, 18]],
+  'feats:starlight-armor': [[6, 17]],
+  'feats:surki-weapon-familiarity': [[5, 5]],
+  'feats:tengu-weapon-familiarity': [[6, 5]],
+  'feats:thunder-clap': [[5, 8]],
+  'feats:wayang-weapon-familiarity': [[5, 5]],
+};
+/**
+ * The sheet's `rightFoldNotEncoded` rows (card-step13b-handcheck.json): record → its gate paragraphs (the
+ * parser's candidates) whose RIGHT fold the hand check found but the generator cannot encode. Each must be
+ * LISTED in scripts/level-folds.mjs PROSE_EXCLUDED with the sheet's reason, never left whole by accident.
+ */
+const RIGHT_FOLD_NOT_ENCODED: Record<string, number[]> = {
+  'classFeatures:ability-boosts': [3], // right fold #3+#4; #4 opens with no gate, so #3 is the candidate
+  'classFeatures:skillful-lessons': [3],
+  'feats:advanced-red-mantis-magic': [5, 6],
+  'feats:mobile-thralls': [5],
+};
+/** The row's named case, not in the seeded 60: both gates fold whole, "If you do" inside #5. */
+const OSTEO = 'feats:osteo-armaments';
+
+/** The top-level indices of `src` a drawing folds that are NOT inside a level-titled section — the prose
+ *  folds (a level section's title and words are step 13a's). Read by node identity: scopeTree moves the
+ *  page's own nodes. */
+function proseFolded(src: AstNode, drawn: AstNode): number[] {
+  const top = src.c ?? [];
+  const inSection = new Set<number>();
+  for (let j = 0; j < top.length; j++) if (isLevelTitle(top[j])) for (let k = j + 1; k < sectionEnd(top, j); k++) inSection.add(k);
+  const at = new Map(top.map((n, i) => [n, i] as const));
+  const out: number[] = [];
+  for (const f of foldNodesOf(drawn)) for (const k of f.c ?? []) {
+    const i = at.get(k);
+    if (i !== undefined && !inSection.has(i) && !isLevelTitle(k)) out.push(i);
+  }
+  return out.sort((a, b) => a - b);
+}
+
+describe('card step 13b: prose gates fold whole — the seeded 60-record hand check, 0 wrong folds', () => {
+  it('the sample is the 60 records of the sheet', () => {
+    expect(Object.keys(HAND_CHECK).length).toBe(60);
+  });
+  it('every hand-checked record, at every level 1–20: exactly the judged paragraphs fold, each below its own level and open from it', () => {
+    const wrong: string[] = [];
+    for (const [key, expected] of Object.entries(HAND_CHECK)) {
+      const src = tree(key);
+      for (let level = 1; level <= 20; level++) {
+        const want = expected.filter(([, lv]) => level < lv).map(([i]) => i);
+        const got = proseFolded(src, scopeTree(src, { level }));
+        if (JSON.stringify(got) !== JSON.stringify(want)) wrong.push(`${key}@${level}: folded ${JSON.stringify(got)}, judged ${JSON.stringify(want)}`);
+      }
+    }
+    expect(wrong).toEqual([]);
+  });
+  it('a fold is the gate paragraph itself, untouched; the paragraphs around it stay open; nothing is deleted', () => {
+    for (const [key, expected] of Object.entries(HAND_CHECK)) {
+      if (!expected.length) continue;
+      const src = tree(key);
+      const top = src.c ?? [];
+      const below = Math.min(...expected.map(([, lv]) => lv)) - 1;
+      const drawn = scopeTree(src, { level: below });
+      const folds = foldNodesOf(drawn).filter((f) => (f.c ?? []).some((k) => expected.some(([i]) => k === top[i])));
+      expect(folds.length, key).toBe(1);
+      expect(folds[0].foldReason, key).toBe('future');
+      const folded = proseFolded(src, drawn);
+      for (const [i] of expected) {
+        expect(folds[0].c?.includes(top[i]), `${key}#${i} inside the fold`).toBe(true);
+        // A neighbouring paragraph of prose stays open; a later level SECTION that folds at the same
+        // level may share the run (one "At higher levels (k)" line — initiate-benefit-shield's Adept).
+        for (const j of [i - 1, i + 1]) if (top[j] && !expected.some(([e]) => e === j)) expect(folded.includes(j), `${key}#${i}'s neighbour #${j} stays open`).toBe(false);
+      }
+      expect(allText(drawn), key).toBe(allText(src));
+    }
+  });
+});
+
+describe('card step 13b: osteo-armaments folds each gated paragraph WHOLE (no orphan "If you do")', () => {
+  // batch card premise: feat-9110 "If you do, the action gains the thrall trait"
+  it('at 7 ONE "At higher levels (2)" fold holds paragraphs 5 and 6; "If you do" is inside it, never open', () => {
+    const src = tree(OSTEO);
+    const top = src.c ?? [];
+    const t = scopeTree(src, { level: 7 });
+    const f = foldNodesOf(t);
+    expect(f.length).toBe(1);
+    expect(f[0].foldIds).toEqual([`${OSTEO}#5`, `${OSTEO}#6`]);
+    expect(f[0].c).toEqual([top[5], top[6]]);
+    expect(foldText(f[0])).toMatch(/^At 8th level, you can destroy an adjacent thrall[\s\S]*If you do, the action gains the thrall trait[\s\S]*At 10th level, the weapon improves/);
+    expect(openWords(t)).not.toMatch(/If you do|At 8th level|At 10th level/);
+    expect(openWords(t)).toMatch(/You create a \+1 striking weapon/);
+    expect(allText(t)).toBe(allText(src));
+  });
+  it('at 8 the 8th-level paragraph is open whole ("If you do" with it) and only the 10th-level one folds; at 10 the tree is returned as is', () => {
+    const src = tree(OSTEO);
+    const t8 = scopeTree(src, { level: 8 });
+    expect(proseFolded(src, t8)).toEqual([6]);
+    expect(openWords(t8)).toMatch(/At 8th level, you can destroy an adjacent thrall as part of using this action\. If you do, the action gains the thrall trait/);
+    expect(scopeTree(src, { level: 10 })).toBe(src);
+  });
+  it('the verdict is the level rule at the gate\'s own level (a gate applied one level off is red)', () => {
+    const [g8, g10] = LEVEL_FOLDS.prose![OSTEO];
+    expect([g8.level, g10.level]).toEqual([8, 10]);
+    expect([proseVerdict(g8, { level: 7 }), proseVerdict(g8, { level: 8 }), proseVerdict(g10, { level: 9 }), proseVerdict(g10, { level: 10 })]).toEqual(['future', 'open', 'future', 'open']);
+  });
+  it('the one switch reaches prose folds too: \'hide\' and \'grey\' carry the treatment', () => {
+    const src = tree(OSTEO);
+    expect(foldNodesOf(scopeTree(src, { level: 7 }, LEVEL_FOLDS, 'hide')).map((f) => f.treatment)).toEqual(['hide']);
+    expect(foldNodesOf(scopeTree(src, { level: 7 }, LEVEL_FOLDS, 'grey')).map((f) => f.treatment)).toEqual(['grey']);
+  });
+});
+
+describe('card step 13b: a changed page folds nothing it does not list, and the check names the record', () => {
+  const edited = (): AstNode => {
+    const src = tree(OSTEO);
+    return { ...src, c: (src.c ?? []).map((n, i) => (i === 5 ? { t: 'p', c: [{ t: 'text', v: 'At 8th level, you can destroy an adjacent thrall as part of using this action.' }] } : n)) };
+  };
+  it('a gate paragraph whose words changed (its hash leaves the ledger) is NOT folded; the unchanged gate still is', () => {
+    const t = edited();
+    expect(proseFolded(t, scopeTree(t, { level: 7 }))).toEqual([6]);
+    // The guard's own view: every fold it sees is listed.
+    expect(foldsOf({ mode: 'mine', card: { printed: [] } }, t).filter((f) => !f.listed)).toEqual([]);
+  });
+  it('scripts/level-folds-check.mjs reports the changed record by name', () => {
+    const trees0 = loadTrees();
+    const t = edited();
+    const tampered = { ...trees0, feats: { ...trees0.feats, 'osteo-armaments': t } };
+    const problems = levelFoldProblems(readFileSync('scripts/data/level-folds.json', 'utf8'), undefined, { trees: tampered, core: loadCore() });
+    expect(problems.some((p) => /^prose feats:osteo-armaments#5: hash [0-9a-f]{8} does not match the tree/.test(p))).toBe(true);
+    expect(problems.some((p) => /^prose feats:osteo-armaments: differs from the generator/.test(p))).toBe(true);
+  }, 120_000);
+  it('a tampered prose hash on a scratch copy of the ledger is red, named by record and paragraph', () => {
+    const ledger = JSON.parse(readFileSync('scripts/data/level-folds.json', 'utf8')) as LevelFoldLedger;
+    ledger.prose![OSTEO][0].hash = '00000000';
+    const problems = levelFoldProblems(JSON.stringify(ledger));
+    expect(problems.some((p) => /^prose feats:osteo-armaments#5: hash 00000000 does not match the tree/.test(p))).toBe(true);
+  }, 120_000);
+});
+
+describe('card step 13b: the guard\'s view of prose folds', () => {
+  it('foldsOf re-hashes every folded prose paragraph against the ledger: on every ledger page, all listed', () => {
+    const unlisted: string[] = [];
+    let seen = 0;
+    for (const key of Object.keys(LEVEL_FOLDS.prose ?? {})) {
+      const [b] = key.split(':');
+      if (!trees[b]) continue;
+      for (const f of foldsOf({ mode: 'mine', card: { printed: [] } }, tree(key))) {
+        if (f.id.startsWith('¶')) seen++;
+        if (!f.listed) unlisted.push(`${key}|${f.id}`);
+      }
+    }
+    expect(unlisted).toEqual([]);
+    expect(seen).toBeGreaterThan(100);
+  });
+  it('a paragraph the ledger does not list is never folded, and foldsOf would call it unlisted', () => {
+    const src = tree(OSTEO);
+    const top = src.c ?? [];
+    // A scratch ledger that lists paragraph 4 (the feat's level-1 rules) as an 8th-level gate draws a
+    // fold of it; checked against the SHIPPED ledger that fold is unlisted.
+    const scratch: LevelFoldLedger = { ...LEVEL_FOLDS, prose: { ...LEVEL_FOLDS.prose, [OSTEO]: [{ i: 4, level: 8, hash: paragraphHash(top, 4) }] } };
+    const drawn = scopeTree(src, { level: 7 }, scratch);
+    expect(proseFolded(src, drawn)).toEqual([4]);
+    expect(ledgerHasProse(paragraphHash(top, 4))).toBe(false);
+    expect(ledgerHasProse(paragraphHash(top, 5))).toBe(true);
+    // And the shipped ledger never folds it.
+    expect(proseFolded(src, scopeTree(src, { level: 1 }))).toEqual([5, 6]);
+  });
+});
+
+describe('card step 13b: the generator\'s rules and exclusions (scripts/level-folds.mjs proseGatesOf)', () => {
+  const gates = (key: string) => proseGatesOf(tree(key), key);
+  it('a paragraph that goes on past its gate with an ungated sentence is left whole, with the sentence named', () => {
+    expect(gates('feats:breath-of-the-dragon').gates).toEqual([]);
+    const ex = gates('feats:breath-of-the-dragon').excluded as { i: number; level: number; reason: string }[];
+    expect(ex.map((e) => [e.i, e.level])).toEqual([[5, 3]]);
+    expect(ex[0].reason).toMatch(/^an ungated sentence follows the gate: "The shape of the breath, the damage type/);
+  });
+  it('later sentences that are themselves gates of the same or a higher level keep the paragraph whole-foldable (spell-gem, osteo-armaments)', () => {
+    expect(gates('feats:spell-gem').gates.map((g: { i: number; level: number }) => [g.i, g.level])).toEqual([[5, 18]]);
+    expect(gates(OSTEO).gates.map((g: { i: number; level: number }) => [g.i, g.level])).toEqual([[5, 8], [6, 10]]);
+  });
+  it('a 1st-level gate is no candidate at all (every character meets it); a class page is an excluded bucket', () => {
+    expect(gates('classFeatures:cleric-spellcasting')).toEqual({ gates: [], excluded: [] });
+    expect(PROSE_EXCLUDED_BUCKETS.classes).toMatch(/Attribute Boosts/);
+    const fighter = gates('classes:fighter');
+    expect(fighter.gates).toEqual([]);
+    expect(fighter.excluded.length).toBeGreaterThan(0);
+    expect(fighter.excluded.every((e: { reason: string }) => e.reason === 'bucket classes')).toBe(true);
+  });
+  it('every gate the hand check found a right fold for but the parser cannot encode is LISTED in PROSE_EXCLUDED (the sheet\'s reason), and nothing else is', () => {
+    for (const [key, is] of Object.entries(RIGHT_FOLD_NOT_ENCODED)) {
+      expect(HAND_CHECK[key], `${key} is in the seeded 60 and folds nothing`).toEqual([]);
+      const g = gates(key);
+      expect(g.gates, key).toEqual([]);
+      for (const i of is) {
+        const why = PROSE_EXCLUDED[`${key}#${i}` as keyof typeof PROSE_EXCLUDED] as string | undefined;
+        expect((why ?? '').length, `${key}#${i} listed in PROSE_EXCLUDED, with a reason`).toBeGreaterThan(40);
+        expect((g.excluded as { i: number; reason: string }[]).find((e) => e.i === i)?.reason, `${key}#${i}: the generator names the listing`).toBe(`reviewed: ${why}`);
+      }
+    }
+    expect(Object.keys(PROSE_EXCLUDED).sort()).toEqual(Object.entries(RIGHT_FOLD_NOT_ENCODED).flatMap(([k, is]) => is.map((i) => `${k}#${i}`)).sort());
+  });
+
+  // Synthetic trees (never a real page): each exclusion rule that no shipped page reaches today — every
+  // real candidate it would catch is caught earlier by the ungated-sentence rule — is exercised here, so
+  // deleting the rule turns its case red. The control is the same shape with the rule's trigger removed.
+  const para = (v: string): AstNode => ({ t: 'p', c: [{ t: 'text', v }] });
+  const synth = (...c: AstNode[]): AstNode => ({ t: 'doc', c: [{ t: 'title', c: [{ t: 'text', v: 'Synthetic Feat' }], level: '1', right: 'Feat 4' }, para('You can do the base thing.'), ...c] });
+  const verdict = (t: AstNode) => {
+    const r = proseGatesOf(t, 'feats:synthetic-feat');
+    return { gates: (r.gates as { i: number }[]).map((g) => g.i), reasons: (r.excluded as { reason: string }[]).map((e) => e.reason.replace(/: ".*$/, '')) };
+  };
+  it('control: a lone "At 8th level, you …" paragraph is a gate', () => {
+    expect(verdict(synth(para('At 8th level, you gain a +1 circumstance bonus to the check.')))).toEqual({ gates: [2], reasons: [] });
+  });
+  it('rule OTHER_SUBJECT: a gated clause about another thing\'s level (a relic, an army, a target) is left whole', () => {
+    expect(verdict(synth(para('At 5th level and every 5 levels thereafter, the relic gains another gift.')))).toEqual({ gates: [], reasons: ['the gated clause is about another thing\'s level'] });
+  });
+  it('rule next-block-continues: a gate paragraph the next block goes on from (a glyph, a lower-case run) is left whole', () => {
+    expect(verdict(synth(para('At 8th level, you can use this ability as'), { t: 'actions', string: 'Reaction' }))).toEqual({ gates: [], reasons: ['the next block continues the printed line'] });
+    expect(verdict(synth(para('At 8th level, you gain a fly Speed'), para('equal to your land Speed.')))).toEqual({ gates: [], reasons: ['the next block continues the printed line'] });
+  });
+  it('rule BACK_REFERENCE: a gate whose next paragraph refers back to it ("at these levels", "If you do") is left whole', () => {
+    expect(verdict(synth(para('At 5th level and every 5 levels thereafter, you gain a boost.'), para('Your companion also gains a boost at these levels.')))).toEqual({ gates: [], reasons: ['the next paragraph refers back to the gate'] });
+    expect(verdict(synth(para('At 8th level, you can destroy an adjacent thrall.'), para('If you do, you gain temporary Hit Points.')))).toEqual({ gates: [], reasons: ['the next paragraph refers back to the gate'] });
+  });
+  it('rule list-introduction: a gate that ends in a colon before a list or table is left whole (the list is its body)', () => {
+    const list: AstNode = { t: 'ul', c: [{ t: 'li', c: [para('A fly Speed of 20 feet.')] }, { t: 'li', c: [para('A swim Speed of 20 feet.')] }] };
+    expect(verdict(synth(para('At 8th level, choose one of the following:'), list))).toEqual({ gates: [], reasons: ['the gate introduces the list or table after it'] });
+    // Control: the same list after a gate that ends in a full stop is the next block, not the gate's body.
+    expect(verdict(synth(para('At 8th level, you gain one more option.'), list))).toEqual({ gates: [2], reasons: [] });
+  });
+  it('the census (measured 2026-10-08 on the lane\'s shipped trees): 104 prose gates on 102 pages; 171 candidates left whole', () => {
+    const { ledger, report } = generateLevelFolds();
+    expect(Object.keys(ledger.prose).length).toBe(102);
+    expect(Object.values(ledger.prose).flat().length).toBe(104);
+    expect(report.proseExcluded.length).toBe(171);
+    expect(report.proseExcluded.filter((e: { reason: string }) => e.reason === 'bucket classes').length).toBe(156);
+  }, 120_000);
+});
+
+describe('card step 13b: a prose fold names its OWN page (the ledger\'s prose keyed by page and hash)', () => {
+  const ids = (t: AstNode) => foldNodesOf(t).map((f) => f.sectionIds);
+  it('actions:furious-strike and its classFeatures copy print one gate paragraph (one hash): each fold names its own page', () => {
+    const a = tree('actions:furious-strike');
+    const c = tree('classFeatures:furious-strike');
+    expect(paragraphHash(a.c ?? [], 5)).toBe(paragraphHash(c.c ?? [], 5));
+    expect(LEVEL_FOLDS.prose?.['actions:furious-strike']?.map((g) => [g.i, g.level])).toEqual([[5, 10]]);
+    expect(ids(scopeTree(a, { level: 9 }))).toEqual([['actions:furious-strike#5']]);
+    // The card that opened the classFeatures record names that record's page …
+    expect(ids(scopeTree(c, { level: 9 }, LEVEL_FOLDS, FUTURE_TREATMENT, 'classFeatures:furious-strike'))).toEqual([['classFeatures:furious-strike#5']]);
+    // … and with no record named, the page the copy's title links to (the Archives page it is).
+    expect(pageRefOf(c.c ?? [])).toBe('actions:furious-strike');
+    expect(ids(scopeTree(c, { level: 9 }))).toEqual([['actions:furious-strike#5']]);
+    expect(scopeTree(a, { level: 10 })).toBe(a);
+  });
+  it('on every loaded ledger page whose gate hash another page shares, the fold names the record the card opened', () => {
+    const byHash = new Map<string, string[]>();
+    for (const [key, list] of Object.entries(LEVEL_FOLDS.prose ?? {})) for (const g of list) byHash.set(g.hash, [...(byHash.get(g.hash) ?? []), key]);
+    const wrong: string[] = [];
+    let shared = 0;
+    for (const [key, list] of Object.entries(LEVEL_FOLDS.prose ?? {})) {
+      if (!trees[key.split(':')[0]]) continue;
+      for (const g of list) {
+        if ((byHash.get(g.hash) ?? []).length < 2) continue;
+        shared++;
+        // (Only the prose fold's id is judged here: a level SECTION's id comes from the section index.)
+        const others = (byHash.get(g.hash) ?? []).filter((k) => k !== key).map((k) => `${k}#${g.i}`);
+        const got = ids(scopeTree(tree(key), { level: g.level - 1 }, LEVEL_FOLDS, FUTURE_TREATMENT, key)).flat();
+        if (!got.includes(`${key}#${g.i}`) || got.some((id) => others.includes(id) || id.includes('|'))) wrong.push(`${key}#${g.i}: ${JSON.stringify(got)}`);
+      }
+    }
+    expect(wrong).toEqual([]);
+    expect(shared).toBeGreaterThanOrEqual(10);
+  });
+  it('identical copies whose title names no page (adept/initiate/paragon-benefit-weapon, implement-9): folded, named as the set — never one page by guess', () => {
+    const t = tree('classFeatures:adept-benefit-weapon');
+    expect(pageRefOf(t.c ?? [])).toBeUndefined();
+    const set = Object.keys(LEVEL_FOLDS.prose ?? {}).filter((k) => LEVEL_FOLDS.prose![k].some((g) => g.hash === paragraphHash(t.c ?? [], 5)));
+    expect(set.length).toBeGreaterThan(1);
+    // The prose fold only (the page's later level SECTIONS fold in a run of their own, from the section index).
+    const proseIds = (d: AstNode) => foldNodesOf(d).filter((f) => f.c?.includes((t.c ?? [])[5])).map((f) => f.sectionIds);
+    expect(proseIds(scopeTree(t, { level: 4 }))).toEqual([[`${set.join('|')}#5`]]);
+    expect(proseIds(scopeTree(t, { level: 4 }, LEVEL_FOLDS, FUTURE_TREATMENT, 'classFeatures:adept-benefit-weapon'))).toEqual([['classFeatures:adept-benefit-weapon#5']]);
+    // A shared hash whose pages disagree on the level is no gate at all without a named page.
+    const split: LevelFoldLedger = { ...LEVEL_FOLDS, prose: Object.fromEntries(Object.entries(LEVEL_FOLDS.prose ?? {}).map(([k, l]) => [k, k === set[0] ? l.map((g) => ({ ...g, level: g.level + 1 })) : l])) };
+    expect(proseIds(scopeTree(t, { level: 4 }, split))).toEqual([]);
+  });
+  it('ledgerHasProse asked for a page answers for that page only', () => {
+    const h = paragraphHash(tree('actions:furious-strike').c ?? [], 5);
+    expect([ledgerHasProse(h), ledgerHasProse(h, LEVEL_FOLDS, 'actions:furious-strike'), ledgerHasProse(h, LEVEL_FOLDS, 'classFeatures:furious-strike'), ledgerHasProse(h, LEVEL_FOLDS, 'feats:osteo-armaments')]).toEqual([true, true, true, false]);
+  });
+});
+
+describe('card step 13b-merge (ledger hygiene): a label inside the page\'s own BODY is not a second stat row (spell popup)', () => {
+  const md = { parseBlocks: () => [], cleanRun: (s: string) => s };
+  /** A spell popup row as surfaceRows builds it for a tree body (card step 17): the tree the popup DRAWS
+   *  (spellCardModel's `drawn`) and the page rows it prints. */
+  const spellRow = (id: string, printed: string[]) => {
+    const model = spellCardModel(content().spells[id], tree(`spells:${id}`), []);
+    expect(model.body, `${id} draws its page`).toBe('tree');
+    expect(model.rows.map(([l]) => l), `${id}'s stat rows`).toEqual(printed);
+    return { surface: 'spellDetail', bucket: 'spells', id, own: { bucket: 'spells', id }, read: { bucket: 'spells', slug: id }, drawn: model.drawn, card: { printed }, printed: model.rows, mode: 'mine', hideMeta: false, itemLists: true, md: '' };
+  };
+  const run = (...rs: [string, boolean?][]) => ({ runs: rs.map(([s, b]) => (b ? { b: s } : { t: s })), text: rs.map(([s]) => s).join('') });
+  // batch card premise: spell-1547 "You conjure grease, choosing an area or target"
+  it('grease: its choose-one options ("Area All solid ground …", "Target If you Cast the Spell …") are body prose — no DUPLICATED, no S3 for Area, Targets or Cast', () => {
+    const r = judgeRow(spellRow('grease', ['Cast', 'Range', 'Area', 'Targets', 'Duration']), trees, md);
+    expect(r.labels).toEqual({});
+    expect(r.placement).toEqual([]);
+    // The option lines are drawn, whole.
+    const row = spellRow('grease', ['Cast', 'Range', 'Area', 'Targets', 'Duration']);
+    const shown = treeBlocks(row.drawn, { card: { printed: new Set(row.card.printed) } }).filter((b: { shown: boolean }) => b.shown).map((b: { text: string }) => b.text);
+    expect(shown.some((t: string) => /^Area All solid ground in the area is covered with grease\./.test(t))).toBe(true);
+    expect(shown.some((t: string) => /^Target If you Cast the Spell on an unattended object/.test(t))).toBe(true);
+  });
+  // batch card premise: ritual-133 "Maximum Duration 5 days"
+  it('perfection-of-essence: the poison\'s bold "Maximum Duration" is not a Duration header; its "Saving Throw" (Defense) stays, as the baseline lists', () => {
+    const printed = ['Cast', 'Cost', 'Secondary Casters', 'Primary Check', 'Secondary Checks', 'Duration'];
+    const r = judgeRow(spellRow('perfection-of-essence', printed), trees, md);
+    expect(r.labels).toEqual({});
+    expect(r.placement).toEqual(['Defense']);
+  });
+  it('a stat header drawn in the prose still counts (S3): a phrase value, an unbolded header, a reaction line cut at its bold "Effect"', () => {
+    expect([...bodyLabels([run(['Area', true], [' 20-foot burst'])], 'spellDetail')]).toEqual(['Area']);
+    expect([...bodyLabels([run(['Area', true], [' All ground is greasy. Each creature falls prone.'])], 'spellDetail')]).toEqual([]);
+    expect([...bodyLabels([run(['Trigger', true], [' The target takes damage; '], ['Effect', true], [' You lose Hit Points. Then the spell ends.'])], 'spellDetail')]).toEqual(['Trigger']);
+    expect([...plainHeaderLabels([run(['Cast 1 hour Area 30-foot burst centered on you Duration varies'])])].sort()).toEqual(['Area', 'Cast', 'Duration']);
+    expect([...plainHeaderLabels([run(['Target', true], [' If you Cast the Spell on an object, it is slick.'])])]).toEqual([]);
+    // Every other surface reads label lines as before (the rule is the spell popup's).
+    expect([...bodyLabels([run(['Area', true], [' All ground is greasy. Each creature falls prone.'])], 'featDetail')]).toEqual(['Area']);
   });
 });
 

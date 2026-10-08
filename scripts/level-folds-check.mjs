@@ -19,8 +19,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, isAbsolute, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { LEDGER, generateLevelFolds, loadCore, loadTrees, serialize } from './level-folds.mjs';
-import { isLevelTitle, paragraphHash, sectionHash } from '../src/sheet/cardScope.ts';
+import { LEDGER, gateOfText, generateLevelFolds, loadCore, loadTrees, serialize } from './level-folds.mjs';
+import { foldText, isLevelTitle, paragraphHash, sectionHash } from '../src/sheet/cardScope.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -53,6 +53,18 @@ export function levelFoldProblems(text, root = ROOT, loaded = undefined) {
     if (!top) { problems.push(`impulses ${key}: no such page in public/ast`); continue; }
     for (const e of list) if (!top[e.i] || paragraphHash(top, e.i) !== e.hash) problems.push(`impulses ${key}#${e.i}: hash ${e.hash} does not match the tree`);
   }
+  // Card step 13b: every prose gate against its tree — still a top-level paragraph at `i`, still opening
+  // with a gate of the listed level, and its paragraph hash unchanged (a changed page names the record).
+  for (const [key, list] of Object.entries(ledger.prose ?? {})) {
+    const top = treeOf(key)?.c;
+    if (!top) { problems.push(`prose ${key}: no such page in public/ast`); continue; }
+    for (const e of list) {
+      const p = top[e.i];
+      const g = p?.t === 'p' ? gateOfText(foldText(p).replace(/\s+/g, ' ').trim()) : null;
+      if (!g || g.level !== e.level) problems.push(`prose ${key}#${e.i}: the tree has no ${e.level}th-level gate paragraph there`);
+      else if (paragraphHash(top, e.i) !== e.hash) problems.push(`prose ${key}#${e.i}: hash ${e.hash} does not match the tree (${paragraphHash(top, e.i)})`);
+    }
+  }
   for (const [key, v] of Object.entries(ledger.subclassPages ?? {})) if (!ledger.pages?.[v]) problems.push(`subclassPages ${key}: ${v} is not a ledger page`);
   for (const [key, p] of Object.entries(ledger.pointers ?? {})) {
     const pages = Object.entries(ledger.subclassPages ?? {}).filter(([k]) => k.startsWith(`${p.classId}:`)).map(([, v]) => v);
@@ -69,6 +81,14 @@ export function levelFoldProblems(text, root = ROOT, loaded = undefined) {
       if (shown++ < 20) problems.push(`pages ${k}: ${!ledger.pages?.[k] ? 'missing from the ledger' : !want.pages[k] ? 'listed but the generator finds no level-titled section' : 'differs from the generator'}`);
     }
     for (const sec of ['impulses', 'pointers', 'subclassPages']) if (JSON.stringify(want[sec]) !== JSON.stringify(ledger[sec] ?? {})) problems.push(`${sec}: differs from the generator`);
+    // Card step 13b: the prose gates, named by record — a gate added, dropped or moved on any page.
+    const wantProse = want.prose ?? {};
+    const haveProse = ledger.prose ?? {};
+    let shownProse = 0;
+    for (const k of [...new Set([...Object.keys(wantProse), ...Object.keys(haveProse)])].sort()) {
+      if (JSON.stringify(wantProse[k]) === JSON.stringify(haveProse[k])) continue;
+      if (shownProse++ < 20) problems.push(`prose ${k}: ${!haveProse[k] ? 'missing from the ledger' : !wantProse[k] ? 'listed but the generator finds no prose gate' : 'differs from the generator'}`);
+    }
     problems.push(`${LEDGER} is not the generator's output — run \`npx jiti scripts/level-folds.mjs --write\` and review the diff`);
   }
   return problems;
@@ -91,6 +111,6 @@ if (IS_MAIN) {
     for (const p of problems.slice(0, 60)) console.log(`   ${p}`);
     process.exitCode = 1;
   } else {
-    console.log(`level folds check: green — ${Object.keys(ledger.pages ?? {}).length} pages, ${n} sections, ${Object.values(ledger.impulses ?? {}).flat().length} impulse entries, ${Object.keys(ledger.pointers ?? {}).length} pointers match the trees and the generator.`);
+    console.log(`level folds check: green — ${Object.keys(ledger.pages ?? {}).length} pages, ${n} sections, ${Object.values(ledger.impulses ?? {}).flat().length} impulse entries, ${Object.keys(ledger.pointers ?? {}).length} pointers, ${Object.values(ledger.prose ?? {}).flat().length} prose gates match the trees and the generator.`);
   }
 }
