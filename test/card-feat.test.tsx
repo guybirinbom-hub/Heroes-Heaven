@@ -10,24 +10,15 @@ import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { loadAstIndex, loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { FeatsTab, featEntries } from '../src/sheet/FeatsTab';
 import { FeatDetail, featPageOf, type FeatPinNode } from '../src/sheet/FeatDetail';
-import { CARD_ON } from '../src/sheet/cardSurfaces';
 import { recordTree } from '../src/sheet/astVisibility';
 import { descId, togglePinnedDesc, type PlayState } from '../src/rules/play';
 import { applyOverrides } from '../src/rules/build';
 import type { Character, ContentDatabase, Feat, PinnedDesc } from '../src/rules/types';
 
-/** The feat switch, read through a mock so one block can turn it back (section 9: "Turning a surface back
- *  is therefore one line, and its tests still hold") without editing src/sheet/cardSurfaces.ts. */
-const sw = vi.hoisted(() => ({ featDetail: undefined as boolean | undefined }));
-vi.mock('../src/sheet/cardSurfaces', async (importOriginal) => {
-  const real = await importOriginal<typeof import('../src/sheet/cardSurfaces')>();
-  return { ...real, cardOn: (s: Parameters<typeof real.cardOn>[0]) => (s === 'featDetail' && sw.featDetail !== undefined ? sw.featDetail : real.cardOn(s)) };
-});
-
 /**
  * Card step 11 (docs/card-design.md section 9 row 11, plan F1; section 2 rules 2(a), 4–5; section 3;
  * section 4; owner rulings section 13): the Feats-tab popup — feats, class features, heritages, choice
- * rows — is the row's record as a 'mine' RecordCard (CARD_ON.featDetail).
+ * rows — is the row's record as a 'mine' RecordCard.
  *
  * Every case clicks a REAL FeatsTab row of a character synthesized through build() (name 't'; none is the
  * owner's) and reads the card it opens, over the shipped page trees (public/ast/*.json.gz, served through
@@ -42,7 +33,7 @@ vi.mock('../src/sheet/cardSurfaces', async (importOriginal) => {
  *  - A level-5 Justice champion's cause row folds Relentless Reaction under "At higher levels".
  *  - Caustic Nectar's note is in the ours box; a homebrew feat's typed use lines stay ours.
  *  - A record with neither page nor slice takes the no-page lane.
- *  - Turned back (the switch off), the row opens the legacy popup again.
+ *  (The turned-back case left with the switch and the legacy popup in card step 22.)
  *
  * MUTATION LINES (each measured red under scripts/vt.mjs on 2026-10-07, then the file restored from the
  * scratch copy, sha1 checked, and measured green again):
@@ -77,7 +68,7 @@ function treeOf(b: string): Record<string, AstNode> | undefined {
 const readTree = (b: string, s: string): AstNode | undefined => treeOf(b)?.[s];
 
 const mounted: (() => void)[] = [];
-afterEach(() => { while (mounted.length) mounted.pop()!(); sw.featDetail = undefined; });
+afterEach(() => { while (mounted.length) mounted.pop()!(); });
 async function settle() {
   await act(async () => { await new Promise((r) => setTimeout(r, 0)); });
   await act(async () => { await new Promise((r) => setTimeout(r, 0)); });
@@ -154,7 +145,7 @@ beforeAll(async () => {
 afterAll(() => { vi.unstubAllGlobals(); });
 
 // batch card premise: feat-4458 "Frequency once per day"
-describe.runIf(CARD_ON.featDetail)('card step 11: the Feats-tab popup is the row\'s mine card', () => {
+describe('card step 11: the Feats-tab popup is the row\'s mine card', () => {
   // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
   it('Halfling Luck shows "Frequency once per day" and its Trigger exactly once each, in the page\'s words, at full weight, before the prose; no "leads to"', async () => {
     const host = await openRow(withFeats(base, 'halfling-luck'), 'Halfling Luck');
@@ -467,21 +458,5 @@ describe.runIf(CARD_ON.featDetail)('card step 11: the Feats-tab popup is the row
     expect([...(lines?.querySelectorAll('.card-ours-useLine') ?? [])].map((p) => squash(p.textContent))).toEqual(['Trigger X happens', 'Frequency once per day']);
     expect(lines!.compareDocumentPosition(modal!.querySelector('.sd-desc')!) & Node.DOCUMENT_POSITION_FOLLOWING, 'above the text').toBeTruthy();
     expect(squash(modal!.querySelector('.card-nopage')?.textContent)).toBe('Homebrew');
-  });
-});
-
-// batch card premise: feat-4458 "Frequency once per day"
-describe('card step 11, switch turned back: the legacy popup', () => {
-  // batch card premise: feat-4458 "Frequency once per day"
-  it('with CARD_ON.featDetail off, Halfling Luck opens the legacy popup: the page with hideMeta, no Frequency line', async () => {
-    sw.featDetail = false;
-    const host = await openRow(withFeats(base, 'halfling-luck'), 'Halfling Luck', db, { has: () => false, toggle: noop });
-    expect(host.querySelector('.card-mine'), 'no card while the switch is off').toBeNull();
-    const pop = host.querySelector('.picker.spell-detail');
-    // batch card premise: feat-4458 "Frequency once per day"
-    expect(pop, 'the legacy popup').toBeTruthy();
-    expect(pop!.querySelector('.sd-body > .sd-desc .ast-body'), 'the page tree').toBeTruthy();
-    expect(count(squash(pop!.textContent), 'Frequency once per day')).toBe(0);
-    expect(pop!.querySelector('.picker-head .info-star'), 'its PinStar').toBeTruthy();
   });
 });

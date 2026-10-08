@@ -15,9 +15,7 @@ import { skillActionsFor, type SkillAction } from '../rules/skillActions';
 import { DescriptionModal } from './DescriptionModal';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { useEscapeClose } from './useEscapeClose';
-import { DescBody } from './DescBody';
 import { RecordCard } from './RecordCard';
-import { cardOn } from './cardSurfaces';
 import { scopeOfCharacter } from './cardScope';
 
 /** An action name to its core.json id — the same kebab-casing MainTab uses, so a marker authored
@@ -225,32 +223,19 @@ export function StatDetailModal({
 
       {/* The full printed text of a note that was capped to one line. Stacked over this modal rather
           than replacing it, so closing it returns you to the stat you were reading. */}
-      {/* Card step 5 (docs/card-design.md section 9 row 5): with CARD_ON.statDetail the full text is the
-          record's card in mode 'mine' — its page with every labelled line once (this popup prints no
-          stat rows, so its printed set is empty), the furniture left out, Source dimmed, PinStar, Back
-          and the TrustMarker in its header. The legacy popup below stays for the switch's off position. */}
-      {fullText && cardOn('statDetail') && fullText.bucket && fullText.id && (
-        // Stacked over this modal like the legacy popup: a click outside the card closes the card only
-        // (its overlay's click must not bubble on to this modal's), so you return to the stat.
+      {/* Card step 5 (docs/card-design.md section 9 row 5): the full text is the record's card in mode
+          'mine' — its page with every labelled line once (this popup prints no stat rows, so its printed
+          set is empty), the furniture left out, Source dimmed, PinStar, Back and the TrustMarker in its
+          header. The "Full text" button is drawn only for a line whose record is known by {bucket, id}
+          (sourceId AND sourceCollection), so the card always has its record; card step 22 removed the
+          legacy popup that stood beside it. */}
+      {fullText && fullText.bucket && fullText.id && (
+        // Stacked over this modal: a click outside the card closes the card only (its overlay's click
+        // must not bubble on to this modal's), so you return to the stat.
         <div style={{ display: 'contents' }} onClick={(e) => e.stopPropagation()}>
           {/* Card step 13a: scoped to this character — its level, class, subclass and the options its
               build owns — so the parts it does not have yet fold (docs/card-design.md section 3). */}
           <RecordCard record={{ bucket: fullText.bucket, id: fullText.id }} mode="mine" chrome="popup" scope={scopeOfCharacter(character)} onExit={() => setFullText(null)} />
-        </div>
-      )}
-      {fullText && !(cardOn('statDetail') && fullText.bucket && fullText.id) && (
-        <div className="picker-overlay" onClick={(e) => { e.stopPropagation(); setFullText(null); }}>
-          <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="picker-head">
-              <span>{fullText.name}</span>
-              <button className="picker-close" onClick={() => setFullText(null)} aria-label="Close">
-                <i className="ti ti-x" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="confirm-body">
-              <DescBody description={fullText.html} astKey={fullText.bucket} astId={fullText.id} onExit={() => setFullText(null)} />
-            </div>
-          </div>
         </div>
       )}
 

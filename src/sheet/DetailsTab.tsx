@@ -13,7 +13,6 @@ import { useIsMobile } from './useIsMobile';
 import { DefensesPills } from './DefensesPills';
 import { AvatarCropModal } from './AvatarCropModal';
 import { CharacterImages } from './CharacterImages';
-import { cardOn } from './cardSurfaces';
 import { scopeOfCharacter } from './cardScope';
 
 function cap(s: string): string {
@@ -79,12 +78,12 @@ export function DetailsTab({
 
   const bgName = background?.name ?? character.customBackground?.name;
   const bgDesc = background?.description ?? character.customBackground?.description;
-  /* Card step 20 (docs/card-design.md section 3 "Class card (Details tab)", section 6; CARD_ON.detailsClassCard):
-     the Class term opens the class record's 'mine' card by its id — the intro, the initial proficiencies and
-     the features up to the character's level open, every later-level feature folded under one "At higher
-     levels (k)" line (owner ruling Q1 = A), its star pinning {key: 'classes', slug, title, mode: 'mine'}.
-     Switched off, the term is the browse popup it always was (title + text, found by name). */
-  const classTerm = cls && cardOn('detailsClassCard')
+  /* Card step 20 (docs/card-design.md section 3 "Class card (Details tab)", section 6): the Class term opens
+     the class record's 'mine' card by its id — the intro, the initial proficiencies and the features up to
+     the character's level open, every later-level feature folded under one "At higher levels (k)" line
+     (owner ruling Q1 = A), its star pinning {key: 'classes', slug, title, mode: 'mine'}. Without a class
+     record (none chosen) the term carries no card. */
+  const classTerm = cls
     ? { descKey: 'classes', descSlug: cls.id, mine: { scope: scopeOfCharacter(character) } }
     : {};
 

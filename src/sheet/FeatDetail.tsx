@@ -1,23 +1,18 @@
 import type { ActionCost, Character, DescRef, LimitedUses } from '../rules/types';
 import { ActionGlyph, isActionCost } from './widgets';
-import { DescBody, remasteredAsOf } from './DescBody';
 import { InfoTerm } from './InfoTerm';
-import { PinStar } from './PinStar';
 import { PinContext, usePinDesc, type PinDescApi } from './PinContext';
 import { RecordCard } from './RecordCard';
-import { cardOn } from './cardSurfaces';
 import { scopeOfCharacter, withPick } from './cardScope';
 import { oursHeaderCost } from './MainTab';
-import { TrustMarker } from './TrustMarker';
 import { useContent } from './ContentContext';
-import { useEscapeClose } from './useEscapeClose';
 import { traitDesc, traitLabel } from '../rules/glossary';
 import { astSlug, useAstNode } from './useAst';
 import type { DescNode } from './descref';
 import type { AstNode } from './astStore';
 import { textOf } from './astVisibility';
 import { oursLineText, type OursLine } from './cardModel';
-import { OursBox, OursUseLines } from './OursBox';
+import { OursUseLines } from './OursBox';
 
 export interface FeatEntry {
   key: string;
@@ -264,18 +259,6 @@ export interface FeatDetailProps {
 }
 
 /**
- * The feat / feature / heritage / choice-row popup.
- *
- * Card step 11 (docs/card-design.md section 9 row 11, plan F1): with CARD_ON.featDetail the row opens its
- * record's 'mine' card — FeatCard below. The legacy popup stays for the switch's off position, unchanged.
- * Two components, not one with a branch: each registers its own dismiss entry (the card's is RecordCard's),
- * so the choice is made before any hook runs.
- */
-export function FeatDetail(props: FeatDetailProps) {
-  return cardOn('featDetail') ? <FeatCard {...props} /> : <LegacyFeatDetail {...props} />;
-}
-
-/**
  * The record a row's card opens, by {bucket, id} (section 2 rule 2): a feat by its feat id, a class
  * feature (or a subclass / choice row) by its classFeatures id, and a HERITAGE row by its heritage id in
  * the heritages bucket — rule 2(a): the legacy popup looked in classFeatures by the slug of the heritage's
@@ -325,7 +308,9 @@ export function featCardPin(pin: PinDescApi, cardNode: DescNode, starNode: FeatP
 }
 
 /**
- * Card step 11 — the row's record as a 'mine' card (section 2 rules 4–5; plan F1).
+ * The feat / feature / heritage / choice-row popup: the row's record as a 'mine' card (card step 11,
+ * docs/card-design.md section 9 row 11; section 2 rules 4–5; plan F1). Card step 22 removed the legacy
+ * popup it replaced.
  *  - The page's use lines (Frequency, Trigger, Requirements, Access, Cost, Prerequisites) show once each,
  *    in the page's words, before the prose: the popup prints NO stat rows over a page, so its printed set
  *    is empty — the Prerequisites field row is not drawn when a page exists, so the page's own
@@ -343,7 +328,7 @@ export function featCardPin(pin: PinDescApi, cardNode: DescNode, starNode: FeatP
  * The builder card heading this pick came from (groupLabel) is ours, a tag in the header; so is the pick
  * itself over a page (featPickSuffix — the page's header prints the record's name, never the row's).
  */
-function FeatCard({ entry, onClose, character }: FeatDetailProps) {
+export function FeatDetail({ entry, onClose, character }: FeatDetailProps) {
   const content = useContent();
   const page = featPageOf(entry);
   // The same lookup the card makes (cached): whether a page is drawn decides which homebrew use lines
@@ -421,106 +406,5 @@ function FeatCard({ entry, onClose, character }: FeatDetailProps) {
         onExit={onClose}
       />
     </PinContext.Provider>
-  );
-}
-
-/** Read-only detail overlay for a feat / feature / heritage (reuses the .picker / .sd-* chrome) — the
- *  legacy popup, kept behind CARD_ON.featDetail (card step 11). */
-function LegacyFeatDetail({ entry, onClose }: FeatDetailProps) {
-  const content = useContent();
-  useEscapeClose(onClose);
-  const kind = entry.isFeature ? 'Feature' : `${entry.bucket} feat`;
-  /* The row's OWN page when the row knows its record: the slug of its NAME is another record's key
-   * whenever two share a name (the Impossible Magic "Zombie Horde" opened the Clockwork Reanimator
-   * feat — see descNodeOf). A row with no id of its own keeps the name lookup it always had. */
-  const astKey = entry.isFeature ? 'classFeatures' : 'feats';
-  const ref = trustRefOf(entry);
-  const astId = ref.bucket === astKey && ref.id ? ref.id : astSlug(entry.name);
-  const stats = featStatRows(entry);
-  const activate = stats.find((r): r is Extract<FeatStatRow, { k: 'Activate' }> => r.k === 'Activate');
-  const valueOf = (k: 'Prerequisites' | 'Enhancement') =>
-    stats.find((r): r is Extract<FeatStatRow, { v: string }> => r.k === k)?.v;
-  const prerequisites = valueOf('Prerequisites');
-  const enhancement = valueOf('Enhancement');
-  const pinNode = featStarNode(entry, usePinDesc());
-  // Which lane DescBody draws (the same hook, the same cache): the page decides whether an Overrides
-  // edit needs its ours line and which homebrew use lines the record's own text already prints.
-  const { node: pageAst, loading: pageLoading } = useAstNode(astKey, astId);
-  const ours = featOursSplit(entry, { ast: pageAst ?? null, loading: !!pageLoading });
-  return (
-    <div className="picker-overlay" onClick={onClose}>
-      <div className="picker spell-detail" onClick={(e) => e.stopPropagation()}>
-        <div className="picker-head">
-          {entry.name}
-          <span style={{ marginLeft: 'auto', display: 'inline-flex', gap: 8, alignItems: 'center' }}>
-            <PinStar node={pinNode} />
-            <button className="picker-close" onClick={onClose} aria-label="Close">
-              <i className="ti ti-x" aria-hidden="true" />
-            </button>
-          </span>
-        </div>
-        <div className="sd-body">
-          <div className="sd-sub">
-            {kind} · level {entry.level}
-            {entry.groupLabel ? ` · ${entry.groupLabel}` : ''}
-            {entry.rarity && entry.rarity !== 'common' ? ` · ${cap(entry.rarity)}` : ''}
-          </div>
-          {/* Under the name, above the text — same position as the list row, the item popup and the
-              builder pick, so the line reads the same wherever the player meets it. */}
-          <TrustMarker {...trustRefOf(entry)} />
-          {entry.traits.length > 0 && (
-            <div className="sd-traits">
-              {entry.traits.map((t) => (
-                <InfoTerm className="ff-trait" key={t} title={traitLabel(t)} description={traitDesc(t, content)}>
-                  {traitLabel(t)}
-                </InfoTerm>
-              ))}
-            </div>
-          )}
-          {activate && (
-            <div className="sd-activate">
-              <strong>Activate</strong> <ActionGlyph cost={activate.cost} />
-            </div>
-          )}
-          {prerequisites !== undefined ? (
-            <div className="sd-stats">
-              <div className="sd-stat">
-                <span className="sd-stat-k">Prerequisites</span>
-                <span className="sd-stat-v">{prerequisites}</span>
-              </div>
-            </div>
-          ) : null}
-          {/* The ENHANCEMENT tier, when it is running. Rendered HERE rather than appended to the
-              description because a record with an ast renders from the ast and DescBody discards the
-              description string entirely — the Enhancement paragraph itself is already in that prose,
-              so what this adds is the one fact the printed text cannot carry: that YOU have it. */}
-          {enhancement !== undefined ? (
-            <div className="sd-stats">
-              <div className="sd-stat">
-                <span className="sd-stat-k">Enhancement</span>
-                <span className="sd-stat-v">{enhancement}</span>
-              </div>
-            </div>
-          ) : null}
-          {/* Card step 8: a homebrew record's typed use lines (Trigger, Requirements, Frequency, Access) —
-              their first reader. Above the body, where use lines go, but ours: never styled as print. */}
-          <OursUseLines lines={ours.use} />
-          {/* desk #158: read the link off the record this row is showing, via the SAME ref TrustMarker
-              above already resolves — a FeatEntry is a view model built in a dozen places, and
-              threading one more field through all of them would be a far bigger change than a lookup. */}
-          <DescBody
-            description={entry.description}
-            descRefs={entry.descRefs}
-            onExit={onClose}
-            astKey={astKey}
-            astId={astId}
-            remasteredAs={remasteredAsOf(content, ref)}
-          />
-          {/* Card step 8 (section 4): the ours box, after the body on BOTH lanes — DescBody picks the
-              page or the markdown, and this box follows either. */}
-          <OursBox lines={ours.box} />
-        </div>
-      </div>
-    </div>
   );
 }

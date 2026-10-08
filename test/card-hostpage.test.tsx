@@ -9,7 +9,10 @@ import { content } from './_content';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { DescriptionModal } from '../src/sheet/DescriptionModal';
 import { RecordCard } from '../src/sheet/RecordCard';
-import { CARD_ON } from '../src/sheet/cardSurfaces';
+import { AstRenderer } from '../src/sheet/AstRenderer';
+import { DescBody } from '../src/sheet/DescBody';
+import { RemasteredLine, remasteredAsOf } from '../src/sheet/RemasteredLine';
+import { useAstNode } from '../src/sheet/useAst';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import type { ContentDatabase, DescRef } from '../src/rules/types';
 import { judgeRow, surfaceRows } from '../scripts/lib/card-scope.mjs';
@@ -20,13 +23,34 @@ vi.mock('../src/data/useAuth', () => {
   const AUTH = { status: 'disabled', session: null, email: null };
   return { useAuth: () => AUTH, signOut: async () => undefined };
 });
-const { HostPage, HostPageLegacy } = await import('../src/integration/CampaignTracker');
+const { HostPage } = await import('../src/integration/CampaignTracker');
+
+/**
+ * The pre-card GM screen page — CampaignTracker.tsx's HostPageLegacy, verbatim, as it stood until card
+ * step 22 removed it from src. Kept HERE, as the reference the card must equal byte for byte (the card's
+ * gm/embed branch replaced it in step 6 "drawn byte for byte as before"); no surface renders it. Its body
+ * is AstRenderer with no hideMeta (the GM page always kept its stat lines), so nothing it uses left src.
+ */
+function PreCardHostPage({ content, bucket, id, onOpen }: {
+  content: ContentDatabase; bucket: string; id: string; onOpen: (bucket: string, id: string) => void;
+}) {
+  const rec = (content as unknown as Record<string, Record<string, { description?: string; descRefs?: DescRef[] }> | undefined>)[bucket]?.[id];
+  const { node, loading } = useAstNode(bucket, id);
+  // desk #158: a pinned old printing says what it was remastered as; the name opens the reprint in HH's popup.
+  const ra = remasteredAsOf(content, { bucket, id });
+  if (!rec) return <p className="sd-ours">This page is not in this version of Heroes Heaven.</p>;
+  if (node) return <AstRenderer node={node} bodyOnly selfRef={`${bucket}:${id}`} onOpenRef={onOpen} footer={ra ? <RemasteredLine ra={ra} onOpen={onOpen} /> : null} />;
+  if (loading) return <div className="ast-body ast-loading" aria-busy="true" />;
+  return <DescBody description={rec.description} descRefs={rec.descRefs} remasteredAs={ra} />;
+}
 
 /**
  * Card step 6 (docs/card-design.md section 9 row 6; section 6 "gm: HostPage … The whole page with its stat
  * lines, embed chrome"): the page a GM pinned to the GM screen (CampaignTracker.tsx HostPage, the `host`
  * pane tab the tracker opens for a Heroes Heaven record from the GM Search or a pinned page) renders
- * through RecordCard with mode 'gm' and chrome 'embed' (CARD_ON.hostPage). NO behaviour change for the GM.
+ * through RecordCard with mode 'gm' and chrome 'embed'. NO behaviour change for the GM. (Card step 22
+ * removed the switch and the legacy HostPage from src; the legacy page lives on above as this file's
+ * reference render, PreCardHostPage.)
  *
  * What this file proves:
  *
@@ -41,8 +65,8 @@ const { HostPage, HostPageLegacy } = await import('../src/integration/CampaignTr
  *     scratch — it pins one tree's output on one data stamp — so it is never committed; without the
  *     variable this block skips and says so.
  *  2. ALWAYS: the card's embed branch (RecordCard mode 'gm', chrome 'embed') renders exactly what the
- *     legacy HostPage renders for every sampled record, both frames, in and out of the context; HostPage
- *     IS the card while the switch is on and the legacy page while it is off; the page keeps its stat
+ *     legacy HostPage (PreCardHostPage) renders for every sampled record, both frames, in and out of the
+ *     context; HostPage IS the card; the page keeps its stat
  *     lines (air-walk's Range and Duration); the embedded body is the browse popup's body (nothing
  *     dropped); a link and the "Remastered as" name open through the host's onOpen, as before; mounting
  *     the page pushes nothing on the dismiss stack (no phone Back-trap history entry), as before; and
@@ -60,12 +84,9 @@ const { HostPage, HostPageLegacy } = await import('../src/integration/CampaignTr
  *    link cases red.
  *  - EmbedRecordCard: `onOpenRef ?? noOpen` → `noOpen` → the link case red.
  *  - EmbedRecordCard: `useEscapeClose(undefined)` added → the dismiss-stack case red.
- *  - CampaignTracker HostPage: `cardOn('hostPage')` → `false && cardOn('hostPage')` → the switch case red.
  *  - card-scope.mjs gm rows with `itemLists: false` → the ledger case red.
- *
- * The switch turns back in one line (section 9): with CARD_ON.hostPage off every case here still holds
- * (HostPage is then the legacy page, which the snapshot and the embed = legacy case pin); run that way
- * on 2026-10-02 with the switch flipped on a scratch edit, then restored.
+ *  - (card step 22) CampaignTracker HostPage: `mode="gm"` → `mode="browse"` → the "HostPage is the card"
+ *    case red.
  */
 const SEED = 20261002;
 const PAGE_COUNTS = { spells: 40, feats: 30, items: 30, actions: 20, classFeatures: 20, reference: 20, trait: 20, conditions: 10, deities: 10 } as const;
@@ -143,7 +164,7 @@ function mediaQuery(phone: boolean): typeof window.matchMedia {
 /** The page as the GM screen mounts it: every second one under the app's ContentContext. */
 const inCtx = (i: number, el: ReactElement): ReactElement => (i % 2 === 0 ? <ContentContext.Provider value={db}>{el}</ContentContext.Provider> : el);
 const hostEl = (e: Entry, onOpen: (b: string, id: string) => void = noop) => <HostPage content={db} bucket={e.bucket} id={e.id} onOpen={onOpen} />;
-const legacyEl = (e: Entry, onOpen: (b: string, id: string) => void = noop) => <HostPageLegacy content={db} bucket={e.bucket} id={e.id} onOpen={onOpen} />;
+const legacyEl = (e: Entry, onOpen: (b: string, id: string) => void = noop) => <PreCardHostPage content={db} bucket={e.bucket} id={e.id} onOpen={onOpen} />;
 const cardEl = (e: Entry, onOpen: (b: string, id: string) => void = noop) => <RecordCard record={{ bucket: e.bucket, id: e.id }} mode="gm" chrome="embed" content={db} onOpenRef={onOpen} />;
 
 const mounted: { stop: () => void }[] = [];
@@ -227,15 +248,11 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     expect(Object.entries(legacy).some(([k, f]) => sample.find((s) => s.key === k)!.kind === 'nopage' && !!f.settled && !f.settled.includes('ast-'))).toBe(true);
   }, 120_000);
 
-  it('HostPage is the card while CARD_ON.hostPage is on, and the legacy page while it is off', () => {
+  it('HostPage is the card: RecordCard mode gm, chrome embed', () => {
     const e = sample.find((s) => s.kind === 'page')!;
     const el = (HostPage as (p: Parameters<typeof HostPage>[0]) => ReactElement)({ content: db, bucket: e.bucket, id: e.id, onOpen: noop });
-    if (CARD_ON.hostPage) {
-      expect(el.type).toBe(RecordCard);
-      expect(el.props).toMatchObject({ record: { bucket: e.bucket, id: e.id }, mode: 'gm', chrome: 'embed', content: db });
-    } else {
-      expect(el.type).toBe(HostPageLegacy);
-    }
+    expect(el.type).toBe(RecordCard);
+    expect(el.props).toMatchObject({ record: { bucket: e.bucket, id: e.id }, mode: 'gm', chrome: 'embed', content: db });
   });
 
   it("keeps the page's stat lines: air-walk shows its Range and Duration, as the GM reads them mid-fight", async () => {

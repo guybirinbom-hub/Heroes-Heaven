@@ -7,7 +7,6 @@ import { build, content } from './_content';
 import { renderDom } from './_render';
 import { ActionDetailModal, MainTab } from '../src/sheet/MainTab';
 import { ACTIVITIES } from '../src/rules/actions';
-import { CARD_ON } from '../src/sheet/cardSurfaces';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
@@ -47,8 +46,9 @@ import type { Character, ContentDatabase, InventoryItem } from '../src/rules/typ
  * Measured 2026-10-02: snapshot written on HEAD 525af84 before any edit (693 popups: 2 Pinned rows,
  * 425 encounter chips, 203 exploration, 63 downtime), then compared after the hoist: 0 differences.
  *
- * Card step 9 (CARD_ON.actionDetail): an action that names its record opens that record's 'mine' card,
- * so the named-case assertions read either popup (the card's .ast-head or the legacy .picker-head), and
+ * Card step 9: an action that names its record opens that record's 'mine' card,
+ * so the named-case assertions read either popup (the card's .ast-head or, for an action that names no
+ * record, the plain popup's .picker-head), and
  * the snapshot block is re-baselined: a popup that moved onto the card is listed as changed for that
  * reason, every other popup stays byte-equal. Measured 2026-10-06 against a snapshot written on HEAD
  * 7945973 before any step-9 edit: 693 popups, 672 changed — every one of them now the record's mine
@@ -269,11 +269,11 @@ describe('every Main-tab action popup, opened through MainTab', () => {
     const before = JSON.parse(readFileSync(SNAP!, 'utf8')) as Record<string, string>;
     expect(Object.keys(popups)).toEqual(Object.keys(before));
     /* Card step 9 re-baseline (honest, like card-browse's): a snapshot written BEFORE step 9 legitimately
-       differs for every popup that now opens its record's 'mine' card (CARD_ON.actionDetail) — the
+       differs for every popup that now opens its record's 'mine' card — the
        reason for each changed row is that one. Every other popup (an action naming no record: a curated
        activity with no action / feat record, an item's activation) must still be byte-equal, and no
-       card may equal the legacy markup it replaced. A snapshot written on the step-9 tree (or with the
-       switch off) compares byte-equal outright: no row is on the card list then. Measured 2026-10-06
+       card may equal the legacy markup it replaced. A snapshot written on the step-9 tree compares
+       byte-equal outright: no row is on the card list then. Measured 2026-10-06
        against the pre-step-9 snapshot (HEAD 7945973): the counts are pinned below. */
     /* Wording merge (2026-10-08, the owner: the two stars differ): a popup's "Pin to top" button draws a pin
        glyph (ti-pin), no longer the PinStar's ti-star. Compared with that one glyph put back, a popup that
@@ -290,7 +290,7 @@ describe('every Main-tab action popup, opened through MainTab', () => {
     expect(changed.filter((k) => !onCard.includes(k)), 'a popup that did not move onto the card changed').toEqual([]);
     // batch card premise: action-2292 "Requirements The ally is willing to accept your aid" — "Pin to top" draws a pin, the PinStar a star (owner, 2026-10-08).
     for (const k of Object.keys(before)) if (!onCard.includes(k)) expect(legacyOf(popups[k]), k).toBe(before[k]);
-    if (CARD_ON.actionDetail) expect(pinOnly.map((k) => k.split('|').slice(3).join('|')), 'popups changed only by the pin glyph').toEqual(Array(6).fill('Recover'));
+    expect(pinOnly.map((k) => k.split('|').slice(3).join('|')), 'popups changed only by the pin glyph').toEqual(Array(6).fill('Recover'));
     // batch card premise: action-2292 "Trigger An ally is about to use an action that requires a skill check or attack roll"
     expect(onCard.filter((k) => !changed.includes(k))).toEqual([]);
     /* Pinned independently of the new markup (fixer round 3): the rule above lets any popup that now
@@ -300,7 +300,7 @@ describe('every Main-tab action popup, opened through MainTab', () => {
        switched, and the unchanged rows are exactly the curated activities that name no record. */
     // Applies to a snapshot written before step 9 (no card markup in it) while the switch is on.
     const preStep9 = !Object.values(before).some((h) => h.includes('card-mine'));
-    if (preStep9 && CARD_ON.actionDetail) {
+    if (preStep9) {
       expect(Object.keys(before).length, 'the pre-step-9 snapshot').toBe(693);
       expect([changed.length, unchanged.length], 'changed / unchanged').toEqual([672, 21]);
       const slug = (n: string) => n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');

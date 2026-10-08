@@ -19,9 +19,9 @@ import { sharedFeatureFallback } from '../rules/featureText';
  * `chrome: 'popup'` (StatDetailModal's full text): `printed`, the footer and `fallbackText` are read.
  * Step 6 builds `mode: 'gm'` with `chrome: 'embed'` (CampaignTracker's HostPage, the GM screen page):
  * `record`, `content` and `onOpenRef` are read; no frame, no stack, nothing on the dismiss stack.
- * Step 9 (the Main-tab action popup, CARD_ON.actionDetail) reads `controls` and `headerActions`.
- * Step 10 (the strike popup, CARD_ON.strikeDetail) reads `leadControls`.
- * Step 14 (the item popup, CARD_ON.itemDetail) builds `chrome: 'inset'` and reads `stubs`.
+ * Step 9 (the Main-tab action popup) reads `controls` and `headerActions`.
+ * Step 10 (the strike popup) reads `leadControls`.
+ * Step 14 (the item popup) builds `chrome: 'inset'` and reads `stubs`.
  */
 
 /** browse = today's search popup, never scoped; mine = the sheet's "what is yours"; gm = HostPage. */
@@ -329,14 +329,10 @@ const endsSpaced = (n: AstNode) => /\s$/.test(textOf(n));
  * and glyphLedLine the line before and after agree with the mirror for 788. The 4 others are list items
  * whose markdown keeps every item on one line (spells:kinetic-ram's "⟨1⟩ The spell targets…"); there the
  * glyph opens its item, as glyphLedLine draws it.
- * `frags` = the pieces after `nodes[i]`; `end` = the index after the line; `own` = how many of `frags` come
- * before the first glyph join — the continuation the parser split off `nodes[i]` itself (all of them when
- * no glyph join happens). hideMeta drops a META paragraph with its own continuation, as it always did, and
- * keeps what a glyph join brought onto its line (AstRenderer lineEl).
+ * `frags` = the pieces after `nodes[i]`; `end` = the index after the line.
  */
-export function lineFrags(nodes: AstNode[], i: number): { frags: AstNode[]; end: number; own: number } {
+export function lineFrags(nodes: AstNode[], i: number): { frags: AstNode[]; end: number } {
   const frags: AstNode[] = [];
-  let own = -1;
   let last = nodes[i];
   let j = i + 1;
   while (j < nodes.length) {
@@ -350,7 +346,6 @@ export function lineFrags(nodes: AstNode[], i: number): { frags: AstNode[]; end:
     if (n.t === 'actions' && last.t !== 'actions' && !/\.\s*$/.test(textOf(last))) {
       const nx = nodes[j + 1];
       const before = !endsSpaced(last);
-      if (own < 0) own = frags.length;
       if (drawsGlyph(n) && before) frags.push(SPACE);
       frags.push(n);
       j++;
@@ -365,22 +360,20 @@ export function lineFrags(nodes: AstNode[], i: number): { frags: AstNode[]; end:
     }
     break;
   }
-  return { frags, end: j, own: own < 0 ? frags.length : own };
+  return { frags, end: j };
 }
 
 /** A glyph that OPENS its line — "⟨1⟩ The target is launched 10 feet into the air…" (spells:banishing-touch,
  *  spell-2152, whose markdown prints `<actions string="Single Action" /> The target is launched…` as one
  *  line) — and the paragraph it leads, with that paragraph's own continuation. `lead` gives the line its
- *  class; `pieces` = the glyph, the paragraph and its continuation; `end` = the index after the line;
- *  `unit` = [from, to) of `pieces`: the paragraph and the continuation the parser split off it (lineFrags
- *  `own`). Null when the glyph draws nothing or no paragraph follows it (then it keeps the .ast-actline it
- *  always had). */
-export function glyphLedLine(nodes: AstNode[], i: number): { lead: AstNode; pieces: AstNode[]; end: number; unit: [number, number] } | null {
+ *  class; `pieces` = the glyph, the paragraph and its continuation; `end` = the index after the line.
+ *  Null when the glyph draws nothing or no paragraph follows it (then it keeps the .ast-actline it always
+ *  had). */
+export function glyphLedLine(nodes: AstNode[], i: number): { lead: AstNode; pieces: AstNode[]; end: number } | null {
   const nx = nodes[i + 1];
   if (!drawsGlyph(nodes[i]) || !isLineP(nx)) return null;
-  const { frags, end, own } = lineFrags(nodes, i + 1);
-  const from = startsSpaced(nx) ? 1 : 2;
-  return { lead: nx, pieces: [nodes[i], ...(startsSpaced(nx) ? [] : [SPACE]), nx, ...frags], end, unit: [from, from + 1 + own] };
+  const { frags, end } = lineFrags(nodes, i + 1);
+  return { lead: nx, pieces: [nodes[i], ...(startsSpaced(nx) ? [] : [SPACE]), nx, ...frags], end };
 }
 
 /** An "Activate" paragraph led by its bold label and followed by its glyph, drawn as ONE line with what the

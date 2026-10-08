@@ -7,10 +7,10 @@
  *
  * For every (surface, record) with a page it computes, from the shipped public/ast/*.json.gz and the
  * same functions the popups render with —
- *   - src/sheet/astVisibility.ts (isMetaP, isMetaishBlock, variantSection, withoutItemLists, textOf),
+ *   - src/sheet/astVisibility.ts (isMetaP, withoutItemLists, textOf and the card's cuts),
  *   - src/sheet/cardScope.ts (the folds a card draws; none yet — step 13),
- *   - featStatRows / itemStatRows / spellStatRows, the stat panel of FeatDetail / ItemDetail /
- *     SpellDetail, read from their own .tsx files (bundled in memory: jiti cannot parse .tsx),
+ *   - itemStatRows / spellStatRows, the stat panel of ItemDetail / SpellDetail, read from their own
+ *     .tsx files (bundled in memory: jiti cannot parse .tsx),
  *   - RichText's parseBlocks for the description-string lane,
  * one verdict per printed label (OK / MISSING / DIFFERS / DUPLICATED / EXTRA) and these sections:
  *
@@ -19,9 +19,9 @@
  *                    section 2 rule 5's names (src/sheet/cardScope.ts OMISSION_RULES: S-own, S-items,
  *                    S-furniture, S-printed, S-future, S-pick) and is not a vocabulary label line (those
  *                    are S1-MISSING). Keyed by the line's leading bold word ("Source", "PFS Note",
- *                    "Special" …) or, for a prose line, "¶" + the start of its text. The legacy drop paths
- *                    (meta-line, metaish-block, inline-row, spoiler) are how a line was dropped, never a
- *                    name — so a predicate that starts hiding more page text turns this red.
+ *                    "Special" …) or, for a prose line, "¶" + the start of its text. The walk's drop paths
+ *                    (card-furniture, card-printed, spoiler) are how a line was dropped, never a name —
+ *                    so a predicate that starts hiding more page text turns this red.
  *   DIFFERS         a stat row whose value is not the page's (Prerequisites, Range, Area, Targets,
  *                    Duration, Defense — the rest are the record's fields, judged on presence only)
  *   DUPLICATED       a label shown in both the stat rows and the body
@@ -74,15 +74,13 @@
  * renders a seeded 540 of them through the real popups, agrees with every one, and checks that those
  * rows' findings equal this baseline's entries for them.
  *
- * Card step 5 (re-stamped 2026-10-02): StatDetailModal's full text is the 'mine' card (CARD_ON.statDetail)
- * and its 2,774 rows are modelled with the card's rules. Their entries fell from S1-MISSING 5,642 →
+ * Card step 5 (re-stamped 2026-10-02): StatDetailModal's full text is the 'mine' card and its 2,774 rows are modelled with the card's rules. Their entries fell from S1-MISSING 5,642 →
  * 0, S1-UNNAMED 3,559 → 0 and CUT-IN-SENTENCE 2 → 0; no other surface's entry moved. What the card
  * leaves out on those rows is 878 lines on 677 rows, every one named S-furniture by its own words
  * (461 spoiler banners; 176 "leads to…" headings and their 176 link lists; 43 Class labels; 14 Related
  * Feats lists; 8 "Click here …" lines).
- * The switch turns back in one line (section 9): --write-baseline measures every landed surface
- * (lib SWITCHED_SURFACES) with its switch on for the main sections AND with it off for
- * `legacy[surface]`; the check expects the legacy entries while that switch is off (lib expectedEntries).
+ * Card step 22 removed the per-surface switches (src/sheet/cardSurfaces.ts) and the baseline's
+ * `legacy[surface]` blocks with them: every surface is its card, measured as it is.
  */
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -90,8 +88,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { gunzipSync } from 'node:zlib';
-import { SECTIONS, SWITCHED_SURFACES, baselineProblems, computeLedger, expectedEntries, surfaceEntries } from './lib/card-scope.mjs';
-import { CARD_ON } from '../src/sheet/cardSurfaces.ts';
+import { SECTIONS, baselineProblems, computeLedger, expectedEntries } from './lib/card-scope.mjs';
 import { foldsOf } from '../src/sheet/cardScope.ts';
 import { ACTIVITIES } from '../src/rules/actions.ts';
 import { FEAT_SITUATIONAL } from '../src/rules/situationalBonuses.ts';
@@ -137,7 +134,6 @@ export async function loadTsxFunctions(root = ROOT) {
   const r = await build({
     stdin: {
       contents: [
-        "export { featStatRows } from './src/sheet/FeatDetail.tsx';",
         "export { itemStatRows } from './src/sheet/ItemDetail.tsx';",
         "export { spellStatRows } from './src/sheet/SpellsTab.tsx';",
         "export { parseBlocks, cleanRun } from './src/sheet/RichText.tsx';",
@@ -175,7 +171,7 @@ export async function loadDeps(root = ROOT) {
     content,
     trees,
     astIndex,
-    statRows: { featStatRows: fns.featStatRows, itemStatRows: fns.itemStatRows, spellStatRows: fns.spellStatRows },
+    statRows: { itemStatRows: fns.itemStatRows, spellStatRows: fns.spellStatRows },
     parseBlocks: fns.parseBlocks,
     cleanRun: fns.cleanRun,
     activities: ACTIVITIES,
@@ -186,9 +182,9 @@ export async function loadDeps(root = ROOT) {
   };
 }
 
-/** The ledger under `cardOn` (default: the switches as they are in src/sheet/cardSurfaces.ts). */
-export async function runLedger(root = ROOT, cardOn = CARD_ON, deps = undefined) {
-  return computeLedger({ ...(deps ?? (await loadDeps(root))), cardOn });
+/** The ledger of every surface as it draws today. */
+export async function runLedger(root = ROOT, deps = undefined) {
+  return computeLedger(deps ?? (await loadDeps(root)));
 }
 
 const argv = process.argv.slice(2);
@@ -198,26 +194,18 @@ if (IS_MAIN) {
   const t0 = Date.now();
   const deps = await loadDeps();
   const writing = argv.includes('--write-baseline');
-  // The baseline's main sections hold every landed surface with its switch ON (the card), whatever the
-  // switch says right now; the check itself always measures the switches as they are.
-  const mainOn = writing ? { ...CARD_ON, ...Object.fromEntries(SWITCHED_SURFACES.map((s) => [s, true])) } : CARD_ON;
-  const { found, counts, stubOccurrences } = await runLedger(ROOT, mainOn, deps);
+  const { found, counts, stubOccurrences } = await runLedger(ROOT, deps);
   const ms = Date.now() - t0;
   console.error(`card truth: ${stubOccurrences} unresolved stub occurrences across every shipped tree (${found.STUBS.length} distinct page|stub entries).`);
   if (argv.includes('--list')) {
     console.log(JSON.stringify(found, null, 2));
   } else if (writing) {
-    // Each landed surface measured with its switch OFF: what the check expects while it is turned back.
-    const legacy = {};
-    for (const s of SWITCHED_SURFACES) legacy[s] = surfaceEntries((await runLedger(ROOT, { ...mainOn, [s]: false }, deps)).found, s);
     const out = {
       _measured: `card-truth-check --write-baseline, ${new Date().toISOString().slice(0, 10)}; on a working tree with another lane's regen output uncommitted — re-stamp when it commits`,
       ...found,
-      legacy,
     };
     writeFileSync(join(ROOT, BASELINE), JSON.stringify(out, null, 1) + '\n');
     console.log(`card truth: baseline written (${SECTIONS.map((s) => `${s} ${found[s].length}`).join(', ')}) in ${Date.now() - t0} ms.`);
-    for (const s of SWITCHED_SURFACES) console.log(`card truth: legacy ${s} (switch off): ${Object.entries(legacy[s]).map(([k, v]) => `${k} ${v.length}`).join(', ') || 'none'}.`);
   } else {
     const baseline = existsSync(join(ROOT, BASELINE)) ? JSON.parse(readFileSync(join(ROOT, BASELINE), 'utf8')) : {};
     const problems = baselineProblems(found, baseline, BASELINE);

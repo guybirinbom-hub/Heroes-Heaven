@@ -3,13 +3,9 @@ import { formatMod, critSpecSources, strikeShowsCritSpec, type Strike } from '..
 import { critSpec } from '../rules/critSpec';
 import { shownItemId } from '../rules/cursedItems';
 import type { StatRef } from '../rules/explain';
-import { useEscapeClose } from './useEscapeClose';
-import { PinStar } from './PinStar';
 import { PinContext, usePinDesc } from './PinContext';
-import { DescBody } from './DescBody';
 import { CritSpecText } from './CritSpecText';
 import { RecordCard } from './RecordCard';
-import { cardOn } from './cardSurfaces';
 import { scopeOfCharacter } from './cardScope';
 import type { PinDescApi } from './PinContext';
 import type { OursLine } from './cardModel';
@@ -34,21 +30,7 @@ interface StrikeDetailProps {
   onClose: () => void;
 }
 
-/**
- * The strike detail popup: the weapon's (or unarmed/blast) description, plus the attack bonus and
- * damage — each clickable to open its calculation breakdown (the same StatDetailModal the rest of
- * the sheet uses). The description is pinnable like every other description popup.
- *
- * Card step 10 (docs/card-design.md section 9 row 10): with CARD_ON.strikeDetail the popup is the
- * weapon's 'mine' card — StrikeCard below. The legacy popup stays for the switch's off position.
- * Two components, not one with a branch: each registers its own dismiss entry (the card's is
- * RecordCard's), so the choice is made before any hook runs.
- */
-export function StrikeDetailModal(props: StrikeDetailProps) {
-  return cardOn('strikeDetail') ? <StrikeCard {...props} /> : <LegacyStrikeDetail {...props} />;
-}
-
-/** What both popups read off a strike: its weapon (if any), the pin node, and the gated crit block. */
+/** What the popup reads off a strike: its weapon (if any), the pin node, and the gated crit block. */
 function strikeParts(strike: Strike, character: Character, content: ContentDatabase) {
   const inv = character.inventory.find((i) => i.instanceId === strike.instanceId);
   const item = inv ? content.items[inv.itemId] : undefined;
@@ -62,7 +44,7 @@ function strikeParts(strike: Strike, character: Character, content: ContentDatab
   // Crit specialization — shown in Strikes ONLY when the character actually has it (matching the row).
   const critText = critSpec(strike.group);
   const showsCrit = !!critText && strikeShowsCritSpec(strike, critSpecSources(character, content));
-  return { item, description, descRefs, node, critText, showsCrit };
+  return { item, node, critText, showsCrit };
 }
 
 /** Attack bonus and Damage, each a button into its breakdown when the sheet can open one. */
@@ -134,7 +116,12 @@ export function strikeCardPin(pin: PinDescApi, cardNode: DescNode, starNode: Des
 }
 
 /**
- * Card step 10 — the weapon's record as a 'mine' card (section 2 rules 4–5, section 6).
+ * The strike detail popup: the weapon's (or unarmed/blast) description, plus the attack bonus and
+ * damage — each clickable to open its calculation breakdown (the same StatDetailModal the rest of
+ * the sheet uses). The description is pinnable like every other description popup.
+ *
+ * Card step 10 — the weapon's record as a 'mine' card (section 2 rules 4–5, section 6). Card step 22
+ * removed the legacy popup it replaced.
  *  - A weapon opens its own Archives page by id (items bucket; the disguise twin's for a hidden cursed
  *    weapon, cursedItems.ts shownItemId): the page's words replace the imported weapon text. The page's
  *    lines show by the printed-set rule with an EMPTY set — this popup prints no stat rows of the page's
@@ -154,7 +141,7 @@ export function strikeCardPin(pin: PinDescApi, cardNode: DescNode, starNode: Des
  *  - The PinStar pins the step-19 node it always pinned ({key:'items', slug, title, mode:'mine'} for a
  *    weapon; the key-only node for a strike with no weapon), through strikeCardPin.
  */
-function StrikeCard({ strike, character, content, onOpenStat, onClose }: StrikeDetailProps) {
+export function StrikeDetailModal({ strike, character, content, onOpenStat, onClose }: StrikeDetailProps) {
   const { item, node, critText, showsCrit } = strikeParts(strike, character, content);
   // The node the card opens: a weapon's is the pin node itself (it carries the weapon's id); a strike
   // with no weapon opens no record — an empty slug makes the card look nothing up by name.
@@ -180,30 +167,5 @@ function StrikeCard({ strike, character, content, onOpenStat, onClose }: StrikeD
         onExit={onClose}
       />
     </PinContext.Provider>
-  );
-}
-
-/** The legacy popup, kept behind CARD_ON.strikeDetail (card step 10). */
-function LegacyStrikeDetail({ strike, character, content, onOpenStat, onClose }: StrikeDetailProps) {
-  useEscapeClose(onClose);
-  const { description, descRefs, node, critText, showsCrit } = strikeParts(strike, character, content);
-
-  return (
-    <div className="picker-overlay" onClick={onClose}>
-      <div className="picker info-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="picker-head">
-          <span className="info-title">{strike.name}</span>
-          <PinStar node={node} />
-          <button className="picker-close" onClick={onClose} aria-label="Close">
-            <i className="ti ti-x" aria-hidden="true" />
-          </button>
-        </div>
-        <div className="info-body">
-          <StrikeStats strike={strike} onOpenStat={onOpenStat} />
-          {showsCrit && <StrikeCrit strike={strike} critText={critText!} content={content} />}
-          {description && <DescBody description={description} descRefs={descRefs} onExit={onClose} />}
-        </div>
-      </div>
-    </div>
   );
 }

@@ -7,7 +7,6 @@ import { createRoot } from 'react-dom/client';
 import { build, content } from './_content';
 import { StrikeDetailModal, strikeOursLines } from '../src/sheet/StrikeDetailModal';
 import { RecordCard } from '../src/sheet/RecordCard';
-import { cardOn } from '../src/sheet/cardSurfaces';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { loadAstIndex, loadBucketAst, type AstNode } from '../src/sheet/astStore';
@@ -18,7 +17,7 @@ import type { DescNode } from '../src/sheet/descref';
 
 /**
  * Card step 10 (docs/card-design.md section 9 row 10; sections 2, 4, 6, 7): the strike popup is the
- * weapon's 'mine' card (CARD_ON.strikeDetail).
+ * weapon's 'mine' card.
  *
  *  - The weapon's own Archives page (items bucket, by the weapon's id — the disguise twin's for a hidden
  *    cursed weapon) replaces the imported weapon text: the longsword reads weapon-386's "Longswords can be
@@ -170,7 +169,7 @@ function draw<T>(pool: T[], n: number, rng: () => number): T[] {
 }
 
 // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
-describe.runIf(cardOn('strikeDetail'))('card step 10: the strike popup is the weapon\'s mine card', () => {
+describe('card step 10: the strike popup is the weapon\'s mine card', () => {
   // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
   it('while the page loads, Attack bonus and Damage are already on the card (loading lane); then the page replaces the placeholder', async () => {
     const { c, s } = wielder('longsword', 1);

@@ -15,17 +15,18 @@ import { openExternal } from '../platform';
 /* Card step 1: the text hygiene (clean, textOf) and the meta predicates (META, isMetaP, isSourceP,
  * STAT_LABELS, isMetaishBlock) live in astVisibility.ts, a plain .ts file the card's guard imports
  * through jiti, so the guard and this renderer read one copy. */
-import { clean, textOf, isMetaP, isSourceP, isMetaishBlock } from './astVisibility';
+import { clean, textOf, isMetaP, isSourceP } from './astVisibility';
 /* Card step 5: the 'mine' card's cuts (printed set, furniture, dim lines) — the same functions the guard
- * models the card with (scripts/lib/card-scope.mjs). Reached only through the `card` prop; the hideMeta
- * path below never reads them. */
+ * models the card with (scripts/lib/card-scope.mjs). Reached only through the `card` prop; the browse
+ * path never reads them. (Card step 22 removed the third path, `hideMeta`, the held-record popup body
+ * every 'mine' card replaced.) */
 import {
   cardDropsMetaP, cardDropsPrintedP, cardFurnitureSectionEnd, cardHeadUntil, cardRowParts, cardStatHeadMask, isCardDimP, isCardFurnitureP,
   isCardFurnitureTitle, type CardWalk,
 } from './astVisibility';
 /* Card step 13a: the level folds' node types (card-fold, card-pointer, `applies`), made only by
- * src/sheet/cardScope.ts scopeTree for a 'mine' card — a stored tree never carries them, so the hideMeta
- * and browse paths never meet them. */
+ * src/sheet/cardScope.ts scopeTree for a 'mine' card — a stored tree never carries them, so the browse
+ * path never meets them. */
 import { FOLD_LABEL, type ScopedNode } from './cardScope';
 /* Card step 14: an embedded page stub resolved by astStubs.ts (made only where a card switches it on —
  * a stored tree's stubs are empty, so every other path draws them as nothing, as before). */
@@ -260,10 +261,9 @@ function TableEl({ node, ctx }: { node: AstNode; ctx: Ctx }): ReactNode {
 /**
  * Render a RUN of block nodes faithfully — every AoN node type (headings, tables, lists, asides, nested
  * documents, degree-of-success, unboxed Activate, meta lines). Recurses into row/column/document/aside so
- * a full class/ancestry page renders in full, not just its loose paragraphs. `hideMeta` drops only the
- * Source/Range/… meta lines (detail views show their own stat block) — flavor prose is NEVER dimmed.
+ * a full class/ancestry page renders in full, not just its loose paragraphs. Flavor prose is NEVER dimmed.
  */
-function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil, statMask }: { nodes: AstNode[]; ctx: Ctx; hideMeta?: boolean; kb?: string; lead?: boolean; card?: CardWalk; headUntil?: number; statMask?: readonly boolean[] }): ReactNode {
+function Blocks({ nodes, ctx, kb = 'b', lead, card, headUntil, statMask }: { nodes: AstNode[]; ctx: Ctx; kb?: string; lead?: boolean; card?: CardWalk; headUntil?: number; statMask?: readonly boolean[] }): ReactNode {
   const out: ReactNode[] = [];
   for (let i = 0; i < nodes.length; i++) {
     const n = nodes[i];
@@ -288,11 +288,12 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil, statMas
     }
     /* bug 2026-09-12 #8: popup-divider — a rule with NOTHING above it.
      *
-     * An AoN page is <stat header> <hr> <prose>, and a detail popup passes `hideMeta` because it prints
-     * that header itself — so the page's separator became the FIRST thing in the body: a line under the
-     * title bar with its own .7em margin above and below and nothing to separate. Measured on the shipped
-     * artefact: 18,667 of 24,964 pages open that way in the hideMeta path (0 in the modal path, where the
-     * Source/stat lines do render above it — that popup is unchanged).
+     * An AoN page is <stat header> <hr> <prose>. A popup that leaves the whole header out (the pre-card
+     * detail popups did, through `hideMeta`, removed in card step 22; a 'mine' card does where its
+     * surface's stat rows printed every header line) made the page's separator the FIRST thing in the
+     * body: a line under the title bar with its own .7em margin above and below and nothing to separate.
+     * Measured on the shipped artefact: 18,667 of 24,964 pages opened that way in the hideMeta path (0 in
+     * the modal path, where the Source/stat lines do render above it — that popup is unchanged).
      *
      * `lead` is "nothing has been rendered before this run"; with an empty `out` this hr is the first
      * thing on screen. A divider is only a divider when it divides. */
@@ -313,17 +314,16 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil, statMas
       const raw = textOf(n).trim();
       const meta = isMetaP(n);
       if (raw && !successTier(n) && !/^#{1,6}$/.test(raw) && !/^[-*_]{3,}$/.test(raw)) {
-        const { frags, end: j, own } = lineFrags(nodes, i);
-        /* A META line joins the fold ONLY to collect a split-out glyph — 78 rows in the modal path (77
-         * under hideMeta): 4 "Range ⟨1⟩ shortbow …" stat rows and 74 "Craft Requirements Supply a casting
-         * of ⟨2⟩ …" wand lines, meta either way, so hideMeta now drops each one WITH its label instead of
-         * stranding the glyph below it. It stays out of it otherwise: the 3 other meta lines
-         * with a continuation include trait:asura, whose Source line is followed by its flavour text, and
-         * folding that would dim a paragraph of prose into the source line (and drop it under hideMeta).
-         * "flavor prose is NEVER dimmed" is this renderer's rule; the glyph rows are not prose. */
+        const { frags, end: j } = lineFrags(nodes, i);
+        /* A META line joins the fold ONLY to collect a split-out glyph — 78 rows in the modal path: 4
+         * "Range ⟨1⟩ shortbow …" stat rows and 74 "Craft Requirements Supply a casting of ⟨2⟩ …" wand
+         * lines, meta either way, so the glyph is never stranded below its label. It stays out of it
+         * otherwise: the 3 other meta lines with a continuation include trait:asura, whose Source line is
+         * followed by its flavour text, and folding that would dim a paragraph of prose into the source
+         * line. "flavor prose is NEVER dimmed" is this renderer's rule; the glyph rows are not prose. */
         if (frags.length && (!meta || frags.some((f) => f.t === 'actions'))) {
           i = j - 1;
-          const el = lineEl(n, [n, ...frags], [0, 1 + own], key, ctx, hideMeta, cw);
+          const el = lineEl(n, [n, ...frags], key, ctx, cw);
           if (el != null) out.push(el);
           continue;
         }
@@ -334,45 +334,31 @@ function Blocks({ nodes, ctx, hideMeta, kb = 'b', lead, card, headUntil, statMas
     const led = n.t === 'actions' ? glyphLedLine(nodes, i) : null;
     if (led) {
       i = led.end - 1;
-      const el = lineEl(led.lead, led.pieces, led.unit, key, ctx, hideMeta, cw);
+      const el = lineEl(led.lead, led.pieces, key, ctx, cw);
       if (el != null) out.push(el);
       continue;
     }
-    const el = renderBlock(n, ctx, hideMeta, key, lead && !out.length, cw);
+    const el = renderBlock(n, ctx, key, lead && !out.length, cw);
     if (el != null) out.push(el);
   }
   /* Rendered nothing ⇒ render NOTHING, not an empty fragment. A container whose children all drop out
-   * (a `column` holding only a Source line without "pg. N", which isMetaishBlock keeps but whose metaP
-   * renders null under hideMeta) was still an entry in the caller's `out`, so it counted as "something
-   * above" and kept the hr after it: 32 pages — actions/tumbling-swipe, items/conundrum-spectacles,
-   * items/secret-keepers-mask and its variants… — still opened on a rule. */
+   * (a `column` holding only a Source line without "pg. N", whose line the old hideMeta popup dropped)
+   * was still an entry in the caller's `out`, so it counted as "something above" and kept the hr after
+   * it: 32 pages — actions/tumbling-swipe, items/conundrum-spectacles, items/secret-keepers-mask and its
+   * variants… — still opened on a rule. A 'mine' card's printed-set drops empty a container the same way. */
   return out.length ? <>{out}</> : null;
 }
 
 /** One reunited LINE (cardModel.ts lineFrags / glyphLedLine): `pieces` drawn inline, styled as its `lead`
  *  paragraph. Card step 5: on a card it follows the card's rules — left out only as furniture or S-printed
  *  (card step 14: for any header line, META or not), otherwise drawn whole at full weight (a dim label dims
- *  it). Elsewhere a reunited meta row keeps the meta branch's styling AND its hideMeta drop — which used to
- *  leave the glyph and the second half of the row behind as orphan blocks once the label went. */
-function lineEl(lead: AstNode, pieces: AstNode[], unit: readonly [number, number], key: string, ctx: Ctx, hideMeta: boolean | undefined, cw: CardWalk | undefined): ReactNode {
+ *  it). Elsewhere (browse) a reunited meta row keeps the meta branch's styling. */
+function lineEl(lead: AstNode, pieces: AstNode[], key: string, ctx: Ctx, cw: CardWalk | undefined): ReactNode {
   const meta = isMetaP(lead);
   const kids = lineInline(pieces).map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />);
   if (cw) {
     if (isCardFurnitureP(lead, cw.head) || cardDropsPrintedP(lead, cw)) return null;
     return <p key={key} className={(lead as ScopedNode).applies ? 'card-applies' : isCardDimP(lead) ? 'card-dim' : meta ? 'card-use' : undefined}>{kids}</p>;
-  }
-  /* hideMeta drops a joined line's META label, never the line's other words (orchestrator ruling,
-   * 2026-10-08): rules:reading-creature-statistics prints "Ranged ⟨1⟩ As Melee, but also lists range…" as
-   * one line, and "Ranged" opens with META's "range" — dropping the line whole lost the explanation the
-   * popup had always drawn. What leaves is the META paragraph `unit` = [from, to) of `pieces`: its label
-   * and the continuation the parser split off it (cardModel.ts lineFrags `own`), which hideMeta always
-   * dropped together — a wand's "Craft Requirements Supply a casting of a spell… of ⟨1⟩ or ⟨2⟩, must…"
-   * still leaves whole, never as label-less words. The glyph and the words the page prints after it on
-   * the same line stay, drawn as plain prose; nothing left draws nothing. */
-  if (meta && hideMeta) {
-    const rest = lineInline(pieces.filter((_, m) => m < unit[0] || m >= unit[1]));
-    if (!rest.some(drawsWords)) return null;
-    return <p key={key}>{rest.map((c, ci) => <Inline key={ci} node={c} ctx={ctx} k={ci} />)}</p>;
   }
   return meta
     ? <div key={key} className={'ast-meta' + (isSourceP(lead) ? ' src' : '')}>{kids}</div>
@@ -403,7 +389,7 @@ function subBlocks(props: Parameters<typeof Blocks>[0], key: string): ReactNode 
  * page's markdown ("**Call Gun** <actions string="Single Action" /> ([magical]…"), so lineFrags and
  * glyphLedLine draw them inline. */
 
-function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: string, lead?: boolean, card?: CardWalk): ReactNode {
+function renderBlock(n: AstNode, ctx: Ctx, key: string, lead?: boolean, card?: CardWalk): ReactNode {
   switch (n.t) {
     case 'traits':
       // Shown as chips in the header — the host page's. Card step 14b: an embedded page's own chips draw
@@ -444,7 +430,7 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
         if (isMetaP(n)) return cardDropsMetaP(n, card) ? null : <p key={key} className={isCardDimP(n) ? 'card-dim' : 'card-use'}><Kids node={n} ctx={ctx} /></p>;
         if (isCardDimP(n)) return <p key={key} className="card-dim"><Kids node={n} ctx={ctx} /></p>;
       }
-      if (isMetaP(n)) return hideMeta ? null : <div key={key} className={'ast-meta' + (isSourceP(n) ? ' src' : '')}><Kids node={n} ctx={ctx} /></div>;
+      if (isMetaP(n)) return <div key={key} className={'ast-meta' + (isSourceP(n) ? ' src' : '')}><Kids node={n} ctx={ctx} /></div>;
       const t = successTier(n);
       if (t) {
         const rest = (n.c || []).slice(t.idx + 1).map((c, i) => <Inline key={i} node={c} ctx={ctx} k={i} />);
@@ -456,22 +442,21 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       return String(n.string || '').trim() ? <div key={key} className="ast-actline"><Glyph str={n.string} /></div> : null;
     case 'spoilers':
       if (card) return null; // S-furniture: a spoiler banner is navigation, not the record's rules
-      return hideMeta ? null : <div key={key} className="ast-meta src"><Kids node={n.c && n.c[0] ? n.c[0] : n} ctx={ctx} /></div>;
+      return <div key={key} className="ast-meta src"><Kids node={n.c && n.c[0] ? n.c[0] : n} ctx={ctx} /></div>;
     case 'ul':
     case 'ol': {
       const items = (n.c || []).filter((c) => c.t === 'li');
       if (!items.length) return null;
-      const inner = items.map((li, i) => <li key={i}><Blocks nodes={li.c || []} ctx={ctx} hideMeta={hideMeta} kb={`${key}.${i}`} card={card} /></li>);
+      const inner = items.map((li, i) => <li key={i}><Blocks nodes={li.c || []} ctx={ctx} kb={`${key}.${i}`} card={card} /></li>);
       return n.t === 'ol' ? <ol key={key} className="ast-list">{inner}</ol> : <ul key={key} className="ast-list">{inner}</ul>;
     }
     case 'table':
       return <TableEl key={key} node={n} ctx={ctx} />;
     case 'aside':
-      return <aside key={key} className="ast-aside"><Blocks nodes={n.c || []} ctx={ctx} hideMeta={hideMeta} kb={key} card={card} /></aside>;
+      return <aside key={key} className="ast-aside"><Blocks nodes={n.c || []} ctx={ctx} kb={key} card={card} /></aside>;
     case 'row': {
-      // A detail view shows its own stat panel, so drop a leading Source/stat layout row to avoid a
-      // duplicate stat block. (Card step 5: a 'mine' card never drops a block whole — it recurses.)
-      if (!card && hideMeta && isMetaishBlock(n)) return null;
+      // A layout row is never dropped whole (card step 5: a 'mine' card recurses into it; the old hideMeta
+      // popup body that dropped a leading Source/stat row left in card step 22).
       const kids = n.c || [];
       // A glyph line (glyphLineLeaves): ONE line, the glyph inline, as AoN's flex row draws it — the element
       // and class renderBlock 'p' gives its label's paragraph alone (an "Activate" line is a plain <p>).
@@ -484,8 +469,8 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
         /* A paragraph the surface leaves out never takes the glyph and the other words of the line along:
          * the row's PRINTED label leaves alone (with every label printed the row "Activate ⟨1⟩ (manipulate)"
          * still draws "⟨1⟩ (manipulate)", as the three blocks did before the row became one line); a later
-         * printed paragraph, card furniture, and the META paragraph hideMeta drops leave as the whole
-         * paragraph they are — what each one did as a block of its own (and as lineEl's unit). */
+         * printed paragraph and card furniture leave as the whole paragraph they are — what each one did
+         * as a block of its own. */
         if (card) {
           const ls = leaves.flatMap((f, m): AstNode[] => {
             if (f.t !== 'p') return [f];
@@ -496,17 +481,13 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
           if (!ls.length) return null;
           return <p key={key} className={first && isCardDimP(first) ? 'card-dim' : meta ? 'card-use' : undefined}>{draw(ls)}</p>;
         }
-        if (meta && hideMeta) {
-          const ls = leaves.filter((_, m) => m !== fi);
-          return ls.length ? <p key={key}>{draw(ls)}</p> : null;
-        }
         if (meta) return <div key={key} className={'ast-meta' + (isSourceP(first!) ? ' src' : '')}>{draw(leaves)}</div>;
         return <p key={key}>{draw(leaves)}</p>;
       }
       // A row that holds BLOCK children (columns, a TABLE, paragraphs, lists…) is a layout/content row —
       // render those as blocks. (A row wrapping a table was the bug that mashed the whole exemplars table
       // into one inline run.) Only a row of purely inline bits is a compact "A; B; C" stat line.
-      if (kids.some((c) => BLOCK_TYPES.has(c.t))) return subBlocks({ nodes: kids, ctx, hideMeta, kb: key, lead, card }, key);
+      if (kids.some((c) => BLOCK_TYPES.has(c.t))) return subBlocks({ nodes: kids, ctx, kb: key, lead, card }, key);
       const parts = kids.filter((f) => textOf(f).trim());
       if (card) {
         // Card step 5: filtered per bold-label segment (S-printed), the rest drawn at full weight.
@@ -515,13 +496,12 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
         return <p key={key} className={keep.every(isCardDimP) ? 'card-dim' : 'card-use'}>{keep.map((f, m) => <Fragment key={m}>{m > 0 ? '; ' : ''}<Kids node={f} ctx={ctx} /></Fragment>)}</p>;
       }
       if (!parts.length) return null;
-      return hideMeta ? null : <div key={key} className="ast-meta">{parts.map((f, m) => <Fragment key={m}>{m > 0 ? '; ' : ''}<Kids node={f} ctx={ctx} /></Fragment>)}</div>;
+      return <div key={key} className="ast-meta">{parts.map((f, m) => <Fragment key={m}>{m > 0 ? '; ' : ''}<Kids node={f} ctx={ctx} /></Fragment>)}</div>;
     }
     case 'column':
-      // The leading Source + stat column (armor/weapon/gear header) duplicates a detail view's own stat
-      // panel — drop it when hiding meta; otherwise render its children as blocks.
-      if (!card && hideMeta && isMetaishBlock(n)) return null;
-      return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key);
+      // Its children as blocks (the leading Source + stat column of an armor / weapon / gear page included:
+      // a 'mine' card judges its lines one by one against the surface's printed set).
+      return subBlocks({ nodes: n.c || [], ctx, kb: key, lead, card }, key);
     case 'document':
     case 'doc': {
       // Card step 14 (section 2 rule 6): a stub resolved by src/sheet/astStubs.ts resolveStubs carries the
@@ -533,11 +513,11 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       if (sn.stubKind === 'name') return <StubName key={key} node={sn} ctx={ctx} />;
       if (sn.stubKind === 'list') return <ul key={key} className="ast-list ast-stub-list" data-stub-list=""><StubListItem node={sn} ctx={ctx} /></ul>;
       const from = sn.stubOf;
-      if (!from) return subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key);
-      // Card step 14b (orchestrator ruling, round 3): an embedded page is drawn AS PRINTED — neither the
-      // card walk (S-furniture cuts, dim / use classes, the host's printed-set drops) nor the host's
-      // hideMeta reaches inside it, so its spoiler banner and its "click here" line stay on a mine card as
-      // they do on browse. It is another record's page, not the character's.
+      if (!from) return subBlocks({ nodes: n.c || [], ctx, kb: key, lead, card }, key);
+      // Card step 14b (orchestrator ruling, round 3): an embedded page is drawn AS PRINTED — the card walk
+      // (S-furniture cuts, dim / use classes, the host's printed-set drops) does not reach inside it, so
+      // its spoiler banner and its "click here" line stay on a mine card as they do on browse. It is
+      // another record's page, not the character's.
       const inner = Blocks({ nodes: n.c || [], ctx: { ...ctx, inStub: true }, kb: key });
       return inner == null ? null : <div key={key} className="ast-stub" data-stub={from}>{inner}</div>;
     }
@@ -556,7 +536,7 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       // the whole Ethnicities section) instead of being flattened into one inline run. Otherwise it's an
       // inline node — render its children inline.
       return (n.c || []).some((c) => BLOCK_TYPES.has(c.t))
-        ? subBlocks({ nodes: n.c || [], ctx, hideMeta, kb: key, lead, card }, key)
+        ? subBlocks({ nodes: n.c || [], ctx, kb: key, lead, card }, key)
         : <Fragment key={key}><Kids node={n} ctx={ctx} /></Fragment>;
   }
 }
@@ -621,29 +601,28 @@ const isBareStub = (n: AstNode | undefined) => !!n && (n.t === 'document' || n.t
  * block) live in cardModel.ts, imported above, so the row preview reads the same lines. */
 
 /** Render the doc's body faithfully (see Blocks). */
-function DocBody({ top, ctx, hideMeta, card }: { top: AstNode[]; ctx: Ctx; hideMeta?: boolean; card?: CardWalk }): ReactNode {
+function DocBody({ top, ctx, card }: { top: AstNode[]; ctx: Ctx; card?: CardWalk }): ReactNode {
   /* `lead` starts true here and only here: this run IS the top of the popup body, so a divider it
    * reaches before anything else has nothing above it (bug #8). */
   if (card) return <Blocks nodes={top} ctx={ctx} kb="d" lead card={card} headUntil={cardHeadUntil(top)} statMask={cardStatHeadMask(top)} />;
-  return <Blocks nodes={top} ctx={ctx} hideMeta={hideMeta} kb="d" lead />;
+  return <Blocks nodes={top} ctx={ctx} kb="d" lead />;
 }
 
 /**
  * Full description popup content for one record's ast — header (name + action glyph + badge),
  * AoN-ordered colour-coded trait chips, then the meta + prose body. Slots into HH's popup chrome.
  */
-export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, card, headerControls, footer, lead }: {
+export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, card, headerControls, footer, lead }: {
   node: AstNode;
   /** "bucket:slug" of the open record, so its self-links render as plain text */
   selfRef?: string;
   onOpenRef: (bucket: string, slug: string) => void;
   /** render only the meta+prose body (no popup chrome) — for embedding inside a detail/stat view */
   bodyOnly?: boolean;
-  /** drop the Source/Range/… meta lines (detail views show their own stat block) */
-  hideMeta?: boolean;
-  /** Card step 5 — a 'mine' card: the surface's printed set replaces `hideMeta` (docs/card-design.md
-   *  section 2 rules 4–5). Every labelled page line shows unless its label is printed; furniture leaves;
-   *  Source / Archetype / Access / Craft Requirements / PFS Note are dimmed. Ignores `hideMeta`. */
+  /** Card step 5 — a 'mine' card: the surface's printed set (docs/card-design.md section 2 rules 4–5;
+   *  it replaced the old `hideMeta` drop, which card step 22 removed). Every labelled page line shows
+   *  unless its label is printed; furniture leaves; Source / Archetype / Access / Craft Requirements /
+   *  PFS Note are dimmed. */
   card?: { printed: ReadonlySet<string> };
   /** controls (Back / pin / close) rendered at the right of the header, when the popup owns the chrome */
   headerControls?: ReactNode;
@@ -662,7 +641,7 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, card
   const ctx: Ctx = { selfRef, onOpenRef, hasRef };
   const top = node.c || [];
   const cw: CardWalk | undefined = card ? { printed: card.printed, head: false } : undefined;
-  if (bodyOnly) return <div className="ast-body ast-embed"><DocBody top={top} ctx={ctx} hideMeta={hideMeta} card={cw} />{footer}</div>;
+  if (bodyOnly) return <div className="ast-body ast-embed"><DocBody top={top} ctx={ctx} card={cw} />{footer}</div>;
   const title = top.find((n) => n.t === 'title' && Number(n.level || 1) <= 1) || top.find((n) => n.t === 'title');
   const name = title ? textOf(title.c?.find((x) => x.t === 'link' || x.t === 'text') || title) : '';
   const badge = title?.right;
@@ -695,7 +674,7 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, hideMeta, card
         )}
       </div>
       <TraitChips labels={traitLabels} ctx={ctx} />
-      <div className="ast-body">{lead}<DocBody top={top} ctx={ctx} hideMeta={hideMeta} card={cw} />{footer}</div>
+      <div className="ast-body">{lead}<DocBody top={top} ctx={ctx} card={cw} />{footer}</div>
     </div>
   );
 }

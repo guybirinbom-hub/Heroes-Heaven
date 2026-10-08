@@ -7,7 +7,6 @@ import { build, content } from './_content';
 import { renderDom } from './_render';
 import { MainTab } from '../src/sheet/MainTab';
 import { StrikeDetailModal } from '../src/sheet/StrikeDetailModal';
-import { cardOn } from '../src/sheet/cardSurfaces';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
@@ -30,14 +29,14 @@ import type { DescNode } from '../src/sheet/descref';
  *
  * Every character here is synthesized through build() (name 't'); none is the owner's.
  *
- * Page trees: the activity popups render the Archives page through DescBody (astKey 'actions'). jsdom
- * cannot fetch public/ast, so the TRACKED public/ast/actions.json.gz is served for the three actions
- * opened here and the cache primed, which is the state the app is in once the bucket has loaded. Every
- * other bucket 404s; feat actions carry no astKey and render their description string either way.
+ * Page trees: the action popups render the Archives page through the record's card. jsdom cannot fetch
+ * public/ast, so the TRACKED public/ast/actions.json.gz is served for the three actions opened here and
+ * the cache primed, which is the state the app is in once the bucket has loaded (Halfling Luck's feats
+ * page is served too). Every other bucket 404s.
  *
- * Card step 9: with CARD_ON.actionDetail the action popup is the record's 'mine' card. The legacy
- * popup's six cases stay as they were, in a block that runs only with the switch off; the same six,
- * re-pointed at the card, run with it on (Halfling Luck's feats page is served for them).
+ * Card step 9: the action popup is the record's 'mine' card; card step 10: the strike popup is the
+ * weapon's. Card step 22 removed the switches and, with them, the two blocks of the legacy popups' own
+ * cases that ran only with a switch off; the same cases, re-pointed at the cards, run below.
  *
  * MUTATION LINES (each measured red on 2026-10-02, then restored byte-exact):
  *  - StrikeDetailModal.tsx: drop the gate (`{critText && (` for `{showsCrit && (`) → the level-1
@@ -104,107 +103,9 @@ const strikeOf = (c: Character, id: string): Strike => {
 const LONGSWORD_TEXT =
   "Longswords, also known as arming swords, can be one-edged or two-edged swords. Their blades are heavy and they're between 3 and 4 feet in length.";
 
-// Card step 10: these are the LEGACY popup's assertions, kept for the switch's off position (section 9:
-// "That surface's legacy assertions stay in a block that runs when the switch is off"). With
-// CARD_ON.strikeDetail the popup is the weapon's mine card — the block after this one runs the same six.
-// batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
-describe.skipIf(cardOn('strikeDetail'))('StrikeDetailModal', () => {
-  it('a level-1 fighter\'s longsword: name, PinStar, Attack bonus and Damage as derived, the item text, and NO crit block', () => {
-    const c = fighter(1);
-    const s = strikeOf(c, 'i-sword');
-    const { host } = mount(<StrikeDetailModal strike={s} character={c} content={db} onClose={() => undefined} />);
-    const pop = host.querySelector('.picker.info-modal') as HTMLElement;
-    expect(txt(pop.querySelector('.picker-head .info-title'))).toBe('Longsword');
-    expect(pop.querySelector('.picker-head .info-star'), 'PinStar is in the header').not.toBeNull();
-    const stats = [...pop.querySelectorAll('.strike-detail-stat')].map((b) => [txt(b.querySelector('.sds-label')), txt(b.querySelector('.sds-value'))]);
-    expect(stats).toEqual([
-      ['Attack bonus', formatMod(s.attack[0])],
-      ['Damage', s.damage],
-    ]);
-    // The numbers the derive measured on 2026-10-02 for this build, so a silent engine change shows here too.
-    expect(stats.map(([, v]) => v)).toEqual(['+5', '1d8 S']);
-    // Without onOpenStat the two stats are inert: no .clickable, no "show calculation" hint.
-    expect(pop.querySelectorAll('.strike-detail-stat.clickable')).toHaveLength(0);
-    expect(pop.querySelector('.sds-hint')).toBeNull();
-    expect(pop.querySelector('.strike-detail-crit'), 'a level-1 fighter has no crit specialization').toBeNull();
-    expect(txt(pop.querySelector('.info-body > div:last-child'))).toBe(LONGSWORD_TEXT);
-    expect(txt(pop)).not.toContain('Critical specialization');
-  });
-
-  it('at level 5 (Fighter Weapon Mastery) the sword group\'s crit specialization shows above the text', () => {
-    const c = fighter(5);
-    const s = strikeOf(c, 'i-sword');
-    const { host } = mount(<StrikeDetailModal strike={s} character={c} content={db} onClose={() => undefined} />);
-    const crit = host.querySelector('.strike-detail-crit') as HTMLElement;
-    expect(crit).not.toBeNull();
-    expect(txt(crit.querySelector('.sds-label'))).toBe('Critical specialization · Sword');
-    expect(txt(crit.querySelector('.sd-critspec-text'))).toBe('The target is off-guard until the start of your next turn.');
-    // Order in the body: stats, crit block, then the item's own text.
-    const kids = [...host.querySelector('.info-body')!.children].map((k) => k.className);
-    expect(kids).toEqual(['strike-detail-stats', 'strike-detail-crit', 'sd-desc']);
-    expect(txt(host.querySelector('.info-body')!.lastElementChild)).toBe(LONGSWORD_TEXT);
-  });
-
-  it('with onOpenStat, each stat is a button into its breakdown, keyed by the strike', () => {
-    const c = fighter(1);
-    const s = strikeOf(c, 'i-sword');
-    const opened: StatRef[] = [];
-    const { host, click } = mount(
-      <StrikeDetailModal strike={s} character={c} content={db} onOpenStat={(r) => opened.push(r)} onClose={() => undefined} />,
-    );
-    const buttons = [...host.querySelectorAll('.strike-detail-stat.clickable')];
-    expect(buttons).toHaveLength(2);
-    expect(buttons.map((b) => txt(b.querySelector('.sds-hint')))).toEqual(['show calculation', 'show calculation']);
-    click(buttons[0]);
-    click(buttons[1]);
-    expect(opened).toEqual([
-      { kind: 'strikeAttack', instanceId: 'i-sword' },
-      { kind: 'strikeDamage', instanceId: 'i-sword' },
-    ]);
-  });
-
-  it('the Fist has no item, so it shows the built-in blurb', () => {
-    const c = fighter(1);
-    const s = strikeOf(c, 'fist');
-    const { host } = mount(<StrikeDetailModal strike={s} character={c} content={db} onClose={() => undefined} />);
-    expect(txt(host.querySelector('.info-title'))).toBe('Fist');
-    expect(txt(host.querySelector('.info-body')!.lastElementChild)).toBe(
-      'An unarmed Strike with your fist — every creature can make unarmed attacks. It uses your unarmed proficiency, and Handwraps of Mighty Blows can etch potency, striking, and property runes onto it.',
-    );
-  });
-
-  it('the PinStar pins {title, key: items, description}; the overlay closes, the popup body does not', () => {
-    const c = fighter(1);
-    const s = strikeOf(c, 'i-sword');
-    let closed = 0;
-    const { host, click } = mount(<StrikeDetailModal strike={s} character={c} content={db} onClose={() => (closed += 1)} />);
-    click(host.querySelector('.info-star'));
-    expect(toggled.map((n) => [n.title, n.key, n.description])).toEqual([['Longsword', 'items', LONGSWORD_TEXT]]);
-    expect(closed, 'the star does not close the popup').toBe(0);
-    click(host.querySelector('.info-body'));
-    expect(closed).toBe(0);
-    click(host.querySelector('.picker-close'));
-    expect(closed).toBe(1);
-    click(host.querySelector('.picker-overlay'));
-    expect(closed).toBe(2);
-  });
-
-  it('through MainTab: the Strikes sub-tab\'s name button opens this popup for that strike', () => {
-    const c = fighter(5);
-    const { host, click } = mount(<MainTab character={c} content={db} onPlay={() => undefined} />);
-    click([...host.querySelectorAll('.stab')].find((t) => t.textContent?.trim() === 'Strikes') ?? null);
-    expect(host.querySelector('.picker.info-modal')).toBeNull();
-    click([...host.querySelectorAll('.strike-name')].find((b) => txt(b).startsWith('Longsword')) ?? null);
-    const pop = host.querySelector('.picker.info-modal') as HTMLElement;
-    expect(txt(pop.querySelector('.info-title'))).toBe('Longsword');
-    expect(txt(pop.querySelector('.strike-detail-crit .sds-label'))).toBe('Critical specialization · Sword');
-    expect(txt(pop.querySelector('.info-body')!.lastElementChild)).toBe(LONGSWORD_TEXT);
-  });
-});
-
 /*
  * Card step 10 (docs/card-design.md section 9 row 10): the same six cases, re-pointed at the weapon's
- * 'mine' card (CARD_ON.strikeDetail). The numbers, the buttons, the crit gate and the pin are the legacy
+ * 'mine' card. The numbers, the buttons, the crit gate and the pin are the legacy
  * popup's, unchanged; the weapon's words now come from its Archives page (weapon-386, Player Core) — the
  * old import's "also known as arming swords" is gone — and the Fist's blurb sits in the ours box.
  * test/card-strike.test.tsx holds the step's full refuter set.
@@ -223,7 +124,7 @@ const prose = (card: Element) => {
   return kids.slice(hr + 1).filter((k) => k.tagName === 'P' && !k.closest('[data-ours]') && !k.classList.contains('card-dim')).map((p) => txt(p));
 };
 // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
-describe.runIf(cardOn('strikeDetail'))('StrikeDetailModal — the weapon\'s mine card (step 10)', () => {
+describe('StrikeDetailModal — the weapon\'s mine card (step 10)', () => {
   // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
   it('a level-1 fighter\'s longsword: name, PinStar, Attack bonus and Damage as derived, the PAGE text, and NO crit block', () => {
     const c = fighter(1);
@@ -368,101 +269,9 @@ function actionsOf(c: Character) {
 }
 const glyphs = (el: Element | null | undefined) => [...(el?.querySelectorAll('.pf2-action') ?? [])].map((g) => g.getAttribute('aria-label'));
 
-// Card step 9: these are the LEGACY popup's assertions, kept for the switch's off position (section 9:
-// "That surface's legacy assertions stay in a block that runs when the switch is off"). With
-// CARD_ON.actionDetail the popup is the record's mine card — the block after this one.
-// batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
-describe.skipIf(cardOn('actionDetail'))('the Main-tab action popup, opened from its chip', () => {
-  it('Halfling Luck (a feat action, on its description string): free-action glyph, both traits, Frequency and Trigger once each, then the rule', () => {
-    const { chip, popup } = actionsOf(halfling());
-    expect(txt(chip('Halfling Luck').querySelector('.ff-uses-n')), 'the use counter rides the chip').toBe('1/1');
-    const pop = popup('Halfling Luck');
-    expect(glyphs(pop.querySelector('.picker-head .action-detail-cost'))).toEqual(['Free action']);
-    expect(txt(pop.querySelector('.info-title'))).toBe('Halfling Luck');
-    expect(pop.querySelector('.picker-head .pin-star'), 'the action pin (Star) is in the header').not.toBeNull();
-    expect([...pop.querySelectorAll('.action-detail-traits .strike-trait')].map((t) => txt(t))).toEqual(['fortune', 'halfling']);
-    const desc = pop.querySelector('.action-detail-desc') as HTMLElement;
-    expect(desc.querySelector('.ast-body'), 'a feat action has no page tree here').toBeNull();
-    expect([...desc.children].map((k) => [k.tagName.toLowerCase(), txt(k)])).toEqual([
-      ['p', 'Frequency once per day'],
-      ['p', 'Trigger You fail a skill check or saving throw.'],
-      ['hr', ''],
-      [
-        'p',
-        "Your happy-go-lucky nature makes it seem like misfortune avoids you, and to an extent, that might even be true. You can reroll the triggering check, but you must use the new result, even if it's worse.",
-      ],
-    ]);
-    expect(count(txt(pop), 'Frequency')).toBe(1);
-    expect(count(txt(pop), 'Trigger')).toBe(1);
-  });
-
-  it('Aid (an activity, on its page tree): reaction glyph, no trait row, the page prose and degrees — and TODAY no Trigger or Requirements line', () => {
-    // hideMeta drops the page's header lines, and the action popup prints no stat rows of its own, so
-    // Aid's printed Trigger and Requirements reach no part of this popup today. Step 9's refuter is
-    // "Aid and Shield Block show Trigger and Requirements once"; it flips the two zero counts below with
-    // a `// batch card premise: action-… "Trigger"` line.
-    const pop = actionsOf(halfling()).popup('Aid');
-    expect(glyphs(pop.querySelector('.action-detail-cost'))).toEqual(['Reaction']);
-    expect(pop.querySelector('.action-detail-traits')).toBeNull();
-    const tree = pop.querySelector('.action-detail-desc > .ast-body.ast-embed') as HTMLElement;
-    expect(tree, 'the popup renders the page tree, not the fallback string').not.toBeNull();
-    expect(txt(tree.querySelector('p'))).toBe(
-      "You try to help your ally with a task. To use this reaction, you must first prepare to help, usually by using an action during your turn. You must explain to the GM exactly how you're trying to help, and they determine whether you can Aid your ally.",
-    );
-    expect([...tree.querySelectorAll('.ast-ds .ast-ds-lbl')].map((l) => txt(l))).toEqual(['Critical Success', 'Success', 'Critical Failure']);
-    expect(count(txt(pop), 'Trigger')).toBe(0);
-    expect(count(txt(pop), 'Requirements')).toBe(0);
-  });
-
-  it('a mark whose value IS a cost (Quick Jump on High Jump): one-action glyph on the chip AND the popup; the note is only the star\'s tooltip', () => {
-    const { chip, popup } = actionsOf(halfling());
-    const ch = chip('High Jump');
-    expect(glyphs(ch.querySelector('.action-cost'))).toEqual(['One action']);
-    expect(ch.querySelector('.action-mark-val'), 'no parenthetical second cost').toBeNull();
-    const note = 'Quick Jump: you can High Jump as a single action instead of 2, and you do not need to Stride 10 feet first.';
-    expect(ch.querySelector('.action-mark')?.getAttribute('title')).toBe(note);
-    expect(ch.querySelector('.sit-star')?.getAttribute('title')).toBe(note);
-    const pop = popup('High Jump');
-    expect(glyphs(pop.querySelector('.action-detail-cost'))).toEqual(['One action']);
-    expect(txt(pop.querySelector('.info-title'))).toBe('High JumpAthletics');
-    // TODAY the marked cost carries no note inside the popup (spec section 4, kind `actionMark`).
-    expect(txt(pop)).not.toContain('Quick Jump');
-    expect(pop.querySelector('.action-mark, .sit-star, [data-ours]')).toBeNull();
-    expect(txt(pop.querySelector('.action-detail-desc .ast-body p'))).toContain('You Stride, then attempt a DC 30 Athletics check to jump vertically.');
-  });
-
-  it('without Quick Jump the same chip and popup keep the printed two actions and no mark', () => {
-    const { chip, popup } = actionsOf({ ...build('fighter', 2), inventory: SWORD });
-    expect(glyphs(chip('High Jump').querySelector('.action-cost'))).toEqual(['Two actions']);
-    expect(chip('High Jump').querySelector('.action-mark')).toBeNull();
-    expect(glyphs(popup('High Jump').querySelector('.action-detail-cost'))).toEqual(['Two actions']);
-  });
-
-  it('a mark whose value is NOT a cost (Black Powder Boost on Leap): "(+10 feet)" and the star on the chip; the popup is the plain action', () => {
-    const { chip, popup } = actionsOf(boosted());
-    const ch = chip('Leap');
-    expect(glyphs(ch.querySelector('.action-cost'))).toEqual(['One action']);
-    expect(txt(ch.querySelector('.action-mark-val'))).toBe('(+10 feet)');
-    expect(ch.querySelector('.sit-star')?.getAttribute('title')).toMatch(/^Black Powder Boost: /);
-    const pop = popup('Leap');
-    expect(glyphs(pop.querySelector('.action-detail-cost'))).toEqual(['One action']);
-    expect(txt(pop)).not.toContain('+10 feet');
-    expect(txt(pop)).not.toContain('Black Powder Boost');
-    expect([...pop.querySelectorAll('.action-detail-desc .ast-body li strong')].map((s) => txt(s))).toEqual(['Horizontal Jump', 'Vertical Jump']);
-  });
-
-  it('the popup closes from its close button and leaves the sheet behind it', () => {
-    const r = actionsOf(halfling());
-    r.popup('Aid');
-    r.click(r.host.querySelector('.picker.info-modal .picker-close'));
-    expect(r.host.querySelector('.picker.info-modal')).toBeNull();
-    expect(r.chip('Aid')).toBeTruthy();
-  });
-});
-
 /*
  * Card step 9 (docs/card-design.md section 9 row 9): the same six popups, re-pointed at the record's
- * 'mine' card (CARD_ON.actionDetail). The page's use lines now reach the popup once each, the page's
+ * 'mine' card. The page's use lines now reach the popup once each, the page's
  * printed glyph stays and the marked cost is our marked glyph beside it, and a record marker's note is an `actionMark` line in the ours box
  * ([data-ours]) instead of living only in the row star's tooltip. test/card-action.test.tsx holds the
  * step's full refuter set.
@@ -476,7 +285,7 @@ const cardOf = (r: ReturnType<typeof actionsOf>, name: string) => {
 };
 const headGlyph = (card: Element) => [...card.querySelectorAll('.ast-head .ast-ag.head')].map((g) => g.getAttribute('title'));
 // batch card premise: action-2292 "Trigger An ally is about to use an action that requires a skill check or attack roll"
-describe.runIf(cardOn('actionDetail'))('the Main-tab action popup, opened from its chip — the record\'s mine card (step 9)', () => {
+describe('the Main-tab action popup, opened from its chip — the record\'s mine card (step 9)', () => {
   // batch card premise: feat-4458 "Frequency once per day"
   it('Halfling Luck (a feat action, now on its page tree): free-action glyph, both traits, Frequency and Trigger once each, then the rule', () => {
     const r = actionsOf(halfling());

@@ -10,7 +10,6 @@ import { ContentContext } from '../src/sheet/ContentContext';
 import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { isSpellPage, pageRows, pageStatLines, spellCardModel, stripPrintedPreamble } from '../src/sheet/spellCard';
-import { CARD_ON } from '../src/sheet/cardSurfaces';
 import type { Spell } from '../src/rules/types';
 
 /**
@@ -27,8 +26,8 @@ import type { Spell } from '../src/rules/types';
  * (stripPrintedPreamble). Cast keeps the field's glyph and the Cast-at chip / picker; the area suffix
  * rides on the page's Area row only when that row names the base area.
  *
- * SpellDetail keeps its own shell in phase A (it is not routed through RecordCard), so
- * CARD_ON.spellDetail stays false — asserted below.
+ * SpellDetail keeps its own shell in phase A (it is not routed through RecordCard) — asserted below
+ * (until card step 22 removed the switches, as CARD_ON.spellDetail staying false; now on the popup itself).
  *
  * Rendered through the REAL SpellDetail on the shipped records (no character: SpellDetail takes the
  * spell alone; the one invented record is a synthesized copy of fireball under an id with no page).
@@ -119,8 +118,11 @@ describe('while the page loads', () => {
 describe('the rows are the page header, in the page words and order', () => {
   beforeAll(loaded);
 
-  it('SpellDetail keeps its own shell in phase A: the card switch stays off', () => {
-    expect(CARD_ON.spellDetail).toBe(false);
+  // batch card premise: spell-2631 "Area 1 cubic foot" — card step 22: the switch is gone; the popup itself shows it is not RecordCard.
+  it('SpellDetail keeps its own shell in phase A: its popup is never a RecordCard', () => {
+    const { host, popup } = open(<SpellDetail spell={spell('approximate')} maxRank={4} onClose={() => undefined} />);
+    expect(popup.classList.contains('spell-detail')).toBe(true);
+    expect(host.querySelector('.card-mine, .ast-modal'), 'no RecordCard shell').toBeNull();
   });
 
   it('approximate: "Area 1 cubic foot" is a row, the body no longer opens with it, and the cantrip chip still shows', () => {

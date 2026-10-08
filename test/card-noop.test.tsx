@@ -5,8 +5,6 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import type { ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { content } from './_content';
-import { AstRenderer } from '../src/sheet/AstRenderer';
-import { DescBody } from '../src/sheet/DescBody';
 import { DescriptionModal } from '../src/sheet/DescriptionModal';
 import { ItemDetail, itemStatRows } from '../src/sheet/ItemDetail';
 import { FeatDetail, featStatRows, type FeatEntry } from '../src/sheet/FeatDetail';
@@ -15,9 +13,8 @@ import { spellCardModel } from '../src/sheet/spellCard';
 import { splitHeightening } from '../src/rules/heightening';
 import { ActionGlyph } from '../src/sheet/widgets';
 import { ContentContext } from '../src/sheet/ContentContext';
-import { cardOn } from '../src/sheet/cardSurfaces';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
-import { isNotOwnPage, pageSliceOf, recordTree, withoutItemLists } from '../src/sheet/astVisibility';
+import { isNotOwnPage, pageSliceOf, recordTree } from '../src/sheet/astVisibility';
 import type { ActionCost, ContentDatabase, InventoryItem } from '../src/rules/types';
 
 /**
@@ -32,14 +29,15 @@ import type { ActionCost, ContentDatabase, InventoryItem } from '../src/rules/ty
  * What this file proves, on records drawn by mulberry32(20261002), 120 per bucket over feats,
  * classFeatures, items, actions and spells (600), plus 60 per stat-row surface:
  *
- *  1. ALWAYS: the sample is what it says it is, and the held-record path (DescBody) renders exactly
- *     AstRenderer(bodyOnly, hideMeta) over withoutItemLists(variantSection(tree)) — the cuts are wired.
+ *  1. ALWAYS: the sample is what it says it is.
  *  2. ALWAYS: each surface's stat rows on screen are the rows its exported function returns, so the
  *     component cannot grow a second copy.
  *  3. WITH A SNAPSHOT (env CARD_NOOP_SNAPSHOT=<json path>): byte-equal markup against the same renders
- *     produced by the pre-move code — the DescBody path, the bare body path and the full
- *     DescriptionModal path for all 600, the three popups for 60 each, and the stat rows the functions
- *     return equal today's rows. `CARD_NOOP_WRITE=1` writes the snapshot instead (run that on the
+ *     produced by the pre-move code — the full DescriptionModal path for all 600, the three popups for
+ *     60 each, and the stat rows the functions return equal today's rows. (Until card step 22 it also
+ *     compared the held-record DescBody path and the bare hideMeta body for all 600; step 22 removed
+ *     both paths — every held-record popup is its record's 'mine' card — so their snapshot entries are
+ *     no longer rendered.) `CARD_NOOP_WRITE=1` writes the snapshot instead (run that on the
  *     pre-move tree). The snapshot is scratch: it pins one tree's output on one data stamp, so it is
  *     never committed; without the variable this block skips and says so.
  *
@@ -237,8 +235,8 @@ function step16SpellChange(now: { markup: string; rows: [string, string][] }, be
  *  every one of the 60 sampled spell popups changed on purpose (all 60 stat blocks carry their lane, 14
  *  with nothing else changed); the rows of 46 differ because they are the page's own; 7 bodies lost the
  *  printed preamble the rows now show (all 7 also page rows). No 'stats markup' change. Every other
- *  surface (the 600 tree renders, the 60 item popups, and the 60 feat popups while CARD_ON.featDetail is
- *  off) stays byte-equal.
+ *  surface (the 600 tree renders and the 60 item popups, before steps 11 and 14 made the feat and item
+ *  popups cards) stays byte-equal.
  *  batch card premise: spell-2315 "Duration sustained up to 1 minute" — the page's own Duration line is the row.
  *  Card step 17, measured 2026-10-08 in the lane at ee517bc + step 17 against the same snapshot: 59 of the
  *  60 draw their body from the page ('tree body' added; the 7 step-16 'preamble stripped' bodies are the
@@ -319,7 +317,7 @@ const STEP16_CHANGED_NOOP: Record<string, string> = {
  *  "aon:action-1233", initiate-benefit-weapon "aon:action-1234", both name links) are STEP12_CHANGED_NOOP
  *  records, so they differ from the pre-move popup anyway; the five below are pinned. The other three are
  *  feat popups (kinetic-aura, master-strike, mature-trained-companion: their 'mine' card embeds the page),
- *  which this block compares only while CARD_ON.featDetail is off. */
+ *  whose markup this block does not compare (the feat popup is the card since step 11). */
 const STEP14B_CHANGED_NOOP: Record<string, string> = {
   'classFeatures:alchemical-sciences-methodology': 'embeds actions:quick-tincture',
   'classFeatures:alchemy': 'embeds classFeatures:quick-alchemy',
@@ -330,19 +328,13 @@ const STEP14B_CHANGED_NOOP: Record<string, string> = {
 /** Wording merge (docs/card-design.md section 13, "A glyph sits in the line the page prints it in",
  *  2026-10-08): a glyph the page prints inside a line now draws inside that line, so a render whose glyph
  *  stood on a block of its own moves its <p>/<div> boundaries — accepted only when its inline content (every
- *  word, link and glyph span, in order) is the snapshot's (`inlineOf`). A held-record body (hideMeta) may
- *  also GAIN the page's own use lines its activity header now carries ("Trigger …", "Frequency …"): those
- *  records are named here with the line they gain, and must keep every word they drew before, in order. */
-const WORDING_GAINED_NOOP: Record<string, string> = {
-  // batch card premise: feat-6134 "Trigger You fall at least 10 feet and take no damage from the fall"
-  'actions:plummeting-roll': 'gains "Trigger You fall at least 10 feet…; Effect…" on its "Plummeting Roll ⟨r⟩" line',
-  // batch card premise: background-396 "Trigger You're about to roll initiative"
-  'actions:seasonal-boon-outskirt': 'gains "Trigger You\'re about to roll initiative; Effect…" on its "Seasonal Boon ⟨r⟩" line',
-  // batch card premise: feat-8104 "Frequency once per round"
-  'actions:winged-leap': 'gains "Frequency once per round; Effect…" on its "Winged Leap ⟨1⟩" line',
-  // batch card premise: feat-5019 "Frequency once per hour"
-  'feats:patrons-claim': 'gains "Frequency once per hour; Effect…" on its "Patron’s Claim ⟨2⟩" line',
-};
+ *  word, link and glyph span, in order) is the snapshot's (`inlineOf`). The search popup never gains or
+ *  loses a word. (The four records that GAINED their activity header's use lines did so only on the
+ *  held-record hideMeta body, which card step 22 removed with its snapshot renders.) */
+/** How many of the 600 search popups moved only their block boundaries against card-step1-premove.json
+ *  (the wording merge's 224 counted the three renders: 64 DescBody + 64 bare body + 96 search popup, as the
+ *  base tree a19f00d's own dump splits them; card step 22 left the search popup alone). */
+const MOVED_MODAL = 96;
 /** The inline content of a render: its <p>/<div> tags taken out, whitespace collapsed. */
 const inlineOf = (markup: string) => markup.replace(/<\/?(?:p|div)\b[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 /** Its words, a glyph as ⟨g⟩. */
@@ -362,22 +354,15 @@ function without14bStubs(markup: string): string {
   return host.innerHTML;
 }
 
-/** The three tree renders for one record: what a held record's popup body shows (the real DescBody),
- *  the same body rendered straight from the cuts, and the search popup (the real DescriptionModal). */
+/** The tree render for one record: the search popup (the real DescriptionModal). Card step 22 removed the
+ *  two held-record renders this returned beside it — the real DescBody page branch and the bare hideMeta
+ *  body — with the paths themselves (every held-record popup is its record's 'mine' card). */
 function astRenders(bucket: string, slug: string) {
   const rec = recs(bucket)[slug];
-  // batch card premise: doctrine-4 "Second Doctrine (3rd)" — card step 12: the read is recordTree (the
-  // record's slice of a bigger page, none when its page is not its own, else variantSection), which
-  // useAstNode makes; a record with no tree to read renders no body here (DescBody falls back).
-  const tree = recordTree(bucket, slug, (b, s) => trees[b]?.[s]);
-  const descBody = wrap(<DescBody description={rec.description ?? ''} descRefs={rec.descRefs as never} astKey={bucket} astId={slug} />);
-  const body = tree
-    ? wrap(<AstRenderer node={withoutItemLists(tree)} bodyOnly hideMeta selfRef={`${bucket}:${slug}`} onOpenRef={noop} />)
-    : '';
   const modal = wrap(
     <DescriptionModal root={{ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs as never, key: bucket, slug }} onClose={noop} />,
   );
-  return { descBody, body, modal };
+  return { modal };
 }
 
 function featEntry(r: { bucket: 'feats' | 'classFeatures'; id: string }, i: number): FeatEntry {
@@ -459,20 +444,6 @@ describe('card step 1 (G0): the move changes no markup', () => {
     expect([itemIds.length, featRows.length, spellIds.length]).toEqual([PER_SURFACE, PER_SURFACE, PER_SURFACE]);
   });
 
-  it('a held record renders its page through variantSection + withoutItemLists, body only, meta hidden', () => {
-    let wired = 0;
-    for (const { bucket, slug } of sample) {
-      const { descBody, body } = astRenders(bucket, slug);
-      // DescBody = <div class="sd-desc">{that body}{remastered line}</div>.
-      // batch card premise: doctrine-4 "Second Doctrine (3rd)" — a record with no tree to read
-      // (not-own-page.json) draws its own text, never a page body.
-      if (!body) expect(descBody.includes('ast-body'), `${bucket}:${slug} falls back to its own text`).toBe(false);
-      else expect(descBody.startsWith(`<div class="sd-desc">${body}`), `${bucket}:${slug}`).toBe(true);
-      wired++;
-    }
-    expect(wired).toBe(sample.length);
-  });
-
   it('each popup prints exactly the rows its exported stat-row function returns (one copy)', () => {
     let rows = 0;
     for (const id of itemIds) {
@@ -480,17 +451,14 @@ describe('card step 1 (G0): the move changes no markup', () => {
       expect(shownRows(itemPopup(id)), `item ${id}`).toEqual(want);
       rows += want.length;
     }
-    // Card step 11 (docs/card-design.md section 9: a surface's legacy assertions run while its switch is
-    // off): with CARD_ON.featDetail the row is the record's mine card, which prints NO stat rows over a page
-    // (its printed set is empty, so the page's own use lines show) and, on the no-page lane, only the
-    // Prerequisites row of the same function (the glyph sits in the header, the enhancement in the box).
-    // The seeded sample need not hold a no-page row WITH prerequisites (on 2026-10-07 none of its rows
-    // did); test/card-feat.test.tsx pins that lane on dedication-to-the-five ("Order of the Godclaw").
+    // Card step 11: the row is the record's mine card, which prints NO stat rows over a page (its printed
+    // set is empty, so the page's own use lines show) and, on the no-page lane, only the Prerequisites row
+    // of the same function (the glyph sits in the header, the enhancement in the box). The seeded sample
+    // need not hold a no-page row WITH prerequisites (on 2026-10-07 none of its rows did);
+    // test/card-feat.test.tsx pins that lane on dedication-to-the-five ("Order of the Godclaw").
     // batch card premise: feat-928 "Prerequisites Charisma 14"
     featRows.forEach((r, i) => {
-      const want = cardOn('featDetail')
-        ? (recordTree(r.bucket, r.id, (b, s) => trees[b]?.[s]) ? [] : featRowsFn(r, i).filter(([k]) => k === 'Prerequisites'))
-        : featRowsFn(r, i);
+      const want = recordTree(r.bucket, r.id, (b, s) => trees[b]?.[s]) ? [] : featRowsFn(r, i).filter(([k]) => k === 'Prerequisites');
       // batch card premise: feat-928 "Prerequisites Charisma 14"
       expect(shownRows(featPopup(r, i)), `${r.bucket} ${r.id}`).toEqual(want);
       rows += want.length;
@@ -523,23 +491,23 @@ describe('card step 1 (G0): the move changes no markup', () => {
     // Card step 12 re-baseline: a record whose READ step 12 changed (its own section cut out of a family
     // page, its own text in place of a page that is not its own, its slice of a bigger page) draws a
     // different body by design. Those are pinned with their reason in STEP12_CHANGED_NOOP and must differ
-    // (the DescBody and bare-body renders; the search popup too); every other render stays byte-equal.
+    // (the search popup; until card step 22 the DescBody and bare-body renders too); every other render
+    // stays byte-equal.
     // batch card premise: doctrine-4 "Second Doctrine (3rd)" — the record's own bullet of the doctrine page is its page.
     const keys = [...sample.map(({ bucket, slug }) => `${bucket}:${slug}`), ...itemIds.map((id) => `items:${id}`), ...featRows.map((r) => `${r.bucket}:${r.id}`)];
     const changed = step12Changed(keys);
     expect(changed).toEqual(STEP12_CHANGED_NOOP);
     // Card step 14b re-baseline: the search popup (modal) of a non-item page whose stubs resolve from a loaded
     // bucket draws them (an embedded page, a name) — pinned in STEP14B_CHANGED_NOOP; with those elements
-    // taken out it is the pre-move popup, byte for byte. The held-record body paths never resolve stubs.
+    // taken out it is the pre-move popup, byte for byte.
     // batch card premise: class-feature-1281 "You gain the Double Spellstrike activity"
     const drawsStubs = Object.keys(now.ast).filter((k) => !k.startsWith('items:') && !(k in changed) && /data-stub/.test(now.ast[k].modal));
     expect(drawsStubs.sort()).toEqual(Object.keys(STEP14B_CHANGED_NOOP).sort());
-    for (const k of Object.keys(now.ast)) expect(/data-stub/.test(now.ast[k].descBody + now.ast[k].body), `${k} body paths`).toBe(false);
     let diffs = 0;
     let moved = 0;
     const gained: string[] = [];
     for (const k of Object.keys(now.ast)) {
-      for (const f of ['descBody', 'body', 'modal'] as const) {
+      for (const f of ['modal'] as const) {
         if (now.ast[k][f] !== before.ast[k][f]) diffs++;
         if (k in changed) continue;
         if (f === 'modal' && k in STEP14B_CHANGED_NOOP) {
@@ -559,15 +527,18 @@ describe('card step 1 (G0): the move changes no markup', () => {
         expect(f, `${k} modal: only its block boundaries may move`).not.toBe('modal');
         expect(keepsEveryWord(before.ast[k][f], now.ast[k][f]), `${k} ${f} keeps every word it drew`).toBe(true);
       }
-      if (k in changed) expect(now.ast[k].descBody, `${k} (${changed[k]}) changed`).not.toBe(before.ast[k].descBody);
+      // batch card premise: doctrine-4 "Second Doctrine (3rd)" — card step 22: the search popup is the render left to differ (the DescBody render left with its path).
+      if (k in changed) expect(now.ast[k].modal, `${k} (${changed[k]}) changed`).not.toBe(before.ast[k].modal);
     }
-    // Wording merge: the records that gained use lines are exactly the named ones; the boundary moves counted.
-    // batch card premise: feat-5019 "Frequency once per hour"
-    expect([...new Set(gained.map((g) => g.split(' ')[0]))].sort()).toEqual(Object.keys(WORDING_GAINED_NOOP).sort());
-    // Measured 2026-10-08 on main (2f6ee78 + the wording round) against card-step1-premove.json.
-    expect(moved, 'renders whose block boundaries moved').toBe(224);
-    // Card step 11: with CARD_ON.featDetail the feat popups are the mine card by design (60 of 60 differ);
-    // their byte-equality is the legacy assertion and runs while the switch is off. Items stay.
+    // Wording merge: no search popup gains or loses a word; the boundary moves counted.
+    // batch card premise: feat-5019 "Frequency once per hour" — card step 22: the gains were the hideMeta body's alone.
+    expect(gained).toEqual([]);
+    // Measured 2026-10-08 on main (2f6ee78 + the wording round) against card-step1-premove.json: 224 over the
+    // three renders. Card step 22 (measured 2026-10-09 in the lane at a19f00d): the search popup's own share.
+    // batch card premise: class-feature-1281 "You gain the Double Spellstrike activity"
+    expect(moved, 'renders whose block boundaries moved').toBe(MOVED_MODAL);
+    // Card step 11: the feat popups are the mine card by design (60 of 60 differ from the pre-move popup);
+    // their stat rows are checked against the function below. Items: the rows only (card step 14).
     // batch card premise: feat-928 "Prerequisites Charisma 14"
     // Card step 16: the spell popups changed on purpose — each is pinned with its classes in
     // STEP16_CHANGED_NOOP and must differ exactly so (below); the byte-equal loop runs over the rest.
@@ -597,31 +568,14 @@ describe('card step 1 (G0): the move changes no markup', () => {
       // batch card: step17-nit7 — the no-page footer exactly on an official spell the spells bucket holds no page for.
       expect(why.includes('no-page footer'), `spell ${k} no-page footer`).toBe(!trees.spells[k] && !!db.spells[k].source?.book);
     }
-    // Card step 14: with CARD_ON.itemDetail the item popup's description is the shown record's mine card by
-    // design (its page lines by the printed-set rule, the embedded group page, the no-page line), so its
-    // markup's byte-equality is the legacy assertion and runs while the switch is off. Its STAT ROWS do not
-    // move: the frame prints the same itemStatRows, checked against the pre-move rows here either way.
+    // Card step 14: the item popup's description is the shown record's mine card by design (its page lines
+    // by the printed-set rule, the embedded group page, the no-page line). Its STAT ROWS do not move: the
+    // frame prints the same itemStatRows, checked against the pre-move rows here.
     // batch card premise: weapon-group-15 "becoming off-guard until the start of your next turn"
-    if (cardOn('itemDetail')) {
-      expect(Object.keys(now.items)).toEqual(Object.keys(before.items));
-      for (const k of Object.keys(now.items)) expect(now.items[k].rows, `items ${k} rows`).toEqual(before.items[k].rows);
-    }
-    const legacySurfaces = [...(cardOn('itemDetail') ? [] : ['items']), ...(cardOn('featDetail') ? [] : ['feats'])];
-    for (const surface of legacySurfaces as ('items' | 'feats')[]) {
-      expect(Object.keys(now[surface])).toEqual(Object.keys(before[surface]));
-      for (const k of Object.keys(now[surface])) {
-        const key = surface === 'items' ? `items:${k}` : k;
-        if (key in changed) {
-          expect(now[surface][k].markup, `${surface} ${k} (${changed[key]}) changed`).not.toBe(before[surface][k].markup);
-          expect(now[surface][k].rows, `${surface} ${k} rows`).toEqual(before[surface][k].rows);
-          continue;
-        }
-        expect(now[surface][k].markup, `${surface} ${k} popup`).toBe(before[surface][k].markup);
-        expect(now[surface][k].rows, `${surface} ${k} rows`).toEqual(before[surface][k].rows);
-      }
-    }
-    // batch card premise: methodology-5 "You gain the Quick Tincture action"
-    expect(diffs).toBe(Object.keys(now.ast).filter((k) => k in changed).reduce((n, k) => n + ['descBody', 'body', 'modal'].filter((f) => now.ast[k][f as 'body'] !== before.ast[k][f as 'body']).length, 0) + Object.keys(STEP14B_CHANGED_NOOP).length + moved + gained.length);
+    expect(Object.keys(now.items)).toEqual(Object.keys(before.items));
+    for (const k of Object.keys(now.items)) expect(now.items[k].rows, `items ${k} rows`).toEqual(before.items[k].rows);
+    // batch card premise: methodology-5 "You gain the Quick Tincture action" — card step 22: the search popup alone.
+    expect(diffs).toBe(Object.keys(now.ast).filter((k) => k in changed && now.ast[k].modal !== before.ast[k].modal).length + Object.keys(STEP14B_CHANGED_NOOP).length + moved + gained.length);
     // The exported functions reproduce TODAY's rows — the rows the pre-move popups printed.
     for (const id of itemIds) expect(itemRowsFn(id), `item ${id} vs pre-move`).toEqual(before.items[id].rows);
     featRows.forEach((r, i) => expect(featRowsFn(r, i), `${r.bucket} ${r.id} vs pre-move`).toEqual(before.feats[`${r.bucket}:${r.id}`].rows));

@@ -91,7 +91,6 @@ import { DefensesPills } from '../sheet/DefensesPills';
 import { DescriptionModal } from '../sheet/DescriptionModal';
 import { RecordCard } from '../sheet/RecordCard';
 import { scopeOfCharacter } from '../sheet/cardScope';
-import { cardOn } from '../sheet/cardSurfaces';
 import type { CardScope } from '../sheet/cardModel';
 import { PinContext, usePinDesc, type PinDescApi } from '../sheet/PinContext';
 import { astSlug, useAstNode } from '../sheet/useAst';
@@ -143,8 +142,8 @@ export function ChoiceDetails({
    * buildCharacter over the in-progress build at the builder's current level. Given (with the record's
    * bucket and id), the row opens its record's 'mine' card scoped by scopeOfCharacter: parts the build
    * does not have yet fold (owner ruling Q1 = A), a pointer row shows its subclass section, an option the
-   * build did not pick folds (Q2 = A, where cardScope supports it). Absent (or with CARD_ON.choiceDetails
-   * off), the popup is the browse popup it always was, byte for byte.
+   * build did not pick folds (Q2 = A, where cardScope supports it). Absent, the popup is the browse popup
+   * it always was, byte for byte.
    */
   character?: Character | null;
 }) {
@@ -168,11 +167,10 @@ export function ChoiceDetails({
         // slug index, which names one bucket per slug: the background feat Cascade Countermeasure
         // opened the spell of the same name. A caller that names no record keeps the title lookup, and
         // so, until card step 14, does a page whose rules sit in an embedded stub (ChoiceDetailsModal).
-        // Card step 15: a row that names its record and is shown for a build opens the 'mine' card —
-        // while CARD_ON.choiceDetails is on; switched off, the popup is the browse popup it was.
+        // Card step 15: a row that names its record and is shown for a build opens the 'mine' card.
         <ChoiceDetailsModal
           root={{ title: name ?? 'Details', description: flavor!, descRefs, ...(bucket && id ? { key: bucket, slug: id } : {}) }}
-          mine={cardOn('choiceDetails') && bucket && id && character ? { scope: scopeOfCharacter(character) } : undefined}
+          mine={bucket && id && character ? { scope: scopeOfCharacter(character) } : undefined}
           onClose={() => setOpen(false)}
         />
       )}

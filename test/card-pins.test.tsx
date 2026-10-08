@@ -125,7 +125,7 @@ const pinnedRow = (host: HTMLElement, title: string) =>
  *  sheet, browse for any other). */
 const popup = (host: HTMLElement) => host.querySelector('.picker-overlay');
 /**
- * FeatDetail's popup over the sheet. Card step 11 (CARD_ON.featDetail) made it the row's 'mine' RecordCard:
+ * FeatDetail's popup over the sheet. Card step 11 made it the row's 'mine' RecordCard:
  * the page lane's `.ast-modal.card-mine` (its star in `.ast-head`) or the no-page lane's
  * `.picker.info-modal.card-mine` (its star in `.picker-head`) — no longer the legacy `.picker.spell-detail`.
  */

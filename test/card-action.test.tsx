@@ -6,7 +6,6 @@ import { act, type ReactElement } from 'react';
 import { build, content } from './_content';
 import { renderDom } from './_render';
 import { ActionDetailModal, MainTab, actionOursLines, oursHeaderCost, printedHeaderCost, skillTierLine, type Act } from '../src/sheet/MainTab';
-import { CARD_ON } from '../src/sheet/cardSurfaces';
 import { variantSection } from '../src/sheet/useAst';
 import { recordTree } from '../src/sheet/astVisibility';
 import { ACTIVITIES } from '../src/rules/actions';
@@ -21,17 +20,10 @@ import type { BuildState } from '../src/rules/build';
 import type { Character, ContentDatabase, ModeDef } from '../src/rules/types';
 import { ModesPanel } from '../src/sheet/ModesPanel';
 
-/** The action switch, read through a mock so one case can turn it back (section 9: "Turning a surface
- *  back is therefore one line, and its tests still hold") without editing src/sheet/cardSurfaces.ts. */
-const sw = vi.hoisted(() => ({ actionDetail: undefined as boolean | undefined }));
-vi.mock('../src/sheet/cardSurfaces', async (importOriginal) => {
-  const real = await importOriginal<typeof import('../src/sheet/cardSurfaces')>();
-  return { ...real, cardOn: (s: Parameters<typeof real.cardOn>[0]) => (s === 'actionDetail' && sw.actionDetail !== undefined ? sw.actionDetail : real.cardOn(s)) };
-});
-
 /**
  * Card step 9 (docs/card-design.md section 9 row 9, F1b; section 2 rules 4–5; section 4; owner rulings
- * section 13): the Main-tab action popup is the record's 'mine' card (CARD_ON.actionDetail).
+ * section 13): the Main-tab action popup is the record's 'mine' card. (Card step 22 removed the switch
+ * and the legacy popup; its turned-back case left with them.)
  *
  * Every action that names its record — curated activities (their content.actions / feat record), feat,
  * class-feature and granted actions, Commander tactics, runesmith runes — opens RecordCard mode 'mine'
@@ -64,13 +56,15 @@ vi.mock('../src/sheet/cardSurfaces', async (importOriginal) => {
  *  - scripts/lib/card-scope.mjs: `actCard` forced undefined (the ledger models the legacy popup) →
  *    card-parity red (44 disagreements; 48 sample rows differ from the baseline) and card-truth-check
  *    red (S1-MISSING 10,462 vs baseline 8,724).
+ *  - (card step 22, measured red then restored byte-exact) MainTab.tsx ActionDetailModal: a no-record
+ *    action named Aid routed to ActionCard → the "never draws that page" case red.
  *
  * Fixer round 1 (refuter findings):
  *  - The chip's cost is always in the card header: 36 of 2,641 action pages print no title glyph (Flurry
  *    of Blows, Cast a Spell, Signature Weapon …) and the card showed no cost at all.
  *  - The runesmith rune and the camping activity cases (each removal of their record was green before).
- *  - The card block runs only while CARD_ON.actionDetail is on (describe.runIf, as card-statdetail and
- *    card-strike-action do); the cases true in both positions run always.
+ *  - The card block ran only while the switch was on (until card step 22 removed it); the cases true in
+ *    both positions ran always.
  *  MUTATION LINES (measured red on 2026-10-06, restored from a scratch copy, sha1 matched):
  *  - runeActs without `record` → the rune case red (alone).
  *  - runeActs AND campingActs without `record` → the rune, camping and sweep cases red.
@@ -150,7 +144,6 @@ let stops: (() => void)[] = [];
 afterEach(() => {
   for (const s of stops) s();
   stops = [];
-  sw.actionDetail = undefined;
 });
 function mount(el: ReactElement, cdb: ContentDatabase = db) {
   const r = renderDom(
@@ -223,7 +216,7 @@ const oursGlyphs = (card: Element) => [...card.querySelectorAll('.ast-head .card
 
 /* ------------------------------------------------------------------ the refuter cases */
 
-describe.runIf(CARD_ON.actionDetail)('card step 9: the Main-tab action popup is the record\'s mine card', () => {
+describe('card step 9: the Main-tab action popup is the record\'s mine card', () => {
   it('Aid (an activity) shows its printed Trigger AND Requirements exactly once, at full weight, before the prose; Source dimmed', () => {
     const card = sheet(halfling()).open('Aid');
     expect(card.matches('.ast-modal.card-mine')).toBe(true);
@@ -753,23 +746,24 @@ const PRINT_DIFFERS: string[] = [
   'feats:sheltering-hand printed=Single Action or Two Actions stored=One Action',
 ];
 
-describe('card step 9: true in both switch positions', () => {
-  it('an action that names no record (an item activation) keeps the legacy popup', () => {
+describe('card step 9: an action that names no record', () => {
+  it('an action that names no record (an item activation) opens the plain no-record popup, its text through DescBody', () => {
     const a: Act = { name: 'Synthetic Activation', cost: { type: 'actions', value: 1 }, desc: 'Body words of a synthetic activation.', traits: ['manipulate'] };
     const r = mount(<ActionDetailModal detail={{ a, pinnable: false }} onClose={() => undefined} character={build('fighter', 2)} content={db} pinned={new Set()} />);
     expect(r.host.querySelector('.card-mine')).toBeNull();
     expect(txt(r.host.querySelector('.picker.info-modal .action-detail-desc'))).toBe('Body words of a synthetic activation.');
   });
 
-  it('turned back (CARD_ON.actionDetail off), Aid opens the legacy popup again: the page tree with hideMeta, no Trigger line', () => {
-    sw.actionDetail = false;
-    const r = mount(<MainTab character={halfling()} content={db} onPlay={() => undefined} />);
-    r.click([...r.host.querySelectorAll('.stab')].find((t) => txt(t) === 'Actions') ?? null);
-    r.click([...r.host.querySelectorAll('.action-chip')].find((e) => txt(e.querySelector('.action-chip-name')) === 'Aid') ?? null);
-    const pop = r.host.querySelector('.picker.info-modal') as HTMLElement;
-    expect(pop.classList.contains('card-mine')).toBe(false);
-    expect(pop.querySelector('.action-detail-desc > .ast-body')).not.toBeNull();
-    expect(count(txt(pop), 'Trigger')).toBe(0);
+  // batch card premise: action-2292 "Requirements The ally is willing to accept your aid" — the page a name-slug lookup would land on; a no-record popup never draws it.
+  it('a no-record action named like an action with a page never draws that page (no tree key, no page branch)', () => {
+    // Card step 22: the no-record popup's DescBody has no page branch; an Act whose name slugs to a shipped
+    // action page (Aid) but names no record draws its own words, never the page.
+    const a: Act = { name: 'Aid', cost: { type: 'reaction' }, desc: 'Synthetic words standing in for Aid.', traits: [] };
+    const r = mount(<ActionDetailModal detail={{ a, pinnable: false }} onClose={() => undefined} character={build('fighter', 2)} content={db} pinned={new Set()} />);
+    expect(r.host.querySelector('.card-mine')).toBeNull();
+    expect(r.host.querySelector('.ast-body'), 'no page tree is drawn').toBeNull();
+    expect(txt(r.host.querySelector('.picker.info-modal .action-detail-desc'))).toBe('Synthetic words standing in for Aid.');
+    expect(count(txt(r.host), 'Trigger')).toBe(0);
   });
 });
 

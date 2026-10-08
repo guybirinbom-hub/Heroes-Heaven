@@ -27,7 +27,6 @@ import { classFeatureDescription } from '../src/rules/featureText';
 import { splitHeightening } from '../src/rules/heightening';
 import { trustUnencoded } from '../src/data/trustGate';
 import { foldsOf } from '../src/sheet/cardScope';
-import { cardOn } from '../src/sheet/cardSurfaces';
 import type { Character, ContentDatabase, InventoryItem, PinnedDesc } from '../src/rules/types';
 import type { DescNode } from '../src/sheet/descref';
 import { togglePinnedDesc, type PlayState } from '../src/rules/play';
@@ -44,23 +43,23 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *   FeatDetail      feats / class features / heritage rows, built by FeatsTab's own featEntries
  *   ItemDetail      every item with a page, and a hidden cursed item through playerFacingContent — since
  *                   card step 14 its description is the shown record's inset 'mine' card
- *                   (CARD_ON.itemDetail), modelled with the printed set of its own stat block
+ *                   modelled with the printed set of its own stat block
  *   SpellDetail     the spell popup (stat rows from fields, body from the description string)
  *   ActionDetail    opened by clicking its chip on MainTab (curated activities + feat actions) — since
- *                   card step 9 the record's 'mine' RecordCard (CARD_ON.actionDetail), modelled by the
+ *                   card step 9 the record's 'mine' RecordCard, modelled by the
  *                   ledger with the same printed set (empty), the tree read by {bucket, id}
  *   StatDetail      "Full text" of a situational line — since card step 5 the 'mine' RecordCard
- *                   (CARD_ON.statDetail), modelled by the ledger with the same printed set (empty)
+ *                   modelled by the ledger with the same printed set (empty)
  *   browse          DescriptionModal (the search popup) for {bucket, id}
  *   ChoiceDetails   the builder's "Details" button for a granted class feature / background feat — since
  *                   card step 15 opened with a character, the record's 'mine' RecordCard
- *                   (CARD_ON.choiceDetails; a row held on the title lookup stays the browse popup)
+ *                   (a row held on the title lookup stays the browse popup)
  *   builderOrigin   the builder's Background picker (SearchSelect, its filled value opens the popup; since
  *                   card step 7b each option names its record, so the popup reads {backgrounds, id})
  *   pin             a PinStar pressed on FeatDetail / ItemDetail / SpellDetail, the STORED pin reopened by
  *                   MainTab's PinnedDescCard (card step 19: by its {key, slug}; 'mine' from the sheet)
  *   strikeDetail    the Strikes-tab popup of a weapon wielded by a level-20 fighter — since card step 10 the
- *                   weapon's 'mine' RecordCard by its id (CARD_ON.strikeDetail), its Attack / Damage / crit
+ *                   weapon's 'mine' RecordCard by its id, its Attack / Damage / crit
  *                   specialization controls read as regions, not page lines; drawn LAST from the seeded
  *                   generator, so the nine earlier surfaces' samples are the ones drawn before it existed
  *
@@ -128,8 +127,9 @@ import * as lib from '../scripts/lib/card-scope.mjs';
  *    the baseline test red (255 sample rows differ); card-truth-check red (new strikeDetail offenders).
  *  - (card step 10 fixer) StrikeDetailModal.tsx: a `<div className="sd-injected">` added inside the card's
  *    controls → the regions test red ('strikeDetail: div.sd-injected').
- *  - (card step 10 fixer) cardSurfaces.ts strikeDetail → false: this file 16 of 16 green on the legacy
- *    popup, and card-truth-check green against the baseline's legacy strikeDetail entries.
+ *  - (card step 10 fixer) the strike switch off: this file 16 of 16 green on the legacy popup, and
+ *    card-truth-check green against the baseline's legacy strikeDetail entries. (Card step 22 removed the
+ *    switches, hideMeta and DescBody's page branch; the lines above that mutate them are history.)
  *  - (card step 14, 2026-10-07) scripts/lib/card-scope.mjs `itemDrawn` forced to the legacy model (the
  *    ledger models the hideMeta item popup while the card is on) → the agreement test red (60
  *    disagreements, first itemDetail|items:jiang-shi-bell), the baseline test and the hidden-bag case red.
@@ -152,15 +152,13 @@ const known = JSON.parse(readFileSync('test/card-parity-known.json', 'utf8')) as
    *  title carries the pick suffix ("Caustic Nectar (Acid)") — the ledger models it by reading the slug
    *  of that title, as the stored pin does until card step 19. */
   cases: { key: string; why: string; verdict: Verdict; pick?: string }[];
-  /** Card step 11: cases right on a surface's card and wrong again with its switch turned back. */
+  /** Card step 11: cases right on a surface's card and wrong again with its switch turned back. Card step
+   *  22 removed the switches, so these are never expected; the block leaves the file at the orchestrator's
+   *  re-stamp on main (the lane may not edit it). */
   legacy?: Record<string, { key: string; why: string; verdict: Verdict; pick?: string }[]>;
 };
-/** The named cases expected under the switches as they are now: a landed surface whose switch is turned
- *  back is expected at its `legacy` cases too (the baseline's own rule, lib expectedEntries). */
-const knownCases = [
-  ...known.cases,
-  ...Object.entries(known.legacy ?? {}).flatMap(([surface, cases]) => (cardOn(surface as Parameters<typeof cardOn>[0]) ? [] : cases)),
-];
+/** The named cases expected: every surface is its card (card step 22), so the `legacy` cases never are. */
+const knownCases = [...known.cases];
 
 type Run = { t?: string; b?: string };
 type Block = { runs: Run[]; text: string };
@@ -325,27 +323,25 @@ const REGIONS_MEASURED: Record<string, string[]> = {
   // Card step 11: the Feats-tab popup is the 'mine' card — its header (name, glyph, chips, Back / PinStar /
   // close) sits beside its body, as on the statDetail and action cards.
   // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
-  featDetail: cardOn('featDetail') ? ['div.ast-head', 'div.ast-traits', 'div.picker-head'] : ['div.sd-sub', 'div.sd-traits', 'div.sd-activate', 'div.sd-stats', 'div.card-ours', 'div.card-uselines'],
+  featDetail: ['div.ast-head', 'div.ast-traits', 'div.picker-head'],
   itemDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-stats', 'div.sd-uses', 'div.sd-choice-note'],
   spellDetail: ['div.sd-sub', 'div.sd-traits', 'div.sd-stats', 'div.sd-heighten-h'],
   // Card step 9: the action popup is the 'mine' card — its header (name, glyph, chips, the skill label,
   // prepare toggle and action pin, Back / PinStar / close) sits beside its body, as on statDetail.
   // batch card premise: action-2292 "Trigger An ally is about to use an action that requires a skill check or attack roll"
-  actionDetail: cardOn('actionDetail') ? ['div.ast-head', 'div.ast-traits', 'div.picker-head'] : ['div.action-detail-traits'],
+  actionDetail: ['div.ast-head', 'div.ast-traits', 'div.picker-head'],
   // Card step 5: the 'mine' card's own header (name, cost, chips, Back / PinStar / close) sits beside its
-  // body, as on the browse card; the legacy popup read only its body.
+  // body, as on the browse card.
   // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
-  statDetail: cardOn('statDetail') ? ['div.ast-head', 'div.ast-traits', 'div.picker-head'] : [],
+  statDetail: ['div.ast-head', 'div.ast-traits', 'div.picker-head'],
   // Card step 15: a granted builder row opens the record's 'mine' card — its header sits beside its body,
-  // as on statDetail; switched off (or a held row) it is the browse popup, which records no regions.
-  choiceDetails: cardOn('choiceDetails') ? ['div.ast-head', 'div.ast-traits', 'div.picker-head'] : [],
+  // as on statDetail; a held row is the browse popup, which records no regions.
+  choiceDetails: ['div.ast-head', 'div.ast-traits', 'div.picker-head'],
   // Card step 10: the strike popup is the weapon's 'mine' card — its header as on the other cards, and its
   // controls (RecordCard leadControls: Attack bonus / Damage, the gated critical specialization) read as
-  // regions, never as page lines; the legacy popup drew the same two control blocks beside its text.
+  // regions, never as page lines.
   // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
-  strikeDetail: cardOn('strikeDetail')
-    ? ['div.ast-head', 'div.ast-traits', 'div.picker-head', 'div.strike-detail-stats', 'div.strike-detail-crit']
-    : ['div.strike-detail-stats', 'div.strike-detail-crit'],
+  strikeDetail: ['div.ast-head', 'div.ast-traits', 'div.picker-head', 'div.strike-detail-stats', 'div.strike-detail-crit'],
 };
 const txt = (el: Element | null | undefined) => (el?.textContent ?? '').replace(/\s+/g, ' ').trim();
 
@@ -520,24 +516,16 @@ function featEntryFor(row: Row, extra?: Partial<Character>): FeatEntry | undefin
 
 async function renderFeat(entry: FeatEntry): Promise<Read> {
   const m = await mount(<FeatDetail entry={entry} onClose={noop} />);
-  if (cardOn('featDetail')) {
-    // Card step 11: the popup is the row's 'mine' RecordCard (CARD_ON.featDetail), read as the statDetail
-    // and action cards are — the page lane's body is the card's .ast-body (its ours box and our Source line
-    // are [data-ours], outside the read); the no-page lane's is .info-body. No character is passed, so the
-    // card is unscoped, as the ledger's row is (the scope grid is the ledger's own pass).
-    // batch card premise: feat-4458 "Frequency once per day"
-    const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
-    const cpop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
-    const body = page ? page.querySelector(':scope > .ast-body') : cpop?.querySelector('.info-body') ?? null;
-    noteRegions('featDetail', cpop, body ? [body] : []);
-    const r: Read = { lane: page ? 'tree' : 'md', body, blocks: domBlocks(body), printed: [], leak: leakIn(body) };
-    m.stop();
-    return r;
-  }
-  const pop = m.host.querySelector('.picker.spell-detail')!;
-  const bodies = [...pop.querySelectorAll(':scope .sd-body > .sd-desc')];
-  noteRegions('featDetail', pop.querySelector('.sd-body'), bodies);
-  const r = readBody(bodies, readStats(pop));
+  // Card step 11: the popup is the row's 'mine' RecordCard, read as the statDetail and action cards are —
+  // the page lane's body is the card's .ast-body (its ours box and our Source line are [data-ours], outside
+  // the read); the no-page lane's is .info-body. No character is passed, so the card is unscoped, as the
+  // ledger's row is (the scope grid is the ledger's own pass).
+  // batch card premise: feat-4458 "Frequency once per day"
+  const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
+  const cpop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
+  const body = page ? page.querySelector(':scope > .ast-body') : cpop?.querySelector('.info-body') ?? null;
+  noteRegions('featDetail', cpop, body ? [body] : []);
+  const r: Read = { lane: page ? 'tree' : 'md', body, blocks: domBlocks(body), printed: [], leak: leakIn(body) };
   m.stop();
   return r;
 }
@@ -550,7 +538,7 @@ async function renderItem(row: Row): Promise<Read> {
   const cdb = hidden ? playerFacingContent(db, [inv]) : db;
   const m = await mount(<ItemDetail inv={inv} item={cdb.items[id]} content={cdb} onClose={noop} />, cdb);
   const pop = m.host.querySelector('.picker.spell-detail')!;
-  // Card step 14: with CARD_ON.itemDetail the last .sd-desc is the record's inset 'mine' card (RecordCard
+  // Card step 14: the last .sd-desc is the record's inset 'mine' card (RecordCard
   // chrome 'inset', .sd-desc.card-inset) — its ours box and footer lines are [data-ours], its embedded page
   // stubs [data-stub], both outside the read; the frame around it (sub-line, chips, stat block, controls)
   // is the same regions as before.
@@ -573,20 +561,13 @@ async function renderStat(row: Row): Promise<Read> {
   const breakdown = { title: 'Stat', totalText: '+0', parts: [], timeline: [], situational: [{ text: 'a situational line', sourceId: row.id, sourceCollection: row.bucket as never }] };
   const m = await mount(<StatDetailModal breakdown={breakdown} character={base} content={db} onClose={noop} />);
   await click(m.host.querySelector('.sd-sit-more'));
-  if (cardOn('statDetail')) {
-    // Card step 5: the full text is RecordCard mode 'mine' — the page lane's body is the card's .ast-body
-    // (its footer's ours lines are [data-ours], outside the read); the no-page lane's is .info-body.
-    const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
-    const pop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
-    const body = page ? page.querySelector(':scope > .ast-body') : pop?.querySelector('.info-body') ?? null;
-    noteRegions('statDetail', pop, body ? [body] : []);
-    const r: Read = { lane: page ? 'tree' : 'md', body, blocks: domBlocks(body), printed: [], leak: leakIn(body) };
-    m.stop();
-    return r;
-  }
-  const bodies = [...m.host.querySelectorAll('.confirm-body > .sd-desc')];
-  noteRegions('statDetail', m.host.querySelector('.confirm-body'), bodies);
-  const r = readBody(bodies, []);
+  // Card step 5: the full text is RecordCard mode 'mine' — the page lane's body is the card's .ast-body
+  // (its footer's ours lines are [data-ours], outside the read); the no-page lane's is .info-body.
+  const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
+  const pop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
+  const body = page ? page.querySelector(':scope > .ast-body') : pop?.querySelector('.info-body') ?? null;
+  noteRegions('statDetail', pop, body ? [body] : []);
+  const r: Read = { lane: page ? 'tree' : 'md', body, blocks: domBlocks(body), printed: [], leak: leakIn(body) };
   m.stop();
   return r;
 }
@@ -606,23 +587,15 @@ async function renderStrike(row: Row): Promise<Read> {
   const strike = deriveStrikes(ch, cdb).find((s) => s.instanceId === 'i-strike');
   expect(strike, `${keyOf(row)}: the weapon makes a Strike`).toBeTruthy();
   const m = await mount(<StrikeDetailModal strike={strike!} character={ch} content={cdb} onClose={noop} />, cdb);
-  if (cardOn('strikeDetail')) {
-    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
-    const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
-    const cpop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
-    const body = page ? page.querySelector(':scope > .ast-body') : cpop?.querySelector('.info-body') ?? null;
-    noteRegions('strikeDetail', cpop, body ? [body] : []);
-    noteRegions('strikeDetail', body?.querySelector('.card-lead') ?? null, []);
-    const read = body ? (body.cloneNode(true) as Element) : null;
-    read?.querySelector('.card-lead')?.remove();
-    const r: Read = { lane: page ? 'tree' : 'md', body: read, blocks: domBlocks(read), printed: [], leak: leakIn(read) };
-    m.stop();
-    return r;
-  }
-  const pop = m.host.querySelector('.picker.info-modal')!;
-  const bodies = [...pop.querySelectorAll(':scope .info-body > .sd-desc')];
-  noteRegions('strikeDetail', pop.querySelector('.info-body'), bodies);
-  const r = readBody(bodies, []);
+  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
+  const cpop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
+  const body = page ? page.querySelector(':scope > .ast-body') : cpop?.querySelector('.info-body') ?? null;
+  noteRegions('strikeDetail', cpop, body ? [body] : []);
+  noteRegions('strikeDetail', body?.querySelector('.card-lead') ?? null, []);
+  const read = body ? (body.cloneNode(true) as Element) : null;
+  read?.querySelector('.card-lead')?.remove();
+  const r: Read = { lane: page ? 'tree' : 'md', body: read, blocks: domBlocks(read), printed: [], leak: leakIn(read) };
   m.stop();
   return r;
 }
@@ -643,7 +616,7 @@ async function renderBrowse(row: Row): Promise<Read> {
 }
 /**
  * Card step 15: the builder's granted row, as Builder hands it to ChoiceDetails — WITH the character being
- * built (`character={featPrereqChar}`), so with CARD_ON.choiceDetails the popup is the live path: the
+ * built (`character={featPrereqChar}`), so the popup is the live path: the
  * record's 'mine' RecordCard (a held row keeps the browse popup). The character is a synthesized level-20
  * build with no class (name 't'): its scope ({level: 20}) folds no level section and names no class slice
  * or pick, so the card draws what the ledger's unscoped row draws; the levels and picks are the scope
@@ -721,24 +694,16 @@ async function renderActions(list: Row[], extraFeats: string[] = []): Promise<Ma
     }
     if (!found) { out.set(keyOf(row), null); continue; }
     await click(found);
-    if (cardOn('actionDetail')) {
-      // Card step 9: the popup is the record's 'mine' RecordCard (CARD_ON.actionDetail), read as the
-      // statDetail card is — the page lane's body is the card's .ast-body (its ours box and our Source line
-      // are [data-ours], outside the read); the no-page lane's is .info-body.
-      // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
-      const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
-      const cpop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
-      const body = page ? page.querySelector(':scope > .ast-body') : cpop?.querySelector('.info-body') ?? null;
-      noteRegions('actionDetail', cpop, body ? [body] : []);
-      out.set(keyOf(row), { lane: page ? 'tree' : 'md', body, blocks: domBlocks(body), printed: [], leak: leakIn(body) });
-      await click(m.host.querySelector('.card-mine .picker-close'));
-      continue;
-    }
-    const pop = m.host.querySelector('.picker.info-modal')!;
-    const bodies = [...pop.querySelectorAll('.action-detail-desc')];
-    noteRegions('actionDetail', pop.querySelector('.info-body'), bodies);
-    out.set(keyOf(row), readBody(bodies, []));
-    await click(pop.querySelector('.picker-close'));
+    // Card step 9: the popup is the record's 'mine' RecordCard, read as the statDetail card is — the page
+    // lane's body is the card's .ast-body (its ours box and our Source line are [data-ours], outside the
+    // read); the no-page lane's is .info-body.
+    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+    const page = m.host.querySelector('.ast-modal.card-mine .ast-pop');
+    const cpop = page ?? m.host.querySelector('.picker.info-modal.card-mine');
+    const body = page ? page.querySelector(':scope > .ast-body') : cpop?.querySelector('.info-body') ?? null;
+    noteRegions('actionDetail', cpop, body ? [body] : []);
+    out.set(keyOf(row), { lane: page ? 'tree' : 'md', body, blocks: domBlocks(body), printed: [], leak: leakIn(body) });
+    await click(m.host.querySelector('.card-mine .picker-close'));
   }
   m.stop();
   return out;
@@ -796,8 +761,8 @@ describe('card step 4: the rendered parity check (report mode)', () => {
    * rows, both ways — the full-corpus check's two-way rule, applied to the 540 rows rendered here.
    */
   it('the sample\'s findings equal the card-truth baseline\'s entries for the same rows, both ways', () => {
-    // Card step 5: a landed surface whose switch is turned back is expected at the baseline's legacy
-    // entries for it (lib expectedEntries), so the one-line switch keeps this test green both ways.
+    // The baseline's main sections (lib expectedEntries; card step 22 removed the switches and with them
+    // the `legacy` entries a turned-back surface was expected at).
     // batch card premise: feat-4458 "Frequency once per day"
     const baseline = lib.expectedEntries(JSON.parse(readFileSync('scripts/data/card-truth-baseline.json', 'utf8'))) as Record<string, string[]>;
     const problems: string[] = [];
@@ -926,8 +891,8 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     const ch = { ...ch0, effectPicks: [...(ch0.effectPicks ?? []), { recordId: 'air-gate', choiceId: choice.id, label: choice.options[0].label, note: choice.options[0].note }] } as Character;
     const entry = featEntries(ch, db).find((e) => e.trustFeatureId === 'air-gate' || e.featureId === 'air-gate');
     expect(entry, 'a kineticist with the Air gate lists an Air Gate row').toBeTruthy();
-    // Card step 11: switched on, the row is the 'mine' card's (printed set empty, no hideMeta), as the ledger models it.
-    const drawn = cardOn('featDetail') ? { hideMeta: false, card: { printed: [] } } : { hideMeta: true };
+    // Card step 11: the row is the 'mine' card's (printed set empty), as the ledger models it.
+    const drawn = { card: { printed: [] } };
     const row = { surface: 'featDetail', bucket: 'classFeatures', id: 'air-gate', own: { bucket: 'classFeatures', id: 'air-gate' }, read: { bucket: 'classFeatures', slug: 'air-gate' }, ...drawn, itemLists: false, md: entry!.description, printed: [], mode: 'mine' } as unknown as Row;
     const s = await renderFeat(entry!);
     const dom = domJudge(row, s, await refOf('classFeatures', 'air-gate'), hiddenOf(row));
@@ -939,7 +904,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     // the page's own lines are the read blocks, which leave every [data-ours] node out.
     // batch card premise: element-1 "Before or after the other effects of the impulse, you can either Stride up to half your Speed or Step"
     expect(s.blocks.map((b) => b.text).join(' ')).not.toMatch(/Your choice|\| ?---/);
-    if (cardOn('featDetail')) expect(txt(s.body?.querySelector('.card-ours[data-ours]'))).toMatch(/Your choice: Elemental Resistance/);
+    expect(txt(s.body?.querySelector('.card-ours[data-ours]'))).toMatch(/Your choice: Elemental Resistance/);
   });
 
   /*
@@ -955,7 +920,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     const m = await mount(<FeatDetail entry={entry} onClose={noop} />);
     // Card step 11: on the 'mine' card the ours box follows the page body (RecordCard), still [data-ours].
     // batch card premise: feat-7612 "Your nectar doesn’t add critical specialization effects"
-    const box = txt(m.host.querySelector(cardOn('featDetail') ? '.card-mine .card-ours[data-ours]' : '.picker.spell-detail .sd-body > .card-ours[data-ours]'));
+    const box = txt(m.host.querySelector('.card-mine .card-ours[data-ours]'));
     m.stop();
     // batch card premise: feat-7612 "On a critical hit, the target is additionally sickened 1"
     expect(box).toContain(`Note: ${db.feats['caustic-nectar'].note}`);
@@ -1013,11 +978,9 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     // batch card premise: doctrine-4 "Second Doctrine (3rd)** Your proficiency rank for Fortitude saves increases to expert"
     // Owner case 1 (featDetail|feats:halfling-luck) is right since card step 11: the Feats-tab popup is the
     // 'mine' card and shows the page's Frequency and Trigger once each, so it left the shrink-only list;
-    // test/card-feat.test.tsx asserts it positively through FeatsTab. Switched back, it is wrong again.
+    // test/card-feat.test.tsx asserts it positively through FeatsTab.
     // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
-    const owner = [...(cardOn('featDetail') ? [] : ['featDetail|feats:halfling-luck'])];
-    for (const k of owner) expect(keys, `owner case ${k}`).toContain(k);
-    if (cardOn('featDetail')) expect(keys, 'halfling-luck is right on the card').not.toContain('featDetail|feats:halfling-luck');
+    expect(keys, 'halfling-luck is right on the card').not.toContain('featDetail|feats:halfling-luck');
     // Owner cases 2 and 4 are right since card step 16 (spells phase A): SpellDetail prints the page's
     // own rows (spellCardModel) and takes the printed preamble off the prose, so both left the
     // shrink-only list and must stay off it; test/card-spell.test.tsx asserts them positively.

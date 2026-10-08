@@ -245,7 +245,7 @@ Checks 1, 3, 4 and 5 join `npm run verify` only when package.json is clean. Unti
 
 ## 9. Build order
 
-Each step is one commit, staged by path, ends on its refuter and runs the owner-names check on new files. Each surface has a per-surface switch `CARD_ON[surface]` in `src/sheet/cardSurfaces.ts`. That surface's legacy assertions stay in a block that runs when the switch is off. Turning a surface back is therefore one line, and its tests still hold. All switches and legacy paths go in step 22.
+Each step is one commit, staged by path, ends on its refuter and runs the owner-names check on new files. Step 22 removed the per-surface switches and every legacy path they guarded; each surface is its card, and `scripts/card-only-check.mjs` (strict) keeps the legacy paths out.
 
 | # | Step | Files | Refuter | Risk |
 |---|---|---|---|---|

@@ -4,12 +4,8 @@ import type { CampaignMembership } from '../data/campaigns';
 import { loadRoster, type SavedChar } from '../data/storage';
 import { GmEditSheet, type GmEditHandle } from '../sheet/GmEditSheet';
 import { DescriptionModal } from '../sheet/DescriptionModal';
-import { DescBody } from '../sheet/DescBody';
-import { RemasteredLine, remasteredAsOf } from '../sheet/RemasteredLine';
-import { AstRenderer } from '../sheet/AstRenderer';
 import { RecordCard } from '../sheet/RecordCard';
-import { cardOn } from '../sheet/cardSurfaces';
-import { astSlug, useAstNode } from '../sheet/useAst';
+import { astSlug } from '../sheet/useAst';
 import { bucketOf } from '../sheet/astStore';
 import { PinContext, type PinDescApi } from '../sheet/PinContext';
 import type { DescNode } from '../sheet/descref';
@@ -111,28 +107,13 @@ const hostRefOf = (n: DescNode): string | null => {
 /** A page pinned to the GM screen: the record's own page (its Range/Duration lines kept — the GM reads
  *  them off it mid-fight), links opening HH's popup; a record with no page shows its text.
  *  Card step 6 (docs/card-design.md section 6 "gm"): it is the record card in mode 'gm' with chrome
- *  'embed' (CARD_ON.hostPage) — the whole page, no popup frame (the tracker window owns it), drawn byte
- *  for byte as before (test/card-hostpage.test.tsx). Switched off, the legacy page below. */
+ *  'embed' — the whole page, no popup frame (the tracker window owns it), drawn byte for byte as the
+ *  pre-card page drew it (test/card-hostpage.test.tsx keeps that page as its reference). Card step 22
+ *  removed the switch and the legacy page. */
 export function HostPage({ content, bucket, id, onOpen }: {
   content: ContentDatabase; bucket: string; id: string; onOpen: (bucket: string, id: string) => void;
 }) {
-  return cardOn('hostPage')
-    ? <RecordCard record={{ bucket, id }} mode="gm" chrome="embed" content={content} onOpenRef={onOpen} />
-    : <HostPageLegacy content={content} bucket={bucket} id={id} onOpen={onOpen} />;
-}
-
-/** The pre-card GM screen page, kept while CARD_ON.hostPage can be turned back (card step 22 removes it). */
-export function HostPageLegacy({ content, bucket, id, onOpen }: {
-  content: ContentDatabase; bucket: string; id: string; onOpen: (bucket: string, id: string) => void;
-}) {
-  const rec = (content as unknown as Record<string, Record<string, { description?: string; descRefs?: DescRef[] }> | undefined>)[bucket]?.[id];
-  const { node, loading } = useAstNode(bucket, id);
-  // desk #158: a pinned old printing says what it was remastered as; the name opens the reprint in HH's popup.
-  const ra = remasteredAsOf(content, { bucket, id });
-  if (!rec) return <p className="sd-ours">This page is not in this version of Heroes Heaven.</p>;
-  if (node) return <AstRenderer node={node} bodyOnly selfRef={`${bucket}:${id}`} onOpenRef={onOpen} footer={ra ? <RemasteredLine ra={ra} onOpen={onOpen} /> : null} />;
-  if (loading) return <div className="ast-body ast-loading" aria-busy="true" />;
-  return <DescBody description={rec.description} descRefs={rec.descRefs} remasteredAs={ra} />;
+  return <RecordCard record={{ bucket, id }} mode="gm" chrome="embed" content={content} onOpenRef={onOpen} />;
 }
 
 /** True when this PC already has a row in the initiative order. Matched through the store's OWN

@@ -532,10 +532,10 @@ describe('the guard\'s view of choose-one folds', () => {
     const sPick = (r: { hidden?: { text: string; rule: string }[] }) => (r.hidden ?? []).filter((h) => h.rule === 'S-pick').map((h) => h.text.split(' ')[0].replace(/:$/, ''));
     // A row pick (FeatDetail).
     const scope = withPick({ level: 20 }, 'feats', 'iruxi-armaments', 'Claw')!;
-    const row = { ...featRow, bucket: 'feats', id: 'iruxi-armaments', printed: [], hideMeta: true, itemLists: false, md: '' };
+    const row = { ...featRow, bucket: 'feats', id: 'iruxi-armaments', printed: [], itemLists: false, md: '' };
     expect(sPick(judgeRow({ ...row, scope, treatment: 'hide' }, jTrees, md))).toEqual(['Fangs', 'Tail']);
     // A class pick (any card on a classFeatures page).
-    const cfRow = { surface: 'statDetail', bucket: 'classFeatures', id: 'exemplary-finisher', mode: 'mine', card: { printed: [] }, read: { bucket: 'classFeatures', slug: 'exemplary-finisher' }, own: { bucket: 'classFeatures', id: 'exemplary-finisher' }, printed: [], hideMeta: false, itemLists: false, md: '' };
+    const cfRow = { surface: 'statDetail', bucket: 'classFeatures', id: 'exemplary-finisher', mode: 'mine', card: { printed: [] }, read: { bucket: 'classFeatures', slug: 'exemplary-finisher' }, own: { bucket: 'classFeatures', id: 'exemplary-finisher' }, printed: [], itemLists: false, md: '' };
     const cScope: CardScope = { level: 20, picks: { [CLASS_PICKS]: 'Fencer' } };
     expect(sPick(judgeRow({ ...cfRow, scope: cScope, treatment: 'hide' }, jTrees, md))).toEqual(['Battledancer', 'Braggart', 'Gymnast', 'Rascal', 'Wit']);
   });
@@ -1246,7 +1246,7 @@ describe('card step 13b-merge (ledger hygiene): a label inside the page\'s own B
     const model = spellCardModel(content().spells[id], tree(`spells:${id}`), []);
     expect(model.body, `${id} draws its page`).toBe('tree');
     expect(model.rows.map(([l]) => l), `${id}'s stat rows`).toEqual(printed);
-    return { surface: 'spellDetail', bucket: 'spells', id, own: { bucket: 'spells', id }, read: { bucket: 'spells', slug: id }, drawn: model.drawn, card: { printed }, printed: model.rows, mode: 'mine', hideMeta: false, itemLists: true, md: '' };
+    return { surface: 'spellDetail', bucket: 'spells', id, own: { bucket: 'spells', id }, read: { bucket: 'spells', slug: id }, drawn: model.drawn, card: { printed }, printed: model.rows, mode: 'mine', itemLists: true, md: '' };
   };
   const run = (...rs: [string, boolean?][]) => ({ runs: rs.map(([s, b]) => (b ? { b: s } : { t: s })), text: rs.map(([s]) => s).join('') });
   // batch card premise: spell-1547 "You conjure grease, choosing an area or target"

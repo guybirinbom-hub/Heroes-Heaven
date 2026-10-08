@@ -29,7 +29,6 @@ import { traitDesc } from '../rules/glossary';
 import { assuranceNote, assuranceResult, markNote, markTooltip, markedActionCost, nameOfRecord, recordMarkersFor, sheetLoreKeys, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { SKILL_ACTIONS, rankAtLeast } from '../rules/skillActions';
 import { RecordCard } from './RecordCard';
-import { cardOn } from './cardSurfaces';
 import { scopeOfCharacter } from './cardScope';
 import { astSlug, useAstNode } from './useAst';
 import { OURS_KINDS, type OursLine } from './cardModel';
@@ -153,18 +152,15 @@ export interface Act {
    *  activities): the full rules description + its cross-references from content.actions. */
   fullDesc?: string;
   fullRefs?: DescRef[];
-  /** The AST bucket + id of the record `fullDesc` came from, so the detail popup renders the printed
-   *  formatting (tables, headings) like every other description popup instead of the flat fallback. */
-  astKey?: string;
-  astId?: string;
   /** The record whose `limitedUses` governs this action. Eight BACKGROUNDS grant a once-per-day
    *  action (Genie-Blessed → Wish for Luck); the pip lookup only ever took a feat or a class feature,
    *  and a background has neither id, so every one of them showed an untracked action. */
   usesFrom?: { id: string; name: string; limitedUses?: LimitedUses };
   /** The record this action IS, by {bucket, id} (card step 9): what its popup opens as the record's
-   *  'mine' card (CARD_ON.actionDetail). Activities name the action / feat record their full text comes
-   *  from; feat, class-feature and granted actions, tactics and runes name their own. An action with
-   *  none (a curated activity with no record, an item's activation) keeps the legacy popup. */
+   *  'mine' card. Activities name the action / feat record their full text comes from; feat,
+   *  class-feature and granted actions, tactics and runes name their own. An action with none (a curated
+   *  activity with no record — Recover, Retrain, Recover (Bed Rest) — or an item's activation) has no page
+   *  and opens the plain popup (NoRecordActionDetail). */
   record?: { bucket: string; id: string };
 }
 
@@ -240,7 +236,7 @@ function PinToggle({ k, pinned, onPlay }: { k: string; pinned: ReadonlySet<strin
 
 /** Which collection a Feat-actions record came from (card step 9): a feat or class feature the
  *  character owns is the content object itself; a granted action is content.actions' record (or a copy
- *  of it carrying `usesFrom`). Undefined for anything else, which keeps the legacy popup. */
+ *  of it carrying `usesFrom`). Undefined for anything else, which opens the no-record popup. */
 function actionRecordOf(db: ContentDatabase, f: { id?: string; name: string }): Act['record'] {
   const id = f.id;
   if (!id) return undefined;
@@ -363,13 +359,14 @@ export function oursHeaderCost(cost: ActionCost | undefined, page: AstNode | nul
  *  and the pinned set from there. Every one of them is a prop now, so the popup can be rendered — and
  *  moved onto the card — without MainTab.
  *
- *  Card step 9 (docs/card-design.md section 9 row 9, F1b): with CARD_ON.actionDetail an action that
- *  names its record (Act.record) opens that record's 'mine' card — ActionCard below. The legacy popup
- *  stays for the switch's off position and for actions that name no record. */
+ *  Card step 9 (docs/card-design.md section 9 row 9, F1b): an action that names its record (Act.record)
+ *  opens that record's 'mine' card — ActionCard below. An action that names no record has no page to
+ *  draw: it opens NoRecordActionDetail, its text through DescBody's no-page lanes (card step 22 removed
+ *  the switch and the page branch that popup once had). */
 export function ActionDetailModal(props: ActionDetailProps) {
   // Two components, not one with a branch: each registers its own dismiss entry (the card's is
   // RecordCard's), so the choice is made before any hook runs.
-  return cardOn('actionDetail') && props.detail.a.record ? <ActionCard {...props} /> : <LegacyActionDetail {...props} />;
+  return props.detail.a.record ? <ActionCard {...props} /> : <NoRecordActionDetail {...props} />;
 }
 
 interface ActionDetailProps {
@@ -457,7 +454,11 @@ function ActionCard({ detail, onClose, character, content, onPlay, pinned }: Act
   );
 }
 
-function LegacyActionDetail({ detail, onClose, character, content, onPlay, pinned }: ActionDetailProps) {
+/** The popup of an action that names no record (a curated activity with no record, an item's
+ *  activation): no page exists for it, so its text is drawn through DescBody's markdown / rich-HTML
+ *  lanes — the no-page lane of section 7, never a page. Unchanged since card step 2 but for the page
+ *  branch card step 22 removed (no such action ever carried a tree key). */
+function NoRecordActionDetail({ detail, onClose, character, content, onPlay, pinned }: ActionDetailProps) {
   useEscapeClose(onClose);
   const { a, pinnable, prepare } = detail;
   const traits = a.traits ?? [];
@@ -506,7 +507,7 @@ function LegacyActionDetail({ detail, onClose, character, content, onPlay, pinne
               ))}
             </div>
           )}
-          <DescBody description={a.fullDesc ?? a.desc} descRefs={a.fullRefs ?? a.descRefs} className="action-detail-desc" onExit={onClose} astKey={a.astKey} astId={a.astId} />
+          <DescBody description={a.fullDesc ?? a.desc} descRefs={a.fullRefs ?? a.descRefs} className="action-detail-desc" onExit={onClose} />
         </div>
       </div>
     </div>
@@ -599,8 +600,6 @@ export function MainTab({
       desc: a.desc,
       fullDesc: full?.description ?? rec?.description,
       fullRefs: full?.descRefs ?? rec?.descRefs,
-      astKey: full ? 'actions' : rec ? 'feats' : undefined,
-      astId: full ? full.id : a.featId,
       record: full ? { bucket: 'actions', id: full.id } : rec && a.featId ? { bucket: 'feats', id: a.featId } : undefined,
     };
   };

@@ -9,14 +9,13 @@ import { ContentContext } from '../src/sheet/ContentContext';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { StatDetailModal } from '../src/sheet/StatDetailModal';
 import { FeatsTab } from '../src/sheet/FeatsTab';
-import { CARD_ON } from '../src/sheet/cardSurfaces';
 import type { Character, ContentDatabase } from '../src/rules/types';
 
 /**
  * Card step 13a (docs/card-design.md section 3, section 9 row 13a; owner ruling Q1 = A, section 13):
  * LEVEL FOLDS on the screen. Every case renders the REAL StatDetailModal with a synthesized character
  * (built here with test/_content's build, name 't' — never an owner's character), opens a situational
- * line's "Full text" (the 'mine' card, CARD_ON.statDetail), and reads the card off the DOM:
+ * line's "Full text" (the 'mine' card), and reads the card off the DOM:
  *  - the parts the character does not have yet sit under ONE closed, dimmed line "At higher levels (k)"
  *    (a <details>; the folded text stays in the DOM, the line is ours);
  *  - an option the build does not have folds under "Other options (k)";
@@ -115,7 +114,7 @@ function openText(modal: HTMLElement): string {
 }
 const folds = (modal: HTMLElement) => [...modal.querySelectorAll('details.card-fold')] as HTMLDetailsElement[];
 
-describe.runIf(CARD_ON.statDetail)('card step 13a: level folds on the mine card', () => {
+describe('card step 13a: level folds on the mine card', () => {
   it('a Justice champion at 5: no Relentless Reaction open, ONE closed "At higher levels (2)" line, the text inside it', async () => {
     const modal = await openCard(build('champion', 5, { subclassId: 'justice' }), 'classFeatures', 'justice');
     const f = folds(modal);
@@ -213,7 +212,7 @@ async function openFeatRow(ch: Character, name: string): Promise<HTMLElement> {
   return modal!;
 }
 
-describe.runIf(CARD_ON.featDetail)('card step 13c: choose-one blocks on the FeatDetail card (owner ruling Q2 = A)', () => {
+describe('card step 13c: choose-one blocks on the FeatDetail card (owner ruling Q2 = A)', () => {
   it('Iruxi Armaments (Claw): Claws open and highlighted; Fangs and Tail under ONE closed "Other options (2)" line', async () => {
     const modal = await openFeatRow(withPickedFeat('iruxi-armaments', 'Claw'), 'Iruxi Armaments (Claw)');
     const hi = [...modal.querySelectorAll('.card-applies')];
@@ -244,7 +243,7 @@ describe.runIf(CARD_ON.featDetail)('card step 13c: choose-one blocks on the Feat
   });
 });
 
-describe.runIf(CARD_ON.statDetail)('card step 13c: class picks on a classFeatures card (StatDetailModal, no row pick)', () => {
+describe('card step 13c: class picks on a classFeatures card (StatDetailModal, no row pick)', () => {
   it('a Fencer swashbuckler: exemplary-finisher shows Fencer open and highlighted, the five other styles under "Other options (5)"', async () => {
     const modal = await openCard(build('swashbuckler', 9, { subclassId: 'fencer' }), 'classFeatures', 'exemplary-finisher');
     const hi = [...modal.querySelectorAll('.card-applies')];
@@ -297,7 +296,7 @@ function withFeat(featId: string, level: number): Character {
   return { ...ch, feats: [{ featId, level: 1, category: 'class' }] } as Character;
 }
 
-describe.runIf(CARD_ON.statDetail)('card step 13b: prose gates fold WHOLE on the mine card', () => {
+describe('card step 13b: prose gates fold WHOLE on the mine card', () => {
   // batch card premise: feat-9110 "If you do, the action gains the thrall trait"
   it('osteo-armaments at 7: ONE closed "At higher levels (2)" line holds both gated paragraphs; no orphan "If you do" is open', async () => {
     const modal = await openCard(build('fighter', 7, {}), 'feats', 'osteo-armaments');
@@ -331,7 +330,7 @@ describe.runIf(CARD_ON.statDetail)('card step 13b: prose gates fold WHOLE on the
   });
 });
 
-describe.runIf(CARD_ON.featDetail)('card step 13b: the sheet\'s own feat row (FeatsTab → FeatDetail card)', () => {
+describe('card step 13b: the sheet\'s own feat row (FeatsTab → FeatDetail card)', () => {
   it('a level-7 character\'s Osteo Armaments row folds both gated paragraphs under one line', async () => {
     const modal = await openFeatRow(withFeat('osteo-armaments', 7), 'Osteo Armaments');
     expect(folds(modal).map((d) => [d.dataset.fold, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['future', 'At higher levels (2)']]);
@@ -355,7 +354,7 @@ async function justiceAt5With(treatment: 'hide' | 'grey') {
   }
 }
 
-describe.runIf(CARD_ON.statDetail)('card step 13a: FUTURE_TREATMENT is the one switch', () => {
+describe('card step 13a: FUTURE_TREATMENT is the one switch', () => {
   it('"hide" removes the folded text from the DOM and leaves only a marker', async () => {
     const modal = await justiceAt5With('hide');
     expect(folds(modal)).toEqual([]);

@@ -10,7 +10,6 @@ import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { StatDetailModal } from '../src/sheet/StatDetailModal';
 import { RecordCard } from '../src/sheet/RecordCard';
-import { CARD_ON } from '../src/sheet/cardSurfaces';
 import type { DescNode } from '../src/sheet/descref';
 import type { Character, ContentDatabase } from '../src/rules/types';
 import { omissionLog } from '../scripts/lib/card-scope.mjs';
@@ -26,7 +25,7 @@ vi.mock('../src/data/trustGate', async (importOriginal) => {
 /**
  * Card step 5 (docs/card-design.md section 9 row 5; section 2 rules 4–5; owner rulings section 13): the
  * FIRST visible change. StatDetailModal's "Full text" of a situational line renders the record's card in
- * mode 'mine' (CARD_ON.statDetail). The popup prints no stat rows, so its printed set is empty and every
+ * mode 'mine'. The popup prints no stat rows, so its printed set is empty and every
  * labelled line of the record's Archives page shows exactly once, in the page's words, at full weight, in
  * the page's order. S-furniture leaves (spoiler banners, the "<X> leads to…" section, Class labels);
  * Source / Archetype / Access / Craft Requirements / PFS Note stay, dimmed (.card-dim). The header keeps
@@ -72,9 +71,8 @@ vi.mock('../src/data/trustGate', async (importOriginal) => {
  *    dropped is not caught there; the refuter measured this file catching that mutation. Noted for
  *    step W.
  *
- * The switch turns back in one line (section 9): the card cases run while CARD_ON.statDetail is on, the
- * legacy popup's cases while it is off. Both blocks were run on 2026-10-02 (the off block with the
- * switch flipped on a scratch edit, then restored).
+ * Card step 22 removed the switch and the legacy popup with its off-position block; the card cases run
+ * always.
  */
 const noop = () => undefined;
 const db: ContentDatabase = content();
@@ -144,27 +142,7 @@ function pageCard(host: HTMLElement) {
   return { modal: modal!, body, text: squash(body.textContent), lines };
 }
 
-describe.runIf(!CARD_ON.statDetail)('card step 5, switch OFF: StatDetailModal full text is the legacy popup', () => {
-  it('the Full text opens the legacy text popup over the stat, never the card', async () => {
-    const host = await openFullText('feats', 'halfling-luck');
-    expect(host.querySelector('.card-mine'), 'no card while the switch is off').toBeNull();
-    const modal = host.querySelector('.picker.confirm-modal');
-    expect(modal, 'the legacy popup').toBeTruthy();
-    expect(squash(modal!.querySelector('.picker-head span')?.textContent)).toBe(recs('feats')['halfling-luck'].name);
-    expect(squash(modal!.querySelector('.confirm-body')?.textContent)).toMatch(/Your happy-go-lucky nature/);
-  });
-
-  it('closing the legacy popup returns to the stat popup', async () => {
-    const onClose = vi.fn();
-    const host = await openFullText('feats', 'halfling-luck', null, onClose);
-    await click(host.querySelector('.confirm-modal .picker-close'));
-    expect(host.querySelector('.confirm-modal'), 'the legacy popup closed').toBeNull();
-    expect(host.querySelector('.picker.stat-detail'), 'the stat popup stays').toBeTruthy();
-    expect(onClose).not.toHaveBeenCalled();
-  });
-});
-
-describe.runIf(CARD_ON.statDetail)('card step 5: StatDetailModal full text is the mine card', () => {
+describe('card step 5: StatDetailModal full text is the mine card', () => {
   it('halfling-luck shows "Frequency once per day" and its Trigger exactly once each, at full weight, before the prose; no "leads to"', async () => {
     const host = await openFullText('feats', 'halfling-luck');
     const { body, text, lines } = pageCard(host);

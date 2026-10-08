@@ -31,7 +31,7 @@ import { browseResolvesStubs, mineResolvesStubs, useStubbedTree } from './astStu
  * modes / chrome came in later steps (below); the reserved props still unread here (stats, transform) are declared in
  * cardModel.ts and not read yet.
  *
- * Step 5 builds `mode: 'mine'` (StatDetailModal's full text, CARD_ON.statDetail): the same shells with a
+ * Step 5 builds `mode: 'mine'` (StatDetailModal's full text): the same shells with a
  * `card-mine` class added — `.ast-modal` is no `.picker`, so PopupSizeLock never pins it, and
  * `.picker.info-modal` is already SELF_SIZED, so the card grows with its content and PopupSizeLock is
  * unchanged. The page lane draws through AstRenderer's `card` prop (the printed set, furniture, dim
@@ -307,7 +307,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
   /* Card step 14 (section 2 rule 6; src/sheet/astStubs.ts): the browse card of an item page draws the
      pages its stubs embed — a weapon's group effect, an armor's specialization — one level deep, as the
      item's own card does. A page whose stub buckets are still loading draws its stubs empty for a beat.
-     Behind CARD_ON.itemDetail (browseResolvesStubs): switched off, the browse card is the one before step 14.
+     Which buckets draw them is browseResolvesStubs (astStubs.ts).
      Card step 14b: every bucket in STUB_HOST_BUCKETS, an archetype page's feats as a compact linked list,
      and a stub no record's page answers as its name (a link when a record exists for it). */
   const stubHost = astBucket ?? cur.key ?? '';

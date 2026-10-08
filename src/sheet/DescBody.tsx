@@ -6,8 +6,6 @@ import { RichText } from './RichText';
 import { DescriptionModal } from './DescriptionModal';
 import { sanitize } from './sanitizeHtml';
 import { htmlWithAutoDir } from './autoDir';
-import { AstRenderer } from './AstRenderer';
-import { useAstNode, withoutItemLists } from './useAst';
 import { RemasteredLine, type RemasteredAs } from './RemasteredLine';
 
 /** A description is treated as rich HTML (user-authored, from the item editor) if it carries any
@@ -33,14 +31,19 @@ export { remasteredAsOf, type RemasteredAs } from './RemasteredLine';
  * Renders an inline description with its cross-references linkified; clicking a link opens the
  * recursive description popup (with Back). Drop-in replacement for `<p>{description}</p>` in
  * detail views. Accepts both curated markdown and user-authored rich HTML.
+ *
+ * It never draws an Archives page. A record's page is drawn by the card (RecordCard, and SpellDetail's
+ * spell card); DescBody is the card's no-page lane (docs/card-design.md section 7) and the text lane of
+ * the player's notes. Card step 22 (section 9 row 22) removed its page branch — `astKey` / `astId`, the
+ * tree drawn with `hideMeta`, the loading placeholder — once every surface that reached it (FeatDetail,
+ * ItemDetail, StatDetailModal's full text, the Main-tab action popup) drew its record's 'mine' card.
+ * scripts/card-only-check.mjs keeps it that way.
  */
 export function DescBody({
   description,
   descRefs,
   className = 'sd-desc',
   onExit,
-  astKey,
-  astId,
   dirAuto,
   remasteredAs,
   emptyNote,
@@ -63,14 +66,9 @@ export function DescBody({
   onExit?: () => void;
   /** @deprecated RichText now emits block elements, so the container is always a div. */
   as?: 'p' | 'div';
-  /** The record's bucket + slug — when its ast exists, the description renders from the new pipeline
-   *  (prose only; the detail view keeps its own stat block) instead of the legacy markdown. */
-  astKey?: string;
-  astId?: string;
 }) {
   const content = useContent();
   const [node, setNode] = useState<DescNode | null>(null);
-  const { node: ast, bucket: astBucket, loading: astLoading } = useAstNode(astKey, astId);
   /** Open another record's description in the recursive popup — what a .ref-link click does. */
   const openRecord = (bucket: string, slug: string) => {
     const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[slug];
@@ -82,38 +80,15 @@ export function DescBody({
   // Sanitizing (and, for notes, direction-tagging) parses the whole string, so do it once per value
   // rather than on every render — a long note re-renders on each keystroke of its title. Skipped
   // entirely unless the rich-HTML branch below is the one that will run.
-  const useRich = !astId || (!ast && !astLoading);
   const richHtml = useMemo(
     () =>
-      useRich && description && isRichHtml(description, dirAuto)
+      description && isRichHtml(description, dirAuto)
         ? dirAuto
           ? htmlWithAutoDir(sanitize(description))
           : sanitize(description)
         : '',
-    [useRich, description, dirAuto],
+    [description, dirAuto],
   );
-
-  // Ast path — the new-data description prose (meta hidden; links open the recursive ast popup).
-  if (ast && astId) {
-    return (
-      <>
-        <div className={className}>
-          {/* bug 2026-09-15: item popup — `withoutItemLists` cuts the page's appended "Specific Magic
-              Armor/Weapons/Shields" link lists. It sits HERE, on the path every detail view of a thing
-              the character already HAS reads through, rather than in `useAstNode`: the search popup
-              (DescriptionModal) reads the same tree straight from the hook and keeps its lists, because
-              there the player is looking for another item. */}
-          <AstRenderer node={withoutItemLists(ast)} bodyOnly hideMeta selfRef={`${astBucket}:${astId}`} onOpenRef={openRecord} />
-          {remastered}
-        </div>
-        {node && <DescriptionModal root={node} onClose={() => setNode(null)} onExit={onExit} backToSource={!!onExit} />}
-      </>
-    );
-  }
-
-  // The record HAS an ast that's still loading: show a quiet placeholder rather than flashing the plain-text
-  // fallback (which, for armor/weapons, prints the stat line as prose and looks like a duplicate stat block).
-  if (astLoading && astId) return <div className={className + ' ast-loading'} aria-busy="true" />;
 
   /*
    * desk #152 — NO RULES TEXT AND NO PAGE. Owner, 2026-09-12: the popup says so, "the marked line

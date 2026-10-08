@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getCachedAst, isBucketLoaded, loadBucketAst, type AstNode } from './astStore';
-import { cardOn } from './cardSurfaces';
 import STUB_NAMES_JSON from '../data/stub-names.json';
 
 /**
@@ -29,7 +28,7 @@ import STUB_NAMES_JSON from '../data/stub-names.json';
  *
  * Where it is switched on (step 14): pages of the buckets in STUB_HOST_BUCKETS ('items') on the browse
  * card (RecordCard mode 'browse', a page opened from a link inside any card included) and on ItemDetail's
- * card — both behind CARD_ON.itemDetail (browseResolvesStubs), so the switch turns both back.
+ * card (browseResolvesStubs). Card step 22 removed the item popup's switch they were tied to.
  * Step 14b (docs/card-design.md section 2 rule 6, section 9 row 14b) widens STUB_HOST_BUCKETS to every
  * bucket whose pages carry a stub, on the browse card and on the 'mine' POPUP cards (mineResolvesStubs:
  * StatDetail's full text, FeatDetail, the action popup, the builder's granted rows, a pinned card — every
@@ -98,13 +97,12 @@ export const STUB_HOST_BUCKETS: ReadonlySet<string> = new Set([
 ]);
 
 /**
- * Does the browse card draw the page stubs of a page in this bucket? An item page's are tied to the item
- * popup's switch (docs/card-design.md section 9: a landed surface turns back in one line): with
- * CARD_ON.itemDetail off the browse card of an item page is the one it was before step 14, its stubs drawn
- * as nothing. Every other bucket's (step 14b) turn back by leaving STUB_HOST_BUCKETS.
+ * Does the browse card draw the page stubs of a page in this bucket? Every bucket in STUB_HOST_BUCKETS
+ * (step 14: items; step 14b: every bucket whose pages carry a stub). Until card step 22 an item page's were
+ * tied to the item popup's switch; step 22 removed the switches.
  */
 export function browseResolvesStubs(bucket: string): boolean {
-  return STUB_HOST_BUCKETS.has(bucket) && (bucket !== 'items' || cardOn('itemDetail'));
+  return STUB_HOST_BUCKETS.has(bucket);
 }
 
 /**

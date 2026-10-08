@@ -12,7 +12,6 @@ import { StrikeDetailModal } from '../src/sheet/StrikeDetailModal';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { ForceMobileContext } from '../src/sheet/useIsMobile';
-import { cardOn } from '../src/sheet/cardSurfaces';
 import { loadAstIndex, loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import { aonIndex, embedsPage, printedWeaponGroups, resolveStubs, stubIds, stubRefs, type StubbedNode } from '../src/sheet/astStubs';
 import { cardStatHeadMask, recordTree, withoutItemLists } from '../src/sheet/astVisibility';
@@ -23,19 +22,10 @@ import { unresolvedStubs } from '../scripts/lib/card-scope.mjs';
 import type { Character, ContentDatabase, InventoryItem } from '../src/rules/types';
 import type { DescNode } from '../src/sheet/descref';
 
-/** The item switch, read through a mock so one case can turn it back (section 9: "Turning a surface back
- *  is therefore one line, and its tests still hold") without editing src/sheet/cardSurfaces.ts — the
- *  pattern of test/card-action.test.tsx. Undefined = the real CARD_ON.itemDetail. */
-const sw = vi.hoisted(() => ({ itemDetail: undefined as boolean | undefined }));
-vi.mock('../src/sheet/cardSurfaces', async (importOriginal) => {
-  const real = await importOriginal<typeof import('../src/sheet/cardSurfaces')>();
-  return { ...real, cardOn: (s: Parameters<typeof real.cardOn>[0]) => (s === 'itemDetail' && sw.itemDetail !== undefined ? sw.itemDetail : real.cardOn(s)) };
-});
-
 /**
  * Card step 14 (docs/card-design.md section 9 row 14; section 2 rules 4–6; section 5 "Item controls and
  * computed rows" and "Crit-spec block"): the item popup's description is the SHOWN record's 'mine' card
- * (CARD_ON.itemDetail, RecordCard chrome 'inset'), inside ItemDetail's own frame.
+ * (RecordCard chrome 'inset'), inside ItemDetail's own frame.
  *
  *  - Embedded page stubs (src/sheet/astStubs.ts): a weapon's page draws its group's page under "Critical
  *    Specialization Effects", an armor's its specialization — one level deep, with a visited set, so a
@@ -101,8 +91,7 @@ vi.mock('../src/sheet/cardSurfaces', async (importOriginal) => {
  * the reason lives here instead, beside the test that pins those three ids so the list cannot grow silently.
  *  - astVisibility.ts cardStatHeadMask no-rule branch: `mask[k] = true;` → `void lead;` → the class kit
  *    test red (Price and Bulk printed twice).
- *  - astStubs.ts browseResolvesStubs: `cardOn('itemDetail') &&` removed → the turned-back test red (the
- *    browse card keeps drawing the Sword page with the switch off).
+ *  (The turned-back and switched-off cases, with their mutation, left with the switch in card step 22.)
  */
 const db: ContentDatabase = content();
 const AST_DIR = 'public/ast';
@@ -136,7 +125,7 @@ async function settle() {
 }
 const pin: PinDescApi = { has: () => false, toggle: () => undefined };
 let stops: (() => void)[] = [];
-afterEach(() => { for (const s of stops) s(); stops = []; sw.itemDetail = undefined; });
+afterEach(() => { for (const s of stops) s(); stops = []; });
 async function mount(el: ReactElement, cdb: ContentDatabase = db): Promise<HTMLElement> {
   const host = document.createElement('div');
   document.body.appendChild(host);
@@ -276,9 +265,7 @@ describe('card step 14: embedded page stubs (astStubs.ts)', () => {
   });
 });
 
-/* Section 9: a landed surface's switch turns back in one line and its tests still hold — the card's
- * assertions run while CARD_ON.itemDetail is on, the legacy popup's below while it is off. */
-describe.skipIf(!cardOn('itemDetail'))('card step 14: the item popup is the record\'s card (CARD_ON.itemDetail)', () => {
+describe('card step 14: the item popup is the record\'s card', () => {
   it('the description is the inset mine card', async () => {
     const host = await itemPopup('longsword');
     expect(cardBody(host), 'the inset card draws the description').toBeTruthy();
@@ -565,37 +552,6 @@ describe.skipIf(!cardOn('itemDetail'))('card step 14: the item popup is the reco
   });
 });
 
-describe.skipIf(cardOn('itemDetail'))('card step 14, switched off: the legacy item popup', () => {
-  it('draws the description through DescBody (no card) and our crit sentence for every weapon with a known group', async () => {
-    const host = await itemPopup('longsword');
-    expect(host.querySelector('.card-inset')).toBeNull();
-    expect(host.querySelector('[data-stub]')).toBeNull();
-    expect(txt(host.querySelector('.sd-critspec .sd-critspec-text'))).toBe(CRIT_SPEC.sword);
-    expect(host.querySelector('.sd-critspec')!.hasAttribute('data-ours')).toBe(false);
-  });
-});
-
-/* Section 9: the switch turns the WHOLE step back in one line — the item popup and the item page's browse
- * card (astStubs.ts browseResolvesStubs) — read through the mocked cardOn, so this runs either way. */
-describe('card step 14, turned back (CARD_ON.itemDetail off): the item popup and the browse card are the old ones', () => {
-  it('the item popup draws DescBody and our sentence unmarked; the longsword\'s browse card draws no stub', async () => {
-    sw.itemDetail = false;
-    const item = await itemPopup('longsword');
-    expect(item.querySelector('.card-inset')).toBeNull();
-    expect(item.querySelector('[data-stub]')).toBeNull();
-    expect(txt(item.querySelector('.sd-critspec .sd-critspec-text'))).toBe(CRIT_SPEC.sword);
-    expect(item.querySelector('.sd-critspec')!.hasAttribute('data-ours')).toBe(false);
-    const browse = await mount(<RecordCard record={{ bucket: 'items', id: 'longsword' }} mode="browse" chrome="popup" onExit={() => undefined} />);
-    expect(browse.querySelector('.ast-pop > .ast-body'), 'the longsword page is drawn').toBeTruthy();
-    expect(browse.querySelector('[data-stub]'), 'its stubs draw nothing, as before step 14').toBeNull();
-    expect(txt(browse)).not.toContain('becoming off-guard until the start of your next turn');
-    // Switched on again, the same browse card draws the Sword page (the switch is the only difference).
-    sw.itemDetail = true;
-    const on = await mount(<RecordCard record={{ bucket: 'items', id: 'longsword' }} mode="browse" chrome="popup" onExit={() => undefined} />);
-    expect(on.querySelector('.ast-pop > .ast-body [data-stub="weaponGroup:sword"]')).toBeTruthy();
-  });
-});
-
 describe('card step 14: the frame and its controls are unchanged', () => {
   it('the phone Remove bar stays outside the scrolling body, the same markup, and still removes', async () => {
     let played = 0;
@@ -665,7 +621,7 @@ describe('card step 14: the browse card draws an item page\'s stubs; the strike 
  * (vi.resetModules: a new astStore with nothing cached) whose fetch holds the named buckets behind a
  * deferred promise the test releases itself. Last in the file, so nothing after it shares the reset.
  */
-describe.skipIf(!cardOn('itemDetail'))('card step 14: the crit gate while the page or its group page is loading', () => {
+describe('card step 14: the crit gate while the page or its group page is loading', () => {
   type Fresh = { host: HTMLElement; release: (bucket: string) => void };
   const realFetch = () => globalThis.fetch;
   let restoreFetch: (() => void) | undefined;

@@ -451,7 +451,7 @@ describe('the popup on the tree lane', () => {
     const row = {
       surface: 'spellDetail', bucket: 'spells', id: 'fireball', own: { bucket: 'spells', id: 'fireball' },
       read: { bucket: 'spells', slug: 'fireball' }, drawn: m.drawn, card: { printed: m.rows.map(([l]) => l) },
-      hideMeta: false, itemLists: true, md: spell('fireball').description, printed: m.rows, mode: 'mine',
+      itemLists: true, md: spell('fireball').description, printed: m.rows, mode: 'mine',
     };
     const r = lib.judgeRow(row, { spells: trees }, { parseBlocks, cleanRun });
     expect([r.lane, r.identity, r.labels, r.unnamed]).toEqual(['tree', false, {}, []]);

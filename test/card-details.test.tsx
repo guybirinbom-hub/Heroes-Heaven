@@ -15,7 +15,6 @@ import { DetailsTab } from '../src/sheet/DetailsTab';
 import { FeatsTab, featEntries, rowPagePending } from '../src/sheet/FeatsTab';
 import { featPageOf } from '../src/sheet/FeatDetail';
 import { cardPreview, cardPreviewLane, type CardScope } from '../src/sheet/cardModel';
-import { CARD_ON } from '../src/sheet/cardSurfaces';
 import { LEVEL_FOLDS, scopeOfCharacter } from '../src/sheet/cardScope';
 import { sharedFeatureFallback } from '../src/rules/featureText';
 import { CharacterSheet } from '../src/sheet/CharacterSheet';
@@ -154,7 +153,6 @@ const headings = (el: Element) => [...el.querySelectorAll('.ast-h2 .ast-hname, .
 const VERSATILE = 'You are nigh-unmatched with any weapon';
 const BRAVERY = 'Having faced countless foes and the chaos of battle';
 
-const sw = CARD_ON as unknown as { detailsClassCard: boolean };
 /** While set, every page-bucket fetch waits on it (the slow-network case); the index never waits. */
 let astGate: Promise<void> | null = null;
 
@@ -268,23 +266,6 @@ describe('card step 20 (a): the Details-tab class card is the class record\'s mi
       expect(txt(openText(again!))).not.toContain(VERSATILE);
     } finally {
       m.stop();
-    }
-  });
-
-  it('switched off (CARD_ON.detailsClassCard), the Class term is the browse popup it was: the whole page, no fold', async () => {
-    const was = sw.detailsClassCard;
-    sw.detailsClassCard = false;
-    const m = await mount(<DetailsTab character={build('fighter', 3)} content={db} />);
-    try {
-      await click(classTerm(m.host, 'Fighter'));
-      const pop = m.host.querySelector('.ast-modal');
-      expect(pop).toBeTruthy();
-      expect(pop!.classList.contains('card-mine')).toBe(false);
-      expect(pop!.querySelectorAll('details.card-fold')).toHaveLength(0);
-      expect(txt(pop!.querySelector('.ast-body'))).toContain(VERSATILE);
-    } finally {
-      m.stop();
-      sw.detailsClassCard = was;
     }
   });
 });

@@ -12,7 +12,6 @@ import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import type { DescNode } from '../src/sheet/descref';
 import type { ContentDatabase, DescRef } from '../src/rules/types';
-import { CARD_ON } from '../src/sheet/cardSurfaces';
 import { RecordCard } from '../src/sheet/RecordCard';
 import type { OursLine } from '../src/sheet/cardModel';
 import { isNotOwnPage, pageSliceOf, recordTree, textOf, variantSection } from '../src/sheet/astVisibility';
@@ -39,8 +38,8 @@ import { aonIndex, stubIds, stubRefs } from '../src/sheet/astStubs';
  *  2. ALWAYS: one drill-in through a page cross-link, then Back, returns to the first node; Escape
  *     closes the whole chain (useEscapeClose → onExit, never onClose); the PinStar sits in the header
  *     and pins the caller's own node object; the loading placeholder branch; a record with no page
- *     renders the markdown fallback; no "Full page" button anywhere (owner ruling, section 13); every
- *     CARD_ON surface switch is off except the ones whose step has landed (step 5: statDetail).
+ *     renders the markdown fallback; no "Full page" button anywhere (owner ruling, section 13). (Until
+ *     card step 22 it also checked the per-surface switches; step 22 removed them.)
  *
  * Measured 2026-10-02: the snapshot was written on HEAD dc67738 before any edit (300 first frames +
  * 20 settled frames: 273 page popups with a name, 20 loading placeholders, 25 markdown fallbacks,
@@ -511,36 +510,8 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     expect(body.lastElementChild!.matches('.slot-foot')).toBe(true);
   });
 
-  it('there is no "Full page" button (owner ruling 2026-10-02) and every per-surface switch is off but the ones whose step landed', () => {
+  it('there is no "Full page" button (owner ruling 2026-10-02)', () => {
     for (const [i, e] of sample.slice(0, 60).entries()) expect(staticRender(e.node, i), e.key).not.toMatch(/Full page/i);
-    expect(Object.keys(CARD_ON).length).toBeGreaterThan(0);
-    // Card step 5 turns StatDetailModal's full text into the 'mine' card (test/card-statdetail.test.tsx),
-    // so the page's own use lines reach that popup; a landed switch may stand either way (section 9:
-    // turning it back is one line and the tests still hold), every surface not yet landed is off.
-    // batch card premise: feat-4458 "Frequency once per day"
-    // Card step 6 turns the GM screen page (CampaignTracker HostPage) into the 'gm' embed card, drawn
-    // byte for byte as before with its stat lines (test/card-hostpage.test.tsx).
-    // batch card premise: spell-6 "Range touch"
-    // Card step 9 turns the Main-tab action popup into the record's 'mine' card, so Aid's printed Trigger
-    // and Requirements reach it (test/card-action.test.tsx).
-    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
-    // Card step 11 turns the Feats-tab popup (FeatDetail) into the row's record's 'mine' card, so Halfling
-    // Luck's printed Frequency and Trigger reach it (test/card-feat.test.tsx).
-    // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
-    // Card step 10 turns the strike popup (StrikeDetailModal) into the weapon's 'mine' card, so the
-    // longsword reads its own page's words (test/card-strike.test.tsx).
-    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
-    // Card step 14 turns the item popup's description into the shown record's 'mine' card, so the
-    // longsword's popup draws its group's page where the longsword page embeds it (test/card-item.test.tsx).
-    // batch card premise: weapon-group-15 "becoming off-guard until the start of your next turn"
-    // Card step 20 turns the Details tab's Class term into the class record's 'mine' card, so a fighter 3's
-    // level-19 feature sits folded (test/card-details.test.tsx).
-    // batch card premise: class-35 "You are nigh-unmatched with any weapon"
-    // Card step 15 turns the builder's granted ChoiceDetails rows into the record's 'mine' card, so a level-3
-    // cloistered cleric's Second Doctrine row shows its own doctrine only (test/card-choicedetails.test.tsx).
-    // batch card premise: doctrine-4 "Your proficiency rank for Fortitude saves increases to expert"
-    const landed = new Set(['statDetail', 'hostPage', 'actionDetail', 'featDetail', 'strikeDetail', 'itemDetail', 'detailsClassCard', 'choiceDetails']);
-    for (const [surface, on] of Object.entries(CARD_ON)) if (!landed.has(surface)) expect(on, surface).toBe(false);
   });
 });
 
@@ -612,8 +583,8 @@ describe('card step 14: an item page\'s browse card adds its embedded pages and 
    *
    * MUTATION LINE (measured red on 2026-10-07, restored byte-exact): RecordCard.tsx browse lane
    * `STUB_HOST_BUCKETS.has(stubHost)` → `(STUB_HOST_BUCKETS.has(stubHost) || true)` → red. Since the
-   * step-14 fixer the browse lane asks astStubs.ts browseResolvesStubs (the bucket test behind
-   * CARD_ON.itemDetail); the same mutation there, `STUB_HOST_BUCKETS.has(bucket)` →
+   * step-14 fixer the browse lane asks astStubs.ts browseResolvesStubs (the bucket test); the same
+   * mutation there, `STUB_HOST_BUCKETS.has(bucket)` →
    * `(STUB_HOST_BUCKETS.has(bucket) || true)`, measured red again.
    */
   /*

@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { readFileSync, existsSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
-import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { act, type ReactElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { build, content } from './_content';
@@ -16,14 +16,6 @@ import { emptyBuild, type BuildState } from '../src/rules/build';
 import { classFeatureDescription } from '../src/rules/featureText';
 import type { Character, ContentDatabase } from '../src/rules/types';
 import type { DescNode } from '../src/sheet/descref';
-
-/** The ChoiceDetails switch, read through a mock so one block can turn it back (section 9: "Turning a
- *  surface back is therefore one line, and its tests still hold") without editing src/sheet/cardSurfaces.ts. */
-const sw = vi.hoisted(() => ({ choiceDetails: undefined as boolean | undefined }));
-vi.mock('../src/sheet/cardSurfaces', async (importOriginal) => {
-  const real = await importOriginal<typeof import('../src/sheet/cardSurfaces')>();
-  return { ...real, cardOn: (s: Parameters<typeof real.cardOn>[0]) => (s === 'choiceDetails' && sw.choiceDetails !== undefined ? sw.choiceDetails : real.cardOn(s)) };
-});
 
 /**
  * Card step 15, part 1 (docs/card-design.md section 9 row 15; section 6 "Builder rows: ChoiceDetails,
@@ -61,9 +53,7 @@ vi.mock('../src/sheet/cardSurfaces', async (importOriginal) => {
  *  - shared.tsx `{ ...byId, mode: 'mine' }` → `{ ...byId }` → the PinStar case red.
  *  - shared.tsx ChoiceDetails `mine={bucket && id && character ? … : undefined}` → `mine={bucket && id ? … }`
  *    (mine without a build) → the browse-unchanged case red.
- *  - shared.tsx ChoiceDetails `mine={cardOn('choiceDetails') && bucket && id && character ? …` →
- *    `mine={bucket && id && character ? …` (the switch ignored) → the switch-turned-back case red
- *    ("no mine card while the switch is off"; merge fixer, 2026-10-08).
+ *  (The switch-turned-back case and its mutation left with the switch in card step 22.)
  * The guard sees the same path: scripts/lib/card-scope.mjs models the 455 granted rows that are not held
  * as 'mine' (21 held rows stay browse), and test/card-parity.test.tsx opens its sampled rows WITH a
  * character — `rows.push(false && choiceCard && !held …` (every row browse) → 49 disagreements, red; the
@@ -236,30 +226,6 @@ describe('card step 15: the builder\'s granted rows open the record\'s mine card
       expect(browseBody).toContain(FEAT_CLAUSE);
       expect(txt(page)).toContain(FEAT_CLAUSE);
     } finally { p.stop(); }
-  });
-});
-
-describe('card step 15, switch turned back: the browse popup', () => {
-  afterEach(() => { sw.choiceDetails = undefined; });
-  it('with CARD_ON.choiceDetails off, a granted row shown for a build opens the browse popup it had, byte for byte', async () => {
-    const cleric = build('cleric', 3, { subclassId: 'cloistered-cleric' });
-    sw.choiceDetails = false;
-    const withBuild = await openRow(featureRow('cleric', 'second-doctrine-cloistered-cleric', cleric));
-    const html = withBuild.pop?.outerHTML ?? '';
-    const isMine = !!withBuild.pop?.querySelector('.card-mine');
-    withBuild.stop();
-    const without = await openRow(featureRow('cleric', 'second-doctrine-cloistered-cleric'));
-    const before = without.pop?.outerHTML ?? '';
-    without.stop();
-    expect(isMine, 'no mine card while the switch is off').toBe(false);
-    expect(html.length, 'a popup opened').toBeGreaterThan(0);
-    expect(html, 'the browse popup the row had without a build').toBe(before);
-    // The same row with the switch on is the mine card (the switch, not the row, decides).
-    sw.choiceDetails = undefined;
-    const on = await openRow(featureRow('cleric', 'second-doctrine-cloistered-cleric', cleric));
-    try {
-      expect(on.pop?.querySelector('.ast-modal.card-mine'), 'the mine card with the switch on').toBeTruthy();
-    } finally { on.stop(); }
   });
 });
 
