@@ -13,6 +13,8 @@ import { findDuplicateIds } from '../src/data';
 import { CHOOSABLE_SOURCE_MAPS } from '../src/rules/sources';
 import { HOMEBREW_TYPES } from '../src/data/storage';
 import type { ContentDatabase } from '../src/rules/types';
+import { aonIndex, resolveStubs, stubBuckets, stubNameOf, stubRefs, type StubbedNode } from '../src/sheet/astStubs';
+import type { AstNode } from '../src/sheet/astStore';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { DescriptionModal } from '../src/sheet/DescriptionModal';
 import { PinContext } from '../src/sheet/PinContext';
@@ -358,7 +360,17 @@ describe('the description popup opens a reference record, star included', () => 
  * THE BUCKET NO PICKER READS. Pickers read their buckets by NAME (content.feats, content.items, …) or
  * through a named list; a bucket nobody names is reached only by code that walks EVERY bucket. So the
  * guard is two facts about the source: nothing but the GM Search names `reference`, and every walk over
- * the whole database is one of the three listed below, none of which lists anything to a player.
+ * the whole database is one of the four listed below, none of which lists anything to a player.
+ *
+ * The fourth, src/sheet/astStubs.ts (card step 14b, aonIndex), was decided 2026-10-09 to be NOT a picker:
+ * it never enumerates its index, it only answers the aon id an empty stub of the host page itself carries
+ * (docs/card-design.md section 2 rule 6), so a reference page it draws is one the host page prints inline.
+ * Measured on the shipped data: 5 of the 5,856 stubs reach a reference record, every one the host page's
+ * own embed — the beetle companion's Advanced Maneuver "Hustle" (action-1040), Lady's Chalice's "Strike"
+ * activation (action-1167), and three creature pages' creature-family stubs. Leaving the bucket out of the
+ * stub walk would print the beetle's "Advanced Maneuver Hustle" with nothing under it (the GM's record of
+ * that page is the only record of it). The second test below pins the "only by an embedded id" half; the
+ * shipped census of those 5 lives in test/card-stubs.test.tsx.
  */
 describe('no picker ever lists the reference bucket (source guard)', () => {
   const files = (dir: string): string[] => readdirSync(dir).flatMap((f) => {
@@ -374,10 +386,51 @@ describe('no picker ever lists the reference bucket (source guard)', () => {
     expect(naming).toEqual(['src/integration/hostSearchRecords.ts']);
   });
 
-  it('every walk over the whole database is the Search, the edition filter or the loader', () => {
+  it('every walk over the whole database is the Search, the edition filter, the loader or the stub resolver', () => {
     const WALK = /Object\.(?:keys|entries|values)\((?:content|db|core|cachedCore|coreRec)(?:\s+as\s+[^)]*)?\)|for \(const \w+ in (?:content|db|core|cachedCore|coreRec)\)/;
     const walking = sources.filter((p) => WALK.test(readFileSync(p, 'utf8'))).map(rel).sort();
-    expect(walking).toEqual(['src/data/index.ts', 'src/integration/hostSearchRecords.ts', 'src/rules/build.ts']);
+    // src/sheet/astStubs.ts: aonIndex answers only the aon id a host page's own stub carries; it lists nothing.
+    // batch card premise: action-1040 "moves at incredible speed"
+    expect(walking).toEqual(['src/data/index.ts', 'src/integration/hostSearchRecords.ts', 'src/rules/build.ts', 'src/sheet/astStubs.ts']);
+  });
+
+  it('the stub resolver reaches a reference record only through an id the host page embeds, and draws that page', () => {
+    // Synthesized: a reference record (the bucket no picker reads) and a player-bucket record, each with a page.
+    const sdb = {
+      reference: { 'zz-hustle': { id: 'zz-hustle', name: 'Zz Hustle', kind: 'action', aonId: 'action-990001' } },
+      actions: { 'zz-stride': { id: 'zz-stride', name: 'Zz Stride', aonId: 'action-990002' } },
+    };
+    const T = (v: string): AstNode => ({ t: 'text', v });
+    const pages: Record<string, AstNode> = {
+      'reference:zz-hustle': { t: 'document', c: [{ t: 'title', level: 1, c: [T('Zz Hustle')] }, { t: 'p', c: [T('The zz beetle strides three times.')] }] },
+      'actions:zz-stride': { t: 'document', c: [{ t: 'title', level: 1, c: [T('Zz Stride')] }, { t: 'p', c: [T('You move up to your Speed.')] }] },
+    };
+    const host = (ids: string[]): AstNode => ({
+      t: 'document',
+      c: [{ t: 'title', level: 1, c: [T('Zz Beetle')] }, { t: 'p', c: [T('Advanced Maneuver Zz Hustle')] }, ...ids.map((id) => ({ t: 'document', level: '2', id }) as AstNode)],
+    });
+    const index = aonIndex(sdb);
+    const resolve = (tree: AstNode, treeOf: (b: string, s: string) => AstNode | undefined) =>
+      resolveStubs(tree, 'animalCompanions:zz-beetle', (id) => index.get(id), treeOf, { nameOf: (id) => stubNameOf(id, index, sdb) });
+    const kids = (t: AstNode) => (t.c ?? []) as StubbedNode[];
+    const text = (n: AstNode): string => (n.t === 'text' ? String(n.v ?? '') : (n.c ?? []).map(text).join(' '));
+
+    // Embedded: a stub whose only candidate is the reference record draws that record's page (the host prints it).
+    const embedding = host(['action-990001']);
+    expect(stubBuckets(embedding, index)).toEqual(['reference']);
+    const drawn = kids(resolve(embedding, (b, s) => pages[`${b}:${s}`]))[2];
+    expect(drawn.stubOf).toBe('reference:zz-hustle');
+    expect(text(drawn)).toContain('The zz beetle strides three times.');
+    // Its page not shipped: the record's name, linked (a reference record opens in the description popup).
+    const named = kids(resolve(embedding, () => undefined))[2];
+    expect([named.stubKind, named.stubName, named.stubLink]).toEqual(['name', 'Zz Hustle', 'reference:zz-hustle']);
+
+    // Not embedded: a page whose stubs name other ids never reaches it through any output of the resolver.
+    const other = host(['action-990002', 'zz-no-record-1']);
+    expect(stubBuckets(other, index)).toEqual(['actions']);
+    expect(stubRefs(other, index)).toEqual(['actions:zz-stride']);
+    expect(JSON.stringify(resolve(other, (b, s) => pages[`${b}:${s}`]))).not.toContain('reference:');
+    expect(stubNameOf('zz-no-record-1', index, sdb)).toBeUndefined();
   });
 
   it('the named bucket lists (sources card, homebrew) do not include it', () => {

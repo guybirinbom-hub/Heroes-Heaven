@@ -45,6 +45,8 @@ import type { ContentDatabase } from '../src/rules/types';
  *     spell page's mine card is byte-equal whole (its stubs draw on browse only).
  *  8. An embedded page is drawn AS PRINTED on a mine card (orchestrator ruling, round 3): its spoiler
  *     banner and its "click here" line stay, and its markup is the browse card's, byte for byte.
+ *  9. The 5 shipped stubs that draw a page of the `reference` bucket (archive coverage; read by no picker)
+ *     are the host pages' own embeds, and the beetle's Advanced Maneuver draws on both its cards.
  *
  * MUTATION LINES (each measured red on 2026-10-08, then restored byte-exact — sha1 checked):
  *  - astStubs.ts STUB_HOST_BUCKETS: 'trait' added (a bucket widened without its case) → block 1 red.
@@ -79,6 +81,8 @@ import type { ContentDatabase } from '../src/rules/types';
  *  - src/data/stub-names.json: rules-330 ref null → the census, the either-side test and the recomputation
  *    red; rules-2389 ref "sidebar:affliction-example" (cross-category) → five block-4 tests red; rules-325
  *    ref "rules:spell-dc" → the either-side test and the recomputation red.
+ *  - astStubs.ts aonIndex: the reference bucket skipped (measured 2026-10-09) → block 9 red (0 of 5 hits,
+ *    the beetle's maneuver not drawn) and test/archive-coverage.test.tsx's resolver test red.
  */
 
 /** Step 14b on / off, read through a mock so block 7 can draw the card as it was before this step. */
@@ -246,6 +250,40 @@ describe('card step 14b: every host bucket, each behind its own case', () => {
     // batch card premise: weapon-group-15 "becoming off-guard until the start of your next turn"
     const b = await mount(browse('items', 'longsword'));
     expect(squash(b.querySelector('[data-stub="weaponGroup:sword"]')?.textContent)).toContain('becoming off-guard until the start of your next turn');
+  });
+});
+
+/*
+ * The archive-coverage bucket `reference` (pages the GM's Search finds, read by no picker) is reached by a
+ * stub only through an aon id the host page itself embeds (test/archive-coverage.test.tsx pins the source
+ * half and the "only by an embedded id" half; decided 2026-10-09). This is the shipped census: each of these
+ * draws the page its host prints inline, and a new one turns this red to be read before it ships.
+ */
+describe('card step 14b: the stubs that draw a reference page are the host pages\' own embeds', () => {
+  it('over every shipped tree: 5 stubs, each drawn on its browse card', async () => {
+    const idx = aonIndex(db);
+    const hits: string[] = [];
+    for (const [b, ts] of Object.entries(shipped)) {
+      for (const [s, t] of Object.entries(ts)) {
+        for (const id of stubIds(t)) {
+          const first = (idx.get(id) ?? []).find((c) => shipped[c.bucket]?.[c.slug]);
+          if (first?.bucket === 'reference') hits.push(`${b}:${s} ${id} reference:${first.slug}`);
+        }
+      }
+    }
+    expect(hits.sort()).toEqual([
+      'animalCompanions:beetle action-1040 reference:hustle',
+      'feats:phalanx-formation creature-family-543 reference:military',
+      'items:aon-guide creature-family-537 reference:explorer',
+      'items:ladys-chalice action-1167 reference:strike',
+      'items:magical-medal-wolf-pack creature-family-485 reference:wolf',
+    ]);
+    // The beetle's Advanced Maneuver is drawn under its name, on browse and on the companion's mine card.
+    // batch card premise: action-1040 "moves at incredible speed"
+    for (const card of [browse('animalCompanions', 'beetle'), mine('animalCompanions', 'beetle')]) {
+      const host = await mount(card);
+      expect(squash(host.querySelector('[data-stub="reference:hustle"]')?.textContent)).toContain('moves at incredible speed');
+    }
   });
 });
 

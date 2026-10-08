@@ -49,6 +49,11 @@ import STUB_NAMES_JSON from '../data/stub-names.json';
  * record's, drawn verbatim by this rule, so the ledger never resolves stubs and test/card-parity.test.tsx
  * reads past `[data-stub]` on both sides. test/card-item.test.tsx checks the embedded words against the
  * target page itself. Stubs that resolve nothing stay listed in the guard's STUBS section.
+ *
+ * aonIndex walks EVERY bucket, the archive-coverage bucket no picker reads included (decided 2026-10-09):
+ * it is never enumerated, only asked for the aon id a host page's own stub carries, so a page it draws from
+ * that bucket is one the host prints inline (the beetle companion's Advanced Maneuver, action-1040).
+ * test/archive-coverage.test.tsx lists this file among the database walkers and pins that half.
  */
 
 /** One candidate page of a stub: a record's bucket and id (its page is `bucket:slug` in public/ast). */
