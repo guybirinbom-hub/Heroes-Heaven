@@ -204,33 +204,39 @@ async function framesOf(make: (e: Entry) => ReactElement): Promise<Record<string
 }
 
 describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed', () => {
+  // batch card: #card-NOT-VACUOUS — the sample holds every named case
   it('draws 200 page records, 20 without a page, the remastered ones and 2 not in this version', () => {
     expect(sample.filter((s) => s.kind === 'page').length).toBe(200);
     for (const b of BUCKETS) expect(sample.filter((s) => s.kind === 'page' && s.bucket === b).length, b).toBe(PAGE_COUNTS[b]);
+    // batch card: #card-NOT-VACUOUS — no-page, remastered and not-in-this-version records are all sampled
     expect(sample.filter((s) => s.kind === 'nopage').length).toBe(NO_PAGE);
     expect(sample.filter((s) => s.kind === 'remastered').length).toBeGreaterThan(0);
     expect(sample.filter((s) => s.kind === 'missing').length).toBe(2);
     expect(new Set(sample.map((s) => s.key)).size).toBe(sample.length);
   });
 
+  // batch card: #card-SNAPSHOT — the GM page stays byte-equal to the pre-step render
   it.skipIf(!SNAP)('byte-equal to the pre-step HostPage (CARD_HOST_SNAPSHOT)', async () => {
     const now = await framesOf(hostEl);
     if (WRITE) {
       writeFileSync(SNAP!, JSON.stringify(now));
       return;
     }
+    // batch card: #card-SNAPSHOT — the snapshot exists and covers the same records
     expect(existsSync(SNAP!), `snapshot ${SNAP} missing — write it on the pre-step tree with CARD_HOST_WRITE=1`).toBe(true);
     const before = JSON.parse(readFileSync(SNAP!, 'utf8')) as typeof now;
     expect(Object.keys(now)).toEqual(Object.keys(before));
     let diffs = 0;
     for (const k of Object.keys(now)) {
       if (now[k].first !== before[k].first || now[k].settled !== before[k].settled) diffs++;
+      // batch card: #card-SNAPSHOT — both frames of every record are byte-equal
       expect(now[k].first, `${k} first frame`).toBe(before[k].first);
       expect(now[k].settled, `${k} settled frame`).toBe(before[k].settled);
     }
     expect(diffs).toBe(0);
   }, 120_000);
 
+  // batch card: #card-SNAPSHOT — the embed branch renders exactly the legacy GM page
   it('the embed branch renders exactly the legacy HostPage, both frames, in and out of the app context', async () => {
     const card = await framesOf(cardEl);
     const legacy = await framesOf(legacyEl);
@@ -241,6 +247,7 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     // Every branch of the legacy page is in the sample: the page, the loading placeholder, the old text,
     // the remastered line, the not-in-this-version line.
     const all = Object.values(legacy).flatMap((f) => [f.first, f.settled ?? '']);
+    // batch card: #card-NOT-VACUOUS — every branch of the legacy page is in the sample
     expect(all.some((h) => h.startsWith('<div class="ast-body ast-embed">'))).toBe(true);
     expect(all.some((h) => h === '<div class="ast-body ast-loading" aria-busy="true"></div>')).toBe(true);
     expect(all.some((h) => h.includes('sd-remastered'))).toBe(true);
@@ -248,6 +255,7 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     expect(Object.entries(legacy).some(([k, f]) => sample.find((s) => s.key === k)!.kind === 'nopage' && !!f.settled && !f.settled.includes('ast-'))).toBe(true);
   }, 120_000);
 
+  // batch card: #card-R1 — the GM screen page is the record's card (mode gm, chrome embed)
   it('HostPage is the card: RecordCard mode gm, chrome embed', () => {
     const e = sample.find((s) => s.kind === 'page')!;
     const el = (HostPage as (p: Parameters<typeof HostPage>[0]) => ReactElement)({ content: db, bucket: e.bucket, id: e.id, onOpen: noop });
@@ -255,6 +263,7 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     expect(el.props).toMatchObject({ record: { bucket: e.bucket, id: e.id }, mode: 'gm', chrome: 'embed', content: db });
   });
 
+  // batch card premise: spell-6 "Range touch"
   it("keeps the page's stat lines: air-walk shows its Range and Duration, as the GM reads them mid-fight", async () => {
     // batch card premise: spell-6 "Range touch"
     const e: Entry = { kind: 'page', key: 'spells:air-walk', bucket: 'spells', id: 'air-walk' };
@@ -264,15 +273,21 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     expect(body, 'the embedded page body').toBeTruthy();
     // AstRenderer draws a page's stat lines as `.ast-meta` rows led by a bold label.
     const labels = [...body!.querySelectorAll('.ast-meta > strong')].map((b) => (b.textContent ?? '').trim());
+    // batch card premise: spell-6 "Range touch"
     expect(labels).toContain('Range');
+    // batch card premise: spell-6 "Duration 5 minutes"
     expect(labels).toContain('Duration');
     const text = (body!.textContent ?? '').replace(/\s+/g, ' ');
+    // batch card premise: spell-6 "Range touch"
     expect(text).toContain('Range touch');
+    // batch card premise: spell-6 "Duration 5 minutes"
     expect(text).toContain('Duration 5 minutes');
     // Embed chrome: no popup overlay, no header of its own — the tracker window owns the frame.
+    // batch card: #card-SNAPSHOT — the GM page draws as before: no popup frame of its own
     expect(host.querySelector('.picker-overlay, .ast-modal, .ast-head, .picker-close, .info-star')).toBeNull();
   });
 
+  // batch card: #card-R1 — the GM page's body is the browse card's body
   it("the embedded body is the browse popup's body: nothing is dropped on the GM page", async () => {
     let compared = 0;
     for (const e of sample.filter((s) => s.kind === 'page').slice(0, 60)) {
@@ -285,15 +300,18 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
       );
       const gmBody = gm.querySelector('.ast-body.ast-embed');
       const browseBody = browse.querySelector('.ast-modal .ast-pop > .ast-body');
+      // batch card: #card-R1 — the GM body and the browse body are the same markup
       expect(gmBody, e.key).toBeTruthy();
       expect(browseBody, e.key).toBeTruthy();
       expect(gmBody!.innerHTML, e.key).toBe(browseBody!.innerHTML);
       compared++;
       while (mounted.length) mounted.pop()!.stop();
     }
+    // batch card: #card-NOT-VACUOUS — the comparison ran on all 60 sampled pages
     expect(compared).toBe(60);
   }, 120_000);
 
+  // batch card: #card-SNAPSHOT — links open through the host's onOpen, as before
   it('a link and the "Remastered as" name open through the host (the GM\'s own popup), as before', async () => {
     const withLink = sample.filter((s) => s.kind === 'page').find((s) => renderToStaticMarkup(legacyEl(s)).includes('ast-lk'))!;
     expect(withLink, 'a sampled page with a live link').toBeTruthy();
@@ -301,12 +319,14 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
       const onOpen = vi.fn();
       const host = await mount(<ContentContext.Provider value={db}>{el(e, onOpen)}</ContentContext.Provider>);
       const a = host.querySelector<HTMLElement>(sel);
+      // batch card: #card-NOT-VACUOUS — the link the case clicks exists
       expect(a, `${e.key} ${sel}`).toBeTruthy();
       await act(async () => { a!.click(); });
       return onOpen.mock.calls;
     };
     const legacyLink = await calls(legacyEl, withLink, 'a.ast-lk');
     expect(legacyLink.length).toBe(1);
+    // batch card: #card-SNAPSHOT — the card opens the same link and Remastered name the legacy page did
     expect(await calls(hostEl, withLink, 'a.ast-lk')).toEqual(legacyLink);
     const rem = sample.find((s) => s.kind === 'remastered')!;
     const legacyRem = await calls(legacyEl, rem, '.sd-remastered a');
@@ -314,6 +334,7 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     expect(await calls(hostEl, rem, '.sd-remastered a')).toEqual(legacyRem);
   });
 
+  // batch card: #card-SNAPSHOT — the GM page arms no phone Back trap, as before
   it('mounting the page pushes nothing on the dismiss stack — no phone Back-trap entry (the browse popup does)', async () => {
     const before = window.matchMedia;
     window.matchMedia = mediaQuery(true);
@@ -321,9 +342,11 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     try {
       const e = sample.find((s) => s.kind === 'page')!;
       await mount(hostEl(e));
+      // batch card: #card-SNAPSHOT — mounting the GM page pushes no history entry
       expect(push, 'the GM page armed the Back trap').not.toHaveBeenCalled();
       // The instrument works: a popup card on the same phone does arm it.
       await mount(<ContentContext.Provider value={db}><RecordCard record={{ bucket: e.bucket, id: e.id }} mode="browse" chrome="popup" onExit={noop} /></ContentContext.Provider>);
+      // batch card: #card-NOT-VACUOUS — the instrument works: a popup card on the same phone arms it
       expect(push).toHaveBeenCalled();
     } finally {
       push.mockRestore();
@@ -331,6 +354,7 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     }
   });
 
+  // batch card: #card-GUARD — the guard's ledger models the GM page with the rows browse renders
   it("the guard's ledger models the GM page like browse: the whole page, nothing dropped", () => {
     const e = sample.find((s) => s.kind === 'page' && s.bucket === 'spells')!;
     const rec = recs(e.bucket)[e.id];
@@ -342,9 +366,11 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     const { rows } = surfaceRows(deps as never) as { rows: { surface: string; bucket: string; id: string }[] };
     const gm = rows.filter((r) => r.surface === 'gm');
     const browse = rows.filter((r) => r.surface === 'browse');
+    // batch card: #card-GUARD — one GM row per browse row, the same records
     expect(gm.length, 'one GM row per browse row').toBe(browse.length);
     expect(gm.length).toBeGreaterThan(0);
     expect(gm.map(({ surface: _s, ...r }) => r)).toEqual(browse.map(({ surface: _s, ...r }) => r));
+    // batch card: #card-GUARD — the GM row is judged by the tree lane, every label OK
     const v = judgeRow(gm[0] as never, deps.trees, (() => []) as never) as { identity: boolean; labels: Record<string, string>; lane: string };
     expect(v.lane).toBe('tree');
     expect(v.identity).toBe(false);
