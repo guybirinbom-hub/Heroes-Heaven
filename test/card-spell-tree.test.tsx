@@ -163,15 +163,18 @@ const applying = (popup: HTMLElement) => entries(popup).filter((e) => e.classLis
 const at = (s: Spell, r: number) => open(<SpellDetail spell={s} maxRank={r} atRank={r} onClose={() => undefined} />);
 
 describe('the gate: src/data/heighten-string-lane.json is the parity result, both ways, over the whole corpus', () => {
+  // batch card: #card-STRING-LANE — the string-lane list is the parity result
   it('lists exactly the spells that fail parity on their own printing (no stale id, no unlisted one), and the popup reads the same list', () => {
     expect(stringLaneProblems(STRING_LANE_FILE.ids, parity, Object.keys(REPRINTS))).toEqual([]);
     expect([...HEIGHTEN_STRING_LANE].sort()).toEqual([...STRING_LANE_FILE.ids].sort());
     // Not vacuous: the gate saw the corpus (2,016 tree-body candidates measured 2026-10-08) and keeps a few.
     expect(parity.length).toBeGreaterThan(2000);
     expect(HEIGHTEN_STRING_LANE.size).toBeGreaterThan(0);
+    // batch card: #card-STRING-LANE — the string-lane list is the parity result
     expect(HEIGHTEN_STRING_LANE.size).toBeLessThan(20);
   });
 
+  // batch card: #card-STRING-LANE — the string-lane list is the parity result
   it('the STALE direction: a listed spell that passes parity is reported, so the list can only shrink', () => {
     // Fixer round 3 (must-fix 2): fireball draws the tree and loses nothing; listing it is stale.
     expect(parity.find((p) => p.id === 'fireball')?.stay).toBe(false);
@@ -179,16 +182,19 @@ describe('the gate: src/data/heighten-string-lane.json is the parity result, bot
     expect(stringLaneProblems([...STRING_LANE_FILE.ids, 'fireball'], parity)).toContain('fireball|STRING-LANE-STALE');
     // A reprint-drift spell listed on the string lane is stale too (the page wins), and a reprint entry
     // for a spell that no longer fails parity is reported as stale drift.
+    // batch card: #card-STRING-LANE — the string-lane list is the parity result
     expect(stringLaneProblems([...STRING_LANE_FILE.ids, 'quick-sort'], parity, Object.keys(REPRINTS))).toEqual(['quick-sort|STRING-LANE-STALE']);
     expect(stringLaneProblems(STRING_LANE_FILE.ids, parity, [...Object.keys(REPRINTS), 'fireball'])).toEqual(['fireball|REPRINT-DRIFT-STALE']);
   });
 
+  // batch card: #card-S7 — no page: our text, marked
   it('the gate splits the failing spells by printing (owner rule R12): a page that is a NEWER printing wins and draws the tree; a same-printing page that omits a line keeps the string', () => {
     // The gate re-run on the file's own evidence (the older printing's Heightened lines, written by
     // scripts/heighten-tree-parity.mjs from scripts/lib/reprint.mjs's index) reproduces the file exactly.
     const gate = heightenGate(parity, (id) => (REPRINTS[id] ? [REPRINTS[id]] : []));
     expect(gate.reprintDrift.map((d) => d.id)).toEqual(['purify-soul-path', 'quick-sort', 'sea-of-thought']);
     expect(gate.reprintDrift.map((d) => [d.from, d.to])).toEqual([['ritual-67', 'ritual-243'], ['spell-978', 'spell-2797'], ['spell-1162', 'spell-2579']]);
+    // batch card: #card-S7 — no page: our text, marked
     expect(gate.stringLane).toEqual(STRING_LANE_FILE.ids.map((id) => ({ id, missing: STRING_LANE_FILE.missing![id] })));
     expect(gate.stringLane).toEqual([{ id: 'rite-of-repatriation', missing: ['(+1)'] }]);
     // Each reprint's newer document IS the page the popup draws.
@@ -197,9 +203,11 @@ describe('the gate: src/data/heighten-string-lane.json is the parity result, bot
     expect(heightenGate(parity, () => []).stringLane.map((s) => s.id)).toEqual(['purify-soul-path', 'quick-sort', 'rite-of-repatriation', 'sea-of-thought']);
     // An older printing that does not print the lost line is no evidence: the spell stays a loss.
     const notPrinted = heightenGate(parity, (id) => (id === 'quick-sort' ? [{ ...REPRINTS[id], entries: [REPRINTS[id].entries[0]] }] : []));
+    // batch card: #card-S7 — no page: our text, marked
     expect(notPrinted.stringLane.map((s) => s.id)).toContain('quick-sort');
   });
 
+  // batch card: #card-STRING-LANE — the string-lane list is the parity result
   it.skipIf(!existsSync(EXPORT_DIR))("the file's reprint evidence is the Archives' own link (the export's legacy_id / remaster_id, scripts/lib/reprint.mjs)", () => {
     const index = loadReprintIndex(undefined, { text: true });
     for (const [id, ev] of Object.entries(REPRINTS)) {
@@ -210,20 +218,24 @@ describe('the gate: src/data/heighten-string-lane.json is the parity result, bot
     // rite-of-repatriation's page replaces no older printing: its omission is the same printing's.
     for (const id of STRING_LANE_FILE.ids) {
       const doc = trees[id]?.aon;
+      // batch card: #card-STRING-LANE — the string-lane list is the parity result
       expect([...index.next.keys()].filter((old) => newestPrinting(index, old) === doc), id).toEqual([]);
     }
   }, 120_000);
 
+  // batch card: #card-STRING-LANE — the string-lane list is the parity result
   it('0 tree-body spells whose applied Heightened set shrinks at any cast rank, or whose inline damage arrow disappears, except where the page is a newer printing', () => {
     const bad = parity.filter((p) => !HEIGHTEN_STRING_LANE.has(p.id) && !REPRINTS[p.id] && (p.shrinks.length > 0 || p.arrowLost)).map((p) => p.id);
     expect(bad).toEqual([]);
     // The reprint-drift spells lose only the older printing's lines, never an arrow.
     for (const id of Object.keys(REPRINTS)) expect(parity.find((p) => p.id === id)?.arrowLost, id).toBe(false);
     // The check is not empty: these spells carry entries and arrows on both lanes.
+    // batch card: #card-STRING-LANE — the string-lane list is the parity result
     expect(parity.filter((p) => !HEIGHTEN_STRING_LANE.has(p.id) && p.stringEntries > 0).length).toBeGreaterThan(1100);
     expect(parity.filter((p) => !HEIGHTEN_STRING_LANE.has(p.id) && p.arrowString).length).toBeGreaterThan(380);
   });
 
+  // batch card: #card-STRING-LANE — the string-lane list is the parity result
   it('the numbers do not move: the tree arrow carries scaleDamage at every rank, the same value the string lane splices', () => {
     for (const p of parity.filter((x) => x.arrowTree)) {
       const s = spell(p.id);
@@ -232,6 +244,7 @@ describe('the gate: src/data/heighten-string-lane.json is the parity result, bot
         const up = scaleDamage(s, r);
         if (!up) continue;
         const { body: out, found } = injectTreeArrow(cut.body, s.baseDamage!, up);
+        // batch card: #card-STRING-LANE — the string-lane list is the parity result
         expect(found, p.id).toBe(true);
         expect(JSON.stringify(out), `${p.id} at ${r}`).toContain(`{"t":"up-heighten","v":"(→ ${up})"}`);
       }
@@ -240,6 +253,7 @@ describe('the gate: src/data/heighten-string-lane.json is the parity result, bot
 });
 
 describe('the popup on the tree lane', () => {
+  // batch card: #card-HEIGHTEN — heightening works as before
   it('the listed spells draw the string body as in phase A; every other spell page draws the tree', () => {
     for (const id of HEIGHTEN_STRING_LANE) {
       const popup = at(spell(id), 10);
@@ -247,11 +261,13 @@ describe('the popup on the tree lane', () => {
       expect(body(popup)?.querySelector('.ast-body'), `${id} draws no tree`).toBeNull();
       // Its string entries keep the rail exactly as before.
       const want = splitHeightening(spell(id).description || '').heightening.filter((h) => 10 > spell(id).rank && heighteningApplies(h, spell(id).rank, 10)).length;
+      // batch card: #card-HEIGHTEN — heightening works as before
       expect(applying(popup), id).toHaveLength(want);
     }
     expect(spellCardModel(spell('fireball'), trees.fireball, []).body).toBe('tree');
   });
 
+  // batch card: #card-HEIGHTEN — heightening works as before
   it('a spell whose page is a newer printing draws the page (quick-sort at 3rd: "500 objects", no older-import footer)', () => {
     // Fixer round 3 (must-fix 1; owner rule R12 "the newest printing wins, whole"): Impossible Magic's
     // quick-sort (spell-2797) replaces Secrets of Magic's (spell-978), whose "(3rd) 400 objects" and "(5th)
@@ -259,6 +275,7 @@ describe('the popup on the tree lane', () => {
     expect(HEIGHTEN_STRING_LANE.has('quick-sort')).toBe(false);
     expect(spellCardModel(spell('quick-sort'), trees['quick-sort'], []).body).toBe('tree');
     const popup = at(spell('quick-sort'), 3);
+    // batch card: #card-HEIGHTEN — heightening works as before
     expect(body(popup)?.getAttribute('data-body')).toBe('tree');
     // batch card premise: spell-2797 "The spell can sort up to 500 objects in a minute, or 75 objects in a round"
     expect(applying(popup).map((e) => txt(e))).toEqual(['Heightened (3rd) The spell can sort up to 500 objects in a minute, or 75 objects in a round.']);
@@ -272,10 +289,12 @@ describe('the popup on the tree lane', () => {
       const p = at(spell(id), 6);
       expect(body(p)?.getAttribute('data-body'), id).toBe('tree');
       expect(p.querySelector('.sd-heighten'), id).toBeNull();
+      // batch card: #card-HEIGHTEN — heightening works as before
       expect(p.querySelector('[data-ours-kind="stringLane"]'), id).toBeNull();
     }
   });
 
+  // batch card: #card-S7 — no page: our text, marked
   it('a same-printing page that omits a Heightened line keeps the string, and its footer names the missing line (rite-of-repatriation)', () => {
     expect(HEIGHTEN_STRING_LANE.has('rite-of-repatriation')).toBe(true);
     // batch card premise: ritual-105 "1 object of up to 4th level" — the owner (2026-10-08): the ours footer speaks player words, no "import".
@@ -297,6 +316,7 @@ describe('the popup on the tree lane', () => {
       .sort()
       .filter((id) => splitHeightening(db.spells[id].description || '').heightening.some((h) => !/^\*\*Heightened/.test(h)));
     // Measured 2026-10-08: 124 spells (dragon-claws, touch-of-corruption, mindscape-shift …).
+    // batch card: #card-HEIGHTEN — heightening works as before
     expect(unbolded).toHaveLength(124);
     let railed = 0;
     for (const id of unbolded) {
@@ -306,6 +326,7 @@ describe('the popup on the tree lane', () => {
       const popup = at(s, 10);
       const want = splitHeightening(s.description || '').heightening.filter((h) => 10 > s.rank && heighteningApplies(h, s.rank, 10)).length;
       const have = model.tree!.heightening.filter((e) => 10 > s.rank && treeEntryApplies(e, s.rank, 10)).length;
+      // batch card: #card-HEIGHTEN — heightening works as before
       expect(applying(popup), id).toHaveLength(have);
       expect(have, id).toBeGreaterThanOrEqual(want);
       for (const e of applying(popup)) expect(txt(e.querySelector('strong')), id).toMatch(/^Heightened\b/);
@@ -314,6 +335,7 @@ describe('the popup on the tree lane', () => {
     expect(railed).toBeGreaterThan(124);
   });
 
+  // batch card: #card-HEIGHTEN — heightening works as before
   it('every heightened damage reaches the popup: inline in the page prose (marked ours), boxed for the two the page gives no anchor', () => {
     const boxed: string[] = [];
     for (const p of parity.filter((x) => x.arrow)) {
@@ -321,7 +343,7 @@ describe('the popup on the tree lane', () => {
       // Round 3 (the orchestrator's arrow rule): the value the popup draws is arrowAt's — the engine's
       // wherever the page prints its interval, the page's own count on the listed drift spells (asserted in
       // the arrow-rule block below).
-      // batch card premise: spell-1750 "the cold damage dealt to creatures crossing a destroyed section increases by 1d6"
+      // batch card: #card-ARROW — the arrow appears where a printed Heightened entry grants it
       const m = spellCardModel(s, trees[p.id], []);
       const r = Math.max(...castRanksAbove(s.rank).filter((rr) => arrowAt(s, m, rr).damage));
       const up = arrowAt(s, m, r).damage!;
@@ -331,12 +353,14 @@ describe('the popup on the tree lane', () => {
       if (HEIGHTEN_STRING_LANE.has(p.id)) continue;
       const inline = body(popup)!.querySelector('.ast-body .up-heighten');
       if (inline) {
+        // batch card: #card-HEIGHTEN — heightening works as before
         expect(inline.getAttribute('data-ours'), p.id).toBe('');
         expect(txt(inline)).toBe(`(→ ${up})`);
       } else {
         // Fixer round 3 (nit 6): the boxed line is a line of the ours box AFTER the page, never a child of
         // the page body.
         const line = popup.querySelector('.sd-body > .card-ours[data-ours] > .sd-arrow-line[data-ours]');
+        // batch card: #card-HEIGHTEN — heightening works as before
         expect(line, `${p.id} boxes its arrow in the ours box`).not.toBeNull();
         expect(txt(line)).toBe(`Heightened damage ${s.baseDamage} (→ ${up})`);
         expect(popup.querySelector('.sd-desc[data-body="tree"] .sd-arrow-line'), `${p.id}: not inside the page body`).toBeNull();
@@ -346,21 +370,25 @@ describe('the popup on the tree lane', () => {
         boxed.push(p.id);
       }
     }
+    // batch card: #card-HEIGHTEN — heightening works as before
     expect(boxed).toEqual(['electrified-crystal-ward', 'shadow-illusion']);
   });
 
+  // batch card: #card-HEIGHTEN — heightening works as before
   it('the 18 Amp spells: the Amp paragraphs are their own group (.sd-amp), never inside the Heightening box', () => {
     const amp = parity.filter((p) => p.ampEntries > 0).map((p) => p.id);
     expect(amp).toHaveLength(18);
     for (const id of amp) {
       const popup = at(spell(id), 10);
       const group = popup.querySelector('.sd-body > .sd-amp');
+      // batch card: #card-HEIGHTEN — heightening works as before
       expect(group, id).not.toBeNull();
       // Fixer round 3 (nit 5): no heading of ours — the page's own bold "Amp" heads the group, once, first.
       expect(group?.querySelector('.sd-heighten-h, [data-ours]'), id).toBeNull();
       const bold = [...group!.querySelectorAll('strong')].map((b) => txt(b));
       expect(bold[0], id).toBe('Amp');
       expect(bold.filter((b) => b === 'Amp'), id).toHaveLength(1);
+      // batch card: #card-HEIGHTEN — heightening works as before
       expect(txt(group), id).toMatch(/^Amp\b/);
       expect(txt(popup.querySelector('.sd-heighten')), id).not.toMatch(/\bAmp\b/);
       expect(txt(body(popup)), id).not.toMatch(/\bAmp\b/);
@@ -374,25 +402,33 @@ describe('the popup on the tree lane', () => {
     // telekinetic-rend (Cantrip 1, rank 0): "Amp Heightened (+2)" applies from cast rank 2, by the same rule
     // as an ordinary "(+2)" entry of the same spell.
     const ampRail = (popup: HTMLElement) => [...popup.querySelectorAll('.sd-amp > .sd-desc.applies')].map((e) => txt(e).slice(0, 19));
+    // batch card: #card-HEIGHTEN — heightening works as before
     expect(ampRail(at(spell('telekinetic-rend'), 1))).toEqual([]);
+    // batch card premise: spell-2547 "Amp Heightened (+2)"
     expect(ampRail(at(spell('telekinetic-rend'), 5))).toEqual(['Amp Heightened (+2)']);
+    // batch card premise: spell-2547 "Heightened (+2) The damage increases by 1d6."
     expect(applying(at(spell('telekinetic-rend'), 5)).map((e) => txt(e))).toEqual(['Heightened (+2) The damage increases by 1d6.']);
   });
 
+  // batch card: #card-HEIGHTEN — heightening works as before
   it('a list printed under an entry stays with that entry (evolution-surge: each "Heightened" entry holds its own options)', () => {
     const popup = at(spell('evolution-surge'), 5);
     const es = entries(popup);
+    // batch card premise: spell-2915 "Heightened (3rd)"
     expect(es.map((e) => txt(e.querySelector('strong')))).toEqual(['Heightened (3rd)', 'Heightened (5th)']);
+    // batch card: #card-HEIGHTEN — heightening works as before
     for (const e of es) expect(e.querySelector('ul li'), txt(e).slice(0, 20)).not.toBeNull();
     expect(applying(popup)).toHaveLength(2);
   });
 
+  // batch card: #card-HEIGHTEN — heightening works as before
   it('a sidebar printed after the Heightened entries is drawn after the box, never inside the railed entry (dragon-form, detect-alignment …)', () => {
     // Fixer round 2: the 4 tree-lane pages that print a sidebar (a title / heading, its prose, its table)
     // after their last entry, measured 2026-10-08.
     const withAfter = Object.keys(db.spells)
       .sort()
       .filter((id) => (spellCardModel(spell(id), trees[id], []).tree?.after.length ?? 0) > 0);
+    // batch card: #card-HEIGHTEN — heightening works as before
     expect(withAfter).toEqual(['aon-detect-alignment', 'detect-alignment', 'dragon-form', 'spiritual-attunement']);
     // Every block attached under an entry is a list or (transmigrate's 5th-rank ritual) its prose / degrees.
     for (const id of Object.keys(db.spells)) {
@@ -406,13 +442,17 @@ describe('the popup on the tree lane', () => {
     expect(txt(rail[0])).not.toMatch(/Monster Core Dragons|Draconic Codex/);
     const after = popup.querySelector('.sd-body > .sd-after[data-body="tree-after"]');
     expect(after).not.toBeNull();
+    // batch card: #card-HEIGHTEN — heightening works as before
     expect(after?.classList.contains('applies')).toBe(false);
+    // batch card premise: spell-1502 "The dragons from Lost Omens: Draconic Codex use the following specifications"
     expect(txt(after)).toContain('The dragons from Lost Omens: Draconic Codex use the following specifications');
     // Print order: the Heightening box, then the sidebar.
     const kids = [...popup.querySelectorAll('.sd-body > div')];
+    // batch card: #card-HEIGHTEN — heightening works as before
     expect(kids.indexOf(after!)).toBe(kids.indexOf(popup.querySelector('.sd-body > .sd-heighten')!) + 1);
   });
 
+  // batch card: #card-HEIGHTEN — heightening works as before
   it('the gate holds an entry the page prints under another label with the same words (weapon-of-judgment, celestial-brand, cloud-current draw the tree)', () => {
     for (const id of ['weapon-of-judgment', 'celestial-brand', 'cloud-current']) {
       expect(HEIGHTEN_STRING_LANE.has(id), id).toBe(false);
@@ -427,9 +467,11 @@ describe('the popup on the tree lane', () => {
     expect(stringEntryWords('**Heightened (10th)** The damage increases by [1d10](/x).')).toBe('the damage increases by 1d10');
     const entry = { nodes: [{ t: 'p', c: [{ t: 'b', c: [{ t: 'text', v: 'Heightened (+1)' }] }, { t: 'text', v: ' The damage increases by 1d10.' }] }] as AstNode[] };
     expect(treeEntryWords(entry)).toBe('the damage increases by 1d10');
+    // batch card: #card-HEIGHTEN — heightening works as before
     expect(stringEntryWords('**Heightened (5th)** The spell can sort up to 800 objects.')).not.toBe(treeEntryWords(entry));
   });
 
+  // batch card: #card-FURNITURE — navigation furniture leaves, by name
   it("the footer is the page header's own lines the rows do not print: the Source line, dimmed, last; no where-to-get line anywhere", () => {
     // batch card premise: spell-1530 "Source Player Core pg. 331"
     const popup = at(spell('fireball'), 3);
@@ -438,11 +480,13 @@ describe('the popup on the tree lane', () => {
     expect(kids[kids.length - 1]).toBe(foot);
     expect(txt(foot)).toBe('Source Player Core pg. 331');
     expect(foot?.querySelector('p.card-dim')).not.toBeNull();
+    // batch card: #card-FURNITURE — navigation furniture leaves, by name
     expect(txt(popup)).not.toMatch(/Traditions|Deities|Angradd/);
     // The rows the stat block prints are not drawn a second time.
     expect(txt(body(popup))).not.toMatch(/\b(Range|Area|Defense)\b/);
   });
 
+  // batch card: #card-GUARD — the guard computes with the card's functions
   it('the card guard judges the tree the popup draws (spellCardModel.drawn): the where-to-get lines are left out by name, nothing unnamed', () => {
     // scripts/lib/card-scope.mjs judgeRow on a tree-body spell row as surfaceRows builds it (card step 17):
     // the drawn tree, not the whole page — so the Traditions / Deities lines the popup never draws are
@@ -454,11 +498,13 @@ describe('the popup on the tree lane', () => {
       itemLists: true, md: spell('fireball').description, printed: m.rows, mode: 'mine',
     };
     const r = lib.judgeRow(row, { spells: trees }, { parseBlocks, cleanRun });
+    // batch card: #card-GUARD — the guard computes with the card's functions
     expect([r.lane, r.identity, r.labels, r.unnamed]).toEqual(['tree', false, {}, []]);
     const omitted = (r.omitted as { text: string; rule: string }[]).map((o) => [o.text.replace(/\s+/g, ' ').trim().split(' ')[0], o.rule]);
     expect(omitted).toEqual([['Traditions', 'S-furniture'], ['Deities', 'S-furniture'], ['Range', 'S-printed'], ['Area', 'S-printed'], ['Defense', 'S-printed']]);
   });
 
+  // batch card: #card-S7 — no page: our text, marked
   it('a spell with no page (a copy of fireball under an unknown id) and a homebrew id keep the string body', () => {
     const synth: Spell = { ...spell('fireball'), id: 'lane17-synth-no-page' };
     const popup = at(synth, 5);
@@ -476,6 +522,7 @@ describe('the popup on the tree lane', () => {
     // the seed's 3 app-authored demo spells (no book) and a page spell do not (section 7).
     const noTree = Object.keys(db.spells).filter((id) => !trees[id]).sort();
     const official = noTree.filter((id) => spell(id).source?.book);
+    // batch card: #card-S7 — no page: our text, marked
     expect(official).toEqual(['anima-invocation-modified', 'aspirational-state', 'commune-with-nature', 'create-mycoguardian', 'destroy-mindscape', 'rite-of-cleansing-flame', 'unfettered-mark']);
     expect(noTree.filter((id) => !official.includes(id))).toEqual(['restore-senses', 'searing-light', 'wall-of-light']);
     // batch card premise: ritual-7 "natural resources within a 3-mile radius" — commune-with-nature, one of the 7; the owner (2026-10-08).
@@ -499,12 +546,14 @@ describe('the popup on the tree lane', () => {
     // The 8, exactly the drift file's notOwnPage list; a spell page and a no-page spell carry no such footer.
     const inside = Object.keys(db.spells).sort().filter((id) => printedInsideFooter(spell(id), trees[id]));
     expect(inside).toEqual(DRIFT.notOwnPage.map((e) => e.id));
+    // batch card: #card-S7 — no page: our text, marked
     expect(DRIFT.notOwnPage.map((e) => e.page)).toEqual(['hazard-278', 'feat-239', 'feat-227', 'feat-1689', 'feat-254', 'feat-1681', 'rules-2735', 'feat-7259']);
     for (const e of DRIFT.notOwnPage) expect(e.title, e.id).toBe(printedInsideTitle(spell(e.id), trees[e.id]));
     expect(at(spell('fireball'), 5).querySelector('[data-ours-kind="notOwnPage"]')).toBeNull();
     expect(at(spell('commune-with-nature'), 6).querySelector('[data-ours-kind="notOwnPage"]')).toBeNull();
   });
 
+  // batch card: #card-HEIGHTEN — heightening works as before
   it('the summon matcher: a bare "Heightened" label (no parenthesis) is an entry with no trigger — listed, never railed', () => {
     // Measured 2026-10-08: 0 shipped spell pages print it (every summon page lists its levels); the matcher
     // stands so the older printing's "Heightened As listed in the trait" can never fall into the prose.
@@ -519,6 +568,7 @@ describe('the popup on the tree lane', () => {
       ],
     };
     const cut = splitSpellTree(page)!;
+    // batch card: #card-HEIGHTEN — heightening works as before
     expect(cut.heightening.map((e) => [e.label, e.trigger])).toEqual([['Heightened', null]]);
     expect(cut.body.map((n) => n.t)).toEqual(['hr', 'p']);
     expect(treeEntryApplies(cut.heightening[0], 1, 10)).toBe(false);
@@ -529,6 +579,7 @@ describe("the arrow rule (the orchestrator's round-3 ruling): an arrow or area s
   const areaSuffix = (popup: HTMLElement) =>
     [...popup.querySelectorAll('.sd-stat')].find((s) => txt(s.querySelector('.sd-stat-k')) === 'Area')?.querySelector('.sd-stat-v .up-heighten') ?? null;
 
+  // batch card: #card-ARROW — an arrow only where a printed entry grants it
   it('sea-of-thought at 6th: its newer printing prints no Heightened line, so no arrow and no area suffix (the engine still says +5 feet a rank)', () => {
     // batch card premise: spell-2579 "Area 15-foot burst"
     const s = spell('sea-of-thought');
@@ -537,9 +588,11 @@ describe("the arrow rule (the orchestrator's round-3 ruling): an arrow or area s
     expect(popup.querySelector('.up-heighten')).toBeNull();
     expect(areaSuffix(popup)).toBeNull();
     expect(txt([...popup.querySelectorAll('.sd-stat')].find((x) => txt(x.querySelector('.sd-stat-k')) === 'Area')?.querySelector('.sd-stat-v'))).toBe('15-foot burst');
+    // batch card: #card-ARROW — an arrow only where a printed entry grants it
     expect(arrowAt(s, spellCardModel(s, trees['sea-of-thought'], []), 6)).toEqual({ damage: null, area: null, engineDamage: null, engineArea: 30 });
   });
 
+  // batch card: #card-ARROW — an arrow only where a printed entry grants it
   it("wall-of-ice: no damage arrow at 6th; at 7th the arrow its printed (+2) entry grants (2d6 + 1d6 = 3d6), never the engine's every-rank 4d6", () => {
     // batch card premise: spell-1750 "the cold damage dealt to creatures crossing a destroyed section increases by 1d6"
     const s = spell('wall-of-ice');
@@ -548,13 +601,18 @@ describe("the arrow rule (the orchestrator's round-3 ruling): an arrow or area s
     expect(six.querySelector('.up-heighten')).toBeNull();
     expect(applying(six)).toHaveLength(0);
     const seven = at(s, 7);
+    // batch card: #card-ARROW — an arrow only where a printed entry grants it
     expect([...seven.querySelectorAll('.up-heighten')].map((e) => txt(e))).toEqual(['(→ 3d6)']);
+    // batch card premise: spell-1750 "cold damage to any creature passing through it"
     expect(txt(body(seven))).toContain('deals 2d6 (→ 3d6) cold damage to any creature passing through it');
+    // batch card premise: spell-1750 "Heightened (+2)"
     expect(applying(seven).map((e) => txt(e.querySelector('strong')))).toEqual(['Heightened (+2)']);
     // The engine's own value is untouched (listed in the drift file, not drawn).
+    // batch card: #card-ARROW — an arrow only where a printed entry grants it
     expect(scaleDamage(s, 7)).toBe('4d6');
   });
 
+  // batch card: #card-ARROW — an arrow only where a printed entry grants it
   it("fireball at 5th still shows its arrow (the page's (+1) is the engine's interval), marked ours; the area suffix span is marked ours (thunderburst)", () => {
     // batch card premise: spell-1530 "The damage increases by 2d6"
     const fb = at(spell('fireball'), 5);
@@ -582,6 +640,7 @@ describe("the arrow rule (the orchestrator's round-3 ruling): an arrow or area s
         .filter((e) => e.displaySuppressed.damage.length || e.displaySuppressed.area.length || Object.keys(e.displayFromPrint).length)
         .map((e) => [e.id, { suppressed: e.displaySuppressed, fromPrint: e.displayFromPrint }]),
     );
+    // batch card: #card-ARROW — an arrow only where a printed entry grants it
     expect(computed).toEqual(fromFile);
     // Withheld somewhere: the 6 engine-drift spells of round 2, draw-the-lightning (its page prints only
     // "(8th)"), and sea-of-thought (reprint drift). Measured 2026-10-08.
@@ -590,6 +649,7 @@ describe("the arrow rule (the orchestrator's round-3 ruling): an arrow or area s
     expect(Object.keys(computed)).toEqual(['breath-of-life', 'celestial-brand', 'draw-the-lightning', 'gluttonous-growth', 'inner-upheaval', 'positive-attunement', 'sea-of-thought', 'wall-of-ice']);
     // Every other spell draws the engine's own value at every rank an entry backs, and no arrow disappears.
     const ids = new Set(listed.map((e) => e.id));
+    // batch card: #card-ARROW — an arrow only where a printed entry grants it
     for (const id of Object.keys(computed)) expect(ids.has(id), `${id} is a drift entry`).toBe(true);
     // The withheld ranks are exactly the ranks the page grants nothing (wall-of-ice: 6th; sea-of-thought: all).
     expect(computed['wall-of-ice'].suppressed).toEqual({ damage: [6], area: [] });

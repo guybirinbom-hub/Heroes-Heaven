@@ -386,11 +386,12 @@ describe('no picker ever lists the reference bucket (source guard)', () => {
     expect(naming).toEqual(['src/integration/hostSearchRecords.ts']);
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('every walk over the whole database is the Search, the edition filter, the loader or the stub resolver', () => {
     const WALK = /Object\.(?:keys|entries|values)\((?:content|db|core|cachedCore|coreRec)(?:\s+as\s+[^)]*)?\)|for \(const \w+ in (?:content|db|core|cachedCore|coreRec)\)/;
     const walking = sources.filter((p) => WALK.test(readFileSync(p, 'utf8'))).map(rel).sort();
     // src/sheet/astStubs.ts: aonIndex answers only the aon id a host page's own stub carries; it lists nothing.
-    // batch card premise: action-1040 "moves at incredible speed"
+    // batch card: #card-STUBS — the stub resolver answers only the id a host page's own stub carries; it lists nothing
     expect(walking).toEqual(['src/data/index.ts', 'src/integration/hostSearchRecords.ts', 'src/rules/build.ts', 'src/sheet/astStubs.ts']);
   });
 
@@ -417,18 +418,21 @@ describe('no picker ever lists the reference bucket (source guard)', () => {
 
     // Embedded: a stub whose only candidate is the reference record draws that record's page (the host prints it).
     const embedding = host(['action-990001']);
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(stubBuckets(embedding, index)).toEqual(['reference']);
     const drawn = kids(resolve(embedding, (b, s) => pages[`${b}:${s}`]))[2];
     expect(drawn.stubOf).toBe('reference:zz-hustle');
     expect(text(drawn)).toContain('The zz beetle strides three times.');
     // Its page not shipped: the record's name, linked (a reference record opens in the description popup).
     const named = kids(resolve(embedding, () => undefined))[2];
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect([named.stubKind, named.stubName, named.stubLink]).toEqual(['name', 'Zz Hustle', 'reference:zz-hustle']);
 
     // Not embedded: a page whose stubs name other ids never reaches it through any output of the resolver.
     const other = host(['action-990002', 'zz-no-record-1']);
     expect(stubBuckets(other, index)).toEqual(['actions']);
     expect(stubRefs(other, index)).toEqual(['actions:zz-stride']);
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(JSON.stringify(resolve(other, (b, s) => pages[`${b}:${s}`]))).not.toContain('reference:');
     expect(stubNameOf('zz-no-record-1', index, sdb)).toBeUndefined();
   });

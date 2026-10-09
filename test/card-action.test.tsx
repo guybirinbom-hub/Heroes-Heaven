@@ -217,12 +217,14 @@ const oursGlyphs = (card: Element) => [...card.querySelectorAll('.ast-head .card
 /* ------------------------------------------------------------------ the refuter cases */
 
 describe('card step 9: the Main-tab action popup is the record\'s mine card', () => {
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('Aid (an activity) shows its printed Trigger AND Requirements exactly once, at full weight, before the prose; Source dimmed', () => {
     const card = sheet(halfling()).open('Aid');
     expect(card.matches('.ast-modal.card-mine')).toBe(true);
     expect(headGlyphs(card)).toEqual(['Reaction']);
     expect(card.querySelector('.card-ours-cost'), 'the page prints the chip\'s cost: no glyph of ours').toBeNull();
     const body = bodyOf(card)!;
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(count(txt(body), 'Trigger')).toBe(1);
     expect(count(txt(body), 'Requirements')).toBe(1);
     expect(useLines(body)).toEqual([
@@ -231,6 +233,7 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     ]);
     const kids = [...body.children];
     const at = (label: string) => kids.findIndex((k) => txt(k).startsWith(label));
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(at('Trigger')).toBeLessThan(kids.findIndex((k) => k.tagName === 'HR'));
     expect(kids[at('Trigger')].className).toBe('card-use');
     expect(kids[at('Requirements')].className).toBe('card-use');
@@ -239,16 +242,20 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     expect(card.querySelector('.action-detail-desc')).toBeNull();
   });
 
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('Shield Block, as a FEAT action, shows its printed Trigger once (it was on the markdown lane)', () => {
     const c = withFeats(build('wizard', 2), ['shield-block']);
     const card = sheet(c).open('Shield Block');
     expect(txt(card.querySelector('.ast-badge'))).toBe('Feat 1');
     const body = bodyOf(card)!;
     expect(body, 'the page tree, not the description string').not.toBeNull();
+    // batch card premise: feat-5212 "Trigger While you have your shield raised, you would take physical damage (bludgeoning, piercing"
     expect(useLines(body)).toEqual(['Trigger While you have your shield raised, you would take physical damage (bludgeoning, piercing, or slashing) from an attack.']);
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(count(txt(body), 'Trigger')).toBe(1);
   });
 
+  // batch card: #card-OWNER-1 — Halfling Luck: Frequency and Trigger once
   it('Halfling Luck shows Frequency and Trigger once each — the same use lines as the search popup — and no "leads to"', () => {
     const card = sheet(halfling()).open('Halfling Luck');
     expect(headGlyphs(card)).toEqual(['Free Action']);
@@ -256,15 +263,19 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     expect(count(txt(body), 'Frequency')).toBe(1);
     expect(count(txt(body), 'Trigger')).toBe(1);
     const main = useLines(body);
+    // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
     expect(main).toEqual(['Frequency once per day', 'Trigger You fail a skill check or saving throw']);
+    // batch card premise: feat-4458 "leads to"
     expect(txt(body)).not.toMatch(/leads to/);
     // The search popup (DescriptionModal, browse) for the same record draws the same use lines.
     const rec = db.feats['halfling-luck']!;
     const search = mount(<DescriptionModal root={{ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: 'feats', slug: 'halfling-luck' }} onClose={() => undefined} />);
     const browse = useLines(search.host.querySelector('.ast-modal .ast-pop > .ast-body'));
+    // batch card: #card-OWNER-1 — Halfling Luck: Frequency and Trigger once
     expect(browse).toEqual(main);
   });
 
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('Rise Up! (a feat action that was on the markdown lane) shows its printed Frequency and Prerequisites once each', () => {
     // The step row named "its Trigger"; MEASURED, feat-8914's page prints no Trigger — its use lines are
     // Frequency and Prerequisites, and those are what the card must now show (the string lane drew the
@@ -272,10 +283,13 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     const c = withFeats(build('fighter', 12), ['rose-warden-dedication', 'rise-up'].filter((id) => !!db.feats[id]));
     const card = sheet(c).open('Rise Up!');
     const body = bodyOf(card)!;
+    // batch card premise: feat-8914 "Prerequisites Rose Warden Dedication"
     expect(useLines(body)).toEqual(['Frequency once per day', 'Prerequisites Rose Warden Dedication']);
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(count(txt(body), 'Trigger')).toBe(0);
   });
 
+  // batch card: #card-ORDER — the mine card's order and controls
   it('a tactic keeps its prepare toggle in the card header; toggling hands onPlay the tactic and closes the card', () => {
     const calls: ((p: PlayState) => PlayState)[] = [];
     const record: PlayUpdater = (fn) => void calls.push(fn);
@@ -284,6 +298,7 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     const prepared = db.actions[c.commanderTactics!.prepared[0]]!.name;
     const card = s.open(prepared);
     const toggle = card.querySelector('.ast-head .ast-controls .prep-toggle') as HTMLButtonElement;
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(toggle, 'the prepare toggle is a header action').not.toBeNull();
     expect(toggle.classList.contains('on')).toBe(true);
     // headerActions sit before Back / PinStar / close: the toggle precedes the close button.
@@ -292,21 +307,25 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     expect(calls).toHaveLength(1);
     // MainTab's onPrepare: toggleTactic on the prepared list (play.ts) — the prepared tactic is unprepared.
     const before = { preparedTactics: [c.commanderTactics!.prepared[0]] } as unknown as PlayState;
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(calls[0](before).preparedTactics).toEqual([]);
     expect(s.host.querySelector('.picker-overlay'), 'the toggle closes the card, as the legacy popup did').toBeNull();
     // An unprepared tactic (one slot, already full) shows the toggle OFF and disabled.
     const other = c.commanderTactics!.folio.find((id) => !c.commanderTactics!.prepared.includes(id))!;
     const off = s.open(db.actions[other]!.name).querySelector('.prep-toggle') as HTMLButtonElement;
     expect(off.classList.contains('on')).toBe(false);
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(off.disabled).toBe(c.commanderTactics!.prepared.length >= c.commanderTactics!.preparedMax);
   });
 
+  // batch card: #card-ORDER — the mine card's order and controls
   it('the action star (PinToggle) is a header action: ON for a pinned action, and it pins / unpins through onPlay', () => {
     const calls: ((p: PlayState) => PlayState)[] = [];
     const record: PlayUpdater = (fn) => void calls.push(fn);
     const s = sheet(halfling({ pinned: ['action:Aid'] }), record);
     const aid = s.open('Aid');
     const on = aid.querySelector('.ast-head .ast-controls .pin-star') as HTMLElement;
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(on.classList.contains('on')).toBe(true);
     expect(on.getAttribute('aria-label')).toBe('Unpin');
     s.click(on);
@@ -314,21 +333,25 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     expect(s.host.querySelector('.picker-overlay'), 'the star does not close the card').not.toBeNull();
     s.click(s.host.querySelector('.card-mine .picker-close'));
     const off = s.open('Halfling Luck').querySelector('.ast-head .pin-star') as HTMLElement;
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(off.classList.contains('on')).toBe(false);
     s.click(off);
     expect(calls[1]({ pinned: [] } as unknown as PlayState).pinned).toEqual(['action:Halfling Luck']);
     // Read-only sheet: no star, no PinToggle.
     stops.forEach((x) => x());
     stops = [];
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(sheet(halfling(), null).open('Aid').querySelector('.pin-star')).toBeNull();
   });
 
+  // batch card: #card-ORDER — the mine card's order and controls
   it('the header\'s two pin buttons differ at a glance: "Pin to top" is a pin, "Add to Pinned" the star — page lane and no-page lane', async () => {
     // The owner (2026-10-08): two identical stars side by side in the action card header read as one control.
     const icon = (b: Element | null) => b?.querySelector('i')?.className ?? '';
     const pair = (card: Element, head: string) => {
       const top = card.querySelector(`${head} [aria-label="Pin to top"]`);
       const fav = card.querySelector(`${head} [aria-label="Add to Pinned"]`);
+      // batch card: #card-ORDER — the mine card's order and controls
       expect(top, `${head}: the Pin to top button`).not.toBeNull();
       expect(fav, `${head}: the Add to Pinned star (PinStar)`).not.toBeNull();
       expect(icon(top), `${head}: a pin glyph`).toBe('ti ti-pin');
@@ -347,12 +370,14 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     pair(r.host.querySelector('.picker.info-modal.card-mine')!, '.picker-head');
   });
 
+  // batch card: #card-ORDER — the mine card's order and controls
   it('the Modes list\'s "Pin to top" is the same pin, never the PinStar\'s star', () => {
     // Our own control's glyph (no printed page involved): every "Pin to top" toggle on the sheet wears one icon.
     const mode: ModeDef = { id: 't-card-wording-mode', name: 'T Wording Mode', modifiers: [] };
     const { host, stop } = renderDom(<ModesPanel library={[mode]} predefined={[]} catalog={[]} activeIds={[]} onToggle={() => undefined} onSave={() => undefined} onDelete={() => undefined} />);
     try {
       const top = host.querySelector('.mode-row [aria-label="Pin to top"]');
+      // batch card: #card-ORDER — the mine card's order and controls
       expect(top, 'the mode row\'s Pin to top button').not.toBeNull();
       const icon = top!.querySelector('i')?.className ?? '';
       expect(icon).toBe('ti ti-pin');
@@ -360,6 +385,7 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     } finally { stop(); }
   });
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('Quick Jump: the page\'s printed two actions stay; the marked cost (one action) is OUR glyph, marked, in the header; its note is an actionMark line in the ours box', () => {
     const card = sheet(halfling()).open('High Jump');
     expect(headGlyphs(card)).toEqual(['Two Actions']);
@@ -367,6 +393,7 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     expect(card.querySelector('.ast-head .card-ours-cost')!.getAttribute('title')).toBe('The cost on your sheet');
     expect(txt(card.querySelector('.ast-head .action-skill'))).toBe('Athletics');
     const line = card.querySelector('.ast-body > .card-ours[data-ours] .card-ours-actionMark') as HTMLElement;
+    // batch card: #card-N2 — an app addition is marked ours
     expect(line).not.toBeNull();
     const mark = recordMarkersFor(halfling(), db, 'action', 'high-jump').find((m) => m.sourceId === 'quick-jump')!;
     expect(txt(line)).toBe(`Quick Jump: ${markNote(db, mark)}`);
@@ -375,6 +402,7 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     expect([...bodyOf(card)!.querySelectorAll('p')].filter((p) => !p.closest('[data-ours]')).some((p) => txt(p).includes('Quick Jump'))).toBe(false);
   });
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('without Quick Jump High Jump keeps the printed two actions and has no ours box', () => {
     const card = sheet(build('fighter', 2)).open('High Jump');
     expect(headGlyphs(card)).toEqual(['Two Actions']);
@@ -382,6 +410,7 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     expect(card.querySelector('[data-ours-kind="actionMark"]')).toBeNull();
   });
 
+  // batch card: #card-R1 — one card per record
   it('a mark whose value is not a cost (Black Powder Boost on Leap): the page\'s printed "Single Action" is the chip\'s ◆, so no glyph of ours; the note is an actionMark line', () => {
     const c = { ...build('fighter', 5), feats: [{ featId: 'black-powder-boost', level: 1, category: 'class' as never }] };
     const card = sheet(c).open('Leap');
@@ -390,24 +419,28 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     expect(txt(card.querySelector('[data-ours-kind="actionMark"] .card-ours-from'))).toBe('Black Powder Boost:');
   });
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('a page whose title prints no glyph (Flurry of Blows) keeps it so; the chip\'s ◆ is our marked glyph', () => {
     const card = sheet(build('monk', 1)).open('Flurry of Blows');
     expect(headGlyphs(card)).toEqual([]);
     expect(oursGlyphs(card)).toEqual(['One action']);
   });
 
+  // batch card: #card-R1 — one card per record
   it('a link inside the card opens a browse card: no skill label, no action pin, no glyph of ours there; Back brings them back', async () => {
     const s = sheet(halfling());
     const card = s.open('High Jump');
     expect(card.querySelector('.ast-head .action-skill')).not.toBeNull();
     expect(card.querySelector('.ast-body > .card-ours[data-ours] .card-ours-actionMark'), 'the action card itself carries the box').not.toBeNull();
     const link = card.querySelector('.ast-pop > .ast-body a.ast-lk') as HTMLElement;
+    // batch card: #card-R1 — one card per record
     expect(link, 'High Jump\'s page links another record').not.toBeNull();
     s.click(link);
     const linked = s.host.querySelector('.picker-overlay')!.firstElementChild as HTMLElement;
     expect(linked.querySelector('.info-back'), 'a linked page is open (Back shows)').not.toBeNull();
     expect(txt(linked.querySelector('.ast-name'))).not.toBe('High Jump');
     expect(linked.querySelector('.action-skill')).toBeNull();
+    // batch card: #card-R1 — one card per record
     expect(linked.querySelector('.pin-star')).toBeNull();
     expect(linked.querySelector('.card-ours-cost')).toBeNull();
     // The action's ours box (the Quick Jump note) belongs to the action, never to a page it links
@@ -415,24 +448,28 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     // linked page has landed, so this reads it after the load settles, not on the loading shell above.
     await settle();
     const landed = s.host.querySelector('.picker-overlay')!.firstElementChild as HTMLElement;
+    // batch card: #card-R1 — one card per record
     expect(landed.querySelector('.ast-loading'), 'the linked page has landed').toBeNull();
     expect(landed.querySelector('.info-back')).not.toBeNull();
     expect(landed.querySelector('.card-ours')).toBeNull();
     expect(landed.querySelector('[data-ours]')).toBeNull();
     s.click(landed.querySelector('.info-back'));
     const back = s.host.querySelector('.picker-overlay .card-mine') as HTMLElement;
+    // batch card: #card-R1 — one card per record
     expect(txt(back.querySelector('.ast-name'))).toBe('High Jump');
     expect(back.querySelector('.ast-head .action-skill')).not.toBeNull();
     expect(back.querySelector('.ast-head .pin-star')).not.toBeNull();
     expect(back.querySelector('.ast-body > .card-ours[data-ours] .card-ours-actionMark'), 'Back brings the box back').not.toBeNull();
   });
 
+  // batch card: #card-R1 — one card per record
   it('a tactic\'s linked page carries no prepare toggle', async () => {
     const c = commander();
     const s = sheet(c);
     const card = s.open(db.actions[c.commanderTactics!.prepared[0]]!.name);
     expect(card.querySelector('.ast-head .prep-toggle')).not.toBeNull();
     const link = card.querySelector('.ast-pop > .ast-body a.ast-lk') as HTMLElement;
+    // batch card: #card-R1 — one card per record
     expect(link, 'the tactic\'s page links another record').not.toBeNull();
     s.click(link);
     const linked = s.host.querySelector('.picker-overlay')!.firstElementChild as HTMLElement;
@@ -442,6 +479,7 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     // Read again once the linked page has landed: no ours box of the tactic's there either.
     await settle();
     const landed = s.host.querySelector('.picker-overlay')!.firstElementChild as HTMLElement;
+    // batch card: #card-R1 — one card per record
     expect(landed.querySelector('.ast-loading'), 'the linked page has landed').toBeNull();
     expect(landed.querySelector('.prep-toggle')).toBeNull();
     expect(landed.querySelector('.card-ours')).toBeNull();
@@ -464,18 +502,21 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     throw new Error('no link on this card reaches the fallback branch');
   }
 
+  // batch card: #card-S7 — no page: our text, marked
   it('a link to a page whose bucket fails to load opens the fallback popup with NONE of the action\'s header actions (no action pin, prepare toggle, skill label or glyph of ours)', async () => {
     const s = sheet(halfling());
     const card = s.open('High Jump');
     // The action's own card carries them (Quick Jump: our marked one-action glyph).
     expect(card.querySelector('.ast-head .action-skill')).not.toBeNull();
     expect(card.querySelector('.ast-head .pin-star')).not.toBeNull();
+    // batch card: #card-S7 — no page: our text, marked
     expect(card.querySelector('.ast-head .card-ours-cost[data-ours]')).not.toBeNull();
     const fb = await openFallbackLink(s);
     expect(txt(fb.querySelector('.info-title'))).not.toBe('High Jump');
     expect(fb.querySelector('.action-skill')).toBeNull();
     expect(fb.querySelector('.pin-star')).toBeNull();
     expect(fb.querySelector('.card-ours-cost')).toBeNull();
+    // batch card: #card-S7 — no page: our text, marked
     expect(fb.querySelector('.action-detail-cost')).toBeNull();
     expect(fb.querySelector('.prep-toggle')).toBeNull();
     // Nor the action's ours box (the Quick Jump note): the fallback branch draws the tail too.
@@ -485,15 +526,18 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     const c = commander();
     const t = sheet(c);
     const tcard = t.open(db.actions[c.commanderTactics!.prepared[0]]!.name);
+    // batch card: #card-S7 — no page: our text, marked
     expect(tcard.querySelector('.ast-head .prep-toggle')).not.toBeNull();
     const tfb = await openFallbackLink(t);
     expect(tfb.querySelector('.prep-toggle')).toBeNull();
     expect(tfb.querySelector('.pin-star')).toBeNull();
     expect(tfb.querySelector('.card-ours-cost')).toBeNull();
     expect(tfb.querySelector('.card-ours')).toBeNull();
+    // batch card: #card-S7 — no page: our text, marked
     expect(tfb.querySelector('[data-ours]')).toBeNull();
   });
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('trained Treat Wounds shows "Your rank (trained): DC 15" in the ours box; the printed tier sentence stays whole', () => {
     const card = sheet(halfling(), () => undefined, 'Exploration').open('Treat Wounds');
     const line = card.querySelector('.card-ours[data-ours] .card-ours-skillTier');
@@ -502,12 +546,14 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     expect(useLines(bodyOf(card))).toEqual(['Requirements You\'re wearing or holding a healer\'s toolkit.']);
   });
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('skillTierLine: an expert gets the expert tier; an untrained character, a skill-less or tier-less action gets none', () => {
     const c = halfling();
     const tw = { name: 'Treat Wounds', skill: 'Medicine' };
     const expert = { ...c, proficiencies: { ...c.proficiencies, skills: { ...c.proficiencies.skills, medicine: 'expert' as const } } };
     expect(skillTierLine(expert, db, tw)?.text).toBe('Your rank (expert): You can instead attempt a DC 20 check to heal 10 more HP (e.g. 2d8+10).');
     const untrained = { ...c, proficiencies: { ...c.proficiencies, skills: { ...c.proficiencies.skills, medicine: 'untrained' as const } } };
+    // batch card: #card-N2 — an app addition is marked ours
     expect(skillTierLine(untrained, db, tw)).toBeNull();
     expect(skillTierLine(c, db, { name: 'Aid' })).toBeNull();
     expect(skillTierLine(c, db, { name: 'High Jump', skill: 'Athletics' })).toBeNull();
@@ -515,9 +561,11 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     const crafter = { ...c, proficiencies: { ...c.proficiencies, skills: { ...c.proficiencies.skills, crafting: 'trained' as const } } };
     expect(skillTierLine(crafter, db, { name: 'Repair', skill: 'Crafting' })?.text).toBe('Your rank (trained): Restores 10 HP on a success (20 HP on a critical success).');
     // actionOursLines: the marks first, then the rank line.
+    // batch card: #card-N2 — an app addition is marked ours
     expect(actionOursLines(c, db, tw).map((l) => l.kind)).toEqual(['skillTier']);
   });
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('master and legendary Treat Wounds: the ours box shows the HIGHEST tier the rank unlocks (DC 30 / DC 40), never the expert DC 20 line', () => {
     const at = (rank: 'master' | 'legendary'): Character => {
       const c = halfling();
@@ -530,6 +578,7 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     for (const rank of ['master', 'legendary'] as const) {
       const card = sheet(at(rank), () => undefined, 'Exploration').open('Treat Wounds');
       const lines = [...card.querySelectorAll('.card-ours[data-ours] .card-ours-skillTier')].map((l) => txt(l));
+      // batch card: #card-N2 — an app addition is marked ours
       expect(lines, rank).toEqual([WANT[rank]]);
       const box = txt(card.querySelector('.card-ours[data-ours]'));
       expect(box, `${rank}: the expert tier is not the one that applies`).not.toContain('DC 20');
@@ -538,6 +587,7 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     }
   });
 
+  // batch card: #card-S7 — no page: our text, marked
   it('a record with no page opens the card\'s no-page lane: our glyph in the header, the trait chips above the old text, the no-page line', async () => {
     // This case used classFeatures:a-challenge-for-heroes until card step 12 gave it its block of the Mark of
     // the Sage page (src/data/page-slices.json, kind 'block'; section 13's raised bar).
@@ -550,22 +600,25 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     const id = 't-card-step12-no-page-action';
     const rec = { ...src, id, name: 'T No Page Action' };
     const tdb = { ...db, classFeatures: { ...db.classFeatures, [id]: rec } } as ContentDatabase;
+    // batch card: #card-S7 — no page: our text, marked
     expect(recordTree('classFeatures', src.id, readTree), 'a-challenge-for-heroes now reads its slice').toBeTruthy();
     expect(recordTree('classFeatures', id, readTree), `${id} reads no tree (no page, no slice)`).toBeUndefined();
     const a: Act = { name: rec.name, cost: rec.actionCost as never, desc: rec.description, descRefs: rec.descRefs, traits: rec.traits, record: { bucket: 'classFeatures', id } };
     const r = mount(<ActionDetailModal detail={{ a, pinnable: true }} onClose={() => undefined} character={build('fighter', 2)} content={tdb} onPlay={() => undefined} pinned={new Set()} />, tdb);
     await settle();
     const card = r.host.querySelector('.picker.info-modal.card-mine') as HTMLElement;
+    // batch card: #card-S7 — no page: our text, marked
     expect(card).not.toBeNull();
     expect([...card.querySelectorAll('.picker-head .action-detail-cost .pf2-action')].map((g) => g.getAttribute('aria-label'))).toEqual(['Two actions']);
     expect(txt(card.querySelector('.picker-head .info-title'))).toBe(rec.name);
     expect([...card.querySelectorAll('.info-body > .card-controls .action-detail-traits .strike-trait')].map((t) => txt(t))).toEqual(rec.traits);
     expect(txt(card.querySelector('.info-body'))).toContain('You declare an enemy within 60 feet to be a heroic test.');
-    // batch card premise: feat-7185 "to be a heroic test" — the owner (2026-10-08): the ours footer speaks player words, no "import".
+    // batch card: #card-FOOTER-WORDS — the owner (2026-10-08): the ours footer speaks player words, no "import".
     expect(txt(card.querySelector('[data-ours-kind="noPage"]'))).toBe('Not from the Archives — our text');
     expect(card.querySelector('.picker-head .pin-star'), 'the action pin rides the no-page header too').not.toBeNull();
   });
 
+  // batch card: #card-R1 — the rune opens its record's card
   it('a runesmith rune opens its record\'s card: the Archives page, the etch toggle in the header, toggling hands onPlay the rune', () => {
     const calls: ((p: PlayState) => PlayState)[] = [];
     const record: PlayUpdater = (fn) => void calls.push(fn);
@@ -574,29 +627,34 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     const rec = db.runesmithRune![etched]!;
     const s = sheet(c, record);
     const card = s.open(rec.name);
+    // batch card: #card-R1 — one card per record
     expect(txt(card.querySelector('.ast-head .ast-title')) || txt(card.querySelector('.ast-head'))).toContain(rec.name);
     const body = bodyOf(card)!;
     expect(body, 'the rune\'s page tree, not the description string').not.toBeNull();
     expect(card.querySelector('.action-detail-desc')).toBeNull();
     const toggle = card.querySelector('.ast-head .ast-controls .prep-toggle') as HTMLButtonElement;
     expect(toggle, 'the etch toggle is a header action').not.toBeNull();
+    // batch card: #card-R1 — one card per record
     expect(toggle.classList.contains('on')).toBe(true);
     s.click(toggle);
     expect(calls).toHaveLength(1);
     expect(s.host.querySelector('.picker-overlay'), 'the toggle closes the card').toBeNull();
   });
 
+  // batch card: #card-R1 — one card per record
   it('a camping activity (Kingmaker) opens its record\'s card with the Archives page', () => {
     const c: Character = { ...halfling(), kingmakerEnabled: true };
     const id = 'camouflage-campsite';
     const rec = db.actions[id]!;
     const card = sheet(c, () => undefined, 'Camping').open(rec.name);
     expect(card.matches('.ast-modal.card-mine')).toBe(true);
+    // batch card: #card-R1 — one card per record
     expect(txt(card.querySelector('.ast-head'))).toContain(rec.name);
     expect(bodyOf(card), 'the camping page tree').not.toBeNull();
     expect(card.querySelector('.action-detail-desc')).toBeNull();
   });
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('every chip opens a card whose header shows the chip\'s cost exactly once — as the page\'s print or as our marked glyph, never ours beside an equal print (7 characters, every mode)', () => {
     /** One glyph slot read as digits: "1".."5" per action glyph, "H" for the activity hourglass, the
      *  words for a duration. A chip's slot is `.action-cost`; the card's printed one is the page title
@@ -658,15 +716,18 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
     }
     // The refuter's named cases are in the sweep (each was a missing, a different or a rewritten cost).
     for (const name of ['Flurry of Blows', 'Cast a Spell', 'Sheltering Hand', 'Signature Weapon', 'Quick Recovery', 'Pick a Lock', 'High Jump', 'Camouflage Campsite']) {
+      // batch card: #card-N2 — an app addition is marked ours
       expect(seen.has(name), `${name} opened a card in the sweep`).toBe(true);
     }
     expect(cards).toBeGreaterThan(300);
     expect(bad).toEqual([]);
     // Ours beside a different print: Quick Jump's marked High Jump / Long Jump, and the stored costs that
     // differ from print (a data question for the owner, shown both ways, decided nowhere here).
+    // batch card: #card-N2 — an app addition is marked ours
     expect([...beside].sort()).toEqual(BESIDE_IN_SWEEP);
   }, 300_000);
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('oursHeaderCost over every action record with a page (2,641 trees): the page\'s printed glyph is what the header reads; ours is drawn exactly where print is not the stored cost', () => {
     const glyphs = (n: AstNode): string[] => {
       const top = n.c ?? [];
@@ -709,12 +770,14 @@ describe('card step 9: the Main-tab action popup is the record\'s mine card', ()
       if (!printed) noGlyph++;
       else if (!same) differs.push(`${b}:${id} printed=${printed} stored=${want ?? 'none'}`);
     }
+    // batch card: #card-N2 — an app addition is marked ours
     expect(checked).toBeGreaterThan(2600);
     expect(bad).toEqual([]);
     // Measured 2026-10-06: the pages whose title prints no glyph (ours drawn alone) …
     expect(noGlyph).toBe(NO_GLYPH_PAGES);
     // … and the records whose stored cost is not the printed one (ours drawn beside print). Each is a data
     // disagreement listed for the owner; a new one, or one fixed in the data, changes this list.
+    // batch card: #card-N2 — an app addition is marked ours
     expect(differs.sort()).toEqual(PRINT_DIFFERS);
   });
 });
@@ -747,6 +810,7 @@ const PRINT_DIFFERS: string[] = [
 ];
 
 describe('card step 9: an action that names no record', () => {
+  // batch card: #card-S7 — no page: our text, marked
   it('an action that names no record (an item activation) opens the plain no-record popup, its text through DescBody', () => {
     const a: Act = { name: 'Synthetic Activation', cost: { type: 'actions', value: 1 }, desc: 'Body words of a synthetic activation.', traits: ['manipulate'] };
     const r = mount(<ActionDetailModal detail={{ a, pinnable: false }} onClose={() => undefined} character={build('fighter', 2)} content={db} pinned={new Set()} />);
@@ -761,6 +825,7 @@ describe('card step 9: an action that names no record', () => {
     const a: Act = { name: 'Aid', cost: { type: 'reaction' }, desc: 'Synthetic words standing in for Aid.', traits: [] };
     const r = mount(<ActionDetailModal detail={{ a, pinnable: false }} onClose={() => undefined} character={build('fighter', 2)} content={db} pinned={new Set()} />);
     expect(r.host.querySelector('.card-mine')).toBeNull();
+    // batch card: #card-S7 — no page: our text, marked
     expect(r.host.querySelector('.ast-body'), 'no page tree is drawn').toBeNull();
     expect(txt(r.host.querySelector('.picker.info-modal .action-detail-desc'))).toBe('Synthetic words standing in for Aid.');
     expect(count(txt(r.host), 'Trigger')).toBe(0);
@@ -770,21 +835,25 @@ describe('card step 9: an action that names no record', () => {
 describe('card step 9: oursHeaderCost reads the printed glyph and changes nothing', () => {
   const tree = (b: string, id: string) => (JSON.parse(gunzipSync(readFileSync(`public/ast/${b}.json.gz`)).toString('utf8')) as Record<string, AstNode>)[id];
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('High Jump prints "Two Actions": ours for a marked one action, none for two; the tree is not mutated', () => {
     const t = tree('actions', 'high-jump');
     const before = JSON.stringify(t);
     expect(printedHeaderCost(t)).toBe('Two Actions');
     expect(oursHeaderCost({ type: 'actions', value: 1 }, t)).toBe(true);
     expect(oursHeaderCost({ type: 'actions', value: 2 }, t)).toBe(false);
+    // batch card: #card-N2 — an app addition is marked ours
     expect(JSON.stringify(t)).toBe(before);
   });
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('"Single Action" is the same glyph as one action; no cost, a duration, no page or a page with no glyph draws ours', () => {
     const leap = tree('actions', 'leap');
     expect(printedHeaderCost(leap)).toBe('Single Action');
     expect(oursHeaderCost({ type: 'actions', value: 1 }, leap)).toBe(false);
     expect(oursHeaderCost(undefined, leap)).toBe(true);
     expect(oursHeaderCost({ type: 'duration' } as never, leap)).toBe(true);
+    // batch card: #card-N2 — an app addition is marked ours
     expect(oursHeaderCost({ type: 'actions', value: 1 }, null)).toBe(true);
     const flurry = tree('classFeatures', 'flurry-of-blows');
     expect(printedHeaderCost(flurry)).toBeNull();

@@ -54,6 +54,7 @@ async function mount(el: ReactElement): Promise<{ host: HTMLElement; stop: () =>
   return { host, stop: () => { act(() => root.unmount()); host.remove(); } };
 }
 async function click(el: Element | null | undefined) {
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -78,12 +79,14 @@ beforeAll(async () => {
 afterAll(() => { vi.unstubAllGlobals(); });
 
 describe('F3b: levelGrants lists the subclass variant', () => {
+  // batch card: #card-OWNER-3 — Second Doctrine is its own line
   it('a level-3 cloistered cleric lists second-doctrine-cloistered-cleric; no subclass lists the generic second-doctrine', () => {
     expect(levelGrants(3, 'cleric', db, 'cloistered-cleric').features.map((f) => f.id)).toEqual(['second-doctrine-cloistered-cleric']);
     expect(levelGrants(3, 'cleric', db, 'warpriest').features.map((f) => f.id)).toEqual(['second-doctrine-warpriest']);
     expect(levelGrants(3, 'cleric', db, null).features.map((f) => f.id)).toEqual(['second-doctrine']);
   });
 
+  // batch card: #card-F3B — levelGrants lists the subclass variant
   it('every class × subclass × level: a row lists the variant exactly when the variant record exists (the Feats tab\'s rule)', () => {
     let variants = 0;
     for (const cls of Object.values(db.classes)) {
@@ -94,21 +97,25 @@ describe('F3b: levelGrants lists the subclass variant', () => {
           const want = cls.features
             .filter((f) => f.level === lvl && !suppressed.has(f.featureId))
             .map((f) => (db.classFeatures[`${f.featureId}-${opt.id}`] ? `${f.featureId}-${opt.id}` : f.featureId));
+          // batch card: #card-F3B — levelGrants lists the subclass variant
           expect(shown, `${cls.id}/${opt.id} level ${lvl}`).toEqual(want);
           variants += want.filter((id) => !cls.features.some((f) => f.featureId === id)).length;
         }
       }
     }
     // Measured: 28 variant records (cleric doctrines 12, alchemist 12, ranger 3, wizard 1).
+    // batch card: #card-F3B — levelGrants lists the subclass variant
     expect(variants).toBe(28);
   });
 
+  // batch card: #card-F3B — levelGrants lists the subclass variant
   it('Dual Class: the second class\'s rows map by the SECOND class\'s subclass, never the first\'s', () => {
     const dual = { dualClass: true };
     const ids = (cls: string, sub: string | null, cls2: string, sub2: string | null) =>
       levelGrants(3, cls, db, sub, dual, cls2, sub2).features.map((f) => f.id);
     // Fighter (no subclass) + cloistered cleric: the cleric's level-3 row is the cloistered variant.
     const fc = ids('fighter', null, 'cleric', 'cloistered-cleric');
+    // batch card: #card-F3B — levelGrants lists the subclass variant
     expect(fc).toContain('second-doctrine-cloistered-cleric');
     expect(fc).not.toContain('second-doctrine');
     // Each class's rows carry their own class's subclass: warpriest first, cloistered second.
@@ -117,6 +124,7 @@ describe('F3b: levelGrants lists the subclass variant', () => {
     expect(ids('fighter', null, 'cleric', null)).toContain('second-doctrine');
   });
 
+  // batch card: #card-F3B — levelGrants lists the subclass variant
   it('an archetype-ADDED row never maps to a subclass variant, even when one exists', () => {
     // No shipped archetype-added feature has a `${featureId}-${subclassId}` record (measured in lane scratch:
     // the 6 class archetypes with addFeatures — flexible spellcaster, wellspring mage, seneschal witch,
@@ -135,6 +143,7 @@ describe('F3b: levelGrants lists the subclass variant', () => {
       ancestryId: 'human', backgroundId: 'acolyte', featPicks: { '2:class:0': 'war-mage-dedication' },
     } as BuildState;
     const ids = levelGrants(1, 'wizard', synth, 'school-of-battle-magic', undefined, null, null, false, ['war-mage-dedication'], b).features.map((f) => f.id);
+    // batch card: #card-F3B — levelGrants lists the subclass variant
     expect(ids, 'the archetype adds War Magic at 1st').toContain('war-magic');
     expect(ids).not.toContain('war-magic-school-of-battle-magic');
   });
@@ -150,6 +159,7 @@ describe('F3b through the real Builder', () => {
     return { m, names };
   }
 
+  // batch card: #card-OWNER-3 — Second Doctrine is its own line
   it('L3 cloistered cleric: the level-3 row is the doctrine\'s own record and its Details card has "Fortitude", no other doctrine', async () => {
     const { m, names } = await level3Row(cleric('cloistered-cleric'));
     try {
@@ -160,13 +170,16 @@ describe('F3b through the real Builder', () => {
       await click(block!.querySelector('.cc-det'));
       const overlays = m.host.querySelectorAll('.picker-overlay');
       const page = overlays[overlays.length - 1]?.querySelector('.ast-modal.card-mine .ast-body') ?? null;
+      // batch card: #card-OWNER-3 — Second Doctrine is its own line
       expect(page, 'the Details card draws the doctrine page').toBeTruthy();
       const shown = txt(page);
       expect(shown).toContain(FORTITUDE);
+      // batch card premise: doctrine-4 "Fourth Doctrine"
       for (const other of ['First Doctrine', 'Third Doctrine', 'Fourth Doctrine', 'Fifth Doctrine', 'Final Doctrine']) expect(shown).not.toContain(other);
     } finally { m.stop(); }
   });
 
+  // batch card: #card-OWNER-3 — Second Doctrine is its own line
   it('a level-3 cleric with no doctrine chosen still lists the generic Second Doctrine', async () => {
     const { m, names } = await level3Row(cleric(null));
     try {

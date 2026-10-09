@@ -62,6 +62,7 @@ function openPopup(id: string): { error: unknown; name: string; rows: [string, s
 }
 
 describe('bug 2026-10-02: the item popup opens for a weapon or armor with no category', () => {
+  // batch card: #card-R1 — one card per record
   it('every category-less weapon and armor opens, names itself, and prints no Category row', () => {
     // The measured population: if the data changes, this count is the line that says so.
     expect(NO_CATEGORY.length).toBe(34);
@@ -80,9 +81,11 @@ describe('bug 2026-10-02: the item popup opens for a weapon or armor with no cat
       if (p.rows.some(([k]) => k === 'Category')) failures.push(`${id}: prints a Category row`);
       if (p.text.includes('undefined')) failures.push(`${id}: prints the word "undefined"`);
     }
+    // batch card: #card-R1 — one card per record
     expect(failures).toEqual([]);
   });
 
+  // batch card: #card-R1 — one card per record
   it('control: a weapon and an armor that DO carry a category still print it, capitalised', () => {
     const cases = [
       { id: 'longsword', category: 'martial', shown: 'Martial' },
@@ -91,6 +94,7 @@ describe('bug 2026-10-02: the item popup opens for a weapon or armor with no cat
     ];
     for (const { id, category, shown } of cases) {
       // The fixture is what it says it is, so the row below is the data's category and not a default.
+      // batch card: #card-R1 — one card per record
       expect((c.items[id] as { category?: string }).category, id).toBe(category);
       const p = openPopup(id);
       expect(p.error, id).toBeUndefined();

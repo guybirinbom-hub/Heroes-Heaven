@@ -431,19 +431,21 @@ const featRowsFn = (r: { bucket: 'feats' | 'classFeatures'; id: string }, i: num
 // Card step 16 (spells phase A): the popup's rows come from the spell's own page through spellCardModel
 // (src/sheet/spellCard.ts), falling back to spellStatRows only when there is no spell/ritual page — so the
 // ONE copy the popup prints is spellCardModel's rows, judged here with the same warm tree it renders from.
-// batch card premise: ritual-213 "Area 50-foot radius emanation centered on you"
 const spellRowsFn = (id: string): [string, string][] =>
   blankCast(spellCardModel(db.spells[id], trees.spells[id], spellStatRows(db.spells[id])).rows);
 const blankCast = (rows: [string, string][]): [string, string][] => rows.map(([k, v]) => [k, k === 'Cast' ? '' : v]);
 
 describe('card step 1 (G0): the move changes no markup', () => {
+  // batch card: #card-NOT-VACUOUS — the sample holds 600 records with a page
   it('draws 600 records with a page, 120 per bucket, and 60 per stat-row surface', () => {
+    // batch card: #card-NOT-VACUOUS — the case measures something
     expect(sample.length).toBe(BUCKETS.length * PER_BUCKET);
     expect(new Set(sample.map((s) => `${s.bucket}:${s.slug}`)).size).toBe(sample.length);
     for (const b of BUCKETS) expect(sample.filter((s) => s.bucket === b).length, b).toBe(PER_BUCKET);
     expect([itemIds.length, featRows.length, spellIds.length]).toEqual([PER_SURFACE, PER_SURFACE, PER_SURFACE]);
   });
 
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('each popup prints exactly the rows its exported stat-row function returns (one copy)', () => {
     let rows = 0;
     for (const id of itemIds) {
@@ -459,7 +461,7 @@ describe('card step 1 (G0): the move changes no markup', () => {
     // batch card premise: feat-928 "Prerequisites Charisma 14"
     featRows.forEach((r, i) => {
       const want = recordTree(r.bucket, r.id, (b, s) => trees[b]?.[s]) ? [] : featRowsFn(r, i).filter(([k]) => k === 'Prerequisites');
-      // batch card premise: feat-928 "Prerequisites Charisma 14"
+      // batch card: #card-PRINTED-SET — each popup prints its stat rows once
       expect(shownRows(featPopup(r, i)), `${r.bucket} ${r.id}`).toEqual(want);
       rows += want.length;
     });
@@ -469,11 +471,13 @@ describe('card step 1 (G0): the move changes no markup', () => {
       rows += want.length;
     }
     // Not vacuous: every surface draws rows, and each feat row kind appears at least once.
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(rows).toBeGreaterThan(3 * PER_SURFACE);
     const featKinds = new Set(featRows.flatMap((r, i) => featStatRows(featEntry(r, i)).map((x) => x.k)));
     expect([...featKinds].sort()).toEqual(['Activate', 'Enhancement', 'Prerequisites']);
   });
 
+  // batch card: #card-SNAPSHOT — a step changes only its own surface
   it.skipIf(!SNAP)('byte-equal to the pre-move render (CARD_NOOP_SNAPSHOT)', () => {
     const now = {
       ast: Object.fromEntries(sample.map(({ bucket, slug }) => [`${bucket}:${slug}`, astRenders(bucket, slug)])),
@@ -485,6 +489,7 @@ describe('card step 1 (G0): the move changes no markup', () => {
       writeFileSync(SNAP!, JSON.stringify(now));
       return;
     }
+    // batch card: #card-SNAPSHOT — a step changes only its own surface
     expect(existsSync(SNAP!), `snapshot ${SNAP} missing — write it on the pre-move tree with CARD_NOOP_WRITE=1`).toBe(true);
     const before = JSON.parse(readFileSync(SNAP!, 'utf8')) as typeof now;
     expect(Object.keys(now.ast)).toEqual(Object.keys(before.ast));
@@ -493,14 +498,14 @@ describe('card step 1 (G0): the move changes no markup', () => {
     // different body by design. Those are pinned with their reason in STEP12_CHANGED_NOOP and must differ
     // (the search popup; until card step 22 the DescBody and bare-body renders too); every other render
     // stays byte-equal.
-    // batch card premise: doctrine-4 "Second Doctrine (3rd)" — the record's own bullet of the doctrine page is its page.
+    // batch card: #card-SNAPSHOT — only the records step 12 re-read differ
     const keys = [...sample.map(({ bucket, slug }) => `${bucket}:${slug}`), ...itemIds.map((id) => `items:${id}`), ...featRows.map((r) => `${r.bucket}:${r.id}`)];
     const changed = step12Changed(keys);
     expect(changed).toEqual(STEP12_CHANGED_NOOP);
     // Card step 14b re-baseline: the search popup (modal) of a non-item page whose stubs resolve from a loaded
     // bucket draws them (an embedded page, a name) — pinned in STEP14B_CHANGED_NOOP; with those elements
     // taken out it is the pre-move popup, byte for byte.
-    // batch card premise: class-feature-1281 "You gain the Double Spellstrike activity"
+    // batch card: #card-SNAPSHOT — only the step-14b stub records differ
     const drawsStubs = Object.keys(now.ast).filter((k) => !k.startsWith('items:') && !(k in changed) && /data-stub/.test(now.ast[k].modal));
     expect(drawsStubs.sort()).toEqual(Object.keys(STEP14B_CHANGED_NOOP).sort());
     let diffs = 0;
@@ -511,42 +516,42 @@ describe('card step 1 (G0): the move changes no markup', () => {
         if (now.ast[k][f] !== before.ast[k][f]) diffs++;
         if (k in changed) continue;
         if (f === 'modal' && k in STEP14B_CHANGED_NOOP) {
-          // batch card premise: class-feature-479 "all at least know how to make their innovation Explode"
+          // batch card: #card-STUBS — a step-14b record's popup draws its embedded pages
           expect(now.ast[k][f], `${k} modal (${STEP14B_CHANGED_NOOP[k]}) changed`).not.toBe(before.ast[k][f]);
           // Wording merge: with the stubs out, the pre-move popup — byte for byte, or with only its block
           // boundaries moved (inlineOf).
-          // batch card premise: class-feature-1281 "You gain the Double Spellstrike activity"
+          // batch card: #card-SNAPSHOT — with the stubs out, the pre-move popup
           expect(inlineOf(without14bStubs(now.ast[k][f])), `${k} modal: only the stubs changed`).toBe(inlineOf(viaDom(before.ast[k][f])));
           continue;
         }
         if (now.ast[k][f] === before.ast[k][f]) continue;
-        // batch card premise: class-feature-1281 "You gain the Double Spellstrike activity" — a glyph the
+        // batch card: #card-GLYPH — a glyph the
         // page prints in a line draws in it; the words, links and glyphs stay, in order.
         if (inlineOf(now.ast[k][f]) === inlineOf(before.ast[k][f])) { moved++; continue; }
         gained.push(`${k} ${f}`);
         expect(f, `${k} modal: only its block boundaries may move`).not.toBe('modal');
         expect(keepsEveryWord(before.ast[k][f], now.ast[k][f]), `${k} ${f} keeps every word it drew`).toBe(true);
       }
-      // batch card premise: doctrine-4 "Second Doctrine (3rd)" — card step 22: the search popup is the render left to differ (the DescBody render left with its path).
+      // batch card: #card-LEGACY-GONE — card step 22: the search popup is the render left to differ (the DescBody render left with its path).
       if (k in changed) expect(now.ast[k].modal, `${k} (${changed[k]}) changed`).not.toBe(before.ast[k].modal);
     }
     // Wording merge: no search popup gains or loses a word; the boundary moves counted.
-    // batch card premise: feat-5019 "Frequency once per hour" — card step 22: the gains were the hideMeta body's alone.
+    // batch card: #card-LEGACY-GONE — card step 22: the gains were the hideMeta body's alone.
     expect(gained).toEqual([]);
     // Measured 2026-10-08 on main (2f6ee78 + the wording round) against card-step1-premove.json: 224 over the
     // three renders. Card step 22 (measured 2026-10-09 in the lane at a19f00d): the search popup's own share.
-    // batch card premise: class-feature-1281 "You gain the Double Spellstrike activity"
+    // batch card: #card-SNAPSHOT — the measured count of boundary moves
     expect(moved, 'renders whose block boundaries moved').toBe(MOVED_MODAL);
     // Card step 11: the feat popups are the mine card by design (60 of 60 differ from the pre-move popup);
     // their stat rows are checked against the function below. Items: the rows only (card step 14).
     // batch card premise: feat-928 "Prerequisites Charisma 14"
     // Card step 16: the spell popups changed on purpose — each is pinned with its classes in
     // STEP16_CHANGED_NOOP and must differ exactly so (below); the byte-equal loop runs over the rest.
-    // batch card premise: spell-2315 "Duration sustained up to 1 minute"
+    // batch card: #card-SNAPSHOT — the same spells drawn before and after
     expect(Object.keys(now.spells)).toEqual(Object.keys(before.spells));
     // Card step 17: a spell on the tree body (spellCardModel body 'tree') draws the page's prose, so its
     // body differs from the pre-move string by design ('tree body', pinned per spell below).
-    // batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate"
+    // batch card: #card-SNAPSHOT — only the step-16 spells differ, each by its pinned class
     const treeBodyOf = (k: string) => spellCardModel(db.spells[k], trees.spells[k], spellStatRows(db.spells[k])).body === 'tree';
     const spellChanged = Object.fromEntries(
       Object.keys(now.spells).map((k) => [k, step16SpellChange(now.spells[k], before.spells[k], treeBodyOf(k))] as const).filter(([, why]) => why),
@@ -556,25 +561,27 @@ describe('card step 1 (G0): the move changes no markup', () => {
       const why = STEP16_CHANGED_NOOP[k] ?? '';
       // The lane marker names the lane spellCardModel chose — the one the rows came from.
       const lane = spellCardModel(db.spells[k], trees.spells[k], spellStatRows(db.spells[k])).lane;
+      // batch card: #card-SNAPSHOT — a step changes only its own surface
       expect(now.spells[k].markup.includes(`data-lane="${lane}"`), `spell ${k} carries data-lane="${lane}"`).toBe(why.includes('lane marker'));
       // Only a page-lane popup changes its rows; the field lane prints the pre-move rows.
       if (why.includes('page rows')) expect(lane, `spell ${k} rows changed only on the page lane`).toBe('page');
       const model = spellCardModel(db.spells[k], trees.spells[k], spellStatRows(db.spells[k]));
       // Card step 17: every tree-body spell's body is the page's; a string-body spell keeps step 16's rule
       // — a stripped preamble is exactly the model's body differing from the plain heightening split.
-      // batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate"
+      // batch card: #card-SNAPSHOT — each changed spell differs exactly by its pinned reason
       if (model.body === 'tree') expect(why.includes('tree body'), `spell ${k} draws the page body`).toBe(true);
       else expect(model.base !== splitHeightening(db.spells[k].description || '').base, `spell ${k} body stripped`).toBe(why.includes('preamble stripped'));
       // batch card: step17-nit7 — the no-page footer exactly on an official spell the spells bucket holds no page for.
+      // batch card: #card-S7 — no page: our text, marked (step17-nit7 above names no record the it() title holds)
       expect(why.includes('no-page footer'), `spell ${k} no-page footer`).toBe(!trees.spells[k] && !!db.spells[k].source?.book);
     }
     // Card step 14: the item popup's description is the shown record's mine card by design (its page lines
     // by the printed-set rule, the embedded group page, the no-page line). Its STAT ROWS do not move: the
     // frame prints the same itemStatRows, checked against the pre-move rows here.
-    // batch card premise: weapon-group-15 "becoming off-guard until the start of your next turn"
+    // batch card: #card-SNAPSHOT — the item stat rows do not move
     expect(Object.keys(now.items)).toEqual(Object.keys(before.items));
     for (const k of Object.keys(now.items)) expect(now.items[k].rows, `items ${k} rows`).toEqual(before.items[k].rows);
-    // batch card premise: methodology-5 "You gain the Quick Tincture action" — card step 22: the search popup alone.
+    // batch card: #card-SNAPSHOT — card step 22: the search popup alone.
     expect(diffs).toBe(Object.keys(now.ast).filter((k) => k in changed && now.ast[k].modal !== before.ast[k].modal).length + Object.keys(STEP14B_CHANGED_NOOP).length + moved + gained.length);
     // The exported functions reproduce TODAY's rows — the rows the pre-move popups printed.
     for (const id of itemIds) expect(itemRowsFn(id), `item ${id} vs pre-move`).toEqual(before.items[id].rows);
@@ -582,7 +589,7 @@ describe('card step 1 (G0): the move changes no markup', () => {
     // Card step 16: a spell whose rows step 16 did not change still prints the pre-move rows through the
     // ONE copy; a 'page rows' spell prints today's page rows through that same copy (they differ from the
     // pre-move rows by the classification above).
-    // batch card premise: spell-2315 "Duration sustained up to 1 minute"
+    // batch card: #card-PAGE-ROWS — a 'page rows' spell prints today's page rows through the one copy
     for (const id of spellIds) {
       if ((STEP16_CHANGED_NOOP[id] ?? '').includes('page rows')) expect(spellRowsFn(id), `spell ${id} page rows`).toEqual(blankCast(now.spells[id].rows));
       else expect(spellRowsFn(id), `spell ${id} vs pre-move`).toEqual(blankCast(before.spells[id].rows));

@@ -179,7 +179,7 @@ describe('StrikeDetailModal — the weapon\'s mine card (step 10)', () => {
       <StrikeDetailModal strike={s} character={c} content={db} onOpenStat={(r) => opened.push(r)} onClose={() => undefined} />,
     );
     const buttons = [...strikeCard(host).querySelectorAll('.strike-detail-stat.clickable')];
-    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    // batch card: #card-ORDER — the stats are the card's controls, each a button into its breakdown
     expect(buttons).toHaveLength(2);
     expect(buttons.map((b) => txt(b.querySelector('.sds-hint')))).toEqual(['show calculation', 'show calculation']);
     click(buttons[0]);
@@ -190,13 +190,13 @@ describe('StrikeDetailModal — the weapon\'s mine card (step 10)', () => {
     ]);
   });
 
-  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  // batch card: #card-N2 — the Fist's built-in blurb is ours, in the box
   it('the Fist has no item, so it shows the built-in blurb — in the ours box, with no page looked up by its name', () => {
     const c = fighter(1);
     const s = strikeOf(c, 'fist');
     const { host } = mount(<StrikeDetailModal strike={s} character={c} content={db} onClose={() => undefined} />);
     const pop = host.querySelector('.picker.info-modal.card-mine') as HTMLElement;
-    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    // batch card: #card-N2 — the Fist's built-in blurb is ours, in the box
     expect(txt(pop.querySelector('.info-title'))).toBe('Fist');
     expect(txt(pop.querySelector('[data-ours] [data-ours-kind="blurb"]'))).toBe(
       'An unarmed Strike with your fist — every creature can make unarmed attacks. It uses your unarmed proficiency, and Handwraps of Mighty Blows can etch potency, striking, and property runes onto it.',

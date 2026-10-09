@@ -207,6 +207,7 @@ function synthHost(): AstNode {
 }
 
 describe('card step 14b: every host bucket, each behind its own case', () => {
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('STUB_HOST_BUCKETS is exactly the cased buckets, and holds every shipped bucket with a resolvable stub', () => {
     expect([...STUB_HOST_BUCKETS].sort(), 'a host bucket without its case (or a case without its bucket)').toEqual(Object.keys(STUB_BUCKET_CASES).sort());
     const idx = aonIndex(db);
@@ -216,6 +217,7 @@ describe('card step 14b: every host bucket, each behind its own case', () => {
     // The switches: items' browse stubs stay behind CARD_ON.itemDetail; a mine POPUP never resolves an item
     // page (Strike) nor a spell page (row 14b: a spell's stubs draw on its browse card only).
     for (const b of STUB_HOST_BUCKETS) {
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       expect(browseResolvesStubs(b), b).toBe(true);
       expect(mineResolvesStubs(b), b).toBe(!MINE_NO_STUBS.has(b));
     }
@@ -223,6 +225,7 @@ describe('card step 14b: every host bucket, each behind its own case', () => {
   });
 
   for (const [bucket, [slug, ref]] of Object.entries(STUB_BUCKET_CASES)) {
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     it(`${bucket}: ${slug} draws ${ref} on browse${MINE_NO_STUBS.has(bucket) ? ', never on its mine card' : ' and on its mine card'}`, async () => {
       // The first stub resolves to that page (its first candidate whose page ships).
       const idx = aonIndex(db);
@@ -231,6 +234,7 @@ describe('card step 14b: every host bucket, each behind its own case', () => {
       expect(first && `${first.bucket}:${first.slug}`, `${bucket}:${slug} first resolvable stub`).toBe(ref);
       const sel = `.ast-pop > .ast-body [data-stub="${ref}"]`;
       const b = await mount(browse(bucket, slug));
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       expect(b.querySelector(sel), `browse ${bucket}:${slug} draws ${ref}`).toBeTruthy();
       const m = await mount(mine(bucket, slug));
       expect(!!m.querySelector('.ast-modal.card-mine'), `${bucket}:${slug} mine card page lane`).toBe(true);
@@ -240,6 +244,7 @@ describe('card step 14b: every host bucket, each behind its own case', () => {
     });
   }
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('the Strike card (the mine popup of an item page) never draws a stub, though the page embeds its group', async () => {
     // StrikeDetailModal hands the card { key: 'items', slug } (src/sheet/StrikeDetailModal.tsx strikeParts).
     const node = { title: 'Longsword', description: '', key: 'items', slug: 'longsword', mode: 'mine' as const };
@@ -260,6 +265,7 @@ describe('card step 14b: every host bucket, each behind its own case', () => {
  * draws the page its host prints inline, and a new one turns this red to be read before it ships.
  */
 describe('card step 14b: the stubs that draw a reference page are the host pages\' own embeds', () => {
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('over every shipped tree: 5 stubs, each drawn on its browse card', async () => {
     const idx = aonIndex(db);
     const hits: string[] = [];
@@ -271,6 +277,7 @@ describe('card step 14b: the stubs that draw a reference page are the host pages
         }
       }
     }
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(hits.sort()).toEqual([
       'animalCompanions:beetle action-1040 reference:hustle',
       'feats:phalanx-formation creature-family-543 reference:military',
@@ -298,12 +305,14 @@ describe('card step 14b: Rage shows the Rage action once', () => {
     await act(async () => { (row as HTMLElement).click(); });
     await settle();
     const modal = host.querySelector('.ast-modal.card-mine')!;
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(modal, 'the row opens the class feature\'s mine card').toBeTruthy();
     expect(squash(modal.querySelector('.ast-head .ast-name')?.textContent)).toBe('Rage');
     const text = squash(modal.textContent);
     expect(count(text, PHRASE), 'the Rage action, once').toBe(1);
     const stub = modal.querySelector('.ast-pop > .ast-body [data-stub="actions:rage"]');
     expect(squash(stub?.textContent)).toContain(PHRASE);
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(modal.querySelectorAll('[data-stub]').length, 'the page embeds one page').toBe(1);
     // The embedded action's heading (its name, at the stub's level) and its OWN trait chips, inside it.
     const heading = stub!.querySelector('.ast-h2 .ast-hname')!;
@@ -311,6 +320,7 @@ describe('card step 14b: Rage shows the Rage action once', () => {
     expect(heading.querySelector('.ast-ag')?.getAttribute('title'), 'its action glyph').toBe('Single Action');
     expect([...stub!.querySelectorAll('.ast-stub-traits .ast-tr')].map((e) => squash(e.textContent))).toEqual(['Barbarian', 'Concentrate', 'Emotion', 'Mental']);
     // The host's own header chips are not the action's.
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(modal.querySelector('.ast-pop > .ast-traits .ast-tr') ? squash(modal.querySelector('.ast-pop > .ast-traits')!.textContent) : '').not.toContain('Concentrate');
     const b = await mount(browse('classFeatures', 'rage'));
     expect(count(squash(b.textContent), PHRASE)).toBe(1);
@@ -319,6 +329,7 @@ describe('card step 14b: Rage shows the Rage action once', () => {
 });
 
 describe('card step 14b: an archetype page lists its feats compactly', () => {
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('Knight Vigilant (archetype page and its dedication record): one list of name links with badges, no feat bodies', async () => {
     const idx = aonIndex(db);
     for (const [bucket, slug] of [['archetype', 'knight-vigilant'], ['feats', 'aon-knight-vigilant']] as const) {
@@ -327,6 +338,7 @@ describe('card step 14b: an archetype page lists its feats compactly', () => {
       const featStubs = stubIds(tree).filter(isListStubId);
       const host = await mount(browse(bucket, slug));
       const lists = host.querySelectorAll('.ast-pop > .ast-body [data-stub-list]');
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       expect(lists.length, `${bucket}:${slug}: one compact list`).toBe(1);
       const items = [...lists[0].querySelectorAll(':scope > li.ast-stub-item')];
       const want = featStubs.filter((id, i) => featStubs.indexOf(id) === i);
@@ -337,6 +349,7 @@ describe('card step 14b: an archetype page lists its feats compactly', () => {
         const id = want[i];
         const t = (idx.get(id) ?? []).find((c) => shipped[c.bucket]?.[c.slug]);
         const ref = t ? `${t.bucket}:${t.slug}` : `aon:${id}`;
+        // batch card: #card-STUBS — an embedded page drawn once, one level deep
         expect(li.getAttribute('data-stub'), `${bucket}:${slug} entry ${i}`).toBe(ref);
         expect(li.querySelector('a.ast-lk'), `${ref} is a link`).toBeTruthy();
         expect(li.querySelector('p, .ast-h2, .ast-h3, .ast-traits'), `${ref}: no body`).toBeNull();
@@ -348,17 +361,20 @@ describe('card step 14b: an archetype page lists its feats compactly', () => {
       const [fb, fs] = firstRef.split(':');
       const firstPage = shipped[fb][fs];
       const bodyP = (firstPage.c ?? []).find((n) => n.t === 'p' && squash(flat(n)).length > 60);
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       expect(bodyP, `${firstRef} has a body paragraph`).toBeTruthy();
       expect(squash(host.textContent)).not.toContain(squash(flat(bodyP!)).slice(0, 60));
       // A name opens the feat's own card (drill-in), Back returns.
       const name = squash(items[0].querySelector('a.ast-lk')!.textContent);
       await act(async () => { (items[0].querySelector('a.ast-lk') as HTMLElement).click(); });
       await settle();
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       expect(squash(host.querySelector('.ast-head .ast-name')?.textContent), `${firstRef} opens`).toBe(name);
       expect(host.querySelector('.info-back')).toBeTruthy();
     }
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('over every shipped archetype page: every feat stub is a list entry (never a body), every other stub a page or a name', () => {
     const idx = aonIndex(db);
     let entries = 0, bodies = 0, other = 0, featStubs = 0;
@@ -375,6 +391,7 @@ describe('card step 14b: an archetype page lists its feats compactly', () => {
     // Measured 2026-10-08: 2,664 feat stubs on the archetype pages (docs/card-design.md section 2 rule 6),
     // every one a compact entry (a repeat on one page would draw nothing; there is none); the 7 other
     // stubs (actions, a siege weapon) draw their pages.
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(featStubs).toBe(2664);
     expect(entries).toBe(2664);
     expect(bodies).toBe(0);
@@ -385,6 +402,7 @@ describe('card step 14b: an archetype page lists its feats compactly', () => {
 const flat = (n: AstNode): string => (n.t === 'text' ? String(n.v ?? '') : (n.c ?? []).map(flat).join(''));
 
 describe('card step 14b: a stub no record\'s page answers draws its name', () => {
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('over every shipped tree: 273 occurrences, each a name link when a record exists, else a plain name', () => {
     const idx = aonIndex(db);
     let total = 0, link = 0, plain = 0;
@@ -399,6 +417,7 @@ describe('card step 14b: a stub no record\'s page answers draws its name', () =>
             if (s.stubLink) {
               link++;
               const [lb, ls] = s.stubLink.split(':');
+              // batch card: #card-STUBS — an embedded page drawn once, one level deep
               expect((db as unknown as Record<string, Record<string, unknown>>)[lb]?.[ls], `${s.id} → ${s.stubLink} is a record`).toBeTruthy();
             } else { plain++; plainIds.add(String(s.id)); }
           }
@@ -411,22 +430,26 @@ describe('card step 14b: a stub no record\'s page answers draws its name', () =>
     // category: identity by id, section 2 rule 2, never by display name), 74 a plain name (73 ids: no record
     // is that page by id). Card truth's STUBS section lists only the plain ones (a link is no offender):
     // 74 page|stub entries, exactly these 73 ids (scripts/lib/card-scope.mjs computeLedger).
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(total).toBe(273);
     expect([link, plain]).toEqual([199, 74]);
     expect(plainIds.size).toBe(73);
     const ledgerStubs = (JSON.parse(readFileSync('scripts/data/card-truth-baseline.json', 'utf8')) as { STUBS: string[] }).STUBS;
     expect(ledgerStubs.length).toBe(74);
     expect([...new Set(ledgerStubs.map((e) => e.slice(e.indexOf('|') + 1)))].sort()).toEqual([...plainIds].sort());
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(plainIds.has('rules-2757')).toBe(true);
     expect(plainIds.has('rules-330')).toBe(false);
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('a link is chosen by id, never by a record that only shares the page\'s name', async () => {
     // rules-2757 "Hit Points" (GM Core pg. 84, level 0 characters) is not rules:hit-points (rules-2891,
     // GM Core pg. 118, building creatures); rules-2187 "Attack Rolls" (Player Core pg. 275) is not
     // rules-2288 (Player Core pg. 402). No printing link joins either pair by id, so both stay plain.
     expect((db as unknown as Record<string, Record<string, { aonId?: string }>>).rules['hit-points']?.aonId).toBe('rules-2891');
     expect(STUB_NAMES['rules-2757']).toEqual({ name: 'Hit Points', ref: null, right: 'Rules' });
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(STUB_NAMES['rules-2187']).toEqual({ name: 'Attack Rolls', ref: null, right: 'Rules' });
     // Every ref of the file names a record the mirror's printing link joins to the stub's page by id — the
     // stub page's remaster_id / legacy_id names the record, or the record's page names the stub — in the
@@ -440,6 +463,7 @@ describe('card step 14b: a stub no record\'s page answers draws its name', () =>
         const aon = String(aonOf(v.ref));
         const stub = page(id), rec = page(aon);
         const joined = [...ids(stub.remaster_id), ...ids(stub.legacy_id)].includes(aon) || [...ids(rec.legacy_id), ...ids(rec.remaster_id)].includes(id);
+        // batch card: #card-STUBS — an embedded page drawn once, one level deep
         expect(joined, `${id} → ${v.ref} (${aon}) is a printing of it by id`).toBe(true);
         expect(aon.replace(/-\d+$/, ''), `${id} → ${aon} in the page's own category`).toBe(id.replace(/-\d+$/, ''));
       }
@@ -447,16 +471,19 @@ describe('card step 14b: a stub no record\'s page answers draws its name', () =>
     // On the card: rules:building-characters embeds rules-2757 — its name, plain, no link to the other page.
     const r = await mount(browse('rules', 'building-characters'));
     const hp = r.querySelector('.ast-pop > .ast-body [data-stub="aon:rules-2757"]');
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(squash(hp?.querySelector('.ast-hname')?.textContent)).toBe('Hit Points');
     expect(hp?.querySelector('a')).toBeNull();
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('drawn on the card: a link that opens the record, and a plain name', async () => {
     // Initiate Benefit (amulet) embeds action-1229, the legacy Amulet's Abeyance; its record is the remaster's.
     const a = await mount(browse('classFeatures', 'initiate-benefit-amulet'));
     const named = a.querySelector('.ast-pop > .ast-body [data-stub="aon:action-1229"]');
     expect(named?.matches('.ast-stub-name'), 'drawn where the embedded page\'s heading would be').toBe(true);
     expect(squash(named?.querySelector('a.ast-lk')?.textContent)).toBe("Amulet's Abeyance");
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(STUB_NAMES['action-1229']).toEqual({ name: "Amulet's Abeyance", ref: 'actions:amulets-abeyance', right: 'Action' });
     expect(squash(named?.querySelector('.ast-hbadge')?.textContent)).toBe('Action');
     await act(async () => { (named!.querySelector('a.ast-lk') as HTMLElement).click(); });
@@ -466,37 +493,46 @@ describe('card step 14b: a stub no record\'s page answers draws its name', () =>
     // plain (the one printing link to it starts on a sidebar page, another kind of page).
     const r = await mount(browse('rules', 'chapter-8-playing-the-game'));
     const plain = r.querySelector('.ast-pop > .ast-body [data-stub="aon:rules-2389"]');
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(squash(plain?.querySelector('.ast-hname')?.textContent)).toBe('Afflictions');
     expect(squash(plain?.querySelector('.ast-hbadge')?.textContent)).toBe('Rules');
     expect(plain?.querySelector('a')).toBeNull();
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('a stub whose page a shipped record names by id links that record (the printing link read from either side)', async () => {
     // rules-2300 "Skill Checks" (Player Core) lists rules-330 "Skill Checks and Skill DCs" (Core Rulebook) as
     // its legacy_id; rules-330's own remaster_id names rules-2276 "Skills", which no record carries.
+    // batch card premise: rules-330 "Skill Checks and Skill DCs"
     expect(STUB_NAMES['rules-330']).toEqual({ name: 'Skill Checks and Skill DCs', ref: 'rules:skill-checks', right: 'Rules' });
     // rules-325 "Spell Attack Rolls" is the legacy_id of rules-2292 "Spell Attack Rolls" AND rules-2293 "Spell
     // DC" (the page was split): the lowest aon number, rules-2292.
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(STUB_NAMES['rules-325']).toEqual({ name: 'Spell Attack Rolls', ref: 'rules:spell-attack-rolls', right: 'Rules' });
     expect((db as unknown as Record<string, Record<string, { aonId?: string }>>).rules['spell-dc']?.aonId).toBe('rules-2293');
     // feat-6209 "Master Spotter" (Player Core 2) names feat-1850 as its legacy_id, and feat-1850 names it as
     // its remaster_id: the older printing this app ships.
+    // batch card premise: feat-1850 "Master Spotter"
     expect(STUB_NAMES['feat-6209']).toEqual({ name: 'Master Spotter', ref: 'feats:master-spotter-investigator', right: 'Feat 12' });
     // sidebar-47 "Affliction Example" names rules-2389 "Afflictions" as its remaster_id: a sidebar is not a
     // printing of a rules page, so no link (own category only).
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect((db as unknown as Record<string, Record<string, { aonId?: string }>>).sidebar['affliction-example']?.aonId).toBe('sidebar-47');
     expect(STUB_NAMES['rules-2389']).toEqual({ name: 'Afflictions', ref: null, right: 'Rules' });
     // On the card: rules:specific-checks draws both as links, and a link opens the record.
     const r = await mount(browse('rules', 'specific-checks'));
     const skill = r.querySelector('.ast-pop > .ast-body [data-stub="aon:rules-330"]');
     const spell = r.querySelector('.ast-pop > .ast-body [data-stub="aon:rules-325"]');
+    // batch card premise: rules-330 "Skill Checks and Skill DCs"
     expect(squash(skill?.querySelector('a.ast-lk')?.textContent)).toBe('Skill Checks and Skill DCs');
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(squash(spell?.querySelector('a.ast-lk')?.textContent)).toBe('Spell Attack Rolls');
     await act(async () => { (spell!.querySelector('a.ast-lk') as HTMLElement).click(); });
     await settle();
     expect(squash(r.querySelector('.ast-head .ast-name')?.textContent)).toBe('Spell Attack Rolls');
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('src/data/stub-names.json is the shipped data, two ways (and the mirror\'s recomputation where the mirror is present)', () => {
     const core = JSON.parse(readFileSync('public/core.json', 'utf8'));
     const file = JSON.parse(readFileSync('src/data/stub-names.json', 'utf8'));
@@ -504,6 +540,7 @@ describe('card step 14b: a stub no record\'s page answers draws its name', () =>
     if (existsSync(DEFAULT_MIRROR)) expect(computeStubNames(core, shipped, DEFAULT_MIRROR).names).toEqual(file.names);
     // The `_notes` are the generator's, two ways: a note dropped, reworded or added is drift.
     const { _notes: notes, ...noNotes } = file;
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(Object.keys(notes)).toEqual(['action-902']);
     expect(stubNamesProblems(noNotes, core, shipped)).toEqual(['STUB-NAMES-NOTES|action-902']);
     expect(stubNamesProblems({ ...file, _notes: { 'action-902': 'reworded' } }, core, shipped)).toEqual(['STUB-NAMES-NOTES|action-902']);
@@ -522,6 +559,7 @@ describe('card step 14b: a self-embedding chain does not loop', () => {
   const cands = (id: string) => ({ 'x-a': [{ bucket: 'x', slug: 'a' }], 'x-b': [{ bucket: 'x', slug: 'b' }] } as Record<string, { bucket: string; slug: string }[]>)[id];
   const read = (_b: string, s: string) => T[s];
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('A embeds B embeds A (and A embeds itself): B drawn once, A never inside A, nothing two levels deep', () => {
     const out = resolveStubs(T.a, 'x:a', cands, read);
     const drawn: string[] = [];
@@ -530,15 +568,18 @@ describe('card step 14b: a self-embedding chain does not loop', () => {
       if (from) { drawn.push(`${from}@${depth}`); depth++; }
       for (const c of n.c ?? []) walk(c, depth);
     })(out, 0);
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(drawn).toEqual(['x:b@0']);
     expect(flat(out)).toContain('Words of Beta.');
     expect(count(flat(out), 'Words of Alpha.')).toBe(1);
     // From B's side: A drawn, A's stubs (to B and to A) stay empty.
     const fromB = resolveStubs(T.b, 'x:b', cands, read);
     expect(count(flat(fromB), 'Words of Beta.')).toBe(1);
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(count(flat(fromB), 'Words of Alpha.')).toBe(1);
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('on every shipped page with a stub: no page draws its own host, and no embedded page draws a page', () => {
     const idx = aonIndex(db);
     let pages = 0, embedded = 0;
@@ -552,6 +593,7 @@ describe('card step 14b: a self-embedding chain does not loop', () => {
         (function walk(n: AstNode, inside: boolean) {
           const from = (n as StubbedNode).stubOf;
           if (from && (n.c?.length || (n as StubbedNode).stubKind)) {
+            // batch card: #card-STUBS — an embedded page drawn once, one level deep
             expect(from, `${host} never embeds itself`).not.toBe(host);
             expect(inside, `${host}: ${from} is one level deep`).toBe(false);
             expect(seen.has(from), `${host} embeds ${from} once`).toBe(false);
@@ -565,18 +607,21 @@ describe('card step 14b: a self-embedding chain does not loop', () => {
       }
     }
     // Measured 2026-10-08: 1,657 pages carry a stub; 5,583 stubs draw a page or a compact entry.
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(pages).toBe(1657);
     expect(embedded).toBe(5583);
   });
 });
 
 describe('card step 14b: a mine card scopes the host page only; an embedded page is drawn as it ships', () => {
+  // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
   it('the host\'s level sections fold at 1st level; the embedded cause page shows its own whole', async () => {
     const dbx = { ...db, classFeatures: { ...db.classFeatures, [SYNTH]: { id: SYNTH, name: 'Synthesized Stub Host' } } } as unknown as ContentDatabase;
     // Both pages carry ledger sections (scripts/data/level-folds.json) that fold below their level.
     const own = LEVEL_FOLDS.pages['cause:desecration'];
     const emb = LEVEL_FOLDS.pages['cause:grandeur'];
     expect(own.map((s) => s.level)).toEqual([9, 11]);
+    // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
     expect(emb.map((s) => s.level)).toEqual([9, 11]);
     // The stub (cause-9) draws its first candidate whose page ships: the Grandeur page, by aon id.
     const t = (aonIndex(dbx).get('cause-9') ?? []).find((c) => shipped[c.bucket]?.[c.slug])!;
@@ -584,6 +629,7 @@ describe('card step 14b: a mine card scopes the host page only; an embedded page
     expect(t.slug).toBe('grandeur');
     // The embedded page alone, on its own mine card at 1st level, folds both sections: scoping WOULD fold it.
     const alone = await mount(mine(t.bucket, t.slug, 1), dbx);
+    // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
     expect(alone.querySelectorAll('details.card-fold').length).toBe(1);
     const host = await mount(mine('classFeatures', SYNTH, 1), dbx);
     const body = host.querySelector('.ast-modal.card-mine .ast-pop > .ast-body')!;
@@ -591,18 +637,23 @@ describe('card step 14b: a mine card scopes the host page only; an embedded page
     expect(stub, 'the embedded cause page is drawn').toBeTruthy();
     // The host's two later sections fold (13a), outside the embedded page.
     const folds = [...body.querySelectorAll('details.card-fold')];
+    // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
     expect(folds.length, 'the host page folds').toBe(1);
     expect(folds.every((f) => !stub!.contains(f))).toBe(true);
     expect(squash(folds[0].querySelector('summary')?.textContent)).toBe('At higher levels (2)');
     // The embedded page: no fold, every section title of its own drawn, whole.
     expect(stub!.querySelector('.card-fold, [data-fold]'), 'the embedded page is never scoped').toBeNull();
     const embTitles = [...stub!.querySelectorAll('.ast-h2 .ast-hname, .ast-h3 .ast-hname')].map((e) => squash(e.textContent));
+    // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
     for (const s of emb) expect(embTitles, `Grandeur's "${s.title}" drawn`).toContain(squash(s.title));
     expect(squash(stub!.textContent)).toContain('Level 9');
   });
+  // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
   it('a real host: classFeatures:dragon-eidolon folds its own two later sections; the embedded Breath Weapon keeps its 3rd-level line', async () => {
     // Both pages are ledger pages of their own: the host's two level sections, and the action's prose gate.
+    // batch card premise: eidolon-7 "Draconic Frenzy"
     expect(LEVEL_FOLDS.pages['classFeatures:dragon-eidolon'].map((s) => s.title)).toEqual(['Draconic Frenzy', "Wyrm's Breath"]);
+    // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
     expect(LEVEL_FOLDS.prose?.['actions:breath-weapon']?.map((g) => g.level)).toEqual([3]);
     const GATE = 'At 3rd level and every 2 levels thereafter, the damage increases by 1d6.';
     // The embedded page alone, on its own mine card at 1st level, folds its gate: scoping WOULD fold it.
@@ -611,12 +662,14 @@ describe('card step 14b: a mine card scopes the host page only; an embedded page
     const host = await mount(mine('classFeatures', 'dragon-eidolon', 1));
     const body = host.querySelector('.ast-modal.card-mine .ast-pop > .ast-body')!;
     const stub = body.querySelector('[data-stub="actions:breath-weapon"]');
+    // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
     expect(stub, 'the embedded Breath Weapon page is drawn').toBeTruthy();
     const folds = [...body.querySelectorAll('details.card-fold')];
     expect(folds.length, 'the host page folds').toBe(1);
     expect(squash(folds[0].querySelector('summary')?.textContent)).toBe('At higher levels (2)');
     expect(folds.every((f) => !stub!.contains(f))).toBe(true);
     expect(stub!.querySelector('.card-fold, [data-fold]'), 'the embedded page is never scoped').toBeNull();
+    // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
     expect(squash(stub!.textContent)).toContain(GATE);
   });
 });
@@ -640,6 +693,7 @@ describe('card step 14b: an embedded page is drawn as printed on a mine card', (
     it(`${bucket}:${slug}'s mine card draws ${ref} whole, as browse does: "${words}"`, async () => {
       const sel = `.ast-pop > .ast-body [data-stub="${ref}"]`;
       const m = await mount(mine(bucket, slug));
+      // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
       expect(m.querySelector('.ast-modal.card-mine'), `${bucket}:${slug} mine card page lane`).toBeTruthy();
       const stub = m.querySelector(sel);
       expect(stub, `mine ${bucket}:${slug} embeds ${ref}`).toBeTruthy();
@@ -647,6 +701,7 @@ describe('card step 14b: an embedded page is drawn as printed on a mine card', (
       expect(stub!.querySelector('.card-dim, .card-use, .card-applies, .card-fold, [data-fold], [data-ours]'), 'no card class inside the embedded page').toBeNull();
       const b = await mount(browse(bucket, slug));
       const bStub = b.querySelector(sel);
+      // batch card: #card-NEVER-SCOPED — an embedded page is drawn as printed
       expect(squash(bStub?.textContent)).toContain(words);
       expect(stub!.innerHTML, `${ref}: the mine card's embedded page is the browse card's, byte for byte`).toBe(bStub!.innerHTML);
     });
@@ -660,6 +715,7 @@ describe('card step 14b: nothing else moves', () => {
    * only, no mine stubs) and ON. ON with the step-14b stub elements taken out must be byte-equal to OFF,
    * and ON must draw at least one of them.
    */
+  // batch card: #card-SNAPSHOT — a step changes only its own surface
   it('browse and mine cards: only the stubs changed', async () => {
     const idx = aonIndex(db);
     const nameOf = (id: string) => stubNameOf(id, idx, db);
@@ -684,6 +740,7 @@ describe('card step 14b: nothing else moves', () => {
           const after = on.innerHTML;
           compared++;
           if (viaDom(after) !== before) changed++;
+          // batch card: #card-SNAPSHOT — a step changes only its own surface
           expect(without14b(after, bucket), `${lane} ${bucket}:${slug}: only the stubs changed`).toBe(without14b(before, bucket));
           // A spell page's mine card is compared too: with step 14b on it must be the card it was (no stub).
           const draws = lane === 'browse' ? bucket !== 'items' : !MINE_NO_STUBS.has(bucket);
@@ -698,6 +755,7 @@ describe('card step 14b: nothing else moves', () => {
     // the spell page's, only where a stub now draws; the 6 item browse cards are step 14's and the one spell
     // mine card (spells:bone-flense, the only spell page whose stubs draw) draws no stub (row 14b: a spell's
     // stubs on its browse card only), unchanged.
+    // batch card: #card-SNAPSHOT — a step changes only its own surface
     expect([compared, changed]).toEqual([222, 215]);
   }, 300_000);
 });

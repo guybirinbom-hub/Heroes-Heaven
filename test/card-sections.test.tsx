@@ -165,32 +165,47 @@ const cutTitle = (n: AstNode, slug: string) => {
 };
 
 describe('F5: the record finds its own level-2 section', () => {
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('the exact slug still decides first (unchanged)', () => {
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(cutTitle(page('Magic Wand', ['Magic Wand (1st-rank Spell)', 'Magic Wand (2nd-rank Spell)']), 'magic-wand-2nd-rank-spell')).toBe('Magic Wand (2nd-rank Spell)');
   });
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('(a) a leading "aon-" is stripped', () => {
     expect(cutTitle(page('Magic Scroll', ['1st-rank Scroll', '2nd-rank Scroll']), 'aon-1st-rank-scroll')).toBe('1st-rank Scroll');
     expect(widerSectionRule(page('Magic Scroll', ['1st-rank Scroll', '2nd-rank Scroll']), 'aon-1st-rank-scroll').rule).toBe('a');
   });
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('(b) the same words in any order, of/the dropped', () => {
+    // batch card premise: equipment-4032 "Greater Aether Marbles"
     expect(cutTitle(page('Aether Marbles', ['Lesser Aether Marbles', 'Greater Aether Marbles']), 'aether-marbles-greater')).toBe('Greater Aether Marbles');
+    // batch card premise: equipment-3910 "Major Flag of the Stronghold"
     expect(cutTitle(page('Flag of the Stronghold', ['Flag of the Stronghold', 'Major Flag of the Stronghold']), 'flag-stronghold-major')).toBe('Major Flag of the Stronghold');
   });
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('(c) the name\'s words, on the family page: the page title is the qualifier or the name without it', () => {
+    // batch card premise: implement-1 "Initiate Benefit"
     expect(cutTitle(page('Amulet', ['Initiate Benefit', 'Adept Benefit', 'Paragon Benefit']), 'adept-benefit-amulet')).toBe('Adept Benefit');
+    // batch card premise: equipment-2941 "Energy Breath Potion (Greater)"
     expect(cutTitle(page('Energy Breath Potion', ['Energy Breath Potion (Lesser)', 'Energy Breath Potion (Greater)']), 'energy-breath-potion-acid-greater')).toBe('Energy Breath Potion (Greater)');
     // Not a family page (the title is neither the qualifier nor the head): no cut.
+    // batch card premise: implement-1 "Initiate Benefit"
     expect(cutTitle(page('Trinkets', ['Initiate Benefit', 'Adept Benefit']), 'adept-benefit-amulet')).toBeNull();
   });
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('(c) never takes the unnamed base grade or a one-word mode section', () => {
+    // batch card premise: equipment-690 "Olfactory Obfuscator"
     expect(cutTitle(page('Olfactory Obfuscator', ['Olfactory Obfuscator', 'Greater Olfactory Obfuscator']), 'olfactory-obfuscator-lesser')).toBeNull();
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(cutTitle(page('Axe Musket', ['Melee', 'Ranged']), 'axe-musket-melee')).toBeNull();
   });
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('(d) two letters of spelling slack, same words count and digits, two words or more', () => {
     expect(cutTitle(page('Peshspine Grenade', ['Peshspine Grenade (Lesser)', 'Peshspine Grenade (Greater)']), 'peshpine-grenade-greater')).toBe('Peshspine Grenade (Greater)');
     expect(cutTitle(page('Dragonet', ['Dragon', 'Wyrm']), 'dragonet')).toBeNull();
     expect(cutTitle(page('Magic Wand', ['Wand (1st)', 'Wand (2nd)']), 'wand-3rd')).toBeNull();
   });
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('two sections qualify → no cut (a wrong cut is worse than the whole page)', () => {
     expect(cutTitle(page('Puzzle Box', ['Puzzle Box (Challenging)', 'Puzzle Box (Hollow)']), 'puzzle-box-challenging-hollow')).toBeNull();
     expect(cutTitle(page('Treats', ['Greater Treat', 'Treat, Greater', 'Lesser Treat']), 'greater-the-treat')).toBeNull();
@@ -240,6 +255,7 @@ const RIGHT_RECUT = [
 ].sort();
 
 describe('F5 on the shipped data (the census, before and after)', () => {
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('S2 falls by 289 — 30 implement benefits and 259 items — and no record becomes wrong', () => {
     let before = 0, after = 0, newlyWrong = 0;
     const fixed: Record<string, number> = {};
@@ -265,6 +281,7 @@ describe('F5 on the shipped data (the census, before and after)', () => {
         else if (A[slug].verdict.startsWith('RIGHT')) rightRecut.push(`${b}:${slug}`);
       }
     }
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(before - after).toBe(289);
     expect(fixed).toEqual({ classFeatures: 30, items: 259 });
     expect(newlyWrong).toBe(0);
@@ -272,6 +289,7 @@ describe('F5 on the shipped data (the census, before and after)', () => {
     expect(rightRecut.sort()).toEqual(RIGHT_RECUT);
   }, 240_000);
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('every re-cut right record lands on a section named after it', () => {
     const bag = (s: string) => astSlug(s).split('-').filter((w) => w && w !== 'of' && w !== 'the');
     for (const k of RIGHT_RECUT) {
@@ -281,10 +299,12 @@ describe('F5 on the shipped data (the census, before and after)', () => {
       // Every word of the section's title is a word of the record's name, give or take AoN's spelling.
       const nameWords = new Set(bag(name));
       const missing = bag(shown).filter((w) => !nameWords.has(w));
+      // batch card: #card-OWN-SECTION — the record's own section, slice or class text
       expect(missing.length, `${k}: "${name}" → "${shown}"`).toBeLessThanOrEqual(1);
     }
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('rule (c) only ever cuts on the record\'s family page (checked on the record NAME, every bucket)', () => {
     const off: string[] = [];
     for (const b of Object.keys(trees)) if (raw[b] && typeof raw[b] === 'object') off.push(...ruleCWithoutQualifier(trees[b], raw[b]).map((s: string) => `${b}:${s}`));
@@ -300,6 +320,7 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
   let residue: Record<string, string> = {};
   beforeAll(() => { residue = censusResidue(raw, trees); }, 120_000);
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('not-own-page.json = the S2 residue after F5 less the sliced records, split by the 60 % gate (every listed record passed it)', () => {
     // batch card premise: equipment-2739 "You can use oil to fuel lanterns" — round 4 (the fixer): 243 (was
     // 247). A page byte-identical to a differently named record's, with no section and no line that is another
@@ -345,6 +366,7 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
       const [b, s] = k.split(':');
       return supersetSections(trees[b][s], raw[b][s].name!).length === 1;
     });
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(offenders).toEqual([]);
     // Round 3 (the refuters' 16): nor a LINE led by its bracketed qualifier — "Animal: …" on the Instinct
     // Crown page, "Acid …" in the Drake Rifle list, "Air …" on Elemental Familiar. Counted loosely (any line
@@ -353,11 +375,14 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
       const [b, s] = k.split(':');
       return (qualifierLine(trees[b][s], raw[b][s])?.all ?? 0) > 0;
     });
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(lineOffenders).toEqual([]);
     // The spelling slack that finds "Splinter Spear (Greater)" for "Splintering Spear (Greater)".
+    // batch card premise: equipment-2646 "Splintering Spear"
     expect(supersetSections(trees.items['splintering-spear-greater'], 'Splintering Spear (Greater)').length).toBe(1);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it.runIf(existsSync('C:/wonderers guide/aon-2e-archive/data/by-category'))('the split is the mirror gate, recomputed on ALL listed records (mirror present)', () => {
     const MIRROR = 'C:/wonderers guide/aon-2e-archive/data/by-category';
     const mirrorOf = (rec: { aonId?: string }) => {
@@ -371,10 +396,12 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
       return undefined;
     };
     const { ids, keptOnPage } = splitResidue(residueWithoutSlices(residue, PAGE_SLICES.slices), raw, mirrorOf);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(ids).toEqual(NOT_OWN_PAGE.ids);
     expect(keptOnPage).toEqual(NOT_OWN_PAGE.keptOnPage);
   }, 120_000);
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('page-slices.json = the slice computation, both ways; every slice holds the record (gate)', () => {
     const computed = computePageSlices(raw, trees, residue);
     expect(pageSliceProblems(PAGE_SLICES, computed)).toEqual([]);
@@ -382,16 +409,19 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
     for (const [k, v] of Object.entries(slices)) {
       const named = v.kind !== 'run' && (v.route === 'R0' || v.route === 'R1' || v.route === 'R2');
       const passes = (v.coverage !== null && v.coverage >= COVERAGE_GATE) || (named && (v.grams === null || (v.grams ?? 0) >= 0.5));
+      // batch card: #card-OWN-SECTION — the record's own section, slice or class text
       expect(passes, k).toBe(true);
     }
     // Both directions of the pure check.
     const { ['classFeatures:air-gate']: _gone, ...rest } = PAGE_SLICES.slices as Record<string, unknown>;
     void _gone;
     expect(pageSliceProblems({ slices: rest }, computed)).toEqual(['classFeatures:air-gate|SLICE-UNLISTED']);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(pageSliceProblems({ slices: { ...PAGE_SLICES.slices, 'feats:power-attack': { bucket: 'feats', page: 'power-attack', path: [0], anchor: 'Power Attack', kind: 'page' } } }, computed))
       .toEqual(['feats:power-attack|SLICE-STALE']);
   }, 120_000);
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('how many of the official no-page records get a slice (measured, pinned)', () => {
     const noPage: string[] = officialNoPage(raw, trees);
     const sliced = noPage.filter((k) => k in (PAGE_SLICES.slices as Record<string, unknown>));
@@ -399,6 +429,7 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
     expect(sliced.length).toBe(327);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('no slice shows another record\'s text: a whole page only where it IS the record\'s, a paragraph or run never runs into the next entry, a section stops before a subsection that is not the record\'s', () => {
     // Round 2 (the refuters' cases): thirty round-1 slices were another record's whole page (the Energy
     // Robe page with all four energies; Air Gate with the Air element's "Impulse Feats" and "Elemental
@@ -447,9 +478,11 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
         }
       }
     }
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(bad).toEqual([]);
   }, 120_000);
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('a paragraph or bullet slice names its record once: the title is its bold lead, and the line under it starts after the lead', () => {
     // Round 3 (the refuters' render): all 201 block and 72 item slices drew "Second Doctrine (3rd)Second
     // Doctrine (3rd) Your proficiency rank…", "Death Drone Death Drone". toMatch passes on a doubled name, so
@@ -478,10 +511,12 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
       const first = (tree.c ?? []).slice(1).find((n) => !['traits', 'hr', 'br', 'actions'].includes(n.t));
       if (first && words(textOf(first)).startsWith(words(v.anchor) + ' ')) bad.push(`${k}: body opens with its title`);
     }
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(checked).toBe(273);
     expect(bad).toEqual([]);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('a variant printed as a LINE of its family page reads the page with the other variants\' lines left out (kind "line")', () => {
     const lines = Object.entries(PAGE_SLICES.slices as Record<string, { kind: string; bucket: string; page: string; path: number[]; drop?: number[][]; title?: string }>).filter(([, v]) => v.kind === 'line');
     expect(lines.map(([k]) => k).sort()).toEqual([
@@ -495,12 +530,14 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
       const [b, s] = [k.slice(0, k.indexOf(':')), k.slice(k.indexOf(':') + 1)];
       const shown = textOf(recordTree(b, s, treeOf)!);
       const at = (p: number[]) => textOf(p.reduce((n: AstNode, i: number) => n.c![i], trees[v.bucket][v.page])).trim();
+      // batch card: #card-OWN-SECTION — the record's own section, slice or class text
       expect(shown, k).toContain(at(v.path));
       for (const d of v.drop ?? []) expect(shown, `${k} drops ${at(d).slice(0, 30)}`).not.toContain(at(d));
       expect(textOf(recordTree(b, s, treeOf)!.c![0]).trim(), k).toBe(raw[b][s].name);
     }
   });
 
+  // batch card: #card-MUTATION — a tampered copy turns the check red
   it('the ledger goes red when the lists disagree with the census: delete a listed id, add a right one, drop a slice, add a stale one', () => {
     // batch card premise: class-feature-15 "See specific research fields for more information" — the listed
     // id deleted is a perpetual-infusions variant since the hollow puzzle boxes read their section (round 4).
@@ -520,6 +557,7 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
     const listProblems = found['S2-NOT-OWN'].filter((e: string) => /\|(NOT-OWN|SLICE)-/.test(e)).sort();
     // Exactly the four mutations, so the real files agree with the census everywhere else. Each entry is a
     // NEW offender against any baseline, which is what turns `card-truth-check` red.
+    // batch card: #card-MUTATION — a tampered copy turns the check red
     expect(listProblems).toEqual([
       'actions:accept-echo|SLICE-UNLISTED',
       'classFeatures:deity-cleric|NOT-OWN-STALE',
@@ -535,6 +573,7 @@ describe('F6 / F6b: not-own-page.json and page-slices.json are the census, both 
 /* ---------------------------------------------------------------------------------------------- */
 
 describe('F6c: a lead naming several classes is an addendum for exactly those classes', () => {
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('wizard and druid Weapon Expertise have no "martial weapons"; each keeps its own paragraph', () => {
     const rawWe = db.classFeatures['weapon-expertise'].description;
     expect(rawWe).toMatch(/\*\*Witch, Wizard\*\*/);
@@ -542,11 +581,13 @@ describe('F6c: a lead naming several classes is an addendum for exactly those cl
     expect(wiz).toMatch(/Witch, Wizard/);
     expect(wiz).not.toMatch(/martial weapons/);
     const dru = classFeatureDescription(rawWe, 'druid', db);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(dru).toMatch(/Druid, Kineticist/);
     expect(dru).not.toMatch(/martial/);
     expect(classFeatureDescription(rawWe, 'magus', db)).toMatch(/martial weapons/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('every class row the guard calls CLASS_MISMATCH gets the fallback — all 25 shared features, not only those with two class addenda', () => {
     // Round 2: round 1 reached only the features whose text carries addenda for two or more classes (9 of
     // the 25); Weapon Specialization (page "Class Thaumaturge"), Reflex Expertise ("Class Guardian"),
@@ -562,6 +603,7 @@ describe('F6c: a lead naming several classes is an addendum for exactly those cl
         const pc = pageClassName(textOf(tree), names);
         if (!pc || pc === cls.name) {
           // The page IS this class's (or names none): the card draws it.
+          // batch card: #card-OWN-SECTION — the record's own section, slice or class text
           expect(sharedFeatureFallback(f.featureId, cls.id, textOf(tree), db), `${f.featureId}@${cls.id}`).toBeNull();
           continue;
         }
@@ -569,12 +611,14 @@ describe('F6c: a lead naming several classes is an addendum for exactly those cl
         if (sharedFeatureFallback(f.featureId, cls.id, textOf(tree), db) === null) missed.push(`${f.featureId}@${cls.id}`);
       }
     }
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(missed).toEqual([]);
     expect(rows.length).toBe(151);
     expect(new Set(rows.map((r) => r.split('@')[0])).size).toBe(25);
     // A bard's Reflex Expertise is the generic paragraph, without the Guardian's addendum.
     const bard = sharedFeatureFallback('reflex-expertise', 'bard', textOf(trees.classFeatures['reflex-expertise']), db)!;
     expect(bard).not.toMatch(/Guardian/);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(bard.length).toBeGreaterThan(20);
   });
 });
@@ -605,6 +649,7 @@ async function mineCard(bucket: string, id: string, ch: Character): Promise<{ te
   const breakdown = { title: 'Stat', totalText: '+0', parts: [], timeline: [], situational: [{ text: 'a situational line', sourceId: id, sourceCollection: bucket as never }] };
   const host = await mount(<StatDetailModal breakdown={breakdown} character={ch} content={db} onClose={noop} />);
   const more = host.querySelector('.sd-sit-more');
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   expect(more, `${bucket}:${id} Full text`).toBeTruthy();
   await act(async () => { (more as HTMLElement).click(); });
   await settle();
@@ -629,10 +674,13 @@ describe('rendered: records open their own section, own slice or own text', () =
     kineticist = build('kineticist', 1);
   }, 120_000);
 
+  // batch card: #card-OWNER-3 — Second Doctrine is its own line
   it('second-doctrine-cloistered-cleric shows "Fortitude" and not "Final Doctrine (19th)" (mine and browse)', async () => {
     for (const text of [(await mineCard('classFeatures', 'second-doctrine-cloistered-cleric', cleric)).text, await browseCard('classFeatures', 'second-doctrine-cloistered-cleric')]) {
       expect(text).toMatch(/Fortitude/);
+      // batch card premise: doctrine-4 "Final Doctrine (19th)"
       expect(text).not.toMatch(/Final Doctrine \(19th\)/);
+      // batch card premise: doctrine-4 "First Doctrine (1st)"
       expect(text).not.toMatch(/First Doctrine \(1st\)/);
     }
   });
@@ -655,26 +703,32 @@ describe('rendered: records open their own section, own slice or own text', () =
     for (const other of ['First Doctrine', 'Third Doctrine', 'Fourth Doctrine', 'Fifth Doctrine', 'Final Doctrine']) expect(text, `no "${other}"`).not.toContain(other);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('field-discovery-toxicologist shows "poison resistance" (its research field\'s section)', async () => {
     const { text } = await mineCard('classFeatures', 'field-discovery-toxicologist', alchemist);
     expect(text).toMatch(/poison resistance/);
     expect(await browseCard('classFeatures', 'field-discovery-toxicologist')).toMatch(/poison resistance/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('masterful-hunter-flurry shows its multiple-attack-penalty clause', async () => {
     const { text } = await mineCard('classFeatures', 'masterful-hunter-flurry', ranger);
     expect(text).toMatch(/multiple attack penalty for attacks against your hunted prey is –2 \(–1 with an agile weapon\)/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('anathema-cleric has no "druids" and stops before the class page\'s Cleric Spellcasting', async () => {
     const { text } = await mineCard('classFeatures', 'anathema-cleric', cleric);
     expect(text).toMatch(/anathema/i);
     expect(text).not.toMatch(/druids/i);
     // Round 2: the section ran on through the level-3 "Cleric Spellcasting" subsection.
+    // batch card premise: class-33 "Cleric Spellcasting"
     expect(text).not.toMatch(/Cleric Spellcasting/);
+    // batch card premise: class-33 "bestows on you the power to cast divine spells"
     expect(text).not.toMatch(/bestows on you the power to cast divine spells/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('adept-benefit-amulet lacks "Paragon Benefit" (F5 rule c)', async () => {
     expect(await browseCard('classFeatures', 'adept-benefit-amulet')).not.toMatch(/Paragon Benefit/);
     const { text } = await mineCard('classFeatures', 'adept-benefit-amulet', build('thaumaturge', 7));
@@ -682,6 +736,7 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(text).not.toMatch(/Paragon Benefit/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('aon-1st-rank-scroll lacks "2nd-rank Scroll"; 1st-rank-scroll is unchanged', async () => {
     const aon = await browseCard('items', 'aon-1st-rank-scroll');
     expect(aon).toMatch(/1st-rank Scroll/);
@@ -689,19 +744,26 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(recordTree('items', '1st-rank-scroll', treeOf)).toEqual(preStep12Cut(trees.items['1st-rank-scroll'], '1st-rank-scroll'));
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('aether-marbles-greater lacks "Lesser Aether Marbles"', async () => {
     const text = await browseCard('items', 'aether-marbles-greater');
+    // batch card premise: equipment-4032 "Greater Aether Marbles"
     expect(text).toMatch(/Greater Aether Marbles/);
+    // batch card premise: equipment-4032 "Lesser Aether Marbles"
     expect(text).not.toMatch(/Lesser Aether Marbles/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('air-gate shows the Air element\'s junctions and nothing else of the page, nothing of the kineticist class page', async () => {
     const { text } = await mineCard('classFeatures', 'air-gate', kineticist);
     expect(text).toMatch(/Push the target up to 10 feet/);
+    // batch card premise: element-1 "Stride up to half your Speed or Step"
     expect(text).toMatch(/Stride up to half your Speed or Step/);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(text).not.toMatch(/Initial Proficiencies/);
+    // batch card premise: class-23 "Dual Gate"
     expect(text).not.toMatch(/Dual Gate/);
-    // batch card premise: element-1 "Push the target up to 10 feet" — the owner (2026-10-08): the no-page footer's words changed.
+    // batch card: #card-FOOTER-WORDS — the owner (2026-10-08): the no-page footer's words changed.
     expect(text).not.toMatch(/Not from the Archives/);
     // Round 2: the whole Air element page was shown.
     for (const t of [await browseCard('classFeatures', 'air-gate'), text]) {
@@ -711,29 +773,35 @@ describe('rendered: records open their own section, own slice or own text', () =
     }
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('a family variant with no page shows its own section of the family page (Energy Robe of Acid, Smoky Hag Eye)', async () => {
     const robe = await browseCard('items', 'energy-robe-of-acid');
     expect(robe).toMatch(/You gain resistance 5 to acid/);
     expect(robe).toMatch(/brightly colored linen robe/);
     for (const other of [/resistance 5 to fire/, /resistance 5 to cold/, /resistance 5 to electricity/, /Energy Robe \(Cold\)/]) expect(robe).not.toMatch(other);
     const eye = await browseCard('items', 'smoky-hag-eye');
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(eye).toMatch(/smoky hag eye is named after the black vapor/);
     expect(eye).not.toMatch(/Frightful/);
     expect(eye).not.toMatch(/Oracular/);
     expect(eye).not.toMatch(/stony hag eye/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('a record inside a bigger page shows only its own lines (Dragon Breath, Swirl Crimson Shroud)', async () => {
     const breath = await browseCard('actions', 'dragon-breath-dragon-form');
     expect(breath).toMatch(/You exhale deadly magical energy/);
     expect(breath).not.toMatch(/Heightened \(8th\)/);
     expect(breath).not.toMatch(/Calling upon powerful magic/);
     const swirl = await browseCard('actions', 'swirl-crimson-shroud');
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(swirl).toMatch(/swirling it around you/);
     expect(swirl).not.toMatch(/At 10th level/);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(swirl).not.toMatch(/leads to/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('a paragraph slice stops at its own entry: no next activation, no granting feat\'s Special line, no table, no epilogue', async () => {
     const cases: Array<[string, RegExp, RegExp]> = [
       ['twist-design', /transform your tattoo/, /Adopt Persona/],
@@ -745,14 +813,18 @@ describe('rendered: records open their own section, own slice or own text', () =
     ];
     for (const [id, has, lacks] of cases) {
       const text = await browseCard('actions', id);
+      // batch card: #card-OWN-SECTION — the record's own section, slice or class text
       expect(text, id).toMatch(has);
       expect(text, id).not.toMatch(lacks);
     }
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('a wand rank reads its own section of the wand page (R0), not the whole page and not old text', async () => {
     const text = await browseCard('items', 'wand-of-mercy-4th-rank');
+    // batch card premise: equipment-2283 "Wand of Mercy (4th-Rank Spell)"
     expect(text).toMatch(/Wand of Mercy \(4th-Rank Spell\)/);
+    // batch card premise: equipment-2283 "Wand of Mercy (6th-Rank Spell)"
     expect(text).not.toMatch(/Wand of Mercy \(6th-Rank Spell\)/);
     // batch card premise: equipment-2283 "Wand of Mercy (4th-Rank Spell)" — the owner (2026-10-08): the no-page footer's words changed.
     expect(text).not.toMatch(/Not from the Archives/);
@@ -761,19 +833,26 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(echoes).not.toMatch(/Wand of Thundering Echoes \(4th-Level\)/);
   });
 
+  // batch card: #card-S7 — no page: our text, marked
   it('a bard\'s Reflex Expertise (page "Class Guardian") is the bard\'s own older text, marked so', async () => {
     const { text, host } = await mineCard('classFeatures', 'reflex-expertise', build('bard', 9));
     expect(text).not.toMatch(/Guardian/);
+    // batch card premise: class-feature-1127 "heaviest of armors"
     expect(text).not.toMatch(/heaviest of armors/);
+    // batch card: #card-S7 — no page: our text, marked
     expect(squash(host.querySelector('.card-nopage')?.textContent)).toBe(SHARED_FEATURE_FOOTER);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('an action printed inside its feat (Accept Echo) shows that paragraph, not the feat', async () => {
     const text = await browseCard('actions', 'accept-echo');
+    // batch card premise: feat-8405 "Frequency once per day"
     expect(text).toMatch(/Frequency once per day/);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(text).not.toMatch(/With the utmost gratitude/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('a paragraph / bullet card names its record once (the refuters\' doubled titles, rendered)', async () => {
     const once = (text: string, name: string) => text.split(name).length - 1;
     const doctrineMine = (await mineCard('classFeatures', 'second-doctrine-cloistered-cleric', cleric)).text;
@@ -786,18 +865,25 @@ describe('rendered: records open their own section, own slice or own text', () =
     ];
     for (const [b, id, name] of cases) {
       const text = await browseCard(b, id);
+      // batch card: #card-OWN-SECTION — the record's own section, slice or class text
       expect(once(text, name), `${id}: ${text.slice(0, 80)}`).toBe(1);
       expect(text, id).not.toMatch(new RegExp(`${name.replace(/[()]/g, '\\$&')}\\s*:?\\s*${name.replace(/[()]/g, '\\$&')}`));
     }
+    // batch card premise: doctrine-4 "Second Doctrine (3rd)"
     expect(once(doctrineMine, 'Second Doctrine (3rd)')).toBe(1);
+    // batch card premise: doctrine-4 "Second Doctrine (3rd) Your proficiency rank for Fortitude"
     expect(doctrineMine).toMatch(/Second Doctrine \(3rd\)\s*Your proficiency rank for Fortitude/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('a variant printed as a line of its family page shows the family text and its own line only (Instinct Crown, Drake Rifle, Elemental Familiar); a "Splinter" section is found for "Splintering"', async () => {
     const crown = await browseCard('items', 'instinct-crown-animal');
     expect(crown).toMatch(/Instinct Crown \(Animal\)/);
+    // batch card premise: equipment-2338 "magical headpiece"
     expect(crown).toMatch(/magical headpiece/);
+    // batch card premise: equipment-2338 "Your bestial instincts take over"
     expect(crown).toMatch(/Your bestial instincts take over/);
+    // batch card premise: equipment-2338 "fights off the effects of magic"
     for (const other of [/The might of dragons/, /Your boundless fury/, /you become Large/, /partial form of a spirit/, /fights off the effects of magic/]) expect(crown).not.toMatch(other);
     // batch card premise: equipment-2338 "Your bestial instincts take over" — the owner (2026-10-08): the no-page footer's words changed.
     expect(crown).not.toMatch(/Not from the Archives/);
@@ -806,17 +892,26 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(squash(mineCrown.textContent)).not.toMatch(/Your bestial instincts/);
     expect(mineCrown.querySelector('.card-nopage'), 'no old-text footer').toBeNull();
     const rifle = await browseCard('items', 'drake-rifle-acid');
+    // batch card premise: equipment-1166 "On a hit, the drake rifle provides"
     expect(rifle).toMatch(/On a hit, the drake rifle provides/);
+    // batch card premise: equipment-1166 "Clinging acid makes it painful"
     expect(rifle).toMatch(/Clinging acid makes it painful/);
+    // batch card premise: equipment-1166 "bursts of electricity"
     for (const other of [/Frozen spittle/, /bursts of electricity/, /massive explosion/, /Noxious vapors/]) expect(rifle).not.toMatch(other);
     const fam = await browseCard('familiarAbilities', 'elemental-familiar-air');
+    // batch card premise: feat-4342 "stays completely still for 1 round"
     expect(fam).toMatch(/stays completely still for 1 round/);
+    // batch card premise: feat-4342 "sheds bright light"
     expect(fam).not.toMatch(/sheds bright light/);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(fam).not.toMatch(/fast healing/);
     const spear = await browseCard('items', 'splintering-spear-greater');
+    // batch card premise: equipment-2646 "Splinter Spear (Greater)"
     expect(spear).toMatch(/Splinter Spear \(Greater\)/);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(spear).toMatch(/16d6/);
     expect(spear).not.toMatch(/18d6/);
+    // batch card premise: equipment-2646 "Splinter Spear (Major)"
     expect(spear).not.toMatch(/Splinter Spear \(Major\)/);
     // batch card premise: equipment-2646 "Splinter Spear (Greater)" — the owner (2026-10-08): the no-page footer's words changed.
     expect(spear).not.toMatch(/Not from the Archives/);
@@ -829,29 +924,35 @@ describe('rendered: records open their own section, own slice or own text', () =
   it('a listed not-own record (Perpetual Infusions (Bomber): the shared feature page has no line of its research field) falls back to its own text with the no-page line', async () => {
     const id = 'perpetual-infusions-bomber';
     expect(NOT_OWN_PAGE.ids).toContain(`classFeatures:${id}`);
+    // batch card: #card-S7 — no page: our text, marked
     expect(textOf(trees.classFeatures[id])).not.toMatch(/bombs/);
     const host = await mount(<RecordCard record={{ bucket: 'classFeatures', id }} mode="mine" chrome="popup" onExit={noop} />);
     expect(host.querySelector('.ast-modal'), 'no page drawn').toBeNull();
-    // batch card premise: class-feature-15 "See specific research fields for more information" — the owner (2026-10-08): player words, no "import".
+    // batch card: #card-FOOTER-WORDS — the owner (2026-10-08): player words, no "import".
     expect(squash(host.querySelector('.card-nopage')?.textContent)).toBe('Not from the Archives — our text');
     expect(squash(host.textContent)).toMatch(/Choose two 1st-level bombs/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own page
   it('round 4: a page byte-identical to a differently named record\'s, with no line of another record\'s, is the record\'s page — Oil (1 pint), the Ganjay Book bulk variants', async () => {
     // The refuter's MUST-FIX 1 (a): these went to old text with the no-page footer although equipment-2739 /
     // equipment-859 print their text word for word.
     for (const id of ['oil-1-pint', 'ganjay-book-1-bulk-book', 'ganjay-book-light-bulk-book']) {
       const k = `items:${id}`;
+      // batch card: #card-OWN-SECTION — the record's own section, slice or class text
       expect(k in residueNow, k).toBe(false);
       expect(NOT_OWN_PAGE.ids, k).not.toContain(k);
       const host = await mount(<RecordCard record={{ bucket: 'items', id }} mode="mine" chrome="popup" onExit={noop} />);
       expect(host.querySelector('.ast-modal'), `${k} draws its page`).toBeTruthy();
       expect(host.querySelector('.card-nopage'), `${k} no old-text footer`).toBeNull();
     }
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(squash((await mount(<RecordCard record={{ bucket: 'items', id: 'oil-1-pint' }} mode="mine" chrome="popup" onExit={noop} />)).textContent)).toMatch(/DC 10 flat check/);
+    // batch card premise: equipment-859 "You fold or unfold the Ganjay book"
     expect(await browseCard('items', 'ganjay-book-1-bulk-book')).toMatch(/You fold or unfold the Ganjay book/);
     // Not on a page with level-2 sections: Wand of Refracting Rays (7th-Rank) shares its page byte for byte
     // with the 4th / 6th-rank records too, and must never draw the other ranks' sections.
+    // batch card premise: equipment-2288 "6th-Rank Spell"
     expect(await browseCard('items', 'wand-of-refracting-rays-7th-rank')).not.toMatch(/6th-Rank Spell/);
   });
 
@@ -865,6 +966,7 @@ describe('rendered: records open their own section, own slice or own text', () =
       const id = `puzzle-box-${grade}-hollow`;
       const text = await browseCard('items', id);
       texts.push(text);
+      // batch card: #card-OWN-SECTION — the record's own section, slice or class text
       expect(text, id).toMatch(/A hollow puzzle box is designed to have an empty compartment/);
       expect(text, id).toMatch(/A puzzle box features moving parts/);
       expect(text, id).toContain(`The DC to solve this puzzle box is ${DC[grade]}.`);
@@ -880,20 +982,26 @@ describe('rendered: records open their own section, own slice or own text', () =
     expect(evidencedVariantSections(box, raw.items['puzzle-box-simple-hollow']).map((i: number) => textOf(box.c![i]).trim())).toEqual(['Puzzle Box (Simple)', 'Puzzle Box (Hollow)']);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('round 5: sliceOf draws a variant\'s further sections (`also`) after the first, and gives no tree when one moved', () => {
     const fam: AstNode = { t: 'doc', c: [t('Box', 1), p('Shared box text.'), t('Box (Plain)', 2), p('Plain DC 15.'), t('Box (Fancy)', 2), p('Fancy DC 20.'), t('Box (Hollow)', 2), p('A hollow compartment.')] };
     const s: PageSlice = { bucket: 'items', page: 'box', path: [2], anchor: 'Box (Plain)', kind: 'variant', n: 1, also: [{ path: [6], anchor: 'Box (Hollow)', n: 1 }] };
     const cut = sliceOf(fam, s)!;
     expect(textOf(cut)).toBe('Box (Plain)Shared box text.Plain DC 15.Box (Hollow)A hollow compartment.');
     expect(sliceOf(fam, { ...s, also: [{ path: [4], anchor: 'Box (Hollow)', n: 1 }] }), 'the further section moved').toBeUndefined();
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(sliceOf(fam, { ...s, also: [{ path: [2], anchor: 'Box (Plain)', n: 1 }] }), 'not after the first').toBeUndefined();
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('round 4: a record whose own page holds its description as a run with no anchor reads that run — Arcane Bond (Unified Magical Theory)', async () => {
     const umt = await browseCard('classFeatures', 'arcane-bond-school-of-unified-magical-theory');
     expect(umt).toMatch(/Arcane Bond \(Unified Magical Theory\)/);
+    // batch card premise: arcane-school-21 "you can use it once per day for each rank of spell you can"
     expect(umt).toMatch(/you can use it once per day for each rank of spell you can cast/);
+    // batch card premise: arcane-school-21 "No Curriculum"
     expect(umt).not.toMatch(/No Curriculum/);
+    // batch card premise: arcane-school-21 "Hand of the Apprentice"
     expect(umt).not.toMatch(/Hand of the Apprentice/);
     // batch card premise: arcane-school-21 "you can use it once per day for each rank of spell you can cast" — the owner (2026-10-08): footer words changed.
     expect(umt).not.toMatch(/Not from the Archives/);
@@ -909,29 +1017,40 @@ describe('rendered: records open their own section, own slice or own text', () =
   it('round 5: Knight Vigilant Dedication draws its whole own page — Prerequisites, Access, Special — with no slice and no not-own entry', async () => {
     const k = 'feats:knight-vigilant-dedication';
     const residueHere = censusResidue(raw, trees);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(k in residueHere, 'not in the residue').toBe(false);
     expect(sharedPageCensus(trees.feats, raw.feats, { all: true })['knight-vigilant-dedication'].verdict).toBe('RIGHT_OWN_PAGE');
     expect(k in (PAGE_SLICES.slices as Record<string, unknown>), 'no slice').toBe(false);
     expect([...NOT_OWN_PAGE.ids, ...Object.keys(NOT_OWN_PAGE.keptOnPage)], 'no not-own entry').not.toContain(k);
     expect(recordTree('feats', 'knight-vigilant-dedication', treeOf)).toBe(trees.feats['knight-vigilant-dedication']);
     const kv = await browseCard('feats', 'knight-vigilant-dedication');
+    // batch card premise: feat-1092 "You are dedicated to the cause of the Shining Sentinels"
     expect(kv).toMatch(/You are dedicated to the cause of the Shining Sentinels/);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(raw.feats['knight-vigilant-dedication'].description).not.toMatch(/Special/);
+    // batch card premise: feat-1092 "You cannot select another dedication feat until you have gained two other feats"
     expect(kv).toMatch(/You cannot select another dedication feat until you have gained two other feats/);
+    // batch card premise: feat-1092 "Prerequisites Trained in Religion"
     expect(kv).toMatch(/Prerequisites\s*Trained in Religion/);
+    // batch card premise: feat-1092 "Access A character who is a member of the Knights of Lastwall"
     expect(kv).toMatch(/Access\s*A character who is a member of the Knights of Lastwall/);
-    // batch card premise: feat-1092 "You are dedicated to the cause of the Shining Sentinels" — the owner (2026-10-08): footer words changed.
+    // batch card: #card-FOOTER-WORDS — the owner (2026-10-08): footer words changed.
     expect(kv).not.toMatch(/Not from the Archives/);
   });
 
+  // batch card: #card-OWN-SECTION — an own-page run carries its page's header
   it('round 5: an own-page run carries its page\'s header — Wand of Refracting Rays (7th-Rank) shows its traits, Usage, Bulk and Source in its FIRST frame, never the other ranks', () => {
     const s = PAGE_SLICES.slices['items:wand-of-refracting-rays-7th-rank'] as PageSlice;
     expect(s.kind).toBe('run');
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(s.head).toBe(true);
     const tree = recordTree('items', 'wand-of-refracting-rays-7th-rank', treeOf)!;
     // The first frame: the record's name, then the page's traits node and its stat column, before the run.
+    // batch card premise: equipment-2288 "Wand of Refracting Rays"
     expect(textOf(tree.c![0]).trim()).toBe('Wand of Refracting Rays (7th-Rank)');
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(tree.c![1].t).toBe('traits');
+    // batch card premise: equipment-2288 "Source Treasure Vault (Remastered) pg. 142 Usage held in 1 hand Bulk L"
     expect(textOf(tree.c![2])).toMatch(/Source Treasure Vault \(Remastered\) pg\. 142.*Usage held in 1 hand.*Bulk L/);
     const html = renderToStaticMarkup(
       <ContentContext.Provider value={db}><PinContext.Provider value={null}>
@@ -939,19 +1058,28 @@ describe('rendered: records open their own section, own slice or own text', () =
       </PinContext.Provider></ContentContext.Provider>,
     );
     const text = squash(html.replace(/<[^>]+>/g, ' '));
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(html).toMatch(/class="ast-modal"/);
     for (const trait of ['Uncommon', 'Magical', 'Wand']) expect(text, trait).toContain(trait);
+    // batch card premise: equipment-2288 "Usage held in 1 hand"
     expect(text).toMatch(/Usage held in 1 hand/);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(text).toMatch(/Bulk L/);
     expect(text).toMatch(/Treasure Vault \(Remastered\)/);
+    // batch card premise: equipment-2288 "This wand is short and wide"
     expect(text).toMatch(/This wand is short and wide/);
+    // batch card premise: equipment-2288 "6th-Rank Spell"
     expect(text).not.toMatch(/6th-Rank Spell/);
+    // batch card premise: equipment-2288 "4th-Rank Spell"
     expect(text).not.toMatch(/4th-Rank Spell/);
   });
 
+  // batch card: #card-S7 — no page: our text, marked
   it('a wizard 11\'s Weapon Expertise is the wizard paragraph of our older text, marked so — no "martial weapons"', async () => {
     const { text, host } = await mineCard('classFeatures', 'weapon-expertise', wizard);
+    // batch card premise: class-39 "Through sheer experience"
     expect(text).toMatch(/Through sheer experience/);
+    // batch card: #card-S7 — no page: our text, marked
     expect(text).not.toMatch(/martial weapons/);
     expect(text).not.toMatch(/Thaumaturge/);
     expect(squash(host.querySelector('.card-nopage')?.textContent)).toBe(SHARED_FEATURE_FOOTER);
@@ -973,13 +1101,17 @@ describe('round 4: sliceOf refuses a stale line slice, and the first frame of a 
     bucket: 'items', page: 'drake-gun', path: [2, 0], anchor: runAnchor(page.c![2].c![0]), kind: 'line', title: 'Drake Gun (Acid)', drop: [[2, 1]],
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('kind "line": the slice cut from the page it was generated on keeps its line and drops the others; a page whose line changed gives NO tree', () => {
     const before = family('Acid Clinging acid makes it painful to move.');
     const s = spec(before);
     const cut = sliceOf(before, s);
     expect(cut, 'the page the map was generated on').toBeTruthy();
+    // batch card: #card-MUTATION — the slice cut from the page it was generated on keeps its line
     expect(textOf(cut!)).toMatch(/Clinging acid makes it painful/);
+    // batch card: #card-MUTATION — and drops the others
     expect(textOf(cut!)).not.toMatch(/Frozen spittle/);
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(textOf(cut!.c![0]).trim()).toBe('Drake Gun (Acid)');
     // The page changed under the map (a regenerated tree whose line at the path now reads otherwise): the
     // anchor no longer matches, so the card draws no tree rather than a wrong cut.
@@ -988,9 +1120,11 @@ describe('round 4: sliceOf refuses a stale line slice, and the first frame of a 
     expect(sliceOf(after, s)).toBeUndefined();
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('useAstNode seeds a sliced record\'s FIRST frame from its slice, never its whole family page (static render: no effects run)', () => {
     // second-doctrine-cloistered-cleric's own tree is the whole Cloistered Cleric doctrine page; its slice is
     // one bullet of it. The seed must already be the bullet, or the first frame flashes the whole page.
+    // batch card premise: doctrine-4 "Final Doctrine (19th)"
     expect(textOf(trees.classFeatures['second-doctrine-cloistered-cleric'])).toMatch(/Final Doctrine \(19th\)/);
     const html = renderToStaticMarkup(
       <ContentContext.Provider value={db}><PinContext.Provider value={null}>
@@ -998,9 +1132,13 @@ describe('round 4: sliceOf refuses a stale line slice, and the first frame of a 
       </PinContext.Provider></ContentContext.Provider>,
     );
     const text = squash(html.replace(/<[^>]+>/g, ' '));
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(html).toMatch(/class="ast-modal"/);
+    // batch card premise: doctrine-4 "Your proficiency rank for Fortitude"
     expect(text).toMatch(/Your proficiency rank for Fortitude/);
+    // batch card premise: doctrine-4 "Final Doctrine (19th)"
     expect(text).not.toMatch(/Final Doctrine \(19th\)/);
+    // batch card premise: doctrine-4 "First Doctrine (1st)"
     expect(text).not.toMatch(/First Doctrine \(1st\)/);
   });
 });

@@ -88,6 +88,7 @@ async function mount(el: ReactElement, pin: PinDescApi | null = null): Promise<{
   return { host, stop: () => { act(() => root.unmount()); host.remove(); } };
 }
 async function click(el: Element | null | undefined) {
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -104,6 +105,7 @@ function shownText(el: Element | null): string {
 /** A granted class-feature row, as Builder hands it to ChoiceDetails. */
 function featureRow(classId: string, id: string, character?: Character | null): ReactElement {
   const r = db.classFeatures[id];
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(r, `classFeatures:${id} exists`).toBeTruthy();
   return <ChoiceDetails name={r.name} flavor={classFeatureDescription(r.description, classId, db)} descRefs={r.descRefs} bucket="classFeatures" id={id} character={character} />;
 }
@@ -132,6 +134,7 @@ beforeAll(async () => {
 afterAll(() => { vi.unstubAllGlobals(); });
 
 describe('card step 15: the builder\'s granted rows open the record\'s mine card', () => {
+  // batch card: #card-OWNER-3 — Second Doctrine is its own line
   it('L3 cloistered cleric: Second Doctrine\'s variant record shows "Fortitude" and no other doctrine', async () => {
     const cleric = build('cleric', 3, { subclassId: 'cloistered-cleric' });
     const p = await openRow(featureRow('cleric', 'second-doctrine-cloistered-cleric', cleric));
@@ -139,18 +142,23 @@ describe('card step 15: the builder\'s granted rows open the record\'s mine card
       const page = p.pop?.querySelector('.ast-modal.card-mine .ast-body') ?? null;
       expect(page, 'the mine card draws the page').toBeTruthy();
       // doctrine-4 (Cloistered Cleric, Player Core) prints the second doctrine as this sentence.
+      // batch card premise: doctrine-4 "Your proficiency rank for Fortitude saves increases to expert."
       expect(shownText(page)).toContain('Your proficiency rank for Fortitude saves increases to expert.');
+      // batch card premise: doctrine-4 "Fourth Doctrine"
       for (const other of ['First Doctrine', 'Third Doctrine', 'Fourth Doctrine', 'Fifth Doctrine', 'Final Doctrine']) expect(shownText(page)).not.toContain(other);
+      // batch card: #card-NO-FULL-PAGE — there is no Full page button
       expect(txt(p.pop), 'no Full page button (owner ruling, section 13)').not.toMatch(/Full page/i);
     } finally { p.stop(); }
   });
 
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('a Justice champion 5: the level-9 Relentless Reaction row folds its cause section; at 9 it is open', async () => {
     // cause-11 (Justice): "If your Strike hits, the target takes persistent spirit damage equal to your Charisma modifier."
     const clause = 'If your Strike hits, the target takes persistent spirit damage equal to your Charisma modifier';
     const at5 = await openRow(featureRow('champion', 'relentless-reaction', build('champion', 5, { subclassId: 'justice' })));
     try {
       const page = at5.pop?.querySelector('.ast-modal.card-mine .ast-body') ?? null;
+      // batch card: #card-Q1A — later-level parts fold under one line
       expect(page, 'the mine card draws the page').toBeTruthy();
       const fold = page!.querySelector('details.card-fold[data-fold="future"]');
       expect(fold, 'the cause section is folded at 5').toBeTruthy();
@@ -161,11 +169,13 @@ describe('card step 15: the builder\'s granted rows open the record\'s mine card
     const at9 = await openRow(featureRow('champion', 'relentless-reaction', build('champion', 9, { subclassId: 'justice' })));
     try {
       const page = at9.pop?.querySelector('.ast-modal.card-mine .ast-body') ?? null;
+      // batch card: #card-Q1A — later-level parts fold under one line
       expect(page?.querySelector('.card-fold'), 'nothing folds at 9').toBeNull();
       expect(txt(page?.querySelector('.card-pointer')), 'the cause section shows at 9').toContain(clause);
     } finally { at9.stop(); }
   });
 
+  // batch card: #card-R1 — one card per record
   it('the step-7a hold stays: a barbarian\'s Rage row keeps the title lookup\'s browse popup (the Rage action\'s rules)', async () => {
     const barb = build('barbarian', 1);
     const withBuild = await openRow(featureRow('barbarian', 'rage', barb));
@@ -176,12 +186,15 @@ describe('card step 15: the builder\'s granted rows open the record\'s mine card
     const without = await openRow(featureRow('barbarian', 'rage'));
     const before = without.pop?.outerHTML ?? '';
     without.stop();
+    // batch card: #card-R1 — one card per record
     expect(isMine, 'a held row is not the mine card').toBe(false);
     expect(html, 'byte for byte the popup the row had').toBe(before);
     // The Rage action page (action-2802) is what the title lookup lands on.
+    // batch card premise: action-2802 "You tap into your inner fury and begin raging"
     expect(shown).toContain('You tap into your inner fury and begin raging');
   });
 
+  // batch card: #card-PIN — a pin reopens the record it was made from
   it('the PinStar node is {key: bucket, slug: id, title, mode: \'mine\'}', async () => {
     let pinned: DescNode | null = null;
     const pin: PinDescApi = { has: () => false, toggle: (n) => { pinned = n; } };
@@ -189,6 +202,7 @@ describe('card step 15: the builder\'s granted rows open the record\'s mine card
     try {
       await click(p.pop?.querySelector('.info-star'));
     } finally { p.stop(); }
+    // batch card: #card-PIN — a pin reopens the record it was made from
     expect(pinned, 'the star pinned a node').toBeTruthy();
     const n = pinned as unknown as DescNode & { mode?: string };
     expect({ key: n.key, slug: n.slug, title: n.title, mode: n.mode }).toEqual({
@@ -196,6 +210,7 @@ describe('card step 15: the builder\'s granted rows open the record\'s mine card
     });
   });
 
+  // batch card: #card-SNAPSHOT — a step changes only its own surface
   it('with no build (a feat being chosen, any caller but the granted rows) the popup is unchanged: DescriptionModal\'s markup for the same root', async () => {
     for (const id of ['toughness', 'cascade-countermeasure', 'assurance']) {
       const f = db.feats[id];
@@ -206,12 +221,14 @@ describe('card step 15: the builder\'s granted rows open the record\'s mine card
       const ref = await mount(<DescriptionModal root={root} onClose={noop} />);
       const want = ref.host.querySelector('.picker-overlay')?.outerHTML;
       ref.stop();
+      // batch card: #card-SNAPSHOT — a step changes only its own surface
       expect(got, `${id}: a browse popup`).toBeTruthy();
       expect(got, `${id}: byte for byte DescriptionModal`).toBe(want);
       expect(got).not.toContain('card-mine');
     }
   });
 
+  // batch card: #card-R1 — one card per record
   it('a background-granted feat row with a build opens the feat\'s mine card (its page, by id)', async () => {
     const f = db.feats['cascade-countermeasure'];
     const p = await openRow(<ChoiceDetails name={f.name} flavor={f.description} descRefs={f.descRefs} bucket="feats" id="cascade-countermeasure" character={build('fighter', 1)} />);
@@ -222,6 +239,7 @@ describe('card step 15: the builder\'s granted rows open the record\'s mine card
       const browse = await mount(<RecordCard record={{ bucket: 'feats', id: 'cascade-countermeasure' }} mode="browse" chrome="popup" onExit={noop} />);
       const browseBody = txt(browse.host.querySelector('.ast-modal .ast-body'));
       browse.stop();
+      // batch card: #card-R1 — one card per record
       expect(browseBody.length).toBeGreaterThan(0);
       expect(browseBody).toContain(FEAT_CLAUSE);
       expect(txt(page)).toContain(FEAT_CLAUSE);
@@ -233,6 +251,7 @@ describe('card step 15 through the real Builder', () => {
   const champion9 = (): BuildState =>
     ({ ...emptyBuild(), name: 't', level: 9, ancestryId: 'human', backgroundId: 'acolyte', classId: 'champion', subclassId: 'justice' }) as BuildState;
 
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('a Justice champion built to 9: the level-9 page\'s Relentless Reaction Details is the mine card with the cause section open', async () => {
     const m = await mount(<Builder content={db} initial={champion9()} onCancel={noop} onCreate={noop} />);
     try {
@@ -243,12 +262,15 @@ describe('card step 15 through the real Builder', () => {
       const overlays = m.host.querySelectorAll('.picker-overlay');
       const pop = overlays[overlays.length - 1];
       const page = pop?.querySelector('.ast-modal.card-mine .ast-body') ?? null;
+      // batch card: #card-Q1A — later-level parts fold under one line
       expect(page, 'the row opens the mine card').toBeTruthy();
       expect(page!.querySelector('.card-fold'), 'scoped to the build\'s level (9): nothing folds').toBeNull();
+      // batch card premise: cause-11 "If your Strike hits, the target takes persistent spirit damage equal to your Charisma"
       expect(txt(page!.querySelector('.card-pointer'))).toContain('If your Strike hits, the target takes persistent spirit damage equal to your Charisma modifier');
     } finally { m.stop(); }
   });
 
+  // batch card: #card-R1 — one card per record
   it('an acolyte\'s level-1 page: the background-granted Student of the Canon row opens the feat\'s mine card', async () => {
     const acolyte1 = { ...emptyBuild(), name: 't', level: 1, ancestryId: 'human', backgroundId: 'acolyte', classId: 'fighter' } as BuildState;
     const m = await mount(<Builder content={db} initial={acolyte1} onCancel={noop} onCreate={noop} />);
@@ -256,6 +278,7 @@ describe('card step 15 through the real Builder', () => {
       await click([...m.host.querySelectorAll('button')].find((b) => txt(b) === '1'));
       const name = db.feats['student-of-the-canon'].name;
       const block = [...m.host.querySelectorAll('.lvl-gain-block')].find((b) => txt(b.querySelector('.lvl-gain-name')) === name);
+      // batch card: #card-R1 — one card per record
       expect(block, 'the level-1 page lists the background-granted feat').toBeTruthy();
       expect(txt(block!.querySelector('.lvl-gain-tag'))).toBe('skill feat · granted');
       await click(block!.querySelector('.cc-det'));
@@ -263,6 +286,7 @@ describe('card step 15 through the real Builder', () => {
       const page = overlays[overlays.length - 1]?.querySelector('.ast-modal.card-mine .ast-body') ?? null;
       expect(page, 'the granted feat row opens the mine card').toBeTruthy();
       // feat-5219 (Student of the Canon, Player Core) prints this clause.
+      // batch card premise: feat-5219 "researched many faiths enough to recognize notions about them that are unlikely to be"
       expect(txt(page)).toContain('researched many faiths enough to recognize notions about them that are unlikely to be true');
     } finally { m.stop(); }
   });

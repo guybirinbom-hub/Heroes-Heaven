@@ -69,6 +69,7 @@ describe('classFeatureDescription — a lead that names several classes', () => 
   const rx = c.classFeatures['reflex-expertise'].description;
   const paragraphs = (s: string) => s.split(/\n{2,}/).map((p) => (p.match(/^\s*\*\*([^*]+)\*\*/) ?? [])[1] ?? '(generic)');
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('Weapon Expertise: one paragraph per class, its own', () => {
     expect(we).toMatch(/\*\*Witch, Wizard\*\*/);
     const want: Record<string, string> = {
@@ -76,32 +77,39 @@ describe('classFeatureDescription — a lead that names several classes', () => 
       champion: 'Champion, Exemplar, Investigator, Magus', magus: 'Champion, Exemplar, Investigator, Magus',
       guardian: 'Guardian', oracle: 'Oracle', psychic: 'Psychic', sorcerer: 'Sorcerer', swashbuckler: 'Swashbuckler', thaumaturge: 'Thaumaturge',
     };
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     for (const [cls, lead] of Object.entries(want)) expect(paragraphs(classFeatureDescription(we, cls, c)), cls).toEqual([lead]);
     expect(classFeatureDescription(we, 'wizard', c)).not.toMatch(/martial/);
     expect(classFeatureDescription(we, 'druid', c)).not.toMatch(/martial/);
     expect(classFeatureDescription(we, 'champion', c)).toMatch(/martial weapons/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('Perception Mastery: one paragraph per class, its own', () => {
     const want: Record<string, string> = {
       barbarian: 'Barbarian', bard: 'Bard, Gunslinger, Rogue', gunslinger: 'Bard, Gunslinger, Rogue', rogue: 'Bard, Gunslinger, Rogue',
       commander: 'Commander', exemplar: 'Exemplar', investigator: 'Investigator, Swashbuckler, Thaumaturge',
       swashbuckler: 'Investigator, Swashbuckler, Thaumaturge', thaumaturge: 'Investigator, Swashbuckler, Thaumaturge', ranger: 'Ranger',
     };
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     for (const [cls, lead] of Object.entries(want)) expect(paragraphs(classFeatureDescription(pm, cls, c)), cls).toEqual([lead]);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('Reflex Expertise: the generic paragraph for every class, the Guardian note for the guardian only', () => {
     for (const cls of ['bard', 'wizard', 'rogue', 'monk']) expect(paragraphs(classFeatureDescription(rx, cls, c)), cls).toEqual(['(generic)']);
     expect(paragraphs(classFeatureDescription(rx, 'guardian', c))).toEqual(['(generic)', 'Guardian']);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('a cleric\'s Perception Expertise says expert (no class addenda: the text is whole)', () => {
     const pe = c.classFeatures['perception-expertise'].description;
     expect(classFeatureDescription(pe, 'cleric', c)).toBe(pe);
+    // batch card premise: class-33 "Perception increases to expert"
     expect(pe).toMatch(/Perception increases to expert/);
   });
 
+  // batch card: #card-OWN-SECTION — the record's own section, slice or class text
   it('no class sees a paragraph led by OTHER classes only, comma lists included', () => {
     const classNames = new Set(Object.values(c.classes).map((cl) => cl.name.toLowerCase()));
     const offenders: string[] = [];
@@ -117,6 +125,7 @@ describe('classFeatureDescription — a lead that names several classes', () => 
         }
       }
     }
+    // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(offenders, offenders.join('; ')).toEqual([]);
   });
 });

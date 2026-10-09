@@ -154,6 +154,7 @@ async function mount(el: ReactElement, cdb: ContentDatabase = db, pin: PinDescAp
   return { host, stop: () => { act(() => root.unmount()); host.remove(); } };
 }
 async function click(el: Element | null | undefined) {
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -181,7 +182,7 @@ async function pinnedNodeOf(el: ReactElement, cdb: ContentDatabase = db): Promis
   const m = await mount(el, cdb, pin);
   // Card step 11: FeatDetail on the card carries its star in the page header (.ast-head); the legacy
   // popups (and the card's no-page lane) in .picker-head — whichever the popup drew.
-  // batch card premise: heritage-21 "When you roll a success on a saving throw against an emotion effect, you get a critical success instead"
+  // batch card: #card-PIN — the star pins a node
   await click(m.host.querySelector(STAR));
   m.stop();
   expect(pinned, 'the star pinned a node').toBeTruthy();
@@ -190,6 +191,7 @@ async function pinnedNodeOf(el: ReactElement, cdb: ContentDatabase = db): Promis
 /** The pin as STORED by the real store (play.ts togglePinnedDesc) — what MainTab's Pinned list reopens. */
 function storedPinOf(node: DescNode): DescNode {
   const stored = togglePinnedDesc({} as PlayState, node).pinnedDescs?.[0];
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(stored, 'the store kept a pin').toBeTruthy();
   return stored!;
 }
@@ -218,6 +220,7 @@ const featRow = (id: string, extra?: Partial<Character>): FeatEntry => {
   const rec = db.feats[id];
   const ch = { ...base, feats: [{ featId: id, level: rec.level ?? 1, category: (rec.category ?? 'general') as never }], ...extra } as Character;
   const e = featEntries(ch, db).find((x) => x.featId === id);
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(e, `FeatsTab lists ${id}`).toBeTruthy();
   return e!;
 };
@@ -253,7 +256,9 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     const node = await pinnedNodeOf(<FeatDetail entry={e} onClose={noop} />);
     const own = await browseText('feats', 'caustic-nectar');
     expect(own, 'Caustic Nectar has a page').toBeTruthy();
+    // batch card: #card-PIN — a pin reopens the record it was made from
     expect((await pinnedPopupText(node)).page, 'the star\'s node opens the record\'s page').toBe(own);
+    // batch card premise: feat-7612 "Caustic Nectar"
     expect({ key: node.key, slug: node.slug, title: node.title }).toEqual({ key: 'feats', slug: 'caustic-nectar', title: 'Caustic Nectar (Acid)' });
     // Never-overwrite: the title is unchanged, so the pin's identity is the one an old pin of this row has.
     expect(descId(node)).toBe(descId({ key: 'feats', title: 'Caustic Nectar (Acid)' }));
@@ -268,6 +273,7 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     const own = await browseText('feats', 'zombie-horde-impossible-magic');
     const other = await browseText('feats', 'zombie-horde');
     expect(own && other && own !== other, 'the two pages differ').toBe(true);
+    // batch card: #card-PIN — a pin reopens the record it was made from
     expect((await pinnedPopupText(node)).page, 'the star\'s node opens the record\'s page').toBe(own);
     expect(node.slug).toBe('zombie-horde-impossible-magic');
     // The STORED pin reopens this record by its slug since card step 19 (test/card-pins.test.tsx); it was
@@ -283,7 +289,9 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     expect({ key: node.key, slug: node.slug }).toEqual({ key: 'heritages', slug: 'gutsy-halfling' });
     // What the Main tab's Pinned list reopens: the stored pin (key 'heritages', no slug).
     const stored = storedPinOf(node);
+    // batch card premise: heritage-255 "Gutsy Halfling"
     expect({ key: stored.key, title: stored.title }).toEqual({ key: 'heritages', title: 'Gutsy Halfling' });
+    // batch card: #card-PIN — a pin reopens the record it was made from
     expect((await pinnedPopupText(stored)).page, 'the reopened pin is the heritage\'s page').toBe(own);
 
     // Card step 11 moves the body: the heritage row opens its heritages page by id (section 2 rule 2(a))
@@ -303,10 +311,12 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     const legacy: DescNode = { title: h.name, description: h.description, descRefs: h.descRefs, key: 'classFeatures' };
     const r = await pinnedPopupText(legacy);
     // No classFeatures page by that name: the stored snapshot text, as before.
+    // batch card: #card-PIN — a pin reopens the record it was made from
     expect(r.page).toBeNull();
     expect(r.all).toContain(txt(Object.assign(document.createElement('div'), { innerHTML: h.description.split('\n')[0] })).slice(0, 40));
   });
 
+  // batch card: #card-PIN — a pin reopens the record it was made from
   it('a heritage pinned before this step shows as pinned on its star, and pressing it removes THAT pin — never a second one', async () => {
     const e = heritageRow('gutsy-halfling');
     const legacy: PinnedDesc = { title: e.name, description: e.description, descRefs: e.descRefs, key: 'classFeatures' };
@@ -335,17 +345,20 @@ describe('card step 7a: a pin opens the record it was made from', () => {
     const node = await pinnedNodeOf(<SpellDetail spell={sp} onClose={noop} />);
     const own = await browseText('spells', 'discomfiting-whispers');
     expect(own, 'the spell has a page').toBeTruthy();
+    // batch card: #card-PIN — a pin reopens the record it was made from
     expect((await pinnedPopupText(node)).page, 'the star\'s node opens the spell\'s page').toBe(own);
     expect({ key: node.key, slug: node.slug }).toEqual({ key: 'spells', slug: 'discomfiting-whispers' });
     // The STORED pin keeps the spell's slug since card step 19 (play.ts pinOf) and reopens this page by it.
   });
 
+  // batch card: #card-PIN — a pin reopens the record it was made from
   it('a strike\'s pin opens its weapon\'s page by id; a strike with no item keeps the title lookup', async () => {
     const c = { ...build('fighter', 1), inventory: [{ instanceId: 'i-sword', itemId: 'longsword', quantity: 1, equipped: true }] } as Character;
     const strikes = deriveStrikes(c, db);
     const sword = strikes.find((s) => s.instanceId === 'i-sword')!;
     const node = await pinnedNodeOf(<StrikeDetailModal strike={sword} character={c} content={db} onClose={noop} />);
     expect(node.slug).toBe('longsword');
+    // batch card: #card-PIN — a pin reopens the record it was made from
     expect((await pinnedPopupText(node)).page).toBe(await browseText('items', 'longsword'));
     const fist = strikes.find((s) => s.instanceId === 'fist');
     expect(fist, 'the fighter has a fist strike').toBeTruthy();
@@ -357,16 +370,19 @@ describe('card step 7a: a pin opens the record it was made from', () => {
 describe('card step 7a: a hidden cursed item is its twin, page and pin', () => {
   const inv: InventoryItem = { instanceId: 'i-bag', itemId: 'bag-of-devouring', quantity: 1, hiddenCurse: true } as InventoryItem;
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('the hidden Bag of Devouring\'s popup and its pin show Spacious Pouch\'s page and never "devours" (T7)', async () => {
     expect(db.items['bag-of-devouring'].disguisedAs).toBe('spacious-pouch');
     const cdb = playerFacingContent(db, [inv]);
     const item = cdb.items['bag-of-devouring'];
+    // batch card premise: equipment-3032 "Spacious Pouch"
     expect(item.name).toBe('Spacious Pouch');
     const m = await mount(<ItemDetail inv={inv} item={item} content={cdb} onClose={noop} />, cdb);
     const pop = m.host.querySelector('.picker.spell-detail');
     const words = txt(pop);
     const body = txt([...(pop?.querySelectorAll(':scope .sd-body > .sd-desc') ?? [])].slice(-1)[0]);
     m.stop();
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(words).not.toMatch(/devour/i);
     const twin = await browseText('items', 'spacious-pouch');
     expect(twin, 'Spacious Pouch has a page').toBeTruthy();
@@ -375,16 +391,20 @@ describe('card step 7a: a hidden cursed item is its twin, page and pin', () => {
 
     const node = await pinnedNodeOf(<ItemDetail inv={inv} item={item} content={cdb} onClose={noop} />, cdb);
     const r = await pinnedPopupText(node, cdb);
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(r.all, 'the pinned popup').not.toMatch(/devour/i);
     expect(r.page).toBe(twin);
+    // batch card premise: equipment-3032 "Spacious Pouch"
     expect({ key: node.key, slug: node.slug, title: node.title }).toEqual({ key: 'items', slug: 'spacious-pouch', title: 'Spacious Pouch' });
     // The stored pin (no slug) reopens by the shown name, which is the twin's: also no "devours".
     const reopened = await pinnedPopupText(storedPinOf(node), cdb);
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(reopened.all).not.toMatch(/devour/i);
     expect(reopened.page).toBe(twin);
     expect(shownItemId(item)).toBe('spacious-pouch');
   });
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('the hidden item\'s TrustMarker is the SHOWN record\'s (its twin\'s), like its page and its pin (rule 2c)', async () => {
     const cdb = playerFacingContent(db, [inv]);
     const item = cdb.items['bag-of-devouring'];
@@ -398,6 +418,7 @@ describe('card step 7a: a hidden cursed item is its twin, page and pin', () => {
       // Only the CURSED record is marked: the player's popup (the twin) draws no line; the GM's does.
       trustMarked.clear();
       trustMarked.add('items:bag-of-devouring');
+      // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
       expect(await noteOf(cdb, item), 'the disguise draws the cursed record\'s line').not.toMatch(/Not yet verified/);
       expect(await noteOf(db, db.items['bag-of-devouring'], true), 'the GM sees the cursed record\'s line').toMatch(/Not yet verified/);
       // Only the TWIN is marked: the player's popup draws the twin's line.
@@ -409,6 +430,7 @@ describe('card step 7a: a hidden cursed item is its twin, page and pin', () => {
     }
   });
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('the GM (raw database) still sees the Bag of Devouring\'s own page', async () => {
     const item = db.items['bag-of-devouring'];
     expect(shownItemId(item)).toBe('bag-of-devouring');
@@ -417,6 +439,7 @@ describe('card step 7a: a hidden cursed item is its twin, page and pin', () => {
     m.stop();
   });
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('an item that is not disguised shows its own id', () => {
     const cdb = playerFacingContent(db, [inv]);
     expect(shownItemId(cdb.items.longsword, cdb)).toBe('longsword');
@@ -426,6 +449,7 @@ describe('card step 7a: a hidden cursed item is its twin, page and pin', () => {
 });
 
 describe('card step 7a: the builder and the pickers resolve by id', () => {
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('ChoiceDetails(feats, cascade-countermeasure) renders the feat, not the same-named spell', async () => {
     const ft = db.feats['cascade-countermeasure'];
     expect(db.spells['cascade-countermeasure']?.name).toBe(ft.name);
@@ -436,9 +460,11 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
     await click(m.host.querySelector('.cc-det'));
     const t = pageText(m.host);
     m.stop();
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(t).toBe(feat);
   });
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('a ChoiceDetails pin saved before this step (no key) shows as pinned, and pressing the star removes THAT pin', async () => {
     const ft = db.feats['cascade-countermeasure'];
     const legacy: PinnedDesc = { title: ft.name, description: ft.description, descRefs: ft.descRefs };
@@ -447,6 +473,7 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
     const m = await mount(el, db, api);
     await click(m.host.querySelector('.cc-det'));
     const star = m.host.querySelector('.info-star');
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(star?.getAttribute('aria-pressed'), 'the old key-less pin reads as pinned').toBe('true');
     await click(star);
     m.stop();
@@ -454,6 +481,7 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
     const m2 = await mount(el, db, api);
     await click(m2.host.querySelector('.cc-det'));
     const star2 = m2.host.querySelector('.info-star');
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(star2?.getAttribute('aria-pressed')).toBe('false');
     await click(star2);
     m2.stop();
@@ -507,13 +535,16 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
   }
   const isHeld = (r: ChoiceRowCase) => holdOnTitleLookup(treeOf('classFeatures')?.[r.id], 'classFeatures', r.id, r.name);
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('a class feature whose page embeds its rules as a stub keeps the pre-step popup until step 14: Rage shows the Rage action', async () => {
     const r = classFeatureRows().find((x) => x.id === 'rage')!;
     expect(hasEmptyEmbeddedPage(treeOf('classFeatures')?.rage), 'Rage\'s class-feature page embeds the action as a stub').toBe(true);
     const { now, before } = await choiceNowAndBefore(r);
     expect(now).toBe(before);
+    // batch card premise: action-2802 "You aren't fatigued or raging"
     expect(now).toContain('You aren\'t fatigued or raging');
     // Never less than its own description (refuter round 3).
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect((await choicePopupText(r)).length).toBeGreaterThanOrEqual((await descriptionText(r)).length);
   });
 
@@ -524,6 +555,7 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
    * dropped: it also held the background feat Cascade Countermeasure (its page links the spell of the
    * same name), re-opening exactly the wrong record this step fixes.
    */
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('the guardian\'s Shield Block opens its own page (which links the feat), never less than its description', async () => {
     const r = classFeatureRows().find((x) => x.id === 'shield-block')!;
     expect(hasEmptyEmbeddedPage(treeOf('classFeatures')?.['shield-block']), 'no stub on this page').toBe(false);
@@ -533,12 +565,16 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
     const t = pageText(m.host);
     const link = [...m.host.querySelectorAll('.ast-modal a, .ast-modal [data-ref], .ast-modal .ref-link')].map((a) => txt(a));
     m.stop();
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(t).toBe(await browseText('classFeatures', 'shield-block'));
+    // batch card premise: class-feature-1116 "Class Guardian"
     expect(t).toContain('Class Guardian');
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(link, 'the feat is one tap away').toContain('Shield Block');
     expect((await choicePopupText(r)).length).toBeGreaterThanOrEqual((await descriptionText(r)).length);
   });
 
+  // batch card: #card-SNAPSHOT — a step changes only its own surface
   it('every held class feature is byte-equal to its pre-step popup; the rest open by id', async () => {
     const rows = classFeatureRows();
     const held = rows.filter(isHeld);
@@ -551,6 +587,7 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
     ]);
     for (const r of held) {
       const { now, before } = await choiceNowAndBefore(r);
+      // batch card: #card-SNAPSHOT — a step changes only its own surface
       expect(now, `${r.id}: the held popup is the pre-step one`).toBe(before);
     }
     // A row that is NOT held opens its own page: the summoner's Defensive Robes, which by name opened
@@ -561,16 +598,20 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
     await click(m.host.querySelector('.cc-det'));
     const t = pageText(m.host);
     m.stop();
+    // batch card: #card-IDENTITY — the row opens its own record's page, by {bucket, id}
     expect(t).toBe(await browseText('classFeatures', 'defensive-robes-summoner'));
+    // batch card premise: class-feature-1357 "Class Summoner"
     expect(t).toContain('Class Summoner');
     // …and a normal class feature whose name is its own slug (Deny Advantage) shows its page.
     const plain = rows.find((x) => x.id === 'deny-advantage')!;
+    // batch card: #card-SNAPSHOT — a step changes only its own surface
     expect(plain && astSlug(plain.name), 'Deny Advantage is a class feature named by its own slug').toBe('deny-advantage');
     expect(isHeld(plain)).toBe(false);
     const m3 = await mount(<ChoiceDetails name={plain.name} flavor={plain.flavor} descRefs={plain.descRefs} bucket="classFeatures" id={plain.id} />);
     await click(m3.host.querySelector('.cc-det'));
     const t3 = pageText(m3.host);
     m3.stop();
+    // batch card: #card-SNAPSHOT — a step changes only its own surface
     expect(t3, 'Deny Advantage shows its page').toBe(await browseText('classFeatures', 'deny-advantage'));
   }, 120_000);
 
@@ -585,6 +626,7 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
    *  (A held or unchanged row can be shorter than its description — Spellstrike, Runes — exactly as it
    *   was before this step: those popups are byte-equal to the pre-step ones.)
    */
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('no re-pointed class feature shows less than its own description, and none loses its own words against the pre-step popup', async () => {
     const rows = classFeatureRows().filter((r) => treeOf('classFeatures')?.[r.id]);
     const moved = rows.filter((r) => { const ts = astSlug(r.name); return !(astIndex[ts] === 'classFeatures' && ts === r.id); });
@@ -619,10 +661,12 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
     }
     console.log(`card-identity: ${moved.length} class features whose title lookup lands elsewhere; ${changed} re-pointed (id page ≠ pre-step popup); ${held} held on the pre-step popup; ${shorterThanBefore} shorter than a pre-step popup that was another record's page; ${bad.length} problems`);
     // 61 title lookups land elsewhere; 5 of them land on a page identical to the record's own.
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect([moved.length, changed]).toEqual([61, 56]);
     expect(bad).toEqual([]);
   }, 300_000);
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('the guard\'s stub test (card-scope.mjs) and the popup\'s (shared.tsx) agree on every classFeatures and feats page', () => {
     let pages = 0;
     for (const b of ['classFeatures', 'feats']) {
@@ -631,9 +675,11 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
         expect(lib.hasEmptyEmbeddedPage(t), `${b}:${slug}`).toBe(hasEmptyEmbeddedPage(t));
       }
     }
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(pages).toBeGreaterThan(5000);
   });
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('descNodeOf counts the record\'s own page as something to show, by id in its own bucket', () => {
     const chalk = db.items.chalk;
     expect(chalk.description ?? '', 'Chalk ships no description string').toBe('');
@@ -641,6 +687,7 @@ describe('card step 7a: the builder and the pickers resolve by id', () => {
     const node = descNodeOf(chalk, 'items');
     expect(node && { key: node.key, slug: node.slug, title: node.title }).toEqual({ key: 'items', slug: 'chalk', title: 'Chalk' });
     // Never by name, never in another bucket, never without an id.
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(descNodeOf({ name: 'Chalk' }, 'items')).toBeNull();
     expect(descNodeOf(chalk, 'feats')).toBeNull();
     expect(descNodeOf({ id: 'no-such-record-step7a', name: 'Chalk' }, 'items')).toBeNull();

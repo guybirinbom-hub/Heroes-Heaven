@@ -81,6 +81,7 @@ async function mount(el: ReactElement, cdb: ContentDatabase = db, pin: PinDescAp
   return { host, stop: () => { act(() => root.unmount()); host.remove(); } };
 }
 async function click(el: Element | null | undefined) {
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -91,6 +92,7 @@ const txt = (el: Element | null | undefined) => (el?.textContent ?? '').replace(
 async function openRow(ch: Character, name: string, cdb: ContentDatabase = db, pin: PinDescApi | null = null) {
   const m = await mount(<FeatsTab character={ch} content={cdb} />, cdb, pin);
   const row = [...m.host.querySelectorAll('.ff-row')].find((r) => txt(r.querySelector('.ff-name')) === name);
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(row, `FeatsTab lists a row named ${name}`).toBeTruthy();
   await click(row);
   const pop = m.host.querySelector('.picker.spell-detail');
@@ -137,7 +139,7 @@ afterAll(() => { vi.unstubAllGlobals(); });
 async function openCard(ch: Character, name: string, cdb: ContentDatabase = db, pin: PinDescApi | null = null) {
   const m = await mount(<FeatsTab character={ch} content={cdb} />, cdb, pin);
   const row = [...m.host.querySelectorAll('.ff-row')].find((r) => txt(r.querySelector('.ff-name')) === name);
-  // batch card premise: feat-5544 "Frequency once per day"
+  // batch card: #card-NOT-VACUOUS — the row the case drives exists
   expect(row, `FeatsTab lists a row named ${name}`).toBeTruthy();
   await click(row);
   const card = m.host.querySelector('.card-mine') as HTMLElement | null;
@@ -211,20 +213,20 @@ describe('card step 11: the ours box on the Feats-tab card', () => {
     v.stop();
   });
 
-  // batch card premise: feat-5544 "Frequency once per day"
+  // batch card: #card-N2 — a note is ours, in the box
   it('a record with NO page: the no-page card draws the note in the box, the star\'s pin keeps it when reopened, and a no-page table with a pick stays a table', async () => {
     const id = 'dedication-to-the-five';
     const note = db.feats[id].note!;
-    // batch card premise: feat-5544 "Frequency once per day"
+    // batch card: #card-S7 — no page: our text, marked
     expect(recordTree('feats', id, readTree), `${id} reads no tree (no page, no slice)`).toBeUndefined();
     let pinned: FeatPinNode | null = null;
     const pin: PinDescApi = { has: () => false, toggle: (n) => { pinned = n; } };
     const v = await openCard(withFeats(base, id), db.feats[id].name, db, pin);
-    // batch card premise: feat-5544 "Frequency once per day"
+    // batch card: #card-N2 — a note is ours, never in the record's own text
     expect(v.page, 'the no-page lane').toBe(false);
     expect(v.ours).toContain(`Note: ${note}`);
     expect(v.own, 'never inside the record\'s own text').not.toContain(note);
-    // batch card premise: feat-5544 "Frequency once per day"
+    // batch card: #card-PIN — the reopened pin keeps the note
     await click(v.star);
     v.stop();
     const r = await reopenPin(pinned!);
@@ -241,13 +243,13 @@ describe('card step 11: the ours box on the Feats-tab card', () => {
     const entry = featEntries(ch, tdb).find((e) => e.featId === tid)!;
     pinned = null;
     const w = await openCard(ch, entry.name, tdb, pin);
-    // batch card premise: element-1 "Gate Junction"
+    // batch card: #card-N2 — the pick is ours, in the box
     expect(w.page, 'the card has no page').toBe(false);
     expect(w.ownEl?.querySelector('table'), 'the card draws its table as a table').toBeTruthy();
     expect(w.ours).toContain(`Your choice: ${opt.label} — ${opt.note}`);
     await click(w.star);
     w.stop();
-    // batch card premise: element-1 "Gate Junction"
+    // batch card: #card-PIN — the pin keeps the pick and the table
     expect(pinned!.description).not.toMatch(/<(p|strong|br|div)\b/i);
     expect(pinned!.description).toContain(`Your choice: ${opt.label} — ${opt.note}`);
     const g = await reopenPin(pinned!);
@@ -276,7 +278,7 @@ describe('card step 11: the ours box on the Feats-tab card', () => {
     w.stop();
   });
 
-  // batch card premise: feat-5544 "Trigger You fail a Reflex saving throw"
+  // batch card: #card-PRINTED-SET — a label the text prints is not drawn again as our use line
   it('a homebrew feat whose own text prints a Trigger: only the label it does not print (Frequency) is drawn as our use line', async () => {
     const hb = {
       id: 'hb-card-step11-b', name: 'Synthesized Homebrew B', level: 1, traits: ['general'], rarity: 'common', category: 'general',
@@ -284,7 +286,7 @@ describe('card step 11: the ours box on the Feats-tab card', () => {
     } as unknown as Feat;
     const cdb = { ...db, feats: { ...db.feats, [hb.id]: hb } } as ContentDatabase;
     const v = await openCard(withFeats(base, hb.id), hb.name, cdb);
-    // batch card premise: feat-5544 "Trigger You fail a Reflex saving throw"
+    // batch card: #card-PRINTED-SET — a label the text prints is not drawn again as our use line
     expect(v.page).toBe(false);
     expect([...v.card.querySelectorAll('.card-ours-useLine')].map(txt)).toEqual(['Frequency once per day']);
     v.stop();

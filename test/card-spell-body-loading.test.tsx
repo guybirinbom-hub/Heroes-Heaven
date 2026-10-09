@@ -95,6 +95,7 @@ const oldOpening = (s: Spell) =>
     .slice(0, 40);
 
 describe('while the spells page loads', () => {
+  // batch card: #card-LOADING — a placeholder while the page loads, never old text
   it('a page-body spell shows a placeholder body — no old imported text, no string entries — then the page body', async () => {
     const s = spell('fireball');
     expect(HEIGHTEN_STRING_LANE.has(s.id)).toBe(false);
@@ -102,6 +103,7 @@ describe('while the spells page loads', () => {
     expect(opening.length).toBeGreaterThan(20); // not vacuous: the old text exists and would show
     const popup = open(<SpellDetail spell={s} maxRank={5} atRank={5} onClose={() => undefined} />);
     const ph = popup.querySelector('.sd-body > .sd-desc[data-body="loading"]');
+    // batch card: #card-LOADING — a placeholder while the page loads, never old text
     expect(ph?.classList.contains('ast-loading')).toBe(true);
     expect(ph?.getAttribute('aria-busy')).toBe('true');
     expect(txt(ph)).toBe('');
@@ -111,6 +113,7 @@ describe('while the spells page loads', () => {
     // A listed spell has nothing better coming: its string body shows at once, marked.
     const kept = spell([...HEIGHTEN_STRING_LANE].sort()[0]);
     const keptPopup = open(<SpellDetail spell={kept} onClose={() => undefined} />);
+    // batch card: #card-LOADING — a placeholder while the page loads, never old text
     expect(keptPopup.querySelector('[data-body="loading"]')).toBeNull();
     expect(txt(keptPopup)).toContain(oldOpening(kept));
     expect(txt(keptPopup.querySelector('[data-ours-kind="stringLane"]'))).toBe(OLDER(kept.id));
@@ -119,6 +122,7 @@ describe('while the spells page loads', () => {
     expect(keptPopup.querySelector('[data-ours-kind="noPage"]')).toBeNull();
 
     await loaded();
+    // batch card: #card-LOADING — a placeholder while the page loads, never old text
     expect(popup.querySelector('[data-body="loading"]')).toBeNull();
     expect(popup.querySelector('.sd-desc[data-body="tree"] .ast-body')).not.toBeNull();
     // batch card premise: spell-1530 "A roaring blast of fire detonates at a spot you designate"
@@ -127,17 +131,18 @@ describe('while the spells page loads', () => {
 });
 
 describe('the spells the parity gate keeps on the string lane are marked as our older text', () => {
-  // batch card premise: ritual-105 "1 object of up to 4th level" — the owner (2026-10-08): the ours line speaks player words, no "import".
+  // batch card: #card-FOOTER-WORDS — the owner (2026-10-08): the ours line speaks player words, no "import".
   it('each of the listed spells ends with the ours "Not from the Archives" line, after its string body and entries', async () => {
     await loaded();
     expect(HEIGHTEN_STRING_LANE.size).toBeGreaterThan(0);
     for (const id of HEIGHTEN_STRING_LANE) {
       const popup = open(<SpellDetail spell={spell(id)} maxRank={10} atRank={10} onClose={() => undefined} />);
       const line = popup.querySelector('.sd-body > [data-ours-kind="stringLane"]');
+      // batch card: #card-S7 — no page: our text, marked
       expect(line, id).not.toBeNull();
       expect(line!.hasAttribute('data-ours'), id).toBe(true);
       expect(txt(line), id).toBe(OLDER(id));
-      // batch card premise: ritual-105 "1 object of up to 4th level" — the owner (2026-10-08): player words, no "import".
+      // batch card: #card-FOOTER-WORDS — the owner (2026-10-08): player words, no "import".
       expect(txt(line), id).toMatch(/^Not from the Archives — our text; the Archives page prints no Heightened line for \S/);
       const kids = [...popup.querySelectorAll('.sd-body > *')];
       expect(kids[kids.length - 1], `${id}: the line is the footer, last`).toBe(line);

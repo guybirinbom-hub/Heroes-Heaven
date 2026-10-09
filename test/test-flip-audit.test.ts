@@ -161,9 +161,44 @@ const FEAT_4458 = JSON.stringify({
   summary: 'Your happy-go-lucky nature makes it seem like misfortune avoids you.',
 });
 
+/*
+ * Card citation retrofit round 2 (2026-10-09): a premise must also cite a page the TEST DRIVES. item-2000
+ * is a page that embeds the Sword group page (`<document id="weapon-group-15" />`) and has a legacy twin,
+ * item-1999 — the two links the reachability check follows one hop. Synthetic words throughout.
+ */
+const ITEM_2000 = JSON.stringify({
+  category: 'item', id: 'item-2000', name: 'Gate Shield', url: '/Equipment.aspx?ID=2000', legacy_id: ['item-1999'],
+  markdown: '<title level="1" right="Item 5">[Gate Shield](/Equipment.aspx?ID=2000)</title>\n\nThe gate shield hums when raised.\n\n<document level="2" id="weapon-group-15" />',
+});
+const ITEM_1999 = JSON.stringify({
+  category: 'item', id: 'item-1999', name: 'Gate Shield', url: '/Equipment.aspx?ID=1999', remaster_id: ['item-2000'],
+  markdown: '<title level="1" right="Item 5">[Gate Shield](/Equipment.aspx?ID=1999)</title>\n\nThe older gate shield rattles when raised.',
+});
+
+/**
+ * The record index the page-the-test-drives check reads (public/core.json under the audit's root) and the
+ * slice map (src/data/page-slices.json): each record names its page by `aonId`. `lucky-break` has no page
+ * of its own and is sliced from Halfling Luck's; `spined-shield-greater` is a variant printed on the Spined
+ * Shield page (a compound id); the category page "Feats" stands for the bucket-name trap.
+ */
+const CORE = JSON.stringify({
+  items: {
+    'spined-shield': { id: 'spined-shield', name: 'Spined Shield', aonId: 'item-1234' },
+    'spined-shield-greater': { id: 'spined-shield-greater', name: 'Spined Shield (Greater)', aonId: 'item-1234-77' },
+    'gate-shield': { id: 'gate-shield', name: 'Gate Shield', aonId: 'item-2000' },
+  },
+  feats: { 'halfling-luck': { id: 'halfling-luck', name: 'Halfling Luck', aonId: 'feat-4458' } },
+  actions: { 'lucky-break': { id: 'lucky-break', name: 'Lucky Break' } },
+  weaponGroup: { sword: { id: 'sword', name: 'Sword', aonId: 'weapon-group-15' } },
+  categoryPage: { feats: { id: 'feats', name: 'Feats', aonId: 'weapon-group-15' } },
+});
+const SLICES = JSON.stringify({ slices: { 'actions:lucky-break': { bucket: 'feats', page: 'halfling-luck', kind: 'block' } } });
+
 write(root, {
   ...TRACKED,
   'aon/by-category/item/item-1234.json': ITEM_1234,
+  'aon/by-category/item/item-2000.json': ITEM_2000,
+  'aon/by-category/item/item-1999.json': ITEM_1999,
   'aon/by-category/weapon-group/weapon-group-15.json': WEAPON_GROUP_15,
   'aon/by-category/feat/feat-4458.json': FEAT_4458,
 });
@@ -199,6 +234,9 @@ function reset() {
     [`work/.b${B}-testbase.json`]: TESTBASE,
     [`work/.b${B}-read.json`]: READ,
     'work/experience-instrument-limits.json': LIMITS,
+    'public/core.json': CORE,                                       // the record index (page-the-test-drives)
+    'src/data/page-slices.json': SLICES,
+    'docs/card-design.md': '# Card design (fixture)\n',              // a design rule's section must exist
   });
   for (const stray of ['test/gamma.test.ts', 'test/test-flip-audit.test.ts']) {
     const abs = path.join(root, stray);
@@ -680,9 +718,13 @@ describe('test-flip-audit — the registry parser', () => {
 describe('test-flip-audit — a premise must quote words that are in its doc', () => {
   const PRINTED = 'The target is made off-balance by your attack, becoming off-guard until the start of your next turn';
   const OURS = 'The target is off-guard until the start of your next turn';
+  // The test names the three records whose pages these cases cite (Spined Shield item-1234 in the describe,
+  // the Sword group weapon-group-15 and Halfling Luck feat-4458 in a comment of the block), so the
+  // page-the-test-drives check passes and each case isolates the clause check it is about (round 2,
+  // 2026-10-09). A comment, not a renamed describe: renaming one is a removed describe block.
   const cite = (doc: string, clause: string) => CLEAN_TEST.replace(
     "    expect('a').toBe('a');",
-    `    // batch ${B} premise: ${doc} "${clause}"\n    expect('a').toBe('b');`,
+    `    // the pages cited here: the Sword group and Halfling Luck\n    // batch ${B} premise: ${doc} "${clause}"\n    expect('a').toBe('b');`,
   );
   const onlyWhy = () => {
     const r = run();
@@ -842,5 +884,168 @@ describe('test-flip-audit — a premise must quote words that are in its doc', (
     expect(clauseInDoc({ aonRoot: aon, docId: 'weapon-group-15', clause: OURS, cache }).ok).toBe(false);
     expect(cache.size).toBe(1);                                      // one parse per doc per run
     expect(clauseInDoc({ aonRoot: aon, docId: 'nonsense', clause: PRINTED, cache }).why).toContain('unparseable id');
+  });
+});
+
+/*
+ * CARD CITATION RETROFIT, ROUND 2 (2026-10-09) — decision B: a premise must cite the page of the record the
+ * test DRIVES, never another page that happens to print the same words. A refuter found four card premises
+ * that passed the clause check on someone else's page (an osteo-armaments line cited to the fighter class
+ * page, an Accept Echo line to an unrelated item, a Halfling Luck Source line to a category page). The doc
+ * must be reachable from a record named in the test: its own page (aonId / aonParentId, a compound variant
+ * id's family page), the page it is sliced from, a page that page embeds, or a reprint twin.
+ */
+describe('test-flip-audit — a premise cites a page the test drives', () => {
+  const FREQ = 'Frequency once per day';
+  const SPINES = 'The spines are +1 striking shield spikes.';
+  /**
+   * alpha.test.ts (describe 'spined-shield') with one premise above the flipped expect; `record`, when
+   * given, is opened on a line of the it() block just above it — the way a card test names its record.
+   */
+  const cited = (record: string | null, doc: string, clause: string, body = '') => CLEAN_TEST.replace(
+    "    expect('a').toBe('a');",
+    `${record ? `    const record = '${record}';\n    void record;\n` : ''}${body}    // batch ${B} premise: ${doc} "${clause}"\n    expect('a').toBe('b');`,
+  );
+  const whys = () => run().violations.map((v) => v.expected);
+
+  it('accepts the page of the record the describe names, and refuses a page no named record reaches — naming the doc', () => {
+    write(root, { 'test/alpha.test.ts': cited(null, 'item-1234', SPINES) });
+    expect(changes(run())).toBe('');
+    // feat-4458 prints the words, but nothing in this test names Halfling Luck: the Accept Echo / equipment-2337 shape
+    write(root, { 'test/alpha.test.ts': cited(null, 'feat-4458', FREQ) });
+    const w = whys();
+    expect(w).toHaveLength(1);
+    expect(w[0]).toContain('premise cites a page the test does not drive — feat-4458');
+  });
+
+  it('reads the whole it() block, not only the titles and the 6-line window: a record opened further up the test makes its page citable', () => {
+    write(root, { 'test/alpha.test.ts': cited('halfling-luck', 'feat-4458', FREQ, '    void 0;\n'.repeat(8)) });
+    expect(changes(run())).toBe('');
+  });
+
+  it('a premise above an it() opener vouches for the whole test: a record the body opens BELOW the opener counts', () => {
+    const added = `  // batch ${B} premise: feat-4458 "${FREQ}"\n  it('opens the card', () => {\n    const record = 'halfling-luck';\n    expect(record).toBeTruthy();\n  });\n`;
+    write(root, { 'test/alpha.test.ts': CLEAN_TEST.replace("  it('counts five spines'", `${added}\n  it('counts five spines'`) });
+    expect(changes(run())).toBe('');
+  });
+
+  it('never lets the citation vouch for itself: a record named only inside the premise comment does not count', () => {
+    // "Halfling Luck" is on feat-4458 (the title link) — quoting it names the record only in the comment
+    write(root, { 'test/alpha.test.ts': cited(null, 'feat-4458', 'Halfling Luck Free Action') });
+    expect(whys()).toEqual([expect.stringContaining('premise cites a page the test does not drive — feat-4458')]);
+  });
+
+  it('follows a slice to its host page, an embedded page and a reprint twin', () => {
+    // lucky-break has no page of its own; page-slices.json cuts it from Halfling Luck's (feat-4458)
+    write(root, { 'test/alpha.test.ts': cited('lucky-break', 'feat-4458', FREQ) });
+    expect(changes(run())).toBe('');
+    // gate-shield's page (item-2000) embeds the Sword group page, and item-1999 is its legacy twin
+    write(root, { 'test/alpha.test.ts': cited('gate-shield', 'weapon-group-15', 'becoming off-guard until the start of your next turn') });
+    expect(changes(run())).toBe('');
+    write(root, { 'test/alpha.test.ts': cited('gate-shield', 'item-1999', 'The older gate shield rattles when raised.') });
+    expect(changes(run())).toBe('');
+    // …but each link is ONE hop from a named record's page: Halfling Luck's page reaches none of these
+    write(root, { 'test/alpha.test.ts': cited('halfling-luck', 'item-1999', 'The older gate shield rattles when raised.') });
+    expect(whys()).toEqual([expect.stringContaining('premise cites a page the test does not drive — item-1999')]);
+  });
+
+  // mutation-proof for the compound id: drop the family-page prefix in drivenDocs and this goes red
+  it('a compound variant id (spined-shield-greater = item-1234-77) reaches its family page and nothing else', () => {
+    // Without the plain Spined Shield record, only the variant's compound id can lead to item-1234.
+    const core = JSON.parse(CORE) as { items: Record<string, unknown> };
+    delete core.items['spined-shield'];
+    write(root, { 'public/core.json': JSON.stringify(core), 'test/alpha.test.ts': cited('spined-shield-greater', 'item-1234', SPINES) });
+    expect(changes(run())).toBe('');
+    write(root, { 'test/alpha.test.ts': cited('spined-shield-greater', 'item-2000', 'The gate shield hums when raised.') });
+    expect(whys()).toEqual([expect.stringContaining('premise cites a page the test does not drive — item-2000')]);
+  });
+
+  // mutation-proof for the bucket-name stop list: without it, `'feats'` names the category page "Feats"
+  it('a bucket name in code is not a record named: `feats` does not make the Feats category page citable', () => {
+    write(root, { 'test/alpha.test.ts': cited('feats', 'weapon-group-15', 'becoming off-guard until the start of your next turn') });
+    expect(whys()).toEqual([expect.stringContaining('premise cites a page the test does not drive — weapon-group-15')]);
+  });
+
+  it('refuses when the root has no record index — the check never passes by default', () => {
+    rmSync(path.join(root, 'public/core.json'));
+    write(root, { 'test/alpha.test.ts': cited(null, 'item-1234', SPINES) });
+    expect(whys()).toEqual([expect.stringContaining('no record index at public/core.json')]);
+  });
+});
+
+/*
+ * Decision A: a finding id with an EMPTY record part ('#card-…') used to pass the record-in-title rule
+ * because every title "contains" the empty string. It is accepted now only when its read entry declares
+ * `scope: 'design'` and a `rule` naming an existing docs/<file>.md section; otherwise refused with a why.
+ */
+describe('test-flip-audit — a design-wide finding declares its scope', () => {
+  const READ_DESIGN = JSON.stringify({
+    confirmed: [
+      { id: '#design-rule', verdict: 'CONFIRMED', scope: 'design', rule: 'docs/card-design.md section 2 rule 1' },
+      { id: '#undeclared', verdict: 'CONFIRMED' },
+      { id: '#no-rule', verdict: 'CONFIRMED', scope: 'design', rule: '  ' },
+      { id: '#missing-doc', verdict: 'CONFIRMED', scope: 'design', rule: 'docs/not-a-design.md section 1' },
+      { id: 'spined-shield#granted-spikes', verdict: 'CONFIRMED' },
+    ],
+    refuted: [],
+    askOwner: [],
+  }, null, 2);
+  beforeEach(() => write(root, { [`work/.b${B}-read.json`]: READ_DESIGN }));
+  const cited = (id: string) => CLEAN_TEST.replace("    expect('a').toBe('a');", `    // batch ${B}: ${id}\n    expect('a').toBe('b');`);
+
+  it('accepts an empty record part whose entry carries scope design and a rule naming its docs section', () => {
+    write(root, { 'test/alpha.test.ts': cited('#design-rule') });
+    expect(changes(run())).toBe('');
+  });
+
+  // mutation-proof: delete the scope check in checkFinding and the undeclared '#x' passes — this goes red
+  it('refuses an undeclared empty record part with the why "a design-wide finding needs scope design in the read file"', () => {
+    write(root, { 'test/alpha.test.ts': cited('#undeclared') });
+    const r = run();
+    expect(r.violations).toHaveLength(1);
+    expect(r.violations[0].expected).toContain('finding #undeclared names no record — a design-wide finding needs scope design in the read file');
+  });
+
+  it('refuses scope design with an empty rule, and with a rule naming a docs file that does not exist', () => {
+    write(root, { 'test/alpha.test.ts': cited('#no-rule') });
+    expect(run().violations[0].expected).toContain('needs scope design');
+    write(root, { 'test/alpha.test.ts': cited('#missing-doc') });
+    expect(run().violations[0].expected).toContain('needs scope design');
+  });
+
+  it('leaves a finding that names a record to the record-in-title rule, scope or not', () => {
+    write(root, { 'test/alpha.test.ts': cited('spined-shield#granted-spikes') });
+    expect(changes(run())).toBe('');
+  });
+});
+
+/*
+ * Decision C: a deleted describe block stays a hard fail — except when the read file holds a CONFIRMED
+ * entry with scope design, a rule naming its docs section and `removed` listing that describe's EXACT title
+ * (card step 22 deleted the legacy DescBody path and the describe that drove it, docs/card-design.md row 22).
+ */
+describe('test-flip-audit — a describe removal a design rule sanctions by its exact title', () => {
+  const readWith = (entry: Record<string, unknown>) => JSON.stringify({
+    confirmed: [{ id: 'card-S22-REMOVED', verdict: 'CONFIRMED', ...entry }], refuted: [], askOwner: [],
+  }, null, 2);
+  const dropDescribe = () => write(root, { 'test/alpha.test.ts': CLEAN_TEST.replace("describe('spined-shield', () => {\n", '') });
+
+  // mutation-proof: make removalSanctioned return false and the first case reports the removal — red
+  it('lets the removal through when the entry lists the exact title', () => {
+    write(root, { [`work/.b${B}-read.json`]: readWith({ scope: 'design', rule: 'docs/card-design.md row 22: legacy paths and their assertions are deleted', removed: ['spined-shield'] }) });
+    dropDescribe();
+    expect(changes(run())).toBe('');
+  });
+
+  it('still fails a removal whose title is not listed, and one whose entry has no design scope — naming the mechanism', () => {
+    write(root, { [`work/.b${B}-read.json`]: readWith({ scope: 'design', rule: 'docs/card-design.md row 22', removed: ['spined-shield, another block'] }) });
+    dropDescribe();
+    let r = run();
+    expect(r.violations).toHaveLength(1);
+    expect(r.violations[0].change).toContain('describe block removed');
+    expect(r.violations[0].expected).toContain('`removed` listing this describe\'s exact title');
+    write(root, { [`work/.b${B}-read.json`]: readWith({ removed: ['spined-shield'] }) });
+    r = run();
+    expect(r.violations.map((v) => v.change)).toEqual([expect.stringContaining('describe block removed')]);
   });
 });

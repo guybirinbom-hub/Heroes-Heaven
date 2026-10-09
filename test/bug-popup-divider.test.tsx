@@ -79,6 +79,7 @@ describe('bug #8 — a divider only where something precedes the body', () => {
     // The ast still carries the page's own separator, directly after its stat header. Pin that, or a
     // data change could make every assertion below pass for the wrong reason.
     expect(ACTIVATE.c?.map((n) => n.t).slice(0, 5)).toEqual(['title', 'traits', 'column', 'hr', 'p']);
+    // batch card: #card-LEGACY-GONE — step 22 removed the hideMeta "Activate an Item" case that followed this block
     expect(NECKLACE.c?.filter((n) => n.t === 'hr')).toHaveLength(8);
   });
 
@@ -92,6 +93,7 @@ describe('bug #8 — a divider only where something precedes the body', () => {
       expect(above, 'something precedes it').not.toBeNull();
       expect(above!.className).toContain('ast-meta');
       expect(above!.textContent).toContain('Requirements');
+      // batch card: #card-LEGACY-GONE — step 22 removed the hideMeta necklace case that followed this block
       expect(body.firstElementChild!.textContent).toContain('Source');
     } finally { stop(); }
   });
@@ -101,11 +103,12 @@ describe('bug #8 — a divider only where something precedes the body', () => {
     try {
       const body = bodyOf(host);
       expect(rules(body)).toHaveLength(8);
+      // batch card: #card-LEGACY-GONE — step 22 removed DescBody's page branch, and with it the "through DescBody" block that followed this one
       expect(rules(body)[0].previousElementSibling!.textContent).toContain('Usage');
     } finally { stop(); }
   });
 
-  // batch card premise: action-100 "You call forth the effect of an item by properly activating it" — the owner's case: its page is header column / rule / prose, the shape SYNTH copies with every header line printed.
+  // batch card: #card-INHERITED — a divider only where something precedes the body: SYNTH is a page shaped header column / rule / prose, with every header line printed.
   it('a mine card whose surface printed every header line opens on the prose — the empty column is not "something above"', () => {
     const { host, stop } = renderDom(<AstRenderer node={SYNTH} bodyOnly card={{ printed: new Set(['Requirements', 'Frequency']) }} onOpenRef={() => undefined} />);
     try {
@@ -114,6 +117,7 @@ describe('bug #8 — a divider only where something precedes the body', () => {
       expect(body.firstElementChild?.textContent).toBe('You pull the synthesized lever and it clicks.');
       // The rule under the second heading divides something, so it stays — this drops a separator, never content.
       const hr = rules(body);
+      // batch card: #card-INHERITED — the renderer's tree rules hold on the card
       expect(hr).toHaveLength(1);
       expect(hr[0].previousElementSibling!.className).toContain('ast-h2');
       expect(body.textContent).toContain('The second lever clicks too.');
@@ -121,7 +125,7 @@ describe('bug #8 — a divider only where something precedes the body', () => {
     } finally { stop(); }
   });
 
-  // batch card premise: action-100 "You call forth the effect of an item by properly activating it" — the same shape with nothing printed: the use lines stay above the rule.
+  // batch card: #card-INHERITED — the same shape with nothing printed: the use lines stay above the rule.
   it('the same card with an empty printed set keeps the rule — the use lines print above it', () => {
     const { host, stop } = renderDom(<AstRenderer node={SYNTH} bodyOnly card={{ printed: new Set() }} onOpenRef={() => undefined} />);
     try {

@@ -85,7 +85,7 @@ async function mount(el: ReactElement, cdb: ContentDatabase = db, pin: PinDescAp
   return host;
 }
 async function click(el: Element | null | undefined) {
-  // batch card premise: feat-4458 "Frequency once per day"
+  // batch card: #card-NOT-VACUOUS — the control the case clicks exists
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -97,7 +97,7 @@ const count = (hay: string, needle: string) => hay.split(needle).length - 1;
 async function openRow(ch: Character, name: string, cdb: ContentDatabase = db, pin: PinDescApi | null = null): Promise<HTMLElement> {
   const host = await mount(<FeatsTab character={ch} content={cdb} />, cdb, pin);
   const row = [...host.querySelectorAll('.ff-row')].find((r) => squash(r.querySelector('.ff-name')?.textContent) === name);
-  // batch card premise: feat-4458 "Frequency once per day"
+  // batch card: #card-NOT-VACUOUS — the row the case drives exists
   expect(row, `FeatsTab lists a row named ${name}`).toBeTruthy();
   await click(row);
   return host;
@@ -105,7 +105,7 @@ async function openRow(ch: Character, name: string, cdb: ContentDatabase = db, p
 /** The open card, page lane: the modal, its body, the body's text and its block lines in order. */
 function pageCard(host: HTMLElement) {
   const modal = host.querySelector('.ast-modal.card-mine') as HTMLElement | null;
-  // batch card premise: feat-4458 "Frequency once per day"
+  // batch card: #card-NOT-VACUOUS — the row opened its record's mine card
   expect(modal, 'the row opens its record\'s mine card, page lane').toBeTruthy();
   const body = modal!.querySelector('.ast-pop > .ast-body')!;
   const lines = [...body.querySelectorAll('p, .ast-meta, .ast-h2, .ast-h3, li')].map((e) => squash(e.textContent));
@@ -332,11 +332,11 @@ describe('card step 11: the Feats-tab popup is the row\'s mine card', () => {
   // The rest of card step 8's ours lines reach the card's box too (test/card-ours.test.tsx reads them off
   // the legacy popup): a marker, a use-counter retune beside the restored printed Frequency, an Overrides
   // edit over a page, the running enhancement tier.
-  // batch card premise: feat-4458 "Frequency once per day"
+  // batch card: #card-N2 — every app addition sits in the ours box, never in the page's words
   it('the card\'s ours box carries a marker, a use-counter retune (beside the page\'s own Frequency), an Overrides edit and the running enhancement', async () => {
     const boxOf = (host: HTMLElement) => squash(pageCard(host).modal.querySelector('.card-ours[data-ours]')?.textContent);
     const blood = await openRow(withFeats(build('sorcerer', 3), 'ancestral-blood-magic'), 'Bloodline');
-    // batch card premise: feat-4458 "Frequency once per day"
+    // batch card: #card-N2 — a marker is ours, never the page's words
     expect(boxOf(blood)).toContain('Ancestral Blood Magic: ');
     expect(pageParas(pageCard(blood).body).map((p) => squash(p.textContent)).join(' ')).not.toContain('Ancestral Blood Magic');
     const luck = await openRow(withFeats(base, 'cats-luck', 'reliable-luck'), "Cat's Luck");
@@ -416,7 +416,7 @@ describe('card step 11: the Feats-tab popup is the row\'s mine card', () => {
     expect(modal.querySelector('.sd-stats'), 'no print-styled stat row').toBeNull();
   });
 
-  // batch card premise: feat-4458 "Frequency once per day"
+  // batch card: #card-S7 — no page: our text, marked
   it('a record with neither page nor slice takes the no-page lane: its old text, the no-page line marked ours, the star in its header', async () => {
     const id = 'dedication-to-the-five';
     expect(treeOf('feats')![id], `${id} has no page`).toBeUndefined();
@@ -424,25 +424,25 @@ describe('card step 11: the Feats-tab popup is the row\'s mine card', () => {
     const pin: PinDescApi = { has: () => false, toggle: noop };
     const host = await openRow(withFeats(base, id), db.feats[id].name, db, pin);
     const modal = host.querySelector('.picker.info-modal.card-mine');
-    // batch card premise: feat-4458 "Frequency once per day"
+    // batch card: #card-S7 — no page: our text, marked
     expect(modal, 'the no-page lane of the mine card').toBeTruthy();
     expect(host.querySelector('.ast-modal'), 'no page drawn').toBeNull();
     expect(squash(modal!.querySelector('.info-title')?.textContent)).toBe(db.feats[id].name);
     expect(squash(modal!.querySelector('.info-body .sd-desc')?.textContent).length, 'the old text is shown').toBeGreaterThan(20);
     // With no page there is no printed Prerequisites line to replace it, so the field row stays — once,
     // and the old text does not repeat it (section 5: the fallback lane keeps the record's own rows).
-    // batch card premise: rules-1431 "as long as you meet its prerequisites"
+    // batch card: #card-PRINTED-SET — the Prerequisites row once
     const prereqRows = [...modal!.querySelectorAll('.card-controls .sd-stat')].filter((r) => squash(r.querySelector('.sd-stat-k')?.textContent) === 'Prerequisites');
     expect(prereqRows.map((r) => squash(r.querySelector('.sd-stat-v')?.textContent)), 'the field Prerequisites row, exactly once').toEqual(['Order of the Godclaw']);
     expect(squash(modal!.textContent).split('Order of the Godclaw').length - 1, 'the prerequisite text appears once on the card').toBe(1);
     const line = modal!.querySelector('.card-nopage');
-    // batch card premise: feat-4458 "Frequency once per day"
+    // batch card: #card-S7 — no page: our text, marked
     expect(line && squash(line.textContent)).toBe('Not from the Archives — our text');
     expect(line!.matches('[data-ours].sd-ours'), 'marked ours').toBe(true);
     expect(modal!.querySelector('.picker-head .info-star'), 'PinStar on the no-page lane').toBeTruthy();
   });
 
-  // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+  // batch card: #card-N2 — a homebrew record's use lines are ours
   it('a homebrew feat\'s typed trigger and frequency stay OUR use lines, above its text, never styled as print', async () => {
     const hb = {
       id: 'hb-card-step11', name: 'Synthesized Homebrew Eleven', level: 1, traits: ['general'], rarity: 'common', category: 'general',
@@ -451,10 +451,10 @@ describe('card step 11: the Feats-tab popup is the row\'s mine card', () => {
     const cdb = { ...db, feats: { ...db.feats, [hb.id]: hb } } as ContentDatabase;
     const host = await openRow(withFeats(base, hb.id), hb.name, cdb);
     const modal = host.querySelector('.picker.info-modal.card-mine');
-    // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+    // batch card: #card-N2 — a homebrew record's use lines are ours
     expect(modal, 'a homebrew record takes the no-page lane').toBeTruthy();
     const lines = modal!.querySelector('.card-uselines[data-ours]');
-    // batch card premise: feat-4458 "Trigger You fail a skill check or saving throw"
+    // batch card: #card-N2 — a homebrew record's use lines are ours
     expect([...(lines?.querySelectorAll('.card-ours-useLine') ?? [])].map((p) => squash(p.textContent))).toEqual(['Trigger X happens', 'Frequency once per day']);
     expect(lines!.compareDocumentPosition(modal!.querySelector('.sd-desc')!) & Node.DOCUMENT_POSITION_FOLLOWING, 'above the text').toBeTruthy();
     expect(squash(modal!.querySelector('.card-nopage')?.textContent)).toBe('Homebrew');

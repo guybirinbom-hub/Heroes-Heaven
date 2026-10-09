@@ -62,25 +62,31 @@ describe('S-printed predicates (astVisibility.ts cardDropsMetaP / cardRowParts)'
   const parts = () => ROW_LANTERN().c || [];
   const labels = (ps: AstNode[]) => ps.map((p) => leadOf(p));
 
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('an inline stat row is filtered per bold-label segment: printed {Price} keeps Bulk and Usage', () => {
     expect(labels(cardRowParts(parts(), { printed: printedSet(['Price']), head: true }))).toEqual(['Bulk', 'Usage']);
   });
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('an inline row whose every label is printed keeps nothing', () => {
     expect(cardRowParts(parts(), { printed: printedSet(['Price', 'Bulk', 'Usage']), head: true })).toEqual([]);
   });
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('after the first rule, and with an empty printed set, a row keeps every segment', () => {
     expect(labels(cardRowParts(parts(), { printed: printedSet(['Price']), head: false }))).toEqual(['Price', 'Bulk', 'Usage']);
     expect(labels(cardRowParts(parts(), { printed: printedSet([]), head: true }))).toEqual(['Price', 'Bulk', 'Usage']);
   });
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('a META line drops only before the rule, and only when every label it leads with is printed', () => {
     const freq = metaP('Frequency', 'once per hour');
     expect(cardDropsMetaP(freq, { printed: printedSet(['Frequency']), head: true })).toBe(true);
     expect(cardDropsMetaP(freq, { printed: printedSet(['Frequency']), head: false }), 'after the rule it stays').toBe(false);
     expect(cardDropsMetaP(freq, { printed: printedSet([]), head: true }), 'an empty printed set drops nothing').toBe(false);
     const priceBulk: AstNode = { t: 'p', c: [bold('Price'), txt(' 3 gp; '), bold('Bulk'), txt(' L')] };
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(cardDropsMetaP(priceBulk, { printed: printedSet(['Price']), head: true }), 'Bulk was not printed').toBe(false);
     expect(cardDropsMetaP(priceBulk, { printed: printedSet(['Price', 'Bulk']), head: true })).toBe(true);
   });
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('printedSet folds the spellings a stat row uses onto the page\'s canonical labels', () => {
     expect([...printedSet(['price', 'Requirement', 'Saving Throw', 'not a label'])].sort()).toEqual(['Defense', 'Price', 'Requirements']);
   });
@@ -104,6 +110,7 @@ describe('S-printed through the real AstRenderer (`card` prop, header = before t
     return [...host.querySelectorAll('.ast-body p')].map((p) => squash(p.textContent));
   }
 
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('printed {Price, Frequency, Hands}: Price leaves the stat row, the header Frequency line and the all-printed row leave, the Frequency line after the rule stays', () => {
     expect(linesOf(page(), ['Price', 'Frequency', 'Hands'])).toEqual([
       'Bulk L; Usage held in 1 hand',
@@ -111,6 +118,7 @@ describe('S-printed through the real AstRenderer (`card` prop, header = before t
       'Synthetic prose of the lantern.',
     ]);
   });
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('printed {} drops nothing: every labelled line shows, in the page\'s order', () => {
     expect(linesOf(page(), [])).toEqual([
       'Price 3 gp; Bulk L; Usage held in 1 hand',
@@ -120,6 +128,7 @@ describe('S-printed through the real AstRenderer (`card` prop, header = before t
       'Synthetic prose of the lantern.',
     ]);
   });
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('a page with no rule has no header, so the printed set leaves nothing out', () => {
     expect(linesOf(page(false), ['Price', 'Frequency', 'Hands'])).toEqual([
       'Price 3 gp; Bulk L; Usage held in 1 hand',

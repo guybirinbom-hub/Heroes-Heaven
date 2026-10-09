@@ -293,6 +293,7 @@ function linkedRecord(): { slug: string; target: string } {
 }
 
 describe('card step 3: the browse card extracted from DescriptionModal', () => {
+  // batch card: #card-NOT-VACUOUS — the case measures something
   it('draws 275 page records, 20 without a page and 5 homebrew nodes', () => {
     expect(sample.length).toBe(300);
     expect(new Set(sample.map((s) => s.key)).size).toBe(300);
@@ -301,12 +302,14 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     expect(sample.filter((s) => s.kind === 'homebrew').length).toBe(5);
   });
 
+  // batch card: #card-SNAPSHOT — a step changes only its own surface
   it.skipIf(!SNAP)('byte-equal to the pre-extraction DescriptionModal (CARD_BROWSE_SNAPSHOT)', async () => {
     const now = await allRenders();
     if (WRITE) {
       writeFileSync(SNAP!, JSON.stringify(now));
       return;
     }
+    // batch card: #card-SNAPSHOT — a step changes only its own surface
     expect(existsSync(SNAP!), `snapshot ${SNAP} missing — write it on the pre-extraction tree with CARD_BROWSE_WRITE=1`).toBe(true);
     const before = JSON.parse(readFileSync(SNAP!, 'utf8')) as typeof now;
     expect(Object.keys(now)).toEqual(Object.keys(before));
@@ -315,47 +318,49 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     // not its own gives way to its own text (F6, src/data/not-own-page.json) or to its paragraph of a
     // bigger page (F6b, src/data/page-slices.json). Those records are pinned with their reason in
     // STEP12_CHANGED and must differ; every other record stays byte-equal.
-    // batch card premise: equipment-3769 "Greater Bolka's Blessing" — a family page's own variant section is the record's page.
+    // batch card: #card-SNAPSHOT — only the records step 12 re-read differ, each pinned with its reason
     const changed = step12Changed();
     expect(changed).toEqual(STEP12_CHANGED);
     let diffs = 0;
     // Card step 14b re-baseline: a non-item page whose stubs resolve from a loaded bucket draws them in its
     // first frame (the embedded page, a compact list, a name) — pinned in STEP14B_CHANGED; with those
     // elements taken out it is the pre-extraction frame, byte for byte.
-    // batch card premise: eidolon-13 "your eidolon gains the Sickening Assault action"
+    // batch card: #card-SNAPSHOT — only the step-14b stub records differ
     const drawsStubs = Object.keys(now).filter((k) => !k.startsWith('items:') && !(k in changed) && /data-stub/.test(now[k].first));
     expect(drawsStubs).toEqual(Object.keys(STEP14B_CHANGED));
     let moved = 0;
     for (const k of Object.keys(now)) {
       if (now[k].first !== before[k].first || now[k].settled !== before[k].settled) diffs++;
       if (k in changed) {
+        // batch card: #card-SNAPSHOT — a step changes only its own surface
         expect(now[k].first === before[k].first && now[k].settled === before[k].settled, `${k} (${changed[k]}) changed`).toBe(false);
         continue;
       }
       if (k in STEP14B_CHANGED) {
-        // batch card premise: eidolon-13 "While dispersed, it can use the Swarming Assault activity"
+        // batch card: #card-STUBS — a step-14b record draws its embedded pages
         expect(now[k].first, `${k} (${STEP14B_CHANGED[k]}) changed`).not.toBe(before[k].first);
         // Wording merge: with the stubs out, the pre-extraction frame — its block boundaries alone may move.
-        // batch card premise: eidolon-13 "your eidolon gains the Sickening Assault action"
+        // batch card: #card-SNAPSHOT — with the stubs out, the pre-extraction frame
         expect(inlineOf(without14bStubs(now[k].first)), `${k}: only the stubs changed`).toBe(inlineOf(viaDomHtml(before[k].first)));
         expect(now[k].settled, `${k} settled frame`).toBe(before[k].settled);
         continue;
       }
       if (now[k].first === before[k].first && now[k].settled === before[k].settled) continue;
-      // batch card premise: eidolon-13 "your eidolon gains the Redistribute reaction" — a glyph the page prints
+      // batch card: #card-GLYPH — a glyph the page prints
       // in a line draws in it; the words, links and glyphs stay, in order.
       expect(inlineOf(now[k].first), `${k} first frame`).toBe(inlineOf(before[k].first));
       expect(inlineOf(now[k].settled ?? ''), `${k} settled frame`).toBe(inlineOf(before[k].settled ?? ''));
       moved++;
     }
     // Measured 2026-10-08 on main (2f6ee78 + the wording round) against card-step3-browse-snapshot.json.
-    // batch card premise: eidolon-13 "your eidolon gains the Redistribute reaction"
+    // batch card: #card-SNAPSHOT — the measured count of boundary moves
     expect(moved, 'records whose block boundaries moved').toBe(35);
     expect(diffs).toBe(Object.keys(STEP12_CHANGED).length + Object.keys(STEP14B_CHANGED).length + moved);
   });
 
+  // batch card: #card-NOT-VACUOUS — the sample holds every branch
   it('every branch is in the sample: page, loading placeholder, markdown fallback', async () => {
-    // batch card premise: doctrine-4 "Second Doctrine (3rd)" — a record whose read step 12 changed
+    // batch card: #card-OWN-SECTION — a record whose read step 12 changed
     // (STEP12_CHANGED) is drawn by its new lane: its own section or slice is a page, its own text a fallback.
     const step12 = (e: Entry) => e.key in STEP12_CHANGED;
     for (const [i, e] of sample.filter(step12).entries()) {
@@ -364,6 +369,7 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
       else expect(html.startsWith('<div class="picker-overlay"><div class="ast-modal"><div class="ast-pop">'), e.key).toBe(true);
     }
     const page = sample.filter((s) => s.kind === 'page' && !step12(s));
+    // batch card: #card-NOT-VACUOUS — the case measures something
     for (const [i, e] of page.entries()) expect(staticRender(e.node, i).startsWith('<div class="picker-overlay"><div class="ast-modal"><div class="ast-pop">'), e.key).toBe(true);
     const np = sample.filter((s) => s.kind === 'nopage' && !step12(s));
     for (const [i, e] of np.entries()) {
@@ -371,15 +377,18 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
       expect(await mountedRender(e.node, i), `${e.key} settled`).toMatch(/^<div class="picker-overlay"><div class="picker info-modal"><div class="picker-head">/);
     }
     for (const [i, e] of sample.filter((s) => s.kind === 'homebrew').entries())
+      // batch card: #card-NOT-VACUOUS — the case measures something
       expect(staticRender(e.node, i), e.key).toMatch(/^<div class="picker-overlay"><div class="picker info-modal">/);
   });
 
+  // batch card: #card-R1 — one card per record
   it('a cross-link drills in, and Back returns to the first node', async () => {
     const { slug, target } = linkedRecord();
     const host = await mount(modalEl(nodeOf('feats', slug), 1, { pin: null }));
     const name = () => host.querySelector('.ast-head .ast-name')?.textContent;
     const first = name();
     expect(first).toBeTruthy();
+    // batch card: #card-R1 — one card per record
     expect(host.querySelector('.info-back'), 'no Back at the first level').toBeNull();
     const [tb, ts] = target.split(':');
     // card step 4 (refuter nit): click the COMPUTED target, not any live link. The body's live links in
@@ -396,31 +405,34 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
       (n.c ?? []).forEach((c) => walk(c, title));
     })(trees.feats[slug], false);
     const at = liveRefs.findIndex((l) => l.ref === target);
-    // batch card premise: feat-6457 "you can spend 8 hours to locate a resident"
+    // batch card: #card-NOT-VACUOUS — the link the case clicks exists
     expect(at, `${slug} carries a live link to ${target}`).toBeGreaterThanOrEqual(0);
     const anchors = [...host.querySelectorAll<HTMLElement>('.ast-body a.ast-lk')];
     expect(anchors.length, 'one anchor per live body link').toBe(liveRefs.length);
     const link = anchors[at];
-    // batch card premise: feat-6457 "you can spend 8 hours to locate a resident"
+    // batch card: #card-R1 — a link inside the card drills in on the same card
     expect(link.textContent, `${slug} → ${target}`).toBe(liveRefs[at].label);
     await act(async () => { link.click(); });
     await act(async () => { await new Promise((r) => setTimeout(r, 0)); });
-    // batch card premise: feat-6457 "you can spend 8 hours to locate a resident"
+    // batch card: #card-R1 — a link inside the card drills in; Back returns
     expect(name(), 'the drilled-in page is open').not.toBe(first);
     expect(name(), 'and it is the computed target').toBe(headName(variantSection(trees[tb][ts], ts)));
     const back = host.querySelector<HTMLElement>('.info-back');
     expect(back, 'Back shows once drilled in').toBeTruthy();
     await act(async () => { back!.click(); });
     expect(name()).toBe(first);
+    // batch card: #card-R1 — one card per record
     expect(host.querySelector('.info-back')).toBeNull();
   });
 
+  // batch card: #card-R1 — one card per record
   it('Escape closes the whole chain (onExit), never just one level (onClose)', async () => {
     const { slug } = linkedRecord();
     const onClose = vi.fn();
     const onExit = vi.fn();
     const host = await mount(modalEl(nodeOf('feats', slug), 1, { onClose, onExit, pin: null }));
     await act(async () => { host.querySelector<HTMLElement>('.ast-body a.ast-lk')!.click(); });
+    // batch card: #card-R1 — one card per record
     expect(host.querySelector('.info-back')).toBeTruthy();
     await act(async () => { window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); });
     expect(onExit).toHaveBeenCalledTimes(1);
@@ -430,15 +442,18 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     const onlyClose = vi.fn();
     await mount(modalEl(nodeOf('feats', slug), 1, { onClose: onlyClose, pin: null }));
     await act(async () => { window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); });
+    // batch card: #card-R1 — one card per record
     expect(onlyClose).toHaveBeenCalledTimes(1);
   });
 
+  // batch card: #card-ORDER — the mine card's order and controls
   it('the PinStar is in the header on the page and fallback branches, and pins the caller\'s own node', async () => {
     const toggle = vi.fn();
     const pin: PinDescApi = { has: () => false, toggle };
     const pageNode = sample.find((s) => s.kind === 'page' && s.key.startsWith('spells:'))!.node;
     const host = await mount(modalEl(pageNode, 1, { pin }));
     const star = host.querySelector<HTMLElement>('.ast-head .ast-controls button.info-star');
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(star, 'star in the page header').toBeTruthy();
     await act(async () => { star!.click(); });
     expect(toggle).toHaveBeenCalledTimes(1);
@@ -446,31 +461,37 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     const hb = HOMEBREW[0];
     const host2 = await mount(modalEl(hb, 1, { pin }));
     const star2 = host2.querySelector<HTMLElement>('.picker-head button.info-star');
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(star2, 'star in the fallback header').toBeTruthy();
     await act(async () => { star2!.click(); });
     expect(toggle.mock.calls[1][0]).toBe(hb);
   });
 
+  // batch card: #card-LOADING — a placeholder while the page loads, never old text
   it('a record whose page is still loading shows the shell and a placeholder body, not the old text', () => {
     // heritages is never loaded in this file, so the hook seeds `loading` for any heritage id.
     const id = Object.keys(db.heritages).sort()[0];
     const html = staticRender(nodeOf('heritages', id), 1);
     expect(html).toMatch(/^<div class="picker-overlay"><div class="ast-modal"><div class="ast-pop"><div class="ast-bar"><\/div><div class="ast-head"><span class="ast-name">/);
     expect(html).toContain('<div class="ast-body ast-loading" aria-busy="true">');
+    // batch card: #card-LOADING — a placeholder while the page loads, never old text
     expect(html).not.toContain('info-body');
   });
 
+  // batch card: #card-S7 — no page: our text, marked
   it('a record with no page renders its markdown fallback', async () => {
     const e = sample.find((s) => s.kind === 'nopage' && s.node.description.trim().length > 40)!;
     const host = await mount(modalEl(e.node, 1, { pin: null }));
     expect(host.querySelector('.ast-modal')).toBeNull();
     expect(host.querySelector('.picker.info-modal .picker-head .info-title')?.textContent).toBe(e.node.title);
     const body = host.querySelector('.picker.info-modal .info-body');
+    // batch card: #card-S7 — no page: our text, marked
     expect(body, e.key).toBeTruthy();
     const firstWords = e.node.description.replace(/[*_#>[\]|`-]/g, ' ').split(/\s+/).filter((w) => /^[A-Za-z]{4,}$/.test(w)).slice(0, 3);
     for (const w of firstWords) expect(body!.textContent, `${e.key} "${w}"`).toContain(w);
   });
 
+  // batch card: #card-R1 — one card per record
   it('RecordCard by {bucket,id} or by {title,text} renders what DescriptionModal renders for the same node', () => {
     const wrapCard = (el: ReactElement) => renderToStaticMarkup(<ContentContext.Provider value={db}>{el}</ContentContext.Provider>);
     for (const e of sample.filter((s) => s.kind === 'page').slice(0, 40)) {
@@ -480,10 +501,12 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     }
     for (const n of HOMEBREW) {
       const card = wrapCard(<RecordCard record={{ title: n.title, text: n.description, refs: n.descRefs }} mode="browse" chrome="popup" onExit={noop} />);
+      // batch card: #card-R1 — one card per record
       expect(card, n.title).toBe(renderToStaticMarkup(modalEl(n, 1, { pin: null })));
     }
   });
 
+  // batch card: #card-ORDER — the mine card's order and controls
   it('the slots: headerActions in the header, the ours box after the body, the footer after it', () => {
     const ours: OursLine[] = [{ kind: 'note', from: { bucket: 'feats', id: 'synthetic', name: 'Synthetic Feat' }, text: 'A note of ours.' }];
     const slots = { headerActions: <button className="slot-act">act</button>, ours, footer: <p className="slot-foot">foot</p> };
@@ -494,6 +517,7 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
       <ContentContext.Provider value={db}><RecordCard record={{ bucket, id }} mode="browse" chrome="popup" onExit={noop} {...slots} /></ContentContext.Provider>,
     );
     const controls = host.querySelector('.ast-head .ast-controls')!;
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(controls.querySelector('.slot-act'), 'headerActions in the page header').toBeTruthy();
     expect(controls.lastElementChild!.matches('.picker-close')).toBe(true);
     const box = host.querySelector('.ast-pop [data-ours]');
@@ -504,12 +528,14 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     hb.innerHTML = renderToStaticMarkup(
       <ContentContext.Provider value={db}><RecordCard record={{ title: 'Synthetic Page', text: 'Body words here.' }} mode="browse" chrome="popup" onExit={noop} {...slots} /></ContentContext.Provider>,
     );
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(hb.querySelector('.picker-head .slot-act'), 'headerActions in the fallback header').toBeTruthy();
     const body = hb.querySelector('.info-body')!;
     expect(body.querySelector('[data-ours]')?.textContent).toBe('Synthetic Feat: A note of ours.');
     expect(body.lastElementChild!.matches('.slot-foot')).toBe(true);
   });
 
+  // batch card: #card-NO-FULL-PAGE — no Full page button
   it('there is no "Full page" button (owner ruling 2026-10-02)', () => {
     for (const [i, e] of sample.slice(0, 60).entries()) expect(staticRender(e.node, i), e.key).not.toMatch(/Full page/i);
   });
@@ -531,6 +557,7 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
  * `node={browseTree ?? astNode}` → `node={astNode}` → red (no page embedded).
  */
 describe('card step 14: an item page\'s browse card adds its embedded pages and changes nothing else', () => {
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('the sampled item pages with stubs, the longsword and full plate', async () => {
     const idx = aonIndex(db);
     const withStubs = sample
@@ -558,6 +585,7 @@ describe('card step 14: an item page\'s browse card adds its embedded pages and 
     for (const [k, { e, i }] of cases.entries()) {
       const host = await mount(modalEl(e.node, i));
       const refs = stubRefs(recordTree('items', e.key.slice(6), (b, s) => trees[b]?.[s]), idx);
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       for (const ref of refs) expect(host.querySelector(`.ast-pop > .ast-body [data-stub="${ref}"]`), `${e.key} draws ${ref}`).toBeTruthy();
       embedded += host.querySelectorAll('[data-stub]').length;
       expect(strip(host.innerHTML), `${e.key}: only the embedded pages changed`).toBe(before[k]);
@@ -565,6 +593,7 @@ describe('card step 14: an item page\'s browse card adds its embedded pages and 
     }
     // Measured 2026-10-07: 2 of the 46 sampled item pages embed a page (their groups' pages), plus the two
     // named cases — 4 pages embedded, each on its own card, nothing else moved.
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(withStubs.map(({ e }) => e.key)).toEqual(['items:dwarven-waraxe', 'items:sling-bullets']);
     expect(embedded).toBe(4);
     // batch card premise: weapon-group-15 "becoming off-guard until the start of your next turn"
@@ -610,6 +639,7 @@ describe('card step 14: an item page\'s browse card adds its embedded pages and 
       const tree = recordTree(bucket, slug, (b, s) => trees[b]?.[s]);
       const refs = stubRefs(tree, idx);
       // The stub resolves: its first candidate's page ships in a bucket this file has loaded.
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       expect(refs[0], `${bucket}:${slug} first stub`).toBe(first);
       const [tb, ts] = first.split(':');
       expect(trees[tb]?.[ts], `${first} ships`).toBeTruthy();
@@ -618,6 +648,7 @@ describe('card step 14: an item page\'s browse card adds its embedded pages and 
       first0.innerHTML = staticRender(nodeOf(bucket, slug), 2000 + k);
       const before = first0.innerHTML;
       const host = await mount(modalEl(nodeOf(bucket, slug), 2000 + k));
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       expect(host.querySelector('.ast-pop > .ast-body'), `${bucket}:${slug} draws its page`).toBeTruthy();
       // batch card premise: feat-3096 "You gain the Resist Magic reaction"
       expect(host.querySelector(`.ast-pop > .ast-body [data-stub="${first}"]`), `${bucket}:${slug} draws ${first}`).toBeTruthy();

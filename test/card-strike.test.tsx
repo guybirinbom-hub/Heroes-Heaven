@@ -119,7 +119,7 @@ async function mount(el: ReactElement, cdb: ContentDatabase = db): Promise<HTMLE
   return host;
 }
 async function click(el: Element | null | undefined) {
-  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  // batch card: #card-NOT-VACUOUS — the control the case clicks exists
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -282,9 +282,9 @@ describe('card step 10: the strike popup is the weapon\'s mine card', () => {
     expect(toggled.map((n) => [n.title, n.key, n.slug, (n as { mode?: string }).mode])).toEqual([['Longsword', 'items', 'longsword', 'mine']]);
   });
 
-  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  // batch card: #card-S7 — no page: our text, marked
   it('a weapon with no page of its own (Makeshift Staff) keeps its old text, with the controls above it and the no-page line', async () => {
-    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    // batch card: #card-S7 — no page: our text, marked
     expect(ITEMS['makeshift-staff'], 'no page ships').toBeUndefined();
     const { c, s } = wielder('makeshift-staff');
     expect(s, 'the staff makes a strike').toBeTruthy();
@@ -292,11 +292,11 @@ describe('card step 10: the strike popup is the weapon\'s mine card', () => {
     const pop = host.querySelector('.picker.info-modal.card-mine') as HTMLElement;
     expect(txt(pop.querySelector('.info-title'))).toBe(s!.name);
     const body = pop.querySelector('.info-body.card-body') as HTMLElement;
-    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    // batch card: #card-ORDER — the controls sit above the old text
     expect(statsOf(body.querySelector('.card-lead')!)).toEqual([['Attack bonus', formatMod(s!.attack[0])], ['Damage', s!.damage]]);
     const old = norm(db.items['makeshift-staff'].description).slice(0, 40);
     expect(old.length).toBeGreaterThan(0);
-    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    // batch card: #card-S7 — no page: our text, marked
     expect(txt(body.querySelector('.sd-desc'))).toContain(old);
     expect(txt(body.querySelector('[data-ours-kind="noPage"]'))).toBe('Not from the Archives — our text');
   });
@@ -350,13 +350,13 @@ describe('card step 10: the strike popup is the weapon\'s mine card', () => {
     expect(pop.querySelector('.card-nopage')).toBeNull();
   });
 
-  // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+  // batch card: #card-R1 — each sampled weapon's card draws its page, never the old import
   it('a seeded sample of 60 weapons with a page: every line the card draws outside its controls and ours box is the page\'s; the old import never shows where the page does not print it; the controls carry the derive\'s numbers', async () => {
     const pool = Object.values(db.items)
       .filter((i) => i.itemType === 'weapon' && ITEMS[i.id])
       .map((i) => i.id)
       .sort();
-    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    // batch card: #card-NOT-VACUOUS — the pool the sample draws from is real
     expect(pool.length).toBeGreaterThan(1000);
     const sample = draw(pool, 60, mulberry32(20261002));
     let judged = 0;
@@ -379,7 +379,7 @@ describe('card step 10: the strike popup is the weapon\'s mine card', () => {
       judged += 1;
       for (const st of stops.splice(0)) st();
     }
-    // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
+    // batch card: #card-R1 — each sampled weapon's card draws its page, never the old import
     expect(offPage).toEqual([]);
     expect(oldShown).toEqual([]);
     expect(statsWrong).toEqual([]);

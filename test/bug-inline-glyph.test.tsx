@@ -213,10 +213,12 @@ describe('wording round 2 — a glyph the page prints inside a line stays in tha
   };
   const glyphLine = (body: Element, title: string) => {
     const g = body.querySelector(`.ast-ag[title="${title}"]`);
+    // batch card: #card-GLYPH — a glyph stays in its printed line
     expect(g, `a ${title} glyph`).not.toBeNull();
     return g!.parentElement!;
   };
 
+  // batch card: #card-GLYPH — a glyph stays in its printed line
   it('an embedded activity header is ONE line: classFeatures:gleaming-blade\'s "Transcendence ⟨2⟩ (Spirit, Transcendence) …"', () => {
     const tree = readBucket('classFeatures')['gleaming-blade'];
     // batch card premise: ikon-6 "Make two Strikes with the gleaming blade" — card step 22: the card and the modal path (hideMeta is gone).
@@ -226,6 +228,7 @@ describe('wording round 2 — a glyph the page prints inside a line stays in tha
         const body = bodyOf(host);
         expect(body.querySelector('.ast-actline'), 'no glyph line of its own').toBeNull();
         const line = glyphLine(body, 'Two Actions');
+        // batch card: #card-GLYPH — a glyph stays in its printed line
         expect(line.tagName).toBe('P');
         // batch card premise: ikon-6 "Make two Strikes with the gleaming blade"
         expect(words(line)).toMatch(/^Transcendence \(Spirit, Transcendence\) ?Flowing Spirit Strike; Effect Make two Strikes with the gleaming blade/);
@@ -258,6 +261,7 @@ describe('wording round 2 — a glyph the page prints inside a line stays in tha
         const lines = [...body.querySelectorAll('p')].filter((p) => (p.textContent ?? '').includes('This activation takes'));
         expect(lines, 'one line holds the sentence').toHaveLength(1);
         const act = lines[0];
+        // batch card: #card-GLYPH — a glyph stays in its printed line
         expect(act.className).toBe('ast-act');
         // batch card premise: equipment-2280 "Frequency once per day, plus overcharge"
         expect(words(act)).toMatch(/^Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; ?Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms/);
@@ -266,6 +270,7 @@ describe('wording round 2 — a glyph the page prints inside a line stays in tha
     }
   });
 
+  // batch card: #card-GLYPH — a glyph stays in its printed line
   it('a glyph that opens its line leads it: spells:banishing-touch\'s "⟨1⟩ The target is launched 10 feet into the air …"', () => {
     const tree = readBucket('spells')['banishing-touch'];
     const { host, stop } = renderDom(<AstRenderer node={tree} bodyOnly card={CARD} onOpenRef={() => undefined} />);
@@ -273,6 +278,7 @@ describe('wording round 2 — a glyph the page prints inside a line stays in tha
       const body = bodyOf(host);
       expect(body.querySelector('.ast-actline')).toBeNull();
       const line = glyphLine(body, 'Single Action');
+      // batch card: #card-GLYPH — a glyph stays in its printed line
       expect(line.tagName).toBe('P');
       expect(line.firstElementChild!.classList.contains('ast-ag'), 'the glyph opens the line').toBe(true);
       // batch card premise: spell-2152 "The target is launched 10 feet into the air"
@@ -289,7 +295,7 @@ describe('wording round 2 — a glyph the page prints inside a line stays in tha
    * branch back to `return null` on a printed first leaf → the printed case red. (The hideMeta branch and
    * its META case left with hideMeta in card step 22.)
    */
-  // batch card premise: equipment-2943 "A healing potion is a vial of a ruby-red liquid" — its row "Activate ⟨1⟩ (manipulate)" is the shape the synthetic trees copy.
+  // batch card: #card-GLYPH — a glyph sits in the line the page prints it in; the synthetic trees copy a page's "Activate ⟨1⟩ (manipulate)" row.
   it('a glyph row whose first leaf is a printed label drops only that label (synthetic)', () => {
     const p = (...c: AstNode[]): AstNode => ({ t: 'p', c });
     const txt = (v: string): AstNode => ({ t: 'text', v });
@@ -307,13 +313,14 @@ describe('wording round 2 — a glyph the page prints inside a line stays in tha
       } finally { stop(); }
     };
     const act = row(p(bold('Activate')));
-    // batch card premise: equipment-2943 "A healing potion is a vial of a ruby-red liquid"
+    // batch card: #card-PRINTED-SET — a label the stat block printed is not drawn twice
     expect(line(act, { card: CARD })).toEqual({ tag: 'P', words: 'Activate (manipulate) Zorblat turns the dial' });
     expect(line(act, { card: { printed: new Set(['Activate']) } })).toEqual({ tag: 'P', words: '(manipulate) Zorblat turns the dial' });
     const req = row(p(bold('Requirements'), txt(' You hold the synthetic dial')));
     expect(line(req, {})?.words).toBe('Requirements You hold the synthetic dial (manipulate) Zorblat turns the dial');
   });
 
+  // batch card: #card-GLYPH — a glyph stays in its printed line
   it('across every shipped page, no card draws a glyph on a line of its own', () => {
     let pages = 0;
     const alone: string[] = [];
@@ -325,6 +332,7 @@ describe('wording round 2 — a glyph the page prints inside a line stays in tha
         if (html.includes('class="ast-actline"')) alone.push(`${b}:${slug}`);
       }
     }
+    // batch card: #card-GLYPH — a glyph stays in its printed line
     expect(pages, 'the corpus was read').toBeGreaterThan(20000);
     expect(alone.slice(0, 20), `${alone.length} pages still draw a glyph line of its own`).toEqual([]);
   }, 300_000);

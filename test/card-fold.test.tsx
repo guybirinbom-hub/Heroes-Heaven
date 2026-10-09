@@ -91,6 +91,7 @@ async function mount(el: ReactElement, ctx: Ctx = ContentContext): Promise<HTMLE
   return host;
 }
 async function click(el: Element | null | undefined) {
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -103,6 +104,7 @@ async function openCard(ch: Character, bucket: string, id: string, Modal: typeof
   const host = await mount(<Modal breakdown={breakdown} character={ch} content={db} onClose={noop} />, ctx);
   await click(host.querySelector('.sd-sit-more'));
   const modal = host.querySelector('.ast-modal.card-mine') as HTMLElement | null;
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(modal, `${bucket}:${id} opens the mine card, page lane`).toBeTruthy();
   return modal!;
 }
@@ -115,6 +117,7 @@ function openText(modal: HTMLElement): string {
 const folds = (modal: HTMLElement) => [...modal.querySelectorAll('details.card-fold')] as HTMLDetailsElement[];
 
 describe('card step 13a: level folds on the mine card', () => {
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('a Justice champion at 5: no Relentless Reaction open, ONE closed "At higher levels (2)" line, the text inside it', async () => {
     const modal = await openCard(build('champion', 5, { subclassId: 'justice' }), 'classFeatures', 'justice');
     const f = folds(modal);
@@ -122,51 +125,70 @@ describe('card step 13a: level folds on the mine card', () => {
     expect(f[0].open).toBe(false);
     expect(f[0].dataset.fold).toBe('future');
     const line = f[0].querySelector(':scope > summary');
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(squash(line?.textContent)).toBe('At higher levels (2)');
     expect(line?.hasAttribute('data-ours'), 'the line is ours, not print').toBe(true);
+    // batch card premise: class-58 "Relentless Reaction"
     expect(openText(modal)).not.toMatch(/Relentless Reaction|Exalted Reaction|persistent spirit damage/);
     // Folded, never deleted: the words are in the DOM, inside the fold.
+    // batch card premise: cause-11 "Relentless Reaction If your Strike hits, the target takes persistent spirit damage equal to"
     expect(squash(f[0].textContent)).toMatch(/Relentless Reaction.*persistent spirit damage.*Exalted Reaction/);
     // The rest of the page stays open.
+    // batch card premise: cause-11 "Champion's Reaction"
     expect(openText(modal)).toMatch(/Champion's Reaction/);
   });
 
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('the fold opens on a tap (a native <summary>, so the keyboard opens it too) and closes again', async () => {
     const modal = await openCard(build('champion', 5, { subclassId: 'justice' }), 'classFeatures', 'justice');
     const f = folds(modal)[0];
     const line = f.querySelector(':scope > summary') as HTMLElement;
     expect(line.tagName).toBe('SUMMARY');
     await click(line);
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(f.open).toBe(true);
+    // batch card premise: class-58 "Relentless Reaction"
     expect(openText(modal)).toMatch(/Relentless Reaction/);
     await click(line);
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(f.open).toBe(false);
   });
 
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('at 9 Relentless Reaction is open and Exalted Reaction is folded, its text inside the fold', async () => {
     const modal = await openCard(build('champion', 9, { subclassId: 'justice' }), 'classFeatures', 'justice');
+    // batch card premise: cause-11 "Relentless Reaction If your Strike hits, the target takes persistent spirit damage"
     expect(openText(modal)).toMatch(/Relentless Reaction.*persistent spirit damage/);
+    // batch card premise: class-58 "Exalted Reaction"
     expect(openText(modal)).not.toMatch(/Exalted Reaction/);
     const f = folds(modal);
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(f.map((d) => squash(d.querySelector(':scope > summary')?.textContent))).toEqual(['At higher levels (1)']);
+    // batch card premise: cause-11 "Exalted Reaction Each ally in your champion's aura"
     expect(squash(f[0].textContent)).toMatch(/Exalted Reaction.*Each ally in your champion.s aura/);
   });
 
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('a pointer row: relentless-reaction at 9 shows the Justice cause\'s section; at 5 that section is folded', async () => {
     const m9 = await openCard(build('champion', 9, { subclassId: 'justice' }), 'classFeatures', 'relentless-reaction');
     const ptr = m9.querySelector('.card-pointer[data-pointer="classFeatures:justice"]');
     expect(ptr, 'the subclass section is drawn').toBeTruthy();
+    // batch card premise: cause-11 "Relentless Reaction If your Strike hits, the target takes persistent spirit damage"
     expect(squash(ptr!.textContent)).toMatch(/Relentless Reaction.*persistent spirit damage/);
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(ptr!.closest('details'), 'open at 9').toBeNull();
     const m5 = await openCard(build('champion', 5, { subclassId: 'justice' }), 'classFeatures', 'relentless-reaction');
     const ptr5 = m5.querySelector('.card-pointer');
     expect(ptr5?.closest('details.card-fold:not([open])'), 'folded at 5').toBeTruthy();
   });
 
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('a thaumaturge 11 with one implement at adept: only the owned Adept open; another implement\'s benefits fold as other options', async () => {
     const ch = build('thaumaturge', 11, { extraChoices: { implement: ['amulet'] } });
     const amulet = await openCard(ch, 'classFeatures', 'amulet');
+    // batch card premise: implement-17 "Adept Benefit Your amulet offers continued protection. When you use Amulet's Abeyance, you or"
     expect(openText(amulet)).toMatch(/Adept Benefit.*Intensify Benefit/);
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(openText(amulet)).not.toMatch(/Paragon Benefit/);
     expect(folds(amulet).map((d) => [d.dataset.fold, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['future', 'At higher levels (1)']]);
     const bell = await openCard(ch, 'classFeatures', 'bell');
@@ -180,18 +202,24 @@ describe('card step 13a: level folds on the mine card', () => {
 
   it('an unknown pick is shown: a thaumaturge 11 with no implement on record sees the adept benefit open', async () => {
     const bell = await openCard(build('thaumaturge', 11, { extraChoices: {} }), 'classFeatures', 'bell');
+    // batch card premise: implement-18 "Adept Benefit Your bell resonates powerfully, causing the effect to last longer. The conditions"
     expect(openText(bell)).toMatch(/Adept Benefit.*Intensify Benefit/);
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(folds(bell).map((d) => squash(d.querySelector(':scope > summary')?.textContent))).toEqual(['At higher levels (1)']);
   });
 
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('a kineticist impulse: the applying "Level (+2)" entry is highlighted and nothing is hidden', async () => {
     const at3 = await openCard(build('kineticist', 3, { extraChoices: { element: ['air-gate'] } }), 'feats', 'aerial-boomerang');
     const hi = [...at3.querySelectorAll('.card-applies')];
+    // batch card premise: feat-4206 "Level (+2) The damage increases by 1d4."
     expect(hi.map((p) => squash(p.textContent))).toEqual(['Level (+2) The damage increases by 1d4.']);
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(hi[0].closest('[data-ours]'), 'the highlight is a class on the page\'s own paragraph').toBeNull();
     expect(at3.querySelector('[data-fold]'), 'an impulse folds nothing').toBeNull();
     const at2 = await openCard(build('kineticist', 2, { extraChoices: { element: ['air-gate'] } }), 'feats', 'aerial-boomerang');
     expect(at2.querySelector('.card-applies')).toBeNull();
+    // batch card premise: feat-4206 "Level (+2) The damage increases by 1d4."
     expect(openText(at2)).toMatch(/Level \(\+2\) The damage increases by 1d4\./);
   });
 });
@@ -205,6 +233,7 @@ function withPickedFeat(featId: string, label: string): Character {
 async function openFeatRow(ch: Character, name: string): Promise<HTMLElement> {
   const host = await mount(<FeatsTab character={ch} content={db} />);
   const row = [...host.querySelectorAll('.ff-row')].find((r) => squash(r.querySelector('.ff-name')?.textContent) === name);
+  // batch card: #card-Q1A — later-level parts fold under one line
   expect(row, `the Feats tab lists ${name}`).toBeTruthy();
   await click(row);
   const modal = host.querySelector('.ast-modal.card-mine') as HTMLElement | null;
@@ -213,28 +242,39 @@ async function openFeatRow(ch: Character, name: string): Promise<HTMLElement> {
 }
 
 describe('card step 13c: choose-one blocks on the FeatDetail card (owner ruling Q2 = A)', () => {
+  // batch card: #card-Q2A — the picked option open, the others folded
   it('Iruxi Armaments (Claw): Claws open and highlighted; Fangs and Tail under ONE closed "Other options (2)" line', async () => {
     const modal = await openFeatRow(withPickedFeat('iruxi-armaments', 'Claw'), 'Iruxi Armaments (Claw)');
     const hi = [...modal.querySelectorAll('.card-applies')];
+    // batch card premise: feat-5633 "Claws Your claw attack deals 1d6 slashing damage instead of 1d4 and gains the"
     expect(hi.map((p) => squash(p.textContent))).toEqual(['Claws Your claw attack deals 1d6 slashing damage instead of 1d4 and gains the versatile P trait.']);
+    // batch card: #card-Q2A — the picked option open, the others folded
     expect(hi[0].closest('li'), 'the highlight sits on the list item the page prints').toBeTruthy();
     expect(hi[0].closest('details'), 'the picked option is never folded').toBeNull();
     const f = folds(modal);
     expect(f.map((d) => [d.dataset.fold, d.open, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['pick', false, 'Other options (2)']]);
     expect(f[0].querySelector(':scope > summary')?.hasAttribute('data-ours'), 'the line is ours').toBe(true);
     // Folded, never deleted: the other options are in the DOM, inside the fold, still a list.
+    // batch card: #card-Q2A — the picked option open, the others folded
     expect([...f[0].querySelectorAll('li')].map((li) => squash(li.textContent).split(' ')[0])).toEqual(['Fangs', 'Tail']);
+    // batch card premise: feat-5633 "Fangs You gain"
     expect(openText(modal)).not.toMatch(/Fangs You gain|Tail You gain/);
+    // batch card premise: feat-5633 "Choose one of the following options: Claws Your claw attack"
     expect(openText(modal)).toMatch(/Choose one of the following options: Claws Your claw attack/);
+    // batch card premise: feat-5633 "At 5th level, whenever you get a critical hit"
     expect(openText(modal)).toMatch(/At 5th level, whenever you get a critical hit/);
   });
 
+  // batch card: #card-Q2A — the picked option open, the others folded
   it('a pick whose label holds its own parentheses (the row reads "Dragonet Breath (Fey Dragonet (arcane, poison))") still names its option', async () => {
     const modal = await openFeatRow(withPickedFeat('dragonet-breath', 'Fey Dragonet (arcane, poison)'), 'Dragonet Breath (Fey Dragonet (arcane, poison))');
+    // batch card premise: feat-8047 "Fey Dragonet"
     expect([...modal.querySelectorAll('.card-applies')].map((p) => squash(p.textContent).split(' ').slice(0, 2).join(' '))).toEqual(['Fey Dragonet']);
+    // batch card: #card-Q2A — the picked option open, the others folded
     expect(folds(modal).map((d) => squash(d.querySelector(':scope > summary')?.textContent))).toEqual(['Other options (4)']);
   });
 
+  // batch card: #card-Q2A — the picked option open, the others folded
   it('dragon-disciple-dedication: a pick the page prints only in a group falls back to the whole text — no fold, no highlight', async () => {
     const modal = await openFeatRow(withPickedFeat('dragon-disciple-dedication', 'Red (fire)'), 'Dragon Disciple Dedication (Red (fire))');
     expect(folds(modal)).toEqual([]);
@@ -244,17 +284,22 @@ describe('card step 13c: choose-one blocks on the FeatDetail card (owner ruling 
 });
 
 describe('card step 13c: class picks on a classFeatures card (StatDetailModal, no row pick)', () => {
+  // batch card: #card-Q2A — the picked option open, the others folded
   it('a Fencer swashbuckler: exemplary-finisher shows Fencer open and highlighted, the five other styles under "Other options (5)"', async () => {
     const modal = await openCard(build('swashbuckler', 9, { subclassId: 'fencer' }), 'classFeatures', 'exemplary-finisher');
     const hi = [...modal.querySelectorAll('.card-applies')];
     expect(hi.map((p) => squash(p.textContent).split(' ')[0])).toEqual(['Fencer:']);
     expect(hi[0].closest('details'), 'the picked style is never folded').toBeNull();
     const f = folds(modal);
+    // batch card: #card-Q2A — the picked option open, the others folded
     expect(f.map((d) => [d.dataset.fold, d.open, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['pick', false, 'Other options (5)']]);
+    // batch card premise: class-feature-1022 "Battledancer: You can Step as a free action immediately after the finisher. Braggart: If"
     expect(squash(f[0].textContent)).toMatch(/Battledancer.*Braggart.*Gymnast.*Rascal.*Wit/);
+    // batch card: #card-Q2A — the picked option open, the others folded
     expect(openText(modal)).not.toMatch(/Battledancer:|Braggart:|Gymnast:|Rascal:|Wit:/);
   });
 
+  // batch card: #card-Q2A — the picked option open, the others folded
   it('a single-gate air kineticist: kinetic-gate shows Air\'s impulse junction highlighted, the other five under ONE line', async () => {
     // batch card premise: class-feature-596 "In addition, you gain an impulse junction"
     const modal = await openCard(build('kineticist', 5, { extraChoices: { element: ['air-gate'] } }), 'classFeatures', 'kinetic-gate');
@@ -282,6 +327,7 @@ describe('card step 13c: class picks on a classFeatures card (StatDetailModal, n
     expect(modal.querySelector('.card-applies')).toBeNull();
   });
 
+  // batch card: #card-Q2A — the picked option open, the others folded
   it('a swashbuckler with no style on record sees exemplary-finisher whole', async () => {
     const ch = build('swashbuckler', 9, { subclassId: 'fencer' });
     const modal = await openCard({ ...ch, subclassId: null, classChoices: [] } as Character, 'classFeatures', 'exemplary-finisher');
@@ -304,15 +350,21 @@ describe('card step 13b: prose gates fold WHOLE on the mine card', () => {
     expect(f.map((d) => [d.dataset.fold, d.open, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['future', false, 'At higher levels (2)']]);
     expect(f[0].querySelector(':scope > summary')?.hasAttribute('data-ours'), 'the line is ours').toBe(true);
     expect(squash(f[0].textContent)).toMatch(/At 8th level, you can destroy an adjacent thrall as part of using this action\. If you do, the action gains the thrall trait.*At 10th level, the weapon improves to a \+2 striking weapon/);
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(openText(modal)).not.toMatch(/If you do|At 8th level|At 10th level/);
+    // batch card premise: feat-9110 "whichever comes first."
     expect(openText(modal)).toMatch(/whichever comes first\./);
   });
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('osteo-armaments at 8: the 8th-level paragraph is open whole, "If you do" with it; only the 10th-level one folds', async () => {
     const modal = await openCard(build('fighter', 8, {}), 'feats', 'osteo-armaments');
+    // batch card premise: feat-9110 "At 8th level, you can destroy an adjacent thrall as part of using this"
     expect(openText(modal)).toMatch(/At 8th level, you can destroy an adjacent thrall as part of using this action\. If you do, the action gains the thrall trait/);
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(openText(modal)).not.toMatch(/At 10th level/);
     expect(folds(modal).map((d) => squash(d.querySelector(':scope > summary')?.textContent))).toEqual(['At higher levels (1)']);
   });
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('a hand-checked ancestry feat: halfling-weapon-familiarity folds its 5th-level paragraph at 4 and shows it at 5', async () => {
     // batch card premise: feat-4459 "At 5th level, whenever you get a critical hit with one of these weapons"
     const m4 = await openCard(build('fighter', 4, {}), 'feats', 'halfling-weapon-familiarity');
@@ -321,16 +373,20 @@ describe('card step 13b: prose gates fold WHOLE on the mine card', () => {
     expect(openText(m4)).toMatch(/You favor traditional halfling weapons/);
     const m5 = await openCard(build('fighter', 5, {}), 'feats', 'halfling-weapon-familiarity');
     expect(folds(m5)).toEqual([]);
+    // batch card premise: feat-4459 "At 5th level, whenever you get a critical hit with one of these weapons"
     expect(openText(m5)).toMatch(/At 5th level, whenever you get a critical hit with one of these weapons, you get its critical specialization effect\./);
   });
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('a partly gated paragraph is never folded: breath-of-the-dragon at 1 shows its 3rd-level paragraph whole (the breath\'s shape and save are level-1 rules)', async () => {
     const modal = await openCard(build('fighter', 1, {}), 'feats', 'breath-of-the-dragon');
     expect(folds(modal)).toEqual([]);
+    // batch card premise: feat-5730 "At 3rd level and every 2 levels thereafter, the damage increases by 1d4. The"
     expect(openText(modal)).toMatch(/At 3rd level and every 2 levels thereafter, the damage increases by 1d4\. The shape of the breath, the damage type, and the saving throw match/);
   });
 });
 
 describe('card step 13b: the sheet\'s own feat row (FeatsTab → FeatDetail card)', () => {
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('a level-7 character\'s Osteo Armaments row folds both gated paragraphs under one line', async () => {
     const modal = await openFeatRow(withFeat('osteo-armaments', 7), 'Osteo Armaments');
     expect(folds(modal).map((d) => [d.dataset.fold, squash(d.querySelector(':scope > summary')?.textContent)])).toEqual([['future', 'At higher levels (2)']]);
@@ -355,23 +411,30 @@ async function justiceAt5With(treatment: 'hide' | 'grey') {
 }
 
 describe('card step 13a: FUTURE_TREATMENT is the one switch', () => {
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('"hide" removes the folded text from the DOM and leaves only a marker', async () => {
     const modal = await justiceAt5With('hide');
     expect(folds(modal)).toEqual([]);
+    // batch card: #card-Q1A — FUTURE_TREATMENT 'hide': the folded text leaves the DOM
     expect(squash(modal.textContent)).not.toMatch(/Relentless Reaction|Exalted Reaction|persistent spirit damage/);
     const marker = modal.querySelector('[data-fold="future"]') as HTMLElement | null;
+    // batch card: #card-Q1A — later-level parts fold under one line
     expect(marker, 'a marker stays where the run was').toBeTruthy();
     expect(marker!.hidden).toBe(true);
     expect(squash(marker!.textContent)).toBe('');
+    // batch card: #card-Q1A — what is not folded stays open
     expect(squash(modal.textContent)).toMatch(/Champion's Reaction/);
   });
 
+  // batch card: #card-Q1A — later-level parts fold under one line
   it('"grey" keeps the text in place, dimmed', async () => {
     const modal = await justiceAt5With('grey');
     expect(folds(modal)).toEqual([]);
     const grey = modal.querySelector('.card-fold-grey.card-dim[data-fold="future"]');
     expect(grey, 'the run is drawn dimmed').toBeTruthy();
+    // batch card: #card-Q1A — FUTURE_TREATMENT 'grey': the folded text stays in place, dimmed
     expect(squash(grey!.textContent)).toMatch(/Relentless Reaction.*persistent spirit damage.*Exalted Reaction/);
+    // batch card: #card-Q1A — what is not folded stays open
     expect(openText(modal)).toMatch(/Relentless Reaction/);
   });
 });

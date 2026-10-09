@@ -106,12 +106,12 @@ const txt = (el: Element | null | undefined) => (el?.textContent ?? '').replace(
 async function openCard(ch: Character, name: string) {
   const m = await mount(<FeatsTab character={ch} content={db} />);
   const row = [...m.host.querySelectorAll('.ff-row')].find((r) => txt(r.querySelector('.ff-name')) === name);
-  // batch card premise: class-feature-743 "Increase the number of dice by one at 5th, 11th, and 17th levels"
+  // batch card: #card-NOT-VACUOUS — the row the case drives exists
   expect(row, `FeatsTab lists a row named ${name}`).toBeTruthy();
   await act(async () => { (row as HTMLElement).click(); });
   await settle();
   const card = (m.host.querySelector('.card-mine') ?? m.host.querySelector('.picker.spell-detail')) as HTMLElement | null;
-  // batch card premise: class-feature-743 "Increase the number of dice by one at 5th, 11th, and 17th levels"
+  // batch card: #card-NOT-VACUOUS — the row opened its popup
   expect(card, `${name}: the row opened its popup`).toBeTruthy();
   const copy = card!.cloneNode(true) as HTMLElement;
   copy.querySelectorAll('[data-ours]').forEach((e) => e.remove());
@@ -121,7 +121,7 @@ async function openCard(ch: Character, name: string) {
 /** The at-level lines featEntries puts on the row whose record id is `id`. */
 const rowLines = (ch: Character, id: string) => {
   const e = featEntries(ch, db).find((x) => (x.featId ?? x.featureId ?? x.trustFeatureId ?? x.heritageId) === id);
-  // batch card premise: class-feature-743 "Increase the number of dice by one at 5th, 11th, and 17th levels"
+  // batch card: #card-NOT-VACUOUS — the row the case drives exists
   expect(e, `a row for ${id}`).toBeTruthy();
   return (e!.ours ?? []).filter((l) => l.kind === 'atYourLevel').map((l) => l.text);
 };
@@ -299,6 +299,7 @@ describe('card step 18: "At your level" lines read from derive', () => {
     expect(rowLine.length).toBe(1);
     expect(rowLine[0].startsWith('At your level (5): ')).toBe(true);
     // …and the record has no page, so a reopened pin draws the STORED description.
+    // batch card: #card-S7 — a record with no Archives page
     expect(astIndex['dragon-instinct']).toBeUndefined();
     const pin = pinOf(featPinNode(entry!));
     // batch card premise: instinct-9 "increase the additional damage from Rage from 2 to 4"
@@ -330,7 +331,7 @@ describe('card step 18: "At your level" lines read from derive', () => {
   /** A rogue 7's Sneak Attack row pinned the way the row's star pins it (FeatDetail featPinNode → play.ts pinOf). */
   const sneakPin = () => {
     const entry = featEntries(build('rogue', 7), db).find((x) => rowId(x) === 'sneak-attack');
-    // batch card premise: class-feature-743 "Increase the number of dice by one at 5th, 11th, and 17th levels"
+    // batch card: #card-NOT-VACUOUS — the Sneak Attack row the pin is made from exists
     expect(entry, 'a Sneak Attack row').toBeTruthy();
     return pinOf(featPinNode(entry!));
   };
@@ -361,12 +362,13 @@ describe('card step 18: "At your level" lines read from derive', () => {
     m.stop();
   });
 
-  // batch card premise: class-feature-743 "Increase the number of dice by one at 5th, 11th, and 17th levels"
+  // batch card: #card-PIN — a browse pin reopened with the character stays a browse card (no at-level line)
   it('a pin made in browse mode (a search pin for the same record, no mode) reopened with the character shows NO at-level line', async () => {
     // pinOf keeps a mode only when one is given: this is the stored shape of a pin starred from browsing.
     const browse = pinOf({ ...sneakPin(), mode: undefined });
     expect('mode' in browse).toBe(false);
     const m = await mount(<PinnedDescCard pin={browse} content={db} character={build('rogue', 11)} onClose={noop} />);
+    // sneakPin() is the pin of classFeatures:sneak-attack, so the card drawn is the Sneak Attack page.
     // batch card premise: class-feature-743 "you deal an extra 1d6 precision damage"
     expect(txt(m.host)).toContain('you deal an extra 1d6 precision damage');
     expect(m.host.querySelectorAll('.card-ours-atYourLevel').length).toBe(0);
@@ -382,7 +384,7 @@ describe('card step 18: "At your level" lines read from derive', () => {
     // An unlisted barbarian instinct (derive scales Rage by every one) is named.
     const barb = db.classes.barbarian;
     const synthDb = { ...db, classes: { ...db.classes, barbarian: { ...barb, subclass: { ...barb.subclass!, options: [...barb.subclass!.options, { id: 'synthesized-instinct', name: 'Synthesized' }] } } } } as unknown as ContentDatabase;
-    // batch card premise: instinct-10 "Increase the additional damage from Rage from 2 to 3"
+    // batch card: #card-MUTATION — a synthesized unlisted instinct is named by the ledger check
     expect(atLevelProblems(synthDb, t)).toEqual(['classFeatures:synthesized-instinct|a barbarian instinct derive scales Rage by, not listed']);
     // A listed record whose page loses its scaling clause is named.
     const sa = t.classFeatures['sneak-attack'];
@@ -509,14 +511,14 @@ describe('card step 18: "At your level" lines read from derive', () => {
     expect(modLines(inventor(9, false), 'metallic-reactance')).toEqual(['At your level (9): resistance 7 to acid, electricity']);
   });
 
-  // batch card premise: heritage-240 "granting you cold resistance equal to half your level (minimum 1)"
+  // batch card: #card-GUARD — the ledger agrees with derive both ways; an unlisted, a stale and a lost record each show
   it('the levelDefense ledger: every record derive sizes a resistance / weakness by level is listed or deferred; an unlisted one, a deferral that no longer holds and a listed record without such a value each show', () => {
     const t = { classFeatures: treeOf('classFeatures')!, feats: treeOf('feats')!, heritages: treeOf('heritages')! };
     expect(atLevelProblems(db, t)).toEqual([]);
     expect(Object.values(AT_LEVEL).filter((f) => f === 'levelDefense').length).toBe(79);
     // A synthesized feat whose own resistance derive sizes by level, in neither table, is named.
     const synth = { id: 'synthesized-ward', name: 'Synthesized Ward', level: 1, traits: [], description: 'You gain resistance to cold equal to half your level.', resistances: [{ type: 'cold', value: 'floor(@actor.level/2)' }] };
-    // batch card premise: heritage-240 "granting you cold resistance equal to half your level (minimum 1)"
+    // batch card: #card-MUTATION — a synthesized feat in neither table is named
     expect(atLevelProblems({ ...db, feats: { ...db.feats, 'synthesized-ward': synth } } as unknown as ContentDatabase, t)).toEqual(['feats:synthesized-ward|derive sizes its resistance / weakness by level, neither listed nor deferred']);
     // A listed record that loses its level-sized value is named.
     const fr = { ...db.feats['fire-resistance'], resistances: [{ type: 'fire', value: 2 }] };

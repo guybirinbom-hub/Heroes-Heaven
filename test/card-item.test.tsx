@@ -162,11 +162,15 @@ describe('card step 14: the itemDetail CUT-IN-SENTENCE baseline is the three pag
       'itemDetail|items:silver-armor-low-grade|silver worth at least 70 sp + 7 sp per Bulk',
       'itemDetail|items:silver-armor|silver worth at least 70 sp + 7 sp per Bulk',
     ]);
+    // batch card: #card-GUARD — the guard computes with the card's functions
     for (const id of ['aon-silver-armor', 'silver-armor', 'silver-armor-low-grade']) expect(db.items[id].aonId?.startsWith('equipment-2803'), id).toBe(true);
     const flat = (n: AstNode): string => (n.t === 'text' ? n.v ?? '' : (n.c ?? []).map(flat).join(' '));
     const page = flat(treeOf('items')!['silver-armor-low-grade']).replace(/\s+/g, ' ');
+    // batch card premise: equipment-2803 "silver worth at least 70 sp + 7 sp per Bulk"
     expect(page).toContain('silver worth at least 70 sp + 7 sp per Bulk');
+    // batch card: #card-GUARD — the guard computes with the card's functions
     expect(page, 'the Low-Grade paragraph has no opening clause on the page').not.toMatch(/must include silver worth at least 70 sp/);
+    // batch card premise: equipment-2803 "The initial raw materials must include silver worth at least 150 gp + 15"
     expect(page, 'the Standard-Grade one does').toContain('The initial raw materials must include silver worth at least 150 gp + 15 gp per Bulk');
   });
 });
@@ -188,12 +192,14 @@ describe('card step 14: embedded page stubs (astStubs.ts)', () => {
   const synthTree = (b: string, s: string) => synthetic[`${b}:${s}`];
   const flat = (n: AstNode): string => (n.t === 'text' ? n.v ?? '' : (n.c ?? []).map(flat).join(' '));
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('a page that embeds itself, and a page that embeds a page embedding it back, never loop (visited set)', () => {
     const out = resolveStubs(A, 'x:a', candidates, synthTree);
     // The B stub draws B; A's own stub (the host) draws nothing; B's stub back to A stays empty.
     const embedded = (out.c ?? []).filter((n) => (n as StubbedNode).stubOf);
     expect(embedded.map((n) => (n as StubbedNode).stubOf)).toEqual(['x:b']);
     const self = (out.c ?? []).find((n) => (n as StubbedNode).id === 'aon-a')!;
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(self.c ?? [], 'the host page is never embedded in itself').toEqual([]);
     const inner = embedded[0].c!.find((n) => (n as StubbedNode).id === 'aon-a')!;
     expect(inner.c ?? [], 'the embedded page\'s stub back to the host stays empty').toEqual([]);
@@ -201,24 +207,28 @@ describe('card step 14: embedded page stubs (astStubs.ts)', () => {
     expect(count(flat(out), 'Words of A.'), 'A is drawn once').toBe(1);
     // Two stubs naming one page: the second draws nothing.
     const twice = page('Page C', stub('aon-b'), stub('aon-b'));
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(resolveStubs(twice, 'x:c', candidates, synthTree).c!.filter((n) => (n as StubbedNode).stubOf).length).toBe(1);
     // And it renders: the real AstRenderer draws the self-embedding page once, with B inside [data-stub].
     const host = document.createElement('div');
     document.body.appendChild(host);
     const root = createRoot(host);
     act(() => { root.render(<AstRenderer node={out} bodyOnly onOpenRef={() => undefined} card={{ printed: printedSet([]) }} />); });
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(count(txt(host), 'Words of A.')).toBe(1);
     expect(txt(host.querySelector('[data-stub="x:b"]'))).toContain('Words of B.');
     act(() => root.unmount());
     host.remove();
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('one level deep: an embedded page\'s own stub stays empty even when it names a page not yet drawn (depth 1)', () => {
     const out = resolveStubs(A2, 'x:a2', candidates, synthTree);
     const b2 = (out.c ?? []).find((n) => (n as StubbedNode).stubOf === 'x:b2');
     expect(b2, 'A2 draws B2').toBeTruthy();
     expect(flat(out)).toContain('Words of B2.');
     const deep = b2!.c!.find((n) => (n as StubbedNode).id === 'aon-deep');
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(deep, 'B2 keeps its stub node').toBeTruthy();
     expect(deep!.c ?? [], 'the second level is never resolved').toEqual([]);
     expect((deep as StubbedNode).stubOf).toBeUndefined();
@@ -227,6 +237,7 @@ describe('card step 14: embedded page stubs (astStubs.ts)', () => {
     expect(flat(resolveStubs(B2, 'x:b2', candidates, synthTree))).toContain('Words of Deep.');
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('the embedded page\'s name prints as the stub\'s heading (its level-1 title moved down to level 2)', () => {
     const out = resolveStubs(A, 'x:a', candidates, synthTree);
     const b = (out.c ?? []).find((n) => (n as StubbedNode).stubOf === 'x:b')!;
@@ -235,6 +246,7 @@ describe('card step 14: embedded page stubs (astStubs.ts)', () => {
     expect(resolveStubs(lone, 'x:l', candidates, synthTree), 'a page with no stub is the very same tree').toBe(lone);
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('every stub on every item page resolves exactly where the guard says it does (STUBS agreement)', () => {
     const idx = aonIndex(db);
     const items = treeOf('items')!;
@@ -253,6 +265,7 @@ describe('card step 14: embedded page stubs (astStubs.ts)', () => {
       const guard = new Set((unresolvedStubs(tree, aonIds) as string[]).filter((g) => g !== '(no id)'));
       const drawn = new Set<string>();
       (function walk(n: AstNode) { const s = n as StubbedNode; if (s.stubOf && s.id) drawn.add(String(s.id)); for (const c of n.c ?? []) walk(c); })(out);
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       for (const g of guard) expect(left, `items:${slug} keeps ${g} empty`).toContain(g);
       for (const l of left) expect(guard.has(l) || drawn.has(l), `items:${slug}: ${l} left empty only when the guard lists it or it repeats`).toBe(true);
       resolved += ids.length - left.length;
@@ -260,12 +273,14 @@ describe('card step 14: embedded page stubs (astStubs.ts)', () => {
       for (const ref of stubRefs(tree, idx)) expect(embedsPage(out, ref), `items:${slug} draws ${ref}`).toBe(true);
     }
     // Measured 2026-10-07: 419 stubs on 418 item pages, 418 resolve (the one left names no record).
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(pagesWithStubs).toBeGreaterThan(400);
     expect(resolved).toBeGreaterThan(400);
   });
 });
 
 describe('card step 14: the item popup is the record\'s card', () => {
+  // batch card: #card-R1 — one card per record
   it('the description is the inset mine card', async () => {
     const host = await itemPopup('longsword');
     expect(cardBody(host), 'the inset card draws the description').toBeTruthy();
@@ -279,6 +294,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
     const stubEl = cardBody(host)!.querySelector('[data-stub="weaponGroup:sword"]');
     expect(stubEl, 'the Sword page is embedded where the longsword page names it').toBeTruthy();
     expect(count(txt(pop), 'becoming off-guard until the start of your next turn')).toBe(1);
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(txt(pop)).not.toContain(CRIT_SPEC.sword);
     expect(pop.querySelector('.sd-critspec'), 'our sentence leaves when the page prints the effect').toBeNull();
     // batch card premise: weapon-386 "The exact effect depends on which weapon group your weapon belongs to, as listed below"
@@ -295,12 +311,14 @@ describe('card step 14: the item popup is the record\'s card', () => {
     expect(txt(stubEl)).toContain('You gain resistance to slashing damage equal to 1 + the value of the armor’s potency rune for medium armor');
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('the embedded words are the target page\'s own: the same text as the Sword page\'s browse card', async () => {
     const item = await itemPopup('longsword');
     const embedded = txt(cardBody(item)!.querySelector('[data-stub="weaponGroup:sword"]'));
     const browse = await mount(<RecordCard record={{ bucket: 'weaponGroup', id: 'sword' }} mode="browse" chrome="popup" onExit={() => undefined} />);
     const name = txt(browse.querySelector('.ast-head .ast-name'));
     const body = txt(browse.querySelector('.ast-pop > .ast-body'));
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(name).toBe('Sword');
     expect(embedded.replace(/\s+/g, '')).toBe(`${name}WeaponCriticalSpecialization${body}`.replace(/\s+/g, ''));
   });
@@ -312,6 +330,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
     const host = await itemPopup('dwarven-thrower');
     const crit = host.querySelector('.sd-critspec');
     expect(crit, 'our sentence stays').toBeTruthy();
+    // batch card: #card-N2 — an app addition is marked ours
     expect(crit!.getAttribute('data-ours')).toBe('');
     expect(crit!.getAttribute('data-ours-kind')).toBe('critSpec');
     expect(txt(crit)).toContain(CRIT_SPEC.hammer);
@@ -326,6 +345,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
   type GroupRow = { id: string; recordGroup: string; pagePrintedGroups: string[]; embeddedGroupPages: string[] };
   const driftFile = () => JSON.parse(readFileSync('work/card-step14-weapon-group-drift.json', 'utf8')) as { drift: GroupRow[]; combination: GroupRow[] };
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('the drift file matches the shipped pages: 5 drift (prints only the page\'s group), 18 combination (prints the record\'s group too)', () => {
     const f = driftFile();
     const idx = aonIndex(db);
@@ -335,6 +355,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
       const page = withoutItemLists(recordTree('items', r.id, (b, s) => trees[b]?.[s])!);
       const printed = [...new Set(printedWeaponGroups(page))];
       const embedded = [...new Set(stubRefs(page, idx).filter((x) => x.startsWith('weaponGroup:')).map((x) => x.slice('weaponGroup:'.length)))];
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       expect(db.items[r.id].group, r.id).toBe(r.recordGroup);
       expect(printed, `${r.id} prints`).toEqual(r.pagePrintedGroups);
       expect(embedded, `${r.id} embeds`).toEqual(r.embeddedGroupPages);
@@ -342,6 +363,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
     }
     for (const r of f.drift) expect(r.pagePrintedGroups, `${r.id}: true drift prints only the embedded group`).toEqual(r.embeddedGroupPages);
     for (const r of f.combination) {
+      // batch card: #card-STUBS — an embedded page drawn once, one level deep
       expect(r.id, 'every combination row is a melee half').toMatch(/-melee$/);
       expect(r.pagePrintedGroups, `${r.id}: the page prints the record's group`).toContain(r.recordGroup);
     }
@@ -354,6 +376,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
     const host = await itemPopup('axe-musket-melee');
     const pop = host.querySelector('.picker.spell-detail')!;
     const crit = pop.querySelectorAll('.sd-critspec');
+    // batch card: #card-N2 — an app addition is marked ours
     expect(crit.length, 'our sentence stays: the page prints Group Axe but embeds only the Firearm page').toBe(1);
     expect(crit[0].getAttribute('data-ours')).toBe('');
     expect(crit[0].getAttribute('data-ours-kind')).toBe('critSpec');
@@ -373,6 +396,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
     const host = await itemPopup('alchemical-crossbow');
     const pop = host.querySelector('.picker.spell-detail')!;
     expect(pop.querySelector('.sd-critspec'), 'our crossbow sentence stays out').toBeNull();
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(txt(pop)).not.toContain(CRIT_SPEC.crossbow);
     const stubs = [...cardBody(host)!.querySelectorAll('[data-stub]')].map((e) => e.getAttribute('data-stub'));
     expect(stubs, 'one group page, the one the page embeds').toEqual(['weaponGroup:bow']);
@@ -400,6 +424,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
       { t: 'p', c: [b('Base Weapon'), t(' Warhammer')] },
       { t: 'p', c: [t('Group Hammer, said in passing')] },
     ] };
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(printedWeaponGroups(tree)).toEqual(['pick', 'shield']);
     expect(printedWeaponGroups(undefined)).toEqual([]);
   });
@@ -413,11 +438,14 @@ describe('card step 14: the item popup is the record\'s card', () => {
     const statKeys = [...pop.querySelectorAll('.sd-stat-k')].map(txt);
     const bodyLabels = [...cardBody(host)!.querySelectorAll('.ast-body strong')].map(txt);
     for (const label of ['Price', 'Bulk']) {
+      // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
       expect(statKeys.filter((k) => k === label).length, `${label} is a stat row`).toBe(1);
       expect(bodyLabels.filter((k) => k === label).length, `${label} is not printed again in the body`).toBe(0);
     }
     // The rest of the kit's header stays, in the page's words.
+    // batch card premise: class-kit-20 "Money Left Over"
     expect(bodyLabels).toContain('Money Left Over');
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(bodyLabels).toContain('Armor');
   });
 
@@ -429,6 +457,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
     const lines = [...body.querySelectorAll('.ast-body p')].map(txt);
     expect(lines.filter((l) => /^Activate\b/.test(l)).length, 'the page\'s Activate line, once').toBe(1);
     for (const label of ['Price', 'Usage', 'Bulk']) {
+      // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
       expect([...pop.querySelectorAll('.sd-stat-k')].map(txt), `${label} is a stat row`).toContain(label);
       expect(lines.filter((l) => l.startsWith(label)).length, `${label} is not printed again in the body`).toBe(0);
     }
@@ -443,6 +472,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
     const host = await itemPopup('healing-potion-lesser');
     const body = cardBody(host)!;
     const glyphs = [...body.querySelectorAll('.ast-body .ast-ag')];
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(glyphs.map((g) => g.getAttribute('title')), 'the page\'s one Activate glyph').toEqual(['Single Action']);
     const block = glyphs[0].parentElement!;
     expect(block.tagName, 'the glyph sits inside the line, not in a block of its own').toBe('P');
@@ -450,10 +480,12 @@ describe('card step 14: the item popup is the record\'s card', () => {
     expect(txt(block)).toBe(`Activate ${txt(glyphs[0])} (manipulate)`);
     expect(body.querySelector('.ast-actline'), 'no glyph line of its own').toBeNull();
     const lines = [...body.querySelectorAll('.ast-body p')].map(txt);
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(lines.filter((l) => /^Activate\b/.test(l)), 'one Activate line').toHaveLength(1);
     expect(lines, '"(manipulate)" is not a line of its own').not.toContain('(manipulate)');
   });
 
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('longsword: Damage, Category, Group and Hands are the stat block\'s, never repeated by the page; Type stays', async () => {
     const host = await itemPopup('longsword');
     const lines = [...cardBody(host)!.querySelectorAll('.ast-body p')].map(txt);
@@ -471,6 +503,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
     const host = await itemPopup('ablative-armor-plating-greater');
     const lines = [...cardBody(host)!.querySelectorAll('.ast-body p')].map(txt);
     expect(lines.some((l) => /^Price\b/.test(l))).toBe(false);
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(lines.some((l) => /^Bulk\b/.test(l))).toBe(false);
     expect(txt(cardBody(host))).toContain('The wearer gains 20 temporary Hit Points');
   });
@@ -494,26 +527,31 @@ describe('card step 14: the item popup is the record\'s card', () => {
     expect(recordTree('items', 'agate', (b, s) => trees[b]?.[s]), 'agate ships no page').toBeUndefined();
     const host = await itemPopup('agate');
     const body = cardBody(host)!;
+    // batch card: #card-S7 — no page: our text, marked
     expect(body, 'the inset card draws the no-page lane').toBeTruthy();
     expect(body.querySelector('.ast-body')).toBeNull();
     const note = body.querySelector('.sd-unprinted');
     expect(txt(note)).toBe(NO_TEXT);
     const line = body.querySelector('.card-nopage');
     expect(txt(line)).toBe(NO_PAGE);
+    // batch card: #card-S7 — no page: our text, marked
     expect(line!.getAttribute('data-ours')).toBe('');
     expect(line!.getAttribute('data-ours-kind')).toBe('noPage');
     expect(count(txt(host), NO_TEXT), 'the note once').toBe(1);
   });
 
+  // batch card: #card-S7 — no page: our text, marked
   it('an item with old text and no page (Abrogail I Script): the old text, no #152 note, the no-page line', async () => {
     expect(recordTree('items', 'abrogail-i-script', (b, s) => trees[b]?.[s])).toBeUndefined();
     const host = await itemPopup('abrogail-i-script');
     const body = cardBody(host)!;
     expect(txt(body.querySelector('.card-inset-text')).length, 'the old import\'s words').toBeGreaterThan(20);
     expect(body.querySelector('.sd-unprinted')).toBeNull();
+    // batch card: #card-S7 — no page: our text, marked
     expect(txt(body.querySelector('.card-nopage'))).toBe(NO_PAGE);
   });
 
+  // batch card: #card-S7 — no page: our text, marked
   it('a homebrew item: its own words and "Homebrew", never the no-page line', async () => {
     const HB = {
       id: 'custom-test-lantern-aaa', itemType: 'gear', name: 'Test Lantern', level: 0, rarity: 'common',
@@ -523,6 +561,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
     const inv = invOf(HB.id);
     const host = await mount(<ItemDetail inv={inv} item={HB} content={hdb} inventory={[inv]} onClose={() => undefined} />, hdb);
     const body = cardBody(host)!;
+    // batch card: #card-S7 — no page: our text, marked
     expect(txt(body.querySelector('.card-inset-text'))).toContain('A synthesized test lantern.');
     const line = body.querySelector('.card-nopage');
     expect(txt(line)).toBe('Homebrew');
@@ -531,12 +570,14 @@ describe('card step 14: the item popup is the record\'s card', () => {
     expect(body.querySelector('.sd-unprinted')).toBeNull();
   });
 
+  // batch card: #card-R1 — one card per record
   it('an item with a page prints none of the no-page footer lines', async () => {
     const host = await itemPopup('longsword');
     expect(host.querySelector('.card-nopage')).toBeNull();
     expect(host.querySelector('.sd-unprinted')).toBeNull();
   });
 
+  // batch card: #card-R1 — one card per record
   it('a linked word opens the browse card over the item; Back returns to the item', async () => {
     const host = await itemPopup('longsword');
     const link = cardBody(host)!.querySelector('a.ast-lk') as HTMLElement;
@@ -544,6 +585,7 @@ describe('card step 14: the item popup is the record\'s card', () => {
     await act(async () => { link.click(); });
     await settle();
     const drilled = host.querySelector('.ast-modal');
+    // batch card: #card-R1 — one card per record
     expect(drilled, 'the browse card opened').toBeTruthy();
     await act(async () => { (drilled!.querySelector('.info-back') as HTMLElement).click(); });
     await settle();
@@ -553,28 +595,33 @@ describe('card step 14: the item popup is the record\'s card', () => {
 });
 
 describe('card step 14: the frame and its controls are unchanged', () => {
+  // batch card: #card-SNAPSHOT — a step changes only its own surface
   it('the phone Remove bar stays outside the scrolling body, the same markup, and still removes', async () => {
     let played = 0;
     const host = await itemPopup('longsword', { onPlay: () => { played++; }, mobile: true });
     const pop = host.querySelector('.picker.spell-detail')!;
     const bar = pop.querySelector(':scope > .sd-remove');
     expect(bar, 'a sibling of .sd-body, not inside it').toBeTruthy();
+    // batch card: #card-SNAPSHOT — a step changes only its own surface
     expect(pop.querySelector('.sd-body .sd-remove')).toBeNull();
     expect(pop.lastElementChild).toBe(bar);
     expect(bar!.outerHTML).toBe('<div class="sd-remove"><button class="sd-remove-btn" aria-label="Remove Longsword"><i class="ti ti-trash" aria-hidden="true"></i> Remove item</button></div>');
     await act(async () => { (bar!.querySelector('button') as HTMLElement).click(); });
     await settle();
     const confirm = [...document.querySelectorAll('.confirm-modal .btn-danger')].find((b) => txt(b) === 'Remove') as HTMLElement;
+    // batch card: #card-SNAPSHOT — a step changes only its own surface
     expect(confirm, 'the same confirm dialog').toBeTruthy();
     await act(async () => { confirm.click(); });
     await settle();
     expect(played).toBe(1);
     // Desktop draws no bar (the header's trash icon is the one control).
     const desk = await itemPopup('longsword', { onPlay: () => undefined, mobile: false });
+    // batch card: #card-SNAPSHOT — a step changes only its own surface
     expect(desk.querySelector('.sd-remove')).toBeNull();
     expect(desk.querySelector('.sd-head-remove')).toBeTruthy();
   });
 
+  // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
   it('the stat block still prints exactly itemStatRows, and the star pins {items, slug, title, mine}', async () => {
     const toggled: DescNode[] = [];
     const host = document.createElement('div');
@@ -588,6 +635,7 @@ describe('card step 14: the frame and its controls are unchanged', () => {
     });
     await settle();
     const rows = [...host.querySelectorAll('.sd-stats .sd-stat')].map((s) => [txt(s.querySelector('.sd-stat-k')), txt(s.querySelector('.sd-stat-v'))]);
+    // batch card: #card-PRINTED-SET — a line the stat block prints is not drawn twice
     expect(rows).toEqual(itemStatRows(db.items.longsword, db).map((r) => [r.k, String(r.v)]));
     await act(async () => { (host.querySelector('.sd-head-actions .info-star') as HTMLElement).click(); });
     expect(toggled.map((n) => ({ key: n.key, slug: n.slug, title: n.title, mode: (n as { mode?: string }).mode }))).toEqual([{ key: 'items', slug: 'longsword', title: 'Longsword', mode: 'mine' }]);
@@ -597,11 +645,14 @@ describe('card step 14: the frame and its controls are unchanged', () => {
 });
 
 describe('card step 14: the browse card draws an item page\'s stubs; the strike card keeps its gate', () => {
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('the search popup of the longsword draws the Sword page, as the item card does', async () => {
     const host = await mount(<RecordCard record={{ bucket: 'items', id: 'longsword' }} mode="browse" chrome="popup" onExit={() => undefined} />);
+    // batch card premise: weapon-group-15 "becoming off-guard until the start of your next turn"
     expect(txt(host.querySelector('.ast-pop > .ast-body [data-stub="weaponGroup:sword"]'))).toContain('becoming off-guard until the start of your next turn');
   });
 
+  // batch card: #card-STUBS — an embedded page drawn once, one level deep
   it('the strike card (Strikes tab) draws no stub: its crit spec is still only shown when the character has it', async () => {
     const ch = build('fighter', 1);
     const inv = invOf('longsword', { equipped: true });
@@ -609,7 +660,9 @@ describe('card step 14: the browse card draws an item page\'s stubs; the strike 
     const strike = deriveStrikes(c, db).find((s) => s.instanceId === inv.instanceId)!;
     expect(strike).toBeTruthy();
     const host = await mount(<StrikeDetailModal strike={strike} character={c} content={db} onClose={() => undefined} />);
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(host.querySelector('[data-stub]')).toBeNull();
+    // batch card premise: weapon-group-15 "becoming off-guard"
     expect(txt(host)).not.toContain('becoming off-guard');
   });
 });
@@ -656,6 +709,7 @@ describe('card step 14: the crit gate while the page or its group page is loadin
       import('../src/sheet/ItemDetail'), import('../src/sheet/ContentContext'), import('../src/sheet/PinContext'), import('../src/sheet/astStore'),
     ]);
     await store.loadAstIndex();
+    // batch card: #card-LOADING — a placeholder while the page loads, never old text
     expect(store.isBucketLoaded('items'), 'a fresh store holds no bucket').toBe(false);
     for (const b of held) expect(store.isBucketLoaded(b)).toBe(false);
     const inv = invOf(itemId);
@@ -679,6 +733,7 @@ describe('card step 14: the crit gate while the page or its group page is loadin
     await until(() => !!cardBody(host)?.querySelector('.ast-body'), 'the longsword page');
     for (let i = 0; i < 5; i++) await act(async () => { await new Promise((r) => setTimeout(r, 20)); });
     const pop = host.querySelector('.picker.spell-detail')!;
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(cardBody(host)!.querySelector('[data-stub]'), 'the stub draws nothing while its bucket loads').toBeNull();
     expect(txt(pop)).not.toContain(SWORD_WORDS);
     expect(pop.querySelector('.sd-critspec'), 'no flash of our sentence while the group page loads').toBeNull();
@@ -686,17 +741,20 @@ describe('card step 14: the crit gate while the page or its group page is loadin
     // (b) The bucket arrives: the page's effect, once; ours never appears.
     release('weaponGroup');
     await until(() => !!cardBody(host)?.querySelector('[data-stub="weaponGroup:sword"]'), 'the Sword page');
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(count(txt(pop), SWORD_WORDS)).toBe(1);
     expect(pop.querySelector('.sd-critspec')).toBeNull();
     expect(txt(pop)).not.toContain(CRIT_SPEC.sword);
   });
 
+  // batch card: #card-LOADING — while the page loads, a placeholder, never our text
   it('(c) the item page itself pending: the card shows its loading placeholder and no crit sentence of ours', async () => {
     const { host, release } = await freshPopup('longsword', ['items', 'weaponGroup']);
     for (let i = 0; i < 5; i++) await act(async () => { await new Promise((r) => setTimeout(r, 20)); });
     const pop = host.querySelector('.picker.spell-detail')!;
     expect(host.querySelector('.sd-desc.card-inset.ast-loading[aria-busy="true"]'), 'the quiet placeholder').toBeTruthy();
     expect(pop.querySelector('.sd-critspec'), 'no sentence of ours before the page is known').toBeNull();
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(txt(pop)).not.toContain(CRIT_SPEC.sword);
     // The page arrives with its group bucket still held: still no sentence of ours (the stub names the group page).
     release('items');
@@ -704,6 +762,7 @@ describe('card step 14: the crit gate while the page or its group page is loadin
     expect(pop.querySelector('.sd-critspec')).toBeNull();
     release('weaponGroup');
     await until(() => !!cardBody(host)?.querySelector('[data-stub="weaponGroup:sword"]'), 'the Sword page');
+    // batch card: #card-STUBS — an embedded page drawn once, one level deep
     expect(pop.querySelector('.sd-critspec')).toBeNull();
   });
 });

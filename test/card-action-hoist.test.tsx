@@ -222,6 +222,7 @@ describe('every Main-tab action popup, opened through MainTab', () => {
     }));
   }, 300_000);
 
+  // batch card: #card-NOT-VACUOUS — the case measures something
   it('the sample holds every named case, and is not vacuous', () => {
     const keys = Object.keys(popups);
     expect(keys.length).toBeGreaterThan(200);
@@ -252,6 +253,7 @@ describe('every Main-tab action popup, opened through MainTab', () => {
     expect(toggles.some((t) => !t!.classList.contains('on') && t!.disabled)).toBe(true);
     // A rune: the etch toggle rides the same prepare slot, never disabled.
     const runePops = Object.keys(popups).filter((k) => k.startsWith('runesmith|enc|')).map((k) => frag(popups[k]));
+    // batch card: #card-NOT-VACUOUS — the case measures something
     expect(runePops.filter((p) => p.querySelector('.prep-toggle.on')).length).toBe(1);
     expect(runePops.filter((p) => p.querySelector('.prep-toggle') && !p.querySelector('.prep-toggle.on')).length).toBe(3);
     // The resonant weapon's granted free action.
@@ -265,6 +267,7 @@ describe('every Main-tab action popup, opened through MainTab', () => {
       writeFileSync(SNAP!, JSON.stringify(popups));
       return;
     }
+    // batch card: #card-SNAPSHOT — a step changes only its own surface
     expect(existsSync(SNAP!), `snapshot ${SNAP} missing — write it on the pre-hoist tree with CARD_ACTION_HOIST_WRITE=1`).toBe(true);
     const before = JSON.parse(readFileSync(SNAP!, 'utf8')) as Record<string, string>;
     expect(Object.keys(popups)).toEqual(Object.keys(before));
@@ -286,12 +289,12 @@ describe('every Main-tab action popup, opened through MainTab', () => {
     const unchanged = Object.keys(before).filter((k) => legacyOf(popups[k]) === before[k]);
     const pinOnly = unchanged.filter((k) => popups[k] !== before[k]);
     console.log(`card-action-hoist: ${Object.keys(before).length} popups, ${changed.length} changed, ${onCard.length} now the record's mine card`);
-    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid"
+    // batch card: #card-SNAPSHOT — a popup that did not move onto the card stays byte-equal
     expect(changed.filter((k) => !onCard.includes(k)), 'a popup that did not move onto the card changed').toEqual([]);
-    // batch card premise: action-2292 "Requirements The ally is willing to accept your aid" — "Pin to top" draws a pin, the PinStar a star (owner, 2026-10-08).
+    // batch card: #card-SNAPSHOT — "Pin to top" draws a pin, the PinStar a star (owner, 2026-10-08).
     for (const k of Object.keys(before)) if (!onCard.includes(k)) expect(legacyOf(popups[k]), k).toBe(before[k]);
     expect(pinOnly.map((k) => k.split('|').slice(3).join('|')), 'popups changed only by the pin glyph').toEqual(Array(6).fill('Recover'));
-    // batch card premise: action-2292 "Trigger An ally is about to use an action that requires a skill check or attack roll"
+    // batch card: #card-SNAPSHOT — every popup now on the card is one that changed
     expect(onCard.filter((k) => !changed.includes(k))).toEqual([]);
     /* Pinned independently of the new markup (fixer round 3): the rule above lets any popup that now
        contains 'card-mine' change, so it alone would let a no-record popup (Recover, Retrain) start
@@ -301,6 +304,7 @@ describe('every Main-tab action popup, opened through MainTab', () => {
     // Applies to a snapshot written before step 9 (no card markup in it) while the switch is on.
     const preStep9 = !Object.values(before).some((h) => h.includes('card-mine'));
     if (preStep9) {
+      // batch card: #card-SNAPSHOT — a step changes only its own surface
       expect(Object.keys(before).length, 'the pre-step-9 snapshot').toBe(693);
       expect([changed.length, unchanged.length], 'changed / unchanged').toEqual([672, 21]);
       const slug = (n: string) => n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -320,6 +324,7 @@ describe('every Main-tab action popup, opened through MainTab', () => {
       const SURFACES = ['activity', 'feat', 'classFeature', 'granted', 'tactic', 'rune'];
       const tally: Record<string, number> = {};
       for (const k of changed) tally[surfaceOf(k)] = (tally[surfaceOf(k)] ?? 0) + 1;
+      // batch card: #card-SNAPSHOT — a step changes only its own surface
       expect(changed.filter((k) => !SURFACES.includes(surfaceOf(k))), 'a changed popup on no switched surface').toEqual([]);
       expect(tally).toEqual(CHANGED_BY_SURFACE);
       expect(unchanged.map((k) => surfaceOf(k)).every((s) => s === 'none')).toBe(true);
@@ -337,18 +342,21 @@ describe('the row stars on strike rows and full action rows', () => {
     const r = mount(<MainTab character={c} content={db} onPlay={onPlay} />);
     // The sub-tab is remembered per device (localStorage); the collect() above leaves it on Actions.
     const strikesTab = [...r.host.querySelectorAll('.stab')].find((e) => txt(e) === 'Strikes');
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(strikesTab, 'Strikes sub-tab').toBeTruthy();
     r.click(strikesTab!);
     return r;
   };
   const rowName = (el: Element) => (el.querySelector('.action-name')?.firstChild?.textContent ?? '').trim();
 
+  // batch card: #card-ORDER — the mine card's order and controls
   it('pinned actions and a pinned strike show an ON star; an unpinned strike an OFF one; clicks reach onPlay', () => {
     const calls: ((p: PlayState) => PlayState)[] = [];
     const record: PlayUpdater = (fn) => void calls.push(fn);
     const c = { ...halfling(), pinned: ['action:Aid', 'action:Halfling Luck'] };
     const r = rows(c, record);
     const pinnedRows = [...r.host.querySelectorAll('.pinned-card .action')];
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(pinnedRows.map(rowName).sort()).toEqual(['Aid', 'Halfling Luck']);
     for (const row of pinnedRows) {
       const star = row.querySelector('.pin-star');
@@ -356,6 +364,7 @@ describe('the row stars on strike rows and full action rows', () => {
       expect(star?.getAttribute('aria-label')).toBe('Unpin');
     }
     // The longsword's strike row (Strikes section; not pinned, so not in the Pinned card).
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(r.host.querySelectorAll('.pinned-card .strike')).toHaveLength(0);
     const strikeStars = [...r.host.querySelectorAll('.strike .pin-star')];
     expect(strikeStars.length).toBeGreaterThan(0);
@@ -364,6 +373,7 @@ describe('the row stars on strike rows and full action rows', () => {
       expect(s.getAttribute('aria-label')).toBe('Pin to top');
     }
     r.click(strikeStars[0]);
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(calls).toHaveLength(1);
     expect(calls[0]({ pinned: [] } as unknown as PlayState).pinned).toEqual(['strike:i-sword']);
     // Unpinning from a pinned action row hands onPlay the removal.
@@ -374,10 +384,12 @@ describe('the row stars on strike rows and full action rows', () => {
     // A pinned strike: its Pinned-card row carries the ON star.
     const s = rows({ ...halfling(), pinned: ['strike:i-sword'] }, record);
     const pinnedStrike = s.host.querySelector('.pinned-card .strike .pin-star');
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(pinnedStrike?.classList.contains('on')).toBe(true);
     expect(pinnedStrike?.getAttribute('aria-label')).toBe('Unpin');
   });
 
+  // batch card: #card-ORDER — the mine card's order and controls
   it('without onPlay no row carries a star', () => {
     const r = rows({ ...halfling(), pinned: ['action:Aid', 'strike:i-sword'] });
     expect(r.host.querySelectorAll('.pinned-card .action, .pinned-card .strike').length).toBeGreaterThan(0);
@@ -400,15 +412,18 @@ describe('ActionDetailModal as a module-level component', () => {
     return { id: a.id, name: a.name, cost: a.actionCost, desc: a.description, descRefs: a.descRefs, traits: a.traits, record: { bucket: 'actions', id } };
   };
 
+  // batch card: #card-SNAPSHOT — a step changes only its own surface
   it('with the props MainTab hands it, it prints exactly MainTab\'s popup (feat action, pinned)', () => {
     const c = { ...halfling(), pinned: ['action:Aid', 'action:Halfling Luck'] };
     const via = find('halfling-pinned', 'enc', 'Halfling Luck');
     const { host } = mount(
       <ActionDetailModal detail={{ a: featAct('halfling-luck'), pinnable: true }} onClose={() => undefined} character={c} content={db} onPlay={noPlay} pinned={new Set(c.pinned)} />,
     );
+    // batch card: #card-SNAPSHOT — a step changes only its own surface
     expect(host.querySelector('.picker-overlay')!.outerHTML).toBe(via);
   });
 
+  // batch card: #card-SNAPSHOT — a step changes only its own surface
   it('…and for a tactic, prepared and unprepared-but-full', () => {
     const c = commander();
     const max = c.commanderTactics!.preparedMax;
@@ -428,11 +443,13 @@ describe('ActionDetailModal as a module-level component', () => {
           </PinContext.Provider>
         </ContentContext.Provider>,
       );
+      // batch card: #card-SNAPSHOT — a step changes only its own surface
       expect(host.querySelector('.picker-overlay')!.outerHTML, `tactic #${i} ${id}`).toBe(find('commander', 'enc', db.actions[id]!.name));
       stop();
     }
   });
 
+  // batch card: #card-N2 — an app addition is marked ours
   it('character drives the marked cost: High Jump is one action with Quick Jump, two without', () => {
     const hj = { ...actionAct('high-jump'), skill: 'Athletics' };
     const one = mount(<ActionDetailModal detail={{ a: hj, pinnable: true }} onClose={() => undefined} character={halfling()} content={db} onPlay={noPlay} pinned={new Set()} />);
@@ -443,6 +460,7 @@ describe('ActionDetailModal as a module-level component', () => {
     expect(headCost(two.host)).toEqual(['two actions']);
   });
 
+  // batch card: #card-PIN — the star pins the record it was made from; without onPlay, no star
   it('pinned drives the star, onPlay receives the pin, and without onPlay neither star nor prepare toggle renders', () => {
     const c = halfling();
     const a = featAct('halfling-luck');
@@ -465,9 +483,11 @@ describe('ActionDetailModal as a module-level component', () => {
     const prepare = { prepared: false, disabled: false, onToggle: () => undefined };
     const bare = mount(<ActionDetailModal detail={{ a, pinnable: true, prepare }} onClose={() => undefined} character={c} content={db} pinned={new Set(['action:Halfling Luck'])} />);
     expect(bare.host.querySelector('.pin-star')).toBeNull();
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(bare.host.querySelector('.prep-toggle')).toBeNull();
   });
 
+  // batch card: #card-ORDER — the mine card's order and controls
   it('the prepare toggle calls onToggle and then closes; the star does not close', () => {
     let toggled = 0;
     let closed = 0;
@@ -482,6 +502,7 @@ describe('ActionDetailModal as a module-level component', () => {
       />,
     );
     click(host.querySelector('.pin-star'));
+    // batch card: #card-ORDER — the mine card's order and controls
     expect(closed).toBe(0);
     click(host.querySelector('.prep-toggle'));
     expect([toggled, closed]).toEqual([1, 1]);

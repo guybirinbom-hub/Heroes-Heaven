@@ -93,6 +93,7 @@ async function mount(el: ReactElement, cdb: ContentDatabase = db, pin: PinDescAp
   return { host, stop: () => { act(() => root.unmount()); host.remove(); } };
 }
 async function click(el: Element | null | undefined) {
+  // batch card: #card-NOT-VACUOUS — the case measures something
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -148,6 +149,7 @@ beforeAll(async () => {
 afterAll(() => { vi.unstubAllGlobals(); });
 
 describe('card step 7b: a builder origin popup opens the record\'s own page, by its real bucket', () => {
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('Background (Acolyte): the filled value opens the backgrounds page — no request for ast/origin.json (T3)', async () => {
     const own = await browseText('backgrounds', 'acolyte');
     expect(own, 'Acolyte has a page').toBeTruthy();
@@ -156,6 +158,7 @@ describe('card step 7b: a builder origin popup opens the record\'s own page, by 
     expect(p.urls.filter((u) => /ast\/origin\.json/.test(u))).toEqual([]);
   });
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('Background: a row in the open picker opens THAT background\'s page (the first listed one with a unique name)', async () => {
     const m = await mount(<OriginPickers build={cleric()} actions={actions} content={db} />);
     await click(m.host.querySelector('[data-setupcard="Background"] .ss-replace'));
@@ -164,6 +167,7 @@ describe('card step 7b: a builder origin popup opens the record\'s own page, by 
       const hits = named(txt(r.querySelector('.picker-name')));
       return hits.length === 1 && hits[0].id !== 'acolyte' && !!treeOf('backgrounds')?.[hits[0].id];
     });
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(row, 'the open picker lists a background with a page').toBeTruthy();
     const id = named(txt(row!.querySelector('.picker-name')))[0].id;
     await click(row!.querySelector('.pick-body'));
@@ -172,6 +176,7 @@ describe('card step 7b: a builder origin popup opens the record\'s own page, by 
     expect(shown, `${id}: the row opens its own page`).toBe(await browseText('backgrounds', id));
   });
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('Ancestry, Class, Deity and the subclass (Cloistered Cleric) each open their own page', async () => {
     const cases: [string, string, string][] = [
       ['Ancestry', 'ancestries', 'human'],
@@ -181,6 +186,7 @@ describe('card step 7b: a builder origin popup opens the record\'s own page, by 
     ];
     for (const [card, bucket, id] of cases) {
       const own = await browseText(bucket, id);
+      // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
       expect(own, `${bucket}:${id} has a page`).toBeTruthy();
       const p = await filledPopup(card, cleric());
       expect(p.page, `${card}: the popup is ${bucket}:${id}'s page`).toBe(own);
@@ -188,6 +194,7 @@ describe('card step 7b: a builder origin popup opens the record\'s own page, by 
     expect(originRequests(), 'no origin popup so far asked for the bucket that does not exist').toEqual([]);
   });
 
+  // batch card: #card-PIN — a pin reopens the record it was made from
   it('never-overwrite: a Background pinned before 7b ({key: "origin"}) shows pinned and its star removes THAT pin; a new pin stores the real bucket', async () => {
     const acolyte = db.backgrounds.acolyte;
     // Shaped like the Builder's pin API (Builder.tsx pinApi: descId match over build.pinnedDescs).
@@ -202,6 +209,7 @@ describe('card step 7b: a builder origin popup opens the record\'s own page, by 
     const m = await mount(<OriginPickers build={cleric()} actions={actions} content={db} />, db, pin);
     await click(m.host.querySelector('[data-setupcard="Background"] .ss-filled-body'));
     const star = () => m.host.querySelector('.info-star');
+    // batch card: #card-PIN — a pin reopens the record it was made from
     expect(star()?.classList.contains('on'), 'the old pin reads as pinned').toBe(true);
     await click(star());
     expect(state.list, 'the old pin was removed, nothing added').toEqual([]);
@@ -210,33 +218,39 @@ describe('card step 7b: a builder origin popup opens the record\'s own page, by 
     m.stop();
   });
 
+  // batch card: #card-S7 — no page: our text, marked
   it('a homebrew background named like an official one opens its OWN text, never the official page', async () => {
     const hbId = 'hb-card-origin-test';
     const hb = { ...db.backgrounds.acolyte, id: hbId, description: 'Synthetic homebrew background words.', descRefs: undefined, source: { book: 'Homebrew', license: 'homebrew' } };
     const hbDb = { ...db, backgrounds: { ...db.backgrounds, [hbId]: hb } } as unknown as ContentDatabase;
     const p = await filledPopup('Background', cleric({ backgroundId: hbId }), hbDb);
     expect(p.page, 'no page for a homebrew id').toBeNull();
+    // batch card: #card-S7 — no page: our text, marked
     expect(p.all).toContain('Synthetic homebrew background words.');
     expect(p.all).not.toContain((await browseText('backgrounds', 'acolyte'))!.slice(0, 60));
   });
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('a multi-pick option that names its record opens its page, not the group name as a bucket', async () => {
     const id = Object.keys(treeOf('classFeatures')!).filter((k) => db.classFeatures[k]?.description).sort()[0];
     const own = await browseText('classFeatures', id);
     const before = requested.length;
     const m = await mount(<MultiPickRows options={[{ id, name: db.classFeatures[id].name, description: db.classFeatures[id].description, record: { bucket: 'classFeatures', id } }]} selected={[]} max={2} onToggle={noop} keyName="Elements" />);
     await click(m.host.querySelector('.pick-body'));
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(pageText(m.host)).toBe(own);
     expect(requested.slice(before).filter((u) => /ast\/Elements\.json/.test(u))).toEqual([]);
     m.stop();
   });
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('choiceOptionRecord: open choices by source bucket, ownsFeature by classFeature id (aon- matched bare), inline options none', () => {
     const cf = Object.keys(db.classFeatures).sort()[0];
     expect(choiceOptionRecord({ kind: 'open', from: { type: 'feat' } } as FeatChoiceDef, 'x', db)).toEqual({ bucket: 'feats', id: 'x' });
     expect(choiceOptionRecord({ kind: 'open', from: { type: 'background' } } as FeatChoiceDef, 'acolyte', db)).toEqual({ bucket: 'backgrounds', id: 'acolyte' });
     expect(choiceOptionRecord({ kind: 'open', from: { type: 'language' } } as FeatChoiceDef, 'common', db)).toBeNull();
     expect(choiceOptionRecord({ ownsFeature: true } as FeatChoiceDef, `aon-${cf}`, db)).toEqual({ bucket: 'classFeatures', id: cf });
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(choiceOptionRecord({} as FeatChoiceDef, cf, db)).toBeNull();
     expect(openOptionsWithRecords([{ id: 'acolyte', name: 'Acolyte' }], { type: 'background' })[0].record).toEqual({ bucket: 'backgrounds', id: 'acolyte' });
   });
@@ -248,6 +262,7 @@ async function openLevel(host: HTMLElement, lvl: string) {
 }
 
 describe('card step 7b: through the real Builder, the level page\'s pickers open the record\'s page', () => {
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('the level page\'s subclass card (Builder.tsx, not the Setup one) opens Cloistered Cleric\'s page', async () => {
     const own = await browseText('classFeatures', 'cloistered-cleric');
     expect(own, 'Cloistered Cleric has a page').toBeTruthy();
@@ -258,10 +273,12 @@ describe('card step 7b: through the real Builder, the level page\'s pickers open
     const shown = pageText(m.host);
     const urls = requested.slice(before);
     m.stop();
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(shown, 'the level-page subclass popup is the Archives page').toBe(own);
     expect(urls.filter((u) => /ast\/origin\.json/.test(u))).toEqual([]);
   });
 
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('a picked feat\'s choice (pickerOption): Basic Lesson\'s answer opens that lesson\'s class-feature page', async () => {
     // Basic Lesson (witch 2) is an ownsFeature choice whose answers are `aon-` lesson ids; the page is
     // the classFeature under the bare id (choiceOptionRecord). Synthesized witch, name 't'.
@@ -272,12 +289,14 @@ describe('card step 7b: through the real Builder, the level page\'s pickers open
     const m = await mount(<Builder content={db} initial={witch} onCancel={noop} onCreate={noop} />);
     await openLevel(m.host, '2');
     const card = m.host.querySelector('.lvl-subcard[data-subcard="Basic Lesson"]');
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(card, 'the Basic Lesson choice card is drawn').toBeTruthy();
     const before = requested.length;
     await click(card!.querySelector('.ss-filled-body'));
     const shown = pageText(m.host);
     const urls = requested.slice(before);
     m.stop();
+    // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
     expect(shown, 'the feat-choice popup is the lesson\'s Archives page').toBe(own);
     expect(urls.filter((u) => /ast\/origin\.json/.test(u))).toEqual([]);
   });
@@ -384,20 +403,24 @@ function scanBuckets(): BucketHit[] {
 
 describe('card step 7b: every bucket a builder site names is a page bucket that ships', () => {
   const hits = scanBuckets();
+  // batch card: #card-NOT-VACUOUS — the case measures something
   it('the scan sees the builder\'s buckets (it is measuring something)', () => {
     expect(hits.filter((h) => h.kind === 'literal').length).toBeGreaterThan(40);
     expect(hits.filter((h) => h.kind === 'open-source').length, 'OPEN_SOURCE_BUCKET is found and read').toBeGreaterThan(5);
   });
+  // batch card: #card-NOT-VACUOUS — the case measures something
   it('the check itself tells a real bucket from the fake one', () => {
     expect(existsSync('public/ast/backgrounds.json.gz')).toBe(true);
     expect(existsSync('public/ast/origin.json.gz')).toBe(false);
   });
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('every string bucket (object literal, JSX prop, OPEN_SOURCE_BUCKET value) has public/ast/<bucket>.json.gz', () => {
     const bad = hits
       .filter((h) => h.kind !== 'dynamic' && !existsSync(`public/ast/${h.value}.json.gz`))
       .map((h) => `${h.file}:${h.line} ${h.kind} '${h.value}'`);
     expect(bad, 'a bucket with no page file opens no page (the old `origin` 404)').toEqual([]);
   });
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('every bucket that is no string literal is on the reasoned list, and the list holds no stale entry', () => {
     const found = hits.filter((h) => h.kind === 'dynamic').map((h) => `${h.file} ${h.value}`).sort();
     expect(found).toEqual(DYNAMIC_BUCKET.map((d) => `${d.file} ${d.text}`).sort());
@@ -406,17 +429,21 @@ describe('card step 7b: every bucket a builder site names is a page bucket that 
 
 describe('card step 7b: no builder option literal can quietly lose its record', () => {
   const hits = scanOptionLiterals();
+  // batch card: #card-NOT-VACUOUS — the case measures something
   it('the scan sees the builder\'s option literals (it is measuring something)', () => {
     expect(hits.filter((h) => !h.exempt).length).toBeGreaterThan(40);
   });
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('every option-shaped literal with a description says `record`', () => {
     const missing = hits.filter((h) => !h.exempt && !h.props.includes('record')).map((h) => `${h.file}:${h.line} {${h.props.join(', ')}}`);
     expect(missing, 'add `record: { bucket, id }` (or `record: null` listed in RECORD_NULL with its reason)').toEqual([]);
   });
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('every `record: null` is on the reasoned list, and the list holds no stale entry', () => {
     const found = hits.filter((h) => h.recordNull).map((h) => `${h.file} ${h.description}`).sort();
     expect(found).toEqual(RECORD_NULL.map((r) => `${r.file} ${r.description}`).sort());
   });
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('only the two known non-option literals are exempt', () => {
     expect(hits.filter((h) => h.exempt).map((h) => `${h.file} ${h.exempt}`).sort()).toEqual([
       'src/builder/shared.tsx a campaign membership, no option',
@@ -427,6 +454,7 @@ describe('card step 7b: no builder option literal can quietly lose its record', 
 
 /* LAST: this case opens on the 'origin' key on purpose, which caches that bucket for the file. */
 describe('card step 7b: an option that is no record keeps its own text', () => {
+  // batch card: #card-IDENTITY — resolved by {bucket, id}, never by name
   it('record: null opens the option\'s own words, never a same-named page ("Fire")', async () => {
     const m = await mount(<PopupSelect value="fire" title="t" options={[{ value: 'fire', label: 'Fire', description: 'Synthetic option note words.', record: null }]} onChange={noop} />);
     await click(m.host.querySelector('.ss-filled-body'));

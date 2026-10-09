@@ -41,6 +41,15 @@
  *     bookkeeping fields (BOOKKEEPING below — ids, urls, dates, filing categories, derived scales)
  *     and reads only what the page prints.
  *
+ * Three rules from the card citation retrofit, round 2 (2026-10-09), each explained where it is coded:
+ *   • a premise in a test file must cite a page the TEST DRIVES — the page of a record named in the test,
+ *     its slice host, an embedded page or a reprint — never another page that prints the same words
+ *     (premiseDrivenPage; it needs public/core.json under the root and refuses without it);
+ *   • a finding id with an EMPTY record part ('#…') passes only when its read entry declares
+ *     `scope: 'design'` and a `rule` naming an existing docs/<file>.md section (checkFinding);
+ *   • a removed describe block passes only when such a design entry lists its exact title in `removed`
+ *     (removalSanctioned) — card step 22's legacy-path deletion is the case it exists for.
+ *
  * Usage:  node scripts/test-flip-audit.mjs --batch NNN [--root DIR] [--json]
  * Exit 1 on any violation (each one names the file, the line, what changed and what was expected).
  */
@@ -310,7 +319,11 @@ function citationFor(ls, line, ctx, titleText) {
     const raw = ls[n];
     if (raw == null) continue;
     const p = PREMISE_RE.exec(raw);
-    if (p) return checkPremise(p, ctx);
+    if (p) {
+      const res = checkPremise(p, ctx);
+      if (!res.ok || titleText === null) return res;                 // a non-test file names no record
+      return premiseDrivenPage({ ctx, docId: p[2], hay: driveText(ls, line, titleText) });
+    }
     const c = CITE_RE.exec(raw);
     if (c) return checkFinding(c, ctx, titleText);
   }
@@ -496,6 +509,210 @@ export function clauseInDoc({ aonRoot = AON_ROOT_DEFAULT, docId, clause, cache }
   return { ok: true };
 }
 
+// ---------------------------------------------------------------------------- the page-the-test-drives check
+
+/*
+ * A PREMISE CITES THE PAGE OF THE RECORD THE TEST DRIVES (card citation retrofit, round 2, 2026-10-09).
+ * The clause check above proves the words are on the cited page; it never asked WHOSE page. A refuter
+ * found four card premises that quoted a page which merely happens to print the same words: an
+ * osteo-armaments test citing the fighter class page (class-35) for "whichever comes first.", the
+ * air-gate card citing the kineticist class page for a junction line that its own element page (element-1)
+ * prints, the Accept Echo slice citing an unrelated item (equipment-2337) for "Frequency once per day",
+ * and the Halfling Luck Source line citing a category page. Each passed, because the words were there.
+ *
+ * So a premise in a TEST file must also cite a page the test can reach: the doc is the `aonId` (or the
+ * `aonParentId`) of a record whose id or name appears in the test — the enclosing it()/describe()
+ * titles, the open it() block from its opener down to the change, or the 6 lines above the change and
+ * the changed line itself (batch citation comments excluded — a clause must not vouch for itself); or
+ * the host page that record is sliced from (src/data/page-slices.json); or a page one of those embeds
+ * (`<document id="…" />` in the mirror's markdown); or a reprint of one of those (the mirror's
+ * `legacy_id` / `remaster_id`). Otherwise: 'premise cites a page the test does not drive'. Non-test
+ * files (ratchets, registries, experience limits) have no enclosing title and are not held to it.
+ *
+ * WHY THE WHOLE OPEN it() BLOCK, NOT ONLY THE 6-LINE WINDOW (measured on the card batch, 2026-10-09):
+ * titles + window refused 170 premise lines; 58 of them cite the page of a record the same it() block
+ * names further up (`featAct('halfling-luck')` seven lines above a feat-4458 premise) — false refusals.
+ * Widening to the test that drives the record ("named in the test") removes those and keeps the rule.
+ *
+ * WHAT IT CANNOT CATCH (said, not hidden): it is a reachability check, not a reading of the assertion.
+ * A record named anywhere in that text makes its whole reachable set citable — a fighter build opened
+ * at the top of the block makes the fighter class page (class-35) citable for an assertion about the
+ * osteo-armaments feat card, a title naming "the kineticist class page" makes class-23 citable for a
+ * line the air element page prints too, and a one-word record id that is also an English word ("aid",
+ * "light") is read as that record. It catches a page nothing in the test names; it cannot tell which
+ * of the named records an assertion is about.
+ *
+ * Names are matched as slugs: the text is lower-cased, apostrophes dropped, split on everything that is
+ * not a letter or digit, and every run of up to MAX_NAME_WORDS words is looked up against each record's
+ * id and slugified name (a run of under 3 characters never matches). The record index is
+ * public/core.json under the audit's root; with no index the check refuses — it never passes by default.
+ */
+const MAX_NAME_WORDS = 12;
+const slugOf = (s) => String(s ?? '').toLowerCase().replace(/['’]/g, '').split(/[^a-z0-9]+/).filter(Boolean).join('-');
+
+/** The record index the check reads, built once per audit run; `null` when the root has no public/core.json. */
+function reachIndex(ctx) {
+  if (ctx.reach !== undefined) return ctx.reach;
+  const raw = readIf(path.join(ctx.root, 'public', 'core.json'));
+  if (raw == null) return (ctx.reach = null);
+  const core = JSON.parse(raw);
+  const records = new Map();                                        // 'bucket:id' -> record
+  const names = new Map();                                          // slug -> Set<'bucket:id'>
+  /* A bucket name is code, not a record named: every card test writes `'feats'` / `'items'`, and the
+   * category pages called "Feats", "Items" … would make their page citable from any test (measured: the
+   * Halfling Luck Source premise on category-page-130 passed through `openFullText('feats', …)`). */
+  const bucketWords = new Set(Object.keys(core).flatMap((b) => [slugOf(b), slugOf(b.replace(/([a-z])([A-Z])/g, '$1-$2'))]));
+  for (const [bucket, v] of Object.entries(core)) {
+    const recs = Array.isArray(v) ? v : v && typeof v === 'object' ? Object.values(v) : [];
+    for (const r of recs) {
+      if (!r || typeof r !== 'object' || typeof r.id !== 'string') continue;
+      const key = `${bucket}:${r.id}`;
+      records.set(key, r);
+      for (const s of new Set([slugOf(r.id), slugOf(r.name)])) {
+        if (s.length < 3 || bucketWords.has(s)) continue;
+        if (!names.has(s)) names.set(s, new Set());
+        names.get(s).add(key);
+      }
+    }
+  }
+  const slicesRaw = readIf(path.join(ctx.root, 'src', 'data', 'page-slices.json'));
+  const slices = slicesRaw ? JSON.parse(slicesRaw).slices ?? {} : {};
+  return (ctx.reach = { records, names, slices });
+}
+
+/**
+ * The first line (0-indexed) of the it()/test() block that is still OPEN at `line` (1-indexed), or -1 —
+ * for a change in helper code, at describe level, or below a block that has already closed. Brackets
+ * are counted on codeOnly() text, so a bracket in a string or a comment never closes a block.
+ */
+function openItStart(ls, line) {
+  for (let n = Math.min(line, ls.length) - 1; n >= 0; n--) {
+    const code = codeOnly(ls[n] ?? '');
+    if (DESCRIBE_RE.test(code)) return -1;
+    if (!IT_RE.test(code)) continue;
+    let depth = 0;
+    for (let k = n; k < line - 1; k++) {
+      for (const ch of codeOnly(ls[k] ?? '')) { if (ch === '(' || ch === '{' || ch === '[') depth++; else if (ch === ')' || ch === '}' || ch === ']') depth--; }
+      if (depth <= 0) return -1;                                   // the block closed above the change
+    }
+    return n;
+  }
+  return -1;
+}
+
+/** The last line (0-indexed) of the it()/test() block that opens on `start`: where its brackets balance. */
+function itBlockEnd(ls, start) {
+  let depth = 0;
+  for (let k = start; k < ls.length; k++) {
+    for (const ch of codeOnly(ls[k] ?? '')) { if (ch === '(' || ch === '{' || ch === '[') depth++; else if (ch === ')' || ch === '}' || ch === ']') depth--; }
+    if (depth <= 0) return k;
+  }
+  return ls.length - 1;
+}
+
+/**
+ * The text a premise's record must be named in: the enclosing titles, the whole it()/test() block open at
+ * the change (the test that drives the record — a premise above an it() opener vouches for its whole
+ * body), and the 6 lines above the change with the changed line itself (for a change in helper code) —
+ * minus every batch citation comment, so a clause never vouches for its own page.
+ */
+function driveText(ls, line, titleText) {
+  const start = openItStart(ls, line);
+  const from = Math.min(start < 0 ? Infinity : start, Math.max(0, line - 7));
+  const to = Math.max(line - 1, start < 0 ? -1 : itBlockEnd(ls, start));
+  const keep = [];
+  for (let n = from; n <= to && n < ls.length; n++) {
+    const t = ls[n] ?? '';
+    if (PREMISE_RE.test(t) || CITE_RE.test(t)) continue;
+    keep.push(t);
+  }
+  return `${titleText}\n${keep.join('\n')}`;
+}
+
+/** Every record named in `hay`, as 'bucket:id' keys. Exported for the corpus sweep and the self-test. */
+export function namedRecords(hay, reach) {
+  const words = slugOf(hay).split('-').filter(Boolean);
+  const out = new Set();
+  for (let i = 0; i < words.length; i++) {
+    for (let n = 1; n <= MAX_NAME_WORDS && i + n <= words.length; n++) {
+      const hit = reach.names.get(words.slice(i, i + n).join('-'));
+      if (hit) for (const k of hit) out.add(k);
+    }
+  }
+  return out;
+}
+
+/** A mirror doc's embedded pages and reprint twins, cached per run. */
+function docLinks(ctx, docId) {
+  ctx.linkCache ??= new Map();
+  if (ctx.linkCache.has(docId)) return ctx.linkCache.get(docId);
+  const dm = /^(.*)-(\d+)$/.exec(docId ?? '');
+  const raw = dm ? readIf(path.join(ctx.aonRoot, dm[1], `${docId}.json`)) : null;
+  const links = [];
+  if (raw) {
+    try {
+      const doc = JSON.parse(raw.replace(/^﻿/, ''));
+      for (const k of ['legacy_id', 'remaster_id']) for (const v of [doc[k]].flat()) if (typeof v === 'string') links.push(v);
+      for (const m of String(doc.markdown ?? '').matchAll(/<document\b[^>]*?\bid="([^"]+)"/g)) links.push(m[1]);
+    } catch { /* an unreadable doc links nowhere */ }
+  }
+  ctx.linkCache.set(docId, links);
+  return links;
+}
+
+/** The docs a set of named records reaches: own page, parent page, slice host, then one hop of embeds and reprints. */
+export function drivenDocs(ctx, keys) {
+  const reach = reachIndex(ctx);
+  const base = new Set();
+  /* A variant printed on a family page carries a compound id, `<page doc>-<variant>` (2,969 aonIds in
+   * core.json, e.g. 1st-rank-scroll = equipment-2962-2826): its page is the doc the prefix names. */
+  const addDoc = (id) => {
+    if (typeof id !== 'string' || !id) return;
+    base.add(id);
+    const m = /^(.*-\d+)-\d+$/.exec(id);
+    if (m) base.add(m[1]);
+  };
+  for (const key of keys) {
+    const r = reach.records.get(key);
+    addDoc(r?.aonId);
+    addDoc(r?.aonParentId);
+    const slice = reach.slices[key];
+    const host = slice ? reach.records.get(`${slice.bucket}:${slice.page}`) : null;
+    addDoc(host?.aonId);
+  }
+  const out = new Set(base);
+  for (const d of base) for (const l of docLinks(ctx, d)) out.add(l);
+  return out;
+}
+
+function premiseDrivenPage({ ctx, docId, hay }) {
+  const reach = reachIndex(ctx);
+  if (!reach) return { ok: false, why: `premise ${docId}: no record index at public/core.json, so the page the test drives cannot be checked` };
+  if (drivenDocs(ctx, namedRecords(hay, reach)).has(docId)) return { ok: true };
+  return {
+    ok: false,
+    why: `premise cites a page the test does not drive — ${docId} is not the page (nor the slice host, an embedded page or a reprint) of any record named in the enclosing titles or the lines above; cite the driven record's own page`,
+  };
+}
+
+// ---------------------------------------------------------------------------- the finding check
+
+/*
+ * A DESIGN-WIDE FINDING DECLARES ITSELF (card citation retrofit, round 2, 2026-10-09). The record part
+ * of a finding id (before '#') must appear in the enclosing titles. A card ruling is about every card,
+ * not one record, and round 1 wrote those ids as '#card-…' — an EMPTY record part, which every title
+ * "contains", so the rule passed without being met. An empty record part is now accepted only when the
+ * read entry carries `scope: 'design'` and a non-empty `rule` naming the design document section it
+ * stands on (a `docs/<file>.md` path that exists under the root); anything else is refused.
+ */
+function designEntry(ctx, findingId) {
+  const e = ctx.entries?.get(findingId);
+  if (!e || e.scope !== 'design' || typeof e.rule !== 'string' || !e.rule.trim()) return null;
+  const doc = /\bdocs\/[\w./-]+?\.md\b/.exec(e.rule);
+  if (!doc || !existsSync(path.join(ctx.root, doc[0]))) return null;
+  return e;
+}
+
 function checkFinding(m, ctx, titleText) {
   const [, batch, findingId] = m;
   if (normBatch(batch) !== ctx.batch) return { ok: false, why: `citation names batch ${normBatch(batch)}, this is batch ${ctx.batch}` };
@@ -505,13 +722,39 @@ function checkFinding(m, ctx, titleText) {
       : `finding ${findingId} is not a CONFIRMED finding in work/.b${ctx.batch}-read.json`;
     return { ok: false, why };
   }
-  if (titleText === null) return { ok: true };                     // not a test file
   const record = findingId.split('#')[0].toLowerCase();
+  if (!record) {
+    if (designEntry(ctx, findingId)) return { ok: true };
+    return { ok: false, why: `finding ${findingId} names no record — a design-wide finding needs scope design in the read file (\`scope: 'design'\` and a \`rule\` naming its docs/<file>.md section)` };
+  }
+  if (titleText === null) return { ok: true };                     // not a test file
   const hay = titleText.toLowerCase();
   if (!hay.includes(record) && !hay.includes(record.replace(/-/g, ' '))) {
     return { ok: false, why: `record id "${record}" appears in no enclosing describe/it title` };
   }
   return { ok: true };
+}
+
+/*
+ * A DESIGN-SANCTIONED DESCRIBE REMOVAL (card citation retrofit, round 2). A deleted describe block is a
+ * hard fail, and stays one — except when the batch's read file holds a CONFIRMED entry with
+ * `scope: 'design'`, a `rule` naming its docs/<file>.md section (as above) and a `removed` list carrying
+ * the removed describe's title exactly. Card step 22 deleted the legacy DescBody page path and the
+ * describe that tested it (docs/card-design.md row 22); this is the one mechanism that lets such a
+ * deletion through, and only by its exact title.
+ */
+const describeTitle = (t) => {
+  const m = /^\s*describe(?:\.[A-Za-z_$][\w$]*)*\s*\(\s*(['"`])((?:\\.|(?!\1).)*)\1/.exec(t ?? '');
+  return m ? m[2].replace(/\\(.)/g, '$1') : null;
+};
+function removalSanctioned(ctx, text) {
+  const title = describeTitle(text);
+  if (title == null) return false;
+  for (const id of ctx.confirmed) {
+    const e = designEntry(ctx, id);
+    if (e && Array.isArray(e.removed) && e.removed.includes(title)) return true;
+  }
+  return false;
 }
 
 // ---------------------------------------------------------------------------- the audit
@@ -535,7 +778,9 @@ export function auditBatch({ root = REPO_ROOT, batch, aonRoot = AON_ROOT_DEFAULT
     (read.confirmed ?? []).filter((f) => (f.verdict ?? 'CONFIRMED') === 'CONFIRMED').map((f) => f.id),
   );
   const known = new Set([...(read.confirmed ?? []), ...(read.refuted ?? []), ...(read.askOwner ?? [])].map((f) => f.id));
-  const ctx = { batch: b, confirmed, known, aonRoot, docCache: new Map() };   // one parse per cited doc per run
+  // the confirmed entries whole, for the design-scope rule (an empty record part) and sanctioned removals
+  const entries = new Map((read.confirmed ?? []).filter((f) => (f.verdict ?? 'CONFIRMED') === 'CONFIRMED').map((f) => [f.id, f]));
+  const ctx = { batch: b, root, confirmed, known, entries, aonRoot, docCache: new Map() };   // one parse per cited doc per run
 
   const snapDir = path.join(root, 'work', `.b${b}-testbase`);
   const testFiles = auditTests({ root, b, base, ctx, snapDir, add });
@@ -667,8 +912,9 @@ function scanTestFile({ rel, oldText, newText, ctx, add }) {
       }
     }
     for (const r of h.removed) {
-      if (isDescribe(r.text)) {
-        add(rel, r.line, `describe block removed: ${r.text.trim().slice(0, 80)}`, 'a batch never deletes a describe block');
+      if (isDescribe(r.text) && !removalSanctioned(ctx, r.text)) {
+        add(rel, r.line, `describe block removed: ${r.text.trim().slice(0, 80)}`,
+          `a batch never deletes a describe block — unless work/.b${ctx.batch}-read.json holds a CONFIRMED entry with scope 'design', a rule naming its docs/<file>.md section and \`removed\` listing this describe's exact title`);
       }
     }
 

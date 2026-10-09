@@ -78,27 +78,32 @@ describe('the card footers speak player words, never developer words (section 13
   const files = [...sourceFiles('src/sheet'), ...sourceFiles('src/rules')];
   const found = files.flatMap((f) => provenanceStrings(f, readFileSync(f, 'utf8')).map(([line, s]) => ({ at: `${f.replace(/\\/g, '/')}:${line}`, s })));
 
+  // batch card: #card-NOT-VACUOUS — the case measures something
   it('the scan reads the footers it guards (an empty scan would pass on nothing)', () => {
     const texts = found.map((x) => x.s);
     for (const want of ['Not from the Archives — our text', 'The Archives page could not load on this device — our text']) {
       expect(texts.filter((s) => s === want).length, want).toBeGreaterThanOrEqual(1);
     }
     expect(found.some((x) => x.at.startsWith('src/sheet/RecordCard.tsx:')), 'RecordCard read').toBe(true);
+    // batch card: #card-NOT-VACUOUS — the case measures something
     expect(found.some((x) => x.at.startsWith('src/sheet/SpellsTab.tsx:')), 'SpellsTab read').toBe(true);
     expect(found.some((x) => x.at.startsWith('src/sheet/spellCard.ts:')), 'spellCard read').toBe(true);
     expect(found.some((x) => x.at.startsWith('src/rules/featureText.ts:')), 'featureText read').toBe(true);
   });
 
+  // batch card: #card-FOOTER-WORDS — footers speak player words
   it('no provenance string the app can draw says "import", "older", "lane" or other developer words', () => {
     expect(found.filter((x) => FORBIDDEN.test(x.s)).map((x) => `${x.at} ${x.s}`)).toEqual([]);
   });
 
+  // batch card: #card-FOOTER-WORDS — footers speak player words
   it('the decided lines, word for word (section 7)', () => {
     expect(SHARED_FEATURE_FOOTER).toBe('Not from the Archives — our text for your class');
     expect(stringLaneFooter('rite-of-repatriation')).toBe('Not from the Archives — our text; the Archives page prints no Heightened line for (+1)');
     const synthPage: AstNode = { t: 'doc', c: [{ t: 'title', c: [{ t: 'p', c: [{ t: 'text', v: 'Synthetic Feat Page' }] }] }] };
     expect(printedInsideFooter({ id: 'synthetic-inside-spell' }, synthPage)).toBe('Printed inside Synthetic Feat Page — our text');
     const fns = [SHARED_FEATURE_FOOTER, stringLaneFooter('rite-of-repatriation')!, printedInsideFooter({ id: 'synthetic-inside-spell' }, synthPage)!];
+    // batch card: #card-FOOTER-WORDS — footers speak player words
     for (const s of fns) expect(s, s).not.toMatch(FORBIDDEN);
   });
 });
