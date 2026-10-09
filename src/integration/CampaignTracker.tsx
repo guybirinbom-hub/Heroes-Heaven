@@ -44,7 +44,7 @@ import { ErrorBoundary } from '../../tracker/src/components/ErrorBoundary';
 import { usePartyStore } from '../../tracker/src/store/partyStore';
 import type { Combatant } from '../../tracker/src/types/pf2e';
 import { PartyMembers, PartyCard, useGmPendingVersion, useMyId, knownToBeOther, PARTY_MEMBER_DRAG, type PartyMemberDrag, type PartyCardSlots } from '../sheet/PartyMembers';
-import { gmPendingEdit, pendingEditStillStands } from '../sheet/gmSync';
+import { gmEditRefused, gmPendingEdit, memberPublishedRow, pendingEditStillStands } from '../sheet/gmSync';
 import { type PartySummary } from '../sheet/partySummary';
 import { currentUserId, fetchParty, type PartyMember } from '../data/party';
 import { useAuth } from '../data/useAuth';
@@ -360,7 +360,7 @@ export function CampaignTracker({
    *  and the sheet follow, kept in the one place all three read through (../sheet/gmSync.ts). */
   const pendingFor = (mem: PartyMember): boolean => {
     const edit = gmPendingEdit(m.id, mem.charId);
-    return !!edit && pendingEditStillStands(edit, { sheet: null, updatedAt: mem.updatedAt });
+    return !!edit && pendingEditStillStands(edit, memberPublishedRow(mem));
   };
 
   /** THE ONE SUMMARY every GM-side surface in this view draws from — and it takes the whole member
@@ -1067,6 +1067,9 @@ export function CampaignTracker({
               // rather than what the player published. `sheetById` is already overlaid (party.ts),
               // so the numbers here are the edited ones — this says why.
               pending={pendingFor(mem)}
+              // …or the player's app refused his last push: the same "not applied" chip as the card
+              // (`gmEditRefused` itself never answers for the signed-in account's own character).
+              refused={!pendingFor(mem) && gmEditRefused(m.id, mem.charId)}
               onOpen={() => void openMemberSheet(mem)}
               extra={cardExtra(mem, false)}
             />

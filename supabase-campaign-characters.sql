@@ -73,6 +73,16 @@ create policy gce_owner_read on public.gm_character_edits for select to authenti
 drop policy if exists gce_owner_delete on public.gm_character_edits;
 create policy gce_owner_delete on public.gm_character_edits for delete to authenticated using (owner_id = auth.uid());
 
+-- F1 (2026-10): a GM edit says which published sheet it was built on, and the player's app refuses one
+-- built on a sheet they have changed since. `gm_base` = {v:1, at:<this push's own updated_at>,
+-- stamp:<the campaign_characters.updated_at it was built on>, hash:<a hash of what the player authored
+-- in that sheet>, on:<updated_at of the earlier GM push it was built on, or null>}. NULL on older rows,
+-- which the player's app refuses (a GM re-pushes them). No server logic: the app compares content.
+alter table public.gm_character_edits add column if not exists gm_base jsonb;
+-- The receipt: the updated_at of the last GM edit THIS player's app refused (a copy of the GM's own
+-- stamp), written by the player's app on its own row. The GM's app shows "not applied" from it.
+alter table public.campaign_characters add column if not exists gm_refused_at timestamptz;
+
 -- Realtime: publish these tables' changes so (a) a GM's edit reaches an OPEN player app instantly, and
 -- (b) party cards refresh live when any member publishes/updates/leaves a character. RLS still gates the
 -- streams — gm_character_edits by owner, campaign_characters by the authenticated-read policy (cc_read).
@@ -99,4 +109,7 @@ select 'campaign_characters + gm_character_edits ready (realtime on)' as status,
        (select count(*) from pg_policies where tablename in ('campaign_characters', 'gm_character_edits')) as policy_count,
        (select count(*) from pg_publication_tables
          where pubname = 'supabase_realtime' and schemaname = 'public'
-           and tablename in ('campaign_characters', 'gm_character_edits')) as realtime_tables;
+           and tablename in ('campaign_characters', 'gm_character_edits')) as realtime_tables,
+       (select count(*) from information_schema.columns where table_schema = 'public'
+          and ((table_name = 'gm_character_edits' and column_name = 'gm_base')
+            or (table_name = 'campaign_characters' and column_name = 'gm_refused_at'))) as f1_columns;  -- expect 2

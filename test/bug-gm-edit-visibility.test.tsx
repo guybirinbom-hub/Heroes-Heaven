@@ -57,6 +57,8 @@ const server = vi.hoisted(() => ({
   listeners: [] as (() => void)[],
   /** SINGLE-ROW reads of `campaign_characters` — what one GM push costs. Leg (k) counts these. */
   reads: 0,
+  /** F1 (2026-10-09): a database the SQL was never re-run on — `gm_character_edits` has no `gm_base`. */
+  noGmBaseColumn: false,
 }));
 
 vi.mock('../src/data/supabase', () => {
@@ -65,10 +67,17 @@ vi.mock('../src/data/supabase', () => {
   ];
   function from(table: string) {
     const where: Record<string, unknown> = {};
+    let cols = '';
     const matched = () => rows(table).filter((r) => Object.entries(where).every(([k, v]) => r[k] === v));
-    const answer = () => ({ data: matched(), error: null });
+    // F1 (2026-10-09): PostgREST's answer for a column the schema cache does not know.
+    const missing = () => server.noGmBaseColumn && table === 'gm_character_edits' && cols.includes('gm_base');
+    const noColumn = { code: 'PGRST204', message: `Could not find the 'gm_base' column of '${table}' in the schema cache` };
+    const answer = () => (missing() ? { data: null, error: noColumn } : { data: matched(), error: null });
     const q = {
-      select: () => q,
+      select: (c?: string) => {
+        cols = c ?? '';
+        return q;
+      },
       eq: (col: string, val: unknown) => {
         where[col] = val;
         return q;
@@ -86,6 +95,7 @@ vi.mock('../src/data/supabase', () => {
           server.chars.set(key, row);
           server.charWrites.push(row);
         } else {
+          if (server.noGmBaseColumn && 'gm_base' in row) return Promise.resolve({ error: noColumn });
           server.edits.set(key, row);
           server.editWrites.push(row);
         }
@@ -129,8 +139,10 @@ vi.mock('../src/data/supabase', () => {
 
 const { computeSummary, memberConditions, memberSummary } = await import('../src/sheet/partySummary');
 const { applyPlayState, initialPlay, addCondition } = await import('../src/rules/play');
-const { fetchMemberRow, fetchMemberSheet, fetchPublishedSheet, fetchParty, fetchPendingGmEdits, pushGmEdit } = await import('../src/data/party');
-const { clearGmPendingEdits, gmPendingEdit, pendingEditStillStands, setGmPendingAccount } = await import('../src/sheet/gmSync');
+const { fetchMemberRow, fetchMemberSheet, fetchPublishedSheet, fetchParty, fetchPendingGmEdits, forgetMissingColumns, pushGmEdit } =
+  await import('../src/data/party');
+const { clearGmPendingEdits, gmBaseOf, gmPendingEdit, pendingEditStillStands, setGmPendingAccount } = await import('../src/sheet/gmSync');
+const { authoredKey, hash53 } = await import('../src/data/authored');
 const { signOut } = await import('../src/data/useAuth');
 const { GmEditSheet } = await import('../src/sheet/GmEditSheet');
 const { PartyCard, PartyMembers, useMemberViewer } = await import('../src/sheet/PartyMembers');
@@ -173,12 +185,15 @@ function publish(sc: SavedChar, at: string, summaryFrom: SavedChar = sc): void {
 
 /**
  * What the GM's sheet does on Update: read the PUBLISHED row (never the overlay — that would be the
- * GM's own work compared against itself), then push, carrying the stamp the edit is built on.
+ * GM's own work compared against itself), then push, carrying the read the edit is built on.
+ * F1 (2026-10-09): that base is the read's stamp AND its authored hash (`gmBaseOf`), not a stamp alone.
  */
 async function gmPush(sheet: SavedChar): Promise<void> {
   const row = await fetchPublishedSheet(CAMPAIGN, CHAR);
-  await pushGmEdit(CAMPAIGN, CHAR, PLAYER, sheet, row?.updatedAt);
+  await pushGmEdit(CAMPAIGN, CHAR, PLAYER, sheet, gmBaseOf(row));
 }
+/** The base of what the server publishes for a character right now. */
+const baseNow = async (charId = CHAR) => gmBaseOf(await fetchPublishedSheet(CAMPAIGN, charId));
 
 /** The teammate viewer, opened on our one character — the surface that keeps a channel per sheet. */
 function Viewer(): ReactElement {
@@ -245,6 +260,8 @@ afterEach(() => {
   server.channels.length = 0;
   server.listeners.length = 0;
   server.reads = 0;
+  server.noGmBaseColumn = false;
+  forgetMissingColumns();
   clearGmPendingEdits();
   localStorage.clear();
 });
@@ -432,8 +449,12 @@ describe('(b) after Update the GM sees the change straight away', () => {
   });
 
   it('a REFUSED push is never shown as landed', async () => {
+    // F1 (2026-10-09): the push carries a real base (the read at 10:00), so this still tests a SERVER
+    // refusal and not the new "no base, nothing sent" refusal of pushGmEdit itself.
     publish(light(), '2026-09-18T10:00:00.000Z');
     const base = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
+    const proved = await baseNow();
+    expect(proved?.stamp).toBe('2026-09-18T10:00:00.000Z');
     const from = (await import('../src/data/supabase')).supabase!.from;
     const spy = vi
       .spyOn((await import('../src/data/supabase')).supabase!, 'from')
@@ -441,7 +462,7 @@ describe('(b) after Update the GM sees the change straight away', () => {
         table === 'gm_character_edits'
           ? { upsert: async () => ({ error: { message: 'row-level security' } }) }
           : from(table)) as typeof from);
-    const res = await pushGmEdit(CAMPAIGN, CHAR, PLAYER, { ...base, play: addCondition(base.play!, 'frightened', 2) });
+    const res = await pushGmEdit(CAMPAIGN, CHAR, PLAYER, { ...base, play: addCondition(base.play!, 'frightened', 2) }, proved);
     spy.mockRestore();
     expect(res.ok).toBe(false);
     expect(gmPendingEdit(CAMPAIGN, CHAR)).toBeUndefined();
@@ -775,17 +796,19 @@ describe('(j) the tracker’s two cards for one character cannot disagree', () =
 });
 
 describe('(k) a failed read never downgrades an edit that was already protected', () => {
-  it('keeps the base stamp an earlier push proved — so the GM’s clock still cannot decide it', async () => {
+  it('a push whose read failed sends NOTHING — the held edit and its base are untouched, so the GM’s clock still cannot decide it', async () => {
     /*
-     * MUTATION: write the argument straight through in `rememberGmEdit` (src/sheet/gmSync.ts) —
-     * `baseUpdatedAt` instead of `baseUpdatedAt ?? had?.baseUpdatedAt` — and this fails:
-     *   AssertionError: the base an earlier push proved is not thrown away: expected undefined to be '2026-09-18T10:00:00.000Z'
-     * and the player's newer sheet then loses to the stale overlay on the line after it.
+     * F1 (2026-10-09): rewritten. Its old mutation (write `baseUpdatedAt` straight through in
+     * `rememberGmEdit`) can no longer be reached through `pushGmEdit`, which now refuses a push that
+     * proves no base — that `?? had` rule is pinned in test/gm-sync.test.ts (18). What this leg holds now
+     * is the stronger half: the failed read's push never reaches the server at all.
+     * MUTATION (run 2026-10-09): allow base-less pushes — `if (!base) base = { stamp: '', hash: '' };`
+     * in place of pushGmEdit's guard — and this fails —
+     *   AssertionError: a push that proves no base is never sent: expected true to be false
      *
-     * `fetchPublishedSheet` answers `null` when the read FAILS, and the push still goes ahead on the
-     * newest thing this device holds. Passing that `undefined` base on left the edit comparing the
-     * GM's clock against the player's — the comparison `baseUpdatedAt` exists to remove — and the
-     * damage path has no confirm dialog to catch what follows.
+     * `fetchPublishedSheet` answers `null` when the read FAILS. A push sent then would carry no proof,
+     * the player's app would have to refuse it, and the held edit would be downgraded to comparing the
+     * GM's clock against the player's — the comparison `baseUpdatedAt` exists to remove.
      */
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2030-01-01T00:00:00.000Z')); // the GM's machine, years fast
@@ -794,9 +817,13 @@ describe('(k) a failed read never downgrades an edit that was already protected'
       const base = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
       await gmPush({ ...base, play: addCondition(base.play!, 'frightened', 2) });
       expect(gmPendingEdit(CAMPAIGN, CHAR)!.baseUpdatedAt).toBe('2026-09-18T10:00:00.000Z');
+      const held = gmPendingEdit(CAMPAIGN, CHAR);
 
-      // The next push — a point of damage — reads the published row and the read FAILS: no stamp.
-      await pushGmEdit(CAMPAIGN, CHAR, PLAYER, { ...base, play: addCondition(base.play!, 'sickened', 1) }, undefined);
+      // The next push — a point of damage — reads the published row and the read FAILS: no base.
+      const res = await pushGmEdit(CAMPAIGN, CHAR, PLAYER, { ...base, play: addCondition(base.play!, 'sickened', 1) }, undefined);
+      expect(res.ok, 'a push that proves no base is never sent').toBe(false);
+      expect(server.editWrites, 'nothing reached the server').toHaveLength(1);
+      expect(gmPendingEdit(CAMPAIGN, CHAR), 'the held edit is untouched').toBe(held);
       expect(gmPendingEdit(CAMPAIGN, CHAR)!.baseUpdatedAt, 'the base an earlier push proved is not thrown away').toBe(
         '2026-09-18T10:00:00.000Z',
       );
@@ -900,9 +927,10 @@ describe('(l) the tracker seam — one push, one read, and an echo is not the sh
 
     server.reads = 0;
     const base = (await fetchMemberSheet(CAMPAIGN, 'pc-2'))!;
-    server.reads = 0; // the line above is the test's own read, not the app's
+    const proved = await baseNow('pc-2'); // F1 (2026-10-09): a push carries the read it was built on
+    server.reads = 0; // the lines above are the test's own reads, not the app's
     await act(async () => {
-      await pushGmEdit(CAMPAIGN, 'pc-2', PLAYER, { ...base, play: addCondition(base.play!, 'frightened', 2) }, '2026-09-18T10:00:00.000Z');
+      await pushGmEdit(CAMPAIGN, 'pc-2', PLAYER, { ...base, play: addCondition(base.play!, 'frightened', 2) }, proved);
       await new Promise((r) => setTimeout(r, 0));
     });
     await settle();
@@ -925,8 +953,9 @@ describe('(l) the tracker seam — one push, one read, and an echo is not the sh
     try {
       publish(light(), '2026-09-18T10:00:00.000Z');
       const base = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
+      const proved = await baseNow(); // F1 (2026-10-09): a push carries the read it was built on
       for (let i = 1; i <= 5; i++)
-        await pushGmEdit(CAMPAIGN, CHAR, PLAYER, { ...base, play: { ...base.play!, damage: i } }, '2026-09-18T10:00:00.000Z');
+        await pushGmEdit(CAMPAIGN, CHAR, PLAYER, { ...base, play: { ...base.play!, damage: i } }, proved);
       expect(ours(), 'a burst of damage must not stringify every pending sheet five times over').toBe(0);
       await new Promise((r) => setTimeout(r, 500));
       expect(ours(), 'and the chip still reaches the disk').toBe(1);
@@ -1123,7 +1152,8 @@ describe('(n) a GM’s pending edit is private to the account that pushed it', (
     publish(light(), '2026-09-18T10:00:00.000Z', encumbered());
     server.chars.get(`${CAMPAIGN}|${CHAR}`)!.owner_id = 'gm-1'; // the GM plays this one themselves
     const base = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
-    await pushGmEdit(CAMPAIGN, CHAR, 'gm-1', { ...base, play: addCondition(base.play!, 'frightened', 2) }, '2026-09-18T10:00:00.000Z');
+    // F1 (2026-10-09): a push carries the read it was built on.
+    await pushGmEdit(CAMPAIGN, CHAR, 'gm-1', { ...base, play: addCondition(base.play!, 'frightened', 2) }, await baseNow());
     expect(server.editWrites.length, 'the push reaches the server exactly as any other').toBe(1);
     expect(gmPendingEdit(CAMPAIGN, CHAR), 'but no surface of theirs is ever shown it').toBeUndefined();
 
@@ -1597,5 +1627,155 @@ describe('(P) the PLAIN party page — the cards, not just the sheet behind them
       expect(mount, `${f} must still mount PartyMembers`).not.toBeNull();
       expect(mount![0], `${f}: no content= means cards drawn from the player's own column again`).toContain('content=');
     }
+  });
+});
+
+/*
+ * F1 (2026-10-09) — THE GM'S SIDE OF A REFUSED OR UNPROVABLE UPDATE.
+ *
+ * His full-sheet Update is sent only on top of the newest thing the server holds for the character
+ * (gmSync.gmUpdateBase), and only with the read it was built on, so the player's app can prove it. When
+ * it cannot be sent he is told why and keeps his work; when the player's app refused one, his card says
+ * "not applied"; and a database without the F1 columns is named on his party page.
+ */
+describe('(F1) the full-sheet Update, the "not applied" chip and the SQL strip', () => {
+  const dialog = () => document.querySelector<HTMLElement>('.confirm-modal');
+  async function press(label: string): Promise<void> {
+    const b = [...(dialog()?.querySelectorAll('button') ?? [])].find((x) => (x.textContent ?? '').trim() === label);
+    expect(b, `the dialog offers “${label}”`).toBeDefined();
+    await act(async () => {
+      b!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await new Promise((r) => setTimeout(r, 0));
+    });
+    await settle();
+  }
+  /** Open his sheet on what is published, make an edit (a hero point), and press Update → Update. */
+  async function editAndUpdate(host: HTMLElement): Promise<void> {
+    const pip = host.querySelector<HTMLButtonElement>('button[aria-label^="Set hero points to"]');
+    expect(pip, 'fixture: the GM sheet can be edited').not.toBeNull();
+    act(() => pip!.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+    await settle();
+    await act(async () => {
+      host.querySelector<HTMLButtonElement>('.gm-update-btn')!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await new Promise((r) => setTimeout(r, 0));
+    });
+    await settle();
+    await press('Update'); // the confirm
+  }
+
+  it('(44) Update with the read failing sends NOTHING, says so, and keeps his work', async () => {
+    /*
+     * MUTATION (run 2026-10-09): push without the proof — `const proof = { ok: true, base: <the read's
+     * stamp, or undefined when it failed>, on: null }` in place of gmUpdateBase in GmEditSheet.pushToPlayer
+     * — and this fails (with both (45) legs: `expected 'Sent' to be 'Thessaly Vane changed since your copy'`) —
+     *   AssertionError: expected 'Couldn’t update' to be 'Couldn’t check Thessaly Vane'
+     * (pushGmEdit's own guard still refuses the base-less push, so nothing reaches the server either way.)
+     */
+    publish(light(), '2026-09-18T10:00:00.000Z');
+    const host = render(gmSheet((await fetchMemberSheet(CAMPAIGN, CHAR))!));
+    await settle();
+    const mod = await import('../src/data/supabase');
+    const from = mod.supabase!.from;
+    const spy = vi.spyOn(mod.supabase!, 'from').mockImplementation(((table: string) =>
+      table === 'campaign_characters'
+        ? { select: () => ({ eq: () => ({ eq: () => ({ maybeSingle: async () => ({ data: null, error: { message: 'network' } }) }) }) }) }
+        : from(table)) as typeof from);
+    try {
+      await editAndUpdate(host);
+      expect(dialog()?.querySelector('.info-title')?.textContent).toBe('Couldn’t check Thessaly Vane');
+      expect(dialog()?.textContent, 'said plainly').toContain('nothing was sent');
+      expect(server.editWrites, 'no gm_character_edits write').toEqual([]);
+      await press('OK');
+    } finally {
+      spy.mockRestore();
+    }
+    // Still dirty: leaving asks whether to update first.
+    await act(async () => {
+      host.querySelector<HTMLButtonElement>('button[aria-label="Back to campaign"]')!.dispatchEvent(
+        new MouseEvent('click', { bubbles: true }),
+      );
+      await new Promise((r) => setTimeout(r, 0));
+    });
+    await settle();
+    expect(dialog()?.querySelector('.info-title')?.textContent, 'his changes are still here').toBe('Update before leaving?');
+    await press('Cancel');
+  });
+
+  describe('(45) he edited P0, the player published P1 meanwhile', () => {
+    async function moved(): Promise<HTMLElement> {
+      publish(light(), '2026-09-18T10:00:00.000Z');
+      const host = render(gmSheet((await fetchMemberSheet(CAMPAIGN, CHAR))!));
+      await settle();
+      const p1 = light();
+      publish({ ...p1, play: addCondition(p1.play!, 'fatigued') }, '2026-09-18T11:00:00.000Z'); // their device
+      await editAndUpdate(host);
+      expect(dialog()?.querySelector('.info-title')?.textContent).toBe('Thessaly Vane changed since your copy');
+      expect(server.editWrites, 'nothing was sent').toEqual([]);
+      return host;
+    }
+
+    it('“Take current version” writes nothing and puts their P1 in front of him', async () => {
+      /*
+       * MUTATION (run 2026-10-09): the old "Overwrite anyway" path, auto-confirmed — `const choice =
+       * (await Promise.resolve('overwrite')) || await chooseDialog({…})` in GmEditSheet.pushToPlayer —
+       * and this fails (with the overwrite leg below) —
+       *   AssertionError: expected 'Sent' to be 'Thessaly Vane changed since your copy'
+       */
+      const host = await moved();
+      await press('Take current version');
+      expect(server.editWrites, 'taking theirs sends nothing').toEqual([]);
+      expect(host.textContent, 'his sheet is their current version').toContain('Fatigued');
+    });
+
+    it('“Overwrite anyway” is his knowing choice: the push carries the FRESH read, so their app can prove it', async () => {
+      /*
+       * A2: the app never overwrites a player's change; a GM shown "changed since your copy" who presses
+       * the red button is not the app.
+       * MUTATION (run 2026-10-09): drop the overwrite branch — `return false;` for `if (choice !==
+       * 'overwrite') return false;` — and this fails —
+       *   AssertionError: expected [] to have a length of 1 but got +0
+       */
+      await moved();
+      expect(dialog()?.textContent, 'he is told what it does').toContain('cannot be taken back from here');
+      await press('Overwrite anyway');
+      expect(server.editWrites).toHaveLength(1);
+      const b = server.editWrites[0].gm_base as { stamp: string; hash: string; on: string | null };
+      expect(b.stamp, 'built on the read that showed P1').toBe('2026-09-18T11:00:00.000Z');
+      expect(b.hash).toBe(hash53(authoredKey(server.chars.get(`${CAMPAIGN}|${CHAR}`)!.sheet as SavedChar)));
+      expect(b.on).toBeNull();
+    });
+  });
+
+  it('(46) a card whose player’s app refused his push says “not applied”, and no longer “waiting”', async () => {
+    /*
+     * MUTATION (run 2026-10-09): drop `refused={refused}` from the PartyCard in PartyMembers — and this fails —
+     *   AssertionError: expected 'THThessaly VaneHuman Fighter 3HP38 / …' to contain 'not applied'
+     */
+    publish(light(), '2026-09-18T10:00:00.000Z');
+    const base = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
+    await gmPush({ ...base, play: addCondition(base.play!, 'frightened', 2) });
+    // Their app refused it (they changed the character first) and wrote the receipt on their row.
+    server.chars.get(`${CAMPAIGN}|${CHAR}`)!.gm_refused_at = server.editWrites[0].updated_at;
+    const host = render(<PartyMembers campaignId={CAMPAIGN} isGm content={db} onView={() => undefined} />);
+    await settle();
+    await settle();
+    expect(host.textContent).toContain('not applied');
+    expect(host.textContent).not.toContain('waiting');
+    expect(host.textContent, 'the card is their version').not.toContain('Frightened');
+  });
+
+  it('(47) a database without gm_base: the GM’s party page names the SQL file', async () => {
+    /*
+     * MUTATION (run 2026-10-09): drop `markGmEditSchemaOutdated();` from party.selectWithOptional — and
+     * this fails —
+     *   AssertionError: expected 'THThessaly VaneHuman Fighter 3HP38 / …' to contain 'supabase-campaign-characters.sql'
+     */
+    server.noGmBaseColumn = true;
+    publish(light(), '2026-09-18T10:00:00.000Z');
+    const host = render(<PartyMembers campaignId={CAMPAIGN} isGm content={db} onView={() => undefined} />);
+    await settle();
+    await settle();
+    expect(host.textContent).toContain('supabase-campaign-characters.sql');
+    expect(host.textContent, 'the party still loads').toContain('Thessaly Vane');
   });
 });

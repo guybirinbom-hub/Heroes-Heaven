@@ -21,6 +21,7 @@ import type {
   Spell,
 } from '../rules/types';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
+import { authoredKey, hash53 } from './authored';
 import { loadSettingsUpdated, markLocalDataChanged, markCampaignHbDirty, saveSettingsUpdated, loadCustomizationUpdated, saveCustomizationUpdated } from './syncBus';
 import { notifyReset } from '../../tracker/src/store/persistBus';
 import type { CampaignMembership } from './campaigns';
@@ -66,6 +67,21 @@ export function duplicateChar(c: SavedChar): SavedChar {
 export const ROSTER_KEY = 'wanderers-codex:roster:v1';
 const KEY = ROSTER_KEY;
 
+/**
+ * `hash53(authoredKey(<a stored entry as it was on disk>))` → `authoredKey(<that entry as loaded>)`,
+ * for every entry whose load CHANGED what counts as authored (a play / character migration of an app
+ * update: normalizePlay dropping a legacy field, an item-id alias). Session memory, add-only: each pair
+ * is a fact about content ("loading this makes that"), true whenever it is read.
+ *
+ * The GM-edit verdict reads it (src/sheet/gmSync.ts → `gmEditVerdict`, `loaded`): a GM push built on
+ * what the OLDER version published must not be refused because this version's load — not the player —
+ * changed the sheet and its launch republished that. A load is not an edit (F1, 2026-10-09).
+ */
+const loadedAuthored = new Map<string, string>();
+export function loadedAuthoredAs(hash: string): string | undefined {
+  return loadedAuthored.get(hash);
+}
+
 export function loadRoster(): SavedChar[] {
   try {
     const raw = localStorage.getItem(KEY);
@@ -75,7 +91,17 @@ export function loadRoster(): SavedChar[] {
     // survivors so a legacy or hand-edited character can't crash the roster on render.
     return parsed
       .filter((e) => e && typeof e === 'object' && typeof e.id === 'string' && e.character && typeof e.character === 'object')
-      .map((e) => ({ ...e, character: normalizeCharacter(e.character), play: e.play ? normalizePlay(e.play) : undefined }));
+      .map((e) => {
+        const out = { ...e, character: normalizeCharacter(e.character), play: e.play ? normalizePlay(e.play) : undefined };
+        try {
+          const before = authoredKey(e);
+          const after = authoredKey(out);
+          if (before !== after) loadedAuthored.set(hash53(before), after);
+        } catch {
+          /* a sheet that won't serialise has no pair; the verdict then judges it as stored */
+        }
+        return out;
+      });
   } catch {
     return [];
   }
@@ -559,13 +585,16 @@ export function saveCharUpdated(map: Record<string, number>): void {
 
 const GM_EDITS_APPLIED_KEY = 'wanderers-codex:gm-edits-applied:v1';
 
-/** `campaignId|charId` → the `updated_at` of the last GM edit APPLIED on this device.
+/** `campaignId|charId` → the `updated_at` of the last GM edit this device HANDLED (applied, refused
+ *  or found already settled).
  *
  *  The applier's cleanup DELETE on `gm_character_edits` is best-effort — on a database missing the
  *  `gce_owner_delete` policy (a setup that predates it) it silently removes NOTHING, and the same
  *  edit then re-applied on every poll tick (2.5 s), clobbering every local change seconds after it
- *  was made. This stamp is what makes that loop structurally impossible: an edit at or below the
- *  stamp is already ours and is never applied again, whatever the delete did. */
+ *  was made. This stamp is what makes that loop structurally impossible: a row carrying the SAME
+ *  stamp (compared as an instant, by equality — src/sheet/gmSync.ts → `editsToApply`) has already
+ *  been judged here and is never judged again, whatever the delete did. A different push is a new
+ *  edit even when the GM's other device stamped it earlier: two GM clocks are never ordered. */
 export function loadGmEditsApplied(): Record<string, string> {
   try {
     const raw = localStorage.getItem(GM_EDITS_APPLIED_KEY);
@@ -579,6 +608,34 @@ export function loadGmEditsApplied(): Record<string, string> {
 export function saveGmEditsApplied(map: Record<string, string>): void {
   try {
     localStorage.setItem(GM_EDITS_APPLIED_KEY, JSON.stringify(map));
+  } catch {
+    /* non-fatal */
+  }
+}
+
+const GM_EDITS_CHAIN_KEY = 'wanderers-codex:gm-edits-chain:v1';
+
+/** `campaignId|charId` → WHICH GM edit this device last APPLIED, what it was built on and what it
+ *  produced: `at` = that row's own `updated_at` (a later push's `gm_base.on` names it), `stamp` = its
+ *  `gm_base.stamp` (the publish it was applied over — every later push built on a held edit of his over
+ *  that publish carries it), `base` = its `gm_base.hash`, `result` = `hash53(authoredKey(<the roster
+ *  entry the apply produced>))`. It lets the GM's next push, built on THAT push of his, land here — and
+ *  only here, only while the sheet is still exactly that result (src/sheet/gmSync.ts → `gmEditVerdict`). Kept
+ *  OUTSIDE the roster and its undo timeline on purpose: a Ctrl+Z of the applied edit must make the
+ *  sheet differ from `result`, never move the record with it. */
+export function loadGmEditChains(): Record<string, { at?: string; stamp?: string; base: string; result: string }> {
+  try {
+    const raw = localStorage.getItem(GM_EDITS_CHAIN_KEY);
+    const p = raw ? JSON.parse(raw) : null;
+    return p && typeof p === 'object' ? (p as Record<string, { at?: string; stamp?: string; base: string; result: string }>) : {};
+  } catch {
+    return {};
+  }
+}
+
+export function saveGmEditChains(map: Record<string, { at?: string; stamp?: string; base: string; result: string }>): void {
+  try {
+    localStorage.setItem(GM_EDITS_CHAIN_KEY, JSON.stringify(map));
   } catch {
     /* non-fatal */
   }

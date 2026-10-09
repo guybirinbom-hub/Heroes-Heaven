@@ -367,3 +367,46 @@ describe('an edit made while a sync is on the network is never overwritten', () 
     expect(sb.state.upserts.length).toBe(uploads);
   });
 });
+
+/*
+ * F1 (2026-10-09): a device BEHIND its own cloud copy, if it was the last to publish, applied a GM push
+ * built on that old copy, and the cloud merge then dropped the player's newer work from their other device
+ * (round-3 refuter probe; the App leg is test/bug-gm-edit-race.test.tsx (38)). App now asks cloud sync to
+ * pull before an apply, and applies only on a `true`. These legs drive the REAL pullForGmApply.
+ */
+describe('pullForGmApply — a GM edit is applied only on a device level with its own cloud copy', () => {
+  /*
+   * MUTATION (run 2026-10-09): `return pulledOk;` without the `await pull()` before it, in
+   * cloudSync.pullForGmApply — and this fails —
+   *   AssertionError: their other device's newer copy is adopted before the answer: expected undefined to be 5 // Object.is equality
+   */
+  it('no cloud sync → null; started → it PULLS, and a newer copy from their other device is adopted before it answers', async () => {
+    vi.resetModules();
+    const cold = await import('../src/data/cloudSync');
+    expect(cold.pullForGmApply(), 'not started: nothing to pull, nothing to wait for').toBeNull();
+    const t = await boot();
+    const sync = await import('../src/data/cloudSync');
+    sb.state.cloudRow = { ...(sb.state.cloudRow as CloudBundle), roster: [hero(5)], charUpdated: { c1: 9e12 } };
+    const answer = sync.pullForGmApply()!;
+    await settle();
+    expect(await answer, 'level after the pull').toBe(true);
+    expect(flasks(t.applied.at(-1)), "their other device's newer copy is adopted before the answer").toBe(5);
+  });
+
+  /*
+   * MUTATION (run 2026-10-09): drop `|| syncing` from the guard in cloudSync.pullForGmApply — and this
+   * fails (pull() then returns at once on its own guard, having pulled nothing) —
+   *   AssertionError: a sync already in the air: wait: expected true to be false // Object.is equality
+   */
+  it('a sync already in the air answers "wait" — never "apply" on a pull that did not happen', async () => {
+    await boot();
+    const sync = await import('../src/data/cloudSync');
+    const holds = holdPull();
+    sb.state.realtime[0](); // a Realtime pull is on the network
+    await settle();
+    const answer = sync.pullForGmApply()!;
+    await settle();
+    expect(await answer, 'a sync already in the air: wait').toBe(false);
+    await holds();
+  });
+});

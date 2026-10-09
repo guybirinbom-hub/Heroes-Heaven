@@ -63,6 +63,11 @@ let pushTimer: ReturnType<typeof setTimeout> | null = null; // debounced mid-ses
 let liveUnsub: (() => void) | null = null; // Realtime subscription teardown
 let applyRoster: ((r: SavedChar[]) => void) | null = null;
 let fingerprints = new Map<string, string>(); // last-applied content per roster id (edit detection)
+/** Resolves once startCloudSync's first pull ATTEMPT is over and the persist hook is on (it also
+ *  resolves when the start throws). Null while sync is not started. */
+let ready: Promise<void> | null = null;
+/** The persist hook (noteRosterChange) is attached: an edit persisted from now on is stamped newest. */
+let hooked = false;
 
 /** Debounce for the mid-session upload: push this long after the last local edit settles, so a change
  *  reaches the cloud (and, via Realtime, the user's other open devices) within seconds instead of only
@@ -342,6 +347,49 @@ const onOnline = () => {
 export async function startCloudSync(onRosterReplaced: (roster: SavedChar[]) => void): Promise<() => void> {
   if (!supabase || started) return () => {};
   started = true;
+  let markReady = () => {};
+  ready = new Promise<void>((done) => {
+    markReady = done;
+  });
+  try {
+    return await startSync(onRosterReplaced);
+  } finally {
+    markReady(); // also when the start threw: pullForGmApply then answers "not level" instead of hanging
+  }
+}
+
+/**
+ * PULL NOW, BEFORE A GM EDIT IS APPLIED — and say whether this device is level with its own cloud copy
+ * (F1, 2026-10-09). Null when there is no cloud sync at all (nothing of another device's to lose).
+ *
+ * A GM edit is applied only when this device's sheet IS the published one it was built on
+ * (gmSync.gmEditVerdict). That proves nothing about the player's OTHER device: a device that last pulled
+ * before the player changed something on their phone can still be the one that published LAST (a failed
+ * publish retried on `online`, a mid-session re-derive), so the published sheet is its stale one, the GM
+ * builds on that, and the verdict here says APPLY. The apply is a roster edit, stamped newest, and the
+ * per-character merge then carried the GM's sheet over the phone's newer work — the player's change,
+ * overwritten (refuter probe of 2026-10-09; test/bug-gm-edit-race.test.tsx leg 38). So the cloud is
+ * pulled and merged first: a newer copy from their other device is ADOPTED here (the caller's re-check
+ * over the queued roster then sees the entry moved, and the edit waits, then is refused once that copy
+ * publishes); and false — the first pull not done, the persist hook not on yet (an apply then would go
+ * unstamped), a sync already in the air, a failed pull — means "wait", never "apply".
+ */
+export function pullForGmApply(): Promise<boolean> | null {
+  if (!supabase || !started) return null;
+  const gate = ready;
+  return (async () => {
+    if (gate) await gate;
+    if (!started || !hooked || syncing) return false;
+    try {
+      await pull();
+    } catch {
+      return false;
+    }
+    return pulledOk;
+  })();
+}
+
+async function startSync(onRosterReplaced: (roster: SavedChar[]) => void): Promise<() => void> {
   applyRoster = onRosterReplaced;
   pulledOk = false;
   syncing = false;
@@ -371,6 +419,7 @@ export async function startCloudSync(onRosterReplaced: (roster: SavedChar[]) => 
   }
 
   setOnPersisted(noteRosterChange);
+  hooked = true;
   // Non-roster local data (homebrew, modes, settings) marks dirty and uploads (debounced) live too.
   onLocalDataChanged(() => {
     dirty = true;
@@ -397,6 +446,8 @@ export async function startCloudSync(onRosterReplaced: (roster: SavedChar[]) => 
 
   return () => {
     setOnPersisted(() => {});
+    hooked = false;
+    ready = null;
     onLocalDataChanged(null);
     document.removeEventListener('visibilitychange', onVisibility);
     window.removeEventListener('focus', onFocus);

@@ -64,6 +64,8 @@ const server = vi.hoisted(() => ({
   editRefusals: 0,
   /** Make the NEXT GM edit THROW (a dropped socket) instead of answering. */
   throwNextEdit: false,
+  /** F1 (2026-10-09): a database the SQL was never re-run on — `gm_character_edits` has no `gm_base`. */
+  noGmBaseColumn: false,
 }));
 
 vi.mock('../src/data/supabase', () => {
@@ -89,12 +91,33 @@ vi.mock('../src/data/supabase', () => {
    */
   const wire = (row: Record<string, unknown> | undefined): Record<string, unknown> | null =>
     row ? (jsonbOrder(JSON.parse(JSON.stringify(row))) as Record<string, unknown>) : null;
+  /** F1 (2026-10-09): PostgREST's answer for a column the schema cache does not know. */
+  const noColumn = (col: string, t: string) => ({
+    code: 'PGRST204',
+    message: `Could not find the '${col}' column of '${t}' in the schema cache`,
+  });
   function from(table: string) {
     const where: Record<string, unknown> = {};
+    let cols = '';
     const matched = () => rows(table).filter((r) => Object.entries(where).every(([k, v]) => r[k] === v));
-    const answer = () => ({ data: matched(), error: null });
+    const answer = () =>
+      server.noGmBaseColumn && table === 'gm_character_edits' && cols.includes('gm_base')
+        ? { data: null, error: noColumn('gm_base', table) }
+        : { data: matched(), error: null };
     const q = {
-      select: () => q,
+      select: (c?: string) => {
+        cols = c ?? '';
+        return q;
+      },
+      // F1 (2026-10-09): the receipt is a column-only UPDATE of the player's own row.
+      update: (fields: Record<string, unknown>) => ({
+        eq: (c1: string, v1: unknown) => ({
+          eq: (c2: string, v2: unknown) => {
+            for (const r of rows(table)) if (r[c1] === v1 && r[c2] === v2) Object.assign(r, fields);
+            return Promise.resolve({ error: null });
+          },
+        }),
+      }),
       eq: (col: string, val: unknown) => {
         where[col] = val;
         return q;
@@ -134,8 +157,11 @@ vi.mock('../src/data/supabase', () => {
           server.throwNextEdit = false;
           return Promise.reject(new Error('socket hang up'));
         }
+        if (server.noGmBaseColumn && 'gm_base' in row) return Promise.resolve({ error: noColumn('gm_base', table) });
+        // F1 (2026-10-09): MERGE-duplicates, as PostgREST's upsert does — only the columns sent are
+        // rewritten, so an older app's upsert leaves the previous push's `gm_base` beside its sheet.
         const land = () => {
-          server.edits.set(key, row);
+          server.edits.set(key, { ...(server.edits.get(key) ?? {}), ...row });
           server.editWrites.push(row);
         };
         if (server.holdNextEdit) {
@@ -184,8 +210,11 @@ vi.mock('../src/data/supabase', () => {
 
 const { computeSummary } = await import('../src/sheet/partySummary');
 const { applyPlayState, initialPlay } = await import('../src/rules/play');
-const { fetchMemberSheet, fetchParty, fetchPendingGmEdits, pushGmEdit } = await import('../src/data/party');
-const { clearGmPendingEdits, gmPendingEdit, snapshotGmPending } = await import('../src/sheet/gmSync');
+const { fetchMemberSheet, fetchParty, fetchPendingGmEdits, fetchPublishedSheet, forgetMissingColumns, gmEditFromRow, pushGmEdit } =
+  await import('../src/data/party');
+const { clearGmPendingEdits, gmBaseOf, gmEditRefused, gmEditSchemaOutdated, gmEditVerdict, gmPendingEdit, snapshotGmPending } =
+  await import('../src/sheet/gmSync');
+const { authoredKey, hash53 } = await import('../src/data/authored');
 const { usePcSheetTruth, useMemberSheets, vitalsFromSheet } = await import('../src/integration/pcSheetTruth');
 const { useCombatStore, scopeKey, flushPersist, invalidateEncounterCache } = await import(
   '../tracker/src/store/combatStore'
@@ -362,6 +391,8 @@ afterEach(() => {
   server.refuseEdits = false;
   server.editRefusals = 0;
   server.throwNextEdit = false;
+  server.noGmBaseColumn = false;
+  forgetMissingColumns();
   clearGmPendingEdits();
   flushPersist();
   localStorage.clear();
@@ -1983,10 +2014,11 @@ describe('the write base — a push is recorded on the publish it was built on, 
     await m.deliver();
     expect(snapshotGmPending(CAMPAIGN).size, 'the read dropped his stood-down 4').toBe(0);
 
-    // The full-sheet Update (GmEditSheet's push): his own working copy, on the stamp it read.
+    // The full-sheet Update (GmEditSheet's push): his own working copy, on the read it made.
+    // F1 (2026-10-09): the base is that read's stamp AND its authored hash (`gmBaseOf`), not a stamp alone.
     const opened = (await fetchMemberSheet(CAMPAIGN, CHAR))!;
     const sick = { ...opened, play: { ...opened.play!, conditions: [...(opened.play!.conditions ?? []), { id: 'sickened', value: 1 }] } };
-    expect((await pushGmEdit(CAMPAIGN, CHAR, GM, sick, T1)).ok).toBe(true);
+    expect((await pushGmEdit(CAMPAIGN, CHAR, GM, sick, gmBaseOf(await fetchPublishedSheet(CAMPAIGN, CHAR)), null)).ok).toBe(true);
     expect(snapshotGmPending(CAMPAIGN).get(`${CAMPAIGN}|${CHAR}`)!.baseUpdatedAt).toBe(T1);
 
     frightened(1); // made on the row's 21: the read finds his Update standing, so it stands down
@@ -2109,10 +2141,12 @@ describe('the write base — a push is recorded on the publish it was built on, 
    *   ZB: AssertionError: his gesture goes out at once: expected [] to have a length of 1 but got +0
    *   ZC: AssertionError: the row snaps to their sheet: expected 21 to be 25
    */
-  for (const [label, how, hp] of [
-    ['ZA: his full-sheet Update, pushed after its read failed, awards 80 XP', 'update', 25],
-    ['ZB: his other device awarded 80 XP', 'seeded', 25],
-    ['ZC: his other device dealt 4 damage', 'seeded', 21],
+  // F1 (2026-10-09): ZA's premise — a full-sheet Update pushed after its read failed, with no base — no
+  // longer exists: `pushGmEdit` sends nothing without a base (leg 42 below pins that). ZB and ZC stay as
+  // written: they model rows an OLDER GM app wrote (no `gm_base`).
+  for (const [label, hp] of [
+    ['ZB: his other device awarded 80 XP', 25],
+    ['ZC: his other device dealt 4 damage', 21],
   ] as const) {
     it(`${label} (no proved base, still standing): never built on — his gestures go out at once on their sheet, and replace it`, async () => {
       const m = await mount(hurt());
@@ -2120,26 +2154,16 @@ describe('the write base — a push is recorded on the publish it was built on, 
       const theirXp = own.play!.xp;
       expect(theirXp, 'their sheet carries no award').not.toBe(80);
       const edit: SavedChar = { ...own, play: { ...own.play!, ...(hp === 25 ? { xp: 80 } : { damage: MAX - 21 }) } };
-      // 10:30 on a clock in step with theirs: after their 10:00 publish.
-      if (how === 'update') {
-        vi.useFakeTimers({ toFake: ['Date'] });
-        vi.setSystemTime(new Date('2026-10-01T10:30:00.000Z'));
-        try {
-          expect((await pushGmEdit(CAMPAIGN, CHAR, PLAYER, edit, undefined)).ok, 'the read before it failed: no base').toBe(true);
-        } finally {
-          vi.useRealTimers();
-        }
-      } else {
-        server.edits.set(`${CAMPAIGN}|${CHAR}`, {
-          campaign_id: CAMPAIGN,
-          char_id: CHAR,
-          owner_id: PLAYER,
-          editor_id: GM,
-          sheet: edit,
-          updated_at: '2026-10-01T10:30:00.000Z',
-        });
-        await fetchPendingGmEdits(CAMPAIGN);
-      }
+      // 10:30 on a clock in step with theirs: after their 10:00 publish. A row an OLDER GM app wrote.
+      server.edits.set(`${CAMPAIGN}|${CHAR}`, {
+        campaign_id: CAMPAIGN,
+        char_id: CHAR,
+        owner_id: PLAYER,
+        editor_id: GM,
+        sheet: edit,
+        updated_at: '2026-10-01T10:30:00.000Z',
+      });
+      await fetchPendingGmEdits(CAMPAIGN);
       expect(gmPendingEdit(CAMPAIGN, CHAR)!.baseUpdatedAt, 'no proved base').toBeUndefined();
       const writes = server.editWrites.length;
       await m.deliver();
@@ -2174,7 +2198,7 @@ describe('the write base — a push is recorded on the publish it was built on, 
   it('PZ3: his full-sheet Update, confirmed over their newer publish, is recorded on the read it was built on — the next read keeps it, and his next gesture lands on it', async () => {
     /*
      * The round-10 refuter's PZ3. His 4 lands on T0; their app applies it and they note 10 XP (T1).
-     * His full-sheet Update reads T1 and he confirms "Overwrite anyway" (./GmEditSheet.tsx): their
+     * His full-sheet Update builds his Update on the read that showed T1 (./GmEditSheet.tsx): their
      * sheet, with 90 XP. Recorded on the OLDER base of his 4, the next read took it for overtaken by
      * the very publish it was built on, and his next tracker gesture, built on that publish,
      * replaced it on the server: his confirmed 90 XP gone.
@@ -2189,7 +2213,8 @@ describe('the write base — a push is recorded on the publish it was built on, 
     publish({ ...applied, play: { ...applied.play!, xp: 10 } } as SavedChar, T1); // their app applies it; 10 XP of theirs
     const opened = theirs();
     const update = { ...opened, play: { ...opened.play!, xp: 90 } } as SavedChar;
-    expect((await pushGmEdit(CAMPAIGN, CHAR, PLAYER, update, T1)).ok).toBe(true);
+    // F1 (2026-10-09): the base is the read that showed T1 — its stamp and its authored hash.
+    expect((await pushGmEdit(CAMPAIGN, CHAR, PLAYER, update, gmBaseOf(await fetchPublishedSheet(CAMPAIGN, CHAR)), null)).ok).toBe(true);
     expect(gmPendingEdit(CAMPAIGN, CHAR)!.baseUpdatedAt, 'his Update is recorded on the read it was built on').toBe(T1);
 
     await m.deliver(); // the next member read
@@ -2232,6 +2257,197 @@ describe('the write base — a push is recorded on the publish it was built on, 
     expect(pc().currentHP, 'the row follows their sheet').toBe(21);
     expect(rowConds()).toEqual(['wounded:1']);
     expect(theirs().play!.conditions).toEqual([{ id: 'wounded', value: 1 }]);
+  });
+});
+
+/*
+ * F1 (2026-10-09) — THE BASE A PUSH CARRIES, AND WHAT THE PLAYER'S APP MAKES OF IT.
+ *
+ * Every push writes `gm_base` (the fresh read it was built on: stamp + authored hash, and `on` — the
+ * push of his it was built on), so the player's app can refuse one built on a sheet they have changed
+ * since (src/sheet/gmSync.ts → gmEditVerdict), and the GM's own write path builds on his held edit only
+ * while the published sheet is still exactly its base (`pendingEditStandsOnFreshRead`). The player's
+ * side runs here as the pure verdict over the rows this harness stores; the real <App/> runs it in
+ * test/bug-gm-edit-race.test.tsx.
+ */
+describe('F1 — the base a push carries, and what the player’s app makes of it', () => {
+  const editRow = () => server.edits.get(`${CAMPAIGN}|${CHAR}`)!;
+  const theirRow = async () => (await fetchPublishedSheet(CAMPAIGN, CHAR))!;
+  const hashOf = (sc: SavedChar) => hash53(authoredKey(sc));
+
+  it('(36) every seam push writes gm_base bound to itself, on the read it was built on — and `on` names the push it was built on', async () => {
+    /*
+     * MUTATION (run 2026-10-09): drop the `gm_base: { … }` line from pushGmEdit's upsert — and this fails,
+     * with (37), (38), (39) and (43) —
+     *   AssertionError: expected undefined to deeply equal { v: 1, …(4) }
+     * MUTATION (run 2026-10-09): pass `null` for `on` in pcSheetTruth's `send()` — and this fails, with (38) —
+     *   AssertionError: his 1 was built on his 4: expected null to be '2026-10-09T14:53:55.854Z'
+     * (the stamp is the push's own, so it differs run to run).
+     */
+    await mount(hurt());
+    act(() => store().applyDamage(pc().id, 4));
+    await settle();
+    const first = server.editWrites[0];
+    expect(first.gm_base).toEqual({ v: 1, at: first.updated_at, stamp: T0, hash: hashOf(hurt()), on: null });
+    act(() => store().applyDamage(pc().id, 1)); // built on his held 4: the published sheet has not moved
+    await settle();
+    const second = server.editWrites[1];
+    expect((second.gm_base as { on: string | null }).on, 'his 1 was built on his 4').toBe(first.updated_at);
+    expect((second.gm_base as { stamp: string }).stamp).toBe(T0);
+    expect((second.gm_base as { at: string }).at).toBe(second.updated_at);
+  });
+
+  it('(37) F2: their second device publishes a newer sheet stamped EARLIER than his base — his next gesture is built on THEIR sheet', async () => {
+    /*
+     * MUTATION (run 2026-10-09): build on the display rule — `edit && pendingEditStillStands(edit,
+     * published)` in gmSync.gmPushBuiltOn — and this fails —
+     *   AssertionError: nothing is built on his stale 4 over their 6: expected [ …(2) ] to have a length of 1 but got 2
+     */
+    const m = await mount(hurt());
+    act(() => store().applyDamage(pc().id, 4)); // lands: 21, on T0
+    await settle();
+    const early = '2026-10-01T09:59:00.000Z';
+    publish(patchedUp(), early); // their phone, whose clock runs behind
+    await m.deliver();
+    frightened(1); // made on the row
+    await settle();
+    expect(server.editWrites, 'nothing is built on his stale 4 over their 6').toHaveLength(1);
+    expect(pc().currentHP, 'the row snaps to their sheet').toBe(6);
+    frightened(1); // made on their 6: it lands there
+    await settle();
+    expect(server.editWrites).toHaveLength(2);
+    expect(pushed(1).currentHP).toBe(6);
+    expect((server.editWrites[1].gm_base as { stamp: string }).stamp, 'built on their publish').toBe(early);
+    expect(theirs().play!.damage, 'the player’s own sheet is never written').toBe(MAX - 6);
+  });
+
+  it('(38) an edit seeded from a row WITH a bound gm_base is proved, and his next gesture is built on it (the inverse of ZB)', async () => {
+    /*
+     * MUTATION (run 2026-10-09): drop the base from fetchPendingGmEdits' mapping (`baseUpdatedAt:
+     * undefined, baseHash: undefined`) — and this fails —
+     *   AssertionError: seeded with its base: expected undefined to be '2026-10-01T10:00:00.000Z'
+     */
+    const m = await mount(hurt());
+    const own = hurt();
+    const at = '2026-10-01T10:30:00.000Z';
+    server.edits.set(`${CAMPAIGN}|${CHAR}`, {
+      campaign_id: CAMPAIGN,
+      char_id: CHAR,
+      owner_id: PLAYER,
+      editor_id: GM,
+      sheet: { ...own, play: { ...own.play!, damage: MAX - 21 } }, // his 4, from his other device
+      updated_at: at,
+      gm_base: { v: 1, at, stamp: T0, hash: hashOf(own), on: null },
+    });
+    await fetchPendingGmEdits(CAMPAIGN);
+    expect(gmPendingEdit(CAMPAIGN, CHAR)!.baseUpdatedAt, 'seeded with its base').toBe(T0);
+    await m.deliver();
+    expect(pc().currentHP).toBe(21);
+    frightened(1);
+    await settle();
+    expect(server.editWrites, 'his gesture lands on his seeded 4').toHaveLength(1);
+    expect(pushed(0).currentHP).toBe(21);
+    expect((server.editWrites[0].gm_base as { on: string }).on).toBe(at);
+  });
+
+  it('(39) a stale survivor: an OLD GM app upserts over a new app’s row — the base no longer proves anything', async () => {
+    /*
+     * MUTATION (run 2026-10-09): skip the binding term (`sameInstant(b.at, row.updatedAt)`) in
+     * gmSync.boundGmBase — and this fails —
+     *   AssertionError: an old app's push never borrows the new one's proof: expected 'apply' to be 'refuse'
+     */
+    await mount(hurt());
+    act(() => store().applyDamage(pc().id, 4)); // the new app's push, with its base
+    await settle();
+    const { supabase } = await import('../src/data/supabase');
+    const own = hurt();
+    await supabase!.from('gm_character_edits').upsert({
+      campaign_id: CAMPAIGN,
+      char_id: CHAR,
+      owner_id: PLAYER,
+      editor_id: GM,
+      sheet: { ...own, play: { ...own.play!, xp: 500 } },
+      updated_at: '2026-10-01T10:45:00.000Z', // an older GM app: no gm_base column sent
+    });
+    expect(editRow().gm_base, 'merge-duplicates kept the earlier push’s base').toBeDefined();
+    const verdict = gmEditVerdict({ row: gmEditFromRow(editRow()), own: await theirRow(), local: theirs() });
+    expect(verdict, "an old app's push never borrows the new one's proof").toBe('refuse');
+  });
+
+  it('(40) the P2b2 / P2c / P5c replay: they publish after his read — the stored push is refused, and their sheet keeps their change', async () => {
+    /*
+     * MUTATION (run 2026-10-09): drop `atBase` from the general rule (`if (A === S) return 'apply';`) —
+     * and this fails —
+     *   AssertionError: his push built on T0 is refused: expected 'apply' to be 'refuse'
+     */
+    await mount(hurt());
+    act(() => store().applyDamage(pc().id, 4)); // his push, built on their T0 sheet
+    await settle();
+    const own = hurt();
+    const drank = { ...own, play: { ...own.play!, xp: 12 } } as SavedChar; // their own change after his read
+    publish(drank, T1); // their app published it before picking his push up
+    const verdict = gmEditVerdict({ row: gmEditFromRow(editRow()), own: await theirRow(), local: drank });
+    expect(verdict, 'his push built on T0 is refused').toBe('refuse');
+    expect(theirs().play!.xp, 'their change stays').toBe(12);
+    expect(theirs().play!.damage).toBe(MAX - 25);
+  });
+
+  it('(41) the refusal receipt stands his overlay down, says "not applied", and his row snaps to their sheet', async () => {
+    /*
+     * MUTATION (run 2026-10-09): delete the receipt clause from gmSync.pendingEditStillStands — and this
+     * fails, alone among the F1 legs —
+     *   AssertionError: the overlay stands down: expected { campaignId: 'camp-nvo', …(6) } to be undefined
+     */
+    const m = await mount(hurt());
+    act(() => store().applyDamage(pc().id, 4)); // lands: 21
+    await settle();
+    expect(pc().currentHP).toBe(21);
+    const { markGmEditRefused } = await import('../src/data/party');
+    await markGmEditRefused(CAMPAIGN, CHAR, server.editWrites[0].updated_at as string); // their app refused it
+    expect(server.chars.get(`${CAMPAIGN}|${CHAR}`)!.updated_at, 'a receipt is one column — the stamp never moves').toBe(T0);
+    await m.deliver();
+    expect(gmPendingEdit(CAMPAIGN, CHAR), 'the overlay stands down').toBeUndefined();
+    expect(gmEditRefused(CAMPAIGN, CHAR), 'the GM is told').toBe(true);
+    expect(pc().currentHP, 'the row snaps to their sheet').toBe(25);
+  });
+
+  it('(42) ZA rewritten: a push with no base sends NOTHING, and his held edit is untouched', async () => {
+    /*
+     * ZA's premise — a full-sheet Update pushed after its read failed — is closed at the source: a push
+     * that proves no base is one the player's app must refuse anyway.
+     * MUTATION (run 2026-10-09): allow base-less pushes — `if (!base) base = { stamp: '', hash: '' };` in
+     * place of the guard in pushGmEdit — and this fails —
+     *   AssertionError: a push with no base is refused: expected true to be false
+     */
+    await mount(hurt());
+    act(() => store().applyDamage(pc().id, 4));
+    await settle();
+    const held = gmPendingEdit(CAMPAIGN, CHAR)!;
+    const own = hurt();
+    const res = await pushGmEdit(CAMPAIGN, CHAR, PLAYER, { ...own, play: { ...own.play!, xp: 80 } }, undefined);
+    expect(res.ok, 'a push with no base is refused').toBe(false);
+    expect(res.ok === false && res.error, 'said plainly').toContain('nothing was sent');
+    expect(server.editWrites, 'no row lands').toHaveLength(1);
+    expect(gmPendingEdit(CAMPAIGN, CHAR), 'his held edit is untouched').toBe(held);
+  });
+
+  it('(43) a database without gm_base: the push is refused with the SQL file named, and no base-less row ever lands', async () => {
+    /*
+     * MUTATION (run 2026-10-09): retry without the column — a legacy upsert of the same row minus
+     * `gm_base`, returning ok, in pushGmEdit's missing-column branch — and this fails —
+     *   AssertionError: refused until the SQL is re-run: expected true to be false
+     */
+    await mount(hurt());
+    server.noGmBaseColumn = true;
+    const own = hurt();
+    const res = await pushGmEdit(CAMPAIGN, CHAR, PLAYER, { ...own, play: { ...own.play!, xp: 80 } }, gmBaseOf(await theirRow()), null);
+    expect(res.ok, 'refused until the SQL is re-run').toBe(false);
+    expect(res.ok === false && res.error).toContain('supabase-campaign-characters.sql');
+    expect(gmEditSchemaOutdated(), 'the GM is shown the strip').toBe(true);
+    act(() => store().applyDamage(pc().id, 4)); // a tracker gesture is owed, never sent base-less
+    await settle();
+    expect(server.editWrites, 'no base-less row ever lands').toEqual([]);
+    expect(theirs().play!.damage).toBe(MAX - 25);
   });
 });
 

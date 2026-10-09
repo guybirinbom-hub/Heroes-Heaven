@@ -1,6 +1,7 @@
 import { applyOverrides, buildCharacter } from '../rules/build';
 import type { Character, ContentDatabase } from '../rules/types';
 import type { SavedChar } from './storage';
+import { CARRIED_CHARACTER_FIELDS } from './authored';
 
 /**
  * Fields the engine derives fresh on every build/rebuild but does NOT own: they live only on the
@@ -10,12 +11,15 @@ import type { SavedChar } from './storage';
  * edit save (GmEditSheet.tsx). `stored` is the roster/working-copy character being replaced; when
  * there is none (a brand-new character), `fresh` is returned untouched — a new character starting
  * at the build's own defaults (0 gold) is correct, there is nothing to carry.
+ *
+ * The list is `CARRIED_CHARACTER_FIELDS` (./authored.ts), and it is also what the GM-edit channel
+ * counts as the player's own on a built character (`authoredKey`): what a rebuild keeps is exactly
+ * what a GM edit must not take, so a launch rebuild can never look like a change of theirs.
  */
 export function carryStoredOverrides(fresh: Character, stored: Character | undefined): Character {
   if (!stored) return fresh;
-  const carried: { customization?: Character['customization']; currency?: Character['currency'] } = {};
-  if (stored.customization !== undefined) carried.customization = stored.customization;
-  if (stored.currency !== undefined) carried.currency = stored.currency;
+  const carried: Partial<Pick<Character, (typeof CARRIED_CHARACTER_FIELDS)[number]>> = {};
+  for (const k of CARRIED_CHARACTER_FIELDS) if (stored[k] !== undefined) (carried as Record<string, unknown>)[k] = stored[k];
   return { ...fresh, ...carried };
 }
 

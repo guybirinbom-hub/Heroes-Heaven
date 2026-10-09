@@ -87,13 +87,15 @@ vi.mock('../src/data/party', async (importOriginal) => ({
   fetchGmEdits: async () => [],
   deleteGmEdit: async () => 1,
   subscribeGmEdits: () => () => undefined,
-  pushGmEdit: async (campaignId: string, charId: string, ownerId: string, sheet: SavedChar, baseUpdatedAt?: string) => {
+  // F1 (2026-10-09): the base is the read's stamp AND its authored hash (`gmBaseOf`), and the held
+  // copy records both — the seam builds on it only while the read is still exactly that publish.
+  pushGmEdit: async (campaignId: string, charId: string, ownerId: string, sheet: SavedChar, base?: { stamp: string; hash: string }) => {
     srv.pushes.push({ charId, ownerId, sheet });
     if (!srv.pushOk) return { ok: false, error: 'new row violates row-level security policy' };
     // As the real one does once the server took it: the GM's own pending copy of what it now holds,
-    // which the seam's next push builds on (owner's list 2026-10-01, item 3 — gmSync.gmPushBase).
+    // which the seam's next push builds on (owner's list 2026-10-01, item 3 — gmSync.gmPushBuiltOn).
     const { rememberGmEdit } = await import('../src/sheet/gmSync');
-    rememberGmEdit(campaignId, charId, sheet, new Date().toISOString(), baseUpdatedAt, ownerId);
+    rememberGmEdit(campaignId, charId, sheet, new Date().toISOString(), base?.stamp, ownerId, base?.hash);
     return { ok: true, value: null };
   },
 }));

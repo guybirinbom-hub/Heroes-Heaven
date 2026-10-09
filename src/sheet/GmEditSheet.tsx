@@ -9,7 +9,8 @@ import { exportNative } from '../data/transfer';
 import { downloadText, fileSlug } from './download';
 import { pushGmEdit, fetchPublishedSheet } from '../data/party';
 import { confirmDialog, chooseDialog } from './confirm';
-import { gmPendingEdit, gmPendingVersion, reconcileGmWork, subscribeGmPending } from './gmSync';
+import { acknowledgeGmEditRefused, gmEditRefused, gmHeldEdit, gmPendingEdit, gmPendingVersion, gmUpdateBase, reconcileGmWork, subscribeGmPending } from './gmSync';
+import { canonicalJson } from '../data/authored';
 import { memberConditions, type PartySummary } from './partySummary';
 import { carryStoredOverrides } from '../data/rebuild';
 
@@ -85,6 +86,14 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [campaignId, work.id, pendingVersion],
   );
+  /* …or did the player's app REFUSE it (they changed the character before it picked it up)? Their
+   * version is then what this sheet shows, and the GM is told rather than left to wonder where his
+   * change went (F1, 2026-10). */
+  const refused = useMemo(
+    () => gmEditRefused(campaignId, work.id),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [campaignId, work.id, pendingVersion],
+  );
 
   /*
    * Follow the player, live — but never at the cost of the GM's work.
@@ -99,13 +108,15 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
    */
   useEffect(() => {
     if (!live) return;
+    // Canonical JSON: the published sheet is jsonb, whose key order is its own — compared as written,
+    // a sheet that came back unchanged read as "changed on the player's device" while dirty.
     const verdict = reconcileGmWork({
-      live: JSON.stringify(live),
-      work: JSON.stringify(work),
+      live: canonicalJson(live),
+      work: canonicalJson(work),
       dirty,
       // Our own last push, which now comes BACK through the pending overlay — never "the player
       // changed this while you were editing".
-      pushed: JSON.stringify(baselineRef.current),
+      pushed: canonicalJson(baselineRef.current),
     });
     if (verdict === 'in-step') {
       setPlayerAhead(null); // usually our own push echoing back
@@ -202,47 +213,68 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   // Push the working copy to the player. Returns true on success.
   const pushToPlayer = async (): Promise<boolean> => {
     setBusy(true);
+    const name = work.character.name;
     /*
-     * Don't silently clobber newer player work: if the player has re-published this character since we
-     * opened it, our working copy is based on a stale snapshot. Detect it (re-fetch + compare to the
-     * snapshot we opened) and let the GM reopen for the current version instead of overwriting theirs.
+     * PROVE THE WORKING COPY BEFORE IT GOES (F1, 2026-10). His edits were made on `baselineRef` — the
+     * sheet he opened, last pushed or took. They may go out only on top of the newest thing the server
+     * holds for this character: his held edit while it stands on this FRESH read, else the published
+     * sheet (`gmUpdateBase`). Anything else means the character MOVED since his copy — the player
+     * published, or his own tracker gesture replaced his held edit — and sending would undo that.
      *
      * ⚠ `fetchPublishedSheet`, NOT `fetchMemberSheet`. The latter hands back our own pending edit
-     * whenever one is waiting, so this guard would be comparing the GM's work against itself: it
-     * would find nothing changed and push straight over whatever the player published in between,
-     * with no warning at all. A write re-bases on the player's row; only the display overlays it.
+     * whenever one is waiting, so this guard would be comparing the GM's work against itself. A write
+     * re-bases on the player's row; only the display overlays it. The read's base travels with the
+     * push (`gm_base`), and the player's app applies it only while their sheet is still that one.
      */
     const row = await fetchPublishedSheet(campaignId, work.id);
-    const current = row?.sheet ?? null;
-    // Only warn about a PLAYER change. `current` must differ from every version we already know is
-    // OURS: the snapshot we opened, our last push, and the edit still waiting on the server (which is
-    // what `initial` is when the GM reopened a character whose edit hasn't landed yet).
-    const cur = current ? JSON.stringify(current) : null;
-    const mine = [JSON.stringify(initial), JSON.stringify(baselineRef.current)];
-    if (pending) mine.push(JSON.stringify(pending.sheet));
-    const changedByPlayer =
-      cur !== null &&
-      !mine.includes(cur) &&
-      // With an edit of ours still waiting, the published row is SUPPOSED to be the pre-edit one, so
-      // the fact that it differs proves nothing at all. The stamp is what answers it — and both sides
-      // of that comparison come off the player's own clock, so a GM device running fast can't fool it.
-      // Unknown either way (an edit seeded from the GM's other device) errs towards asking.
-      (!pending || !pending.baseUpdatedAt || !row?.updatedAt || row.updatedAt > pending.baseUpdatedAt);
-    if (changedByPlayer) {
+    const proof = gmUpdateBase(baselineRef.current, row, gmHeldEdit(campaignId, work.id));
+    let base: { stamp: string; hash: string };
+    let on: string | null;
+    if (proof.ok) {
+      base = proof.base;
+      on = proof.on;
+    } else {
       setBusy(false);
-      const overwrite = await confirmDialog({
-        title: 'Player changed this character',
-        message: `${work.character.name} was updated by the player since you opened it, so your edits are based on an older version and would overwrite their newer changes. Overwrite anyway, or cancel and reopen to edit their current version?`,
-        confirmLabel: 'Overwrite anyway',
-        cancelLabel: 'Cancel',
-        danger: true,
+      if (proof.reason !== 'moved') {
+        await confirmDialog(
+          proof.reason === 'read-failed'
+            ? {
+                title: `Couldn’t check ${name}`,
+                message: `Couldn’t reach the server to read ${name}’s current sheet, so nothing was sent. Your changes are still here — try Update again in a moment.`,
+                confirmLabel: 'OK',
+              }
+            : {
+                title: `${name} isn’t shared any more`,
+                message: `${name} is no longer shared in this campaign, so there is nothing to update. Your changes are still here.`,
+                confirmLabel: 'OK',
+              },
+        );
+        return false;
+      }
+      // MOVED. The app never overwrites a player's change — but a GM who is shown that the character
+      // changed and presses the red button has chosen to, knowingly (the one judgment call, F1).
+      const choice = await chooseDialog({
+        title: `${name} changed since your copy`,
+        message: `${name} changed after this sheet was opened — on the player’s device, or by your own change in the tracker. Your edits were made on the older copy, so nothing was sent. Take the current version and make your edits again, or keep editing to note them first. Overwrite anyway sends your copy as it is: it undoes whatever changed since your copy (the player’s own changes included), and that cannot be taken back from here.`,
+        buttons: [
+          { value: 'take', label: 'Take current version', primary: true },
+          { value: 'overwrite', label: 'Overwrite anyway', danger: true },
+          { value: 'keep', label: 'Keep editing' },
+        ],
       });
-      if (!overwrite) return false;
+      if (choice === 'take') {
+        setWork(proof.current);
+        baselineRef.current = proof.current;
+        setPlayerAhead(null);
+        setDirty(false);
+        return false;
+      }
+      if (choice !== 'overwrite') return false;
       setBusy(true);
+      base = proof.base;
+      on = proof.on;
     }
-    // The stamp we just read travels with the push: it is the published version this edit is built
-    // on, and the only skew-free way of asking later whether the player has moved past it.
-    const res = await pushGmEdit(campaignId, work.id, playerOwnerId, work, row?.updatedAt);
+    const res = await pushGmEdit(campaignId, work.id, playerOwnerId, work, base, on);
     setBusy(false);
     if (!res.ok) {
       await confirmDialog({ title: 'Couldn’t update', message: res.error, confirmLabel: 'OK' });
@@ -250,6 +282,8 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
     }
     baselineRef.current = work; // our new known-published baseline
     setDirty(false);
+    // He re-did his change on their version: whatever "not applied" said is answered (F1, 2026-10-09).
+    acknowledgeGmEditRefused(campaignId, work.id);
     return true;
   };
 
@@ -257,7 +291,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
     confirmDialog({
       title: `Update ${work.character.name}?`,
       message:
-        'Push your changes to this player’s character. If their app is open it updates right away; otherwise the next time they open it. They won’t be notified.',
+        'Push your changes to this player’s character. If their app is open it updates right away; otherwise the next time they open it. They won’t be notified. If they change the character before their app picks this up, their change wins and yours is not applied — their card then says “not applied”.',
       confirmLabel: 'Update',
     });
 
@@ -268,7 +302,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
       if (ok)
         await confirmDialog({
           title: 'Sent',
-          message: `Your changes to ${work.character.name} were sent — they apply on the player’s device right away if their app is open, otherwise next time they open it. Your own cards and sheet show them from now, marked “waiting” until the player’s app has them.`,
+          message: `Your changes to ${work.character.name} were sent — they apply on the player’s device right away if their app is open, otherwise next time they open it. Your own cards and sheet show them from now, marked “waiting” until the player’s app has them, or “not applied” if they changed the character first.`,
           confirmLabel: 'OK',
         });
     }
@@ -331,6 +365,17 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
           </span>
         </div>
       )}
+      {/* The player's app refused his last push — they changed the character first — so this sheet is
+          their version, and he is told rather than left to find his change gone (F1, 2026-10). */}
+      {refused && !pending && !dirty && (
+        <div className="gm-pending-strip" role="status">
+          <i className="ti ti-cloud-x" aria-hidden="true" />
+          <span>
+            Your last changes to <strong>{work.character.name}</strong> were not applied — the player changed the
+            character before their app picked them up. This is their version.
+          </span>
+        </div>
+      )}
       {/* Only ever shown when the GM has unsaved edits — otherwise the player's change was already
           adopted silently and there is nothing to decide. */}
       {playerAhead && (
@@ -338,7 +383,8 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
           <i className="ti ti-refresh-alert" aria-hidden="true" />
           <span>
             <strong>{work.character.name}</strong> changed on the player&apos;s device while you were editing. Your
-            unsaved changes are still here — pushing them will overwrite the player&apos;s newer version.
+            unsaved changes are still here, but they were made on the older version — take theirs and make
+            your changes again to send them.
           </span>
           <button className="btn" onClick={takePlayerVersion}>
             Take their version

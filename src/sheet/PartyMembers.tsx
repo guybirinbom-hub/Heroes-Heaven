@@ -4,7 +4,16 @@ import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
 import { rememberPartyCapabilities } from '../data/partyCapabilities';
 import { fetchParty, fetchMemberRow, fetchPendingGmEdits, currentUserId, kickFromParty, subscribeParty, subscribeMemberSheet, type PartyMember } from '../data/party';
-import { gmPendingEdit, gmPendingVersion, pendingEditStillStands, resolvePendingGmEdit, subscribeGmPending } from './gmSync';
+import {
+  gmEditRefused,
+  gmEditSchemaOutdated,
+  gmPendingEdit,
+  gmPendingVersion,
+  memberPublishedRow,
+  pendingEditStillStands,
+  resolvePendingGmEdit,
+  subscribeGmPending,
+} from './gmSync';
 import { memberCardSummary, useMemberSheets } from './memberSheets';
 import { memberConditions, memberSummary, type PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
@@ -415,10 +424,11 @@ export function PartyMembers({
   useEffect(() => {
     // THE PRUNER, reached from the party page at last. `resolvePendingGmEdit` is the one place an
     // overtaken edit is dropped, so doing it here is what makes the chip disappear on the cards, the
-    // tracker pane and the sheet together. `sheet: null` — the stamp is the entire question here.
+    // tracker pane and the sheet together. No sheet — the stamp, and the player's app's refusal
+    // receipt (F1, 2026-10: "not applied"), are the entire question here.
     if (!campaignId || !fetched) return;
     for (const m of fetched)
-      if (m.updatedAt) resolvePendingGmEdit(campaignId, m.charId, { sheet: null, updatedAt: m.updatedAt });
+      if (m.updatedAt || m.gmRefusedAt) resolvePendingGmEdit(campaignId, m.charId, memberPublishedRow(m));
   }, [fetched, campaignId]);
 
   /*
@@ -476,24 +486,26 @@ export function PartyMembers({
         // and `gmPendingEdit` itself refuses to answer with an edit about the signed-in account's
         // own character — that is the rule's home, reached by every surface. The `m.ownerId` test
         // here is the belt for an edit whose row recorded no owner, which that one cannot judge.
-        const pending =
-          !!edit && m.ownerId !== myId && pendingEditStillStands(edit, { sheet: null, updatedAt: m.updatedAt });
+        const pending = !!edit && m.ownerId !== myId && pendingEditStillStands(edit, memberPublishedRow(m));
+        // …or the player's app REFUSED his last push (F1, 2026-10): the card shows their version, and
+        // says his change did not land. Never on the viewer's own character, by the same belt.
+        const refused = !pending && m.ownerId !== myId && gmEditRefused(campaignId, m.charId);
         // A host that holds the sheet has already done the whole job — this device's derivation, plus
         // any derived chip only the player's app could reach, and the pending edit folded in (the
         // sheets it works from are the overlaid ones). Its answer is the card's answer, so the two
         // cards the tracker draws for one character cannot say different things again.
         const derived = summarizeFor(m);
-        if (derived) return { member: { ...m, name: derived.name || m.name, summary: derived }, pending };
-        if (!pending || !edit || !content) return { member: m, pending };
+        if (derived) return { member: { ...m, name: derived.name || m.name, summary: derived }, pending, refused };
+        if (!pending || !edit || !content) return { member: m, pending, refused };
         try {
           const live = applyPlayState(edit.sheet.character, edit.sheet.play, content);
           // `memberSummary`, so a pending edit does not cost the card everything only the PLAYER's
           // app could work out. A bare `computeSummary` here made pressing Update wipe a carried
           // "Encumbered" off the card for the whole pending window — the owner's original symptom,
           // re-created by the fix for the other half of it.
-          return { member: { ...m, name: live.name || m.name, summary: memberSummary(live, content, m.summary) }, pending };
+          return { member: { ...m, name: live.name || m.name, summary: memberSummary(live, content, m.summary) }, pending, refused };
         } catch {
-          return { member: m, pending }; // a sheet that won't compute is never worth a broken card
+          return { member: m, pending, refused }; // a sheet that won't compute is never worth a broken card
         }
       }) ?? null,
     // The pending store is module state; `pendingVersion` is what says it moved. `summarize` is in
@@ -516,9 +528,23 @@ export function PartyMembers({
     else setError(res.error);
   };
 
+  // The database still lacks the F1 columns (the SQL was not re-run): GM edits cannot reach players
+  // until it is, and the GM is told where — never left to find his Updates silently going nowhere.
+  // Read on every render: the flag bumps `pendingVersion` when it is first set, which re-renders this.
+  const schemaOutdated = isGm && !localMembers && gmEditSchemaOutdated();
+
   return (
     <>
       {error && <p className="login-error" role="alert">{error}</p>}
+      {schemaOutdated && (
+        <div className="gm-pending-strip" role="status">
+          <i className="ti ti-database-exclamation" aria-hidden="true" />
+          <span>
+            GM changes can’t reach players yet — this campaign’s database needs supabase-campaign-characters.sql run
+            once in the Supabase SQL editor.
+          </span>
+        </div>
+      )}
       {shown === null && !error ? (
         <div className="party-loading"><span className="app-loading-spin" aria-hidden="true" /> Loading party…</div>
       ) : shown && shown.length === 0 && !localMembers && authChecked && myId === null ? (
@@ -530,11 +556,12 @@ export function PartyMembers({
         <div className="party-empty">No one has shared a character with this campaign yet. Characters appear here once a member attaches one (Builder → Setup → Campaigns) and their app syncs.</div>
       ) : (
         <div className="party-grid">
-          {(shown ?? []).map(({ member: m, pending }) => (
+          {(shown ?? []).map(({ member: m, pending, refused }) => (
             <PartyCard
               key={m.charId}
               member={m}
               pending={pending}
+              refused={refused}
               isMine={m.ownerId === myId}
               showKick={isGm && !!myId && m.ownerId !== myId}
               onOpen={() => onView(m)}
@@ -591,6 +618,7 @@ export function PartyCard({
   member,
   isMine,
   pending,
+  refused,
   showKick,
   onOpen,
   onKick,
@@ -600,6 +628,9 @@ export function PartyCard({
   isMine: boolean;
   /** GM only: this card is showing an edit the player's app hasn't picked up yet. */
   pending?: boolean;
+  /** GM only: the player's app REFUSED his last push (they changed the character first), so the card
+   *  shows their version and says his change was not applied. */
+  refused?: boolean;
   /** GM only. Omitted (the card in a PC's tracker pane) → no kick button, and no chevron offset. */
   showKick?: boolean;
   onOpen: () => void;
@@ -651,6 +682,14 @@ export function PartyCard({
         {pending && (
           <span className="party-pending" title="Waiting — the player’s app hasn’t picked this change up yet.">
             <i className="ti ti-cloud-upload" aria-hidden="true" /> waiting
+          </span>
+        )}
+        {refused && !pending && (
+          <span
+            className="party-pending party-refused"
+            title="Not applied — the player changed this character before their app picked up your change."
+          >
+            <i className="ti ti-cloud-x" aria-hidden="true" /> not applied
           </span>
         )}
         {/* The host's header controls (turn chip, add-to-initiative). Their own clicks are theirs —

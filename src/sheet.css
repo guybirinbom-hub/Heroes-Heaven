@@ -925,6 +925,10 @@ body {
 .party-pending > .ti {
   font-size: 11px;
 }
+/* GM only: the player's app REFUSED his last push — they changed the character first (F1, 2026-10). */
+.party-pending.party-refused {
+  color: var(--app-warn, #e0a63a);
+}
 
 /* A phone is too narrow for the band to run side by side, or for six cells on a line. */
 @media (max-width: 720px) {
@@ -4788,14 +4792,7 @@ button.strike-name:hover {
 .save-warning.storage-warning {
   background: var(--app-warn, #b45309);
 }
-/* "Your GM updated this" — informational, not a failure, so it takes the accent rather than the alarm
-   colours the other two banners use. */
-.save-warning.gm-overwrote {
-  background: var(--app-accent, #6366f1);
-  color: var(--app-accent-text, #fff);
-}
-.save-warning .ti-alert-triangle,
-.save-warning .ti-cloud-download {
+.save-warning .ti-alert-triangle {
   font-size: 16px;
   flex: none;
 }

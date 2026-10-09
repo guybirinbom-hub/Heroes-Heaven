@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
 import { beforeEach, describe, expect, it } from 'vitest';
 import { content } from './_content';
-import { rebuildRoster } from '../src/data/rebuild';
+import { carryStoredOverrides, rebuildRoster } from '../src/data/rebuild';
+import { authoredKey, CARRIED_CHARACTER_FIELDS } from '../src/data/authored';
 import { noteDerivedRefresh, noteRosterChange } from '../src/data/cloudSync';
 import { loadCharUpdated, saveCharUpdated, type SavedChar } from '../src/data/storage';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
@@ -58,6 +59,44 @@ describe('rebuildRoster', () => {
   it('a character without a build is left exactly as stored', () => {
     const sc = { id: 'b', character: { name: 'legacy' }, play: {} } as unknown as SavedChar;
     expect(rebuildRoster([sc], content())[0]).toBe(sc);
+  });
+
+  it('F1 (2026-10-09): what the player AUTHORED is unchanged by a rebuild — the GM-edit verdict’s premise', () => {
+    /*
+     * A GM edit is applied only while this device's sheet and its published copy are the same by
+     * `authoredKey`, and a launch rebuild (or a cloud adopt) re-derives `character` on every launch. If
+     * a rebuild could move the authored key, every launch would make a pending GM edit WAIT and then
+     * REFUSE it as "the player changed the character" — case 21 of the F1 design.
+     * MUTATION (run 2026-10-09): stop carrying the player's fields over a rebuild — `character: fresh`
+     * in rebuildRoster — and this fails (with the two carry legs above) —
+     *   AssertionError: a rebuild moved what the player authored: expected '{"build":{"ancestryBoosts":[],"ancest…' to be '{"build":{"ancestryBoosts":[],"ancest…'
+     */
+    const stale = saved('a', build(), true);
+    (stale.character as { currency?: unknown }).currency = { gp: 7 };
+    (stale.character as { customization?: unknown }).customization = { zoom: 1.1 };
+    const legacy = { id: 'b', character: { name: 'legacy' }, play: {} } as unknown as SavedChar;
+    const fresh = saved('c', build(), false);
+    const before = [stale, legacy, fresh];
+    const after = rebuildRoster(before, content());
+    expect(JSON.stringify(after[0].character), 'fixture: the derived cache really moved').not.toBe(JSON.stringify(stale.character));
+    after.forEach((sc, i) => expect(authoredKey(sc), 'a rebuild moved what the player authored').toBe(authoredKey(before[i])));
+  });
+
+  it('F1 (2026-10-09): carryStoredOverrides carries exactly CARRIED_CHARACTER_FIELDS', () => {
+    /*
+     * The two lists are one list: what a rebuild keeps is what the GM-edit channel counts as the
+     * player's own (`authoredKey`). A field carried here but not counted there would be lost silently
+     * by an applied GM edit the verdict judged lossless.
+     * MUTATION (run 2026-10-09): carry a third field in carryStoredOverrides without adding it to
+     * CARRIED_CHARACTER_FIELDS (`for (const k of [...CARRIED_CHARACTER_FIELDS, 'zzz'])`) — and this
+     * fails, alone in this file —
+     *   AssertionError: expected [ 'currency', 'customization', 'zzz' ] to deeply equal [ 'currency', 'customization' ]
+     */
+    const fresh = buildCharacter(build(), content());
+    const stored = { ...fresh, name: 'Old Name', customization: { zoom: 2 }, currency: { gp: 3 }, zzz: 1 } as unknown as typeof fresh;
+    const out = carryStoredOverrides(fresh, stored) as unknown as Record<string, unknown>;
+    const fromStored = Object.keys(out).filter((k) => out[k] !== (fresh as unknown as Record<string, unknown>)[k]).sort();
+    expect(fromStored).toEqual([...CARRIED_CHARACTER_FIELDS].sort());
   });
 });
 

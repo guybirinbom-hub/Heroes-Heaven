@@ -18,7 +18,7 @@ detail panel. Nothing else changes.
 |---|---|---|
 | `src/sheet/CampaignsPage.tsx` | `integration/` imports (`TrackerTools` + `CampaignTracker` are `React.lazy`, each in its own `<Suspense fallback={null}>`, so a player who never opens a campaign doesn't download the tracker); `<TrackerTools/>` + the `ti-palette` Customize button in the chrome; the `cmp-body-tracker` class; `<CampaignTracker>` in place of `<CampaignDetail>` on desktop; the two `TRACKER_IN_CAMPAIGN`-gated last-campaign-memory blocks; `CampaignForm`'s `localOnly` fallback | Delete the imports and restore `<CampaignDetail>` (which already has its own Settings / Delete / share code); drop `localOnly` and its branches |
 | `src/sheet/CampaignsPage.tsx` (phone) | `useIsMobile` → `isPhone`, which hides every GM tool at ≤720px (Create/Edit, the tracker, the tools row, the Customize button) and renders `<CampaignDetail gmTools={false}>` + `<JoinRow/>` instead. NOT part of the seam — it is HH's own player-facing campaigns page | Keep. Only the `TRACKER_IN_CAMPAIGN && !isPhone` terms go with the integration |
-| `src/sheet/gmSync.ts` | `pendingEditStillStands` compares the published sheet with the pending edit through `canonicalJson` (key order ignored — the `sheet` column is jsonb, which hands keys back in its own order), found while closing the seam's never-overwrite door; `gmPushBase` — the sheet a GM push builds on: his pending edit while it stands on a PROVED base, on his OWN character too (where `resolvePendingGmEdit` never draws it), else the published sheet; `rememberGmEdit` records a push on the base it was built on (it used to keep the older of that and the replaced edit's, which made a push built on their newer publish look overtaken); `resolvePendingGmEdit` judges its drop on the edit it HOLDS, so his own character's edit is pruned like any other (it was never dropped at all); the `gmPendingEdit` doc names the seam's own-push test as a reader, and the `baseUpdatedAt` / `pendingEditStillStands` docs say a seam push depends on those rules | Keep `canonicalJson`, the held-edit drop and the recorded base: HH's own overlay rules, with no tracker names in them. `gmPushBase` has no other caller: delete it with the seam. The docs' mentions of the seam go too |
+| `src/sheet/gmSync.ts` | `pendingEditStillStands` compares the published sheet with the pending edit through `canonicalJson` (key order ignored — the `sheet` column is jsonb, which hands keys back in its own order), found while closing the seam's never-overwrite door; `gmPushBuiltOn` — the sheet a seam push builds on (his pending edit while it stands on THIS fresh read — the read is still the very publish the edit was built on, by stamp equality AND by the authored hash, and no refusal receipt for it — on his OWN character too, else the published sheet) and WHICH push of his it is (`on`, carried in `gm_base.on`); `gmPushBase` is now its `.sheet`; `rememberGmEdit` records a push on the base it was built on (it used to keep the older of that and the replaced edit's, which made a push built on their newer publish look overtaken); `resolvePendingGmEdit` judges its drop on the edit it HOLDS, so his own character's edit is pruned like any other (it was never dropped at all); the `gmPendingEdit` doc names the seam's own-push test as a reader, and the `baseUpdatedAt` / `pendingEditStillStands` docs say a seam push depends on those rules | Keep `canonicalJson`, the held-edit drop and the recorded base: HH's own overlay rules, with no tracker names in them. `gmPushBuiltOn` and `gmPushBase` have no other caller: delete them with the seam (keep `pendingEditStandsOnFreshRead` — GmEditSheet's Update uses it through `gmUpdateBase`). The docs' mentions of the seam go too |
 | `src/sheet/memberSheets.ts` | comments only: two notes name the tracker seam (its pushes as what used to re-join every channel, and the seam as a reader of the re-pulled map) | Delete those two mentions; nothing in the code knows the tracker |
 | `src/theme/theme-manager.ts` | `resolveAppearanceVars` — the token-resolution half of `applyResolved`, extracted + exported so a scoped appearance (the tracker's own theme) can be built without writing `<html>` | A pure refactor with no tracker names in it; harmless to keep. To fully revert, inline it back into `applyResolved` |
 | `src/sheet/SettingsPage.tsx` | the `'tracker'` section (id, `ALL_SECTIONS` entry, `renderSection` case); `TrackerSettingsSection` is `React.lazy` + `<Suspense>` so opening Settings doesn't pull the tracker's stores in | Delete the three `'tracker'` references and the lazy import |
@@ -33,6 +33,23 @@ page (`CampaignForm`), and their `sheet.css` rules. They moved there when the tr
 campaign detail panel, but they are HH's own controls on HH's own page and stand on their own — they
 are not tracker machinery and should stay if the integration goes. (With the integration removed
 `CampaignDetail` also brings its copies back; harmlessly duplicative, not broken.)
+
+**Also deliberately NOT in that table — the GM-edit channel's own rules (F1, 2026-10).**
+`gm_character_edits.gm_base`, `campaign_characters.gm_refused_at`, `src/data/authored.ts`; in
+`src/sheet/gmSync.ts` `sameInstant`, `boundGmBase`, `gmEditVerdict`, `gmBaseOf`,
+`pendingEditStandsOnFreshRead`, `gmUpdateBase`, `gmHeldEdit`, `memberPublishedRow`, the refusal receipt
+(`gmEditRefused`, kept for a push a later one replaced without carrying it, answered by
+`acknowledgeGmEditRefused`) and the schema flag, `editsToApply` by equality and `reconcileGmPendingEdits` by
+equality; in `src/data/party.ts` the publish lane, `gmEditFromRow`, `markGmEditRefused` (says whether it
+landed; a refused row is consumed only then), the conditional delete and the optional-column reads; in
+`src/data/cloudSync.ts` `pullForGmApply` (the cloud pull before an apply); the `src/App.tsx` applier
+(consuming an apply only from the committed roster, written to disk in that commit) and publish retry;
+`GmEditSheet`'s proved-baseline Update; `PartyCard`'s "not applied" chip and `PartyMembers`' SQL strip; in
+`src/data/storage.ts` `loadGmEditChains` / `saveGmEditChains` (the `wanderers-codex:gm-edits-chain:v1`
+key) and `loadRoster`'s session record of what its load made of each entry (`loadedAuthoredAs`); `src/data/rebuild.ts`'s `carryStoredOverrides` reading `CARRIED_CHARACTER_FIELDS`; and in
+`src/sheet.css` the `.party-pending.party-refused` rule (and the retired `.gm-overwrote` banner's). They protect HH's
+own full-sheet Update as much as the seam's pushes, carry no tracker names, and STAY if the integration
+is removed. (`CampaignTracker.tsx`'s use of `memberPublishedRow`/`gmEditRefused` goes with the folder.)
 
 There is otherwise deliberately **nothing else to unwind**:
 
@@ -209,7 +226,7 @@ the player's published sheet (`fetchMemberSheet` + `subscribeMemberSheet` per me
 condition or damage the GM applies to a PC in the tracker is written back to that sheet through
 `pushGmEdit` — only on the GM's own gesture (the combat store's vitals-gesture API, above), never
 because a row merely differs from the sheet, and never on Ctrl+Z / Ctrl+Y. Each push first reads the
-published sheet (with the GM's own pending edit, `gmPushBase`) and lands only while it still carries
+published sheet (with the GM's own pending edit, `gmPushBuiltOn`) and lands only while it still carries
 what the row showed when he made the gesture; otherwise the sheet wins. Read that file's header before
 touching either direction: it is where the never-overwrite rules live.
 
@@ -221,18 +238,75 @@ touching either direction: it is where the never-overwrite rules live.
   the name — and a row two members' names both match is driven by NEITHER sheet: nothing is written
   to it and nothing is pushed from it. Other surfaces in `CampaignTracker.tsx` (the PC stats strip,
   the live-member lookup) still match by name; see `tracker/DEFERRED.md` §3.
-- **A GM change can still be lost** (the seam header, rule C) — never the player's. Visibly, his row
-  snapping to their sheet, in one ordering no stamp can tell apart: the player's app applies an
-  EARLIER push of his after a LATER one was already built on it; only the sheets' content could tell
-  that republish from a change of the player's own, which the seam's rule E rules out. (A push built
-  ON such a republish is recorded on it and stands.) Unseen: an owed gesture the seam never got to
-  send before it unmounted. And on the server: an edit of his with no proved base (seeded from his
-  other device or by a sign-in, or pushed after a failed read) is never built on — only the GM's
-  clock says it still stands, and a fast one put a stale copy over a newer sheet of theirs — so his
-  next tracker gesture on that character goes out on their sheet and replaces it. Where that edit
-  changed vitals, the first gesture stands down and the row snaps to their sheet; where it did not
-  (an XP award, an item), it goes without a sign. Only a base stamp carried on the
-  `gm_character_edits` row itself (`src/data/party.ts` + SQL) would prove such an edit.
+- **A GM change can still be lost** (the seam header, rule C) — the player's only in the narrow cases
+  named at the end of this bullet. The player's app
+  applies a push only when their sheet is still exactly the one it was built on (`gmEditVerdict`), so
+  ANY change of theirs published between his fresh read and their app picking the push up — a potion,
+  a Shield Block, a note — refuses his whole push: the overlay stands down, his row snaps to their
+  sheet and the card says "not applied"; he gestures again. Back-to-back gestures (the second built on
+  his first, `gm_base.on`) land when the device that applied the first judges the second (its chain
+  record names that push, or the very publish it was applied over — so a third gesture is caught too)
+  while that device still holds exactly what the apply produced and the server is still at that
+  publish or holds that result, or when no device has applied the first yet and their published row is
+  still the very publish he built on. Otherwise the second is refused the same visible way: judged by
+  their other device after the first republished, or after ANY republish of theirs, even one that
+  changed nothing of theirs (a launch) — content alone cannot tell "nothing changed" from "his first
+  push was applied and then taken back" (a heal after his hit), and applying there would carry the hit
+  back over the heal. **That includes two between-session Updates, the second built on the first: when
+  the player's launch republish lands before their app reads its own row, both are refused ("not
+  applied") — a GM-side, visible cost kept for player safety, open for the owner's ruling**
+  (test/bug-gm-edit-race.test.tsx leg 34c pins both orders). A single between-session Update (built on
+  their published sheet) still lands after a launch, by content — also when this version's load
+  migrates their play (`storage.loadedAuthoredAs`, leg 34b). The ordering no stamp can tell apart (their app applying
+  an EARLIER push of his after a LATER one was built on it) still snaps his row for a moment. Unseen:
+  an owed gesture the seam never got to send before it unmounted. With no sign beyond his "waiting"
+  chip going: an unapplied edit of his when their app republishes WITHOUT changing anything of theirs
+  (a launch) and he gestures before their app has applied the edit: the write
+  path wants the very publish his edit was built on, so his next gesture — or his next full-sheet
+  Update from `GmEditSheet`, which judges against their sheet then — is built on their sheet and
+  replaces that edit on the server (the price of refusing to build on a sheet that only came BACK to
+  his base, which would carry an old hit of his over their heal). On the server: only an edit an OLDER
+  GM app wrote has no proved base; every push this app makes carries `gm_base`, so seeded edits are
+  built on. **The player's loss that remains** (F1 design §6.3, narrow): one device applies his edit and
+  they press Ctrl+Z inside the 400 ms publish debounce, so nothing of the undo is published; their OTHER
+  device, open and level with the server, then judges his next push built on that edit before cloud
+  sync carries the undo across — it applies (nothing it can read says otherwise), and the per-character
+  cloud merge can carry that over the undo. The chain record is per device on purpose: synced, a stale
+  device's record could overwrite newer work. Two more, both pre-existing in kind: after an APPLY, this
+  device's republish can overwrite a publish their other device made after this device's own-row read
+  (about 400 ms plus a round trip; the cloud roster merge then decides — F1 design §6.4). A device
+  BEHIND its own cloud copy no longer applies at all: the app pulls its cloud copy first
+  (`cloudSync.pullForGmApply`). A newer copy from their other device is adopted, and that adopt lands
+  BEFORE the apply — both are ordinary background updates on the same React lane, rendered in the order
+  they were made — so the apply's re-check finds the entry moved and the push WAITS; once the adopted
+  sheet republishes it is REFUSED, with a receipt (race legs 38, 43–45, run under production update
+  priorities) — what that pull cannot see is a change their other device has published but not yet
+  synced to the cloud (its 3-second upload debounce), the same window in kind; and the GM's
+  own knowing **Overwrite anyway** on the full-sheet Update, shown "changed since your copy", pushes on
+  their current sheet, so their app applies it over those changes — his choice, never the app's.
+- **Two tabs of one browser profile**: a GM apply in the background tab inside the other tab's 400 ms
+  persist debounce can win the cross-tab write — a pre-existing class (the applier before F1 had the
+  same window), open for the owner's ruling since 2026-09-13 ("two tabs both editing within 400 ms,
+  last flush wins"); between DEVICES the cloud merge keeps the player's change.
+- **A hung cloud pull holds every apply**: the player's GM-edit pass gives up on any one network answer
+  after 20 s and ends, but a pull that never answers leaves cloud sync's `syncing` flag set until it
+  settles, so every APPLY waits for the rest of that session — nothing is lost, the GM sees "waiting".
+- **An absolute play write in the apply's render batch**: the player's app tells "his edit, or their
+  change made on top of it" by a mark the apply leaves on the entry (App's `GM_APPLIED`, carried by
+  every updater's spread). A play write that sets a value outright from what the screen showed — typing
+  HP, temp HP or XP — landing in the very batch that applies a tracker gesture keeps the mark but
+  overwrites that one field with the player's value: the gesture is consumed as applied, with no
+  receipt, and his row snaps to their sheet. A sub-millisecond window; the player's value wins, by rule.
+- **A builder save in the apply's render batch**: the builder's save spreads the entry, so it keeps the
+  mark and the edit is consumed as applied, while the builder's character and build — the copy taken
+  when the builder opened, before the apply — replace his; his play changes stay (`playForRebuild`).
+  No receipt; his card shows their published sheet. The same is true of a builder save made at any
+  time after an apply (the builder saves the copy it opened). A sub-millisecond window inside the
+  batch; GM-only and visible.
+- **Ctrl+Z in the apply's render batch** spends the keypress on the apply the player never saw (the
+  entry goes back to the one it was judged over, which still carries the judged mark, so nothing is
+  consumed and nothing is refused); the edit stays waiting and the next pass applies it again. Nothing
+  is lost.
 - **Creature data isn't wired up** — `Link Stat Block` reports "Data not loaded. Run: npm run
   setup-data". Creatures can still be authored via the **Custom** text converter, which is how the
   stat-block pane was verified.

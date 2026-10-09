@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { initialPlay } from '../rules/play';
-import { gmPendingEdit, gmPushBase } from '../sheet/gmSync';
+import { gmBaseOf, gmPendingEdit, gmPushBuiltOn } from '../sheet/gmSync';
 import { deriveMaxHp } from '../rules/derive';
 import { fetchPublishedSheet, pushGmEdit, type PartyMember } from '../data/party';
 import { livePlay } from '../sheet/memberSheets';
@@ -57,7 +57,8 @@ export { memberCardSummary, livePlay, useMemberSheets } from '../sheet/memberShe
  *      (`writeVitals`) and nothing is pushed. A gesture that changes nothing a push carries (temp HP,
  *      max HP alone) pushes nothing either.
  *   C. A PUSH NEEDS A FRESH READ. Before anything is sent, the seam reads the published sheet
- *      (`fetchPublishedSheet`) and builds on what that read answers for the GM (`gmPushBase`): his
+ *      (`fetchPublishedSheet`) and builds on what that read answers for the GM (`gmPushBuiltOn`), which
+ *      also says WHICH of his pushes it built on, so the row can carry it (`gm_base.on`): his
  *      own pending edit while it stands against that read on a PROVED base — on his own character
  *      too, where that edit is never drawn but is still on the server — else the published sheet. The
  *      push is recorded on the stamp of that read, so one built on their newer publish stands. A read
@@ -83,13 +84,17 @@ export { memberCardSummary, livePlay, useMemberSheets } from '../sheet/memberShe
  *      it (fetched before the later one replaced it on the server), which IS after the later push's
  *      base, and only the sheets' content could tell from a change of their own (rule E rules that
  *      out); unseen, when an owed gesture never got its turn before the seam unmounted; and on the
- *      server, when an edit of his has NO proved base (seeded from his other device or by a sign-in,
- *      or pushed after a read that failed). Only the GM's clock says such an edit still stands, and a
- *      fast one put a stale copy over a newer sheet of theirs, so no push is built on it: his next
- *      push is built on their sheet and replaces it. Where it changed vitals, the gesture made on
- *      them stands down first and the row snaps to their sheet; where it did not (an XP award, an
- *      item), it goes without a sign. A base stamp on the `gm_character_edits` row itself would prove
- *      such an edit — src/data/party.ts and the SQL, not this seam.
+ *      server, only for an edit an OLDER GM app wrote: such a row has no bound `gm_base`, so a seeded
+ *      copy has no proved base, is never built on, and his next push replaces it. Every push this app
+ *      makes carries the publish it was built on (`gm_base`, src/data/party.ts + the SQL), so an edit
+ *      seeded from his other device or by a sign-in is proved and built on like any other. On the
+ *      PLAYER's side their app applies a push only when their sheet is still exactly the one it was
+ *      built on (src/sheet/gmSync.ts → `gmEditVerdict`); otherwise it refuses it and says so on their
+ *      row (`gm_refused_at`), the overlay stands down, his row snaps to their sheet and the card says
+ *      "not applied". A push built on an earlier push of his (`gm_base.on`) lands only on the device
+ *      that applied that push, or while their row is still the very publish he built on. The one
+ *      player-loss case left (a Ctrl+Z inside the publish debounce while their other device judges his
+ *      next push) is named in ./README.md, Known gaps.
  *   D. AN UNMOUNTED SEAM WRITES NOTHING. Every pass first asks whether the seam is still mounted, and
  *      a read that answers after it unmounted (the GM left the campaign) sends nothing — the next
  *      board can hold a row of the same name.
@@ -297,8 +302,9 @@ export function usePcSheetTruth(args: {
       try {
         const row = await fetchPublishedSheet(campaignId, mem.charId);
         if (!alive.current) return false;
-        const fresh = row?.sheet && gmPushBase(campaignId, mem.charId, row);
-        if (row && fresh) {
+        const built = row?.sheet ? gmPushBuiltOn(campaignId, mem.charId, row) : null;
+        const fresh = built?.sheet;
+        if (row && built && fresh) {
           const now = vitalsFromSheet(fresh, content);
           if (vitalsKey(now) !== w.on) {
             // The sheet moved since he made it: it wins, over anything made on top of it too.
@@ -308,11 +314,11 @@ export function usePcSheetTruth(args: {
           }
           const arrived = st.arrived;
           const sent = sheetWithVitals(fresh, w.v, content);
-          // `row.updatedAt` is the published stamp this edit is built on. `mem.updatedAt` (the same
-          // column, off the same player's clock, read by the party list — older, therefore safe) only
-          // when the read gave none; never nothing, or the overlay falls back to comparing the GM's
-          // clock against the player's.
-          const res = await pushGmEdit(campaignId, mem.charId, mem.ownerId, sent, row.updatedAt ?? mem.updatedAt);
+          // The base is THIS read (`gmBaseOf`: its stamp and the hash of the sheet it holds), and
+          // `built.on` says which push of his it was built on — the player's app applies it only while
+          // their published sheet is still that one. A read with no stamp proves nothing: nothing is
+          // sent (pushGmEdit refuses) and the gesture is owed.
+          const res = await pushGmEdit(campaignId, mem.charId, mem.ownerId, sent, gmBaseOf(row), built.on);
           if (res.ok) {
             ours.add(sent);
             // What the server holds now — the sheet may not hold the row whole (a heal past its max).

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 // Removable integration flag — see src/integration/README.md.
 import { TEST_CAMPAIGNS_WITHOUT_LOGIN, TRACKER_IN_CAMPAIGN } from './integration/enabled';
 import { wasOnCampaignsPage, setOnCampaignsPage } from './integration/lastCampaignView';
@@ -16,19 +16,20 @@ import { HeroesHeavenLogo } from './sheet/Logo';
 import { loadContent, rebuildContent, onDescriptionsLoaded } from './data';
 import { pickScreen } from './appScreen';
 import { useAuth } from './data/useAuth';
-import { startCloudSync, hasSyncedOnce, noteDerivedRefresh } from './data/cloudSync';
+import { startCloudSync, hasSyncedOnce, noteDerivedRefresh, pullForGmApply } from './data/cloudSync';
 import { startCampaignHomebrew, refreshCampaignHomebrew, homebrewFingerprint } from './data/campaignHomebrew';
 import { rebuildRoster, carryStoredOverrides } from './data/rebuild';
 import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
-import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit, currentUserId, subscribeGmEdits } from './data/party';
-import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
+import { publishCharacter, unpublishCharacter, fetchGmEdits, fetchPublishedSheet, deleteGmEdit, markGmEditRefused, currentUserId, subscribeGmEdits, type GmEdit } from './data/party';
+import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadSyncOwner, loadGmEditsApplied, saveGmEditsApplied, loadGmEditChains, saveGmEditChains, loadedAuthoredAs, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
+import { authoredKey, hash53 } from './data/authored';
 import { isTauri } from './platform';
 import { getPrefs, subscribePrefs } from './data/prefs';
 import { useIsMobile, useShowUndoButtons } from './sheet/useIsMobile';
-import { playerWorkWasOverwritten, editsToApply } from './sheet/gmSync';
+import { gmEditVerdict, boundGmBase, editsToApply, sameInstant, type GmChainRecord } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
 import { setupPersist, schedulePersist, persistNow, flushPersist, hasPendingPersist, recentPersists } from './data/persist';
 import { chooseDialog } from './sheet/confirm';
@@ -59,10 +60,46 @@ import type { Character, ContentDatabase, Item, ModeDef } from './rules/types';
  */
 const PUBLISH_DEBOUNCE_MS = 400;
 
-/** The comparable shape of one saved character: exactly what the publish effect uploads and what a GM
- *  edit replaces, so "did this move?" is one string compare in the same key order everywhere. */
-const sheetJson = (id: string, s: { character?: unknown; build?: unknown; play?: unknown }): string =>
-  JSON.stringify({ id, character: s.character, build: s.build, play: s.play });
+/**
+ * F1 (2026-10-09): the longest the serialised GM-edit pass waits on one network answer (the rows, the
+ * fresh reads of our own published rows, the cloud pull before an apply, a refusal receipt).
+ * supabase-js has no fetch timeout, so one hung request kept the pass `running` for the whole session
+ * and no later pass ever judged anything. On the bound the pass ends with nothing more judged, consumed
+ * or written (a pull or a receipt counts as "not true": the apply WAITS, the refused row stays), and
+ * `running` is released. It only ever delays an apply; it never writes the roster and never consumes a row.
+ */
+const GM_PASS_AWAIT_MS = 20_000;
+const TIMED_OUT: unique symbol = Symbol('timed out');
+function bounded<T>(p: Promise<T>): Promise<T | typeof TIMED_OUT> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const bound = new Promise<typeof TIMED_OUT>((resolve) => {
+    timer = setTimeout(() => resolve(TIMED_OUT), GM_PASS_AWAIT_MS);
+  });
+  const clear = () => clearTimeout(timer);
+  p.then(clear, clear);
+  return Promise.race([p, bound]);
+}
+function boundedTrue(p: Promise<boolean>): Promise<boolean> {
+  return bounded(p).then((v) => v === true);
+}
+
+/**
+ * F1 (2026-10-09, round 7): WHERE A ROSTER ENTRY CAME FROM, BY MARK. The after-commit effect must tell
+ * "the commit holds the GM's apply, or a player change composed on it" from "something replaced the
+ * entry". Guessing that from which sub-objects an updater keeps failed: a Customize click or a Ctrl+=
+ * zoom right after the apply makes a NEW `character` object (race legs 47, 48), and his edit — on their
+ * sheet — was answered "not applied". So the apply MARKS what it wrote, and the entry it was judged over:
+ *  - `GM_APPLIED` on the written entry (the row's `campaign|char|stamp`);
+ *  - `GM_JUDGED` on the judged entry, assigned on the committed object (invisible to React and readers).
+ * Both are ENUMERABLE symbol-keyed own properties: every App updater composes on an entry by object
+ * spread (`{ ...c, … }`), which copies them; JSON (persistence, the cloud bundle, the publish payload)
+ * and `structuredClone` drop them, so an entry that was parsed, loaded, adopted, imported or built fresh
+ * carries no mark (test/gm-apply-mark.test.ts). The key names ONE GM row: a later push has its own stamp,
+ * and a row already handled is never judged again, so an old mark can never answer for a new record.
+ */
+const GM_APPLIED = Symbol('hh.gmApplied');
+const GM_JUDGED = Symbol('hh.gmJudged');
+type GmMarked = SavedChar & { [GM_APPLIED]?: string; [GM_JUDGED]?: string };
 
 function initialRoster(): SavedChar[] {
   // A fresh install starts with an EMPTY roster — no demo character is injected. The RosterScreen
@@ -157,13 +194,12 @@ export default function App() {
   const [saveFailed, setSaveFailed] = useState(false);
   // Proactive "storage almost full" heads-up (before the hard quota failure that sets saveFailed).
   const [storageWarn, setStorageWarn] = useState(false);
-  /** Characters whose unpublished local changes a GM's edit just replaced — named in a banner so the
-   *  loss is never silent. Cleared when dismissed. */
-  const [gmOverwrote, setGmOverwrote] = useState<string[] | null>(null);
   /* How much banner is currently showing, published as --app-banner-h. The pinned screens are sized to
    * the viewport MINUS this: banners are flow siblings above them, so without the subtraction a single
-   * update notice makes the document taller than the window, and scrolling it drags the top bar off. */
-  const bannersRef = useHeightVar<HTMLDivElement>('--app-banner-h', [saveFailed, storageWarn, gmOverwrote?.length ?? 0]);
+   * update notice makes the document taller than the window, and scrolling it drags the top bar off.
+   * (The "your GM overwrote you" banner is gone, F1 2026-10: a GM edit is applied only when it loses
+   * nothing of the player's, so there is no replaced work left to announce.) */
+  const bannersRef = useHeightVar<HTMLDivElement>('--app-banner-h', [saveFailed, storageWarn]);
   const storageDismissed = useRef(false);
   // Set by structural roster changes (create/delete/import/duplicate) so the NEXT persist writes
   // immediately instead of debouncing — a crash inside the debounce window must not drop a whole
@@ -423,23 +459,78 @@ export default function App() {
       setLocalSkip(false);
     }
   }, [auth.status, localSkip]);
+  /* ── THE GM-EDIT CHANNEL, PLAYER SIDE (F1, 2026-10) ──────────────────────────────────────────────
+   * A GM edit is a WHOLE sheet built on a published sheet of ours. It is applied only when that is
+   * provably lossless (src/sheet/gmSync.ts → gmEditVerdict); otherwise it waits, or is refused with a
+   * receipt the GM's app shows as "not applied". The refs below are what the applier and the publish
+   * effect share. */
+  /** campaign|char judged WAIT and not consumed yet — a publish of that key re-runs the pull. */
+  const gmWaitingRef = useRef<Set<string>>(new Set());
+  /** The serialised pull, for the publish effect to call once a waiting key has published. */
+  const gmPullRef = useRef<() => void>(() => undefined);
+  /** Applies decided INSIDE the setRoster updater, consumed by the after-commit effect. Keyed by
+   *  campaign|char|stamp, so an updater React re-invokes writes the same entries. */
+  const gmAppliedRef = useRef<
+    Map<string, { e: GmEdit; key: string; mark: string; base: string; stamp: string; result: string; entry: SavedChar; judged: SavedChar }>
+  >(new Map());
+  /** The chain records written THIS session, beside the stored ones (storage can fail). */
+  const gmChainSession = useRef<Record<string, GmChainRecord>>({});
+  /** Successful publishes seen while a key waits — a sheet that never matches its own published copy
+   *  is said out loud once (a jsonb round trip that changes it). */
+  const gmWaitPublishes = useRef<Map<string, number>>(new Map());
+  const warnedLongWait = useRef<Set<string>>(new Set());
+  /** Warn ONCE per session when the gm_character_edits cleanup delete removes no rows (RLS gap). */
+  const warnedGmEditDelete = useRef(false);
+  const warnedGmFuture = useRef(false);
+  /** The handled stamps THIS session, held in memory beside the stored ones. `saveGmEditsApplied`
+   *  swallows a storage failure (quota, private mode), and a stamp that never reached disk means the
+   *  same GM row is judged again on every focus / visibility / online / Realtime event — the revert
+   *  loop, back again. Memory is enough to close it for the session; the stored map covers the next
+   *  launch. */
+  const gmAppliedSession = useRef<Record<string, string>>({});
   // Publish characters attached to a campaign so teammates see them in the party. Debounced on roster
   // change; unpublishes any (campaign, character) pair that's no longer attached (detach / delete).
   const publishedRef = useRef<Set<string>>(new Set());
-  /** What we last PUBLISHED for each character, by roster id. Lets an incoming GM edit tell whether it
-   *  is about to overwrite local work the player made but hadn't published yet — see the apply below. */
-  const publishedSheetRef = useRef<Map<string, string>>(new Map());
-  /** Warn ONCE per session when the gm_character_edits cleanup delete removes no rows (RLS gap). */
-  const warnedGmEditDelete = useRef(false);
-  /** The applied stamps THIS session, held in memory beside the stored ones. `saveGmEditsApplied`
-   *  swallows a storage failure (quota, private mode), and a stamp that never reached disk means the
-   *  same GM row re-applies on every focus / visibility / online / Realtime event — the revert loop,
-   *  back again. Memory is enough to close it for the session; the stored map covers the next launch. */
-  const gmAppliedSession = useRef<Record<string, string>>({});
+  /** campaign|char → the JSON last SENT (in flight or landed). A failed send forgets it, so the next
+   *  run sends again — a publish that never landed must never look in sync (a GM edit is judged
+   *  against what the server really holds). */
+  const sentJsonRef = useRef<Map<string, string>>(new Map());
+  const publishFailedRef = useRef(false);
+  const [publishNonce, setPublishNonce] = useState(0);
+  useEffect(() => {
+    // The retry: a failed publish goes again on online / focus / visible. No timer — no polling.
+    const kick = () => {
+      if (publishFailedRef.current) setPublishNonce((n) => n + 1);
+    };
+    const onVis = () => {
+      if (document.visibilityState === 'visible') kick();
+    };
+    window.addEventListener('online', kick);
+    window.addEventListener('focus', kick);
+    document.addEventListener('visibilitychange', onVis);
+    return () => {
+      window.removeEventListener('online', kick);
+      window.removeEventListener('focus', kick);
+      document.removeEventListener('visibilitychange', onVis);
+    };
+  }, []);
+  /** A publish for this key LANDED. If a GM edit for it waits, judge it again now: what the server
+   *  holds has just moved (or caught up). */
+  const onPublishedKey = (key: string) => {
+    if (!gmWaitingRef.current.has(key)) return;
+    const n = (gmWaitPublishes.current.get(key) ?? 0) + 1;
+    gmWaitPublishes.current.set(key, n);
+    if (n >= 3 && !warnedLongWait.current.has(key)) {
+      warnedLongWait.current.add(key);
+      console.warn(`[HeavesParty] a GM edit for ${key} has waited through ${n} publishes — this device's sheet never matches the published one.`);
+    }
+    gmPullRef.current();
+  };
   useEffect(() => {
     if (auth.status !== 'signed-in' || !content) return;
     const readyContent = content;
     const timer = setTimeout(() => {
+      publishFailedRef.current = false;
       const desired = new Set<string>();
       for (const sc of roster) {
         const ids = sc.character.campaignIds ?? [];
@@ -453,30 +544,41 @@ export default function App() {
           const json = JSON.stringify(published);
           // Only what CHANGED goes up. This effect runs on every roster change, so before this every
           // attached character was re-uploaded (portrait and all) on every edit to ANY character —
-          // one Customize click on one sheet meant N uploads. An unchanged, already-published sheet
-          // is left alone; a campaign attached since the last publish still gets its first upload.
-          const unchanged = publishedSheetRef.current.get(sc.id) === json;
-          publishedSheetRef.current.set(sc.id, json);
+          // one Customize click on one sheet meant N uploads. Per (campaign, character): a campaign
+          // attached since the last publish still gets its first upload, and a send that FAILED is
+          // forgotten below, so it goes again.
           for (const cid of ids) {
             const key = cid + '|' + sc.id;
             desired.add(key);
-            if (unchanged && publishedRef.current.has(key)) continue;
-            void publishCharacter(cid, sc.id, live.name, summary, published);
+            if (sentJsonRef.current.get(key) === json) continue;
+            sentJsonRef.current.set(key, json);
+            void publishCharacter(cid, sc.id, live.name, summary, published).then((res) => {
+              if (res === 'ok') onPublishedKey(key);
+              else if (res === 'failed') {
+                if (sentJsonRef.current.get(key) === json) sentJsonRef.current.delete(key);
+                publishFailedRef.current = true;
+              }
+              // 'superseded' (or a test mock's undefined): the newer send answers for it.
+            });
           }
         } catch {
           /* skip a character that won't compute */
         }
       }
       for (const key of publishedRef.current) {
-        if (!desired.has(key)) {
-          const [cid, charId] = key.split('|');
-          void unpublishCharacter(cid, charId);
-        }
+        if (desired.has(key)) continue;
+        const [cid, charId] = key.split('|');
+        sentJsonRef.current.delete(key);
+        void unpublishCharacter(cid, charId).then((res) => {
+          if (res === 'ok') onPublishedKey(key);
+        });
       }
       publishedRef.current = desired;
     }, PUBLISH_DEBOUNCE_MS);
     return () => clearTimeout(timer);
-  }, [roster, auth.status, content]);
+    // `onPublishedKey` reads refs only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roster, auth.status, content, publishNonce]);
   // A live ref to the roster so the async GM-edit applier below reads the LATEST roster without having
   // to re-subscribe on every roster change. (Canonical "latest value" ref — safe to write in render.)
   const rosterRef = useRef(roster);
@@ -515,146 +617,223 @@ export default function App() {
       if (timer) clearTimeout(timer);
     };
   }, [auth.status]);
-  // The characters a GM edit replaced unpublished work on, handed from INSIDE the `setRoster` updater
-  // below to the effect under it. Both comments there say why it cannot be decided or raised anywhere
-  // else: the decision needs the queued roster, the banner needs a commit to have happened.
-  const gmClobberedRef = useRef<string[] | null>(null);
-  // Apply pending GM edits to MY characters — silently. A GM can edit a player's sheet and push it; the
-  // player's app swaps in the GM's version. It applies INSTANTLY via a Realtime subscription while the
-  // app is open, and the focus/visibility/online/sign-in pull is the fallback for when it was closed or
-  // the socket dropped. Each edit is cleared after applying so it lands exactly once.
+  /** A delete that reports success but removes no rows is the silent RLS gap (or a newer push that
+   *  replaced the row) — said out loud once per session so it is diagnosable. */
+  const warnIfZero = (deleted: number | null) => {
+    if (deleted === 0 && !warnedGmEditDelete.current) {
+      warnedGmEditDelete.current = true;
+      console.warn(
+        '[HeavesParty] gm_character_edits cleanup deleted 0 rows — either the GM replaced that edit in the meantime (harmless), or the database is missing the gce_owner_delete policy (run the current supabase-campaign-characters.sql). Handled edits are stamped locally, so nothing re-applies.',
+      );
+    }
+  };
+  /** Mark one GM row HANDLED: its stamp recorded (memory first — storage can fail), the row deleted
+   *  on its OWN stamp (a newer push that replaced it survives to be judged), and it stops waiting. */
+  const consumeGmEdit = (e: GmEdit) => {
+    const key = `${e.campaignId}|${e.charId}`;
+    gmAppliedSession.current[key] = e.updatedAt;
+    // Session values WIN: equality semantics, so the newest handled stamp is the one that counts.
+    const stamps = { ...loadGmEditsApplied(), ...gmAppliedSession.current };
+    // …and prune stamps for characters no longer on this device, so the map cannot grow forever.
+    const present = new Set(rosterRef.current.map((c) => c.id));
+    for (const k of Object.keys(stamps)) if (!present.has(k.slice(k.indexOf('|') + 1))) delete stamps[k];
+    saveGmEditsApplied(stamps);
+    gmWaitingRef.current.delete(key);
+    gmWaitPublishes.current.delete(key);
+    gmAppliedRef.current.delete(`${key}|${e.updatedAt}`); // a record still waiting for its commit is moot now
+    void deleteGmEdit(e.campaignId, e.charId, e.updatedAt).then(warnIfZero);
+  };
+  /*
+   * JUDGE PENDING GM EDITS FOR MY CHARACTERS (F1, 2026-10). A GM can edit a player's sheet and push
+   * it; the row reaches this app INSTANTLY via a Realtime subscription while it is open, and the
+   * focus/visibility/online/sign-in pull is the fallback for when it was closed or the socket dropped.
+   *
+   * ⚠ A PLAYER'S CHANGE IS NEVER OVERWRITTEN. The edit is a WHOLE sheet the GM built on a published
+   * sheet of ours. It used to replace this device's entry whenever its stamp was new — so a potion the
+   * player drank after the GM's read, published within 400 ms, came back the moment his push landed,
+   * with no banner (local equalled last-published). Now each row is judged against a FRESH read of our
+   * own published row (gmSync.gmEditVerdict): applied only when provably lossless; WAIT (nothing
+   * consumed) while this device differs from the server; REFUSED otherwise — never applied, and a
+   * one-column receipt tells the GM "not applied". Only an APPLY writes the roster, and only inside
+   * the updater, re-checked over the QUEUED roster.
+   *
+   * Passes are serialised: one runs, at most one more is queued (two concurrent passes judging one row
+   * could write a false receipt).
+   */
   useEffect(() => {
     if (auth.status !== 'signed-in') return;
     let cancelled = false;
-    const apply = async () => {
-      // The roster as it stands BEFORE the round trip. A GM edit replaces the whole sheet, so anything
-      // the player does while the fetch is in flight would be applied over — see the raced-edit branch
-      // below, which keeps their `play` (their actions) and takes only the GM's character + build.
-      const beforeFetch = new Map(rosterRef.current.map((c) => [c.id, c]));
-      const edits = await fetchGmEdits();
-      if (cancelled || !edits.length) return;
-      // Only edits whose character actually lives in THIS device's roster are applied+cleared here.
-      // Edits for characters this device doesn't have (another of the player's signed-in devices owns
-      // them, or a mid-sync gap) are LEFT in place — deleting them here would rob the owning device of
-      // the edit. Read the latest roster via the ref so this async pull isn't scoped to a stale snapshot.
+    let running = false;
+    let again = false;
+    const pass = async () => {
+      // Bounded (GM_PASS_AWAIT_MS): a hung read ends the pass with nothing judged.
+      const edits = await bounded(fetchGmEdits());
+      if (cancelled || edits === TIMED_OUT || !edits.length) return;
+      // Only edits whose character actually lives in THIS device's roster are judged here. Edits for
+      // characters this device doesn't have (another of the player's signed-in devices owns them, or a
+      // mid-sync gap) are LEFT in place — consuming them here would rob the owning device of the edit.
       const present = new Set(rosterRef.current.map((c) => c.id));
-      const forThisDevice = edits.filter((e) => present.has(e.charId) && e.sheet && e.sheet.character);
-      if (!forThisDevice.length) return;
-      /* NEVER APPLY THE SAME EDIT TWICE. The cleanup delete below is best-effort, and on a database
-       * missing the `gce_owner_delete` policy (a setup that predates supabase-campaign-characters.sql's
-       * current version) it silently removes NOTHING — the row survived every apply, and this loop then
-       * re-applied it on each poll tick (2.5 s), rewinding the player's sheet to the GM's stale copy
-       * seconds after every local change, with no error anywhere. The applied stamp (per campaign+char,
-       * by updated_at) is the structural guard: a row can linger in the table forever and still apply
-       * exactly once. */
-      const appliedStamps = loadGmEditsApplied();
-      // …and the session's own stamps on top, for the ones a failed write never got to store.
-      for (const [k, v] of Object.entries(gmAppliedSession.current)) if ((appliedStamps[k] ?? '') < v) appliedStamps[k] = v;
-      const applicable = editsToApply(forThisDevice, appliedStamps);
-      if (applicable.length) {
-        // A character attached to two campaigns can have two pending edits (PK is campaign+char). Apply the
-        // NEWEST per character (last-writer-wins); an older one is superseded, never dropped-before-applied.
-        const newestByChar = new Map<string, (typeof applicable)[number]>();
-        for (const e of applicable) {
-          const prev = newestByChar.get(e.charId);
-          if (!prev || (e.updatedAt || '') > (prev.updatedAt || '')) newestByChar.set(e.charId, e);
+      const mine = edits.filter((e) => present.has(e.charId) && e.sheet && e.sheet.character);
+      if (!mine.length) return;
+      /* NEVER JUDGE THE SAME EDIT TWICE. The cleanup delete is best-effort, and on a database missing
+       * the `gce_owner_delete` policy it silently removes NOTHING — the row survived every apply, and
+       * the old loop re-applied it on each poll tick (2.5 s). The handled stamp (per campaign+char,
+       * by instant equality) is the structural guard: a row can linger forever and is judged once. */
+      const handled = { ...loadGmEditsApplied(), ...gmAppliedSession.current };
+      const fresh = editsToApply(mine, handled);
+      // Strays a failed delete left behind are cleared too — on their own stamp — so a later policy
+      // fix drains them.
+      for (const e of mine) if (!fresh.includes(e)) void deleteGmEdit(e.campaignId, e.charId, e.updatedAt).then(warnIfZero);
+      if (!fresh.length) return;
+      const owns = await bounded(Promise.all(fresh.map((e) => fetchPublishedSheet(e.campaignId, e.charId))));
+      if (cancelled || owns === TIMED_OUT) return; // a hung read: nothing judged, consumed or written
+      const chains = { ...loadGmEditChains(), ...gmChainSession.current };
+      const byId = new Map(rosterRef.current.map((c) => [c.id, c]));
+      // Two campaigns can hold an edit for one character: judged in campaign-id order — no clock.
+      const order = fresh
+        .map((e, i) => ({ e, own: owns[i] }))
+        .sort((a, b) => (a.e.campaignId < b.e.campaignId ? -1 : a.e.campaignId > b.e.campaignId ? 1 : 0));
+      const candidates: { e: GmEdit; key: string; judged: SavedChar; base: string; stamp: string }[] = [];
+      for (const { e, own } of order) {
+        const key = `${e.campaignId}|${e.charId}`;
+        const local = byId.get(e.charId);
+        if (!local) continue;
+        // Handled while this pass was out (an apply committed during its reads): judged once only, and
+        // never put back in the waiting set it was consumed out of.
+        if (sameInstant(gmAppliedSession.current[key], e.updatedAt)) continue;
+        if (e.gmBase === 'future' && !warnedGmFuture.current) {
+          warnedGmFuture.current = true;
+          console.warn('[HeavesParty] a GM edit was written by a newer version of the app — it waits until this app is updated.');
         }
-        /*
-         * Last change wins — but say so when the loser was the player.
-         *
-         * A GM's edit replaces the whole sheet. If the player had changed something since their last
-         * publish (typed HP in the past second, or worked offline), the GM was editing a version that
-         * didn't include it, and applying silently would make that work vanish with no explanation. So
-         * compare what we last published against what's local right now: a difference means there WAS
-         * unpublished work, and the player gets told. It stays recoverable — the replacement is one step
-         * on the roster's undo timeline, so Ctrl+Z brings their version back.
-         *
-         * Before the first publish of a session there is nothing to compare against, and the banner used
-         * to be suppressed outright — so the very first revert of a session was the silent one. With no
-         * published copy we compare the INCOMING sheet against the local one instead: if they differ, the
-         * player's version is being replaced, which is exactly what the banner is for.
-         */
-        /* TWO DECISIONS, ONE ROSTER — the one the map is actually replacing.
-         *
-         * `r` is the latest QUEUED roster; `rosterRef.current` is the last COMMITTED one (assigned
-         * during render). They disagree in exactly one state — an update scheduled and not yet
-         * rendered — and if that queued update is ITSELF the player's work (another tab's roster
-         * arriving on the storage event, or the cloud pull's merged roster: both non-discrete
-         * Scheduler-lane updates), then anything decided over `rosterRef.current` is decided about a
-         * roster that is already gone. `rosterRef.current` still holds the very entry `beforeFetch`
-         * captured, so the "did they edit during the fetch" compare answers no, and:
-         *   - WHAT TO KEEP: the GM's `play` replaces theirs.
-         *   - WHO TO TELL: a character the queued roster has since dropped is named though nothing of
-         *     it was replaced; and a queued BUILD change — a level-up made in the player's other tab —
-         *     is replaced by the GM's sheet and NOT announced, which is the shape that costs work
-         *     silently. (Their queued `play` is kept, so that half needs no banner.)
-         * So both are decided in here, per entry, over `r`.
-         *
-         * WHAT DOES NOT BELONG IN HERE IS THE `setGmOverwrote` CALL. React runs a functional updater
-         * when it RENDERS, not when you hand it over — it only evaluates it on the spot while the
-         * component has no other update pending. So a list filled here and read on the next line is
-         * empty exactly when App happens to be busy, and the banner this whole branch exists to raise
-         * silently does not appear. The names go into a ref instead, and the effect below this one
-         * raises them after the commit — a commit React cannot reach without having run this updater.
-         * That write is the only side effect in here and it is idempotent: same roster in, same names
-         * out, so an updater React re-invokes leaves the same list behind.
-         * 2026-09-23; (d) pins the banner, (e) the queued `play`, (f) the queued build — all in
-         * test/bug-gm-edit-race.test.tsx. */
-        setRoster((r) => {
-          const clobbered: string[] = [];
-          const next = r.map((c) => {
-            const edit = newestByChar.get(c.id);
-            if (!edit) return c;
-            // The player edited DURING the fetch (identity first — the JSON compare only runs for a
-            // character that actually moved). Their actions are newer than anything the GM saw, so the
-            // GM's character + build land and the local `play` stays.
-            const was = beforeFetch.get(c.id);
-            const localNow = sheetJson(c.id, c);
-            const raced = !!was && was !== c && sheetJson(c.id, was) !== localNow;
-            if (raced || playerWorkWasOverwritten(publishedSheetRef.current.get(c.id), localNow, sheetJson(c.id, edit.sheet)))
-              clobbered.push(c.character.name);
-            return { ...edit.sheet, id: c.id, archived: c.archived ?? false, ...(raced ? { play: c.play } : {}) };
-          });
-          gmClobberedRef.current = clobbered;
-          return next;
-        });
-        // Stamp every edit we consumed (the applied newest AND the superseded older ones), so none of
-        // them can ever re-apply, whatever becomes of the delete below.
-        for (const e of applicable) {
-          const stamp = e.updatedAt || new Date().toISOString();
-          appliedStamps[`${e.campaignId}|${e.charId}`] = stamp;
-          gmAppliedSession.current[`${e.campaignId}|${e.charId}`] = stamp;
+        const v = gmEditVerdict({ row: e, own, local, chain: chains[key], loaded: loadedAuthoredAs });
+        if (v === 'wait') {
+          gmWaitingRef.current.add(key);
+          continue;
         }
-        // …and prune stamps for characters no longer on this device, so the map cannot grow forever.
-        for (const k of Object.keys(appliedStamps)) {
-          const charId = k.slice(k.indexOf('|') + 1);
-          if (!present.has(charId)) delete appliedStamps[k];
+        if (v === 'apply') {
+          gmWaitingRef.current.add(key); // until the commit consumes it
+          const b = boundGmBase(e)!;
+          candidates.push({ e, key, judged: local, base: b.hash, stamp: b.stamp });
+          continue;
         }
-        saveGmEditsApplied(appliedStamps);
+        // refuse / settled / told: the roster is never touched. `told` (the server already carries our
+        // receipt for this push — one that landed after the bound below gave up on it) is consumed like
+        // `settled`: no second receipt, never applied (F1 2026-10-09, race leg 46).
+        if (v === 'refuse' && own?.sheet) {
+          /* THE RECEIPT FIRST, AND THE ROW IS CONSUMED ONLY ONCE IT LANDED. F1 (2026-10-09): the row
+           * used to be consumed first and the receipt fired and forgotten — one failed UPDATE (a blip)
+           * and no later pass ever judged the row again, so the GM's overlay stood down at their next
+           * publish and no screen ever said "not applied" (test/bug-gm-edit-race.test.tsx leg 40).
+           * Unreceipted, the row stays: the next focus / visibility / online / Realtime pass judges it,
+           * and receipts it, again. Awaited here, inside the serialised pass — bounded (GM_PASS_AWAIT_MS):
+           * a hung UPDATE counts as not landed, so the row stays and the pass still ends. A receipt slower
+           * than the bound can therefore still land late, after a later pass's receipt for a newer push
+           * of his (out of order); a late receipt for THIS push is seen by the next judgment as `told`
+           * and the row is only consumed, never applied (race leg 46). */
+          const told = await boundedTrue(markGmEditRefused(e.campaignId, e.charId, e.updatedAt));
+          if (cancelled) return;
+          if (!told) continue;
+        }
+        consumeGmEdit(e);
       }
-      // Clear every fetched edit this device owns — INCLUDING already-stamped strays a failed delete
-      // left behind, so a later policy fix drains them. Verified: a delete that reports success but
-      // removes no rows is the silent RLS gap, said out loud once per session so it is diagnosable.
-      for (const e of forThisDevice) void deleteGmEdit(e.campaignId, e.charId).then((deleted) => {
-        if (deleted === 0 && !warnedGmEditDelete.current) {
-          warnedGmEditDelete.current = true;
-          console.warn(
-            '[HeavesParty] gm_character_edits cleanup deleted 0 rows — the database is likely missing the gce_owner_delete policy. Run the current supabase-campaign-characters.sql. (Applied edits are stamped locally, so nothing re-applies.)',
-          );
-        }
+      if (!candidates.length) return;
+      /* NOT BEHIND ITS OWN CLOUD COPY. F1 (2026-10-09): the verdict proves this device holds the sheet
+       * the GM built on — not that the player's OTHER device has nothing newer. A device that last
+       * pulled before they changed something on their phone can be the one that published last (a
+       * failed publish retried on `online`), the GM builds on that stale sheet, and the apply — a
+       * roster edit, stamped newest — then won the cloud merge over the phone's work (leg 38). So the
+       * cloud is pulled first: a newer copy from their other device is adopted (queued ahead of the
+       * updater below, whose re-check then finds the entry moved: it waits, and is refused once that
+       * copy publishes). Not level, or the pull failed: everything here waits. No cloud: nothing to
+       * pull, and no await (null). A pull that never answers counts as not level (GM_PASS_AWAIT_MS):
+       * everything waits, and the pass ends so a later event can judge again. */
+      const level = pullForGmApply();
+      if (level && !(await boundedTrue(level))) return;
+      if (cancelled) return;
+      /* THE ONLY WRITE. Re-checked over the QUEUED roster `r`: `rosterRef.current` is the last
+       * COMMITTED one, and an update scheduled and not yet rendered (another tab's roster on the storage
+       * event, the cloud pull's merge — both non-discrete Scheduler-lane updates) can itself be the
+       * player's work. The entry must still be what was judged — the same object, or the same authored
+       * sheet — or it WAITS (nothing consumed; its own publish re-runs the pull). One APPLY per
+       * character per pass falls out of the same check: after the first, the entry is no longer what
+       * was judged. React runs this updater when it RENDERS, so nothing is consumed in here: the apply
+       * is recorded in a ref keyed by row, idempotent if React re-invokes it, and consumed by the
+       * after-commit effect below. 2026-09-23 (d)/(e)/(f) and F1 legs in test/bug-gm-edit-race.test.tsx.
+       *
+       * QUEUED IN THE ORDINARY BATCH, ON PURPOSE. F1 (2026-10-09, round 6): committing it synchronously
+       * (flushSync) rendered the SYNC lane alone — a cloud adopt or a storage event still pending on the
+       * default lane was skipped, the apply committed over the pre-adopt roster, and the persist loop
+       * that followed ended in "Maximum update depth exceeded" with the other device's change persisted
+       * over (legs 43–45). In the ordinary batch the adopt renders FIRST (same lane, in order), so the
+       * re-check below sees the entry moved and waits. A player tap made after the apply is rebased on
+       * top of it instead; the after-commit `landed` test recognises that by MARK (GM_APPLIED above;
+       * legs 41, 47, 48). The updater records the very entry it wrote (`entry`), keyed by row, so a
+       * rebased re-run re-records the same key, and marks the entry it was judged over (GM_JUDGED) —
+       * both `k.judged` and the queued entry it actually composed on, which may be another object
+       * holding the same authored sheet. */
+      setRoster((r) => {
+        let changed = false;
+        const next = r.map((c) => {
+          let cur = c;
+          for (const k of candidates) {
+            if (k.e.charId !== c.id) continue;
+            if (cur !== k.judged && authoredKey(cur) !== authoredKey(k.judged)) continue;
+            const mark = `${k.key}|${k.e.updatedAt}`;
+            (k.judged as GmMarked)[GM_JUDGED] = mark;
+            (cur as GmMarked)[GM_JUDGED] = mark;
+            const applied: GmMarked = { ...k.e.sheet, id: c.id, archived: c.archived ?? false, [GM_APPLIED]: mark };
+            cur = applied;
+            gmAppliedRef.current.set(mark, {
+              e: k.e,
+              key: k.key,
+              mark,
+              base: k.base,
+              stamp: k.stamp,
+              result: hash53(authoredKey(cur)),
+              entry: cur,
+              judged: k.judged,
+            });
+            changed = true;
+          }
+          return cur;
+        });
+        return changed ? next : r; // no change → no undo step, no commit
       });
     };
-    void apply();
-    const onFocus = () => void apply();
+    const run = () => {
+      if (cancelled) return;
+      if (running) {
+        again = true;
+        return;
+      }
+      running = true;
+      void pass()
+        .catch(() => undefined)
+        .finally(() => {
+          running = false;
+          if (again && !cancelled) {
+            again = false;
+            run();
+          }
+        });
+    };
+    gmPullRef.current = run;
+    run();
+    const onFocus = () => run();
     const onVisible = () => {
-      if (document.visibilityState === 'visible') void apply();
+      if (document.visibilityState === 'visible') run();
+    };
+    // A cloud adopt can bring this device level with its own published sheet, which settles a WAIT.
+    const onSynced = () => {
+      if (gmWaitingRef.current.size) run();
     };
     window.addEventListener('focus', onFocus);
     window.addEventListener('online', onFocus);
     document.addEventListener('visibilitychange', onVisible);
-    // Realtime: apply the moment the GM pushes, without waiting for a focus/open. Subscribes once we
-    // know this user's id; the subscription triggers the same pull-and-apply above (including on each
-    // (re)connect, so nothing pushed during a socket drop is missed).
+    window.addEventListener('hh-synced', onSynced);
+    // Realtime: judge the moment the GM pushes, without waiting for a focus/open. Subscribes once we
+    // know this user's id; the subscription triggers the same pull (including on each (re)connect, so
+    // nothing pushed during a socket drop is missed).
     //
     // NO POLLING. There used to be a 2.5-second fallback poll for when the Realtime stream was not up
     // (the table missing from the supabase_realtime publication). On the owner's setup that stream was
@@ -667,25 +846,89 @@ export default function App() {
     let unsubscribe = () => {};
     void currentUserId().then((id) => {
       if (cancelled || !id) return;
-      unsubscribe = subscribeGmEdits(id, () => void apply(), () => {});
+      unsubscribe = subscribeGmEdits(id, run, () => {});
     });
     return () => {
       cancelled = true;
+      gmPullRef.current = () => undefined;
       window.removeEventListener('focus', onFocus);
       window.removeEventListener('online', onFocus);
       document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('hh-synced', onSynced);
       unsubscribe();
     };
+    // `consumeGmEdit` / `warnIfZero` read refs only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.status, setRoster]);
-  /* The banner goes up AFTER a commit, never on the line after `setRoster` — see the updater above.
-   * No dependency list on purpose: the only moment those names are certainly known is once React has
-   * actually rendered the update that produced them, and "after every commit" is that moment without
-   * having to guess which of App's states carried it there. Everything else is a null check. */
-  useEffect(() => {
-    const names = gmClobberedRef.current;
-    if (!names) return;
-    gmClobberedRef.current = null;
-    if (names.length) setGmOverwrote(names);
+  /* An APPLY is consumed AFTER a commit, never inside the updater — see the updater above. No
+   * dependency list on purpose: the only moment an apply is certainly real is once React has rendered
+   * the update that produced it, and "after every commit" is that moment without having to guess which
+   * of App's states carried it there. Everything else is a size check.
+   * A crash between the commit and this effect leaves the row unconsumed: the next launch judges it
+   * again — APPLY again (same content, lossless) or, once the result published, REFUSE.
+   *
+   * ⚠ ONLY WHAT THE COMMIT HOLDS, AND ON DISK IN THE SAME COMMIT. F1 (2026-10-09), two windows that
+   * consumed a GM edit into nothing (no sheet held it, no receipt — his overlay just stood down):
+   *   • a whole-roster VALUE queued after the updater in the same render batch (cloud sync's adopt, read
+   *     from storage that never held the apply) wins the commit while the updater still recorded the
+   *     apply. So an apply is consumed only when the COMMITTED entry is exactly its result; otherwise the
+   *     row stays, and is judged again at once (leg 39);
+   *   • the same adopt landing between the commit and a PASSIVE effect: the roster's persist is scheduled
+   *     in a passive effect, so storage still lacked the apply when adopt read it. So this is a LAYOUT
+   *     effect — no gap after the commit — and it writes the roster to storage itself before consuming:
+   *     any adopt from here on reads the apply (stamped newest by the persist hook) (leg 39b). */
+  useLayoutEffect(() => {
+    const done = gmAppliedRef.current;
+    if (!done.size) return;
+    const committed = new Map(roster.map((c) => [c.id, c]));
+    /* LANDED = the committed entry IS the apply, or was COMPOSED UPON it — it carries the apply's
+     * GM_APPLIED mark (see GM_APPLIED at the top of this file). F1 (2026-10-09, rounds 6–7): a player
+     * change queued after the apply is rebased on top of it by React, through one of App's functional
+     * updaters, each of which spreads the entry it changes — a potion tap (`updatePlay`), a Customize
+     * click (`updateCharacter`), a Ctrl+= zoom (`zoomStep`) — so the commit holds apply + change and the
+     * mark: landed (legs 41, 47, 48; by content alone it read as "not landed", the row was judged again
+     * and REFUSED — the GM told "not applied" while his edit was on their sheet). A whole-entry
+     * replacement (a cloud adopt, a storage event: parsed, no mark) is "not landed" → judged again.
+     *
+     * NOT RENDERED YET = the committed entry is still the one the apply was judged over, or a change
+     * composed on THAT — it carries the apply's GM_JUDGED mark — so this commit simply did not include
+     * the apply. F1 (2026-10-09, round 6): React computes a state update EAGERLY when nothing else is
+     * queued — the updater ran (and recorded, and marked) at dispatch — and a tap's click, on the
+     * higher-priority sync lane, then committed alone, ahead of the apply. Dropped there, the record was
+     * gone when the apply committed (React reuses the eager result, so the updater never runs again):
+     * nothing was consumed, the row was refused once apply + tap published (leg 41 under production
+     * lanes). Such a record is KEPT for the commit that holds it; nothing is consumed or re-judged
+     * meanwhile (the row is still in the waiting set — any pass judges it as usual, and a pass that
+     * consumes the row drops the record with it). */
+    const landed: NonNullable<ReturnType<typeof done.get>>[] = [];
+    let dropped = 0;
+    for (const [k, a] of [...done]) {
+      const c = committed.get(a.e.charId) as GmMarked | undefined;
+      if (c && (c === a.entry || c[GM_APPLIED] === a.mark || hash53(authoredKey(c)) === a.result)) {
+        landed.push(a);
+        done.delete(k);
+      } else if (c && (c === a.judged || c[GM_JUDGED] === a.mark)) {
+        continue; // not rendered yet — kept for the commit that holds it
+      } else {
+        dropped++;
+        done.delete(k);
+      }
+    }
+    if (dropped) gmPullRef.current(); // never landed, and never will: judge them again
+    if (!landed.length) return;
+    persistNow(roster);
+    for (const a of landed) {
+      // `at`: WHICH push this record is the result of — only a push whose `gm_base.on` names it may use
+      // the record (F1, 2026-10-09: a base-keyed record from an old apply answered for pushes it never saw).
+      // `stamp`: the PUBLISH it was applied over — a push built on a LATER held push of his over that same
+      // publish (a third gesture) is caught by it too (F1, 2026-10-09: a round-2 refuter probe, now leg (10f) of test/gm-sync.test.ts).
+      gmChainSession.current[a.key] = { at: a.e.updatedAt, stamp: a.stamp, base: a.base, result: a.result };
+      consumeGmEdit(a.e);
+    }
+    const chains = { ...loadGmEditChains(), ...gmChainSession.current };
+    const present = new Set(rosterRef.current.map((c) => c.id));
+    for (const k of Object.keys(chains)) if (!present.has(k.slice(k.indexOf('|') + 1))) delete chains[k];
+    saveGmEditChains(chains);
   });
   useEffect(() => {
     if (persistImmediately.current) {
@@ -1282,20 +1525,6 @@ export default function App() {
         {/* The manual "new version — download it" banner is for the INSTALLED apps only. The web build
             auto-updates through its service worker, so nudging web users to download a release is wrong. */}
         {isTauri && <UpdateNotice />}
-        {/* A GM's update replaced something the player had just changed. Only shown when there really
-            was unpublished local work — a GM edit landing on an in-sync sheet is silent, as it should be. */}
-        {gmOverwrote && gmOverwrote.length > 0 && (
-          <div className="save-warning gm-overwrote" role="status">
-            <i className="ti ti-cloud-download" aria-hidden="true" />
-            <span>
-              Your GM updated <strong>{gmOverwrote.join(', ')}</strong>, replacing a change you'd just made. Press{' '}
-              <strong>Ctrl+Z</strong> to get your version back.
-            </span>
-            <button className="save-warning-x" onClick={() => setGmOverwrote(null)} aria-label="Dismiss">
-              <i className="ti ti-x" aria-hidden="true" />
-            </button>
-          </div>
-        )}
         {saveFailed && (
           <div className="save-warning" role="alert">
             <i className="ti ti-alert-triangle" aria-hidden="true" />
