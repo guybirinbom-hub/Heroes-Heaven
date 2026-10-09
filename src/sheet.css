@@ -1558,6 +1558,24 @@ body {
 .icon-btn:hover {
   border-color: var(--app-accent);
 }
+/* "← Tracker": a sheet opened from the campaign's tracker (CharacterSheet's gmEdit.inTracker /
+   onBackToTracker) leads its identity row with one labelled way back. Icon + word, so it reads as the
+   exit rather than one more tool. Removable with the tracker seam (src/integration/README.md). */
+.icon-btn.sheet-tracker-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  padding: 6px 10px;
+}
+/* Below 900px the row is tight (tabs, XP, Update — and the window controls in the desktop app), so the
+   word goes and the arrow stays, titled "Back to tracker": the same trade the tracker's own tool labels
+   make at this width (campaign-tracker.css). */
+@media (max-width: 900px) {
+  .icon-btn.sheet-tracker-back > span {
+    display: none;
+  }
+}
 
 /* ---- body layout ---- */
 .body {

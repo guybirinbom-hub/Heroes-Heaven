@@ -183,6 +183,14 @@ export default function App() {
   const [bootPending, setBootPending] = useState(false);
   // Which screen the Settings / Customize pages should return to when closed (the one they opened from).
   const [uiReturn, setUiReturn] = useState<'sheet' | 'roster' | 'homebrew' | 'campaigns'>('roster');
+  /*
+   * Removable tracker seam: the roster id of YOUR OWN character when its sheet was opened from your card
+   * in the campaign's tracker — that sheet then leads with "← Tracker", which comes back to the campaigns
+   * page (it reopens the campaign it remembers). The owner, 2026-10: "leaving the sheet returns to the
+   * tracker". Cleared the moment the sheet is reached any other way (effect below): leaving the sheet
+   * screen, or switching character.
+   */
+  const [ownFromTracker, setOwnFromTracker] = useState<string | null>(null);
   const autoOpenSheet = useRef(true);
   /** Takes the "the user is already using the app" listeners off — called where the boot restore's
    *  decision is actually MADE, which is either the content load or the `bootPending` effect below. */
@@ -1114,6 +1122,12 @@ export default function App() {
     setMode('settings');
   };
   const closeSubpage = () => setMode(uiReturn);
+  // "← Tracker" belongs to the visit that came from the tracker, and to nothing after it: any other
+  // screen, or another character on this one, ends it (a sheet reached later from the menu, the roster
+  // or the builder is an ordinary sheet). Removable tracker seam.
+  useEffect(() => {
+    setOwnFromTracker((f) => (f !== null && (mode !== 'sheet' || f !== activeId) ? null : f));
+  }, [mode, activeId]);
   // Reactive device-global customization default + this character's effective customization (default +
   // its overrides), provided to the sheet subtree so every consumer resolves the same values.
   const globalCustom = useGlobalCustomization();
@@ -1403,7 +1417,7 @@ export default function App() {
         onOpenHomebrew={() => setMode('homebrew')}
         onOpenSettings={openSettings}
         characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
-        onOpenOwn={(id) => { setActiveId(id); setMode('sheet'); }}
+        onOpenOwn={(id, fromTracker) => { setActiveId(id); setMode('sheet'); setOwnFromTracker(fromTracker ? id : null); }}
         modes={readyContent.modes}
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
@@ -1437,6 +1451,7 @@ export default function App() {
         charKey={active.id}
         characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
         onOpenOwn={(id) => { setActiveId(id); setMode('sheet'); }}
+        onBackToTracker={ownFromTracker === active.id ? () => setMode('campaigns') : undefined}
         onPlay={updatePlay}
         onCreateItem={addCustomItem}
         onSaveMode={saveModeDef}

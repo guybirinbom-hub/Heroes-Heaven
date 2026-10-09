@@ -670,8 +670,10 @@
 }
 /* ── The GM's view of a player's sheet ─────────────────────────── */
 
-/* Out of combat there's nothing to watch, so the sheet takes the whole tracker view. (It does NOT
-   cover HH's chrome above — see the .chrome note further down.) */
+/* A card opens the player's sheet as a layer over the whole tracker view. It does not cover HH's
+   chrome above it: that bar is HIDDEN while the sheet is open instead (TrackerTools, off trackerUi's
+   `sheetOpen`; the rule just below), and the sheet's identity row carries "← Tracker" and, in the
+   desktop app, the window's drag region and controls. */
 .ct-sheet-full {
   position: absolute;
   inset: 0;
@@ -682,17 +684,18 @@
   overflow: hidden;
 }
 
-/* During combat: inside the main pane, so the initiative order stays visible and usable. The sheet
-   is the same editor — only its box changes — so the GM can still see and change everything. */
-.ct-sheet-embed {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+/* The campaign title bar while a sheet covers the tracker. TrackerTools sets `hidden` on it, and the
+   attribute alone loses to `.chrome { display: flex }` — this is what makes it stick. Hidden, never
+   unmounted: the turn timer and the tools inside it keep running. */
+.cmp-page > .chrome[hidden] {
+  display: none;
 }
-.ct-sheet-embed > *,
-.ct-sheet-full > * {
+
+/* Only the sheet (or the builder it opens) takes the height. The strips GmEditSheet renders beside it
+   — "saved and waiting", "not applied", "the player changed this" — size to their own text; under the
+   old `> *` rule each one took an equal share of the height with the sheet. */
+.ct-sheet-full > .ws-app,
+.ct-sheet-full > .builder {
   flex: 1;
   min-height: 0;
 }
@@ -701,33 +704,25 @@
  * Turn a whole app SCREEN into a panel.
  *
  * GmEditSheet renders HH's full shell: a `.ws-app` sized `height: calc(100vh / var(--zoom))`, with
- * its own `.chrome` titlebar. Dropped into a pane that is NOT the viewport, it kept viewport height
- * — overflowing its box (980px pane vs 1065px shell), pushing the top bar off-screen and leaving
- * dead space below — and it drew a SECOND "Heroes Heaven" titlebar inside a view that already has
- * one. Both are fixed here rather than in the sheet, which is right to be viewport-sized on its own.
+ * its own `.chrome` titlebar. Dropped into a box that is NOT the viewport, it kept viewport height
+ * — overflowing its box (980px pane vs 1065px shell), pushing its own top rows off-screen and leaving
+ * dead space below. Fixed here rather than in the sheet, which is right to be viewport-sized on its
+ * own; the titlebar is the rule after this one.
  */
-.ct-sheet-embed .ws-app,
 .ct-sheet-full .ws-app {
   height: 100%;
   min-height: 0;
 }
 
 /*
- * The campaign's top bar IS this view's chrome, so the sheet's own "Heroes Heaven" titlebar is a
- * duplicate — in BOTH modes. .ct-sheet-full is absolute to .campaign-tracker, which starts BELOW
- * that top bar, so even full-screen it never covers it and the two titlebars just stack.
- * Safe to hide: the sheet's Back arrow lives in its own top bar, not in this chrome.
+ * The sheet's own "Heroes Heaven" titlebar stays hidden here: it is a second title bar over a view
+ * whose job is one character, and the campaign's own bar is hidden too while the sheet is open (see
+ * `[hidden]` above). Safe, because nothing in it is needed: the sheet's way back ("← Tracker") and,
+ * in the desktop app, the drag region and window controls live in its identity row when it is opened
+ * from the tracker (CharacterSheet's `gmEdit.inTracker`). The "GM editing X" strip is a separate
+ * element and stays (the owner, 2026-09-16, and again 2026-10: "keep the gm editing strip").
  */
-.ct-sheet-embed .chrome,
 .ct-sheet-full .chrome {
-  display: none;
-}
-
-/* The "GM editing X — changes reach the player only when you Update" banner exists to tell a GM
-   that a full-screen sheet isn't their own character. Embedded beside the initiative order that's
-   self-evident — the tracker is right there — so it's just a yellow stripe eating vertical space.
-   It stays in .ct-sheet-full, where the sheet DOES take over and the warning earns its place. */
-.ct-sheet-embed .gm-edit-tab {
   display: none;
 }
 

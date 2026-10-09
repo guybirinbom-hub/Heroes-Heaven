@@ -389,8 +389,11 @@ describe('the owner’s 2026-09-16 list — the seam', () => {
     expect(sheet!.querySelector('.gm-edit-tab')).toBeTruthy();
     expect(sheet!.querySelector('.gm-edit-tab')!.textContent).toContain('GM editing Ayla Brightwood');
 
-    // Back → the CARD, still in its pane. Not the dashboard, and not out of the tracker.
-    click(btn('Back to campaign'));
+    // Back → the CARD, still in its pane. Not the dashboard, and not out of the tracker. The sheet's
+    // one way back is labelled for where it goes (owner 2026-10: "leaving the sheet returns to the
+    // tracker"; the campaign's title bar is hidden while the sheet is open).
+    expect(qq('.ct-sheet-full button[aria-label="Back to campaign"]')).toHaveLength(0);
+    click(btn('Back to tracker'));
     await flush(2);
     expect(q('.ct-sheet-full')).toBeNull();
     expect(q('.ct-pane-card .party-card')).toBeTruthy();
@@ -408,7 +411,7 @@ describe('the owner’s 2026-09-16 list — the seam', () => {
     expect(q('.ct-sheet-full')).toBeTruthy();
     expect(q('.ct-sheet-full .gm-edit-tab')).toBeTruthy();
 
-    click(btn('Back to campaign'));
+    click(btn('Back to tracker'));
     await flush(2);
     expect(q('.ct-sheet-full')).toBeNull();
     expect(q('.party-grid .party-card')).toBeTruthy();

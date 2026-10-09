@@ -46,6 +46,9 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   content: ContentDatabase;
   campaignId: string;
   playerOwnerId: string;
+  /** Opened over the campaign's tracker, whose title bar steps aside meanwhile: the sheet leads with
+   *  "← Tracker" (still through doExit → confirmLeave) and holds the window's controls. Removable seam. */
+  inTracker?: boolean;
   onExit: () => void;
 }>(function GmEditSheet({
   initial,
@@ -54,6 +57,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
   content: baseContent,
   campaignId,
   playerOwnerId,
+  inTracker,
   onExit,
 }, ref) {
   const [work, setWork] = useState<SavedChar>(initial);
@@ -315,6 +319,26 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
    * throw away the very changes they just chose to keep).
    */
   const confirmLeave = async (reason?: { title: string; message: string }): Promise<boolean> => {
+    /*
+     * THE BUILDER IS OPEN. Its unsaved state lives inside <Builder> until Save, not in `work`, so
+     * `dirty` cannot see it — and this used to answer "fine, go" here whenever the sheet itself was
+     * clean: Escape, the tracker's Party / GM Screen, or a turn change then threw the builder's work
+     * away without a word. Ask, but with Discard / Cancel ONLY: an "Update player" here would push
+     * `work`, which is not what the GM is looking at — the wrong copy.
+     */
+    if (editing) {
+      const choice = await chooseDialog({
+        title: 'Leave the builder?',
+        message: dirty
+          ? `You’re rebuilding ${work.character.name}, and you have other changes you haven’t sent. Leaving now discards both.`
+          : `You’re rebuilding ${work.character.name}. Leaving now discards what you’ve changed in the builder.`,
+        buttons: [
+          { value: 'leave', label: 'Discard changes', danger: true },
+          { value: 'cancel', label: 'Cancel' },
+        ],
+      });
+      return choice === 'leave';
+    }
     if (!dirty) return true;
     const choice = await chooseDialog({
       title: reason?.title ?? 'Update before leaving?',
@@ -405,7 +429,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
         onEdit={openBuilder}
-        gmEdit={{ onUpdate: () => void doUpdate(), onExport: doExport, busy }}
+        gmEdit={{ onUpdate: () => void doUpdate(), onExport: doExport, busy, inTracker }}
         onBack={() => void doExit()}
       />
     </>

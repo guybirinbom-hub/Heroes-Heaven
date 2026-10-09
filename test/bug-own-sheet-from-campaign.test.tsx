@@ -439,6 +439,14 @@ describe('every campaign surface is wired to the same route', () => {
 
   it('App gives both pages the own-sheet route', () => {
     const src = read('src/App.tsx');
-    expect(src.match(/onOpenOwn=\{\(id\) => \{ setActiveId\(id\); setMode\('sheet'\); \}\}/g)?.length).toBe(2);
+    // The sheet's own party overlay: straight to the sheet.
+    expect(src.match(/onOpenOwn=\{\(id\) => \{ setActiveId\(id\); setMode\('sheet'\); \}\}/g)?.length).toBe(1);
+    // The campaigns page: the same route, plus whether the card was tapped in the tracker — that sheet
+    // then offers "← Tracker" back (owner 2026-10; test/bug-tracker-sheet-top-row.test.tsx).
+    expect(
+      src.match(
+        /onOpenOwn=\{\(id, fromTracker\) => \{ setActiveId\(id\); setMode\('sheet'\); setOwnFromTracker\(fromTracker \? id : null\); \}\}/g,
+      )?.length,
+    ).toBe(1);
   });
 });

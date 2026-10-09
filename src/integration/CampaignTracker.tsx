@@ -1102,6 +1102,25 @@ export function CampaignTracker({
   const fullSheetChar = fullSheetId ? (roster.byId.get(fullSheetId) ?? null) : null;
 
   /*
+   * TELL THE CHROME A SHEET IS COVERING THE TRACKER — so the campaign's title bar can step aside (the
+   * owner, 2026-10: "when editing a player sheet from the tracker I don't want to see the top row").
+   *
+   * Keyed on what is actually RENDERED below (`synced && fullSheetChar`), not on `fullSheetId`: the
+   * builder the sheet opens renders inside the same `.ct-sheet-full`, so it keeps the bar hidden too.
+   * A report only (see `sheetOpen` in trackerUiStore) — closing still goes through leaveFullSheet.
+   *
+   * The unmount cleanup is load-bearing, the same as boardReady's above: campaign settings, leaving the
+   * campaign, the page-replacing sheet route and the GM's own card all UNMOUNT this view with a sheet
+   * possibly open, and a flag left true would hide the bar — its back arrow and hamburger with it — on
+   * whatever comes next. test/bug-tracker-sheet-top-row.test.tsx pins it.
+   */
+  const sheetShown = synced && fullSheetChar != null;
+  useEffect(() => {
+    trackerUi.setSheetOpen(sheetShown);
+    return () => trackerUi.setSheetOpen(false);
+  }, [sheetShown]);
+
+  /*
    * NOTHING TO EDIT UNTIL THE BOARD IS THE RIGHT ONE.
    *
    * `synced` gated only the setScope effect below, so until it flipped the rail rendered whatever the
@@ -1286,6 +1305,10 @@ export function CampaignTracker({
               content={content}
               campaignId={m.id}
               playerOwnerId={fullSheetChar.ownerId}
+              // The campaign's title bar is hidden while this is open (sheetOpen above), so the sheet
+              // carries the one way back ("← Tracker", through its own doExit → confirmLeave) and, in
+              // the desktop app, the window's drag region and controls.
+              inTracker
               onExit={() => setFullSheetId(null)}
             />
           </div>

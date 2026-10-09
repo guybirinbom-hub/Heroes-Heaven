@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import type { Character, ContentDatabase, Customization, Item, ModeDef } from '../rules/types';
 import {
   addXp,
@@ -134,6 +134,7 @@ export function CharacterSheet({
   gmEdit,
   onOpenOwn,
   onBack,
+  onBackToTracker,
   charKey,
   build,
 }: {
@@ -182,9 +183,19 @@ export function CharacterSheet({
   onOpenOwn?: (charId: string) => void;
   /** GM editing a player's character (from the campaign detail): fully editable, no nav hamburger, and
    *  a top-bar [edit-build · export · Update · Back] set. `onUpdate` pushes to the player (silently);
-   *  `onExport` downloads the file. Mutually exclusive with `readOnly`. */
-  gmEdit?: { onUpdate: () => void; onExport: () => void; busy?: boolean };
+   *  `onExport` downloads the file. Mutually exclusive with `readOnly`.
+   *
+   *  `inTracker`: opened over the campaign's initiative tracker, whose title bar is hidden while this
+   *  sheet is open (the owner, 2026-10). The identity row then carries the ONE way back — a labelled
+   *  "← Tracker" first in the row, calling `onBack`, in place of the trailing arrow — and, since the
+   *  desktop app draws its own title bar, the window's drag region and controls. Removable seam: see
+   *  src/integration/README.md. */
+  gmEdit?: { onUpdate: () => void; onExport: () => void; busy?: boolean; inTracker?: boolean };
   onBack?: () => void;
+  /** Your OWN character, opened from your card in the campaign's tracker: the same labelled
+   *  "← Tracker" first in the identity row, which takes you back there. App sets it only for that
+   *  route and drops it the moment the sheet is reached any other way. Removable seam (README). */
+  onBackToTracker?: () => void;
 }) {
   const custom = useCustomization();
   // Only the PRIMARY, editable sheet owns the per-character look. Nested read-only / GM-edit sheets
@@ -192,6 +203,11 @@ export function CharacterSheet({
   // unmount, revert it — otherwise closing a teammate's sheet clobbers your own sheet's overlay, and the
   // teammate's sheet would paint with YOUR customization (see review). They just inherit the ambient look.
   const primarySheet = !readOnly && !gmEdit;
+  // Opened over the campaign's tracker (see the gmEdit doc): the identity row is the window's title
+  // bar then, and "← Tracker" is the way back. The OWN sheet reached from the tracker gets the same
+  // control (onBackToTracker) but keeps its own title bar, so it needs neither drag region nor controls.
+  const inTracker = !!gmEdit?.inTracker;
+  const trackerBack = inTracker ? onBack : primarySheet ? onBackToTracker : undefined;
   // A cursed item a GM planted HIDDEN shows the player its uncursed twin — name, description and
   // bonuses — so they cannot tell it apart. Swapping it in the CONTENT means every consumer below
   // (item card, inventory, passiveEffects, the stat breakdowns) is disguised at once without any of
@@ -557,7 +573,22 @@ export function CharacterSheet({
         <WindowControls />
       </header>
 
-      <div className="identity">
+      <div
+        className="identity"
+        // In the tracker the sheet's own title bar and the campaign's are both hidden, so on the
+        // desktop app (decorations: false) this row is the window's drag region and holds its controls;
+        // --chrome-pad-y matches this row's 10px padding so those controls sit flush in the corner.
+        data-tauri-drag-region={inTracker || undefined}
+        style={inTracker ? ({ '--chrome-pad-y': '10px' } as CSSProperties) : undefined}
+      >
+        {trackerBack && (
+          // The ONE way back to the tracker, first in the row and labelled — the owner asked for the
+          // tracker's top row to go, so this replaces the two unlabelled arrows that used to share it.
+          <button type="button" className="icon-btn sheet-tracker-back" title="Back to tracker" aria-label="Back to tracker" onClick={trackerBack}>
+            <i className="ti ti-arrow-left" aria-hidden="true" />
+            <span>Tracker</span>
+          </button>
+        )}
         {portrait ? (
           <button
             type="button"
@@ -717,9 +748,13 @@ export function CharacterSheet({
             <button className="btn-primary gm-update-btn" disabled={gmEdit.busy} onClick={gmEdit.onUpdate}>
               <i className="ti ti-cloud-upload" aria-hidden="true" /> Update
             </button>
-            <button className="icon-btn" title="Back to campaign" aria-label="Back to campaign" onClick={onBack}>
-              <i className="ti ti-arrow-left" aria-hidden="true" />
-            </button>
+            {/* In the tracker the labelled "← Tracker" at the front of this row is the way back. */}
+            {!inTracker && (
+              <button className="icon-btn" title="Back to campaign" aria-label="Back to campaign" onClick={onBack}>
+                <i className="ti ti-arrow-left" aria-hidden="true" />
+              </button>
+            )}
+            {inTracker && <WindowControls />}
           </>
         ) : readOnly ? (
           <button className="icon-btn" title="Back to party" aria-label="Back to party" onClick={onBack}>

@@ -109,8 +109,9 @@ interface CampaignsPageProps {
   onOpenSettings?: () => void;
   characters: { id: string; name: string }[];
   /** Open one of this device's own characters (a roster id) — what a GM's own card in the party does
-   *  instead of opening the GM editor on their own published copy. */
-  onOpenOwn?: (charId: string) => void;
+   *  instead of opening the GM editor on their own published copy. `fromTracker`: the card was in the
+   *  campaign's initiative tracker, so that sheet offers "← Tracker" back here (removable seam). */
+  onOpenOwn?: (charId: string, fromTracker: boolean) => void;
   modes: Record<string, ModeDef>;
   onSaveMode: (m: ModeDef) => void;
   onDeleteMode: (id: string) => void;
@@ -169,7 +170,13 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
   // GM detail: the GM edits a player's sheet (fully, silently pushed on Update) — not a read-only view.
   // On a phone that editor IS the GM side, so a teammate's sheet opens read-only there instead.
   // A GM plays too: their OWN card in the party is their own sheet, not a GM edit of it.
-  const { sheetEl, open } = useMemberViewer(content, { gmEdit: !isPhone, roster: characters, onOpenOwn });
+  // Removable seam: the own card tells App whether it was tapped in the tracker (`trackerView`, below,
+  // read when the card is tapped), so that sheet can offer "← Tracker" back to this campaign.
+  const { sheetEl, open } = useMemberViewer(content, {
+    gmEdit: !isPhone,
+    roster: characters,
+    onOpenOwn: onOpenOwn && ((id) => onOpenOwn(id, trackerView)),
+  });
   // Back navigation, one step at a time. Campaign settings (edit) was opened FROM a campaign, so back
   // returns to that campaign's tracker — not all the way out to the list, which would lose the GM's
   // place. Every other sub-view steps back to the list.

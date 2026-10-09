@@ -263,8 +263,16 @@ describe('leaving a campaign', () => {
     await flush(2);
     expect(el.querySelector('.ct-sheet-full .stub-gm-sheet')).not.toBeNull();
 
-    // Back arrow → the same question the campaign-settings route has always asked.
-    click(el.querySelector('.hb-back')!);
+    // Back → the same question the campaign-settings route has always asked. Escape, not the title
+    // bar's arrow: that bar is HIDDEN while a sheet covers the tracker (owner 2026-10, "no top row";
+    // test/bug-tracker-sheet-top-row.test.tsx), and the stub has no back button of its own — Escape
+    // is the same dismiss stack the arrow fires (triggerBack), so it is the same gate.
+    expect(el.querySelector<HTMLElement>('.cmp-page > .chrome')!.hidden).toBe(true);
+    const escape = () =>
+      act(() => {
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+      });
+    escape();
     await flush(2);
     click(dialogButton('.btn-ghost')); // Cancel
     await flush(2);
@@ -273,7 +281,7 @@ describe('leaving a campaign', () => {
 
     // …saying yes closes the SHEET and lands back on the card — the gate isn't a dead end, and Back
     // peels one layer at a time rather than dropping the GM out of the campaign.
-    click(el.querySelector('.hb-back')!);
+    escape();
     await flush(2);
     click(dialogButton('.btn-primary')); // Update
     await flush(3);
@@ -281,7 +289,8 @@ describe('leaving a campaign', () => {
     expect(el.querySelector('.ct-pane-card .party-card')).not.toBeNull();
     expect(el.querySelector('.campaign-tracker')).not.toBeNull();
 
-    // Nothing left to lose — the next Back really does leave.
+    // Nothing left to lose — the title bar is back, and its arrow really does leave.
+    expect(el.querySelector<HTMLElement>('.cmp-page > .chrome')!.hidden).toBe(false);
     click(el.querySelector('.hb-back')!);
     await flush(3);
     expect(el.querySelector('.campaign-tracker')).toBeNull();

@@ -50,6 +50,7 @@ export interface TrackerUiState {
    * It's a nonce rather than the store simply owning "is a sheet open" because closing a sheet is
    * asynchronous and refusable: a dirty sheet prompts, and the GM can cancel. Only the component
    * holding the sheet can honour that, so the store records the REQUEST and lets it decide.
+   * (`sheetOpen` below is the other direction: a REPORT of what is on screen, never a way to close.)
    */
   paneRequest: number;
   /**
@@ -72,11 +73,21 @@ export interface TrackerUiState {
    * pf2e-parties and pf2e-dm-turn-average going up to the GM's account on top. So the row waits too.
    */
   boardReady: boolean;
+  /**
+   * A player's sheet (or the builder opened from it) is covering the tracker right now.
+   *
+   * A REPORT, never a switch. CampaignTracker sets it from what it actually renders and clears it on
+   * unmount, exactly like boardReady; nothing may CLOSE a sheet by writing false here — closing is
+   * asynchronous and refusable (paneRequest above, and GmEditSheet's confirmLeave). Its one reader is
+   * TrackerTools, which hides the campaign's title bar while it is true (the owner, 2026-10: "when
+   * editing a player sheet from the tracker I don't want to see the top row").
+   */
+  sheetOpen: boolean;
 }
 
 const INITIAL: TrackerUiState = {
   searchOpen: false, monsterSearchOpen: false, customOpen: false, encountersOpen: false, appearanceOpen: false,
-  mainView: 'party', paneRequest: 0, settingsRequest: 0, boardReady: false,
+  mainView: 'party', paneRequest: 0, settingsRequest: 0, boardReady: false, sheetOpen: false,
 };
 
 let state: TrackerUiState = INITIAL;
@@ -111,6 +122,10 @@ export const trackerUi = {
   requestCampaignSettings: () => set({ settingsRequest: state.settingsRequest + 1 }),
   /** CampaignTracker only: the board is scoped and editable (see boardReady). */
   setBoardReady: (boardReady: boolean) => set({ boardReady }),
+  /** CampaignTracker only: report whether a sheet covers the tracker (see sheetOpen — never a close). */
+  setSheetOpen: (sheetOpen: boolean) => {
+    if (state.sheetOpen !== sheetOpen) set({ sheetOpen });
+  },
   /** Close everything — used when leaving the campaign so panels don't reappear on re-entry. */
   reset: () => set(INITIAL),
 };

@@ -15,7 +15,7 @@ import { resolveAppearanceVars } from '../theme/theme-manager';
  * Heroes Heaven's chrome, so it should look like it. Part of the removable seam.
  */
 export function TrackerTools() {
-  const { searchOpen, customOpen, encountersOpen, mainView, boardReady } = useTrackerUi();
+  const { searchOpen, customOpen, encountersOpen, mainView, boardReady, sheetOpen } = useTrackerUi();
   const turnTimerEnabled = useSettingsStore((s) => s.turnTimerEnabled);
 
   /*
@@ -51,6 +51,27 @@ export function TrackerTools() {
       for (const n of names) header.style.removeProperty(n);
     };
   }, [app, boardReady]);
+
+  /*
+   * NO TOP ROW WHILE A PLAYER'S SHEET IS OPEN (the owner, 2026-10: "when editing a player sheet from
+   * the tracker I don't want to see the top row"; hiding the tools, the timer, Search / Party / GM
+   * Screen with it is "fine").
+   *
+   * The same reach as above, for the same reason: the bar is Heroes Heaven's, and this keeps the
+   * decision inside the removable seam. HIDDEN, never unmounted — the turn timer and these tools stay
+   * mounted underneath, and the bar comes straight back when the sheet closes. The sheet carries what
+   * the bar did: its own "← Tracker" and, in the desktop app, the drag region and window controls.
+   * `[hidden]` alone loses to `.chrome { display: flex }`, so campaign-tracker.css makes it stick.
+   * Restored on cleanup, so leaving the campaign (this component unmounts) can never strand a hidden bar.
+   */
+  useEffect(() => {
+    const header = rootRef.current?.closest('header') as HTMLElement | null;
+    if (!header || !sheetOpen) return;
+    header.hidden = true;
+    return () => {
+      header.hidden = false;
+    };
+  }, [sheetOpen, boardReady]);
 
   /**
    * `on: undefined` means "this button doesn't have an on/off state" — it navigates. Such a button

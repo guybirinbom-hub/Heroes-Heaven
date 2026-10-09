@@ -17,7 +17,7 @@ import {
 import { memberCardSummary, useMemberSheets } from './memberSheets';
 import { memberConditions, memberSummary, type PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
-import { GmEditSheet } from './GmEditSheet';
+import { GmEditSheet, type GmEditHandle } from './GmEditSheet';
 import { confirmDialog } from './confirm';
 import { RankPill } from './widgets';
 import { useBackHandler } from './useEscapeClose';
@@ -134,7 +134,23 @@ export function useMemberViewer(
   },
 ) {
   const [viewing, setViewing] = useState<ViewingState | null>(null);
-  useBackHandler(!!viewing, () => setViewing(null));
+  /*
+   * Escape / Android-back leave the sheet the same way its own back arrow does. On the GM-edit sheet
+   * that means ASKING first (GmEditSheet's confirmLeave: Update / Discard / Cancel when there are
+   * unsent changes) — this used to `setViewing(null)` outright, binning an unpushed working copy on
+   * one key press while the arrow beside it asked. A read-only sheet has nothing to lose.
+   */
+  const gmSheetRef = useRef<GmEditHandle>(null);
+  useBackHandler(!!viewing, () => {
+    const gm = gmSheetRef.current;
+    if (!gm) {
+      setViewing(null);
+      return;
+    }
+    void gm.confirmLeave().then((ok) => {
+      if (ok) setViewing(null);
+    });
+  });
   // The summary is read HERE, from the same row as the sheet, rather than taken from the card that
   // opened it — see ViewingState.summary for what a card-supplied one could not do.
   const open = async (campaignId: string, charId: string, ownerId: string): Promise<boolean> => {
@@ -251,6 +267,7 @@ export function useMemberViewer(
         <div className="party-viewer">
           <GmEditSheet
             key={viewing.charId}
+            ref={gmSheetRef}
             initial={viewing.sheet}
             live={viewing.sheet}
             summary={summary}
