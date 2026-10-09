@@ -76,6 +76,7 @@ async function mount(el: ReactElement): Promise<{ host: HTMLElement; stop: () =>
   return { host, stop: () => { act(() => root.unmount()); host.remove(); } };
 }
 async function click(el: Element | null | undefined) {
+  // batch card: #card-NOT-VACUOUS — the control a case clicks exists
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -183,6 +184,7 @@ beforeAll(async () => {
 afterAll(() => { vi.unstubAllGlobals(); });
 
 describe('card step 20 (a): the Details-tab class card is the class record\'s mine card', () => {
+  // batch card: #card-Q1A — the later-level features fold under one closed line; what the character has stays open
   it('a fighter 3 has no level-19 feature open: Versatile Legend sits inside ONE closed "At higher levels" fold; Bravery is open', async () => {
     const ch = build('fighter', 3);
     const toggled: PinNode[] = [];
@@ -191,29 +193,36 @@ describe('card step 20 (a): the Details-tab class card is the class record\'s mi
     try {
       await click(classTerm(m.host, 'Fighter'));
       const pop = m.host.querySelector('.ast-modal.card-mine');
+      // batch card: #card-NOT-VACUOUS — the Class term opened the class's mine card; the ledger folds Versatile Legend at level 3
       expect(pop, 'the Class term opened the class record\'s mine card (its page lane)').toBeTruthy();
       const later = laterSections('fighter', 3);
       expect(later.map((s) => s.title)).toContain('Versatile Legend');
       // One fold line for the whole run of later-level features (owner ruling Q1 = A), closed.
       const folds = [...pop!.querySelectorAll('details.card-fold')];
+      // batch card: #card-Q1A — one closed "At higher levels (k)" line for the whole run of later features
       expect(folds).toHaveLength(1);
       expect((folds[0] as HTMLDetailsElement).open, 'the fold starts closed').toBe(false);
       expect(txt(folds[0].querySelector('summary'))).toBe(`At higher levels (${later.length})`);
       // The level-19 feature is IN the DOM, inside the fold — never open, never deleted.
+      // batch card premise: class-35 "You are nigh-unmatched with any weapon"
       expect(headings(folds[0])).toContain('Versatile Legend');
       expect(txt(folds[0])).toContain(VERSATILE);
       const open = openText(pop!);
+      // batch card: #card-Q1A — no section above level 3 is open
       expect(headings(open)).not.toContain('Versatile Legend');
       expect(txt(open)).not.toContain(VERSATILE);
       for (const s of later) expect(headings(open), `${s.title} (level ${s.level}) is not open at level 3`).not.toContain(s.title);
       // What a fighter 3 has is open: the level-3 Bravery and the intro.
+      // batch card premise: class-35 "Having faced countless foes and the chaos of battle"
       expect(headings(open)).toContain('Bravery');
       expect(txt(open)).toContain(BRAVERY);
       // No "Full page" button (section 13): with the fold nothing is unreachable.
+      // batch card: #card-NO-FULL-PAGE — the card draws no Full page button
       expect(txt(pop)).not.toMatch(/Full page/i);
       expect([...pop!.querySelectorAll('button')].map(txt)).not.toContain('Full page');
       // The PinStar is built in and pins the class record by id, as the character's own card.
       await click(pop!.querySelector('.info-star'));
+      // batch card: #card-PIN — the built-in star pins the class record by id, mode 'mine'
       expect(toggled).toHaveLength(1);
       expect({ key: toggled[0].key, slug: toggled[0].slug, title: toggled[0].title, mode: toggled[0].mode })
         .toEqual({ key: 'classes', slug: 'fighter', title: 'Fighter', mode: 'mine' });
@@ -222,14 +231,17 @@ describe('card step 20 (a): the Details-tab class card is the class record\'s mi
     }
   });
 
+  // batch card: #card-Q1A — the fold follows the character's level
   it('a fighter 19 has Versatile Legend open — the fold follows the character\'s level, it is not a fixed cut', async () => {
     const ch = build('fighter', 19);
     const m = await mount(<DetailsTab character={ch} content={db} />);
     try {
       await click(classTerm(m.host, 'Fighter'));
       const pop = m.host.querySelector('.ast-modal.card-mine')!;
+      // batch card: #card-Q1A — a fighter 19 has nothing left to fold
       expect(pop).toBeTruthy();
       expect(pop.querySelectorAll('details.card-fold')).toHaveLength(0);
+      // batch card premise: class-35 "You are nigh-unmatched with any weapon"
       expect(headings(openText(pop))).toContain('Versatile Legend');
       expect(txt(openText(pop))).toContain(VERSATILE);
     } finally {
@@ -237,6 +249,7 @@ describe('card step 20 (a): the Details-tab class card is the class record\'s mi
     }
   });
 
+  // batch card: #card-PIN — the class pin stores {classes, fighter, Fighter, mine} and reopens as the mine card with its fold
   it('pinned from the real sheet\'s Details tab, the class pin is {classes, fighter, Fighter, mine} and reopens as the mine card with the fold', async () => {
     const ch = build('fighter', 3);
     const seen = { play: initialPlay(ch, db), writes: 0 };
@@ -245,10 +258,12 @@ describe('card step 20 (a): the Details-tab class card is the class record\'s mi
       await click(tab(m.host, 'Details'));
       await click(classTerm(m.host, 'Fighter'));
       const pop = m.host.querySelector('.ast-modal.card-mine');
+      // batch card: #card-Q1A — the Details tab opens the mine card scoped to the fighter 3: one fold
       expect(pop, 'the Details tab Class term opened the mine card').toBeTruthy();
       expect(pop!.querySelectorAll('details.card-fold'), 'scoped to the fighter 3: one fold').toHaveLength(1);
       await click(pop!.querySelector('.info-star'));
       const stored = seen.play.pinnedDescs ?? [];
+      // batch card: #card-PIN — the star stored {classes, fighter, Fighter, mine} and reads pinned
       expect(stored).toHaveLength(1);
       expect({ key: stored[0].key, slug: stored[0].slug, title: stored[0].title, mode: stored[0].mode })
         .toEqual({ key: 'classes', slug: 'fighter', title: 'Fighter', mode: 'mine' });
@@ -256,12 +271,15 @@ describe('card step 20 (a): the Details-tab class card is the class record\'s mi
       await click(pop!.querySelector('.picker-close'));
       await click(tab(m.host, 'Main'));
       const row = [...m.host.querySelectorAll('.pinned-desc')].find((r) => txt(r.querySelector('.pinned-desc-title')) === 'Fighter');
+      // batch card: #card-NOT-VACUOUS — the Pinned list shows the class
       expect(row, 'the Pinned list shows the class').toBeTruthy();
       await click(row!.querySelector('.pinned-desc-open'));
       const again = m.host.querySelector('.ast-modal.card-mine');
+      // batch card: #card-PIN — the reopened class pin is the mine card at the fighter 3's scope: one fold
       expect(again, 'the reopened class pin is the mine card').toBeTruthy();
       const folds = again!.querySelectorAll('details.card-fold');
       expect(folds).toHaveLength(1);
+      // batch card premise: class-35 "You are nigh-unmatched with any weapon"
       expect(txt(folds[0])).toContain(VERSATILE);
       expect(txt(openText(again!))).not.toContain(VERSATILE);
     } finally {
@@ -271,6 +289,7 @@ describe('card step 20 (a): the Details-tab class card is the class record\'s mi
 });
 
 describe('card step 20 (b): a preview is the first line of its popup', () => {
+  // batch card: #card-PREVIEW — every record's preview is the first line of its real mine popup
   it('for every feat, class feature, item and spell, cardPreview equals the first line of the record\'s real mine popup', async () => {
     const tpl = document.createElement('template');
     /* A record whose tree is cached renders its settled popup in one synchronous pass (useAstNode seeds from
@@ -313,12 +332,15 @@ describe('card step 20 (b): a preview is the first line of its popup', () => {
       }
     }
     console.info('card step 20 preview corpus', JSON.stringify(counts));
+    // batch card: #card-PREVIEW — no record's preview differs from its popup's first line
     expect(bad.slice(0, 15), `${bad.length} records whose preview is not their popup's first line`).toEqual([]);
     // The measure is not vacuous: every bucket compared, both lanes met, the shared features met.
+    // batch card: #card-NOT-VACUOUS — every bucket compared at corpus size
     expect(counts.feats.n).toBeGreaterThan(6000);
     expect(counts.items.n).toBeGreaterThan(7000);
     expect(counts.spells.n).toBeGreaterThan(1900);
     expect(counts.classFeatures.n).toBeGreaterThan(1000);
+    // batch card: #card-NOT-VACUOUS — the page lane met in every bucket; the no-page lane and the shared features met
     for (const b of Object.keys(counts)) expect(counts[b].tree, `${b}: page lane`).toBeGreaterThan(0);
     expect(counts.classFeatures.text + counts.items.text, 'no-page lane').toBeGreaterThan(0);
     expect(counts.classFeatures.shared, 'shared class features').toBeGreaterThan(0);
@@ -362,24 +384,30 @@ describe('card step 20 (b): a preview is the first line of its popup', () => {
     return out;
   }
 
+  // batch card: #card-PREVIEW — every Feats-tab row's preview is the first line of the popup it opens
   it('on the Feats tab, every row\'s preview is the first line of the popup it opens — including a shared class feature', async () => {
     const { ch, name } = findRow(sharedRow);
     const rows = await rowsAgainstPopups(ch);
+    // batch card: #card-NOT-VACUOUS — the tab lists more than 20 rows, the shared-feature row among them, with a preview
     expect(rows.length).toBeGreaterThan(20);
     expect(rows.map((r) => r.name)).toContain(name);
     const shared = rows.find((r) => r.name === name)!;
     expect(shared.preview, `${name}: a shared feature row has a preview`).not.toBe('');
+    // batch card: #card-PREVIEW — no row's preview differs from its popup's first line
     expect(rows.filter((r) => r.preview !== r.popup)).toEqual([]);
   }, 300_000);
 
+  // batch card: #card-PREVIEW — a row with no page previews its text's first prose line, as its popup draws it
   it('a row with no page of its own previews its text\'s first prose line, as its popup draws it', async () => {
     const { ch, name } = findRow(noPageRow);
     const rows = await rowsAgainstPopups(ch);
     const row = rows.find((r) => r.name === name)!;
+    // batch card: #card-PREVIEW — the no-page row has a preview, and every row's preview is its popup's first line
     expect(row.preview).not.toBe('');
     expect(rows.filter((r) => r.preview !== r.popup)).toEqual([]);
   }, 300_000);
 
+  // batch card: #card-PREVIEW — a pick, a marker or a note is a tag beside the preview
   it('a pick, a marker or a note is a marked tag beside the preview, never inside the sentence', async () => {
     const base = build('fighter', 3);
     const ch = {
@@ -390,11 +418,14 @@ describe('card step 20 (b): a preview is the first line of its popup', () => {
     const m = await mount(<FeatsTab character={ch} content={db} />);
     try {
       const row = [...m.host.querySelectorAll('.ff-row')].find((r) => /Caustic Nectar/.test(txt(r.querySelector('.ff-name'))))!;
+      // batch card: #card-NOT-VACUOUS — the tab lists the Caustic Nectar row
       expect(row).toBeTruthy();
       const tag = row.querySelector('.ff-desc .ff-ours-tag[data-ours]');
+      // batch card: #card-N2 — the pick and the note are a tag marked ours
       expect(txt(tag)).toContain('Your choice: Acid — synthesized step-20 note');
       expect(txt(tag)).toContain(`Note: ${db.feats['caustic-nectar'].note}`);
       const preview = txt(row.querySelector('.ff-preview'));
+      // batch card: #card-PREVIEW — the preview carries none of the tag's words and is the popup's first line
       expect(preview).not.toContain('Your choice');
       expect(preview).not.toContain('synthesized step-20 note');
       await click(row);
@@ -406,9 +437,11 @@ describe('card step 20 (b): a preview is the first line of its popup', () => {
 });
 
 describe('card step 20 (c): a term opens its record by id', () => {
+  // batch card: #card-IDENTITY — a term opens its record by id, not by its display name
   it('InfoTerm with descSlug opens that record\'s page, not the page its display name slugs to', async () => {
     // Two class features share the name "Weapon Expertise"; the magus record has its own slice.
     const magus = 'weapon-expertise-magus';
+    // batch card: #card-NOT-VACUOUS — the magus record carries the shared name
     expect(db.classFeatures[magus]?.name).toBe('Weapon Expertise');
     const { InfoTerm } = await import('../src/sheet/InfoTerm');
     const byId = await mount(<InfoTerm title="Weapon Expertise" description={db.classFeatures[magus].description} descKey="classFeatures" descSlug={magus}>term</InfoTerm>);
@@ -417,6 +450,7 @@ describe('card step 20 (c): a term opens its record by id', () => {
     try {
       await click(byId.host.querySelector('.info-term'));
       await click(byName.host.querySelector('.info-term'));
+      // batch card: #card-IDENTITY — by id the magus record's own page; by name another page
       expect(recordTree('classFeatures', magus, getCachedAst), 'the magus record has a tree').toBeTruthy();
       const own = txt(truth.host.querySelector('.ast-modal .ast-body'));
       expect(own).not.toBe('');
@@ -435,6 +469,7 @@ describe('card step 20 (c): a term opens its record by id', () => {
  * cache is module state, and beforeAll filled it), so any later dynamic import would get fresh modules.
  */
 describe('card step 20 (b): a preview while the page loads', () => {
+  // batch card: #card-LOADING — a row previews nothing while its page loads, never the old imported text
   it('a row whose record has a page previews NOTHING until its bucket arrives — never the old imported text — then its popup\'s first line', async () => {
     let open!: () => void;
     astGate = new Promise<void>((r) => { open = r; });
@@ -455,6 +490,7 @@ describe('card step 20 (b): a preview while the page loads', () => {
       const p = detail.featPageOf(e);
       return !!vis.pageSliceOf(p.bucket, p.id) || (!vis.isNotOwnPage(p.bucket, p.id) && !!treeOf(p.bucket)?.[p.id]);
     };
+    // batch card: #card-NOT-VACUOUS — a fresh store: no page bucket is cached, so the loading state is reached
     expect(['feats', 'classFeatures', 'heritages'].filter((b) => store.isBucketLoaded(b)), 'a fresh store: no page bucket cached').toEqual([]);
     const host = document.createElement('div');
     document.body.appendChild(host);
@@ -465,23 +501,27 @@ describe('card step 20 (b): a preview while the page loads', () => {
       await freshSettle();
       // Gate shut: the page buckets are on their way.
       const paged = entries.filter(hasPage);
+      // batch card: #card-NOT-VACUOUS — the fighter 3 has rows with a page, and every row is drawn
       expect(paged.length, 'fighter 3 rows whose record has a page').toBeGreaterThanOrEqual(4);
       const before = rowsNow();
       expect(before.length).toBe(entries.length);
       for (const e of paged) {
         const row = before.find((r) => r.name === norm(e.name));
+        // batch card: #card-LOADING — a row whose page is on its way previews no words
         expect(row, `${e.name}: a row`).toBeTruthy();
         expect(row!.preview, `${e.name}: no words before its page arrives`).toBe('');
       }
       // The popup opened now is the loading placeholder: it has no first line either.
       const first = [...host.querySelectorAll('.ff-row')].find((r) => txt(r.querySelector('.ff-name')) === norm(paged[0].name));
       await React.act(async () => { (first as HTMLElement).click(); });
+      // batch card: #card-LOADING — the popup opened now is the loading placeholder, with no first line
       expect(host.querySelector('.ast-modal.card-mine .ast-body.ast-loading'), 'the popup is still loading').toBeTruthy();
       expect(popupFirstLine(host)).toBe('');
       await React.act(async () => { (host.querySelector('.picker-overlay') as HTMLElement).click(); });
       // Gate open: the buckets land, each row reads its page.
       open();
       await freshSettle();
+      // batch card: #card-NOT-VACUOUS — the row buckets arrived
       expect(['feats', 'classFeatures'].every((b) => store.isBucketLoaded(b)), 'the row buckets arrived').toBe(true);
       const after = rowsNow();
       const scope = scopeOfCharacter(ch);
@@ -489,6 +529,7 @@ describe('card step 20 (b): a preview while the page loads', () => {
       for (const name of new Set(paged.map((e) => norm(e.name)))) {
         const shown = after.filter((r) => r.name === name).map((r) => r.preview).sort();
         const want = entries.filter((e) => norm(e.name) === name).map((e) => norm(fresh.rowPreview(e, scope, db))).sort();
+        // batch card: #card-PREVIEW — once its page is in, each row reads its page's first line
         expect(shown, `${name}: its page's first line`).toEqual(want);
         const pagedPreviews = paged.filter((e) => norm(e.name) === name).map((e) => fresh.rowPreview(e, scope, db));
         expect(pagedPreviews.every(Boolean), `${name}: words once its page is in`).toBe(true);
@@ -501,6 +542,7 @@ describe('card step 20 (b): a preview while the page loads', () => {
     }
   }, 300_000);
 
+  // batch card: #card-LOADING — rowPagePending waits exactly where the card shows its loading placeholder
   it('rowPagePending mirrors useAstNode\'s seed: a slice waits for its page\'s bucket, a not-own-page record never waits', () => {
     const none = () => false;
     const all = () => true;
@@ -508,6 +550,7 @@ describe('card step 20 (b): a preview while the page loads', () => {
     let notOwn = 0;
     for (const e of featEntries(build('fighter', 3), db)) {
       const p = featPageOf(e);
+      // batch card: #card-LOADING — nothing waits once every bucket is in; with none in, a page record waits
       expect(rowPagePending(p.bucket, p.id, all), `${e.name}: nothing pending once every bucket is in`).toBe(false);
       const s = pageSliceOf(p.bucket, p.id);
       expect(rowPagePending(p.bucket, p.id, none)).toBe(!!s || !isNotOwnPage(p.bucket, p.id));
@@ -517,6 +560,7 @@ describe('card step 20 (b): a preview while the page loads', () => {
       const s = pageSliceOf(b, id);
       if (s) {
         slices++;
+        // batch card: #card-LOADING — a slice waits for its page's bucket only; a not-own-page record never waits
         expect(rowPagePending(b, id, (x) => x !== s.bucket), `${b}:${id} waits for its page's bucket ${s.bucket}`).toBe(true);
         expect(rowPagePending(b, id, (x) => x === s.bucket)).toBe(false);
       } else if (isNotOwnPage(b, id)) {
@@ -524,6 +568,7 @@ describe('card step 20 (b): a preview while the page loads', () => {
         expect(rowPagePending(b, id, none), `${b}:${id} reads its own text at once`).toBe(false);
       }
     }
+    // batch card: #card-NOT-VACUOUS — both arms are reached over the corpus
     expect(slices).toBeGreaterThan(0);
     expect(notOwn).toBeGreaterThan(0);
   });
@@ -557,6 +602,7 @@ describe('polish round: the class card marks the character\'s level in the advan
     const m = await mount(<RecordCard record={{ bucket: 'classes', id: classId }} mode="browse" chrome="popup" onExit={noop} />);
     try {
       const pop = m.host.querySelector('.ast-modal');
+      // batch card: #card-NOT-VACUOUS — the browse card drew the page the tables are read from
       expect(pop, `${classId}: the browse card drew the page`).toBeTruthy();
       return tablesOf(pop!);
     } finally { m.stop(); }
@@ -565,18 +611,23 @@ describe('polish round: the class card marks the character\'s level in the advan
     const m = await mount(<DetailsTab character={build(classId, level)} content={db} />);
     await click(classTerm(m.host, name));
     const pop = m.host.querySelector('.ast-modal.card-mine');
+    // batch card: #card-NOT-VACUOUS — the Class term opened the class record's mine card
     expect(pop, `${name} ${level}: the Class term opened the class record's mine card`).toBeTruthy();
     return { m, tables: tablesOf(pop!) };
   }
   const strip = (t: ReturnType<typeof tablesOf>) => t.map((rows) => rows.map(({ current: _c, ...r }) => r));
 
+  // batch card: #card-LEVEL-ROW — the fighter 3's level-3 row is marked, every word and span as printed
   it('a fighter 3: the advancement table\'s level-3 row is highlighted, no other row; every word and span is the printed table\'s', async () => {
     const { m, tables } = await detailsCard('fighter', 3, 'Fighter');
     try {
+      // batch card: #card-NOT-VACUOUS — the fighter page's one table is the table the case reads
       expect(tables, 'the fighter page prints one table').toHaveLength(1);
+      // batch card premise: class-35 "Your Level"
       expect(tables[0][0].first).toBe('Your Level');
       expect(tables[0][0].words).toBe('Your Level | Class Features');
       const marked = tables.flat().filter((r) => r.current);
+      // batch card: #card-LEVEL-ROW — exactly the level-3 row is marked; the table is the browse card's, row for row
       expect(marked.map((r) => r.first), 'exactly the level-3 row').toEqual(['3']);
       expect(marked[0].words).toMatch(/^3 \| Bravery/);
       // Not a word, a cell or a span changed: the table is the browse card's, row for row.
@@ -584,10 +635,13 @@ describe('polish round: the class card marks the character\'s level in the advan
     } finally { m.stop(); }
   });
 
+  // batch card: #card-LEVEL-ROW — only the advancement table marks the wizard's level row
   it('a wizard 5: only the advancement table marks the level-5 row; the spells-per-day table keeps its footnote colspan and marks nothing', async () => {
     const { m, tables } = await detailsCard('wizard', 5, 'Wizard');
     try {
+      // batch card: #card-NOT-VACUOUS — the wizard page draws both its tables
       expect(tables, 'the wizard page prints the advancement and the spells-per-day tables').toHaveLength(2);
+      // batch card: #card-LEVEL-ROW — the level-5 row is marked; the spells-per-day table marks none and keeps its span
       expect(tables[0].filter((r) => r.current).map((r) => r.first)).toEqual(['5']);
       expect(tables[1][0].first).toBe('Your Level');
       expect(tables[1].filter((r) => r.current), 'the spells-per-day table is not the class advancement table').toEqual([]);
@@ -597,15 +651,18 @@ describe('polish round: the class card marks the character\'s level in the advan
     } finally { m.stop(); }
   });
 
+  // batch card: #card-LEVEL-ROW — a browse card, an unscoped card and another class's scope mark no row
   it('a browse card highlights nothing; nor does a mine card with no scope, or one scoped to another class', async () => {
     for (const classId of ['fighter', 'wizard']) {
       const browse = await browseTables(classId);
+      // batch card: #card-LEVEL-ROW — the browse card marks no row
       expect(browse.flat().filter((r) => r.current), `${classId}: the browse card marks no row`).toEqual([]);
     }
     const draw = async (classId: string, scope?: CardScope) => {
       const m = await mount(<RecordCard record={{ bucket: 'classes', id: classId }} mode="mine" chrome="popup" scope={scope} printed={[]} onExit={noop} />);
       try { return tablesOf(m.host.querySelector('.ast-modal.card-mine')!).flat().filter((r) => r.current).map((r) => r.first); } finally { m.stop(); }
     };
+    // batch card: #card-LEVEL-ROW — no scope or another class's scope: no row; the fighter's own scope: the level-3 row
     expect(await draw('fighter'), 'no scope: no row').toEqual([]);
     expect(await draw('wizard', scopeOfCharacter(build('fighter', 3))), 'a fighter\'s scope on the wizard page: no row').toEqual([]);
     expect(await draw('fighter', scopeOfCharacter(build('fighter', 3))), 'the same card at the fighter\'s scope: the level-3 row').toEqual(['3']);

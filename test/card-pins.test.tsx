@@ -83,6 +83,7 @@ async function mount(el: ReactElement): Promise<{ host: HTMLElement; stop: () =>
   return { host, stop: () => { act(() => root.unmount()); host.remove(); } };
 }
 async function click(el: Element | null | undefined) {
+  // batch card: #card-NOT-VACUOUS — the control a case clicks exists
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -141,10 +142,11 @@ const featCard = (host: HTMLElement) => host.querySelector('.ast-modal.card-mine
 async function pinFromFeatsTab(host: HTMLElement, name: string) {
   await click(tab(host, 'Feats & features'));
   const row = [...host.querySelectorAll('.ff-row')].find((r) => txt(r.querySelector('.ff-name')) === name);
+  // batch card: #card-NOT-VACUOUS — the Feats tab lists the row the case pins
   expect(row, `the Feats tab lists a row named ${name}`).toBeTruthy();
   await click(row);
   const pop = featCard(host);
-  // batch card premise: feat-7612 "You have specialized glands inside your throat"
+  // batch card: #card-NOT-VACUOUS — the row opened its FeatDetail card, the popup the case drives
   expect(pop, `${name}: FeatDetail opened (the 'mine' card)`).toBeTruthy();
   await click(pop!.querySelector('.info-star'));
   await click(pop!.querySelector('.picker-close'));
@@ -153,10 +155,11 @@ async function pinFromFeatsTab(host: HTMLElement, name: string) {
 async function openFeat(host: HTMLElement, name: string) {
   await click(tab(host, 'Feats & features'));
   const row = [...host.querySelectorAll('.ff-row')].find((r) => txt(r.querySelector('.ff-name')) === name);
+  // batch card: #card-NOT-VACUOUS — the Feats tab lists the row the case opens
   expect(row, `the Feats tab lists a row named ${name}`).toBeTruthy();
   await click(row);
   const pop = featCard(host);
-  // batch card premise: feat-7612 "You have specialized glands inside your throat"
+  // batch card: #card-NOT-VACUOUS — the row opened its FeatDetail card, the popup the case drives
   expect(pop, `${name}: FeatDetail opened (the 'mine' card)`).toBeTruthy();
   return pop!;
 }
@@ -164,6 +167,7 @@ async function openFeat(host: HTMLElement, name: string) {
 async function reopenFromPinned(host: HTMLElement, title: string) {
   await click(tab(host, 'Main'));
   const row = pinnedRow(host, title);
+  // batch card: #card-NOT-VACUOUS — the Pinned list shows the row and its popup opens
   expect(row, `the Pinned list shows ${title}`).toBeTruthy();
   await click(row!.querySelector('.pinned-desc-open'));
   const pop = popup(host);
@@ -200,11 +204,13 @@ beforeAll(async () => {
 afterAll(() => { vi.unstubAllGlobals(); });
 
 describe('card step 19: a pin is its record', () => {
+  // batch card: #card-PIN — a pin made from the sheet reopens its own record's page, with its box
   it('"Caustic Nectar (Acid)" pinned from FeatDetail reopens from the Pinned list as caustic-nectar\'s own page, with its box (the pick)', async () => {
     // A synthesized pick WITH a note: FeatsTab withPicks turns a noted pick into the 'choice' ours line.
     const pickNote = 'synthesized pick note for card step 19';
     const ch = withFeats(fighter, { effectPicks: [{ recordId: 'caustic-nectar', choiceId: 'synthesized', label: 'Acid', note: pickNote }] } as Partial<Character>, 'caustic-nectar');
     const entry = featEntries(ch, db).find((e) => e.featId === 'caustic-nectar');
+    // batch card: #card-NOT-VACUOUS — the row is caustic-nectar under its pick and carries the pick as an ours line
     expect(entry?.name).toBe('Caustic Nectar (Acid)');
     const choice = entry!.ours?.find((l) => l.kind === 'choice');
     expect(choice, 'the row carries its pick as an ours line').toBeTruthy();
@@ -212,6 +218,7 @@ describe('card step 19: a pin is its record', () => {
     const m = await mount(sheet(ch, seen.play, seen));
     try {
       await pinFromFeatsTab(m.host, 'Caustic Nectar (Acid)');
+      // batch card: #card-PIN — one write stores the record {feats, caustic-nectar}, its title, mode 'mine' and its pick line
       expect(seen.writes, 'the star wrote once').toBe(1);
       const stored = seen.play.pinnedDescs ?? [];
       expect(stored).toHaveLength(1);
@@ -229,28 +236,35 @@ describe('card step 19: a pin is its record', () => {
       // batch card premise: feat-7612 "You have specialized glands inside your throat"
       expect(pageText(pop), 'the reopened pin is caustic-nectar\'s own page, not a name miss').toBe(own);
       const box = pop.querySelector('.card-ours[data-ours]');
+      // batch card: #card-N2 — the reopened card draws its ours box: the pick and the record's note, marked ours
       expect(box, 'the reopened card draws the ours box').toBeTruthy();
       expect(txt(box)).toContain(`Your choice: Acid — ${pickNote}`);
       expect(txt(box)).toContain(`Note: ${db.feats['caustic-nectar'].note}`);
       // The box is ours, after the page's words, and its words are said once.
       const words = pop.querySelector('.ast-body')!;
       const prose = [...words.querySelectorAll('p')].find((p) => !p.closest('[data-ours]') && txt(p).includes('specialized glands'));
+      // batch card premise: feat-7612 "You have specialized glands inside your throat"
       expect(prose, 'the page prose is drawn').toBeTruthy();
+      // batch card: #card-ORDER — the ours box follows the page's words and says its pick once
       expect(prose!.compareDocumentPosition(box!) & Node.DOCUMENT_POSITION_FOLLOWING, 'the box follows the page prose').toBeTruthy();
       expect(txt(pop).split(`Your choice: Acid — ${pickNote}`).length - 1).toBe(1);
+      // batch card: #card-PIN — reopening a pin is a read: no write
       expect(seen.writes, 'reopening wrote nothing').toBe(1);
 
       // The reopened card's own star reads pinned, and pressing it unpins the record.
       const star = pop.querySelector('.info-star');
+      // batch card: #card-PIN — the reopened card's star reads its own pin and removes it
       expect(star?.getAttribute('aria-pressed')).toBe('true');
       await click(star);
       expect(seen.play.pinnedDescs ?? []).toEqual([]);
     } finally { m.stop(); }
   });
 
+  // batch card: #card-IDENTITY — a pin reopens its record by id, never by the page its name slugs to
   it('a pinned magus Weapon Expertise reopens weapon-expertise-magus by its id — not the page the name "Weapon Expertise" slugs to', async () => {
     const magus = build('magus', 9);
     const entry = featEntries(magus, db).find((e) => e.name === 'Weapon Expertise');
+    // batch card: #card-NOT-VACUOUS — the magus lists the row, and its name names several class features
     expect(entry, 'a magus 9 lists Weapon Expertise').toBeTruthy();
     const named = Object.entries(db.classFeatures).filter(([, r]) => r.name === 'Weapon Expertise').map(([id]) => id);
     expect(named.length, 'the name "Weapon Expertise" names several class features').toBeGreaterThan(1);
@@ -259,6 +273,7 @@ describe('card step 19: a pin is its record', () => {
     try {
       await pinFromFeatsTab(m.host, 'Weapon Expertise');
       const stored = seen.play.pinnedDescs ?? [];
+      // batch card: #card-IDENTITY — the pin stores the magus record's id; the two records draw different pages
       expect({ key: stored[0]?.key, slug: stored[0]?.slug }).toEqual({ key: 'classFeatures', slug: 'weapon-expertise-magus' });
       const pop = await reopenFromPinned(m.host, 'Weapon Expertise');
       expect(await browseText('classFeatures', 'weapon-expertise-magus'), 'the magus record and the name-slug record draw different pages')
@@ -281,14 +296,17 @@ describe('card step 19: a pin is its record', () => {
   // Was test/card-parity-known.json's 'pin|feats:zombie-horde-impossible-magic' (identity true until step 19:
   // the stored pin read feats + the slug of "Zombie Horde", the Clockwork Reanimator feat). Right now, so the
   // entry left the shrink-only list and this case holds the fix on the real sheet.
+  // batch card: #card-IDENTITY — a pin reopens its own record, not a namesake's page
   it('an Impossible Magic "Zombie Horde" pinned from the sheet reopens its own page, not the Clockwork Reanimator feat of the same name', async () => {
     const id = 'zombie-horde-impossible-magic';
+    // batch card: #card-NOT-VACUOUS — two feats share the name, so the case measures identity
     expect(db.feats['zombie-horde'].name, 'two feats share the name').toBe(db.feats[id].name);
     const ch = withFeats(fighter, {}, id);
     const seen = { play: initialPlay(ch, db), writes: 0 };
     const m = await mount(sheet(ch, seen.play, seen));
     try {
       await pinFromFeatsTab(m.host, db.feats[id].name);
+      // batch card: #card-IDENTITY — the pin stores the Impossible Magic id and reopens its page, not the namesake's
       expect({ key: seen.play.pinnedDescs?.[0]?.key, slug: seen.play.pinnedDescs?.[0]?.slug }).toEqual({ key: 'feats', slug: id });
       const pop = await reopenFromPinned(m.host, db.feats[id].name);
       const own = await mineText('feats', id, ch);
@@ -301,9 +319,11 @@ describe('card step 19: a pin is its record', () => {
   // Fixer round 1 (CharacterSheet.tsx pinApi has(), play.ts samePin): a legacy key:title compare would read
   // "Caustic Nectar (Fire)" as unpinned after the pick changed, and the magus star as pinned by another
   // class feature's pin of the same name.
+  // batch card: #card-PIN — the sheet star reads a pin by its record
   it('the sheet star reads a pin by its record: the same record under another pick reads pinned', async () => {
     const stored: PinnedDesc = { title: 'Caustic Nectar (Acid)', description: 'synthesized', key: 'feats', slug: 'caustic-nectar', mode: 'mine' };
     const ch = withFeats(fighter, { effectPicks: [{ recordId: 'caustic-nectar', choiceId: 'synthesized', label: 'Fire' }] } as Partial<Character>, 'caustic-nectar');
+    // batch card: #card-NOT-VACUOUS — the row is the same record under another pick
     expect(featEntries(ch, db).find((e) => e.featId === 'caustic-nectar')?.name).toBe('Caustic Nectar (Fire)');
     const start: PlayState = { ...initialPlay(ch, db), pinnedDescs: [stored] };
     const seen = { play: start, writes: 0 };
@@ -318,9 +338,11 @@ describe('card step 19: a pin is its record', () => {
     } finally { m.stop(); }
   });
 
+  // batch card: #card-IDENTITY — another record's pin of the same name is not this record's
   it('the sheet star does not read another record\'s pin of the same name as its own', async () => {
     const magus = build('magus', 9);
     const other = Object.keys(db.classFeatures).filter((id) => db.classFeatures[id]?.name === 'Weapon Expertise' && id !== 'weapon-expertise-magus').sort()[0];
+    // batch card: #card-NOT-VACUOUS — another class feature carries the name
     expect(other, 'another class feature is named Weapon Expertise').toBeTruthy();
     const theirs: PinnedDesc = { title: 'Weapon Expertise', description: 'synthesized', key: 'classFeatures', slug: other };
     const start2: PlayState = { ...initialPlay(magus, db), pinnedDescs: [theirs] };
@@ -335,12 +357,14 @@ describe('card step 19: a pin is its record', () => {
     } finally { m2.stop(); }
   });
 
+  // batch card: #card-S7 — a record with no page shows our words once, with no second box
   it('a pinned record with NO page says its note once when reopened — the stored words, no second box', async () => {
     // dedication-to-the-five: a noted feat with no page. Its stored description carries the box's words
     // (FeatDetail pinDescriptionOf, the step-8 bridge kept for older pins and devices), so the reopened
     // no-page card must not draw them a second time from the stored ours lines.
     const id = 'dedication-to-the-five';
     const note = db.feats[id].note!;
+    // batch card: #card-NOT-VACUOUS — the fixture carries a note and has no page
     expect(note, `${id} carries a note`).toBeTruthy();
     expect(treeOf('feats')![id], `${id} has no page`).toBeUndefined();
     const ch = withFeats(fighter, {}, id);
@@ -348,8 +372,10 @@ describe('card step 19: a pin is its record', () => {
     const m = await mount(sheet(ch, seen.play, seen));
     try {
       await pinFromFeatsTab(m.host, db.feats[id].name);
+      // batch card: #card-PIN — the pin stored its record's note line
       expect(seen.play.pinnedDescs?.[0]?.ours?.map((l) => l.kind), 'the pin stored the note line').toEqual(['note']);
       const pop = await reopenFromPinned(m.host, db.feats[id].name);
+      // batch card: #card-S7 — no page: the mine card's no-page lane says the note once, with no second box
       expect(pageText(pop)).toBeNull();
       // Made from the sheet: the 'mine' card's no-page lane, which says it has no page once.
       expect(pop.querySelector('.picker.info-modal.card-mine'), 'the reopened pin is the \'mine\' card (no-page lane)').toBeTruthy();
@@ -358,23 +384,27 @@ describe('card step 19: a pin is its record', () => {
     } finally { m.stop(); }
   });
 
+  // batch card: #card-Q1A — a pin reopens at the character's level, its later part folded
   it('a pin made from the sheet reopens as the \'mine\' card at the character\'s level: a Justice champion 5\'s cause row folds what it does not have yet', async () => {
     // Section 6: "A pin made from the sheet reopens as mine at the character's current level". MainTab's
     // PinnedDescCard passes mode 'mine' and scopeOfCharacter(character) for a pin stored with mode 'mine'.
     const ch = build('champion', 5, { subclassId: 'justice' } as never);
     const entry = featEntries(ch, db).find((e) => e.trustFeatureId === 'justice' || e.featureId === 'justice');
+    // batch card: #card-NOT-VACUOUS — the Justice champion lists its cause row
     expect(entry, 'a Justice champion lists its cause row').toBeTruthy();
     const seen = { play: initialPlay(ch, db), writes: 0 };
     const m = await mount(sheet(ch, seen.play, seen));
     try {
       await pinFromFeatsTab(m.host, entry!.name);
       const stored = seen.play.pinnedDescs ?? [];
+      // batch card: #card-PIN — the pin stores {classFeatures, justice, mine} and reopens as the mine card
       expect({ key: stored[0]?.key, slug: stored[0]?.slug, mode: stored[0]?.mode }).toEqual({ key: 'classFeatures', slug: 'justice', mode: 'mine' });
       const pop = await reopenFromPinned(m.host, entry!.name);
       const modal = pop.querySelector('.ast-modal.card-mine');
       expect(modal, 'the reopened pin is the \'mine\' card').toBeTruthy();
       // cause-11 "Relentless Reaction" is a later level's part: folded, closed, its words inside the fold.
       const folds = [...modal!.querySelectorAll('details.card-fold')] as HTMLDetailsElement[];
+      // batch card: #card-Q1A — one closed "At higher levels" fold holds the later part; the card is the champion's own
       expect(folds.length, 'one fold').toBe(1);
       expect(folds[0].open, 'closed').toBe(false);
       expect(txt(folds[0].querySelector(':scope > summary'))).toMatch(/^At higher levels \(\d+\)$/);
@@ -402,22 +432,26 @@ describe('card step 19: the Builder\'s star keeps the record id and matches by r
     await click(m.host.querySelector('.lvl-subsel .ss-filled-body'));
     const overlays = m.host.querySelectorAll('.picker-overlay');
     const pop = overlays[overlays.length - 1];
+    // batch card: #card-R1 — the subclass popup opened, and it is Cloistered Cleric's record card
     expect(pop, 'the subclass popup opened').toBeTruthy();
     expect(pageText(pop), 'it is Cloistered Cleric\'s record card').toBe(await browseText('classFeatures', 'cloistered-cleric'));
     const saved = async () => {
       await click(pop.querySelector('.picker-close'));
       await click([...m.host.querySelectorAll<HTMLButtonElement>('button.b-create')].find((b) => txt(b) === 'Save changes'));
       for (let i = 0; i < 4 && anyButton('Save anyway'); i++) await click(anyButton('Save anyway'));
+      // batch card: #card-NOT-VACUOUS — the Builder handed back the build the case reads
       expect(out, 'the Builder handed back its build').toBeTruthy();
       return out!;
     };
     return { m, star: () => pop.querySelector('.info-star'), saved };
   }
 
+  // batch card: #card-IDENTITY — the Builder star stores {bucket, id} and matches a pin by its record
   it('a new pin stores {bucket, id}; a pin of another record sharing the name does not read as this one', async () => {
     const theirs: PinnedDesc = { title: 'Cloistered Cleric', description: 'synthesized', key: 'classFeatures', slug: 'synthesized-other-record' };
     const p = await builderPopup(cleric([theirs]));
     try {
+      // batch card: #card-IDENTITY — another record's pin of the same name is not this one; the new pin keeps its id
       expect(p.star()?.getAttribute('aria-pressed'), 'another record\'s pin of the same name is not this record\'s').toBe('false');
       await click(p.star());
       expect(p.star()?.getAttribute('aria-pressed')).toBe('true');
@@ -427,20 +461,24 @@ describe('card step 19: the Builder\'s star keeps the record id and matches by r
     } finally { p.m.stop(); }
   });
 
+  // batch card: #card-PIN — a pin made in the Builder keeps the record it was made from
   it('a new pin made in the Builder keeps its record id (no field-by-field copy)', async () => {
     const p = await builderPopup(cleric([]));
     try {
       await click(p.star());
       const pins = (await p.saved()).pinnedDescs ?? [];
+      // batch card: #card-PIN — the record id survives the Builder's store
       expect(pins).toHaveLength(1);
       expect(pins[0], 'the record id survives the Builder\'s store').toMatchObject({ key: 'classFeatures', slug: 'cloistered-cleric', title: 'Cloistered Cleric' });
     } finally { p.m.stop(); }
   });
 
+  // batch card: #card-PIN — an old pin is re-resolved at read time: the Builder star reads it and removes it
   it('an old title-only pin in the build reads pinned on the Builder star and pressing it removes that pin', async () => {
     const legacy: PinnedDesc = { title: 'Cloistered Cleric', description: 'synthesized', key: 'classFeatures' };
     const p = await builderPopup(cleric([legacy]));
     try {
+      // batch card: #card-PIN — the old pin reads pinned, and pressing it removes it and adds none
       expect(p.star()?.getAttribute('aria-pressed'), 'the old pin reads as pinned').toBe('true');
       await click(p.star());
       expect((await p.saved()).pinnedDescs ?? [], 'removed, and none added').toEqual([]);
@@ -454,8 +492,10 @@ describe('card step 19: a pin saved before step 19 (old shape) — read-time onl
     return { title: r.name, description: r.description ?? '', descRefs: r.descRefs, key: bucket };
   };
 
+  // batch card: #card-PIN — an old pin is re-resolved at read time only and never written back
   it('an old title-only pin opens its record\'s page, unpins from the new star, and a load writes 0 times', async () => {
     const legacy = old('caustic-nectar');
+    // batch card: #card-NOT-VACUOUS — the fixture is the pre-step-19 pin shape
     expect(Object.keys(legacy).sort(), 'the fixture is the pre-step-19 shape').toEqual(['descRefs', 'description', 'key', 'title']);
     const ch = withFeats(fighter, {}, 'caustic-nectar');
     const start: PlayState = { ...initialPlay(ch, db), pinnedDescs: [legacy] };
@@ -464,12 +504,15 @@ describe('card step 19: a pin saved before step 19 (old shape) — read-time onl
     const m = await mount(sheet(ch, start, seen));
     try {
       await settle();
+      // batch card: #card-PIN — loading the sheet with an old pin writes nothing
       expect(seen.writes, 'loading the sheet with an old pin wrote nothing').toBe(0);
 
       // An old pin stores no mode, so it reopens as the browse card it always opened as.
       const pop = await reopenFromPinned(m.host, 'Caustic Nectar');
+      // batch card: #card-PIN — the old pin re-resolves to its record's browse page at read time
       expect(pop.querySelector('.card-mine'), 'an old pin is not a \'mine\' card').toBeNull();
       expect(pageText(pop), 'the old pin re-resolves (key + title name one record) to its page').toBe(await browseText('feats', 'caustic-nectar'));
+      // batch card: #card-PIN — opening it writes nothing: the very same stored list, never rewritten
       expect(seen.writes, 'opening the old pin wrote nothing').toBe(0);
       expect(seen.play.pinnedDescs, 'the ledger still holds the very same pin list').toBe(start.pinnedDescs);
       expect(JSON.stringify(seen.play.pinnedDescs), 'the stored pin was never rewritten').toBe(frozen);
@@ -485,6 +528,7 @@ describe('card step 19: a pin saved before step 19 (old shape) — read-time onl
     } finally { m.stop(); }
   });
 
+  // batch card: #card-PIN — an old pin whose title names several records shows its stored snapshot
   it('an old pin whose title names several records shows its stored snapshot, not the page its title slugs to', async () => {
     // A magus pinned "Weapon Expertise" before step 19: four class features carry that name.
     const snapshot = 'Synthesized snapshot words for an old Weapon Expertise pin.';
@@ -495,17 +539,20 @@ describe('card step 19: a pin saved before step 19 (old shape) — read-time onl
     const m = await mount(sheet(magus, start, seen));
     try {
       const pop = await reopenFromPinned(m.host, 'Weapon Expertise');
+      // batch card: #card-IDENTITY — no page is guessed from a name several records share; the stored snapshot shows
       expect(pageText(pop), 'no page is guessed from the title').toBeNull();
       expect(txt(pop)).toContain(snapshot);
       // …and its star still matches the stored pin (legacy key:title) and unpins it.
       const star = pop.querySelector('.info-star');
       expect(star?.getAttribute('aria-pressed')).toBe('true');
       await click(star);
+      // batch card: #card-PIN — its star unpins the old pin with one write
       expect(seen.writes).toBe(1);
       expect(seen.play.pinnedDescs ?? []).toEqual([]);
     } finally { m.stop(); }
   });
 
+  // batch card: #card-PIN — the real app never writes an old pin back
   it('the REAL app: loading a roster with an old pin and opening it schedules no persist and never rewrites the pin', async () => {
     // The 400 ms persist (src/data/persist.ts schedulePersist, App.tsx's roster effect). App writes the
     // roster it loaded once on mount whatever it holds (pre-existing, not a pin write); that write must
@@ -525,11 +572,13 @@ describe('card step 19: a pin saved before step 19 (old shape) — read-time onl
     await act(async () => { await new Promise((r) => setTimeout(r, 50)); });
     act(() => flushPersist());
     const rosterPins = () => JSON.stringify((JSON.parse(localStorage.getItem(ROSTER_KEY) ?? '[]') as { play?: PlayState }[])[0]?.play?.pinnedDescs);
+    // batch card: #card-PIN — the roster written on load carries the old pin unchanged
     expect(rosterPins(), 'the roster written on load carries the old pin unchanged').toBe(seedPins);
 
     const setItem = vi.spyOn(Storage.prototype, 'setItem');
     try {
       const row = pinnedRow(host, 'Caustic Nectar');
+      // batch card: #card-PIN — the old pin opens, re-resolves to its page and schedules no persist
       expect(row, 'the Main tab\'s Pinned list shows the old pin').toBeTruthy();
       await click(row!.querySelector('.pinned-desc-open'));
       expect(popup(host), 'the pin opened').toBeTruthy();
@@ -537,6 +586,7 @@ describe('card step 19: a pin saved before step 19 (old shape) — read-time onl
       await act(async () => { await new Promise((r) => setTimeout(r, 500)); });
       expect(hasPendingPersist(), 'no persist is pending after opening the pin').toBe(false);
       act(() => flushPersist());
+      // batch card: #card-PIN — the roster was written 0 times and still holds the old pin byte-identical
       expect(setItem.mock.calls.filter(([k]) => k === ROSTER_KEY), 'the roster was written 0 times').toHaveLength(0);
       expect(rosterPins()).toBe(seedPins);
     } finally {
@@ -597,6 +647,7 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
   };
   const shape = (p: PinnedDesc | null | undefined) => ({ key: p?.key, slug: p?.slug, title: p?.title, mode: p?.mode });
 
+  // batch card: #card-PIN — the action card's star stores the record with mode 'mine'; the pin reopens as that card
   it('the action card\'s star stores {actions, seek, Seek, mine}; the pin reopens as Seek\'s own mine card', async () => {
     const ch = build('fighter', 3);
     const seen = { play: initialPlay(ch, db), writes: 0 };
@@ -604,11 +655,13 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
     try {
       const pop = await openAction(m.host, 'Seek');
       const card = pop!.querySelector('.ast-modal.card-mine');
+      // batch card: #card-R1 — the Seek chip opens its record's mine card, which has a page
       expect(card, 'the Seek chip opened its record\'s mine card').toBeTruthy();
       const own = pageText(pop!);
       expect(own, 'Seek has a page').toBeTruthy();
       // The card's built-in star (in its page header), not the action pin beside it (.pin-star).
       await click(card!.querySelector('.ast-head .info-star'));
+      // batch card: #card-PIN — one pin stored {actions, seek, Seek, mine}; it reopens as the same mine card
       expect(seen.play.pinnedDescs ?? []).toHaveLength(1);
       expect(shape(seen.play.pinnedDescs?.[0])).toEqual({ key: 'actions', slug: 'seek', title: 'Seek', mode: 'mine' });
       await click(card!.querySelector('.picker-close'));
@@ -616,12 +669,14 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
       expect(again.querySelector('.ast-modal.card-mine'), 'the reopened pin is the mine card').toBeTruthy();
       expect(pageText(again), 'the action card\'s own body').toBe(own);
       const star = again.querySelector('.info-star');
+      // batch card: #card-PIN — the reopened card's star reads its pin and unpins the record
       expect(star?.getAttribute('aria-pressed')).toBe('true');
       await click(star);
       expect(seen.play.pinnedDescs ?? [], 'pressing it unpinned the record').toEqual([]);
     } finally { m.stop(); }
   });
 
+  // batch card: #card-PIN — the full-text star stores the record with mode 'mine'; the pin reopens as that card
   it('StatDetailModal\'s full-text star stores the record with mode \'mine\'; the pin reopens as that same mine card', async () => {
     const ch = build('fighter', 3);
     const id = 'halfling-luck';
@@ -632,6 +687,7 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
     try {
       await click(m.host.querySelector('.sd-sit-more'));
       const card = m.host.querySelector('.ast-modal.card-mine');
+      // batch card: #card-R1 — the full text is the record's mine card; its star stores the record with mode 'mine'
       expect(card, 'the full text is the record\'s mine card').toBeTruthy();
       own = pageText(card!.parentElement!);
       expect(own, `${id} has a page`).toBeTruthy();
@@ -640,14 +696,17 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
     } finally { m.stop(); }
     const p = await mount(<PinnedDescCard pin={out.stored!} content={db} character={ch} onClose={noop} />);
     try {
+      // batch card: #card-PIN — the pin reopens as the same mine card, with the same body
       expect(p.host.querySelector('.ast-modal.card-mine'), 'the reopened pin is the mine card').toBeTruthy();
       expect(pageText(p.host), 'the full text\'s own body').toBe(own);
     } finally { p.stop(); }
   });
 
+  // batch card: #card-HEIGHTEN — the Spells-tab pin reopens as SpellDetail, heightened to the character's rank
   it('the Spells tab\'s star stores {spells, daze, Daze, mine}; the pin reopens as the Spells-tab popup itself, heightened to the character\'s rank', async () => {
     // A sorcerer 5 casts 3rd-rank spells: its cantrip Daze auto-heightens to 3rd ("Cast at 3rd").
     const ch = build('sorcerer', 5);
+    // batch card: #card-NOT-VACUOUS — the synthesized sorcerer knows Daze
     expect(ch.spellcasting.find((e) => e.type === 'spontaneous')?.cantrips, 'the synthesized sorcerer knows Daze').toContain('daze');
     const seen = { play: initialPlay(ch, db), writes: 0 };
     const m = await mount(sheet(ch, seen.play, seen));
@@ -655,19 +714,23 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
       await click(tab(m.host, 'Spells'));
       await click([...m.host.querySelectorAll('.spell-card.clickable')].find((c) => txt(c.querySelector('.spell-name')) === 'Daze'));
       const pop = m.host.querySelector('.picker.spell-detail');
+      // batch card: #card-HEIGHTEN — the Spells tab opens SpellDetail, cast at the sorcerer's 3rd rank
       expect(pop, 'the Spells tab opened SpellDetail').toBeTruthy();
       const body = txt(pop!.querySelector('.sd-body'));
       expect(txt(pop!.querySelector('.sd-rank-sel .sd-rank-lbl'))).toBe('Cast at');
       expect(txt(pop!.querySelector('.sd-rank-sel .sd-rank-chip.on')), 'the Spells-tab popup heightens Daze to the sorcerer\'s 3rd rank').toBe('3rd');
       await click(pop!.querySelector('.info-star'));
+      // batch card: #card-PIN — the Spells-tab star stores {spells, daze, Daze, mine}
       expect(shape(seen.play.pinnedDescs?.[0])).toEqual({ key: 'spells', slug: 'daze', title: 'Daze', mode: 'mine' });
       await click(pop!.querySelector('.picker-close'));
       await reopenFromPinned(m.host, 'Daze');
       const again = m.host.querySelector('.picker.spell-detail');
+      // batch card: #card-HEIGHTEN — the reopened spell pin is SpellDetail itself, with the same heightened body
       expect(again, 'the reopened spell pin is SpellDetail, the Spells tab\'s popup').toBeTruthy();
       expect(m.host.querySelector('.card-mine'), 'not the spell\'s mine card').toBeNull();
       expect(txt(again!.querySelector('.sd-body')), 'the same body as the Spells-tab popup').toBe(body);
       const star = again!.querySelector('.info-star');
+      // batch card: #card-PIN — its star reads the pin and unpins the spell
       expect(star?.getAttribute('aria-pressed')).toBe('true');
       await click(star);
       expect(seen.play.pinnedDescs ?? [], 'pressing it unpinned the spell').toEqual([]);
@@ -695,8 +758,10 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
    *  - MainTab's PinnedDescCard call without `onPlay={onPlay} pinned={pinned}` → red (High Jump); without
    *    only `pinned={pinned}` → red (High Jump: drawn but not pressed).
    */
+  // batch card: #card-N2 — the reopened action pin is the action card: its ours lines, skill label, marked glyph and toggle
   it('an action pin reopens as the action card itself: the same ours lines, skill label, cost glyph and Pin-to-top toggle as the Main tab\'s popup', async () => {
     const ch = { ...build('fighter', 3, { featPicks: { '2:skill': 'quick-jump' }, classSkills: ['medicine'] } as never), kingmakerEnabled: true };
+    // batch card: #card-NOT-VACUOUS — the fighter is trained in Medicine and Organize Watch is a camping action
     expect(ch.proficiencies.skills?.medicine, 'the synthesized fighter is trained in Medicine').toBe('trained');
     expect(db.actions['organize-watch']?.traits, 'Organize Watch is a camping action').toContain('camping');
     const seen = { play: initialPlay(ch, db), writes: 0 };
@@ -726,14 +791,17 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
       ] as const) {
         const pop = await openAction(m.host, name);
         const card = pop!.querySelector('.ast-modal.card-mine');
+        // batch card: #card-NOT-VACUOUS — the chip opened the action card the case reads
         expect(card, `${name}: the chip opened the action card`).toBeTruthy();
         // High Jump is pinned to the top first, so the reopened toggle must show the sheet's pin keys too
         // (pressed, "Unpin"), not only be drawn.
         if (want.toggle) {
           await click(card!.querySelector('.ast-head .pin-star'));
+          // batch card: #card-NOT-VACUOUS — the toggle pinned the action to the top, so its pressed state is measured
           expect(card!.querySelector('.ast-head .pin-star')?.getAttribute('aria-label'), `${name}: the toggle pinned it to the top`).toBe('Unpin');
         }
         const fromTab = oursOf(pop!);
+        // batch card: #card-N2 — the action card's ours box, skill label, marked cost glyph and toggle
         if ('lines' in want) expect(fromTab.lines, `${name}: the action card's ours box`).toEqual(want.lines);
         if ('from' in want) expect(fromTab.lines.some((l) => l.startsWith(want.from)), `${name}: the record marker's note is in the box`).toBe(true);
         expect(fromTab.skill, `${name}: the action card's skill label`).toBe(want.skill);
@@ -741,9 +809,11 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
         expect(!!fromTab.toggle, `${name}: the Main tab's popup ${want.toggle ? 'draws' : 'draws no'} "Pin to top" toggle`).toBe(want.toggle);
         const own = pageText(pop!);
         await click(card!.querySelector('.ast-head .info-star'));
+        // batch card: #card-PIN — the star stored {actions, slug, name, mine}
         expect(shape(seen.play.pinnedDescs?.at(-1))).toEqual({ key: 'actions', slug, title: name, mode: 'mine' });
         await click(card!.querySelector('.picker-close'));
         const again = await reopenFromPinned(m.host, name);
+        // batch card: #card-R1 — the reopened pin is the action card: the same ours, the same page body
         expect(again.querySelector('.ast-modal.card-mine'), `${name}: the reopened pin is a mine card`).toBeTruthy();
         expect(oursOf(again), `${name}: the reopened pin is the action card — the same ours lines, skill label, cost glyph and "Pin to top" toggle`).toEqual(fromTab);
         expect(pageText(again), `${name}: the same page body`).toBe(own);
@@ -762,6 +832,7 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
    *  - RecordCard.tsx pinNode → `cur`, with shared.tsx ChoiceDetailsModal's cardNode without `mode: 'mine'`
    *    → the ChoiceDetails half red; with InfoTerm.tsx mineTermPin's mark → `n` → the InfoTerm half red.
    */
+  // batch card: #card-PIN — the ChoiceDetails and InfoTerm stars store mode 'mine'; each pin reopens as the mine card
   it('the Builder ChoiceDetails star and InfoTerm\'s mine card store mode \'mine\'; each pin reopens as the record\'s mine card', async () => {
     const cleric = build('cleric', 3, { subclassId: 'cloistered-cleric' });
     const cfId = 'second-doctrine-cloistered-cleric';
@@ -790,20 +861,24 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
       try {
         await click(m.host.querySelector(c.opener));
         const card = m.host.querySelector('.ast-modal.card-mine');
+        // batch card: #card-R1 — the popup is the record's mine card, and the record has a page
         expect(card, `${c.label}: the popup is the record's mine card`).toBeTruthy();
         own = pageText(m.host);
         expect(own, `${c.label}: the record has a page`).toBeTruthy();
         await click(card!.querySelector('.ast-head .info-star'));
       } finally { m.stop(); }
+      // batch card: #card-PIN — the star stored the record with mode 'mine'
       expect(shape(out.stored), `${c.label}: the star stored the record with mode 'mine'`).toEqual({ ...c.want, mode: 'mine' });
       const p = await mount(<PinnedDescCard pin={out.stored!} content={db} character={c.ch} onClose={noop} />);
       try {
+        // batch card: #card-PIN — the pin reopens as the record's mine card, with the same page body
         expect(p.host.querySelector('.ast-modal.card-mine'), `${c.label}: the reopened pin is the mine card`).toBeTruthy();
         expect(pageText(p.host), `${c.label}: the same page body`).toBe(own);
       } finally { p.stop(); }
     }
   });
 
+  // batch card: #card-PIN — a pin made in browse mode stores no mode and reopens as the browse card it was made from
   it('a pin made in browse mode (search) stores no mode and keeps reopening as the browse card', async () => {
     const ch = build('fighter', 3);
     const { out, api } = recorder();
@@ -811,6 +886,7 @@ describe('polish round: every sheet star stores mode \'mine\' and its pin reopen
     try {
       await click(m.host.querySelector('.ast-head .info-star'));
     } finally { m.stop(); }
+    // batch card: #card-PIN — the browse star stored no mode; the pin reopens as the record's browse card
     expect(shape(out.stored)).toEqual({ key: 'actions', slug: 'seek', title: 'Seek', mode: undefined });
     const p = await mount(<PinnedDescCard pin={out.stored!} content={db} character={ch} onClose={noop} />);
     try {
@@ -841,15 +917,19 @@ describe('card step 19: the ledger\'s pin model reads a pin as play.ts does', ()
     { title: 'Weapon Expertise', description: '', key: 'classFeatures', slug: 'weapon-expertise' },
   ];
 
+  // batch card: #card-GUARD — the ledger's pin model computes what play.ts computes, on every pin shape
   it('pinReadOf equals pinForRead, and samePinModel equals samePin, on new pins, old title-only pins, twinned names and a pick in the title', () => {
     for (const p of pins) {
       const r = pinForRead(p, db);
+      // batch card: #card-GUARD — the ledger's pinReadOf equals play.ts pinForRead
       expect(lib.pinReadOf(p, db), `${p.key}:${p.title}${p.slug ? ` (${p.slug})` : ''}`).toEqual({ bucket: r.key ?? '', slug: r.slug });
     }
     // The cases the identity rules turn on, read off play.ts itself so the mirror cannot agree vacuously.
+    // batch card: #card-IDENTITY — an old pin resolves only when its title names exactly one record
     expect(pinForRead(pins[1], db).slug, 'an old pin whose title names one record resolves to it').toBe('caustic-nectar');
     expect(pinForRead(pins[3], db).slug, 'an old pin whose title names two records resolves to none').toBe('');
     expect(pinForRead(pins[2], db).slug, 'an old pin whose title carries a pick resolves to none').toBe('');
+    // batch card: #card-PIN — one record under two picks is one pin, two records of one name are two, old pins match by key:title
     expect(samePin(pins[0], pins[9]), 'one record under two picks is one pin').toBe(true);
     expect(samePin(pins[6], pins[10]), 'two records of one name are two pins').toBe(false);
     expect(samePin(pins[1], pins[0]), 'an old pin matches the new pin of its record only by its own title').toBe(false);
@@ -857,16 +937,18 @@ describe('card step 19: the ledger\'s pin model reads a pin as play.ts does', ()
     for (const a of pins) for (const b of pins) expect(lib.samePinModel(a, b), `${a.title}/${a.slug} vs ${b.title}/${b.slug}`).toBe(samePin(a, b));
   });
 
+  // batch card: #card-GUARD — each star's stored node is the node the ledger models
   it('each star\'s stored node is the one the ledger models: the record id and, from the sheet, mode \'mine\'', () => {
     const feat = featEntries(withFeats(fighter, {}, 'caustic-nectar'), db).find((e) => e.featId === 'caustic-nectar')!;
     // FeatDetail's star node, stored through pinOf as the sheet stores it.
     const stored = pinOf(featPinNode(feat));
     const modelled = lib.pinStarNode('feats', 'caustic-nectar', db.feats['caustic-nectar']);
+    // batch card: #card-GUARD — FeatDetail's stored pin equals the ledger's model and reads back as its record
     expect({ key: stored.key, slug: stored.slug, mode: stored.mode }).toEqual({ key: modelled.key, slug: modelled.slug, mode: modelled.mode });
     expect(lib.pinReadOf(stored, db)).toEqual({ bucket: 'feats', slug: 'caustic-nectar' });
     // Polish round: the Spells tab's star stores mode 'mine' (SpellsTab SpellDetail), and so does the action
     // card's built-in star (RecordCard pinNode): the ledger models both pins as made from the sheet.
-    // batch card premise: spell-2139 "You are surrounded by an aura of spiteful murmurings"
+    // batch card: #card-GUARD — the ledger models the Spells-tab and action-card stars as pins made from the sheet
     expect(lib.pinStarNode('spells', 'discomfiting-whispers', db.spells['discomfiting-whispers'])).toEqual({ title: db.spells['discomfiting-whispers'].name, key: 'spells', slug: 'discomfiting-whispers', mode: 'mine' });
     expect(lib.pinStarNode('actions', 'seek', db.actions.seek)).toEqual({ title: 'Seek', key: 'actions', slug: 'seek', mode: 'mine' });
     // The pin rows built from this model (actions, the stat lines' records, spells as the spellDetail row)

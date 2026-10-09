@@ -215,6 +215,7 @@ async function mount(el: ReactElement, cdb: ContentDatabase = db, pin: PinDescAp
   return { host, stop: () => { act(() => root.unmount()); host.remove(); } };
 }
 async function click(el: Element | null | undefined) {
+  // batch card: #card-NOT-VACUOUS — the control a case clicks exists
   expect(el, 'a control to click').toBeTruthy();
   await act(async () => { (el as HTMLElement).click(); });
   await settle();
@@ -585,6 +586,7 @@ async function renderStrike(row: Row): Promise<Read> {
   const ch = { ...base, inventory: [inv] } as Character;
   const cdb = hidden ? playerFacingContent(db, [inv]) : db;
   const strike = deriveStrikes(ch, cdb).find((s) => s.instanceId === 'i-strike');
+  // batch card: #card-NOT-VACUOUS — the weapon makes the Strike whose popup the row drives
   expect(strike, `${keyOf(row)}: the weapon makes a Strike`).toBeTruthy();
   const m = await mount(<StrikeDetailModal strike={strike!} character={ch} content={cdb} onClose={noop} />, cdb);
   // batch card premise: weapon-386 "Longswords can be one-edged or two-edged swords"
@@ -634,6 +636,7 @@ async function renderChoice(row: Row): Promise<Read> {
   m.stop();
   // The popup is the one the ledger models: a 'mine' row opens the mine card, a held row the browse popup
   // (the DOM verdict alone cannot tell them apart: a browse popup shows every line a mine card keeps).
+  // batch card: #card-GUARD — the popup on screen is the one the ledger's row models (mine card or held browse popup)
   expect(!!pop, `${keyOf(row)}: the ledger's ${row.mode} row opens ${row.mode === 'mine' ? 'the mine card' : 'the browse popup'}`).toBe(row.mode === 'mine');
   return r;
 }
@@ -672,6 +675,7 @@ async function renderPin(row: Row, extra?: Partial<Character>): Promise<Read> {
   // no-page lane, in .picker-head; it hands over the same node the legacy star did (FeatDetail featCardPin).
   await click(m.host.querySelector(statBucket ? '.card-mine .info-star' : '.picker-head .info-star, .ast-head .info-star'));
   m.stop();
+  // batch card: #card-PIN — the sheet star pinned its record with mode 'mine'
   expect(pinned, `${keyOf(row)}: the star pinned a node`).toBeTruthy();
   expect((pinned as PinnedDesc | null)?.mode, `${keyOf(row)}: a sheet star stores mode 'mine'`).toBe('mine');
   // Fixer round 3: an actions pin reopens with the character the star was pressed on (`base`, as the sheet
@@ -687,12 +691,14 @@ async function renderPin(row: Row, extra?: Partial<Character>): Promise<Read> {
   // which the ledger row models; for a curated activity the header carries the tab's skill label.
   if (isAction) {
     const act = pinnedActionDetail(db, row.id);
+    // batch card: #card-PIN — the action pin reopens as the action card, its header carrying the tab's skill label
     expect(act, `${keyOf(row)}: the content holds the action the pin reopens as`).toBeTruthy();
     if (act?.a.skill) expect(txt(p.host.querySelector('.ast-head .action-skill, .picker-head .action-skill')), `${keyOf(row)}: the reopened action pin is the action card (its skill label)`).toBe(act.a.skill);
   }
   // Polish round: a spell pin reopens as SpellDetail itself — read as renderSpell reads it; any other pin
   // made from the sheet reopens as the record's 'mine' card.
   const spellPop = p.host.querySelector('.picker.spell-detail');
+  // batch card: #card-PIN — a spell pin reopens as SpellDetail; any other sheet pin as the record's mine card
   expect(!!spellPop, `${keyOf(row)}: the reopened pin is ${row.bucket === 'spells' ? 'SpellDetail' : 'the mine card'}`).toBe(row.bucket === 'spells');
   if (!spellPop) expect(p.host.querySelector('.card-mine'), `${keyOf(row)}: the reopened pin is the mine card`).toBeTruthy();
   const r = spellPop ? readBody([...spellPop.querySelectorAll(':scope .sd-body > .sd-desc, :scope .sd-heighten > .sd-desc')], readStats(spellPop)) : readPopup(p.host);
@@ -761,11 +767,13 @@ const results = new Map<string, { row: Row; dom: ReturnType<typeof domJudge>; le
 const timing: Record<string, number> = {};
 
 describe('card step 4: the rendered parity check (report mode)', () => {
+  // batch card: #card-NOT-VACUOUS — the seeded sample holds 60 distinct records per surface
   it('draws 60 records per surface with mulberry32(20261002)', () => {
     for (const s of lib.SURFACES) expect(sample[s].length, s).toBe(PER_SURFACE);
     expect(new Set(sampled.map((s) => s.key)).size).toBe(sampled.length);
   });
 
+  // batch card: #card-GUARD — every sampled popup's DOM verdict equals the ledger's, computed with the card's own functions
   it('every sampled popup renders and its DOM verdict equals the ledger verdict — zero disagreements', async () => {
     const t0 = Date.now();
     const actionReads = await renderActions(sample.actionDetail);
@@ -781,6 +789,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
       if (norm(dom) !== norm(led)) disagreements.push(`${key}\n   dom    ${norm(dom)}\n   ledger ${norm(led)}`);
     }
     timing.render = Date.now() - t0;
+    // batch card: #card-GUARD — every sampled record reaches its real popup, with zero disagreements
     expect(unrendered, 'every sampled record reaches its real popup').toEqual([]);
     expect(disagreements.slice(0, 15).join('\n'), `${disagreements.length} disagreements`).toBe('');
   }, 600_000);
@@ -791,6 +800,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
    * sample's ledger findings must equal scripts/data/card-truth-baseline.json's entries for the same
    * rows, both ways — the full-corpus check's two-way rule, applied to the 540 rows rendered here.
    */
+  // batch card: #card-GUARD — the sample's ledger findings equal the guard's baseline, both ways
   it('the sample\'s findings equal the card-truth baseline\'s entries for the same rows, both ways', () => {
     // The baseline's main sections (lib expectedEntries; card step 22 removed the switches and with them
     // the `legacy` entries a turned-back surface was expected at).
@@ -804,6 +814,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
       for (const e of now) if (!listed.has(e)) problems.push(`NEW   ${e}`);
       for (const e of listed) if (!now.has(e)) problems.push(`GONE  ${e} (remove it from the baseline: the list only shrinks)`);
     }
+    // batch card: #card-GUARD — no sample row differs from the baseline, either way
     expect(problems.slice(0, 20), `${problems.length} sample rows differ from the baseline`).toEqual([]);
   });
 
@@ -814,6 +825,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
    * not on this list (a string drawn BESIDE the description, where no line check reads it) fails.
    */
   const REGIONS: Record<string, string[]> = REGIONS_MEASURED;
+  // batch card: #card-ORDER — a mine popup draws nothing outside its read body, its stat panel and the named regions
   it('nothing in a mine popup body is drawn outside the read body, the stat panel and the named regions', () => {
     const unlisted: string[] = [];
     for (const [surface, set] of regionSeen) for (const s of set) if (!(REGIONS[surface] ?? []).includes(s)) unlisted.push(`${surface}: ${s}`);
@@ -821,6 +833,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     expect(unlisted).toEqual([]);
   });
 
+  // batch card: #card-GUARD — every line a tree surface draws is a page line, a stats row or ours
   it('every line a tree surface draws is a line of the record\'s page (or a stats row, or inside [data-ours])', () => {
     const strays: string[] = [];
     for (const [key, { row, s, ref, led }] of results) {
@@ -829,6 +842,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
       const stats = s.printed.map(([k, v]) => lib.squash(k + v)).join('|');
       for (const b of s.blocks) if (!page.includes(lib.squash(b.text)) && !stats.includes(lib.squash(b.text))) strays.push(`${key}: "${b.text.slice(0, 80)}"`);
     }
+    // batch card: #card-GUARD — no line is drawn outside the page and outside [data-ours]
     expect(strays.slice(0, 10), `${strays.length} lines drawn outside the page and outside [data-ours]`).toEqual([]);
   });
 
@@ -840,6 +854,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
    * line they drop is classified by its own words. (hideMeta's meta-line, metaish-block and inline-row
    * paths left with it in card step 22.)
    */
+  // batch card: #card-GUARD — every page line a surface leaves out carries a rule 5 name or is a counted defect
   it('every page line a surface leaves out carries a section 2 rule 5 name or is a counted defect (logged by rule)', () => {
     const bad: string[] = [];
     const byRule: Record<string, number> = {};
@@ -853,11 +868,13 @@ describe('card step 4: the rendered parity check (report mode)', () => {
         if (o.rule === 'UNNAMED' && !o.unnamed.length && !(o as { cont?: boolean }).cont) bad.push(`${key}: "${o.text.slice(0, 60)}" is UNNAMED but counted nowhere`);
       }
     }
+    // batch card: #card-GUARD — the ledger's rule names are cardScope.ts's, and no omission is unnamed and uncounted
     expect(lib.RULE_NAMES, 'the names come from cardScope.ts').toEqual(['S-own', 'S-items', 'S-furniture', 'S-printed', 'S-future', 'S-pick']);
     console.log(`card-parity: page lines left out, by rule ${JSON.stringify(byRule)}; by drop path ${JSON.stringify(byLegacy)}`);
     expect(bad.slice(0, 10), `${bad.length} page lines left out with neither a name nor a count`).toEqual([]);
   });
 
+  // batch card: #card-NOT-VACUOUS — every named case is flagged, shrink-only, checked both ways
   it('the named cases (test/card-parity-known.json) are flagged — shrink-only, checked both ways', async () => {
     const t0 = Date.now();
     const problems: string[] = [];
@@ -873,13 +890,16 @@ describe('card step 4: the rendered parity check (report mode)', () => {
         const s2 = cls ? (classMismatch.includes(`classFeatures:${id}@${cls}`) ? 'CLASS_MISMATCH' : undefined) : census[id];
         got = s2 ? { s2 } : {};
         const entry = cls ? featEntries(build(cls, 20), db).find((e) => e.featureId === id) : featEntries(build('cleric', 20, { subclassId: 'cloistered-cleric' }), db).find((e) => e.featureId === id);
+        // batch card: #card-NOT-VACUOUS — FeatsTab lists the named case's row
         expect(entry, `${c.key}: FeatsTab lists the row`).toBeTruthy();
         const s = await renderFeat(entry!);
         const words = s.blocks.map((b) => b.text).join(' ');
+        // batch card: #card-OWN-SECTION — a listed S2 case still shows another class's text or the other doctrines
         if (cls) expect(words, `${c.key}: the page on screen is another class's`).toMatch(/psychic power/);
         else expect(words, `${c.key}: the page on screen carries other doctrines`).toMatch(/Third Doctrine/);
       } else {
         const ledgerRow = rows.find((r) => keyOf(r) === c.key);
+        // batch card: #card-NOT-VACUOUS — the named case is a ledger row
         expect(ledgerRow, `${c.key} is a ledger row`).toBeTruthy();
         let row = ledgerRow;
         let s: Read | null;
@@ -888,14 +908,17 @@ describe('card step 4: the rendered parity check (report mode)', () => {
           // the star's node names (play.ts pinOf), so it reads the record by {bucket, id} whatever its title
           // carries — the ledger's own row (card-scope.mjs pinReadOf). Before step 19 it read the slug of
           // the title (card step 7a refuter round 2, T4).
+          // batch card: #card-NOT-VACUOUS — a pick case is a feats pin row
           expect(surface === 'pin' && ledgerRow!.bucket === 'feats', `${c.key}: a pick case is a feats pin row`).toBe(true);
           s = await renderPin(row!, { effectPicks: [{ recordId: ledgerRow!.id, choiceId: 'card-parity-pick', label: c.pick }] } as Partial<Character>);
         } else if (surface === 'actionDetail') s = (await renderActions([row!])).get(c.key) ?? null;
         else s = await renderRow(row!, new Map());
+        // batch card: #card-NOT-VACUOUS — the named case renders
         expect(s, `${c.key} renders`).toBeTruthy();
         const ref = await refOf(row!.own.bucket, row!.own.id);
         const dom = domJudge(row!, s!, ref, hiddenOf(row!));
         const led = ledgerJudge(row!);
+        // batch card: #card-GUARD — DOM and ledger agree on the named case
         expect(norm(dom), `${c.key}: DOM and ledger agree`).toBe(norm(led));
         got = pick(dom);
         void bucket;
@@ -904,6 +927,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
       else if (JSON.stringify(canon(got)) !== want) problems.push(`${c.key}: verdict is ${JSON.stringify(got)}, the list says ${want} — update the entry only in the commit that changes that popup`);
     }
     timing.known = Date.now() - t0;
+    // batch card: #card-NOT-VACUOUS — no named case is right now or listed with another verdict
     expect(problems).toEqual([]);
   }, 300_000);
 
@@ -916,18 +940,21 @@ describe('card step 4: the rendered parity check (report mode)', () => {
    * It is therefore NOT on the known list (a listed case that is right fails the list); this pins the
    * measured behaviour instead — DOM and ledger agree, and nothing of ours is in the body.
    */
+  // batch card: #card-N2 — a junction pick stays ours: DOM equals ledger, no ours text or raw markup in the body
   it('Air Gate with a junction picked (kineticist): DOM equals ledger, no ours text in the body, no raw table markup', async () => {
     const gate = db.classes.kineticist.extraChoices?.find((g) => g.options?.some((o) => o.id === 'air-gate'));
     const choice = (db.classFeatures['air-gate'] as { effectChoices?: { id: string; options: { label: string; note?: string }[] }[] }).effectChoices![0];
     const ch0 = build('kineticist', 5, { extraChoices: { [gate!.id]: ['air-gate'] } } as never);
     const ch = { ...ch0, effectPicks: [...(ch0.effectPicks ?? []), { recordId: 'air-gate', choiceId: choice.id, label: choice.options[0].label, note: choice.options[0].note }] } as Character;
     const entry = featEntries(ch, db).find((e) => e.trustFeatureId === 'air-gate' || e.featureId === 'air-gate');
+    // batch card: #card-NOT-VACUOUS — the kineticist lists the Air Gate row the case drives
     expect(entry, 'a kineticist with the Air gate lists an Air Gate row').toBeTruthy();
     // Card step 11: the row is the 'mine' card's (printed set empty), as the ledger models it.
     const drawn = { card: { printed: [] } };
     const row = { surface: 'featDetail', bucket: 'classFeatures', id: 'air-gate', own: { bucket: 'classFeatures', id: 'air-gate' }, read: { bucket: 'classFeatures', slug: 'air-gate' }, ...drawn, itemLists: false, md: entry!.description, printed: [], mode: 'mine' } as unknown as Row;
     const s = await renderFeat(entry!);
     const dom = domJudge(row, s, await refOf('classFeatures', 'air-gate'), hiddenOf(row));
+    // batch card: #card-GUARD — DOM equals ledger; nothing but the counted Source line is off
     expect(norm(dom)).toBe(norm(ledgerJudge(row)));
     // Its dropped Source line is counted in S1-UNNAMED like every other mine popup's; nothing else is off.
     const { unnamed: _counted, ...rest } = pick(dom);
@@ -972,14 +999,17 @@ describe('card step 4: the rendered parity check (report mode)', () => {
    * (shown as Spacious Pouch) must read Spacious Pouch's page — DOM and ledger agree, no identity flag,
    * and the word "devour" is nowhere on screen. (It left test/card-parity-known.json when 7a fixed it.)
    */
+  // batch card: #card-IDENTITY — a hidden cursed item reads the page of the record it shows
   it('a hidden Bag of Devouring (itemDetail ~hidden) reads Spacious Pouch\'s page and never says "devour" (T7)', async () => {
     const row = rows.find((r) => keyOf(r) === 'itemDetail|items:bag-of-devouring~hidden');
+    // batch card: #card-IDENTITY — the ledger's hidden row reads Spacious Pouch; DOM and ledger agree, no identity flag
     expect(row, 'the ledger has the hidden row').toBeTruthy();
     expect(row!.read).toEqual({ bucket: 'items', slug: 'spacious-pouch' });
     const s = await renderItem(row!);
     const dom = domJudge(row!, s, await refOf(row!.own.bucket, row!.own.id), hiddenOf(row!));
     expect(norm(dom)).toBe(norm(ledgerJudge(row!)));
     expect(dom.identity, 'the popup reads its own (shown) page').toBe(false);
+    // batch card: #card-IDENTITY — the body draws the shown page, and the hidden record's word is nowhere on screen
     expect(s.lane).toBe('tree');
     const words = s.blocks.map((b) => b.text).join(' ');
     expect(words.length, 'the body draws the page').toBeGreaterThan(40);
@@ -991,17 +1021,21 @@ describe('card step 4: the rendered parity check (report mode)', () => {
    * page by {backgrounds, id}. builderOrigin|backgrounds:acolyte left test/card-parity-known.json when
    * 7b fixed it (S5-IDENTITY builderOrigin 523 → 0); the sample may not draw it, so it is always rendered.
    */
+  // batch card: #card-IDENTITY — the Background picker opens its record's own page by {backgrounds, id}
   it('the builder Background popup (Acolyte) reads its own page — DOM equals ledger, no identity flag (T3)', async () => {
     const row = rows.find((r) => keyOf(r) === 'builderOrigin|backgrounds:acolyte');
+    // batch card: #card-IDENTITY — the ledger's row reads {backgrounds, acolyte}
     expect(row, 'the ledger has the row').toBeTruthy();
     expect(row!.read).toEqual({ bucket: 'backgrounds', slug: 'acolyte' });
     const s = await renderOrigin(row!);
     const dom = domJudge(row!, s, await refOf('backgrounds', 'acolyte'), hiddenOf(row!));
+    // batch card: #card-GUARD — DOM equals ledger, no identity flag, the page lane
     expect(norm(dom)).toBe(norm(ledgerJudge(row!)));
     expect(dom.identity, 'the popup reads its own page').toBe(false);
     expect(s.lane).toBe('tree');
   });
 
+  // batch card: #card-NOT-VACUOUS — every owner case is held: off the list only because it is right on the card
   it('a case missing from the sample and the list both counts: every owner case is flagged', () => {
     const keys = knownCases.map((c) => c.key);
     // Owner case 3 (featDetail|classFeatures:second-doctrine-cloistered-cleric) is right since card step 12:
@@ -1024,6 +1058,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
       // carries no finding at all, so forcing the field lane turns THIS test red, not only the list's.
       const row = rows.find((r) => keyOf(r) === k);
       expect(row, `the ledger builds a row for ${k}`).toBeTruthy();
+      // batch card: #card-PAGE-ROWS — the ledger's row for each fixed owner spell case carries no finding
       expect(lib.rowEntries(row!, ledgerFull(row!), foldsOf), `ledger findings for ${k}`).toEqual([]);
     }
   });
@@ -1037,12 +1072,15 @@ describe('card step 4: the rendered parity check (report mode)', () => {
    *  - scripts/lib/card-scope.mjs surfaceRows `rows.push({ ...r, surface: 'pin', as: 'spellDetail' })` →
    *    `rows.push({ ...r, surface: 'pin' })` → this case red.
    */
+  // batch card: #card-GUARD — the ledger models each spell pin as the SpellDetail popup it reopens as
   it('the ledger models every spell pin as the spellDetail row it reopens as (`as`), judged as that popup', () => {
     const spellRows = new Map(rows.filter((r) => r.surface === 'spellDetail').map((r) => [r.id, r]));
     const pins = rows.filter((r) => r.surface === 'pin' && r.bucket === 'spells') as (Row & { as?: string })[];
+    // batch card: #card-NOT-VACUOUS — the ledger builds spellDetail rows and one spell pin row for each
     expect(spellRows.size, 'the ledger builds spellDetail rows').toBeGreaterThan(0);
     expect(pins.length, 'one spell pin row per spellDetail row').toBe(spellRows.size);
     for (const p of pins) {
+      // batch card: #card-GUARD — each spell pin is the spellDetail row of the same spell, drawn as SpellDetail
       expect(p.as, `pin|spells:${p.id} is drawn as SpellDetail`).toBe('spellDetail');
       const { surface: _s, as: _a, ...rest } = p;
       const { surface: _t, ...twin } = spellRows.get(p.id)!;
@@ -1051,6 +1089,7 @@ describe('card step 4: the rendered parity check (report mode)', () => {
     // Judged as that popup: the first spellDetail row (by key) whose verdict carries a placement list gives
     // its pin the same list; a pin judged as a plain card has none.
     const placed = [...spellRows.values()].sort((a, b) => keyOf(a).localeCompare(keyOf(b))).find((r) => ledgerFull(r).placement.length > 0);
+    // batch card: #card-GUARD — a spell pin is judged with SpellDetail's placement list
     expect(placed, 'some spellDetail row carries a placement list').toBeTruthy();
     const pin = pins.find((p) => p.id === placed!.id)!;
     expect(ledgerFull(pin).placement, `pin|spells:${pin.id} is judged with SpellDetail's placement`).toEqual(ledgerFull(placed!).placement);
@@ -1085,6 +1124,7 @@ describe('card step 4: RecordCard chrome (absorbed from step 3\'s refuter)', () 
   const pageId = () => Object.keys(trees.feats).filter((s) => recs('feats')[s]).sort()[0];
   const noPageId = () => Object.keys(recs('feats')).filter((s) => !trees.feats[s]).sort()[0];
 
+  // batch card: #card-ORDER — the card's header carries Back at the first level when it came from a source popup
   it('Back shows at the FIRST level with backToSource and returns through onClose (onBackToSource), on the page and fallback branches', async () => {
     for (const id of [pageId(), noPageId()]) {
       const rec = recs('feats')[id];
@@ -1092,6 +1132,7 @@ describe('card step 4: RecordCard chrome (absorbed from step 3\'s refuter)', () 
       const node: DescNode = { title: rec.name, description: rec.description ?? '', key: 'feats', slug: id };
       const m = await mount(<DescriptionModal root={node} onClose={onClose} backToSource />);
       const back = m.host.querySelector('.info-back');
+      // batch card: #card-ORDER — Back is drawn with backToSource, returns through onClose, and is absent without it
       expect(back, `${id}: Back at the first level`).toBeTruthy();
       await click(back);
       expect(onClose, `${id}: Back returns to the source popup`).toHaveBeenCalledTimes(1);
@@ -1102,20 +1143,25 @@ describe('card step 4: RecordCard chrome (absorbed from step 3\'s refuter)', () 
     }
   });
 
+  // batch card: #card-ORDER — the TrustMarker is a header control, never a line of the body
   it('the TrustMarker of a record with no rules encoded sits in the browse card\'s header, not its body', async () => {
     const id = Object.keys(trees.feats).filter((s) => recs('feats')[s] && trustUnencoded('feats', s)).sort()[0];
+    // batch card: #card-NOT-VACUOUS — an unencoded feat with a page ships
     expect(id, 'an unencoded feat with a page ships').toBeTruthy();
     const m = await mount(<RecordCard record={{ bucket: 'feats', id }} mode="browse" chrome="popup" onExit={noop} />);
+    // batch card: #card-ORDER — the marker sits in the header controls, not in the body
     expect(m.host.querySelector('.ast-head .ast-controls .sd-choice-note'), 'marker in the header controls').toBeTruthy();
     expect(m.host.querySelector('.ast-body .sd-choice-note'), 'and not in the body').toBeNull();
     m.stop();
   });
 
+  // batch card: #card-ORDER — the header keeps its actions in one position on every branch
   it('headerActions keep one position on every branch: actions, Back, star, close', async () => {
     const pin: PinDescApi = { has: () => false, toggle: noop };
     const slot = <button className="slot-act">act</button>;
     const order = (host: Element) => {
       const els = ['.slot-act', '.info-back', '.info-star', '.picker-close'].map((s) => host.querySelector(s));
+      // batch card: #card-ORDER — actions, Back, star and close are all drawn, in that order, the actions straight before Back
       for (const e of els) expect(e).toBeTruthy();
       for (let i = 0; i + 1 < els.length; i++) expect(els[i]!.compareDocumentPosition(els[i + 1]!) & Node.DOCUMENT_POSITION_FOLLOWING, `${i}`).toBeTruthy();
       expect(els[0]!.nextElementSibling, 'headerActions sit straight before Back').toBe(els[1]);
@@ -1125,6 +1171,7 @@ describe('card step 4: RecordCard chrome (absorbed from step 3\'s refuter)', () 
     order(page.host);
     page.stop();
     const fb = await mount(<RecordCard record={{ title: 'Synthetic Page', text: 'Body words.' }} mode="browse" chrome="popup" onExit={noop} headerActions={slot} onBackToSource={noop} />, db, pin);
+    // batch card: #card-NOT-VACUOUS — the fallback branch drew its popup, so its header order is measured
     expect(fb.host.querySelector('.picker.info-modal')).toBeTruthy();
     order(fb.host);
     fb.stop();
@@ -1132,6 +1179,7 @@ describe('card step 4: RecordCard chrome (absorbed from step 3\'s refuter)', () 
 });
 
 describe('card step 4: suite time', () => {
+  // batch card: #card-NOT-VACUOUS — the rendered sample the timing reports on is not empty
   it('reports how long the rendered sample took', () => {
     console.log(`card-parity: rendered ${results.size} sampled popups in ${timing.render} ms; named cases in ${timing.known} ms`);
     expect(results.size).toBeGreaterThan(0);
