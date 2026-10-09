@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import type { ContentDatabase, DescRef } from '../rules/types';
 import { useContent } from './ContentContext';
-import { usePinDesc } from './PinContext';
+import { usePinDesc, type PinNode } from './PinContext';
 import { lookupRef, type DescNode } from './descref';
 import { RichText } from './RichText';
 import { useEscapeClose } from './useEscapeClose';
@@ -186,7 +186,16 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
   const pin = usePinDesc();
   const [stack, setStack] = useState<DescNode[]>(() => [node ?? nodeOfRecord(record, content)]);
   const cur = stack[stack.length - 1];
-  const pinned = pin?.has(cur) ?? false;
+  /* Polish round (docs/card-design.md section 6: "A pin made from the sheet reopens as mine at the
+     character's current level"; section 7: "new pins store bucket + id + mode"): the built-in star of the
+     record a 'mine' card opened — the action card, StatDetailModal's full text, any mine card without a
+     star of its own — hands over its {key, slug, title} with mode 'mine', as FeatDetail / ItemDetail /
+     StrikeDetailModal do, so MainTab's PinnedDescCard reopens it as the character's own card. A page
+     opened from a link inside the card is a browse card (section 6) and pins as it always did; a browse
+     card's star stores no mode, so a pin made from search keeps reopening as browse. The mode is never
+     part of the identity (play.ts samePin): has() reads the same pin either way. */
+  const pinNode: PinNode = mode === 'mine' && stack.length === 1 ? { ...cur, mode: 'mine' } : cur;
+  const pinned = pin?.has(pinNode) ?? false;
   // explicit slug (from a resolved cross-ref) or best-effort from the title, so any titled node can
   // resolve its ast; a miss simply falls back to the RichText path.
   const curSlug = cur.slug ?? astSlug(cur.title);
@@ -261,7 +270,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
         <button className={'info-star' + (pinned ? ' on' : '')}
           title={pinned ? `Remove from ${pin.where ?? 'Pinned'}` : `Favorite — add to ${pin.where ?? 'Pinned'}`}
           aria-label={pinned ? `Remove from ${pin.where ?? 'Pinned'}` : `Add to ${pin.where ?? 'Pinned'}`} aria-pressed={pinned}
-          onClick={(e) => { e.stopPropagation(); pin.toggle(cur); }}>
+          onClick={(e) => { e.stopPropagation(); pin.toggle(pinNode); }}>
           <i className="ti ti-star" aria-hidden="true" />
         </button>
       )}
@@ -360,7 +369,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
               <button className={'info-star' + (pinned ? ' on' : '')}
                 title={pinned ? `Remove from ${pin.where ?? 'Pinned'}` : `Favorite — add to ${pin.where ?? 'Pinned'}`}
                 aria-label={pinned ? `Remove from ${pin.where ?? 'Pinned'}` : `Add to ${pin.where ?? 'Pinned'}`} aria-pressed={pinned}
-                onClick={(e) => { e.stopPropagation(); pin.toggle(cur); }}>
+                onClick={(e) => { e.stopPropagation(); pin.toggle(pinNode); }}>
                 <i className="ti ti-star" aria-hidden="true" />
               </button>
             )}
@@ -456,7 +465,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
             <button className={'info-star' + (pinned ? ' on' : '')}
               title={pinned ? 'Remove from Pinned' : 'Favorite — add to Pinned'}
               aria-label={pinned ? 'Remove from Pinned' : 'Add to Pinned'} aria-pressed={pinned}
-              onClick={(e) => { e.stopPropagation(); pin.toggle(cur); }}>
+              onClick={(e) => { e.stopPropagation(); pin.toggle(pinNode); }}>
               <i className="ti ti-star" aria-hidden="true" />
             </button>
           )}

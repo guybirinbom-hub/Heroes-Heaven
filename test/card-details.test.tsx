@@ -528,3 +528,86 @@ describe('card step 20 (b): a preview while the page loads', () => {
     expect(notOwn).toBeGreaterThan(0);
   });
 });
+
+/*
+ * Polish round (docs/card-design.md:97 "advancement table whole, current row highlighted"; :121 highlights
+ * "never change a word": "the class table's current row"): on the Details-tab class card (mine), the class
+ * advancement table's row for the character's level carries the `card-row-current` class — a class on the
+ * page's own row (cardScope.ts withLevelRow → AstRenderer TableEl), every cell, colspan and rowspan as
+ * printed. A browse card highlights nothing.
+ *
+ * MUTATION LINES (polish lane, each measured red, then the file restored byte-exact from a scratch copy,
+ * sha1 checked):
+ *  - cardScope.ts withLevelRow `String(scope.level)` → `String(scope.level + 1)` → the fighter 3 and wizard 5
+ *    cases red (the level-4 / level-6 row is marked instead).
+ *  - RecordCard.tsx's browse page branch draws `withLevelRow(browseTree ?? astNode, {level: 3, classId:
+ *    'fighter'}, 'classes:fighter')` (the highlight on browse) → the browse case red.
+ */
+describe('polish round: the class card marks the character\'s level in the advancement table', () => {
+  /** Each table the popup draws: its rows as [the first cell's words, highlighted?, cell count, spans]. */
+  const tablesOf = (pop: Element) => [...pop.querySelectorAll('table.ast-table')].map((t) => [...t.querySelectorAll('tr')].map((tr) => ({
+    first: txt(tr.querySelector('td, th')),
+    current: tr.classList.contains('card-row-current'),
+    cells: tr.querySelectorAll('td, th').length,
+    spans: [...tr.querySelectorAll('td, th')].map((c) => `${(c as HTMLTableCellElement).colSpan}x${(c as HTMLTableCellElement).rowSpan}`).join(','),
+    words: [...tr.querySelectorAll('td, th')].map(txt).join(' | '),
+  })));
+  /** The browse card's tables for a class page: the printed page's rows, the words a mine card must keep. */
+  async function browseTables(classId: string) {
+    const m = await mount(<RecordCard record={{ bucket: 'classes', id: classId }} mode="browse" chrome="popup" onExit={noop} />);
+    try {
+      const pop = m.host.querySelector('.ast-modal');
+      expect(pop, `${classId}: the browse card drew the page`).toBeTruthy();
+      return tablesOf(pop!);
+    } finally { m.stop(); }
+  }
+  async function detailsCard(classId: string, level: number, name: string) {
+    const m = await mount(<DetailsTab character={build(classId, level)} content={db} />);
+    await click(classTerm(m.host, name));
+    const pop = m.host.querySelector('.ast-modal.card-mine');
+    expect(pop, `${name} ${level}: the Class term opened the class record's mine card`).toBeTruthy();
+    return { m, tables: tablesOf(pop!) };
+  }
+  const strip = (t: ReturnType<typeof tablesOf>) => t.map((rows) => rows.map(({ current: _c, ...r }) => r));
+
+  it('a fighter 3: the advancement table\'s level-3 row is highlighted, no other row; every word and span is the printed table\'s', async () => {
+    const { m, tables } = await detailsCard('fighter', 3, 'Fighter');
+    try {
+      expect(tables, 'the fighter page prints one table').toHaveLength(1);
+      expect(tables[0][0].first).toBe('Your Level');
+      expect(tables[0][0].words).toBe('Your Level | Class Features');
+      const marked = tables.flat().filter((r) => r.current);
+      expect(marked.map((r) => r.first), 'exactly the level-3 row').toEqual(['3']);
+      expect(marked[0].words).toMatch(/^3 \| Bravery/);
+      // Not a word, a cell or a span changed: the table is the browse card's, row for row.
+      expect(strip(tables)).toEqual(strip(await browseTables('fighter')));
+    } finally { m.stop(); }
+  });
+
+  it('a wizard 5: only the advancement table marks the level-5 row; the spells-per-day table keeps its footnote colspan and marks nothing', async () => {
+    const { m, tables } = await detailsCard('wizard', 5, 'Wizard');
+    try {
+      expect(tables, 'the wizard page prints the advancement and the spells-per-day tables').toHaveLength(2);
+      expect(tables[0].filter((r) => r.current).map((r) => r.first)).toEqual(['5']);
+      expect(tables[1][0].first).toBe('Your Level');
+      expect(tables[1].filter((r) => r.current), 'the spells-per-day table is not the class advancement table').toEqual([]);
+      const foot = tables[1][tables[1].length - 1];
+      expect(foot.spans, 'the footnote row still spans the whole table').toBe('12x1');
+      expect(strip(tables)).toEqual(strip(await browseTables('wizard')));
+    } finally { m.stop(); }
+  });
+
+  it('a browse card highlights nothing; nor does a mine card with no scope, or one scoped to another class', async () => {
+    for (const classId of ['fighter', 'wizard']) {
+      const browse = await browseTables(classId);
+      expect(browse.flat().filter((r) => r.current), `${classId}: the browse card marks no row`).toEqual([]);
+    }
+    const draw = async (classId: string, scope?: CardScope) => {
+      const m = await mount(<RecordCard record={{ bucket: 'classes', id: classId }} mode="mine" chrome="popup" scope={scope} printed={[]} onExit={noop} />);
+      try { return tablesOf(m.host.querySelector('.ast-modal.card-mine')!).flat().filter((r) => r.current).map((r) => r.first); } finally { m.stop(); }
+    };
+    expect(await draw('fighter'), 'no scope: no row').toEqual([]);
+    expect(await draw('wizard', scopeOfCharacter(build('fighter', 3))), 'a fighter\'s scope on the wizard page: no row').toEqual([]);
+    expect(await draw('fighter', scopeOfCharacter(build('fighter', 3))), 'the same card at the fighter\'s scope: the level-3 row').toEqual(['3']);
+  });
+});

@@ -12,7 +12,13 @@ import { CharacterSheet } from '../src/sheet/CharacterSheet';
 import { Builder } from '../src/builder/Builder';
 import { featEntries } from '../src/sheet/FeatsTab';
 import { featPinNode } from '../src/sheet/FeatDetail';
-import { applyPlayState, initialPlay, pinForRead, pinOf, samePin, type PlayState, type PlayUpdater } from '../src/rules/play';
+import { applyPlayState, initialPlay, pinForRead, pinOf, samePin, togglePinnedDesc, type PlayState, type PlayUpdater } from '../src/rules/play';
+import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
+import { PinnedDescCard } from '../src/sheet/MainTab';
+import { StatDetailModal } from '../src/sheet/StatDetailModal';
+import { InfoTerm } from '../src/sheet/InfoTerm';
+import { ChoiceDetails } from '../src/builder/shared';
+import { classFeatureDescription } from '../src/rules/featureText';
 import { scopeOfCharacter } from '../src/sheet/cardScope';
 import * as lib from '../scripts/lib/card-scope.mjs';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
@@ -543,6 +549,278 @@ describe('card step 19: a pin saved before step 19 (old shape) — read-time onl
 });
 
 /*
+ * Polish round (docs/card-design.md section 6: "A pin made from the sheet reopens as mine at the
+ * character's current level"; section 7: "new pins store bucket + id + mode"). The stars that stored no
+ * mode — RecordCard's built-in star on the action card and on StatDetailModal's full text, and the Spells
+ * tab's star — store mode 'mine' with {key, slug, title}, and MainTab's PinnedDescCard reopens each as the
+ * SAME popup the record opens from its own tab, scoped to the character: the action / full-text record as
+ * its 'mine' card, a spell as SpellDetail itself (the cast-at rank included). A pin made in browse mode
+ * (search) keeps reopening as browse. Characters synthesized through build() (name 't').
+ *
+ * MUTATION LINES (polish lane, each measured red, then the file restored byte-exact from a scratch copy,
+ * sha1 checked):
+ *  - RecordCard.tsx pinNode `{ ...cur, mode: 'mine' }` → `cur` (the mode dropped) → the action-card and
+ *    full-text cases red.
+ *  - SpellsTab.tsx SpellDetail's PinStar node without `mode: 'mine'` → the Spells-tab case red.
+ *  - MainTab.tsx PinnedDescCard `maxRank={character ? spellMaxRank(character) : undefined}` → `maxRank={undefined}`
+ *    → the Spells-tab case red (the reopened body has no "Cast at 3rd").
+ *  - MainTab.tsx PinnedDescCard `if (spell)` → `if (spell && false)` (the spell's mine card instead) → the
+ *    Spells-tab case red.
+ *  - RecordCard.tsx pinNode `mode === 'mine' && stack.length === 1` → `stack.length === 1` (a browse card's
+ *    star stores 'mine') → the browse case red.
+ *  - scripts/lib/card-scope.mjs pinStarNode back to "no mode for spells" → the ledger-model case below red.
+ */
+describe('polish round: every sheet star stores mode \'mine\' and its pin reopens as the record\'s own popup', () => {
+  const seg = (host: HTMLElement, label: string) => [...host.querySelectorAll('.seg-btn')].find((b) => txt(b) === label);
+  const stab = (host: HTMLElement, label: string) => [...host.querySelectorAll('.stab')].find((b) => txt(b) === label);
+  /** Main tab → the action chip named `name`, in whichever mode / sub-tab lists it → its popup. */
+  async function openAction(host: HTMLElement, name: string) {
+    await click(tab(host, 'Main'));
+    const chip = () => [...host.querySelectorAll('.action-chip')].find((c) => txt(c.querySelector('.action-chip-name')) === name);
+    for (const mode of ['Encounter', 'Exploration', 'Downtime', 'Camping']) {
+      const b = seg(host, mode);
+      if (b) await click(b);
+      for (const s of mode === 'Encounter' ? ['Actions', 'Skills', 'Items'] : ['']) {
+        const t = s ? stab(host, s) : undefined;
+        if (s && !t) continue;
+        if (t) await click(t);
+        if (chip()) { await click(chip()); return popup(host); }
+      }
+    }
+    expect.fail(`the Main tab lists an action chip named ${name}`);
+  }
+  /** A stub pin API that keeps what togglePinnedDesc would store (pinOf), for a popup mounted on its own. */
+  const recorder = () => {
+    const out: { stored: PinnedDesc | null } = { stored: null };
+    const api: PinDescApi = { has: () => false, toggle: (n) => { out.stored = togglePinnedDesc({} as PlayState, n).pinnedDescs?.[0] ?? null; } };
+    return { out, api };
+  };
+  const shape = (p: PinnedDesc | null | undefined) => ({ key: p?.key, slug: p?.slug, title: p?.title, mode: p?.mode });
+
+  it('the action card\'s star stores {actions, seek, Seek, mine}; the pin reopens as Seek\'s own mine card', async () => {
+    const ch = build('fighter', 3);
+    const seen = { play: initialPlay(ch, db), writes: 0 };
+    const m = await mount(sheet(ch, seen.play, seen));
+    try {
+      const pop = await openAction(m.host, 'Seek');
+      const card = pop!.querySelector('.ast-modal.card-mine');
+      expect(card, 'the Seek chip opened its record\'s mine card').toBeTruthy();
+      const own = pageText(pop!);
+      expect(own, 'Seek has a page').toBeTruthy();
+      // The card's built-in star (in its page header), not the action pin beside it (.pin-star).
+      await click(card!.querySelector('.ast-head .info-star'));
+      expect(seen.play.pinnedDescs ?? []).toHaveLength(1);
+      expect(shape(seen.play.pinnedDescs?.[0])).toEqual({ key: 'actions', slug: 'seek', title: 'Seek', mode: 'mine' });
+      await click(card!.querySelector('.picker-close'));
+      const again = await reopenFromPinned(m.host, 'Seek');
+      expect(again.querySelector('.ast-modal.card-mine'), 'the reopened pin is the mine card').toBeTruthy();
+      expect(pageText(again), 'the action card\'s own body').toBe(own);
+      const star = again.querySelector('.info-star');
+      expect(star?.getAttribute('aria-pressed')).toBe('true');
+      await click(star);
+      expect(seen.play.pinnedDescs ?? [], 'pressing it unpinned the record').toEqual([]);
+    } finally { m.stop(); }
+  });
+
+  it('StatDetailModal\'s full-text star stores the record with mode \'mine\'; the pin reopens as that same mine card', async () => {
+    const ch = build('fighter', 3);
+    const id = 'halfling-luck';
+    const { out, api } = recorder();
+    const breakdown = { title: 'Stat', totalText: '+0', parts: [], timeline: [], situational: [{ text: 'a situational line', sourceId: id, sourceCollection: 'feats' as never }] };
+    const m = await mount(<PinContext.Provider value={api}><StatDetailModal breakdown={breakdown} character={ch} content={db} onClose={noop} /></PinContext.Provider>);
+    let own: string | null;
+    try {
+      await click(m.host.querySelector('.sd-sit-more'));
+      const card = m.host.querySelector('.ast-modal.card-mine');
+      expect(card, 'the full text is the record\'s mine card').toBeTruthy();
+      own = pageText(card!.parentElement!);
+      expect(own, `${id} has a page`).toBeTruthy();
+      await click(card!.querySelector('.info-star'));
+      expect(shape(out.stored)).toEqual({ key: 'feats', slug: id, title: db.feats[id].name, mode: 'mine' });
+    } finally { m.stop(); }
+    const p = await mount(<PinnedDescCard pin={out.stored!} content={db} character={ch} onClose={noop} />);
+    try {
+      expect(p.host.querySelector('.ast-modal.card-mine'), 'the reopened pin is the mine card').toBeTruthy();
+      expect(pageText(p.host), 'the full text\'s own body').toBe(own);
+    } finally { p.stop(); }
+  });
+
+  it('the Spells tab\'s star stores {spells, daze, Daze, mine}; the pin reopens as the Spells-tab popup itself, heightened to the character\'s rank', async () => {
+    // A sorcerer 5 casts 3rd-rank spells: its cantrip Daze auto-heightens to 3rd ("Cast at 3rd").
+    const ch = build('sorcerer', 5);
+    expect(ch.spellcasting.find((e) => e.type === 'spontaneous')?.cantrips, 'the synthesized sorcerer knows Daze').toContain('daze');
+    const seen = { play: initialPlay(ch, db), writes: 0 };
+    const m = await mount(sheet(ch, seen.play, seen));
+    try {
+      await click(tab(m.host, 'Spells'));
+      await click([...m.host.querySelectorAll('.spell-card.clickable')].find((c) => txt(c.querySelector('.spell-name')) === 'Daze'));
+      const pop = m.host.querySelector('.picker.spell-detail');
+      expect(pop, 'the Spells tab opened SpellDetail').toBeTruthy();
+      const body = txt(pop!.querySelector('.sd-body'));
+      expect(txt(pop!.querySelector('.sd-rank-sel .sd-rank-lbl'))).toBe('Cast at');
+      expect(txt(pop!.querySelector('.sd-rank-sel .sd-rank-chip.on')), 'the Spells-tab popup heightens Daze to the sorcerer\'s 3rd rank').toBe('3rd');
+      await click(pop!.querySelector('.info-star'));
+      expect(shape(seen.play.pinnedDescs?.[0])).toEqual({ key: 'spells', slug: 'daze', title: 'Daze', mode: 'mine' });
+      await click(pop!.querySelector('.picker-close'));
+      await reopenFromPinned(m.host, 'Daze');
+      const again = m.host.querySelector('.picker.spell-detail');
+      expect(again, 'the reopened spell pin is SpellDetail, the Spells tab\'s popup').toBeTruthy();
+      expect(m.host.querySelector('.card-mine'), 'not the spell\'s mine card').toBeNull();
+      expect(txt(again!.querySelector('.sd-body')), 'the same body as the Spells-tab popup').toBe(body);
+      const star = again!.querySelector('.info-star');
+      expect(star?.getAttribute('aria-pressed')).toBe('true');
+      await click(star);
+      expect(seen.play.pinnedDescs ?? [], 'pressing it unpinned the spell').toEqual([]);
+    } finally { m.stop(); }
+  });
+
+  /*
+   * Fixer round 2 (the must-fix): an `actions` pin made from the action card reopens as ActionDetailModal
+   * itself — the action card — not a bare mine card of the record: the same ours box (actionOursLines), the
+   * same skill label and the same cost glyph (ours, marked) in its header. Treat Wounds is the skill-tier
+   * case (a fighter 3 trained in Medicine: "Your rank (trained): DC 15"); High Jump under Quick Jump is the
+   * record-marker case (the marked one-action glyph and the Quick Jump note).
+   * MUTATION LINES (each measured red, then MainTab.tsx restored byte-exact from a scratch copy, sha1 checked):
+   *  - MainTab.tsx PinnedDescCard `if (action && character)` → `if (action && character && false)` (the
+   *    reopened pin is the bare mine card: no ours box, no skill label) → this case red.
+   *  - MainTab.tsx pinnedActionDetail `const def = ACTIVITIES.find(…)` → `const def = undefined` (the Act
+   *    built without its curated row: no skill) → this case red.
+   * Fixer round 3: the header's "Pin to top" toggle is compared too — Treat Wounds (exploration) and
+   * Organize Watch (camping, Kingmaker on) draw none in the tab; High Jump (encounter) draws it, pinned to
+   * the top first so its pressed state and label must follow the sheet's pin keys. MUTATION LINES (each
+   * measured red, then MainTab.tsx restored byte-exact from a scratch copy, sha1 388a6358 checked):
+   *  - pinnedActionDetail `pinnable: def.mode === 'encounter'` → `pinnable: true` → red (Treat Wounds).
+   *  - pinnedActionDetail `def.mode === 'encounter'` → `def.mode !== 'encounter'` → red (Treat Wounds).
+   *  - pinnedActionDetail `pinnable: !camping` → `pinnable: camping` → red (Organize Watch).
+   *  - MainTab's PinnedDescCard call without `onPlay={onPlay} pinned={pinned}` → red (High Jump); without
+   *    only `pinned={pinned}` → red (High Jump: drawn but not pressed).
+   */
+  it('an action pin reopens as the action card itself: the same ours lines, skill label, cost glyph and Pin-to-top toggle as the Main tab\'s popup', async () => {
+    const ch = { ...build('fighter', 3, { featPicks: { '2:skill': 'quick-jump' }, classSkills: ['medicine'] } as never), kingmakerEnabled: true };
+    expect(ch.proficiencies.skills?.medicine, 'the synthesized fighter is trained in Medicine').toBe('trained');
+    expect(db.actions['organize-watch']?.traits, 'Organize Watch is a camping action').toContain('camping');
+    const seen = { play: initialPlay(ch, db), writes: 0 };
+    const m = await mount(sheet(ch, seen.play, seen));
+    /** What the action card shows of ours: the box's lines, the header's skill label and cost glyph, and the
+     *  header's "Pin to top" toggle (.pin-star: drawn or not; pressed or not, normalised — PinToggle carries
+     *  no aria-pressed, so its `on` class stands in when the attribute is absent — and its label). */
+    const oursOf = (pop: Element) => {
+      const toggle = pop.querySelector('.ast-head .pin-star');
+      return {
+        lines: [...pop.querySelectorAll('.card-ours[data-ours] [data-ours-kind]')].map((l) => txt(l)),
+        skill: txt(pop.querySelector('.ast-head .action-skill')),
+        glyph: pop.querySelector('.ast-head .card-ours-cost[data-ours]')?.innerHTML ?? null,
+        toggle: toggle ? { pressed: toggle.getAttribute('aria-pressed') ?? String(toggle.classList.contains('on')), label: toggle.getAttribute('aria-label') } : null,
+      };
+    };
+    try {
+      for (const [name, slug, want] of [
+        // An exploration activity: the Main tab offers no "Pin to top" on it (pinnedActionDetail: encounter only).
+        ['Treat Wounds', 'treat-wounds', { lines: ['Your rank (trained): DC 15'], skill: 'Medicine', toggle: false }],
+        // The marker line opens with its record's name (OursBox: "Quick Jump: …"). An encounter activity:
+        // the toggle is drawn.
+        ['High Jump', 'high-jump', { from: 'Quick Jump:', skill: 'Athletics', toggle: true }],
+        // A camping action (Kingmaker on): the Camping list's row — no skill, no ours lines, no toggle
+        // (pinnedActionDetail's non-activity branch: pinnable only when it is not a camping action).
+        ['Organize Watch', 'organize-watch', { lines: [], skill: '', toggle: false, camping: true }],
+      ] as const) {
+        const pop = await openAction(m.host, name);
+        const card = pop!.querySelector('.ast-modal.card-mine');
+        expect(card, `${name}: the chip opened the action card`).toBeTruthy();
+        // High Jump is pinned to the top first, so the reopened toggle must show the sheet's pin keys too
+        // (pressed, "Unpin"), not only be drawn.
+        if (want.toggle) {
+          await click(card!.querySelector('.ast-head .pin-star'));
+          expect(card!.querySelector('.ast-head .pin-star')?.getAttribute('aria-label'), `${name}: the toggle pinned it to the top`).toBe('Unpin');
+        }
+        const fromTab = oursOf(pop!);
+        if ('lines' in want) expect(fromTab.lines, `${name}: the action card's ours box`).toEqual(want.lines);
+        if ('from' in want) expect(fromTab.lines.some((l) => l.startsWith(want.from)), `${name}: the record marker's note is in the box`).toBe(true);
+        expect(fromTab.skill, `${name}: the action card's skill label`).toBe(want.skill);
+        if (!('camping' in want)) expect(fromTab.glyph, `${name}: the action card draws its cost glyph, marked ours`).toBeTruthy();
+        expect(!!fromTab.toggle, `${name}: the Main tab's popup ${want.toggle ? 'draws' : 'draws no'} "Pin to top" toggle`).toBe(want.toggle);
+        const own = pageText(pop!);
+        await click(card!.querySelector('.ast-head .info-star'));
+        expect(shape(seen.play.pinnedDescs?.at(-1))).toEqual({ key: 'actions', slug, title: name, mode: 'mine' });
+        await click(card!.querySelector('.picker-close'));
+        const again = await reopenFromPinned(m.host, name);
+        expect(again.querySelector('.ast-modal.card-mine'), `${name}: the reopened pin is a mine card`).toBeTruthy();
+        expect(oursOf(again), `${name}: the reopened pin is the action card — the same ours lines, skill label, cost glyph and "Pin to top" toggle`).toEqual(fromTab);
+        expect(pageText(again), `${name}: the same page body`).toBe(own);
+        await click(again.querySelector('.picker-close'));
+      }
+    } finally { m.stop(); }
+  });
+
+  /*
+   * Section 6 ("A pin made from the sheet reopens as mine at the character's current level"): the Builder's
+   * ChoiceDetails star (a granted row, with a build) and InfoTerm's mine card (the Details-tab terms) store
+   * mode 'mine' with the record's {key, slug}, and the pin reopens as that record's mine card.
+   * MUTATION LINES (each measured red, then the files restored byte-exact from scratch copies, sha1 checked):
+   *  - MainTab.tsx PinnedDescCard `if (pin.mode === 'mine')` → `if (false)` (every pin reopens as browse) →
+   *    both halves red ("the reopened pin is the mine card").
+   *  - RecordCard.tsx pinNode → `cur`, with shared.tsx ChoiceDetailsModal's cardNode without `mode: 'mine'`
+   *    → the ChoiceDetails half red; with InfoTerm.tsx mineTermPin's mark → `n` → the InfoTerm half red.
+   */
+  it('the Builder ChoiceDetails star and InfoTerm\'s mine card store mode \'mine\'; each pin reopens as the record\'s mine card', async () => {
+    const cleric = build('cleric', 3, { subclassId: 'cloistered-cleric' });
+    const cfId = 'second-doctrine-cloistered-cleric';
+    const cf = db.classFeatures[cfId];
+    const f3 = build('fighter', 3);
+    const cases: { label: string; ch: Character; el: ReactElement; opener: string; want: { key: string; slug: string; title: string } }[] = [
+      {
+        label: 'ChoiceDetails',
+        ch: cleric,
+        el: <ChoiceDetails name={cf.name} flavor={classFeatureDescription(cf.description, 'cleric', db)} descRefs={cf.descRefs} bucket="classFeatures" id={cfId} character={cleric} />,
+        opener: '.cc-det',
+        want: { key: 'classFeatures', slug: cfId, title: cf.name },
+      },
+      {
+        label: 'InfoTerm',
+        ch: f3,
+        el: <InfoTerm title={db.feats['halfling-luck'].name} description={db.feats['halfling-luck'].description} descKey="feats" descSlug="halfling-luck" mine={{ scope: scopeOfCharacter(f3) }}>term</InfoTerm>,
+        opener: '.info-term',
+        want: { key: 'feats', slug: 'halfling-luck', title: db.feats['halfling-luck'].name },
+      },
+    ];
+    for (const c of cases) {
+      const { out, api } = recorder();
+      const m = await mount(<PinContext.Provider value={api}>{c.el}</PinContext.Provider>);
+      let own: string | null;
+      try {
+        await click(m.host.querySelector(c.opener));
+        const card = m.host.querySelector('.ast-modal.card-mine');
+        expect(card, `${c.label}: the popup is the record's mine card`).toBeTruthy();
+        own = pageText(m.host);
+        expect(own, `${c.label}: the record has a page`).toBeTruthy();
+        await click(card!.querySelector('.ast-head .info-star'));
+      } finally { m.stop(); }
+      expect(shape(out.stored), `${c.label}: the star stored the record with mode 'mine'`).toEqual({ ...c.want, mode: 'mine' });
+      const p = await mount(<PinnedDescCard pin={out.stored!} content={db} character={c.ch} onClose={noop} />);
+      try {
+        expect(p.host.querySelector('.ast-modal.card-mine'), `${c.label}: the reopened pin is the mine card`).toBeTruthy();
+        expect(pageText(p.host), `${c.label}: the same page body`).toBe(own);
+      } finally { p.stop(); }
+    }
+  });
+
+  it('a pin made in browse mode (search) stores no mode and keeps reopening as the browse card', async () => {
+    const ch = build('fighter', 3);
+    const { out, api } = recorder();
+    const m = await mount(<PinContext.Provider value={api}><RecordCard record={{ bucket: 'actions', id: 'seek' }} mode="browse" chrome="popup" onExit={noop} /></PinContext.Provider>);
+    try {
+      await click(m.host.querySelector('.ast-head .info-star'));
+    } finally { m.stop(); }
+    expect(shape(out.stored)).toEqual({ key: 'actions', slug: 'seek', title: 'Seek', mode: undefined });
+    const p = await mount(<PinnedDescCard pin={out.stored!} content={db} character={ch} onClose={noop} />);
+    try {
+      expect(p.host.querySelector('.card-mine'), 'a browse pin is not a mine card').toBeNull();
+      expect(pageText(p.host), 'the browse card of the record').toBe(await browseText('actions', 'seek'));
+    } finally { p.stop(); }
+  });
+});
+
+/*
  * The guard's ledger (scripts/lib/card-scope.mjs, card-truth-check's 'pin' rows) reads a stored pin the way
  * MainTab's PinnedDescCard does: its mirror of play.ts pinForRead / samePin must agree with them on every
  * shape a pin can have, and a star's node, stored through pinOf, must be the node the ledger models.
@@ -586,7 +864,13 @@ describe('card step 19: the ledger\'s pin model reads a pin as play.ts does', ()
     const modelled = lib.pinStarNode('feats', 'caustic-nectar', db.feats['caustic-nectar']);
     expect({ key: stored.key, slug: stored.slug, mode: stored.mode }).toEqual({ key: modelled.key, slug: modelled.slug, mode: modelled.mode });
     expect(lib.pinReadOf(stored, db)).toEqual({ bucket: 'feats', slug: 'caustic-nectar' });
-    // The Spells tab's star stores no mode: the ledger models a spell pin as the browse card.
-    expect(lib.pinStarNode('spells', 'discomfiting-whispers', db.spells['discomfiting-whispers'])).toEqual({ title: db.spells['discomfiting-whispers'].name, key: 'spells', slug: 'discomfiting-whispers' });
+    // Polish round: the Spells tab's star stores mode 'mine' (SpellsTab SpellDetail), and so does the action
+    // card's built-in star (RecordCard pinNode): the ledger models both pins as made from the sheet.
+    // batch card premise: spell-2139 "You are surrounded by an aura of spiteful murmurings"
+    expect(lib.pinStarNode('spells', 'discomfiting-whispers', db.spells['discomfiting-whispers'])).toEqual({ title: db.spells['discomfiting-whispers'].name, key: 'spells', slug: 'discomfiting-whispers', mode: 'mine' });
+    expect(lib.pinStarNode('actions', 'seek', db.actions.seek)).toEqual({ title: 'Seek', key: 'actions', slug: 'seek', mode: 'mine' });
+    // The pin rows built from this model (actions, the stat lines' records, spells as the spellDetail row)
+    // are measured against the DOM by test/card-parity.test.tsx renderPin.
+    expect(lib.pinReadOf(pinOf({ ...lib.pinStarNode('actions', 'seek', db.actions.seek), description: '' }), db)).toEqual({ bucket: 'actions', slug: 'seek' });
   });
 });

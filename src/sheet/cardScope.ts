@@ -205,6 +205,8 @@ export interface ScopedNode extends AstNode {
   /** Card step 13c: the picked option of a choose-one block (the list item or paragraph) and the list
    *  holding it. Its own paragraph carries `applies`, the highlight the renderer draws. */
   picked?: boolean;
+  /** Polish round: a class advancement table's row for the character's level (withLevelRow). */
+  current?: boolean;
 }
 
 /** Raw text of a node (no hygiene: the hash only needs to be deterministic). */
@@ -531,7 +533,57 @@ export function scopeTree(tree: AstNode, scope: CardScope | undefined, ledger: L
     out.push(n);
   }
   flush();
-  return changed ? { ...tree, c: out } : tree;
+  return withLevelRow(changed ? { ...tree, c: out } : tree, scope, own);
+}
+
+/** The header a class page's advancement table prints (every class page's first "Your Level" table). */
+const ADVANCEMENT_HEAD = ['your level', 'class features'];
+const rowCells = (tr: AstNode) => (tr.c ?? []).filter((c) => c.t === 'td' || c.t === 'th');
+function tableRows(table: AstNode): AstNode[] {
+  const rows: AstNode[] = [];
+  (function collect(n: AstNode) {
+    for (const c of n.c ?? []) {
+      if (c.t === 'tr') rows.push(c);
+      else if (c.t === 'thead' || c.t === 'tbody' || c.t === 'tfoot') collect(c);
+    }
+  })(table);
+  return rows;
+}
+
+/**
+ * Polish round (docs/card-design.md section 3 "Class card (Details tab)": "advancement table whole, current
+ * row highlighted"; section 4: highlights "are CSS classes on page nodes and never change a word"): on the
+ * class card of the character's own class (`own` = "classes:<scope.classId>"), the advancement table's row
+ * for the character's level is marked `current` — AstRenderer's TableEl draws that as a class on the row,
+ * keeping every cell, colspan and rowspan as printed. A level cell spanning several rows marks each row it
+ * spans. Any other page, another class's page, or no scope (browse) is returned untouched.
+ */
+export function withLevelRow(tree: AstNode, scope: CardScope | undefined, own?: string): AstNode {
+  if (!scope?.classId || !scope.level || own !== `classes:${scope.classId}`) return tree;
+  const level = String(scope.level);
+  const mark = (table: AstNode): AstNode => {
+    const rows = tableRows(table);
+    const head = rowCells(rows[0] ?? { t: 'tr' }).map((c) => foldText(c).trim().toLowerCase());
+    if (head[0] !== ADVANCEMENT_HEAD[0] || head[1] !== ADVANCEMENT_HEAD[1]) return table;
+    const hit = new Set<AstNode>();
+    for (let i = 1; i < rows.length; i++) {
+      const first = rowCells(rows[i])[0];
+      if (!first || foldText(first).trim() !== level) continue;
+      const span = Math.max(1, Number(first.rowspan) || 1);
+      for (let k = i; k < Math.min(rows.length, i + span); k++) hit.add(rows[k]);
+    }
+    if (!hit.size) return table;
+    const walk = (n: AstNode): AstNode => (hit.has(n) ? ({ ...n, current: true } as ScopedNode) : n.c ? { ...n, c: n.c.map(walk) } : n);
+    return walk(table);
+  };
+  // Returns the very node when nothing under it changed, so an untouched tree stays the same object.
+  const visit = (n: AstNode): AstNode => {
+    if (n.t === 'table') return mark(n);
+    if (!n.c) return n;
+    const kids = n.c.map(visit);
+    return kids.some((k, i) => k !== n.c![i]) ? { ...n, c: kids } : n;
+  };
+  return visit(tree);
 }
 
 /**

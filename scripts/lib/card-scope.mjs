@@ -889,11 +889,13 @@ export const GM_SURFACE = 'gm';
  *
  * pinStarNode: the stored pin of the record `b:id` as its star hands it over and pinOf keeps it — the
  * record id always (FeatDetail featPinNode: trustRefOf's id, a heritage keyed 'heritages'; ItemDetail:
- * shownItemId, the item's own id outside a hidden curse; SpellsTab: spell.id), mode 'mine' from the sheet's
- * FeatDetail / ItemDetail stars, no mode from the Spells tab's.
+ * shownItemId, the item's own id outside a hidden curse; SpellsTab: spell.id; the action card and
+ * StatDetailModal's full text: the record RecordCard opened), and mode 'mine' from every sheet star the
+ * ledger models — FeatDetail, ItemDetail, the Spells tab's SpellDetail (polish round), the action card and
+ * the full text (RecordCard pinNode, polish round).
  */
 export function pinStarNode(b, id, rec) {
-  return { title: rec?.name ?? '', key: b, slug: id, ...(b === 'spells' ? {} : { mode: 'mine' }) };
+  return { title: rec?.name ?? '', key: b, slug: id, mode: 'mine' };
 }
 
 /** play.ts descId: the LEGACY identity `key:title` (lowercased). */
@@ -1110,19 +1112,29 @@ export function surfaceRows(deps) {
   // it (pinReadOf, play.ts pinForRead): by its {key, slug} — bucket + id — whatever its title says. A pin
   // made from the sheet (FeatDetail / ItemDetail stars: mode 'mine') reopens as the 'mine' card (section
   // 6: "A pin made from the sheet reopens as mine"): printed set empty, item lists cut, as FeatDetail's
-  // card; the Spells tab's star stores no mode, so a spell pin reopens as the browse card it always did.
-  // Before step 19 the store dropped the slug and the reopened pin read key + astSlug(title) (107
+  // card. Before step 19 the store dropped the slug and the reopened pin read key + astSlug(title) (107
   // S5-IDENTITY rows on 2026-10-07: a pick in the title, a shared name).
-  for (const b of ['feats', 'classFeatures', 'heritages', 'items', 'spells']) {
-    for (const [id, rec] of Object.entries(db[b] ?? {})) {
-      if (!has(b, id)) continue;
-      const stored = pinStarNode(b, id, rec);
-      const read = pinReadOf(stored, db);
-      const drawn = stored.mode === 'mine'
-        ? { itemLists: false, card: { printed: [] }, mode: 'mine' }
-        : { itemLists: true, mode: 'browse' };
-      rows.push({ surface: 'pin', bucket: b, id, own: { bucket: b, id }, read, md: rec.description ?? '', printed: [], ...drawn });
-    }
+  // Polish round: the action card's and StatDetailModal's full-text stars (RecordCard pinNode) store mode
+  // 'mine' too, so their records' pins reopen as the same 'mine' card (the second loop below: the actions
+  // bucket, and the stat lines' backgrounds / ancestries the first does not cover). An actions pin reopens
+  // as ActionDetailModal itself (MainTab PinnedDescCard, fixer round 2): its body is that same mine card
+  // (printed set empty, the record's page); its skill label and cost glyph sit in the header and its ours
+  // box is marked [data-ours], both outside what a row judges, so the row needs no `as` (bodyLabels reads every non-spell surface alike). A spell pin reopens as
+  // SpellDetail itself and is modelled at the end, as the spellDetail row it is (`as`).
+  const pinMine = { itemLists: false, card: { printed: [] }, mode: 'mine' };
+  const pinRow = (b, id, rec) => {
+    const read = pinReadOf(pinStarNode(b, id, rec), db);
+    rows.push({ surface: 'pin', bucket: b, id, own: { bucket: b, id }, read, md: rec.description ?? '', printed: [], ...pinMine });
+  };
+  for (const b of ['feats', 'classFeatures', 'heritages', 'items']) {
+    for (const [id, rec] of Object.entries(db[b] ?? {})) if (has(b, id)) pinRow(b, id, rec);
+  }
+  const pinned = new Set(rows.filter((x) => x.surface === 'pin').map((x) => `${x.bucket}:${x.id}`));
+  for (const r of rows.filter((x) => x.surface === 'actionDetail' || x.surface === 'statDetail')) {
+    const k = `${r.bucket}:${r.id}`;
+    if (pinned.has(k)) continue;
+    pinned.add(k);
+    pinRow(r.bucket, r.id, db[r.bucket][r.id]);
   }
 
   // StrikeDetailModal (card step 10) — the Strikes tab's popup for a weapon that makes a Strike of its own
@@ -1159,6 +1171,11 @@ export function surfaceRows(deps) {
     const { mdParts: _md, ...rest } = row;
     rows[k] = { ...rest, read: { bucket: 'spells', slug: row.id }, drawn: model.drawn, card: { printed: model.rows.map(([l]) => l) }, itemLists: true, md: sp.description ?? '' };
   }
+
+  // Polish round: the Spells tab's star stores mode 'mine' and MainTab's PinnedDescCard reopens the pin as
+  // SpellDetail itself (no slot rank: as the Spells tab's list rows open it), so a spell pin row IS the
+  // spellDetail row, judged as that popup (`as`: the spell popup's labels and placement, judgeRow).
+  for (const r of rows.filter((x) => x.surface === 'spellDetail')) rows.push({ ...r, surface: 'pin', as: 'spellDetail' });
 
   return { rows, classMismatch };
 }
@@ -1230,13 +1247,16 @@ export function judgeRow(row, trees, mdFns) {
   // different record's and IDENTITY already counts the row.
   res.omitted = row.mode === 'mine' && res.lane === 'tree' && !identity && ownTree ? omissionLog(pageBlocks, bodyBlocks, res.hidden, printed) : [];
   res.unnamed = [...new Set(res.omitted.flatMap((o) => o.unnamed))].sort();
-  const body = bodyLabels(bodyBlocks, row.surface);
+  // Polish round: a row drawn as another surface's popup (`as` — a spell pin reopens as SpellDetail) is
+  // judged as that popup.
+  const drawnAs = row.as ?? row.surface;
+  const body = bodyLabels(bodyBlocks, drawnAs);
   // A browse-mode popup on another record's page is an identity failure; comparing its lines with the
   // own page would be comparing two records.
   // Card step 12: a record whose page is not its own (src/data/not-own-page.json) reads no tree — like a
   // record with no page, it has no page to judge its lines against, so it gets no label verdicts.
   res.labels = (row.mode === 'browse' && identity) || !ownTree ? {} : labelVerdicts({ page, body, printed, glyph, base: refsBase(pageBlocks) });
-  res.placement = row.surface === 'spellDetail' ? [...body].sort() : [];
+  res.placement = drawnAs === 'spellDetail' ? [...body].sort() : [];
   // OURS-LEAK: ours wording in the page itself, or the string lane carrying appended ours HTML into a
   // body that is not an ours box (withPicks' "Note:" on a record with no tree to read).
   res.oursLeak = [...oursInPage(ownTree ?? {}), ...((res.lane === 'fallback' || res.lane === 'md') && /<p><strong>(Note|Your choice):<\/strong>/.test(row.md ?? '') ? ['appended-ours-html'] : [])];

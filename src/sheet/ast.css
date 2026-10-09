@@ -203,6 +203,10 @@
 .ast-table { border-collapse: collapse; width: 100%; font-size: 12.8px; }
 .ast-table th, .ast-table td { border: 1px solid var(--app-border); padding: 5px 9px; text-align: left; vertical-align: top; }
 .ast-table th { background: var(--app-surface-2); font-weight: 650; color: var(--app-text); }
+/* The class card's advancement row for the character's level (cardScope.ts withLevelRow): the accent tint
+   .card-applies gives an applying entry, with a rail on the row's first cell — a class, never a word. */
+.ast-table tr.card-row-current > td, .ast-table tr.card-row-current > th { background: color-mix(in srgb, var(--app-accent) 12%, transparent); }
+.ast-table tr.card-row-current > :first-child { box-shadow: inset 3px 0 0 var(--app-accent); font-weight: 650; }
 
 /* ---- aside / sidebar (Key Terms, etc.) ---- */
 .ast-aside {

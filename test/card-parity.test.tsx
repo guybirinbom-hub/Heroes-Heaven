@@ -11,7 +11,7 @@ import { loadAstIndex, loadBucketAst, type AstNode } from '../src/sheet/astStore
 import { FeatDetail, type FeatEntry } from '../src/sheet/FeatDetail';
 import { ItemDetail, itemStatRows } from '../src/sheet/ItemDetail';
 import { SpellDetail, spellStatRows } from '../src/sheet/SpellsTab';
-import { MainTab, PinnedDescCard } from '../src/sheet/MainTab';
+import { ActionDetailModal, MainTab, PinnedDescCard, pinnedActionDetail } from '../src/sheet/MainTab';
 import { StatDetailModal } from '../src/sheet/StatDetailModal';
 import { StrikeDetailModal } from '../src/sheet/StrikeDetailModal';
 import { deriveStrikes } from '../src/rules/derive';
@@ -389,7 +389,10 @@ function domJudge(row: Row, s: Read, ref: Read, hidden: { text: string; rule: st
   const pageBlocks = ref.kind === 'page' ? ref.blocks : [];
   const page = lib.labelsOf(pageBlocks);
   const printed = lib.printedMap(s.printed);
-  const body: Set<string> = lib.bodyLabels(s.blocks, row.surface);
+  // Polish round: a row drawn as another surface's popup (`as` — a spell pin reopens as SpellDetail) is
+  // judged as that popup, as the ledger's judgeRow does.
+  const drawnAs = (row as { as?: string }).as ?? row.surface;
+  const body: Set<string> = lib.bodyLabels(s.blocks, drawnAs);
   const ownSq = pageBlocks.map((b) => lib.squash(b.text)).join('|');
   let identity: boolean;
   if (row.mode === 'browse') identity = ref.kind === 'page' && (s.kind !== 'page' || lib.squash(s.blocks.map((b) => b.text).join(' ')) !== lib.squash(pageBlocks.map((b) => b.text).join(' ')));
@@ -401,7 +404,7 @@ function domJudge(row: Row, s: Read, ref: Read, hidden: { text: string; rule: st
   const labels = (row.mode === 'browse' && identity) || ref.kind === 'fallback' ? {} : lib.labelVerdicts({ page, body, printed, glyph: !!ref.glyph, base: lib.refsBase(pageBlocks) });
   const omitted: Omission[] = row.mode === 'mine' && s.lane === 'tree' && !identity && ref.kind === 'page' ? lib.omissionLog(pageBlocks, s.blocks, hidden, printed) : [];
   const unnamed = [...new Set(omitted.flatMap((o) => o.unnamed))].sort();
-  return { labels, identity, placement: row.surface === 'spellDetail' ? [...body].sort() : [], oursLeak: s.leak ? ['appended-ours-html'] : [], unnamed, omitted };
+  return { labels, identity, placement: drawnAs === 'spellDetail' ? [...body].sort() : [], oursLeak: s.leak ? ['appended-ours-html'] : [], unnamed, omitted };
 }
 function ledgerFull(row: Row) {
   return lib.judgeRow(row, trees, { parseBlocks, cleanRun });
@@ -651,17 +654,48 @@ async function renderPin(row: Row, extra?: Partial<Character>): Promise<Read> {
   // sheet, browse otherwise. No character here, so the card is unscoped, as the ledger's row is.
   const pin: PinDescApi = { has: () => false, toggle: (n) => { pinned = togglePinnedDesc({} as PlayState, n).pinnedDescs?.[0] ?? null; } };
   let el: ReactElement;
+  // Polish round: the action card's star (an actions record: ActionDetailModal → RecordCard 'mine') and
+  // StatDetailModal's full-text star (the stat lines' backgrounds / ancestries) are the stars the ledger's
+  // other pin rows model. Mutation lines (polish lane, each red then restored byte-exact, sha1 checked; the
+  // seeded pin sample holds 7 spell and 2 action pin rows): card-scope.mjs modelling spell pins as the
+  // browse card again (pinStarNode without the spell mode, no `as` rows) → 7 disagreements (pin|spells:*);
+  // MainTab.tsx PinnedDescCard `if (spell && false)` → red; RecordCard.tsx pinNode = cur → red.
+  const statBucket = row.bucket === 'backgrounds' || row.bucket === 'ancestries';
   if (row.bucket === 'items') el = <ItemDetail inv={{ instanceId: 'i-pin', itemId: row.id, quantity: 1 } as InventoryItem} item={db.items[row.id]} content={db} onClose={noop} />;
   else if (row.bucket === 'spells') el = <SpellDetail spell={db.spells[row.id]} onClose={noop} />;
+  else if (row.bucket === 'actions') el = <ActionDetailModal detail={{ a: { name: recs('actions')[row.id].name, desc: recs('actions')[row.id].description ?? '', record: { bucket: 'actions', id: row.id } }, pinnable: false }} character={base} content={db} onClose={noop} pinned={new Set()} />;
+  else if (statBucket) el = <StatDetailModal breakdown={{ title: 'Stat', totalText: '+0', parts: [], timeline: [], situational: [{ text: 'a situational line', sourceId: row.id, sourceCollection: row.bucket as never }] }} character={base} content={db} onClose={noop} />;
   else el = <FeatDetail entry={featEntryFor(row, extra)!} onClose={noop} />;
   const m = await mount(el, db, pin);
+  if (statBucket) await click(m.host.querySelector('.sd-sit-more'));
   // Card step 11: FeatDetail is the 'mine' card — its star sits in the page header (.ast-head) or, on the
   // no-page lane, in .picker-head; it hands over the same node the legacy star did (FeatDetail featCardPin).
-  await click(m.host.querySelector('.picker-head .info-star, .ast-head .info-star'));
+  await click(m.host.querySelector(statBucket ? '.card-mine .info-star' : '.picker-head .info-star, .ast-head .info-star'));
   m.stop();
   expect(pinned, `${keyOf(row)}: the star pinned a node`).toBeTruthy();
-  const p = await mount(<PinnedDescCard pin={pinned!} content={db} onClose={noop} />);
-  const r = readPopup(p.host);
+  expect((pinned as PinnedDesc | null)?.mode, `${keyOf(row)}: a sheet star stores mode 'mine'`).toBe('mine');
+  // Fixer round 3: an actions pin reopens with the character the star was pressed on (`base`, as the sheet
+  // hands MainTab's character to PinnedDescCard), so it takes the real reopen — ActionDetailModal with the
+  // Act pinnedActionDetail builds — and the ledger's mine action pin rows are judged on that popup. Every
+  // other pin keeps no character: the card stays unscoped, as the ledger's row is (the scope grid is the
+  // ledger's own pass), and a spell pin keeps its own rank. Mutation line (measured red, MainTab.tsx restored
+  // byte-exact, sha1 checked): PinnedDescCard `if (action && character)` → `… && false` → red
+  // ("pin|actions:sneak: the reopened action pin is the action card (its skill label)").
+  const isAction = row.bucket === 'actions';
+  const p = await mount(<PinnedDescCard pin={pinned!} content={db} character={isAction ? base : undefined} onClose={noop} />);
+  // The reopened action pin is the action card's popup (ActionDetailModal → ActionCard: RecordCard 'mine'),
+  // which the ledger row models; for a curated activity the header carries the tab's skill label.
+  if (isAction) {
+    const act = pinnedActionDetail(db, row.id);
+    expect(act, `${keyOf(row)}: the content holds the action the pin reopens as`).toBeTruthy();
+    if (act?.a.skill) expect(txt(p.host.querySelector('.ast-head .action-skill, .picker-head .action-skill')), `${keyOf(row)}: the reopened action pin is the action card (its skill label)`).toBe(act.a.skill);
+  }
+  // Polish round: a spell pin reopens as SpellDetail itself — read as renderSpell reads it; any other pin
+  // made from the sheet reopens as the record's 'mine' card.
+  const spellPop = p.host.querySelector('.picker.spell-detail');
+  expect(!!spellPop, `${keyOf(row)}: the reopened pin is ${row.bucket === 'spells' ? 'SpellDetail' : 'the mine card'}`).toBe(row.bucket === 'spells');
+  if (!spellPop) expect(p.host.querySelector('.card-mine'), `${keyOf(row)}: the reopened pin is the mine card`).toBeTruthy();
+  const r = spellPop ? readBody([...spellPop.querySelectorAll(':scope .sd-body > .sd-desc, :scope .sd-heighten > .sd-desc')], readStats(spellPop)) : readPopup(p.host);
   p.stop();
   return r;
 }
@@ -992,6 +1026,34 @@ describe('card step 4: the rendered parity check (report mode)', () => {
       expect(row, `the ledger builds a row for ${k}`).toBeTruthy();
       expect(lib.rowEntries(row!, ledgerFull(row!), foldsOf), `ledger findings for ${k}`).toEqual([]);
     }
+  });
+
+  /*
+   * Polish round: a spell pin reopens as SpellDetail itself (MainTab PinnedDescCard), so the ledger models
+   * each spell pin as the spellDetail row of the same spell, tagged `as: 'spellDetail'`, and judges it as that
+   * popup (its spell labels and its placement). The DOM side (renderPin) reads the same tag, so dropping it
+   * would move both sides together and the disagreement count alone would not see it — this case does.
+   * MUTATION LINE (measured red, then card-scope.mjs restored byte-exact from a scratch copy, sha1 checked):
+   *  - scripts/lib/card-scope.mjs surfaceRows `rows.push({ ...r, surface: 'pin', as: 'spellDetail' })` →
+   *    `rows.push({ ...r, surface: 'pin' })` → this case red.
+   */
+  it('the ledger models every spell pin as the spellDetail row it reopens as (`as`), judged as that popup', () => {
+    const spellRows = new Map(rows.filter((r) => r.surface === 'spellDetail').map((r) => [r.id, r]));
+    const pins = rows.filter((r) => r.surface === 'pin' && r.bucket === 'spells') as (Row & { as?: string })[];
+    expect(spellRows.size, 'the ledger builds spellDetail rows').toBeGreaterThan(0);
+    expect(pins.length, 'one spell pin row per spellDetail row').toBe(spellRows.size);
+    for (const p of pins) {
+      expect(p.as, `pin|spells:${p.id} is drawn as SpellDetail`).toBe('spellDetail');
+      const { surface: _s, as: _a, ...rest } = p;
+      const { surface: _t, ...twin } = spellRows.get(p.id)!;
+      expect(rest, `pin|spells:${p.id} is the spellDetail row of the same spell`).toEqual(twin);
+    }
+    // Judged as that popup: the first spellDetail row (by key) whose verdict carries a placement list gives
+    // its pin the same list; a pin judged as a plain card has none.
+    const placed = [...spellRows.values()].sort((a, b) => keyOf(a).localeCompare(keyOf(b))).find((r) => ledgerFull(r).placement.length > 0);
+    expect(placed, 'some spellDetail row carries a placement list').toBeTruthy();
+    const pin = pins.find((p) => p.id === placed!.id)!;
+    expect(ledgerFull(pin).placement, `pin|spells:${pin.id} is judged with SpellDetail's placement`).toEqual(ledgerFull(placed!).placement);
   });
 });
 

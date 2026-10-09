@@ -219,7 +219,9 @@ function titleInline(n: AstNode): AstNode[] {
 }
 
 /* A faithful table (AoN thead/tbody/tr/th/td). Header cells stay <th>; wrapped so a wide table scrolls
-   inside the popup instead of forcing it wider. */
+   inside the popup instead of forcing it wider. Polish round: a row marked `current` (cardScope.ts
+   withLevelRow — the class card's advancement row for the character's level) carries the
+   `card-row-current` class; its cells, words and spans are drawn exactly as any other row's. */
 function TableEl({ node, ctx }: { node: AstNode; ctx: Ctx }): ReactNode {
   const rows: AstNode[] = [];
   (function collect(n: AstNode) {
@@ -234,7 +236,7 @@ function TableEl({ node, ctx }: { node: AstNode; ctx: Ctx }): ReactNode {
       <table className="ast-table">
         <tbody>
           {rows.map((tr, i) => (
-            <tr key={i}>
+            <tr key={i} className={(tr as ScopedNode).current ? 'card-row-current' : undefined}>
               {(tr.c || [])
                 .filter((c) => c.t === 'td' || c.t === 'th')
                 .map((cell, j) => {

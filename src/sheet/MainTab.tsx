@@ -26,7 +26,7 @@ import { AlchemyPanel } from './AlchemyPanel';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
-import { assuranceNote, assuranceResult, markNote, markTooltip, markedActionCost, nameOfRecord, recordMarkersFor, sheetLoreKeys, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
+import { assuranceNote, assuranceResult, markNote, markTooltip, markedActionCost, nameOfRecord, recordMarkersFor, sheetLoreKeys, spellNotesFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { SKILL_ACTIONS, rankAtLeast } from '../rules/skillActions';
 import { RecordCard } from './RecordCard';
 import { scopeOfCharacter } from './cardScope';
@@ -39,6 +39,7 @@ import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { DescBody } from './DescBody';
 import { toPlainText } from './RichText';
 import { StrikeDetailModal } from './StrikeDetailModal';
+import { SpellDetail, spellMaxRank, spellSignatureIds } from './SpellsTab';
 import { CritSpecText } from './CritSpecText';
 import { InfoTerm } from './InfoTerm';
 import { useEscapeClose } from './useEscapeClose';
@@ -95,8 +96,8 @@ const PINNED_SOURCE_LABEL: Record<string, string> = {
  * Pinned list, by the pin's record. A pin made from the sheet (stored mode 'mine': FeatDetail, ItemDetail,
  * StrikeDetailModal) reopens as the 'mine' card at the character's current level — section 6: "A pin made
  * from the sheet reopens as mine at the character's current level" — scoped and drawn as FeatDetail's and
- * the action card are (scopeOfCharacter, printed set empty). Any other pin (search, the Spells tab, a pin
- * saved before step 19) opens the browse card it opened before (what DescriptionModal rendered). Either:
+ * the action card are (scopeOfCharacter, printed set empty). Any other pin (search, a pin saved before
+ * step 19) opens the browse card it opened before (what DescriptionModal rendered). Either:
  *  - a pin that stores its id (play.ts pinOf) opens that record's own page, whatever its title says
  *    ("Caustic Nectar (Acid)" is caustic-nectar);
  *  - a pin saved before step 19 is re-resolved HERE, at read time, by key + title (play.ts pinForRead):
@@ -109,8 +110,34 @@ const PINNED_SOURCE_LABEL: Record<string, string> = {
  * PIN_OURS_KINDS) — it is derive's CURRENT value, so it is built here at read time by the same builder the
  * row uses (cardAtLevel.ts atLevelLines), on both lanes, marked ours, and only while the character still
  * holds the record (the builder gives nothing otherwise).
+ *
+ * Polish round (section 6; RULE: a reopened pin is the SAME popup the record opens from its own tab, scoped
+ * to the character): the action card's and StatDetailModal's built-in stars and the Spells tab's star store
+ * mode 'mine' too (RecordCard pinNode, SpellsTab SpellDetail). With a character:
+ *  - a 'mine' spell pin reopens as SpellDetail itself — the Spells tab's popup, with the character's highest
+ *    castable rank (spellMaxRank: a cantrip or focus spell auto-heightened, its "Cast at" chip), the cast-at
+ *    picker for a signature spell, and the spell notes the character's records write onto it. It is opened
+ *    from no slot, so it heightens as the Spells tab's list rows open it (no `atRank`);
+ *  - a 'mine' pin of an `actions` record reopens as ActionDetailModal itself, with the Act the Main tab
+ *    builds for that record (pinnedActionDetail): the skill label and the marked cost in its header, and its
+ *    ours box from actionOursLines (marker notes, "Your rank (trained): DC 15") — the action card, not a
+ *    bare mine card. A tactic's prepare toggle is not carried (the pin does not know the folio state);
+ *  - any other 'mine' pin reopens as the record's mine card below — FeatDetail's card: RecordCard mine,
+ *    scoped to the character, with the live "At your level" line (atLevelLines) for the records that have
+ *    one. A pin from StatDetailModal's full text reopens as that card too, not as the full-text card it
+ *    was made from (which draws no "At your level" line of its own).
+ * A record the content does not hold, or no character, falls through to the card below.
  */
-export function PinnedDescCard({ pin, content, character, onClose }: { pin: PinnedDesc; content: ContentDatabase; character?: Character | null; onClose: () => void }) {
+export function PinnedDescCard({ pin, content, character, onClose, onPlay, pinned }: {
+  pin: PinnedDesc;
+  content: ContentDatabase;
+  character?: Character | null;
+  onClose: () => void;
+  /** The sheet's play updater and pin keys, for the reopened action card's "Pin to top" toggle (as the
+   *  Main tab hands them to ActionDetailModal). Without them the toggle is not drawn. */
+  onPlay?: PlayUpdater;
+  pinned?: ReadonlySet<string>;
+}) {
   const node = useMemo(() => pinForRead(pin, content), [pin, content]);
   // The same tree lookup RecordCard makes for this node (cached), to know whether the page is drawn.
   const { node: page } = useAstNode(node.key, node.slug ?? astSlug(node.title));
@@ -118,10 +145,26 @@ export function PinnedDescCard({ pin, content, character, onClose }: { pin: Pinn
   const live = pin.mode === 'mine' && node.key ? atLevelLines(character, content, node.key, node.slug) : [];
   const all = [...(page ? ours : []), ...live];
   const box = all.length ? all : undefined;
+  const spell = pin.mode === 'mine' && node.key === 'spells' && node.slug ? content.spells[node.slug] : undefined;
+  if (spell)
+    return (
+      <SpellDetail
+        spell={spell}
+        maxRank={character ? spellMaxRank(character) : undefined}
+        signature={!!character && spellSignatureIds(character.spellcasting).has(spell.id)}
+        notes={character ? spellNotesFor(character, spell.id) : undefined}
+        onClose={onClose}
+      />
+    );
+  const action = pin.mode === 'mine' && character && node.key === 'actions' && node.slug ? pinnedActionDetail(content, node.slug) : undefined;
+  if (action && character)
+    return <ActionDetailModal detail={action} character={character} content={content} onClose={onClose} onPlay={onPlay} pinned={pinned ?? NO_PIN_KEYS} />;
   if (pin.mode === 'mine')
     return <RecordCard node={node} mode="mine" chrome="popup" scope={scopeOfCharacter(character)} printed={[]} ours={box} onExit={onClose} />;
   return <RecordCard node={node} mode="browse" chrome="popup" ours={box} onExit={onClose} />;
 }
+
+const NO_PIN_KEYS: ReadonlySet<string> = new Set();
 
 /** Map an action cost to its filter-chip id, or null if it can't be filtered (variable/duration). */
 function costId(c: ActionCost): string | null {
@@ -209,6 +252,51 @@ function saveActionsSub(v: ActionsSub): void {
 const actionId = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 /** The pin key of an action row: what `character.pinned` holds for it. */
 const actionKey = (name: string) => `action:${name}`;
+
+/** A curated activity as the row the Main tab lists (MainTab enrichActivity): the curated summary inline,
+ *  the full rules text, traits and record from content.actions under the kebab-cased name — or, for a
+ *  feat-activity (Bon Mot, Battle Medicine), which has no action record, from the FEAT record. */
+function activityAct(content: ContentDatabase, a: ActivityDef): Act {
+  const full = content.actions[actionId(a.name)];
+  const rec = a.featId ? content.feats[a.featId] : undefined;
+  return {
+    name: a.name,
+    cost: a.cost,
+    skill: a.skill,
+    traits: full?.traits ?? rec?.traits ?? a.traits,
+    desc: a.desc,
+    fullDesc: full?.description ?? rec?.description,
+    fullRefs: full?.descRefs ?? rec?.descRefs,
+    record: full ? { bucket: 'actions', id: full.id } : rec && a.featId ? { bucket: 'feats', id: a.featId } : undefined,
+  };
+}
+
+/** The costs an action row draws as its cost (MainTab isActionCost: passive stays out). */
+const isRowActionCost = (c?: ActionCost): c is ActionCost =>
+  !!c && (c.type === 'actions' || c.type === 'reaction' || c.type === 'free' || c.type === 'variable' || c.type === 'duration');
+
+/**
+ * Polish round (RULE: a reopened pin is the SAME popup the record opens from its own tab): the action an
+ * `actions` record's pin reopens as, built the way the Main tab builds that record's row, so the reopened
+ * popup is ActionDetailModal with the same Act — the skill label, the cost (ActionCard marks it from the
+ * character's record markers), the trait chips and the ours box (actionOursLines: marker notes, skill-rank
+ * line). A curated activity (Treat Wounds, Seek) is its ACTIVITIES row (activityAct) — pinnable to the top
+ * only where the tab offers that (encounter rows; exploration and downtime rows are not); a camping action
+ * is the Camping list's row (no cost, not pinnable); any other action record is the Feat actions / Tactics
+ * row (its own cost when it is an action cost). Undefined when the content holds no such action.
+ */
+export function pinnedActionDetail(content: ContentDatabase, id: string): DetailAction | undefined {
+  const rec = content.actions[id];
+  if (!rec) return undefined;
+  const def = ACTIVITIES.find((a) => actionId(a.name) === id);
+  if (def) return { a: activityAct(content, def), pinnable: def.mode === 'encounter' };
+  const camping = (rec.traits ?? []).includes('camping');
+  const cost = !camping && isRowActionCost(rec.actionCost) ? rec.actionCost : undefined;
+  return {
+    a: { name: rec.name, ...(cost ? { cost } : {}), desc: rec.description, descRefs: rec.descRefs, traits: rec.traits, record: { bucket: 'actions', id } },
+    pinnable: !camping,
+  };
+}
 
 /** The "Pin to top" toggle on a strike row, an action row and the action popup. Renders nothing without
  *  `onPlay` (a read-only sheet has nothing to pin into). Its glyph is a PIN, never the star: the action
@@ -587,22 +675,7 @@ export function MainTab({
   // Curated activities carry only a short summary; the detail popup wants the FULL rules text +
   // its cross-references (conditions, etc.) + traits, which live in content.actions under the
   // kebab-cased name. Keep the summary inline; surface the full version (when found) in the popup.
-  const enrichActivity = (a: ActivityDef): Act => {
-    const full = content.actions[actionId(a.name)];
-    // A feat-activity (Bon Mot, Battle Medicine) has no action record — its full text lives on the
-    // FEAT record, and the row used to open with only the one-line curated summary.
-    const rec = a.featId ? content.feats[a.featId] : undefined;
-    return {
-      name: a.name,
-      cost: a.cost,
-      skill: a.skill,
-      traits: full?.traits ?? rec?.traits ?? a.traits,
-      desc: a.desc,
-      fullDesc: full?.description ?? rec?.description,
-      fullRefs: full?.descRefs ?? rec?.descRefs,
-      record: full ? { bucket: 'actions', id: full.id } : rec && a.featId ? { bucket: 'feats', id: a.featId } : undefined,
-    };
-  };
+  const enrichActivity = (a: ActivityDef): Act => activityAct(content, a);
   /* …and a feat-activity is shown only to a character who OWNS the feat: Battle Medicine sat in
    * every character's Skill actions, promising an in-combat heal to fighters who never took it. */
   const ownedFeatIdSet = new Set(character.feats.map((f) => f.featId));
@@ -1634,7 +1707,7 @@ export function MainTab({
         )}
       </section>
 
-      {openDesc && <PinnedDescCard pin={openDesc} content={content} character={character} onClose={() => setOpenDesc(null)} />}
+      {openDesc && <PinnedDescCard pin={openDesc} content={content} character={character} onPlay={onPlay} pinned={pinned} onClose={() => setOpenDesc(null)} />}
       {detailAction && (
         <ActionDetailModal
           detail={detailAction}

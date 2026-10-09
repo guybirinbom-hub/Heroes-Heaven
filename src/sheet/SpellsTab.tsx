@@ -116,6 +116,41 @@ export function spellStatRows(spell: Spell): [string, string | undefined][] {
   ];
 }
 
+/**
+ * Highest rank the character can cast — bounds SpellDetail's heightening rank selector. Includes the focus
+ * auto-heighten target (ceil(level/2)) so a focus-only caster (champion/monk) can still see the heightened
+ * text of e.g. Lay on Hands. Exported (polish round) so the Pinned list reopens a spell pin as the very
+ * popup the Spells tab opens (MainTab PinnedDescCard), cast-at picker and auto-heightening included.
+ */
+export function spellMaxRank(character: Pick<Character, 'level' | 'spellcasting'>): number {
+  const mains = character.spellcasting.filter((e) => e.type === 'prepared' || e.type === 'spontaneous');
+  const focus = character.spellcasting.find((e) => e.type === 'focus');
+  const itemEntries = character.spellcasting.filter((e) => e.type === 'items' || e.type === 'innate');
+  return Math.max(
+    0,
+    focus ? Math.ceil(character.level / 2) : 0,
+    // INNATE spells count too. A cantrip auto-heightens to ceil(level/2) — "A cantrip is heightened to
+    // a spell rank equal to half your level rounded up" (Awakened Jewel, Awakened Magic, Bone Magic) —
+    // and a leveled grant's own rank is the rank it is cast at. This list read prepared/spontaneous/
+    // focus ONLY, so a character whose only magic is innate saw every cantrip frozen at its base rank
+    // in the detail view, while a class caster's identical cantrip printed "heightened to 10th".
+    ...itemEntries
+      .filter((e) => e.type === 'innate')
+      .flatMap((e) => [
+        ...(e.cantrips.length ? [Math.ceil(character.level / 2)] : []),
+        ...Object.keys(e.repertoire ?? {}).map(Number),
+      ]),
+    ...mains.flatMap((e) =>
+      [...Object.keys(e.prepared ?? {}), ...Object.keys(e.repertoire ?? {}), ...Object.keys(e.slots ?? {})].map(Number),
+    ),
+  );
+}
+
+/** Signature spells (spontaneous casters) — the only spells SpellDetail keeps the "cast at" picker for. */
+export function spellSignatureIds(spellcasting: readonly SpellcastingEntry[]): Set<string> {
+  return new Set(spellcasting.flatMap((e) => (e.repertoire ? e.signature ?? [] : [])));
+}
+
 /** Detail overlay for a single spell, including its heightening entries. */
 function castText(c?: ActionCost): string {
   if (!c) return '';
@@ -237,8 +272,10 @@ export function SpellDetail({
           {spell.name}
           <span style={{ marginLeft: 'auto', display: 'inline-flex', gap: 8, alignItems: 'center' }}>
             {/* card step 7a: `slug` = the spell's own id, so the pinned popup opens THIS spell's page
-                (section 2 rule 2), never the page its name slugs to. */}
-            <PinStar node={{ title: spell.name, description: spell.description, descRefs: spell.descRefs, key: 'spells', slug: spell.id }} />
+                (section 2 rule 2), never the page its name slugs to. Polish round (section 6: "A pin made
+                from the sheet reopens as mine"): this popup is the Spells tab's — the character's own —
+                so its pin stores mode 'mine' and MainTab's PinnedDescCard reopens it as this popup. */}
+            <PinStar node={{ title: spell.name, description: spell.description, descRefs: spell.descRefs, key: 'spells', slug: spell.id, mode: 'mine' }} />
             <button className="picker-close" onClick={onClose} aria-label="Close">
               <i className="ti ti-x" aria-hidden="true" />
             </button>
@@ -1496,37 +1533,16 @@ export function SpellsTab({
       .map((s) => ({ spell: s, grant: granted.get(s.id) }))
       .sort((a, b) => a.spell.rank - b.spell.rank || a.spell.name.localeCompare(b.spell.name));
   }, [character.overrides, character.grantedRituals, character.knownRituals, content]);
-  // Highest rank the character can cast — bounds the heightening rank selector. Includes the focus
-  // auto-heighten target (ceil(level/2)) so a focus-only caster (champion/monk) can still see the
-  // heightened text of e.g. Lay on Hands.
-  const maxRank = Math.max(
-    0,
-    focus ? Math.ceil(character.level / 2) : 0,
-    // INNATE spells count too. A cantrip auto-heightens to ceil(level/2) — "A cantrip is heightened to
-    // a spell rank equal to half your level rounded up" (Awakened Jewel, Awakened Magic, Bone Magic) —
-    // and a leveled grant's own rank is the rank it is cast at. This list read prepared/spontaneous/
-    // focus ONLY, so a character whose only magic is innate saw every cantrip frozen at its base rank
-    // in the detail view, while a class caster's identical cantrip printed "heightened to 10th".
-    ...itemEntries
-      .filter((e) => e.type === 'innate')
-      .flatMap((e) => [
-        ...(e.cantrips.length ? [Math.ceil(character.level / 2)] : []),
-        ...Object.keys(e.repertoire ?? {}).map(Number),
-      ]),
-    ...mains.flatMap((e) =>
-      [...Object.keys(e.prepared ?? {}), ...Object.keys(e.repertoire ?? {}), ...Object.keys(e.slots ?? {})].map(Number),
-    ),
-  );
+  // Highest rank the character can cast — bounds the heightening rank selector (spellMaxRank, shared
+  // with the Pinned list's reopened spell pin, MainTab PinnedDescCard).
+  const maxRank = spellMaxRank(character);
   // Through the helper, not off the deity record: Splinter Faith replaces which four domains this
   // character's deity has, and reading the printed list here would show a splinter-faith cleric the
   // domains they gave up.
   const deityDomains = deityDomainsOf(character, content).domains;
   // Signature spells (spontaneous casters) — the only spells you can freely re-rank when casting, so
   // they're the only ones that keep the "cast at" rank picker in the detail view.
-  const signatureIds = useMemo(
-    () => new Set(character.spellcasting.flatMap((e) => (e.repertoire ? e.signature ?? [] : []))),
-    [character.spellcasting],
-  );
+  const signatureIds = useMemo(() => spellSignatureIds(character.spellcasting), [character.spellcasting]);
   const multi = mains.length > 1;
 
   function toggleFilter(id: string) {
