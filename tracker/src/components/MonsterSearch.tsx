@@ -3,7 +3,7 @@ import { searchCreatures, loadCreature, loadCustomCreatures, deleteCustomCreatur
 import type { IndexEntry } from '../data/dataStore'
 import type { Creature } from '../types/pf2e'
 import { useCombatStore } from '../store/combatStore'
-import { usePartyStore } from '../store/partyStore'
+import { usePartyStore, addPartyMemberToOrder } from '../store/partyStore'
 import type { PartyPlayer } from '../store/partyStore'
 import { TrashIcon, XIcon, SearchIcon } from './Icons'
 import { RangeSlider } from './RangeSlider'
@@ -902,10 +902,10 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
       } else if (it.kind === 'custom') {
         addCombatant(it.creature, { count: it.qty })
       } else {
-        // Party member — single instance, original signature.
-        const pl = it.player
-        if (pl.memberType === 'npc') addCombatant(pl.creature ?? null, { name: pl.name, isPC: false })
-        else addCombatant(null, { name: pl.name, isPC: true, maxHP: pl.pcStats?.maxHP, charId: pl.charId })
+        // Party member — single instance, through the ONE party add the party page's "Add to
+        // Initiative" uses too. This copy used to leave the ally flag off, so a party NPC added from
+        // here was rated as an enemy (owner's list 2026-10-01, item 5).
+        addPartyMemberToOrder(it.player)
       }
     }
     onClose()

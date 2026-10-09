@@ -29,3 +29,14 @@ export function useHostPcStats(name: string): PcStats | null {
   if (!map) return null
   return map.get(name.trim().toLowerCase()) ?? null
 }
+
+/**
+ * A PC's level as the host's sheet has it, for every PC row at once — the encounter rating counts
+ * each PC in the order at their own level (owner's list 2026-10-01, item 5). Undefined for a name
+ * the host doesn't know and for every name when running standalone, where the caller's fallback
+ * (the typed party level) stands.
+ */
+export function useHostPcLevel(): (name: string) => number | undefined {
+  const map = useContext(Ctx)
+  return (name: string) => map?.get(name.trim().toLowerCase())?.level
+}

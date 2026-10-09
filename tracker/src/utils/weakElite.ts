@@ -1,5 +1,22 @@
 import type { Creature } from '../types/pf2e'
 
+/**
+ * The level a board row fights at: scaled to a level (which wins, as combatStore.adjustedCreature
+ * decides — setScaledLevel clears Elite / Weak), else Elite +1 or Weak −1, else the printed level.
+ * The level-only twin of adjustedCreature, so the encounter maths reads the same rule without
+ * deep-cloning a stat block per row per render. NaN when the stat block carries no numeric level
+ * (a party NPC's snapshot in 'pf2e-parties' is stored unchecked), so a caller can refuse it with
+ * Number.isFinite instead of rating against a string or undefined.
+ */
+export function effectiveLevel(
+  creature: { level: number },
+  how: { isElite?: boolean; isWeak?: boolean; scaledToLevel?: number | null },
+): number {
+  if (how.scaledToLevel != null) return how.scaledToLevel
+  const base = typeof creature.level === 'number' ? creature.level : NaN
+  return base + (how.isElite ? 1 : how.isWeak ? -1 : 0)
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Official Weak/Elite adjustments (Bestiary 1)
 // ─────────────────────────────────────────────────────────────────────────────

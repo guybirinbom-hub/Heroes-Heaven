@@ -23,6 +23,8 @@ export interface PortableCombatant {
   creatureSource?: string | null
   isPC: boolean
   isAlly?: boolean
+  /** The party member the row was added for (PartyPlayer.id), when there was one. */
+  partyMemberId?: string
   maxHP: number
   isElite: boolean
   isWeak: boolean
@@ -65,6 +67,7 @@ function toPortable(saved: SavedEncounter): PortableEncounter {
       creatureSource: sc.creature?.source ?? null,
       isPC: sc.isPC,
       isAlly: sc.isAlly ?? false,
+      ...(sc.partyMemberId ? { partyMemberId: sc.partyMemberId } : {}),
       maxHP: sc.maxHP,
       isElite: sc.isElite,
       isWeak: sc.isWeak,
@@ -183,6 +186,7 @@ export async function importEncountersFromText(text: string): Promise<ImportResu
         creatureId: creature?.id ?? null,
         isPC: !!sc.isPC,
         isAlly: !!sc.isAlly,
+        partyMemberId: typeof sc.partyMemberId === 'string' ? sc.partyMemberId : undefined,
         // A resolved stat block's maximum is the ADJUSTED one, as Load Encounter and the board set
         // it (adjustedCreature); the printed `defenses.hp` stored an Elite combatant's base HP when
         // the file carried no maxHP, and a re-export wrote it on (encounterTransfer.test). A row

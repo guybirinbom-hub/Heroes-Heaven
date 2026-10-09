@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef, Children, type ReactNode } from 'react'
-import { usePartyStore } from '../store/partyStore'
+import { usePartyStore, addPartyMemberToOrder } from '../store/partyStore'
 import { parseWanderersGuide } from '../utils/wanderersGuide'
 import { parsePathbuilder } from '../utils/pathbuilder'
-import { useCombatStore } from '../store/combatStore'
 import type { PartyPlayer } from '../store/partyStore'
 import type { Creature } from '../types/pf2e'
 import { MonsterSearch } from './MonsterSearch'
@@ -295,7 +294,6 @@ export function PartyView({ partyId, playersSlot }: Props) {
   // drops the name editor, the level badge and Delete; the standalone tracker (no playersSlot) keeps
   // all three, because there it's the only place to manage the party.
   const hostManaged = playersSlot != null
-  const { combatants, addCombatant } = useCombatStore()
   const globalDetail = useSettingsStore(s => s.pcDetail)
   const party = parties.find(p => p.id === partyId)
 
@@ -365,19 +363,11 @@ export function PartyView({ partyId, playersSlot }: Props) {
   const handleDelete = () => { removeParty(partyId) }
 
   const addAllToInitiative = () => {
-    // Who is already in the order is decided in ONE place per kind. A PC carries the stable charId
-    // through, and `addCombatant`'s own dedupe (isSamePc — charId first, name only when a side has
-    // none) does the skipping, so this button and the card's "+" can't disagree about a renamed PC.
-    // An NPC has no id, so a snapshot name check here is all there is.
-    const existing = new Set(combatants.map(c => c.name.trim().toLowerCase()))
-    party.players.forEach(pl => {
-      if (pl.memberType === 'npc') {
-        if (existing.has(pl.name.trim().toLowerCase())) return
-        addCombatant(pl.creature ?? null, { name: pl.name, isPC: false, isAlly: true })
-      } else {
-        addCombatant(null, { name: pl.name, isPC: true, maxHP: pl.pcStats?.maxHP, charId: pl.charId })
-      }
-    })
+    // Who is already in the order, and how a member goes in, is decided in ONE place —
+    // addPartyMemberToOrder, which the Add-combatants dialog's Party Members rows call too, so the
+    // two routes can't disagree about whether a party NPC is an ally (owner's list 2026-10-01,
+    // item 5). A PC still defers to `addCombatant`'s own dedupe (isSamePc), as the card's "+" does.
+    party.players.forEach(addPartyMemberToOrder)
   }
 
   const handleCreatureSelect = (creature: Creature) => {

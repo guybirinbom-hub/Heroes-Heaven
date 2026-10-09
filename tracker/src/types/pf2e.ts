@@ -388,6 +388,11 @@ export interface Combatant {
    *  sides have one. Absent in the standalone tracker and on every hand-typed row. */
   charId?: string
   isAlly: boolean    // true = allied NPC (counts with players for XP purposes)
+  /** The party member (`PartyPlayer.id`) this row was added for, stamped by the ONE party add
+   *  (partyStore.addPartyMemberToOrder). It is how the encounter rating knows a party NPC's row is
+   *  already on the board, so a same-named hostile copy is never mistaken for it. Absent on every
+   *  other row, and CLEARED on a duplicate (a copy is not that member). */
+  partyMemberId?: string
   initiative: number | null
   currentHP: number
   maxHP: number
@@ -417,6 +422,7 @@ export interface SavedEncounter {
     isPC: boolean
     isAlly?: boolean    // optional for back-compat with older saves
     charId?: string     // the campaign character a PC row points at; absent on pre-charId saves
+    partyMemberId?: string  // the party member the row was added for; absent on older saves
     maxHP: number
     isElite: boolean
     isWeak: boolean

@@ -260,7 +260,7 @@ interface CombatStore {
   diceResults: DiceResult[]
   /** Whether the combat-edit undo / redo stacks have anything to apply. */
   canUndo: boolean; canRedo: boolean
-  addCombatant: (creature: Creature | null, opts?: { name?: string; isPC?: boolean; isAlly?: boolean; initiative?: number|null; count?: number; maxHP?: number; charId?: string }) => void
+  addCombatant: (creature: Creature | null, opts?: { name?: string; isPC?: boolean; isAlly?: boolean; initiative?: number|null; count?: number; maxHP?: number; charId?: string; partyMemberId?: string }) => void
   /** Add another copy of an existing combatant (same stat block + weak/elite/
    *  scaled state), inserted right after it with fresh HP and no conditions.
    *  No-op for PCs (a player character can't appear twice). */
@@ -426,7 +426,9 @@ interface PersistedCombat {
 function combatSignature(combatants: Combatant[]): string {
   return combatants.map(c => [
     c.name, c.creature?.id ?? c.creature?.name ?? '',
-    c.isPC ? 1 : 0, c.isAlly ? 1 : 0,
+    // The party-member stamp joins the fingerprint only when there is one, so a board saved before
+    // the stamp existed still reads "unchanged since save" (no Clear prompt for an untouched board).
+    c.isPC ? 1 : 0, c.isAlly ? 1 : 0, ...(c.partyMemberId != null ? [`pm:${c.partyMemberId}`] : []),
     c.currentHP, c.maxHP, c.tempHP,
     c.isElite ? 1 : 0, c.isWeak ? 1 : 0, c.scaledToLevel ?? '', c.isDefeated ? 1 : 0,
     c.notes ?? '',
@@ -750,6 +752,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         s.combatants.push({
           id: nid(), name, creature: creature ?? null,
           isPC: opts.isPC ?? false, isAlly: opts.isAlly ?? false, charId: opts.charId,
+          partyMemberId: opts.partyMemberId,
           initiative: opts.initiative ?? null,
           currentHP: hp, maxHP: hp, tempHP: 0,
           conditions: [], isElite: false, isWeak: false, notes: '', isDefeated: false,
@@ -782,6 +785,10 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         ...src,
         id: nid(),
         name,
+        // A copy is not the party member the original was added for. It keeps isAlly, so it is
+        // rated as one more allied creature in the fight (as any stat-blocked ally is); without the
+        // stamp it can't block that member's own row from being added again or be taken for it.
+        partyMemberId: undefined,
         currentHP: src.maxHP,
         tempHP: 0,
         conditions: [],
@@ -1386,6 +1393,8 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
           // what dropped the link: a reloaded save was a PC by name only, and the party card's "+"
           // offered to add them a second time.
           charId: slim.charId,
+          // The party member the row was added for — field by field for the same reason.
+          partyMemberId: slim.partyMemberId,
           scaledToLevel: slim.scaledToLevel, notes: slim.notes,
         }
       }),
@@ -1414,6 +1423,9 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         const hp = creature ? adjustedCreature(creature, { ...sc, scaledToLevel }).defenses.hp : sc.maxHP
         return {
           id: nid(), name: sc.name, creature, isPC: sc.isPC, isAlly: sc.isAlly ?? false, charId: sc.charId,
+          // A string or nothing: a hand-written save's `null` is no stamp (it would read as a party
+          // member in encounter.sidesOf and block the real member's add).
+          partyMemberId: typeof sc.partyMemberId === 'string' ? sc.partyMemberId : undefined,
           initiative: null, currentHP: hp, maxHP: hp, tempHP: 0, conditions: [],
           isElite: sc.isElite, isWeak: sc.isWeak, scaledToLevel,
           notes: sc.notes, isDefeated: false,

@@ -5,6 +5,7 @@ import type { PcStats, PcSkill, PcDetailConfig, ImportedSheet } from '../utils/p
 import type { ImportedCharacter } from '../utils/wanderersGuide'
 import { useCombatStore } from './combatStore'
 import { notifyPersist } from './persistBus'
+import { isRowOfPartyNpc } from '../utils/encounter'
 
 let _pid = 0, _plid = 0
 const npid = () => `party-${Date.now()}-${++_pid}`
@@ -93,6 +94,33 @@ interface PartyStore {
   /** Re-read the parties out of localStorage — another of this GM's devices wrote a newer copy and the
    *  mirror (src/data/trackerSync.ts) put it there. Keeps the active party selected when it survived. */
   reloadFromStorage: () => void
+}
+
+/**
+ * THE ONE WAY a party member enters the initiative order. The party page's "Add to Initiative" and
+ * the Add-combatants dialog's "Party Members" rows both call this, so the two routes can't disagree
+ * again: the dialog's copy left the ally flag off, and a party NPC added from it was rated as an
+ * ENEMY (its XP added to the fight, left out of the party) while the same NPC added from the party
+ * page was rated as one of the party (owner's list 2026-10-01, item 5).
+ *
+ *  - NPC: one row per party member — skipped when its row is already in the order
+ *    (encounter.isRowOfPartyNpc: a row stamped with this member, or an older unstamped row of its
+ *    name that is plainly it — never a hostile copy of the creature it is named after). Added as an
+ *    ALLY, stamped with the member's id. Its level is its stat block's (encounter.partyOf).
+ *  - PC: addCombatant's own dedupe decides (isSamePc: charId first, the name only when a side has
+ *    none); stamped with the member's id too.
+ *
+ * Reads the order fresh on every call, so a batch (the whole party, a cart) sees its own adds.
+ */
+export function addPartyMemberToOrder(pl: PartyPlayer): void {
+  const combat = useCombatStore.getState()
+  if (pl.memberType === 'npc') {
+    const already = combat.combatants.some(c => isRowOfPartyNpc(c, pl))
+    if (already) return
+    combat.addCombatant(pl.creature ?? null, { name: pl.name, isPC: false, isAlly: true, partyMemberId: pl.id })
+  } else {
+    combat.addCombatant(null, { name: pl.name, isPC: true, maxHP: pl.pcStats?.maxHP, charId: pl.charId, partyMemberId: pl.id })
+  }
 }
 
 function saveToStorage(parties: Party[]) {

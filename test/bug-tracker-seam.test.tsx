@@ -399,6 +399,155 @@ describe('the campaign ↔ tracker seam', () => {
     expect(el.textContent).toContain('Moderate');
   }, 120_000);
 
+  it('rates a fight against the party members IN THE ORDER at their own levels, a party NPC the same from either add', async () => {
+    // owner's list 2026-10-01, item 5: "the difficulty calculator needs to look at each party player and
+    // npc and calculate according to their lv. the calculation is only for the ones in the tracker not
+    // the ones sitting in the party dashboard. don't show calculation if there aren't any party members /
+    // npcs in the fight." Party level per GM Core pg. 57 (Archives rules-2653); thresholds per GM Core
+    // pg. 75 (rules-2717). Synthetic names only.
+    //
+    // Four PCs at 5, 5, 5 and 4, a level-5 party NPC, one level-7 enemy: pg. 57 gives party level 5
+    // (one behind → the highest), five members, so the low budget is 80 and the enemy's 80 XP is LOW.
+    // The Add-combatants dialog used to add that NPC as an enemy: 40 + 80 = 120 XP against four, SEVERE.
+    //
+    // MUTATIONS (each applied and run):
+    //  - MonsterSearch cart: back to its own `addCombatant(pl.creature ?? null, { name: pl.name, isPC:
+    //    false })` instead of addPartyMemberToOrder: FAILS at the dialog row's `isAlly` — the NPC is an
+    //    enemy row again (the badge itself is rescued by the read-only heal, which is why the row is
+    //    asserted directly).
+    //  - InitiativeTracker: drop `party.inOrder > 0 &&` from the badge gate: FAILS at the first
+    //    assertion — an enemy alone is rated (against nobody, as Extreme). Gate on `party.size`
+    //    instead: FAILS at the last assertion — a party knocked flat lost its badge mid-fight.
+    //  - InitiativeTracker: `partyNpcs` handed to the rating as [] (the read-only heal switched off):
+    //    FAILS at ROUTE (c) — the old board's NPC row is an enemy again, "120 XP" "Severe".
+    //  - InitiativeTracker: `pcLevel: c => hostPcLevel(c.name)` removed: FAILS at the "i" table — every
+    //    PC reads the campaign's level, "(5, 5, 5, 5)". Put back as `hostPcLevel(c.name)` instead of
+    //    `pcLevelOf(…)`: FAILS at the renamed row — "Tobin the Tall" reads the campaign's 5.
+    //  - InitiativeTracker: the modal handed `party` only when `party.size > 0`: FAILS at the last
+    //    assertion — a party knocked flat lost its "rated against" block.
+    //  - EncounterTablesModal: drop the `{party && (…)}` block: FAILS at the "i" table — no counted party.
+    const four = [
+      saved('char-a', 'Ayla Brightwood', 5),
+      saved('char-b', 'Doran Vex', 5),
+      saved('char-c', 'Mira Holloway', 5),
+      saved('char-d', 'Tobin Reed', 4),
+    ];
+    srv.party = four.map((sc, i) => publish(sc, `owner-${i}`));
+    const el = await openTracker();
+    const tablesBtn = () => el.querySelector('button[aria-label="Encounter building reference tables"]');
+    // The badge itself — the difficulty word, the XP and the "i" — not the whole page, which also
+    // carries stat-block text.
+    const badge = () => tablesBtn()?.parentElement?.parentElement?.textContent ?? '';
+
+    const { SAMPLE_COMBATANT } = await import('../tracker/src/data/sampleStatBlock');
+    const statBlock = (id: string, name: string, level: number): Creature =>
+      ({ ...JSON.parse(JSON.stringify(SAMPLE_COMBATANT.creature)), id, name, level }) as Creature;
+    const HIRELING = statBlock('seam-hireling', 'Hired Blade', 5);
+    const BRUTE = statBlock('seam-brute', 'Ridge Brute', 7);
+    const partyId = usePartyStore.getState().parties.find((p) => p.campaignId === CAMPAIGN.id)!.id;
+    act(() => usePartyStore.getState().addNPC(partyId, HIRELING));
+    await flush(1);
+
+    // No party member in the fight → no rating at all, however many enemies there are.
+    act(() => useCombatStore.getState().addCombatant(BRUTE));
+    await flush(1);
+    expect(useCombatStore.getState().combatants).toHaveLength(1);
+    expect(tablesBtn()).toBeNull();
+
+    // ROUTE (a): the party page's "Add to Initiative".
+    click(btn('Add to Initiative'));
+    await flush(2);
+    const rowA = useCombatStore.getState().combatants.find((c) => c.name === 'Hired Blade')!;
+    expect([rowA.isAlly, rowA.partyMemberId]).toEqual([true, expect.any(String)]);
+    expect(badge()).toContain('80 XP');
+    expect(badge()).toContain('Low');
+
+    // The "i" table says who was counted, at what level, and this party's thresholds.
+    click(tablesBtn()!);
+    await flush(1);
+    const counted = el.querySelector('[data-testid="encounter-party"]');
+    expect(counted?.textContent).toContain('4 PCs (5, 5, 5, 4) + 1 NPC (5) → party level 5, +0 extra');
+    expect(el.textContent).toContain('This party (5)');
+    act(() => void el.querySelector('.modal-overlay')!.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+    await flush(1);
+
+    // A PC row whose name no longer matches the sheet (renamed after it joined the order) still
+    // counts at its own level: the row's party stamp finds its player, and the player's name finds
+    // the sheet (encounter.pcLevelOf). By the row's name alone it read the campaign's 5.
+    act(() => useCombatStore.setState((s) => ({
+      combatants: s.combatants.map((c) => (c.name === 'Tobin Reed' ? { ...c, name: 'Tobin the Tall' } : c)),
+    })));
+    await flush(1);
+    expect(useCombatStore.getState().combatants.find((c) => c.name === 'Tobin the Tall')?.partyMemberId).toEqual(expect.any(String));
+    click(tablesBtn()!);
+    await flush(1);
+    expect(el.querySelector('[data-testid="encounter-party"]')?.textContent).toContain('4 PCs (5, 5, 5, 4) + 1 NPC (5)');
+    act(() => void el.querySelector('.modal-overlay')!.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+    await flush(1);
+
+    // ROUTE (b): a fresh board, the NPC through the Add-combatants dialog's Party Members row.
+    act(() => useCombatStore.setState({ combatants: [], round: 1, activeIndex: 0, selectedId: null, inCombat: false }));
+    await flush(1);
+    act(() => trackerUi.setMonsterSearch(true));
+    await flush(2);
+    const dialog = [...el.querySelectorAll('.modal-overlay')].find((o) =>
+      [...o.querySelectorAll('input')].some((i) => i.placeholder === 'Search by name...'));
+    if (!dialog) throw new Error('the Add-combatants dialog did not open');
+    const memberRow = [...dialog.querySelectorAll('span')].find((s) => (s.textContent ?? '').trim() === 'Hired Blade');
+    if (!memberRow) throw new Error(`no Party Members row for the NPC — dialog held: ${(dialog.textContent ?? '').slice(0, 300)}`);
+    click(memberRow);
+    await flush(1);
+    const addBtn = [...dialog.querySelectorAll('button')].find((b) => (b.textContent ?? '').startsWith('Add to Tracker'));
+    click(addBtn!);
+    await flush(2);
+    const rowB = useCombatStore.getState().combatants.find((c) => c.name === 'Hired Blade')!;
+    expect(rowB.isAlly).toBe(true);
+    expect(rowB.partyMemberId).toBe(rowA.partyMemberId);
+    // The PCs, then the enemy — the NPC is not added a second time by the party button.
+    click(btn('Add to Initiative'));
+    await flush(2);
+    expect(useCombatStore.getState().combatants.filter((c) => c.name === 'Hired Blade')).toHaveLength(1);
+    act(() => useCombatStore.getState().addCombatant(BRUTE));
+    await flush(1);
+    expect(badge()).toContain('80 XP');
+    expect(badge()).toContain('Low');
+
+    // ROUTE (c): a board SAVED by the old dialog route — the NPC's row with no ally flag and no
+    // stamp. The tracker heals it at rating time (never writing it back). The hireling is renamed
+    // first: an NPC named after its own stat block can't be told from a hostile copy, so only a
+    // member with a name of its own is healed (encounter.looksLikePartyNpc).
+    const npcId = rowA.partyMemberId!;
+    act(() => usePartyStore.setState((s) => ({
+      parties: s.parties.map((p) => (p.id !== partyId ? p : {
+        ...p, players: p.players.map((pl) => (pl.id === npcId ? { ...pl, name: 'Captain Hale' } : pl)),
+      })),
+    })));
+    act(() => useCombatStore.setState((s) => ({
+      combatants: s.combatants.map((c) => (c.partyMemberId === npcId
+        ? { ...c, name: 'Captain Hale', isAlly: false, partyMemberId: undefined } : c)),
+    })));
+    await flush(1);
+    const legacy = useCombatStore.getState().combatants.find((c) => c.name === 'Captain Hale')!;
+    expect([legacy.isAlly, legacy.partyMemberId]).toEqual([false, undefined]);
+    expect(badge()).toContain('80 XP');
+    expect(badge()).toContain('Low');
+    // The heal is a reading: the row on the board is untouched.
+    expect(useCombatStore.getState().combatants.find((c) => c.name === 'Captain Hale')!.isAlly).toBe(false);
+
+    // Every party member knocked flat: still a fight in progress, the badge stays, its XP holds still
+    // (the level is chosen over everyone in the order, the defeated included), and the "i" table
+    // still says who the fight is rated against.
+    act(() => useCombatStore.setState((s) => ({
+      combatants: s.combatants.map((c) => (c.creature?.id === 'seam-brute' ? c : { ...c, isDefeated: true })),
+    })));
+    await flush(1);
+    expect(tablesBtn()).not.toBeNull();
+    expect(badge()).toContain('80 XP');
+    click(tablesBtn()!);
+    await flush(1);
+    expect(el.querySelector('[data-testid="encounter-party"]')?.textContent).toContain('5 down → party level 5');
+  }, 180_000);
+
   it('reads a PC’s HP and conditions from their sheet, and pushes the GM’s back to it', async () => {
     // tracker 2026-09-15: seam
     const db = content();

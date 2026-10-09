@@ -1,8 +1,14 @@
 import { XIcon } from './Icons'
+import { describeParty, type PartyInFight, type EncounterStats } from '../utils/encounter'
 
 interface Props {
   /** Current encounter difficulty, highlighted in the budget table if given. */
   current?: string
+  /** The party the badge rated the fight against (encounter.partyOf) — shown so the GM can see who
+   *  was counted, at what level (owner's list 2026-10-01, item 5). Absent: the plain reference. */
+  party?: PartyInFight
+  /** That party's thresholds (computeEncounter's budget), shown beside the 4-player table. */
+  budget?: EncounterStats['budget']
   onClose: () => void
 }
 
@@ -38,8 +44,15 @@ const td: React.CSSProperties = {
 }
 const tdNum: React.CSSProperties = { ...td, fontFamily: 'var(--font-mono)', color: 'var(--linked)', whiteSpace: 'nowrap' }
 
-export function EncounterTablesModal({ current, onClose }: Props) {
+export function EncounterTablesModal({ current, party, budget, onClose }: Props) {
   const cur = (current ?? '').toLowerCase()
+  // This party's column: shown only when the badge handed over who it counted.
+  const mine = party && budget ? budget : null
+  const mineCell = (threat: string): string => {
+    if (!mine) return ''
+    const t = mine[threat.toLowerCase() as keyof typeof mine]
+    return threat === 'Trivial' ? `${t} or less` : String(t)
+  }
   return (
     <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="modal-box" style={{ maxWidth: 660, maxHeight: '88vh', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -53,6 +66,19 @@ export function EncounterTablesModal({ current, onClose }: Props) {
           </button>
         </div>
 
+        {/* Who this fight was rated against */}
+        {party && (
+          <div data-testid="encounter-party" style={{ fontFamily: 'var(--font-ui)', fontSize: 12.5, color: 'var(--text)', lineHeight: 1.5 }}>
+            <div className="pf-label" style={{ marginBottom: 4 }}>This fight is rated against</div>
+            <div style={{ fontFamily: 'var(--font-mono)', color: 'var(--linked)' }}>{describeParty(party)}</div>
+            <div style={{ marginTop: 4, fontSize: 11.5, color: 'var(--text-muted)' }}>
+              Only the party members in the initiative order count, each at their own level. Party level per GM Core
+              pg. 57: the highest level if only one or two are behind, otherwise the average; a member 2 or more
+              levels above it counts as one more member per 2 levels.
+            </div>
+          </div>
+        )}
+
         {/* Encounter Budget */}
         <div>
           <div className="pf-label" style={{ marginBottom: 6 }}>XP Budget by Threat</div>
@@ -62,6 +88,8 @@ export function EncounterTablesModal({ current, onClose }: Props) {
                 <th style={th}>Threat</th>
                 <th style={{ ...th, textAlign: 'right' }}>XP Budget</th>
                 <th style={{ ...th, textAlign: 'right' }}>Character Adjustment</th>
+                {/* The size the badge's budget used (InitiativeTracker keeps it at least 1). */}
+                {mine && party && <th style={{ ...th, textAlign: 'right' }}>This party ({Math.max(1, party.size + party.extra)})</th>}
               </tr>
             </thead>
             <tbody>
@@ -72,13 +100,14 @@ export function EncounterTablesModal({ current, onClose }: Props) {
                     <td style={{ ...td, fontWeight: on ? 700 : 600, color: on ? 'var(--accent)' : 'var(--text)' }}>{threat}</td>
                     <td style={{ ...tdNum, textAlign: 'right' }}>{xp}</td>
                     <td style={{ ...tdNum, textAlign: 'right', color: 'var(--text-muted)' }}>{adj}</td>
+                    {mine && <td style={{ ...tdNum, textAlign: 'right', fontWeight: on ? 700 : undefined }}>{mineCell(threat)}</td>}
                   </tr>
                 )
               })}
             </tbody>
           </table>
           <div style={{ marginTop: 7, fontFamily: 'var(--font-ui)', fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>
-            “Character Adjustment” is how much to raise or lower the XP budget for each player above or below a party of 4.
+            “Character Adjustment” is how much to raise or lower the XP budget for each party member (a PC or a party NPC with a stat block) above or below a party of 4.
           </div>
         </div>
 

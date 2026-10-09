@@ -4,6 +4,7 @@ import { useGameData } from '../data/gameDataContext'
 import { CONDITION_META } from '../utils/conditionEffects'
 import { rollDamageExpr } from '../utils/dice'
 import { stripTags } from '../utils/tags'
+import { XP_BUDGET_ROWS } from '../utils/encounter'
 import { ClockIcon, NotesIcon, DiceIcon, TableIcon, ShieldIcon, CoinIcon, SkullIcon } from './Icons'
 import { RandomEncounterWidget } from './RandomEncounterWidget'
 import { DowntimeWidget } from './DowntimeWidget'
@@ -47,8 +48,10 @@ const DC_BY_LEVEL: Record<number, number> = { 0:14,1:15,2:16,3:18,4:19,5:20,6:22
 const SIMPLE_DCS: [string, number][] = [['Untrained',10],['Trained',15],['Expert',20],['Master',30],['Legendary',40]]
 const DC_ADJUST: [string, number][] = [['Incredibly easy',-10],['Very easy',-5],['Easy',-2],['Hard',2],['Very hard',5],['Incredibly hard',10]]
 const RARITY_ADJUST: [string, number][] = [['Uncommon',2],['Rare',5],['Unique',10]]
-// [name, budget for 4 players, adjustment per extra/fewer player]
-const XP_BUDGET: [string, number, number][] = [['Trivial',40,10],['Low',60,15],['Moderate',80,20],['Severe',120,30],['Extreme',160,40]]
+// [name, budget for 4 players, adjustment per extra/fewer player] — GM Core pg. 75's table, read from
+// the encounter rating's own copy. This widget kept a private one with the legacy Core Rulebook's
+// Low ±15, so it disagreed with the badge for any party that wasn't four.
+export const XP_BUDGET = XP_BUDGET_ROWS
 const TREASURE_BY_LEVEL: Record<number, number> = { 1:175,2:300,3:500,4:850,5:1350,6:2000,7:2900,8:4000,9:5700,10:8000,11:11500,12:16500,13:25000,14:36500,15:54500,16:82500,17:128000,18:208000,19:355000,20:490000 }
 
 // ── shared styles ────────────────────────────────────────────────────────────

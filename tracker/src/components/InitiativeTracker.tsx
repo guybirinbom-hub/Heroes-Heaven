@@ -9,10 +9,10 @@ import { DRAG_MIME, useHoveredCid } from '../store/layoutStore'
 import { Chip } from './Chip'
 import { CONDITION_META, computeConditionMods } from '../utils/conditionEffects'
 import { applyWeakElite, scaleByLevel } from '../utils/weakElite'
-import { computeEncounter, DIFFICULTY_COLOR } from '../utils/encounter'
+import { computeEncounter, partyOf, pcLevelOf, DIFFICULTY_COLOR } from '../utils/encounter'
 import { fixedPopupPos } from '../utils/zoomFix'
 import { useCampaignPartyLevel } from '../data/partyLevelContext'
-import { useHostPcStats } from '../data/pcStatsContext'
+import { useHostPcStats, useHostPcLevel } from '../data/pcStatsContext'
 import { PlayIcon, StopIcon, ChevronLeftIcon, ChevronRightIcon, DiceIcon } from './Icons'
 import { EncounterTablesModal } from './EncounterTablesModal'
 
@@ -473,19 +473,32 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
    * know. Null when running standalone, where the old behaviour stands unchanged.
    */
   const campaignLevel = useCampaignPartyLevel()
-  const partyLevel  = campaignLevel ?? (activeParty ? activeParty.level : localLevel)
-  // Party size = PCs + allied NPCs currently in the initiative tracker
-  // (excluding defeated). An allied NPC only counts if it has a stat block
-  // — name-only allies don't actually contribute to the party's combat
-  // strength, so we don't inflate the encounter budget for them.
-  const partySize   = Math.max(1, combatants.filter(c =>
-    !c.isDefeated && (c.isPC || (c.isAlly && c.creature != null))
-  ).length)
+  const hostPcLevel = useHostPcLevel()
+  /*
+   * WHO THE ENCOUNTER IS RATED AGAINST (owner's list 2026-10-01, item 5): the PCs and stat-blocked
+   * party NPCs IN THE ORDER, each at their own level — never the roster on the party page. A PC's
+   * level is their sheet's when the host has it, else their own stat sheet's in the party store (a
+   * Wanderer's Guide import, or typed); a PC with neither counts at the number below
+   * (encounter.pcLevelOf). A party NPC counts at its stat block's level. GM Core pg. 57 picks the
+   * party level from those (partyOf). Name-only allies have no level and no stat block, so they
+   * don't count; defeated members still choose the level (the XP holds still) but leave the size.
+   */
+  const fallbackLevel = campaignLevel ?? (activeParty ? activeParty.level : localLevel)
+  // The active party's NPCs — only for recognising rows saved before the party add stamped them
+  // (encounter.sidesOf's read-only heal). Never written back to the board.
+  const partyNpcs = activeParty?.players.filter(p => p.memberType === 'npc') ?? []
+  // Every party's players, the active party's first — the PC row's own player for its level.
+  const allPlayers = [...(activeParty?.players ?? []), ...parties.filter(p => p !== activeParty).flatMap(p => p.players)]
+  const party = partyOf(combatants, {
+    pcLevel: c => pcLevelOf(c, allPlayers, hostPcLevel),
+    fallback: fallbackLevel,
+    partyNpcs,
+  })
 
   const hasDefeatedNpcs = combatants.some(c => c.isDefeated && !c.isPC)
 
   // Encounter stats — recomputed whenever combatants or party info changes
-  const stats = computeEncounter(combatants, partyLevel, partySize)
+  const stats = computeEncounter(combatants, party.level, Math.max(1, party.size + party.extra), partyNpcs)
   const diffColor = DIFFICULTY_COLOR[stats.difficulty]
 
   // Panel minimum width = the widest of two things measured off-screen:
@@ -545,8 +558,12 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
     border: 'var(--app-bw) solid var(--border-strong)', color: 'var(--text-muted)',
   }
 
-  // XP/difficulty badge — shown in the button row, wraps below if narrow
-  const encounterBadge = stats.enemyCount > 0 ? (
+  // XP/difficulty badge — shown in the button row, wraps below if narrow. Only when there is a fight
+  // to rate: at least one PC or stat-blocked party NPC in the order AND at least one enemy. "don't
+  // show calculation if there aren't any party members / npcs in the fight" (owner, item 5) — rated
+  // against nobody, one on-level creature read as Extreme. A party knocked flat is still in the
+  // fight (inOrder counts the defeated), so the badge doesn't vanish as they drop.
+  const encounterBadge = party.inOrder > 0 && stats.enemyCount > 0 ? (
     <div style={{
       marginLeft: 'auto',
       display: 'flex', flexDirection: 'column', alignItems: 'flex-end',
@@ -585,7 +602,8 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
 
   return (
     <div className="flex flex-col h-full" style={{ background: 'var(--bg-base)', minWidth: minPanelW }}>
-      {showXpTables && <EncounterTablesModal current={stats.difficulty} onClose={() => setShowXpTables(false)} />}
+      {showXpTables && <EncounterTablesModal current={stats.difficulty} party={party.inOrder > 0 ? party : undefined}
+        budget={stats.budget} onClose={() => setShowXpTables(false)} />}
       {/* Hidden measurement element — renders the 3 in-combat buttons off-screen
           so we can size the panel to exactly fit them. */}
       <div
