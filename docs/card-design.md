@@ -349,7 +349,7 @@ Decided without asking:
 - The 11.5% figure is the feat-mechanics residual rate, not a text defect rate, and is not used.
 - Level titles had one 30-record sample, not two.
 - The CSS path is corrected to src/sheet.css.
-- The rollback switch is now backed by kept legacy assertions.
+- The rollback switch was backed by kept legacy assertions until step 22, which removed the switches, the legacy paths and those assertions (test/card-parity-known.json's `legacy` block with them).
 - Legacy removal is not tied to a release.
 
 ---
@@ -385,12 +385,13 @@ Decided without asking:
   src/sheet/cardModel.ts holds those lines once (lineFrags, glyphLedLine, activateLine, glyphLineLeaves); the
   renderer and the row preview both read them. A glyph keeps a line of its own only where the page prints it
   alone; on 2026-10-08 no shipped page does (test/bug-inline-glyph.test.tsx renders the corpus).
-  On the held-record legacy path (hideMeta) a joined line loses only its META label: the META paragraph and
-  the continuation the parser split off it leave, as before; the glyph and the words the page prints after it
-  stay ("Ranged ⟨1⟩ As Melee, but also lists range…" on rules:reading-creature-statistics). A glyph row whose
-  first label the surface printed loses that label only. Measured over every shipped page in four modes
-  against 2f6ee78: the card, the search popup and the every-label-printed card change no word; hideMeta
-  pages only gain words (115, the activity headers' own Trigger / Frequency / Requirements / Cost lines).
+  The held-record legacy path (hideMeta) is gone since step 22: AstRenderer no longer takes the prop, and
+  scripts/card-only-check.mjs (strict) fails if it comes back. What replaced it is the 'mine' card's printed
+  set (section 2 rule 4.2): a joined line loses only a label the surface's own stat rows printed; the glyph
+  and the words the page prints after it stay ("Ranged ⟨1⟩ As Melee, but also lists range…" on
+  rules:reading-creature-statistics). A glyph row whose first label the surface printed loses that label
+  only. Measured over every shipped page against 2f6ee78 (when hideMeta still shipped): the card, the search
+  popup and the every-label-printed card change no word.
 - **Tree hygiene:** another chat is live in this tree (it edits test/bug-homebrew-stat-block-skipped.test.tsx and owns the
   26 modified tracked files listed by `git status`, among them package.json, scripts/data/effect-backfill.json,
   scripts/import-core-v2.mjs, scripts/dropped-inline-check.mjs, src/sheet/CompanionsTab.tsx, src/rules/sources.ts). Never

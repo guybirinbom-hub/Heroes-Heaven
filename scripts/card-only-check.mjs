@@ -23,6 +23,7 @@
  *
  *   node scripts/card-only-check.mjs            # the check (exit 1 on anything listed)
  *   node scripts/card-only-check.mjs --json     # the list as JSON (same exit code)
+ *   node scripts/card-only-check.mjs --root <dir>   # scan <dir>/src instead of this repo's (exit 2 if none)
  * (`--strict`, the step-4 spelling of the check, is still accepted and changes nothing.)
  */
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
@@ -148,7 +149,15 @@ export function scan(root = ROOT) {
 
 const IS_MAIN = process.argv.some((a) => /(^|\/)card-only-check\.mjs$/.test(String(a).replace(/\\/g, '/')));
 if (IS_MAIN) {
-  const found = scan();
+  // `--root <dir>`: scan another tree (one holding src/) — test/card-only-check.test.ts spawns this script
+  // on a scratch root with one legacy call site planted, to prove the exit code, not only the list.
+  const at = process.argv.indexOf('--root');
+  const root = at < 0 ? ROOT : process.argv[at + 1];
+  if (at >= 0 && (!root || !existsSync(join(root, 'src')))) {
+    console.error(`card only: --root needs a directory holding src/ (got ${root ?? 'nothing'}).`);
+    process.exit(2);
+  }
+  const found = scan(root);
   if (process.argv.includes('--json')) {
     console.log(JSON.stringify(found, null, 2));
   } else if (!found.length) {

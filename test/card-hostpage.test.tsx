@@ -336,7 +336,7 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     const rec = recs(e.bucket)[e.id];
     const deps = {
       content: { [e.bucket]: { [e.id]: rec } }, trees: { [e.bucket]: { [e.id]: trees[e.bucket][e.id] } }, astIndex: {},
-      statRows: { featStatRows: () => [], itemStatRows: () => [], spellStatRows: () => [] }, activities: [], situationalIds: [],
+      statRows: { itemStatRows: () => [], spellStatRows: () => [] }, activities: [], situationalIds: [],
       classFeatureDescription: (d: string) => d, splitHeightening: (d: string) => ({ base: d, heightening: [] }),
     };
     const { rows } = surfaceRows(deps as never) as { rows: { surface: string; bucket: string; id: string }[] };

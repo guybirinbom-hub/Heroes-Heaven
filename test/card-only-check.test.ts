@@ -1,5 +1,8 @@
-import { readFileSync } from 'node:fs';
-import { describe, expect, it } from 'vitest';
+import { spawnSync, execFileSync } from 'node:child_process';
+import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { afterAll, describe, expect, it } from 'vitest';
 import { CARD_FILES, NO_PAGE_LANES, callSites, codeOf, scan } from '../scripts/card-only-check.mjs';
 
 /**
@@ -24,6 +27,15 @@ import { CARD_FILES, NO_PAGE_LANES, callSites, codeOf, scan } from '../scripts/c
  *  - card-only-check.mjs codeOf: returns its input (comments count as code) → the "prose naming a removed
  *    prop" case red (the tree case stays green: the structural checks also require a code shape, and
  *    AstRenderer.tsx's comments never name hideMeta in one).
+ *  - (step 22 finish) card-only-check.mjs back in report mode (`if (found.length) process.exitCode = 1`
+ *    removed, so it exits 0 always) → the two SPAWNED red cases red (exit 0 where 1 is expected); the
+ *    stale-lane loop in scan() dropped → the stale NO_PAGE_LANES case red.
+ *
+ * STRICT IS THE EXIT CODE: the spawned cases run `node scripts/card-only-check.mjs` itself (the exit code is
+ * set only when the script is run, never by scan()), on the tree (exit 0) and with `--root` on a scratch
+ * tree under os.tmpdir() (never in the repo) holding the two named no-page lanes copied from src/sheet,
+ * plus one legacy call site: a19f00d's src/sheet/FeatDetail.tsx, the last FeatDetail before step 22, whose
+ * DescBody still takes astKey / astId (exit 1, that one site listed).
  */
 type Site = { kind: string; line: number; snippet: string };
 const kinds = (rel: string, src: string) => (callSites(rel, src) as Site[]).map((s) => s.kind);
@@ -89,5 +101,62 @@ describe('card step 22: card-only-check is strict and lists every legacy path pu
     expect(code).toContain('"https://2e.aonprd.com"');
     expect(code).not.toContain('hideMeta');
     expect(code.split('\n').length, 'line numbers kept').toBe(src.split('\n').length);
+  });
+});
+
+describe('card step 22 finish: the script itself is strict — its exit code, spawned', () => {
+  const run = (...args: string[]) => {
+    const r = spawnSync(process.execPath, ['scripts/card-only-check.mjs', ...args], { encoding: 'utf8' });
+    return { code: r.status, out: r.stdout, err: r.stderr };
+  };
+  const roots: string[] = [];
+  /** A scratch tree under os.tmpdir(): the two named no-page lanes copied from src/sheet, plus `extra`. */
+  const scratch = (extra: Record<string, string>, lanes = Object.keys(NO_PAGE_LANES) as string[]) => {
+    const root = mkdtempSync(join(tmpdir(), 'card-only-check-'));
+    roots.push(root);
+    mkdirSync(join(root, 'src', 'sheet'), { recursive: true });
+    for (const rel of lanes) copyFileSync(rel, join(root, rel));
+    for (const [rel, text] of Object.entries(extra)) writeFileSync(join(root, rel), text);
+    return root;
+  };
+  afterAll(() => { for (const r of roots) rmSync(r, { recursive: true, force: true }); });
+
+  it('on the tree it exits 0 and says so', () => {
+    const r = run();
+    expect(r.code, r.out + r.err).toBe(0);
+    expect(r.out).toMatch(/^card only: every record page is drawn by the card \(2 named no-page text lanes/);
+  });
+
+  it('a scratch tree holding only the named lanes exits 0 (the control for the red case)', () => {
+    const r = run('--root', scratch({}));
+    expect(r.code, r.out + r.err).toBe(0);
+  });
+
+  it('ONE legacy call site planted (a19f00d\'s FeatDetail.tsx, DescBody with astKey) exits 1 and lists that site alone', () => {
+    const legacy = execFileSync('git', ['show', 'a19f00d:src/sheet/FeatDetail.tsx'], { encoding: 'utf8', maxBuffer: 1 << 24 });
+    const root = scratch({ 'src/sheet/FeatDetail.tsx': legacy });
+    const r = run('--root', root);
+    expect(r.code, r.out + r.err).toBe(1);
+    expect(r.out).toMatch(/^card only: 1 call sites outside the card in 1 files \(DescBody astKey 1\) — each one fails the check\./);
+    const json = run('--root', root, '--json');
+    expect(json.code, '--json keeps the exit code').toBe(1);
+    const listed = JSON.parse(json.out) as (Site & { file: string })[];
+    expect(listed.map((s) => `${s.file} ${s.kind}`)).toEqual(['src/sheet/FeatDetail.tsx DescBody astKey']);
+    expect(listed[0].snippet).toContain('astKey={astKey} astId={astId}');
+  });
+
+  it('a named no-page lane whose file is gone is a stale entry: exit 1, that lane listed', () => {
+    const root = scratch({}, ['src/sheet/SpellsTab.tsx']);
+    const r = run('--root', root, '--json');
+    expect(r.code, r.out + r.err).toBe(1);
+    expect(JSON.parse(r.out)).toEqual([{ file: 'src/sheet/MainTab.tsx', kind: 'stale NO_PAGE_LANES entry', line: 0, snippet: '' }]);
+  });
+
+  it('--root that holds no src/ is refused (exit 2), never read as an empty, passing tree', () => {
+    const root = mkdtempSync(join(tmpdir(), 'card-only-check-'));
+    roots.push(root);
+    const r = run('--root', root);
+    expect(r.code).toBe(2);
+    expect(r.err).toContain('--root needs a directory holding src/');
   });
 });

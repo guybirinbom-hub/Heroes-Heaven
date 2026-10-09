@@ -45,8 +45,10 @@ export function isSourceP(p: AstNode): boolean {
 }
 
 /** A leading META/STAT layout block (a Source line, or a compact stat line with several item/armor/weapon
- *  fields) — the kind a DETAIL view already shows in its own stat panel, so `hideMeta` drops it to avoid a
- *  duplicate stat block. Scoped to row/column LAYOUT nodes so it never touches prose paragraphs. */
+ *  fields) — the kind a DETAIL view shows in its own stat panel. It once fed `hideMeta`'s whole-block drop,
+ *  removed in card step 22 (a 'mine' card leaves a header line off only by its printed set); today sliceOf
+ *  reads it to find the page header a run of a shared page carries in front, and the shared-page census to
+ *  skip header blocks. Scoped to row/column LAYOUT nodes so it never touches prose paragraphs. */
 export const STAT_LABELS = /\b(?:AC Bonus|Dex Cap|Check Penalty|Speed Penalty|Strength|Bulk|Group|Category|Hardness|Hit Points|HP|BT|Damage|Hands|Reload|Ammunition|Capacity|Range|Price|Usage|Craft Requirements)\b/gi;
 export function isMetaishBlock(n: AstNode): boolean {
   const t = textOf(n);

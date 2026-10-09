@@ -8,7 +8,7 @@ import { build, content } from './_content';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { PinContext, type PinDescApi } from '../src/sheet/PinContext';
 import { loadAstIndex, loadBucketAst, type AstNode } from '../src/sheet/astStore';
-import { FeatDetail, featStatRows, type FeatEntry } from '../src/sheet/FeatDetail';
+import { FeatDetail, type FeatEntry } from '../src/sheet/FeatDetail';
 import { ItemDetail, itemStatRows } from '../src/sheet/ItemDetail';
 import { SpellDetail, spellStatRows } from '../src/sheet/SpellsTab';
 import { MainTab, PinnedDescCard } from '../src/sheet/MainTab';
@@ -152,12 +152,9 @@ const known = JSON.parse(readFileSync('test/card-parity-known.json', 'utf8')) as
    *  title carries the pick suffix ("Caustic Nectar (Acid)") — the ledger models it by reading the slug
    *  of that title, as the stored pin does until card step 19. */
   cases: { key: string; why: string; verdict: Verdict; pick?: string }[];
-  /** Card step 11: cases right on a surface's card and wrong again with its switch turned back. Card step
-   *  22 removed the switches, so these are never expected; the block leaves the file at the orchestrator's
-   *  re-stamp on main (the lane may not edit it). */
-  legacy?: Record<string, { key: string; why: string; verdict: Verdict; pick?: string }[]>;
 };
-/** The named cases expected: every surface is its card (card step 22), so the `legacy` cases never are. */
+/** The named cases expected. Card step 22 removed the per-surface switches, and with them the file's
+ *  `legacy` block (cases wrong again only with a switch turned back): every surface is its card. */
 const knownCases = [...known.cases];
 
 type Run = { t?: string; b?: string };
@@ -444,7 +441,7 @@ beforeAll(async () => {
 
   const deps = {
     content: db, trees, astIndex,
-    statRows: { featStatRows, itemStatRows, spellStatRows },
+    statRows: { itemStatRows, spellStatRows },
     activities: ACTIVITIES,
     situationalIds: Object.keys(FEAT_SITUATIONAL).filter((id) => !id.startsWith('trait:')),
     classFeatureDescription, splitHeightening, parseBlocks, cleanRun, foldsOf,
@@ -805,8 +802,9 @@ describe('card step 4: the rendered parity check (report mode)', () => {
    * Section 8: every page line a mine surface leaves out carries one of section 2 rule 5's names
    * (src/sheet/cardScope.ts OMISSION_RULES), or is a COUNTED defect — MISSING (a vocabulary label line,
    * in S1-MISSING) or UNNAMED (in S1-UNNAMED, the same list on the DOM and in the ledger, compared by
-   * the agreement test). The legacy drop paths (meta-line, metaish-block, inline-row, spoiler) are never
-   * a name: a line they drop is classified by its own words.
+   * the agreement test). The walk's drop paths (spoiler, card-furniture, card-printed) are never a name: a
+   * line they drop is classified by its own words. (hideMeta's meta-line, metaish-block and inline-row
+   * paths left with it in card step 22.)
    */
   it('every page line a surface leaves out carries a section 2 rule 5 name or is a counted defect (logged by rule)', () => {
     const bad: string[] = [];

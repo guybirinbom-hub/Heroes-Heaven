@@ -1,5 +1,5 @@
 {
- "_measured": "card-truth-check --write-baseline, 2026-10-08; on a working tree with another lane's regen output uncommitted — re-stamp when it commits",
+ "_measured": "card-truth-check --write-baseline, 2026-10-09; on a working tree with another lane's regen output uncommitted — re-stamp when it commits",
  "S1-MISSING": [
   "spellDetail|spells:aon-litany-against-sloth|Prerequisites",
   "spellDetail|spells:aon-litany-against-wrath|Prerequisites",
