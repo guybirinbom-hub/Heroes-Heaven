@@ -841,6 +841,131 @@ describe('the campaign ↔ tracker seam', () => {
     expect(el.querySelector('.campaign-tracker')).not.toBeNull(); // …and that press bought nothing else
   }, 120_000);
 
+  it('stays in the campaign when the row menu’s close is COMMITTED before the dismiss stack runs (the browser’s order)', async () => {
+    // tracker popup pass 2026-10-10, found in the browser proof: the leg above passes in jsdom and the
+    // campaign still closed in a real browser. A browser runs a microtask checkpoint after EACH event
+    // listener, and React 18 commits a keydown's state update in a microtask — so the menu's own
+    // `document` listener (onClose) had the menu off the DOM before the dismiss stack's `window` listener
+    // asked `trackerPopupOpen()`, which then said "no popup" and left the campaign. jsdom dispatches
+    // synchronously, with no checkpoint between listeners, which is why the leg above never saw it. Here
+    // a second `document` listener flushes React exactly where the browser's checkpoint would.
+    // Without the fix (CampaignTracker's base handler asking only `trackerPopupOpen()` at the moment it
+    // runs, not as of the key press — `|| popupAtPress.current` removed):
+    //   AssertionError: expected null not to be null   ← the campaign was gone
+    srv.party = [publish(PC_A(), 'owner-a')];
+    localStorage.setItem('pf2e-codex.campaigns', JSON.stringify([CAMPAIGN]));
+    await import('../src/integration/CampaignTracker');
+    await import('../src/integration/TrackerTools');
+    const { CampaignsPage } = await import('../src/sheet/CampaignsPage');
+    const { flushSync } = await import('react-dom');
+    const el = render(
+      <CampaignsPage
+        content={content()}
+        onClose={() => undefined}
+        onOpenRoster={() => undefined}
+        onOpenHomebrew={() => undefined}
+        characters={[]}
+        modes={{}}
+        onSaveMode={() => undefined}
+        onDeleteMode={() => undefined}
+      />,
+    );
+    await flush();
+    click(el.querySelector('.cmp-card-btn')!);
+    await flush();
+
+    act(() => useCombatStore.getState().addCombatant(null, { name: 'Ayla Brightwood', isPC: true, maxHP: 40 }));
+    await flush(1);
+    const row = el.querySelector('.init-row')!;
+    act(() => void row.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, clientX: 20, clientY: 20 })));
+    await flush(1);
+    const menu = document.querySelector('body > .tracker-root:not(.campaign-tracker)');
+    expect(menu).not.toBeNull();
+
+    // The browser's checkpoint, after the menu's own listener (registered first, so it runs first).
+    let flushedBeforeStack = false;
+    const checkpoint = () => {
+      flushSync(() => undefined);
+      flushedBeforeStack = !document.querySelector('body > .tracker-root:not(.campaign-tracker)');
+    };
+    document.addEventListener('keydown', checkpoint);
+    // NOT inside act: the update must be scheduled the way a browser schedules it, so the checkpoint
+    // above is what commits it.
+    const was = (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT;
+    (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = false;
+    try {
+      menu!.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    } finally {
+      (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = was;
+      document.removeEventListener('keydown', checkpoint);
+    }
+    await flush(2);
+
+    expect(flushedBeforeStack, 'fixture: the menu was off the DOM before the dismiss stack ran').toBe(true);
+    expect(document.querySelector('body > .tracker-root:not(.campaign-tracker)')).toBeNull(); // menu closed…
+    expect(el.querySelector('.campaign-tracker')).not.toBeNull(); // …and the campaign is still up
+    // A later press with nothing open still leaves, as it always has — the press's answer doesn't linger.
+    await key({ key: 'Escape' });
+    await flush(2);
+    expect(el.querySelector('.campaign-tracker')).toBeNull();
+  }, 120_000);
+
+  it('still leaves by the title bar’s Back arrow after an Escape closed the row menu (the press’s answer is spent)', async () => {
+    // tracker popup pass 2026-10-10 (the refuter's guard on the leg above): CampaignTracker keeps "a popup
+    // was open" only for the key press that read it — `popupAtPress`, cleared on the next task. The leg
+    // above ends on a second ESCAPE, which re-reads the DOM in the capture listener and so leaves either
+    // way; the Back arrow fires no keydown, so nothing but that clear ever resets the flag, and the arrow
+    // would be dead for the rest of the visit.
+    // Without the fix (the `setTimeout(() => { popupAtPress.current = false; }, 0)` in CampaignTracker's
+    // capture listener removed):
+    //   AssertionError: the Back arrow left the campaign: expected <div …(1)><div …(1)>…(3)</div></div> to be null
+    srv.party = [publish(PC_A(), 'owner-a')];
+    localStorage.setItem('pf2e-codex.campaigns', JSON.stringify([CAMPAIGN]));
+    await import('../src/integration/CampaignTracker');
+    await import('../src/integration/TrackerTools');
+    const { CampaignsPage } = await import('../src/sheet/CampaignsPage');
+    const el = render(
+      <CampaignsPage
+        content={content()}
+        onClose={() => undefined}
+        onOpenRoster={() => undefined}
+        onOpenHomebrew={() => undefined}
+        characters={[]}
+        modes={{}}
+        onSaveMode={() => undefined}
+        onDeleteMode={() => undefined}
+      />,
+    );
+    await flush();
+    click(el.querySelector('.cmp-card-btn')!);
+    await flush();
+
+    act(() => useCombatStore.getState().addCombatant(null, { name: 'Ayla Brightwood', isPC: true, maxHP: 40 }));
+    await flush(1);
+    const row = el.querySelector('.init-row');
+    if (!row) throw new Error(`no initiative row — rail held: ${(el.querySelector('.ct-order')?.textContent ?? '(no rail)').slice(0, 200)}`);
+    act(() => void row.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, clientX: 20, clientY: 20 })));
+    await flush(1);
+    const menu = document.querySelector('body > .tracker-root:not(.campaign-tracker)');
+    expect(menu, 'the row menu is open').not.toBeNull();
+
+    // One Escape, the way the browser delivers it (up through `document` to `window`): the menu closes…
+    await act(async () => {
+      menu!.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      await new Promise((r) => setTimeout(r, 0));
+    });
+    await flush(1);
+    expect(document.querySelector('body > .tracker-root:not(.campaign-tracker)'), 'the menu closed').toBeNull();
+    expect(el.querySelector('.campaign-tracker'), 'the Escape left the campaign up').not.toBeNull();
+
+    // …and the title bar's Back arrow, pressed later with nothing open, leaves as it always has.
+    const back = el.querySelector('.hb-back');
+    expect(back, 'the title bar shows its Back arrow').not.toBeNull();
+    click(back!);
+    await flush(3);
+    expect(el.querySelector('.campaign-tracker'), 'the Back arrow left the campaign').toBeNull();
+  }, 120_000);
+
   it('re-pushes a GM change the server refused', async () => {
     // tracker 2026-09-15: sheet truth — the row was stamped "agreed" before the push was even sent,
     // and the result was thrown away, so a refusal was silently permanent.

@@ -22,7 +22,9 @@ detail panel. Nothing else changes.
 | `src/sheet/memberSheets.ts` | comments only: two notes name the tracker seam (its pushes as what used to re-join every channel, and the seam as a reader of the re-pulled map) | Delete those two mentions; nothing in the code knows the tracker |
 | `src/theme/theme-manager.ts` | `resolveAppearanceVars` — the token-resolution half of `applyResolved`, extracted + exported so a scoped appearance (the tracker's own theme) can be built without writing `<html>` | A pure refactor with no tracker names in it; harmless to keep. To fully revert, inline it back into `applyResolved` |
 | `src/sheet/SettingsPage.tsx` | the `'tracker'` section (id, `ALL_SECTIONS` entry, `renderSection` case); `TrackerSettingsSection` is `React.lazy` + `<Suspense>` so opening Settings doesn't pull the tracker's stores in | Delete the three `'tracker'` references and the lazy import |
-| `src/sheet/PartyMembers.tsx` | optional `localMembers?: PartyMember[]` prop; optional `renderExtra?` render-prop returning `PartyCardSlots` (`header` = the turn chip + "+" button in `.party-card-tools`, `saves` = extra tiles in the turn band's `.party-defs` block, `right` = the whole `.party-row-ref` band — the card's second row — whose presence is what puts `.has-right` on `.party-card-body`); optional `onMembers?` callback (every loaded list, so the tracker's party can be built from the server party — this component mounts INSIDE the tracker's party view, which needs that party to exist first) | Delete the three props + `PartyCardSlots`; use `members`; drop the `extra` slots and the `.has-right` term, which leaves the card its turn band and nothing else |
+| `src/sheet/PartyMembers.tsx` | optional `localMembers?: PartyMember[]` prop; optional `renderExtra?` render-prop returning `PartyCardSlots` (`header` = the turn chip + "+" button in `.party-card-tools`, `saves` = extra tiles in the turn band's `.party-defs` block, `right` = the whole `.party-row-ref` band — the card's second row — whose presence is what puts `.has-right` on `.party-card-body`); optional `onMembers?` callback (every loaded list, so the tracker's party can be built from the server party — this component mounts INSIDE the tracker's party view, which needs that party to exist first); optional `dialogStyle?` (2026-10-10), passed to the kick's `confirmDialog` as `style` so the confirm wears the tracker's look above its windows | Delete the four props + `PartyCardSlots`; use `members`; drop the `extra` slots and the `.has-right` term, which leaves the card its turn band and nothing else; drop `style: dialogStyle` from `kick` |
+| `src/sheet/confirm.tsx` | optional `style?: DialogStyle` on `ConfirmOptions` / `ChooseOptions`, applied on the `.picker-overlay.confirm-overlay` (2026-10-10). The dialogs are detached roots on `<body>`, so no context reaches them: a confirm raised from the tracker (Clear the order, a card's kick, the local table's "No campaign settings") gets the tracker's `--app-*` variables plus the four text properties `<body>` sets (`hhSurfaceTheme` in `trackerAppearance.ts`) and a z-index above the floating windows (HH's own 80 sat under a window at 501). GmEditSheet's dialogs pass nothing: they belong to the app-themed full sheet | A generic option with no tracker names — harmless to keep. To revert: delete `DialogStyle`, the two `style?` fields and the two `style={style}` |
+| `src/sheet/CampaignsPage.tsx` (local table) | the local table's `onOpenSettings` takes the tracker's `dialogStyle` argument and passes it to its "No campaign settings" `confirmDialog` as `style` (2026-10-10) | Back to `onOpenSettings={() => void confirmDialog({ … })}` with no `style` |
 | `src/sheet/GmEditSheet.tsx` | `forwardRef` + the `GmEditHandle` (`confirmLeave`) so the initiative order can ask before swapping the sheet out; the optional `inTracker` prop, forwarded into `CharacterSheet`'s `gmEdit` | Drop the ref plumbing; inline `confirmLeave` back into `doExit`; drop `inTracker`. (`confirmLeave`'s builder-open Discard / Cancel prompt is HH's own — the builder's unsaved work is lost the same way on the campaign detail — and stays) |
 | `src/sheet/CharacterSheet.tsx` | `gmEdit.inTracker` — the tracker hides the campaign's title bar while a sheet covers it, so the identity row leads with a labelled "← Tracker" (`.sheet-tracker-back`, calling `onBack`) in place of the trailing "Back to campaign" arrow, and becomes the window's drag region with `<WindowControls/>` and `--chrome-pad-y: 10px`; `onBackToTracker` — the same "← Tracker" on your OWN sheet when App opened it from your card in the tracker | Delete the field, the prop, `inTracker` / `trackerBack` and their JSX; the trailing arrow is unconditional again |
 | `src/sheet.css` | the `.icon-btn.sheet-tracker-back` rule (the labelled "← Tracker") | Delete the rule |
@@ -30,6 +32,7 @@ detail panel. Nothing else changes.
 | `src/sheet/useEscapeClose.ts` | `triggerBack()` — fires the topmost dismiss handler, so the campaign back arrow can share the dismiss stack (close an open sheet before leaving the campaign) | A generic helper with no tracker names; harmless to keep |
 | `src/App.tsx` | `TEST_CAMPAIGNS_WITHOUT_LOGIN` in the **DEV-only** `devBypass`; `bootToCampaign` + its branch in the post-content-load jump; the `setOnCampaignsPage(mode==='campaigns')` effect — reopen a campaign the app was closed on; the one `combatOwnsUndo()` guard in the Ctrl+Z handler; `which !== 'campaigns'` on the floating undo/redo pair (Ctrl+Z there undoes the COMBAT, so a character-undo button beside it would do something else); `ownFromTracker` — the own sheet opened from your card in the tracker (CampaignsPage's `onOpenOwn(id, fromTracker)`) passes `onBackToTracker` (back to the campaigns page, which reopens the campaign it remembers), cleared by an effect the moment the screen or the character changes | Delete that term, the `bootToCampaign` state + branch, the marker effect, the guard, the `which !== 'campaigns'` term, and `ownFromTracker` with its effect and the `onBackToTracker` prop |
 | `src/sheet/PartyMembers.tsx` (HH's own fix) | `useMemberViewer`'s Escape / Android-back now asks the open GM sheet first (a `GmEditHandle` ref → `confirmLeave`), as its back arrow always did. NOT part of the seam: the same page-replacing sheet opens from HH's own campaign detail | Keep |
+| `src/sheet/RecordCard.tsx` (HH's own fix) | the browse card's FALLBACK branch star names `pin.where` (it said "Pinned" whatever the caller pins to; the page branch always named it) — inside the tracker that is the GM screen (2026-10-10). NOT part of the seam: any caller with a `where` gets it | Keep |
 
 **Deliberately NOT in that table:** the share code and *Delete campaign* on HH's campaign settings
 page (`CampaignForm`), and their `sheet.css` rules. They moved there when the tracker replaced the
@@ -63,7 +66,7 @@ There is otherwise deliberately **nothing else to unwind**:
   dependency only ever points HH → tracker: where the tracker needs something only the host knows, it
   declares a context in `tracker/src/data/` with a **null default**, and HH provides the value. With
   no provider each one falls back to the tracker's original behaviour, so the standalone app is
-  unchanged. There are four:
+  unchanged. There are six:
 
   | Context | What HH supplies | Standalone (no provider) |
   |---|---|---|
@@ -71,6 +74,8 @@ There is otherwise deliberately **nothing else to unwind**:
   | `monsterPartsContext` | the campaign's Battlezoo rule + Full/Light/Hybrid variant | the tracker's own "Show Monster Parts value" setting, priced on Light |
   | `pcPaneContext` | a renderer so a PC's pane is HH's editable character sheet | the tracker's own `CombatantDetail` |
   | `pcStatsContext` | each PC's real stats (AC/saves/…) so the initiative order can show them | `PartyPlayer.pcStats` (the DM-entered sheet) |
+  | `hostSearchContext` | an index of every HH record for Search, an `open` that pops HH's description popup, and the body of a page pinned to the GM screen | Search over the tracker's own reference data |
+  | `hostThemeContext` | the GM's tracker-only look (`useTrackerVars()`, one object per appearance state, or null when the tracker inherits the app's look), which `BodyPortal` puts on everything the tracker draws on `<body>` | null — the popup inherits the document's variables, as always |
 
   The tracker's own `DisplaySection` also takes a `campaignDriven` prop: HH passes it to hide the
   Monster Parts switch (the campaign decides), the standalone tracker doesn't and keeps it.
@@ -81,7 +86,16 @@ There is otherwise deliberately **nothing else to unwind**:
   cards' extra sections render via `PcStatsCardExtra` (integration), passed to `PartyMembers`'
   `renderExtra` prop.
 
-  Four more tracker-side, standalone-safe touches for the embed:
+  Five more tracker-side, standalone-safe touches for the embed:
+  - `BodyPortal` (`tracker/src/components/BodyPortal.tsx`, 2026-10-10) is the ONE way the tracker draws
+    on `<body>`: the initiative row's right-click menu and every hover preview (`Tooltip`) go through it.
+    Its root is a direct child of `<body>` with exactly the class `tracker-root` (the tracker's CSS
+    variables live under it, and `trackerPopupOpen()` above finds an open tracker popup as
+    `body > .tracker-root:not(.campaign-tracker)`), plus the `hostThemeContext` variables, so the popup
+    wears the tracker's look instead of resolving the app's from `<html>`. With no provider it is the
+    old portal exactly. `tracker/src/components/BodyPortal.test.tsx` refuses a createPortal call anywhere
+    else under `tracker/src`; `test/tracker-popup-theme.test.tsx` checks every body popup's look. To
+    remove: keep it (harmless) or inline `createPortal` back into the two callers.
   - `InitiativeTracker`'s mini HP bar falls back to the host `pcStats` HP for a PC row when the
     combatant itself has no HP (`c.maxHP === 0`) — which is always true for an embedded PC, since HH
     feeds HP through the context, not the party store. A standalone PC gets `maxHP` at add-time, so

@@ -254,6 +254,15 @@ const STEP14B_CHANGED: Record<string, string> = {
  *  word, link and glyph span, in order) is the snapshot's. The browse card is the search popup: no use line
  *  is hidden there, so no frame may gain or lose a word. */
 const inlineOf = (html: string) => html.replace(/<\/?(?:p|div)\b[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+/** The tracker popup pass (2026-10-10; the owner's 2026-10-01 list, item 1): the FALLBACK branch's star
+ *  said "Pinned" whatever its caller pins to, while the page branch has always named `pin.where` (inside
+ *  the tracker: the GM screen). It names `pin.where` now. The snapshot predates that, and pinApi pins
+ *  every fourth render to 'Spellbook', so those fallback frames differ in the star's two attributes and
+ *  nowhere else. Both sides are read with the star's place put back to "Pinned" — symmetric, so a page
+ *  frame that always said Spellbook still compares as it did — and the frames that differed ONLY there are
+ *  counted in the leg. */
+const STAR_WHERE = /(<button class="info-star(?: on)?" title=")(Remove from|Favorite — add to) Spellbook(" aria-label=")(Remove from|Add to) Spellbook"/g;
+const starAsPinned = (html: string) => html.replace(STAR_WHERE, '$1$2 Pinned$3$4 Pinned"');
 /** The markup with every embedded stub element (page, compact list, name) taken out, through the DOM. */
 function without14bStubs(html: string): string {
   const host = document.createElement('div');
@@ -313,6 +322,20 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     expect(existsSync(SNAP!), `snapshot ${SNAP} missing — write it on the pre-extraction tree with CARD_BROWSE_WRITE=1`).toBe(true);
     const before = JSON.parse(readFileSync(SNAP!, 'utf8')) as typeof now;
     expect(Object.keys(now)).toEqual(Object.keys(before));
+    // The fallback star's place (STAR_WHERE): read both sides with it put back to "Pinned", and count the
+    // frames that differed only there. Everything below compares the frames as read here.
+    let starOnly = 0;
+    const asPinned = (r: { first: string; settled?: string }) =>
+      r.settled === undefined ? { first: starAsPinned(r.first) } : { first: starAsPinned(r.first), settled: starAsPinned(r.settled) };
+    for (const k of Object.keys(now)) {
+      const same = now[k].first === before[k].first && now[k].settled === before[k].settled;
+      now[k] = asPinned(now[k]);
+      before[k] = asPinned(before[k]);
+      if (!same && now[k].first === before[k].first && now[k].settled === before[k].settled) starOnly++;
+    }
+    // Measured 2026-10-10 on main 5a0e849 + the tracker popup pass, against card-step3-browse-snapshot.json.
+    // batch card: #card-SNAPSHOT — the fallback frames whose star now names its place
+    expect(starOnly, 'fallback frames whose star now names its place, and nothing else changed').toBe(5);
     // Card step 12 re-baseline: the browse popup of a record whose READ step 12 changed is no longer the
     // pre-extraction popup, by design — its family page is cut to its own section (F5), its page that is
     // not its own gives way to its own text (F6, src/data/not-own-page.json) or to its paragraph of a
@@ -379,6 +402,24 @@ describe('card step 3: the browse card extracted from DescriptionModal', () => {
     for (const [i, e] of sample.filter((s) => s.kind === 'homebrew').entries())
       // batch card: #card-NOT-VACUOUS — the case measures something
       expect(staticRender(e.node, i), e.key).toMatch(/^<div class="picker-overlay"><div class="picker info-modal">/);
+  });
+
+  // batch card: #card-STAR — every branch's star names where it pins
+  it('the fallback branch’s star names its caller’s place, as the page branch does', () => {
+    // The tracker popup pass (2026-10-10; the owner's 2026-10-01 list, item 1): a homebrew node or a record
+    // without a page opened from the tracker's Search said "add to Pinned" — the GM's star pins to the GM
+    // screen. MUTATION: RecordCard's fallback star back to the literal 'Favorite — add to Pinned' /
+    // 'Remove from Pinned' → this leg red (expected '…add to Pinned…' to contain '…add to GM screen…').
+    const at = (has: boolean, where?: string) =>
+      renderToStaticMarkup(modalEl(HOMEBREW[0], 1, { pin: { has: () => has, toggle: noop, ...(where ? { where } : {}) } }));
+    const off = at(false, 'GM screen');
+    // batch card: #card-NOT-VACUOUS — the render is the fallback branch, with its star
+    expect(off).toMatch(/^<div class="picker-overlay"><div class="picker info-modal">/);
+    // batch card: #card-STAR — every branch's star names where it pins
+    expect(off).toContain('<button class="info-star" title="Favorite — add to GM screen" aria-label="Add to GM screen" aria-pressed="false">');
+    expect(at(true, 'GM screen')).toContain('<button class="info-star on" title="Remove from GM screen" aria-label="Remove from GM screen" aria-pressed="true">');
+    // A caller that names no place still reads "Pinned", exactly as before.
+    expect(at(false)).toContain('<button class="info-star" title="Favorite — add to Pinned" aria-label="Add to Pinned" aria-pressed="false">');
   });
 
   // batch card: #card-R1 — one card per record

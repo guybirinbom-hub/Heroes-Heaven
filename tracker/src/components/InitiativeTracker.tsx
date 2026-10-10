@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import type { DragEvent as ReactDragEvent } from 'react'
-import { createPortal } from 'react-dom'
 import type { Combatant } from '../types/pf2e'
 import { useCombatStore } from '../store/combatStore'
 import { usePartyStore } from '../store/partyStore'
@@ -15,6 +14,7 @@ import { useCampaignPartyLevel } from '../data/partyLevelContext'
 import { useHostPcStats, useHostPcLevel } from '../data/pcStatsContext'
 import { PlayIcon, StopIcon, ChevronLeftIcon, ChevronRightIcon, DiceIcon } from './Icons'
 import { EncounterTablesModal } from './EncounterTablesModal'
+import { BodyPortal } from './BodyPortal'
 
 /** Dragging the ACTING row into the host's Delay area takes it out of the order (delayCombatant). */
 export const DELAY_MIME = 'application/x-hh-delay'
@@ -365,14 +365,14 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
   // is dimmed with opacity 0.38 (would make the menu translucent) and
   // filter: grayscale (which makes the row the containing block for our
   // position:fixed coords, mis-placing the menu off-target and unclickable).
-  return createPortal(
-    // `.tracker-root` is LOAD-BEARING here: the menu is portalled to <body>, OUTSIDE the tracker's
-    // wrapper, and its colours (`--bg-panel`, `--border-strong`, …) are tracker CSS variables that the
-    // Heroes Heaven embed defines only under `.tracker-root`. Without the class those vars resolve to
-    // nothing and the menu's background falls back to transparent (the "half-translucent" bug). The
-    // standalone tracker defines the vars on :root so it never noticed.
-    <div ref={ref}
-      className="tracker-root"
+  return (
+    // BodyPortal gives the root `.tracker-root`, which is LOAD-BEARING here: the menu is OUTSIDE the
+    // tracker's wrapper, and its colours (`--bg-panel`, `--border-strong`, …) are tracker CSS variables
+    // that the Heroes Heaven embed defines only under `.tracker-root`. Without the class those vars
+    // resolve to nothing and the menu's background falls back to transparent (the "half-translucent"
+    // bug). The standalone tracker defines the vars on :root so it never noticed. It also carries the
+    // host's tracker look, so the menu wears the tracker's colours and font rather than the app's.
+    <BodyPortal ref={ref}
       onClick={e => e.stopPropagation()}
       style={{
         position: 'fixed', left, top, zIndex: 9999, minWidth: W,
@@ -422,8 +422,7 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
         onMouseEnter={e => (e.currentTarget.style.background = 'var(--danger-soft)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
         onClick={run(() => removeCombatant(c.id))}>Remove</button>
-    </div>,
-    document.body,
+    </BodyPortal>
   )
 }
 

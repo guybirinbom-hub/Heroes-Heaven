@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useLayoutEffect, type ReactNode, type CSSProperties, isValidElement } from 'react'
-import { createPortal } from 'react-dom'
 import { pageZoom, localRect } from '../utils/zoomFix'
+import { BodyPortal } from './BodyPortal'
 
 interface TooltipProps {
   content: string | ReactNode
@@ -163,12 +163,17 @@ export function Tooltip({ content, children, className = '', style, bare, onActi
     (popupWrapperStyle as Record<string, string | number>)['--tooltip-max-h'] = `${maxH}px`
   }
 
+  // Render on <body> (BodyPortal) so the popup escapes any ancestor stacking
+  // context — without this, popups whose trigger lives inside a
+  // floating window would be confined to that window's stacking layer
+  // and could block the window's own close button / drag handle.
+  // BodyPortal's root carries `.tracker-root`, which is load-bearing: this popup is OUTSIDE the
+  // tracker's wrapper, and its colours (`--bg-panel`, `--border-strong`, `--shadow-md`, …) are tracker
+  // CSS variables the Heroes Heaven embed defines only under `.tracker-root`. Without the class they
+  // resolve to nothing and the tooltip renders unstyled/translucent (same fix as RowContextMenu). It
+  // also carries the host's tracker look, so the preview matches the window a click opens.
   const popupEl = visible && content ? (
-    // `.tracker-root` is load-bearing: this popup is portalled to <body> (below), OUTSIDE the tracker's
-    // wrapper, and its colours (`--bg-panel`, `--border-strong`, `--shadow-md`, …) are tracker CSS
-    // variables the Heroes Heaven embed defines only under `.tracker-root`. Without the class they
-    // resolve to nothing and the tooltip renders unstyled/translucent (same fix as RowContextMenu).
-    <div ref={popupRef} className="tracker-root" style={popupWrapperStyle}>
+    <BodyPortal ref={popupRef} style={popupWrapperStyle}>
       {isBare ? (
         content
       ) : (
@@ -194,7 +199,7 @@ export function Tooltip({ content, children, className = '', style, bare, onActi
           }
         </div>
       )}
-    </div>
+    </BodyPortal>
   ) : null
 
   return (
@@ -221,11 +226,7 @@ export function Tooltip({ content, children, className = '', style, bare, onActi
       >
         {children}
       </span>
-      {/* Render in a portal so the popup escapes any ancestor stacking
-          context — without this, popups whose trigger lives inside a
-          floating window would be confined to that window's stacking layer
-          and could block the window's own close button / drag handle. */}
-      {popupEl && createPortal(popupEl, document.body)}
+      {popupEl}
     </>
   )
 }

@@ -11,7 +11,8 @@ import { PinContext, type PinDescApi } from '../sheet/PinContext';
 import type { DescNode } from '../sheet/descref';
 import { ForceMobileContext } from '../sheet/useIsMobile';
 import { useBackHandler } from '../sheet/useEscapeClose';
-import { useTrackerVars, useGlobalVars } from './trackerAppearance';
+import { useTrackerVars, useGlobalVars, hhSurfaceTheme } from './trackerAppearance';
+import type { DialogStyle } from '../sheet/confirm';
 import { TrackerCustomize } from './TrackerCustomize';
 import { CampaignPartyLevelProvider } from '../../tracker/src/data/partyLevelContext';
 import { CampaignPcPaneProvider, type PcPaneHandles } from '../../tracker/src/data/pcPaneContext';
@@ -28,6 +29,7 @@ import { useWindowStore } from '../../tracker/src/store/windowStore';
 import { useLayoutStore, useGmLayoutStore, type PaneNode } from '../../tracker/src/store/layoutStore';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
 import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
+import { HostThemeProvider } from '../../tracker/src/data/hostThemeContext';
 import { hostSearchRecords } from './hostSearchRecords';
 import { InitiativeTracker, DELAY_RETURN_MIME, useDelayDropZone } from '../../tracker/src/components/InitiativeTracker';
 import { useDelayDragActive } from '../../tracker/src/useDelayDragActive';
@@ -77,8 +79,9 @@ const SYNC_READY_CAP_MS = 4000;
  * event. So the same press also reached the stack, whose base handler leaves the campaign: one
  * Escape out of a row menu and the GM was out of the campaign, unpushed pane edits and all. The
  * tracker can't import HH's hooks to register itself, so the seam asks the DOM: such a menu portals
- * itself to <body> (carrying `.tracker-root` for its CSS variables) and is still there on this
- * press. This view's own root is inside HH's page, and excluded by name in case it ever isn't.
+ * itself to <body> (through the tracker's BodyPortal, carrying `.tracker-root` for its CSS variables)
+ * and is still there on this press. This view's own root is inside HH's page, and excluded by name in
+ * case it ever isn't.
  */
 function trackerPopupOpen(): boolean {
   return !!document.querySelector('body > .tracker-root:not(.campaign-tracker)');
@@ -197,8 +200,12 @@ export function CampaignTracker({
    * Leave for the campaign's settings page. Called only once it's SAFE to unmount this view — the
    * tools button that asks for it lives in HH's chrome and can't know whether the GM has unsaved
    * changes, so the decision belongs here.
+   *
+   * `dialogStyle` is what a box the page raises in answer should wear — the local table has no
+   * settings and says so in a confirm, which opens OVER this view: the tracker's own look and a
+   * z-index above its floating windows (see `dialogStyle` below). A page that navigates ignores it.
    */
-  onOpenSettings: () => void;
+  onOpenSettings: (dialogStyle?: DialogStyle) => void;
   /**
    * Leave the campaign (back to the campaigns list). Called only once it's SAFE to unmount, exactly
    * like onOpenSettings — Escape and the Back arrow both arrive here through the shared dismiss
@@ -227,17 +234,28 @@ export function CampaignTracker({
   const offline = !!m.local;
   /*
    * The GM's own theme for this tracker view (theme/style only, local, never synced).
-   *  - trackerVars: paint the tracker with them; null → inherit the app's global appearance.
+   *  - trackerVars: paint the tracker with them; null → inherit the app's global appearance. One object
+   *    per appearance state (useTrackerVars memoises), because it also feeds every popup below.
    *  - fullSheetRevert: the OUT-OF-COMBAT full-screen sheet (opened from a party card to review a
    *    character) is pinned to the app's global appearance — it's a focused "look at this character
-   *    as they really are" view, not part of the combat workspace.
+   *    as they really are" view, not part of the combat workspace. Its own popups render inside it and
+   *    keep that look; so do GmEditSheet's dialogs (detached, on the app's look).
    * The IN-COMBAT PC panes deliberately get NO revert: tiled beside the initiative order and the
-   * creature stat blocks, they should read as one themed surface, so they inherit the tracker theme.
+   * creature stat blocks, they hold the PC's party card and read as one themed surface with them.
+   * EVERY POPUP OPENED IN THE TRACKER wears the tracker's look too — the owner, 2026-10-01: "if i open
+   * a pop up in the initiative tracker it needs to have the same colors as the initiative tracker".
+   * Those drawn on <body>, outside this root, get it handed to them: the tracker's own (row menu,
+   * hover previews) through HostThemeProvider → BodyPortal, HH's description popup through its
+   * wrapper (`hhPopupTheme`), and the confirms raised here through `dialogStyle`.
    * None of this changes anything for players — it's the GM's local display only.
    */
   const trackerVars = useTrackerVars();
   const globalVars = useGlobalVars();
-  const fullSheetRevert = trackerVars ? globalVars : undefined;
+  // The app's variables AND the four text properties: the sheet sits inside `.tracker-root`, whose
+  // rules re-declare colour and font from the TRACKER's variables, and an element inherits those as
+  // finished values — with the variables alone the review sheet kept the tracker's font, and its
+  // tracker text colour wherever the sheet sets none (found in the 2026-10-10 browser proof).
+  const fullSheetRevert = trackerVars ? hhSurfaceTheme(globalVars) : undefined;
   // While testing without login the server party is always empty (nobody published to a campaign
   // that only exists on this device), so feed HH's real cards from the local roster instead.
   const localMembers = useLocalCampaignMembers(m.id, content);
@@ -567,6 +585,21 @@ export function CampaignTracker({
   // each focus), so the host-search description popup — portalled to <body> at HH's .picker-overlay
   // z-index — would paint BEHIND any open window. Lift its wrapper above the current top.
   const floatingTopZ = useWindowStore((s) => s.topZ);
+  /*
+   * The tracker's look, for the HH surfaces drawn on <body> from in here (undefined when the tracker
+   * inherits the app's look — then <body>'s own values ARE the tracker's). The vars alone would not
+   * do: an HH element inherits <body>'s finished text colour and font, so `hhSurfaceTheme` re-declares
+   * them as well. Applied as inline style on a wrapper that is deliberately NOT `.tracker-root` — the
+   * tracker's scoped preflight must never reach HH's markup.
+   */
+  const hhPopupTheme = useMemo(() => hhSurfaceTheme(trackerVars), [trackerVars]);
+  /*
+   * …and a confirm raised from this view (Clear the order, a card's kick, the local table's "No
+   * campaign settings"): the same look, above the description popup and every floating window. A
+   * confirm is a detached root (src/sheet/confirm.tsx), so it gets this as an option, not a context.
+   * The z-index applies with or without a tracker look — HH's own 80 sits under a window at 501.
+   */
+  const dialogStyle = useMemo<DialogStyle>(() => ({ ...hhPopupTheme, zIndex: floatingTopZ + 20 }), [hhPopupTheme, floatingTopZ]);
   // The index itself — names, older names, a detail line, no duplicate scrapes: hostSearchRecords.ts.
   const searchRecords = useMemo<HostSearchRecord[]>(() => hostSearchRecords(content), [content]);
   const hostSearch = useMemo(() => {
@@ -692,8 +725,31 @@ export function CampaignTracker({
    * and, because only the topmost handler runs, also stops a press this view has already spent
    * (a tracker popup closing itself) from falling through and leaving.
    */
+  /*
+   * …AS OF THE KEY PRESS, not as of the moment this handler runs. A browser runs a microtask checkpoint
+   * after every event listener, and React 18 commits a keydown's state update in one: so by the time
+   * the stack's `window` listener calls this, the row menu's own `document` listener has already closed
+   * the menu AND React has taken it off the DOM — `trackerPopupOpen()` said "nothing open" and the same
+   * press left the campaign (the local table: the whole page). jsdom dispatches with no checkpoint
+   * between listeners, so only the browser ever showed it (found in the 2026-10-10 browser proof;
+   * test/bug-tracker-seam.test.tsx flushes React where the browser does). A capture listener on
+   * `window` runs before every other listener for the press, so it reads the DOM as the GM saw it.
+   * Spent with this press: a Back arrow later (no key) asks the DOM afresh.
+   */
+  const popupAtPress = useRef(false);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      popupAtPress.current = trackerPopupOpen();
+      setTimeout(() => {
+        popupAtPress.current = false;
+      }, 0);
+    };
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, []);
   useBackHandler(true, () => {
-    if (trackerPopupOpen()) return;
+    if (trackerPopupOpen() || popupAtPress.current) return;
     void (async () => {
       if (await leaveFullSheet()) onLeave();
     })();
@@ -961,7 +1017,7 @@ export function CampaignTracker({
     if (settingsRequest === lastSettingsReqRef.current) return;
     lastSettingsReqRef.current = settingsRequest;
     void (async () => {
-      if (await leaveFullSheet()) onOpenSettings();
+      if (await leaveFullSheet()) onOpenSettings(dialogStyle);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settingsRequest]);
@@ -1147,6 +1203,9 @@ export function CampaignTracker({
     <div className="tracker-root campaign-tracker" style={trackerVars ?? undefined}>
       <GameDataProvider>
        <HostSearchProvider value={hostSearch}>
+       {/* The tracker's look for what the tracker itself draws on <body> (its BodyPortal): the row's
+           right-click menu and every hover preview. null → they inherit the app's look, as this root does. */}
+       <HostThemeProvider value={trackerVars}>
        <PinContext.Provider value={gmPin}>
        <CampaignPartyLevelProvider levels={partyLevels}>
         <CampaignMonsterPartsProvider enabled={monsterParts} mode={monsterPartsMode}>
@@ -1187,7 +1246,7 @@ export function CampaignTracker({
                   />
                 </div>
                 {dropMsg && <div className="ct-order-drop-msg" role="status">{dropMsg}</div>}
-                <RailFooter />
+                <RailFooter dialogStyle={dialogStyle} />
               </aside>
               {/* The drag handle. Its own element rather than a border so there's something to grab. */}
               <div
@@ -1257,6 +1316,9 @@ export function CampaignTracker({
                     // tracker party and the cards can't drift apart.
                     onMembers={setServerMembers}
                     localMembers={members === localMembers ? localMembers : undefined}
+                    // A card's kick asks in a confirm drawn over this view: the tracker's look, above
+                    // its windows.
+                    dialogStyle={dialogStyle}
                   />
                   )
                 }
@@ -1276,9 +1338,11 @@ export function CampaignTracker({
         <FloatingWindowLayer />
 
         {/* Global-search result → HH's own description popup. Portalled to <body> so it renders in
-            HH's normal CSS environment, not the tracker's scoped stylesheet. */}
+            HH's normal CSS environment, not the tracker's scoped stylesheet — and so its wrapper is
+            NOT `.tracker-root`: the tracker's look reaches it as inline variables plus the four text
+            properties (`hhPopupTheme`), never as the class, whose preflight would restyle HH's markup. */}
         {descTarget && descRec && createPortal(
-          <div style={{ position: 'fixed', inset: 0, zIndex: floatingTopZ + 10 }}>
+          <div style={{ ...hhPopupTheme, position: 'fixed', inset: 0, zIndex: floatingTopZ + 10 }}>
             <DescriptionModal
               root={{ title: descRec.name, description: descRec.description ?? '', descRefs: descRec.descRefs, key: descTarget.bucket, slug: descTarget.id }}
               onClose={() => setDescTarget(null)}
@@ -1318,6 +1382,7 @@ export function CampaignTracker({
         </CampaignMonsterPartsProvider>
        </CampaignPartyLevelProvider>
        </PinContext.Provider>
+       </HostThemeProvider>
        </HostSearchProvider>
       </GameDataProvider>
     </div>
@@ -1493,7 +1558,7 @@ function DelayZone() {
   );
 }
 
-function RailFooter() {
+function RailFooter({ dialogStyle }: { dialogStyle: DialogStyle }) {
   const combatants = useCombatStore((s) => s.combatants);
   const clearAll = useCombatStore((s) => s.clearAllCombatants);
 
@@ -1503,6 +1568,8 @@ function RailFooter() {
       message: 'Removes every combatant from the tracker. Your characters and the campaign are untouched.',
       confirmLabel: 'Clear',
       danger: true,
+      // The tracker's look, above its floating windows (a stat block left open used to cover it).
+      style: dialogStyle,
     });
     if (ok) clearAll();
   };

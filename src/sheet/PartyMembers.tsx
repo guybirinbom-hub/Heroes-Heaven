@@ -18,7 +18,7 @@ import { memberCardSummary, useMemberSheets } from './memberSheets';
 import { memberConditions, memberSummary, type PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
 import { GmEditSheet, type GmEditHandle } from './GmEditSheet';
-import { confirmDialog } from './confirm';
+import { confirmDialog, type DialogStyle } from './confirm';
 import { RankPill } from './widgets';
 import { useBackHandler } from './useEscapeClose';
 
@@ -319,6 +319,7 @@ export function PartyMembers({
   onMembers,
   localMembers,
   renderExtra,
+  dialogStyle,
 }: {
   campaignId: string;
   isGm: boolean;
@@ -366,6 +367,13 @@ export function PartyMembers({
    * roster. Omitted → the normal server-backed behaviour, unchanged.
    */
   localMembers?: PartyMember[];
+  /**
+   * The look of the confirm this page raises (the kick). The tracker integration passes its own
+   * tracker-only appearance and a z-index above its floating windows, so a dialog raised from a card
+   * in the tracker wears the tracker's colours, as everything else there does. Omitted → the app's
+   * look, unchanged.
+   */
+  dialogStyle?: DialogStyle;
 }) {
   const [members, setMembers] = useState<PartyMember[] | null>(null);
   const [error, setError] = useState('');
@@ -538,6 +546,7 @@ export function PartyMembers({
       message: "Their characters leave this party and they can't rejoin unless you re-share the code. This removes every character that player shared with the campaign.",
       confirmLabel: 'Remove',
       danger: true,
+      style: dialogStyle,
     });
     if (!ok) return;
     const res = await kickFromParty(campaignId, m.ownerId);

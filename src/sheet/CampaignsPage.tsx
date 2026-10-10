@@ -414,13 +414,15 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
                 content={content}
                 // There is no campaign behind this table, so there are no campaign settings. The
                 // tools' "Campaign" button lives in the tracker's own bar and can't be hidden from
-                // here, so say what it would have opened instead of doing nothing.
-                onOpenSettings={() =>
+                // here, so say what it would have opened instead of doing nothing. `style` is the
+                // tracker's own look (and a z-index above its windows): this box opens over the tracker.
+                onOpenSettings={(style) =>
                   void confirmDialog({
                     title: 'No campaign settings',
                     message:
                       'This table is local to this device. Sign in and create a campaign to set default rules, share a code and bring players in.',
                     confirmLabel: 'OK',
+                    style,
                   })
                 }
                 onLeave={onClose}

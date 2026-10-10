@@ -1,4 +1,4 @@
-import { useSyncExternalStore, type CSSProperties } from 'react';
+import { useMemo, useSyncExternalStore, type CSSProperties } from 'react';
 import { getAppearance, resolveAppearanceVars, type AppearanceState } from '../theme/theme-manager';
 
 /*
@@ -89,13 +89,41 @@ export function useTrackerAppearance(): AppearanceState | null {
  * The CSS variables to paint the tracker with, or null when it inherits the global appearance (so the
  * caller applies nothing and the document's own variables show through). Consumable colour is left to
  * the global default here — it's a device pref, not part of a tracker look.
+ *
+ * ONE OBJECT PER APPEARANCE STATE (memoised on it): the map also reaches every tracker popup drawn on
+ * <body> through the host theme context, and a fresh object per render would re-render each of them
+ * every time the tracker view did.
  */
 export function useTrackerVars(): CSSProperties | null {
   const app = useTrackerAppearance();
-  if (!app) return null;
-  // The vars are all CSS custom properties (`--app-*`) — a plain string map, which React accepts as
-  // an inline style but @types/react types with a `--${string}` index, so cast through unknown.
-  return resolveAppearanceVars(app.themeId, app.styleId, app.fontId, app.accent, null).vars as unknown as CSSProperties;
+  return useMemo(
+    () =>
+      app
+        ? // The vars are all CSS custom properties (`--app-*`) — a plain string map, which React accepts
+          // as an inline style but @types/react types with a `--${string}` index, so cast through unknown.
+          (resolveAppearanceVars(app.themeId, app.styleId, app.fontId, app.accent, null).vars as unknown as CSSProperties)
+        : null,
+    [app],
+  );
+}
+
+/**
+ * A set of appearance variables made WEARABLE by a Heroes Heaven wrapper: the variables plus the four
+ * text properties <body> sets — or undefined for null (nothing to re-theme). Two uses: an HH surface
+ * drawn on <body> from inside the tracker wears the TRACKER's (`vars` = the tracker's: the
+ * Search-everything description popup, a confirm the tracker raises), and the full review sheet inside
+ * the tracker wears the APP's (`vars` = the global ones, CampaignTracker's `fullSheetRevert`).
+ *
+ * The variables alone are not enough: `color` and `font-family` INHERIT as finished values. <body>
+ * computed its own once, from the global variables (src/theme/tokens.css), and `.tracker-root` computed
+ * its own from the tracker's. So a wrapper carrying only `--app-*` keeps its parent's text colour and
+ * font — light text on a light panel, with a light tracker palette over a dark app; the tracker's font
+ * on the review sheet. The wrapper re-declares the four text properties, so they resolve again from the
+ * variables on the wrapper itself. (The tracker's OWN body portals don't need this: its
+ * `:where(.tracker-root)` rules re-declare colour and font from its variables — see BodyPortal.)
+ */
+export function hhSurfaceTheme(vars: CSSProperties | null): CSSProperties | undefined {
+  return vars ? { ...vars, color: 'var(--app-text)', fontFamily: 'var(--app-font)', fontSize: 14, lineHeight: 1.5 } : undefined;
 }
 
 /**

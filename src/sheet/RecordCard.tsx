@@ -461,10 +461,12 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
             </button>
           )}
           <span className="info-title">{cur.title}</span>
+          {/* The star names where it pins, as the page and mine branches do: inside the tracker that is
+              the GM screen, not "Pinned" (the owner's 2026-10-01 list, item 1 — this branch said Pinned). */}
           {pin && (
             <button className={'info-star' + (pinned ? ' on' : '')}
-              title={pinned ? 'Remove from Pinned' : 'Favorite — add to Pinned'}
-              aria-label={pinned ? 'Remove from Pinned' : 'Add to Pinned'} aria-pressed={pinned}
+              title={pinned ? `Remove from ${pin.where ?? 'Pinned'}` : `Favorite — add to ${pin.where ?? 'Pinned'}`}
+              aria-label={pinned ? `Remove from ${pin.where ?? 'Pinned'}` : `Add to ${pin.where ?? 'Pinned'}`} aria-pressed={pinned}
               onClick={(e) => { e.stopPropagation(); pin.toggle(pinNode); }}>
               <i className="ti ti-star" aria-hidden="true" />
             </button>

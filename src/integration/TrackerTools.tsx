@@ -36,10 +36,11 @@ export function TrackerTools() {
    * CampaignsPage. See ./README.md.
    */
   const rootRef = useRef<HTMLDivElement>(null);
-  // The STATE, not useTrackerVars(): the resolved map is a fresh object on every render, which would
-  // re-run this effect (strip + rewrite every token on the header) on every keystroke in the tracker.
-  // The state object only changes when the GM actually changes an axis. `null` = inherit the app's
-  // appearance, and then the header is left exactly as Heroes Heaven painted it.
+  // Keyed on the STATE: a freshly resolved map per render would re-run this effect (strip + rewrite
+  // every token on the header) on every keystroke in the tracker. The state object only changes when
+  // the GM actually changes an axis (useTrackerVars() is memoised on the same state for the same
+  // reason). `null` = inherit the app's appearance, and then the header is left exactly as Heroes
+  // Heaven painted it.
   const app = useTrackerAppearance();
   useEffect(() => {
     const header = rootRef.current?.closest('header') as HTMLElement | null;

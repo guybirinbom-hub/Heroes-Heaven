@@ -26,8 +26,10 @@ import './tracker-settings.css';
  * GameDataProvider is required because several groups (Sources, Conditions, Stat Blocks) read the
  * game data; without it they'd render empty.
  *
- * NOT included from the tracker's modal: Appearance (Heroes Heaven's own Appearance section governs
- * the look — one appearance system, not two) and Backup & Data (the whole-app backup covers it).
+ * NOT included from the tracker's modal: Appearance (the look is Heroes Heaven's own appearance system —
+ * the app's Appearance, or the tracker-only look a GM sets with a campaign's "Customize tracker
+ * appearance" button, ./TrackerCustomize.tsx; one system, not two) and Backup & Data (the whole-app
+ * backup covers it).
  */
 
 type GroupId = 'display' | 'statblock' | 'sources' | 'timer' | 'players' | 'conditions' | 'encounter-tables';
@@ -48,8 +50,9 @@ export function TrackerSettingsSection() {
   return (
     <div className="tracker-settings">
       <p className="settings-desc">
-        Settings for the initiative tracker inside a campaign. The tracker&rsquo;s look follows this
-        app&rsquo;s Appearance, and its data is covered by Backup.
+        Settings for the initiative tracker inside a campaign. The tracker has its own look: set it
+        with Customize (the palette button in a campaign&rsquo;s top bar) &mdash; until you do, it
+        follows this app&rsquo;s Appearance. Its data is covered by Backup.
       </p>
 
       <div className="seg tracker-settings-nav" role="tablist" aria-label="Initiative tracker settings">
