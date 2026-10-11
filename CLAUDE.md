@@ -141,7 +141,7 @@ name it.
 
 - **Memory folder** (loads with the session): the running log, the release pointer, batch state, the
   standing owner questions and every lesson with a date.
-- **`docs/worktree-lanes.md`** (on the `wip/cross-kind-reprints-2026-09` branch until merged): how a
+- **`docs/worktree-lanes.md`**: how a
   data lane runs in its own worktree and merges INPUTS only, so several can run at once.
 - **`work/`**: the pipeline's tracked evidence (parity/residual JSON, owner questions) plus untracked
   scratch. Never the owner's characters.

@@ -30,7 +30,7 @@ Two stages. **Stage 1 never pushes**: pushing `main` IS publishing the website (
    - the SQL files Guy must run, in order (or "none")
    - what to test on his phone
    - one line: **GO** or **NO-GO** (and why)
-   Then stop and wait.
+   The release card replaces the usual end-of-job status block. Then stop and wait.
 
 ## Stage 2 - publish, only when a release card was shown in this chat and his next message is just "update", "update GitHub" or "ship it"
 
