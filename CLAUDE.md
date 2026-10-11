@@ -93,7 +93,8 @@ name it.
   edit and keep each file's own; never trust a git-bash grep for this.
 - **`npx jiti`, not `node`,** for scripts importing `.ts`. jiti cannot parse `.tsx` — inline what you
   need instead.
-- **`tsc -b` lies** (it is incremental). Use `npx tsc --noEmit`.
+- **`tsc -b` lies** (it is incremental). Use `node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json`
+  (bare `npx tsc` can download a fake package). In the main chat the end-of-turn hook already runs it on changed files.
 - **Search record fields at ANY depth.** A shallow top-level check once called two records empty whose
   mechanics live inside `effectChoices[].grant`.
 - **Foundry's silence means nothing.** 3,537 feats exist there with zero rule elements; only 39% carry
@@ -122,23 +123,19 @@ name it.
 - ⛔ **NEVER `git checkout HEAD -- <file>`, `git restore`, `git reset --hard` or `git clean`.** HEAD is
   usually behind the working tree; a checkout once destroyed 42 KB of `build.ts`. To recover a file,
   Write it from `git show HEAD:<path>`. These are also permission deny rules in `.claude/settings.local.json`.
-- **Never write code through a heredoc or `node -e`.** Use Write/Edit; the shell is for running things.
-- **Commit locally; push and release only on the owner's "update".** "Update GitHub" always means
-  source + Windows installer + Android APK + the site, cut from the clean clone at a commit.
+- **Commit locally; push and release only when the owner's whole message is "update", "update GitHub" or
+  "ship it".** "Update <something>" is a normal edit. A release is always source + Windows installer +
+  Android APK + the site; the steps are the `hh-release` skill.
 - **Verify in the browser preview** (dev-skip login only, never the owner's account). Do not assert
   that a change works — show it. Never native `confirm`/`alert`/`prompt`; every description popup
   keeps `PinStar`.
 - **Never rebuild the Tauri exe** unless asked (a release counts as asked).
-- **Never improvise when a referenced file is missing** — ask for the real one.
 - **Test characters are disposable.** Change them freely; do not narrate doing so.
-- **Don't ask the owner where to put a control** — decide in one line. A ruling is only for
-  conflicting rulings or unsettled print. "Report, then we'll do X" means stop after the report.
-- **Every final report ends with what was checked, what was assumed and what was not tested.** Plain
-  words for the owner; no slash commands, no option tables. He reads results, not code.
+- **Ask for a ruling only when rulings conflict, the print is unsettled (R9), or Wanderer's Guide's encoding
+  contradicts the print.** Where a control goes: decide in one line.
 - **Commit messages** explain WHY and say what was measured rather than what was attempted.
-- **One chat per job.** When a job ends, write the handover in memory and say so; the next chat
-  starts in this folder (its `.claude/settings.local.json` points `autoMemoryDirectory` at the shared
-  memory folder). Read the usage meter before any run of more than ~20 agents.
+- **One chat per job.** When a job ends, use the wrapup skill; the next chat starts in this folder (its
+  `.claude/settings.local.json` points `autoMemoryDirectory` at the shared memory folder).
 
 ## Where the rest lives
 
