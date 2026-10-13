@@ -12,6 +12,7 @@ import { RecordCard } from '../src/sheet/RecordCard';
 import { AstRenderer } from '../src/sheet/AstRenderer';
 import { DescBody } from '../src/sheet/DescBody';
 import { RemasteredLine, remasteredAsOf } from '../src/sheet/RemasteredLine';
+import { refLinkHtml } from '../src/sheet/RichEditor';
 import { useAstNode } from '../src/sheet/useAst';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import type { ContentDatabase, DescRef } from '../src/rules/types';
@@ -24,7 +25,8 @@ vi.mock('../src/data/useAuth', () => {
   const AUTH = { status: 'disabled', session: null, email: null };
   return { useAuth: () => AUTH, signOut: async () => undefined };
 });
-const { HostPage } = await import('../src/integration/CampaignTracker');
+const { HostPage, openHostWindow } = await import('../src/integration/CampaignTracker');
+const { useWindowStore, BASE_Z } = await import('../tracker/src/store/windowStore');
 
 /**
  * The pre-card GM screen page — CampaignTracker.tsx's HostPageLegacy, verbatim, as it stood until card
@@ -109,6 +111,9 @@ function PreCardHostPage({ content, bucket, id, onOpen }: {
  *    "Enter on the name" (both {0, 0}: the screen's top-left corner).
  *  - (item 7, refuter round 2) RecordCard WindowRecordCard: `headerControls={marker}` dropped → the marker
  *    leg red ("the window head draws the same line": null).
+ *  - (item 7, refuter round 3) DescBody's rich-HTML lane: `if (onOpenRecord) return onOpenRecord(key, id, at);`
+ *    dropped → the homebrew leg red ("another window": none — DescBody's own popup opened inside the
+ *    window instead). The markdown no-page leg above never reaches that lane.
  */
 const SEED = 20261002;
 const PAGE_COUNTS = { spells: 40, feats: 30, items: 30, actions: 20, classFeatures: 20, reference: 20, trait: 20, conditions: 10, deities: 10 } as const;
@@ -539,6 +544,36 @@ describe("item 7: the GM's page in a tracker window (RecordCard gm/window)", () 
     // A record not in this version says so, at the body's insets.
     const missing = await mount(hostEl({ kind: 'missing', key: 'feats:card-step6-no-such-feat', bucket: 'feats', id: 'card-step6-no-such-feat' }));
     expect(missing.innerHTML).toBe('<div class="ast-win ast-win-text"><p class="sd-ours">This page is not in this version of Heroes Heaven.</p></div>');
+  }, 120_000);
+
+  // item 7 (refuter round 3): the no-page lane's OTHER branch — authored HTML, whose links are .ref-link anchors
+  it('a homebrew record with no page: its authored .ref-link opens another window where it was clicked, never DescBody\'s own popup', async () => {
+    const target = recs('conditions').frightened;
+    expect(target, 'fixture: the linked record ships').toBeTruthy();
+    const HB = 'synthetic-homebrew-glare';
+    // What the homebrew editor writes (RichEditor refLinkHtml): rich HTML, a linked word as a .ref-link anchor.
+    const html = `<p>On a hit the target becomes ${refLinkHtml({ key: 'conditions', id: 'frightened', name: target.name }, 'frightened 1')}.</p>`;
+    const hb = { ...db, feats: { ...recs('feats'), [HB]: { name: 'Synthetic Homebrew Glare', description: html } } } as unknown as ContentDatabase;
+    expect(trees.feats[HB], 'no page of its own: the no-page lane').toBeUndefined();
+    useWindowStore.setState({ wins: [], topZ: BASE_Z });
+    try {
+      // Wired as CampaignTracker wires the page in a window: a link opens another window (openHostWindow).
+      // Inside the app's ContentContext, as the live app is — where DescBody's own popup COULD open.
+      const host = await mount(
+        <ContentContext.Provider value={hb}>
+          <HostPage content={hb} bucket="feats" id={HB} onOpen={(b, id, at) => openHostWindow(hb, b, id, at)} />
+        </ContentContext.Provider>,
+      );
+      const a = host.querySelector<HTMLElement>('.ast-win.ast-win-text .rich-html a.ref-link');
+      expect(a, 'the authored link, drawn by DescBody\'s rich-HTML lane').not.toBeNull();
+      await act(async () => { a!.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1, clientX: 240, clientY: 180 })); });
+      const ws = useWindowStore.getState().wins;
+      expect(ws.map((w) => w.tabs[0]), 'another window, holding the linked record').toEqual([{ type: 'host', ref: 'conditions:frightened', title: target.name, castRank: undefined }]);
+      expect({ x: ws[0].x, y: ws[0].y }, 'where the link was clicked').toEqual({ x: 240, y: 180 });
+      expect(document.querySelector('.picker-overlay, .ast-modal'), 'no popup of DescBody\'s own, inside the window').toBeNull();
+    } finally {
+      useWindowStore.setState({ wins: [], topZ: BASE_Z });
+    }
   }, 120_000);
 
   // item 7: the "Remastered as" name opens the reprint where it was clicked — or at itself, from the keyboard

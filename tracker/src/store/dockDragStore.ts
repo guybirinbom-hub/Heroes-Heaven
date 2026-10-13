@@ -8,7 +8,7 @@ import { pageZoom, localDelta } from '../utils/zoomFix'
 // real viewport pixels. Under Heroes Heaven's html{zoom} the two differ (utils/zoomFix), so a window
 // dragged by 100 px moved 100·zoom on screen, and one popped out of a pane landed at clientX·zoom — off
 // the cursor, the further off the further right. Every client point below goes through the zoom, read
-// once when the drag starts (dockDragStore.zoom.test.ts). Identity at zoom 1.
+// once when the drag starts (dockDragStore.zoom.test.tsx). Identity at zoom 1.
 
 // Popups can dock into more than one workspace (the combat tiling and the GM
 // Screen). Each pane carries a `data-layout-scope` so a drop routes to the

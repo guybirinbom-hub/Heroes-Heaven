@@ -41,12 +41,45 @@ function viewport(): { vw: number; vh: number } {
   const z = pageZoom()
   return { vw: window.innerWidth / z, vh: window.innerHeight / z }
 }
-/** Left/top for a window `w` wide, kept on screen: 8 px from the top-left, `w + 10` from the right. */
-function clampPos(x: number, y: number, w: number): { x: number; y: number } {
+
+/*
+ * HEIGHT. A window is as tall as its page, up to WIN_MAX_H (a stat block, an article), and never more
+ * than 88 % of the viewport: winMaxH, in the fixed layout's own pixels, is the number FloatingWindow draws
+ * as the window's max-height. It used to be the CSS `min(88vh, 680px)`, which is no such number under
+ * Heroes Heaven's html{zoom}: `vh` is multiplied by the zoom like any length (the tracker's index.css says
+ * so at `.modal-overlay`), so at zoom 1.3 a window stood taller than the screen and no placement fitted it.
+ *
+ * PLACEMENT keeps 320 px of a new window on screen (WIN_GUESS_H and the 8 px edge; openHostWindow's
+ * fixedPopupPos guesses 320 too), because its height is not known until it is drawn — and a stat block is
+ * up to 680: in the item-7 browser walk
+ * (1280 × 800) a creature opened from Search at y 240 hung 120 px off the bottom of the screen. So once a
+ * window is drawn, and again whenever its height changes (a stat block arrives after "Loading…"),
+ * FloatingWindow measures it and `fit` lifts it just enough for its bottom to sit 8 px inside the viewport
+ * — never above 8 px from the top, so its header stays on screen to drag. A short window stays where it
+ * opened (at a click: a link's own convention). Only where the APP put it: a window the GM has dragged
+ * (`moved`) or resized (`sized`) stays where he left it. windowStore.test.ts, FloatingWindow.fit.test.tsx.
+ */
+export const WIN_MAX_H = 680
+/** A live combatant's window (its full interactive stat block fills a set height). */
+export const LIVE_WIN_H = 640
+/** The height a window's placement assumes before it has been drawn and measured. */
+const WIN_GUESS_H = 312
+/** A window's tallest, in the fixed layout's own pixels (its max-height). */
+export function winMaxH(): number {
+  return Math.min(WIN_MAX_H, Math.floor(viewport().vh * 0.88))
+}
+/** A live combatant window's height, in the fixed layout's own pixels. */
+export function liveWinH(): number {
+  return Math.min(LIVE_WIN_H, Math.floor(viewport().vh * 0.82))
+}
+/** Left/top for a window `w` wide and `h` tall, kept on screen: 8 px from the top-left, `w + 10` from the
+ *  right, its bottom 8 px above the viewport's — but never above 8 px from the top (its header stays
+ *  reachable). `h` unknown (not yet drawn) is the 312 px guess. */
+function clampPos(x: number, y: number, w: number, h: number = WIN_GUESS_H): { x: number; y: number } {
   const { vw, vh } = viewport()
   return {
     x: Math.max(8, Math.min(x, vw - w - 10)),
-    y: Math.max(8, Math.min(y, vh - 320)),
+    y: Math.max(8, Math.min(y, vh - h - 8)),
   }
 }
 /** A width that fits the viewport (never under the 300 px a resize allows). */
@@ -87,6 +120,10 @@ export interface FloatingWin {
   w: number; h: number
   z: number
   sized: boolean    // false = auto-height, true = user has manually resized
+  /** The GM put it where it is (a drag, a tab dropped off a pane): `fit` leaves it there. */
+  moved?: boolean
+  /** Its height as last drawn (layout px, FloatingWindow → `fit`); unknown until it has been drawn. */
+  drawnH?: number
 }
 
 interface WindowStore {
@@ -117,8 +154,12 @@ interface WindowStore {
   /** Open a new window holding the given tabs at (x, y). Returns its id. */
   openTabs: (tabs: PopupTab[], x: number, y: number, active?: number) => string
   toFront: (id: string) => void
+  /** The GM moved the window (a drag): from now on it stays where he leaves it (`moved`). */
   move: (id: string, x: number, y: number) => void
   resize: (id: string, w: number, h: number) => void
+  /** The window was drawn `h` layout px tall: lift it until its bottom is inside the viewport (see HEIGHT
+   *  above) — unless the GM has moved or resized it. */
+  fit: (id: string, h: number) => void
 }
 
 let _uid = 0
@@ -137,9 +178,11 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
         set(s => settleZ({
           wins: s.wins.map(win => {
             if (win.id !== w.id) return win
-            const moved = (opts?.noCascade && originX != null && originY != null)
-              ? clampPos(originX, originY, win.w) : {}
-            return { ...win, ...moved, active: idx, z: s.topZ + 1 }
+            // Put at the click again: the app's placement now (not the GM's), kept whole on screen by the
+            // height it was last drawn at.
+            const placed = (opts?.noCascade && originX != null && originY != null)
+              ? { ...clampPos(originX, originY, win.w, win.sized ? win.h : win.drawnH), moved: false } : {}
+            return { ...win, ...placed, active: idx, z: s.topZ + 1 }
           }),
           topZ: s.topZ + 1,
         }))
@@ -251,7 +294,8 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
     set(settleZ({
       wins: [
         ...wins.map(w => w.id === id ? { ...w, tabs, active } : w),
-        { id: newId, tabs: [tab], active: 0, x: nx, y: ny, w: src.w, h: src.h, z: topZ + 1, sized: src.sized },
+        // A tab pulled off a window's tab strip: the GM's placement (`moved`), wherever his drag takes it.
+        { id: newId, tabs: [tab], active: 0, x: nx, y: ny, w: src.w, h: src.h, z: topZ + 1, sized: src.sized, moved: true },
       ],
       topZ: topZ + 1,
     }))
@@ -271,7 +315,8 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
         tabs: [...tabs],
         active: Math.max(0, Math.min(active, tabs.length - 1)),
         ...clampPos(x, y, w),
-        w, h: 0, z: topZ + 1, sized: false,
+        // Dropped off a pane where the GM let go of it (dockDragStore): his placement, left there.
+        w, h: 0, z: topZ + 1, sized: false, moved: true,
       }],
       topZ: topZ + 1,
     }))
@@ -291,10 +336,22 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
   },
 
   move(id, x, y) {
-    set(s => ({ wins: s.wins.map(w => w.id === id ? { ...w, x, y } : w) }))
+    set(s => ({ wins: s.wins.map(w => w.id === id ? { ...w, x, y, moved: true } : w) }))
   },
 
   resize(id, nw, nh) {
     set(s => ({ wins: s.wins.map(w => w.id === id ? { ...w, w: nw, h: nh, sized: true } : w) }))
+  },
+
+  fit(id, h) {
+    set(s => {
+      const win = s.wins.find(w => w.id === id)
+      // Not drawn (jsdom, a hidden pane: 0) — nothing measured, nothing to do.
+      if (!win || !(h > 0)) return s
+      // Where the GM put it, or sized it, is his: only the height is noted (a re-open at a click uses it).
+      const y = win.moved || win.sized ? win.y : clampPos(win.x, win.y, win.w, h).y
+      if (y === win.y && win.drawnH === h) return s
+      return { wins: s.wins.map(w => w.id === id ? { ...w, y, drawnH: h } : w) }
+    })
   },
 }))

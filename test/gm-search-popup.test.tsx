@@ -48,7 +48,9 @@ import LEDGER from '../src/data/trust-ledger.json';
  *  - CampaignTracker: the window Escape handler (`useBackHandler(synced && openWindows > 0, …)`) dropped →
  *    leg 3 red ("the first Escape left the campaign").
  *  - CampaignTracker window handler: `if (trackerPopupOpen() || popupAtPress.current) return;` dropped →
- *    leg 4 red (the window under the menu closed too).
+ *    leg 4 red (the window under the menu closed too); just its `|| popupAtPress.current` term dropped →
+ *    leg 4 red too, now that the leg flushes React between the menu's listener and the stack's, as the
+ *    browser's microtask checkpoint does (before that, jsdom kept it green without the term).
  *  - CampaignTracker HostPage → hostSearch `open`: `openHostWindow(content, bucket, id, at)` → `(…, undefined)`
  *    → leg 2 red (the second window opened centred, not at the click).
  *  - campaign-tracker.css: the `.campaign-tracker ul.ast-list { list-style: disc; }` rule dropped → leg 5
@@ -304,12 +306,32 @@ describe('the GM Search opens pages as tracker windows', () => {
     expect(menu, 'the row menu').not.toBeNull();
 
     // Escape the way the browser delivers it: up through `document`, where the menu listens, and on to
-    // `window`, where the dismiss stack does.
-    await act(async () => {
+    // `window`, where the dismiss stack does — WITH the browser's microtask checkpoint between the two.
+    // React commits the menu's close in that checkpoint, so when the stack's `window` listener runs the menu
+    // is already off the DOM and `trackerPopupOpen()` says "nothing open": only the answer taken as of the
+    // key press (CampaignTracker's `popupAtPress`) keeps the window under the menu. jsdom runs listeners
+    // back to back, with no checkpoint, so without one the window stays open even with that term gone (the
+    // item-7 refuter). A second `document` listener, added after the menu's, flushes React exactly where
+    // the browser's checkpoint would — test/bug-tracker-seam.test.tsx's instrument for the base handler.
+    const { flushSync } = await import('react-dom');
+    let flushedBeforeStack = false;
+    const checkpoint = () => {
+      flushSync(() => undefined);
+      flushedBeforeStack = !document.querySelector('body > .tracker-root:not(.campaign-tracker)');
+    };
+    document.addEventListener('keydown', checkpoint);
+    // NOT inside act: the update must be scheduled the way a browser schedules it, so the checkpoint above
+    // is what commits it.
+    const was = (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT;
+    (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = false;
+    try {
       menu!.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-      await new Promise((r) => setTimeout(r, 0));
-    });
-    await flush(1);
+    } finally {
+      (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = was;
+      document.removeEventListener('keydown', checkpoint);
+    }
+    await flush(2);
+    expect(flushedBeforeStack, 'fixture: the menu was off the DOM before the dismiss stack ran').toBe(true);
     expect(document.querySelector('body > .tracker-root:not(.campaign-tracker)'), 'the menu closed').toBeNull();
     expect(wins(), 'the window under the menu is still open').toHaveLength(1);
     expect(onLeave).not.toHaveBeenCalled();

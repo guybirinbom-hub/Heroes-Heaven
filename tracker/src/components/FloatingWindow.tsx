@@ -1,5 +1,5 @@
-import { useRef, createContext, useContext, useState, useEffect, Fragment } from 'react'
-import { useWindowStore, type FloatingWin, type WinType, type PopupTab } from '../store/windowStore'
+import { useRef, createContext, useContext, useState, useEffect, useLayoutEffect, Fragment } from 'react'
+import { useWindowStore, winMaxH, liveWinH, type FloatingWin, type WinType, type PopupTab } from '../store/windowStore'
 import { CombatantDetail } from './CombatantDetail'
 import { useSettingsStore } from '../store/settingsStore'
 import { beginDockDrag, beginBrowserDrag, useDockDrag } from '../store/dockDragStore'
@@ -819,8 +819,23 @@ export function PopupPreview({ type, ref_, title, castRank, fill, dockHandle, on
 // tabs can be dragged out (detach), onto another window (merge), or into a
 // layout pane (dock) — all via the mouse-driven dockDragStore.
 function WinItem({ win }: { win: FloatingWin }) {
-  const { close, closeTab, focusTab, toFront, resize } = useWindowStore()
+  const { close, closeTab, focusTab, toFront, resize, fit } = useWindowStore()
   const rsz  = useRef<{ mx: number; my: number; ww: number; wh: number; z: number } | null>(null)
+  // Its placement guessed it 320 px tall; a stat block is up to 680. Once drawn — before the first paint —
+  // and whenever its height changes (a stat block arriving after "Loading…", another tab), the window is
+  // measured and the store lifts it until its bottom is on screen, unless the GM has moved or resized it
+  // (windowStore HEIGHT). offsetHeight is in the layout's own pixels, as `y` is, under any zoom.
+  const rootRef = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => {
+    const el = rootRef.current
+    if (!el) return
+    const measure = () => fit(win.id, el.offsetHeight)
+    measure()
+    if (typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [win.id, fit])
   const active = win.tabs[win.active] ?? win.tabs[0]
   const meta = useMetaBadge(active.type, active.ref, active.castRank)
   // A creature tab whose ref is a LIVE combatant id hosts the full interactive
@@ -913,6 +928,7 @@ function WinItem({ win }: { win: FloatingWin }) {
 
   return (
     <div
+      ref={rootRef}
       data-win-root=""
       data-float-win={win.id}
       data-float-merge={win.id}
@@ -922,7 +938,9 @@ function WinItem({ win }: { win: FloatingWin }) {
         width: win.w,
         // A live stat block fills its height (h-full), so an auto-height window
         // would collapse it — give it a definite default height until resized.
-        ...(win.sized ? { height: win.h } : activeLive ? { height: 'min(82vh, 640px)' } : { maxHeight: 'min(88vh, 680px)' }),
+        // Numbers of the zoomed layout's own viewport, not CSS vh, which html{zoom} multiplies
+        // (windowStore HEIGHT): the window fits the screen at any zoom.
+        ...(win.sized ? { height: win.h } : activeLive ? { height: liveWinH() } : { maxHeight: winMaxH() }),
         zIndex: win.z,
         display: 'flex', flexDirection: 'column',
         background: 'var(--bg-panel)',
@@ -1078,6 +1096,14 @@ function DockDragGhost() {
 
 export function FloatingWindowLayer() {
   const wins = useWindowStore(s => s.wins)
+  // A window's height cap is a number of the viewport (winMaxH), not CSS vh, so redraw the windows when
+  // the viewport changes size (a shrinking cap re-measures each window, and `fit` keeps it on screen).
+  const [, viewportChanged] = useState(0)
+  useEffect(() => {
+    const onResize = () => viewportChanged(n => n + 1)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
   return (
     <>
       {wins.map(w => <WinItem key={w.id} win={w} />)}

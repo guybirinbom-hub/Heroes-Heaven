@@ -204,7 +204,11 @@ There is otherwise deliberately **nothing else to unwind**:
     Screen" picker can fall through to "leave the campaign". `windowStore`: a host page opens 560 wide
     (`winWidthFor`), placement and clamps are in the zoomed page's own pixels (`pageZoom`) against the
     window's own width, `toFront` on the top window no longer climbs, `topZ` is renumbered past 1500
-    without ever dropping below a window's z, and `closeTop` / `closeAll` exist. `dockDragStore` (and
+    without ever dropping below a window's z, and `closeTop` / `closeAll` exist. A window's height cap is
+    a number of the zoomed layout's viewport (`winMaxH`: 680, at most 88 %; a live row's `liveWinH`), not
+    CSS vh, which html{zoom} multiplies. Once drawn, and whenever its height changes, `FloatingWindow`
+    measures the window and `windowStore.fit` lifts it until its bottom is on screen, unless the GM has
+    dragged (`moved`) or resized it (`windowStore.test.ts`, `FloatingWindow.fit.test.tsx`). `dockDragStore` (and
     `FloatingWindow`'s tab detach) put every window it moves or pops out of a pane in the zoomed page's
     own pixels too. `FloatingWindow`: the header draws `HostSearch.controls` for a host tab (a strip
     above the page when a pane of two tabs has no header), a host page and a full stat block have no body

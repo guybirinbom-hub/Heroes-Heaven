@@ -37,9 +37,10 @@ export type CardMode = 'browse' | 'mine' | 'gm';
  * the item's description was. A linked word opens the browse card over it, Back returning to the item.
  * window (the owner's online list 2026-10-01, item 7) = the page inside the initiative tracker's movable
  * window or GM-screen pane (CampaignTracker's HostPage): the window is the frame and its tab the title,
- * and its header carries the trust marker and the star, so the card draws the rest of the page head —
- * the action glyph, the level badge, the Archives link and the trait chips — over the whole page body.
- * A linked word opens through the host (another window, at the click point).
+ * and its header carries the star (the host's controls), so the card draws the rest of the page head
+ * under it — the action glyph, the level badge, the Archives link, the trust marker (in the head's
+ * controls, where the popup puts it: the one-row header has no room for its words) and the trait chips —
+ * over the whole page body. A linked word opens through the host (another window, at the click point).
  */
 export type CardChrome = 'popup' | 'embed' | 'inset' | 'window';
 
