@@ -16,6 +16,7 @@ import { useAstNode } from '../src/sheet/useAst';
 import { loadBucketAst, type AstNode } from '../src/sheet/astStore';
 import type { ContentDatabase, DescRef } from '../src/rules/types';
 import { judgeRow, surfaceRows } from '../scripts/lib/card-scope.mjs';
+import LEDGER from '../src/data/trust-ledger.json';
 
 /* CampaignTracker pulls in the whole tracker; mounted with no account, as test/gm-search-popup.test.tsx does. */
 vi.mock('../src/integration/enabled', () => ({ TRACKER_IN_CAMPAIGN: true, TEST_CAMPAIGNS_WITHOUT_LOGIN: false }));
@@ -77,6 +78,16 @@ function PreCardHostPage({ content, bucket, id, onOpen }: {
  * loading placeholders that settle to the old text, 15 with a "Remastered as" line, 2 not in this version.
  * After the step: 0 differences.
  *
+ * ITEM 7 (2026-10-11, the owner's online list: "Search everything results open in the tracker's movable,
+ * windowed stat-block popup, not a static popup"). HostPage moved from chrome 'embed' to the new chrome
+ * 'window' — the page inside a tracker window or GM-screen pane, with the page head under the window's
+ * header (action glyph, level badge, Archives link, trait chips) over the SAME body. 'embed' itself is
+ * unchanged, so every leg that pins the embed markup now renders the embed card directly (`cardEl`) where it
+ * rendered HostPage (`hostEl`): the snapshot leg, the browse-body leg and the link leg. The "HostPage is
+ * the card" leg names the window chrome, and the legs after the ledger pin the window chrome itself:
+ * its body is the embed body byte for byte, its head is the popup's head without the name, a link hands
+ * the host the point it was clicked at, and a record with no page opens its links through the host.
+ *
  * MUTATION LINES (each measured red on 2026-10-02, then restored byte-exact from a scratch copy):
  *  - RecordCard EmbedRecordCard: `bodyOnly` dropped → snapshot, embed = legacy, air-walk and browse-body
  *    cases red.
@@ -87,6 +98,17 @@ function PreCardHostPage({ content, bucket, id, onOpen }: {
  *  - card-scope.mjs gm rows with `itemLists: false` → the ledger case red.
  *  - (card step 22) CampaignTracker HostPage: `mode="gm"` → `mode="browse"` → the "HostPage is the card"
  *    case red.
+ *  (item 7, each applied, run and read off that run, then restored:)
+ *  - CampaignTracker HostPage: `chrome="window"` → `chrome="embed"` → "HostPage is the card" red, and the
+ *    window-head leg red (no `.ast-win`).
+ *  - AstRenderer windowHead: the `ast-win-head` block dropped → the window-head leg red (no Archives link).
+ *  - AstRenderer Inline link: `clickAt(e)` dropped from the call → the click-point leg red.
+ *  - DescBody: `if (n && onOpenRecord) { … }` dropped → the no-page leg red (DescBody's own popup opens).
+ *  - RemasteredLine clickPoint: the keyboard branch (`if (e.detail === 0 && …) { …box… }`) dropped → the
+ *    no-page leg red at "a keyboard click hands over the link's box" and the Remastered leg red at
+ *    "Enter on the name" (both {0, 0}: the screen's top-left corner).
+ *  - (item 7, refuter round 2) RecordCard WindowRecordCard: `headerControls={marker}` dropped → the marker
+ *    leg red ("the window head draws the same line": null).
  */
 const SEED = 20261002;
 const PAGE_COUNTS = { spells: 40, feats: 30, items: 30, actions: 20, classFeatures: 20, reference: 20, trait: 20, conditions: 10, deities: 10 } as const;
@@ -215,9 +237,10 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     expect(new Set(sample.map((s) => s.key)).size).toBe(sample.length);
   });
 
-  // batch card: #card-SNAPSHOT — the GM page stays byte-equal to the pre-step render
+  // batch card: #card-SNAPSHOT — the embed chrome stays byte-equal to the pre-step render
+  // item 7: the embed card itself (cardEl), no longer HostPage, which draws the window chrome now.
   it.skipIf(!SNAP)('byte-equal to the pre-step HostPage (CARD_HOST_SNAPSHOT)', async () => {
-    const now = await framesOf(hostEl);
+    const now = await framesOf(cardEl);
     if (WRITE) {
       writeFileSync(SNAP!, JSON.stringify(now));
       return;
@@ -255,12 +278,12 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     expect(Object.entries(legacy).some(([k, f]) => sample.find((s) => s.key === k)!.kind === 'nopage' && !!f.settled && !f.settled.includes('ast-'))).toBe(true);
   }, 120_000);
 
-  // batch card: #card-R1 — the GM screen page is the record's card (mode gm, chrome embed)
-  it('HostPage is the card: RecordCard mode gm, chrome embed', () => {
+  // batch card: #card-R1 — the GM screen page is the record's card (mode gm; item 7: chrome window)
+  it('HostPage is the card: RecordCard mode gm, chrome window', () => {
     const e = sample.find((s) => s.kind === 'page')!;
     const el = (HostPage as (p: Parameters<typeof HostPage>[0]) => ReactElement)({ content: db, bucket: e.bucket, id: e.id, onOpen: noop });
     expect(el.type).toBe(RecordCard);
-    expect(el.props).toMatchObject({ record: { bucket: e.bucket, id: e.id }, mode: 'gm', chrome: 'embed', content: db });
+    expect(el.props).toMatchObject({ record: { bucket: e.bucket, id: e.id }, mode: 'gm', chrome: 'window', content: db });
   });
 
   // batch card premise: spell-6 "Range touch"
@@ -268,7 +291,8 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     // batch card premise: spell-6 "Range touch"
     const e: Entry = { kind: 'page', key: 'spells:air-walk', bucket: 'spells', id: 'air-walk' };
     expect(trees.spells[e.id], 'air-walk has a page').toBeTruthy();
-    const host = await mount(hostEl(e));
+    // item 7: the embed card (cardEl) — HostPage's window chrome is pinned by the legs after the ledger.
+    const host = await mount(cardEl(e));
     const body = host.querySelector('.ast-body.ast-embed');
     expect(body, 'the embedded page body').toBeTruthy();
     // AstRenderer draws a page's stat lines as `.ast-meta` rows led by a bold label.
@@ -291,7 +315,8 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
   it("the embedded body is the browse popup's body: nothing is dropped on the GM page", async () => {
     let compared = 0;
     for (const e of sample.filter((s) => s.kind === 'page').slice(0, 60)) {
-      const gm = await mount(<ContentContext.Provider value={db}>{hostEl(e)}</ContentContext.Provider>);
+      // item 7: the embed card (cardEl); the window chrome's body is pinned to this one further down.
+      const gm = await mount(<ContentContext.Provider value={db}>{cardEl(e)}</ContentContext.Provider>);
       const r = recs(e.bucket)[e.id];
       const browse = await mount(
         <ContentContext.Provider value={db}>
@@ -327,11 +352,12 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     const legacyLink = await calls(legacyEl, withLink, 'a.ast-lk');
     expect(legacyLink.length).toBe(1);
     // batch card: #card-SNAPSHOT — the card opens the same link and Remastered name the legacy page did
-    expect(await calls(hostEl, withLink, 'a.ast-lk')).toEqual(legacyLink);
+    // (item 7: the embed card, cardEl — both hand the host the same click point as a third argument now)
+    expect(await calls(cardEl, withLink, 'a.ast-lk')).toEqual(legacyLink);
     const rem = sample.find((s) => s.kind === 'remastered')!;
     const legacyRem = await calls(legacyEl, rem, '.sd-remastered a');
     expect(legacyRem.length).toBe(1);
-    expect(await calls(hostEl, rem, '.sd-remastered a')).toEqual(legacyRem);
+    expect(await calls(cardEl, rem, '.sd-remastered a')).toEqual(legacyRem);
   });
 
   // batch card: #card-SNAPSHOT — the GM page arms no phone Back trap, as before
@@ -376,4 +402,158 @@ describe('card step 6: the GM screen page (HostPage) through RecordCard gm/embed
     expect(v.identity).toBe(false);
     expect(v.labels, 'every page label judged OK (labelVerdicts returns only the others)').toEqual({});
   });
+});
+
+/*
+ * Item 7 (2026-10-11): HostPage's chrome, 'window' — the page in a tracker window / GM-screen pane. The
+ * window's header (the tracker's) holds the tab title and the star; the card draws the rest of the popup's
+ * head under it — the trust marker included, in the head's controls where the popup draws it — and the
+ * very body the embed chrome draws.
+ */
+/** A laid-out box for an element (jsdom lays nothing out: every box is 0, 0, 0, 0). */
+const box = (x: number, y: number, width: number, height: number): DOMRect =>
+  ({ x, y, width, height, left: x, top: y, right: x + width, bottom: y + height, toJSON: () => ({}) }) as DOMRect;
+
+describe("item 7: the GM's page in a tracker window (RecordCard gm/window)", () => {
+  // item 7: the window body is the embed body, byte for byte — nothing dropped, the stat lines kept
+  it('draws the very body the embed chrome draws, under the popup head without its name', async () => {
+    let compared = 0;
+    let withAon = 0;
+    let withTraits = 0;
+    let withBadge = 0;
+    for (const e of sample.filter((s) => s.kind === 'page').slice(0, 40)) {
+      const win = await mount(<ContentContext.Provider value={db}>{hostEl(e)}</ContentContext.Provider>);
+      const embed = await mount(<ContentContext.Provider value={db}>{cardEl(e)}</ContentContext.Provider>);
+      const r = recs(e.bucket)[e.id];
+      const browse = await mount(
+        <ContentContext.Provider value={db}>
+          <DescriptionModal root={{ title: r.name, description: r.description ?? '', descRefs: r.descRefs, key: e.bucket, slug: e.id }} onClose={noop} />
+        </ContentContext.Provider>,
+      );
+      const root = win.firstElementChild as HTMLElement;
+      expect(root.className, e.key).toBe('ast-win');
+      // The body: the embed chrome's, byte for byte.
+      expect(root.querySelector(':scope > .ast-body')!.innerHTML, e.key).toBe(embed.querySelector('.ast-body.ast-embed')!.innerHTML);
+      // The window is the frame: no popup overlay, frame, bar, name, Back, star or close of its own.
+      expect(win.querySelector('.picker-overlay, .ast-modal, .ast-pop, .ast-bar, .ast-name, .info-back, .info-star, .picker-close'), e.key).toBeNull();
+      // The head is the popup's, without the name: glyph, level badge, Archives link, trait chips.
+      const pop = browse.querySelector('.ast-modal .ast-pop')!;
+      const same = (sel: string, popSel: string) => {
+        const a = root.querySelector(sel);
+        const b = pop.querySelector(popSel);
+        expect(a?.outerHTML ?? null, `${e.key} ${sel}`).toBe(b?.outerHTML ?? null);
+        return !!a;
+      };
+      if (same(':scope > .ast-win-head .ast-aon', ':scope > .ast-head .ast-aon')) withAon++;
+      if (same(':scope > .ast-win-head .ast-badge', ':scope > .ast-head .ast-badge')) withBadge++;
+      same(':scope > .ast-win-head > .ast-ag.head', ':scope > .ast-head > .ast-ag.head');
+      if (same(':scope > .ast-traits', ':scope > .ast-traits')) withTraits++;
+      compared++;
+      while (mounted.length) mounted.pop()!.stop();
+    }
+    expect(compared).toBe(40);
+    // Not vacuous: the sample holds pages with each part of the head.
+    expect(withAon, 'pages with an Archives link').toBeGreaterThan(0);
+    expect(withTraits, 'pages with trait chips').toBeGreaterThan(0);
+    expect(withBadge, 'pages with a level badge').toBeGreaterThan(0);
+  }, 120_000);
+
+  // item 7 (refuter round 2): the trust marker is the page's — in the head's controls, where the popup puts it
+  it('a marked record draws its trust marker in the window head: the very line the popup draws there', async () => {
+    const ledger = LEDGER as { partly?: Record<string, string>; unencoded?: string[] };
+    const marked = [...Object.keys(ledger.partly ?? {}), ...(ledger.unencoded ?? [])]
+      .map((k) => k.split('/'))
+      .filter(([b, id]) => trees[b]?.[id] && recs(b)[id]);
+    expect(marked.length, 'marked records with a page (the shipped ledger)').toBeGreaterThan(0);
+    const [bucket, id] = marked[0];
+    const e: Entry = { kind: 'page', key: `${bucket}:${id}`, bucket, id };
+    const r = recs(bucket)[id];
+    const win = await mount(<ContentContext.Provider value={db}>{hostEl(e)}</ContentContext.Provider>);
+    const browse = await mount(
+      <ContentContext.Provider value={db}>
+        <DescriptionModal root={{ title: r.name, description: r.description ?? '', descRefs: r.descRefs, key: bucket, slug: id }} onClose={noop} />
+      </ContentContext.Provider>,
+    );
+    const popupNote = browse.querySelector('.ast-head .ast-controls .sd-choice-note');
+    expect(popupNote?.textContent ?? '', `${e.key}: the popup draws the marker`).toMatch(/^Not yet verified/);
+    const winNote = win.querySelector(':scope > .ast-win > .ast-win-head .ast-controls .sd-choice-note');
+    expect(winNote?.outerHTML ?? null, `${e.key}: the window head draws the same line`).toBe(popupNote!.outerHTML);
+    expect(win.querySelectorAll('.sd-choice-note'), 'once, and not in the body').toHaveLength(1);
+  }, 120_000);
+
+  // item 7: a link opens another window WHERE IT WAS CLICKED — the host is handed the point
+  it('a linked word and a trait chip hand the host the point they were activated at', async () => {
+    const withLink = sample.filter((s) => s.kind === 'page').find((s) => renderToStaticMarkup(<ContentContext.Provider value={db}>{cardEl(s)}</ContentContext.Provider>).includes('ast-lk'))!;
+    expect(withLink, 'a sampled page with a live link').toBeTruthy();
+    const onOpen = vi.fn();
+    const host = await mount(<ContentContext.Provider value={db}>{hostEl(withLink, onOpen)}</ContentContext.Provider>);
+    const a = host.querySelector<HTMLElement>('.ast-body a.ast-lk')!;
+    await act(async () => { a.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, clientX: 321, clientY: 87 })); });
+    expect(onOpen).toHaveBeenCalledTimes(1);
+    const [bucket, slug, at] = onOpen.mock.calls[0];
+    expect(typeof bucket === 'string' && typeof slug === 'string', 'bucket and slug').toBe(true);
+    expect(at, 'the click point').toEqual({ x: 321, y: 87 });
+    // A key press has no pointer: the link's own box (jsdom lays nothing out, so its corner is 0, 0).
+    await act(async () => { a.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })); });
+    expect(onOpen.mock.calls[1]).toEqual([bucket, slug, { x: 0, y: 0 }]);
+    // A trait chip, the same way.
+    const withChip = sample.filter((s) => s.kind === 'page').find((s) => renderToStaticMarkup(<ContentContext.Provider value={db}>{hostEl(s)}</ContentContext.Provider>).includes('ast-tr-link'));
+    expect(withChip, 'a sampled page with a live trait chip').toBeTruthy();
+    const onChip = vi.fn();
+    const chipHost = await mount(<ContentContext.Provider value={db}>{hostEl(withChip!, onChip)}</ContentContext.Provider>);
+    const chip = chipHost.querySelector<HTMLElement>('.ast-traits a.ast-tr-link')!;
+    await act(async () => { chip.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, clientX: 40, clientY: 12 })); });
+    expect(onChip.mock.calls[0][0]).toBe('trait');
+    expect(onChip.mock.calls[0][2]).toEqual({ x: 40, y: 12 });
+  }, 120_000);
+
+  // item 7: a record with no page opens its links through the host, never a popup inside the window
+  it('a record with no page shows its text, and its links open through the host (another window), not a popup', async () => {
+    // The first no-page record (deterministic order) whose old text the window draws with a live link.
+    let found: { e: Entry; host: HTMLElement; onOpen: ReturnType<typeof vi.fn> } | null = null;
+    outer: for (const b of BUCKETS) {
+      for (const id of Object.keys(recs(b)).filter((s) => !trees[b][s] && (recs(b)[s]?.descRefs?.length ?? 0) > 0).sort().slice(0, 30)) {
+        const e: Entry = { kind: 'nopage', key: `${b}:${id}`, bucket: b, id };
+        const onOpen = vi.fn();
+        const host = await mount(<ContentContext.Provider value={db}>{hostEl(e, onOpen)}</ContentContext.Provider>);
+        if (host.querySelector('.ast-win-text button.desc-link')) { found = { e, host, onOpen }; break outer; }
+        mounted.pop()!.stop();
+      }
+    }
+    expect(found, 'a no-page record whose text carries a link').not.toBeNull();
+    const { host, onOpen, e } = found!;
+    expect(host.querySelector('.ast-win.ast-win-text .sd-desc'), `${e.key}: DescBody's text lane`).not.toBeNull();
+    const link = host.querySelector<HTMLElement>('.ast-win-text button.desc-link')!;
+    await act(async () => { link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, clientX: 150, clientY: 210 })); });
+    expect(onOpen, `${e.key}: the link opened through the host`).toHaveBeenCalledTimes(1);
+    const [bucket, slug, at] = onOpen.mock.calls[0];
+    expect(recs(bucket)[slug], 'it names a record that ships').toBeTruthy();
+    expect(at).toEqual({ x: 150, y: 210 });
+    // Enter on the focused link: the browser makes a click with no pointer (detail 0, client 0, 0). The
+    // window opens at the link, not in the screen's top-left corner.
+    link.getBoundingClientRect = () => box(70, 120, 90, 20);
+    await act(async () => { link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 0 })); });
+    expect(onOpen.mock.calls[1], `${e.key}: a keyboard click hands over the link's box`).toEqual([bucket, slug, { x: 70, y: 140 }]);
+    // …and DescBody's own popup never opened inside the window.
+    expect(document.querySelector('.picker-overlay')).toBeNull();
+    // A record not in this version says so, at the body's insets.
+    const missing = await mount(hostEl({ kind: 'missing', key: 'feats:card-step6-no-such-feat', bucket: 'feats', id: 'card-step6-no-such-feat' }));
+    expect(missing.innerHTML).toBe('<div class="ast-win ast-win-text"><p class="sd-ours">This page is not in this version of Heroes Heaven.</p></div>');
+  }, 120_000);
+
+  // item 7: the "Remastered as" name opens the reprint where it was clicked — or at itself, from the keyboard
+  it('the "Remastered as" name hands the host its click point, or its own box when the keyboard clicked it', async () => {
+    const rem = sample.find((s) => s.kind === 'remastered')!;
+    expect(rem, 'a sampled record with a "Remastered as" line').toBeTruthy();
+    const onOpen = vi.fn();
+    const host = await mount(<ContentContext.Provider value={db}>{hostEl(rem, onOpen)}</ContentContext.Provider>);
+    const name = host.querySelector<HTMLElement>('.sd-remastered a')!;
+    expect(name, `${rem.key}: the window draws the line`).toBeTruthy();
+    const ra = recs(rem.bucket)[rem.id].remasteredAs as { bucket: string; id: string };
+    await act(async () => { name.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1, clientX: 33, clientY: 44 })); });
+    expect(onOpen.mock.calls[0]).toEqual([ra.bucket, ra.id, { x: 33, y: 44 }]);
+    name.getBoundingClientRect = () => box(12, 300, 80, 18);
+    await act(async () => { name.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 0 })); });
+    expect(onOpen.mock.calls[1], 'Enter on the name: its own box, not the corner').toEqual([ra.bucket, ra.id, { x: 12, y: 318 }]);
+  }, 120_000);
 });

@@ -164,6 +164,30 @@
   position: relative;
 }
 
+/*
+ * A Heroes Heaven page inside the tracker (item 7: a Search-everything result in a floating window, a
+ * page pinned to the GM screen) keeps its list bullets and numbers. The tracker's scoped preflight
+ * (`:where(.tracker-root) ul, ol { list-style: none }`, specificity 0,0,1) strips them, and HH's
+ * `.ast-list` never set a list-style of its own — outside the tracker the browser's default drew them.
+ * These beat the preflight (0,2,1) and stay inside this view. An archetype page's compact feat list
+ * (.ast-stub-list) draws no bullets anywhere, so it keeps none here either.
+ */
+.campaign-tracker ul.ast-list { list-style: disc; }
+.campaign-tracker ul.ast-list ul.ast-list { list-style: circle; }
+.campaign-tracker ol.ast-list { list-style: decimal; }
+.campaign-tracker ul.ast-list.ast-stub-list,
+.campaign-tracker ul.ast-list ul.ast-list.ast-stub-list { list-style: none; }
+
+/*
+ * A confirm stays the topmost layer while the campaign tracker is on screen. The tracker's floating
+ * windows sit at 501 and up (windowStore: never past 1,500, and a confirm this view styles rides 20
+ * above the top one). A confirm HH raises WITHOUT that style — the player's sheet's "Update before
+ * leaving?" and "Leave the builder?" (GmEditSheet), asked while a rules window floats over the sheet —
+ * drew at HH's own 80 (sheet.css), UNDER the window. This lifts every such confirm above them all; a
+ * styled confirm's inline z-index still wins. test/tracker-windows-over-sheet.test.tsx.
+ */
+body:has(.campaign-tracker) .picker-overlay.confirm-overlay { z-index: 1600; }
+
 /* ── the tracker ───────────────────────────────────────────────── */
 .ct-body {
   display: flex;

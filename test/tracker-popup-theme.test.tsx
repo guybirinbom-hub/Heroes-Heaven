@@ -27,8 +27,10 @@ import { useWindowStore } from '../tracker/src/store/windowStore';
  * initiative tracker".
  *
  * "Customize tracker appearance" paints the tracker's root with inline `--app-*` variables. Four kinds of
- * surface are drawn on <body>, OUTSIDE that root, and resolved the app's look from <html> instead:
- *  (1) Search everything's description popup (HH's own card, portalled by CampaignTracker);
+ * surface were drawn on <body>, OUTSIDE that root, and resolved the app's look from <html> instead:
+ *  (1) Search everything's description popup (HH's own card, portalled by CampaignTracker) — since item 7
+ *      (2026-10-11) a tracker WINDOW inside the root instead, so it inherits the root's look; the leg now
+ *      checks that it is inside the root and wears that look;
  *  (2) the initiative row's right-click menu and (3) every hover preview (the tracker's own portals);
  *  (4) the confirms raised from the tracker (Clear the order, a card's kick, the local table's "No
  *      campaign settings") — detached roots, which also sat at z-index 80 under the floating windows.
@@ -45,10 +47,13 @@ import { useWindowStore } from '../tracker/src/store/windowStore';
  * `--app-surface` — before this pass that was <html> (the app's look) for all four.
  *
  * MUTATIONS (each applied, run, and read off that run; then restored):
- *  - CampaignTracker: `...hhPopupTheme` dropped from the description wrapper → leg 1 red at the Search
- *    popup: "the Search popup wears the tracker's look: expected '<global surface>' to be '<tracker>'".
- *  - trackerAppearance.ts: `color`/`fontFamily` dropped from `hhSurfaceTheme` → leg 1 red at "the Search
- *    popup: HH text colour re-declared", leg 2 at the kick confirm.
+ *  - (item 7) GlobalSearch: the host-window route dropped (`else if (host?.render) openWin(…)`) → leg 1 red
+ *    at "the page opens in a tracker window". (The description wrapper and its `hhPopupTheme` mutation went
+ *    with the portal: a Search page has no wrapper of its own any more.)
+ *  - trackerAppearance.ts: `color`/`fontFamily` dropped from `hhSurfaceTheme` → leg 1 red at "the Clear
+ *    confirm: HH text colour re-declared", leg 2 at the kick confirm.
+ *  - (item 1 follow-up) TrackerTools: the `color` / `font-family` lines dropped from the header effect →
+ *    the top-bar leg red ("the bar's title text: expected '' to be 'var(--app-text)'").
  *  - CampaignTracker: `<HostThemeProvider value={trackerVars}>` → `value={null}` → leg 1 red at the row
  *    menu and again at the hover preview.
  *  - CampaignTracker RailFooter: `style: dialogStyle` dropped → leg 1 red at the Clear confirm.
@@ -270,29 +275,28 @@ describe('the tracker’s popups wear the tracker’s look', () => {
     const root = el.querySelector<HTMLElement>('.tracker-root.campaign-tracker')!;
     expect(lookOf(root), 'the tracker itself (unchanged)').toBe(tracker['--app-surface']);
 
-    // (1) Search everything → an HH record → HH's description popup, on <body>.
+    // (1) Search everything → an HH record → a tracker window (item 7, 2026-10-11: it used to be HH's
+    // description popup on <body>). The window is drawn INSIDE the tracker's root, so it wears the root's
+    // look by inheritance — nothing to hand it — and the seam's popup detector never counts it.
     act(() => trackerUi.setSearch(true));
     await flush();
     type(document.querySelector<HTMLInputElement>('input[placeholder^="Search everything"]')!, 'Breachhill');
     const row = () => [...document.querySelectorAll('[data-row]')].find((r) => r.textContent?.includes('Breachhill, Outpost of Secrets'));
     await until(() => !!row(), 'the article is a Search row');
     click(row()!);
-    await until(() => !!document.querySelector('.ast-modal') && (document.body.textContent ?? '').includes('demographics of Breachill'), 'the page opens');
-    const popup = document.querySelector<HTMLElement>('.ast-modal')!;
-    const wrapper = popup.closest('.picker-overlay')!.parentElement!;
-    expect(wrapper.parentElement, 'the popup is drawn on <body>').toBe(document.body);
-    expect(lookOf(popup), "the Search popup wears the tracker's look").toBe(tracker['--app-surface']);
-    expect(lookOf(popup, '--app-text')).toBe(tracker['--app-text']);
-    expect(lookOf(popup, '--app-font')).toBe(tracker['--app-font']);
-    expectHhTextRedeclared(wrapper, 'the Search popup');
-    // HH's markup stays outside the tracker's scoped stylesheet — and outside the seam's popup detector.
-    expect(wrapper.classList.contains('tracker-root')).toBe(false);
-    expect(wrapper.closest('.tracker-root')).toBeNull();
-    // Every description popup keeps its star (here it pins to the GM screen).
-    expect(popup.querySelector<HTMLButtonElement>('.info-star')?.title).toBe('Favorite — add to GM screen');
-    click(popup.querySelector('.picker-close'));
+    const win = () => [...document.querySelectorAll<HTMLElement>('[data-float-win]')].find((w) => (w.textContent ?? '').includes('demographics of Breachill'));
+    await until(() => !!win(), 'the page opens in a tracker window');
+    expect(document.querySelector('.ast-modal'), 'no static popup').toBeNull();
+    expect(win()!.closest('.tracker-root.campaign-tracker'), 'the window is inside the tracker root').toBe(root);
+    expect(lookOf(win()!), "the Search window wears the tracker's look").toBe(tracker['--app-surface']);
+    expect(lookOf(win()!, '--app-text')).toBe(tracker['--app-text']);
+    expect(lookOf(win()!, '--app-font')).toBe(tracker['--app-font']);
+    expect(trackerPopups(), 'a window is not a body popup').toHaveLength(0);
+    // Every description popup keeps its star (here it pins to the GM screen), in the window's header.
+    expect(win()!.querySelector<HTMLButtonElement>('[data-host-controls] .info-star')?.title).toBe('Favorite — add to GM screen');
+    click(win()!.querySelector('button[title="Close"]'));
     await flush(2);
-    expect(document.querySelector('.ast-modal')).toBeNull();
+    expect(win()).toBeUndefined();
 
     // (2) A creature in the order, and its row's right-click menu.
     act(() => useCombatStore.getState().addCombatant(null, { name: 'Tidewrack Gull', initiative: 14 }));
@@ -425,6 +429,30 @@ describe('the tracker’s popups wear the tracker’s look', () => {
     expect(root.style.getPropertyValue('--app-surface'), 'the tracker root carries no tracker look').toBe('');
     expect(trackerPopups()[0].style.getPropertyValue('--app-surface'), 'the row menu carries no tracker look').toBe('');
     expect(lookOf(trackerPopups()[0]), 'the row menu wears the app look').toBe(app['--app-surface']);
+  }, 120_000);
+
+  it('the top bar’s text follows the tracker look with its colours, and drops both on a reset', async () => {
+    // Item 1's follow-up (2026-10-10 recheck): TrackerTools copied only the `--app-*` variables onto the
+    // campaign's `header.chrome`, and `.chrome` / `.chrome-brand` set no `color` — so the title text
+    // inherited <body>'s FINISHED colour (the app's) and sat in the app's colour on the tracker's bar.
+    const el = renderPage();
+    await flush();
+    await until(() => !!el.querySelector('.tracker-tools'), 'the tools are in the bar');
+    const bar = el.querySelector('.tracker-tools')!.closest('header') as HTMLElement;
+    expect(bar, 'the campaign’s header').not.toBeNull();
+    expect(bar.style.getPropertyValue('--app-text').trim(), 'the bar carries the tracker look').toBe(tracker['--app-text']);
+    expect(bar.style.color, "the bar's title text").toBe('var(--app-text)');
+    expect(bar.style.fontFamily, "the bar's font").toBe('var(--app-font)');
+    // Not hhSurfaceTheme's size / line height: those would resize the bar.
+    expect(bar.style.fontSize).toBe('');
+    expect(bar.style.lineHeight).toBe('');
+
+    // Back to no tracker look: the bar is exactly as Heroes Heaven painted it.
+    act(() => trackerAppearance.reset());
+    await flush(1);
+    expect(bar.style.getPropertyValue('--app-text')).toBe('');
+    expect(bar.style.color).toBe('');
+    expect(bar.style.fontFamily).toBe('');
   }, 120_000);
 
   it('HH Settings no longer says the tracker’s look follows the app', () => {

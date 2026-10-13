@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { createPortal } from 'react-dom';
 import type { CampaignMembership } from '../data/campaigns';
 import { loadRoster, type SavedChar } from '../data/storage';
 import { GmEditSheet, type GmEditHandle } from '../sheet/GmEditSheet';
-import { DescriptionModal } from '../sheet/DescriptionModal';
 import { RecordCard } from '../sheet/RecordCard';
+import type { OpenAt } from '../sheet/cardModel';
+import { PinStar } from '../sheet/PinStar';
 import { astSlug } from '../sheet/useAst';
 import { bucketOf } from '../sheet/astStore';
 import { PinContext, type PinDescApi } from '../sheet/PinContext';
 import type { DescNode } from '../sheet/descref';
 import { ForceMobileContext } from '../sheet/useIsMobile';
-import { useBackHandler } from '../sheet/useEscapeClose';
+import { DismissUnder, useBackHandler } from '../sheet/useEscapeClose';
 import { useTrackerVars, useGlobalVars, hhSurfaceTheme } from './trackerAppearance';
 import type { DialogStyle } from '../sheet/confirm';
 import { TrackerCustomize } from './TrackerCustomize';
@@ -25,7 +25,8 @@ import { PcStatsCardExtra, PcSavesCells, hasRightColumn } from './PcStatsCardExt
 import { MemberTurnButton } from './MemberTurnButton';
 import { useCombatStore, isSamePc } from '../../tracker/src/store/combatStore';
 import { useSettingsStore } from '../../tracker/src/store/settingsStore';
-import { useWindowStore } from '../../tracker/src/store/windowStore';
+import { useWindowStore, HOST_WIN_W } from '../../tracker/src/store/windowStore';
+import { fixedPopupPos } from '../../tracker/src/utils/zoomFix';
 import { useLayoutStore, useGmLayoutStore, type PaneNode } from '../../tracker/src/store/layoutStore';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
 import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
@@ -107,17 +108,68 @@ const hostRefOf = (n: DescNode): string | null => {
   return key && slug ? `${key}:${slug}` : null;
 };
 
-/** A page pinned to the GM screen: the record's own page (its Range/Duration lines kept — the GM reads
- *  them off it mid-fight), links opening HH's popup; a record with no page shows its text.
- *  Card step 6 (docs/card-design.md section 6 "gm"): it is the record card in mode 'gm' with chrome
- *  'embed' — the whole page, no popup frame (the tracker window owns it), drawn byte for byte as the
- *  pre-card page drew it (test/card-hostpage.test.tsx keeps that page as its reference). Card step 22
- *  removed the switch and the legacy page. */
+/** A Heroes Heaven page inside the tracker — a floating window (a Search result, a link in another page)
+ *  or a page pinned to the GM screen; both draw THIS. The record's own page with its Range/Duration lines
+ *  (the GM reads them off it mid-fight), its head under the window's header (action glyph, level badge,
+ *  Archives link, the trust marker, trait chips), links opening another window where they were clicked;
+ *  a record with no page shows its text. Card step 6 (docs/card-design.md section 6 "gm") made it the
+ *  record card in mode 'gm'; item 7 of the owner's online list (2026-10-01) moved it from chrome 'embed'
+ *  (the body alone, still pinned to the pre-card page by test/card-hostpage.test.tsx) to chrome 'window'.
+ *  The window's header carries the star (HostPageControls). */
 export function HostPage({ content, bucket, id, onOpen }: {
-  content: ContentDatabase; bucket: string; id: string; onOpen: (bucket: string, id: string) => void;
+  content: ContentDatabase; bucket: string; id: string; onOpen: (bucket: string, id: string, at?: OpenAt) => void;
 }) {
-  return <RecordCard record={{ bucket, id }} mode="gm" chrome="embed" content={content} onOpenRef={onOpen} />;
+  return <RecordCard record={{ bucket, id }} mode="gm" chrome="window" content={content} onOpenRef={onOpen} />;
 }
+
+type HostRec = { name: string; description?: string; descRefs?: DescRef[] };
+const hostRec = (content: ContentDatabase, bucket: string, id: string): HostRec | undefined =>
+  (content as unknown as Record<string, Record<string, HostRec> | undefined>)[bucket]?.[id];
+
+/**
+ * Open a Heroes Heaven page as a tracker window — what a linked word, a trait chip or a "Remastered as"
+ * name inside a windowed page does. With the point it was clicked at, the window opens THERE (the
+ * tracker's own convention: a link promotes to a window where it was clicked — FloatingWindow's
+ * RichText), converted into the zoomed page's coordinates (fixedPopupPos: HH scales the app with
+ * html{zoom}, and a click arrives in real viewport pixels — test/gm-search-popup.test.tsx pins it at
+ * zoom 2). A link opened from the keyboard hands over its own box instead (AstRenderer keyAt,
+ * RemasteredLine clickPoint). With no point it opens centred, as a Search result does. A page already
+ * open is focused instead.
+ */
+export function openHostWindow(content: ContentDatabase, bucket: string, id: string, at?: OpenAt): void {
+  const rec = hostRec(content, bucket, id);
+  if (!rec) return;
+  const ws = useWindowStore.getState();
+  const ref = `${bucket}:${id}`;
+  if (!at) {
+    ws.open('host', ref, rec.name);
+    return;
+  }
+  const p = fixedPopupPos(at.x, at.y, HOST_WIN_W, 320);
+  ws.open('host', ref, rec.name, p.left, p.top, { noCascade: true });
+}
+
+/** The window header's half of the popup's chrome for a host page (HostSearch.controls): the favourite
+ *  star. It reads the GM screen's pin target (`gmPin`, PinContext) — the windows and panes render inside
+ *  its provider — so it pins the page to the GM screen; on a page that IS a GM-screen pane it unpins it,
+ *  which closes that pane. The trust marker is NOT here: a line of words that names what is not applied
+ *  ("…partly applied. Not applied: …") would crowd the tab strip and the close button out of a header
+ *  that holds them in one row, and it would vanish with the header of a pane holding two tabs. It sits
+ *  in the page's own head instead (RecordCard chrome 'window'), where the popup puts it. */
+function HostPageControls({ content, bucket, id }: { content: ContentDatabase; bucket: string; id: string }) {
+  const rec = hostRec(content, bucket, id);
+  if (!rec) return null;
+  return <PinStar node={{ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug: id }} />;
+}
+
+/*
+ * Windows close when the GM goes back to the campaigns LIST — the same moment the tracker's transient UI
+ * resets (CampaignsPage calls trackerUi.reset() there), so a page opened at one table never reappears at
+ * the next. NOT on unmount: opening this campaign's settings unmounts the tracker too, and the GM comes
+ * back to the windows he left. Registered here, by the lazily-loaded tracker side, so trackerUiStore (which
+ * CampaignsPage imports statically) never pulls the tracker's stores into the main bundle.
+ */
+trackerUi.onReset(() => useWindowStore.getState().closeAll());
 
 /** True when this PC already has a row in the initiative order. Matched through the store's OWN
  *  `isSamePc` (charId first, name as the fallback), because that is what `addCombatant`'s PC dedupe
@@ -245,8 +297,9 @@ export function CampaignTracker({
    * EVERY POPUP OPENED IN THE TRACKER wears the tracker's look too — the owner, 2026-10-01: "if i open
    * a pop up in the initiative tracker it needs to have the same colors as the initiative tracker".
    * Those drawn on <body>, outside this root, get it handed to them: the tracker's own (row menu,
-   * hover previews) through HostThemeProvider → BodyPortal, HH's description popup through its
-   * wrapper (`hhPopupTheme`), and the confirms raised here through `dialogStyle`.
+   * hover previews) through HostThemeProvider → BodyPortal, and the confirms raised here through
+   * `dialogStyle`. A Search-everything page is a tracker window INSIDE this root (item 7), so it
+   * simply wears the root's look.
    * None of this changes anything for players — it's the GM's local display only.
    */
   const trackerVars = useTrackerVars();
@@ -573,42 +626,54 @@ export function CampaignTracker({
 
   /*
    * Global Search over ALL of Heroes Heaven's content (feats, spells, items, ancestries, rules,
-   * traits, conditions, actions, deities, …) — like the Archives search — opening HH's own
-   * description popup on select. Built once from the content DB this view already holds; the few
-   * purely-mechanical buckets with no description are skipped. It reaches the tracker's GlobalSearch
-   * through HostSearchProvider, and the popup is portalled to <body> so it renders in HH's normal CSS
-   * environment (outside the tracker's scoped stylesheet). Creatures stay searchable via the tracker
-   * data (GlobalSearch adds them), since HH has no bestiary content.
+   * traits, conditions, actions, deities, …) — like the Archives search. Built once from the content DB
+   * this view already holds; the few purely-mechanical buckets with no description are skipped. It
+   * reaches the tracker's GlobalSearch through HostSearchProvider. Creatures stay searchable via the
+   * tracker data (GlobalSearch adds them), since HH has no bestiary content.
+   *
+   * A RESULT OPENS AS ONE OF THE TRACKER'S OWN WINDOWS — the owner, 2026-10-01 (item 7): "Search
+   * everything results open in the tracker's movable, windowed stat-block popup, not a static popup."
+   * It used to open HH's description popup portalled to <body> (to keep HH's markup out of the tracker's
+   * scoped stylesheet): centred over a dimmed page, one at a time, impossible to move. Now `render` draws
+   * the page (HostPage) inside a movable, tabbed, dockable window — and the same page in a GM-screen pane
+   * — and `controls` puts the popup's star in that window's header. The CSS this costs
+   * is paid in campaign-tracker.css (list bullets the tracker's preflight strips) and ast.css (the
+   * window chrome's insets). `open` is the HostSearch contract's other door, for a host that draws no
+   * pages; this host draws them, so its `open` opens the same window.
    */
-  const [descTarget, setDescTarget] = useState<{ bucket: string; id: string } | null>(null);
-  // The tracker's floating stat-block windows join the root stacking context at z ≥ 501 (climbing on
-  // each focus), so the host-search description popup — portalled to <body> at HH's .picker-overlay
-  // z-index — would paint BEHIND any open window. Lift its wrapper above the current top.
+  // A confirm raised here must stay above every floating window (`dialogStyle` below), and the windows'
+  // z climbs from 501 on each focus (windowStore keeps `topZ` at or above every one of them).
   const floatingTopZ = useWindowStore((s) => s.topZ);
   /*
-   * The tracker's look, for the HH surfaces drawn on <body> from in here (undefined when the tracker
-   * inherits the app's look — then <body>'s own values ARE the tracker's). The vars alone would not
-   * do: an HH element inherits <body>'s finished text colour and font, so `hhSurfaceTheme` re-declares
-   * them as well. Applied as inline style on a wrapper that is deliberately NOT `.tracker-root` — the
-   * tracker's scoped preflight must never reach HH's markup.
+   * The tracker's look, for the one HH surface this view still raises on <body> itself: a confirm
+   * (undefined when the tracker inherits the app's look — then <body>'s own values ARE the tracker's).
+   * The vars alone would not do: an HH element inherits <body>'s finished text colour and font, so
+   * `hhSurfaceTheme` re-declares them as well. (A Search page used to be the other one, an HH popup on
+   * <body> in a wrapper carrying this; item 7 made it a tracker window, which wears the tracker's look
+   * by sitting inside this root.)
    */
   const hhPopupTheme = useMemo(() => hhSurfaceTheme(trackerVars), [trackerVars]);
   /*
-   * …and a confirm raised from this view (Clear the order, a card's kick, the local table's "No
-   * campaign settings"): the same look, above the description popup and every floating window. A
-   * confirm is a detached root (src/sheet/confirm.tsx), so it gets this as an option, not a context.
-   * The z-index applies with or without a tracker look — HH's own 80 sits under a window at 501.
+   * …so a confirm raised from this view (Clear the order, a card's kick, the local table's "No
+   * campaign settings") wears the same look, above every floating window. A confirm is a detached root
+   * (src/sheet/confirm.tsx), so it gets this as an option, not a context; it is applied as the
+   * overlay's inline style, never through `.tracker-root` — the tracker's scoped preflight must never
+   * reach HH's markup. The z-index applies with or without a tracker look — HH's own 80 sits under a
+   * window at 501. (The player's sheet raises its own confirms without this style, and the windows stay
+   * up over that sheet: campaign-tracker.css lifts those above every window instead.)
    */
   const dialogStyle = useMemo<DialogStyle>(() => ({ ...hhPopupTheme, zIndex: floatingTopZ + 20 }), [hhPopupTheme, floatingTopZ]);
   // The index itself — names, older names, a detail line, no duplicate scrapes: hostSearchRecords.ts.
   const searchRecords = useMemo<HostSearchRecord[]>(() => hostSearchRecords(content), [content]);
   const hostSearch = useMemo(() => {
-    const open = (bucket: string, id: string) => setDescTarget({ bucket, id });
+    const open = (bucket: string, id: string, at?: OpenAt) => openHostWindow(content, bucket, id, at);
     return {
       records: searchRecords,
       open,
-      // A page the GM starred onto the GM screen (gmPin below): its links open this same popup.
+      // The page in a window or a GM-screen pane: its links open another window where they were clicked.
       render: (bucket: string, id: string) => <HostPage content={content} bucket={bucket} id={id} onOpen={open} />,
+      // …and the popup's star, in that window's (or pane's) header.
+      controls: (bucket: string, id: string) => <HostPageControls content={content} bucket={bucket} id={id} />,
     };
   }, [searchRecords, content]);
   // The star in every description popup here (findHostTab above).
@@ -625,9 +690,6 @@ export function CampaignTracker({
       else gm.addPopup({ type: 'host', ref, title: n.title });
     },
   }), [gmRoot]);
-  const descRec = descTarget
-    ? (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }> | undefined>)[descTarget.bucket]?.[descTarget.id]
-    : null;
 
   // "Stats shown" — the per-party override, else the global default. The party page's dropdown
   // (PcDetailControls) writes party.pcDetail; both live in the tracker's own stores.
@@ -638,7 +700,8 @@ export function CampaignTracker({
   // Leaving the campaign resets the tracker UI (so re-entering doesn't pop the last panel open) — but
   // that's driven by CampaignsPage when the view returns to the campaigns LIST, NOT by this component
   // unmounting. Opening campaign settings unmounts this too, and back from there must restore the
-  // exact view the GM left (a combat pane, the GM screen), so a reset on every unmount would be wrong.
+  // exact view the GM left (a combat pane, the GM screen, the open windows), so a reset on every
+  // unmount would be wrong. The windows ride that same reset (trackerUi.onReset, top of this file).
 
   /**
    * The campaign's characters the GM can actually open, by charId — the sheet plus the owner id,
@@ -687,12 +750,20 @@ export function CampaignTracker({
    * the tracker, so one back press should peel it, not exit the whole campaign. Registered on the
    * shared dismiss stack ABOVE CampaignsPage's "leave campaign", and its Back arrow now fires that
    * stack too, so both the arrow and Escape close the sheet first.
+   *
+   * `under`: the sheet is drawn UNDER the tracker's floating windows (z 30 against their 501+), so while
+   * one is open the windows' handler below takes the press first, whichever opened first (useEscapeClose
+   * DismissUnder; everything the sheet registers itself is under them too — the boundary round it below).
    */
-  useBackHandler(fullSheetId != null, () => {
-    void (async () => {
-      if (await leaveFullSheet()) setFullSheetId(null);
-    })();
-  });
+  useBackHandler(
+    fullSheetId != null,
+    () => {
+      void (async () => {
+        if (await leaveFullSheet()) setFullSheetId(null);
+      })();
+    },
+    { under: true },
+  );
 
   /*
    * Escape inside a tracker overlay used to LEAVE THE CAMPAIGN.
@@ -708,12 +779,16 @@ export function CampaignTracker({
    * close, and a flag left over from before (opening campaign settings and coming back deliberately
    * doesn't reset the tracker UI) would put a handler on the stack that swallows an Escape and closes
    * nothing — the same LIFO trap, one level down.
+   *
+   * The first four are drawn ABOVE the floating windows (`.modal-overlay` at 2000 and up, the Search box
+   * at 9500), so while one is open the windows' handler stands down (below). The Customize panel is drawn
+   * UNDER them (`.tc-overlay`, z 60), so a window open over it takes the press first (`under`).
    */
   useBackHandler(synced && monsterSearchOpen, () => trackerUi.setMonsterSearch(false));
   useBackHandler(synced && searchOpen, () => trackerUi.setSearch(false));
   useBackHandler(synced && customOpen, () => trackerUi.setCustom(false));
   useBackHandler(synced && encountersOpen, () => trackerUi.setEncounters(false));
-  useBackHandler(synced && appearanceOpen, () => trackerUi.setAppearance(false));
+  useBackHandler(synced && appearanceOpen, () => trackerUi.setAppearance(false), { under: true });
 
   /*
    * LEAVING THE CAMPAIGN IS THIS VIEW'S DECISION.
@@ -754,6 +829,45 @@ export function CampaignTracker({
       if (await leaveFullSheet()) onLeave();
     })();
   });
+
+  /*
+   * ESCAPE PEELS THE TOP WINDOW FIRST (item 7). A Search page is a floating window now, and windows had
+   * no Escape at all: they render INSIDE this root, so `trackerPopupOpen()` never sees one, and with only
+   * a window open the press fell to the base handler above and LEFT THE CAMPAIGN. So while any window is
+   * open, this sits above the base handler and closes the highest one; the next press closes the next,
+   * and with none left Escape leaves as before. (Counting windows in `trackerPopupOpen()` instead would
+   * make the base handler do nothing at all — and leaving by Escape impossible while any window exists.)
+   *
+   * It stands down for a press that a body popup took (the row's right-click menu over a window closes
+   * itself from its own `document` listener): asked as of the key press, exactly like the base handler,
+   * or one Escape out of that menu would close the window under it too.
+   *
+   * Declared AFTER the base handler and gated on `synced` (the windows render below the early return):
+   * while the board is still opening there is no window on screen for it to close, and a press then
+   * must not close one the GM has not seen yet. Back from campaign settings with windows still open, it
+   * lands above the base handler again.
+   *
+   * WHAT IS DRAWN UNDER THE WINDOWS, AND WHAT OVER THEM. The stack runs in push order; the screen does
+   * not. A cover entry (useEscapeClose DismissUnder): everything drawn UNDER the windows is registered
+   * `under` — the player's sheet (z 30; its own handler above and, through the boundary round it,
+   * every popup, overlay and tab the sheet registers while a window stays open over it) and the
+   * Customize panel (z 60) — so a window takes the press before any of them, whichever opened first.
+   * The tracker's four overlays are drawn OVER the windows (2000 and up), so while one is open this
+   * stands down: a window opened from inside one (the Custom creature's stat block links) used to push
+   * this above the overlay's handler, and Escape closed that window, hidden behind the overlay, while
+   * the overlay stayed. A confirm (a detached root over the windows, campaign-tracker.css) is plain
+   * LIFO and opens last. test/tracker-windows-over-sheet.test.tsx, test/gm-search-popup.test.tsx.
+   */
+  const openWindows = useWindowStore((s) => s.wins.length);
+  const overlayAboveWindows = monsterSearchOpen || searchOpen || customOpen || encountersOpen;
+  useBackHandler(
+    synced && openWindows > 0 && !overlayAboveWindows,
+    () => {
+      if (trackerPopupOpen() || popupAtPress.current) return;
+      useWindowStore.getState().closeTop();
+    },
+    { cover: true },
+  );
 
   // ── Click a combatant → open it in the workspace ─────────────────────────────
   /*
@@ -1335,22 +1449,10 @@ export function CampaignTracker({
         {encountersOpen && <EncounterManager onClose={() => trackerUi.setEncounters(false)} />}
         {appearanceOpen && <TrackerCustomize onClose={() => trackerUi.setAppearance(false)} />}
         <DiceOverlay />
+        {/* The floating windows — creature stat blocks, reference popups and (item 7) every Search
+            everything page — inline in this root: they wear its look and sit inside the GM-screen pin
+            provider above. Escape closes the top one (the handler after the base handler). */}
         <FloatingWindowLayer />
-
-        {/* Global-search result → HH's own description popup. Portalled to <body> so it renders in
-            HH's normal CSS environment, not the tracker's scoped stylesheet — and so its wrapper is
-            NOT `.tracker-root`: the tracker's look reaches it as inline variables plus the four text
-            properties (`hhPopupTheme`), never as the class, whose preflight would restyle HH's markup. */}
-        {descTarget && descRec && createPortal(
-          <div style={{ ...hhPopupTheme, position: 'fixed', inset: 0, zIndex: floatingTopZ + 10 }}>
-            <DescriptionModal
-              root={{ title: descRec.name, description: descRec.description ?? '', descRefs: descRec.descRefs, key: descTarget.bucket, slug: descTarget.id }}
-              onClose={() => setDescTarget(null)}
-              onExit={() => setDescTarget(null)}
-            />
-          </div>,
-          document.body,
-        )}
 
         {/* Out of combat there's nothing to keep an eye on, so a party card's sheet gets the view.
             fullSheetRevert pins THIS review sheet to the app's global appearance when the tracker is
@@ -1358,6 +1460,9 @@ export function CampaignTracker({
             character as they really are. */}
         {fullSheetChar && (
           <div className="ct-sheet-full" style={fullSheetRevert}>
+            {/* Everything the sheet registers on the dismiss stack is drawn under the floating windows
+                (this layer is z 30), so a window open over it takes Escape first (the windows' handler). */}
+            <DismissUnder.Provider value>
             <GmEditSheet
               key={fullSheetChar.entry.id}
               ref={fullSheetRef}
@@ -1375,6 +1480,7 @@ export function CampaignTracker({
               inTracker
               onExit={() => setFullSheetId(null)}
             />
+            </DismissUnder.Provider>
           </div>
         )}
         </CampaignPcPaneProvider>

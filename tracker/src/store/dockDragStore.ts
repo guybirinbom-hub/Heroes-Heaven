@@ -1,11 +1,27 @@
 import { create } from 'zustand'
 import { useLayoutStore, useGmLayoutStore, type PopupRef, type Zone } from './layoutStore'
-import { useWindowStore } from './windowStore'
+import { useWindowStore, toLayoutTab } from './windowStore'
+import { useCombatStore } from './combatStore'
+import { pageZoom, localDelta } from '../utils/zoomFix'
+
+// A floating window's x/y are layout pixels of the page it is fixed in; a MouseEvent's clientX/Y are
+// real viewport pixels. Under Heroes Heaven's html{zoom} the two differ (utils/zoomFix), so a window
+// dragged by 100 px moved 100·zoom on screen, and one popped out of a pane landed at clientX·zoom — off
+// the cursor, the further off the further right. Every client point below goes through the zoom, read
+// once when the drag starts (dockDragStore.zoom.test.ts). Identity at zoom 1.
 
 // Popups can dock into more than one workspace (the combat tiling and the GM
 // Screen). Each pane carries a `data-layout-scope` so a drop routes to the
 // right store; default is the combat layout.
 const layoutFor = (scope?: string) => (scope === 'gm' ? useGmLayoutStore : useLayoutStore)
+
+// Tabs landing in a layout: a creature window that is a bestiary name (a Search result, a creature named
+// in prose) goes in as a 'bestiary' tab — as a 'creature' tab the layout would read the name as a
+// combatant id and prune it the moment it landed (windowStore toLayoutTab). A board row stays a creature.
+const intoLayout = (tabs: PopupRef[]): PopupRef[] => {
+  const ids = new Set(useCombatStore.getState().combatants.map(c => c.id))
+  return tabs.map(t => toLayoutTab(t, id => ids.has(id)))
+}
 
 // ── Popup dragging — two distinct modes (mouse-driven; HTML5 DnD is unreliable
 //    from position:fixed windows in a browser/Tauri webview) ─────────────────
@@ -78,6 +94,7 @@ export function beginDockDrag(
   opts?: { mode?: 'box' | 'tab' },
 ): void {
   const mode = opts?.mode ?? 'box'
+  const z = pageZoom()
   let started = false
   const move = (e: MouseEvent) => {
     if (!started) {
@@ -89,8 +106,8 @@ export function beginDockDrag(
     }
     if (payload.winId && payload.winPos) {
       useWindowStore.getState().move(payload.winId,
-        Math.max(0, payload.winPos.x + e.clientX - startX),
-        Math.max(0, payload.winPos.y + e.clientY - startY))
+        Math.max(0, payload.winPos.x + localDelta(e.clientX - startX, z)),
+        Math.max(0, payload.winPos.y + localDelta(e.clientY - startY, z)))
     }
     // The dragged floating window is pointer-events:none while docking (see
     // beingDocked), so elementFromPoint reaches the panes beneath it.
@@ -148,10 +165,10 @@ export function beginDockDrag(
     }
     if (hover?.kind === 'pane') {
       if (drag.fromLeaf && drag.fromLeaf === hover.leafId) return  // onto itself
-      layoutFor(hover.scope).getState().dropPopups(hover.leafId, tabs, hover.zone, drag.active ?? 0)
+      layoutFor(hover.scope).getState().dropPopups(hover.leafId, intoLayout(tabs), hover.zone, drag.active ?? 0)
       closeSrc()
     } else if (hover?.kind === 'empty') {
-      layoutFor(hover.scope).getState().dropPopups('', tabs, 'center', drag.active ?? 0)
+      layoutFor(hover.scope).getState().dropPopups('', intoLayout(tabs), 'center', drag.active ?? 0)
       closeSrc()
     } else {
       // Released NOT on a tab line/header (a pane body or empty space) → pop the
@@ -160,7 +177,7 @@ export function beginDockDrag(
       // combatant id, so the floating window hosts the full interactive stat
       // block (see WinItem) — no state is lost.
       if (drag.winId) return
-      ws.openTabs(tabs, e.clientX - 80, e.clientY - 16, drag.active ?? 0)
+      ws.openTabs(tabs, e.clientX / z - 80, e.clientY / z - 16, drag.active ?? 0)
       if (drag.fromLeaf != null) closeSrc()
     }
   }
@@ -184,6 +201,7 @@ export function beginBrowserDrag(
 ): void {
   let d: { winId: string; startWX: number; startWY: number } | null = null
   let started = false
+  const z = pageZoom()
   const cleanup = () => {
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
@@ -204,7 +222,7 @@ export function beginBrowserDrag(
     }
     if (!d) return
     const ws = useWindowStore.getState()
-    ws.move(d.winId, Math.max(0, d.startWX + e.clientX - startX), Math.max(0, d.startWY + e.clientY - startY))
+    ws.move(d.winId, Math.max(0, d.startWX + localDelta(e.clientX - startX, z)), Math.max(0, d.startWY + localDelta(e.clientY - startY, z)))
     // Merge target = any other popup under the cursor — a floating window OR a
     // docked popup block (whole area, not just a header). The dragged window is
     // pointer-events:none so it's excluded from elementsFromPoint; the first
@@ -247,7 +265,7 @@ export function beginBrowserDrag(
       // that block belongs to.
       const src = ws.wins.find(w => w.id === d!.winId)
       if (src) {
-        layoutFor(mergeHover.scope).getState().dropPopups(mergeHover.id, src.tabs.map(t => ({ ...t })), 'center', src.active)
+        layoutFor(mergeHover.scope).getState().dropPopups(mergeHover.id, intoLayout(src.tabs.map(t => ({ ...t }))), 'center', src.active)
         ws.close(d.winId)
       }
     }

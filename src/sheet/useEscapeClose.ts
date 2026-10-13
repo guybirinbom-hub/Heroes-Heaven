@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { createContext, useContext, useEffect, useRef } from 'react';
 
 /**
  * Shared dismiss stack for modals/overlays AND mobile "back-worthy" sub-views.
@@ -18,7 +18,7 @@ import { useEffect, useRef } from 'react';
  * reorder the stack. `useEscapeClose` registers popups; `useBackHandler` registers state-driven
  * sub-views (Notes editor ↔ list, Settings section ↔ cards, a non-home tab ↔ home).
  */
-type Entry = { get: () => (() => void) | undefined };
+type Entry = { get: () => (() => void) | undefined; cover?: boolean; under?: boolean };
 const stack: Entry[] = [];
 let keyListening = false;
 let popListening = false;
@@ -28,9 +28,28 @@ function isMobileViewport(): boolean {
   return typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
 }
 
+/*
+ * LAYERS THE PUSH ORDER CANNOT TELL APART. The stack is LIFO, which is the order on screen as long as
+ * whatever opens later is drawn on top. One surface breaks that: the campaign tracker's floating windows
+ * (src/integration/CampaignTracker.tsx) float ABOVE the player's sheet it opens over the tracker
+ * (`.ct-sheet-full`, a z-30 layer, so nothing drawn inside it can ever rise past a window) — and the GM
+ * keeps working in that sheet while a window stays open, opening its popups and its overlays there. Each
+ * of those pushes LATER than the windows' handler, so Escape went to a popup drawn under a window while
+ * the window still sat on top of it.
+ *
+ * So an entry can be a COVER (the windows' handler) and entries can be UNDER it (everything registered
+ * inside a `<DismissUnder value>` boundary, and handlers that say so): while a cover entry has a handler,
+ * the under entries are passed over, whatever order they were pushed in. Every other entry keeps plain
+ * LIFO against the cover — a confirm (a detached root, drawn above the windows) still takes the press
+ * first. Neither flag set = exactly the stack it always was. test/tracker-windows-over-sheet.test.tsx.
+ */
+export const DismissUnder = createContext(false);
+
 // Topmost entry that currently exposes a close handler (entries may pass undefined = no-op).
 function topHandler(): (() => void) | undefined {
+  const covered = stack.some((e) => e.cover && !!e.get());
   for (let i = stack.length - 1; i >= 0; i--) {
+    if (covered && stack[i].under) continue;
     const fn = stack[i].get();
     if (fn) return fn;
   }
@@ -100,19 +119,26 @@ export function triggerBack(): boolean {
 export function useEscapeClose(onClose: (() => void) | undefined): void {
   const ref = useRef(onClose);
   ref.current = onClose; // keep the latest handler without reordering the stack on re-render
-  useEffect(() => pushEntry({ get: () => ref.current }), []);
+  const under = useContext(DismissUnder);
+  useEffect(() => pushEntry({ get: () => ref.current, under }), []);
 }
 
 /**
  * Register a "go back one step" handler for a mobile drill-in sub-view. Active only while `active`
  * is true; Android Back / Escape then calls `onBack` (e.g. Notes editor → list, Settings section →
  * cards, a non-home tab → home) instead of exiting the app or unwinding a deeper layer.
+ *
+ * `layer` (optional, see DismissUnder above): `cover` = a layer drawn above every `under` one, so it
+ * takes the press before them whenever they were pushed; `under` = this handler is one of those (as is
+ * every entry inside a `<DismissUnder value>` boundary). Omitted: plain LIFO, as before.
  */
-export function useBackHandler(active: boolean, onBack: () => void): void {
+export function useBackHandler(active: boolean, onBack: () => void, layer?: { cover?: boolean; under?: boolean }): void {
   const ref = useRef(onBack);
   ref.current = onBack;
+  const under = useContext(DismissUnder) || !!layer?.under;
+  const cover = !!layer?.cover;
   useEffect(() => {
     if (!active) return;
-    return pushEntry({ get: () => ref.current });
-  }, [active]);
+    return pushEntry({ get: () => ref.current, cover, under });
+  }, [active, cover, under]);
 }

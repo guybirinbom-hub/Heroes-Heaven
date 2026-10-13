@@ -1,5 +1,7 @@
-import { useState } from 'react'
-import { useGmLayoutStore } from '../store/layoutStore'
+import { useLayoutEffect, useState } from 'react'
+import { useGmLayoutStore, type PaneNode, type PopupRef } from '../store/layoutStore'
+import { toLayoutTab } from '../store/windowStore'
+import { useCombatStore } from '../store/combatStore'
 import { PaneLayout } from './PaneLayout'
 import { GlobalSearch } from './GlobalSearch'
 import { PlusIcon, ScreenIcon } from './Icons'
@@ -41,6 +43,38 @@ function EmptyWorkspace({ onAdd }: { onAdd: () => void }) {
   )
 }
 
+/** The tree with `fix` applied to every tab — the same objects back wherever nothing changed. */
+function mapTabs(n: PaneNode, fix: (t: PopupRef) => PopupRef): PaneNode {
+  if (n.kind === 'leaf') {
+    const tabs = n.tabs.map(fix)
+    return tabs.every((t, i) => t === n.tabs[i]) ? n : { ...n, tabs }
+  }
+  const a = mapTabs(n.a, fix)
+  const b = mapTabs(n.b, fix)
+  return a === n.a && b === n.b ? n : { ...n, a, b }
+}
+
+/**
+ * A CREATURE PINNED HERE IS A BESTIARY PIN, BY EVERY ROUTE (item 7 of the owner's online list: "if i
+ * search a stat block it needs to open the full stat block (and there needs to be able to put it in the
+ * initiative order)").
+ *
+ * This screen's layout reads a 'creature' tab as a LIVE combatant id, and it reconciles against no
+ * combatants at all (`combatants={[]}` below), so every creature tab that reached it was pruned the
+ * moment it landed: the Random Encounter widget's "Preview", the standalone app's Add-to-GM-screen pick
+ * (App.tsx), any route still to come. A creature named here (no row on the board) is turned into the
+ * 'bestiary' tab the layout keeps (windowStore toLayoutTab) — the full stat block with "Add to
+ * initiative". Run on mount (a layout effect: before the layout's own reconcile, a passive effect, gets
+ * to it) and on every change of this screen's tree while it is up. Exported for the test.
+ */
+export function keepBestiaryPins(): void {
+  const { root } = useGmLayoutStore.getState()
+  if (!root) return
+  const ids = new Set(useCombatStore.getState().combatants.map(c => c.id))
+  const next = mapTabs(root, t => toLayoutTab(t, id => ids.has(id)))
+  if (next !== root) useGmLayoutStore.setState({ root: next })
+}
+
 const addItemStyle: React.CSSProperties = {
   display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left',
   background: 'transparent', border: 'none', borderRadius: 'var(--radius-sm)',
@@ -52,6 +86,11 @@ export function GMScreen() {
   const root = useGmLayoutStore(s => s.root)
   const [picking, setPicking] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useLayoutEffect(() => {
+    keepBestiaryPins()
+    return useGmLayoutStore.subscribe((s, p) => { if (s.root !== p.root) keepBestiaryPins() })
+  }, [])
 
   const addWidget = (kind: string, label: string) => {
     useGmLayoutStore.getState().addPopup({ type: 'widget', ref: newWidgetRef(kind), title: label })
@@ -110,6 +149,9 @@ export function GMScreen() {
           title="Add to GM Screen"
           onClose={() => setPicking(false)}
           onPick={h => {
+            // A creature picked here is a bestiary name, not a row on the board: keepBestiaryPins (above)
+            // turns it into a 'bestiary' tab the moment it lands — its full stat block, with "Add to
+            // initiative" — before the layout's reconcile could prune it.
             useGmLayoutStore.getState().addPopup({ type: h.type, ref: h.ref, title: h.title })
             setPicking(false)
           }}

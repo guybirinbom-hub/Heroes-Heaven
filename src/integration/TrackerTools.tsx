@@ -42,14 +42,29 @@ export function TrackerTools() {
   // reason). `null` = inherit the app's appearance, and then the header is left exactly as Heroes
   // Heaven painted it.
   const app = useTrackerAppearance();
+  /*
+   * …and the bar's TEXT follows too (item 1's follow-up, 2026-10-10). The variables alone left the
+   * campaign's "Initiative tracker" title in the app's colour on the tracker's bar: `.chrome` and
+   * `.chrome-brand` set no `color`, so the title inherits <body>'s FINISHED colour, computed from the
+   * app's variables on <html>. Re-declaring `color` and `font-family` from the header's own variables
+   * puts the tracker's text on the tracker's bar. (Not hhSurfaceTheme's font-size / line-height: those
+   * would resize the bar.) Whatever the header carried inline before is put back on cleanup.
+   */
   useEffect(() => {
     const header = rootRef.current?.closest('header') as HTMLElement | null;
     if (!header || !app) return;
     const { vars } = resolveAppearanceVars(app.themeId, app.styleId, app.fontId, app.accent, null);
     const names = Object.keys(vars);
     for (const n of names) header.style.setProperty(n, vars[n]);
+    const text = { color: 'var(--app-text)', 'font-family': 'var(--app-font)' } as const;
+    const before = Object.fromEntries(Object.keys(text).map((p) => [p, header.style.getPropertyValue(p)]));
+    for (const [p, v] of Object.entries(text)) header.style.setProperty(p, v);
     return () => {
       for (const n of names) header.style.removeProperty(n);
+      for (const p of Object.keys(text)) {
+        if (before[p]) header.style.setProperty(p, before[p]);
+        else header.style.removeProperty(p);
+      }
     };
   }, [app, boardReady]);
 

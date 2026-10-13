@@ -22,8 +22,9 @@ interface Hit {
   title: string      // display name
   tl: string         // title, lowercased (for matching)
   category: string
-  /** Set when this is a host (Heroes Heaven) content record — selecting it opens the host's OWN
-   *  description popup (HostSearch.open) instead of the tracker's reference window. */
+  /** Set when this is a host (Heroes Heaven) content record — selecting it opens the host's page in a
+   *  tracker window (WinType 'host', drawn by HostSearch.render), or, for a host that draws no pages,
+   *  calls HostSearch.open. */
   host?: { bucket: string; id: string }
   /** A host record's muted second line (HostSearchRecord.detail). */
   detail?: string
@@ -125,6 +126,26 @@ export function GlobalSearch({ onClose, onPick, title }: {
   useEffect(() => { setActive(0) }, [query])
   useEffect(() => { inputRef.current?.focus() }, [])
 
+  /*
+   * ESCAPE CLOSES THE PICKER AND NOTHING ELSE. Inside Heroes Heaven one shared dismiss stack listens on
+   * `window`, and its bottom entry leaves the campaign. The top-bar Search is registered on that stack,
+   * but the GM screen's "Add to GM Screen" picker is the tracker's own and is not — so its Escape fell
+   * through to "leave the campaign". The box's own handler (onKeyDown below) stops the press where it
+   * is handled; this catches a press made with the focus somewhere else on the page while the picker is
+   * open (a click on the box's padding drops the focus to <body>). Standalone nothing listens above,
+   * and both simply close the picker as before.
+   */
+  const onCloseRef = useRef(onClose)
+  onCloseRef.current = onClose
+  useEffect(() => {
+    const onDocKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      e.preventDefault(); e.stopPropagation(); onCloseRef.current()
+    }
+    document.addEventListener('keydown', onDocKey)
+    return () => document.removeEventListener('keydown', onDocKey)
+  }, [])
+
   // Keep the highlighted row visible while arrow-navigating.
   useEffect(() => {
     const el = listRef.current?.querySelector<HTMLElement>(`[data-row="${active}"]`)
@@ -133,10 +154,14 @@ export function GlobalSearch({ onClose, onPick, title }: {
 
   const choose = (h: Hit | undefined) => {
     if (!h) return
-    // Host (Heroes Heaven) content opens HH's own description popup — or, picked for the GM screen,
-    // lands there as a host page (WinType 'host', drawn by the host).
+    // Host (Heroes Heaven) content is a host page (WinType 'host', drawn by the host): picked for the GM
+    // screen it lands there as a pane tab; otherwise it opens as one of the tracker's own movable
+    // windows, centred, at a page's width (windowStore winWidthFor). A host that draws no pages (no
+    // `render`) still gets its own `open`.
     if (h.host) {
-      if (onPick) onPick({ type: 'host', ref: `${h.host.bucket}:${h.host.id}`, title: h.title })
+      const ref = `${h.host.bucket}:${h.host.id}`
+      if (onPick) onPick({ type: 'host', ref, title: h.title })
+      else if (host?.render) openWin('host', ref, h.title)
       else host?.open(h.host.bucket, h.host.id)
       onClose(); return
     }
@@ -149,7 +174,8 @@ export function GlobalSearch({ onClose, onPick, title }: {
   }
 
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') { e.preventDefault(); onClose() }
+    // stopPropagation: the press is spent here — see ESCAPE CLOSES THE PICKER above.
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); onClose() }
     else if (e.key === 'ArrowDown') { e.preventDefault(); setActive(a => Math.min(a + 1, results.length - 1)) }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(a => Math.max(a - 1, 0)) }
     else if (e.key === 'Enter') { e.preventDefault(); choose(results[active]) }

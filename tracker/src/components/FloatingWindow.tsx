@@ -19,6 +19,7 @@ import { TableAwareText } from './MarkdownTable'
 import { useCombatStore } from '../store/combatStore'
 import { rollDamageExpr } from '../utils/dice'
 import { GmWidgetBody } from './GmWidgets'
+import { BestiaryStatBlock } from './BestiaryStatBlock'
 
 // ── Recursive rich-text renderer ──────────────────────────────────────────
 // Drop-in replacement for `TextWithGlyphs` that ALSO renders `{@trait X}` /
@@ -446,9 +447,12 @@ function EquipmentDisplay({ item }: { item: EquipmentInfo }) {
 }
 
 // ── Creature reference card — a compact stat summary loaded by name, shown
-// when a creature mention in prose is hovered / clicked. Deliberately NOT the
-// full <StatBlock> (which imports this file — a circular import — and is too
-// heavy for a hover preview). ──────────────────────────────────────────────
+// when a creature mention in prose is HOVERED. A hover preview is too small and
+// too fleeting for the full <StatBlock>; a creature opened as a window (a click
+// on that mention, a Search result) gets the full block — BestiaryStatBlock,
+// through WinContent's `full`. (StatBlock imports this file, so that one is a
+// circular import; FloatingWindow → CombatantDetail → StatBlock already was
+// one, and both only meet inside render, never at module load.) ─────────────
 const fmtMod = (n: number) => (n >= 0 ? `+${n}` : `${n}`)
 const SAVE_LABEL = { fort: 'Fort', ref: 'Ref', will: 'Will' } as const
 function CreatureCard({ name }: { name: string }) {
@@ -526,7 +530,8 @@ export function CreatureCardBody({ c }: { c: Creature }) {
 // function component take a plain prop named `ref`, but React 18 (Heroes Heaven, which embeds this)
 // reserves `ref`, so passing the string id as `ref=` there throws "function components cannot have
 // string refs" and crashes every docked popup. `refId` is a normal prop in both.
-function WinContent({ type, refId: ref_, title, castRank }: { type: WinType; refId: string; title: string; castRank?: number }) {
+// `full`: drawn in a window or a pane rather than a hover preview — a creature gets its full stat block.
+function WinContent({ type, refId: ref_, title, castRank, full }: { type: WinType; refId: string; title: string; castRank?: number; full?: boolean }) {
   const { conditions, traits, spells, rituals, actions, actionTraits, skills, equipment, rules } = useGameData()
   const host = useHostSearch()
 
@@ -534,13 +539,18 @@ function WinContent({ type, refId: ref_, title, castRank }: { type: WinType; ref
   // pane chrome as reference popups — the body is just routed by the ref's kind.
   if (type === 'widget') return <GmWidgetBody refId={ref_} />
 
-  // A host page pinned to the GM screen ("bucket:id") — the host draws it.
+  // A host page ("bucket:id") — a Search result, a link in another host page, or a page pinned to
+  // the GM screen. The host draws it.
   if (type === 'host') {
     const cut = ref_.indexOf(':')
     return <>{host?.render?.(ref_.slice(0, cut), ref_.slice(cut + 1)) ?? <p style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontSize: 12 }}>This page opens in Heroes Heaven.</p>}</>
   }
 
-  if (type === 'creature') return <CreatureCard name={ref_} />
+  // The owner, 2026-10-01 (item 7): "if i search a stat block it needs to open the full stat block (and
+  // there needs to be able to put it in the initiative order)". A hover preview keeps the compact card.
+  // A bestiary creature in a pane layout ('bestiary', windowStore toLayoutTab) is never a hover preview.
+  if (type === 'bestiary') return <BestiaryStatBlock name={ref_} />
+  if (type === 'creature') return full ? <BestiaryStatBlock name={ref_} /> : <CreatureCard name={ref_} />
 
   if (type === 'spell') {
     const spell = spells.get(ref_)
@@ -628,8 +638,39 @@ function useMetaBadge(type: WinType, ref: string, castRank?: number): string | n
   return null
 }
 
+// ── A host page's header controls ───────────────────────────────────────────
+// Heroes Heaven's own controls for the page in this window / pane (HostSearch.controls): its favourite
+// star — every description popup keeps its star, and inside the campaign it pins the page to the GM
+// screen. Pressing one must not start the header's window drag (FloatingWindow.body.test.tsx (e)).
+// A pane holding two tabs or more draws no header (its tab strip names the tabs), so there the
+// controls sit in a strip of their own above the page (`bar`) — or the star would be gone the moment a
+// pinned page shared a pane (body.test (f)).
+function HostControls({ refId, bar }: { refId: string; bar?: boolean }) {
+  const host = useHostSearch()
+  const cut = refId.indexOf(':')
+  const el = cut > 0 ? host?.controls?.(refId.slice(0, cut), refId.slice(cut + 1)) : null
+  if (!el) return null
+  const controls = (
+    <span data-host-controls="" onMouseDown={e => e.stopPropagation()}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+      {el}
+    </span>
+  )
+  if (!bar) return controls
+  return (
+    <div data-host-controls-bar="" style={{ display: 'flex', justifyContent: 'flex-end', padding: '5px 10px 0', flexShrink: 0 }}>
+      {controls}
+    </div>
+  )
+}
+
+/** A body that brings its own padding: a host page (Heroes Heaven's card has its own head and body
+ *  insets) and a full bestiary stat block (.stat-block). The usual 14×18 inset would double it.
+ *  FloatingWindow.body.test.tsx pins it, and the text selection beside it. */
+const bleeds = (type: WinType, full: boolean) => type === 'host' || type === 'bestiary' || (full && type === 'creature')
+
 // ── Reusable header bar (used by both preview tooltip + floating window) ────
-function PopupHeader({ title, meta, onClose, onMouseDown, dockHandle, tabStrip }: {
+function PopupHeader({ title, meta, onClose, onMouseDown, dockHandle, tabStrip, controls }: {
   title: string
   meta: string | null
   onClose?: () => void
@@ -640,6 +681,8 @@ function PopupHeader({ title, meta, onClose, onMouseDown, dockHandle, tabStrip }
   /** Chrome-style tab strip rendered IN PLACE of the title (floating windows).
    *  Empty space around the tabs still drags the window via onMouseDown. */
   tabStrip?: React.ReactNode
+  /** The host's controls for a host page (HostControls), before the dock handle. */
+  controls?: React.ReactNode
 }) {
   const [copied, setCopied] = useState(false)
   const copy = () => {
@@ -694,6 +737,8 @@ function PopupHeader({ title, meta, onClose, onMouseDown, dockHandle, tabStrip }
         </span>
       )}
 
+      {controls}
+
       {dockHandle}
 
       {onClose && (
@@ -747,16 +792,22 @@ export function PopupPreview({ type, ref_, title, castRank, fill, dockHandle, on
       // window (where no variable is set).
       maxHeight: fill ? '100%' : 'var(--tooltip-max-h, min(88vh, 680px))',
     }}>
-      {!hideHeader && <PopupHeader title={title} meta={meta} dockHandle={dockHandle} onMouseDown={onHeaderDrag} onClose={onClose} />}
+      {!hideHeader && (
+        <PopupHeader title={title} meta={meta} dockHandle={dockHandle} onMouseDown={onHeaderDrag} onClose={onClose}
+          controls={type === 'host' ? <HostControls refId={ref_} /> : undefined} />
+      )}
+      {hideHeader && type === 'host' && <HostControls refId={ref_} bar />}
       <div style={{
-        padding: '14px 18px',
+        // A docked pane (`fill`) is the same page a window shows, so it bleeds the same way.
+        padding: bleeds(type, !!fill) ? 0 : '14px 18px',
         overflowY: 'auto',
         color: 'var(--text)',
         flex: fill ? 1 : undefined,
         minHeight: fill ? 0 : undefined,
+        ...(type === 'host' ? { userSelect: 'text' as const } : {}),
       }}>
         <SelfRefContext.Provider value={{ type, ref: ref_ }}>
-          <WinContent type={type} refId={ref_} title={title} castRank={castRank} />
+          <WinContent type={type} refId={ref_} title={title} castRank={castRank} full={fill} />
         </SelfRefContext.Provider>
       </div>
     </div>
@@ -775,8 +826,9 @@ function WinItem({ win }: { win: FloatingWin }) {
   // A creature tab whose ref is a LIVE combatant id hosts the full interactive
   // stat block (HP, conditions, dice) — identical to a docked pane, so tearing a
   // stat-block tab off into a floating window keeps all its combat state. A
-  // creature tab whose ref is a bestiary name (from a link) stays a read-only
-  // card. Ids are `cmb-N`, names are words, so they never collide.
+  // creature tab whose ref is a bestiary name (a link, a Search result) draws
+  // that creature's full stat block with "Add to initiative" (WinContent `full`).
+  // Ids are `cmb-N`, names are words, so they never collide.
   const combatants = useCombatStore(s => s.combatants)
   const liveOf = (t: PopupTab) => (t.type === 'creature' ? combatants.find(c => c.id === t.ref) : undefined)
   const activeLive = liveOf(active)
@@ -900,6 +952,7 @@ function WinItem({ win }: { win: FloatingWin }) {
         onMouseDown={onTitleDown}
         onClose={() => close(win.id)}
         dockHandle={dockHandle}
+        controls={active.type === 'host' ? <HostControls refId={active.ref} /> : undefined}
         tabStrip={win.tabs.map((t, i) => {
           const on = i === win.active
           return (
@@ -913,10 +966,14 @@ function WinItem({ win }: { win: FloatingWin }) {
                 // drag the whole window. Multi-tab: detach this tab into its own
                 // window first, then drag that. A plain click still focuses.
                 const single = win.tabs.length === 1
+                // The press in the window's own layout pixels (under HH's html{zoom} a client point is
+                // not one — utils/zoomFix), so the detached window opens under the cursor.
+                const z = pageZoom()
+                const at = { x: e.clientX / z - 80, y: e.clientY / z - 16 }
                 beginBrowserDrag(() => {
                   if (single) return { winId: win.id, startWX: win.x, startWY: win.y }
-                  const id = useWindowStore.getState().detachTab(win.id, i, e.clientX - 80, e.clientY - 16)
-                  return id ? { winId: id, startWX: e.clientX - 80, startWY: e.clientY - 16 } : null
+                  const id = useWindowStore.getState().detachTab(win.id, i, at.x, at.y)
+                  return id ? { winId: id, startWX: at.x, startWY: at.y } : null
                 }, e.clientX, e.clientY, 'tabstrip')
               }}
               onClick={() => focusTab(win.id, i)}
@@ -950,19 +1007,22 @@ function WinItem({ win }: { win: FloatingWin }) {
       />
       </div>
 
-      {/* Scrollable content — a live stat block is full-bleed (it brings its own
-          padding/header); reference popups get the usual inset. */}
+      {/* Scrollable content — a live stat block, a bestiary stat block and a host page are
+          full-bleed (each brings its own padding/header); reference popups get the usual inset.
+          The window root is `userSelect: none` (so a drag never selects text); a host page's rules
+          text is selectable again, as it is in Heroes Heaven's own popup. */}
       <div style={{
         flex: (win.sized || activeLive) ? 1 : undefined,
         overflow: 'auto',
-        padding: activeLive ? 0 : '14px 18px',
+        padding: activeLive || bleeds(active.type, true) ? 0 : '14px 18px',
         color: 'var(--text)',
+        ...(active.type === 'host' ? { userSelect: 'text' as const } : {}),
       }}>
         {activeLive ? (
           <CombatantDetail key={activeLive.id} combatant={activeLive} />
         ) : (
           <SelfRefContext.Provider value={{ type: active.type, ref: active.ref }}>
-            <WinContent key={`${active.type}:${active.ref}`} type={active.type} refId={active.ref} title={active.title} castRank={active.castRank} />
+            <WinContent key={`${active.type}:${active.ref}`} type={active.type} refId={active.ref} title={active.title} castRank={active.castRank} full />
           </SelfRefContext.Provider>
         )}
       </div>

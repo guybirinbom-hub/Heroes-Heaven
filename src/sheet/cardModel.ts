@@ -22,18 +22,34 @@ import { sharedFeatureFallback } from '../rules/featureText';
  * Step 9 (the Main-tab action popup) reads `controls` and `headerActions`.
  * Step 10 (the strike popup) reads `leadControls`.
  * Step 14 (the item popup) builds `chrome: 'inset'` and reads `stubs`.
+ * Item 7 of the owner's online list (2026-10-01) builds `chrome: 'window'` with `mode: 'gm'` (the page in
+ * a tracker window or GM-screen pane) and hands `onOpenRef` the point a link was activated at (OpenAt).
  */
 
 /** browse = today's search popup, never scoped; mine = the sheet's "what is yours"; gm = HostPage. */
 export type CardMode = 'browse' | 'mine' | 'gm';
 /**
- * popup = an overlay with its own header and close; embed = inside another page (HostPage); inset (card
+ * popup = an overlay with its own header and close; embed = inside another page (the body alone, kept
+ * byte for byte as the pre-card GM screen page drew it — test/card-hostpage.test.tsx); inset (card
  * step 14) = the card's BODY inside a surface's own popup frame — ItemDetail keeps its header (name, star,
  * edit, remove, close), its stat block, its controls and its phone Remove bar outside the scrolling body,
  * and the card draws the page (or the old text with its no-page line), the ours box and the footer where
  * the item's description was. A linked word opens the browse card over it, Back returning to the item.
+ * window (the owner's online list 2026-10-01, item 7) = the page inside the initiative tracker's movable
+ * window or GM-screen pane (CampaignTracker's HostPage): the window is the frame and its tab the title,
+ * and its header carries the trust marker and the star, so the card draws the rest of the page head —
+ * the action glyph, the level badge, the Archives link and the trait chips — over the whole page body.
+ * A linked word opens through the host (another window, at the click point).
  */
-export type CardChrome = 'popup' | 'embed' | 'inset';
+export type CardChrome = 'popup' | 'embed' | 'inset' | 'window';
+
+/** Where a linked word was activated, in client (viewport) pixels: the pointer for a click, the link's
+ *  own box for a key press. A host that opens the link as a window places it there (the tracker's
+ *  convention: a link "promotes" to a window where it was clicked). */
+export interface OpenAt {
+  x: number;
+  y: number;
+}
 
 /** A record by identity: the card reads its name and text off the content, by {bucket, id}. */
 export interface CardRecordRef {
@@ -217,13 +233,14 @@ export interface RecordCardProps {
    */
   onExit?: () => void;
   /**
-   * Chrome 'embed' (card step 6): where a linked word or the "Remastered as" name opens. An embedded page
-   * has no stack to drill into, so the host opens it (HostPage: the GM's own description popup).
+   * Chromes 'embed' (card step 6) and 'window' (item 7): where a linked word or the "Remastered as" name
+   * opens. An embedded page has no stack to drill into, so the host opens it — HostPage opens another
+   * tracker window at `at`, where the word was clicked.
    */
-  onOpenRef?: (bucket: string, id: string) => void;
+  onOpenRef?: (bucket: string, id: string, at?: OpenAt) => void;
   /**
-   * Chrome 'embed': the host's content database, read for the record. The campaign tracker holds its
-   * own (CampaignTracker's `content` prop) and is not always mounted under the app's ContentContext.
+   * Chromes 'embed' and 'window': the host's content database, read for the record. The campaign tracker
+   * holds its own (CampaignTracker's `content` prop) and is not always mounted under the app's ContentContext.
    */
   content?: ContentDatabase;
   /** When given, Back shows at the first level too and calls this (returns to the popup this opened from). */

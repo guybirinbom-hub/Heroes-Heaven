@@ -903,9 +903,25 @@ interface Props {
   /** When set, turns the stat block into the Settings editor: each body item
       becomes click-to-select + drag-to-reorder (rolls/popups are suppressed). */
   edit?: SbEditApi
+  /** The block is drawn from a bestiary record, not a row on the board (BestiaryStatBlock: a creature
+      opened as a window or pinned to the GM screen). Nothing here can be spent or put on cooldown —
+      the store finds no row by this id and ignores every such write — so the use trackers draw as
+      plain text (the limit, the pips' count) instead of controls that look live and do nothing, and a
+      cooldown's dice simply roll. Rolls, checks and reference popups work as everywhere. */
+  notOnBoard?: boolean
 }
 
-export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
+/** A pip row that is only a count (`notOnBoard`): the same shapes as SpellPips, no role, no
+ *  "Spend"/"Refund" title, nothing to click. */
+function CountPips({ total, indicator, title }: { total: number; indicator: string; title: string }) {
+  return (
+    <span className={`spell-pips ind-${indicator}`} title={title} data-count-pips="">
+      {Array.from({ length: total }, (_, i) => <span key={i} className="spell-pip lock" />)}
+    </span>
+  )
+}
+
+export function StatBlock({ combatant, hideHP, hideTraits, edit, notOnBoard }: Props) {
   const { addDiceResult, addCondition, setResourceUse, resetResources } = useCombatStore()
   const { traits, spells, rituals, actions, creatureLinks } = useGameData()
   const openWin = useWindowStore(s => s.open)
@@ -946,7 +962,8 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
   )
   // Reserve the reset button's footprint even when nothing's spent, so the
   // header (and everything below it) doesn't jump down the moment it appears.
-  const resetSlot = (active: boolean) => (
+  // Not on the board: nothing is ever spent, so there is nothing to reset.
+  const resetSlot = (active: boolean) => notOnBoard ? null : (
     <span style={{ visibility: active ? 'visible' : 'hidden' }} aria-hidden={active ? undefined : true}>
       {resetAllBtn}
     </span>
@@ -1008,6 +1025,9 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
       description: abilityText,
     })
   }
+  // Not on the board there is no row to put a cooldown on: its dice are plain dice (a plain roll, a
+  // plain "Click to roll" title), not a promise of a condition that would never appear.
+  const cooldownRoll = notOnBoard ? undefined : rollAbilityCooldown
 
   const isHazard = creature.isHazard
   const hd = creature.hazardData
@@ -1158,8 +1178,11 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
             : <span style={{ fontWeight: 600, color: 'var(--text)' }}>{cleanName}</span>
           }
           {displayActivity && <ActionGlyph act={displayActivity} />}
-          {limit && (
-            <span style={{ marginLeft: 2 }}>
+          {limit && (notOnBoard
+            ? <span data-uses-limit="" style={{ marginLeft: 2, fontSize: 10.5, color: 'var(--text-faded)', fontStyle: 'italic' }}>
+                {`${limit.max}${periodLabel(limit.period)}`}
+              </span>
+            : <span style={{ marginLeft: 2 }}>
               <UsesChip
                 used={usedOf(abKey)}
                 max={limit.max}
@@ -1185,7 +1208,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
           )}
         </div>
         {style !== 'compact' && leadClauses && (
-          <AbilityText text={leadClauses} label={ab.name} onRoll={rollAbilityDamage} onCooldownRoll={rollAbilityCooldown} onCheck={handleCheck} />
+          <AbilityText text={leadClauses} label={ab.name} onRoll={rollAbilityDamage} onCooldownRoll={cooldownRoll} onCheck={handleCheck} />
         )}
         {style !== 'compact' && ab.trigger && (
           <div style={{ fontSize: 12, ...muted, marginBottom: 2 }}>
@@ -1193,7 +1216,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
           </div>
         )}
         {style !== 'compact' && (
-          <AbilityText text={bodyText} label={ab.name} onRoll={rollAbilityDamage} onCooldownRoll={rollAbilityCooldown} onCheck={handleCheck} />
+          <AbilityText text={bodyText} label={ab.name} onRoll={rollAbilityDamage} onCooldownRoll={cooldownRoll} onCheck={handleCheck} />
         )}
       </StatRow>
     )
@@ -1742,9 +1765,11 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                   <span style={{ fontWeight: 600, color: 'var(--text)' }}><TextWithGlyphs text={sc.name} /></span>
                   {isFocus && sc.focusPoints != null && sc.focusPoints > 0 && (
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7 }}>
-                      <SpellPips total={sc.focusPoints} used={usedOf(focusKey(i))}
+                      {notOnBoard
+                        ? <CountPips total={sc.focusPoints} indicator={spellIndicator} title="Focus Points" />
+                        : <SpellPips total={sc.focusPoints} used={usedOf(focusKey(i))}
                         onChange={v => setResourceUse(combatant.id, focusKey(i), v)}
-                        indicator={spellIndicator} title="Focus Points" />
+                        indicator={spellIndicator} title="Focus Points" />}
                       <span style={{ fontSize: 10, color: 'var(--text-faded)', fontStyle: 'italic' }}>
                         focus point{sc.focusPoints === 1 ? '' : 's'}
                       </span>
@@ -1779,8 +1804,10 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                               <span className="spell-rank-label">{label}</span>
                               {slot.isCantrip && <span className="atwill">at will</span>}
                               {slot.isConstant && <span style={{ fontSize: 10, color: 'var(--text-faded)', fontStyle: 'italic' }}>constant</span>}
-                              {isSpontaneous && !untracked && slot.slots != null && slot.slots > 0 && (
-                                <SpellPips total={slot.slots} used={usedOf(spellSlotKey(i, slot.level))}
+                              {isSpontaneous && !untracked && slot.slots != null && slot.slots > 0 && (notOnBoard
+                                ? <CountPips total={slot.slots} indicator={spellIndicator}
+                                    title={`${slot.slots} slot${slot.slots === 1 ? '' : 's'}`} />
+                                : <SpellPips total={slot.slots} used={usedOf(spellSlotKey(i, slot.level))}
                                   onChange={v => setResourceUse(combatant.id, spellSlotKey(i, slot.level), v)}
                                   indicator={spellIndicator}
                                   title={`${slot.slots} slot${slot.slots === 1 ? '' : 's'}`} />
@@ -1798,7 +1825,10 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                                       <Fragment key={spi}>
                                         <span className="spell-srow-name">{spellName(sp, slot, perSpell && used >= maxUses)}</span>
                                         {perSpell
-                                          ? <SpellPips total={maxUses} used={used}
+                                          ? notOnBoard
+                                            ? <CountPips total={maxUses} indicator={spellIndicator}
+                                                title={`${maxUses} use${maxUses === 1 ? '' : 's'}`} />
+                                            : <SpellPips total={maxUses} used={used}
                                               onChange={v => setResourceUse(combatant.id, spellUseKey(i, slot.level, sp.name), v)}
                                               indicator={spellIndicator}
                                               title={`${maxUses} use${maxUses === 1 ? '' : 's'}`} />
@@ -2275,7 +2305,7 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
                   )}
                   <ProseBlock text={body}
                     onRoll={rollAbilityDamage}
-                    onCooldownRoll={rollAbilityCooldown}
+                    onCooldownRoll={cooldownRoll}
                     onCheck={handleCheck}
                     rollLabel={headName ? `${creature.name} — ${headName}` : `${creature.name} — Routine`} />
                   {/* Keys past every creature.abilities index, so a row never shares one. */}

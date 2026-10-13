@@ -51,14 +51,54 @@ import { browseResolvesStubs, mineResolvesStubs, useStubbedTree } from './astStu
  * Step 14 adds `chrome: 'inset'` (InsetRecordCard below: the 'mine' card's body inside ItemDetail's own
  * frame) and embedded page stubs (src/sheet/astStubs.ts): the inset card draws them when asked (`stubs`),
  * the browse card draws them on an item page.
+ *
+ * Item 7 of the owner's online list adds `chrome: 'window'` (WindowRecordCard below): the page inside the
+ * initiative tracker's floating window or GM-screen pane.
  */
 export function RecordCard(props: RecordCardProps) {
   // Two components, not one with a branch: the popup registers on the dismiss stack (useEscapeClose)
   // and an embedded page must not, so the choice is made before any hook runs. Card step 14's inset
   // card (inside ItemDetail's own popup frame, which owns the dismiss entry) registers none either.
   if (props.chrome === 'embed') return <EmbedRecordCard {...props} />;
+  if (props.chrome === 'window') return <WindowRecordCard {...props} />;
   if (props.chrome === 'inset') return <InsetRecordCard {...props} />;
   return <PopupRecordCard {...props} />;
+}
+
+/**
+ * Item 7 of the owner's online list (2026-10-01: "Search everything results open in the tracker's
+ * movable, windowed stat-block popup, not a static popup") — mode 'gm', chrome 'window': the page inside
+ * the initiative tracker's floating window or GM-screen pane (CampaignTracker.tsx HostPage), the ONE
+ * page both draw.
+ *  - The window is the frame: its tab is the title and its header carries the star (the host's
+ *    controls), so there is no overlay, name, Back, star or close here, and nothing goes on the dismiss
+ *    stack (Escape is the window's — CampaignTracker closes the top window).
+ *  - Under that header, the rest of the popup's page head: the action glyph, the level badge, the
+ *    Archives link, the TrustMarker (where the popup draws it: in the head's controls, beside the badge)
+ *    and the trait chips (AstRenderer `windowHead`), then the whole page with its stat lines — the very
+ *    body 'embed' draws (nothing dropped; the GM reads Range / Duration mid-fight). The marker is the
+ *    page's, not the window header's: it is a line of words that can name what is not applied, which a
+ *    one-row header shared with the tabs and the close button has no room to wrap, and a pane holding two
+ *    tabs draws no header at all. A record with no page draws it above its text, as the popup does.
+ *  - A linked word, a trait chip and the "Remastered as" name open through the host with the point they
+ *    were clicked at (onOpenRef): another window there. A record with no page shows its text (DescBody),
+ *    whose links go the same way (onOpenRecord) instead of opening a popup inside the window.
+ *  - 'embed' is left exactly as it was: test/card-hostpage.test.tsx keeps it equal to the pre-card page.
+ */
+function WindowRecordCard({ record, content: hostContent, onOpenRef }: RecordCardProps) {
+  const ctxContent = useContent();
+  const db = hostContent ?? ctxContent;
+  const ref = record && isRecordRef(record) ? record : undefined;
+  const rec = ref ? (db as unknown as Record<string, Record<string, { description?: string; descRefs?: DescRef[] }> | undefined> | null)?.[ref.bucket]?.[ref.id] : undefined;
+  const { node, loading } = useAstNode(ref?.bucket, ref?.id);
+  const open = onOpenRef ?? noOpen;
+  const ra = ref ? remasteredAsOf(db, ref) : undefined;
+  if (record && !isRecordRef(record)) return <div className="ast-win ast-win-text"><DescBody description={record.text} descRefs={record.refs} onOpenRecord={open} /></div>;
+  if (!ref || !rec) return <div className="ast-win ast-win-text"><p className="sd-ours">This page is not in this version of Heroes Heaven.</p></div>;
+  const marker = <TrustMarker bucket={ref.bucket} id={ref.id} />;
+  if (node) return <AstRenderer node={node} windowHead selfRef={`${ref.bucket}:${ref.id}`} onOpenRef={open} headerControls={marker} footer={ra ? <RemasteredLine ra={ra} onOpen={open} /> : null} />;
+  if (loading) return <div className="ast-win"><div className="ast-body ast-loading" aria-busy="true">{marker}</div></div>;
+  return <div className="ast-win ast-win-text">{marker}<DescBody description={rec.description} descRefs={rec.descRefs} remasteredAs={ra} onOpenRecord={open} /></div>;
 }
 
 /**

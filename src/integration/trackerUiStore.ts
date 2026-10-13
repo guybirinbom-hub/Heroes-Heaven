@@ -92,6 +92,8 @@ const INITIAL: TrackerUiState = {
 
 let state: TrackerUiState = INITIAL;
 const listeners = new Set<() => void>();
+/** What else leaving the campaign clears — registered by the tracker side (see `onReset`). */
+const resetHooks = new Set<() => void>();
 
 function set(patch: Partial<TrackerUiState>): void {
   state = { ...state, ...patch };
@@ -127,5 +129,21 @@ export const trackerUi = {
     if (state.sheetOpen !== sheetOpen) set({ sheetOpen });
   },
   /** Close everything — used when leaving the campaign so panels don't reappear on re-entry. */
-  reset: () => set(INITIAL),
+  reset: () => {
+    set(INITIAL);
+    for (const h of resetHooks) h();
+  },
+  /**
+   * Register something else `reset` must clear. The tracker's floating windows (item 7: a Search page
+   * opened at one table must not reappear at the next) live in the tracker's own store, which this file
+   * must not import: CampaignsPage imports it statically, and the tracker's stores belong to the chunk
+   * its two `lazy()` calls keep out of the main bundle. So the lazily-loaded CampaignTracker registers
+   * the clear at module load — before any window can exist. Returns the unregister.
+   */
+  onReset: (hook: () => void) => {
+    resetHooks.add(hook);
+    return () => {
+      resetHooks.delete(hook);
+    };
+  },
 };

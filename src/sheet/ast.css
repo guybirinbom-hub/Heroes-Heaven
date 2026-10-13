@@ -30,6 +30,17 @@
 /* embedded (bodyOnly) description — no popup chrome, flows in a detail/stat view */
 .ast-embed { padding: 0; }
 
+/* Item 7 — the page inside the initiative tracker's window or GM-screen pane (RecordCard chrome 'window',
+   AstRenderer windowHead). The window is the frame and its tab the title, so there is no .ast-pop border or
+   accent bar, and no name: the head keeps the action glyph, the level badge and the Archives link on one
+   quiet line, the trait chips under it, then the body with its usual insets. The window's own body has no
+   padding for a page (tracker FloatingWindow `bleeds`), so these insets are the only ones. */
+.ast-win { color: var(--app-text); }
+.ast-win-head { display: flex; align-items: center; gap: 9px; padding: 9px 15px 0; }
+.ast-win .ast-traits { padding: 8px 15px 2px; }
+/* A record with no page (DescBody's text) and the not-in-this-version line, at the body's insets. */
+.ast-win-text { padding: 12px 15px 15px; font-size: 14px; line-height: 1.62; }
+
 /* ast popup used as a modal (recursive description navigation). Sizes to its content up to a comfortable
    reading width, and is user-RESIZABLE by dragging the bottom-right corner (long rules pages often want
    more room). Mobile keeps one consistent width (see the phone override below). */

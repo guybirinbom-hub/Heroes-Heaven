@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
 import type { DescRef } from '../rules/types';
 import { useContent } from './ContentContext';
 import { lookupRef, type DescNode } from './descref';
@@ -6,7 +6,8 @@ import { RichText } from './RichText';
 import { DescriptionModal } from './DescriptionModal';
 import { sanitize } from './sanitizeHtml';
 import { htmlWithAutoDir } from './autoDir';
-import { RemasteredLine, type RemasteredAs } from './RemasteredLine';
+import { RemasteredLine, clickPoint, type RemasteredAs } from './RemasteredLine';
+import type { OpenAt } from './cardModel';
 
 /** A description is treated as rich HTML (user-authored, from the item editor) if it carries any
  *  HTML tag; otherwise it's curated markdown and RichText parses + auto-linkifies it. */
@@ -47,10 +48,17 @@ export function DescBody({
   dirAuto,
   remasteredAs,
   emptyNote,
+  onOpenRecord,
 }: {
   description?: string;
   descRefs?: DescRef[];
   className?: string;
+  /** Item 7 — open a linked record the HOST's way instead of in this component's own popup: the
+   *  tracker window's no-page lane (RecordCard chrome 'window') opens it as another tracker window, at
+   *  the point the link was clicked (`at` — the link's own box when the keyboard made the click,
+   *  RemasteredLine's clickPoint). A popup drawn inside a window would
+   *  sit in that window's stacking context, under any window above it. Absent = the popup, as before. */
+  onOpenRecord?: (bucket: string, id: string, at?: OpenAt) => void;
   /** desk #158: this record is the older printing and its reprint ships as its own record — the popup
    *  says so and links to it. */
   remasteredAs?: RemasteredAs;
@@ -69,11 +77,22 @@ export function DescBody({
 }) {
   const content = useContent();
   const [node, setNode] = useState<DescNode | null>(null);
-  /** Open another record's description in the recursive popup — what a .ref-link click does. */
-  const openRecord = (bucket: string, slug: string) => {
+  /** Open another record's description in the recursive popup — what a .ref-link click does — or, with
+   *  `onOpenRecord`, the host's way. */
+  const openRecord = (bucket: string, slug: string, at?: OpenAt) => {
+    if (onOpenRecord) return onOpenRecord(bucket, slug, at);
     const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[slug];
     if (rec) setNode({ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug });
   };
+  /* The markdown lane's links (RichText) hand back only the reference, not the click: the point is
+   * caught on the way down (capture phase, before the link's own handler) for `onOpenRecord` — the
+   * link's own box when the keyboard made the click (clickPoint). */
+  const clickedAt = useRef<OpenAt | undefined>(undefined);
+  const catchPoint = onOpenRecord
+    ? (e: ReactMouseEvent) => {
+        clickedAt.current = clickPoint(e, (e.target as Element).closest?.('a, button') ?? null);
+      }
+    : undefined;
   /* desk #158 — "Remastered as <name>", on every branch below, because a legacy record usually DOES
    * have text. Marked `sd-ours`: the book never printed this line, we did. */
   const remastered = remasteredAs ? <RemasteredLine ra={remasteredAs} onOpen={openRecord} /> : null;
@@ -113,7 +132,8 @@ export function DescBody({
   // Rich-HTML path: render the authored HTML directly, with .ref-link anchors made clickable
   // (each carries data-ref-key/data-ref-id pointing at a content entry to pop up).
   if (isRichHtml(description, dirAuto)) {
-    const open = (key: string, id: string) => {
+    const open = (key: string, id: string, at: OpenAt) => {
+      if (onOpenRecord) return onOpenRecord(key, id, at);
       const map = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[key];
       const e = map?.[id];
       if (e) setNode({ title: e.name, description: e.description ?? '', descRefs: e.descRefs, key });
@@ -127,7 +147,7 @@ export function DescBody({
             const a = (ev.target as HTMLElement).closest?.('.ref-link') as HTMLElement | null;
             if (a?.dataset.refKey && a.dataset.refId) {
               ev.preventDefault();
-              open(a.dataset.refKey, a.dataset.refId);
+              open(a.dataset.refKey, a.dataset.refId, clickPoint(ev, a));
             }
           }}
         />
@@ -140,12 +160,18 @@ export function DescBody({
   // Markdown path (curated SRD content): RichText parses emphasis/tables and auto-linkifies refs.
   return (
     <>
-      <div className={className}>
+      <div className={className} onClickCapture={catchPoint}>
         <RichText
           text={description}
           refs={descRefs}
           onOpen={(ref: DescRef) => {
             const n = content ? lookupRef(content, ref) : null;
+            const at = clickedAt.current;
+            clickedAt.current = undefined;
+            if (n && onOpenRecord) {
+              if (n.key && n.slug) onOpenRecord(n.key, n.slug, at);
+              return;
+            }
             if (n) setNode(n);
           }}
         />

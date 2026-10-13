@@ -34,8 +34,17 @@ import type { StubbedNode } from './astStubs';
 /* The lines a page's glyphs sit in (a split sentence, an activity header, a glyph that opens its line, an
  * Activate line, a glyph row) live in cardModel.ts, a plain .ts file, so the row preview (cardPreview) reads
  * the very same lines this renderer draws — one copy. */
-import { BLOCK_TYPES, activateLine, glyphLedLine, glyphLineLeaves, lineFrags, lineInline } from './cardModel';
+import { BLOCK_TYPES, activateLine, glyphLedLine, glyphLineLeaves, lineFrags, lineInline, type OpenAt } from './cardModel';
 import './ast.css';
+
+/* Where a link was activated (cardModel OpenAt), handed to onOpenRef: a click's pointer, or — for Enter /
+ * Space on a focused link, which has none — the link's own box. Item 7: the tracker opens a linked page as
+ * a window there; every other caller ignores it. */
+const clickAt = (e: { clientX: number; clientY: number }): OpenAt => ({ x: e.clientX, y: e.clientY });
+const keyAt = (el: Element): OpenAt => {
+  const r = el.getBoundingClientRect();
+  return { x: r.left, y: r.bottom };
+};
 
 /** The Archives of Nethys; a page's own address (`/Rules.aspx?ID=1503`) is stamped on its tree root by
  *  scripts/stamp-ast-urls.mjs. */
@@ -79,7 +88,7 @@ function sortTraits(ts: string[]): string[] {
 
 interface Ctx {
   selfRef?: string;
-  onOpenRef: (bucket: string, slug: string) => void;
+  onOpenRef: (bucket: string, slug: string, at?: OpenAt) => void;
   /** Does this "bucket:slug" actually ship? A link whose target is absent rendered as a clickable
    *  anchor whose click did nothing — 3,692 of them, led by classFeatures:anathema (617 times) and
    *  actions:command (601). Absent ⇒ assume everything resolves, which is the old behaviour. */
@@ -143,8 +152,8 @@ function TraitChips({ labels, ctx, className }: { labels: string[]; ctx: Ctx; cl
           return <span key={i} className={cls + ' ast-tr-dead'}>{tn}</span>;
         return (
           <a key={i} className={cls + ' ast-tr-link'} role="button" tabIndex={0}
-             onClick={(e) => { e.preventDefault(); ctx.onOpenRef('trait', slug); }}
-             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ctx.onOpenRef('trait', slug); } }}>
+             onClick={(e) => { e.preventDefault(); ctx.onOpenRef('trait', slug, clickAt(e)); }}
+             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ctx.onOpenRef('trait', slug, keyAt(e.currentTarget)); } }}>
             {tn}
           </a>
         );
@@ -178,8 +187,8 @@ function Inline({ node, ctx, k }: { node: AstNode; ctx: Ctx; k: number }): React
           return <span key={k} className={'ast-lk-dead' + (node.auto ? ' auto' : '')}>{label}</span>;
         return (
           <a key={k} className={'ast-lk' + (node.auto ? ' auto' : '')} role="button" tabIndex={0}
-             onClick={(e) => { e.preventDefault(); ctx.onOpenRef(bucket, slug); }}
-             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ctx.onOpenRef(bucket, slug); } }}>
+             onClick={(e) => { e.preventDefault(); ctx.onOpenRef(bucket, slug, clickAt(e)); }}
+             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ctx.onOpenRef(bucket, slug, keyAt(e.currentTarget)); } }}>
             {label}
           </a>
         );
@@ -614,13 +623,19 @@ function DocBody({ top, ctx, card }: { top: AstNode[]; ctx: Ctx; card?: CardWalk
  * Full description popup content for one record's ast — header (name + action glyph + badge),
  * AoN-ordered colour-coded trait chips, then the meta + prose body. Slots into HH's popup chrome.
  */
-export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, card, headerControls, footer, lead }: {
+export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, windowHead, card, headerControls, footer, lead }: {
   node: AstNode;
   /** "bucket:slug" of the open record, so its self-links render as plain text */
   selfRef?: string;
-  onOpenRef: (bucket: string, slug: string) => void;
+  /** A linked word (or trait chip) opens this record; `at` is where it was activated (cardModel OpenAt). */
+  onOpenRef: (bucket: string, slug: string, at?: OpenAt) => void;
   /** render only the meta+prose body (no popup chrome) — for embedding inside a detail/stat view */
   bodyOnly?: boolean;
+  /** Item 7 — the page inside a tracker window or GM-screen pane (RecordCard chrome 'window'): the head
+   *  WITHOUT the name (the window's tab is the title) — action glyph, level badge, Archives link and
+   *  `headerControls` — the trait chips, then the body; no `.ast-pop` frame or accent bar (the window is
+   *  the frame). */
+  windowHead?: boolean;
   /** Card step 5 — a 'mine' card: the surface's printed set (docs/card-design.md section 2 rules 4–5;
    *  it replaced the old `hideMeta` drop, which card step 22 removed). Every labelled page line shows
    *  unless its label is printed; furniture leaves; Source / Archetype / Access / Craft Requirements /
@@ -654,6 +669,32 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, card, headerCo
   const traitLabels = traitLabelsOf(top.find((n) => n.t === 'traits'));
   // The page on the Archives, where the record came from.
   const aonUrl = /^\/\w+\.aspx/.test(String(node.url ?? '')) ? AON + node.url : '';
+  const aonLink = aonUrl ? (
+    <a className="ast-aon" href={aonUrl} target="_blank" rel="noreferrer"
+       title="Open this page on Archives of Nethys" aria-label="Open on Archives of Nethys"
+       onClick={(e) => { e.stopPropagation(); void openExternal(e, aonUrl); }}>
+      <i className="ti ti-external-link" aria-hidden="true" />
+    </a>
+  ) : null;
+
+  if (windowHead) {
+    return (
+      <div className="ast-win">
+        {(cost || badge || aonUrl || headerControls) && (
+          <div className="ast-win-head">
+            {cost && <Glyph str={cost.string} head />}
+            <span className="ast-head-right">
+              {badge && <span className="ast-badge">{badge}</span>}
+              {aonLink}
+              {headerControls && <span className="ast-controls">{headerControls}</span>}
+            </span>
+          </div>
+        )}
+        <TraitChips labels={traitLabels} ctx={ctx} />
+        <div className="ast-body">{lead}<DocBody top={top} ctx={ctx} card={cw} />{footer}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="ast-pop">
@@ -664,13 +705,7 @@ export function AstRenderer({ node, selfRef, onOpenRef, bodyOnly, card, headerCo
         {(badge || headerControls || aonUrl) && (
           <span className="ast-head-right">
             {badge && <span className="ast-badge">{badge}</span>}
-            {aonUrl && (
-              <a className="ast-aon" href={aonUrl} target="_blank" rel="noreferrer"
-                 title="Open this page on Archives of Nethys" aria-label="Open on Archives of Nethys"
-                 onClick={(e) => { e.stopPropagation(); void openExternal(e, aonUrl); }}>
-                <i className="ti ti-external-link" aria-hidden="true" />
-              </a>
-            )}
+            {aonLink}
             {headerControls && <span className="ast-controls">{headerControls}</span>}
           </span>
         )}
