@@ -1,19 +1,37 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
-  "identifier": "default",
-  "description": "enables the default permissions",
-  "windows": [
-    "main"
-  ],
-  "permissions": [
-    "core:default",
-    "core:window:allow-minimize",
-    "core:window:allow-toggle-maximize",
-    "core:window:allow-maximize",
-    "core:window:allow-unmaximize",
-    "core:window:allow-close",
-    "core:window:allow-start-dragging",
-    "core:window:allow-set-focus",
-    "opener:allow-open-url"
+  "capabilities": [
+    {
+      "identifier": "default",
+      "description": "enables the default permissions",
+      "windows": [
+        "main"
+      ],
+      "permissions": [
+        "core:default",
+        "core:window:allow-minimize",
+        "core:window:allow-toggle-maximize",
+        "core:window:allow-maximize",
+        "core:window:allow-unmaximize",
+        "core:window:allow-close",
+        "core:window:allow-start-dragging",
+        "core:window:allow-set-focus",
+        "opener:allow-open-url"
+      ]
+    },
+    {
+      "identifier": "android-export",
+      "description": "Android only: an export's Save to folder (src/sheet/download.ts), the system save picker and a write into the document the player picked. Nothing else from either plugin: never dialog ask, confirm or message (the app shows no native dialog) and no fs read, list or delete. Guarded by test/download-platform-route.test.tsx.",
+      "windows": [
+        "main"
+      ],
+      "platforms": [
+        "android"
+      ],
+      "permissions": [
+        "dialog:allow-save",
+        "fs:allow-write-text-file"
+      ]
+    }
   ]
 }

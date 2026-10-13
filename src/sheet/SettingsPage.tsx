@@ -251,18 +251,19 @@ function BackupSection() {
   const fileRef = useRef<HTMLInputElement>(null);
   const charCount = loadRoster().length;
 
-  const showError = (message: string) =>
-    void chooseDialog({ title: 'Import failed', message, buttons: [{ value: 'ok', label: 'OK', primary: true }] });
+  const showError = (message: string, title = 'Import failed') =>
+    void chooseDialog({ title, message, buttons: [{ value: 'ok', label: 'OK', primary: true }] });
 
-  const doExport = () => {
+  const doExport = async () => {
     try {
       // createBackup() reads localStorage directly, so force out any pending debounced roster write
       // first — otherwise a just-made change (still in the debounce window) would be missing from
       // the exported backup. See data/persist.ts.
       flushPersist();
-      downloadText({ filename: backupFilename(), text: createBackup() });
+      // Awaited: on the Android app the save or share finishes later, and its failure belongs here.
+      await downloadText({ filename: backupFilename(), text: createBackup() });
     } catch (e) {
-      showError(`Export failed: ${(e as Error).message}`);
+      showError(`Export failed: ${(e as Error).message}`, 'Export failed');
     }
   };
 

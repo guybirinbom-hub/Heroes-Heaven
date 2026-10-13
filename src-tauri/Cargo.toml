@@ -25,8 +25,16 @@ tauri = { version = "2.11.2", features = [] }
 tauri-plugin-log = "2"
 tauri-plugin-opener = "2"
 
-# Android-only: raw JNI for the in-app uninstall (ACTION_DELETE intent). Same jni version the
-# Tauri stack already uses (Cargo.lock pins 0.21.1), so it unifies to a single crate instance —
-# required for the closure types passed to wry's JniHandle::exec to line up.
+# Android-only: raw JNI for the in-app uninstall (ACTION_DELETE intent) and an export's "Share"
+# (ACTION_SEND through the app's FileProvider). Same jni version the Tauri stack already uses
+# (Cargo.lock pins 0.21.1), so it unifies to a single crate instance — required for the closure
+# types passed to wry's JniHandle::exec to line up.
 [target.'cfg(target_os = "android")'.dependencies]
 jni = "0.21"
+# Android-only: an export's "Save to folder" (src/sheet/download.ts) — the system save picker, then a
+# write into the document the player picked. Not on desktop: there the dialog plugin's init script
+# replaces window.alert/confirm, and the PC app keeps its own download route. Pinned to the same
+# minor as the npm packages (~2.7.3 / ~2.5.2 in package.json): the Tauri CLI refuses a build whose
+# npm and crate minors differ, and dialog 2.8 / fs 2.6 need tauri 2.12 (test/download-platform-route.test.tsx).
+tauri-plugin-dialog = "~2.7.3"
+tauri-plugin-fs = "~2.5.2"

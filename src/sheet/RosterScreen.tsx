@@ -81,7 +81,8 @@ export function RosterScreen({
   const [filter, setFilter] = useState<Filter>('active');
   const [query, setQuery] = useState('');
   const [result, setResult] = useState<ImportReport | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  // The notice names what failed: an export's failure used to open under "Import failed".
+  const [error, setError] = useState<{ title: 'Import failed' | 'Export failed'; text: string } | null>(null);
   const [importing, setImporting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -138,25 +139,26 @@ export function RosterScreen({
         if (applied !== false) setResult(report);
       } catch (e) {
         setResult(null);
-        setError((e as Error).message);
+        setError({ title: 'Import failed', text: (e as Error).message });
       } finally {
         setImporting(false);
       }
     };
     reader.onerror = () => {
-      setError('Could not read that file.');
+      setError({ title: 'Import failed', text: 'Could not read that file.' });
       setImporting(false);
     };
     reader.readAsText(file);
   };
 
-  const doExport = (c: SavedChar, target: 'wg' | 'native') => {
+  const doExport = async (c: SavedChar, target: 'wg' | 'native') => {
     if (target === 'wg' && !content) return; // WG export resolves against the content database
     try {
       const text = target === 'wg' && content ? exportWg(c, content) : exportNative(c);
-      downloadText({ filename: `${fileSlug(c.character.name)}${target === 'wg' ? '.wg' : '.codex'}.json`, text });
+      // Awaited: on the Android app the save or share finishes later, and its failure belongs here.
+      await downloadText({ filename: `${fileSlug(c.character.name)}${target === 'wg' ? '.wg' : '.codex'}.json`, text });
     } catch (e) {
-      setError(`Export failed: ${(e as Error).message}`);
+      setError({ title: 'Export failed', text: `Export failed: ${(e as Error).message}` });
     }
   };
 
@@ -195,7 +197,7 @@ export function RosterScreen({
         },
       ],
     });
-    if (target === 'wg' || target === 'native') doExport(c, target);
+    if (target === 'wg' || target === 'native') await doExport(c, target);
   };
 
   return (
@@ -388,14 +390,14 @@ export function RosterScreen({
           <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()}>
             <div className="picker-head">
               <span>
-                <i className="ti ti-alert-triangle" aria-hidden="true" /> Import failed
+                <i className="ti ti-alert-triangle" aria-hidden="true" /> {error.title}
               </span>
               <button className="picker-close" onClick={() => setError(null)} aria-label="Close">
                 <i className="ti ti-x" aria-hidden="true" />
               </button>
             </div>
             <div className="confirm-body">
-              <p>{error}</p>
+              <p>{error.text}</p>
             </div>
             <div className="confirm-actions">
               <button className="btn-primary" onClick={() => setError(null)}>

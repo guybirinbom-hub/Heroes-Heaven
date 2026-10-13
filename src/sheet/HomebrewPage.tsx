@@ -594,11 +594,13 @@ export function HomebrewPage({
 
   // Export / import all homebrew (sources + content) as a shareable JSON file.
   const fileRef = useRef<HTMLInputElement>(null);
-  const exportHomebrew = () => {
+  const exportHomebrew = async () => {
     try {
       // app + kind are what readHomebrewFile recognises an export by.
       const payload = { app: BACKUP_APP, kind: HOMEBREW_EXPORT_KIND, version: 1, sources: loadHomebrewSources(), content: loadHomebrewContent() };
-      downloadText({ filename: homebrewFilename(), text: JSON.stringify(payload, null, 2) });
+      // Awaited: on the Android app the save or share happens after this line returns, and its
+      // failure must still land in this catch (a Cancel resolves quietly).
+      await downloadText({ filename: homebrewFilename(), text: JSON.stringify(payload, null, 2) });
     } catch (e) {
       void chooseDialog({ title: 'Export failed', message: (e as Error).message, buttons: [{ value: 'ok', label: 'OK', primary: true }] });
     }

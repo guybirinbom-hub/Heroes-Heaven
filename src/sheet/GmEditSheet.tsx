@@ -363,9 +363,10 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
     if (await confirmLeave()) onExit();
   };
 
-  const doExport = () => {
+  const doExport = async () => {
     try {
-      downloadText({ filename: `${fileSlug(work.character.name)}.codex.json`, text: exportNative(work) });
+      // Awaited: on the Android app the save or share finishes later, and its failure belongs here.
+      await downloadText({ filename: `${fileSlug(work.character.name)}.codex.json`, text: exportNative(work) });
     } catch (e) {
       void confirmDialog({ title: 'Export failed', message: (e as Error).message, confirmLabel: 'OK' });
     }
@@ -429,7 +430,7 @@ export const GmEditSheet = forwardRef<GmEditHandle, {
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
         onEdit={openBuilder}
-        gmEdit={{ onUpdate: () => void doUpdate(), onExport: doExport, busy, inTracker }}
+        gmEdit={{ onUpdate: () => void doUpdate(), onExport: () => void doExport(), busy, inTracker }}
         onBack={() => void doExit()}
       />
     </>

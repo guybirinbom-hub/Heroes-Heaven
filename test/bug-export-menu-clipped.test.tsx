@@ -26,10 +26,11 @@ vi.mock('../src/data/transfer', async (orig) => ({
   exportWg: vi.fn(() => '{"wg":true}'),
   exportNative: vi.fn(() => '{"codex":true}'),
 }));
-// Only the download itself is faked; fileSlug (which names the file) stays the real one.
+// Only the download itself is faked; fileSlug (which names the file) stays the real one. downloadText
+// answers a promise (the Android app's save or share finishes later), and the roster awaits it.
 vi.mock('../src/sheet/download', async (orig) => ({
   ...(await orig<typeof import('../src/sheet/download')>()),
-  downloadText: vi.fn(),
+  downloadText: vi.fn(async () => 'saved' as const),
 }));
 
 /* Every selector in the REAL stylesheet whose block clips its children. jsdom has no CSS engine, so
