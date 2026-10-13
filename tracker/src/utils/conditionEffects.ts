@@ -376,3 +376,29 @@ export const CONDITION_META: Record<string, ConditionMeta> = {
 }
 
 export const ALL_CONDITIONS = Object.keys(CONDITION_META).sort()
+
+/**
+ * A condition another app spells differently from the tracker, by that app's id → the tracker's key.
+ *
+ * Heroes Heaven's id for persistent damage is `persistent-damage`; the tracker's key is `persistent
+ * damage`. A player's sheet writes the hyphenated one onto their initiative row (the campaign seam,
+ * src/integration/pcSheetTruth.ts), and without this the row drew it as a grey, unlabelled "P".
+ *
+ * DISPLAY ONLY. A row's condition keeps the name it was written with, so the sheet's badge is styled
+ * and named as the tracker's own while `firePersistentDamage` — which wants the exact name `persistent
+ * damage` AND an amount, and no sheet condition carries an amount — never rolls it on a player.
+ */
+export const CONDITION_ALIASES: Record<string, string> = {
+  'persistent-damage': 'persistent damage',
+}
+
+/** The tracker's own key for a condition name, an alias folded in (CONDITION_ALIASES). */
+export function conditionKey(name: string): string {
+  const k = name.trim().toLowerCase()
+  return CONDITION_ALIASES[k] ?? k
+}
+
+/** The tracker's meta for a condition name, an alias folded in — for drawing a badge. */
+export function conditionMetaOf(name: string): ConditionMeta | undefined {
+  return CONDITION_META[conditionKey(name)]
+}

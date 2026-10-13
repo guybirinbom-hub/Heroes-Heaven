@@ -13,6 +13,7 @@ import { useEncounterTablesStore } from '../store/encounterTablesStore'
 import { usePersistVersion } from '../store/persistBus'
 import { searchMatches, rankBySearch } from '../utils/searchRank'
 import { fixedPopupPos } from '../utils/zoomFix'
+import { useHostPcMembers } from '../data/pcStatsContext'
 
 // ── 3-state pill ────────────────────────────────────────────────────────────
 type TriState = 'off' | 'yes' | 'no'
@@ -439,7 +440,7 @@ interface Props {
 export function MonsterSearch({ onClose, onPick, title }: Props) {
   const pickMode = !!onPick
   const { addCombatant } = useCombatStore()
-  const { parties } = usePartyStore()
+  const { parties, activePartyId } = usePartyStore()
 
   const [creatureQuery, setCreatureQuery] = useState('')
   const [filterQuery, setFilterQuery] = useState('')
@@ -913,17 +914,35 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
 
   /**
    * Quick add — one name per line, or comma-separated, each straight into the initiative order as a
-   * name-only combatant. This is the campaign rail footer's old "Quick add by name…" box, and it
-   * makes the SAME store call it made — `addCombatant(null, { name })` — so a line typed with a
-   * player character's name still produces the plain combatant that Heroes Heaven's seam matches to
-   * that character's pane by name.
+   * name-only combatant. This is the campaign rail footer's old "Quick add by name…" box.
+   *
+   * EXCEPT a player character's name inside a campaign (owner's list 2026-10-01, item 3). A name-only
+   * row is NOT a player character (isPC false), so Heroes Heaven's seam never linked it — no sheet HP
+   * or conditions, no AC or saves, the stat-block pane's editors, and the GM's damage going nowhere.
+   * A line that names one of the host campaign's PCs (pcStatsContext `useHostPcMembers`, null
+   * standalone) is that PC, added the ONE way a party member enters the order — `addPartyMemberToOrder`
+   * with their mirrored party entry (charId, party stamp, max HP), else the same PC add on the host's
+   * own member — and both go through addCombatant's `isSamePc` dedupe, so one already in the order is
+   * never added twice. Every other line, and every line standalone, is the plain combatant it always
+   * was. "Added N" counts what really went in.
    */
+  const hostMembers = useHostPcMembers()
   const quickAdd = () => {
     const names = quickNames.split(/[\n,]/).map(s => s.trim()).filter(Boolean)
     if (!names.length) return
-    for (const name of names) addCombatant(null, { name })
+    const before = useCombatStore.getState().combatants.length
+    for (const name of names) {
+      const mem = hostMembers?.find(m => m.name.trim().toLowerCase() === name.toLowerCase())
+      if (!mem) { addCombatant(null, { name }); continue }
+      // Their mirrored party entry — the campaign's (the active party) first, any other party's copy of
+      // the same character after it.
+      const ordered = [...parties].sort((a, b) => (b.id === activePartyId ? 1 : 0) - (a.id === activePartyId ? 1 : 0))
+      const pl = ordered.flatMap(p => p.players).find(x => x.memberType !== 'npc' && x.charId === mem.charId)
+      if (pl) addPartyMemberToOrder(pl)
+      else addCombatant(null, { name: mem.name, isPC: true, maxHP: mem.maxHP, charId: mem.charId })
+    }
     setQuickNames('')
-    setQuickAdded(names.length)
+    setQuickAdded(useCombatStore.getState().combatants.length - before)
   }
 
   const handleAddPartyMember = (pl: PartyPlayer & { partyName: string }) => {

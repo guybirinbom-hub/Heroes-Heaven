@@ -219,6 +219,8 @@ const { usePcSheetTruth, useMemberSheets, vitalsFromSheet } = await import('../s
 const { useCombatStore, scopeKey, flushPersist, invalidateEncounterCache, downedMarker } = await import(
   '../tracker/src/store/combatStore'
 );
+// owner's list 2026-10-01, item 3: "Step players' conditions each turn" (the last describe block).
+const { useSettingsStore } = await import('../tracker/src/store/settingsStore');
 type PartyMember = import('../src/data/party').PartyMember;
 
 const db = content();
@@ -3053,5 +3055,410 @@ describe('a player whose own sheet drops to 0 mid-fight moves in the order — a
     expect(order(), 'where the add put it').toEqual(['Cinder Goblin', 'Moss Ogre', NAME]);
     expect(acting()).toBe('Cinder Goblin');
     expect(server.editWrites).toEqual([]);
+  });
+});
+
+/*
+ * OWNER'S LIST 2026-10-01, ITEM 3 — the tracker steps a PLAYER's conditions the way it steps a monster's.
+ * His answer: "the tracker should do that for players [step conditions down each turn] but have a setting
+ * for it not to do that". So, while "Step players' conditions each turn" is on (the default), the GM
+ * advancing the turn takes their Frightened down by 1 as their turn ends and uses up their Stunned as it
+ * starts — and that step is HIS GESTURE (rule B), so it goes out like any condition he sets: one push,
+ * through a fresh read, and a sheet the player changed while the turn moved still wins (rule C). With the
+ * setting off nothing of theirs moves and nothing goes out.
+ *
+ * MUTATIONS (tried 2026-10-13):
+ *  - pcSheetTruth `stepsWithTheTurn` answering false (every sheet condition pinned again, new or kept) →
+ *    the Frightened, Stunned and race legs fail (the row never steps: expected [ 'frightened:2', … ] to
+ *    deeply equal [ 'frightened:1', … ]);
+ *  - combatStore nextTurn: unwrap `asGesture(() => …)` → the Frightened and Stunned legs fail the same way
+ *    (the step is no gesture: the sheet wins it back and nothing is pushed);
+ *  - combatStore `stepsConditions` answering true for every row → the setting-off leg fails, alone;
+ *  - reconcile without `|| pinsAStep(c, content)` → the saved-board leg fails, alone.
+ * The race leg needs no new line: rule C's fresh-read test (`vitalsKey(now) !== w.on` in `send`) is what
+ * keeps it green, and dropping that test fails it (with 19 older legs).
+ */
+describe('a player’s conditions step with the turn — the GM’s gesture, pushed once, and the sheet still wins a race', () => {
+  beforeEach(() => {
+    useSettingsStore.setState({ pcConditionTicks: true });
+  });
+  afterEach(() => {
+    useSettingsStore.setState({ pcConditionTicks: true });
+  });
+
+  /** Their own sheet: 25 HP, Wounded 1 and `extra` — mounted, then in a fight against Cinder Goblin. */
+  async function inFight(extra: { id: string; value: number }, pcFirst: boolean) {
+    const sc = hurt();
+    const m = await mount({ ...sc, play: { ...sc.play!, conditions: [...sc.play!.conditions, extra] } });
+    act(() => {
+      store().addCombatant(null, { name: 'Cinder Goblin', maxHP: 20, initiative: 15 });
+      store().setInitiative(pc().id, pcFirst ? 20 : 10);
+      store().startCombat();
+    });
+    await settle();
+    return m;
+  }
+  const acting = () => store().combatants[store().activeIndex]?.name;
+
+  it('Frightened 2 → 1 as their turn ends: pushed once, carrying their own Wounded and HP', async () => {
+    await inFight({ id: 'frightened', value: 2 }, true);
+    expect(acting()).toBe(NAME);
+    expect(rowConds(), 'their sheet on the row').toEqual(['frightened:2', 'wounded:1']);
+    expect(server.editWrites, 'starting the fight is no step of theirs').toEqual([]);
+
+    act(() => store().nextTurn()); // THEIR turn ends
+    await settle();
+    expect(rowConds()).toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites, 'one step, one push').toHaveLength(1);
+    expect(pushed(0).currentHP, 'their own HP, untouched').toBe(25);
+    expect(pushed(0).conditions).toEqual(expect.arrayContaining([{ id: 'frightened', value: 1 }, { id: 'wounded', value: 1 }]));
+
+    act(() => store().nextTurn()); // Cinder Goblin's turn ends — not theirs
+    await settle();
+    expect(server.editWrites, '…and once only').toHaveLength(1);
+
+    act(() => store().nextTurn()); // their turn ends again: Frightened 1 → gone
+    await settle();
+    expect(rowConds()).toEqual(['wounded:1']);
+    expect(server.editWrites, 'the next step builds on his last').toHaveLength(2);
+    expect(pushed(1).conditions).toEqual([{ id: 'wounded', value: 1 }]);
+  });
+
+  it('a row from a board saved before this rule (their Frightened pinned) is unpinned on the next pass, then steps', async () => {
+    /*
+     * A board persisted, saved or mirrored before 2026-10-13 carries the sheet's conditions pinned
+     * ("until removed"), and nothing about the values differs from the sheet, so no write would ever
+     * unpin them. MUTATION (tried 2026-10-13): drop `|| pinsAStep(c, content)` from reconcile's write
+     * test (src/integration/pcSheetTruth.ts) and this fails at "unpinned" (expected true to be false).
+     */
+    await inFight({ id: 'frightened', value: 2 }, true);
+    act(() =>
+      useCombatStore.setState((s) => ({
+        combatants: s.combatants.map((c) => (c.isPC ? { ...c, conditions: c.conditions.map((x) => ({ ...x, isPermanent: true })) } : c)),
+      })),
+    );
+    await settle();
+    expect(pc().conditions.find((c) => c.name === 'frightened')?.isPermanent, 'unpinned').toBe(false);
+    expect(pc().conditions.find((c) => c.name === 'wounded')?.isPermanent, 'a condition that does not step stays pinned').toBe(true);
+    expect(server.editWrites, 'unpinning is no edit of anyone’s').toEqual([]);
+    act(() => store().nextTurn()); // their turn ends
+    await settle();
+    expect(rowConds()).toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites).toHaveLength(1);
+  });
+
+  it('Stunned is used up as their turn STARTS: pushed once', async () => {
+    await inFight({ id: 'stunned', value: 1 }, false);
+    expect(acting()).toBe('Cinder Goblin');
+    expect(server.editWrites).toEqual([]);
+
+    act(() => store().nextTurn()); // their turn begins
+    await settle();
+    expect(acting()).toBe(NAME);
+    expect(rowConds()).toEqual(['wounded:1']);
+    expect(server.editWrites).toHaveLength(1);
+    expect(pushed(0).conditions).toEqual([{ id: 'wounded', value: 1 }]);
+  });
+
+  it('with the setting OFF nothing of theirs moves and nothing is pushed', async () => {
+    useSettingsStore.setState({ pcConditionTicks: false });
+    await inFight({ id: 'frightened', value: 2 }, true);
+    for (let i = 0; i < 4; i++) {
+      act(() => store().nextTurn());
+      await settle();
+    }
+    expect(rowConds(), 'their Frightened is theirs to step').toEqual(['frightened:2', 'wounded:1']);
+    expect(server.editWrites).toEqual([]);
+    expect(theirs().play!.conditions).toEqual([{ id: 'wounded', value: 1 }, { id: 'frightened', value: 2 }]);
+  });
+
+  it('a change of the player’s published while the turn moved WINS: the step is dropped, nothing goes out', async () => {
+    const m = await inFight({ id: 'frightened', value: 2 }, true);
+    server.holdNextRead = true;
+    act(() => store().nextTurn()); // their turn ends: the step's push reads their sheet first…
+    await settle();
+    expect(server.releaseRead, 'the step’s fresh read is on the wire').not.toBeNull();
+
+    // …and meanwhile their own app publishes their own change: 3 more damage, Frightened still 2.
+    const mine = theirs();
+    publish({ ...mine, play: { ...mine.play!, damage: mine.play!.damage + 3 } }, T1);
+    server.releaseRead!();
+    await settle();
+    await settle();
+    expect(server.editWrites, 'nothing of the GM’s goes out over their change').toEqual([]);
+    expect(theirs().play!.damage, 'their change stands').toBe(MAX - 22);
+    expect(theirs().play!.conditions).toEqual([{ id: 'wounded', value: 1 }, { id: 'frightened', value: 2 }]);
+    await m.deliver();
+    expect(pc().currentHP, 'the row is their sheet').toBe(22);
+    expect(rowConds()).toEqual(['frightened:2', 'wounded:1']);
+  });
+
+  /*
+   * NEXT, CTRL+Z, NEXT — THE G3 REFUTER (2026-10-13). The step went to their sheet; the Undo is a load
+   * (rule A), so it put back the board — and the turn flags with it — but never the step. Next pressed
+   * again ran the SAME turn end a second time and pushed it: Frightened 2 → 1 → gone on their sheet for
+   * one turn end (a monster in the same sequence ends at 1). A step the seam took is spent now
+   * (combatStore, SPENT STEPS).
+   * MUTATION (tried 2026-10-13): drop `&& !stepTaken(c.id, 'end', s.round)` from endTurnPass
+   * (tracker/src/store/combatStore.ts) and this fails, alone —
+   *   AssertionError: stepped once for one turn end: expected [ 'wounded:1' ] to deeply equal [ 'frightened:1', 'wounded:1' ]
+   */
+  it('Next, Ctrl+Z, Next: their Frightened steps ONCE for that one turn end — one push, never two', async () => {
+    await inFight({ id: 'frightened', value: 2 }, true);
+    act(() => store().nextTurn()); // THEIR turn ends: 2 → 1, pushed
+    await settle();
+    expect(rowConds()).toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites).toHaveLength(1);
+
+    act(() => store().undo()); // the GM takes the Next back — the board, never their sheet (rule A)
+    await settle();
+    expect(acting(), 'their turn again').toBe(NAME);
+    expect(rowConds(), 'the row shows what their sheet now has').toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites, 'an Undo never pushes').toHaveLength(1);
+
+    act(() => store().nextTurn()); // the same turn end, again
+    await settle();
+    expect(acting()).toBe('Cinder Goblin');
+    expect(rowConds(), 'stepped once for one turn end').toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites, 'nothing more goes out').toHaveLength(1);
+
+    // Their NEXT turn end is a new one, and steps as always.
+    act(() => store().nextTurn()); // Cinder Goblin's turn ends; round 2 begins with theirs
+    await settle();
+    act(() => store().nextTurn()); // their round-2 turn ends: 1 → gone
+    await settle();
+    expect(rowConds()).toEqual(['wounded:1']);
+    expect(server.editWrites).toHaveLength(2);
+    expect(pushed(1).conditions).toEqual([{ id: 'wounded', value: 1 }]);
+  });
+
+  it('Next, Ctrl+Z, Next: their Stunned is used up ONCE for that one turn start', async () => {
+    /*
+     * Stunned 4: a turn start takes 3 (the tracker's CONDITION_META), leaving Stunned 1 on their sheet.
+     * MUTATION (tried 2026-10-13): drop `|| stepTaken(c.id, 'start', round)` from tickConditionsAtStart
+     * (tracker/src/store/combatStore.ts) and this fails, alone —
+     *   AssertionError: used up once for one turn start: expected [ 'wounded:1' ] to deeply equal [ 'stunned:1', 'wounded:1' ]
+     */
+    await inFight({ id: 'stunned', value: 4 }, false);
+    act(() => store().nextTurn()); // their turn starts: 4 → 1, pushed
+    await settle();
+    expect(acting()).toBe(NAME);
+    expect(rowConds()).toEqual(['stunned:1', 'wounded:1']);
+    expect(server.editWrites).toHaveLength(1);
+
+    act(() => store().undo()); // back to Cinder Goblin's turn
+    await settle();
+    expect(acting()).toBe('Cinder Goblin');
+    expect(rowConds()).toEqual(['stunned:1', 'wounded:1']);
+
+    act(() => store().nextTurn()); // the same turn start, again
+    await settle();
+    expect(acting()).toBe(NAME);
+    expect(rowConds(), 'used up once for one turn start').toEqual(['stunned:1', 'wounded:1']);
+    expect(server.editWrites, 'nothing more goes out').toHaveLength(1);
+  });
+
+  it('Next, End, Start, Ctrl+Z, Next: still one turn end, one push — Start is no undo step', async () => {
+    /*
+     * The G3 refuter, round 2: round 1's startCombat CLEARED the spent steps, but the undo history outlived
+     * it, so one Ctrl+Z after a fresh Start went back to the board before the last fight's last Next — and
+     * Next stepped that turn end a second time and pushed it: their Frightened 1 removed for one turn end.
+     * Every undo board now carries its own fight (combatStore, SPENT STEPS).
+     * MUTATION (tried 2026-10-13): drop `_fight = prev.fight` from combatStore's undo
+     * (tracker/src/store/combatStore.ts) and this fails —
+     *   AssertionError: stepped once for one turn end: expected [ 'wounded:1' ] to deeply equal [ 'frightened:1', 'wounded:1' ]
+     */
+    await inFight({ id: 'frightened', value: 2 }, true);
+    act(() => store().nextTurn()); // THEIR turn ends: 2 → 1, pushed
+    await settle();
+    expect(server.editWrites).toHaveLength(1);
+
+    act(() => store().endCombat()); // End by mistake…
+    await settle();
+    act(() => store().startCombat()); // …Start…
+    await settle();
+    act(() => store().undo()); // …and Ctrl+Z to get back: their round-1 turn, the last fight's board
+    await settle();
+    expect(acting(), 'their turn again').toBe(NAME);
+    expect(store().round).toBe(1);
+    expect(rowConds(), 'the row shows what their sheet now has').toEqual(['frightened:1', 'wounded:1']);
+
+    act(() => store().nextTurn()); // the same turn end, again
+    await settle();
+    expect(acting()).toBe('Cinder Goblin');
+    expect(rowConds(), 'stepped once for one turn end').toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites, 'one turn end, one push').toHaveLength(1);
+  });
+
+  /*
+   * …BUT A STEP THAT NEVER REACHED THEM IS HANDED BACK (`releaseSteps`), so the turn steps them once when
+   * an Undo brings it round again: owed while offline and then taken off the row by the Undo (a load,
+   * rule A), owed together with a change made on top of it, or lost to the sheet winning (rule C).
+   */
+  it('owed while offline, then taken off the row by Ctrl+Z: Next steps them again — once, sent when the reads come back', async () => {
+    /*
+     * MUTATION (tried 2026-10-13): drop `releaseSteps(st.want.steps);` from reconcile's load branch
+     * (src/integration/pcSheetTruth.ts) and this fails, with the next two legs —
+     *   AssertionError: the turn end again: expected [ 'frightened:2', 'wounded:1' ] to deeply equal [ 'frightened:1', 'wounded:1' ]
+     */
+    await inFight({ id: 'frightened', value: 2 }, true);
+    server.failSheetReads = true;
+    act(() => store().nextTurn()); // their turn ends: 2 → 1, owed (the read failed)
+    await settle();
+    expect(rowConds()).toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites).toEqual([]);
+
+    act(() => store().undo()); // a load: the owed step comes off the row, and never goes out (rule A)
+    await settle();
+    expect(acting()).toBe(NAME);
+    expect(rowConds(), 'their sheet, which never had the step').toEqual(['frightened:2', 'wounded:1']);
+
+    act(() => store().nextTurn()); // the same turn end, again: the step is still theirs to get
+    await settle();
+    expect(rowConds(), 'the turn end again').toEqual(['frightened:1', 'wounded:1']);
+
+    server.failSheetReads = false;
+    act(() => store().addCombatant(null, { name: 'Cave Lurker', maxHP: 30 })); // any later pass
+    await settle();
+    expect(server.editWrites, 'sent once the reads come back — once').toHaveLength(1);
+    expect(pushed(0).currentHP).toBe(25);
+    expect(pushed(0).conditions).toEqual(expect.arrayContaining([{ id: 'frightened', value: 1 }, { id: 'wounded', value: 1 }]));
+  });
+
+  it('owed together with a hit made on top of it, both taken off by Ctrl+Z: the step is handed back with them', async () => {
+    /*
+     * MUTATION (tried 2026-10-13): owe the two together WITHOUT the step's keys (drop `...(w.steps ?? []),`
+     * from `send`'s failure path, src/integration/pcSheetTruth.ts) and this fails, alone —
+     *   AssertionError: the turn end again: expected [ 'frightened:2', 'wounded:1' ] to deeply equal [ 'frightened:1', 'wounded:1' ]
+     */
+    await inFight({ id: 'frightened', value: 2 }, true);
+    server.holdNextRead = true;
+    act(() => store().nextTurn()); // their turn ends: the step's fresh read is on the wire
+    await settle();
+    act(() => store().applyDamage(pc().id, 5)); // a hit made ON the step, waiting behind it
+    await settle();
+    server.failSheetReads = true;
+    server.releaseRead!(); // the read fails: the step and the hit are owed, together
+    await settle();
+    await settle();
+    expect(server.editWrites).toEqual([]);
+
+    act(() => store().undo()); // the hit off the board — a load: what was owed comes off the row
+    await settle();
+    act(() => store().undo()); // …and the Next: their turn again
+    await settle();
+    expect(acting()).toBe(NAME);
+    expect(rowConds()).toEqual(['frightened:2', 'wounded:1']);
+    expect(pc().currentHP).toBe(25);
+
+    act(() => store().nextTurn());
+    await settle();
+    expect(rowConds(), 'the turn end again').toEqual(['frightened:1', 'wounded:1']);
+    server.failSheetReads = false;
+    act(() => store().addCombatant(null, { name: 'Cave Lurker', maxHP: 30 }));
+    await settle();
+    expect(server.editWrites).toHaveLength(1);
+    expect(pushed(0).currentHP, 'the hit was taken back').toBe(25);
+    expect(pushed(0).conditions).toEqual(expect.arrayContaining([{ id: 'frightened', value: 1 }]));
+  });
+
+  it('a step made on an owed hit, both taken off by Ctrl+Z: the step is handed back with the hit', async () => {
+    /*
+     * MUTATION (tried 2026-10-13): carry the hit along WITHOUT the step's keys (drop `...taken` from
+     * reconcile's `st.want.steps = […]`, src/integration/pcSheetTruth.ts) and this fails, alone —
+     *   AssertionError: the turn end again: expected [ 'frightened:2', 'wounded:1' ] to deeply equal [ 'frightened:1', 'wounded:1' ]
+     */
+    await inFight({ id: 'frightened', value: 2 }, true);
+    server.failSheetReads = true;
+    act(() => store().applyDamage(pc().id, 5)); // a hit, owed (the read failed)
+    await settle();
+    act(() => store().nextTurn()); // their turn ends: the step joins the owed hit
+    await settle();
+    expect(rowConds()).toEqual(['frightened:1', 'wounded:1']);
+    expect(pc().currentHP).toBe(20);
+
+    act(() => store().undo()); // the Next back — a load: what was owed comes off the row (rule A)
+    await settle();
+    expect(acting()).toBe(NAME);
+    expect(pc().currentHP, 'their sheet').toBe(25);
+    expect(rowConds()).toEqual(['frightened:2', 'wounded:1']);
+
+    act(() => store().nextTurn());
+    await settle();
+    expect(rowConds(), 'the turn end again').toEqual(['frightened:1', 'wounded:1']);
+    server.failSheetReads = false;
+    act(() => store().addCombatant(null, { name: 'Cave Lurker', maxHP: 30 }));
+    await settle();
+    expect(server.editWrites).toHaveLength(1);
+    expect(pushed(0).currentHP).toBe(25);
+    expect(pushed(0).conditions).toEqual(expect.arrayContaining([{ id: 'frightened', value: 1 }]));
+  });
+
+  it('a step lost to the player’s own change is handed back: Ctrl+Z, Next steps their sheet once, on top of their change', async () => {
+    /*
+     * MUTATION (tried 2026-10-13): drop `releaseSteps(w.steps);` from `send`'s sheet-wins branch
+     * (src/integration/pcSheetTruth.ts) and this fails, alone —
+     *   AssertionError: the turn end again: expected [ 'frightened:2', 'wounded:1' ] to deeply equal [ 'frightened:1', 'wounded:1' ]
+     */
+    const m = await inFight({ id: 'frightened', value: 2 }, true);
+    server.holdNextRead = true;
+    act(() => store().nextTurn()); // their turn ends: the step's fresh read is on the wire…
+    await settle();
+    const mine = theirs(); // …and their own app publishes 3 more damage meanwhile
+    publish({ ...mine, play: { ...mine.play!, damage: mine.play!.damage + 3 } }, T1);
+    server.releaseRead!();
+    await settle();
+    await settle();
+    expect(server.editWrites, 'their change wins').toEqual([]);
+    await m.deliver();
+    expect(rowConds()).toEqual(['frightened:2', 'wounded:1']);
+
+    act(() => store().undo()); // their turn again
+    await settle();
+    expect(acting()).toBe(NAME);
+    expect(pc().currentHP, 'the row is their sheet').toBe(22);
+
+    act(() => store().nextTurn());
+    await settle();
+    expect(rowConds(), 'the turn end again').toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites).toHaveLength(1);
+    expect(pushed(0).currentHP, 'on top of their own change').toBe(22);
+    expect(pushed(0).conditions).toEqual(expect.arrayContaining([{ id: 'frightened', value: 1 }, { id: 'wounded', value: 1 }]));
+  });
+
+  it('a step made ON one that is out, both lost to the player’s change: the later one is handed back too', async () => {
+    /*
+     * Frightened 3: their round-1 turn end steps it to 2 and that push's read is held; their round-2 turn
+     * end steps it to 1, made on the one that is out. Their own change wins over both.
+     * MUTATION (tried 2026-10-13): drop `releaseSteps(st.want?.steps);` from `send`'s sheet-wins branch
+     * (src/integration/pcSheetTruth.ts) and this fails, alone —
+     *   AssertionError: their round-2 turn end again: expected [ 'frightened:3', 'wounded:1' ] to deeply equal [ 'frightened:2', 'wounded:1' ]
+     */
+    const m = await inFight({ id: 'frightened', value: 3 }, true);
+    server.holdNextRead = true;
+    act(() => store().nextTurn()); // their round-1 turn ends: 3 → 2, its read held
+    await settle();
+    act(() => store().nextTurn()); // Cinder Goblin's turn ends; round 2 begins with theirs
+    await settle();
+    act(() => store().nextTurn()); // their round-2 turn ends: 2 → 1, made on the one that is out
+    await settle();
+    const mine = theirs();
+    publish({ ...mine, play: { ...mine.play!, damage: mine.play!.damage + 3 } }, T1);
+    server.releaseRead!();
+    await settle();
+    await settle();
+    expect(server.editWrites, 'their change wins over both').toEqual([]);
+    await m.deliver();
+    expect(rowConds()).toEqual(['frightened:3', 'wounded:1']);
+
+    act(() => store().undo()); // back to their round-2 turn
+    await settle();
+    expect(acting()).toBe(NAME);
+    expect(store().round).toBe(2);
+    act(() => store().nextTurn());
+    await settle();
+    expect(rowConds(), 'their round-2 turn end again').toEqual(['frightened:2', 'wounded:1']);
+    expect(server.editWrites).toHaveLength(1);
+    expect(pushed(0).currentHP).toBe(22);
   });
 });

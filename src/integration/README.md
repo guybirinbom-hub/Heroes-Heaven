@@ -22,7 +22,8 @@ detail panel. Nothing else changes.
 | `src/sheet/memberSheets.ts` | comments only: two notes name the tracker seam (its pushes as what used to re-join every channel, and the seam as a reader of the re-pulled map) | Delete those two mentions; nothing in the code knows the tracker |
 | `src/theme/theme-manager.ts` | `resolveAppearanceVars` — the token-resolution half of `applyResolved`, extracted + exported so a scoped appearance (the tracker's own theme) can be built without writing `<html>` | A pure refactor with no tracker names in it; harmless to keep. To fully revert, inline it back into `applyResolved` |
 | `src/sheet/SettingsPage.tsx` | the `'tracker'` section (id, `ALL_SECTIONS` entry, `renderSection` case); `TrackerSettingsSection` is `React.lazy` + `<Suspense>` so opening Settings doesn't pull the tracker's stores in | Delete the three `'tracker'` references and the lazy import |
-| `src/sheet/PartyMembers.tsx` | optional `localMembers?: PartyMember[]` prop; optional `renderExtra?` render-prop returning `PartyCardSlots` (`header` = the turn chip + "+" button in `.party-card-tools`, `saves` = extra tiles in the turn band's `.party-defs` block, `right` = the whole `.party-row-ref` band — the card's second row — whose presence is what puts `.has-right` on `.party-card-body`); optional `onMembers?` callback (every loaded list, so the tracker's party can be built from the server party — this component mounts INSIDE the tracker's party view, which needs that party to exist first); optional `dialogStyle?` (2026-10-10), passed to the kick's `confirmDialog` as `style` so the confirm wears the tracker's look above its windows | Delete the four props + `PartyCardSlots`; use `members`; drop the `extra` slots and the `.has-right` term, which leaves the card its turn band and nothing else; drop `style: dialogStyle` from `kick` |
+| `src/sheet/PartyMembers.tsx` | optional `localMembers?: PartyMember[]` prop; optional `renderExtra?` render-prop returning `PartyCardSlots` (`header` = the turn chip + "+" button in `.party-card-tools`, `saves` = extra tiles in the turn band's `.party-defs` block, `right` = the whole `.party-row-ref` band — the card's second row — whose presence is what puts `.has-right` on `.party-card-body`, and `core` (2026-10-13, owner's list item 3: "the switches need to do what they say") = the tracker's "Stats shown" switches for the card's own sub-line, AC tile and Perception tile — `PartyCard`'s `showSub` / `showPerc` / `showAc` / `showDefs`, the HP bar never one of them; a card with no `core` shows all three, so HH's own Party page and campaign detail are unchanged); optional `onMembers?` callback (every loaded list, so the tracker's party can be built from the server party — this component mounts INSIDE the tracker's party view, which needs that party to exist first); optional `dialogStyle?` (2026-10-10), passed to the kick's `confirmDialog` as `style` so the confirm wears the tracker's look above its windows | Delete the four props + `PartyCardSlots`; use `members`; drop the `extra` slots and the `.has-right` term, which leaves the card its turn band and nothing else (the four `show…` flags go with `core`: the sub-line, Perception and AC are drawn unconditionally again); drop `style: dialogStyle` from `kick` |
+| `src/sheet/partySummary.ts` (HH's own fix, 2026-10-13) | `computeSummary` asks `derivePerception(c, content)` WITH the content database, as the sheet's own rail does, so a passive Perception item's item bonus reaches the card. NOT part of the seam: every party card reads it. The summary a player's app PUBLISHES changes with it — a teammate on an older app publishes the value without that bonus until they update | Keep |
 | `src/sheet/confirm.tsx` | optional `style?: DialogStyle` on `ConfirmOptions` / `ChooseOptions`, applied on the `.picker-overlay.confirm-overlay` (2026-10-10). The dialogs are detached roots on `<body>`, so no context reaches them: a confirm raised from the tracker (Clear the order, a card's kick, the local table's "No campaign settings") gets the tracker's `--app-*` variables plus the four text properties `<body>` sets (`hhSurfaceTheme` in `trackerAppearance.ts`) and a z-index above the floating windows (HH's own 80 sat under a window at 501). GmEditSheet's dialogs pass nothing: they belong to the app-themed full sheet (a rule in `campaign-tracker.css` lifts such an un-styled confirm above the windows while the tracker is on screen, 2026-10-11) | A generic option with no tracker names — harmless to keep. To revert: delete `DialogStyle`, the two `style?` fields and the two `style={style}` |
 | `src/sheet/CampaignsPage.tsx` (local table) | the local table's `onOpenSettings` takes the tracker's `dialogStyle` argument and passes it to its "No campaign settings" `confirmDialog` as `style` (2026-10-10) | Back to `onOpenSettings={() => void confirmDialog({ … })}` with no `style` |
 | `src/sheet/GmEditSheet.tsx` | `forwardRef` + the `GmEditHandle` (`confirmLeave`) so the initiative order can ask before swapping the sheet out; the optional `inTracker` prop, forwarded into `CharacterSheet`'s `gmEdit` | Drop the ref plumbing; inline `confirmLeave` back into `doExit`; drop `inTracker`. (`confirmLeave`'s builder-open Discard / Cancel prompt is HH's own — the builder's unsaved work is lost the same way on the campaign detail — and stays) |
@@ -77,8 +78,8 @@ There is otherwise deliberately **nothing else to unwind**:
   |---|---|---|
   | `partyLevelContext` | the party's level, derived from the real characters | the party store / the typed local level |
   | `monsterPartsContext` | the campaign's Battlezoo rule + Full/Light/Hybrid variant | the tracker's own "Show Monster Parts value" setting, priced on Light |
-  | `pcPaneContext` | a renderer so a PC's pane is HH's editable character sheet | the tracker's own `CombatantDetail` |
-  | `pcStatsContext` | each PC's real stats (AC/saves/…) so the initiative order can show them | `PartyPlayer.pcStats` (the DM-entered sheet) |
+  | `pcPaneContext` | a renderer so a PC's pane is HH's own party card for that character (a click opens the GM sheet over the tracker); the row's member is found by its character id first | the tracker's own `CombatantDetail` |
+  | `pcStatsContext` | each PC's real stats (AC/saves/level/temp HP/…) so the initiative order can show them, keyed by character id (`byId`, a row's first key — a rename on either side keeps the link) and by name (a row with no id); `folded` — which conditions those stats already count, so the row adds the tracker's penalty only for the rest; `badgesById` — the sheet's derived conditions and active modes, drawn locked; `members` — the campaign's PCs, for Quick add | `PartyPlayer.pcStats` (the DM-entered sheet), every condition counted by the tracker, no badges, Quick add name-only |
   | `hostSearchContext` | an index of every HH record for Search; `render`, the body of an HH page in a tracker window (a Search result opens as one, 2026-10-11) or a GM-screen pane; `controls`, that page's favourite star for the window's header (a strip above the page in a pane holding two tabs, which has no header); and `open` (this host opens the same window — Search calls `open` only for a host with no `render`) | Search over the tracker's own reference data |
   | `hostThemeContext` | the GM's tracker-only look (`useTrackerVars()`, one object per appearance state, or null when the tracker inherits the app's look), which `BodyPortal` puts on everything the tracker draws on `<body>` | null — the popup inherits the document's variables, as always |
 
@@ -102,9 +103,36 @@ There is otherwise deliberately **nothing else to unwind**:
     else under `tracker/src`; `test/tracker-popup-theme.test.tsx` checks every body popup's look. To
     remove: keep it (harmless) or inline `createPortal` back into the two callers.
   - `InitiativeTracker`'s mini HP bar falls back to the host `pcStats` HP for a PC row when the
-    combatant itself has no HP (`c.maxHP === 0`) — which is always true for an embedded PC, since HH
-    feeds HP through the context, not the party store. A standalone PC gets `maxHP` at add-time, so
-    its own HP still wins; the fallback only fills the gap.
+    combatant itself has no HP (`c.maxHP === 0`) — a PC row the seam has not reached yet (once it
+    has, `pcSheetTruth.writeVitals` puts the sheet's current and max HP on the row). A standalone PC
+    gets `maxHP` at add-time, so its own HP still wins; the fallback only fills the gap.
+  - **The PC row agrees with the card** (2026-10-13, owner's list item 3). `InitRow` reads the host's
+    stats by `useHostPcStats(name, charId)` (and its party-store fallback by `isSamePc`), so a renamed row
+    or character keeps them; for a PC with host stats it applies the tracker's condition penalties only
+    to the badges the host does not fold (`useHostConditionFolded`) — the sheet's own conditions are
+    already inside those numbers, and counting them again drew a frightened player two under their
+    card; it draws the sheet's temp HP as "+N" beside the bar (`PcStats.hpTemp`, display only — never
+    the row's `tempHP`, never pushed), the sheet's derived conditions and modes as dashed locked badges
+    (`useHostPcBadges`), and with "Show level in initiative order" a PC's level from the host. Badges
+    go through `conditionMetaOf` (`conditionEffects.ts`), whose alias table styles HH's
+    `persistent-damage` as the tracker's `persistent damage` — display only: the row keeps the sheet's
+    name, so the auto-roll (which wants that exact name and an amount) never fires on a player. The
+    encounter rating's per-PC level asks `useHostPcLevel(name, charId)` the same way. To remove: keep
+    them (inert without a provider) or drop the `charId` arguments, `pcCm`, `lockedBadges`, `pcLevel`
+    and `hpTemp`.
+  - **Quick add links a member's name** (`MonsterSearch` `quickAdd`, 2026-10-13): inside a campaign a
+    line that names one of its PCs (`useHostPcMembers`) is added as that PC — `addPartyMemberToOrder`
+    with their mirrored party entry, else the same PC add on the host's own member — through
+    `addCombatant`'s `isSamePc` dedupe. Standalone, and for any other line, it is the name-only row it
+    always was. To remove: back to `addCombatant(null, { name })` for every line.
+  - **Players' conditions step with the turn** (2026-10-13, owner's list item 3): the setting
+    `pcConditionTicks` (`settingsStore`, on by default; "Step players' conditions each turn" in
+    `SettingsModal`'s `PlayersSection`, reached from HH Settings → Initiative tracker → Player
+    characters) lets `endTurnPass` / `tickConditionsAtStart` step a PC's Frightened and Stunned as they
+    do a monster's (`stepsConditions`); off, a PC's conditions are left alone. The step is a vitals
+    GESTURE (below). `PlayersSection` and `PcDetailControls` take an optional `campaignDriven` /
+    `descs` so HH's Settings describes the Defenses switch as AC only (a campaign card keeps its HP bar).
+    To remove: keep (standalone-safe) or drop the setting and `stepsConditions`.
   - `TrackerTools` mounts the tracker's own `TurnTimerWidget` in HH's chrome (gated on the timer
     setting there, and self-gated as well), and `CampaignTracker` mounts a small `RailFooter` (the
     Add-combatants button + Clear the order) — both pure combat-store features from the original
@@ -118,15 +146,57 @@ There is otherwise deliberately **nothing else to unwind**:
     `takeVitalsGesture(id)`, which answers whether the dispatch now running is a GM gesture on that
     row. Inside the store, `asGesture` wraps each explicit GM vitals action (damage, healing, temp HP,
     max HP, Mark defeated / Restore, a condition added or removed, a condition's value or duration
-    set) and `markGesture` marks the PC row it changed. **Undo / Redo are not gestures and never
+    set) and `markGesture` marks the PC row it changed — and, since 2026-10-13, `nextTurn`,
+    `startCombat` and `returnFromDelay`, whose condition step marks a PC row only when it changed it
+    (Frightened down at the end of a player's turn, Stunned used up at the start, while
+    `pcConditionTicks` is on); `pcSheetTruth.writeVitals` leaves those two sheet conditions unpinned
+    for it (`stepsWithTheTurn`, `pinsAStep`). A step the seam TAKES is spent (`markStep`,
+    `_stepsTaken`, keyed by fight, row, turn phase and round, kept outside every undo snapshot): an Undo
+    of that Next cannot reach the player's sheet, so Next pressed again does not step them a second time
+    for the same turn. `startCombat` gives a fresh fight a new number (`newFight`, never reused) rather
+    than clearing the record, because Start is no undo step: every undo / redo snapshot carries its
+    board's fight (`CombatSnapshot.fight`), so Ctrl+Z back across an End and a Start brings the older
+    fight back with the steps it spent. `reloadFromStorage` clears the record with the undo history;
+    nothing is spent where no host takes it. The seam hands a step back (`releaseSteps`, the change's `steps`) when it never reaches
+    the player — owed and then taken off the row by a load, or lost to the sheet winning — so that turn
+    steps them once if it comes round again. **Undo / Redo are not gestures and never
     push**: putting an older board back is a load, so the seam re-bases a PC row on the player's sheet,
     and the GM takes a change back with the opposite gesture (Restore, heal, remove the condition).
     Nor does an Undo call back a change of his that is already on its way to the server. A
     gesture lives only while that action's own `set()` dispatches and is never written onto a row, so
     nothing persisted, saved or mirrored carries one; the standalone tracker has no subscriber that
-    takes them, so there it is inert. Pinned by `tracker/src/store/vitalsGesture.test.ts`. To remove:
-    drop the export, unwrap each `asGesture(…)` back to its bare `set(…)` and delete the `markGesture`
-    calls — or keep it, harmless.
+    takes them, so there it is inert. Pinned by `tracker/src/store/vitalsGesture.test.ts` (spent steps:
+    `tracker/src/store/pcConditionTicks.test.ts`). To remove: drop the export, unwrap each
+    `asGesture(…)` back to its bare `set(…)` and delete the `markGesture` / `markStep` calls and
+    `_stepsTaken` — or keep it, harmless.
+  - `combatStore` exports `moveBeforeActive(s, id)`, the one reorder for 'a creature went down'.
+    `pcSheetTruth` keeps, per player, the HP last seen on THEIR side (`SeenPc.theirs`). It also keeps a
+    drop to 0 owed to the row (`SeenPc.drop`), set when their side goes from above 0 to 0: either a
+    sheet arrives, or a GM push loses to a newer sheet. In its plain (non-gesture) writeVitals it moves
+    the row before the acting creature, onto its number, only when that write takes the row from above
+    0 to 0 mid-fight. Nothing is pushed. Pinned by test/bug-tracker-seam-never-overwrite.test.tsx ('a
+    player whose own sheet drops to 0…' legs). To remove: drop writeVitals' `dropped` argument,
+    `follow`, `SeenPc.drop` and `SeenPc.theirs`.
+  - CombatantDetail opens InitiativeTracker's exported CombatantMenu on a right-click of the stat
+    block. HH's App.tsx right-click blocker leaves an already-prevented event alone
+    (test/bug-tracker-dying-npc.test.tsx (a)).
+  - Tracker boxes and inline menus spend their own Escape (tracker/src/utils/spendEscape.ts, plus the
+    ☰ menu's and the condition picker's document listeners), so it never reaches the campaign's base
+    handler (test/bug-tracker-dying-npc.test.tsx (b), (c), (d)).
+  - **The seam's own Escape guards** (`CampaignTracker`, 2026-10-13): its window capture listener reads,
+    as of the key press, whether a tracker popup is on `<body>` (`popupAtPress`), whether a tracker
+    modal is open in the view (`modalAtPress`, `trackerModalOpen` — the `.modal-overlay` of the
+    Encounter Building tables, Link Stat Block, the encounter-table editor, the advanced condition
+    editor, a party card's turn-time graph) and whether the press was typed in a tracker text box
+    (`editableAtPress`, `editableInTracker` — a text input, textarea or editable region; a dropdown holds
+    no text and is a plain press) and, if so, which floating window holds that box (`boxWinAtPress`,
+    the `[data-float-win]` id). The base "leave the campaign" handler stands down for any
+    of them — a box in ANY tracker file (the stat block's, the GM screen's, the Monster Parts popup's)
+    can no longer leave the campaign — and the windows' handler stands down for a popup, a modal, or a
+    box outside every window, so Escape never closes a window hidden behind one, nor an unrelated window
+    while the GM types elsewhere. A box inside a window closes THAT window, even when another window is
+    above it (keyboard focus raises no window) (test/bug-tracker-escape-boxes.test.tsx). Deleted with
+    the seam.
   - **Search pages and creatures as windows** (2026-10-11, item 7). `GlobalSearch` opens a host record
     as a `host` window when the host has `render` (`host.open` otherwise — standalone has no host), and
     its Escape stops where it is handled (the box's `onKeyDown`, plus a `document` listener for a press
@@ -283,12 +353,15 @@ touching either direction: it is where the never-overwrite rules live.
 
 **Known gaps.**
 
-- **The seam's row is matched charId first** (`isSamePc`, the tracker's own rule): a PC row added
-  from the party carries the character's id, so two same-named characters get two rows, each driven
-  by its own sheet. A row with no id (typed in by hand, or saved before ids were kept) falls back to
-  the name — and a row two members' names both match is driven by NEITHER sheet: nothing is written
-  to it and nothing is pushed from it. Other surfaces in `CampaignTracker.tsx` (the PC stats strip,
-  the live-member lookup) still match by name; see `tracker/DEFERRED.md` §3.
+- **Every PC join is charId first** (`isSamePc`, the tracker's own rule): a PC row added from the
+  party — or by Quick add of a member's name — carries the character's id, so two same-named
+  characters get two rows, each driven by its own sheet, and a rename on either side keeps the row
+  linked: the seam's sheet sync, the row's AC/saves/level/badges (`pcStatsContext`), the PC's pane
+  card (`memberOfRow`), the dashboard card's jump to that pane, the encounter rating's per-PC level and
+  the party mirror's max-HP fallback. A row with no id (typed in by hand before Quick add linked, or
+  saved before ids were kept) falls back to the name — and a row two members' names both match is
+  driven by NEITHER sheet (nothing is written to it or pushed from it) and has no pane card. The
+  tracker-internal `syncPcHp` / `setPcMaxHP` (the standalone party cards' HP) still match by name.
 - **A GM change can still be lost** (the seam header, rule C) — the player's only in the narrow cases
   named at the end of this bullet. The player's app
   applies a push only when their sheet is still exactly the one it was built on (`gmEditVerdict`), so

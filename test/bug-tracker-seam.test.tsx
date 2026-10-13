@@ -548,6 +548,60 @@ describe('the campaign ↔ tracker seam', () => {
     expect(el.querySelector('[data-testid="encounter-party"]')?.textContent).toContain('5 down → party level 5');
   }, 180_000);
 
+  /*
+   * THE CAMPAIGN'S OWN LEVEL (group G3 (J); the G3 refuter, round 2). `partyLevels` reads each member's
+   * LIVE sheet level first (a level-up the published summary has not caught up with, a GM's pending level
+   * edit — the number the row's own rating reads) and the summary's only for a member whose sheet has not
+   * arrived. Nothing pinned it: a PC row the host knows reads its own level, so reverting the line to the
+   * summary left every test green. The campaign's level is the rating's FALLBACK for a PC row nobody can
+   * place (a name typed by hand, no character link), and that is where it shows. Synthetic names only.
+   */
+  it('a PC row nobody can place counts at the campaign’s level — from the live sheet, not a stale summary', async () => {
+    /*
+     * MUTATION (tried 2026-10-13): partyLevels as `members.map((mem) => mem.summary?.level || 0)`
+     * (src/integration/CampaignTracker.tsx) and this fails at “the live sheet’s level” ('1 PC (3) → party
+     * level 3' where 6 was due).
+     */
+    const member = publish(saved('char-a', 'Ayla Brightwood', 6), 'owner-a');
+    // The summary published before their level-up; their sheet is level 6.
+    srv.party = [{ ...member, summary: { ...member.summary!, level: 3 } }];
+    const el = await openTracker();
+    act(() => {
+      useCombatStore.getState().addCombatant(null, { name: 'Wandering Sellsword', isPC: true, maxHP: 20 });
+      useCombatStore.getState().addCombatant(OGRE);
+    });
+    await flush(2);
+    const tablesBtn = el.querySelector('button[aria-label="Encounter building reference tables"]');
+    expect(tablesBtn, 'fixture: the fight is rated').not.toBeNull();
+    click(tablesBtn!);
+    await flush(1);
+    expect(el.querySelector('[data-testid="encounter-party"]')?.textContent, 'the live sheet’s level').toContain(
+      '1 PC (6) → party level 6',
+    );
+  }, 120_000);
+
+  it('…and the published summary’s level for a member whose sheet has not arrived', async () => {
+    /*
+     * MUTATION (tried 2026-10-13): drop `|| mem.summary?.level` from partyLevels
+     * (src/integration/CampaignTracker.tsx) and this fails at “the summary’s level” — the campaign party's
+     * own placeholder level 1 is used instead ('1 PC (1) → party level 1').
+     */
+    const member = publish(saved('char-a', 'Ayla Brightwood', 6), 'owner-a');
+    srv.sheets.delete('char-a'); // no sheet to read: only the card's summary
+    srv.party = [{ ...member, summary: { ...member.summary!, level: 3 } }];
+    const el = await openTracker();
+    act(() => {
+      useCombatStore.getState().addCombatant(null, { name: 'Wandering Sellsword', isPC: true, maxHP: 20 });
+      useCombatStore.getState().addCombatant(OGRE);
+    });
+    await flush(2);
+    click(el.querySelector('button[aria-label="Encounter building reference tables"]')!);
+    await flush(1);
+    expect(el.querySelector('[data-testid="encounter-party"]')?.textContent, 'the summary’s level').toContain(
+      '1 PC (3) → party level 3',
+    );
+  }, 120_000);
+
   it('reads a PC’s HP and conditions from their sheet, and pushes the GM’s back to it', async () => {
     // tracker 2026-09-15: seam
     const db = content();

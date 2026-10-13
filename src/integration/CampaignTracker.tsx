@@ -17,11 +17,11 @@ import { TrackerCustomize } from './TrackerCustomize';
 import { CampaignPartyLevelProvider } from '../../tracker/src/data/partyLevelContext';
 import { CampaignPcPaneProvider, type PcPaneHandles } from '../../tracker/src/data/pcPaneContext';
 import { CampaignMonsterPartsProvider } from '../../tracker/src/data/monsterPartsContext';
-import { CampaignPcStatsProvider } from '../../tracker/src/data/pcStatsContext';
+import { CampaignPcStatsProvider, type HostPcBadge } from '../../tracker/src/data/pcStatsContext';
 import type { PcStats } from '../../tracker/src/utils/pcDetail';
 import { useCampaignDefaults } from './useCampaignDefaults';
 import { computePcStats } from './computePcStats';
-import { PcStatsCardExtra, PcSavesCells, hasRightColumn } from './PcStatsCardExtra';
+import { PcStatsCardExtra, PcSavesCells, hasRightColumn, cardCore } from './PcStatsCardExtra';
 import { MemberTurnButton } from './MemberTurnButton';
 import { useCombatStore, isSamePc } from '../../tracker/src/store/combatStore';
 import { useSettingsStore } from '../../tracker/src/store/settingsStore';
@@ -86,6 +86,39 @@ const SYNC_READY_CAP_MS = 4000;
  */
 function trackerPopupOpen(): boolean {
   return !!document.querySelector('body > .tracker-root:not(.campaign-tracker)');
+}
+
+/*
+ * A tracker modal open in this view: the `.modal-overlay` every tracker dialog draws inside this root —
+ * the Encounter Building tables, Link Stat Block, the encounter-table editor, the advanced condition
+ * editor, a party card's turn-time graph — drawn ABOVE the floating windows (z 2000 and up) and, unlike
+ * the four overlays registered below, not on the dismiss stack (most close themselves from a `document`
+ * listener, some not at all). While one is up, Escape is not the windows' (a window hidden behind it
+ * would close) and not the campaign's.
+ */
+function trackerModalOpen(): boolean {
+  return !!document.querySelector('.campaign-tracker .modal-overlay');
+}
+
+/** Input types that hold no text: an Escape on one is no "cancel what I was typing". */
+const NOT_TEXT = new Set(['button', 'checkbox', 'radio', 'submit', 'reset', 'range', 'color', 'file', 'image']);
+
+/*
+ * An Escape typed in a TEXT BOX of the tracker's (this view's root, or a tracker popup on <body>). In a
+ * box Escape means "cancel what I was typing", never "leave the campaign" — and a box that does not
+ * spend its own Escape (the stat block's, the GM screen's, the Monster Parts popup's; any added later)
+ * used to fall through to the base handler and LEAVE (the G2b refuter, 2026-10-13). Asked of the key
+ * press's own target, so it holds whichever file drew the box. A dropdown (<select>) holds no text:
+ * focus stays on one after a pick, and an Escape there is a plain press (the G3 refuter, 2026-10-13).
+ */
+function editableInTracker(t: EventTarget | null): boolean {
+  if (!(t instanceof HTMLElement)) return false;
+  const text =
+    t.tagName === 'TEXTAREA' ||
+    (t.tagName === 'INPUT' && !NOT_TEXT.has((t as HTMLInputElement).type)) ||
+    t.isContentEditable ||
+    !!t.closest('[contenteditable]:not([contenteditable="false"])');
+  return text && !!t.closest('.campaign-tracker, body > .tracker-root');
 }
 
 /*
@@ -406,8 +439,9 @@ export function CampaignTracker({
    *
    * This is what makes "Show player AC & saves in initiative order" and the party cards' "Stats
    * shown" sections work: the tracker knows how to display these, it just never had the numbers in
-   * the embedded view. Computed once per roster change; keyed both by name (the initiative order
-   * matches combatants to PCs by name) and by charId (the cards are keyed by charId).
+   * the embedded view. Computed once per roster change; keyed by charId (a card's key, and a PC row's
+   * first one — pcStatsContext joins a row by its character id, so a rename on either side keeps the
+   * link) and by name (a row with no character id: typed in by hand, or saved before ids were kept).
    */
   const pcStats = useMemo(() => {
     const byName = new Map<string, PcStats>();
@@ -440,12 +474,13 @@ export function CampaignTracker({
   const summaryFor = (mem: PartyMember, sheet: SavedChar): PartySummary => memberCardSummary(mem, sheet, content);
 
   /*
-   * The members again, but with the summary RE-DERIVED from the player's live sheet — keyed by name,
-   * which is all a combatant row carries.
+   * The members again, but with the summary RE-DERIVED from the player's live sheet — keyed by charId,
+   * and found for a PC row through `memberOfRow` (the tracker's own `isSamePc`: the row's character id,
+   * its name only when it has none), so a row the GM renamed, or a character the player renamed, still
+   * gets its card in the pane.
    *
    * This is what a PC's pane card reads. (The dashboard's cards go through the same answer, by way of
-   * `roster.byId` and PartyMembers' `summarize` prop — it is keyed by charId, which is what a card
-   * carries, while a combatant row carries only a name.) PartyMembers is unmounted the moment the GM
+   * `roster.byId` and PartyMembers' `summarize` prop.) PartyMembers is unmounted the moment the GM
    * leaves the dashboard for the workspace, so `mem.summary` there is frozen at whatever the last
    * visit fetched, and the pane needs an answer that doesn't depend on it. The sheets in
    * `sheetById` keep arriving either way (pcSheetTruth subscribes per member for the life of the
@@ -461,12 +496,23 @@ export function CampaignTracker({
     const map = new Map<string, PartyMember>();
     for (const mem of members) {
       const sheet = sheetById.get(mem.charId);
-      map.set(mem.name.trim().toLowerCase(), sheet ? { ...mem, summary: summaryFor(mem, sheet) } : mem);
+      map.set(mem.charId, sheet ? { ...mem, summary: summaryFor(mem, sheet) } : mem);
     }
     return map;
     // `summaryFor` is defined just above and closes over the same values.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [members, sheetById, content, pendingVersion]);
+  /** The member a PC row is — the tracker's own rule (`isSamePc`), the one its add dedupe, the "+"
+   *  button and the sheet seam use, so the pane can't disagree with them about who a row is. A row two
+   *  members answer to (a hand-typed name they share) is neither's, as it is to the seam (pcSheetTruth
+   *  WHICH ROW). */
+  const memberOfRow = useCallback(
+    (c: { name: string; charId?: string }): PartyMember | undefined => {
+      const hits = members.filter((x) => isSamePc(c, { name: x.name, charId: x.charId }));
+      return hits.length === 1 ? liveMembers.get(hits[0].charId) : undefined;
+    },
+    [members, liveMembers],
+  );
 
   /*
    * Mirror the campaign's PCs into the tracker's OWN party store (the party tagged with this
@@ -488,7 +534,7 @@ export function CampaignTracker({
         name: mem.name,
         // The published summary is what the player's own app derived; the computed sheet stats are
         // the fallback for a member whose sheet hasn't arrived yet.
-        maxHP: mem.summary?.hpMax || pcStats.byName.get(mem.name.trim().toLowerCase())?.maxHP,
+        maxHP: mem.summary?.hpMax || pcStats.byId.get(mem.charId)?.maxHP,
       })),
     [members, pcStats],
   );
@@ -706,9 +752,8 @@ export function CampaignTracker({
   /**
    * The campaign's characters the GM can actually open, by charId — the sheet plus the owner id,
    * which travels with the MEMBER because a published SavedChar doesn't carry who to address a GM
-   * edit to. Only the cards and the initiative rows need a name lookup, and `liveMembers` above is
-   * that one (combatants carry no character id, so they are matched by lower-cased name, the same
-   * convention partyStore.importCharacter already uses).
+   * edit to. An initiative row finds its member through `memberOfRow` above (its character id first,
+   * its name only when it has none).
    */
   const roster = useMemo(() => {
     const byId = new Map<string, { entry: SavedChar; ownerId: string; summary?: PartySummary }>();
@@ -812,12 +857,29 @@ export function CampaignTracker({
    * Spent with this press: a Back arrow later (no key) asks the DOM afresh.
    */
   const popupAtPress = useRef(false);
+  /* …and, the same way, as of the key press: a tracker modal on screen (`trackerModalOpen` — it closes
+   * itself from a `document` listener, so by the time a `window` handler runs the browser has already
+   * taken it off the DOM), and whether the press was typed in a tracker text box (`editableInTracker`)
+   * — and if so, which floating window holds that box (`[data-float-win]`, FloatingWindow's root, whose
+   * value is the window's id), or none. All spent with this press, like `popupAtPress`. */
+  const modalAtPress = useRef(false);
+  const editableAtPress = useRef(false);
+  const boxWinAtPress = useRef<string | null>(null);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
       popupAtPress.current = trackerPopupOpen();
+      modalAtPress.current = trackerModalOpen();
+      editableAtPress.current = editableInTracker(e.target);
+      boxWinAtPress.current =
+        editableAtPress.current && e.target instanceof Element
+          ? (e.target.closest('[data-float-win]')?.getAttribute('data-float-win') ?? null)
+          : null;
       setTimeout(() => {
         popupAtPress.current = false;
+        modalAtPress.current = false;
+        editableAtPress.current = false;
+        boxWinAtPress.current = null;
       }, 0);
     };
     window.addEventListener('keydown', onKey, true);
@@ -825,6 +887,9 @@ export function CampaignTracker({
   }, []);
   useBackHandler(true, () => {
     if (trackerPopupOpen() || popupAtPress.current) return;
+    // A text box's Escape is "cancel what I was typing" (editableInTracker), and a tracker modal's is
+    // that modal's — never "leave the campaign".
+    if (editableAtPress.current || modalAtPress.current) return;
     void (async () => {
       if (await leaveFullSheet()) onLeave();
     })();
@@ -857,6 +922,17 @@ export function CampaignTracker({
    * this above the overlay's handler, and Escape closed that window, hidden behind the overlay, while
    * the overlay stayed. A confirm (a detached root over the windows, campaign-tracker.css) is plain
    * LIFO and opens last. test/tracker-windows-over-sheet.test.tsx, test/gm-search-popup.test.tsx.
+   * So does every OTHER tracker modal drawn over the windows (`trackerModalOpen`: the Encounter Building
+   * tables, Link Stat Block, the encounter-table editor, the advanced condition editor, a party card's
+   * turn-time graph) — asked as of the press, since the graph closes itself from its own `document`
+   * listener before this runs. Without it Escape closed the window hidden BEHIND the modal (the item-7
+   * refuter, 2026-10-13). test/bug-tracker-escape-boxes.test.tsx.
+   * And for an Escape typed in a tracker TEXT BOX outside every window (the stat-block pane's, the GM
+   * screen's, the initiative rail's): that press is "cancel what I was typing", exactly as the base
+   * handler reads it, and it closed whichever unrelated window was on top (the G3 refuter, 2026-10-13).
+   * A box INSIDE a window is that window's own, and Escape there closes THAT window — not the top one:
+   * focus reached by the keyboard (Tab) raises no window, so the box's can sit under another, and
+   * `closeTop` closed the unrelated one above it (the G3 refuter, round 2).
    */
   const openWindows = useWindowStore((s) => s.wins.length);
   const overlayAboveWindows = monsterSearchOpen || searchOpen || customOpen || encountersOpen;
@@ -864,6 +940,11 @@ export function CampaignTracker({
     synced && openWindows > 0 && !overlayAboveWindows,
     () => {
       if (trackerPopupOpen() || popupAtPress.current) return;
+      if (modalAtPress.current) return;
+      if (editableAtPress.current) {
+        if (boxWinAtPress.current) useWindowStore.getState().close(boxWinAtPress.current);
+        return;
+      }
       useWindowStore.getState().closeTop();
     },
     { cover: true },
@@ -1196,7 +1277,13 @@ export function CampaignTracker({
               {canAdd && <PartyAddToOrderButton member={mem} />}
             </>
           ),
-        saves: st ? <PcSavesCells stats={st} detail={pcDetail} /> : null,
+        // "Stats shown" switches the card's OWN core too — Ancestry & class, Defenses (AC; the HP bar
+        // stays), Perception (owner's list 2026-10-01, item 3: "some switches change nothing, the
+        // switches need to do what they say"). The dashboard card and the PC's pane card alike.
+        core: cardCore(pcDetail),
+        // Null, not an element that renders nothing, when the saves are off: the card decides whether
+        // its AC/saves block exists at all from this slot.
+        saves: st && pcDetail.saves ? <PcSavesCells stats={st} detail={pcDetail} /> : null,
         // Emptiness is decided HERE, before the slot exists: the card splits into two columns off
         // the slot itself, so handing it an element that renders null (every right-column section
         // off — "Stats shown" → Minimal / Name only) bought a blank bordered gutter.
@@ -1215,11 +1302,13 @@ export function CampaignTracker({
    * card again, because the sheet is a layer over this whole view rather than the pane's content.
    *
    * Returning null (a combatant who isn't one of this campaign's members) falls back to the
-   * tracker's own CombatantDetail.
+   * tracker's own CombatantDetail. The member is found by the row's character id first
+   * (`memberOfRow`), so a row the GM renamed — or a character the player renamed — keeps its card here
+   * instead of falling back to CombatantDetail's HP and condition editors.
    */
   const renderPcPane = useCallback(
     (c: Combatant, handles: PcPaneHandles): ReactNode | null => {
-      const mem = liveMembers.get(c.name.trim().toLowerCase());
+      const mem = memberOfRow(c);
       if (!mem) return null;
       /*
        * A PC pane needs its OWN close and move controls: the tracker gives a creature pane those via
@@ -1249,13 +1338,52 @@ export function CampaignTracker({
     },
     // `pendingVersion` is the pending store's snapshot — module state, so it is what says it moved.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [liveMembers, openMemberSheet, cardExtra, m.id, pendingVersion, myId],
+    [memberOfRow, openMemberSheet, cardExtra, m.id, pendingVersion, myId],
   );
 
   // The real levels of the real characters — what encounter difficulty must be rated against. The
   // tracker's own party level was a typed number that defaulted to 1, and rated a level-3 party's
-  // fights against a level-1 budget.
-  const partyLevels = useMemo(() => members.map((mem) => mem.summary?.level ?? 0), [members]);
+  // fights against a level-1 budget. The sheet's own level first (the live sheet, a GM's pending
+  // level edit included — the same number the row's per-PC rating reads), the published summary's
+  // for a member whose sheet hasn't arrived.
+  const partyLevels = useMemo(
+    () => members.map((mem) => pcStats.byId.get(mem.charId)?.level || mem.summary?.level || 0),
+    [members, pcStats],
+  );
+
+  /*
+   * What the host hands the initiative rows besides the numbers (tracker/src/data/pcStatsContext):
+   *  - FOLDED: a condition HH has an entry for is already inside the PC's AC and saves above (they are
+   *    the live sheet's), so the row must not take the tracker's own penalty for it again — a frightened
+   *    player's row read two under their card (owner's list 2026-10-01, item 3). The tracker's
+   *    `persistent damage` is HH's `persistent-damage`.
+   *  - BADGES: what the sheet works out and stores nowhere — Encumbered from Bulk, a mode's conditions
+   *    (`derivedFrom` on the card's own summary, the one `roster` holds) — and the active modes. Drawn
+   *    locked on the row; never written into its conditions (pcSheetTruth reads only AUTHORED ones).
+   *  - MEMBERS: so Quick add of a member's name adds that PC linked.
+   */
+  const conditionFolded = useCallback(
+    (name: string) => {
+      const k = name.trim().toLowerCase();
+      return !!content.conditions?.[k] || !!content.conditions?.[k.replace(/\s+/g, '-')];
+    },
+    [content],
+  );
+  const hostBadges = useMemo(() => {
+    const map = new Map<string, HostPcBadge[]>();
+    for (const [charId, r] of roster.byId) {
+      const s = r.summary;
+      if (!s) continue;
+      const badges: HostPcBadge[] = [
+        ...s.conditions
+          .filter((c) => !!c.derivedFrom)
+          .map((c) => ({ kind: 'condition' as const, name: c.name, value: c.value, title: c.derivedFrom })),
+        ...(s.modes ?? []).map((name) => ({ kind: 'mode' as const, name, title: 'an active mode on their sheet' })),
+      ];
+      if (badges.length) map.set(charId, badges);
+    }
+    return map;
+  }, [roster]);
 
   /*
    * Battlezoo Monster Parts comes from THE CAMPAIGN, not from a switch in the tracker: the campaign
@@ -1323,7 +1451,13 @@ export function CampaignTracker({
        <PinContext.Provider value={gmPin}>
        <CampaignPartyLevelProvider levels={partyLevels}>
         <CampaignMonsterPartsProvider enabled={monsterParts} mode={monsterPartsMode}>
-        <CampaignPcStatsProvider byName={pcStats.byName}>
+        <CampaignPcStatsProvider
+          byName={pcStats.byName}
+          byId={pcStats.byId}
+          badgesById={hostBadges}
+          folded={conditionFolded}
+          members={hostPcs}
+        >
         <CampaignPcPaneProvider render={renderPcPane}>
         <div className="ct-body">
           {/* Collapsed: a drawer handle at the top-left, exactly as the tracker does it. */}
@@ -1416,8 +1550,10 @@ export function CampaignTracker({
                       // In combat the card joins the workspace beside the initiative order; out of
                       // combat there's nothing to keep an eye on, so the sheet gets the whole view.
                       if (inCombat) {
+                        // Their row by the tracker's own rule (character id first), so a renamed row
+                        // or character still opens its pane rather than the sheet.
                         const cid = combatants.find(
-                          (c) => c.isPC && c.name.trim().toLowerCase() === mem.name.trim().toLowerCase(),
+                          (c) => c.isPC && isSamePc(c, { name: mem.name, charId: mem.charId }),
                         )?.id;
                         if (cid) {
                           handleCombatantClick(cid);

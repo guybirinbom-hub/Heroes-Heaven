@@ -630,6 +630,15 @@ export interface PartyCardSlots {
   saves?: React.ReactNode;
   /** The whole of ROW 2: Speed & DCs, Skills, Abilities, Senses & Languages. Falsy → no row 2. */
   right?: React.ReactNode;
+  /**
+   * The card's OWN core, switched by the host (the tracker's "Stats shown"; owner's list 2026-10-01,
+   * item 3: "the switches need to do what they say"). Each `false` hides that part: `ancestry` the
+   * ancestry · class · level line under the name, `defenses` the AC tile, `perception` the Perception
+   * tile. The HP bar is never one of them — "hp doesn't go with defense". Omitted, or a key left
+   * undefined → shown: the player's own Party page and the campaign detail panel pass no slots at all
+   * and are unchanged.
+   */
+  core?: { ancestry?: boolean; defenses?: boolean; perception?: boolean };
 }
 
 function hpColor(cur: number, max: number): string {
@@ -668,6 +677,14 @@ export function PartyCard({
   const sub = [s.ancestry, s.className && `${s.className} ${s.level ?? ''}`.trim()].filter(Boolean).join(' ');
   const hpMax = s.hpMax ?? 0;
   const pct = hpMax > 0 ? Math.max(0, Math.min(100, Math.round(((s.hpCur ?? hpMax) / hpMax) * 100))) : 0;
+  // The host's "Stats shown" switches for the card's own core (PartyCardSlots.core); shown unless a host
+  // turned one off.
+  const showSub = extra?.core?.ancestry !== false;
+  const showPerc = extra?.core?.perception !== false;
+  const showAc = extra?.core?.defenses !== false;
+  // The right-hand group of row 1 only exists while it has something in it: with Perception, AC and
+  // the saves all switched off, an empty group would still draw its divider.
+  const showDefs = showAc || !!extra?.saves;
   return (
     <div
       className="party-card"
@@ -701,7 +718,7 @@ export function PartyCard({
             {s.name || member.name}
             {isMine && <span className="party-you"> · you</span>}
           </span>
-          <span className="party-card-sub">{sub || '—'}</span>
+          {showSub && <span className="party-card-sub">{sub || '—'}</span>}
         </span>
         {/* This card is drawn from the GM's own last Update, not from what the player published —
             say so, rather than letting them wonder which of the two they are reading. */}
@@ -764,23 +781,31 @@ export function PartyCard({
           {/* The numbers a GM calls for mid-turn, across the band past the divider: Perception with
               its circle, then AC and the saves as label-over-value tiles. Part of the card's own
               surface, so a click here still opens the sheet, exactly as it used to. */}
-          <div className="party-turn-r">
-            <div className="party-perc">
-              <span className="party-lab">Perception</span>
-              <span className="party-perc-v">
-                {s.perception >= 0 ? '+' : ''}
-                {s.perception ?? 0}
-                {s.perceptionRank && <RankPill rank={s.perceptionRank} />}
-              </span>
+          {(showPerc || showDefs) && (
+            <div className="party-turn-r">
+              {showPerc && (
+                <div className="party-perc">
+                  <span className="party-lab">Perception</span>
+                  <span className="party-perc-v">
+                    {s.perception >= 0 ? '+' : ''}
+                    {s.perception ?? 0}
+                    {s.perceptionRank && <RankPill rank={s.perceptionRank} />}
+                  </span>
+                </div>
+              )}
+              {showDefs && (
+                <div className="party-defs">
+                  {showAc && (
+                    <span className="party-def">
+                      <span className="party-lab">AC</span>
+                      <b>{s.ac ?? '—'}</b>
+                    </span>
+                  )}
+                  {extra?.saves}
+                </div>
+              )}
             </div>
-            <div className="party-defs">
-              <span className="party-def">
-                <span className="party-lab">AC</span>
-                <b>{s.ac ?? '—'}</b>
-              </span>
-              {extra?.saves}
-            </div>
-          </div>
+          )}
         </div>
         {/* ROW 2 — the host's Speed & DCs, Skills, Abilities, Senses, full card width. Omitted
             entirely when the "Stats shown" preset leaves nothing to draw, so there is no empty band

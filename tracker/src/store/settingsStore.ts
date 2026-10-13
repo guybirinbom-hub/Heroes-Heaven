@@ -308,6 +308,13 @@ export interface AppSettings {
   /** Hide the mini HP bar for PLAYER characters in the initiative order (players
    *  track their own HP). Monster / NPC HP bars are unaffected. */
   hideInitPcHp: boolean
+  /** Step a PLAYER character's conditions with the turn, as a monster's are: Frightened goes down by 1
+   *  at the end of their turn and Stunned is used up at the start of it (combatStore endTurnPass /
+   *  tickConditionsAtStart). Inside a Heroes Heaven campaign the step reaches the player's own sheet —
+   *  it is the GM's gesture (combatStore takeVitalsGesture). Off: the tracker leaves a player's
+   *  conditions alone and the player steps them down. On by default (owner's list 2026-10-01, item 3:
+   *  "the tracker should do that for players but have a setting for it not to do that"). */
+  pcConditionTicks: boolean
   /** Show the book/page source citation at the bottom of reference popups. */
   showSource: boolean
   /** Shape used for remaining spell slots / uses / focus points on stat blocks. */
@@ -345,6 +352,7 @@ const DEFAULTS: AppSettings = {
   showInitLevel: true,
   showInitPcDefenses: true,
   hideInitPcHp: false,
+  pcConditionTicks: true,
   showSource: true,
   spellIndicator: 'diamond',
   spellLayout: 'grid',
@@ -465,6 +473,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       showInitLevel: next.showInitLevel,
       showInitPcDefenses: next.showInitPcDefenses,
       hideInitPcHp: next.hideInitPcHp,
+      pcConditionTicks: next.pcConditionTicks,
       showSource: next.showSource,
       spellIndicator: next.spellIndicator,
       spellLayout: next.spellLayout,

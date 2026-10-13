@@ -51,8 +51,11 @@ export function computeSummary(c: Character, content: ContentDatabase): PartySum
     }
   };
   const hpMax = safe(() => deriveMaxHp(c, content), c.hitPoints?.current ?? 0);
-  // One derive, two fields — the card draws the rank's pill beside the modifier.
-  const perc = safe<{ modifier: number; rank?: ProficiencyRank }>(() => derivePerception(c), { modifier: 0 });
+  // One derive, two fields — the card draws the rank's pill beside the modifier. WITH the content
+  // database, as the sheet's own rail asks it (VitalsRail): without it a passive Perception item's item
+  // bonus counted on the sheet and on no card (owner's list 2026-10-01, item 3). A teammate whose app
+  // predates this publishes the value without that bonus until they update.
+  const perc = safe<{ modifier: number; rank?: ProficiencyRank }>(() => derivePerception(c, content), { modifier: 0 });
   return {
     name: c.name || 'Unnamed',
     ancestry: c.ancestryId ? content.ancestries[c.ancestryId]?.name : undefined,

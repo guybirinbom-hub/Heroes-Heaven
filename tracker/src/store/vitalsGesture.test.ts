@@ -8,6 +8,7 @@
 // test/bug-tracker-seam-never-overwrite.test.tsx.
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { useCombatStore, takeVitalsGesture, flushPersist, scopeKey, invalidateEncounterCache } from './combatStore'
+import { useSettingsStore } from './settingsStore'
 
 function resetCombat() {
   useCombatStore.setState({
@@ -39,10 +40,11 @@ describe('GM vitals gestures', () => {
   beforeEach(() => {
     resetCombat()
     localStorage.clear()
+    useSettingsStore.setState({ pcConditionTicks: true })
     store().addCombatant(null, { name: PC, isPC: true, maxHP: 30, charId: 'char-wren' })
     store().addCombatant(null, { name: MONSTER, maxHP: 20 })
   })
-  afterEach(() => { localStorage.clear() })
+  afterEach(() => { localStorage.clear(); useSettingsStore.setState({ pcConditionTicks: true }) })
 
   // [label, setup (runs unwatched), the ONE GM action under test]. Removing `markGesture(c)` from
   // that action's recipe in combatStore.ts fails its row — the setup's own gestures are made outside
@@ -70,6 +72,37 @@ describe('GM vitals gestures', () => {
     })
   }
 
+  /*
+   * FLIPPED ON PURPOSE (owner's list 2026-10-01, item 3 — his answer: "the tracker should do that for
+   * players [step conditions down each turn] but have a setting for it not to do that"). Until then the
+   * turn engine was pinned below as NOT a gesture, so a player's Frightened never stepped (the seam
+   * pinned every sheet condition) — and a GM-set one that did step was silently put back by the sheet.
+   * Now the turn engine's STEP of a PC's condition is the GM's gesture while "Step players' conditions"
+   * is on; everything else it does still is not (the notGestures legs below keep the rest).
+   * MUTATIONS (tried 2026-10-13; the step's mark is `markStep` since the G3 refuter's SPENT STEPS): drop
+   * `if (stepped) markStep(c, 'end', s.round)` from endTurnPass → the Frightened leg fails (expected +0 to
+   * be 1); drop `if (stepped || …) markStep(c, 'start', round)` from tickConditionsAtStart
+   * → the Stunned leg fails; unwrap nextTurn's `asGesture(() => …)` → the Frightened leg fails.
+   */
+  const order = (pcInit: number, monsterInit: number) => {
+    store().setInitiative(rowOf(PC)!.id, pcInit)
+    store().setInitiative(rowOf(MONSTER)!.id, monsterInit)
+  }
+  const engine: [string, () => void, () => void][] = [
+    ['the turn engine stepping a PC’s Frightened as their turn ends',
+      () => { store().addCondition(rowOf(PC)!.id, { name: 'frightened', value: 2, isPermanent: false }); order(10, 20); store().startCombat(); store().nextTurn() },
+      () => store().nextTurn()],
+    ['the turn engine using up a PC’s Stunned as their turn starts',
+      () => { store().addCondition(rowOf(PC)!.id, { name: 'stunned', value: 1, isPermanent: false }); order(20, 10) },
+      () => store().startCombat()],
+  ]
+  for (const [label, setup, act] of engine) {
+    it(`${label} is a gesture on that PC row, handed out once`, () => {
+      setup()
+      expect(takenDuring(PC, act)).toBe(1)
+    })
+  }
+
   it('is handed out ONCE: a second ask inside the same dispatch gets nothing', () => {
     // MUTATION: make takeVitalsGesture answer `_gesture.has(id)` instead of `_gesture.delete(id)` and
     // this fails — expected [ true, true ] to deeply equal [ true, false ].
@@ -84,8 +117,8 @@ describe('GM vitals gestures', () => {
 
   it('does not outlive its own dispatch — an untaken gesture is gone once the action returns', () => {
     // MUTATION: drop the `finally { _gesture = outer }` from asGesture (combatStore.ts) and this
-    // fails — expected true to be false — and so do the reloadFromStorage, setScope and turn engine
-    // legs below: a later, unrelated dispatch hands the old damage out as a gesture.
+    // fails — expected true to be false — and so do the reloadFromStorage, setScope and turn-engine
+    // (nothing stepped) legs below: a later, unrelated dispatch hands the old damage out as a gesture.
     store().applyDamage(rowOf(PC)!.id, 3)              // nobody subscribed: nobody took it
     expect(takeVitalsGesture(rowOf(PC)!.id)).toBe(false)
     expect(takenDuring(PC, () => store().addCombatant(null, { name: 'Torchbearer' }))).toBe(0)
@@ -117,7 +150,17 @@ describe('GM vitals gestures', () => {
     ['setScope', () => store().applyDamage(rowOf(PC)!.id, 1),
       () => { store().setScope('camp-gesture'); store().setScope(null) }],
     ['setPcMaxHP (the party bridge)', () => undefined, () => store().setPcMaxHP(PC, 40)],
-    ['startCombat / nextTurn (the turn engine)', () => store().addCondition(rowOf(PC)!.id, { name: 'frightened', value: 2, isPermanent: false }),
+    // The turn engine is still no gesture where it steps nothing of a player's (see the FLIPPED note
+    // above): with the setting off, on a PC carrying nothing that steps, and on a monster's own step.
+    // MUTATION (tried 2026-10-13): make stepsConditions answer true for every row → the setting-off leg
+    // fails (expected [ true ] to deeply equal []).
+    ['startCombat / nextTurn with “Step players’ conditions” OFF', () => {
+      useSettingsStore.setState({ pcConditionTicks: false })
+      store().addCondition(rowOf(PC)!.id, { name: 'frightened', value: 2, isPermanent: false })
+    }, () => { store().startCombat(); store().nextTurn(); store().nextTurn() }],
+    ['startCombat / nextTurn on a PC with nothing that steps (Wounded)', () => store().addCondition(rowOf(PC)!.id, { name: 'wounded', value: 1, isPermanent: false }),
+      () => { store().startCombat(); store().nextTurn(); store().nextTurn() }],
+    ['startCombat / nextTurn stepping a MONSTER’s Frightened', () => store().addCondition(rowOf(MONSTER)!.id, { name: 'frightened', value: 2, isPermanent: false }),
       () => { store().startCombat(); store().nextTurn(); store().nextTurn() }],
     ['renameCombatant', () => undefined, () => store().renameCombatant(rowOf(PC)!.id, 'Wren the Bold')],
   ]

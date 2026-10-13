@@ -20,6 +20,11 @@ export interface PcStats {
    *  damage/healing there (see combatStore → partyStore.syncCurrentHpByName).
    *  Undefined until they've been in a tracked fight. */
   hpCurrent?: number
+  /** Temporary HP on the character's own sheet, when a HOST supplies the stats (Heroes Heaven's campaign
+   *  seam, data/pcStatsContext). DISPLAY ONLY: the initiative row draws it as "+N" beside the HP bar and
+   *  nothing ever writes it back — not the row's own `tempHP`, not a push to the player. Undefined on a
+   *  hand-entered sheet. */
+  hpTemp?: number
   perceptionMod?: number; perceptionProf?: ProfRank
   fortMod?: number; fortProf?: ProfRank
   refMod?: number;  refProf?: ProfRank

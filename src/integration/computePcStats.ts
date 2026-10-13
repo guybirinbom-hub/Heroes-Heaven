@@ -48,7 +48,9 @@ export function computePcStats(c: Character, content: ContentDatabase): PcStats 
   };
 
   const mods = safe(() => abilityModifiers(c), { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 });
-  const perception = safe(() => derivePerception(c), { rank: 'untrained' as ProficiencyRank, modifier: 0 });
+  // WITH the content database, as the sheet's own rail asks it (VitalsRail): without it a passive
+  // Perception item (an item bonus) counted on the sheet and on nothing the GM reads.
+  const perception = safe(() => derivePerception(c, content), { rank: 'untrained' as ProficiencyRank, modifier: 0 });
   const fort = safe(() => deriveSave(c, 'fortitude', content), { rank: 'untrained' as ProficiencyRank, modifier: 0 });
   const ref = safe(() => deriveSave(c, 'reflex', content), { rank: 'untrained' as ProficiencyRank, modifier: 0 });
   const will = safe(() => deriveSave(c, 'will', content), { rank: 'untrained' as ProficiencyRank, modifier: 0 });
@@ -82,6 +84,8 @@ export function computePcStats(c: Character, content: ContentDatabase): PcStats 
     ac: safe(() => deriveAc(c, content).value, undefined),
     maxHP: hpMax,
     hpCurrent: c.hitPoints?.current ?? undefined,
+    // Display only — the initiative row's "+N" (see PcStats.hpTemp); nothing writes it anywhere.
+    hpTemp: c.hitPoints?.temp || undefined,
     perceptionMod: perception.modifier,
     perceptionProf: RANK[perception.rank],
     fortMod: fort.modifier,

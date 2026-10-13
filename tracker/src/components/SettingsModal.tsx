@@ -523,13 +523,13 @@ export function DisplaySection({ campaignDriven = false }: { campaignDriven?: bo
       />
       <ToggleRow
         label="Show level in initiative order"
-        hint="Show each creature's level (the “Lv N” tag) on its card in the initiative list."
+        hint="Show each creature's level (the “Lv N” tag) on its card in the initiative list — and, inside a campaign, each player character's, from their own sheet."
         checked={showInitLevel}
         onChange={v => setSetting('showInitLevel', v)}
       />
       <ToggleRow
         label="Show player AC & saves in initiative order"
-        hint="Show each player character's AC and Fortitude/Reflex/Will on its initiative card, pulled from their imported or entered character sheet."
+        hint="Show each player character's AC and Fortitude/Reflex/Will on its initiative card — inside a campaign from the player's own live sheet (the same numbers as their party card), otherwise from the sheet you imported or entered."
         checked={showInitPcDefenses}
         onChange={v => setSetting('showInitPcDefenses', v)}
       />
@@ -982,17 +982,35 @@ export function TimerSection() {
   )
 }
 
-export function PlayersSection() {
+/**
+ * `campaignDriven` — Heroes Heaven passes it (Settings → Initiative tracker → Player characters): there
+ * a campaign card's HP bar stays whatever "Stats shown" says (the owner's answer on item 3 of his
+ * 2026-10-01 list: "hp doesn't go with defense"), so the Defenses switch is described as what it hides
+ * there — AC. The
+ * standalone tracker hides AC and Max HP together and keeps its own wording.
+ */
+export function PlayersSection({ campaignDriven = false }: { campaignDriven?: boolean } = {}) {
   const pcDetail = useSettingsStore(s => s.pcDetail)
+  const pcConditionTicks = useSettingsStore(s => s.pcConditionTicks)
   const setSetting = useSettingsStore(s => s.setSetting)
   return (
     <div>
-      <div className="pf-label" style={{ marginBottom: 8, marginTop: 4 }}>Detail kept per player character</div>
+      {/* The turn engine steps a monster's Frightened and Stunned; this says whether it does a player's
+          too (owner's list 2026-10-01, item 3: "the tracker should do that for players but have a
+          setting for it not to do that"). In a campaign the step reaches the player's own sheet. */}
+      <ToggleRow
+        label="Step players' conditions each turn"
+        hint="As for monsters: Frightened goes down by 1 at the end of a player character's turn, and Stunned is used up at the start of it. Inside a campaign the change reaches the player's own sheet (a change they made at the same moment wins). Off: the tracker leaves players' conditions alone and they step them down themselves."
+        checked={pcConditionTicks !== false}
+        onChange={v => setSetting('pcConditionTicks', v)}
+      />
+      <div className="pf-label" style={{ marginBottom: 8, marginTop: 16 }}>Detail kept per player character</div>
       <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.55, marginBottom: 14 }}>
         How much of each PC's PF2e sheet shows on the party page. This is the default for every party;
         each party can override it from its own page. Hiding a section never deletes what you've entered.
       </div>
-      <PcDetailControls config={pcDetail} onChange={cfg => setSetting('pcDetail', cfg)} />
+      <PcDetailControls config={pcDetail} onChange={cfg => setSetting('pcDetail', cfg)}
+        descs={campaignDriven ? { defenses: 'AC — the HP bar always shows' } : undefined} />
     </div>
   )
 }

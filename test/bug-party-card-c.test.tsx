@@ -60,7 +60,7 @@ vi.mock('../src/data/party', async (importOriginal) => ({
 }));
 
 const { PartyCard } = await import('../src/sheet/PartyMembers');
-const { PcStatsCardExtra, PcSavesCells, hasRightColumn } = await import('../src/integration/PcStatsCardExtra');
+const { PcStatsCardExtra, PcSavesCells, hasRightColumn, cardCore } = await import('../src/integration/PcStatsCardExtra');
 const { PartyAddToOrderButton, addPartyMemberToInitiative } = await import('../src/integration/CampaignTracker');
 
 const SUMMARY: PartySummary = {
@@ -134,9 +134,11 @@ function render(opts: { showKick?: boolean; onOpen?: () => void; detail?: PcDeta
         onKick={() => undefined}
         extra={{
           header: <PartyAddToOrderButton member={MEMBER} />,
-          saves: <PcSavesCells stats={STATS} detail={detail} />,
           // EXACTLY what the seam's slot builder does (CampaignTracker.cardExtra) — the emptiness
-          // decision is made before the slot exists, not by the component inside it.
+          // decision is made before the slot exists, not by the component inside it — and the card's
+          // own core switched by the same "Stats shown" (owner's list 2026-10-01, item 3).
+          core: cardCore(detail),
+          saves: detail.saves ? <PcSavesCells stats={STATS} detail={detail} /> : null,
           right: hasRightColumn(STATS, detail) ? <PcStatsCardExtra stats={STATS} detail={detail} /> : null,
         }}
       />,
@@ -400,9 +402,13 @@ describe('party card — two rows', () => {
       const body = card.querySelector('.party-card-body')!;
       expect([id, body.classList.contains('has-right')]).toEqual([id, false]);
       expect([id, card.querySelectorAll('.party-row-ref').length]).toEqual([id, 0]);
-      // Row 1 is untouched — the GM still gets HP/AC on a Minimal card.
-      expect(card.querySelector('.party-turn-l .party-hp')).toBeTruthy();
-      expect(card.querySelector('.party-turn-r .party-defs')).toBeTruthy();
+      // CHANGED ON PURPOSE (owner's list 2026-10-01, item 3 — his answers: "some switches change
+      // nothing, the switches need to do what they say; hp doesn't go with defense"). This leg used to
+      // pin row 1 as untouched on both presets — HP and AC on a Name-only card too, which is exactly the
+      // "switch that changes nothing" he reported. Now the HP bar stays on both (it is never a "Stats
+      // shown" part), AC stays on Minimal (Defenses is its one section), and Name only has no AC.
+      expect([id, !!card.querySelector('.party-turn-l .party-hp')]).toEqual([id, true]);
+      expect([id, !!card.querySelector('.party-turn-r .party-defs')]).toEqual([id, id === 'minimal']);
     }
     // …and the band drops its own bottom padding when there is nothing under it, so a Minimal card
     // ends where its numbers end.
@@ -423,6 +429,47 @@ describe('party card — two rows', () => {
     // ONE predicate: the seam's slot builder asks it rather than keeping its own copy of the rule.
     const seam = readFileSync('src/integration/CampaignTracker.tsx', 'utf8');
     expect(/right:\s*st && hasRightColumn\(st, pcDetail\)/.test(seam)).toBe(true);
+  });
+
+  it('“Stats shown”: Ancestry & class, Defenses and Perception each hide exactly their part — and HP stays', () => {
+    // owner's list 2026-10-01, item 3 — his answers: "some switches change nothing, the switches need to
+    // do what they say; hp doesn't go with defense". Three of the eight switches changed nothing on the
+    // GM's campaign cards: nothing read detail.ancestry / defenses / perception.
+    // MUTATIONS (tried 2026-10-13, each alone, in PartyCard, src/sheet/PartyMembers.tsx):
+    //  - `showSub` always true (the sub-line unconditional again) → fails at "ancestry off";
+    //  - `showAc` always true → fails at "defenses off" (and the Name-only leg above);
+    //  - `showPerc` always true → fails at "perception off";
+    //  - `.party-turn-r` drawn whatever it holds → fails at "no empty right group".
+    // The seam's half — CampaignTracker.cardExtra handing every card `core: cardCore(pcDetail)` — is pinned
+    // by test/bug-tracker-pc-row-agrees.test.tsx's dashboard leg (A) (commenting the line out fails it);
+    // the source check at the end of this leg keeps the slot built from the one function.
+    const parts = (card: Element) => {
+      const labs = [...card.querySelectorAll('.party-def .party-lab')].map((l) => l.textContent);
+      return {
+        sub: !!card.querySelector('.party-card-sub'),
+        hp: !!card.querySelector('.party-turn-l .party-hp .party-hpbar'),
+        perc: !!card.querySelector('.party-perc'),
+        ac: labs.includes('AC'),
+        saves: labs.includes('Fort'),
+      };
+    };
+    const all = { sub: true, hp: true, perc: true, ac: true, saves: true };
+    expect(parts(render())).toEqual(all);
+    expect(render().querySelector('.party-card-sub')!.textContent, 'the line Ancestry & class hides').toBe('Catfolk Bard 7');
+    expect(['ancestry off', parts(render({ detail: { ...PC_DETAIL_ALL, ancestry: false } }))]).toEqual(['ancestry off', { ...all, sub: false }]);
+    expect(['defenses off', parts(render({ detail: { ...PC_DETAIL_ALL, defenses: false } }))]).toEqual(['defenses off', { ...all, ac: false }]);
+    expect(['perception off', parts(render({ detail: { ...PC_DETAIL_ALL, perception: false } }))]).toEqual(['perception off', { ...all, perc: false }]);
+    // Everything off: the name and the HP bar — and no empty right-hand group drawing its divider.
+    const bare = render({ detail: preset('nameOnly') });
+    expect(parts(bare)).toEqual({ sub: false, hp: true, perc: false, ac: false, saves: false });
+    expect(['no empty right group', bare.querySelector('.party-turn-r')]).toEqual(['no empty right group', null]);
+    // A card handed NO slots — the player's own Party page, the campaign detail panel — keeps its whole
+    // core, exactly as before (decided: those are not the GM's tracker view).
+    act(() => root.render(<PartyCard member={MEMBER} isMine={false} onOpen={() => undefined} />));
+    expect(parts(host.querySelector('.party-card')!)).toEqual({ ...all, saves: false });
+    // ONE function: the seam's slot builder hands every card `cardCore(pcDetail)`.
+    const seam = readFileSync('src/integration/CampaignTracker.tsx', 'utf8');
+    expect(/core:\s*cardCore\(pcDetail\)/.test(seam)).toBe(true);
   });
 
   it('caps the pane card so it doesn’t stretch across a 1095px pane', () => {

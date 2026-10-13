@@ -1,6 +1,6 @@
 import {
   PC_DETAIL_SECTIONS, PC_DETAIL_PRESETS, matchPreset,
-  type PcDetailConfig,
+  type PcDetailConfig, type PcDetailSection,
 } from '../utils/pcDetail'
 
 // ── PC detail-level editor ─────────────────────────────────────────────────
@@ -12,9 +12,12 @@ interface Props {
   onChange: (config: PcDetailConfig) => void
   /** Compact variant for the party popover (smaller labels, no descriptions). */
   compact?: boolean
+  /** A host's own description for a section, where the switch hides something different there (Heroes
+   *  Heaven's campaign card keeps its HP bar with Defenses off — SettingsModal PlayersSection). */
+  descs?: Partial<Record<PcDetailSection, string>>
 }
 
-export function PcDetailControls({ config, onChange, compact }: Props) {
+export function PcDetailControls({ config, onChange, compact, descs }: Props) {
   const active = matchPreset(config)
   return (
     <div>
@@ -55,7 +58,7 @@ export function PcDetailControls({ config, onChange, compact }: Props) {
             >
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--text)' }}>{label}</div>
-                {!compact && <div style={{ fontSize: 11, color: 'var(--text-faded)' }}>{desc}</div>}
+                {!compact && <div style={{ fontSize: 11, color: 'var(--text-faded)' }}>{descs?.[key] ?? desc}</div>}
               </div>
               {/* Switch */}
               <div role="switch" aria-checked={on} style={{

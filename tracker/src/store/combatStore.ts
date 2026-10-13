@@ -284,18 +284,36 @@ function wasUpBeforeHit(c: Combatant): boolean {
   return !c.conditions.some(x => { const n = x.name.toLowerCase(); return n === 'dying' || n === 'unconscious' })
 }
 
+/**
+ * Does the turn engine step this creature's auto-decrementing conditions (Frightened at the end of its
+ * turn, Stunned at the start)? A monster's or an NPC's always. A PLAYER character's while the "Step
+ * players' conditions" setting is on (settingsStore.pcConditionTicks — on by default; the owner's list
+ * 2026-10-01, item 3: "the tracker should do that for players but have a setting for it not to do
+ * that"). Off, a player's conditions are theirs to step down and the tracker leaves them alone.
+ */
+function stepsConditions(c: Combatant): boolean {
+  return !c.isPC || useSettingsStore.getState().pcConditionTicks !== false
+}
+
 // Conditions consumed at the START of a creature's turn (Stunned — it eats your
 // actions as soon as your turn begins). Frightened-style conditions that fade at
 // the END of the turn are handled inline in nextTurn instead. Called when a
 // creature's turn begins (nextTurn lands on it, or combat starts on it).
-function tickConditionsAtStart(c: Combatant | undefined | null) {
-  if (!c) return
+// On a PC row the step is a GM vitals GESTURE (markStep — see the gesture block below): inside a
+// campaign the player's sheet is the truth, and the tracker's step reaches it only as his gesture.
+// `round` is the round this turn starts in: a start a host already took for this row in this round is
+// spent, even after an Undo brought the turn back (stepTaken — SPENT STEPS in the gesture block).
+function tickConditionsAtStart(c: Combatant | undefined | null, round: number) {
+  if (!c || !stepsConditions(c) || stepTaken(c.id, 'start', round)) return
+  const before = c.conditions.length
+  let stepped = false
   c.conditions = c.conditions
     .map(cc => {
       const m = CONDITION_META[cc.name.toLowerCase()]
       // `isPermanent` ("until removed") pins the value: an auto-decrementing condition set this way
       // stays at its current value until someone clears it by hand.
       if (m?.autoDecrement && m.tickAtStart && !cc.isPermanent && cc.value !== undefined && cc.value > 0) {
+        stepped = true
         return { ...cc, value: Math.max(0, cc.value - (m.decrementBy ?? 1)) }
       }
       return cc
@@ -304,6 +322,7 @@ function tickConditionsAtStart(c: Combatant | undefined | null) {
       const m = CONDITION_META[cc.name.toLowerCase()]
       return !(m?.autoDecrement && m.tickAtStart && !cc.isPermanent && (cc.value ?? 1) <= 0)
     })
+  if (stepped || c.conditions.length !== before) markStep(c, 'start', round)
 }
 
 /**
@@ -417,10 +436,10 @@ function creditCount(c: Combatant | undefined, counts: Set<string>) {
  * to finish the turn it was in the middle of. That landing is a RESUMPTION, not a turn start — it
  * must not eat a second point of Stunned. Same shape as `endTurnPass`'s once-per-round guard.
  */
-function startTurn(c: Combatant | undefined | null) {
+function startTurn(c: Combatant | undefined | null, round: number) {
   if (!c || c.startedThisRound) return
   c.startedThisRound = true
-  tickConditionsAtStart(c)
+  tickConditionsAtStart(c, round)
 }
 
 interface CombatStore {
@@ -720,6 +739,8 @@ if (typeof window !== 'undefined') window.addEventListener('pagehide', flushPers
 // conditions, defeat, …) are recorded, matching the "undo a mis-typed number" use
 // case — and so is Next Turn, whose condition ticks and persistent damage prevTurn
 // can't recreate (see nextTurn). Stepping back with prevTurn is not recorded.
+// Undo puts the BOARD back. A player's condition step that a host already took (it went to their
+// own sheet) is not on the board to put back, and stays spent — SPENT STEPS in the gesture block.
 /** A party member's "dying like a player" that goes back with a snapshot (knockOutPartyMember). */
 interface MemberDowns { id: string; downsLikePC: boolean }
 interface CombatSnapshot {
@@ -729,16 +750,27 @@ interface CombatSnapshot {
    *  switch and what it did to the board are undone — and redone — as one. Every other step leaves the
    *  member's setting alone ("a party NPC keeps the setting until undone"). */
   member?: MemberDowns
+  /** The FIGHT this board belongs to (`_fight`): restoring the snapshot puts it back with the board, so
+   *  the players' steps spent in that fight stay spent on it — SPENT STEPS in the gesture block. */
+  fight: number
 }
 const _undoStack: CombatSnapshot[] = []
 const _redoStack: CombatSnapshot[] = []
+/** The fight the board on screen belongs to. startCombat gives every fresh fight a new number
+ *  (`newFight`), and Undo / Redo put back the number of the board they restore — so Ctrl+Z back across
+ *  an End and a Start lands on the OLDER fight, with the steps it already spent (SPENT STEPS, gesture
+ *  block; the G3 refuter, round 2: Next, End, Start, Ctrl+Z, Next stepped one turn end twice). */
+let _fight = 0
+/** The last fight number handed out. Never reused: a fight started after undoing back across a Start
+ *  is new, and must not inherit the spent steps of the fight that Undo stepped out of. */
+let _fightSeq = 0
 const HISTORY_MAX = 40
 /** Capture the PRE-mutation state. Call at the top of a mutating recipe (after
  *  any early-return guard so no-ops don't pollute the stack). */
 function record(s: CombatStore, member?: MemberDowns) {
   const o = original(s) as CombatStore | undefined
   if (!o) return
-  _undoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex, ...(member ? { member } : {}) })
+  _undoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex, fight: _fight, ...(member ? { member } : {}) })
   if (_undoStack.length > HISTORY_MAX) _undoStack.shift()
   _redoStack.length = 0
   s.canUndo = true
@@ -782,31 +814,114 @@ function invalidateRedo(s: CombatStore) {
  * rows can ever carry one. Safe by construction, not by every new loader remembering to clear a flag.
  *
  * A gesture is an explicit GM vitals action on a PC row: damage, healing, temp HP, max HP, Mark
- * defeated / Restore, a condition added or removed, a condition's value or duration set.
+ * defeated / Restore, a condition added or removed, a condition's value or duration set — and the
+ * turn engine STEPPING a PC's conditions while "Step players' conditions" is on (settingsStore
+ * pcConditionTicks; owner's list 2026-10-01, item 3: "the tracker should do that for players"):
+ * Frightened down by 1 as their turn ends (endTurnPass), Stunned used up as it starts
+ * (tickConditionsAtStart). Advancing the turn is the GM's act, and that step is what it does to the
+ * player, so it reaches their sheet like any condition he sets — through the same fresh-read push, so
+ * a sheet the player changed meanwhile still wins. nextTurn, startCombat and returnFromDelay run as
+ * gestures for that; only a PC row a step actually changed is marked.
  *
  * Deliberately NOT gestures: Undo / Redo (putting an older board back is a load, and its snapshot can
  * predate the player's own changes — the GM takes a change back with the opposite gesture instead),
- * the turn engine (end-of-turn ticks, persistent damage, Delay, combat start), the party bridge's
- * max-HP sync (setPcMaxHP), adds, removals, clears, loads, scope switches, reloads and renames. The
- * standalone tracker has no subscriber that takes them, so there this is inert.
+ * everything else the turn engine does (persistent damage, round durations, Delay itself, the order a
+ * fight starts in, and every step while the setting is off — then nothing is stepped at all), the
+ * party bridge's max-HP sync (setPcMaxHP), adds, removals, clears, loads, scope switches, reloads and
+ * renames. The standalone tracker has no subscriber that takes them, so there this is inert.
+ *
+ * SPENT STEPS — A PLAYER'S STEP THAT WENT OUT STAYS SPENT, ACROSS AN UNDO TOO. Undo puts the older board
+ * back, and for a campaign PC row that is a load: the seam rewrites the row from the player's sheet,
+ * which already carries the step his Next sent. But the snapshot also brings back the turn flags
+ * (endedThisRound / startedThisRound) as they stood before that Next, so pressing Next again ran the
+ * SAME turn end a second time: Frightened 2 → 1 → gone on the player's sheet for one turn end, while a
+ * monster in the same sequence ended at 1 (the G3 refuter, 2026-10-13). So a step a host TOOK
+ * (`takeVitalsGesture`) is remembered here, outside every snapshot, by row, turn phase and round
+ * (`_stepsTaken`), and the engine never steps that row for that turn again (`stepTaken`). Only a TAKEN
+ * step: in the standalone tracker, or on a PC row no host mirrors, nobody takes it — Undo puts the
+ * condition back on the row and the next Next steps it again, exactly as a monster's. A host hands a
+ * step BACK (`releaseSteps`) when it never reached the player's sheet after all — owed while offline
+ * and then taken off the row by the Undo itself, or lost to a sheet the player changed meanwhile — so
+ * that turn steps them once when it comes round again.
+ * A turn is a row, a phase and a round OF ONE FIGHT: every fight has a round 1, so the key carries the
+ * fight too (`_fight`, by the undo stacks). startCombat starts a new fight with nothing spent
+ * (`newFight`) — but it is no undo step, so Ctrl+Z after a fresh Start still goes back to the older
+ * fight's board, and that board brings its own fight back with it, spent steps and all (the G3
+ * refuter, round 2: Next, End, Start, Ctrl+Z, Next stepped one turn end twice when Start cleared the
+ * record instead). A load from storage (reloadFromStorage, setScope) clears the record with the undo
+ * history, which is all that could bring an older turn back. What it costs: a condition the GM sets on
+ * that player AFTER undoing their turn end is not stepped by the repeated turn end — that turn already
+ * ended once, on their sheet.
  */
 let _gesture: Set<string> | null = null
+/** Inside a gesture: the turn-engine steps (`stepKey`) its recipe made, by PC row id — moved into
+ *  `_stepsTaken` when a host takes that row's gesture. */
+let _gestureSteps: Map<string, string[]> | null = null
+/** SPENT STEPS (above): every PC turn-engine step a host has taken, in every fight the undo history
+ *  can still reach (`newFight` lets go of the rest). */
+const _stepsTaken = new Set<string>()
+type StepPhase = 'end' | 'start'
+/** One row's turn phase in one round of the fight on screen: `fight|id|phase|round`. */
+function stepKey(id: string, phase: StepPhase, round: number): string {
+  return `${_fight}|${id}|${phase}|${round}`
+}
+/** startCombat: a fresh fight, with nothing of it spent — a number never used before (`_fightSeq`).
+ *  The steps of the fights an Undo or Redo can still bring back are kept (their boards carry their
+ *  number); the rest are let go, so the record never outgrows the history. */
+function newFight() {
+  _fight = ++_fightSeq
+  const live = new Set<number>([_fight])
+  for (const snap of _undoStack) live.add(snap.fight)
+  for (const snap of _redoStack) live.add(snap.fight)
+  for (const k of _stepsTaken) if (!live.has(Number(k.slice(0, k.indexOf('|'))))) _stepsTaken.delete(k)
+}
+/** Has a host already taken this row's turn-engine step for this turn (its `phase` of `round`)? */
+function stepTaken(id: string, phase: StepPhase, round: number): boolean {
+  return _stepsTaken.has(stepKey(id, phase, round))
+}
 /** Run one store action as a GM vitals gesture: the rows its recipe marks are takeable by the store's
  *  subscribers while that action's `set()` dispatches, and by nobody once it has returned. */
 function asGesture(run: () => void) {
   const outer = _gesture
+  const outerSteps = _gestureSteps
   _gesture = new Set()
-  try { run() } finally { _gesture = outer }
+  _gestureSteps = new Map()
+  try { run() } finally { _gesture = outer; _gestureSteps = outerSteps }
 }
 /** Inside a gesture's recipe: this PC row is what the gesture changed. A no-op anywhere else. */
 function markGesture(c: Combatant | undefined | null) {
   if (c?.isPC && _gesture) _gesture.add(c.id)
 }
+/** Inside a gesture's recipe: the turn engine STEPPED this PC row's conditions — its `phase` of turn in
+ *  `round`. A gesture like any other (markGesture), and the step is spent once a host takes it. */
+function markStep(c: Combatant, phase: StepPhase, round: number) {
+  if (!c.isPC || !_gesture || !_gestureSteps) return
+  _gesture.add(c.id)
+  const key = stepKey(c.id, phase, round)
+  const list = _gestureSteps.get(c.id)
+  if (list) list.push(key)
+  else _gestureSteps.set(c.id, [key])
+}
 /** For a store subscriber: did the dispatch now running make a GM vitals gesture on this row? Handed
  *  out ONCE (a second ask in the same dispatch answers false). Outside a gesture's own dispatch there
- *  is never one. */
-export function takeVitalsGesture(id: string): boolean {
-  return !!_gesture && _gesture.delete(id)
+ *  is never one. Taking it SPENDS any turn-engine step in it (SPENT STEPS, above); `steps`, when
+ *  given, receives those steps' keys, for `releaseSteps` should they never reach the player. */
+export function takeVitalsGesture(id: string, steps?: string[]): boolean {
+  if (!_gesture || !_gesture.delete(id)) return false
+  const made = _gestureSteps?.get(id)
+  if (made) {
+    for (const k of made) {
+      _stepsTaken.add(k)
+      steps?.push(k)
+    }
+    _gestureSteps!.delete(id)
+  }
+  return true
+}
+/** A host hands back turn-engine steps it took (`takeVitalsGesture`'s `steps`) that never reached the
+ *  player's sheet, so the turn they belong to steps them again if an Undo brings it back (SPENT STEPS). */
+export function releaseSteps(steps: readonly string[] | undefined): void {
+  if (steps) for (const k of steps) _stepsTaken.delete(k)
 }
 
 /** Push a PC's current HP back to its party-card sheet (matched by name). */
@@ -885,6 +1000,13 @@ function endTurnPass(s: CombatStore, c: Combatant) {
     // apply it (if auto-roll is on) or pop a reminder, BEFORE the duration
     // tick below can expire the condition.
     firePersistentDamage(s, c)
+    // The auto-decrement step runs for a player character only while the setting says so
+    // (stepsConditions); the duration clock below is not that step and runs either way. On a PC row
+    // a step is a GM vitals gesture (markStep below), so a campaign pushes it to the player — and a
+    // step a host already took for this turn end is spent, even when an Undo brought the turn back
+    // (stepTaken — SPENT STEPS in the gesture block).
+    const steps = stepsConditions(c) && !stepTaken(c.id, 'end', s.round)
+    let stepped = false
     c.conditions = c.conditions
       .map(cd => {
         const meta = CONDITION_META[cd.name.toLowerCase()]
@@ -892,7 +1014,8 @@ function endTurnPass(s: CombatStore, c: Combatant) {
         // at the START of a turn (Stunned) are handled elsewhere, when the next
         // creature's turn begins, so they're skipped here.
         // `isPermanent` ("until removed") pins the value — see tickConditionsAtStart.
-        if (meta?.autoDecrement && !meta.tickAtStart && !cd.isPermanent && cd.value !== undefined && cd.value > 0) {
+        if (steps && meta?.autoDecrement && !meta.tickAtStart && !cd.isPermanent && cd.value !== undefined && cd.value > 0) {
+          stepped = true
           return { ...cd, value: Math.max(0, cd.value - (meta.decrementBy ?? 1)) }
         }
         // Timed conditions with NO source ON THE BOARD tick at the end of the affected
@@ -907,10 +1030,11 @@ function endTurnPass(s: CombatStore, c: Combatant) {
       })
       .filter(cd => {
         const meta = CONDITION_META[cd.name.toLowerCase()]
-        if (meta?.autoDecrement && !meta.tickAtStart && !cd.isPermanent && (cd.value ?? 1) <= 0) return false
+        if (steps && meta?.autoDecrement && !meta.tickAtStart && !cd.isPermanent && (cd.value ?? 1) <= 0) { stepped = true; return false }
         if (!cd.isPermanent && !hasSource(s, cd) && cd.duration !== undefined && cd.duration <= 0) return false
         return true
       })
+    if (stepped) markStep(c, 'end', s.round)
   }
   // OUTSIDE the guard on purpose. Refilling per-round / per-turn limited uses is not one of p. 416's
   // "negative effects" — it is what makes the ability available again on the creature's next turn,
@@ -1145,7 +1269,8 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   },
 
   returnFromDelay(id) {
-    set(s => {
+    // A gesture only for a returning PC whose start-of-turn step changes it (Stunned — the gesture block).
+    asGesture(() => set(s => {
       const i = s.combatants.findIndex(c => c.id === id)
       if (i < 0 || !s.combatants[i].isDelayed) return
       record(s)
@@ -1175,12 +1300,12 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       const counts = new Set<string>()
       creditCount(c, counts)
       tickSourceDurations(s, counts)
-      startTurn(c)
+      startTurn(c, s.round)
       // The interrupted creature's turn isn't over — pause its timer (bank the seconds so far onto
       // it, no TurnRecord yet) rather than commit it, or its resumed half banks a second record and
       // halves its average. beginTurn picks the paused seconds back up when nextTurn lands on it.
       if (turnTimerOn()) { pauseTurn(s, interrupted); beginTurn(s, c) }
-    })
+    }))
   },
 
   setScope(scopeId) {
@@ -1198,6 +1323,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
     _condId = p?.condCounter ?? 0
     _undoStack.length = 0
     _redoStack.length = 0
+    _stepsTaken.clear()       // SPENT STEPS go with the undo history that could bring a turn back (gesture block)
     set(s => {
       s.combatants = p?.combatants ?? []
       s.round = p?.round ?? 1
@@ -1270,7 +1396,13 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   },
 
   startCombat() {
-    set(s => {
+    // A gesture only for the PC row its opening start-of-turn step changes (Stunned — see the gesture
+    // block); the sort and the counts are no edit of anyone's. A fresh fight starts with no step spent:
+    // round 1 is a new round 1. A new NUMBER, not a cleared record: Start is no undo step, so Ctrl+Z
+    // still reaches the last fight's boards, and they bring that fight's spent steps back with them
+    // (SPENT STEPS in the gesture block).
+    newFight()
+    asGesture(() => set(s => {
       // Delay is a within-combat position, so a fresh fight starts with everyone in the order —
       // cleared BEFORE the sort, so nothing last fight left behind can reach it.
       for (const c of s.combatants) {
@@ -1306,11 +1438,11 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       }
       tickSourceDurations(s, counts)
       // …and any start-of-turn conditions (Stunned) it walked into combat with are consumed.
-      startTurn(s.combatants[s.activeIndex])
+      startTurn(s.combatants[s.activeIndex], s.round)
       // selectedId intentionally NOT changed — user controls which stat block is shown
       if (turnTimerOn()) beginTurn(s, s.combatants[s.activeIndex])
       else s.turnTimer = null
-    })
+    }))
   },
 
   endCombat() {
@@ -1328,11 +1460,15 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   },
 
   nextTurn() {
-    set(s => {
+    // A gesture only for the PC rows its condition step changes (Frightened at the end of a player's
+    // turn, Stunned at the start — the gesture block above); nothing else it does is one.
+    asGesture(() => set(s => {
       if (!s.combatants.length) return
-      // Record so Ctrl+Z reverses the whole turn-advance — including the
+      // Record so Ctrl+Z reverses the whole turn-advance ON THE BOARD — including the
       // condition ticks and persistent damage applied to the ending creature,
-      // which prevTurn can't recreate.
+      // which prevTurn can't recreate. Not a player's step a host took: that went to their
+      // own sheet, which no Undo reaches (the campaign seam's rule A), and it stays spent, so
+      // pressing Next again does not step them a second time (SPENT STEPS, gesture block).
       record(s)
       const cur = s.combatants[s.activeIndex]
       if (cur) endTurnPass(s, cur)
@@ -1393,11 +1529,11 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       tickSourceDurations(s, counts)
       // Start-of-turn conditions (Stunned) are consumed as the new creature's turn begins — unless
       // this landing is the RESUMED half of a turn a Return cut into, which startTurn's flag knows.
-      startTurn(s.combatants[s.activeIndex])
+      startTurn(s.combatants[s.activeIndex], s.round)
       // selectedId intentionally NOT changed — user controls which stat block is shown
       // Turn timer: bank the turn that just ended, start timing the new one.
       if (turnTimerOn()) { commitTurn(s); beginTurn(s, s.combatants[s.activeIndex]) }
-    })
+    }))
     // Keep PC party-card HP live (auto-rolled persistent damage may have hit a PC).
     get().combatants.forEach(syncPcHp)
   },
@@ -1630,13 +1766,14 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       const o = original(s) as CombatStore | undefined
       if (o) {
         const now = memberDownsNow(member)
-        _redoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex, ...(now ? { member: now } : {}) })
+        _redoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex, fight: _fight, ...(now ? { member: now } : {}) })
         if (_redoStack.length > HISTORY_MAX) _redoStack.shift()
       }
       const prev = _undoStack.pop()!
       s.combatants = prev.combatants
       s.round = prev.round
       s.activeIndex = prev.activeIndex
+      _fight = prev.fight          // the board's own fight, and the steps spent in it (SPENT STEPS)
       s.canUndo = _undoStack.length > 0
       s.canRedo = true
     })
@@ -1651,13 +1788,14 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       const o = original(s) as CombatStore | undefined
       if (o) {
         const now = memberDownsNow(member)
-        _undoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex, ...(now ? { member: now } : {}) })
+        _undoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex, fight: _fight, ...(now ? { member: now } : {}) })
         if (_undoStack.length > HISTORY_MAX) _undoStack.shift()
       }
       const next = _redoStack.pop()!
       s.combatants = next.combatants
       s.round = next.round
       s.activeIndex = next.activeIndex
+      _fight = next.fight          // the board's own fight (SPENT STEPS)
       s.canUndo = true
       s.canRedo = _redoStack.length > 0
     })

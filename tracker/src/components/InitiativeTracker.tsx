@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import type { DragEvent as ReactDragEvent } from 'react'
 import type { Combatant } from '../types/pf2e'
-import { useCombatStore, downsAsPC, isDeadNpc, downedMarker, clearedByClearDefeated } from '../store/combatStore'
+import { useCombatStore, downsAsPC, isDeadNpc, downedMarker, clearedByClearDefeated, isSamePc } from '../store/combatStore'
 import { usePartyStore } from '../store/partyStore'
 import { useSettingsStore } from '../store/settingsStore'
 import { DRAG_MIME, useHoveredCid } from '../store/layoutStore'
 import { Chip } from './Chip'
-import { CONDITION_META, computeConditionMods } from '../utils/conditionEffects'
+import { conditionMetaOf, computeConditionMods } from '../utils/conditionEffects'
 import { applyWeakElite, scaleByLevel } from '../utils/weakElite'
 import { computeEncounter, partyOf, pcLevelOf, DIFFICULTY_COLOR } from '../utils/encounter'
 import { fixedPopupPos } from '../utils/zoomFix'
 import { useCampaignPartyLevel } from '../data/partyLevelContext'
-import { useHostPcStats, useHostPcLevel } from '../data/pcStatsContext'
+import { useHostPcStats, useHostPcLevel, useHostPcBadges, useHostConditionFolded } from '../data/pcStatsContext'
 import { PlayIcon, StopIcon, ChevronLeftIcon, ChevronRightIcon, DiceIcon } from './Icons'
 import { EncounterTablesModal } from './EncounterTablesModal'
 import { BodyPortal } from './BodyPortal'
@@ -130,23 +130,48 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
   // sheet so they can show in the initiative order too. Inside a Heroes Heaven
   // campaign the host supplies the real character's stats (hostPcStats); the
   // party-store sheet is the standalone fallback. Host wins because it's the
-  // live character, not a hand-entered copy.
+  // live character, not a hand-entered copy. Both are found by the tracker's own
+  // PC join (isSamePc: the character id when the row has one, else the name), so a
+  // row the GM renamed, or a character the player renamed, keeps its numbers.
   const parties = usePartyStore(s => s.parties)
   // Read under the `parties` subscription above, so a party NPC's switch re-draws its row at once.
   const downMark = downedMarker(c)
-  const hostPcStats = useHostPcStats(c.name)
+  const hostPcStats = useHostPcStats(c.name, c.charId)
   const pcStats = c.isPC
-    ? hostPcStats ?? parties.flatMap(p => p.players).find(pl => pl.memberType === 'pc' && pl.name.toLowerCase() === c.name.toLowerCase())?.pcStats
+    ? hostPcStats ?? parties.flatMap(p => p.players).find(pl => pl.memberType === 'pc' && isSamePc(c, pl))?.pcStats
     : undefined
+  /*
+   * CONDITIONS COUNTED ONCE (owner's list 2026-10-01, item 3). A host's PC stats are the live sheet's,
+   * its conditions already inside them — and the row's own badges ARE those conditions (the campaign
+   * seam writes the sheet's onto the row). Adding the tracker's penalty for them again drew a frightened
+   * player's AC and saves two points under the card's. So for a PC with host stats the tracker counts
+   * only what the host does not fold in (a condition the GM typed that the sheet has no entry for);
+   * monsters, a hand-entered sheet and the standalone tracker count every badge, as before.
+   */
+  const folded = useHostConditionFolded()
+  const pcCm = c.isPC && hostPcStats && folded
+    ? computeConditionMods(c.conditions.filter(x => !folded(x.name)))
+    : cm
+  // What the host's sheet works out and stores nowhere (Encumbered, a mode's conditions, the active
+  // modes): drawn locked, after the row's own badges. Never written onto the row.
+  const hostBadges = useHostPcBadges(c.name, c.charId)
+  const lockedBadges = c.isPC && hostPcStats ? hostBadges : []
+  // "Show level in initiative order" for a PC: the host's sheet knows it (a stat block's comes from the
+  // block). Host only — a hand-entered standalone sheet keeps the row as it was.
+  const pcLevel = c.isPC && !effective ? hostPcStats?.level : undefined
 
-  // The mini HP bar's numbers. A PC combatant added inside a Heroes Heaven campaign has no HP of its
-  // own (maxHP 0) — its real HP lives on the character, handed over via pcStats. Fall back to that so
-  // the bar renders. (A standalone PC already gets maxHP from its party sheet at add-time, so the
-  // combatant's own HP wins whenever it has any; this only fills the gap when it doesn't.)
+  // The mini HP bar's numbers. A PC row inside a Heroes Heaven campaign carries the sheet's HP (the
+  // seam writes current and max onto it); a PC row the seam has not reached yet has none of its own
+  // (maxHP 0), so fall back to pcStats and the bar still renders. (A standalone PC gets maxHP from its
+  // party sheet at add-time, so the combatant's own HP wins whenever it has any.)
   const hpMax = c.maxHP > 0 ? c.maxHP : c.isPC ? pcStats?.maxHP ?? 0 : 0
   const hpCur = c.maxHP > 0 ? c.currentHP : c.isPC ? pcStats?.hpCurrent ?? pcStats?.maxHP ?? 0 : 0
   const pct = hpMax > 0 ? hpCur / hpMax : 0
   const hpBarColor = pct > 0.5 ? 'var(--hp-full)' : pct > 0.25 ? 'var(--hp-mid)' : 'var(--hp-low)'
+  // Temporary HP on the player's sheet, "+N" beside the bar — DISPLAY ONLY, from the host's stats and
+  // never from the row's own `tempHP`: nothing the tracker does to a player's row reaches their temp HP
+  // (the push carries HP and conditions only), and a copy on the row would soak the GM's damage first.
+  const hpTemp = c.isPC && hostPcStats?.hpTemp ? hostPcStats.hpTemp : 0
 
   return (
     <div
@@ -249,6 +274,7 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
                 becomes active/viewed. */}
             <span style={{ marginLeft: 'auto', flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 5 }}>
               {showInitLevel && effective && <Chip tone="muted" mono>Lv {effective.level}</Chip>}
+              {showInitLevel && !!pcLevel && pcLevel > 0 && <span data-pc-level=""><Chip tone="muted" mono>Lv {pcLevel}</Chip></span>}
               {isActive && (
                 <span className="now-badge" title="Current turn">NOW</span>
               )}
@@ -278,31 +304,54 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
                   <span><span className="sv-lbl"><span className="sv-full">Will</span><span className="sv-short">W</span></span> <span className={modCls(cm.will)}>{sv(effective.defenses.will + cm.will)}</span></span>
                 </span>
               )}
-              {/* Player AC + saves from the imported/entered sheet. */}
+              {/* Player AC + saves — the host's live sheet inside a campaign, else the party store's
+                  imported/entered sheet. A host's numbers already count the sheet's conditions (pcCm). */}
               {showInitPcDefenses && pcStats?.ac != null && (
-                <span style={{ color: 'var(--text-muted)' }}>
-                  <span style={{ color: 'var(--text-faded)' }}>AC</span> <span className={modCls(cm.ac)}>{pcStats.ac + cm.ac}</span>
+                <span data-pc-ac="" style={{ color: 'var(--text-muted)' }}>
+                  <span style={{ color: 'var(--text-faded)' }}>AC</span> <span className={modCls(pcCm.ac)}>{pcStats.ac + pcCm.ac}</span>
                 </span>
               )}
               {showInitPcDefenses && pcStats && (pcStats.fortMod != null || pcStats.refMod != null || pcStats.willMod != null) && (
-                <span style={{ color: 'var(--text-muted)', display: 'inline-flex', gap: 6 }}>
-                  {pcStats.fortMod != null && <span><span className="sv-lbl"><span className="sv-full">Fort</span><span className="sv-short">F</span></span> <span className={modCls(cm.fort)}>{sv(pcStats.fortMod + cm.fort)}</span></span>}
-                  {pcStats.refMod != null && <span><span className="sv-lbl"><span className="sv-full">Ref</span><span className="sv-short">R</span></span> <span className={modCls(cm.ref)}>{sv(pcStats.refMod + cm.ref)}</span></span>}
-                  {pcStats.willMod != null && <span><span className="sv-lbl"><span className="sv-full">Will</span><span className="sv-short">W</span></span> <span className={modCls(cm.will)}>{sv(pcStats.willMod + cm.will)}</span></span>}
+                <span data-pc-saves="" style={{ color: 'var(--text-muted)', display: 'inline-flex', gap: 6 }}>
+                  {pcStats.fortMod != null && <span data-save="fort"><span className="sv-lbl"><span className="sv-full">Fort</span><span className="sv-short">F</span></span> <span className={modCls(pcCm.fort)}>{sv(pcStats.fortMod + pcCm.fort)}</span></span>}
+                  {pcStats.refMod != null && <span data-save="ref"><span className="sv-lbl"><span className="sv-full">Ref</span><span className="sv-short">R</span></span> <span className={modCls(pcCm.ref)}>{sv(pcStats.refMod + pcCm.ref)}</span></span>}
+                  {pcStats.willMod != null && <span data-save="will"><span className="sv-lbl"><span className="sv-full">Will</span><span className="sv-short">W</span></span> <span className={modCls(pcCm.will)}>{sv(pcStats.willMod + pcCm.will)}</span></span>}
                 </span>
               )}
-              {c.conditions.length > 0 && (
-                <span style={{ display: 'inline-flex', gap: 2 }}>
+              {(c.conditions.length > 0 || lockedBadges.length > 0) && (
+                <span style={{ display: 'inline-flex', gap: 2, flexWrap: 'wrap' }}>
                   {c.conditions.map(cond => {
-                    const meta = CONDITION_META[cond.name.toLowerCase()]
+                    // Through the alias table: a player's sheet writes `persistent-damage`, the tracker's
+                    // key is `persistent damage` — the same badge, styled and named (display only).
+                    const meta = conditionMetaOf(cond.name)
                     return (
-                      <span key={cond.id} style={{
+                      <span key={cond.id} data-cond={cond.name} title={meta?.name ?? cond.name} style={{
                         display: 'inline-block',
                         background: meta?.bg ?? '#374151', color: meta?.fg ?? '#fff',
                         borderRadius: 2, padding: '0 4px', fontSize: 8.5, fontWeight: 700,
                         fontFamily: 'var(--font-ui)',
                       }}>
                         {cond.name.charAt(0).toUpperCase()}{cond.value !== undefined ? cond.value : ''}
+                      </span>
+                    )
+                  })}
+                  {/* LOCKED: what the player's sheet works out (Encumbered from Bulk, a mode's conditions)
+                      and the modes they have on. Dashed, not filled — nobody at the table takes these
+                      off; they go when their cause goes. Display only, never a row condition. */}
+                  {lockedBadges.map((b, i) => {
+                    const meta = b.kind === 'condition' ? conditionMetaOf(b.name) : undefined
+                    return (
+                      <span key={`locked-${i}`} data-locked={b.kind}
+                        title={b.title ? `${b.name}${b.value ? ` ${b.value}` : ''} — ${b.title}` : b.name}
+                        style={{
+                          display: 'inline-block', maxWidth: b.kind === 'mode' ? 90 : undefined,
+                          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', verticalAlign: 'middle',
+                          background: 'transparent', color: 'var(--text-muted)',
+                          border: `1px dashed ${meta?.border ?? 'var(--border-strong)'}`,
+                          borderRadius: 2, padding: '0 3px', fontSize: 8.5, fontWeight: 700,
+                          fontFamily: 'var(--font-ui)',
+                        }}>
+                        {b.kind === 'mode' ? b.name : `${b.name.charAt(0).toUpperCase()}${b.value ? b.value : ''}`}
                       </span>
                     )
                   })}
@@ -328,11 +377,19 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
             max now flows in from the imported / entered character sheet), unless
             the user hides player HP bars in Settings. */}
         {hpMax > 0 && !editingName && !(c.isPC && hideInitPcHp) && (
-          <div style={{
-            height: 3, borderRadius: 2, marginTop: 5,
-            background: 'var(--bg-elevated)', overflow: 'hidden',
-          }}>
-            <div style={{ height: '100%', width: `${Math.max(0, Math.min(100, pct * 100))}%`, background: hpBarColor, borderRadius: 2 }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: hpTemp > 0 ? 2 : 5 }}>
+            <div style={{
+              flex: 1, minWidth: 0, height: 3, borderRadius: 2,
+              background: 'var(--bg-elevated)', overflow: 'hidden',
+            }}>
+              <div style={{ height: '100%', width: `${Math.max(0, Math.min(100, pct * 100))}%`, background: hpBarColor, borderRadius: 2 }} />
+            </div>
+            {hpTemp > 0 && (
+              <span data-temp-hp="" title={`${hpTemp} temporary HP on their sheet`}
+                style={{ flexShrink: 0, fontFamily: 'var(--font-mono)', fontSize: 9.5, lineHeight: 1, color: 'var(--accent)' }}>
+                +{hpTemp}
+              </span>
+            )}
           </div>
         )}
       </div>
@@ -585,7 +642,9 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
   // Every party's players, the active party's first — the PC row's own player for its level.
   const allPlayers = [...(activeParty?.players ?? []), ...parties.filter(p => p !== activeParty).flatMap(p => p.players)]
   const party = partyOf(combatants, {
-    pcLevel: c => pcLevelOf(c, allPlayers, hostPcLevel),
+    // The host's sheet by the ROW's character id when it has one (a renamed row or character is still
+    // themselves), else by the name pcLevelOf asks for.
+    pcLevel: c => pcLevelOf(c, allPlayers, name => hostPcLevel(name, c.charId)),
     fallback: fallbackLevel,
     partyNpcs,
   })

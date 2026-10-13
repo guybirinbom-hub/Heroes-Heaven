@@ -12,9 +12,11 @@ import { RankPill } from '../sheet/widgets';
  *                       wide: DCs three-up, skills four-up, the six abilities on one line.
  *
  * The card itself shows HP, AC, Perception and the ancestry/class sub-line, so neither piece
- * repeats those. Turning a section on in "Stats shown" makes it appear on every card. (The
- * defenses/perception/ancestry toggles govern the card's own core, which is always shown — the
- * numbers are never hidden, only added to.)
+ * repeats those. Turning a section on in "Stats shown" makes it appear on every card. The other three
+ * switches — Ancestry & class, Defenses, Perception — govern the card's OWN core through
+ * `PartyCardSlots.core` (`cardCore` below; owner's list 2026-10-01, item 3: "the switches need to do
+ * what they say"). Off, they hide the sub-line, the AC tile and the Perception tile; the HP bar stays
+ * whatever they say ("hp doesn't go with defense").
  *
  * Compact by design — this lives inside a party card, not the spacious detail panel (PcStatsDisplay).
  * Part of the removable seam; see ./README.md.
@@ -51,6 +53,15 @@ function Section({ label, rows, children }: { label: string; rows?: string; chil
       <div className={rows ?? 'party-kv'}>{children}</div>
     </div>
   );
+}
+
+/**
+ * The card's own core as "Stats shown" switches it — PartyMembers' `PartyCardSlots.core`. One function
+ * for the seam's slot builder (CampaignTracker.cardExtra) and its test, so the two can't drift apart.
+ * Each switch that is off hides its part of the card; the HP bar is none of them.
+ */
+export function cardCore(detail: PcDetailConfig): { ancestry: boolean; defenses: boolean; perception: boolean } {
+  return { ancestry: !!detail.ancestry, defenses: !!detail.defenses, perception: !!detail.perception };
 }
 
 /** Fort/Ref/Will for ROW 1's band, where they sit beside AC as label-over-value tiles.

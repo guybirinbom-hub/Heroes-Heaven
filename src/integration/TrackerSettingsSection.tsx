@@ -77,7 +77,9 @@ export function TrackerSettingsSection() {
           {group === 'statblock' && <StatBlockSection />}
           {group === 'sources' && <SourcesSection />}
           {group === 'timer' && <TimerSection />}
-          {group === 'players' && <PlayersSection />}
+          {/* campaignDriven: a campaign card's HP bar stays with "Defenses" off (the owner's answer on
+              item 3: "hp doesn't go with defense"), so the switch is described as AC only here. */}
+          {group === 'players' && <PlayersSection campaignDriven />}
           {group === 'conditions' && <ConditionsSection />}
           {group === 'encounter-tables' && <EncounterTablesSection />}
         </GameDataProvider>

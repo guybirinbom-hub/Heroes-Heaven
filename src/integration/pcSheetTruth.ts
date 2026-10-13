@@ -6,7 +6,8 @@ import { fetchPublishedSheet, pushGmEdit, type PartyMember } from '../data/party
 import { livePlay } from '../sheet/memberSheets';
 import type { SavedChar } from '../data/storage';
 import type { Character, ContentDatabase } from '../rules/types';
-import { isSamePc, moveBeforeActive, takeVitalsGesture, useCombatStore } from '../../tracker/src/store/combatStore';
+import { isSamePc, moveBeforeActive, releaseSteps, takeVitalsGesture, useCombatStore } from '../../tracker/src/store/combatStore';
+import { CONDITION_META } from '../../tracker/src/utils/conditionEffects';
 import type { Combatant } from '../../tracker/src/types/pf2e';
 
 /*
@@ -49,13 +50,26 @@ export { memberCardSummary, livePlay, useMemberSheets } from '../sheet/memberShe
  *      behind it — lives on the row alone: a load takes it off the row, and it never goes out.
  *   B. A GESTURE IS THE ONLY THING THAT PUSHES. The combat store marks every explicit GM vitals
  *      action on a PC row (`takeVitalsGesture`): damage, healing, temp HP, max HP, Mark defeated /
- *      Restore, a condition added or removed, a condition's value or duration set. EVERY OTHER way a
- *      row can come to differ from the sheet — Clear then re-add, Remove then re-add, Load encounter,
- *      Undo / Redo, a board from the GM's other device (reloadFromStorage), a campaign switch
- *      (setScope), the party bridge's max-HP sync, the turn engine, and any row-replacing path added
- *      later — carries none, so it is safe BY CONSTRUCTION: the row is rewritten from the sheet
- *      (`writeVitals`) and nothing is pushed. A gesture that changes nothing a push carries (temp HP,
- *      max HP alone) pushes nothing either.
+ *      Restore, a condition added or removed, a condition's value or duration set — and, while the
+ *      tracker's "Step players' conditions" setting is on (the default; settingsStore
+ *      `pcConditionTicks`), the turn engine STEPPING their conditions as the GM advances the turn:
+ *      Frightened down by 1 as their turn ends, Stunned used up as it starts (owner's list
+ *      2026-10-01, item 3: "the tracker should do that for players but have a setting for it not to do
+ *      that"). That step goes out like any condition he sets — through rule C, so a sheet the player
+ *      changed while the turn moved still wins. `writeVitals` leaves those two conditions unpinned for
+ *      it (`isPermanent` false); every other sheet condition stays pinned. Taking the gesture SPENDS the
+ *      step (combatStore, SPENT STEPS): an Undo of that Next puts the board back but never the step
+ *      (rule A — it went to their sheet), and Next pressed again does not step them a second time for
+ *      the same turn. A step that never reaches their sheet is handed back (`releaseSteps`, the
+ *      change's `steps`): dropped while owed — by a load, the Undo included — or lost to the sheet
+ *      winning (rule C). EVERY OTHER way a row can
+ *      come to differ from the sheet — Clear then re-add, Remove then re-add, Load encounter, Undo /
+ *      Redo, a board from the GM's other device (reloadFromStorage), a campaign switch (setScope), the
+ *      party bridge's max-HP sync, the rest of the turn engine (persistent damage, round durations,
+ *      every step while the setting is off), and any row-replacing path added later — carries none, so
+ *      it is safe BY CONSTRUCTION: the row is rewritten from the sheet (`writeVitals`) and nothing is
+ *      pushed. A gesture that changes nothing a push carries (temp HP, max HP alone) pushes nothing
+ *      either.
  *   C. A PUSH NEEDS A FRESH READ. Before anything is sent, the seam reads the published sheet
  *      (`fetchPublishedSheet`) and builds on what that read answers for the GM (`gmPushBuiltOn`), which
  *      also says WHICH of his pushes it built on, so the row can carry it (`gm_base.on`): his
@@ -142,6 +156,21 @@ export interface PcVitals {
 const GM_EDITS_PC_HP = true;
 
 let _cid = 0;
+
+/** A condition the tracker's turn engine steps on its own (CONDITION_META `autoDecrement`: Frightened at
+ *  the end of a turn, Stunned at the start) — the two a sheet condition is left unpinned for (rule B). */
+function stepsWithTheTurn(id: string): boolean {
+  return !!CONDITION_META[id]?.autoDecrement;
+}
+
+/** The row still carries one of the sheet's stepping conditions PINNED — written before rule B let the
+ *  turn engine step it — so `writeVitals` has to unpin it even where no value differs. */
+function pinsAStep(c: Combatant, content: ContentDatabase): boolean {
+  return c.conditions.some((x) => {
+    const id = x.name.trim().toLowerCase();
+    return !!x.isPermanent && stepsWithTheTurn(id) && !!content.conditions?.[id];
+  });
+}
 
 /** Conditions Heroes Heaven actually has a rules entry for. A tracker-only condition (a custom one
  *  the GM typed) has no id on the sheet, so it is neither pushed nor reconciled — it simply stays. */
@@ -232,11 +261,17 @@ function writeVitals(cid: string, v: PcVitals, content: ContentDatabase, dropped
     c.currentHP = Math.max(0, Math.min(v.currentHP, c.maxHP));
     c.isDefeated = c.currentHP === 0;
     // Keep a badge the GM already set (its duration is theirs) and every tracker-only condition;
-    // replace only the ones the sheet is authoritative for.
+    // replace only the ones the sheet is authoritative for. A sheet condition is pinned (`isPermanent`,
+    // "until removed": the turn engine never touches it) — except one that steps with the turn
+    // (Frightened, Stunned), which the engine steps as the GM's gesture while the tracker's "Step
+    // players' conditions" setting is on (rule B; the engine itself checks the setting). A badge pinned
+    // before that rule existed is unpinned here too, or it would never step.
     const keep = c.conditions.filter((x) => !content.conditions?.[x.name.trim().toLowerCase()]);
     const fromSheet = v.conditions.map((cond) => {
       const had = c.conditions.find((x) => x.name.trim().toLowerCase() === cond.id);
-      return had ? { ...had, value: cond.value } : { id: `hh-${cond.id}-${++_cid}`, name: cond.id, value: cond.value, isPermanent: true };
+      const steps = stepsWithTheTurn(cond.id);
+      if (had) return steps ? { ...had, value: cond.value, isPermanent: false } : { ...had, value: cond.value };
+      return { id: `hh-${cond.id}-${++_cid}`, name: cond.id, value: cond.value, isPermanent: !steps };
     });
     c.conditions = [...keep, ...fromSheet];
     if (dropped && standing && c.currentHP === 0) moveBeforeActive(s, cid);
@@ -251,6 +286,9 @@ interface Change {
   v: PcVitals;
   /** The vitals key of what the row showed when he made it: the only sheet it may land on. */
   on: string;
+  /** The turn-engine steps inside it (combatStore SPENT STEPS, `takeVitalsGesture`'s `steps`): handed
+   *  back (`releaseSteps`) when the change is dropped without reaching their sheet (rule B). */
+  steps?: string[];
 }
 
 /** What the seam remembers per character, keyed `campaign|character` — rules A–E at the top of this file. */
@@ -349,6 +387,9 @@ export function usePcSheetTruth(args: {
           if (vitalsKey(now) !== w.on) {
             // The sheet moved since he made it: it wins, over anything made on top of it too — and a
             // fall to 0 in it is the player's, owed to the row like one that arrived (SeenPc.drop).
+            // A turn-engine step in either never reached them: handed back (rule B, SPENT STEPS).
+            releaseSteps(w.steps);
+            releaseSteps(st.want?.steps);
             st.want = undefined;
             follow(st, now);
             return true;
@@ -378,7 +419,8 @@ export function usePcSheetTruth(args: {
       } catch {
         /* a push that THREW reached nobody */
       }
-      st.want = st.want ? { ...st.want, on: w.on } : w;
+      // Owed again, with the steps of both (a load that later drops it hands them back).
+      st.want = st.want ? { ...st.want, on: w.on, steps: [...(w.steps ?? []), ...(st.want.steps ?? [])] } : w;
       return false;
     };
     // WHICH ROW: the tracker's own "same character" rule, the one its add dedupe and the "+" button use.
@@ -419,17 +461,22 @@ export function usePcSheetTruth(args: {
       // Taken on every pass that has this character's row, whatever it then decides: a gesture is acted
       // on by the pass that sees it or by nobody (the store forgets it the moment its own dispatch
       // returns, either way).
-      const gesture = takeVitalsGesture(c.id);
+      const taken: string[] = [];
+      const gesture = takeVitalsGesture(c.id, taken);
       const cv = vitalsFromCombatant(c, content);
       const ck = vitalsKey(cv);
       const was = st.want?.v ?? st.out?.v ?? st.shown;
       if (gesture && ck !== vitalsKey(was)) {
         // Rule B: the GM's own change, made on what the row showed. One of his not sent yet on this
-        // row carries it along.
-        if (st.want?.rowId === c.id) st.want.v = cv;
-        else st.want = { rowId: c.id, v: cv, on: vitalsKey(was) };
+        // row carries it along — and the turn-engine steps in it (SPENT STEPS).
+        if (st.want?.rowId === c.id) {
+          st.want.v = cv;
+          st.want.steps = [...(st.want.steps ?? []), ...taken];
+        } else st.want = { rowId: c.id, v: cv, on: vitalsKey(was), steps: taken };
       } else if (!gesture && st.want && (st.want.rowId !== c.id || ck !== vitalsKey(st.want.v))) {
         // A load took his unsent change off the row (rules A and B): not his doing, so the sheet wins.
+        // A step in it never reached them, and an Undo may bring its turn back: handed back.
+        releaseSteps(st.want.steps);
         st.want = undefined;
       }
       const show = st.want?.v ?? st.out?.v ?? st.shown;
@@ -441,7 +488,10 @@ export function usePcSheetTruth(args: {
         dropped = !!st.drop;
         st.drop = false;
       }
-      if (ck !== vitalsKey(show)) writeVitals(c.id, show, content, dropped);
+      // …or when the row still pins a condition that steps with the turn (a board saved before rule B
+      // let the engine step a player's Frightened): the same values, written unpinned. The pass that
+      // write sets off finds nothing left to write.
+      if (ck !== vitalsKey(show) || pinsAStep(c, content)) writeVitals(c.id, show, content, dropped);
       if (st.want && !st.out) {
         const w = (st.out = st.want);
         st.want = undefined;
