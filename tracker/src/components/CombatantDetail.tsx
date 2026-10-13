@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import type { Combatant } from '../types/pf2e'
-import { useCombatStore } from '../store/combatStore'
+import { useCombatStore, downedMarker } from '../store/combatStore'
+import { CombatantMenu } from './InitiativeTracker'
 import { usePartyStore } from '../store/partyStore'
 import { saveCustomCreatureImage } from '../data/dataStore'
 import { StatBlock, hpPoolViews, hpPoolLabelText } from './StatBlock'
@@ -15,11 +16,14 @@ import { useSettingsStore, monsterPartsFor } from '../store/settingsStore'
 import { useCampaignMonsterParts } from '../data/monsterPartsContext'
 import { PcStatsDisplay } from './PcStatsDisplay'
 import { MonsterPartsPopup } from './MonsterPartsPopup'
+import { escapeLeavesBox } from '../utils/spendEscape'
 
 // ── Hamburger options menu ─────────────────────────────────────────────────
-function HamburgerMenu({ combatant, onEditClick }: {
+function HamburgerMenu({ combatant, onEditClick, onCombatMenu }: {
   combatant: Combatant
   onEditClick: () => void
+  /** Open the combatant menu (the row's right-click menu) at this point — the touch screen's way in. */
+  onCombatMenu: (x: number, y: number) => void
 }) {
   const { setEliteWeak, setScaledLevel, setCombatantImage } = useCombatStore()
   const [open, setOpen] = useState(false)
@@ -34,8 +38,22 @@ function HamburgerMenu({ combatant, onEditClick }: {
     const h = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
     }
+    // Escape closes this menu — and goes no further. Drawn inside the tracker, not on <body>, it is no
+    // popup Heroes Heaven's Escape can see, so the key fell through and LEFT THE CAMPAIGN (found
+    // 2026-10-11; the ☰ is the touch screen's way to the combatant menu, owner's list item 2). Typed in
+    // its Custom level box, the key bubbles here too, and the half-typed level goes with the menu.
+    const k = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      e.stopPropagation()
+      setLevelInput('')
+      setOpen(false)
+    }
     document.addEventListener('mousedown', h)
-    return () => document.removeEventListener('mousedown', h)
+    document.addEventListener('keydown', k)
+    return () => {
+      document.removeEventListener('mousedown', h)
+      document.removeEventListener('keydown', k)
+    }
   }, [open])
 
   const baseLevel = combatant.creature?.level ?? 0
@@ -183,6 +201,15 @@ function HamburgerMenu({ combatant, onEditClick }: {
 
           {/* Edit */}
           {menuRow(<PencilIcon size={13} />, 'Edit Stat Block', onEditClick)}
+
+          <div style={{ borderTop: 'var(--app-bw) solid var(--border)' }} />
+
+          {/* The combatant menu — Knock out, Mark dead, "At 0 HP: dying like a player", Remove … — for a
+              screen with no right-click. Opens under this ☰. */}
+          {menuRow(<span aria-hidden="true" style={{ width: 13, textAlign: 'center', fontSize: 12 }}>⋯</span>, 'Combatant actions…', () => {
+            const r = ref.current?.getBoundingClientRect()
+            onCombatMenu(r ? r.left : 0, r ? r.bottom : 0)
+          })}
         </div>
       )}
     </div>
@@ -220,13 +247,30 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
   const [showEdit, setShowEdit] = useState(false)
   const [showMpPopup, setShowMpPopup] = useState(false)
   const [nameCopied, setNameCopied] = useState(false)
+  // The combatant menu (the same one the initiative row's right-click opens), opened here by a right-
+  // click anywhere on this stat block or from the ☰ menu.
+  const [menuAt, setMenuAt] = useState<{ x: number; y: number } | null>(null)
   const families = useGameData().families
   // The creature's flavor blurb + family description (if AoN had them).
   const familyText = combatant.creature?.family ? families.get(combatant.creature.family.toLowerCase()) : undefined
   const hasDescription = !!(combatant.creature?.flavor || familyText)
 
   useEffect(() => { setShowNotes(false); setShowDescription(false) }, [combatant.id])
-  useEffect(() => { setNameCopied(false) }, [combatant.id])
+  useEffect(() => { setNameCopied(false); setMenuAt(null) }, [combatant.id])
+
+  // "Right-click on a stat block → treat like a player when at 0 HP" (owner's list 2026-10-01, item
+  // 2). Heroes Heaven swallows every right-click outside a text field (src/App.tsx), so before this a
+  // right-click on an open stat block did nothing at all; its listener leaves an event alone once a
+  // component has called preventDefault, so this one handler covers a pane and a floating window
+  // alike. A text field keeps the browser's own menu (copy / paste), and a right-click inside a popup
+  // drawn on <body> (it reaches here through React's tree, not the page's) is not this stat block's.
+  const onStatBlockContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+    const t = e.target as Element
+    if (!e.currentTarget.contains(t) || t.closest('input, textarea, select, [contenteditable]')) return
+    e.preventDefault()
+    setMenuAt({ x: e.clientX, y: e.clientY })
+  }
+  const downMark = downedMarker(combatant)
 
   const copyName = () => {
     navigator.clipboard?.writeText(combatant.name).then(
@@ -263,7 +307,8 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
   }
 
   return (
-    <div className="flex flex-col h-full" style={{ background: 'var(--bg-panel)' }}>
+    <div className="flex flex-col h-full" style={{ background: 'var(--bg-panel)' }} onContextMenu={onStatBlockContextMenu}>
+      {menuAt && <CombatantMenu c={combatant} x={menuAt.x} y={menuAt.y} onClose={() => setMenuAt(null)} />}
       {/* ── Page head — compact: display title + inline level + source.
            Dragging the header combines this stat block as tabs with another
            pane (replaces the old tabs button); clicking the name copies it. ── */}
@@ -316,7 +361,11 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
               }}>({combatant.creature.name})</span>
             )}
             {combatant.isPC && <Chip tone="accent">PC</Chip>}
-            {combatant.isDefeated && <Chip tone="danger">DEFEATED</Chip>}
+            {/* A creature that goes down like a player shows how it is — DYING n, or DEAD — rather
+                than a monster's DEFEATED. */}
+            {downMark
+              ? <span data-downed-marker=""><Chip tone="danger">{downMark}</Chip></span>
+              : combatant.isDefeated && <Chip tone="danger">DEFEATED</Chip>}
           </div>
 
           {/* Right meta — single line: level + source */}
@@ -397,7 +446,7 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
                 onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)' }}
               ><XIcon size={15} /></button>
             )}
-            {combatant.creature && <HamburgerMenu combatant={combatant} onEditClick={() => setShowEdit(true)} />}
+            {combatant.creature && <HamburgerMenu combatant={combatant} onEditClick={() => setShowEdit(true)} onCombatMenu={(x, y) => setMenuAt({ x, y })} />}
           </div>
         )}
       </div>
@@ -472,12 +521,14 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
                   stats={partyMatch.player.pcStats ?? {}}
                   detail={partyMatch.party.pcDetail ?? globalDetail}
                 />
+                {/* Escape in a notes box leaves the box and goes no further (utils/spendEscape). */}
                 <textarea
                   className="input-dark w-full text-sm"
                   style={{ minHeight: 120, resize: 'vertical', marginTop: 4 }}
                   placeholder="Player notes…"
                   value={partyMatch.player.notes}
                   onChange={e => updatePlayer(partyMatch.party.id, partyMatch.player.id, { notes: e.target.value })}
+                  onKeyDown={escapeLeavesBox}
                 />
               </>
             ) : (
@@ -491,6 +542,7 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
                   placeholder="Local notes for this combatant…"
                   value={combatant.notes}
                   onChange={e => setNotes(combatant.id, e.target.value)}
+                  onKeyDown={escapeLeavesBox}
                 />
               </>
             )}
@@ -503,6 +555,7 @@ export function CombatantDetail({ combatant, onClose, dockHandle, onHeaderDrag }
               placeholder="Notes about this combatant..."
               value={combatant.notes}
               onChange={e => setNotes(combatant.id, e.target.value)}
+              onKeyDown={escapeLeavesBox}
             />
           </div>
         ) : showDescription && combatant.creature ? (

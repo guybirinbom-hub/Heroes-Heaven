@@ -9,7 +9,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { createElement } from 'react'
 import { render, screen, fireEvent, cleanup, act } from '@testing-library/react'
-import { useCombatStore, invalidateEncounterCache } from './combatStore'
+import { useCombatStore, invalidateEncounterCache, downsAsPC, downedMarker, isDeadNpc, clearedByClearDefeated } from './combatStore'
 import { InitiativeTracker } from '../components/InitiativeTracker'
 import { useLayoutStore, useGmLayoutStore } from './layoutStore'
 import { useSettingsStore } from './settingsStore'
@@ -1261,6 +1261,576 @@ describe('turn-engine actions', () => {
     useCombatStore.getState().nextTurn()                  // Hero → skip both goblins → wrap to Hero
     expect(activeName()).toBe('Hero')
     expect(useCombatStore.getState().round).toBe(2)
+  })
+})
+
+// ───────────────────────────────────────────────────────────────────────────
+// 4b. Going down like a player (owner's list 2026-10-01, item 2)
+//
+//    "Right-click on a stat block → treat like a player when at 0 HP; a party NPC keeps the setting
+//    until undone." Answers (2026-10-10): "npcs should just have dying condition like players (and
+//    wounded) and give me the ability to change them. if i switch it goes dying if it's already at
+//    [0 HP]. The tracker moves a downed creature before whoever's turn it is." Decided with them: at
+//    the death value (Dying ≥ max(1, 4 − Doomed)) it is DEAD and a normal defeated NPC again — skipped,
+//    removed by Clear Defeated, brought back by Restore. Nothing automatic at a turn start.
+//    The party-member half (the setting kept on the member, read live) is in partyOrder.test.ts.
+// ───────────────────────────────────────────────────────────────────────────
+describe('a creature set to go down like a player', () => {
+  beforeEach(() => { resetCombat(); localStorage.clear() })
+  afterEach(() => {
+    cleanup()
+    useSettingsStore.setState({ persistentDamageAutoRoll: false })
+    localStorage.clear()
+  })
+
+  const row = (name: string) => useCombatStore.getState().combatants.find(c => c.name === name)!
+  const condNames = (name: string) => row(name).conditions.map(c => c.name).sort()
+  const dyingOf = (name: string) => row(name).conditions.find(c => c.name === 'dying')?.value
+
+  /** Wizard 30 · Goblin 20 · Hired Blade 10 (a hireling, set to go down like a player), on the Goblin's turn. */
+  function goblinsTurn() {
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Hired Blade', { initiative: 10, maxHP: 20 })
+    useCombatStore.getState().setDownsLikePC(idOf('Hired Blade'), true)
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().nextTurn()
+    expect(activeName()).toBe('Goblin')
+  }
+
+  it('at 0 HP it goes Unconscious + Dying and moves to just before the acting creature, ON its count', () => {
+    // MUTATION (applyDamage: `if (downsAsPC(c))` back to `if (c.isPC)`): FAILS — "expected [] to
+    //   deeply equal [ 'dying', 'unconscious' ]" (it was just marked beaten, like a monster).
+    // MUTATION (moveBeforeActive: drop `removed.initiative = acting?.initiative ?? removed.initiative`):
+    //   FAILS — "expected 10 to be 20" — and the initiative-edit leg below sends it back.
+    goblinsTurn()
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 50)
+    expect(row('Hired Blade').currentHP).toBe(0)
+    expect(row('Hired Blade').isDefeated).toBe(true)
+    expect(condNames('Hired Blade')).toEqual(['dying', 'unconscious'])
+    expect(dyingOf('Hired Blade')).toBe(1)
+    expect(names()).toEqual(['Wizard', 'Hired Blade', 'Goblin'])
+    expect(row('Hired Blade').initiative).toBe(20)
+    expect(activeName()).toBe('Goblin')
+    expect(downedMarker(row('Hired Blade'))).toBe('DYING 1')
+  })
+
+  it('keeps its turn, Clear Defeated leaves it, and healing above 0 revives it with Wounded 1', () => {
+    // MUTATION (clearedByClearDefeated — which skipsTurn reads — `if (!downsAsPC(c)) return true` back to
+    //   `if (!c.isPC) return true`, tried 2026-10-11): FAILS — "expected 'Goblin' to be 'Hired Blade'"
+    //   (the advance skipped a creature that still acts; Clear Defeated would have taken it too).
+    // MUTATION (applyHealing: `if (downsAsPC(c)) reviveConditions(c)` back to `if (c.isPC)`): FAILS —
+    //   "expected [ 'dying', 'unconscious' ] to deeply equal [ 'wounded' ]".
+    goblinsTurn()
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 50)   // [Wizard, Hired Blade, Goblin]
+    useCombatStore.getState().nextTurn()                              // Goblin → wrap → Wizard
+    expect(activeName()).toBe('Wizard')
+    useCombatStore.getState().nextTurn()                              // Wizard → the dying hireling
+    expect(activeName()).toBe('Hired Blade')
+
+    useCombatStore.getState().removeDefeated()
+    expect(names()).toContain('Hired Blade')
+
+    useCombatStore.getState().applyHealing(idOf('Hired Blade'), 5)
+    expect(condNames('Hired Blade')).toEqual(['wounded'])
+    expect(row('Hired Blade').conditions[0].value).toBe(1)
+    expect(row('Hired Blade').isDefeated).toBe(false)
+  })
+
+  it('a later initiative edit does not send it back; a drop BEFORE the fight keeps the rolled number', () => {
+    // MUTATION (moveBeforeActive: drop the `removed.initiative = …` copy): FAILS — "expected [ 'Wizard',
+    //   'Goblin', 'Hired Blade' ] to deeply equal [ 'Wizard', 'Hired Blade', 'Goblin' ]" (the settled
+    //   re-sort put it back on its own 10).
+    // MUTATION (moveBeforeActive: drop `if (!s.inCombat) return false`): FAILS — "expected [ 'Hired
+    //   Blade', 'Wizard', 'Goblin' ] to deeply equal [ 'Wizard', 'Goblin', 'Hired Blade' ]" (a drop
+    //   before the fight jumped the order and overwrote the number startCombat sorts by).
+    goblinsTurn()
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 50)
+    useCombatStore.getState().setInitiative(idOf('Wizard'), 31)          // a mid-fight edit re-sorts
+    expect(names()).toEqual(['Wizard', 'Hired Blade', 'Goblin'])
+    expect(activeName()).toBe('Goblin')
+
+    resetCombat()
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Hired Blade', { initiative: 10, maxHP: 20 })
+    useCombatStore.getState().setDownsLikePC(idOf('Hired Blade'), true)
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 50)        // no fight yet
+    expect(condNames('Hired Blade')).toEqual(['dying', 'unconscious'])
+    expect(names()).toEqual(['Wizard', 'Goblin', 'Hired Blade'])
+    expect(row('Hired Blade').initiative).toBe(10)
+  })
+
+  it('one ALREADY down that is hit again only gains Dying: it keeps the seat and the count its fall gave it', () => {
+    // Only a creature REDUCED to 0 HP moves before the acting creature; damage while already dying only
+    // raises Dying. The round-3 refuter's probes T1 / T1b (2026-10-13): a flagged NPC and a PC, each hit
+    // again on a later turn, jumped to before the creature acting THEN and took its count.
+    // MUTATION (applyDamage: `applyPCDefeat(s, id, wasUp)` → `applyPCDefeat(s, id)`, tried 2026-10-13):
+    //   FAILS — "not moved a second time: expected [ 'Hired Blade', 'Hero', …(2) ] to deeply equal
+    //   [ 'Wizard', 'Hired Blade', …(2) ]" (both jumped to before the Wizard) — and the no-HP-tracked leg
+    //   below fails with it.
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Hired Blade', { initiative: 10, maxHP: 20 }); add('Hero', { initiative: 5, isPC: true, maxHP: 20 })
+    useCombatStore.getState().setDownsLikePC(idOf('Hired Blade'), true)
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().nextTurn()                                  // the Goblin acts
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 50)        // down: before the Goblin, on 20
+    useCombatStore.getState().applyDamage(idOf('Hero'), 50)               // down: before the Goblin, on 20
+    expect(names()).toEqual(['Wizard', 'Hired Blade', 'Hero', 'Goblin'])
+    expect(activeName()).toBe('Goblin')
+    useCombatStore.getState().nextTurn()                                  // Goblin → wrap → the Wizard acts
+    expect(activeName()).toBe('Wizard')
+
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 5)         // hit again while dying
+    useCombatStore.getState().applyDamage(idOf('Hero'), 5)
+    expect(dyingOf('Hired Blade'), 'more Dying').toBe(2)
+    expect(dyingOf('Hero')).toBe(2)
+    expect(names(), 'not moved a second time').toEqual(['Wizard', 'Hired Blade', 'Hero', 'Goblin'])
+    expect(row('Hired Blade').initiative, 'nor given the Wizard’s count').toBe(20)
+    expect(row('Hero').initiative).toBe(20)
+    expect(activeName()).toBe('Wizard')
+  })
+
+  it('one with no HP tracked is down once beaten: its first hit moves it, the next only adds Dying', () => {
+    // A row with a name only (maxHP 0) is down when it is marked defeated — needsKnockOut's rule.
+    // MUTATION (applyDamage's then-rule `const wasUp = c.maxHP > 0 ? c.currentHP > 0 : !c.isDefeated` →
+    //   `const wasUp = c.currentHP > 0`, tried 2026-10-13): FAILED — "its fall moves it: expected [ 'Wizard',
+    //   'Goblin', 'Shade' ] to deeply equal [ 'Wizard', 'Shade', 'Goblin' ]" (read as down before its first hit).
+    //   Since round 4 the rule is wasUpBeforeHit. The same slip there — its body → `return c.currentHP > 0`
+    //   — FAILS here with the same message (and the Restore and first-fall legs with it, tried 2026-10-13);
+    //   its last line → `return true` FAILS here with "the next hit leaves it where its fall put it" (and
+    //   the ALREADY-down and stabilised legs with it, tried 2026-10-13).
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Shade', { initiative: 10 })                                      // a name only: no HP tracked
+    useCombatStore.getState().setDownsLikePC(idOf('Shade'), true)
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().nextTurn()                                  // the Goblin acts
+    useCombatStore.getState().applyDamage(idOf('Shade'), 5)
+    expect(names(), 'its fall moves it').toEqual(['Wizard', 'Shade', 'Goblin'])
+    expect(row('Shade').initiative).toBe(20)
+    expect(dyingOf('Shade')).toBe(1)
+    useCombatStore.getState().nextTurn()                                  // Goblin → wrap → the Wizard acts
+    expect(activeName()).toBe('Wizard')
+    useCombatStore.getState().applyDamage(idOf('Shade'), 5)
+    expect(dyingOf('Shade')).toBe(2)
+    expect(names(), 'the next hit leaves it where its fall put it').toEqual(['Wizard', 'Shade', 'Goblin'])
+    expect(row('Shade').initiative).toBe(20)
+  })
+
+  it('one brought back by Restore (its HP still 0) and hit again FALLS again: it moves before the acting creature, onto its count', () => {
+    // Restore takes the knock-out off and the defeated mark, but leaves HP at 0. The round-4 refuter's
+    // probes PA / PA-PC (2026-10-13): with "up" read from HP alone, a restored hireling — and a restored
+    // PC, which moved here before round 3 — went Unconscious + Dying 2 on the next hit but stayed in its
+    // old seat on its old count.
+    // MUTATION (wasUpBeforeHit back to `c.maxHP > 0 ? c.currentHP > 0 : !c.isDefeated`, tried 2026-10-13):
+    //   FAILS — "a fall again: expected [ 'Wizard', 'Hired Blade', …(2) ] to deeply equal [ 'Hired Blade',
+    //   'Hero', …(2) ]" (and partyOrder.test.ts's first-fall leg with it).
+    // MUTATION (wasUpBeforeHit: delete `if (!c.isDefeated) return true`, tried 2026-10-13): FAILS here alone
+    //   — "a fall again: expected [ 'Hired Blade', 'Wizard', …(2) ] to deeply equal [ 'Hired Blade', 'Hero',
+    //   …(2) ]": the restored PC stayed put (a restored hireling, bare of Dying and Unconscious, still
+    //   reads as up by the last line; a PC does not).
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Hired Blade', { initiative: 10, maxHP: 20 }); add('Hero', { initiative: 5, isPC: true, maxHP: 20 })
+    useCombatStore.getState().setDownsLikePC(idOf('Hired Blade'), true)
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().nextTurn()                                  // the Goblin acts
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 50)        // down: before the Goblin, on 20
+    useCombatStore.getState().applyDamage(idOf('Hero'), 50)
+    expect(names()).toEqual(['Wizard', 'Hired Blade', 'Hero', 'Goblin'])
+    useCombatStore.getState().setDefeated(idOf('Hired Blade'), false)     // Restore
+    useCombatStore.getState().setDefeated(idOf('Hero'), false)
+    expect(row('Hired Blade').currentHP, 'Restore leaves HP at 0').toBe(0)
+    expect(condNames('Hired Blade')).toEqual(['wounded'])
+    expect(condNames('Hero')).toEqual(['wounded'])
+    useCombatStore.getState().nextTurn()                                  // Goblin → wrap → the Wizard acts
+    expect(activeName()).toBe('Wizard')
+
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 5)
+    useCombatStore.getState().applyDamage(idOf('Hero'), 5)
+    expect(dyingOf('Hired Blade'), '1 + Wounded 1').toBe(2)
+    expect(dyingOf('Hero')).toBe(2)
+    expect(names(), 'a fall again').toEqual(['Hired Blade', 'Hero', 'Wizard', 'Goblin'])
+    expect(row('Hired Blade').initiative, 'onto the Wizard’s count').toBe(30)
+    expect(row('Hero').initiative).toBe(30)
+    expect(activeName()).toBe('Wizard')
+  })
+
+  it('a PC marked defeated at 0 HP with no Dying on the board stays in the fight: its turn, Clear Defeated leaves it, a hit does not move it', () => {
+    // How a campaign gets here: the GM Restores a downed PC (Unconscious and Dying off, HP stays 0, the
+    // push lands) and the player's next sheet write marks the row defeated again (pcSheetTruth
+    // writeVitals: isDefeated = currentHP === 0) — a player's Dying is the player's own. The round-4
+    // refuter's probes PH / SP4 (2026-10-13): only `if (c.isPC) return false` kept this row in the fight.
+    // MUTATION (clearedByClearDefeated: delete `if (c.isPC) return false`, tried 2026-10-13): FAILS here
+    //   alone — "a downed PC is never out of the fight: expected true to be false" (its turn would be
+    //   skipped, and Clear Defeated would delete the player's row).
+    // MUTATION (wasUpBeforeHit: delete `if (c.isPC) return false`, tried 2026-10-13): FAILS here alone —
+    //   "a hit on a PC already down: expected [ 'Hero', 'Wizard', 'Goblin' ] to deeply equal [ 'Wizard',
+    //   'Hero', 'Goblin' ]" (read as up by the last line, it jumped to before the Wizard).
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Hero', { initiative: 10, isPC: true, maxHP: 20 })
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().nextTurn()                                  // the Goblin acts
+    useCombatStore.getState().applyDamage(idOf('Hero'), 50)               // [Wizard, Hero, Goblin], on 20
+    useCombatStore.getState().setDefeated(idOf('Hero'), false)            // Restore: Wounded 1, HP 0
+    // The player's sheet still reads 0 HP: the seam's plain write marks the row defeated again.
+    useCombatStore.setState(s => { s.combatants.find(c => c.name === 'Hero')!.isDefeated = true })
+    expect(row('Hero').isDefeated).toBe(true)
+    expect(row('Hero').currentHP).toBe(0)
+    expect(condNames('Hero')).toEqual(['wounded'])
+    expect(clearedByClearDefeated(row('Hero')), 'a downed PC is never out of the fight').toBe(false)
+
+    useCombatStore.getState().nextTurn()                                  // Goblin → wrap → Wizard
+    useCombatStore.getState().nextTurn()                                  // Wizard → the downed PC
+    expect(activeName(), 'a downed PC takes its turn').toBe('Hero')
+    useCombatStore.getState().removeDefeated()
+    expect(names(), 'Clear Defeated never removes a PC').toEqual(['Wizard', 'Hero', 'Goblin'])
+
+    useCombatStore.getState().nextTurn()                                  // Hero → Goblin
+    useCombatStore.getState().nextTurn()                                  // Goblin → wrap → the Wizard acts
+    expect(activeName()).toBe('Wizard')
+    useCombatStore.getState().applyDamage(idOf('Hero'), 5)                // the GM's hit on a PC already down
+    expect(dyingOf('Hero')).toBe(2)
+    expect(names(), 'a hit on a PC already down').toEqual(['Wizard', 'Hero', 'Goblin'])
+    expect(row('Hero').initiative).toBe(20)
+  })
+
+  it('one stabilised (Dying off, Unconscious kept) and hit again is still down: Dying comes back, the seat stays', () => {
+    // MUTATION (wasUpBeforeHit: its last line without `|| n === 'unconscious'`, tried 2026-10-13): FAILS here
+    //   alone — "a stable creature hit again keeps its seat: expected [ 'Hired Blade', 'Wizard', 'Goblin' ]
+    //   to deeply equal [ 'Wizard', 'Hired Blade', 'Goblin' ]".
+    goblinsTurn()
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 50)          // [Wizard, Hired Blade, Goblin]
+    const dyingId = row('Hired Blade').conditions.find(c => c.name === 'dying')!.id
+    useCombatStore.getState().removeCondition(idOf('Hired Blade'), dyingId)  // stabilised
+    useCombatStore.getState().nextTurn()                                    // Goblin → wrap → the Wizard acts
+    expect(activeName()).toBe('Wizard')
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 5)
+    expect(dyingOf('Hired Blade')).toBe(1)
+    expect(names(), 'a stable creature hit again keeps its seat').toEqual(['Wizard', 'Hired Blade', 'Goblin'])
+    expect(row('Hired Blade').initiative).toBe(20)
+  })
+
+  it('one beaten while still STANDING, asleep, and then hit to 0 FALLS: it moves before the acting creature and is back in the fight', () => {
+    // It was at 25 HP: whatever it carries (Unconscious from a sleep spell), a hit to 0 is its fall.
+    // MUTATION (wasUpBeforeHit: delete `if (c.maxHP > 0 && c.currentHP > 0) return true`, tried
+    //   2026-10-13): FAILS here alone — "its fall moves it: expected [ 'Wizard', 'Goblin', 'Cave Lurker' ] to
+    //   deeply equal [ 'Wizard', 'Cave Lurker', 'Goblin' ]" (its Unconscious read as a knock-out taken).
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Cave Lurker', { initiative: 10, maxHP: 40 })
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().nextTurn()                                 // the Goblin acts
+    useCombatStore.getState().applyDamage(idOf('Cave Lurker'), 15)       // 25 / 40
+    useCombatStore.getState().addCondition(idOf('Cave Lurker'), { name: 'unconscious', isPermanent: true })  // asleep
+    useCombatStore.getState().setDefeated(idOf('Cave Lurker'), true)     // beaten
+    useCombatStore.getState().setDownsLikePC(idOf('Cave Lurker'), true)
+    expect(clearedByClearDefeated(row('Cave Lurker')), 'beaten: out of the fight').toBe(true)
+    useCombatStore.getState().applyDamage(idOf('Cave Lurker'), 50)
+    expect(condNames('Cave Lurker')).toEqual(['dying', 'unconscious'])
+    expect(names(), 'its fall moves it').toEqual(['Wizard', 'Cave Lurker', 'Goblin'])
+    expect(row('Cave Lurker').initiative).toBe(20)
+    expect(clearedByClearDefeated(row('Cave Lurker')), 'down and dying: back in the fight').toBe(false)
+  })
+
+  it('switching it on for a creature ALREADY down knocks it out now, as one undo step', () => {
+    // MUTATION (setDownsLikePC: drop `if (on && needsKnockOut(c)) applyPCDefeat(s, id)`): FAILS —
+    //   "expected [] to deeply equal [ 'dying', 'unconscious' ]".
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Cave Lurker', { initiative: 10, maxHP: 20 })
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().nextTurn()                                 // the Goblin acts
+    useCombatStore.getState().applyDamage(idOf('Cave Lurker'), 50)       // a plain monster: beaten
+    expect(condNames('Cave Lurker')).toEqual([])
+    expect(names()).toEqual(['Wizard', 'Goblin', 'Cave Lurker'])
+
+    useCombatStore.getState().setDownsLikePC(idOf('Cave Lurker'), true)
+    expect(downsAsPC(row('Cave Lurker'))).toBe(true)
+    expect(condNames('Cave Lurker')).toEqual(['dying', 'unconscious'])
+    expect(names()).toEqual(['Wizard', 'Cave Lurker', 'Goblin'])
+    expect(activeName()).toBe('Goblin')
+
+    // A switch is not a hit: on again (off, then on) with Dying already there adds nothing.
+    useCombatStore.getState().setDownsLikePC(idOf('Cave Lurker'), false)
+    useCombatStore.getState().setDownsLikePC(idOf('Cave Lurker'), true)
+    expect(dyingOf('Cave Lurker')).toBe(1)
+
+    // The row's own switch is an undo step: three Undos put the plain beaten monster back.
+    useCombatStore.getState().undo(); useCombatStore.getState().undo(); useCombatStore.getState().undo()
+    expect(downsAsPC(row('Cave Lurker'))).toBe(false)
+    expect(condNames('Cave Lurker')).toEqual([])
+    expect(row('Cave Lurker').isDefeated).toBe(true)
+  })
+
+  it('at its death value it is DEAD: skipped, removed by Clear Defeated, and Restore brings it back', () => {
+    // (This hireling dies STANDING — Dying by the badge at 20 HP — so it is out of the fight twice over:
+    // dead, and beaten while standing. The dead-NPC line of clearedByClearDefeated is pinned by the legs
+    // where a corpse is at 0 HP: the skipped-seat leg, the died-on-the-drop leg and the menu leg below,
+    // and partyOrder.test.ts's setting-from-another-device leg — each fails without it, tried 2026-10-11.)
+    // MUTATION (updateConditionValue: drop `settleDeath(c!)`): FAILS — "expected false to be true" on
+    //   the standing creature that reached Dying 4 by the badge's +.
+    // MUTATION (addCondition: drop `settleDeath(c)`): FAILS — "expected false to be true" on Doomed.
+    // MUTATION (setDefeated: `if (!val && downsAsPC(c)) reviveConditions(c)` back to `c.isPC`): FAILS —
+    //   "expected true to be false" (Restore left it dead).
+    goblinsTurn()
+    // Dying by the badge's −/+ (updateConditionValue), on a creature still standing: Dying 3 → 4.
+    useCombatStore.getState().addCondition(idOf('Hired Blade'), { name: 'dying', value: 3, isPermanent: true })
+    expect(row('Hired Blade').isDefeated).toBe(false)
+    const dyingId = row('Hired Blade').conditions.find(c => c.name === 'dying')!.id
+    useCombatStore.getState().updateConditionValue(idOf('Hired Blade'), dyingId, 4)
+    expect(isDeadNpc(row('Hired Blade'))).toBe(true)
+    expect(row('Hired Blade').isDefeated).toBe(true)
+    expect(downedMarker(row('Hired Blade'))).toBe('DEAD')
+
+    useCombatStore.getState().nextTurn()                       // Goblin → Hired Blade is dead → wrap
+    expect(activeName()).toBe('Wizard')
+    useCombatStore.getState().nextTurn()
+    expect(activeName()).toBe('Goblin')
+
+    // Restore brings it back: no Dying, Wounded 1, a turn again.
+    useCombatStore.getState().setDefeated(idOf('Hired Blade'), false)
+    expect(isDeadNpc(row('Hired Blade'))).toBe(false)
+    expect(condNames('Hired Blade')).toEqual(['wounded'])
+    expect(downedMarker(row('Hired Blade'))).toBeNull()
+
+    // Doomed 1 pulls the death value to 3: Dying 3 added on top kills it (addCondition).
+    useCombatStore.getState().addCondition(idOf('Hired Blade'), { name: 'doomed', value: 1, isPermanent: true })
+    useCombatStore.getState().addCondition(idOf('Hired Blade'), { name: 'dying', value: 3, isPermanent: true })
+    expect(row('Hired Blade').isDefeated).toBe(true)
+    expect(downedMarker(row('Hired Blade'))).toBe('DEAD')
+
+    useCombatStore.getState().removeDefeated()
+    expect(names()).toEqual(['Wizard', 'Goblin'])
+  })
+
+  it('Mark dead finishes it off; a PC and a plain monster are never "marked dead"', () => {
+    // MUTATION (markDead: drop `|| !downsAsPC(c)` from its guard): FAILS — "expected [ 'dying',
+    //   'unconscious' ] to deeply equal []" (the plain monster was "marked dead").
+    goblinsTurn()
+    add('Hero', { initiative: 5, isPC: true, maxHP: 20 })
+    useCombatStore.getState().markDead(idOf('Hired Blade'))
+    expect(row('Hired Blade').currentHP).toBe(0)
+    expect(dyingOf('Hired Blade')).toBe(4)
+    expect(isDeadNpc(row('Hired Blade'))).toBe(true)
+    useCombatStore.getState().markDead(idOf('Goblin'))
+    useCombatStore.getState().markDead(idOf('Hero'))
+    expect(condNames('Goblin')).toEqual([])
+    expect(condNames('Hero')).toEqual([])
+  })
+
+  it('its own persistent damage at the end of its turn knocks it out like a player, and it keeps its next turn', () => {
+    // MUTATION (firePersistentDamage: `if (downsAsPC(cur))` back to `if (cur.isPC)`): FAILS —
+    //   "expected [ 'persistent damage' ] to deeply equal [ 'dying', 'persistent damage', 'unconscious' ]".
+    add('Hired Blade', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    useCombatStore.getState().setDownsLikePC(idOf('Hired Blade'), true)
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 19)                        // 1 HP left
+    useCombatStore.getState().addCondition(idOf('Hired Blade'), { name: 'persistent damage', pdAmount: '1d4', pdType: 'bleed', isPermanent: true })
+    useSettingsStore.setState({ persistentDamageAutoRoll: true })
+    useCombatStore.getState().startCombat()
+    expect(activeName()).toBe('Hired Blade')
+    useCombatStore.getState().nextTurn()                       // its turn ends: it bleeds to 0
+    expect(condNames('Hired Blade')).toEqual(['dying', 'persistent damage', 'unconscious'])
+    expect(names(), 'the creature whose turn ended is not moved').toEqual(['Hired Blade', 'Goblin'])
+    useCombatStore.getState().nextTurn()                       // Goblin → wrap
+    expect(activeName(), 'a dying creature still takes its turn').toBe('Hired Blade')
+  })
+
+  it('a DEAD one on the skipped-seat path is left where it is — no splice under the skip loop', () => {
+    // nextTurn's skip loop runs a skipped seat's end of turn — its persistent damage — while walking the
+    // array. A dead hireling at 0 HP hit by its own burning reaches applyPCDefeat from there. Guarded
+    // twice since 2026-10-11: firePersistentDamage never moves (`applyPCDefeat(s, cur.id, false)` —
+    // pinned by the beaten-while-standing bleed leg below) and a corpse is left alone (applyPCDefeat's
+    // dead-NPC return — pinned by the corpse leg below).
+    // MUTATION (clearedByClearDefeated: drop `if (isDeadNpc(c)) return true`, tried 2026-10-11): FAILS —
+    //   "expected 'Hired Blade' to be 'Goblin'" (the corpse took a turn).
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Hired Blade', { initiative: 20, maxHP: 20 })
+    add('Goblin', { initiative: 10, maxHP: 20 })
+    useCombatStore.getState().setDownsLikePC(idOf('Hired Blade'), true)
+    useCombatStore.getState().markDead(idOf('Hired Blade'))
+    useCombatStore.getState().addCondition(idOf('Hired Blade'), { name: 'persistent damage', pdAmount: '1d4', pdType: 'fire', isPermanent: true })
+    useSettingsStore.setState({ persistentDamageAutoRoll: true })
+    useCombatStore.getState().startCombat()
+    expect(activeName()).toBe('Wizard')
+
+    useCombatStore.getState().nextTurn()                   // Wizard → (dead hireling burns, skipped) → Goblin
+    expect(names()).toEqual(['Wizard', 'Hired Blade', 'Goblin'])
+    expect(activeName()).toBe('Goblin')
+    expect(row('Hired Blade').initiative).toBe(20)
+    expect(dyingOf('Hired Blade')).toBe(4)
+  })
+
+  it('one that DIES on the drop (Doomed 3) is a defeated NPC at once: not moved, its own count kept, skipped', () => {
+    // MUTATION (applyPCDefeat: `if (move && !isDeadNpc(c)) moveBeforeActive(s, id)` → `if (move) …`, tried
+    //   2026-10-11): FAILS — "a corpse is not moved in front of the acting creature: expected [ 'Wizard',
+    //   'Hired Blade', 'Goblin' ] to deeply equal [ 'Wizard', 'Goblin', 'Hired Blade' ]".
+    goblinsTurn()
+    useCombatStore.getState().addCondition(idOf('Hired Blade'), { name: 'doomed', value: 3, isPermanent: true })
+    expect(isDeadNpc(row('Hired Blade')), 'Doomed 3 alone is not death: no Dying yet').toBe(false)
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 50)  // Dying 1 = its death value
+    expect(isDeadNpc(row('Hired Blade'))).toBe(true)
+    expect(downedMarker(row('Hired Blade'))).toBe('DEAD')
+    expect(names(), 'a corpse is not moved in front of the acting creature').toEqual(['Wizard', 'Goblin', 'Hired Blade'])
+    expect(row('Hired Blade').initiative, 'nor given its count').toBe(10)
+    expect(activeName()).toBe('Goblin')
+    useCombatStore.getState().nextTurn()                       // Goblin → the dead hireling is skipped → wrap
+    expect(activeName()).toBe('Wizard')
+  })
+
+  it('a dead one hit again is a corpse: nothing is added to it or rewritten on it', () => {
+    // MUTATION (applyPCDefeat: drop the first `if (isDeadNpc(c)) return`, tried 2026-10-11): FAILS — "no
+    //   Unconscious put on a corpse: expected [ 'doomed', 'dying', 'unconscious' ] to deeply equal
+    //   [ 'doomed', 'dying' ]" (and its Dying 4 would be "bumped" down to 2).
+    goblinsTurn()
+    useCombatStore.getState().addCondition(idOf('Hired Blade'), { name: 'doomed', value: 2, isPermanent: true })
+    useCombatStore.getState().addCondition(idOf('Hired Blade'), { name: 'dying', value: 4, isPermanent: true })
+    expect(isDeadNpc(row('Hired Blade'))).toBe(true)
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 50)
+    expect(condNames('Hired Blade'), 'no Unconscious put on a corpse').toEqual(['doomed', 'dying'])
+    expect(dyingOf('Hired Blade'), 'its Dying is not "bumped" DOWN to the death value 2').toBe(4)
+    expect(names()).toEqual(['Wizard', 'Goblin', 'Hired Blade'])
+  })
+
+  it('one the GM marked beaten while it still STANDS keeps its HP when switched on, and stays out of the fight', () => {
+    // The owner: "if i switch it goes dying if it's already at [0 HP]" — 25 of 40 is not 0.
+    // MUTATION (needsKnockOut: `(c.maxHP > 0 ? c.currentHP === 0 : c.isDefeated)` back to `(c.isDefeated
+    //   || (c.maxHP > 0 && c.currentHP === 0))`, tried 2026-10-11): FAILS — "its HP is the GM’s number,
+    //   kept: expected +0 to be 25" (the switch zeroed it and gave it Dying).
+    // MUTATION (clearedByClearDefeated: its last line `!c.isPC && c.maxHP > 0 && c.currentHP > 0` made
+    //   false, tried 2026-10-11): FAILS — "expected 'Cave Lurker' to be 'Wizard'" (a beaten creature that
+    //   never went down kept its turn — and Clear Defeated would have left it). Since 2026-10-13 that line
+    //   is `if (c.maxHP > 0 && c.currentHP > 0) return true`: made `… return false` it still fails here
+    //   (tried 2026-10-13); DELETED, the new last line (no Dying, no Unconscious: never went down) clears
+    //   this bare creature anyway, and only "…beaten while still STANDING stays out even with Unconscious
+    //   on it…", below, fails (tried 2026-10-13).
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Cave Lurker', { initiative: 10, maxHP: 40 })
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().nextTurn()                                 // the Goblin acts
+    useCombatStore.getState().applyDamage(idOf('Cave Lurker'), 15)       // 25 / 40
+    useCombatStore.getState().setDefeated(idOf('Cave Lurker'), true)     // it surrenders: beaten
+    useCombatStore.getState().setDownsLikePC(idOf('Cave Lurker'), true)
+    expect(downsAsPC(row('Cave Lurker'))).toBe(true)
+    expect(row('Cave Lurker').currentHP, 'its HP is the GM’s number, kept').toBe(25)
+    expect(condNames('Cave Lurker')).toEqual([])
+    expect(row('Cave Lurker').isDefeated).toBe(true)
+    expect(names()).toEqual(['Wizard', 'Goblin', 'Cave Lurker'])
+    // Beaten while standing, it never went down: out of the fight like any beaten creature.
+    useCombatStore.getState().nextTurn()                                 // Goblin → (skipped) → wrap
+    expect(activeName()).toBe('Wizard')
+    useCombatStore.getState().removeDefeated()
+    expect(names()).toEqual(['Wizard', 'Goblin'])
+  })
+
+  it('one beaten while still STANDING stays out even with Unconscious on it (asleep): only 0 HP is going down', () => {
+    // MUTATION (clearedByClearDefeated: delete `if (c.maxHP > 0 && c.currentHP > 0) return true`, tried
+    //   2026-10-13): FAILS here alone — "a beaten creature at 25 HP is skipped: expected 'Cave Lurker' to
+    //   be 'Wizard'" (its Unconscious read as a downed creature's). Made `… return false` it fails here and
+    //   in the two other beaten-while-standing legs.
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Cave Lurker', { initiative: 10, maxHP: 40 })
+    useCombatStore.getState().startCombat()
+    useCombatStore.getState().nextTurn()                                 // the Goblin acts
+    useCombatStore.getState().applyDamage(idOf('Cave Lurker'), 15)       // 25 / 40
+    useCombatStore.getState().addCondition(idOf('Cave Lurker'), { name: 'unconscious', isPermanent: true })  // asleep
+    useCombatStore.getState().setDefeated(idOf('Cave Lurker'), true)     // beaten
+    useCombatStore.getState().setDownsLikePC(idOf('Cave Lurker'), true)
+    expect(row('Cave Lurker').currentHP, 'a switch is not a hit').toBe(25)
+    expect(condNames('Cave Lurker')).toEqual(['unconscious'])
+    useCombatStore.getState().nextTurn()                                 // Goblin → (skipped) → wrap
+    expect(activeName(), 'a beaten creature at 25 HP is skipped').toBe('Wizard')
+    useCombatStore.getState().removeDefeated()
+    expect(names()).toEqual(['Wizard', 'Goblin'])
+  })
+
+  it('one that went down and was stabilised (Dying taken off, Unconscious kept) is still down: it keeps its turn, Clear Defeated leaves it', () => {
+    // A beaten creature at 0 HP that NEVER went down like a player — no Dying, no Unconscious — is out
+    // of the fight (partyOrder.test.ts: a setting from another device). One that went down and was
+    // stabilised still carries Unconscious, like a stable player, and stays.
+    // MUTATION (clearedByClearDefeated: `n === 'dying' || n === 'unconscious'` → `n === 'dying'`, tried
+    //   2026-10-13): FAILS — "a stable creature still takes its turn: expected 'Goblin' to be 'Hired Blade'".
+    goblinsTurn()
+    useCombatStore.getState().applyDamage(idOf('Hired Blade'), 50)          // [Wizard, Hired Blade, Goblin]
+    const dyingId = row('Hired Blade').conditions.find(c => c.name === 'dying')!.id
+    useCombatStore.getState().removeCondition(idOf('Hired Blade'), dyingId)  // stabilised
+    expect(condNames('Hired Blade')).toEqual(['unconscious'])
+    useCombatStore.getState().nextTurn()                                    // Goblin → wrap → Wizard
+    useCombatStore.getState().nextTurn()                                    // Wizard → the stable hireling
+    expect(activeName(), 'a stable creature still takes its turn').toBe('Hired Blade')
+    useCombatStore.getState().removeDefeated()
+    expect(names()).toContain('Hired Blade')
+  })
+
+  it('a beaten-while-standing one bleeding to 0 on the skipped-seat path goes Dying where it sits — no splice under the loop', () => {
+    // MUTATION (firePersistentDamage: `applyPCDefeat(s, cur.id, false)` → `applyPCDefeat(s, cur.id)`,
+    //   tried 2026-10-11): FAILS — "nothing spliced under the skip loop: expected [ 'Cave Lurker', 'Wizard',
+    //   'Goblin' ] to deeply equal [ 'Wizard', 'Cave Lurker', 'Goblin' ]" (moved in front of the creature
+    //   whose turn was ending, mid-loop, on its count).
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Cave Lurker', { initiative: 20, maxHP: 40 })
+    add('Goblin', { initiative: 10, maxHP: 20 })
+    useCombatStore.getState().applyDamage(idOf('Cave Lurker'), 35)        // 5 / 40
+    useCombatStore.getState().setDefeated(idOf('Cave Lurker'), true)      // beaten, still standing
+    useCombatStore.getState().setDownsLikePC(idOf('Cave Lurker'), true)
+    useCombatStore.getState().addCondition(idOf('Cave Lurker'), { name: 'persistent damage', pdAmount: '1d4+10', pdType: 'fire', isPermanent: true })
+    useSettingsStore.setState({ persistentDamageAutoRoll: true })
+    useCombatStore.getState().startCombat()
+    expect(activeName()).toBe('Wizard')
+
+    useCombatStore.getState().nextTurn()                   // Wizard → (Cave Lurker skipped, burns to 0) → Goblin
+    expect(row('Cave Lurker').currentHP).toBe(0)
+    expect(condNames('Cave Lurker')).toEqual(['dying', 'persistent damage', 'unconscious'])
+    expect(names(), 'nothing spliced under the skip loop').toEqual(['Wizard', 'Cave Lurker', 'Goblin'])
+    expect(row('Cave Lurker').initiative).toBe(20)
+    expect(activeName()).toBe('Goblin')
+  })
+
+  it('switched on while it already carries Dying at its death value, it is dead — and defeated', () => {
+    // MUTATION (setDownsLikePC: drop `settleDeath(c)`, tried 2026-10-11): FAILS — "a dead NPC is defeated —
+    //   dimmed, and its menu offers Restore: expected false to be true" (DEAD, skipped, cleared, yet drawn
+    //   standing with "Knock out (0 HP)" on its menu).
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Cave Lurker', { initiative: 10, maxHP: 20 })
+    useCombatStore.getState().addCondition(idOf('Cave Lurker'), { name: 'dying', value: 4, isPermanent: true })
+    expect(row('Cave Lurker').isDefeated, 'on a plain monster Dying is only a badge').toBe(false)
+    useCombatStore.getState().setDownsLikePC(idOf('Cave Lurker'), true)
+    expect(isDeadNpc(row('Cave Lurker'))).toBe(true)
+    expect(row('Cave Lurker').isDefeated, 'a dead NPC is defeated — dimmed, and its menu offers Restore').toBe(true)
+  })
+
+  it('the menu says what it does: Knock out / Mark dead / the switch on a flagged row; Mark defeated elsewhere', () => {
+    // MUTATION (CombatantMenu: `downer ? 'Knock out (0 HP)' : 'Mark defeated'` back to 'Mark defeated'):
+    //   FAILS — "expected <button …(1)></button> to be null" (a flagged row still says Mark defeated).
+    // MUTATION (InitRow: drop the `downMark && <Chip …>` chip): FAILS — "Unable to find an element with
+    //   the text: DYING 1".
+    // MUTATION (setDefeated: `if (val && downsAsPC(c))` back to `if (val && c.isPC)`): FAILS — "Unable to
+    //   find an element with the text: DYING 1" (Knock out only marked it beaten).
+    // MUTATION (InitiativeTracker: `hasDefeatedNpcs = combatants.some(clearedByClearDefeated)` back to
+    //   `c.isDefeated && !c.isPC`): FAILS — "expected <button…>Clear Defeated</button> to be null".
+    add('Wizard', { initiative: 30, maxHP: 20 }); add('Goblin', { initiative: 20, maxHP: 20 })
+    add('Hero', { initiative: 15, isPC: true, maxHP: 20 })
+    render(createElement(InitiativeTracker))
+    const rowEl = (name: string) => screen.getByText(name).closest('.init-row')!
+
+    fireEvent.contextMenu(rowEl('Goblin'))
+    expect(screen.getByText('Mark defeated')).not.toBeNull()
+    expect(screen.queryByText('Mark dead')).toBeNull()
+    const sw = screen.getByRole('menuitemcheckbox')
+    expect(sw.textContent).toContain('At 0 HP: dying like a player')
+    expect(sw.getAttribute('aria-checked')).toBe('false')
+    fireEvent.click(sw)                                         // switch it on (closes the menu)
+    expect(downsAsPC(row('Goblin'))).toBe(true)
+
+    fireEvent.contextMenu(rowEl('Goblin'))
+    expect(screen.getByRole('menuitemcheckbox').getAttribute('aria-checked')).toBe('true')
+    expect(screen.queryByText('Mark defeated')).toBeNull()
+    fireEvent.click(screen.getByText('Knock out (0 HP)'))
+    expect(screen.getByText('DYING 1')).not.toBeNull()
+    expect(screen.queryByText('Clear Defeated')).toBeNull()      // a dying hireling is not cleared
+
+    fireEvent.contextMenu(rowEl('Goblin'))
+    expect(screen.getByText('Restore')).not.toBeNull()
+    fireEvent.click(screen.getByText('Mark dead'))
+    expect(screen.getByText('DEAD')).not.toBeNull()
+    expect(screen.getByText('Clear Defeated')).not.toBeNull()   // …a dead one is
+
+    // A PC's menu has no switch: a player character always goes down like one.
+    fireEvent.contextMenu(rowEl('Hero'))
+    expect(screen.queryByRole('menuitemcheckbox')).toBeNull()
+    expect(screen.getByText('Mark defeated')).not.toBeNull()
   })
 })
 

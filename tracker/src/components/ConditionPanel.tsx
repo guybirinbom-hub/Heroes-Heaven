@@ -226,6 +226,22 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
     return () => document.removeEventListener('mousedown', handler)
   }, [anchorEl, onClose])
 
+  // Escape closes the top layer — the Advanced editor while it is open, else this picker — and goes no
+  // further. Drawn inside the tracker (fixed, not on <body>), neither is a popup Heroes Heaven's Escape
+  // can see, so the key, typed in the search box that takes the focus as the picker opens, fell through
+  // and LEFT THE CAMPAIGN (found 2026-10-11: this is where the GM adds Dying and Wounded, owner's list
+  // 2026-10-01 item 2).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      e.stopPropagation()
+      if (advOpen) setAdvOpen(false)
+      else onClose()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [advOpen, onClose])
+
   const handleSelect = (name: string) => {
     if (selected === name) return
     setSelected(name); setValue(1)

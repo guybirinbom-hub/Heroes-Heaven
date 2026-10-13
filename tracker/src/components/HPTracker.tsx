@@ -4,6 +4,7 @@ import { useCombatStore } from '../store/combatStore'
 import { ConditionPanel, ConditionBadgeList } from './ConditionPanel'
 import { NumberInput } from './NumberInput'
 import { TraitTags } from './TraitTags'
+import { spendEscape } from '../utils/spendEscape'
 
 interface Props {
   combatant: Combatant
@@ -20,6 +21,13 @@ export function HPTracker({ combatant, showNotes, onToggleNotes, showDescription
   const [newMax, setNewMax] = useState(combatant.maxHP)
   const [showConditions, setShowConditions] = useState(false)
   const condBtnRef = useRef<HTMLButtonElement>(null)
+  // The max-HP box was already settled — Escape cancelled it, or Enter committed it — so a blur the
+  // browser fires as the box goes away must not commit (again).
+  const maxSettled = useRef(false)
+  const beginEditMax = () => { maxSettled.current = false; setNewMax(combatant.maxHP); setEditingMax(true) }
+  // ESCAPE IN THESE BOXES IS SPENT HERE (utils/spendEscape): left to bubble, it LEFT THE CAMPAIGN — and
+  // the damage box is where the GM types the hit that drops a creature to 0 (owner's list 2026-10-01,
+  // item 2; found 2026-10-11). The rename / initiative boxes on the row do the same (InitiativeTracker).
 
   // Hazards don't track HP/AC like combatants — they're triggered, do their
   // thing, and are dealt with via Disable / damage outside the bar metaphor.
@@ -129,7 +137,7 @@ export function HPTracker({ combatant, showNotes, onToggleNotes, showDescription
           type="text" value={input}
           placeholder="50 · -30 · t15"
           onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && handleApply()}
+          onKeyDown={e => { if (!spendEscape(e, () => setInput('')) && e.key === 'Enter') handleApply() }}
           className="input-dark input-mono"
           style={{ width: 96, padding: '5px 10px', fontSize: 12, flexShrink: 0 }}
         />
@@ -201,8 +209,11 @@ export function HPTracker({ combatant, showNotes, onToggleNotes, showDescription
                   value={newMax}
                   onChange={e => setNewMax(parseInt(e.target.value) || 0)}
                   onStep={n => setNewMax(Math.max(0, n))}
-                  onBlur={() => { setMaxHP(combatant.id, newMax); setEditingMax(false) }}
-                  onKeyDown={e => e.key === 'Enter' && (setMaxHP(combatant.id, newMax), setEditingMax(false))}
+                  onBlur={() => { if (!maxSettled.current) setMaxHP(combatant.id, newMax); setEditingMax(false) }}
+                  onKeyDown={e => {
+                    if (spendEscape(e, () => { maxSettled.current = true; setEditingMax(false) })) return
+                    if (e.key === 'Enter') { maxSettled.current = true; setMaxHP(combatant.id, newMax); setEditingMax(false) }
+                  }}
                   style={{ width: 76, fontSize: 12 }}
                   autoFocus
                 />
@@ -212,13 +223,13 @@ export function HPTracker({ combatant, showNotes, onToggleNotes, showDescription
                 {' / '}<span>{effMax}</span>
                 <span style={{ color: 'var(--text-faded)', cursor: 'pointer' }}
                   title={`Original max HP — Drained ${drainedVal} reduces it by ${drainedLoss}. Click to edit.`}
-                  onClick={() => { setNewMax(combatant.maxHP); setEditingMax(true) }}>
+                  onClick={beginEditMax}>
                   {' '}({oldMax})
                 </span>
               </>
             ) : (
               <span style={{ color: 'var(--text-faded)', cursor: 'pointer' }}
-                onClick={() => { setNewMax(combatant.maxHP); setEditingMax(true) }}>
+                onClick={beginEditMax}>
                 {' / '}{combatant.maxHP}
               </span>
             )}

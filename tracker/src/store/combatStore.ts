@@ -93,30 +93,195 @@ function reviveConditions(c: Combatant) {
   else c.conditions.push({ id: ncid(), name: 'wounded', value: 1, isPermanent: true })
 }
 
-// Shared PC-defeat logic: sets HP to 0, applies Unconscious + Dying, reorders initiative
-function applyPCDefeat(s: { combatants: Combatant[]; activeIndex: number }, id: string) {
+// ── Going down like a player (owner's list 2026-10-01, item 2) ───────────────────────────────────
+/*
+ * "Right-click on a stat block → treat like a player when at 0 HP; a party NPC keeps the setting until
+ * undone." … "npcs should just have dying condition like players (and wounded) and give me the ability
+ * to change them. if i switch it goes dying if it's already at [0 HP]. The tracker moves a downed
+ * creature before whoever's turn it is." (the owner's answers, 2026-10-10)
+ *
+ * A PC always goes down like a player. Any other creature does when the GM switches it on: per row
+ * (`Combatant.downsLikePC`), or — for a row added for a party member (`partyMemberId`) — on that MEMBER
+ * (`PartyPlayer.downsLikePC`), read LIVE here and never copied onto the row, so a toggle on the party
+ * card reaches every live row of that member at once, Undo / Redo / a board from another device can
+ * never put an old copy of the setting back, and an unrelated Undo never takes the setting away.
+ *
+ * `downsAsPC` decides ONLY the 0-HP and turn-order splits — applyPCDefeat's guard, applyDamage,
+ * persistent damage, the healing revive, Mark defeated / Restore, skipsTurn, Clear Defeated and the
+ * Clear Defeated button. Everything else that reads `isPC` (initiative rolls, the PC pane, Duplicate,
+ * the XP sides, the sheet join, the tie rule, the turn timer) must go on reading `isPC`: a flagged NPC
+ * is still a creature with a stat block, an enemy or an ally, never a player character.
+ *
+ * DEATH. At its death value — Dying ≥ max(1, 4 − Doomed), as on a player's sheet — a creature that
+ * goes down like a player is DEAD, and a dead NPC is a normal defeated NPC again: its turn is skipped,
+ * Clear Defeated removes it, Restore (or healing) brings it back. Nothing here rolls a recovery check
+ * or reminds anyone of one ("there isn't a need for a reminder for a recovery check").
+ */
+
+/** The party member a row was added for, when that member is still in a party. */
+function partyMemberOf(c: Combatant) {
+  if (!c.partyMemberId) return undefined
+  for (const p of usePartyStore.getState().parties) {
+    const pl = p.players.find(x => x.id === c.partyMemberId)
+    if (pl) return pl
+  }
+  return undefined
+}
+
+/** Does this creature go down like a player at 0 HP? A PC always; a party member's row as that member
+ *  is set (live); any other row as its own flag says. */
+export function downsAsPC(c: Combatant): boolean {
+  if (c.isPC) return true
+  const m = partyMemberOf(c)
+  return m ? !!m.downsLikePC : !!c.downsLikePC
+}
+
+/** The Dying value at which this creature dies: 4, reduced by Doomed, never below 1. */
+export function deathValue(c: Combatant): number {
+  return Math.max(1, 4 - condValue(c, 'doomed'))
+}
+
+/** A creature that goes down like a player whose Dying has reached its death value. */
+function atDeathValue(c: Combatant): boolean {
+  return downsAsPC(c) && condValue(c, 'dying') >= deathValue(c)
+}
+
+/** A NON-PC that went down like a player and died: from here on a normal defeated NPC (skipped,
+ *  removed by Clear Defeated). A PC's death is the player's (their sheet); the tracker only shows it. */
+export function isDeadNpc(c: Combatant): boolean {
+  return !c.isPC && atDeathValue(c)
+}
+
+/** The marker a creature that goes down like a player wears on its row and its stat block: DEAD at the
+ *  death value, else DYING n while it has Dying. Null for everyone else — a monster's defeat keeps its
+ *  own look. Never the one-letter condition badge, where Dying 2 and Doomed 2 both read "D2". */
+export function downedMarker(c: Combatant): string | null {
+  if (!downsAsPC(c)) return null
+  const dying = condValue(c, 'dying')
+  if (dying <= 0) return null
+  return dying >= deathValue(c) ? 'DEAD' : `DYING ${dying}`
+}
+
+/**
+ * OUT OF THE FIGHT — removed by Clear Defeated, and (skipsTurn) passed over by the turn advance:
+ *  - a defeated creature that does not go down like a player;
+ *  - a dead NPC that did — defeated or not: a party member's setting switched on from another device
+ *    reaches its rows without anyone settling them;
+ *  - one set to go down like a player that the GM marked beaten while it still STANDS (HP above 0): it
+ *    never went down, so there is no dying to keep it in the fight;
+ *  - one set to go down like a player that is beaten at 0 HP with neither Dying nor Unconscious: it was
+ *    beaten as a monster BEFORE the setting reached it — a party member's setting arriving by the party
+ *    sync, from the GM's other device, or set while another campaign's board was loaded — and nobody on
+ *    this board knocked it out (knockOutPartyMember runs only from this device's own switch). It never
+ *    went down like a player, so it stays a beaten creature: skipped, cleared, no marker. (One that went
+ *    down and was then stabilised — Dying taken off, Unconscious kept — is still a downed creature.)
+ * A downed PC — or a downed (0 HP), still-dying creature set to go down like one — stays, and acts.
+ */
+export function clearedByClearDefeated(c: Combatant): boolean {
+  if (isDeadNpc(c)) return true
+  if (!c.isDefeated) return false
+  if (!downsAsPC(c)) return true
+  if (c.isPC) return false
+  if (c.maxHP > 0 && c.currentHP > 0) return true
+  return !c.conditions.some(x => { const n = x.name.toLowerCase(); return n === 'dying' || n === 'unconscious' })
+}
+
+/** A dead NPC is defeated, whichever way its Dying got there (the −/+ on its badge included). */
+function settleDeath(c: Combatant) {
+  if (isDeadNpc(c)) c.isDefeated = true
+}
+
+/**
+ * Move a creature that just went DOWN to just before the creature whose turn it is — and onto that
+ * creature's initiative count, as `returnFromDelay` does: the array position alone says it now acts
+ * AHEAD of it (initSort keeps mid-combat ties as the board has them), so a later initiative edit or
+ * Sort can't send it back to its old seat. Out of combat nothing moves: the fight hasn't started, and
+ * startCombat sorts by the rolled numbers, which a drop before the fight must not overwrite.
+ *
+ * Exported for the campaign seam (src/integration/pcSheetTruth.ts), which moves a player character
+ * whose OWN sheet reached 0 HP mid-fight inside its plain (non-gesture) write — so the reorder is one
+ * rule, not two. Answers whether it moved.
+ */
+export function moveBeforeActive(s: { combatants: Combatant[]; activeIndex: number; inCombat: boolean }, id: string): boolean {
+  if (!s.inCombat) return false
+  const idx = s.combatants.findIndex(x => x.id === id)
+  const activeIdx = s.activeIndex
+  if (idx === -1 || idx === activeIdx || s.combatants.length < 2) return false
+  const [removed] = s.combatants.splice(idx, 1)
+  const adjustedActive = idx < activeIdx ? activeIdx - 1 : activeIdx
+  const acting = s.combatants[adjustedActive]
+  removed.initiative = acting?.initiative ?? removed.initiative
+  s.combatants.splice(adjustedActive, 0, removed)
+  s.activeIndex = adjustedActive + 1
+  return true
+}
+
+/**
+ * Shared "goes down like a player" logic: sets HP to 0, applies Unconscious + Dying, reorders initiative.
+ *
+ * `move` is false for a creature dropped by its OWN persistent damage (firePersistentDamage): that runs
+ * at the end of its turn — when it is the creature whose turn is ending, already just before the next —
+ * or for a seat nextTurn's skip loop (or startCombat's opening run) is stepping OVER, while that loop
+ * walks the array: a splice there would shift the seats under it. It is false too for a hit on one that
+ * was ALREADY down (applyDamage's `wasUpBeforeHit`): that is no new fall, only more Dying.
+ */
+function applyPCDefeat(s: { combatants: Combatant[]; activeIndex: number; inCombat: boolean }, id: string, move = true) {
   const c = s.combatants.find(c => c.id === id)
-  if (!c || !c.isPC) return
+  if (!c || !downsAsPC(c)) return
   c.isDefeated = true
   c.currentHP = 0
+  // A DEAD NPC: nothing more happens to it — no Unconscious, no Dying rewritten (a bump capped by a
+  // lower death value would even LOWER it), no move. It is a normal defeated NPC. (A PC is never a dead
+  // NPC, so a PC's knock-out is exactly what it always was.)
+  if (isDeadNpc(c)) return
   if (!c.conditions.some(x => x.name.toLowerCase() === 'unconscious')) {
     c.conditions.push({ id: ncid(), name: 'unconscious', isPermanent: true })
   }
   // Dropped to 0 HP → Dying as well as Unconscious. The value gained is 1 + your Wounded value, or
   // +1 if you were already Dying, never past the death threshold (4, reduced by Doomed, min 1).
   // Mirrors applyDamage in the player sheet's src/rules/play.ts.
-  const deathAt = Math.max(1, 4 - condValue(c, 'doomed'))
+  const deathAt = deathValue(c)
   const dying = c.conditions.find(x => x.name.toLowerCase() === 'dying')
   if (dying) dying.value = Math.min(deathAt, (dying.value ?? 0) + 1)
   else c.conditions.push({ id: ncid(), name: 'dying', value: Math.min(deathAt, 1 + condValue(c, 'wounded')), isPermanent: true })
-  const pcIdx = s.combatants.findIndex(x => x.id === id)
-  const activeIdx = s.activeIndex
-  if (pcIdx !== -1 && pcIdx !== activeIdx && s.combatants.length > 1) {
-    const [removed] = s.combatants.splice(pcIdx, 1)
-    const adjustedActive = pcIdx < activeIdx ? activeIdx - 1 : activeIdx
-    s.combatants.splice(adjustedActive, 0, removed)
-    s.activeIndex = adjustedActive + 1
-  }
+  // One that DIES on this very drop (Doomed 3, or hit again at Dying 3) is a normal defeated NPC from
+  // here — skipped, cleared — and a defeated NPC never moves, nor takes the acting creature's count.
+  if (move && !isDeadNpc(c)) moveBeforeActive(s, id)
+}
+
+/** Switching "dying like a player" ON for a creature that is ALREADY down knocks it out now ("if i
+ *  switch it goes dying if it's already at [0 HP]"). Down is 0 HP; a row with no HP tracked (name only)
+ *  is down when it is marked defeated. A creature the GM marked beaten while it still has HP keeps its HP
+ *  and stays beaten (clearedByClearDefeated). One that already has Dying keeps the value it has: a
+ *  switch is not a hit. */
+function needsKnockOut(c: Combatant): boolean {
+  return !c.isPC && downsAsPC(c)
+    && (c.maxHP > 0 ? c.currentHP === 0 : c.isDefeated)
+    && !c.conditions.some(x => x.name.toLowerCase() === 'dying')
+}
+
+/**
+ * Was this creature still UP before a hit (applyDamage)? Only a creature that FALLS — goes from up to
+ * down like a player — moves before the acting creature, onto its count. One hit again while already
+ * down (a dying PC, a dying creature set to go down like one) only gains Dying (+1, applyPCDefeat) and
+ * keeps the seat its fall gave it: moved again, it would jump to before whoever acts NOW and take that
+ * creature's count. The seam's rule for a player's own sheet is the same (pcSheetTruth writeVitals: "not
+ * moved a second time for the same fall").
+ *
+ * DOWN is: not standing (0 HP — a row with no HP tracked has only the defeated mark to go by), AND
+ * marked defeated, AND — for a non-PC — carrying the knock-out (Dying, or Unconscious once stabilised).
+ * So these are UP, and their hit to 0 is a fall that moves them:
+ *  - one above 0 HP, whatever it carries (beaten while standing, asleep: Unconscious is no knock-out);
+ *  - one RESTORED (Restore takes Unconscious and Dying off and the defeated mark, but leaves HP at 0);
+ *  - a non-PC beaten at 0 HP as a MONSTER before its setting reached it (no Dying, no Unconscious —
+ *    clearedByClearDefeated's last case): it never went down like a player; this hit is its first fall.
+ * A PC marked defeated at 0 HP is down whatever its conditions: a player's Dying is the player's own.
+ */
+function wasUpBeforeHit(c: Combatant): boolean {
+  if (c.maxHP > 0 && c.currentHP > 0) return true
+  if (!c.isDefeated) return true
+  if (c.isPC) return false
+  return !c.conditions.some(x => { const n = x.name.toLowerCase(); return n === 'dying' || n === 'unconscious' })
 }
 
 // Conditions consumed at the START of a creature's turn (Stunned — it eats your
@@ -185,9 +350,13 @@ function tickSourceDurations(s: { combatants: Combatant[] }, sourceIds: Set<stri
   }
 }
 
-/** Skipped by the turn advance: a defeated NPC (downed PCs still act) or anyone who Delayed. */
+/** Skipped by the turn advance: anyone who Delayed, and every creature out of the fight
+ *  (clearedByClearDefeated — a defeated monster, a dead NPC, one marked beaten while it still stands). A
+ *  creature that goes down like a player and is still Dying keeps its turn (a downed PC still acts).
+ *  A seat skipped here has its end of turn run by the skip loop, and a knock-out from there never moves
+ *  it (applyPCDefeat's `move`, which firePersistentDamage passes false). */
 function skipsTurn(c: Combatant | undefined): boolean {
-  return !!c && (c.isDelayed || (c.isDefeated && !c.isPC))
+  return !!c && (c.isDelayed || clearedByClearDefeated(c))
 }
 
 // Turn-advance bookkeeping. Declared here rather than in types/pf2e.ts because the turn engine in
@@ -267,9 +436,28 @@ interface CombatStore {
   duplicateCombatant: (id: string) => void
   removeCombatant: (id: string) => void
   /** Drop every DEFEATED non-PC from the board (PCs stay, downed or not) so the next fight starts
-   *  clean and the removed monsters stop counting toward its XP budget. The active pointer follows
-   *  its combatant by id, or falls to the next survivor. Recorded as one undo step. */
+   *  clean and the removed monsters stop counting toward its XP budget. A creature set to go down
+   *  like a player stays while it is down and Dying, and goes once it is dead — or when the GM marked
+   *  it beaten while it still stood (clearedByClearDefeated). The
+   *  active pointer follows its combatant by id, or falls to the next survivor. Recorded as one undo
+   *  step. */
   removeDefeated: () => void
+  /** "At 0 HP: dying like a player" on one row (never a PC — a PC always does). A row added for a party
+   *  member sets that MEMBER (partyStore.setPlayerDownsLikePC) — a setting, not a combat edit, so on its
+   *  own it is not an undo step; any other row sets its own flag as one undo step. Switching it ON for a
+   *  creature already at 0 HP knocks it out now (Unconscious + Dying, moved before whoever's turn it
+   *  is), and one already carrying Dying at its death value is dead — defeated. */
+  setDownsLikePC: (id: string, on: boolean) => void
+  /** The party member `memberId` was just set to go down like a player: every live row of that member
+   *  that is already at 0 HP is knocked out now, and one already at its death value is defeated. That
+   *  change to the board and the switch that made it are ONE gesture: Undo takes back both (the member's
+   *  setting included — or the row is left a beaten creature that keeps its turn), Redo puts back both.
+   *  Called by the party store's setter. */
+  knockOutPartyMember: (memberId: string) => void
+  /** Finish off a creature set to go down like a player: 0 HP, Unconscious, Dying at its death value —
+   *  DEAD, a normal defeated NPC from here (skipped; Clear Defeated removes it; Restore brings it back).
+   *  No-op on a PC (their Dying is their sheet's) and on a creature that is not set to go down. */
+  markDead: (id: string) => void
   /** Delay: the combatant leaves the turn order (skipped like a defeated NPC) until it is brought
    *  back with `returnFromDelay`, and its turn ends (p. 416's negatives run). ONLY the creature whose
    *  turn it is may Delay — any other id is a no-op and returns false. */
@@ -429,6 +617,10 @@ function combatSignature(combatants: Combatant[]): string {
     // The party-member stamp joins the fingerprint only when there is one, so a board saved before
     // the stamp existed still reads "unchanged since save" (no Clear prompt for an untouched board).
     c.isPC ? 1 : 0, c.isAlly ? 1 : 0, ...(c.partyMemberId != null ? [`pm:${c.partyMemberId}`] : []),
+    // The row's own "dying like a player" the same way: a column only when it is on, so every board
+    // saved before the setting existed still reads unchanged. (A party member's setting lives on the
+    // member, not the board.)
+    ...(c.downsLikePC ? ['downs-like-pc'] : []),
     c.currentHP, c.maxHP, c.tempHP,
     c.isElite ? 1 : 0, c.isWeak ? 1 : 0, c.scaledToLevel ?? '', c.isDefeated ? 1 : 0,
     c.notes ?? '',
@@ -528,20 +720,40 @@ if (typeof window !== 'undefined') window.addEventListener('pagehide', flushPers
 // conditions, defeat, …) are recorded, matching the "undo a mis-typed number" use
 // case — and so is Next Turn, whose condition ticks and persistent damage prevTurn
 // can't recreate (see nextTurn). Stepping back with prevTurn is not recorded.
-interface CombatSnapshot { combatants: Combatant[]; round: number; activeIndex: number }
+/** A party member's "dying like a player" that goes back with a snapshot (knockOutPartyMember). */
+interface MemberDowns { id: string; downsLikePC: boolean }
+interface CombatSnapshot {
+  combatants: Combatant[]; round: number; activeIndex: number
+  /** Set only on the step a party member's switch made (it knocked out or settled that member's rows):
+   *  the member's setting as it stood on this board. Restoring the snapshot puts it back too, so the
+   *  switch and what it did to the board are undone — and redone — as one. Every other step leaves the
+   *  member's setting alone ("a party NPC keeps the setting until undone"). */
+  member?: MemberDowns
+}
 const _undoStack: CombatSnapshot[] = []
 const _redoStack: CombatSnapshot[] = []
 const HISTORY_MAX = 40
 /** Capture the PRE-mutation state. Call at the top of a mutating recipe (after
  *  any early-return guard so no-ops don't pollute the stack). */
-function record(s: CombatStore) {
+function record(s: CombatStore, member?: MemberDowns) {
   const o = original(s) as CombatStore | undefined
   if (!o) return
-  _undoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex })
+  _undoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex, ...(member ? { member } : {}) })
   if (_undoStack.length > HISTORY_MAX) _undoStack.shift()
   _redoStack.length = 0
   s.canUndo = true
   s.canRedo = false
+}
+/** The member's setting as it stands now — what the OTHER stack's entry must put back. */
+function memberDownsNow(m: MemberDowns | undefined): MemberDowns | undefined {
+  if (!m) return undefined
+  const pl = usePartyStore.getState().parties.flatMap(p => p.players).find(x => x.id === m.id)
+  return { id: m.id, downsLikePC: !!pl?.downsLikePC }
+}
+/** Put a restored snapshot's member setting back — quietly: the board it goes with is restored whole,
+ *  so nothing is knocked out again. */
+function restoreMemberDowns(m: MemberDowns | undefined) {
+  if (m) usePartyStore.getState().setPlayerDownsLikePC(m.id, m.downsLikePC, false)
 }
 /** Drop the redo stack WITHOUT recording an undo step — for mutations that change the combatants but
  *  aren't themselves on the undo timeline (add / duplicate / set-initiative / roll-initiative). Without
@@ -631,13 +843,14 @@ function firePersistentDamage(s: CombatStore, cur: Combatant) {
       let rem = res.total
       if (cur.tempHP > 0) { const abs = Math.min(cur.tempHP, rem); cur.tempHP -= abs; rem -= abs }
       cur.currentHP = Math.max(0, cur.currentHP - rem)
-      // Match applyDamage: a PC dropped to 0 by persistent damage goes
-      // Unconscious; a monster is defeated. (endTurnPass also runs for seats the
-      // pointer steps over, but those are skipsTurn seats = defeated NPCs, and
-      // applyPCDefeat returns early for a non-PC, so no array reorder happens here.
-      // A future caller passing a non-active PC would splice mid-iteration.)
+      // Match applyDamage: a creature that goes down like a player (a PC, or a creature set to)
+      // dropped to 0 by persistent damage goes Unconscious + Dying; a monster is defeated. NEVER
+      // moved (`move` false): this is the end of its own turn — it is already just before the next
+      // creature — or it is a seat nextTurn's skip loop / startCombat's opening run is stepping over
+      // (one marked beaten while standing, set to go down like a player, bleeding to 0), and a splice
+      // there would shift the seats under the loop.
       if (cur.currentHP === 0) {
-        if (cur.isPC) applyPCDefeat(s, cur.id)
+        if (downsAsPC(cur)) applyPCDefeat(s, cur.id, false)
         else cur.isDefeated = true
       }
       pushDice(s, res)
@@ -789,6 +1002,9 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
         // rated as one more allied creature in the fight (as any stat-blocked ally is); without the
         // stamp it can't block that member's own row from being added again or be taken for it.
         partyMemberId: undefined,
+        // …and it starts out going down the way the original does right now. Its own flag from here:
+        // a toggle on the copy is the copy's, never the party member's.
+        downsLikePC: downsAsPC(src) ? true : undefined,
         currentHP: src.maxHP,
         tempHP: 0,
         conditions: [],
@@ -832,7 +1048,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
 
   removeDefeated() {
     set(s => {
-      const doomed = new Set(s.combatants.filter(c => c.isDefeated && !c.isPC).map(c => c.id))
+      const doomed = new Set(s.combatants.filter(clearedByClearDefeated).map(c => c.id))
       if (!doomed.size) return
       record(s)
       const activeId = s.combatants[s.activeIndex]?.id
@@ -843,6 +1059,62 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       if (s.selectedId && doomed.has(s.selectedId)) s.selectedId = null
       const stillThere = activeId ? s.combatants.findIndex(c => c.id === activeId) : -1
       s.activeIndex = stillThere >= 0 ? stillThere : Math.min(survivorsBefore, Math.max(0, s.combatants.length - 1))
+    })
+  },
+
+  setDownsLikePC(id, on) {
+    const row = get().combatants.find(c => c.id === id)
+    if (!row || row.isPC) return
+    // A party member's row: the setting is the MEMBER's ("a party NPC keeps the setting until
+    // undone"), written there and read live by every row of that member. Not an undo step on its own —
+    // the member is not board state, so a snapshot could only put a stale copy back (setNotes is the
+    // other edit the timeline leaves alone). The member's setter knocks out a row already down, and
+    // THAT step carries the setting with it (knockOutPartyMember): Undo takes back both.
+    const member = partyMemberOf(row)
+    if (member) { usePartyStore.getState().setPlayerDownsLikePC(member.id, on); return }
+    set(s => {
+      const c = s.combatants.find(x => x.id === id)
+      if (!c || !!c.downsLikePC === on) return
+      record(s)
+      if (on) c.downsLikePC = true
+      else delete c.downsLikePC
+      if (!on) return
+      if (needsKnockOut(c)) applyPCDefeat(s, id)
+      // Already carrying Dying at its death value: switched on, it is dead — and a dead NPC is defeated.
+      settleDeath(c)
+    })
+  },
+
+  knockOutPartyMember(memberId) {
+    set(s => {
+      const touched = s.combatants
+        .filter(c => c.partyMemberId === memberId && (needsKnockOut(c) || (isDeadNpc(c) && !c.isDefeated)))
+        .map(c => c.id)
+      if (!touched.length) return
+      // One gesture with the switch that made it: the member was OFF on the board this step restores.
+      record(s, { id: memberId, downsLikePC: false })
+      // By id, one at a time: each knock-out can move its row (moveBeforeActive).
+      for (const id of touched) {
+        if (needsKnockOut(s.combatants.find(x => x.id === id)!)) applyPCDefeat(s, id)
+        settleDeath(s.combatants.find(x => x.id === id)!)
+      }
+    })
+  },
+
+  markDead(id) {
+    set(s => {
+      const c = s.combatants.find(x => x.id === id)
+      if (!c || c.isPC || !downsAsPC(c) || isDeadNpc(c)) return
+      record(s)
+      c.isDefeated = true
+      c.currentHP = 0
+      if (!c.conditions.some(x => x.name.toLowerCase() === 'unconscious')) {
+        c.conditions.push({ id: ncid(), name: 'unconscious', isPermanent: true })
+      }
+      const at = deathValue(c)
+      const dying = c.conditions.find(x => x.name.toLowerCase() === 'dying')
+      if (dying) dying.value = at
+      else c.conditions.push({ id: ncid(), name: 'dying', value: at, isPermanent: true })
     })
   },
 
@@ -1159,10 +1431,13 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       markGesture(c)
       let rem = amt
       if (c.tempHP > 0) { const abs = Math.min(c.tempHP, rem); c.tempHP -= abs; rem -= abs }
+      // Was it still UP before this hit? Only a FALL moves a creature before the acting one; a hit on
+      // one already down only gains Dying (wasUpBeforeHit says which).
+      const wasUp = wasUpBeforeHit(c)
       c.currentHP = Math.max(0, c.currentHP - rem)
       if (c.currentHP === 0) {
-        if (c.isPC) {
-          applyPCDefeat(s, id)
+        if (downsAsPC(c)) {
+          applyPCDefeat(s, id, wasUp)
         } else {
           c.isDefeated = true
         }
@@ -1181,9 +1456,9 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       if (c.currentHP > 0) {
         c.isDefeated = false
         // Healed back above 0 → no longer knocked out. Mirror setDefeated(false): drop the Unconscious
-        // and Dying conditions applyPCDefeat added (and take the Wounded bump), so a revived PC
-        // doesn't keep its -4 Perception/Reflex + off-guard.
-        if (c.isPC) reviveConditions(c)
+        // and Dying conditions applyPCDefeat added (and take the Wounded bump), so a revived PC — or a
+        // creature set to go down like one — doesn't keep its -4 Perception/Reflex + off-guard.
+        if (downsAsPC(c)) reviveConditions(c)
       }
     }))
     syncPcHp(get().combatants.find(c => c.id === id))
@@ -1199,12 +1474,14 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       if (!c) return
       record(s)
       markGesture(c)
-      if (val && c.isPC) {
+      // A creature that goes down like a player is knocked out ("Knock out (0 HP)" on its menu);
+      // a monster is just marked beaten.
+      if (val && downsAsPC(c)) {
         applyPCDefeat(s, id)
       } else {
         c.isDefeated = val
-        // Restoring a PC: remove Unconscious + Dying (and take the Wounded bump).
-        if (!val && c.isPC) reviveConditions(c)
+        // Restoring one: remove Unconscious + Dying (and take the Wounded bump) — a dead NPC too.
+        if (!val && downsAsPC(c)) reviveConditions(c)
       }
     }))
     syncPcHp(get().combatants.find(c => c.id === id))
@@ -1245,6 +1522,9 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       const nc = { ...cond, id: ncid() }
       if (ei >= 0) c.conditions[ei] = nc
       else c.conditions.push(nc)
+      // Dying at the death value (or Doomed pulling the death value down to it) kills a creature
+      // that goes down like a player.
+      settleDeath(c)
     }))
   },
 
@@ -1256,7 +1536,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
     asGesture(() => set(s => {
       const c = s.combatants.find(c => c.id===id)
       const cond = c?.conditions.find(x => x.id===condId)
-      if (cond) { record(s); markGesture(c); cond.value = v }
+      if (cond) { record(s); markGesture(c); cond.value = v; settleDeath(c!) }
     }))
   },
 
@@ -1344,10 +1624,13 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
 
   undo() {
     if (!_undoStack.length) return
+    // The step a party member's switch made carries that member's setting (CombatSnapshot.member).
+    const member = _undoStack[_undoStack.length - 1].member
     set(s => {
       const o = original(s) as CombatStore | undefined
       if (o) {
-        _redoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex })
+        const now = memberDownsNow(member)
+        _redoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex, ...(now ? { member: now } : {}) })
         if (_redoStack.length > HISTORY_MAX) _redoStack.shift()
       }
       const prev = _undoStack.pop()!
@@ -1357,15 +1640,18 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       s.canUndo = _undoStack.length > 0
       s.canRedo = true
     })
+    restoreMemberDowns(member)
     get().combatants.forEach(syncPcHp)
   },
 
   redo() {
     if (!_redoStack.length) return
+    const member = _redoStack[_redoStack.length - 1].member
     set(s => {
       const o = original(s) as CombatStore | undefined
       if (o) {
-        _undoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex })
+        const now = memberDownsNow(member)
+        _undoStack.push({ combatants: o.combatants, round: o.round, activeIndex: o.activeIndex, ...(now ? { member: now } : {}) })
         if (_undoStack.length > HISTORY_MAX) _undoStack.shift()
       }
       const next = _redoStack.pop()!
@@ -1375,6 +1661,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       s.canUndo = true
       s.canRedo = _redoStack.length > 0
     })
+    restoreMemberDowns(member)
     get().combatants.forEach(syncPcHp)
   },
 
@@ -1395,6 +1682,8 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
           charId: slim.charId,
           // The party member the row was added for — field by field for the same reason.
           partyMemberId: slim.partyMemberId,
+          // The row's own "dying like a player" (a party member's lives on the member).
+          downsLikePC: slim.downsLikePC ? true : undefined,
           scaledToLevel: slim.scaledToLevel, notes: slim.notes,
         }
       }),
@@ -1426,6 +1715,8 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
           // A string or nothing: a hand-written save's `null` is no stamp (it would read as a party
           // member in encounter.sidesOf and block the real member's add).
           partyMemberId: typeof sc.partyMemberId === 'string' ? sc.partyMemberId : undefined,
+          // Only a real `true` turns it on (a hand-written save's "yes" or 1 is not a setting).
+          downsLikePC: sc.downsLikePC === true ? true : undefined,
           initiative: null, currentHP: hp, maxHP: hp, tempHP: 0, conditions: [],
           isElite: sc.isElite, isWeak: sc.isWeak, scaledToLevel,
           notes: sc.notes, isDefeated: false,

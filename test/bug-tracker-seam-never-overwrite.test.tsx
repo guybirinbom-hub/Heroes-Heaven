@@ -216,7 +216,7 @@ const { clearGmPendingEdits, gmBaseOf, gmEditRefused, gmEditSchemaOutdated, gmEd
   await import('../src/sheet/gmSync');
 const { authoredKey, hash53 } = await import('../src/data/authored');
 const { usePcSheetTruth, useMemberSheets, vitalsFromSheet } = await import('../src/integration/pcSheetTruth');
-const { useCombatStore, scopeKey, flushPersist, invalidateEncounterCache } = await import(
+const { useCombatStore, scopeKey, flushPersist, invalidateEncounterCache, downedMarker } = await import(
   '../tracker/src/store/combatStore'
 );
 type PartyMember = import('../src/data/party').PartyMember;
@@ -2647,4 +2647,411 @@ describe('rule D — an unmounted seam writes nothing', () => {
       });
     }
   }
+});
+
+/*
+ * OWNER'S LIST 2026-10-01, ITEM 2 — a player who drops to 0 on their OWN sheet. His answers (2026-10-10):
+ * "the players need to change the dying themselves; if they drop to 0 it does need to be updated in the
+ * tracker and move them to the correct initiative" and "The tracker moves a downed creature before
+ * whoever's turn it is."
+ *
+ * So when a sheet ARRIVES taking the row from above 0 HP to 0 in a fight, the row moves to just before
+ * the creature whose turn it is, on that creature's count (combatStore.moveBeforeActive, the store's
+ * one rule for a creature going down) — inside writeVitals' plain write, which is no gesture: nothing
+ * reaches the player, and the row's Dying / Unconscious are exactly their sheet's. The tracker adds no
+ * condition of its own to a player character.
+ */
+describe('a player whose own sheet drops to 0 mid-fight moves in the order — and nothing is pushed', () => {
+  const order = () => store().combatants.map((c) => c.name);
+  const acting = () => store().combatants[store().activeIndex]?.name;
+
+  /** The player's 25 HP + Wounded 1, in a fight: Cinder Goblin 20 (acting), the PC 15, Moss Ogre 10. */
+  async function inFight(fight = true) {
+    const m = await mount(hurt());
+    act(() => {
+      store().addCombatant(null, { name: 'Cinder Goblin', maxHP: 20, initiative: 20 });
+      store().addCombatant(null, { name: 'Moss Ogre', maxHP: 40, initiative: 10 });
+      store().setInitiative(pc().id, 15);
+      if (fight) store().startCombat();
+      else store().sortByInitiative();
+    });
+    await settle();
+    expect(order(), 'fixture: the order as rolled').toEqual(['Cinder Goblin', NAME, 'Moss Ogre']);
+    return m;
+  }
+
+  it('their knock-out moves the row before the acting creature, on its count; the row is their sheet, and nothing is pushed', async () => {
+    /*
+     * MUTATION (tried 2026-10-11, round 1, before `standing` joined the line): drop
+     * `if (dropped && standing && c.currentHP === 0) moveBeforeActive(s, cid);` from writeVitals
+     * (src/integration/pcSheetTruth.ts) and this fails — as it does (tried, round 2) when the arrival
+     * stops counting as a fall (`follow(st, sv)` → `st.shown = sv` in reconcile) —
+     *   AssertionError: expected [ 'Cinder Goblin', 'Isolde Marrow', …(1) ] to deeply equal [ 'Isolde Marrow', 'Cinder Goblin', …(1) ]
+     */
+    const m = await inFight();
+    expect(acting()).toBe('Cinder Goblin');
+    publish(knockedOut(), T1); // their own app: 0 HP, Unconscious, Dying 2
+    await m.deliver();
+    showsKnockOut('the row is exactly their sheet — the tracker adds no condition to a player');
+    expect(order()).toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    expect(pc().initiative, 'on the acting creature’s count, so a later edit or Sort keeps it there').toBe(20);
+    expect(acting(), 'the turn stays where it was').toBe('Cinder Goblin');
+    expect(downedMarker(pc()), 'the row’s marker is their own Dying').toBe('DYING 2');
+    expect(server.editWrites, 'a sheet arriving is never pushed back').toEqual([]);
+    expect(theirs().play!.damage).toBe(MAX);
+
+    // …and the turn engine after it adds nothing of the tracker's either.
+    act(() => store().nextTurn());
+    await settle();
+    expect(server.editWrites).toEqual([]);
+    showsKnockOut('no recovery roll, no reminder, no Dying of the tracker’s');
+  });
+
+  it('a player ALREADY at 0 whose sheet arrives at 0 again (Dying 2 → 3) is not moved again', async () => {
+    /*
+     * Only a drop moves the row: their sheet going from above 0 HP to 0. Their failed recovery check
+     * (Dying 2 → 3, still 0 HP) is no drop — the row follows their sheet where it already sits.
+     * GUARDED TWICE since round 2 (2026-10-11): `follow`'s fall test (no new fall — since round 3,
+     * 2026-10-13, `st.theirs > 0`: their own side's last HP) and writeVitals' `standing` (a row already
+     * at 0 is not taken down) each keep this leg green alone. The single-guard legs are "…whose sheet
+     * wins the GM’s heal…" and "…that LANDED and that their app then refused…" (follow) and "…the GM’s
+     * own knock-out already took the row through…" (standing), below.
+     */
+    const m = await inFight();
+    publish(knockedOut(), T1); // the drop: moved before Cinder Goblin, on its 20
+    await m.deliver();
+    expect(order()).toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    act(() => store().nextTurn()); // Cinder Goblin's turn ends: Moss Ogre acts
+    await settle();
+    expect(acting()).toBe('Moss Ogre');
+
+    const worse = knockedOut();
+    publish(
+      { ...worse, play: { ...worse.play!, conditions: [{ id: 'wounded', value: 1 }, { id: 'unconscious' }, { id: 'dying', value: 3 }] } },
+      '2026-10-01T11:30:00.000Z',
+    );
+    await m.deliver();
+    expect(rowConds(), 'the row follows their sheet').toEqual(['dying:3', 'unconscious:', 'wounded:1']);
+    expect(order(), 'still where the first drop put it').toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    expect(pc().initiative).toBe(20);
+    expect(acting()).toBe('Moss Ogre');
+    expect(server.editWrites, 'a sheet arriving is never pushed back').toEqual([]);
+  });
+
+  it('before the fight nothing moves, and the rolled number stays', async () => {
+    /*
+     * MUTATION (tried 2026-10-11): drop `if (!s.inCombat) return false` from combatStore.moveBeforeActive
+     * and this fails —
+     *   AssertionError: expected [ 'Isolde Marrow', 'Cinder Goblin', …(1) ] to deeply equal [ 'Cinder Goblin', 'Isolde Marrow', …(1) ]
+     */
+    const m = await inFight(false);
+    publish(knockedOut(), T1);
+    await m.deliver();
+    showsKnockOut('the row is their sheet');
+    expect(order()).toEqual(['Cinder Goblin', NAME, 'Moss Ogre']);
+    expect(pc().initiative).toBe(15);
+    expect(server.editWrites).toEqual([]);
+  });
+
+  it('a row that is only REWRITTEN at 0 — re-added mid-fight — is no drop, and stays where it was put', async () => {
+    /*
+     * A load is not an edit, and a re-add is not the character going down: only a sheet ARRIVING from
+     * above 0 to 0 moves the row.
+     * MUTATION (tried 2026-10-11): key the move on the write alone — `show.currentHP === 0` for
+     * `dropped` in reconcile's writeVitals call — and this fails —
+     *   AssertionError: expected [ 'Isolde Marrow', 'Cinder Goblin', …(1) ] to deeply equal [ 'Cinder Goblin', 'Moss Ogre', …(1) ]
+     */
+    const m = await inFight();
+    publish(knockedOut(), T1);
+    await m.deliver();
+    act(() => store().removeCombatant(pc().id));
+    m.addPc(); // a brand-new row at full HP, put at the end of the order
+    await settle();
+    showsKnockOut('the re-added row is their sheet');
+    expect(order()).toEqual(['Cinder Goblin', 'Moss Ogre', NAME]);
+    expect(server.editWrites).toEqual([]);
+  });
+
+  /*
+   * ROUND 2 (refuter, 2026-10-11): their fall used to be read only on the pass their sheet ARRIVED, and
+   * acted on only if the row showed that sheet on that same pass. With a change of the GM's out (or owed)
+   * the row shows HIS change; when his push's fresh read then finds their newer sheet, the sheet wins and
+   * the row reaches 0 on a later pass — which was no arrival, so the row stayed in its old seat for good.
+   * The fall is kept now (SeenPc.drop) until the row shows their sheet.
+   */
+  it('their drop that arrives while a change of the GM’s is OUT moves the row once his push loses to it', async () => {
+    /*
+     * MUTATION (tried 2026-10-11): spend the drop on every pass — `if (show === st.shown) { … }` →
+     * `{ … }` in reconcile (src/integration/pcSheetTruth.ts) — and this fails —
+     *   AssertionError: moved before the acting creature: expected [ 'Cinder Goblin', …(2) ] to deeply equal [ 'Isolde Marrow', …(2) ]
+     * (the round-1 code, which took the drop on the arrival pass alone, failed the same way).
+     */
+    const m = await inFight();
+    server.holdNextRead = true;
+    frightened(1); // his gesture: its push's fresh read stays on the wire
+    await settle();
+    expect(server.releaseRead, 'his push is still waiting').not.toBeNull();
+
+    publish(knockedOut(), T1); // their own app: 0 HP, Unconscious, Dying 2
+    await m.deliver();
+    expect(pc().currentHP, 'his Frightened still stands over their sheet').toBe(25);
+    expect(order()).toEqual(['Cinder Goblin', NAME, 'Moss Ogre']);
+
+    server.releaseRead!(); // the read finds their knock-out: the sheet wins his Frightened
+    await settle();
+    await settle();
+    showsKnockOut('the row is their sheet');
+    expect(order(), 'moved before the acting creature').toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    expect(pc().initiative, 'on its count').toBe(20);
+    expect(acting(), 'the turn stays where it was').toBe('Cinder Goblin');
+    expect(server.editWrites, 'nothing reaches the player').toEqual([]);
+  });
+
+  it('…and one his push’s fresh read finds BEFORE the sheet itself arrives moves it too — once', async () => {
+    /*
+     * MUTATION (tried 2026-10-11): in send's sheet-wins branch, `follow(st, now)` → `st.shown = now`
+     * (the round-1 line) and this fails —
+     *   AssertionError: moved before the acting creature: expected [ 'Cinder Goblin', …(2) ] to deeply equal [ 'Isolde Marrow', …(2) ]
+     */
+    const m = await inFight();
+    server.holdNextRead = true;
+    frightened(1);
+    await settle();
+    publish(knockedOut(), T1); // published — the live subscription has not handed it over yet
+    server.releaseRead!(); // his push's read finds it first
+    await settle();
+    await settle();
+    showsKnockOut('the row is their sheet');
+    expect(order(), 'moved before the acting creature').toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    expect(pc().initiative).toBe(20);
+
+    act(() => store().nextTurn()); // Cinder Goblin's turn ends: Moss Ogre acts
+    await settle();
+    expect(acting()).toBe('Moss Ogre');
+    await m.deliver(); // only now does the subscription hand over the very same knock-out
+    expect(order(), 'one fall, one move').toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    expect(pc().initiative).toBe(20);
+    expect(server.editWrites).toEqual([]);
+  });
+
+  it('their fall that the GM’s own knock-out already took the row through is not moved a second time', async () => {
+    /*
+     * His hit took the row to 0 and moved it (applyDamage → applyPCDefeat, a gesture). Their own app
+     * records the same fall, with Prone, and his push loses to it: the row follows their sheet, but it
+     * is already down — the same fall does not move it again, to before whoever acts NOW.
+     * MUTATION (tried 2026-10-11): drop `standing &&` from writeVitals' move
+     * (src/integration/pcSheetTruth.ts) and this fails —
+     *   AssertionError: one fall, one move: expected [ 'Cinder Goblin', …(2) ] to deeply equal [ 'Isolde Marrow', …(2) ]
+     */
+    const m = await inFight();
+    server.holdNextRead = true;
+    act(() => store().applyDamage(pc().id, 25)); // his hit: down, moved before Cinder Goblin on its 20
+    await settle();
+    expect(order()).toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    act(() => store().nextTurn()); // Cinder Goblin's turn ends: Moss Ogre acts
+    await settle();
+    expect(acting()).toBe('Moss Ogre');
+
+    const ko = knockedOut();
+    publish({ ...ko, play: { ...ko.play!, conditions: [...ko.play!.conditions!, { id: 'prone' }] } }, T1);
+    await m.deliver();
+    server.releaseRead!(); // the read finds their own record of it: the sheet wins his push
+    await settle();
+    await settle();
+    expect(pc().currentHP).toBe(0);
+    expect(rowConds(), 'the row is their sheet').toEqual(['dying:2', 'prone:', 'unconscious:', 'wounded:1']);
+    expect(order(), 'one fall, one move').toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    expect(pc().initiative).toBe(20);
+    expect(acting()).toBe('Moss Ogre');
+    expect(server.editWrites, 'his push lost to their sheet').toEqual([]);
+  });
+
+  it('a player still down whose sheet wins the GM’s heal is not moved: they never got up, so no new fall', async () => {
+    /*
+     * His heal stood the row up at 5; their app never got it and records a failed recovery check
+     * (Dying 3, still 0 HP); the sheet wins and the row goes back to 0 where their first fall put it.
+     * MUTATION (tried 2026-10-11 on the round-2 line, re-tried 2026-10-13 on round 3's):
+     * `if (st.theirs > 0 && v.currentHP === 0) st.drop = true;` → `if (v.currentHP === 0) st.drop = true;`
+     * in follow (src/integration/pcSheetTruth.ts) and this fails —
+     *   AssertionError: where their first fall put it: expected [ 'Cinder Goblin', …(2) ] to deeply equal [ 'Isolde Marrow', …(2) ]
+     */
+    const m = await inFight();
+    publish(knockedOut(), T1);
+    await m.deliver(); // their fall: moved before Cinder Goblin, on its 20
+    expect(order()).toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    act(() => store().nextTurn()); // Moss Ogre acts
+    await settle();
+    expect(acting()).toBe('Moss Ogre');
+
+    server.holdNextRead = true;
+    act(() => store().applyHealing(pc().id, 5)); // his heal: its push's read stays on the wire
+    await settle();
+    expect(pc().currentHP).toBe(5);
+
+    const worse = knockedOut();
+    publish(
+      { ...worse, play: { ...worse.play!, conditions: [{ id: 'wounded', value: 1 }, { id: 'unconscious' }, { id: 'dying', value: 3 }] } },
+      '2026-10-01T11:30:00.000Z',
+    );
+    await m.deliver();
+    server.releaseRead!(); // the read finds their Dying 3: the sheet wins his heal
+    await settle();
+    await settle();
+    expect(pc().currentHP, 'the row is their sheet').toBe(0);
+    expect(rowConds()).toEqual(['dying:3', 'unconscious:', 'wounded:1']);
+    expect(order(), 'where their first fall put it').toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    expect(pc().initiative).toBe(20);
+    expect(server.editWrites, 'his heal lost to their sheet').toEqual([]);
+  });
+
+  /*
+   * ROUND 3 (refuter, 2026-10-13): a fall is THEIRS only from above 0 on THEIR side (SeenPc.theirs) —
+   * never from what the row showed of his own landed push — and a sheet that arrives while no row of
+   * theirs is on the board is followed then, so the row a later re-add puts there never takes it for
+   * the fall.
+   */
+  it('his heal that LANDED and that their app then refused is no new fall: they never got up, so the row stays where their fall put it', async () => {
+    /*
+     * The round-3 refuter's probe S2. His heal lands (the server holds it; the row shows 5). Their app
+     * never applies it: they publish their failed recovery check (Dying 3, still 0 HP) first, and their
+     * app refuses his heal. The row goes back to 0 in the seat their first fall gave it.
+     * MUTATION (tried 2026-10-13): `if (st.theirs > 0 && v.currentHP === 0)` → the round-2
+     * `if (st.shown.currentHP > 0 && v.currentHP === 0)` in follow (src/integration/pcSheetTruth.ts) and
+     * this fails, alone —
+     *   AssertionError: where their first fall put it: expected [ 'Cinder Goblin', …(2) ] to deeply equal [ 'Isolde Marrow', …(2) ]
+     */
+    const m = await inFight();
+    publish(knockedOut(), T1);
+    await m.deliver(); // their fall: moved before Cinder Goblin, on its 20
+    expect(order()).toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    act(() => store().nextTurn()); // Moss Ogre acts
+    await settle();
+    expect(acting()).toBe('Moss Ogre');
+
+    act(() => store().applyHealing(pc().id, 5)); // his heal: it lands
+    await settle();
+    expect(server.editWrites, 'his heal landed').toHaveLength(1);
+    expect(pc().currentHP).toBe(5);
+
+    const worse = knockedOut();
+    publish(
+      { ...worse, play: { ...worse.play!, conditions: [{ id: 'wounded', value: 1 }, { id: 'unconscious' }, { id: 'dying', value: 3 }] } },
+      '2026-10-01T11:30:00.000Z',
+    );
+    const { markGmEditRefused } = await import('../src/data/party');
+    await markGmEditRefused(CAMPAIGN, CHAR, server.editWrites[0].updated_at as string); // their app refused it
+    await m.deliver();
+    expect(pc().currentHP, 'the row is their sheet').toBe(0);
+    expect(rowConds()).toEqual(['dying:3', 'unconscious:', 'wounded:1']);
+    expect(order(), 'where their first fall put it').toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    expect(pc().initiative).toBe(20);
+    expect(acting()).toBe('Moss Ogre');
+    expect(server.editWrites, 'nothing more is pushed').toHaveLength(1);
+  });
+
+  it('…nor when his next gesture is built on his own landed heal: that read is HIS, and they are still down', async () => {
+    /*
+     * As above, with his Frightened made on his landed heal before their app has picked either up: its
+     * fresh read is built on his own pending edit (the heal), not on their sheet. Their failed recovery
+     * check then arrives, and their app refuses his pushes: they never got up.
+     * MUTATION (tried 2026-10-13): `if (built.on === null) st.theirs = now.currentHP;` →
+     * `st.theirs = now.currentHP;` in send (src/integration/pcSheetTruth.ts) and this fails, alone —
+     *   AssertionError: where their first fall put it: expected [ 'Cinder Goblin', …(2) ] to deeply equal [ 'Isolde Marrow', …(2) ]
+     */
+    const m = await inFight();
+    publish(knockedOut(), T1);
+    await m.deliver(); // their fall: moved before Cinder Goblin, on its 20
+    act(() => store().nextTurn()); // Moss Ogre acts
+    await settle();
+
+    act(() => store().applyHealing(pc().id, 5)); // his heal lands
+    await settle();
+    frightened(1); // built on his own heal, which still stands on their sheet
+    await settle();
+    expect(server.editWrites, 'both of his land').toHaveLength(2);
+
+    const worse = knockedOut();
+    publish(
+      { ...worse, play: { ...worse.play!, conditions: [{ id: 'wounded', value: 1 }, { id: 'unconscious' }, { id: 'dying', value: 3 }] } },
+      '2026-10-01T11:30:00.000Z',
+    );
+    const { markGmEditRefused } = await import('../src/data/party');
+    await markGmEditRefused(CAMPAIGN, CHAR, server.editWrites[1].updated_at as string); // their app refused it
+    await m.deliver();
+    expect(pc().currentHP, 'the row is their sheet').toBe(0);
+    expect(order(), 'where their first fall put it').toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    expect(pc().initiative).toBe(20);
+    expect(server.editWrites).toHaveLength(2);
+  });
+
+  it('…but once a read of THEIR sheet finds them up (their app applied his heal), their next fall moves the row', async () => {
+    /*
+     * The other side of that rule. His heal lands; their app applies it and republishes (not yet handed
+     * to this screen); his next gesture's fresh read is built on that publish and finds them at 5. When
+     * their own sheet then goes to 0 again, that is a fall of theirs: the row moves before the creature
+     * acting now, on its count.
+     * MUTATION (tried 2026-10-13): drop `if (built.on === null) st.theirs = now.currentHP;` from send's
+     * landed path (src/integration/pcSheetTruth.ts) and this fails, alone —
+     *   AssertionError: a fall of theirs: moved before the creature acting now: expected [ 'Isolde Marrow', …(2) ] to deeply equal [ 'Cinder Goblin', …(2) ]
+     */
+    const m = await inFight();
+    publish(knockedOut(), T1);
+    await m.deliver();
+    expect(order()).toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+    act(() => store().nextTurn()); // Moss Ogre acts
+    await settle();
+
+    act(() => store().applyHealing(pc().id, 5)); // his heal lands…
+    await settle();
+    expect(server.editWrites).toHaveLength(1);
+    publish(server.editWrites[0].sheet as SavedChar, '2026-10-01T11:10:00.000Z'); // …their app applies it — not yet on this screen
+    frightened(1); // his next gesture: its fresh read is their 5
+    await settle();
+    expect(server.editWrites, 'his Frightened lands on their 5').toHaveLength(2);
+    expect(order(), 'standing again, nothing moved').toEqual([NAME, 'Cinder Goblin', 'Moss Ogre']);
+
+    const sc = freshSheet();
+    publish(
+      {
+        ...sc,
+        play: {
+          ...sc.play!,
+          damage: MAX,
+          conditions: [{ id: 'wounded', value: 2 }, { id: 'frightened', value: 1 }, { id: 'unconscious' }, { id: 'dying', value: 3 }],
+        },
+      },
+      '2026-10-01T11:30:00.000Z',
+    ); // down again, on their own sheet
+    await m.deliver();
+    expect(pc().currentHP, 'the row is their sheet').toBe(0);
+    expect(order(), 'a fall of theirs: moved before the creature acting now').toEqual(['Cinder Goblin', NAME, 'Moss Ogre']);
+    expect(pc().initiative, 'on its count').toBe(10);
+    expect(acting(), 'the turn stays where it was').toBe('Moss Ogre');
+    expect(server.editWrites, 'a sheet arriving is never pushed back').toHaveLength(2);
+  });
+
+  it('their fall that arrives while their row is OFF the order is no fall of the row a re-add puts back', async () => {
+    /*
+     * The round-3 refuter's probe S1. The GM took their row out mid-fight; their knock-out arrives while
+     * no row of theirs is on the board; he adds them back. The new row is their sheet, where the add put
+     * it — a re-add is not the character going down.
+     * MUTATION (tried 2026-10-13): drop `st.drop = false;` from reconcile's no-row branch
+     * (src/integration/pcSheetTruth.ts) and this fails, alone —
+     *   AssertionError: where the add put it: expected [ 'Isolde Marrow', …(2) ] to deeply equal [ 'Cinder Goblin', 'Moss Ogre', …(1) ]
+     * MUTATION (tried 2026-10-13): put the no-row `continue` back ABOVE the arrival bookkeeping (the
+     * round-2 order, where the arrival waited for the re-add) and this fails the same way, alone.
+     */
+    const m = await inFight();
+    act(() => store().removeCombatant(pc().id));
+    await settle();
+    publish(knockedOut(), T1);
+    await m.deliver(); // their fall, with no row of theirs on the board
+    expect(order()).toEqual(['Cinder Goblin', 'Moss Ogre']);
+    m.addPc(); // put back mid-fight: a brand-new row, at the end of the order
+    await settle();
+    showsKnockOut('the re-added row is their sheet');
+    expect(order(), 'where the add put it').toEqual(['Cinder Goblin', 'Moss Ogre', NAME]);
+    expect(acting()).toBe('Cinder Goblin');
+    expect(server.editWrites).toEqual([]);
+  });
 });

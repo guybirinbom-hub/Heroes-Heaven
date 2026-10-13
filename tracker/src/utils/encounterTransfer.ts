@@ -25,6 +25,8 @@ export interface PortableCombatant {
   isAlly?: boolean
   /** The party member the row was added for (PartyPlayer.id), when there was one. */
   partyMemberId?: string
+  /** The row's own "at 0 HP: dying like a player", when it is on. */
+  downsLikePC?: boolean
   maxHP: number
   isElite: boolean
   isWeak: boolean
@@ -68,6 +70,7 @@ function toPortable(saved: SavedEncounter): PortableEncounter {
       isPC: sc.isPC,
       isAlly: sc.isAlly ?? false,
       ...(sc.partyMemberId ? { partyMemberId: sc.partyMemberId } : {}),
+      ...(sc.downsLikePC ? { downsLikePC: true } : {}),
       maxHP: sc.maxHP,
       isElite: sc.isElite,
       isWeak: sc.isWeak,
@@ -187,6 +190,7 @@ export async function importEncountersFromText(text: string): Promise<ImportResu
         isPC: !!sc.isPC,
         isAlly: !!sc.isAlly,
         partyMemberId: typeof sc.partyMemberId === 'string' ? sc.partyMemberId : undefined,
+        downsLikePC: sc.downsLikePC === true ? true : undefined,
         // A resolved stat block's maximum is the ADJUSTED one, as Load Encounter and the board set
         // it (adjustedCreature); the printed `defenses.hp` stored an Elite combatant's base HP when
         // the file carried no maxHP, and a re-export wrote it on (encounterTransfer.test). A row

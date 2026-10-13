@@ -21,6 +21,11 @@ export interface PartyPlayer {
    *  and keeps two same-named PCs distinct. Undefined for hand-made standalone players. */
   charId?: string
   creature?: Creature | null   // NPCs only — linked stat block
+  /** NPCs only: at 0 HP this member goes DOWN LIKE A PLAYER (Unconscious + Dying, keeps its turn)
+   *  instead of being a defeated monster — "a party NPC keeps the setting until undone" (owner's list
+   *  2026-10-01, item 2). Every row added for this member reads it LIVE (combatStore.downsAsPC), so
+   *  the card's switch and the row menu's are one setting. Absent = off. */
+  downsLikePC?: boolean
   /** Cumulative turn-time average (seconds) folded in via the turn timer's
    *  "Save to Averages". Paired with turnCount so new batches weight right. */
   turnAvgSeconds?: number
@@ -63,6 +68,12 @@ interface PartyStore {
   addNPC: (partyId: string, creature?: Creature | null) => void
   removePlayer: (partyId: string, playerId: string) => void
   updatePlayer: (partyId: string, playerId: string, updates: Partial<Pick<PartyPlayer, 'name' | 'notes' | 'creature'>>) => void
+  /** Switch an NPC member's "at 0 HP: dying like a player" (keyed by player id alone — a row knows its
+   *  member, not its party). Saved with the parties. Switched ON, every live row of that member that is
+   *  already down is knocked out now (combatStore.knockOutPartyMember) — unless `knockOut` is false,
+   *  which is the combat store's Undo / Redo putting the setting back with a board it restores whole.
+   *  A PC member is left alone: a player character always goes down like one. */
+  setPlayerDownsLikePC: (playerId: string, on: boolean, knockOut?: boolean) => void
   getSortedParties: () => Party[]
   findPlayerByName: (combatantName: string) => { party: Party; player: PartyPlayer } | null
   /** Cumulatively fold a batch of turn times into every party member whose
@@ -229,6 +240,23 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
       if ('creature' in updates) pl.creature = updates.creature
     })
     saveToStorage(get().parties)
+  },
+
+  setPlayerDownsLikePC(playerId, on, knockOut = true) {
+    let changed = false
+    set(s => {
+      for (const p of s.parties) {
+        for (const pl of p.players) {
+          if (pl.id !== playerId || pl.memberType !== 'npc' || !!pl.downsLikePC === on) continue
+          if (on) pl.downsLikePC = true
+          else delete pl.downsLikePC
+          changed = true
+        }
+      }
+    })
+    if (!changed) return
+    saveToStorage(get().parties)
+    if (on && knockOut) useCombatStore.getState().knockOutPartyMember(playerId)
   },
 
   getSortedParties() { return sortParties(get().parties) },

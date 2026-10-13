@@ -12,6 +12,7 @@ import { PcDetailControls } from './PcDetailControls'
 import { useSettingsStore } from '../store/settingsStore'
 import { type PcDetailConfig } from '../utils/pcDetail'
 import { TrashIcon, XIcon, PlusIcon, CheckIcon, PencilIcon, LinkIcon, SwordIcon, EyeIcon, ChevronRightIcon } from './Icons'
+import { spendEscape, escapeLeavesBox } from '../utils/spendEscape'
 
 // ── Masonry grid ─────────────────────────────────────────────────────────────
 // Round-robin masonry: cards flow into a fixed number of equal-width columns
@@ -52,7 +53,7 @@ interface MemberCardProps {
 }
 
 function MemberCard({ player, partyId, onLinkStatBlock, detail }: MemberCardProps) {
-  const { updatePlayer, removePlayer } = usePartyStore()
+  const { updatePlayer, removePlayer, setPlayerDownsLikePC } = usePartyStore()
   const [name, setName] = useState(player.name)
   const [confirmRemove, setConfirmRemove] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
@@ -63,7 +64,11 @@ function MemberCard({ player, partyId, onLinkStatBlock, detail }: MemberCardProp
 
   useEffect(() => { setName(player.name) }, [player.name])
 
+  // Escape in the name box cancels the rename and is spent there (utils/spendEscape: left to bubble, it
+  // LEFT THE CAMPAIGN); the blur it ends with then commits nothing. Re-armed each time the box is entered.
+  const nameCancelled = useRef(false)
   const commitName = () => {
+    if (nameCancelled.current) { setName(player.name); return }
     const t = name.trim()
     if (t && t !== player.name) updatePlayer(partyId, player.id, { name: t })
     else setName(player.name)
@@ -111,8 +116,13 @@ function MemberCard({ player, partyId, onLinkStatBlock, detail }: MemberCardProp
         <input
           value={name}
           onChange={e => setName(e.target.value)}
+          onFocus={() => { nameCancelled.current = false }}
           onBlur={commitName}
-          onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur() }}
+          onKeyDown={e => {
+            const box = e.currentTarget
+            if (spendEscape(e, () => { nameCancelled.current = true; box.blur() })) return
+            if (e.key === 'Enter') box.blur()
+          }}
           placeholder={isNPC ? 'NPC name' : 'Player name'}
           style={{
             flex: 1, background: 'transparent',
@@ -214,13 +224,34 @@ function MemberCard({ player, partyId, onLinkStatBlock, detail }: MemberCardProp
         )
       )}
 
+      {/* "A party NPC keeps the setting until undone" (owner's list 2026-10-01, item 2). The same
+          switch as its row's right-click menu in a fight — one setting, kept here, read live by every
+          row of this NPC; switched on while it is already down, that row goes Dying now. */}
+      {isNPC && (
+        <label
+          title="At 0 HP it goes Unconscious and Dying like a player, keeps its turn, and Clear Defeated leaves it — in every fight, until you switch it off"
+          style={{
+            display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer',
+            color: 'var(--text-muted)', fontSize: 11.5, userSelect: 'none',
+          }}>
+          <input
+            type="checkbox"
+            checked={!!player.downsLikePC}
+            onChange={e => setPlayerDownsLikePC(player.id, e.target.checked)}
+            style={{ margin: 0, accentColor: 'var(--linked)', cursor: 'pointer' }}
+          />
+          At 0 HP: dying like a player
+        </label>
+      )}
+
       {/* PC stat sheet — only the sections enabled by the detail level */}
       {!isNPC && <PcStatsEditor partyId={partyId} player={player} detail={detail} />}
 
-      {/* Notes */}
+      {/* Notes — Escape leaves the box and goes no further (utils/spendEscape). */}
       <textarea
         value={player.notes}
         onChange={e => updatePlayer(partyId, player.id, { notes: e.target.value })}
+        onKeyDown={escapeLeavesBox}
         placeholder={isNPC ? 'NPC notes…' : 'Player notes…'}
         className="themed-placeholder"
         style={{

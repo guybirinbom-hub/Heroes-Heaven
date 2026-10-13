@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import type { DragEvent as ReactDragEvent } from 'react'
 import type { Combatant } from '../types/pf2e'
-import { useCombatStore } from '../store/combatStore'
+import { useCombatStore, downsAsPC, isDeadNpc, downedMarker, clearedByClearDefeated } from '../store/combatStore'
 import { usePartyStore } from '../store/partyStore'
 import { useSettingsStore } from '../store/settingsStore'
 import { DRAG_MIME, useHoveredCid } from '../store/layoutStore'
@@ -76,16 +76,37 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
 
   useEffect(() => { if (!editingName) setNameInput(c.name) }, [c.name, editingName])
 
+  // An edit is SETTLED once: Escape cancels it (and is spent in the box — see the two onKeyDown below),
+  // Enter commits it. The box then unmounts, and a blur the browser fires on the way out must neither
+  // commit what Escape cancelled nor commit a second time what Enter committed (a rename is an undo
+  // step: two of them made one Undo look like it did nothing).
+  const settled = useRef(false)
+
+  const beginEditInit = () => {
+    settled.current = false
+    // From the row's CURRENT number: a Roll since the row mounted would otherwise put a stale one back.
+    setInitVal(c.initiative?.toString() ?? '')
+    setEditInit(true)
+  }
   const finishEditInit = () => {
+    setEditInit(false)
+    if (settled.current) return
+    settled.current = true
     const v = parseInt(initVal)
     setInitiative(c.id, isNaN(v) ? null : v)
-    setEditInit(false)
   }
 
+  const beginRename = () => {
+    settled.current = false
+    setNameInput(c.name)
+    setEditingName(true)
+  }
   const commitRename = () => {
+    setEditingName(false)
+    if (settled.current) return
+    settled.current = true
     const t = nameInput.trim()
     renameCombatant(c.id, t || c.name)
-    setEditingName(false)
   }
 
   const effective = c.creature
@@ -111,6 +132,8 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
   // party-store sheet is the standalone fallback. Host wins because it's the
   // live character, not a hand-entered copy.
   const parties = usePartyStore(s => s.parties)
+  // Read under the `parties` subscription above, so a party NPC's switch re-draws its row at once.
+  const downMark = downedMarker(c)
   const hostPcStats = useHostPcStats(c.name)
   const pcStats = c.isPC
     ? hostPcStats ?? parties.flatMap(p => p.players).find(pl => pl.memberType === 'pc' && pl.name.toLowerCase() === c.name.toLowerCase())?.pcStats
@@ -163,11 +186,17 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
             value={initVal}
             onChange={e => setInitVal(e.target.value)}
             onBlur={finishEditInit}
-            onKeyDown={e => e.key === 'Enter' && finishEditInit()}
+            onKeyDown={e => {
+              if (e.key === 'Enter') finishEditInit()
+              // Escape cancels the edit and is SPENT here. Left to bubble it reached the host's
+              // dismiss stack (Heroes Heaven's CampaignTracker), whose base handler finds no popup on
+              // <body> for a box inside the tracker and LEAVES THE CAMPAIGN (2026-10-10).
+              if (e.key === 'Escape') { e.stopPropagation(); settled.current = true; setEditInit(false) }
+            }}
             onClick={e => e.stopPropagation()}
           />
         ) : (
-          <span style={{ cursor: 'pointer' }} onClick={stop(() => setEditInit(true))}>
+          <span style={{ cursor: 'pointer' }} onClick={stop(beginEditInit)}>
             {c.initiative ?? '—'}
           </span>
         )}
@@ -190,7 +219,10 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
             onChange={e => setNameInput(e.target.value)}
             onKeyDown={e => {
               if (e.key === 'Enter') commitRename()
-              if (e.key === 'Escape') { setNameInput(c.name); setEditingName(false) }
+              // Escape cancels the rename and is SPENT here: left to bubble, it reached the host's
+              // dismiss stack, whose base handler finds no popup on <body> for a box inside the tracker
+              // and LEFT THE CAMPAIGN (the local table: the whole page) — 2026-10-10.
+              if (e.key === 'Escape') { e.stopPropagation(); settled.current = true; setNameInput(c.name); setEditingName(false) }
             }}
             onBlur={commitRename}
             onClick={e => e.stopPropagation()}
@@ -205,6 +237,9 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 }}>{c.name}</span>
             {c.isPC && <Chip tone="accent">PC</Chip>}
             {c.isAlly && !c.isPC && <Chip tone="linked">NPC</Chip>}
+            {/* DYING n / DEAD for a creature that goes down like a player — its own chip, because the
+                one-letter badges below read "D2" for Dying 2 and Doomed 2 alike. */}
+            {downMark && <span data-downed-marker=""><Chip tone="danger">{downMark}</Chip></span>}
             {c.isElite && <span className="label-elite" style={{ fontSize: 8, flexShrink: 0 }}>E</span>}
             {c.isWeak && <span className="label-weak" style={{ fontSize: 8, flexShrink: 0 }}>W</span>}
             {c.scaledToLevel !== undefined && <Chip tone="accent" mono>L{c.scaledToLevel}</Chip>}
@@ -308,24 +343,43 @@ function InitRow({ c, isActive, isSelected, onSelect }: {
       {/* Right-click anywhere on the row for actions (rename / duplicate /
           mark defeated / remove). */}
       {ctxPos && (
-        <RowContextMenu
+        <CombatantMenu
           c={c} x={ctxPos.x} y={ctxPos.y}
           onClose={() => setCtxPos(null)}
-          onRename={() => { setNameInput(c.name); setEditingName(true) }}
+          onRename={beginRename}
         />
       )}
     </div>
   )
 }
 
-// ── Right-click menu for an initiative row ─────────────────────────────────
-function RowContextMenu({ c, x, y, onClose, onRename }: {
-  c: Combatant; x: number; y: number; onClose: () => void; onRename: () => void
+// ── The combatant menu: the initiative row's right-click, the stat block's right-click and its ☰ ───
+/*
+ * ONE menu for a combatant, wherever the GM reaches for it: right-click on its initiative row, right-
+ * click anywhere on its open stat block (a pane or a floating window — "Right-click on a stat block →
+ * treat like a player when at 0 HP", owner's list 2026-10-01, item 2), and the stat block's ☰ menu on a
+ * touch screen, which has no right-click. Exported for CombatantDetail; it stays in this file because
+ * BodyPortal.test.tsx pins that the row menu here draws through <BodyPortal.
+ *
+ * It is a BodyPortal on purpose (class exactly `tracker-root`, a direct child of <body>) with its OWN
+ * `document` Escape listener: Heroes Heaven's campaign view finds an open tracker popup by that shape
+ * (`trackerPopupOpen()`), and that is what keeps the Escape that closes this menu from also leaving the
+ * campaign.
+ *
+ * `onRename` is the row's inline rename box; the stat block has none, so its menu has no Rename.
+ */
+export function CombatantMenu({ c, x, y, onClose, onRename }: {
+  c: Combatant; x: number; y: number; onClose: () => void; onRename?: () => void
 }) {
-  const { duplicateCombatant, removeCombatant, setDefeated, delayCombatant } = useCombatStore()
+  const { duplicateCombatant, removeCombatant, setDefeated, delayCombatant, setDownsLikePC, markDead } = useCombatStore()
   const inCombat = useCombatStore(s => s.inCombat)
   const isActiveTurn = useCombatStore(s => s.combatants[s.activeIndex]?.id === c.id)
+  // A party NPC's setting lives on the party member and is read live — re-draw when the parties change.
+  usePartyStore(s => s.parties)
   const ref = useRef<HTMLDivElement>(null)
+  // "At 0 HP: dying like a player" — offered on every combatant but a PC (a PC always goes down so).
+  const downer = !c.isPC && downsAsPC(c)
+  const dead = isDeadNpc(c)
 
   useEffect(() => {
     const onDown = (e: MouseEvent) => {
@@ -346,8 +400,12 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
   // <body> is actually laid out in. Heroes Heaven zooms <html>, which scales left/top but not the
   // clientX/clientY this menu is opened at, so at any zoom but 100% the raw coords put the menu
   // further and further from the row the further down the page it is (the owner's "far away").
-  const W = 184, rowH = 30
-  const { left, top } = fixedPopupPos(x, y, W, rowH * 6)
+  // The height it is clamped by counts the rows it will really draw (header, items, the separators and
+  // padding): a fixed guess clipped the bottom items once the menu grew past it.
+  const W = 210, rowH = 30
+  const rows = 1 + (onRename ? 1 : 0) + (c.isPC ? 0 : 1) + 1 + (downer && !dead ? 1 : 0)
+    + (inCombat && isActiveTurn ? 1 : 0) + (c.isPC ? 0 : 1) + 1
+  const { left, top } = fixedPopupPos(x, y, W, rowH * rows + 28)
 
   const run = (fn: () => void) => (e: React.MouseEvent) => { e.stopPropagation(); fn(); onClose() }
 
@@ -386,18 +444,33 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
         overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
       }}>{c.name}</div>
 
-      <button style={itemStyle} onMouseEnter={hov(true)} onMouseLeave={hov(false)}
-        onClick={run(onRename)}>Rename</button>
+      {onRename && (
+        <button style={itemStyle} onMouseEnter={hov(true)} onMouseLeave={hov(false)}
+          onClick={run(onRename)}>Rename</button>
+      )}
 
       {!c.isPC && (
         <button style={itemStyle} onMouseEnter={hov(true)} onMouseLeave={hov(false)}
           onClick={run(() => duplicateCombatant(c.id))}>Duplicate</button>
       )}
 
+      {/* On a creature set to go down like a player, "defeated" IS the knock-out (0 HP, Unconscious,
+          Dying, moved before whoever's turn it is) — so it says so. Every other row keeps "Mark
+          defeated" (test/tracker-popup-theme.test.tsx reads it on a plain creature's menu). */}
       <button style={itemStyle} onMouseEnter={hov(true)} onMouseLeave={hov(false)}
         onClick={run(() => setDefeated(c.id, !c.isDefeated))}>
-        {c.isDefeated ? 'Restore' : 'Mark defeated'}
+        {c.isDefeated ? 'Restore' : downer ? 'Knock out (0 HP)' : 'Mark defeated'}
       </button>
+
+      {/* Finishing one off: Dying at its death value — DEAD, a normal defeated NPC again (its turn
+          skipped, Clear Defeated removes it; Restore brings it back). */}
+      {downer && !dead && (
+        <button style={itemStyle} onMouseEnter={hov(true)} onMouseLeave={hov(false)}
+          title="Dying at its death value: it is dead — its turn is skipped and Clear Defeated removes it"
+          onClick={run(() => markDead(c.id))}>
+          Mark dead
+        </button>
+      )}
 
       {/* Delay — step out of the order, come back after any later turn. Offered on the row whose
           turn it is and nowhere else: Player Core p. 416 gives Delay the trigger "Your turn begins",
@@ -415,6 +488,29 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
           onClick={run(() => delayCombatant(c.id))}>
           Delay
         </button>
+      )}
+
+      {/* The switch. A party NPC's row switches the party member (it keeps the setting in every fight
+          until switched back); any other row switches itself. Switched on while already down, it
+          goes Dying now. */}
+      {!c.isPC && (
+        <>
+          {sep}
+          <button style={itemStyle} onMouseEnter={hov(true)} onMouseLeave={hov(false)}
+            role="menuitemcheckbox" aria-checked={downer}
+            title={c.partyMemberId
+              ? 'At 0 HP it goes Unconscious and Dying like a player, keeps its turn, and Clear Defeated leaves it — kept on the party member until you switch it back'
+              : 'At 0 HP it goes Unconscious and Dying like a player, keeps its turn, and Clear Defeated leaves it'}
+            onClick={run(() => setDownsLikePC(c.id, !downer))}>
+            <span aria-hidden="true" style={{
+              width: 13, height: 13, flexShrink: 0, borderRadius: 3,
+              border: 'var(--app-bw) solid var(--border-strong)',
+              background: downer ? 'var(--accent)' : 'transparent', color: 'var(--text-on-accent)',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, lineHeight: 1,
+            }}>{downer ? '✓' : ''}</span>
+            At 0 HP: dying like a player
+          </button>
+        </>
       )}
 
       {sep}
@@ -494,7 +590,9 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
     partyNpcs,
   })
 
-  const hasDefeatedNpcs = combatants.some(c => c.isDefeated && !c.isPC)
+  // The store's own rule (removeDefeated), so the button shows exactly when it would remove someone: a
+  // creature set to go down like a player is not "defeated" here until it is dead.
+  const hasDefeatedNpcs = combatants.some(clearedByClearDefeated)
 
   // Encounter stats — recomputed whenever combatants or party info changes
   const stats = computeEncounter(combatants, party.level, Math.max(1, party.size + party.extra), partyNpcs)

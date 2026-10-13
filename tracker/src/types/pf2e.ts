@@ -393,6 +393,13 @@ export interface Combatant {
    *  already on the board, so a same-named hostile copy is never mistaken for it. Absent on every
    *  other row, and CLEARED on a duplicate (a copy is not that member). */
   partyMemberId?: string
+  /** At 0 HP this creature goes DOWN LIKE A PLAYER — Unconscious + Dying, moved before whoever's turn it
+   *  is, keeps its turn, and Clear Defeated leaves it — instead of being a defeated monster (owner's
+   *  list 2026-10-01, item 2). The GM sets it per row from the combatant menu. A row added for a party
+   *  member (`partyMemberId`) reads that MEMBER's setting live instead (PartyPlayer.downsLikePC), so
+   *  this field only speaks for rows with no member to ask. Never set on a PC: a PC always goes down
+   *  like a player (combatStore.downsAsPC). */
+  downsLikePC?: boolean
   initiative: number | null
   currentHP: number
   maxHP: number
@@ -423,6 +430,7 @@ export interface SavedEncounter {
     isAlly?: boolean    // optional for back-compat with older saves
     charId?: string     // the campaign character a PC row points at; absent on pre-charId saves
     partyMemberId?: string  // the party member the row was added for; absent on older saves
+    downsLikePC?: boolean   // the row's own "dying like a player at 0 HP"; absent = off (and on older saves)
     maxHP: number
     isElite: boolean
     isWeak: boolean

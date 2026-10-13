@@ -6,7 +6,7 @@ import { fetchPublishedSheet, pushGmEdit, type PartyMember } from '../data/party
 import { livePlay } from '../sheet/memberSheets';
 import type { SavedChar } from '../data/storage';
 import type { Character, ContentDatabase } from '../rules/types';
-import { isSamePc, takeVitalsGesture, useCombatStore } from '../../tracker/src/store/combatStore';
+import { isSamePc, moveBeforeActive, takeVitalsGesture, useCombatStore } from '../../tracker/src/store/combatStore';
 import type { Combatant } from '../../tracker/src/types/pf2e';
 
 /*
@@ -209,11 +209,25 @@ export function sheetWithVitals(sheet: SavedChar, v: PcVitals, content: ContentD
   };
 }
 
-/** Write the sheet's vitals onto one PC combatant. The tracker keeps no PC HP of its own. */
-function writeVitals(cid: string, v: PcVitals, content: ContentDatabase): void {
-  useCombatStore.setState((s: { combatants: Combatant[] }) => {
+/**
+ * Write the sheet's vitals onto one PC combatant. The tracker keeps no PC HP of its own.
+ *
+ * `dropped`: the player's OWN sheet took this character from above 0 HP to 0 and the row has not
+ * followed it yet (SeenPc.drop; owner's list 2026-10-01, item 2: "if they drop to 0 it does need to be
+ * updated in the tracker and move them to the correct initiative"). When this write takes the ROW from
+ * above 0 to 0, mid-fight, the row moves to just before the creature whose turn it is, on that
+ * creature's count — the tracker's one rule for a creature going down (combatStore `moveBeforeActive`,
+ * which also refuses out of combat). A row already at 0 is already down — the GM's own knock-out moved
+ * it when he made it — and is not moved a second time for the same fall. It happens HERE, inside this
+ * plain write, and never through setDefeated / applyDamage: those are the GM's gestures, and a gesture
+ * is pushed to the player (rule B). Their Dying and Unconscious are their sheet's, written like every
+ * condition above; the tracker adds none.
+ */
+function writeVitals(cid: string, v: PcVitals, content: ContentDatabase, dropped = false): void {
+  useCombatStore.setState((s: { combatants: Combatant[]; activeIndex: number; inCombat: boolean }) => {
     const c = s.combatants.find((x) => x.id === cid);
     if (!c) return;
+    const standing = c.currentHP > 0;
     if (v.maxHP > 0) c.maxHP = v.maxHP;
     c.currentHP = Math.max(0, Math.min(v.currentHP, c.maxHP));
     c.isDefeated = c.currentHP === 0;
@@ -225,6 +239,7 @@ function writeVitals(cid: string, v: PcVitals, content: ContentDatabase): void {
       return had ? { ...had, value: cond.value } : { id: `hh-${cond.id}-${++_cid}`, name: cond.id, value: cond.value, isPermanent: true };
     });
     c.conditions = [...keep, ...fromSheet];
+    if (dropped && standing && c.currentHP === 0) moveBeforeActive(s, cid);
   });
 }
 
@@ -252,6 +267,31 @@ interface SeenPc {
   want?: Change;
   /** His change that is OUT, from its fresh read to the server's answer. No load drops it (rule A). */
   out?: Change;
+  /**
+   * The player's side went from above 0 HP to 0 — a sheet arriving, or a push's fresh read the sheet
+   * won — and the row has not shown it yet: a change of the GM's not sent or out stood over it. Kept
+   * until the first pass in which the row shows `shown` (writeVitals' `dropped`), then spent — or until
+   * a pass finds no row for the character: a row added after that is a re-add, never the fall. Taken
+   * only on the pass the sheet arrived, the drop was lost whenever a change of his was standing then:
+   * the row reached 0 later, through the sheet winning his push, and never moved.
+   */
+  drop?: boolean;
+  /**
+   * The HP the PLAYER's side last had: the last sheet that arrived from them, or a push's fresh read of
+   * their published sheet. A fall is theirs only from above 0 here — never from what the row showed of
+   * his own landed push (`shown = held`, or his push coming back). His heal that landed and that their
+   * app then REFUSED stood the row up, but never them: their next sheet at 0 is no new fall.
+   */
+  theirs: number;
+}
+
+/** `shown` follows the player's side (an arrival, or a fresh read the sheet won): a fall from above 0
+ *  HP to 0 ON THEIR SIDE is owed to the row until the row shows it (SeenPc.drop). One still at 0 on
+ *  their side is no new fall, whatever the row showed of his in between. */
+function follow(st: SeenPc, v: PcVitals): void {
+  if (st.theirs > 0 && v.currentHP === 0) st.drop = true;
+  st.theirs = v.currentHP;
+  st.shown = v;
 }
 
 /**
@@ -307,11 +347,18 @@ export function usePcSheetTruth(args: {
         if (row && built && fresh) {
           const now = vitalsFromSheet(fresh, content);
           if (vitalsKey(now) !== w.on) {
-            // The sheet moved since he made it: it wins, over anything made on top of it too.
+            // The sheet moved since he made it: it wins, over anything made on top of it too — and a
+            // fall to 0 in it is the player's, owed to the row like one that arrived (SeenPc.drop).
             st.want = undefined;
-            st.shown = now;
+            follow(st, now);
             return true;
           }
+          // Built on their PUBLISHED sheet (no push of his under it): this read is the player's side,
+          // and it carries what the row showed, so the row already went through anything in it — no
+          // fall to owe. Kept as theirs, so a fall from here is one (their app applied his heal and
+          // republished, and the next sheet this screen is handed is them down again). Built on his
+          // own push, the read is HIS, never theirs (SeenPc.theirs).
+          if (built.on === null) st.theirs = now.currentHP;
           const arrived = st.arrived;
           const sent = sheetWithVitals(fresh, w.v, content);
           // The base is THIS read (`gmBaseOf`: its stamp and the hash of the sheet it holds), and
@@ -340,14 +387,9 @@ export function usePcSheetTruth(args: {
       const sheet = sheetById.get(mem.charId);
       if (!sheet) continue;
       const c = rowOf(mem);
-      // A row another member answers to as well is nobody's window (WHICH ROW).
-      if (!c || members.some((o) => o !== mem && rowOf(o) === c)) continue;
-      // Taken FIRST, whatever this pass then decides: a gesture is acted on by the pass that sees it
-      // or by nobody (the store forgets it the moment its own dispatch returns, either way).
-      const gesture = takeVitalsGesture(c.id);
       const sv = vitalsFromSheet(sheet, content);
       const key = `${campaignId}|${mem.charId}`;
-      const st = seen.get(key) ?? { sheet, shown: sv, arrived: 0 };
+      const st = seen.get(key) ?? { sheet, shown: sv, arrived: 0, theirs: sv.currentHP };
       if (!seen.has(key)) {
         seen.set(key, st);
       } else if (sheet !== st.sheet) {
@@ -356,12 +398,28 @@ export function usePcSheetTruth(args: {
         // push came back, which the row follows too — but it is no arrival, since a push of his still
         // out was made on top of it; or a LATE ECHO, which is set aside.
         if (!ours.has(sheet)) {
-          st.shown = sv;
+          // Only the PLAYER's side is a fall (SeenPc.drop): a first sight, a Load, a re-add, an Undo or
+          // his own push coming back writes the row too, and none of those is the character going down.
+          follow(st, sv);
           st.arrived++;
         } else if (sheet === gmPendingEdit(campaignId, mem.charId)?.sheet) {
           st.shown = sv;
         }
       }
+      // NO ROW that is this character's window: none on the board (removed, a Clear, an encounter
+      // without them), or one another member answers to as well, which is nobody's (WHICH ROW). The
+      // sheet is still followed above — a row added later starts from it — but a fall in it is no fall
+      // OF A ROW: whatever row comes next is a re-add, and a re-add is not the character going down
+      // (SeenPc.drop). Before 2026-10-13 an arrival here waited for the re-add, which then took it for
+      // the fall and moved the new row before whoever was acting.
+      if (!c || members.some((o) => o !== mem && rowOf(o) === c)) {
+        st.drop = false;
+        continue;
+      }
+      // Taken on every pass that has this character's row, whatever it then decides: a gesture is acted
+      // on by the pass that sees it or by nobody (the store forgets it the moment its own dispatch
+      // returns, either way).
+      const gesture = takeVitalsGesture(c.id);
       const cv = vitalsFromCombatant(c, content);
       const ck = vitalsKey(cv);
       const was = st.want?.v ?? st.out?.v ?? st.shown;
@@ -375,7 +433,15 @@ export function usePcSheetTruth(args: {
         st.want = undefined;
       }
       const show = st.want?.v ?? st.out?.v ?? st.shown;
-      if (ck !== vitalsKey(show)) writeVitals(c.id, show, content);
+      // A fall of theirs is spent on the first pass the row shows their sheet — moving the row if this
+      // write takes it down, else (the row already there) moving nothing — and kept while a change of
+      // the GM's not sent or out stands over it (SeenPc.drop).
+      let dropped = false;
+      if (show === st.shown) {
+        dropped = !!st.drop;
+        st.drop = false;
+      }
+      if (ck !== vitalsKey(show)) writeVitals(c.id, show, content, dropped);
       if (st.want && !st.out) {
         const w = (st.out = st.want);
         st.want = undefined;
