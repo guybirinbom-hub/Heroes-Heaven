@@ -12,6 +12,8 @@
 import type { SavedEncounter } from '../types/pf2e'
 import { loadCustomCreatures, loadIndex, loadCreature, loadCreatureByName, type IndexEntry } from '../data/dataStore'
 import { readEncounterStore, writeEncounterStore, adjustedCreature } from '../store/combatStore'
+import type { HostSave, HostSaveFile, HostSaveOutcome } from '../data/hostSaveContext'
+import { saveTextFile } from './saveTextFile'
 
 const FILE_VERSION = 1
 
@@ -95,21 +97,25 @@ export function buildExportPayload(names: string[]): PortableEncounterFile {
   }
 }
 
-/** Trigger a browser download of the chosen encounters as a JSON file. */
-export function downloadEncounters(names: string[]): void {
+/** The file an export of the chosen encounters is: its name, its text and its type. */
+export function encounterExportFile(names: string[]): HostSaveFile {
   const payload = buildExportPayload(names)
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
   const stamp = new Date().toISOString().slice(0, 10)
-  a.download = names.length === 1
-    ? `pf2e-encounter-${names[0].replace(/[^\w-]+/g, '_')}-${stamp}.json`
-    : `pf2e-encounters-${stamp}.json`
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  setTimeout(() => URL.revokeObjectURL(url), 1000)
+  return {
+    filename: names.length === 1
+      ? `pf2e-encounter-${names[0].replace(/[^\w-]+/g, '_')}-${stamp}.json`
+      : `pf2e-encounters-${stamp}.json`,
+    text: JSON.stringify(payload, null, 2),
+    mime: 'application/json',
+  }
+}
+
+/** Save the chosen encounters as a JSON file. Inside Heroes Heaven through the host's export
+ *  (`hostSave`, from useHostSave — on the Android app its own Save to folder / Share), standalone the
+ *  browser download (../utils/saveTextFile). `hostSave` is required, not optional, so a new caller has
+ *  to say which it is. */
+export function downloadEncounters(names: string[], hostSave: HostSave | null): Promise<HostSaveOutcome> {
+  return saveTextFile(encounterExportFile(names), hostSave)
 }
 
 // ── Import ────────────────────────────────────────────────────────────────

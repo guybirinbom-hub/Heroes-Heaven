@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CampaignMembership } from '../data/campaigns';
 import { loadRoster, type SavedChar } from '../data/storage';
 import { GmEditSheet, type GmEditHandle } from '../sheet/GmEditSheet';
@@ -31,6 +31,8 @@ import { useLayoutStore, useGmLayoutStore, type PaneNode } from '../../tracker/s
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
 import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
 import { HostThemeProvider } from '../../tracker/src/data/hostThemeContext';
+import { HostSaveProvider, type HostSave } from '../../tracker/src/data/hostSaveContext';
+import { downloadText } from '../sheet/download';
 import { hostSearchRecords } from './hostSearchRecords';
 import { InitiativeTracker, DELAY_RETURN_MIME, useDelayDropZone } from '../../tracker/src/components/InitiativeTracker';
 import { useDelayDragActive } from '../../tracker/src/useDelayDragActive';
@@ -709,6 +711,36 @@ export function CampaignTracker({
    * up over that sheet: campaign-tracker.css lifts those above every window instead.)
    */
   const dialogStyle = useMemo<DialogStyle>(() => ({ ...hhPopupTheme, zIndex: floatingTopZ + 20 }), [hhPopupTheme, floatingTopZ]);
+  /*
+   * THE TRACKER'S OWN EXPORTS (the Encounter Manager's saved encounters) save through the app's one
+   * export helper, src/sheet/download.ts (item 8). On the Android app that helper first asks — Save to
+   * folder or Share — in a dialog it raises on <body>, OUTSIDE this root, at the confirm lift
+   * campaign-tracker.css gives it (1600). The Encounter Manager asking is a tracker modal at 2000
+   * (tracker.scoped.css `.modal-overlay`), and nothing between them forms a stacking context: the chooser
+   * opened UNDER the manager, so the GM tapped Export and saw nothing happen (G8t refuter, 2026-10-13,
+   * measured in Edge: a tap on "Save to folder" landed on the manager).
+   * So while the host's export is in flight this root ISOLATES its own layers — one stacking context,
+   * painted at the page's own level — and whatever the tracker draws (its modals, its windows, the dice)
+   * stays under any dialog on <body>, whatever z-index either side uses. Only while in flight: the rest
+   * of the time the windows keep floating over the sheet's own popups as designed
+   * (test/tracker-windows-over-sheet.test.tsx). On the web and the PC app the save is done before the
+   * browser paints, so nothing changes on screen there. test/download-platform-route.test.tsx.
+   */
+  const [hostSaving, setHostSaving] = useState(0);
+  const hostSave = useCallback<HostSave>(async (file) => {
+    setHostSaving((n) => n + 1);
+    try {
+      // Called before the first await, so the web's anchor still clicks inside the GM's own click. A
+      // name the helper refuses (thrown) and a failed save (rejected) both reach the manager's notice.
+      return await downloadText(file);
+    } finally {
+      setHostSaving((n) => n - 1);
+    }
+  }, []);
+  const rootStyle = useMemo<CSSProperties | undefined>(
+    () => (hostSaving > 0 ? { ...trackerVars, isolation: 'isolate' } : trackerVars ?? undefined),
+    [hostSaving, trackerVars],
+  );
   // The index itself — names, older names, a detail line, no duplicate scrapes: hostSearchRecords.ts.
   const searchRecords = useMemo<HostSearchRecord[]>(() => hostSearchRecords(content), [content]);
   const hostSearch = useMemo(() => {
@@ -1442,9 +1474,14 @@ export function CampaignTracker({
   }
 
   return (
-    <div className="tracker-root campaign-tracker" style={trackerVars ?? undefined}>
+    <div className="tracker-root campaign-tracker" style={rootStyle}>
       <GameDataProvider>
        <HostSearchProvider value={hostSearch}>
+       {/* The tracker's own exports (the Encounter Manager's saved encounters) save through the app's one
+           export helper: the anchor on the web and the PC app, Save to folder / Share on the Android app,
+           whose WebView ignores the tracker's own anchor (item 8). `hostSave` (above) keeps that
+           chooser over the tracker's own modals while it is open. */}
+       <HostSaveProvider value={hostSave}>
        {/* The tracker's look for what the tracker itself draws on <body> (its BodyPortal): the row's
            right-click menu and every hover preview. null → they inherit the app's look, as this root does. */}
        <HostThemeProvider value={trackerVars}>
@@ -1625,6 +1662,7 @@ export function CampaignTracker({
        </CampaignPartyLevelProvider>
        </PinContext.Provider>
        </HostThemeProvider>
+       </HostSaveProvider>
        </HostSearchProvider>
       </GameDataProvider>
     </div>

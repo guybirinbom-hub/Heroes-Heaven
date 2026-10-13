@@ -72,7 +72,7 @@ There is otherwise deliberately **nothing else to unwind**:
   dependency only ever points HH → tracker: where the tracker needs something only the host knows, it
   declares a context in `tracker/src/data/` with a **null default**, and HH provides the value. With
   no provider each one falls back to the tracker's original behaviour, so the standalone app is
-  unchanged. There are six:
+  unchanged. There are seven:
 
   | Context | What HH supplies | Standalone (no provider) |
   |---|---|---|
@@ -82,6 +82,7 @@ There is otherwise deliberately **nothing else to unwind**:
   | `pcStatsContext` | each PC's real stats (AC/saves/level/temp HP/…) so the initiative order can show them, keyed by character id (`byId`, a row's first key — a rename on either side keeps the link) and by name (a row with no id); `folded` — which conditions those stats already count, so the row adds the tracker's penalty only for the rest; `badgesById` — the sheet's derived conditions and active modes, drawn locked; `members` — the campaign's PCs, for Quick add | `PartyPlayer.pcStats` (the DM-entered sheet), every condition counted by the tracker, no badges, Quick add name-only |
   | `hostSearchContext` | an index of every HH record for Search; `render`, the body of an HH page in a tracker window (a Search result opens as one, 2026-10-11) or a GM-screen pane; `controls`, that page's favourite star for the window's header (a strip above the page in a pane holding two tabs, which has no header); and `open` (this host opens the same window — Search calls `open` only for a host with no `render`) | Search over the tracker's own reference data |
   | `hostThemeContext` | the GM's tracker-only look (`useTrackerVars()`, one object per appearance state, or null when the tracker inherits the app's look), which `BodyPortal` puts on everything the tracker draws on `<body>` | null — the popup inherits the document's variables, as always |
+  | `hostSaveContext` (2026-10-13, item 8's Android half) | HH's one export helper, `downloadText` (`src/sheet/download.ts`): the anchor on the web and the PC app, the app's Save to folder / Share chooser on the Android app, whose WebView ignores an anchor download. `TrackerSettingsSection` gives it as is (Settings → Initiative tracker → Encounter tables' Export); `CampaignTracker` gives `hostSave`, a wrapper that also sets `isolation: isolate` on its root while the export is in flight, so the chooser on `<body>` (the confirm lift, 1600) is drawn over the Encounter Manager that asked (a tracker modal, 2000) instead of under it (the G8t refuter, measured in Edge). Both tracker exports go through `tracker/src/utils/saveTextFile.ts` with the same file names and text as before (`tracker/src/components/hostSave.exports.test.tsx`; the HH half in `test/download-platform-route.test.tsx`) | the tracker's own anchor download, unchanged — attached while clicked, its URL revoked a second later (the encounter-table export used to click a detached anchor and revoke at once) |
 
   The tracker's own `DisplaySection` also takes a `campaignDriven` prop: HH passes it to hide the
   Monster Parts switch (the campaign decides), the standalone tracker doesn't and keeps it.

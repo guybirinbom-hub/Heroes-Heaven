@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useCombatStore } from '../store/combatStore'
 import { usePersistVersion } from '../store/persistBus'
 import { downloadEncounters, importEncountersFromFilePicker } from '../utils/encounterTransfer'
+import { useHostSave } from '../data/hostSaveContext'
 
 interface Props { onClose: () => void }
 
@@ -23,6 +24,8 @@ export function EncounterManager({ onClose }: Props) {
   // Re-render trigger after an import (localStorage is updated outside of React state).
   const [refreshTick, setRefreshTick] = useState(0)
   void refreshTick
+  // Inside Heroes Heaven, the host's export (on the Android app: Save to folder or Share); standalone, null.
+  const hostSave = useHostSave()
   // …and after the GM-device mirror pulls this key from the GM's other device: the names below come
   // from a module cache the pull only invalidates, so nothing else would re-read it.
   void usePersistVersion('pf2e-encounters')
@@ -133,8 +136,14 @@ export function EncounterManager({ onClose }: Props) {
   const doExport = () => {
     const chosen = names.filter(n => exportSelected.has(n))
     if (chosen.length === 0) return
-    downloadEncounters(chosen)
-    setMsg(`Exported ${chosen.length} encounter${chosen.length === 1 ? '' : 's'}`)
+    const n = chosen.length
+    // Standalone the browser download runs at once, inside this click; inside Heroes Heaven the host
+    // saves it (on the Android app after the player picks Save to folder or Share). A Cancel there says
+    // nothing; a refused name or a failed save or share says why.
+    downloadEncounters(chosen, hostSave).then(
+      out => { if (out !== 'cancelled') setMsg(`${out === 'shared' ? 'Shared' : 'Exported'} ${n} encounter${n === 1 ? '' : 's'}`) },
+      (e: unknown) => setMsg(`Export failed: ${e instanceof Error ? e.message : String(e)}`),
+    )
     cancelExport()
   }
 

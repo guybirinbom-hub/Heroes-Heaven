@@ -9,6 +9,8 @@ import {
   EncounterTablesSection,
 } from '../../tracker/src/components/SettingsModal';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
+import { HostSaveProvider } from '../../tracker/src/data/hostSaveContext';
+import { downloadText } from '../sheet/download';
 import '../../tracker/dist-css/tracker.scoped.css';
 import './tracker-settings.css';
 
@@ -25,6 +27,10 @@ import './tracker-settings.css';
  *
  * GameDataProvider is required because several groups (Sources, Conditions, Stat Blocks) read the
  * game data; without it they'd render empty.
+ *
+ * HostSaveProvider hands the Encounter tables group's Export the app's one export helper
+ * (src/sheet/download.ts): the anchor on the web and the PC app, Save to folder / Share on the Android
+ * app, whose WebView ignores the tracker's own anchor download (item 8).
  *
  * NOT included from the tracker's modal: Appearance (the look is Heroes Heaven's own appearance system —
  * the app's Appearance, or the tracker-only look a GM sets with a campaign's "Customize tracker
@@ -71,6 +77,7 @@ export function TrackerSettingsSection() {
 
       <div className="tracker-root tracker-settings-body">
         <GameDataProvider>
+        <HostSaveProvider value={downloadText}>
           {/* campaignDriven: in Heroes Heaven, Monster Parts follows the campaign's Battlezoo
               variant rule (set in the campaign's own settings), so no manual switch here. */}
           {group === 'display' && <DisplaySection campaignDriven />}
@@ -82,6 +89,7 @@ export function TrackerSettingsSection() {
           {group === 'players' && <PlayersSection campaignDriven />}
           {group === 'conditions' && <ConditionsSection />}
           {group === 'encounter-tables' && <EncounterTablesSection />}
+        </HostSaveProvider>
         </GameDataProvider>
       </div>
     </div>

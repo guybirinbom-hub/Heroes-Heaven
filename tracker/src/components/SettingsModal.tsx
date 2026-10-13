@@ -16,6 +16,8 @@ import { XIcon, TrashIcon, PencilIcon, PlusIcon, ImportIcon, SaveIcon } from './
 import { HHAppearance } from './HHAppearance'
 import { useEncounterTablesStore, newEncId, DEFAULT_ENCOUNTER_NOTE, type EncounterTable, type EncounterEntry } from '../store/encounterTablesStore'
 import { EncounterTableEditor } from './EncounterTableEditor'
+import { useHostSave } from '../data/hostSaveContext'
+import { saveTextFile } from '../utils/saveTextFile'
 import { TurnTimeline } from './TurnTimeline'
 
 interface Props { onClose: () => void }
@@ -64,14 +66,19 @@ export function EncounterTablesSection() {
   // either choice, and for free when the section unmounts (tab switch / modal close).
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
 
+  // Inside Heroes Heaven, the host's export (on the Android app: Save to folder or Share); standalone, null.
+  const hostSave = useHostSave()
+
+  // Standalone the browser download runs at once, inside this click (its anchor attached while clicked
+  // and its URL revoked a second later — it used to be a detached anchor revoked in the same tick);
+  // inside Heroes Heaven the host saves it. A Cancel says nothing; a refused name or a failed save or
+  // share says why, in the section's message line.
   const exportTable = (t: EncounterTable) => {
-    const blob = new Blob([JSON.stringify(t, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${t.name.replace(/[^\w -]+/g, '').trim().replace(/\s+/g, '-') || 'encounter-table'}.json`
-    a.click()
-    URL.revokeObjectURL(url)
+    saveTextFile({
+      filename: `${t.name.replace(/[^\w -]+/g, '').trim().replace(/\s+/g, '-') || 'encounter-table'}.json`,
+      text: JSON.stringify(t, null, 2),
+      mime: 'application/json',
+    }, hostSave).catch((e: unknown) => setMsg(`Export failed: ${e instanceof Error ? e.message : String(e)}`))
   }
 
   const importTables = () => {
