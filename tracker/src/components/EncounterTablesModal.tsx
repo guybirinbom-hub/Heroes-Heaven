@@ -1,5 +1,6 @@
 import { XIcon } from './Icons'
 import { describeParty, type PartyInFight, type EncounterStats } from '../utils/encounter'
+import { useEscapeCloses } from '../utils/spendEscape'
 
 interface Props {
   /** Current encounter difficulty, highlighted in the budget table if given. */
@@ -45,6 +46,9 @@ const td: React.CSSProperties = {
 const tdNum: React.CSSProperties = { ...td, fontFamily: 'var(--font-mono)', color: 'var(--linked)', whiteSpace: 'nowrap' }
 
 export function EncounterTablesModal({ current, party, budget, onClose }: Props) {
+  // Escape closes it and goes no further — unless something is drawn over it (Search, Ctrl+K), whose
+  // press it is (utils/spendEscape useEscapeCloses; the ref says which element is this modal).
+  const escapeRef = useEscapeCloses(onClose)
   const cur = (current ?? '').toLowerCase()
   // This party's column: shown only when the badge handed over who it counted.
   const mine = party && budget ? budget : null
@@ -54,7 +58,7 @@ export function EncounterTablesModal({ current, party, budget, onClose }: Props)
     return threat === 'Trivial' ? `${t} or less` : String(t)
   }
   return (
-    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+    <div className="modal-overlay" ref={escapeRef} onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="modal-box" style={{ maxWidth: 660, maxHeight: '88vh', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 20 }}>
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

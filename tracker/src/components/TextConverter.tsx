@@ -8,12 +8,17 @@ import { useCombatStore } from '../store/combatStore'
 import { StatBlock } from './StatBlock'
 import { StatBlockBuilder } from './StatBlockBuilder'
 import { ErrorBoundary } from './ErrorBoundary'
+import { useEscapeCloses } from '../utils/spendEscape'
 
 // ── Help dialog ────────────────────────────────────────────────────────────
 // Opened by the "?" button in the bottom-left of the footer. Explains the
 // expected paste format so users don't have to read parseStatBlockText
 // source to figure out why their paste isn't recognized.
 function TextConverterHelpModal({ onClose }: { onClose: () => void }) {
+  // Escape closes this help box ALONE and goes no further. In a campaign the press reached the host's
+  // handler for the converter under it and closed both, the pasted text with them (the G7e browser
+  // round, 2026-10-13). It opens after the converter, so it is the top layer (utils/spendEscape).
+  const escapeRef = useEscapeCloses(onClose)
   const sec: React.CSSProperties = {
     fontFamily: 'var(--font-display)', fontVariationSettings: '"opsz" 72',
     fontWeight: 600, fontSize: 14, color: 'var(--accent)',
@@ -39,7 +44,7 @@ function TextConverterHelpModal({ onClose }: { onClose: () => void }) {
   const code: React.CSSProperties = { fontFamily: 'var(--font-mono)', color: 'var(--accent)' }
 
   return (
-    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()} style={{ zIndex: 10001 }}>
+    <div className="modal-overlay" ref={escapeRef} onClick={e => e.target === e.currentTarget && onClose()} style={{ zIndex: 10001 }}>
       <div className="modal-box" style={{ maxWidth: 660, maxHeight: '90vh', overflowY: 'auto', padding: 0 }}>
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -240,6 +245,10 @@ Goblin Scuttle [reaction] Trigger An ally ends a move action adjacent to the gob
 type SaveStep = 'idle' | 'confirm' | 'saveas' | 'confirmdelete' | 'confirmDupName'
 
 export function TextConverter({ onClose, existing }: Props) {
+  // Escape closes the converter as its ✕ does, and goes no further. Its Edit copy (a stat block's
+  // CombatantDetail) had no Escape at all; the campaign's Custom creature copy is on the host's dismiss
+  // stack too, and this listener spends the press first, so it closes once (utils/spendEscape).
+  const escapeRef = useEscapeCloses(onClose)
   const { addCombatant } = useCombatStore()
   const [showHelp, setShowHelp] = useState(false)
   const [importMsg, setImportMsg] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null)
@@ -505,8 +514,20 @@ export function TextConverter({ onClose, existing }: Props) {
     onClose()
   }
 
+  // A right-click inside the converter is the converter's. Its Edit copy is drawn inside the stat block's
+  // CombatantDetail, whose right-click opens the combatant menu: it opened OVER the converter, and one
+  // Escape then closed the converter under the menu, its unsaved edits with it, the menu left on screen
+  // (the G7s refuter, 2026-10-13). So the right-click goes no further than this overlay. A text field keeps
+  // the browser's own menu (copy / paste); anywhere else it is prevented, as Heroes Heaven's own listener
+  // (src/App.tsx, on `window`, which a stopped event never reaches) does everywhere outside a text field.
+  // CombatantMenu.test.tsx.
+  const keepRightClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (!(e.target as Element).closest('input, textarea, [contenteditable]')) e.preventDefault()
+  }
+
   return (
-    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+    <div className="modal-overlay" ref={escapeRef} onClick={e => e.target === e.currentTarget && onClose()} onContextMenu={keepRightClick}>
       <div
         style={{
           background: 'var(--bg-panel)',

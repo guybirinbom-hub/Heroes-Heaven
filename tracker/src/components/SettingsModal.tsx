@@ -19,6 +19,7 @@ import { EncounterTableEditor } from './EncounterTableEditor'
 import { useHostSave } from '../data/hostSaveContext'
 import { saveTextFile } from '../utils/saveTextFile'
 import { TurnTimeline } from './TurnTimeline'
+import { useEscapeCloses } from '../utils/spendEscape'
 
 interface Props { onClose: () => void }
 
@@ -423,29 +424,50 @@ export function ConditionsSection() {
 
       {/* Delete confirmation */}
       {confirmDelete && (
-        <div className="modal-overlay" style={{ zIndex: 10002 }}>
-          <div className="modal-box" style={{ maxWidth: 380, padding: 18 }}>
-            <h3 style={{ margin: '0 0 8px', fontSize: 14, color: 'var(--danger)', fontFamily: 'var(--font-display)', fontWeight: 600 }}>
-              Delete "{confirmDelete.name}"?
-            </h3>
-            <p style={{ fontSize: 12.5, color: 'var(--text-muted)', lineHeight: 1.5, margin: '0 0 14px' }}>
-              The template is removed from your library. Conditions already applied to combatants stay where they are.
-            </p>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
-              <button className="btn btn-secondary btn-sm" onClick={() => setConfirmDelete(null)}>Cancel</button>
-              <button
-                onClick={() => { remove(confirmDelete.id); setConfirmDelete(null) }}
-                style={{
-                  background: 'var(--danger)', color: 'var(--text-on-danger)',
-                  border: 'var(--app-bw) solid var(--danger)', borderRadius: 'var(--radius-sm)',
-                  padding: '6px 14px', fontSize: 12, fontWeight: 600,
-                  cursor: 'pointer', fontFamily: 'var(--font-ui)',
-                }}
-              >Delete</button>
-            </div>
-          </div>
-        </div>
+        <ConditionDeleteConfirm
+          condition={confirmDelete}
+          onCancel={() => setConfirmDelete(null)}
+          onDelete={() => { remove(confirmDelete.id); setConfirmDelete(null) }}
+        />
       )}
+    </div>
+  )
+}
+
+/*
+ * The custom-condition Delete confirm. Escape cancels it, as Cancel does, and goes no further — it had no
+ * Escape at all (utils/spendEscape useEscapeCloses; modalEscape.test.tsx). Its own component, so the hook
+ * is registered only while the confirm is up: called in ConditionsSection itself it would hold every
+ * Escape on the Conditions page for a confirm that is not there, and Settings would never close on it.
+ */
+function ConditionDeleteConfirm({ condition, onCancel, onDelete }: {
+  condition: CustomCondition
+  onCancel: () => void
+  onDelete: () => void
+}) {
+  const escapeRef = useEscapeCloses(onCancel)
+  return (
+    <div className="modal-overlay" ref={escapeRef} style={{ zIndex: 10002 }}>
+      <div className="modal-box" style={{ maxWidth: 380, padding: 18 }}>
+        <h3 style={{ margin: '0 0 8px', fontSize: 14, color: 'var(--danger)', fontFamily: 'var(--font-display)', fontWeight: 600 }}>
+          Delete "{condition.name}"?
+        </h3>
+        <p style={{ fontSize: 12.5, color: 'var(--text-muted)', lineHeight: 1.5, margin: '0 0 14px' }}>
+          The template is removed from your library. Conditions already applied to combatants stay where they are.
+        </p>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
+          <button className="btn btn-secondary btn-sm" onClick={onCancel}>Cancel</button>
+          <button
+            onClick={onDelete}
+            style={{
+              background: 'var(--danger)', color: 'var(--text-on-danger)',
+              border: 'var(--app-bw) solid var(--danger)', borderRadius: 'var(--radius-sm)',
+              padding: '6px 14px', fontSize: 12, fontWeight: 600,
+              cursor: 'pointer', fontFamily: 'var(--font-ui)',
+            }}
+          >Delete</button>
+        </div>
+      </div>
     </div>
   )
 }

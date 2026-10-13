@@ -7,6 +7,7 @@ import {
 import { CreaturePickerModal } from './CreaturePickerModal'
 import { NumberInput } from './NumberInput'
 import { XIcon, TrashIcon, PlusIcon } from './Icons'
+import { useEscapeCloses } from '../utils/spendEscape'
 
 const listKey = (k: EncounterKind) => (k === 'creature' ? 'creatures' : 'hazards') as 'creatures' | 'hazards'
 
@@ -79,6 +80,11 @@ export function EncounterTableEditor({ table, onClose }: { table?: EncounterTabl
   const upsert = useEncounterTablesStore(s => s.upsert)
   const [draft, setDraft] = useState<EncounterTable>(() => (table ? structuredClone(table) : newEncounterTable()))
   const [picking, setPicking] = useState<{ kind: EncounterKind; entryId: string } | null>(null)
+  // Escape cancels, as the ✕ does, and goes no further — in Heroes Heaven's Settings it closed the whole
+  // Settings page (utils/spendEscape useEscapeCloses). With the Link picker open over it, Escape closes
+  // the picker first; with Search (Ctrl+K) drawn over it, the search (the ref says which element is this
+  // modal).
+  const escapeRef = useEscapeCloses(onClose)
 
   const addEntry = (kind: EncounterKind) => setDraft(d => ({ ...d, [listKey(kind)]: [...d[listKey(kind)], newEncounterEntry()] }))
   const updateEntry = (kind: EncounterKind, id: string, patch: Partial<EncounterEntry>) =>
@@ -102,7 +108,7 @@ export function EncounterTableEditor({ table, onClose }: { table?: EncounterTabl
   }
 
   return (
-    <div className="modal-overlay" style={{ zIndex: 9000 }} onClick={e => e.target === e.currentTarget && onClose()}>
+    <div className="modal-overlay" ref={escapeRef} style={{ zIndex: 9000 }} onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="modal-box" style={{ maxWidth: 680, padding: 0, overflow: 'hidden', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
         {/* Header */}
         <div style={{

@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { XIcon } from './Icons'
 import { NumberInput } from './NumberInput'
+import { useEscapeCloses } from '../utils/spendEscape'
 import {
   STAT_MOD_GROUPS, STAT_MOD_LABELS, MOD_TYPES,
   type StatMods, type ModType,
@@ -79,6 +80,11 @@ export function AdvancedConditionEditor({
   const [draft, setDraft] = useState<CustomCondition>(() =>
     editing ? { ...editing, mods: { ...editing.mods } } : emptyCustomCondition()
   )
+  // Escape cancels, as Cancel does, and goes no further — opened from Settings it closed the whole
+  // Settings page (utils/spendEscape useEscapeCloses). Opened from the condition picker, the press is spent
+  // here before the picker's own listener (ConditionPanel) hears it: one press closes this editor only.
+  // The ref says which element is this modal (a layer drawn over it keeps its own press).
+  const escapeRef = useEscapeCloses(onClose)
 
   // Helper to update a single field on the draft without breaking immer-ness.
   const patch = (p: Partial<CustomCondition>) =>
@@ -160,7 +166,7 @@ export function AdvancedConditionEditor({
   }
 
   return (
-    <div className="modal-overlay" style={{ zIndex: 10001 }}
+    <div className="modal-overlay" ref={escapeRef} style={{ zIndex: 10001 }}
       onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="modal-box" style={{
         padding: 0, overflow: 'hidden',

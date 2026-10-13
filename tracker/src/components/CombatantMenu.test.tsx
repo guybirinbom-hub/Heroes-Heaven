@@ -1,4 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { StrictMode } from 'react'
+import { flushSync } from 'react-dom'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { CombatantDetail } from './CombatantDetail'
 import { InitiativeTracker } from './InitiativeTracker'
@@ -80,6 +82,41 @@ describe('the combatant menu on an open stat block', () => {
     const hpBox = screen.getByPlaceholderText('50 · -30 · t15')
     expect(fireEvent.contextMenu(hpBox)).toBe(true)
     expect(menu()).toBeNull()
+  })
+
+  it('a right-click inside the stat block’s Edit converter is the converter’s: no combatant menu opens over it, and one Escape closes the converter', () => {
+    /*
+     * The converter is drawn inside the stat block, whose right-click opens the combatant menu: it opened
+     * OVER the converter, and one Escape then closed the converter under the menu — its unsaved edits with
+     * it — and left the menu on screen (the G7s refuter, 2026-10-13). TextConverter keeps its right-clicks.
+     * MUTATIONS (tried 2026-10-13, tracker/src/components/TextConverter.tsx, each alone):
+     *  - `e.stopPropagation()` dropped from keepRightClick → FAILS "no combatant menu over the converter";
+     *  - its `e.preventDefault()` line dropped → FAILS "prevented, as Heroes Heaven prevents a right-click
+     *    outside a text field" (stopped at the overlay, the host's own listener never sees it).
+     */
+    render(<Live />)
+    fireEvent.click(screen.getByTitle('Options'))
+    fireEvent.click(screen.getByText('Edit Stat Block'))
+    const converter = () => screen.queryByRole('heading', { name: 'Edit Synthetic Brigand' })
+    expect(converter(), 'fixture: the Edit converter is open over the stat block').not.toBeNull()
+
+    const allowed = fireEvent.contextMenu(converter()!, { clientX: 40, clientY: 40 })
+    expect(menu(), 'no combatant menu over the converter').toBeNull()
+    expect(allowed, 'prevented, as Heroes Heaven prevents a right-click outside a text field').toBe(false)
+    // Its paste box keeps the browser's own menu (copy / paste).
+    const paste = screen.getByPlaceholderText(/^Paste a PF2e stat block here/)
+    expect(fireEvent.contextMenu(paste), 'a text box keeps its own menu').toBe(true)
+    expect(menu()).toBeNull()
+
+    // Nothing over the converter: one Escape closes it, and the stat block stays.
+    fireEvent.keyDown(document.body, { key: 'Escape' })
+    expect(converter(), 'Escape closed the converter').toBeNull()
+    expect(screen.getByRole('heading', { name: 'Synthetic Brigand' })).not.toBeNull()
+    fireEvent.keyUp(document.body, { key: 'Escape' })
+
+    // Outside the converter the stat block's own right-click still opens the menu.
+    fireEvent.contextMenu(screen.getByRole('heading', { name: 'Synthetic Brigand' }), { clientX: 40, clientY: 40 })
+    expect(menu(), 'the stat block’s right-click still opens the menu').not.toBeNull()
   })
 
   it('its switch sets the creature, and the header then says DYING n / DEAD instead of DEFEATED', () => {
@@ -331,8 +368,17 @@ describe('Escape in the stat block’s and the party card’s other boxes goes n
   it('the condition picker — where Dying and Wounded are added — Escape closes the top layer and goes no further', () => {
     // MUTATION (ConditionPanel, tried 2026-10-11): drop `document.addEventListener('keydown', onKey)` —
     //   FAILS "nothing reached the window (search box): expected [ 'Escape' ] to deeply equal []"; drop
-    //   `e.stopPropagation()` from onKey — FAILS the same; `if (advOpen) setAdvOpen(false)` dropped (always
-    //   onClose) — FAILS "the picker stays under it: expected null not to be null".
+    //   `e.stopPropagation()` from onKey — FAILS the same.
+    // SINCE G7e ROUND 2 (2026-10-13) the editor's press is the editor's own: useEscapeCloses (tracker/src/
+    //   utils/spendEscape.ts) spends it for every later `document` listener too (`stopImmediatePropagation`).
+    //   In THIS render (no StrictMode, a production build's order) ConditionPanel's listener is re-added
+    //   AFTER the editor's — its effect depends on `advOpen` and re-runs as the editor opens — so the
+    //   editor's runs first, and `if (advOpen) setAdvOpen(false)` dropped (always onClose) stays GREEN here
+    //   (tried on a mocked-in copy of ConditionPanel.tsx, 2026-10-13). With `e.stopImmediatePropagation()`
+    //   ALSO dropped from onModalKey it FAILS "the picker stays under it: expected null not to be null".
+    //   stopImmediatePropagation alone is guarded in modalEscape.test.tsx (h). UNDER React.StrictMode (the
+    //   dev build) the order is the other way round — the editor's effect runs twice and its listener lands
+    //   last — and ConditionPanel's listener closes the editor itself (G7s, 2026-10-13): the next leg.
     render(<Live />)
     const search = () => screen.queryByPlaceholderText('Search conditions…')
     fireEvent.click(screen.getByText('+ Condition'))
@@ -351,6 +397,87 @@ describe('Escape in the stat block’s and the party card’s other boxes goes n
     expect(escapeIn(search()!)).toEqual([])
     expect(search(), 'the next Escape closes the picker').toBeNull()
     expect(row().conditions, 'nothing was added').toEqual([])
+  })
+
+  it('under React.StrictMode (the dev build): a HELD Escape in the advanced condition editor closes the editor only — the picker stays, nothing reaches the window', () => {
+    /*
+     * The G7e refuter's MAJOR (measured 2026-10-13). Under StrictMode (src/main.tsx) the editor's effect runs
+     * twice, so its `document` listener (useEscapeCloses' onModalKey) lands AFTER the picker's
+     * (ConditionPanel's onKey). The picker's runs first and closes the editor; the browser commits React
+     * between the two listeners (its microtask checkpoint); the editor's cleanup takes onModalKey off
+     * before it runs — and the hold, which used to start only inside onModalKey, never started: each
+     * repeat of a held Escape peeled the next layer — the editor, the picker, then (inside Heroes Heaven)
+     * the campaign itself. The hold now starts in a `window` capture listener (onModalPress), whichever
+     * listener closes the modal.
+     * This leg renders under <StrictMode> and commits React after every `document` keydown listener, as
+     * the browser does (jsdom runs them back to back).
+     * MUTATION (tried 2026-10-13): drop `holdUntilLetGo(e)` from onModalPress (tracker/src/utils/
+     *   spendEscape.ts), or its `window.addEventListener('keydown', onModalPress, true)` → FAILS "held,
+     *   repeat 2: nothing reached the window: expected [ 'Escape' ] to deeply equal []" (repeat 1 closed
+     *   the picker, repeat 2 went on to `window`) — the refuter's probe result on the code before G7s.
+     */
+    const realAdd = document.addEventListener
+    const realRemove = document.removeEventListener
+    const wrapped = new Map<EventListenerOrEventListenerObject, EventListener>()
+    /** The `document` keydown listeners that ran for the press, by name. */
+    let ran: string[] = []
+    document.addEventListener = function (this: Document, type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions) {
+      if (type !== 'keydown' || !listener) return realAdd.call(this, type, listener as EventListenerOrEventListenerObject, options)
+      let w = wrapped.get(listener)
+      if (!w) {
+        const inner = listener
+        w = (e: Event) => {
+          ran.push(typeof inner === 'function' ? inner.name : 'handleEvent')
+          if (typeof inner === 'function') inner.call(document, e)
+          else inner.handleEvent(e)
+          flushSync(() => undefined) // the browser's checkpoint: React commits before the next listener
+        }
+        wrapped.set(listener, w)
+      }
+      return realAdd.call(this, type, w, options)
+    } as typeof document.addEventListener
+    document.removeEventListener = function (this: Document, type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | EventListenerOptions) {
+      return realRemove.call(this, type, ((listener && wrapped.get(listener)) ?? listener) as EventListenerOrEventListenerObject, options)
+    } as typeof document.removeEventListener
+    const actEnv = globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
+    const was = actEnv.IS_REACT_ACT_ENVIRONMENT
+    try {
+      render(<StrictMode><Live /></StrictMode>)
+      const search = () => screen.queryByPlaceholderText('Search conditions…')
+      fireEvent.click(screen.getByText('+ Condition'))
+      fireEvent.click(screen.getByText('+ Custom'))
+      fireEvent.click(screen.getByText('Advanced →'))
+      const editor = () => screen.queryByText('Advanced Custom Condition')
+      expect(editor(), 'fixture: the Advanced editor is open over the picker').not.toBeNull()
+
+      /** A keydown as the browser delivers it — outside act, React committing between listeners. */
+      const press = (el: Element, init: KeyboardEventInit) => heardAtWindow(() => {
+        actEnv.IS_REACT_ACT_ENVIRONMENT = false
+        try { el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, ...init })) }
+        finally { actEnv.IS_REACT_ACT_ENVIRONMENT = was }
+      })
+      ran = []
+      expect(press(editor()!, {}), 'nothing reached the window (the press)').toEqual([])
+      expect(ran, 'fixture: the refuter’s order — the picker’s listener ran, the editor’s was taken off before it could').toContain('onKey')
+      expect(ran, 'fixture: …the editor’s never ran').not.toContain('onModalKey')
+      expect(editor(), 'the press closed the editor').toBeNull()
+      expect(search(), 'the picker stays').not.toBeNull()
+
+      // Still held: the browser repeats the key on whatever has the focus now.
+      for (let i = 0; i < 3; i++) expect(press(document.body, { repeat: true }), `held, repeat ${i + 1}: nothing reached the window`).toEqual([])
+      expect(search(), 'held: the picker stays').not.toBeNull()
+      expect(row().conditions, 'nothing was added').toEqual([])
+
+      // Let go, a fresh press is the picker's, as always.
+      act(() => { document.body.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', bubbles: true })) })
+      expect(press(document.body, {}), 'nothing reached the window (the picker)').toEqual([])
+      expect(search(), 'the next press closes the picker').toBeNull()
+    } finally {
+      actEnv.IS_REACT_ACT_ENVIRONMENT = was
+      cleanup() // every listener added through the wrapper comes off through it
+      document.addEventListener = realAdd
+      document.removeEventListener = realRemove
+    }
   })
 
   it('the party card: Escape in the name box cancels the rename and goes no further; in the notes box it goes no further', () => {

@@ -30,6 +30,7 @@ import type { CampaignMembership } from '../src/data/campaigns';
 import { CampaignTracker } from '../src/integration/CampaignTracker';
 import { TrackerSettingsSection } from '../src/integration/TrackerSettingsSection';
 import { trackerUi } from '../src/integration/trackerUiStore';
+import { trackerAppearance } from '../src/integration/trackerAppearance';
 import { invalidateEncounterCache, writeEncounterStore, useCombatStore } from '../tracker/src/store/combatStore';
 import { useEncounterTablesStore, type EncounterTable } from '../tracker/src/store/encounterTablesStore';
 import { useWindowStore, BASE_Z } from '../tracker/src/store/windowStore';
@@ -749,6 +750,63 @@ describe('the tracker’s own exports reach the phone’s chooser (HostSaveProvi
     expect(native.invoke).toHaveBeenCalledWith('share_text_file', { filename: TABLE_FILE, text: JSON.stringify(TABLE, null, 2), mime: 'application/json' });
     r.stop();
   }, 30_000);
+
+  it('the chooser an export opens IN the campaign tracker wears the tracker’s look, above its windows; the one from HH Settings wears the app’s', async () => {
+    /*
+     * The owner, 2026-10-01: "if i open a pop up in the initiative tracker it needs to have the same colors
+     * as the initiative tracker". The Android chooser the Encounter Manager's Export opens is such a
+     * pop-up — a detached root on <body>, which no context of the tracker's reaches — and it wore the
+     * app's look (the G8t refuter's minor). CampaignTracker's `hostSave` now hands download.ts the same
+     * `dialogStyle` its confirms wear (the tracker's `--app-*` variables, the four text properties, a
+     * z-index above the windows). HH Settings → Initiative tracker passes none: that page is the app's.
+     * MUTATION PROOF (tried 2026-10-13, each alone): `style: dialogStyleNow.current` dropped from hostSave
+     * (src/integration/CampaignTracker.tsx) → AssertionError: the chooser wears the tracker’s look:
+     * expected '' to be '#ffffff'; `style,` dropped from saveOrShareOnPhone's chooseDialog call
+     * (src/sheet/download.ts) → the same line red. Handing `downloadText` a style at the Settings mount
+     * too → red at "the Settings chooser carries no style of the tracker's".
+     */
+    android();
+    trackerAppearance.setTheme('daylight');
+    try {
+      writeEncounterStore({
+        [ENCOUNTER]: { name: ENCOUNTER, savedAt: '2026-10-01T09:00:00.000Z', combatants: [{ name: 'Mud Lurker', creature: null, creatureId: null, isPC: false, isAlly: false, maxHP: 34, isElite: false, isWeak: false, notes: '' }] },
+      });
+      const r = mount(createElement(CampaignTracker, { m: LOCAL_TABLE, content: content(), onOpenSettings: noop, onLeave: noop, onViewMember: noop }));
+      await until(() => !!r.host.querySelector('.campaign-tracker .ct-main'), 'the table to open');
+      const look = r.host.querySelector<HTMLElement>('.campaign-tracker')!.style.getPropertyValue('--app-surface').trim();
+      expect(look, 'fixture: the tracker wears a look of its own').not.toBe('');
+      await act(async () => trackerUi.setEncounters(true));
+      await until(() => !!titled('Choose encounters to export to a JSON file'), 'the Encounter Manager');
+      r.click(titled('Choose encounters to export to a JSON file'));
+      r.click(buttonWhere((b) => (b.textContent ?? '').trim() === 'Export (1)'));
+      await until(() => dialog() !== null, 'the phone chooser');
+      const overlay = dialog()!.closest<HTMLElement>('.picker-overlay')!;
+      expect(overlay.style.getPropertyValue('--app-surface').trim(), 'the chooser wears the tracker’s look').toBe(look);
+      expect(overlay.style.color, 'its text in the tracker’s colour (an HH element re-declares it)').toBe('var(--app-text)');
+      expect(overlay.style.fontFamily, '…and the tracker’s font').toBe('var(--app-font)');
+      expect(Number(overlay.style.zIndex), 'above every floating window').toBeGreaterThan(useWindowStore.getState().topZ);
+      // A tap beside it cancels: nothing saved or shared.
+      await act(async () => overlay.click());
+      await settle();
+      await settle();
+      expect(dialog()).toBeNull();
+      expect(native.invoke).not.toHaveBeenCalled();
+      expect(native.save).not.toHaveBeenCalled();
+      r.stop();
+
+      // HH Settings → Initiative tracker → Encounter tables → Export: the app's own page and look, even
+      // with a tracker look set.
+      const s = exportFromSettings();
+      await until(() => dialog() !== null, 'the Settings chooser');
+      const plain = dialog()!.closest<HTMLElement>('.picker-overlay')!;
+      expect(plain.getAttribute('style'), 'the Settings chooser carries no style of the tracker’s').toBeNull();
+      await act(async () => plain.click());
+      await settle();
+      s.stop();
+    } finally {
+      trackerAppearance.reset();
+    }
+  }, 120_000);
 
   it('the settings mount on the web and the PC app: the app’s own anchor saves the same file at once, no chooser', async () => {
     for (const tauri of [false, true]) {

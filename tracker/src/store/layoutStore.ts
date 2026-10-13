@@ -50,6 +50,26 @@ function findCreatureTab(n: PaneNode | null, cid: string): { leaf: LeafNode; ind
   }
   return findCreatureTab(n.a, cid) ?? findCreatureTab(n.b, cid)
 }
+/** Locate the leaf + tab index already holding this popup — the same page: the same ref, and the same type
+ *  or a creature by name and its 'bestiary' tab (samePageType). */
+function findPopupTab(n: PaneNode | null, p: PopupRef): { leaf: LeafNode; index: number } | null {
+  if (!n) return null
+  if (n.kind === 'leaf') {
+    const index = n.tabs.findIndex(t => t.ref === p.ref && samePageType(t.type, p.type))
+    return index >= 0 ? { leaf: n, index } : null
+  }
+  return findPopupTab(n.a, p) ?? findPopupTab(n.b, p)
+}
+/* A creature picked BY NAME arrives as 'creature' (the GM screen's "Add to GM Screen" picker) and the GM
+ * screen turns it into the 'bestiary' tab it keeps the moment it lands (GMScreen keepBestiaryPins,
+ * windowStore toLayoutTab): matched by type alone, the same creature picked again split off a second,
+ * identical pane (the G7s refuter, 2026-10-13). A 'creature' tab's ref is either a bestiary name or a
+ * live combatant id, never both, so a 'bestiary' tab of that ref is that creature's page. */
+function samePageType(held: WinType, incoming: WinType): boolean {
+  if (held === incoming) return true
+  const creaturePage = (t: WinType) => t === 'creature' || t === 'bestiary'
+  return creaturePage(held) && creaturePage(incoming)
+}
 function firstLeaf(n: PaneNode): LeafNode {
   return n.kind === 'leaf' ? n : firstLeaf(n.a)
 }
@@ -133,7 +153,9 @@ export interface LayoutStore {
   dropPopup: (leafId: string, popup: PopupRef, zone: Zone) => void
   /** A whole window/block (all its tabs — popups and/or creatures) docked. */
   dropPopups: (leafId: string, popups: PopupRef[], zone: Zone, active?: number) => void
-  /** Add a popup as a new pane (used by the GM Screen's "Add Reference"). */
+  /** Add a popup as a new pane (used by the GM Screen's "Add Reference"). One the layout already holds
+   *  (the same ref and type; a creature by name and its 'bestiary' tab are one) is focused where it is
+   *  instead — never a second, identical pane. */
   addPopup: (popup: PopupRef) => void
   /** Activate a tab. */
   focusTab: (leafId: string, idx: number) => void
@@ -238,6 +260,12 @@ export function createLayoutStore(opts?: { persistKey?: string }) {
     addPopup(popup) {
       const { root, hoveredLeaf } = get()
       if (!root) { const l = popupLeaf([popup]); set({ root: l, hoveredLeaf: l.id, hoveredCid: null }); return }
+      // Already here: show it. Each "Preview" on the Random Encounter widget split off another identical
+      // pane of the same creature (the G7e refuter, 2026-10-13); so did "Add to GM Screen" picking a
+      // page the screen already held — a creature too, which arrives as 'creature' and is held as
+      // 'bestiary' (samePageType, the G7s refuter). layoutStore.test.ts, RandomEncounterWidget.test.tsx.
+      const held = findPopupTab(root, popup)
+      if (held) { get().focusTab(held.leaf.id, held.index); return }
       const target = (hoveredLeaf && findLeaf(root, hoveredLeaf)) || firstLeaf(root)
       const pl = popupLeaf([popup])
       set({ root: splitLeaf(root, target.id, pl, 'right'), hoveredLeaf: pl.id, hoveredCid: null })

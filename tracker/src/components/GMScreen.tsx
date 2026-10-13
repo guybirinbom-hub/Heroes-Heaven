@@ -62,7 +62,9 @@ function mapTabs(n: PaneNode, fix: (t: PopupRef) => PopupRef): PaneNode {
  * This screen's layout reads a 'creature' tab as a LIVE combatant id, and it reconciles against no
  * combatants at all (`combatants={[]}` below), so every creature tab that reached it was pruned the
  * moment it landed: the Random Encounter widget's "Preview", the standalone app's Add-to-GM-screen pick
- * (App.tsx), any route still to come. A creature named here (no row on the board) is turned into the
+ * (App.tsx), any route still to come. (The widget's Preview now pins a 'bestiary' tab itself, and away
+ * from this screen opens a window — RandomEncounterWidget; a creature tab it stored before is still
+ * turned here, on mount.) A creature named here (no row on the board) is turned into the
  * 'bestiary' tab the layout keeps (windowStore toLayoutTab) — the full stat block with "Add to
  * initiative". Run on mount (a layout effect: before the layout's own reconcile, a passive effect, gets
  * to it) and on every change of this screen's tree while it is up. Exported for the test.

@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { useEncounterTablesStore, rollEncounterEntry, type EncounterEntry, type EncounterKind } from '../store/encounterTablesStore'
 import { useCombatStore, useScopedState } from '../store/combatStore'
 import { useGmLayoutStore } from '../store/layoutStore'
+import { useWindowStore, toLayoutTab } from '../store/windowStore'
 import { loadCreatureByName } from '../data/dataStore'
 import { rollDie } from '../utils/dice'
+import { localRect } from '../utils/zoomFix'
 
 // Per-instance persisted state — campaign-scoped, shared with the other GM widgets.
 const usePersisted = useScopedState
@@ -58,8 +60,30 @@ export function RandomEncounterWidget({ id }: { id: string }) {
     setMsg('')
     setSt(p => ({ ...p, result: rollEncounterEntry(entries) }))
   }
-  const preview = (name: string) => {
-    useGmLayoutStore.getState().addPopup({ type: 'creature', ref: name.toLowerCase(), title: name })
+  /*
+   * PREVIEW SHOWS THE ROLLED CREATURE WHERE THE GM IS LOOKING — its full stat block, with "Add to
+   * initiative".
+   *
+   * It used to pin a 'creature' tab to the GM screen: a pane layout reads a 'creature' tab as a LIVE
+   * combatant id, and the GM screen reconciles against no combatants at all, so the pin was pruned the
+   * moment it landed (the item-7 refuters). GMScreen's keepBestiaryPins now rescues such a tab while that
+   * screen is up — but this widget also lives in a floating window or the combat workspace, where the GM
+   * screen is often not on show, and a pin there appeared nowhere the GM could see. So:
+   *  - on the GM screen (the widget is one of its panes): pinned beside it as the 'bestiary' tab a layout
+   *    keeps — through toLayoutTab, the same way a creature window docked into a layout goes in
+   *    (dockDragStore), so it never depends on that screen's rescue;
+   *  - anywhere else: opened as a window under the button, the creature window a Search result opens.
+   * RandomEncounterWidget.test.tsx.
+   */
+  const preview = (name: string, from: HTMLElement) => {
+    const tab = { type: 'creature' as const, ref: name.toLowerCase(), title: name }
+    if (from.closest('[data-layout-scope="gm"]')) {
+      const onBoard = new Set(useCombatStore.getState().combatants.map(c => c.id))
+      useGmLayoutStore.getState().addPopup(toLayoutTab(tab, id => onBoard.has(id)))
+      return
+    }
+    const at = localRect(from)
+    useWindowStore.getState().open(tab.type, tab.ref, tab.title, at.left, at.bottom + 6, { noCascade: true })
   }
   const addToCombat = async (e: EncounterEntry) => {
     if (!e.creature) return
@@ -145,7 +169,7 @@ export function RandomEncounterWidget({ id }: { id: string }) {
               {result.creature && (
                 <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
                   <button className="btn btn-primary btn-sm" onClick={() => addToCombat(result)}>+ Add to combat</button>
-                  <button className="btn btn-secondary btn-sm" onClick={() => preview(result.creature!.name)}>Preview</button>
+                  <button className="btn btn-secondary btn-sm" onClick={e => preview(result.creature!.name, e.currentTarget)}>Preview</button>
                 </div>
               )}
             </div>

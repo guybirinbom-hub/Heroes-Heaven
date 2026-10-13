@@ -1,6 +1,6 @@
 import { createElement, Fragment } from 'react';
 import { isMobilePlatform, isTauri } from '../platform';
-import { chooseDialog } from './confirm';
+import { chooseDialog, type DialogStyle } from './confirm';
 
 /** Save a text file the player asked for. One helper for every export in the app (backup, roster
  *  character, GM character, homebrew), with one route per shell:
@@ -27,15 +27,20 @@ export interface DownloadFile {
   text: string;
   /** The file's media type. Every file the app saves today is JSON. */
   mime?: string;
+  /** The Android chooser's overlay style (confirm.tsx `DialogStyle`): the campaign tracker's exports pass
+   *  the tracker's look and a z-index above its windows — a pop-up opened in the tracker wears the
+   *  tracker's colours (owner, 2026-10-01). Omitted → the app's look, as every other export. The web and
+   *  PC route raises no dialog and ignores it. */
+  style?: DialogStyle;
 }
 
 /** What became of the file: saved (anchor download or the picked folder), handed to the share sheet,
  *  or nothing at all because the player cancelled. */
 export type DownloadOutcome = 'saved' | 'shared' | 'cancelled';
 
-export function downloadText({ filename, text, mime = 'application/json' }: DownloadFile): Promise<DownloadOutcome> {
+export function downloadText({ filename, text, mime = 'application/json', style }: DownloadFile): Promise<DownloadOutcome> {
   assertDownloadFilename(filename);
-  if (isTauri && isMobilePlatform) return saveOrShareOnPhone(filename, text, mime).catch(rejectAsError);
+  if (isTauri && isMobilePlatform) return saveOrShareOnPhone(filename, text, mime, style).catch(rejectAsError);
   anchorDownload(filename, text, mime);
   return Promise.resolve('saved');
 }
@@ -72,7 +77,7 @@ function anchorDownload(filename: string, text: string, mime: string): void {
 /** The Android route. Both choices sit in the app's own dialog (never a native prompt), and the
  *  plugins load only here, the way platform.ts openExternal loads the opener: the web bundle does not
  *  carry them. */
-async function saveOrShareOnPhone(filename: string, text: string, mime: string): Promise<DownloadOutcome> {
+async function saveOrShareOnPhone(filename: string, text: string, mime: string, style?: DialogStyle): Promise<DownloadOutcome> {
   const how = await chooseDialog({
     title: 'Export',
     message: filename,
@@ -80,6 +85,7 @@ async function saveOrShareOnPhone(filename: string, text: string, mime: string):
       { value: 'save', primary: true, label: withIcon('ti-folder-down', 'Save to folder') },
       { value: 'share', label: withIcon('ti-share', 'Share') },
     ],
+    style,
   });
   if (how === 'save') {
     const { save } = await import('@tauri-apps/plugin-dialog');

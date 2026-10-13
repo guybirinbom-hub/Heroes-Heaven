@@ -10,7 +10,9 @@ import {
 } from '../../tracker/src/components/SettingsModal';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
 import { HostSaveProvider } from '../../tracker/src/data/hostSaveContext';
+import { closeTopTrackerModal, useTrackerModalCount } from '../../tracker/src/utils/spendEscape';
 import { downloadText } from '../sheet/download';
+import { useBackHandler } from '../sheet/useEscapeClose';
 import '../../tracker/dist-css/tracker.scoped.css';
 import './tracker-settings.css';
 
@@ -30,7 +32,15 @@ import './tracker-settings.css';
  *
  * HostSaveProvider hands the Encounter tables group's Export the app's one export helper
  * (src/sheet/download.ts): the anchor on the web and the PC app, Save to folder / Share on the Android
- * app, whose WebView ignores the tracker's own anchor download (item 8).
+ * app, whose WebView ignores the tracker's own anchor download (item 8). It passes no dialog style: this
+ * is Heroes Heaven's Settings page, and the app's own look is the right one for a pop-up here.
+ *
+ * ANDROID'S BACK CLOSES THE TRACKER MODAL ON TOP (G7s, 2026-10-13). The tracker's modals opened here — the
+ * encounter-table editor and its Link picker, the custom-condition editor, its Delete confirm — close
+ * themselves on Escape (tracker/src/utils/spendEscape useEscapeCloses), a key Back never sends: on the
+ * phone Back reached the Settings page's own handler and closed the whole page over the half-made table.
+ * While any is open a Back handler sits above the page's (a cover) and closes the top one.
+ * test/bug-tracker-escape-boxes.test.tsx (BACK).
  *
  * NOT included from the tracker's modal: Appearance (the look is Heroes Heaven's own appearance system —
  * the app's Appearance, or the tracker-only look a GM sets with a campaign's "Customize tracker
@@ -52,6 +62,14 @@ const GROUPS: { id: GroupId; label: string; icon: string }[] = [
 
 export function TrackerSettingsSection() {
   const [group, setGroup] = useState<GroupId>('display');
+  const modalCount = useTrackerModalCount();
+  useBackHandler(
+    modalCount > 0,
+    () => {
+      closeTopTrackerModal();
+    },
+    { cover: true },
+  );
 
   return (
     <div className="tracker-settings">

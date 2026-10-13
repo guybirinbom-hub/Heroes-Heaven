@@ -14,6 +14,7 @@ import { usePersistVersion } from '../store/persistBus'
 import { searchMatches, rankBySearch } from '../utils/searchRank'
 import { fixedPopupPos } from '../utils/zoomFix'
 import { useHostPcMembers } from '../data/pcStatsContext'
+import { useEscapeCloses } from '../utils/spendEscape'
 
 // ── 3-state pill ────────────────────────────────────────────────────────────
 type TriState = 'off' | 'yes' | 'no'
@@ -284,7 +285,10 @@ type CtxMenu =
   | { kind: 'bestiary'; x: number; y: number; entry: IndexEntry }
 
 function ContextMenu({ menu, onDelete, onClose }: { menu: CtxMenu; onDelete: () => void; onClose: () => void }) {
-  const ref = useRef<HTMLDivElement>(null)
+  // Escape closes this menu and goes no further. It opens after the picker it sits in, so it is the
+  // top layer and one press closes it alone; the next is the picker's (utils/spendEscape useEscapeCloses).
+  const escapeRef = useEscapeCloses(onClose)
+  const ref = useRef<HTMLDivElement | null>(null)
   const [confirming, setConfirming] = useState(false)
 
   useEffect(() => {
@@ -302,7 +306,7 @@ function ContextMenu({ menu, onDelete, onClose }: { menu: CtxMenu; onDelete: () 
   const { left, top } = fixedPopupPos(menu.x, menu.y, 210, 96)
 
   return (
-    <div ref={ref} style={{
+    <div ref={el => { ref.current = el; escapeRef(el) }} style={{
       position: 'fixed', left, top, zIndex: 9999,
       background: 'var(--bg-panel)', border: 'var(--app-bw) solid var(--border-strong)',
       borderRadius: 8, boxShadow: 'var(--shadow-md)',
@@ -438,6 +442,13 @@ interface Props {
 }
 
 export function MonsterSearch({ onClose, onPick, title }: Props) {
+  // Escape — typed in its search box too — closes it and goes no further. A party card's "Link Stat
+  // Block" (PartyView, pick mode) had no Escape at all: inside a campaign the host stands down for every
+  // tracker `.modal-overlay`, so the press did nothing (the G7e refuter's browser round, 2026-10-13). The
+  // campaign's Add Combatants copy is on the host's dismiss stack too; this listener spends the press
+  // first, so it still closes once (utils/spendEscape useEscapeCloses; the ref says which element is
+  // this modal, so a layer drawn over it keeps its own press).
+  const escapeRef = useEscapeCloses(onClose)
   const pickMode = !!onPick
   const { addCombatant } = useCombatStore()
   const { parties, activePartyId } = usePartyStore()
@@ -1231,7 +1242,7 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
   }
 
   return (
-    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+    <div className="modal-overlay" ref={escapeRef} onClick={e => e.target === e.currentTarget && onClose()}>
       <div style={{
         background: 'var(--bg-panel)',
         border: 'var(--app-bw) solid var(--border-strong)',

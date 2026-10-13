@@ -5,6 +5,7 @@ import type { Creature } from '../types/pf2e'
 import { cleanSource } from '../utils/sources'
 import { useSourcesStore } from '../store/sourcesStore'
 import { usePersistVersion } from '../store/persistBus'
+import { useEscapeCloses } from '../utils/spendEscape'
 
 interface Props {
   title?: string
@@ -22,6 +23,10 @@ export function CreaturePickerModal({ title = 'Link Stat Block', onSelect, onClo
   const [customCreatures, setCustomCreatures] = useState<Creature[]>([])
   const disabledSources = useSourcesStore(s => s.disabled)
   const disabledSourceSet = useMemo(() => new Set(disabledSources), [disabledSources])
+  // Escape — typed in the search box it opens on, too — closes it and goes no further. Over the table
+  // editor that opened it, one press closes this picker only (utils/spendEscape useEscapeCloses; the ref
+  // says which element is this modal, so a layer drawn over it keeps its own press).
+  const escapeRef = useEscapeCloses(onClose)
 
   // Re-read when the list changes under us — a save here, or the GM-device mirror pulling this
   // account's other device's homebrew.
@@ -61,7 +66,7 @@ export function CreaturePickerModal({ title = 'Link Stat Block', onSelect, onClo
   const pickCustom = (creature: Creature) => { onSelect(creature); onClose() }
 
   return (
-    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+    <div className="modal-overlay" ref={escapeRef} onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="modal-box max-h-[80vh] flex flex-col">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-pf-gold font-bold text-base">{title}</h2>

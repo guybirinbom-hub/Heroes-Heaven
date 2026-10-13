@@ -27,9 +27,11 @@ import type { Creature, Defenses } from '../types/pf2e'
  *      Deliberate — the owner's words name no surface ("if i search a stat block it needs to open the
  *      full stat block"), and the window kind is the tracker's own, not Heroes Heaven's.
  *  (i) EVERY OTHER ROUTE onto the GM screen keeps its creature too (the item-7 refuter, round 2): the
- *      Random Encounter widget's "Preview" pinned a 'creature' tab, pruned the moment it landed; so did
- *      the standalone app's Add-to-GM-screen pick. GMScreen's keepBestiaryPins turns any creature tab in
- *      its tree that is no board row into a bestiary pin — as it lands, and on mount for one already there.
+ *      Random Encounter widget's "Preview" used to pin a 'creature' tab, pruned the moment it landed; so
+ *      did the standalone app's Add-to-GM-screen pick. The widget's Preview now pins a 'bestiary' tab
+ *      itself (RandomEncounterWidget, toLayoutTab; RandomEncounterWidget.test.tsx). GMScreen's
+ *      keepBestiaryPins still turns any creature tab in its tree that is no board row into a bestiary pin
+ *      — as it lands, and on mount for one already there (the second half of this leg).
  *
  * MUTATIONS (each applied, run, read off that run, then restored):
  *  - FloatingWindow WinItem: `full` dropped from its WinContent → (a) red (the card, no `.stat-block`).
@@ -39,9 +41,10 @@ import type { Creature, Defenses } from '../types/pf2e'
  *  - BestiaryStatBlock: `setTimeout(revealNewRow, 0)` dropped → (c) red (the new row never scrolled into view).
  *  - BestiaryStatBlock: the ErrorBoundary unwrapped → (d) red (the throw escapes the render).
  *  - BestiaryStatBlock: `notOnBoard` dropped from its <StatBlock> → (e) red (the live controls draw).
- *  - GMScreen: the layout effect's `useGmLayoutStore.subscribe(…)` dropped → (f) and (i) red (the pin is
- *    pruned; no pane); its mount-time `keepBestiaryPins()` dropped → (i) red at "kept as a bestiary pin
- *    on mount"; keepBestiaryPins' `toLayoutTab(…)` → `t` → (f) and (i) red.
+ *  - GMScreen: the layout effect's `useGmLayoutStore.subscribe(…)` dropped → (f) red (the pin is pruned;
+ *    no pane) — the widget's Preview pins a 'bestiary' tab itself now, so (i)'s first half no longer
+ *    leans on it; its mount-time `keepBestiaryPins()` dropped → (i) red at "kept as a bestiary pin on
+ *    mount"; keepBestiaryPins' `toLayoutTab(…)` → `t` → (f) and (i) red.
  *  - WinContent: the `type === 'bestiary'` line dropped → (f) red (the pane draws no stat block).
  *  - dockDragStore: `intoLayout(tabs)` → `tabs` at the empty-workspace drop → (g) red at "onto the empty
  *    GM screen"; at the pane drop → red at "onto a pane"; at the tab-strip merge → red at "onto a tab strip".

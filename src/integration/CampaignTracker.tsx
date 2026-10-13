@@ -33,6 +33,12 @@ import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/dat
 import { HostThemeProvider } from '../../tracker/src/data/hostThemeContext';
 import { HostSaveProvider, type HostSave } from '../../tracker/src/data/hostSaveContext';
 import { downloadText } from '../sheet/download';
+import {
+  closeTopTrackerModal,
+  topTrackerModalUnderAWindow,
+  underAnotherWindow,
+  useTrackerModalCount,
+} from '../../tracker/src/utils/spendEscape';
 import { hostSearchRecords } from './hostSearchRecords';
 import { InitiativeTracker, DELAY_RETURN_MIME, useDelayDropZone } from '../../tracker/src/components/InitiativeTracker';
 import { useDelayDragActive } from '../../tracker/src/useDelayDragActive';
@@ -93,13 +99,27 @@ function trackerPopupOpen(): boolean {
 /*
  * A tracker modal open in this view: the `.modal-overlay` every tracker dialog draws inside this root —
  * the Encounter Building tables, Link Stat Block, the encounter-table editor, the advanced condition
- * editor, a party card's turn-time graph — drawn ABOVE the floating windows (z 2000 and up) and, unlike
- * the four overlays registered below, not on the dismiss stack (most close themselves from a `document`
- * listener, some not at all). While one is up, Escape is not the windows' (a window hidden behind it
- * would close) and not the campaign's.
+ * editor, a party card's turn-time graph — drawn ABOVE the floating windows (z 2000 and up). Each closes
+ * itself on Escape from a `document` listener (most through the tracker's useEscapeCloses, which also
+ * gives Android's Back a handler on the dismiss stack below; the graph on its own). While one is up,
+ * Escape and Back are not the windows' (a window hidden behind it would close) and not the campaign's.
  */
 function trackerModalOpen(): boolean {
   return !!document.querySelector('.campaign-tracker .modal-overlay');
+}
+
+/*
+ * …and of those, one drawn over EVERY floating window: one outside them all (the campaign's own), or one
+ * inside the window on top. A floating window is a stacking context of its own, so a modal opened inside
+ * one — the Edit converter of a stat block in a window — is painted at that window's z-index, and a window
+ * opened since (a link in the converter's preview) is painted over it, overlay and all (the G7s refuter,
+ * 2026-10-13; tracker/src/utils/spendEscape underAnotherWindow). Asked only where the modal on top is such
+ * a modal (the Back handler for the tracker's modals): the windows' and the base handlers keep
+ * `trackerModalOpen`, so a modal with its own Escape inside a lower window, which closes itself on the
+ * press, still keeps the press from closing a window too.
+ */
+function trackerModalOverWindows(): boolean {
+  return [...document.querySelectorAll('.campaign-tracker .modal-overlay')].some((m) => !underAnotherWindow(m));
 }
 
 /** Input types that hold no text: an Escape on one is no "cancel what I was typing". */
@@ -725,14 +745,20 @@ export function CampaignTracker({
    * of the time the windows keep floating over the sheet's own popups as designed
    * (test/tracker-windows-over-sheet.test.tsx). On the web and the PC app the save is done before the
    * browser paints, so nothing changes on screen there. test/download-platform-route.test.tsx.
+   * That chooser is a pop-up opened in the tracker, so it wears the tracker's look (the owner,
+   * 2026-10-01): the same `dialogStyle` every confirm raised here gets, read when the export starts (a
+   * ref, so this callback — and every export button under the provider — is not rebuilt each time a
+   * window comes to the front and `topZ` climbs).
    */
+  const dialogStyleNow = useRef(dialogStyle);
+  dialogStyleNow.current = dialogStyle;
   const [hostSaving, setHostSaving] = useState(0);
   const hostSave = useCallback<HostSave>(async (file) => {
     setHostSaving((n) => n + 1);
     try {
       // Called before the first await, so the web's anchor still clicks inside the GM's own click. A
       // name the helper refuses (thrown) and a failed save (rejected) both reach the manager's notice.
-      return await downloadText(file);
+      return await downloadText({ ...file, style: dialogStyleNow.current });
     } finally {
       setHostSaving((n) => n - 1);
     }
@@ -895,33 +921,50 @@ export function CampaignTracker({
    * — and if so, which floating window holds that box (`[data-float-win]`, FloatingWindow's root, whose
    * value is the window's id), or none. All spent with this press, like `popupAtPress`. */
   const modalAtPress = useRef(false);
+  const modalOverWindowsAtPress = useRef(false);
   const editableAtPress = useRef(false);
   const boxWinAtPress = useRef<string | null>(null);
+  /* …and whether the press is a REPEAT — the key held down. A held Escape repeats, and each repeat
+   * reached this stack as a press of its own: whatever the first press closed — a popup or a picker of the
+   * tracker's that took it (the condition picker, where the GM adds Dying, closes itself from its own
+   * `document` listener and spends it), the row's right-click menu, a window — the repeats went on to
+   * close every window and then LEFT THE CAMPAIGN (the G7s refuter, 2026-10-13: a held Escape from the
+   * condition picker left the campaign twice over). A repeat now closes no window and never leaves: one
+   * press, one layer, as the tracker's own modals already hold it (tracker/src/utils/spendEscape). */
+  const repeatAtPress = useRef(false);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
       popupAtPress.current = trackerPopupOpen();
       modalAtPress.current = trackerModalOpen();
+      modalOverWindowsAtPress.current = trackerModalOverWindows();
       editableAtPress.current = editableInTracker(e.target);
       boxWinAtPress.current =
         editableAtPress.current && e.target instanceof Element
           ? (e.target.closest('[data-float-win]')?.getAttribute('data-float-win') ?? null)
           : null;
+      repeatAtPress.current = e.repeat;
       setTimeout(() => {
         popupAtPress.current = false;
         modalAtPress.current = false;
+        modalOverWindowsAtPress.current = false;
         editableAtPress.current = false;
         boxWinAtPress.current = null;
+        repeatAtPress.current = false;
       }, 0);
     };
     window.addEventListener('keydown', onKey, true);
     return () => window.removeEventListener('keydown', onKey, true);
   }, []);
   useBackHandler(true, () => {
+    // A held key's repeat never leaves: the first press did what it did (`repeatAtPress` above).
+    if (repeatAtPress.current) return;
     if (trackerPopupOpen() || popupAtPress.current) return;
     // A text box's Escape is "cancel what I was typing" (editableInTracker), and a tracker modal's is
-    // that modal's — never "leave the campaign".
-    if (editableAtPress.current || modalAtPress.current) return;
+    // that modal's — never "leave the campaign". Android's Back is no key press (a `popstate`, so nothing
+    // was recorded "at the press"): a tracker modal still on screen — one no Back handler below closes,
+    // the turn-time graph — keeps the campaign up too.
+    if (editableAtPress.current || modalAtPress.current || trackerModalOpen()) return;
     void (async () => {
       if (await leaveFullSheet()) onLeave();
     })();
@@ -965,19 +1008,73 @@ export function CampaignTracker({
    * A box INSIDE a window is that window's own, and Escape there closes THAT window — not the top one:
    * focus reached by the keyboard (Tab) raises no window, so the box's can sit under another, and
    * `closeTop` closed the unrelated one above it (the G3 refuter, round 2).
+   * A REPEAT (the key held down) closes no window: the first press closed one layer, and the held key
+   * peeled every window after it (the G7s refuter, 2026-10-13; `repeatAtPress` above).
    */
   const openWindows = useWindowStore((s) => s.wins.length);
   const overlayAboveWindows = monsterSearchOpen || searchOpen || customOpen || encountersOpen;
+  // How many of the tracker's own modals are open (tracker/src/utils/spendEscape useEscapeCloses) — the
+  // Back handler below. While one is, this handler is off the stack: a window opened from inside one drawn
+  // over the windows (a converter's preview links) would otherwise land ABOVE that Back handler and take
+  // the press for a window hidden behind the modal. (A modal inside a window is painted UNDER a window
+  // opened since: the Back handler below closes that window itself.)
+  const modalCount = useTrackerModalCount();
+  /* The windows' close for a press (or a Back) that is theirs. `modalOver` says whether a tracker modal is
+   * drawn over the window this would close — as of the key press, or (Back is no key press) on screen now. */
+  const closeWindowForPress = (modalOver: () => boolean): void => {
+    if (repeatAtPress.current) return;
+    if (trackerPopupOpen() || popupAtPress.current) return;
+    if (modalOver()) return;
+    if (editableAtPress.current) {
+      if (boxWinAtPress.current) useWindowStore.getState().close(boxWinAtPress.current);
+      return;
+    }
+    useWindowStore.getState().closeTop();
+  };
   useBackHandler(
-    synced && openWindows > 0 && !overlayAboveWindows,
+    synced && openWindows > 0 && !overlayAboveWindows && modalCount === 0,
+    () => closeWindowForPress(() => modalAtPress.current || trackerModalOpen()),
+    { cover: true },
+  );
+
+  /*
+   * ANDROID'S BACK CLOSES THE TRACKER MODAL ON TOP (G7s, 2026-10-13). On the phone Back reaches the
+   * dismiss stack as a `popstate`, never as a key: the tracker's modals close themselves on Escape from a
+   * `document` keydown listener (useEscapeCloses) that Back never reaches, and `modalAtPress` above is set
+   * only from a keydown — so Back with the Encounter Building tables up closed the window hidden behind
+   * them, or LEFT THE CAMPAIGN. While any tracker modal is open this sits above the windows' handler and
+   * the base handler (a cover, like the windows': the sheet and Customize drawn under the modals wait
+   * their turn) and closes the top one — covered all over by another layer it closes nothing, and
+   * that layer, registered later, is above this anyway. test/bug-tracker-escape-boxes.test.tsx (BACK).
+   * The keyboard's Escape reaches it past an open modal only when the modal's own listener left the
+   * press unspent for a layer drawn over all of the modal — a body popup, a layer with a text box — and
+   * such a layer that closes itself on that press without spending it is gone by the time this runs: it
+   * closed the modal under the layer too (the G7s refuter, 2026-10-13). closeTopTrackerModal closes
+   * nothing while a press the modal left to a layer is still on its way, so that press closes the layer
+   * alone. test/bug-tracker-escape-boxes.test.tsx (g).
+   * It does NOT stand down for a tracker popup on <body> still up when Back comes, as the windows' and
+   * the base handlers do: the body popup that shows over a modal is a link's preview tooltip (a stat
+   * block's links, as in the Edit converter's preview: BodyPortal, `pointer-events: none`), which a tap
+   * can leave up — Back would do nothing while it showed. Closed with its modal, it goes with it. (The
+   * combatant menu opens from the initiative rail and from a stat block's right-click or ☰, which every
+   * modal is drawn over; a right-click inside the stat block's Edit converter is the converter's own and
+   * opens no menu over it — TextConverter keeps it, CombatantMenu.test.tsx.)
+   * A MODAL UNDER A WINDOW. A stat block's Edit converter opened in a floating window is painted at that
+   * window's z-index, and a window opened since (a link in its preview) or raised since is painted over
+   * it (spendEscape underAnotherWindow). That window is the layer on top: this closes it — as the windows'
+   * handler would, which is off the stack while a modal is open — and the converter, its unsaved edits
+   * with it, stays (the G7s refuter, 2026-10-13: Back and Escape alike closed the converter hidden under
+   * the window). A modal drawn over every window (`trackerModalOverWindows`) still keeps the press.
+   * test/bug-tracker-escape-boxes.test.tsx (h), BACK.
+   */
+  useBackHandler(
+    synced && modalCount > 0,
     () => {
-      if (trackerPopupOpen() || popupAtPress.current) return;
-      if (modalAtPress.current) return;
-      if (editableAtPress.current) {
-        if (boxWinAtPress.current) useWindowStore.getState().close(boxWinAtPress.current);
+      if (topTrackerModalUnderAWindow()) {
+        closeWindowForPress(() => modalOverWindowsAtPress.current || trackerModalOverWindows());
         return;
       }
-      useWindowStore.getState().closeTop();
+      closeTopTrackerModal();
     },
     { cover: true },
   );
