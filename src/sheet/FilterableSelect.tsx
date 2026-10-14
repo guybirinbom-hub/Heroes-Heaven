@@ -7,6 +7,7 @@ import { RangeSlider } from './RangeSlider';
 import { ActionGlyph } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
 import { useBackHandler, useEscapeClose } from './useEscapeClose';
+import { isMobileNow } from './useIsMobile';
 import type { DescNode } from './descref';
 import { bucketOf, getCachedAst, isBucketLoaded } from './astStore';
 
@@ -685,7 +686,10 @@ export function FilterableSelect<T>({
                 <div className="fsel-results-search">
                   <i className="ti ti-search" aria-hidden="true" />
                   <input
-                    autoFocus
+                    // Not on a phone: on the owner's own phone (Chrome, 2026-10-14) the keyboard opened with
+                    // the feat picker and covered all but 3½ feats of the list he came to browse. The
+                    // search is one tap away. Same rule as every other builder picker (isMobileNow).
+                    autoFocus={!isMobileNow()}
                     placeholder={searchField.placeholder ?? 'Search by name…'}
                     value={(state[searchField.id] as string) ?? ''}
                     onChange={(e) => set(searchField.id, e.target.value)}

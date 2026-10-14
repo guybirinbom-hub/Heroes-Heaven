@@ -10,6 +10,7 @@ import { CAMPAIGN_OPTION_TOGGLES, PopupSelect, SearchSelect, VARIANT_RULE_TOGGLE
 import { ContentContext } from '../src/sheet/ContentContext';
 import { emptyBuild, type BuildState } from '../src/rules/build';
 import { rankBySearch, searchMatches } from '../src/data/searchRank';
+import { FilterableSelect, PickerRow } from '../src/sheet/FilterableSelect';
 
 /**
  * Phone audit 2026-10-14 — the shared builder pickers (src/builder/shared.tsx). One guard per finding:
@@ -82,6 +83,32 @@ describe('B2/C8/D7/E1: a choice popup does not open the phone keyboard by itself
       r.click(r.host.querySelector('[data-ctl-title="Skill increase"]'));
       expect(searchBox(), 'a 7-option popup has a search box').toBeTruthy();
       expect(document.activeElement === searchBox()).toBe(focused);
+      r.stop();
+    });
+  }
+
+  // Real-phone check (owner's Pixel 7 Pro, Chrome, 2026-10-14): the FULL-SCREEN feat / spell picker
+  // focused its search on open too, and the keyboard covered all but 3½ feats of the list.
+  for (const [w, focused] of [
+    [412, false],
+    [1280, true],
+  ] as const) {
+    it(`${w}px: the full-screen feat picker's search is ${focused ? '' : 'NOT '}focused when it opens`, () => {
+      setViewport(w);
+      const items = [{ id: 'a', name: 'Power Attack' }, { id: 'b', name: 'Sudden Charge' }];
+      const r = renderDom(
+        createElement(FilterableSelect<{ id: string; name: string }>, {
+          title: 'Choose a class feat',
+          items,
+          spec: { fields: [{ id: 'q', label: 'Name', kind: 'text', accessor: (i) => i.name }] },
+          rowKey: (i) => i.id,
+          onClose: noop,
+          renderRow: (i) => createElement(PickerRow, { name: i.name }),
+        }),
+      );
+      const box = document.querySelector<HTMLInputElement>('.fsel-results-search input');
+      expect(box, 'the picker has a search box').toBeTruthy();
+      expect(document.activeElement === box).toBe(focused);
       r.stop();
     });
   }
