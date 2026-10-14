@@ -1719,9 +1719,13 @@ function CustomBackgroundForm({ build, actions, content }: EditorProps) {
           onChange={(e) => set({ description: e.target.value })}
         />
       </label>
+      {/* The two popup pickers below sit in a <div>, never a <label>: the popup renders in place, so a
+          label would contain it, and a tap on its backdrop or title was forwarded by the browser to the
+          label's first control — the picker's own button — re-opening the popup it had just closed
+          (owner's phone video, 2026-10-14). Guard: test/bug-popup-inside-label.test.tsx. */}
       <div className="cbg-row">
         {([0, 1] as const).map((i) => (
-          <label className="cbg-field" key={i}>
+          <div className="cbg-field" key={i}>
             <span className="cbg-lbl">Boost {i + 1}</span>
             <PopupSelect
               title={`Boost ${i + 1}`}
@@ -1731,11 +1735,11 @@ function CustomBackgroundForm({ build, actions, content }: EditorProps) {
               clearLabel="Clear"
               options={ABILITIES.map((ab) => ({ value: ab, label: ab.toUpperCase(), disabled: cb.boosts[1 - i] === ab }))}
             />
-          </label>
+          </div>
         ))}
       </div>
       <div className="cbg-row">
-        <label className="cbg-field">
+        <div className="cbg-field">
           <span className="cbg-lbl">Trained skill</span>
           <PopupSelect
             title="Trained skill"
@@ -1745,7 +1749,7 @@ function CustomBackgroundForm({ build, actions, content }: EditorProps) {
             clearLabel="Clear"
             options={SKILLS.map((s) => ({ value: s, label: capSkill(s) }))}
           />
-        </label>
+        </div>
         <label className="cbg-field">
           <span className="cbg-lbl">Lore</span>
           <input value={cb.loreSubject} placeholder="e.g. Sailing" onChange={(e) => set({ loreSubject: e.target.value })} />
