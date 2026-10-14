@@ -1047,6 +1047,11 @@ export interface MissingChoice {
 export function levelChoices(build: BuildState, content: ContentDatabase): MissingChoice[] {
   const out: MissingChoice[] = [];
   for (const label of originMissing(build, content)) out.push({ page: 0, label, required: true });
+  /* A sanctification the chosen deity does not allow — answered before the deity, or kept through a
+   * deity change. Named rather than swapped, like a cause the sanctification forbids (which legal
+   * answer they meant is the player's call), and on the PAGE of the picker that answers it: the
+   * dedication's level, the champion's Deity feature's level — never Setup, where nothing clears it. */
+  for (const s of sanctificationsOffDeity(build, content)) out.push({ page: s.page, label: `Level ${s.page} — ${s.label}`, required: true });
 
   const cls = build.classId ? content.classes[build.classId] : undefined;
   // The second class only under Dual Class: a `classId2` left behind with the rule off asks nothing.
@@ -1402,7 +1407,24 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
   // A deity is a level-0 choice for classes that require one (cleric, champion) or for a subclass that
   // demands it (e.g. rogue Avenger) — and for anyone who PICKED a record that reads the deity, since
   // that record delivers nothing without one. Flag it as missing so Setup completeness reflects it.
+  // Anyone else MAY follow a deity, and an optional pick is never reported here.
   if (buildUsesDeity(build, content) && !build.deityId) out.push('Deity');
+  // …and a deity a picked record rules out (a Razmiran priest's must be Razmir). Named, never swapped.
+  {
+    const named = deityNamedBy(build, content);
+    if (named && build.deityId && build.deityId !== named.id) out.push(`Deity — ${named.reason}`);
+  }
+  /* …and the deity card's own Sanctification question, while a Vindicator or Mortal Herald of a "can be"
+   * deity has not answered it: their holy/unholy trait comes from nowhere else. (A "must be" deity's
+   * single option is taken without a click. The cleric's own unanswered question is not counted here —
+   * it never has been, and that is a separate change.) */
+  if (build.deityId && takesDeitySanctification(build, content)) {
+    const deity = content.deities[build.deityId];
+    const ch = deity?.effectChoices?.find((e) => e.id === 'sanctification');
+    if (ch && effectChoiceOptions(ch, build, content).length > 1 && !build.effectChoices?.[`${build.deityId}:sanctification`]) {
+      out.push(`Sanctification (${deity!.name})`);
+    }
+  }
   const heritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
   if (heritage?.grantsGeneralFeat && !build.heritageFeatId) out.push('Heritage general feat');
   if (heritage?.choiceResistance && !build.heritageResistanceChoice) out.push('Heritage resistance');
@@ -1855,6 +1877,16 @@ export function effectChoiceOffered(ch: EffectChoice, build: BuildState, content
   if (ch.requiresChoice && recordId) {
     const sib = build.effectChoices?.[`${recordId}:${ch.requiresChoice.id}`];
     if (!sib || !ch.requiresChoice.values.includes(sib)) return false;
+  }
+  /* The DEITY's own Sanctification question belongs to a class whose Deity feature hands the
+   * sanctification over — the cleric reads this answer, the champion has always been offered it too.
+   * Every character may follow a deity now (2026-10-14), and a fighter who merely worships Iomedae is
+   * not sanctified: without this the card asked them a question nothing reads, and a "must be holy"
+   * deity's single option was recorded as their pick. A Cleric or Champion Dedication answers through
+   * its own sanctification choice, which follows the deity (`SANCTIFICATION_FROM_DEITY`). */
+  if (ch.id === 'sanctification' && recordId && recordId === build.deityId && content.deities[recordId]) {
+    // …and the Vindicator and Mortal Herald, who take the deity's sanctification with no choice of their own.
+    return heldClasses(build).some((s) => s.classId && classChoosesDeity(content.classes[s.classId]?.features)) || takesDeitySanctification(build, content);
   }
   if (!ch.requiresFeature) return true;
   /* BOTH classes. A dual-class character's second class carries its own features and its own
@@ -2360,7 +2392,15 @@ export function buildChoiceOptions(
     return limited(markClaimed(opts));
   }
   if (def.kind === 'skills') return limited(markClaimed(trainedSkillOptions(character, def.minRank ?? 'trained')));
-  const narrowed = limited(markClaimed(narrowChoiceOptions(recordId, def, effectiveChoiceOptions(recordId, def, character, content), character, content)));
+  const narrowed = limited(markClaimed(narrowChoiceOptions(recordId, def, effectiveChoiceOptions(recordId, def, character, content), character, content))).map(
+    /* A sanctification that follows the deity: what the deity's entry does not allow is greyed with
+     * the reason (Q27), never removed — the champion's cause picker does the same for a cause the
+     * sanctification forbids. */
+    (o) => {
+      const why = def.flag === 'sanctification' && !o.disabled ? sanctificationNotAllowed(recordId, o.value, build, content) : null;
+      return why ? { ...o, disabled: why } : o;
+    },
+  );
   // An `ownsFeature` option's value IS a classFeature id, so the record it names can describe it. The
   // four that shipped before this each carried a COPY of that record's description on the option, and
   // a copy is a second place for the same text to go stale — Exemplar Dedication's 21 ikons would have
@@ -2592,9 +2632,32 @@ export function buildNeedsDeity(build: BuildState, content: ContentDatabase): bo
 }
 
 /**
- * Does anything on this build READ the deity — the class, the subclass, or a record the player picked?
+ * Records whose OWN text makes the character follow a deity, but whose data carries no field that
+ * reads one — so the scan in `buildUsesDeity` never saw them (2026-10-14).
  *
- * `buildNeedsDeity` answers the narrower class/subclass question, and it has to stay narrow: it also
+ *   Cleric Dedication: *"Choose a deity as you would if you were a cleric."* (AoN feat-5066)
+ *   Champion Dedication: *"Choose a deity."* (Player Core 2)
+ *   Mortal Herald Dedication: *"You become a mortal herald of your deity … Depending on your deity,
+ *   their sanctification can make you holy or unholy"* (prerequisite: a worshiper of a specific deity)
+ *   Vindicator (ranger class archetype): *"You must choose a deity to be a follower of"*
+ *
+ * The dedications ship only a sanctification choice (or nothing) whose note says "your deity", and the
+ * vindicator carries no `requiresDeity`, so none of them ever made the Deity card required.
+ * Kept OUT of `buildNeedsDeity`: that predicate also grants the deity's favored weapon on the cleric's
+ * ladder, which no dedication gives. The vindicator IS trained in its deity's favored weapon, but under a
+ * rule of its own (an advanced one at its martial rank) that nothing implements yet — not this ladder.
+ * `test/deity-any-class.test.tsx` scans the corpus for "choose a deity" so a new one cannot slip by.
+ */
+export const DEITY_CHOOSING_FEATS: ReadonlySet<string> = new Set(['cleric-dedication', 'champion-dedication', 'mortal-herald-dedication']);
+export const DEITY_CHOOSING_SUBCLASSES: ReadonlySet<string> = new Set(['vindicator']);
+
+/**
+ * Must this build ANSWER the deity question? Every character MAY follow a deity (the owner,
+ * 2026-10-14: following a deity with any class breaks no rule), so the Deity card is always drawn;
+ * this decides whether it is a required choice (listed in "choices left") or "Deity (optional)".
+ *
+ * It asks whether anything on the build READS the deity — the class, the subclass, or a record the
+ * player picked. `buildNeedsDeity` answers the narrower class/subclass question, and it has to stay narrow: it also
  * drives the deity's FAVORED WEAPON proficiency, which is a cleric benefit and not something a feat
  * hands out. But the deity PICKER was gated on it too, so a record that needs a deity and belongs to a
  * class that does not could never get one:
@@ -2614,12 +2677,14 @@ export function buildNeedsDeity(build: BuildState, content: ContentDatabase): bo
  */
 export function buildUsesDeity(build: BuildState, content: ContentDatabase): boolean {
   if (buildNeedsDeity(build, content)) return true;
+  if ([...DEITY_CHOOSING_SUBCLASSES].some((s) => holdsSubclass(build, s))) return true;
   // A BACKGROUND can read the deity too: Raised by Belief trains "your deity's associated skill"
   // (`trainedSkillFromDeity`, applied below at the background step). Without this the Deity card never
   // rendered for a non-divine class and the derived skill was unreachable (experience gate, 2026-09-02).
   if (resolveBackground(build, content)?.trainedSkillFromDeity) return true;
   const reads = (f: Feat | undefined) => {
     if (!f) return false;
+    if (DEITY_CHOOSING_FEATS.has(f.id)) return true;
     if (f.choice?.kind === 'domains' || f.choice?.from?.type === 'own-deity-spell') return true;
     const add = f.spellListAdditions;
     return (add == null ? [] : Array.isArray(add) ? add : [add]).some((a) => a?.from === 'deity');
@@ -2630,6 +2695,130 @@ export function buildUsesDeity(build: BuildState, content: ContentDatabase): boo
     ...Object.keys(build.grantedFeatChoices ?? {}).map((k) => k.split(':')[0]),
   ];
   return ids.some((id) => id && reads(content.feats[id]));
+}
+
+/**
+ * Records through which the DEITY's own Sanctification answer becomes the character's, exactly as the
+ * cleric's Deity feature reads it — neither carries a sanctification choice of its own:
+ *
+ *   Vindicator: *"You must choose a deity to be a follower of, and you gain your deity's sanctification."*
+ *   Mortal Herald Dedication: *"If you "can be" holy or unholy according to your deity, you make that
+ *   choice, and if you "must be" holy or unholy you gain the trait automatically."*
+ */
+export const DEITY_SANCTIFIES_FEATS: ReadonlySet<string> = new Set(['mortal-herald-dedication']);
+export const DEITY_SANCTIFIES_SUBCLASSES: ReadonlySet<string> = new Set(['vindicator']);
+
+/** The feats picked at or below the character's level. The Builder keeps a pick above it when the level
+ *  is lowered, and buildCharacter drops that feat — so a reader of picks must drop it too. */
+function heldPicks(build: BuildState): Set<string> {
+  return new Set(
+    Object.entries(build.featPicks ?? {})
+      .filter(([slot, id]) => !!id && (Number.parseInt(slot, 10) || 0) <= build.level)
+      .map(([, id]) => id as string),
+  );
+}
+
+/**
+ * Does the deity's Sanctification answer make this character holy or unholy through a record other
+ * than the cleric's Deity feature (which buildCharacter checks by owned feature)?
+ *
+ * NOT when the build already answers through a sanctification choice that follows the deity
+ * (`SANCTIFICATION_FROM_DEITY`: the champion's Deity feature, Cleric or Champion Dedication). That answer
+ * is the character's one sanctification; reading the deity card's too would let a Mortal Herald dedicant
+ * be holy by the feat and unholy by the card, or sanctify a champion against their explicit 'none'.
+ */
+export function takesDeitySanctification(build: BuildState, content: ContentDatabase): boolean {
+  const picks = heldPicks(build);
+  const viaRecord =
+    [...DEITY_SANCTIFIES_SUBCLASSES].some((s) => holdsSubclass(build, s)) || [...DEITY_SANCTIFIES_FEATS].some((id) => picks.has(id));
+  if (!viaRecord) return false;
+  const ownChoice =
+    [...picks].some((id) => SANCTIFICATION_FROM_DEITY.has(id) && content.feats[id]?.choice?.flag === 'sanctification') ||
+    heldClasses(build).some((s) => s.classId && content.classes[s.classId]?.features?.some((f) => SANCTIFICATION_FROM_DEITY.has(f.featureId)));
+  return !ownChoice;
+}
+
+/**
+ * A deity a picked record names outright, with the sentence that names it.
+ *
+ * Razmiran Priest Dedication: *"You can take the Cleric Dedication feat without needing to meet its
+ * prerequisites … but you must choose Razmir as your deity"* (AoN feat-7566). Holding both, the Deity
+ * card offers only Razmir (Q9) and any other answer is named in the choices left, never swapped — even
+ * while Razmir's book is switched off, when the card then has nothing live to offer and says why.
+ */
+export function deityNamedBy(build: BuildState, content: ContentDatabase): { id: string; reason: string } | null {
+  const picks = heldPicks(build);
+  if (picks.has('razmiran-priest-dedication') && picks.has('cleric-dedication')) {
+    const name = content.deities['razmir']?.name ?? 'Razmir';
+    return { id: 'razmir', reason: `a Razmiran priest who takes Cleric Dedication must choose ${name} as their deity.` };
+  }
+  return null;
+}
+
+/**
+ * Records whose `sanctification` choice IS the deity's, so the answer must be one the deity's
+ * Sanctification entry allows:
+ *
+ *   Deity (Champion): *"If you "can be" holy or unholy according to your deity's sanctification
+ *   entry, you make that choice, and if you "must be" holy or unholy, you gain the trait"*
+ *   Cleric Dedication: *"…can receive that deity's divine sanctification"*
+ *   Champion Dedication: *"…gain the champion's aura and sanctification as described in the champion class"*
+ *
+ * Both dedications' own notes already said "Your deity's Sanctification entry decides which of these
+ * you may take", and the picker offered all three to everyone. The exemplar's Sanctified Soul is
+ * deliberately absent: an exemplar's sanctification belongs to no deity.
+ */
+export const SANCTIFICATION_FROM_DEITY: ReadonlySet<string> = new Set(['deity-champion', 'cleric-dedication', 'champion-dedication']);
+
+/**
+ * The sanctification answers ('holy' | 'unholy' | 'none') the chosen deity allows, or null while no
+ * deity is chosen — a half-built character sees the whole list. A deity whose record carries no
+ * Sanctification entry allows only 'none' (115 of 486, Pharasma among them), which is also how the
+ * cleric's own reading below treats it: no entry, no trait.
+ */
+export function deitySanctifications(build: BuildState, content: ContentDatabase): { deity: string; allowed: Set<string> } | null {
+  const deity = build.deityId ? content.deities[build.deityId] : undefined;
+  if (!deity) return null;
+  const ch = deity.effectChoices?.find((e) => e.id === 'sanctification');
+  return { deity: deity.name, allowed: new Set(ch ? effectChoiceOptions(ch, build, content).map((o) => o.value) : ['none']) };
+}
+
+/** The reason an answer to a deity-following sanctification choice is not allowed, or null when it is. */
+export function sanctificationNotAllowed(recordId: string, value: string, build: BuildState, content: ContentDatabase): string | null {
+  if (!SANCTIFICATION_FROM_DEITY.has(recordId)) return null;
+  const by = deitySanctifications(build, content);
+  if (!by || by.allowed.has(value)) return null;
+  const order = ['holy', 'unholy', 'none'].filter((v) => by.allowed.has(v));
+  return `${by.deity} allows only: ${order.join(', ')}.`;
+}
+
+/** Every stored sanctification answer the chosen deity does not allow, on the level page of the picker
+ *  that answers it, as "Sanctification (Cleric Dedication): Unholy — Sarenrae allows only: holy, none." */
+function sanctificationsOffDeity(build: BuildState, content: ContentDatabase): { page: number; label: string }[] {
+  const out: { page: number; label: string }[] = [];
+  const check = (recordId: string, value: string | undefined, page: number) => {
+    const why = value ? sanctificationNotAllowed(recordId, value, build, content) : null;
+    const name = content.feats[recordId]?.name ?? content.classFeatures[recordId]?.name ?? recordId;
+    if (why) out.push({ page, label: `Sanctification (${name}): ${cap(value!)} — ${why}` });
+  };
+  for (const [slot, featId] of Object.entries(build.featPicks ?? {})) {
+    if (!featId || content.feats[featId]?.choice?.flag !== 'sanctification') continue;
+    // A feat slot's key opens with its level ("2:class:0"). A pick above the character's level is not
+    // held, and its page is not on the strip to show the mark.
+    const page = Number.parseInt(slot, 10) || 0;
+    if (page > build.level) continue;
+    check(featId, build.featChoices?.[slot] || build.featChoices?.[`${slot}:0`], page);
+  }
+  for (const id of SANCTIFICATION_FROM_DEITY) {
+    if (content.classFeatures[id]?.choice?.flag !== 'sanctification') continue;
+    // Only a feature a held class carries: a champion who became a fighter leaves the answer behind.
+    const row = heldClasses(build)
+      .map((s) => (s.classId ? content.classes[s.classId]?.features?.find((f) => f.featureId === id) : undefined))
+      .find(Boolean);
+    if (!row) continue;
+    check(id, build.featChoices?.[`feature:${id}`] || build.featChoices?.[`feature:${id}:0`], row.level);
+  }
+  return out;
 }
 
 /**
@@ -7255,8 +7444,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * deity-champion choice ships a grant) got it fine. Gated on owning the cleric feature, so a
    * fighter who merely worships Jaidi stays unsanctified — and deity-champion is deliberately NOT
    * in the list: the champion answers through their own feature's choice, and reading the deity
-   * answer too could sanctify a champion against their explicit 'none'. */
-  if (build.deityId && ownedFeatureIds.has('deity-cleric')) {
+   * answer too could sanctify a champion against their explicit 'none'. The Vindicator and the Mortal
+   * Herald read the same answer the same way (`takesDeitySanctification`, 2026-10-14). */
+  if (build.deityId && (ownedFeatureIds.has('deity-cleric') || takesDeitySanctification(build, content))) {
     /* "Sanctification: must choose holy" (Iomedae, Sarenrae …) ships as a ONE-option deity choice —
      * deity sweep 2026-09-05, 162 deities re-shaped from the Archives' own sanctification line. resolvePick
      * already treats a single option as taken; this raw read has to as well, or a cleric of Iomedae stays

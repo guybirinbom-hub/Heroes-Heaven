@@ -22,6 +22,7 @@ import {
   boostSlots,
   buildCharacter,
   buildUsesDeity,
+  deityNamedBy,
   championDevotionOptions,
   extraPickCount,
   commanderFolioCapacity,
@@ -82,6 +83,7 @@ import {
   narrowChoiceOptions,
   outsideDomains,
   effectiveChoiceLimits,
+  heldClasses,
   holdsClass,
 } from '../rules/derive';
 import { explainStat, statHasSituational, type StatRef } from '../rules/explain';
@@ -599,7 +601,11 @@ export function requestDeityChange(id: string, build: BuildState, content: Conte
    * reducer makes, so an empty build still yields an empty list and no dialog. */
   const { font, lostDomains } = deitySwapDrops(build, content, id);
   const lost = lostDomains.map((d) => `Domain — ${cap(d)}`);
-  if (build.divineFont && font !== build.divineFont) lost.push(`Divine font — ${cap(build.divineFont)}`);
+  /* Only a class that HAS a divine font loses one. Every character may follow a deity now, and the
+   * reducer still settles a one-font deity's font on the build — so a fighter swapping Sarenrae for
+   * Asmodeus was asked to give up "Divine font — Heal", a choice they never had. */
+  const hasFont = heldClasses(build).some((s) => s.classId && content.classes[s.classId]?.features?.some((f) => f.featureId === 'divine-font'));
+  if (hasFont && build.divineFont && font !== build.divineFont) lost.push(`Divine font — ${cap(build.divineFont)}`);
   void confirmLoss('Change deity?', 'Change deity', lost, () => actions.changeDeity(id));
 }
 
@@ -1246,6 +1252,7 @@ export function SearchSelect({
   descBucket,
   sourcesHidden,
   sortByName = false,
+  clearLabel,
 }: {
   label: string;
   value: string | null | undefined;
@@ -1273,6 +1280,10 @@ export function SearchSelect({
    *  (rank, then name), formulas (level), proficiency tracks (Perception first) are in an order that
    *  means something. A typed search keeps its own ranking either way. */
   sortByName?: boolean;
+  /** PopupSelect's clear action, for an OPTIONAL pick (the "Deity (optional)" card): a button below the
+   *  list, shown only while something is chosen, that calls `onChange('')`. An action, never a fake
+   *  `''` option — that would be counted as one more choice and need a page it does not have. */
+  clearLabel?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
@@ -1452,6 +1463,19 @@ export function SearchSelect({
               )}
               {sourcesHidden && <SourcesHiddenNote hidden={sourcesHidden} q={q} offered={filtered.length} />}
             </div>
+            {clearLabel && current && (
+              <button
+                type="button"
+                className="picker-clear"
+                onClick={() => {
+                  onChange('');
+                  setOpen(false);
+                }}
+              >
+                <i className="ti ti-x" aria-hidden="true" /> {clearLabel}
+                <span className="picker-clear-cur">{current.name}</span>
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -4742,51 +4766,69 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             </SubCard>
           );
         })()}
-      {/* buildUsesDeity, not buildNeedsDeity: a sorcerer who took Blessed Blood needs the picker
-          even though their class never asks for a deity. The narrower predicate also drives the
-          favored-weapon proficiency, which is a cleric benefit, so it stays where it is. */}
-      {buildUsesDeity(build, content) && (
-        <SetupCard icon="ti-flare" label="Deity">
-          <SearchSelect
-            bare
-            label="Deity"
-            sortByName
-            value={build.deityId}
-            /* bug 2026-09-13: change-subclass-deity-confirm — a deity swap deletes every domain the
-               new deity doesn't offer, and can replace an answered divine font. Ask first. */
-            onChange={(v) => requestDeityChange(v, build, content, actions)}
-            descBucket="deities"
-            options={Object.values(content.deities).map((d) => ({
-              id: d.id,
-              name: d.name,
-              note: [note(d.rarity), d.domains?.slice(0, 3).join(', ')].filter(Boolean).join(' · ') || undefined,
-              description: d.description,
-              descRefs: d.descRefs,
-              record: { bucket: 'deities', id: d.id },
-            }))}
-            sourcesHidden={sourcesHidden('deities')}
-          />
-          {/* Phone audit D3 (a blocker): with the default books a new cleric had NO deity to choose and the
-              card said nothing about why. Every deity is printed outside the Core books. */}
-          {Object.keys(content.deities).length === 0 && !!hiddenIn?.deities.length && (
-            <>
-              <p className="setup-hint">Every deity is printed in a book this character has switched off.</p>
-              <button type="button" className="btn-ghost picker-src-btn" onClick={() => setSourcesOpen(true)}>
-                <i className="ti ti-books" aria-hidden="true" /> Turn books on in Sources
-              </button>
-            </>
-          )}
-          {/* A deity can ask a question of its own — Lurlup's "Sanctification: can be Unholy". Deities
-              were the one chosen record with no pick surface at all, so the answer had nowhere to go. */}
-          <EffectChoicesPicker
-            recordId={build.deityId ?? ''}
-            choices={build.deityId ? content.deities[build.deityId]?.effectChoices : undefined}
-            build={build}
-            actions={actions}
-            content={content}
-          />
-        </SetupCard>
-      )}
+      {/* EVERY character may follow a deity (the owner, 2026-10-14: a fighter who worships Sarenrae
+          breaks no rule), so the card is always drawn. buildUsesDeity decides only whether it is a
+          required choice — a deity-choosing class or subclass, or a picked record that reads the deity
+          (Blessed Blood, Cleric Dedication) — or "Deity (optional)", which never shows a pending mark
+          or joins the choices left. buildNeedsDeity stays narrower still: it also grants the favored
+          weapon, which a plain follower does not get. */}
+      {(() => {
+        const required = buildUsesDeity(build, content);
+        // A Razmiran priest's Cleric Dedication names its deity (Q9: only the legal pick is live).
+        const named = deityNamedBy(build, content);
+        return (
+          <SetupCard icon="ti-flare" label={required ? 'Deity' : 'Deity (optional)'}>
+            <SearchSelect
+              bare
+              label="Deity"
+              sortByName
+              value={build.deityId}
+              /* bug 2026-09-13: change-subclass-deity-confirm — a deity swap deletes every domain the
+                 new deity doesn't offer, and can replace an answered divine font. Ask first. */
+              onChange={(v) => requestDeityChange(v, build, content, actions)}
+              descBucket="deities"
+              /* An optional pick has to be undoable: a follower who changes their mind needs a way back
+                 to no deity at all. A required card has none — its answer is owed. */
+              clearLabel={required ? undefined : 'No deity'}
+              options={Object.values(content.deities).map((d) => ({
+                id: d.id,
+                name: d.name,
+                note: [note(d.rarity), d.domains?.slice(0, 3).join(', ')].filter(Boolean).join(' · ') || undefined,
+                description: d.description,
+                descRefs: d.descRefs,
+                record: { bucket: 'deities', id: d.id },
+                // Never the stored answer: a pick must not vanish under the player (it is named in the choices left).
+                disabled: named && d.id !== named.id && d.id !== build.deityId ? `Not allowed: ${named.reason}` : undefined,
+              }))}
+              sourcesHidden={sourcesHidden('deities')}
+            />
+            {/* Phone audit D3 (a blocker): with the default books a new cleric had NO deity to choose and the
+                card said nothing about why. Every deity is printed outside the Core books. Only on a
+                REQUIRED card: every new character starts on the Core books, so an optional card would
+                carry this warning for a choice nobody owes (the open picker still says what is hidden). */}
+            {required && Object.keys(content.deities).length === 0 && !!hiddenIn?.deities.length && (
+              <>
+                <p className="setup-hint">Every deity is printed in a book this character has switched off.</p>
+                <button type="button" className="btn-ghost picker-src-btn" onClick={() => setSourcesOpen(true)}>
+                  <i className="ti ti-books" aria-hidden="true" /> Turn books on in Sources
+                </button>
+              </>
+            )}
+            {/* A deity can ask a question of its own — Lurlup's "Sanctification: can be Unholy". Deities
+                were the one chosen record with no pick surface at all, so the answer had nowhere to go.
+                Only a cleric, champion, vindicator or mortal herald is asked it (effectChoiceOffered): a
+                plain follower is not sanctified, and the Cleric and Champion dedications answer through
+                their own sanctification choice. */}
+            <EffectChoicesPicker
+              recordId={build.deityId ?? ''}
+              choices={build.deityId ? content.deities[build.deityId]?.effectChoices : undefined}
+              build={build}
+              actions={actions}
+              content={content}
+            />
+          </SetupCard>
+        );
+      })()}
       {/* Living Rune: "Your body can hold a single property rune." A rune with no item to sit on —
           nothing etches it and every reader of etched runes walks the inventory — so it needs its own
           choice here. The offered list applies the feat's own two exclusions. */}
