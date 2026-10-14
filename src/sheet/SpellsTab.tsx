@@ -2,7 +2,7 @@ import { useMemo, useState, type ReactNode } from 'react';
 import { cleanRun } from './RichText';
 import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
-import { deityDomainsOf, deriveSpellcasting, deriveClassDc, formatMod, ownedFeatureIds } from '../rules/derive';
+import { deityDomainsOf, deriveSpellcasting, deriveClassDc, entryClassIdOf, formatMod, ownedFeatureIds } from '../rules/derive';
 import { signatureSpellsAt } from '../rules/build';
 import { toggleKnownRitual,
   bumpItemCounter,
@@ -775,7 +775,12 @@ function ManageSpellsModal({
     .map(Number)
     .sort((a, b) => a - b);
 
-  const cls = character.classId ? content.classes[character.classId] : undefined;
+  /* The class whose table decides signature spells is the one that OWNS this entry: the second class's
+   * entry (`${classId2}-casting`, the id buildCharacter gives it) reads the second class's table. Read
+   * off the first class alone, a Fighter/Bard's bard repertoire never offered a signature toggle, and a
+   * Sorcerer/Oracle's oracle entry used the sorcerer's levels. */
+  const entryClassId = entryClassIdOf(character, entry);
+  const cls = entryClassId ? content.classes[entryClassId] : undefined;
   const sigAvailable =
     spontaneous && signatureSpellsAt(cls, character.level);
 

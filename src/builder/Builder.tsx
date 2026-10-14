@@ -60,6 +60,8 @@ import { foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, skillSlo
 import { signaturesAt, signatureSpellsAt } from '../rules/build';
 // batch 037: flexible-spellcaster#collection-shape — the sheet's own sizer, never a copy of it.
 import { flexibleCollectionSize } from '../rules/build';
+// Dual Class: the second subclass's effectChoices card is drawn only when one is offered.
+import { effectChoiceOffered } from '../rules/build';
 import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
 import { bonusSkillFeatCount, bonusSkillFeatKey, choiceGrantFor, exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS, maxTakes } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickKeysFor, pickPrompt, pickableFeats } from '../rules/featPickGrants';
@@ -1135,6 +1137,7 @@ export function Builder({
      * occult access to Harm — a divine spell — so without this the SHEET offered it and the builder,
      * which is where a prepared caster's book is actually filled, did not. Same body as the feat loop
      * above: only the plain list lane, since 'repertoire' and 'font' grants are buildCharacter's. */
+    // FIRST class only on purpose: this widens the PRIMARY picker (`eligibleSpells`); a second class's widening belongs to `eligibleSpells2`, which reads none yet (spell-picker lane).
     for (const fid of classFeatureIdsOwned(
       { classId: build.classId, subclassId: build.subclassId, level: build.level },
       content,
@@ -1592,6 +1595,47 @@ export function Builder({
     );
   };
 
+  /**
+   * Dual Class: the SECOND subclass's own follow-up — its `choice`, its `effectChoices` and a
+   * FEAT_PICK_GRANTS bonus feat. Mounted on the Level 0 page right under the second-class card, where
+   * the second subclass is picked (SetupUnlockedChoices); the first class's twin sits beside its own
+   * subclass picker on the level page ("The CHOSEN subclass can ask a follow-up of its own").
+   *
+   * bug 2026-10-14 (lane A check): only `build.subclassId` was ever asked. buildCharacter reads all of
+   * these answers for the second class too (`grantOptions` holds the second subclass, the `feature:<id>`
+   * carrier walks both classes), so a Fighter/Barbarian's Rage read "energy" and an animal instinct had
+   * no animal attack — with no control anywhere to fix it. 17 subclass options ask this way (barbarian
+   * instincts, rogue rackets, wizard schools, palatine detective, vindicator, four eidolons). Same
+   * storage keys as the first class's picker, so nothing new is written.
+   */
+  const renderSecondSubclassAsks = () => {
+    const sid = cls2?.subclass ? build.subclassId2 : null;
+    const rec = sid ? content.classFeatures[sid] : undefined;
+    if (!sid || !rec) return null;
+    const def = rec.choice && !askedAtDailyPrep(rec.choice) && !(rec.choice.minLevel != null && build.level < rec.choice.minLevel) ? rec.choice : undefined;
+    const asksEffect = (rec.effectChoices ?? []).some((ch) => effectChoiceOffered(ch, build, content, sid));
+    const spec = FEAT_PICK_GRANTS[sid];
+    if (!def && !asksEffect && !spec) return null;
+    const featOpts = spec ? pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description, record: { bucket: 'feats' as const, id: o.id } })) : [];
+    return (
+      <SetupCard icon="ti-versions" label={`Dual Class — ${rec.name}`}>
+        {def && renderChoice(def, `feature:${sid}`, sid)}
+        <EffectChoicesPicker recordId={sid} choices={rec.effectChoices} build={build} actions={actions} content={content} />
+        {spec &&
+          pickKeysFor(sid, spec.picks).map((k, i) => (
+            <PopupSelect
+              key={k}
+              title={pickPrompt(spec.prompt, i, spec.picks)}
+              placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
+              value={build.pickFeatChoices?.[k] ?? ''}
+              onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [k]: v } })}
+              options={featOpts}
+            />
+          ))}
+      </SetupCard>
+    );
+  };
+
   /** Dual Class: a consolidated card to pick the SECOND caster class's cantrips + spells (by rank, up to
    *  the current level's slot counts). Flat like the sheet's Manage flow — not per level. Renders only for
    *  a dual-class character whose second class is a slot caster. Writes cantrips2/spells2/signatures2. */
@@ -1923,6 +1967,7 @@ export function Builder({
                     </div>
                     <div className="lvl-cards">
                       <SetupUnlockedChoices build={build} actions={actions} content={content} callingRows={callingRows} />
+                      {renderSecondSubclassAsks()}
                       {renderSecondClassSpells()}
                     </div>
                   </div>

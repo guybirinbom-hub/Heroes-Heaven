@@ -1,5 +1,5 @@
 import type { Character, ContentDatabase } from '../rules/types';
-import { deriveDefenses, deriveStrikes, ownedFeatureIds, weaponSpecialization, type CharacterDefenses, type Strike } from '../rules/derive';
+import { deriveDefenses, deriveStrikes, ownedFeatureIds, specDamageParts, subclassOfHeldClass, weaponSpecialization, type CharacterDefenses, type Strike } from '../rules/derive';
 import { atLevelFamilyOf, atLevelLead, levelDefenseKeys, type AtLevelFamily } from './cardScope';
 import type { OursLine } from './cardModel';
 
@@ -53,10 +53,10 @@ function strikesOf(c: Character, db: ContentDatabase, state: string | undefined)
 }
 
 /** Whether the character holds the record the line would sit on. Rage: the instinct derive scales Rage by
- *  (derive.ts rageStrikeRider reads `subclassId` for a barbarian only — an archetype barbarian rages for a
- *  flat 2, which the instinct's printed scaling does not describe). */
+ *  (derive.ts rageStrikeRider reads the BARBARIAN class's subclass, either slot under Dual Class — an
+ *  archetype barbarian rages for a flat 2, which the instinct's printed scaling does not describe). */
 function holds(c: Character, db: ContentDatabase, bucket: string, id: string, family: AtLevelFamily): boolean {
-  if (family === 'rage') return c.classId === 'barbarian' && c.subclassId === id;
+  if (family === 'rage') return subclassOfHeldClass(c, 'barbarian') === id;
   if (bucket === 'feats') return (c.feats ?? []).some((f) => f.featId === id);
   if (bucket === 'classFeatures') return ownedFeatureIds(c, db).has(id);
   // Both heritages: derive.ts heritageRecords reads the second one (Late Awakener) as well.
@@ -149,7 +149,7 @@ const SPEC_TOGETHER = ', Weapon Specialization and Greater together';
 
 /** What derive computed for the family, as the line's words after the lead; null when it computed nothing.
  *  `greater`: derive's weaponSpecialization(c, db).greater, read only for the weaponSpec family. */
-function valueOf(family: AtLevelFamily, strikes: Strike[], greater = false): string | null {
+function valueOf(family: AtLevelFamily, strikes: Strike[], c: Character, db: ContentDatabase, greater = false): string | null {
   const live = strikes.filter((s) => !s.fromBattleForm);
   if (family === 'sneakAttack' || family === 'precision') {
     const note = family === 'sneakAttack' ? SNEAK_NOTE : PREY_NOTE;
@@ -162,8 +162,11 @@ function valueOf(family: AtLevelFamily, strikes: Strike[], greater = false): str
     if (!items.length) return null;
     return groupBy(items).map((g) => `${namesOf(g.strikes)}: ${g.v.text}, ${noteWords(g.v.note)}`).join('; ');
   }
-  // weaponSpec: the flat damage derive folded into each Strike, grouped by amount and the rank it pays for.
-  const items = live.filter((s) => (s.specDamage ?? 0) > 0).map((s) => ({ key: `${s.specDamage}|${s.rank}`, strike: s, v: { n: s.specDamage!, rank: s.rank } }));
+  // weaponSpec: the flat damage derive folded into each Strike, grouped by amount and the rank it pays for —
+  // its WEAPON SPECIALIZATION part only (derive.ts specDamageParts). A Fighter/Runesmith's Strike folds
+  // Runic Optimization into the same number, and this card is the Weapon Specialization record's.
+  const specOf = (s: Strike) => specDamageParts(c, db, s).find((p) => p.label === 'Weapon specialization')?.value ?? 0;
+  const items = live.filter((s) => specOf(s) > 0).map((s) => ({ key: `${specOf(s)}|${s.rank}`, strike: s, v: { n: specOf(s), rank: s.rank } }));
   if (!items.length) return null;
   const amounts = groupBy(items)
     .sort((a, b) => a.v.n - b.v.n)
@@ -185,7 +188,7 @@ export function atLevelLines(c: Character | null | undefined, db: ContentDatabas
     value =
       family === 'levelDefense'
         ? defenseValue(c, db, bucket, id)
-        : valueOf(family, strikesOf(c, db, STATE_OF[family]), family === 'weaponSpec' && weaponSpecialization(c, db).greater);
+        : valueOf(family, strikesOf(c, db, STATE_OF[family]), c, db, family === 'weaponSpec' && weaponSpecialization(c, db).greater);
   } catch {
     return [];
   }

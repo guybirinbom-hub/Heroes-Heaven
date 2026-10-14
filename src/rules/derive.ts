@@ -421,8 +421,9 @@ export function dynamicItemSkillBonus(c: Character, db: ContentDatabase | undefi
   if (!db) return 0;
   let best = 0;
   const bloodline = () => {
-    const cls = c.classId === 'sorcerer' ? db.classes.sorcerer : c.classId2 === 'sorcerer' ? db.classes.sorcerer : undefined;
-    const sub = cls?.subclass?.options.find((o) => o.id === c.subclassId || o.id === c.subclassId2);
+    // Either held class (`subclassOfHeldClass`): a `classId2` left on a record with Dual Class off is none.
+    const sid = subclassOfHeldClass(c, 'sorcerer');
+    const sub = sid ? db.classes.sorcerer?.subclass?.options.find((o) => o.id === sid) : undefined;
     return (sub?.grants?.skills ?? []) as string[];
   };
   const deitySkill = () => {
@@ -732,7 +733,7 @@ interface ResolvedBasis {
 function specialStatBasis(c: Character, db: ContentDatabase, basis: SpecialStatBasis): ResolvedBasis | null {
   if ('higherOfClassDcOrSpellDc' in basis) return higherOfClassOrSpellBasis(c, db);
   const classId = basis.classDc;
-  if (c.classId === classId || c.classId2 === classId) {
+  if (holdsClass(c, classId)) {
     // `c.keyAbility` is the same single value deriveClassDc uses; under Dual Class the app carries one
     // class-DC key attribute, and reading a different one here would print two class DCs that disagree.
     return {
@@ -3508,12 +3509,18 @@ export function bestMpHandwraps(c: Character, db: ContentDatabase): InventoryIte
 /** Whether the character's class grants (Greater) Weapon Specialization by their level,
  *  detected from the class's auto-granted features. */
 export function weaponSpecialization(c: Character, db: ContentDatabase): { spec: boolean; greater: boolean } {
-  const cls = c.classId ? db.classes[c.classId] : undefined;
-  if (!cls) return { spec: false, greater: false };
+  // EITHER held class (Dual Class): a Wizard/Fighter reaches the fighter's Weapon Specialization at 7th
+  // exactly as a Fighter/Wizard does — this read the first class's table only, so the order the two
+  // classes were picked in decided whether the damage was paid.
+  const tables = heldClasses(c)
+    .map((s) => (s.classId ? db.classes[s.classId] : undefined))
+    .filter((k): k is NonNullable<typeof k> => !!k);
+  if (!tables.length) return { spec: false, greater: false };
   // …minus any whose engine lane the trust gate turned off: the feature is still the class's, it just
   // stops paying the specialization damage (docs/trust-gate.md section 3).
-  const owned = cls.features.filter((f) => f.level <= c.level).map((f) => f.featureId).filter((id) => !engineLaneOff(id));
-  const greater = owned.some((id) => id.startsWith('greater-weapon-specialization'));
+  const ownedOf = (k: (typeof tables)[number]) =>
+    k.features.filter((f) => f.level <= c.level).map((f) => f.featureId).filter((id) => !engineLaneOff(id));
+  const greater = tables.some((k) => ownedOf(k).some((id) => id.startsWith('greater-weapon-specialization')));
   /*
    * 'eidolon-weapon-specialization' (summoner) is the pet's, not the character's — excluded by exact
    * match, and that exact match is why this has to name the per-class forms too.
@@ -3526,8 +3533,8 @@ export function weaponSpecialization(c: Character, db: ContentDatabase): { spec:
    * test/weaponspec.test.ts caught. `psychic-weapon-specialization` is the same convention with the
    * class name in front, so it falls out of the second form instead of being named.
    */
-  const spec = greater || owned.some((id) => id === 'weapon-specialization'
-    || id === `weapon-specialization-${c.classId}` || id === `${c.classId}-weapon-specialization`);
+  const spec = greater || tables.some((k) => ownedOf(k).some((id) => id === 'weapon-specialization'
+    || id === `weapon-specialization-${k.id}` || id === `${k.id}-weapon-specialization`));
   return { spec, greater };
 }
 
@@ -3539,14 +3546,40 @@ export function weaponSpecialization(c: Character, db: ContentDatabase): { spec:
  *  (greater-)weapon-specialization at all — there is nothing here to stack with.
  *  `strikingTier` is the strike's effective striking-dice count (rune, ABP, or Monster Parts). */
 export function runicOptimizationDamage(c: Character, db: ContentDatabase, strikingTier: number): number {
-  const cls = c.classId ? db.classes[c.classId] : undefined;
-  if (!cls || strikingTier < 1) return 0;
-  const owned = cls.features.filter((f) => f.level <= c.level).map((f) => f.featureId).filter((id) => !engineLaneOff(id));
+  // Either held class — an X/Runesmith reaches Runic Optimization at 7th like a Runesmith/X does.
+  const tables = heldClasses(c)
+    .map((s) => (s.classId ? db.classes[s.classId] : undefined))
+    .filter((k): k is NonNullable<typeof k> => !!k);
+  if (!tables.length || strikingTier < 1) return 0;
+  const owned = tables.flatMap((k) => k.features.filter((f) => f.level <= c.level).map((f) => f.featureId)).filter((id) => !engineLaneOff(id));
   // Print stops at major striking; a 4th die (mythic) is treated as major rather than extrapolated.
   const tier = Math.min(strikingTier, 3);
   if (owned.includes('greater-runic-optimization')) return [0, 4, 6, 8][tier];
   if (owned.includes('runic-optimization')) return [0, 2, 3, 4][tier];
   return 0;
+}
+
+/**
+ * A Strike's `specDamage`, split into the features that paid it, for every label that names it.
+ *
+ * deriveStrike folds Weapon Specialization and Runic Optimization into one number, and the labels read
+ * `classId === 'runesmith'` to name it — so a Fighter/Runesmith's +4 (2 weapon specialization + 2 Runic
+ * Optimization, Dual Class) was called "Weapon specialization", and a Runesmith/Fighter's the reverse.
+ * The weapon-specialization part is recomputed from the Strike's own rank exactly as derive paid it
+ * (`weaponSpecDamage(rank, weaponSpecialization)`); the rest is Runic Optimization, but only for a
+ * character who holds it — anyone else's whole number stays Weapon specialization, as it always was.
+ * One class's character gets ONE part, labelled as before.
+ */
+export function specDamageParts(c: Character, db: ContentDatabase, strike: Pick<Strike, 'specDamage' | 'rank'>): { label: string; value: number }[] {
+  const total = strike.specDamage ?? 0;
+  if (!total) return [];
+  const runicHeld = runicOptimizationDamage(c, db, 1) > 0;
+  const spec = runicHeld ? Math.min(total, weaponSpecDamage(strike.rank, weaponSpecialization(c, db))) : total;
+  const runic = total - spec;
+  return [
+    ...(spec ? [{ label: 'Weapon specialization', value: spec }] : []),
+    ...(runic ? [{ label: 'Runic Optimization', value: runic }] : []),
+  ];
 }
 
 /** The class-feature ids the character owns at their current level (auto-granted class features only —
@@ -3568,30 +3601,133 @@ export function classFeatureIdsOwned(
 ): Set<string> {
   const cls = opts.classId ? db.classes[opts.classId] : undefined;
   const out = new Set<string>();
-  if (cls) {
-    for (const f of cls.features) {
-      if (f.level > opts.level) continue;
-      out.add(f.featureId);
-      // A CLASS-suffixed variant of a shared feature — the swashbuckler's own Weapon Expertise
-      // (which carries critSpec), each spontaneous caster's own Spell Repertoire. Only the
-      // SUBCLASS suffix was tried, and a swashbuckler's subclass is a style, so six records
-      // existed, carried mechanics, and were reachable by nothing.
-      const byClass = `${f.featureId}-${cls.id}`;
-      if (db.classFeatures[byClass]) out.add(byClass);
-    }
-  }
-  if (cls && opts.subclassId) {
-    for (const f of cls.features) {
-      if (f.level > opts.level) continue;
-      const variant = `${f.featureId}-${opts.subclassId}`;
-      if (db.classFeatures[variant]) out.add(variant);
-    }
-    if (db.classFeatures[opts.subclassId]) out.add(opts.subclassId);
-    const opt = cls.subclass?.options.find((o) => o.id === opts.subclassId);
-    for (const id of subclassFeatureIds(opt?.featureIds, opts.level)) if (db.classFeatures[id]) out.add(id);
-  }
+  addClassTableFeatures(out, cls, opts.subclassId, opts.level, db);
+  if (cls && opts.subclassId) addSubclassGrants(out, cls, opts.subclassId, opts.level, db);
   for (const cc of opts.classChoices ?? []) {
     if (cc.id && cc.level <= opts.level && db.classFeatures[cc.id]) out.add(cc.id);
+  }
+  return out;
+}
+
+/**
+ * The CLASS TABLE half of a class's features: every feature its table grants at or below `level`, the
+ * `<featureId>-<classId>` variant of each, and — when a subclass is chosen — the `<featureId>-<subclassId>`
+ * variant of each. Shared by `classFeatureIdsOwned` and `ownedFeatureIds`, which used to carry a copy each.
+ */
+function addClassTableFeatures(
+  out: Set<string>,
+  cls: ContentDatabase['classes'][string] | undefined,
+  subclassId: string | null | undefined,
+  level: number,
+  db: ContentDatabase,
+): void {
+  if (!cls) return;
+  for (const f of cls.features) {
+    if (f.level > level) continue;
+    out.add(f.featureId);
+    // A CLASS-suffixed variant of a shared feature — the swashbuckler's own Weapon Expertise
+    // (which carries critSpec), each spontaneous caster's own Spell Repertoire. Only the
+    // SUBCLASS suffix was tried, and a swashbuckler's subclass is a style, so six records
+    // existed, carried mechanics, and were reachable by nothing.
+    const byClass = `${f.featureId}-${cls.id}`;
+    if (db.classFeatures[byClass]) out.add(byClass);
+  }
+  // Subclass VARIANTS of a listed feature are stored as `<featureId>-<subclassId>` and are not in
+  // cls.features — the class lists the generic prose record (`field-discovery`), and the variant
+  // (`field-discovery-toxicologist`) carries the actual mechanics. Only variants of a feature the class
+  // ACTUALLY grants, at or below its level, so a subclass can't smuggle in a feature its class lacks.
+  if (!subclassId) return;
+  for (const f of cls.features) {
+    if (f.level > level) continue;
+    const variant = `${f.featureId}-${subclassId}`;
+    if (db.classFeatures[variant]) out.add(variant);
+  }
+}
+
+/**
+ * The SUBCLASS half: the chosen subclass option itself (159 of the 160 options are also classFeatures
+ * records — Giant Instinct, Cloistered Cleric, Bones mystery) and the class features it brings with it
+ * (an oracle mystery hands over its oracular curse, which is in no class's feature list).
+ */
+function addSubclassGrants(
+  out: Set<string>,
+  cls: ContentDatabase['classes'][string] | undefined,
+  subclassId: string | null | undefined,
+  level: number,
+  db: ContentDatabase,
+): void {
+  if (subclassId && db.classFeatures[subclassId]) out.add(subclassId);
+  const opt = cls?.subclass?.options.find((o) => o.id === subclassId);
+  for (const id of subclassFeatureIds(opt?.featureIds, level)) if (db.classFeatures[id]) out.add(id);
+}
+
+/** The fields that say which classes a character — or a BuildState — holds. */
+type HeldClassFields = {
+  classId?: string | null;
+  subclassId?: string | null;
+  classId2?: string | null;
+  subclassId2?: string | null;
+  variantRules?: { dualClass?: boolean };
+};
+
+/**
+ * Every class the character holds, with the subclass chosen for it: the first class always, the SECOND
+ * only under the Dual Class variant rule — *"gain the proficiencies, HP, features and feats of a second
+ * class"*. The same guard deriveMaxHp and buildCharacter use, so a `classId2` left behind on a record
+ * with the rule off grants nothing.
+ *
+ * Exists because the second class was read in a handful of places and missed in the rest: the sheet's
+ * owned-feature set walked only the first class's table, so a Fighter/Guardian owned no Guardian's
+ * Armor and woke fatigued in full plate, a Fighter/Rogue had no Sneak Attack and a Wizard/Fighter no
+ * weapon specialization. Anything that asks "which class / which subclass" asks here.
+ */
+export function heldClasses(c: HeldClassFields): { classId: string | null; subclassId: string | null }[] {
+  const out = [{ classId: c.classId ?? null, subclassId: c.subclassId ?? null }];
+  if (c.variantRules?.dualClass && c.classId2) out.push({ classId: c.classId2, subclassId: c.subclassId2 ?? null });
+  return out;
+}
+
+/** The subclass chosen for `classId` if the character holds that class (either slot under Dual Class),
+ *  `null` when it is held with no subclass, `undefined` when it is not held at all. */
+export function subclassOfHeldClass(c: HeldClassFields, classId: string): string | null | undefined {
+  const slot = heldClasses(c).find((s) => s.classId === classId);
+  return slot ? slot.subclassId : undefined;
+}
+
+/** Whether the character holds `classId`: the first class, or the second under Dual Class. A
+ *  `classId2` left on a build after Dual Class was turned off is no class — turning the rule off does
+ *  not clear the field, and a raw `classId2 === 'fighter'` read kept granting a wizard the fighter's
+ *  weapon-group mastery. */
+export function holdsClass(c: HeldClassFields, classId: string): boolean {
+  return heldClasses(c).some((s) => s.classId === classId);
+}
+
+/** Whether either held class has `subclassId` chosen (a rogue's racket, a ranger's edge). */
+export function holdsSubclass(c: HeldClassFields, subclassId: string): boolean {
+  return heldClasses(c).some((s) => s.subclassId === subclassId);
+}
+
+/** The class a spellcasting ENTRY belongs to: the second class for its own entry (`${classId2}-casting`,
+ *  the id buildCharacter builds it with), the first class for every other entry. */
+export function entryClassIdOf(c: HeldClassFields, entry: { id: string }): string | null {
+  const second = heldClasses(c)[1];
+  return second?.classId && entry.id === `${second.classId}-casting` ? second.classId : c.classId ?? null;
+}
+
+/**
+ * `classFeatureIdsOwned` for EVERY held class: the first class (with its extra-choice picks) and, under
+ * Dual Class, the second. buildCharacter's owned-feature lanes read this, so a feature of the second
+ * class hands over its feat, its proficiency grant, its spell-list widening and its stored answer
+ * exactly as the same feature does for the first. A single-class build gets `classFeatureIdsOwned`'s
+ * own set back, in its own order.
+ */
+export function heldClassFeatureIds(
+  opts: HeldClassFields & { level: number; classChoices?: readonly { id?: string; level: number }[] },
+  db: ContentDatabase,
+): Set<string> {
+  const out = classFeatureIdsOwned({ classId: opts.classId, subclassId: opts.subclassId, level: opts.level, classChoices: opts.classChoices }, db);
+  for (const slot of heldClasses(opts).slice(1)) {
+    for (const id of classFeatureIdsOwned({ classId: slot.classId, subclassId: slot.subclassId, level: opts.level }, db)) out.add(id);
   }
   return out;
 }
@@ -3628,33 +3764,21 @@ export function modeGateIds(c: Character, db: ContentDatabase): Set<string> {
 }
 
 export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> {
-  const cls = c.classId ? db.classes[c.classId] : undefined;
+  /*
+   * EVERY held class — the first, and under Dual Class the second (`heldClasses`). This walked the
+   * first class's table alone: the second class's SUBCLASS reached the set (the pair loop below always
+   * read both) but none of its FEATURES did, so a Fighter/Guardian owned no Guardian's Armor and woke
+   * fatigued in full plate, a Fighter/Rogue had no Sneak Attack, a Fighter/Cleric no Divine Font. A
+   * feature both classes grant (Shield Block, Weapon Expertise) is one id in a Set, never two.
+   *
+   * Per class: the table features, their `<featureId>-<classId>` variants (the swashbuckler's own
+   * Weapon Expertise carries critSpec, each spontaneous caster has its own Spell Repertoire) and their
+   * `<featureId>-<subclassId>` variants (`field-discovery-toxicologist` carries the poison resistance
+   * the generic `field-discovery` does not). `addClassTableFeatures` is the one copy of that rule.
+   */
+  const held = heldClasses(c).map((s) => ({ ...s, cls: s.classId ? db.classes[s.classId] : undefined }));
   const out = new Set<string>();
-  if (cls) {
-    for (const f of cls.features) {
-      if (f.level > c.level) continue;
-      out.add(f.featureId);
-      // A CLASS-suffixed variant, the sibling of the subclass rule below: the swashbuckler's own
-      // Weapon Expertise carries critSpec, each spontaneous caster has its own Spell Repertoire.
-      // A swashbuckler's subclass is a style, so the subclass suffix never reached these.
-      const byClass = `${f.featureId}-${cls.id}`;
-      if (db.classFeatures[byClass]) out.add(byClass);
-    }
-  }
-  // Subclass VARIANTS of a listed feature are stored as `<featureId>-<subclassId>` and are not in
-  // cls.features — the class lists the generic prose record (`field-discovery`), and the variant
-  // (`field-discovery-toxicologist`) carries the actual mechanics. `critSpecSources` already reached
-  // them by suffix for its own purpose; doing it here makes them owned like any other feature, which
-  // is what the toxicologist's poison resistance was missing. Only variants of a feature the class
-  // ACTUALLY grants, at or below its level, so a subclass can't smuggle in a feature its class lacks.
-  if (cls && c.subclassId) {
-    const suffix = `-${c.subclassId}`;
-    for (const f of cls.features) {
-      if (f.level > c.level) continue;
-      const variant = `${f.featureId}${suffix}`;
-      if (db.classFeatures[variant]) out.add(variant);
-    }
-  }
+  for (const s of held) addClassTableFeatures(out, s.cls, s.subclassId, c.level, db);
   // Extra-choice PICKS (thaumaturge implements, exemplar ikons and epithets, kineticist elements,
   // wizard theses, animist apparitions, psychic subconscious minds) are class features you chose
   // rather than were handed. Every current option id is also a classFeature id, and the option shape
@@ -3679,18 +3803,14 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
   // inventor-modification case above, which is why that comment reads the way it does.
   if (c.mythicCalling && db.classFeatures[c.mythicCalling]) out.add(c.mythicCalling);
   for (const id of choiceOwnedFeatureIds(c.feats ?? [], db)) out.add(id);
-  for (const [klass, subId] of [[cls, c.subclassId], [c.classId2 ? db.classes[c.classId2] : undefined, c.subclassId2]] as const) {
-    // The CHOSEN SUBCLASS ITSELF. 159 of the 160 subclass options are also classFeatures records —
-    // Giant Instinct, Cloistered Cleric, Bones mystery — and this set never held them, so a star, a
-    // marker, a resistance or a whileActive authored on the subclass you picked reached nothing. The
-    // `<featureId>-<subclassId>` rule above catches VARIANTS of a class feature, not the option.
-    if (subId && db.classFeatures[subId]) out.add(subId);
-    // Class features the subclass brings WITH it — an oracle mystery hands over its oracular curse.
-    // A curse is in no class's feature list and is not a subclass option either, so all 11 were
-    // reachable by nothing at all.
-    const opt = klass?.subclass?.options.find((o) => o.id === subId);
-    for (const id of subclassFeatureIds(opt?.featureIds, c.level)) if (db.classFeatures[id]) out.add(id);
-  }
+  // The CHOSEN SUBCLASS ITSELF, for each held class, and the class features it brings WITH it. 159 of
+  // the 160 subclass options are also classFeatures records — Giant Instinct, Cloistered Cleric, Bones
+  // mystery — and this set never held them, so a star, a marker, a resistance or a whileActive authored
+  // on the subclass you picked reached nothing; an oracle mystery's curse is in no class's feature list
+  // and is not a subclass option either, so all 11 were reachable by nothing at all. The
+  // `<featureId>-<subclassId>` rule above catches VARIANTS of a class feature, not the option. Added
+  // after the extra-choice picks so a single-class set keeps the order it always had.
+  for (const s of held) addSubclassGrants(out, s.cls, s.subclassId, c.level, db);
   /*
    * A CLASS ARCHETYPE takes class features AWAY. War Mage (AoN archetype-331): *"You do not gain the
    * arcane bond or arcane thesis class features. You do not gain the defensive robes feature at 13th
@@ -3704,13 +3824,22 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
    * Placed immediately BEFORE the grantsClassFeatures pass on purpose: a record that hands the
    * feature back — Spellshield, *"You gain the arcane bond class feature"*, whose prerequisite IS War
    * Mage Dedication — re-adds it there for free. Suppression is keyed by the GENERIC id, so a
-   * `<featureId>-<subclassId>` variant added above goes with it (same rule as deriveDefenses).
+   * `<featureId>-<subclassId>` variant added above goes with it (same rule as deriveDefenses) — for
+   * EITHER held class's subclass suffix.
+   *
+   * ⚠ The list is applied FLAT across both classes of a dual-class character, as buildCharacter's own
+   * subtraction is: a Warrior of Legend Fighter/Guardian loses the Guardian's Shield Block too. Whether
+   * "you don't gain X" should also remove an X the OTHER class grants is an open owner question — and
+   * the Feats tab answers it the other way today (FeatsTab.tsx `archHere`: only the archetype's own
+   * class), so it still lists that Shield Block. His ruling lands in all three places: here, build.ts's
+   * `arch.suppressed` subtraction, and FeatsTab.tsx.
    */
   const archSuppressed = new Set(c.classArchetype?.suppressedFeatures ?? []);
   if (archSuppressed.size) {
-    const sub = c.subclassId ? `-${c.subclassId}` : null;
+    const subs = held.filter((s) => s.subclassId).map((s) => `-${s.subclassId}`);
     for (const id of out) {
-      const base = sub && id.endsWith(sub) ? id.slice(0, -sub.length) : id;
+      const sub = subs.find((x) => id.endsWith(x));
+      const base = sub ? id.slice(0, -sub.length) : id;
       if (archSuppressed.has(id) || archSuppressed.has(base)) out.delete(id);
     }
   }
@@ -3802,8 +3931,9 @@ function strikePrecisionRiders(
   // qualifies simple weapons (die ≤ d8) and martial/advanced weapons (die ≤ d6), regardless of agile/finesse.
   if (owned.has('sneak-attack') && !engineLaneOff('sneak-attack')) {
     const faces = strike.dieFaces ?? 0;
+    // Either held class's racket — a Fighter/Rogue (ruffian) qualifies the same weapons.
     const ruffian =
-      c.subclassId === 'ruffian' &&
+      holdsSubclass(c, 'ruffian') &&
       ((strike.category === 'simple' && faces <= 8) ||
         ((strike.category === 'martial' || strike.category === 'advanced') && faces <= 6));
     const qualifies = strike.ranged ? !thrown || agileOrFinesse : agileOrFinesse || !!strike.unarmed || ruffian;
@@ -3812,10 +3942,8 @@ function strikePrecisionRiders(
       // scales it 1d6 → 4d6; the three FEATS that hand it over each cap their own dice ("You don't
       // increase the number of dice as you gain levels"), and reading only the grant gave a
       // 17th-level fighter with Butterfly's Sting the rogue's 4d6.
-      const nativeCls = c.classId ? db.classes[c.classId] : undefined;
-      const nativeCls2 = c.classId2 ? db.classes[c.classId2] : undefined;
-      const native = [nativeCls, nativeCls2].some((k) =>
-        (k?.features ?? []).some((f) => f.featureId === 'sneak-attack' && f.level <= c.level),
+      const native = heldClasses(c).some((s) =>
+        ((s.classId ? db.classes[s.classId] : undefined)?.features ?? []).some((f) => f.featureId === 'sneak-attack' && f.level <= c.level),
       );
       let dice = 0;
       let die = 'd6';
@@ -3841,7 +3969,7 @@ function strikePrecisionRiders(
   // Ranger Precision hunter's edge applies to ANY Strike vs your hunted prey (no weapon restriction),
   // on the first hit of the round. It's the `precision` Hunter's Edge subclass option + Hunt Prey, and
   // only while Hunt Prey is toggled on (you've declared a prey).
-  if (c.subclassId === 'precision' && owned.has('hunt-prey') && c.classResources?.['hunt-prey'] && !engineLaneOff('hunt-prey')) {
+  if (holdsSubclass(c, 'precision') && owned.has('hunt-prey') && c.classResources?.['hunt-prey'] && !engineLaneOff('hunt-prey')) {
     const dice = c.level >= 19 ? 3 : c.level >= 11 ? 2 : 1;
     out.push({ text: `${dice}d8 precision`, note: '* first hit vs hunted prey' });
   }
@@ -3912,7 +4040,11 @@ function rageStrikeRider(
   opts: { ranged: boolean; unarmed: boolean; weaponType: string; thrown?: boolean; agile?: boolean; source?: string },
 ): { text: string; note: string } | null {
   if (!c.classResources?.rage) return null; // not currently raging → no bonus
-  const isBarb = c.classId === 'barbarian';
+  /* The instinct of the BARBARIAN class, whichever slot holds it: under Dual Class an X/Barbarian is a
+   * barbarian — *"the proficiencies, HP, features and feats of a second class"* — and rages at its
+   * instinct's own scale. This read `classId` alone, so an X/Barbarian got no Rage damage at all. */
+  const barbSub = subclassOfHeldClass(c, 'barbarian');
+  const isBarb = barbSub !== undefined;
   const isArchetype = !isBarb && !engineLaneOff('barbarian-dedication') && c.feats.some((f) => f.featId === 'barbarian-dedication');
   if (!isBarb && !isArchetype) return null;
   // Rage never applies to ranged Strikes — except that Raging Thrower extends it to THROWN weapons
@@ -3929,7 +4061,7 @@ function rageStrikeRider(
   if (isBarb) {
     // The instinct's own scaling is its record's mechanic: gated off, the barbarian still rages, at
     // Rage's ordinary +2 of the weapon's own type.
-    const inst = engineLaneOff(c.subclassId) ? undefined : RAGE_DAMAGE[c.subclassId ?? ''];
+    const inst = engineLaneOff(barbSub) ? undefined : RAGE_DAMAGE[barbSub ?? ''];
     if (inst) {
       if (inst.unarmedOnly && !opts.unarmed) return null; // Animal Instinct: only its animal unarmed attack
       /*
@@ -3940,7 +4072,7 @@ function rageStrikeRider(
        * Blast radius: `unarmedOnly` is set on animal-instinct alone, so every other instinct — and
        * every non-barbarian — takes the same branch it always did.
        */
-      const scoped = !inst.unarmedOnly || opts.source === c.subclassId;
+      const scoped = !inst.unarmedOnly || opts.source === barbSub;
       if (!scoped) note += ", Rage's base damage: not your animal's attack";
       value = scoped ? inst.tiers[c.level >= 15 ? 2 : c.level >= 7 ? 1 : 0] : 2;
       if (inst.type && scoped) type = inst.type; // spirit / energy / poison override the weapon's own type
@@ -4027,6 +4159,16 @@ export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSour
   /** Class-feature ids already contributed, so the catch-all pass at the end cannot add one twice. */
   const addedFeatures = new Set<string>();
   if (cls) for (const cf of cls.features) { add(db.classFeatures[cf.featureId], cf.level); addedFeatures.add(cf.featureId); }
+  /* …and the SECOND class's table under Dual Class, at the level THAT table grants each feature. The
+   * catch-all below would reach these through ownedFeatureIds too, but at the record's own level rather
+   * than the table's. A feature the first class already contributed is not added twice. */
+  for (const s of heldClasses(c).slice(1)) {
+    for (const cf of (s.classId ? db.classes[s.classId] : undefined)?.features ?? []) {
+      if (addedFeatures.has(cf.featureId)) continue;
+      add(db.classFeatures[cf.featureId], cf.level);
+      addedFeatures.add(cf.featureId);
+    }
+  }
   for (const f of c.feats) add(db.feats[f.featId], f.level ?? 1, f.choice?.value);
   // A base of the form "{actor|flags.system.<flag>}" is an UNSUBSTITUTED Foundry template that ships
   // in the source data — Gird Champion's favored weapon is stored exactly that way, so its crit
@@ -4067,11 +4209,13 @@ export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSour
       }),
     };
   }
-  if (c.subclassId) {
-    add(db.classFeatures[c.subclassId], db.classFeatures[c.subclassId]?.level ?? 1);
-    addedFeatures.add(c.subclassId);
+  // Each held class's subclass (Dual Class: a Fighter/Cleric warpriest's doctrine too).
+  for (const subclassId of heldClasses(c).map((s) => s.subclassId)) {
+    if (!subclassId) continue;
+    add(db.classFeatures[subclassId], db.classFeatures[subclassId]?.level ?? 1);
+    addedFeatures.add(subclassId);
     // Doctrines and other subclass-suffixed features aren't listed in cls.features.
-    const suffix = '-' + c.subclassId;
+    const suffix = '-' + subclassId;
     for (const cf of Object.values(db.classFeatures)) {
       if (cf.critSpec && cf.id.endsWith(suffix)) { add(cf, cf.level); addedFeatures.add(cf.id); }
     }
@@ -4673,7 +4817,8 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   // Thief racket (rogue): on a MELEE Strike with a finesse weapon/unarmed attack, add Dexterity to
   // damage instead of Strength. RAW it's a choice ("you can"), so use it only when it helps (Dex>Str).
   // (class-features/thief.json: FlatModifier ability=dex, selector melee-strike-damage, item:trait:finesse.)
-  const thiefDexDamage = c.subclassId === 'thief' && !projectile && finesse && dexMod > strMod;
+  // Either held class's racket (Dual Class: a Fighter/Rogue thief swaps in Dex the same way).
+  const thiefDexDamage = holdsSubclass(c, 'thief') && !projectile && finesse && dexMod > strMod;
   // Damage attribute: melee & thrown add full Str; propulsive adds half Str (rounded down,
   // or the full penalty if Str is negative); other projectiles add none. Finesse affects the
   // attack roll, not damage, so the Str (not Dex) modifier and its Enfeebled penalty apply — unless
@@ -5007,7 +5152,7 @@ function deriveUnarmedStrike(
   const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db)) + runicOptimizationDamage(c, db, strikingExtra);
   // Thief racket also applies to a finesse UNARMED attack (thief.json selector melee-strike-damage) —
   // add Dex to damage instead of Str when it helps.
-  const thiefDexDamage = !isRanged && c.subclassId === 'thief' && p.traits.includes('finesse') && dexMod > strMod;
+  const thiefDexDamage = !isRanged && holdsSubclass(c, 'thief') && p.traits.includes('finesse') && dexMod > strMod;
   // Ranged natural attacks add no ability modifier to damage (like a projectile); melee add Str (or Dex via Thief).
   // …unless the attack is PROPULSIVE — *"add half your Strength modifier to ranged damage with this
   // weapon (all of it if your Strength is negative)"* (glossary.ts:111, the same rule the weapon path

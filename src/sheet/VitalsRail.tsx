@@ -18,6 +18,7 @@ import {
   formatMod,
   modeGateIds,
   stateGrantSummary,
+  subclassOfHeldClass,
   type DefenseSource,
 } from '../rules/derive';
 import { deriveInitiative, initiativeInfluenceDetail } from '../rules/initiative';
@@ -1302,7 +1303,9 @@ export function VitalsRail({
   ) : null;
   // Champion: an at-a-glance card naming the chosen Cause (its tenets + signature reaction + aura live in
   // the description popup). A reminder only — the reaction's numbers are target-specific, so nothing derives.
-  const cause = character.classId === 'champion' && character.subclassId ? content.classFeatures[character.subclassId] : undefined;
+  // Either held class (Dual Class: an X/Champion has a Cause too).
+  const causeId = subclassOfHeldClass(character, 'champion');
+  const cause = causeId ? content.classFeatures[causeId] : undefined;
   cards.champion = cause ? (
       <section className="card">
         <div className="ct">

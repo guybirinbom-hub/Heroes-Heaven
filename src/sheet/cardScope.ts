@@ -33,6 +33,7 @@
 import type { AstNode } from './astStore';
 import type { CardScope } from './cardModel';
 import type { Character } from '../rules/types';
+import { holdsSubclass } from '../rules/derive';
 import LEVEL_FOLDS_JSON from '../../scripts/data/level-folds.json';
 // Read here, not through astVisibility.ts pageSliceOf: astVisibility imports canonLabel from this module.
 import PAGE_SLICES_JSON from '../data/page-slices.json';
@@ -653,7 +654,8 @@ export function scopeOfCharacter(ch: Character | null | undefined): CardScope | 
   // subclass row's name ("Fencer": exemplary-finisher's styles) and the divine font (divine-font's
   // Healing / Harmful Font) — and, per page (ELEMENT_PICK_PAGES), the gate's elements. Only what the
   // character stores; nothing stored → no class picks (UNKNOWN ≠ EMPTY: the page stays whole).
-  const subclassRows = rows.filter((r) => !!r.id && (r.id === ch.subclassId || r.id === ch.subclassId2));
+  // Either held class's subclass (`holdsSubclass`: the second only under Dual Class).
+  const subclassRows = rows.filter((r) => !!r.id && holdsSubclass(ch, r.id as string));
   const font = (ch.spellcasting ?? []).find((e) => e.font)?.font?.type;
   const classPicks = [
     ...subclassRows.map((r) => r.name),

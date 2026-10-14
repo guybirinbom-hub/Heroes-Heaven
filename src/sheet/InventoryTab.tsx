@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from '
 import type { Character, CompanionConfig, ContentDatabase, Customization, InventoryItem, Item, ItemDesignation, SiegeWeaponStat, VehicleStat } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
 import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable,
-  handwrapsRuneSharing, isHandwraps, unitBulk } from '../rules/derive';
+  handwrapsRuneSharing, heldClasses, isHandwraps, unitBulk } from '../rules/derive';
 import { affixHostType, isAttachable, planAttach } from '../rules/attachments';
 import { officialIdOf } from '../rules/officialId';
 import { rankBySearch, searchMatches } from '../data/searchRank';
@@ -1077,7 +1077,8 @@ export function InventoryTab({
    * note says draws them), never a backpack.
    */
   const designationKinds = useMemo(() => {
-    const owned = new Set([character.classId, character.classId2].filter(Boolean) as string[]);
+    // Every held class (the second only under Dual Class).
+    const owned = new Set(heldClasses(character).map((s) => s.classId).filter(Boolean) as string[]);
     // An ikon is not the exemplar CLASS's alone — Exemplar Dedication grants one, and an ikon is a
     // thing you wear or wield, so a class-only gate left an archetype exemplar holding an ikon with no
     // item to name as it. Read off the ANSWER (an ikon choice value is a classFeature with the ikon

@@ -40,7 +40,7 @@ import {
   updatePlayCompanion,
   type PlayUpdater,
 } from '../rules/play';
-import { formatMod, modeGateIds, ownedFeatureIds } from '../rules/derive';
+import { formatMod, modeGateIds, ownedFeatureIds, subclassOfHeldClass } from '../rules/derive';
 import { InventoryTab } from './InventoryTab';
 import { HpControl } from './HpControl';
 import { specificFamiliars } from '../rules/specificFamiliars';
@@ -1632,9 +1632,11 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
 export function CompanionsTab({ character, content, onPlay, onSaveMode, onDeleteMode, onCreateItem, charKey }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater; onSaveMode?: (mode: ModeDef) => void; onDeleteMode?: (id: string) => void; /** Register a user-created item — threaded to the companion's inventory, which is the real one. */ onCreateItem?: (item: Item) => void; charKey?: string }) {
   const explicit = character.companions ?? [];
   const explicitIds = new Set(explicit.map((c) => c.id));
+  // The summoner's eidolon from EITHER held class (Dual Class: an X/Summoner has one too).
+  const eidolonType = subclassOfHeldClass(character, 'summoner');
   const autoEidolon: CompanionConfig[] =
-    character.classId === 'summoner' && character.subclassId && !explicit.some((c) => c.kind === 'eidolon')
-      ? [{ id: 'eidolon-auto', kind: 'eidolon', name: '', typeId: character.subclassId }]
+    eidolonType && !explicit.some((c) => c.kind === 'eidolon')
+      ? [{ id: 'eidolon-auto', kind: 'eidolon', name: '', typeId: eidolonType }]
       : [];
   // Companions granted by the character's feats (e.g. the Pet feat, Friend of the Sea). Each is shown
   // as a synthetic, materialized-on-edit card (like the auto-eidolon); the locked abilities are seeded

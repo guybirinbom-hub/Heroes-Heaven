@@ -34,7 +34,7 @@ import { astSlug, useAstNode } from './useAst';
 import { OURS_KINDS, type OursLine } from './cardModel';
 import { atLevelLines } from './cardAtLevel';
 import type { AstNode } from './astStore';
-import { stanceRequirementIssue, modeGateIds } from '../rules/derive';
+import { stanceRequirementIssue, modeGateIds, specDamageParts } from '../rules/derive';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { DescBody } from './DescBody';
 import { toPlainText } from './RichText';
@@ -1078,7 +1078,17 @@ export function MainTab({
             {s.ranged && s.range != null && <span>Range {s.range} ft</span>}
             {!!s.reaches?.length && <StrikeReachValue reaches={s.reaches} />}
             {s.reload != null && s.reload > 0 && <span>Reload {s.reload}</span>}
-            {s.specDamage ? <span title={`${character.classId === 'runesmith' ? 'Runic Optimization' : 'Weapon specialization'} (included in the damage above)`}>Spec +{s.specDamage}</span> : null}
+            {/* Named from its parts (derive.ts specDamageParts): a Fighter/Runesmith's +4 is weapon
+                specialization AND Runic Optimization, which `classId` alone could not say. */}
+            {s.specDamage ? (
+              <span
+                title={`${specDamageParts(character, content, s)
+                  .map((p, _i, all) => (all.length > 1 ? `${p.label} +${p.value}` : p.label))
+                  .join(' and ')} (included in the damage above)`}
+              >
+                Spec +{s.specDamage}
+              </span>
+            ) : null}
             {s.group && <span className="strike-group">{s.group.charAt(0).toUpperCase() + s.group.slice(1)}</span>}
           </div>
         )}

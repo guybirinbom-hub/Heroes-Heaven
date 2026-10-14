@@ -70,6 +70,9 @@ const PATTERNS = [
   new RegExp(`\\.(?:has|includes|startsWith)\\(\\s*'${ID}'`, 'g'),
   // an index by literal id: `content.feats['intense-implement']`, `c.classResources?.['hunt-prey']`
   new RegExp(`\\[\\s*'${ID}'\\s*\\]`, 'g'),
+  // the Dual Class identity helpers (derive.ts): `holdsSubclass(c, 'ruffian')`, `holdsClass(build, 'monk')`
+  // are the same lane-key read as `c.subclassId === 'ruffian'`, made for either held class (2026-10-14).
+  new RegExp(`\\bholds(?:Sub)?[Cc]lass\\(\\s*[\\w.]+\\s*,\\s*'${ID}'`, 'g'),
 ];
 /* A TABLE keyed by record id inside an engine file — RAGE_DAMAGE's instincts. Only the engine files:
  * everywhere else in src/rules a table keyed by record id IS a registry (see registryFiles). */

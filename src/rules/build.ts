@@ -51,7 +51,7 @@ import type {
 import type { Ancestry, ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, Heritage, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, RestrictedSlotGrant, Size, SourceInfo, SpellChoiceFilter, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS, CLASS_OWN_PICK_MAPS, classOptionInBook, classOptionOn, classOptionRecords, entrySourceOn, mythicCallingRecords, type ClassOptionRecord } from './sources';
-import { abilityMod, askedAtDailyPrep, belongsToArchetype, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, narrowChoiceOptions, outsideDomains, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
+import { abilityMod, askedAtDailyPrep, belongsToArchetype, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, heldClasses, heldClassFeatureIds, holdsClass, holdsSubclass, effectiveChoiceOptions, narrowChoiceOptions, outsideDomains, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
 import { advancementRows } from './advancement';
 import { applyCounterMods } from './counterMods';
 /* `grantsFor`, never the raw FEAT_GRANTS table: this is the APPLY side, and a grant whose kind the
@@ -1049,7 +1049,8 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
   for (const label of originMissing(build, content)) out.push({ page: 0, label, required: true });
 
   const cls = build.classId ? content.classes[build.classId] : undefined;
-  const cls2 = build.classId2 ? content.classes[build.classId2] : undefined;
+  // The second class only under Dual Class: a `classId2` left behind with the rule off asks nothing.
+  const cls2 = build.variantRules?.dualClass && build.classId2 ? content.classes[build.classId2] : undefined;
   // Class subsystems: one generic loop rather than a branch per class. A group is outstanding when
   // fewer options are picked than the level entitles you to.
   /* A class archetype can take the whole question away (a War Mage wizard has no arcane thesis).
@@ -1074,7 +1075,7 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
    * smaller table, so the two cannot disagree about how many are owed.
    */
   {
-    const runesmith = build.classId === 'runesmith' || build.classId2 === 'runesmith';
+    const runesmith = holdsClass(build, 'runesmith');
     const dedicated = Object.values(build.featPicks ?? {}).includes('runesmith-dedication');
     if (runesmith || dedicated) {
       const max = runesmith ? runeRepertoireMax(build.level, content) : runeRepertoireMaxViaDedication(build.level, content);
@@ -1857,11 +1858,9 @@ export function effectChoiceOffered(ch: EffectChoice, build: BuildState, content
   }
   if (!ch.requiresFeature) return true;
   /* BOTH classes. A dual-class character's second class carries its own features and its own
-   * doctrine, and reading only `classId` would tell a dual-class cleric they are not one. */
-  return [
-    { classId: build.classId, subclassId: build.subclassId },
-    { classId: build.classId2, subclassId: build.subclassId2 },
-  ].some((c) => c.classId && classFeatureIdsOwned({ ...c, level: build.level }, content).has(ch.requiresFeature!));
+   * doctrine, and reading only `classId` would tell a dual-class cleric they are not one. The second
+   * only under Dual Class (`heldClasses`): a `classId2` left on the build with the rule off is no class. */
+  return heldClasses(build).some((c) => c.classId && classFeatureIdsOwned({ ...c, level: build.level }, content).has(ch.requiresFeature!));
 }
 
 /**
@@ -2661,7 +2660,7 @@ export function classArchetypeSpellMods(
     const ca = id ? content.feats[id as string]?.classArchetype : undefined;
     if (!ca) continue;
     const classes = Array.isArray(ca.classId) ? ca.classId : [ca.classId];
-    if (!classes.includes(build.classId ?? '') && !classes.includes(build.classId2 ?? '')) continue;
+    if (!heldClasses(build).some((s) => s.classId && classes.includes(s.classId))) continue;
     if (ca.slotCap != null) slotCap = Math.min(slotCap ?? Infinity, ca.slotCap);
     // ⚠ The FLAT feature cut only. The dedication's give-back ("four cantrips instead of three; at
     // 4th, five instead of four") is NOT this field's job — it already lives on the feat record's
@@ -2837,7 +2836,7 @@ export function resolveClassArchetype(
     // and record which of the character's own classes it landed on; storing the array would file the
     // substituted features under a class named "wizard,cleric".
     const classes = Array.isArray(ca.classId) ? ca.classId : [ca.classId];
-    const hit = [build.classId, build.classId2].find((c) => c && classes.includes(c));
+    const hit = heldClasses(build).map((s) => s.classId).find((c) => c && classes.includes(c));
     if (!hit) return;
     seen.add(id);
     carriers.push({ id, name: name ?? id, ca, classId: hit });
@@ -2882,6 +2881,7 @@ export function cantripBonusFor(build: BuildState, content: ContentDatabase): nu
   }
   const sources = [
     ...Object.values(build.featPicks ?? {}).filter(Boolean).map((id) => content.feats[id as string]),
+    // FIRST class only on purpose: this sizes the shared class cantrip pool, and no class-table feature carries a cantrip bonus (a second class's would need routing to its own entry first).
     ...[...classFeatureIdsOwned({ classId: build.classId, subclassId: build.subclassId, level: build.level }, content)].map(
       (id) => content.classFeatures[id],
     ),
@@ -2894,7 +2894,7 @@ export function cantripBonusFor(build: BuildState, content: ContentDatabase): nu
      * four shipped rows (Psi Development, Cascade Bearers Spellcasting, Shattered Sacrament, Cantrip
      * Casting) target an ARCHETYPE pool (`<dedication>-casting`) — un-gated, a psychic who took Psi
      * Development had their CLASS cantrip cap silently raised by the feat that widens the archetype's. */
-    if (b.entryId && b.entryId !== `${build.classId}-casting` && b.entryId !== `${build.classId2}-casting`) continue;
+    if (b.entryId && !heldClasses(build).some((s) => b.entryId === `${s.classId}-casting`)) continue;
     if ((b.cantrips ?? 0) < 0 && unpaidSwaps.has(src.id)) continue;
     // `cantripsAt` is a LADDER, not an accumulation: Flexible Spellcaster Dedication reads "four
     // cantrips per day instead of three. At 4th level, you have five instead of four" — the later
@@ -3073,7 +3073,7 @@ export function qiSpellsPossible(build: BuildState, content?: ContentDatabase): 
    * to the qi spells) the answer flipped the tradition of the character's other focus spells too.
    */
   void content;
-  return build.classId === 'monk' || build.classId2 === 'monk';
+  return holdsClass(build, 'monk');
 }
 
 /** Every rune a runesmith may add to their repertoire at this level. */
@@ -3989,16 +3989,65 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    */
   const ownedSubclassId = build.subclassId && suppressedPickIds.has(build.subclassId) ? null : build.subclassId;
   /* …and the DUAL-CLASS twin. `suppressedPickIds` already walks `cls2`'s groups, and `classId`
-   * matching in `resolveClassArchetype` already considers `build.classId2`, so a wizard//investigator
+   * matching in `resolveClassArchetype` already considers the second held class, so a wizard//investigator
    * who takes Palatine Detective Dedication — *"Instead of choosing a methodology from others
    * available to the investigator class, you have the esoterica methodology"* (AoN archetype-306) —
    * really does lose the second class's methodology. Only the CHARACTER field was still raw, and
-   * `ownedFeatureIds` reads `[c.subclassId, c.subclassId2]` as one pair. */
+   * `ownedFeatureIds` walks every held class's subclass (derive.ts `heldClasses`), the second's too. */
   const ownedSubclassId2 = build.subclassId2 && suppressedPickIds.has(build.subclassId2) ? null : build.subclassId2;
+  /*
+   * The class features this build holds from EVERY class it has — the first, and under Dual Class the
+   * second (*"the proficiencies, HP, features and feats of a second class"*), each through its
+   * archetype-filtered subclass. `withPicks` adds the chosen extra-choice options as well.
+   *
+   * The owned-feature lanes below each called `classFeatureIdsOwned` for the FIRST class only, so a
+   * second class's feature was listed in the builder, asked its question there, and then handed over
+   * nothing: a Fighter/Guardian never got Tough to Kill's Diehard, a Fighter/Inventor's Expert Overdrive
+   * trained no Crafting, a Fighter/Kineticist's gate junction granted no skill feat. One helper so the
+   * lanes cannot drift apart again about which classes count.
+   */
+  const ownedClassFeatures = (withPicks: boolean): Set<string> =>
+    heldClassFeatureIds(
+      {
+        classId: build.classId,
+        subclassId: ownedSubclassId,
+        classId2: build.classId2,
+        subclassId2: ownedSubclassId2,
+        variantRules: build.variantRules,
+        level: build.level,
+        classChoices: withPicks ? grantOptions.map((o) => ({ id: o.id, level: 1 })) : undefined,
+      },
+      content,
+    );
   // A chosen option can set the spellcasting key ability (psychic subconscious mind = Int/Cha).
   // A keyAbilityOptions option (rogue racket) resolves through the player's pick instead.
   const keyOption = grantOptions.find((o) => o.keyAbility || o.keyAbilityOptions?.length);
   const choiceKeyAbility = keyOption ? resolveOptionKeyAbility(keyOption, build.keyAbility) : undefined;
+  /*
+   * DUAL CLASS: the chosen options split by the class they belong to. `grantOptions` is ONE list for
+   * both classes, which is right for what every option hands the CHARACTER (skills, feats, Strikes) and
+   * wrong for what an option says about ONE class's casting. The first class's spellcasting read its
+   * tradition and key attribute off "the first option that has one" in that shared list, so whenever
+   * the first class's own option was silent the SECOND class's answered for it — measured over every
+   * caster x every tradition-setting option at 5th level: 336 pairs cast in the wrong tradition (a
+   * Cleric/Summoner(fey eidolon)'s cleric list was PRIMAL, a Cleric/Witch(Baba Yaga)'s occult) and
+   * 41 keyed their spells off the other class's attribute (a Cleric/Rogue(ruffian) cast with Strength).
+   * Read by the first class's own entries (its spellcasting and the animist apparition pool). NOT by
+   * the shared focus entry (see the note there) nor the character's `keyAbility` (the class DC), which
+   * still take `choiceKeyAbility` from both classes — each is its own open question.
+   * Single-class: no second class, so `firstClassOptions` IS `grantOptions` and nothing moves.
+   */
+  const secondClassOptionIds = new Set<string>();
+  if (cls2) {
+    const firstOwn = new Set([...(cls?.subclass?.options ?? []), ...(cls?.extraChoices ?? []).flatMap((g) => g.options)].map((o) => o.id));
+    for (const o of [...(cls2.subclass?.options ?? []), ...(cls2.extraChoices ?? []).flatMap((g) => g.options)]) {
+      if (!firstOwn.has(o.id)) secondClassOptionIds.add(o.id);
+    }
+  }
+  const firstClassOptions = secondClassOptionIds.size ? grantOptions.filter((o) => !secondClassOptionIds.has(o.id)) : grantOptions;
+  /** The key attribute the FIRST class's own option sets for its casting entries (see above). */
+  const firstKeyOption = firstClassOptions.find((o) => o.keyAbility || o.keyAbilityOptions?.length);
+  const firstClassKeyAbility = firstKeyOption ? resolveOptionKeyAbility(firstKeyOption, build.keyAbility) : undefined;
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
 
   // Tradition + key ability for a FOCUS pool. Slot casters reuse their spellcasting;
@@ -4303,7 +4352,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // so this stays scoped to the cleric even though several classes pick a deity. The weapon half was
   // already granted below; `Deity.skill` was read only by Helm of Zeal and never trained anything.
   const clericDeitySkill =
-    build.classId === 'cleric' || build.classId2 === 'cleric'
+    holdsClass(build, 'cleric')
       ? (build.deityId ? content.deities[build.deityId]?.skill : undefined)
       : undefined;
   if (clericDeitySkill && (SKILLS as readonly string[]).includes(clericDeitySkill)) {
@@ -4468,7 +4517,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   /* The doctrine that advances a favored weapon, read once. Syncretism's *"you gain the favored weapon
    * of that deity as a SECOND favored weapon"* needs the same ladder, and computing it a second way
    * there is how the two would come to disagree at 7th level. */
-  const clericDoctrine = build.classId === 'cleric' ? build.subclassId : build.classId2 === 'cleric' ? build.subclassId2 : null;
+  const clericDoctrine = build.classId === 'cleric' ? build.subclassId : holdsClass(build, 'cleric') ? build.subclassId2 : null;
   /* The rogue's AVENGER racket has a ladder of its own, and rode the cleric default instead. *"You are
    * trained in your deity's favored weapon. Whenever you gain a class feature that grants you expert or
    * greater proficiency with simple or martial weapons, you also gain that proficiency rank with your
@@ -4477,7 +4526,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * until 11th and never reached master; only ADVANCED favored weapons actually diverge (Achaekek's
    * sawtooth saber, The Pandemonia's gnome flickmace, Wulgren's barricade buster, Aerekostes' falcata),
    * since deriveStrike already takes max(category rank, override) for simple and martial ones. */
-  const isAvenger = build.subclassId === 'avenger' || build.subclassId2 === 'avenger';
+  const isAvenger = holdsSubclass(build, 'avenger');
   const favoredWeaponRank: ProficiencyRank =
     clericDoctrine === 'warpriest'
       ? level >= 19 ? 'master' : level >= 7 ? 'expert' : 'trained'
@@ -4734,10 +4783,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   }
   // A CLASS FEATURE can grant a pool point too. Only `feat.focusPoolBonus` was ever read, so
   // Clarity of Focus — the psychic's 5th-level feature, and the field's only carrier — did nothing:
-  // every psychic from 5th on was one Focus Point short of what the rules give them.
-  for (const cid of [build.classId, build.classId2]) {
+  // every psychic from 5th on was one Focus Point short of what the rules give them. Each HELD class:
+  // the second only under Dual Class, so a `classId2` left behind with the rule off adds nothing.
+  for (const { classId: cid, subclassId: sub } of heldClasses(build)) {
     if (!cid) continue;
-    const sub = cid === build.classId ? build.subclassId : build.subclassId2;
     for (const fid of classFeatureIdsOwned({ classId: cid, subclassId: sub, level }, content)) {
       featPoolBonus += content.classFeatures[fid]?.focusPoolBonus ?? 0;
     }
@@ -4778,9 +4827,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const hid of [build.heritageId, secondHeritageId]) {
     for (const id of (hid ? content.heritages[hid]?.grantsFeats : undefined) ?? []) pushFocusBonus(id);
   }
-  for (const cid of [build.classId, build.classId2]) {
+  // Each HELD class (the second only under Dual Class).
+  for (const { classId: cid, subclassId: sub } of heldClasses(build)) {
     if (!cid) continue;
-    const sub = cid === build.classId ? build.subclassId : build.subclassId2;
     for (const fid of classFeatureIdsOwned({ classId: cid, subclassId: sub, level }, content)) {
       for (const id of content.classFeatures[fid]?.grantsFeats ?? []) pushFocusBonus(id);
     }
@@ -4916,7 +4965,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // A subclass/choice can set the tradition (witch patron, sorcerer bloodline,
     // summoner eidolon) or key ability (psychic subconscious mind); else the class's.
     // The Draconic bloodline's tradition comes from the chosen dragon exemplar.
-    const tradition = dragon?.tradition ?? grantOptions.find((o) => o.tradition)?.tradition ?? sp.tradition;
+    // THIS class's options only (`firstClassOptions`): under Dual Class the second class's eidolon,
+    // patron or bloodline set the first class's tradition whenever this class's own option was silent.
+    // `dragon` is the second class's when this class chose no subclass, so it counts only with one.
+    const tradition = (subOption ? dragon : undefined)?.tradition ?? firstClassOptions.find((o) => o.tradition)?.tradition ?? sp.tradition;
     // A subclass can override the slot progression (cleric Battle Creed uses the reduced two-rank table).
     const progression = subOption?.slotProgression ?? sp.progression;
     const slotCounts = capSlots(casterSlots(level, progression)); // rank -> number of slots
@@ -4987,7 +5039,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       name: `${cap(tradition)} ${sp.type} spellcasting`,
       type: sp.type,
       tradition,
-      keyAbility: choiceKeyAbility ?? sp.keyAbility,
+      keyAbility: firstClassKeyAbility ?? sp.keyAbility,
       proficiency: 'trained',
       // Dedup so a subclass-granted cantrip (psychic conscious mind) doesn't duplicate a
       // player-picked one — and, for a class whose grants count INSIDE the allowance (the sorcerer's
@@ -5245,7 +5297,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         name: 'Apparition spellcasting',
         type: 'spontaneous',
         tradition: 'divine',
-        keyAbility: choiceKeyAbility ?? sp.keyAbility,
+        keyAbility: firstClassKeyAbility ?? sp.keyAbility,
         proficiency: entry.proficiency,
         cantrips: [...new Set(appCantrips)],
         repertoire,
@@ -5529,6 +5581,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const monkChoosesQi = cls?.id === 'monk' || cls2?.id === 'monk';
     /** The printed qi profile: the player's answer (monk) or the archetype's stated occult, always Wis. */
     const qiProfile = { tradition: (monkChoosesQi ? build.qiTradition ?? 'occult' : 'occult') as Tradition, keyAbility: 'wis' as AbilityId };
+    /* ⚠ DUAL CLASS, left as it was on purpose: these read the option list of BOTH classes, so the other
+     * class's eidolon/patron tradition or racket key can set this profile (a Bard/Rogue(ruffian)'s
+     * compositions key off Strength). Narrowing them to `focusCls`'s own options is NOT the fix: one
+     * entry holds BOTH classes' focus spells unless the first class lists its own (the split below), so
+     * a Cleric/Summoner's link spells would turn divine. The fix is attributing each focus spell to the
+     * class that granted it — open, see the lane A report. */
     const focusTradition =
       grantOptions.find((o) => o.tradition)?.tradition ?? focusCls?.spellcasting?.tradition ?? (focusCls && FOCUS_CASTING[focusCls.id]?.tradition) ?? featFocusGrant?.tradition ?? 'occult';
     const focusKey = choiceKeyAbility ?? focusCls?.spellcasting?.keyAbility ?? (focusCls && FOCUS_CASTING[focusCls.id]?.key) ?? featFocusGrant?.keyAbility ?? focusCls?.keyAbility[0] ?? 'cha';
@@ -5708,7 +5766,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // Rogue Ruffian/Avenger rackets: "when you gain light armor expertise/mastery, you also gain expert/
     // master proficiency in medium armor." The rogue table only advances light, so mirror the resolved
     // light-armor rank onto medium for these rackets (trained@1, expert@13, master@19).
-    if ([build.subclassId, build.subclassId2].some((s) => s === 'ruffian' || s === 'avenger')) {
+    if (holdsSubclass(build, 'ruffian') || holdsSubclass(build, 'avenger')) {
       proficiencies.defenses.medium = maxRank(proficiencies.defenses.medium, proficiencies.defenses.light);
     }
     /*
@@ -5731,7 +5789,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * the category axis that says this, and both maps are consulted with `betterRank`, so the flat one
      * must not also be written or it would win right back.
      */
-    if (build.classId === 'fighter' || build.classId2 === 'fighter') {
+    // Either held class — a `classId2` left on the build with Dual Class off is no fighter (`holdsClass`).
+    if (holdsClass(build, 'fighter')) {
       const push = (group: string, core: ProficiencyRank, advanced: ProficiencyRank) => {
         const wgr = (proficiencies.weaponGroupRanks ??= []);
         for (const category of ['simple', 'martial', 'unarmed'] as const) wgr.push({ group, category, rank: core });
@@ -6062,11 +6121,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * ids from `opts.classChoices`, and a bare BuildState has no such key — so a wizard's arcane thesis,
    * a thaumaturge's implements and an animist's apparitions could never reach this walk however their
    * spec was written. The wizard's Experimental Spellshaping is the case: *"You gain one 1st-level
-   * spellshape wizard feat of your choice."* Same spread lines 4890 / 5111 / 5971 / 6075 already use. */
-  for (const fid of classFeatureIdsOwned(
-    { classId: build.classId, subclassId: ownedSubclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
-    content,
-  )) {
+   * spellshape wizard feat of your choice."* Same spread lines 4890 / 5111 / 5971 / 6075 already use.
+   * Both classes (`ownedClassFeatures`): an X/Summoner's evolution feat is picked in the builder like a
+   * Summoner's, and was then dropped here. */
+  for (const fid of ownedClassFeatures(true)) {
     pickFrom(fid, Math.max(1, Math.min(level, content.classFeatures[fid]?.level ?? 1)));
   }
   // Feats that GRANT another feat (Bastion-style dedications → a bonus feat, e.g. Lastwall Sentry →
@@ -6172,7 +6230,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * skill with its own `giveAbilityBlock`. The grant was unreachable however it was authored, which
      * is why our junction options carry the skill and name the feat in prose only.
      */
-    for (const fid of new Set([...classFeatureIdsOwned(build, content), ...grantOptions.map((o) => o.id)])) {
+    // Both classes — a Fighter/Kineticist's junction is answered in the builder like a Kineticist's.
+    for (const fid of new Set([...heldClassFeatureIds(build, content), ...grantOptions.map((o) => o.id)])) {
       for (const ch of content.classFeatures[fid]?.effectChoices ?? []) {
         const val = build.effectChoices?.[`${fid}:${ch.id}`];
         const opt = ch.options?.find((o) => o.value === val);
@@ -6235,10 +6294,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const queue = [
       ...feats.map((f) => f.featId),
       ...[build.heritageId, secondHeritageId].filter((h): h is string => !!h),
-      ...classFeatureIdsOwned(
-        { classId: build.classId, subclassId: ownedSubclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
-        content,
-      ),
+      // Both classes: a Fighter/Guardian's Tough to Kill hands over Diehard as a Guardian's does.
+      ...ownedClassFeatures(true),
     ];
     let guard = 0;
     /* One granter may hand over one feat once. Needed because the Lore rule below lets a feat be
@@ -6496,10 +6553,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...feats,
     // `grantOptions` is every chosen option — subclass plus the extra-choice picks (thaumaturge
     // implements, exemplar ikons, kineticist elements) — and each option id is also a classFeature.
-    ...[...classFeatureIdsOwned(
-      { classId: build.classId, subclassId: ownedSubclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
-      content,
-    )]
+    // Both classes: a Fighter/Inventor's Expert Overdrive trains Crafting as an Inventor's does.
+    ...[...ownedClassFeatures(true)]
       .filter((id) => grantsFor(id))
       .map((id) => ({ featId: id, choice: undefined })),
     /* …and the HERITAGES, for exactly the reason the featFeatGrants queue above was widened to them.
@@ -7402,7 +7457,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   {
     const ownedIds = new Set<string>([
       ...feats.map((f) => f.featId),
-      ...classFeatureIdsOwned({ classId: build.classId, subclassId: ownedSubclassId, level }, content),
+      // Both classes — the gate is "does the character have it", and a second class's feature is had.
+      ...ownedClassFeatures(false),
     ]);
     for (const id of ownedIds) {
       const rec = content.feats[id] ?? content.classFeatures[id];
@@ -7463,14 +7519,38 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   {
     const sources: ((DefenseGrants & { name?: string; id?: string }) | undefined)[] = [
       ...feats.map((fc) => content.feats[fc.featId]),
-      ...[...classFeatureIdsOwned(
-        { classId: build.classId, subclassId: ownedSubclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
-        content,
-      )].map((id) => content.classFeatures[id]),
+      // Both classes — a Fighter/Cleric's Deity feature adds the deity's spells to the CLERIC list.
+      ...[...ownedClassFeatures(true)].map((id) => content.classFeatures[id]),
     ];
+    /*
+     * DUAL CLASS: a widening that names no entry means "YOUR spell list" — the list of the CLASS whose
+     * feature it is. spellOptions applies an unscoped widening to every entry, so under Dual Class each
+     * class's own feature is aimed at that class's entry (`${id}-casting`, the id entry and entry2 are
+     * built with), in EITHER class order: Fey Eidolon (*"spells that have the illusion or mental traits
+     * that appear on the arcane spell list"*) widens the summoner's list and never the cleric's, for a
+     * Cleric/Summoner and a Summoner/Cleric alike. Only the second class was aimed at first, so a
+     * Summoner(fey)/Cleric's cleric list was offered 123 arcane-only spells. A feature both classes
+     * hold stays unscoped, and so does everything on a single-class build (no `cls2`, nothing aimed).
+     * Each aim needs its entry to exist — the same rule spellSlotBonus follows at `secondClassOnly`
+     * below. Matched by RECORD identity, so a feat sharing a class feature's id is never redirected.
+     */
+    const ownEntryOfRecord = new Map<unknown, string>();
+    if (cls2) {
+      const perClass = [
+        { entryId: `${cls?.id}-casting`, ids: classFeatureIdsOwned({ classId: build.classId, subclassId: ownedSubclassId, level }, content) },
+        { entryId: `${cls2.id}-casting`, ids: classFeatureIdsOwned({ classId: build.classId2, subclassId: ownedSubclassId2, level }, content) },
+      ];
+      for (const [i, own] of perClass.entries()) {
+        if (!spellcasting.some((e) => e.id === own.entryId)) continue;
+        const other = perClass[1 - i].ids;
+        for (const id of own.ids) if (!other.has(id) && content.classFeatures[id]) ownEntryOfRecord.set(content.classFeatures[id], own.entryId);
+      }
+    }
     for (const src of sources) {
       const list = src?.spellListAdditions;
-      for (const add of list == null ? [] : Array.isArray(list) ? list : [list]) {
+      for (const rawAdd of list == null ? [] : Array.isArray(list) ? list : [list]) {
+        const ownEntryId = rawAdd.entryId ? undefined : ownEntryOfRecord.get(src);
+        const add = ownEntryId ? { ...rawAdd, entryId: ownEntryId } : rawAdd;
         // A whole-TRADITION widening is carried as a rule, not expanded into ids — see
         // Character.spellListTraditions for why.
         if (add.traditions) {
@@ -7572,10 +7652,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     | undefined
   )[] = [
     ...feats.map((fc) => content.feats[fc.featId]),
-    ...[...classFeatureIdsOwned(
-      { classId: build.classId, subclassId: ownedSubclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
-      content,
-    )].map((id) => content.classFeatures[id]),
+    // Both classes: a ritual, spell note or innate spell a second class's feature grants is the character's.
+    ...[...ownedClassFeatures(true)].map((id) => content.classFeatures[id]),
     build.ancestryId ? content.ancestries[build.ancestryId] : undefined,
     build.heritageId ? content.heritages[build.heritageId] : undefined,
     build.backgroundId ? content.backgrounds[build.backgroundId] : undefined,
@@ -8032,8 +8110,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * is right for no class. Here, with the familiarity mirrors, because this is after class
      * advancement: that is when "if you gain the weapon expertise class feature" has finished
      * happening. RAISES only, like every other grant in this file. */
-    const hasWeaponExpertise = ([[build.classId, build.subclassId], [build.classId2, build.subclassId2]] as const).some(
-      ([cid, sub]) =>
+    const hasWeaponExpertise = heldClasses(build).some(
+      ({ classId: cid, subclassId: sub }) =>
         !!cid &&
         advancementRows(cid, sub, arch.suppressed).some((e) => e.level <= level && /(^|-)weapon-expertise$/.test(e.source ?? '')),
     );
@@ -8063,7 +8141,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const seen = new Set<string>();
     for (const fc of feats) {
       const grant = content.feats[fc.featId]?.classDcGrant;
-      if (!grant || seen.has(grant.classId) || grant.classId === build.classId || grant.classId === build.classId2) continue;
+      if (!grant || seen.has(grant.classId) || holdsClass(build, grant.classId)) continue;
       const cls = content.classes[grant.classId];
       if (!cls) continue;
       seen.add(grant.classId);
@@ -8095,7 +8173,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (f?.spellSlotBonus) spellSlotBonuses.push(f.spellSlotBonus);
   }
   /*
-   * DUAL CLASS: `ownedFeatureIds` is a FLAT set over both classes, while slotEntryFor's default pick is
+   * DUAL CLASS: the local `ownedFeatureIds` above (both classes' table features — the sheet's derive.ts
+   * set of the same name walks both classes too, via `heldClasses`) is FLAT, with no record of which
+   * class granted what, while slotEntryFor's default pick is
    * "the first spontaneous or prepared entry" — the PRIMARY class's. A feature belonging only to the
    * second class must name that class's own entry (`${cls2.id}-casting`, the id entry2 is built with),
    * or a dual-class magus's *"two special 2nd-rank studious spell slots"* land on the wizard half. The
@@ -8332,6 +8412,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Granted melee strikes from feats/heritage/ancestry/class features (Iruxi Fangs, Razortooth jaws,
   // …). Seeded with any WG-imported natural-attack names so a feat grant doesn't duplicate one the
   // import already produced; the rest are appended so they appear in Strikes (handwraps-buffed).
+  const naturalSeen = new Set((build.naturalAttacks ?? []).map((n) => n.name.toLowerCase()));
   const grantedNaturals = collectGrantedNaturals(
     content,
     feats,
@@ -8339,7 +8420,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     build.ancestryId,
     build.classId,
     level,
-    new Set((build.naturalAttacks ?? []).map((n) => n.name.toLowerCase())),
+    naturalSeen,
     /*
      * An item's granted Strike is live while the item is INVESTED — or, for an item that is not an
      * invested one at all, while it is simply WORN OR HELD. *"Five jagged spines project from the
@@ -8360,6 +8441,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // rows can be selected by the pick the player already made.
     build.featChoices,
   );
+  /* DUAL CLASS: the second class's features and subclass grant their Strikes too — a Fighter/Magus
+   * whose hybrid study is Unfurling Brocade gets the qi-infused fabric a Magus does. Same `seen` set,
+   * so a Strike both classes grant appears once. `deriveBuildFromCharacter` subtracts the same call. */
+  if (cls2) {
+    grantedNaturals.push(
+      ...collectGrantedNaturals(content, [], null, null, build.classId2, level, naturalSeen, [], build.subclassId2, enhancedFeatIds, build.effectChoices, build.featChoices),
+    );
+  }
   // A stored attack that a grant re-states (by name or by shape) yields to the grant: the grant is the
   // live source and carries the feat's riders; the stored copy is an older save or an import.
   const naturalAttacks = [
@@ -9558,7 +9647,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       }
     };
     for (const fc of feats) take(content.feats[fc.featId]?.choice, fc.choice?.value);
-    for (const fid of classFeatureIdsOwned(build, content)) take(content.classFeatures[fid]?.choice, build.featChoices?.[`feature:${fid}`]);
+    // Both classes: a second class's feature answer grants its token as the first class's does.
+    for (const fid of heldClassFeatureIds(build, content)) take(content.classFeatures[fid]?.choice, build.featChoices?.[`feature:${fid}`]);
     for (const hid of [build.heritageId, secondHeritageId]) if (hid) take(content.heritages[hid]?.choice, build.featChoices?.[`heritage:${hid}`]);
     if (background) take(background.choice, build.featChoices?.[backgroundChoiceKey(background.id)]);
     return [...out];
@@ -9591,10 +9681,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * could not have it: Elemental Rage prints *"change its damage type to the one you selected for your
    * element"* and the answer (`air-slashing`, `earth-bludgeoning`, …) had zero readers anywhere, so
    * every element's barbarian read the placeholder "energy" on every Strike.
+   *
+   * Both classes (Dual Class): this walked the first class only, so an X/Barbarian's element answer was
+   * never carried and its Rage read "energy". The builder did not ASK that answer either until the same
+   * fix — Builder.tsx `renderSecondSubclassAsks` puts the second subclass's question on the Level 0 page.
    */
   const featureChoices = (() => {
     const out: Record<string, string> = {};
-    for (const fid of classFeatureIdsOwned(build, content)) {
+    for (const fid of heldClassFeatureIds(build, content)) {
       if (!content.classFeatures[fid]?.choice) continue;
       const v = build.featChoices?.[`feature:${fid}`];
       if (v) out[`feature:${fid}`] = v;
@@ -9841,7 +9935,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // above already carry the mechanical half; what they cannot carry is WHICH save was chosen at
     // which tier once two of them are master, and Path to Perfection's degree shift lands on exactly
     // one of them ("the chosen saving throw"). See Character.pathToPerfection.
-    ...((build.classId === 'monk' || build.classId2 === 'monk') && build.pathToPerfection?.some(Boolean)
+    ...(holdsClass(build, 'monk') && build.pathToPerfection?.some(Boolean)
       ? { pathToPerfection: build.pathToPerfection }
       : {}),
     ...(() => {
@@ -10054,6 +10148,10 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     // Matched by name OR shape (sameNaturalAttack), so an older save's "Iruxi Fangs" is recognised as
     // the "Fangs" the feat now grants and does not come back as a second manual attack.
     const granted = collectGrantedNaturals(content, c.feats ?? [], c.heritageId, c.ancestryId, c.classId, c.level, new Set(), [], c.subclassId, undefined, undefined, c.featureChoices);
+    // …and the second class's (Dual Class), which buildCharacter adds the same way.
+    for (const slot of heldClasses(c).slice(1)) {
+      granted.push(...collectGrantedNaturals(content, [], null, null, slot.classId, c.level, new Set(), [], slot.subclassId, undefined, undefined, c.featureChoices));
+    }
     const kept = c.naturalAttacks.filter((na) => !granted.some((g) => sameNaturalAttack(na, g))).map((na) => ({ ...na }));
     if (kept.length) b.naturalAttacks = kept;
   }
@@ -10722,7 +10820,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       if (key) granted.add(key);
     }
     for (const o of grantOptions) for (const sk of o.grants?.skills ?? []) granted.add(sk);
-    if (c.classId === 'cleric' || c.classId2 === 'cleric') {
+    if (holdsClass(c, 'cleric')) {
       const ds = c.details.deityId ? content.deities[c.details.deityId]?.skill : undefined;
       if (ds) granted.add(ds as ProficiencyKey);
     }

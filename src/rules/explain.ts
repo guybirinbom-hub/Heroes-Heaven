@@ -57,6 +57,7 @@ import {
   itemInUse,
   resolveFormula,
   answeredEffectOptions,
+  specDamageParts,
 } from './derive';
 import { mpArmorRefine } from './monsterParts';
 import { traitLabel } from './glossary';
@@ -1701,8 +1702,9 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         });
       }
       // A runesmith's extra damage is Runic Optimization (class-73), keyed on the striking rune, not on
-      // proficiency — same slot in the breakdown, its own name (batch 28).
-      if (strike.specDamage) parts.push({ label: c.classId === 'runesmith' ? 'Runic Optimization' : 'Weapon specialization', value: strike.specDamage });
+      // proficiency — same slot in the breakdown, its own name (batch 28). One line per feature that paid
+      // it (derive.ts specDamageParts): a Fighter/Runesmith's +4 is 2 + 2, not "Weapon specialization 4".
+      for (const p of specDamageParts(c, db, strike)) parts.push(p);
       // Enfeebled/etc. hits the actual damage ability (Str, or Dex under the thief racket); blasts add none.
       if (strike.dmgAbility === 'str' || strike.dmgAbility === 'dex') {
         const cond = conditionPart(c, strike.dmgAbility, 'damage');

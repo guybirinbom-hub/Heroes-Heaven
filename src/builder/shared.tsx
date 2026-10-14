@@ -82,6 +82,7 @@ import {
   narrowChoiceOptions,
   outsideDomains,
   effectiveChoiceLimits,
+  holdsClass,
 } from '../rules/derive';
 import { explainStat, statHasSituational, type StatRef } from '../rules/explain';
 import { useContent } from '../sheet/ContentContext';
@@ -2802,7 +2803,8 @@ export function SourcesCard({
 export function SnareFormulasCard({ build, actions, content, character }: EditorProps & { character: Character }) {
   const RANK_ORDER: ProficiencyRank[] = ['untrained', 'trained', 'expert', 'master', 'legendary'];
   const higher = (a: ProficiencyRank, b: ProficiencyRank) => RANK_ORDER[Math.max(RANK_ORDER.indexOf(a), RANK_ORDER.indexOf(b))];
-  const isRanger = build.classId === 'ranger' || build.classId2 === 'ranger';
+  // Either held class; a second class left on the build with Dual Class off is none (`holdsClass`).
+  const isRanger = holdsClass(build, 'ranger');
   const craftingRank = character.proficiencies.skills.crafting ?? 'untrained';
   const survivalRank = character.proficiencies.skills.survival ?? 'untrained';
   // Rangers "use Survival instead of Crafting for all functions of feats from this archetype" — so their
