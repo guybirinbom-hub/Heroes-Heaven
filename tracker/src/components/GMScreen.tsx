@@ -136,7 +136,7 @@ function AddMenu({ onClose, onAdd, fab }: {
       <div ref={panelRef} style={{
         position: 'absolute', bottom: 74, right: 18, zIndex: 41, width: 232,
         background: 'var(--bg-panel)', border: 'var(--app-bw) solid var(--border-strong)',
-        borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)', padding: 6,
+        borderRadius: 'var(--radius)', boxShadow: 'var(--shadow-lg)', padding: 6,
       }}>
         <div style={{ fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text-faded)', padding: '4px 9px 6px' }}>Add to GM screen</div>
         {GM_WIDGETS.map(w => (

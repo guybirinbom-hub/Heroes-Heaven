@@ -644,7 +644,7 @@ export interface PartyCardSlots {
 function hpColor(cur: number, max: number): string {
   if (max <= 0) return 'var(--app-accent)';
   const f = cur / max;
-  if (f <= 0.35) return 'var(--app-danger, #ef4444)';
+  if (f <= 0.35) return 'var(--app-bad)';
   if (f < 1) return 'var(--app-warn, #e0a63a)';
   return 'var(--app-good, #22c55e)';
 }

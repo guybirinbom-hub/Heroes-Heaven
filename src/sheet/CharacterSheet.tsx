@@ -13,6 +13,8 @@ import {
   setSlotsUsed,
   poolKey,
   slotKeyOf,
+  fatiguingArmor,
+  ownedRestIds,
   type PlayUpdater,
 } from '../rules/play';
 import { canPrepareStaff, chargeCounterId, highestSlotRank, isStaff, openSlots, type OpenSlot } from '../rules/itemUses';
@@ -149,7 +151,9 @@ export function CharacterSheet({
   charKey?: string;
   /** All roster characters (id + name) — for the Settings → Modes scope picker / labels. */
   characters?: { id: string; name: string }[];
-  onRest?: () => void;
+  /** `sleptInArmor`: the player ticked "I slept in my armor" (shown only when the worn armour would
+   *  fatigue). The caller hands it to rest(). */
+  onRest?: (opts?: { sleptInArmor?: boolean }) => void;
   onOpenRoster?: () => void;
   onEdit?: () => void;
   /** Roster undo/redo, surfaced as header buttons. Absent ⇒ the buttons are not rendered (the sheet
@@ -327,6 +331,16 @@ export function CharacterSheet({
   const [alchemyDraft, setAlchemyDraft] = useState<Record<string, number>>({});
   const [alchemyPicker, setAlchemyPicker] = useState(false);
   const alchemyPrepared = Object.values(alchemyDraft).reduce((a, b) => a + b, 0);
+  /* SLEEPING IN ARMOR — *"Sleeping in armor results in poor rest that leaves you fatigued"* (Player
+   * Core p. 439). The app can't know whether the armour came off for the night, and making every
+   * armoured character Fatigued each morning read as "fatigued for no reason" (owner, 2026-10-14). So
+   * the window ASKS, unticked by default, and only when the worn armour would actually fatigue — not
+   * for comfort armour, and not for a Guardian or a Steel Skin owner. */
+  const restArmor = useMemo(
+    () => (restOpen ? fatiguingArmor(character.inventory, content.items, ownedRestIds(character, content)) : undefined),
+    [restOpen, character, content],
+  );
+  const [armorSleep, setArmorSleep] = useState(false);
   /**
    * Close the Daily preparations dialog WITHOUT preparing — and throw the morning's picks away.
    *
@@ -343,6 +357,7 @@ export function CharacterSheet({
     setStaffPick(null);
     setAlchemyDraft({});
     setAlchemyPicker(false);
+    setArmorSleep(false);
   };
   // The Customize drawer's open flag lives in CustomizeHost, NOT here: as sheet state it re-rendered
   // the whole sheet on every open and every close (see CustomizeHost). A ref write is not state.
@@ -910,9 +925,28 @@ export function CharacterSheet({
                 <li>Refresh spell slots, focus points, and daily-use abilities</li>
                 <li>Refill tracked item uses that reset daily (wands, staves, per-day items)</li>
                 <li>Clear temporary HP</li>
-                <li>Remove Fatigued, Wounded, and Dying; reduce Doomed and Drained by 1</li>
+                <li>
+                  {armorSleep && restArmor
+                    ? 'Remove Wounded and Dying; reduce Doomed and Drained by 1 — but you wake up Fatigued'
+                    : 'Remove Fatigued, Wounded, and Dying; reduce Doomed and Drained by 1'}
+                </li>
               </ul>
               <p className="confirm-note">Hero points are session-based and aren't changed.</p>
+
+              {restArmor && (
+                <div className="daily-choices rest-armor">
+                  <label className="rest-armor-row">
+                    <input type="checkbox" checked={armorSleep} onChange={(e) => setArmorSleep(e.target.checked)} />
+                    <span>
+                      I slept in my armor ({restArmor.name}) — wake up <strong>Fatigued</strong>
+                    </span>
+                  </label>
+                  <p className="confirm-note">
+                    Sleeping in armor is poor rest that leaves you fatigued (Player Core p. 439). Leave this empty if you
+                    took it off for the night.
+                  </p>
+                </div>
+              )}
 
               {/* Choices the rules re-make each morning. With "reuse", only never-answered ones show. */}
               {needsAsking.length > 0 && (
@@ -1143,7 +1177,7 @@ export function CharacterSheet({
                       dailyItems: { ...(p.dailyItems ?? {}), ...dailyItemDraft },
                     }));
                   }
-                  onRest();
+                  onRest({ sleptInArmor: armorSleep && !!restArmor });
                   /*
                    * AFTER onRest(), and that ordering is load-bearing. Both go through the same
                    * updatePlay queue, and rest() refills every counter to its STORED max, wipes
@@ -1179,6 +1213,7 @@ export function CharacterSheet({
                   setStaffSlotKey('');
                   setStaffPick(null);
                   setAlchemyDraft({});
+                  setArmorSleep(false);
                   setRestOpen(false);
                 }}
               >

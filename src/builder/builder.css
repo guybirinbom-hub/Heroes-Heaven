@@ -1388,7 +1388,9 @@
 @media (hover: hover) {
   .attr-override-clear:hover {
     background: var(--app-warn);
-    color: var(--app-warn-text, #1a1205);
+    /* Text on a warn-coloured fill: the page background is dark where --app-warn is bright and light
+       where it is dark, so it reads on every theme (a fixed near-black failed every light theme). */
+    color: var(--app-bg);
   }
 }
 .fs-an {
@@ -1887,14 +1889,14 @@
   border: none;
   background: none;
   cursor: pointer;
-  color: var(--app-danger);
+  color: var(--app-bad);
   padding: 1px;
   border-radius: 50%;
   line-height: 1;
 }
 @media (hover: hover) {
   .ovr-chip-x:hover {
-    background: var(--app-hover);
+    background: rgba(127, 127, 127, 0.15);
   }
 }
 .picker-override-note {

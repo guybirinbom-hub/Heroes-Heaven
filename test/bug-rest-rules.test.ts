@@ -154,7 +154,10 @@ describe('rest(): losing Dying leaves Wounded behind (Player Core p. 447)', () =
 });
 
 describe('rest(): sleeping in armour is poor rest (Player Core p. 439)', () => {
-  const withItems = { ...OPTS, items: db.items };
+  // bug 2026-10-14: the night only counts as "in armour" when the player ticks it in the Daily
+  // preparations window (owner's ruling) — these legs are the ticked case; the unticked default and the
+  // feats that rest in armour are test/bug-rest-armor-asked.test.ts.
+  const withItems = { ...OPTS, items: db.items, sleptInArmor: true };
 
   it('the data still says what the rule is read off', () => {
     // bug 2026-09-13: rest rules

@@ -141,7 +141,7 @@ export function MarkdownTable({ header, rows, renderCell }: {
           <thead>
             <tr>
               {idx.map(c => (
-                <th key={c} style={{ ...cellPad, background: 'var(--bg-subtle, var(--bg-elevated))', fontWeight: 600 }}>
+                <th key={c} style={{ ...cellPad, background: 'var(--bg-elevated)', fontWeight: 600 }}>
                   {renderCell(header[c] ?? '')}
                 </th>
               ))}

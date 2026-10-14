@@ -35,7 +35,7 @@ import { setupPersist, schedulePersist, persistNow, flushPersist, hasPendingPers
 import { chooseDialog } from './sheet/confirm';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
 import { useUndoableState } from './useUndoableState';
-import { applyPlayState, initialPlay, playForRebuild, reconcileFormulaBook, rest, type PlayState } from './rules/play';
+import { applyPlayState, initialPlay, ownedRestIds, playForRebuild, reconcileFormulaBook, rest, type PlayState } from './rules/play';
 import { abilityMod } from './rules/derive';
 import { companionConMod } from './rules/companions';
 import { ContentContext } from './sheet/ContentContext';
@@ -1463,7 +1463,7 @@ export default function App() {
         globalCustomization={globalCustom}
         onLeaveCampaign={leaveCampaign}
         partyEnabled={campaignsOnline}
-        onRest={() =>
+        onRest={(o) =>
           updatePlay((p) =>
             rest(p, {
               level: active.character.level,
@@ -1473,9 +1473,12 @@ export default function App() {
               modeDefs: content?.modes,
               // Fast Recovery / Bolstered Recovery — without this a night's sleep ignores them.
               restRecovery: active.character.restRecovery,
-              // "Sleeping in armor results in poor rest that leaves you fatigued" — rest reads the
-              // worn row's category + traits to tell armour from clothes.
+              // "Sleeping in armor results in poor rest that leaves you fatigued" — only when the player
+              // ticked it in the window (owner's ruling 2026-10-14). rest reads the worn row's category
+              // + traits to tell armour from clothes, and the owned records that rest in armour.
               items: readyContent.items,
+              sleptInArmor: o?.sleptInArmor,
+              ownedIds: character ? ownedRestIds(character, readyContent) : undefined,
               // Svetocher reads Drained "as though the condition value were 1 lower", so a step-down
               // hands back that much less max HP.
               drainedReduction: active.character.drainedReduction,

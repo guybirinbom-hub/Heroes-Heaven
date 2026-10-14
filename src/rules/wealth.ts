@@ -42,7 +42,53 @@ export function coinsToCp(c: Coins | undefined): number {
   return (c.pp ?? 0) * 1000 + (c.gp ?? 0) * 100 + (c.sp ?? 0) * 10 + (c.cp ?? 0);
 }
 
-/** Copper split back into gp / sp / cp (no pp — keeps the wallet readable). */
+const DENOMS = [
+  ['pp', 1000],
+  ['gp', 100],
+  ['sp', 10],
+  ['cp', 1],
+] as const;
+
+/**
+ * Pay `priceCp` out of a wallet the way a person at a shop counter would: hand over the coins that
+ * fit, break ONE larger coin only when the smaller ones run out, and take the change in the coins
+ * below it. Every other coin stays exactly as it was. Returns undefined when the wallet can't cover it.
+ *
+ * bug 2026-10-14: buying ran the whole purse through copper and back out of `cpToCoins`, which has no
+ * pp — so buying a 5 gp item with 10 pp in the purse left 95 gp and no platinum at all.
+ */
+export function payFrom(wallet: Coins | undefined, priceCp: number): Coins | undefined {
+  const cost = Math.max(0, Math.round(priceCp));
+  if (cost > coinsToCp(wallet)) return undefined;
+  const have = { pp: wallet?.pp ?? 0, gp: wallet?.gp ?? 0, sp: wallet?.sp ?? 0, cp: wallet?.cp ?? 0 };
+  let owed = cost;
+  // Largest coin first, but only coins worth no more than what is still owed.
+  for (const [k, v] of DENOMS) {
+    const use = Math.min(have[k], Math.floor(owed / v));
+    have[k] -= use;
+    owed -= use * v;
+  }
+  if (owed > 0) {
+    // Every coin still held is worth more than what is owed, so break the smallest one.
+    const broken = [...DENOMS].reverse().find(([k]) => have[k] > 0);
+    if (!broken) return undefined;
+    have[broken[0]] -= 1;
+    let change = broken[1] - owed;
+    for (const [k, v] of DENOMS) {
+      if (v >= broken[1]) continue;
+      const n = Math.floor(change / v);
+      have[k] += n;
+      change -= n * v;
+    }
+  }
+  // Empty denominations are left out, the same shape the purse always had after a purchase.
+  const out: Coins = {};
+  for (const [k] of DENOMS) if (have[k]) out[k] = have[k];
+  return out;
+}
+
+/** Copper split back into gp / sp / cp (no pp — keeps the wallet readable). Never use it to pay
+ *  from a wallet: it turns every platinum piece into gold. `payFrom` is the paying helper. */
 export function cpToCoins(cp: number): Coins {
   let r = Math.max(0, Math.round(cp));
   const gp = Math.floor(r / 100);

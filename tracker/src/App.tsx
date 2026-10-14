@@ -159,7 +159,7 @@ function PartyMenu({ parties, activePartyId, isPartyFocus, onPick, onToggleFav, 
         position: 'absolute', top: 'calc(100% + 5px)', right: 0, zIndex: 2001,
         width: 250, maxWidth: '70vw',
         background: 'var(--bg-panel)', border: 'var(--app-bw) solid var(--border-strong)',
-        borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)',
+        borderRadius: 'var(--radius)', boxShadow: 'var(--shadow-lg)',
         display: 'flex', flexDirection: 'column', overflow: 'hidden',
         WebkitAppRegion: 'no-drag',
       } as React.CSSProperties}>
@@ -654,7 +654,7 @@ export default function App() {
               onMouseEnter={e => {
                 if (combatants.length === 0) return
                 e.currentTarget.style.background = 'var(--danger)'
-                e.currentTarget.style.color = '#fff'
+                e.currentTarget.style.color = 'var(--text-on-danger)'
                 e.currentTarget.style.borderStyle = 'solid'
               }}
               onMouseLeave={e => {
@@ -760,7 +760,7 @@ export default function App() {
               <button
                 onClick={() => { clearAllCombatants(); setShowClearConfirm(false) }}
                 style={{
-                  background: 'var(--danger)', color: '#fff',
+                  background: 'var(--danger)', color: 'var(--text-on-danger)',
                   border: 'var(--app-bw) solid var(--danger)', borderRadius: 'var(--radius-sm)',
                   padding: '6px 14px', fontSize: 12.5, fontWeight: 600,
                   cursor: 'pointer', fontFamily: 'var(--font-ui)',

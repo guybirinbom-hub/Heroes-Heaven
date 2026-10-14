@@ -745,7 +745,7 @@ export function StatBlockSection() {
                       const on = (sel.style ?? selMeta!.styles![0].id) === s.id
                       return (
                         <button key={s.id} onClick={() => patchItem(sel.id, { style: s.id })}
-                          style={{ fontFamily: 'var(--font-ui)', fontSize: 11, fontWeight: 600, padding: '4px 9px', border: 'none', cursor: 'pointer', background: on ? 'var(--accent)' : 'var(--bg-panel)', color: on ? 'var(--on-accent, #fff)' : 'var(--text-muted)' }}>{s.label}</button>
+                          style={{ fontFamily: 'var(--font-ui)', fontSize: 11, fontWeight: 600, padding: '4px 9px', border: 'none', cursor: 'pointer', background: on ? 'var(--accent)' : 'var(--bg-panel)', color: on ? 'var(--text-on-accent)' : 'var(--text-muted)' }}>{s.label}</button>
                       )
                     })}
                   </div>
@@ -1178,7 +1178,7 @@ export function SourcesSection() {
                           ...chk,
                           borderColor: on ? 'var(--accent)' : 'var(--border-strong)',
                           background: on ? 'var(--accent)' : 'transparent',
-                          color: on ? 'var(--on-accent, #fff)' : 'transparent',
+                          color: on ? 'var(--text-on-accent)' : 'transparent',
                         }}>{on ? '✓' : ''}</span>
                         <span style={{ flex: 1, minWidth: 0, fontFamily: 'var(--font-ui)', fontSize: 12.5, color: on ? 'var(--text)' : 'var(--text-faded)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{b.name}</span>
                         <span style={{ flexShrink: 0, fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--text-faded)' }}>{b.count}</span>

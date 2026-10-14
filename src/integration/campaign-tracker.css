@@ -404,7 +404,9 @@ body:has(.campaign-tracker) .picker-overlay.confirm-overlay { z-index: 1600; }
 }
 .ct-rail-clear:not(:disabled):hover {
   background: var(--app-bad);
-  color: #fff;
+  /* Text on a theme fill reads in the page background colour: white on the dark themes' light red was
+     2.7:1 (guard: test/css-readable-text.test.ts). */
+  color: var(--app-bg);
   border-style: solid;
 }
 .ct-rail-clear:disabled {

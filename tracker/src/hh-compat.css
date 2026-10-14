@@ -52,9 +52,10 @@
   /* ── Danger ───────────────────────────────────────────────── */
   --danger: var(--app-bad);
   --danger-soft: color-mix(in srgb, var(--app-bad) 14%, transparent);
-  /* Theme-independent on purpose: danger is a saturated red/rose in every HH palette, so white
-     reads on all of them (this matches the original's own comment). */
-  --text-on-danger: #ffffff;
+  /* NOT white: on HH's dark palettes --app-bad is a LIGHT red/rose (midnight #f87171), where white
+     text measured 2.7–3.4:1. The page background flips with the theme and measured 4.7:1 or better on
+     --app-bad in every palette (2026-10-14; guard test/css-readable-text.test.ts). */
+  --text-on-danger: var(--app-bg);
 
   /* ── HP bar ───────────────────────────────────────────────── */
   --hp-full: var(--app-good);

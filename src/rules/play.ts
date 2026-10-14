@@ -20,7 +20,7 @@ import { FORMULA_BOOK_ITEM_ID, formulaBooks, grantsFormulaBook, withFormula } fr
 import { adjustModes } from './modes';
 import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
-import { coinsToCp, cpToCoins } from './wealth';
+import { coinsToCp, payFrom } from './wealth';
 
 /** The maximum hero points a character can hold (the rail shows three pips). */
 export const MAX_HERO_POINTS = 3;
@@ -1603,8 +1603,9 @@ export function setCompanionTempHp(play: PlayState, id: string, value: number): 
 
 /** Buy a vehicle / siege weapon (or any companion) — deduct the character's coins, then add it. */
 export function buyCompanion(play: PlayState, cfg: Omit<CompanionConfig, 'id'>, price: Coins | undefined): PlayState {
-  if (price && !canAfford(play.currency, price)) return play;
-  const next = price ? { ...play, currency: cpToCoins(coinsToCp(play.currency) - coinsToCp(price)) } : play;
+  const remaining = payFrom(play.currency, coinsToCp(price));
+  if (!remaining) return play;
+  const next = price ? { ...play, currency: remaining } : play;
   return addPlayCompanion(next, cfg);
 }
 
@@ -1632,9 +1633,9 @@ export function addCompanionItem(play: PlayState, compId: string, itemId: string
 
 /** Buy an item for a companion — deduct the character's coins, then add it. */
 export function buyCompanionItem(play: PlayState, compId: string, itemId: string, price: Coins | undefined, init?: Partial<InventoryItem>): PlayState {
-  if (!canAfford(play.currency, price)) return play;
-  const remaining = cpToCoins(coinsToCp(play.currency) - coinsToCp(price));
-  return addCompanionItem({ ...play, currency: remaining }, compId, itemId, init);
+  const remaining = payFrom(play.currency, coinsToCp(price));
+  if (!remaining) return play;
+  return addCompanionItem({ ...play, currency: price ? remaining : play.currency }, compId, itemId, init);
 }
 
 /** Remove one of a companion's items. */
@@ -2447,9 +2448,11 @@ export function canAfford(currency: Coins | undefined, price: Coins | undefined)
 /** Buy an item: deduct its price from the wallet and add it. No-op if unaffordable. `init` carries the
  *  same row defaults `addInventoryItem` takes — the pack quantity for ammunition, above all. */
 export function buyItem(play: PlayState, itemId: string, price: Coins | undefined, init?: Partial<InventoryItem>): PlayState {
-  if (!canAfford(play.currency, price)) return play;
-  const remaining = cpToCoins(coinsToCp(play.currency) - coinsToCp(price));
-  return addInventoryItem({ ...play, currency: remaining }, itemId, init);
+  // Pays with the coins that fit and breaks one bigger coin only when it must — never the old
+  // copper round-trip, which turned all platinum into gold (bug 2026-10-14).
+  const remaining = payFrom(play.currency, coinsToCp(price));
+  if (!remaining) return play;
+  return addInventoryItem({ ...play, currency: price ? remaining : play.currency }, itemId, init);
 }
 
 /** Every field of an inventory row except its id — the test for "this row is still exactly what the
@@ -2887,33 +2890,80 @@ function restConditions(list: ActiveCondition[], steps: number | undefined, full
 }
 
 /**
- * Did the character sleep in armour? *"Sleeping in armor results in poor rest that leaves you
- * fatigued"* (Player Core p. 439).
+ * Records that let a character rest normally in armour, by id, with the armour categories each one
+ * covers ('any' = every category). Read off each record's own sentence:
+ *   Armored Rest — "You can sleep in armor overnight without being fatigued the next day"
+ *   Steel Skin — "You don't become fatigued if you sleep while wearing armor"
+ *   Armor Regiment Training — "you can rest normally while wearing armor of any type"
+ *   Guardian's Armor — "you can rest normally while wearing medium and heavy armor"
+ *   Second Skin — "When wearing light or medium armor, you can rest normally"
+ *   Beast of Burden — "You can rest normally while wearing medium armor"
+ *   Reinforced Chassis — "You can never … remove your chassis; however, you still don't become
+ *     fatigued from sleeping" (the automaton's chassis IS medium armour, so it would be asked nightly)
+ * None of them was read before 2026-10-14, so a Guardian — the heavy-armour class — woke fatigued
+ * after every night. test/bug-rest-armor-asked.test.tsx scans the data for any NEW record with such a
+ * sentence and fails until it is listed here.
+ */
+export const RESTS_IN_ARMOR: Readonly<Record<string, 'any' | readonly string[]>> = {
+  'armored-rest': 'any',
+  'steel-skin': 'any',
+  'armor-regiment-training': 'any',
+  'armored-regiment-training': 'any',
+  'aon-armor-regiment-training': 'any',
+  'guardians-armor': ['medium', 'heavy'],
+  'second-skin': ['light', 'medium'],
+  'beast-of-burden': ['medium'],
+  'reinforced-chassis': 'any',
+};
+
+/** The ids of every record a character holds that a rest rule can read: feats, class features,
+ *  heritage, ancestry and background. */
+export function ownedRestIds(c: Character, db: ContentDatabase): string[] {
+  const out: string[] = (c.feats ?? []).map((f) => f.featId);
+  out.push(...ownedFeatureIds(c, db));
+  for (const id of [c.heritageId, c.ancestryId, c.backgroundId]) if (id) out.push(id);
+  return out;
+}
+
+/**
+ * The worn armour that would make a night in it poor rest, or undefined. *"Sleeping in armor results
+ * in poor rest that leaves you fatigued"* (Player Core p. 439).
  *
- * Two printed exceptions, both read off the item rather than guessed: the `comfort` trait (*"you can
- * sleep in this armor without becoming fatigued"*) and the `unarmored` category — explorer's
- * clothing, robes and swarmsuits are clothes, not armour. (Explorer's clothing carries both.)
- * Without `items` there is nothing to read, so nothing is claimed.
+ * Printed exceptions, all read off the data rather than guessed: the `comfort` trait (*"you can sleep
+ * in this armor without becoming fatigued"*), the `unarmored` category — explorer's clothing, robes and
+ * swarmsuits are clothes, not armour (explorer's clothing carries both) — and an owned record from
+ * RESTS_IN_ARMOR that covers the armour's category. Without `items` there is nothing to read, so
+ * nothing is claimed.
  *
  * A CATEGORY is required, not merely a non-`unarmored` one. 16 shipped armour records are Archives
  * CATEGORY PAGES rather than suits — "Unarmored" itself, "Magic Armor", and the 14 precious-material
  * pages — with no category, no price, no bulk and no AC bonus. They are offered in Add Items like any
  * other record, so without this a character wearing the thing literally named Unarmored woke fatigued.
  */
-function sleptInArmor(inventory: InventoryItem[] | undefined, items: Record<string, Item> | undefined): boolean {
-  if (!items) return false;
-  return (inventory ?? []).some((inv) => {
-    if (!inv.worn) return false;
+export function fatiguingArmor(
+  inventory: InventoryItem[] | undefined,
+  items: Record<string, Item> | undefined,
+  ownedIds: Iterable<string> = [],
+): Item | undefined {
+  if (!items) return undefined;
+  const covers = [...ownedIds].map((id) => RESTS_IN_ARMOR[id]).filter((r) => r !== undefined);
+  for (const inv of inventory ?? []) {
+    if (!inv.worn) continue;
     const it = items[inv.itemId];
-    return it?.itemType === 'armor' && !!it.category && it.category !== 'unarmored' && !(it.traits ?? []).includes('comfort');
-  });
+    if (it?.itemType !== 'armor' || !it.category || it.category === 'unarmored') continue;
+    if ((it.traits ?? []).includes('comfort')) continue;
+    const cat = it.category;
+    if (covers.some((r) => r === 'any' || r.includes(cat))) continue;
+    return it;
+  }
+  return undefined;
 }
 
 /**
  * A full night's rest + daily preparations, per PF2e — NOT a full heal. You regain Hit
  * Points equal to your level × your Constitution modifier (minimum 1); temp HP clears;
  * spell slots, the focus pool, and daily-use class resources refresh; Fatigued is removed (unless
- * you slept in armour, which ADDS it), Dying ends and leaves Wounded behind, Wounded itself clears
+ * the player ticked that they slept in armour, which ADDS it), Dying ends and leaves Wounded behind, Wounded itself clears
  * only at full Hit Points, and Doomed and Drained step down by 1. Hero points and mythic points are
  * session resources and are untouched. XP carries over.
  */
@@ -2930,6 +2980,12 @@ export function rest(
     /** content.items — the WORN armour's category and traits decide whether the night leaves the
      *  character Fatigued. Without it no armour can be read, so no fatigue is claimed. */
     items?: Record<string, Item>;
+    /** The player's answer to "I slept in my armor" in the Daily preparations window. The app can't
+     *  know whether armour came off for the night, so it ASKS, unticked by default (owner's ruling,
+     *  2026-10-14: daily prep was making characters Fatigued "for no reason"). No yes, no fatigue. */
+    sleptInArmor?: boolean;
+    /** `ownedRestIds` of the character — a Guardian or a Steel Skin owner rests normally in armour. */
+    ownedIds?: Iterable<string>;
     /** Character.drainedReduction (Svetocher) — Drained counts *"as though the condition value were
      *  1 lower"* for the HP reduction, so a step-down there hands back that much less max HP, and the
      *  damage below must grow by that much less too. */
@@ -3016,7 +3072,12 @@ export function rest(
     // potent for 24 hours or until your next daily preparations, whichever comes first."* This IS
     // that moment, so the alchemist makes today's batch after resting.
     alchemyPrep: {},
-    conditions: restConditions(play.conditions ?? [], opts.restRecovery?.conditionSteps, damage === 0, sleptInArmor(play.inventory, opts.items)),
+    conditions: restConditions(
+      play.conditions ?? [],
+      opts.restRecovery?.conditionSteps,
+      damage === 0,
+      opts.sleptInArmor === true && !!fatiguingArmor(play.inventory, opts.items, opts.ownedIds),
+    ),
     companionConditions,
     companionHp,
     resources: opts.initialResources ?? play.resources,

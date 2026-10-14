@@ -897,7 +897,7 @@ export function CampaignForm({ content, editing, onDelete, onCancel, onCreated, 
       </label>
       {editing && !loadedDefaults && !localOnly ? (
         loadError ? (
-          <div className="setup-note" style={{ color: 'var(--app-danger, #ef4444)' }}>
+          <div className="setup-note" style={{ color: 'var(--app-bad)' }}>
             Couldn’t load this campaign’s current default rules ({loadError}). You can still save the name and
             description — the defaults won’t be changed. Reopen this editor to try again.
           </div>

@@ -303,8 +303,8 @@ body {
   align-items: center;
   gap: 5px;
   background: none;
-  border: 1px solid var(--app-danger, #ef4444);
-  color: var(--app-danger, #ef4444);
+  border: 1px solid var(--app-bad);
+  color: var(--app-bad);
   border-radius: 8px;
   padding: 4px 10px;
   font-size: 12px;
@@ -552,8 +552,8 @@ body {
   font-size: 15px;
 }
 .party-kick:hover {
-  color: var(--app-danger, #ef4444);
-  border-color: color-mix(in srgb, var(--app-danger, #ef4444) 50%, transparent);
+  color: var(--app-bad);
+  border-color: color-mix(in srgb, var(--app-bad) 50%, transparent);
 }
 .party-gm {
   display: flex;
@@ -905,8 +905,8 @@ body {
   opacity: 0.8;
 }
 .party-cond {
-  background: color-mix(in srgb, var(--app-danger, #ef4444) 16%, transparent);
-  color: color-mix(in srgb, var(--app-danger, #ef4444) 70%, var(--app-text));
+  background: color-mix(in srgb, var(--app-bad) 16%, transparent);
+  color: color-mix(in srgb, var(--app-bad) 70%, var(--app-text));
 }
 .party-mode {
   background: color-mix(in srgb, var(--app-accent) 18%, transparent);
@@ -1914,9 +1914,9 @@ body {
   max-width: 100%;
   padding: 6px 10px;
   border-radius: 999px;
-  border: 1px solid var(--line, #2c2f3d);
-  background: var(--panel-2, #1b1e2a);
-  color: var(--text, #e8e9f0);
+  border: 1px solid var(--app-border);
+  background: var(--app-surface-2);
+  color: var(--app-text);
   font-size: 0.82rem;
   line-height: 1.1;
   white-space: nowrap;
@@ -1937,15 +1937,15 @@ body {
 /* Resistance reduces the number, weakness increases it — colour-coded the same way the readout
    already codes heal vs damage, so the direction is readable before the label is. */
 .np-iwr-chip.res:not(:disabled) {
-  border-color: color-mix(in srgb, var(--good, #4ade80) 45%, transparent);
+  border-color: color-mix(in srgb, var(--app-good) 45%, transparent);
 }
 .np-iwr-chip.weak:not(:disabled) {
-  border-color: color-mix(in srgb, var(--bad, #f87171) 45%, transparent);
+  border-color: color-mix(in srgb, var(--app-bad) 45%, transparent);
 }
 /* The `*` beside a resistance that only applies sometimes ("while raging"). Same meaning and the
    same accent as the conditional marker used on stats elsewhere, so it reads as one language. */
 .iwr-cond {
-  color: var(--accent, #8b8bf0);
+  color: var(--app-accent);
   font-weight: 700;
   margin-left: 1px;
   cursor: help;
@@ -2029,8 +2029,8 @@ body {
 }
 /* Rage reads as a martial-red state so it's distinct from the accent-tinted Panache. */
 .state-card.state-rage.on {
-  border-color: var(--danger, #c2410c);
-  box-shadow: inset 0 0 0 1px var(--danger, #c2410c);
+  border-color: #c2410c;
+  box-shadow: inset 0 0 0 1px #c2410c;
 }
 .state-toggle {
   margin-top: 8px;
@@ -2056,8 +2056,8 @@ body {
   color: var(--app-accent-text);
 }
 .state-rage .state-toggle.on {
-  background: var(--danger, #c2410c);
-  border-color: var(--danger, #c2410c);
+  background: #c2410c;
+  border-color: #c2410c;
   color: #fff;
 }
 .state-toggle .state-name {
@@ -2096,9 +2096,9 @@ body {
   letter-spacing: 0.02em;
   padding: 1px 6px 1px 5px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--danger, #c2410c) 15%, var(--app-surface-2));
-  color: var(--danger, #c2410c);
-  border: 1px solid color-mix(in srgb, var(--danger, #c2410c) 35%, transparent);
+  background: color-mix(in srgb, #c2410c 15%, var(--app-surface-2));
+  color: #c2410c;
+  border: 1px solid color-mix(in srgb, #c2410c 35%, transparent);
   white-space: nowrap;
   vertical-align: middle;
 }
@@ -2417,7 +2417,7 @@ body {
   font-size: 10px;
 }
 .mode-info-dur {
-  color: var(--app-muted);
+  color: var(--app-text-dim);
   font-size: 12px;
   margin: 0 0 6px;
 }
@@ -2427,7 +2427,7 @@ body {
   font-size: 12.5px;
   line-height: 1.6;
 }
-.mode-info-when { color: var(--app-muted); }
+.mode-info-when { color: var(--app-text-dim); }
 .cond-pill-step {
   display: inline-flex;
   align-items: center;
@@ -2563,8 +2563,8 @@ body {
 .skill-sub {
   font-size: 10px;
   font-weight: 600;
-  color: var(--app-muted);
-  background: color-mix(in srgb, var(--app-muted) 14%, transparent);
+  color: var(--app-text-dim);
+  background: color-mix(in srgb, var(--app-text-dim) 14%, transparent);
   border-radius: 4px;
   padding: 0 3px;
   margin-left: 4px;
@@ -2659,7 +2659,7 @@ body {
 }
 .search-clear:hover {
   color: var(--app-text);
-  background: var(--app-hover, rgba(127, 127, 127, 0.15));
+  background: rgba(127, 127, 127, 0.15);
 }
 /* Empty-state note when search/filters hide every spell in a section. */
 .spell-empty {
@@ -2727,7 +2727,7 @@ body {
   padding: 8px 10px;
   border: 1px solid var(--app-border, #2a2e3d);
   border-radius: 10px;
-  background: var(--app-panel-2, rgba(255, 255, 255, 0.03));
+  background: rgba(127, 127, 127, 0.06);
 }
 .stance-bar-label {
   font-size: 11px;
@@ -2776,7 +2776,7 @@ body {
   padding: 8px 10px;
   border: 1px solid var(--app-border, #2a2e3d);
   border-radius: 10px;
-  background: var(--app-panel-2, rgba(255, 255, 255, 0.03));
+  background: rgba(127, 127, 127, 0.06);
 }
 .alchemy-head {
   display: flex;
@@ -3126,11 +3126,7 @@ button.strike-name:hover {
 .pin-star:hover {
   color: var(--app-accent);
 }
-.pin-star.on {
-  color: var(--app-accent);
-  background: color-mix(in srgb, var(--app-accent) 22%, transparent);
-  border-radius: 6px;
-}
+/* .pin-star.on: drawn with .info-star.on (filled gold star) — see there. */
 /* Commander tactic "prepared today" toggle — sits left of the pin star. */
 .prep-toggle {
   margin-left: auto;
@@ -4219,13 +4215,49 @@ button.strike-name:hover {
     color: var(--app-accent);
   }
 }
-.info-star.on {
-  color: var(--app-accent);
+/* bug 2026-10-14 (owner: "star highlighted not obvious enough, too dim"): a pinned star was the SAME
+   outline glyph, only recoloured to the accent — on the dark themes an indigo outline next to a grey one.
+   Pinned is now a FILLED star in the theme's gold on a gold patch, for every star that means "on"
+   (popup pin, Main-tab pin, signature spell). The filled glyph comes from Tabler's own filled font,
+   loaded only when an "on" star is on screen. Guard: test/pin-star-visible.test.ts. */
+@font-face {
+  font-family: 'hh-star-filled';
+  src: url('../node_modules/@tabler/icons-webfont/dist/fonts/tabler-icons-filled.woff2') format('woff2');
+  font-display: block;
+}
+.info-star.on,
+.pin-star.on,
+.ms-sig.on {
+  color: var(--app-warn);
+  background: color-mix(in srgb, var(--app-warn) 22%, transparent);
+  border-radius: 6px;
+}
+.info-star.on .ti-star::before,
+.pin-star.on .ti-star::before,
+.ms-sig.on .ti-star::before {
+  font-family: 'hh-star-filled' !important;
+  content: '\f6a6';
 }
 
 /* ---- confirm modal (daily preparations, …) ---- */
 .confirm-modal {
   max-width: 420px;
+}
+/* "I slept in my armor" — asked, unticked (owner's ruling 2026-10-14). The whole row is the tap target. */
+.rest-armor-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+  color: var(--app-text);
+  padding: 4px 0;
+}
+.rest-armor-row input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--app-accent);
 }
 .confirm-body {
   padding: 13px 16px;
@@ -4712,7 +4744,7 @@ button.strike-name:hover {
   font-family: inherit;
   cursor: pointer;
   background: var(--app-bad);
-  color: #fff;
+  color: var(--app-bg);
   border: none;
   display: inline-flex;
   align-items: center;
@@ -4787,14 +4819,14 @@ button.strike-name:hover {
 .error-boundary-card {
   max-width: 480px;
   text-align: center;
-  background: var(--app-panel);
+  background: var(--app-surface);
   border: var(--app-bw) solid var(--app-border);
   border-radius: var(--app-radius);
   padding: 28px 26px;
 }
 .error-boundary-icon {
   font-size: 32px;
-  color: var(--app-danger, #c0392b);
+  color: var(--app-bad);
 }
 .error-boundary-card h2 {
   margin: 10px 0 6px;
@@ -4814,13 +4846,17 @@ button.strike-name:hover {
 }
 
 /* ---- "Couldn't save" banner ---- */
+/* Text on the red / amber fill is the page background colour, not white: on the dark themes those fills
+   are LIGHT (midnight's warn is yellow), so white text was 1.4–2.8:1. The page background reads at
+   3.6:1 or better on every theme (owner, 2026-10-14: "why do we even have things that aren't readable").
+   Guard: test/css-readable-text.test.ts. */
 .save-warning {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 8px 14px;
-  background: var(--app-danger, #c0392b);
-  color: #fff;
+  background: var(--app-bad);
+  color: var(--app-bg);
   font-size: 13px;
 }
 /* Proactive "storage almost full" heads-up — amber, not the red hard-failure color. */
@@ -4837,7 +4873,7 @@ button.strike-name:hover {
 .save-warning-x {
   background: none;
   border: none;
-  color: #fff;
+  color: inherit;
   cursor: pointer;
   font-size: 15px;
   display: inline-flex;
@@ -4851,7 +4887,7 @@ button.strike-name:hover {
   gap: 10px;
   padding: 8px 14px;
   background: var(--app-accent, #6366f1);
-  color: #fff;
+  color: var(--app-accent-text, #fff);
   font-size: 13px;
 }
 .update-banner > .ti {
@@ -4862,7 +4898,7 @@ button.strike-name:hover {
   flex: 1;
 }
 .update-banner a {
-  color: #fff;
+  color: inherit;
   font-weight: 600;
   text-decoration: underline;
   white-space: nowrap;
@@ -6483,8 +6519,8 @@ button.strike-name:hover {
    as the .inv-badge.bf chip the Standard/Essentials name line uses. */
 .inv-card.inv-compact .inv-cdot.bf {
   border-style: dashed;
-  border-color: var(--warn, #e0a458);
-  color: var(--warn, #e0a458);
+  border-color: var(--app-warn);
+  color: var(--app-warn);
 }
 /* No rule for .inv-clbl / .inv-cnum, and that is the point: a pill is never squeezed, so there is
    nothing for a word to give way to and no ellipsis to hide a charge count behind. The two spans are
@@ -6684,7 +6720,7 @@ button.strike-name:hover {
 .inv-attach-dismiss {
   background: none;
   border: none;
-  color: var(--app-muted);
+  color: var(--app-text-dim);
   cursor: pointer;
   padding: 2px;
   display: flex;
@@ -6899,7 +6935,7 @@ button.strike-name:hover {
 }
 /* Trash icon in the item-detail header — always reachable, never inside the scrolling body. */
 .sd-head-remove:hover {
-  color: var(--app-danger, #e5484d);
+  color: var(--app-bad);
 }
 .sd-container-chips {
   display: flex;
@@ -7240,7 +7276,7 @@ button.strike-name:hover {
   cursor: pointer;
 }
 .fb-remove:hover {
-  color: var(--app-danger, #d05a5a);
+  color: var(--app-bad);
 }
 /* A printed restriction the picker cannot enforce, shown in the picker's header. */
 .fsel-note {
@@ -7393,7 +7429,7 @@ button.strike-name:hover {
 .mpr-note {
   font-size: 13px;
   color: var(--app-text-dim);
-  background: var(--app-panel-2, rgba(127, 127, 127, 0.08));
+  background: rgba(127, 127, 127, 0.08);
   border-left: 3px solid var(--app-accent);
   padding: 8px 10px;
   border-radius: 4px;
@@ -7408,7 +7444,7 @@ button.strike-name:hover {
   border: 1px solid var(--app-border);
   border-radius: 8px;
   padding: 10px;
-  background: var(--app-panel-2, rgba(127, 127, 127, 0.05));
+  background: rgba(127, 127, 127, 0.05);
 }
 .mpr-card-title {
   font-weight: 700;
@@ -7460,7 +7496,7 @@ button.strike-name:hover {
 }
 .mpr-table th {
   font-weight: 700;
-  background: var(--app-panel-2, rgba(127, 127, 127, 0.08));
+  background: rgba(127, 127, 127, 0.08);
   position: sticky;
   top: 0;
 }
@@ -7483,7 +7519,7 @@ button.strike-name:hover {
 }
 .mpr-modebtn.active {
   background: var(--app-accent);
-  color: #fff;
+  color: var(--app-accent-text);
   border-color: var(--app-accent);
 }
 .mpr-propfilter {
@@ -7545,7 +7581,7 @@ button.strike-name:hover {
   border-radius: 6px;
 }
 .mpr-prop-toggle:hover {
-  background: var(--app-panel-2, rgba(127, 127, 127, 0.06));
+  background: rgba(127, 127, 127, 0.06);
   color: var(--app-text);
 }
 .mpr-prop-kinds {
@@ -7598,7 +7634,7 @@ button.strike-name:hover {
   padding: 0 5px;
   border-radius: 999px;
   background: var(--app-accent);
-  color: var(--app-on-accent, #fff);
+  color: var(--app-accent-text, #fff);
   font-size: 11px;
   font-weight: 700;
 }
@@ -7656,7 +7692,7 @@ button.strike-name:hover {
   border: 1px solid var(--app-border);
   border-radius: 8px;
   padding: 10px;
-  background: var(--app-panel-2, rgba(127, 127, 127, 0.05));
+  background: rgba(127, 127, 127, 0.05);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -8016,7 +8052,7 @@ button.strike-name:hover {
 .mp-tagchip.on {
   border-color: var(--app-accent);
   background: var(--app-accent);
-  color: #fff;
+  color: var(--app-accent-text);
 }
 .mp-tagfree {
   border: 1.5px solid var(--app-border);
@@ -8104,7 +8140,9 @@ button.strike-name:hover {
 }
 .inv-badge.invested {
   background: color-mix(in srgb, var(--app-accent) 22%, transparent);
-  color: color-mix(in srgb, var(--app-accent) 45%, white);
+  /* Mixed toward the theme's TEXT colour, not white: white made it pale-on-pale (1.5:1) on every light
+     theme. */
+  color: color-mix(in srgb, var(--app-accent) 45%, var(--app-text));
 }
 .inv-badge.worn {
   color: var(--app-text-dim);
@@ -8123,8 +8161,8 @@ button.strike-name:hover {
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  border: 1px dashed var(--warn, #e0a458);
-  color: var(--warn, #e0a458);
+  border: 1px dashed var(--app-warn);
+  color: var(--app-warn);
 }
 /* Battleforger control in the item editor. */
 .ie-bf {
@@ -9445,9 +9483,7 @@ button.strike-name:hover {
   color: var(--app-text-dim);
   opacity: 0.6;
 }
-.ms-sig.on {
-  color: var(--app-warn);
-}
+/* .ms-sig.on: drawn with .info-star.on (filled gold star) — see there. */
 /* A signature spell a record GRANTED. Still lit — it really is a signature spell — but not a control:
    the feat's text says it is one, so there is nothing here for the player to decide. */
 .ms-sig.fixed {
@@ -9666,7 +9702,7 @@ button.strike-name:hover {
 }
 .ie-base-clear:hover {
   color: var(--app-text);
-  border-color: var(--app-danger, var(--app-accent));
+  border-color: var(--app-bad);
 }
 .ie-pills {
   display: flex;
@@ -9805,7 +9841,7 @@ button.strike-name:hover {
   margin: 0;
   font-size: 11.5px;
   line-height: 1.55;
-  color: var(--app-muted);
+  color: var(--app-text-dim);
 }
 .ie-adv-addbtn {
   display: inline-flex;
@@ -9890,9 +9926,9 @@ button.strike-name:hover {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: var(--app-muted);
+  color: var(--app-text-dim);
 }
-.ie-adv-del:hover { color: var(--app-danger, #e5484d); }
+.ie-adv-del:hover { color: var(--app-bad); }
 
 /* Standalone Reset action at the foot of the editor — left-aligned, set off from the sections above. */
 .ie-reset-row {
@@ -10093,10 +10129,20 @@ button.strike-name:hover {
 .cond-pill.cond-dead {
   background: var(--app-bad);
   border-color: var(--app-bad);
-  color: #fff;
+  color: var(--app-bg);
 }
 .cond-pill.cond-dead .info-term {
-  color: #fff;
+  color: inherit;
+}
+/* On the red pill, the − / + hover colour (--app-bad) is the pill's own fill and the situational `*`
+   (accent) can sit on red too — both vanished. Keep them in the pill's text colour. */
+.cond-pill.cond-dead .cond-pill-step button:hover,
+.cond-pill.cond-dead .cond-pill-x:hover {
+  color: inherit;
+  opacity: 0.75;
+}
+.cond-pill.cond-dead .sit-star {
+  color: inherit;
 }
 .cond-stepper {
   display: inline-flex;
@@ -10595,7 +10641,7 @@ button.strike-name:hover {
   justify-content: center;
 }
 .login-error {
-  color: var(--app-danger);
+  color: var(--app-bad);
   font-size: 12.5px;
   margin: 0;
   line-height: 1.4;
@@ -11155,7 +11201,7 @@ button.strike-name:hover {
 .sb-muted { color: var(--app-text-dim); }
 .sb-div { border-top: var(--app-bw) solid var(--app-border); margin: 8px 0; }
 .sb-trait-warn { background: var(--app-warn); color: #3a2a00; }
-.sb-trait-bad { background: var(--app-bad); color: #fff; }
+.sb-trait-bad { background: var(--app-bad); color: var(--app-bg); }
 /* The shared HpControl (sidebar HP block) embedded in a companion / vehicle / siege stat block. */
 .sb-hp-block { margin: 4px 0 2px; }
 .sb-hp-block .hp-line { margin: 2px 0; }
@@ -11623,7 +11669,7 @@ button.strike-name:hover {
   border: none;
   cursor: pointer;
 }
-.fsel-anyall-btn.on { background: var(--app-accent); color: #fff; }
+.fsel-anyall-btn.on { background: var(--app-accent); color: var(--app-accent-text); }
 
 .fsel-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .fsel-chip {
@@ -12218,7 +12264,7 @@ html:has(.builder), html:has(.builder) body { overscroll-behavior-y: none; }
     border-radius: var(--app-radius-sm); color: var(--app-text); font-size: 13px; cursor: pointer;
   }
   .settings-card i { font-size: 24px; color: var(--app-accent); }
-  .settings-card.danger i, .settings-card.danger span { color: var(--app-danger, #e0584d); }
+  .settings-card.danger i, .settings-card.danger span { color: var(--app-bad); }
   .settings-page-m .settings-pane { flex: 1; padding: 14px; padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)); overflow-y: auto; overscroll-behavior: contain; }
   .settings-back { flex: none; }
   /* The Settings SUBPAGE's pane (a drilled-in section) falls through to the desktop `.settings-pane`
@@ -12780,18 +12826,22 @@ html:has(.builder), html:has(.builder) body { overscroll-behavior-y: none; }
   .rsl-stop { font-size: 11px; }
 }
 
-/* Missing-data warnings on the Feats & Features tab (effects referencing legacy content). */
-.ff-warnings { display: flex; gap: 10px; align-items: flex-start; background: color-mix(in srgb, var(--warn, #b8862e) 12%, var(--card-bg, #fff)); border: 1px solid color-mix(in srgb, var(--warn, #b8862e) 40%, transparent); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: 13px; }
-.ff-warnings > i { color: var(--warn, #b8862e); font-size: 18px; margin-top: 1px; }
+/* Missing-data warnings on the Feats & Features tab (effects referencing legacy content).
+   Same bug as .ff-arch below, missed when that one was fixed: `--warn` and `--card-bg` are not names
+   this app defines, so the panel was cream on every dark theme and the heading kept the theme's light
+   text colour — unreadable (owner, 2026-10-14). Real theme tokens only; the guard is
+   test/css-undefined-vars.test.ts. */
+.ff-warnings { display: flex; gap: 10px; align-items: flex-start; color: var(--app-text); background: color-mix(in srgb, var(--app-warn) 12%, var(--app-surface)); border: 1px solid color-mix(in srgb, var(--app-warn) 40%, transparent); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: 13px; }
+.ff-warnings > i { color: var(--app-warn); font-size: 18px; margin-top: 1px; }
 .ff-warnings ul { margin: 4px 0 0; padding-left: 18px; }
-.ff-warnings li { margin: 2px 0; color: var(--app-text-dim, #726c7c); }
+.ff-warnings li { margin: 2px 0; color: var(--app-text); }
 
 /* Class-archetype banner (Feats & Features): what the archetype replaced in your class. */
 /* `--card-bg` is not a variable this app defines, so the mix fell back to WHITE on every dark theme and
    the dim grey text sat on a pale lavender panel — unreadable (owner, 2026-09-02). The panel now mixes
    the accent into the real surface colour and the text uses the real text colour. */
-.ff-arch { display: flex; gap: 10px; align-items: flex-start; color: var(--app-text); background: color-mix(in srgb, var(--accent, #7a5af8) 12%, var(--app-surface)); border: 1px solid color-mix(in srgb, var(--accent, #7a5af8) 35%, transparent); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: 13px; }
-.ff-arch > i { color: var(--accent, #7a5af8); font-size: 18px; margin-top: 1px; }
+.ff-arch { display: flex; gap: 10px; align-items: flex-start; color: var(--app-text); background: color-mix(in srgb, var(--app-accent) 12%, var(--app-surface)); border: 1px solid color-mix(in srgb, var(--app-accent) 35%, transparent); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: 13px; }
+.ff-arch > i { color: var(--app-accent); font-size: 18px; margin-top: 1px; }
 .ff-arch ul { margin: 4px 0 0; padding-left: 18px; }
 .ff-arch li { margin: 2px 0; color: var(--app-text); }
 /* A long class-archetype note (Flexible Spellcaster's renders 1,168 characters) starts cut to 3 lines;
@@ -13137,7 +13187,7 @@ html:has(.builder), html:has(.builder) body { overscroll-behavior-y: none; }
   margin: 0 0 9px;
   padding: 4px 0 4px 9px;
   border-left: 2px solid var(--app-accent);
-  color: var(--app-muted);
+  color: var(--app-text-dim);
 }
 .sd-ours .ref-link {
   font-style: normal;
@@ -13187,7 +13237,7 @@ html:has(.builder), html:has(.builder) body { overscroll-behavior-y: none; }
   padding: 0 4px 0 6px;
   margin-right: 4px;
   border-left: 2px solid var(--app-accent);
-  color: var(--app-muted);
+  color: var(--app-text-dim);
 }
 /* Card step 11: the player's pick ("Athletics" of Assurance) as the header subtitle over a page — ours,
    with the same accent rail, since the page's own header prints only the record's name. */
@@ -13195,7 +13245,7 @@ html:has(.builder), html:has(.builder) body { overscroll-behavior-y: none; }
   padding: 0 4px 0 6px;
   margin-right: 4px;
   border-left: 2px solid var(--app-accent);
-  color: var(--app-muted);
+  color: var(--app-text-dim);
   font-size: 0.9em;
   font-style: italic;
 }
