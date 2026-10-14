@@ -1,5 +1,5 @@
 import { Fragment, useRef, useState } from 'react';
-import type { Character, ContentDatabase, ProficiencyRank, SenseEntry, CharacterDetails } from '../rules/types';
+import type { Character, ContentDatabase, DescRef, ProficiencyRank, SenseEntry, CharacterDetails } from '../rules/types';
 import { RankPill } from './widgets';
 import { RANK_LABEL } from '../rules/explain';
 import { InfoTerm } from './InfoTerm';
@@ -14,6 +14,7 @@ import { DefensesPills } from './DefensesPills';
 import { AvatarCropModal } from './AvatarCropModal';
 import { CharacterImages } from './CharacterImages';
 import { scopeOfCharacter } from './cardScope';
+import type { CardScope, OursLine } from './cardModel';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -36,6 +37,17 @@ interface ProfRow {
   name: string;
   rank: ProficiencyRank;
   desc?: string;
+}
+
+/** One cell of the desktop origin list: its InfoTerm's plain popup, or with `term` a record's 'mine' card
+ *  (the Class and Background terms). */
+interface OriginCell {
+  icon: string;
+  label: string;
+  name?: string;
+  desc?: string;
+  refs?: DescRef[];
+  term?: { descKey?: string; descSlug?: string; mine?: { scope?: CardScope }; ours?: OursLine[] };
 }
 
 /** Short bio fields shown as single-line inputs; appearance/personality get textareas. */
@@ -86,6 +98,31 @@ export function DetailsTab({
   const classTerm = cls
     ? { descKey: 'classes', descSlug: cls.id, mine: { scope: scopeOfCharacter(character) } }
     : {};
+  /* The Background term opens the background record's 'mine' card the same way, and that card is where
+     the background's own `note` is read — "this record works; here is the part you apply yourself"
+     (types.ts ContentBase.note): Anti-Magical's DC 3 flat check, Cathedral Child's party reputations.
+     A background has no Feats-tab row, so without this every background note was a field nobody saw,
+     and table notes were filed as red "Missing data" warnings instead (test/note-readers.test.tsx).
+     A custom background (no record) keeps the plain popup. */
+  const bgTerm = background
+    ? {
+        descKey: 'backgrounds',
+        descSlug: background.id,
+        mine: { scope: scopeOfCharacter(character) },
+        ours: background.note ? [{ kind: 'note' as const, text: `Note: ${background.note}` }] : undefined,
+      }
+    : {};
+  /* The desktop origin list's two rows (below). Typed, because only some cells open a record's card. */
+  const desktopRows: OriginCell[][] = [
+    [
+      { icon: 'ti-user', label: 'Ancestry', name: ancestry?.name, desc: ancestry?.description, refs: ancestry?.descRefs },
+      { icon: 'ti-sparkles', label: 'Heritage', name: heritage?.name, desc: heritage?.description, refs: heritage?.descRefs },
+    ],
+    [
+      { icon: 'ti-shield-half', label: 'Class', name: cls?.name, desc: cls?.description, refs: cls?.descRefs, term: classTerm },
+      { icon: 'ti-book-2', label: 'Background', name: bgName, desc: bgDesc, refs: background?.descRefs, term: bgTerm },
+    ],
+  ];
 
   // Portrait import: clicking the slot opens a file picker, then the frame-the-avatar step. The image
   // is stored BEFORE the crop dialog, so cancelling the dialog keeps the upload (with a centre crop)
@@ -223,7 +260,7 @@ export function DetailsTab({
               {[
                 { icon: 'ti-user', label: 'Ancestry', name: ancestry?.name, title: ancestry?.name ?? 'Ancestry', desc: ancestry?.description, refs: ancestry?.descRefs },
                 { icon: 'ti-sparkles', label: 'Heritage', name: heritage?.name, title: heritage?.name ?? 'Heritage', desc: heritage?.description, refs: heritage?.descRefs },
-                { icon: 'ti-book-2', label: 'Background', name: bgName, title: bgName ?? 'Background', desc: bgDesc, refs: background?.descRefs },
+                { icon: 'ti-book-2', label: 'Background', name: bgName, title: bgName ?? 'Background', desc: bgDesc, refs: background?.descRefs, term: bgTerm },
                 { icon: 'ti-shield-half', label: 'Class', name: cls?.name, title: cls?.name ?? 'Class', desc: cls?.description, refs: cls?.descRefs, term: classTerm },
               ].map((o) => (
                 <div className="obox" key={o.label}>
@@ -239,16 +276,7 @@ export function DetailsTab({
             /* Two rows of two rather than a pair and then a column: Ancestry over Class on the left,
                Heritage over Background on the right. */
             <div className="origin-list">
-              {[
-                [
-                  { icon: 'ti-user', label: 'Ancestry', name: ancestry?.name, desc: ancestry?.description, refs: ancestry?.descRefs },
-                  { icon: 'ti-sparkles', label: 'Heritage', name: heritage?.name, desc: heritage?.description, refs: heritage?.descRefs },
-                ],
-                [
-                  { icon: 'ti-shield-half', label: 'Class', name: cls?.name, desc: cls?.description, refs: cls?.descRefs, term: classTerm },
-                  { icon: 'ti-book-2', label: 'Background', name: bgName, desc: bgDesc, refs: background?.descRefs },
-                ],
-              ].map((row, i) => (
+              {desktopRows.map((row, i) => (
                 <div className="orow pair" key={i}>
                   {row.map((o, j) => (
                     <Fragment key={o.label}>

@@ -5,9 +5,24 @@
  * genuinely need an engine lane that does not exist and are left alone rather than faked.
  *
  * Every value is re-checked here against the record's own text before it is written.
+ *
+ * ⛔ HISTORICAL — this ran once (commit 5f508f3) and must not run again. It is kept because its rows are
+ * only traceable to the text below. Two reasons it is now wrong:
+ *  - It writes straight into scripts/data/effect-backfill.json, whose only writer is
+ *    scripts/apply-parity-fixes.mjs (supersedes, the AoN `why`, --expect-rows).
+ *  - Its four "prose" rows are filed under its own heading "the feat works, but a clause is the player's
+ *    to apply" — the definition of `note` — yet it writes them as `dataWarning`, the red "Missing data"
+ *    box. Lane B (2026-10-14) moved them to `note` with value:null dataWarning rows; this upsert would
+ *    overwrite those null rows with the old text and put four table notes back in the box.
+ *    test/data-warning-is-missing-data.test.ts fails if that happens by any route.
+ *
+ *   node scripts/backfill-bare-feats.mjs   # exits 2 with that message
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { formatBackfill } from './lib/write-backfill.mjs';
+
+console.error('scripts/backfill-bare-feats.mjs is HISTORICAL: it ran once (5f508f3) and would write four table notes back as dataWarning (the red "Missing data" box) over the value:null rows that moved them to `note`. Overlay rows go through scripts/apply-parity-fixes.mjs — it is the only writer of effect-backfill.json.');
+process.exit(2);
 
 const ROOT = 'C:/trying ai 2/pf2e codex/';
 const db = JSON.parse(readFileSync(ROOT + 'public/core.json', 'utf8'));

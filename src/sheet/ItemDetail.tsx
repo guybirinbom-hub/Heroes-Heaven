@@ -13,6 +13,7 @@ import { CritSpecText } from './CritSpecText';
 import { CRIT_SPEC_PAGE_BUCKET, critSpec, critSpecPageRef } from '../rules/critSpec';
 import { RecordCard } from './RecordCard';
 import { scopeOfCharacter } from './cardScope';
+import type { OursLine } from './cardModel';
 import { useAstNode, withoutItemLists } from './useAst';
 import { aonIndex, embedsFromBucket, embedsPage, printedWeaponGroups, refInBucket, stubRefs, useStubbedTree } from './astStubs';
 import { PinStar } from './PinStar';
@@ -294,6 +295,10 @@ export function ItemDetail({
   // item wears its twin's name and text, so its page and its pin are the twin's too; for any other item
   // this is its own id.
   const pageId = shownItemId(item, content);
+  // The shown record's own note (the card's ours box and the star's pin, below): the twin's for a hidden
+  // cursed item.
+  const shownNote = (content.items[pageId] ?? item).note;
+  const noteOurs: OursLine[] | undefined = shownNote ? [{ kind: 'note', text: `Note: ${shownNote}` }] : undefined;
   /* Card step 14 (docs/card-design.md section 9 row 14; section 5 "Crit-spec block"): the description is
    * the record's card (RecordCard chrome 'inset', below) and its page draws the pages its stubs embed — a
    * weapon's group effect under "Critical Specialization Effects". The same tree is read here (the hooks
@@ -462,7 +467,9 @@ export function ItemDetail({
         <div className="picker-head">
           <span className="sd-head-name">{item.name}</span>
           <span className="sd-head-actions">
-            <PinStar node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items', slug: pageId, mode: 'mine' }} />
+            {/* The pin carries the card's note line too (play.ts pinOf keeps kind note), so the Pinned list
+                reopens the card with its box — what FeatDetail's star does for a feat. */}
+            <PinStar node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items', slug: pageId, mode: 'mine', ...(noteOurs ? { ours: noteOurs } : {}) }} />
             {editable && (
               <i className="ti ti-pencil" style={{ cursor: 'pointer' }} title="Edit item" onClick={() => onEdit!(item, inv)} aria-label="Edit item" />
             )}
@@ -957,12 +964,18 @@ export function ItemDetail({
               lists cut, the character's folds; no page → the old text with the no-page line. The card's
               footer carries the two marked lines the popup owns (desk #158 the link to the reprint that
               ships beside a legacy item, desk #152 `fallbackText` for an item the book gives no rules text
-              and no archive page). Card step 22 removed the legacy DescBody that stood beside it. */}
+              and no archive page). Card step 22 removed the legacy DescBody that stood beside it.
+              Its ours box carries the SHOWN record's own `note` — "this item works; here is the part you
+              apply yourself" (a Talisman Cord's preservation flat check, a food's daily effect), in the
+              Feats tab's "Note: …" words. It was read by nothing here, so an item note was a field no
+              player saw (test/note-readers.test.tsx). The shown record's, never a hidden cursed
+              item's own: the twin's note is the one the player is meant to read. */}
           <RecordCard
             node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items', slug: pageId }}
             mode="mine"
             chrome="inset"
             scope={scopeOfCharacter(character)}
+            ours={noteOurs}
             printed={itemStatRows(item, content).map((r) => r.k)}
             fallbackText="The book prints no rules text for this item."
             stubs

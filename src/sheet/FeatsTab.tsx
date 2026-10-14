@@ -399,7 +399,13 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       traits: heritage.traits,
       description: heritage.description,
       // Card step 18: a heritage's level-sized resistance (Arctic Elf: "cold resistance equal to half your level").
-      ours: atLevelLines(character, content, 'heritages', heritage.id),
+      // Then the heritage's own `note`, in the feat row's "Note: …" words (withPicks above): Hooded
+      // Nagaji's critical-hit rider, Ancient Scale Azarketi's spots. Read by nothing before, so a heritage
+      // note was a field no player saw (test/note-readers.test.tsx).
+      ours: [
+        ...atLevelLines(character, content, 'heritages', heritage.id),
+        ...(heritage.note ? [{ kind: 'note' as const, text: `Note: ${heritage.note}` }] : []),
+      ],
       descRefs: heritage.descRefs,
       isFeature: true,
       bucket: 'Ancestry & heritage',
