@@ -440,11 +440,16 @@
   padding-right: 6px;
   border-radius: var(--app-radius-sm);
 }
-.brow-open:hover {
-  background: var(--app-surface-2);
-}
-.brow-open:hover .bv {
-  color: var(--app-accent);
+/* Every :hover in this file sits in a (hover: hover) block: a touch screen keeps :hover on the last
+   thing tapped, so the row or button stayed lit after the tap (native-feel check 2026-10-14; guard
+   test/phone-native-feel.test.ts). */
+@media (hover: hover) {
+  .brow-open:hover {
+    background: var(--app-surface-2);
+  }
+  .brow-open:hover .bv {
+    color: var(--app-accent);
+  }
 }
 .brail-actions {
   margin-top: 12px;
@@ -716,9 +721,11 @@
 .info-term.lvl-slot-info {
   text-decoration: none;
 }
-.lvl-info:hover,
-.lvl-slot-info:hover {
-  color: var(--app-accent);
+@media (hover: hover) {
+  .lvl-info:hover,
+  .lvl-slot-info:hover {
+    color: var(--app-accent);
+  }
 }
 .lvl-pending {
   color: var(--app-warn);
@@ -784,9 +791,11 @@
   align-items: center;
   justify-content: center;
 }
-.lvl-clear-btn:hover {
-  color: var(--app-bad);
-  border-color: var(--app-bad);
+@media (hover: hover) {
+  .lvl-clear-btn:hover {
+    color: var(--app-bad);
+    border-color: var(--app-bad);
+  }
 }
 /* Replace a filled feat slot — opens the picker (the card itself now shows the description). */
 .lvl-replace-btn {
@@ -803,9 +812,11 @@
   gap: 5px;
   white-space: nowrap;
 }
-.lvl-replace-btn:hover {
-  color: var(--app-accent);
-  border-color: var(--app-accent);
+@media (hover: hover) {
+  .lvl-replace-btn:hover {
+    color: var(--app-accent);
+    border-color: var(--app-accent);
+  }
 }
 .lvl-replace-btn .ti {
   font-size: 13px;
@@ -1105,8 +1116,10 @@
   opacity: 0.4;
   cursor: default;
 }
-.picker-item:disabled:hover {
-  background: transparent;
+@media (hover: hover) {
+  .picker-item:disabled:hover {
+    background: transparent;
+  }
 }
 .picker-check {
   width: 18px;
@@ -1169,8 +1182,10 @@
   line-height: 1;
   border-radius: 999px;
 }
-.rule-info:hover {
-  color: var(--app-accent);
+@media (hover: hover) {
+  .rule-info:hover {
+    color: var(--app-accent);
+  }
 }
 .spr-chip {
   display: inline-flex;
@@ -1194,8 +1209,10 @@
   margin: 0;
   line-height: 1;
 }
-.spr-chip-x:hover {
-  color: var(--app-bad);
+@media (hover: hover) {
+  .spr-chip-x:hover {
+    color: var(--app-bad);
+  }
 }
 .spr-chip-sig {
   display: inline-flex;
@@ -1209,8 +1226,10 @@
   margin: 0;
   line-height: 1;
 }
-.spr-chip-sig:hover {
-  color: var(--app-accent);
+@media (hover: hover) {
+  .spr-chip-sig:hover {
+    color: var(--app-accent);
+  }
 }
 .spr-chip-sig.on {
   color: var(--app-accent);
@@ -1295,8 +1314,10 @@
   display: flex;
   align-items: center;
 }
-.inv-remove:hover {
-  color: var(--app-bad);
+@media (hover: hover) {
+  .inv-remove:hover {
+    color: var(--app-bad);
+  }
 }
 
 /* full stats sidebar */
@@ -1316,8 +1337,10 @@
   cursor: pointer;
   border: 1px solid transparent;
 }
-.fs-ab-open:hover {
-  border-color: var(--app-accent);
+@media (hover: hover) {
+  .fs-ab-open:hover {
+    border-color: var(--app-accent);
+  }
 }
 /* An ability score pinned by an Override (boosts don't move it). */
 .fs-ab-pinned {
@@ -1362,9 +1385,11 @@
   font-size: 12px;
   cursor: pointer;
 }
-.attr-override-clear:hover {
-  background: var(--app-warn);
-  color: var(--app-warn-text, #1a1205);
+@media (hover: hover) {
+  .attr-override-clear:hover {
+    background: var(--app-warn);
+    color: var(--app-warn-text, #1a1205);
+  }
 }
 .fs-an {
   font-size: 11px;
@@ -1642,9 +1667,11 @@
   color: var(--app-text);
   cursor: pointer;
 }
-.src-act:hover {
-  border-color: var(--app-accent);
-  color: var(--app-accent);
+@media (hover: hover) {
+  .src-act:hover {
+    border-color: var(--app-accent);
+    color: var(--app-accent);
+  }
 }
 /* Live name filter for the (long) book list. */
 .src-search {
@@ -1682,8 +1709,10 @@
   padding: 0;
   flex: none;
 }
-.src-search-x:hover {
-  color: var(--app-text);
+@media (hover: hover) {
+  .src-search-x:hover {
+    color: var(--app-text);
+  }
 }
 .src-no-match {
   font-size: 12.5px;
@@ -1762,8 +1791,10 @@
   border-radius: var(--app-radius-sm);
   text-align: left;
 }
-.src-book:hover {
-  background: var(--app-surface-2);
+@media (hover: hover) {
+  .src-book:hover {
+    background: var(--app-surface-2);
+  }
 }
 .src-book.on {
   color: var(--app-text);
@@ -1808,8 +1839,10 @@
   cursor: pointer;
   text-align: left;
 }
-.src-niche:hover {
-  color: var(--app-text);
+@media (hover: hover) {
+  .src-niche:hover {
+    color: var(--app-text);
+  }
 }
 .src-niche > i {
   font-size: 15px;
@@ -1859,8 +1892,10 @@
   border-radius: 50%;
   line-height: 1;
 }
-.ovr-chip-x:hover {
-  background: var(--app-hover);
+@media (hover: hover) {
+  .ovr-chip-x:hover {
+    background: var(--app-hover);
+  }
 }
 .picker-override-note {
   font-size: 11px;
@@ -2133,4 +2168,44 @@
   .ovr-attrs > .ovr-attr:only-child { grid-column: 1 / -1; }
   .ovr-attr { min-width: 0; }
   .ovr-attr-in { flex: 1 1 auto; width: auto; min-width: 0; max-width: 56px; min-height: 36px; font-size: 16px; }
+}
+
+/* ---- Native feel on a phone (native-feel check 2026-10-14; guard test/phone-native-feel.test.ts) ----
+   Press feedback the moment the finger lands. A web button only reacts on `click`, which fires when the
+   finger LEAVES, so every tap read as slightly late; and with the hover styles now gated (touch has no
+   hover) a tap gave no feedback at all. Small buttons shrink a touch, full-width rows dim — instant, no
+   transition (nothing here animates, so reduced-motion has nothing to switch off).
+   `button.` on every selector: `:active` also matches every ANCESTOR of the pressed element, and many
+   .lvl-card / .popsel are wrapper divs — pressing one boost pill dimmed its whole card, and the pill
+   twice over (final check). A button never contains another button, so only the pressed one reacts. */
+@media (max-width: 720px) {
+  button.lchip:active:not(:disabled),
+  button.lvl-step:active:not(:disabled),
+  button.b-cancel:active:not(:disabled),
+  button.b-create:active:not(:disabled),
+  button.ss-replace:active:not(:disabled),
+  button.lvl-replace-btn:active:not(:disabled),
+  button.lvl-clear-btn:active:not(:disabled),
+  button.spr-add:active:not(:disabled),
+  button.src-act:active:not(:disabled),
+  button.rule-info:active:not(:disabled),
+  button.pick-add:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+  button.popsel:active:not(:disabled),
+  button.lvl-card:active:not(:disabled),
+  button.ss-filled-body:active:not(:disabled),
+  button.pick-body:active:not(:disabled),
+  button.picker-item:active:not(:disabled),
+  button.src-book:active:not(:disabled),
+  button.brow-open:active:not(:disabled),
+  button.brail-toggle:active:not(:disabled),
+  button.fs-ab-open:active:not(:disabled) {
+    opacity: 0.7;
+  }
+  /* A greyed (unpickable) row is already at .5 — pressing it to read the description dims it further
+     rather than brightening it to .7. */
+  .pick-row.dim button.pick-body:active:not(:disabled) {
+    opacity: 0.35;
+  }
 }

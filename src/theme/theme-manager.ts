@@ -166,6 +166,23 @@ function applyResolved(themeId: string, styleId: string, fontId: string, accent:
   root.dataset.theme = theme;
   root.dataset.polarity = polarity;
   root.style.colorScheme = polarity;
+  syncThemeColorMeta(vars['--app-bg']);
+}
+
+/** The phone browser paints its status bar / address bar from `<meta name="theme-color">`. index.html
+ *  ships one fixed dark value (the default theme's background), so on the website a light theme sat
+ *  under a near-black bar (native-feel check 2026-10-14). Follow the theme that is actually on screen.
+ *  The installed apps ignore the tag (their bars have their own backing). test/phone-native-feel.test.ts.
+ *  Exported for a surface that paints its OWN look over the page (the campaign tracker). */
+export function syncThemeColorMeta(bg: string | undefined): void {
+  if (!bg || typeof document === 'undefined') return;
+  let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+  if (!meta) {
+    meta = document.createElement('meta');
+    meta.name = 'theme-color';
+    document.head.appendChild(meta);
+  }
+  if (meta.content !== bg) meta.content = bg;
 }
 
 /** The open sheet's per-character overlay (see applySheetOverlay), or null when no sheet overrides. */

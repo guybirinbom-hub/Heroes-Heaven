@@ -12,6 +12,7 @@ import type { DescNode } from '../sheet/descref';
 import { ForceMobileContext } from '../sheet/useIsMobile';
 import { DismissUnder, useBackHandler } from '../sheet/useEscapeClose';
 import { useTrackerVars, useGlobalVars, hhSurfaceTheme } from './trackerAppearance';
+import { syncThemeColorMeta } from '../theme/theme-manager';
 import type { DialogStyle } from '../sheet/confirm';
 import { TrackerCustomize } from './TrackerCustomize';
 import { CampaignPartyLevelProvider } from '../../tracker/src/data/partyLevelContext';
@@ -363,6 +364,15 @@ export function CampaignTracker({
    */
   const trackerVars = useTrackerVars();
   const globalVars = useGlobalVars();
+  // A phone or tablet browser paints its status bar from <meta name="theme-color">, which follows the
+  // app's theme (theme-manager). While the tracker wears its own look, follow that instead, and hand the
+  // bar back to the app's theme when the tracker closes or drops its look (native-feel check 2026-10-14).
+  useEffect(() => {
+    const bg = (trackerVars as Record<string, string> | null)?.['--app-bg'];
+    if (!bg) return;
+    syncThemeColorMeta(bg);
+    return () => syncThemeColorMeta(document.documentElement.style.getPropertyValue('--app-bg').trim() || undefined);
+  }, [trackerVars]);
   // The app's variables AND the four text properties: the sheet sits inside `.tracker-root`, whose
   // rules re-declare colour and font from the TRACKER's variables, and an element inherits those as
   // finished values — with the variables alone the review sheet kept the tracker's font, and its

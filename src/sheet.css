@@ -311,8 +311,12 @@ body {
   cursor: pointer;
   opacity: 0.85;
 }
-.cmp-leave-btn:hover {
-  opacity: 1;
+/* Hover rules of controls the builder and its pickers use sit in (hover: hover) blocks: a touch screen
+   keeps :hover on the last thing tapped (native-feel check 2026-10-14; test/phone-native-feel.test.ts). */
+@media (hover: hover) {
+  .cmp-leave-btn:hover {
+    opacity: 1;
+  }
 }
 .party-leave-row {
   display: flex;
@@ -1555,8 +1559,10 @@ body {
   font-family: inherit;
   cursor: pointer;
 }
-.icon-btn:hover {
-  border-color: var(--app-accent);
+@media (hover: hover) {
+  .icon-btn:hover {
+    border-color: var(--app-accent);
+  }
 }
 /* "← Tracker": a sheet opened from the campaign's tracker (CharacterSheet's gmEdit.inTracker /
    onBackToTracker) leads its identity row with one labelled way back. Icon + word, so it reads as the
@@ -4188,8 +4194,10 @@ button.strike-name:hover {
   margin-right: 8px;
   flex: none;
 }
-.info-back:hover {
-  color: var(--app-accent);
+@media (hover: hover) {
+  .info-back:hover {
+    color: var(--app-accent);
+  }
 }
 /* Favorite star in a description popup's header (pins it to the Main-tab Pinned section). */
 .info-star {
@@ -4205,7 +4213,12 @@ button.strike-name:hover {
   flex: none;
   border-radius: var(--app-radius-sm);
 }
-.info-star:hover,
+/* Split: on a touch screen the hover half left a tapped (unpinned) star looking pinned. */
+@media (hover: hover) {
+  .info-star:hover {
+    color: var(--app-accent);
+  }
+}
 .info-star.on {
   color: var(--app-accent);
 }
@@ -4673,8 +4686,10 @@ button.strike-name:hover {
   border: var(--app-bw) solid var(--app-border);
   color: var(--app-text);
 }
-.btn-ghost:hover {
-  border-color: var(--app-accent);
+@media (hover: hover) {
+  .btn-ghost:hover {
+    border-color: var(--app-accent);
+  }
 }
 .btn-primary {
   background: var(--app-accent);
@@ -4756,8 +4771,10 @@ button.strike-name:hover {
   border: var(--app-bw) solid var(--app-border);
   color: var(--app-text);
 }
-.btn:hover {
-  border-color: var(--app-accent);
+@media (hover: hover) {
+  .btn:hover {
+    border-color: var(--app-accent);
+  }
 }
 
 /* ---- Error boundary fallback ---- */
@@ -7271,8 +7288,10 @@ button.strike-name:hover {
   cursor: pointer;
   padding: 2px 4px;
 }
-.mp-rules-link:hover {
-  text-decoration: underline;
+@media (hover: hover) {
+  .mp-rules-link:hover {
+    text-decoration: underline;
+  }
 }
 /* Standalone rules link inside a Setup card (its own line, not right-floated). */
 .setup-rules-link {
@@ -8920,9 +8939,11 @@ button.strike-name:hover {
   text-align: left;
   border-radius: 0 0 var(--app-radius) var(--app-radius);
 }
-.picker-clear:hover {
-  color: var(--app-bad);
-  background: color-mix(in srgb, var(--app-bad) 8%, transparent);
+@media (hover: hover) {
+  .picker-clear:hover {
+    color: var(--app-bad);
+    background: color-mix(in srgb, var(--app-bad) 8%, transparent);
+  }
 }
 .picker-clear i { flex: none; }
 .picker-clear-cur {
@@ -9044,9 +9065,11 @@ button.strike-name:hover {
   border-radius: var(--app-radius-sm);
   font-size: 15px;
 }
-.picker-close:hover {
-  color: var(--app-text);
-  background: var(--app-surface-2);
+@media (hover: hover) {
+  .picker-close:hover {
+    color: var(--app-text);
+    background: var(--app-surface-2);
+  }
 }
 
 /* Styled confirm() replacement: a small, non-resizable .picker variant (see sheet/confirm.tsx). */
@@ -9081,9 +9104,11 @@ button.strike-name:hover {
 .openable {
   cursor: pointer;
 }
-.tile.openable:hover,
-.ability.openable:hover {
-  border-color: var(--app-accent);
+@media (hover: hover) {
+  .tile.openable:hover,
+  .ability.openable:hover {
+    border-color: var(--app-accent);
+  }
 }
 /* The "Hit points" title opens the breakdown; the number is an editable field. */
 .ct.openable {
@@ -9429,9 +9454,11 @@ button.strike-name:hover {
   cursor: default;
   opacity: 0.75;
 }
-.ms-sig:hover,
-.ms-remove:hover {
-  color: var(--app-text);
+@media (hover: hover) {
+  .ms-sig:hover,
+  .ms-remove:hover {
+    color: var(--app-text);
+  }
 }
 .ms-sig.fixed:hover {
   color: var(--app-warn);
@@ -10360,9 +10387,11 @@ button.strike-name:hover {
 .focus-circ.btn.on {
   background: var(--app-accent);
 }
-.slot-pip.btn:hover,
-.focus-circ.btn:hover {
-  box-shadow: 0 0 0 2px var(--app-accent);
+@media (hover: hover) {
+  .slot-pip.btn:hover,
+  .focus-circ.btn:hover {
+    box-shadow: 0 0 0 2px var(--app-accent);
+  }
 }
 
 /* Item-spell source (staff/wand) header: the name opens the item; charge pips mirror its charges. */
@@ -11147,9 +11176,11 @@ button.strike-name:hover {
   cursor: pointer;
   border-radius: var(--app-radius-sm);
 }
-.stat-row.rollable:hover,
-.skill.rollable:hover {
-  background: var(--app-surface-2);
+@media (hover: hover) {
+  .stat-row.rollable:hover,
+  .skill.rollable:hover {
+    background: var(--app-surface-2);
+  }
 }
 .atk.rollable {
   cursor: pointer;
@@ -11509,7 +11540,9 @@ button.strike-name:hover {
   color: var(--app-text-dim);
   cursor: pointer;
 }
-.fsel-clear:hover { color: var(--app-accent); border-color: var(--app-accent); }
+@media (hover: hover) {
+  .fsel-clear:hover { color: var(--app-accent); border-color: var(--app-accent); }
+}
 /* The filter panel's "Done" (back to the results) is a PHONE control: there the panel covers the results
    completely. The phone block below shows it; everywhere else the header's Filters pill does the job. */
 .fsel-done { display: none; }
@@ -11574,7 +11607,9 @@ button.strike-name:hover {
   padding: 0 2px;
   cursor: pointer;
 }
-.fsel-sec-reset:hover { color: var(--app-accent); text-decoration: underline; }
+@media (hover: hover) {
+  .fsel-sec-reset:hover { color: var(--app-accent); text-decoration: underline; }
+}
 
 /* Damage-type facet: an Any(OR)/All(AND) segmented toggle above its chips. */
 .fsel-chipstoggle { display: flex; flex-direction: column; gap: 7px; }
@@ -11657,7 +11692,9 @@ button.strike-name:hover {
   padding: 4px 10px; border-radius: 999px;
   border: var(--app-bw) solid var(--app-border); background: transparent; color: var(--app-text-dim); cursor: pointer;
 }
-.fsel-head-filters:hover { border-color: var(--app-accent); }
+@media (hover: hover) {
+  .fsel-head-filters:hover { border-color: var(--app-accent); }
+}
 .fsel-head-filters.on { background: var(--app-accent); color: var(--app-accent-text); border-color: transparent; }
 .fsel-clear:disabled { opacity: .4; cursor: default; }
 .fsel-clear { display: inline-flex; align-items: center; gap: 4px; }
@@ -11669,7 +11706,9 @@ button.strike-name:hover {
   padding: 6px 4px; border-radius: var(--app-radius-sm);
   border: var(--app-bw) solid transparent; background: transparent; color: var(--app-text-dim); cursor: pointer;
 }
-.fsel-tab:hover { color: var(--app-text); }
+@media (hover: hover) {
+  .fsel-tab:hover { color: var(--app-text); }
+}
 .fsel-tab.on { background: var(--app-surface-2); color: var(--app-text); border-color: var(--app-border); }
 
 /* tri-state pills: excluded state (red, ✕, no bullet) + action-cost pills (glyph, no bullet) */
@@ -11754,7 +11793,9 @@ button.strike-name:hover {
   cursor: pointer;
   white-space: nowrap;
 }
-.fsel-inel:hover { border-color: var(--app-accent); }
+@media (hover: hover) {
+  .fsel-inel:hover { border-color: var(--app-accent); }
+}
 .fsel-inel.on { background: var(--app-accent); color: var(--app-accent-text); border-color: transparent; }
 .fsel-results-count { margin-left: auto; font-size: 11.5px; color: var(--app-text-dim); }
 /* Plain search shown in place of the Filters toggle when a picker has no real filter panel. */
@@ -12005,12 +12046,25 @@ button.strike-name:hover {
      phone, so they move with it; their 100% heights lose to the dvh !important as before. */
   .ws-app { position: fixed; inset: 0; top: var(--app-banner-h, 0px); overflow: hidden; }
   /* Native-app feel: no text selection / long-press callout on the UI chrome (long-press is for drag,
-     not selecting). Keep selection where it matters — inputs, selects, and editable rich-text areas. */
-  .ws-app, .roster-screen, .hb-page {
+     not selecting). Keep selection where it matters — inputs, selects, and editable rich-text areas.
+     `.builder` and `.picker-overlay` (2026-10-14 native-feel check): the builder is its own shell, not a
+     .ws-app, so holding a finger on any builder button selected its label; and the confirm / choose
+     boxes render outside every shell, so theirs did too. */
+  .ws-app, .roster-screen, .hb-page, .builder, .picker-overlay {
     -webkit-user-select: none;
     user-select: none;
     -webkit-touch-callout: none;
   }
+  /* Pull-to-refresh RELOADED the page on the phone website — and a reload throws away a character still
+     in the builder, with no question (the Discard guard only sees Cancel and Back). The builder's own
+     scroller no longer hands an overscroll on to the page, and while the builder is open the page itself
+     has no pull-to-refresh. Own rule: a browser without :has() drops just this one. The page rule is at
+     EVERY width — a phone held sideways (800-930px) or a tablet gets the desktop layout, and pull-to-
+     refresh with it (final check); on a desktop it changes nothing anyone can see. */
+  .builder > .builder-body { overscroll-behavior: contain; }
+}
+html:has(.builder), html:has(.builder) body { overscroll-behavior-y: none; }
+@media (max-width: 720px) {
   input, textarea, select, [contenteditable="true"] {
     -webkit-user-select: text;
     user-select: text;
