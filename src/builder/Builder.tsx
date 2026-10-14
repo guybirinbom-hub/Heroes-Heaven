@@ -79,6 +79,7 @@ import type { DescNode } from '../sheet/descref';
 import { ActionGlyph, isActionCost } from '../sheet/widgets';
 import { SPELL_SPEC_BUILDER, FEAT_SPEC } from '../sheet/filterSpecs';
 import { useIsMobile, useShowUndoButtons } from '../sheet/useIsMobile';
+import { useBackHandler } from '../sheet/useEscapeClose';
 import { PinContext, type PinDescApi } from '../sheet/PinContext';
 import { WindowControls } from '../sheet/WindowControls';
 import { useUndoableState } from '../useUndoableState';
@@ -195,7 +196,81 @@ export function hasChoicesAtLevel(build: BuildState, level: number): boolean {
   return feat || skillIncrease || attrBoosts;
 }
 
-const ord = (r: number) => (r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`);
+/**
+ * A build as a comparable string: keys sorted at every depth and `undefined` fields dropped (a saved
+ * build has been through JSON, which drops them too), so two builds holding the same choices compare
+ * equal whatever order their keys were written in. Used only to ask "did anything change?" before
+ * the builder is left.
+ */
+export function buildFingerprint(b: BuildState): string {
+  return JSON.stringify(b, (_k, v: unknown) => {
+    if (!v || typeof v !== 'object' || Array.isArray(v)) return v;
+    const o = v as Record<string, unknown>;
+    return Object.fromEntries(Object.keys(o).sort().map((k) => [k, o[k]]));
+  });
+}
+
+/**
+ * "Has the player changed this build since the builder opened?" — the question leaving asks.
+ *
+ * The starting point is the build as it stands when the player FIRST touches the screen, not the one
+ * handed in: anything the builder does to a build on its own while it opens (filling in a field an old
+ * save predates, say) is not the player's change and must never make Cancel or Back ask. Until the first
+ * press, tap, key or text input anywhere, every build change moves the start along with it; after it,
+ * the start is fixed. Undoing back to the start, or typing a name and deleting it again, is unchanged.
+ * test/phone-builder-leave.test.tsx.
+ */
+export function useBuildChanged(build: BuildState): () => boolean {
+  const startRef = useRef(build);
+  const frozenRef = useRef(false);
+  const latestRef = useRef(build);
+  latestRef.current = build;
+  useEffect(() => {
+    if (!frozenRef.current) startRef.current = build;
+  }, [build]);
+  useEffect(() => {
+    const freeze = () => {
+      frozenRef.current = true;
+    };
+    const events = ['pointerdown', 'mousedown', 'touchstart', 'keydown', 'click', 'input'];
+    for (const ev of events) document.addEventListener(ev, freeze, true);
+    return () => {
+      for (const ev of events) document.removeEventListener(ev, freeze, true);
+    };
+  }, []);
+  return () =>
+    latestRef.current !== startRef.current && buildFingerprint(latestRef.current) !== buildFingerprint(startRef.current);
+}
+
+/** The one line that says what a spell chip's ★ does (it was a hover tooltip only). */
+function SignatureHint() {
+  return (
+    <p className="lvl-note spr-sig-hint">
+      <i className="ti ti-star" aria-hidden="true" />
+      <span>
+        Tap a spell&rsquo;s star to make it a signature spell — you can cast it at any rank you have a slot for.
+      </span>
+    </p>
+  );
+}
+
+/** "a" or "an" before a noun, by its first letter: "an archetype feat", "a class feat". */
+export function withArticle(noun: string): string {
+  return `${/^[aeiou]/i.test(noun) ? 'an' : 'a'} ${noun}`;
+}
+
+/**
+ * How a player takes back a feat they took anyway, in the words of the device they hold. Desktop keeps
+ * its Ctrl+Z sentence; a phone has no keyboard, and its Undo arrows are hidden unless the player turned
+ * them on in Settings (the owner's setting — 'auto' is desktop-only), so it names what is really there.
+ */
+export function overrideUndoHint(isMobile: boolean, showUndoButtons: boolean): string {
+  if (!isMobile) return 'You can undo with Ctrl+Z.';
+  if (showUndoButtons) return 'You can undo it with the Undo arrow at the top.';
+  return 'Changed your mind? Clear the feat with the ✕ on its slot.';
+}
+
+const ord =(r: number) => (r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`);
 
 export function Builder({
   content: baseContent,
@@ -268,6 +343,16 @@ export function Builder({
   useEffect(() => {
     selChipRef.current?.scrollIntoView({ inline: 'nearest', block: 'nearest' });
   }, [sel]);
+  /* A new page opens at its TOP. `.builder-body` is the one scroller every page shares, and nothing reset
+   * it, so a page change kept the old page's offset: the next page opened mid-way or at its bottom, its
+   * "Level N · choices left" heading and first slots above the screen (a caster's level 19 opened on its
+   * spell ranks, looking as if it had no feats). Chip taps, the +/− stepper and "Advance to level N" all
+   * change `sel`, so this one place covers them. Layout, so no frame paints the new page at the old
+   * offset. test/phone-builder-shell.test.tsx. */
+  const bodyRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    if (bodyRef.current) bodyRef.current.scrollTop = 0;
+  }, [sel]);
   /*
    * Keep the page you are looking at and the character's level in step.
    *
@@ -291,10 +376,56 @@ export function Builder({
   const showUndoButtons = useShowUndoButtons();
   // Mobile: the live "Character" stat preview collapses behind a chevron to reclaim builder space.
   const [statsOpen, setStatsOpen] = useState(false);
-  // When lowering the level would drop choices already made at that level, confirm first.
-  // Holds the level we'd lower TO (= current level − 1), or null when no prompt is open.
-  const [confirmLowerTo, setConfirmLowerTo] = useState<number | null>(null);
   useEffect(() => setShowArch(false), [picker]);
+
+  /*
+   * LEAVING THE BUILDER — one door for the Cancel button (every platform) and Android's Back (phones).
+   *
+   * Cancel used to drop the whole build at once, one tap beside Create; Back was never wired at all, so
+   * its first press was swallowed by the dismiss stack's trap and the second left the APP, the unsaved
+   * character with it. Now: nothing changed since the builder opened → leave at once (no question for
+   * opening and closing it); something changed → ask, and only "Discard" leaves.
+   *
+   * Back reaches this only when no popup is open: it is the builder's FLOOR on the dismiss stack, below
+   * every picker the page mounts with it (useBackHandler `floor`), so a popup still closes first. Phones
+   * only — desktop Escape with nothing open keeps doing nothing. `backOnly`: so does Escape at PHONE
+   * width (a narrow window, a hardware keyboard) — only Back leaves; it used to reach this door and leave
+   * or ask "Discard changes?" (phone audit round 3). test/phone-builder-leave.test.tsx.
+   */
+  const buildChanged = useBuildChanged(build);
+  const askingLeave = useRef(false);
+  const requestLeave = async (): Promise<void> => {
+    if (askingLeave.current) return;
+    askingLeave.current = true;
+    try {
+      // An Overrides number box writes what was typed only when it is LEFT (DraftNumberInput), and
+      // Android's Back reaches this door without taking focus from it — so "50 typed into Max HP, then
+      // Back" read as no change and left without asking, the typed value gone (final check 2026-10-14).
+      // Leave the focused field first and let React apply what it commits, then compare.
+      const focused = typeof document !== 'undefined' ? document.activeElement : null;
+      if (focused instanceof HTMLElement && focused !== document.body) {
+        focused.blur();
+        await new Promise((r) => setTimeout(r, 0));
+      }
+      if (!buildChanged()) {
+        onCancel();
+        return;
+      }
+      const ok = await confirmDialog({
+        title: 'Discard changes?',
+        message: initial
+          ? `Leaving now throws away what you’ve changed in the builder. ${initial.name || 'The character'} stays as it was last saved.`
+          : 'This character hasn’t been created yet. Leaving now throws away everything you’ve chosen.',
+        confirmLabel: 'Discard',
+        cancelLabel: 'Keep editing',
+        danger: true,
+      });
+      if (ok) onCancel();
+    } finally {
+      askingLeave.current = false;
+    }
+  };
+  useBackHandler(isMobile, () => void requestLeave(), { floor: true, backOnly: true });
 
   /*
    * Take Ctrl+Z while the builder is open, and answer it ourselves. Both halves matter: without the
@@ -1306,6 +1437,18 @@ export function Builder({
               // one who satisfies it, so it is said where they choose.
               <p className="setup-hint">Any ranks you like, up to the total — but at least one 1st-rank spell.</p>
             )}
+            {/* Why every "+ add" below is grey, in words: it was only each button's hover tooltip, and a
+                tap on a disabled button does nothing, so a phone player was never told. Said once for
+                the whole pool. test/phone-builder-shell.test.tsx. */}
+            {poolSpent >= flatAt(lvl) && (
+              <p className="lvl-note spr-why">
+                <i className="ti ti-info-circle" aria-hidden="true" />
+                <span>
+                  Your {isFlexCollection ? 'collection' : 'spellbook'} holds all {flatAt(lvl)} spells it can at this
+                  level — remove one to choose a different spell.
+                </span>
+              </p>
+            )}
             {Object.keys(slotsAt(lvl))
               .map(Number)
               // batch 037: flexible-spellcaster#capstone-outside-collection — ranks 1-9 only for a
@@ -1343,6 +1486,16 @@ export function Builder({
                         + add
                       </button>
                     </div>
+                    {/* The held place, said where the press lands (the whole-pool line above covers a full pool). */}
+                    {full && floorHeld > 0 && poolSpent < flatAt(lvl) && (
+                      <p className="lvl-note spr-why">
+                        <i className="ti ti-info-circle" aria-hidden="true" />
+                        <span>
+                          Your collection must include at least one 1st-rank spell — the last of its {flatAt(lvl)}{' '}
+                          places is held for one.
+                        </span>
+                      </p>
+                    )}
                   </div>
                 );
               })}
@@ -1391,6 +1544,10 @@ export function Builder({
               })()}
           </>
         )}
+        {/* What the ★ on a spell is, in words: it was only the star's hover tooltip, and a tap toggles it
+            silently, so a phone player could not learn what it does. Shown while a star is on screen.
+            test/phone-builder-shell.test.tsx. */}
+        {!flatBudget && sigAvailable && g.ranks.some(({ rank }) => (build.spells[rank] ?? []).length > 0) && <SignatureHint />}
         {/* batch 037: flexible-spellcaster#collection-shape — per-rank caps only where the rule is
             per rank; a collection (like a spellbook) is drawn by the flat rail above. */}
         {!flatBudget &&
@@ -1471,6 +1628,7 @@ export function Builder({
           </div>
         )}
         {isWizardBook2 && <div className="bsec-sub">Spellbook — {learnedTotal2} / {spellbookSize2} learned</div>}
+        {sigAvailable2 && ranksWithSlots.some((r) => (build.spells2?.[r] ?? []).length > 0) && <SignatureHint />}
         {ranksWithSlots.map((rank) => {
           const chosen = build.spells2?.[rank] ?? [];
           const capR = isWizardBook2 ? spellbookSize2 : slotCounts2[rank] ?? 0;
@@ -1593,11 +1751,31 @@ export function Builder({
           <span className="lvl-ctl-label">Level</span>
           <button
             className="lvl-step"
-            onClick={() => {
+            onClick={async () => {
               // Lowering drops the current top level. Confirm if any choice (feat, skill, boost, or
               // chosen spells of a rank/cantrip gained there) was made there.
-              if (hasChoicesAtLevel(build, build.level) || spellsDropAt(build.level)) setConfirmLowerTo(build.level - 1);
-              else actions.bumpLevel(-1);
+              if (!(hasChoicesAtLevel(build, build.level) || spellsDropAt(build.level))) {
+                actions.bumpLevel(-1);
+                return;
+              }
+              /* The shared confirm, not a box of our own: the hand-built one never went on the dismiss
+               * stack, so Back and Escape could not close it — and the swallowed Back made the NEXT one
+               * leave the app with the build. test/phone-builder-shell.test.tsx. */
+              const to = build.level - 1;
+              const ok = await confirmDialog({
+                title: 'Lower level?',
+                message: (
+                  <>
+                    <p>
+                      You&apos;ve made choices at <strong>level {to + 1}</strong> (a feat, skill increase,
+                      attribute boost, or chosen spells). Lowering to <strong>level {to}</strong> stops applying them.
+                    </p>
+                    <p>They&apos;re kept and will reapply if you raise the level again.</p>
+                  </>
+                ),
+                confirmLabel: `Lower to level ${to}`,
+              });
+              if (ok) actions.setLevel(to);
             }}
             disabled={build.level <= 1}
             aria-label="Lower level"
@@ -1636,7 +1814,7 @@ export function Builder({
             </button>
           </div>
         )}
-        <button className="b-cancel" onClick={onCancel}>
+        <button className="b-cancel" onClick={() => void requestLeave()}>
           Cancel
         </button>
         <button className="b-create" onClick={() => void submit()}>
@@ -1665,7 +1843,7 @@ export function Builder({
         })}
       </div>
 
-      <div className="builder-body">
+      <div className="builder-body" ref={bodyRef}>
         <div className="bmain">
           {sel === 'setup' && (
             <div className="card-sec">
@@ -2382,6 +2560,17 @@ export function Builder({
                               card shows it: a created feat with no rules encoded applies nothing, and the
                               slot is where the player spent the pick (see TrustMarker). */}
                           {picked && <TrustMarker bucket="feats" id={picked} />}
+                          {/* WHY the triangle on the card is there, in words. It was only the icon's
+                              hover tooltip, which a phone never shows, and a tap on the icon opens the
+                              feat's description — so a phone player could not find out what was wrong.
+                              test/phone-builder-shell.test.tsx. */}
+                          {picked && nowInvalid && (
+                            <div className="lvl-note lvl-unfit lvl-invalid-note" data-invalid={key}>
+                              <i className="ti ti-alert-triangle" aria-hidden="true" /> Prerequisites no longer met
+                              {revalidation!.unmet.length ? `: ${revalidation!.unmet.join('; ')}` : ''}. Still on your
+                              character — replace it, or meet the prerequisite again.
+                            </div>
+                          )}
                           {unfit && (
                             <div className="lvl-note lvl-unfit" data-unfit={key}>
                               <i className="ti ti-alert-triangle" aria-hidden="true" /> Not valid for this slot — still on your character. Replace or clear it.
@@ -3102,7 +3291,11 @@ export function Builder({
 
         <aside className="brail">
           <div className="brail-title">
-            {isMobile && (
+            {/* Phone: the WHOLE title row is the toggle, the word included. Only the chevron used to be
+                (32x34 at the far left); a tap on "Character" or beside it did nothing, which read as
+                broken, and closing the panel again meant finding that chevron. Desktop keeps the plain
+                heading (the panel is always open there). test/phone-builder-shell.test.tsx. */}
+            {isMobile ? (
               <button
                 type="button"
                 className="brail-toggle"
@@ -3111,9 +3304,11 @@ export function Builder({
                 onClick={() => setStatsOpen((o) => !o)}
               >
                 <i className={'ti ' + (statsOpen ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
+                <span className="brail-toggle-label">Character</span>
               </button>
+            ) : (
+              'Character'
             )}
-            Character
           </div>
           {(!isMobile || statsOpen) && <FullStats build={build} content={content} character={featPrereqChar} />}
         </aside>
@@ -3201,7 +3396,7 @@ export function Builder({
         };
         return (
           <FilterableSelect
-            title={`Choose a ${FEAT_LABEL[picker.category].toLowerCase()}`}
+            title={`Choose ${withArticle(FEAT_LABEL[picker.category].toLowerCase())}`}
             icon="ti-medal"
             items={feats}
             spec={FEAT_SPEC}
@@ -3313,8 +3508,12 @@ export function Builder({
               const canOverride = !!build.options?.overridesEnabled;
               const allowed = build.overrides?.allowedFeats?.includes(f.id) ?? false;
               const node = descNodeOf(f, 'feats');
+              // Replace: the feat in this slot NOW is marked (highlight + ✓), so the player can find it
+              // and compare the others with it. test/phone-builder-shell.test.tsx.
+              const isCurrent = build.featPicks?.[pickerKey] === f.id;
               return (
                 <PickerRow
+                  chosen={isCurrent}
                   lead={<span className="picker-lvl">{f.level}</span>}
                   // The cost belongs to the feat, so it reads beside the feat's NAME. Sitting in the
                   // lead it landed left of the level badge, where it looked like part of the level.
@@ -3372,6 +3571,8 @@ export function Builder({
                       <span className="ovr-take">
                         <i className="ti ti-alert-triangle" aria-hidden="true" /> Take anyway
                       </span>
+                    ) : isCurrent ? (
+                      'Chosen'
                     ) : (
                       'Choose'
                     )
@@ -3401,7 +3602,7 @@ export function Builder({
                           : "You don't meet this feat's prerequisites.";
                       const ok = await confirmDialog({
                         title: `Take ${f.name} anyway?`,
-                        message: `${why}\n\nThis records a deliberate override for this feat only. You can undo with Ctrl+Z.`,
+                        message: `${why}\n\nThis records a deliberate override for this feat only. ${overrideUndoHint(isMobile, showUndoButtons)}`,
                         confirmLabel: 'Take anyway',
                         danger: true,
                       });
@@ -3556,41 +3757,6 @@ export function Builder({
         );
       })()}
 
-      {confirmLowerTo != null && (
-        <div className="picker-overlay" onClick={() => setConfirmLowerTo(null)}>
-          <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="picker-head">
-              <span>
-                <i className="ti ti-alert-triangle" aria-hidden="true" /> Lower level?
-              </span>
-              <button className="picker-close" onClick={() => setConfirmLowerTo(null)} aria-label="Close">
-                <i className="ti ti-x" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="confirm-body">
-              <p>
-                You&apos;ve made choices at <strong>level {confirmLowerTo + 1}</strong> (a feat, skill increase,
-                attribute boost, or chosen spells). Lowering to <strong>level {confirmLowerTo}</strong> stops applying them.
-              </p>
-              <p>They&apos;re kept and will reapply if you raise the level again.</p>
-            </div>
-            <div className="confirm-actions">
-              <button className="btn-ghost" onClick={() => setConfirmLowerTo(null)}>
-                Cancel
-              </button>
-              <button
-                className="btn-primary"
-                onClick={() => {
-                  actions.setLevel(confirmLowerTo);
-                  setConfirmLowerTo(null);
-                }}
-              >
-                Lower to level {confirmLowerTo}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
     </PinContext.Provider>
   );

@@ -8313,7 +8313,9 @@ button.strike-name:hover {
    status bar / notch so its title and nav hamburger stay visible and tappable (edge-to-edge on Android). */
 @media (max-width: 720px) {
   .subpage-bar {
-    padding-top: calc(9px + env(safe-area-inset-top, 0px) / var(--zoom, 1));
+    /* Under an app banner the subpage (a `.ws-app`, pinned below the banners on a phone) does not pay
+       the status bar twice — the banner already pads it. No banner: exactly the old padding. */
+    padding-top: calc(9px + max(0px, env(safe-area-inset-top, 0px) / var(--zoom, 1) - var(--app-banner-h, 0px)));
   }
 }
 .subpage-title {
@@ -8847,12 +8849,16 @@ button.strike-name:hover {
   font-family: inherit;
   color: var(--app-text);
 }
-.pick-body:hover {
-  background: var(--app-surface-2);
-}
-/* On a chosen row, keep the hover translucent so the accent tint still reads through. */
-.pick-row.chosen .pick-body:hover {
-  background: color-mix(in srgb, var(--app-accent) 22%, transparent);
+/* Hover highlights only where there IS hover: a touch screen keeps `:hover` on the last row tapped, so a
+   row whose description you closed with Back stayed grey as if it had been chosen (phone audit C15). */
+@media (hover: hover) {
+  .pick-body:hover {
+    background: var(--app-surface-2);
+  }
+  /* On a chosen row, keep the hover translucent so the accent tint still reads through. */
+  .pick-row.chosen .pick-body:hover {
+    background: color-mix(in srgb, var(--app-accent) 22%, transparent);
+  }
 }
 .pick-body-static,
 .pick-body-static:hover {
@@ -8880,9 +8886,11 @@ button.strike-name:hover {
   font-weight: 500;
   white-space: nowrap;
 }
-.pick-add:hover:not(:disabled) {
-  border-color: var(--app-accent);
-  color: var(--app-accent);
+@media (hover: hover) {
+  .pick-add:hover:not(:disabled) {
+    border-color: var(--app-accent);
+    color: var(--app-accent);
+  }
 }
 .pick-add:disabled {
   opacity: 0.4;
@@ -11502,6 +11510,9 @@ button.strike-name:hover {
   cursor: pointer;
 }
 .fsel-clear:hover { color: var(--app-accent); border-color: var(--app-accent); }
+/* The filter panel's "Done" (back to the results) is a PHONE control: there the panel covers the results
+   completely. The phone block below shows it; everywhere else the header's Filters pill does the job. */
+.fsel-done { display: none; }
 /* The filter panel is a FULL-WIDTH takeover of the ~900px picker, but this body kept the default
  * block layout it had as a 360px sidebar — so every facet (Rarity, Category, Level…) claimed a whole
  * row and a handful of short chips left most of the width empty. Flow the facets into as many
@@ -11890,7 +11901,43 @@ button.strike-name:hover {
     margin-left: auto; padding: 8px 14px; border-radius: var(--app-radius-sm);
     border: var(--app-bw) solid var(--app-accent); background: var(--app-accent); color: var(--app-accent-text);
     font-size: 13px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
+    min-height: 40px;
   }
+
+  /* ----- The full-screen picker's controls at touch size (phone audit 2026-10-14, C9/D15/E7) -----
+     Everything here was a desktop size: the header's Archetypes / Filters pills 22px, every filter chip
+     22px in tight rows, Clear filters 24px, the tabs 28px, the row's Choose/Add 30px, the option rows
+     33px. Main controls (rows, Choose/Add) to 40px, the rest to 36px. */
+  .fsel-arch, .fsel-head-filters { min-height: 36px; padding: 6px 12px; font-size: 12.5px; }
+  .fsel-inel, .fsel-toggle { min-height: 36px; }
+  .fsel-clear, .fsel-tab { min-height: 36px; }
+  .fsel-chip, .fsel-trait-opt, .fsel-achip { min-height: 36px; padding-top: 6px; padding-bottom: 6px; font-size: 12.5px; }
+  .fsel-trait-opts, .fsel-trait-chosen { gap: 6px; }
+  .fsel-trait-tag { min-height: 32px; }
+  .fsel-anyall-btn { min-height: 32px; }
+  .fsel-sec-reset { min-height: 32px; padding: 0 8px; }
+  .pick-body { min-height: 40px; }
+  .pick-add { min-height: 40px; padding: 8px 14px; }
+  /* A Setup card's "Read the … rules" link was a 16px-tall line of 11px text (D13). */
+  .setup-rules-link { min-height: 36px; font-size: 12.5px; }
+  .fsel-rowwrap + .fsel-rowwrap { margin-top: 6px; }
+  /* The header is ONE flex row on desktop, and at 360px the controls took it: the title was squeezed
+     into a 55px column ("Choose / a class / feat") and a "0 / 43" counter split over two lines
+     (C14/E8/D16). On a phone the title shares the first row with the close X only; the counter,
+     Archetypes, the result count and Filters wrap under it. `order` only — DOM/Tab order unchanged. */
+  .fsel-head { flex-wrap: wrap; row-gap: 10px; }
+  .fsel-head > .fsel-title { flex: 1 1 calc(100% - 100px); min-width: 0; font-size: 15px; }
+  .fsel-head > .picker-close { order: 1; }
+  /* That made the header 7px taller than the old squeezed one (108 vs 101px at 360-412, round 3): the
+     first row was as tall as the X's 40px hit area around a 23px title. The X keeps its 40px hit area but
+     lays out 32px tall (-4px above and below, over the header's own padding and the row gap), so the row
+     is 32px; the 10px row gap still leaves 6px between the X's hit area and Filters under it. */
+  .fsel-head > .picker-close { margin-block: -4px; }
+  .fsel-head > :not(i):not(.fsel-title):not(.picker-close) { order: 2; }
+  .fsel-cap { white-space: nowrap; }
+  /* Builder and picker text fields at 16px (they were 12.5-13px; small type to read while typing). */
+  .fsel-results-search input, .fsel-metasearch input, .fsel-text, .picker .name-input { font-size: 16px; }
+  .picker .name-input, .fsel-results-search, .fsel-metasearch { min-height: 40px; }
 
   /* ----- Narrow-viewport overflow fixes: rows that were single-line on desktop must wrap on a phone so
      no control is pushed off the right edge (the whole tab would otherwise scroll sideways). ----- */
@@ -11919,10 +11966,14 @@ button.strike-name:hover {
      desktop-only pin (min-width:721px, top of this file) left Android scrolling the header, the name
      field, the level stepper, Cancel and Save off the top of every long level page: to save you had to
      scroll back up and find them. Affordable now that builder.css folds the header into two rows.
-     `inset: 0` deliberately paints over .app-banners, which is why that floats at z-index 2000 here. */
+     `inset: 0` paints over the place .app-banners floats (z-index 2000 here), so the shell STARTS BELOW
+     the banners instead: `top` is the banners' measured height (App.tsx publishes --app-banner-h, 0px
+     when none is showing — then this is exactly `inset: 0`). Before, a storage warning or the installed
+     app's update notice sat on top of the name field, the level stepper and Cancel (phone audit A9). */
   .builder {
     position: fixed;
     inset: 0;
+    top: var(--app-banner-h, 0px);
     min-height: 0;
     overflow: hidden;
   }
@@ -11930,6 +11981,13 @@ button.strike-name:hover {
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
+  }
+  /* …and nothing else in the pinned shell may shrink. The desktop block at the top of this file has
+     this rule; the phone pin didn't, so on a long level page flexbox took the overflow out of the level
+     strip too: its 40px chips were cut in half, the strip changed height from page to page and became
+     a vertical scroller of its own (phone audit A3/B4/D12). */
+  .builder > :not(.builder-body) {
+    flex: none;
   }
 
   /* ----- Mobile character-sheet shell: top identity bar, one scrolling body, bottom tab bar ----- */
@@ -11939,7 +11997,13 @@ button.strike-name:hover {
   /* Fixed inset as the base, so the shell fills the viewport at any zoom — a bare `100dvh` mis-scales
      under html{zoom} (it left a blank band when zoomed out). Fixed top/right/bottom/left=0 pins to the
      viewport edges; the zoom-corrected dvh height below then layers on top of it. */
-  .ws-app { position: fixed; inset: 0; overflow: hidden; }
+  /* `top`: the shell starts below the app banners, exactly like the builder pin above (0px, so plain
+     `inset: 0`, when none is showing). A storage warning or the installed app's update notice used to
+     sit on the identity bar and its Edit-character button (phone audit A9, round 2). The height that
+     goes with it is in the @supports (height: 100dvh) block below. Nested shells (the campaign tracker's
+     `.ct-sheet-full .ws-app`, `.ct-pc-pane-body .ws-app`) were already pinned by this very rule on a
+     phone, so they move with it; their 100% heights lose to the dvh !important as before. */
+  .ws-app { position: fixed; inset: 0; top: var(--app-banner-h, 0px); overflow: hidden; }
   /* Native-app feel: no text selection / long-press callout on the UI chrome (long-press is for drag,
      not selecting). Keep selection where it matters — inputs, selects, and editable rich-text areas. */
   .ws-app, .roster-screen, .hb-page {
@@ -11953,7 +12017,9 @@ button.strike-name:hover {
   }
   .ws-app > .chrome { display: none; }
   .identity .tabs { display: none; } /* NOT .level-stack: the JS gate (CharacterSheet's isMobile) is the header XP field's only width-based hide, and a CSS hide here could only zero the XP; campaign-tracker.css's narrow-pane rule for it is keyed to the same boolean as that pane's ForceMobileContext, so it cannot disagree */
-  .identity { flex: 0 0 auto; padding: calc(8px + env(safe-area-inset-top, 0px) / var(--zoom, 1)) 12px 8px; }
+  /* The status-bar padding is not paid twice under a banner (the banner pads the safe area itself);
+     with no banner the max() is the old env() term exactly. Same as the builder header (builder.css). */
+  .identity { flex: 0 0 auto; padding: calc(8px + max(0px, env(safe-area-inset-top, 0px) / var(--zoom, 1) - var(--app-banner-h, 0px))) 12px 8px; }
   .identity-name { flex: 1 1 auto; max-width: none; }
 
   .ws-app > .body {
@@ -12290,6 +12356,13 @@ button.strike-name:hover {
       height: calc(100dvh / var(--zoom, 1)) !important;
     }
     .hb-page { min-height: 0; height: calc(100dvh / var(--zoom, 1) - var(--app-banner-h, 0px)); }
+    /* The builder starts below the app banners (its phone pin above: `top: var(--app-banner-h)`), so it
+       is that much shorter, or its bottom row would run off the screen while a banner shows. After the
+       grouped rule: equal specificity, both !important, so the later one is the one that applies. */
+    .builder { height: calc(100dvh / var(--zoom, 1) - var(--app-banner-h, 0px)) !important; }
+    /* The sheet shell likewise (its phone pin above: `top: var(--app-banner-h)`): shorter by the banner,
+       or the bottom tab row runs off the screen while a banner shows. Same ordering note as .builder. */
+    .ws-app { height: calc(100dvh / var(--zoom, 1) - var(--app-banner-h, 0px)) !important; }
     /* The two screens that SCROLL THE DOCUMENT instead of pinning to it (position: static on a phone):
        a large-viewport min-height here is not an unreachable row, just a URL-bar's worth of dead scroll
        past the last character card. min-height only — a fixed height would clamp a list that grows. */
@@ -12643,6 +12716,14 @@ button.strike-name:hover {
 @media (max-width: 720px) {
   .fsel-results-bar { flex-wrap: wrap; }
   .fsel-results-search { flex: 1 1 100%; min-width: 0; max-width: none; }
+  /* Range slider (Level, Range, Area …): a 15px dot was the only thing to drag, with 8.5px labels
+     (phone audit C9/D15). A slightly bigger dot, and an invisible 40px ring around it that is part of
+     the handle, so a thumb anywhere near the dot picks it up. Here, below the .rsl rules, because at
+     equal specificity the later rule wins. */
+  .rsl { padding-bottom: 26px; }
+  .rsl-handle { width: 22px; height: 22px; margin-left: -11px; }
+  .rsl-handle::before { content: ''; position: absolute; inset: -11px; border-radius: 50%; }
+  .rsl-stop { font-size: 11px; }
 }
 
 /* Missing-data warnings on the Feats & Features tab (effects referencing legacy content). */

@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState, type Dispatch, type Rea
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
 import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, FeatChoiceDef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
-import { BOOK_SPLIT_MARK, enabledBookSet, sourceCatalog, sourceIdToken, storedSources, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
+import { BOOK_SPLIT_MARK, enabledBookSet, entrySourceOn, sourceCatalog, sourceIdToken, storedSources, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { loadHomebrewSources, loadCampaigns, saveCampaigns, listCampaignHbSources } from '../data/storage';
@@ -98,8 +98,9 @@ import { bucketOf, loadAstIndex, type AstNode } from '../sheet/astStore';
 import { TrustMarker } from '../sheet/TrustMarker';
 import { MythicRules } from '../sheet/MythicRules';
 import { PickerRow, descNodeOf } from '../sheet/FilterableSelect';
-import { useEscapeClose } from '../sheet/useEscapeClose';
+import { useBackHandler, useEscapeClose } from '../sheet/useEscapeClose';
 import { isMobileNow } from '../sheet/useIsMobile';
+import { DraftNumberInput } from './DraftNumberInput';
 import type { DescNode } from '../sheet/descref';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
 import { picksLosingSlot, rekeyFeatSlots, SLOT_KEYED } from '../rules/featSlots';
@@ -1103,21 +1104,32 @@ export function AbilitySelect({
   options,
   onChange,
   exclude,
+  title = 'Attribute boost',
+  kind = 'boost',
 }: {
   value: AbilityId | null;
   options: readonly AbilityId[];
   onChange: (v: AbilityId | null) => void;
   /** Abilities already chosen elsewhere in this boost group — disabled here. */
   exclude?: readonly (AbilityId | null)[];
+  /** The popup's title. Phone audit B8: the Voluntary flaw and Key attribute pills opened a popup
+   *  titled "Attribute boost", on a small screen where the card's own heading had scrolled away. */
+  title?: string;
+  /** 'flaw' draws the picked pill with a down arrow and the flaw colour (`is-flaw`), so a chosen
+   *  flaw no longer looks exactly like a boost. */
+  kind?: 'boost' | 'flaw';
 }) {
+  const flaw = kind === 'flaw';
   return (
     <PopupSelect
       variant="pill"
-      title="Attribute boost"
+      title={title}
       placeholder=""
       value={value ?? ''}
       onChange={(v) => onChange((v || null) as AbilityId | null)}
       clearLabel="Clear"
+      icon={flaw ? 'ti-arrow-down' : undefined}
+      className={flaw ? 'is-flaw' : undefined}
       options={options.map((o) => {
         const taken = o !== value && !!exclude?.includes(o);
         return {
@@ -1126,11 +1138,100 @@ export function AbilitySelect({
           disabled: taken,
           // The greying was here already; the sentence was not, and "why is Strength grey?" is a
           // real question when four boost pills sit side by side.
-          disabledReason: taken ? 'Already boosted by another pick in this group.' : undefined,
+          disabledReason: taken ? (flaw ? 'Already chosen by another pick in this group.' : 'Already boosted by another pick in this group.') : undefined,
         };
       })}
     />
   );
+}
+
+/**
+ * Phone audit D3 (2026-10-14): a list that is EMPTY or SHORT because this character's Sources hide its
+ * book says so, with a one-tap way to the Sources card. Before, a new cleric's Deity popup said only
+ * "No matches." — every deity is printed outside the Core books, which are the only ones on by default.
+ * `names` are the options the list would offer with every book on; the list counts the ones matching its
+ * search. Whether more books should be on by default is the owner's call; this changes no default.
+ */
+export interface SourcesHidden {
+  names: readonly string[];
+  onOpenSources: () => void;
+}
+
+/** The names of the records in `all` that this character's Sources switch off: not offered (`shown`
+ *  lacks them) and printed in a book that is off. Records hidden for another reason (Hide legacy data,
+ *  the Mythic toggle) are not counted, so the note never blames the books for them. */
+export function namesHiddenBySources(
+  all: Iterable<{ id: string; name: string } & Parameters<typeof entrySourceOn>[1]>,
+  shown: Readonly<Record<string, unknown>> | undefined,
+  enabledSources: string[] | undefined,
+): string[] {
+  const enabled = enabledBookSet(enabledSources);
+  const out: string[] = [];
+  for (const r of all) if (r && !shown?.[r.id] && !entrySourceOn(enabled, r)) out.push(r.name);
+  return out;
+}
+
+/** How many of the hidden options match the list's search (all of them with no search). */
+function hiddenCount(hidden: SourcesHidden, q: string): number {
+  return q.trim() ? hidden.names.filter((nm) => searchMatches(q, nm)).length : hidden.names.length;
+}
+
+/** The note at the end of a SearchSelect / PopupSelect list — see SourcesHidden. */
+function SourcesHiddenNote({ hidden, q, offered }: { hidden: SourcesHidden; q: string; offered: number }) {
+  const n = hiddenCount(hidden, q);
+  if (!n) return null;
+  return (
+    <div className="setup-note picker-src-hidden" style={{ padding: 12 }}>
+      <p style={{ margin: '0 0 8px' }}>
+        {offered === 0 ? 'None in the books this character has switched on. ' : ''}
+        {n} more {n === 1 ? 'is' : 'are'} in books this character has switched off.
+      </p>
+      <button type="button" className="btn-ghost picker-src-btn" onClick={hidden.onOpenSources}>
+        <i className="ti ti-books" aria-hidden="true" /> Turn books on in Sources
+      </button>
+    </div>
+  );
+}
+
+/**
+ * The Setup → Sources card as a popup over the list that sent the player here (SourcesHidden). The very
+ * same card, so a book switched on here is switched on in Setup, and switching one OFF still names what
+ * the character would lose first. The list underneath stays open and updates as books go on.
+ */
+export function SourcesPopup({ build, actions, onClose }: { build: BuildState; actions: BuilderActions; onClose: () => void }) {
+  const full = useContent();
+  useEscapeClose(onClose);
+  // The Builder's own catalog is sourceCatalog over the same unfiltered database the app provides here.
+  const catalog = useMemo(() => (full ? sourceCatalog(full) : null), [full]);
+  if (!full || !catalog) return null;
+  return (
+    <div className="picker-overlay" onClick={onClose}>
+      <div className="picker picker-sources" role="dialog" aria-label="Sources" onClick={(e) => e.stopPropagation()}>
+        <div className="picker-head">
+          <span>Sources</span>
+          <button className="picker-close" style={{ marginLeft: 'auto' }} onClick={onClose} aria-label="Close">
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="picker-list">
+          <SourcesCard build={build} actions={actions} catalog={catalog} content={full} />
+        </div>
+        <div className="confirm-actions" style={{ padding: '8px 10px 0' }}>
+          <button type="button" className="btn-primary" onClick={onClose}>
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** A–Z for browsing (SearchSelect `sortByName`): case- and accent-blind, "Rank 2" before "Rank 10". */
+const NAME_ORDER = new Intl.Collator(undefined, { sensitivity: 'base', numeric: true });
+
+/** `options` in name order, `pin`ned ones first (in their given order). A new array; stable. */
+export function byNamePinnedFirst<T extends { name: string; pin?: boolean }>(options: readonly T[]): T[] {
+  return [...options].sort((a, b) => Number(!!b.pin) - Number(!!a.pin) || (a.pin && b.pin ? 0 : NAME_ORDER.compare(a.name, b.name)));
 }
 
 /** A select replacement for large option lists: a button that opens a searchable overlay. */
@@ -1142,14 +1243,17 @@ export function SearchSelect({
   placeholder = 'Choose…',
   bare = false,
   descBucket,
+  sourcesHidden,
+  sortByName = false,
 }: {
   label: string;
   value: string | null | undefined;
   /** `disabled` carries the REASON the option cannot be committed (Q27: unpickable must say why);
    *  the stored answer is never disabled by the caller, so a pick cannot vanish under the player.
    *  `group` puts the option under a heading; sections follow the order the groups first appear in
-   *  this array, and SEARCH STILL SPANS ALL OF THEM (the filter runs before the split). */
-  options: ({ id: string; name: string; note?: string; disabled?: string; group?: string } & OptionDescStrict)[];
+   *  this array, and SEARCH STILL SPANS ALL OF THEM (the filter runs before the split).
+   *  `pin` keeps an option at the top of a `sortByName` list (the "✎ Custom background…" entry). */
+  options: ({ id: string; name: string; note?: string; disabled?: string; group?: string; pin?: boolean } & OptionDescStrict)[];
   onChange: (id: string) => void;
   placeholder?: string;
   /** Render just the control (no .ocard/label wrapper) — for use inside a SetupCard. */
@@ -1158,9 +1262,26 @@ export function SearchSelect({
    *  popup loads that record's FULL ast page (all sections — roleplay, etc.), matching the reference app,
    *  instead of only the short flavor `description`. */
   descBucket?: string;
+  /** Options this character's Sources hide — the list says how many, with a way to turn books on. */
+  sourcesHidden?: SourcesHidden;
+  /** Browse A–Z: with nothing typed the list is in name order (`pin`ned options first) instead of the
+   *  order the caller built it in. For lists built straight from the content, which is BOOK order —
+   *  phone audit B3: the deep background's 178 skill feats opened "Assurance (Religion), Student of the
+   *  Canon, Battle Medicine…" and 519 backgrounds "Acolyte, Lesser Scion, Lost and Alone…", so a player
+   *  scrolling for a half-remembered name could not tell where it would be. Off by default: spells
+   *  (rank, then name), formulas (level), proficiency tracks (Perception first) are in an order that
+   *  means something. A typed search keeps its own ranking either way. */
+  sortByName?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
+  // Phone audit B3: past ROW_CAP rows the list offers "Show all N" instead of a dead end.
+  const [showAll, setShowAll] = useState(false);
+  const openPicker = () => {
+    setQ('');
+    setShowAll(false);
+    setOpen(true);
+  };
   // Escape / Android Back closes the picker instead of leaving the builder. See PopupSelect.
   useEscapeClose(open ? () => setOpen(false) : undefined);
   // When options carry descriptions (or a descBucket), the picker rows and the filled control become
@@ -1179,14 +1300,22 @@ export function SearchSelect({
   // bug 2026-09-13: search-rank — ranked BEFORE the 100-row cap below, so the option the player
   // typed leads the list and can never be the row the cap cut off. Name only: that is all this
   // picker filters on.
+  // A–Z only while the list is open: a closed control never draws it, and a page holds many of these.
   const filtered = needle
     ? rankBySearch(options.filter((o) => searchMatches(q, o.name)), q, (o) => o.name)
-    : options;
+    : sortByName && open
+      ? byNamePinnedFirst(options)
+      : options;
   const readFirst = !!descBucket || filtered.some((o) => o.description || o.descRefs?.length);
   /* Headed sections, when the caller groups its options (the heritage picker's "Human heritages" vs
    * "Versatile heritages"). The split happens AFTER the search filter and the 100-row cap, so a query
-   * still spans every group and an ungrouped caller gets exactly the one flat list it had. */
-  const shown = filtered.slice(0, 100);
+   * still spans every group and an ungrouped caller gets exactly the one flat list it had.
+   * The cap keeps a 500-row list quick to open; it is no longer a wall. It used to end in "Showing 100
+   * of 518 — refine your search", so with every book on most backgrounds (and, by default, 78 of the
+   * deep background's skill feats) could not be reached by scrolling at all, only by guessing their name
+   * (phone audit B3). Now the last row is "Show all N", in the same order. */
+  const ROW_CAP = 100;
+  const shown = showAll ? filtered : filtered.slice(0, ROW_CAP);
   const sections = options.some((o) => o.group)
     ? [...new Set(options.map((o) => o.group ?? ''))]
         .map((g) => ({ head: g, items: shown.filter((o) => (o.group ?? '') === g) }))
@@ -1209,7 +1338,7 @@ export function SearchSelect({
           <button type="button" className="ss-filled-body" title="View description" onClick={() => setDescNode(currentNode)}>
             <span className="popsel-val">{current.name}</span>
           </button>
-          <button type="button" className="ss-replace" title={`Replace ${label.toLowerCase()}`} onClick={() => { setQ(''); setOpen(true); }}>
+          <button type="button" className="ss-replace" title={`Replace ${label.toLowerCase()}`} onClick={openPicker}>
             <i className="ti ti-pencil" aria-hidden="true" /> Replace
           </button>
         </div>
@@ -1218,10 +1347,7 @@ export function SearchSelect({
           type="button"
           {...ctlAttrs}
           className={'popsel' + (current ? ' is-picked' : ' is-empty')}
-          onClick={() => {
-            setQ('');
-            setOpen(true);
-          }}
+          onClick={openPicker}
         >
           {current ? (
             <>
@@ -1307,16 +1433,23 @@ export function SearchSelect({
                   })}
                 </Fragment>
               ))}
-              {filtered.length === 0 && (
+              {!showAll && filtered.length > ROW_CAP && (
+                <button type="button" className="picker-item picker-show-all" onClick={() => setShowAll(true)}>
+                  <span className="picker-check">
+                    <i className="ti ti-list" aria-hidden="true" />
+                  </span>
+                  <div className="picker-text">
+                    <div className="picker-name">Show all {filtered.length}</div>
+                    <div className="picker-traits">The first {ROW_CAP} are shown — or type to search.</div>
+                  </div>
+                </button>
+              )}
+              {filtered.length === 0 && !(sourcesHidden && hiddenCount(sourcesHidden, q)) && (
                 <div className="setup-note" style={{ padding: 12 }}>
                   No matches.
                 </div>
               )}
-              {filtered.length > 100 && (
-                <div className="setup-note" style={{ padding: 12 }}>
-                  Showing 100 of {filtered.length} — refine your search.
-                </div>
-              )}
+              {sourcesHidden && <SourcesHiddenNote hidden={sourcesHidden} q={q} offered={filtered.length} />}
             </div>
           </div>
         </div>
@@ -1349,6 +1482,7 @@ export function PopupSelect({
   cardLabel,
   addCustom,
   clearLabel,
+  sourcesHidden,
 }: {
   value: string | null | undefined;
   /** `disabled` greys the option out; `disabledReason` is the short sentence saying WHY, printed in
@@ -1383,6 +1517,8 @@ export function PopupSelect({
    *  not another option. Only shown while something is selected. Replaces the old pattern of a
    *  `{ value: '', label: '— none —' }` entry styled like a real option. */
   clearLabel?: string;
+  /** Options this character's Sources hide — the list says how many, with a way to turn books on. */
+  sourcesHidden?: SourcesHidden;
 }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
@@ -1393,6 +1529,11 @@ export function PopupSelect({
   // `undefined` while shut is the hook's own idiom for an inert slot (see topHandler), so the dozens of
   // closed PopupSelects on a level-0 page cost one skipped array read each and swallow nothing.
   useEscapeClose(open ? () => close() : undefined);
+  // Phone audit B7: in the "type your own" field (a custom Lore), Escape and Android Back step back to
+  // the list, as the popup's own Back button does — the popup stays open and the typed text is kept.
+  // Before, both closed the whole popup and threw the text away. Registered when the mode opens, so it
+  // sits above this popup's own slot (pushed at mount) and takes the press first.
+  useBackHandler(open && customMode, () => setCustomMode(false));
   // When any option carries a description, the popup shows read-first rows (press to read, a Select
   // button to choose) instead of click-to-select — matching the feat/spell picker.
   const [descNode, setDescNode] = useState<DescNode | null>(null);
@@ -1477,7 +1618,8 @@ export function PopupSelect({
           {current ? (
             <>
               {variant === 'pill' ? (
-                <i className="ti ti-check popsel-lead" aria-hidden="true" />
+                // A pill's `icon` replaces the check (a flaw's down arrow, see AbilitySelect).
+                <i className={'ti ' + (icon ?? 'ti-check') + ' popsel-lead'} aria-hidden="true" />
               ) : icon ? (
                 <span className="popsel-tile"><i className={'ti ' + icon} aria-hidden="true" /></span>
               ) : null}
@@ -1517,7 +1659,7 @@ export function PopupSelect({
                       e.preventDefault();
                       commitCustom();
                     }
-                    if (e.key === 'Escape') setCustomMode(false);
+                    // Escape goes through the dismiss stack (useBackHandler above), like Android Back.
                   }}
                 />
                 {customRefusal && (
@@ -1543,7 +1685,10 @@ export function PopupSelect({
                       style={{ width: '100%', margin: 0 }}
                       placeholder="Search…"
                       value={q}
-                      autoFocus
+                      // Not on a phone (phone audit B2/C8/D7/E1): focusing the field opens the soft
+                      // keyboard over the short list the player came to tap — every skill increase,
+                      // Heritage skill, language, Arcane School, bloodline. Same rule as SearchSelect.
+                      autoFocus={!isMobileNow()}
                       onChange={(e) => setQ(e.target.value)}
                     />
                   </div>
@@ -1602,11 +1747,12 @@ export function PopupSelect({
                       </div>
                     </button>
                   )}
-                  {filtered.length === 0 && !addCustom && (
+                  {filtered.length === 0 && !addCustom && !(sourcesHidden && hiddenCount(sourcesHidden, useSearch ? q : '')) && (
                     <div className="setup-note" style={{ padding: 12 }}>
                       No matches.
                     </div>
                   )}
+                  {sourcesHidden && <SourcesHiddenNote hidden={sourcesHidden} q={useSearch ? q : ''} offered={filtered.length} />}
                 </div>
                 {clearLabel && current && (
                   <button
@@ -1757,6 +1903,7 @@ function CustomBackgroundForm({ build, actions, content }: EditorProps) {
       </div>
       <SearchSelect
         label="Skill feat"
+        sortByName
         value={cb.skillFeatId}
         onChange={(id) => set({ skillFeatId: id })}
         options={skillFeats.map((f) => ({ id: f.id, name: f.name, description: f.description, descRefs: f.descRefs, record: { bucket: 'feats', id: f.id } }))}
@@ -1833,6 +1980,9 @@ function AbpPotencyEditor({ build, actions }: { build: BuildState; actions: Buil
  *  character configured under the old (Setup-side) UI shows its choice unchanged. */
 export function SetupUnlockedChoices({ build, actions, content, callingRows = [] }: EditorProps & { callingRows?: readonly string[] }) {
   const [mythicRulesOpen, setMythicRulesOpen] = useState(false);
+  // Phone audit D3: the Sources card, one tap from the Mythic Calling list when its books are off.
+  const [sourcesOpen, setSourcesOpen] = useState(false);
+  const fullDb = useContent();
   const dualClass = !!build.variantRules?.dualClass;
   const abp = !!build.variantRules?.abp;
   const mythic = !!build.mythicEnabled;
@@ -1841,6 +1991,17 @@ export function SetupUnlockedChoices({ build, actions, content, callingRows = []
   const callings = Object.values(content.classFeatures)
     .filter((f) => (f.traits ?? []).includes('calling'))
     .sort((a, b) => a.name.localeCompare(b.name));
+  const callingsHidden: SourcesHidden | undefined =
+    mythic && fullDb
+      ? {
+          names: namesHiddenBySources(
+            Object.values(fullDb.classFeatures).filter((f) => (f.traits ?? []).includes('calling')),
+            content.classFeatures,
+            build.enabledSources,
+          ),
+          onOpenSources: () => setSourcesOpen(true),
+        }
+      : undefined;
   return (
     <>
       {dualClass && (
@@ -1884,6 +2045,7 @@ export function SetupUnlockedChoices({ build, actions, content, callingRows = []
             onChange={(v) => actions.patch({ mythicCalling: v || null })}
             clearLabel="Clear"
             options={callings.map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs, record: { bucket: 'classFeatures', id: f.id } }))}
+            sourcesHidden={callingsHidden}
           />
           {/* 2026-09-30 (desk #170): `content` is the Builder's Sources-filtered content, so a calling whose book
               is off is not offered (applySources); say why the list is empty rather than leave a bare picker, and name
@@ -1895,6 +2057,13 @@ export function SetupUnlockedChoices({ build, actions, content, callingRows = []
                 ? `Turn ${callingRows.length === 1 ? callingRows[0] : `${callingRows.slice(0, -1).join(', ')} or ${callingRows[callingRows.length - 1]}`} on in Sources to choose one.`
                 : 'Turn its book on in Sources to choose one.'}
             </p>
+          )}
+          {/* Phone audit D3: and a one-tap way there (outside the sentence, which test/sources-apply-to-
+              everything.test.tsx reads to its last word). */}
+          {callings.length === 0 && fullDb && (
+            <button type="button" className="btn-ghost picker-src-btn" onClick={() => setSourcesOpen(true)}>
+              <i className="ti ti-books" aria-hidden="true" /> Turn books on in Sources
+            </button>
           )}
           <p className="setup-hint">
             You gain a mythic feat slot at every even level (2&ndash;20). At 12th level that slot must buy a mythic{' '}
@@ -1930,6 +2099,7 @@ export function SetupUnlockedChoices({ build, actions, content, callingRows = []
         </SetupCard>
       )}
       {mythicRulesOpen && <MythicRules content={content} onClose={() => setMythicRulesOpen(false)} />}
+      {sourcesOpen && <SourcesPopup build={build} actions={actions} onClose={() => setSourcesOpen(false)} />}
     </>
   );
 }
@@ -2001,27 +2171,31 @@ function ToggleWithInfo({
 /** The optional-variant-rules toggles (Ancestry Paragon, ABP, Dual Class, …). Lives on the builder's
  *  Setup page. Their dependent per-character SELECTIONS (the second class/subclass, ABP skill potency
  *  / apex) are made on the Level 0 page — see SetupUnlockedChoices — so only the on/off toggle is here. */
+/** [flag, label, our one-line summary, the published rules page to open instead (see RuleInfo)].
+ *  Exported for test/phone-builder-pickers.test.tsx, which opens every page named here and checks it is
+ *  the rule the toggle is about. */
+export const VARIANT_RULE_TOGGLES = [
+  ['ancestryParagon', 'Ancestry Paragon', 'Extra ancestry feats: two at level 1, then one more at every odd level (3, 5, 7 … 19) — 11 total.', 'rules:ancestry-paragon'],
+  // Phone audit D14: NOT 'rules:free-archetype'. That slug is now War of Immortals' sidebar about mixing
+  // free archetype with mythic progression; GM Core's Free Archetype rule is filed as -gm-core.
+  ['freeArchetype', 'Free Archetype', 'A bonus class feat at every even level (2–20) that may only be spent on archetype feats.', 'rules:free-archetype-gm-core'],
+  ['gradualBoosts', 'Gradual Attribute Boosts', 'The attribute boosts at 5/10/15/20 instead arrive one at a time at levels 2-5, 7-10, 12-15, 17-20.', 'rules:gradual-ability-boosts'],
+  ['proficiencyWithoutLevel', 'Proficiency w/o Level', 'Remove your level from proficiency: untrained −2, trained +2, expert +4, master +6, legendary +8.', 'rules:proficiency-without-level'],
+  ['abp', 'Automatic Bonus Progression', 'Gain item-equivalent attack/AC/save/Perception/skill bonuses automatically by level (replaces fundamental runes).', 'rules:automatic-bonus-progression'],
+  ['dualClass', 'Dual Class', 'Gain the proficiencies, Hit Points, class features and class feats of a second class.', 'rules:dual-class-pcs'],
+  ['pervasiveMagic', 'Pervasive Magic', 'Secrets of Magic variant: magic is common enough that any character can pick up minor spellcasting. Adds the Cantrip Casting / Basic / Expert / Master Spellcasting feat ladder to class feat slots.', 'rules:pervasive-magic'],
+  // Monster Parts is a Treasure Vault subsystem with no rules page in the shipped set — our
+  // summary is the only description available for it.
+  ['monsterParts', 'Monster Parts', 'Harvest parts from defeated monsters to refine (fundamental-rune-equivalent bonuses) and imbue (special properties) your weapons, armor, shields, and Perception/skill items in place of runes and precious materials. An item uses either Monster Parts or normal runes — never both.', undefined],
+  // A HOUSE RULE (owner, 2026-09-22) rather than a published variant, so no rules page either.
+  ['loreInsteadOfLanguage', 'Lore instead of language', 'Each time your Intelligence would grant an extra language, you may become trained in a new Lore instead', undefined],
+] as const;
+
 export function VariantRulesCard({ build, actions, content }: EditorProps) {
   return (
     <SetupCard icon="ti-adjustments-alt" label="Variant rules">
       <div className="spr-chips">
-        {/* [flag, label, our one-line summary, the published rules page to open instead (see RuleInfo)] */}
-        {(
-          [
-            ['ancestryParagon', 'Ancestry Paragon', 'Extra ancestry feats: two at level 1, then one more at every odd level (3, 5, 7 … 19) — 11 total.', 'rules:ancestry-paragon'],
-            ['freeArchetype', 'Free Archetype', 'A bonus class feat at every even level (2–20) that may only be spent on archetype feats.', 'rules:free-archetype'],
-            ['gradualBoosts', 'Gradual Attribute Boosts', 'The attribute boosts at 5/10/15/20 instead arrive one at a time at levels 2-5, 7-10, 12-15, 17-20.', 'rules:gradual-ability-boosts'],
-            ['proficiencyWithoutLevel', 'Proficiency w/o Level', 'Remove your level from proficiency: untrained −2, trained +2, expert +4, master +6, legendary +8.', 'rules:proficiency-without-level'],
-            ['abp', 'Automatic Bonus Progression', 'Gain item-equivalent attack/AC/save/Perception/skill bonuses automatically by level (replaces fundamental runes).', 'rules:automatic-bonus-progression'],
-            ['dualClass', 'Dual Class', 'Gain the proficiencies, Hit Points, class features and class feats of a second class.', 'rules:dual-class-pcs'],
-            ['pervasiveMagic', 'Pervasive Magic', 'Secrets of Magic variant: magic is common enough that any character can pick up minor spellcasting. Adds the Cantrip Casting / Basic / Expert / Master Spellcasting feat ladder to class feat slots.', 'rules:pervasive-magic'],
-            // Monster Parts is a Treasure Vault subsystem with no rules page in the shipped set — our
-            // summary is the only description available for it.
-            ['monsterParts', 'Monster Parts', 'Harvest parts from defeated monsters to refine (fundamental-rune-equivalent bonuses) and imbue (special properties) your weapons, armor, shields, and Perception/skill items in place of runes and precious materials. An item uses either Monster Parts or normal runes — never both.', undefined],
-            // A HOUSE RULE (owner, 2026-09-22) rather than a published variant, so no rules page either.
-            ['loreInsteadOfLanguage', 'Lore instead of language', 'Each time your Intelligence would grant an extra language, you may become trained in a new Lore instead', undefined],
-          ] as const
-        ).map(([flag, label, desc, rule]) => (
+        {VARIANT_RULE_TOGGLES.map(([flag, label, desc, rule]) => (
           <ToggleWithInfo
             key={flag}
             label={label}
@@ -2237,19 +2411,20 @@ export function CampaignAttachCard({ build, actions, content, onLeaveCampaign }:
 /** Campaign content toggles (Mythic, Kingmaker) — top-level build flags that show/hide their content.
  *  The dependent Mythic Calling SELECTION is made on the Level 0 page (see SetupUnlockedChoices); only
  *  the on/off toggle lives here. */
+/** The Campaign card's toggles, shaped like VARIANT_RULE_TOGGLES (exported for the same test). */
+export const CAMPAIGN_OPTION_TOGGLES = [
+  ['mythicEnabled', 'Mythic', 'War of Immortals mythic rules: gain a mythic calling + destiny, mythic feats, and mythic points. Off hides all mythic-trait content.', 'rules:mythic-rules'],
+  // Kingmaker is a source book's worth of content rather than a rule, so there is no single
+  // page to open — the summary stays.
+  ['kingmakerEnabled', 'Kingmaker', 'Kingmaker Adventure Path player content: its backgrounds, feats, spells, items, and the camping activities (plus kingdom/army rules content).', undefined],
+  ['deviantEnabled', 'Deviant abilities', 'Dark Archive deviant abilities — unstable powers a GM grants. On, a class feat can buy one of the 30 deviant feats; off, they are hidden. The rules put them entirely at the GM’s discretion, which is why they are a table opt-in rather than an ordinary feat.', 'rules:deviant-abilities'],
+] as const;
+
 export function CampaignOptionsCard({ build, actions, content }: EditorProps) {
   return (
     <SetupCard icon="ti-flag" label="Campaign">
       <div className="spr-chips">
-        {(
-          [
-            ['mythicEnabled', 'Mythic', 'War of Immortals mythic rules: gain a mythic calling + destiny, mythic feats, and mythic points. Off hides all mythic-trait content.', 'rules:mythic-rules'],
-            // Kingmaker is a source book's worth of content rather than a rule, so there is no single
-            // page to open — the summary stays.
-            ['kingmakerEnabled', 'Kingmaker', 'Kingmaker Adventure Path player content: its backgrounds, feats, spells, items, and the camping activities (plus kingdom/army rules content).', undefined],
-            ['deviantEnabled', 'Deviant abilities', 'Dark Archive deviant abilities — unstable powers a GM grants. On, a class feat can buy one of the 30 deviant feats; off, they are hidden. The rules put them entirely at the GM’s discretion, which is why they are a table opt-in rather than an ordinary feat.', 'rules:deviant-abilities'],
-          ] as const
-        ).map(([flag, label, desc, rule]) => (
+        {CAMPAIGN_OPTION_TOGGLES.map(([flag, label, desc, rule]) => (
           <ToggleWithInfo
             key={flag}
             label={label}
@@ -2751,26 +2926,41 @@ export function FormulaBookCard({ build, actions, content, character }: EditorPr
   );
 }
 
+/**
+ * The overrides object the Overrides card saves: `prev` with `next` laid over it, every EMPTY field
+ * dropped (so an emptied override clears to absent), and `undefined` when nothing is left.
+ *
+ * Generic over the keys on purpose. It used to rebuild the object one hand-written line per key, and
+ * there was no `maxHp` line, so Overrides → Set maximum HP looked like it worked and saved nothing
+ * (phone audit D5). A key added to BuildOverrides later is kept without anyone remembering to add it;
+ * test/overrides-write.test.tsx holds a sample of EVERY BuildOverrides key, read off types.ts.
+ */
+export function pruneOverrides(prev: BuildOverrides, next: Partial<BuildOverrides>): BuildOverrides | undefined {
+  const merged: Record<string, unknown> = { ...prev, ...next };
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(merged)) if (overrideHasContent(v, 1)) out[k] = v;
+  return Object.keys(out).length ? (out as BuildOverrides) : undefined;
+}
+
+/** Empty = absent, not a finite number, an empty list, or an object holding nothing. `depth` 1 looks one
+ *  level into an object's values, which is the shape the old per-key checks had: contentEdits
+ *  `{ feats: {} }` is empty, `{ feats: { x: {} } }` (an edit just started) is not; attributes `{}` is
+ *  empty, `{ str: 10 }` is not. */
+function overrideHasContent(v: unknown, depth: number): boolean {
+  if (v == null) return false;
+  if (typeof v === 'number') return Number.isFinite(v);
+  if (Array.isArray(v)) return v.length > 0;
+  if (typeof v === 'object') return Object.values(v as Record<string, unknown>).some((x) => x !== undefined && (depth > 0 ? overrideHasContent(x, depth - 1) : true));
+  return true;
+}
+
 export function OverridesCard({ build, actions, content, character }: EditorProps & { character: Character }) {
   const ov = build.overrides ?? {};
   const featName = (id: string) => content.feats[id]?.name ?? id;
   const featureName = (id: string) => content.classFeatures[id]?.name ?? id;
   const langName = (id: string) => content.languages[id]?.name ?? cap(id);
   // Write a pruned overrides object — drop empty fields so an emptied override clears to `undefined`.
-  const writeOv = (next: Partial<BuildOverrides>) => {
-    const m = { ...ov, ...next };
-    const clean: BuildOverrides = {};
-    if (m.allowedFeats?.length) clean.allowedFeats = m.allowedFeats;
-    if (m.addedFeats?.length) clean.addedFeats = m.addedFeats;
-    if (m.addedFeatures?.length) clean.addedFeatures = m.addedFeatures;
-    if (m.removedFeatIds?.length) clean.removedFeatIds = m.removedFeatIds;
-    if (m.attributes && Object.keys(m.attributes).length) clean.attributes = m.attributes;
-    if (m.proficiencies && Object.keys(m.proficiencies).length) clean.proficiencies = m.proficiencies;
-    if (m.addedLanguages?.length) clean.addedLanguages = m.addedLanguages;
-    if (m.addedSpells?.length) clean.addedSpells = m.addedSpells;
-    if (m.contentEdits && (Object.keys(m.contentEdits.feats ?? {}).length || Object.keys(m.contentEdits.classFeatures ?? {}).length)) clean.contentEdits = m.contentEdits;
-    actions.patch({ overrides: Object.keys(clean).length ? clean : undefined });
-  };
+  const writeOv = (next: Partial<BuildOverrides>) => actions.patch({ overrides: pruneOverrides(ov, next) });
 
   // --- Feats: allow-past-prereqs ledger + grant (feat OR feature) + remove ---
   const unallow = (id: string) => {
@@ -2804,11 +2994,9 @@ export function OverridesCard({ build, actions, content, character }: EditorProp
     .map((f) => ({ id: f.featId, name: featName(f.featId), note: `level ${f.level}` }));
 
   // --- Attributes: force a raw score, no limits ---
-  const setAttr = (ab: AbilityId, raw: string) => {
-    const n = parseInt(raw, 10);
-    if (Number.isNaN(n)) return revertAttr(ab);
-    writeOv({ attributes: { ...ov.attributes, [ab]: n } });
-  };
+  // Called once, when the player leaves the box (DraftNumberInput) — never per keystroke, which refilled
+  // an emptied box mid-edit and saved 12 → 8 as 128 (phone audit D6).
+  const setAttr = (ab: AbilityId, n: number) => writeOv({ attributes: { ...ov.attributes, [ab]: n } });
   const revertAttr = (ab: AbilityId) => {
     const a = { ...(ov.attributes ?? {}) };
     delete a[ab];
@@ -2921,7 +3109,14 @@ export function OverridesCard({ build, actions, content, character }: EditorProp
             return (
               <label key={ab} className={'ovr-attr' + (overridden ? ' on' : '')}>
                 <span className="ovr-attr-k">{ABILITY_LABEL[ab]}</span>
-                <input type="number" className="ovr-attr-in" value={character.abilities[ab]} onChange={(e) => setAttr(ab, e.target.value)} />
+                <DraftNumberInput
+                  className="ovr-attr-in"
+                  aria-label={ABILITY_LABEL[ab]}
+                  value={character.abilities[ab]}
+                  onCommit={(n) => setAttr(ab, n)}
+                  // Emptied and left = back to the computed score (what the revert button does).
+                  onClear={() => revertAttr(ab)}
+                />
                 {overridden && (
                   <button type="button" className="ovr-attr-x" title="Revert to computed" onClick={() => revertAttr(ab)} aria-label={`Revert ${ab}`}>
                     <i className="ti ti-arrow-back-up" aria-hidden="true" />
@@ -2940,14 +3135,15 @@ export function OverridesCard({ build, actions, content, character }: EditorProp
         <div className="ovr-attrs">
           <label className={'ovr-attr' + (ov.maxHp != null ? ' on' : '')}>
             <span className="ovr-attr-k">Max HP</span>
-            <input
-              type="number"
+            {/* Phone audit D5: this never saved anything — writeOv rebuilt the overrides key by key and had
+                no maxHp line (pruneOverrides is generic now). D6: a draft box, as for the attributes. */}
+            <DraftNumberInput
               className="ovr-attr-in"
+              aria-label="Max HP"
+              min={1}
               value={ov.maxHp ?? character.hitPoints.current}
-              onChange={(e) => {
-                const n = parseInt(e.target.value, 10);
-                writeOv({ maxHp: Number.isNaN(n) ? undefined : Math.max(1, n) });
-              }}
+              onCommit={(n) => writeOv({ maxHp: n })}
+              onClear={() => writeOv({ maxHp: undefined })}
             />
             {ov.maxHp != null && (
               <button type="button" className="ovr-attr-x" title="Revert to computed" onClick={() => writeOv({ maxHp: undefined })} aria-label="Revert maximum HP">
@@ -3166,6 +3362,28 @@ function fighterWeaponGroupOptions(content: ContentDatabase): { id: string; labe
 }
 
 export function OriginPickers({ build, actions, content }: EditorProps) {
+  /* Phone audit D3: a list here that is short or empty because this character's books are off says so,
+   * with a one-tap way to the Sources card (SourcesHidden). `fullDb` is the unfiltered database the app
+   * provides; without it (a test with no provider) the lists simply say nothing extra. */
+  const fullDb = useContent();
+  const [sourcesOpen, setSourcesOpen] = useState(false);
+  const hiddenIn = useMemo(() => {
+    if (!fullDb) return null;
+    const of = (all: Iterable<{ id: string; name: string } & Parameters<typeof entrySourceOn>[1]>, shown: Readonly<Record<string, unknown>> | undefined) =>
+      namesHiddenBySources(all, shown, build.enabledSources);
+    return {
+      ancestries: of(Object.values(fullDb.ancestries), content.ancestries),
+      heritages: of(
+        Object.values(fullDb.heritages).filter((h) => h.ancestryId === null || h.ancestryId === build.ancestryId),
+        content.heritages,
+      ),
+      backgrounds: of(Object.values(fullDb.backgrounds), content.backgrounds),
+      classes: of(Object.values(fullDb.classes), content.classes),
+      deities: of(Object.values(fullDb.deities), content.deities),
+    };
+  }, [fullDb, content, build.enabledSources, build.ancestryId]);
+  const sourcesHidden = (k: keyof NonNullable<typeof hiddenIn>): SourcesHidden | undefined =>
+    hiddenIn?.[k].length ? { names: hiddenIn[k], onOpenSources: () => setSourcesOpen(true) } : undefined;
   /* Two headed groups, not one mixed list (owner, 2026-09-22): the ancestry's OWN heritages first,
    * then the versatile ones any ancestry may take. Ordered here so the picker's sections come out in
    * that order — it heads each group in the order it first meets one. */
@@ -3273,17 +3491,39 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   const note = (r?: string) => (r && r !== 'common' ? r : undefined);
   // Changing class clears class-specific picks (feats, class skills, spells/cantrips, subclass
   // choices). Confirm first when there's actually something to lose, mirroring the level-down guard.
-  const [pendingClass, setPendingClass] = useState<string | null>(null);
   const classChangeLoses =
     !!build.classId &&
     (Object.keys(build.featPicks).length > 0 ||
       build.classSkills.length > 0 ||
       build.cantrips.length > 0 ||
       Object.keys(build.spells).length > 0);
+  /*
+   * Phone audit E2 / A-M1 / D-M1: the shared confirmDialog, not a box drawn here. The hand-made box never
+   * joined the dismiss stack, so Escape did nothing and Android Back was swallowed with the box still
+   * open — and the NEXT Back left the builder, losing the unsaved character. confirmDialog registers
+   * itself (useEscapeClose): Escape, Back, the backdrop and the X all mean Cancel. Same title, text and
+   * buttons as the old box. Guard: test/phone-builder-pickers.test.tsx.
+   */
   const requestClassChange = (id: string) => {
     if (id === build.classId) return; // re-picking the class you already have wiped every class pick
-    if (classChangeLoses) setPendingClass(id);
-    else actions.changeClass(id);
+    if (!classChangeLoses) return actions.changeClass(id);
+    const fromName = build.classId ? content.classes[build.classId]?.name ?? 'your current class' : 'your current class';
+    void confirmDialog({
+      title: 'Change class?',
+      message: (
+        <>
+          <p>
+            Switching to <strong>{content.classes[id]?.name ?? 'this class'}</strong> clears your class feats, class skills, and any
+            chosen spells &amp; cantrips — these are tied to {fromName}.
+          </p>
+          <p>Attribute boosts and other origin choices are kept.</p>
+        </>
+      ),
+      confirmLabel: 'Change class',
+      cancelLabel: 'Cancel',
+    }).then((ok) => {
+      if (ok) actions.changeClass(id);
+    });
   };
   /*
    * bug 2026-09-12 #3b: an ORIGIN swap that throws away answers the player already gave has to ask
@@ -3335,10 +3575,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         <SearchSelect
           bare
           label="Ancestry"
+          sortByName
           value={build.ancestryId}
           onChange={requestAncestryChange}
           descBucket="ancestries"
           options={Object.values(content.ancestries).map((a) => ({ id: a.id, name: a.name, note: note(a.rarity), description: a.description, descRefs: a.descRefs, record: { bucket: 'ancestries', id: a.id } }))}
+          sourcesHidden={sourcesHidden('ancestries')}
         />
         {ancestry && (
           <ChoiceGrants
@@ -3388,6 +3630,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       {ancestry && build.options?.voluntaryFlaw && (
         <SubCard icon="ti-arrow-down" label="Voluntary flaw">
           <AbilitySelect
+            title="Voluntary flaw"
+            kind="flaw"
             value={build.options?.voluntaryFlawAbility ?? null}
             options={ABILITIES}
             onChange={(v) => actions.patch({ options: { ...build.options, voluntaryFlawAbility: v } })}
@@ -3410,6 +3654,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             record: { bucket: 'heritages', id: h.id },
             group: h.ancestryId === null ? 'Versatile heritages' : `${ancestry?.name ?? 'Ancestry'} heritages`,
           }))}
+          sourcesHidden={sourcesHidden('heritages')}
         />
       </SetupCard>
       {/* Heritages that grant a "skill of your choice" (Skilled human) need a picker, or
@@ -3605,10 +3850,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         <SearchSelect
           bare
           label="Background"
+          sortByName
           value={build.backgroundId}
           onChange={requestBackgroundChange}
           options={[
-            ...(showCustomBg ? [{ id: CUSTOM_BACKGROUND_ID, name: '✎ Custom background…' }] : []),
+            ...(showCustomBg ? [{ id: CUSTOM_BACKGROUND_ID, name: '✎ Custom background…', pin: true }] : []),
             ...Object.values(content.backgrounds).map((b) => ({
               id: b.id,
               name: b.name,
@@ -3624,6 +3870,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   : undefined,
             })),
           ]}
+          sourcesHidden={sourcesHidden('backgrounds')}
         />
         {/* The chosen background's TrustMarker on the card itself: SearchSelect draws none on its
             filled control, and a created background whose print is only partly applied must say so
@@ -3877,10 +4124,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         <SearchSelect
           bare
           label="Class"
+          sortByName
           value={build.classId}
           onChange={requestClassChange}
           descBucket="classes"
           options={Object.values(content.classes).map((c) => ({ id: c.id, name: c.name, note: note(c.rarity), description: c.description, descRefs: c.descRefs, record: { bucket: 'classes', id: c.id } }))}
+          sourcesHidden={sourcesHidden('classes')}
         />
         {cls && (
           <ChoiceGrants
@@ -3911,6 +4160,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               data-ctl-state={build.keyAbility && keyOptions.includes(build.keyAbility) ? 'picked' : 'empty'}
             >
               <AbilitySelect
+                title="Key attribute"
                 value={build.keyAbility && keyOptions.includes(build.keyAbility) ? build.keyAbility : null}
                 options={keyOptions}
                 onChange={(v) => actions.patch({ keyAbility: v })}
@@ -4498,6 +4748,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           <SearchSelect
             bare
             label="Deity"
+            sortByName
             value={build.deityId}
             /* bug 2026-09-13: change-subclass-deity-confirm — a deity swap deletes every domain the
                new deity doesn't offer, and can replace an answered divine font. Ask first. */
@@ -4511,7 +4762,18 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               descRefs: d.descRefs,
               record: { bucket: 'deities', id: d.id },
             }))}
+            sourcesHidden={sourcesHidden('deities')}
           />
+          {/* Phone audit D3 (a blocker): with the default books a new cleric had NO deity to choose and the
+              card said nothing about why. Every deity is printed outside the Core books. */}
+          {Object.keys(content.deities).length === 0 && !!hiddenIn?.deities.length && (
+            <>
+              <p className="setup-hint">Every deity is printed in a book this character has switched off.</p>
+              <button type="button" className="btn-ghost picker-src-btn" onClick={() => setSourcesOpen(true)}>
+                <i className="ti ti-books" aria-hidden="true" /> Turn books on in Sources
+              </button>
+            </>
+          )}
           {/* A deity can ask a question of its own — Lurlup's "Sanctification: can be Unholy". Deities
               were the one chosen record with no pick surface at all, so the answer had nowhere to go. */}
           <EffectChoicesPicker
@@ -4823,41 +5085,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           )}
         </SetupCard>
       )}
-      {pendingClass != null && (
-        <div className="picker-overlay" onClick={() => setPendingClass(null)}>
-          <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="picker-head">
-              <span>
-                <i className="ti ti-alert-triangle" aria-hidden="true" /> Change class?
-              </span>
-              <button className="picker-close" onClick={() => setPendingClass(null)} aria-label="Close">
-                <i className="ti ti-x" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="confirm-body">
-              <p>
-                Switching to <strong>{content.classes[pendingClass]?.name ?? 'this class'}</strong> clears your class
-                feats, class skills, and any chosen spells &amp; cantrips — these are tied to {build.classId ? content.classes[build.classId]?.name ?? 'your current class' : 'your current class'}.
-              </p>
-              <p>Attribute boosts and other origin choices are kept.</p>
-            </div>
-            <div className="confirm-actions">
-              <button className="btn-ghost" onClick={() => setPendingClass(null)}>
-                Cancel
-              </button>
-              <button
-                className="btn-primary"
-                onClick={() => {
-                  actions.changeClass(pendingClass);
-                  setPendingClass(null);
-                }}
-              >
-                Change class
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {sourcesOpen && <SourcesPopup build={build} actions={actions} onClose={() => setSourcesOpen(false)} />}
     </>
   );
 }

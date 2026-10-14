@@ -4,7 +4,8 @@ import { useContent } from './ContentContext';
 import { usePinDesc, type PinNode } from './PinContext';
 import { lookupRef, type DescNode } from './descref';
 import { RichText } from './RichText';
-import { useEscapeClose } from './useEscapeClose';
+import { useBackHandler, useEscapeClose } from './useEscapeClose';
+import { isMobileNow } from './useIsMobile';
 import { AstRenderer } from './AstRenderer';
 import { TrustMarker } from './TrustMarker';
 import { unencodedNamed } from '../data/trustGate';
@@ -223,6 +224,9 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
   const content = useContent();
   const exit = onExit;
   useEscapeClose(exit);
+  // The VIEWPORT, not useIsMobile(): a tracker pane forces the phone layout on a desktop, and there
+  // Escape must keep closing the whole chain. Same test the dismiss stack arms the phone's Back with.
+  const isMobile = isMobileNow();
   const pin = usePinDesc();
   const [stack, setStack] = useState<DescNode[]>(() => [node ?? nodeOfRecord(record, content)]);
   const cur = stack[stack.length - 1];
@@ -279,6 +283,12 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
   const remastered = ra ? <RemasteredLine ra={ra} onOpen={openRef} /> : null;
   const back = () => { if (stack.length > 1) setStack((s) => s.slice(0, -1)); else onBackToSource?.(); };
   const showBack = stack.length > 1 || !!onBackToSource;
+  /* On a phone the hardware Back does what the card's own Back button does: one page back after you
+     followed a link inside the card (or back to the popup this one opened from). It used to close the
+     whole description chain, while the visible "‹ Back" went one step — two Backs that disagreed
+     (phone audit B5/C12/D11, 2026-10-14). Pushed while there is somewhere to go back to, so it sits
+     above this card's own close entry. Desktop Escape still closes the whole chain, as documented. */
+  useBackHandler(isMobile && showBack, back);
 
   /* "Not yet verified", for whichever node of the stack is open. A node whose key/slug does not
      resolve to a gated record renders nothing, which is every glossary term and every homebrew page.

@@ -6,7 +6,7 @@ import { rankBySearch, searchMatches, splitNameText } from '../data/searchRank';
 import { RangeSlider } from './RangeSlider';
 import { ActionGlyph } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
-import { useEscapeClose } from './useEscapeClose';
+import { useBackHandler, useEscapeClose } from './useEscapeClose';
 import type { DescNode } from './descref';
 import { bucketOf, getCachedAst, isBucketLoaded } from './astStore';
 
@@ -520,6 +520,12 @@ export function FilterableSelect<T>({
   const panelFields = searchField ? liveFields.filter((f) => f.id !== searchField.id) : liveFields;
   const hasPanel = panelFields.length >= 1;
   const panelOpen = hasPanel && showFilters;
+  /* The filter panel is a layer of its own: it covers the results (full-screen on a phone, a takeover of
+     the popup body on desktop). Escape / Android Back with it open close ONLY the panel, back to the
+     results with the search and every filter kept — they used to close the whole picker and lose both
+     (phone audit C1/D8/E6, 2026-10-14). Pushed when the panel opens, so it sits above the picker's own
+     entry; every platform, because the desktop panel is a takeover too. */
+  useBackHandler(panelOpen, () => setShowFilters(false));
   const panelActiveCount = panelFields.filter((f) => isActive(f, state[f.id], effStops)).length;
   const mq = metaQuery.trim().toLowerCase();
 
@@ -612,6 +618,14 @@ export function FilterableSelect<T>({
                 </div>
                 <button className="fsel-clear" onClick={reset} disabled={activeCount === 0} title="Clear all filters">
                   <i className="ti ti-x" aria-hidden="true" /> Clear filters{activeCount > 0 ? ` (${activeCount})` : ''}
+                </button>
+                {/* The phone's way back to the results: the panel covers them completely there, and the
+                    only other exit was the small header pill that reads as a toggle. Dropped by accident
+                    in the v0.1.16 release commit (061f099) while its CSS stayed; restored 2026-10-14.
+                    Always rendered, SHOWN by sheet.css's phone block only — the same viewport test that
+                    makes the panel full-screen — so a forced-mobile pane on a desktop never draws it bare. */}
+                <button type="button" className="fsel-done" onClick={() => setShowFilters(false)} title="Show results">
+                  <i className="ti ti-check" aria-hidden="true" /> Done
                 </button>
               </div>
 

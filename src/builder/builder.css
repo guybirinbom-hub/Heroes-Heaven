@@ -65,6 +65,11 @@
   padding: 9px 14px;
   border-bottom: var(--app-bw) solid var(--app-border);
   overflow-x: auto;
+  /* `overflow-x: auto` alone makes overflow-y compute to auto too, so the strip was a VERTICAL scroller
+     as well: once a long page squashed it (see `.builder > :not(.builder-body)` in sheet.css), the
+     chip scrollIntoView landed on and a swipe on the bar slid the chips half out of their own bar
+     (phone audit A3/D12, 2026-10-14). It is one row; it never scrolls up and down. */
+  overflow-y: hidden;
   scrollbar-width: none;
   /* The bar hides its scrollbar, so at level 20 there was nothing at all to say the chips continue
      past the edge — they simply stopped. A fade at each end is the only cue; it is a mask, so it
@@ -1088,8 +1093,13 @@
   font-family: inherit;
   color: var(--app-text);
 }
-.picker-item:hover {
-  background: var(--app-surface-2);
+/* Hover highlights only where there IS hover. A touch screen keeps `:hover` on the last element tapped
+   until the next tap, so a row you opened and then closed with Back stayed highlighted as if chosen
+   (phone audit C15). test/phone-builder-css.test.ts keeps every picker-row hover inside this query. */
+@media (hover: hover) {
+  .picker-item:hover {
+    background: var(--app-surface-2);
+  }
 }
 .picker-item:disabled {
   opacity: 0.4;
@@ -1439,17 +1449,21 @@
   background: transparent;
   color: var(--app-text-dim);
 }
-.popsel.is-empty:hover {
-  border-color: var(--app-accent);
-  color: var(--app-text);
+@media (hover: hover) {
+  .popsel.is-empty:hover {
+    border-color: var(--app-accent);
+    color: var(--app-text);
+  }
 }
 .popsel.is-picked {
   border: var(--app-bw) solid var(--app-border);
   background: var(--app-surface-2);
   color: var(--app-text);
 }
-.popsel.is-picked:hover {
-  border-color: var(--app-accent);
+@media (hover: hover) {
+  .popsel.is-picked:hover {
+    border-color: var(--app-accent);
+  }
 }
 .popsel-lead {
   flex: none;
@@ -1485,8 +1499,10 @@
   color: var(--app-text-dim);
   font-size: 14px;
 }
-.popsel.is-picked:hover .popsel-change {
-  color: var(--app-accent);
+@media (hover: hover) {
+  .popsel.is-picked:hover .popsel-change {
+    color: var(--app-accent);
+  }
 }
 /* A filled SearchSelect whose value has a description: the value opens its description card, and a
    separate Replace button re-opens the picker — so pressing the value reads it instead of silently
@@ -1496,14 +1512,18 @@
   flex: 1; min-width: 0; display: flex; align-items: center; padding: 8px 11px;
   background: transparent; border: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
 }
-.ss-filled-body:hover { background: color-mix(in srgb, var(--app-accent) 8%, transparent); }
-.ss-filled-body:hover .popsel-val { color: var(--app-accent); }
+@media (hover: hover) {
+  .ss-filled-body:hover { background: color-mix(in srgb, var(--app-accent) 8%, transparent); }
+  .ss-filled-body:hover .popsel-val { color: var(--app-accent); }
+}
 .ss-replace {
   flex: none; display: inline-flex; align-items: center; gap: 4px; padding: 8px 11px;
   border: none; border-left: var(--app-bw) solid var(--app-border); background: transparent;
   color: var(--app-text-dim); font: inherit; font-size: 12px; cursor: pointer; white-space: nowrap;
 }
-.ss-replace:hover { background: var(--app-surface); color: var(--app-accent); }
+@media (hover: hover) {
+  .ss-replace:hover { background: var(--app-surface); color: var(--app-accent); }
+}
 /* In-popup "type your own" mode (e.g. a custom Lore) — typed inside the picker, not outside it. */
 .popsel-custom {
   padding: 12px;
@@ -1534,6 +1554,17 @@
 }
 .popsel.pill .popsel-lead {
   font-size: 13px;
+}
+/* Phone audit B8 (2026-10-14), all platforms: a picked Voluntary flaw (AbilitySelect kind="flaw", class
+   is-flaw) reads as a flaw, in the same red as the ancestry's own "flaw: Cha" text — it drew in the boost
+   colour, exactly like a boost. 4 classes beat `.popsel.pill.is-picked` and `.popsel.pill .popsel-lead`
+   (3 each) and the `.popsel.is-picked:hover` border. test/phone-builder-css.test.ts. */
+.popsel.pill.is-flaw.is-picked {
+  border-color: var(--app-bad);
+  background: color-mix(in srgb, var(--app-bad) 14%, var(--app-surface));
+}
+.popsel.pill.is-flaw .popsel-lead {
+  color: var(--app-bad);
 }
 .ss-count {
   margin-left: auto;
@@ -1944,18 +1975,26 @@
    this point uses a media query). Matches useIsMobile() / the sheet.css mobile breakpoint.
    ============================================================ */
 @media (max-width: 720px) {
-  /* The load-bearing fix: kill the 244px rail track that crushed the content column. */
-  .builder-body { grid-template-columns: 1fr; gap: 12px; padding: 12px; }
+  /* The load-bearing fix: kill the 244px rail track that crushed the content column.
+     `align-content: start`: on a phone .builder-body is a one-column grid that IS the fixed-height
+     scroller, and grid rows stretch by default — so on a short level page the collapsed Character card
+     and the level card were pulled apart by a 170-250px empty band (phone audit C6/E9). */
+  .builder-body { grid-template-columns: 1fr; gap: 12px; padding: 12px; align-content: start; }
 
   /* The FullStats rail stops being a pinned first-column sidebar; it sits below the content
      (collapsed by default via the chevron) instead of reserving a fixed track. */
   /* Put the live-stats (FullStats) rail ABOVE the choices on mobile so the "did my AC/HP change?"
      feedback is visible without scrolling to the very bottom. It stays collapsed by default. */
-  .brail { order: -1; position: static; top: auto; }
+  .brail { order: -1; position: static; top: auto; padding: 4px 12px 12px; }
+  /* Collapsed, the title row is all there is — no bottom padding under it. */
+  .brail:has(> .brail-title:last-child) { padding-bottom: 4px; }
 
   /* Header wraps instead of overflowing; the name field goes full-width, the level stepper unpins. */
-  /* Clear the phone status bar (÷zoom so it still clears when zoomed out — the page is html{zoom}-scaled). */
-  .builder-head { flex-wrap: wrap; gap: 8px; padding: calc(10px + env(safe-area-inset-top, 0px) / var(--zoom, 1)) 12px 10px; }
+  /* Clear the phone status bar (÷zoom so it still clears when zoomed out — the page is html{zoom}-scaled).
+     …unless an app banner is showing: the pinned builder then starts BELOW the banner (sheet.css,
+     `top: var(--app-banner-h)`), and the banner has already cleared the status bar with its own
+     safe-area padding. With no banner --app-banner-h is 0px and this is exactly the old padding. */
+  .builder-head { flex-wrap: wrap; gap: 8px; padding: calc(10px + max(0px, env(safe-area-inset-top, 0px) / var(--zoom, 1) - var(--app-banner-h, 0px))) 12px 10px; }
   .name-input { min-width: 0; flex: 1 1 100%; margin-left: 0; }
   .lvl-ctl { margin-left: 0; }
 
@@ -1970,19 +2009,37 @@
 
   /* Top section: the 21-chip level strip scrolls sideways instead of wrapping into a block; the header
      reads as title / full-width name / (level + Cancel + Save) rows rather than an overflowing jumble. */
-  .lstrip { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+  /* 6px between chips: they are the builder's page navigation, and at 4px a thumb landed on the
+     neighbouring level (phone audit A8). Less vertical padding so the 40px chips don't grow the bar. */
+  .lstrip { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; gap: 6px; padding: 6px 14px; }
   .lstrip::-webkit-scrollbar { display: none; }
   .lstrip .lchip { flex: 0 0 auto; }
   /* Two rows, not three: title + name share the first, level + Cancel + Save the second. The title
      used to take a whole row to itself (flex: 1 1 100%), and once the header is PINNED (see sheet.css)
      every row it costs is screen the player never gets back. */
   .builder-head .builder-title { flex: 0 0 auto; }
-  .builder-head .name-input { flex: 1 1 120px; }
+  /* 16px text: 13px was hard to read while typing a name (audit A8/C16); 40px tall like Cancel/Save. */
+  /* 200px basis keeps the level stepper on the second row with Cancel + Save on every phone width (it
+     is narrow enough now to squeeze onto the first and leave the name a 125px sliver); with Undo
+     buttons on, the pair takes that room on the first row instead. */
+  .builder-head .name-input { flex: 1 1 200px; font-size: 16px; min-height: 40px; }
+  .builder-head:has(.b-undo) .name-input { flex-basis: 120px; }
   .builder-head .lvl-ctl { margin-right: auto; }
   .builder-head .b-cancel, .builder-head .b-create { flex: 1 1 auto; min-height: 40px; }
+  /* The "LEVEL" word cost 40px of the second row, and at 360px that pushed "Save changes" onto a third
+     row of its own (audit A7); the stepper beside the level chips needs no caption. */
+  .lvl-ctl-label { display: none; }
+  /* Undo buttons on (the owner's setting — they stay hidden on phones by default): the pair rides on the
+     title row beside the name instead of the second row, where level + Cancel + Save + undo cannot fit
+     360px and the header grew to three rows. `order` only — the DOM order (and Tab order) is unchanged. */
+  .builder-head .lvl-ctl,
+  .builder-head .b-cancel,
+  .builder-head .b-create,
+  .builder-head .chrome-btns { order: 1; }
   /* 22px is under any touch-target guidance, and this is the control that adds a level. */
-  .lvl-step { width: 34px; height: 34px; font-size: 17px; }
-  .lvl-ctl { padding: 3px 6px; }
+  .lvl-step { width: 40px; height: 40px; font-size: 18px; }
+  /* The two 40px steps carry their own borders; the box around them only added height to the row. */
+  .lvl-ctl { padding: 0; gap: 4px; border: none; background: none; }
 
   /* Popup-select — THE builder choice control (subclass, boosts, skills, feats, deity) — to a 40px
      touch target; the compact pill variant (ability-boost rows) to ~38px. */
@@ -1993,15 +2050,87 @@
      the level chips were 26px, the Setup toggles 23px, and the "i" rules buttons 19px square —
      small enough to miss, and the chips are the builder's main navigation. The "i" keeps its 15px
      glyph and gains padding, so only the hit area grows. */
-  .lchip { min-width: 32px; height: 32px; font-size: 12px; }
-  .inv-toggle { min-height: 32px; }
-  .rule-info { padding: 7px; font-size: 15px; }
+  /* 2026-10-14 phone audit: 32px was an improvement on 26px, not a limit. The owner's bar now is 40px
+     for the main controls (level chips, Select/Add, picker rows) and 36px for secondary ones, with at
+     least 6px between neighbours. */
+  .lchip { min-width: 40px; height: 40px; font-size: 13px; }
+  .inv-toggle { min-height: 36px; }
+  /* The "i" sat 3px from its toggle; 8px now, and a 36px hit area around the same 15px glyph. */
+  .rule-toggle { gap: 8px; }
+  .rule-info { padding: 7px; min-width: 36px; min-height: 36px; font-size: 15px; }
   /* Sources card: the per-book on/off box, its Select-all / none actions, and the book search — the
      search field was 22px tall, and a 16px font also stops iOS zooming the page when you focus it. */
-  .src-check { width: 32px; height: 32px; }
-  .src-act { min-height: 32px; }
-  .src-search input { min-height: 34px; font-size: 16px; }
-  /* The chevron that reveals the live Character stats. It was 18x16 — the smallest control on the
-     page, guarding the one panel that tells you what your choices did. */
-  .brail-toggle { padding: 8px; font-size: 16px; }
+  .src-check { width: 36px; height: 36px; justify-content: center; align-items: center; }
+  .src-act { min-height: 36px; }
+  .src-search input { min-height: 36px; font-size: 16px; }
+  /* Book rows were 27px with 1px between them — a tap just under one book toggled the next (D13). */
+  .src-books { gap: 6px; }
+  .src-book { min-height: 40px; }
+  /* The search's clear ✕, the Overrides chip ✕ and the attribute revert ✕ were 14-15px. Negative
+     margins keep the rows they sit in the same height; only the hit area grows. */
+  .src-search-x, .ovr-chip-x, .ovr-attr-x { min-width: 36px; min-height: 36px; justify-content: center; align-items: center; margin: -8px -6px; }
+  .ovr-edit-name, .ovr-edit-desc { font-size: 16px; min-height: 36px; }
+  /* The live Character stats toggle: the WHOLE title row is the button (the "Character" label sits
+     inside it on phones), so a tap on the word or anywhere along the row opens and closes the panel —
+     it used to be a 32px chevron at the far left and a tap on the word did nothing (A6/C7). */
+  .brail-title { margin-bottom: 0; font-size: 12px; }
+  .brail-toggle {
+    display: flex; align-items: center; gap: 8px; width: 100%; min-height: 40px; padding: 0;
+    font: inherit; text-transform: inherit; letter-spacing: inherit; color: inherit; text-align: left;
+  }
+  .brail-toggle i { font-size: 16px; width: 20px; text-align: center; }
+  .brail-title + * { margin-top: 8px; }
+
+  /* Option rows in every PopupSelect (heritage skill, boosts, trained skills …): 33px rows 4px apart. */
+  .picker-list { gap: 6px; }
+  .picker-item { min-height: 40px; }
+  /* Deep-background form fields: 30px tall with 12.5px text. */
+  .cbg-field input, .cbg-field select { min-height: 40px; font-size: 16px; }
+  .cbg-field textarea { font-size: 16px; }
+  /* A picked value (heritage, school, background …) WRAPS instead of ellipsizing: at 360px the Replace
+     button left 132px and "Ancient-Blooded Dwarf" read "Ancient-Blooded D…" (B9/D16). */
+  .ss-filled .popsel-val { white-space: normal; overflow-wrap: break-word; }
+  /* …and the filled control gets back the width the phone `.popsel` padding above took from it: the
+     value button and Replace carry their own padding (`.ss-filled { padding: 0 }` says so; the phone
+     rule overrode it by coming later). Both buttons fill the 40px height, so no tap lands between. */
+  .popsel.ss-filled { padding: 0; align-items: stretch; }
+  /* Spell chips and their ✕ / ★ (13px glyphs), "+ add", the "Details" links, the feat clear ✕. */
+  .spr-chip { min-height: 36px; }
+  .spr-chip-x, .spr-chip-sig { min-width: 32px; min-height: 32px; justify-content: center; margin: -4px -6px; }
+  .spr-add { min-height: 36px; padding: 8px 14px; }
+  .cc-det { min-height: 36px; padding: 8px 0; }
+  .lvl-slot { gap: 8px; }
+  .lvl-clear-btn { width: 40px; }
+  /* Overrides → Change attributes: three `1fr` columns kept each cell's min-content, so inside the
+     indented Setup card the grid ran past the screen and Con/Cha sat off the right edge (D4). Columns
+     now fit the width; the number box is 16px text and 36px tall like the other secondary fields. */
+  /* `width: 100%`: the grid is an item of the card's wrapping flex row, which sizes it to its max-content
+     width — and an auto-fill grid with no width of its own has room for ONE column, so the six boxes
+     stood in a 98px column with half the card empty (round 2). Full width: 2 columns at 360-412px. */
+  .ovr-attrs { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); width: 100%; }
+  /* …and the follow-up cards inside a Setup card take its whole row on a phone. They are items of the
+     same wrapping row (.lvl-card-row), so each one was only as wide as its content: Overrides read as a
+     ragged column of half-width cards ("Change attributes" 196px of a 260px row), and the grid above had
+     nothing to fill. Two never fit side by side at phone width anyway. */
+  .lvl-card-row > .lvl-subcard { flex: 1 1 100%; min-width: 0; }
+  /* Round 3: even full-width, a follow-up card's content column was 162px at 360 (192 at 390): 155px of the
+     screen went to indents — the Setup card's icon column, the follow-up card's own 16px indent and ↳, and
+     ITS icon column. "Change attributes" stood as six stacked boxes until 412px. On a phone: (1) inside a
+     Setup card the follow-up card drops its 16px indent (it already sits in the card's text column; the ↳
+     still marks it as a follow-up), and (2) a follow-up card reads as a header line — icon + label — with
+     its controls on the full card width BELOW the icon: the row reaches back under the icon column
+     (28px icon + 10px gap) and the label is as tall as the icon, so the row always starts below it.
+     360px: 216px of content, two columns of attribute boxes. */
+  .lvl-card-row > .lvl-subcard { padding-left: 0; }
+  .lvl-card-child > .lvl-card-text > .lvl-card-label { min-height: 29px; padding-top: 7px; box-sizing: border-box; }
+  .lvl-card-child > .lvl-card-text > .lvl-card-row { margin-left: -38px; }
+  /* "Max HP" broke over two lines in the 26px label column. */
+  .ovr-attr-k { width: auto; min-width: 26px; white-space: nowrap; }
+  /* The label never shrinks under its box's number field (the field gives way instead): with a revert ↶
+     beside it, "Max HP" in a 105px half-width box was cut to "Max H" behind "120" (round 3). And a grid
+     holding ONE box (Set maximum HP) gives it the whole row instead of half of it. */
+  .ovr-attr-k { flex: none; }
+  .ovr-attrs > .ovr-attr:only-child { grid-column: 1 / -1; }
+  .ovr-attr { min-width: 0; }
+  .ovr-attr-in { flex: 1 1 auto; width: auto; min-width: 0; max-width: 56px; min-height: 36px; font-size: 16px; }
 }
