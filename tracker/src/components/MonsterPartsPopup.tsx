@@ -1,6 +1,7 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import type { Creature } from '../types/pf2e'
 import { matchingImbuements, IMBUE_GROUP_ORDER, type ImbueGroup } from '../utils/imbuements'
+import { useEscapeCloses } from '../utils/spendEscape'
 import { XIcon } from './Icons'
 
 // Popup shown when the Monster Parts chip on a stat block is clicked: the parts'
@@ -12,11 +13,10 @@ export function MonsterPartsPopup({ creature, value, bulk, onClose }: {
   bulk: string
   onClose: () => void
 }) {
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [onClose])
+  // Escape closes the popup and goes no further — and Android's Back closes it through the host (utils/
+  // spendEscape useEscapeCloses). Its own `document` listener closed it and let the press go on to the
+  // page under it (owner's list 2026-10-14, item 2). modalEscape.test.tsx.
+  const escapeRef = useEscapeCloses(onClose)
 
   const matches = useMemo(() => matchingImbuements(creature), [creature])
   const byGroup = useMemo(() => {
@@ -26,7 +26,7 @@ export function MonsterPartsPopup({ creature, value, bulk, onClose }: {
   }, [matches])
 
   return (
-    <div className="modal-overlay" style={{ zIndex: 9000 }} onClick={e => e.target === e.currentTarget && onClose()}>
+    <div className="modal-overlay" ref={escapeRef} style={{ zIndex: 9000 }} onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="modal-box" style={{ maxWidth: 560, padding: 0, overflow: 'hidden', maxHeight: '88vh', display: 'flex', flexDirection: 'column' }}>
         {/* Header */}
         <div style={{

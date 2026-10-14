@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react'
 import type { Combatant, AppliedCondition } from '../types/pf2e'
 import { useCombatStore } from '../store/combatStore'
 import { CONDITION_META, ALL_CONDITIONS } from '../utils/conditionEffects'
@@ -11,6 +11,7 @@ import { TagRenderer } from './TagRenderer'
 import { useWindowStore } from '../store/windowStore'
 import { useGameData } from '../data/gameDataContext'
 import { fixedPopupPos, localRect } from '../utils/zoomFix'
+import { useEscapeCloses } from '../utils/spendEscape'
 
 const STUNNED_SLIDER_MAX = 10
 /** Width of the add-condition panel — the clamp needs it, the panel's style sets it. */
@@ -169,7 +170,7 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
   // The loaded Archives entries — read for the detail panel below, so the GM sees the whole rule
   // before applying it instead of the 12-word summary the tile's title attribute carries.
   const { conditions: conditionText } = useGameData()
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement | null>(null)
   const [search, setSearch] = useState('')
   const [selected, setSelected] = useState('')
   const [value, setValue] = useState(1)
@@ -230,17 +231,18 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
   // further. Drawn inside the tracker (fixed, not on <body>), neither is a popup Heroes Heaven's Escape
   // can see, so the key, typed in the search box that takes the focus as the picker opens, fell through
   // and LEFT THE CAMPAIGN (found 2026-10-11: this is where the GM adds Dying and Wounded, owner's list
-  // 2026-10-01 item 2).
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return
-      e.stopPropagation()
-      if (advOpen) setAdvOpen(false)
-      else onClose()
-    }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [advOpen, onClose])
+  // 2026-10-01 item 2). The picker is one of the tracker's registered layers (utils/spendEscape
+  // useEscapeCloses, a `panel`: no backdrop round it), under the editor it opens (registered after it):
+  // one press closes the editor, the next the picker. It used to close itself from a `document` listener
+  // of its own, which Android's Back never reaches: with only the picker up, Back on a phone turned
+  // sideways closed the window behind it, or LEFT THE CAMPAIGN (owner's list 2026-10-14, item 1). Now the
+  // host's Back handler closes it (CampaignTracker, closeTopTrackerModal) — test/bug-tracker-escape-boxes
+  // (BACK), CombatantMenu.test.tsx.
+  const escapeRef = useEscapeCloses(onClose, { panel: true })
+  const rootRef = useCallback((el: HTMLDivElement | null) => {
+    ref.current = el
+    escapeRef(el)
+  }, [escapeRef])
 
   const handleSelect = (name: string) => {
     if (selected === name) return
@@ -329,7 +331,7 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
     'advanced'.includes(search.toLowerCase())
 
   return (
-    <div ref={ref} style={{
+    <div ref={rootRef} style={{
       position: 'fixed', top, left, zIndex: 9999,
       width: PANEL_W,
       background: 'var(--bg-panel)',

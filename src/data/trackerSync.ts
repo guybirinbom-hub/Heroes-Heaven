@@ -259,6 +259,12 @@ function reloadLocal(key: string): void {
     // no write means no onLocalPersist at all, so the lastSeen the caller takes is the remote's own
     // bytes. The call is gone rather than kept as a no-op because a flush that can never have anything
     // to flush reads like a safety net, and the next person to touch this would keep it for that.
+    // An adopted board can be OLDER play than the one on screen (the other device edited the board from
+    // before this one's Next). It carries its fight's id (`fightId`) and the steps that fight has spent
+    // (`spentSteps` — an Undo on the other device included), and the load keeps the player steps already
+    // spent in that fight and takes in the board's, so a turn end it brings back never steps a player twice
+    // (combatStore, SPENT STEPS; legs ab, ac and ad of test/tracker-sync.test.ts). The load still writes
+    // nothing; the list only rides on saves the board makes anyway.
     useCombatStore.getState().reloadFromStorage();
     return;
   }

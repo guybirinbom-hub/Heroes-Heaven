@@ -49,13 +49,18 @@ function titleCase(s: string): string {
   return s.replace(/(^|[\s/(-])([a-z])/g, (_, p, c) => p + c.toUpperCase())
 }
 
-export function GlobalSearch({ onClose, onPick, title }: {
+export function GlobalSearch({ onClose, onPick, title, escapeRef }: {
   onClose: () => void
   /** When provided, selecting a result calls this (e.g. to pin it) instead of
    *  opening the reference window. */
   onPick?: (hit: { type: WinType; ref: string; title: string }) => void
   /** Optional heading shown in pick mode (e.g. "Pin a reference"). */
   title?: string
+  /** The opener's `useEscapeCloses` ref (utils/spendEscape), put on the backdrop: the picker is then one
+   *  of the tracker's registered layers — Escape with the focus off the box is the one shared listener's,
+   *  and Android's Back reaches it through the host — and adds no `document` listener of its own. The GM
+   *  screen's "Add to GM Screen" picker (GMScreen.tsx). */
+  escapeRef?: (el: HTMLElement | null) => void
 }) {
   const data = useGameData()
   const host = useHostSearch()
@@ -134,17 +139,22 @@ export function GlobalSearch({ onClose, onPick, title }: {
    * is handled; this catches a press made with the focus somewhere else on the page while the picker is
    * open (a click on the box's padding drops the focus to <body>). Standalone nothing listens above,
    * and both simply close the picker as before.
+   * An opener that registers the picker (`escapeRef`: the GM screen's, 2026-10-14) gets no listener here:
+   * the shared one closes it, and a second listener on the same press closed it twice — or, the browser
+   * committing React between the two, took the shared listener away mid-press.
    */
   const onCloseRef = useRef(onClose)
   onCloseRef.current = onClose
+  const registered = !!escapeRef
   useEffect(() => {
+    if (registered) return
     const onDocKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return
       e.preventDefault(); e.stopPropagation(); onCloseRef.current()
     }
     document.addEventListener('keydown', onDocKey)
     return () => document.removeEventListener('keydown', onDocKey)
-  }, [])
+  }, [registered])
 
   // Keep the highlighted row visible while arrow-navigating.
   useEffect(() => {
@@ -186,6 +196,7 @@ export function GlobalSearch({ onClose, onPick, title }: {
 
   return (
     <div
+      ref={escapeRef}
       onClick={e => { if (e.target === e.currentTarget) onClose() }}
       style={{
         position: 'fixed', inset: 0, zIndex: 9500,

@@ -389,6 +389,63 @@ describe('a PC’s initiative row agrees with their party card', () => {
     expect(store().combatants.filter((c) => c.charId === 'char-a'), 'never twice').toHaveLength(1);
   }, 120_000);
 
+  it('(H) Quick add of a member with NO mirrored party entry still adds them LINKED to their party member — once', async () => {
+    /*
+     * Owner's list 2026-10-14, item 5: the third way in. A member the campaign's mirrored party had no entry
+     * for (the parties this device adopted from the GM's other one predate them, say) fell to a direct PC
+     * add with no party stamp — a row not linked to its party member. Now the entry is made first, exactly
+     * as the campaign mirror makes it (partyStore.ensureCampaignMember), and the member goes in the one way
+     * a party member does (addPartyMemberToOrder).
+     * MUTATION (tried 2026-10-14): MonsterSearch quickAdd — the old lookup and its direct PC add back in
+     * place of `ensureCampaignMember` (`… else if (mem) addCombatant(null, { name: mem.name, isPC: true,
+     * maxHP: mem.maxHP, charId: mem.charId })`) → fails at “their entry, made the way the mirror makes
+     * it” (expected [] to have a length of 1): no entry, so the row had no party member to carry.
+     * MUTATION (tried 2026-10-14): the entry made, but the row added straight (`addCombatant(null, { name:
+     * pl.name, isPC: true, maxHP: pl.pcStats?.maxHP, charId: pl.charId })` for `addPartyMemberToOrder(pl)`)
+     * → fails at “the party member it was added for” (expected undefined), with the leg above.
+     */
+    const a = saved('char-a', NAME, 5);
+    srv.party = [publish(a, 'owner-a')];
+    await openTracker();
+    const campaignParty = () => usePartyStore.getState().parties.find((p) => p.campaignId === CAMPAIGN.id)!;
+    expect(campaignParty().players.some((p) => p.charId === 'char-a'), 'fixture: the mirror made their entry').toBe(true);
+    // The parties this device adopted from the GM's other device have no entry for them.
+    act(() =>
+      usePartyStore.setState((s) => ({
+        parties: s.parties.map((p) => (p.campaignId === CAMPAIGN.id ? { ...p, players: p.players.filter((x) => x.charId !== 'char-a') } : p)),
+      })),
+    );
+    await flush(2);
+    expect(campaignParty().players.some((p) => p.charId === 'char-a'), 'fixture: no mirrored entry for them').toBe(false);
+
+    act(() => trackerUi.setMonsterSearch(true));
+    await flush(2);
+    const box = [...host!.querySelectorAll('textarea')].find((t) => t.placeholder.startsWith('One name per line')) as HTMLTextAreaElement;
+    const type = (v: string) =>
+      act(() => {
+        Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')!.set!.call(box, v);
+        box.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+    const addBtn = () => [...host!.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Add') as HTMLButtonElement;
+    type(NAME);
+    click(addBtn());
+    await flush(3);
+
+    const entries = campaignParty().players.filter((p) => p.charId === 'char-a');
+    expect(entries, 'their entry, made the way the mirror makes it — in the campaign’s party').toHaveLength(1);
+    expect([entries[0].memberType, entries[0].name]).toEqual(['pc', NAME]);
+    const pc = store().combatants.find((c) => c.charId === 'char-a');
+    expect(pc?.isPC, 'a player character').toBe(true);
+    expect(pc?.partyMemberId, 'the party member it was added for').toBe(entries[0].id);
+    expect(pc?.currentHP, 'the sheet drives it').toBe(a.character.hitPoints.current);
+
+    type(NAME.toUpperCase()); // again: already in the order
+    click(addBtn());
+    await flush(2);
+    expect(store().combatants.filter((c) => c.charId === 'char-a'), 'never twice (isSamePc)').toHaveLength(1);
+    expect(campaignParty().players.filter((p) => p.charId === 'char-a'), 'and one party entry').toHaveLength(1);
+  }, 120_000);
+
   it('(I) "Show level in initiative order" shows a PC’s level from their sheet', async () => {
     // MUTATION (tried 2026-10-13): drop the `{showInitLevel && !!pcLevel && …}` chip from InitRow → fails.
     srv.party = [publish(saved('char-a', NAME, 5), 'owner-a')];

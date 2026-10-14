@@ -451,7 +451,7 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
   const escapeRef = useEscapeCloses(onClose)
   const pickMode = !!onPick
   const { addCombatant } = useCombatStore()
-  const { parties, activePartyId } = usePartyStore()
+  const { parties } = usePartyStore()
 
   const [creatureQuery, setCreatureQuery] = useState('')
   const [filterQuery, setFilterQuery] = useState('')
@@ -932,10 +932,13 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
    * or conditions, no AC or saves, the stat-block pane's editors, and the GM's damage going nowhere.
    * A line that names one of the host campaign's PCs (pcStatsContext `useHostPcMembers`, null
    * standalone) is that PC, added the ONE way a party member enters the order — `addPartyMemberToOrder`
-   * with their mirrored party entry (charId, party stamp, max HP), else the same PC add on the host's
-   * own member — and both go through addCombatant's `isSamePc` dedupe, so one already in the order is
-   * never added twice. Every other line, and every line standalone, is the plain combatant it always
-   * was. "Added N" counts what really went in.
+   * with their entry in the campaign's mirrored party (charId, party stamp, max HP), through
+   * addCombatant's `isSamePc` dedupe, so one already in the order is never added twice. When that entry
+   * is missing (the parties this device adopted from the GM's other one predate the member, say) it is
+   * made first, exactly as the campaign mirror makes it (partyStore `ensureCampaignMember`) — there is no
+   * second way in: a direct PC add here left the row unlinked to its party member (item 5, 2026-10-14).
+   * Every other line, every line standalone, and a member's name where no campaign has been mirrored
+   * (no party to link to) is the plain combatant it always was. "Added N" counts what really went in.
    */
   const hostMembers = useHostPcMembers()
   const quickAdd = () => {
@@ -944,13 +947,9 @@ export function MonsterSearch({ onClose, onPick, title }: Props) {
     const before = useCombatStore.getState().combatants.length
     for (const name of names) {
       const mem = hostMembers?.find(m => m.name.trim().toLowerCase() === name.toLowerCase())
-      if (!mem) { addCombatant(null, { name }); continue }
-      // Their mirrored party entry — the campaign's (the active party) first, any other party's copy of
-      // the same character after it.
-      const ordered = [...parties].sort((a, b) => (b.id === activePartyId ? 1 : 0) - (a.id === activePartyId ? 1 : 0))
-      const pl = ordered.flatMap(p => p.players).find(x => x.memberType !== 'npc' && x.charId === mem.charId)
+      const pl = mem ? usePartyStore.getState().ensureCampaignMember(mem) : null
       if (pl) addPartyMemberToOrder(pl)
-      else addCombatant(null, { name: mem.name, isPC: true, maxHP: mem.maxHP, charId: mem.charId })
+      else addCombatant(null, { name })
     }
     setQuickNames('')
     setQuickAdded(useCombatStore.getState().combatants.length - before)

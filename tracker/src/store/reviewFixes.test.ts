@@ -121,7 +121,10 @@ describe('partyStore review fixes', () => {
       activePartyId: 'p1',
     } as never)
     usePartyStore.getState().addTurnsToPlayerByName('Bob', 30, 3)
-    usePartyStore.getState().syncCurrentHpByName('Bob', 7)
+    // A row with no ids (typed in by hand) reaches a card by its name, inside the active party only
+    // (syncCurrentHp replaced the name-only syncCurrentHpByName, owner's item 5, 2026-10-14; the
+    // identity legs are in pcHpBridge.test.ts).
+    usePartyStore.getState().syncCurrentHp({ name: 'Bob' }, 7)
     const p1 = usePartyStore.getState().parties.find(p => p.id === 'p1')!
     const p2 = usePartyStore.getState().parties.find(p => p.id === 'p2')!
     expect(p1.players[0].turnCount).toBe(3)

@@ -56,7 +56,9 @@ function viewport(): { vw: number; vh: number } {
  * window is drawn, and again whenever its height changes (a stat block arrives after "Loading…"),
  * FloatingWindow measures it and `fit` lifts it just enough for its bottom to sit 8 px inside the viewport
  * — never above 8 px from the top, so its header stays on screen to drag. A short window stays where it
- * opened (at a click: a link's own convention). Only where the APP put it: a window the GM has dragged
+ * opened (at a click: a link's own convention). A page DROPPED off a GM-screen pane (openTabs) is lifted the
+ * same way, whatever its drop point: the GM let go of it where its height had never been drawn, so it is the
+ * app's placement (at his drop point) until he touches it. Only where the APP put it: a window the GM has dragged
  * (`moved`) or resized (`sized`) stays where he left it. windowStore.test.ts, FloatingWindow.fit.test.tsx.
  */
 export const WIN_MAX_H = 680
@@ -120,7 +122,9 @@ export interface FloatingWin {
   w: number; h: number
   z: number
   sized: boolean    // false = auto-height, true = user has manually resized
-  /** The GM put it where it is (a drag, a tab dropped off a pane): `fit` leaves it there. */
+  /** The GM put it where it is (a drag, a tab pulled off a window's strip): `fit` leaves it there. A tab
+   *  dropped off a pane is NOT this until he drags or resizes it: its drop point is kept, but `fit` still
+   *  lifts it until its bottom is on screen. */
   moved?: boolean
   /** Its height as last drawn (layout px, FloatingWindow → `fit`); unknown until it has been drawn. */
   drawnH?: number
@@ -294,7 +298,9 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
     set(settleZ({
       wins: [
         ...wins.map(w => w.id === id ? { ...w, tabs, active } : w),
-        // A tab pulled off a window's tab strip: the GM's placement (`moved`), wherever his drag takes it.
+        // A tab pulled off a window's tab strip: the GM's placement (`moved`), wherever his drag takes it. Unlike a
+        // page dropped off a pane (openTabs), he is dragging this window live and sees all of it follow the cursor
+        // (beginBrowserDrag moves it at once), so where he lets go is chosen with its height on screen.
         { id: newId, tabs: [tab], active: 0, x: nx, y: ny, w: src.w, h: src.h, z: topZ + 1, sized: src.sized, moved: true },
       ],
       topZ: topZ + 1,
@@ -315,8 +321,11 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
         tabs: [...tabs],
         active: Math.max(0, Math.min(active, tabs.length - 1)),
         ...clampPos(x, y, w),
-        // Dropped off a pane where the GM let go of it (dockDragStore): his placement, left there.
-        w, h: 0, z: topZ + 1, sized: false, moved: true,
+        // Dropped off a pane where the GM let go of it (dockDragStore): it keeps that point (x, y above), but
+        // its height was never on screen when he let go, so it is NOT yet his placement (`moved` stays false):
+        // the first time it is drawn `fit` lifts it until its bottom is inside the viewport, as for a window
+        // opened at a click. His first drag or resize (`move`, `resize`) makes it his, and `fit` then leaves it.
+        w, h: 0, z: topZ + 1, sized: false, moved: false,
       }],
       topZ: topZ + 1,
     }))

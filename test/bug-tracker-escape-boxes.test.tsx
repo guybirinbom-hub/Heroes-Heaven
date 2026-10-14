@@ -13,7 +13,7 @@ import type { PartyMember } from '../src/data/party';
 import type { Creature } from '../tracker/src/types/pf2e';
 import { useCombatStore } from '../tracker/src/store/combatStore';
 import { usePartyStore } from '../tracker/src/store/partyStore';
-import { useLayoutStore } from '../tracker/src/store/layoutStore';
+import { useLayoutStore, useGmLayoutStore } from '../tracker/src/store/layoutStore';
 import { useSettingsStore } from '../tracker/src/store/settingsStore';
 import { useWindowStore, BASE_Z } from '../tracker/src/store/windowStore';
 import { trackerUi } from '../src/integration/trackerUiStore';
@@ -39,9 +39,11 @@ import { rememberCampaign, setOnCampaignsPage } from '../src/integration/lastCam
  *      the tables under it and the search too (round 2): a modal covered all over now leaves the press
  *      to the layer on top.
  *  (c) The same for a party card's TURN-TIME GRAPH: opened before a window, the window's handler sits on
- *      top of the graph's — and the graph closes itself from its own `document` listener, which in a real
+ *      top of the graph's — and the graph closed itself from its own `document` listener, which in a real
  *      browser takes it off the DOM before the windows' handler runs. Asked as of the key press
- *      (CampaignTracker's capture listener), the window still stands down.
+ *      (CampaignTracker's capture listener), the window still stood down. Since 2026-10-14 the graph is a
+ *      registered tracker layer that spends its press; a stand-in that closes itself and lets the press
+ *      go on keeps the as-of-the-press record guarded.
  *  (f) Outside a campaign, in Heroes Heaven's SETTINGS → Initiative tracker: the page closes on Escape, and
  *      a tracker editor opened there (a new encounter table) had no Escape — one press closed the whole
  *      Settings page, the half-made table with it.
@@ -52,11 +54,19 @@ import { rememberCampaign, setOnCampaignsPage } from '../src/integration/lastCam
  *  (h) A stat block's EDIT CONVERTER IN A WINDOW is painted at that window's z-index, and a window opened
  *      since is painted over it: one Escape closed the converter hidden under that window (the G7s refuter,
  *      round 2). The press is that window's now.
- *  (i) HELD DOWN after a tracker popup that is no registered modal took the press (the condition picker):
- *      the repeats went on to close the window on top, then left the campaign (the G7s refuter, round 2).
- *      A repeat now closes no window and never leaves.
+ *  (i) HELD DOWN after a tracker popup that is no registered modal took the press (the condition picker,
+ *      then; the stat block's ☰ menu now): the repeats went on to close the window on top, then left the
+ *      campaign (the G7s refuter, round 2). A repeat now closes no window and never leaves.
+ *  (j) Heroes Heaven's Settings → Initiative tracker → Turn timer: one Escape on the DM's turn-time graph
+ *      closed the graph AND the Settings page (owner's list 2026-10-14, item 2).
+ *  (k) The GM screen's + menu had no Escape; it, and its "Add to GM Screen" picker, now close alone — and
+ *      a window drawn over all of the + menu (it is in the page, under the windows) goes first (item 3).
+ *      A press or a focus outside the menu closes it, so Customize, opened from the top bar, never sits
+ *      over it: Escape and Back did nothing at all there (the escape-lane refuter, 2026-10-14).
  *  BACK (G7s): the same places on the phone, where Back is a `popstate` and no key press at all — the last
  *      describe; with it, the modals' Back handler waiting for nothing drawn under the modals (its cover).
+ *      Since 2026-10-14 (owner's list, items 1-3) also the condition picker, the turn-time graph (a party
+ *      card's, and the DM's in Settings), the GM screen's + menu and its picker.
  *
  * Mounted the way the GM meets it: the campaigns page, the campaign opened as the tracker (server
  * mocked). Every character here is synthetic.
@@ -288,6 +298,85 @@ async function windowOverTheConverter(winA: string): Promise<string> {
   const z = (id: string) => wins.find((w) => w.id === id)!.z;
   expect(z(winB), 'fixture: the new window is drawn over the converter’s').toBeGreaterThan(z(winA));
   return winB;
+}
+
+/** Heroes Heaven's Settings → Initiative tracker → Turn timer, with the DM's turn-time graph open (a
+ *  synthetic DM average seeded; `restore` puts the store back). */
+async function settingsTimerGraph(): Promise<{
+  settingsClosed: ReturnType<typeof vi.fn>;
+  graph: () => Element | null;
+  restore: () => void;
+}> {
+  const { SettingsPage } = await import('../src/sheet/SettingsPage');
+  const { useDmAverageStore } = await import('../tracker/src/store/dmAverageStore');
+  const { avgSeconds, turnCount, history } = useDmAverageStore.getState();
+  act(() =>
+    useDmAverageStore.setState({ avgSeconds: 42, turnCount: 6, history: [{ at: Date.UTC(2026, 9, 1), avgSeconds: 42, turnCount: 6 }] }),
+  );
+  const restore = () => act(() => useDmAverageStore.setState({ avgSeconds, turnCount, history }));
+  const settingsClosed = vi.fn();
+  const el = render(<SettingsPage onClose={settingsClosed} />);
+  await flush();
+  const button = (label: string) =>
+    [...el.querySelectorAll<HTMLButtonElement>('button')].find((b) => (b.textContent ?? '').trim() === label);
+  click(button('Initiative tracker')!);
+  // The section is a lazy chunk (SettingsPage): wait for it to arrive.
+  for (let i = 0; i < 300 && !button('Turn timer'); i++) {
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 50));
+    });
+  }
+  expect(button('Turn timer'), 'fixture: the tracker section is up').toBeTruthy();
+  click(button('Turn timer')!);
+  await flush(2);
+  const dm = el.querySelector('button[title="Click for the DM turn-time timeline"]');
+  expect(dm, 'fixture: the DM average, a button').not.toBeNull();
+  click(dm!);
+  await flush(1);
+  const graph = () => el.querySelector('.modal-overlay');
+  expect(graph(), 'fixture: the DM’s graph is open over Settings').not.toBeNull();
+  return { settingsClosed, graph, restore };
+}
+
+/** The campaign on its GM screen (empty: "Add Reference" in the middle, the + at the bottom right). */
+async function gmScreen() {
+  act(() => useGmLayoutStore.setState({ root: null }));
+  await openCampaign();
+  act(() => trackerUi.showMain('gm'));
+  await flush(2);
+  const fab = () => q<HTMLButtonElement>('.campaign-tracker button[title="Add to GM screen"]');
+  /** The + menu's panel: its heading's parent. */
+  const menu = () =>
+    [...document.querySelectorAll<HTMLElement>('.campaign-tracker div')].find((d) => d.children.length === 0 && d.textContent === 'Add to GM screen')
+      ?.parentElement ?? null;
+  const addReference = () =>
+    [...document.querySelectorAll<HTMLButtonElement>('.campaign-tracker button')].find((b) => (b.textContent ?? '').trim() === 'Add Reference');
+  const picker = () => [...document.querySelectorAll('div')].find((d) => d.children.length === 0 && d.textContent === 'Add to GM Screen') ?? null;
+  expect(fab(), 'fixture: the GM screen’s +').not.toBeNull();
+  expect(addReference(), 'fixture: the empty GM screen offers Add Reference').toBeTruthy();
+  return { fab, menu, addReference, picker };
+}
+
+/** The browser's hit test (jsdom has none) with the open window drawn over all of the + menu until it
+ *  closes, and a box for the menu. Answers the undo. */
+function windowOverAllOfTheMenu(menu: () => HTMLElement | null): () => void {
+  const win = document.querySelector<HTMLElement>('.campaign-tracker [data-float-win]');
+  expect(win, 'fixture: the window').not.toBeNull();
+  return layerOverAllOfTheMenu(menu, () => (win!.isConnected ? win : null));
+}
+/** The same for any layer: `cover()` (while it answers one) is drawn over all of the + menu. */
+function layerOverAllOfTheMenu(menu: () => HTMLElement | null, cover: () => Element | null): () => void {
+  const doc = document as unknown as { elementFromPoint?: (x: number, y: number) => Element | null };
+  doc.elementFromPoint = () => cover() ?? menu();
+  const realRect = Element.prototype.getBoundingClientRect;
+  const box = { x: 600, y: 300, left: 600, top: 300, width: 232, height: 240, right: 832, bottom: 540 };
+  Element.prototype.getBoundingClientRect = function (this: Element) {
+    return this === menu() ? ({ ...box, toJSON: () => box } as DOMRect) : realRect.call(this);
+  };
+  return () => {
+    delete doc.elementFromPoint;
+    Element.prototype.getBoundingClientRect = realRect;
+  };
 }
 
 describe('Escape inside the tracker', () => {
@@ -650,14 +739,13 @@ describe('Escape inside the tracker', () => {
 
   it('(c) a party card’s turn-time graph opened BEFORE a window: Escape closes the graph — never the window behind it', async () => {
     /*
-     * In the browser's order: the graph's own `document` listener closes it and React commits that
-     * before the windows' handler (on `window`) runs, so only the state AS OF THE PRESS can say a modal
-     * was up. A second `document` listener flushes React exactly where the browser's checkpoint would.
-     * MUTATION (tried 2026-10-13): drop `if (modalAtPress.current) return;` from the windows' handler
-     * (src/integration/CampaignTracker.tsx) and this fails —
-     *   AssertionError: the window behind the graph stays: expected 0 to be 1
-     * (a check made when the handler runs would find nothing: the fixture line below pins that the graph
-     * is already off the DOM by then).
+     * The graph closed itself from a `document` listener of its own and let the press go on: the window's
+     * handler (on `window`) stood down only because the campaign recorded, AS OF THE PRESS, that a modal
+     * was up (the next leg keeps that record guarded). Since 2026-10-14 (owner's list, item 2) the graph is
+     * a registered tracker layer (useEscapeCloses): it closes and SPENDS the press — the dismiss stack never
+     * hears it.
+     * MUTATION (tried 2026-10-14): TurnTimeline's `useEscapeCloses(onClose)` → a no-op ref (tracker/src/
+     * components/TurnTimeline.tsx) → fails at "the graph closed" (expected <div …> to be null).
      */
     useSettingsStore.setState({ turnTimerEnabled: true });
     srv.party = [publish(saved('char-a', 'Ayla Brightwood', 5), 'owner-a')];
@@ -668,60 +756,80 @@ describe('Escape inside the tracker', () => {
     await flush(2);
     const graph = () => q('.campaign-tracker .modal-overlay');
     expect(graph(), 'fixture: the graph is open').not.toBeNull();
-    openWindow(); // its handler goes on the stack ABOVE the graph's
+    openWindow(); // its handler would go on the stack ABOVE the graph's
     await flush(1);
     expect(windowsOpen()).toBe(1);
 
-    const { flushSync } = await import('react-dom');
-    let goneBeforeTheStack = false;
-    const checkpoint = () => {
-      flushSync(() => undefined);
-      goneBeforeTheStack = !document.querySelector('.campaign-tracker .modal-overlay');
-    };
-    document.addEventListener('keydown', checkpoint);
-    const was = (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT;
-    (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = false;
-    try {
-      document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    } finally {
-      (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = was;
-      document.removeEventListener('keydown', checkpoint);
-    }
-    await flush(2);
-
-    expect(goneBeforeTheStack, 'fixture: the graph was off the DOM before the dismiss stack ran').toBe(true);
+    await escapeOn(document.body);
     expect(graph(), 'the graph closed').toBeNull();
     expect(windowsOpen(), 'the window behind the graph stays').toBe(1);
     expect(campaignUp()).toBe(true);
     // The next press, nothing over the window: it closes the window, as always.
+    await letGoOfEscape(document.body);
     await escapeOn(document.body);
     expect(windowsOpen()).toBe(0);
     expect(campaignUp()).toBe(true);
 
-    /*
-     * …and with NO window open: the same press reaches the base handler, which since G7s also asks the
-     * DOM live (`trackerModalOpen()`, for Android's Back) — and finds nothing, the graph already gone. Only
-     * the as-of-the-press record keeps the campaign up.
-     * MUTATION (tried 2026-10-13): drop `modalAtPress.current ||` from the base handler's stand-down
-     * (src/integration/CampaignTracker.tsx) → fails at "no window: the graph closed, the campaign stays"
-     * (expected false to be true).
-     */
+    // …and with NO window open: the graph closes, the campaign stays; the press after that leaves.
     click(q('.party-grid .party-card .mt-turn-chip')!);
     await flush(2);
     expect(graph(), 'fixture: the graph is open again, no window').not.toBeNull();
-    goneBeforeTheStack = false;
-    document.addEventListener('keydown', checkpoint);
-    (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = false;
-    try {
-      document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    } finally {
-      (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = was;
-      document.removeEventListener('keydown', checkpoint);
-    }
-    await flush(2);
-    expect(goneBeforeTheStack, 'fixture: off the DOM before the dismiss stack ran').toBe(true);
+    await escapeOn(document.body);
     expect(graph(), 'the graph closed').toBeNull();
     expect(campaignUp(), 'no window: the graph closed, the campaign stays').toBe(true);
+    await letGoOfEscape(document.body);
+    await escapeOn(document.body);
+    expect(campaignUp(), 'nothing open: the press leaves').toBe(false);
+  }, 180_000);
+
+  it('(c) a tracker modal that closes itself on Escape and lets the press go on (a stand-in): the window behind it stays — with no window, the campaign', async () => {
+    /*
+     * The turn-time graph and the Monster Parts popup were the last tracker modals that closed on Escape
+     * from their own `document` listener and let the press go on (both registered since 2026-10-14;
+     * tracker/src/components/modalEscapeCoverage.test.ts lets no new one in). The campaign's record of the
+     * press (`modalAtPress`) still stands guard for one: in a browser such a modal is off the DOM before the
+     * dismiss stack runs (React commits between listeners), so only the state AS OF THE PRESS can say it
+     * was up. The stand-in takes itself off the DOM from its own `document` listener, as the browser would.
+     * MUTATIONS (tried 2026-10-14, src/integration/CampaignTracker.tsx, each alone):
+     *  - the windows' handler: `modalAtPress.current ||` dropped from its `closeWindowForPress(() => …)`
+     *    → fails at "the window behind it stays" (expected +0 to be 1);
+     *  - the base handler: `modalAtPress.current ||` dropped from its stand-down → fails at "no window: the
+     *    campaign stays" (expected false to be true).
+     */
+    await openCampaign();
+    openWindow();
+    await flush(1);
+    const listeners: ((e: KeyboardEvent) => void)[] = [];
+    /** A `.modal-overlay` in the view that removes itself on Escape and leaves the press unspent. */
+    const standIn = (): HTMLElement => {
+      const m = document.createElement('div');
+      m.className = 'modal-overlay';
+      q('.campaign-tracker .ct-main')!.appendChild(m);
+      const onKey = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') m.remove();
+      };
+      listeners.push(onKey);
+      document.addEventListener('keydown', onKey);
+      return m;
+    };
+    try {
+      const first = standIn();
+      await escapeOn(document.body);
+      expect(first.isConnected, 'fixture: it took the press').toBe(false);
+      expect(windowsOpen(), 'the window behind it stays').toBe(1);
+      expect(campaignUp()).toBe(true);
+      await escapeOn(document.body);
+      expect(windowsOpen(), 'the next press closes the window').toBe(0);
+
+      const second = standIn();
+      await escapeOn(document.body);
+      expect(second.isConnected, 'fixture: it took the press').toBe(false);
+      expect(campaignUp(), 'no window: the campaign stays').toBe(true);
+      await escapeOn(document.body);
+      expect(campaignUp(), 'nothing open: the press leaves').toBe(false);
+    } finally {
+      for (const l of listeners) document.removeEventListener('keydown', l);
+    }
   }, 180_000);
 
   it('(g) a layer over the Encounter Building tables that takes the press without spending it: ONE Escape closes the layer — never the tables under it', async () => {
@@ -851,10 +959,11 @@ describe('Escape inside the tracker', () => {
 
   it('(h) …and a modal in the window ON TOP that the host cannot close (it lets its press go on) keeps the press, and Back, from closing that window too', async () => {
     /*
-     * A stand-in `.modal-overlay` inside the window drawn over the converter — MonsterPartsPopup's way: it
-     * closes itself on Escape from its own `document` listener, leaves the press unspent, and is off the
-     * DOM before the dismiss stack runs (the browser commits React between listeners; the stand-in removes
-     * itself). So only the state AS OF THE PRESS can say it was up, as in (c).
+     * A stand-in `.modal-overlay` inside the window drawn over the converter — MonsterPartsPopup's way until
+     * 2026-10-14 (it registers now; none ships this way, modalEscapeCoverage.test.ts): it closes itself on
+     * Escape from its own `document` listener, leaves the press unspent, and is off the DOM before the
+     * dismiss stack runs (the browser commits React between listeners; the stand-in removes itself). So
+     * only the state AS OF THE PRESS can say it was up, as in (c).
      * MUTATIONS (tried 2026-10-13, src/integration/CampaignTracker.tsx, the modals' Back handler, each alone):
      *  - `modalOverWindowsAtPress.current ||` dropped → fails at "Escape: the window it was in stays";
      *  - `|| trackerModalOverWindows()` dropped → fails at "Back: the window under that modal stays".
@@ -893,18 +1002,21 @@ describe('Escape inside the tracker', () => {
     expect(converter(), 'the converter stays').not.toBeNull();
   }, 180_000);
 
-  it('(i) HELD DOWN after a tracker popup took the press — the condition picker, where the GM adds Dying: the repeats close no window and never leave the campaign', async () => {
+  it('(i) HELD DOWN after a tracker popup took the press — the stat block’s ☰ menu, the condition picker where the GM adds Dying: the repeats close no window and never leave the campaign', async () => {
     /*
-     * The condition picker closes itself on Escape from its own `document` listener and spends the press
-     * (tracker/src/components/ConditionPanel.tsx). It is no registered tracker modal, so no hold starts,
-     * and each repeat of the held key went on to the campaign's dismiss stack: the window on top, then out
-     * of the campaign (the G7s refuter, 2026-10-13, measured: two repeats, the campaign left twice). A
-     * repeat now closes no window and never leaves — one press, one layer.
-     * MUTATIONS (tried 2026-10-13, src/integration/CampaignTracker.tsx, each alone):
-     *  - closeWindowForPress: `if (repeatAtPress.current) return;` dropped → fails at "held: the window
-     *    stays";
-     *  - the base handler's `if (repeatAtPress.current) return;` dropped → fails at "held, no window: still
-     *    in the campaign".
+     * A popup of the tracker's that closes itself on Escape from its own `document` listener and spends the
+     * press — the stat block's ☰ menu (tracker/src/components/CombatantDetail.tsx HamburgerMenu) — is no
+     * registered tracker layer, so no hold starts, and each repeat of the held key went on to the campaign's
+     * dismiss stack: the window on top, then out of the campaign (the G7s refuter, 2026-10-13, measured on
+     * the condition picker: two repeats, the campaign left twice). A repeat now closes no window and never
+     * leaves — one press, one layer. The condition picker is a registered layer since 2026-10-14 (owner's
+     * list, item 1: its Back), so its repeats are held by the tracker itself as well; the ☰ menu keeps the
+     * campaign's own rule guarded.
+     * MUTATIONS (tried 2026-10-14, src/integration/CampaignTracker.tsx, each alone):
+     *  - closeWindowForPress: `if (repeatAtPress.current) return;` dropped → fails at "the ☰ menu — held:
+     *    the window stays" (expected +0 to be 1);
+     *  - the base handler's `if (repeatAtPress.current) return;` dropped → fails at "the ☰ menu — held, no
+     *    window: still in the campaign" (expected false to be true).
      */
     await openCampaign();
     await bruteOnTheBoard();
@@ -914,41 +1026,138 @@ describe('Escape inside the tracker', () => {
     expect(row, 'fixture: the creature’s row').toBeTruthy();
     click(row!);
     await flush(2);
-    const addCondition = () =>
-      [...document.querySelectorAll<HTMLButtonElement>('.campaign-tracker button')].find((b) => b.textContent === '+ Condition');
-    const search = () => document.querySelector<HTMLInputElement>('input[placeholder="Search conditions…"]');
+    /** A button of the stat block in the workspace pane (never one inside a floating window). */
+    const paneButton = (pick: (b: HTMLButtonElement) => boolean) =>
+      [...document.querySelectorAll<HTMLButtonElement>('.campaign-tracker button')].find((b) => !b.closest('[data-float-win]') && pick(b));
+    const addCondition = () => paneButton((b) => b.textContent === '+ Condition');
+    const options = () => paneButton((b) => b.title === 'Options');
     expect(addCondition(), 'fixture: the stat block’s + Condition').toBeTruthy();
+    expect(options(), 'fixture: the stat block’s ☰').toBeTruthy();
+    const search = () => document.querySelector<HTMLInputElement>('input[placeholder="Search conditions…"]');
+    const scaleRow = () => [...document.querySelectorAll('.campaign-tracker *')].find((el) => el.textContent === 'Scale to') ?? null;
 
-    // A window open over the board.
-    openWindow();
-    await flush(1);
-    click(addCondition()!);
-    await flush(1);
-    expect(search(), 'fixture: the picker is open').not.toBeNull();
-    search()!.focus();
-    await escapeOn(search()!);
-    expect(search(), 'the press closed the picker').toBeNull();
-    expect(windowsOpen(), 'the window stays').toBe(1);
-    for (let i = 0; i < 3; i++) await escapeOn(document.body, { repeat: true });
-    expect(windowsOpen(), 'held: the window stays').toBe(1);
-    expect(campaignUp(), 'held: still in the campaign').toBe(true);
-    await letGoOfEscape(document.body);
+    const POPUPS: [string, () => void, () => Element | null, () => Element][] = [
+      ['the ☰ menu', () => click(options()!), scaleRow, () => options()!],
+      ['the condition picker', () => click(addCondition()!), search, () => search()!],
+    ];
+    for (const [what, open, shown, pressOn] of POPUPS) {
+      // A window open over the board.
+      openWindow();
+      await flush(1);
+      open();
+      await flush(1);
+      expect(shown(), `fixture: ${what} is open`).not.toBeNull();
+      const at = pressOn() as HTMLElement;
+      at.focus();
+      await escapeOn(at);
+      expect(shown(), `${what}: the press closed it`).toBeNull();
+      expect(windowsOpen(), `${what}: the window stays`).toBe(1);
+      for (let i = 0; i < 3; i++) await escapeOn(document.body, { repeat: true });
+      expect(windowsOpen(), `${what} — held: the window stays`).toBe(1);
+      expect(campaignUp(), `${what} — held: still in the campaign`).toBe(true);
+      await letGoOfEscape(document.body);
 
-    // No window.
-    act(() => useWindowStore.getState().closeAll());
-    await flush(1);
-    click(addCondition()!);
-    await flush(1);
-    expect(search(), 'fixture: the picker, no window').not.toBeNull();
-    search()!.focus();
-    await escapeOn(search()!);
-    expect(search(), 'the press closed the picker').toBeNull();
-    for (let i = 0; i < 3; i++) await escapeOn(document.body, { repeat: true });
-    expect(campaignUp(), 'held, no window: still in the campaign').toBe(true);
-    await letGoOfEscape(document.body);
+      // No window.
+      act(() => useWindowStore.getState().closeAll());
+      await flush(1);
+      open();
+      await flush(1);
+      expect(shown(), `fixture: ${what}, no window`).not.toBeNull();
+      const at2 = pressOn() as HTMLElement;
+      at2.focus();
+      await escapeOn(at2);
+      expect(shown(), `${what}: the press closed it (no window)`).toBeNull();
+      for (let i = 0; i < 3; i++) await escapeOn(document.body, { repeat: true });
+      expect(campaignUp(), `${what} — held, no window: still in the campaign`).toBe(true);
+      await letGoOfEscape(document.body);
+    }
     // Let go, a fresh press with nothing open leaves, as always.
     await escapeOn(document.body);
     expect(campaignUp(), 'a fresh press leaves').toBe(false);
+  }, 180_000);
+
+  it('(j) Heroes Heaven’s Settings → Initiative tracker → Turn timer: Escape on the DM’s turn-time graph closes the GRAPH — never the Settings page', async () => {
+    /*
+     * The graph closed itself from its own `document` listener and let the press go on to the Settings
+     * page's handler: one Escape closed the graph AND Settings (owner's list 2026-10-14, item 2). It is a
+     * registered tracker layer now (useEscapeCloses): it closes and spends the press.
+     * MUTATION (tried 2026-10-14): TurnTimeline's `useEscapeCloses(onClose)` → a no-op ref → fails at "Escape
+     * closed the graph" (no closer at all; the press went on and closed the Settings page instead).
+     */
+    const { settingsClosed, graph, restore } = await settingsTimerGraph();
+    try {
+      await escapeOn(document.body);
+      expect(graph(), 'Escape closed the graph').toBeNull();
+      expect(settingsClosed, 'the Settings page stays').not.toHaveBeenCalled();
+      await letGoOfEscape(document.body);
+      // Nothing open over Settings: the next press is Settings' own, as always.
+      await escapeOn(document.body);
+      expect(settingsClosed).toHaveBeenCalledTimes(1);
+    } finally {
+      restore();
+    }
+  }, 180_000);
+
+  it('(k) the GM screen: Escape closes the + menu alone, then the "Add to GM Screen" picker alone — the campaign stays', async () => {
+    /*
+     * The + menu had no Escape at all, and the picker's Escape (its own listeners, test/gm-search-popup)
+     * no Back: each is a registered tracker layer now while it is open (owner's list 2026-10-14, item 3).
+     * MUTATIONS (tried 2026-10-14, tracker/src/components/GMScreen.tsx, each alone):
+     *  - AddMenu's `useEscapeCloses(onClose, { panel: true })` → a no-op ref → fails at the first "the
+     *    campaign stays" (expected false to be true: the press went on and LEFT THE CAMPAIGN, the menu with it);
+     *  - AddReferencePicker's `useEscapeCloses(onClose)` → a no-op ref → fails at the second "the campaign
+     *    stays" (with the focus off its box nothing closed the picker, and the press left).
+     */
+    const { fab, menu, addReference, picker } = await gmScreen();
+    click(fab()!);
+    await flush(1);
+    expect(menu(), 'fixture: the + menu is open').not.toBeNull();
+    await escapeOn(document.body);
+    expect(menu(), 'Escape closed the + menu').toBeNull();
+    expect(campaignUp(), 'the campaign stays').toBe(true);
+    await letGoOfEscape(document.body);
+
+    click(addReference()!);
+    await flush(1);
+    expect(picker(), 'fixture: the picker is open').not.toBeNull();
+    (document.activeElement as HTMLElement | null)?.blur(); // a click on the box's padding
+    await escapeOn(document.body);
+    expect(picker(), 'Escape closed the picker').toBeNull();
+    expect(campaignUp(), 'the campaign stays').toBe(true);
+    await letGoOfEscape(document.body);
+    await escapeOn(document.body);
+    expect(campaignUp(), 'nothing open: the press leaves').toBe(false);
+  }, 180_000);
+
+  it('(k) the GM screen’s + menu with a window drawn over ALL of it: Escape closes that WINDOW, then the menu', async () => {
+    /*
+     * The + menu is drawn in the page (z 41), under the floating windows (500 and up): a window over all of
+     * it is the layer on top. The menu leaves that press unspent (utils/spendEscape, covered all over), and
+     * the campaign's handler for its layers closes the window — the windows' own handler is off the stack
+     * while any tracker layer is registered.
+     * MUTATION (tried 2026-10-14, tracker/src/utils/spendEscape.ts): `|| coveredAllOver(el, top.box(), …)`
+     * dropped from topTrackerModalUnderAWindow → fails at "Escape closed the window over the menu"
+     * (expected 1 to be +0: nothing closed at all).
+     */
+    const { fab, menu } = await gmScreen();
+    openWindow();
+    await flush(1);
+    click(fab()!);
+    await flush(1);
+    expect(menu(), 'fixture: the + menu is open').not.toBeNull();
+    const restore = windowOverAllOfTheMenu(menu);
+    try {
+      await escapeOn(document.body);
+      expect(windowsOpen(), 'Escape closed the window over the menu').toBe(0);
+      expect(menu(), 'the menu under it stays').not.toBeNull();
+      expect(campaignUp()).toBe(true);
+      await letGoOfEscape(document.body);
+      await escapeOn(document.body);
+      expect(menu(), 'the next press closes the menu').toBeNull();
+      expect(campaignUp(), 'still in the campaign').toBe(true);
+    } finally {
+      restore();
+    }
   }, 180_000);
 });
 
@@ -1204,5 +1413,230 @@ describe('Android’s Back inside the tracker', () => {
     await back();
     expect(customize(), 'the next Back closes Customize').toBeNull();
     expect(campaignUp(), 'still in the campaign').toBe(true);
+  }, 180_000);
+
+  it('BACK with the condition picker up — over a window, and with none — closes the PICKER only: never the window behind it, never the campaign', async () => {
+    /*
+     * The picker (where the GM adds Dying) closed itself only from a `document` key listener, which Back
+     * never reaches: on a phone turned sideways, Back with only the picker up closed the window behind it
+     * — or, with no window, LEFT THE CAMPAIGN (owner's list 2026-10-14, item 1). It is a registered tracker
+     * layer now (tracker/src/components/ConditionPanel.tsx, useEscapeCloses), closed by the campaign's Back
+     * handler for its layers.
+     * MUTATION (tried 2026-10-14, ConditionPanel): `useEscapeCloses(onClose, { panel: true })` → a no-op
+     * ref → fails at "Back closed the picker" (expected <input …> to be null: the windows' handler took the
+     * Back and closed the window behind it).
+     */
+    await phoneBackTrap();
+    await openCampaign();
+    await bruteOnTheBoard();
+    const row = [...document.querySelectorAll<HTMLElement>('.campaign-tracker .init-row')].find((r) =>
+      (r.textContent ?? '').includes('Reed Brute'),
+    );
+    click(row!);
+    await flush(2);
+    const addCondition = () =>
+      [...document.querySelectorAll<HTMLButtonElement>('.campaign-tracker button')].find(
+        (b) => !b.closest('[data-float-win]') && b.textContent === '+ Condition',
+      );
+    const search = () => document.querySelector<HTMLInputElement>('input[placeholder="Search conditions…"]');
+    expect(addCondition(), 'fixture: the stat block’s + Condition').toBeTruthy();
+
+    openWindow();
+    await flush(1);
+    click(addCondition()!);
+    await flush(1);
+    expect(search(), 'fixture: the picker is open over the board, a window open').not.toBeNull();
+    await back();
+    expect(search(), 'Back closed the picker').toBeNull();
+    expect(windowsOpen(), 'the window behind it stays').toBe(1);
+    expect(campaignUp(), 'and the campaign').toBe(true);
+    await back();
+    expect(windowsOpen(), 'the next Back closes the window').toBe(0);
+    expect(campaignUp()).toBe(true);
+
+    click(addCondition()!);
+    await flush(1);
+    expect(search(), 'fixture: the picker, no window').not.toBeNull();
+    await back();
+    expect(search(), 'Back closed the picker (no window)').toBeNull();
+    expect(campaignUp(), 'no window: the campaign stays').toBe(true);
+    await back();
+    expect(campaignUp(), 'nothing open: Back leaves, as always').toBe(false);
+  }, 180_000);
+
+  it('BACK with a party card’s turn-time graph over a window closes the GRAPH — then the window', async () => {
+    /*
+     * The party card's graph has a Back of the campaign's own (src/integration/MemberTurnButton.tsx,
+     * useBackHandler), and since 2026-10-14 the graph is also a registered tracker layer (owner's list,
+     * item 2), closed by the campaign's Back handler for its layers: two handlers for one graph. This pins
+     * that one Back still closes ONE layer — the graph — and the window behind it stays.
+     * NOT A MUTATION GUARD for the graph's registration: TurnTimeline's `useEscapeCloses(onClose)` → a no-op
+     * ref stays GREEN here (tried 2026-10-14: MemberTurnButton's handler closes it). That registration's
+     * Back is pinned by the Settings leg below, where no such handler exists, and its Escape by (c), (j).
+     */
+    await phoneBackTrap();
+    useSettingsStore.setState({ turnTimerEnabled: true });
+    srv.party = [publish(saved('char-a', 'Ayla Brightwood', 5), 'owner-a')];
+    await openCampaign();
+    openWindow();
+    await flush(1);
+    click(q('.party-grid .party-card .mt-turn-chip')!);
+    await flush(2);
+    const graph = () => q('.campaign-tracker .modal-overlay');
+    expect(graph(), 'fixture: the graph is open, a window under it').not.toBeNull();
+
+    await back();
+    expect(graph(), 'Back closed the graph').toBeNull();
+    expect(windowsOpen(), 'the window behind it stays').toBe(1);
+    expect(campaignUp()).toBe(true);
+    await back();
+    expect(windowsOpen(), 'the next Back closes the window').toBe(0);
+    expect(campaignUp(), 'still in the campaign').toBe(true);
+  }, 180_000);
+
+  it('BACK in Heroes Heaven’s Settings → Initiative tracker → Turn timer closes the DM’s GRAPH — the Settings page stays', async () => {
+    /*
+     * Back closed the Settings page with the graph still up (owner's list 2026-10-14, item 2): the graph was
+     * no registered layer, so TrackerSettingsSection's Back handler never went on the stack.
+     * MUTATION (tried 2026-10-14): TurnTimeline's `useEscapeCloses(onClose)` → a no-op ref → fails at "Back
+     * closed the graph" (Back went to the page's own handler and closed Settings).
+     */
+    await phoneBackTrap();
+    const { settingsClosed, graph, restore } = await settingsTimerGraph();
+    try {
+      await back();
+      expect(graph(), 'Back closed the graph').toBeNull();
+      expect(settingsClosed, 'the Settings page stays').not.toHaveBeenCalled();
+      // Nothing open over Settings: the next Back is the page's own, as always.
+      await back();
+      expect(settingsClosed).toHaveBeenCalledTimes(1);
+    } finally {
+      restore();
+    }
+  }, 180_000);
+
+  it('BACK on the GM screen closes the + menu alone, then the "Add to GM Screen" picker alone — the campaign stays', async () => {
+    /*
+     * Neither had a Back: with either open, Back LEFT THE CAMPAIGN (owner's list 2026-10-14, item 3).
+     * MUTATIONS (tried 2026-10-14, tracker/src/components/GMScreen.tsx, each alone):
+     *  - AddMenu's `useEscapeCloses(onClose, { panel: true })` → a no-op ref → fails at the first "the
+     *    campaign stays" (expected false to be true: the base handler took the Back and left);
+     *  - AddReferencePicker's `useEscapeCloses(onClose)` → a no-op ref → fails at the second "the campaign
+     *    stays".
+     */
+    await phoneBackTrap();
+    const { fab, menu, addReference, picker } = await gmScreen();
+    click(fab()!);
+    await flush(1);
+    expect(menu(), 'fixture: the + menu is open').not.toBeNull();
+    await back();
+    expect(menu(), 'Back closed the + menu').toBeNull();
+    expect(campaignUp(), 'the campaign stays').toBe(true);
+
+    click(addReference()!);
+    await flush(1);
+    expect(picker(), 'fixture: the picker is open').not.toBeNull();
+    await back();
+    expect(picker(), 'Back closed the picker').toBeNull();
+    expect(campaignUp(), 'the campaign stays').toBe(true);
+    await back();
+    expect(campaignUp(), 'nothing open: Back leaves, as always').toBe(false);
+  }, 180_000);
+
+  it('BACK with a window drawn over ALL of the GM screen’s + menu closes that WINDOW first, then the menu', async () => {
+    /*
+     * The + menu is drawn in the page, under the floating windows: covered all over by one, the window is
+     * the layer on top. The windows' own handler is off the stack while a tracker layer is registered, so
+     * the campaign's handler for its layers closes it (tracker/src/utils/spendEscape.ts
+     * topTrackerModalUnderAWindow).
+     * MUTATION (tried 2026-10-14, spendEscape): `|| coveredAllOver(el, top.box(), …)` dropped from
+     * topTrackerModalUnderAWindow → fails at "Back closed the window over the menu" (nothing closed).
+     */
+    await phoneBackTrap();
+    const { fab, menu } = await gmScreen();
+    openWindow();
+    await flush(1);
+    click(fab()!);
+    await flush(1);
+    expect(menu(), 'fixture: the + menu is open').not.toBeNull();
+    const restore = windowOverAllOfTheMenu(menu);
+    try {
+      await back();
+      expect(windowsOpen(), 'Back closed the window over the menu').toBe(0);
+      expect(menu(), 'the menu under it stays').not.toBeNull();
+      await back();
+      expect(menu(), 'the next Back closes the menu').toBeNull();
+      expect(campaignUp(), 'still in the campaign').toBe(true);
+    } finally {
+      restore();
+    }
+  }, 180_000);
+
+  it('(k) the GM screen’s + menu, then Customize from the top bar: the menu goes first — Escape and Back close Customize, the campaign stays', async () => {
+    /*
+     * The + menu's tap-catcher covers the GM screen only; the top bar stays within reach. Its palette opened
+     * Customize (`.tc-overlay`, z 60) over ALL of the menu, and then Escape and Back did nothing at all, press
+     * after press: the menu, covered all over, left both to the layer on top, and the campaign's Back handler
+     * for the tracker's layers (a cover) kept Customize's own handler (drawn under them) off the stack (the
+     * escape-lane refuter, 2026-10-14, measured in a real browser). The menu now closes on any press or focus
+     * outside it (tracker/src/components/GMScreen.tsx AddMenu), so nothing opens over it.
+     * MUTATIONS (tried 2026-10-14, GMScreen AddMenu, each line removed alone):
+     *  - `document.addEventListener('mousedown', elsewhere)` → fails at "Escape closed Customize" (expected
+     *    <div …> to be null: the dead end — Customize and the menu both stay);
+     *  - `document.addEventListener('focusin', elsewhere)` → fails at "the keyboard's way: Escape closed
+     *    Customize" (Tab to the palette and Enter press no mouse).
+     */
+    await phoneBackTrap();
+    const { fab, menu } = await gmScreen();
+    const palette = () => q<HTMLButtonElement>('button[aria-label="Customize tracker appearance"]');
+    const customize = () => document.querySelector('.tc-overlay');
+    expect(palette(), 'fixture: the top bar’s palette').not.toBeNull();
+    /** A mouse or finger on the palette: the press, then the click. */
+    const tapPalette = () => {
+      act(() => void palette()!.dispatchEvent(new MouseEvent('mousedown', { bubbles: true })));
+      click(palette()!);
+    };
+    // The browser's hit test: Customize, while it is up, is drawn over all of the menu.
+    const restore = layerOverAllOfTheMenu(menu, customize);
+    try {
+      click(fab()!);
+      await flush(1);
+      expect(menu(), 'fixture: the + menu is open').not.toBeNull();
+      tapPalette();
+      await flush(1);
+      expect(customize(), 'fixture: Customize is open').not.toBeNull();
+      await escapeOn(document.body);
+      expect(customize(), 'Escape closed Customize').toBeNull();
+      expect(menu(), 'the menu went with the press on the palette').toBeNull();
+      expect(campaignUp(), 'the campaign stays').toBe(true);
+      await letGoOfEscape(document.body);
+
+      click(fab()!);
+      await flush(1);
+      expect(menu(), 'fixture: the + menu is open again').not.toBeNull();
+      tapPalette();
+      await flush(1);
+      expect(customize(), 'fixture: Customize is open again').not.toBeNull();
+      await back();
+      expect(customize(), 'Back closed Customize').toBeNull();
+      expect(menu(), 'the menu went with the press on the palette').toBeNull();
+      expect(campaignUp(), 'the campaign stays').toBe(true);
+
+      // The keyboard's way: Tab to the palette (the focus moves there), Enter (a click, no mouse press).
+      click(fab()!);
+      await flush(1);
+      expect(menu(), 'fixture: the + menu is open, a third time').not.toBeNull();
+      act(() => palette()!.focus());
+      click(palette()!);
+      await flush(1);
+      expect(customize(), 'fixture: Customize is open, by the keyboard').not.toBeNull();
+      await escapeOn(palette()!);
+      expect(customize(), 'the keyboard’s way: Escape closed Customize').toBeNull();
+      expect(menu(), 'the menu went when the focus left it').toBeNull();
+      expect(campaignUp(), 'the campaign stays').toBe(true);
+      await letGoOfEscape(palette()!);
+    } finally {
+      restore();
+    }
   }, 180_000);
 });

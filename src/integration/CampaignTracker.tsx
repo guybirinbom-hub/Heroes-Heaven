@@ -100,9 +100,13 @@ function trackerPopupOpen(): boolean {
  * A tracker modal open in this view: the `.modal-overlay` every tracker dialog draws inside this root —
  * the Encounter Building tables, Link Stat Block, the encounter-table editor, the advanced condition
  * editor, a party card's turn-time graph — drawn ABOVE the floating windows (z 2000 and up). Each closes
- * itself on Escape from a `document` listener (most through the tracker's useEscapeCloses, which also
- * gives Android's Back a handler on the dismiss stack below; the graph on its own). While one is up,
- * Escape and Back are not the windows' (a window hidden behind it would close) and not the campaign's.
+ * itself on Escape through the tracker's useEscapeCloses, which also gives Android's Back a handler on the
+ * dismiss stack below (the graph too, since 2026-10-14). While one is up, Escape and Back are not the
+ * windows' (a window hidden behind it would close) and not the campaign's. This DOM check is the guard for
+ * a `.modal-overlay` that is NOT registered (the saved-encounters list, EncounterManager, is one — on
+ * KNOWN_GAPS in tracker/src/components/modalEscapeCoverage.test.ts, which lets no new one in): a registered layer — `.modal-overlay` or not (the
+ * condition picker, the GM screen's + menu and its "Add to GM Screen" picker) — is seen by its count
+ * (useTrackerModalCount), which puts the Back handler for the layers above every handler here.
  */
 function trackerModalOpen(): boolean {
   return !!document.querySelector('.campaign-tracker .modal-overlay');
@@ -925,12 +929,13 @@ export function CampaignTracker({
   const editableAtPress = useRef(false);
   const boxWinAtPress = useRef<string | null>(null);
   /* …and whether the press is a REPEAT — the key held down. A held Escape repeats, and each repeat
-   * reached this stack as a press of its own: whatever the first press closed — a popup or a picker of the
-   * tracker's that took it (the condition picker, where the GM adds Dying, closes itself from its own
-   * `document` listener and spends it), the row's right-click menu, a window — the repeats went on to
-   * close every window and then LEFT THE CAMPAIGN (the G7s refuter, 2026-10-13: a held Escape from the
-   * condition picker left the campaign twice over). A repeat now closes no window and never leaves: one
-   * press, one layer, as the tracker's own modals already hold it (tracker/src/utils/spendEscape). */
+   * reached this stack as a press of its own: whatever the first press closed — a popup of the tracker's
+   * that took it from its own `document` listener and spent it (the stat block's ☰ menu; the condition
+   * picker, where the GM adds Dying, until it became a registered layer on 2026-10-14), the row's
+   * right-click menu, a window — the repeats went on to close every window and then LEFT THE CAMPAIGN (the
+   * G7s refuter, 2026-10-13: a held Escape from the condition picker left the campaign twice over). A
+   * repeat now closes no window and never leaves: one press, one layer, as the tracker's own modals
+   * already hold it (tracker/src/utils/spendEscape). test/bug-tracker-escape-boxes.test.tsx (i). */
   const repeatAtPress = useRef(false);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -962,8 +967,8 @@ export function CampaignTracker({
     if (trackerPopupOpen() || popupAtPress.current) return;
     // A text box's Escape is "cancel what I was typing" (editableInTracker), and a tracker modal's is
     // that modal's — never "leave the campaign". Android's Back is no key press (a `popstate`, so nothing
-    // was recorded "at the press"): a tracker modal still on screen — one no Back handler below closes,
-    // the turn-time graph — keeps the campaign up too.
+    // was recorded "at the press"): a tracker modal still on screen that no Back handler below closes (an
+    // unregistered `.modal-overlay`; the turn-time graph was one until 2026-10-14) keeps the campaign up too.
     if (editableAtPress.current || modalAtPress.current || trackerModalOpen()) return;
     void (async () => {
       if (await leaveFullSheet()) onLeave();
@@ -999,9 +1004,10 @@ export function CampaignTracker({
    * LIFO and opens last. test/tracker-windows-over-sheet.test.tsx, test/gm-search-popup.test.tsx.
    * So does every OTHER tracker modal drawn over the windows (`trackerModalOpen`: the Encounter Building
    * tables, Link Stat Block, the encounter-table editor, the advanced condition editor, a party card's
-   * turn-time graph) — asked as of the press, since the graph closes itself from its own `document`
-   * listener before this runs. Without it Escape closed the window hidden BEHIND the modal (the item-7
-   * refuter, 2026-10-13). test/bug-tracker-escape-boxes.test.tsx.
+   * turn-time graph) — asked as of the press, since a modal that closes itself from its own `document`
+   * listener and lets the press go on is off the DOM before this runs (the graph did, until 2026-10-14; a
+   * stand-in keeps the record guarded). Without it Escape closed the window hidden BEHIND the modal (the
+   * item-7 refuter, 2026-10-13). test/bug-tracker-escape-boxes.test.tsx (c).
    * And for an Escape typed in a tracker TEXT BOX outside every window (the stat-block pane's, the GM
    * screen's, the initiative rail's): that press is "cancel what I was typing", exactly as the base
    * handler reads it, and it closed whichever unrelated window was on top (the G3 refuter, 2026-10-13).
@@ -1046,6 +1052,9 @@ export function CampaignTracker({
    * the base handler (a cover, like the windows': the sheet and Customize drawn under the modals wait
    * their turn) and closes the top one — covered all over by another layer it closes nothing, and
    * that layer, registered later, is above this anyway. test/bug-tracker-escape-boxes.test.tsx (BACK).
+   * The count is the tracker's registrations, not the DOM: a registered layer with no `.modal-overlay` —
+   * the condition picker, the GM screen's + menu and its "Add to GM Screen" picker (owner's list
+   * 2026-10-14, items 1 and 3: Back with one up left the campaign) — is closed here like any other.
    * The keyboard's Escape reaches it past an open modal only when the modal's own listener left the
    * press unspent for a layer drawn over all of the modal — a body popup, a layer with a text box — and
    * such a layer that closes itself on that press without spending it is gone by the time this runs: it
@@ -1065,7 +1074,9 @@ export function CampaignTracker({
    * handler would, which is off the stack while a modal is open — and the converter, its unsaved edits
    * with it, stays (the G7s refuter, 2026-10-13: Back and Escape alike closed the converter hidden under
    * the window). A modal drawn over every window (`trackerModalOverWindows`) still keeps the press.
-   * test/bug-tracker-escape-boxes.test.tsx (h), BACK.
+   * test/bug-tracker-escape-boxes.test.tsx (h), BACK. The same for a layer drawn in the page UNDER the
+   * windows that one covers all over — the GM screen's + menu (2026-10-14): that window is on top, and
+   * this closes it first (test/bug-tracker-escape-boxes.test.tsx (k), BACK).
    */
   useBackHandler(
     synced && modalCount > 0,

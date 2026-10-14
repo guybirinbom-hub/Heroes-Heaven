@@ -1095,6 +1095,162 @@ describe('trackerSync — mirroring the GM board between that GM own devices', (
     expect(JSON.parse(localStorage.getItem('pf2e-parties')!)[0].name).toBe('The Salt Road'); // …with the GM's own party
   });
 
+  /*
+   * A TURN END THE OTHER DEVICE'S BOARD BRINGS BACK (the G3 refuter, 2026-10-14). This device pressed
+   * Next — a player's Frightened stepped, and a host (the campaign seam) took the step to their sheet —
+   * while the other GM device was still editing the board from before that Next. Its save lands after
+   * ours, with a newer server stamp, so the mirror adopts it (reloadLocal → reloadFromStorage): the same
+   * turn end is back on screen. The load used to clear the spent steps, and Next stepped it a second
+   * time. The fight id now travels in the mirrored board, and a load keeps that fight's spent steps.
+   * MUTATION (tried 2026-10-14): `_stepsTaken.clear()` in place of `keepFight(p?.fightId ?? '')` (since
+   * round 2 `keepFight(p?.fightId ?? '', p?.spentSteps)`) in combatStore's reloadFromStorage → fails at “the same turn end, again” (expected [ 'Probe Wren',
+   * 'Probe Wren' ] to deeply equal [ 'Probe Wren' ]).
+   */
+  it('ab — an older board of the SAME fight from the other device cannot step a player’s turn end twice', async () => {
+    const KEY = 'pf2e-current-combat:camp-a';
+    const t = await boot();
+    const st = () => t.combat.useCombatStore.getState();
+    const row = (name: string) => st().combatants.find((c) => c.name === name)!;
+    st().setScope('camp-a');
+    st().addCombatant(null, { name: 'Probe Wren', isPC: true, maxHP: 30, charId: 'char-probe-wren' });
+    st().addCombatant(null, { name: 'Synth Alpha', maxHP: 20 });
+    st().setInitiative(row('Probe Wren').id, 20);
+    st().setInitiative(row('Synth Alpha').id, 10);
+    st().addCondition(row('Probe Wren').id, { name: 'frightened', value: 2, isPermanent: false });
+    st().startCombat();
+    await vi.advanceTimersByTimeAsync(COMBAT_MS);
+    await vi.advanceTimersByTimeAsync(PUSH_MS);
+    await settle();
+    const preNext = JSON.parse(JSON.stringify(sb.state.rows.get(KEY)!.value)) as { fightId?: string; combatants: { name: string; currentHP: number }[] };
+    expect(preNext.fightId, 'the fight id travels with the mirrored board').toMatch(/^fight-/);
+
+    // A host on the store, as the campaign seam is: it takes every PC row's step.
+    const taken: string[] = [];
+    const off = t.combat.useCombatStore.subscribe((s) => {
+      for (const c of s.combatants) if (c.isPC && t.combat.takeVitalsGesture(c.id)) taken.push(c.name);
+    });
+    try {
+      st().nextTurn(); // Probe Wren's round-1 turn end: 2 → 1, taken
+      expect(taken).toEqual(['Probe Wren']);
+      await vi.advanceTimersByTimeAsync(COMBAT_MS);
+      await vi.advanceTimersByTimeAsync(PUSH_MS);
+      await settle(); // …and that board is in the cloud
+
+      // The other device, still on the pre-Next board, hits Synth Alpha; its save lands after ours.
+      const theirs = { ...preNext, combatants: preNext.combatants.map((c) => (c.name === 'Synth Alpha' ? { ...c, currentHP: 15 } : c)) };
+      sb.state.rows.set(KEY, { key: KEY, value: theirs, updated_at: AN_HOUR_FROM_NOW });
+      sb.state.realtime[1]({ new: sb.state.rows.get(KEY) });
+      await settle();
+      expect(row('Synth Alpha').currentHP, 'their board, adopted').toBe(15);
+      expect(st().combatants[st().activeIndex].name, 'Probe Wren’s turn again').toBe('Probe Wren');
+      const pushesBefore = sb.state.upserts.length;
+      await vi.advanceTimersByTimeAsync(COMBAT_MS);
+      await vi.advanceTimersByTimeAsync(PUSH_MS);
+      await settle();
+      expect(sb.state.upserts.length, 'adopting it is no edit: nothing echoes back').toBe(pushesBefore);
+
+      st().nextTurn(); // the same turn end, again
+      expect(taken, 'the same turn end, again').toEqual(['Probe Wren']);
+      expect(row('Probe Wren').conditions.find((c) => c.name === 'frightened')?.value).toBe(2);
+    } finally {
+      off();
+    }
+  });
+
+  it('ac — a board of a NEW fight from the other device steps its own turn ends as always', async () => {
+    const KEY = 'pf2e-current-combat:camp-a';
+    const t = await boot();
+    const st = () => t.combat.useCombatStore.getState();
+    const row = (name: string) => st().combatants.find((c) => c.name === name)!;
+    st().setScope('camp-a');
+    st().addCombatant(null, { name: 'Probe Wren', isPC: true, maxHP: 30, charId: 'char-probe-wren' });
+    st().addCombatant(null, { name: 'Synth Alpha', maxHP: 20 });
+    st().setInitiative(row('Probe Wren').id, 20);
+    st().setInitiative(row('Synth Alpha').id, 10);
+    st().addCondition(row('Probe Wren').id, { name: 'frightened', value: 2, isPermanent: false });
+    st().startCombat();
+    await vi.advanceTimersByTimeAsync(COMBAT_MS);
+    await vi.advanceTimersByTimeAsync(PUSH_MS);
+    await settle();
+    const preNext = JSON.parse(JSON.stringify(sb.state.rows.get(KEY)!.value)) as Record<string, unknown>;
+    const taken: string[] = [];
+    const off = t.combat.useCombatStore.subscribe((s) => {
+      for (const c of s.combatants) if (c.isPC && t.combat.takeVitalsGesture(c.id)) taken.push(c.name);
+    });
+    try {
+      st().nextTurn();
+      await vi.advanceTimersByTimeAsync(COMBAT_MS);
+      await vi.advanceTimersByTimeAsync(PUSH_MS);
+      await settle();
+      // The other device ended that fight and started a new one on the same rows.
+      sb.state.rows.set(KEY, { key: KEY, value: { ...preNext, fightId: 'fight-started-on-the-other-device' }, updated_at: AN_HOUR_FROM_NOW });
+      sb.state.realtime[1]({ new: sb.state.rows.get(KEY) });
+      await settle();
+      st().nextTurn(); // the new fight's round-1 turn end
+      expect(taken).toEqual(['Probe Wren', 'Probe Wren']);
+      expect(row('Probe Wren').conditions.find((c) => c.name === 'frightened')?.value).toBe(1);
+    } finally {
+      off();
+    }
+  });
+
+  /*
+   * …AND A STEP SPENT ON THE OTHER DEVICE COMES WITH ITS BOARD (the G3 refuter, 2026-10-14, round 2). The GM
+   * pressed Next there — the player's Frightened stepped and went to their sheet — and then Ctrl+Z, and that
+   * undone board is the newest in the cloud. The spent steps were memory on the device that took them, so
+   * Next HERE stepped the same turn end again. The board now carries its fight's spent steps.
+   * MUTATION (tried 2026-10-14): drop `adoptSpent(fight, spent)` from combatStore's keepFight → fails at
+   * “Next here, after an Undo there” (expected [ 'Probe Wren' ] to deeply equal []).
+   */
+  it('ad — the other device’s undone board carries the step it spent there: Next here does not step it again', async () => {
+    const KEY = 'pf2e-current-combat:camp-a';
+    const t = await boot();
+    const st = () => t.combat.useCombatStore.getState();
+    const row = (name: string) => st().combatants.find((c) => c.name === name)!;
+    st().setScope('camp-a');
+    st().addCombatant(null, { name: 'Probe Wren', isPC: true, maxHP: 30, charId: 'char-probe-wren' });
+    st().addCombatant(null, { name: 'Synth Alpha', maxHP: 20 });
+    st().setInitiative(row('Probe Wren').id, 20);
+    st().setInitiative(row('Synth Alpha').id, 10);
+    st().addCondition(row('Probe Wren').id, { name: 'frightened', value: 2, isPermanent: false });
+    st().startCombat();
+    await vi.advanceTimersByTimeAsync(COMBAT_MS);
+    await vi.advanceTimersByTimeAsync(PUSH_MS);
+    await settle();
+    const board = JSON.parse(JSON.stringify(sb.state.rows.get(KEY)!.value)) as { fightId?: string } & Record<string, unknown>;
+    expect(board.fightId).toMatch(/^fight-/);
+    expect(board.spentSteps, 'nothing spent yet: no list at all').toBeUndefined();
+
+    const taken: string[] = [];
+    const off = t.combat.useCombatStore.subscribe((s) => {
+      for (const c of s.combatants) if (c.isPC && t.combat.takeVitalsGesture(c.id)) taken.push(c.name);
+    });
+    try {
+      // The other device's board after its Next and Ctrl+Z: Probe Wren's turn again, the step listed as spent.
+      const theirs = { ...board, spentSteps: ['c:char-probe-wren|end|1'] };
+      sb.state.rows.set(KEY, { key: KEY, value: theirs, updated_at: AN_HOUR_FROM_NOW });
+      sb.state.realtime[1]({ new: sb.state.rows.get(KEY) });
+      await settle();
+      expect(st().combatants[st().activeIndex].name).toBe('Probe Wren');
+      const pushesBefore = sb.state.upserts.length;
+      await vi.advanceTimersByTimeAsync(COMBAT_MS);
+      await vi.advanceTimersByTimeAsync(PUSH_MS);
+      await settle();
+      expect(sb.state.upserts.length, 'adopting it is no edit: nothing echoes back').toBe(pushesBefore);
+
+      st().nextTurn(); // Next here, on the same turn end
+      expect(taken, 'Next here, after an Undo there').toEqual([]);
+      expect(row('Probe Wren').conditions.find((c) => c.name === 'frightened')?.value).toBe(2);
+      // …and this device's own next save keeps the step listed, so it goes on travelling with the board.
+      await vi.advanceTimersByTimeAsync(COMBAT_MS);
+      await vi.advanceTimersByTimeAsync(PUSH_MS);
+      await settle();
+      expect((sb.state.rows.get(KEY)!.value as { spentSteps?: string[] }).spentSteps).toEqual(['c:char-probe-wren|end|1']);
+    } finally {
+      off();
+    }
+  });
+
   it('payload — a six-combatant board is a few tens of KB, not a megabyte', async () => {
     const t = await boot();
     const { SAMPLE_COMBATANT } = await import('../tracker/src/data/sampleStatBlock');

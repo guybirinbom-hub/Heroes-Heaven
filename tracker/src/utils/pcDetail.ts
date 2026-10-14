@@ -17,7 +17,7 @@ export interface PcStats {
   ac?: number
   maxHP?: number
   /** Live current HP, mirrored from the combat tracker when this PC takes
-   *  damage/healing there (see combatStore → partyStore.syncCurrentHpByName).
+   *  damage/healing there (see combatStore → partyStore.syncCurrentHp).
    *  Undefined until they've been in a tracked fight. */
   hpCurrent?: number
   /** Temporary HP on the character's own sheet, when a HOST supplies the stats (Heroes Heaven's campaign

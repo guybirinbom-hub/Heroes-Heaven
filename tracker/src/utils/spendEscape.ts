@@ -61,6 +61,9 @@ export function escapeLeavesBox(e: ReactKeyboardEvent<HTMLElement>): void {
  * is open (onModalPress below): a fresh press with the top modal not covered all over holds its repeats,
  * whoever then closes the modal. The modal's own listener still does the closing and the spending.
  * CombatantMenu.test.tsx (the StrictMode leg), modalEscape.test.tsx.
+ * (Since 2026-10-14 the condition picker has no listener of its own: it is a registered panel here, under
+ * the editor it opens, so the ONE listener below closes the editor, then the picker — and Android's Back
+ * reaches it too, which no `document` listener ever did: Back with the picker up left the campaign.)
  *
  * ONLY THE LAYER DRAWN ON TOP. "Opened last" is the modals' own order; the screen has others. Search
  * (Ctrl+K, z 9500, its own `document` listener) opened over the Encounter Building tables (z 2000): with
@@ -81,7 +84,14 @@ export function escapeLeavesBox(e: ReactKeyboardEvent<HTMLElement>): void {
  *    G7s refuter, 2026-10-13). The press is left for the window on top, which the host closes. A press
  *    from INSIDE the modal's own window (the focus there, reached by Tab: a click would have raised the
  *    window) is still the modal's.
- * The modal tells which element it is through the ref this hook returns (on its `.modal-overlay`).
+ * The modal tells which element it is through the ref this hook returns (on its `.modal-overlay`). The
+ * box the hit test measures is the dialog INSIDE that full-screen backdrop (its first child); a PANEL with
+ * no backdrop of its own around it (the condition picker, the GM screen's + menu) says so (`panel`), and
+ * its own box is measured — its first child is only its top row, and a layer over that row alone is no
+ * layer over the panel.
+ *  - a modal drawn UNDER the floating windows and covered all over by one (the GM screen's + menu, z 41 in
+ *    the page, under windows at 500 and up — 2026-10-14): the window is the layer on top, and the host's
+ *    Back handler closes it (topTrackerModalUnderAWindow), as for a modal inside a lower window.
  *
  * ANDROID'S BACK IS NO KEY PRESS. On the phone Back reaches Heroes Heaven as a `popstate` on its dismiss
  * stack (src/sheet/useEscapeClose.ts), which no listener here ever hears: with a tracker modal up, Back
@@ -97,7 +107,9 @@ export function escapeLeavesBox(e: ReactKeyboardEvent<HTMLElement>): void {
  * closeTopTrackerModal closes nothing: that press was the layer's.
  * Under another window, the host's handler closes that window instead (topTrackerModalUnderAWindow).
  */
-type OpenModal = { close: () => void; el: () => HTMLElement | null }
+/* `el`: the element the ref is on (everything inside it is the modal's); `box`: the box the hit test
+ * measures — the dialog inside a backdrop, or a panel's own (useEscapeCloses `panel`). */
+type OpenModal = { close: () => void; el: () => HTMLElement | null; box: () => Element | null }
 const openModals: OpenModal[] = []
 
 /* Who wants the count (useTrackerModalCount): told on every open and every close. */
@@ -148,7 +160,7 @@ function onModalPress(e: KeyboardEvent): void {
  * over — unless the press comes from inside that window itself (the focus is there). */
 function notTheModals(top: OpenModal, e?: Event): boolean {
   const el = top.el()
-  if (coveredAllOver(el)) return true
+  if (coveredAllOver(el, top.box())) return true
   const win = windowUnderAnother(el)
   if (!win) return false
   return !(e && e.target instanceof Node && win.contains(e.target))
@@ -178,10 +190,11 @@ export function underAnotherWindow(el: Element | null): boolean {
  * modal, at the box's middle and near each of its corners. A point off the screen (the hit test finds
  * nothing there) says nothing either way; with nothing found anywhere, the modal is on top as before.
  * getBoundingClientRect and elementFromPoint both speak client pixels, so Heroes Heaven's CSS zoom needs
- * no correction here (utils/zoomFix). */
-function coveredAllOver(modal: HTMLElement | null): boolean {
-  if (!modal || typeof document.elementFromPoint !== 'function') return false
-  const r = (modal.firstElementChild ?? modal).getBoundingClientRect()
+ * no correction here (utils/zoomFix). `by`, when given, asks what the cover must be: a point covered by
+ * anything else answers "no" (topTrackerModalUnderAWindow: covered by floating windows alone). */
+function coveredAllOver(modal: HTMLElement | null, box: Element | null, by?: (hit: Element) => boolean): boolean {
+  if (!modal || !box || typeof document.elementFromPoint !== 'function') return false
+  const r = box.getBoundingClientRect()
   if (!(r.width > 0 && r.height > 0)) return false
   const dx = Math.min(8, r.width / 4)
   const dy = Math.min(8, r.height / 4)
@@ -197,6 +210,7 @@ function coveredAllOver(modal: HTMLElement | null): boolean {
     const hit = document.elementFromPoint(x, y)
     if (!hit) continue
     if (modal.contains(hit)) return false // the modal shows here: it is on top
+    if (by && !by(hit)) return false // covered here by something else than `by` asks for
     covered = true
   }
   return covered
@@ -231,13 +245,19 @@ function letGo(): void {
   window.removeEventListener('keyup', onHeldKey, true)
 }
 
-/** Escape closes this modal while it is the one on top. Put the returned ref on its `.modal-overlay`. */
-export function useEscapeCloses(onClose: () => void): (el: HTMLElement | null) => void {
+/** Escape closes this modal while it is the one on top. Put the returned ref on its `.modal-overlay` —
+ *  or, with `panel`, on a panel that has no backdrop around it (its own box is then the one measured). */
+export function useEscapeCloses(onClose: () => void, opts?: { panel?: boolean }): (el: HTMLElement | null) => void {
   const latest = useRef(onClose)
   latest.current = onClose
+  const panel = useRef(!!opts?.panel)
   const node = useRef<HTMLElement | null>(null)
   useEffect(() => {
-    const entry: OpenModal = { close: () => latest.current(), el: () => node.current }
+    const entry: OpenModal = {
+      close: () => latest.current(),
+      el: () => node.current,
+      box: () => (panel.current ? node.current : (node.current?.firstElementChild ?? node.current)),
+    }
     openModals.push(entry)
     document.addEventListener('keydown', onModalKey)
     window.addEventListener('keydown', onModalPress, true)
@@ -271,11 +291,19 @@ export function closeTopTrackerModal(): boolean {
   return true
 }
 
-/** Whether the tracker modal on top sits in a floating window another window is drawn over
- *  (underAnotherWindow): that window is the layer on top, and a host's Back closes it, not the modal. */
+/** Whether the tracker modal on top is drawn UNDER a floating window: it sits in a window another window
+ *  is drawn over (underAnotherWindow), or it is drawn under the windows and one covers all of it (the GM
+ *  screen's + menu). That window is the layer on top, and a host's Back closes it, not the modal. */
 export function topTrackerModalUnderAWindow(): boolean {
   const top = openModals[openModals.length - 1]
-  return !!top && underAnotherWindow(top.el())
+  if (!top) return false
+  const el = top.el()
+  return underAnotherWindow(el) || coveredAllOver(el, top.box(), (hit) => coveredByAWindowOf(el, hit))
+}
+/* `hit` is in a floating window (FloatingWindow's root, `[data-float-win]`) — not the one `modal` is in. */
+function coveredByAWindowOf(modal: HTMLElement | null, hit: Element): boolean {
+  const win = hit.closest('[data-float-win]')
+  return !!win && !(modal && win.contains(modal))
 }
 
 /** How many tracker modals are open (each `useEscapeCloses`), kept current — a host puts its Back

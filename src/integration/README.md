@@ -124,9 +124,13 @@ There is otherwise deliberately **nothing else to unwind**:
     and `hpTemp`.
   - **Quick add links a member's name** (`MonsterSearch` `quickAdd`, 2026-10-13): inside a campaign a
     line that names one of its PCs (`useHostPcMembers`) is added as that PC — `addPartyMemberToOrder`
-    with their mirrored party entry, else the same PC add on the host's own member — through
-    `addCombatant`'s `isSamePc` dedupe. Standalone, and for any other line, it is the name-only row it
-    always was. To remove: back to `addCombatant(null, { name })` for every line.
+    with their entry in the campaign's mirrored party, through `addCombatant`'s `isSamePc` dedupe. An
+    entry that is missing is made first, exactly as the mirror makes it (`partyStore`
+    `ensureCampaignMember`, sharing `mirrorMember` with `syncCampaignParty`, in the party of the campaign
+    `syncCampaignParty` last mirrored), so every member's row carries its party stamp — there is no
+    direct PC add any more (2026-10-14; test/bug-tracker-pc-row-agrees.test.tsx (H)). Standalone, and for
+    any other line, it is the name-only row it always was. To remove: back to `addCombatant(null, { name })`
+    for every line.
   - **Players' conditions step with the turn** (2026-10-13, owner's list item 3): the setting
     `pcConditionTicks` (`settingsStore`, on by default; "Step players' conditions each turn" in
     `SettingsModal`'s `PlayersSection`, reached from HH Settings → Initiative tracker → Player
@@ -153,22 +157,52 @@ There is otherwise deliberately **nothing else to unwind**:
     (Frightened down at the end of a player's turn, Stunned used up at the start, while
     `pcConditionTicks` is on); `pcSheetTruth.writeVitals` leaves those two sheet conditions unpinned
     for it (`stepsWithTheTurn`, `pinsAStep`). A step the seam TAKES is spent (`markStep`,
-    `_stepsTaken`, keyed by fight, row, turn phase and round, kept outside every undo snapshot): an Undo
+    `_stepsTaken`, keyed by fight, PLAYER, turn phase and round, kept outside every undo snapshot; the
+    player is `stepOwner` — their character id, else their party stamp, else for a row with neither their
+    name — never the row id, which a load or the other device can hand to a different player): an Undo
     of that Next cannot reach the player's sheet, so Next pressed again does not step them a second time
-    for the same turn. `startCombat` gives a fresh fight a new number (`newFight`, never reused) rather
-    than clearing the record, because Start is no undo step: every undo / redo snapshot carries its
-    board's fight (`CombatSnapshot.fight`), so Ctrl+Z back across an End and a Start brings the older
-    fight back with the steps it spent. `reloadFromStorage` clears the record with the undo history;
-    nothing is spent where no host takes it. The seam hands a step back (`releaseSteps`, the change's `steps`) when it never reaches
-    the player — owed and then taken off the row by a load, or lost to the sheet winning — so that turn
-    steps them once if it comes round again. **Undo / Redo are not gestures and never
+    for the same turn. `startCombat` gives a fresh fight a new id (`newFight`, `freshFightId`, never
+    reused, on any device) rather than clearing the record, because Start is no undo step: every undo /
+    redo snapshot carries its board's fight (`CombatSnapshot.fight`), so Ctrl+Z back across an End and a
+    Start brings the older fight back with the steps it spent. The undo history is not all that can bring
+    an older turn back: the GM-device mirror (`trackerSync.ts`) adopts any board with a newer server
+    stamp, and one edited on his other device while this one pressed Next predates that Next. So the
+    fight id is saved WITH the board (`PersistedCombat.fightId`, and so mirrored), and `reloadFromStorage`
+    (a mirrored board, a campaign switch) keeps the spent steps of the loaded board's fight and lets go of
+    every other fight's (`keepFight`); a board with no fight id (saved before 2026-10-14) clears the
+    record as before. The fight's spent steps are saved with its board too (`PersistedCombat.spentSteps`,
+    each without the fight, sorted, read as the save happens; absent when none), and every load takes
+    them in — a mirrored board, a campaign switch back, and the app starting (`adoptSpent`) — so Next and
+    Ctrl+Z on one of his devices cannot let the other step that turn end again, and nor can switching
+    campaigns away and back. Neither field is part of a saved encounter or of the board's fingerprint
+    (`combatSignature`), and a load still writes nothing back: the list only rides on saves the board
+    makes anyway. One side effect: after this device adopts an older board of the same fight while it
+    holds more spent steps, the next save that is no edit (a dice roll) writes different bytes, so the
+    GM-device mirror pushes that board to his other device. It touches only his own two devices, never a
+    player, and a running turn timer already did the same. Not covered: Next pressed for the same turn end on BOTH of his devices before either
+    has the other's board steps it on each; a board saved by an app version from before 2026-10-14 (his
+    other device not yet updated) carries no fight id and clears the record when it is loaded. KNOWN
+    GAP — a step handed back can come back as spent: handing it back (`releaseSteps`, below) lets go of
+    it on THIS device only. A board saved before that still lists it, and once the mirror has carried
+    that board to his other device, that device holds the step spent too (a board of the same fight
+    keeps its fight's steps) and lists it again on its next save; this device adopts that board, and the
+    step is spent here again. So when that turn comes round again the player misses that one condition
+    step. It needs the sheet offline, an Undo and both GM devices in use at once; it never overwrites
+    anything, and the GM steps the condition by hand. Handing it back deliberately writes nothing, since
+    a save that is no edit would make the mirror push this board over a newer one from his other device.
+    Pinned as today's behaviour (`pcConditionTicks.test.ts`, "KNOWN GAP"), so a change to it is
+    deliberate. Nothing is spent where no host takes it. The seam hands a step back (`releaseSteps`,
+    the change's `steps`) when it never reaches the player — owed and then taken off the row by a load,
+    or lost to the sheet winning — so that turn steps them once if it comes round again (on this device;
+    the known gap above). **Undo / Redo are not gestures and never
     push**: putting an older board back is a load, so the seam re-bases a PC row on the player's sheet,
     and the GM takes a change back with the opposite gesture (Restore, heal, remove the condition).
     Nor does an Undo call back a change of his that is already on its way to the server. A
     gesture lives only while that action's own `set()` dispatches and is never written onto a row, so
     nothing persisted, saved or mirrored carries one; the standalone tracker has no subscriber that
     takes them, so there it is inert. Pinned by `tracker/src/store/vitalsGesture.test.ts` (spent steps:
-    `tracker/src/store/pcConditionTicks.test.ts`). To remove: drop the export, unwrap each
+    `tracker/src/store/pcConditionTicks.test.ts`; through the mirror: `test/tracker-sync.test.ts` ab, ac, ad;
+    through the seam: `test/bug-tracker-seam-never-overwrite.test.tsx`). To remove: drop the export, unwrap each
     `asGesture(…)` back to its bare `set(…)` and delete the `markGesture` / `markStep` calls and
     `_stepsTaken` — or keep it, harmless.
   - `combatStore` exports `moveBeforeActive(s, id)`, the one reorder for 'a creature went down'.
@@ -183,8 +217,9 @@ There is otherwise deliberately **nothing else to unwind**:
     block. HH's App.tsx right-click blocker leaves an already-prevented event alone
     (test/bug-tracker-dying-npc.test.tsx (a)).
   - Tracker boxes and inline menus spend their own Escape (tracker/src/utils/spendEscape.ts, plus the
-    ☰ menu's and the condition picker's document listeners), so it never reaches the campaign's base
-    handler (test/bug-tracker-dying-npc.test.tsx (b), (c), (d)).
+    ☰ menu's document listener; the condition picker is a registered tracker layer (useEscapeCloses,
+    `panel`) since 2026-10-14), so it never reaches the campaign's base handler
+    (test/bug-tracker-dying-npc.test.tsx (b), (c), (d)).
   - **The seam's own Escape guards** (`CampaignTracker`, 2026-10-13): its window capture listener reads,
     as of the key press, whether a tracker popup is on `<body>` (`popupAtPress`), whether a tracker
     modal is open in the view (`modalAtPress`, `trackerModalOpen` — the `.modal-overlay` of the
@@ -201,21 +236,24 @@ There is otherwise deliberately **nothing else to unwind**:
     down for a tracker modal still on screen when they run (`trackerModalOpen()` live, beside the
     as-of-the-press checks): Android's Back is a `popstate`, no key press, so nothing was recorded for it
     (G7s, 2026-10-13). And neither acts on a REPEAT (`repeatAtPress`, the key held down; G7s round 2):
-    after a tracker popup that is no registered modal took the first press — the condition picker, the
-    row menu — each repeat closed the next window and then left the campaign
+    after a tracker popup that is no registered modal took the first press — the stat block's ☰ menu,
+    the row menu (the condition picker until 2026-10-14) — each repeat closed the next window and then
+    left the campaign
     (test/bug-tracker-escape-boxes.test.tsx (i)). Deleted with the seam.
   - **The tracker's modals close themselves on Escape** (`tracker/src/utils/spendEscape.ts`
     `useEscapeCloses`, 2026-10-13): the Encounter Building tables, the encounter-table editor and its
     Link picker, the custom-condition editor and its Delete confirm, MonsterSearch (Add Combatants and a
-    party card's Link Stat Block) and its right-click menu, the Text Converter and its help box. One
+    party card's Link Stat Block) and its right-click menu, the Text Converter and its help box; the
+    turn-time graph, the Monster Parts popup, the condition picker, and the GM screen's + menu and "Add
+    to GM Screen" picker (2026-10-14). One
     `document` listener closes the top one not covered all over by another layer — nor drawn under another
     floating window, when it sits inside one (`underAnotherWindow`: a stat block's Edit converter in a
     window, with a window opened over it; G7s round 2) — and spends the press; a `window` capture listener
     holds a held key's repeats from the first press, whichever listener closes the modal (the StrictMode
     order). Standalone-safe (it is the tracker's own Escape); no host needed.
     `tracker/src/components/modalEscape.test.tsx`, `modalEscapeCoverage.test.ts` (which counts a listener
-    as a closer only when it spends the press: TurnTimeline and MonsterPartsPopup, which do not, are on its
-    KNOWN_GAPS). The Text Converter's overlay keeps its right-clicks (its Edit copy sits inside the stat
+    as a closer only when it spends the press; TurnTimeline and MonsterPartsPopup left its KNOWN_GAPS on
+    2026-10-14). The Text Converter's overlay keeps its right-clicks (its Edit copy sits inside the stat
     block, whose right-click opened the combatant menu over it; `CombatantMenu.test.tsx`).
   - **Android's Back closes the tracker modal on top** (G7s, 2026-10-13). The same file exports
     `closeTopTrackerModal()` (closes the top registered modal through its own close, unless something is
@@ -235,14 +273,20 @@ There is otherwise deliberately **nothing else to unwind**:
     in a window another is drawn over, `CampaignTracker`'s modal handler closes the window on top instead
     (the windows' own close, `closeWindowForPress`), standing down for a modal drawn over every window
     (`trackerModalOverWindows`, as of the press and live) — test/bug-tracker-escape-boxes.test.tsx (h),
-    BACK. To remove: delete the two Back handlers, the `modalCount` term in the windows' gate,
+    BACK. A panel with no backdrop registers with `{ panel: true }` (its own box is hit-tested);
+    `topTrackerModalUnderAWindow()` also answers true for a layer drawn under the windows that one covers
+    all over (the GM screen's + menu), so the campaign's modal Back handler closes that window first.
+    The + menu also closes on any press or focus outside it. To remove: delete the two Back handlers,
+    the `modalCount` term in the windows' gate,
     `trackerModalOverWindows` and `modalOverWindowsAtPress`; the four exports are harmless to keep (no
     caller, nothing registered).
   - **Search pages and creatures as windows** (2026-10-11, item 7). `GlobalSearch` opens a host record
     as a `host` window when the host has `render` (`host.open` otherwise — standalone has no host), and
     its Escape stops where it is handled (the box's `onKeyDown`, plus a `document` listener for a press
     made with the focus elsewhere), so neither the top-bar Search nor the GM screen's "Add to GM
-    Screen" picker can fall through to "leave the campaign". `windowStore`: a host page opens 560 wide
+    Screen" picker can fall through to "leave the campaign". Opened with an `escapeRef` (the GM screen's
+    picker) it adds no document listener of its own — the shared tracker-layer listener closes it, and
+    Back reaches it. `windowStore`: a host page opens 560 wide
     (`winWidthFor`), placement and clamps are in the zoomed page's own pixels (`pageZoom`) against the
     window's own width, `toFront` on the top window no longer climbs, `topZ` is renumbered past 1500
     without ever dropping below a window's z, and `closeTop` / `closeAll` exist. A window's height cap is
@@ -406,7 +450,10 @@ touching either direction: it is where the never-overwrite rules live.
   the party mirror's max-HP fallback. A row with no id (typed in by hand before Quick add linked, or
   saved before ids were kept) falls back to the name — and a row two members' names both match is
   driven by NEITHER sheet (nothing is written to it or pushed from it) and has no pane card. The
-  tracker-internal `syncPcHp` / `setPcMaxHP` (the standalone party cards' HP) still match by name.
+  tracker-internal HP bridge between rows and the tracker's own party cards (`syncPcHp` /
+  `setPcMaxHP`) matches by identity too (`partyStore.partyCardOfRow`, 2026-10-14): the row's party stamp,
+  then its character id, its name only when neither side has an id and exactly one card answers —
+  otherwise nothing is written (`tracker/src/store/pcHpBridge.test.ts`).
 - **A GM change can still be lost** (the seam header, rule C) — the player's only in the narrow cases
   named at the end of this bullet. The player's app
   applies a push only when their sheet is still exactly the one it was built on (`gmEditVerdict`), so

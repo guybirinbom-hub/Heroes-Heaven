@@ -80,10 +80,11 @@ interface PartyStore {
    *  name matches (case-insensitive). Used by the turn timer's Save to
    *  Averages. */
   addTurnsToPlayerByName: (name: string, sumSeconds: number, count: number) => void
-  /** Push a PC's CURRENT hp from the combat tracker back onto their party-card
-   *  sheet (matched by name). Keeps the card's HP live as they take damage in a
-   *  fight. No-op if no matching PC has a stat sheet. */
-  syncCurrentHpByName: (name: string, hpCurrent: number) => void
+  /** Push a PC row's CURRENT hp from the combat tracker back onto the party card that row IS
+   *  (`partyCardOfRow`: its party stamp, then its character id, its name only when neither side has an
+   *  id and exactly one card answers). Keeps the card's HP live as they take damage in a fight. No-op
+   *  when no card answers, or the one that does has no stat sheet. */
+  syncCurrentHp: (row: PcRowIds, hpCurrent: number) => void
   /** Clear a single player's stored turn average. */
   resetPlayerAverage: (partyId: string, playerId: string) => void
   /** Merge a patch into a PC's stat sheet. */
@@ -101,7 +102,14 @@ interface PartyStore {
    *  matched case-insensitively by name — PRESERVING any accumulated turnAvg/turnCount/turnHistory —
    *  sets each PC's maxHP, prunes PCs who left (keeping hand-added NPCs), makes it the active party,
    *  and returns its id. Called by the embed from the live campaign roster. */
-  syncCampaignParty: (campaignId: string, campaignName: string, members: { charId: string; name: string; maxHP?: number }[]) => string
+  syncCampaignParty: (campaignId: string, campaignName: string, members: CampaignMember[]) => string
+  /** The entry the campaign mirror keeps for this member, in the party of the campaign it last mirrored
+   *  (`syncCampaignParty` — the campaign open in the host). When it is missing (the parties a GM device
+   *  adopted from his other one predate the member, say) it is made NOW, exactly as the mirror makes it
+   *  (`mirrorMember`; the party too, should that be the one missing), never anywhere else. Null when no
+   *  campaign has been mirrored — the standalone tracker. For Quick add, so a member's name goes into the
+   *  order the one way a party member does (`addPartyMemberToOrder`). */
+  ensureCampaignMember: (member: CampaignMember) => PartyPlayer | null
   /** Re-read the parties out of localStorage — another of this GM's devices wrote a newer copy and the
    *  mirror (src/data/trackerSync.ts) put it there. Keeps the active party selected when it survived. */
   reloadFromStorage: () => void
@@ -132,6 +140,85 @@ export function addPartyMemberToOrder(pl: PartyPlayer): void {
   } else {
     combat.addCombatant(null, { name: pl.name, isPC: true, maxHP: pl.pcStats?.maxHP, charId: pl.charId, partyMemberId: pl.id })
   }
+}
+
+/** A PC row's identity, as the board keeps it (a Combatant has all three). */
+export interface PcRowIds { name: string; charId?: string; partyMemberId?: string }
+
+/**
+ * WHICH PARTY CARD A PC ROW IS — for the tracker's own HP bridge between the board and the party cards:
+ * combatStore's syncPcHp (the row's HP onto the card, `syncCurrentHp`) and setPcMaxHP (a card's max HP
+ * onto its row) both ask THIS, so a card and a row can never disagree about whose HP they share.
+ *  1. The row's party stamp (`partyMemberId`, set on every add from the party): that member, in
+ *     whichever party holds it.
+ *  2. Else its character id: the one PC card carrying that id, in the active party (in every party
+ *     while none is active) — none when two answer.
+ *  3. Else, for a row with NO id at all (typed in by hand, saved before ids were kept), its name — only
+ *     against a card with no character id either, and only when exactly ONE card answers.
+ * Anything else answers nothing, and nothing is written. It used to be the name alone, so two
+ * same-named characters wrote each other's HP bars (owner's list item 5, 2026-10-14).
+ */
+export function partyCardOfRow(row: PcRowIds, parties: readonly Party[], activePartyId: string | null): PartyPlayer | undefined {
+  if (row.partyMemberId !== undefined) {
+    for (const p of parties) {
+      const pl = p.players.find(x => x.id === row.partyMemberId)
+      if (pl) return pl.memberType === 'npc' ? undefined : pl
+    }
+    // A stamp whose member left every party: the character id below may still say who it is.
+  }
+  const scope = activePartyId ? parties.filter(p => p.id === activePartyId) : parties
+  const pcs = scope.flatMap(p => p.players).filter(x => x.memberType !== 'npc')
+  let hits: PartyPlayer[]
+  if (row.charId !== undefined) hits = pcs.filter(x => x.charId === row.charId)
+  else if (row.partyMemberId !== undefined) return undefined   // a stamped row is nobody's by name
+  else {
+    const lower = row.name.trim().toLowerCase()
+    hits = pcs.filter(x => x.charId === undefined && x.name.trim().toLowerCase() === lower)
+  }
+  return hits.length === 1 ? hits[0] : undefined
+}
+
+/** Where a card sits in `parties` ([party, player]), by identity — so a write lands on that very card. */
+function locate(parties: readonly Party[], card: PartyPlayer): [number, number] | null {
+  for (let i = 0; i < parties.length; i++) {
+    const j = parties[i].players.indexOf(card)
+    if (j >= 0) return [i, j]
+  }
+  return null
+}
+
+/** A Heroes Heaven campaign's player character, as the host hands it to the mirror. */
+export interface CampaignMember { charId: string; name: string; maxHP?: number }
+
+/** The campaign `syncCampaignParty` mirrored last — the one open in the host, which runs it as the
+ *  campaign opens and whenever its roster changes — for `ensureCampaignMember`. */
+let _mirrored: { campaignId: string; campaignName: string } | null = null
+
+/**
+ * THE ONE WAY the campaign mirror makes or updates a member's entry in the campaign's party `p` (an immer
+ * draft): matched on the stable character id, so a RENAMED PC keeps its turn history and two PCs that
+ * share a name stay distinct; else a pre-charId PC of that name adopted once and stamped with the id;
+ * else made. Takes the member's current name and max HP. syncCampaignParty runs it for every member,
+ * ensureCampaignMember for one.
+ */
+function mirrorMember(p: Party, m: CampaignMember): PartyPlayer {
+  const lower = m.name.trim().toLowerCase()
+  let pl = p.players.find(x => x.memberType !== 'npc' && x.charId === m.charId)
+  if (!pl) pl = p.players.find(x => x.memberType !== 'npc' && x.charId === undefined && x.name.trim().toLowerCase() === lower)
+  if (!pl) {
+    pl = { id: nplid(), name: m.name, notes: '', memberType: 'pc', charId: m.charId }
+    p.players.push(pl)
+  } else {
+    pl.charId = m.charId
+    pl.name = m.name // adopt the current name in place (handles a rename)
+  }
+  if (typeof m.maxHP === 'number') pl.pcStats = { ...(pl.pcStats ?? {}), maxHP: m.maxHP }
+  return pl
+}
+
+/** A campaign's mirrored party, made the way syncCampaignParty makes it (and made active, as it is). */
+function newCampaignParty(campaignId: string, campaignName: string): Party {
+  return { id: npid(), name: campaignName, level: 1, players: [], isFavorite: false, campaignId }
 }
 
 function saveToStorage(parties: Party[]) {
@@ -307,22 +394,19 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
     saveToStorage(get().parties)
   },
 
-  syncCurrentHpByName(name, hpCurrent) {
-    const lower = name.trim().toLowerCase()
-    let changed = false
+  syncCurrentHp(row, hpCurrent) {
+    // The ONE card this row is (partyCardOfRow) — never every card that shares its name. Only a PC that
+    // already has a stat sheet shows an HP bar to update.
+    const { parties, activePartyId } = get()
+    const card = partyCardOfRow(row, parties, activePartyId)
+    if (!card?.pcStats || card.pcStats.hpCurrent === hpCurrent) return
+    const at = locate(parties, card)
+    if (!at) return
     set(s => {
-      // Scope to the active party so damage to a PC in one campaign's combat can't overwrite the HP
-      // bar of an unrelated party's same-named PC (falls back to all parties only when none is active).
-      const parties = s.activePartyId ? s.parties.filter(p => p.id === s.activePartyId) : s.parties
-      for (const party of parties) {
-        for (const pl of party.players) {
-          // Only PCs that already have a stat sheet show an HP bar to update.
-          if (pl.memberType === 'npc' || !pl.pcStats || pl.name.trim().toLowerCase() !== lower) continue
-          if (pl.pcStats.hpCurrent !== hpCurrent) { pl.pcStats.hpCurrent = hpCurrent; changed = true }
-        }
-      }
+      const pl = s.parties[at[0]].players[at[1]]
+      if (pl.pcStats) pl.pcStats.hpCurrent = hpCurrent
     })
-    if (changed) saveToStorage(get().parties)
+    saveToStorage(get().parties)
   },
 
   resetPlayerAverage(partyId, playerId) {
@@ -337,16 +421,17 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
   },
 
   updatePcStats(partyId, playerId, patch) {
-    let pcName: string | undefined
+    let found = false
     set(s => {
       const pl = s.parties.find(p => p.id === partyId)?.players.find(pl => pl.id === playerId)
       if (!pl) return
       pl.pcStats = { ...(pl.pcStats ?? {}), ...patch }
-      pcName = pl.name
+      found = true
     })
     saveToStorage(get().parties)
-    // Keep an in-combat copy of this PC's HP bar in step with the sheet.
-    if (pcName && typeof patch.maxHP === 'number') useCombatStore.getState().setPcMaxHP(pcName, patch.maxHP)
+    // Keep an in-combat copy of this PC's HP bar in step with the sheet — the row that IS this card
+    // (partyCardOfRow), never another character's row of the same name.
+    if (found && typeof patch.maxHP === 'number') useCombatStore.getState().setPcMaxHP({ id: playerId }, patch.maxHP)
   },
 
   updatePcSkill(partyId, playerId, skill, patch) {
@@ -394,17 +479,19 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
       }
     })
     saveToStorage(get().parties)
-    // If this PC is already in the tracker, refresh its HP bar from the import.
-    if (typeof parsed.pcStats?.maxHP === 'number') useCombatStore.getState().setPcMaxHP(parsed.name, parsed.pcStats.maxHP)
+    // If this PC is already in the tracker, refresh its HP bar from the import — the row that IS this
+    // card (partyCardOfRow), never another character's row of the same name.
+    if (result.playerId && typeof parsed.pcStats?.maxHP === 'number') useCombatStore.getState().setPcMaxHP({ id: result.playerId }, parsed.pcStats.maxHP)
     return result
   },
 
   syncCampaignParty(campaignId, campaignName, members) {
     let partyId = ''
+    _mirrored = { campaignId, campaignName }
     set(s => {
       let p = s.parties.find(pp => pp.campaignId === campaignId)
       if (!p) {
-        p = { id: npid(), name: campaignName, level: 1, players: [], isFavorite: false, campaignId }
+        p = newCampaignParty(campaignId, campaignName)
         s.parties.push(p)
       } else {
         p.name = campaignName
@@ -441,26 +528,31 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
       // the GM added by hand, and (back-compat) any PC player that predates charId tracking, so a first
       // sync after upgrading doesn't discard its accumulated turn history.
       p.players = p.players.filter(pl => pl.memberType === 'npc' || pl.charId === undefined || wantedIds.has(pl.charId))
-      for (const m of members) {
-        // Match on the stable character id so a RENAMED PC keeps its turn history and two PCs that share
-        // a name stay distinct. Fall back once to a name match to adopt a pre-charId player, then stamp
-        // the id onto it.
-        const lower = m.name.trim().toLowerCase()
-        let pl = p.players.find(x => x.memberType !== 'npc' && x.charId === m.charId)
-        if (!pl) pl = p.players.find(x => x.memberType !== 'npc' && x.charId === undefined && x.name.trim().toLowerCase() === lower)
-        if (!pl) {
-          pl = { id: nplid(), name: m.name, notes: '', memberType: 'pc', charId: m.charId }
-          p.players.push(pl)
-        } else {
-          pl.charId = m.charId
-          pl.name = m.name // adopt the current name in place (handles a rename)
-        }
-        if (typeof m.maxHP === 'number') pl.pcStats = { ...(pl.pcStats ?? {}), maxHP: m.maxHP }
-      }
+      for (const m of members) mirrorMember(p, m)
       s.activePartyId = partyId
     })
     saveToStorage(get().parties)
     return partyId
+  },
+
+  ensureCampaignMember(m) {
+    const mirror = _mirrored
+    if (!mirror) return null
+    const entry = () => get().parties.find(pp => pp.campaignId === mirror.campaignId)
+      ?.players.find(x => x.memberType !== 'npc' && x.charId === m.charId) ?? null
+    const have = entry()
+    if (have) return have
+    set(s => {
+      let p = s.parties.find(pp => pp.campaignId === mirror.campaignId)
+      if (!p) {
+        p = newCampaignParty(mirror.campaignId, mirror.campaignName)
+        s.parties.push(p)
+        s.activePartyId = p.id
+      }
+      mirrorMember(p, m)
+    })
+    saveToStorage(get().parties)
+    return entry()
   },
 
   reloadFromStorage() {

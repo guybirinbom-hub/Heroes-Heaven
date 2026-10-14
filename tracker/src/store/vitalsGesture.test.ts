@@ -9,6 +9,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { useCombatStore, takeVitalsGesture, flushPersist, scopeKey, invalidateEncounterCache } from './combatStore'
 import { useSettingsStore } from './settingsStore'
+import { usePartyStore } from './partyStore'
 
 function resetCombat() {
   useCombatStore.setState({
@@ -44,7 +45,11 @@ describe('GM vitals gestures', () => {
     store().addCombatant(null, { name: PC, isPC: true, maxHP: 30, charId: 'char-wren' })
     store().addCombatant(null, { name: MONSTER, maxHP: 20 })
   })
-  afterEach(() => { localStorage.clear(); useSettingsStore.setState({ pcConditionTicks: true }) })
+  afterEach(() => {
+    localStorage.clear()
+    useSettingsStore.setState({ pcConditionTicks: true })
+    usePartyStore.setState({ parties: [], activePartyId: null })
+  })
 
   // [label, setup (runs unwatched), the ONE GM action under test]. Removing `markGesture(c)` from
   // that action's recipe in combatStore.ts fails its row — the setup's own gestures are made outside
@@ -149,7 +154,13 @@ describe('GM vitals gestures', () => {
       () => store().reloadFromStorage()],
     ['setScope', () => store().applyDamage(rowOf(PC)!.id, 1),
       () => { store().setScope('camp-gesture'); store().setScope(null) }],
-    ['setPcMaxHP (the party bridge)', () => undefined, () => store().setPcMaxHP(PC, 40)],
+    // The party bridge writes the row that IS the card (partyStore partyCardOfRow, by the row's character
+    // id here) — and really writes it, so this leg is never vacuous (owner's item 5, 2026-10-14).
+    ['setPcMaxHP (the party bridge)', () => usePartyStore.setState({
+      parties: [{ id: 'party-gesture', name: 'Gesture Party', level: 1, isFavorite: false,
+        players: [{ id: 'member-wren', name: PC, notes: '', memberType: 'pc', charId: 'char-wren' }] }],
+      activePartyId: null,
+    }), () => { store().setPcMaxHP({ id: 'member-wren' }, 40); expect(rowOf(PC)!.maxHP, 'the bridge wrote the row').toBe(40) }],
     // The turn engine is still no gesture where it steps nothing of a player's (see the FLIPPED note
     // above): with the setting off, on a PC carrying nothing that steps, and on a monster's own step.
     // MUTATION (tried 2026-10-13): make stepsConditions answer true for every row → the setting-off leg

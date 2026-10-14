@@ -25,13 +25,23 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
  *    (y 240, its bottom at 920).
  *  - clampPos: `vh - h - 8` → `vh - 320` (the old guess for every height) → the same leg red.
  *  - fit: `win.moved || win.sized ? win.y :` dropped → "a window the GM dragged or resized" red.
- *  - move: `moved: true` dropped → the same leg red at "dragged"; openTabs' `moved: true` dropped → red at
- *    "dropped off a pane"; detachTab's new window's `moved: true` dropped → red at "pulled off a tab strip".
+ *  - move: `moved: true` dropped → the same leg red at "dragged" and at "dropped off a pane, then dragged";
+ *    detachTab's new window's `moved: true` dropped → red at "pulled off a tab strip".
  *  - open (re-open at a click): `win.drawnH` → `undefined` → "opened again at a click near the bottom" red;
  *    its `moved: false` dropped → the same leg red at "lifted for its new height".
  *  - fit: `win.moved || win.sized` → `win.moved` → "a window the GM dragged or resized" red at "resized".
  *  - fit: `!(h > 0)` dropped → "a window not drawn yet" red (a 0 height noted, the re-open hangs off).
  *  - winMaxH: `viewport().vh` → `window.innerHeight` (not divided by the zoom) → "at zoom 1.25" red.
+ *
+ * A TALL PAGE DROPPED OUT OF A PANE (the owner's 2026-10-14 list, item 5: "a tall page dragged out of a pane
+ * can sit off screen"). openTabs made that window `moved: true`, so `fit` never lifted it: dropped low, its
+ * bottom hung under the screen edge. It is the app's placement now, at the GM's drop point, until he drags or
+ * resizes it; a tab pulled off a window's strip (detachTab) stays his at once, as he drags that live.
+ * MUTATIONS, as above:
+ *  - openTabs: `moved: false` → `moved: true` → "a tall page dropped low" red (y 450, its bottom at 1130), and
+ *    "a page dropped low is lifted when it grows" red; FloatingWindow.fit.test.tsx (f) red.
+ *  - fit: `win.moved || win.sized ? win.y :` dropped → "after the GM drags or resizes a dropped page" red
+ *    (both the drag and the resize), the same line the dragged-window leg pins.
  */
 
 const zoom = vi.hoisted(() => ({ value: 1 }))
@@ -177,10 +187,12 @@ describe('windowStore — a tall window fits the screen', () => {
     st().resize(resized, 500, 700)
     st().fit(resized, 700)
     expect(win(resized).y, 'resized').toBe(y)
-    // A tab dropped off a pane where he let go of it (dockDragStore), and one pulled off a window's tabs.
+    // A tab dropped off a pane (dockDragStore) is the app's placement until he touches it (the next block of
+    // legs); once he has dragged it, it is his. And one pulled off a window's tabs, which he drags live.
     const dropped = st().openTabs([{ type: 'host', ref: 'feats:synthetic-drop', title: 'Synthetic Drop' }], 300, 450)
+    st().move(dropped, 300, 450)
     st().fit(dropped, 680)
-    expect(win(dropped).y, 'dropped off a pane').toBe(450)
+    expect(win(dropped).y, 'dropped off a pane, then dragged').toBe(450)
     st().mergeTab(dropped, { type: 'condition', ref: 'synthetic glare', title: 'Synthetic Glare' })
     const pulled = st().detachTab(dropped, 1, 500, 420)!
     expect(pulled).not.toBe(dropped)
@@ -228,6 +240,61 @@ describe('windowStore — a tall window fits the screen', () => {
     // On screen, in real pixels: the bottom inside the 800.
     expect((win(id).y + cap) * 1.25).toBeLessThanOrEqual(800 - 8)
     expect(win(id).y).toBeGreaterThanOrEqual(8)
+  })
+})
+
+describe('windowStore — a tall page dropped out of a pane fits the screen', () => {
+  const laptop = () => {
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: 1280 })
+    Object.defineProperty(window, 'innerHeight', { configurable: true, value: 800 })
+  }
+  const win = (id: string) => st().wins.find(w => w.id === id)!
+  const page = (n: string) => ({ type: 'host' as const, ref: `reference:synthetic-${n}`, title: `Synthetic ${n}` })
+
+  it('a tall page dropped low is lifted until its bottom is on screen, and keeps the drop point\'s x', () => {
+    laptop()
+    const id = st().openTabs([page('article')], 300, 450)
+    expect({ x: win(id).x, y: win(id).y }, 'placed at the drop point').toEqual({ x: 300, y: 450 })
+    // FloatingWindow draws it and reports its height (the store's `fit`).
+    st().fit(id, 680)
+    expect(win(id).y + 680, 'its bottom on screen').toBeLessThanOrEqual(800 - 8)
+    expect(win(id).y, 'lifted just enough, not to the top').toBe(800 - 680 - 8)
+    expect(win(id).x, 'sideways it stays at the drop point').toBe(300)
+  })
+
+  it('a short page dropped low stays exactly at the drop point', () => {
+    laptop()
+    const id = st().openTabs([page('note')], 300, 450)
+    st().fit(id, 260)
+    expect({ x: win(id).x, y: win(id).y }).toEqual({ x: 300, y: 450 })
+  })
+
+  it('a page dropped low is lifted when it grows (a stat block arriving after "Loading…"), until the GM touches it', () => {
+    laptop()
+    const id = st().openTabs([page('article')], 300, 450)
+    st().fit(id, 120)
+    expect(win(id).y, 'short while it loads: where it was dropped').toBe(450)
+    st().fit(id, 680)
+    expect(win(id).y + 680, 'lifted when the page arrived').toBeLessThanOrEqual(800 - 8)
+  })
+
+  it('after the GM drags or resizes a dropped page, fit never lifts it again', () => {
+    laptop()
+    const dragged = st().openTabs([page('dragged')], 300, 450)
+    st().fit(dragged, 680)
+    expect(win(dragged).y, 'first drawn: lifted').toBe(800 - 680 - 8)
+    // His drag, a later height report, and a page that grows after it.
+    st().move(dragged, 340, 600)
+    st().fit(dragged, 680)
+    expect({ x: win(dragged).x, y: win(dragged).y }, 'dragged').toEqual({ x: 340, y: 600 })
+    st().fit(dragged, 760)
+    expect(win(dragged).y, 'dragged, then it grew').toBe(600)
+    // His resize: the window is his as soon as he sizes it, wherever it was dropped.
+    const resized = st().openTabs([page('resized')], 700, 450)
+    st().fit(resized, 120)
+    st().resize(resized, 500, 700)
+    st().fit(resized, 700)
+    expect(win(resized).y, 'resized').toBe(450)
   })
 })
 

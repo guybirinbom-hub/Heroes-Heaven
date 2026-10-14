@@ -3199,7 +3199,8 @@ describe('a player’s conditions step with the turn — the GM’s gesture, pus
    * again ran the SAME turn end a second time and pushed it: Frightened 2 → 1 → gone on their sheet for
    * one turn end (a monster in the same sequence ends at 1). A step the seam took is spent now
    * (combatStore, SPENT STEPS).
-   * MUTATION (tried 2026-10-13): drop `&& !stepTaken(c.id, 'end', s.round)` from endTurnPass
+   * MUTATION (tried 2026-10-13): drop `&& !stepTaken(c.id, 'end', s.round)` (since 2026-10-14
+   * `stepTaken(c, …)`, keyed by the player) from endTurnPass
    * (tracker/src/store/combatStore.ts) and this fails, alone —
    *   AssertionError: stepped once for one turn end: expected [ 'wounded:1' ] to deeply equal [ 'frightened:1', 'wounded:1' ]
    */
@@ -3235,7 +3236,8 @@ describe('a player’s conditions step with the turn — the GM’s gesture, pus
   it('Next, Ctrl+Z, Next: their Stunned is used up ONCE for that one turn start', async () => {
     /*
      * Stunned 4: a turn start takes 3 (the tracker's CONDITION_META), leaving Stunned 1 on their sheet.
-     * MUTATION (tried 2026-10-13): drop `|| stepTaken(c.id, 'start', round)` from tickConditionsAtStart
+     * MUTATION (tried 2026-10-13): drop `|| stepTaken(c.id, 'start', round)` (since 2026-10-14
+     * `stepTaken(c, …)`) from tickConditionsAtStart
      * (tracker/src/store/combatStore.ts) and this fails, alone —
      *   AssertionError: used up once for one turn start: expected [ 'wounded:1' ] to deeply equal [ 'stunned:1', 'wounded:1' ]
      */
@@ -3288,6 +3290,100 @@ describe('a player’s conditions step with the turn — the GM’s gesture, pus
     expect(acting()).toBe('Cinder Goblin');
     expect(rowConds(), 'stepped once for one turn end').toEqual(['frightened:1', 'wounded:1']);
     expect(server.editWrites, 'one turn end, one push').toHaveLength(1);
+  });
+
+  /*
+   * A BOARD FROM THE GM'S OTHER DEVICE — THE G3 REFUTER, 2026-10-14. The undo history is not all that can
+   * bring an older turn back: the GM-device mirror adopts any board with a newer server stamp, and one
+   * edited on the second device while this one pressed Next predates that Next. The load cleared the spent
+   * steps, the seam rewrote the row from their sheet (Frightened 1), and the repeated Next stepped 1 → gone
+   * and pushed it: two steps for one real turn end. The fight is now an id both devices agree on, carried
+   * with the board, and a load keeps that fight's spent steps (combatStore, SPENT STEPS).
+   * MUTATION (tried 2026-10-14): `_stepsTaken.clear()` in place of `keepFight(p?.fightId ?? '')` (since
+   * round 2 `keepFight(p?.fightId ?? '', p?.spentSteps)`) in combatStore's reloadFromStorage
+   * (tracker/src/store/combatStore.ts) → fails at “stepped once for one turn end”.
+   */
+  it('Next, then the pre-Next board of the SAME fight arrives from his other device, Next: one turn end, one push', async () => {
+    await inFight({ id: 'frightened', value: 2 }, true);
+    flushPersist();
+    const preNext = localStorage.getItem(scopeKey('pf2e-current-combat'))!; // what his other device holds
+    expect(JSON.parse(preNext).fightId, 'fixture: the board carries its fight').toMatch(/^fight-/);
+
+    act(() => store().nextTurn()); // THEIR turn ends: 2 → 1, pushed
+    await settle();
+    expect(server.editWrites).toHaveLength(1);
+
+    flushPersist();
+    localStorage.setItem(scopeKey('pf2e-current-combat'), preNext); // the mirror hands this board back…
+    act(() => store().reloadFromStorage()); // …and the open board adopts it (trackerSync reloadLocal)
+    await settle();
+    expect(acting(), 'their turn again').toBe(NAME);
+    expect(rowConds(), 'the row shows what their sheet now has').toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites, 'a load never pushes').toHaveLength(1);
+
+    act(() => store().nextTurn()); // the same turn end, again
+    await settle();
+    expect(acting()).toBe('Cinder Goblin');
+    expect(rowConds(), 'stepped once for one turn end').toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites, 'nothing more goes out').toHaveLength(1);
+  });
+
+  it('…while a board of a NEW fight from his other device steps their turn end as always', async () => {
+    // The other device ended that fight and started another: its round 1 is a new round 1.
+    await inFight({ id: 'frightened', value: 2 }, true);
+    flushPersist();
+    const preNext = JSON.parse(localStorage.getItem(scopeKey('pf2e-current-combat'))!) as Record<string, unknown>;
+    act(() => store().nextTurn()); // THEIR turn ends: 2 → 1, pushed
+    await settle();
+    expect(server.editWrites).toHaveLength(1);
+
+    flushPersist();
+    localStorage.setItem(scopeKey('pf2e-current-combat'), JSON.stringify({ ...preNext, fightId: 'fight-started-on-his-other-device' }));
+    act(() => store().reloadFromStorage());
+    await settle();
+    expect(rowConds()).toEqual(['frightened:1', 'wounded:1']);
+
+    act(() => store().nextTurn()); // the new fight's round-1 turn end of theirs
+    await settle();
+    expect(rowConds(), 'the new fight’s turn end').toEqual(['wounded:1']);
+    expect(server.editWrites).toHaveLength(2);
+  });
+
+  /*
+   * …AND THE SPENT STEP TRAVELS WITH THE BOARD (the G3 refuter, 2026-10-14, round 2). The step was memory on
+   * the device that took it: Next and Ctrl+Z on one device, that undone board mirrored to the other, and
+   * Next THERE stepped the same turn end again and pushed it. The board now carries its fight's spent
+   * steps (`spentSteps`), and a load takes them in.
+   * MUTATION (tried 2026-10-14): drop `adoptSpent(fight, spent)` from combatStore's keepFight
+   * (tracker/src/store/combatStore.ts) → fails at “stepped once for one turn end” (a second push).
+   */
+  it('Next and Ctrl+Z on one of his devices, that board arrives on a device that never took the step, Next: one push', async () => {
+    await inFight({ id: 'frightened', value: 2 }, true);
+    act(() => store().nextTurn()); // THEIR turn ends: 2 → 1, pushed
+    await settle();
+    expect(server.editWrites).toHaveLength(1);
+    act(() => store().undo()); // …and the GM takes the Next back there
+    await settle();
+    flushPersist();
+    const undone = JSON.parse(localStorage.getItem(scopeKey('pf2e-current-combat'))!) as Record<string, unknown>;
+    expect(undone.spentSteps, 'fixture: the undone board carries the step').toEqual([`c:${pc().charId}|end|1`]);
+
+    // The device it arrives on has nothing of this fight spent: be it, by holding another fight first.
+    localStorage.setItem(scopeKey('pf2e-current-combat'), JSON.stringify({ ...undone, fightId: 'fight-held-on-his-other-device', spentSteps: undefined }));
+    act(() => store().reloadFromStorage());
+    await settle();
+    localStorage.setItem(scopeKey('pf2e-current-combat'), JSON.stringify(undone)); // the mirror hands it the undone board
+    act(() => store().reloadFromStorage());
+    await settle();
+    expect(acting(), 'their turn again').toBe(NAME);
+    expect(rowConds(), 'the row shows what their sheet has').toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites, 'loads never push').toHaveLength(1);
+
+    act(() => store().nextTurn()); // Next, on that device
+    await settle();
+    expect(acting()).toBe('Cinder Goblin');
+    expect(rowConds(), 'stepped once for one turn end').toEqual(['frightened:1', 'wounded:1']);
+    expect(server.editWrites, 'nothing more goes out').toHaveLength(1);
   });
 
   /*

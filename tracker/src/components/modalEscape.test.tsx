@@ -8,10 +8,14 @@ import { GlobalSearch } from './GlobalSearch'
 import { MonsterSearch } from './MonsterSearch'
 import { TextConverter } from './TextConverter'
 import { ConditionsSection } from './SettingsModal'
+import { TurnTimeline } from './TurnTimeline'
+import { MonsterPartsPopup } from './MonsterPartsPopup'
+import { GMScreen } from './GMScreen'
 import { HostSearchProvider } from '../data/hostSearchContext'
 import { useEncounterTablesStore } from '../store/encounterTablesStore'
 import { useCustomConditionsStore, emptyCustomCondition } from '../store/customConditionsStore'
-import { closeTopTrackerModal, topTrackerModalUnderAWindow, useTrackerModalCount } from '../utils/spendEscape'
+import { useGmLayoutStore } from '../store/layoutStore'
+import { closeTopTrackerModal, topTrackerModalUnderAWindow, useEscapeCloses, useTrackerModalCount } from '../utils/spendEscape'
 import type { Creature, Defenses } from '../types/pf2e'
 
 /*
@@ -764,5 +768,216 @@ describe('Android’s Back: the host closes the top tracker modal with no key pr
     expect(tables(), 'fixture: open again').not.toBeNull()
     expect(back(), 'no key press: Back closes the tables').toBe(true)
     expect(tables()).toBeNull()
+  })
+})
+
+/*
+ * THE OWNER'S 2026-10-14 LIST, ITEMS 2 AND 3 — the last layers a GM meets with no Escape or Back of their own.
+ *
+ *  (s) the turn-time graph (a party card's ⏱, the DM's in Settings → Turn timer) and (t) the Monster Parts
+ *      popup closed on Escape from a `document` listener that let the press go on: in Heroes Heaven's
+ *      Settings one Escape closed the graph AND the Settings page, and Back closed the page with the graph
+ *      still up. Each now registers (useEscapeCloses): Escape closes it ONCE and goes no further; Back (the
+ *      host's closeTopTrackerModal) closes it. (The Settings page itself: test/bug-tracker-escape-boxes.)
+ *  (u) the GM screen's + menu had no Escape at all, and (v) its "Add to GM Screen" picker no Back: inside a
+ *      campaign, Back with either open LEFT THE CAMPAIGN. Each registers while it is open. The + menu is a
+ *      PANEL (no backdrop round it, `panel`): its own box is measured, so a layer over its heading row
+ *      alone leaves the press the menu's; and it is drawn in the page, UNDER the floating windows — a window
+ *      over all of it is the layer on top, and the host is told so (topTrackerModalUnderAWindow), to close
+ *      that window first.
+ * MUTATIONS (tried 2026-10-14, each applied alone with Edit, run, read off that run, then restored; "a
+ * no-op ref" is `((_el: HTMLElement | null) => undefined)` in place of the hook call):
+ *  - TurnTimeline: `useEscapeCloses(onClose)` → a no-op ref → (s) red at "one layer for the host"
+ *    (expected '0' to be '1').
+ *  - MonsterPartsPopup: the same → (t) red at "one layer for the host"; modalEscapeCoverage.test.ts (b)
+ *    and (d) red naming "components/MonsterPartsPopup.tsx :: MonsterPartsPopup".
+ *  - GMScreen AddMenu: `useEscapeCloses(onClose, { panel: true })` → a no-op ref → (u) red at "one layer
+ *    for the host"; `{ panel: true }` dropped → (u) red at "over the heading row alone: not under a window"
+ *    (expected true to be false: the heading row measured as the menu, covered all over).
+ *  - spendEscape topTrackerModalUnderAWindow: `|| coveredAllOver(el, top.box(), …)` dropped → (u) red at
+ *    "the host is told: under a window" (expected false to be true).
+ *  - GMScreen AddReferencePicker: `useEscapeCloses(onClose)` → a no-op ref → (v) red at "one layer for the
+ *    host".
+ *  - spendEscape coveredAllOver: `if (by && !by(hit)) return false` dropped → (w) red at "covered by no
+ *    window: not under a window" (expected true to be false: a plain layer counted as a window over it).
+ */
+describe('the last layers with no Escape or Back of their own (owner’s list 2026-10-14)', () => {
+  function Count() {
+    return <output data-testid="layer-count">{useTrackerModalCount()}</output>
+  }
+  const count = () => screen.getByTestId('layer-count').textContent
+  const back = (): boolean => {
+    let closed = false
+    act(() => { closed = closeTopTrackerModal() })
+    return closed
+  }
+  const SYNTH = { name: 'Synthetic Harrow', turnHistory: [{ at: Date.UTC(2026, 9, 1), avgSeconds: 42, turnCount: 6 }], turnAvgSeconds: 42, turnCount: 6 }
+
+  it('(s) the turn-time graph: Escape closes it once and goes no further; Back closes it', () => {
+    const closed = vi.fn()
+    render(<><Count /><Opened modal={close => <TurnTimeline player={SYNTH} onClose={() => { closed(); close() }} />} /></>)
+    const graph = () => screen.queryByText('turn-time history')
+    expect(graph(), 'fixture: the graph is open').not.toBeNull()
+    expect(count(), 'one layer for the host').toBe('1')
+
+    expect(escapeOn(document.body), 'nothing reached the window').toEqual([])
+    expect(graph(), 'Escape closed the graph').toBeNull()
+    expect(closed, 'closed once').toHaveBeenCalledTimes(1)
+    letGoOf(document.body)
+    expect(escapeOn(document.body), 'nothing open: a plain press').toEqual(['Escape'])
+
+    render(<Opened modal={close => <TurnTimeline player={SYNTH} onClose={close} />} />)
+    expect(graph(), 'fixture: open again').not.toBeNull()
+    expect(back(), 'Back closed it').toBe(true)
+    expect(graph()).toBeNull()
+    expect(count()).toBe('0')
+  })
+
+  it('(t) the Monster Parts popup: Escape closes it once and goes no further; Back closes it', () => {
+    const DEF: Defenses = { ac: 16, fort: 7, ref: 5, will: 4, hp: 28, immunities: [], resistances: [], weaknesses: [] }
+    const beast: Creature = {
+      id: 'synth-harrow', name: 'Synthetic Harrowback', source: 'Test', level: 3,
+      traits: ['beast'], perception: 8, senses: [], languages: [], skills: {},
+      str: 3, dex: 1, con: 3, int: -4, wis: 1, cha: -2,
+      items: [], speed: { walk: 30 }, attacks: [], spellcasting: [], abilities: [],
+      defenses: { ...DEF }, isHazard: false, raw: {} as Creature['raw'],
+    }
+    const closed = vi.fn()
+    const parts = (close: () => void) => <MonsterPartsPopup creature={beast} value="30 gp" bulk="2" onClose={close} />
+    render(<><Count /><Opened modal={close => parts(() => { closed(); close() })} /></>)
+    const popup = () => screen.queryByText('Monster Parts')
+    expect(popup(), 'fixture: the popup is open').not.toBeNull()
+    expect(count(), 'one layer for the host').toBe('1')
+
+    expect(escapeOn(document.body), 'nothing reached the window').toEqual([])
+    expect(popup(), 'Escape closed the popup').toBeNull()
+    expect(closed, 'closed once').toHaveBeenCalledTimes(1)
+    letGoOf(document.body)
+    expect(escapeOn(document.body), 'nothing open: a plain press').toEqual(['Escape'])
+
+    render(<Opened modal={parts} />)
+    expect(popup(), 'fixture: open again').not.toBeNull()
+    expect(back(), 'Back closed it').toBe(true)
+    expect(popup()).toBeNull()
+    expect(count()).toBe('0')
+  })
+
+  /** The + menu's panel (the element its ref is on): the heading's parent. */
+  const menuPanel = () => screen.queryByText('Add to GM screen', { selector: 'div' })?.parentElement ?? null
+  const openMenu = () => fireEvent.click(screen.getByTitle('Add to GM screen'))
+
+  it('(u) the GM screen’s + menu: Escape and Back close it alone — and a window drawn over all of it is the layer on top', () => {
+    useGmLayoutStore.setState({ root: null })
+    render(<><Count /><GMScreen /></>)
+    openMenu()
+    expect(menuPanel(), 'fixture: the + menu is open').not.toBeNull()
+    expect(count(), 'one layer for the host').toBe('1')
+    expect(escapeOn(document.body), 'nothing reached the window').toEqual([])
+    expect(menuPanel(), 'Escape closed the menu').toBeNull()
+    expect(screen.queryByText('Add Reference'), 'the GM screen under it stays').not.toBeNull()
+    letGoOf(document.body)
+    expect(escapeOn(document.body), 'nothing open: a plain press').toEqual(['Escape'])
+
+    openMenu()
+    expect(back(), 'Back closed it').toBe(true)
+    expect(menuPanel()).toBeNull()
+    expect(count()).toBe('0')
+
+    // Boxes and a hit test (jsdom has neither): the panel 232 × 240, its heading row the top 24 px.
+    openMenu()
+    const rect = (left: number, top: number, width: number, height: number) =>
+      ({ x: left, y: top, left, top, width, height, right: left + width, bottom: top + height, toJSON: () => ({}) }) as DOMRect
+    const realRect = Element.prototype.getBoundingClientRect
+    Element.prototype.getBoundingClientRect = function (this: Element) {
+      const panel = menuPanel()
+      if (this === panel) return rect(600, 300, 232, 240)
+      if (panel && this === panel.firstElementChild) return rect(600, 300, 232, 24)
+      return realRect.call(this)
+    }
+    undo.push(() => { Element.prototype.getBoundingClientRect = realRect })
+    // A floating window (FloatingWindow's root), drawn over the page — the menu is in the page, z 41.
+    const win = document.createElement('div')
+    win.setAttribute('data-float-win', 'w-synth-over')
+    win.style.position = 'fixed'
+    win.style.zIndex = '501'
+    document.body.appendChild(win)
+    undo.push(() => win.remove())
+    let overAll = false
+    hitTest((_x, y) => (overAll || y < 324 ? win : menuPanel()))
+
+    // Over its heading row alone: the menu shows below it, and the press is the menu's.
+    expect(topTrackerModalUnderAWindow(), 'over the heading row alone: not under a window').toBe(false)
+    expect(escapeOn(document.body), 'over its heading row alone: the menu’s, spent').toEqual([])
+    expect(menuPanel(), 'over its heading row alone: the menu’s').toBeNull()
+    letGoOf(document.body)
+
+    // Over ALL of it: the window is the layer on top — the press goes on to the host, unspent.
+    openMenu()
+    overAll = true
+    expect(escapeOn(document.body), 'under a window: the press goes on to the host, unspent').toEqual(['Escape'])
+    expect(menuPanel(), 'the menu under the window stays').not.toBeNull()
+    expect(topTrackerModalUnderAWindow(), 'the host is told: under a window').toBe(true)
+    expect(back(), 'Back: closes nothing of the menu’s — the window is the host’s to close').toBe(false)
+    expect(menuPanel()).not.toBeNull()
+    letGoOf(document.body)
+  })
+
+  it('(v) the GM screen’s "Add to GM Screen" picker: Escape closes it once, with the focus off its box too; Back closes it', () => {
+    useGmLayoutStore.setState({ root: null })
+    const records = [{ bucket: 'feats', id: 'gleam-step', name: 'Gleam Step' }]
+    render(<HostSearchProvider value={{ records, open: () => undefined }}><Count /><GMScreen /></HostSearchProvider>)
+    const picker = () => screen.queryByText('Add to GM Screen')
+    fireEvent.click(screen.getByText('Add Reference'))
+    expect(picker(), 'fixture: the picker is open').not.toBeNull()
+    expect(count(), 'one layer for the host').toBe('1')
+    ;(document.activeElement as HTMLElement | null)?.blur() // a click on the box's padding
+    expect(escapeOn(document.body), 'nothing reached the window').toEqual([])
+    expect(picker(), 'Escape closed the picker').toBeNull()
+    expect(screen.queryByText('Add Reference'), 'the GM screen under it stays').not.toBeNull()
+    letGoOf(document.body)
+
+    fireEvent.click(screen.getByText('Add Reference'))
+    expect(picker(), 'fixture: open again').not.toBeNull()
+    expect(back(), 'Back closed it').toBe(true)
+    expect(picker()).toBeNull()
+    expect(count()).toBe('0')
+  })
+
+  it('(w) a panel covered all over by a layer that is NO floating window is not "under a window": Back closes nothing — neither the panel nor the window elsewhere', () => {
+    /*
+     * topTrackerModalUnderAWindow asks the hit test what covers the panel, and only floating windows count
+     * (coveredAllOver's `by`): covered by anything else — a host popup, a confirm — the layer on top is
+     * that one, and the host must not close a window for it (it would close a window the GM never saw
+     * over the panel). A stand-in panel (`useEscapeCloses(…, { panel: true })`), a plain layer over all of
+     * it, and one floating window elsewhere on the screen.
+     */
+    const closed = vi.fn()
+    function Panel({ onClose }: { onClose: () => void }) {
+      const ref = useEscapeCloses(onClose, { panel: true })
+      // The hit test sizes every `.modal-box`: a panel's own box is the one measured.
+      return <div ref={ref} className="modal-box" data-testid="synth-panel">Synthetic panel</div>
+    }
+    render(<><Count /><Opened modal={close => <Panel onClose={() => { closed(); close() }} />} /></>)
+    const panel = () => screen.queryByTestId('synth-panel')
+    expect(panel(), 'fixture: the panel is open').not.toBeNull()
+    expect(count(), 'one layer for the host').toBe('1')
+    // A floating window (FloatingWindow's root), open elsewhere — not over the panel.
+    const win = document.createElement('div')
+    win.setAttribute('data-float-win', 'w-synth-elsewhere')
+    win.style.position = 'fixed'
+    win.style.zIndex = '501'
+    document.body.appendChild(win)
+    undo.push(() => win.remove())
+    // Over all of the panel: a plain layer, no window.
+    const layer = document.createElement('div')
+    document.body.appendChild(layer)
+    undo.push(() => layer.remove())
+    hitTest(() => layer)
+
+    expect(topTrackerModalUnderAWindow(), 'covered by no window: not under a window').toBe(false)
+    expect(back(), 'Back: the layer on top is not the panel’s').toBe(false)
+    expect(panel(), 'the panel stays').not.toBeNull()
+    expect(closed).not.toHaveBeenCalled()
+    expect(win.isConnected, 'the window elsewhere stays open').toBe(true)
   })
 })

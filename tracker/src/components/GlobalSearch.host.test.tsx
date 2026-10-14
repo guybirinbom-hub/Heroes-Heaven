@@ -3,6 +3,7 @@ import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import { GlobalSearch } from './GlobalSearch'
 import { HostSearchProvider, type HostSearch } from '../data/hostSearchContext'
 import { useWindowStore, BASE_Z } from '../store/windowStore'
+import { useEscapeCloses } from '../utils/spendEscape'
 
 /*
  * Search everything, routed (item 7 of the owner's online list, 2026-10-01: "Search everything results
@@ -14,7 +15,9 @@ import { useWindowStore, BASE_Z } from '../store/windowStore'
  *  (c) picked for the GM screen (`onPick`): the pick, and no window;
  *  (d) Escape closes the picker and nothing else: the press never reaches a `window` listener (where
  *      Heroes Heaven's dismiss stack would leave the campaign), whether the focus is in the box or not,
- *      and the picker's onClose runs once.
+ *      and the picker's onClose runs once;
+ *  (e) opened by an opener that registers it as a tracker layer (`escapeRef`, the GM screen's picker since
+ *      2026-10-14): the shared listener closes it, once — it adds no `document` listener of its own.
  *
  * MUTATIONS (each applied, run, read off that run, then restored):
  *  - choose: `else if (host?.render) openWin('host', ref, h.title)` dropped → (a) red (open called, no window).
@@ -100,6 +103,28 @@ describe('GlobalSearch — Escape closes the picker and nothing else', () => {
     act(() => { input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })) })
     expect(onClose, 'onClose runs once').toHaveBeenCalledTimes(1)
     expect(heard, 'the press reached window').not.toHaveBeenCalled()
+  })
+
+  it('(e) opened by a GM screen that registers it (`escapeRef`): Escape with the focus on <body> closes it ONCE — the shared listener’s, none of its own', async () => {
+    /*
+     * The GM screen's "Add to GM Screen" picker is one of the tracker's registered layers since 2026-10-14
+     * (GMScreen.tsx AddReferencePicker; utils/spendEscape useEscapeCloses), so Android's Back closes it.
+     * Its own `document` listener would be a second closer on the same press: twice here, and in a browser
+     * (React committing between listeners) it took the shared listener away mid-press.
+     * MUTATION (tried 2026-10-14, GlobalSearch): `if (registered) return` dropped from its listener's effect
+     *   → FAILS "closed once, by the shared listener: expected "vi.fn()" to be called 1 times, but got 2
+     *   times" (its own listener closed it, then the shared one again).
+     */
+    const onClose = vi.fn()
+    function Registered() {
+      const escapeRef = useEscapeCloses(onClose)
+      return <GlobalSearch onClose={onClose} title="Add to GM Screen" escapeRef={escapeRef} />
+    }
+    render(<HostSearchProvider value={host({ render: () => null })}><Registered /></HostSearchProvider>)
+    act(() => { document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })) })
+    expect(onClose, 'closed once, by the shared listener').toHaveBeenCalledTimes(1)
+    expect(heard, 'the press reached window').not.toHaveBeenCalled()
+    act(() => { document.body.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', bubbles: true })) })
   })
 
   it('(d) with the focus on <body>: the same', async () => {

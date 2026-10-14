@@ -93,5 +93,7 @@ describe('spell print lines guard (conjurers-countermeasure, turbulent-tide)', (
     for (const c of CHECKS) expect(found[c]).not.toContain('conjurers-countermeasure');
     expect(found.requirements).not.toContain('turbulent-tide');
     for (const id of ['booming-blast', 'force-fling']) expect(found.cast).not.toContain(id);
-  });
+    // Reads about 2,800 mirror pages plus core.json and core-descriptions.json: about 1.7 s alone, far longer
+    // (over the 5 s default) when the whole suite runs at once.
+  }, 300_000);
 });

@@ -8,6 +8,7 @@ import { PartyView } from './PartyView'
 import { useCombatStore, downsAsPC } from '../store/combatStore'
 import { usePartyStore, addPartyMemberToOrder } from '../store/partyStore'
 import type { Creature, Defenses } from '../types/pf2e'
+import { closeTopTrackerModal, useTrackerModalCount } from '../utils/spendEscape'
 
 /*
  * Owner's list 2026-10-01, item 2: "Right-click on a stat block → treat like a player when at 0 HP."
@@ -366,19 +367,15 @@ describe('Escape in the stat block’s and the party card’s other boxes goes n
   })
 
   it('the condition picker — where Dying and Wounded are added — Escape closes the top layer and goes no further', () => {
-    // MUTATION (ConditionPanel, tried 2026-10-11): drop `document.addEventListener('keydown', onKey)` —
-    //   FAILS "nothing reached the window (search box): expected [ 'Escape' ] to deeply equal []"; drop
-    //   `e.stopPropagation()` from onKey — FAILS the same.
-    // SINCE G7e ROUND 2 (2026-10-13) the editor's press is the editor's own: useEscapeCloses (tracker/src/
-    //   utils/spendEscape.ts) spends it for every later `document` listener too (`stopImmediatePropagation`).
-    //   In THIS render (no StrictMode, a production build's order) ConditionPanel's listener is re-added
-    //   AFTER the editor's — its effect depends on `advOpen` and re-runs as the editor opens — so the
-    //   editor's runs first, and `if (advOpen) setAdvOpen(false)` dropped (always onClose) stays GREEN here
-    //   (tried on a mocked-in copy of ConditionPanel.tsx, 2026-10-13). With `e.stopImmediatePropagation()`
-    //   ALSO dropped from onModalKey it FAILS "the picker stays under it: expected null not to be null".
-    //   stopImmediatePropagation alone is guarded in modalEscape.test.tsx (h). UNDER React.StrictMode (the
-    //   dev build) the order is the other way round — the editor's effect runs twice and its listener lands
-    //   last — and ConditionPanel's listener closes the editor itself (G7s, 2026-10-13): the next leg.
+    // The picker closed itself from a `document` listener of its own until 2026-10-14 (history: G7e round
+    //   2 and G7s, 2026-10-13, the order of that listener against the editor's). Android's Back never
+    //   reaches a key listener, so with only the picker up Back left the campaign (owner's list 2026-10-14,
+    //   item 1). The picker is now one of the tracker's registered layers (utils/spendEscape useEscapeCloses,
+    //   a `panel`), and the Advanced editor it opens registers after it, on top: the ONE shared listener
+    //   closes the editor, then the picker, and spends each press. Back: the leg after the StrictMode one.
+    // MUTATION (tried 2026-10-14, ConditionPanel): `useEscapeCloses(onClose, { panel: true })` → a no-op ref
+    //   (`(_el: HTMLElement | null) => undefined`) — FAILS "nothing reached the window (search box):
+    //   expected [ 'Escape' ] to deeply equal []" (nothing closes the picker; the press goes on).
     render(<Live />)
     const search = () => screen.queryByPlaceholderText('Search conditions…')
     fireEvent.click(screen.getByText('+ Condition'))
@@ -415,6 +412,11 @@ describe('Escape in the stat block’s and the party card’s other boxes goes n
      *   spendEscape.ts), or its `window.addEventListener('keydown', onModalPress, true)` → FAILS "held,
      *   repeat 2: nothing reached the window: expected [ 'Escape' ] to deeply equal []" (repeat 1 closed
      *   the picker, repeat 2 went on to `window`) — the refuter's probe result on the code before G7s.
+     * SINCE 2026-10-14 the picker has no listener of its own: it is a registered layer under the editor,
+     *   and the one shared listener (onModalKey) closes the editor — the refuter's order cannot happen.
+     *   With the picker open a repeat reaches onModalKey, which closes nothing on a repeat, so that hold
+     *   drop stays GREEN here; it is pinned by modalEscape.test.tsx (d), (e). This leg keeps the StrictMode
+     *   order honest: one held Escape, one layer — the editor — under the dev build's double effects.
      */
     const realAdd = document.addEventListener
     const realRemove = document.removeEventListener
@@ -458,8 +460,8 @@ describe('Escape in the stat block’s and the party card’s other boxes goes n
       })
       ran = []
       expect(press(editor()!, {}), 'nothing reached the window (the press)').toEqual([])
-      expect(ran, 'fixture: the refuter’s order — the picker’s listener ran, the editor’s was taken off before it could').toContain('onKey')
-      expect(ran, 'fixture: …the editor’s never ran').not.toContain('onModalKey')
+      expect(ran, 'the one shared listener took the press').toContain('onModalKey')
+      expect(ran, 'the picker has no `document` listener of its own any more (2026-10-14)').not.toContain('onKey')
       expect(editor(), 'the press closed the editor').toBeNull()
       expect(search(), 'the picker stays').not.toBeNull()
 
@@ -477,6 +479,103 @@ describe('Escape in the stat block’s and the party card’s other boxes goes n
       cleanup() // every listener added through the wrapper comes off through it
       document.addEventListener = realAdd
       document.removeEventListener = realRemove
+    }
+  })
+
+  it('Android’s Back with the condition picker up: the host closes the Advanced editor, then the picker — one layer per Back', () => {
+    /*
+     * On the phone Back is a `popstate` on Heroes Heaven's dismiss stack, never a key: while any tracker
+     * layer is registered the host puts a Back handler on its stack that closes the top one
+     * (closeTopTrackerModal; the campaign's half: test/bug-tracker-escape-boxes.test.tsx, BACK). The picker
+     * was no registered layer before 2026-10-14, and Back with it up closed the window behind it or LEFT
+     * THE CAMPAIGN (owner's list 2026-10-14, item 1).
+     * MUTATION (tried 2026-10-14, ConditionPanel): `useEscapeCloses(onClose, { panel: true })` → a no-op ref
+     *   → FAILS "the picker alone: one layer for the host: expected '0' to be '1'".
+     */
+    function Count() {
+      return <output data-testid="layers">{useTrackerModalCount()}</output>
+    }
+    render(<><Count /><Live /></>)
+    const layers = () => screen.getByTestId('layers').textContent
+    const back = (): boolean => {
+      let closed = false
+      act(() => { closed = closeTopTrackerModal() })
+      return closed
+    }
+    const search = () => screen.queryByPlaceholderText('Search conditions…')
+    const editor = () => screen.queryByText('Advanced Custom Condition')
+
+    fireEvent.click(screen.getByText('+ Condition'))
+    expect(search(), 'fixture: the picker is open').not.toBeNull()
+    expect(layers(), 'the picker alone: one layer for the host').toBe('1')
+    expect(back(), 'Back closed it').toBe(true)
+    expect(search(), 'Back closed the picker').toBeNull()
+    expect(layers()).toBe('0')
+
+    fireEvent.click(screen.getByText('+ Condition'))
+    fireEvent.click(screen.getByText('+ Custom'))
+    fireEvent.click(screen.getByText('Advanced →'))
+    expect(editor(), 'fixture: the Advanced editor is open over the picker').not.toBeNull()
+    expect(layers(), 'the editor over the picker').toBe('2')
+    expect(back()).toBe(true)
+    expect(editor(), 'Back closed the editor').toBeNull()
+    expect(search(), 'the picker stays under it').not.toBeNull()
+    expect(back()).toBe(true)
+    expect(search(), 'the next Back closes the picker').toBeNull()
+    expect(back(), 'nothing left: Back closes nothing here').toBe(false)
+    expect(row().conditions, 'nothing was added').toEqual([])
+  })
+
+  it('the picker is measured WHOLE: a layer over its search row alone leaves Escape the picker’s; over all of it, the press is the layer’s', () => {
+    /*
+     * A tracker layer under something drawn over ALL of it leaves Escape to that layer (utils/spendEscape,
+     * ONLY THE LAYER DRAWN ON TOP). For a `.modal-overlay` the box asked about is the dialog inside the
+     * backdrop (its first child); the picker has no backdrop — its first child is only its search row — so
+     * it registers as a `panel`, and its own box is the one measured.
+     * jsdom has no hit test: `elementFromPoint` stands in for the browser, and the picker and its search
+     * row get boxes (the row: the top 50 px of the picker's 320 × 300).
+     * MUTATION (tried 2026-10-14, ConditionPanel): `{ panel: true }` dropped → FAILS "over its search row
+     *   alone: nothing reached the window: expected [ 'Escape' ] to deeply equal []" (the row measured as
+     *   the picker: covered all over, the press left to the layer).
+     */
+    render(<Live />)
+    fireEvent.click(screen.getByText('+ Condition'))
+    const search = () => screen.queryByPlaceholderText('Search conditions…')
+    let picker: HTMLElement | null = search()
+    while (picker && picker.style.position !== 'fixed') picker = picker.parentElement
+    expect(picker, 'fixture: the picker’s own box').not.toBeNull()
+    let row1 = picker!.firstElementChild!
+    expect(row1.contains(search()), 'fixture: its first child is the search row').toBe(true)
+    const rect = (left: number, top: number, width: number, height: number) =>
+      ({ x: left, y: top, left, top, width, height, right: left + width, bottom: top + height, toJSON: () => ({}) }) as DOMRect
+    const realRect = Element.prototype.getBoundingClientRect
+    Element.prototype.getBoundingClientRect = function (this: Element) {
+      if (this === picker) return rect(100, 100, 320, 300)
+      if (this === row1) return rect(100, 100, 320, 50)
+      return realRect.call(this)
+    }
+    const layer = document.createElement('div')
+    document.body.appendChild(layer)
+    let overAll = false
+    const doc = document as unknown as { elementFromPoint?: (x: number, y: number) => Element | null }
+    doc.elementFromPoint = (_x: number, y: number) => (overAll || y < 150 ? layer : picker)
+    try {
+      expect(heardAtWindow(() => fireEvent.keyDown(document.body, { key: 'Escape' })), 'over its search row alone: nothing reached the window').toEqual([])
+      expect(search(), 'over its search row alone: Escape closed the picker').toBeNull()
+      fireEvent.keyUp(document.body, { key: 'Escape' })
+
+      fireEvent.click(screen.getByText('+ Condition'))
+      picker = search()
+      while (picker && picker.style.position !== 'fixed') picker = picker.parentElement
+      row1 = picker!.firstElementChild!
+      overAll = true
+      expect(heardAtWindow(() => fireEvent.keyDown(document.body, { key: 'Escape' })), 'over all of it: the press is the layer’s, unspent').toEqual(['Escape'])
+      expect(search(), 'over all of it: the picker stays').not.toBeNull()
+      fireEvent.keyUp(document.body, { key: 'Escape' })
+    } finally {
+      delete doc.elementFromPoint
+      Element.prototype.getBoundingClientRect = realRect
+      layer.remove()
     }
   })
 

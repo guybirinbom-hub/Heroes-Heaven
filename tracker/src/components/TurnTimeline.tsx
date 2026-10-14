@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { PartyPlayer } from '../store/partyStore'
 import { formatTurnTime } from '../utils/turnTimer'
+import { useEscapeCloses } from '../utils/spendEscape'
 import { XIcon } from './Icons'
 
 // ── Turn-time timeline ─────────────────────────────────────────────────────
@@ -53,12 +54,12 @@ export function TurnTimeline({ player, onClose }: Props) {
   const toggleDay = (k: string) =>
     setExpandedDays(s => { const n = new Set(s); n.has(k) ? n.delete(k) : n.add(k); return n })
 
-  // Close on Escape.
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [onClose])
+  // Escape closes the graph and goes no further — and Android's Back closes it through the host (utils/
+  // spendEscape useEscapeCloses). Its own `document` listener closed it and let the press go on: in Heroes
+  // Heaven's Settings → Initiative tracker → Turn timer one Escape closed the graph AND the Settings page,
+  // and Back closed the page with the graph still up (owner's list 2026-10-14, item 2). modalEscape.test.tsx,
+  // test/bug-tracker-escape-boxes.test.tsx.
+  const escapeRef = useEscapeCloses(onClose)
 
   // Total saved fights (across all days) — drives the "Sessions" stat regardless
   // of how the chart is currently grouped/expanded.
@@ -133,7 +134,7 @@ export function TurnTimeline({ player, onClose }: Props) {
     : ''
 
   return (
-    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+    <div className="modal-overlay" ref={escapeRef} onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="modal-box" style={{
         padding: 0, overflow: 'hidden', maxWidth: 600, width: '100%',
         display: 'flex', flexDirection: 'column',

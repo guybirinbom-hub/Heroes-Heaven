@@ -40,7 +40,9 @@ import './tracker-settings.css';
  * themselves on Escape (tracker/src/utils/spendEscape useEscapeCloses), a key Back never sends: on the
  * phone Back reached the Settings page's own handler and closed the whole page over the half-made table.
  * While any is open a Back handler sits above the page's (a cover) and closes the top one.
- * test/bug-tracker-escape-boxes.test.tsx (BACK).
+ * test/bug-tracker-escape-boxes.test.tsx (BACK). The Turn timer's DM turn-time graph joined them on
+ * 2026-10-14 (owner's list, item 2): it closed itself on a key only, so one Escape closed the graph AND this
+ * page, and Back closed the page with the graph still up (test/bug-tracker-escape-boxes.test.tsx (j), BACK).
  *
  * NOT included from the tracker's modal: Appearance (the look is Heroes Heaven's own appearance system —
  * the app's Appearance, or the tracker-only look a GM sets with a campaign's "Customize tracker

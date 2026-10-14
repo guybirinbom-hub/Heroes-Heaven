@@ -28,7 +28,7 @@ import {
   type HeightenStringLaneFile,
 } from '../src/sheet/spellCard';
 import { injectTreeArrow, splitSpellTree, treeEntryApplies } from '../src/sheet/heighteningTree';
-import type { Spell } from '../src/rules/types';
+import type { ContentDatabase, Spell } from '../src/rules/types';
 import { parseBlocks, cleanRun } from '../src/sheet/RichText';
 import STRING_LANE_JSON from '../src/data/heighten-string-lane.json';
 import * as lib from '../scripts/lib/card-scope.mjs';
@@ -119,7 +119,7 @@ const DRIFT = JSON.parse(readFileSync('work/card-step17-heighten-reprint-drift.j
  *    `data-ours=""` dropped, together → 2 of 25 red, one each (aon-litany-against-sloth; thunderburst).
  *  Each restored byte-exact from a scratch copy, sha1 checked.
  */
-const db = content();
+let db: ContentDatabase;
 const spell = (id: string): Spell => {
   const s = db.spells[id];
   if (!s) throw new Error(`no spell ${id} in the shipped data`);
@@ -128,12 +128,16 @@ const spell = (id: string): Spell => {
 let trees: Record<string, AstNode> = {};
 let parity: HeightenParity[] = [];
 
+// Every one-time heavy load happens here (core.json + core-descriptions.json through content(), the spells
+// AST, the whole-corpus parity pass), outside the 5 s per-test limit; the hook's own 10 s default timed out
+// on a machine starved of CPU (measured 2026-10-14), so it gets a generous one.
 beforeAll(async () => {
+  db = content();
   trees = JSON.parse(gunzipSync(readFileSync('public/ast/spells.json.gz')).toString('utf8'));
   vi.stubGlobal('fetch', async (url: string) => (/ast\/spells\.json$/.test(String(url)) ? { ok: true, json: async () => trees } : { ok: false }));
   await loadBucketAst('spells');
   parity = heightenParityAll(db.spells, trees, () => []);
-});
+}, 300_000);
 
 const pin: PinDescApi = { has: () => false, toggle: () => undefined };
 let stops: (() => void)[] = [];
@@ -333,7 +337,8 @@ describe('the popup on the tree lane', () => {
       railed += applying(popup).length;
     }
     expect(railed).toBeGreaterThan(124);
-  });
+    // Renders 124 real spell popups (about 0.7 s alone, over the 5 s default under full-suite load).
+  }, 120_000);
 
   // batch card: #card-HEIGHTEN — heightening works as before
   it('every heightened damage reaches the popup: inline in the page prose (marked ours), boxed for the two the page gives no anchor', () => {
@@ -372,7 +377,8 @@ describe('the popup on the tree lane', () => {
     }
     // batch card: #card-HEIGHTEN — heightening works as before
     expect(boxed).toEqual(['electrified-crystal-ward', 'shadow-illusion']);
-  });
+    // Renders a real popup for every spell with a heightened damage arrow (about 1.9 s alone, over the 5 s default under full-suite load).
+  }, 120_000);
 
   // batch card: #card-HEIGHTEN — heightening works as before
   it('the 18 Amp spells: the Amp paragraphs are their own group (.sd-amp), never inside the Heightening box', () => {

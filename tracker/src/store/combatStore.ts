@@ -9,7 +9,7 @@ import { roundTurnAbilityKeys } from '../utils/limitedUses'
 import { rollDamageExpr } from '../utils/dice'
 import { recallKnowledgeFromPage } from '../utils/parseCreature'
 import { useSettingsStore } from './settingsStore'
-import { usePartyStore } from './partyStore'
+import { usePartyStore, partyCardOfRow } from './partyStore'
 import { useDmAverageStore } from './dmAverageStore'
 import { notifyPersist } from './persistBus'
 import type { TurnRecord, TurnTimerState } from '../utils/turnTimer'
@@ -304,7 +304,7 @@ function stepsConditions(c: Combatant): boolean {
 // `round` is the round this turn starts in: a start a host already took for this row in this round is
 // spent, even after an Undo brought the turn back (stepTaken — SPENT STEPS in the gesture block).
 function tickConditionsAtStart(c: Combatant | undefined | null, round: number) {
-  if (!c || !stepsConditions(c) || stepTaken(c.id, 'start', round)) return
+  if (!c || !stepsConditions(c) || stepTaken(c, 'start', round)) return
   const before = c.conditions.length
   let stepped = false
   c.conditions = c.conditions
@@ -509,9 +509,11 @@ interface CombatStore {
   setTempHP: (id: string, amt: number) => void
   setDefeated: (id: string, val: boolean) => void
   setMaxHP: (id: string, val: number) => void
-  /** Sync a PC combatant's max HP from its party sheet (matched by name).
-   *  No-op if that PC isn't currently in the tracker. */
-  setPcMaxHP: (name: string, maxHP: number) => void
+  /** Sync a party card's max HP onto the PC row that IS that card (partyStore `partyCardOfRow`: the
+   *  row's party stamp, then its character id, its name only when neither side has an id and exactly one
+   *  card answers) — never another character's row of the same name. No-op if no row is that card.
+   *  Not a vitals gesture (the gesture block). */
+  setPcMaxHP: (member: { id: string }, maxHP: number) => void
   addCondition: (id: string, cond: Omit<AppliedCondition,'id'>) => void
   removeCondition: (id: string, condId: string) => void
   updateConditionValue: (id: string, condId: string, v: number) => void
@@ -623,6 +625,16 @@ interface PersistedCombat {
   turns?: TurnRecord[]
   turnTimer?: TurnTimerState | null
   savedSignature?: string | null
+  /** The FIGHT this board belongs to — made fresh by startCombat (`freshFightId`), so both of the GM's
+   *  devices name a fight the same way (the board is what the GM-device mirror carries), and an older
+   *  board of the SAME fight keeps that fight's spent steps when it is loaded (SPENT STEPS, gesture
+   *  block). Absent on a board saved before 2026-10-14, or one whose fight was never started here. */
+  fightId?: string
+  /** The players' steps already spent in THAT fight (`spentOf`: each without the fight), so they travel
+   *  with the board: the GM's other device that adopts it — after an Undo here, say — and this device
+   *  after a restart or a campaign switch know which turn ends already reached a player's sheet. Only
+   *  with a `fightId`; absent when nothing is spent. */
+  spentSteps?: string[]
 }
 
 // A deterministic fingerprint of the meaningful board state — the lineup plus
@@ -654,6 +666,12 @@ function loadPersistedCombat(): PersistedCombat | null {
     if (!raw) return null
     const parsed = JSON.parse(raw) as PersistedCombat
     if (!Array.isArray(parsed.combatants)) return null
+    // Only a fight id this build could have made names a fight: anything else (a hand-edited or
+    // foreign value) is no id, and the board loads as one saved before fight ids existed.
+    if (!isFightId(parsed.fightId)) delete parsed.fightId
+    // Spent steps belong to the board's fight: none without one, and only strings.
+    if (!parsed.fightId || !Array.isArray(parsed.spentSteps)) delete parsed.spentSteps
+    else parsed.spentSteps = parsed.spentSteps.filter((k): k is string => typeof k === 'string')
     // Every board saved before the once-per-round credit existed carries no flag at all, and
     // `undefined` reads as "not counted yet" — so loading one mid-fight hands everyone the order has
     // already passed a SECOND count this round (Delay, return, advance, and their effects tick
@@ -752,18 +770,32 @@ interface CombatSnapshot {
   member?: MemberDowns
   /** The FIGHT this board belongs to (`_fight`): restoring the snapshot puts it back with the board, so
    *  the players' steps spent in that fight stay spent on it — SPENT STEPS in the gesture block. */
-  fight: number
+  fight: string
 }
 const _undoStack: CombatSnapshot[] = []
 const _redoStack: CombatSnapshot[] = []
-/** The fight the board on screen belongs to. startCombat gives every fresh fight a new number
- *  (`newFight`), and Undo / Redo put back the number of the board they restore — so Ctrl+Z back across
- *  an End and a Start lands on the OLDER fight, with the steps it already spent (SPENT STEPS, gesture
- *  block; the G3 refuter, round 2: Next, End, Start, Ctrl+Z, Next stepped one turn end twice). */
-let _fight = 0
-/** The last fight number handed out. Never reused: a fight started after undoing back across a Start
- *  is new, and must not inherit the spent steps of the fight that Undo stepped out of. */
-let _fightSeq = 0
+/** The fight the board on screen belongs to — the board's own `fightId`, '' for a board that has none
+ *  (saved before fight ids, or never started here). startCombat gives every fresh fight a new id
+ *  (`newFight`), Undo / Redo put back the id of the board they restore — so Ctrl+Z back across an End
+ *  and a Start lands on the OLDER fight, with the steps it already spent (SPENT STEPS, gesture block;
+ *  the G3 refuter, round 2: Next, End, Start, Ctrl+Z, Next stepped one turn end twice) — and a board
+ *  loaded from storage brings its own (reloadFromStorage). Persisted with the board, so the GM's other
+ *  device, which adopts this board, names the fight the same way. */
+let _fight: string = _persisted?.fightId ?? ''
+/** A fight id: made here (`freshFightId`), never containing the `|` a spent-step key splits on. */
+function isFightId(v: unknown): v is string {
+  return typeof v === 'string' && /^[\w-]{1,80}$/.test(v)
+}
+/** A fight id no other fight — on this device or the GM's other one — has had or will have. Never
+ *  reused: a fight started after undoing back across a Start is new, and must not inherit the spent
+ *  steps of the fight that Undo stepped out of. */
+function freshFightId(): string {
+  try {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return `fight-${crypto.randomUUID()}`
+  } catch { /* no secure context: the fallback below */ }
+  const r = () => Math.random().toString(36).slice(2, 10)
+  return `fight-${Date.now().toString(36)}-${r()}${r()}`
+}
 const HISTORY_MAX = 40
 /** Capture the PRE-mutation state. Call at the top of a mutating recipe (after
  *  any early-return guard so no-ops don't pollute the stack). */
@@ -836,48 +868,125 @@ function invalidateRedo(s: CombatStore) {
  * (endedThisRound / startedThisRound) as they stood before that Next, so pressing Next again ran the
  * SAME turn end a second time: Frightened 2 → 1 → gone on the player's sheet for one turn end, while a
  * monster in the same sequence ended at 1 (the G3 refuter, 2026-10-13). So a step a host TOOK
- * (`takeVitalsGesture`) is remembered here, outside every snapshot, by row, turn phase and round
- * (`_stepsTaken`), and the engine never steps that row for that turn again (`stepTaken`). Only a TAKEN
+ * (`takeVitalsGesture`) is remembered here, outside every snapshot, by PLAYER (`stepOwner`: their
+ * character id, party stamp or — with neither — name; never the row id, which a load or the other device
+ * can hand to a different player), turn phase and round (`_stepsTaken`), and the engine never steps that
+ * player for that turn again (`stepTaken`). Only a TAKEN
  * step: in the standalone tracker, or on a PC row no host mirrors, nobody takes it — Undo puts the
  * condition back on the row and the next Next steps it again, exactly as a monster's. A host hands a
  * step BACK (`releaseSteps`) when it never reached the player's sheet after all — owed while offline
  * and then taken off the row by the Undo itself, or lost to a sheet the player changed meanwhile — so
  * that turn steps them once when it comes round again.
- * A turn is a row, a phase and a round OF ONE FIGHT: every fight has a round 1, so the key carries the
+ * A turn is a player, a phase and a round OF ONE FIGHT: every fight has a round 1, so the key carries the
  * fight too (`_fight`, by the undo stacks). startCombat starts a new fight with nothing spent
  * (`newFight`) — but it is no undo step, so Ctrl+Z after a fresh Start still goes back to the older
  * fight's board, and that board brings its own fight back with it, spent steps and all (the G3
  * refuter, round 2: Next, End, Start, Ctrl+Z, Next stepped one turn end twice when Start cleared the
- * record instead). A load from storage (reloadFromStorage, setScope) clears the record with the undo
- * history, which is all that could bring an older turn back. What it costs: a condition the GM sets on
- * that player AFTER undoing their turn end is not stepped by the repeated turn end — that turn already
- * ended once, on their sheet.
+ * record instead).
+ * The undo history is NOT all that can bring an older turn back: a board from the GM's OTHER device
+ * can too. The GM-device mirror (src/data/trackerSync.ts) adopts any board with a newer server stamp,
+ * and one edited on the second device while this one pressed Next predates that Next — the same turn
+ * end, back on screen, and Next stepped it a second time (the G3 refuter, 2026-10-14: Frightened 1 →
+ * gone for one turn end). So the fight is an ID both devices agree on, made fresh at startCombat
+ * (`freshFightId`) and carried in the persisted — and so the mirrored — board (`fightId`), and a load
+ * from storage (reloadFromStorage, setScope) KEEPS the spent steps of the fight the loaded board belongs
+ * to and lets go of every other fight's (`keepFight`): an older board of the same fight cannot step a
+ * spent turn again, and a board of a different fight — the other device started a new one — steps its
+ * own turns as always. The fight's spent steps travel WITH its board too (`PersistedCombat.spentSteps`,
+ * read as the write happens), and a load takes them in: so the other device that adopts this board after
+ * an Undo here, this device after a restart (`adoptSpent` at module load), and this device back from
+ * another campaign (setScope) all know which turn ends already reached a player's sheet. A board with no
+ * fight id (saved before 2026-10-14, or by an app version from before then on his other device) clears
+ * the record, as every load did before. What it does NOT cover: Next pressed for the same turn end on
+ * BOTH devices before either has the other's board steps it on each; and, a KNOWN GAP, a step handed back
+ * (`releaseSteps`) can come back as spent. Handing it back lets go of it on THIS device only: a board
+ * written before that still lists it, and once the mirror has carried that board to his other device,
+ * that device holds the step spent too (`keepFight` keeps its fight's steps across the next board of the
+ * same fight it adopts) and lists it again on its own next save; this device adopts that board
+ * (`adoptSpent`) and the step is spent here again — so when that turn comes round again the player misses
+ * that one condition step. It needs the sheet offline, an Undo and both GM devices in use at once; it
+ * never overwrites anything, and the GM steps the condition by hand. Pinned as today's behaviour
+ * (pcConditionTicks.test.ts, "KNOWN GAP"), so a change to it is deliberate. (Handing it back writes
+ * nothing: a save that is no edit would make the GM-device mirror push this board over a newer one from
+ * his other device.) What it
+ * costs: a condition the GM sets on that player AFTER undoing their turn end is not stepped by the
+ * repeated turn end — that turn already ended once, on their sheet.
  */
 let _gesture: Set<string> | null = null
 /** Inside a gesture: the turn-engine steps (`stepKey`) its recipe made, by PC row id — moved into
  *  `_stepsTaken` when a host takes that row's gesture. */
 let _gestureSteps: Map<string, string[]> | null = null
 /** SPENT STEPS (above): every PC turn-engine step a host has taken, in every fight the undo history
- *  can still reach (`newFight` lets go of the rest). */
+ *  can still reach (`newFight` lets go of the rest) — and, after a load, in the loaded board's fight
+ *  (`keepFight`), together with the ones that board brought with it (`spentSteps`). The saved board's
+ *  own fight's steps are put back as the app starts (`adoptSpent` below). */
 const _stepsTaken = new Set<string>()
 type StepPhase = 'end' | 'start'
-/** One row's turn phase in one round of the fight on screen: `fight|id|phase|round`. */
-function stepKey(id: string, phase: StepPhase, round: number): string {
-  return `${_fight}|${id}|${phase}|${round}`
+/**
+ * WHOSE turn a step belongs to — the PLAYER, never the row: their character id, else their party stamp,
+ * else (a PC row with neither — typed in by hand, saved before ids were kept) their name, which addCombatant's
+ * `isSamePc` keeps unique among such rows and which is how the campaign seam itself matches one. NOT the
+ * row id: ids come from a counter that a load resets to the loaded board's (`cidCounter`) and that the
+ * GM's other device hands out too, so a DIFFERENT player's row could get the id of a row whose step was
+ * already spent, and their own turn end was skipped (the G3 refuter, 2026-10-14, round 2: an older board
+ * of the same fight arrives, Synth Quill is added as cmb-2 — Probe Wren's old id — and Quill's
+ * Frightened never stepped).
+ */
+function stepOwner(c: Combatant): string {
+  if (c.charId) return `c:${c.charId}`
+  if (c.partyMemberId) return `p:${c.partyMemberId}`
+  return `n:${c.name.trim().toLowerCase()}`
 }
-/** startCombat: a fresh fight, with nothing of it spent — a number never used before (`_fightSeq`).
+/** One player's turn phase in one round of the fight on screen: `fight|owner|phase|round`. */
+function stepKey(c: Combatant, phase: StepPhase, round: number): string {
+  return `${_fight}|${stepOwner(c)}|${phase}|${round}`
+}
+/** The fight a spent-step key belongs to. */
+const fightOfKey = (k: string) => k.slice(0, k.indexOf('|'))
+/** The spent steps of `fight` as its board saves them (`PersistedCombat.spentSteps`): each key without
+ *  the fight, which the board names once, sorted so two devices holding the same steps write the same
+ *  bytes. Undefined when there are none, so a board with nothing spent is written as before. */
+function spentOf(fight: string): string[] | undefined {
+  if (!fight) return undefined
+  const pre = `${fight}|`
+  const out: string[] = []
+  for (const k of _stepsTaken) if (k.startsWith(pre)) out.push(k.slice(pre.length))
+  return out.length ? out.sort() : undefined
+}
+/** Take the spent steps a board of `fight` carries (`spentOf`'s form) into the record. */
+function adoptSpent(fight: string, spent: readonly string[] | undefined) {
+  if (!fight || !spent) return
+  for (const k of spent) _stepsTaken.add(`${fight}|${k}`)
+}
+// The app starting is a load too: the saved board's fight keeps what it spent before the restart, so an
+// older board of that fight from the GM's other device cannot step a turn already stepped.
+adoptSpent(_fight, _persisted?.spentSteps)
+/** startCombat: a fresh fight, with nothing of it spent — an id never used before (`freshFightId`).
  *  The steps of the fights an Undo or Redo can still bring back are kept (their boards carry their
- *  number); the rest are let go, so the record never outgrows the history. */
+ *  id); the rest are let go, so the record never outgrows the history. */
 function newFight() {
-  _fight = ++_fightSeq
-  const live = new Set<number>([_fight])
+  _fight = freshFightId()
+  const live = new Set<string>([_fight])
   for (const snap of _undoStack) live.add(snap.fight)
   for (const snap of _redoStack) live.add(snap.fight)
-  for (const k of _stepsTaken) if (!live.has(Number(k.slice(0, k.indexOf('|'))))) _stepsTaken.delete(k)
+  for (const k of _stepsTaken) if (!live.has(fightOfKey(k))) _stepsTaken.delete(k)
 }
-/** Has a host already taken this row's turn-engine step for this turn (its `phase` of `round`)? */
-function stepTaken(id: string, phase: StepPhase, round: number): boolean {
-  return _stepsTaken.has(stepKey(id, phase, round))
+/** A load from storage: the board on screen is now `fight` (its `fightId`; '' when it has none), and no
+ *  undo history reaches any other. The steps spent in THAT fight stay spent — an older board of the same
+ *  fight, from the GM's other device, cannot step a turn already stepped — joined by the ones the loaded
+ *  board carries (`spent`: what the device that saved it had spent, an Undo there included), and every
+ *  other fight's are let go. A board with no fight id lets go of everything, as every load did before
+ *  fight ids. */
+function keepFight(fight: string, spent?: readonly string[]) {
+  _fight = fight
+  if (!fight) { _stepsTaken.clear(); return }
+  for (const k of _stepsTaken) if (fightOfKey(k) !== fight) _stepsTaken.delete(k)
+  adoptSpent(fight, spent)
+}
+/** Has a host already taken this PLAYER's turn-engine step for this turn (its `phase` of `round`)? Only
+ *  a PC row's step is ever spent (markStep), so a monster's turn is never one — whatever it is called. */
+function stepTaken(c: Combatant, phase: StepPhase, round: number): boolean {
+  return !!c.isPC && _stepsTaken.has(stepKey(c, phase, round))
 }
 /** Run one store action as a GM vitals gesture: the rows its recipe marks are takeable by the store's
  *  subscribers while that action's `set()` dispatches, and by nobody once it has returned. */
@@ -897,7 +1006,7 @@ function markGesture(c: Combatant | undefined | null) {
 function markStep(c: Combatant, phase: StepPhase, round: number) {
   if (!c.isPC || !_gesture || !_gestureSteps) return
   _gesture.add(c.id)
-  const key = stepKey(c.id, phase, round)
+  const key = stepKey(c, phase, round)
   const list = _gestureSteps.get(c.id)
   if (list) list.push(key)
   else _gestureSteps.set(c.id, [key])
@@ -919,14 +1028,17 @@ export function takeVitalsGesture(id: string, steps?: string[]): boolean {
   return true
 }
 /** A host hands back turn-engine steps it took (`takeVitalsGesture`'s `steps`) that never reached the
- *  player's sheet, so the turn they belong to steps them again if an Undo brings it back (SPENT STEPS). */
+ *  player's sheet, so the turn they belong to steps them again if an Undo brings it back (SPENT STEPS).
+ *  On this device only: the GM's other device can list one again on its next save (the KNOWN GAP there). */
 export function releaseSteps(steps: readonly string[] | undefined): void {
   if (steps) for (const k of steps) _stepsTaken.delete(k)
 }
 
-/** Push a PC's current HP back to its party-card sheet (matched by name). */
+/** Push a PC's current HP back to the party card that row IS (partyStore `partyCardOfRow`: its party
+ *  stamp, then its character id, its name only with no ids and one card answering) — never every card
+ *  that shares its name. Not a vitals gesture: it writes the tracker's own party card, nobody's sheet. */
 function syncPcHp(c: Combatant | undefined) {
-  if (c?.isPC) usePartyStore.getState().syncCurrentHpByName(c.name, c.currentHP)
+  if (c?.isPC) usePartyStore.getState().syncCurrentHp(c, c.currentHP)
 }
 
 let _ridSeq = 0
@@ -1005,7 +1117,7 @@ function endTurnPass(s: CombatStore, c: Combatant) {
     // a step is a GM vitals gesture (markStep below), so a campaign pushes it to the player — and a
     // step a host already took for this turn end is spent, even when an Undo brought the turn back
     // (stepTaken — SPENT STEPS in the gesture block).
-    const steps = stepsConditions(c) && !stepTaken(c.id, 'end', s.round)
+    const steps = stepsConditions(c) && !stepTaken(c, 'end', s.round)
     let stepped = false
     c.conditions = c.conditions
       .map(cd => {
@@ -1323,7 +1435,10 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
     _condId = p?.condCounter ?? 0
     _undoStack.length = 0
     _redoStack.length = 0
-    _stepsTaken.clear()       // SPENT STEPS go with the undo history that could bring a turn back (gesture block)
+    // SPENT STEPS (gesture block): the loaded board's fight keeps the steps already spent in it, plus the
+    // ones the board brings — an older board of the same fight from the GM's other device must not step
+    // a turn a second time — and every other fight's go with the undo history that could have reached them.
+    keepFight(p?.fightId ?? '', p?.spentSteps)
     set(s => {
       s.combatants = p?.combatants ?? []
       s.round = p?.round ?? 1
@@ -1398,9 +1513,10 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
   startCombat() {
     // A gesture only for the PC row its opening start-of-turn step changes (Stunned — see the gesture
     // block); the sort and the counts are no edit of anyone's. A fresh fight starts with no step spent:
-    // round 1 is a new round 1. A new NUMBER, not a cleared record: Start is no undo step, so Ctrl+Z
+    // round 1 is a new round 1. A new ID, not a cleared record: Start is no undo step, so Ctrl+Z
     // still reaches the last fight's boards, and they bring that fight's spent steps back with them
-    // (SPENT STEPS in the gesture block).
+    // (SPENT STEPS in the gesture block). The id is saved with the board, so the GM's other device
+    // names this fight the same way.
     newFight()
     asGesture(() => set(s => {
       // Delay is a within-combat position, so a fresh fight starts with everyone in the order —
@@ -1635,16 +1751,25 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
     syncPcHp(get().combatants.find(c => c.id === id))
   },
 
-  setPcMaxHP(name, maxHP) {
+  setPcMaxHP(member, maxHP) {
     if (!(maxHP > 0)) return
+    // The rows that ARE this card, by the same join the HP bridge uses the other way (syncPcHp), so a
+    // card and a row never disagree about whose HP they share. It used to be the first PC row of the
+    // card's NAME: a max-HP change on one of two same-named characters reached the other's row.
+    const { parties, activePartyId } = usePartyStore.getState()
+    const mine = new Set(get().combatants
+      .filter(c => c.isPC && partyCardOfRow(c, parties, activePartyId)?.id === member.id)
+      .map(c => c.id))
+    if (!mine.size) return
     set(s => {
-      const c = s.combatants.find(c => c.isPC && c.name.toLowerCase() === name.toLowerCase())
-      if (!c) return
-      // A PC sitting at full (incl. the 0/0 it's added with) refills to the new
-      // max; a damaged PC keeps its damage, just clamped to the new ceiling.
-      const wasFull = c.currentHP >= c.maxHP
-      c.maxHP = maxHP
-      c.currentHP = wasFull ? maxHP : Math.min(c.currentHP, maxHP)
+      for (const c of s.combatants) {
+        if (!mine.has(c.id)) continue
+        // A PC sitting at full (incl. the 0/0 it's added with) refills to the new
+        // max; a damaged PC keeps its damage, just clamped to the new ceiling.
+        const wasFull = c.currentHP >= c.maxHP
+        c.maxHP = maxHP
+        c.currentHP = wasFull ? maxHP : Math.min(c.currentHP, maxHP)
+      }
     })
   },
 
@@ -2011,7 +2136,15 @@ function slimCombatantForPersist(c: Combatant): Combatant {
 // Persist live combat state (debounced) whenever the relevant slice changes.
 // Skip diceResults — those are ephemeral.
 useCombatStore.subscribe((s) => {
+  // The fight this board belongs to, read NOW — inside the dispatch that made the board (Undo / Redo set
+  // `_fight` in their recipe, startCombat just before its own), not when the debounce fires. Left out
+  // when the board has none, so a board saved before fight ids is written byte for byte as before.
+  const fightId = _fight || undefined
   schedulePersist(() => ({
+    fightId,
+    // …and that fight's spent steps read when the write HAPPENS: a host takes a step inside the dispatch,
+    // after this subscriber has run, and hands one back (releaseSteps) later still.
+    spentSteps: spentOf(fightId ?? ''),
     combatants: s.combatants.map(slimCombatantForPersist),
     round: s.round,
     activeIndex: s.activeIndex,

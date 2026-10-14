@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
 import { useGmLayoutStore, type PaneNode, type PopupRef } from '../store/layoutStore'
 import { toLayoutTab } from '../store/windowStore'
 import { useCombatStore } from '../store/combatStore'
@@ -6,6 +6,7 @@ import { PaneLayout } from './PaneLayout'
 import { GlobalSearch } from './GlobalSearch'
 import { PlusIcon, ScreenIcon } from './Icons'
 import { GM_WIDGETS, newWidgetRef } from './GmWidgets'
+import { useEscapeCloses } from '../utils/spendEscape'
 
 // ── GM Screen ────────────────────────────────────────────────────────────────
 // A free workspace, kept across combats. You pull in references via search,
@@ -84,10 +85,97 @@ const addItemStyle: React.CSSProperties = {
   padding: '7px 9px', cursor: 'pointer',
 }
 
+/*
+ * ESCAPE AND BACK CLOSE THIS SCREEN'S OWN PICKERS, ONE AT A TIME (owner's list 2026-10-14, item 3). The +
+ * menu had no Escape at all, and neither it nor the "Add to GM Screen" picker had a Back: inside a Heroes
+ * Heaven campaign, Back on the phone with either open LEFT THE CAMPAIGN. Each registers as one of the
+ * tracker's layers while it is open (utils/spendEscape useEscapeCloses): Escape closes it and goes no
+ * further, and the host's Back handler closes it (CampaignTracker closeTopTrackerModal). The + menu is a
+ * panel with no backdrop round it (`panel`; its tap-catcher is a sibling), drawn in the page under the
+ * floating windows: a window over all of it is the layer on top, and the host closes that window first.
+ * modalEscape.test.tsx (GM screen), test/bug-tracker-escape-boxes.test.tsx (GM screen, BACK).
+ *
+ * A PRESS OR A FOCUS ANYWHERE ELSE CLOSES THE + MENU. Its tap-catcher covers the GM screen only: the top
+ * bar, the initiative rail and the windows stay within reach while it is open. The palette button there
+ * opened Customize (z 60) over all of the menu, and then neither Escape nor Back did anything at all: the
+ * menu, covered all over, left both to the layer on top, while the campaign's Back handler for the
+ * tracker's layers — a cover — kept Customize's own handler (drawn under the layers) off the stack (the
+ * escape-lane refuter, 2026-10-14). A menu is gone the moment the GM turns elsewhere, so nothing can open
+ * over it: a mouse or finger press outside it, its tap-catcher and the + (which toggles it), or the focus
+ * moving there (Tab to a button and Enter presses no mouse). test/bug-tracker-escape-boxes.test.tsx (k).
+ */
+function AddMenu({ onClose, onAdd, fab }: {
+  onClose: () => void
+  onAdd: (kind: string, label: string) => void
+  fab: RefObject<HTMLButtonElement | null>
+}) {
+  const escapeRef = useEscapeCloses(onClose, { panel: true })
+  const panel = useRef<HTMLDivElement | null>(null)
+  const catcher = useRef<HTMLDivElement | null>(null)
+  const panelRef = useCallback((el: HTMLDivElement | null) => {
+    panel.current = el
+    escapeRef(el)
+  }, [escapeRef])
+  useEffect(() => {
+    const elsewhere = (e: Event) => {
+      const t = e.target
+      if (!(t instanceof Node)) return
+      if (panel.current?.contains(t) || catcher.current?.contains(t) || fab.current?.contains(t)) return
+      onClose()
+    }
+    document.addEventListener('mousedown', elsewhere)
+    document.addEventListener('focusin', elsewhere)
+    return () => {
+      document.removeEventListener('mousedown', elsewhere)
+      document.removeEventListener('focusin', elsewhere)
+    }
+  }, [onClose, fab])
+  return (
+    <>
+      <div ref={catcher} onClick={onClose} style={{ position: 'absolute', inset: 0, zIndex: 40 }} />
+      <div ref={panelRef} style={{
+        position: 'absolute', bottom: 74, right: 18, zIndex: 41, width: 232,
+        background: 'var(--bg-panel)', border: 'var(--app-bw) solid var(--border-strong)',
+        borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)', padding: 6,
+      }}>
+        <div style={{ fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text-faded)', padding: '4px 9px 6px' }}>Add to GM screen</div>
+        {GM_WIDGETS.map(w => (
+          <button key={w.kind} style={addItemStyle}
+            onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-hover)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+            onClick={() => onAdd(w.kind, w.label)}>
+            <span style={{ width: 18, display: 'inline-flex', justifyContent: 'center', alignItems: 'center', color: 'var(--text-muted)' }}><w.Icon size={16} /></span> {w.label}
+          </button>
+        ))}
+      </div>
+    </>
+  )
+}
+
+/** The "Add to GM Screen" picker, registered while it is open (see above). */
+function AddReferencePicker({ onClose }: { onClose: () => void }) {
+  const escapeRef = useEscapeCloses(onClose)
+  return (
+    <GlobalSearch
+      title="Add to GM Screen"
+      escapeRef={escapeRef}
+      onClose={onClose}
+      onPick={h => {
+        // A creature picked here is a bestiary name, not a row on the board: keepBestiaryPins (above)
+        // turns it into a 'bestiary' tab the moment it lands — its full stat block, with "Add to
+        // initiative" — before the layout's reconcile could prune it.
+        useGmLayoutStore.getState().addPopup({ type: h.type, ref: h.ref, title: h.title })
+        onClose()
+      }}
+    />
+  )
+}
+
 export function GMScreen() {
   const root = useGmLayoutStore(s => s.root)
   const [picking, setPicking] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const fabRef = useRef<HTMLButtonElement | null>(null)
 
   useLayoutEffect(() => {
     keepBestiaryPins()
@@ -98,6 +186,8 @@ export function GMScreen() {
     useGmLayoutStore.getState().addPopup({ type: 'widget', ref: newWidgetRef(kind), title: label })
     setMenuOpen(false)
   }
+  const closeMenu = useCallback(() => setMenuOpen(false), [])
+  const closePicker = useCallback(() => setPicking(false), [])
 
   return (
     <div className="flex flex-col flex-1 min-h-0" style={{ background: 'var(--bg-panel)', position: 'relative' }}>
@@ -109,30 +199,12 @@ export function GMScreen() {
           : <EmptyWorkspace onAdd={() => setPicking(true)} />}
       </div>
 
-      {/* Add menu — opened by the + FAB; backdrop click closes it. */}
-      {menuOpen && (
-        <>
-          <div onClick={() => setMenuOpen(false)} style={{ position: 'absolute', inset: 0, zIndex: 40 }} />
-          <div style={{
-            position: 'absolute', bottom: 74, right: 18, zIndex: 41, width: 232,
-            background: 'var(--bg-panel)', border: 'var(--app-bw) solid var(--border-strong)',
-            borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)', padding: 6,
-          }}>
-            <div style={{ fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text-faded)', padding: '4px 9px 6px' }}>Add to GM screen</div>
-            {GM_WIDGETS.map(w => (
-              <button key={w.kind} style={addItemStyle}
-                onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-hover)')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-                onClick={() => addWidget(w.kind, w.label)}>
-                <span style={{ width: 18, display: 'inline-flex', justifyContent: 'center', alignItems: 'center', color: 'var(--text-muted)' }}><w.Icon size={16} /></span> {w.label}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
+      {/* Add menu — opened by the + FAB; backdrop click, a press elsewhere, Escape and Back close it. */}
+      {menuOpen && <AddMenu onClose={closeMenu} onAdd={addWidget} fab={fabRef} />}
 
       {/* + floating action button */}
       <button
+        ref={fabRef}
         onClick={() => setMenuOpen(o => !o)}
         title="Add to GM screen"
         style={{
@@ -146,19 +218,7 @@ export function GMScreen() {
         <PlusIcon size={20} />
       </button>
 
-      {picking && (
-        <GlobalSearch
-          title="Add to GM Screen"
-          onClose={() => setPicking(false)}
-          onPick={h => {
-            // A creature picked here is a bestiary name, not a row on the board: keepBestiaryPins (above)
-            // turns it into a 'bestiary' tab the moment it lands — its full stat block, with "Add to
-            // initiative" — before the layout's reconcile could prune it.
-            useGmLayoutStore.getState().addPopup({ type: h.type, ref: h.ref, title: h.title })
-            setPicking(false)
-          }}
-        />
-      )}
+      {picking && <AddReferencePicker onClose={closePicker} />}
     </div>
   )
 }

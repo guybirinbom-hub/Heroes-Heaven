@@ -81,8 +81,9 @@ export function AdvancedConditionEditor({
     editing ? { ...editing, mods: { ...editing.mods } } : emptyCustomCondition()
   )
   // Escape cancels, as Cancel does, and goes no further — opened from Settings it closed the whole
-  // Settings page (utils/spendEscape useEscapeCloses). Opened from the condition picker, the press is spent
-  // here before the picker's own listener (ConditionPanel) hears it: one press closes this editor only.
+  // Settings page (utils/spendEscape useEscapeCloses). Opened from the condition picker (a registered panel
+  // under this editor, ConditionPanel), the one shared listener closes this editor first; the next press
+  // closes the picker.
   // The ref says which element is this modal (a layer drawn over it keeps its own press).
   const escapeRef = useEscapeCloses(onClose)
 

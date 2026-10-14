@@ -25,8 +25,9 @@ import { describe, expect, it } from 'vitest'
  * Heroes Heaven's Settings → Initiative tracker → Turn timer, the DM's turn-time graph (TurnTimeline)
  * closed on Escape, and the same press went on to the Settings page and closed it too; on the phone Back
  * closed the page with the graph still up. TurnTimeline and MonsterPartsPopup, counted as closers until
- * then, are on KNOWN_GAPS now — the only entries ever added, by the stricter rule; their files are
- * outside the group that tightened it.
+ * then, went on KNOWN_GAPS — the only entries ever added, by the stricter rule; their files were
+ * outside the group that tightened it. Both close through useEscapeCloses since 2026-10-14 (owner's list,
+ * item 2) and are off the list again, named in (d) with the closers.
  *
  *  (a) the scanner itself, on synthetic sources whose answer is known;
  *  (b) no NEW Escape-less modal: one added without an Escape fails here, named;
@@ -59,11 +60,6 @@ const KNOWN_GAPS: Record<string, string> = {
   'components/EncounterManager.tsx :: EncounterManager':
     "saved encounters (in a campaign the host's dismiss stack closes it; the standalone app has no Escape)",
   'components/SettingsModal.tsx :: SettingsModal': "the standalone app's Settings (not drawn in Heroes Heaven)",
-  // Added by the stricter rule (G7s round 2): each closes on Escape and lets the press go on.
-  'components/TurnTimeline.tsx :: TurnTimeline':
-    "the turn-time graph: in HH Settings → Turn timer one Escape closes the graph AND the Settings page, and Back closes the page (needs useEscapeCloses in TurnTimeline.tsx)",
-  'components/MonsterPartsPopup.tsx :: MonsterPartsPopup':
-    "Monster Parts: its press goes on (in a campaign the host's as-of-the-press stand-down holds it); needs useEscapeCloses in MonsterPartsPopup.tsx",
 }
 
 function sourcesUnder(dir: string): string[] {
@@ -239,11 +235,14 @@ describe('every tracker modal closes on Escape (the known gaps only shrink)', ()
       'components/CreaturePickerModal.tsx :: CreaturePickerModal',
       'components/AdvancedConditionEditor.tsx :: AdvancedConditionEditor',
       // G7s (2026-10-13): the last four gaps a GM meets inside Heroes Heaven. (MonsterPartsPopup and
-      // TurnTimeline, once listed here as closers, let the press go on: KNOWN_GAPS since G7s round 2.)
+      // TurnTimeline, once listed here as closers, let the press go on: KNOWN_GAPS from G7s round 2 until
+      // 2026-10-14, when both took useEscapeCloses — below.)
       'components/MonsterSearch.tsx :: MonsterSearch',
       'components/TextConverter.tsx :: TextConverter',
       'components/TextConverter.tsx :: TextConverterHelpModal',
       'components/SettingsModal.tsx :: ConditionDeleteConfirm',
+      'components/TurnTimeline.tsx :: TurnTimeline',
+      'components/MonsterPartsPopup.tsx :: MonsterPartsPopup',
     ])
       expect(closers.has(k), k).toBe(true)
   })

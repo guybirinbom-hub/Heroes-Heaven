@@ -161,7 +161,8 @@ describe('card step 19: pin identity by {bucket, id}', () => {
         expect(pinForRead({ title: map[canon]!.name!, description: 's', key: bucket }, db).slug, `${bucket}: ${ids.join(' | ')}`).toBe(canon);
       }
     }
-  });
+    // pinForRead scans its whole bucket on every call and this calls it ~600 times (about 1.2 s alone, over the 5 s default under full-suite load).
+  }, 120_000);
 
   // batch card: #card-PIN — the pin keeps every field through build, play, sync and rebuild
   it('round trip: Builder → built Character → play ledger → normalize/JSON (sync) → derived build → rebuilt Character keeps every pin field', () => {
