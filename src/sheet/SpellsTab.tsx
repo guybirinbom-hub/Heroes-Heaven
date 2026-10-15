@@ -15,7 +15,7 @@ import { toggleKnownRitual,
   setRestrictedSpell,
   setRestrictedRank,
   setTradedCantrip,
-  setPreparedCantrip,
+  prepareCantripOpening,
   addRepertoireSpell,
   removeRepertoireSpell,
   starsAtRank,
@@ -570,11 +570,18 @@ function LearnSpellModal({
   // Already in the repository (or already learned) — offering it again would just create a duplicate.
   const known = new Set<string>([
     ...entry.cantrips,
+    // `cantrips` is TODAY's openings on the overlaid entry; `cantripPool` is the build's own list, so a
+    // cantrip the caster knows but did not prepare today is not offered back (checker, 2026-10-15).
+    ...(entry.cantripPool ?? []),
     // A book caster's book holds more cantrips than it prepares today (owner's bug 2026-10-14).
     ...(entry.bookCantrips ?? []),
     ...Object.values(entry.spellbook ?? {}).flat(),
     ...Object.values(entry.repertoire ?? {}).flat(),
     ...Object.values(entry.learned ?? {}).flat(),
+    // …and what a FEAT put in this entry (`spellSources`): Adapted Cantrip's on a prepared class is an
+    // option, not in `cantrips`, so a Flexible Spellcaster cleric was offered to learn — and pay for — the
+    // cantrip it already has (2026-10-15).
+    ...Object.keys(entry.spellSources ?? {}),
   ]);
 
   // A caster who prepares from the whole tradition list (cleric, druid) has no spell to learn — the
@@ -872,7 +879,9 @@ function ManageSpellsModal({
       if (picking.preparedCantrip) {
         // A cantrip OPENING re-prepared for the day — before the spontaneous branch, because the
         // flexible spellcaster's entry is spontaneous-shaped and still prepares its cantrips.
-        onPlay((p) => setPreparedCantrip(p, entry.id, picking.slot!, spellId));
+        // …storing, with it, every opening showing a stand-in (`entry.cantripStandIns`), so this edit
+        // cannot flip one back (prepareCantripOpening).
+        onPlay((p) => prepareCantripOpening(p, entry, picking.slot!, spellId));
       } else if (picking.restricted) {
         onPlay((p) => setRestrictedSpell(p, picking.restricted!, spellId));
       } else if (spontaneous) {
@@ -1407,10 +1416,13 @@ const COST_FILTERS: { id: string; label: string; cost: ActionCost }[] = [
  */
 /** The player's own picks drawn PAST a sorcerer's allowance — the last `by` of them, in the order the
  *  rank draws them (the builder's pick order, the gift first), so the one marked is the one a builder
- *  from before lane C2 let them add beside the gift. Empty unless the entry counts its gift inside. */
+ *  from before lane C2 let them add beside the gift. Empty unless the entry counts its gift inside.
+ *  Never a spell a feat put there (`spellSources` — Adapted Cantrip's, drawn last): it is not one of the
+ *  player's picks, and `cantripsOverOf` does not count it (2026-10-15). */
 function pastGiftIds(entry: SpellcastingEntry, ids: string[], granted: string[], by: number): Set<string> {
   if (!entry.grantsCountInside || by <= 0) return new Set();
-  return new Set(ids.filter((id) => !granted.includes(id)).slice(-by));
+  const fromFeats = entry.spellSources ?? {};
+  return new Set(ids.filter((id) => !granted.includes(id) && !(id in fromFeats)).slice(-by));
 }
 
 function offBookNote(entry: SpellcastingEntry, id: string | null | undefined): string | undefined {

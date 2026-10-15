@@ -76,7 +76,10 @@ function featsMatching(from: OpenChoiceFrom, content: ContentDatabase, level?: n
 export function openChoiceOptions(
   from: OpenChoiceFrom | undefined,
   content: ContentDatabase,
-  opts?: { hideLegacy?: boolean; character?: Character },
+  /** `keep`: the choice's stored answers — exempt from `excludeOwnTraditions`, so an answer given before
+   *  that rule (or before the character's tradition changed) stays in its own picker rather than reading
+   *  as unanswered while the build still grants it. */
+  opts?: { hideLegacy?: boolean; character?: Character; keep?: readonly (string | null | undefined)[] },
 ): OpenOption[] {
   if (!from) return [];
   switch (from.type) {
@@ -98,16 +101,23 @@ export function openChoiceOptions(
       // "the picker can't filter that, because your tradition depends on your class". It can: this
       // resolver already runs against a built character (Builder.tsx:424 passes `featPrereqChar`).
       // Class pools only — an innate or item entry is not a tradition you cast in for this purpose —
-      // and with no class casting at all nothing is excluded, so the list is never emptied.
+      // and with no class casting at all no tradition is excluded, so the list is never emptied.
+      // …but the cantrip must come FROM a magical tradition: 51 cantrips carry none (compositions such as
+      // allegro, hexes, psi, necromancer and summoner cantrips) and were offered, with or without class
+      // casting (2026-10-15). A stored answer (`keep`) stays in its own picker either way — and says it
+      // is not allowed any more, so it does not look like a valid pick (Q27).
       const ownTraditions = new Set<string>(
         (opts?.character?.spellcasting ?? []).filter((e) => e.type === 'prepared' || e.type === 'spontaneous').map((e) => e.tradition),
       );
+      const keep = new Set(opts?.keep ?? []);
       const traditionOk = (s: { traditions?: string[] }) =>
-        !from.excludeOwnTraditions || !ownTraditions.size || !(s.traditions ?? []).some((t) => ownTraditions.has(t));
-      return spellsMatching(filter, content, opts?.hideLegacy).filter(matchesAny).filter(traditionOk).map((s) => ({
+        !from.excludeOwnTraditions || (!!s.traditions?.length && !s.traditions.some((t) => ownTraditions.has(t)));
+      return spellsMatching(filter, content, opts?.hideLegacy).filter(matchesAny).filter((s) => keep.has(s.id) || traditionOk(s)).map((s) => ({
         id: s.id,
         name: s.name,
-        note: (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`,
+        note:
+          ((s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`) +
+          (traditionOk(s) ? '' : ' · not from a magical tradition other than your own — choose again'),
         description: s.description,
       }));
     }

@@ -45,7 +45,10 @@ describe('the record asks a question the picker can answer', () => {
 
   it("offers no cantrip of the character's own tradition, and is never emptied for a non-caster", () => {
     const arcane = openChoiceOptions(db.feats['adapted-cantrip'].choice!.from, db, { character: wiz() });
-    expect(arcane.length).toBeGreaterThan(20);
+    // Was > 20, counting 51 cantrips with no tradition at all (allegro, hexes, psi cantrips); print says
+    // "from a magical tradition other than your own", so they are gone (2026-10-15, feat-4474) and an
+    // arcane caster has 14 — test/adapted-cantrip-followups.test.ts holds that rule.
+    expect(arcane.length).toBeGreaterThan(5);
     for (const o of arcane) expect(db.spells[o.id].traditions, o.id).not.toContain('arcane');
     // A fighter with Wizard Dedication meets the prerequisite through an ARCHETYPE entry; a fighter
     // with no class casting at all excludes nothing, so the picker still offers something.

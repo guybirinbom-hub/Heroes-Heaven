@@ -592,25 +592,35 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
        * cantrip by hand; the fix gave the opening back, and its default — the build's next cantrip, the
        * adapted one — drew it twice while the pick it had pushed out stayed hidden. Never the FIRST free
        * default: a cantrip the player emptied or swapped out of another opening must not come back.
-       * Stored choices are never changed. Known limit: the stand-in is not stored, so if the player later
-       * re-prepares the opening that holds the adapted cantrip, this opening shows its own default (the
-       * adapted cantrip) again — still nothing the code before the fix drew is lost. */
+       * Stored choices are never changed, and loading stores nothing.
+       *
+       * The stand-in depends on THAT opening's choice, so it is MARKED with the opening it depends on
+       * (`cantripStandIns`, `{ at, from }`), and the Prepare panel stores it when the player re-prepares
+       * that opening (`prepareCantripOpening`): before, re-preparing the opening that held the adapted
+       * cantrip flipped this one back to its own default — the adapted cantrip — and the pick it had shown
+       * was gone (checker finding, 2026-10-15). An edit to any OTHER opening stores nothing extra: the
+       * stand-in still follows the build then, so a cantrip the player later swaps in the builder reaches
+       * it. An opening left empty (no pick to give back) is not a stand-in and is not stored. */
       const chosen = new Set(stored.filter((o): o is string => !!o));
       const kept = new Set(stored.flatMap((o, i) => (o === undefined && defaults[i] && !chosen.has(defaults[i]) ? [defaults[i]] : [])));
       const given = new Set<string>();
+      const standIns: { at: number; from: number }[] = [];
       const cantripSlots = stored.map((o, i) => {
         if (o !== undefined) return o;
         const d = defaults[i];
         if (!d) return null;
         if (!chosen.has(d)) return d;
-        const back = defaults[stored.indexOf(d)];
+        const from = stored.indexOf(d);
+        const back = defaults[from];
         if (!back || chosen.has(back) || kept.has(back) || given.has(back)) return null;
         given.add(back);
+        standIns.push({ at: i, from });
         return back;
       });
       out = {
         ...out,
         cantripSlots,
+        ...(standIns.length ? { cantripStandIns: standIns } : {}),
         cantrips: [...new Set([...cantripSlots.filter((x): x is string => !!x), ...(e.grantedCantrips ?? [])])],
         // The BUILD's list, kept beside the rewritten one: an opening may hold any cantrip the
         // character KNOWS (Adapted Cantrip buys one off-tradition on purpose), and the picker reads
@@ -1364,6 +1374,37 @@ export const preparedCantripKey = (entryId: string, index: number) => `${entryId
 
 export function setPreparedCantrip(play: PlayState, entryId: string, index: number, spellId: string | null): PlayState {
   return { ...play, preparedSpells: { ...(play.preparedSpells ?? {}), [preparedCantripKey(entryId, index)]: spellId } };
+}
+
+/**
+ * The PLAYER re-prepares cantrip opening `index` — the Prepare panel's writer. When an opening shows a
+ * STAND-IN that depends on THIS opening (`entry.cantripStandIns` `{ at, from: index }`, applyPlayState:
+ * the pick this opening's stored choice pushed out), the stand-in is stored too, as shown, so the edit
+ * cannot flip it. Before, re-preparing the opening that held Adapted Cantrip's cantrip flipped the
+ * stand-in back to its own default — the adapted cantrip — and the pick was gone (checker finding on
+ * c720191, 2026-10-15).
+ *
+ * Only the stand-ins of the edited opening: an edit elsewhere cannot flip one (the picker never offers a
+ * cantrip another opening shows, so it cannot take the stand-in's cantrip or the one it depends on), and
+ * a stand-in stored for no reason would outrank the player's later builder swap of that cantrip.
+ *
+ * `entry` is the OVERLAID entry the panel drew. A key the store already holds is never written (a stale
+ * render cannot overwrite a choice), and with no such stand-in this is exactly `setPreparedCantrip`. Only
+ * a player's edit calls it — never a load.
+ */
+export function prepareCantripOpening(
+  play: PlayState,
+  entry: Pick<SpellcastingEntry, 'id' | 'cantripSlots' | 'cantripStandIns'>,
+  index: number,
+  spellId: string | null,
+): PlayState {
+  let next = play;
+  for (const { at, from } of entry.cantripStandIns ?? []) {
+    const shown = entry.cantripSlots?.[at];
+    if (from !== index || at === index || !shown || play.preparedSpells?.[preparedCantripKey(entry.id, at)] !== undefined) continue;
+    next = setPreparedCantrip(next, entry.id, at, shown);
+  }
+  return setPreparedCantrip(next, entry.id, index, spellId);
 }
 
 /**

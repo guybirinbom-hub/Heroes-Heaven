@@ -857,7 +857,13 @@ export function Builder({
                                     // list is too long to enumerate on the record and would go stale.
                                     (() => {
                                       const keys = choiceKeys(key, def);
-                                      const all = openChoiceOptions(def.from, content, { hideLegacy: build.hideLegacy, character: featPrereqChar });
+                                      // `keep`: a stored answer stays in its own picker (Adapted Cantrip's allegro
+                                      // from before its no-tradition rule, 2026-10-15) instead of reading blank.
+                                      const all = openChoiceOptions(def.from, content, {
+                                        hideLegacy: build.hideLegacy,
+                                        character: featPrereqChar,
+                                        keep: keys.map((kk) => build.featChoices[kk]),
+                                      });
                                       return keys.map((k, i) => {
                                         const answers = keys.map((kk) => build.featChoices[kk]);
                                         const taken = new Set(def.distinct ? answers.filter((a, j) => j !== i && a) : []);
@@ -1084,7 +1090,11 @@ export function Builder({
                * a granted feat's menu is open rather than enumerated. The picked-feat path (renderChoice)
                * has handled `open` since it shipped; this one never did.
                */
-              openChoiceOptions(def.from, content, { hideLegacy: build.hideLegacy, character: featPrereqChar }).map((o) => ({
+              openChoiceOptions(def.from, content, {
+                hideLegacy: build.hideLegacy,
+                character: featPrereqChar,
+                keep: [build.grantedFeatChoices?.[grantedChoiceKey(grantedId, grantVariant)]],
+              }).map((o) => ({
                 value: o.id,
                 label: o.note ? `${o.name} (${o.note})` : o.name,
                 ...(o.description ? { description: o.description } : {}),

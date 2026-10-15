@@ -5896,6 +5896,11 @@ export interface SpellcastingEntry {
   /** OVERLAY ONLY: the per-opening view of today's prepared cantrips (`cantripCap` entries, null =
    *  an emptied opening). `cantrips` stays the flat effective list every existing reader uses. */
   cantripSlots?: (string | null)[];
+  /** OVERLAY ONLY: the openings of `cantripSlots` showing a STAND-IN (`at`) — an untouched opening whose
+   *  own default the stored choice of opening `from` holds, showing the pick that choice pushed out
+   *  (applyPlayState). Not stored on load; the Prepare panel stores one when the player re-prepares its
+   *  `from` opening (`prepareCantripOpening`), so that edit cannot flip it back. Absent when none. */
+  cantripStandIns?: { at: number; from: number }[];
   /**
    * OVERLAY ONLY: the BUILD's own cantrip list, kept beside the overlay's rewritten `cantrips`.
    *

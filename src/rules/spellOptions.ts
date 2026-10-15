@@ -674,11 +674,18 @@ export function bookGrantChips(
  * can produce it (every saved sorcerer from before lane C2 that filled its row), and the cantrips are
  * the player's own, so the sheet draws every one and says so — the `overCapOf` shape, for the one list
  * a spontaneous caster cannot edit on the sheet. 0 everywhere else.
+ *
+ * A cantrip a FEAT put in the pool (`spellSources`: Adapted Cantrip's, written only when the player had
+ * not picked it themselves) is not one of the player's own either — the same set deriveBuildFromCharacter
+ * leaves out of the build it reads back. Counted, a sorcerer with Adapted Cantrip read "One too many —
+ * … remove one in the builder" beside a builder that offered exactly the places it filled (feat-4474:
+ * *"replace one of your cantrips known with the chosen spell"*; 2026-10-15).
  */
 export function cantripsOverOf(entry: SpellcastingEntry): number {
   if (!entry.grantsCountInside || entry.cantripCap === undefined) return 0;
   const granted = entry.grantedCantrips ?? [];
-  const own = entry.cantrips.filter((id) => !granted.includes(id)).length;
+  const fromFeats = entry.spellSources ?? {};
+  const own = entry.cantrips.filter((id) => !granted.includes(id) && !(id in fromFeats)).length;
   return Math.max(0, own - Math.max(0, entry.cantripCap - grantedPlaces(entry, 0)));
 }
 
