@@ -217,7 +217,14 @@ export function spellOptions(ctx: SpellOptionCtx, rank: number, restrictedId?: s
     return extra.length ? [...list, ...extra] : list;
   };
   const base = withLearned(listed());
-  if (ceiling !== 0) return base;
+  /* A spell a record added AT ITS RANK ONLY — Adaptive Adept: *"you don't gain access to the heightened
+   * versions of that spell, meaning you can't prepare them if you prepare spells"* (feat-4481) — is left
+   * out of a higher slot. buildCharacter lists a spell there only when nothing the entry prepares from
+   * already offers it (its tradition or a replaced list, a deity's spells, an opened tradition). */
+  if (ceiling !== 0) {
+    const atRankOnly = entry.noHeighten;
+    return atRankOnly?.length ? base.filter((s) => !(atRankOnly.includes(s.id) && s.rank < ceiling)) : base;
+  }
   /* A CANTRIP OPENING also offers every cantrip the character already KNOWS, whatever list it came
    * from. Adapted Cantrip buys one from another tradition on purpose ("gain a cantrip from a
    * tradition other than your own"), so holding the opening to the tradition alone meant that the
@@ -563,9 +570,11 @@ export function repertoireCap(entry: SpellcastingEntry, rank: number): number {
   return Math.max(0, (entry.repertoireMax?.[rank] ?? entry.slots?.[rank]?.max ?? Infinity) - grantedPlaces(entry, rank));
 }
 
-/** The record's grants at `rank` (0 = cantrips). */
+/** The CLASS record's grants at `rank` (0 = cantrips) — not what a FEAT granted beside them (`spellSources`:
+ *  Adaptive Adept's 1st-rank spell is in `grantedRepertoire` too). Read as the sorcerer's gift, a feat's
+ *  spell made a second "only one of these 2" gift chip and note (checker finding, 2026-10-15). */
 const grantsAt = (entry: SpellcastingEntry, rank: number): string[] =>
-  (rank === 0 ? entry.grantedCantrips : entry.grantedRepertoire?.[rank]) ?? [];
+  ((rank === 0 ? entry.grantedCantrips : entry.grantedRepertoire?.[rank]) ?? []).filter((id) => !entry.spellSources?.[id]);
 
 /**
  * How many of the player's places at `rank` (0 = cantrips) the class's OWN gift takes — the sorcerer's
@@ -627,6 +636,18 @@ export function ownPlacesBeside(entry: SpellcastingEntry | undefined, rank: numb
   if (!entry?.grantsCountInside) return count;
   const granted = grantsAt(entry, rank);
   return Math.max(0, count - grantedPlaces(entry, rank) + picks.filter((id) => granted.includes(id)).length);
+}
+
+/** What a FEAT made known in a REPERTOIRE at `rank` (1+) beside the row's `picks` — Adaptive Adept's
+ *  1st-rank spell (`grantedRepertoire` + `spellSources`). The builder draws them as LOCKED chips with a
+ *  line saying they use none of the row's places: `grantsAt` keeps them out of the gift chips, and a spell
+ *  drawn nowhere in the row is one a player may spend a place learning again (checker finding,
+ *  2026-10-15). [] for a cantrip row and for a prepared or book entry (a list option, or `bookGrantChips`). */
+export function featRepertoireGrants(entry: SpellcastingEntry | undefined, rank: number, picks: readonly string[]): { id: string; from: string }[] {
+  if (!entry || entry.type !== 'spontaneous' || !entry.repertoire || entry.spellCollection !== undefined || rank < 1) return [];
+  return (entry.grantedRepertoire?.[rank] ?? [])
+    .filter((id) => !!entry.spellSources?.[id] && !picks.includes(id))
+    .map((id) => ({ id, from: entry.spellSources![id] }));
 }
 
 /** The gift ids the builder draws as LOCKED chips in a row whose chips are `picks` — the record's grants

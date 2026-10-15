@@ -673,7 +673,12 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
        * spell, and a second set of echo cards above it. Both stay in the store; the one drawn is the
        * one they starred LAST, and re-starring the other is one click. */
       const mine = new Map<number, string>();
+      /* …and never on a spell a record says can't be one (`signatureBarred`, Adaptive Adept: *"you can't …
+       * select the spell as a signature spell"*): a ★ stored before the feat granted it stays in the store,
+       * undrawn — the ★ is greyed, so the player could not clear it (final check, 2026-10-15). */
+      const barred = new Set(e.signatureBarred ?? []);
       for (const id of chosen ?? []) {
+        if (barred.has(id)) continue;
         const at = filedRank(repertoire, id);
         if (at !== undefined) mine.set(at, id);
       }

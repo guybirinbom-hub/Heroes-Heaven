@@ -917,9 +917,12 @@ function ManageSpellsModal({
   /* A signature spell a RECORD granted is not the player's to un-star — the feat's text says it IS
    * one — so the ★ on it refuses rather than appearing to work and silently coming back. */
   const fixedSig = new Set(entry.signatureFixed ?? []);
+  /* …and one a record says can NEVER be a signature spell (Adaptive Adept's 1st-rank spell: *"you can't …
+   * select the spell as a signature spell"*) — greyed, and its title says why (Q27). */
+  const barredSig = new Set(entry.signatureBarred ?? []);
   // One signature spell per rank: toggling a new one drops any existing same-rank signature.
   const toggleSig = (rank: number, id: string) => {
-    if (fixedSig.has(id)) return;
+    if (fixedSig.has(id) || barredSig.has(id)) return;
     // A granted signature never yields its rank to a new pick, for the same reason. The write itself
     // edits the STORED star list by this one id (see toggleSignatureSpell): the rendered `signature`
     // holds the record's granted stars, which are not the player's to store, and omits any ★ the
@@ -934,7 +937,9 @@ function ManageSpellsModal({
     // deleted the player's ★ on a lower-rank spell filed higher up, on an unrelated click (R2).
     const granted = entry.grantedRepertoire?.[rank] ?? [];
     const own = (entry.repertoire?.[rank] ?? []).filter((x) => !granted.includes(x));
-    onPlay((p) => toggleSignatureSpell(p, entry.id, id, starsAtRank(p, entry.id, rank, own, granted).filter((x) => !fixedSig.has(x))));
+    // …and never a barred star parked in the store (applyPlayState draws it nowhere), or it would decide
+    // which star is "on" and a click on the drawn one could change nothing.
+    onPlay((p) => toggleSignatureSpell(p, entry.id, id, starsAtRank(p, entry.id, rank, own, granted).filter((x) => !fixedSig.has(x) && !barredSig.has(x))));
   };
 
   // (The "Reset to default repertoire/preparation" button was removed at the owner's request, 2026-09-02.)
@@ -1107,17 +1112,19 @@ function ManageSpellsModal({
                       <div key={id} className={'ms-slot' + (isSig ? ' sig' : '')}>
                         {sigAvailable && (
                           <button
-                            className={'ms-sig' + (isSig ? ' on' : '') + (fixedSig.has(id) ? ' fixed' : '')}
+                            className={'ms-sig' + (isSig ? ' on' : '') + (fixedSig.has(id) ? ' fixed' : '') + (barredSig.has(id) ? ' barred' : '')}
                             title={
                               fixedSig.has(id)
                                 ? 'Signature spell — granted, so it can’t be unset'
-                                : isSig
-                                  ? 'Signature spell — click to unset'
-                                  : 'Set as signature spell'
+                                : barredSig.has(id)
+                                  ? `Can’t be a signature spell — ${entry.spellSources?.[id] ?? 'the feat that grants it'} says so`
+                                  : isSig
+                                    ? 'Signature spell — click to unset'
+                                    : 'Set as signature spell'
                             }
                             aria-label="Toggle signature spell"
-                            aria-disabled={fixedSig.has(id) || undefined}
-                            disabled={fixedSig.has(id)}
+                            aria-disabled={fixedSig.has(id) || barredSig.has(id) || undefined}
+                            disabled={fixedSig.has(id) || barredSig.has(id)}
                             onClick={() => toggleSig(rank, id)}
                           >
                             <i className="ti ti-star" aria-hidden="true" />
@@ -1128,7 +1135,10 @@ function ManageSpellsModal({
                           {!isGranted && <OffBookTag entry={entry} id={id} />}
                         </span>
                         {isGranted ? (
-                          <span className="ms-granted" title="Granted by your bloodline/mystery — always known">
+                          <span
+                            className="ms-granted"
+                            title={entry.spellSources?.[id] ? `Granted by ${entry.spellSources[id]} — always known` : 'Granted by your bloodline/mystery — always known'}
+                          >
                             <i className="ti ti-lock" aria-hidden="true" />
                           </span>
                         ) : (

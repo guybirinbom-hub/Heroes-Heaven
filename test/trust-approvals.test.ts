@@ -154,19 +154,22 @@ describe('trust-approvals.json — completeness', () => {
    * book-grants lane, commit be93069 — its disposition is that lane's to file) and #172
    * cantrip-expansion#dual-class-pool (the Dual Class cantrip-bonus fix: which class's pool one Cantrip
    * Expansion feeds for a prepared + spontaneous pair). Both unanswered, so `unruled`. Roster 170 -> 172.
+   * And #173 adaptive-adept#repertoire-place (the Adapted Cantrip chain lane: whether a repertoire's
+   * Adaptive Adept spell is extra or takes one of its places), open, so `unruled`. Roster 172 -> 173.
    */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
   // batch P02: enhanced-familiar#ability-budget
-  it('the desk roster is every number in work/owner-questions.json — 172: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25, the one ruled in chat on 2026-09-29, the one ruled in chat on 2026-09-30 and the two filed open on 2026-10-15 — with no gaps or repeats', () => {
+  it('the desk roster is every number in work/owner-questions.json — 173: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25, the one ruled in chat on 2026-09-29, the one ruled in chat on 2026-09-30 and the three filed open on 2026-10-15 — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
     // reprint lane 2026-09-25: #165 reprint-cross-kind-sub-pages, #166 book-names-different-book-folds, #167 reprint-grade-to-grade
     // batch P02: enhanced-familiar#ability-budget — #168 enhanced-familiar#fixed-budget-grants (open, so `unruled`)
     // Sources lane 2026-09-29: #169 shop-respects-sources (ruled in chat, so `unruled`)
     // Sources lane 2026-09-30: desk #170 sources-apply-to-everything (ruled in chat, so `unruled`)
     // 2026-10-15: desk #171 expanded-necromancy#archetype-ninth-rank and #172 cantrip-expansion#dual-class-pool (open, so `unruled`)
-    expect(deskNumbers.length).toBe(172);
+    // 2026-10-15: desk #173 adaptive-adept#repertoire-place (open, so `unruled`)
+    expect(deskNumbers.length).toBe(173);
   });
 
   it('every desk number has exactly one disposition', () => {

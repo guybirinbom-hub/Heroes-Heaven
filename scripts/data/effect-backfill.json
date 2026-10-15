@@ -34896,11 +34896,13 @@
    "kind": "open",
    "from": {
     "type": "spell",
-    "maxRank": 1
+    "maxRank": 1,
+    "sameTraditionAsAnswerOf": "adapted-cantrip",
+    "grantToClassEntry": true
    },
-   "inert": "Recorded only: the spell is not added to your prepared options or repertoire — add it yourself, cast as a spell of your own class's tradition.",
-   "note": "Must be from the same tradition as the cantrip you took with Adapted Cantrip — the picker can't filter to that earlier pick. If you pick a 1st-rank spell you don't gain its heightened versions, and it can't be a signature spell."
-  }
+   "note": "From the same tradition as your Adapted Cantrip cantrip, cast as a spell of your class's tradition. A caster who prepares spells can prepare it as one more option; a spell repertoire knows it without using a place. A 1st-rank spell is never heightened and can't be a signature spell."
+  },
+  "why": "feat-4481 (Player Core pg. 64): 'Choose a cantrip or 1st-rank spell from the same magical tradition as your cantrip from Adapted Cantrip. You gain that spell, adding it to your spell options just like the cantrip from Adapted Cantrip … If you choose a 1st-rank spell, you don't gain access to the heightened versions of that spell.' The choice was recorded only (inert); it now joins the class entry like Adapted Cantrip's (grantToClassEntry), held to the Adapted Cantrip answer's tradition (sameTraditionAsAnswerOf). Wanderer's Guide Common Core row 19872 carries no operations, so this is print, not a WG conflict."
  },
  {
   "category": "feats",

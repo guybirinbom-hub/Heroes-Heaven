@@ -9496,6 +9496,13 @@ button.strike-name:hover {
     color: var(--app-text);
   }
 }
+/* A spell a record says can NEVER be a signature spell (Adaptive Adept): greyed, not a control (Q27). */
+.ms-sig.barred,
+.ms-sig.barred:hover {
+  cursor: not-allowed;
+  opacity: 0.3;
+  color: var(--app-text-dim);
+}
 .ms-sig.fixed:hover {
   color: var(--app-warn);
 }

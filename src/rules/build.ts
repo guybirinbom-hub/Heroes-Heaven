@@ -68,7 +68,7 @@ import { FORMULA_BOOK_ITEM_ID, formulaBookSource, formulaGrantsOwned, grantsForm
 import { grantForSpellPick } from './spellChoice';
 import { DOMAIN_SPELLS } from './domains';
 import { mpImbuedSpellIds } from './monsterParts';
-import { openChoiceLabel } from './openChoice';
+import { openChoiceLabel, sameTraditionsAs } from './openChoice';
 import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeBook, archetypeBookMaxRank, archetypeCantripAllowed, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions, CASTER_ARCHETYPES, DEDICATION_COUNTS_AS, type ActiveCasterArchetype } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
@@ -2145,13 +2145,23 @@ export function archetypeTradition(
  *     Sorcerer or Cleric Dedication cantrips and then took Adapted Cantrip has been casting all three:
  *     the builder shows the row one over, but the build never hides a pick the player stored.
  *
- * A BOOK pool is not charged Adapted Cantrip's `-1`: that is the repertoire half of the feat (*"replace
- * one of your cantrips known"*), and for a caster who prepares *"you can choose this spell when you
- * prepare your cantrips, in addition to your other options"* — buildCharacter puts it in the book, where
- * a morning's preparation can choose it. A prepared pool WITHOUT a book re-prepares nothing (every
- * cantrip it holds is drawn), so there the `-1` is what keeps the total at print's: one picked cantrip
- * plus the adapted one.
+ * A PREPARED pool is not charged Adapted Cantrip's `-1`: that is the repertoire half of the feat
+ * (*"replace one of your cantrips known"*), and for a caster who prepares *"you can choose this spell when
+ * you prepare your cantrips, in addition to your other options"* (feat-4474). buildCharacter puts it in
+ * what the pool's openings prepare from: a BOOK, or — for the book-less pools (Cleric, Druid, Animist,
+ * Red Mantis), whose openings re-prepare each morning since 2026-10-15 (*"You can prepare two common
+ * cantrips each day from the divine spell list"*, feat-5066) — the entry's list additions. Until then a
+ * book-less pool re-prepared nothing and was charged the `-1`, so a fighter with Cleric Dedication and
+ * Adapted Cantrip had ONE place for their own cantrips. A REPERTOIRE pool (Sorcerer, Bard …) and an innate
+ * one still pay.
  */
+/** Does this archetype pool PREPARE its spells — a book's (Wizard, Witch …) or a book-less one (Cleric,
+ *  Druid, Animist, Red Mantis) — rather than keep a repertoire or cast innately? buildCharacter's prepared
+ *  branch, read as one predicate. */
+export function archetypePrepares(arch: ActiveCasterArchetype): boolean {
+  return !arch.config.repertoire && !arch.config.innateRanked;
+}
+
 export function archetypeCantripCounts(
   arch: ActiveCasterArchetype,
   build: BuildState,
@@ -2166,7 +2176,7 @@ export function archetypeCantripCounts(
   }
   const book = archetypeBook(arch);
   const onlyCaster = !heldClasses(build).some((s) => s.classId && content.classes[s.classId]?.spellcasting);
-  const untargeted = onlyCaster ? cantripBonusFor(build, content, { skipSwaps: !!book }) : 0;
+  const untargeted = onlyCaster ? cantripBonusFor(build, content, { skipSwaps: archetypePrepares(arch) }) : 0;
   const prepared = Math.max(0, arch.config.cantrips + aimed + untargeted);
   const drawn = Math.max(prepared, arch.config.cantrips + aimed);
   return { prepared, book: book ? Math.max(book.holds + aimed, prepared) : undefined, drawn };
@@ -3308,8 +3318,8 @@ function feedsClassPool(build: BuildState, content: ContentDatabase, src: Feat |
  * too). A prepared class keeps its whole count and takes the cantrip as one more option: the build puts
  * it in what its openings prepare from (the entry's `spellListAdditions`, and a book caster's book —
  * see the Adapted Cantrip grant in buildCharacter). The archetype pools
- * are sized in `archetypeCantripCounts`, which skips the swap only for a BOOK archetype: a book-less
- * prepared dedication (Cleric, Druid, Animist) has no re-preparable openings yet, so it still pays.
+ * are sized in `archetypeCantripCounts`, which skips the swap for every PREPARED archetype — a book's and,
+ * since their openings re-prepare (2026-10-15), a book-less one's (Cleric, Druid, Animist, Red Mantis).
  */
 export function classPaysCantripSwap(build: BuildState, content: ContentDatabase, classId: string | null | undefined): boolean {
   const receiver = heldClasses(build).find((s) => s.classId && content.classes[s.classId]?.spellcasting)?.classId;
@@ -9372,7 +9382,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
             ...(keepsakeMax !== undefined ? { bookMaxRank: keepsakeMax } : {}),
           });
         } else {
-          spellcasting.push({ ...baseEntry, type: 'prepared', prepared });
+          /* A book-less pool's cantrips RE-PREPARE each morning too: *"You can prepare two common
+           * cantrips each day from the divine spell list or any other divine cantrips you have access to"*
+           * (Cleric Dedication, feat-5066; Druid feat-5073 and Animist feat-7219 print the same), and
+           * Wanderer's Guide gives the pool two rank-0 PREPARED slots off the tradition. The builder's
+           * picks are the standing preparation, exactly as for a class cleric; the sheet's openings may
+           * prepare anything on the list — and Adapted Cantrip's cantrip, an option there (2026-10-15). */
+          spellcasting.push({ ...baseEntry, type: 'prepared', prepared, cantripCap: archCantrips.prepared, cantripsPrepared: true });
         }
       }
       /*
@@ -9429,6 +9445,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
              */
             if (rank === 0 && archEntry.type === 'prepared') {
               archEntry.cantrips = [...new Set([...(archEntry.cantrips ?? []), sid])];
+              /* …and, now that a book-less pool's openings re-prepare, marked GRANTED: the play overlay
+               * draws `cantripCap` openings out of the non-granted list, so an unmarked grant would take
+               * an opening the player never chose, or fall past the last one and vanish. */
+              if (archEntry.cantripsPrepared) archEntry.grantedCantrips = [...new Set([...(archEntry.grantedCantrips ?? []), sid])];
             } else {
               addGrantedToRepertoire(archEntry, rank, sid);
             }
@@ -9538,8 +9558,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * (`classPaysCantripSwap`): it keeps every opening, and the cantrip joins the list they prepare from
    * (below: the entry's list additions and, for a book caster, the book). An ARCHETYPE entry slices from
    * `archetypeCantripCounts`, the builder's own number, which charges the `-1` where the archetype is
-   * the only caster — except a BOOK archetype's: its cantrips are prepared out of the book, and this
-   * cantrip joins the book (below) as one more option, *"in addition to your other options"*.
+   * the only caster — except a PREPARED archetype's: its openings re-prepare (out of a book, or off the
+   * tradition for Cleric, Druid, Animist and Red Mantis Dedication), and this cantrip joins what they
+   * prepare from (below) as one more option, *"in addition to your other options"*.
    *
    * ⚠ It runs HERE, after the archetype entries exist: a fighter with Wizard Dedication meets the
    * feat's "ability to cast cantrips" prerequisite and their only entry is built ~40 lines above.
@@ -9551,7 +9572,100 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const def = content.feats[fc.featId]?.choice;
     const sid = fc.choice?.value;
     if (!def?.from?.grantToClassEntry || !sid || !content.spells[sid]) continue;
+    const featName = content.feats[fc.featId]?.name ?? 'A feat';
+    const spellRank = content.spells[sid].rank ?? 0;
+    /* An answer the record's own picker would refuse — a spell off Adaptive Adept's tradition (`from.
+     * sameTraditionAsAnswerOf`: the tradition of the Adapted Cantrip answer, which can change after this
+     * one was given), or past its rank — is not granted, and the warning says why. The pick stays
+     * stored, never rewritten; the same test as the picker's (`sameTraditionsAs`). */
+    const sameAs = sameTraditionsAs(def.from, content, { feats });
+    const sameSpell = !!sameAs && sid === sameAs.answer;
+    const offTradition = !!sameAs && !content.spells[sid].traditions.some((t) => sameAs.traditions.has(t));
+    const offRank = (def.from.maxRank !== undefined && spellRank > def.from.maxRank) || (def.from.cantripsOnly === true && spellRank !== 0);
+    if (sameSpell || offTradition || offRank) {
+      const answerOf = sameAs ? content.feats[def.from.sameTraditionAsAnswerOf!]?.name ?? 'the earlier feat' : '';
+      const name = content.spells[sid].name;
+      effectWarnings.push({
+        source: featName,
+        message: offRank
+          ? `${name} is not a spell ${featName} can grant — choose again.`
+          : sameSpell
+            ? `${name} is already your ${answerOf} cantrip — choose another spell in the builder.`
+            : `${name} is not from the tradition of your ${answerOf} cantrip — choose again in the builder.`,
+      });
+      continue;
+    }
     const own = spellcasting.find((e) => e.type === 'prepared' || e.type === 'spontaneous');
+    /*
+     * A 1st-RANK answer — Adaptive Adept: *"Choose a cantrip or 1st-rank spell from the same magical
+     * tradition as your cantrip from Adapted Cantrip. You gain that spell, adding it to your spell options
+     * just like the cantrip from Adapted Cantrip. You can cast this spell as a spell of your class's
+     * magical tradition. If you choose a 1st-rank spell, you don't gain access to the heightened versions
+     * of that spell, meaning you can't prepare them if you prepare spells and you can't learn them or select
+     * the spell as a signature spell if you have a spell repertoire."* (feat-4481). Wanderer's Guide
+     * encodes nothing for the feat (Common Core row, no operations), so this is print.
+     *
+     * The same three routes as the cantrip below, at the spell's own rank: a REPERTOIRE knows it (granted,
+     * so it costs none of the rank's places — "you gain that spell" — and its ★ is barred); a BOOK caster
+     * has it on the book's page; any other prepared pool — a Flexible Spellcaster's daily collection too,
+     * which is prepared, not known — gets it on its list, where its slots prepare it. Off the lists the
+     * entry already prepares from it is held to its rank (`noHeighten`): the slot pickers leave it out of
+     * a higher slot. "Already" means the class's tradition AND every other widening (a cleric's deity
+     * spells, Fey Caller, an opened tradition) — a deity's spell heightens as it always did (checker
+     * finding, 2026-10-15). Recorded (`grantedRepertoire`, `spellSources`) only when pushed, as
+     * `grantIntoBook` does, so the player's own pick of the same spell is never read back out as "not a
+     * pick".
+     */
+    if (own && spellRank > 0) {
+      const sp = content.spells[sid];
+      /* The entry's own list — its tradition, or the list a class archetype REPLACED it with (an
+       * Elementalist druid prepares from the elemental list, where grease is not), the same test as the
+       * picker's `traditionPool` — then every widening on top. */
+      const rep = archSpellList && (!archSpellList.entryId || archSpellList.entryId === own.id) ? archSpellList : undefined;
+      const spTraits = sp.traits ?? [];
+      const onBaseList = !rep
+        ? sp.traditions.includes(own.tradition)
+        : !sp.traditions.length
+          ? !!sp.spellLists?.includes(rep.list)
+          : !!sp.spellLists?.includes(rep.list) ||
+            (rep.anyTrait.length > 0 && spTraits.some((t) => rep.anyTrait.includes(t)) && !spTraits.some((t) => rep.excludeTraits.includes(t)));
+      const onOwnList =
+        onBaseList ||
+        [...(spellListAdditions?.[own.id] ?? []), ...(spellListAdditions?.['*'] ?? [])].includes(sid) ||
+        spellListTraditions.some(
+          (w) =>
+            (!w.entryId || w.entryId === own.id) &&
+            (w.traditions === 'any' || sp.traditions.some((t) => (w.traditions as string[]).includes(t))) &&
+            (!w.traits?.length || w.traits.some((t) => (sp.traits ?? []).includes(t))),
+        );
+      const collects = own.spellCollection !== undefined;
+      if (own.type === 'spontaneous' && own.repertoire && !collects) {
+        if (!(own.repertoire[spellRank] ?? []).includes(sid)) {
+          addGrantedToRepertoire(own, spellRank, sid);
+          const at = ((own.grantedRepertoire ??= {})[spellRank] ??= []);
+          if (!at.includes(sid)) at.push(sid);
+          (own.spellSources ??= {})[sid] ??= featName;
+          // Whatever its list: *"you can't … select the spell as a signature spell"* is about the spell this
+          // feat gave. (A spell the player learned themselves is not pushed, so never barred.)
+          own.signatureBarred = [...new Set([...(own.signatureBarred ?? []), sid])];
+        }
+      } else if (!grantIntoBook(own, spellRank, sid, featName) && !onOwnList) {
+        // (A spell the class's own list already offers needs no widening, and no "from" label on it.)
+        const adds = (spellListAdditions ??= {});
+        adds[own.id] = [...new Set([...(adds[own.id] ?? []), sid])];
+        (own.spellSources ??= {})[sid] ??= featName;
+      }
+      if (!onOwnList && (own.type === 'prepared' || collects)) own.noHeighten = [...new Set([...(own.noHeighten ?? []), sid])];
+      /* A Flexible Spellcaster's collection makes every collected spell a fixed signature spell
+       * (`fillSpellCollection`), and a signature spell is cast at any rank — so a collected feat spell off
+       * the entry's lists would heighten after all. It is taken back out, and its ★ is barred. */
+      if (!onOwnList && collects) {
+        if (own.signature) own.signature = own.signature.filter((x) => x !== sid);
+        if (own.signatureFixed) own.signatureFixed = own.signatureFixed.filter((x) => x !== sid);
+        own.signatureBarred = [...new Set([...(own.signatureBarred ?? []), sid])];
+      }
+      continue;
+    }
     // …or already in the BOOK as the player's own pick (a book holds more cantrips than it prepares):
     // it is preparable already, and attributing it to the feat would read it back out of the book as
     // "not a pick" on a rebuild (deriveBuildFromCharacter strips `spellSources`).
@@ -11798,8 +11912,15 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
        * every rebuild — a pick the player made, lost. A single class: the same set as before. */
       const own = new Set([...(klass.subclass?.options ?? []), ...(klass.extraChoices ?? []).flatMap((g) => g.options)].map((o) => o.id));
       const grantedSpellSet = new Set(grantOptions.filter((o) => own.has(o.id)).flatMap((o) => o.grantedSpells ?? []));
+      /* What a FEAT put in the entry (`spellSources`, written only when the build pushed it): Adapted
+       * Cantrip's cantrip, Adaptive Adept's 1st-rank spell in a repertoire. Read back as a pick it would
+       * spend one of the player's places on the next build and lose its "from" label. */
+      const fromFeats = new Set(Object.keys(classEntry.spellSources ?? {}));
       if (classEntry.type === 'spontaneous' && classEntry.repertoire) {
-        for (const [rank, ids] of Object.entries(classEntry.repertoire)) spells[Number(rank)] = ids.filter((s) => !grantedSpellSet.has(s));
+        // …at the rank the feat granted it only: the player may know the same spell at another rank
+        // (heal at 3rd, Adaptive Adept's heal at 1st), and that pick is theirs.
+        for (const [rank, ids] of Object.entries(classEntry.repertoire))
+          spells[Number(rank)] = ids.filter((s) => !grantedSpellSet.has(s) && !(fromFeats.has(s) && classEntry.grantedRepertoire?.[Number(rank)]?.includes(s)));
         // ACCUMULATE. Assigning would keep only the last of a rank's signatures, which is exactly
         // the round-trip loss the array shape exists to stop — and TypeScript cannot catch it,
         // because a bare string is still assignable to `string | string[]`.
@@ -11848,7 +11969,6 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
        * had not picked that cantrip themselves), as the archetype pool already does below. Read back as
        * a pick it took one of the player's places on the next build, and lost its "from Adapted
        * Cantrip" label (2026-10-15). */
-      const fromFeats = new Set(Object.keys(classEntry.spellSources ?? {}));
       return (classEntry.bookCantrips ?? classEntry.cantrips).filter((s) => !grantedSpellSet.has(s) && !fromFeats.has(s));
     };
     const classEntry = cls ? findPrimaryCasterEntry(c, cls, cls2dc) : undefined;
@@ -11890,8 +12010,16 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       } else if (archEntry.prepared)
         for (const [rank, slots] of Object.entries(archEntry.prepared))
           spellsByRank[Number(rank)] = slots.map((s) => s.spellId).filter((id): id is string => !!id);
-      if (archEntry.repertoire) for (const [rank, ids] of Object.entries(archEntry.repertoire)) spellsByRank[Number(rank)] = [...ids];
-      const archCantripPicks = archEntry.bookCantrips ? archEntry.bookCantrips.filter((id) => !free.has(id)) : [...archEntry.cantrips];
+      /* A repertoire pool too — minus a FEAT's spell at the rank the feat granted it (Adaptive Adept's,
+       * `spellSources` + `grantedRepertoire`): read back as a pick it took the pool's one place at that rank
+       * and lost its "from" label (checker finding, 2026-10-15). Scoped to `spellSources`: a record's other
+       * grants mark `grantedRepertoire` even over a player's own pick, which stays theirs. */
+      if (archEntry.repertoire)
+        for (const [rank, ids] of Object.entries(archEntry.repertoire))
+          spellsByRank[Number(rank)] = ids.filter((s) => !(archEntry.spellSources?.[s] && archEntry.grantedRepertoire?.[Number(rank)]?.includes(s)));
+      // A book-less pool too: Adapted Cantrip's cantrip fills an opening a pool has free (an old save)
+      // and is attributed in `spellSources` — read back as a pick it took one of the player's places.
+      const archCantripPicks = (archEntry.bookCantrips ?? archEntry.cantrips).filter((id) => !free.has(id));
       if (classEntry) {
         b.archetypeSpells = {
           cantrips: archCantripPicks,
@@ -12151,6 +12279,18 @@ export function forbiddenFeatReason(featId: string, character: Character, conten
   return undefined;
 }
 
+/** Does the character cast from SPELL SLOTS of `minRank` or higher — a class's prepared or spontaneous
+ *  pool, or an archetype's once its basic spellcasting feat gives it slots? Cantrips, focus spells,
+ *  innate spells and item charges are not slots. The test behind checkPrerequisites' spellcasting lines. */
+export function hasSpellSlotsOfRank(character: Character, minRank: number): boolean {
+  return (character.spellcasting ?? []).some(
+    (e) =>
+      (e.type === 'prepared' || e.type === 'spontaneous') &&
+      (Object.entries(e.prepared ?? {}).some(([r, ss]) => Number(r) >= minRank && ss.length > 0) ||
+        Object.entries(e.slots ?? {}).some(([r, s]) => Number(r) >= minRank && s.max > 0)),
+  );
+}
+
 export function checkPrerequisites(
   feat: Feat,
   character: Character,
@@ -12240,6 +12380,24 @@ export function checkPrerequisites(
         if (!anyMet) unmet.push(line);
       }
       continue; // rank-pattern lines are never feat names
+    }
+    /* "spellcasting class feature" (Adapted Cantrip, feat-4474; War Mage and Time Mage print "You have a
+     * spellcasting class feature") and "can cast 3rd-level spells" (Adaptive Adept, feat-4481). Both are
+     * a question about SPELL SLOTS: Player Core's own rule for focus-spell characters (rules-2230) — *"you
+     * don't qualify for feats and other rules that require you to be a spellcaster or have a spellcasting
+     * class feature — those require you to have spell slots"*. (Player Core's archetype chapter, rules-2132,
+     * says nothing more; the legacy Core Rulebook's, rules-170, said the same thing another way — *"the
+     * basic spellcasting feat counts as having a spellcasting class feature"*.) So a Cleric Dedication's
+     * two cantrips do not qualify and its Basic Cleric Spellcasting (a 1st-rank slot) does; a champion's
+     * devotion spells do not; an innate spell does not. These lines were unrecognised and so never checked
+     * — a fighter with no spells at all was offered Adapted Cantrip. Records: Adapted Cantrip, Adaptive
+     * Adept, War Mage and Time Mage Dedication, Hellknight Signifer's Preferment. */
+    const castMin = /^(?:you have a )?spellcasting class feature$/i.test(line)
+      ? 1
+      : Number(line.match(/^can cast (\d+)(?:st|nd|rd|th)-(?:level|rank) spells$/i)?.[1] ?? 0);
+    if (castMin > 0) {
+      if (!hasSpellSlotsOfRank(character, castMin)) unmet.push(line);
+      continue;
     }
     // Has-feat: enforce only when the prereq resolves to a known feat.
     const fid = slug(line);

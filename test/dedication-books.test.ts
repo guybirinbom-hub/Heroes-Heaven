@@ -724,10 +724,14 @@ describe('j) every archetype without a printed book is untouched', () => {
       expect(archetypeCantripCounts(arch!, b, db, featIdsOf(b)).book, ded).toBeUndefined();
       const e = entryOf(buildCharacter(b, db), `${ded}-casting`);
       expect(e?.type, ded).toBe(type);
+      /* `cantripsPrepared` was asserted undefined here too. Since 2026-10-15 a book-less PREPARED pool's
+       * cantrips re-prepare (*"You can prepare two common cantrips each day from the divine spell list"*,
+       * feat-5066), so it is true for the prepared three and still absent for the repertoire and innate
+       * pools — the book fields stay absent for all five (test/adapted-chain.test.ts holds the openings). */
       expect(
         { bookCantrips: e?.bookCantrips, spellbook: e?.spellbook, bookNoun: e?.bookNoun, cantripsPrepared: e?.cantripsPrepared, bookMaxRank: e?.bookMaxRank },
         ded,
-      ).toEqual({ bookCantrips: undefined, spellbook: undefined, bookNoun: undefined, cantripsPrepared: undefined, bookMaxRank: undefined });
+      ).toEqual({ bookCantrips: undefined, spellbook: undefined, bookNoun: undefined, cantripsPrepared: type === 'prepared' ? true : undefined, bookMaxRank: undefined });
     }
   });
 
@@ -801,11 +805,15 @@ describe('review findings, 2026-10-15', () => {
    * mutation-proof (in memory): the bad case is the entry slicing to `counts.prepared` instead of
    * `counts.drawn`; that slice is computed on the same numbers below and lacks the second stored cantrip,
    * so the `e.cantrips` assertion tells the fixed build from the bad one.
+   *
+   * 2026-10-15: the Cleric Dedication case moved. A book-less PREPARED pool no longer pays the -1 — its
+   * openings re-prepare, so the adapted cantrip is an option there (feat-4474: *"in addition to your other
+   * options"*) — and its leg below now reads that shape; test/adapted-chain.test.ts holds the rest. The
+   * REPERTOIRE pool keeps every assertion it had.
    */
   it('F1: Adapted Cantrip\'s -1 never hides a stored cantrip on a non-book pool (the builder row still counts one); a book pool takes it into the book', () => {
     const cases: [ded: string, type: string, stored: string[], adapted: string][] = [
       ['sorcerer-dedication', 'spontaneous', ['detect-magic', 'light'], 'divine-lance'],
-      ['cleric-dedication', 'prepared', ['divine-lance', 'stabilize'], 'electric-arc'],
     ];
     for (const [ded, type, stored, adapted] of cases) {
       const b = fighter(6, {
@@ -828,6 +836,23 @@ describe('review findings, 2026-10-15', () => {
       expect(e.spellSources?.[adapted], ded).toBe('Adapted Cantrip');
       // The planted bad case: the slice the entry made before `drawn`.
       expect(stored.slice(0, counts.prepared), `${ded}: the old slice hid the second pick`).not.toContain(stored[1]);
+    }
+    // A book-less PREPARED pool (Cleric Dedication): not charged; both stored picks prepared, the adapted
+    // cantrip on the list its two openings prepare from — never drawn on top.
+    {
+      const stored = ['divine-lance', 'stabilize'];
+      const b = fighter(6, {
+        featPicks: { '1:ancestry': 'adapted-cantrip', '2:class:0': 'cleric-dedication' },
+        featChoices: { '1:ancestry': 'electric-arc' },
+        cantrips: stored,
+      } as Partial<BuildState>);
+      const arch = activeCasterArchetype(featIdsOf(b))!;
+      expect(archetypeCantripCounts(arch, b, db, featIdsOf(b))).toEqual({ prepared: 2, book: undefined, drawn: 2 });
+      const ch = buildCharacter(b, db);
+      const e = entryOf(ch, 'cleric-dedication-casting')!;
+      expect(e.cantrips).toEqual(stored);
+      expect(ch.spellListAdditions?.['cleric-dedication-casting']).toContain('electric-arc');
+      expect(e.spellSources?.['electric-arc']).toBe('Adapted Cantrip');
     }
     // A BOOK pool: the -1 is not charged, and the adapted cantrip joins the book as one more option.
     const b = fighter(6, {

@@ -57,7 +57,7 @@ import {
   type NarrowedOption,
 } from '../rules/derive';
 import { archetypeCantripCounts, archetypeTradition, foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, optionDragon, skillSlotOptions } from '../rules/build';
-import { bookGrantChips, giftChipIds, ownPlacesBeside, spellOpenedBy, variantGiftCount } from '../rules/spellOptions';
+import { bookGrantChips, featRepertoireGrants, giftChipIds, ownPlacesBeside, spellOpenedBy, variantGiftCount } from '../rules/spellOptions';
 import { signaturesAt, signatureSpellsAt } from '../rules/build';
 // batch 037: flexible-spellcaster#collection-shape — the sheet's own sizer, never a copy of it.
 import { flexibleCollectionSize } from '../rules/build';
@@ -70,7 +70,7 @@ import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
 import { isBoundBackgroundGrant } from '../rules/backgroundGrants';
 import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
-import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId, SpellAccessGrant, Tradition } from '../rules/types';
+import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId, SpellAccessGrant, SpellcastingEntry, Tradition } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
 import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, cap, choiceOptionRecord, loreLabel, openOptionsWithRecords, requestRemovePick, requestSubclassChange, useBuilderActions, type OptionRecord } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
@@ -740,6 +740,31 @@ export function Builder({
             {r !== rank ? ` (${ord(r)} rank)` : ''} is added to your {noun}
             {from ? ` by ${from}` : ''}
             {at && pageLevel !== undefined && at > pageLevel ? ` at ${ord(at)} level` : ''} — it does not use one of these places.
+          </span>
+        );
+      }),
+    };
+  };
+  /** A FEAT's spell in a repertoire row — Adaptive Adept's 1st-rank spell (`featRepertoireGrants`), known
+   *  for free: a LOCKED chip and one visible line saying it uses none of these places, so the player does
+   *  not spend a place learning it again. `entry`: the row's own caster — the first class's entry or the
+   *  dedication's on a level page, the second class's on its Level 0 card. */
+  const featGrantEls = (entry: SpellcastingEntry | undefined, rank: number, picks: readonly string[], pageLevel?: number) => {
+    const grants = featRepertoireGrants(entry, rank, picks);
+    const name = (id: string) => content.spells[id]?.name ?? id;
+    return {
+      chips: grants.map(({ id, from }) => (
+        <span className="spr-chip spr-chip-gift" key={'feat-grant:' + id} title={`Known through ${from} — not one of the spells you choose here`}>
+          {name(id)}
+          <i className="ti ti-lock" aria-hidden="true" />
+        </span>
+      )),
+      notes: grants.map(({ id, from }) => {
+        const at = grantLevelOf(from);
+        return (
+          <span className="spr-gift-note" key={'feat-grant-note:' + id}>
+            {name(id)} is known through {from}
+            {at && pageLevel !== undefined && at > pageLevel ? ` from ${ord(at)} level` : ''} — it does not use one of these places.
           </span>
         );
       }),
@@ -1820,6 +1845,7 @@ export function Builder({
             // The book's LAST row (at the character's level) also shows grants at ranks it has no row for.
             const lastBookRank = archBook ? Math.max(0, ...archBookRanksAt(build.level).map((r) => r.rank)) : 0;
             const grantEls = bookGrantEls(rank, chosen, lvl, archBook ? rank === lastBookRank : false);
+            const featEls = featGrantEls(castEntry1 ?? archEntryBuilt, rank, chosen, lvl);
             return (
               <div className="spell-pick-row" key={rank}>
                 <div className="spr-head">
@@ -1835,6 +1861,7 @@ export function Builder({
                 <div className="spr-chips">
                   {giftChips(giftChipIds(castEntry1, rank, chosen), variantGiftCount(castEntry1, rank))}
                   {grantEls.chips}
+                  {featEls.chips}
                   {chosen.map((id, idx) => (
                     <span className="spr-chip" key={id + ':' + idx}>
                       {sigAvailable && (
@@ -1858,6 +1885,7 @@ export function Builder({
                     + add
                   </button>
                   {grantEls.notes}
+                  {featEls.notes}
                 </div>
               </div>
             );
@@ -1974,6 +2002,8 @@ export function Builder({
           const chosen = build.spells2?.[rank] ?? [];
           // Less a sorcerer's gift spell (lane C2), exactly as the first class's row (`ownPlaces`).
           const gifts = giftChipIds(castEntry2, rank, chosen);
+          // …and a feat's spell the build put in THIS class's repertoire (Adaptive Adept on a Fighter/Sorcerer).
+          const featEls2 = featGrantEls(castEntry2, rank, chosen, 0);
           const capR = isWizardBook2 ? spellbookSize2 : ownPlacesBeside(castEntry2, rank, slotCounts2[rank] ?? 0, chosen);
           const have = isWizardBook2 ? learnedTotal2 : chosen.length;
           return (
@@ -1986,6 +2016,7 @@ export function Builder({
               </div>
               <div className="spr-chips">
                 {giftChips(gifts, variantGiftCount(castEntry2, rank))}
+                {featEls2.chips}
                 {chosen.map((id, idx) => (
                   <span className="spr-chip" key={id + ':' + idx}>
                     {sigAvailable2 && (
@@ -2008,6 +2039,7 @@ export function Builder({
                 <button className="spr-add" type="button" disabled={have >= capR} title={have >= capR ? `All ${capR} spells at this rank are chosen — remove one first.` : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip (second class)' : `Rank ${rank} spell (second class)`} data-ctl-options={capR} onClick={() => setPicker({ kind: 'spell', rank, cap: capR, caster: 2 })}>
                   + add
                 </button>
+                {featEls2.notes}
               </div>
             </div>
           );

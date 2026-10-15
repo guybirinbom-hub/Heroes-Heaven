@@ -2321,6 +2321,13 @@ export interface OpenChoiceFrom {
    */
   excludeOwnTraditions?: boolean;
   /**
+   * spell: only spells sharing a tradition with the spell ANOTHER record's choice answered — Adaptive
+   * Adept's *"Choose a cantrip or 1st-rank spell from the same magical tradition as your cantrip from
+   * Adapted Cantrip"* (feat-4481). The value is that record's feat id. With no answer on the character
+   * (none given yet, or no character) nothing is narrowed, so the picker is never emptied.
+   */
+  sameTraditionAsAnswerOf?: string;
+  /**
    * spell: the answer joins the character's own CLASS casting entry rather than the innate pool —
    * *"You can cast this cantrip as a spell of your class's tradition."* Marked granted, so it neither
    * counts against the known-spells cap nor can be removed in play.
@@ -5892,9 +5899,19 @@ export interface SpellcastingEntry {
   /** A PREPARED caster's cantrips are prepared each morning like their slots ("you prepare your
    *  cantrips") — the owner's 2026-09-02 point: a cleric must be able to change them on the sheet,
    *  not only in the builder. Set on the class entry when the CLASS casts prepared (the flexible-
-   *  spellcaster collection keeps it: "this archetype doesn't change the way you prepare cantrips").
-   *  Spontaneous classes' cantrips stay builder-known. */
+   *  spellcaster collection keeps it: "this archetype doesn't change the way you prepare cantrips"),
+   *  and on every PREPARED archetype pool — a book's, and a book-less one's (Cleric Dedication: "You can
+   *  prepare two common cantrips each day from the divine spell list"). Spontaneous pools' cantrips stay
+   *  builder-known. */
   cantripsPrepared?: boolean;
+  /** 1st-rank (or higher) spells a RECORD added that this entry may cast ONLY at their own rank —
+   *  Adaptive Adept: *"If you choose a 1st-rank spell, you don't gain access to the heightened versions
+   *  of that spell, meaning you can't prepare them if you prepare spells"* (feat-4481). The slot pickers
+   *  leave them out of a higher slot unless the entry's own list offers the spell anyway. */
+  noHeighten?: string[];
+  /** Repertoire spells a RECORD added that can never be a signature spell — Adaptive Adept: *"you can't
+   *  … select the spell as a signature spell if you have a spell repertoire"*. The ★ on them is greyed. */
+  signatureBarred?: string[];
   /** Cantrips a RECORD put into this entry (a psychic's conscious-mind psi cantrips) — not the
    *  player's daily preparation, so the play overlay must never let a re-preparation drop them. */
   grantedCantrips?: string[];

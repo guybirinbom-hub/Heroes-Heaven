@@ -71,6 +71,23 @@ function featsMatching(from: OpenChoiceFrom, content: ContentDatabase, level?: n
 }
 
 /**
+ * The traditions an open spell choice is held to by ANOTHER record's answer (`sameTraditionAsAnswerOf`):
+ * the traditions of the spell the character answered that record's choice with. Undefined when the
+ * descriptor asks nothing of the kind, or the character has given no such answer — the caller then
+ * narrows nothing. Shared by the picker and buildCharacter's grant, so the two judge one answer alike.
+ */
+export function sameTraditionsAs(
+  from: OpenChoiceFrom | undefined,
+  content: ContentDatabase,
+  character: Pick<Character, 'feats'> | undefined,
+): { traditions: Set<string>; answer: string } | undefined {
+  if (!from?.sameTraditionAsAnswerOf || !character) return undefined;
+  const answer = character.feats.find((f) => f.featId === from.sameTraditionAsAnswerOf)?.choice?.value;
+  const traditions = answer ? content.spells[answer]?.traditions : undefined;
+  return answer && traditions?.length ? { traditions: new Set(traditions), answer } : undefined;
+}
+
+/**
  * The legal picks for an open choice, ready for SearchSelect.
  *
  * Returns [] for a descriptor this cannot resolve rather than throwing — an empty picker is a visible
@@ -120,18 +137,42 @@ export function openChoiceOptions(
       const keep = new Set(opts?.keep ?? []);
       const traditionOk = (s: { traditions?: string[] }) =>
         !from.excludeOwnTraditions || (!!s.traditions?.length && !s.traditions.some((t) => ownTraditions.has(t)));
+      // "…from the same magical tradition as your cantrip from Adapted Cantrip" (Adaptive Adept): the
+      // traditions of the spell that record answered — but not that spell itself, which the character
+      // already has (Q21: a pick wasted across the whole career). No answer yet → nothing narrowed. A
+      // stored answer (`keep`) stays in its own picker and is marked not allowed, with the same reason
+      // buildCharacter gives for not granting it (the earlier answer can change after this one was given).
+      const sameAs = sameTraditionsAs(from, content, opts?.character);
+      const answerOf = sameAs ? content.feats[from.sameTraditionAsAnswerOf!]?.name ?? 'the earlier feat' : '';
+      const sameWhy = (s: { id: string; name: string; traditions?: string[] }): string | undefined =>
+        !sameAs
+          ? undefined
+          : s.id === sameAs.answer
+            ? `${s.name} is already your ${answerOf} cantrip — choose another.`
+            : !(s.traditions ?? []).some((t) => sameAs.traditions.has(t))
+              ? `${s.name} is not from the tradition of your ${answerOf} cantrip — choose again.`
+              : undefined;
       return spellsMatching(filter, content, opts?.hideLegacy)
         .filter(matchesAny)
-        .filter((s) => keep.has(s.id) || traditionOk(s))
+        .filter((s) => keep.has(s.id) || (traditionOk(s) && !sameWhy(s)))
         .map((s) => {
           const rank = (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`;
           const barred = !!from.excludeOwnTraditions && !s.traditions?.length;
+          const notSame = sameWhy(s);
           return {
             id: s.id,
             name: s.name,
-            note: barred ? `${rank} · from no magical tradition — choose again` : rank,
+            note: barred
+              ? `${rank} · from no magical tradition — choose again`
+              : notSame
+                ? `${rank} · ${s.id === sameAs?.answer ? `already your ${answerOf} cantrip` : `not from your ${answerOf} cantrip's tradition`} — choose again`
+                : rank,
             description: s.description,
-            ...(barred ? { notAllowed: `${s.name} is from no magical tradition, and this choice needs one — choose again.` } : {}),
+            ...(barred
+              ? { notAllowed: `${s.name} is from no magical tradition, and this choice needs one — choose again.` }
+              : notSame
+                ? { notAllowed: notSame }
+                : {}),
           };
         });
     }

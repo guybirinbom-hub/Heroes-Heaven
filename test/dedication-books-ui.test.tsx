@@ -625,7 +625,11 @@ describe('the sheet: a Fighter with Wizard Dedication prepares out of the dedica
       expect(opening(sheet, ENTRY, '2nd rank', 0)?.names.sort(), 'the 2nd-rank slot: the whole book').toEqual(sorted(['grease', 'fear', 'see-the-unseen']));
       withBook('wizard-dedication', null, () => {
         const plain = sheetOf(buildCharacter(build, db));
-        expect(opening(plain, ENTRY, 'Cantrips', 0), 'without a book the cantrips are not openings').toBeNull();
+        /* This read "without a book the cantrips are not openings" (null). Since 2026-10-15 a book-less
+         * PREPARED pool's cantrips re-prepare too (Cleric Dedication, feat-5066: "You can prepare two common
+         * cantrips each day from the divine spell list") — so without the book the openings are still
+         * there, and what tells the two apart is their list: the whole arcane list, not the book. */
+        expect(opening(plain, ENTRY, 'Cantrips', 0)?.names, 'without a book the cantrip opening offers the whole arcane list').toContain(nameOf('ignition'));
         expect(opening(plain, ENTRY, '1st rank', 0)?.names, 'without a book the slot offers the whole arcane list').toContain(nameOf('force-barrage'));
       });
     },
