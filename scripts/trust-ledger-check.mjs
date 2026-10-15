@@ -20,7 +20,7 @@
  *
  *     node scripts/trust-ledger-check.mjs
  */
-import { readFileSync, existsSync, rmSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, rmSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
@@ -174,25 +174,52 @@ const leafOf = (path) => CONTAINERS.reduce((p, c) => (p.startsWith(c) ? p.slice(
 }
 
 /* ---- 7. every desk ruling has exactly one disposition -------------------------------------------
- * §2b: "every desk number in work/desk-answers-2026-09-10.json must appear in exactly one of them".
- * A number in NO list is a ruling that ships dark; a number in TWO is a ruling whose disposition the
- * file contradicts itself about. Counted by LIST, not by row: one ruling may own several approvals
- * rows (#28 is five quah emblems). */
-const DESK = 'work/desk-answers-2026-09-10.json';
-if (!existsSync(R(DESK))) {
-  /* Untracked (it is the desk's own working file), so a clean clone has no roster to check against —
-   * and `npm run verify` must stay green on the clone a release is cut from. test/trust-approvals.test.ts
-   * makes the same check where the file IS present. */
-  skipped('every desk number has exactly one disposition in trust-approvals.json', `skipped (no ${DESK})`);
-} else {
-  const answers = read(DESK);
-  const deskNumbers = [...new Set((answers.answers ?? []).flatMap((a) => a.ns ?? []))].sort((a, b) => a - b);
-  const LISTS = ['approvals', 'noMechanic', 'engine', 'unruled'];
-  const listsOf = (n) => LISTS.filter((k) => (approvals[k] ?? []).some((e) => e.n === n));
-  const none = deskNumbers.filter((n) => listsOf(n).length === 0);
-  const twice = deskNumbers.filter((n) => listsOf(n).length > 1);
-  check('every desk number has exactly one disposition in trust-approvals.json', none.length === 0 && twice.length === 0,
-    `${deskNumbers.length} answered${none.length ? ` — ${none.length} with none: ${some(none)}` : ''}${twice.length ? ` — ${twice.length} filed twice: ${some(twice)}` : ''}`);
+ * §2b: every desk number an answers file answers must appear in exactly one of the lists. A number in
+ * NO list is a ruling that ships dark; a number in TWO is a ruling whose disposition the file contradicts
+ * itself about. Counted by LIST, not by row: one ruling may own several approvals rows (#28 is five quah
+ * emblems).
+ *
+ * EVERY work/desk-answers-*.json, not only 2026-09-10's (package K, 2026-10-15). Reading one file meant a
+ * later ruling could never be approved — its number had to sit in `unruled` — so the gate kept dark the
+ * rule he had just asked for. An ANSWERED number may not hide in `unruled` either: that list is for
+ * numbers no answers file speaks for. And each approvals / noMechanic / engine row cites the file that
+ * holds his words (`answers`; none = work/desk-answers-2026-09-10.json), which must answer that number.
+ * test/trust-approvals.test.ts asserts the same over the same files. */
+{
+  const files = existsSync(R('work'))
+    ? readdirSync(R('work')).filter((f) => /^desk-answers-.+\.json$/.test(f)).map((f) => `work/${f}`).sort() : [];
+  if (!files.length) {
+    /* A clone without the desk's answers files has no roster to check against, and `npm run verify` must
+     * stay green there. test/trust-approvals.test.ts makes the same check where the files ARE present. */
+    skipped('every desk number has exactly one disposition in trust-approvals.json', 'skipped (no work/desk-answers-*.json)');
+  } else {
+    const FIRST = 'work/desk-answers-2026-09-10.json';
+    const answeredIn = new Map();
+    for (const f of files) for (const n of (read(f).answers ?? []).flatMap((a) => a.ns ?? [])) answeredIn.set(n, [...(answeredIn.get(n) ?? []), f]);
+    const deskNumbers = [...answeredIn.keys()].sort((a, b) => a - b);
+    const LISTS = ['approvals', 'noMechanic', 'engine'];
+    const listsOf = (n) => LISTS.filter((k) => (approvals[k] ?? []).some((e) => e.n === n));
+    const none = deskNumbers.filter((n) => listsOf(n).length === 0);
+    const twice = deskNumbers.filter((n) => listsOf(n).length > 1);
+    const hidden = (approvals.unruled ?? []).map((e) => e.n).filter((n) => answeredIn.has(n));
+    check('every answered desk number has exactly one disposition in trust-approvals.json', none.length === 0 && twice.length === 0 && hidden.length === 0,
+      `${deskNumbers.length} answered over ${files.length} answers file(s)${none.length ? ` — ${none.length} with none: ${some(none)}` : ''}${twice.length ? ` — ${twice.length} filed twice: ${some(twice)}` : ''}${hidden.length ? ` — ${hidden.length} answered but still \`unruled\`: ${some(hidden)}` : ''}`);
+    const miscited = LISTS.flatMap((k) => (approvals[k] ?? [])
+      .filter((e) => !(answeredIn.get(e.n) ?? []).includes(e.answers ?? FIRST))
+      .map((e) => `${k} #${e.n} cites ${e.answers ?? FIRST}`));
+    const doubled = [...answeredIn].filter(([, fs]) => fs.length > 1).map(([n]) => `#${n}`);
+    check('every disposition cites the answers file that holds its ruling', miscited.length === 0 && doubled.length === 0,
+      `${miscited.length ? `${miscited.length} cite a file that does not answer them: ${some(miscited)}` : ''}${doubled.length ? ` — answered in two files: ${some(doubled)}` : ''}`);
+    /* …and a ruling made from a file NOT named desk-answers-*.json (rule-owner-questions.mjs takes any
+     * --answers path) would sit in `unruled` as "ruled" with every check above green while it ships dark.
+     * The RULED numbers no answers file speaks for are pinned to the eleven known ones (the same list as
+     * test/trust-approvals.test.ts); a new one must come through an answers file. */
+    const RULED_WITHOUT_ANSWERS_FILE = [1, 2, 6, 8, 31, 33, 165, 166, 167, 169, 170];
+    const ruledUnfiled = (approvals.unruled ?? []).filter((e) => e.status === 'ruled').map((e) => e.n).sort((a, b) => a - b);
+    const newOnes = ruledUnfiled.filter((n) => !RULED_WITHOUT_ANSWERS_FILE.includes(n));
+    check('no new ruling sits in `unruled` without an answers file', newOnes.length === 0,
+      newOnes.length ? `${some(newOnes.map((n) => `#${n}`))} — write his words into a work/desk-answers-*.json file and give each a real disposition` : `${ruledUnfiled.length} known`);
+  }
 }
 
 /* ---- 8. every whole-class rule is one the generator implements ----------------------------------

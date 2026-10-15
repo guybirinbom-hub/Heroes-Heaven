@@ -290,21 +290,39 @@ export function keptOffListNote(label: string): string {
  *  have no sheet writer, so the builder is the place for them.
  *
  *  The gift is always ONE of the places (`grantedPlaces`), even where the record lists one per variant
- *  (lane C4: C3's "your bloodline's 4 spells take all of your 4" told players to remove correct picks). */
-export function overGiftNote(places: number, cantrip: boolean, onSheet = false): string {
+ *  (lane C4: C3's "your bloodline's 4 spells take all of your 4" told players to remove correct picks).
+ *
+ *  `over`: how many are past it. One, until package K (2026-10-15) switched Adapted Cantrip's -1 on under
+ *  the trust gate: a sorcerer saved by the released app with five picks beside the gift is now TWO over,
+ *  and "One too many … remove one" told them the wrong count twice. */
+export function overGiftNote(places: number, cantrip: boolean, onSheet = false, over = 1): string {
   const where = onSheet ? 'with the Repertoire button' : 'in the builder';
   const noun = cantrip ? 'cantrip' : 'spell';
-  return `One too many — your bloodline’s ${noun} is one of your ${places}; remove one ${where}`;
+  return over > 1
+    ? `${over} ${noun}s too many — your bloodline’s ${noun} is one of your ${places}; remove ${over} ${where}`
+    : `One too many — your bloodline’s ${noun} is one of your ${places}; remove one ${where}`;
 }
 
 /** The marker on a class's own cantrip drawn past its cap (`cantripCapWas`): a save made while a
- *  Dual Class cantrip bonus still fed this class as well as the class that took the feat.
+ *  Dual Class cantrip bonus still fed this class as well as the class that took the feat — and, since
+ *  package K (2026-10-15), a spontaneous caster saved by the released app with Adapted Cantrip, whose
+ *  builder offered one place more than print allows.
  *
  *  `prepared`: the class prepares its cantrips on the sheet, and a cantrip prepared there into an
- *  opening the larger cap gave is in no builder list — the Prepare button is where it is emptied. */
-export function overCantripCapNote(places: number, prepared = false): string {
+ *  opening the larger cap gave is in no builder list — the Prepare button is where it is emptied.
+ *
+ *  `over`: how many are past the cap (an old save can be more than one, as for `overGiftNote`).
+ *
+ *  "this class lets you choose N", not "this class has N": the cards shown also hold the class's own
+ *  granted cantrips and a feat's (an oracle with Adapted Cantrip draws seven against a choice of four), so
+ *  "has 4" next to seven cards read as wrong — and still did after the player removed the extra one. */
+export function overCantripCapNote(places: number, prepared = false, over = 1): string {
+  if (over > 1) {
+    const where = prepared ? `leave ${over} empty with the Prepare button, or remove ${over} in the builder` : `remove ${over} in the builder`;
+    return `${over} cantrips too many — this class lets you choose ${places}; ${where}`;
+  }
   const where = prepared ? 'leave one empty with the Prepare button, or remove one in the builder' : 'remove one in the builder';
-  return `One too many — this class has ${places} cantrips; ${where}`;
+  return `One cantrip too many — this class lets you choose ${places}; ${where}`;
 }
 
 /** The marker on a sorcerous gift drawn at a rank where the bloodline's record lists one gift per

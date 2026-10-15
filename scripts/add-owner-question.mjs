@@ -34,8 +34,13 @@
  *
  * ONE QUESTION, THREE FILES. A new desk number also needs an `unruled` line in
  * scripts/data/trust-approvals.json — test/trust-approvals.test.ts requires every desk number to have
- * exactly one disposition there, and a question filed this year is never in the closed 2026-09-10
- * answers file, so `unruled` is the only one it can have. This tool used to write the desk and the
+ * exactly one disposition there, and a question just filed is in no work/desk-answers-*.json file yet,
+ * so `unruled` is the only one it can have. Once he rules it — and that is how a later ruling switches a
+ * rule the trust gate keeps dark back ON (package K, 2026-10-15) — his words go into a new answers file,
+ * scripts/rule-owner-questions.mjs moves the desk entry and prints a DISPOSITION line, and the `unruled`
+ * line is then moved by hand to `approvals` ({ n, record, fields, why, answers: "<that answers file>" })
+ * or to `noMechanic` / `engine`; rule-owner-questions.mjs's header has the four steps. A ruling he gives
+ * in chat with no question behind it is filed here first, for its number. This tool used to write the desk and the
  * numbering file only, and #171 (2026-10-15) left the suite red until the line was added by hand. It
  * writes that line itself now (addUnruledLines, below). Two more places move with every question —
  * the desk roster count in test/trust-approvals.test.ts and the PARKS table in

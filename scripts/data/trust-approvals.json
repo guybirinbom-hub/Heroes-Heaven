@@ -1,6 +1,7 @@
 {
  "_": "WHY THIS FILE EXISTS. The trust gate (docs/trust-gate.md) switches OFF every record mechanic Wanderer's Guide does not encode, so the app ships only what the WG parity effort has verified. That rule is right for the 11,100 records nobody has read against print, and WRONG for the ~150 records the owner personally ruled on at the rulings desk on 2026-09-10: those he HAS read, and a ruling that builds or keeps a mechanic would ship dark the day it lands unless this file says otherwise. So every desk number in work/owner-questions.json is given exactly one disposition here, and the generator (scripts/trust-ledger.mjs) removes an `approvals` entry's field paths from that record's OFF list. Hand-maintained on purpose: an approval is a judgement about which FIELDS a ruling turns on, and that cannot be read out of prose (docs/trust-gate.md:361-363).",
- "_dispositions": "approvals = the ruling KEEPS or ADDS a mechanic WG does not encode on that record, so the named paths must stay ON. noMechanic = the ruling changes nothing a field carries (it settles a difference, removes a duplicate control, fixes prose or a value), or the mechanic it lands on is a kind WG already encodes on that record so the gate leaves it alone. engine = the ruling is code, not a record field. unruled = the 22 numbers work/desk-answers-2026-09-10.json skips (already ruled, deferred, or a standing authorised exception); they carry no approval until the owner answers them.",
+ "_dispositions": "approvals = the ruling KEEPS or ADDS a mechanic WG does not encode on that record, so the named paths must stay ON. noMechanic = the ruling changes nothing a field carries (it settles a difference, removes a duplicate control, fixes prose or a value), or the mechanic it lands on is a kind WG already encodes on that record so the gate leaves it alone. engine = the ruling is code, not a record field. unruled = the numbers NO work/desk-answers-*.json file answers (deferred, a standing authorised exception, or ruled in chat without an answers file); they carry no approval until an answers file speaks for them.",
+ "_answers": "WHICH RULING A ROW CITES (package K, 2026-10-15). A row in approvals / noMechanic / engine with no `answers` key cites work/desk-answers-2026-09-10.json, the first desk pass. A ruling from any LATER pass names its own file in `answers` (\"work/desk-answers-2026-10-15.json\"), and that file must answer that number; every number any answers file answers must have exactly one of these three dispositions. That is how a ruling given after 2026-09-10 switches back on a rule the trust gate keeps dark: a chat ruling with no desk number is filed first with scripts/add-owner-question.mjs, his words go into a new answers file, scripts/rule-owner-questions.mjs rules it and prints a DISPOSITION line, and the `unruled` line moves here by hand (the four steps are in rule-owner-questions.mjs's header). Guards: test/trust-approvals.test.ts and scripts/trust-ledger-check.mjs check 7.",
  "_fieldPaths": "⚠ scripts/data/trust-fields.json (the strippable universe, plan §2a) DID NOT EXIST when this file was written — lane A had not produced it. Every path below is therefore taken from the OUR_KINDS field lists at scripts/wg-diff.mjs:396-582 and the nested container paths ourKindsOf walks at scripts/wg-diff.mjs:1216-1330 (`choice.options[].grant.*`, `effectChoices[].options[].grant.*`, `whileActive[].*`, `enhancement.grant.*`, `resonant.*`, `passiveEffects.*`). When trust-fields.json lands, re-check every path here against it.",
  "_pending": "\"pending\": true means the RECORD does not exist in public/core.json yet — the ruling creates it, and `record` is the intended id. A field named in `fields` that the record does not carry yet is normal and expected: the approval is written BEFORE the desk fix so the fix is live the moment it lands (docs/trust-gate.md:327-329).",
  "_multipleRows": "A desk number may own MORE THAN ONE approvals row when one ruling touches several records (the quah emblem family, the six kitsune/nagaji feats, the magus/summoner move). What must be unique is the DISPOSITION: no number appears in two of the four lists. test/trust-approvals.test.ts pins exactly that.",
@@ -20,7 +21,7 @@
    "date": "2026-09-11"
   }
  ],
- "_source": "Rulings: work/desk-answers-2026-09-10.json (the `answers` array, 128 numbers) and work/desk-brief-2026-09-10.json (the `entries` array, per-number id/title/recommendation/ifYes). Roster of desk numbers: work/owner-questions.json (open 128 + deferred 13 + ruled 6 + authorisedExceptions 3 = 150). WG verdicts quoted in `why`: work/.wg-diff-all.json.",
+ "_source": "Rulings: every work/desk-answers-*.json (see `_answers`; the first is work/desk-answers-2026-09-10.json, the `answers` array, 128 numbers) and work/desk-brief-2026-09-10.json (the `entries` array, per-number id/title/recommendation/ifYes). Roster of desk numbers: work/owner-questions.json (150 when this file was written: open 128 + deferred 13 + ruled 6 + authorisedExceptions 3; 175 after package K, 2026-10-15 — test/trust-approvals.test.ts pins the current count). WG verdicts quoted in `why`: work/.wg-diff-all.json.",
 
  "approvals": [
   {
@@ -317,6 +318,41 @@
    "record": "feats/spirit-walk",
    "fields": ["resistances", "situational"],
    "why": "The ruling KEEPS three printed pieces against a playtest row: 'first turn of an encounter: resistance = half level vs damage from haunts/spirits (built in batch 036 as conditionalResistances)' and the two +2 status stars. WG's row is theyOnly with theirKinds=[sense] and defense/conditional/skill/ac/save ALL ours — docs/trust-gate.md:313 names this record as the example of a paired record that shares no kind with WG."
+  },
+  {
+   "n": 163,
+   "record": "classFeatures/energy-shot",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-15.json",
+   "why": "The ruling ADDS a star: 'a prose star on the Strike (situationalBonuses) for all three: Energy Shot, Fulminating Shot and Dispelling Bullet' (his pick, 'A note on the Strike (Recommended)'). work/.wg-diff-all.json has this record theirsUnencoded — WG encodes nothing on it — so its registry star would land on `lanes.situational` and never render. Written before the star exists (chat-todo package I adds it through scripts/apply-situational-lane.mjs), the way the 2026-09-10 approvals were, so the star is live the moment it lands. The actions/energy-shot twin needs no row: a lane id is gated only when every bucket twin is off."
+  },
+  {
+   "n": 163,
+   "record": "feats/fulminating-shot",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-15.json",
+   "why": "Same ruling, the second of the three it names: 'a prose star on the Strike … for all three: Energy Shot, Fulminating Shot and Dispelling Bullet'. WG encodes nothing on feat-3268 (theirsUnencoded in work/.wg-diff-all.json), so the star would be suppressed without this row."
+  },
+  {
+   "n": 163,
+   "record": "classFeatures/dispelling-bullet",
+   "fields": ["situational"],
+   "answers": "work/desk-answers-2026-10-15.json",
+   "why": "Same ruling, the third of the three it names: 'a prose star on the Strike … for all three: Energy Shot, Fulminating Shot and Dispelling Bullet'. WG encodes nothing on action-925's record (theirsUnencoded in work/.wg-diff-all.json), so the star would be suppressed without this row; the actions/dispelling-bullet twin needs none, as for Energy Shot."
+  },
+  {
+   "n": 174,
+   "record": "feats/adapted-cantrip",
+   "fields": ["spellSlotBonus"],
+   "answers": "work/desk-answers-2026-10-15-package-k.json",
+   "why": "The ruling KEEPS print's cost: 'Follow print' (home chat, 2026-10-15 evening; docs/gold-set-answers.md '2026-10-15 (evening)') — feat-4474: \"If you have a spell repertoire, replace one of your cantrips known with the chosen spell.\" The record's spellSlotBonus { cantrips: -1 } is read only for a repertoire caster, so a level-1 sorcerer or bard knows 5 cantrips; a prepared caster keeps every opening. WG carries the record and encodes nothing (theirsUnencoded in work/.wg-diff-all.json), so without this row the gate strips the -1 and the sorcerer knows 6."
+  },
+  {
+   "n": 175,
+   "record": "feats/basic-cleric-spellcasting",
+   "fields": ["spellListAdditions"],
+   "answers": "work/desk-answers-2026-10-15-package-k.json",
+   "why": "The ruling ADDS what print says and WG does not encode: feat-5067 \"You can prepare your deity's spells in your spell slots of the appropriate rank from the cleric archetype.\" (his 'start K' after the home chat showed him the live page). Built as spellListAdditions { from: 'deity', as: 'list', entryId: 'cleric-dedication-casting' } — the shape classFeatures/deity-cleric uses for the class — so each deity spell is offered in the archetype's slots of its own rank or higher, and only once such a slot exists. WG encodes only giveSpellSlot here (weOnly, theirKinds=[spellSlot]), and spellListAdditions maps to `spell`, so it would ship dark without this row."
   }
  ],
 
@@ -408,7 +444,27 @@
   { "n": 144, "record": "classFeatures/cultivation-order", "why": "'B is good' — Cultivation counts as Leaf Order, already built; nothing changes. `grantsFeats` is a `grantsRecord` path WG also encodes on this row." },
   { "n": 147, "record": "classFeatures/otherworldly-protection", "why": "'#147 Otherworldly Protection: resistance 3 + half level to void (or vitality with void healing) computed from the character, no control.' Keep the app; WG encodes `defense` on this row, so `resistances` stays on." },
   { "n": 148, "record": "classFeatures/hyper-boosters", "why": "'keep the app on all 28 … nothing changes for a player; the record stops being re-checked in every future comparison.' The record is `agree` in work/.wg-diff-all.json." },
-  { "n": 150, "record": "feats/chronomancers-secrets", "why": "'keep the app on all 28 … nothing changes for a player.' A Stasis-is-focus question the app already answers; the ruling moves no field." }
+  { "n": 150, "record": "feats/chronomancers-secrets", "why": "'keep the app on all 28 … nothing changes for a player.' A Stasis-is-focus question the app already answers; the ruling moves no field." },
+  { "n": 151, "record": "items/screech-shooter", "answers": "work/desk-answers-2026-09-12.json", "why": "'yes — (a) the major's text becomes the Archives' own block … (b) builtInRunes on all three' (equipment-1169). Prose and `builtInRunes`, the item's chassis runes: neither is in scripts/data/trust-fields.json, so the gate never strips what this ruling builds." },
+  { "n": 151, "record": "items/screech-shooter-greater", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling, the greater grade (equipment-1169-1109): builtInRunes {potency 2, striking 2}. A chassis field the gate never strips." },
+  { "n": 151, "record": "items/screech-shooter-major", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling, the major grade (equipment-1169-1110): the Archives' own text block and builtInRunes {potency 2, striking 2}. Prose and a chassis field; the gate strips neither." },
+  { "n": 153, "record": "feats/timewracked-dedication", "answers": "work/desk-answers-2026-10-15.json", "why": "'(a) +5 feet to EVERY Speed the character has' (feat-8166; his pick '+5 to every speed'). The fix is `speedBonusAllSpeeds`, which is not in scripts/data/trust-fields.json (never stripped), and the record's `landSpeedBonus` maps to `speed`, which WG encodes on this row (agree: conditional, speed, grantsRecord)." },
+  { "n": 154, "record": "feats/swashbucklers-speed", "answers": "work/desk-answers-2026-09-12.json", "why": "'yes — build the conditional half now: while panache is on, EVERY Speed gets the +10 status bonus in place of the +5' (feat-6238). Built as `whileActive[].landSpeedBonus` + `speedBonusAllSpeeds`; WG encodes conditional and speed on this row (agree), so every path stays on without an approval." },
+  { "n": 154, "record": "classFeatures/stylish-combatant", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling, the first of the three records his follow-up named (class-feature-1007, +5 status to Speeds while panache). A swashbuckler's own class feature: on under the 2026-09-11 class-owned-features rule, and WG encodes conditional and speed here too." },
+  { "n": 154, "record": "classFeatures/vivacious-speed", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling, the second record (class-feature-1017, Vivacious Speed): class-owned, and WG encodes conditional and speed on this row (agree), so nothing the ruling builds goes dark." },
+  { "n": 159, "record": "feats/effortless-captivation", "answers": "work/desk-answers-2026-09-12.json", "why": "'same as the Archives of Nethys — keep the reprint page's trait list as shipped; nothing changes' (feat-9323 prints Archetype only). Traits are not a strippable path; nothing moves." },
+  { "n": 159, "record": "feats/look-again", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling: keep the reprint page's trait list (feat-9325, Archetype only); nothing changes." },
+  { "n": 159, "record": "feats/arcane-shroud", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling: keep the reprint page's trait list (feat-9083, Magus); nothing changes." },
+  { "n": 159, "record": "spells/draw-the-lightning", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling: keep the reprint page's trait list (spell-2683, no metal); nothing changes, and spells are outside the gate's eight buckets anyway." },
+  { "n": 159, "record": "items/rebounding-breastplate", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling: keep the reprint page's trait list (equipment-4983, no force); nothing changes." },
+  { "n": 159, "record": "items/fu-water", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling: keep the reprint page's trait list (equipment-5087, holy not good, no splash); nothing changes." },
+  { "n": 159, "record": "items/hundred-moth-caress", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling: keep the reprint page's trait list (equipment-5020, Divine only); nothing changes." },
+  { "n": 159, "record": "items/staff-storing-shield", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling: keep the reprint page's trait list (equipment-5008, no invested); nothing changes." },
+  { "n": 160, "record": "feats/soulforger-dedication", "answers": "work/desk-answers-2026-09-12.json", "why": "'Soulforger Dedication: NO prerequisite (the live page prints none …)' (feat-9350). Prerequisites are builder structure, which the gate never strips (docs/trust-gate.md §1)." },
+  { "n": 160, "record": "feats/dimensional-disappearance", "answers": "work/desk-answers-2026-09-12.json", "why": "Same ruling: 'Dimensional Disappearance: keep both prerequisites, drop the stray comma' (feat-9073). Prerequisites only; nothing the gate touches." },
+  { "n": 161, "record": "feats/spell-parry", "answers": "work/desk-answers-2026-09-12.json", "why": "'same as the live Archives page: Spell Parry (feat-9049, Impossible Magic pg. 18) shows NO action icon → no action cost (passive).' `actionCost` is excluded from the gate (docs/trust-gate.md §1); the ruling says nothing about the record's star, which stays as the ledger decides." },
+  { "n": 171, "record": "feats/expanded-necromancy", "answers": "work/desk-answers-2026-10-15.json", "why": "'only when the dirge can cast that rank, as print says' (feat-9132) — what the app already does since be93069. The grant is `spellListAdditions` (kind spell), which WG encodes on this row (agree: spell, conditional), so it is on without an approval." },
+  { "n": 173, "record": "feats/adaptive-adept", "answers": "work/desk-answers-2026-10-15.json", "why": "'(a) the spell is added for free and uses none of the repertoire caster's places' (feat-4481) — what the app already does since fa9287e. The spell arrives through the feat's `choice` (builder structure the gate never strips); the record carries no strippable path." }
  ],
 
  "engine": [
@@ -431,6 +487,48 @@
    "n": 146,
    "why": "'yes — run the repair once (permission to write the six public/ast files). node scripts/apply-ast-patches.mjs in the fix pass; ast-content-check goes green; npm run data already ends with the same script so a rebuild cannot undo it.' Tooling, not a record field: the six pages are pre-rendered AST files, which the trust gate never reads.",
    "laneId": "ast-patch-repair"
+  },
+  {
+   "n": 152,
+   "answers": "work/desk-answers-2026-09-12.json",
+   "why": "'yes — (a) the marked line lives in the SHEET, not in a description field: the popup prints \"The book prints no rules text for this item\" whenever a description is empty; (b) scope: all 244 empty-description items at once, by rule.' A popup component change, not a record field.",
+   "laneId": "empty-description-marker"
+  },
+  {
+   "n": 155,
+   "answers": "work/desk-answers-2026-09-12.json",
+   "why": "'yes — build the combined shape: a spellbook caster (wizard, witch via familiar, magus) keeps the spellbook and the curriculum/restricted slots and prepares the flat collection OUT OF THE SPELLBOOK.' The caster branch of src/rules/build.ts; the record half (feats/flexible-spellcaster-dedication's spellSlotBonus and spellcastingGrant) is already approved under #102.",
+   "laneId": "flexible-spellcaster-book-casters"
+  },
+  {
+   "n": 158,
+   "answers": "work/desk-answers-2026-09-12.json",
+   "why": "'yes — keep both, mark the old one legacy, add a \"remastered as …\" link.' Pipeline work (build-map + stamp-aonid, guarded by scripts/reprint-check.mjs) on 182 records' edition and link fields, none of which is a strippable path.",
+   "laneId": "reprint-twins-legacy-link"
+  },
+  {
+   "n": 162,
+   "answers": "work/desk-answers-2026-10-15.json",
+   "why": "'one archetype pool (the beast gunner's) plus the spellshot's two cantrips as at-will innate cantrips is fine, as long as the sheet SAYS that is what is happening' (his pick 'One pool + a note'). A line on the sheet and builder (chat-todo package F), no record field.",
+   "laneId": "spellshot-beast-gunner-pool-note"
+  },
+  {
+   "n": 164,
+   "answers": "work/desk-answers-2026-10-15.json",
+   "why": "'build the FULL lane for all 602 feats (\"Archetypes X (Level N)\" listings), as its own job later.' Importer + featSlots.ts eligibility + build.ts's dedication count: builder structure, which the gate never strips.",
+   "laneId": "archetype-class-feat-listings"
+  },
+  {
+   "n": 168,
+   "answers": "work/desk-answers-2026-10-15.json",
+   "why": "'(A) the HIGHER number wins: Enhanced Familiar's four replaces \"three instead of two\"' (feat-4717). The familiar ability budget is computed in src/rules/companionGrants.ts; no record field changes.",
+   "laneId": "familiar-budget-higher-wins"
+  },
+  {
+   "n": 172,
+   "answers": "work/desk-answers-2026-10-15.json",
+   "why": "'(a) only the class you took Cantrip Expansion for gets the 2 cantrips; when both classes have the feat on their list the builder asks which class' (feat-4580). Builder and build.ts work (chat-todo package E); feats/cantrip-expansion's `spellSlotBonus` is a kind WG encodes on this row (agree: spellSlot), so it stays on.",
+   "laneId": "cantrip-expansion-per-class"
   }
  ],
 
@@ -457,28 +555,12 @@
   { "n": 124, "id": null, "status": "authorisedException" },
   { "n": 125, "id": null, "status": "authorisedException" },
   { "n": 126, "id": null, "status": "authorisedException" },
-  { "n": 151, "id": "screech-shooter-major-rune-grade", "status": "ruled" },
-  { "n": 152, "id": "empty-description-marker-line", "status": "ruled" },
-  { "n": 153, "id": "timewracked-dedication-speed-clause", "status": "ruled" },
-  { "n": 154, "id": "speed-plural-while-a-state-is-on", "status": "ruled" },
-  { "n": 155, "id": "flexible-spellcaster-book-casters", "status": "ruled" },
   { "n": 156, "id": null, "status": "authorisedException" },
   { "n": 157, "id": null, "status": "authorisedException" },
-  { "n": 158, "id": "reprint-twins-merge", "status": "ruled" },
-  { "n": 159, "id": "reprint-lost-traits", "status": "ruled" },
-  { "n": 160, "id": "reprint-damaged-pages", "status": "ruled" },
-  { "n": 161, "id": "spell-parry-badge", "status": "ruled" },
-  { "n": 162, "id": "engine-second-archetype-pool-spellshot-beast-gunner", "status": "ruled" },
-  { "n": 163, "id": "engine-no-route-riders-energy-fulminating-dispelling", "status": "ruled" },
-  { "n": 164, "id": "familiar#archetype-reach", "status": "ruled" },
   { "n": 165, "id": "reprint-cross-kind-sub-pages", "status": "ruled" },
   { "n": 166, "id": "book-names-different-book-folds", "status": "ruled" },
   { "n": 167, "id": "reprint-grade-to-grade", "status": "ruled" },
-  { "n": 168, "id": "enhanced-familiar#fixed-budget-grants", "status": "ruled" },
   { "n": 169, "id": "shop-respects-sources", "status": "ruled" },
-  { "n": 170, "id": "sources-apply-to-everything", "status": "ruled" },
-  { "n": 171, "id": "expanded-necromancy#archetype-ninth-rank", "status": "ruled" },
-  { "n": 172, "id": "cantrip-expansion#dual-class-pool", "status": "ruled" },
-  { "n": 173, "id": "adaptive-adept#repertoire-place", "status": "ruled" }
+  { "n": 170, "id": "sources-apply-to-everything", "status": "ruled" }
  ]
 }

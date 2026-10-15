@@ -1,0 +1,21 @@
+{
+ "_": "Two rulings Guy gave in the home chat on 2026-10-15 (evening) with no desk question behind them, filed as #174 and #175 by package K so each can carry a trust approval: an approval must cite a desk number and the answers file that holds his words (scripts/data/trust-approvals.json `_answers`). Same shape as work/desk-answers-2026-10-15.json, so scripts/rule-owner-questions.mjs moves them open -> ruled. Package K builds both.",
+ "answers": [
+  {
+   "ns": [
+    174
+   ],
+   "answer": "follow print: on a caster with a spell repertoire (sorcerer, bard) the adapted cantrip replaces one of the cantrips known, so a level-1 sorcerer with Adapted Cantrip knows 5 cantrips",
+   "rule": "print, feat-4474 (Player Core pg. 63): \"If you have a spell repertoire, replace one of your cantrips known with the chosen spell.\"",
+   "note": "His pick in the home chat's multiple-choice questions, 2026-10-15 evening: 'Follow print'. Recorded in docs/gold-set-answers.md, section '2026-10-15 (evening)', line 'Adapted Cantrip on a sorcerer or bard'. Fix (package K): approve spellSlotBonus on feats/adapted-cantrip in scripts/data/trust-approvals.json, so the gate stops stripping the -1."
+  },
+  {
+   "ns": [
+    175
+   ],
+   "answer": "build print: a character with Basic Cleric Spellcasting can prepare their deity's spells in the cleric archetype's spell slots of the appropriate rank",
+   "rule": "print, feat-5067 (Player Core pg. 217): \"You can prepare your deity's spells in your spell slots of the appropriate rank from the cleric archetype.\"",
+   "note": "His words in the home chat, 2026-10-15: 'before you sratr show me where in the cleric page in archive of nethis its says the cleric knows the gods spells'. The home chat showed him the live page (https://2e.aonprd.com/Feats.aspx?ID=5067) and said the job would add the deity's spells to what the archetype's slots prepare from; his next message was 'start K', the package that builds it. Fix (package K): one overlay row, feats/basic-cleric-spellcasting spellListAdditions { from: 'deity', as: 'list', entryId: 'cleric-dedication-casting' }, and its approval."
+  }
+ ]
+}

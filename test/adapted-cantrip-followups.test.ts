@@ -62,7 +62,8 @@ const onTradition = (d: ContentDatabase, tradition: string) =>
 describe('1 · the builder note says what print says for BOTH kinds of caster', () => {
   const PREPARED = /If you prepare spells, you keep every cantrip opening: this cantrip is one more option when you prepare your cantrips\./;
   const REPERTOIRE = /If you have a spell repertoire, it replaces one of your cantrips known\./;
-  /** The old note's claim, true for no prepared caster and (trust gate: the -1 is off) for nobody in the app. */
+  /** The old note's claim, true for no prepared caster (a repertoire caster does give one up: print, and since
+   *  package K's desk #174 also with the trust gate on). */
   const OLD = /budget is one lower/i;
   const saysPrint = (note: string | undefined) => PREPARED.test(note ?? '') && REPERTOIRE.test(note ?? '') && !OLD.test(note ?? '');
 
@@ -106,7 +107,8 @@ describe("2 · a sorcerer's adapted cantrip is not one of its own picks past the
   };
 
   // mutation-proof
-  it('the builder-full sorcerer is 0 over — ungated (cap one lower) and in the app (trust gate: the -1 is off)', () => {
+  // Since package K (desk #174, 2026-10-15) the gated cap is one lower too; test/later-rulings-trust.test.ts pins it.
+  it('the builder-full sorcerer is 0 over — ungated and in the app (trust gate on), the cap one lower in both', () => {
     for (const d of [db, gated]) {
       const s = sorcerer(d);
       const label = d === db ? 'ungated' : 'trust-gated';

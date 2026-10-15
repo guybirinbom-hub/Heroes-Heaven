@@ -1066,7 +1066,16 @@ fixes are queued in the app folder's work list (`chat-todo.md`), not built by th
 - **Adapted Cantrip on a sorcerer or bard:** *"Follow print"* — the adapted cantrip replaces one known
   cantrip (a sorcerer knows 5). The feat's `spellSlotBonus` −1 is dark under the trust gate today and
   `trust-approvals.json` has no route for a ruling made after the 2026-09-10 desk pass, so switching it
-  on is its own small job (work list, package K).
+  on is its own small job (work list, package K). **Done the same evening by package K:** filed as desk
+  #174 and ruled from `work/desk-answers-2026-10-15-package-k.json`; its approval switches the −1 back on,
+  so with the gate on a level-1 sorcerer knows 5 (a prepared caster still keeps every opening).
+- **Basic Cleric Spellcasting** (feat-5067, Player Core pg. 217): asked to see where print says it, he was
+  shown the live page — *"You can prepare your deity's spells in your spell slots of the appropriate rank
+  from the cleric archetype"* — and answered *"start K"*. Built by package K as desk #175: the deity's
+  spells join what the cleric archetype's slots prepare from, each at its own rank, so a 4th-level
+  character with one rank-1 slot is offered only the deity's rank-1 spell. Wanderer's Guide encodes only
+  the slots here; the approval is what keeps it on under the trust gate. How any later ruling switches a
+  hidden rule on: `docs/trust-gate.md` §2b, "Later rulings".
 - **Warrior of Legend under Dual Class:** *"Only the fighter side"* — "you aren't trained in heavy armor"
   caps only the fighter's proficiencies; the other class's heavy armour training stays. Same principle as
   the ruling above.

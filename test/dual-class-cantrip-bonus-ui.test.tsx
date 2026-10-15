@@ -36,7 +36,10 @@ const flat = (s: string | null | undefined) => (s ?? '').replace(/\s+/g, ' ').tr
 
 const SEVEN = ['caustic-blast', 'detect-magic', 'electric-arc', 'frostbite', 'gouging-claw', 'guidance', 'ignition'];
 // A prepared class: a cantrip prepared on the sheet past the cap is emptied there, not in the builder.
-const OVER = 'One too many — this class has 5 cantrips; leave one empty with the Prepare button, or remove one in the builder';
+// Seven against five is TWO over, and since package K (2026-10-15) the note says so; it used to read "One too
+// many … leave one empty … or remove one" on both cards, the wrong count twice.
+// ("this class lets you choose 5" since then too: "this class has 5" read wrong beside more cards than five.)
+const OVER = '2 cantrips too many — this class lets you choose 5; leave 2 empty with the Prepare button, or remove 2 in the builder';
 const b = (cantrips2: string[]): BuildState =>
   ({
     ...emptyBuild(),
@@ -96,8 +99,8 @@ describe('an old Wizard/Druid save with seven druid cantrips', () => {
       expect(cards.map((c) => c.name)).toEqual(expect.arrayContaining(names));
       expect(cards.filter((c) => c.note === OVER).map((c) => c.name)).toEqual(names.slice(5));
     }
-    // Control: a druid that kept to its five shows no note.
-    expect(druidCards(buildCharacter(b(SEVEN.slice(0, 5)), db)).some((c) => c.note === OVER)).toBe(false);
+    // Control: a druid that kept to its five shows no over note of ANY count.
+    expect(druidCards(buildCharacter(b(SEVEN.slice(0, 5)), db)).some((c) => /too many/.test(c.note ?? ''))).toBe(false);
   });
   // mutation-proof
   it('the Prepare panel has an opening for every one of the seven — with and without a play state', { timeout: T }, () => {

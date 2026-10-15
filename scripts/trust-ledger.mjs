@@ -160,7 +160,7 @@ for (const f of FIELDS) {
 const APPROVALS_PATH = R('scripts/data/trust-approvals.json');
 if (!existsSync(APPROVALS_PATH)) {
   writeFileSync(APPROVALS_PATH, `${JSON.stringify({
-    _: "WHY: docs/trust-gate.md section 2b. Every desk number in work/desk-answers-2026-09-10.json must appear in exactly one of the four lists below. `approvals` entries are the ONLY way a ruling that ADDS a mechanic Wanderer's Guide lacks survives the trust gate — without one it ships dark. Hand-maintained; scripts/trust-ledger.mjs creates this file empty and never overwrites it.",
+    _: "WHY: docs/trust-gate.md section 2b. Every desk number a work/desk-answers-*.json file answers must appear in exactly one of approvals / noMechanic / engine below, citing its file in `answers`; `unruled` holds the numbers no answers file speaks for. `approvals` entries are the ONLY way a ruling that ADDS a mechanic Wanderer's Guide lacks survives the trust gate — without one it ships dark. Hand-maintained; scripts/trust-ledger.mjs creates this file empty and never overwrites it.",
     _shapes: {
       approvals: '{ "n": 28, "record": "items/unifying-emblem-shundar-quah", "fields": ["innateSpells"], "why": "…" }  — record is bucket/id; fields are trust-fields paths or their bare leaf',
       noMechanic: '{ "n": 15, "why": "the ruling changes nothing a field carries" }',
@@ -176,6 +176,13 @@ const approvalsFile = JSON.parse(readFileSync(APPROVALS_PATH, 'utf8'));
 const approvedBy = new Map();
 for (const a of approvalsFile.approvals ?? []) {
   if (!a?.record) continue;
+  /* An approval turns paths back ON, so it must say which of his rulings did that: a desk number, whose
+   * words are in the answers file the row cites (`answers`, default work/desk-answers-2026-09-10.json).
+   * A row with no number would switch a rule on that nothing he said can be found behind — refused, as
+   * an unknown rule name is. That the cited file really answers the number is checked in `npm run verify`
+   * (scripts/trust-ledger-check.mjs check 7) and in test/trust-approvals.test.ts, which read every answers
+   * file; this generator only needs the number to exist. */
+  if (!Number.isInteger(a.n)) refuse(`scripts/data/trust-approvals.json approves ${a.record} with no desk number \`n\` — every approval must cite the ruling it comes from`);
   const set = approvedBy.get(a.record) ?? new Set();
   for (const f of a.fields ?? []) set.add(f);
   approvedBy.set(a.record, set);
@@ -693,20 +700,24 @@ if (CENSUS_DIR) {
     records: unread,
   });
 
-  const desk = JSON.parse(readFileSync(R('work/desk-answers-2026-09-10.json'), 'utf8'));
-  const deskNumbers = [...new Set((desk.answers ?? []).flatMap((a) => a.ns ?? []))].sort((a, b) => a - b);
+  /* Every desk-answers file, not only 2026-09-10's: a later pass's rulings need a disposition too
+   * (package K, 2026-10-15 — scripts/trust-ledger-check.mjs check 7 says why). */
+  const deskFiles = readdirSync(R('work')).filter((f) => /^desk-answers-.+\.json$/.test(f)).sort();
+  const deskNumbers = [...new Set(deskFiles.flatMap((f) => (JSON.parse(readFileSync(R(`work/${f}`), 'utf8')).answers ?? []).flatMap((a) => a.ns ?? [])))].sort((a, b) => a - b);
   /* A desk number may carry SEVERAL `approvals` rows (one ruling, several records — #28 is five quah
-   * emblems), so the completeness question is "how many DISTINCT lists", not "how many rows". */
+   * emblems), so the completeness question is "how many DISTINCT lists", not "how many rows". An
+   * ANSWERED number in `unruled` is unaccounted: that list is for numbers no answers file speaks for. */
   const disposed = new Map();
-  for (const list of ['approvals', 'noMechanic', 'engine', 'unruled']) {
+  for (const list of ['approvals', 'noMechanic', 'engine']) {
     for (const e of approvalsFile[list] ?? []) disposed.set(e.n, new Set([...(disposed.get(e.n) ?? []), list]));
   }
   const skipped = [];
   for (let i = 1; i <= Math.max(...deskNumbers); i++) if (!deskNumbers.includes(i)) skipped.push(i);
   w('desk-dispositions.json', {
-    _: 'Plan section 2b: every desk number in work/desk-answers-2026-09-10.json must appear in exactly ONE list of scripts/data/trust-approvals.json. `unaccounted` and `twice` must both be empty before the gate ships — the section-5 guard goes red while they are not.',
+    _: 'Plan section 2b: every desk number a work/desk-answers-*.json file answers must appear in exactly ONE of approvals / noMechanic / engine in scripts/data/trust-approvals.json. `unaccounted` and `twice` must both be empty before the gate ships — the section-5 guard goes red while they are not.',
+    answersFiles: deskFiles,
     deskNumbers: deskNumbers.length,
-    skippedByTheDeskFile: skipped,
+    skippedByTheDeskFiles: skipped,
     accounted: [...disposed.keys()].filter((n) => deskNumbers.includes(n)).sort((a, b) => a - b),
     unaccounted: deskNumbers.filter((n) => !disposed.has(n)),
     twice: [...disposed.entries()].filter(([, l]) => l.size > 1).map(([n, l]) => ({ n, lists: [...l] })),

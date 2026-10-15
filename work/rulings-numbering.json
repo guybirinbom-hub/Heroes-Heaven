@@ -171,6 +171,8 @@
   "sources-apply-to-everything": 170,
   "expanded-necromancy#archetype-ninth-rank": 171,
   "cantrip-expansion#dual-class-pool": 172,
-  "adaptive-adept#repertoire-place": 173
+  "adaptive-adept#repertoire-place": 173,
+  "adapted-cantrip#repertoire-cantrip-count": 174,
+  "basic-cleric-spellcasting#deity-spells": 175
  }
 }

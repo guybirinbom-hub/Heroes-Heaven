@@ -1,5 +1,5 @@
 {
- "coreSha": "dcdec03c9001c4058a0a182add57ce1376463856293e0958e24508900670cd06",
+ "coreSha": "00f770ba104c7990c344292b2b3c2ed46fda2d5abaa8b9f4f352aa6f2b1290f1",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -4090,9 +4090,6 @@
   "feats/acute-vision": [
    "whileActive"
   ],
-  "feats/adapted-cantrip": [
-   "spellSlotBonus"
-  ],
   "feats/advanced-bloodline": [
    "focusPoolBonus"
   ],
@@ -7566,5 +7563,5 @@
   "items/waterproof-carrying-case",
   "items/wave-warding-tattoo"
  ],
- "wgSha": "768fa38d342e36f320f9fbaca571e01926c1b2f5dd54be410ab6b39c698b1111"
+ "wgSha": "9980360e576dac4a377f2827c0375b6453ade36a0f3486e9d799b74bcef6fdcc"
 }

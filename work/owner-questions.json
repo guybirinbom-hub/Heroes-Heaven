@@ -2052,6 +2052,30 @@
    "ruling": "(a) the spell is added for free and uses none of the repertoire caster's places — His pick: 'Extra spell (Recommended)'. This is what the app already does since fa9287e; nothing to build.",
    "ruledOn": "2026-10-15",
    "rulingSource": "desk pass 2026-10-15, work/desk-answers-2026-10-15.json"
+  },
+  {
+   "n": 174,
+   "id": "adapted-cantrip#repertoire-cantrip-count",
+   "batch": 0,
+   "printed": "Player Core pg. 63, Adapted Cantrip (feat-4474): \"If you prepare spells, you can choose this spell when you prepare your cantrips, in addition to your other options. If you have a spell repertoire, replace one of your cantrips known with the chosen spell.\"",
+   "theirs": "Wanderer's Guide carries the record and encodes nothing on it (wg-show prints no operations), so it never takes a cantrip away.",
+   "ours": "feats/adapted-cantrip carries spellSlotBonus { cantrips: -1 }, read only for a caster with a spell repertoire (fa9287e). The trust gate strips that path because WG encodes nothing here (src/data/trust-ledger.json records['feats/adapted-cantrip'] = ['spellSlotBonus']), so with the gate on a level-1 sorcerer with Adapted Cantrip knows 6 cantrips where print says 5.",
+   "question": "A sorcerer or bard takes Adapted Cantrip. Follow print (the adapted cantrip replaces one known cantrip: a level-1 sorcerer knows 5), or keep what the gate shows today (6)? Asked in the home chat 2026-10-15 evening; his pick: 'Follow print'.",
+   "ruling": "follow print: on a caster with a spell repertoire (sorcerer, bard) the adapted cantrip replaces one of the cantrips known, so a level-1 sorcerer with Adapted Cantrip knows 5 cantrips — His pick in the home chat's multiple-choice questions, 2026-10-15 evening: 'Follow print'. Recorded in docs/gold-set-answers.md, section '2026-10-15 (evening)', line 'Adapted Cantrip on a sorcerer or bard'. Fix (package K): approve spellSlotBonus on feats/adapted-cantrip in scripts/data/trust-approvals.json, so the gate stops stripping the -1.",
+   "ruledOn": "2026-10-15",
+   "rulingSource": "package K 2026-10-15, work/desk-answers-2026-10-15-package-k.json"
+  },
+  {
+   "n": 175,
+   "id": "basic-cleric-spellcasting#deity-spells",
+   "batch": 0,
+   "printed": "Player Core pg. 217, Basic Cleric Spellcasting (feat-5067): \"You gain the basic spellcasting benefits. You can prepare your deity's spells in your spell slots of the appropriate rank from the cleric archetype.\"",
+   "theirs": "Wanderer's Guide encodes one giveSpellSlot operation (castingSource CLERIC: the archetype's slot ladder) and nothing that adds the deity's spells.",
+   "ours": "feats/basic-cleric-spellcasting carries no field for the deity's spells: the cleric archetype's slots prepare only from the divine list. The engine already has the shape — classFeatures/deity-cleric carries spellListAdditions { from: 'deity', as: 'list', entryId: 'cleric-casting' } — but no row aims it at the archetype's entry, and any such row would be dark under the trust gate, because WG encodes only spellSlot here.",
+   "question": "Should a character with Basic Cleric Spellcasting be able to prepare their deity's cleric spells in the cleric archetype's slots, as feat-5067 prints, past what Wanderer's Guide encodes? The home chat showed him the live page 2026-10-15 ('You can prepare your deity's spells in your spell slots'); he answered 'start K', the package that builds it.",
+   "ruling": "build print: a character with Basic Cleric Spellcasting can prepare their deity's spells in the cleric archetype's spell slots of the appropriate rank — His words in the home chat, 2026-10-15: 'before you sratr show me where in the cleric page in archive of nethis its says the cleric knows the gods spells'. The home chat showed him the live page (https://2e.aonprd.com/Feats.aspx?ID=5067) and said the job would add the deity's spells to what the archetype's slots prepare from; his next message was 'start K', the package that builds it. Fix (package K): one overlay row, feats/basic-cleric-spellcasting spellListAdditions { from: 'deity', as: 'list', entryId: 'cleric-dedication-casting' }, and its approval.",
+   "ruledOn": "2026-10-15",
+   "rulingSource": "package K 2026-10-15, work/desk-answers-2026-10-15-package-k.json"
   }
  ]
 }

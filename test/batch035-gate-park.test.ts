@@ -183,7 +183,7 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
   // batch P02: enhanced-familiar#ability-budget
-  it('the widening is exactly eleven records — the five still-open aspect keys, familiar under familiar#archetype-reach, enhanced-familiar under enhanced-familiar#fixed-budget-grants, expanded-necromancy under expanded-necromancy#archetype-ninth-rank, cantrip-expansion under cantrip-expansion#dual-class-pool, adaptive-adept under adaptive-adept#repertoire-place, and the deferred relic family', () => {
+  it('the widening is exactly thirteen records — the five still-open aspect keys, familiar under familiar#archetype-reach, enhanced-familiar under enhanced-familiar#fixed-budget-grants, expanded-necromancy under expanded-necromancy#archetype-ninth-rank, cantrip-expansion under cantrip-expansion#dual-class-pool, adaptive-adept under adaptive-adept#repertoire-place, adapted-cantrip and basic-cleric-spellcasting under package K\'s two, and the deferred relic family', () => {
     /*
      * The pin against silent growth. `--queued-parks` lists every record parked by a desk id that is
      * not its own; today that is five, and each is deliberate:
@@ -248,6 +248,11 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
       // 2026-10-15: desk #173 adaptive-adept#repertoire-place (record#aspect: whether a repertoire's
       // Adaptive Adept spell is extra or takes one of its places) parks adaptive-adept.
       'adaptive-adept': 'adaptive-adept#repertoire-place',
+      // package K 2026-10-15: desk #174 adapted-cantrip#repertoire-cantrip-count and #175
+      // basic-cleric-spellcasting#deity-spells (record#aspect, filed and ruled the same day so each could carry
+      // a trust approval). Ruled, so neither parks now; pinned so a reopened one cannot widen silently.
+      'adapted-cantrip': 'adapted-cantrip#repertoire-cantrip-count',
+      'basic-cleric-spellcasting': 'basic-cleric-spellcasting#deity-spells',
       relic: 'relic-gift-family-skysunder-sparkwarden-uniter-adamantine',
     };
     const deskNow = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));

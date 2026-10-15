@@ -32,6 +32,23 @@
  *   node scripts/rule-owner-questions.mjs --answers work/desk-answers-2026-09-12.json \
  *     --source "desk pass 2026-09-12, work/desk-answers-2026-09-12.json" [--write]
  *
+ * A LATER RULING THAT SWITCHES A RULE ON (package K, 2026-10-15). The trust gate keeps dark every rule
+ * Wanderer's Guide does not encode unless scripts/data/trust-approvals.json approves it, and an approval
+ * must cite a desk number and the answers file that holds his words. So a ruling he gives later — at a
+ * desk pass, or in chat with no desk number — reaches the sheet in four steps:
+ *   1. no desk number yet (a chat ruling): file one with scripts/add-owner-question.mjs (it also writes
+ *      the number's `unruled` line in trust-approvals.json);
+ *   2. write his words into a NEW work/desk-answers-<date>[-<what>].json ({ answers: [{ ns, answer, rule,
+ *      note }] }, the shape of the 2026-10-15 file) and run this script on it with its own --source;
+ *   3. this script then prints a `DISPOSITION` line for every number of the pass still in `unruled`:
+ *      move each line out of `unruled` by hand into `approvals` ({ n, record, fields, why, answers }),
+ *      `noMechanic` ({ n, record, why, answers }) or `engine` ({ n, why, laneId, answers }), where
+ *      `answers` is the answers file's repo path — that is a judgement about which FIELDS the ruling turns
+ *      on, so no script makes it (docs/trust-gate.md §2b). test/trust-approvals.test.ts and
+ *      scripts/trust-ledger-check.mjs stay red until every number an answers file answers has one;
+ *   4. re-stamp the ledger: node scripts/wg-diff.mjs --out work/.wg-diff-all.json, then
+ *      node scripts/trust-ledger.mjs.
+ *
  * --reverdict writes work/.desk-reverdict-2026-09-11.json: one row per (batch, record) whose parity
  * verdict is still OWNER-QUEUED and whose question he has now answered, in the shape
  * scripts/record-parity-verdict.mjs --bulk reads ({batch, id, evidence, verdict}). Those rows have to
@@ -39,7 +56,7 @@
  * and after this script runs it no longer is.
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
-import { join, dirname, isAbsolute, resolve } from 'node:path';
+import { join, dirname, isAbsolute, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { appendQuestions } from './add-owner-question.mjs';
 import { batchValue } from './lib/batch-paths.mjs';
@@ -225,8 +242,10 @@ for (const src of EXCEPTIONS) {
  * holds"), so a number moved open -> ruled here and not there turns the test red — and the repair is
  * exactly the hand edit of a numbered file that this script exists to prevent. One writer, both files.
  *
- * `unruled` MEMBERSHIP is not touched: it means "the 2026-09-10 answers file does not speak for this
- * number", which a later pass does not change. Only the disposition moves.
+ * `unruled` MEMBERSHIP is not touched here, only the status: `unruled` means "no answers file speaks for
+ * this number", so a number this pass answers must LEAVE it — but for approvals, noMechanic or engine,
+ * and choosing among those is a judgement about fields this script cannot make. It prints a DISPOSITION
+ * line for each such number instead (below), and the trust-approvals guards stay red until it is filed.
  *
  * ⚠ EDITED AS TEXT, NOT RE-SERIALISED. The file is hand-curated and its `unruled` entries are one
  * readable line each; `JSON.stringify(…, null, 1)` explodes every one of them and turns an 8-status
@@ -267,6 +286,22 @@ if (existsSync(APPROVALS)) {
       approvalsText = text;
     }
   } catch { approvalsText = null; approvalsMoved = []; }
+}
+
+/* Every number this pass answers that still sits in `unruled` — each needs a real disposition citing
+ * this answers file (see the header, step 3). Printed, never written: which list, which record and which
+ * fields is the judgement docs/trust-gate.md §2b keeps out of scripts. */
+const answersShown = (() => {
+  const rel = relative(ROOT, ANSWERS);
+  return rel.startsWith('..') || isAbsolute(rel) ? ANSWERS : rel.replace(/\\/g, '/');
+})();
+let dispositionsDue = [];
+if (existsSync(APPROVALS)) {
+  try {
+    const answeredHere = new Set([...toRule.keys(), ...already]);
+    dispositionsDue = (JSON.parse(approvalsText ?? readFileSync(APPROVALS, 'utf8')).unruled ?? [])
+      .map((e) => Number(e.n)).filter((n) => answeredHere.has(n)).sort((a, b) => a - b);
+  } catch { dispositionsDue = []; }
 }
 
 /* ================================================================================================= *
@@ -332,6 +367,17 @@ console.log(`max n:      ${Math.max(...ARRAYS.flatMap((a) => desk[a].map((e) => 
 console.log(`source:     ${SOURCE}  (ruledOn base ${BASE_DATE})`);
 console.log(`approvals:  ${approvalsMoved.length} unruled entr(ies) -> status "ruled"${approvalsMoved.length ? ` (#${approvalsMoved.join(', #')})` : ''}`);
 if (REVERDICT) console.log(`re-verdict: ${rows.length} row(s) over ${new Set(rows.map((r) => r.batch)).size} batch file(s) -> ${OUT}`);
+if (!/^work\/desk-answers-[^/]+\.json$/.test(answersShown)) {
+  /* The trust guards read only work/desk-answers-*.json. A pass ruled from any other file leaves its numbers
+   * in `unruled` as "ruled", which test/trust-approvals.test.ts and trust-ledger-check.mjs pin and refuse. */
+  console.log(`\nWARNING: ${answersShown} is not a work/desk-answers-*.json file, so the trust-approvals guards cannot read these rulings; a number ruled here stays red there until its words are in such a file.`);
+}
+if (dispositionsDue.length) {
+  console.log(`\nTRUST APPROVALS — ${dispositionsDue.length} number(s) this pass answers still sit in \`unruled\`. File each by hand, or test/trust-approvals.test.ts and scripts/trust-ledger-check.mjs stay red:`);
+  for (const n of dispositionsDue) {
+    console.log(`  DISPOSITION #${n}: move its \`unruled\` line to approvals / noMechanic / engine with "answers": "${answersShown}" (an approval names the record and the fields the ruling turns on)`);
+  }
+}
 
 if (!WRITE) { console.log('\n(report only — pass --write)'); process.exit(0); }
 writeFileSync(DESK, `${JSON.stringify(desk, null, 1)}\n`);

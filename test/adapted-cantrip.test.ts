@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { build, content } from './_content';
 import { openChoiceOptions } from '../src/rules/openChoice';
 import { cantripBonusFor, classCantripBonus, emptyBuild } from '../src/rules/build';
+import { cantripsOverOf } from '../src/rules/spellOptions';
 
 /**
  * ADAPTED CANTRIP — "Choose one cantrip from a magical tradition other than your own… You can cast
@@ -113,15 +114,31 @@ describe('and it does not over-grant — "replace one of your cantrips known"', 
     expect(db.feats['adapted-cantrip'].spellSlotBonus).toEqual({ cantrips: -1 });
   });
 
-  it('a repertoire at its cap ends with the same number of cantrips, one of them the new one', () => {
+  it('a repertoire built with the places the builder offers ends with the same number of cantrips, one of them the new one', () => {
     const plain = bardPool(bard()).cantrips;
-    const adapted = bardPool(bard('electric-arc')).cantrips;
     expect(plain.length, 'the fixture must be AT the cap or this proves nothing').toBe(BARD5.length);
     expect(db.spells['electric-arc']?.traditions, 'fixture: off the occult list').not.toContain('occult');
-    expect(adapted).toHaveLength(plain.length);
-    expect(adapted).toContain('electric-arc');
-    // The one displaced is the LAST the player picked — they choose what to give up by not picking it.
-    expect(adapted).not.toContain(BARD5[BARD5.length - 1]);
+    // The builder offers one place fewer once the feat is answered, so the player keeps four of their own.
+    const e = bardPool(bard('electric-arc', BARD5.slice(0, 4)));
+    expect(e.cantripCap).toBe(bardPool(bard()).cantripCap! - 1);
+    expect(e.cantrips).toHaveLength(plain.length);
+    expect(e.cantrips).toContain('electric-arc');
+    expect(cantripsOverOf(e)).toBe(0);
+  });
+
+  /*
+   * ⚠ REWRITTEN by package K (2026-10-15). This asserted that a bard ALREADY at five picks who takes the feat
+   * loses the LAST pick from the sheet ("they choose what to give up by not picking it"). That is the app
+   * hiding one of the player's own cantrips with nothing saying so — and it hit every saved bard or sorcerer
+   * from the released app, whose trust gate kept the -1 off (the independent check of package K). A list over
+   * its allowance is DRAWN and REPORTED everywhere else (lane C2's sorcerer, Dual Class's `cantripCapWas`);
+   * the player removes the extra in the builder.
+   */
+  it('a repertoire ALREADY at its cap keeps every pick on the sheet and is told one is over', () => {
+    const e = bardPool(bard('electric-arc'));
+    expect(e.cantripCap).toBe(bardPool(bard()).cantripCap! - 1);
+    expect(e.cantrips).toEqual(expect.arrayContaining([...BARD5, 'electric-arc']));
+    expect(cantripsOverOf(e), 'one own pick past the allowance, reported').toBe(1);
   });
 
   it('…and a caster who PREPARES keeps all of them, the new one beside them', () => {

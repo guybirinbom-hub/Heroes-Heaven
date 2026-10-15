@@ -190927,5 +190927,18 @@
    "wall-of-ice"
   ],
   "why": "AoN lesson-11 (Lesson of the Frozen Queen, Lost Omens Legends): \"You gain the Glacial Heart hex, and your familiar learns Wall of Ice.\" Our record carried focusSpells: [glacial-heart] only. WG's Lesson of the Frozen Queen: giveSpell FOCUS rank 5 + giveSpell NORMAL (castingSource WITCH, rank 5). spells['wall-of-ice'] is rank 5. Same reader as lesson-of-death."
+ },
+ {
+  "category": "feats",
+  "id": "basic-cleric-spellcasting",
+  "field": "spellListAdditions",
+  "value": [
+   {
+    "from": "deity",
+    "as": "list",
+    "entryId": "cleric-dedication-casting"
+   }
+  ],
+  "why": "AoN feat-5067 (Basic Cleric Spellcasting, Player Core pg. 217): \"You gain the basic spellcasting benefits. You can prepare your deity's spells in your spell slots of the appropriate rank from the cleric archetype.\" The deity's spells (the deity record's `spells`, the list it grants to clerics) join the list the cleric archetype's entry prepares from, exactly as classFeatures/deity-cleric adds them to the class's cleric-casting entry; a spell is offered in a slot of its own rank or higher, so one whose rank the archetype has no slot for yet is not offered. Owner ruling desk #175, package K 2026-10-15."
  }
 ]

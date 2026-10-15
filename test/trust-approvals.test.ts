@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 
 /**
  * WHY THIS FILE EXISTS.
@@ -16,25 +16,45 @@ import { existsSync, readFileSync } from 'node:fs';
  * verify-time script (scripts/trust-ledger-check.mjs) repeats it against the generated ledger.
  *
  * The roster is work/owner-questions.json — open + deferred + ruled + authorisedExceptions — because
- * a number the answers file skips still has to be accounted for, as `unruled`.
+ * a number no answers file speaks for still has to be accounted for, as `unruled`.
+ *
+ * EVERY DESK-ANSWERS FILE, NOT ONLY 2026-09-10's (package K, 2026-10-15). The file used to read one
+ * answers file, so a ruling given after that pass could never get an `approvals` row: its number was
+ * forced into `unruled`, and the trust gate kept dark the very rule he had just asked for (Adapted
+ * Cantrip's −1 cantrip, his "Follow print" of 2026-10-15). Now every work/desk-answers-*.json counts, and
+ * the guard is the SAME guard over all of them: a number any of them answers has exactly one real
+ * disposition (approvals, noMechanic or engine — never `unruled`), and each such row names the file that
+ * holds his words (`answers`; a row without it means work/desk-answers-2026-09-10.json). A ruling he gives
+ * in chat with no desk number gets one first: add-owner-question.mjs files it, rule-owner-questions.mjs
+ * rules it from a new answers file, and then it is filed here like any other.
  */
 
-type Approval = { n: number; record: string; fields: string[]; why: string; pending?: boolean; modelledOn?: string };
-type NoMechanic = { n: number; record: string; why: string };
-type Engine = { n: number; why: string; laneId: string };
+type Approval = { n: number; record: string; fields: string[]; why: string; pending?: boolean; modelledOn?: string; answers?: string };
+type NoMechanic = { n: number; record: string; why: string; answers?: string };
+type Engine = { n: number; why: string; laneId: string; answers?: string };
 type Unruled = { n: number; id: string | null; status: string };
 
 const approvals = JSON.parse(readFileSync('scripts/data/trust-approvals.json', 'utf8')) as {
   approvals: Approval[]; noMechanic: NoMechanic[]; engine: Engine[]; unruled: Unruled[];
 };
 const desk = JSON.parse(readFileSync('work/owner-questions.json', 'utf8')) as Record<string, { n: number; id?: string }[]>;
-const answers = JSON.parse(readFileSync('work/desk-answers-2026-09-10.json', 'utf8')) as { answers: { ns: number[] }[] };
 const core = JSON.parse(readFileSync('public/core.json', 'utf8')) as Record<string, Record<string, Record<string, unknown>>>;
+
+/** The first desk pass — what a disposition row with no `answers` key cites. */
+const FIRST_ANSWERS = 'work/desk-answers-2026-09-10.json';
+const ANSWERS_FILES = readdirSync('work').filter((f) => /^desk-answers-.+\.json$/.test(f)).map((f) => `work/${f}`).sort();
+/** n -> every answers file that names it. */
+const answeredIn = new Map<number, string[]>();
+for (const f of ANSWERS_FILES) {
+  const doc = JSON.parse(readFileSync(f, 'utf8')) as { answers?: { ns?: number[] }[] };
+  for (const n of (doc.answers ?? []).flatMap((a) => a.ns ?? [])) answeredIn.set(n, [...(answeredIn.get(n) ?? []), f]);
+}
+const answeredNumbers = new Set(answeredIn.keys());
+const citedFile = (e: { answers?: string }) => e.answers ?? FIRST_ANSWERS;
 
 const deskNumbers = ['open', 'deferred', 'ruled', 'authorisedExceptions']
   .flatMap((k) => desk[k] ?? [])
   .map((e) => e.n);
-const answeredNumbers = new Set(answers.answers.flatMap((a) => a.ns));
 
 const LISTS = ['approvals', 'noMechanic', 'engine', 'unruled'] as const;
 /** n -> the lists it appears in. A number may own SEVERAL rows in ONE list (one ruling, several records). */
@@ -156,12 +176,22 @@ describe('trust-approvals.json — completeness', () => {
    * Expansion feeds for a prepared + spontaneous pair). Both unanswered, so `unruled`. Roster 170 -> 172.
    * And #173 adaptive-adept#repertoire-place (the Adapted Cantrip chain lane: whether a repertoire's
    * Adaptive Adept spell is extra or takes one of its places), open, so `unruled`. Roster 172 -> 173.
+   * (He answered all three the same evening, with #153 #162-#164 #168, in work/desk-answers-2026-10-15.json;
+   * since package K those numbers, and the eight of work/desk-answers-2026-09-12.json, carry a real
+   * disposition citing their file instead of `unruled` — see the header.)
+   */
+  /*
+   * Then package K (2026-10-15) filed TWO rulings he gave in the home chat, each ruled at once from
+   * work/desk-answers-2026-10-15-package-k.json so it could carry an approval: #174
+   * adapted-cantrip#repertoire-cantrip-count ("Follow print": a sorcerer or bard with Adapted Cantrip knows
+   * one cantrip fewer) and #175 basic-cleric-spellcasting#deity-spells ("start K", after reading feat-5067:
+   * the deity's spells can be prepared in the cleric archetype's slots). Both are `approvals`. Roster 173 -> 175.
    */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
   // batch P02: enhanced-familiar#ability-budget
-  it('the desk roster is every number in work/owner-questions.json — 173: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25, the one ruled in chat on 2026-09-29, the one ruled in chat on 2026-09-30 and the three filed open on 2026-10-15 — with no gaps or repeats', () => {
+  it('the desk roster is every number in work/owner-questions.json — 175: 157 batch-filed questions (enhanced-familiar#fixed-budget-grants, print batch P02, the newest), the two 2026-09-11 authorised exceptions, the four filed by the 2026-09-12 reprint lane, the two filed by the 2026-09-22 Spellshot lane, the three ruled in chat on 2026-09-25, the one ruled in chat on 2026-09-29, the one ruled in chat on 2026-09-30, the three filed open on 2026-10-15 and the two package K filed and ruled the same day — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
     // reprint lane 2026-09-25: #165 reprint-cross-kind-sub-pages, #166 book-names-different-book-folds, #167 reprint-grade-to-grade
     // batch P02: enhanced-familiar#ability-budget — #168 enhanced-familiar#fixed-budget-grants (open, so `unruled`)
@@ -169,7 +199,8 @@ describe('trust-approvals.json — completeness', () => {
     // Sources lane 2026-09-30: desk #170 sources-apply-to-everything (ruled in chat, so `unruled`)
     // 2026-10-15: desk #171 expanded-necromancy#archetype-ninth-rank and #172 cantrip-expansion#dual-class-pool (open, so `unruled`)
     // 2026-10-15: desk #173 adaptive-adept#repertoire-place (open, so `unruled`)
-    expect(deskNumbers.length).toBe(173);
+    // package K 2026-10-15: desk #174 adapted-cantrip#repertoire-cantrip-count and #175 basic-cleric-spellcasting#deity-spells (ruled, `approvals`)
+    expect(deskNumbers.length).toBe(175);
   });
 
   it('every desk number has exactly one disposition', () => {
@@ -187,7 +218,9 @@ describe('trust-approvals.json — completeness', () => {
     }
   });
 
-  it('`unruled` is exactly the set work/desk-answers-2026-09-10.json skips', () => {
+  it('`unruled` is exactly the set no work/desk-answers-*.json file speaks for', () => {
+    // Not vacuous: the first pass's file must still be there, or every number would read as unanswered.
+    expect(ANSWERS_FILES, 'the 2026-09-10 answers file is one of the files read').toContain(FIRST_ANSWERS);
     const skipped = deskNumbers.filter((n) => !answeredNumbers.has(n)).sort((a, b) => a - b);
     expect(approvals.unruled.map((e) => e.n).sort((a, b) => a - b)).toEqual(skipped);
     // …and the other three lists hold only ANSWERED numbers: an unanswered ruling cannot approve anything.
@@ -195,6 +228,51 @@ describe('trust-approvals.json — completeness', () => {
       const unanswered = (approvals[k] as { n: number }[]).map((e) => e.n).filter((n) => !answeredNumbers.has(n));
       expect(unanswered, `${k} claims a disposition for a number the owner has not answered`).toEqual([]);
     }
+  });
+
+  /*
+   * Package K (2026-10-15): a disposition says WHERE his ruling is written. A row with no `answers` key
+   * cites the first desk pass; a ruling from any later pass names its own file, and that file must
+   * really answer that number — so a row cannot borrow a number from a file that never mentions it,
+   * and every row of one number cites the same file.
+   */
+  it('every disposition cites the answers file that holds its ruling', () => {
+    const wrong: string[] = [];
+    const fileOf = new Map<number, string>();
+    for (const k of ['approvals', 'noMechanic', 'engine'] as const) {
+      for (const e of approvals[k] as { n: number; answers?: string }[]) {
+        const f = citedFile(e);
+        if (!ANSWERS_FILES.includes(f)) wrong.push(`${k} #${e.n}: cites ${f}, which is not a work/desk-answers-*.json file`);
+        else if (!(answeredIn.get(e.n) ?? []).includes(f)) wrong.push(`${k} #${e.n}: cites ${f}, which does not answer #${e.n} (answered in: ${(answeredIn.get(e.n) ?? []).join(', ') || 'none'})`);
+        if (fileOf.has(e.n) && fileOf.get(e.n) !== f) wrong.push(`#${e.n}: its rows cite two files (${fileOf.get(e.n)} and ${f})`);
+        fileOf.set(e.n, f);
+      }
+    }
+    expect(wrong).toEqual([]);
+  });
+
+  it('no desk number is answered in two answers files — one ruling, one source', () => {
+    const twice = [...answeredIn].filter(([, fs]) => fs.length > 1).map(([n, fs]) => `#${n}: ${fs.join(', ')}`);
+    expect(twice).toEqual([]);
+  });
+
+  it('every number an answers file answers is on the desk roster', () => {
+    const roster = new Set(deskNumbers);
+    expect([...answeredIn.keys()].filter((n) => !roster.has(n)), 'answered numbers the desk does not have').toEqual([]);
+  });
+
+  /*
+   * THE HOLE THE ROUTE MUST NOT LEAVE (independent check of package K). rule-owner-questions.mjs takes any
+   * --answers path, so a ruling made from a file this test does not read (work/rulings-2026-11-02.json, a temp
+   * path) moved to `ruled` with its `unruled` line flipped to "ruled" — and every guard stayed green while the
+   * ruling shipped dark. So the RULED numbers that no answers file speaks for are pinned: the six ruled before
+   * the 2026-09-10 desk file existed and the five the Sources and reprint lanes ruled in chat (#165-#167,
+   * #169, #170), none of which turns a record mechanic on. A new one goes red here until its words are in a
+   * work/desk-answers-*.json file and it has a real disposition.
+   */
+  it('`unruled` holds only the eleven known rulings with no answers file', () => {
+    const RULED_WITHOUT_ANSWERS_FILE = [1, 2, 6, 8, 31, 33, 165, 166, 167, 169, 170];
+    expect(approvals.unruled.filter((e) => e.status === 'ruled').map((e) => e.n).sort((a, b) => a - b)).toEqual(RULED_WITHOUT_ANSWERS_FILE);
   });
 
   /*
@@ -275,6 +353,24 @@ describe('trust-approvals.json — the plan’s add-a-mechanic list is covered',
   it('each one has an approvals entry', () => {
     const have = new Set(approvals.approvals.map((e) => e.n));
     expect(MUST_BE_APPROVED.filter((n) => !have.has(n)), 'add-a-mechanic rulings with no approval').toEqual([]);
+  });
+
+  /*
+   * The rulings given AFTER the 2026-09-10 pass that add a mechanic WG does not encode — the reason the
+   * route above exists. #163: three prose stars on the Strike (Energy Shot, Fulminating Shot, Dispelling
+   * Bullet), registry stars on records WG encodes nothing on. #174: Adapted Cantrip's −1 cantrip on a
+   * repertoire caster (his "Follow print"). #175: Basic Cleric Spellcasting's deity spells in the
+   * archetype's slots (his "start K", after reading feat-5067). Each must carry its field, or the ruling
+   * ships dark.
+   */
+  it('the later add-a-mechanic rulings are approved on the field they turn on', () => {
+    const has = (n: number, record: string, field: string) =>
+      approvals.approvals.some((e) => e.n === n && e.record === record && e.fields.includes(field) && !!e.answers);
+    expect(has(174, 'feats/adapted-cantrip', 'spellSlotBonus'), '#174 Adapted Cantrip spellSlotBonus').toBe(true);
+    expect(has(175, 'feats/basic-cleric-spellcasting', 'spellListAdditions'), '#175 Basic Cleric Spellcasting spellListAdditions').toBe(true);
+    for (const r of ['classFeatures/energy-shot', 'feats/fulminating-shot', 'classFeatures/dispelling-bullet']) {
+      expect(has(163, r, 'situational'), `#163 ${r} situational`).toBe(true);
+    }
   });
 
   it('#145 is the documented exception and lives in `engine`', () => {

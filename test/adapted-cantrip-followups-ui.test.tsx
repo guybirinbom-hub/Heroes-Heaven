@@ -8,6 +8,7 @@ import { SpellsTab } from '../src/sheet/SpellsTab';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import { applyPlayState, initialPlay, preparedCantripKey, setPreparedCantrip, type PlayState } from '../src/rules/play';
 import { ownPlacesBeside } from '../src/rules/spellOptions';
+import { overGiftNote } from '../src/rules/spellcasting';
 import { enabledBookSet } from '../src/rules/sources';
 import type { Character, ContentDatabase, SpellcastingEntry } from '../src/rules/types';
 
@@ -149,7 +150,7 @@ describe("2 · a sorcerer's Spells tab", () => {
         const cards = cantripCards(sorcerer(d).ch, d);
         const label = d === db ? 'ungated' : 'trust-gated';
         expect(cards.find((c) => c.name === nameOf('electric-arc'))?.text, label).toContain('from Adapted Cantrip');
-        expect(cards.filter((c) => /One too many/.test(c.text)).map((c) => c.name), label).toEqual([]);
+        expect(cards.filter((c) => /too many/.test(c.text)).map((c) => c.name), label).toEqual([]);
       }
     },
     T,
@@ -166,11 +167,62 @@ describe("2 · a sorcerer's Spells tab", () => {
         // The planted bad case: the same character with the attribution gone marks the adapted cantrip too.
         const bad = structuredClone(s.ch);
         delete entryOf(bad, 'sorcerer').spellSources;
-        expect(cantripCards(bad, d).filter((c) => /One too many/.test(c.text)).map((c) => c.name)).toContain(nameOf('electric-arc'));
+        // (Two over then, so the note reads "2 cantrips too many" since package K gave it the count.)
+        expect(cantripCards(bad, d).filter((c) => /too many/.test(c.text)).map((c) => c.name)).toContain(nameOf('electric-arc'));
       }
     },
     T,
   );
+
+  /*
+   * Package K (2026-10-15) switched the -1 on under the trust gate, so a sorcerer saved by the released app
+   * (five picks beside the bloodline gift) is now TWO over, both drawn. "One too many … remove one" on each
+   * told the player the wrong count; the note says how many.
+   */
+  // mutation-proof
+  it(
+    'a released-app sorcerer save, two over: both extra picks say "2 cantrips too many … remove 2", never on the adapted cantrip',
+    () => {
+      const s = sorcerer(gated, 2);
+      const marked = cantripCards(s.ch, gated).filter((c) => /too many/.test(c.text));
+      expect(marked.map((c) => c.name)).toEqual(s.picks.slice(-2).map(nameOf));
+      for (const c of marked) {
+        expect(c.text).toContain('2 cantrips too many');
+        expect(c.text).toContain('remove 2 in the builder');
+      }
+      // What the count replaces: the note with no count is the old sentence, the one these cards must not show.
+      expect(overGiftNote(4, true)).toMatch(/^One too many/);
+      expect(marked.some((c) => /One too many/.test(c.text))).toBe(false);
+    },
+    T,
+  );
+
+  /** The empty cantrip places the Spells tab draws. */
+  const emptyCantripCards = (ch: Character, d: ContentDatabase) => {
+    const r = renderDom(<SpellsTab character={applyPlayState(ch, initialPlay(ch, d), d)} content={d} onPlay={noop} />);
+    try {
+      const hdr = [...r.host.querySelectorAll('.spell-rankhdr')].find((h) => flat(h.textContent).startsWith('Cantrips'));
+      return hdr?.parentElement?.querySelectorAll('.spell-grid .spell-card.empty').length ?? 0;
+    } finally {
+      r.stop();
+    }
+  };
+
+  // mutation-proof
+  it(
+    'a sorcerer with one place free shows one empty cantrip place — the adapted cantrip fills none of them',
+    () => {
+      const s = sorcerer(gated, -1);
+      expect(emptyCantripCards(s.ch, gated), 'one own place left').toBe(1);
+      expect(emptyCantripCards(sorcerer(gated).ch, gated), 'builder-full: none').toBe(0);
+      // The planted bad case: counted as one of the player's places, the free place disappears.
+      const bad = structuredClone(s.ch);
+      delete entryOf(bad, 'sorcerer').spellSources;
+      expect(emptyCantripCards(bad, gated)).toBe(0);
+    },
+    T,
+  );
+
 });
 
 describe('3 · the Prepare panel stores a stand-in when the player edits', () => {

@@ -65,12 +65,15 @@ by any WG kind, so an allowlist would kill them all and a denylist must simply n
 PATHS, not bare field names, so a nested grant can be emptied without touching the option row.
 
 **b. `scripts/data/trust-approvals.json` — the desk rulings (hand-maintained, tracked).**
-Four lists, and every desk number in `work/desk-answers-2026-09-10.json` must appear in exactly one of them:
+Four lists, and every desk number sits in exactly one of them: a number any `work/desk-answers-*.json` file
+answers in `approvals`, `noMechanic` or `engine`, citing its file; every other number in `unruled` (until
+2026-10-15 only `work/desk-answers-2026-09-10.json` counted — see "Later rulings" below):
 `approvals` (`{ "n": 28, "record": "items/unifying-emblem-shundar-quah", "fields": ["innateSpells"], "why": "…" }`),
 `noMechanic` (the ruling changes nothing a field carries), `engine` (the ruling is code, not a record field —
 #127 speed typing, #145 "allow no-damage attacks", #109 Guardian's Armor, whose class-feature record carries no
-mechanical field at all), and `unruled` (the 22 numbers the file skips: 1, 2, 6, 8, 31, 33, 52, 54, 58-64, 67,
-106, 122-126). No "…" endings: the guard in §5 goes red while any desk number is unaccounted for. Every ruling
+mechanical field at all), and `unruled` (the numbers no answers file speaks for — at first the 22 the 09-10 file
+skipped: 1, 2, 6, 8, 31, 33, 52, 54, 58-64, 67, 106, 122-126; since then also the authorised exceptions #156 and
+#157 and the chat rulings #165-#167, #169, #170). No "…" endings: the guard in §5 goes red while any desk number is unaccounted for. Every ruling
 that ADDS a mechanic WG lacks needs an `approvals` entry or it ships dark — the seven quah emblems, Armiger's
 pick, Hardened Chassis, Flexible Spellcaster's pool, Haunting Memories, Dream Magic, Scar of the Survivor,
 Web's damageless attack, Locate Lawbreakers, Molten Wit, Intuitive Crafting, Reborn Soul, Time Sense's
@@ -78,6 +81,29 @@ tradition, Breath of the Dragon, the astrolabe star, the Major aeon stone activa
 Skybearer's scoped stars, Spirit Walk's resistance, Northridge's free action, Merchant's Scale, Curse of
 Turbulent Moments, the six kitsune/nagaji `dailyChoice` controls, the #70/#71 `recordMarks` riders, the
 armour-proficiency borrowing of #10/#26, Oatia's narrowed picker, magus + summoner 2026.
+
+**Later rulings (package K, 2026-10-15).** The lists were first tied to the 2026-09-10 answers file alone, so
+a ruling given after it could never be approved: its number had to stay `unruled`, and the gate kept dark the
+rule he had just asked for (Adapted Cantrip's −1 cantrip on a sorcerer, his "Follow print"). The guard is now
+the same guard over every answers file. Every number any `work/desk-answers-*.json` answers has exactly one of
+`approvals` / `noMechanic` / `engine` (an answered number may not sit in `unruled`, which is for numbers no
+answers file speaks for); each such row cites the file holding his words in `answers` (a row without it cites
+`work/desk-answers-2026-09-10.json`), and that file must answer that number; no number is answered in two
+files. A later ruling reaches the sheet in four steps, written out in `scripts/rule-owner-questions.mjs`'s
+header: (1) a chat ruling with no desk number is filed first with `scripts/add-owner-question.mjs`; (2) his
+words go into a new `work/desk-answers-<date>[-<what>].json` and `rule-owner-questions.mjs` runs on it; (3) it
+prints a `DISPOSITION` line per number, and each `unruled` line is moved by hand to the right list with
+`answers`; (4) the ledger is re-stamped. Guards: `test/trust-approvals.test.ts`, `scripts/trust-ledger-check.mjs`
+check 7, and the generator refuses an approval with no desk number. A pass ruled from a file NOT named
+`work/desk-answers-*.json` would leave its numbers in `unruled` as "ruled" with every check green, so the ruled
+numbers no answers file speaks for are pinned to the eleven known ones (1, 2, 6, 8, 31, 33, 165-167, 169, 170) and
+`rule-owner-questions.mjs` warns about such a file. If he REVERSES a ruling, it is filed as a new desk number whose
+question names the one it replaces (rule-owner-questions refuses to re-rule a number, and a number is answered in one
+file only); the old number's disposition is then changed by hand to match. The first use filed the sixteen numbers of
+the 2026-09-12 and 2026-10-15 passes and #174 (Adapted Cantrip) and #175 (Basic Cleric Spellcasting's deity
+spells). A desk number is required on purpose — rather than letting a row cite a `docs/gold-set-answers.md`
+section — because the number is what makes "one disposition per ruling" checkable; the gold-set section is
+quoted in the row's `why` and in the answers file.
 
 **c. `src/data/trust-ledger.json` — generated, tracked, deterministic.**
 The OFF list. Two sections:
@@ -270,7 +296,8 @@ per-character Overrides remain the escape hatch).
 - `scripts/trust-ledger-check.mjs` in `npm run verify`, in two halves so a clean clone stays green: the
   always-runnable half checks that every ledger key resolves to a real record in `public/core.json`, every
   approvals entry names a real record and real paths, every desk number in
-  `work/desk-answers-2026-09-10.json` has exactly one disposition in `trust-approvals.json`, deities and the
+  `work/desk-answers-2026-09-10.json` (since 2026-10-15: in any `work/desk-answers-*.json`, citing its file)
+  has exactly one disposition in `trust-approvals.json`, deities and the
   three chassis buckets are all-on, no path outside `trust-fields.json` appears in the ledger, no path that
   `fieldToKinds` knows is missing from `trust-fields.json`, and the stamped `coreSha` matches. The
   regenerate-and-diff half runs only when `work/wg/wg-data.sql` is present and prints "skipped (no
@@ -310,7 +337,7 @@ per-character Overrides remain the escape hatch).
    plus four small review files, not prose: off-counts by bucket; every record that ends FULLY dark while
    carrying a mechanic (measured in review: ~550 paired records share no kind with WG at all, 259 of them
    carrying real mechanics — `feats/spirit-walk` is one, and Guy ruled on it the same week, so it needs an
-   approvals entry); the 1,286 WG-encoded records no closed batch has read; the 22 unruled desk numbers.
+   approvals entry); the 1,286 WG-encoded records no closed batch has read; the 22 unruled desk numbers (at the time).
    The one owner line from §2 (tracked ledger, yes/no) goes with this.
 2. **Runtime gate + switch + Settings card.** `src/data/trustGate.ts` (new), one line in
    `src/data/index.ts:457`, `src/data/prefs.ts`, the Settings card, the subscribe-and-rebuild wiring in

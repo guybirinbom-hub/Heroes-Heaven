@@ -1723,11 +1723,20 @@ export function SpellsTab({
      * caster asked "why don't I have a place for my cantrips?" and the sheet had no answer. The
      * spell-slot convention already shows "Empty slot" cards, so unfilled cantrip openings get the
      * same treatment, pointing at where the picking actually happens (the builder). */
-    const emptyCantrips = Math.max(0, (main.cantripCap ?? 0) - main.cantrips.length);
+    // A cantrip a FEAT put in a known (not prepared) pool — Adapted Cantrip's — fills none of the cap's
+    // places: the cap already paid for it (its -1, on under the trust gate since package K, 2026-10-15).
+    // Counted, a bard with three picks of four showed no empty place while the builder said 3 / 4.
+    // ⚠ A class grant given ON TOP of the picks (an oracle's mystery cantrip, a psychic's conscious mind)
+    // is still counted here, so such a caster with a free place shows none. Leaving it out is NOT the fix
+    // on its own: the builder counts a pick that is also a grant as a pick, so the sheet would then offer a
+    // place the builder refuses (package K's last check, measured). Both sides need one rule — chat-todo.md.
+    const featCantrips = main.cantripsPrepared ? 0 : main.cantrips.filter((id) => id in (main.spellSources ?? {})).length;
+    const emptyCantrips = Math.max(0, (main.cantripCap ?? 0) - (main.cantrips.length - featCantrips));
+    const cantripsOver = cantripsOverOf(main);
     // A sorcerer's cantrip drawn past its five (the gift is one of them — lane C2): drawn, and said.
-    const pastCantrips = pastGiftIds(main, main.cantrips, main.grantedCantrips ?? [], cantripsOverOf(main));
+    const pastCantrips = pastGiftIds(main, main.cantrips, main.grantedCantrips ?? [], cantripsOver);
     // …and any class's picks past a cap a Dual Class cantrip bonus no longer gives it: drawn, and said.
-    const pastCap = pastCapCantripIds(main, cantripsOverOf(main));
+    const pastCap = pastCapCantripIds(main, cantripsOver);
     // …and a gift cantrip the record lists one of per VARIANT (elemental: one per element), each drawn
     // and each saying only one is the character's (`variantGiftCount`, lane C4).
     const variantCantrips = variantGiftCount(main, 0);
@@ -1742,8 +1751,8 @@ export function SpellsTab({
           const from = main.spellSources?.[id];
           const note =
             offBookNote(main, id) ??
-            (pastCantrips.has(id) ? overGiftNote(main.cantripCap ?? 0, true) : undefined) ??
-            (pastCap.has(id) ? overCantripCapNote(main.cantripCap ?? 0, !!main.cantripsPrepared) : undefined) ??
+            (pastCantrips.has(id) ? overGiftNote(main.cantripCap ?? 0, true, false, cantripsOver) : undefined) ??
+            (pastCap.has(id) ? overCantripCapNote(main.cantripCap ?? 0, !!main.cantripsPrepared, cantripsOver) : undefined) ??
             (variantCantrips && main.grantedCantrips?.includes(id) ? variantGiftNote(variantCantrips) : undefined);
           return sp && visible(sp) ? (
             <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta={from ? `at will · from ${from}` : 'at will'} marks={marksFor(id)} note={note} onClick={() => openDetail(sp)} />

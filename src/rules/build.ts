@@ -3355,9 +3355,16 @@ export function classCantripBonus(build: BuildState, content: ContentDatabase, c
 /** What `classCantripBonus` read before Dual Class routed each bonus to its own pool: every bonus, in
  *  every pool. buildCharacter draws a no-book class's stored cantrips up to the allowance this gave, so
  *  a save made when the pool was larger keeps every pick it chose — drawn, and reported over the cap
- *  (`cantripCapWas`) — instead of losing the last ones to a slice. */
-function classCantripBonusUnrouted(build: BuildState, content: ContentDatabase, classId: string | null | undefined): number {
-  return cantripBonusFor(build, content, { skipSwaps: !classPaysCantripSwap(build, content, classId) });
+ *  (`cantripCapWas`) — instead of losing the last ones to a slice.
+ *
+ *  …and WITHOUT Adapted Cantrip's swap `-1` (package K, 2026-10-15). The released app shipped that `-1`
+ *  switched off by the trust gate, so a saved bard or sorcerer with the feat holds one pick more than the
+ *  allowance now gives; charged here too, the floor sliced that pick off the sheet with nothing saying so.
+ *  The allowance (`classCantripBonus`) still pays the swap, so the builder offers one place fewer and the
+ *  old extra pick is reported over, never chosen away by the app. A prepared class is unchanged: its
+ *  floor already skipped the swap. */
+function classCantripBonusUnrouted(build: BuildState, content: ContentDatabase): number {
+  return cantripBonusFor(build, content, { skipSwaps: true });
 }
 
 /** Champion devotion (focus) spell options, gated by the deity's font: Shields of the Spirit is
@@ -5746,7 +5753,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const cantripBook = !sp.repertoire && (!!sp.spellbook || cls.id === 'wizard' || cls.id === 'witch');
     const cantripsDrawn = cantripBook
       ? cantripAllowance
-      : Math.max(cantripAllowance, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + classCantripBonusUnrouted(build, content, cls.id) + mods.cantripDelta);
+      : Math.max(cantripAllowance, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + classCantripBonusUnrouted(build, content) + mods.cantripDelta);
     const entry: SpellcastingEntry = {
       id: `${cls.id}-casting`,
       name: `${cap(tradition)} ${sp.type} spellcasting`,

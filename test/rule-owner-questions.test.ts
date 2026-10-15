@@ -248,10 +248,24 @@ describe('rule-owner-questions.mjs applies the desk pass', () => {
 
     const approvals = JSON.parse(readFileSync(path.join(root, 'approvals.json'), 'utf8')) as { unruled: Unruled[] };
     expect(approvals.unruled.find((u) => u.n === 153)!.status).toBe('ruled');
-    /* MEMBERSHIP is untouched — `unruled` means "the answers file does not speak for this number",
-     * which a later pass does not change — and a number this pass did not name keeps its disposition. */
+    /* MEMBERSHIP is untouched by the script — which list #153 leaves `unruled` for (approvals, noMechanic
+     * or engine) is a judgement about fields it cannot make — and a number this pass did not name keeps
+     * its disposition. */
     expect(approvals.unruled.map((u) => u.n)).toEqual([153, 1]);
     expect(approvals.unruled.find((u) => u.n === 1)!.status).toBe('ruled');
+    /* …but it SAYS so (package K, 2026-10-15): a number an answers file answers may not stay `unruled`
+     * (test/trust-approvals.test.ts), so the run names each one and the file its row must cite. The
+     * number it did not answer gets no line. */
+    expect(r.out).toMatch(/DISPOSITION #153: .*"answers": ".*answers-2026-09-12\.json"/);
+    expect(r.out).not.toMatch(/DISPOSITION #1\b/);
+    /* …and this fixture's answers file is not a work/desk-answers-*.json file, which the trust guards never
+     * read, so the run says so; a real one (below) does not. */
+    expect(r.out).toMatch(/WARNING: .* is not a work\/desk-answers-\*\.json file/);
+    const fresh = fixture();
+    const real = runRaw([SCRIPT, '--answers', 'work/desk-answers-2026-10-15.json', '--desk', path.join(fresh, 'desk.json'), '--out', path.join(fresh, 'out.json'), '--approvals', path.join(fresh, 'approvals.json')]);
+    expect(real.code, 'the real file plans its moves (report only)').toBe(0);
+    expect(real.out).toContain('report only');
+    expect(real.out).not.toMatch(/WARNING: .* is not a work\/desk-answers/);
   });
 
   it('is safe to run twice: the second run moves nothing and adds no second copy', () => {

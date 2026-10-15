@@ -208,7 +208,8 @@ describe('a book-less PREPARED dedication keeps both cantrip openings, and they 
     }
   });
 
-  it('…in the app as shipped (trust gate on, which switches the -1 off): two cantrips drawn, not three', () => {
+  // The -1 is ON under the gate since package K (desk #174, 2026-10-15); a prepared pool never pays it anyway.
+  it('…in the app as shipped (trust gate on): two cantrips drawn, not three', () => {
     const gated: ContentDatabase = content({ trustGate: true });
     const c = BOOKLESS[0];
     const two = onTradition(c.tradition).slice(0, 2);
