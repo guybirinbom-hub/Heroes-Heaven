@@ -1660,7 +1660,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const parts: CalcPart[] = [profPart(strike.rank, lvl, pwl(c)), abilityPart(c, strike.atkAbility)];
       if (strike.potencyBonus)
         parts.push({
-          label: strike.mpRefined ? 'Monster Parts refinement' : abpOn(c) ? 'ABP attack potency' : 'Weapon potency rune',
+          label: strike.potencyNote ?? (strike.mpRefined ? 'Monster Parts refinement' : abpOn(c) ? 'ABP attack potency' : 'Weapon potency rune'),
           note: 'item bonus',
           value: strike.potencyBonus,
         });

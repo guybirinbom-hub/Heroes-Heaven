@@ -33,7 +33,8 @@
   { "file": "src/rules/play.ts", "why": "play-state tables (rest, daily prep) keyed by record id" },
   { "file": "src/rules/mythic.ts", "why": "mythic destiny table keyed by dedication id" },
   { "file": "src/rules/seed.ts", "why": "the SEED content itself — merged AFTER the gate runs on the core object (plan section 3), so the gate never touches it" },
-  { "file": "src/rules/featSlots.ts", "why": "feat-slot table keyed by class id (chassis)" }
+  { "file": "src/rules/featSlots.ts", "why": "feat-slot table keyed by class id (chassis)" },
+  { "file": "src/rules/versatileVial.ts", "why": "the versatile vial's printed type table (Alchemy: 'a vial you create is always the highest type you could Craft'), keyed by the two vial item ids and the Firework Technician dedication (the one maker of pyrotechnic vials). Who makes vials is read from the `versatile-vials` counter in classResources.ts, which no lane gates today (that file is in neither list: the guard's patterns do not see its `feat:` keys), so the bomb type follows the counter. For the alchemist class the rule is its own Alchemy feature, on under the 2026-09-11 core-class-features approval (gold-set R17). For the four archetype makers it is NOT covered by R17: kept ungated by judgement (package B, 2026-10-15), because gating the type alone would leave a counter of 4 vials beside a bomb that never grows, and gating the counter too would take vials and Quick Alchemy from all four archetypes" }
  ],
  "notIds": [
   { "id": "weapon", "why": "`item.itemType === 'weapon'` — an item type, not the classFeatures record" },

@@ -76,6 +76,7 @@ import {
   shieldFamily,
   type MpDamage,
 } from './monsterParts';
+import { versatileVialFor, versatileVialLabel, versatileVialNote } from './versatileVial';
 
 /** True when the Monster Parts variant rule is on AND this item has been switched to Monster-Parts
  *  mode (carries a `monsterPart` blob). Such an item ignores its runes/precious material entirely. */
@@ -3361,9 +3362,13 @@ export interface Strike {
    *  off-guard, Ranger Precision on the first hit vs hunted prey). Rendered as an annotation on the
    *  strike row and in the damage breakdown — NOT folded into the flat `dmgBonus`/`damage` dice. */
   conditionalDamage?: { text: string; note: string }[];
-  /** Where a damage die BIGGER than the granting record's printed one came from, printed in the
-   *  damage breakdown. Absent on a Strike whose die is the one its record states. */
+  /** Where damage dice that DIFFER from the granting record's printed ones came from — a bigger die,
+   *  or a die COUNT the record does not print (a versatile vial, whose record holds the lesser type).
+   *  Printed in the damage breakdown; absent on a Strike whose dice are the ones its record states. */
   dieNote?: string;
+  /** The label the attack breakdown puts on `potencyBonus` when that item bonus is neither a potency
+   *  rune, ABP nor a Monster Parts refinement — a vial's type, or a bomb's own printed bonus. */
+  potencyNote?: string;
 }
 
 /** Handwraps of Mighty Blows (and kin): worn-gloves UNARMED "weapons" whose runes buff every
@@ -4786,6 +4791,13 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   // attack item bonus + striking dice a potency/striking rune would (Table 4A), plus imbued riders.
   const mpMode = mpActive(c, inv);
   const mpRef = mpMode ? mpWeaponRefine(inv.monsterPart, c.level) : null;
+  /* "A vial you create is always the highest type you could Craft" (Alchemy). Both vial records hold
+   * the LESSER type, so a vial maker past 3rd level throws something the record does not describe:
+   * more dice, more splash and, from 4th, an item bonus to attack. versatileVial.ts holds the printed
+   * table — its gates are 1/4/12/18, not the 1/3/11/17 of every other graded bomb — and Craft's rank
+   * test (master Crafting for a greater vial, legendary for a major one). Null for any other item; a
+   * vial someone else made keeps the lesser type. */
+  const vial = versatileVialFor(c, w.id, dailySkillRank(c, db, 'crafting') ?? c.proficiencies.skills.crafting ?? 'untrained');
   const runes = mpMode ? undefined : effectiveWeaponRunes(c, db, inv);
   // Best of: weapon-category rank, a per-weapon override (deity favored weapon), and a per-GROUP
   // proficiency (alchemist bombs, gunslinger firearms — these beat the bare category rank).
@@ -4813,13 +4825,19 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   /* …and the weapon's OWN printed item bonus — the alchemical bomb grades ("+1 item bonus to attack
    * rolls" on a moderate, +2 greater, +3 major). A bomb takes no runes, so the potency slot that
    * normally carries a weapon's item-class attack bonus was permanently 0 and the printed number had
-   * nowhere to land. Same bonus class as a rune, so the highest wins rather than summing. */
-  const potencyBonus = Math.max(
-    abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0,
-    mpRef?.attack ?? 0,
-    inv.battleforged ? 1 : 0,
-    w.attackItemBonus ?? 0,
-  );
+   * nowhere to land. Same bonus class as a rune, so the highest wins rather than summing. A vial's
+   * type bonus is the same kind of printed bonus, so it joins that side. */
+  const otherItemBonus = Math.max(abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0, mpRef?.attack ?? 0, inv.battleforged ? 1 : 0);
+  const ownItemBonus = Math.max(w.attackItemBonus ?? 0, vial?.tier.itemAttack ?? 0);
+  const potencyBonus = Math.max(otherItemBonus, ownItemBonus);
+  /* The breakdown labels a potency rune, ABP or a refinement on its own; a bomb's printed bonus was
+   * labelled "Weapon potency rune", which a bomb cannot carry. Named when it is the bonus that WON the
+   * max above (a tie included — Battleforger's +1 is not a rune either), so the row never credits the
+   * bomb with a bigger number ABP supplied. */
+  const potencyNote =
+    ownItemBonus > 0 && ownItemBonus >= otherItemBonus
+      ? vial && vial.tier.itemAttack === ownItemBonus ? versatileVialLabel(vial.tier, item.name) : item.name
+      : undefined;
   // Clumsy penalizes EVERY ranged attack roll, including thrown weapons that use Str to hit. Status
   // penalties don't stack and both calls carry the same Frightened/Prone, so taking the worst (min) of
   // the attack-ability and Dex penalties folds in Clumsy for a thrown strike without double-counting.
@@ -4847,7 +4865,10 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     abpOn(c) ? abpStrikingDice(c.level) : runes?.striking ? STRIKING_DICE[runes.striking] : 0,
     mpRef?.extraDice ?? 0,
   );
-  const dice = w.damage.dice + strikingExtra;
+  // A vial's type states its dice outright and replaces the record's one die: a greater vial is 3d6,
+  // not 1d6 + 2. ABP's devastating attacks also say "N damage dice instead of one", so under ABP the
+  // larger count wins rather than the two adding up.
+  const dice = vial ? Math.max(vial.tier.dice, w.damage.dice + strikingExtra) : w.damage.dice + strikingExtra;
   // Deadly Simplicity steps the damage die of the deity's favored SIMPLE weapon up one size while
   // it's wielded (Player Core). Only real simple weapon items qualify here; unarmed favored weapons
   // (Irori's fist) are handled on the Fist Strike in deriveUnarmedStrike.
@@ -4894,7 +4915,12 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const mpDmg = mpMode ? mpImbuedDamageTerms(inv.monsterPart, w.damage.type, c.level).map((t) => formatMpDamageTerm(t)) : [];
   // Feat/feature/item strike-damage riders (Spirit Striking; Crimson Fulcrum Lens; Hyldarf's Fang +2d6
   // intrinsic to this weapon).
-  const riderDmg = strikeDamageRiders(c, db, { rank, ranged, unarmed: false, name: w.name, baseId: w.id }, w.strikeDamage);
+  // A vial's splash is part of its printed type ("1d6 acid damage and 1 acid splash damage"), in the
+  // record's own damage type — fire for the Firework Technician's pyrotechnic vial.
+  const vialSplash: StrikeDamageRider[] = vial
+    ? [{ type: w.damage.type, dice: { n: vial.tier.splash, die: '' }, splash: true, note: `${item.name} splash` }]
+    : [];
+  const riderDmg = strikeDamageRiders(c, db, { rank, ranged, unarmed: false, name: w.name, baseId: w.id }, [...(w.strikeDamage ?? []), ...vialSplash]);
   const extraDmg = [...runeDmg, ...mpDmg, ...riderDmg];
   // Deadly dN adds bonus weapon dice on a crit (1 die; 2 with greater striking, 3 with major); Fatal dN
   // upgrades the crit dice to dN and adds one; Two-Hand dN uses a larger die when wielded two-handed.
@@ -4964,6 +4990,11 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     mapStep: step,
     mapSources: mapSources.length ? mapSources : undefined,
     conditionalDamage: conditionalDamage.length ? conditionalDamage : undefined,
+    // Dice that moved with nothing explaining them read as a bug (Q31's rule for a changed MAP), so the
+    // damage breakdown names the vial's type — and, when the Crafting rank holds the next type back,
+    // the rank it needs, so a vial that did NOT grow says why too.
+    ...(vial?.made && (vial.tier.dice !== w.damage.dice || vial.blocked) ? { dieNote: versatileVialNote(vial, item.name, w.damage.type) } : {}),
+    ...(potencyNote ? { potencyNote } : {}),
   };
 }
 
