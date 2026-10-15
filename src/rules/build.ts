@@ -73,7 +73,7 @@ import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions, CASTER_ARCHETYPES, DEDICATION_COUNTS_AS } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { cpToCoins } from './wealth';
-import { apparitionSlots, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
+import { apparitionSlots, bookCantripCapacity, bookNoun, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
 
 /**
  * The kineticist's element rules for one feat slot: the test the Builder's picker asks (`slotTakes`,
@@ -1447,7 +1447,16 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
     const skillChoice = sub?.skillChoice?.length ? sub.skillChoice : cls.trainedSkills.choice;
     if (skillChoice?.length && !(build.subclassSkill && skillChoice.includes(build.subclassSkill)))
       out.push('Class trained skill');
-    if (sub?.dragonChoice?.length && !sub.dragonChoice.some((d) => d.slug === build.dragonExemplar))
+    /* …for whichever HELD class's option asks it (`heldClasses`): under Dual Class the second class's
+     * draconic bloodline asks the Dragon question on Level 0 too (lane C2), and an unanswered one cast
+     * arcane in silence — buildCharacter falls back to the first dragon. One answer for both classes
+     * (`build.dragonExemplar` is one field), so it is reported once. */
+    if (
+      heldClasses(build).some(({ classId, subclassId }) => {
+        const o = classId ? content.classes[classId]?.subclass?.options.find((x) => x.id === subclassId) : undefined;
+        return !!o?.dragonChoice?.length && !o.dragonChoice.some((d) => d.slug === build.dragonExemplar);
+      })
+    )
       out.push('Dragon exemplar');
     if ((cls.features ?? []).some((f) => f.featureId === 'devotion-spells')) {
       const opts = championDevotionOptions(build, content);
@@ -2837,10 +2846,16 @@ function sanctificationsOffDeity(build: BuildState, content: ContentDatabase): {
  * `cantripBonusFor` is: the sheet applied slotCap/cantripDelta while the builder's pickers kept
  * offering the uncapped class table, so a flexible spellcaster picked six cantrips and three
  * 1st-rank spells and the sheet silently kept four and two. One function, both sides.
+ *
+ * `forClassId` asks for ONE held class's casting (Dual Class, lane C2): a class archetype changes the
+ * class it names — Wellspring Mage (bard, sorcerer, oracle, psychic, summoner) cuts a Wizard/Sorcerer's
+ * sorcerer cantrips, never the wizard's — and each class's entry is built with its own answer. Omitted,
+ * every held class counts, as before; for a single class the two answers are the same.
  */
 export function classArchetypeSpellMods(
   build: BuildState,
   content: ContentDatabase,
+  forClassId?: string | null,
 ): { slotCap?: number; cantripDelta: number; spellCollection: boolean } {
   let slotCap: number | undefined;
   let cantripDelta = 0;
@@ -2850,6 +2865,7 @@ export function classArchetypeSpellMods(
     if (!ca) continue;
     const classes = Array.isArray(ca.classId) ? ca.classId : [ca.classId];
     if (!heldClasses(build).some((s) => s.classId && classes.includes(s.classId))) continue;
+    if (forClassId != null && !classes.includes(forClassId)) continue;
     if (ca.slotCap != null) slotCap = Math.min(slotCap ?? Infinity, ca.slotCap);
     // ⚠ The FLAT feature cut only. The dedication's give-back ("four cantrips instead of three; at
     // 4th, five instead of four") is NOT this field's job — it already lives on the feat record's
@@ -4036,18 +4052,44 @@ function restrictedGrantSpells(grant: RestrictedSlotGrant | undefined, level: nu
  * so they can be prepared in an ordinary slot too. Sourced from the very `restricted` ladder that
  * builds those slots — never a second hard-coded list — so the book and the slots cannot disagree.
  *
+ * …and a class feature's own `grantedSpells` (ClassFeatureDef.grantedSpells: *"Spells this feature
+ * adds to the caster's spellbook/repertoire"*), reached at the feature's level. The necromancer's dirge
+ * is *"your choice of eight occult cantrips, THE 1ST-RANK SPELL HARM, and four other 1st-rank occult
+ * spells"* (class-feature-1285): harm is in the dirge for free, and like the studious spells it must
+ * not be charged to the four the player chooses — which is why it lives here, the list both
+ * buildCharacter's book and deriveBuildFromCharacter's "minus what the class gave for free" read.
+ * No other class's own feature carries a flat `grantedSpells` (measured 2026-10-14: only witch
+ * lessons, which are choice-owned and go through `featureGrantedSpells`).
+ *
  * Gated on the class actually declaring a `spellbook`, which is exactly the class print says this of;
  * a class feature's restricted grant on a bookless caster stays walled off in its slots as before.
  */
 function bookGrantedSpellIds(content: ContentDatabase, cls: ClassDef | undefined, subclassId: string | null | undefined, level: number): string[] {
   if (!cls?.spellcasting?.spellbook) return [];
+  const owned = (cls.features ?? []).filter((f) => f.level <= level).map((f) => content.classFeatures[f.featureId]);
   const grants = [
-    ...(cls.features ?? []).filter((f) => f.level <= level).map((f) => content.classFeatures[f.featureId]?.spellSlotBonus?.restricted),
+    ...owned.map((f) => f?.spellSlotBonus?.restricted),
     cls.subclass?.options.find((o) => o.id === subclassId)?.spellSlotBonus?.restricted,
   ];
   const out: string[] = [];
   for (const g of grants) for (const id of restrictedGrantSpells(g, level)) if (content.spells[id] && !out.includes(id)) out.push(id);
+  // `Array.isArray`: the psychic's conscious mind feature carries `grantedSpells` as a ladder MAP.
+  for (const f of owned) for (const id of Array.isArray(f?.grantedSpells) ? f.grantedSpells : []) if (content.spells[id] && !out.includes(id)) out.push(id);
   return out;
+}
+
+/**
+ * The dragon a Draconic (or Wyrmblessed) bloodline casts as: the exemplar the player chose, else the
+ * option's first. Undefined for an option with no dragon. ONE reading, for buildCharacter (each class's
+ * casting entry, the bloodline skill) and the builder's spell picker, which offered a divine-dragon
+ * sorcerer the arcane list because it read the bloodline's own `tradition` instead (lane C2).
+ */
+export function optionDragon(
+  opt: SubclassOption | undefined,
+  exemplar: string | null | undefined,
+): NonNullable<SubclassOption['dragonChoice']>[number] | undefined {
+  if (!opt?.dragonChoice?.length) return undefined;
+  return opt.dragonChoice.find((d) => d.slug === exemplar) ?? opt.dragonChoice[0];
 }
 
 /**
@@ -4099,22 +4141,30 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * Hoisted because two places need the same answer — the curriculum slot itself, and Sin Reservoir's
    * restricted slot, which may hold "only one of your curriculum spells". Computing it twice is how
    * the two would come to disagree.
+   *
+   * A function of the school OPTION, because under Dual Class a second-class wizard has a school of its
+   * own: its branch or sin is answered under the same `feature:<option id>` key the first class's is
+   * (the builder's second-subclass card writes it there), and it builds that class's curriculum slots
+   * (lane C2 — a Sorcerer/Wizard had a plain extra slot instead, and the answer changed nothing).
    */
-  const wizardCurriculum = (() => {
-    const rec = subOption?.id ? content.classFeatures[subOption.id] : undefined;
+  const curriculumOf = (opt: SubclassOption | undefined): Record<string, string[]> | undefined => {
+    const rec = opt?.id ? content.classFeatures[opt.id] : undefined;
     if (!rec?.curriculum && !rec?.curriculumBranches) return undefined;
-    const picked = subOption?.id ? build.featChoices?.[`feature:${subOption.id}`] : undefined;
+    const picked = opt?.id ? build.featChoices?.[`feature:${opt.id}`] : undefined;
     const extra = picked ? rec?.curriculumBranches?.[picked] : undefined;
     const merged: Record<string, string[]> = { ...(rec?.curriculum ?? {}) };
     for (const [rank, ids] of Object.entries(extra ?? {})) merged[rank] = [...new Set([...(merged[rank] ?? []), ...ids])];
     return Object.keys(merged).length ? merged : undefined;
-  })();
+  };
+  const wizardCurriculum = curriculumOf(subOption);
   // Dual Class: the second class's chosen subclass also confers its grants (order skill, racket, etc.).
   const subOption2 = cls2?.subclass?.options.find((o) => o.id === build.subclassId2);
   // Sorcerer Draconic: the chosen dragon exemplar sets the spell tradition + the 2nd bloodline skill.
-  const dragon = (subOption ?? subOption2)?.dragonChoice?.length
-    ? (subOption ?? subOption2)!.dragonChoice!.find((d) => d.slug === build.dragonExemplar) ?? (subOption ?? subOption2)!.dragonChoice![0]
-    : undefined;
+  // The option that HAS a dragon — `subOption ?? subOption2` took the first class's whatever it was, so a
+  // Cleric/Sorcerer(draconic) read the doctrine, found no dragon and never got its bloodline skill (lane
+  // C2). Only a sorcerer bloodline carries one, so a character has at most one. Each class's casting
+  // reads its OWN option's dragon (`optionDragon`, in classCasting below).
+  const dragon = optionDragon([subOption, subOption2].find((o) => o?.dragonChoice?.length), build.dragonExemplar);
   // Options chosen in extra choice groups (psychic subconscious mind, apparitions, …) — from EITHER
   // class (the groups are keyed by a subsystem-specific id, so the two classes never collide).
   const extraOptions: SubclassOption[] = [];
@@ -4237,6 +4287,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   /** The key attribute the FIRST class's own option sets for its casting entries (see above). */
   const firstKeyOption = firstClassOptions.find((o) => o.keyAbility || o.keyAbilityOptions?.length);
   const firstClassKeyAbility = firstKeyOption ? resolveOptionKeyAbility(firstKeyOption, build.keyAbility) : undefined;
+  /** …and the SECOND class's own options, for ITS casting entry (lane C2): a Fighter/Psychic whose
+   *  subconscious mind is Wandering Reverie casts with Charisma, not the psychic record's default
+   *  Intelligence, and an X/Witch casts in its patron's tradition. Every option of the second class's own
+   *  groups, so a group both classes share would answer for both — none does. */
+  const secondOwnOptionIds = new Set(
+    cls2 ? [...(cls2.subclass?.options ?? []), ...(cls2.extraChoices ?? []).flatMap((g) => g.options)].map((o) => o.id) : [],
+  );
+  const secondClassOptions = cls2 ? grantOptions.filter((o) => secondOwnOptionIds.has(o.id)) : [];
+  const secondKeyOption = secondClassOptions.find((o) => o.keyAbility || o.keyAbilityOptions?.length);
+  const secondClassKeyAbility = secondKeyOption ? resolveOptionKeyAbility(secondKeyOption, build.keyAbility) : undefined;
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
 
   // Tradition + key ability for a FOCUS pool. Slot casters reuse their spellcasting;
@@ -4273,15 +4333,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    *
    * Computed here rather than in the class-archetype block further down, which runs long after the
    * spellcasting entries have been built — a slot cap applied there would change nothing.
+   *
+   * Per CLASS (lane C2): under Dual Class each class's entry takes the archetype that names IT — see
+   * classArchetypeSpellMods. A single class gets exactly the answer it always did.
    */
-  const archSpellMods = classArchetypeSpellMods(build, content);
+  const archSpellModsOf = (classId: string) => classArchetypeSpellMods(build, content, classId);
   /** Apply a class archetype's per-rank slot ceiling. The archetype's own text exempts restricted
    *  slots ("the wizard's specialist school spells or the cleric's divine font spells"), and those
    *  live in `restrictedSlots` / `font` rather than in this table, so capping here is exactly right. */
-  const capSlots = (counts: Record<number, number>): Record<number, number> =>
-    archSpellMods.slotCap == null
+  const capSlots = (counts: Record<number, number>, mods: { slotCap?: number }): Record<number, number> =>
+    mods.slotCap == null
       ? counts
-      : Object.fromEntries(Object.entries(counts).map(([r, n]) => [r, Math.min(n, archSpellMods.slotCap!)]));
+      : Object.fromEntries(Object.entries(counts).map(([r, n]) => [r, Math.min(n, mods.slotCap!)]));
 
   const skills = {} as Record<ProficiencyKey, ProficiencyRank>;
   for (const sk of SKILLS) skills[sk] = 'untrained';
@@ -4779,6 +4842,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * the very route the witch PATRON's taught spells already take.
    */
   const featureGrantedSpells: string[] = [];
+  /** …and the FEAT whose choice granted each one, so under Dual Class a witch's lesson spell reaches the
+   *  witch's entry rather than whichever class is first (`featAimsAtClass`, lane C2). */
+  const featureSpellFeat: Record<string, string> = {};
   /** Which feat/feature granted each focus spell — the focus entry pools many sources, so the Spells
    *  page labels each spell with its origin. */
   const focusSource: Record<string, string> = {};
@@ -4965,7 +5031,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         // subclass option's `grantedSpellChoice` uses, so a stale answer grants nothing.
         const picked = gsc && build.featSpellChoices?.[`${slotKey}:granted-spell`];
         for (const sid of [...flat, ...(picked && gsc.options.includes(picked) ? [picked] : [])]) {
-          if (content.spells[sid] && !featureGrantedSpells.includes(sid)) featureGrantedSpells.push(sid);
+          if (content.spells[sid] && !featureGrantedSpells.includes(sid)) {
+            featureGrantedSpells.push(sid);
+            featureSpellFeat[sid] = featId;
+          }
         }
       }
     }
@@ -5149,18 +5218,69 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
 
   const spellcasting: SpellcastingEntry[] = [];
   let focus: FocusPool | undefined;
-  if (cls?.spellcasting) {
-    const sp = cls.spellcasting;
+  /** Each class entry's own curriculum, for a restricted grant that asks for one (Sin Reservoir). */
+  const curriculumOfEntry = new Map<string, Record<string, string[]> | undefined>();
+  /**
+   * Under Dual Class, which class a CLASS FEAT's spell effect belongs to: the class whose trait it
+   * carries (a witch's lesson teaches the witch's familiar; Ultimate Polymath makes the BARD's repertoire
+   * signature). A feat carrying neither class's trait stays with the first class, where every such
+   * effect has always gone. A single class: always the first.
+   */
+  const featAimsAtClass = (featId: string | undefined, classId: string): boolean => {
+    if (!cls2) return true;
+    const traits = (featId ? content.feats[featId]?.traits : undefined) ?? [];
+    if (traits.includes(classId)) return true;
+    return classId === cls?.id && !traits.includes(cls2.id);
+  };
+  /**
+   * ONE CLASS'S OWN SPELLCASTING — its entry, and the animist's apparition pool beside it.
+   *
+   * Gamemastery Guide, Dual-Class Characters (AoN rules-1330): *"Dual-class spellcasters get full access
+   * to all the spells of any spellcasting classes they have. For instance, a sorcerer/wizard gets five
+   * cantrips in their spell repertoire from sorcerer, five prepared cantrips from wizard … and three
+   * 1st-level prepared spell slots from wizard (or four, for a specialist). They keep these spells
+   * entirely separate and get the full benefits of both spellcasting class features."*
+   *
+   * So the SECOND class's entry is built by exactly this code, called twice. It used to be a separate,
+   * thinner copy (lane C2, 2026-10-14, measured): only a second-class WIZARD had a book, and a plain +1
+   * slot instead of its curriculum; a second-class witch, magus or necromancer prepared rank 1+ off the
+   * whole tradition; no cantrip could be re-prepared on the sheet; the patron's, bloodline's and
+   * conscious mind's spells never arrived; a divine dragon cast arcane and a Wandering Reverie psychic
+   * cast with Intelligence.
+   *
+   * The names inside are THIS class's (`cls`, `subOption`, `sp`), so the body reads as it always did.
+   * What differs per class arrives in `k`: the class's own options (tradition, key attribute), its
+   * curriculum, its spell surface (`build.cantrips/spells/signatures`, or the `…2` mirror), its
+   * archetype prices and the feat-taught spells aimed at it. The entry id stays `<class id>-casting`,
+   * so every stored play key (prepared slots, cantrip openings, repertoire, stars) still lands.
+   */
+  const classCasting = (k: {
+    /** A class WITH `spellcasting` — both callers test it first. */
+    cls: ClassDef;
+    subOption: SubclassOption | undefined;
+    subclassId: string | null | undefined;
+    /** This class's own chosen options — its tradition comes from these (`firstClassOptions` / …). */
+    options: SubclassOption[];
+    /** The key attribute this class's own option sets, if any. */
+    keyAbility: AbilityId | undefined;
+    curriculum: Record<string, string[]> | undefined;
+    cantrips: string[];
+    spells: Record<number, string[]>;
+    signatures: Record<number, string | string[]> | undefined;
+  }): { entry: SpellcastingEntry; slotCounts: Record<number, number> } => {
+    const { cls, subOption } = k;
+    const sp = cls.spellcasting!;
+    const mods = archSpellModsOf(cls.id);
     // A subclass/choice can set the tradition (witch patron, sorcerer bloodline,
     // summoner eidolon) or key ability (psychic subconscious mind); else the class's.
     // The Draconic bloodline's tradition comes from the chosen dragon exemplar.
-    // THIS class's options only (`firstClassOptions`): under Dual Class the second class's eidolon,
-    // patron or bloodline set the first class's tradition whenever this class's own option was silent.
-    // `dragon` is the second class's when this class chose no subclass, so it counts only with one.
-    const tradition = (subOption ? dragon : undefined)?.tradition ?? firstClassOptions.find((o) => o.tradition)?.tradition ?? sp.tradition;
+    // THIS class's options only (`k.options`): under Dual Class the other class's eidolon, patron or
+    // bloodline set this class's tradition whenever its own option was silent. The dragon is this
+    // class's own subclass option's.
+    const tradition = optionDragon(subOption, build.dragonExemplar)?.tradition ?? k.options.find((o) => o.tradition)?.tradition ?? sp.tradition;
     // A subclass can override the slot progression (cleric Battle Creed uses the reduced two-rank table).
     const progression = subOption?.slotProgression ?? sp.progression;
-    const slotCounts = capSlots(casterSlots(level, progression)); // rank -> number of slots
+    const slotCounts = capSlots(casterSlots(level, progression), mods); // rank -> number of slots
     // Wizard School of Unified Magical Theory (Player Core): "No Curriculum" — it grants NO curriculum
     // spell slot and NO extra school cantrip (unlike every other arcane school). Instead it gives a bonus
     // L1 wizard class feat + one extra spellbook spell (feat/spellbook grants handled elsewhere). Gate the
@@ -5208,36 +5328,44 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * studious spells and the hybrid study's own spell are not only usable in the two restricted slots,
      * they are IN THE BOOK, so an ordinary slot can hold them too. Ours put them solely into two
      * walled-off slots and the round-trip then stripped them out of the book again. */
-    for (const id of bookGrantedSpellIds(content, cls, build.subclassId, level)) {
+    for (const id of bookGrantedSpellIds(content, cls, k.subclassId, level)) {
       const rank = content.spells[id]?.rank ?? 1;
       if (!(grantedByRank[rank] ??= []).includes(id)) grantedByRank[rank].push(id);
     }
     /* batch 035: lesson-of-vengeance#familiar-spell — *"and your familiar learns Phantom Pain."* A
      * lesson's taught spell is a grant to THIS pool exactly as the patron's is, so it merges here and
-     * nowhere else: one route, and the spellbook/repertoire/cantrip branches all inherit it. */
+     * nowhere else: one route, and the spellbook/repertoire/cantrip branches all inherit it. Under Dual
+     * Class, to the pool of the class whose feat taught it (`featAimsAtClass`). */
     for (const id of featureGrantedSpells) {
+      if (!featAimsAtClass(featureSpellFeat[id], cls.id)) continue;
       const rank = content.spells[id]?.rank ?? 1;
       if (!(grantedByRank[rank] ??= []).includes(id)) grantedByRank[rank].push(id);
     }
     // The ALLOWANCE, not just the picks: the sheet needs it to draw empty cantrip openings — with
     // zero picked, the whole Cantrips section used to vanish, and a new caster had no hint that
     // cantrips exist or where to choose them (measured on a fresh cloistered cleric).
-    const cantripAllowance = Math.max(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + cantripBonus + archSpellMods.cantripDelta);
+    const cantripAllowance = Math.max(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + cantripBonus + mods.cantripDelta);
     const entry: SpellcastingEntry = {
       id: `${cls.id}-casting`,
       name: `${cap(tradition)} ${sp.type} spellcasting`,
       type: sp.type,
       tradition,
-      keyAbility: firstClassKeyAbility ?? sp.keyAbility,
+      keyAbility: k.keyAbility ?? sp.keyAbility,
       proficiency: 'trained',
       // Dedup so a subclass-granted cantrip (psychic conscious mind) doesn't duplicate a
       // player-picked one — and, for a class whose grants count INSIDE the allowance (the sorcerer's
       // sorcerous gift cantrip: *"four cantrips of your choice, as well as an additional… cantrip from
-      // your bloodline"* against a Cantrips column of 5), cap the pair rather than appending.
+      // your bloodline"* against a Cantrips column of 5), the gift goes first.
+      //
+      // ⚠ Lane C2 (2026-10-14): NOT capped any more. The pair was sliced to the allowance, so a sorcerer
+      // whose builder offered five picks beside the gift (every one before this lane) had its fifth
+      // drawn nowhere, with nothing saying so. The builder now offers the allowance less the gift
+      // (`grantedPlaces`); an older pick past it is drawn and reported (`cantripsOverOf`).
       cantrips: sp.grantedCountsAgainstRepertoire
-        ? [...new Set([...(grantedByRank[0] ?? []), ...build.cantrips])].slice(0, cantripAllowance)
-        : [...new Set([...build.cantrips.slice(0, cantripAllowance), ...(grantedByRank[0] ?? [])])],
+        ? [...new Set([...(grantedByRank[0] ?? []), ...k.cantrips.slice(0, cantripAllowance)])]
+        : [...new Set([...k.cantrips.slice(0, cantripAllowance), ...(grantedByRank[0] ?? [])])],
       cantripCap: cantripAllowance,
+      ...(sp.grantedCountsAgainstRepertoire ? { grantsCountInside: true } : {}),
       // A prepared CLASS prepares its cantrips each morning (kept under the flexible collection:
       // "this archetype doesn't change the way you prepare cantrips"), so the sheet may re-prepare
       // them; the builder's picks are the standing default. Granted cantrips ride separately so a
@@ -5273,11 +5401,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
          * Cantrips column of 5, and *"your first new spell is always the sorcerous gift spell for that
          * rank"* — the gift IS the first of the allowance, so an appended gift made a 1st-level
          * sorcerer know six cantrips where print says five. `grantedCountsAgainstRepertoire` opts a
-         * class into counting them inside; the gift is placed FIRST so it is never the entry the cap
-         * discards. */
+         * class into counting them inside; the gift is placed FIRST.
+         *
+         * ⚠ …and the count is kept by the CAPS, not by a slice (lane C2, 2026-10-14). The list used to
+         * be sliced to `count`, which pushed the player's last pick off the end at any full rank — and
+         * the builder offered `count` picks, so that was every full rank of every sorcerer, drawn
+         * nowhere and marked nowhere. The builder now offers `count` less the gift, the sheet's gate
+         * the same (`grantedPlaces`), and a pick an older builder allowed past it is drawn and reported
+         * over the cap (`overCapOf`). Only the player's own picks are clamped, exactly as below. */
         entry.repertoire[rank] = sp.grantedCountsAgainstRepertoire
-          ? [...new Set([...granted, ...(build.spells[rank] ?? [])])].slice(0, count)
-          : [...new Set([...(build.spells[rank] ?? []).slice(0, count), ...granted])];
+          ? [...new Set([...granted, ...(k.spells[rank] ?? []).slice(0, count)])]
+          : [...new Set([...(k.spells[rank] ?? []).slice(0, count), ...granted])];
         if (granted.length) (entry.grantedRepertoire ??= {})[rank] = [...granted];
       }
       // Signature spells (one per rank) — only once the class grants the feature
@@ -5285,9 +5419,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // `signatureSpellsAt` is the shared predicate the Builder's two stars and the sheet's star read too.
       const sigAvailable = signatureSpellsAt(cls, level);
       if (sigAvailable) {
-        const sig = Object.keys(build.signatures)
-          .flatMap((rankStr) => signaturesAt(build.signatures, Number(rankStr))
-            .filter((id) => entry.repertoire?.[Number(rankStr)]?.includes(id)));
+        // …or a GRANT the repertoire now files at another rank: a data row that re-files a bloodline gift
+        // (phoenix's Cleanse Affliction, 2nd → its printed 4th) must not silently drop the star the
+        // player set in the builder while it sat at the old rank. A player's own pick never moves rank.
+        const grantedAnywhere = new Set(Object.values(entry.grantedRepertoire ?? {}).flat());
+        const sig = Object.keys(k.signatures ?? {})
+          .flatMap((rankStr) => signaturesAt(k.signatures, Number(rankStr))
+            .filter((id) => entry.repertoire?.[Number(rankStr)]?.includes(id) || grantedAnywhere.has(id)));
         if (sig.length) entry.signature = sig;
       }
       // Ultimate Polymath (bard 20): every spell in the repertoire is a signature spell.
@@ -5306,8 +5444,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // replaced — the sheet shows one star per rank and the picker is live from level 3.
       const unlimitedSig =
         // Read from the PICKS: the built `feats` array does not exist yet at this point in the build,
-        // the same reason `cantripBonus` above reads them directly.
-        Object.values(build.featPicks ?? {}).includes('ultimate-polymath') && !engineLaneOff('ultimate-polymath');
+        // the same reason `cantripBonus` above reads them directly. The BARD's repertoire, under Dual
+        // Class (`featAimsAtClass`) — a Bard/Sorcerer's sorcerer spells are not made signature by it.
+        Object.values(build.featPicks ?? {}).includes('ultimate-polymath') && !engineLaneOff('ultimate-polymath') && featAimsAtClass('ultimate-polymath', cls.id);
       if (unlimitedSig) entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
       /* …or any prepared class whose own record declares a BOOK. The class-id test was the only
        * spellbook lane in the engine, so the magus — *"The spellbook contains your choice of eight
@@ -5331,6 +5470,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         !isUmt &&
         ((cls.features ?? []).some((f) => f.featureId === 'arcane-school' || f.featureId === 'arcane-thesis') || !!subOption);
       entry.spellbook = {};
+      /*
+       * THE BOOK'S CANTRIPS (owner's bug 2026-10-14: "magus (and other spellbook casters) can prepare
+       * spells that aren't in their spellbook"). Print sizes the book at 10 / 10 / 8 / 8 cantrips
+       * (`bookCantripCapacity`) and prepares five (six) of them each morning — and the app modelled only
+       * the five, so the sheet's Prepare-a-cantrip opening offered the whole tradition.
+       *
+       * No new store: for a book caster `build.cantrips` (a second class's `cantrips2`) IS the book. Its first `cantripAllowance`
+       * entries stay the standing preparation — `entry.cantrips` above slices exactly that, so every
+       * reader of `entry.cantrips` is unchanged — and the rest are cantrips the book holds for a morning
+       * that wants them. The cap is never below the prepared allowance (Cantrip Expansion's eight).
+       * A saved character with five or six stored is a book of five or six with places free; nothing
+       * is rewritten. Its own field, NOT `spellbook[0]` (see SpellcastingEntry.bookCantrips).
+       */
+      const bookCantripCap = Math.max(bookCantripCapacity(cls) ?? 0, cantripAllowance);
+      entry.bookCantrips = [...new Set([...k.cantrips.slice(0, bookCantripCap), ...(grantedByRank[0] ?? [])])];
+      const noun = bookNoun(cls);
+      if (noun) entry.bookNoun = noun;
       /* desk 155: flexible-book-casters — a book caster who took Flexible Spellcaster prepares a
        * COLLECTION out of the book instead of nailing one spell into each slot, so the per-slot
        * preparation is not built at all (an empty `prepared` would still take the font's rank away
@@ -5339,7 +5495,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * additional restrictions, like the wizard's specialist school spells … don't change due to
        * this archetype, nor do such spells count toward the number of spells you place in your spell
        * collection"* (archetype-99) — book, patron grants and curriculum slots all stand. */
-      const flexBook = archSpellMods.spellCollection;
+      const flexBook = mods.spellCollection;
       /** What the collection is drawn from: the assembled book, player's own picks first. */
       const bookFill: Record<number, string[]> = {};
       if (!flexBook) entry.prepared = {};
@@ -5347,8 +5503,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // your school's curriculum" — filling it from the whole spellbook, which is what a plain +1 did,
       // hands a wizard a free general slot at every rank. The list is the school's own, cumulative to
       // the slot's rank because a slot may hold any spell of its rank or lower.
-      // The school's list plus the chosen branch/sin — computed once, near subOption.
-      const curriculum = wizardCurriculum;
+      // The school's list plus the chosen branch/sin — computed once, near subOption (`curriculumOf`).
+      const curriculum = k.curriculum;
       for (const [rankStr, count] of Object.entries(slotCounts)) {
         const rank = Number(rankStr);
         /* The witch's PATRON teaches the familiar a spell (patron-N: *"your familiar learns …"*) — those
@@ -5356,14 +5512,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
          * spontaneous branch, so a built witch's spellbook held none of the 14 patron spells (measured
          * by the batch-28 data verifier: Baba Yaga's chilling spray appeared nowhere). Merged in first,
          * de-duplicated against what the player learned by hand. */
-        const learned = [...new Set([...(grantedByRank[rank] ?? []), ...(build.spells[rank] ?? [])])];
+        const learned = [...new Set([...(grantedByRank[rank] ?? []), ...(k.spells[rank] ?? [])])];
         entry.spellbook[rank] = [...learned];
         /* The standing preparation fills with the player's OWN learned spells first. A granted book
          * entry (a witch's patron spell, a magus's studious spells) is an addition to the BOOK — print
          * never says it stands prepared — and filling from the granted head pushed the player's own
-         * picks out of their own slots the moment a grant arrived. */
-        const fill = [...new Set([...(build.spells[rank] ?? []), ...learned])];
-        bookFill[rank] = fill;
+         * picks out of their own slots the moment a grant arrived.
+         *
+         * …and the player's own list AS STORED, a repeat included. The BOOK above is a set; the standing
+         * preparation is not. A necromancer picked per slot until its dirge was modelled (lane C1,
+         * 2026-10-14) — `spells[1] = ['fear', 'fear']` was fear prepared twice, the cleric branch's
+         * `chosen[i]` — and a set here drew [fear, harm]: a preparation the player never made, with
+         * nothing on the sheet saying why. A wizard's, witch's or magus's list comes out of the builder's
+         * set toggle, so for them this is the same list as before. The flexible COLLECTION stays a set:
+         * a repeat would spend a second place of its one flat pool on the same spell. */
+        const own = k.spells[rank] ?? [];
+        const fill = [...own, ...learned.filter((id) => !own.includes(id))];
+        bookFill[rank] = [...new Set(fill)];
         if (entry.prepared) entry.prepared[rank] = Array.from({ length: count }, (_, i) => ({ spellId: fill[i] ?? null, expended: false }));
         if (hasSchool && rank > 0) {
           const allowed: string[] = [];
@@ -5394,7 +5559,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * curriculum's restricted slots were pushed above and are untouched: they neither gain a
        * collection place nor spend one. */
       if (flexBook) fillSpellCollection(entry, slotCounts, bookFill, {});
-    } else if (archSpellMods.spellCollection) {
+    } else if (mods.spellCollection) {
       // FLEXIBLE SPELLCASTER: "you prepare a spell collection rather than preparing spells into
       // each spell slot individually … you can cast any of the spells in your collection by using
       // a spell slot of an appropriate level." The collection is a repertoire over the class's
@@ -5427,13 +5592,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * …and *"batch 037: flexible-spellcaster#capstone-outside-collection"* — rank 10 is OUTSIDE the
        * pool on BOTH sides of the sum. Both rules, and the whole loop, now live in
        * `fillSpellCollection`, which the BOOK branch above calls with the spellbook (desk 155). */
-      fillSpellCollection(entry, slotCounts, build.spells, grantedByRank);
+      fillSpellCollection(entry, slotCounts, k.spells, grantedByRank);
     } else {
       // Cleric/druid: prepare from the whole tradition list each day.
       entry.prepared = {};
       for (const [rankStr, count] of Object.entries(slotCounts)) {
         const rank = Number(rankStr);
-        const chosen = build.spells[rank] ?? [];
+        const chosen = k.spells[rank] ?? [];
         entry.prepared[rank] = Array.from({ length: count }, (_, i) => ({
           spellId: chosen[i] ?? null,
           expended: false,
@@ -5486,7 +5651,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         name: 'Apparition spellcasting',
         type: 'spontaneous',
         tradition: 'divine',
-        keyAbility: firstClassKeyAbility ?? sp.keyAbility,
+        keyAbility: k.keyAbility ?? sp.keyAbility,
         proficiency: entry.proficiency,
         cantrips: [...new Set(appCantrips)],
         repertoire,
@@ -5527,118 +5692,46 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         };
       }
     }
+    curriculumOfEntry.set(entry.id, k.curriculum);
+    return { entry, slotCounts };
+  };
+  if (cls?.spellcasting) {
+    classCasting({
+      cls,
+      subOption,
+      subclassId: build.subclassId,
+      options: firstClassOptions,
+      keyAbility: firstClassKeyAbility,
+      curriculum: wizardCurriculum,
+      cantrips: build.cantrips,
+      spells: build.spells,
+      signatures: build.signatures,
+    });
   }
-
-  // Dual Class: a SECOND spellcasting class contributes its own entry — correct slots, tradition,
-  // key attribute, and (advancing) proficiency, so the character can cast from it. Its actual spell
-  // list is chosen on the character sheet via the in-play spell manager (the builder's spell picker
-  // configures only the primary class). The per-class casting TAILS (divine font, magus studious,
-  // wizard curriculum, animist apparition pool) are applied here too.
-  if (cls2?.spellcasting && build.classId2) {
-    const sp2 = cls2.spellcasting;
-    const tradition2 = subOption2?.tradition ?? sp2.tradition;
-    const slotCounts2 = capSlots(casterSlots(level, subOption2?.slotProgression ?? sp2.progression));
-    // The second class's chosen spells live on BuildState.{cantrips2,spells2,signatures2} — mirroring
-    // the primary surface — so a builder edit rebuilds the second entry with its spells INTACT.
-    const cantrips2 = build.cantrips2 ?? [];
-    const spells2 = build.spells2 ?? {};
-    const entry2: SpellcastingEntry = {
-      id: `${cls2.id}-casting`,
-      name: `${cap(tradition2)} ${sp2.type} spellcasting`,
-      type: sp2.type,
-      tradition: tradition2,
-      keyAbility: sp2.keyAbility,
-      proficiency: 'trained',
-      cantrips: [...new Set([...cantrips2.slice(0, Math.max(0, cantripsKnown(cls2.id) + cantripBonus + archSpellMods.cantripDelta))])],
-    };
-    const hasSchool2 = cls2.id === 'wizard'; // wizard curriculum: +1 prepared slot per castable rank
-    if (sp2.repertoire) {
-      entry2.repertoire = {};
-      entry2.slots = {};
-      for (const [rankStr, count] of Object.entries(slotCounts2)) {
-        const rank = Number(rankStr);
-        entry2.slots[rank] = { max: count, used: 0 };
-        entry2.repertoire[rank] = [...new Set((spells2[rank] ?? []).slice(0, count))];
-      }
-      // Signature spells (spontaneous, once granted) — each must be in the repertoire.
-      const sig2Available = signatureSpellsAt(cls2, level);
-      if (sig2Available) {
-        const sig2 = Object.keys(build.signatures2 ?? {})
-          .flatMap((rankStr) => signaturesAt(build.signatures2, Number(rankStr))
-            .filter((id) => entry2.repertoire?.[Number(rankStr)]?.includes(id)));
-        if (sig2.length) entry2.signature = sig2;
-      }
-    } else if (cls2.id === 'wizard') {
-      // Wizard second class: spells2 is the spellbook; auto-prepare from it (+1 curriculum slot/rank).
-      entry2.spellbook = {};
-      entry2.prepared = {};
-      for (const [rankStr, count] of Object.entries(slotCounts2)) {
-        const rank = Number(rankStr);
-        const learned = spells2[rank] ?? [];
-        entry2.spellbook[rank] = [...learned];
-        entry2.prepared[rank] = Array.from({ length: count + 1 }, (_, i) => ({ spellId: learned[i] ?? null, expended: false }));
-      }
-    } else {
-      entry2.prepared = {};
-      for (const [rankStr, count] of Object.entries(slotCounts2)) {
-        const rank = Number(rankStr);
-        const chosen = spells2[rank] ?? [];
-        entry2.prepared[rank] = Array.from({ length: count + (hasSchool2 ? 1 : 0) }, (_, i) => ({ spellId: chosen[i] ?? null, expended: false }));
-      }
-    }
-    // Magus Studious Spells on the SECOND class — same fallback as the primary above: it stands down
-    // once the record carries the restricted grant, so the slots are never granted twice.
-    if (cls2.id === 'magus' && entry2.prepared && !content.classFeatures['studious-spells']?.spellSlotBonus?.restricted) {
-      const studious2 = magusStudiousSpells(level);
-      if (studious2) entry2.prepared[studious2.rank] = [...(entry2.prepared[studious2.rank] ?? []), ...studious2.spells.map((id) => ({ spellId: content.spells[id] ? id : null, expended: false }))];
-    }
-    // Cleric divine font (or Battle Creed's battle font) on the second class — 4/5/6 slots at the
-    // highest NORMAL rank (rank 10 is the Miraculous Spell capstone, excluded), matching the primary.
-    if (entry2.prepared) {
-      const fontSlots2 = level >= 15 ? 6 : level >= 5 ? 5 : 4;
-      const ranks2 = Object.keys(entry2.prepared).map(Number).filter((r) => r <= 9);
-      const top2 = ranks2.length ? Math.max(...ranks2) : 1;
-      if (subOption2?.id === 'battle-creed') {
-        entry2.font = { type: 'battle', slots: fontSlots2, rank: top2, useClassDc: true, allowed: ['bane', 'bless'] };
-      } else if ((cls2.features ?? []).some((f) => f.featureId === 'divine-font') && build.divineFont) {
-        const deityFont2 = build.deityId ? content.deities[build.deityId]?.divineFont : undefined;
-        if (!deityFont2?.length || deityFont2.includes(build.divineFont)) entry2.font = { type: build.divineFont, slots: fontSlots2, rank: top2 };
-      }
-    }
-    spellcasting.push(entry2);
-
-    // Animist (as the second class): a separate spontaneous apparition pool from the attuned apparitions.
-    if (cls2.id === 'animist') {
-      const appCantrips: string[] = [];
-      const byRank: Record<number, string[]> = {};
-      for (const o of extraOptions)
-        for (const id of o.grantedSpells ?? []) {
-          const r = content.spells[id]?.rank ?? 1;
-          if (r === 0) appCantrips.push(id);
-          else (byRank[r] ??= []).push(id);
-        }
-      const appSlots = apparitionSlots(level);
-      const repertoire: Record<number, string[]> = {};
-      const slots: Record<number, { max: number; used: number }> = {};
-      for (const rankStr of Object.keys(appSlots)) {
-        const r = Number(rankStr);
-        slots[r] = { max: appSlots[r], used: 0 };
-        repertoire[r] = [...new Set(byRank[r] ?? [])];
-      }
-      spellcasting.push({
-        id: 'animist-apparition-casting',
-        name: 'Apparition spellcasting',
-        type: 'spontaneous',
-        tradition: 'divine',
-        keyAbility: sp2.keyAbility,
-        proficiency: 'trained',
-        cantrips: [...new Set(appCantrips)],
-        repertoire,
-        slots,
-        signature: [...new Set(Object.values(repertoire).flat())],
-      });
-    }
-  }
+  /*
+   * Dual Class: the SECOND spellcasting class, through the same `classCasting` — its own tradition (its
+   * patron, eidolon, bloodline or dragon), key attribute (its psychic mind), granted spells, book,
+   * cantrip openings, curriculum and font. Its picks live on BuildState.{cantrips2,spells2,signatures2},
+   * mirroring the primary surface, so a builder edit rebuilds the entry with its spells intact.
+   *
+   * `secondEntryFill` is kept for one reason: the plain +1 slot the old second-class wizard had. Its pick
+   * was stored under `<entry>:<rank>:<count>`, the index just past the ordinary slots; the curriculum
+   * slot that replaces it reads that key while it holds nothing of its own (play.ts, `legacyKey`).
+   */
+  const secondEntryFill =
+    cls2?.spellcasting && build.classId2
+      ? classCasting({
+          cls: cls2,
+          subOption: subOption2,
+          subclassId: build.subclassId2,
+          options: secondClassOptions,
+          keyAbility: secondClassKeyAbility,
+          curriculum: curriculumOf(subOption2),
+          cantrips: build.cantrips2 ?? [],
+          spells: build.spells2 ?? {},
+          signatures: build.signatures2,
+        })
+      : undefined;
 
   // Focus spells granted by the class (bard compositions) + subclass (order/school spell,
   // witch hex, champion devotion, ranger warden) + domain-initiate feats. This runs for
@@ -8489,6 +8582,30 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const r of eligible) add(r, perRank);
   }
   /*
+   * DUAL CLASS, a save from before lane C2 (2026-10-14): a second-class WIZARD had a plain +1 prepared
+   * slot at every rank where it now has its curriculum slot, and the player's pick in that slot is
+   * stored under `<entry>:<rank>:<count>` — the index just past the ordinary slots. The curriculum slot
+   * names that key (`legacyKey`) and the sheet draws its pick there while the slot holds nothing of its
+   * own, marked when it is not a curriculum spell (play.ts) — a pick the player stored is never
+   * hidden. The key is the index just past EVERY slot the rank has now: with no bonus slot that is
+   * `count`, the old +1 slot's own index. With bonus slots (pass 1, just above — a Ring of Wizardry)
+   * the old layout had them one further along (+1 slot first, then the ring's), so each of today's
+   * bonus slots draws the key one before its old one and the LAST old bonus slot's key is read by no
+   * slot at all — it is this one. Lane C3 (2026-10-15): it was set only when the rank had no bonus
+   * slot, so that last ring pick was drawn nowhere (c2chk4/ring.ts: `command` at `:1:5`). Every stored
+   * key at the rank is read by exactly one slot either way, so no pick is drawn twice. The key cannot
+   * say which app wrote it, so a ring taken off or a level-down reaches it too (types.ts, `legacyKey`).
+   */
+  if (secondEntryFill && cls2?.id === 'wizard') {
+    const e2 = secondEntryFill.entry;
+    for (const rs of e2.restrictedSlots ?? []) {
+      const count = secondEntryFill.slotCounts[rs.rank];
+      if (rs.id !== `${e2.id}:curriculum:${rs.rank}` || count == null) continue;
+      // preparedKey's shape (play.ts), written out here because play.ts imports this file.
+      rs.legacyKey = `${e2.id}:${rs.rank}:${e2.prepared?.[rs.rank]?.length ?? count}`;
+    }
+  }
+  /*
    * Pass 2 — RESTRICTED slots, resolved only now so a rank the pass above CREATED counts as the
    * entry's highest. They live in their own list, never in `prepared`/`slots` — see RestrictedSlotGrant.
    *
@@ -8509,8 +8626,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const { bonus, grant } of restrictedBonuses) {
     const entry = slotEntryFor(bonus);
     if (!entry) continue;
+    // The curriculum of the class whose entry it lands on — under Dual Class a second-class wizard's
+    // Sin Reservoir holds ITS curriculum, not the first class's. Any other entry: the first class's.
+    const entryCurriculum = curriculumOfEntry.has(entry.id) ? curriculumOfEntry.get(entry.id) : wizardCurriculum;
     (entry.restrictedSlots ??= []).push(
-      ...resolveRestrictedSlots(grant, entry, level, String(restrictedGroup++), wizardCurriculum, content),
+      ...resolveRestrictedSlots(grant, entry, level, String(restrictedGroup++), entryCurriculum, content),
     );
   }
 
@@ -8942,6 +9062,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const own = spellcasting.find((e) => e.type === 'prepared' || e.type === 'spontaneous');
     if (!own || own.cantrips.includes(sid)) continue;
     own.cantrips.push(sid);
+    // …and a BOOK caster's openings may hold it: *"If you prepare spells, you can choose this spell
+    // when you prepare your cantrips, in addition to your other options"* — so it joins the list the
+    // openings' picker (held to the book) offers, and is still there after a re-preparation.
+    if (own.bookCantrips && !own.bookCantrips.includes(sid)) own.bookCantrips.push(sid);
     // Attributed through the field that already means this — the class pool's cantrip card prints
     // "· from Adapted Cantrip" so the extra row is not mistaken for one of the player's own picks.
     (own.spellSources ??= {})[sid] ??= content.feats[fc.featId]?.name ?? 'A feat';
@@ -11121,55 +11245,77 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     // (prepared/spontaneous), excluding the entries that are NOT the primary class pool: the caster
     // archetype pool (`-dedication-casting`), focus spells (`type === 'focus'`), the animist apparition
     // pool, and — under Dual Class — the SECOND class's entry (recovered separately below).
-    const classEntry = cls ? findPrimaryCasterEntry(c, cls, cls2dc) : undefined;
-    if (classEntry) {
-      b.cantrips = classEntry.cantrips.filter((s) => !grantedSpellSet.has(s));
+    /**
+     * One class's spell surface, back out of its entry: the cantrips are RETURNED, the spells and
+     * signatures written into the records handed in. ONE routine for both classes, because
+     * buildCharacter builds both entries with one (`classCasting`): the second class's used to be read
+     * back raw — its book with the class's own gifts in it, its five prepared cantrips instead of its
+     * book, its granted repertoire spells as picks — which charged each gift against the builder's
+     * budget on every rebuild once the entry started receiving them (lane C2).
+     */
+    const recoverSurface = (
+      classEntry: SpellcastingEntry,
+      klass: ClassDef,
+      subclassId: string | null | undefined,
+      spells: Record<number, string[]>,
+      signatures: Record<number, string | string[]>,
+    ): string[] => {
+      /* What THIS class's own options grant. `grantedSpellSet` pools both classes' options, so under
+       * Dual Class a Sorcerer/Wizard's bloodline cantrip (daze) was taken out of the WIZARD's book on
+       * every rebuild — a pick the player made, lost. A single class: the same set as before. */
+      const own = new Set([...(klass.subclass?.options ?? []), ...(klass.extraChoices ?? []).flatMap((g) => g.options)].map((o) => o.id));
+      const grantedSpellSet = new Set(grantOptions.filter((o) => own.has(o.id)).flatMap((o) => o.grantedSpells ?? []));
       if (classEntry.type === 'spontaneous' && classEntry.repertoire) {
-        for (const [rank, ids] of Object.entries(classEntry.repertoire)) b.spells[Number(rank)] = ids.filter((s) => !grantedSpellSet.has(s));
+        for (const [rank, ids] of Object.entries(classEntry.repertoire)) spells[Number(rank)] = ids.filter((s) => !grantedSpellSet.has(s));
         // ACCUMULATE. Assigning would keep only the last of a rank's signatures, which is exactly
         // the round-trip loss the array shape exists to stop — and TypeScript cannot catch it,
         // because a bare string is still assignable to `string | string[]`.
         for (const sigId of classEntry.signature ?? []) {
           const r = content.spells[sigId]?.rank;
-          if (r != null) b.signatures[r] = [...signaturesAt(b.signatures, r), sigId];
+          if (r != null) signatures[r] = [...signaturesAt(signatures, r), sigId];
         }
       } else if (classEntry.spellbook) {
         /* The book MINUS what the class put in it for free. *"You add any spells from this class
          * feature to your spellbook"* is a gift, so writing those ids back as player picks would charge
-         * them against the magus's 4 + 2 budget and push a real pick out of the book on every rebuild. */
-        const free = new Set(bookGrantedSpellIds(content, cls, c.subclassId, c.level));
-        for (const [rank, ids] of Object.entries(classEntry.spellbook)) b.spells[Number(rank)] = ids.filter((id) => !free.has(id));
+         * them against the magus's 5 + 2 budget (the necromancer's harm against its 4 + 2) and push a
+         * real pick out of the book on every rebuild. */
+        // …and minus what its OPTION put there: a witch's patron spell (*"your familiar learns …"*) came
+        // back as a pick, charged against the book's budget and moved to the head of the preparation on
+        // every rebuild (the quirk lane C1 noted; lane C2, now that a second-class witch has a patron).
+        const free = new Set([...bookGrantedSpellIds(content, klass, subclassId, c.level), ...grantedSpellSet]);
+        for (const [rank, ids] of Object.entries(classEntry.spellbook)) {
+          /* …with a spell the standing preparation holds TWICE written back twice, beside the first.
+           * The book is a set, but buildCharacter fills the preparation from the player's own list as
+           * stored (a necromancer's per-slot picks from before its dirge: [fear, fear]), and the set
+           * alone dropped the second fear on every rebuild with no stored build. A preparation with no
+           * repeat — every wizard's, witch's and magus's — gives back exactly the list it always did. */
+          const held = new Map<string, number>();
+          for (const s of classEntry.prepared?.[Number(rank)] ?? []) if (s.spellId && !s.traded) held.set(s.spellId, (held.get(s.spellId) ?? 0) + 1);
+          spells[Number(rank)] = ids.filter((id) => !free.has(id)).flatMap((id) => Array<string>(Math.max(1, held.get(id) ?? 0)).fill(id));
+        }
       } else if (classEntry.prepared) {
         const studious = new Set(magusStudiousSpells(c.level)?.spells ?? []);
         for (const [rank, slots] of Object.entries(classEntry.prepared)) {
-          b.spells[Number(rank)] = slots
+          spells[Number(rank)] = slots
             .map((s) => s.spellId)
             .filter((id): id is string => !!id && !studious.has(id) && !grantedSpellSet.has(id));
         }
       }
-    }
+      /* A BOOK caster's `build.cantrips` is the whole book (up to 10), and `cantrips` is only the five
+       * (six) prepared from it — reading that lost the rest on every rebuild of a character with no
+       * stored build (a Wanderer's Guide import's ten cantrips came back as six). */
+      return (classEntry.bookCantrips ?? classEntry.cantrips).filter((s) => !grantedSpellSet.has(s));
+    };
+    const classEntry = cls ? findPrimaryCasterEntry(c, cls, cls2dc) : undefined;
+    if (classEntry && cls) b.cantrips = recoverSurface(classEntry, cls, c.subclassId, b.spells, b.signatures);
     // Dual Class: recover the SECOND caster class's own spell surface into cantrips2/spells2/
     // signatures2, so it survives a builder rebuild (buildCharacter re-populates the entry from these).
     const classEntry2 = cls2dc ? findSecondCasterEntry(c, cls2dc, cls) : undefined;
-    if (classEntry2) {
-      b.cantrips2 = [...classEntry2.cantrips];
+    if (classEntry2 && cls2dc) {
       const spells2: Record<number, string[]> = {};
-      if (classEntry2.type === 'spontaneous' && classEntry2.repertoire) {
-        for (const [rank, ids] of Object.entries(classEntry2.repertoire)) spells2[Number(rank)] = [...ids];
-        const signatures2: Record<number, string | string[]> = {};
-        for (const sigId of classEntry2.signature ?? []) {
-          const r = content.spells[sigId]?.rank;
-          if (r != null) signatures2[r] = [...signaturesAt(signatures2, r), sigId];
-        }
-        if (Object.keys(signatures2).length) b.signatures2 = signatures2;
-      } else if (classEntry2.spellbook) {
-        for (const [rank, ids] of Object.entries(classEntry2.spellbook)) spells2[Number(rank)] = [...ids];
-      } else if (classEntry2.prepared) {
-        const studious2 = new Set(magusStudiousSpells(c.level)?.spells ?? []);
-        for (const [rank, slots] of Object.entries(classEntry2.prepared)) {
-          spells2[Number(rank)] = slots.map((s) => s.spellId).filter((id): id is string => !!id && !studious2.has(id));
-        }
-      }
+      const signatures2: Record<number, string | string[]> = {};
+      b.cantrips2 = recoverSurface(classEntry2, cls2dc, c.subclassId2, spells2, signatures2);
+      if (Object.keys(signatures2).length) b.signatures2 = signatures2;
       b.spells2 = spells2;
     }
     // Caster archetype pool (dedication-based id). Recover it SEPARATELY from the class pool: into

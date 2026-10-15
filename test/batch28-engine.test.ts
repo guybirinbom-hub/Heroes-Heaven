@@ -9,6 +9,7 @@ import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
 import { buildCharacter, deriveBuildFromCharacter, emptyBuild, setupMissing, type BuildState } from '../src/rules/build';
 import { repertoireCounts, spellbookBudget } from '../src/rules/spellcasting';
+import { cantripsOverOf } from '../src/rules/spellOptions';
 import { deriveStrike } from '../src/rules/derive';
 import { deriveFamiliar, familiarAbilityBudget } from '../src/rules/companions';
 import { explainStat } from '../src/rules/explain';
@@ -156,10 +157,21 @@ describe('batch 28 — class carriers (engine 1: types + build)', () => {
     expect(db.classes.sorcerer.spellcasting!.grantedCountsAgainstRepertoire, 'the sorcerer opts in').toBe(true);
     const counted = main(hero(b, db))!;
     expect(counted.cantripCap).toBe(5);
-    expect(counted.cantrips.length, 'five known cantrips, the bloodline gift among them').toBe(5);
-    expect(counted.cantrips, 'and the gift is never the entry the cap discards').toEqual(
+    /* This used to assert `cantrips.length === 5` for these FIVE picks plus the gift — i.e. that the
+     * fifth pick was cut off behind the gift and drawn nowhere. Changed in lane C2 (2026-10-14) because
+     * a pick the player stored is never hidden (gold set: a player's change is never overwritten): the
+     * builder now offers four places beside the gift (`grantedBeside`), and a save from the old builder
+     * draws all five and is REPORTED one over (`cantripsOverOf`). The print count is still the cap. */
+    expect(counted.grantsCountInside, 'the entry carries the rule').toBe(true);
+    expect(counted.cantrips, 'every one of the five picks is drawn').toEqual(expect.arrayContaining(b.cantrips!));
+    expect(cantripsOverOf(counted), 'and the sixth is reported over the printed five').toBe(1);
+    expect(counted.cantrips, 'and the gift is never the entry left out').toEqual(
       expect.arrayContaining(counted.grantedCantrips ?? []),
     );
+    // Four picks beside the gift is the printed five exactly, and nothing is over.
+    const legal = main(hero({ ...b, cantrips: b.cantrips!.slice(0, 4) }, db))!;
+    expect(legal.cantrips.length, 'five known cantrips, the bloodline gift among them').toBe(5);
+    expect(cantripsOverOf(legal)).toBe(0);
     // Strip the flag and the additive default returns: the gift rides on TOP of the five picks.
     const additive = withCasting('sorcerer', { grantedCountsAgainstRepertoire: undefined });
     expect(main(hero(b, additive))!.cantrips.length).toBe(6);
@@ -263,7 +275,9 @@ describe('batch 28 — class carriers (engine 1: types + build)', () => {
   it("magus: a class's spellbook budget comes off its own record, not a class-id test", () => {
     const spec = db.classes.magus.spellcasting!.spellbook!;
     // batch 037: magus#2026-printing
-    expect(spec, '"…your choice of eight arcane cantrips and five 1st-rank arcane spells"').toEqual({ spells: 5, perLevel: 2 });
+    // Lane C1 (2026-10-14) added `cantrips: 8` — the book's cantrips, from the same sentence — where this
+    // pinned { spells: 5, perLevel: 2 }: the sheet now holds the magus's openings to its book.
+    expect(spec, '"…your choice of eight arcane cantrips and five 1st-rank arcane spells"').toEqual({ spells: 5, perLevel: 2, cantrips: 8 });
     // batch 037: magus#2026-printing
     expect(spellbookBudget(spec, 1), 'five 1st-rank arcane spells').toBe(5);
     // batch 037: magus#2026-printing

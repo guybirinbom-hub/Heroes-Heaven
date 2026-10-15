@@ -348,8 +348,11 @@ describe('batch 28 — magus', () => {
    * (Impossible Magic pg. 9) prints "The spellbook contains your choice of eight arcane cantrips and
    * five 1st-rank arcane spells", and "you add two arcane spells" is unchanged. */
   // batch 037: magus#2026-printing
-  it('spellbook: "five 1st-rank arcane spells" + two per level (the cantrip count has no reader)', () => {
-    expect(raw(cls('magus').spellcasting).spellbook).toEqual({ spells: 5, perLevel: 2 });
+  // Lane C1 (2026-10-14): the cantrip count HAS a reader now — `bookCantripCapacity` holds the sheet's
+  // openings to the book (owner's bug: "magus … can prepare spells that aren't in their spellbook") — so
+  // `cantrips: 8` is carried, from the same sentence. This pinned { spells: 5, perLevel: 2 } before.
+  it('spellbook: "eight arcane cantrips and five 1st-rank arcane spells" + two per level', () => {
+    expect(raw(cls('magus').spellcasting).spellbook).toEqual({ spells: 5, perLevel: 2, cantrips: 8 });
     expect(cls('magus').spellcasting?.type, 'still a prepared caster').toBe('prepared');
   });
 });

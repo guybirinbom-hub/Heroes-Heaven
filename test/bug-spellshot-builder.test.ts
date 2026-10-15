@@ -96,8 +96,11 @@ describe('the Builder shows the cantrips an old spellshot already has', () => {
     // The row itself cannot be measured from a .ts test, so it is measured at the source: a row that
     // goes back to counting `build.cantrips` fails here, which is the mutation that matters.
     expect(BUILDER_SRC).toContain('legacyArchetypeCantrips(archCaster.dedicationId, build, content)');
-    expect(BUILDER_SRC).toContain('{rowCantrips.length} / {cantripCap}');
+    // Was `{rowCantrips.length} / {cantripCap}` until lane C1 (2026-10-14): the row's cap is now
+    // `cantripRowCap` — a book caster's book (10 / 10 / 8 / 8), everyone else's `cantripCap` unchanged.
+    expect(BUILDER_SRC).toContain('{rowCantrips.length} / {cantripRowCap}');
     expect(BUILDER_SRC).not.toContain('{build.cantrips.length} / {cantripCap}');
+    expect(BUILDER_SRC).not.toContain('{build.cantrips.length} / {cantripRowCap}');
     // …and editing a row that is showing the fallback materialises it first, so the X on a chip
     // removes that cantrip instead of adding it to an empty list.
     expect(BUILDER_SRC).toContain('if (legacyCantrips.length) actions.patch({ cantrips: legacyCantrips });');

@@ -58,7 +58,6 @@ import {
 import { choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, legacyArchetypeCantrips, narrowSpellFilter, resolveClassArchetype, subclassOptionAllowed } from '../rules/build';
 import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
 import { openChoiceOptions, type OpenOption } from '../rules/openChoice';
-import { cantripsKnown } from '../rules/spellcasting';
 import { spellsMatching } from '../rules/spellChoice';
 import { abpSkillBudget } from '../rules/abp';
 import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots } from '../rules/casterArchetypes';
@@ -322,7 +321,9 @@ export interface BuilderActions {
   /** Monk Path to Perfection: set the chosen save for a tier (0=L7 master, 1=L11 master, 2=L15 legendary). */
   setPathToPerfection: (tier: number, save: SaveId | null) => void;
   setAttributeBoost: (level: number, idx: number, v: AbilityId | null) => void;
-  toggleCantrip: (id: string) => void;
+  /** Add/remove a cantrip, capped at `cap` — the cap the CALLER's row shows (a book caster's book, a
+   *  Cantrip Expansion's extra two), never a second reading of the class's own count. */
+  toggleCantrip: (id: string, cap: number) => void;
   toggleSpell: (rank: number, id: string) => void;
   /** Append a spell to a rank (prepared casters can prepare the same spell repeatedly). */
   addSpell: (rank: number, id: string) => void;
@@ -331,7 +332,7 @@ export interface BuilderActions {
   /** Toggle a repertoire spell as the rank's signature spell (spontaneous, one per rank). */
   toggleSignature: (rank: number, id: string) => void;
   /** Dual Class — the same spell writers for the SECOND caster class (cantrips2/spells2/signatures2). */
-  toggleCantrip2: (id: string) => void;
+  toggleCantrip2: (id: string, cap: number) => void;
   toggleSpell2: (rank: number, id: string) => void;
   addSpell2: (rank: number, id: string) => void;
   removeSpellAt2: (rank: number, index: number) => void;
@@ -864,10 +865,13 @@ export function useBuilderActions(
         return { ...b, attributeBoosts: { ...b.attributeBoosts, [level]: arr } };
       });
     },
-    toggleCantrip(id) {
+    toggleCantrip(id, cap) {
       setBuild((b) => {
         if (b.cantrips.includes(id)) return { ...b, cantrips: b.cantrips.filter((x) => x !== id) };
-        if (b.cantrips.length >= cantripsKnown(b.classId)) return b;
+        /* The CALLER's cap. This read `cantripsKnown(b.classId)` and ignored every bonus, so a wizard
+         * with Cantrip Expansion saw "6 / 8" and the 7th pick bailed here without a word — and a book
+         * caster's book (10 for a wizard) could never be filled at all. */
+        if (b.cantrips.length >= cap) return b;
         return { ...b, cantrips: [...b.cantrips, id] };
       });
     },
@@ -896,11 +900,13 @@ export function useBuilderActions(
       });
     },
     // ── Dual Class second-caster spell writers (cantrips2/spells2/signatures2) ──
-    toggleCantrip2(id) {
+    toggleCantrip2(id, cap) {
       setBuild((b) => {
         const cur = b.cantrips2 ?? [];
         if (cur.includes(id)) return { ...b, cantrips2: cur.filter((x) => x !== id) };
-        const cap = b.classId2 ? cantripsKnown(b.classId2) : 0;
+        /* The CALLER's cap, as `toggleCantrip` takes it (lane C2). This read `cantripsKnown(b.classId2)`
+         * raw — no Dual Class guard, no Cantrip Expansion, and never a book caster's book of ten — so a
+         * second-class wizard's seventh book cantrip bailed here without a word. */
         if (cur.length >= cap) return b;
         return { ...b, cantrips2: [...cur, id] };
       });
@@ -3429,6 +3435,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   const ownsClass = (id: string): boolean => cls?.id === id || cls2?.id === id;
   const classDefOf = (id: string): ClassDef | undefined => (cls?.id === id ? cls : cls2?.id === id ? cls2 : undefined);
   const subclassOf = (id: string): string | null => (cls?.id === id ? build.subclassId : cls2?.id === id ? build.subclassId2 ?? null : null);
+  /** The chosen subclass option of each held class — the second only under Dual Class (`cls2`). */
+  const heldSubOptions = [
+    cls?.subclass?.options.find((o) => o.id === build.subclassId),
+    cls2?.subclass?.options.find((o) => o.id === build.subclassId2),
+  ].filter((o): o is SubclassOption => !!o);
   /*
    * A CLASS ARCHETYPE can take a whole question off this page. *"You do not gain the arcane bond or
    * arcane thesis class features"* (War Mage, AoN archetype-331) and *"Instead of an arcane thesis,
@@ -4290,16 +4301,17 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           </SubCard>
         );
       })()}
-      {(() => {
+      {heldSubOptions.map((subOpt) => {
         // A spell the subclass option lets the player CHOOSE — witch patrons that teach the familiar
         // "dizzying colors or grease" (Ripple in the Deep) / "summon animal or summon plant or fungus"
         // (Wilding Steward). `grantedSpells` is a flat list, so the "or" rides `grantedSpellChoice`.
-        const subOpt = cls?.subclass?.options.find((o) => o.id === build.subclassId);
-        const gsc = subOpt?.grantedSpellChoice;
-        if (!gsc || !subOpt) return null;
+        // EITHER held class's subclass (lane C2): an X/Witch's patron teaches its familiar too, and the
+        // answer is keyed by the option, so the two classes can never share one.
+        const gsc = subOpt.grantedSpellChoice;
+        if (!gsc) return null;
         const cur = build.subclassSpellChoice?.[subOpt.id] ?? '';
         return (
-          <SubCard icon="ti-sparkles" label={gsc.prompt}>
+          <SubCard key={`gsc-${subOpt.id}`} icon="ti-sparkles" label={gsc.prompt}>
             <PopupSelect
               title={gsc.prompt}
               value={gsc.options.includes(cur) ? cur : ''}
@@ -4308,10 +4320,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             />
           </SubCard>
         );
-      })()}
+      })}
       {(() => {
         // Sorcerer Draconic: pick the dragon exemplar (sets spell tradition + second bloodline skill).
-        const subOpt = cls?.subclass?.options.find((o) => o.id === build.subclassId);
+        // Whichever held class is the sorcerer (lane C2): an X/Sorcerer's dragon was never asked, so its
+        // entry cast in the first dragon's tradition. Only a bloodline carries one — at most one held.
+        const subOpt = heldSubOptions.find((o) => o.dragonChoice?.length);
         if (!subOpt?.dragonChoice?.length) return null;
         // Empty until picked — the dragon sets your spell tradition, so silently showing the first one
         // decides the most important thing about the character on the player's behalf.

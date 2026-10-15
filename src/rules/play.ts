@@ -14,8 +14,8 @@
  */
 import type { AbilityId, ActiveCondition, Character, CharacterAppearance, CharacterDetails, CharacterImage, Coins, CompanionConfig, ContentDatabase, InventoryItem, Item, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, InnateSpellGrant, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
 import { resolveRestrictedSlots } from './restrictedSlots';
-import { filedRank, heldCounts, offersSpell, overCapOf, type SpellOptionCtx } from './spellOptions';
-import { deriveMaxHp, deriveBulk, dailyChoiceGrants, ownedFeatureIds } from './derive';
+import { filedRank, heldCounts, notInBookOf, offersSpell, overCapOf, type SpellOptionCtx } from './spellOptions';
+import { deriveMaxHp, deriveBulk, dailyChoiceGrants, heldClasses, ownedFeatureIds } from './derive';
 import { FORMULA_BOOK_ITEM_ID, formulaBooks, grantsFormulaBook, withFormula } from './formulaBook';
 import { adjustModes } from './modes';
 import { monsterPartApex } from './monsterParts';
@@ -417,6 +417,9 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
   // A mode grant with no `entryId` lands on the character's own slot caster, the same default the
   // build-time applier uses.
   const mainCasterId = (ch.spellcasting ?? []).find((e) => e.type === 'spontaneous' || e.type === 'prepared')?.id;
+  // The one entry Spell Blending trades on — asked only when a trade is stored at all, because the
+  // answer walks the owned features.
+  const blendEntryId = Object.keys(play.spellTrades ?? {}).length ? spellBlendingEntryId(ch, content) : undefined;
   const spellcasting = (ch.spellcasting ?? []).map((e) => {
     let out = e;
     const isMainCaster = e.id === mainCasterId;
@@ -444,6 +447,12 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
      * src/rules/spellOptions.ts so that the two surfaces cannot answer it differently. Whatever the
      * picker would offer into this slot right now is what the slot draws; everything else is left in
      * the store, undrawn, and comes back the moment the build says so again.
+     *
+     * ⚠ 2026-10-14 (owner: a pick the player stored is never hidden; one no longer legal is drawn WITH
+     * a marker saying why): for a BOOK caster the render's list is the book AND the tradition, and the
+     * book decides only what the picker may ADD. A spell on the caster's tradition that the builder has
+     * taken out of the book is therefore still drawn here, marked `notInBook` ("Not in your spellbook —
+     * add it in the builder") — what stops drawing is what no list of this caster holds at all.
      */
     /*
      * Learn a Spell. "A spell you learn is added to your repository of spells, such as a spellbook for
@@ -498,8 +507,9 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     };
     if (e.prepared) {
       const prepared: Record<number, PreparedSlot[]> = {};
-      // Spell Blending. Stale trades are dropped rather than applied — see liveTrades.
-      const trades = liveTrades(play, e);
+      // Spell Blending. Stale trades — and any stored under an entry the thesis does not trade on —
+      // are dropped rather than applied: see liveTrades.
+      const trades = liveTrades(play, e, blendEntryId);
       const tradedAt = new Map<number, Set<number>>();
       for (const t of trades) {
         const set = tradedAt.get(t.from) ?? new Set<number>();
@@ -563,8 +573,9 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
      * flat list every reader uses; `cantripSlots` is the per-opening view the Prepare panel edits.
      *
      * ③④ have a list after all, and the table said for three rounds that they did not: `optionsFor(0)`
-     * is the tradition's CANTRIPS (a book caster's rank-0 book being "cannot say" — see spellOptions),
-     * so a 4th-rank spell parked in an opening rendered as an at-will cantrip until this asked. */
+     * is the tradition's CANTRIPS — for a book caster the tradition AND its book, so a cantrip prepared
+     * before the picker was held to the book is still drawn (and marked, `notInBook`) — so a 4th-rank
+     * spell parked in an opening rendered as an at-will cantrip until this asked. */
     if (e.cantripsPrepared) {
       const cap = e.cantripCap ?? e.cantrips.length;
       const granted = new Set(e.grantedCantrips ?? []);
@@ -581,8 +592,9 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
         // The BUILD's list, kept beside the rewritten one: an opening may hold any cantrip the
         // character KNOWS (Adapted Cantrip buys one off-tradition on purpose), and the picker reads
         // the overlaid entry — so without this, re-preparing that opening put the cantrip out of
-        // reach of every picker for ever. See SpellcastingEntry.cantripPool.
-        cantripPool: e.cantrips,
+        // reach of every picker for ever. See SpellcastingEntry.cantripPool. A BOOK caster KNOWS its
+        // whole book, not only the five (six) it prepares — `bookCantrips` (owner's bug 2026-10-14).
+        cantripPool: e.bookCantrips ? [...new Set([...e.bookCantrips, ...e.cantrips])] : e.cantrips,
       };
     }
     if (e.repertoire) {
@@ -632,6 +644,9 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
         ...out,
         repertoire,
         ...(repertoireHeld ? { repertoireHeld } : {}),
+        // Which ranks that store holds a list for — the same `!list` test renderRepertoire makes — so
+        // the sheet can tell a player where a fix to the rank goes (the builder's picks are not read here).
+        ...(repOverride ? { repertoireOnSheet: Object.keys(repOverride).map(Number).filter((r) => !!repOverride[r]) } : {}),
         signature: chosen ? [...new Set([...granted, ...mine.values()])] : e.signature,
         signatureFixed: granted.length ? granted : undefined,
         // D5: over the cap is REPORTED, never hidden — the sheet draws every one of the player's
@@ -670,13 +685,23 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
          * emptied. It is the same test the ordinary slots make one screen up, and it is inert today
          * only because restrictedSlots.ts builds every slot with `spellId: null` — the day a record
          * ships a default spell in a restricted slot, `??` is a player's change overwritten. */
-        const override = prepared1(s.id, rank, s.id);
+        /* Dual Class, a save from before lane C2: the plain +1 slot a second-class wizard had where its
+         * curriculum slot now is kept the player's pick under `legacyKey`. Drawn HERE while this slot
+         * stores nothing of its own — a stored pick is never hidden — under the entry's ordinary list
+         * (the slot it was prepared in was an ordinary one), and marked when it is not on this slot's
+         * own list. The first pick into this slot (or "Leave slot empty") writes `s.id`, which wins. */
+        const legacyPick = s.legacyKey && !moved && play.preparedSpells?.[s.id] === undefined ? play.preparedSpells?.[s.legacyKey] : undefined;
+        // (`offersSpell` without the slot id: the entry's ordinary list — book and tradition — the
+        // question the old slot's own picker asked.)
+        const legacy = typeof legacyPick === 'string' && offersSpell(ctx, rank, legacyPick) ? legacyPick : undefined;
+        const override = legacy ?? prepared1(s.id, rank, s.id);
         const spellId = override !== undefined ? override : moved ? null : s.spellId;
         // A Spell Combination slot holds a SECOND spell, stored under a `#2` key so it rides the same
         // preparedSpells map (and the same rank-move clearing) as the first.
         const override2 = s.pairs ? prepared1(`${s.id}#2`, rank, `${s.id}#2`) : undefined;
         const spellId2 = s.pairs ? (override2 !== undefined ? override2 : moved ? null : s.spellId2 ?? null) : undefined;
-        return { ...s, rank, spellId, ...(s.pairs ? { spellId2 } : {}), expended: !!expended[s.id] };
+        const keptOffList = !!legacy && !offersSpell(ctx, rank, legacy, s.id);
+        return { ...s, rank, spellId, ...(s.pairs ? { spellId2 } : {}), ...(keptOffList ? { keptOffList } : {}), expended: !!expended[s.id] };
       });
       out = { ...out, restrictedSlots: resolved };
       /*
@@ -701,6 +726,12 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
       const used = play.innateUsed ?? {};
       out = { ...out, innateUsed: Object.keys(used).filter((k) => used[k] && k.startsWith(`${e.id}:`)).map((k) => k.slice(e.id.length + 1)) };
     }
+    /* A book caster's pick that its BOOK does not hold — prepared before the openings were held to the
+     * book (owner's bug 2026-10-14), or a spell the builder has since taken out — is drawn and castable
+     * like any other, and SAID: the sheet marks it "Not in your spellbook — add it in the builder".
+     * Reported, never hidden (the overCap shape); the store is never touched. */
+    const offBook = notInBookOf(out);
+    if (offBook) out = { ...out, notInBook: offBook };
     return out;
   });
   // Spells BORROWED this morning (Loaner Spell). They cannot come from the build — the answer is
@@ -1135,10 +1166,55 @@ export const cantripTradeKey = (entryId: string, index: number) => `${entryId}:0
  * stopped: the Save tests nothing at all now (D1), and a reader auditing "does the Save test
  * anything?" must not be told by a stale sentence that it does.
  */
-function liveTrades(play: PlayState, e: Pick<SpellcastingEntry, 'id' | 'prepared'>): SpellTrade[] {
+function liveTrades(play: PlayState, e: Pick<SpellcastingEntry, 'id' | 'prepared'>, blendEntryId: string | undefined): SpellTrade[] {
+  /* …and only on the entry Spell Blending belongs to (`spellBlendingEntryId`). The thesis trades the
+   * WIZARD's slots — GMG's dual-class casters *"keep these spells entirely separate"* — so a trade
+   * stored under any other entry (a Wizard/Magus's magus, a Witch/Wizard's witch: the Trade slots
+   * button sat on every book caster's card once lane C2 gave a second class its book) is not applied:
+   * no slot of that entry is spent, no bonus slot appears. It is NOT deleted — the store keeps it,
+   * like every stale trade above, and nothing a player wrote is thrown away by a render. */
+  if (e.id !== blendEntryId) return [];
   return (play.spellTrades?.[e.id] ?? []).filter(
     (t) => e.prepared?.[t.from] && t.indices.every((i) => i < (e.prepared?.[t.from]?.length ?? 0)) && (t.to === CANTRIP_TRADE || !!e.prepared?.[t.to]),
   );
+}
+
+/** The class feature Spell Blending is — a wizard thesis. */
+const SPELL_BLENDING = 'spell-blending';
+
+/**
+ * The ONE entry Spell Blending trades on: the casting entry of the held class whose own record offers
+ * the thesis (`<class id>-casting`, the id buildCharacter gives a class entry), and only while the
+ * character owns it. Undefined otherwise — no entry trades.
+ *
+ * Lane C3 (2026-10-15): the sheet's Trade slots button was gated on "a prepared entry with a book",
+ * which meant "the wizard" only while the wizard was the one class with a book. Lane C2 gave a
+ * second-class witch, magus and necromancer theirs, so a Wizard (Spell Blending)/Magus got the button
+ * on the MAGUS card, and a trade made there handed the magus a bonus slot it never paid for. The button
+ * (SpellsTab) and the render (`liveTrades`) both ask this, so they cannot disagree about which card it is.
+ *
+ * Read off the record, not a hard-coded `wizard-casting`: whichever class's table or extra-choice group
+ * lists the feature is the class whose slots it trades. A character whose entries carry no canonical id
+ * (an import that was never rebuilt) falls back to its one book-keeping prepared entry that belongs to
+ * no other held class and no archetype — the entry the old gate found.
+ */
+export function spellBlendingEntryId(ch: Character, content: ContentDatabase): string | undefined {
+  if (!ownedFeatureIds(ch, content).has(SPELL_BLENDING)) return undefined;
+  const held = heldClasses(ch);
+  const owner = held.find(({ classId }) => {
+    const cls = classId ? content.classes[classId] : undefined;
+    return (
+      !!cls &&
+      (cls.features.some((f) => f.featureId === SPELL_BLENDING) ||
+        (cls.extraChoices ?? []).some((g) => g.options.some((o) => o.id === SPELL_BLENDING)))
+    );
+  })?.classId;
+  if (!owner) return undefined;
+  const canonical = `${owner}-casting`;
+  const entries = ch.spellcasting ?? [];
+  if (entries.some((e) => e.id === canonical)) return canonical;
+  const others = new Set(held.filter((s) => s.classId && s.classId !== owner).map((s) => `${s.classId}-casting`));
+  return entries.find((e) => e.type === 'prepared' && !!e.spellbook && !others.has(e.id) && !e.id.endsWith('-dedication-casting'))?.id;
 }
 
 /** The key for one slot of a rendered prepared entry — a bonus slot carries its own. */
@@ -2615,14 +2691,17 @@ function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[],
  *     WRITER   setPreparedSpell (SpellsTab `pick`, an ordinary prepared slot).
  *     RENDERS  applyPlayState `prepared1` → one per slot of the fresh `e.prepared[rank]`.
  *     TESTS    spellOptions(rank): the rank CEILING off the spell's own rank, then the book (plus
- *              what was LEARNED in play, merged into it above) or else the tradition list. An EMPTY
- *              book is "cannot say" and falls through to the tradition — a book that failed to build
- *              must never take the player's preparations with it.
- *     SAVE     nothing. An illegal pick is not drawn (the slot falls back to the build's own spell)
- *              and returns the moment the fresh build offers it again: magusStudiousSpells REPLACES
- *              the book per level band, so `haste` is a book grant to an 11th-level magus and absent
- *              at 10th, and a level entered wrong, Saved, corrected and Saved again used to empty a
- *              5th-rank slot BOTH levels have.
+ *              what was LEARNED in play, merged into it above) UNIONED with the tradition list — the
+ *              book decides what the picker may ADD (`pickerSpellOptions`), never what an already
+ *              stored pick may draw. A pick on the tradition that the book does not hold (the builder
+ *              took it out of the book) is drawn and marked `notInBook` (owner's bug 2026-10-14).
+ *     SAVE     nothing. A pick the book no longer holds stays DRAWN, marked `notInBook`, and the store
+ *              is untouched: magusStudiousSpells REPLACES the book per level band, so `haste` is a book
+ *              grant to an 11th-level magus and out of the book at 10th — drawn there with the marker,
+ *              where a Save that deleted it (a level entered wrong, Saved, corrected and Saved again)
+ *              used to empty a 5th-rank slot BOTH levels have. A pick on NO list this caster holds (off
+ *              the tradition, or above the ceiling) is not drawn — the slot falls back to the build's
+ *              own spell — and returns the moment the fresh build offers it again.
  * ② preparedSpells[`entry:rank:b<from>`] — bonusSlotKey (Spell Blending).
  *     WRITER   setPreparedSpell via slotKeyOf.  RENDERS appended to rank `to`, one per live trade.
  *     TESTS    ①'s, at the bonus slot's own rank.   SAVE nothing.
@@ -2630,10 +2709,12 @@ function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[],
  *     WRITER   setPreparedCantrip (the Prepare-a-cantrip opening).
  *     RENDERS  applyPlayState `cantripSlots`, the openings below the fresh `cantripCap`.
  *     TESTS    spellOptions(0) — and there IS a rank-0 list, which this table denied for three
- *              rounds: the tradition's cantrips. The book does not answer at rank 0 (the engine keeps
- *              cantrips in `entry.cantrips` and fills the spellbook off the slot table, which starts
- *              at rank 1), so it says "cannot say" and the tradition answers. Without it a 4th-rank
- *              spell parked in an opening rendered as an at-will cantrip.
+ *              rounds: the tradition's cantrips, and for a BOOK caster its book's cantrips as well
+ *              (`bookCantrips`, learned ones in `spellbook[0]`) — a union, never a replacement: a
+ *              rank-0 book that REPLACED the tradition hid a prepared cantrip the moment the player
+ *              learned one. The PICKER is held to the book (`pickerSpellOptions`); a pick prepared
+ *              before that is drawn and marked `notInBook`. Without the list a 4th-rank spell parked
+ *              in an opening rendered as an at-will cantrip.
  *     SAVE     nothing — including the openings past the cap.
  * ④ preparedSpells[`entry:0:c<i>`] — cantripTradeKey.
  *     WRITER   setTradedCantrip.  RENDERS `tradedCantrips`, two per cantrip trade.
@@ -2656,6 +2737,9 @@ function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[],
  *              active ones, which moves when an unrelated mode is switched off. ⚠ A slot the player
  *              has MOVED to another rank draws a pick made after the move; only the BUILD's own spell
  *              for the slot is dropped there, because it was chosen for the rank the slot has left.
+ *              ⚠ A slot with a `legacyKey` (a second-class wizard's curriculum slot, which replaced a
+ *              plain +1 slot — lane C2) draws ①'s pick under that key while its own id stores nothing,
+ *              tested as ①, and marked `keptOffList` when the slot's own list would not offer it.
  * ⑥ repertoireSpells[entry][rank].
  *     WRITER   addRepertoireSpell / removeRepertoireSpell (SpellsTab `pick` / `removeKnown`) — ONE id
  *              at a time, onto the STORED list (`storedRank`). ⚠ The grants are stripped off the
@@ -2697,7 +2781,8 @@ function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[],
  * ⑧ restrictedSlotRanks[slotId] — setRestrictedRank. RENDERS in ⑤'s loop, only where the fresh slot
  *     offers that rank (`rankOptions`), so a stale value shows nothing. SAVE nothing.
  * ⑨ spellTrades[entry] — addSpellTrade/removeSpellTrade. RENDERS through `liveTrades`, only while the
- *     traded indices still exist. SAVE nothing.
+ *     traded indices still exist and only on the entry Spell Blending trades on (`spellBlendingEntryId`,
+ *     lane C3) — a trade stored under another entry stays in the store, unapplied. SAVE nothing.
  * ⑩ learnedSpells[entry][rank] — learnSpell. Days of a character's time. RENDERS on the entry as
  *     `learned`, and for a caster WITH A BOOK also merged into the fresh spellbook at the top of
  *     applyPlayState's entry loop. TESTED nowhere, because it is part of the list ①②⑤⑥ are tested

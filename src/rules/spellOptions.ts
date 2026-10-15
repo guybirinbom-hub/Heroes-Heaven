@@ -157,38 +157,40 @@ export function spellOptions(ctx: SpellOptionCtx, rank: number, restrictedId?: s
       .filter((s): s is Spell => !!s && s.rank <= ceiling)
       .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
   }
-  /* desk 155: flexible-book-casters — a caster WITH A BOOK offers the book and nothing else, whether
-   * the entry prepares into slots or holds a collection. A flexible wizard, witch or magus casts
-   * spontaneous-shaped, and print is explicit that the source does not change: *"Select these spells
-   * from the same source as normal, such as from a spellbook for a wizard"* (archetype-99).
+  /* THE RENDER'S LIST FOR A BOOK CASTER IS THE BOOK *AND* THE TRADITION — never narrower than it was.
    *
-   * Two ways the book says "cannot say" rather than "nothing is allowed", and both are the same rule:
-   * a book that cannot answer must never take the player's picks with it.
-   *   · an EMPTY book — one that failed to build — falls through to the tradition;
-   *   · a book with NO RANK-0 LIST does too, at rank 0. The engine keeps a caster's cantrips in
-   *     `entry.cantrips` and fills the spellbook off the SLOT table, which starts at rank 1, so
-   *     asking the book about a cantrip answered "nothing" for every wizard, witch and magus alive —
-   *     an empty Prepare-a-cantrip picker, and (once the render started asking this question) every
-   *     prepared cantrip gone from the sheet. */
-  const fromBook = (): Spell[] | null => {
-    if (!entry.spellbook || !Object.values(entry.spellbook).some((ids) => ids.length)) return null;
-    if (ceiling === 0) {
-      const c0 = (entry.spellbook[0] ?? []).map((id) => content.spells[id]).filter((s): s is Spell => !!s);
-      return c0.length ? c0 : null;
-    }
-    const out: Spell[] = [];
-    for (let r = 1; r <= ceiling; r++)
-      for (const id of entry.spellbook[r] ?? []) {
-        const sp = content.spells[id];
-        if (sp) out.push(sp);
-      }
-    return out;
-  };
+   * What a book caster may ADD is its book (desk 155: *"Select these spells from the same source as
+   * normal, such as from a spellbook for a wizard"*, archetype-99; owner's bug 2026-10-14: a magus
+   * could prepare cantrips that are not in their spellbook) — and that narrowing lives in
+   * `pickerSpellOptions`, the ADD side, alone. This function also answers the RENDER ("is the pick
+   * already stored still drawn?"), and a book that REPLACED the tradition here took the player's picks
+   * with it, three ways:
+   *   · a cantrip prepared on the sheet before the picker was held to the book (every wizard, witch
+   *     and magus, whose openings offered the whole tradition until 2026-10-14);
+   *   · a cantrip the player prepared, hidden the moment they LEARNED one — Learn a Spell merges a
+   *     learned cantrip into `spellbook[0]`, and a rank-0 book list used to REPLACE the tradition
+   *     (measured: learn daze, and the opening holding shield rendered "Empty cantrip");
+   *   · a leveled spell the builder has since taken out of the book.
+   * So the book is UNIONED onto the tradition here: a stored pick on the caster's tradition (within
+   * the ceiling) keeps being drawn, castable, with the sheet's "Not in your spellbook" marker
+   * (`notInBookOf`). Order: at rank 0 the tradition's own order first (unchanged for a book with no
+   * rank-0 list); at rank 1+ the book's order first, which is exactly the order the picker shows. */
   const listed = (): Spell[] => {
-    const book = fromBook();
-    if (book) return book;
     const pool = traditionPool(character, entry, content);
-    return (ceiling === 0 ? pool.byRank[0] : pool.upTo[ceiling]) ?? [];
+    const trad = (ceiling === 0 ? pool.byRank[0] : pool.upTo[ceiling]) ?? [];
+    const ids = ceiling === 0 ? [...(entry.bookCantrips ?? []), ...(entry.spellbook?.[0] ?? [])] : bookIdsUpTo(entry, ceiling);
+    // A cantrip opening holds cantrips only (a 4th-rank spell parked in one is not drawn); a leveled
+    // slot reads the book by the RANK IT IS FILED AT, exactly as it always has.
+    const book = ids.map((id) => content.spells[id]).filter((s): s is Spell => !!s && (ceiling !== 0 || s.rank === 0));
+    if (!book.length) return trad;
+    if (ceiling === 0) {
+      const have = new Set(trad.map((s) => s.id));
+      const extra = book.filter((s) => !have.has(s.id) && !!have.add(s.id));
+      return extra.length ? [...trad, ...extra] : trad;
+    }
+    const have = new Set<string>();
+    const uniqueBook = book.filter((s) => !have.has(s.id) && !!have.add(s.id));
+    return [...uniqueBook, ...trad.filter((s) => !have.has(s.id))];
   };
   /* LEARNED SPELLS ARE ON THE LIST, FOR EVERY CASTER SHAPE. Days of the character's time and a
    * critical success bought this spell; the only question here is which list it joined.
@@ -247,7 +249,7 @@ export function spellsHeldBy(character: Character, entry: SpellcastingEntry): Se
   const add = (id: string | null | undefined) => {
     if (id) out.add(id);
   };
-  for (const id of [...entry.cantrips, ...(entry.cantripPool ?? []), ...(entry.grantedCantrips ?? [])]) add(id);
+  for (const id of [...entry.cantrips, ...(entry.cantripPool ?? []), ...(entry.grantedCantrips ?? []), ...(entry.bookCantrips ?? [])]) add(id);
   for (const id of [...(entry.tradedCantrips ?? []), ...(entry.cantripSlots ?? [])]) add(id);
   for (const rec of [entry.spellbook, entry.repertoire, entry.grantedRepertoire, entry.learned])
     for (const ids of Object.values(rec ?? {})) for (const id of ids) add(id);
@@ -274,8 +276,17 @@ export function spellsHeldBy(character: Character, entry: SpellcastingEntry): Se
  * ⛔ The RENDER never asks this. applyPlayState keeps asking `spellOptions` / `offersSpell`, which read no book, so
  * a prepared or repertoire spell from a book switched off since is still drawn and never pruned; this list only
  * decides what may be ADDED, and it is always a subset of what the render draws (the rule in this file's header).
+ *
+ * `keep` is the ASKING opening's own pick today (a cantrip opening, a Spell Blending traded one): a book caster's
+ * cantrip picker keeps it on offer in that opening alone — see `bookAllows`.
  */
-export function pickerSpellOptions(ctx: SpellOptionCtx, rank: number, restrictedId: string | undefined, books: Set<string>): Spell[] {
+export function pickerSpellOptions(
+  ctx: SpellOptionCtx,
+  rank: number,
+  restrictedId: string | undefined,
+  books: Set<string>,
+  keep?: string | null,
+): Spell[] {
   const all = spellOptions(ctx, rank, restrictedId);
   const rs = restrictedId
     ? (ctx.restrictedSlots ?? ctx.entry.restrictedSlots)?.find((s) => s.id === restrictedId.replace(/#2$/, ''))
@@ -284,8 +295,116 @@ export function pickerSpellOptions(ctx: SpellOptionCtx, rank: number, restricted
     const ok = new Set(restrictedAllowedOnBooks(ctx, rs, books));
     return all.filter((s) => ok.has(s.id));
   }
+  /* …and a BOOK caster adds ONLY out of its book (owner's bug 2026-10-14: "magus (and other spellbook
+   * casters) can prepare spells that aren't in their spellbook"). The render list above is the book
+   * AND the tradition, so nothing already drawn is lost; this is the add side alone, and it is the
+   * same list for every opening that adds — the Prepare-a-cantrip opening, Spell Blending's traded
+   * cantrip openings, an ordinary slot, a restricted slot with no list of its own, a collection —
+   * plus, in a cantrip opening, that opening's own pick (`keep`). */
+  const inBook = bookAllows(ctx.entry, Math.min(rank, rs?.maxRank ?? rank), keep);
   const held = spellsHeldBy(ctx.character, ctx.entry);
-  return all.filter((s) => entrySourceOn(books, s) || held.has(s.id));
+  return all.filter((s) => (!inBook || inBook.has(s.id)) && (entrySourceOn(books, s) || held.has(s.id)));
+}
+
+/** The book's leveled ids filed at ranks 1..ceiling, in the book's own order. */
+function bookIdsUpTo(entry: SpellcastingEntry, ceiling: number): string[] {
+  const out: string[] = [];
+  for (let r = 1; r <= ceiling; r++) out.push(...(entry.spellbook?.[r] ?? []));
+  return out;
+}
+
+/**
+ * A BOOK caster's CANTRIPS — what print fills its openings from (*"you can prepare … five cantrips each
+ * morning from the spells in your spellbook"*, class-feature-793). Null for an entry with no book of
+ * cantrips: `bookCantrips` is written by buildCharacter's class book branch alone, so every other
+ * caster's openings keep their tradition. Held as one set:
+ *   · `bookCantrips` — the builder's book (its first ones are the standing preparation);
+ *   · `spellbook[0]` / `learned[0]` — cantrips added with Learn a Spell (merged into the book in play);
+ *   · `grantedCantrips` — a record's rank-0 grant;
+ *   · the BUILD's own list (`cantripPool`, or `cantrips` before the overlay) — Adapted Cantrip's pick,
+ *     which *"you can choose … when you prepare your cantrips"*.
+ */
+export function bookCantripIds(entry: SpellcastingEntry): Set<string> | null {
+  if (!entry.bookCantrips) return null;
+  return new Set([
+    ...entry.bookCantrips,
+    ...(entry.spellbook?.[0] ?? []),
+    ...(entry.learned?.[0] ?? []),
+    ...(entry.grantedCantrips ?? []),
+    ...(entry.cantripPool ?? entry.cantrips),
+  ]);
+}
+
+/**
+ * A BOOK caster's leveled spells — every rank of the book (Learn a Spell's are merged into it) and
+ * `learned`.
+ *
+ * Null ("cannot say": the picker offers the tradition) only where the entry has no CLASS book. An empty
+ * book the class itself built — `bookCantrips` is written by buildCharacter's class book branch alone,
+ * so its presence says the book was built — is an empty book, and an empty set: nothing to ADD at rank
+ * 1+ until the builder puts a spell in it. Lane C3 (2026-10-15): that empty book read as "cannot say",
+ * so a fresh wizard or magus with no leveled book picks was offered its whole tradition at every rank
+ * on the sheet — the owner's bug (2026-10-14) still reachable. What is DRAWN is unchanged: the render
+ * asks `spellOptions`, whose list is the book AND the tradition, so a pick stored earlier keeps drawing,
+ * marked "Not in your spellbook" (`notInBookOf`). An archetype's book (no `bookCantrips`) keeps the old
+ * answer: an empty one there still cannot say.
+ */
+export function bookLeveledIds(entry: SpellcastingEntry): Set<string> | null {
+  const filled = !!entry.spellbook && Object.values(entry.spellbook).some((ids) => ids.length);
+  if (!filled && !entry.bookCantrips) return null;
+  const out = new Set<string>();
+  for (const [r, ids] of Object.entries(entry.spellbook ?? {})) if (Number(r) > 0) for (const id of ids) out.add(id);
+  for (const [r, ids] of Object.entries(entry.learned ?? {})) if (Number(r) > 0) for (const id of ids) out.add(id);
+  return out;
+}
+
+/** What the book lets an opening of this ceiling ADD, or null where no book answers. At rank 0 the
+ *  ASKING opening's own pick today (`keep`) is kept on offer (desk #170's keep): a cantrip prepared
+ *  before the picker was held to the book stays until the player changes that opening themselves.
+ *  That opening's ONLY — every opening's off-book pick offered in every opening (Spell Blending's
+ *  traded ones included) let a legacy off-book cantrip be copied into a new opening, which is the
+ *  owner's bug again in a narrower shape (lane C1 check, 2026-10-14). */
+function bookAllows(entry: SpellcastingEntry, ceiling: number, keep?: string | null): Set<string> | null {
+  if (ceiling !== 0) return bookLeveledIds(entry);
+  const book = bookCantripIds(entry);
+  if (!book) return null;
+  if (keep) book.add(keep);
+  return book;
+}
+
+/**
+ * NOT IN THE BOOK — REPORTED, NEVER HIDDEN (the `overCapOf` shape).
+ *
+ * The spells a book caster's entry is DRAWING that its book does not hold: a cantrip prepared on the
+ * sheet before the openings were held to the book, a leveled spell the builder has since taken out
+ * of it. Every one stays drawn and castable — a pick the player stored is never hidden — and the
+ * sheet marks it "Not in your spellbook — add it in the builder" (`notInBookNote`). Written by
+ * applyPlayState onto the overlaid entry, `entry.notInBook`.
+ *
+ * A restricted slot with its own `allowed` list (a curriculum, Studious Spells) is that record's rule,
+ * not the book's, and a grant is a rule too, so neither is judged here. An empty book "cannot say" only
+ * where no class built it (`bookLeveledIds`): a class book that is empty holds none of what is drawn.
+ */
+export function notInBookOf(entry: SpellcastingEntry): string[] | undefined {
+  const out = new Set<string>();
+  const cantrips = bookCantripIds(entry);
+  if (cantrips)
+    for (const id of [...(entry.cantripSlots ?? []), ...(entry.tradedCantrips ?? [])]) if (id && !cantrips.has(id)) out.add(id);
+  const leveled = bookLeveledIds(entry);
+  if (leveled) {
+    for (const slots of Object.values(entry.prepared ?? {}))
+      for (const s of slots) if (s.spellId && !s.traded && !leveled.has(s.spellId)) out.add(s.spellId);
+    for (const rs of entry.restrictedSlots ?? []) {
+      if (rs.allowed?.length || rs.spontaneous) continue;
+      for (const id of [rs.spellId, rs.spellId2]) if (id && !leveled.has(id)) out.add(id);
+    }
+    if (entry.spellCollection !== undefined)
+      for (const [r, ids] of Object.entries(entry.repertoire ?? {})) {
+        const granted = entry.grantedRepertoire?.[Number(r)] ?? [];
+        for (const id of ids) if (!granted.includes(id) && !leveled.has(id)) out.add(id);
+      }
+  }
+  return out.size ? [...out] : undefined;
 }
 
 /**
@@ -429,7 +548,96 @@ export function repertoireCap(entry: SpellcastingEntry, rank: number): number {
   // `repertoireMax` first: two records print a repertoire wider than their slot table (the oracle's
   // two 10th-rank spells over one slot, the summoner's five over four), and reading the slot count
   // alone let the builder fill the rank while the SHEET refused to put a different spell back.
-  return entry.repertoireMax?.[rank] ?? entry.slots?.[rank]?.max ?? Infinity;
+  // …less the places a sorcerer's gift takes (`grantedPlaces`): the gate counts the player's OWN
+  // picks, grants stripped, so the allowance it compares them with has to be stripped the same way.
+  return Math.max(0, (entry.repertoireMax?.[rank] ?? entry.slots?.[rank]?.max ?? Infinity) - grantedPlaces(entry, rank));
+}
+
+/** The record's grants at `rank` (0 = cantrips). */
+const grantsAt = (entry: SpellcastingEntry, rank: number): string[] =>
+  (rank === 0 ? entry.grantedCantrips : entry.grantedRepertoire?.[rank]) ?? [];
+
+/**
+ * How many of the player's places at `rank` (0 = cantrips) the class's OWN gift takes — the sorcerer's
+ * sorcerous gift, which print counts INSIDE the allowance (`grantsCountInside`). Zero for every other
+ * entry, whose grants ride on top.
+ *
+ * ONE place, however many ids the record lists there. Print gives one gift per rank — *"an additional
+ * spell and cantrip from your bloodline"*, *"your first new spell is always the sorcerous gift spell for
+ * that rank"* (class-62).
+ *
+ * ⚠ Three bloodline records list every VARIANT's gift at some ranks (`variantGiftCount`): draconic one per
+ * dragon tradition at 2nd, 5th and 8th; elemental one per element at cantrip, 1st, 3rd and 6th; genie one
+ * per genie type at 2nd, 5th and 8th. Print gives the chosen variant's alone, and the data cannot say
+ * which that is: the option's `grantedSpells` is one flat list, `dragonChoice` names each dragon's
+ * tradition but not its gifts, elemental and genie carry no choice at all, and only the description
+ * prose pairs each gift with its variant. So the gifts are drawn, every one saying only one of them is
+ * the character's (`variantGiftNote`), and together they take the ONE place print gives.
+ *
+ * Lane C3 tried one place per listed gift for one round, and it was worse (C3 check round 1): a draconic
+ * or genie sorcerer had no place of its own at 2nd/5th/8th, an elemental none at cantrip/1st/3rd/6th,
+ * every print-correct pick there was marked over with "remove one", and removing one never cleared the
+ * marker — following it deleted correct picks while the wrong gifts stayed. Extra spells drawn for free
+ * cost the player nothing they own; a refused add and a false "remove one" do. The fix that settles it is
+ * data: each variant's gifts by rank, and element and genie-type questions in the builder.
+ * (Phoenix listed two at 2nd only because its 4th-rank gift, Cleanse Affliction, is a 2nd-rank spell;
+ * the bloodline's grant ladder, `classFeatures/bloodline.grantedSpells`, now files it at 4th.)
+ *
+ * Lane C2 (2026-10-14). The build used to keep the sorcerer's count by slicing the player's picks off
+ * behind the gift, the builder offered the full count, and the sheet's gate treated the gift as free —
+ * three answers to one rule, and the first one hid picks. This is the one answer: the builder's caps
+ * (`ownPlacesBeside`), this gate and `overCapOf` all subtract it, and the build draws every pick.
+ */
+export function grantedPlaces(entry: SpellcastingEntry, rank: number): number {
+  return entry.grantsCountInside && grantsAt(entry, rank).length ? 1 : 0;
+}
+
+/**
+ * How many gifts the record lists at `rank` (0 = cantrips) when it lists ONE PER VARIANT — more than one
+ * where print gives one (`grantedPlaces`). 0 at every other rank and for any entry without
+ * `grantsCountInside`. Measured lane C4 (2026-10-15): draconic (one per dragon tradition, 2nd/5th/8th),
+ * elemental (one per element: cantrip, 1st, 3rd, 6th) and genie (one per genie type, 2nd/5th/8th) — the
+ * record does not say which is the character's, so every one is drawn and each says so
+ * (`variantGiftNote`). A gift id listed twice (elemental's Chain Lightning, air and metal) is one.
+ */
+export function variantGiftCount(entry: SpellcastingEntry | undefined, rank: number): number {
+  if (!entry?.grantsCountInside) return 0;
+  const n = new Set(grantsAt(entry, rank)).size;
+  return n > 1 ? n : 0;
+}
+
+/**
+ * The BUILDER's side of `grantedPlaces`: how many chips a row of `count` places may hold when its chips
+ * are `picks`. A pick that IS one of the record's gift ids is not one of the player's own on the sheet
+ * (`drawnAt` strips grants), so it is given its place back here — the row's count and the sheet's
+ * (own picks, grants stripped, against the allowance less the gift) are then the same number. `entry`
+ * is buildCharacter's own class entry; `count` itself for any entry without `grantsCountInside`.
+ */
+export function ownPlacesBeside(entry: SpellcastingEntry | undefined, rank: number, count: number, picks: readonly string[]): number {
+  if (!entry?.grantsCountInside) return count;
+  const granted = grantsAt(entry, rank);
+  return Math.max(0, count - grantedPlaces(entry, rank) + picks.filter((id) => granted.includes(id)).length);
+}
+
+/** The gift ids the builder draws as LOCKED chips in a row whose chips are `picks` — the record's grants
+ *  the player did not also pick. [] for any entry without `grantsCountInside`. */
+export function giftChipIds(entry: SpellcastingEntry | undefined, rank: number, picks: readonly string[]): string[] {
+  if (!entry?.grantsCountInside) return [];
+  return grantsAt(entry, rank).filter((id) => !picks.includes(id));
+}
+
+/**
+ * A `grantsCountInside` entry's cantrips OVER its allowance — the player's own, gift stripped, past
+ * `cantripCap` less the gift's one place. Only a builder that offered the full five beside the gift
+ * can produce it (every saved sorcerer from before lane C2 that filled its row), and the cantrips are
+ * the player's own, so the sheet draws every one and says so — the `overCapOf` shape, for the one list
+ * a spontaneous caster cannot edit on the sheet. 0 everywhere else.
+ */
+export function cantripsOverOf(entry: SpellcastingEntry): number {
+  if (!entry.grantsCountInside || entry.cantripCap === undefined) return 0;
+  const granted = entry.grantedCantrips ?? [];
+  const own = entry.cantrips.filter((id) => !granted.includes(id)).length;
+  return Math.max(0, own - Math.max(0, entry.cantripCap - grantedPlaces(entry, 0)));
 }
 
 /**
@@ -469,9 +677,13 @@ export function overCapOf(
   }
   for (const rank of Object.keys(shown.repertoire).map(Number)) {
     if (size !== undefined && rank >= 1 && rank <= 9) continue; // counted in the pool above
-    const cap = shown.repertoireMax?.[rank] ?? shown.slots?.[rank]?.max;
-    if (cap === undefined) continue;
-    const by = drawnAt(shown, rank) - Math.max(cap, drawnAt(built, rank));
+    const max = shown.repertoireMax?.[rank] ?? shown.slots?.[rank]?.max;
+    if (max === undefined) continue;
+    const cap = Math.max(0, max - grantedPlaces(shown, rank));
+    /* The floor is the build's own count — except where the class's gift counts inside the allowance
+     * (`grantsCountInside`): there the build draws nothing of its own beyond the player's builder
+     * picks, so its count past the cap is the player's over-pick, not a gift, and it is reported. */
+    const by = drawnAt(shown, rank) - (shown.grantsCountInside ? cap : Math.max(cap, drawnAt(built, rank)));
     if (by > 0) out.push({ rank, by });
   }
   return out.length ? out : undefined;

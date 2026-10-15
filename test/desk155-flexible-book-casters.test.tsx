@@ -7,6 +7,7 @@ import { SpellsTab } from '../src/sheet/SpellsTab';
 import { initialPlay, type PlayState } from '../src/rules/play';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import { wizardSpellbookBudget } from '../src/rules/spellcasting';
+import { grantedPlaces } from '../src/rules/spellOptions';
 import type { Character } from '../src/rules/types';
 
 /**
@@ -363,9 +364,12 @@ describe('a flexible collection is spent as ONE pool from the Manage Spells shee
     try {
       const notes = capNotes(r.host).join(' | ');
       expect(notes, 'the per-rank wording, or no note at all').not.toMatch(/Collection full/);
-      const cap = main.slots?.[1]?.max ?? 0;
+      // The rank's own places: its slot count, less the bloodline's gift — print counts a sorcerer's
+      // gift INSIDE the rank (lane C2, 2026-10-14; this read the slot count alone, while the build hid
+      // the player's fourth pick behind the gift so the two numbers happened to agree).
+      const cap = (main.slots?.[1]?.max ?? 0) - grantedPlaces(main, 1);
       const known = (main.repertoire?.[1] ?? []).filter((id) => !(main.grantedRepertoire?.[1] ?? []).includes(id)).length;
-      // The gate is still the rank's own slot count: Add is offered exactly while the rank has room.
+      // The gate is still the rank's own places: Add is offered exactly while the rank has room.
       expect(!!addButton(r.host, '1st-rank')).toBe(known < cap);
       if (known >= cap) expect(notes).toMatch(new RegExp(`Repertoire full \\(${cap} known\\)`));
     } finally { r.stop(); }

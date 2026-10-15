@@ -43,7 +43,9 @@ describe('classes/magus — the 2026 Impossible Magic printing', () => {
      * 2026 magus table prints, reused rather than re-implemented. */
     const sp = db.classes.magus!.spellcasting!;
     expect(sp.progression).toBe('psychic');
-    expect(sp.spellbook).toEqual({ spells: 5, perLevel: 2 });
+    // Pinned { spells: 5, perLevel: 2 } until lane C1 (2026-10-14) added the same sentence's "eight
+    // arcane cantrips" as `cantrips: 8`, so the sheet can hold the magus's openings to its book.
+    expect(sp.spellbook).toEqual({ spells: 5, perLevel: 2, cantrips: 8 });
   });
 
   // batch 037: magus#2026-printing

@@ -205,17 +205,109 @@ export function repertoireCounts(
 
 /**
  * Leveled spells in a LEARNED prepared caster's spellbook at a level: the 1st-level book plus
- * `perLevel` more each level after. The magus's book is *"four 1st-level arcane spells… Each time you
- * gain a level, you add two more arcane spells"* — not the wizard's 5 + 2 — so the numbers come off
- * the class record instead of a hardcoded class-id test.
+ * `perLevel` more each level after. The necromancer's dirge is *"the 1st-rank spell harm, and four
+ * other 1st-rank occult spells… Each time you gain a level, you add two occult spells"* — not the
+ * wizard's 5 + 2 — so the numbers come off the class record instead of a hardcoded class-id test.
  */
 export function spellbookBudget(spec: { spells: number; perLevel: number }, level: number): number {
   return spec.spells + spec.perLevel * (Math.max(1, level) - 1);
 }
 
+/** The slice of a class record the book helpers read — structural, so this file imports nothing. */
+type BookClass = { id: string; spellcasting?: { type?: string; repertoire?: boolean; spellbook?: { cantrips?: number; noun?: string } } } | null | undefined;
+
+/**
+ * Does this class prepare out of a BOOK (a spellbook, a familiar, a dirge) rather than off its whole
+ * tradition? The same test buildCharacter's book branch and the builder's `isWizardBook` make: a
+ * prepared class whose record declares `spellcasting.spellbook`, or a wizard or witch (which carry no
+ * `spellbook` object — the builder's Unified Magical Theory +1 depends on that absence).
+ */
+export function isBookCaster(cls: BookClass): boolean {
+  const sp = cls?.spellcasting;
+  if (!sp || sp.repertoire || (sp.type && sp.type !== 'prepared')) return false;
+  return !!sp.spellbook || cls!.id === 'wizard' || cls!.id === 'witch';
+}
+
+/**
+ * How many CANTRIPS a book caster's book holds at 1st level — the BOOK, not the five (six) prepared
+ * from it each morning. Print, newest printing:
+ *   · wizard 10 — *"The spellbook contains your choice of 10 arcane cantrips"* (class-feature-793);
+ *   · witch 10 — *"Your familiar starts off knowing 10 cantrips"* (class-feature-772);
+ *   · magus 8 — *"eight arcane cantrips"* (class-feature-1258, Impossible Magic);
+ *   · necromancer 8 — *"Your dirge contains your choice of eight occult cantrips"* (class-75).
+ * The record's own `spellbook.cantrips` first; the wizard and witch fall back to 10 because they carry
+ * no `spellbook` object. Undefined for a class with no book. test/book-cantrips.test.ts holds every
+ * number against the record's own printed sentence.
+ */
+export function bookCantripCapacity(cls: BookClass): number | undefined {
+  if (!isBookCaster(cls)) return undefined;
+  return cls!.spellcasting!.spellbook?.cantrips ?? (cls!.id === 'wizard' || cls!.id === 'witch' ? 10 : undefined);
+}
+
+/** What player text calls a book caster's book: "spellbook" (wizard, magus), "familiar" (witch: *"Your
+ *  familiar is the source and repository of the spells your patron has bestowed upon you"*), "dirge"
+ *  (necromancer, from its record). Undefined for a class with no book. */
+export function bookNoun(cls: BookClass): string | undefined {
+  if (!isBookCaster(cls)) return undefined;
+  return cls!.spellcasting!.spellbook?.noun ?? (cls!.id === 'witch' ? 'familiar' : 'spellbook');
+}
+
+/** The book as a TITLE — "Spellbook", "Familiar's spells", "Dirge". */
+export function bookTitle(noun: string | undefined): string {
+  const n = noun ?? 'spellbook';
+  return n === 'familiar' ? 'Familiar’s spells' : n.charAt(0).toUpperCase() + n.slice(1);
+}
+
+/** The builder's cantrip row label for a book caster — "Spellbook cantrips", "Familiar’s cantrips". */
+export function bookCantripLabel(noun: string | undefined): string {
+  const n = noun ?? 'spellbook';
+  return n === 'familiar' ? 'Familiar’s cantrips' : `${n.charAt(0).toUpperCase() + n.slice(1)} cantrips`;
+}
+
+/** The sheet's marker on a spell an entry is DRAWING that its book does not hold. One sentence, so the
+ *  test and every surface say the same thing. */
+export function notInBookNote(noun: string | undefined): string {
+  return `Not in your ${noun ?? 'spellbook'} — add it in the builder`;
+}
+
+/** The sheet's marker on a restricted slot drawing a pick its own list does not hold — prepared in an
+ *  ordinary slot the character no longer has (`RestrictedSlot.keptOffList`, lane C2). That slot is the
+ *  old +1 slot a second-class wizard had before its curriculum (a save from before C2), or — the stored
+ *  key cannot tell them apart — a Ring of Wizardry's slot after the ring came off, or an ordinary slot
+ *  after a level-down. The words are true of all three; "before this slot was limited" was not
+ *  (C2 check round 2). */
+export function keptOffListNote(label: string): string {
+  return `Not a ${label.toLowerCase()} spell — prepared in a slot you no longer have`;
+}
+
+/** The sheet's marker on a pick drawn PAST a sorcerer's allowance (`grantsCountInside`, lane C2): the
+ *  bloodline's gift is one of the `places`, and a builder from before the gift was counted offered one
+ *  more. Drawn and castable all the same; this says why the rank holds one too many.
+ *
+ *  `onSheet`: the rank's list was set on the sheet (`SpellcastingEntry.repertoireOnSheet`), so the
+ *  builder's picks there are not read and removing one in the builder would change nothing — the
+ *  sheet's Repertoire button is where it goes. Cantrips never are: a spontaneous caster's cantrips
+ *  have no sheet writer, so the builder is the place for them.
+ *
+ *  The gift is always ONE of the places (`grantedPlaces`), even where the record lists one per variant
+ *  (lane C4: C3's "your bloodline's 4 spells take all of your 4" told players to remove correct picks). */
+export function overGiftNote(places: number, cantrip: boolean, onSheet = false): string {
+  const where = onSheet ? 'with the Repertoire button' : 'in the builder';
+  const noun = cantrip ? 'cantrip' : 'spell';
+  return `One too many — your bloodline’s ${noun} is one of your ${places}; remove one ${where}`;
+}
+
+/** The marker on a sorcerous gift drawn at a rank where the bloodline's record lists one gift per
+ *  VARIANT (`variantGiftCount`, lane C4): print gives the character one of the `count`, and the record
+ *  does not say which, so all are drawn — together one of the rank's places — and each says so. */
+export function variantGiftNote(count: number): string {
+  return `Your bloodline gives only one of these ${count} (by dragon, element or genie) — the app can’t tell which yet`;
+}
+
 /**
  * Free leveled spells in a wizard's spellbook: 5 at level 1, +2 each level after.
- * (The 10 starting cantrips and the school-curriculum additions are not counted here.)
+ * (The 10 starting cantrips — `bookCantripCapacity` — and the school-curriculum additions are not
+ * counted here.)
  */
 export function wizardSpellbookSize(level: number): number {
   return spellbookBudget({ spells: 5, perLevel: 2 }, level);

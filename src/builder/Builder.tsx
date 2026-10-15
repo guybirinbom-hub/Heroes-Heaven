@@ -45,7 +45,7 @@ import {
   backgroundSkillIncreaseAllowed,
   skillIncreaseCap,
 } from '../rules/build';
-import { casterSlots, repertoireCounts, spellbookBudget, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
+import { casterSlots, repertoireCounts, spellbookBudget, wizardSpellbookBudget, cantripsKnown, bookCantripCapacity, bookCantripLabel, bookNoun, bookTitle, variantGiftNote } from '../rules/spellcasting';
 import {
   askedAtDailyPrep,
   characterSenseKeys,
@@ -56,7 +56,8 @@ import {
   senseGateReason,
   type NarrowedOption,
 } from '../rules/derive';
-import { foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, skillSlotOptions } from '../rules/build';
+import { foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, optionDragon, skillSlotOptions } from '../rules/build';
+import { giftChipIds, ownPlacesBeside, spellOpenedBy, variantGiftCount } from '../rules/spellOptions';
 import { signaturesAt, signatureSpellsAt } from '../rules/build';
 // batch 037: flexible-spellcaster#collection-shape — the sheet's own sizer, never a copy of it.
 import { flexibleCollectionSize } from '../rules/build';
@@ -69,7 +70,7 @@ import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
 import { isBoundBackgroundGrant } from '../rules/backgroundGrants';
 import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
-import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
+import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId, SpellAccessGrant, Tradition } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
 import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, cap, choiceOptionRecord, loreLabel, openOptionsWithRecords, requestRemovePick, requestSubclassChange, useBuilderActions, type OptionRecord } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
@@ -524,7 +525,9 @@ export function Builder({
   // A flexible spellcaster's class entry is a COLLECTION — a repertoire over the capped class
   // table — so the picker must count "known" and offer the signature stars, exactly as the sheet
   // builds the entry. Same function as buildCharacter, never a copy (the cantrip-cap lesson below).
-  const archMods = classArchetypeSpellMods(build, content);
+  // THIS class's archetype prices (buildCharacter builds each class's entry with its own — a Wellspring
+  // Mage cuts a Wizard/Sorcerer's sorcerer cantrips, never the wizard's).
+  const archMods = classArchetypeSpellMods(build, content, build.classId);
   const castType = archMods.spellCollection && casting ? 'spontaneous' : (casting?.type ?? (archCaster?.config.repertoire ? 'spontaneous' : 'prepared'));
   // For a choice-tradition archetype (sorcerer/witch), the player's pick; for a summoner archetype, the
   // chosen eidolon type's tradition; else the dedication's fixed tradition.
@@ -536,7 +539,10 @@ export function Builder({
         ? build.archetypeTradition ?? archCaster.config.tradition
         : archCaster.config.tradition
     : undefined;
-  const tradition = subOption?.tradition ?? casting?.tradition ?? archTradition;
+  // The Draconic bloodline casts in its DRAGON's tradition (buildCharacter's `optionDragon`): the
+  // bloodline's own `tradition` is arcane, so a divine-dragon sorcerer was offered arcane spells here
+  // and its divine entry on the sheet drew none of them.
+  const tradition = optionDragon(subOption, build.dragonExemplar)?.tradition ?? subOption?.tradition ?? casting?.tradition ?? archTradition;
   const isPrepared = castType === 'prepared';
   // Spontaneous casters can designate signature spells once the class grants the
   // feature (e.g. bard at level 3).
@@ -551,15 +557,19 @@ export function Builder({
    * ranks — the wizard's book, the witch's familiar) and can prepare only from it.
    *
    * The MAGUS is one too and was not: *"You start with a spellbook worth 10 sp or less, which you
-   * receive for free and must study to prepare your spells each day. The spellbook contains your choice
-   * of eight arcane cantrips and four 1st-level arcane spells… Each time you gain a level, you add two
-   * more arcane spells to your spellbook"* (class-17) — and it prepared straight off the arcane list
-   * with no book and no budget, because the only book lane in the app was this class-id test. WG marks
-   * the same distinction with its PREPARED-LIST casting token against PREPARED-TRADITION.
+   * receive for free and must study each day to prepare your spells… The spellbook contains your choice
+   * of eight arcane cantrips and five 1st-rank arcane spells. Each time you gain a level, you add two
+   * arcane spells to your spellbook"* (class-feature-1258, Impossible Magic — the newest printing; the
+   * Secrets of Magic one, class-17, had four) — and it prepared straight off the arcane list with no
+   * book and no budget, because the only book lane in the app was this class-id test. So is the
+   * NECROMANCER's dirge (class-75: *"eight occult cantrips, the 1st-rank spell harm, and four other
+   * 1st-rank occult spells"*). WG marks the same distinction with its PREPARED-LIST casting token
+   * against PREPARED-TRADITION.
    *
-   * `ClassSpellcasting.spellbook` carries the numbers now (the magus's 4 + 2 is NOT the wizard's 5 + 2,
-   * so reusing wizardSpellbookBudget for it would be wrong). The class-id test stays as the fallback so
-   * a wizard or witch record without the field keeps the book it has always had.
+   * `ClassSpellcasting.spellbook` carries the numbers now (the necromancer's 4 + 2 is NOT the wizard's
+   * 5 + 2, so reusing wizardSpellbookBudget for it would be wrong) and the book's CANTRIP count
+   * (`bookCantripCapacity`). The class-id test stays as the fallback so a wizard or witch record
+   * without the field keeps the book it has always had.
    */
   const bookSpec = casting?.spellbook;
   /* desk 155: flexible-book-casters — the CLASS's own casting type, not `isPrepared` (which is the
@@ -650,6 +660,19 @@ export function Builder({
       }, 0)
     : 0;
   const cantripCap = Math.max(0, (casting ? cantripsKnown(build.classId) : (archCaster?.config.cantrips ?? 0) + archCantripBonus) + cantripBonus + (casting ? archMods.cantripDelta : 0));
+  /*
+   * A BOOK caster's cantrip row is the BOOK (owner's bug 2026-10-14: "magus (and other spellbook
+   * casters) can prepare spells that aren't in their spellbook"). Print sizes it at 10 / 10 / 8 / 8
+   * cantrips (`bookCantripCapacity`) against the five (six) prepared from it each morning, and the row
+   * used to ask only for the five — so the sheet had no book to hold its openings to.
+   *
+   * `build.cantrips` IS the book; its first `cantripAllowance` entries are the standing preparation
+   * (buildCharacter's own slice, School of Unified Magical Theory's missing curriculum cantrip
+   * included), which the sheet re-prepares each morning. Never below the allowance (Cantrip
+   * Expansion's eight). Every other caster's row is the cantrips it knows, as before.
+   */
+  const bookWord = isWizardBook ? bookNoun(casterCls) : undefined;
+  const cantripAllowance = Math.max(0, cantripCap - (isUmtBook ? 1 : 0));
   /* A build saved before its archetype had a spell pool keeps its cantrips in the dedication's own
    * retired effectChoices, and buildCharacter hands them to the sheet from there. The row counted
    * `build.cantrips` alone, so it read "0 / 2" over two cantrips the character was already casting and
@@ -667,7 +690,9 @@ export function Builder({
    * `toggleCantrip` against an empty list and ADDS the cantrip the player just asked to remove. */
   const writeCantrip = (id: string) => {
     if (legacyCantrips.length) actions.patch({ cantrips: legacyCantrips });
-    actions.toggleCantrip(id);
+    // The cap the ROW shows — a book's ten, Cantrip Expansion's eight. The toggle used to cap at
+    // `cantripsKnown` alone and silently refused the 7th cantrip the row was offering.
+    actions.toggleCantrip(id, cantripRowCap);
   };
   // The built character, used to evaluate feat prerequisites in the picker and the stats rail.
   // Memoized so the full per-level build pipeline runs once per build change, not 2–3× per render.
@@ -676,6 +701,40 @@ export function Builder({
   // Memoized for the same reason featPrereqChar is: deriveDefenses walks feats, items, modes and
   // stances, and a picker re-renders on every keystroke.
   const builderSenses = useMemo(() => characterSenseKeys(featPrereqChar, content), [featPrereqChar, content]);
+  /* buildCharacter's own entry for the first class — what its gift is (`ownPlacesBeside`). */
+  const castEntry1 = casting && build.classId ? featPrereqChar.spellcasting.find((e) => e.id === `${build.classId}-casting`) : undefined;
+  /** The bloodline's gift in a row, drawn as LOCKED chips so the smaller count says why — the gift is
+   *  the bloodline's, one of the row's places, and has no ✕ (`giftChipIds`). `variants`: the record
+   *  lists one gift per variant at this rank (`variantGiftCount`, lane C4) — together they are the one
+   *  place, and each chip says only one of them is the character's. */
+  const giftChips = (ids: string[], variants = 0) => [
+    ...ids.map((id) => (
+      <span
+        className="spr-chip spr-chip-gift"
+        key={'gift:' + id}
+        title={variants ? `${variantGiftNote(variants)}; together they take one of these places` : 'Granted by your bloodline — one of these places, and always known'}
+      >
+        {content.spells[id]?.name ?? id}
+        <i className="ti ti-lock" aria-hidden="true" />
+      </span>
+    )),
+    // A title is hover-only, so a phone never showed why four to six locked gifts sit beside "3 / 3":
+    // the same sentence as visible text, once per row (the sheet already prints it, .spell-offbook-note).
+    ...(variants && ids.length
+      ? [
+          <span className="spr-gift-note" key="gift-note">
+            {variantGiftNote(variants)}; together they take one of these places.
+          </span>,
+        ]
+      : []),
+  ];
+  /* The cantrip row's cap — a book's ten, else the cantrips the class knows, LESS a sorcerer's gift
+   * cantrip (lane C2, 2026-10-14). Print counts the bloodline's cantrip inside the five
+   * (`grantsCountInside`) and the row offered all five beside it, so the sheet drew the gift and four
+   * picks and the fifth nowhere. The sheet's gate and over-cap report subtract the same one place. */
+  const cantripRowCap = isWizardBook
+    ? Math.max(bookCantripCapacity(casterCls) ?? 0, cantripAllowance)
+    : ownPlacesBeside(castEntry1, 0, cantripCap, rowCantrips);
 
   /**
    * Render one build-time choice picker.
@@ -1107,62 +1166,74 @@ export function Builder({
    * filtered on tradition alone, so a caster building a repertoire here could never pick the spells
    * their own feat had just granted them.
    */
-  const listAdditions = useMemo(() => {
+  /*
+   * ONE body for both class pickers (lane C2): `listAdditions` widens the first class's list,
+   * `listAdditions2` the second's under Dual Class. The second picker read no widening at all, so an
+   * X/Cleric's deity spells and an X/Summoner(fey)'s illusions reached the sheet's picker and never the
+   * builder's — where a prepared caster's book is actually filled.
+   *
+   * `entryId` is the pool this picker fills (`<class id>-casting`): a widening aimed at ANOTHER entry is
+   * not this picker's. The first picker used to take a feat widening aimed at EITHER class's entry, so a
+   * row naming the second class's pool widened the first one too. `classId`/`subclassId` name the class
+   * whose own features widen it — a feature both classes hold widens both, as buildCharacter leaves it.
+   */
+  const collectListAdditions = (entryId: string, classId: string | null, subclassId: string | null | undefined): Set<string> => {
     const out = new Set<string>();
     // A widening may name whole TRADITIONS rather than spells — "one spell in your spell repertoire
     // not on the divine spell list" (Mysterious Repertoire). Expanded here, in a memo, rather than
-    // onto the character, where it would be ~1,500 ids in every saved roster entry.
-    const openTraditions = new Set<string>();
-    let anyTradition = false;
+    // onto the character, where it would be ~1,500 ids in every saved roster entry. Each rule keeps its
+    // TRAIT narrowing: Fey Eidolon opens *"spells that have the illusion or mental traits that appear on
+    // the arcane spell list"* (AoN eidolon-8), not the whole arcane list — the sheet's `spellOpenedBy`
+    // test, so the two pickers offer the same spells.
+    const opened: { traditions: Tradition[] | 'any'; traits?: string[] }[] = [];
+    const widenings = (list: SpellAccessGrant | SpellAccessGrant[] | undefined): SpellAccessGrant[] =>
+      list == null ? [] : Array.isArray(list) ? list : [list];
+    const widen = (add: SpellAccessGrant) => {
+      for (const s of add.spells ?? []) if (content.spells[s]) out.add(s);
+      // "Add up to three of your deity's spells to your spell list" — resolved from the build's own
+      // deity, so the picker offers the right three the moment the player picks a deity. (The same arm
+      // the class-feature loop needs: Deity (Cleric) "adds your deity's spells to your spell list".)
+      if (add.from === 'deity' && build.deityId)
+        for (const s of content.deities[build.deityId]?.spells ?? []) if (content.spells[s]) out.add(s);
+      if (add.traditions) opened.push({ traditions: add.traditions, ...(add.traits?.length ? { traits: add.traits } : {}) });
+    };
     for (const featId of Object.values(build.featPicks ?? {})) {
-      const list = featId ? content.feats[featId]?.spellListAdditions : undefined;
-      for (const add of list == null ? [] : Array.isArray(list) ? list : [list]) {
+      for (const add of widenings(featId ? content.feats[featId]?.spellListAdditions : undefined)) {
         // Only the plain list-widening lane belongs in this picker — 'repertoire' and 'font' grants
         // are applied by buildCharacter and are not the player's to choose here.
         if (add.as && add.as !== 'list') continue;
-        // …and only widenings aimed at the CLASS pools this picker fills. An `entryId`-scoped row
+        // …and only widenings aimed at the CLASS pool this picker fills. An `entryId`-scoped row
         // (Psi Development's six psi cantrips → `psychic-dedication-casting`) belongs to the
         // archetype pool's own picker in shared.tsx; un-gated it offered them in the class list too.
-        if (add.entryId && add.entryId !== `${build.classId}-casting` && add.entryId !== `${build.classId2}-casting`) continue;
-        for (const s of add.spells ?? []) if (content.spells[s]) out.add(s);
-        // "Add up to three of your deity's spells to your spell list" — resolved from the build's own
-        // deity, so the picker offers the right three the moment the player picks a deity.
-        if (add.from === 'deity' && build.deityId)
-          for (const s of content.deities[build.deityId]?.spells ?? []) if (content.spells[s]) out.add(s);
-        if (add.traditions === 'any') anyTradition = true;
-        else for (const t of add.traditions ?? []) openTraditions.add(t);
+        if (add.entryId && add.entryId !== entryId) continue;
+        widen(add);
       }
     }
     /* …and a widening carried by a CLASS FEATURE rather than a feat. The necromancer's dirge grants
      * occult access to Harm — a divine spell — so without this the SHEET offered it and the builder,
-     * which is where a prepared caster's book is actually filled, did not. Same body as the feat loop
-     * above: only the plain list lane, since 'repertoire' and 'font' grants are buildCharacter's. */
-    // FIRST class only on purpose: this widens the PRIMARY picker (`eligibleSpells`); a second class's widening belongs to `eligibleSpells2`, which reads none yet (spell-picker lane).
-    for (const fid of classFeatureIdsOwned(
-      { classId: build.classId, subclassId: build.subclassId, level: build.level },
-      content,
-    )) {
-      const list = content.classFeatures[fid]?.spellListAdditions;
-      for (const add of list == null ? [] : Array.isArray(list) ? list : [list]) {
-        if (add.as && add.as !== 'list') continue;
-        for (const s of add.spells ?? []) if (content.spells[s]) out.add(s);
-        // The same deity branch the feat loop has — Deity (Cleric) "adds your deity's spells to
-        // your spell list", and this copy of the loop was missing exactly this arm, so the sheet
-        // offered Jaidi's spells and the builder's book did not.
-        if (add.from === 'deity' && build.deityId)
-          for (const s of content.deities[build.deityId]?.spells ?? []) if (content.spells[s]) out.add(s);
-        if (add.traditions === 'any') anyTradition = true;
-        else for (const t of add.traditions ?? []) openTraditions.add(t);
+     * which is where a prepared caster's book is actually filled, did not. */
+    if (classId) {
+      for (const fid of classFeatureIdsOwned({ classId, subclassId, level: build.level }, content)) {
+        for (const add of widenings(content.classFeatures[fid]?.spellListAdditions)) {
+          if (add.as && add.as !== 'list') continue;
+          if (add.entryId && add.entryId !== entryId) continue;
+          widen(add);
+        }
       }
     }
-    if (anyTradition || openTraditions.size) {
+    if (opened.length) {
       for (const s of Object.values(content.spells)) {
         if (s.ritual) continue;
-        if (anyTradition || (s.traditions ?? []).some((t) => openTraditions.has(t))) out.add(s.id);
+        if (opened.some((w) => spellOpenedBy(w, s))) out.add(s.id);
       }
     }
     return out;
-  }, [build.featPicks, build.deityId, build.classId, build.classId2, build.subclassId, build.level, content]);
+  };
+  const listAdditions = useMemo(
+    () => collectListAdditions(`${build.classId}-casting`, build.classId, build.subclassId),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [build.featPicks, build.deityId, build.classId, build.subclassId, build.level, content],
+  );
   /**
    * A class archetype that REPLACES the list ("Replace your spell list with the elemental spell
    * list"). The tradition index is still the right starting point for everyone else, so this
@@ -1182,10 +1253,16 @@ export function Builder({
     const t = s.traits ?? [];
     return t.some((x) => r.anyTrait.includes(x)) && !t.some((x) => r.excludeTraits.includes(x));
   };
-  const eligibleSpells = (rank: number) => {
-    if (!tradition) return NO_SPELLS;
-    let base = rank === 0 ? spellIndex.cantrips[tradition] ?? NO_SPELLS : spellIndex.upTo[tradition]?.[rank] ?? NO_SPELLS;
-    if (listReplacement) {
+  /** Under Dual Class, the second class's entry id (buildCharacter's `<class id>-casting`). */
+  const secondEntryId = build.variantRules?.dualClass && build.classId2 ? `${build.classId2}-casting` : undefined;
+  /** The list one class pool's picker offers: its tradition (or the class archetype's replacement list),
+   *  plus that pool's own widenings. ONE body for the first class (`eligibleSpells`) and, under Dual
+   *  Class, the second (`eligibleSpells2`) — lane C2. `replaced` says whether the replacement list is
+   *  this pool's: buildCharacter aims it at the archetype's class entry (`spellListReplacement.entryId`). */
+  const poolSpellsFor = (rank: number, trad: string | undefined, additions: Set<string>, replaced: boolean, narrowArchetypeCantrips: boolean) => {
+    if (!trad) return NO_SPELLS;
+    let base = rank === 0 ? spellIndex.cantrips[trad] ?? NO_SPELLS : spellIndex.upTo[trad]?.[rank] ?? NO_SPELLS;
+    if (listReplacement && replaced) {
       // The replaced list is not a subset of the tradition — an inner sea elementalist wizard gets
       // primal water spells — so it is rebuilt from the whole spell set, not filtered out of `base`.
       const pool = Object.values(content.spells).filter(
@@ -1199,16 +1276,20 @@ export function Builder({
      * its archetype pool on the Setup card instead), so the class's own list is never narrowed here.
      * `listAdditions` below is deliberately still added on top: a feat that grants a cantrip grants it
      * by its own printed text, which the dedication's list does not override. */
-    if (rank === 0 && !casting && archCaster?.config.cantripOptions) {
+    if (narrowArchetypeCantrips && rank === 0 && archCaster?.config.cantripOptions) {
       base = base.filter((s) => archetypeCantripAllowed(archCaster, s.id));
     }
-    if (!listAdditions.size) return base;
+    if (!additions.size) return base;
     const have = new Set(base.map((s) => s.id));
-    const extra = [...listAdditions]
+    const extra = [...additions]
       .map((id) => content.spells[id])
       .filter((s): s is Sp => !!s && !have.has(s.id) && (rank === 0 ? s.rank === 0 : s.rank > 0 && s.rank <= rank));
     return extra.length ? [...base, ...extra].sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name)) : base;
   };
+  // The first pool keeps the replacement unless the archetype names the SECOND class's entry; a single
+  // class keeps it exactly as before.
+  const eligibleSpells = (rank: number) =>
+    poolSpellsFor(rank, tradition, listAdditions, !!listReplacement && (!secondEntryId || listReplacement.entryId !== secondEntryId), !casting);
   // ── Dual Class: the SECOND caster's spell surface (writes cantrips2/spells2/signatures2). Only when
   //    the dual-class variant is on AND the second class is itself a slot caster. These mirror the
   //    primary caster derivations above, and feed the consolidated "Second class spells" card + the
@@ -1218,24 +1299,56 @@ export function Builder({
   const subOption2 = cls2?.subclass?.options.find((o) => o.id === build.subclassId2);
   const showSpells2 = !!casting2;
   const castProgression2 = subOption2?.slotProgression ?? casting2?.progression;
-  const castType2 = casting2?.type ?? 'prepared';
-  const tradition2 = subOption2?.tradition ?? casting2?.tradition;
+  /* THIS class's archetype prices, as `archMods` is the first's — the same `classCasting` builds both
+   * entries (lane C2). A flexible second class casts its COLLECTION spontaneously, exactly as `castType`
+   * says for the first; its rows stay per rank, which never asks for more than the pool's places. */
+  const archMods2 = classArchetypeSpellMods(build, content, build.classId2);
+  const castType2 = archMods2.spellCollection && casting2 ? 'spontaneous' : casting2?.type ?? 'prepared';
+  /* The tradition buildCharacter gave the second entry — its patron's, eidolon's, bloodline's or
+   * DRAGON's (lane C2: an X/Sorcerer with a divine dragon was offered arcane spells here). Read off the
+   * built entry, so the two can never disagree; the option chain is only the fallback before a build. */
+  const tradition2 =
+    (cls2 ? featPrereqChar.spellcasting.find((e) => e.id === `${cls2.id}-casting`)?.tradition : undefined) ??
+    optionDragon(subOption2, build.dragonExemplar)?.tradition ??
+    subOption2?.tradition ??
+    casting2?.tradition;
   const isPrepared2 = castType2 === 'prepared';
   const sigAvailable2 =
     casting2?.type === 'spontaneous' &&
     signatureSpellsAt(cls2, build.level);
-  // Same spellbook lane as the primary class above (dual class), so a magus/wizard pair agrees with itself.
+  // Same spellbook lane as the primary class above (dual class), so a magus/wizard pair agrees with itself
+  // — the CLASS's own casting type, as `isWizardBook` reads it (desk 155: a flexible wizard keeps its book).
   const bookSpec2 = casting2?.spellbook;
-  const isWizardBook2 = !!casting2 && isPrepared2 && (!!bookSpec2 || cls2?.id === 'wizard' || cls2?.id === 'witch');
+  const isWizardBook2 = !!casting2 && casting2.type === 'prepared' && (!!bookSpec2 || cls2?.id === 'wizard' || cls2?.id === 'witch');
   const isUmtBook2 = cls2?.id === 'wizard' && subOption2?.id === 'school-of-unified-magical-theory';
   const spellbookSize2 = bookSpec2 ? spellbookBudget(bookSpec2, build.level) : wizardSpellbookBudget(build.level, isUmtBook2);
-  const slotCounts2 = casting2 ? repertoireCounts(casterSlots(build.level, castProgression2), casting2.extraRepertoire) : {};
-  const cantripCap2 = casting2 && build.classId2 ? cantripsKnown(build.classId2) : 0;
+  /* The second class's prices and allowances by the FIRST class's formulas (lane C2), because
+   * buildCharacter builds both entries with one `classCasting`: the archetype that names this class
+   * (`archMods2`), its slot ceiling, Cantrip Expansion's bonus — the card offered `cantripsKnown` alone
+   * while the sheet kept the bonus cantrips, so the extra ones could never be chosen. */
+  const capArch2 =(counts: Record<number, number>): Record<number, number> =>
+    archMods2.slotCap == null ? counts : Object.fromEntries(Object.entries(counts).map(([r, n]) => [r, Math.min(n, archMods2.slotCap!)]));
+  const slotCounts2 = casting2 ? repertoireCounts(capArch2(casterSlots(build.level, castProgression2)), casting2.extraRepertoire) : {};
+  const cantripCap2 = casting2 && build.classId2 ? Math.max(0, cantripsKnown(build.classId2) + cantripBonus + archMods2.cantripDelta) : 0;
+  /* …and a BOOK caster's row is its BOOK, exactly as the first class's is (lane C1's shape): ten (eight)
+   * cantrips, the first `cantripAllowance2` of them prepared each morning — re-preparable on the sheet. */
+  const bookWord2 = isWizardBook2 ? bookNoun(cls2) : undefined;
+  const cantripAllowance2 = Math.max(0, cantripCap2 - (isUmtBook2 ? 1 : 0));
+  /* buildCharacter's own entry for the second class, and its gift's place — the first class's rule
+   * (`ownPlacesBeside`), so a Fighter/Sorcerer's card offers what a Sorcerer's level page does. */
+  const castEntry2 = cls2 ? featPrereqChar.spellcasting.find((e) => e.id === `${cls2.id}-casting`) : undefined;
+  const cantripRowCap2 = isWizardBook2
+    ? Math.max(bookCantripCapacity(cls2) ?? 0, cantripAllowance2)
+    : ownPlacesBeside(castEntry2, 0, cantripCap2, build.cantrips2 ?? []);
   const learnedTotal2 = Object.values(build.spells2 ?? {}).reduce((n, arr) => n + arr.length, 0);
-  const eligibleSpells2 = (rank: number) => {
-    if (!tradition2) return NO_SPELLS;
-    return rank === 0 ? spellIndex.cantrips[tradition2] ?? NO_SPELLS : spellIndex.upTo[tradition2]?.[rank] ?? NO_SPELLS;
-  };
+  // The second pool's widenings — the same body as the first's, aimed at the second entry.
+  const listAdditions2 = useMemo(
+    () => (secondEntryId ? collectListAdditions(secondEntryId, build.classId2 ?? null, build.subclassId2) : new Set<string>()),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [secondEntryId, build.featPicks, build.deityId, build.classId2, build.subclassId2, build.level, content],
+  );
+  const eligibleSpells2 = (rank: number) =>
+    poolSpellsFor(rank, tradition2, listAdditions2, !!listReplacement && !!secondEntryId && listReplacement.entryId === secondEntryId, false);
   const familiarAbilityList = useMemo(
     () => Object.values(content.familiarAbilities).sort((a, b) => a.name.localeCompare(b.name)),
     [content],
@@ -1288,13 +1401,20 @@ export function Builder({
     return 1;
   })();
   // What spell capacity is GAINED at level L (vs the level before) — drives the per-level pickers.
+  /* The player's OWN places at a rank: the slot count, less a sorcerer's gift spell once the rank has
+   * slots at all (lane C2 — *"your first new spell is always the sorcerous gift spell for that rank"*,
+   * so the gift arrives with the rank and is one of its places; the row offered the full count, and the
+   * sheet drew the player's last pick nowhere). `cap - gained` stays the previous level's own places,
+   * which is what `spellsDropAt` compares against. */
+  const ownPlaces = (counts: Record<number, number>, r: number) =>
+    (counts[r] ?? 0) > 0 ? ownPlacesBeside(castEntry1, r, counts[r] ?? 0, build.spells[r] ?? []) : 0;
   const spellGainsAt = (L: number) => {
     const cur = slotsAt(L);
     const prev = slotsAt(L - 1);
     const ranks = [...new Set([...Object.keys(cur), ...Object.keys(prev)].map(Number))]
       .filter((r) => r >= 1 && (cur[r] ?? 0) > (prev[r] ?? 0))
       .sort((a, b) => a - b)
-      .map((r) => ({ rank: r, gained: (cur[r] ?? 0) - (prev[r] ?? 0), cap: cur[r] ?? 0 }));
+      .map((r) => ({ rank: r, gained: ownPlaces(cur, r) - ownPlaces(prev, r), cap: ownPlaces(cur, r) }));
     return {
       ranks,
       // batch 037: flexible-spellcaster#collection-shape — both across-rank pools grow through here.
@@ -1394,12 +1514,20 @@ export function Builder({
         {g.cantrips > 0 && (
           <div className="spell-pick-row">
             <div className="spr-head">
-              <span>Cantrips</span>
+              {/* "Spellbook cantrips", "Familiar’s cantrips", "Dirge cantrips" — a book caster chooses
+                  its BOOK here (owner's bug 2026-10-14); everyone else, the cantrips they know. */}
+              <span>{bookWord ? bookCantripLabel(bookWord) : 'Cantrips'}</span>
               <span className="spr-count">
-                {rowCantrips.length} / {cantripCap}
+                {rowCantrips.length} / {cantripRowCap}
               </span>
             </div>
+            {bookWord && (
+              <p className="setup-hint book-cantrip-hint">
+                The first {cantripAllowance} are prepared each morning by default — change them on the sheet (Spells tab).
+              </p>
+            )}
             <div className="spr-chips">
+              {giftChips(giftChipIds(castEntry1, 0, rowCantrips), variantGiftCount(castEntry1, 0))}
               {rowCantrips.map((id) => (
                 <span className="spr-chip" key={id}>
                   {content.spells[id]?.name ?? id}
@@ -1413,12 +1541,18 @@ export function Builder({
               <button
                 className="spr-add"
                 type="button"
-                disabled={rowCantrips.length >= cantripCap}
-                title={rowCantrips.length >= cantripCap ? `All ${cantripCap} cantrip slots are filled — remove one first.` : undefined}
+                disabled={rowCantrips.length >= cantripRowCap}
+                title={
+                  rowCantrips.length >= cantripRowCap
+                    ? bookWord
+                      ? `Your ${bookWord} holds all ${cantripRowCap} cantrips it can — remove one first.`
+                      : `All ${cantripRowCap} cantrip slots are filled — remove one first.`
+                    : undefined
+                }
                 data-ctl="spell"
                 data-ctl-title="Cantrip"
-                data-ctl-options={cantripCap}
-                onClick={() => setPicker({ kind: 'spell', rank: 0, cap: cantripCap })}
+                data-ctl-options={cantripRowCap}
+                onClick={() => setPicker({ kind: 'spell', rank: 0, cap: cantripRowCap })}
               >
                 + add
               </button>
@@ -1430,7 +1564,7 @@ export function Builder({
             {/* batch 037: flexible-spellcaster#collection-shape — one across-rank pool, named for the
                 rule that gives it: a spellbook, or the archetype's spell collection. */}
             <div className="bsec-sub">
-              {isFlexCollection ? 'Spell collection' : 'Spellbook'} — {poolSpent} / {flatAt(lvl)}{' '}
+              {isFlexCollection ? 'Spell collection' : bookTitle(bookWord)} — {poolSpent} / {flatAt(lvl)}{' '}
               {isFlexCollection ? 'collected' : 'learned'}
               {g.bookGained > 0 ? ` (+${g.bookGained} this level)` : ''}
             </div>
@@ -1447,7 +1581,7 @@ export function Builder({
               <p className="lvl-note spr-why">
                 <i className="ti ti-info-circle" aria-hidden="true" />
                 <span>
-                  Your {isFlexCollection ? 'collection' : 'spellbook'} holds all {flatAt(lvl)} spells it can at this
+                  Your {isFlexCollection ? 'collection' : bookWord ?? 'spellbook'} holds all {flatAt(lvl)} spells it can at this
                   level — remove one to choose a different spell.
                 </span>
               </p>
@@ -1485,7 +1619,7 @@ export function Builder({
                           </button>
                         </span>
                       ))}
-                      <button className="spr-add" type="button" disabled={full} title={full ? (floorHeld ? `Your collection must include at least one 1st-rank spell — the last of its ${flatAt(lvl)} places is held for one.` : isFlexCollection ? `Your collection holds all ${flatAt(lvl)} spells it can at this level.` : `Your spellbook holds all ${flatAt(lvl)} spells it can at this level.`) : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} onClick={() => setPicker({ kind: 'spell', rank, cap: capHere })}>
+                      <button className="spr-add" type="button" disabled={full} title={full ? (floorHeld ? `Your collection must include at least one 1st-rank spell — the last of its ${flatAt(lvl)} places is held for one.` : isFlexCollection ? `Your collection holds all ${flatAt(lvl)} spells it can at this level.` : `Your ${bookWord ?? 'spellbook'} holds all ${flatAt(lvl)} spells it can at this level.`) : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} onClick={() => setPicker({ kind: 'spell', rank, cap: capHere })}>
                         + add
                       </button>
                     </div>
@@ -1565,6 +1699,7 @@ export function Builder({
                   </span>
                 </div>
                 <div className="spr-chips">
+                  {giftChips(giftChipIds(castEntry1, rank, chosen), variantGiftCount(castEntry1, rank))}
                   {chosen.map((id, idx) => (
                     <span className="spr-chip" key={id + ':' + idx}>
                       {sigAvailable && (
@@ -1616,7 +1751,7 @@ export function Builder({
     const asksEffect = (rec.effectChoices ?? []).some((ch) => effectChoiceOffered(ch, build, content, sid));
     const spec = FEAT_PICK_GRANTS[sid];
     if (!def && !asksEffect && !spec) return null;
-    const featOpts = spec ? pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description, record: { bucket: 'feats' as const, id: o.id } })) : [];
+    const featOpts = spec ? pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description, record: { bucket: 'feats', id: o.id } })) : [];
     return (
       <SetupCard icon="ti-versions" label={`Dual Class — ${rec.name}`}>
         {def && renderChoice(def, `feature:${sid}`, sid)}
@@ -1648,34 +1783,62 @@ export function Builder({
       .sort((a, b) => a - b);
     return (
       <SetupCard icon="ti-sparkles" label={`${cls2.name} spells — ${cap(tradition2 ?? '')} ${castType2}`}>
-        {cantripCap2 > 0 && (
+        {cantripRowCap2 > 0 && (
           <div className="spell-pick-row">
             <div className="spr-head">
-              <span>Cantrips</span>
+              {/* The first class's row, word for word (lane C1's shape): a book caster chooses its BOOK. */}
+              <span>{bookWord2 ? bookCantripLabel(bookWord2) : 'Cantrips'}</span>
               <span className="spr-count">
-                {cantrips2.length} / {cantripCap2}
+                {cantrips2.length} / {cantripRowCap2}
               </span>
             </div>
+            {bookWord2 && (
+              <p className="setup-hint book-cantrip-hint">
+                The first {cantripAllowance2} are prepared each morning by default — change them on the sheet (Spells tab).
+              </p>
+            )}
             <div className="spr-chips">
+              {giftChips(giftChipIds(castEntry2, 0, cantrips2), variantGiftCount(castEntry2, 0))}
               {cantrips2.map((id) => (
                 <span className="spr-chip" key={id}>
                   {content.spells[id]?.name ?? id}
-                  <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => actions.toggleCantrip2(id)}>
+                  <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => actions.toggleCantrip2(id, cantripRowCap2)}>
                     <i className="ti ti-x" aria-hidden="true" />
                   </button>
                 </span>
               ))}
-              <button className="spr-add" type="button" data-ctl="spell" data-ctl-title="Cantrip (second class)" data-ctl-options={cantripCap2} onClick={() => setPicker({ kind: 'spell', rank: 0, cap: cantripCap2, caster: 2 })}>
+              <button
+                className="spr-add"
+                type="button"
+                disabled={cantrips2.length >= cantripRowCap2}
+                title={
+                  cantrips2.length >= cantripRowCap2
+                    ? bookWord2
+                      ? `Your ${bookWord2} holds all ${cantripRowCap2} cantrips it can — remove one first.`
+                      : `All ${cantripRowCap2} cantrip slots are filled — remove one first.`
+                    : undefined
+                }
+                data-ctl="spell"
+                data-ctl-title="Cantrip (second class)"
+                data-ctl-options={cantripRowCap2}
+                onClick={() => setPicker({ kind: 'spell', rank: 0, cap: cantripRowCap2, caster: 2 })}
+              >
                 + add
               </button>
             </div>
           </div>
         )}
-        {isWizardBook2 && <div className="bsec-sub">Spellbook — {learnedTotal2} / {spellbookSize2} learned</div>}
+        {isWizardBook2 && (
+          <div className="bsec-sub">
+            {bookTitle(bookWord2)} — {learnedTotal2} / {spellbookSize2} learned
+          </div>
+        )}
         {sigAvailable2 && ranksWithSlots.some((r) => (build.spells2?.[r] ?? []).length > 0) && <SignatureHint />}
         {ranksWithSlots.map((rank) => {
           const chosen = build.spells2?.[rank] ?? [];
-          const capR = isWizardBook2 ? spellbookSize2 : slotCounts2[rank] ?? 0;
+          // Less a sorcerer's gift spell (lane C2), exactly as the first class's row (`ownPlaces`).
+          const gifts = giftChipIds(castEntry2, rank, chosen);
+          const capR = isWizardBook2 ? spellbookSize2 : ownPlacesBeside(castEntry2, rank, slotCounts2[rank] ?? 0, chosen);
           const have = isWizardBook2 ? learnedTotal2 : chosen.length;
           return (
             <div className="spell-pick-row" key={rank}>
@@ -1686,6 +1849,7 @@ export function Builder({
                 </span>
               </div>
               <div className="spr-chips">
+                {giftChips(gifts, variantGiftCount(castEntry2, rank))}
                 {chosen.map((id, idx) => (
                   <span className="spr-chip" key={id + ':' + idx}>
                     {sigAvailable2 && (
@@ -3670,7 +3834,8 @@ export function Builder({
         // `caster: 2` targets the Dual-Class second class; every primary-coupled value below is
         // swapped for its cls2 mirror so the same picker serves both (primary path unchanged).
         const c2 = picker.caster === 2;
-        const capCantrip = c2 ? cantripCap2 : cantripCap;
+        // A book caster's row is its book (`cantripRowCap`) — the same cap the row and the toggle use.
+        const capCantrip = c2 ? cantripRowCap2 : cantripRowCap;
         // batch 037: flexible-spellcaster#collection-shape — the collection is the second across-rank
         // pool this picker serves; `flatBudget` covers both, so neither is capped by one rank's slots.
         const capBook = c2 ? spellbookSize2 : isFlexCollection ? flexibleCollectionSize(slotCounts) : spellbookSize;
@@ -3748,7 +3913,7 @@ export function Builder({
                   onSelect={() =>
                     c2
                       ? isCantrip
-                        ? actions.toggleCantrip2(sp.id)
+                        ? actions.toggleCantrip2(sp.id, capCantrip)
                         : preparedMode
                           ? actions.addSpell2(picker.rank, sp.id)
                           : actions.toggleSpell2(picker.rank, sp.id)

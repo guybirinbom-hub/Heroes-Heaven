@@ -539,10 +539,22 @@ describe('a second class left on the build with Dual Class OFF grants nothing', 
   /* …and the reads the sweep cannot run: the builder's components and derive's Character readers. A raw
    * comparison against `classId2`/`subclassId2` (or a `[classId, classId2]` pair) must sit on a line
    * that guards it — `dualClass`, or an already-guarded `cls2…` — or go through `holdsClass` /
-   * `holdsSubclass` / `heldClasses`. Comment lines are skipped. */
+   * `holdsSubclass` / `heldClasses`. Comment lines are skipped.
+   *
+   * `!==` as well as `===`, on both sides, and through a template literal (lane C2, from lane A check
+   * 3): `add.entryId !== `${build.classId2}-casting`` slipped past the `===`-only pattern — an unguarded
+   * read that let a widening aimed at the second class's pool widen the first class's picker. A test
+   * against `undefined`/`null` asks whether the field is there at all (deriveBuildFromCharacter copying
+   * it back), not which class it names, and is not a read of this kind. */
   it('no unguarded classId2/subclassId2 comparison anywhere in src/', () => {
     const raw =
-      /\b(classId2|subclassId2)\s*===|===\s*[\w.?]*\b(classId2|subclassId2)\b|\[\s*[\w.]*\bclassId\s*,\s*[\w.]*\bclassId2\s*\]|\[\s*[\w.]*\bsubclassId\s*,\s*[\w.]*\bsubclassId2\s*\]|includes\(\s*[\w.]*\b(classId2|subclassId2)\b/;
+      /\b(classId2|subclassId2)\s*[!=]==(?!\s*(?:undefined|null)\b)|[!=]==\s*`?(?:[^`]*\$\{)?[\w.?]*\b(classId2|subclassId2)\b|\[\s*[\w.]*\bclassId\s*,\s*[\w.]*\bclassId2\s*\]|\[\s*[\w.]*\bsubclassId\s*,\s*[\w.]*\bsubclassId2\s*\]|includes\(\s*[\w.]*\b(classId2|subclassId2)\b/;
+    // The pattern itself, on the line it missed and on its two plain shapes, so a later edit cannot
+    // quietly blunt it — and the presence test it deliberately leaves alone.
+    expect(raw.test('if (add.entryId && add.entryId !== `${build.classId}-casting` && add.entryId !== `${build.classId2}-casting`) continue;')).toBe(true);
+    expect(raw.test('if (b.classId2 !== x) return;')).toBe(true);
+    expect(raw.test('if (x !== build.subclassId2) return;')).toBe(true);
+    expect(raw.test('if (c.classId2 !== undefined) b.classId2 = c.classId2;')).toBe(false);
     const walk = (dir: string): string[] =>
       readdirSync(dir, { withFileTypes: true }).flatMap((d) =>
         d.isDirectory() ? walk(join(dir, d.name)) : /\.(ts|tsx)$/.test(d.name) ? [join(dir, d.name)] : [],

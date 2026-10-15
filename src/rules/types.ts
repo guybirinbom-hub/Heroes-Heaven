@@ -2028,6 +2028,25 @@ export interface RestrictedSlot {
   /** Highest rank a spell in this slot may be — Spell Combination's "2 or more spell ranks below the
    *  slot's rank". Absent means the slot's own rank, as everywhere else. */
   maxRank?: number;
+  /**
+   * The play key an ORDINARY slot that stood here before kept its pick under (Dual Class, lane C2): a
+   * second-class wizard had a plain +1 slot at each rank, `<entry>:<rank>:<count>`, where it now has its
+   * curriculum slot. While nothing is stored under this slot's own id, the sheet draws that pick here
+   * (applyPlayState) — the player's preparation is never hidden. It is the index just past every slot
+   * the rank has NOW (`<entry>:<rank>:<prepared[rank].length>`): with bonus slots (a Ring of Wizardry)
+   * each of them draws the key one before its old one, and this slot draws the last (lane C3).
+   *
+   * ⚠ Nothing stored says which app wrote that key (`schemaVersion` is re-stamped by every build and the
+   * play state carries no version), so a NEW Fighter/Wizard reaches it too: a pick in a Ring of
+   * Wizardry's slot after the ring comes off, or in an ordinary slot after a level-down, sits under the
+   * same `<entry>:<rank>:<count>`. It is drawn here the same way — kept, and marked when it is not a
+   * curriculum spell — where a single-class wizard keeps it in the store undrawn. Accepted (C2 check
+   * round 2): the alternative hides old saves' picks, and the marker is worded to be true in all three.
+   */
+  legacyKey?: string;
+  /** Written by applyPlayState ONLY: the slot is drawing a `legacyKey` pick its own `allowed` list does
+   *  not hold — kept and castable, and marked on the sheet (`keptOffListNote`). */
+  keptOffList?: boolean;
 }
 
 /** A concrete effect an EffectChoice option confers when picked. A subset of the effect lanes the
@@ -3692,7 +3711,8 @@ export interface ClassFeature extends ContentBase, DefenseGrants {
    *
    * ⚠ Array only. `classFeatures['conscious-mind'].grantedSpells` in core.json is a different shape
    * (option id → ladder entries) read through its own cast in buildCharacter, so every reader of this
-   * field must guard with `Array.isArray`.
+   * field must guard with `Array.isArray`. `classFeatures.bloodline` carries the same ladder shape
+   * since lane C4 (phoenix's 4th-rank gift, a 2nd-rank spell, filed at 4th).
    */
   grantedSpells?: string[];
   /**
@@ -3990,19 +4010,27 @@ export interface ClassSpellcasting {
    */
   grantedCountsAgainstRepertoire?: boolean;
   /**
-   * A LEARNED prepared caster's spellbook budget: leveled spells in the book at 1st level, plus
-   * `perLevel` more each level after. Replaces a hardcoded class-id test in the builder.
+   * A LEARNED prepared caster's book: leveled spells in it at 1st level, plus `perLevel` more each
+   * level after, and how many CANTRIPS it holds. Replaces a hardcoded class-id test in the builder.
    *
-   * Magus (class-17): *"The spellbook contains your choice of eight arcane cantrips and four 1st-level
-   * arcane spells… Each time you gain a level, you add two more arcane spells to your spellbook"* —
-   * `{ spells: 4, perLevel: 2 }`, NOT the wizard's 5 + 2. Wanderer's Guide marks the same distinction
-   * with its PREPARED-LIST casting token (wizard, witch, magus, necromancer, technomancer) against
-   * PREPARED-TRADITION (cleric, druid, animist).
+   * Magus, newest printing (class-74 / class-feature-1258, Impossible Magic): *"The spellbook contains
+   * your choice of eight arcane cantrips and five 1st-rank arcane spells… Each time you gain a level,
+   * you add two arcane spells to your spellbook"* — `{ spells: 5, perLevel: 2, cantrips: 8 }`. (The
+   * Secrets of Magic printing, class-17, had four 1st-level spells; the newest printing wins.)
+   * Necromancer (class-75 / class-feature-1285): *"Your dirge contains your choice of eight occult
+   * cantrips, the 1st-rank spell harm, and four other 1st-rank occult spells"* — `{ spells: 4,
+   * perLevel: 2, cantrips: 8, noun: 'dirge' }`, harm being a free grant (the feature's `grantedSpells`).
+   * Wanderer's Guide marks the same distinction with its PREPARED-LIST casting token (wizard, witch,
+   * magus, necromancer, technomancer) against PREPARED-TRADITION (cleric, druid, animist).
    *
-   * Cantrips are deliberately not carried: the book's cantrip count is not modelled for the wizard
-   * either (see `wizardSpellbookSize`), so a field for it would have no reader.
+   * `cantrips` is the BOOK's size, not what is prepared: a book caster prepares `cantripsKnown` of them
+   * each morning (five, the wizard's curriculum cantrip six) and may prepare ONLY from the book.
+   * `bookCantripCapacity` reads it, falling back to 10 for the wizard and witch, which carry no
+   * `spellbook` object at all (the builder's Unified Magical Theory +1 depends on that absence).
+   *
+   * `noun` is what the player text calls the book (`bookNoun`): absent = "spellbook".
    */
-  spellbook?: { spells: number; perLevel: number };
+  spellbook?: { spells: number; perLevel: number; cantrips?: number; noun?: string };
 }
 
 export interface ClassDef extends ContentBase {
@@ -5870,13 +5898,50 @@ export interface SpellcastingEntry {
    * build entry, which has the list under `cantrips` already).
    */
   cantripPool?: string[];
+  /**
+   * A BOOK caster's cantrips — the wizard's spellbook, the witch's familiar, the magus's spellbook,
+   * the necromancer's dirge — which print sizes at 10 / 10 / 8 / 8, against the five (six) the caster
+   * PREPARES each morning. Written by buildCharacter's book branch only: `build.cantrips` IS the book
+   * for these classes (its first `cantripCap` entries are the standing preparation, which is still
+   * `cantrips`), plus the record-granted rank-0 spells.
+   *
+   * Its own field and NOT `spellbook[0]`: deriveBuildFromCharacter writes every spellbook rank into
+   * `build.spells[rank]`, so a rank-0 list there would land in `build.spells[0]` and be charged to the
+   * leveled book's budget in the builder. What may be ADDED to an opening is this list
+   * (`pickerSpellOptions`); what is DRAWN is never narrower than before (`spellOptions`).
+   */
+  bookCantrips?: string[];
+  /** A book caster's word for its book in player text — "spellbook", "familiar", "dirge" (`bookNoun`). */
+  bookNoun?: string;
+  /**
+   * OVERLAY ONLY: spells this entry is DRAWING today that its book does not hold — a cantrip or a
+   * spell the player prepared before the picker was held to the book, or one the builder has since
+   * taken out of the book. Drawn and castable all the same (a pick the player stored is never hidden)
+   * and marked on the sheet "Not in your <noun> — add it in the builder". Written by applyPlayState
+   * (`notInBookOf`); absent when there is nothing to say.
+   */
+  notInBook?: string[];
   /** Prepared casters: slots per rank. */
   prepared?: Record<number, PreparedSlot[]>;
   /** Spontaneous casters: known spell ids per rank. */
   repertoire?: Record<number, string[]>;
   /** Spells granted into the repertoire by a subclass (bloodline/mystery/muse/conscious mind) — these
-   *  do NOT count against the per-rank known-spells cap and can't be removed in play. */
+   *  never spend one of the player's places and can't be removed in play. (For an entry marked
+   *  `grantsCountInside` the player's allowance is that much SMALLER instead — `grantedPlaces`.) */
   grantedRepertoire?: Record<number, string[]>;
+  /**
+   * This class's granted spells and cantrip are PART of its printed allowance, not on top of it — the
+   * sorcerer's sorcerous gift: *"you learn two 1st-rank spells of your choice and four cantrips of your
+   * choice, as well as an additional spell and cantrip from your bloodline"* against a Cantrips column
+   * of 5, and *"your first new spell is always the sorcerous gift spell for that rank"* (class-62).
+   * Copied from `ClassSpellcasting.grantedCountsAgainstRepertoire` onto the class entry, so the
+   * builder's caps, the sheet's add gate and the over-cap report all read one fact (`grantedPlaces`).
+   *
+   * Lane C2 (2026-10-14): the build used to keep the count by SLICING the player's own picks behind the
+   * gift, and the builder offered the full count — so the last pick a player made at a full rank was
+   * drawn nowhere, with nothing saying so. Every pick is drawn now, and the rank says it is over.
+   */
+  grantsCountInside?: boolean;
   /**
    * How many spells of their OWN this entry may know at a rank, where that is not the slot count.
    *
@@ -5886,6 +5951,7 @@ export interface SpellcastingEntry {
    * carried that number, so the sheet's add gate read `slots[rank].max` and refused to let an oracle
    * put a different 10th-rank spell back after removing one. Written from `repertoireCounts`, the
    * same function the BUILDER's picker caps with, and only where it differs from the slot count.
+   * (A `grantsCountInside` entry's gift comes off this number too — read it through `repertoireCap`.)
    */
   repertoireMax?: Record<number, number>;
   /**
@@ -5899,6 +5965,13 @@ export interface SpellcastingEntry {
    * player has never touched, where the build's own list is what they hold.
    */
   repertoireHeld?: Record<number, number>;
+  /**
+   * OVERLAY ONLY: the ranks whose list the player set on the SHEET (`play.repertoireSpells`). At these
+   * ranks the stored list is what is drawn and the builder's own picks are not read, so a change made
+   * in the builder does nothing there — the sheet's Repertoire button is the one place to make it.
+   * Written by applyPlayState; read by the sheet to say WHERE a rank's fix goes (`overGiftNote`).
+   */
+  repertoireOnSheet?: number[];
   /** Slot pool per rank (used by spontaneous; prepared derives from `prepared`). */
   slots?: Record<number, { max: number; used: number }>;
   /** Extra slots that may hold only certain spells. Deliberately NOT folded into `prepared`/`slots`:
@@ -5952,11 +6025,14 @@ export interface SpellcastingEntry {
   /**
    * OVERLAY ONLY: ranks whose collection is OVER the cap, and by how many (`rank: 0` is a flexible
    * collection's flat pool). Over-cap is a state only a BUILD edit produces — a level entered wrong,
-   * a subclass swapped — and every spell in it is the player's own, so the sheet draws them all and
+   * a subclass swapped, a builder that offered a sorcerer one place more than its gift leaves
+   * (`grantsCountInside`) — and every spell in it is the player's own, so the sheet draws them all and
    * shows this beside the rank instead of hiding one. Written by applyPlayState (`overCapOf`).
    */
   overCap?: { rank: number; by: number }[];
-  /** Wizard: learned spells per rank (the daily preparation is drawn from this). */
+  /** Wizard: learned spells per rank (the daily preparation is drawn from this). The BUILT book starts
+   *  at rank 1 — its cantrips are `bookCantrips`; a rank-0 list appears here only on the play overlay,
+   *  for cantrips learned with Learn a Spell. */
   spellbook?: Record<number, string[]>;
   /**
    * Spells added in play by the Learn a Spell activity, per rank.

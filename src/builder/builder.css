@@ -1163,6 +1163,12 @@
   flex-wrap: wrap;
   gap: 6px;
 }
+/* The variant-gift sentence under a sorcerer's locked gift chips — its own line, not a chip. */
+.spr-gift-note {
+  flex-basis: 100%;
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
 /* A toggle chip paired with its "i" info button; wraps together as a unit. */
 .rule-toggle {
   display: inline-flex;

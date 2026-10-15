@@ -442,7 +442,10 @@ describe('a sheet pick gives way only where the fresh build makes it illegal', (
     ]);
   });
 
-  it('prepared slot: a pick the fresh SPELLBOOK no longer holds gives way to the build\'s spell', () => {
+  it('prepared slot: a pick the fresh SPELLBOOK no longer holds is still drawn — and marked, never hidden', () => {
+    // Until 2026-10-14 this pinned "gives way to the build's spell" (grease undrawn). Lane C1 (owner: a
+    // stored pick is never hidden; one no longer legal is drawn WITH a marker saying why): the book now
+    // decides what the picker may ADD, and the render draws grease with `notInBook`.
     const b = wizard(3, { 1: ['force-barrage', 'grease'] });
     const ch = built(b);
     expect(mainCasting(ch)?.spellbook?.[1], 'fixture: the book is the wizard\'s only source').toEqual([
@@ -454,11 +457,15 @@ describe('a sheet pick gives way only where the fresh build makes it illegal', (
     play = setPreparedSpell(play, 'wizard-casting', 1, 1, 'force-barrage');
     // The builder rewrites the book: grease is out, mage armor is in.
     const after = save(b, play, wizard(3, { 1: ['force-barrage', 'mage-armor'] }));
-    const slots = mainCasting(sheet(after))?.prepared?.[1]?.map((s) => s.spellId);
-    expect(slots?.[0], 'a spell that is in no book the wizard owns cannot stay prepared').toBe('force-barrage');
+    const shown = mainCasting(sheet(after));
+    const slots = shown?.prepared?.[1]?.map((s) => s.spellId);
+    expect(slots?.[0], 'the player\'s pick is still drawn').toBe('grease');
+    expect(shown?.notInBook, '…with the marker saying it is in no book the wizard owns').toContain('grease');
+    expect(after.play.preparedSpells?.['wizard-casting:1:0'], 'and the store is untouched').toBe('grease');
     expect(slots?.[1], 'this one is still in the book — the build answer moving under it is not a reason').toBe(
       'force-barrage',
     );
+    expect(shown?.notInBook ?? [], 'a book spell carries no marker').not.toContain('force-barrage');
   });
 
   it('prepared slot: a spell LEARNED in play counts as the fresh list too', () => {
@@ -553,10 +560,15 @@ describe('a sheet pick gives way only where the fresh build makes it illegal', (
     const play = setPreparedSpell(initialPlay(ch, db), id, 5, 0, 'haste');
     expect(mainCasting(sheet({ character: ch, play }))?.prepared?.[5]?.[0]?.spellId, 'fixture: legal today').toBe('haste');
     const down = save(m11, play, m10);
-    expect(mainCasting(sheet(down))?.prepared?.[5]?.[0]?.spellId, 'at 10th it is in no book they own').toBeNull();
+    // Until 2026-10-14 this read `.toBeNull()` — "at 10th it is in no book they own", so not drawn. Lane C1
+    // (never hidden; drawn WITH a marker): haste is arcane and under the 5th-rank ceiling, so it is drawn
+    // at 10th and marked `notInBook`; the book still keeps it off the picker.
+    expect(mainCasting(sheet(down))?.prepared?.[5]?.[0]?.spellId, 'at 10th it is in no book they own — drawn all the same').toBe('haste');
+    expect(mainCasting(sheet(down))?.notInBook, '…and SAID').toContain('haste');
     expect(down.play.preparedSpells?.[`${id}:5:0`], 'and it is not deleted').toBe('haste');
     const back = save(m10, down.play, m11);
     expect(mainCasting(sheet(back))?.prepared?.[5]?.[0]?.spellId, 'the correction cost them nothing').toBe('haste');
+    expect(mainCasting(sheet(back))?.notInBook ?? [], 'back in the book, the marker goes').not.toContain('haste');
   });
 
   /* ---- 1b. a Spell Blending BONUS slot ---- */
@@ -594,16 +606,19 @@ describe('a sheet pick gives way only where the fresh build makes it illegal', (
     expect(bonusSlotOf(sheet(after))?.spellId, 'the bonus slot kept what the player prepared').toBe('grease');
   });
 
-  it('bonus slot: a spell the fresh book no longer holds gives way', () => {
+  it('bonus slot: a spell the fresh book no longer holds is still drawn — marked, never hidden', () => {
+    // Until 2026-10-14 this pinned "gives way" (an empty bonus slot). Lane C1 (never hidden; drawn WITH a
+    // marker): grease is arcane and under the slot's ceiling, so it stays drawn, marked `notInBook`.
     const b = blendingWizard(5, BOOK5);
     const play = withBonusSlot(b, 'grease');
     const after = save(b, play, blendingWizard(5, { ...BOOK5, 1: ['force-barrage', 'mage-armor'] }));
-    expect(bonusSlotOf(sheet(after))?.spellId, 'an empty bonus slot, not a castable spell nobody knows').toBeNull();
-    expect(after.play.preparedSpells?.[BONUS3], 'not DRAWN — and not deleted either').toBe('grease');
-    // …and the book rewrite undone puts it straight back, which a Save-time delete could never do.
-    expect(bonusSlotOf(sheet(save(blendingWizard(5, { ...BOOK5, 1: ['force-barrage', 'mage-armor'] }), after.play, b)))?.spellId).toBe(
-      'grease',
-    );
+    expect(bonusSlotOf(sheet(after))?.spellId, 'the player\'s pick in the bonus slot is still drawn').toBe('grease');
+    expect(mainCasting(sheet(after))?.notInBook, '…marked as in no book the wizard owns').toContain('grease');
+    expect(after.play.preparedSpells?.[BONUS3], 'and not deleted either').toBe('grease');
+    // …and the book rewrite undone takes the marker away again.
+    const back = sheet(save(blendingWizard(5, { ...BOOK5, 1: ['force-barrage', 'mage-armor'] }), after.play, b));
+    expect(bonusSlotOf(back)?.spellId).toBe('grease');
+    expect(mainCasting(back)?.notInBook ?? []).not.toContain('grease');
   });
 
   /* ---- 1c. a RESTRICTED slot's spell ---- */
@@ -850,15 +865,19 @@ describe('a sheet pick gives way only where the fresh build makes it illegal', (
     ).not.toContain(slots[0].id);
   });
 
-  it('mode slot: a spell the fresh book no longer holds is not drawn — and is not deleted', () => {
+  it('mode slot: a spell the fresh book no longer holds is still drawn, marked — and is not deleted', () => {
+    // Until 2026-10-14 this pinned "is not drawn" (`.toBeNull()`). Lane C1 (never hidden; drawn WITH a
+    // marker): fireball is arcane and under the candle slot's 3rd-rank ceiling, so it stays drawn,
+    // marked `notInBook`; what the slot may NOT draw is still refused (the next tests).
     const b = wizard(11, { 1: ['force-barrage'], 3: ['fireball'] });
     const ch = built(b);
     const id = candleSlots(applyPlayState(ch, lit(ch), db))[0].id;
     const play = setRestrictedSpell(lit(ch), id, 'fireball');
     expect(candleSlots(applyPlayState(ch, play, db))[0].spellId, 'fixture: legal today').toBe('fireball');
     const after = save(b, play, wizard(11, { 1: ['force-barrage'], 3: ['blink'] }));
-    expect(candleSlots(sheet(after))[0]?.spellId, 'a spell in no book the wizard owns').toBeNull();
-    expect(after.play.preparedSpells?.[id], 'not DRAWN — and not deleted either').toBe('fireball');
+    expect(candleSlots(sheet(after))[0]?.spellId, 'a spell in no book the wizard owns — drawn all the same').toBe('fireball');
+    expect(mainCasting(sheet(after))?.notInBook, '…and said').toContain('fireball');
+    expect(after.play.preparedSpells?.[id], 'and not deleted either').toBe('fireball');
     expect(candleSlots(sheet(save(wizard(11, { 1: ['force-barrage'], 3: ['blink'] }), after.play, b)))[0]?.spellId).toBe(
       'fireball',
     );
@@ -985,7 +1004,9 @@ describe('a sheet pick gives way only where the fresh build makes it illegal', (
     expect(after.play.preparedSpells?.[`${id}#2`]).toBe('force-barrage');
   });
 
-  it('combination slot: a spell the fresh book no longer holds gives way — in BOTH halves', () => {
+  it('combination slot: a spell the fresh book no longer holds is still drawn, marked — in BOTH halves', () => {
+    // Until 2026-10-14 this pinned "gives way" ([null, null]). Lane C1 (never hidden; drawn WITH a marker):
+    // both are arcane and under the slot's 1st-rank ceiling, so both stay drawn, marked `notInBook`.
     const b = comboWizard(COMBO_BOOK);
     const ch = built(b);
     const id = comboSlot(ch)!.id;
@@ -993,13 +1014,11 @@ describe('a sheet pick gives way only where the fresh build makes it illegal', (
     // The builder rewrites rank 1 of the spellbook entirely.
     const after = save(b, play, comboWizard({ ...COMBO_BOOK, 1: ['mage-armor'] }));
     const now = comboSlot(sheet(after));
-    expect([now?.spellId, now?.spellId2], 'an empty combination slot, not two castable spells nobody knows').toEqual([
-      null,
-      null,
-    ]);
+    expect([now?.spellId, now?.spellId2], 'both halves still drawn').toEqual(['grease', 'force-barrage']);
+    expect(mainCasting(sheet(after))?.notInBook, '…both marked').toEqual(expect.arrayContaining(['grease', 'force-barrage']));
     expect(
       [after.play.preparedSpells?.[id], after.play.preparedSpells?.[`${id}#2`]],
-      'neither half is DRAWN — and neither is deleted',
+      'and neither is deleted',
     ).toEqual(['grease', 'force-barrage']);
   });
 
@@ -1065,12 +1084,15 @@ describe('a sheet pick gives way only where the fresh build makes it illegal', (
      * deleted all of them on any Save at all, with no builder edit involved. */
     const b = wizard(3, { 1: ['force-barrage', 'grease'] }, ['detect-magic', 'light']);
     const ch = built(b);
+    // Still true after lane C1 (2026-10-14): the book's cantrips are `bookCantrips`, never `spellbook[0]`.
     expect(mainCasting(ch)?.spellbook?.[0], 'fixture: a built spellbook has no rank-0 list').toBeUndefined();
     expect(mainCasting(ch)?.cantripsPrepared, 'fixture: a wizard re-prepares cantrips daily').toBe(true);
     const play = setPreparedCantrip(initialPlay(ch, db), 'wizard-casting', 0, 'shield');
     const after = save(b, play); // the IDENTICAL build
     expect(after.play.preparedSpells?.['wizard-casting:cantrip:0']).toBe('shield');
     expect(mainCasting(sheet(after))?.cantripSlots?.[0], 'the wizard woke up with yesterday\'s cantrip').toBe('shield');
+    // …and since lane C1 shield (not in this wizard's book) is marked "Not in your spellbook", never hidden.
+    expect(mainCasting(sheet(after))?.notInBook).toContain('shield');
   });
 
   it('cantrip opening: a spell that is not a cantrip is not drawn as one — and is not deleted', () => {
@@ -1087,11 +1109,14 @@ describe('a sheet pick gives way only where the fresh build makes it illegal', (
     expect(after.play.preparedSpells?.[`${ENTRY}:cantrip:0`], 'and the Save deletes nothing').toBe('fly');
   });
 
-  it('cantrip opening: a BOOK caster\'s opening is held to the TRADITION, since no book answers at rank 0', () => {
+  it('cantrip opening: a BOOK caster\'s opening DRAWS the tradition (and its book) — the render half', () => {
     /* The engine keeps a caster's cantrips in `entry.cantrips` and fills the spellbook off the SLOT
      * table, which starts at rank 1 — so the book cannot answer about a cantrip at all. It says
      * "cannot say" and the tradition answers, for the picker (which offered an EMPTY list to every
-     * wizard, witch and magus) and for the render alike. */
+     * wizard, witch and magus) and for the render alike.
+     * ⚠ Lane C1 (2026-10-14) changed the PICKER half: the book now answers at rank 0 (`bookCantrips`)
+     * and the picker offers only it (test/book-cantrips.test.ts); the RENDER, pinned here, still draws
+     * the tradition ∪ the book, so an arcane pick made before that is drawn (marked), a divine one not. */
     const b = wizard(3, { 1: ['force-barrage', 'grease'] }, ['detect-magic', 'light']);
     const ch = built(b);
     expect(mainCasting(ch)?.spellbook?.[0], 'fixture: a built spellbook has no rank-0 list').toBeUndefined();

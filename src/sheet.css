@@ -10366,6 +10366,17 @@ button.strike-name:hover {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* A book caster's pick its book does not hold ("Not in your spellbook — add it in the builder"):
+   drawn and castable, and said — wraps rather than truncating, because it is an instruction. */
+.spell-offbook-note {
+  margin-top: 5px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--app-warn, #e0a63a);
+}
+.ms-slot-tag.spell-offbook {
+  color: var(--app-warn, #e0a63a);
+}
 .fp-tag {
   font-size: 11px;
   padding: 0 6px;

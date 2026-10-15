@@ -21,6 +21,9 @@ function expectSameBuild(a: Character, b: Character) {
     ch.spellcasting.map((e) => ({
       id: e.id,
       cantrips: [...e.cantrips].sort(),
+      // A BOOK caster's cantrips beyond the five it prepares (lane C1, 2026-10-14) — compared, or the
+      // derive that read only `cantrips` and lost the rest of the book on every rebuild goes unseen.
+      bookCantrips: e.bookCantrips ? [...e.bookCantrips].sort() : undefined,
       prepared: Object.fromEntries(Object.entries(e.prepared ?? {}).map(([r, s]) => [r, s.map((x) => x.spellId)])),
       repertoire: Object.fromEntries(Object.entries(e.repertoire ?? {}).map(([r, ids]) => [r, [...ids].sort()])),
       spellbook: Object.fromEntries(Object.entries(e.spellbook ?? {}).map(([r, ids]) => [r, [...ids].sort()])),
@@ -361,5 +364,70 @@ describe('deriveBuildFromCharacter — the hand-authored seed (Kyra)', () => {
     // may clamp a bonus language; assert no spurious languages appear (recovered ⊆ original).
     expect(kyra.languages).toEqual(expect.arrayContaining(reb.languages));
     expect(reb.languages).toContain('common');
+  });
+});
+
+/*
+ * A BOOK caster's cantrips are the whole BOOK (lane C1, owner's bug 2026-10-14): 10 for a wizard or
+ * witch, 8 for a magus or necromancer, against the five (six) prepared from it. deriveBuildFromCharacter
+ * read `classEntry.cantrips` — the prepared five — so every rebuild of a character with no stored build
+ * (App's rebuild, the GM edit sheet, an import) cut the rest of the book. `expectSameBuild` compares
+ * `bookCantrips` now, so this goes red if the derive ever reads the prepared list again.
+ */
+describe('deriveBuildFromCharacter — a book caster keeps its whole book', () => {
+  const ARCANE10 = ['detect-magic', 'light', 'shield', 'daze', 'electric-arc', 'frostbite', 'ignition', 'prestidigitation', 'telekinetic-hand', 'message'];
+  const OCCULT8 = ['detect-magic', 'light', 'shield', 'daze', 'prestidigitation', 'telekinetic-hand', 'message', 'void-warp'];
+  const PRIMAL10 = ['detect-magic', 'light', 'prestidigitation', 'electric-arc', 'frostbite', 'ignition', 'gouging-claw', 'read-aura', 'sigil', 'vitality-lash'];
+  const book = (classId: string, subclassId: string, cantrips: string[], spells: Record<number, string[]>): BuildState => ({
+    ...emptyBuild(),
+    name: 'Book',
+    level: 5,
+    classId,
+    ancestryId: 'human',
+    backgroundId: 'acolyte',
+    keyAbility: 'int',
+    subclassId,
+    ancestryBoosts: ['con', 'int'],
+    backgroundBoosts: ['str', 'int'],
+    levelBoosts: ['int', 'dex', 'con', 'wis'],
+    cantrips,
+    spells,
+  });
+  const cases: [string, BuildState, number][] = [
+    ['wizard', book('wizard', 'school-of-ars-grammatica', ARCANE10, { 1: ['grease', 'force-barrage'], 3: ['fireball'] }), 10],
+    // A patron whose familiar spell is a CHOICE left unanswered, so the familiar holds no patron grant:
+    // the derive writes a patron's granted spell back as a player pick (a separate, older quirk of the
+    // leveled book that reorders the preparation), which is not what this block measures.
+    ['witch', book('witch', 'wilding-steward', PRIMAL10, { 1: ['grease'] }), 10],
+    ['magus', book('magus', C.classes.magus?.subclass?.options[0]?.id ?? '', ARCANE10.slice(0, 8), { 1: ['grease'], 2: ['invisibility'] }), 8],
+    ['necromancer', book('necromancer', 'reaper', OCCULT8, { 1: ['fear', 'command'], 2: ['invisibility'], 3: ['slow'] }), 8],
+  ];
+  for (const [classId, b, size] of cases) {
+    it(`${classId}: all ${size} book cantrips survive derive → rebuild`, () => {
+      const ch0 = buildCharacter(b, C);
+      const main = (ch: Character) => ch.spellcasting.find((e) => e.id === `${classId}-casting`);
+      expect(main(ch0)?.bookCantrips, 'fixture: the whole book is built').toHaveLength(size);
+      const derived = deriveBuildFromCharacter(ch0, C);
+      expect(derived.cantrips, 'the derive reads the BOOK, not the prepared five').toHaveLength(size);
+      expect([...derived.cantrips].sort()).toEqual([...b.cantrips].sort());
+      if (classId === 'necromancer') {
+        // harm is in the dirge for free (class-feature-1285) and must not come back as one of the four.
+        const nonEmpty = Object.fromEntries(Object.entries(derived.spells).filter(([, l]) => l.length));
+        expect(nonEmpty, 'the dirge minus its free harm is exactly the player\'s picks').toEqual(b.spells);
+      }
+      expectSameBuild(ch0, roundTrip(ch0));
+    });
+  }
+
+  // mutation-proof
+  it('necromancer: a spell prepared TWICE the old per-slot way comes back twice (the dirge is a set, the preparation is not)', () => {
+    /* lane C1 check, 2026-10-14: the old necromancer took the cleric branch, so `spells[1] = ['fear',
+     * 'fear']` was fear in both 1st-rank slots. The dirge's set alone gave the rebuild one fear and
+     * filled the other slot with harm. `expectSameBuild` compares `prepared` in slot order. */
+    const b = book('necromancer', 'reaper', OCCULT8, { 1: ['fear', 'fear'], 2: ['invisibility'], 3: ['slow'] });
+    const ch0 = buildCharacter(b, C);
+    expect(ch0.spellcasting.find((e) => e.id === 'necromancer-casting')?.prepared?.[1]?.map((s) => s.spellId), 'fixture').toEqual(['fear', 'fear']);
+    expect(deriveBuildFromCharacter(ch0, C).spells[1]).toEqual(['fear', 'fear']);
+    expectSameBuild(ch0, roundTrip(ch0));
   });
 });

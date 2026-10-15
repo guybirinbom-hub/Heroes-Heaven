@@ -2,7 +2,7 @@ import { useMemo, useState, type ReactNode } from 'react';
 import { cleanRun } from './RichText';
 import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
-import { deityDomainsOf, deriveSpellcasting, deriveClassDc, entryClassIdOf, formatMod, ownedFeatureIds } from '../rules/derive';
+import { deityDomainsOf, deriveSpellcasting, deriveClassDc, entryClassIdOf, formatMod } from '../rules/derive';
 import { signatureSpellsAt } from '../rules/build';
 import { toggleKnownRitual,
   bumpItemCounter,
@@ -27,6 +27,7 @@ import { toggleKnownRitual,
   toggleInnateCast,
   addSpellTrade,
   removeSpellTrade,
+  spellBlendingEntryId,
   spellTradeError,
   entryTrades,
   untradedIndices,
@@ -56,6 +57,7 @@ import { traitDesc, traitLabel } from '../rules/glossary';
 import { spellNotesFor, spellSituationalFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { spellCostMatches } from '../rules/spellFilter';
 import {
+  cantripsOverOf,
   chosenAt,
   collectionUsed,
   hiddenAt,
@@ -65,8 +67,10 @@ import {
   signatureEchoIds,
   spellsHeldBy,
   traditionPool,
+  variantGiftCount,
 } from '../rules/spellOptions';
 import { enabledBookSet, entrySourceOn } from '../rules/sources';
+import { bookTitle, keptOffListNote, notInBookNote, overGiftNote, variantGiftNote } from '../rules/spellcasting';
 import { heighteningApplies } from '../rules/heightening';
 import { useAstNode } from './useAst';
 import { isBucketLoaded, type AstNode } from './astStore';
@@ -561,6 +565,8 @@ function LearnSpellModal({
   // Already in the repository (or already learned) — offering it again would just create a duplicate.
   const known = new Set<string>([
     ...entry.cantrips,
+    // A book caster's book holds more cantrips than it prepares today (owner's bug 2026-10-14).
+    ...(entry.bookCantrips ?? []),
     ...Object.values(entry.spellbook ?? {}).flat(),
     ...Object.values(entry.repertoire ?? {}).flat(),
     ...Object.values(entry.learned ?? {}).flat(),
@@ -689,7 +695,7 @@ function LearnSpellModal({
           <div className="ms-body">
             <div className="ms-hint">
               {entry.spellbook
-                ? 'A spell you learn goes into your spellbook, so you can prepare it from then on.'
+                ? `A spell you learn goes into your ${entry.bookNoun ?? 'spellbook'}, so you can prepare it from then on.`
                 : 'A learned spell isn’t added to your repertoire automatically — you know only so many spells — but you can pick it the next time you add or swap one.'}{' '}
               <button type="button" className="ms-hint-link" onClick={() => setRules(true)}>
                 Read the rules
@@ -715,7 +721,7 @@ function LearnSpellModal({
                               await confirmDialog({
                                 title: `Unlearn ${sp?.name ?? id}?`,
                                 message: entry.spellbook
-                                  ? 'The spell is struck from your spellbook. Anything prepared from it keeps its slot until you re-prepare.'
+                                  ? `The spell is struck from your ${entry.bookNoun ?? 'spellbook'}. Anything prepared from it keeps its slot until you re-prepare.`
                                   : 'The spell is no longer one you’ve learned.',
                                 confirmLabel: 'Unlearn',
                                 danger: true,
@@ -801,11 +807,12 @@ function ManageSpellsModal({
    *
    * `entry` is the OVERLAID entry, so `restrictedSlots` includes the ones a toggled mode grants.
    */
-  const optionsFor = (rank: number, restrictedId?: string): Spell[] => {
+  const optionsFor = (rank: number, restrictedId?: string, keep?: string | null): Spell[] => {
     // desk #170 (owner 2026-09-30, "yes the player sources should aplly to everything he has accses to"): the
     // picker offers the character's books, keeping what the entry holds; the render still asks the book-blind
-    // `spellOptions`, so nothing held is pruned (pickerSpellOptions).
-    const all = pickerSpellOptions({ character, entry, content }, rank, restrictedId, enabledBookSet(character.enabledSources));
+    // `spellOptions`, so nothing held is pruned (pickerSpellOptions). `keep`: the asking cantrip opening's own
+    // pick, which a book caster's picker keeps on offer in THAT opening only.
+    const all = pickerSpellOptions({ character, entry, content }, rank, restrictedId, enabledBookSet(character.enabledSources), keep);
     if (!spontaneous || restrictedId) return all;
     const known = new Set(entry.repertoire?.[rank] ?? []);
     return all.filter((s) => !known.has(s.id));
@@ -917,6 +924,25 @@ function ManageSpellsModal({
 
   // (The "Reset to default repertoire/preparation" button was removed at the owner's request, 2026-09-02.)
 
+  const pickItems: Spell[] = !picking
+    ? []
+    : picking.preparedCantrip
+      ? // Today's other openings already hold their cantrips — offer the rest (an at-will
+        // cantrip prepared twice does nothing). The opening's own current pick stays offered.
+        optionsFor(0, undefined, entry.cantripSlots?.[picking.slot!]).filter(
+          (s) => !entry.cantrips.includes(s.id) || entry.cantripSlots?.[picking.slot!] === s.id,
+        )
+      : picking.cantripTrade
+        ? optionsFor(0, undefined, entry.tradedCantrips?.[picking.slot!])
+        : optionsFor(picking.rank, picking.restricted);
+  /* A BOOK caster's picker adds only out of its book (owner's bug 2026-10-14), so a fresh wizard or magus
+   * whose builder book holds nothing at this rank yet is offered nothing at all — and the list must say
+   * where the spells come from, not "Nothing matches these filters" alone (lane C3, 2026-10-15). */
+  const emptyBookNote =
+    picking && entry.bookNoun && !picking.restricted && pickItems.length === 0
+      ? `Your ${entry.bookNoun} holds nothing this ${picking.preparedCantrip || picking.cantripTrade ? 'opening' : 'slot'} can take yet — add spells to it in the builder.`
+      : undefined;
+
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker manage-spells" onClick={(e) => e.stopPropagation()}>
@@ -942,16 +968,11 @@ function ManageSpellsModal({
           <FilterableSelect
             key={'pick-' + picking.rank + (picking.preparedCantrip ? ':c' : '')}
             title={picking.preparedCantrip ? 'Prepare a cantrip' : `${spontaneous && !picking.restricted ? 'Add' : 'Prepare'} a ${ord(picking.rank)}-rank spell`}
-            items={
-              picking.preparedCantrip
-                ? // Today's other openings already hold their cantrips — offer the rest (an at-will
-                  // cantrip prepared twice does nothing). The opening's own current pick stays offered.
-                  optionsFor(0).filter((s) => !entry.cantrips.includes(s.id) || entry.cantripSlots?.[picking.slot!] === s.id)
-                : optionsFor(picking.rank, picking.restricted)
-            }
+            items={pickItems}
             spec={SPELL_SPEC_BUILDER}
             rowKey={(s) => s.id}
             onClose={() => setPicking(null)}
+            resultsFooter={emptyBookNote ? () => <div className="fsel-empty ms-book-empty">{emptyBookNote}</div> : undefined}
             headerExtra={
               !spontaneous || picking.restricted || picking.preparedCantrip ? (
                 <button className="fsel-arch" onClick={() => pick(null)}>
@@ -1017,7 +1038,11 @@ function ManageSpellsModal({
             <div className="ms-hint">
               {spontaneous
                 ? 'Add or remove known spells; tap ★ to set a rank’s signature spell. Changes apply to this play session.'
-                : 'Tap a slot to change what’s prepared. Changes apply to this play session.'}
+                : entry.bookNoun
+                  ? // A book caster prepares only out of its book (owner's bug 2026-10-14), so the list is
+                    // shorter than the tradition on purpose — said, so it does not read as a bug.
+                    `Tap a slot to change what’s prepared — from your ${entry.bookNoun}; add spells to it in the builder. Changes apply to this play session.`
+                  : 'Tap a slot to change what’s prepared. Changes apply to this play session.'}
             </div>
             {/* "You prepare your cantrips" — a prepared caster's cantrips are part of daily
                 preparations (owner, 2026-09-02), so they re-prepare here like any slot. Granted
@@ -1034,7 +1059,10 @@ function ManageSpellsModal({
                       className={'ms-slot' + (id ? '' : ' empty')}
                       onClick={() => setPicking({ rank: 0, slot: i, preparedCantrip: true })}
                     >
-                      <span className="ms-slot-name">{sp?.name ?? 'Empty cantrip'}</span>
+                      <span className="ms-slot-name">
+                        {sp?.name ?? 'Empty cantrip'}
+                        <OffBookTag entry={entry} id={id} />
+                      </span>
                       <i className="ti ti-pencil" aria-hidden="true" />
                     </button>
                   );
@@ -1044,8 +1072,9 @@ function ManageSpellsModal({
             {ranks.map((rank) =>
               spontaneous ? (
                 (() => {
-                  // Bloodline/mystery/muse spells are added FOR FREE — they don't count toward the
-                  // known-spells cap and can't be removed in play.
+                  // Bloodline/mystery/muse spells never spend one of the player's places and can't be
+                  // removed in play. (A sorcerer's gift is one of the rank's places by print, so its
+                  // allowance is that much smaller — `repertoireCap` subtracts it, lane C2.)
                   const granted = entry.grantedRepertoire?.[rank] ?? [];
                   const knownCount = chosenAt(entry, rank);
                   // The flat pool's own report rides the first rank shown — a collection has no rank
@@ -1079,7 +1108,10 @@ function ManageSpellsModal({
                             <i className="ti ti-star" aria-hidden="true" />
                           </button>
                         )}
-                        <span className="ms-slot-name">{sp?.name ?? id}</span>
+                        <span className="ms-slot-name">
+                          {sp?.name ?? id}
+                          {!isGranted && <OffBookTag entry={entry} id={id} />}
+                        </span>
                         {isGranted ? (
                           <span className="ms-granted" title="Granted by your bloodline/mystery — always known">
                             <i className="ti ti-lock" aria-hidden="true" />
@@ -1139,6 +1171,7 @@ function ManageSpellsModal({
                         <span className="ms-slot-name">
                           {sp?.name ?? (slot.spellId || 'Empty slot')}
                           {slot.bonusFrom != null && <em className="ms-slot-tag"> · bonus from {ord(slot.bonusFrom)}</em>}
+                          <OffBookTag entry={entry} id={slot.spellId} />
                         </span>
                         <i className="ti ti-pencil" aria-hidden="true" />
                       </button>
@@ -1195,6 +1228,7 @@ function ManageSpellsModal({
                         <span className="ms-slot-name">
                           {sp?.name ?? (slot.spellId || 'Empty slot')}
                           <em className="ms-slot-tag"> · {ord(slot.rank)} rank{slot.maxRank ? ` · up to ${ord(slot.maxRank)}` : ''}</em>
+                          {slot.keptOffList ? <em className="ms-slot-tag spell-offbook"> · {keptOffListNote(slot.label)}</em> : <OffBookTag entry={entry} id={slot.spellId} />}
                         </span>
                         <i className="ti ti-pencil" aria-hidden="true" />
                       </button>
@@ -1207,6 +1241,7 @@ function ManageSpellsModal({
                           <span className="ms-slot-name">
                             {sp2?.name ?? (slot.spellId2 || 'Empty — second spell')}
                             <em className="ms-slot-tag"> · combined</em>
+                            <OffBookTag entry={entry} id={slot.spellId2} />
                           </span>
                           <i className="ti ti-pencil" aria-hidden="true" />
                         </button>
@@ -1237,7 +1272,10 @@ function ManageSpellsModal({
                   const sp = id ? content.spells[id] : null;
                   return (
                     <button key={i} className={'ms-slot' + (id ? '' : ' empty')} onClick={() => setPicking({ rank: 0, slot: i, cantripTrade: true })}>
-                      <span className="ms-slot-name">{sp?.name ?? 'Empty cantrip'}</span>
+                      <span className="ms-slot-name">
+                        {sp?.name ?? 'Empty cantrip'}
+                        <OffBookTag entry={entry} id={id} />
+                      </span>
                       <i className="ti ti-pencil" aria-hidden="true" />
                     </button>
                   );
@@ -1356,6 +1394,28 @@ const COST_FILTERS: { id: string; label: string; cost: ActionCost }[] = [
   { id: 'r', label: 'reaction', cost: { type: 'reaction' } },
 ];
 
+/**
+ * "Not in your spellbook — add it in the builder" — a pick this entry is DRAWING that its book does not
+ * hold (`entry.notInBook`, written by applyPlayState). The spell stays prepared and castable; the tag
+ * says why the picker will not offer it again once it is changed (owner's bug 2026-10-14). Nothing for
+ * a spell in the book, or an entry with no book.
+ */
+/** The player's own picks drawn PAST a sorcerer's allowance — the last `by` of them, in the order the
+ *  rank draws them (the builder's pick order, the gift first), so the one marked is the one a builder
+ *  from before lane C2 let them add beside the gift. Empty unless the entry counts its gift inside. */
+function pastGiftIds(entry: SpellcastingEntry, ids: string[], granted: string[], by: number): Set<string> {
+  if (!entry.grantsCountInside || by <= 0) return new Set();
+  return new Set(ids.filter((id) => !granted.includes(id)).slice(-by));
+}
+
+function offBookNote(entry: SpellcastingEntry, id: string | null | undefined): string | undefined {
+  return id && entry.notInBook?.includes(id) ? notInBookNote(entry.bookNoun) : undefined;
+}
+function OffBookTag({ entry, id }: { entry: SpellcastingEntry; id: string | null | undefined }) {
+  const note = offBookNote(entry, id);
+  return note ? <em className="ms-slot-tag spell-offbook"> · {note}</em> : null;
+}
+
 function SpellCard({
   name,
   cost,
@@ -1370,6 +1430,7 @@ function SpellCard({
   castDisabled,
   castTitle,
   marks,
+  note,
 }: {
   name: string;
   cost?: ActionCost;
@@ -1388,6 +1449,8 @@ function SpellCard({
   /** Ruling G: conditional bonuses that belong on THIS spell, because the spell is what you are
    *  looking at when you cast it. Display-only, like every other star. */
   marks?: { source: string; when: string; bonus: string }[];
+  /** A short warning line under the card — "Not in your spellbook — add it in the builder" (offBookNote). */
+  note?: string;
 }) {
   return (
     <div
@@ -1443,6 +1506,7 @@ function SpellCard({
           </button>
         )}
       </div>
+      {note && <div className="spell-offbook-note">{note}</div>}
     </div>
   );
 }
@@ -1510,8 +1574,9 @@ export function SpellsTab({
   const manageEntry = manageId ? mains.find((m) => m.id === manageId) : null;
   const learnEntry = learnId ? mains.find((m) => m.id === learnId) : null;
   const blendEntry = blendId ? mains.find((m) => m.id === blendId) : null;
-  // The wizard's arcane thesis. It arrives as a classChoices row, which ownedFeatureIds folds in.
-  const hasSpellBlending = useMemo(() => ownedFeatureIds(character, content).has('spell-blending'), [character, content]);
+  // The wizard's arcane thesis — and the ONE entry it trades on (the wizard's own), the same answer the
+  // render's `liveTrades` reads, so the button and the slots cannot disagree about which card it is.
+  const blendOwnerId = useMemo(() => spellBlendingEntryId(character, content), [character, content]);
   const focusEntries = character.spellcasting.filter((e) => e.type === 'focus');
   const focus = focusEntries[0]; // first entry — for existence checks + maxCastRank; rendering uses focusEntries
   const itemEntries = character.spellcasting.filter((e) => e.type === 'items' || e.type === 'innate');
@@ -1621,6 +1686,11 @@ export function SpellsTab({
      * spell-slot convention already shows "Empty slot" cards, so unfilled cantrip openings get the
      * same treatment, pointing at where the picking actually happens (the builder). */
     const emptyCantrips = Math.max(0, (main.cantripCap ?? 0) - main.cantrips.length);
+    // A sorcerer's cantrip drawn past its five (the gift is one of them — lane C2): drawn, and said.
+    const pastCantrips = pastGiftIds(main, main.cantrips, main.grantedCantrips ?? [], cantripsOverOf(main));
+    // …and a gift cantrip the record lists one of per VARIANT (elemental: one per element), each drawn
+    // and each saying only one is the character's (`variantGiftCount`, lane C4).
+    const variantCantrips = variantGiftCount(main, 0);
     if (main.cantrips.length || tradedCantrips.length || emptyCantrips > 0) {
       const cards = rankSpellIds(main.cantrips, (id) => id)
         .map((id, i) => {
@@ -1630,8 +1700,12 @@ export function SpellsTab({
           // player's own picks. `spellSources` was populated for the pooled entries and read only
           // there; the class pool never wrote it, so the attribution costs no new field.
           const from = main.spellSources?.[id];
+          const note =
+            offBookNote(main, id) ??
+            (pastCantrips.has(id) ? overGiftNote(main.cantripCap ?? 0, true) : undefined) ??
+            (variantCantrips && main.grantedCantrips?.includes(id) ? variantGiftNote(variantCantrips) : undefined);
           return sp && visible(sp) ? (
-            <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta={from ? `at will · from ${from}` : 'at will'} marks={marksFor(id)} onClick={() => openDetail(sp)} />
+            <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta={from ? `at will · from ${from}` : 'at will'} marks={marksFor(id)} note={note} onClick={() => openDetail(sp)} />
           ) : null;
         })
         .concat(
@@ -1639,7 +1713,7 @@ export function SpellsTab({
             const sp = id ? content.spells[id] : null;
             if (!sp) return filtering ? null : <SpellCard key={'tc' + i} name="Empty cantrip" meta="traded" empty />;
             return visible(sp) ? (
-              <SpellCard key={'tc' + i} name={sp.name} cost={sp.cast} meta="traded · at will" marks={marksFor(sp.id)} onClick={() => openDetail(sp)} />
+              <SpellCard key={'tc' + i} name={sp.name} cost={sp.cast} meta="traded · at will" marks={marksFor(sp.id)} note={offBookNote(main, sp.id)} onClick={() => openDetail(sp)} />
             ) : null;
           }),
         )
@@ -1701,6 +1775,7 @@ export function SpellsTab({
               key={i}
               name={sp?.name ?? slot.spellId}
               marks={marksFor(slot.spellId)}
+              note={offBookNote(main, slot.spellId)}
               cost={sp?.cast}
               meta={slot.bonusFrom != null ? `bonus · from ${ord(slot.bonusFrom)}` : 'rank ' + rank}
               pip={slot.expended ? 'filled' : 'empty'}
@@ -1740,6 +1815,15 @@ export function SpellsTab({
     for (const rank of allRanks) {
       const ids = rankSpellIds(main.repertoire[rank] ?? [], (id) => id);
       const pool = main.slots?.[rank];
+      // A sorcerer's pick drawn past the rank's allowance (lane C2): the card says it where the spell
+      // is, not only in Manage spells. Counted here rather than read off `overCap`, so a character
+      // drawn without a play overlay says it too — for these entries it is the same number
+      // (`overCapOf` puts no build floor under a `grantsCountInside` rank).
+      const grantedHere = main.grantedRepertoire?.[rank] ?? [];
+      const ownHere = (main.repertoire[rank] ?? []).filter((id) => !grantedHere.includes(id)).length;
+      const pastRank = pastGiftIds(main, main.repertoire[rank] ?? [], grantedHere, ownHere - repertoireCap(main, rank));
+      const rankPlaces = main.repertoireMax?.[rank] ?? pool?.max ?? 0;
+      const variantHere = variantGiftCount(main, rank);
       const baseCards = ids
         .map((id, i) => {
           const sp = content.spells[id];
@@ -1748,6 +1832,11 @@ export function SpellsTab({
             <SpellCard
               key={id + i}
               name={sp?.name ?? id} marks={marksFor(id)}
+              note={
+                offBookNote(main, id) ??
+                (pastRank.has(id) ? overGiftNote(rankPlaces, false, !!main.repertoireOnSheet?.includes(rank)) : undefined) ??
+                (variantHere && grantedHere.includes(id) ? variantGiftNote(variantHere) : undefined)
+              }
               cost={sp?.cast}
               meta={'rank ' + rank}
               sig={main.signature?.includes(id)}
@@ -1881,6 +1970,7 @@ export function SpellsTab({
                 : sp?.name ?? (slot.spontaneous ? allowedNames.slice(0, 3).join(' / ') || 'Extra cast' : 'Empty slot')
             }
             marks={sp ? marksFor(slot.spellId!) : undefined}
+            note={(slot.keptOffList ? keptOffListNote(label) : undefined) ?? offBookNote(main, slot.spellId) ?? offBookNote(main, slot.spellId2)}
             cost={sp?.cast}
             meta={`${ord(slot.rank)} rank · ${label.toLowerCase()}`}
             pip={slot.expended ? 'filled' : 'empty'}
@@ -1914,30 +2004,58 @@ export function SpellsTab({
   return ranks;
   }
 
-  const spellbookMain = mains.find((m) => m.spellbook);
-  const spellbookCards: ReactNode[] = [];
-  if (spellbookMain?.spellbook) {
-    const book = spellbookMain.spellbook;
+  /* ONE BOOK SECTION PER BOOK. Lane C2 gave a second-class witch, magus and necromancer their book, and
+   * this read only the first (`mains.find`), so on a Wizard/Witch the familiar — and the spells the witch
+   * learned, which play merges into it — appeared in no section at all (lane C3, 2026-10-15). Each book is
+   * titled with its own word for it ("Spellbook", "Familiar’s spells", "Dirge"), and named for its class
+   * when there are several. The first keeps the section id `spellbook`, so a collapse the player set on
+   * a one-book character stays where it was. */
+  const bookMains = mains.filter((m) => m.spellbook);
+  const bookSections = bookMains.map((m, i) => {
+    const book = m.spellbook!;
+    const cards: ReactNode[] = [];
+    /* The book's CANTRIPS first — the builder's (`bookCantrips`, owner's bug 2026-10-14: a book holds
+     * 10 / 10 / 8 / 8 of them against the five it prepares) and any learned with Learn a Spell, which
+     * play merges into `spellbook[0]`. Labelled "Cantrip": a rank-0 list read as "0th rank" before. */
+    const cantripPages = [...new Set([...(m.bookCantrips ?? []), ...(book[0] ?? [])])].map((id) => ({ rank: 0, id }));
     // The whole book is ONE grid, so it ranks as one list; with no query rankSpellIds hands back the
     // same array and the rank-then-book order below is untouched.
-    const pages = Object.keys(book)
-      .map(Number)
-      .sort((a, b) => a - b)
-      .flatMap((rank) => book[rank].map((id) => ({ rank, id })));
+    const pages = [
+      ...cantripPages,
+      ...Object.keys(book)
+        .map(Number)
+        .filter((rank) => rank > 0)
+        .sort((a, b) => a - b)
+        .flatMap((rank) => book[rank].map((id) => ({ rank, id }))),
+    ];
     for (const { rank, id } of rankSpellIds(pages, (p) => p.id)) {
       const sp = content.spells[id];
       if (!visible(sp)) continue;
-      spellbookCards.push(
+      cards.push(
         <SpellCard
           key={'sb' + rank + id}
           name={sp?.name ?? id} marks={marksFor(id)}
           cost={sp?.cast}
-          meta={ord(rank) + ' rank'}
+          meta={rank === 0 ? 'Cantrip' : ord(rank) + ' rank'}
           onClick={sp ? () => openDetail(sp) : undefined}
         />,
       );
     }
-  }
+    // Whose book: the class for a class entry (`<class id>-casting`), the dedication for an archetype's
+    // (`<dedication id>-casting`), else the entry's own name.
+    const classId = entryClassIdOf(character, m);
+    const className =
+      (classId && m.id === `${classId}-casting` ? content.classes[classId]?.name : undefined) ??
+      (m.id.endsWith('-dedication-casting') ? content.feats[m.id.slice(0, -'-casting'.length)]?.name : undefined) ??
+      m.name;
+    return {
+      entry: m,
+      secId: i === 0 ? 'spellbook' : `spellbook:${m.id}`,
+      title: bookMains.length > 1 ? `${className} — ${bookTitle(m.bookNoun)}` : bookTitle(m.bookNoun),
+      tabLabel: bookMains.length > 1 ? `${className} book` : 'Book',
+      cards,
+    };
+  }).filter((s) => s.cards.length > 0);
 
   /* Spells learned by a caster with no spellbook. A spellbook caster's learned spells are merged into
      the spellbook and show in the card above; a repertoire caster's have nowhere else to appear, and
@@ -2014,7 +2132,7 @@ export function SpellsTab({
   const collapsibleSections =
     mains.length +
     itemEntries.length +
-    (spellbookCards.length > 0 ? 1 : 0) +
+    bookSections.length +
     (learnedCards.length > 0 ? 1 : 0) +
     (focusEntries.length > 0 ? 1 : 0) +
     (ritualsShown.length > 0 ? 1 : 0);
@@ -2023,18 +2141,21 @@ export function SpellsTab({
   // page-level tab row can render the SAME JSX. Each builder references in-scope locals
   // (secOpen, focusCards, onPlay, character, content, …) — unchanged from the inline version. ──
 
-  const spellbookNode: ReactNode =
-    spellbookCards.length > 0 ? (
-      <section className="card">
-        <div className="ct" style={{ margin: secOpen('spellbook') ? '0 0 10px' : 0 }}>
-          <SecChevron id="spellbook" />
+  const bookNodes = bookSections.map((s) => ({
+    ...s,
+    node: (
+      <section className="card" key={s.secId} data-book-entry={s.entry.id}>
+        <div className="ct" style={{ margin: secOpen(s.secId) ? '0 0 10px' : 0 }}>
+          <SecChevron id={s.secId} />
           <i className="ti ti-book" aria-hidden="true" />
-          Spellbook
-          <span className="ct-note">{spellbookCards.length} spell{spellbookCards.length === 1 ? '' : 's'}</span>
+          {/* "Spellbook", "Familiar’s spells", "Dirge" — the class's own word for it. */}
+          {s.title}
+          <span className="ct-note">{s.cards.length} spell{s.cards.length === 1 ? '' : 's'}</span>
         </div>
-        {secOpen('spellbook') && <div className="spell-grid">{spellbookCards}</div>}
+        {secOpen(s.secId) && <div className="spell-grid">{s.cards}</div>}
       </section>
-    ) : null;
+    ) as ReactNode,
+  }));
 
   const learnedNode: ReactNode =
     learnedCards.length > 0 ? (
@@ -2345,7 +2466,7 @@ export function SpellsTab({
       badge: character.focus && character.focus.max ? `${character.focus.current}/${character.focus.max}` : undefined,
     });
   for (const it of itemNodes) spellTabs.push({ key: it.id, label: it.name, node: it.node });
-  if (spellbookNode) spellTabs.push({ key: 'spellbook', label: 'Book', node: spellbookNode });
+  for (const b of bookNodes) spellTabs.push({ key: b.secId, label: b.tabLabel, node: b.node });
   if (learnedNode) spellTabs.push({ key: 'learned', label: 'Learned', node: learnedNode });
   if (ritualsNode) spellTabs.push({ key: 'rituals', label: 'Rituals', node: ritualsNode });
   const spellTabActiveKey = spellTabs.some((t) => t.key === spellTab) ? spellTab : spellTabs[0]?.key;
@@ -2391,7 +2512,7 @@ export function SpellsTab({
         const rankNodes = buildRanks(main);
         return (
           <div key={main.id}>
-            <div className="card sc-head">
+            <div className="card sc-head" data-entry={main.id}>
               <SecChevron id={main.id} />
               <div className="sc-info">
                 <div className="sc-name-row">
@@ -2417,9 +2538,10 @@ export function SpellsTab({
                       <i className="ti ti-book-2" aria-hidden="true" /> Learn a spell
                     </button>
                   )}
-                  {/* Gated on the spellbook as well as the thesis: a dual-class wizard/cleric has a
-                      second prepared entry that Spell Blending does not touch. */}
-                  {onPlay && hasSpellBlending && main.type === 'prepared' && !!main.spellbook && (
+                  {/* Only on the entry the thesis trades on — the wizard's own. It was gated on "has a
+                      book", which stopped meaning "the wizard" once lane C2 gave a second-class witch,
+                      magus and necromancer theirs (a Wizard/Magus showed it on the magus card too). */}
+                  {onPlay && main.id === blendOwnerId && main.type === 'prepared' && (
                     <button className="ms-btn" onClick={() => setBlendId(main.id)} title="Spell Blending — trade slots">
                       <i className="ti ti-arrows-exchange" aria-hidden="true" /> Trade slots
                     </button>
@@ -2520,7 +2642,7 @@ export function SpellsTab({
           stacked exactly as before. On mobile these all live inside the page-level tab row above. */}
       {!isMobile && (
         <>
-          {spellbookNode}
+          {bookNodes.map((b) => b.node)}
           {learnedNode}
           {focusNode}
           {itemNodes.map((it) => it.node)}
