@@ -111,10 +111,14 @@ describe('rule-owner-questions.mjs applies the desk pass', () => {
      * 2026-09-12 newest-printing repoint filed after the desk pass closed (#158-#161), plus the two
      * engine-shape spellshot questions filed 2026-09-22 (#162-#163), and batch 039's #164
      * familiar#archetype-reach (the class-feat-via-archetype lane), and print batch P02's #168
-     * enhanced-familiar#fixed-budget-grants (which familiar budget wins beside Enhanced Familiar). */
+     * enhanced-familiar#fixed-budget-grants (which familiar budget wins beside Enhanced Familiar), and
+     * the three filed 2026-10-15 outside any batch: #171 expanded-necromancy#archetype-ninth-rank,
+     * #172 cantrip-expansion#dual-class-pool, #173 adaptive-adept#repertoire-place. (This pin went red
+     * when those three were filed; the 2026-10-15 desk pass rules them, and BEFORE reverts every desk
+     * pass, so they read as open here either way.) */
     // batch 039: familiar#archetype-reach
     // batch P02: enhanced-familiar#ability-budget
-    expect(stillOpen).toEqual([151, 152, 153, 154, 155, 158, 159, 160, 161, 162, 163, 164, 168]);
+    expect(stillOpen).toEqual([151, 152, 153, 154, 155, 158, 159, 160, 161, 162, 163, 164, 168, 171, 172, 173]);
     expect((after.ruled ?? []).length).toBe((BEFORE.ruled ?? []).length + ANSWERED.size);
 
     for (const n of ANSWERED) {
