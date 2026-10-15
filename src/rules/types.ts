@@ -5735,6 +5735,15 @@ export interface SpellAccessGrant {
   /** Narrow to one spellcasting entry (a font addition belongs to the font's own entry). */
   entryId?: string;
   as?: 'list' | 'repertoire' | 'font';
+  /**
+   * Those of `spells` that arrive only once the entry can CAST their rank — it has spell slots of the
+   * spell's own rank. Expanded Necromancy (feat-9132): *"Add the following spells to your dirge as soon as
+   * you gain the ability to cast necromancer spells of that rank: 7th: execute, 8th: desiccate, 9th:
+   * massacre."* Measured against the entry the grant lands in, so a necromancer gains execute at 13th and
+   * a Necromancer Dedication character when the archetype's own 7th-rank slot arrives. `as: 'repertoire'`
+   * only.
+   */
+  whenCastable?: string[];
 }
 
 export interface InventoryItem {

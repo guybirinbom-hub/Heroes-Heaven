@@ -637,6 +637,38 @@ export function giftChipIds(entry: SpellcastingEntry | undefined, rank: number, 
 }
 
 /**
+ * What a RECORD wrote into a dedication's BOOK at `rank` (0 = its cantrips) — the builder's locked chips
+ * beside the player's own picks, each with the record that wrote it. A lesson's *"your familiar learns
+ * Spirit Link"* (Basic Lesson under Basic Witchcraft), Expanded Necromancy's *"Add the grisly growths spell
+ * to your dirge"* (feat-9132), Peer Past the Hedge's detect magic: buildCharacter puts each IN the book
+ * (`grantIntoBook`) and marks it in `grantedRepertoire` / `spellSources`. None of them is one of the
+ * places the player chooses — print adds them on top — so the row's count never includes them. A spell the
+ * player also picked is theirs (`picks`) and is not drawn twice. [] for an entry with no book.
+ *
+ * `andAbove`: the book's LAST row also takes the grants at ranks the book has no row for yet — a Witch
+ * Dedication with only Basic Witch Spellcasting whose Major Lesson teaches Raise Dead (6th rank) has rows
+ * to 3rd, and the spell would otherwise be drawn in no row at all (checker finding 2026-10-15). Each carries
+ * its `rank`, so the row can say which.
+ */
+export function bookGrantChips(
+  entry: SpellcastingEntry | undefined,
+  rank: number,
+  picks: readonly string[],
+  andAbove = false,
+): { id: string; rank: number; from?: string }[] {
+  if (!entry?.bookNoun) return [];
+  const ranks = andAbove
+    ? Object.keys(entry.grantedRepertoire ?? {}).map(Number).filter((r) => r >= rank).sort((a, b) => a - b)
+    : [rank];
+  return ranks.flatMap((r) => {
+    const page = r === 0 ? entry.bookCantrips : entry.spellbook?.[r];
+    return (entry.grantedRepertoire?.[r] ?? [])
+      .filter((id) => !picks.includes(id) && !!page?.includes(id))
+      .map((id) => ({ id, rank: r, ...(entry.spellSources?.[id] ? { from: entry.spellSources[id] } : {}) }));
+  });
+}
+
+/**
  * A `grantsCountInside` entry's cantrips OVER its allowance — the player's own, gift stripped, past
  * `cantripCap` less the gift's one place. Only a builder that offered the full five beside the gift
  * can produce it (every saved sorcerer from before lane C2 that filled its row), and the cantrips are

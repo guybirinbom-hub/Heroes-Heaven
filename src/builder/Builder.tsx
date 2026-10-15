@@ -57,7 +57,7 @@ import {
   type NarrowedOption,
 } from '../rules/derive';
 import { archetypeCantripCounts, archetypeTradition, foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, optionDragon, skillSlotOptions } from '../rules/build';
-import { giftChipIds, ownPlacesBeside, spellOpenedBy, variantGiftCount } from '../rules/spellOptions';
+import { bookGrantChips, giftChipIds, ownPlacesBeside, spellOpenedBy, variantGiftCount } from '../rules/spellOptions';
 import { signaturesAt, signatureSpellsAt } from '../rules/build';
 // batch 037: flexible-spellcaster#collection-shape — the sheet's own sizer, never a copy of it.
 import { flexibleCollectionSize } from '../rules/build';
@@ -708,6 +708,43 @@ export function Builder({
   const builderSenses = useMemo(() => characterSenseKeys(featPrereqChar, content), [featPrereqChar, content]);
   /* buildCharacter's own entry for the first class — what its gift is (`ownPlacesBeside`). */
   const castEntry1 = casting && build.classId ? featPrereqChar.spellcasting.find((e) => e.id === `${build.classId}-casting`) : undefined;
+  /* …and the dedication's own entry, when the ARCHETYPE is the caster these level pages draw — what a
+   * record wrote into its book (`bookGrantChips`). */
+  const archEntryBuilt = archCaster ? featPrereqChar.spellcasting.find((e) => archetypeEntryIds(archCaster).has(e.id)) : undefined;
+  /** What a record put in a dedication's BOOK at `rank` beside the player's `picks` — a lesson's familiar
+   *  spell, Expanded Necromancy's dirge spells, Peer Past the Hedge's detect magic — as LOCKED chips with
+   *  the record named in words under them (a tap shows no title on a phone). Never one of the row's places:
+   *  print adds these on top, so the row's count stays the player's own. */
+  /** The level a book grant arrives at: the level of the feat that gives it — by its name (Expanded
+   *  Necromancy) or by the answer that names it (Basic Lesson → "Lesson of Life"). A rank row is drawn on
+   *  the page where the book first reaches that rank, which can be before the feat is taken, so the note
+   *  says when (checker finding 2026-10-15). */
+  const grantLevelOf = (from?: string): number | undefined =>
+    from ? featPrereqChar.feats.find((f) => content.feats[f.featId]?.name === from || f.choice?.label === from)?.level : undefined;
+  const bookGrantEls = (rank: number, picks: readonly string[], pageLevel?: number, andAbove = false) => {
+    const grants = bookGrantChips(archEntryBuilt, rank, picks, andAbove);
+    const noun = archEntryBuilt?.bookNoun ?? 'book';
+    const name = (id: string) => content.spells[id]?.name ?? id;
+    return {
+      chips: grants.map(({ id, from }) => (
+        <span className="spr-chip spr-chip-gift spr-chip-book-grant" key={'grant:' + id} title={`Added to your ${noun}${from ? ` by ${from}` : ''} — not one of the spells you choose here`}>
+          {name(id)}
+          <i className="ti ti-lock" aria-hidden="true" />
+        </span>
+      )),
+      notes: grants.map(({ id, from, rank: r }) => {
+        const at = grantLevelOf(from);
+        return (
+          <span className="spr-gift-note" key={'grant-note:' + id}>
+            {name(id)}
+            {r !== rank ? ` (${ord(r)} rank)` : ''} is added to your {noun}
+            {from ? ` by ${from}` : ''}
+            {at && pageLevel !== undefined && at > pageLevel ? ` at ${ord(at)} level` : ''} — it does not use one of these places.
+          </span>
+        );
+      }),
+    };
+  };
   /** The bloodline's gift in a row, drawn as LOCKED chips so the smaller count says why — the gift is
    *  the bloodline's, one of the row's places, and has no ✕ (`giftChipIds`). `variants`: the record
    *  lists one gift per variant at this rank (`variantGiftCount`, lane C4) — together they are the one
@@ -1121,6 +1158,26 @@ export function Builder({
             options={initialDomainSpellOptions(content)}
           />
         )}
+        {/* …and the lesson's own "or" on the GRANTED copy (Basic Witchcraft → Basic Lesson → Lesson of the
+            Elements: *"Your familiar learns your choice of breathe fire, gust of wind, hydraulic push, or
+            pummeling rubble"*). WG shows this second select wherever the lesson is taken; the slot path has
+            asked it since batch 035 and this one never did, so the granted lesson taught no spell at all. */}
+        {def.ownsFeature &&
+          (() => {
+            const rec = content.classFeatures[answer] ?? content.classFeatures[answer.replace(/^aon-/, '')];
+            const gsc = rec?.grantedSpellChoice;
+            if (!gsc) return null;
+            const sk = `granted:${grantedId}:granted-spell`;
+            return (
+              <PopupSelect
+                title={gsc.prompt}
+                placeholder={`${gsc.prompt}…`}
+                value={gsc.options.includes(build.featSpellChoices?.[sk] ?? '') ? build.featSpellChoices![sk] : ''}
+                onChange={(v) => actions.patch({ featSpellChoices: { ...(build.featSpellChoices ?? {}), [sk]: v } })}
+                options={gsc.options.map((id) => ({ value: id, label: content.spells[id]?.name ?? id, description: content.spells[id]?.description, record: { bucket: 'spells', id } }))}
+              />
+            );
+          })()}
         {limitReasons.map((r) => (
           <div className="choice-inert" key={r}>
             <i className="ti ti-filter" aria-hidden="true" />
@@ -1561,6 +1618,9 @@ export function Builder({
             )}
             <div className="spr-chips">
               {giftChips(giftChipIds(castEntry1, 0, rowCantrips), variantGiftCount(castEntry1, 0))}
+              {/* With no leveled book rows yet (no Basic spellcasting feat), this is the book's last row, so it
+                  also shows a leveled grant (Basic Witchcraft's lesson taken first). */}
+              {bookGrantEls(0, rowCantrips, lvl, !!archBook && !archBookRanksAt(build.level).length).chips}
               {rowCantrips.map((id) => (
                 <span className="spr-chip" key={id}>
                   {content.spells[id]?.name ?? id}
@@ -1589,6 +1649,7 @@ export function Builder({
               >
                 + add
               </button>
+              {bookGrantEls(0, rowCantrips, lvl, !!archBook && !archBookRanksAt(build.level).length).notes}
             </div>
           </div>
         )}
@@ -1736,6 +1797,9 @@ export function Builder({
             const held = archBook ? new Set(chosen).size : chosen.length;
             // "· 1st-rank spells" on a hedge mage's 2nd and 3rd ranks, "· 2nd rank or lower" on a magus's 2nd.
             const bookNote = archBook ? archetypeBookRankNote(archBookRanksAt(lvl).find((r) => r.rank === rank) ?? { rank, places: capR, minSpellRank: rank, maxSpellRank: rank }) : '';
+            // The book's LAST row (at the character's level) also shows grants at ranks it has no row for.
+            const lastBookRank = archBook ? Math.max(0, ...archBookRanksAt(build.level).map((r) => r.rank)) : 0;
+            const grantEls = bookGrantEls(rank, chosen, lvl, archBook ? rank === lastBookRank : false);
             return (
               <div className="spell-pick-row" key={rank}>
                 <div className="spr-head">
@@ -1750,6 +1814,7 @@ export function Builder({
                 </div>
                 <div className="spr-chips">
                   {giftChips(giftChipIds(castEntry1, rank, chosen), variantGiftCount(castEntry1, rank))}
+                  {grantEls.chips}
                   {chosen.map((id, idx) => (
                     <span className="spr-chip" key={id + ':' + idx}>
                       {sigAvailable && (
@@ -1772,6 +1837,7 @@ export function Builder({
                   <button className="spr-add" type="button" disabled={held >= capR} title={held >= capR ? (archBook ? `Your ${archBook.noun} holds the ${capR} spells this rank adds — remove one first.` : `All ${capR} spells at this rank are chosen — remove one first.`) : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} data-ctl-options={capR} onClick={() => setPicker({ kind: 'spell', rank, cap: capR })}>
                     + add
                   </button>
+                  {grantEls.notes}
                 </div>
               </div>
             );
@@ -3909,14 +3975,21 @@ export function Builder({
         const bookRank = !c2 && archBook && picker.rank > 0 ? archBookRanksAt(build.level).find((r) => r.rank === picker.rank) : undefined;
         // …and never a spell another rank's page already holds: a magus's "or lower" lets 1st-rank fear be
         // added at 2nd too, which would spend a second place on a spell the book already has.
+        // …nor one a RECORD already wrote into the book (a lesson's familiar spell, Expanded Necromancy's
+        // grisly growths, Peer Past the Hedge's detect magic): it is there for free, and picking it again
+        // would spend one of the player's places on it (checker finding 2026-10-15). The Level 0 card
+        // (shared.tsx) leaves them out the same way. A grant never holds the player's own pick.
+        const bookGranted = !c2 && archBook ? new Set(Object.values(archEntryBuilt?.grantedRepertoire ?? {}).flat()) : undefined;
         const elsewhere = bookRank
-          ? new Set(Object.entries(build.spells).flatMap(([r, ids]) => (Number(r) !== picker.rank ? ids ?? [] : [])))
+          ? new Set([...Object.entries(build.spells).flatMap(([r, ids]) => (Number(r) !== picker.rank ? ids ?? [] : [])), ...(bookGranted ?? [])])
           : undefined;
         const items = c2
           ? eligibleSpells2(picker.rank)
           : bookRank
             ? eligibleSpells(picker.rank).filter((s) => s.rank >= bookRank.minSpellRank && s.rank <= bookRank.maxSpellRank && !elsewhere!.has(s.id))
-            : eligibleSpells(picker.rank);
+            : picker.rank === 0 && bookGranted
+              ? eligibleSpells(0).filter((s) => !bookGranted.has(s.id))
+              : eligibleSpells(picker.rank);
         // Wizards cap by the total spellbook budget; others by the rank's slot count.
         const cap_ = picker.cap ?? (picker.rank === 0 ? capCantrip : wizBook && !capstone ? capBook : capSlots[picker.rank] ?? 0);
         const have = picker.rank === 0 ? cantripList.length : wizBook && !capstone ? learned : bookRank ? new Set(spellList).size : spellList.length;

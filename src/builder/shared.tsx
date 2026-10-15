@@ -108,6 +108,7 @@ import { DraftNumberInput } from './DraftNumberInput';
 import type { DescNode } from '../sheet/descref';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
 import { picksLosingSlot, rekeyFeatSlots, SLOT_KEYED } from '../rules/featSlots';
+import { bookGrantChips } from '../rules/spellOptions';
 
 /** "1st", "2nd", "3rd", "4th" … — a spell rank in player text. */
 const ordinalRank = (r: number) => (r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`);
@@ -4963,6 +4964,33 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
            * filter alone would never offer them. */
           const takenIds = Object.values(build.featPicks).filter((v): v is string => !!v);
           const archEntryIds = archetypeEntryIds(arch);
+          /* What a RECORD wrote into the dedication's book (a lesson's familiar spell, Expanded Necromancy's
+           * dirge spells, Peer Past the Hedge's detect magic) — the level pages' locked chips, here too, off
+           * buildCharacter's own entry. Never one of the places the player chooses. */
+          const archBuilt = limitChar?.spellcasting.find((e) => archEntryIds.has(e.id));
+          const grantRow = (rank: number, picks: readonly string[], andAbove = false) => {
+            const grants = bookGrantChips(archBuilt, rank, picks, andAbove);
+            if (!grants.length) return null;
+            const noun = archBuilt?.bookNoun ?? 'book';
+            const name = (id: string) => content.spells[id]?.name ?? id;
+            return (
+              <div className="spr-chips arch-book-grants" style={{ marginTop: 6 }}>
+                {grants.map(({ id, from }) => (
+                  <span className="spr-chip spr-chip-gift spr-chip-book-grant" key={'grant:' + id} title={`Added to your ${noun}${from ? ` by ${from}` : ''} — not one of the spells you choose here`}>
+                    {name(id)}
+                    <i className="ti ti-lock" aria-hidden="true" />
+                  </span>
+                ))}
+                {grants.map(({ id, from, rank: r }) => (
+                  <span className="spr-gift-note" key={'grant-note:' + id}>
+                    {name(id)}
+                    {r !== rank ? ` (${ordinalRank(r)} rank)` : ''} is added to your {noun}
+                    {from ? ` by ${from}` : ''} — it does not use one of these places.
+                  </span>
+                ))}
+              </div>
+            );
+          };
           // buildCharacter's own count (`archetypeCantripCounts`): what the pool prepares, and a book's size.
           const counts = archetypeCantripCounts(arch, build, content, takenIds);
           const cantripCap = counts.book ?? counts.prepared;
@@ -5000,8 +5028,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
            * read aura"* (feat-8112). It narrows the TRADITION half only — a cantrip a later feat adds
            * to this entry (`spellListAdditions`, the `widened` set) was granted by that feat's own
            * printed text and is not the dedication's list to refuse. */
+          // …and never a cantrip a record already wrote into the book (Peer Past the Hedge's detect magic):
+          // it is there for free, and adding it again would spend one of the book's places.
+          const grantedCantrips = new Set(archBuilt?.grantedRepertoire?.[0] ?? []);
           const cantripList = Object.values(content.spells)
             .filter((s) => (s.rank === 0 && s.traditions.includes(trad)) || widened.has(s.id))
+            .filter((s) => !grantedCantrips.has(s.id))
             .filter((s) => widened.has(s.id) || archetypeCantripAllowed(arch, s.id))
             .sort((a, b) => a.name.localeCompare(b.name));
           return (
@@ -5064,6 +5096,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                     ))}
                   </div>
                 )}
+                {/* With no leveled rows yet (no Basic spellcasting feat), the cantrip row is the book's last
+                    row, so it shows a leveled grant too (Basic Witchcraft's lesson taken first). */}
+                {book && grantRow(0, rowCantrips, !archetypeBookRanks(build.level, arch).length)}
                 {/* An innate-ranked archetype has no slots to prepare into — its leveled spells are
                     LEARNED here, one per rank. Saying "prepare them on the Spells tab" to a captivator
                     was a false promise: that tab has nothing for them to prepare. */}
@@ -5096,7 +5131,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                           // at any rank ("or lower" lets a 1st-rank spell be added at 2nd too).
                           const held = new Set(chosen).size;
                           const full = held >= r.places;
-                          const inBook = new Set(Object.values(as.spells ?? {}).flat());
+                          // …and none a record already wrote into it (a lesson's familiar spell): it is there.
+                          const inBook = new Set([...Object.values(as.spells ?? {}).flat(), ...Object.values(archBuilt?.grantedRepertoire ?? {}).flat()]);
                           const options = listValues(content, content.spells)
                             .filter((s) => s.rank >= r.minSpellRank && s.rank <= r.maxSpellRank && s.traditions.includes(trad) && !inBook.has(s.id))
                             .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
@@ -5126,6 +5162,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                                   ))}
                                 </div>
                               )}
+                              {/* The last row also shows grants at ranks the book has no row for yet. */}
+                              {grantRow(r.rank, chosen, r.rank === ranks[ranks.length - 1].rank)}
                               {full ? (
                                 <div className="bsec-note">
                                   Your {book.noun} holds the {r.places} spells this rank adds — remove one to choose another.

@@ -5018,6 +5018,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   /** …and the FEAT whose choice granted each one, so under Dual Class a witch's lesson spell reaches the
    *  witch's entry rather than whichever class is first (`featAimsAtClass`, lane C2). */
   const featureSpellFeat: Record<string, string> = {};
+  /** …and the CLASS FEATURE that taught it ("Lesson of Life"), the name an archetype's book says it came
+   *  from (`spellSources`) — the lesson, not the feat that asked which lesson. */
+  const featureSpellSource: Record<string, string> = {};
   /** Which feat/feature granted each focus spell — the focus entry pools many sources, so the Spells
    *  page labels each spell with its origin. */
   const focusSource: Record<string, string> = {};
@@ -5143,6 +5146,112 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
     return resolved;
   };
+  /**
+   * A choice that hands over a CLASS FEATURE carrying spells — the witch's 19 lessons. Focus spells from
+   * a class feature are otherwise gathered from klass.features alone, and a lesson is in no class's
+   * feature list, so the lesson was picked, shown in the builder, and its hex never reached the focus pool.
+   *
+   * ONE routine for the feat held in a SLOT and the feat GRANTED by another. Basic Witchcraft — *"You gain
+   * a 1st- or 2nd-level witch feat of your choice"* (feat-5101) — and Advanced Witchcraft hand a Witch
+   * Dedication character Basic/Greater/Major Lesson as a granted feat (`pickFeatChoices`), and only the
+   * slot loop ran this: measured 2026-10-15, a fighter with Witch Dedication + Basic Witchcraft → Basic
+   * Lesson (Life) got neither the Life Boost hex nor Spirit Link. `spellPick` is the answer to the lesson's
+   * own "or" (`grantedSpellChoice`): `<slot>:granted-spell` for a slot feat, `granted:<feat>:granted-spell`
+   * for a granted one.
+   */
+  const takeOwnedFeatureSpells = (featId: string, value: string | undefined, spellPick: string | undefined) => {
+    if (!content.feats[featId]?.choice?.ownsFeature || !value) return;
+    for (const id of choiceOwnedFeatureIds([{ featId, choice: { value } }], content)) {
+      for (const sid of content.classFeatures[id]?.focusSpells ?? []) {
+        if (!content.spells[sid] || featFocusSpells.includes(sid)) continue;
+        featFocusSpells.push(sid);
+        focusSource[sid] ??= content.classFeatures[id]?.name ?? id;
+      }
+      /*
+       * batch 035: lesson-of-vengeance#familiar-spell / lesson-of-elements#familiar-spell-choice —
+       * the OTHER half of a lesson: *"and your familiar learns Phantom Pain"*, and its "or" form
+       * *"your familiar learns your choice of breathe fire, gust of wind, hydraulic push, or
+       * pummeling rubble"*. `Array.isArray` because classFeatures['conscious-mind'].grantedSpells is
+       * a different (ladder) shape read through its own cast further down.
+       */
+      const rec = content.classFeatures[id];
+      const flat = Array.isArray(rec?.grantedSpells) ? rec.grantedSpells : [];
+      const gsc = rec?.grantedSpellChoice;
+      // Honoured only while the answer names one of THIS feature's own options — the same guard the
+      // subclass option's `grantedSpellChoice` uses, so a stale answer grants nothing.
+      for (const sid of [...flat, ...(gsc && spellPick && gsc.options.includes(spellPick) ? [spellPick] : [])]) {
+        if (content.spells[sid] && !featureGrantedSpells.includes(sid)) {
+          featureGrantedSpells.push(sid);
+          featureSpellFeat[sid] = featId;
+          featureSpellSource[sid] = rec?.name ?? id;
+        }
+      }
+    }
+  };
+  /**
+   * Is a feat reaching this list through a PICK-A-FEAT answer still picked by a granter the character
+   * holds? A `pickFeatChoices` answer is keyed by the granter's slot (`6:class:2`, `…#1` for a second
+   * pick) or by its id, and `setFeat` does not clear it when the slot changes — so the bare answer is not
+   * proof the feat is granted. buildCharacter's own pick walk (FEAT_PICK_GRANTS, below) is the authority
+   * and runs later; this asks ITS questions early, for the lanes that must answer before it: is the
+   * granter held at this level, is the answer one of the picks its spec makes (`#i` under `picks`), and
+   * may it pick this feat NOW (`pickableFeats` — the trait, and Advanced Witchcraft's half-level cap).
+   * Checker finding 2026-10-15: without the last two, Basic Witchcraft swapped for Basic Arcana (answer
+   * left behind) or Greater Lesson answered under Advanced Witchcraft at 11th kept the lesson's hex and a
+   * Focus Point the build no longer granted.
+   * A feat that is not any pick's answer came from a lane the build derives (a background, heritage,
+   * class feature or feat-grants-feat) and is held by construction.
+   */
+  const pickGrantHeld = (featId: string): boolean => {
+    const keys = Object.entries(build.pickFeatChoices ?? {}).filter(([, v]) => v === featId).map(([k]) => k);
+    if (!keys.length) return true;
+    const answerAt = (base: string, index: number) => build.pickFeatChoices?.[index ? `${base}#${index}` : base];
+    const slotLevelOk = (s: string) => !(Number(s.split(':')[0]) > level);
+    /** A slot the walk KEEPS: it places a feat from its slots in `featPicks` order, at or below this level,
+     *  up to the feat's `maxTakes` — a second Basic Witchcraft slot (a stale or reordered save) is dropped,
+     *  and its answers are never read (final check, 2026-10-15). */
+    const slotKept = (s: string) => {
+      const id = build.featPicks?.[s];
+      if (!id || !slotLevelOk(s)) return false;
+      const holding = Object.entries(build.featPicks ?? {}).filter(([x, v]) => v === id && slotLevelOk(x)).map(([x]) => x);
+      return holding.indexOf(s) < maxTakes(content.feats[id]);
+    };
+    /** An Overrides-added copy of `id` the walk takes (no slot at or below this level already holds it). */
+    const overrideHolds = (id: string) =>
+      (build.overrides?.addedFeats ?? []).some((a) => a.featId === id && (a.level ?? 1) <= level) &&
+      !Object.entries(build.featPicks ?? {}).some(([s, v]) => v === id && slotLevelOk(s));
+    return keys.some((key) => {
+      const m = /^(.*?)(?:#(\d+))?$/.exec(key)!;
+      const k = m[1];
+      const index = Number(m[2] ?? 0);
+      let granter: string | undefined;
+      if (build.featPicks?.[k]) {
+        // A slot (`6:class:2`, or a legacy `2:class`): its feat, at a level the character has reached.
+        if (!slotKept(k)) return false;
+        granter = build.featPicks[k];
+      } else if (k.startsWith('override:')) {
+        // An Overrides-added granter's own synthetic slot.
+        granter = k.slice('override:'.length);
+        if (!overrideHolds(granter)) return false;
+      } else if (content.feats[k]) {
+        /* A granter's bare id — the answer saved before picks were keyed by slot. The walk reads a taking's
+         * SLOT answer first and falls back to this only when the slot has none, so it counts only for a
+         * taking at or below this level with no answer of its own (final check, 2026-10-15: an old
+         * `basic-witchcraft` answer beside a newer slot answer kept the old lesson's hex). */
+        // `== null`: the walk reads `slot ?? bare`, so a null slot answer falls through to this one too.
+        const viaSlot = Object.entries(build.featPicks ?? {}).some(([s, v]) => v === k && slotKept(s) && answerAt(s, index) == null);
+        const viaOverride = overrideHolds(k) && answerAt(`override:${k}`, index) == null;
+        if (!viaSlot && !viaOverride) return false;
+        granter = k;
+      } else {
+        // A heritage, background or class feature — read by the walk only while the character has it.
+        if (k !== build.heritageId && k !== build.backgroundId && !ownedClassFeatures(true).has(k)) return false;
+        granter = k;
+      }
+      const spec = granter ? FEAT_PICK_GRANTS[granter] : undefined;
+      return !!spec && index < (spec.picks ?? 1) && pickableFeats(spec, build, content).some((f) => f.id === featId);
+    });
+  };
   const focusSeen = new Set<string>();
   /*
    * …and the feats added through OVERRIDES, under a synthetic slot key.
@@ -5179,38 +5288,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       );
       featChoiceById[slotKey] = labels.length > 1 ? { value: values.join(','), label: labels.join(', ') } : resolved;
     }
-    // A choice that hands over a CLASS FEATURE carrying focus spells — the witch's 19 lessons, each
-    // of which grants a hex. Focus spells from a class feature are otherwise gathered from
-    // klass.features alone, and a lesson is in no class's feature list, so the lesson was picked,
-    // shown in the builder, and its hex never reached the focus pool.
-    if (content.feats[featId]?.choice?.ownsFeature) {
-      for (const id of choiceOwnedFeatureIds([{ featId, choice: { value: values[0] } }], content)) {
-        for (const sid of content.classFeatures[id]?.focusSpells ?? []) {
-          if (!content.spells[sid] || featFocusSpells.includes(sid)) continue;
-          featFocusSpells.push(sid);
-          focusSource[sid] ??= content.classFeatures[id]?.name ?? id;
-        }
-        /*
-         * batch 035: lesson-of-vengeance#familiar-spell / lesson-of-elements#familiar-spell-choice —
-         * the OTHER half of a lesson: *"and your familiar learns Phantom Pain"*, and its "or" form
-         * *"your familiar learns your choice of breathe fire, gust of wind, hydraulic push, or
-         * pummeling rubble"*. `Array.isArray` because classFeatures['conscious-mind'].grantedSpells is
-         * a different (ladder) shape read through its own cast further down.
-         */
-        const rec = content.classFeatures[id];
-        const flat = Array.isArray(rec?.grantedSpells) ? rec.grantedSpells : [];
-        const gsc = rec?.grantedSpellChoice;
-        // Honoured only while the answer names one of THIS feature's own options — the same guard the
-        // subclass option's `grantedSpellChoice` uses, so a stale answer grants nothing.
-        const picked = gsc && build.featSpellChoices?.[`${slotKey}:granted-spell`];
-        for (const sid of [...flat, ...(picked && gsc.options.includes(picked) ? [picked] : [])]) {
-          if (content.spells[sid] && !featureGrantedSpells.includes(sid)) {
-            featureGrantedSpells.push(sid);
-            featureSpellFeat[sid] = featId;
-          }
-        }
-      }
-    }
+    takeOwnedFeatureSpells(featId, values[0], build.featSpellChoices?.[`${slotKey}:granted-spell`]);
   }
   // A CLASS FEATURE can grant a pool point too. Only `feat.focusPoolBonus` was ever read, so
   // Clarity of Focus — the psychic's 5th-level feature, and the field's only carrier — did nothing:
@@ -5293,6 +5371,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const id of focusBonusIds) {
     const resolved = applyFeatFocus(id, build.grantedFeatChoices?.[id], build.featSpellChoices?.[`granted:${id}`]);
     if (resolved) grantedChoiceById[id] = resolved;
+    // …and a granted LESSON's hex and familiar spell (Basic Witchcraft → Basic Lesson), as for a slot feat —
+    // only while a held granter still picks it (`pickGrantHeld`): the builder's feat swap leaves the old
+    // slot's `pickFeatChoices` answer behind, and a removed Basic Witchcraft must take its lesson with it.
+    if (pickGrantHeld(id)) takeOwnedFeatureSpells(id, build.grantedFeatChoices?.[id], build.featSpellChoices?.[`granted:${id}:granted-spell`]);
   }
   // "Choose one of N FOCUS spells" effect-choices (Additional Shadow Magic, Greater Deathly Secrets).
   // Resolved HERE (not in the later effect-choice pass) so the pick feeds the same focus pool/entry as
@@ -5394,12 +5476,43 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   /** Each class entry's own curriculum, for a restricted grant that asks for one (Sin Reservoir). */
   const curriculumOfEntry = new Map<string, Record<string, string[]> | undefined>();
   /**
+   * The ARCHETYPE entry a class feat's spell effect belongs to, when the character holds that feat's
+   * class only as a multiclass archetype — `<dedication>-casting`, else undefined.
+   *
+   * The witch archetype's Basic and Advanced Witchcraft hand over witch feats (*"You gain a 1st- or
+   * 2nd-level witch feat of your choice"*, feat-5101), and Basic Lesson's *"your familiar learns the
+   * associated spell"* (feat-4996) then means the familiar Witch Dedication gives (*"you gain a familiar
+   * with two common cantrips"*, feat-5099) — the archetype's own book, `witch-dedication-casting`. The
+   * feat names its class by TRAIT (`witch`); the class's multiclass dedication is `<class>-dedication`.
+   * A held class of that trait always wins (a witch's own lesson stays the witch's), and a character
+   * holding neither keeps the old route, so nothing that reached a class before moves.
+   */
+  const heldClassIds = new Set([cls?.id, cls2?.id].filter((x): x is string => !!x));
+  const heldFeatIdsEarly = new Set([
+    ...Object.values(build.featPicks ?? {}),
+    ...Object.values(build.pickFeatChoices ?? {}),
+    ...(build.overrides?.addedFeats ?? []).map((a) => a.featId),
+  ]);
+  const featAimsAtArchetype = (featId: string | undefined): string | undefined => {
+    for (const t of (featId ? content.feats[featId]?.traits : undefined) ?? []) {
+      if (!content.classes[t] || heldClassIds.has(t)) continue;
+      const ded = `${t}-dedication`;
+      if (CASTER_ARCHETYPES[ded] && heldFeatIdsEarly.has(ded)) return `${ded}-casting`;
+    }
+    return undefined;
+  };
+  /**
    * Under Dual Class, which class a CLASS FEAT's spell effect belongs to: the class whose trait it
    * carries (a witch's lesson teaches the witch's familiar; Ultimate Polymath makes the BARD's repertoire
    * signature). A feat carrying neither class's trait stays with the first class, where every such
    * effect has always gone. A single class: always the first.
+   *
+   * …and NO class at all when the feat came through that class's ARCHETYPE (`featAimsAtArchetype`): a
+   * Wizard with Witch Dedication who takes Basic Lesson under Basic Witchcraft teaches the lesson's spell
+   * to the archetype's familiar, never to the wizard's own spellbook.
    */
   const featAimsAtClass = (featId: string | undefined, classId: string): boolean => {
+    if (featAimsAtArchetype(featId)) return false;
     if (!cls2) return true;
     const traits = (featId ? content.feats[featId]?.traits : undefined) ?? [];
     if (traits.includes(classId)) return true;
@@ -5509,10 +5622,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * lesson's taught spell is a grant to THIS pool exactly as the patron's is, so it merges here and
      * nowhere else: one route, and the spellbook/repertoire/cantrip branches all inherit it. Under Dual
      * Class, to the pool of the class whose feat taught it (`featAimsAtClass`). */
+    const lessonTaught: string[] = [];
     for (const id of featureGrantedSpells) {
       if (!featAimsAtClass(featureSpellFeat[id], cls.id)) continue;
       const rank = content.spells[id]?.rank ?? 1;
       if (!(grantedByRank[rank] ??= []).includes(id)) grantedByRank[rank].push(id);
+      lessonTaught.push(id);
     }
     // The ALLOWANCE, not just the picks: the sheet needs it to draw empty cantrip openings — with
     // zero picked, the whole Cantrips section used to vanish, and a new caster had no hint that
@@ -5724,6 +5839,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       for (const [rankStr, ids] of Object.entries(grantedByRank)) {
         const rank = Number(rankStr);
         if (rank > 0 && !entry.spellbook[rank]) entry.spellbook[rank] = [...ids];
+      }
+      /* A LESSON's taught spell is the familiar's for free — *"your familiar learns Spirit Link"* — and is
+       * marked as a grant the way an archetype book's is (`grantIntoBook`): `grantedRepertoire` keeps it
+       * out of the player's own picks when deriveBuildFromCharacter reads the book back (it came back as a
+       * pick, charged against the book's budget), and `spellSources` names the lesson on the sheet. A
+       * spell the player also learned by hand stays theirs and is not marked. Not on a flexible
+       * COLLECTION (desk 155), whose `grantedRepertoire` means "outside the pool's places" and where a
+       * book entry competes for them like any other. */
+      for (const id of flexBook ? [] : lessonTaught) {
+        const rank = content.spells[id]?.rank ?? 1;
+        if ((k.spells[rank] ?? []).includes(id) || (rank === 0 && k.cantrips.includes(id))) continue;
+        const at = ((entry.grantedRepertoire ??= {})[rank] ??= []);
+        if (!at.includes(id)) at.push(id);
+        (entry.spellSources ??= {})[id] ??= featureSpellSource[id] ?? id;
       }
       /* desk 155: flexible-book-casters — the collection, sized by Table 5-1 over the (already capped)
        * class slots and drawn from the book: *"Select these spells from the same source as normal,
@@ -7964,7 +8093,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // too now, which is why the sins and the witch lessons could not be expressed before.
   let spellListAdditions: Record<string, string[]> | undefined;
   const spellListTraditions: NonNullable<Character['spellListTraditions']> = [];
-  const grantedRepertoireAdds: { entryId?: string; spells: string[] }[] = [];
+  const grantedRepertoireAdds: { entryId?: string; spells: string[]; whenCastable?: string[]; from?: string }[] = [];
   /*
    * `grantedRepertoire` is a MARKER, not a store: the Spells tab renders rows from `repertoire` alone
    * and reads `grantedRepertoire` only to keep granted ids out of the known-spells count and to lock
@@ -7977,6 +8106,35 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const rep = ((entry.repertoire ??= {})[rank] ??= []);
     if (!rep.includes(sid)) rep.push(sid);
   };
+  /**
+   * A grant aimed at a BOOK goes INTO the book — its cantrips (`bookCantrips`) or the page of its rank
+   * (`spellbook[rank]`) — where it is one more spell the caster may prepare, never a repertoire row on a
+   * prepared entry (the Spells tab reads a `repertoire` as "spontaneous") and never a slot filled for
+   * them. Print says so each time: Peer Past the Hedge *"Add the detect magic cantrip to your keepsake"*,
+   * Expanded Necromancy *"Add the grisly growths spell to your dirge"* (feat-9132), a lesson's *"your
+   * familiar learns …"*. Wanderer's Guide files them the same way (giveSpell NORMAL into the caster's
+   * book source).
+   *
+   * Recorded in `grantedRepertoire` — and its source in `spellSources` — ONLY when pushed: a book already
+   * holding the spell as the player's own pick takes nothing more, because deriveBuildFromCharacter strips
+   * both from the book as "not a pick", and recording the player's own spell would read it back out.
+   * Returns false for an entry with no book, so the caller's own route applies.
+   */
+  const grantIntoBook = (entry: SpellcastingEntry, rank: number, sid: string, from?: string): boolean => {
+    const page = entry.bookCantrips && rank === 0 ? entry.bookCantrips : entry.spellbook && rank > 0 ? (entry.spellbook[rank] ??= []) : undefined;
+    if (!page) return false;
+    if (page.includes(sid)) return true;
+    page.push(sid);
+    const at = ((entry.grantedRepertoire ??= {})[rank] ??= []);
+    if (!at.includes(sid)) at.push(sid);
+    if (from) (entry.spellSources ??= {})[sid] ??= from;
+    return true;
+  };
+  /** Can this entry cast spells of `rank` yet — slots of that rank, prepared or pooled? The test behind
+   *  `SpellAccessGrant.whenCastable`: *"as soon as you gain the ability to cast necromancer spells of that
+   *  rank"*. */
+  const castsRank = (entry: SpellcastingEntry, rank: number): boolean =>
+    (entry.prepared?.[rank]?.length ?? 0) > 0 || (entry.slots?.[rank]?.max ?? 0) > 0;
   const fontAdds: { entryId?: string; spells: string[] }[] = [];
   /** Each record's own choice ANSWERS, by record id. The widening loop below reads RECORDS, and "add
    *  up to three of your deity's spells" is a PICK — the answer lives on the character, not the feat. */
@@ -8064,7 +8222,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
             : deitySpells;
         const known = [...(add.spells ?? []), ...fromDeity, ...apparitionSpells].filter((s) => content.spells[s]);
         if (!known.length) continue;
-        if (add.as === 'repertoire') grantedRepertoireAdds.push({ entryId: add.entryId, spells: known });
+        if (add.as === 'repertoire')
+          grantedRepertoireAdds.push({ entryId: add.entryId, spells: known, ...(add.whenCastable?.length ? { whenCastable: add.whenCastable } : {}), ...(src?.name ? { from: src.name } : {}) });
         else if (add.as === 'font') fontAdds.push({ entryId: add.entryId, spells: known });
         else {
           const key = add.entryId ?? '*';
@@ -8288,11 +8447,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
 
   // Applied as a final pass: the spellcasting entries are assembled well above this point, and a
   // record granting into a repertoire or a font has to wait until there is an entry to grant into.
-  for (const { entryId, spells } of grantedRepertoireAdds) {
+  for (const { entryId, spells, whenCastable, from } of grantedRepertoireAdds) {
     const entry = entryId ? spellcasting.find((e) => e.id === entryId) : spellcasting.find((e) => e.type === 'focus') ?? spellcasting[0];
     if (!entry) continue;
     for (const sid of spells) {
       const rank = content.spells[sid]?.rank ?? 1;
+      if (whenCastable?.includes(sid) && !castsRank(entry, rank)) continue;
+      // A class BOOK (the necromancer's dirge) takes it into the book, as the archetype block below does.
+      if (grantIntoBook(entry, rank, sid, from)) continue;
       const at = ((entry.grantedRepertoire ??= {})[rank] ??= []);
       if (!at.includes(sid)) at.push(sid);
       addGrantedToRepertoire(entry, rank, sid);
@@ -9161,37 +9323,45 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // runs ~300 lines above this, so anything naming an archetype entry found nothing and was
       // dropped in silence.
       if (archEntry) {
-        for (const { entryId, spells } of grantedRepertoireAdds) {
-          if (!entryId || !archEntryIds.has(entryId)) continue;
+        /* What reaches THIS entry: the repertoire grants that name it (Peer Past the Hedge, Expanded
+         * Necromancy's dedication row), and the spells a class feat taken through this archetype teaches
+         * (a lesson's *"your familiar learns …"*, Basic Witchcraft → Basic Lesson — `featAimsAtArchetype`
+         * kept them out of every class pool for this). The lesson half is held to the feats actually
+         * granted, so a pick left behind by a removed Basic Witchcraft teaches nothing. */
+        const toArch = [
+          ...grantedRepertoireAdds.filter((g) => g.entryId && archEntryIds.has(g.entryId)),
+          ...featureGrantedSpells
+            .filter((sid) => takenFeats.has(featureSpellFeat[sid]) && archEntryIds.has(featAimsAtArchetype(featureSpellFeat[sid]) ?? ''))
+            .map((sid) => ({ spells: [sid], whenCastable: undefined, from: featureSpellSource[sid] })),
+        ];
+        for (const { spells, whenCastable, from } of toArch) {
           for (const sid of spells) {
             const rank = content.spells[sid]?.rank ?? 1;
-            /* A BOOK that already holds the spell as the player's own pick takes nothing more — and the
-             * grant is NOT recorded in `grantedRepertoire`, which deriveBuildFromCharacter strips from the
-             * book as "not a pick": recorded, it read the player's own detect magic back out of the
-             * keepsake, and dropping Peer Past the Hedge later lost it. */
-            const bookPage = archEntry.bookCantrips && rank === 0 ? archEntry.bookCantrips : archEntry.spellbook && rank > 0 ? (archEntry.spellbook[rank] ??= []) : undefined;
-            if (bookPage?.includes(sid)) continue;
+            // *"as soon as you gain the ability to cast necromancer spells of that rank"* — this entry's.
+            if (whenCastable?.includes(sid) && !castsRank(archEntry, rank)) continue;
+            /*
+             * …into a BOOK (`grantIntoBook`): the keepsake, the familiar, the dirge. Print puts the spell
+             * IN it — *"Add the detect magic cantrip to your keepsake"* — where it is one of the spells
+             * the caster may prepare each morning, not one cast on top (Wanderer's Guide files it the
+             * same way: in the book's list, still to be prepared). A book that already holds the spell
+             * as the player's own pick takes nothing more and records nothing — recorded, it read the
+             * player's own detect magic back out of the keepsake, and dropping Peer Past the Hedge
+             * later lost it.
+             */
+            if (grantIntoBook(archEntry, rank, sid, from)) continue;
             const at = ((archEntry.grantedRepertoire ??= {})[rank] ??= []);
             if (!at.includes(sid)) at.push(sid);
             /*
              * A RANK-0 GRANT ON A PREPARED ENTRY IS A CANTRIP, NOT A REPERTOIRE ROW.
              *
-             * Peer Past the Hedge (*"Add the detect magic cantrip to your keepsake"*) targets the
-             * Hedge Mage archetype entry, which is PREPARED. Writing it into `repertoire` put a
-             * rank-0 row on an entry that renders `prepared`, so the cantrip appeared nowhere — and
-             * worse, the Spells tab decided the entry was spontaneous merely because `repertoire`
-             * now existed, and hid all three prepared ranks behind an empty picker.
-             * The class path already unions rank-0 grants into `cantrips`; this does the same.
-             *
-             * …except into a BOOK. The keepsake is a book now (ArchetypeBook), and print puts the
-             * cantrip IN it — *"Add the detect magic cantrip to your keepsake"* — where it is one of the
-             * cantrips the hedge mage may prepare each morning, not a third one cast on top of the two
-             * (Wanderer's Guide files it the same way: in the keepsake list, still to be prepared). A
-             * leveled grant aimed at a book goes into the book at its rank for the same reason.
+             * Peer Past the Hedge targeted the Hedge Mage archetype entry, which is PREPARED, before the
+             * keepsake was a book. Writing it into `repertoire` put a rank-0 row on an entry that renders
+             * `prepared`, so the cantrip appeared nowhere — and worse, the Spells tab decided the entry
+             * was spontaneous merely because `repertoire` now existed, and hid all three prepared ranks
+             * behind an empty picker. The class path already unions rank-0 grants into `cantrips`; this
+             * does the same for a prepared pool with no book.
              */
-            if (bookPage) {
-              bookPage.push(sid);
-            } else if (rank === 0 && archEntry.type === 'prepared') {
+            if (rank === 0 && archEntry.type === 'prepared') {
               archEntry.cantrips = [...new Set([...(archEntry.cantrips ?? []), sid])];
             } else {
               addGrantedToRepertoire(archEntry, rank, sid);
@@ -11579,7 +11749,13 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
         // …and minus what its OPTION put there: a witch's patron spell (*"your familiar learns …"*) came
         // back as a pick, charged against the book's budget and moved to the head of the preparation on
         // every rebuild (the quirk lane C1 noted; lane C2, now that a second-class witch has a patron).
-        const free = new Set([...bookGrantedSpellIds(content, klass, subclassId, c.level), ...grantedSpellSet]);
+        // …and minus what a FEAT put in the book (`grantIntoBook`: Expanded Necromancy's grisly growths in
+        // the dirge), which the build marks in `grantedRepertoire` exactly as it does for an archetype's.
+        const free = new Set([
+          ...bookGrantedSpellIds(content, klass, subclassId, c.level),
+          ...grantedSpellSet,
+          ...Object.values(classEntry.grantedRepertoire ?? {}).flat(),
+        ]);
         for (const [rank, ids] of Object.entries(classEntry.spellbook)) {
           /* …with a spell the standing preparation holds TWICE written back twice, beside the first.
            * The book is a set, but buildCharacter fills the preparation from the player's own list as

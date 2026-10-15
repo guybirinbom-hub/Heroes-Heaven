@@ -39,14 +39,17 @@ export function backfillTarget(root, path) {
  * reads prose from. Replaying the overlay against the FINISHED core.json instead puts all 289 back —
  * measured, the file grew 184 KB and carried prose in two places, the exact state the split removed.
  * The pipeline passes nothing here and is unaffected.
+ *
+ * `only` (a Set of `<category>/<id>`) replays just those records' rows — the same caller's `--only`.
  */
-export function applyBackfill(db, file = 'scripts/data/effect-backfill.json', { skipFields = [] } = {}) {
+export function applyBackfill(db, file = 'scripts/data/effect-backfill.json', { skipFields = [], only = null } = {}) {
   if (!existsSync(file)) return { applied: 0, unresolved: [] };
   const skip = new Set(skipFields);
   const unresolved = [];
   let applied = 0;
   for (const fix of JSON.parse(readFileSync(file, 'utf8'))) {
     if (fix.field && skip.has(fix.field)) continue;
+    if (only && !only.has(`${fix.category}/${fix.id}`)) continue;
     // `create` adds a whole record rather than patching a field — needed where a record is filed in
     // the wrong collection upstream, or is hand-authored with no AoN source at all. Never overwrites.
     if (fix.create) {

@@ -2036,12 +2036,16 @@ export function SpellsTab({
     for (const { rank, id } of rankSpellIds(pages, (p) => p.id)) {
       const sp = content.spells[id];
       if (!visible(sp)) continue;
+      /* A spell a RECORD wrote into the book — a lesson's *"your familiar learns Spirit Link"*, Expanded
+       * Necromancy's grisly growths in the dirge, Adapted Cantrip — says which, so it does not read as one
+       * the player chose (build.ts `grantIntoBook` / the class book's lesson marking, `spellSources`). */
+      const from = m.spellSources?.[id];
       cards.push(
         <SpellCard
           key={'sb' + rank + id}
           name={sp?.name ?? id} marks={marksFor(id)}
           cost={sp?.cast}
-          meta={rank === 0 ? 'Cantrip' : ord(rank) + ' rank'}
+          meta={`${rank === 0 ? 'Cantrip' : ord(rank) + ' rank'}${from ? ` · from ${from}` : ''}`}
           onClick={sp ? () => openDetail(sp) : undefined}
         />,
       );

@@ -110089,15 +110089,39 @@
   "category": "feats",
   "id": "expanded-necromancy",
   "field": "spellListAdditions",
-  "value": {
-   "spells": [
-    "grisly-growths",
-    "execute",
-    "desiccate",
-    "massacre"
-   ],
-   "as": "list"
-  }
+  "value": [
+   {
+    "spells": [
+     "grisly-growths",
+     "execute",
+     "desiccate",
+     "massacre"
+    ],
+    "as": "repertoire",
+    "entryId": "necromancer-casting",
+    "whenCastable": [
+     "execute",
+     "desiccate",
+     "massacre"
+    ]
+   },
+   {
+    "spells": [
+     "grisly-growths",
+     "execute",
+     "desiccate",
+     "massacre"
+    ],
+    "as": "repertoire",
+    "entryId": "necromancer-dedication-casting",
+    "whenCastable": [
+     "execute",
+     "desiccate",
+     "massacre"
+    ]
+   }
+  ],
+  "why": "AoN feat-9132 (Expanded Necromancy, Impossible Magic pg. 37): \"Add the grisly growths spell to your dirge. Add the following spells to your dirge as soon as you gain the ability to cast necromancer spells of that rank: 7th: execute, 8th: desiccate, 9th: massacre.\" The old row widened the LIST (as: 'list', unscoped), so the four had to be bought with the player's own dirge picks and a Necromancer Dedication's dirge (a book since 585544e, reachable through Advanced Death Dealing at 20th) never held them. WG's Expanded Necromancy is four giveSpell NORMAL into castingSource NECROMANCER — the dirge — grisly growths unconditional, execute/desiccate/massacre under LEVEL >= 13/15/17, the necromancer's 7th/8th/9th-rank levels. Here the gate is the entry's own castable rank (whenCastable), which is WG's level for the class and print's words for the archetype; the archetype's 9th rank (massacre, which an archetype never casts but WG adds at 17+) is owner question #171."
  },
  {
   "category": "feats",
@@ -190873,5 +190897,32 @@
    ]
   },
   "why": "AoN bloodline-15 (Phoenix) prints the Granted Spells ladder with \"4th Remove Curse\"; our own text (the classes/sorcerer bloodline-phoenix option, newest printing) reads \"4th: Cleanse Affliction\". Cleanse Affliction (spell-1467) is a 2nd-rank spell, so filing the gift under the spell's own rank gave every phoenix sorcerer two 2nd-rank gifts (one 2nd-rank place too few) and no 4th-rank gift (one 4th-rank place too many). The ladder keyed by option id on the declaring feature - the shape classFeatures/conscious-mind already carries, read by build.ts grantLadder/ladderRank - files it at the rung print names; level 7 is a sorcerer's first 4th-rank slot. Lane C4 (C3 check round 1)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-death",
+  "field": "grantedSpells",
+  "value": [
+   "raise-dead"
+  ],
+  "why": "AoN lesson-24 (Lesson of Death, Player Core): \"You gain the Curse of Death hex, and your familiar learns Raise Dead.\" Our record carried focusSpells: [curse-of-death] only, so the taught spell reached no familiar. WG's Lesson of Death encodes the same pair: giveSpell FOCUS rank 5 + giveSpell NORMAL (castingSource WITCH, rank 6). spells['raise-dead'] is rank 6. Reader: takeOwnedFeatureSpells in buildCharacter (slot and granted lesson feats alike); a Witch Dedication character's copy lands in the archetype familiar (featAimsAtArchetype)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-renewal",
+  "field": "grantedSpells",
+  "value": [
+   "field-of-life"
+  ],
+  "why": "AoN lesson-25 (Lesson of Renewal, Player Core): \"You gain the Restorative Moment hex, and your familiar learns Field of Life.\" Our record carried focusSpells: [restorative-moment] only. WG's Lesson of Renewal: giveSpell FOCUS rank 5 + giveSpell NORMAL (castingSource WITCH, rank 6). spells['field-of-life'] is rank 6. Same reader as lesson-of-death."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-the-frozen-queen",
+  "field": "grantedSpells",
+  "value": [
+   "wall-of-ice"
+  ],
+  "why": "AoN lesson-11 (Lesson of the Frozen Queen, Lost Omens Legends): \"You gain the Glacial Heart hex, and your familiar learns Wall of Ice.\" Our record carried focusSpells: [glacial-heart] only. WG's Lesson of the Frozen Queen: giveSpell FOCUS rank 5 + giveSpell NORMAL (castingSource WITCH, rank 5). spells['wall-of-ice'] is rank 5. Same reader as lesson-of-death."
  }
 ]

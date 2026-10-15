@@ -34,7 +34,14 @@
  *
  * ⚠ public/core.json is stored MINIFIED. Written back the same way, deliberately.
  *
+ * ⚠ AND A WHOLE REPLAY IS NOT LOSSLESS. Measured 2026-10-15 on 585544e: replaying every row dropped the
+ * `descRefs` the chain embeds INSIDE classes/champion and classes/animist `extraChoices` options (an
+ * overlay row writes the whole field, and the chain adds the links after the overlay). So a change that
+ * authored rows for a few records replays just those: `--only <category>/<id>[,<category>/<id>…]`.
+ * Prose rows are routed for the named records only, too.
+ *
  *   node scripts/apply-backfill-now.mjs
+ *   node scripts/apply-backfill-now.mjs --only feats/expanded-necromancy,classFeatures/lesson-of-death
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -45,11 +52,29 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CORE = join(ROOT, 'public/core.json');
 const DESCS = join(ROOT, 'public/core-descriptions.json');
 const OVERLAY = join(ROOT, 'scripts/data/effect-backfill.json');
+const onlyAt = process.argv.indexOf('--only');
+const ONLY = onlyAt > 0 ? new Set(String(process.argv[onlyAt + 1] ?? '').split(',').filter(Boolean)) : null;
+if (ONLY && !ONLY.size) {
+  console.error('usage: --only <category>/<id>[,<category>/<id>…]');
+  process.exit(2);
+}
 
 const before = readFileSync(CORE, 'utf8');
 const db = JSON.parse(before.replace(/^﻿/, ''));
+if (ONLY) {
+  // A record a `create` row adds is not in core.json yet, and is a legal target.
+  const created = new Set(JSON.parse(readFileSync(OVERLAY, 'utf8')).filter((f) => f.create).map((f) => `${f.category}/${f.id}`));
+  for (const key of ONLY) {
+    const [category, ...rest] = key.split('/');
+    if (!db[category]?.[rest.join('/')] && !created.has(key)) {
+      console.error(`--only ${key}: no such record in public/core.json and no overlay row creates it — nothing written.`);
+      process.exit(2);
+    }
+  }
+}
 const { applied, unresolved } = applyBackfill(db, OVERLAY, {
   skipFields: ['description', 'descRefs'],
+  only: ONLY,
 });
 
 const out = JSON.stringify(db);
@@ -78,6 +103,7 @@ for (const fix of JSON.parse(readFileSync(OVERLAY, 'utf8'))) {
   const isDesc = fix.field === 'description' && typeof fix.value === 'string';
   const isRefs = fix.field === 'descRefs' && Array.isArray(fix.value) && descs[fix.category]?.[fix.id] !== undefined;
   if ((!isDesc && !isRefs) || fix.path?.length) continue;
+  if (ONLY && !ONLY.has(`${fix.category}/${fix.id}`)) continue;
   if (!db[fix.category]?.[fix.id]) { proseMissing.push(`${fix.category}/${fix.id}`); continue; }
   const bucket = (descs[fix.category] ??= {});
   const entry = (bucket[fix.id] ??= {});
