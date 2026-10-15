@@ -7,7 +7,7 @@
  * work/wg-batch-P02.json; the baseline then covered those 40. Under --print the batch file IS the print
  * packet, and the cut selects nothing.
  *
- * The driver resolves its root from its own location, so each case copies it (and the two libs it
+ * The driver resolves its root from its own location, so each case copies it (and every file it
  * imports) into a throwaway root under the OS temp dir and runs the REAL stage as a node child — never
  * against this repo's work/ files.
  */
@@ -18,9 +18,23 @@ import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync,
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join, posix } from 'node:path';
 
 const REPO = join(__dirname, '..');
+
+/** `start` plus every repo file it reaches through relative `from './…'` / `from '../…'` imports. */
+function relativeImportClosure(start: string): string[] {
+  const seen = new Set<string>();
+  const queue = [start];
+  while (queue.length) {
+    const f = queue.pop()!;
+    if (seen.has(f)) continue;
+    seen.add(f);
+    const src = readFileSync(join(REPO, f), 'utf8');
+    for (const m of src.matchAll(/\bfrom\s+['"](\.{1,2}\/[^'"]+)['"]/g)) queue.push(posix.normalize(posix.join(posix.dirname(f), m[1])));
+  }
+  return [...seen];
+}
 const PACKET = 'work/print-batch-PT1.json';
 const CORE = { feats: { alpha: { id: 'alpha', name: 'Alpha' } }, spells: { beta: { id: 'beta', name: 'Beta' } } };
 const RECORDS = [
@@ -36,7 +50,13 @@ function fixture(packet: unknown | null): string {
   const root = mkdtempSync(join(tmpdir(), 'wg-print-cut-'));
   roots.push(root);
   for (const d of ['scripts/lib', 'public', 'work']) mkdirSync(join(root, d), { recursive: true });
-  for (const f of ['scripts/wg-batch-run.mjs', 'scripts/lib/heavy-lock.mjs', 'scripts/lib/apply-backfill.mjs']) copyFileSync(join(REPO, f), join(root, f));
+  /* The driver and every file it imports, followed through relative imports. A hand list
+   * (driver + heavy-lock + apply-backfill) went red when b21041c made the driver import
+   * add-owner-question.mjs, which imports lib/batch-paths.mjs: the copy died on ERR_MODULE_NOT_FOUND. */
+  for (const f of relativeImportClosure('scripts/wg-batch-run.mjs')) {
+    mkdirSync(join(root, dirname(f)), { recursive: true });
+    copyFileSync(join(REPO, f), join(root, f));
+  }
   writeFileSync(join(root, 'scripts/wg-field-catalogue.mjs'),
     "import { writeFileSync } from 'node:fs';\nwriteFileSync(process.argv[process.argv.indexOf('--json') + 1], '{}\\n');\n");
   writeFileSync(join(root, 'public/core.json'), JSON.stringify(CORE));
