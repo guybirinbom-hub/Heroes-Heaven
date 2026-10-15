@@ -43,8 +43,8 @@ Guy's answers after the gap search, 2026-10-14:
 
 My defaults for the questions not asked yet (they stand unless Guy says otherwise):
 
-8. The Tweaks switch in Options: switching it off pauses every tweak, after a confirm that lists what
-   turns off. (Today it only hides the card.)
+8. The Tweaks on/off switch (in Options today; the new look may move it, decision 21): switching it off
+   pauses every tweak, after a confirm that lists what turns off. (Today it only hides the card.)
 9. "Set" and level-up: a +/- keeps working at every level; a "set" number warns at level-up when the
    book number under it changed.
 10. Text on the card: the tweaked text replaces the book text, with a "Show original" switch.
@@ -66,6 +66,13 @@ My defaults for the questions not asked yet (they stand unless Guy says otherwis
     from older imports can't be told apart from your own changes, so they show as normal tweaks, and the
     switch-off confirm names them.
 20. Deleting a tweak in the Tweaks panel asks nothing (it is not "removing a thing" from decision 7).
+
+Guy, 2026-10-15:
+
+21. **Tweaks gets a NEW look**, different from the old Overrides card. Do not reuse its layout (one Setup
+    card with 9 stacked sub-cards, behind an Options switch). The build chat shows 2–3 different small
+    samples first, including where Tweaks sits in the Builder, and Guy picks before anything else is
+    built.
 
 ## What Overrides can do today
 
@@ -708,7 +715,8 @@ Phase 1 scope (features 1, 2, 4, 30-33, 40, 44, 46; problems 1, 5, 6, 7, 8, 9, 1
 - Old characters open as before, with nothing lost; every number stays the same except the three
   intended fixes A, B and C (spec item 2). Migration happens at read time only, and loading is never an
   edit (spec items 2 and 3). The 10 existing stored keys keep their values (spec item 1).
-- The Tweaks panel in the Builder lists every tweak: what, where, reason, on/off, go to it, delete.
+- The Tweaks panel in the Builder (new look, decision 21) lists every tweak: what, where, reason,
+  on/off, go to it, delete.
 - +/- and "set" (with an "at least N" option) on the main stats listed in spec item 8, in the order of
   spec item 6, each shown in the stat's breakdown as "Tweak: ..." (spec item 7). No marks next to
   numbers.
@@ -718,8 +726,12 @@ Phase 1 scope (features 1, 2, 4, 30-33, 40, 44, 46; problems 1, 5, 6, 7, 8, 9, 1
 - NOT in phase 1: everything else in the feature list (phases 2-6).
 
 How to work:
-- Start with the look. Show Guy one small sample of the Tweaks panel in the real Builder, at desktop and
-  phone width, next to the existing Setup cards. Ask the taste questions before you build the rest.
+- Start with the look, and make it NEW (decision 21). Guy wants Tweaks to look different from the old
+  Overrides card: do not reuse its layout (one Setup card with 9 stacked sub-cards behind an Options
+  switch). Show 2-3 clearly different small samples in the real Builder, at desktop and phone width,
+  including where Tweaks sits (for example its own Builder step, a side panel, or a card). Remember that
+  players use Tweaks only once in a while. Guy picks one and answers the taste questions before you
+  build anything else.
 - Before you edit build.ts, shared.tsx or Builder.tsx: ask Guy in one line whether the "Deity for every
   class" chat has finished and committed (it edited those files on 2026-10-14). Run `git status`, and
   never overwrite uncommitted edits in those files. Two writers on the same files lose work.
