@@ -2687,7 +2687,8 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   // to sit here is gone. It was not merely redundant: it re-suppressed AFTER the grantsClassFeatures
   // pass, so Spellshield — *"You gain the arcane bond class feature"*, prerequisite War Mage
   // Dedication — handed arcane-bond back and this loop dropped its defenses again. The `addedFeatures`
-  // half is still applied below, where it always was.
+  // half lives there too now ("…and the class features a CLASS ARCHETYPE ADDS"); the private copy of
+  // that loop that sat below would push each added feature's defences a second time.
   if (cls) {
     // Via ownedFeatureIds, not cls.features, so subclass VARIANTS come too — the toxicologist's
     // poison resistance lives on `field-discovery-toxicologist` while the class only lists the
@@ -2710,9 +2711,6 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       if (rec?.defensesRequire && !meetsDefenceGate(c, db, rec.defensesRequire)) continue;
       if (rec) push(rec.name ?? id, id === fullLevelRes ? withFullLevelResistance(rec) : rec);
     }
-  }
-  for (const af of c.classArchetype?.addedFeatures ?? []) {
-    if (af.level <= c.level && db.classFeatures[af.featureId]) push(db.classFeatures[af.featureId].name ?? af.featureId, db.classFeatures[af.featureId]);
   }
   // Worn/invested items with passive senses/resistances/immunities (Goggles of Night pattern) count as
   // grant sources too — the generic magic-item lane.
@@ -3888,6 +3886,23 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
       if (!lostBy.some(Boolean)) continue;
       if (held.some((_, i) => !lostBy[i] && ownGrants[i]?.has(id))) continue;
       out.delete(id);
+    }
+  }
+  /*
+   * …and the class features a CLASS ARCHETYPE ADDS in their place (`classArchetype.addFeatures`): War
+   * Mage's war magic and Shield Block, Warrior of Legend's own feature, the Vindicator, the Seneschal,
+   * Wellspring Magic, Flexible Spell Preparation. buildCharacter counted them in its own owned set
+   * (`resolveClassArchetype(...).added`), but this reader rebuilt ownership from the class tables and
+   * never added them — so every sheet effect authored on an added feature (its actions, uses, stars,
+   * senses, modes) reached nobody, and only deriveDefenses had a private copy of the loop. Added AFTER
+   * the suppression above on purpose: an archetype's substitute is granted outright, and under Dual
+   * Class the other class's archetype must not take it back (War Mage's Shield Block on the wizard,
+   * Warrior of Legend removing the fighter's). Per held class, through `classArchetypeFor`, at the
+   * level the archetype's record gives each one.
+   */
+  for (const s of held) {
+    for (const af of classArchetypeFor(c, s.classId)?.addedFeatures ?? []) {
+      if (af.level <= c.level && db.classFeatures[af.featureId]) out.add(af.featureId);
     }
   }
   // "You gain the Sneak Attack class feature." A record handing over a CLASS FEATURE rather than a

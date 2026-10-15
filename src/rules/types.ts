@@ -6395,8 +6395,11 @@ export interface Character {
    *  *"or in two other skills of your choice in which you're trained, if you were already an expert in
    *  the listed skills"* (AoN feat-2734). It tells the picker two things the bare entry could not: the
    *  replacement grants that rank, and the options are the skills the character is ALREADY TRAINED in
-   *  (an untrained skill is not "another skill in which you're trained"). */
-  skillFallbacks?: { featId: string; skill: ProficiencyKey; note?: string; lore?: true; rank?: ProficiencyRank }[];
+   *  (an untrained skill is not "another skill in which you're trained").
+   *  `slot` replaces the skill in the stored key (`<featId>:fallback:<slot>`) where one record can owe
+   *  two replacements for the same skill: Cleric Dedication's "Religion and your deity's associated
+   *  skill" under a deity whose skill IS Religion (`FeatGrant.deitySkill`, slot `deity`). */
+  skillFallbacks?: { featId: string; skill: ProficiencyKey; note?: string; lore?: true; rank?: ProficiencyRank; slot?: string }[];
   /** batch 037: molten-wit#three-branches — a skill's rank as it stood BEFORE the named record's own
    *  grants, keyed by that record. *"If you're ALREADY trained in one of these skills"* is a question
    *  about the moment before the carrier fired, and the built character cannot answer it: its own

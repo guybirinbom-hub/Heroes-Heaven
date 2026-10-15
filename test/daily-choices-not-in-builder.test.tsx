@@ -145,11 +145,13 @@ describe('nothing is hidden from BOTH screens', () => {
 
   it('…and that assertion can still fail — a feat that DOES keep its skill picker still shows it', () => {
     // Without this control the test above would pass if `SubCard label="Trained skill"` were deleted
-    // outright, or if the regex were wrong. Cleric Dedication grants "trained in one skill of your
-    // choice" permanently, at build time — the picker there is correct and must stay.
+    // outright, or if the regex were wrong. Investigator Dedication grants *"trained in Society and
+    // another skill of your choice"* permanently, at build time — the picker there is correct and must
+    // stay. (This was Cleric Dedication, whose second skill is the DEITY's and is derived with no
+    // picker since 2026-10-15 — R14.)
     const slot = classSlotKey(4, 'fighter');
-    const text = textAtLevel(buildWith(4, slot, 'cleric-dedication'), 4);
-    expect(text).toContain('Cleric Dedication');
+    const text = textAtLevel(buildWith(4, slot, 'investigator-dedication'), 4);
+    expect(text).toContain('Investigator Dedication');
     expect(text).toMatch(/Trained skill(?!s)/);
   });
 });

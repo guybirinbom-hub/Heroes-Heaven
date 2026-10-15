@@ -53,9 +53,12 @@ function pageControls(b: BuildState, page: string) {
 }
 
 describe('builder controls carry data-ctl markers', () => {
-  it("Cleric Dedication's trained-skill picker is a marked PopupSelect inside its SubCard", () => {
+  // Investigator Dedication, *"trained in Society and another skill of your choice"*: a real free pick.
+  // This used Cleric Dedication until its pick turned out to be the deity's own skill, which the engine
+  // now derives with no picker (R14, 2026-10-15; test/deity-any-class.test.tsx section 5).
+  it("Investigator Dedication's trained-skill picker is a marked PopupSelect inside its SubCard", () => {
     const slot = classSlotKey(4, 'fighter');
-    const ctls = pageControls(buildWith(4, slot, 'cleric-dedication'), '4');
+    const ctls = pageControls(buildWith(4, slot, 'investigator-dedication'), '4');
     const skill = ctls.find((c) => c.ctl === 'popup' && c.title === 'Trained skill');
     expect(skill, JSON.stringify(ctls.map((c) => `${c.ctl}:${c.title}`))).toBeTruthy();
     expect(Number(skill!.options)).toBeGreaterThan(0);

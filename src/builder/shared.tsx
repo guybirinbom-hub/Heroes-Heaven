@@ -3359,13 +3359,42 @@ export function SetupCard({
   icon,
   label,
   count,
+  closed,
   children,
 }: {
   icon: string;
   label: string;
   count?: ReactNode;
+  /**
+   * A card that STARTS CLOSED: only its title row shows, with `summary` (the current answer) beside
+   * it, and a tap opens it. For an optional choice nobody owes — the owner's "Deity (optional)" card
+   * for every character (2026-10-14: an optional, closed card). Not remembered between visits, so it
+   * is closed every time the page opens. A required card never passes it.
+   */
+  closed?: { summary?: ReactNode };
   children: ReactNode;
 }) {
+  const [open, setOpen] = useState(false);
+  if (closed) {
+    return (
+      <div className={'lvl-card lvl-card-setup lvl-card-closable' + (open ? ' open' : '')} data-setupcard={label} data-open={open ? '1' : '0'}>
+        <span className="lvl-card-icon">
+          <i className={'ti ' + icon} aria-hidden="true" />
+        </span>
+        <div className="lvl-card-text">
+          <button type="button" className="lvl-card-toggle" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+            <span className="lvl-card-label">
+              {label}
+              {count != null && <span className="ol-count"> {count}</span>}
+            </span>
+            {!open && closed.summary != null && <span className="lvl-card-val">{closed.summary}</span>}
+            <i className={'ti lvl-card-chev ' + (open ? 'ti-chevron-up' : 'ti-chevron-down')} aria-hidden="true" />
+          </button>
+          {open && <div className="lvl-card-row">{children}</div>}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="lvl-card lvl-card-setup" data-setupcard={label}>
       <span className="lvl-card-icon">
@@ -4826,7 +4855,13 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         // A Razmiran priest's Cleric Dedication names its deity (Q9: only the legal pick is live).
         const named = deityNamedBy(build, content);
         return (
-          <SetupCard icon="ti-flare" label={required ? 'Deity' : 'Deity (optional)'}>
+          <SetupCard
+            icon="ti-flare"
+            label={required ? 'Deity' : 'Deity (optional)'}
+            /* The owner's choice (2026-10-14): the optional card starts closed, its title row saying who
+               the character follows. A required card is an owed answer and always stays open. */
+            closed={required ? undefined : { summary: (build.deityId && content.deities[build.deityId]?.name) || build.deityId || 'None' }}
+          >
             <SearchSelect
               bare
               label="Deity"

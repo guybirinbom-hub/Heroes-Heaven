@@ -188,6 +188,16 @@ export interface FeatGrant {
   /** Skill (or `lore:<subject>`) → minimum rank granted (e.g. Medic Dedication: Medicine expert). */
   skills?: Partial<Record<ProficiencyKey, ProficiencyRank>>;
   /**
+   * *"You become trained in Religion and YOUR DEITY'S ASSOCIATED SKILL"* (Cleric and Champion
+   * Dedication). The skill is the chosen deity's own `skill`, so the rank lands on whatever that is —
+   * a static `skills` entry that resolves per character. It was a free `skillChoices` pick, which let
+   * a follower of Sarenrae train Thievery (R14: a value print works out from the character gets no
+   * picker). No deity chosen, or a deity whose skill is no SkillId (a generic "lore"): nothing.
+   * `redundantFallback` covers it like a static skill, with the answer stored under
+   * `<featId>:fallback:deity` so a deity whose skill is Religion still owes the second replacement.
+   */
+  deitySkill?: ProficiencyRank;
+  /**
    * Conditional skill upgrades — "trained in X; if you were ALREADY trained, expert instead" (Lastwall
    * Sentry, Linguist, …). Grants `base`, but if the character already meets `base` from another source,
    * grants `upgraded` instead. Evaluated against the pre-feat rank; RAISES only, never lowers.
@@ -785,6 +795,24 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
    * cannot emit the gate. This merge REPLACES the generated row, so its two fields are restated.
    */
   'intuitive-crafting': { skills: { crafting: 'trained' }, redundantFallback: true, redundantFallbackIfFeat: 'specialty-crafting' },
+  /*
+   * CLERIC DEDICATION (feat-5066) and CHAMPION DEDICATION (Player Core 2) — *"You become trained in
+   * Religion and your deity's associated skill; for each of these skills in which you were already
+   * trained, you instead become trained in a skill of your choice."* The generated rows carried the
+   * deity's half as an open `skillChoices` slot, so the player picked any skill and the deity's own
+   * skill was never trained. `deitySkill` reads it off the chosen deity (R14). Hand-authored because
+   * featGrantsAuto.ts is re-serialised whole; this merge REPLACES those rows, so every other field of
+   * the champion's row (its armour and the "already trained in light and medium" heavy step) is
+   * restated.
+   */
+  'cleric-dedication': { skills: { religion: 'trained' }, deitySkill: 'trained', redundantFallback: true },
+  'champion-dedication': {
+    skills: { religion: 'trained' },
+    deitySkill: 'trained',
+    armor: { light: 'trained', medium: 'trained' },
+    conditionalArmor: { ifTrainedIn: ['light', 'medium'], grant: 'heavy', rank: 'trained' },
+    redundantFallback: true,
+  },
   'armor-in-earth': { armorFamiliarity: { armors: ['armor-in-earth-medium', 'armor-in-earth-heavy'], mirrorBest: true } },
   /* HARDWOOD ARMOR (feat-4283) — *"This hardwood armor is medium armor but USES YOUR HIGHEST ARMOR
    * PROFICIENCY."* The identical answer, on the one armour the feat prints. The feat's other granted
@@ -866,7 +894,7 @@ const GRANT_KEY_KINDS: Record<string, string[]> = {
   // …and the riders the comparer's table cannot name, on their sibling's kind.
   conditionalArmor: ['ac'], conditionalArmorFamiliarity: ['ac'], armorFamiliarity: ['ac'],
   armorMirrorBest: ['ac'], crossConditionalArmor: ['ac'], conditionalSkillsFallback: ['skill'],
-  skillsIfFeature: ['skill'], weaponIfWeaponExpertise: ['weapon'],
+  skillsIfFeature: ['skill'], weaponIfWeaponExpertise: ['weapon'], deitySkill: ['skill'],
   // …and one more no-kind modifier, beside `rankUpgrade`/`minLevel`: it only NARROWS
   // `redundantFallback`, so darkening it could never remove a grant, only restore one.
   redundantFallbackIfFeat: [],

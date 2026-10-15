@@ -62,11 +62,15 @@ describe('FEAT_GRANTS carriers go dark per KIND (lanes.featGrants)', () => {
 
   it('a kind stays on while ANY kind the key answers is trusted (decision 1)', () => {
     // `skillChoices` answers skill+choice: with only `skill` off, the slot still asks and still grants.
-    setFeatGrantTrustOff({ 'champion-dedication': ['skill'] });
+    // (Druid Dedication's slot; Champion Dedication's was the deity's skill, derived since 2026-10-15.)
+    setFeatGrantTrustOff({ 'champion-dedication': ['skill'], 'druid-dedication': ['skill'] });
     const g = grantsFor('champion-dedication')!;
     expect(g.skills).toBeUndefined();           // skill alone
-    expect(g.skillChoices).toBeDefined();       // skill + choice → choice keeps it
+    expect(g.deitySkill).toBeUndefined();       // the deity's skill is a skill too (GRANT_KEY_KINDS)
     expect(g.armor).toBeDefined();              // ac
+    const d = grantsFor('druid-dedication')!;
+    expect(d.skills).toBeUndefined();
+    expect(d.skillChoices).toBeDefined();       // skill + choice → choice keeps it
   });
 
   it('every delivered kind off → grantsFor is undefined, the character gets nothing, the picker keeps its data', () => {

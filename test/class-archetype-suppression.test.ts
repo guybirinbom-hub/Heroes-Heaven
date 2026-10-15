@@ -121,3 +121,44 @@ describe('every class archetype that suppresses a class feature', () => {
     ]);
   });
 });
+
+/**
+ * …and the other half: the features a class archetype ADDS (`classArchetype.addFeatures`). War Mage
+ * (archetype-331): *"You gain the war magic class feature at 1st level"*; the Vindicator, the
+ * Seneschal, Warrior of Legend, Wellspring Magic and Flexible Spell Preparation likewise. buildCharacter
+ * counted them; `ownedFeatureIds` never added them, so every sheet effect authored on one reached nobody
+ * (2026-10-15, package D). A corpus loop, so an archetype added later is covered without a new line.
+ */
+describe('every class archetype that ADDS a class feature', () => {
+  const db = c();
+  const rows = Object.values(db.feats).filter((f) => f.classArchetype?.addFeatures?.length);
+
+  it('the corpus still has the ones this was written against', () => {
+    expect(rows.map((f) => f.id)).toEqual(expect.arrayContaining(['war-mage-dedication', 'vindicator-dedication', 'warrior-of-legend-dedication']));
+  });
+
+  it.each(rows.map((f) => f.id))('%s: the sheet owns what it adds', (id) => {
+    const feat = db.feats[id];
+    const classId = [feat.classArchetype!.classId].flat()[0];
+    const level = Math.max(2, feat.level);
+    const ch = build(classId, level, { featPicks: { [`${level}:class:0`]: id } }) as Character;
+    const owned = ownedFeatureIds(ch, db);
+    for (const af of feat.classArchetype!.addFeatures!) {
+      if (af.level > level || !db.classFeatures[af.featureId]) continue;
+      expect(owned.has(af.featureId), `${id} adds ${af.featureId}`).toBe(true);
+    }
+  });
+
+  it('under Dual Class, the other class\'s archetype does not take an added feature back', () => {
+    // A War Mage wizard gains Shield Block; a Warrior of Legend fighter loses ITS Shield Block. The
+    // owner's ruling (2026-10-15): only its own class loses it — and the wizard's was never the fighter's.
+    const ch = build('wizard', 4, {
+      variantRules: { dualClass: true },
+      classId2: 'fighter',
+      featPicks: { '2:class:0': 'war-mage-dedication', '4:class:0': 'warrior-of-legend-dedication' },
+    }) as Character;
+    expect(ch.classArchetype?.byClass?.['fighter']?.suppressedFeatures).toContain('shield-block');
+    expect(ownedFeatureIds(ch, db).has('shield-block')).toBe(true);
+    expect(ownedFeatureIds(ch, db).has('war-magic')).toBe(true);
+  });
+});

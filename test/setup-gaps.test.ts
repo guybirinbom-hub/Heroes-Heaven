@@ -188,6 +188,9 @@ describe('setupMissing', () => {
       subclassId: 'cloistered-cleric',
       keyAbility: 'wis',
       deityId: 'sarenrae',
+      // Sarenrae "can be" holy, so a cleric of hers owes that answer (counted since 2026-10-15,
+      // test/deity-any-class.test.tsx section 5).
+      effectChoices: { 'sarenrae:sanctification': 'holy' },
       ancestryBoosts: ['str', 'con'],
       backgroundBoosts: ['wis', 'int'],
       levelBoosts: ['wis', 'con', 'dex', 'cha'],

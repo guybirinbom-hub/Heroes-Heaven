@@ -1419,11 +1419,13 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
     const named = deityNamedBy(build, content);
     if (named && build.deityId && build.deityId !== named.id) out.push(`Deity — ${named.reason}`);
   }
-  /* …and the deity card's own Sanctification question, while a Vindicator or Mortal Herald of a "can be"
-   * deity has not answered it: their holy/unholy trait comes from nowhere else. (A "must be" deity's
-   * single option is taken without a click. The cleric's own unanswered question is not counted here —
-   * it never has been, and that is a separate change.) */
-  if (build.deityId && takesDeitySanctification(build, content)) {
+  /* …and the deity card's own Sanctification question, while a cleric, Vindicator or Mortal Herald of a
+   * "can be" deity has not answered it: their holy/unholy trait comes from nowhere else. The cleric is
+   * read by owning Deity (`deity-cleric`), the same test buildCharacter applies the trait on, so a
+   * Fighter/Cleric counts too. *"If you "can be" holy or unholy according to your deity, you make that
+   * choice"* — a question print asks, so an unanswered one is a choice left. (A "must be" deity's single
+   * option is taken without a click. A champion answers through Deity and Cause's own choice.) */
+  if (build.deityId && (heldClassFeatureIds(build, content).has('deity-cleric') || takesDeitySanctification(build, content))) {
     const deity = content.deities[build.deityId];
     const ch = deity?.effectChoices?.find((e) => e.id === 'sanctification');
     if (ch && effectChoiceOptions(ch, build, content).length > 1 && !build.effectChoices?.[`${build.deityId}:sanctification`]) {
@@ -1823,6 +1825,22 @@ export function skillKeyLabel(key: string): string {
 const LEGACY_SKILL_SLOT_KEYS: Record<string, string> = {
   'gildedsoul:0': 'gildedsoul:gildedsoul-skill',
 };
+
+/**
+ * The stored answer to a redundant grant's replacement pick (*"…you instead become trained in a skill
+ * of your choice"*), keyed `<featId>:fallback:<skill or slot>` (Character.skillFallbacks). The ONE read
+ * for buildCharacter and the builder's picker, so the two cannot show different answers.
+ *
+ * The same legacy shape as LEGACY_SKILL_SLOT_KEYS above: the DEITY half of Cleric and Champion
+ * Dedication was a free `skillChoices` slot until 2026-10-15, stored at `<featId>:0`. A player whose
+ * deity's skill was already trained answered exactly this question there, so that answer is read while
+ * the new key is empty — read-only, and re-answering writes the new key. (When the deity's skill was
+ * NOT trained before, the dedication trains it and print owes no replacement: the old pick is unread.)
+ */
+export function skillFallbackPick(build: Pick<BuildState, 'featSkillChoices'>, featId: string, skillOrSlot: string): SkillId | undefined {
+  const v = build.featSkillChoices?.[`${featId}:fallback:${skillOrSlot}`] ?? (skillOrSlot === 'deity' ? build.featSkillChoices?.[`${featId}:0`] : undefined);
+  return v && (SKILLS as readonly string[]).includes(v) ? (v as SkillId) : undefined;
+}
 
 /**
  * The same shape, one surface over: CANTRIP picks stored under a dedication's own `effectChoices`
@@ -2769,7 +2787,8 @@ export function buildNeedsDeity(build: BuildState, content: ContentDatabase): bo
  * vindicator carries no `requiresDeity`, so none of them ever made the Deity card required.
  * Kept OUT of `buildNeedsDeity`: that predicate also grants the deity's favored weapon on the cleric's
  * ladder, which no dedication gives. The vindicator IS trained in its deity's favored weapon, but under a
- * rule of its own (an advanced one at its martial rank) that nothing implements yet — not this ladder.
+ * rule of its own (an advanced one at its martial rank, applied after class advancement in
+ * buildCharacter, with Deadly Simplicity by `vindicatorGetsDeadlySimplicity`) — not this ladder.
  * `test/deity-any-class.test.tsx` scans the corpus for "choose a deity" so a new one cannot slip by.
  */
 export const DEITY_CHOOSING_FEATS: ReadonlySet<string> = new Set(['cleric-dedication', 'champion-dedication', 'mortal-herald-dedication']);
@@ -3372,6 +3391,27 @@ export function deityFavorsSimpleOrUnarmed(deityId: string | null | undefined, c
     // A favored weapon that isn't a real weapon ITEM, or is an unarmed/simple weapon (Irori's "fist"),
     // qualifies. (The new data ships "Fist" as a real unarmed weapon item, so check the category too.)
     return !item || (item.itemType === 'weapon' && (item.category === 'simple' || item.category === 'unarmed'));
+  });
+}
+
+/**
+ * The Vindicator's narrower test (ranger class archetype, archetype-285): *"If your deity's favored
+ * weapon is a simple weapon or unarmed attack with a damage die smaller than d6, you gain the Deadly
+ * Simplicity feat."* Read as Deadly Simplicity's own second paragraph reads it: the die clause belongs
+ * to the UNARMED attack, so any simple weapon qualifies and an unarmed one only below d6. A favored
+ * weapon that is no item has no die to read. The fist is Player Core's 1d4, so Irori's qualifies; a
+ * deity's "jaws", "tail" or "claws" has whatever die the follower's own body gives (jaws are usually
+ * d6), so it does not, rather than hand fifteen deities' vindicators a feat print may not give them.
+ */
+export function vindicatorGetsDeadlySimplicity(deityId: string | null | undefined, content: ContentDatabase): boolean {
+  const deity = deityId ? content.deities[deityId] : undefined;
+  return (deity?.favoredWeapons ?? []).some((w) => {
+    const item = content.items[w];
+    if (!item) return w === 'fist';
+    if (item.itemType !== 'weapon') return false;
+    if (item.category === 'simple') return true;
+    const faces = Number.parseInt((item.damage?.die ?? '').replace(/^d/, ''), 10);
+    return item.category === 'unarmed' && faces > 0 && faces < 6;
   });
 }
 
@@ -4588,12 +4628,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * Redundant-grant fallbacks ("already trained → a skill of your choice"), surfaced on
    * Character.skillFallbacks so the builder can offer the replacement picker. `note` says WHY the
    * pick is being offered ("Already expert in Deception and Stealth"), and `lore` marks the ones
-   * whose replacement is a Lore subject rather than one of the sixteen skills.
+   * whose replacement is a Lore subject rather than one of the sixteen skills. `slot`, when set, is the
+   * key the answer is stored under in place of the skill (`<featId>:fallback:<slot>`).
    *
    * Declared HERE rather than beside the feat-grant loop that fills most of it, because the
    * BACKGROUND lane below is the earliest filler and runs first.
    */
-  const skillFallbacks: { featId: string; skill: ProficiencyKey; note?: string; lore?: true }[] = [];
+  const skillFallbacks: NonNullable<Character['skillFallbacks']> = [];
   // Trainings granted by other sources first; they "lock" a skill and don't
   // consume a class pick.
   const locked = new Set<ProficiencyKey>();
@@ -6873,6 +6914,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * (archetype-331). `addFeatures` reached the owned-feature set 800 lines below but never this
      * loop, so every feat an added feature grants was written to nobody. */
     for (const af of arch.added) grantSources.push({ id: af.featureId, grants: content.classFeatures[af.featureId]?.grantsFeats });
+    /* …and the Vindicator's Deadly Simplicity, which hangs on the DEITY: *"If your deity's favored
+     * weapon is a simple weapon or unarmed attack with a damage die smaller than d6, you gain the
+     * Deadly Simplicity feat"* (archetype-285). A record's static `grantsFeats` cannot say "if", so the
+     * condition is read here and the grant rides the same lane, under the vindicator's own id. */
+    if (holdsSubclass(build, 'vindicator') && vindicatorGetsDeadlySimplicity(build.deityId, content)) {
+      grantSources.push({ id: 'vindicator', grants: ['deadly-simplicity'] });
+    }
     // …and the chosen OPTIONS, which is where several of these actually live: a wizard's thesis
     // (Improved Familiar Attunement → the Familiar feat) and a cleric's doctrine (Cloistered Cleric →
     // Domain Initiate) are picks, not entries in the class's level-by-level feature list. Their option
@@ -7006,6 +7054,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         if (!g) continue;
         const stat = g.skills?.[skill];
         if (stat) best = maxRank(best, stat);
+        // …and "your deity's associated skill" (Cleric / Champion Dedication's `deitySkill`), which the
+        // free pick it replaced used to answer here: a champion of Iomedae trains Intimidation by it.
+        if (g.deitySkill && build.deityId && content.deities[build.deityId]?.skill === skill) best = maxRank(best, g.deitySkill);
         (g.skillChoices ?? []).forEach((slot, idx) => {
           if (featSkillChoiceValue(build, content, f.featId, idx) === skill) best = maxRank(best, slot.rank);
         });
@@ -7291,7 +7342,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       for (const [c, r] of Object.entries(src.weapon ?? {})) if (r) proficiencies.attacks[c as WeaponCategory] = maxRank(proficiencies.attacks[c as WeaponCategory], at(r));
       for (const [s, r] of Object.entries(src.save ?? {})) if (r) proficiencies.saves[s as SaveId] = maxRank(proficiencies.saves[s as SaveId], at(r));
       if (src.perception) proficiencies.perception = maxRank(proficiencies.perception, at(src.perception));
-      for (const [k, r] of Object.entries(src.skills ?? {})) {
+      /* …and "your deity's associated skill" (`deitySkill`, Cleric and Champion Dedication): a static
+       * grant whose skill is the chosen deity's. Its replacement answer has a key of its own (`slot`),
+       * because Religion is both the printed skill and four deities' skill, and print owes one
+       * replacement for EACH grant that was redundant. */
+      const deitySkillKey = src.deitySkill && build.deityId ? content.deities[build.deityId]?.skill : undefined;
+      const staticSkills: [string, ProficiencyRank | undefined, string?][] = [
+        ...Object.entries(src.skills ?? {}),
+        ...(src.deitySkill && deitySkillKey && (SKILLS as readonly string[]).includes(deitySkillKey) ? [[deitySkillKey, src.deitySkill, 'deity'] as [string, ProficiencyRank, string]] : []),
+      ];
+      for (const [k, r, slot] of staticSkills) {
         if (!r) continue;
         const key = k as ProficiencyKey;
         const cur = proficiencies.skills[key] ?? 'untrained';
@@ -7307,9 +7367,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         const fallbackGateOk = !g.redundantFallbackIfFeat
           || feats.some((f) => f.featId === g.redundantFallbackIfFeat && f.grantedBy !== fc.featId);
         if (g.redundantFallback && fallbackGateOk && src === g && !key.startsWith('lore:') && maxRank(cur, at(r)) === cur) {
-          skillFallbacks.push({ featId: fc.featId, skill: key });
-          const picked = build.featSkillChoices?.[`${fc.featId}:fallback:${key}`];
-          if (picked && SKILLS.includes(picked)) proficiencies.skills[picked] = maxRank(proficiencies.skills[picked] ?? 'untrained', 'trained');
+          /* The deity's half says so in its heading: a deity whose skill is Religion owes a second
+           * replacement beside Religion's own, and two cards both reading "Already trained in Religion"
+           * could not be told apart. */
+          skillFallbacks.push({ featId: fc.featId, skill: key, ...(slot ? { slot, note: `your deity's skill (${cap(key)}) was already trained` } : {}) });
+          const picked = skillFallbackPick(build, fc.featId, slot ?? key);
+          if (picked) proficiencies.skills[picked] = maxRank(proficiencies.skills[picked] ?? 'untrained', 'trained');
           continue;
         }
         proficiencies.skills[key] = maxRank(cur, at(r));
@@ -8803,6 +8866,26 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       for (const w of wf.weapons ?? []) {
         if (!content.items[w]) continue;
         wo[w] = maxRank(wo[w] ?? 'untrained', rank);
+        touched = true;
+      }
+    }
+    /* VINDICATOR (ranger class archetype, archetype-285): *"You are trained in your deity's favored
+     * weapon. … If your deity's favored weapon is an advanced weapon, your proficiency with it is equal
+     * to your proficiency with martial weapons."* Here, after class advancement, so the martial rank it
+     * mirrors is the finished one (a 5th-level ranger's expert). A simple or martial favored weapon
+     * already rides the ranger's own category rank — deriveStrike takes the better of the two — so
+     * only an advanced one moves a number (Achaekek's sawtooth saber, Aerekostes' falcata …), and only
+     * a row that adds something is written: each override is a line of its own in the Details tab's
+     * proficiency list, and "Scimitar: trained" under "Martial weapons: expert" would read as a demotion.
+     * Not the cleric's doctrine ladder (`buildNeedsDeity`), which no vindicator follows. */
+    if (holdsSubclass(build, 'vindicator') && build.deityId) {
+      for (const w of content.deities[build.deityId]?.favoredWeapons ?? []) {
+        const item = content.items[w];
+        if (item?.itemType !== 'weapon') continue;
+        const r: ProficiencyRank = item.category === 'advanced' ? maxRank('trained', proficiencies.attacks.martial) : 'trained';
+        const byCategory = item.category ? proficiencies.attacks[item.category as WeaponCategory] : undefined;
+        if (byCategory && maxRank(byCategory, r) === byCategory) continue;
+        wo[w] = maxRank(wo[w] ?? 'untrained', r);
         touched = true;
       }
     }
@@ -11532,6 +11615,9 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   // editable builder slot NOR a chip. Background/heritage/UMT/dedication grants are handled below.
   const autoGrantedFeatIds = new Set<string>();
   {
+    // The Vindicator's Deadly Simplicity (buildCharacter's grantSources, under the vindicator's id):
+    // an import without our `grantedBy` must not spend a class feat slot on it either.
+    if (holdsSubclass(b, 'vindicator') && vindicatorGetsDeadlySimplicity(b.deityId, content)) autoGrantedFeatIds.add('deadly-simplicity');
     const favorsSimpleOrUnarmed = deityFavorsSimpleOrUnarmed(b.deityId, content);
     for (const o of grantOptions) {
       for (const fid of o.grantedFeats ?? []) {

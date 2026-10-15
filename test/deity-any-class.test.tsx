@@ -30,6 +30,7 @@ import {
   buildNeedsDeity,
   buildUsesDeity,
   DEITY_CHOOSING_FEATS,
+  deriveBuildFromCharacter,
   effectChoiceOffered,
   emptyBuild,
   levelChoices,
@@ -38,6 +39,7 @@ import {
   type BuildState,
 } from '../src/rules/build';
 import { sanctificationOf } from '../src/rules/derive';
+import { FEAT_GRANTS } from '../src/rules/featGrants';
 import { setEngineTrustOff } from '../src/rules/trustLanes';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { DetailsTab } from '../src/sheet/DetailsTab';
@@ -134,6 +136,8 @@ describe('1 · every character may pick a deity, and an optional one never nags'
     const open = (b: BuildState, title: string) => {
       const r = renderDom(<OriginPickers build={b} actions={actions} content={db} />);
       const card = r.host.querySelector(`[data-setupcard="${title}"]`)!;
+      // The optional card starts closed (pinned in its own `it` below): open it first.
+      if (card.getAttribute('data-open') === '0') r.click(card.querySelector('.lvl-card-toggle'));
       r.click(card.querySelector('.ss-replace'));
       return r;
     };
@@ -148,6 +152,28 @@ describe('1 · every character may pick a deity, and an optional one never nags'
     const cleric = open({ ...fighter({ classId: 'cleric', subclassId: 'cloistered-cleric', keyAbility: 'wis' }), deityId: 'sarenrae' }, 'Deity');
     expect(cleric.host.querySelector('.picker .picker-clear')).toBeNull();
     cleric.stop();
+  });
+
+  it('the optional card starts CLOSED, its title row naming the deity; a required card is open', () => {
+    // The owner's choice (2026-10-14): "an optional, closed Deity card for every character".
+    const page = (b: BuildState) => renderDom(<OriginPickers build={b} actions={noActions} content={db} />);
+    const r = page(fighter({ deityId: 'sarenrae' }));
+    const card = r.host.querySelector('[data-setupcard="Deity (optional)"]')!;
+    expect(card.getAttribute('data-open')).toBe('0');
+    expect(card.querySelector('[data-ctl="search"]'), 'the picker shows while the card is closed').toBeNull();
+    expect(card.querySelector('.lvl-card-toggle')?.textContent).toContain('Sarenrae');
+    r.click(card.querySelector('.lvl-card-toggle'));
+    expect(card.getAttribute('data-open')).toBe('1');
+    expect(card.querySelector('[data-ctl="search"]'), 'opening it shows the picker').toBeTruthy();
+    r.stop();
+    const none = page(fighter());
+    expect(none.host.querySelector('[data-setupcard="Deity (optional)"] .lvl-card-toggle')?.textContent).toContain('None');
+    none.stop();
+    const req = page(fighter({ featPicks: { '2:class:0': 'cleric-dedication' } }));
+    const reqCard = req.host.querySelector('[data-setupcard="Deity"]')!;
+    expect(reqCard.querySelector('.lvl-card-toggle'), 'a required card has nothing to open').toBeNull();
+    expect(reqCard.querySelector('[data-ctl="search"]')).toBeTruthy();
+    req.stop();
   });
 
   it('a Razmiran priest who takes Cleric Dedication is offered only Razmir', () => {
@@ -208,6 +234,8 @@ describe('2 · a plain follower gets only what every follower gets', () => {
     expect(built.chosenCreatureTraits ?? []).toEqual([]);
     const r = renderDom(<OriginPickers build={fighter({ deityId: 'lurlup' })} actions={{ patch: () => undefined } as unknown as BuilderActions} content={db} />);
     const card = r.host.querySelector('[data-setupcard="Deity (optional)"]')!;
+    r.click(card.querySelector('.lvl-card-toggle')); // open, or the check below would pass on a closed card
+    expect(card.querySelector('[data-ctl="search"]')).toBeTruthy();
     expect(card.querySelector('[data-ctl-title="Sanctification"]'), 'a fighter is asked a question nothing reads').toBeNull();
     r.stop();
   });
@@ -388,5 +416,136 @@ describe('4 · a sanctification that follows the deity offers only what the deit
     const def = db.feats['sanctified-soul']?.choice;
     expect(def?.flag).toBe('sanctification');
     expect(greyed(picker('sanctified-soul', def!, fighter({ deityId: 'pharasma', featPicks: { '1:class:0': 'sanctified-soul' } })))).toEqual([]);
+  });
+});
+
+/*
+ * 5 · WHAT FOLLOWING THE DEITY GIVES — the leftovers of 9c3e1fa (2026-10-15).
+ *
+ *   - Cleric and Champion Dedication: *"You become trained in Religion and your deity's associated
+ *     skill; for each of these skills in which you were already trained, you instead become trained in
+ *     a skill of your choice."* The deity's half shipped as a free "any skill" pick (R14: a value print
+ *     works out from the character gets no picker).
+ *   - The Vindicator (archetype-285): *"You are trained in your deity's favored weapon. If your deity's
+ *     favored weapon is a simple weapon or unarmed attack with a damage die smaller than d6, you gain the
+ *     Deadly Simplicity feat. If your deity's favored weapon is an advanced weapon, your proficiency with
+ *     it is equal to your proficiency with martial weapons."* Nothing implemented either half.
+ *   - A cleric of a "can be" deity who never answered the Sanctification question was not told so.
+ */
+describe('5 · what following the deity gives', () => {
+  const skillsOf = (b: BuildState) => buildCharacter(b, db).proficiencies.skills;
+  const dedicant = (featId: string, deityId: string | null, over: Partial<BuildState> = {}) =>
+    fighter({ deityId, featPicks: { '2:class:0': featId }, ...over });
+
+  it.each(['cleric-dedication', 'champion-dedication'])("%s trains the deity's own skill, with no picker for it", (featId) => {
+    // Sarenrae's skill is Medicine, Abadar's Society: the trained skill follows the deity, so a change
+    // of deity moves it (mutation-proof: a fixed skill, or the old free pick, fails one of the two).
+    expect(db.deities['sarenrae'].skill).toBe('medicine');
+    expect(db.deities['abadar'].skill).toBe('society');
+    const base = skillsOf(fighter({ deityId: 'sarenrae' }));
+    expect(base.medicine ?? 'untrained', 'the fixture must start untrained in Medicine').toBe('untrained');
+    expect(skillsOf(dedicant(featId, 'sarenrae')).medicine).toBe('trained');
+    expect(skillsOf(dedicant(featId, 'abadar')).society).toBe('trained');
+    expect(skillsOf(dedicant(featId, 'abadar')).medicine ?? 'untrained').toBe(base.medicine ?? 'untrained');
+    // …no deity yet: Religion alone, and no "Trained skill" picker standing in for the deity's.
+    expect(skillsOf(dedicant(featId, null)).religion).toBe('trained');
+    expect(FEAT_GRANTS[featId].skillChoices, 'the free pick is back').toBeUndefined();
+    expect(FEAT_GRANTS[featId].deitySkill).toBe('trained');
+  });
+
+  it("an old free pick stored for the dedication no longer trains a skill the deity didn't give", () => {
+    const b = dedicant('cleric-dedication', 'sarenrae', { featSkillChoices: { 'cleric-dedication:0': 'thievery' } as BuildState['featSkillChoices'] });
+    expect(skillsOf(b).thievery ?? 'untrained').toBe(skillsOf(fighter({ deityId: 'sarenrae' })).thievery ?? 'untrained');
+  });
+
+  it('…but where the deity\'s skill was already trained, that old pick IS the replacement, and is kept', () => {
+    // An old save answered the free pick at `<featId>:0`. Already trained in Medicine, a follower of
+    // Sarenrae owes a replacement, and the old answer is exactly that: read while the new key is empty.
+    const old = { 'cleric-dedication:0': 'thievery' } as BuildState['featSkillChoices'];
+    const trained = dedicant('cleric-dedication', 'sarenrae', { classSkills: ['medicine'], featSkillChoices: old });
+    expect(skillsOf(fighter({ deityId: 'sarenrae', classSkills: ['medicine'] })).medicine, 'the fixture must already train Medicine').toBe('trained');
+    expect(skillsOf(trained).thievery).toBe('trained');
+    // A new answer under the new key wins over the old one.
+    const re = { ...trained, featSkillChoices: { ...old, 'cleric-dedication:fallback:deity': 'arcana' } } as BuildState;
+    expect(skillsOf(re).arcana).toBe('trained');
+    expect(skillsOf(re).thievery ?? 'untrained').toBe('untrained');
+  });
+
+  it("the deity's skill counts as trained for a feat that asks \"if you're trained in it\"", () => {
+    // Raging Intimidation grants Intimidating Glare to a barbarian trained in Intimidation. Iomedae's
+    // skill is Intimidation, so Champion Dedication trains it — and the grant must see that.
+    expect(db.deities['iomedae'].skill).toBe('intimidation');
+    const glare = (deityId: string) =>
+      buildCharacter(
+        fighter({ classId: 'barbarian', keyAbility: 'str', deityId, featPicks: { '1:class:0': 'raging-intimidation', '2:class:0': 'champion-dedication' } }),
+        db,
+      ).feats.some((f) => f.featId === 'intimidating-glare');
+    expect(glare('sarenrae'), 'Sarenrae trains Medicine, not Intimidation').toBe(false);
+    expect(glare('iomedae')).toBe(true);
+  });
+
+  it('already trained in the deity\'s skill: a replacement pick, keyed apart from Religion\'s', () => {
+    // Sangpotshi's skill IS Religion, so the dedication grants Religion twice and owes one replacement
+    // for each grant that was redundant — two pickers, two stored answers, two skills.
+    expect(db.deities['sangpotshi'].skill).toBe('religion');
+    const b = dedicant('cleric-dedication', 'sangpotshi');
+    const base = skillsOf(fighter({ deityId: 'sangpotshi' }));
+    for (const s of ['arcana', 'nature'] as const) expect(base[s] ?? 'untrained', `the fixture must start untrained in ${s}`).toBe('untrained');
+    const fb = (buildCharacter(b, db).skillFallbacks ?? []).filter((f) => f.featId === 'cleric-dedication');
+    // Religion itself is redundant only if the fixture already had it; the deity's Religion always is.
+    expect(fb.map((f) => f.slot ?? f.skill).sort()).toEqual((base.religion ?? 'untrained') === 'untrained' ? ['deity'] : ['deity', 'religion']);
+    expect(fb.every((f) => f.skill === 'religion')).toBe(true);
+    const picked = skillsOf({ ...b, featSkillChoices: { 'cleric-dedication:fallback:deity': 'arcana', 'cleric-dedication:fallback:religion': 'nature' } as BuildState['featSkillChoices'] });
+    expect(picked.arcana, 'the deity half\'s replacement').toBe('trained');
+    expect(picked.nature ?? 'untrained').toBe(fb.length === 2 ? 'trained' : 'untrained');
+  });
+
+  const vindicator = (deityId: string, level = 5) =>
+    fighter({ classId: 'ranger', subclassId: 'vindicator', keyAbility: 'dex', level, deityId, featPicks: { '2:class:0': 'vindicator-dedication' } });
+
+  it("the Vindicator is trained in an ADVANCED favored weapon at its martial rank", () => {
+    const ch = buildCharacter(vindicator('achaekek'), db);
+    expect(db.items['sawtooth-saber']).toMatchObject({ category: 'advanced' });
+    expect(ch.proficiencies.attacks.martial).toBe('expert');
+    expect(ch.proficiencies.weaponOverrides?.['sawtooth-saber']).toBe('expert');
+    expect(buildCharacter(vindicator('achaekek', 1), db).proficiencies.weaponOverrides?.['sawtooth-saber']).toBe('trained');
+    // A martial favored weapon already rides the martial rank: no row that would read as a demotion.
+    expect(buildCharacter(vindicator('sarenrae'), db).proficiencies.weaponOverrides?.['scimitar']).toBeUndefined();
+    // …and a ranger of another edge who merely worships Achaekek is trained in nothing new.
+    const plain = buildCharacter({ ...vindicator('achaekek'), subclassId: 'flurry', featPicks: {} } as BuildState, db);
+    expect(plain.proficiencies.weaponOverrides?.['sawtooth-saber']).toBeUndefined();
+  });
+
+  it('the Vindicator gains Deadly Simplicity for a simple or small unarmed favored weapon, and only then', () => {
+    const ds = (b: BuildState) => buildCharacter(b, db).feats.filter((f) => f.featId === 'deadly-simplicity');
+    expect(ds(vindicator('irori')).map((f) => f.grantedBy), "Irori's fist").toEqual(['vindicator']);
+    expect(ds(vindicator('pharasma')).length, "Pharasma's dagger (simple)").toBe(1);
+    expect(ds(vindicator('sarenrae')), "Sarenrae's scimitar is martial").toEqual([]);
+    expect(ds(vindicator('achaekek')), 'an advanced weapon').toEqual([]);
+    // Dahak favors "jaws" (no item, a die the app cannot read — usually d6) and a martial whip.
+    expect(ds(vindicator('dahak')), 'jaws are not known to be below d6').toEqual([]);
+    expect(ds({ ...vindicator('irori'), subclassId: 'flurry', featPicks: {} } as BuildState), 'not a vindicator').toEqual([]);
+  });
+
+  it("an imported Vindicator's Deadly Simplicity (no grantedBy) takes no feat slot", () => {
+    // A Wanderer's Guide import carries the feat as a plain row; deriveBuildFromCharacter must treat it
+    // as the grant buildCharacter re-adds, the way it treats the warpriest's, not as a class-slot pick.
+    const ch = buildCharacter(vindicator('irori'), db);
+    const plain = { ...ch, feats: ch.feats.map((f) => (f.featId === 'deadly-simplicity' ? { featId: f.featId, level: 1, category: f.category } : f)) };
+    const back = deriveBuildFromCharacter(plain, db);
+    expect(Object.values(back.featPicks)).not.toContain('deadly-simplicity');
+    expect(buildCharacter(back, db).feats.filter((f) => f.featId === 'deadly-simplicity').length).toBe(1);
+  });
+
+  it('a cleric of a "can be" deity who has not answered Sanctification is told so', () => {
+    const cleric = (deityId: string, over: Partial<BuildState> = {}) =>
+      ({ ...fighter({ classId: 'cleric', subclassId: 'cloistered-cleric', keyAbility: 'wis', level: 1 }), deityId, ...over }) as BuildState;
+    expect(setupMissing(cleric('abadar'), db)).toContain('Sanctification (Abadar)');
+    expect(setupMissing(cleric('abadar', { effectChoices: { 'abadar:sanctification': 'none' } }), db)).not.toContain('Sanctification (Abadar)');
+    expect(setupMissing(cleric('iomedae'), db).some((s) => s.startsWith('Sanctification')), 'a "must be" deity asks nothing').toBe(false);
+    expect(setupMissing(fighter({ deityId: 'abadar' }), db).some((s) => s.startsWith('Sanctification')), 'a plain follower is never asked').toBe(false);
+    // Dual Class: the cleric half reads the answer the same way.
+    const dual = { ...fighter({ deityId: 'abadar', level: 1 }), variantRules: { dualClass: true }, classId2: 'cleric', subclassId2: 'cloistered-cleric' } as BuildState;
+    expect(setupMissing(dual, db)).toContain('Sanctification (Abadar)');
   });
 });

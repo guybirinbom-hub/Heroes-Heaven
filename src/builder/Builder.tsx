@@ -56,7 +56,7 @@ import {
   senseGateReason,
   type NarrowedOption,
 } from '../rules/derive';
-import { archetypeCantripCounts, archetypeTradition, foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, optionDragon, skillSlotOptions } from '../rules/build';
+import { archetypeCantripCounts, archetypeTradition, foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, optionDragon, skillFallbackPick, skillSlotOptions } from '../rules/build';
 import { bookGrantChips, featRepertoireGrants, giftChipIds, ownPlacesBeside, spellOpenedBy, variantGiftCount } from '../rules/spellOptions';
 import { signaturesAt, signatureSpellsAt } from '../rules/build';
 // batch 037: flexible-spellcaster#collection-shape — the sheet's own sizer, never a copy of it.
@@ -3065,7 +3065,9 @@ export function Builder({
                             (featPrereqChar.skillFallbacks ?? [])
                               .filter((fb) => fb.featId === picked)
                               .map((fb) => {
-                                const fbKey = `${picked}:fallback:${fb.skill}`;
+                                // `slot` keys the deity half of "Religion and your deity's skill" apart
+                                // from Religion itself — the engine reads the same key (build.ts).
+                                const fbKey = `${picked}:fallback:${fb.slot ?? fb.skill}`;
                                 /* The heading used to say "Already trained in X" whatever the rank was.
                                    Golden League Xun's clause fires on a character who is already an
                                    EXPERT, and telling them they are trained misstates why the picker
@@ -3090,7 +3092,9 @@ export function Builder({
                                     <PopupSelect
                                       title="Replacement skill"
                                       placeholder="Choose a skill…"
-                                      value={build.featSkillChoices?.[fbKey] ?? ''}
+                                      // The engine's own read (an old save's answer included), so the
+                                      // picker never shows empty over a skill the build is granting.
+                                      value={skillFallbackPick(build, picked, fb.slot ?? fb.skill) ?? ''}
                                       onChange={(v) =>
                                         actions.patch({
                                           featSkillChoices: { ...(build.featSkillChoices ?? {}), [fbKey]: v as (typeof SKILLS)[number] },
