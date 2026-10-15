@@ -184,14 +184,20 @@ const WRITES = {
       note: 'Up to three. A deity granting exactly three adds all three whether or not you answer; a deity granting more (Nethys, Nalinivati, Abraxas, Yuelral, Isis, Zeaki and the three Nyarlathotep entries each grant nine) adds only the ones picked here.',
     },
   },
-  // "Choose one cantrip from a magical tradition other than your own… If you have a spell repertoire,
-  //  replace one of your cantrips known with the chosen spell. You can cast this cantrip as a spell of
-  //  your class's tradition."
+  // "Choose one cantrip from a magical tradition other than your own. If you prepare spells, you can
+  //  choose this spell when you prepare your cantrips, in addition to your other options. If you have a
+  //  spell repertoire, replace one of your cantrips known with the chosen spell. You can cast this
+  //  cantrip as a spell of your class's tradition." (feat-4474)
   //
-  // `spellSlotBonus: { cantrips: -1 }` is the REPLACEMENT half, and it is not decoration: the builder's
-  // cantrip cap and build.ts's class-entry slice both already read that field, so the player picks one
-  // fewer and the granted cantrip takes its place. Without it the feat would hand a spontaneous caster
-  // cantripsKnown + 1 — strictly better than the printed rule.
+  // `spellSlotBonus: { cantrips: -1 }` is the REPERTOIRE half, and it is not decoration: build.ts
+  // charges it to the one class pool the cantrip lands in, and only when that class keeps a repertoire
+  // (`classPaysCantripSwap`, c720191), so a sorcerer picks one fewer and the granted cantrip takes its
+  // place, while a prepared class keeps every opening and gets the cantrip as one more option.
+  //
+  // The note states print's two cases and NO count (2026-10-15): it used to tell every caster "your class
+  // cantrip budget is one lower", which is false for a prepared class, and in the app — the trust gate
+  // switches the -1 off — for everyone. The same note is overlay row feats/adapted-cantrip.choice, applied
+  // through apply-parity-fixes.mjs; test/adapted-cantrip-followups.test.ts holds the two equal.
   'feats/adapted-cantrip': {
     spellSlotBonus: { cantrips: -1 },
     choice: {
@@ -199,7 +205,7 @@ const WRITES = {
       prompt: 'Adapted cantrip',
       kind: 'open',
       from: { type: 'spell', cantripsOnly: true, excludeOwnTraditions: true, grantToClassEntry: true },
-      note: "Cast as a spell of your class's tradition, from your class's own pool, spell attack and DC. It REPLACES one of your cantrips known, so your class cantrip budget is one lower — pick the cantrip you are giving up by simply not choosing it.",
+      note: "Cast as a spell of your class's tradition, from your class's own pool, spell attack and DC. If you prepare spells, you keep every cantrip opening: this cantrip is one more option when you prepare your cantrips. If you have a spell repertoire, it replaces one of your cantrips known.",
     },
   },
   // "You gain one cantrip from the occult spell list. **As long as you possess your head gem**, you can

@@ -34872,6 +34872,7 @@
   "category": "feats",
   "id": "adapted-cantrip",
   "field": "choice",
+  "why": "feat-4474 (Player Core pg. 63): \"If you prepare spells, you can choose this spell when you prepare your cantrips, in addition to your other options. If you have a spell repertoire, replace one of your cantrips known with the chosen spell.\" The old note told every caster their cantrip budget was one lower; since c720191 a prepared class keeps every opening, and in the trust-gated app the -1 is off for everyone, so the note now states print's two cases and no count.",
   "value": {
    "flag": "adaptedCantrip",
    "prompt": "Adapted cantrip",
@@ -34882,7 +34883,7 @@
     "excludeOwnTraditions": true,
     "grantToClassEntry": true
    },
-   "note": "Cast as a spell of your class's tradition, from your class's own pool, spell attack and DC. It REPLACES one of your cantrips known, so your class cantrip budget is one lower — pick the cantrip you are giving up by simply not choosing it."
+   "note": "Cast as a spell of your class's tradition, from your class's own pool, spell attack and DC. If you prepare spells, you keep every cantrip opening: this cantrip is one more option when you prepare your cantrips. If you have a spell repertoire, it replaces one of your cantrips known."
   }
  },
  {
