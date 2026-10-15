@@ -277,6 +277,25 @@ if (REVERDICT) {
   const work = dirname(DESK);
   const idOf = new Map();
   for (const a of ARRAYS) for (const e of desk[a]) if (e.id) idOf.set(e.id, Number(e.n));
+  /* A parity row names the bare RECORD ("familiar"); many desk ids are record#aspect
+   * ("familiar#archetype-reach", #164). Matching only the exact id left those OWNER-QUEUED rows parked
+   * after he ruled them (2026-10-15: batch 039 familiar, P02 enhanced-familiar), and gate 8 refuses an
+   * OWNER-QUEUED row whose question is no longer open. So a bare record also matches its aspects —
+   * but only while NONE of its questions is still open or deferred: a record with one aspect ruled and
+   * another still waiting stays parked, because re-verdicting it would claim he decided both. */
+  const aspectsOf = new Map();
+  for (const a of ARRAYS) for (const e of desk[a]) {
+    if (!e.id || !e.id.includes('#')) continue;
+    const rec = e.id.split('#')[0];
+    if (!aspectsOf.has(rec)) aspectsOf.set(rec, []);
+    aspectsOf.get(rec).push({ n: Number(e.n), arr: a });
+  }
+  const numberFor = (id) => {
+    if (idOf.has(id)) return idOf.get(id);
+    const aspects = aspectsOf.get(id) ?? [];
+    if (aspects.some((x) => x.arr === 'open' || x.arr === 'deferred')) return undefined;
+    return aspects.find((x) => byNumber.has(x.n))?.n;
+  };
   /* Both lanes: a print batch's parity file sits beside its packet, work/print-batch-<TAG>-parity.json.
    * The batch comes from the FILE NAME, the key record-parity-verdict.mjs routes the row back by
    * (scripts/lib/batch-paths.mjs); `Number(doc.batch)` turned "P02" into null. */
@@ -288,7 +307,7 @@ if (REVERDICT) {
     const batch = batchValue(wgTag ?? printTag);
     for (const r of doc.records ?? []) {
       if (r.verdict !== 'OWNER-QUEUED') continue;
-      const n = idOf.get(r.id);
+      const n = numberFor(r.id);
       const ans = n === undefined ? undefined : byNumber.get(n);
       if (!ans) continue; // still genuinely open, or deferred — leave the verdict alone
       /* Many answers are the single word "yes", which tells a later reader of the parity file nothing

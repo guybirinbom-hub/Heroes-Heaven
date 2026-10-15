@@ -1,0 +1,53 @@
+{
+  "_": "Guy's desk answers of 2026-10-15 evening, given in the home chat as multiple-choice picks (all 8 open questions, #153-#173). Same shape as work/desk-answers-2026-09-12.json so scripts/rule-owner-questions.mjs can move them open -> ruled. The fixes are queued as packages in chat-todo.md (the app folder's untracked work list); nothing is built by this pass.",
+  "answers": [
+    {
+      "ns": [153],
+      "answer": "(a) +5 feet to EVERY Speed the character has (land, swim, fly, climb, burrow)",
+      "rule": "owner's reading of feat-8166 \"Your Speed increases by 5 feet for each mode of movement available to you\" (print settles neither reading)",
+      "note": "His pick: '+5 to every speed'. Fix (chat-todo package I): one overlay row on feats/timewracked-dedication through scripts/apply-parity-fixes.mjs: speedBonusAllSpeeds true in place of the flat landSpeedBonus 5, why citing feat-8166 and desk #153."
+    },
+    {
+      "ns": [162],
+      "answer": "one archetype pool (the beast gunner's) plus the spellshot's two cantrips as at-will innate cantrips is fine, as long as the sheet SAYS that is what is happening",
+      "rule": "owner's choice; no second archetype pool engine",
+      "note": "His pick: 'One pool + a note (Recommended)'. Fix (chat-todo package F): a plain line on the sheet/builder for a Spellshot + Beast Gunner character naming where the spellshot cantrips went. No engine change."
+    },
+    {
+      "ns": [163],
+      "answer": "a prose star on the Strike (situationalBonuses) for all three: Energy Shot, Fulminating Shot and Dispelling Bullet",
+      "rule": "owner's choice; the cheapest lane, still hand-applied by the player",
+      "note": "His pick: 'A note on the Strike (Recommended)'. Fix (chat-todo package I): situational stars through scripts/apply-situational-lane.mjs. Check the trust ledger after the lane runs: a star on a record WG does not encode may be stripped by the gate (chat-todo package K)."
+    },
+    {
+      "ns": [164],
+      "answer": "build the FULL lane for all 602 feats ('Archetypes X (Level N)' listings), as its own job later",
+      "rule": "print (feat-5024 and the 602 listings measured in the mirror)",
+      "note": "His pick: 'All 602, own job (Recommended)'. Engine-shape change per the question: importer parses archetypeListings [{archetype, level}], featSlots.ts slotTakes admits such a feat in class and Free Archetype slots when the dedication is held and the slot is at or above the listed level, build.ts counts it toward the dedication's two-other-feats gate; needs npm run data. Listed under 'Later' in chat-todo.md."
+    },
+    {
+      "ns": [168],
+      "answer": "(A) the HIGHER number wins: Enhanced Familiar's four replaces 'three instead of two' (Psychopomp Familiar, Basic Witchcraft -> 4); the undead and glyph limits stay as printed (Undead 1, Enhanced Undead 3, Glyph 1)",
+      "rule": "owner's reading: both feats replace the same base 'two', so they do not add up",
+      "note": "His pick: 'Higher number wins (Recommended)'. Fix (chat-todo package G): the five 'unsettled' grants in src/rules/companionGrants.ts take max(own number, Enhanced Familiar's) for Psychopomp Familiar and Basic Witchcraft; Undead, Enhanced Undead and Glyph keep their printed number."
+    },
+    {
+      "ns": [171],
+      "answer": "only when the dirge can cast that rank, as print says (no 9th-rank massacre for the archetype)",
+      "rule": "print (Expanded Necromancy); a spell the character can never prepare does nothing",
+      "note": "His pick: 'Only if it can cast it (Recommended)'. This is what the app already does since be93069; nothing to build."
+    },
+    {
+      "ns": [172],
+      "answer": "(a) only the class you took Cantrip Expansion for gets the 2 cantrips; when both classes have the feat on their list the builder asks which class you took it for, and you may take it a second time for the other class, as Wanderer's Guide allows",
+      "rule": "Wanderer's Guide parity and his 2026-10-15 ruling that an effect belongs to its own class",
+      "note": "His pick: 'Only that class (Recommended)'. Fix (chat-todo package E): a 'which class took it' pick for class pairs where both lists carry the feat, a second taking for the other class, and the prepared + spontaneous pair (Wizard/Sorcerer) no longer gets +2 in both."
+    },
+    {
+      "ns": [173],
+      "answer": "(a) the spell is added for free and uses none of the repertoire caster's places",
+      "rule": "print: 'you gain that spell'; the older printing (feat-73) shows 'just like the cantrip from Adapted Cantrip' means where it goes, not giving one up",
+      "note": "His pick: 'Extra spell (Recommended)'. This is what the app already does since fa9287e; nothing to build."
+    }
+  ]
+}

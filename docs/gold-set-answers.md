@@ -1037,4 +1037,40 @@ witch's Defensive Robes. A single-class character does not change. Every reader 
 answer: build.ts `resolveClassArchetype(...).suppressedFor` and derive.ts `classArchetypeFor`, guarded in
 `test/dual-class-owned-features.test.ts`. Not covered by this ruling, and still applied to the whole
 character: an archetype's proficiency cap (Warrior of Legend's "aren't trained in heavy armor" also
-takes the Guardian's heavy armour away).
+takes the Guardian's heavy armour away). **Ruled the same evening (below): Warrior of Legend's cap, too,
+applies only to the fighter's side.** (A future archetype cap is not decided by this.)
+
+## 2026-10-15 (evening) · Desk pass #153–#173, Adapted Cantrip, Warrior of Legend's armour, GM edits
+
+Asked in the home chat as multiple-choice questions; each line gives his pick. The desk entries moved
+open → ruled through `scripts/rule-owner-questions.mjs` with `work/desk-answers-2026-10-15.json`. The
+fixes are queued in the app folder's work list (`chat-todo.md`), not built by this pass.
+
+- **#153 Timewracked Dedication** (feat-8166, "for each mode of movement"): *"+5 to every speed"* — +5 feet
+  to every Speed the character has. One overlay row, `speedBonusAllSpeeds`.
+- **#162 Spellshot + Beast Gunner:** *"One pool + a note"* — one archetype pool plus the spellshot's two
+  cantrips as at-will innate cantrips, and the sheet must say so. No second-pool engine.
+- **#163 Energy Shot, Fulminating Shot, Dispelling Bullet:** *"A note on the Strike"* — a prose star on the
+  Strike for all three.
+- **#164 class feats listed under an archetype** ("Archetypes X (Level N)", 602 feats): *"All 602, own
+  job"* — the full lane, as its own job later.
+- **#168 Enhanced Familiar plus a fixed-number familiar grant:** *"Higher number wins"* — both replace the
+  same base "two", so they do not add up (Basic Witchcraft or Psychopomp Familiar + Enhanced Familiar = 4);
+  the undead and glyph limits stay as printed.
+- **#171 Necromancer Dedication's dirge:** *"Only if it can cast it"* — print; what the app already does.
+- **#172 Cantrip Expansion under Dual Class:** *"Only that class"* — only the class it was taken for gets
+  the two cantrips; the builder asks which class when both lists carry the feat, and it may be taken a
+  second time for the other class (Wanderer's Guide parity).
+- **#173 Adaptive Adept on a repertoire caster:** *"Extra spell"* — added free, uses no place; what the
+  app already does.
+- **Adapted Cantrip on a sorcerer or bard:** *"Follow print"* — the adapted cantrip replaces one known
+  cantrip (a sorcerer knows 5). The feat's `spellSlotBonus` −1 is dark under the trust gate today and
+  `trust-approvals.json` has no route for a ruling made after the 2026-09-10 desk pass, so switching it
+  on is its own small job (work list, package K).
+- **Warrior of Legend under Dual Class:** *"Only the fighter side"* — "you aren't trained in heavy armor"
+  caps only the fighter's proficiencies; the other class's heavy armour training stays. Same principle as
+  the ruling above.
+- **GM edits (the F1 never-overwrite work, `src/integration/README.md`):** keep the GM's knowing
+  *"Overwrite anyway"*; two chained between-session Updates that are refused visibly are *"OK as is"*; two
+  tabs of one browser profile inside the 400 ms persist window: *"Fix it"* — a player's change must never
+  be overwritten by the app; an "HP only" GM update: *"very low priority task"* (his words).

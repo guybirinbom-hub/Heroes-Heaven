@@ -459,7 +459,7 @@
   { "n": 126, "id": null, "status": "authorisedException" },
   { "n": 151, "id": "screech-shooter-major-rune-grade", "status": "ruled" },
   { "n": 152, "id": "empty-description-marker-line", "status": "ruled" },
-  { "n": 153, "id": "timewracked-dedication-speed-clause", "status": "open" },
+  { "n": 153, "id": "timewracked-dedication-speed-clause", "status": "ruled" },
   { "n": 154, "id": "speed-plural-while-a-state-is-on", "status": "ruled" },
   { "n": 155, "id": "flexible-spellcaster-book-casters", "status": "ruled" },
   { "n": 156, "id": null, "status": "authorisedException" },
@@ -468,17 +468,17 @@
   { "n": 159, "id": "reprint-lost-traits", "status": "ruled" },
   { "n": 160, "id": "reprint-damaged-pages", "status": "ruled" },
   { "n": 161, "id": "spell-parry-badge", "status": "ruled" },
-  { "n": 162, "id": "engine-second-archetype-pool-spellshot-beast-gunner", "status": "open" },
-  { "n": 163, "id": "engine-no-route-riders-energy-fulminating-dispelling", "status": "open" },
-  { "n": 164, "id": "familiar#archetype-reach", "status": "open" },
+  { "n": 162, "id": "engine-second-archetype-pool-spellshot-beast-gunner", "status": "ruled" },
+  { "n": 163, "id": "engine-no-route-riders-energy-fulminating-dispelling", "status": "ruled" },
+  { "n": 164, "id": "familiar#archetype-reach", "status": "ruled" },
   { "n": 165, "id": "reprint-cross-kind-sub-pages", "status": "ruled" },
   { "n": 166, "id": "book-names-different-book-folds", "status": "ruled" },
   { "n": 167, "id": "reprint-grade-to-grade", "status": "ruled" },
-  { "n": 168, "id": "enhanced-familiar#fixed-budget-grants", "status": "open" },
+  { "n": 168, "id": "enhanced-familiar#fixed-budget-grants", "status": "ruled" },
   { "n": 169, "id": "shop-respects-sources", "status": "ruled" },
   { "n": 170, "id": "sources-apply-to-everything", "status": "ruled" },
-  { "n": 171, "id": "expanded-necromancy#archetype-ninth-rank", "status": "open" },
-  { "n": 172, "id": "cantrip-expansion#dual-class-pool", "status": "open" },
-  { "n": 173, "id": "adaptive-adept#repertoire-place", "status": "open" }
+  { "n": 171, "id": "expanded-necromancy#archetype-ninth-rank", "status": "ruled" },
+  { "n": 172, "id": "cantrip-expansion#dual-class-pool", "status": "ruled" },
+  { "n": 173, "id": "adaptive-adept#repertoire-place", "status": "ruled" }
  ]
 }

@@ -470,7 +470,8 @@ touching either direction: it is where the never-overwrite rules live.
   push was applied and then taken back" (a heal after his hit), and applying there would carry the hit
   back over the heal. **That includes two between-session Updates, the second built on the first: when
   the player's launch republish lands before their app reads its own row, both are refused ("not
-  applied") — a GM-side, visible cost kept for player safety, open for the owner's ruling**
+  applied") — a GM-side, visible cost kept for player safety; ruled 2026-10-15: OK as is
+  (docs/gold-set-answers.md, 2026-10-15 evening)**
   (test/bug-gm-edit-race.test.tsx leg 34c pins both orders). A single between-session Update (built on
   their published sheet) still lands after a launch, by content — also when this version's load
   migrates their play (`storage.loadedAuthoredAs`, leg 34b). The ordering no stamp can tell apart (their app applying
@@ -502,8 +503,9 @@ touching either direction: it is where the never-overwrite rules live.
   their current sheet, so their app applies it over those changes — his choice, never the app's.
 - **Two tabs of one browser profile**: a GM apply in the background tab inside the other tab's 400 ms
   persist debounce can win the cross-tab write — a pre-existing class (the applier before F1 had the
-  same window), open for the owner's ruling since 2026-09-13 ("two tabs both editing within 400 ms,
-  last flush wins"); between DEVICES the cloud merge keeps the player's change.
+  same window), open since 2026-09-13 ("two tabs both editing within 400 ms, last flush wins") and
+  ruled 2026-10-15: FIX IT (docs/gold-set-answers.md, 2026-10-15 evening) — not built yet; between
+  DEVICES the cloud merge keeps the player's change.
 - **A hung cloud pull holds every apply**: the player's GM-edit pass gives up on any one network answer
   after 20 s and ends, but a pull that never answers leaves cloud sync's `syncing` flag set until it
   settles, so every APPLY waits for the rest of that session — nothing is lost, the GM sees "waiting".

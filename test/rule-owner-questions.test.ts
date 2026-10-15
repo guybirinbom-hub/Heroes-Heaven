@@ -296,6 +296,25 @@ describe('rule-owner-questions.mjs applies the desk pass', () => {
     expect(rows.map((r) => r.id).sort()).toEqual([...ANSWERED_IDS].sort());
     for (const row of rows) expect(row.batch).toBe('P09');
   });
+
+  /* A parity row names the bare record; the desk id is often record#aspect. The 2026-10-15 pass ruled
+   * #164 familiar#archetype-reach and #168 enhanced-familiar#fixed-budget-grants, and --reverdict found
+   * neither OWNER-QUEUED row (batch 039 familiar, P02 enhanced-familiar) because it matched ids exactly. */
+  it('--reverdict matches a bare record to its record#aspect question, and only once none of its questions is still open', () => {
+    const root = fixture(BEFORE, { answers: [{ ns: [164], answer: 'all 602, own job', note: 'the full lane' }] });
+    writeFileSync(path.join(root, 'wg-batch-039-parity.json'), `${JSON.stringify({
+      batch: 39,
+      records: [
+        { id: 'familiar', verdict: 'OWNER-QUEUED', evidence: 'parked on #164' },
+        { id: 'enhanced-familiar', verdict: 'OWNER-QUEUED', evidence: 'parked on #168, still open here' },
+      ],
+    }, null, 1)}\n`);
+    expect(run(root, ['--reverdict', '--write']).code).toBe(0);
+    const rows = JSON.parse(readFileSync(path.join(root, 'out.json'), 'utf8')) as { batch: number; id: string; evidence: string; verdict: string }[];
+    expect(rows.map((r) => r.id)).toEqual(['familiar']);
+    expect(rows[0].verdict).toBe('OWNER-RULED');
+    expect(rows[0].evidence).toMatch(/\(#164\)/);
+  });
 });
 
 describe('rule-owner-questions.mjs refuses rather than guesses', () => {
