@@ -580,10 +580,33 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
       const cap = e.cantripCap ?? e.cantrips.length;
       const granted = new Set(e.grantedCantrips ?? []);
       const defaults = e.cantrips.filter((id) => !granted.has(id));
-      const cantripSlots = Array.from({ length: cap }, (_, i) => {
+      const stored = Array.from({ length: cap }, (_, i): string | null | undefined => {
         const o = play.preparedSpells?.[preparedCantripKey(e.id, i)];
-        if (o === undefined) return defaults[i] ?? null;
+        if (o === undefined) return undefined;
         return o && offersSpell(ctx, 0, o) ? o : null;
+      });
+      /* An opening the player never touched shows its default — unless another opening's STORED choice
+       * already holds that cantrip; then it shows the default THAT opening's choice pushed out (null if
+       * that one is shown already, or there is none). The case (2026-10-15): a prepared class with
+       * Adapted Cantrip had one opening too few, so its players re-prepared an opening with the adapted
+       * cantrip by hand; the fix gave the opening back, and its default — the build's next cantrip, the
+       * adapted one — drew it twice while the pick it had pushed out stayed hidden. Never the FIRST free
+       * default: a cantrip the player emptied or swapped out of another opening must not come back.
+       * Stored choices are never changed. Known limit: the stand-in is not stored, so if the player later
+       * re-prepares the opening that holds the adapted cantrip, this opening shows its own default (the
+       * adapted cantrip) again — still nothing the code before the fix drew is lost. */
+      const chosen = new Set(stored.filter((o): o is string => !!o));
+      const kept = new Set(stored.flatMap((o, i) => (o === undefined && defaults[i] && !chosen.has(defaults[i]) ? [defaults[i]] : [])));
+      const given = new Set<string>();
+      const cantripSlots = stored.map((o, i) => {
+        if (o !== undefined) return o;
+        const d = defaults[i];
+        if (!d) return null;
+        if (!chosen.has(d)) return d;
+        const back = defaults[stored.indexOf(d)];
+        if (!back || chosen.has(back) || kept.has(back) || given.has(back)) return null;
+        given.add(back);
+        return back;
       });
       out = {
         ...out,

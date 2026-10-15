@@ -3250,6 +3250,34 @@ export function cantripBonusFor(build: BuildState, content: ContentDatabase, opt
   return n;
 }
 
+/**
+ * WHICH CLASS POOL PAYS FOR A CANTRIP SWAP. Adapted Cantrip (feat-4474): *"If you prepare spells, you
+ * can choose this spell when you prepare your cantrips, in addition to your other options. If you have
+ * a spell repertoire, replace one of your cantrips known with the chosen spell."*
+ *
+ * The record's `spellSlotBonus { cantrips: -1 }` is the REPERTOIRE half, so it is charged to ONE class
+ * pool: the one buildCharacter puts the chosen cantrip in (the first held class that casts — the grant's
+ * `spellcasting.find(prepared || spontaneous)`, class entries being built first), and only when that
+ * class keeps a repertoire. It used to be charged to every class pool (owner's bug 2026-10-15, measured:
+ * a 1st-level School of Battle Magic wizard had 5 cantrip openings, not 6, and the adapted cantrip was
+ * not among them; a cleric 4, not 5; under Dual Class the class that never receives the cantrip lost one
+ * too). A prepared class keeps its whole count and takes the cantrip as one more option: the build puts
+ * it in what its openings prepare from (the entry's `spellListAdditions`, and a book caster's book —
+ * see the Adapted Cantrip grant in buildCharacter). The archetype pools
+ * are sized in `archetypeCantripCounts`, which skips the swap only for a BOOK archetype: a book-less
+ * prepared dedication (Cleric, Druid, Animist) has no re-preparable openings yet, so it still pays.
+ */
+export function classPaysCantripSwap(build: BuildState, content: ContentDatabase, classId: string | null | undefined): boolean {
+  const receiver = heldClasses(build).find((s) => s.classId && content.classes[s.classId]?.spellcasting)?.classId;
+  return !!classId && receiver === classId && !!content.classes[classId]?.spellcasting?.repertoire;
+}
+
+/** `cantripBonusFor` for ONE held class's pool — the number buildCharacter's `classCasting` and both
+ *  builder cantrip rows (Builder.tsx `cantripCap`, `cantripCap2`) size it by, so the two surfaces agree. */
+export function classCantripBonus(build: BuildState, content: ContentDatabase, classId: string | null | undefined): number {
+  return cantripBonusFor(build, content, { skipSwaps: !classPaysCantripSwap(build, content, classId) });
+}
+
 /** Champion devotion (focus) spell options, gated by the deity's font: Shields of the Spirit is
  *  always available, Lay on Hands if the deity allows heal, Touch of the Void if it allows harm. */
 export function championDevotionOptions(build: BuildState, content: ContentDatabase): string[] {
@@ -4466,8 +4494,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    *
    * The slot applier filters `r > 0`, so a `byRank['0']` was silently dropped and nothing could reach
    * this cap: Cantrip Expansion, one of the most-taken feats in the game, did nothing at all.
+   *
+   * Per CLASS: Adapted Cantrip's `-1` is charged only to the repertoire class that receives the
+   * cantrip (`classPaysCantripSwap`).
    */
-  const cantripBonus = cantripBonusFor(build, content);
+  const cantripBonusOf = (classId: string) => classCantripBonus(build, content, classId);
   /**
    * Class-archetype changes to the SPELL tables — Flexible Spellcaster trades slots for flexibility:
    * "your number of spell slots per day don't advance from 2 to 3 spells at even levels" and "reduce
@@ -5486,7 +5517,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // The ALLOWANCE, not just the picks: the sheet needs it to draw empty cantrip openings — with
     // zero picked, the whole Cantrips section used to vanish, and a new caster had no hint that
     // cantrips exist or where to choose them (measured on a fresh cloistered cleric).
-    const cantripAllowance = Math.max(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + cantripBonus + mods.cantripDelta);
+    const cantripAllowance = Math.max(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + cantripBonusOf(cls.id) + mods.cantripDelta);
     const entry: SpellcastingEntry = {
       id: `${cls.id}-casting`,
       name: `${cap(tradition)} ${sp.type} spellcasting`,
@@ -5586,7 +5617,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // replaced — the sheet shows one star per rank and the picker is live from level 3.
       const unlimitedSig =
         // Read from the PICKS: the built `feats` array does not exist yet at this point in the build,
-        // the same reason `cantripBonus` above reads them directly. The BARD's repertoire, under Dual
+        // the same reason `cantripBonusOf` above reads them directly. The BARD's repertoire, under Dual
         // Class (`featAimsAtClass`) — a Bard/Sorcerer's sorcerer spells are not made signature by it.
         Object.values(build.featPicks ?? {}).includes('ultimate-polymath') && !engineLaneOff('ultimate-polymath') && featAimsAtClass('ultimate-polymath', cls.id);
       if (unlimitedSig) entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
@@ -9264,10 +9295,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * CLASS entry rather than the innate pool, because the printed sentence casts it as a spell of that
    * class's tradition, off that entry's spell attack and DC.
    *
-   * ⚠ It must not OVER-grant. The count never goes up: the record carries
-   * `spellSlotBonus: { cantrips: -1 }`, which both the builder's cantrip cap (Builder.tsx, the
-   * `cantripBonus` reduce) and this file's class-entry slice (`build.cantrips.slice(0, …)`) already
-   * read, so the player picks one fewer and this grant takes its place. An ARCHETYPE entry slices from
+   * ⚠ It must not OVER-grant. A REPERTOIRE's count never goes up: the record carries
+   * `spellSlotBonus: { cantrips: -1 }`, which both the builder's cantrip cap (Builder.tsx `cantripCap`)
+   * and this file's class-entry slice (`build.cantrips.slice(0, …)`) read through `classCantripBonus`,
+   * so the player picks one fewer and this grant takes its place. A PREPARED class is not charged
+   * (`classPaysCantripSwap`): it keeps every opening, and the cantrip joins the list they prepare from
+   * (below: the entry's list additions and, for a book caster, the book). An ARCHETYPE entry slices from
    * `archetypeCantripCounts`, the builder's own number, which charges the `-1` where the archetype is
    * the only caster — except a BOOK archetype's: its cantrips are prepared out of the book, and this
    * cantrip joins the book (below) as one more option, *"in addition to your other options"*.
@@ -9287,7 +9320,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // it is preparable already, and attributing it to the feat would read it back out of the book as
     // "not a pick" on a rebuild (deriveBuildFromCharacter strips `spellSources`).
     if (!own || own.cantrips.includes(sid) || own.bookCantrips?.includes(sid)) continue;
-    own.cantrips.push(sid);
+    /* …but a PREPARED pool whose openings the player has filled does not prepare it ON TOP of them —
+     * *"you can choose this spell when you prepare your cantrips, in addition to your other options"*.
+     * `cantrips` stays the standing preparation, never longer than `cantripCap`: a character with no
+     * play state draws this list as it is (applyPlayState returns it untouched), and a fresh cleric
+     * showed six at-will cantrips (measured in the dev app, 2026-10-15). The cantrip joins what the
+     * openings prepare FROM instead — this entry's list (`spellListAdditions`, which the openings'
+     * picker and the render's check both read) and, below, a book. With an opening free (a save from
+     * the builder that offered one fewer) it fills that opening, as it always did. */
+    const granted = own.grantedCantrips ?? [];
+    const full = !!own.cantripsPrepared && own.cantripCap !== undefined && own.cantrips.filter((id) => !granted.includes(id)).length >= own.cantripCap;
+    if (full) {
+      const adds = (spellListAdditions ??= {});
+      adds[own.id] = [...new Set([...(adds[own.id] ?? []), sid])];
+    } else own.cantrips.push(sid);
     // …and a BOOK caster's openings may hold it: *"If you prepare spells, you can choose this spell
     // when you prepare your cantrips, in addition to your other options"* — so it joins the list the
     // openings' picker (held to the book) offers, and is still there after a re-preparation.
@@ -11554,8 +11600,14 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       }
       /* A BOOK caster's `build.cantrips` is the whole book (up to 10), and `cantrips` is only the five
        * (six) prepared from it — reading that lost the rest on every rebuild of a character with no
-       * stored build (a Wanderer's Guide import's ten cantrips came back as six). */
-      return (classEntry.bookCantrips ?? classEntry.cantrips).filter((s) => !grantedSpellSet.has(s));
+       * stored build (a Wanderer's Guide import's ten cantrips came back as six).
+       *
+       * …minus what a FEAT put there (`spellSources`: Adapted Cantrip's, written only when the player
+       * had not picked that cantrip themselves), as the archetype pool already does below. Read back as
+       * a pick it took one of the player's places on the next build, and lost its "from Adapted
+       * Cantrip" label (2026-10-15). */
+      const fromFeats = new Set(Object.keys(classEntry.spellSources ?? {}));
+      return (classEntry.bookCantrips ?? classEntry.cantrips).filter((s) => !grantedSpellSet.has(s) && !fromFeats.has(s));
     };
     const classEntry = cls ? findPrimaryCasterEntry(c, cls, cls2dc) : undefined;
     if (classEntry && cls) b.cantrips = recoverSurface(classEntry, cls, c.subclassId, b.spells, b.signatures);

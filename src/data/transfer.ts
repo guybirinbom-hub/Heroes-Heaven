@@ -254,8 +254,11 @@ function contentSnapshot(ch: Character, content: ContentDatabase): unknown {
 
   const spellNames = new Set<string>();
   for (const e of ch.spellcasting) {
-    // A book caster's whole book of cantrips, not only the five (six) prepared from it (lane C1).
-    for (const id of [...(e.cantrips ?? []), ...(e.bookCantrips ?? [])]) spellNames.add(content.spells[id]?.name ?? id);
+    // A book caster's whole book of cantrips, not only the five (six) prepared from it (lane C1) —
+    // and a feat's cantrip a prepared caster has as an option rather than prepared (Adapted Cantrip).
+    // Class pools only: an innate entry's `spellSources` also names grants its heritage never received.
+    const featCantrips = e.type === 'prepared' || e.type === 'spontaneous' ? Object.keys(e.spellSources ?? {}).filter((id) => content.spells[id]?.rank === 0) : [];
+    for (const id of [...(e.cantrips ?? []), ...(e.bookCantrips ?? []), ...featCantrips]) spellNames.add(content.spells[id]?.name ?? id);
     for (const ids of Object.values(e.repertoire ?? {})) for (const id of ids) spellNames.add(content.spells[id]?.name ?? id);
     for (const slots of Object.values(e.prepared ?? {})) for (const sl of slots) if (sl.spellId) spellNames.add(content.spells[sl.spellId]?.name ?? sl.spellId);
     for (const ids of Object.values(e.spellbook ?? {})) for (const id of ids) spellNames.add(content.spells[id]?.name ?? id);

@@ -223,10 +223,17 @@ export function spellOptions(ctx: SpellOptionCtx, rank: number, restrictedId?: s
    * tradition other than your own"), so holding the opening to the tradition alone meant that the
    * moment its opening was re-prepared the cantrip was off the sheet AND off the picker — gone for
    * good, from one ordinary click. `cantripPool` is the BUILD's list, kept by the overlay so this
-   * answer is the same on both surfaces. */
+   * answer is the same on both surfaces.
+   *
+   * …plus the cantrips a FEAT put in this entry (`spellSources` — Adapted Cantrip's): on a prepared
+   * class whose openings the player has filled, that cantrip is an option and not in `cantrips`
+   * (build.ts, the Adapted Cantrip grant), and the list addition that offers it is subject to Hide
+   * legacy above — so a legacy answer (acid splash) prepared in an opening drew "Empty cantrip"
+   * (checker finding, 2026-10-15). Rank 0 only, below, like the rest of this list. */
   const have = new Set(base.map((s) => s.id));
-  const own = (entry.cantripPool ?? entry.cantrips ?? [])
-    .filter((id) => !have.has(id))
+  const own = [...(entry.cantripPool ?? entry.cantrips ?? []), ...Object.keys(entry.spellSources ?? {})]
+    // …once: with an opening free the build ALSO puts the feat's cantrip in `cantrips`.
+    .filter((id) => !have.has(id) && !!have.add(id))
     .map((id) => content.spells[id])
     .filter((s): s is Spell => !!s && s.rank === 0);
   return own.length ? [...base, ...own] : base;

@@ -19,7 +19,7 @@ import {
   featChoicePrompt,
   buildChoiceOptions,
   classSubPickOrder,
-  cantripBonusFor,
+  classCantripBonus,
   classArchetypeSpellMods,
   legacyArchetypeCantrips,
   levelGrants,
@@ -646,7 +646,9 @@ export function Builder({
   // ⚠ `buildCharacter`'s own function, not a copy of it. The copy that used to live here had drifted:
   // it ignored the `cantripsAt` LADDER, and it charged Adapted Cantrip's `-1` before its picker was
   // answered, so the page read "5 / 4" over a set of picks the sheet was perfectly happy with.
-  const cantripBonus = cantripBonusFor(build, content);
+  // Per class (`classCantripBonus`): that `-1` is charged only to the repertoire class the cantrip
+  // lands in — a prepared class keeps every place (owner's bug 2026-10-15).
+  const cantripBonus = classCantripBonus(build, content, build.classId);
   // When the ARCHETYPE is the caster (no class spellcasting), the feats that raise ITS cantrip count
   // (Psi Development's `spellSlotBonus {entryId, cantrips:1}`) are scoped to the archetype entry, which
   // `cantripBonusFor` — the class pool's function — never sees; buildCharacter and the setup page
@@ -1332,7 +1334,8 @@ export function Builder({
   const capArch2 =(counts: Record<number, number>): Record<number, number> =>
     archMods2.slotCap == null ? counts : Object.fromEntries(Object.entries(counts).map(([r, n]) => [r, Math.min(n, archMods2.slotCap!)]));
   const slotCounts2 = casting2 ? repertoireCounts(capArch2(casterSlots(build.level, castProgression2)), casting2.extraRepertoire) : {};
-  const cantripCap2 = casting2 && build.classId2 ? Math.max(0, cantripsKnown(build.classId2) + cantripBonus + archMods2.cantripDelta) : 0;
+  const cantripCap2 =
+    casting2 && build.classId2 ? Math.max(0, cantripsKnown(build.classId2) + classCantripBonus(build, content, build.classId2) + archMods2.cantripDelta) : 0;
   /* …and a BOOK caster's row is its BOOK, exactly as the first class's is (lane C1's shape): ten (eight)
    * cantrips, the first `cantripAllowance2` of them prepared each morning — re-preparable on the sheet. */
   const bookWord2 = isWizardBook2 ? bookNoun(cls2) : undefined;

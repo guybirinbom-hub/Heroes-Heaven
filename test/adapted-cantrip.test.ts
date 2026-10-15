@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { build, content } from './_content';
 import { openChoiceOptions } from '../src/rules/openChoice';
-import { cantripBonusFor, emptyBuild } from '../src/rules/build';
+import { cantripBonusFor, classCantripBonus, emptyBuild } from '../src/rules/build';
 
 /**
  * ADAPTED CANTRIP — "Choose one cantrip from a magical tradition other than your own… You can cast
@@ -13,7 +13,11 @@ import { cantripBonusFor, emptyBuild } from '../src/rules/build';
  *
  * Three things had to be true at once for the feat to work and not over-work: the pick joins the
  * CLASS pool (not the innate one), the picker excludes the traditions this character already casts
- * in, and the total does not go up — "replace one of your cantrips known" is a swap, not a bonus.
+ * in, and a REPERTOIRE's total does not go up — "replace one of your cantrips known" is a swap, not a
+ * bonus. A caster who PREPARES spells is the other half of the same sentence: *"you can choose this
+ * spell when you prepare your cantrips, in addition to your other options"* — no swap, every opening
+ * kept (test/adapted-cantrip-prepared.test.ts; the swap legs below moved from a wizard to a bard on
+ * 2026-10-15, because they had asserted the swap on a prepared caster, the owner's bug).
  */
 const db = content();
 const CANTRIPS = ['light', 'shield', 'daze', 'prestidigitation', 'detect-magic', 'sigil'];
@@ -24,6 +28,11 @@ const wiz = (answer?: string, over: Record<string, unknown> = {}) =>
     ...over,
   });
 const pool = (ch: ReturnType<typeof build>) => ch.spellcasting.find((e) => e.id === 'wizard-casting')!;
+/** A bard — a spell REPERTOIRE — at its five cantrips; electric arc is off the occult list. */
+const BARD5 = ['daze', 'detect-magic', 'figment', 'light', 'message'];
+const bard = (answer?: string, cantrips = BARD5) =>
+  build('bard', 5, { cantrips, ...(answer ? { featPicks: { '2:class': 'adapted-cantrip' }, featChoices: { '2:class': answer } } : {}) });
+const bardPool = (ch: ReturnType<typeof build>) => ch.spellcasting.find((e) => e.id === 'bard-casting')!;
 
 describe('the record asks a question the picker can answer', () => {
   it('the pick is no longer inert, and says what it does', () => {
@@ -48,8 +57,11 @@ describe('the record asks a question the picker can answer', () => {
 describe('the answer lands somewhere the player can cast it', () => {
   it("joins the character's own class pool, attributed to the feat", () => {
     const ch = wiz('guidance');
-    expect(pool(ch).cantrips).toContain('guidance');
+    // A wizard with every opening filled prepares it OUT OF THE BOOK (not on top of the six) — see the
+    // prepared leg below; a bard knows it outright.
+    expect(pool(ch).bookCantrips).toContain('guidance');
     expect(pool(ch).spellSources?.['guidance']).toBe('Adapted Cantrip');
+    expect(bardPool(bard('electric-arc')).cantrips).toContain('electric-arc');
     // NOT the innate pool: the printed sentence casts it as a spell of the class's tradition, off that
     // entry's spell attack and DC.
     expect(ch.spellcasting.find((e) => e.type === 'innate')?.cantrips ?? []).not.toContain('guidance');
@@ -69,9 +81,11 @@ describe('the answer lands somewhere the player can cast it', () => {
   it('does nothing at all without an answer — including not charging for it', () => {
     // Both halves of a swap land together. The `-1` budget applied the moment the feat was picked,
     // so taking Adapted Cantrip and not yet answering its picker DELETED one of the player's own
-    // cantrips and gave nothing back — a feat that costs you something and pays out later.
-    const ch = build('wizard', 5, { cantrips: CANTRIPS, featPicks: { '2:class': 'adapted-cantrip' } });
-    expect(pool(ch).cantrips).toEqual(pool(wiz()).cantrips);
+    // cantrips and gave nothing back — a feat that costs you something and pays out later. A bard,
+    // because only a repertoire is ever charged (a wizard is not charged at all now).
+    const ch = build('bard', 5, { cantrips: BARD5, featPicks: { '2:class': 'adapted-cantrip' } });
+    expect(bardPool(ch).cantrips).toEqual(bardPool(bard()).cantrips);
+    expect(bardPool(ch).cantripCap).toBe(bardPool(bard()).cantripCap);
   });
 
   it('and the BUILDER counts the same cantrips the sheet does', () => {
@@ -82,6 +96,10 @@ describe('the answer lands somewhere the player can cast it', () => {
     expect(cantripBonusFor({ ...state, featPicks: { '2:class': 'adapted-cantrip' } }, db)).toBe(0);
     expect(cantripBonusFor({ ...state, featPicks: { '2:class': 'adapted-cantrip' }, featChoices: { '2:class': 'guidance' } }, db)).toBe(-1);
     expect(cantripBonusFor({ ...state, featPicks: { '2:class': 'cantrip-expansion' } }, db)).toBe(2);
+    // …and the per-class answer both surfaces read: the swap is the repertoire's alone.
+    const answered = { featPicks: { '2:class': 'adapted-cantrip' }, featChoices: { '2:class': 'guidance' } };
+    expect(classCantripBonus({ ...state, ...answered }, db, 'wizard'), 'a wizard prepares: no swap').toBe(0);
+    expect(classCantripBonus({ ...state, classId: 'bard', ...answered }, db, 'bard'), 'a bard swaps').toBe(-1);
   });
 });
 
@@ -92,13 +110,25 @@ describe('and it does not over-grant — "replace one of your cantrips known"', 
     expect(db.feats['adapted-cantrip'].spellSlotBonus).toEqual({ cantrips: -1 });
   });
 
-  it('a caster at their cap ends with the same number of cantrips, one of them the new one', () => {
-    const plain = pool(wiz()).cantrips;
-    const adapted = pool(wiz('guidance')).cantrips;
-    expect(plain.length, 'the fixture must be AT the cap or this proves nothing').toBe(CANTRIPS.length);
+  it('a repertoire at its cap ends with the same number of cantrips, one of them the new one', () => {
+    const plain = bardPool(bard()).cantrips;
+    const adapted = bardPool(bard('electric-arc')).cantrips;
+    expect(plain.length, 'the fixture must be AT the cap or this proves nothing').toBe(BARD5.length);
+    expect(db.spells['electric-arc']?.traditions, 'fixture: off the occult list').not.toContain('occult');
     expect(adapted).toHaveLength(plain.length);
-    expect(adapted).toContain('guidance');
+    expect(adapted).toContain('electric-arc');
     // The one displaced is the LAST the player picked — they choose what to give up by not picking it.
-    expect(adapted).not.toContain(CANTRIPS[CANTRIPS.length - 1]);
+    expect(adapted).not.toContain(BARD5[BARD5.length - 1]);
+  });
+
+  it('…and a caster who PREPARES keeps all of them, the new one beside them', () => {
+    // *"If you prepare spells, you can choose this spell when you prepare your cantrips, in addition to
+    // your other options"* — the wizard's six stay prepared, guidance is one more in the book to choose from.
+    const ch = wiz('guidance');
+    const adapted = pool(ch);
+    expect(adapted.cantripCap).toBe(pool(wiz()).cantripCap);
+    expect(adapted.cantrips).toEqual(CANTRIPS);
+    expect(adapted.bookCantrips).toContain('guidance');
+    expect(ch.spellListAdditions?.['wizard-casting']).toContain('guidance');
   });
 });
