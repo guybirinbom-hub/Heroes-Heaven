@@ -29968,7 +29968,8 @@
   "category": "feats",
   "id": "executioner-weapon-training",
   "field": "dataWarning",
-  "value": "Part of this effect references content missing from the current data — apply it manually. (Trained-with-4-named-weapons that scales with later class weapon-proficiency increases needs a per-weapon-base FeatGrant)"
+  "value": null,
+  "why": "feat-3329: STALE. The per-weapon grant exists (src/rules/featGrantsAuto.ts mirrorBestCategory). Measured 2026-10-14 on battle axe, falchion, greataxe and scimitar: fighter 4 expert, fighter 13 master, rogue 4 trained, rogue 5 expert, rogue 13 master, wizard 4 trained, wizard 11 expert."
  },
  {
   "category": "heritages",
@@ -30009,13 +30010,15 @@
   "category": "feats",
   "id": "dragonblood-paragon",
   "field": "dataWarning",
-  "value": "Part of this effect references content missing from the current data — apply it manually. (A choose-one-of-four upgrade, but none of the four options maps to any EffectGrant key: Strongjaw Kobold adds the deadly)"
+  "value": null,
+  "why": "feat-2387: the generic 'references content missing from the current data' template was false — every option's record ships (dracomancer, kobold-breath, strongjaw-kobold, venomtail-kobold, actions/tail-toxin). What is true is that the pick is recorded and its upgrade is not applied (measured 2026-10-14: a strongjaw kobold fighter 9 with the Strongjaw pick has Jaws [finesse, unarmed], no deadly d6), which is a note."
  },
  {
   "category": "feats",
   "id": "beast-gunner-dedication",
   "field": "dataWarning",
-  "value": "Part of this effect references content missing from the current data — apply it manually. (Whole caster-dedication spellcasting: grants Cast a Spell, a spell repertoire with a chosen arcane/primal cantrip, spell)"
+  "value": null,
+  "why": "feat-3229: STALE. The caster dedication is delivered (src/rules/casterArchetypes.ts beast-gunner-dedication: spontaneous repertoire, 1 cantrip, arcane/primal, Cha/Int). Measured 2026-10-14 by building fighter 6, fighter 12, gunslinger 6 and wizard 6 with the feat: each has the entry beast-gunner-dedication-casting, spontaneous, trained."
  },
  {
   "category": "feats",
@@ -52134,7 +52137,8 @@
   "category": "items",
   "id": "talisman-cord",
   "field": "dataWarning",
-  "value": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you."
+  "value": null,
+  "why": "equipment-883-866: the cord ships and its school pick is stored (effectChoices); the flat check is the player's to roll — a note, not missing content. Lane B 2026-10-14; the item popup now draws an item's note."
  },
  {
   "category": "items",
@@ -52261,7 +52265,8 @@
   "category": "items",
   "id": "talisman-cord-greater",
   "field": "dataWarning",
-  "value": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you."
+  "value": null,
+  "why": "equipment-883-867: the cord ships and its school pick is stored (effectChoices); the flat check is the player's to roll — a note, not missing content. Lane B 2026-10-14; the item popup now draws an item's note."
  },
  {
   "category": "items",
@@ -52312,7 +52317,8 @@
   "category": "items",
   "id": "talisman-cord-lesser",
   "field": "dataWarning",
-  "value": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you."
+  "value": null,
+  "why": "equipment-883-865: the cord ships and its school pick is stored (effectChoices); the flat check is the player's to roll — a note, not missing content. Lane B 2026-10-14; the item popup now draws an item's note."
  },
  {
   "category": "items",
@@ -87549,25 +87555,29 @@
   "category": "feats",
   "id": "exorcist-dedication",
   "field": "dataWarning",
-  "value": "Spirit wisps are not tracked. One arrives at each daily preparation; if your dwelling is empty you can spend 10 minutes to attract another, and remnants captured from vanquished incorporeal undead join it. Each purification spends one. Count them by hand."
+  "value": null,
+  "why": "feat-3454: a table note, not missing content (scripts/backfill-bare-feats.mjs filed it under its own 'the feat works, but a clause is the player's to apply' heading). Lane B 2026-10-14 moves the words to note, which the Feats tab draws."
  },
  {
   "category": "feats",
   "id": "enticing-dwelling",
   "field": "dataWarning",
-  "value": "Not tracked: you entice TWO wisps into your spirit dwelling instead of one, both at daily preparations and whenever you spend 10 minutes to find more."
+  "value": null,
+  "why": "feat-3458: a table note, not missing content (scripts/backfill-bare-feats.mjs filed it under its own 'the feat works, but a clause is the player's to apply' heading). Lane B 2026-10-14 moves the words to note, which the Feats tab draws."
  },
  {
   "category": "feats",
   "id": "miraculous-flight",
   "field": "dataWarning",
-  "value": "Not tracked: the flight is a once-per-day miracle with a duration you time at the table."
+  "value": null,
+  "why": "feat-3153: a table note, not missing content (types.ts: dataWarning = content missing from the shipped data; note = the part you apply yourself). Lane B 2026-10-14 moves the words to note, which the Feats tab draws."
  },
  {
   "category": "feats",
   "id": "terrifying-mien",
   "field": "dataWarning",
-  "value": "Not tracked: the aura affects creatures that end their turn near you, which depends on where they are — apply it at the table."
+  "value": null,
+  "why": "feat-7383: a table note, not missing content (types.ts: dataWarning = content missing from the shipped data; note = the part you apply yourself). Lane B 2026-10-14 moves the words to note, which the Feats tab draws."
  },
  {
   "category": "feats",
@@ -96461,7 +96471,7 @@
     {
      "id": "way-of-the-vanguard",
      "name": "Way of the Vanguard",
-     "description": "You practice a unique combat style originated by dwarven siege engineers, using heavy weapons with wide attack areas to blast holes through enemy lines, clear an opening for your allies, and defend the conquered territory.\n\n**Slinger's Reload** Clear a Path\n\n**Deeds** *Initial* Living Fortification; *Advanced* Spinning Crush; *Greater*\n\n**Way Skill** Athletics",
+     "description": "You practice a unique combat style originated by dwarven siege engineers, using heavy weapons with wide attack areas to blast holes through enemy lines, clear an opening for your allies, and defend the conquered territory.\n\n**Slinger's Reload** Clear a Path\n\n**Deeds** *Initial* Living Fortification; *Advanced* Spinning Crush; *Greater* Siegebreaker\n\n**Way Skill** Athletics",
      "descRefs": [
       {
        "label": "Clear a Path",
@@ -96499,7 +96509,7 @@
    ],
    "featureId": "gunslingers-way"
   },
-  "why": "AoN way-5 — the same reversed clause in the Builder's way picker copy. Supersedes the existing classes/gunslinger subclass row (value merged whole — byte-identical to the shipped subclass object, so the featureIds path rows applied on top of it are preserved)."
+  "why": "AoN way-5 — the same reversed clause in the Builder's way picker copy. Supersedes the existing classes/gunslinger subclass row (value merged whole — byte-identical to the shipped subclass object, so the featureIds path rows applied on top of it are preserved). 2026-09-30, the regenerating lane (embedded class-option descriptions): way-of-the-vanguard restated with their classFeatures records' text, the text the chain now derives for every class option (scripts/lib/embedded-descriptions.mjs; scripts/embedded-description-check.mjs) — this row had restated the Foundry-era copies. class-20 is the class page."
  },
  {
   "category": "classes",
@@ -129376,7 +129386,8 @@
   "category": "feats",
   "id": "vampire-dedication",
   "field": "note",
-  "value": "Negative Survival: you are knocked out and begin dying at 0 HP like the living, but stabilize and similar methods that bring someone back from dying don’t benefit you, and when you would die you are destroyed rather than dead."
+  "value": "Negative Survival: you are knocked out and begin dying at 0 HP like the living, but stabilize and similar methods that bring someone back from dying don’t benefit you, and when you would die you are destroyed rather than dead. Vampire Vulnerabilities: the sheet does not apply Revulsion or Sunlight; apply them at the table.",
+  "why": "feat-3545 prints 'You gain revulsion and sunlight vulnerabilities detailed in the Vampire Vulnerabilities sidebar' (sidebar-1790: Revulsion, fleeing near garlic or a religious symbol; Sunlight, slowed 1 rising each turn). No src/rules code reads either (searched 2026-10-14), so the existing Negative Survival note keeps its words and gains one sentence (lane B fix round 1)."
  },
  {
   "category": "feats",
@@ -149570,7 +149581,8 @@
   "category": "feats",
   "id": "vampire-dedication",
   "field": "dataWarning",
-  "value": "Part of this effect references content missing from the current data — apply it manually. (Revulsion and Sunlight vulnerabilities: the vampire sidebar's text is not in the mirror.)"
+  "value": null,
+  "why": "feat-3545: STALE. The Vampire Vulnerabilities sidebar ships (core sidebar/vampire-vulnerabilities, sidebar-1790, with its page printing Revulsion and Sunlight), and the dedication's page links to it ('detailed in the Vampire Vulnerabilities sidebar'). Measured 2026-10-14; the record keeps its existing Negative Survival note."
  },
  {
   "category": "feats",
@@ -150424,7 +150436,8 @@
   "category": "classFeatures",
   "id": "necromancer-spellcasting",
   "field": "note",
-  "value": "Dirge: 8 occult cantrips, harm, and 4 other 1st-rank occult spells, +2 spells each level. The app lets you prepare from the whole occult list instead of from your dirge."
+  "value": null,
+  "why": "class-feature-1285: the note said \"The app lets you prepare from the whole occult list instead of from your dirge.\" — no longer true: the dirge (\"eight occult cantrips, the 1st-rank spell harm, and four other 1st-rank occult spells\") is modelled, and the necromancer prepares only from it. Nothing is left for the player to apply by hand, so the note is removed. Lane C1."
  },
  {
   "category": "feats",
@@ -163979,22 +163992,22 @@
   "category": "backgrounds",
   "id": "child-of-the-twin-village",
   "field": "dataWarning",
-  "value": "You and your twin gain the effects of dream message every night, between the two of you only — a natural effect, not a spell. The app does not track it; your GM plays the twin.",
-  "why": "wg-batch-020 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b020-findings.json"
+  "value": null,
+  "why": "background-587: the nightly dream-message link is played by the GM — a note, not missing content. It was filed as dataWarning only because a background note had no reader (wg-batch-020); the Details tab's Background card draws it now (lane B 2026-10-14)."
  },
  {
   "category": "backgrounds",
   "id": "royalty",
   "field": "dataWarning",
-  "value": "You can attempt to influence commoners in your family’s territory and nobility anywhere. If you gain Leverage Connections, you automatically have common and noble connections in communities in your family’s territory, and noble connections in large communities outside it. The app does not track connections.",
-  "why": "wg-batch-020 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b020-findings.json"
+  "value": null,
+  "why": "background-470: influence and connections are a campaign clause — a note, not missing content. It was filed as dataWarning only because a background note had no reader (wg-batch-020); the Details tab's Background card draws it now (lane B 2026-10-14)."
  },
  {
   "category": "backgrounds",
   "id": "cathedral-child",
   "field": "dataWarning",
-  "value": "Your upbringing shifts the party’s starting reputations (printed in the background) — a campaign tracker your GM applies, not a sheet number.",
-  "why": "wg-batch-020 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b020-findings.json"
+  "value": null,
+  "why": "background-566: party reputation is a campaign tracker — a note, not missing content, the same shape eager-scofflaw, lost-coast-local and newcomer already ship as note. Filed as dataWarning only because a background note had no reader (wg-batch-020); the Details tab's Background card draws it now (lane B 2026-10-14)."
  },
  {
   "category": "backgrounds",
@@ -164179,8 +164192,8 @@
   "category": "backgrounds",
   "id": "sally-guard-neophyte",
   "field": "dataWarning",
-  "value": "The printed gear is SHODDY: each piece takes a −2 item penalty to the checks it is used for (shoddy armor also lowers its item bonus to AC by 2). The app has no shoddy model — apply the penalty by hand until you replace the gear.",
-  "why": "wg-batch-020 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b020-findings.json"
+  "value": null,
+  "why": "background-197: the gear ships (grantsItems); applying SHODDY by hand is a note, not missing content. It was filed as dataWarning only because a background note had no reader; the Details tab's Background card draws it now (lane B 2026-10-14)."
  },
  {
   "category": "backgrounds",
@@ -164224,8 +164237,8 @@
   "category": "backgrounds",
   "id": "otherworldly-mission",
   "field": "dataWarning",
-  "value": "Once per adventure, you can ask the voice you believe to be a deity for orders and receive some kind of instruction — a command to go somewhere or do something, never an explanation. No action cost is printed; your GM adjudicates the ask.",
-  "why": "wg-batch-021 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b021-findings.json"
+  "value": null,
+  "why": "background-286: the once-per-adventure ask is the GM's to adjudicate — a note, not missing content. It was filed as dataWarning only because a background note had no reader (wg-batch-021); the Details tab's Background card draws it now (lane B 2026-10-14)."
  },
  {
   "category": "backgrounds",
@@ -165295,8 +165308,8 @@
   "category": "backgrounds",
   "id": "tech-reliant",
   "field": "dataWarning",
-  "value": "You are entirely unaffected by healing magic: spells, items and effects with the healing trait never restore your Hit Points. The engine cannot enforce this — apply it at the table.",
-  "why": "wg-batch-021 (backgrounds read): adversarially confirmed vs print + WG raw ops — evidence in work/.b021-findings.json"
+  "value": null,
+  "why": "background-265: the healing-magic immunity is applied at the table — a note, not missing content. It was filed as dataWarning only because a background note had no reader (wg-batch-021); the Details tab's Background card draws it now (lane B 2026-10-14)."
  },
  {
   "category": "backgrounds",
@@ -166102,15 +166115,15 @@
   "category": "backgrounds",
   "id": "energy-scarred",
   "field": "dataWarning",
-  "value": "Your innate magical trait is primal — under the Pervasive Magic variant, your Cantrip Casting tradition. The app does not yet feed this into the pervasive-magic feat ladder; apply the tradition yourself.",
-  "why": "wg batch 23: neither side models the innate-trait sentence; dataWarning is the live background residual lane (cathedral-child precedent — background note has no reader)."
+  "value": null,
+  "why": "background-246: the innate primal trait is the player's to apply under Pervasive Magic — a note, not missing content. It was filed as dataWarning only because a background note had no reader (wg batch 23); the Details tab's Background card draws it now (lane B 2026-10-14)."
  },
  {
   "category": "backgrounds",
   "id": "anti-magical",
   "field": "dataWarning",
-  "value": "Whenever any magic would affect you — even your own or an ally’s — its originator must attempt a DC 3 flat check; on a failure the magic does not affect you. Applied at the table: the app does not model flat checks.",
-  "why": "wg batch 23: the record's whole mechanic is an always-on flat check with no numeric carrier; dataWarning is the live background residual lane. The deleted \"DC 3 flat check\" text itself is restored by a REPAIRS row."
+  "value": null,
+  "why": "background-239: a DC 3 flat check applied at the table is a note, not missing content. It was filed as dataWarning only because a background note had no reader (wg batch 23); the Details tab's Background card draws it now (lane B 2026-10-14)."
  },
  {
   "category": "backgrounds",
@@ -167923,8 +167936,8 @@
   "category": "heritages",
   "id": "bright-fetchling",
   "field": "dataWarning",
-  "value": "Print grants two occult innate cantrips, dancing lights and light. The remaster folded dancing lights into light and it is not in this app's spell data, so only Light is granted here — the same single cantrip Wanderer's Guide grants. The legacy printing a player finds on Archives of Nethys still names both.",
-  "why": "wg-batch-025: heritage-120 prints \"cast dancing lights and light as occult innate cantrips\" while our curated description was rewritten to name only Light. There is no spell grant to add — spells['dancing-lights'] does not exist — so the deliberate divergence is recorded instead of hidden, making the rewritten description traceable against the page the player will read."
+  "value": "Print grants two occult innate cantrips, dancing lights and light. The remaster folded dancing lights into light and it is not in this app's spell data, so only Light is granted here. The legacy printing a player finds on Archives of Nethys still names both.",
+  "why": "heritage-120 prints 'cast dancing lights and light as occult innate cantrips'; spells['dancing-lights'] is still absent, so this stays a real missing-data warning. Reworded (lane B 2026-10-14) only to stop naming another app in player-facing text."
  },
  {
   "category": "heritages",
@@ -169334,7 +169347,7 @@
    {
     "id": "lamentation-of-sinister-deals",
     "name": "Lamentation of Sinister Deals",
-    "description": "Lamentations of sinister deals gather wherever someone traded away their integrity, their loyalty or their very soul for a short-term gain — beside corrupt courthouses, in fey markets, and above all in the Whisperwood of Cheliax. Such an apparition will happily coach an animist in the art of the bargain, though it usually nurses a private terror of one particular kind of contract, and it pays out small wishes to whoever is willing to sign.\n\n---\n\n**Apparition Skills** Legal Lore, Scribing Lore\n\n**Apparition Spells**\n\n- **Cantrip** Message\n- **1st** Sure Strike\n- **2nd** Blistering Invective\n- **3rd** Hypercognition\n- **4th** Honeyed Words\n- **5th** Breath of Life\n- **6th** Sacred Form\n- **7th** Contingency\n- **8th** Moment of Renewal\n- **9th** Resplendent Mansion\n\n**Vessel Spell** Wish Market\n\n**Avatar** *Cosmic Notary* Speed 30 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ burning pen (agile, reach 15 feet, versatile fire), **Damage** 6d6+6 piercing\n\n**Ranged** ⟨1⟩ exacting language (fatal d10, mental, range 60 feet), **Damage** 6d6+6 mental",
+    "description": "Lamentations of sinister deals linger where mortals sold their integrity, loyalties, or even their souls in pursuit of short-term gain. While some of these apparitions lurk near corrupt courthouses or fey marketplaces, the greatest concentration emanates from Cheliax’s Whisperwood, where Abrogail I penned a baleful bargain with Hell.\n\nThese apparitions coach an animist in crafting their own deals, though the same apparition often harbors an inconsolable fear of a specific contract type, such as infernal contracts or real estate deeds. Some lamentations of sinister deals might actually be damned souls that have narrowly avoided the River of Souls, knowing they’ll be dragged to Hell once they arrive. Theoretically, an animist could earn the apparition’s loyalty if they could unravel whatever contract cursed the apparition in the first place. A lamentation of sinister deals tempts the animist with deals of its own, granting minor wishes with its spirit magic to impart momentary knowledge or power if the animist simply signs on the figurative line.\n\nApparition Skills Legal Lore, Scribing Lore\n\nApparition Spells\n- Cantrip Message\n- 1st Sure Strike\n- 2nd Blistering Invective\n- 3rd Hypercognition\n- 4th Honeyed Words\n- 5th Breath of Life\n- 6th Sacred Form\n- 7th Contingency\n- 8th Moment of Renewal\n- 9th Resplendent Mansion\n\nVessel Spell Wish Market\n\nAvatar Cosmic Notary Speed 30 feet, fly 50 feet; Melee (1 action) burning pen (agile, reach 15 feet, versatile fire), Damage 6d6+6 piercing; Ranged (1 action) exacting language (fatal d10, mental, range 60 feet), Damage 6d6+6 mental",
     "descRefs": [
      {
       "label": "Message",
@@ -170156,7 +170169,7 @@
     ]
    }
   ],
-  "why": "AoN apparition-6 — the SECOND carrier of the same prose, the apparition picker's own option copy (description + descRefs label). Supersedes the existing classes/animist options@[extraChoices,id=apparition] row, whose value is merged whole (byte-identical to the shipped array)."
+  "why": "AoN apparition-6 — the SECOND carrier of the same prose, the apparition picker's own option copy (description + descRefs label). Supersedes the existing classes/animist options@[extraChoices,id=apparition] row, whose value is merged whole (byte-identical to the shipped array). 2026-09-30, the regenerating lane (embedded class-option descriptions): lamentation-of-sinister-deals restated with their classFeatures records' text, the text the chain now derives for every class option (scripts/lib/embedded-descriptions.mjs; scripts/embedded-description-check.mjs) — this row had restated the Foundry-era copies. class-64 is the class page."
  },
  {
   "category": "classFeatures",
@@ -170266,7 +170279,7 @@
    {
     "id": "baba-yaga",
     "name": "Baba Yaga",
-    "description": "Your patron is Baba Yaga, the Queen of Witches. You are most likely a young woman who has been thrown into events far above your head, though you might also be a young man or a brave knight who has sworn your loyalty to the old witch. You may have demanded Baba Yaga's aid, and somehow escaped unscathed for your audacity. She may have reached out to you by sending a messenger in the form of an animated object, such as a mortar that had grown legs. She may have instead appeared before you herself, demanding you aid her with some nigh-impossible chore. While many fail these tasks and end up becoming a meal for Baba Yaga or meet even worse fates, you prevailed and earned her respect. Her gift to you is her patronage (and your life).\n\n**Spell List** occult\n\n**Patron Skill** Occultism\n\n**Lesson of Baba's Understanding** Baba Yaga teaches you to be more like her, allowing you to transfer spirits into objects and freeze your foes. You gain the Spirit Object hex cantrip and your familiar learns Chilling Spray.\n\n**Familiar of Obscuring Snowfall** Your familiar is always covered in a thin layer of snow, which it sheds as needed. When you Cast or Sustain a hex, you can cause clinging snow to fall in a centered on a square of your familiar's space. This snowfall remains until the start of your next turn, and enemies that enter these squares during that period are dazzled until the start of your next turn.",
+    "description": "Your patron is Baba Yaga, the Queen of Witches. You are most likely a young woman who has been thrown into events far above your head, though you might also be a young man or a brave knight who has sworn your loyalty to the old witch. You may have demanded Baba Yaga's aid, and somehow escaped unscathed for your audacity. She may have reached out to you by sending a messenger in the form of an animated object, such as a mortar that had grown legs. She may have instead appeared before you herself, demanding you aid her with some nigh-impossible chore. While many fail these tasks and end up becoming a meal for Baba Yaga or meet even worse fates, you prevailed and earned her respect. Her gift to you is her patronage (and your life).\n\n**Spell List** occult\n\n**Patron Skill** Occultism\n\n**Lesson of Baba's Understanding** Baba Yaga teaches you to be more like her, allowing you to transfer spirits into objects and freeze your foes. You gain the Spirit Object hex cantrip and your familiar learns Chilling Spray.\n\n**Familiar of Obscuring Snowfall** Your familiar is always covered in a thin layer of snow, which it sheds as needed. When you Cast or Sustain a hex, you can cause clinging snow to fall in a 5-foot burst centered on a square of your familiar's space. This snowfall remains until the start of your next turn, and enemies that enter these squares during that period are dazzled until the start of your next turn.",
     "descRefs": [
      {
       "label": "Spirit Object",
@@ -170507,7 +170520,7 @@
    {
     "id": "silence-in-snow",
     "name": "Silence in Snow",
-    "description": "Bitter cold heralded your patron's appearance, in the depths of the winter solstice or on a frozen peak at the end of the world. Your patron might be a winter hag, ice yai, or other spirit of the cold, but one thing is clear as ice—their power is not to be underestimated.\n\n**Spell List** primal\n\n**Patron Skill** Nature\n\n**Lesson of Winter's Chill** Your patron taught you the power of winter firsthand by subjecting you to frost and snow. You learn the Clinging Ice hex cantrip and your familiar learns Gust of Wind.\n\n**Familiar of Freezing Rime** Your familiar is cold to the touch, its breath always visible. When you Cast or Sustain a hex, you can cause ice to form in a centered on a square of your familiar's space. Those squares are difficult terrain until the start of your next turn.",
+    "description": "Bitter cold heralded your patron's appearance, in the depths of the winter solstice or on a frozen peak at the end of the world. Your patron might be a winter hag, ice yai, or other spirit of the cold, but one thing is clear as ice—their power is not to be underestimated.\n\n**Spell List** primal\n\n**Patron Skill** Nature\n\n**Lesson of Winter's Chill** Your patron taught you the power of winter firsthand by subjecting you to frost and snow. You learn the Clinging Ice hex cantrip and your familiar learns Gust of Wind.\n\n**Familiar of Freezing Rime** Your familiar is cold to the touch, its breath always visible. When you Cast or Sustain a hex, you can cause ice to form in a 5-foot burst centered on a square of your familiar's space. Those squares are difficult terrain until the start of your next turn.",
     "descRefs": [
      {
       "label": "Clinging Ice",
@@ -170746,7 +170759,7 @@
     }
    }
   ],
-  "why": "wg-batch-028: patron-N prints a CHOICE for two patrons ('dizzying colors or grease'; 'your choice of summon animal or summon plant or fungus'); grantedSpells is a flat list, so the orchestrator's new SubclassOption.grantedSpellChoice carries the pick (read beside grantedSpells in build.ts, asked in the class card). Whole array re-emitted from spec 1 (the 14 flat grantedSpells kept).",
+  "why": "wg-batch-028: patron-N prints a CHOICE for two patrons ('dizzying colors or grease'; 'your choice of summon animal or summon plant or fungus'); grantedSpells is a flat list, so the orchestrator's new SubclassOption.grantedSpellChoice carries the pick (read beside grantedSpells in build.ts, asked in the class card). Whole array re-emitted from spec 1 (the 14 flat grantedSpells kept). 2026-09-30, the regenerating lane (embedded class-option descriptions): baba-yaga, silence-in-snow restated with their classFeatures records' text, the text the chain now derives for every class option (scripts/lib/embedded-descriptions.mjs; scripts/embedded-description-check.mjs) — this row had restated the Foundry-era copies. class-38 is the class page.",
   "path": [
    "subclass"
   ]
@@ -171845,7 +171858,7 @@
     "description": "Weapon implements are the most direct and confrontational, representing battle, struggle, and potentially violence. You can choose only a one-handed weapon as an implement, which allows you to channel energies into your weapon as well as hold your other implements once you gain them. Weapon implements are associated with the harrow suit of hammers and the astrological signs of the rider and the swordswoman.\n\n### **Intensify Vulnerability**\n\nYour weapon is drawn to your enemy's vital spots, almost of its own accord. You gain a +2 status bonus to attack rolls against the target of your Exploit Vulnerability."
    }
   ],
-  "why": "nine implements rendered three bare headings with no body, and shield printed the same three benefits twice."
+  "why": "nine implements rendered three bare headings with no body, and shield printed the same three benefits twice. (restored 2026-09-30 after the regenerating lane: batch 28 keeps each implement option to its Intensify Vulnerability tier (test/batch28-data.test.ts); the benefits are their own records (class-69); the option is baselined in scripts/data/embedded-description-baseline.json.)"
  },
  {
   "category": "classes",
@@ -172416,7 +172429,7 @@
     }
    }
   ],
-  "why": "batch P02 sparkling-targe#description + resurgent-maelstrom#handwraps-name, merged into ONE row (same key). AoN hybrid-study-12 (Sparkling Targe, Impossible Magic pg. 13): the option description becomes the printed text (\"force barrage\", \"from a spell or other magical effect\", \"the resistance you have from Arcane Cascade\"), ending at the Conflux Spell line like every sibling option (the Studious Spells ride spellSlotBonus). AoN hybrid-study-9 (Resurgent Maelstrom): \"handwraps of mighty blows\" - description and descRefs label corrected from \"Handwraps of Might Blows\". Supersedes the batch 039 row; every other option and field is carried through byte-for-byte."
+  "why": "batch P02 sparkling-targe#description + resurgent-maelstrom#handwraps-name, merged into ONE row (same key). AoN hybrid-study-12 (Sparkling Targe, Impossible Magic pg. 13): the option description becomes the printed text (\"force barrage\", \"from a spell or other magical effect\", \"the resistance you have from Arcane Cascade\"), ending at the Conflux Spell line like every sibling option (the Studious Spells ride spellSlotBonus). AoN hybrid-study-9 (Resurgent Maelstrom): \"handwraps of mighty blows\" - description and descRefs label corrected from \"Handwraps of Might Blows\". Supersedes the batch 039 row; every other option and field is carried through byte-for-byte. (restored 2026-09-30 after the regenerating lane: batch P02 ends each hybrid-study option at its Conflux Spell (test/batchP02-data-rows-1.test.ts, hybrid-study-12); the Studious Spell rungs are the record's; baselined in scripts/data/embedded-description-baseline.json.)"
  },
  {
   "category": "classes",
@@ -172717,7 +172730,7 @@
    {
     "id": "school-of-battle-magic",
     "name": "School of Battle Magic",
-    "description": "Magic is power, and there are always those who will use power for the art of battle. You may have studied in the military of a nation of the brink of war—Cheliax and Andoran perhaps, or Geb and Nex. You summon whirling energies that can lay waste to both soldiers and armies, while being sure not to neglect arcane countermeasures for common tactical complications or the shields and defenses that keep combatants alive on the battlefield.\n\n**Curriculum**\n\n- **cantrips:** Shield, Telekinetic Projectile\n- **1st:** Breathe Fire, Force Barrage, Mystic Armor\n- **2nd:** Mist, Resist Energy\n- **3rd:** Earthbind, Fireball\n- **4th:** Wall of Fire, Weapon Storm\n- **5th:** Howling Blizzard, Impaling Spike\n- **6th:** Chain Lightning,\n- **7th:** Energy Aegis, True Target\n- **8th:** Arctic Rift, Desiccate\n- **9th:** Falling Stars\n\n**School Spells** initial: Force Bolt; advanced: Energy Absorption",
+    "description": "Magic is power, and there are always those who will use power for the art of battle. You may have studied in the military of a nation of the brink of war—Cheliax and Andoran perhaps, or Geb and Nex. You summon whirling energies that can lay waste to both soldiers and armies, while being sure not to neglect arcane countermeasures for common tactical complications or the shields and defenses that keep combatants alive on the battlefield.\n\n**Curriculum**\n\n- **cantrips:** Shield, Telekinetic Projectile\n- **1st:** Breathe Fire, Force Barrage, Mystic Armor\n- **2nd:** Mist, Resist Energy\n- **3rd:** Earthbind, Fireball\n- **4th:** Wall of Fire, Weapon Storm\n- **5th:** Howling Blizzard, Impaling Spike\n- **6th:** Chain Lightning, Disintegrate\n- **7th:** Energy Aegis, True Target\n- **8th:** Arctic Rift, Desiccate\n- **9th:** Falling Stars\n\n**School Spells** initial: Force Bolt; advanced: Energy Absorption",
     "descRefs": [
      {
       "label": "Shield",
@@ -172911,7 +172924,7 @@
    {
     "id": "school-of-civic-wizardry",
     "name": "School of Civic Wizardry",
-    "description": "Whether you studied in Manaket's Occularium or the Academy of Applied Magic, you learned that the fruits of arcane studies—like any other field—should ultimately help the common citizen. You've learned the humble art of construction, of finding lost people and things, of moving speedily among buildings and moats—yet these same arts can be turned to demolition, and the constructs you animate to build bridges can just as easily tear them down.\n\n**Curriculum**\n\n- **cantrips:** , Read Aura\n- **1st:** Hydraulic Push, Pummeling Rubble, Summon Construct\n- **2nd:** Revealing Light, Water Walk\n- **3rd:** Cozy Cabin, Safe Passage\n- **4th:** Creation, Unfettered Movement\n- **5th:** Control Water, Wall of Stone\n- **6th:** , Wall of Force\n- **7th:** Planar Palace,\n- **8th:** Earthquake, Pinpoint\n- **9th:** Foresight\n\n**School Spells** initial: Earthworks; advanced: Community Restoration",
+    "description": "Whether you studied in Manaket's Occularium or the Academy of Applied Magic, you learned that the fruits of arcane studies—like any other field—should ultimately help the common citizen. You've learned the humble art of construction, of finding lost people and things, of moving speedily among buildings and moats—yet these same arts can be turned to demolition, and the constructs you animate to build bridges can just as easily tear them down.\n\n**Curriculum**\n\n- **cantrips:** Prestidigitation, Read Aura\n- **1st:** Hydraulic Push, Pummeling Rubble, Summon Construct\n- **2nd:** Revealing Light, Water Walk\n- **3rd:** Cozy Cabin, Safe Passage\n- **4th:** Creation, Unfettered Movement\n- **5th:** Control Water, Wall of Stone\n- **6th:** Disintegrate, Wall of Force\n- **7th:** Planar Palace, Retrocognition\n- **8th:** Earthquake, Pinpoint\n- **9th:** Foresight\n\n**School Spells** initial: Earthworks; advanced: Community Restoration",
     "descRefs": [
      {
       "label": "Read Aura",
@@ -173097,7 +173110,7 @@
    {
     "id": "school-of-kalistrade",
     "name": "School of Kalistrade",
-    "description": "Power and money are closely intertwined, and you recognize the potential for magic to assist in your pursuit of wealth and influence. Though you might study this school without joining the Prophets of Kalistrade, most who do so are either a part of the organization or local to Kerse and therefore used to the customs and culture of the Kalistocrats. You deploy magic to help you see through the illusions and trickery of others. At the same time, you push boundaries and exploit loopholes to get ahead of your competitors.\n\n**Curriculum**\n\n- **cantrips:** , Read Aura\n- **1st:** Alarm, Charm, Item Facade\n- **2nd:** Ghostly Carrier,\n- **3rd:** , Veil of Privacy\n- **4th:** Outcast's Curse, Suggestion\n- **5th:** Imaginary Lockbox, Subconscious Suggestion\n- **6th:** Repulsion, Scrying\n- **7th:** Project Image,\n- **8th:** , Hidden Mind\n- **9th:** Resplendent Mansion\n\n**School Spells** initial: Unexpected Windfall; advanced: Capital Dividend",
+    "description": "Power and money are closely intertwined, and you recognize the potential for magic to assist in your pursuit of wealth and influence. Though you might study this school without joining the Prophets of Kalistrade, most who do so are either a part of the organization or local to Kerse and therefore used to the customs and culture of the Kalistocrats. You deploy magic to help you see through the illusions and trickery of others. At the same time, you push boundaries and exploit loopholes to get ahead of your competitors.\n\n**Curriculum**\n\n- **cantrips:** Prestidigitation, Read Aura\n- **1st:** Alarm, Charm, Item Facade\n- **2nd:** Ghostly Carrier, Invisibility\n- **3rd:** Clairaudience, Veil of Privacy\n- **4th:** Outcast's Curse, Suggestion\n- **5th:** Imaginary Lockbox, Subconscious Suggestion\n- **6th:** Repulsion, Scrying\n- **7th:** Project Image, Retrocognition\n- **8th:** Disappearance, Hidden Mind\n- **9th:** Resplendent Mansion\n\n**School Spells** initial: Unexpected Windfall; advanced: Capital Dividend",
     "descRefs": [
      {
       "label": "Read Aura",
@@ -173374,7 +173387,7 @@
    {
     "id": "school-of-mentalism",
     "name": "School of Mentalism",
-    "description": "As a scholar, you know all too well the importance of a sound mind. Thus, you attended a school—like the Farseer Tower or the Stone of the Seers—that taught the arts of befuddling lesser minds with figments and illusions or implanted sensations and memories.\n\n**Curriculum**\n\n- **cantrips:** Daze, Figment\n- **1st:** Dizzying Colors, Sleep, Sure Strike\n- **2nd:** Illusory Creature, Stupefy\n- **3rd:** Dream Message, Mind Reading\n- **4th:** Nightmare, Vision of Death\n- **5th:** , Illusory Scene\n- **6th:** Never Mind, Phantasmal Calamity\n- **7th:** Project Image, Warp Mind\n- **8th:** , Uncontrollable Dance\n- **9th:**\n\n**School Spells** initial: Charming Push; advanced: Invisibility Cloak",
+    "description": "As a scholar, you know all too well the importance of a sound mind. Thus, you attended a school—like the Farseer Tower or the Stone of the Seers—that taught the arts of befuddling lesser minds with figments and illusions or implanted sensations and memories.\n\n**Curriculum**\n\n- **cantrips:** Daze, Figment\n- **1st:** Dizzying Colors, Sleep, Sure Strike\n- **2nd:** Illusory Creature, Stupefy\n- **3rd:** Dream Message, Mind Reading\n- **4th:** Nightmare, Vision of Death\n- **5th:** Hallucination, Illusory Scene\n- **6th:** Never Mind, Phantasmal Calamity\n- **7th:** Project Image, Warp Mind\n- **8th:** Disappearance, Uncontrollable Dance\n- **9th:** Phantasmagoria\n\n**School Spells** initial: Charming Push; advanced: Invisibility Cloak",
     "descRefs": [
      {
       "label": "Daze",
@@ -173932,7 +173945,7 @@
    {
     "id": "school-of-the-reclamation",
     "name": "School of the Reclamation",
-    "description": "Whether it's been lost to war, abandoned during calamity, or simply buried by the ages, there is as much important knowledge to be found in the hidden corners of the world as in the schools and libraries of the academy. Your study of magic in the service of rediscovering lost knowledge for the Sarkoris Reclamation has taught you that much that was once lost can still be found, but only if someone is willing to seek it out and retrieve it. You've focused your magic on reaching the world's hidden and forgotten places, whether they are found in a distant ruin or the depths of a lost memory, and bringing their knowledge back to the surface—whatever the cost.\n\n**Curriculum**\n\n- **cantrips:** Telekinetic Hand, Telekinetic Projectile\n- **1st:** Fleet Step, Gust of Wind, Mending\n- **2nd:** Knock, Mental Map\n- **3rd:** Locate, Overwhelming Memory\n- **4th:** Bridge of Vines, Shape Stone\n- **5th:** Mind Probe, Scouting Eye\n- **6th:** Truesight, Wall of Force\n- **7th:** Restore Ground,\n- **8th:** Pinpoint, Unrelenting Observation\n- **9th:**\n\n**School Spells** initial: Grasping Vine; advanced: Unsettling Knowledge",
+    "description": "Whether it's been lost to war, abandoned during calamity, or simply buried by the ages, there is as much important knowledge to be found in the hidden corners of the world as in the schools and libraries of the academy. Your study of magic in the service of rediscovering lost knowledge for the Sarkoris Reclamation has taught you that much that was once lost can still be found, but only if someone is willing to seek it out and retrieve it. You've focused your magic on reaching the world's hidden and forgotten places, whether they are found in a distant ruin or the depths of a lost memory, and bringing their knowledge back to the surface—whatever the cost.\n\n**Curriculum**\n\n- **cantrips:** Telekinetic Hand, Telekinetic Projectile\n- **1st:** Fleet Step, Gust of Wind, Mending\n- **2nd:** Knock, Mental Map\n- **3rd:** Locate, Overwhelming Memory\n- **4th:** Bridge of Vines, Shape Stone\n- **5th:** Mind Probe, Scouting Eye\n- **6th:** Truesight, Wall of Force\n- **7th:** Restore Ground, Retrocognition\n- **8th:** Pinpoint, Unrelenting Observation\n- **9th:** Metamorphosis\n\n**School Spells** initial: Grasping Vine; advanced: Unsettling Knowledge",
     "descRefs": [
      {
       "label": "Telekinetic Hand",
@@ -174044,7 +174057,7 @@
     "advancedFocusSpell": "interdisciplinary-incantation"
    }
   ],
-  "why": "AoN arcane-school-20 (School of Protean Form, Player Core pg. 200) ends the Curriculum \"- 9th: Metamorphosis\"; the option the picker shows ended \"- **8th:** Desiccate, Monstrosity Form\\n- **9th:**\" with 21 descRefs that skipped Metamorphosis, so a player choosing this school read a curriculum one spell short of print. Supersedes the existing {classes, wizard, options, path:[\"subclass\"]} row, whose 18-option value (byte-identical to the shipped core.json array, including the red-mantis-magic-school curriculum repair that row was written for) is carried over whole with only school-of-protean-form’s 9th-rank line filled in and one descRef inserted after Monstrosity Form; spells/metamorphosis exists in core.json."
+  "why": "AoN arcane-school-20 (School of Protean Form, Player Core pg. 200) ends the Curriculum \"- 9th: Metamorphosis\"; the option the picker shows ended \"- **8th:** Desiccate, Monstrosity Form\\n- **9th:**\" with 21 descRefs that skipped Metamorphosis, so a player choosing this school read a curriculum one spell short of print. Supersedes the existing {classes, wizard, options, path:[\"subclass\"]} row, whose 18-option value (byte-identical to the shipped core.json array, including the red-mantis-magic-school curriculum repair that row was written for) is carried over whole with only school-of-protean-form’s 9th-rank line filled in and one descRef inserted after Monstrosity Form; spells/metamorphosis exists in core.json. 2026-09-30, the regenerating lane (embedded class-option descriptions): school-of-battle-magic, school-of-civic-wizardry, school-of-kalistrade, school-of-mentalism, school-of-the-reclamation restated with their classFeatures records' text, the text the chain now derives for every class option (scripts/lib/embedded-descriptions.mjs; scripts/embedded-description-check.mjs) — this row had restated the Foundry-era copies. class-39 is the class page."
  },
  {
   "category": "classFeatures",
@@ -174368,10 +174381,11 @@
    "progression": "psychic",
    "spellbook": {
     "spells": 5,
-    "perLevel": 2
+    "perLevel": 2,
+    "cantrips": 8
    }
   },
-  "why": "class-74 (Magus, Impossible Magic pg. 9). Its Spells per Day table keeps 2 slots at every unlocked rank (1 the level a rank opens) and prints no 10th-rank slot — identical to the 'psychic' progression already implemented. Supersedes the shipped overlay row {\"type\":\"prepared\",\"tradition\":\"arcane\",\"keyAbility\":\"int\",\"repertoire\":false,\"progression\":\"two-rank\",\"spellbook\":{\"spells\":4,\"perLevel\":2}}, carried whole with only progression and spellbook.spells changed. class-74: \"The spellbook contains your choice of eight arcane cantrips and five 1st-rank arcane spells.\""
+  "why": "class-74 (Magus, Impossible Magic pg. 9). Its Spells per Day table keeps 2 slots at every unlocked rank (1 the level a rank opens) and prints no 10th-rank slot — identical to the 'psychic' progression already implemented. Supersedes the shipped overlay row {\"type\":\"prepared\",\"tradition\":\"arcane\",\"keyAbility\":\"int\",\"repertoire\":false,\"progression\":\"two-rank\",\"spellbook\":{\"spells\":4,\"perLevel\":2}}, carried whole with only progression and spellbook.spells changed. class-74: \"The spellbook contains your choice of eight arcane cantrips and five 1st-rank arcane spells.\" Lane C1 (owner's bug 2026-10-14, book casters may prepare only from their book): spellbook.cantrips 8 added from that same sentence (class-feature-1258 prints it too) — the BOOK holds 8 cantrips, the 5 prepared each morning stay cantripsKnown; read by bookCantripCapacity."
  },
  {
   "category": "classFeatures",
@@ -182548,7 +182562,7 @@
    {
     "id": "angel-eidolon",
     "name": "Angel Eidolon",
-    "description": "Your eidolon is a celestial messenger, a member of the angelic host with a unique link to you, allowing them to carry a special message to the mortal world at your side. Most angel eidolons are roughly humanoid in form, with feathered wings, glowing eyes, halos, or similar angelic features. However, some take the form of smaller angelic servitors like the winged helmet cassisian angel instead. The two of you are destined for an important role in the plans of the celestial realms. Though a true angel, your angel eidolon's link to you as a mortal prevents them from casting the angelic messenger ritual, even if they somehow learn it.\n\n**Tradition** divine\n\n**Traits** angel, celestial, eidolon\n\n**Alignment** must be good, usually neutral good\n\n**Home Plane** Nirvana (if NG), Elysium (if CG), or Heaven (if LG)\n\n---\n\n**Size** Medium or Small\n\n**Suggested Attacks** fist (bludgeoning), wing (bludgeoning), unarmed attacks shaped like a weapon\n\n**Angelic Avenger** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap)\n\n**Angelic Emissary** Str 12, Dex 18, Con 12, Int 10, Wis 12, Cha 14; +1 AC (+4 Dex cap)\n\n**Skills** Diplomacy, Religion\n\n**Senses** darkvision\n\n**Language** Celestial\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities** *Initial* hallowed strikes; *Symbiosis* traveler's aura; *Transcendence* angelic mercy\n\n## Hallowed Strikes\n\nYour eidolon's attacks are hallowed by the celestial realms. Your eidolon's unarmed Strikes deal an extra 1 good damage; as usual, this extra damage harms only evil creatures or those with a weakness to good damage. Additionally, your eidolon can make nonlethal attacks with its unarmed attacks without taking the usual –2 circumstance penalty.\n\n## Traveler's Aura 7th\n\nYour eidolon emanates a powerful aura—resembling that of an astral deva—that protects creatures as they travel. The aura has the abjuration, aura, and divine traits. Your eidolon and its allies within a 20-foot emanation are protected from severe heat and cold, and your eidolon is never off-guard to creatures inside the aura that are of a lower level than the eidolon. When you gain the transcendence class feature, this evolves to the full benefits of an astral deva; your eidolon and allies in the aura are protected from environmental damage from any plane, including severe and extreme heat and cold as well as more unusual dangers.\n\n## Angelic Mercy 17th\n\nYour eidolon's angelic power allows them to assuage a variety of ailments, just like most other powerful angels. Your eidolon can cast *remove curse*, *remove disease*, *remove fear*, and *remove paralysis* once per day each as 9th-level divine innate spells.",
+    "description": "Your eidolon is a celestial messenger, a member of the angelic host with a unique link to you, allowing them to carry a special message to the mortal world at your side. Most angel eidolons are roughly humanoid in form, with feathered wings, glowing eyes, halos, or similar angelic features. However, some take the form of smaller angelic servitors like the winged helmet cassisian angel instead. The two of you are destined for an important role in the plans of the celestial realms. Though a true angel, your angel eidolon's link to you as a mortal prevents them from casting the angelic messenger ritual, even if they somehow learn it.\n\n**Tradition** divine\n\n**Traits** angel, celestial, eidolon\n\n**Alignment** must be good, usually neutral good\n\n**Home Plane** Nirvana (if NG), Elysium (if CG), or Heaven (if LG)\n\n---\n\n**Size** Medium or Small\n\n**Suggested Attacks** fist (bludgeoning), wing (bludgeoning), unarmed attacks shaped like a weapon\n\n**Angelic Avenger** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap)\n\n**Angelic Emissary** Str 12, Dex 18, Con 12, Int 10, Wis 12, Cha 14; +1 AC (+4 Dex cap)\n\n**Skills** Diplomacy, Religion\n\n**Senses** darkvision\n\n**Language** Celestial\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities** *Initial* hallowed strikes; *Symbiosis* traveler's aura; *Transcendence* angelic mercy\n\n## Hallowed Strikes\n\nYour eidolon's attacks are hallowed by the celestial realms. Your eidolon's unarmed Strikes gain the holy trait and deal 1 extra spirit damage to unholy creatures and creatures with weakness to holy. Additionally, your eidolon can make nonlethal attacks with its unarmed attacks without taking the usual –2 circumstance penalty.\n\n## Traveler's Aura 7th\n\nYour eidolon emanates a powerful aura—resembling that of an astral deva—that protects creatures as they travel. The aura has the abjuration, aura, and divine traits. Your eidolon and its allies within a 20-foot emanation are protected from severe heat and cold, and your eidolon is never off-guard to creatures inside the aura that are of a lower level than the eidolon. When you gain the transcendence class feature, this evolves to the full benefits of an astral deva; your eidolon and allies in the aura are protected from environmental damage from any plane, including severe and extreme heat and cold as well as more unusual dangers.\n\n## Angelic Mercy 17th\n\nYour eidolon's angelic power allows them to assuage a variety of ailments, just like most other powerful angels. Your eidolon can cast *remove curse*, *remove disease*, *remove fear*, and *remove paralysis* once per day each as 9th-level divine innate spells.",
     "descRefs": [
      {
       "label": "off-guard",
@@ -183053,7 +183067,7 @@
    {
     "id": "psychopomp-eidolon",
     "name": "Psychopomp Eidolon",
-    "description": "Your eidolon is a psychopomp, a creature whose sworn duty is to usher souls safely to the afterlife and maintain the courts of the dead. Psychopomp eidolons have a variety of appearances, but since they often traffic with mortals, their form typically includes an elaborate mask. You and your psychopomp eidolon share an important fate together, whether it relates directly to your own soul or to a mission that will somehow protect the souls of others.\n\n**Tradition** divine\n\n**Traits** eidolon, monitor, psychopomp\n\n**Alignment** must be true neutral\n\n**Home Plane** The Boneyard\n\n---\n\n**Size** Medium\n\n**Suggested Attacks** beak (piercing), claw (slashing), fist (bludgeoning), jaws (piercing), unarmed attacks shaped like a weapon\n\n**Soul Guardian** Str 18, Dex 14, Con 16, Int 10, Wis 12, Cha 8; +2 AC (+3 Dex cap)\n\n**Scribe of the Dead** Str 12, Dex 18, Con 12, Int 14, Wis 12, Cha 10; +1 AC (+4 Dex cap)\n\n**Skills** Intimidation, Religion\n\n**Senses** darkvision\n\n**Language** Requian\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities***Initial *spirit touch*; Symbiosis *hidden watcher*; Transcendence *spirit taker\n\n## Spirit Touch\n\nYour eidolon's attacks possess a psychopomp's ability to harm the living and the dead. Your eidolon's unarmed Strikes affect incorporeal creatures as though etched with a Ghost Touch property rune and deal an extra 1 void damage to living creatures and an extra 1 vitality damage to undead.\n\n## Hidden Watcher 7th\n\nYour eidolon can render both of you unseen. Once per hour, it can cast targeting you, them, or both of you at once. If the spell targeted both of you, the spell ends for both of you if either of you uses a hostile action.\n\n## Spirit Taker 17th\n\nYour eidolon is particularly capable when it comes to handling bodiless spirits and putting undead to their final rest. Your eidolon can see incorporeal creatures inside of solid objects and can attack them with Strikes without penalty; an incorporeal creature in a solid object that takes damage from your eidolon's Strike is expelled from the object to the nearest available space, moving closer to your eidolon if possible.\n\nAdditionally, your eidolon can target or affect a creature projecting its consciousness (such as via Project Image) or possessing another creature, even if its body is elsewhere, though your eidolon must know about the possession or projection and choose to do so.\n\nFinally, the spirit of an undead destroyed by your eidolon's Strikes is sent directly to the Boneyard for judgment; an undead with an ability to avoid such a fate automatically, such as a ghost's rejuvenation, can attempt a counteract check against your spell DC to return via that ability as normal. In that case, it uses its Will save modifier as its counteract modifier.",
+    "description": "Your eidolon is a psychopomp, a creature whose sworn duty is to usher souls safely to the afterlife and maintain the courts of the dead. Psychopomp eidolons have a variety of appearances, but since they often traffic with mortals, their form typically includes an elaborate mask. You and your psychopomp eidolon share an important fate together, whether it relates directly to your own soul or to a mission that will somehow protect the souls of others.\n\n**Tradition** divine\n\n**Traits** eidolon, monitor, psychopomp\n\n**Alignment** must be true neutral\n\n**Home Plane** The Boneyard\n\n---\n\n**Size** Medium\n\n**Suggested Attacks** beak (piercing), claw (slashing), fist (bludgeoning), jaws (piercing), unarmed attacks shaped like a weapon\n\n**Soul Guardian** Str 18, Dex 14, Con 16, Int 10, Wis 12, Cha 8; +2 AC (+3 Dex cap)\n\n**Scribe of the Dead** Str 12, Dex 18, Con 12, Int 14, Wis 12, Cha 10; +1 AC (+4 Dex cap)\n\n**Skills** Intimidation, Religion\n\n**Senses** darkvision\n\n**Language** Requian\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities***Initial *spirit touch*; Symbiosis *hidden watcher*; Transcendence *spirit taker\n\n## Spirit Touch\n\nYour eidolon's attacks possess a psychopomp's ability to harm the living and the dead. Your eidolon's unarmed Strikes affect incorporeal creatures as though etched with a Ghost Touch property rune and deal an extra 1 void damage to living creatures and an extra 1 vitality damage to undead.\n\n## Hidden Watcher 7th\n\nYour eidolon can render both of you unseen. Once per hour, it can cast Invisibility targeting you, them, or both of you at once. If the spell targeted both of you, the spell ends for both of you if either of you uses a hostile action.\n\n## Spirit Taker 17th\n\nYour eidolon is particularly capable when it comes to handling bodiless spirits and putting undead to their final rest. Your eidolon can see incorporeal creatures inside of solid objects and can attack them with Strikes without penalty; an incorporeal creature in a solid object that takes damage from your eidolon's Strike is expelled from the object to the nearest available space, moving closer to your eidolon if possible.\n\nAdditionally, your eidolon can target or affect a creature projecting its consciousness (such as via Project Image) or possessing another creature, even if its body is elsewhere, though your eidolon must know about the possession or projection and choose to do so.\n\nFinally, the spirit of an undead destroyed by your eidolon's Strikes is sent directly to the Boneyard for judgment; an undead with an ability to avoid such a fate automatically, such as a ghost's rejuvenation, can attempt a counteract check against your spell DC to return via that ability as normal. In that case, it uses its Will save modifier as its counteract modifier.",
     "descRefs": [
      {
       "label": "Ghost Touch",
@@ -183193,7 +183207,7 @@
     ]
    }
   ],
-  "why": "eidolon-14 (Aberrant) and eidolon-23 (Ooze) are the two eidolon types Impossible Magic adds, and a summoner could not pick either. Elemental (eidolon-12, Rage of Elements) and Swarm (eidolon-13, Battlecry!) stay: neither is reprinted, and legacy-only content stays. Every shipped option keeps its id, so a saved summoner still resolves."
+  "why": "eidolon-14 (Aberrant) and eidolon-23 (Ooze) are the two eidolon types Impossible Magic adds, and a summoner could not pick either. Elemental (eidolon-12, Rage of Elements) and Swarm (eidolon-13, Battlecry!) stay: neither is reprinted, and legacy-only content stays. Every shipped option keeps its id, so a saved summoner still resolves. 2026-09-30, the regenerating lane (embedded class-option descriptions): angel-eidolon, psychopomp-eidolon restated with their classFeatures records' text, the text the chain now derives for every class option (scripts/lib/embedded-descriptions.mjs; scripts/embedded-description-check.mjs) — this row had restated the Foundry-era copies. class-77 is the class page."
  },
  {
   "category": "classes",
@@ -183554,7 +183568,7 @@
    {
     "id": "the-tangible-dream",
     "name": "The Tangible Dream",
-    "description": "You pull colors and shapes from the depth of your mind, projecting impossible creations into the world as tapestries of astral thread or sculptures of force and light.\n\n**Granted Spells**\n\n- 1st: Dizzying Colors\n- 2nd:\n- 3rd: Sea of Thought\n- 4th: Containment\n- 5th: Etheric Shards\n- 6th: Scintillating Safeguard\n- 7th: Project Image\n- 8th: Confusing Colors\n- 9th: Resplendent Mansion\n\n**Standard Psi Cantrips**\n\nFigment\n\nYour minor illusions shift and dance in a way that draws the eye. The range of figment increases to 60 feet. When you Sustain the spell, you can move the apparent sound or vision up to 15 feet. You can then attempt to create-a-diversion as usual. Those creatures who disbelieved the illusion aren't affected by this diversion. Your figment also gains the following amp.\n\n**Amp** When you amp the spell, you can create a particularly distracting illusion as part of its normal effects. Choose an unoccupied square within the spell's range. The illusion in that square provides flanking for a single melee attack made before the beginning of your next turn. If you Sustain the spell, the details of the illusion change and shift to keep your enemies unsettled; the flanking illusion's duration extends until the beginning of your next turn and you can move it to any unoccupied square in the spell's range. The flanking illusion can't provide its benefit against any creature who has disbelieved the figment.\n\nShield\n\nYour shield spell can be deployed on behalf of others. When you cast shield, you can choose a target ally within 30 feet to gain the benefits of the spell instead of you. The option to Shield Block with the spell is up to you and uses your reaction, not the target's. Your shield also gains the following amp.\n\n**Amp** You create a layered barrier of three shields to improve your defenses. The duration increases to sustained up to 1 minute. The shield still lowers at the start of each of your turns, but you can raise it again when you Sustain the Spell.\n\nWhen you Shield Block with this spell, one of the three layers breaks and you cease to gain the bonus to AC, but the spell doesn't end. You can keep using the spell until the final layer breaks; once it does, the spell ends and you can't cast shield or amped shield again for 10 minutes. You can choose to break additional layers when you Shield Block with this spell to improve your defenses. If you break two layers instead of one, increase the Hardness to 1-1/2 × the normal amount (7 at 1st rank, 15 at 3rd rank, 22 at 5th rank, 30 at 7th rank, and 37 at 9th rank). If you break all three layers, increase the Hardness to double the normal amount.\n\n**Unique Psi Cantrips**\n\nsurface: Imaginary Weapon\n\n**Amp** You form multiple force weapons to lash out at multiple foes. You can target two creatures, making an attack against each. These attacks each increase your multiple attack penalty, but you don't increase your multiple attack penalty until after you make all the spell attack rolls.\n\n**Amp Heightened (+1)** The damage increases by 2d6 instead of 1d6.\n\ndeeper: Astral Rain\n\n**Amp** The area changes to a , and you can Sustain the Spell up to 1 minute. The first time each round that you Sustain the Spell, you can move the burst up to 20 feet.\n\ndeepest: Hologram Cage\n\n**Amp** Force walls make the cage's barrier physical as well as visual. Each 10-foot-by-10-foot section of the cage's wall has AC 10, Hardness equal to double the spell's rank, and HP equal to quadruple the spell's rank. The spell is disrupted if any of its walls would pass through a creature when you cast it.",
+    "description": "You pull colors and shapes from the depth of your mind, projecting impossible creations into the world as tapestries of astral thread or sculptures of force and light.\n\n**Granted Spells**\n\n- 1st: Dizzying Colors\n- 2nd: Invisibility\n- 3rd: Sea of Thought\n- 4th: Containment\n- 5th: Etheric Shards\n- 6th: Scintillating Safeguard\n- 7th: Project Image\n- 8th: Confusing Colors\n- 9th: Resplendent Mansion\n\n**Standard Psi Cantrips**\n\nFigment\n\nYour minor illusions shift and dance in a way that draws the eye. The range of figment increases to 60 feet. When you Sustain the spell, you can move the apparent sound or vision up to 15 feet. You can then attempt to create-a-diversion as usual. Those creatures who disbelieved the illusion aren't affected by this diversion. Your figment also gains the following amp.\n\n**Amp** When you amp the spell, you can create a particularly distracting illusion as part of its normal effects. Choose an unoccupied square within the spell's range. The illusion in that square provides flanking for a single melee attack made before the beginning of your next turn. If you Sustain the spell, the details of the illusion change and shift to keep your enemies unsettled; the flanking illusion's duration extends until the beginning of your next turn and you can move it to any unoccupied square in the spell's range. The flanking illusion can't provide its benefit against any creature who has disbelieved the figment.\n\nShield\n\nYour shield spell can be deployed on behalf of others. When you cast shield, you can choose a target ally within 30 feet to gain the benefits of the spell instead of you. The option to Shield Block with the spell is up to you and uses your reaction, not the target's. Your shield also gains the following amp.\n\n**Amp** You create a layered barrier of three shields to improve your defenses. The duration increases to sustained up to 1 minute. The shield still lowers at the start of each of your turns, but you can raise it again when you Sustain the Spell.\n\nWhen you Shield Block with this spell, one of the three layers breaks and you cease to gain the bonus to AC, but the spell doesn't end. You can keep using the spell until the final layer breaks; once it does, the spell ends and you can't cast shield or amped shield again for 10 minutes. You can choose to break additional layers when you Shield Block with this spell to improve your defenses. If you break two layers instead of one, increase the Hardness to 1-1/2 × the normal amount (7 at 1st rank, 15 at 3rd rank, 22 at 5th rank, 30 at 7th rank, and 37 at 9th rank). If you break all three layers, increase the Hardness to double the normal amount.\n\n**Unique Psi Cantrips**\n\nsurface: Imaginary Weapon\n\n**Amp** You form multiple force weapons to lash out at multiple foes. You can target two creatures, making an attack against each. These attacks each increase your multiple attack penalty, but you don't increase your multiple attack penalty until after you make all the spell attack rolls.\n\n**Amp Heightened (+1)** The damage increases by 2d6 instead of 1d6.\n\ndeeper: Astral Rain\n\n**Amp** The area changes to a , and you can Sustain the Spell up to 1 minute. The first time each round that you Sustain the Spell, you can move the burst up to 20 feet.\n\ndeepest: Hologram Cage\n\n**Amp** Force walls make the cage's barrier physical as well as visual. Each 10-foot-by-10-foot section of the cage's wall has AC 10, Hardness equal to double the spell's rank, and HP equal to quadruple the spell's rank. The spell is disrupted if any of its walls would pass through a creature when you cast it.",
     "descRefs": [
      {
       "label": "Dizzying Colors",
@@ -183712,7 +183726,7 @@
     ]
    }
   ],
-  "why": "AoN conscious-mind-8 prints \"4th Clairvoyance\" in the Granted Spells ladder; the shipped option description carried the bare line \"- 4th:\" and its descRefs had no Clairvoyance entry, so a psychic picking The Infinite Eye read a blank 4th rank. The other five conscious minds all carry their 4th-rank name."
+  "why": "AoN conscious-mind-8 prints \"4th Clairvoyance\" in the Granted Spells ladder; the shipped option description carried the bare line \"- 4th:\" and its descRefs had no Clairvoyance entry, so a psychic picking The Infinite Eye read a blank 4th rank. The other five conscious minds all carry their 4th-rank name. 2026-09-30, the regenerating lane (embedded class-option descriptions): the-tangible-dream restated with their classFeatures records' text, the text the chain now derives for every class option (scripts/lib/embedded-descriptions.mjs; scripts/embedded-description-check.mjs) — this row had restated the Foundry-era copies. class-68 is the class page."
  },
  {
   "category": "classFeatures",
@@ -190687,5 +190701,177 @@
   "field": "description",
   "value": "**Frequency** once per day\n\n**Trigger** You would take spirit damage from a fiend\n\n---\n\n**Effect** You gain resistance to spirit damage equal to twice your level plus your Charisma modifier against the triggering damage. If this resistance prevents you from taking any damage at all, the spiritual backlash against the fiend who attempted to damage you forces them to attempt a Will save against your class DC to avoid being slowed 1 for one round.",
   "why": "AoN background-651 (Once Possessed) prints the Spiritual Scar reaction verbatim; layout mirrors actions/wish-for-luck (Frequency / Trigger / --- / Effect)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "light-mortar-innovation",
+  "field": "description",
+  "value": "Through years of experience and countless hours of experimentation, you've developed a siege weapon compact enough to operate by yourself while still packing a deadly punch.\n\n**Prerequisites:** You must be an inventor.\n\n**Munitions Master Adjustments:** Instead of choosing an innovation from the options listed in the inventor class, you have the light mortar innovation, as well as the following changes to the class features listed on the following pages. You gain these abilities at the same levels as normal for the class unless otherwise specified. You must select Munitions Master Dedication as your 2nd-level class feat.\n\n### Innovation\n\nYour innovation is a mounted siege weapon called a light mortar that weighs 2 Bulk. Whether it propels its payload via an elaborate mechanism or explosive reagents, it's capable of dealing immense damage. Your light mortar requires an Interact action to deploy it before you can Aim, Load, or Launch it, and it includes its own wheeled platform that it is mounted on as part of the deployment. It can be packed back up for easy transport as a 2-action activity with the manipulate trait and either worn as a backpack or carried in one hand while packed. Because of the light mortar's smaller size, the Move Siege Engine activity takes only 1 action when it is deployed.\n\nYour light mortar begins as a 1st-level siege weapon with the statistics shown below. It deals an additional die of damage at 5th level and every 4 levels thereafter. When you Launch your light mortar, the Reflex save is equal to your class DC. Its AC is equal to your inventor class DC and it has Hardness 5. It has trained proficiency in Reflex and Fortitude saves, using your Intelligence modifier to calculate these bonuses. It has 10 Hit Points, plus a number of Hit Points equal to 2 plus your Intelligence modifier for each level you have. Its Broken Threshold is equal to half its total Hit Points (rounded down).\n\nAt 5th level, your light mortar's Hardness increases to 10. At 10th level it increases to 15 and its proficiency rank in Reflex and Fortitude saves increases to expert. At 15th level, its Hardness increases to 20, and its proficiency rank in Reflex and Fortitude saves increases to master.\n\nYour innovation fires small cannonballs called carry shot. A group of 10 carry shot, which weighs 1 Bulk, can be purchased for 5 sp from most shops that sell ammunition.\n\nChoose one initial light mortar modification to apply to your innovation, either from the following or from other initial light mortar modifications to which you have access. These modifications alter the abilities or form of your light mortar.\n\n- **Contained Shrapnel** You alter your light mortar's ammunition to prevent fragments of it from flying outward on impact. Your innovation gains the nonlethal trait. You can choose whether to apply the nonlethal trait on each Launch.\n- **Enhanced Shrapnel** You alter your light mortar's ammunition to change the way it shatters on impact, spraying nearby creatures with a hail of razor-sharp pieces. Your innovation gains the versatile P and versatile S traits. You can choose whether to apply one of these traits on each Launch with your innovation.\n- **Spring-Loaded** You've designed your innovation with springs to quickly unfold and extend components, optimizing it for quick deployment. You can deploy your light mortar as a free action.\n\n### Overdrive\n\nThe additional damage you deal from Overdrive applies to Launches made with your light mortar, as if they were Strikes.\n\n### Explode\n\nWhen you use this ability, the emanation is centered on your innovation, and you can choose to exclude the square you are in from the emanation.\n\n### Breakthrough Innovation (7th)\n\nWhen choosing a breakthrough innovation, choose from the following breakthrough light mortar modifications. As usual, you can choose an initial light mortar modification instead if you prefer.\n\n- **Blanching Chamber** You embed tiny metal filings into ammunition in the firing chamber of your light mortar. These filings remain embedded in the fragments of the ammunition after it shatters on impact. Your ammunition counts as cold iron and silver.\n- **Earthbreaker** Each time you Launch, you can choose to alter the ammunition to direct the brunt of the explosion downward, dealing half damage but creating difficult terrain in the blast area.\n- **Narrow Blast** You alter your ammunition so that the force of the impact is directed in a narrow band. Each time you Launch you can choose to have the explosion form a 20-foot cone instead of a 10-foot burst. This cone must originate at the point of impact and can be directed either directly away from you or 45 degrees to either side of that.\n\n### Inventive Expertise (7th)\n\nYou gain this class feature at 7th level instead of 9th.\n\n### Offensive Boost (9th)\n\nThe offensive boost you choose applies to Launches made with your light mortar, as if they were Strikes.\n\n### Inventive Mastery (15th)\n\nYou gain this class feature at 15th level instead of 17th.\n\n### Revolutionary Innovation (15th)\n\nWhen choosing a revolutionary innovation, choose from the following revolutionary light mortar modifications. As usual, you can choose an initial or breakthrough light mortar modification instead if you prefer.\n\n- **Enhanced Damage** As the revolutionary weapon modification of the same name.\n- **Impossible Alloy** As the revolutionary weapon modification of the same name, except that the alloy is embedded in your ammunition on launch.\n- **Precise Blast** You have such precise control over your light mortar that you can wrap the blast of impact around your allies without harming them. When you Launch, you can select a number of squares up to your Intelligence modifier to exclude from the blast area.",
+  "why": "AoN innovation-4 (Light Mortar, Guns & Gears): the Narrow Blast line prints \"form a 20-foot cone instead of a 10-foot burst\"; the record had lost both areas to the @-link cleaner (\"form a instead of a .\"). 2026-09-30 regenerating lane: the record takes the text its inventor class option already carries, which is the page's, so scripts/data/embedded-description-baseline.json drops its line."
+ },
+ {
+  "category": "classFeatures",
+  "id": "puppeteer",
+  "field": "description",
+  "value": "You prefer to study life and death from afar. You gain the Consume Thrall action and the thrall proliferation ability.\n\n### Consume Thrall\n\n**Free Action** (concentrate, necromancer, occult)\n\n**Frequency** once per day; **Requirements** You have 0 Focus Points and at least one thrall with 30 feet of you; **Effects** You destroy one thrall within 30 feet of you and regain 1 Focus Point. You can spend this focus point only to cast a grave spell.\n\n### Thrall Proliferation\n\nOnce per round when you cast *create thrall*, you can create one additional thrall in range.",
+  "why": "AoN fatal-method-1 (Puppeteer, Impossible Magic pg. 29): the page prints the Consume Thrall action block between the opening sentence and Thrall Proliferation; the created record (overlay create row) had dropped it. 2026-09-30 regenerating lane: the record takes the text its necromancer class option already carries (work/new-classes/necromancer.json), which is the page's, so scripts/data/embedded-description-baseline.json drops its line. \"at least one thrall with 30 feet of you\" is transcribed as printed."
+ },
+ {
+  "category": "feats",
+  "id": "miraculous-flight",
+  "field": "note",
+  "value": "Not tracked: the flight is a once-per-day miracle with a duration you time at the table.",
+  "why": "feat-3153: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "feats",
+  "id": "terrifying-mien",
+  "field": "note",
+  "value": "Not tracked: the aura affects creatures that end their turn near you, which depends on where they are — apply it at the table.",
+  "why": "feat-7383: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "feats",
+  "id": "exorcist-dedication",
+  "field": "note",
+  "value": "Spirit wisps are not tracked. One arrives at each daily preparation; if your dwelling is empty you can spend 10 minutes to attract another, and remnants captured from vanquished incorporeal undead join it. Each purification spends one. Count them by hand.",
+  "why": "feat-3454: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "feats",
+  "id": "enticing-dwelling",
+  "field": "note",
+  "value": "Not tracked: you entice TWO wisps into your spirit dwelling instead of one, both at daily preparations and whenever you spend 10 minutes to find more.",
+  "why": "feat-3458: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "feats",
+  "id": "dragonblood-paragon",
+  "field": "note",
+  "value": "Your pick is recorded, but its upgrade is not applied on the sheet; apply it yourself. Dracomancer: each granted 1st- and 2nd-rank innate spell can be cast one more time. Kobold Breath: creatures that critically fail their save take 3d4 persistent damage of your draconic patron’s damage type. Strongjaw Kobold: your jaws gain the deadly d6 trait. Venomtail Kobold: you can use Tail Toxin twice per day.",
+  "why": "feat-2387 prints the four upgrades: Dracomancer 'Increase the number of times you can cast each of the granted 1st- and 2nd-rank innate spells by 1'; Kobold Breath 'take 3d4 persistent damage of the type dealt by your draconic patron'; Strongjaw Kobold 'gains the deadly d6 trait'; Venomtail Kobold 'use the Tail Toxin action twice per day'. No src code reads the pick (lane B 2026-10-14)."
+ },
+ {
+  "category": "items",
+  "id": "talisman-cord",
+  "field": "note",
+  "value": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you.",
+  "why": "equipment-883-866: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "items",
+  "id": "talisman-cord-lesser",
+  "field": "note",
+  "value": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you.",
+  "why": "equipment-883-865: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "items",
+  "id": "talisman-cord-greater",
+  "field": "note",
+  "value": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you.",
+  "why": "equipment-883-867: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "backgrounds",
+  "id": "sally-guard-neophyte",
+  "field": "note",
+  "value": "The printed gear is SHODDY: each piece takes a −2 item penalty to the checks it is used for (shoddy armor also lowers its item bonus to AC by 2). The app has no shoddy model — apply the penalty by hand until you replace the gear.",
+  "why": "background-197: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "backgrounds",
+  "id": "anti-magical",
+  "field": "note",
+  "value": "Whenever any magic would affect you — even your own or an ally’s — its originator must attempt a DC 3 flat check; on a failure the magic does not affect you. Applied at the table: the app does not model flat checks.",
+  "why": "background-239: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "backgrounds",
+  "id": "energy-scarred",
+  "field": "note",
+  "value": "Your innate magical trait is primal — under the Pervasive Magic variant, your Cantrip Casting tradition. The app does not yet feed this into the pervasive-magic feat ladder; apply the tradition yourself.",
+  "why": "background-246: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "backgrounds",
+  "id": "tech-reliant",
+  "field": "note",
+  "value": "You are entirely unaffected by healing magic: spells, items and effects with the healing trait never restore your Hit Points. The engine cannot enforce this — apply it at the table.",
+  "why": "background-265: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "backgrounds",
+  "id": "otherworldly-mission",
+  "field": "note",
+  "value": "Once per adventure, you can ask the voice you believe to be a deity for orders and receive some kind of instruction — a command to go somewhere or do something, never an explanation. No action cost is printed; your GM adjudicates the ask.",
+  "why": "background-286: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "backgrounds",
+  "id": "royalty",
+  "field": "note",
+  "value": "You can attempt to influence commoners in your family’s territory and nobility anywhere. If you gain Leverage Connections, you automatically have common and noble connections in communities in your family’s territory, and noble connections in large communities outside it. The app does not track connections.",
+  "why": "background-470: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "backgrounds",
+  "id": "cathedral-child",
+  "field": "note",
+  "value": "Your upbringing shifts the party’s starting reputations (printed in the background) — a campaign tracker your GM applies, not a sheet number.",
+  "why": "background-566: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "backgrounds",
+  "id": "child-of-the-twin-village",
+  "field": "note",
+  "value": "You and your twin gain the effects of dream message every night, between the two of you only — a natural effect, not a spell. The app does not track it; your GM plays the twin.",
+  "why": "background-587: the former dataWarning's words, unchanged, as the record's note (lane B 2026-10-14)."
+ },
+ {
+  "category": "feats",
+  "id": "beast-gunner-dedication",
+  "field": "note",
+  "value": "Your cantrip must be one that requires a spell attack roll. The spell picker does not narrow the list to those, so choose one yourself. If you already cast arcane or primal spells from spell slots, you also learn one additional cantrip from that tradition: a prepared caster can prepare it in addition to their usual cantrips per day, and a spontaneous caster adds it to their repertoire. The sheet does not add that cantrip to your class spellcasting, so track it yourself.",
+  "why": "feat-3229 prints 'This cantrip must require a spell attack roll.' and 'If you already cast arcane or primal spells from spell slots, you learn one additional cantrip from that tradition. If you're a prepared caster, you can prepare this spell in addition to your usual cantrips per day; if you're a spontaneous caster, you add this cantrip to your spell repertoire.' Measured 2026-10-14 (npx jiti, level 6, featPicks 6:class:0): wizard-casting cantripCap 6 without and with the feat, druid-casting 5 and 5; only the separate beast-gunner-dedication-casting entry appears. cantripBonusFor has no tradition gate, so no spellSlotBonus row can deliver it; the clause is the player's to apply (lane B fix round 1)."
+ },
+ {
+  "category": "classes",
+  "id": "necromancer",
+  "path": [
+   "spellcasting"
+  ],
+  "field": "spellbook",
+  "value": {
+   "spells": 4,
+   "perLevel": 2,
+   "cantrips": 8,
+   "noun": "dirge"
+  },
+  "why": "class-75 / class-feature-1285 (Necromancer Spellcasting, Impossible Magic) prints \"At 1st level, you can prepare one 1st-rank spell and five cantrips each morning from your dirge\", \"Your dirge contains your choice of eight occult cantrips, the 1st-rank spell harm, and four other 1st-rank occult spells of your choice.\" and \"Each time you gain a level, you add two occult spells to your dirge\". Declaring the book makes the necromancer a book caster in buildCharacter and the builder (it prepared rank 1+ off the whole occult list); harm is the free grant below, not one of the four. Owner's bug 2026-10-14, lane C1."
+ },
+ {
+  "category": "classFeatures",
+  "id": "necromancer-spellcasting",
+  "field": "grantedSpells",
+  "value": [
+   "harm"
+  ],
+  "why": "class-feature-1285 prints \"Your dirge contains your choice of eight occult cantrips, the 1st-rank spell harm, and four other 1st-rank occult spells of your choice.\" harm is IN the dirge for free; ClassFeatureDef.grantedSpells is the documented carrier (\"Spells this feature adds to the caster's spellbook/repertoire\"), read by build.ts bookGrantedSpellIds so it is in the book and never charged to the four. spellListAdditions keeps harm on the occult list as before. Lane C1."
+ },
+ {
+  "category": "classFeatures",
+  "id": "bloodline",
+  "field": "grantedSpells",
+  "value": {
+   "bloodline-phoenix": [
+    {
+     "id": "cleanse-affliction",
+     "level": 7,
+     "rank": 4
+    }
+   ]
+  },
+  "why": "AoN bloodline-15 (Phoenix) prints the Granted Spells ladder with \"4th Remove Curse\"; our own text (the classes/sorcerer bloodline-phoenix option, newest printing) reads \"4th: Cleanse Affliction\". Cleanse Affliction (spell-1467) is a 2nd-rank spell, so filing the gift under the spell's own rank gave every phoenix sorcerer two 2nd-rank gifts (one 2nd-rank place too few) and no 4th-rank gift (one 4th-rank place too many). The ladder keyed by option id on the declaring feature - the shape classFeatures/conscious-mind already carries, read by build.ts grantLadder/ladderRank - files it at the rung print names; level 7 is a sorcerer's first 4th-rank slot. Lane C4 (C3 check round 1)."
  }
 ]

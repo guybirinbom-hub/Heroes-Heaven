@@ -433,6 +433,9 @@ describe('enabledBookSet — the 2026-09-25 book split never narrows a saved cho
     ['Pathfinder Foolish Housekeeping and Other Articles', 'Paizo Blog: Foolish Housekeeping and Other Articles', 'Other / Blogs & web articles'],
     ['Pathfinder Fools Aplenty', 'Pathfinder Lost Omens: Fools Aplenty', 'Other / Fools Aplenty (April Fools)'],
     ['Pathfinder One-Shot #2: Dinner at Lionlodge', 'Pathfinder One-Shot 2: Dinner at Lionlodge', 'Adventure Paths / Pathfinder Society'],
+    // 2026-09-30 (the regenerating lane): the mid-title "The" CHECK 4 did not see until that day — 8 records beside
+    // the key's 22, one v0.1.40 row. Mutation-proof like the six: deleting its BOOK_FOLDS pair fails this case alone.
+    ['Pathfinder #207: The Resurrection Flood', 'Pathfinder #207: Resurrection Flood', 'Adventure Paths / Triumph of the Tusk'],
   ];
   for (const [from, to, row] of PAIRED_2026_09_29) {
     it(`an old selection with "${from}" on reads "${to}" on: one v0.1.40 row (${row})`, () => {

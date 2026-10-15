@@ -21,6 +21,8 @@ import { applyBackfill } from './lib/apply-backfill.mjs';
 import { aonFacets, backgroundFacets, packOf, fillFrequencyCounters, prerequisitesFrom, foldBookSpellings } from './lib/aon-facets.mjs';
 import { loadLivePages, liveEdition } from './lib/live-pages.mjs';
 import { loadReprintIndex, repointDoc } from './lib/reprint.mjs';
+import { liveFirst } from './lib/ast-index.mjs';
+import { loadBaseline as loadEmbeddedBaseline, recordReader, syncOptionDescriptions } from './lib/embedded-descriptions.mjs';
 import { creationPlan, subclassLink, ancestryOf, appendSubclassOptions } from './lib/player-create.mjs';
 import {
   BESTIARY_CATEGORIES, LABELLED_BUCKETS, REFERENCE, asPage as archivePage, createBucket, creationPlan as archivePlan, loadPages, namesBook, nonPlayerCategories, parentPageOf,
@@ -1184,6 +1186,42 @@ const archivePages = new Map(); // doc id -> page, display tree kept
 for (const bucket of CARRY_WHOLESALE) {
   if (cur[bucket]) { db[bucket] = cur[bucket]; stats[bucket] = { total: Object.keys(cur[bucket]).length, carried: true }; }
 }
+/*
+ * VEHICLES GET THEIR BOOK (2026-09-30, desk #170: "the player sources should aplly to everything he has accses
+ * to"). The carried bucket is the Foundry-era reference, which names no book, so all 107 vehicles shipped without
+ * `source.book` — and entrySourceOn passes a record with no book, so a Core-only character was offered
+ * Battlecry!'s Ice Breaker. Each vehicle now takes the book of the Archives document its record is joined to —
+ * the verified join (scripts/migration/out/map.json, mapDocFor), else the aonId it shipped with — through the
+ * same bestBook + mapBook an overlaid item's book goes through (overlayContent), with the carried licence kept
+ * as it is there. A document of a category the load loop skips (REF_SKIP: bone-ship's creature-4838, a
+ * stat block) is read from the whole-export index `reprints.docs` built above, which keeps every document's
+ * `book` and `books` — the same Source line, given to bestBook in the shape it reads. A vehicle whose join
+ * names no document of the export keeps no book, and stays unfiltered (entrySourceOn: no book = always).
+ * Measured 2026-09-30: 103 of 107 take a book (101 from their vehicle page, magic-broom from equipment-3023,
+ * bone-ship from creature-4838 "High Seas"); flying-carpet, sandsailer (join: drop), warship, second-kiss
+ * (join: subblock) have no document. foldBookSpellings below sees these books like every other record's.
+ */
+{
+  let booked = 0;
+  const bookless = [];
+  // bestBook reads `book` and `data.source`; the slim whole-export copy carries the Source line as `books`.
+  const exportDoc = (id) => {
+    const d = reprints.docs.get(id);
+    return d ? { book: d.book, data: { source: d.books } } : null;
+  };
+  if (db.vehicles) db.vehicles = { ...db.vehicles }; // never mutate the carried reference object
+  for (const [k, rec] of Object.entries(db.vehicles ?? {})) {
+    const id = mapDocFor('vehicles', k) ?? shippedCore.vehicles?.[k]?.aonId;
+    const doc = id ? docById.get(String(id)) ?? exportDoc(String(id)) : null;
+    const book = doc ? mapBook(bestBook(doc)) : undefined;
+    if (!book) { bookless.push(k); continue; }
+    const source = { book };
+    if (rec?.source?.license) source.license = rec.source.license;
+    db.vehicles[k] = { ...rec, source };
+    booked++;
+  }
+  console.log(`vehicles: ${booked} took the book of their joined document; ${bookless.length} have none: ${bookless.join(', ') || '-'}`);
+}
 // MODES had the problem stances already solved, and worse: CARRY_WHOLESALE copies from REF, which is
 // the FROZEN Foundry backup, and that predates the modes work entirely — so every regen silently
 // emptied the bucket of all 428 item and toggle modes, and they were only ever coming back because
@@ -1359,10 +1397,12 @@ const BUCKET_PRIORITY = ['conditions', 'actions', 'feats', 'classFeatures', 'spe
  */
 const BUCKET_LAST = ['grimFascination', 'fatalMethod', 'follower'];
 const astIndex = {}; // slug -> preferred bucket
+const treeAon = {}; // bucket -> slug -> the `aon` of the tree written below (the index pass's rule 4a reads it)
 // `reference` holds step 5's records only, so it is in no category's pick — its trees come from the loop below.
 for (const bucket of [...AON_BUCKETS, REFERENCE]) {
   const newMap = bestByBucket[bucket] || {};
   const astOut = {};
+  treeAon[bucket] = {};
   for (const s in newMap) {
     if (!(s in (db[bucket] || {}))) continue;
     /* The AST must be the SHIPPED record's OWN page. bestByBucket picks per-slug by edition rank,
@@ -1413,7 +1453,7 @@ for (const bucket of [...AON_BUCKETS, REFERENCE]) {
     // PROVENANCE: the archive document this page was built from, so a guard can be exact rather than
     // fuzzy (scripts/ast-provenance-check.mjs). Unknown keys on a tree root are ignored by the
     // renderer (src/sheet/AstRenderer.tsx switches on `t`) and preserved by every resolveAst copy.
-    if (rec.ast) { astOut[s] = resolveAst(rec.ast); if (rec.id) astOut[s].aon = rec.id; }
+    if (rec.ast) { astOut[s] = resolveAst(rec.ast); if (rec.id) { astOut[s].aon = rec.id; treeAon[bucket][s] = rec.id; } }
   }
   // Step 4's records: their page is not the per-slug pick (a suffixed key, or a class option built
   // from another category's document), so the loop above never reaches them.
@@ -1439,12 +1479,35 @@ const INDEX_ORDER = [
   ...AON_BUCKETS.filter((b) => !BUCKET_PRIORITY.includes(b) && !BUCKET_LAST.includes(b)),
   ...BUCKET_LAST.filter((b) => AON_BUCKETS.includes(b)),
 ];
+/*
+ * One slug, several buckets with its tree: INDEX_ORDER decides, EXCEPT that a page the Archives mark
+ * superseded never wins while a live page is a candidate (gold-set R12, "the newest printing wins, whole"),
+ * and where they name the replacement page (`superseded_by`) the slug follows it when a candidate tree IS
+ * that page. That is scripts/lib/ast-index.mjs `liveFirst` (rule 4a) — the one definition, which
+ * backfill-ast-edition.mjs applies to the slugs it adds; imported, never copied.
+ *
+ * Why (2026-09-30, desk: the strigoi fix): this pass reached `sidebar` (sidebar.json) before `trait`
+ * (trait.json) and wrote strigoi -> sidebar, the Advanced Player's Guide sidebar-1126, which the Archives
+ * mark superseded_by ancestry-85 (Dhampir, Player Core 2) — so a title-only "Strigoi" opened replaced text
+ * while the live trait page trait-854 held a tree for the same slug. ancestry-85 is a page of another name,
+ * so no candidate is it and the live trait page wins. Measured before the change
+ * (scripts/ast-index-superseded-split.mjs): strigoi was the only entry this pass wrote onto a superseded page
+ * with a live tree elsewhere, so it is the only slug this moves.
+ */
+const docOfTree = (aon) => {
+  const d = docById.get(String(aon));
+  return d ? { category: d.category, supersededBy: d.superseded_by ?? null } : null;
+};
+const indexCands = new Map(); // slug -> [{ bucket, aon }], in INDEX_ORDER
 for (const bucket of INDEX_ORDER) {
   const newMap = bestByBucket[bucket] || {};
   for (const s in newMap) {
-    if (!(s in astIndex) && newMap[s].rec.ast && (s in (db[bucket] || {}))) astIndex[s] = bucket;
+    if (newMap[s].rec.ast && (s in (db[bucket] || {}))) {
+      (indexCands.get(s) ?? indexCands.set(s, []).get(s)).push({ bucket, aon: treeAon[bucket]?.[s] ?? newMap[s].rec.id ?? null });
+    }
   }
 }
+for (const [s, cs] of indexCands) astIndex[s] = liveFirst(cs, docOfTree)[0].bucket;
 for (const [bucket, m] of Object.entries(playerCreated)) for (const s of Object.keys(m)) if (!(s in astIndex)) astIndex[s] = bucket;
 // Step 5's records are NOT indexed: they open by key only (scripts/lib/archive-coverage.mjs createdRefs).
 writeFileSync('public/ast-index.json', JSON.stringify(astIndex));
@@ -1562,6 +1625,19 @@ if (!existsSync(BACKUP)) copyFileSync(OUT, BACKUP); // preserve the pristine ref
 {
   const { filled, gained } = fillFrequencyCounters(db.items);
   console.log(`item uses: ${filled} item record(s) gained ${gained} counter(s) from a printed Frequency line (rest had nothing to refill on them)`);
+}
+
+/*
+ * A CLASS OPTION'S TEXT IS ITS RECORD'S (2026-09-30). The class options above came from the Foundry-era
+ * reference and from whole-list overlay rows, each carrying an option text of its own that nothing derived
+ * from the option's classFeatures record — 46 had drifted (School of Battle Magic lost "Disintegrate").
+ * The record's links come with its text. scripts/lib/embedded-descriptions.mjs says why; import-siege-and-gaps
+ * (after its backfill re-apply) and import-new-classes run the same pass again, and
+ * scripts/embedded-description-check.mjs holds the result.
+ */
+{
+  const { synced, linked, kept } = syncOptionDescriptions(db, recordReader(db), new Set(loadEmbeddedBaseline('.').keys()));
+  console.log(`class options: ${synced.length} embedded description(s) now read their classFeatures record's text, ${linked.length} gained its links; ${kept.length} baselined`);
 }
 
 writeFileSync(OUT, JSON.stringify(db));

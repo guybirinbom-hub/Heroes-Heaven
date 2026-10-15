@@ -2,10 +2,14 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { content } from './_content';
 import { backgroundGrantedFeats } from '../src/rules/build';
+import { loadBaseline, recordReader, syncOverlayValue } from '../scripts/lib/embedded-descriptions.mjs';
 
 const c = content();
 type Patch = { category: string; id: string; field?: string; value: unknown; path?: string[]; create?: boolean; delete?: boolean };
 const overlay = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as Patch[];
+/* content() has merged core-descriptions.json back onto the records, so the reader needs no split file. */
+const optionRecord = recordReader(c);
+const embeddedKeep = new Set(loadBaseline('.').keys());
 
 /**
  * A patch may address a NESTED object, so one option inside a choice group can be patched without
@@ -90,7 +94,12 @@ describe('mechanical data survives a re-import', () => {
         // null and absent are equivalent to every reader (`rec.speeds?.land`, `...(rec.speeds ?? {})`),
         // so treat them as agreeing rather than forcing a literal null into core.json.
         if (p.value === null && live === undefined) return false;
-        return JSON.stringify(live) !== JSON.stringify(p.value);
+        // 2026-09-30, the regenerating lane: a class option's text and links are its classFeatures record's
+        // (scripts/lib/embedded-descriptions.mjs, run after the overlay by every writer of a class option list),
+        // so a whole-list row is compared THROUGH that sync — the same rule scripts/regen-durability-check.mjs applies.
+        // scripts/embedded-description-check.mjs fails a row whose option TEXT differs from its record's, so this
+        // excuses only the record links the sync adds (test/embedded-descriptions.test.ts, "the overlay half").
+        return JSON.stringify(live) !== JSON.stringify(syncOverlayValue(p, optionRecord, embeddedKeep));
       })
       .map((p) => `${p.category}/${p.id}${p.path?.length ? '/' + p.path.join('/') : ''}.${p.field}`);
     expect(drift, 'overlay entries that no longer match core.json').toEqual([]);

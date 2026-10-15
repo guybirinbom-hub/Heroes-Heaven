@@ -123,6 +123,11 @@ const aliasTitle = (s) => String(s || '').toLowerCase()
 /** CHECK 6: the record's book is one its own document is printed in, under any spelling of that book
  *  ("#207: The Resurrection Flood" and "#207: Resurrection Flood" are one volume). */
 const looseTitle = (s) => aliasTitle(String(s || '').replace(/\bthe\b/gi, ' '));
+/** CHECK 4's title: bookTitle (scripts/lib/aon-facets.mjs) with every "the" set aside, as looseTitle does for
+ *  CHECK 6 — so a mid-title "The" no longer hides a pair ("#207: The Resurrection Flood" beside "#207: Resurrection
+ *  Flood", 2026-09-30). Measured that day over every choosable book: it merges that one pair and nothing else, and
+ *  no two fold targets of scripts/data/book-names.json share a title under it. */
+const looseBookTitle = (s) => bookTitle(String(s || '').replace(/\bthe\b/gi, ' '));
 const sameBookAsDoc = (doc, book) => docNamesBook(doc, book)
   || (doc?.books ?? []).some((b) => looseTitle(b) === looseTitle(book) || looseTitle(mapBook(b)) === looseTitle(book));
 
@@ -346,10 +351,11 @@ const aliasProblems = [];
    *     lookup finds). It follows every row, title-changing rows included, and each title-changing row must
    *     carry its same-book reason in book-names-reasons.json (the reason check above fails one without), so
    *     a stray nobody has ruled on stops here until a row (and, where the row changes the title, its reason)
-   *     is written — never folded silently by a title match. The title strip (aliasTitle here, bookTitle
-   *     likewise) removes only a LEADING "the", so a mid-title "The" — "Pathfinder #207: The Resurrection
-   *     Flood" beside "Pathfinder #207: Resurrection Flood", both in one Triumph of the Tusk row — is not seen
-   *     by this check; that pair is queued for the next regenerating lane;
+   *     is written — never folded silently by a title match. The title is looseBookTitle: bookTitle with EVERY
+   *     "the" set aside (2026-09-30). bookTitle alone removed only a LEADING "the", so a mid-title "The" —
+   *     "Pathfinder #207: The Resurrection Flood" (8 records) beside "Pathfinder #207: Resurrection Flood" (22),
+   *     both in one Triumph of the Tusk row — passed this check until then; it now fails such a pair, and that
+   *     one has its table row (and reason) and a BOOK_FOLDS pair;
    *   · two shipped spellings of one title where neither is a fold target fail, each naming the other;
    *   · a book the table itself folds into another key fails, whatever its title (foldedBook: its exact
    *     spelling's row, else the importer's normalised lookup). The title rule cannot see a row that renames:
@@ -364,7 +370,7 @@ const aliasProblems = [];
   const targets = new Set(Object.values(names));
   const unRemastered = (s) => String(s).replace(/\s*\((?:remastered|remaster)\)\s*/gi, ' ').trim();
   const targetOf = new Map();
-  for (const t of targets) targetOf.set(bookTitle(t), [...(targetOf.get(bookTitle(t)) ?? []), t]);
+  for (const t of targets) targetOf.set(looseBookTitle(t), [...(targetOf.get(looseBookTitle(t)) ?? []), t]);
   const loose = new Map(); // title -> Map(spelling -> first record) for books no fold target has the title of
   let escaped = 0;
   let rowed = 0;
@@ -373,14 +379,14 @@ const aliasProblems = [];
       const b = rec?.source?.book?.trim();
       if (!b || targets.has(b) || rec.source?.license === 'homebrew') continue;
       const row = foldedBook(b);
-      const t = (targetOf.get(bookTitle(b)) ?? []).filter((x) => x !== b);
+      const t = (targetOf.get(looseBookTitle(b)) ?? []).filter((x) => x !== b);
       if (row && !t.includes(row)) {
         rowed++;
         aliasProblems.push(`${bucket}/${key} reads ${JSON.stringify(b)}, which scripts/data/book-names.json folds into ${JSON.stringify(row)} — the chain's fold did not reach it, and it is a second row of one book on the Sources card`);
         continue;
       }
       if (!t.length) {
-        const m = loose.get(bookTitle(b)) ?? loose.set(bookTitle(b), new Map()).get(bookTitle(b));
+        const m = loose.get(looseBookTitle(b)) ?? loose.set(looseBookTitle(b), new Map()).get(looseBookTitle(b));
         if (!m.has(b)) m.set(b, []);
         m.get(b).push(`${bucket}/${key}`);
         continue;
@@ -388,7 +394,7 @@ const aliasProblems = [];
       escaped++;
       aliasProblems.push(unRemastered(b) === unRemastered(t[0])
         ? `${bucket}/${key} reads ${JSON.stringify(b)}, which differs from the fold target ${JSON.stringify(t[0])} only by "(Remastered)" — a second row of one book on the Sources card`
-        : `${bucket}/${key} reads ${JSON.stringify(b)}, a spelling of the fold target ${JSON.stringify(t[0])} (one title once prefixes, "The", "(Hardcover)", apostrophes and punctuation are set aside) — a second row of one book on the Sources card`);
+        : `${bucket}/${key} reads ${JSON.stringify(b)}, a spelling of the fold target ${JSON.stringify(t[0])} (one title once prefixes, every "the", "(Hardcover)", apostrophes and punctuation are set aside) — a second row of one book on the Sources card`);
     }
   }
   let twice = 0;

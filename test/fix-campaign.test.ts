@@ -301,9 +301,14 @@ describe('shipped effect-choice data resolves', () => {
   });
   it('a shipped dataWarning surfaces on the character', () => {
     const db = content();
-    const warned = Object.keys(db.feats).find((k) => db.feats[k].dataWarning)!;
-    const ch = build('fighter', 8, { overrides: { addedFeats: [{ featId: warned, level: 1, category: 'class' }] } });
-    expect(ch.effectWarnings?.length).toBeGreaterThan(0);
+    // Lane B 2026-10-14: no FEAT carries a dataWarning any more — the eight that did were table notes (now
+    // `note`) or stale. The real missing-data warning left is a heritage's (heritage-120, Bright Fetchling's
+    // dancing lights), so the test builds that heritage and asserts ITS words reach effectWarnings rather
+    // than "something did".
+    const warned = Object.values(db.heritages).find((h) => h.dataWarning);
+    expect(warned, 'a heritage carries a real dataWarning (test/data-warning-is-missing-data.test.ts MISSING)').toBeTruthy();
+    const ch = build('fighter', 8, { ancestryId: warned!.ancestryId, heritageId: warned!.id });
+    expect(ch.effectWarnings?.some((w) => w.source === warned!.name && w.message === warned!.dataWarning)).toBe(true);
   });
 });
 

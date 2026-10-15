@@ -111,10 +111,15 @@ describe('new carriers', () => {
     expect(RECORD_MARKERS['eclipseborn']?.some((m) => m.on === 'action' && m.id === 'cast-a-spell')).toBe(true);
   });
 
-  it('Anti-Magical: the DC 3 flat check is back in the text and warned on the sheet', () => {
+  it('Anti-Magical: the DC 3 flat check is back in the text and on the background\'s note — not in the Missing data box', () => {
+    // premise: background-239 "the originator of the effect must attempt a DC 3 flat check"
     expect(db.backgrounds['anti-magical'].description).toContain('DC 3 flat check');
-    expect(db.backgrounds['anti-magical'].dataWarning).toContain('DC 3 flat check');
-    expect(bg('anti-magical').effectWarnings?.some((w) => w.message.includes('DC 3 flat check'))).toBe(true);
+    // Lane B 2026-10-14: a flat check applied at the table is a `note` (the part you apply yourself), drawn on
+    // the Details tab's Background card (test/note-readers.test.tsx). It was a dataWarning only because a
+    // background note had no reader, and so sat in the red "Missing data" box as if content were missing.
+    expect(db.backgrounds['anti-magical'].note).toContain('DC 3 flat check');
+    expect(db.backgrounds['anti-magical'].dataWarning).toBeUndefined();
+    expect((bg('anti-magical').effectWarnings ?? []).some((w) => w.message.includes('DC 3 flat check'))).toBe(false);
   });
 });
 

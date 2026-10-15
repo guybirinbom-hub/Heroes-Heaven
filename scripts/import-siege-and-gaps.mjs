@@ -44,6 +44,7 @@ import { LABELLED_BUCKETS } from './lib/archive-coverage.mjs';
 import { plain, unlink, decode, handlebarsLinks, ACTION_WORD } from './lib/aon-plain.mjs';
 import { appendSubclassOptions } from './lib/player-create.mjs';
 import { readBackfill } from './lib/write-backfill.mjs';
+import { loadBaseline as loadEmbeddedBaseline, recordReader, syncOptionDescriptions } from './lib/embedded-descriptions.mjs';
 
 /** The PRISTINE AoN mirror (one JSON file per record). Facets + markdown come from here. */
 const SRC = process.env.AON_MIRROR || 'C:/wonderers guide/aon-2e-archive/data/by-category';
@@ -1276,6 +1277,17 @@ if (notes.length) console.log(`\nnotes:\n  ${notes.join('\n  ')}`);
 {
   const { filled, gained } = fillFrequencyCounters(core.items);
   console.log(`item uses: ${filled} record(s) regained ${gained} printed-Frequency counter(s) the backfill re-apply had replaced`);
+}
+
+/*
+ * …and a class option's text (and its record's links) from its record again (2026-09-30): the re-apply above wrote every whole-list
+ * `options` row back (wizard, magus, thaumaturge, animist …), each option with the text it had when the row was
+ * written. The last step before split-descriptions.mjs, so the copy split leaves in core.json is the record's.
+ * scripts/lib/embedded-descriptions.mjs; the same pass ends import-core-v2 and import-new-classes.
+ */
+{
+  const { synced, linked, kept } = syncOptionDescriptions(core, recordReader(core), new Set(loadEmbeddedBaseline('.').keys()));
+  console.log(`class options: ${synced.length} embedded description(s) the re-apply restated took their record's text again, ${linked.length} its links; ${kept.length} baselined`);
 }
 
 if (DRY) {

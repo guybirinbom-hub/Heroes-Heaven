@@ -2338,5 +2338,240 @@
   "field": "description",
   "aon": "feat-9057",
   "why": "batch P02 running-recharge#description-header: page header (name, Source) stripped so the body opens with feat-9057's \"Preparing in every way for your next assault\"; shorter by the header; guarded by scripts/description-header-check.mjs."
+ },
+ {
+  "key": "classes/gunslinger",
+  "field": "subclass.options",
+  "aon": "class-20",
+  "before": "7562a5e3058b935e",
+  "inPlace": true,
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions): way-of-the-vanguard's embedded description is now its classFeatures record's text (scripts/lib/embedded-descriptions.mjs; held by scripts/embedded-description-check.mjs) — the Foundry-era copy had lost the linked 'Siegebreaker'. Changed IN PLACE, no option lost (6 before and after); the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classes/witch",
+  "field": "subclass.options",
+  "aon": "class-38",
+  "before": "7562a5e3058b935e",
+  "inPlace": true,
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions): baba-yaga and silence-in-snow now carry their classFeatures records' text (scripts/lib/embedded-descriptions.mjs) — the Foundry-era copies had lost '5-foot burst'. Changed IN PLACE, no option lost (16 before and after); the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classes/wizard",
+  "field": "subclass.options",
+  "aon": "class-39",
+  "before": "7562a5e3058b935e",
+  "inPlace": true,
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions): school-of-battle-magic, school-of-civic-wizardry, school-of-kalistrade, school-of-mentalism and school-of-the-reclamation now carry their classFeatures records' text (scripts/lib/embedded-descriptions.mjs) — the copies had lost curriculum spells ('Chain Lightning,' for 'Chain Lightning, Disintegrate'; ', Read Aura' for 'Prestidigitation, Read Aura' …). Changed IN PLACE, no option lost (18 before and after); the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classes/oracle",
+  "field": "subclass.options",
+  "aon": "class-61",
+  "before": "7562a5e3058b935e",
+  "inPlace": true,
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions): ashes, lore and tempest now carry their classFeatures records' text (scripts/lib/embedded-descriptions.mjs) — the copies had lost granted spells ('6th:' for '6th: Disintegrate'). Changed IN PLACE, no option lost (11 before and after); the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classes/sorcerer",
+  "field": "subclass.options",
+  "aon": "class-62",
+  "before": "7562a5e3058b935e",
+  "inPlace": true,
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions): bloodline-demonic, -elemental, -fey, -genie, -hag, -harrow, -imperial, -phoenix, -shadow and -wyrmblessed now carry their classFeatures records' text (scripts/lib/embedded-descriptions.mjs) — the copies had lost granted spells and areas ('6th: ;', 'a  for a brine dragon'). Changed IN PLACE, no option lost (18 before and after); the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classes/animist",
+  "field": "extraChoices",
+  "aon": "class-64",
+  "before": "7562a5e3058b935e",
+  "inPlace": true,
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions): the apparition lamentation-of-sinister-deals now carries its classFeatures record's text (apparition-16's printed prose; scripts/lib/embedded-descriptions.mjs) in place of a paraphrase an overlay options row restated. Changed IN PLACE, no group or option lost (1 group, 14 options before and after); the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classes/exemplar",
+  "field": "extraChoices",
+  "aon": "class-65",
+  "before": "7562a5e3058b935e",
+  "inPlace": true,
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions): fetching-bangles, mirrored-aegis, born-of-the-bones-of-the-earth, peerless-under-heaven and healer-of-the-world now carry their classFeatures records' text (scripts/lib/embedded-descriptions.mjs) — the copies had lost areas and saves ('a . An enemy', 'a  save'). Changed IN PLACE, no group or option lost (4 groups before and after); the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classes/psychic",
+  "field": "subclass.options",
+  "aon": "class-68",
+  "before": "7562a5e3058b935e",
+  "inPlace": true,
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions): the-tangible-dream now carries its classFeatures record's text (scripts/lib/embedded-descriptions.mjs) — the copy had lost '2nd: Invisibility'. Changed IN PLACE, no option lost (6 before and after); the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classes/summoner",
+  "field": "subclass.options",
+  "aon": "class-77",
+  "before": "7562a5e3058b935e",
+  "whyNotInPlace": "angel-eidolon's text is 16 characters shorter (2651 -> 2635): 'deal an extra 1 good damage; as usual, this extra damage harms only evil creatures or those with a weakness to good damage.' became its record's 'gain the holy trait and deal 1 extra spirit damage to unholy creatures and creatures with weakness to holy.' — the remastered wording (R12), not a loss; the inPlace measure refuses any text shorter by more than TEXT_SLACK, so this row is scoped to the before-snapshot only.",
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions): angel-eidolon and psychopomp-eidolon now carry their classFeatures records' text (scripts/lib/embedded-descriptions.mjs) — the angel's remastered holy / spirit wording in place of the legacy 'good damage' copy, the psychopomp's lost 'Invisibility'. Changed IN PLACE, no option lost (15 before and after); the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classes/necromancer",
+  "field": "subclass.options",
+  "aon": "class-75",
+  "before": "7562a5e3058b935e",
+  "inPlace": true,
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions): reaper now carries its classFeatures record's text (fatal-method-2; scripts/lib/embedded-descriptions.mjs) — the same words, bold run-in headings in place of the authored copy's ### headings. puppeteer keeps its text: its record, which had dropped the Consume Thrall block, was repaired to the option's text from fatal-method-1 (overlay description row) the same day. Changed IN PLACE, no option lost (2 before and after); the guard counts a changed member as a lost one."
+ },
+ {
+  "key": "classes/champion",
+  "field": "extraChoices",
+  "aon": "class-58",
+  "before": "7562a5e3058b935e",
+  "inPlace": true,
+  "why": "2026-09-30, the regenerating lane (embedded class-option descriptions, the refuter's links fix): blessed-armament and blessed-shield carried no descRefs and now carry their classFeatures records' links (5 and 2: Fearsome, Ghost Touch, Returning, Shifting, Vitalizing; Reinforcing, Sturdy Shield — scripts/lib/embedded-descriptions.mjs mergeRefs). Nothing removed: the blessing group keeps its 3 options, and the guard counts a member that GAINED a field as a lost one."
+ },
+ {
+  "key": "feats/miraculous-flight",
+  "field": "dataWarning",
+  "aon": "feat-3153",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, not missing content. The same words now ship as the record's `note` (overlay value:null dataWarning row + note row, through scripts/apply-parity-fixes.mjs); held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "feats/terrifying-mien",
+  "field": "dataWarning",
+  "aon": "feat-7383",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, not missing content. The same words now ship as the record's `note` (overlay value:null dataWarning row + note row, through scripts/apply-parity-fixes.mjs); held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "feats/exorcist-dedication",
+  "field": "dataWarning",
+  "aon": "feat-3454",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, not missing content. The same words now ship as the record's `note` (overlay value:null dataWarning row + note row, through scripts/apply-parity-fixes.mjs); held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "feats/enticing-dwelling",
+  "field": "dataWarning",
+  "aon": "feat-3458",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, not missing content. The same words now ship as the record's `note` (overlay value:null dataWarning row + note row, through scripts/apply-parity-fixes.mjs); held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "feats/dragonblood-paragon",
+  "field": "dataWarning",
+  "aon": "feat-2387",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B: the generic 'references content missing from the current data' template was false (every option's record ships). What is true — the pick is recorded and its upgrade is not applied — now ships as the record's `note`, in feat-2387's own terms; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "feats/beast-gunner-dedication",
+  "field": "dataWarning",
+  "aon": "feat-3229",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B: STALE. The caster dedication it called missing is delivered (src/rules/casterArchetypes.ts; measured on fighter 6/12, gunslinger 6, wizard 6: a spontaneous trained entry). The one clause the app does not enforce (the cantrip must require a spell attack roll) ships as the record's `note`."
+ },
+ {
+  "key": "feats/executioner-weapon-training",
+  "field": "dataWarning",
+  "aon": "feat-3329",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B: STALE. The per-weapon grant it called missing exists (src/rules/featGrantsAuto.ts mirrorBestCategory); measured on the four weapons: fighter 4 expert, fighter 13 master, rogue 4 trained, rogue 5 expert, wizard 11 expert."
+ },
+ {
+  "key": "feats/vampire-dedication",
+  "field": "dataWarning",
+  "aon": "feat-3545",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B: STALE. The Vampire Vulnerabilities sidebar it called missing ships (sidebar-1790) and the dedication's page links it live (test/note-readers.test.tsx opens it: Revulsion, Sunlight). The record keeps its Negative Survival note."
+ },
+ {
+  "key": "heritages/bright-fetchling",
+  "field": "dataWarning",
+  "aon": "heritage-120",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B: shorter because it no longer names another app in player-facing text. Still the real missing-data warning — dancing lights is absent from the spell data (test/data-warning-is-missing-data.test.ts MISSING)."
+ },
+ {
+  "key": "items/talisman-cord",
+  "field": "dataWarning",
+  "aon": "equipment-883-866",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, not missing content. The same words now ship as the record's `note`, which the item popup draws; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "items/talisman-cord-lesser",
+  "field": "dataWarning",
+  "aon": "equipment-883-865",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, not missing content. The same words now ship as the record's `note`, which the item popup draws; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "items/talisman-cord-greater",
+  "field": "dataWarning",
+  "aon": "equipment-883-867",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, not missing content. The same words now ship as the record's `note`, which the item popup draws; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "backgrounds/sally-guard-neophyte",
+  "field": "dataWarning",
+  "aon": "background-197",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, filed as a warning only because a background note had no reader. The same words now ship as the record's `note`, drawn on the Details tab's Background card; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "backgrounds/anti-magical",
+  "field": "dataWarning",
+  "aon": "background-239",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, filed as a warning only because a background note had no reader. The same words now ship as the record's `note`, drawn on the Details tab's Background card; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "backgrounds/energy-scarred",
+  "field": "dataWarning",
+  "aon": "background-246",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, filed as a warning only because a background note had no reader. The same words now ship as the record's `note`, drawn on the Details tab's Background card; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "backgrounds/tech-reliant",
+  "field": "dataWarning",
+  "aon": "background-265",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, filed as a warning only because a background note had no reader. The same words now ship as the record's `note`, drawn on the Details tab's Background card; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "backgrounds/otherworldly-mission",
+  "field": "dataWarning",
+  "aon": "background-286",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, filed as a warning only because a background note had no reader. The same words now ship as the record's `note`, drawn on the Details tab's Background card; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "backgrounds/royalty",
+  "field": "dataWarning",
+  "aon": "background-470",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, filed as a warning only because a background note had no reader. The same words now ship as the record's `note`, drawn on the Details tab's Background card; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "backgrounds/cathedral-child",
+  "field": "dataWarning",
+  "aon": "background-566",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, filed as a warning only because a background note had no reader. The same words now ship as the record's `note`, drawn on the Details tab's Background card; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "backgrounds/child-of-the-twin-village",
+  "field": "dataWarning",
+  "aon": "background-587",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane B (the red Missing data box holds only missing data): a table note, filed as a warning only because a background note had no reader. The same words now ship as the record's `note`, drawn on the Details tab's Background card; held by test/data-warning-is-missing-data.test.ts."
+ },
+ {
+  "key": "classFeatures/necromancer-spellcasting",
+  "field": "note",
+  "aon": "class-feature-1285",
+  "before": "7562a5e3058b935e",
+  "why": "2026-10-14, lane C1 (book casters may prepare only from their book): the apply-it-yourself note said \"The app lets you prepare from the whole occult list instead of from your dirge\", which is no longer true — the dirge class-feature-1285 prints (\"eight occult cantrips, the 1st-rank spell harm, and four other 1st-rank occult spells\") is now modelled (classes/necromancer spellcasting.spellbook, harm as this feature's grantedSpells), so nothing is left to apply by hand. Removed by an overlay `value: null` row; held by test/book-cantrips.test.ts."
  }
 ]

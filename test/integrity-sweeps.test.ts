@@ -390,9 +390,39 @@ describe('a field that only LOOKS read', () => {
           .map((e) => `${e.category}|${e.field}`),
       ),
     ];
+    /*
+     * `note` is the one field name EVERY record type shares (types.ts ContentBase.note), so the
+     * same-file proxy below cannot tell whose note a file reads. `backgrounds|note` passed because
+     * FeatsTab.tsx names `content.backgrounds[id]?.name` (a granter's name) and reads a FEAT's `.note`
+     * fifty lines later — while no surface drew a background's, an item's or a heritage's note at all,
+     * so their table notes were filed as red "Missing data" warnings instead (2026-10-14).
+     *
+     * For a shared field name the proxy is not asked: every (collection, field) pair the overlay writes
+     * must name its reader here — the surface file and the expression in it that reads THAT
+     * collection's field — and the expression must be in the file with comments stripped. A pair with
+     * no entry is dead. The render tests (test/note-readers.test.tsx) prove the words reach a pixel.
+     */
+    const SHARED_FIELD_NAMES = new Set(['note']);
+    const featNote = { file: 'src/sheet/FeatsTab.tsx', read: /\(content\.feats\[recordId\] \?\? content\.classFeatures\[recordId\]\)\?\.note\b/ };
+    const DECLARED_READERS: Record<string, { file: string; read: RegExp }> = {
+      'feats|note': featNote,
+      'classFeatures|note': featNote,
+      'heritages|note': { file: 'src/sheet/FeatsTab.tsx', read: /\bheritage\.note\b/ },
+      'backgrounds|note': { file: 'src/sheet/DetailsTab.tsx', read: /\bbackground\.note\b/ },
+      'items|note': { file: 'src/sheet/ItemDetail.tsx', read: /\(content\.items\[pageId\] \?\? item\)\.note\b/ },
+      'modes|note': { file: 'src/sheet/ModeDetailModal.tsx', read: /\bmode\.note\b/ },
+      'stances|note': { file: 'src/sheet/MainTab.tsx', read: /content\.stances\[[^\]]+\]\??\.note\b/ },
+    };
+    const codeOf = (rel: string) => files.find((f) => path.normalize(f.path) === path.normalize(rel))?.code ?? '';
     const dead: string[] = [];
     for (const pair of pairs) {
       const [collection, field] = pair.split('|');
+      if (SHARED_FIELD_NAMES.has(field)) {
+        const reader = DECLARED_READERS[pair];
+        if (!reader) dead.push(`${collection}.${field} (a shared field name: declare its reader in DECLARED_READERS)`);
+        else if (!reader.read.test(codeOf(reader.file))) dead.push(`${collection}.${field} (its declared reader ${reader.read} is not in ${reader.file})`);
+        continue;
+      }
       const esc = field.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const reads = new RegExp(`\\.\\s*${esc}\\b|\\b${esc}\\s*[,}:?)\\]]|['"\`]${esc}['"\`]`);
       const hit = files.some((f) => reads.test(f.code) && f.code.includes(collection));
@@ -415,24 +445,20 @@ describe('a warning that outlived the thing it warns about', () => {
     // warning is about a DIFFERENT clause of the same record, in which case it is listed here with
     // its reason.
     const MECHANICAL = ['spellSlotBonus', 'skillSubstitutions', 'focusSpells', 'focusPoolBonus', 'innateSpells', 'grantsClassFeatures', 'grantedFeatId', 'trainedSkill'];
+    // Lane B 2026-10-14 pruned this map to the records that still warn. The talisman cords and the batch
+    // 20/21 backgrounds (sally-guard-neophyte, royalty, cathedral-child, child-of-the-twin-village,
+    // tech-reliant, otherworldly-mission) warned about clauses the player applies at the table — those are
+    // `note`s now, not missing data (test/data-warning-is-missing-data.test.ts); verduran-city-folk and
+    // reborn-soul had already lost their warnings. An entry for a record that no longer warns now fails below.
     const PARTIAL: Record<string, string> = {
-      'items/talisman-cord': 'the effectChoices pick the cord’s TALISMAN; the warning is about its magic-school attunement, which the Remaster deleted',
-      'items/talisman-cord-lesser': 'same as talisman-cord',
-      'items/talisman-cord-greater': 'same as talisman-cord',
-      'backgrounds/verduran-city-folk': 'the grants are present; the warning is about the second skill FEAT, whose name is missing from the source data',
-      // Batch 20: each of these warnings names an UNMODELLED printed clause on a record whose other
-      // halves ARE modelled — the warning and the mechanics describe different sentences.
-      'backgrounds/sally-guard-neophyte': 'the gear is granted (grantsItems); the warning is about SHODDY, which has no model on either side',
-      'backgrounds/royalty': 'skill and feat are granted; the warning is about the influence/connections campaign clause the app cannot track',
-      'backgrounds/cathedral-child': 'skill and feat are granted; the warning is about the party-reputation shifts, a table-level tracker',
-      'backgrounds/child-of-the-twin-village': 'the skill is granted; the warning is about the nightly dream-message link the GM plays',
-      // Batch 21: the same warnings-about-OTHER-clauses shape.
-      'backgrounds/tech-reliant': 'both skills are granted; the warning is about the blanket healing-magic immunity no field can express',
       // Batch 25.
       'heritages/bright-fetchling': 'Light IS granted (innateSpells); the warning is about DANCING LIGHTS, the second printed cantrip, which the remaster folded into Light and which the spell data does not contain',
-      'backgrounds/otherworldly-mission': 'the skill is granted; the warning is about the once-per-adventure ask, which prints no action economy to pip',
-      'backgrounds/reborn-soul': 'the Lores are granted; the warning is about the restricted EXTRA skill increases at 3/7/15, which have no lane',
     };
+    const stale = Object.keys(PARTIAL).filter((k) => {
+      const [cat, id] = k.split('/');
+      return !(db as unknown as Record<string, Record<string, { dataWarning?: string }>>)[cat]?.[id]?.dataWarning;
+    });
+    expect(stale, 'PARTIAL lists records that no longer carry a dataWarning — prune them').toEqual([]);
     const bad: string[] = [];
     for (const cat of ['feats', 'classFeatures', 'heritages', 'backgrounds', 'items', 'ancestries'] as const) {
       for (const [id, rec] of Object.entries(db[cat] ?? {})) {

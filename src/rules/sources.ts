@@ -131,7 +131,11 @@ export function categoryOfBook(book: string): SourceCategory {
  *  Impossible Magic (the Builder's runic repertoire, runesmithRuneOptions); vehicles 107, none with a book yet,
  *  so the filter passes every one of them (entrySourceOn: no book = always) until the import gives them one,
  *  and the card then carries that book's row the same day. Every one of those books already had a Sources row
- *  and was a v0.1.40 key, so the card gains no row, only counts.
+ *  and was a v0.1.40 key, so the card gains no row, only counts. The regenerating lane of the same day gave the
+ *  vehicles their book (scripts/import-core-v2.mjs: the book of each one's joined Archives document): 103 of 107,
+ *  across 12 books that were every one a card key already (84 rows before and after); bone-ship's is its High
+ *  Seas stat block (creature-4838); flying-carpet, sandsailer, warship, second-kiss (no document) carry none and
+ *  stay unfiltered.
  *
  *  The CLASS SUB-PICKS join the same day, through classOptionRecords() below rather than this list: the
  *  Builder does not pick a bloodline, patron, school, order, instinct, eidolon … from the `bloodline` /
@@ -553,6 +557,12 @@ export const BOOK_SPLITS: ReadonlyArray<readonly [string, string]> = [
  * (a "PFS Guide" row of its own beside "Lost Omens Pathfinder Society Guide") and "Pathfinder Society Year 4
  * Rule Updates" (in the "Pathfinder Society" row, its Blog key in "Blogs & web articles") — each read at v0.1.40
  * apart from its key's row, so no pair: the saved selection decides the key's row.
+ *
+ * 2026-09-30, one more of the paired shape: "Pathfinder #207: The Resurrection Flood" (8 tattoo and marking
+ * grades) beside its key "Pathfinder #207: Resurrection Flood" (22 records). A mid-title "The" hid the pair from
+ * scripts/reprint-check.mjs CHECK 4 until that day; the table folds it now (book-names.json, with its reason).
+ * Read against the v0.1.40 card (41c2b05), both spellings sat in the ONE "Triumph of the Tusk" row, which toggled
+ * them together, so an old selection with the stray on reads the key on — paired below.
  */
 export const BOOK_FOLDS: ReadonlyArray<readonly [string, string]> = [
   ["Pathfinder Gatewalkers Player's Guide", "Pathfinder Gatewalkers Player's Guide (Remastered)"],
@@ -562,6 +572,7 @@ export const BOOK_FOLDS: ReadonlyArray<readonly [string, string]> = [
   ['Pathfinder Foolish Housekeeping and Other Articles', 'Paizo Blog: Foolish Housekeeping and Other Articles'],
   ['Pathfinder Fools Aplenty', 'Pathfinder Lost Omens: Fools Aplenty'],
   ['Pathfinder One-Shot #2: Dinner at Lionlodge', 'Pathfinder One-Shot 2: Dinner at Lionlodge'],
+  ['Pathfinder #207: The Resurrection Flood', 'Pathfinder #207: Resurrection Flood'],
 ];
 /**
  * Marks a selection made with the split books as separate toggles. A stored list WITHOUT it is from before

@@ -1,5 +1,5 @@
 {
- "coreSha": "7562a5e3058b935e41242c24e23362341ba52de73891b8cf04cc39935d639d4d",
+ "coreSha": "216d4e93050d4ec7d16c11607ef9f6b7cff3ac3404815e76fc16aa7e4a09e84d",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -7566,5 +7566,5 @@
   "items/waterproof-carrying-case",
   "items/wave-warding-tattoo"
  ],
- "wgSha": "05f9cc61181c4a39ed61e2dfe8b77ecac3f4e5315d11f2f0cffa4d300b3bf17e"
+ "wgSha": "768fa38d342e36f320f9fbaca571e01926c1b2f5dd54be410ab6b39c698b1111"
 }

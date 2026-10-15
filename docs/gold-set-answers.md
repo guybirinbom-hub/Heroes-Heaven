@@ -791,9 +791,12 @@ choosable record whose book carries a key's title under another spelling, one th
 key, and two spellings of one title that have no key. Six strays shared one v0.1.40 Sources row with their key
 and got a `BOOK_FOLDS` pair (decided by the orchestrator under the rule above, no new owner words); the rest
 follow the Guns & Gears precedent. The two Guns & Gears overlay source rows are retracted, since the fold
-produces the key on its own, and sixteen overlay source rows now spell their book's key. Still under two
-spellings, queued for the next regenerating lane: Pathfinder #207 (The) Resurrection Flood, 8 and 22 records in
-one Triumph of the Tusk row, which CHECK 4's title strip (a leading "the" only) does not see.
+produces the key on its own, and sixteen overlay source rows now spell their book's key. Left under two
+spellings then: Pathfinder #207 (The) Resurrection Flood, 8 and 22 records in one Triumph of the Tusk row, which
+CHECK 4's title strip (a leading "the" only) did not see. Folded by the regenerating lane of 2026-09-30 under the
+same rule: a `book-names.json` row with its same-book reason, the seventh stray-spelling `BOOK_FOLDS` pair (the table's eighth; both spellings sat in
+that one v0.1.40 row), and CHECK 4 now sets every "the" aside when it compares titles (over the whole choosable
+corpus that merges this pair and no other).
 
 **2026-09-25 — a grade linked only to its family pairs by suffix (desk #167).** A legacy grade block often
 names only its renamed family: Cloak of Elvenkind (Greater) says "Cloak of Illusions" and the family page, so
@@ -834,8 +837,10 @@ Keep-what-you-hold, as in #169: a siege weapon or
 vehicle the character owns stays on the Companions tab and is never listed or removed by the Sources card; a
 companion's current type, familiar, abilities and specialization stay in their own pickers; a rune already in the
 repertoire stays, and — like a feat — is listed only when its book is switched off on the card, and removed only
-if the player agrees. A record with no book is never filtered: no vehicle carries one yet (0 of 107), so every
-vehicle is still offered to everyone until the import gives them one. A book that shows on the card only because
+if the player agrees. A record with no book is never filtered. No vehicle carried one when this was decided (0 of
+107); since the regenerating lane of 2026-09-30 the import gives each vehicle the book of the Archives page it
+joins to (103 of 107, 12 books, every one already a row on the card), and the four with no joined book
+(flying-carpet, sandsailer, warship, second-kiss) are still offered to everyone. A book that shows on the card only because
 of these maps is a key of its own with a row of its own (never a seat inside an Adventure Path, Society or blog
 bundle, where an old whole-row selection would suddenly read part-on), off for every existing selection, and never derived on or from: a stored selection is neither widened nor narrowed by
 it, and a player who wants it switches it on (measured: every siege weapon's book and Impossible Magic already had

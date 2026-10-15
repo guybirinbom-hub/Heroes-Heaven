@@ -49,8 +49,10 @@ import type { Character, ClassDef, CompanionConfig, ContentDatabase, FeatChoiceD
  * in the Add companion picker's Siege tab, and the companion editor's Type selects, familiar ability picker and
  * specialization picker offered every book whatever the character's Sources said.
  *
- * The siege weapon below is the Bombard (AoN siege-weapon-81), printed in Guns & Gears only. Vehicles carry no
- * book yet (0 of 107), so they are offered to everyone until the import gives them one.
+ * The siege weapon below is the Bombard (AoN siege-weapon-81), printed in Guns & Gears only. Vehicles carried no
+ * book (0 of 107) until the regenerating lane of 2026-09-30 gave each the book of its joined Archives document
+ * (scripts/import-core-v2.mjs): 103 of 107 now carry one, and "vehicles follow the character's books" below
+ * holds them to it (the Ice Breaker, Battlecry!).
  *
  * MUTATION LINES (each proven on a scratch copy restored byte-identically, 2026-09-30)
  *   1. src/rules/sources.ts: drop 'siegeWeapons' from SOURCE_MAPS_ADDED_2026_09_30 → (a) goes red (the Builder's
@@ -178,7 +180,7 @@ const db = () => content();
 const books = (...extra: string[]) => storedSources([...CORE_BOOKS, ...extra]);
 
 /** The real database with a small siege catalog: Bombard (Guns & Gears), Arcane Ram (Battlecry!), and a copy of
- *  the Bombard that carries no book at all. Vehicles: the Raft (no book, like every vehicle). */
+ *  the Bombard that carries no book at all. Vehicles: the Raft (GM Core, a Core book since 2026-09-30). */
 function siegeDb(): ContentDatabase {
   const c = db();
   const bombard = c.siegeWeapons![BOMBARD];
@@ -249,7 +251,7 @@ describe('sources-apply-to-everything: fixtures', () => {
     expect(c.siegeWeapons?.[BOMBARD]?.source?.book).toBe(GG);
     expect((c.siegeWeapons?.[BOMBARD] as { aonId?: string }).aonId).toBe('siege-weapon-81');
     expect(c.siegeWeapons?.[ARCANE_RAM]?.source?.book).toBe('Pathfinder Battlecry!');
-    expect(c.vehicles?.['raft']?.source?.book).toBeUndefined();
+    expect(c.vehicles?.['raft']?.source?.book).toBe('Pathfinder GM Core'); // desk #170: vehicle-77's book since 2026-09-30
     expect(c.runesmithRune[RUNE]?.source?.book).toBe(IM);
     expect(c.runesmithRune[RUNE]?.level).toBe(1);
     expect(SOURCE_MAPS_ADDED_2026_09_30).toEqual(['siegeWeapons', 'vehicles', 'runesmithRune']);
@@ -364,13 +366,114 @@ describe('sources-apply-to-everything: siege weapons follow the character\'s boo
   });
 
   // (d) no book → never filtered
-  it('(d) a record with no book is offered to a Core-only character: the Raft and a siege weapon without a book', () => {
+  it('(d) a record with no book is offered to a Core-only character: a siege weapon without a book (and the Raft, GM Core)', () => {
     const c = siegeDb();
     const rows = shopRows(c);
     expect(rows).toContain('Raft');
     expect(rows).toContain('Test Siege Engine');
     expect(addCompanionRows(c, withCompanions([]), 'Siege').names).toContain('Test Siege Engine');
     expect(addCompanionRows(c, withCompanions([]), 'Vehicle').names).toContain('Raft');
+  });
+});
+
+/*
+ * desk #170, the regenerating lane of 2026-09-30: VEHICLES GET THEIR BOOK. scripts/import-core-v2.mjs carried the
+ * vehicles bucket wholesale from the Foundry-era reference, so all 107 shipped without `source.book` and the filter
+ * (entrySourceOn: no book = always) could not reach them — a Core-only character was offered Battlecry!'s Ice
+ * Breaker (vehicle-110) in the shop and on the Add companion picker's Vehicle tab. Each vehicle now takes the book
+ * of the Archives document its record is joined to; the few with none (the Magic Carpet: no document) stay
+ * unfiltered. The fixtures case pins the importer's half (before the lane 0 of 107 vehicles carried a book, so it
+ * and the Core-only case fail on that data). MUTATION LINES, each proven on the regenerated data and restored
+ * byte-identically, 2026-09-30:
+ *   1. src/sheet/CompanionsTab.tsx addRows: drop `.filter(allowed)` on the vehicle rows → the Core-only case goes
+ *      red (the Vehicle tab offers the Ice Breaker).
+ *   2. src/sheet/AddItemsModal.tsx: drop `.filter(bookOn)` on the vehicles → the Core-only case goes red (the shop).
+ */
+const ICE_BREAKER = 'aon-ice-breaker';
+const BATTLECRY = 'Pathfinder Battlecry!';
+const HIGH_SEAS = 'Pathfinder High Seas';
+function vehicleDb(): ContentDatabase {
+  const c = db();
+  return {
+    ...c,
+    siegeWeapons: {},
+    vehicles: { raft: c.vehicles!['raft'], [ICE_BREAKER]: c.vehicles![ICE_BREAKER], 'flying-carpet': c.vehicles!['flying-carpet'] },
+  } as ContentDatabase;
+}
+
+describe('sources-apply-to-everything: vehicles follow the character\'s books (desk #170)', () => {
+  it('(g) fixtures: the Ice Breaker is Battlecry!\'s (vehicle-110), the Raft GM Core\'s, the Magic Carpet has no book', () => {
+    const c = db();
+    expect(c.vehicles?.[ICE_BREAKER]?.name).toBe('Ice Breaker');
+    expect((c.vehicles?.[ICE_BREAKER] as { aonId?: string }).aonId).toBe('vehicle-110');
+    expect(c.vehicles?.[ICE_BREAKER]?.source?.book).toBe(BATTLECRY);
+    expect(c.vehicles?.['raft']?.source?.book).toBe('Pathfinder GM Core');
+    expect(c.vehicles?.['flying-carpet']?.name).toBe('Magic Carpet');
+    expect(c.vehicles?.['flying-carpet']?.source?.book).toBeUndefined();
+  });
+
+  it('(g) Core only: no Ice Breaker in the shop, on the Vehicle tab or in the Builder\'s content; the Raft and the bookless Magic Carpet stay', () => {
+    const c = vehicleDb();
+    const core = withCompanions([]);
+    expect(core.enabledSources).toBeUndefined();
+    const rows = shopRows(c);
+    expect(rows).not.toContain('Ice Breaker');
+    expect(rows).toContain('Raft');
+    expect(rows).toContain('Magic Carpet');
+    const tab = addCompanionRows(c, core, 'Vehicle');
+    expect(tab.names).not.toContain('Ice Breaker');
+    expect(tab.names).toContain('Raft');
+    expect(tab.names).toContain('Magic Carpet');
+    expect(applySources(db(), enabledBookSet(undefined), collectChosenIds(emptyBuild(), db())).vehicles?.[ICE_BREAKER]).toBeUndefined();
+    expect(db().vehicles?.[ICE_BREAKER]).toBeTruthy(); // the sheet's content is never filtered
+  });
+
+  it('(g) Battlecry! on: the Ice Breaker is offered in the shop and on the Vehicle tab', () => {
+    const c = vehicleDb();
+    expect(shopRows(c, books(BATTLECRY))).toContain('Ice Breaker');
+    expect(addCompanionRows(c, withCompanions([], books(BATTLECRY)), 'Vehicle').names).toContain('Ice Breaker');
+    expect(applySources(db(), enabledBookSet(books(BATTLECRY)), new Set()).vehicles?.[ICE_BREAKER]).toBeTruthy();
+  });
+
+  it('(g) an owned Ice Breaker stays on the Companions tab with Battlecry! off, and its Type select keeps it', () => {
+    const c = vehicleDb();
+    const owned: CompanionConfig = { id: 'v1', kind: 'vehicle', name: '', typeId: ICE_BREAKER };
+    const character = withCompanions([owned]);
+    expect(enabledBookSet(character.enabledSources).has(BATTLECRY)).toBe(false);
+    const s = renderDom(<CompanionsTab character={character} content={c} onPlay={noop} charKey="t" />);
+    const text = s.host.textContent ?? '';
+    s.stop();
+    expect(text).toContain('Ice Breaker');
+    expect(text).toContain('1 pilot, 25 crew'); // the stat block resolves the held record
+    const e = editCompanion(c, character);
+    const picked = (e.host.querySelector('select[aria-label="Type"]') as HTMLSelectElement | null)?.value;
+    const types = optionNames(e.host, 'Type');
+    e.stop();
+    expect(picked).toBe(ICE_BREAKER);
+    expect(types.some((t) => t.startsWith('Ice Breaker'))).toBe(true);
+  });
+
+  /*
+   * desk #170, the Bone Ship. Its record is joined to creature-4838 (High Seas), a stat block the importer's load
+   * loop skips (REF_SKIP), so the first cut of the lane left it bookless and a Core-only character was still offered
+   * it. The importer now reads such a document from the whole-export index (reprints.docs). MUTATION LINE: in
+   * scripts/import-core-v2.mjs drop `?? exportDoc(String(id))` and regenerate → this case goes red (the Bone Ship
+   * has no book). Proven 2026-09-30 on the previous regeneration's core.json, which was built without that
+   * fallback and differs from the shipped one in this record's source alone; public/core.json restored
+   * byte-identically.
+   */
+  it('(g) the Bone Ship takes High Seas from its stat block (creature-4838): off for Core only, offered with High Seas on', () => {
+    const c = db();
+    const bone = c.vehicles?.['bone-ship'] as { aonId?: string; name?: string; source?: { book?: string } } | undefined;
+    expect(bone?.name).toBe('Bone Ship');
+    expect(bone?.aonId).toBe('creature-4838');
+    expect(bone?.source?.book).toBe(HIGH_SEAS);
+    const v = { ...c, siegeWeapons: {}, vehicles: { raft: c.vehicles!['raft'], 'bone-ship': c.vehicles!['bone-ship'] } } as ContentDatabase;
+    expect(shopRows(v)).not.toContain('Bone Ship');
+    expect(addCompanionRows(v, withCompanions([]), 'Vehicle').names).not.toContain('Bone Ship');
+    expect(shopRows(v)).toContain('Raft');
+    expect(shopRows(v, books(HIGH_SEAS))).toContain('Bone Ship');
+    expect(addCompanionRows(v, withCompanions([], books(HIGH_SEAS)), 'Vehicle').names).toContain('Bone Ship');
   });
 });
 

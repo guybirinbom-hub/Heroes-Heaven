@@ -178,7 +178,7 @@ function addRows(content: ContentDatabase, enabled?: Set<string>, offers: { offe
     .map((v) => ({ kind: 'vehicle', cat: 'vehicle', typeId: v.id, name: v.name, price: v.price, note: `Level ${v.level}` }));
   // desk sources-apply-to-everything (owner, 2026-09-30: "yes the player sources should aplly to everything he
   // has accses to"): siege weapons follow the character's books like every row above. Vehicles already did;
-  // none carries a book yet (0 of 107), so all of them pass until the import gives them one.
+  // since the regenerating lane of 2026-09-30, 103 of 107 carry their Archives document's book (the rest pass).
   const siege: AddRow[] = Object.values(content.siegeWeapons ?? {})
     .filter(allowed)
     .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))

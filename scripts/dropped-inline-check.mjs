@@ -64,9 +64,13 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
  * 48 terminal "attempt a ." holes with the printed "DC N flat check". 46 of them were "a ." sites this
  * pattern counts; read-fate and the-carnival are "a secret .". Measured 116 on the shipped artefact
  * after --stage apply.
+ *
+ * LOWERED 116 -> 115 BY THE 2026-09-30 REGENERATING LANE: the light-mortar innovation record
+ * (innovation-4) was repaired, closing one stripped-link hole. Measured 115 on the shipped artefact.
  */
 // batch P02: steady-spellcasting-magus
-const HOLE_BASELINE = 116;
+// regen lane 2026-09-30: light-mortar-innovation repaired; measured 115
+const HOLE_BASELINE = 115;
 const HOLE = /\b(?:a|an|the|your) \.(?=\s|$)/;
 {
   const descs = JSON.parse(readFileSync(join(ROOT, 'public/core-descriptions.json'), 'utf8'));

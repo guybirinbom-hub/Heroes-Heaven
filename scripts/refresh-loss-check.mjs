@@ -68,6 +68,20 @@
  * beside the core file, and failing that compares core.json alone (descriptions then simply do not
  * participate, which is a weaker run — it says so).
  *
+ * TWO QUALIFIERS NARROW A ROW (2026-09-30). A row keyed `classes/wizard subclass.options` excuses ANY loss in
+ * that list, so the regenerating lane's "changed in place, no option lost" rows would have excused a later
+ * regeneration that really dropped a school. Its refuter's finding; the rows now carry both of these, and any
+ * row that explains ONE lane's change should:
+ *
+ *   "before": "<hex>"   the first 12+ hex digits of the sha256 of the BEFORE core.json the row explains. The row
+ *                       applies only when the guard compares against that exact snapshot; against any other it
+ *                       is listed under SCOPED ELSEWHERE and excuses nothing — once the lane is committed, HEAD
+ *                       moves and the row is spent (delete it then).
+ *   "inPlace": true     an `array-lost` only: every member the finding calls lost must still be in the after
+ *                       array under the same `id` and have lost nothing inside — no key, no id'd member, no list
+ *                       member, no text emptied or shorter by more than TEXT_SLACK, no number or flag changed
+ *                       (`lossInside`). The row's own claim, measured instead of trusted: a dropped school fails.
+ *
  * ⚠ THE ALLOW-LIST IS DIRECTIONAL. A row explains a change from ONE before-snapshot to the shipped
  * artefact. Running the guard against a DIFFERENT snapshot — the lane's own pre-rebuild copy rather
  * than git HEAD — can surface a change HEAD never had, and there is no row for it because there was
@@ -75,6 +89,7 @@
  * finding has to be read on its own evidence. Say which snapshot a "zero" was measured against.
  */
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname, basename } from 'node:path';
@@ -153,10 +168,22 @@ const after = merge(
   process.env.CORE_DESCRIPTIONS_JSON || join(ROOT, 'public/core-descriptions.json'),
 );
 
-const ALLOW_PATH = join(ROOT, 'scripts/data/refresh-loss-allow.json');
+/* sha256 of the BEFORE core.json's bytes — what a row's `before` qualifier names (see the header). */
+const beforeSha = createHash('sha256').update(readFileSync(beforeCore)).digest('hex');
+const ALLOW_PATH = process.env.REFRESH_LOSS_ALLOW || join(ROOT, 'scripts/data/refresh-loss-allow.json');
 const allowRows = existsSync(ALLOW_PATH) ? load(ALLOW_PATH) : [];
 const allow = new Map();
+/** Rows scoped to another before-snapshot: they excuse nothing in this run. */
+const elsewhere = [];
 for (const row of allowRows) {
+  if (row.before !== undefined && !/^[0-9a-f]{12,64}$/.test(String(row.before))) {
+    console.error(`refresh-loss-check: FAIL — "before" must be 12-64 lowercase hex digits of the before core.json's sha256: ${row.key} ${row.field}`);
+    process.exit(1);
+  }
+  if (row.inPlace !== undefined && row.inPlace !== true) {
+    console.error(`refresh-loss-check: FAIL — "inPlace" is true or absent: ${row.key} ${row.field}`);
+    process.exit(1);
+  }
   if (!row.key || !row.field || !row.aon || !row.why) {
     console.error(`refresh-loss-check: FAIL — an allow row needs key, field, aon and why: ${JSON.stringify(row)}`);
     process.exit(1);
@@ -171,6 +198,7 @@ for (const row of allowRows) {
     console.error('   (equipment-2963-2839). An id this pipeline minted is not evidence.');
     process.exit(1);
   }
+  if (row.before !== undefined && !beforeSha.startsWith(row.before)) { elsewhere.push(row); continue; }
   allow.set(`${row.key}${SEP}${row.field}`, row);
 }
 
@@ -187,6 +215,8 @@ function flatten(obj, prefix, out) {
 }
 
 const findings = [];
+/** key+field -> the AFTER array of an `array-lost` finding, for an `inPlace` row to measure against. */
+const afterArrays = new Map();
 /** The reported-not-fatal half — one row per CHANGED_ROOTS field that moved. */
 const changes = [];
 const seen = new Set();
@@ -231,7 +261,10 @@ for (const [bucket, recs] of Object.entries(before.core)) {
         if (!Array.isArray(nv)) continue; // shape change; the dropped/added pair below covers it
         const have = new Set(nv.map((x) => (typeof x === 'object' ? JSON.stringify(x) : String(x))));
         const lost = wv.filter((x) => !have.has(typeof x === 'object' ? JSON.stringify(x) : String(x)));
-        if (lost.length) add('array-lost', key, path, lost, `${nv.length} member(s) remain`);
+        if (lost.length) {
+          add('array-lost', key, path, lost, `${nv.length} member(s) remain`);
+          afterArrays.set(`${key}${SEP}${path}`, nv);
+        }
         // A re-ordered or extended array loses nothing, so nothing above fires — report it anyway.
         else if (CHANGED_ROOTS.has(root) && JSON.stringify(wv) !== JSON.stringify(nv)) noteChange(key, path, wv, nv);
         continue;
@@ -299,9 +332,69 @@ if (after.desc) {
   }
 }
 
+/*
+ * What an `inPlace` row measures (see the header): the reason `was` lost something on its way to `now`, or null.
+ * Id'd lists match members by id; other lists by member; objects by key; text within TEXT_SLACK; anything else
+ * must be equal. Growth — a new key, member or link, a longer text — is not a loss.
+ */
+function lossInside(was, now, at) {
+  if (was === null || was === undefined) return null;
+  if (now === null || now === undefined) return `${at} is gone`;
+  if (Array.isArray(was)) {
+    if (!Array.isArray(now)) return `${at} is no longer a list`;
+    const ided = was.length > 0 && was.every((x) => x && typeof x === 'object' && !Array.isArray(x) && typeof x.id === 'string');
+    if (ided) {
+      for (const w of was) {
+        const n = now.find((x) => x?.id === w.id);
+        if (!n) return `${at}[id=${w.id}] is gone`;
+        const r = lossInside(w, n, `${at}[id=${w.id}]`);
+        if (r) return r;
+      }
+      return null;
+    }
+    const have = new Set(now.map((x) => (typeof x === 'object' ? JSON.stringify(x) : String(x))));
+    const lost = was.filter((x) => !have.has(typeof x === 'object' ? JSON.stringify(x) : String(x)));
+    return lost.length ? `${at} lost ${lost.length} member(s): ${show(lost)}` : null;
+  }
+  if (typeof was === 'object') {
+    if (typeof now !== 'object' || Array.isArray(now)) return `${at} changed shape`;
+    for (const [k, v] of Object.entries(was)) {
+      const r = lossInside(v, now[k], `${at}.${k}`);
+      if (r) return r;
+    }
+    return null;
+  }
+  if (typeof was === 'string' && typeof now === 'string') {
+    if (was.trim() && !now.trim()) return `${at} emptied`;
+    return now.length < was.length - TEXT_SLACK ? `${at} shrank ${was.length} -> ${now.length} chars` : null;
+  }
+  return was === now ? null : `${at} changed ${show(was)} -> ${show(now)}`;
+}
+/** Why an `inPlace` row does not cover finding `f` (null = it does). */
+function notInPlace(f) {
+  if (f.kind !== 'array-lost') return `an inPlace row covers array-lost only, this is ${f.kind}`;
+  const nowArr = afterArrays.get(`${f.key}${SEP}${f.field}`) ?? [];
+  for (const w of f.was) {
+    if (!w || typeof w !== 'object' || typeof w.id !== 'string') return `a lost member has no id: ${show(w)}`;
+    const n = nowArr.find((x) => x?.id === w.id);
+    if (!n) return `${f.field}[id=${w.id}] is gone`;
+    const r = lossInside(w, n, `${f.field}[id=${w.id}]`);
+    if (r) return r;
+  }
+  return null;
+}
+
 const allowed = [];
 const open = [];
-for (const f of findings) (allow.has(`${f.key}${SEP}${f.field}`) ? allowed : open).push(f);
+for (const f of findings) {
+  const row = allow.get(`${f.key}${SEP}${f.field}`);
+  const refused = row?.inPlace ? notInPlace(f) : null;
+  if (row && !refused) allowed.push(f);
+  else {
+    if (refused) f.refused = `its allow row is inPlace, but ${refused}`;
+    open.push(f);
+  }
+}
 
 /* `--json <path>`: the same findings, untruncated, for whatever is deciding what to do with them. */
 if (jsonOut) writeFileSync(jsonOut, JSON.stringify([...findings, ...changes], null, 1));
@@ -344,16 +437,22 @@ if (allowed.length) {
  * means a rationale nobody believes any more cannot stay invisible.
  */
 const fired = new Set(allowed.map((f) => `${f.key}${SEP}${f.field}`));
-const idle = allowRows.filter((r) => !fired.has(`${r.key}${SEP}${r.field}`));
+const idle = allowRows.filter((r) => !elsewhere.includes(r) && !fired.has(`${r.key}${SEP}${r.field}`));
 if (idle.length) {
   console.log(`\nDID NOT FIRE (${idle.length}) — nothing to explain against this snapshot; re-read the reason before keeping the row:`);
-  for (const r of idle) console.log(`   ${r.key} ${r.field}  [${r.aon}]`);
+  for (const r of idle) console.log(`   ${r.key} ${r.field}  [${r.aon}]${r.before ? `  (scoped to ${r.before})` : ''}`);
+}
+/* A row whose `before` names another snapshot excused nothing here. Once its lane is committed it never will. */
+if (elsewhere.length) {
+  console.log(`\nSCOPED ELSEWHERE (${elsewhere.length}) — each explains a change from another before-snapshot (this one is ${beforeSha.slice(0, 16)}); excused nothing here, delete once its lane is committed:`);
+  for (const r of elsewhere) console.log(`   ${r.key} ${r.field}  [${r.aon}]  before ${r.before}`);
 }
 
 if (open.length) {
   console.error(`\nrefresh-loss-check: FAIL — ${open.length} unallowed finding(s):`);
   for (const f of open) {
     console.error(`   ${f.kind.padEnd(14)} ${f.key.padEnd(46)} ${f.field.padEnd(22)} was ${show(f.was)}  now ${show(f.now)}`);
+    if (f.refused) console.error(`      ${f.refused}`);
   }
   console.error('\n   Repair from the before snapshot, or add a row to scripts/data/refresh-loss-allow.json');
   console.error('   naming the live AoN doc id and why the Archives themselves changed it.');

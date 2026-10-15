@@ -28,6 +28,7 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadBaseline as loadEmbeddedBaseline, recordReader, syncOverlayValue } from './lib/embedded-descriptions.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8').replace(/^﻿/, ''));
@@ -218,6 +219,21 @@ for (const bucket of ['kingdomStructure', 'kingdomEvent', 'creatureAdjustment', 
     if (q.path?.length === 1) lastAmend.set(`${q.category}/${q.id}/${q.path[0]}`, j);
   });
 
+  /*
+   * A CLASS OPTION'S TEXT AND LINKS ARE ITS RECORD'S, WHATEVER A WHOLE-LIST ROW RESTATES (2026-09-30).
+   *
+   * An overlay row that writes a class option list (`options` pathed into subclass / extraChoices, or a whole
+   * `subclass` / `extraChoices`) restates each option's description and descRefs, and the chain then overwrites
+   * them with the option's classFeatures record's (scripts/lib/embedded-descriptions.mjs syncOptionDescriptions,
+   * the last thing import-core-v2, import-siege-and-gaps and import-new-classes do). So what a regeneration
+   * reproduces from such a row is the row passed through that same sync. That is NOT a licence for the row's
+   * text to differ: scripts/embedded-description-check.mjs (npm run verify, its OVERLAY half) fails any such row
+   * whose option text is not its record's (baseline aside), so with it green the only thing this comparison
+   * excuses is a record link the sync ADDS to a row's option — never a text, and never a link the row wrote.
+   */
+  const optionRecord = recordReader(core, descs);
+  const embeddedKeep = new Set(loadEmbeddedBaseline(ROOT).keys());
+
   const stale = [];
   let missingRecord = 0;
   for (const [i, fix] of rows.entries()) {
@@ -251,7 +267,7 @@ for (const bucket of ['kingdomStructure', 'kingdomEvent', 'creatureAdjustment', 
     if (!target) { missingRecord++; continue; }
     const key = proseKey ?? fix.field;
     const got = target[key];
-    const agrees = fix.value === null ? got === undefined : eq(got, fix.value);
+    const agrees = fix.value === null ? got === undefined : eq(got, syncOverlayValue(fix, optionRecord, embeddedKeep));
     if (!agrees) stale.push(`${fix.category}/${fix.id}.${fix.field}`);
   }
 

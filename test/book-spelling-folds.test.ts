@@ -47,6 +47,8 @@ const STRAYS: [string, string][] = [
   // two rows that change the title (each with its same-book reason), which the fold skipped until the refuter's pass
   ['Pathfinder PFS Guide', 'Pathfinder Lost Omens Pathfinder Society Guide'],
   ['Pathfinder Society Year 4 Rule Updates', 'Pathfinder Blog: Pathfinder Society Year 4 Rule Updates'],
+  // 2026-09-30: a mid-title "The" (8 records), which CHECK 4's title strip did not see until that day
+  ['Pathfinder #207: The Resurrection Flood', 'Pathfinder #207: Resurrection Flood'],
   // the printing folds the pass made before it was widened still hold
   ['Pathfinder Guns & Gears (Remastered)', 'Pathfinder Guns & Gears'],
   ['Pathfinder Dark Archive', 'Pathfinder Dark Archive (Remastered)'],
@@ -60,7 +62,7 @@ describe('the same-book fold', () => {
   });
 
   it('every stray spelling on a record has its row in the table, each to the same key', () => {
-    for (const [stray, key] of STRAYS.slice(0, 18)) expect(TABLE[stray], stray).toBe(key);
+    for (const [stray, key] of STRAYS.slice(0, 19)) expect(TABLE[stray], stray).toBe(key);
   });
 
   it('leaves a book that is already a key alone, and never guesses between two keys of one title', () => {
@@ -131,6 +133,17 @@ describe('the same-book fold', () => {
     expect(db.items.x.source.book).toBe('Pathfinder Grand Bazaar');
     expect(db.items.y.source.book).toBe('Pathfinder Player Core');
     expect(db.reference.r.source.book).toBe('Pathfinder Gatewalkers (Hardcover)');
+  });
+
+  it('CHECK 4 reads a title with every "the" set aside, so a mid-title "The" no longer hides a pair (2026-09-30)', () => {
+    // bookTitle alone strips a LEADING "the" only: the #207 pair (8 records beside 22, one v0.1.40 row) passed CHECK 4.
+    expect(bookTitle('Pathfinder #207: The Resurrection Flood')).not.toBe(bookTitle('Pathfinder #207: Resurrection Flood'));
+    const src = readFileSync('scripts/reprint-check.mjs', 'utf8');
+    expect(src).toContain("const looseBookTitle = (s) => bookTitle(String(s || '').replace(/\\bthe\\b/gi, ' '));");
+    const check4 = src.slice(src.indexOf('const targets = new Set(Object.values(names));'), src.indexOf('CHECK 5 —'));
+    expect(check4.length, 'CHECK 4 block not found').toBeGreaterThan(500);
+    expect(check4.match(/looseBookTitle\(/g)?.length, 'CHECK 4 titles every book through looseBookTitle').toBeGreaterThanOrEqual(5);
+    expect(check4, 'a bare bookTitle( left in CHECK 4 would hide a mid-title "The" again').not.toMatch(/\bbookTitle\(/);
   });
 
   it('runs in the chain after each overlay pass: import-core-v2 and import-siege-and-gaps (after its re-apply)', () => {

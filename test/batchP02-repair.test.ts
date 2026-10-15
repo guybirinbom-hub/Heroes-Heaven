@@ -130,10 +130,11 @@ const ratchetDecls = (name: string): number[] =>
 
 describe('batch P02 — steady-spellcasting-magus: the dropped-inline ratchets sit at the counts measured after the repair rows landed', () => {
   // batch P02: steady-spellcasting-magus
-  it('steady-spellcasting-magus: HOLE_BASELINE is 116, not the 162 it was before the repair rows', () => {
-    // mutation-proof: put HOLE_BASELINE back to 162 in scripts/dropped-inline-check.mjs and this must fail naming it.
+  it('steady-spellcasting-magus: HOLE_BASELINE is 115 (116 after P02, 162 before its repair rows; the 2026-09-30 regen lane repaired light-mortar-innovation)', () => {
+    // mutation-proof: put HOLE_BASELINE back to 116 (or 162) in scripts/dropped-inline-check.mjs and this must fail naming it.
     // batch P02: steady-spellcasting-magus
-    expect(ratchetDecls('HOLE_BASELINE'), 'HOLE_BASELINE in scripts/dropped-inline-check.mjs').toEqual([116]);
+    // regen lane 2026-09-30: HOLE_BASELINE lowered 116 -> 115 (light-mortar-innovation repaired, innovation-4)
+    expect(ratchetDecls('HOLE_BASELINE'), 'HOLE_BASELINE in scripts/dropped-inline-check.mjs').toEqual([115]);
   });
 
   // batch P02: steady-spellcasting-magus

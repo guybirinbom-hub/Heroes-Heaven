@@ -28,6 +28,7 @@ import { gzipSync } from 'node:zlib';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applyBackfill } from './lib/apply-backfill.mjs';
+import { loadBaseline as loadEmbeddedBaseline, recordReader, syncOptionDescriptions } from './lib/embedded-descriptions.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(ROOT, 'work/new-classes');
@@ -380,5 +381,18 @@ if (DRY) { console.log('\n--dry-run: core.json NOT written.'); process.exit(0); 
 // prose out of the record into core-descriptions.json, and a core.json written first would keep the
 // inline copy it had just deleted.
 writeDescriptionsAndAst(added);
+/*
+ * A class option's text is its classFeatures record's, links included (2026-09-30, scripts/lib/embedded-descriptions.mjs): this is
+ * the last step of `npm run data` that writes a class record, and the authored classes arrive with option texts of
+ * their own. Past split-descriptions.mjs, so a record's text is in core-descriptions.json (the file the
+ * descriptions step above has just written), inline only for a record written after the split. Over EVERY class,
+ * so the pass the two importers ran holds whatever this step merged.
+ */
+{
+  const descPath = join(ROOT, 'public/core-descriptions.json');
+  const descs = existsSync(descPath) ? JSON.parse(readFileSync(descPath, 'utf8')) : {};
+  const { synced, linked, kept } = syncOptionDescriptions(core, recordReader(core, descs), new Set(loadEmbeddedBaseline(ROOT).keys()));
+  console.log(`class options: ${synced.length} embedded description(s) took their classFeatures record's text, ${linked.length} its links; ${kept.length} baselined`);
+}
 writeFileSync(CORE, JSON.stringify(core));
 console.log(`\nwrote public/core.json — classes ${Object.keys(core.classes).length}, classFeatures ${Object.keys(core.classFeatures).length}`);
