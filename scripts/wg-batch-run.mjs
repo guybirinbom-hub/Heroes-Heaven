@@ -38,6 +38,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { withHeavyLock } from './lib/heavy-lock.mjs';
 import { backfillTarget } from './lib/apply-backfill.mjs';
+import { testPinsFrom } from './add-owner-question.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const MIRROR = 'C:/wonderers guide/aon-2e-archive/data/by-category';
@@ -1034,6 +1035,10 @@ async function stageGaps() {
    * writer (the plan: "no sixth writer"). */
   const queue = readMaybe(P('queue.json'));
   let queued = 0;
+  /* The hand-made test pins a new desk entry moves (the roster count, the gate-park PARKS table). The
+   * writer prints them and never edits a test, and its output otherwise reaches only the run log —
+   * so they are carried into the digest, or the suite stage goes red with no pointer to why. */
+  let pins = [];
   if (Array.isArray(queue) && queue.length) {
     const src = readFileSync(abs('scripts/add-owner-question.mjs'), 'utf8');
     if (!src.includes('--from')) refuse(`CROSS-FILE GAP: scripts/add-owner-question.mjs does not accept --from yet (shared contract: "scripts/add-owner-question.mjs --from that file writes work/owner-questions.json"). ${queue.length} queued question(s) cannot be filed: ${queue.map((q) => q.id).join(', ')}`);
@@ -1048,8 +1053,15 @@ async function stageGaps() {
       writeFileSync(abs(pendingFile), JSON.stringify(pending, null, 2));
       const r = node_('scripts/add-owner-question.mjs', ['--from', pendingFile, '--write']);
       if (r.status !== 0) refuse(`add-owner-question.mjs refused the queue (exit ${r.status}): ${tail(r.out, 6)}`);
+      pins = testPinsFrom(r.out);
+      /* In full to their own file: the digest is clipped (entryOf), and a pin cut in half is a pin the
+       * orchestrator cannot act on — two record#aspect questions already overflow it. */
+      if (pins.length) writeFileSync(abs(P('test-pins.txt')), `${pins.join('\n')}\n`);
     }
     queued = pending.length;
+    /* A RE-RUN files nothing new, so it reads back the pins its first run wrote — the newest gaps entry
+     * must still point at them. */
+    if (!pins.length && has(P('test-pins.txt'))) pins = readFileSync(abs(P('test-pins.txt')), 'utf8').split('\n').filter(Boolean);
     if (pending.length !== queue.length) say(`${queue.length - pending.length} queued question(s) were already on the desk — filing only the ${pending.length} new one(s)`);
   }
 
@@ -1061,8 +1073,8 @@ async function stageGaps() {
   if (bad.length) refuse(`${bad.length} gap line(s) are not disposed of:\n  · ${bad.join('\n  · ')}`);
 
   return {
-    counts: { gaps: gaps.length, authored: gaps.filter((g) => g.status === 'authored').length, parked: gaps.filter((g) => g.status === 'parked').length, queued },
-    digest: `${gaps.length} gap line(s): ${gaps.filter((g) => g.status === 'authored').length} authored, ${gaps.filter((g) => g.status === 'parked').length} parked; ${queued} owner question(s) filed through add-owner-question.mjs.`,
+    counts: { gaps: gaps.length, authored: gaps.filter((g) => g.status === 'authored').length, parked: gaps.filter((g) => g.status === 'parked').length, queued, testPins: pins.length },
+    digest: `${gaps.length} gap line(s): ${gaps.filter((g) => g.status === 'authored').length} authored, ${gaps.filter((g) => g.status === 'parked').length} parked; ${queued} owner question(s) filed through add-owner-question.mjs.${pins.length ? ` TEST PINS: ${pins.length} hand-made test pin(s) to change in this batch, listed in ${P('test-pins.txt')}.` : ''}`,
     next: 'node scripts/wg-batch-run.mjs --batch ' + BATCH + ' --stage close',
   };
 }

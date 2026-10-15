@@ -143,7 +143,10 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
   #104 keeps its identity) with a test pinning the n→id map; `scripts/add-owner-question.mjs` (the
   existing writer — no sixth writer) allocates `max(n) + 1` over all four arrays, refuses an existing
   id (a follow-up gets its own `n`), refuses an entry whose `printed` names no AoN doc id or whose
-  `theirs` quotes no op that `wg-show.mjs --raw` prints. The closer never edits that file: it writes
+  `theirs` quotes no op that `wg-show.mjs --raw` prints. Since 2026-10-15 it also writes the new
+  number's `unruled` line in `scripts/data/trust-approvals.json`, and PRINTS (never writes) the PARKS
+  line `test/batch035-gate-park.test.ts` needs when the new entry parks a record; it refuses a
+  `record#aspect` id whose record part is no record. The closer never edits that file: it writes
   `work/.bNNN-queue.json`, the driver's `gaps` stage feeds it through the writer, and the
   close-verifier diffs the file.
 - `scripts/wg-batch-commit.mjs --batch NNN` — stages, by explicit path, the manifest's `stage: []`

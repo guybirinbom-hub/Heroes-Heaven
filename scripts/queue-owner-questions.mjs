@@ -24,10 +24,10 @@
  *
  *   node scripts/queue-owner-questions.mjs <findings.json> [--write]
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { appendQuestions } from './add-owner-question.mjs';
+import { appendQuestions, addUnruledLines, testPins, jsonKeepingEol, writeAll } from './add-owner-question.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WRITE = process.argv.includes('--write');
@@ -37,8 +37,10 @@ if (!src || src.startsWith('--')) { console.error('usage: node scripts/queue-own
 const findings = JSON.parse(readFileSync(src, 'utf8'));
 const PATH = join(ROOT, 'work/owner-questions.json');
 const NUMBERS = join(ROOT, 'work/rulings-numbering.json');
-const doc = JSON.parse(readFileSync(PATH, 'utf8'));
-const num = JSON.parse(readFileSync(NUMBERS, 'utf8'));
+const deskText = readFileSync(PATH, 'utf8');
+const numText = readFileSync(NUMBERS, 'utf8');
+const doc = JSON.parse(deskText);
+const num = JSON.parse(numText);
 doc.open ??= [];
 
 const clip = (s, n) => { const t = String(s ?? '').replace(/\s+/g, ' ').trim(); return t.length > n ? `${t.slice(0, n - 1)}…` : t; };
@@ -85,9 +87,26 @@ for (const entry of added) console.log(`#${entry.n}  ${entry.id}  (batch ${entry
 for (const r of refused) console.log(`  skipped — ${r}`);
 
 doc.open.sort((a, b) => Number(a.batch) - Number(b.batch) || String(a.id).localeCompare(String(b.id)));
+
+/* …and the same bookkeeping add-owner-question.mjs does: each new number's `unruled` line in
+ * trust-approvals.json, and the hand-made test pins the new entries move, printed (after the sort —
+ * the order of `open` decides which entry parks a record). */
+const APPROVALS = join(ROOT, 'scripts/data/trust-approvals.json');
+const approvals = addUnruledLines(readFileSync(APPROVALS, 'utf8'), added);
+const pins = approvals.refused.length ? { pins: [], notes: [], refused: [] } : testPins(JSON.parse(deskText), doc, added);
+const stop = [...approvals.refused, ...pins.refused];
+if (stop.length) {
+  console.error(`REFUSED — nothing written:\n  ${stop.join('\n  ')}`);
+  process.exit(2);
+}
+
 console.log(`${wanted.length} finding(s) need a ruling: ${added.length} added, ${refused.length} already queued.`);
 console.log(`${doc.open.length} open question(s) total.`);
+for (const note of pins.notes) console.log(`  ${note}`);
+if (pins.pins.length) {
+  console.log('\nTEST PINS — hand-made guards this tool never edits. Change them in the same commit, or the suite goes red:');
+  for (const l of pins.pins) console.log(l);
+}
 if (!WRITE) { console.log('(report only — pass --write)'); process.exit(0); }
-writeFileSync(PATH, JSON.stringify(doc, null, 1) + '\n');
-writeFileSync(NUMBERS, JSON.stringify(num, null, 1) + '\n');
-console.log('written: work/owner-questions.json + work/rulings-numbering.json.');
+writeAll([[PATH, jsonKeepingEol(doc, deskText)], [NUMBERS, jsonKeepingEol(num, numText)], [APPROVALS, approvals.text]]);
+console.log('written: work/owner-questions.json + work/rulings-numbering.json + scripts/data/trust-approvals.json.');
