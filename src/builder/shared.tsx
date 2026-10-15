@@ -55,12 +55,14 @@ import {
   removeChosenIds,
   withCustomAnswer,
 } from '../rules/build';
-import { choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, legacyArchetypeCantrips, narrowSpellFilter, resolveClassArchetype, subclassOptionAllowed } from '../rules/build';
+import { archetypeCantripCounts, archetypeTradition, choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, legacyArchetypeCantrips, narrowSpellFilter, resolveClassArchetype, subclassOptionAllowed } from '../rules/build';
+import { bookCantripLabel, bookTitle } from '../rules/spellcasting';
+import { listValues } from '../data';
 import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
 import { openChoiceOptions, type OpenOption } from '../rules/openChoice';
 import { spellsMatching } from '../rules/spellChoice';
 import { abpSkillBudget } from '../rules/abp';
-import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots } from '../rules/casterArchetypes';
+import { activeCasterArchetype, archetypeBook, archetypeBookRankNote, archetypeBookRanks, archetypeBookSentence, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots } from '../rules/casterArchetypes';
 import { snareAllowance, snareFormulaOptions, isBaseSnareSlot, SNARE_FORMULA_KEY } from '../rules/snareFormulas';
 import { formulaOptions, formulaSlots, type FormulaSlot } from '../rules/formulaBook';
 import { snareAllowanceFor } from '../rules/counterMods';
@@ -106,6 +108,9 @@ import { DraftNumberInput } from './DraftNumberInput';
 import type { DescNode } from '../sheet/descref';
 import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
 import { picksLosingSlot, rekeyFeatSlots, SLOT_KEYED } from '../rules/featSlots';
+
+/** "1st", "2nd", "3rd", "4th" … — a spell rank in player text. */
+const ordinalRank = (r: number) => (r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`);
 
 /** The "what you gain" summary chips under a CHOICE (HP/size/speed for an ancestry, trained skills for
  *  a class …). No Details button: for anything the player picked, the picker itself is how you read it —
@@ -300,6 +305,10 @@ export interface BuilderActions {
   setArchetypePoolKey: (a: AbilityId) => void;
   /** The ONE leveled spell an innate-ranked archetype (Captivator) learns at a rank; null clears it. */
   setArchetypePoolSpell: (rank: number, spellId: string | null) => void;
+  /** Two-casters: add a spell to (or take it out of) a dedication's BOOK at a rank, up to `cap` there. */
+  toggleArchetypePoolBookSpell: (rank: number, spellId: string, cap: number) => void;
+  /** Two-casters: take the spell at `index` out of the archetype pool's rank (one copy of a repeat). */
+  removeArchetypePoolSpellAt: (rank: number, index: number) => void;
   /** Dual Class variant: choose the second class (defaults its subclass to the first option). */
   setSecondClass: (id: string | null) => void;
   /** ABP skill potency: set a skill's item-bonus rank (0 removes it). */
@@ -775,6 +784,25 @@ export function useBuilderActions(
         if (spellId) spells[rank] = [spellId];
         else delete spells[rank];
         return { ...b, archetypeSpells: { ...as, spells } };
+      });
+    },
+    /* A dedication's BOOK on a caster class (Cleric + Wizard Dedication): the card used to say "prepare
+     * leveled archetype spells on the Spells tab", and with a book that tab adds only out of the book —
+     * so the book needs a writer here. A set per rank, capped at what the rank adds (ArchetypeBook). */
+    toggleArchetypePoolBookSpell(rank, spellId, cap) {
+      setBuild((b) => {
+        const as = b.archetypeSpells ?? { cantrips: [], spells: {} };
+        const cur = as.spells?.[rank] ?? [];
+        if (cur.includes(spellId)) return { ...b, archetypeSpells: { ...as, spells: { ...as.spells, [rank]: cur.filter((x) => x !== spellId) } } };
+        if (new Set(cur).size >= cap) return b;
+        return { ...b, archetypeSpells: { ...as, spells: { ...as.spells, [rank]: [...cur, spellId] } } };
+      });
+    },
+    removeArchetypePoolSpellAt(rank, index) {
+      setBuild((b) => {
+        const as = b.archetypeSpells ?? { cantrips: [], spells: {} };
+        const cur = as.spells?.[rank] ?? [];
+        return { ...b, archetypeSpells: { ...as, spells: { ...as.spells, [rank]: cur.filter((_, i) => i !== index) } } };
       });
     },
     setSecondClass(id) {
@@ -4921,7 +4949,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           const arch = activeCasterArchetype(Object.values(build.featPicks).filter((v): v is string => !!v));
           if (!arch) return null;
           const as = build.archetypeSpells ?? { cantrips: [], spells: {}, tradition: null, keyAbility: null };
-          const trad = (arch.config.choiceTradition ? as.tradition : arch.config.tradition) ?? arch.config.tradition;
+          // buildCharacter's own answer (a Hedge Mage's skill, a Bloodrager's bloodline included) — the
+          // copy here never read the skill, so a Nature hedge mage was offered arcane cantrips.
+          const trad = archetypeTradition(arch, build, content);
+          /* A dedication with a BOOK of its own (ArchetypeBook) — its cantrips are the book's, and each new
+           * spell rank adds the Basic feat's spells to it; the Spells tab prepares out of it. */
+          const book = archetypeBook(arch);
           /* A feat can widen THIS pool — Psi Development's extra known cantrip (`spellSlotBonus` with
            * `cantrips`) and its six psi cantrips (`spellListAdditions`), both scoped by `entryId` to
            * `${dedicationId}-casting`, the same gate buildCharacter's archCantripBonus uses — so the
@@ -4930,11 +4963,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
            * filter alone would never offer them. */
           const takenIds = Object.values(build.featPicks).filter((v): v is string => !!v);
           const archEntryIds = archetypeEntryIds(arch);
-          const archCantripBonus = takenIds.reduce((n, id) => {
-            const b = content.feats[id]?.spellSlotBonus;
-            return b?.entryId && archEntryIds.has(b.entryId) ? n + (b.cantrips ?? 0) : n;
-          }, 0);
-          const cantripCap = arch.config.cantrips + archCantripBonus;
+          // buildCharacter's own count (`archetypeCantripCounts`): what the pool prepares, and a book's size.
+          const counts = archetypeCantripCounts(arch, build, content, takenIds);
+          const cantripCap = counts.book ?? counts.prepared;
           /* A build saved before THIS pool existed keeps its two cantrips in the dedication's own
            * retired effectChoices (LEGACY_ARCHETYPE_CANTRIP_KEYS) — buildCharacter's sheet already
            * delivers them from there (see legacyArchetypeCantrips); this card counted `as.cantrips`
@@ -5007,7 +5038,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   </div>
                 </SubCard>
               )}
-              <SubCard icon="ti-sparkles" label={`Cantrips (${rowCantrips.length}/${cantripCap})`}>
+              <SubCard icon="ti-sparkles" label={book ? `${bookCantripLabel(book.noun)} (${rowCantrips.length}/${cantripCap})` : `Cantrips (${rowCantrips.length}/${cantripCap})`}>
+                {book && (
+                  <p className="setup-hint book-cantrip-hint">
+                    {counts.prepared === 1 ? 'The first is' : `The first ${counts.prepared} are`} prepared each morning by default — change them on the sheet (Spells tab).
+                  </p>
+                )}
                 <PopupSelect
                   title="Add a cantrip"
                   value=""
@@ -5031,10 +5067,93 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 {/* An innate-ranked archetype has no slots to prepare into — its leveled spells are
                     LEARNED here, one per rank. Saying "prepare them on the Spells tab" to a captivator
                     was a false promise: that tab has nothing for them to prepare. */}
-                {!arch.config.innateRanked && (
+                {!arch.config.innateRanked && !book && (
                   <div className="bsec-note">Prepare leveled archetype spells on the Spells tab.</div>
                 )}
               </SubCard>
+              {book && (
+                <SubCard icon="ti-book" label={`${bookTitle(book.noun)} — leveled spells`}>
+                  {(() => {
+                    /* *"Each time you gain a spell slot of a new rank from the wizard archetype, add two
+                     * common spells of that rank to your spellbook"* (feat-5109) — one row per rank the
+                     * book has grown at, capped at what the rank adds. The Spells tab prepares the slots
+                     * out of these; a spell prepared there before the book is kept and marked. */
+                    const ranks = archetypeBookRanks(build.level, arch);
+                    if (!ranks.length)
+                      return (
+                        <div className="bsec-note">
+                          Your {book.noun} holds cantrips only until you take the archetype&rsquo;s Basic spellcasting feat.
+                        </div>
+                      );
+                    return (
+                      <>
+                        <div className="bsec-note">
+                          {archetypeBookSentence(book, ranks[ranks.length - 1])} Your spell slots are prepared from it on the Spells tab.
+                        </div>
+                        {ranks.map((r) => {
+                          const chosen = as.spells?.[r.rank] ?? [];
+                          // A book is a set: count distinct spells, and offer none the book already holds
+                          // at any rank ("or lower" lets a 1st-rank spell be added at 2nd too).
+                          const held = new Set(chosen).size;
+                          const full = held >= r.places;
+                          const inBook = new Set(Object.values(as.spells ?? {}).flat());
+                          const options = listValues(content, content.spells)
+                            .filter((s) => s.rank >= r.minSpellRank && s.rank <= r.maxSpellRank && s.traditions.includes(trad) && !inBook.has(s.id))
+                            .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
+                          return (
+                            <div className="spell-pick-row arch-book-rank" key={r.rank}>
+                              <div className="spr-head">
+                                <span>
+                                  {ordinalRank(r.rank)} rank
+                                  {archetypeBookRankNote(r) ? ` · ${archetypeBookRankNote(r)}` : ''}
+                                </span>
+                                <span className="spr-count">
+                                  {held} / {r.places} in your {book.noun}
+                                </span>
+                              </div>
+                              {chosen.length > 0 && (
+                                <div className="spr-chips">
+                                  {chosen.map((id, idx) => (
+                                    <button
+                                      key={id + ':' + idx}
+                                      type="button"
+                                      className="ec-chip on"
+                                      aria-label={`Remove ${content.spells[id]?.name ?? id}`}
+                                      onClick={() => actions.removeArchetypePoolSpellAt(r.rank, idx)}
+                                    >
+                                      {content.spells[id]?.name ?? id} ✕
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                              {full ? (
+                                <div className="bsec-note">
+                                  Your {book.noun} holds the {r.places} spells this rank adds — remove one to choose another.
+                                </div>
+                              ) : (
+                                <PopupSelect
+                                  // "for 2nd rank", not "a 2nd-rank spell": a hedge mage's 2nd-rank page holds 1st-rank spells.
+                                  // "to your familiar", never "a familiar spell" (a spell you are familiar with?).
+                                  title={`Add a spell to your ${book.noun} for ${ordinalRank(r.rank)} rank${archetypeBookRankNote(r) ? ` (${archetypeBookRankNote(r)})` : ''}`}
+                                  value=""
+                                  onChange={(v) => v && actions.toggleArchetypePoolBookSpell(r.rank, v, r.places)}
+                                  options={options.map((s) => ({
+                                    value: s.id,
+                                    label: s.rank === r.rank ? s.name : `${s.name} (${ordinalRank(s.rank)})`,
+                                    description: s.description,
+                                    descRefs: s.descRefs,
+                                    record: { bucket: 'spells', id: s.id },
+                                  }))}
+                                />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </>
+                    );
+                  })()}
+                </SubCard>
+              )}
               {arch.config.innateRanked && (
                 <SubCard icon="ti-book" label="Learned spells">
                   {/* Captivator: *"you learn a 1st-level spell… at 6th level a 2nd-level spell, and at

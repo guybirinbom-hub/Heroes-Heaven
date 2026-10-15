@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, it, expect } from 'vitest';
 import { content } from './_content';
-import { buildCharacter, emptyBuild, legacyArchetypeCantrips, setupMissing, type BuildState } from '../src/rules/build';
+import { archetypeCantripCounts, buildCharacter, emptyBuild, legacyArchetypeCantrips, setupMissing, type BuildState } from '../src/rules/build';
 import { activeCasterArchetype, archetypeCantripAllowed } from '../src/rules/casterArchetypes';
 
 /**
@@ -51,14 +51,17 @@ const STORED = {
   'spellshot-dedication:spellbook-cantrip-2': 'detect-magic',
 };
 
-/** The Builder's cantrip row, computed the way Builder.tsx computes it (legacyCantrips → rowCantrips). */
+/** The Builder's cantrip row, computed the way Builder.tsx computes it (legacyCantrips → rowCantrips).
+ *  The cap is buildCharacter's own count (`archetypeCantripCounts`) since the dedication books: the
+ *  spellbook's four (`book`), of which the first two are prepared each morning (`prepared`). */
 const builderRow = (b: BuildState) => {
   const archCaster = activeCasterArchetype(Object.values(b.featPicks).filter((v): v is string => !!v));
   const legacy =
     archCaster && !b.cantrips.length
       ? legacyArchetypeCantrips(archCaster.dedicationId, b, db).filter((id) => archetypeCantripAllowed(archCaster, id))
       : [];
-  return { chips: legacy.length ? legacy : b.cantrips, cap: archCaster?.config.cantrips ?? 0 };
+  const counts = archCaster ? archetypeCantripCounts(archCaster, b, db, Object.values(b.featPicks)) : undefined;
+  return { chips: legacy.length ? legacy : b.cantrips, cap: counts?.book ?? counts?.prepared ?? 0, prepared: counts?.prepared ?? 0 };
 };
 
 /** What the SHEET delivers for the same build — the other half of "one source of truth". */
@@ -68,7 +71,10 @@ const sheetCantrips = (b: BuildState) =>
 describe('the Builder shows the cantrips an old spellshot already has', () => {
   it('a save in the old shape opens with the row filled, not 0 / 2', () => {
     const row = builderRow(spellshot(4, { effectChoices: STORED }));
-    expect(row.cap, 'the dedication prepares two cantrips').toBe(2);
+    // Was `cap 2` until the dedication books (2026-10-15): the row is the spellbook now — *"a spellbook
+    // with four common arcane cantrips … You can prepare two cantrips each day"* (feat-3267).
+    expect(row.cap, 'the spellbook holds four cantrips').toBe(4);
+    expect(row.prepared, 'the dedication prepares two of them').toBe(2);
     expect(row.chips).toEqual(['electric-arc', 'detect-magic']);
   });
 
@@ -134,12 +140,15 @@ describe('the "Archetype spellcasting" SetupCard (src/builder/shared.tsx) reads 
     const legacy = !as.cantrips.length
       ? legacyArchetypeCantrips(arch.dedicationId, b, db).filter((id) => archetypeCantripAllowed(arch, id))
       : [];
-    return { chips: legacy.length ? legacy : as.cantrips, cap: arch.config.cantrips };
+    const counts = archetypeCantripCounts(arch, b, db, Object.values(b.featPicks));
+    return { chips: legacy.length ? legacy : as.cantrips, cap: counts.book ?? counts.prepared, prepared: counts.prepared };
   };
 
   it('a caster class holding the dedication shows the stored cantrips, not 0 / 2', () => {
     const row = cardRow(wizardWithDedication({ effectChoices: STORED }));
-    expect(row?.cap, 'the dedication prepares two cantrips').toBe(2);
+    // The spellbook's four since the dedication books (2026-10-15), two of them prepared each morning.
+    expect(row?.cap, 'the spellbook holds four cantrips').toBe(4);
+    expect(row?.prepared, 'the dedication prepares two of them').toBe(2);
     expect(row?.chips).toEqual(['electric-arc', 'detect-magic']);
   });
 

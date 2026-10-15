@@ -316,8 +316,10 @@ function bookIdsUpTo(entry: SpellcastingEntry, ceiling: number): string[] {
 /**
  * A BOOK caster's CANTRIPS — what print fills its openings from (*"you can prepare … five cantrips each
  * morning from the spells in your spellbook"*, class-feature-793). Null for an entry with no book of
- * cantrips: `bookCantrips` is written by buildCharacter's class book branch alone, so every other
- * caster's openings keep their tradition. Held as one set:
+ * cantrips: `bookCantrips` is written only by buildCharacter's two book branches — a class book and an
+ * archetype book (Wizard, Witch, Magus, Necromancer, Hedge Mage, Spellshot Dedication: *"a spellbook with
+ * four common arcane cantrips … You can prepare two cantrips each day from your spellbook"*) — so every
+ * other caster's openings keep their tradition. Held as one set:
  *   · `bookCantrips` — the builder's book (its first ones are the standing preparation);
  *   · `spellbook[0]` / `learned[0]` — cantrips added with Learn a Spell (merged into the book in play);
  *   · `grantedCantrips` — a record's rank-0 grant;
@@ -339,15 +341,16 @@ export function bookCantripIds(entry: SpellcastingEntry): Set<string> | null {
  * A BOOK caster's leveled spells — every rank of the book (Learn a Spell's are merged into it) and
  * `learned`.
  *
- * Null ("cannot say": the picker offers the tradition) only where the entry has no CLASS book. An empty
- * book the class itself built — `bookCantrips` is written by buildCharacter's class book branch alone,
- * so its presence says the book was built — is an empty book, and an empty set: nothing to ADD at rank
- * 1+ until the builder puts a spell in it. Lane C3 (2026-10-15): that empty book read as "cannot say",
+ * Null ("cannot say": the picker offers the tradition) only where no book was BUILT. An empty book the
+ * build made — `bookCantrips` is written only by buildCharacter's class and archetype book branches, so
+ * its presence says the book was built — is an empty book, and an empty set: nothing to ADD at rank 1+
+ * until the builder puts a spell in it. Lane C3 (2026-10-15): that empty book read as "cannot say",
  * so a fresh wizard or magus with no leveled book picks was offered its whole tradition at every rank
- * on the sheet — the owner's bug (2026-10-14) still reachable. What is DRAWN is unchanged: the render
- * asks `spellOptions`, whose list is the book AND the tradition, so a pick stored earlier keeps drawing,
- * marked "Not in your spellbook" (`notInBookOf`). An archetype's book (no `bookCantrips`) keeps the old
- * answer: an empty one there still cannot say.
+ * on the sheet — the owner's bug (2026-10-14) still reachable. The archetype books (Wizard … Spellshot
+ * Dedication, ArchetypeBook) follow the same rule: a fighter whose wizard dedication's spellbook holds
+ * no 1st-rank spell is offered none to prepare, and is told to add some in the builder. What is DRAWN is
+ * unchanged: the render asks `spellOptions`, whose list is the book AND the tradition, so a pick stored
+ * earlier keeps drawing, marked "Not in your spellbook" (`notInBookOf`).
  */
 export function bookLeveledIds(entry: SpellcastingEntry): Set<string> | null {
   const filled = !!entry.spellbook && Object.values(entry.spellbook).some((ids) => ids.length);

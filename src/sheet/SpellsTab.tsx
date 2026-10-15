@@ -555,11 +555,16 @@ function LearnSpellModal({
 
   // "…and you can cast spells of that rank." The highest rank this caster has any way to cast — slots
   // for a spontaneous caster, prepared slots for a prepared one.
-  const maxRank = Math.max(
-    0,
-    ...Object.keys(entry.slots ?? {}).map(Number),
-    ...Object.keys(entry.prepared ?? {}).map(Number),
-    ...Object.keys(entry.repertoire ?? {}).map(Number),
+  // …and never past what the BOOK can hold: a hedge mage's keepsake holds 1st-rank spells (2nd with
+  // Expert, 3rd with Master) though its slots go to 8th (`entry.bookMaxRank`).
+  const maxRank = Math.min(
+    entry.bookMaxRank ?? Infinity,
+    Math.max(
+      0,
+      ...Object.keys(entry.slots ?? {}).map(Number),
+      ...Object.keys(entry.prepared ?? {}).map(Number),
+      ...Object.keys(entry.repertoire ?? {}).map(Number),
+    ),
   );
 
   // Already in the repository (or already learned) — offering it again would just create a duplicate.

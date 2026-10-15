@@ -1184,6 +1184,8 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   const spellIdsOnSheet = new Set<string>(
     character.spellcasting.flatMap((e) => [
       ...(e.cantrips ?? []),
+      // A book's cantrips beyond today's preparation are on the sheet too (class and dedication books).
+      ...(e.bookCantrips ?? []),
       ...Object.values(e.repertoire ?? {}).flat(),
       ...Object.values(e.grantedRepertoire ?? {}).flat(),
       ...Object.values(e.prepared ?? {}).flatMap((slots) => slots.map((s) => s.spellId).filter((x): x is string => !!x)),

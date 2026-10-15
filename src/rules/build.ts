@@ -70,7 +70,7 @@ import { DOMAIN_SPELLS } from './domains';
 import { mpImbuedSpellIds } from './monsterParts';
 import { openChoiceLabel } from './openChoice';
 import { initialClassResources } from './classResources';
-import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions, CASTER_ARCHETYPES, DEDICATION_COUNTS_AS } from './casterArchetypes';
+import { activeCasterArchetype, archetypeBook, archetypeBookMaxRank, archetypeCantripAllowed, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions, CASTER_ARCHETYPES, DEDICATION_COUNTS_AS, type ActiveCasterArchetype } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { cpToCoins } from './wealth';
 import { apparitionSlots, bookCantripCapacity, bookNoun, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
@@ -2072,6 +2072,106 @@ export function foldArchSpellSlotBonuses(
   return cantrips;
 }
 
+/** The answer a slot-picked dedication's own `choice` holds (Bloodrager Dedication's bloodline), read off
+ *  the build the way buildCharacter's feat list carries it — undefined for a granted dedication. */
+function dedicationChoiceOf(build: BuildState, dedicationId: string): string | undefined {
+  for (const [slotKey, id] of Object.entries(build.featPicks ?? {})) {
+    if (id !== dedicationId) continue;
+    const v = build.featChoices?.[slotKey];
+    if (typeof v === 'string' && v) return v;
+  }
+  return undefined;
+}
+
+/**
+ * THE ARCHETYPE POOL'S TRADITION — one answer for buildCharacter and both builder surfaces.
+ *
+ * The builder used to compute its own: `choiceTradition ? pick : config.tradition`, which never read
+ * `traditionBySkill`, so a Hedge Mage who chose Nature built a PRIMAL entry while the builder offered
+ * ARCANE spells for it (and a divine bloodrager arcane ones). Harmless-looking while the builder only
+ * filled slots the sheet re-prepares; a book filled with the wrong tradition's spells is not.
+ *
+ * Order, as buildCharacter has always applied it: the summoner's eidolon type, then the answer that
+ * decides the tradition (Hedge Mage's skill, Bloodrager's bloodline), then a free pick within the offered
+ * traditions, then the dedication's own. `dedicationChoice` is that dedication's own `choice` answer
+ * when the caller already has it (buildCharacter's feat list); the builder's slot answer otherwise.
+ */
+export function archetypeTradition(
+  arch: ActiveCasterArchetype,
+  build: BuildState,
+  content: ContentDatabase,
+  dedicationChoice?: string | null,
+): Tradition {
+  const twoCaster = !!(build.classId && content.classes[build.classId]?.spellcasting);
+  const picked = (twoCaster ? build.archetypeSpells?.tradition : build.archetypeTradition) ?? null;
+  const eidolon = arch.config.eidolonTradition
+    ? content.classes.summoner?.subclass?.options.find((o) => o.id === build.archetypeEidolonType)?.tradition
+    : undefined;
+  const offered = archetypeTraditionOptions(arch);
+  const bySkill = arch.config.traditionBySkill
+    ? arch.config.traditionBySkill[
+        String(build.featSkillChoices?.[`${arch.dedicationId}:0`] ?? dedicationChoice ?? dedicationChoiceOf(build, arch.dedicationId) ?? '')
+      ]
+    : undefined;
+  return (
+    eidolon ??
+    bySkill ??
+    (arch.config.choiceTradition
+      ? offered?.includes(picked as Tradition)
+        ? (picked as Tradition)
+        : picked && !offered
+          ? picked
+          : arch.config.tradition
+      : arch.config.tradition)
+  );
+}
+
+/**
+ * HOW MANY CANTRIPS AN ARCHETYPE POOL PREPARES, AND HOW MANY ITS BOOK HOLDS — one answer for
+ * buildCharacter and both builder surfaces (the builder's row used to add Cantrip Expansion's bonus
+ * while the build sliced without it, so the third and fourth picks were drawn nowhere).
+ *
+ *   · `prepared` — the dedication's own number (`config.cantrips`), plus every bonus aimed at this entry
+ *     (Psi Development, Cantrip Supremacy's *"You can also prepare 10 additional cantrips"*), plus —
+ *     when the archetype is the character's ONLY caster — the untargeted ones (Cantrip Expansion,
+ *     reachable through Basic Arcana: *"You can prepare two additional cantrips each day"*). With a
+ *     caster class those size the class's pool, as they always have.
+ *   · `book` — a book archetype's cantrip capacity (ArchetypeBook.holds), plus the entry-aimed bonuses
+ *     (*"Add 10 additional cantrips to your keepsake"*), never below `prepared`, exactly as the class
+ *     book's `max(bookCantripCapacity, allowance)`. Undefined for a pool with no book.
+ *   · `drawn` — how many of the stored cantrips the entry draws: `prepared`, but NEVER fewer than the
+ *     pool drew before untargeted bonuses reached it (`config.cantrips` + the aimed bonuses). The one
+ *     untargeted bonus that LOWERS the count is a swap's `-1` (below), and a fighter who picked two
+ *     Sorcerer or Cleric Dedication cantrips and then took Adapted Cantrip has been casting all three:
+ *     the builder shows the row one over, but the build never hides a pick the player stored.
+ *
+ * A BOOK pool is not charged Adapted Cantrip's `-1`: that is the repertoire half of the feat (*"replace
+ * one of your cantrips known"*), and for a caster who prepares *"you can choose this spell when you
+ * prepare your cantrips, in addition to your other options"* — buildCharacter puts it in the book, where
+ * a morning's preparation can choose it. A prepared pool WITHOUT a book re-prepares nothing (every
+ * cantrip it holds is drawn), so there the `-1` is what keeps the total at print's: one picked cantrip
+ * plus the adapted one.
+ */
+export function archetypeCantripCounts(
+  arch: ActiveCasterArchetype,
+  build: BuildState,
+  content: ContentDatabase,
+  featIds: readonly (string | null | undefined)[],
+): { prepared: number; book: number | undefined; drawn: number } {
+  const entryIds = archetypeEntryIds(arch);
+  let aimed = 0;
+  for (const id of featIds) {
+    const b = id ? content.feats[id]?.spellSlotBonus : undefined;
+    if (b?.entryId && entryIds.has(b.entryId)) aimed += b.cantrips ?? 0;
+  }
+  const book = archetypeBook(arch);
+  const onlyCaster = !heldClasses(build).some((s) => s.classId && content.classes[s.classId]?.spellcasting);
+  const untargeted = onlyCaster ? cantripBonusFor(build, content, { skipSwaps: !!book }) : 0;
+  const prepared = Math.max(0, arch.config.cantrips + aimed + untargeted);
+  const drawn = Math.max(prepared, arch.config.cantrips + aimed);
+  return { prepared, book: book ? Math.max(book.holds + aimed, prepared) : undefined, drawn };
+}
+
 export function featSkillChoiceValue(
   build: Partial<BuildState>,
   content: ContentDatabase,
@@ -3107,7 +3207,7 @@ export function resolveClassArchetype(
   return { carriers, suppressed, added, suppressedFor, addedFrom };
 }
 
-export function cantripBonusFor(build: BuildState, content: ContentDatabase): number {
+export function cantripBonusFor(build: BuildState, content: ContentDatabase, opts?: { skipSwaps?: boolean }): number {
   /*
    * A record whose cantrip budget is NEGATIVE because it swaps a cantrip in — Adapted Cantrip's `-1`
    * is the "replace one of your cantrips known" half of its own grant — but whose picker the player
@@ -3138,6 +3238,9 @@ export function cantripBonusFor(build: BuildState, content: ContentDatabase): nu
      * Development had their CLASS cantrip cap silently raised by the feat that widens the archetype's. */
     if (b.entryId && !heldClasses(build).some((s) => b.entryId === `${s.classId}-casting`)) continue;
     if ((b.cantrips ?? 0) < 0 && unpaidSwaps.has(src.id)) continue;
+    // `skipSwaps`: a pool whose cantrips are PREPARED out of a book takes the swap's cantrip as one more
+    // option in the book, not in place of one (see archetypeCantripCounts) — so the `-1` is not charged.
+    if ((b.cantrips ?? 0) < 0 && opts?.skipSwaps && (src as Feat).choice?.from?.grantToClassEntry) continue;
     // `cantripsAt` is a LADDER, not an accumulation: Flexible Spellcaster Dedication reads "four
     // cantrips per day instead of three. At 4th level, you have five instead of four" — the later
     // rung REPLACES the earlier one, so adding them would give six.
@@ -8870,7 +8973,6 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
             message: `${content.spells[id]?.name ?? id} is not one of the cantrips this dedication grants — choose again from the ones it names.`,
           });
       const srcSpells = src?.spells ?? build.spells;
-      const srcTradition = twoCaster ? src?.tradition ?? null : build.archetypeTradition ?? null;
       const srcKey = twoCaster ? src?.keyAbility ?? null : build.archetypeKeyAbility ?? null;
       const slots = archetypeSlots(level, arch);
       // "You gain a halcyon cantrip and a 1st-rank halcyon spell" (Shattered Sacrament, Cascade
@@ -8887,48 +8989,37 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // Known-beyond-slots, per rank: the config's own (merged Halcyon's 2-known-over-1-slot) plus
       // any entry-targeted feat bonus (Shattered Sacrament). Slots are untouched by these.
       const archExtraKnown: Record<number, number> = { ...(arch.config.extraKnown ?? {}) };
-      const archCantripBonus = foldArchSpellSlotBonuses(
+      foldArchSpellSlotBonuses(
         slots,
         archExtraKnown,
         feats.map((fc) => fc.featId),
         archEntryIds,
         content,
       );
-      // Summoner: the tradition follows the chosen eidolon TYPE, not a free pick.
-      const eidolonTradition = arch.config.eidolonTradition
-        ? content.classes.summoner?.subclass?.options.find((o) => o.id === build.archetypeEidolonType)?.tradition
-        : undefined;
-      // Cascade Bearer's Spellcasting widens the halcyon list to divine and occult, so the offered
-      // set is not the dedication's fixed one.
-      const archTraditions = archetypeTraditionOptions(arch);
-      /* Hedge Mage: the tradition follows the SKILL the dedication asked for, not a free pick —
-       * *"a tradition associated with the skill chosen for this dedication (arcane for Arcana, primal
-       * for Nature, occult for Occultism, and divine for Religion)"*. Same shape as the summoner's
-       * eidolon type above: one recorded answer deciding another. */
-      const skillTradition = arch.config.traditionBySkill
-        ? arch.config.traditionBySkill[
-            String(
-              build.featSkillChoices?.[`${arch.dedicationId}:0`] ??
-                // …or the dedication's own `choice` answer, when the record asks the question itself
-                // rather than through a skill slot. Bloodrager Dedication prints one bloodline pick
-                // (Arcane/Divine) that decides BOTH the trained skill and the spell list; it used to
-                // have a second, separate tradition picker, so a player answered the same question
-                // twice and the two could disagree.
-                feats.find((f) => f.featId === arch.dedicationId)?.choice?.value ??
-                '',
-            )
-          ]
-        : undefined;
-      const archTradition: Tradition =
-        eidolonTradition ??
-        skillTradition ??
-        (arch.config.choiceTradition
-          ? archTraditions?.includes(srcTradition as Tradition)
-            ? (srcTradition as Tradition)
-            : srcTradition && !archTraditions
-              ? srcTradition
-              : arch.config.tradition
-          : arch.config.tradition);
+      /* The tradition: the summoner's eidolon TYPE; Hedge Mage's SKILL (*"a tradition associated with
+       * the skill chosen for this dedication (arcane for Arcana, primal for Nature, occult for Occultism,
+       * and divine for Religion)"*); Bloodrager's own bloodline answer, which decides BOTH the trained
+       * skill and the spell list (it used to have a second, separate tradition picker, so a player
+       * answered the same question twice and the two could disagree); a free pick within the offered
+       * traditions (Cascade Bearer's Spellcasting widens the halcyon list); else the dedication's own.
+       * ONE function, shared with both builder surfaces, which used to ignore the skill answer. */
+      const archTradition: Tradition = archetypeTradition(arch, build, content, feats.find((f) => f.featId === arch.dedicationId)?.choice?.value);
+      /* How many cantrips the pool PREPARES (the standing preparation) and, for a book archetype, how
+       * many its BOOK holds — the number the builder's row offers, so every pick it took is drawn or
+       * preparable (archetypeCantripCounts). */
+      const archCantrips = archetypeCantripCounts(arch, build, content, feats.map((fc) => fc.featId));
+      /* A dedication that prepares out of a small BOOK of its own — Wizard, Witch, Magus, Necromancer,
+       * Hedge Mage, Spellshot (ArchetypeBook) — gets the class book casters' shape (d01fe33): the book's
+       * cantrips (`bookCantrips`, of which the first `prepared` are the standing preparation and the
+       * rest can be prepared on the sheet), its leveled spells (`spellbook`), the noun the sheet names it
+       * by, and cantrips that re-prepare each morning. The sheet's pickers then add ONLY out of the book
+       * (spellOptions.ts `pickerSpellOptions`), and a pick stored before is drawn with a marker
+       * (`notInBookOf`), never hidden.
+       *
+       * No new store: for a non-caster class `build.cantrips` / `build.spells` IS the book, for a caster
+       * class `build.archetypeSpells` — the stores these pools have always used, so a save from before
+       * the book reads as a book holding exactly what the player picked, with places free. */
+      const archBook = archetypeBook(arch);
       // Key attribute: Magaambyan/Halcyon follow the tradition (arcane → Int, primal → Wis); psychic
       // lets you pick Int or Cha; else the dedication's fixed attribute.
       const archKey: AbilityId = arch.config.keyByTradition
@@ -8944,7 +9035,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         tradition: archTradition,
         keyAbility: archKey,
         proficiency: archetypeProficiency(arch),
-        cantrips: srcCantrips.slice(0, arch.config.cantrips + archCantripBonus),
+        cantrips: srcCantrips.slice(0, archCantrips.drawn),
         ...(arch.dedicationId === 'bloodrager-dedication'
           ? { note: 'Bloodrager: pick 2 cantrips (≥1 needing a spell attack). While you rage they gain the rage trait; casting one makes you drained 1 (reduce only via Harvest Blood).' }
           : {}),
@@ -8995,12 +9086,35 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         spellcasting.push({ ...baseEntry, type: 'spontaneous', repertoire, slots: slotPool });
       } else {
         const prepared: Record<number, { spellId: string | null; expended: boolean }[]> = {};
+        const spellbook: Record<number, string[]> = {};
         for (const [rankStr, count] of Object.entries(slots)) {
           const rank = Number(rankStr);
+          // The player's own list AS STORED, a repeat included: before the book these pools were picked
+          // per slot (`[fear, fear]` was fear prepared twice), and the standing preparation keeps drawing
+          // exactly that. The BOOK is the same list as a set.
           const chosen = srcSpells[rank] ?? [];
           prepared[rank] = Array.from({ length: count }, (_, i) => ({ spellId: chosen[i] ?? null, expended: false }));
+          if (archBook) spellbook[rank] = [...new Set(chosen)];
         }
-        spellcasting.push({ ...baseEntry, type: 'prepared', prepared });
+        if (archBook) {
+          const keepsakeMax = archetypeBookMaxRank(arch);
+          spellcasting.push({
+            ...baseEntry,
+            type: 'prepared',
+            prepared,
+            spellbook,
+            /* The WHOLE book, never sliced: the builder offers `archCantrips.book` places, and a book
+             * holding more (a Wanderer's Guide import, whose book has no size) is drawn on the sheet, not
+             * trimmed — a pick the player made is never hidden. */
+            bookCantrips: [...new Set(srcCantrips)],
+            bookNoun: archBook.noun,
+            cantripCap: archCantrips.prepared,
+            cantripsPrepared: true,
+            ...(keepsakeMax !== undefined ? { bookMaxRank: keepsakeMax } : {}),
+          });
+        } else {
+          spellcasting.push({ ...baseEntry, type: 'prepared', prepared });
+        }
       }
       /*
        * Slot bonuses that NAME this archetype entry are applied here, because the loop that applies
@@ -9020,6 +9134,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           if (!entryId || !archEntryIds.has(entryId)) continue;
           for (const sid of spells) {
             const rank = content.spells[sid]?.rank ?? 1;
+            /* A BOOK that already holds the spell as the player's own pick takes nothing more — and the
+             * grant is NOT recorded in `grantedRepertoire`, which deriveBuildFromCharacter strips from the
+             * book as "not a pick": recorded, it read the player's own detect magic back out of the
+             * keepsake, and dropping Peer Past the Hedge later lost it. */
+            const bookPage = archEntry.bookCantrips && rank === 0 ? archEntry.bookCantrips : archEntry.spellbook && rank > 0 ? (archEntry.spellbook[rank] ??= []) : undefined;
+            if (bookPage?.includes(sid)) continue;
             const at = ((archEntry.grantedRepertoire ??= {})[rank] ??= []);
             if (!at.includes(sid)) at.push(sid);
             /*
@@ -9031,8 +9151,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
              * worse, the Spells tab decided the entry was spontaneous merely because `repertoire`
              * now existed, and hid all three prepared ranks behind an empty picker.
              * The class path already unions rank-0 grants into `cantrips`; this does the same.
+             *
+             * …except into a BOOK. The keepsake is a book now (ArchetypeBook), and print puts the
+             * cantrip IN it — *"Add the detect magic cantrip to your keepsake"* — where it is one of the
+             * cantrips the hedge mage may prepare each morning, not a third one cast on top of the two
+             * (Wanderer's Guide files it the same way: in the keepsake list, still to be prepared). A
+             * leveled grant aimed at a book goes into the book at its rank for the same reason.
              */
-            if (rank === 0 && archEntry.type === 'prepared') {
+            if (bookPage) {
+              bookPage.push(sid);
+            } else if (rank === 0 && archEntry.type === 'prepared') {
               archEntry.cantrips = [...new Set([...(archEntry.cantrips ?? []), sid])];
             } else {
               addGrantedToRepertoire(archEntry, rank, sid);
@@ -9043,8 +9171,53 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           if (!entryId || !archEntryIds.has(entryId) || !archEntry.font) continue;
           archEntry.font.allowed = [...new Set([...(archEntry.font.allowed ?? []), ...spells])];
         }
+        /*
+         * A HELD BOOK DEDICATION THAT DID NOT WIN THE POOL — Spellshot beside Beast Gunner, the one
+         * pairing a record legalises (owner question #162: two archetype casters at once); any other
+         * held book dedication beside a pool that wins first (a Cleric and a Magus Dedication) the same
+         * way. The two share
+         * one store, the spellshot's book can hold four cantrips and two spells a rank, and the beast
+         * gunner's repertoire keeps one of each — so what the player chose for the spellbook would vanish
+         * from the sheet with nothing said. Reported, never silently hidden: the picks stay stored, and
+         * come back the moment the pairing changes.
+         *
+         * Said ON THE ENTRY (`note`, the line under its name on the Spells tab), not as an effectWarnings
+         * row — those show under the Feats tab's "Missing data" heading, and nothing here is missing data
+         * (the owner's 2026-10-14 list moved notes out of that box for exactly this reason). Only the ranks
+         * the pool HAS now are judged: after a level-down the higher ranks' picks are kept to come back with
+         * the level (the builder's level-down dialog promises it), and naming them would ask the player to
+         * delete them. A pool without a book that simply holds fewer than its store (a Wizard Dedication
+         * swapped for a Cleric Dedication) is not reported here: its builder row already reads over its
+         * count ("4 / 2"), which is where those picks can be removed. Final check, 2026-10-15. */
+        /* On a NON-CASTER class only: there the builder's level pages list every stored pick as a chip the
+         * player can remove, so "remove it in the builder" can be done. On a caster class the store is
+         * `archetypeSpells`, whose leveled picks no builder control lists for a pool without a book (the
+         * rare Cleric + Druid Dedication + Magus Dedication shape) — a note there could never be cleared. */
+        if (!archBook && !twoCaster) {
+          const lost = feats.find((f) => f.featId !== arch.dedicationId && CASTER_ARCHETYPES[f.featId]?.book);
+          if (lost) {
+            const drawn = new Set<string>([
+              // A held spellshot's retired answers are cast as at-will innate cantrips (the loop above), so
+              // they ARE on the sheet — never "not shown".
+              ...legacyCantripsOf(lost.featId),
+              ...archEntry.cantrips,
+              ...Object.values(archEntry.repertoire ?? {}).flat(),
+              ...Object.values(archEntry.prepared ?? {}).flatMap((ss) => ss.map((s) => s.spellId ?? '')),
+            ]);
+            const heldNow = Object.entries(srcSpells).flatMap(([r, ids]) => (slots[Number(r)] !== undefined ? ids ?? [] : []));
+            const hidden = [...new Set([...srcCantrips, ...heldNow])].filter((id) => !drawn.has(id));
+            if (hidden.length) {
+              const names = hidden.map((id) => content.spells[id]?.name ?? id).join(', ');
+              const winner = content.feats[arch.dedicationId]?.name ?? arch.dedicationId;
+              const lostName = content.feats[lost.featId]?.name ?? lost.featId;
+              const noun = CASTER_ARCHETYPES[lost.featId]?.book?.noun ?? 'book';
+              const said = `Not shown: ${names} — chosen for your ${lostName} ${noun}, but ${winner} holds your archetype spells and keeps fewer. ${hidden.length === 1 ? 'It stays' : 'They stay'} saved; remove ${hidden.length === 1 ? 'it' : 'them'} in the builder if you don't want ${hidden.length === 1 ? 'it' : 'them'}.`;
+              archEntry.note = archEntry.note ? `${archEntry.note} ${said}` : said;
+            }
+          }
+        }
       }
-      // Slot bonuses aimed at this entry are applied BEFORE it is built (see `archCantripBonus`
+      // Slot bonuses aimed at this entry are applied BEFORE it is built (`foldArchSpellSlotBonuses`
       // above), so a spontaneous archetype's repertoire is sliced from the raised counts and the
       // extra slot has something that can go in it. Re-applying them here as well double-granted.
     }
@@ -9095,8 +9268,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * `spellSlotBonus: { cantrips: -1 }`, which both the builder's cantrip cap (Builder.tsx, the
    * `cantripBonus` reduce) and this file's class-entry slice (`build.cantrips.slice(0, …)`) already
    * read, so the player picks one fewer and this grant takes its place. An ARCHETYPE entry slices from
-   * `arch.config.cantrips`, which that untargeted bonus does not reach — but the builder has already
-   * capped the picks, so slicing a short list is a no-op and the total is right there too.
+   * `archetypeCantripCounts`, the builder's own number, which charges the `-1` where the archetype is
+   * the only caster — except a BOOK archetype's: its cantrips are prepared out of the book, and this
+   * cantrip joins the book (below) as one more option, *"in addition to your other options"*.
    *
    * ⚠ It runs HERE, after the archetype entries exist: a fighter with Wizard Dedication meets the
    * feat's "ability to cast cantrips" prerequisite and their only entry is built ~40 lines above.
@@ -9109,7 +9283,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const sid = fc.choice?.value;
     if (!def?.from?.grantToClassEntry || !sid || !content.spells[sid]) continue;
     const own = spellcasting.find((e) => e.type === 'prepared' || e.type === 'spontaneous');
-    if (!own || own.cantrips.includes(sid)) continue;
+    // …or already in the BOOK as the player's own pick (a book holds more cantrips than it prepares):
+    // it is preparable already, and attributing it to the feat would read it back out of the book as
+    // "not a pick" on a rebuild (deriveBuildFromCharacter strips `spellSources`).
+    if (!own || own.cantrips.includes(sid) || own.bookCantrips?.includes(sid)) continue;
     own.cantrips.push(sid);
     // …and a BOOK caster's openings may hold it: *"If you prepare spells, you can choose this spell
     // when you prepare your cantrips, in addition to your other options"* — so it joins the list the
@@ -11400,19 +11577,36 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     );
     if (archEntry) {
       const spellsByRank: Record<number, string[]> = {};
-      if (archEntry.prepared)
+      /* A BOOK archetype (ArchetypeBook) is read back as its BOOK, the way `recoverSurface` reads a class
+       * book: the store IS the book, so reading the two prepared cantrips and the slot picks lost book
+       * cantrips 3-4 and every book spell not prepared today on each rebuild with no stored build. What
+       * a record PUT there is not a pick (Peer Past the Hedge's detect magic, `grantedRepertoire[0]`;
+       * Adapted Cantrip's, attributed in `spellSources`), and a spell the standing preparation holds
+       * twice — a per-slot pick from before the book — is written back twice, beside the first. */
+      const free = new Set([...Object.values(archEntry.grantedRepertoire ?? {}).flat(), ...Object.keys(archEntry.spellSources ?? {})]);
+      if (archEntry.spellbook && archEntry.bookCantrips) {
+        /* In the STORED order: the standing preparation is the stored list read slot by slot, so the
+         * prepared slots give its head back exactly (`[a, b, a]` stays `[a, b, a]`, not `[a, a, b]`, so
+         * no slot's default moves), and the book's other pages follow. */
+        for (const [rank, ids] of Object.entries(archEntry.spellbook)) {
+          const page = ids.filter((id) => !free.has(id));
+          const head = (archEntry.prepared?.[Number(rank)] ?? []).map((s) => s.spellId).filter((id): id is string => !!id && page.includes(id));
+          spellsByRank[Number(rank)] = [...head, ...page.filter((id) => !head.includes(id))];
+        }
+      } else if (archEntry.prepared)
         for (const [rank, slots] of Object.entries(archEntry.prepared))
           spellsByRank[Number(rank)] = slots.map((s) => s.spellId).filter((id): id is string => !!id);
       if (archEntry.repertoire) for (const [rank, ids] of Object.entries(archEntry.repertoire)) spellsByRank[Number(rank)] = [...ids];
+      const archCantripPicks = archEntry.bookCantrips ? archEntry.bookCantrips.filter((id) => !free.has(id)) : [...archEntry.cantrips];
       if (classEntry) {
         b.archetypeSpells = {
-          cantrips: [...archEntry.cantrips],
+          cantrips: archCantripPicks,
           spells: spellsByRank,
           tradition: archEntry.tradition,
           keyAbility: archEntry.keyAbility,
         };
       } else {
-        b.cantrips = [...archEntry.cantrips];
+        b.cantrips = archCantripPicks;
         b.archetypeTradition = archEntry.tradition;
         b.archetypeKeyAbility = archEntry.keyAbility;
         b.spells = spellsByRank;

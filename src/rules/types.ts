@@ -5903,7 +5903,10 @@ export interface SpellcastingEntry {
    * the necromancer's dirge — which print sizes at 10 / 10 / 8 / 8, against the five (six) the caster
    * PREPARES each morning. Written by buildCharacter's book branch only: `build.cantrips` IS the book
    * for these classes (its first `cantripCap` entries are the standing preparation, which is still
-   * `cantrips`), plus the record-granted rank-0 spells.
+   * `cantrips`), plus the record-granted rank-0 spells. An ARCHETYPE book (Wizard, Witch, Magus,
+   * Necromancer, Hedge Mage and Spellshot Dedication — casterArchetypes.ts `ArchetypeBook`) is written
+   * by the archetype branch the same way, out of the archetype's own store; its presence is what says
+   * "this entry prepares out of a book" (spellOptions.ts `bookLeveledIds`).
    *
    * Its own field and NOT `spellbook[0]`: deriveBuildFromCharacter writes every spellbook rank into
    * `build.spells[rank]`, so a rank-0 list there would land in `build.spells[0]` and be charged to the
@@ -5911,8 +5914,15 @@ export interface SpellcastingEntry {
    * (`pickerSpellOptions`); what is DRAWN is never narrower than before (`spellOptions`).
    */
   bookCantrips?: string[];
-  /** A book caster's word for its book in player text — "spellbook", "familiar", "dirge" (`bookNoun`). */
+  /** A book caster's word for its book in player text — "spellbook", "familiar", "dirge", "keepsake" (`bookNoun`). */
   bookNoun?: string;
+  /**
+   * The highest rank this entry's BOOK can hold, where the book caps it below the slots — a hedge mage's
+   * keepsake (*"Your keepsake can also hold 1st-rank spells"*, 2nd with Expert Hedge Mage Spellcasting,
+   * 3rd with Master), though its slots go to 8th (`archetypeBookMaxRank`). Read by Learn a Spell, which
+   * otherwise offers up to the highest slot. Absent everywhere else.
+   */
+  bookMaxRank?: number;
   /**
    * OVERLAY ONLY: spells this entry is DRAWING today that its book does not hold — a cantrip or a
    * spell the player prepared before the picker was held to the book, or one the builder has since

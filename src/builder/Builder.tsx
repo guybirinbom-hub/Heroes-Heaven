@@ -56,14 +56,14 @@ import {
   senseGateReason,
   type NarrowedOption,
 } from '../rules/derive';
-import { foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, optionDragon, skillSlotOptions } from '../rules/build';
+import { archetypeCantripCounts, archetypeTradition, foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, optionDragon, skillSlotOptions } from '../rules/build';
 import { giftChipIds, ownPlacesBeside, spellOpenedBy, variantGiftCount } from '../rules/spellOptions';
 import { signaturesAt, signatureSpellsAt } from '../rules/build';
 // batch 037: flexible-spellcaster#collection-shape — the sheet's own sizer, never a copy of it.
 import { flexibleCollectionSize } from '../rules/build';
 // Dual Class: the second subclass's effectChoices card is drawn only when one is offered.
 import { effectChoiceOffered } from '../rules/build';
-import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
+import { activeCasterArchetype, archetypeBook, archetypeBookRankNote, archetypeBookRanks, archetypeBookSentence, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions, type ArchetypeBookRank } from '../rules/casterArchetypes';
 import { bonusSkillFeatCount, bonusSkillFeatKey, choiceGrantFor, exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS, maxTakes } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickKeysFor, pickPrompt, pickableFeats } from '../rules/featPickGrants';
 import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
@@ -529,16 +529,15 @@ export function Builder({
   // Mage cuts a Wizard/Sorcerer's sorcerer cantrips, never the wizard's).
   const archMods = classArchetypeSpellMods(build, content, build.classId);
   const castType = archMods.spellCollection && casting ? 'spontaneous' : (casting?.type ?? (archCaster?.config.repertoire ? 'spontaneous' : 'prepared'));
-  // For a choice-tradition archetype (sorcerer/witch), the player's pick; for a summoner archetype, the
-  // chosen eidolon type's tradition; else the dedication's fixed tradition.
-  const archTradition = archCaster
-    ? archCaster.config.eidolonTradition
-      ? content.classes.summoner?.subclass?.options.find((o) => o.id === build.archetypeEidolonType)?.tradition ??
-        archCaster.config.tradition
-      : archCaster.config.choiceTradition
-        ? build.archetypeTradition ?? archCaster.config.tradition
-        : archCaster.config.tradition
-    : undefined;
+  // buildCharacter's own answer (`archetypeTradition`): a summoner archetype's eidolon type, a Hedge Mage's
+  // SKILL or a Bloodrager's bloodline, a choice-tradition archetype's pick, else the dedication's own. This
+  // used to be a copy that never read the skill answer, so a Nature hedge mage — a PRIMAL caster on the
+  // sheet — was offered arcane spells here.
+  const archTradition = archCaster ? archetypeTradition(archCaster, build, content) : undefined;
+  /* A dedication that prepares out of a BOOK of its own (ArchetypeBook: Wizard, Witch, Magus, Necromancer,
+   * Hedge Mage, Spellshot). Its cantrip row is the book's cantrips, and each new spell rank adds the
+   * Basic feat's two (three) spells to the book instead of asking for one prepared spell per slot. */
+  const archBook = archetypeBook(archCaster);
   // The Draconic bloodline casts in its DRAGON's tradition (buildCharacter's `optionDragon`): the
   // bloodline's own `tradition` is arcane, so a divine-dragon sorcerer was offered arcane spells here
   // and its divine entry on the sheet drew none of them.
@@ -653,13 +652,13 @@ export function Builder({
   // `cantripBonusFor` — the class pool's function — never sees; buildCharacter and the setup page
   // (shared.tsx archCantripBonus) both add them, so the level page must too or the sheet has an opening
   // the builder gives the player no slot to fill (experience gate, 2026-09-02).
-  const archCantripBonus = !casting && archCaster
-    ? Object.values(build.featPicks).filter((v): v is string => !!v).reduce((n, id) => {
-        const b = content.feats[id]?.spellSlotBonus;
-        return b?.entryId && archetypeEntryIds(archCaster).has(b.entryId) ? n + (b.cantrips ?? 0) : n;
-      }, 0)
-    : 0;
-  const cantripCap = Math.max(0, (casting ? cantripsKnown(build.classId) : (archCaster?.config.cantrips ?? 0) + archCantripBonus) + cantripBonus + (casting ? archMods.cantripDelta : 0));
+  //
+  // ⚠ buildCharacter's own function now (`archetypeCantripCounts`): the copy here added Cantrip Expansion's
+  // untargeted bonus while the build's slice did not, so the third and fourth picks were drawn nowhere.
+  const archCounts = !casting && archCaster ? archetypeCantripCounts(archCaster, build, content, Object.values(build.featPicks)) : undefined;
+  const cantripCap = casting
+    ? Math.max(0, cantripsKnown(build.classId) + cantripBonus + archMods.cantripDelta)
+    : archCounts?.prepared ?? 0;
   /*
    * A BOOK caster's cantrip row is the BOOK (owner's bug 2026-10-14: "magus (and other spellbook
    * casters) can prepare spells that aren't in their spellbook"). Print sizes it at 10 / 10 / 8 / 8
@@ -670,8 +669,12 @@ export function Builder({
    * (buildCharacter's own slice, School of Unified Magical Theory's missing curriculum cantrip
    * included), which the sheet re-prepares each morning. Never below the allowance (Cantrip
    * Expansion's eight). Every other caster's row is the cantrips it knows, as before.
+   *
+   * …and a DEDICATION's book the same way, at its own size (ArchetypeBook): *"a spellbook with four
+   * common arcane cantrips … You can prepare two cantrips each day from your spellbook"* — the row asks
+   * for the four (`archCounts.book`), the first two are the standing preparation.
    */
-  const bookWord = isWizardBook ? bookNoun(casterCls) : undefined;
+  const bookWord = isWizardBook ? bookNoun(casterCls) : archBook?.noun;
   const cantripAllowance = Math.max(0, cantripCap - (isUmtBook ? 1 : 0));
   /* A build saved before its archetype had a spell pool keeps its cantrips in the dedication's own
    * retired effectChoices, and buildCharacter hands them to the sheet from there. The row counted
@@ -734,7 +737,7 @@ export function Builder({
    * picks and the fifth nowhere. The sheet's gate and over-cap report subtract the same one place. */
   const cantripRowCap = isWizardBook
     ? Math.max(bookCantripCapacity(casterCls) ?? 0, cantripAllowance)
-    : ownPlacesBeside(castEntry1, 0, cantripCap, rowCantrips);
+    : archCounts?.book ?? ownPlacesBeside(castEntry1, 0, cantripCap, rowCantrips);
 
   /**
    * Render one build-time choice picker.
@@ -1394,12 +1397,31 @@ export function Builder({
   const poolSpent = isFlexCollection
     ? Object.entries(build.spells).reduce((n, [r, arr]) => (Number(r) <= 9 ? n + (arr?.length ?? 0) : n), 0)
     : learnedTotal;
+  /* The level an ARCHETYPE caster starts casting: the page its dedication was taken on (a summoner's Basic
+   * feat, which is what brings its casting). The loop below answered 1 for every archetype — its cantrip
+   * count is positive at every level — so a Wizard Dedication taken at 2nd drew its spellbook cantrips on
+   * the Level 1 page, a level before the character had them. A dedication with no slot of its own (a
+   * granted one) keeps the old answer. */
+  const archStartLevel = (() => {
+    if (!archCaster) return 1;
+    const starts = archCaster.config.castsFromBasic && archCaster.config.basicId ? archCaster.config.basicId : archCaster.dedicationId;
+    let best = Infinity;
+    for (const [slotKey, id] of Object.entries(build.featPicks)) {
+      const L = Number(slotKey.split(':')[0]);
+      if (id === starts && Number.isFinite(L) && L >= 1) best = Math.min(best, L);
+    }
+    return Number.isFinite(best) ? Math.min(best, build.level) : 1;
+  })();
   // The first level this character can cast — cantrips, tradition, and divine font live here.
   const firstCasterLevel = (() => {
     if (!showSpells) return 0;
-    for (let L = 1; L <= 20; L++) if (cantripCap > 0 || Object.keys(slotsAt(L)).length) return L;
-    return 1;
+    for (let L = archStartLevel; L <= 20; L++) if (cantripCap > 0 || Object.keys(slotsAt(L)).length) return L;
+    return archStartLevel;
   })();
+  /** The ranks a dedication's BOOK has grown at by level L (ArchetypeBook) — what each new rank adds. */
+  const archBookRanksAt = (L: number): ArchetypeBookRank[] => (archBook && L >= 1 ? archetypeBookRanks(L, archCaster) : []);
+  /** What a new rank adds to the book, in the print's terms — the sentence the caster-class card shows too. */
+  const archBookSentence = (r: ArchetypeBookRank | undefined): string => (archBook ? archetypeBookSentence(archBook, r) : '');
   // What spell capacity is GAINED at level L (vs the level before) — drives the per-level pickers.
   /* The player's OWN places at a rank: the slot count, less a sorcerer's gift spell once the rank has
    * slots at all (lane C2 — *"your first new spell is always the sorcerous gift spell for that rank"*,
@@ -1411,10 +1433,18 @@ export function Builder({
   const spellGainsAt = (L: number) => {
     const cur = slotsAt(L);
     const prev = slotsAt(L - 1);
-    const ranks = [...new Set([...Object.keys(cur), ...Object.keys(prev)].map(Number))]
-      .filter((r) => r >= 1 && (cur[r] ?? 0) > (prev[r] ?? 0))
-      .sort((a, b) => a - b)
-      .map((r) => ({ rank: r, gained: ownPlaces(cur, r) - ownPlaces(prev, r), cap: ownPlaces(cur, r) }));
+    /* A dedication's BOOK grows by RANK, not by slot: *"Each time you gain a spell slot of a new rank
+     * from the wizard archetype, add two common spells of that rank to your spellbook"* (feat-5109). So
+     * its rows are the ranks first reached at L, each asking for the Basic feat's two (three) spells —
+     * and an Arcane Breadth slot at a rank the book already has adds a slot to prepare, not a row. */
+    const ranks = archBook
+      ? archBookRanksAt(L)
+          .filter((r) => !archBookRanksAt(L - 1).some((p) => p.rank === r.rank))
+          .map((r) => ({ rank: r.rank, gained: r.places, cap: r.places }))
+      : [...new Set([...Object.keys(cur), ...Object.keys(prev)].map(Number))]
+          .filter((r) => r >= 1 && (cur[r] ?? 0) > (prev[r] ?? 0))
+          .sort((a, b) => a - b)
+          .map((r) => ({ rank: r, gained: ownPlaces(cur, r) - ownPlaces(prev, r), cap: ownPlaces(cur, r) }));
     return {
       ranks,
       // batch 037: flexible-spellcaster#collection-shape — both across-rank pools grow through here.
@@ -1523,7 +1553,7 @@ export function Builder({
             </div>
             {bookWord && (
               <p className="setup-hint book-cantrip-hint">
-                The first {cantripAllowance} are prepared each morning by default — change them on the sheet (Spells tab).
+                {cantripAllowance === 1 ? 'The first is' : `The first ${cantripAllowance} are`} prepared each morning by default — change them on the sheet (Spells tab).
               </p>
             )}
             <div className="spr-chips">
@@ -1685,17 +1715,34 @@ export function Builder({
             silently, so a phone player could not learn what it does. Shown while a star is on screen.
             test/phone-builder-shell.test.tsx. */}
         {!flatBudget && sigAvailable && g.ranks.some(({ rank }) => (build.spells[rank] ?? []).length > 0) && <SignatureHint />}
+        {/* A dedication's book (ArchetypeBook): what each new rank adds, in the print's own terms — and
+            that the slots are prepared OUT of it, on the sheet. */}
+        {archBook && g.ranks.length > 0 && (
+          <p className="setup-hint arch-book-hint">
+            {archBookSentence(archBookRanksAt(lvl).find((r) => r.rank === g.ranks[0].rank))} Your spell slots are prepared from
+            it — change them on the sheet (Spells tab).
+          </p>
+        )}
         {/* batch 037: flexible-spellcaster#collection-shape — per-rank caps only where the rule is
             per rank; a collection (like a spellbook) is drawn by the flat rail above. */}
         {!flatBudget &&
           g.ranks.map(({ rank, gained, cap: capR }) => {
             const chosen = build.spells[rank] ?? [];
+            /* A book is a SET: a per-slot pick stored twice before the book (`[fear, fear]`) is one spell
+             * in it, so the row counts — and gates the add on — distinct spells. */
+            const held = archBook ? new Set(chosen).size : chosen.length;
+            // "· 1st-rank spells" on a hedge mage's 2nd and 3rd ranks, "· 2nd rank or lower" on a magus's 2nd.
+            const bookNote = archBook ? archetypeBookRankNote(archBookRanksAt(lvl).find((r) => r.rank === rank) ?? { rank, places: capR, minSpellRank: rank, maxSpellRank: rank }) : '';
             return (
               <div className="spell-pick-row" key={rank}>
                 <div className="spr-head">
-                  <span>{ord(rank)} rank</span>
+                  <span>
+                    {ord(rank)} rank{bookNote ? ` · ${bookNote}` : ''}
+                  </span>
                   <span className="spr-count">
-                    {chosen.length} / {capR} {castType === 'prepared' ? 'prepared' : 'known'} (+{gained} this level)
+                    {archBook
+                      ? `${held} / ${capR} in your ${archBook.noun}`
+                      : `${chosen.length} / ${capR} ${castType === 'prepared' ? 'prepared' : 'known'} (+${gained} this level)`}
                   </span>
                 </div>
                 <div className="spr-chips">
@@ -1719,7 +1766,7 @@ export function Builder({
                       </button>
                     </span>
                   ))}
-                  <button className="spr-add" type="button" disabled={chosen.length >= capR} title={chosen.length >= capR ? `All ${capR} spells at this rank are chosen — remove one first.` : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} data-ctl-options={capR} onClick={() => setPicker({ kind: 'spell', rank, cap: capR })}>
+                  <button className="spr-add" type="button" disabled={held >= capR} title={held >= capR ? (archBook ? `Your ${archBook.noun} holds the ${capR} spells this rank adds — remove one first.` : `All ${capR} spells at this rank are chosen — remove one first.`) : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} data-ctl-options={capR} onClick={() => setPicker({ kind: 'spell', rank, cap: capR })}>
                     + add
                   </button>
                 </div>
@@ -3853,13 +3900,27 @@ export function Builder({
         const cantripList = c2 ? build.cantrips2 ?? [] : rowCantrips;
         const spellList = c2 ? build.spells2?.[picker.rank] ?? [] : build.spells[picker.rank] ?? [];
         const learned = c2 ? learnedTotal2 : poolSpent;
-        const items = c2 ? eligibleSpells2(picker.rank) : eligibleSpells(picker.rank);
+        /* A dedication's book rank offers only the ranks its Basic feat names — *"two common spells of
+         * that rank"* (wizard, witch, spellshot), *"of that rank or lower"* (magus, necromancer), a hedge
+         * mage's *"three common 1st-rank spells"* (2nd with Expert, 3rd with Master). */
+        const bookRank = !c2 && archBook && picker.rank > 0 ? archBookRanksAt(build.level).find((r) => r.rank === picker.rank) : undefined;
+        // …and never a spell another rank's page already holds: a magus's "or lower" lets 1st-rank fear be
+        // added at 2nd too, which would spend a second place on a spell the book already has.
+        const elsewhere = bookRank
+          ? new Set(Object.entries(build.spells).flatMap(([r, ids]) => (Number(r) !== picker.rank ? ids ?? [] : [])))
+          : undefined;
+        const items = c2
+          ? eligibleSpells2(picker.rank)
+          : bookRank
+            ? eligibleSpells(picker.rank).filter((s) => s.rank >= bookRank.minSpellRank && s.rank <= bookRank.maxSpellRank && !elsewhere!.has(s.id))
+            : eligibleSpells(picker.rank);
         // Wizards cap by the total spellbook budget; others by the rank's slot count.
         const cap_ = picker.cap ?? (picker.rank === 0 ? capCantrip : wizBook && !capstone ? capBook : capSlots[picker.rank] ?? 0);
-        const have = picker.rank === 0 ? cantripList.length : wizBook && !capstone ? learned : spellList.length;
+        const have = picker.rank === 0 ? cantripList.length : wizBook && !capstone ? learned : bookRank ? new Set(spellList).size : spellList.length;
         const atCap = have >= cap_;
         const isCantrip = picker.rank === 0;
-        const preparedMode = !isCantrip && prepared && !wizBook;
+        // A book is a set — a spell is in it or not — so a dedication's book rank toggles, as a class book does.
+        const preparedMode = !isCantrip && prepared && !wizBook && !(archBook && !c2);
         return (
           <FilterableSelect
             key={'spell-' + (c2 ? '2-' : '') + picker.rank}
@@ -3904,8 +3965,12 @@ export function Builder({
                   disabledReason={
                     disabled
                       ? isCantrip
-                        ? `All ${cap_} cantrip slots are filled — remove one first.`
-                        : floorHeldPicker
+                        ? bookWord && !c2
+                          ? `Your ${bookWord} holds all ${cap_} cantrips it can — remove one first.`
+                          : `All ${cap_} cantrip slots are filled — remove one first.`
+                        : bookRank && archBook
+                          ? `Your ${archBook.noun} holds the ${cap_} spells this rank adds — remove one first.`
+                          : floorHeldPicker
                           ? 'Your collection must include at least one 1st-rank spell — the last place is held for one.'
                           : capstone ? `Your single 10th-rank slot already holds a spell — remove it first.` : `All ${cap_} spells at this rank are chosen — remove one first.`
                       : undefined

@@ -93,6 +93,56 @@ export interface CasterArchetype {
    * localStorage, in Supabase and in exported `.codex` files, so this project narrows on READ.
    */
   cantripOptions?: string[];
+  /**
+   * The dedication prepares out of a small BOOK of its own — a spellbook, a familiar, a dirge, a
+   * keepsake — not off its whole tradition. Six dedications print one; see `ArchetypeBook`. Absent on
+   * every other archetype, whose prepared slots keep reading the tradition.
+   */
+  book?: ArchetypeBook;
+}
+
+/**
+ * AN ARCHETYPE'S BOOK — the same rule the class book casters follow (d01fe33), at the dedication's size.
+ *
+ * Print, newest printing:
+ *   · Wizard Dedication — *"a spellbook with four common arcane cantrips of your choice … You can prepare
+ *     two cantrips each day from your spellbook"* (feat-5106); Basic Wizard Spellcasting — *"Each time
+ *     you gain a spell slot of a new rank from the wizard archetype, add two common spells of that rank
+ *     to your spellbook"* (feat-5109).
+ *   · Witch Dedication — *"a familiar with two common cantrips … You can prepare one cantrip each day
+ *     from your familiar"* (feat-5099); Basic Witch Spellcasting adds *"two common spells of that rank
+ *     to your familiar"* (feat-5100).
+ *   · Magus Dedication — four cantrips, prepare two (feat-9284); Basic Magus Spellcasting adds *"two
+ *     common spells of that rank or lower"* (feat-9285). The older Secrets of Magic dedication's own
+ *     "add a spell" sentence is not in the Impossible Magic printing (R12: the newest printing, whole) —
+ *     the record's plain description text still carries it, a known leftover
+ *     (scripts/data/moved-prose-baseline.json: "feat-9284 reads like feat-2945").
+ *   · Necromancer Dedication — *"a dirge with four common occult cantrips … prepare two cantrips each
+ *     day from your dirge"* (feat-9292); Basic Necromancer Spellcasting adds *"two common spells of that
+ *     rank or lower to your dirge"* (feat-9294).
+ *   · Hedge Mage Dedication — *"Your keepsake holds 4 common cantrips … You can prepare two cantrips from
+ *     your keepsake each day"* (feat-9326); Basic Hedge Mage Spellcasting adds *"three common 1st-rank
+ *     spells to your keepsake"* (feat-9327), Expert lets those additions be 2nd-rank (feat-9335) and
+ *     Master 3rd-rank (feat-9337) — the keepsake never holds a higher rank, though the slots go to 8th.
+ *   · Spellshot Dedication — a wizard's spellbook in all but name (feat-3267), on the wizard ladder.
+ *
+ * `holds` is the BOOK's cantrip count; `CasterArchetype.cantrips` stays the number PREPARED from it each
+ * morning (scripts/archetype-cantrip-check.mjs holds that one against print, and reads the first
+ * `cantrips: N` of an entry — which is why this field is not called `cantrips`). test/dedication-books
+ * holds every number here against the record's own sentence.
+ */
+export interface ArchetypeBook {
+  /** What player text calls it: "spellbook", "familiar", "dirge", "keepsake". */
+  noun: 'spellbook' | 'familiar' | 'dirge' | 'keepsake';
+  /** Cantrips the book holds at the dedication. */
+  holds: number;
+  /** Leveled spells the Basic feat adds each time the archetype gains a slot of a new rank. */
+  perRank: number;
+  /** "of that rank" (`exact`) or "of that rank or lower" (`orLower`). */
+  rankRule: 'exact' | 'orLower';
+  /** The highest rank an addition may be, by the tier that unlocked the slot's rank (Hedge Mage: 1st
+   *  under Basic, 2nd under Expert, 3rd under Master) — and so the highest rank the book can hold. */
+  maxRankByTier?: Record<keyof Tier, number>;
 }
 
 /** Is `spellId` a cantrip this archetype may take? True for every archetype without `cantripOptions`. */
@@ -169,22 +219,23 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
    * character cast all four. The batches 5–16 parity read found it on Witch and Magus; their side
    * allows one and two. Wizard, Necromancer and Hedge Mage carried it too.
    *
-   * The spellbook / dirge / keepsake / familiar size is real, but nothing here restricts WHICH cantrips
-   * may be prepared from it, so keeping that number in this field only inflated the cap.
+   * The spellbook / dirge / keepsake / familiar size lives in `book.holds` (see ArchetypeBook): the
+   * cantrips the player chooses into the book, of which the first `cantrips` are the standing
+   * preparation and the rest can be prepared on the sheet instead.
    * scripts/archetype-cantrip-check.mjs reads each record's own sentence and holds this in place.
    */
-  'wizard-dedication': mk('arcane', 'int', 2, 'wizard'), // spellbook of 4, prepare 2
+  'wizard-dedication': { ...mk('arcane', 'int', 2, 'wizard'), book: { noun: 'spellbook', holds: 4, perRank: 2, rankRule: 'exact' } }, // spellbook of 4, prepare 2
   'bard-dedication': mk('occult', 'cha', 2, 'bard'),
   'cleric-dedication': mk('divine', 'wis', 2, 'cleric'),
   'druid-dedication': mk('primal', 'wis', 2, 'druid'),
   'oracle-dedication': mk('divine', 'cha', 2, 'oracle'),
-  'magus-dedication': mk('arcane', 'int', 2, 'magus'), // spellbook of 4, prepare 2
+  'magus-dedication': { ...mk('arcane', 'int', 2, 'magus'), book: { noun: 'spellbook', holds: 4, perRank: 2, rankRule: 'orLower' } }, // spellbook of 4, prepare 2
   /* *"You can cast spells like a necromancer, gaining a dirge with four common occult cantrips of your
    * choice … You can prepare two cantrips each day from your dirge … Your key spellcasting attribute
    * for necromancer archetype spells is Intelligence, and they are occult necromancer spells."*
    * Four known, two prepared — the wizard-dedication shape. The record carried nothing at all.
-   * The field holds the PREPARED number; the dirge's four are not modelled (see the header note). */
-  'necromancer-dedication': mk('occult', 'int', 2, 'necromancer'), // dirge of 4, prepare 2
+   * The field holds the PREPARED number; the dirge's four are `book.holds` (see the header note). */
+  'necromancer-dedication': { ...mk('occult', 'int', 2, 'necromancer'), book: { noun: 'dirge', holds: 4, perRank: 2, rankRule: 'orLower' } }, // dirge of 4, prepare 2
   /*
    * *"…they are hedge mage spells of a TRADITION ASSOCIATED WITH THE SKILL chosen for this dedication
    * (arcane for Arcana, primal for Nature, occult for Occultism, and divine for Religion)"* and *"your
@@ -202,6 +253,7 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
     traditionOptions: ['arcane', 'primal', 'occult', 'divine'],
     choiceKeyAbility: ['int', 'wis'],
     traditionBySkill: { arcana: 'arcane', nature: 'primal', occultism: 'occult', religion: 'divine' },
+    book: { noun: 'keepsake', holds: 4, perRank: 3, rankRule: 'orLower', maxRankByTier: { basic: 1, expert: 2, master: 3 } },
   },
   'animist-dedication': mk('divine', 'wis', 2, 'animist'),
   // Captivator: NOT a slot caster, however much it looks like one. Every captivator spellcasting feat
@@ -258,7 +310,7 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   // Choice-tradition: the tradition follows a bloodline (sorcerer) / patron (witch);
   // the builder offers a tradition picker rather than modelling the full sub-choice.
   'sorcerer-dedication': mk('arcane', 'cha', 2, 'sorcerer', true),
-  'witch-dedication': mk('occult', 'int', 1, 'witch', true), // familiar knows 2, prepare 1
+  'witch-dedication': { ...mk('occult', 'int', 1, 'witch', true), book: { noun: 'familiar', holds: 2, perRank: 2, rankRule: 'exact' } }, // familiar knows 2, prepare 1
   // Guns & Gears casters: tradition of your choice (beast-gunner limited to arcane/primal), Cha key.
   'eldritch-archer-dedication': mk('arcane', 'cha', 1, 'eldritch-archer', true),
   // Their four options are tradition × KEY ATTRIBUTE ("Arcane - Charisma" / "Primal - Intelligence", …):
@@ -300,6 +352,8 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
     cantrips: 2, // spellbook of 4, prepare 2 — see the header note above
     basicId: 'basic-wizard-spellcasting',
     expertId: 'expert-wizard-spellcasting',
+    // Basic Wizard Spellcasting's book sentence, which this dedication borrows: two spells of that rank.
+    book: { noun: 'spellbook', holds: 4, perRank: 2, rankRule: 'exact' },
   },
   // Psychic: occult tradition, key = the attribute you qualified with (Int or Cha — player's choice).
   'psychic-dedication': { ...mk('occult', 'int', 1, 'psychic'), choiceKeyAbility: ['int', 'cha'] },
@@ -606,6 +660,84 @@ export function archetypeSlots(level: number, a: Tier | ActiveCasterArchetype): 
   if (arch.config.innateCantrip) return out;
   for (const [rank, minLevel, t] of RANK_UNLOCKS) if (arch.tier[t] && level >= minLevel) out[rank] = 1;
   return out;
+}
+
+/** The archetype's BOOK, or null — a prepared archetype that prints one (see ArchetypeBook). A spontaneous
+ *  or innate pool never has one, whatever its config says. */
+export function archetypeBook(a: ActiveCasterArchetype | null | undefined): ArchetypeBook | null {
+  const book = a?.config.book;
+  if (!book || a!.config.repertoire || a!.config.innateCantrip || a!.config.innateRanked) return null;
+  return book;
+}
+
+/** One rank of an archetype book: the spells the Basic feat adds when the archetype's slot of `rank`
+ *  arrives, and the ranks those spells may be. */
+export interface ArchetypeBookRank {
+  rank: number;
+  /** How many spells this rank adds to the book. */
+  places: number;
+  /** The lowest and highest rank a spell added here may be. */
+  minSpellRank: number;
+  maxSpellRank: number;
+}
+
+/**
+ * The ranks an archetype's book has GROWN at by `level`: *"Each time you gain a spell slot of a new rank
+ * from the … archetype, add two common spells …"*. A rank counts once its slot exists — the standard
+ * ladder's tier feat taken and the level reached (`RANK_UNLOCKS`) — and Arcane or Patron's Breadth, which
+ * add slots at ranks the archetype already has, add nothing to the book. The Basic feat is what adds
+ * spells: before it the book holds cantrips only.
+ */
+export function archetypeBookRanks(level: number, a: ActiveCasterArchetype | null | undefined): ArchetypeBookRank[] {
+  const book = archetypeBook(a);
+  if (!book || !a) return [];
+  const out: ArchetypeBookRank[] = [];
+  for (const [rank, minLevel, t] of RANK_UNLOCKS) {
+    if (!a.tier[t] || level < minLevel) continue;
+    const ceiling = Math.min(rank, book.maxRankByTier?.[t] ?? rank);
+    out.push({ rank, places: book.perRank, minSpellRank: book.rankRule === 'exact' ? rank : 1, maxSpellRank: ceiling });
+  }
+  return out;
+}
+
+const ordinal = (r: number) => (r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`);
+
+/** What a book rank's row adds, beside its "Nth rank" heading — "" where the spells are of that rank
+ *  (wizard, witch, spellshot; any book's 1st rank), "1st-rank spells" for a hedge mage's 2nd and 3rd
+ *  ranks under Basic, "2nd rank or lower" for a magus's or necromancer's 2nd rank. Without it a hedge
+ *  mage's "2nd rank" row offered only 1st-rank spells with nothing saying why. */
+export function archetypeBookRankNote(r: ArchetypeBookRank): string {
+  if (r.minSpellRank === r.maxSpellRank) return r.maxSpellRank === r.rank ? '' : `${ordinal(r.maxSpellRank)}-rank spells`;
+  return `${ordinal(r.maxSpellRank)} rank or lower`;
+}
+
+/** The book's rule as one sentence, for the rank `r` the player is filling: "Each new spell rank adds 2
+ *  spells of that rank to your spellbook." — "of that rank or lower" (magus, necromancer), "3 1st-rank
+ *  spells" / "3 spells of 2nd rank or lower" (hedge mage, by tier). One sentence for both builder surfaces. */
+export function archetypeBookSentence(book: ArchetypeBook, r: ArchetypeBookRank | undefined): string {
+  const what = !r
+    ? book.rankRule === 'exact' ? 'spells of that rank' : 'spells of that rank or lower'
+    : book.maxRankByTier
+      ? r.maxSpellRank === 1
+        ? '1st-rank spells'
+        : `spells of ${ordinal(r.maxSpellRank)} rank or lower`
+      : book.rankRule === 'exact' || r.maxSpellRank === 1
+        ? 'spells of that rank'
+        : 'spells of that rank or lower';
+  return `Each new spell rank adds ${book.perRank} ${what} to your ${book.noun}.`;
+}
+
+/** The highest rank a spell in this archetype's book may be, where the BOOK caps it below the slots —
+ *  a hedge mage's keepsake (*"Your keepsake can also hold 1st-rank spells"*, 2nd with Expert, 3rd with
+ *  Master); 0 while only the dedication is held. Undefined for every other book: it holds whatever rank
+ *  its slots reach. */
+export function archetypeBookMaxRank(a: ActiveCasterArchetype | null | undefined): number | undefined {
+  const book = archetypeBook(a);
+  if (!book?.maxRankByTier || !a) return undefined;
+  if (a.tier.master) return book.maxRankByTier.master;
+  if (a.tier.expert) return book.maxRankByTier.expert;
+  if (a.tier.basic) return book.maxRankByTier.basic;
+  return 0;
 }
 
 /** Trained from the dedication; expert/master from the Expert/Master Spellcasting feats (or a custom
