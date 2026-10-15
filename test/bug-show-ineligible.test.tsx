@@ -59,11 +59,16 @@ describe('the "Show ineligible" button only exists where pressing it changes the
    * The defect itself: a button offering to reveal an empty set. Asserting on its ABSENCE is what
    * makes this mutation-proof — restore the `|| hideInel` and these two fail.
    */
+  /* The Ancestry row uses a human WIZARD since fa9287e (2026-10-15): Adapted Cantrip's printed prerequisite
+   * "spellcasting class feature" (feat-4474; Player Core rules-2230: you need spell slots) is checked now, so
+   * a fighter's 1st-level ancestry slot really does hold one feat back and the button rightly shows. A
+   * wizard qualifies for every 1st-level human feat offered, which is the case this row is about. */
   it.each([
-    [1, 'Ancestry feat'],
-    [1, 'Class feat'],
-  ])('is not rendered in the lvl-%s %s slot, where nothing is held back', (lvl, label) => {
-    const r = openSlot(fighter(3), lvl as number, label as string);
+    [1, 'Ancestry feat', 'wizard'],
+    [1, 'Class feat', 'fighter'],
+  ])('is not rendered in the lvl-%s %s slot, where nothing is held back (%s)', (lvl, label, cls) => {
+    const build = cls === 'wizard' ? { ...fighter(3), classId: 'wizard', keyAbility: 'int' as const, subclassId: firstSubclass('wizard') } : fighter(3);
+    const r = openSlot(build, lvl as number, label as string);
     const before = rows(r.host);
     expect(before, 'the slot must actually be offering feats').toBeGreaterThan(0);
     expect(toggle(r.host), 'a button that cannot change the list must not be on screen').toBeNull();
