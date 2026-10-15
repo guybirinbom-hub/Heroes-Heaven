@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Character, ContentDatabase, Feat, LimitedUses } from '../rules/types';
 import { classFeatureDescription } from '../rules/featureText';
-import { ownedFeatureIds, subclassFeatureIds } from '../rules/derive';
+import { classArchetypeFor, ownedFeatureIds, subclassFeatureIds } from '../rules/derive';
 import { markNote, nameOfRecord, recordMarkersFor } from '../rules/explain';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { ActionGlyph, isActionCost } from './widgets';
@@ -245,9 +245,10 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
     // otherwise, and the features it substitutes IN were listed nowhere at all.
     const subOpt = cls.subclass?.options.find((o) => o.id === subId);
     // A class archetype restructures ONE class; under Dual Class this loop runs twice, so both its
-    // halves are scoped to the class it targets or the substituted features appear under both.
-    const arch = character.classArchetype;
-    const archHere = arch && (arch.classId ?? clsId) === clsId ? arch : undefined;
+    // halves are scoped to the class it targets or the substituted features appear under both — the
+    // same per-class answer ownedFeatureIds gives (owner ruling 2026-10-15, "only its own class loses
+    // it"), read through the one helper so the two cannot disagree again.
+    const archHere = classArchetypeFor(character, clsId);
     // …minus anything an owned record grants BACK (Spellshield returns the War Mage's arcane-bond).
     // See regrantedFeatureIds: without this the feature was owned by derive and listed by nobody.
     const regranted = regrantedFeatureIds(character, content);
@@ -544,7 +545,11 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
   /** The archetype's suppressions the character did NOT get back from an owned record. */
   const replacedFeatures = useMemo<string[]>(() => {
     const regranted = regrantedFeatureIds(character, content);
-    return (character.classArchetype?.suppressedFeatures ?? []).filter((id) => !regranted.has(id));
+    // …nor one the character still OWNS from its other class (Dual Class, owner ruling 2026-10-15: the
+    // archetype removes a feature from its own class only), or a Fighter (Warrior of Legend)/Guardian read
+    // "Replaced: Shield Block" beside the Guardian's own Shield Block row.
+    const owned = ownedFeatureIds(character, content);
+    return (character.classArchetype?.suppressedFeatures ?? []).filter((id) => !regranted.has(id) && !owned.has(id));
   }, [character, content]);
 
   const q = query.trim().toLowerCase();

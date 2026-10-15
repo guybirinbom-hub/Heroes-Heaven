@@ -3694,6 +3694,28 @@ export function subclassOfHeldClass(c: HeldClassFields, classId: string): string
   return slot ? slot.subclassId : undefined;
 }
 
+/**
+ * What a CLASS ARCHETYPE took from — and substituted into — ONE held class.
+ *
+ * Owner ruling 2026-10-15 (Dual Class and a class archetype): *"Yes, only its own class loses it"*. A
+ * Warrior of Legend Fighter/Guardian loses the FIGHTER's Shield Block; the Guardian still grants its
+ * own. Every Character-side reader that walks one class's features (ownedFeatureIds, the Feats tab,
+ * explain's advancement timeline) asks here with that class's id, so they cannot disagree.
+ *
+ * `byClass` is written only for a dual-class character. Without it the flat lists belong to
+ * `classArchetype.classId` — the one class a single-class character has. A character stored before
+ * `classId` existed has neither, and keeps the old flat reading for every class.
+ */
+export function classArchetypeFor(
+  c: Pick<Character, 'classArchetype'>,
+  classId: string | null | undefined,
+): { suppressedFeatures: string[]; addedFeatures: { level: number; featureId: string }[] } | undefined {
+  const arch = c.classArchetype;
+  if (!arch) return undefined;
+  if (arch.byClass) return classId ? arch.byClass[classId] : undefined;
+  return (arch.classId ?? classId) === classId ? arch : undefined;
+}
+
 /** Whether the character holds `classId`: the first class, or the second under Dual Class. A
  *  `classId2` left on a build after Dual Class was turned off is no class — turning the rule off does
  *  not clear the field, and a raw `classId2 === 'fighter'` read kept granting a wizard the fighter's
@@ -3827,20 +3849,40 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
    * `<featureId>-<subclassId>` variant added above goes with it (same rule as deriveDefenses) — for
    * EITHER held class's subclass suffix.
    *
-   * ⚠ The list is applied FLAT across both classes of a dual-class character, as buildCharacter's own
-   * subtraction is: a Warrior of Legend Fighter/Guardian loses the Guardian's Shield Block too. Whether
-   * "you don't gain X" should also remove an X the OTHER class grants is an open owner question — and
-   * the Feats tab answers it the other way today (FeatsTab.tsx `archHere`: only the archetype's own
-   * class), so it still lists that Shield Block. His ruling lands in all three places: here, build.ts's
-   * `arch.suppressed` subtraction, and FeatsTab.tsx.
+   * DUAL CLASS — owner ruling 2026-10-15, in his words: *"Yes, only its own class loses it."* The
+   * question was whether a class archetype's "you don't gain X" also removes an X the OTHER held class
+   * grants. It does not: a Warrior of Legend Fighter/Guardian loses the fighter's Shield Block and
+   * keeps the Guardian's. So an id is dropped only when no held class whose archetype left it alone
+   * grants it from its own table or subclass. This used to be applied flat across both classes while
+   * the Feats tab scoped it to the archetype's class, so that Fighter/Guardian had Shield Block listed
+   * on the Feats tab and owned nowhere on the sheet. The same per-class rule is applied in build.ts
+   * (`resolveClassArchetype(...).suppressedFor`), the Feats tab and explain's timeline, all through
+   * `classArchetypeFor`. A single-class character has one class, so nothing about it moves.
    */
-  const archSuppressed = new Set(c.classArchetype?.suppressedFeatures ?? []);
-  if (archSuppressed.size) {
+  const archSuppressed = held.map((s) => new Set(classArchetypeFor(c, s.classId)?.suppressedFeatures ?? []));
+  if (archSuppressed.some((s) => s.size)) {
     const subs = held.filter((s) => s.subclassId).map((s) => `-${s.subclassId}`);
-    for (const id of out) {
+    const removes = (gone: Set<string>, id: string) => {
       const sub = subs.find((x) => id.endsWith(x));
       const base = sub ? id.slice(0, -sub.length) : id;
-      if (archSuppressed.has(id) || archSuppressed.has(base)) out.delete(id);
+      return gone.has(id) || gone.has(base);
+    };
+    // What each held class grants on its own (its table, variants and subclass) — only needed when
+    // there is a second class that might still grant a suppressed id.
+    const ownGrants =
+      held.length > 1
+        ? held.map((s) => {
+            const own = new Set<string>();
+            addClassTableFeatures(own, s.cls, s.subclassId, c.level, db);
+            addSubclassGrants(own, s.cls, s.subclassId, c.level, db);
+            return own;
+          })
+        : [];
+    for (const id of out) {
+      const lostBy = archSuppressed.map((gone) => removes(gone, id));
+      if (!lostBy.some(Boolean)) continue;
+      if (held.some((_, i) => !lostBy[i] && ownGrants[i]?.has(id))) continue;
+      out.delete(id);
     }
   }
   // "You gain the Sneak Attack class feature." A record handing over a CLASS FEATURE rather than a

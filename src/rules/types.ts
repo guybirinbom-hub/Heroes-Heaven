@@ -6470,6 +6470,12 @@ export interface Character {
     suppressedFeatures: string[];
     addedFeatures: { level: number; featureId: string }[];
     notes: string[];
+    /** Dual Class only: what each HELD class lost and gained, keyed by class id. Owner ruling
+     *  2026-10-15: *"Yes, only its own class loses it"* — a class archetype's "you don't gain X"
+     *  removes X from the class the archetype belongs to, never from the other held class. Absent on a
+     *  single-class character (the flat lists above are its one class's). Read through derive.ts
+     *  `classArchetypeFor`, never directly. */
+    byClass?: Record<string, { suppressedFeatures: string[]; addedFeatures: { level: number; featureId: string }[] }>;
   };
 
   // --- current state ---

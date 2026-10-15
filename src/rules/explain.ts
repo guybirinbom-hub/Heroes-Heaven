@@ -58,6 +58,7 @@ import {
   resolveFormula,
   answeredEffectOptions,
   specDamageParts,
+  classArchetypeFor,
 } from './derive';
 import { mpArmorRefine } from './monsterParts';
 import { traitLabel } from './glossary';
@@ -1115,8 +1116,10 @@ function advancementFor(c: Character) {
   if (!c.classId) return [];
   /* The archetype's suppressed features travel on the built character, so the timeline drops exactly
    * the rows buildCharacter dropped — a War Mage's Will/armour timeline showing a step the sheet did
-   * not apply is the same silent drift the reaper supplement caused above. */
-  return advancementRows(c.classId, c.subclassId, c.classArchetype?.suppressedFeatures).filter((e) => e.level <= c.level);
+   * not apply is the same silent drift the reaper supplement caused above. Only THIS class's archetype
+   * (owner ruling 2026-10-15, "only its own class loses it"): a Witch/Wizard(War Mage) keeps the
+   * witch's Defensive Robes step in the timeline, as buildCharacter keeps it in the rank. */
+  return advancementRows(c.classId, c.subclassId, classArchetypeFor(c, c.classId)?.suppressedFeatures).filter((e) => e.level <= c.level);
 }
 
 /** Timeline for a class-advancement track (saves / perception / classDc / spellcasting / armor),

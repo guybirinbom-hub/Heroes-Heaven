@@ -3451,15 +3451,18 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
    * cannot take is shown with the reason, not silently removed.
    */
   const arch = resolveClassArchetype(build, content);
-  const suppressedBy = (featureId: string | undefined): string | undefined =>
-    featureId && arch.suppressed.has(featureId)
-      ? (arch.carriers.find((ca) => (ca.ca.suppressFeatures ?? []).includes(featureId))?.name ?? 'your class archetype')
+  /* `ofClass` is the class the group belongs to: an archetype takes a question away from ITS OWN class
+   * only (owner ruling 2026-10-15, "only its own class loses it"), the same scope buildCharacter and
+   * levelChoices use, so the page never greys a question the build still answers. */
+  const suppressedBy = (featureId: string | undefined, ofClass: string | undefined): string | undefined =>
+    featureId && arch.suppressedFor(ofClass).has(featureId)
+      ? (arch.carriers.find((ca) => ca.classId === ofClass && (ca.ca.suppressFeatures ?? []).includes(featureId))?.name ?? 'your class archetype')
       : undefined;
   /** The options still offered for a group: everything, unless the archetype removed the group's
    *  carrier feature — then only its own substitute survives (see `isArchetypeSubstituteOption`), which
    *  for the wizard's thesis is nothing at all and for the investigator's methodology is esoterica. */
-  const liveOptions = (featureId: string | undefined, options: SubclassOption[]): SubclassOption[] =>
-    suppressedBy(featureId) ? options.filter((o) => isArchetypeSubstituteOption(o.id, content)) : options;
+  const liveOptions = (featureId: string | undefined, options: SubclassOption[], ofClass: string | undefined): SubclassOption[] =>
+    suppressedBy(featureId, ofClass) ? options.filter((o) => isArchetypeSubstituteOption(o.id, content)) : options;
   // Origin-granted ability boosts + the class key attribute live as child cards under the card
   // that grants them (a background's boost belongs to the background, not a separate section).
   // Alternate Ancestry Boosts: ignore the ancestry's listed boosts/flaws; offer two free boosts.
@@ -4220,14 +4223,14 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           options, so the list narrows to it rather than the card going blank; a suppression with no
           substitute (there is none on the shipped subclass data) gets the same greyed reason the
           extra-choice groups above get. */}
-      {cls?.subclass && suppressedBy(cls.subclass.featureId) && !liveOptions(cls.subclass.featureId, cls.subclass.options).length && (
+      {cls?.subclass && suppressedBy(cls.subclass.featureId, cls.id) && !liveOptions(cls.subclass.featureId, cls.subclass.options, cls.id).length && (
         <SetupCard icon="ti-versions" label={cls.subclass.name}>
-          <span className="fixed-val" data-suppressed-by={suppressedBy(cls.subclass.featureId)}>
-            Removed by {suppressedBy(cls.subclass.featureId)}
+          <span className="fixed-val" data-suppressed-by={suppressedBy(cls.subclass.featureId, cls.id)}>
+            Removed by {suppressedBy(cls.subclass.featureId, cls.id)}
           </span>
         </SetupCard>
       )}
-      {cls?.subclass && !!liveOptions(cls.subclass.featureId, cls.subclass.options).length && (
+      {cls?.subclass && !!liveOptions(cls.subclass.featureId, cls.subclass.options, cls.id).length && (
         <SetupCard icon="ti-versions" label={cls.subclass.name}>
           <PopupSelect
             title={cls.subclass.name}
@@ -4242,7 +4245,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
              * Redemption Holy. `subclassOptionAllowed` is the same predicate `originMissing` uses to
              * report an illegal cause, so the picker and Setup completeness cannot disagree; it returns
              * true while sanctification is unanswered, leaving the list wide for a half-built champion. */
-            options={liveOptions(cls.subclass.featureId, cls.subclass.options).map((o) => {
+            options={liveOptions(cls.subclass.featureId, cls.subclass.options, cls.id).map((o) => {
               const need = o.traits?.find((t) => t === 'holy' || t === 'unholy');
               const allowed = subclassOptionAllowed(o, build, content);
               return {
@@ -4341,9 +4344,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           </SubCard>
         );
       })()}
-      {[...(cls?.extraChoices ?? []), ...(cls2?.extraChoices ?? [])].map((g) => {
-        const gone = suppressedBy(g.featureId);
-        const offered = liveOptions(g.featureId, g.options);
+      {[
+        ...(cls?.extraChoices ?? []).map((g) => [g, cls?.id] as const),
+        ...(cls2?.extraChoices ?? []).map((g) => [g, cls2?.id] as const),
+      ].map(([g, gClass]) => {
+        const gone = suppressedBy(g.featureId, gClass);
+        const offered = liveOptions(g.featureId, g.options, gClass);
         if (gone && !offered.length)
           return (
             <SubCard icon="ti-adjustments" label={g.name} key={g.id}>

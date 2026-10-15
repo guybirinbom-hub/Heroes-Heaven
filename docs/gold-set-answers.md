@@ -1024,3 +1024,17 @@ the census in `docs/trust-gate.md` §7 prints the count in his face rather than 
 Order matters: he asked for the gate first and the website/GitHub update only after it
 (*"dont push now, after we finish all of the tasks from the file and the turning off of things that
 arent in wg then we update the website and git hub"*).
+
+## 2026-10-15 · Dual Class and class archetypes
+
+> *"Yes, only its own class loses it"*
+
+The question: under Dual Class, does a class archetype's "you don't gain X" also remove an X that the
+OTHER class grants? No. It removes X only from the class the archetype belongs to. A Fighter/Guardian
+with Warrior of Legend on the fighter loses the fighter's Shield Block; the Guardian still grants its own
+Shield Block, and the Shield Block feat with it. In the same way a Wizard (War Mage)/Witch keeps the
+witch's Defensive Robes. A single-class character does not change. Every reader asks one per-class
+answer: build.ts `resolveClassArchetype(...).suppressedFor` and derive.ts `classArchetypeFor`, guarded in
+`test/dual-class-owned-features.test.ts`. Not covered by this ruling, and still applied to the whole
+character: an archetype's proficiency cap (Warrior of Legend's "aren't trained in heavy armor" also
+takes the Guardian's heavy armour away).

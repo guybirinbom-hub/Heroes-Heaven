@@ -1062,10 +1062,15 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
    * Counted here as well as hidden in the Builder: an outstanding choice with no control left to
    * answer it is a "1 choice left" tag nothing on the page can clear, and levelChoices is what the
    * Create/Save completeness check reads. */
-  const archSuppressed = resolveClassArchetype(build, content).suppressed;
-  const archSubstituted = substitutedPickFeatures([cls, cls2], content, archSuppressed);
-  for (const g of [...(cls?.extraChoices ?? []), ...(cls2?.extraChoices ?? [])]) {
-    if (g.featureId && archSuppressed.has(g.featureId) && !archSubstituted.has(g.featureId)) continue;
+  /* Per class: the archetype takes the question away from ITS OWN class only (owner ruling 2026-10-15,
+   * "only its own class loses it"). */
+  const archOf = resolveClassArchetype(build, content);
+  const archSubstituted = substitutedPickFeatures([cls, cls2], content, archOf.suppressedFor);
+  for (const [g, gClass] of [
+    ...(cls?.extraChoices ?? []).map((x) => [x, cls?.id] as const),
+    ...(cls2?.extraChoices ?? []).map((x) => [x, cls2?.id] as const),
+  ]) {
+    if (g.featureId && archOf.suppressedFor(gClass).has(g.featureId) && !archSubstituted.has(g.featureId)) continue;
     const max = extraPickCount(g, build.level, build);
     if (max === 0) continue; // not unlocked at this level yet
     const picked = (build.extraChoices?.[g.id] ?? []).filter(Boolean).length;
@@ -3009,9 +3014,16 @@ export function isArchetypeSubstituteOption(optionId: string, content: ContentDa
  * it anchors, and `levelChoices` must still count it — otherwise a Palatine Detective saves with no
  * methodology at all, which is a worse answer than the wrong one this whole fix removed.
  */
-function substitutedPickFeatures(classes: (ClassDef | undefined)[], content: ContentDatabase, suppressed: Set<string>): Set<string> {
+function substitutedPickFeatures(
+  classes: (ClassDef | undefined)[],
+  content: ContentDatabase,
+  /** The class-scoped suppressions (`resolveClassArchetype(...).suppressedFor`): a group is only
+   *  suppressed when ITS class's archetype removed it — owner ruling 2026-10-15. */
+  suppressedFor: (classId: string | null | undefined) => Set<string>,
+): Set<string> {
   const out = new Set<string>();
   for (const c of classes) {
+    const suppressed = suppressedFor(c?.id);
     for (const grp of [c?.subclass, ...(c?.extraChoices ?? [])]) {
       if (grp?.featureId && suppressed.has(grp.featureId) && grp.options.some((o) => isArchetypeSubstituteOption(o.id, content)))
         out.add(grp.featureId);
@@ -3029,8 +3041,21 @@ export function resolveClassArchetype(
   grantOptions: SubclassOption[] = [],
 ): {
   carriers: { id: string; name: string; ca: ClassArchetype; classId: string }[];
+  /** Every suppressed id, whichever class lost it — for what speaks about the CHARACTER (its sheet
+   *  note, the builder's "Removed by" label). A reader walking ONE class's features takes
+   *  `suppressedFor` instead. */
   suppressed: Set<string>;
   added: { level: number; featureId: string }[];
+  /**
+   * The features an archetype took from ONE held class. Owner ruling 2026-10-15 (Dual Class and a
+   * class archetype): *"Yes, only its own class loses it"* — a Warrior of Legend Fighter/Guardian
+   * loses the fighter's Shield Block and keeps the Guardian's. Every reader that walks a class's own
+   * table, advancement or choice groups asks this with THAT class's id; a single-class character gets
+   * exactly `suppressed` back for its one class.
+   */
+  suppressedFor: (classId: string | null | undefined) => Set<string>;
+  /** `added`, each tagged with the class whose archetype substitutes it (same order). */
+  addedFrom: { classId: string; level: number; featureId: string }[];
 } {
   const carriers: { id: string; name: string; ca: ClassArchetype; classId: string }[] = [];
   const seen = new Set<string>();
@@ -3063,11 +3088,17 @@ export function resolveClassArchetype(
   for (const o of grantOptions) consider(o.id, content.classFeatures[o.id]?.classArchetype, content.classFeatures[o.id]?.name);
   const suppressed = new Set<string>();
   const added: { level: number; featureId: string }[] = [];
-  for (const { ca } of carriers) {
-    for (const id of ca.suppressFeatures ?? []) suppressed.add(id);
-    for (const af of ca.addFeatures ?? []) if (af.level <= build.level && content.classFeatures[af.featureId]) added.push(af);
+  const addedFrom: { classId: string; level: number; featureId: string }[] = [];
+  const byClass = new Map<string, Set<string>>();
+  for (const { ca, classId } of carriers) {
+    const own = byClass.get(classId) ?? new Set<string>();
+    byClass.set(classId, own);
+    for (const id of ca.suppressFeatures ?? []) (suppressed.add(id), own.add(id));
+    for (const af of ca.addFeatures ?? [])
+      if (af.level <= build.level && content.classFeatures[af.featureId]) (added.push(af), addedFrom.push({ classId, level: af.level, featureId: af.featureId }));
   }
-  return { carriers, suppressed, added };
+  const suppressedFor = (classId: string | null | undefined): Set<string> => new Set(classId ? byClass.get(classId) ?? [] : []);
+  return { carriers, suppressed, added, suppressedFor, addedFrom };
 }
 
 export function cantripBonusFor(build: BuildState, content: ContentDatabase): number {
@@ -4212,8 +4243,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    */
   const suppressedPickIds = new Set<string>();
   for (const ec of [cls, cls2] as (ClassDef | undefined)[]) {
+    // The archetype's OWN class only (owner ruling 2026-10-15): a second class's group of the same id keeps its pick.
+    const ecSuppressed = arch.suppressedFor(ec?.id);
     for (const grp of [ec?.subclass, ...(ec?.extraChoices ?? [])]) {
-      if (grp?.featureId && arch.suppressed.has(grp.featureId))
+      if (grp?.featureId && ecSuppressed.has(grp.featureId))
         for (const o of grp.options) if (!isArchetypeSubstituteOption(o.id, content)) suppressedPickIds.add(o.id);
     }
   }
@@ -6036,14 +6069,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * still handed `resolute-faith`'s master Will at 9th, and a War Mage — *"You do not gain the
      * defensive robes feature at 13th level"* (archetype-331) — its unarmoured step at 13th. The
      * suppression test lives in `advancementRows` so this reader and explain.ts's timeline cannot
-     * answer it differently. */
-    for (const e of advancementRows(build.classId, build.subclassId, arch.suppressed)) {
+     * answer it differently.
+     * Each class's table loses only what ITS OWN archetype removed (owner ruling 2026-10-15, "only its
+     * own class loses it"): a Wizard(War Mage)/Witch keeps the witch's Defensive Robes step. */
+    for (const e of advancementRows(build.classId, build.subclassId, arch.suppressedFor(build.classId))) {
       if (e.level <= level) applyAdvancement(proficiencies, spellcasting, e, build.classId);
     }
     // Dual Class: also apply the second class's advancement (applyAdvancement only ever raises a
     // track via maxRank, so the better-rank-of-two result falls out automatically).
     if (cls2 && build.classId2) {
-      for (const e of advancementRows(build.classId2, build.subclassId2, arch.suppressed)) if (e.level <= level) applyAdvancement(proficiencies, spellcasting, e, build.classId2);
+      for (const e of advancementRows(build.classId2, build.subclassId2, arch.suppressedFor(build.classId2))) if (e.level <= level) applyAdvancement(proficiencies, spellcasting, e, build.classId2);
     }
     // Rogue Ruffian/Avenger rackets: "when you gain light armor expertise/mastery, you also gain expert/
     // master proficiency in medium armor." The rogue table only advances light, so mirror the resolved
@@ -6480,8 +6515,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // must not still hand out its feat. A CLASS ARCHETYPE removes features the same way — *"You
       // don't gain Shield Block as a class feature"* (Warrior of Legend, archetype-286) — and this
       // lane honoured the subclass half only, so a Warrior of Legend fighter still held the Shield
-      // Block feat granted by the very feature the archetype takes away.
-      const dropped = new Set([...(c.subclass?.options.find((o) => o.id === subId)?.suppressedFeatures ?? []), ...arch.suppressed]);
+      // Block feat granted by the very feature the archetype takes away. Only from the archetype's OWN
+      // class (owner ruling 2026-10-15): a Warrior of Legend Fighter/Guardian's Guardian still grants it.
+      const dropped = new Set([...(c.subclass?.options.find((o) => o.id === subId)?.suppressedFeatures ?? []), ...arch.suppressedFor(c.id)]);
       for (const f of c.features) {
         if (f.level > level || dropped.has(f.featureId)) continue;
         grantSources.push({ id: f.featureId, grants: content.classFeatures[f.featureId]?.grantsFeats });
@@ -7400,12 +7436,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (ca.note) archNotes.push(`${name}: ${ca.note}`);
   }
 
+  /* Each class's own features minus what ITS archetype removed, and each archetype's substitutes minus
+   * what that same class's archetype removed — owner ruling 2026-10-15, "only its own class loses it":
+   * a Warrior of Legend Fighter/Guardian still holds the Guardian's Shield Block, and a Wizard(War
+   * Mage)/Fighter(Warrior of Legend) the War Mage's. Single class: the old "everything, then delete the
+   * suppressed list" in the same order. */
+  const lostBy1 = arch.suppressedFor(cls?.id);
+  const lostBy2 = arch.suppressedFor(cls2?.id);
   const ownedFeatureIds = new Set([
-    ...(cls?.features ?? []).filter((f) => f.level <= level).map((f) => f.featureId),
-    ...(cls2?.features ?? []).filter((f) => f.level <= level).map((f) => f.featureId),
-    ...archAddedFeatures.map((f) => f.featureId),
+    ...(cls?.features ?? []).filter((f) => f.level <= level && !lostBy1.has(f.featureId)).map((f) => f.featureId),
+    ...(cls2?.features ?? []).filter((f) => f.level <= level && !lostBy2.has(f.featureId)).map((f) => f.featureId),
+    ...arch.addedFrom.filter((f) => !arch.suppressedFor(f.classId).has(f.featureId)).map((f) => f.featureId),
   ]);
-  for (const id of archSuppressed) ownedFeatureIds.delete(id);
   /*
    * A class feature whose skill climbs on its OWN schedule — *"At 3rd level, you become an expert in
    * Undead Lore; at 7th level, you become a master…; and at 15th level, you become legendary"*. The
@@ -8396,7 +8438,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const hasWeaponExpertise = heldClasses(build).some(
       ({ classId: cid, subclassId: sub }) =>
         !!cid &&
-        advancementRows(cid, sub, arch.suppressed).some((e) => e.level <= level && /(^|-)weapon-expertise$/.test(e.source ?? '')),
+        advancementRows(cid, sub, arch.suppressedFor(cid)).some((e) => e.level <= level && /(^|-)weapon-expertise$/.test(e.source ?? '')),
     );
     if (hasWeaponExpertise) {
       for (const fc of feats) {
@@ -10234,7 +10276,32 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // picker greys those rather than offering a pick this build silently discards (Q27).
     ...(Object.keys(lockedFrom).length ? { grantedSkills: lockedFrom } : {}),
     ...(archSuppressed.size || archAddedFeatures.length || archNotes.length
-      ? { classArchetype: { ...(archClassId ? { classId: archClassId } : {}), suppressedFeatures: [...archSuppressed], addedFeatures: archAddedFeatures, notes: archNotes } }
+      ? {
+          classArchetype: {
+            ...(archClassId ? { classId: archClassId } : {}),
+            suppressedFeatures: [...archSuppressed],
+            addedFeatures: archAddedFeatures,
+            notes: archNotes,
+            // Dual Class: what each held class lost and gained (owner ruling 2026-10-15, "only its own
+            // class loses it"), so a sheet reader walking one class's features never applies the
+            // other's archetype — `classArchetypeFor` (derive.ts) reads it.
+            ...(cls2
+              ? {
+                  byClass: Object.fromEntries(
+                    heldClasses(build)
+                      .filter((s): s is { classId: string; subclassId: string | null } => !!s.classId)
+                      .map((s) => [
+                        s.classId,
+                        {
+                          suppressedFeatures: [...arch.suppressedFor(s.classId)],
+                          addedFeatures: arch.addedFrom.filter((a) => a.classId === s.classId).map(({ level: lv, featureId }) => ({ level: lv, featureId })),
+                        },
+                      ]),
+                  ),
+                }
+              : {}),
+          },
+        }
       : {}),
     ...(Object.keys(chosenEffects).length ? { chosenEffects } : {}),
     ...(chosenCreatureTraits.length ? { chosenCreatureTraits } : {}),
@@ -11399,7 +11466,7 @@ export function levelGrants(
   const arch = build ? resolveClassArchetype(build, content) : undefined;
   // …minus the ones the archetype replaces from inside their own option list: the row stays, because
   // it is what anchors the (narrowed) picker on this page.
-  const substituted = arch ? substitutedPickFeatures([cls, cls2], content, arch.suppressed) : new Set<string>();
+  const substituted = arch ? substitutedPickFeatures([cls, cls2], content, arch.suppressedFor) : new Set<string>();
   // A subclass can remove class features (cleric Battle Creed drops Resolute Faith + Miraculous Spell).
   const suppressed = new Set(cls?.subclass?.options.find((o) => o.id === subclassId)?.suppressedFeatures ?? []);
   const suppressed2 = new Set(cls2?.subclass?.options.find((o) => o.id === subclassId2)?.suppressedFeatures ?? []);
@@ -11417,12 +11484,14 @@ export function levelGrants(
   const variantOf = (featureId: string, sub: string | null | undefined): string =>
     sub && content.classFeatures[`${featureId}-${sub}`] ? `${featureId}-${sub}` : featureId;
   const features = [
-    ...(cls?.features ?? []).filter((f) => f.level === level && !suppressed.has(f.featureId)).map((f) => ({ featureId: f.featureId, sub: subclassId })),
-    ...(cls2?.features ?? []).filter((f) => f.level === level && !suppressed2.has(f.featureId)).map((f) => ({ featureId: f.featureId, sub: subclassId2 })),
+    ...(cls?.features ?? []).filter((f) => f.level === level && !suppressed.has(f.featureId)).map((f) => ({ featureId: f.featureId, sub: subclassId, of: cls?.id })),
+    ...(cls2?.features ?? []).filter((f) => f.level === level && !suppressed2.has(f.featureId)).map((f) => ({ featureId: f.featureId, sub: subclassId2, of: cls2?.id })),
     // The archetype's substitutes, at the level its record gives them (`addFeatures[].level`).
-    ...(arch?.added ?? []).filter((a) => a.level === level).map((a) => ({ featureId: a.featureId, sub: null })),
+    ...(arch?.addedFrom ?? []).filter((a) => a.level === level).map((a) => ({ featureId: a.featureId, sub: null, of: a.classId })),
   ]
-    .filter((f) => !arch?.suppressed.has(f.featureId) || substituted.has(f.featureId))
+    // Each row loses only what ITS class's archetype removed (owner ruling 2026-10-15): a Warrior of
+    // Legend Fighter/Guardian's page still lists the Guardian's Shield Block at 1st.
+    .filter((f) => !arch?.suppressedFor(f.of).has(f.featureId) || substituted.has(f.featureId))
     .map((f) => {
       const id = variantOf(f.featureId, f.sub);
       return { id, name: content.classFeatures[id]?.name ?? id };

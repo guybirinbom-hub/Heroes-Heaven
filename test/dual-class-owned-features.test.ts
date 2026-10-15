@@ -33,6 +33,7 @@ import {
   effectChoiceOffered,
   emptyBuild,
   levelChoices,
+  levelGrants,
   qiSpellsPossible,
   signatureSpellsAt,
   type BuildState,
@@ -58,6 +59,7 @@ import { atLevelLines } from '../src/sheet/cardAtLevel';
 import { SpellsTab } from '../src/sheet/SpellsTab';
 import { VitalsRail } from '../src/sheet/VitalsRail';
 import { CompanionsTab } from '../src/sheet/CompanionsTab';
+import { FeatsTab, featEntries } from '../src/sheet/FeatsTab';
 import type { Character, ContentDatabase, InventoryItem } from '../src/rules/types';
 
 const db = content();
@@ -606,5 +608,167 @@ describe('the second class\'s subclass does not set the first class\'s casting',
     const br = dual('bard', 'rogue', 5, { subclassId2: 'ruffian' });
     expect(entry(br, 'bard-casting')?.keyAbility).toBe('cha');
     expect(entry(dual('cleric', 'rogue', 5, { subclassId2: 'ruffian' }), 'cleric-casting')?.keyAbility).toBe('wis');
+  });
+});
+
+/*
+ * DUAL CLASS + A CLASS ARCHETYPE — owner ruling 2026-10-15, in his words: *"Yes, only its own class
+ * loses it."* (docs/gold-set-answers.md, "2026-10-15 · Dual Class and class archetypes".) A class
+ * archetype's "you don't gain X" removes X from the class the archetype belongs to and never from the
+ * other held class. Before this, derive.ts `ownedFeatureIds` and buildCharacter applied the suppressed
+ * list FLAT across both classes while the Feats tab scoped it to the archetype's class: a Warrior of
+ * Legend Fighter/Guardian had the Guardian's Shield Block listed on the Feats tab, owned nowhere on the
+ * sheet, and no Shield Block feat. Every reader now asks one per-class answer (build.ts
+ * `resolveClassArchetype(...).suppressedFor`, derive.ts `classArchetypeFor`).
+ */
+describe('Dual Class + a class archetype: only its own class loses what the archetype removes', () => {
+  const WOL = 'warrior-of-legend-dedication';
+  const WAR_MAGE = 'war-mage-dedication';
+  /** The dedication in the class-feat slot of the class it restructures: slot 0 = the first class's. */
+  const carry = (carrier: string, slot: 0 | 1) => ({ featPicks: { [`2:class:${slot}`]: carrier } });
+  const featsTabLists = (ch: Character, classId: string, featureId: string) =>
+    featEntries(ch, db).some((e) => e.isFeature && e.key === `feature:${classId}:${featureId}`);
+  const hasFeat = (ch: Character, featId: string) => ch.feats.some((f) => f.featId === featId);
+  const rowsAt = (b: BuildState, level: number) =>
+    levelGrants(level, b.classId, db, b.subclassId, b.variantRules, b.classId2, b.subclassId2, b.mythicEnabled, Object.values(b.featPicks ?? {}).filter(Boolean) as string[], b).features.map((f) => f.id);
+
+  it('a Fighter (Warrior of Legend)/Guardian owns the Guardian\'s Shield Block — sheet, Feats tab, feat and level page agree', () => {
+    const ch = dual('fighter', 'guardian', 5, carry(WOL, 0));
+    // The archetype really landed on the fighter, so the case is not vacuous.
+    expect(ch.classArchetype?.classId).toBe('fighter');
+    expect(ch.classArchetype?.suppressedFeatures).toContain('shield-block');
+    expect(ownedFeatureIds(ch, db).has('shield-block')).toBe(true);
+    // The Feats tab lists it under the Guardian and not under the fighter, the class that lost it.
+    expect(featsTabLists(ch, 'guardian', 'shield-block')).toBe(true);
+    expect(featsTabLists(ch, 'fighter', 'shield-block')).toBe(false);
+    // The Guardian's Shield Block feature hands over the Shield Block feat.
+    expect(ch.feats.find((f) => f.featId === 'shield-block')?.grantedBy).toBe('shield-block');
+    // The builder's 1st-level page lists it once — the Guardian's row (a plain Fighter/Guardian lists two).
+    const page = rowsAt(dualState('fighter', 'guardian', 5, carry(WOL, 0)), 1);
+    expect(page.filter((id) => id === 'shield-block')).toHaveLength(1);
+    expect(rowsAt(dualState('fighter', 'guardian', 5), 1).filter((id) => id === 'shield-block')).toHaveLength(2);
+  });
+
+  it('a Guardian/Fighter (Warrior of Legend on the fighter, the SECOND class) — the same answer', () => {
+    const ch = dual('guardian', 'fighter', 5, carry(WOL, 1));
+    expect(ch.classArchetype?.classId).toBe('fighter');
+    expect(ownedFeatureIds(ch, db).has('shield-block')).toBe(true);
+    expect(featsTabLists(ch, 'guardian', 'shield-block')).toBe(true);
+    expect(featsTabLists(ch, 'fighter', 'shield-block')).toBe(false);
+    expect(hasFeat(ch, 'shield-block')).toBe(true);
+    expect(rowsAt(dualState('guardian', 'fighter', 5, carry(WOL, 1)), 1)).toContain('shield-block');
+    // What the character carries out to the sheet: each class's own list.
+    expect(ch.classArchetype?.byClass?.fighter?.suppressedFeatures).toEqual(['shield-block']);
+    expect(ch.classArchetype?.byClass?.guardian?.suppressedFeatures).toEqual([]);
+  });
+
+  it('control: a single-class Warrior of Legend fighter still loses Shield Block, and so does a Fighter (WoL)/Wizard', () => {
+    for (const ch of [build('fighter', 5, carry(WOL, 0)), dual('fighter', 'wizard', 5, carry(WOL, 0))]) {
+      expect(ch.classArchetype?.suppressedFeatures).toContain('shield-block');
+      expect(ownedFeatureIds(ch, db).has('shield-block')).toBe(false);
+      expect(featsTabLists(ch, 'fighter', 'shield-block')).toBe(false);
+      expect(hasFeat(ch, 'shield-block')).toBe(false);
+    }
+    expect(rowsAt({ ...dualState('fighter', 'guardian', 5, carry(WOL, 0)), variantRules: {}, classId2: null, subclassId2: null }, 1)).not.toContain('shield-block');
+    // …and the plain fighter, for contrast, does own it.
+    expect(ownedFeatureIds(build('fighter', 5), db).has('shield-block')).toBe(true);
+  });
+
+  // mutation-proof
+  it('the Feats tab\'s "Class archetype" note does not call a feature "Replaced" while the other class still gives it', () => {
+    /* Lane D check round 1 (low): the note read the flat suppressed list, so a Fighter (Warrior of
+     * Legend)/Guardian read "Replaced: Shield Block" on the same page that lists the Guardian's Shield
+     * Block row. */
+    const noteOf = (ch: Character) => {
+      const r = renderDom(createElement(FeatsTab, { character: ch, content: db, onPlay: noop }));
+      try {
+        return (r.host.querySelector('.ff-arch')?.textContent ?? '').replace(/\s+/g, ' ');
+      } finally {
+        r.stop();
+      }
+    };
+    expect(noteOf(dual('fighter', 'guardian', 5, carry(WOL, 0)))).not.toMatch(/Replaced: [^.]*Shield Block/);
+    // Control: the single-class Warrior of Legend fighter really did lose it, and the note says so.
+    expect(noteOf(build('fighter', 5, carry(WOL, 0)))).toMatch(/Replaced: [^.]*Shield Block/);
+  });
+
+  it('a Wizard (War Mage)/Witch keeps the witch\'s Defensive Robes, and a Witch/Wizard (War Mage)\'s timeline still shows it', () => {
+    const ww = dual('wizard', 'witch', 13, carry(WAR_MAGE, 0));
+    expect(ww.classArchetype?.suppressedFeatures).toContain('defensive-robes');
+    expect(ownedFeatureIds(ww, db).has('defensive-robes')).toBe(true);
+    expect(featsTabLists(ww, 'witch', 'defensive-robes')).toBe(true);
+    expect(featsTabLists(ww, 'wizard', 'defensive-robes')).toBe(false);
+    // The witch as FIRST class: explain's advancement timeline is the first class's, and it lost the
+    // witch's 13th-level Defensive Robes step to the wizard's archetype.
+    const wi = dual('witch', 'wizard', 13, carry(WAR_MAGE, 1));
+    const timeline = explainStat(wi, db, { kind: 'ac' } as never).timeline ?? [];
+    expect(timeline.some((t) => t.level === 13 && t.detail === 'Defensive robes')).toBe(true);
+    // Control: a single-class War Mage still has no Defensive Robes at all.
+    const wm = build('wizard', 13, carry(WAR_MAGE, 0));
+    expect(ownedFeatureIds(wm, db).has('defensive-robes')).toBe(false);
+    expect(featsTabLists(wm, 'wizard', 'defensive-robes')).toBe(false);
+  });
+
+  /*
+   * The ADVANCEMENT half: a row is its feature's proficiency step, so class 2's step must survive class
+   * 1's archetype. No shipped archetype removes a feature whose step the other class's table also takes
+   * at a rank nothing else gives (War Mage's own 11th-level armour step masks the witch's Defensive
+   * Robes), so this is proved on a PATCHED Warrior of Legend that also removes `battle-hardened` — the
+   * Fortitude master step both the fighter (9th) and the Guardian (9th) take.
+   */
+  describe('a second class\'s advancement row is not suppressed by the first class\'s archetype (patched copy)', () => {
+    const patched = {
+      ...db,
+      feats: {
+        ...db.feats,
+        [WOL]: { ...db.feats[WOL], classArchetype: { ...db.feats[WOL].classArchetype!, suppressFeatures: ['shield-block', 'battle-hardened'] } },
+      },
+    } as unknown as ContentDatabase;
+    const fort = (b: BuildState) => buildCharacter(b, patched).proficiencies.saves.fortitude;
+    it('Fighter (WoL)/Guardian and Guardian/Fighter (WoL) reach master Fortitude from the Guardian at 9th', () => {
+      expect(fort(dualState('fighter', 'guardian', 9, carry(WOL, 0)))).toBe('master');
+      expect(fort(dualState('guardian', 'fighter', 9, carry(WOL, 1)))).toBe('master');
+    });
+    it('control: the single-class fighter with the same patched archetype stays expert', () => {
+      expect(fort({ ...dualState('fighter', 'guardian', 9, carry(WOL, 0)), variantRules: {}, classId2: null, subclassId2: null })).toBe('expert');
+    });
+  });
+
+  /*
+   * The sweep: for EVERY shipped class archetype that removes a feature, on its own class, paired with a
+   * class that does and one that does not grant that feature, in both orders — the sheet owns a
+   * suppressed feature exactly when the Feats tab lists it. This is the disagreement the ruling closed.
+   */
+  it('every suppressing archetype, every pairing: the Feats tab lists a suppressed feature exactly when the sheet owns it', () => {
+    const carriers = Object.entries(db.feats).filter(([, f]) => f.classArchetype?.suppressFeatures?.length);
+    expect(carriers.length).toBeGreaterThanOrEqual(6);
+    const partners = ['fighter', 'guardian', 'champion', 'wizard', 'witch', 'sorcerer', 'cleric', 'druid', 'rogue', 'investigator'];
+    let checked = 0;
+    let keptByOther = 0;
+    for (const [carrier, f] of carriers) {
+      const ca = f.classArchetype!;
+      for (const own of Array.isArray(ca.classId) ? ca.classId : [ca.classId]) {
+        for (const other of partners.filter((p) => p !== own && db.classes[p])) {
+          for (const [ch, ownSlot] of [
+            [dual(own, other, 13, carry(carrier, 0)), 0],
+            [dual(other, own, 13, carry(carrier, 1)), 1],
+          ] as const) {
+            expect(ch.classArchetype?.classId, `${carrier} on ${own} (slot ${ownSlot})`).toBe(own);
+            const owned = ownedFeatureIds(ch, db);
+            for (const id of ca.suppressFeatures ?? []) {
+              const listedOther = featsTabLists(ch, other, id);
+              expect(featsTabLists(ch, own, id), `${own}+${other}: ${id} under the archetype's class`).toBe(false);
+              expect(owned.has(id), `${own}+${other} (${carrier}): ${id} owned ⇔ listed under ${other}`).toBe(listedOther);
+              checked++;
+              if (listedOther) keptByOther++;
+            }
+          }
+        }
+      }
+    }
+    // Real coverage: plenty of checks, and the ten where the other class keeps the feature (Shield Block
+    // under a Guardian, Champion or Druid; Defensive Robes under a Witch or Sorcerer; both orders).
+    expect(checked).toBeGreaterThan(100);
+    expect(keptByOther).toBeGreaterThanOrEqual(10);
   });
 });
