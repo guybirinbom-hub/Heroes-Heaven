@@ -2740,11 +2740,17 @@ function heldPicks(build: BuildState): Set<string> {
  * (`SANCTIFICATION_FROM_DEITY`: the champion's Deity feature, Cleric or Champion Dedication). That answer
  * is the character's one sanctification; reading the deity card's too would let a Mortal Herald dedicant
  * be holy by the feat and unholy by the card, or sanctify a champion against their explicit 'none'.
+ *
+ * `forTrait` is set ONLY by the read that applies the holy/unholy trait. The trait is a benefit the
+ * feat delivers in code, so the trust gate can switch it off (`engineLaneOff`, scripts/data/
+ * trust-lanes.json); asking the deity card's question and counting it in "choices left" is builder
+ * structure and stays on (docs/trust-gate.md section 1). The Vindicator is class-owned and never gated.
  */
-export function takesDeitySanctification(build: BuildState, content: ContentDatabase): boolean {
+export function takesDeitySanctification(build: BuildState, content: ContentDatabase, forTrait = false): boolean {
   const picks = heldPicks(build);
   const viaRecord =
-    [...DEITY_SANCTIFIES_SUBCLASSES].some((s) => holdsSubclass(build, s)) || [...DEITY_SANCTIFIES_FEATS].some((id) => picks.has(id));
+    [...DEITY_SANCTIFIES_SUBCLASSES].some((s) => holdsSubclass(build, s)) ||
+    [...DEITY_SANCTIFIES_FEATS].some((id) => picks.has(id) && !(forTrait && engineLaneOff(id)));
   if (!viaRecord) return false;
   const ownChoice =
     [...picks].some((id) => SANCTIFICATION_FROM_DEITY.has(id) && content.feats[id]?.choice?.flag === 'sanctification') ||
@@ -7580,8 +7586,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * fighter who merely worships Jaidi stays unsanctified — and deity-champion is deliberately NOT
    * in the list: the champion answers through their own feature's choice, and reading the deity
    * answer too could sanctify a champion against their explicit 'none'. The Vindicator and the Mortal
-   * Herald read the same answer the same way (`takesDeitySanctification`, 2026-10-14). */
-  if (build.deityId && (ownedFeatureIds.has('deity-cleric') || takesDeitySanctification(build, content))) {
+   * Herald read the same answer the same way (`takesDeitySanctification`, 2026-10-14); the Mortal
+   * Herald's half goes quiet while its engine lane is off (`forTrait`). */
+  if (build.deityId && (ownedFeatureIds.has('deity-cleric') || takesDeitySanctification(build, content, true))) {
     /* "Sanctification: must choose holy" (Iomedae, Sarenrae …) ships as a ONE-option deity choice —
      * deity sweep 2026-09-05, 162 deities re-shaped from the Archives' own sanctification line. resolvePick
      * already treats a single option as taken; this raw read has to as well, or a cleric of Iomedae stays

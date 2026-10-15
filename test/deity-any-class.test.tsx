@@ -38,6 +38,7 @@ import {
   type BuildState,
 } from '../src/rules/build';
 import { sanctificationOf } from '../src/rules/derive';
+import { setEngineTrustOff } from '../src/rules/trustLanes';
 import { ContentContext } from '../src/sheet/ContentContext';
 import { DetailsTab } from '../src/sheet/DetailsTab';
 import type { FeatChoiceDef } from '../src/rules/types';
@@ -313,6 +314,34 @@ describe('3b · every record that hands over "your deity\'s sanctification" deli
     expect(traits(b)).toEqual(['holy']);
     const abadar = db.deities['abadar'].effectChoices!.find((e) => e.id === 'sanctification')!;
     expect(effectChoiceOffered(abadar, b, db, 'abadar'), 'the card must not ask a second time').toBe(false);
+  });
+
+  /*
+   * mutation-proof — THE TRUST LANE. The Mortal Herald's holy/unholy trait is a benefit the feat
+   * delivers in CODE, so scripts/data/trust-lanes.json lists it `"kind": "trait", "gated": true` — a
+   * claim trust-lanes-check cannot verify (it asks only that the id is listed). Drop the `forTrait`
+   * guard in takesDeitySanctification and this `it` is the only failure. Only the trait read is the
+   * lane: asking and counting the deity card's question is builder structure (docs/trust-gate.md
+   * section 1), and the Vindicator is class-owned, so neither may go quiet with it.
+   */
+  it('the Mortal Herald\'s trait goes quiet while its engine lane is off; the question and a Vindicator\'s trait do not', () => {
+    const vin = fighter({ classId: 'ranger', subclassId: 'vindicator', deityId: 'iomedae' });
+    const vinHerald = { ...vin, level: 12, featPicks: { '12:class:0': 'mortal-herald-dedication' } } as BuildState;
+    const abadar = db.deities['abadar'].effectChoices!.find((e) => e.id === 'sanctification')!;
+    setEngineTrustOff(['mortal-herald-dedication']);
+    try {
+      expect(traits(herald({ deityId: 'iomedae' })), 'the trait is the lane, and the lane is off').toEqual([]);
+      expect(traits(vin), 'a Vindicator is class-owned, never this lane').toEqual(['holy']);
+      expect(traits(vinHerald), 'a Vindicator who also took the feat keeps the trait through the subclass').toEqual(['holy']);
+      expect(effectChoiceOffered(abadar, herald({ deityId: 'abadar' }), db, 'abadar'), 'the question is builder structure').toBe(true);
+      expect(setupMissing(herald({ deityId: 'abadar' }), db)).toContain('Sanctification (Abadar)');
+    } finally {
+      // The setter is module-global: a leaked OFF list would silently darken the rest of the suite.
+      setEngineTrustOff([]);
+    }
+    // …and with it back on, the trait returns — so the empty list above is the gate, not a bug.
+    expect(traits(herald({ deityId: 'iomedae' }))).toEqual(['holy']);
+    expect(traits(vinHerald)).toEqual(['holy']);
   });
 
   it("…and a champion's explicit 'none' is not overruled by a stale deity-card answer", () => {
