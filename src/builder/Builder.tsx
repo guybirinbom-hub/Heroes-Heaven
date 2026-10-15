@@ -867,18 +867,28 @@ export function Builder({
                                       return keys.map((k, i) => {
                                         const answers = keys.map((kk) => build.featChoices[kk]);
                                         const taken = new Set(def.distinct ? answers.filter((a, j) => j !== i && a) : []);
+                                        // A kept answer the rule does not allow says so UNDER the control, where
+                                        // the player looks — not only inside the picker (Q27, checker 2026-10-15).
+                                        const barred = all.find((o) => o.id === build.featChoices[k])?.notAllowed;
                                         return (
-                                          <SearchSelect
-                                            key={k}
-                                            bare
-                                            label={featChoicePrompt(def.prompt, def.flag)}
-                                            // NOT the raw `from.type` — that printed the slug at the
-                                            // player ("Search own-deity-spell…") on sixteen records.
-                                            placeholder={`Search ${OPEN_SOURCE_LABEL[def.from?.type ?? ''] ?? 'options'}…`}
-                                            value={build.featChoices[k] ?? null}
-                                            onChange={(v) => actions.setFeatChoice(k, v)}
-                                            options={openOptionsWithRecords(all.filter((o) => !taken.has(o.id)), def.from)}
-                                          />
+                                          <Fragment key={k}>
+                                            <SearchSelect
+                                              bare
+                                              label={featChoicePrompt(def.prompt, def.flag)}
+                                              // NOT the raw `from.type` — that printed the slug at the
+                                              // player ("Search own-deity-spell…") on sixteen records.
+                                              placeholder={`Search ${OPEN_SOURCE_LABEL[def.from?.type ?? ''] ?? 'options'}…`}
+                                              value={build.featChoices[k] ?? null}
+                                              onChange={(v) => actions.setFeatChoice(k, v)}
+                                              options={openOptionsWithRecords(all.filter((o) => !taken.has(o.id)), def.from)}
+                                            />
+                                            {barred && (
+                                              <div className="choice-inert" data-choice-barred>
+                                                <i className="ti ti-alert-triangle" aria-hidden="true" />
+                                                <span>{barred}</span>
+                                              </div>
+                                            )}
+                                          </Fragment>
                                         );
                                       });
                                     })()

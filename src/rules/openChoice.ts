@@ -19,6 +19,9 @@ export interface OpenOption {
   /** Short right-aligned hint in the picker (a feat's level, a spell's rank). */
   note?: string;
   description?: string;
+  /** A KEPT stored answer the rule certainly does not allow — the sentence the builder shows under the
+   *  filled control, so it does not read as a valid pick (Q27). Absent on every ordinary option. */
+  notAllowed?: string;
 }
 
 /**
@@ -104,22 +107,33 @@ export function openChoiceOptions(
       // and with no class casting at all no tradition is excluded, so the list is never emptied.
       // …but the cantrip must come FROM a magical tradition: 51 cantrips carry none (compositions such as
       // allegro, hexes, psi, necromancer and summoner cantrips) and were offered, with or without class
-      // casting (2026-10-15). A stored answer (`keep`) stays in its own picker either way — and says it
-      // is not allowed any more, so it does not look like a valid pick (Q27).
+      // casting (2026-10-15). A stored answer (`keep`) stays in its own picker either way.
+      //
+      // Only a kept answer with NO tradition is marked as not allowed (`notAllowed`, Q27): that is never
+      // legal. One on a tradition the character casts now is kept unmarked — `character` is the whole
+      // build, so a dedication taken LATER (a sorcerer's Druid Dedication) makes an answer that was legal
+      // when picked look like the character's own, and print does not take a legal pick back (checker
+      // finding, 2026-10-15).
       const ownTraditions = new Set<string>(
         (opts?.character?.spellcasting ?? []).filter((e) => e.type === 'prepared' || e.type === 'spontaneous').map((e) => e.tradition),
       );
       const keep = new Set(opts?.keep ?? []);
       const traditionOk = (s: { traditions?: string[] }) =>
         !from.excludeOwnTraditions || (!!s.traditions?.length && !s.traditions.some((t) => ownTraditions.has(t)));
-      return spellsMatching(filter, content, opts?.hideLegacy).filter(matchesAny).filter((s) => keep.has(s.id) || traditionOk(s)).map((s) => ({
-        id: s.id,
-        name: s.name,
-        note:
-          ((s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`) +
-          (traditionOk(s) ? '' : ' · not from a magical tradition other than your own — choose again'),
-        description: s.description,
-      }));
+      return spellsMatching(filter, content, opts?.hideLegacy)
+        .filter(matchesAny)
+        .filter((s) => keep.has(s.id) || traditionOk(s))
+        .map((s) => {
+          const rank = (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`;
+          const barred = !!from.excludeOwnTraditions && !s.traditions?.length;
+          return {
+            id: s.id,
+            name: s.name,
+            note: barred ? `${rank} · from no magical tradition — choose again` : rank,
+            description: s.description,
+            ...(barred ? { notAllowed: `${s.name} is from no magical tradition, and this choice needs one — choose again.` } : {}),
+          };
+        });
     }
     case 'feat': {
       // `excludeOwn` drops feats the character already has — Experimental Spellshaping's daily pick:

@@ -2774,7 +2774,8 @@ function mergeRebuiltInventory(playInv: InventoryItem[], built: InventoryItem[],
  *     WRITER   setPreparedSpell via slotKeyOf.  RENDERS appended to rank `to`, one per live trade.
  *     TESTS    ①'s, at the bonus slot's own rank.   SAVE nothing.
  * ③ preparedSpells[`entry:cantrip:i`] — preparedCantripKey.
- *     WRITER   setPreparedCantrip (the Prepare-a-cantrip opening).
+ *     WRITER   prepareCantripOpening (the Prepare panel: the opening, plus a stand-in that depends on it),
+ *              through setPreparedCantrip.
  *     RENDERS  applyPlayState `cantripSlots`, the openings below the fresh `cantripCap`.
  *     TESTS    spellOptions(0) — and there IS a rank-0 list, which this table denied for three
  *              rounds: the tradition's cantrips, and for a BOOK caster its book's cantrips as well

@@ -224,10 +224,39 @@ describe('5 · the picker offers only cantrips FROM a magical tradition', () => 
   it('a stored answer is kept in its own picker (keep what you hold), says it is not allowed, and is offered to no one else', () => {
     const ch = buildCharacter(pc(db, 'sorcerer', 1), db);
     const kept = openChoiceOptions(from, db, { character: ch, keep: ['allegro', 'electric-arc'] });
-    // Q27, unpickable must look unpickable: the kept answer print no longer allows says so…
-    expect(kept.find((o) => o.id === 'allegro')?.note).toBe('Cantrip · not from a magical tradition other than your own — choose again');
+    // Q27, unpickable must look unpickable: a kept answer with no tradition says so, in the picker and
+    // (`notAllowed`) under the builder's control…
+    const allegro = kept.find((o) => o.id === 'allegro');
+    expect(allegro?.note).toBe('Cantrip · from no magical tradition — choose again');
+    expect(allegro?.notAllowed).toBe('Allegro is from no magical tradition, and this choice needs one — choose again.');
     // …and a kept answer that IS allowed reads like any other option.
-    expect(kept.find((o) => o.id === 'electric-arc')?.note).toBe('Cantrip');
+    expect(kept.find((o) => o.id === 'electric-arc')).toMatchObject({ note: 'Cantrip' });
+    expect(kept.find((o) => o.id === 'electric-arc')?.notAllowed).toBeUndefined();
     expect(openChoiceOptions(from, db, { character: ch, keep: [] }).map((o) => o.id)).not.toContain('allegro');
+  });
+
+  // mutation-proof
+  it('a legal pick is never marked after a LATER dedication adds its tradition (checker finding)', () => {
+    /* A 1st-level sorcerer (occult) picks acid splash (arcane/primal); at 2nd it takes Druid Dedication.
+     * The picker's character is the whole build, so primal now reads as "its own" — but print does not
+     * take a legal pick back, so the kept answer stays unmarked. */
+    const later = buildCharacter(pc(db, 'sorcerer', 2, { keyAbility: 'cha', featPicks: { '2:class:0': 'druid-dedication' } }), db);
+    expect(
+      later.spellcasting.some((e) => (e.type === 'prepared' || e.type === 'spontaneous') && e.tradition === 'primal'),
+      'fixture: the dedication casts primal',
+    ).toBe(true);
+    const kept = openChoiceOptions(from, db, { character: later, keep: ['acid-splash'] }).find((o) => o.id === 'acid-splash');
+    expect(kept, 'kept in its own picker').toBeTruthy();
+    expect(kept?.note).toBe('Cantrip');
+    expect(kept?.notAllowed).toBeUndefined();
+    // The planted bad case: the same cantrip with its traditions gone is marked — the leg reads the field.
+    const spell = db.spells['acid-splash'];
+    const saved = spell.traditions;
+    spell.traditions = [] as never;
+    try {
+      expect(openChoiceOptions(from, db, { character: later, keep: ['acid-splash'] }).find((o) => o.id === 'acid-splash')?.notAllowed).toBeTruthy();
+    } finally {
+      spell.traditions = saved;
+    }
   });
 });

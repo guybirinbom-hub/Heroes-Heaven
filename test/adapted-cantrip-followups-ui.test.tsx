@@ -300,28 +300,41 @@ describe('4 · Learn a Spell', () => {
 describe('5 · the builder keeps a stored answer in its own picker', () => {
   // mutation-proof
   it(
-    'an old save that chose allegro still shows Allegro in the Adapted cantrip picker, marked as no longer allowed',
+    'an old save that chose allegro still shows Allegro in the Adapted cantrip picker, and says under it that it is not allowed',
     () => {
-      const b = withAdapted(pc(db, 'sorcerer', 1, { keyAbility: 'cha' }), 'allegro');
-      const r = renderDom(<Builder content={db} initial={b} onCancel={noop} onCreate={noop} />);
+      /** The level-1 page's Adapted cantrip control: its state, its text, and the line under it. */
+      const card = (answer: string) => {
+        const r = renderDom(<Builder content={db} initial={withAdapted(pc(db, 'sorcerer', 1, { keyAbility: 'cha' }), answer)} onCancel={noop} onCreate={noop} />);
+        try {
+          r.click([...r.host.querySelectorAll<HTMLButtonElement>('.lstrip button')].find((x) => flat(x.textContent) === '1') ?? null);
+          const ctl = [...r.host.querySelectorAll<HTMLElement>('[data-ctl-title="Adapted cantrip"]')];
+          expect(ctl, 'the Adapted cantrip picker').toHaveLength(1);
+          return {
+            state: ctl[0].getAttribute('data-ctl-state'),
+            text: flat(ctl[0].textContent),
+            barred: [...r.host.querySelectorAll('[data-choice-barred]')].map((x) => flat(x.textContent)),
+          };
+        } finally {
+          r.stop();
+        }
+      };
+      const allegro = card('allegro');
+      expect(allegro.state, 'it reads as answered, not blank').toBe('picked');
+      expect(allegro.text).toContain('Allegro');
+      // Q27: the reason is ON the page, not only inside the picker after Replace.
+      expect(allegro.barred).toEqual(['Allegro is from no magical tradition, and this choice needs one — choose again.']);
+      // Control: an allowed answer has no such line.
+      const arc = card('electric-arc');
+      expect(arc.state).toBe('picked');
+      expect(arc.barred).toEqual([]);
+      // The planted bad case: allegro WITH a tradition is an ordinary answer — the line reads the rule.
+      const spell = db.spells.allegro;
+      const saved = spell.traditions;
+      spell.traditions = ['primal'] as never;
       try {
-        r.click([...r.host.querySelectorAll<HTMLButtonElement>('.lstrip button')].find((x) => flat(x.textContent) === '1') ?? null);
-        const card = [...r.host.querySelectorAll<HTMLElement>('[data-ctl-title="Adapted cantrip"]')];
-        expect(card, 'the Adapted cantrip picker').toHaveLength(1);
-        expect(card[0].getAttribute('data-ctl-state'), 'it reads as answered, not blank').toBe('picked');
-        expect(flat(card[0].textContent)).toContain('Allegro');
+        expect(card('allegro').barred).toEqual([]);
       } finally {
-        r.stop();
-      }
-      // The planted bad case: the same character answered with a spell id nothing offers reads blank —
-      // the state a kept answer avoids.
-      const blank = withAdapted(pc(db, 'sorcerer', 1, { keyAbility: 'cha' }), 'no-such-cantrip');
-      const r2 = renderDom(<Builder content={db} initial={blank} onCancel={noop} onCreate={noop} />);
-      try {
-        r2.click([...r2.host.querySelectorAll<HTMLButtonElement>('.lstrip button')].find((x) => flat(x.textContent) === '1') ?? null);
-        expect(r2.host.querySelector('[data-ctl-title="Adapted cantrip"]')?.getAttribute('data-ctl-state')).toBe('empty');
-      } finally {
-        r2.stop();
+        spell.traditions = saved;
       }
     },
     T,
