@@ -183,7 +183,7 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
   // batch 039: familiar#archetype-reach
   // batch P02: enhanced-familiar#ability-budget
-  it('the widening is exactly eight records — the five still-open aspect keys, familiar under familiar#archetype-reach, enhanced-familiar under enhanced-familiar#fixed-budget-grants, and the deferred relic family', () => {
+  it('the widening is exactly nine records — the five still-open aspect keys, familiar under familiar#archetype-reach, enhanced-familiar under enhanced-familiar#fixed-budget-grants, cantrip-expansion under cantrip-expansion#dual-class-pool, and the deferred relic family', () => {
     /*
      * The pin against silent growth. `--queued-parks` lists every record parked by a desk id that is
      * not its own; today that is five, and each is deliberate:
@@ -239,6 +239,9 @@ describe('batch 035 gate-park — a question filed under record#aspect parks its
       // (enhanced-familiar#fixed-budget-grants: which number wins when a fixed-budget familiar grant meets
       // Enhanced Familiar), so it parks enhanced-familiar while the owner rules.
       'enhanced-familiar': 'enhanced-familiar#fixed-budget-grants',
+      // 2026-10-15: desk #172 cantrip-expansion#dual-class-pool (record#aspect: which class's pool one
+      // Cantrip Expansion feeds under Dual Class for a prepared + spontaneous pair) parks cantrip-expansion.
+      'cantrip-expansion': 'cantrip-expansion#dual-class-pool',
       relic: 'relic-gift-family-skysunder-sparkwarden-uniter-adamantine',
     };
     const deskNow = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));

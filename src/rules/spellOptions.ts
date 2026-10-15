@@ -668,24 +668,39 @@ export function bookGrantChips(
   });
 }
 
+/** How many cantrip OPENINGS a prepared entry shows: its cap, or one per own stored pick when the build
+ *  draws more (a save made under a larger cap, `cantripCapWas`) — an opening is what draws a prepared
+ *  cantrip, so fewer would hide one. The play overlay (which also opens one the player prepared on the
+ *  sheet past the cap) and the sheet's Prepare panel both size by this. */
+export function cantripOpenings(entry: SpellcastingEntry): number {
+  const granted = entry.grantedCantrips ?? [];
+  return Math.max(entry.cantripCap ?? entry.cantrips.length, entry.cantrips.filter((id) => !granted.includes(id)).length);
+}
+
 /**
  * A `grantsCountInside` entry's cantrips OVER its allowance — the player's own, gift stripped, past
  * `cantripCap` less the gift's one place. Only a builder that offered the full five beside the gift
  * can produce it (every saved sorcerer from before lane C2 that filled its row), and the cantrips are
  * the player's own, so the sheet draws every one and says so — the `overCapOf` shape, for the one list
- * a spontaneous caster cannot edit on the sheet. 0 everywhere else.
+ * a spontaneous caster cannot edit on the sheet.
  *
  * A cantrip a FEAT put in the pool (`spellSources`: Adapted Cantrip's, written only when the player had
  * not picked it themselves) is not one of the player's own either — the same set deriveBuildFromCharacter
  * leaves out of the build it reads back. Counted, a sorcerer with Adapted Cantrip read "One too many —
  * … remove one in the builder" beside a builder that offered exactly the places it filled (feat-4474:
  * *"replace one of your cantrips known with the chosen spell"*; 2026-10-15).
+ *
+ * Any other class entry whose cap Dual Class made smaller (`cantripCapWas`: the bonus now feeds the
+ * other class) counts the same way, without the gift: what is DRAWN past `cantripCap` — so a cantrip the
+ * player empties out of an opening on the sheet takes its note with it. 0 everywhere else.
  */
 export function cantripsOverOf(entry: SpellcastingEntry): number {
-  if (!entry.grantsCountInside || entry.cantripCap === undefined) return 0;
+  if (entry.cantripCap === undefined) return 0;
+  if (!entry.grantsCountInside && entry.cantripCapWas === undefined) return 0;
   const granted = entry.grantedCantrips ?? [];
   const fromFeats = entry.spellSources ?? {};
   const own = entry.cantrips.filter((id) => !granted.includes(id) && !(id in fromFeats)).length;
+  if (!entry.grantsCountInside) return Math.max(0, own - entry.cantripCap);
   return Math.max(0, own - Math.max(0, entry.cantripCap - grantedPlaces(entry, 0)));
 }
 

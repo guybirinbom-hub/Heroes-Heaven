@@ -57,6 +57,7 @@ import { traitDesc, traitLabel } from '../rules/glossary';
 import { spellNotesFor, spellSituationalFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { spellCostMatches } from '../rules/spellFilter';
 import {
+  cantripOpenings,
   cantripsOverOf,
   chosenAt,
   collectionUsed,
@@ -70,7 +71,7 @@ import {
   variantGiftCount,
 } from '../rules/spellOptions';
 import { enabledBookSet, entrySourceOn } from '../rules/sources';
-import { bookTitle, keptOffListNote, notInBookNote, overGiftNote, variantGiftNote } from '../rules/spellcasting';
+import { bookTitle, keptOffListNote, notInBookNote, overCantripCapNote, overGiftNote, variantGiftNote } from '../rules/spellcasting';
 import { heighteningApplies } from '../rules/heightening';
 import { useAstNode } from './useAst';
 import { isBucketLoaded, type AstNode } from './astStore';
@@ -1065,7 +1066,7 @@ function ManageSpellsModal({
             {entry.cantripsPrepared && (entry.cantripCap ?? 0) > 0 && (
               <div className="ms-rank">
                 <div className="ms-rank-hdr">Cantrips</div>
-                {(entry.cantripSlots ?? Array.from({ length: entry.cantripCap! }, (_, i) => entry.cantrips[i] ?? null)).map((id, i) => {
+                {(entry.cantripSlots ?? Array.from({ length: cantripOpenings(entry) }, (_, i) => entry.cantrips[i] ?? null)).map((id, i) => {
                   const sp = id ? content.spells[id] : null;
                   return (
                     <button
@@ -1425,6 +1426,16 @@ function pastGiftIds(entry: SpellcastingEntry, ids: string[], granted: string[],
   return new Set(ids.filter((id) => !granted.includes(id) && !(id in fromFeats)).slice(-by));
 }
 
+/** Any other class's own cantrips drawn PAST its cap (`cantripCapWas` — a save made while a Dual Class
+ *  cantrip bonus still fed this class too): the last `by` of the player's picks, never a cantrip a
+ *  record or a feat put in the list — the same set `cantripsOverOf` counts. */
+function pastCapCantripIds(entry: SpellcastingEntry, by: number): Set<string> {
+  if (entry.grantsCountInside || by <= 0) return new Set();
+  const granted = entry.grantedCantrips ?? [];
+  const fromFeats = entry.spellSources ?? {};
+  return new Set(entry.cantrips.filter((id) => !granted.includes(id) && !(id in fromFeats)).slice(-by));
+}
+
 function offBookNote(entry: SpellcastingEntry, id: string | null | undefined): string | undefined {
   return id && entry.notInBook?.includes(id) ? notInBookNote(entry.bookNoun) : undefined;
 }
@@ -1705,6 +1716,8 @@ export function SpellsTab({
     const emptyCantrips = Math.max(0, (main.cantripCap ?? 0) - main.cantrips.length);
     // A sorcerer's cantrip drawn past its five (the gift is one of them — lane C2): drawn, and said.
     const pastCantrips = pastGiftIds(main, main.cantrips, main.grantedCantrips ?? [], cantripsOverOf(main));
+    // …and any class's picks past a cap a Dual Class cantrip bonus no longer gives it: drawn, and said.
+    const pastCap = pastCapCantripIds(main, cantripsOverOf(main));
     // …and a gift cantrip the record lists one of per VARIANT (elemental: one per element), each drawn
     // and each saying only one is the character's (`variantGiftCount`, lane C4).
     const variantCantrips = variantGiftCount(main, 0);
@@ -1720,6 +1733,7 @@ export function SpellsTab({
           const note =
             offBookNote(main, id) ??
             (pastCantrips.has(id) ? overGiftNote(main.cantripCap ?? 0, true) : undefined) ??
+            (pastCap.has(id) ? overCantripCapNote(main.cantripCap ?? 0, !!main.cantripsPrepared) : undefined) ??
             (variantCantrips && main.grantedCantrips?.includes(id) ? variantGiftNote(variantCantrips) : undefined);
           return sp && visible(sp) ? (
             <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta={from ? `at will · from ${from}` : 'at will'} marks={marksFor(id)} note={note} onClick={() => openDetail(sp)} />

@@ -297,6 +297,16 @@ export function overGiftNote(places: number, cantrip: boolean, onSheet = false):
   return `One too many — your bloodline’s ${noun} is one of your ${places}; remove one ${where}`;
 }
 
+/** The marker on a class's own cantrip drawn past its cap (`cantripCapWas`): a save made while a
+ *  Dual Class cantrip bonus still fed this class as well as the class that took the feat.
+ *
+ *  `prepared`: the class prepares its cantrips on the sheet, and a cantrip prepared there into an
+ *  opening the larger cap gave is in no builder list — the Prepare button is where it is emptied. */
+export function overCantripCapNote(places: number, prepared = false): string {
+  const where = prepared ? 'leave one empty with the Prepare button, or remove one in the builder' : 'remove one in the builder';
+  return `One too many — this class has ${places} cantrips; ${where}`;
+}
+
 /** The marker on a sorcerous gift drawn at a rank where the bloodline's record lists one gift per
  *  VARIANT (`variantGiftCount`, lane C4): print gives the character one of the `count`, and the record
  *  does not say which, so all are drawn — together one of the rank's places — and each says so. */

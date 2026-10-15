@@ -14,7 +14,7 @@
  */
 import type { AbilityId, ActiveCondition, Character, CharacterAppearance, CharacterDetails, CharacterImage, Coins, CompanionConfig, ContentDatabase, InventoryItem, Item, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, InnateSpellGrant, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
 import { resolveRestrictedSlots } from './restrictedSlots';
-import { filedRank, heldCounts, notInBookOf, offersSpell, overCapOf, type SpellOptionCtx } from './spellOptions';
+import { cantripOpenings, filedRank, heldCounts, notInBookOf, offersSpell, overCapOf, type SpellOptionCtx } from './spellOptions';
 import { deriveMaxHp, deriveBulk, dailyChoiceGrants, heldClasses, ownedFeatureIds } from './derive';
 import { FORMULA_BOOK_ITEM_ID, formulaBooks, grantsFormulaBook, withFormula } from './formulaBook';
 import { adjustModes } from './modes';
@@ -577,9 +577,13 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
      * before the picker was held to the book is still drawn (and marked, `notInBook`) — so a 4th-rank
      * spell parked in an opening rendered as an at-will cantrip until this asked. */
     if (e.cantripsPrepared) {
-      const cap = e.cantripCap ?? e.cantrips.length;
       const granted = new Set(e.grantedCantrips ?? []);
       const defaults = e.cantrips.filter((id) => !granted.has(id));
+      // One opening per stored pick even past the cap: a save made while a Dual Class cantrip bonus
+      // still fed this class draws every pick (`cantripCapWas`), and an opening is what draws it —
+      // including one the player PREPARED here, on the sheet, into an opening the larger cap gave.
+      let cap = cantripOpenings(e);
+      for (let i = cap; i < (e.cantripCapWas ?? 0); i++) if (play.preparedSpells?.[preparedCantripKey(e.id, i)]) cap = i + 1;
       const stored = Array.from({ length: cap }, (_, i): string | null | undefined => {
         const o = play.preparedSpells?.[preparedCantripKey(e.id, i)];
         if (o === undefined) return undefined;

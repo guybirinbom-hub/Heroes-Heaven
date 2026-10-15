@@ -5884,6 +5884,11 @@ export interface SpellcastingEntry {
    *  class entry so the sheet can draw empty openings for unpicked ones. The picks live in
    *  `cantrips`; without the cap, zero picks made the whole Cantrips section invisible. */
   cantripCap?: number;
+  /** The larger cap this class entry had before Dual Class sent each cantrip bonus to its own class
+   *  (Cantrip Expansion taken by the OTHER class). The build draws the player's stored picks up to it,
+   *  the play overlay opens a cantrip prepared on the sheet up to it (`cantripOpenings`), and the sheet
+   *  marks what is drawn past `cantripCap` (`cantripsOverOf`). Absent when the cap did not shrink. */
+  cantripCapWas?: number;
   /** A PREPARED caster's cantrips are prepared each morning like their slots ("you prepare your
    *  cantrips") — the owner's 2026-09-02 point: a cleric must be able to change them on the sheet,
    *  not only in the builder. Set on the class entry when the CLASS casts prepared (the flexible-

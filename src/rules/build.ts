@@ -3207,7 +3207,13 @@ export function resolveClassArchetype(
   return { carriers, suppressed, added, suppressedFor, addedFrom };
 }
 
-export function cantripBonusFor(build: BuildState, content: ContentDatabase, opts?: { skipSwaps?: boolean }): number {
+export function cantripBonusFor(
+  build: BuildState,
+  content: ContentDatabase,
+  /** `classId`: size ONE held class's pool (`classCantripBonus`). Under Dual Class a bonus then feeds
+   *  only the pool it belongs to (`feedsClassPool`); omitted, every bonus counts, as before. */
+  opts?: { skipSwaps?: boolean; classId?: string | null },
+): number {
   /*
    * A record whose cantrip budget is NEGATIVE because it swaps a cantrip in — Adapted Cantrip's `-1`
    * is the "replace one of your cantrips known" half of its own grant — but whose picker the player
@@ -3237,6 +3243,10 @@ export function cantripBonusFor(build: BuildState, content: ContentDatabase, opt
      * Casting) target an ARCHETYPE pool (`<dedication>-casting`) — un-gated, a psychic who took Psi
      * Development had their CLASS cantrip cap silently raised by the feat that widens the archetype's. */
     if (b.entryId && !heldClasses(build).some((s) => b.entryId === `${s.classId}-casting`)) continue;
+    // …and one aimed at a CLASS pool sizes that class's alone: under Dual Class the other class's pool
+    // passed the held-class test above too (none ships today; a homebrew row would have).
+    if (opts?.classId && b.entryId && b.entryId !== `${opts.classId}-casting`) continue;
+    if (opts?.classId && !feedsClassPool(build, content, src as Feat, opts.classId)) continue;
     if ((b.cantrips ?? 0) < 0 && unpaidSwaps.has(src.id)) continue;
     // `skipSwaps`: a pool whose cantrips are PREPARED out of a book takes the swap's cantrip as one more
     // option in the book, not in place of one (see archetypeCantripCounts) — so the `-1` is not charged.
@@ -3248,6 +3258,40 @@ export function cantripBonusFor(build: BuildState, content: ContentDatabase, opt
     n += reached?.cantrips ?? b.cantrips ?? 0;
   }
   return n;
+}
+
+/**
+ * UNDER DUAL CLASS, WHICH CLASS POOL A CANTRIP BONUS FEEDS. Gamemastery Guide, Dual-Class Characters
+ * (rules-1330): the two classes' spells are kept *"entirely separate"*, so a bonus sized for one class's
+ * spellcasting must not also size the other's. Two shapes are settled; everything else feeds every
+ * pool, as it always has (a single class: always).
+ *
+ *  · A CLASS ARCHETYPE's bonus (Flexible Spellcaster's *"four cantrips per day instead of three"* ladder)
+ *    feeds exactly the classes whose cantrip cut it carries — the same test as
+ *    `classArchetypeSpellMods(…, forClassId)`. The cut and the give-back COMPOSE to one class's cantrip
+ *    column; a Wizard/Sorcerer whose wizard took it had the sorcerer's five raised to seven by a ladder
+ *    whose -2 the sorcerer never paid (owner ruling 2026-10-15: a class archetype's effect is its own
+ *    class's).
+ *  · A CLASS FEAT on one class's list and not the other's, when both classes cast the same way. Cantrip
+ *    Expansion (Player Core, feat-4580): *"Prepared Caster (Cleric, Wizard, etc.): You can prepare two
+ *    additional cantrips each day."* — one sentence, two cantrips, and a Wizard/Druid's wizard is the class that
+ *    took the feat, so the druid's pool does not get two more as well (it did: 7 + 8 measured
+ *    2026-10-15). Wanderer's Guide encodes the feat once per class, each copy feeding only its own
+ *    class's spellcasting.
+ *
+ * NOT settled, and left as before (owner question #172 `cantrip-expansion#dual-class-pool`): a pairing of a
+ * prepared and a spontaneous class (the Wizard/Sorcerer: print's two sentences each fit one class,
+ * Wanderer's Guide feeds one), and a feat both classes have on their list (Wizard/Cleric: which pool).
+ */
+function feedsClassPool(build: BuildState, content: ContentDatabase, src: Feat | ClassFeature, classId: string): boolean {
+  const held = heldClasses(build).map((s) => s.classId).filter((c): c is string => !!c && !!content.classes[c]);
+  if (held.length < 2 || !held.includes(classId)) return true;
+  const ca = (src as Feat).classArchetype;
+  if (ca) return (Array.isArray(ca.classId) ? ca.classId : [ca.classId]).includes(classId);
+  const traits = (src as Feat).traits ?? [];
+  if (traits.includes(classId)) return true;
+  const kind = content.classes[classId]?.spellcasting?.type;
+  return !held.some((c) => c !== classId && traits.includes(c) && content.classes[c]?.spellcasting?.type === kind);
 }
 
 /**
@@ -3273,8 +3317,17 @@ export function classPaysCantripSwap(build: BuildState, content: ContentDatabase
 }
 
 /** `cantripBonusFor` for ONE held class's pool — the number buildCharacter's `classCasting` and both
- *  builder cantrip rows (Builder.tsx `cantripCap`, `cantripCap2`) size it by, so the two surfaces agree. */
+ *  builder cantrip rows (Builder.tsx `cantripCap`, `cantripCap2`) size it by, so the two surfaces agree.
+ *  Under Dual Class it counts only the bonuses that feed THIS pool (`feedsClassPool`). */
 export function classCantripBonus(build: BuildState, content: ContentDatabase, classId: string | null | undefined): number {
+  return cantripBonusFor(build, content, { skipSwaps: !classPaysCantripSwap(build, content, classId), classId });
+}
+
+/** What `classCantripBonus` read before Dual Class routed each bonus to its own pool: every bonus, in
+ *  every pool. buildCharacter draws a no-book class's stored cantrips up to the allowance this gave, so
+ *  a save made when the pool was larger keeps every pick it chose — drawn, and reported over the cap
+ *  (`cantripCapWas`) — instead of losing the last ones to a slice. */
+function classCantripBonusUnrouted(build: BuildState, content: ContentDatabase, classId: string | null | undefined): number {
   return cantripBonusFor(build, content, { skipSwaps: !classPaysCantripSwap(build, content, classId) });
 }
 
@@ -5633,6 +5686,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // zero picked, the whole Cantrips section used to vanish, and a new caster had no hint that
     // cantrips exist or where to choose them (measured on a fresh cloistered cleric).
     const cantripAllowance = Math.max(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + cantripBonusOf(cls.id) + mods.cantripDelta);
+    /* …and how many of the player's STORED cantrips are drawn: never fewer than before Dual Class sent
+     * each cantrip bonus to its own class (`classCantripBonusUnrouted`). A Wizard/Druid saved with the
+     * druid's five plus Cantrip Expansion's two keeps all seven — drawn, and reported over the cap
+     * (`cantripCapWas`, `cantripsOverOf`) for the player to remove in the builder. A BOOK caster is not
+     * floored: its stored list is the book, and a pick past the day's preparation is still in it
+     * (`bookCantrips`). */
+    const cantripBook = !sp.repertoire && (!!sp.spellbook || cls.id === 'wizard' || cls.id === 'witch');
+    const cantripsDrawn = cantripBook
+      ? cantripAllowance
+      : Math.max(cantripAllowance, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + classCantripBonusUnrouted(build, content, cls.id) + mods.cantripDelta);
     const entry: SpellcastingEntry = {
       id: `${cls.id}-casting`,
       name: `${cap(tradition)} ${sp.type} spellcasting`,
@@ -5650,8 +5713,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // drawn nowhere, with nothing saying so. The builder now offers the allowance less the gift
       // (`grantedPlaces`); an older pick past it is drawn and reported (`cantripsOverOf`).
       cantrips: sp.grantedCountsAgainstRepertoire
-        ? [...new Set([...(grantedByRank[0] ?? []), ...k.cantrips.slice(0, cantripAllowance)])]
-        : [...new Set([...k.cantrips.slice(0, cantripAllowance), ...(grantedByRank[0] ?? [])])],
+        ? [...new Set([...(grantedByRank[0] ?? []), ...k.cantrips.slice(0, cantripsDrawn)])]
+        : [...new Set([...k.cantrips.slice(0, cantripsDrawn), ...(grantedByRank[0] ?? [])])],
       cantripCap: cantripAllowance,
       ...(sp.grantedCountsAgainstRepertoire ? { grantsCountInside: true } : {}),
       // A prepared CLASS prepares its cantrips each morning (kept under the flexible collection:
@@ -5661,6 +5724,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       ...(sp.type === 'prepared' ? { cantripsPrepared: true } : {}),
       ...(grantedByRank[0]?.length ? { grantedCantrips: [...grantedByRank[0]] } : {}),
     };
+    // The larger cap the pool had, so the play overlay still draws a cantrip the player PREPARED on the
+    // sheet into an opening past the new cap (`cantripOpenings`), and the sheet counts what is over it.
+    if (cantripsDrawn > cantripAllowance) entry.cantripCapWas = cantripsDrawn;
     if (sp.repertoire) {
       // Spontaneous: a repertoire of known spells per rank + a slot pool.
       entry.repertoire = {};
