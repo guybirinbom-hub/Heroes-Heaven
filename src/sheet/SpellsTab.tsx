@@ -2668,6 +2668,17 @@ export function SpellsTab({
                 </div>
               ))}
             </div>
+            {/* On a phone the header's detail lines live in the (i) popup (`.sc-detail` is hidden), and the
+                entry's NOTE went with them — so "Not shown: … remove it in the builder" and the Spellshot +
+                Beast Gunner sentence (owner ruling #162: the sheet must SAY where the spellshot's cantrips
+                went) sat behind the (i), where nobody looks (package F, 2026-10-16). The note is the one line
+                that asks something of the player, so it stays on the page; the popup keeps its copy. */}
+            {isMobile && main.note && (
+              <p className="lvl-note sc-note-mobile" data-entry-note={main.id}>
+                <i className="ti ti-info-circle" aria-hidden="true" />
+                <span>{main.note}</span>
+              </p>
+            )}
             {/* On mobile, only the header renders here; ALL sections live under the single
                 page-level tab row below. On desktop, the per-main collapsible rank section. */}
             {!isMobile &&

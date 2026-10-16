@@ -56,14 +56,15 @@ import {
   senseGateReason,
   type NarrowedOption,
 } from '../rules/derive';
-import { archetypeCantripCounts, archetypeTradition, foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, optionDragon, skillFallbackPick, skillSlotOptions } from '../rules/build';
+import { archetypeCantripCounts, archetypeTradition, dedicationCantripKeys, foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, optionDragon, skillFallbackPick, skillSlotOptions } from '../rules/build';
 import { bookGrantChips, featRepertoireGrants, giftChipIds, ownPlacesBeside, spellOpenedBy, variantGiftCount } from '../rules/spellOptions';
 import { signaturesAt, signatureSpellsAt } from '../rules/build';
 // batch 037: flexible-spellcaster#collection-shape — the sheet's own sizer, never a copy of it.
 import { flexibleCollectionSize } from '../rules/build';
+import { answersInOtherGrantedTakes } from '../rules/build';
 // Dual Class: the second subclass's effectChoices card is drawn only when one is offered.
 import { effectChoiceOffered } from '../rules/build';
-import { activeCasterArchetype, archetypeBook, archetypeBookRankNote, archetypeBookRanks, archetypeBookSentence, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions, type ArchetypeBookRank } from '../rules/casterArchetypes';
+import { activeCasterArchetype, CASTER_ARCHETYPES, archetypeBook, archetypeBookRankNote, archetypeBookRanks, archetypeBookSentence, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions, type ArchetypeBookRank } from '../rules/casterArchetypes';
 import { bonusSkillFeatCount, bonusSkillFeatKey, choiceGrantFor, exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS, maxTakes } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickKeysFor, pickPrompt, pickableFeats } from '../rules/featPickGrants';
 import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
@@ -72,7 +73,7 @@ import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId, SpellAccessGrant, SpellcastingEntry, Tradition } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, cap, choiceOptionRecord, loreLabel, openOptionsWithRecords, requestRemovePick, requestSubclassChange, useBuilderActions, type OptionRecord } from './shared';
+import { AbilitySelect, CampaignAttachCard, ChoiceDetails, FormulaBookCard, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, RuleCards, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, cap, choiceOptionRecord, loreLabel, openOptionsWithRecords, requestRemovePick, requestSubclassChange, useBuilderActions, requestArchetypeTraditionChange, type OptionRecord } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
 import { formulaSlots } from '../rules/formulaBook';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -706,24 +707,50 @@ export function Builder({
   // Memoized for the same reason featPrereqChar is: deriveDefenses walks feats, items, modes and
   // stances, and a picker re-renders on every keystroke.
   const builderSenses = useMemo(() => characterSenseKeys(featPrereqChar, content), [featPrereqChar, content]);
+  /**
+   * The page a GRANTED feat's own questions are asked on — its `choice`, its Lore subject, its
+   * `effectChoices`: the level the build gives its row (the granting slot's level for a pick; 1 for a
+   * heritage or a background, and for the grant lanes that file theirs at 1 — some class-feature and
+   * option grants do), within the pages that exist. They used to be asked on the
+   * subclass page (or Level 1), so Basic Witchcraft at 6th asked "which lesson" on the Level 1 page, far
+   * from the feat that gave it (package F, 2026-10-16). One home per answer key — the earliest row's — so
+   * a feat granted twice under one key still asks once.
+   */
+  const grantedAskPage = useMemo(() => {
+    const byKey = new Map<string, number>();
+    const byFeat = new Map<string, number>();
+    for (const f of featPrereqChar.feats) {
+      if (!f.grantedBy) continue;
+      const page = Math.max(1, Math.min(build.level, f.level ?? 1));
+      const k = grantedChoiceKey(f.featId, f.grantVariant);
+      if (!byKey.has(k) || page < byKey.get(k)!) byKey.set(k, page);
+      if (!byFeat.has(f.featId) || page < byFeat.get(f.featId)!) byFeat.set(f.featId, page);
+    }
+    return { byKey, byFeat };
+  }, [featPrereqChar, build.level]);
   /* buildCharacter's own entry for the first class — what its gift is (`ownPlacesBeside`). */
   const castEntry1 = casting && build.classId ? featPrereqChar.spellcasting.find((e) => e.id === `${build.classId}-casting`) : undefined;
   /* …and the dedication's own entry, when the ARCHETYPE is the caster these level pages draw — what a
    * record wrote into its book (`bookGrantChips`). */
   const archEntryBuilt = archCaster ? featPrereqChar.spellcasting.find((e) => archetypeEntryIds(archCaster).has(e.id)) : undefined;
-  /** What a record put in a dedication's BOOK at `rank` beside the player's `picks` — a lesson's familiar
-   *  spell, Expanded Necromancy's dirge spells, Peer Past the Hedge's detect magic — as LOCKED chips with
-   *  the record named in words under them (a tap shows no title on a phone). Never one of the row's places:
-   *  print adds these on top, so the row's count stays the player's own. */
   /** The level a book grant arrives at: the level of the feat that gives it — by its name (Expanded
    *  Necromancy) or by the answer that names it (Basic Lesson → "Lesson of Life"). A rank row is drawn on
    *  the page where the book first reaches that rank, which can be before the feat is taken, so the note
    *  says when (checker finding 2026-10-15). */
   const grantLevelOf = (from?: string): number | undefined =>
     from ? featPrereqChar.feats.find((f) => content.feats[f.featId]?.name === from || f.choice?.label === from)?.level : undefined;
+  /** The BOOK the level pages' rows draw: the class's own (a witch's familiar, a necromancer's dirge) when
+   *  the class casts, else the dedication's (`archCaster` is set only for a non-caster class; a dedication's
+   *  book beside a caster class is drawn on the Level 0 card). */
+  const pageBookEntry = casting ? castEntry1 : archEntryBuilt;
+  /** What a record put in that BOOK at `rank` beside the player's `picks` — a lesson's familiar spell,
+   *  Expanded Necromancy's dirge spells, Peer Past the Hedge's detect magic — as LOCKED chips with the
+   *  record named in words under them (a tap shows no title on a phone). Never one of the row's places:
+   *  print adds these on top, so the row's count stays the player's own. A class witch or necromancer had
+   *  no such hint at all (package F, 2026-10-16): only the dedication's rows drew them. */
   const bookGrantEls = (rank: number, picks: readonly string[], pageLevel?: number, andAbove = false) => {
-    const grants = bookGrantChips(archEntryBuilt, rank, picks, andAbove);
-    const noun = archEntryBuilt?.bookNoun ?? 'book';
+    const grants = bookGrantChips(pageBookEntry, rank, picks, andAbove);
+    const noun = pageBookEntry?.bookNoun ?? 'book';
     const name = (id: string) => content.spells[id]?.name ?? id;
     return {
       chips: grants.map(({ id, from }) => (
@@ -1148,14 +1175,28 @@ export function Builder({
     if (!opts.length) return null;
     const answerKey = grantedChoiceKey(grantedId, grantVariant);
     // The second taking says so on the card, or the player sees the same question twice with no way
-    // to tell which is which — Q27's "never leave them wondering whether they missed a pick".
-    const label = `${content.feats[grantedId]!.name}${grantVariant ? ' (second)' : ''}: ${featChoicePrompt(def.prompt, def.flag)}`;
+    // to tell which is which — Q27's "never leave them wondering whether they missed a pick". A pick's
+    // later taking is keyed by its granting SLOT (`pickTakingVariants`: two Major Lessons through two
+    // Advanced Witchcraft feats), so it says the level it was taken at.
+    const takenAt = /^(\d+):/.exec(grantVariant ?? '')?.[1];
+    const label = `${content.feats[grantedId]!.name}${grantVariant ? (takenAt ? ` (taken at level ${takenAt})` : ' (second)') : ''}: ${featChoicePrompt(def.prompt, def.flag)}`;
     const answer = build.grantedFeatChoices?.[answerKey] ?? '';
     const setAnswer = (v: string) =>
       actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [answerKey]: v } });
     // Why the list is short, in the narrowing record's own words. A menu silently cut from 12 entries
     // to 6 reads as missing content, which is the failure Q27 names from the other direction.
     const limitReasons = effectiveChoiceLimits(grantedId, def, featPrereqChar, content).map((l) => l.reason);
+    /* "Each time, choose a different one" (`distinctAcrossTakes`) across the GRANTED takings too: the second
+       Major Lesson offered the lesson the first one holds (Q27 — greyed and saying why, never removed).
+       The domains path already greys through buildChoiceOptions. */
+    const claimed = def.distinctAcrossTakes && def.kind !== 'domains' ? answersInOtherGrantedTakes(grantedId, build, featPrereqChar, answerKey) : null;
+    const shownOpts = claimed?.size
+      ? opts.map((o) =>
+          claimed.has(o.value) && o.value !== answer
+            ? { ...o, disabled: `Already chosen by another ${content.feats[grantedId]?.name ?? 'take of this feat'} — each time, choose a different one.` }
+            : o,
+        )
+      : opts;
     return (
       <SubCard key={`gfc-${answerKey}`} icon="ti-adjustments" label={label}>
         <PopupSelect
@@ -1165,7 +1206,7 @@ export function Builder({
           onChange={setAnswer}
           // Trailblazer's "one terrain you've explored (such as forest or underground)" arrives on this
           // lane, not the slot one — a granted feat's question is as open as a picked one's.
-          options={withCustomAnswer(opts.map((o) => pickerOption(o, choiceOptionRecord(def, o.value, content))), def, answer)}
+          options={withCustomAnswer(shownOpts.map((o) => pickerOption(o, choiceOptionRecord(def, o.value, content))), def, answer)}
           // A narrowed list with a "type your own" row is not narrowed. Terrain Stalker carries
           // `allowCustom` because the book lets a GM name a tenth terrain — but Isgeri Reclaimer says
           // "either rubble or underbrush", so while its limit is in force the typing row goes away.
@@ -1212,7 +1253,8 @@ export function Builder({
             const rec = content.classFeatures[answer] ?? content.classFeatures[answer.replace(/^aon-/, '')];
             const gsc = rec?.grantedSpellChoice;
             if (!gsc) return null;
-            const sk = `granted:${grantedId}:granted-spell`;
+            // Per taking, like the answer above: `answerKey` is the bare id for the first taking.
+            const sk = `granted:${answerKey}:granted-spell`;
             return (
               <PopupSelect
                 title={gsc.prompt}
@@ -1228,6 +1270,50 @@ export function Builder({
             <i className="ti ti-filter" aria-hidden="true" />
             <span>{r}</span>
           </div>
+        ))}
+      </SubCard>
+    );
+  };
+
+  /**
+   * A held caster dedication that did NOT win the one archetype pool — Spellshot Dedication beside Beast
+   * Gunner Dedication. Owner ruling #162 (2026-10-15, "One pool + a note"): the beast gunner keeps the pool,
+   * and the spellshot's two cantrips are cast at will as innate cantrips, as long as the app SAYS so. The
+   * build already casts them (its two answers, `dedicationCantripKeys`), but nothing asked them since the
+   * record stopped asking: a new pairing character had no way to choose them. Asked here, on that
+   * dedication's own card, with the sentence the sheet's entry prints. Common cantrips of its tradition —
+   * *"four common arcane cantrips of your choice … You can prepare two"* (feat-3267), two different ones.
+   */
+  const heldDedicationCantrips = (dedId: string) => {
+    const keys = dedicationCantripKeys(dedId);
+    const winner = keys.length ? activeCasterArchetype(featPrereqChar.feats.map((f) => f.featId))?.dedicationId : undefined;
+    if (!winner || winner === dedId) return null;
+    const trad = CASTER_ARCHETYPES[dedId]?.tradition;
+    if (!trad) return null;
+    const dedName = content.feats[dedId]?.name ?? dedId;
+    const winnerName = content.feats[winner]?.name ?? winner;
+    const answers = keys.map((k) => build.effectChoices?.[k] ?? '');
+    const pool = (spellIndex.cantrips[trad] ?? []).filter((s) => (s.rarity ?? 'common') === 'common');
+    return (
+      <SubCard key={`held-ded-cantrips-${dedId}`} icon="ti-wand" label={`${dedName}: cantrips at will`}>
+        <div className="choice-inert" data-held-dedication-cantrips>
+          <i className="ti ti-info-circle" aria-hidden="true" />
+          <span>
+            {winnerName} holds your archetype spells, so your {keys.length} {dedName} cantrips are cast at will as innate {trad} cantrips. On the
+            Spells tab they are listed under Innate spells.
+          </span>
+        </div>
+        {keys.map((k, i) => (
+          <PopupSelect
+            key={k}
+            title={`${dedName} cantrip ${i + 1}`}
+            placeholder="Choose a cantrip…"
+            value={answers[i]}
+            onChange={(v) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [k]: v } })}
+            options={pool
+              .filter((s) => s.id === answers[i] || !answers.includes(s.id))
+              .map((s) => ({ value: s.id, label: s.name, description: s.description, record: { bucket: 'spells', id: s.id } }))}
+          />
         ))}
       </SubCard>
     );
@@ -1574,6 +1660,11 @@ export function Builder({
     return g.ranks.some((r) => (build.spells[r.rank] ?? []).length > r.cap - r.gained);
   };
 
+  /** Change the archetype's TRADITION (Sorcerer, Witch, Beast Gunner … Dedication on a non-caster class),
+   *  asking first when that throws picks away — shared.tsx `requestArchetypeTraditionChange`, the one door
+   *  this row and the Level 0 card both use (package F, 2026-10-16). */
+  const requestArchetypeTradition = (t: Tradition) => requestArchetypeTraditionChange(t, tradition, build, content, actions, 'main');
+
   /** The Spells section for one level card: the cantrips/slots GAINED at that level. */
   const renderSpellsForLevel = (lvl: number) => {
     if (!hasSpellGains(lvl)) return null;
@@ -1599,7 +1690,7 @@ export function Builder({
             </div>
             <div className="spr-chips">
               {(archetypeTraditionOptions(archCaster) ?? (['arcane', 'divine', 'occult', 'primal'] as const)).map((t) => (
-                <button key={t} type="button" className={'inv-toggle' + (tradition === t ? ' on' : '')} onClick={() => actions.setArchetypeTradition(t)}>
+                <button key={t} type="button" className={'inv-toggle' + (tradition === t ? ' on' : '')} onClick={() => requestArchetypeTradition(t)}>
                   {cap(t)}
                 </button>
               ))}
@@ -1743,6 +1834,12 @@ export function Builder({
                 const floorHeld = isFlexCollection && rank >= 2 && !(build.spells[1] ?? []).length ? 1 : 0;
                 const capHere = flatAt(lvl) - floorHeld;
                 const full = poolSpent >= capHere;
+                /* What a record put in the class's own BOOK at this rank (a lesson's familiar spell, Expanded
+                 * Necromancy's grisly growths) — locked, with the record named under the row. The page's
+                 * highest rank also shows the grants of ranks it has no row for yet (Lesson of Death's raise
+                 * dead on a 10th-level witch). */
+                const flatTop = Math.max(0, ...Object.keys(slotsAt(lvl)).map(Number).filter((r) => r >= 1 && !(isFlexCollection && r > 9)));
+                const grantEls = isWizardBook ? bookGrantEls(rank, chosen, lvl, rank === flatTop) : { chips: [], notes: [] };
                 return (
                   <div className="spell-pick-row" key={rank}>
                     <div className="spr-head">
@@ -1750,6 +1847,7 @@ export function Builder({
                       <span className="spr-count">{chosen.length} {isFlexCollection ? 'collected' : 'learned'}</span>
                     </div>
                     <div className="spr-chips">
+                      {grantEls.chips}
                       {chosen.map((id, idx) => (
                         <span className="spr-chip" key={id + ':' + idx}>
                           {content.spells[id]?.name ?? id}
@@ -1761,6 +1859,7 @@ export function Builder({
                       <button className="spr-add" type="button" disabled={full} title={full ? (floorHeld ? `Your collection must include at least one 1st-rank spell — the last of its ${flatAt(lvl)} places is held for one.` : isFlexCollection ? `Your collection holds all ${flatAt(lvl)} spells it can at this level.` : `Your ${bookWord ?? 'spellbook'} holds all ${flatAt(lvl)} spells it can at this level.`) : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} onClick={() => setPicker({ kind: 'spell', rank, cap: capHere })}>
                         + add
                       </button>
+                      {grantEls.notes}
                     </div>
                     {/* The held place, said where the press lands (the whole-pool line above covers a full pool). */}
                     {full && floorHeld > 0 && poolSpent < flatAt(lvl) && (
@@ -2452,6 +2551,36 @@ export function Builder({
                     (gid) => (FEAT_GRANTS[gid]?.loreChoices ?? 0) > 0 && !isBoundBackgroundGrant(bg?.id, gid),
                   )
                 : [];
+              /* EVERY GRANTED feat's own questions that belong on THIS page (`grantedAskPage`). The two lanes
+                 that mount their own picker under the granting row — a slot-picked feat's grants, and the
+                 background's — are left out. Deduped by (feat, VARIANT), not by feat id: a granter that owes
+                 two takings of one feat (Anvil Dwarf's two Specialty Crafting specialties, two Major Lessons
+                 through two Advanced Witchcraft feats) gets a picker per taking. */
+              const slotPickedIds = new Set(Object.values(build.featPicks).filter(Boolean));
+              const handledGrants = new Set<string>([
+                ...[...slotPickedIds].flatMap((id) => FEAT_FEAT_GRANTS[id as string] ?? []),
+                ...backgroundGrantedFeats(bg, build.backgroundSkillChoice),
+              ]);
+              const grantedKeysSeen = new Set<string>();
+              const grantedAsksHere = featPrereqChar.feats
+                .filter((f) => f.grantedBy && !handledGrants.has(f.featId) && content.feats[f.featId]?.choice)
+                .filter((f) => grantedAskPage.byKey.get(grantedChoiceKey(f.featId, f.grantVariant)) === lvl)
+                .filter((f) => {
+                  const k = grantedChoiceKey(f.featId, f.grantVariant);
+                  if (grantedKeysSeen.has(k)) return false;
+                  grantedKeysSeen.add(k);
+                  return true;
+                });
+              // …the same lane's "trained in a Lore of your choice" (one granter can owe two takings, so ROWS).
+              const grantedLoreHere = featPrereqChar.feats
+                .filter((f) => f.grantedBy && !f.slotKey && (FEAT_GRANTS[f.featId]?.loreChoices ?? 0) > 0)
+                .filter((f) => f.grantVariant || !isBoundGrant(f.grantedBy!, f.featId))
+                .filter((f) => grantedAskPage.byKey.get(grantedChoiceKey(f.featId, f.grantVariant)) === lvl);
+              // …and its `effectChoices`, keyed by the record id (one answer per record).
+              const grantedEffectsHere = [...new Set(featPrereqChar.feats.filter((f) => f.grantedBy).map((f) => f.featId))].filter(
+                (gid) => !slotPickedIds.has(gid) && !!content.feats[gid]?.effectChoices?.length && grantedAskPage.byFeat.get(gid) === lvl,
+              );
+              const grantedAsksAny = grantedAsksHere.length > 0 || grantedLoreHere.length > 0 || grantedEffectsHere.length > 0;
 
               return (
                 <>
@@ -2462,7 +2591,7 @@ export function Builder({
                       <span className="lvl-pending-tag">
                         <i className="ti ti-alert-circle" aria-hidden="true" /> {pending} {pending === 1 ? 'choice' : 'choices'} left
                       </span>
-                    ) : anyContent ? (
+                    ) : anyContent || grantedAsksAny ? (
                       <span className="lvl-done-tag">
                         <i className="ti ti-check" aria-hidden="true" /> all set
                       </span>
@@ -2611,7 +2740,7 @@ export function Builder({
                         </div>
                       </div>
                     )}
-                    {(!!(cls?.subclass && subAnchorId) || g.featSlots.length > 0 || noSlot.length > 0) && (
+                    {(!!(cls?.subclass && subAnchorId) || g.featSlots.length > 0 || noSlot.length > 0 || grantedAsksAny) && (
                       <div className="lvl-group">
                         <div className="lvl-group-h">
                           <i className="ti ti-award" aria-hidden="true" /> Feats
@@ -2695,36 +2824,10 @@ export function Builder({
                               and every one reads `grantedFeatChoices` — but the picker was mounted
                               from only two of them, so the rest resolved an answer nobody could give.
                               Driven off the BUILT character rather than per-lane, so a seventh lane
-                              cannot silently miss it. Rendered at level 0 so it has one home. */}
-                          {/* Anchored to the subclass level — or to level 1 for the eight classes with no
-                              subclass, which otherwise never rendered these (Devil Allies via Order Training on a
-                              fighter asked its Tradition nowhere; experience gate, 2026-09-02). */}
-                          {(subAnchorId || (!cls?.subclass && lvl === 1)) &&
-                            (() => {
-                              // The two lanes that already mount their own picker under the granting
-                              // row: a slot-picked feat's grants, and the background's. Everything
-                              // else — heritage, subclass/extra-choice option, class feature, item,
-                              // and any transitive grant — had none.
-                              const slotPicked = new Set(Object.values(build.featPicks).filter(Boolean));
-                              const handled = new Set<string>([
-                                ...[...slotPicked].flatMap((id) => FEAT_FEAT_GRANTS[id as string] ?? []),
-                                ...backgroundGrantedFeats(bg, build.backgroundSkillChoice),
-                              ]);
-                              /* Deduped by (feat, VARIANT), not by feat id: a granter that owes two
-                                 takings of one feat — Anvil Dwarf's two Specialty Crafting
-                                 specialties — got one picker and so one specialty. Same reason the
-                                 Lore lane below iterates rows. */
-                              const seenKeys = new Set<string>();
-                              return featPrereqChar.feats
-                                .filter((f) => f.grantedBy && !handled.has(f.featId) && content.feats[f.featId]?.choice)
-                                .filter((f) => {
-                                  const k = grantedChoiceKey(f.featId, f.grantVariant);
-                                  if (seenKeys.has(k)) return false;
-                                  seenKeys.add(k);
-                                  return true;
-                                })
-                                .map((f) => grantedChoicePicker(f.featId, f.grantVariant));
-                            })()}
+                              cannot silently miss it. Each is asked on the page of the level it was
+                              granted at (`grantedAskPage`) — the subclass page / Level 1 used to be its
+                              one home, far from the feat that gave it. */}
+                          {grantedAsksHere.map((f) => grantedChoicePicker(f.featId, f.grantVariant))}
                           {/* …and the same lane's "trained in a Lore of your choice".
                               A GRANTED feat has no slot, and the Lore input was mounted only under a
                               slot-PICKED feat — so every unbound granted Additional Lore (a sage
@@ -2732,11 +2835,7 @@ export function Builder({
                               the sheet with a subject the player had nowhere to type. Iterated over the
                               feat ROWS, not the ids: one granter can owe two takings and each needs its
                               own answer. A grant whose Lore the granter NAMED asks nothing. */}
-                          {subAnchorId &&
-                            featPrereqChar.feats
-                              .filter((f) => f.grantedBy && !f.slotKey && (FEAT_GRANTS[f.featId]?.loreChoices ?? 0) > 0)
-                              .filter((f) => f.grantVariant || !isBoundGrant(f.grantedBy!, f.featId))
-                              .flatMap((f) =>
+                          {grantedLoreHere.flatMap((f) =>
                                 Array.from({ length: FEAT_GRANTS[f.featId]!.loreChoices! }).map((_, li) => {
                                   const gKey = `${f.grantedBy}${f.grantVariant ? `#${f.grantVariant}` : ''}:${f.featId}:${li}`;
                                   // The bare key is still READ by build.ts, so a character saved before
@@ -2762,26 +2861,19 @@ export function Builder({
                               rendered its trait picker and not "which unarmed attack". Measured in the
                               browser: the card appeared with one question, and the answer the eidolon
                               needs could not be given. Same shape as the comment above — a lane that
-                              mounts one picker and not the other. */}
-                          {/* Anchored to the subclass level — or to level 1 for the eight classes with no
-                              subclass, which otherwise never rendered these (Devil Allies via Order Training on a
-                              fighter asked its Tradition nowhere; experience gate, 2026-09-02). */}
-                          {(subAnchorId || (!cls?.subclass && lvl === 1)) &&
-                            (() => {
-                              const slotPicked = new Set(Object.values(build.featPicks).filter(Boolean));
-                              return [...new Set(featPrereqChar.feats.filter((f) => f.grantedBy).map((f) => f.featId))]
-                                .filter((gid) => !slotPicked.has(gid) && content.feats[gid]?.effectChoices?.length)
-                                .map((gid) => (
-                                  <EffectChoicesPicker
-                                    key={`gec-${gid}`}
-                                    recordId={gid}
-                                    choices={content.feats[gid]!.effectChoices}
-                                    build={build}
-                                    actions={actions}
-                                    content={content}
-                                  />
-                                ));
-                            })()}
+                              mounts one picker and not the other. On the page it was granted at, like the
+                              two above (Devil Allies via Order Training on a fighter asked its Tradition
+                              nowhere until it had a page; experience gate, 2026-09-02). */}
+                          {grantedEffectsHere.map((gid) => (
+                            <EffectChoicesPicker
+                              key={`gec-${gid}`}
+                              recordId={gid}
+                              choices={content.feats[gid]!.effectChoices}
+                              build={build}
+                              actions={actions}
+                              content={content}
+                            />
+                          ))}
                           {/* Extra-choice picks (kineticist gates, thaumaturge implements, animist
                               apparitions…) carry them too — the four elemental gates ask which
                               damage type, and nothing asked. */}
@@ -3248,6 +3340,7 @@ export function Builder({
                               drift — the inline copy that used to live here handled `domains` but not
                               `skills`, which is why an Assurance grant had no options even when reached. */}
                           {picked && (FEAT_FEAT_GRANTS[picked] ?? []).map((gid) => grantedChoicePicker(gid))}
+                          {picked && heldDedicationCantrips(picked)}
                           {/* Effect choices ("choose one of N" — a dragon tattoo's resistance type, an
                               energy heart's element): each picked option confers a concrete effect. */}
                           {picked &&
@@ -3661,7 +3754,7 @@ export function Builder({
                       </div>
                     )}
 
-                    {!anyContent && <div className="setup-note">No choices at this level.</div>}
+                    {!anyContent && !grantedAsksAny && <div className="setup-note">No choices at this level.</div>}
                   </fieldset>
                 </div>
                 {renderSpellsForLevel(lvl)}
@@ -4035,7 +4128,9 @@ export function Builder({
         // grisly growths, Peer Past the Hedge's detect magic): it is there for free, and picking it again
         // would spend one of the player's places on it (checker finding 2026-10-15). The Level 0 card
         // (shared.tsx) leaves them out the same way. A grant never holds the player's own pick.
-        const bookGranted = !c2 && archBook ? new Set(Object.values(archEntryBuilt?.grantedRepertoire ?? {}).flat()) : undefined;
+        // …and the CLASS's own book the same way (a class witch's lesson spell in its familiar, a
+        // necromancer's grisly growths in its dirge — package F, 2026-10-16): `pageBookEntry`.
+        const bookGranted = !c2 && (archBook || (wizBook && pageBookEntry?.bookNoun)) ? new Set(Object.values(pageBookEntry?.grantedRepertoire ?? {}).flat()) : undefined;
         const elsewhere = bookRank
           ? new Set([...Object.entries(build.spells).flatMap(([r, ids]) => (Number(r) !== picker.rank ? ids ?? [] : [])), ...(bookGranted ?? [])])
           : undefined;
@@ -4043,8 +4138,8 @@ export function Builder({
           ? eligibleSpells2(picker.rank)
           : bookRank
             ? eligibleSpells(picker.rank).filter((s) => s.rank >= bookRank.minSpellRank && s.rank <= bookRank.maxSpellRank && !elsewhere!.has(s.id))
-            : picker.rank === 0 && bookGranted
-              ? eligibleSpells(0).filter((s) => !bookGranted.has(s.id))
+            : bookGranted
+              ? eligibleSpells(picker.rank).filter((s) => !bookGranted.has(s.id))
               : eligibleSpells(picker.rank);
         // Wizards cap by the total spellbook budget; others by the rank's slot count.
         const cap_ = picker.cap ?? (picker.rank === 0 ? capCantrip : wizBook && !capstone ? capBook : capSlots[picker.rank] ?? 0);

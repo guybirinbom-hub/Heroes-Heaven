@@ -294,13 +294,16 @@ export function keptOffListNote(label: string): string {
  *
  *  `over`: how many are past it. One, until package K (2026-10-15) switched Adapted Cantrip's -1 on under
  *  the trust gate: a sorcerer saved by the released app with five picks beside the gift is now TWO over,
- *  and "One too many … remove one" told them the wrong count twice. */
+ *  and "One too many … remove one" told them the wrong count twice.
+ *
+ *  "this class gives you N places", not "one of your N": the cards shown also hold a feat's cantrip (Adapted
+ *  Cantrip's, which takes no place), so "is one of your 4" sat beside more than four cards and read as wrong
+ *  (package F, 2026-10-16) — the same reason `overCantripCapNote` says "lets you choose N". */
 export function overGiftNote(places: number, cantrip: boolean, onSheet = false, over = 1): string {
   const where = onSheet ? 'with the Repertoire button' : 'in the builder';
   const noun = cantrip ? 'cantrip' : 'spell';
-  return over > 1
-    ? `${over} ${noun}s too many — your bloodline’s ${noun} is one of your ${places}; remove ${over} ${where}`
-    : `One too many — your bloodline’s ${noun} is one of your ${places}; remove one ${where}`;
+  const why = `this class gives you ${places} ${noun} places, and your bloodline’s ${noun} takes one of them`;
+  return over > 1 ? `${over} ${noun}s too many — ${why}; remove ${over} ${where}` : `One too many — ${why}; remove one ${where}`;
 }
 
 /** The marker on a class's own cantrip drawn past its cap (`cantripCapWas`): a save made while a

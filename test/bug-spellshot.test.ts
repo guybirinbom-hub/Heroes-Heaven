@@ -238,7 +238,13 @@ describe('the way and the gate, which were already right', () => {
       featPicks: { '2:class': 'beast-gunner-dedication' },
     });
     const bg = (ch: Character) => ch.spellcasting.find((e) => e.id === 'beast-gunner-dedication-casting');
-    expect(bg(both)).toEqual(bg(bgOnly));
+    // The same repertoire, cantrips and slots — all but the entry's `note`, which in the pairing now SAYS
+    // where the spellshot's two cantrips went (owner ruling #162, package F 2026-10-16; its own guard is
+    // test/spell-leftovers-f.test.ts).
+    const withoutNote = (e: ReturnType<typeof bg>) => (e ? { ...e, note: undefined } : e);
+    expect(withoutNote(bg(both))).toEqual(withoutNote(bg(bgOnly)));
+    expect(bg(both)?.note).toMatch(/Spellshot Dedication cantrips are cast at will as innate arcane cantrips/);
+    expect(bg(bgOnly)?.note ?? '').not.toMatch(/Spellshot/);
     expect(bg(both)?.type).toBe('spontaneous');
     // …and the pairing does NOT also get a second, prepared archetype entry.
     expect(both.spellcasting.find((e) => e.id === 'spellshot-dedication-casting')).toBeUndefined();

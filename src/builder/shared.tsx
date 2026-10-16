@@ -620,6 +620,39 @@ export function requestDeityChange(id: string, build: BuildState, content: Conte
   void confirmLoss('Change deity?', 'Change deity', lost, () => actions.changeDeity(id));
 }
 
+/**
+ * Change an archetype pool's TRADITION, asking first when that would throw picks away — the one door for
+ * both Tradition rows: a level page's (a non-caster class: the pool is `build.cantrips` / `spells` /
+ * `signatures`, `setArchetypeTradition`) and the Level 0 "Archetype spellcasting" card's (a caster class
+ * beside the dedication: `build.archetypeSpells`, `setArchetypePoolTradition`). Both reducers clear the
+ * pool's picks, and they did it with nothing said — even when the player pressed the tradition already lit,
+ * because a pool with no stored tradition reads as the dedication's own (package F, 2026-10-16). The same
+ * silent loss the subclass and deity guard closed on 2026-09-13; `current` is the tradition the row shows.
+ */
+export function requestArchetypeTraditionChange(
+  t: Tradition,
+  current: Tradition | null | undefined,
+  build: BuildState,
+  content: ContentDatabase,
+  actions: BuilderActions,
+  pool: 'main' | 'second',
+) {
+  if (t === current) return;
+  const spellName = (sid: string) => content.spells[sid]?.name ?? sid;
+  const cantrips = pool === 'second' ? build.archetypeSpells?.cantrips ?? [] : build.cantrips;
+  const spells = Object.values((pool === 'second' ? build.archetypeSpells?.spells : build.spells) ?? {}).flat();
+  const lost: string[] = [];
+  if (cantrips.length) lost.push(`Cantrips (${cantrips.length}) — ${cantrips.map(spellName).join(', ')}`);
+  if (spells.length) lost.push(`Spells (${spells.length}) — ${spells.map(spellName).join(', ')}`);
+  if (pool === 'main') {
+    const sigs = Object.keys(build.signatures).flatMap((r) => signaturesAt(build.signatures, Number(r)));
+    if (sigs.length) lost.push(`Signature spells (${sigs.length}) — ${sigs.map(spellName).join(', ')}`);
+  }
+  void confirmLoss('Change tradition?', 'Change tradition', lost, () =>
+    pool === 'second' ? actions.setArchetypePoolTradition(t) : actions.setArchetypeTradition(t),
+  );
+}
+
 export function useBuilderActions(
   setBuildRaw: Dispatch<SetStateAction<BuildState>>,
   content: ContentDatabase,
@@ -5110,7 +5143,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                         key={t}
                         type="button"
                         className={'inv-toggle' + (trad === t ? ' on' : '')}
-                        onClick={() => actions.setArchetypePoolTradition(t)}
+                        onClick={() => requestArchetypeTraditionChange(t, trad, build, content, actions, 'second')}
                       >
                         {t.charAt(0).toUpperCase() + t.slice(1)}
                       </button>

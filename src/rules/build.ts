@@ -68,7 +68,7 @@ import { FORMULA_BOOK_ITEM_ID, formulaBookSource, formulaGrantsOwned, grantsForm
 import { grantForSpellPick } from './spellChoice';
 import { DOMAIN_SPELLS } from './domains';
 import { mpImbuedSpellIds } from './monsterParts';
-import { openChoiceLabel, sameTraditionsAs } from './openChoice';
+import { openChoiceLabel, openChoiceOptions, sameTraditionsAs } from './openChoice';
 import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeBook, archetypeBookMaxRank, archetypeCantripAllowed, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions, CASTER_ARCHETYPES, DEDICATION_COUNTS_AS, type ActiveCasterArchetype } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
@@ -1173,15 +1173,48 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
     // what the Create/Save completeness check reads.
     // A multi-pick choice fans out to `key#0`, `key#1`, … so it is answered only when EVERY pick is.
     const picked = choiceKeys(key, feat.choice).every((k) => build.featChoices?.[k]);
-    if (picked || build.grantedFeatChoices?.[featId]) continue;
     const lvl = Number(key.split(':')[0]);
+    if (picked || build.grantedFeatChoices?.[featId]) {
+      /* …but a kept answer the record's own picker marks NOT ALLOWED is no answer (Q27): an Adapted Cantrip
+       * cantrip from no magical tradition, an Adaptive Adept spell off that cantrip's tradition. 4cca755 put
+       * the sentence under the control and nowhere else, so the level button showed no "!", the page said
+       * nothing was left and Create/Save asked nothing (package F, 2026-10-16). The same test as the
+       * picker's (`openChoiceOptions`' `notAllowed`), read off the build alone. */
+      if (picked && choiceKeys(key, feat.choice).some((k) => openAnswerBarred(feat.choice!.from, build, content, build.featChoices?.[k])))
+        out.push({ page: Number.isFinite(lvl) && lvl >= 1 ? lvl : 0, label: `${feat.name} — choose again`, required: true });
+      continue;
+    }
     out.push({
       page: Number.isFinite(lvl) && lvl >= 1 ? lvl : 0,
       label: `${feat.name} — choose`,
       required: true,
     });
   }
+
+  /* A held caster dedication that did NOT win the one archetype pool asks for its own cantrips, cast at
+   * will (owner ruling #162, Spellshot beside Beast Gunner) — on its card, so its page owes the answer. */
+  const heldNow = Object.entries(build.featPicks ?? {}).filter(([k, v]) => !!v && !(Number(k.split(':')[0]) > build.level));
+  const poolWinner = activeCasterArchetype(heldNow.map(([, v]) => v))?.dedicationId;
+  for (const [key, featId] of heldNow) {
+    const keys = LEGACY_ARCHETYPE_CANTRIP_KEYS[featId];
+    if (!keys || !poolWinner || featId === poolWinner) continue;
+    const owed = keys.filter((k) => !content.spells[build.effectChoices?.[k] ?? '']).length;
+    const lvl = Number(key.split(':')[0]);
+    if (owed) out.push({ page: Number.isFinite(lvl) && lvl >= 1 ? lvl : 0, label: `${content.feats[featId]?.name ?? featId} — ${owed === 1 ? 'choose a cantrip' : `choose ${owed} cantrips`}`, required: true });
+  }
   return out;
+}
+
+/** Does the OPEN choice's own picker mark this kept `answer` as not allowed (`OpenOption.notAllowed`)?
+ *  Asked of the build, not a built character: the feats it reads are the slot picks and their answers,
+ *  which is all `sameTraditionsAs` needs, and a no-tradition cantrip is barred whoever holds it. */
+function openAnswerBarred(from: FeatChoiceDef['from'], build: BuildState, content: ContentDatabase, answer: string | undefined): boolean {
+  if (!answer || from?.type !== 'spell') return false;
+  const feats = Object.entries(build.featPicks ?? {})
+    .filter(([, id]) => !!id)
+    .map(([slot, id]) => ({ featId: id, choice: build.featChoices?.[slot] ? { value: build.featChoices[slot] } : undefined }));
+  const options = openChoiceOptions(from, content, { hideLegacy: build.hideLegacy, character: { feats } as unknown as Character, keep: [answer] });
+  return !!options.find((o) => o.id === answer)?.notAllowed;
 }
 
 /**
@@ -1873,6 +1906,13 @@ const LEGACY_ARCHETYPE_CANTRIP_KEYS: Record<string, string[]> = {
   'spellshot-dedication': ['spellshot-dedication:spellbook-cantrip-1', 'spellshot-dedication:spellbook-cantrip-2'],
 };
 
+/** The two answer keys a dedication's own cantrip questions live under (`effectChoices`), or [] — for the
+ *  builder, which asks them on the dedication's card when ANOTHER dedication won the archetype pool (owner
+ *  ruling #162: Spellshot beside Beast Gunner casts its two cantrips at will, as innate cantrips). */
+export function dedicationCantripKeys(dedicationId: string): string[] {
+  return LEGACY_ARCHETYPE_CANTRIP_KEYS[dedicationId] ?? [];
+}
+
 /**
  * The cantrips a HELD dedication's retired answers still deliver, in pick order.
  *
@@ -2151,9 +2191,11 @@ export function archetypeTradition(
  *
  *   · `prepared` — the dedication's own number (`config.cantrips`), plus every bonus aimed at this entry
  *     (Psi Development, Cantrip Supremacy's *"You can also prepare 10 additional cantrips"*), plus —
- *     when the archetype is the character's ONLY caster — the untargeted ones (Cantrip Expansion,
- *     reachable through Basic Arcana: *"You can prepare two additional cantrips each day"*). With a
- *     caster class those size the class's pool, as they always have.
+ *     when the archetype is the character's ONLY caster — the untargeted ones a slot holds. With a caster
+ *     class those size the class's pool, as they always have. And, with or without one, an untargeted
+ *     bonus on a feat the archetype's own feat PICKED (Cantrip Expansion through Basic Arcana: *"You can
+ *     prepare two additional cantrips each day"* — `archetypePickedCantripBonus`): that one is the
+ *     archetype's, never the class's.
  *   · `book` — a book archetype's cantrip capacity (ArchetypeBook.holds), plus the entry-aimed bonuses
  *     (*"Add 10 additional cantrips to your keepsake"*), never below `prepared`, exactly as the class
  *     book's `max(bookCantripCapacity, allowance)`. Undefined for a pool with no book.
@@ -2195,9 +2237,185 @@ export function archetypeCantripCounts(
   const book = archetypeBook(arch);
   const onlyCaster = !heldClasses(build).some((s) => s.classId && content.classes[s.classId]?.spellcasting);
   const untargeted = onlyCaster ? cantripBonusFor(build, content, { skipSwaps: archetypePrepares(arch) }) : 0;
-  const prepared = Math.max(0, arch.config.cantrips + aimed + untargeted);
+  const prepared = Math.max(0, arch.config.cantrips + aimed + untargeted + archetypePickedCantripBonus(build, content, arch));
   const drawn = Math.max(prepared, arch.config.cantrips + aimed);
   return { prepared, book: book ? Math.max(book.holds + aimed, prepared) : undefined, drawn };
+}
+
+/**
+ * THE GRANTERS THAT STILL HAND `featId` OVER THROUGH A PICK-A-FEAT ANSWER (`build.pickFeatChoices`).
+ *
+ * An answer is keyed by the granter's slot (`6:class:2`, `…#1` for a second pick), by an Overrides-added
+ * granter (`override:<id>`), by a granter's bare id (saved before picks were keyed by slot) or by a
+ * heritage, background or class feature's id — and `setFeat` does not clear it when the slot changes, so a
+ * stored answer is not proof the feat is granted. buildCharacter's own pick walk (FEAT_PICK_GRANTS) is the
+ * authority; this asks ITS questions without running it, for the lanes that must answer before it (and
+ * for the builder): is the granter held at `level`, is the answer one of the picks its spec makes (`#i`
+ * under `picks`), and may it pick this feat NOW (`pickableFeats` — the trait, and Advanced Witchcraft's
+ * half-level cap). Checker finding 2026-10-15: without the last two, Basic Witchcraft swapped for Basic
+ * Arcana (answer left behind) or Greater Lesson answered under Advanced Witchcraft at 11th kept the
+ * lesson's hex and a Focus Point the build no longer granted.
+ *
+ * `ownsFeature` answers for a class-feature granter (buildCharacter passes the features it owns); a caller
+ * that only asks about FEAT granters passes `() => false`. [] when no held granter picks it. Each entry
+ * names the granter and the key its answer is stored under (`slot`: the granting slot, an `override:` key,
+ * a bare granter id, or a feature id) — `pickTakingVariants` reads the slot.
+ *
+ * A granter the player REMOVED in Overrides ("Remove a granted feat") picks nothing: Basic Witchcraft taken
+ * away kept handing over its lesson and the lesson's hex (checker finding, package F 2026-10-16). The pick
+ * walk skips it the same way.
+ */
+export function heldPickGranters(
+  build: BuildState,
+  content: ContentDatabase,
+  level: number,
+  featId: string,
+  ownsFeature: (id: string) => boolean,
+): { granter: string; slot: string }[] {
+  const removed = new Set(build.overrides?.removedFeatIds ?? []);
+  const keys = Object.entries(build.pickFeatChoices ?? {}).filter(([, v]) => v === featId).map(([k]) => k);
+  const answerAt = (base: string, index: number) => build.pickFeatChoices?.[index ? `${base}#${index}` : base];
+  const slotLevelOk = (s: string) => !(Number(s.split(':')[0]) > level);
+  /** A slot the walk KEEPS: it places a feat from its slots in `featPicks` order, at or below this level,
+   *  up to the feat's `maxTakes` — a second Basic Witchcraft slot (a stale or reordered save) is dropped,
+   *  and its answers are never read (final check, 2026-10-15). */
+  const slotKept = (s: string) => {
+    const id = build.featPicks?.[s];
+    if (!id || !slotLevelOk(s)) return false;
+    const holding = Object.entries(build.featPicks ?? {}).filter(([x, v]) => v === id && slotLevelOk(x)).map(([x]) => x);
+    return holding.indexOf(s) < maxTakes(content.feats[id]);
+  };
+  /** An Overrides-added copy of `id` the walk takes (no slot at or below this level already holds it). */
+  const overrideHolds = (id: string) =>
+    (build.overrides?.addedFeats ?? []).some((a) => a.featId === id && (a.level ?? 1) <= level) &&
+    !Object.entries(build.featPicks ?? {}).some(([s, v]) => v === id && slotLevelOk(s));
+  const out: { granter: string; slot: string }[] = [];
+  for (const key of keys) {
+    const m = /^(.*?)(?:#(\d+))?$/.exec(key)!;
+    const k = m[1];
+    const index = Number(m[2] ?? 0);
+    let granter: string | undefined;
+    /** The takings this answer is read by — the walk gives each a row. */
+    let slots: string[] = [k];
+    if (build.featPicks?.[k]) {
+      // A slot (`6:class:2`, or a legacy `2:class`): its feat, at a level the character has reached.
+      if (!slotKept(k)) continue;
+      granter = build.featPicks[k];
+    } else if (k.startsWith('override:')) {
+      // An Overrides-added granter's own synthetic slot.
+      granter = k.slice('override:'.length);
+      if (!overrideHolds(granter)) continue;
+    } else if (content.feats[k]) {
+      /* A granter's bare id — the answer saved before picks were keyed by slot. The walk reads a taking's
+       * SLOT answer first and falls back to this only when the slot has none, so it counts only for a
+       * taking at or below this level with no answer of its own (final check, 2026-10-15: an old
+       * `basic-witchcraft` answer beside a newer slot answer kept the old lesson's hex). */
+      // `== null`: the walk reads `slot ?? bare`, so a null slot answer falls through to this one too.
+      /* One taking per slot that falls back to it, each under that slot (checker, package F 2026-10-16):
+       * read as one, an old save's second Advanced Witchcraft showed its Major Lesson and taught no hex. */
+      slots = [
+        ...Object.entries(build.featPicks ?? {}).filter(([s, v]) => v === k && slotKept(s) && answerAt(s, index) == null).map(([s]) => s),
+        ...(overrideHolds(k) && answerAt(`override:${k}`, index) == null ? [`override:${k}`] : []),
+      ];
+      if (!slots.length) continue;
+      granter = k;
+    } else {
+      // A heritage, background or class feature — read by the walk only while the character has it.
+      if (k !== build.heritageId && k !== build.backgroundId && !ownsFeature(k)) continue;
+      granter = k;
+    }
+    if (!granter || removed.has(granter)) continue;
+    const spec = FEAT_PICK_GRANTS[granter];
+    if (spec && index < (spec.picks ?? 1) && pickableFeats(spec, build, content).some((f) => f.id === featId)) for (const slot of slots) out.push({ granter, slot });
+  }
+  return out;
+}
+
+/**
+ * THE ANSWER KEY OF EACH PICK TAKING OF ONE FEAT — `slot` → the variant `grantedChoiceKey` adds, or none
+ * for the bare key.
+ *
+ * A feat one granter hands over more than once owes one answer per taking. Major Lesson prints *"You can
+ * select this feat a second time if you're 14th level or higher, and a third time if you're 18th level or
+ * higher"* (feat-5010), and a Witch Dedication character takes it through Advanced Witchcraft, which is
+ * repeatable — but every taking read `grantedFeatChoices['major-lesson']`, so the second taught the first's
+ * lesson again (package F, 2026-10-16).
+ *
+ * The variant is the GRANTING SLOT (`major-lesson#10:class:4`), never a count: a count follows the order
+ * the list happens to be in, so removing the earlier Advanced Witchcraft moved the later taking onto the
+ * first's answer, and a save whose later slot was stored first swapped them (checker, same day). Per granter
+ * id, in slot-level order: the FIRST taking reads the bare key — every save made before this keeps its one
+ * answer there — unless an answer of its own is stored under its slot (it was a later taking once, and the
+ * player answered it there); every later taking reads its slot. Different granters never share a feat's
+ * taking (General Training and Skill Mastery each handing over Additional Lore stay on their bare keys, as
+ * their Lore subjects always were). An `override:` key, a bare granter id or a feature id is no slot and
+ * keeps the bare key. The slot after `#` moves with its pick (featSlots.ts `rekeyFeatSlots` /
+ * `swapSlotKeys`).
+ *
+ * Accepted, not fixed (second check, same day): a save whose ONLY taking answered on the bare key, given an
+ * EARLIER taking later, hands that answer to the new first taking, and the later one asks again. Nothing is
+ * lost — the answer is on the sheet, one card down.
+ */
+export function pickTakingVariants(build: BuildState, featId: string, takings: readonly { granter: string; slot: string }[]): Map<string, string | undefined> {
+  const out = new Map<string, string | undefined>();
+  const isSlot = (s: string) => /^\d+:/.test(s);
+  const byGranter = new Map<string, string[]>();
+  for (const t of takings) {
+    if (!isSlot(t.slot)) {
+      out.set(t.slot, undefined);
+      continue;
+    }
+    const list = byGranter.get(t.granter) ?? [];
+    if (!list.includes(t.slot)) list.push(t.slot);
+    byGranter.set(t.granter, list);
+  }
+  for (const slots of byGranter.values()) {
+    slots.sort((a, b) => Number(a.split(':')[0]) - Number(b.split(':')[0]) || a.localeCompare(b));
+    slots.forEach((s, i) => {
+      const own = build.grantedFeatChoices?.[grantedChoiceKey(featId, s)] != null;
+      out.set(s, i > 0 || own ? s : undefined);
+    });
+  }
+  return out;
+}
+
+/**
+ * A CLASS FEAT AN ARCHETYPE HANDED OVER, SIZING THAT ARCHETYPE'S CANTRIPS.
+ *
+ * Basic Arcana (feat-5108): *"You gain a 1st- or 2nd-level wizard feat of your choice."* Taken through it,
+ * Cantrip Expansion (feat-4580) — *"Prepared Caster (Cleric, Wizard, etc.): You can prepare two additional
+ * cantrips each day"* — is a WIZARD feat on a character whose wizard spellcasting is the archetype's, so the
+ * two cantrips are the wizard archetype's. Before this they went nowhere (measured 2026-10-16): a druid or
+ * cleric with Wizard Dedication kept 5 class cantrips and 2 archetype ones, and even a fighter, whose only
+ * caster is the archetype, kept 2 — the pick-a-feat answer (`pickFeatChoices`) was read by neither pool,
+ * because both read `featPicks` alone. The class pool still never gets them: they are not a class feat
+ * the class took (a druid cannot take Cantrip Expansion at all; it carries no druid trait).
+ *
+ * Counted: an UNTARGETED bonus (no `entryId`) of more than zero cantrips, on a feat a held ARCHETYPE feat
+ * picked (`heldPickGranters`) for this archetype's class — the spec asks for that class's trait (Basic
+ * Arcana → `wizard`; Spellshot Dedication borrows the wizard ladder, `DEDICATION_COUNTS_AS`). A feat also
+ * held in a slot is the slot's (`cantripBonusFor` counts it). A swap's `-1` (Adapted Cantrip) is not routed
+ * here: its other half lands through the class grant, and charging it alone would take a cantrip and give
+ * nothing back.
+ */
+export function archetypePickedCantripBonus(build: BuildState, content: ContentDatabase, arch: ActiveCasterArchetype): number {
+  const classOf = (dedId: string) => dedId.replace(/-dedication$/, '');
+  const archClasses = new Set([arch.dedicationId, ...(DEDICATION_COUNTS_AS[arch.dedicationId]?.countsAs ?? [])].map(classOf));
+  const inSlots = new Set(Object.values(build.featPicks ?? {}));
+  let n = 0;
+  for (const featId of new Set(Object.values(build.pickFeatChoices ?? {}))) {
+    const b = featId ? content.feats[featId]?.spellSlotBonus : undefined;
+    if (!b || b.entryId || inSlots.has(featId)) continue;
+    const granters = heldPickGranters(build, content, build.level, featId, () => false);
+    const viaArchetype = granters.some(
+      ({ granter: g }) => (content.feats[g]?.traits ?? []).includes('archetype') && (FEAT_PICK_GRANTS[g]?.traits ?? []).some((t) => archClasses.has(t)),
+    );
+    if (!viaArchetype) continue;
+    const reached = (b.cantripsAt ?? []).filter((s) => s.level <= build.level).sort((x, y) => y.level - x.level)[0];
+    const c = reached?.cantrips ?? b.cantrips ?? 0;
+    if (c > 0) n += c;
+  }
+  return n;
 }
 
 export function featSkillChoiceValue(
@@ -2579,6 +2797,34 @@ export function grantedChoiceKey(featId: string, grantVariant?: string): string 
   return grantVariant ? `${featId}#${grantVariant}` : featId;
 }
 
+/** A granted taking's own answer under its variant key (`pickTakingVariants`), with the option's label —
+ *  never the bare key's, which belongs to the first taking. */
+function grantedVariantChoice(content: ContentDatabase, build: BuildState, featId: string, variant: string): { value: string; label: string } | undefined {
+  const def = content.feats[featId]?.choice;
+  const v = build.grantedFeatChoices?.[grantedChoiceKey(featId, variant)];
+  if (!def || !v) return undefined;
+  return { value: v, label: (def.options ?? []).find((o) => o.value === v)?.label ?? featChoiceLabel(v) };
+}
+
+/**
+ * The answers a feat's OTHER takings hold, seen from one GRANTED taking's picker (`ownKey`, its
+ * `grantedChoiceKey`): every slot taking's answer and every other granted key of the feat (`<feat>`,
+ * `<feat>#<variant>`). Major Lesson prints *"Choose a different lesson each time"*'s shape
+ * (`distinctAcrossTakes`), and the second taking through Advanced Witchcraft offered the lesson the first
+ * already holds — a wasted 10th-level feat with nothing saying so (Q27; checker, package F 2026-10-16).
+ * Read off the takings the BUILT character holds (`character.feats`), never every stored key: an answer
+ * left behind by a taking since removed is nobody's, and greying it took the lesson away from the one
+ * taking left (second check, same day).
+ */
+export function answersInOtherGrantedTakes(recordId: string, build: BuildState, character: Pick<Character, 'feats'>, ownKey: string): Set<string> {
+  const out = answersInOtherTakes(recordId, build);
+  for (const f of character.feats) {
+    if (f.featId !== recordId || !f.grantedBy || !f.choice?.value) continue;
+    if (grantedChoiceKey(f.featId, f.grantVariant) !== ownKey) out.add(f.choice.value);
+  }
+  return out;
+}
+
 function answersInOtherTakes(recordId: string, build: BuildState, slotKey?: string): Set<string> {
   const out = new Set<string>();
   for (const [k, id] of Object.entries(build.featPicks ?? {})) {
@@ -2835,7 +3081,8 @@ export function buildUsesDeity(build: BuildState, content: ContentDatabase): boo
   const ids = [
     ...Object.values(build.featPicks ?? {}),
     ...Object.values(build.pickFeatChoices ?? {}),
-    ...Object.keys(build.grantedFeatChoices ?? {}).map((k) => k.split(':')[0]),
+    // The feat id of a key: a later taking's `<feat>#<variant>` (`grantedChoiceKey`) names its feat too.
+    ...Object.keys(build.grantedFeatChoices ?? {}).map((k) => k.split('#')[0].split(':')[0]),
   ];
   return ids.some((id) => id && reads(content.feats[id]));
 }
@@ -5118,6 +5365,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // on the FeatChoice for display.
   const featChoiceById: Record<string, { value: string; label: string }> = {};
   const grantedChoiceById: Record<string, { value: string; label: string }> = {};
+  /** Feats the player took away in Overrides ("Remove a granted feat"). The feat list drops them far below
+   *  (after the grant walks), but this focus pass reads the build directly — so a removed lesson still
+   *  taught its hex and its familiar spell, and a removed Domain Initiate kept its domain spell and the
+   *  Focus Point (package F, 2026-10-16). A removed feat contributes nothing here either. */
+  const removedFeatIds = new Set(build.overrides?.removedFeatIds ?? []);
   const featFocusSpells: string[] = [];
   /**
    * batch 035: lesson-of-vengeance#familiar-spell — ordinary (non-focus) spells a CHOICE-OWNED class
@@ -5155,7 +5407,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    *  existed, silently dropping e.g. a choice feat's focusPoolBonus). Returns the resolved choice. */
   const applyFeatFocus = (featId: string, choiceValue: string | undefined, spellOverride?: string) => {
     const feat = content.feats[featId];
-    if (!feat) return undefined;
+    if (!feat || removedFeatIds.has(featId)) return undefined;
     let resolved: { value: string; label: string } | undefined;
     let contributedSpell = false;
     const def = feat.choice;
@@ -5271,7 +5523,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * for a granted one.
    */
   const takeOwnedFeatureSpells = (featId: string, value: string | undefined, spellPick: string | undefined) => {
-    if (!content.feats[featId]?.choice?.ownsFeature || !value) return;
+    if (!content.feats[featId]?.choice?.ownsFeature || !value || removedFeatIds.has(featId)) return;
     for (const id of choiceOwnedFeatureIds([{ featId, choice: { value } }], content)) {
       for (const sid of content.classFeatures[id]?.focusSpells ?? []) {
         if (!content.spells[sid] || featFocusSpells.includes(sid)) continue;
@@ -5300,68 +5552,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
   };
   /**
-   * Is a feat reaching this list through a PICK-A-FEAT answer still picked by a granter the character
-   * holds? A `pickFeatChoices` answer is keyed by the granter's slot (`6:class:2`, `…#1` for a second
-   * pick) or by its id, and `setFeat` does not clear it when the slot changes — so the bare answer is not
-   * proof the feat is granted. buildCharacter's own pick walk (FEAT_PICK_GRANTS, below) is the authority
-   * and runs later; this asks ITS questions early, for the lanes that must answer before it: is the
-   * granter held at this level, is the answer one of the picks its spec makes (`#i` under `picks`), and
-   * may it pick this feat NOW (`pickableFeats` — the trait, and Advanced Witchcraft's half-level cap).
-   * Checker finding 2026-10-15: without the last two, Basic Witchcraft swapped for Basic Arcana (answer
-   * left behind) or Greater Lesson answered under Advanced Witchcraft at 11th kept the lesson's hex and a
-   * Focus Point the build no longer granted.
-   * A feat that is not any pick's answer came from a lane the build derives (a background, heritage,
-   * class feature or feat-grants-feat) and is held by construction.
+   * The answer keys a feat reaching this list is granted under. Through a PICK-A-FEAT answer: one per
+   * taking a held granter still picks (`heldPickGranters` asks the pick walk's questions early; a removed
+   * Basic Witchcraft must take its lesson with it), each keyed as the walk below keys it
+   * (`pickTakingVariants`) — [] when no held granter picks it. A feat that is not any pick's answer came
+   * from a lane the build derives (a background, heritage, class feature or feat-grants-feat), is held by
+   * construction, and has the one bare key.
    */
-  const pickGrantHeld = (featId: string): boolean => {
-    const keys = Object.entries(build.pickFeatChoices ?? {}).filter(([, v]) => v === featId).map(([k]) => k);
-    if (!keys.length) return true;
-    const answerAt = (base: string, index: number) => build.pickFeatChoices?.[index ? `${base}#${index}` : base];
-    const slotLevelOk = (s: string) => !(Number(s.split(':')[0]) > level);
-    /** A slot the walk KEEPS: it places a feat from its slots in `featPicks` order, at or below this level,
-     *  up to the feat's `maxTakes` — a second Basic Witchcraft slot (a stale or reordered save) is dropped,
-     *  and its answers are never read (final check, 2026-10-15). */
-    const slotKept = (s: string) => {
-      const id = build.featPicks?.[s];
-      if (!id || !slotLevelOk(s)) return false;
-      const holding = Object.entries(build.featPicks ?? {}).filter(([x, v]) => v === id && slotLevelOk(x)).map(([x]) => x);
-      return holding.indexOf(s) < maxTakes(content.feats[id]);
-    };
-    /** An Overrides-added copy of `id` the walk takes (no slot at or below this level already holds it). */
-    const overrideHolds = (id: string) =>
-      (build.overrides?.addedFeats ?? []).some((a) => a.featId === id && (a.level ?? 1) <= level) &&
-      !Object.entries(build.featPicks ?? {}).some(([s, v]) => v === id && slotLevelOk(s));
-    return keys.some((key) => {
-      const m = /^(.*?)(?:#(\d+))?$/.exec(key)!;
-      const k = m[1];
-      const index = Number(m[2] ?? 0);
-      let granter: string | undefined;
-      if (build.featPicks?.[k]) {
-        // A slot (`6:class:2`, or a legacy `2:class`): its feat, at a level the character has reached.
-        if (!slotKept(k)) return false;
-        granter = build.featPicks[k];
-      } else if (k.startsWith('override:')) {
-        // An Overrides-added granter's own synthetic slot.
-        granter = k.slice('override:'.length);
-        if (!overrideHolds(granter)) return false;
-      } else if (content.feats[k]) {
-        /* A granter's bare id — the answer saved before picks were keyed by slot. The walk reads a taking's
-         * SLOT answer first and falls back to this only when the slot has none, so it counts only for a
-         * taking at or below this level with no answer of its own (final check, 2026-10-15: an old
-         * `basic-witchcraft` answer beside a newer slot answer kept the old lesson's hex). */
-        // `== null`: the walk reads `slot ?? bare`, so a null slot answer falls through to this one too.
-        const viaSlot = Object.entries(build.featPicks ?? {}).some(([s, v]) => v === k && slotKept(s) && answerAt(s, index) == null);
-        const viaOverride = overrideHolds(k) && answerAt(`override:${k}`, index) == null;
-        if (!viaSlot && !viaOverride) return false;
-        granter = k;
-      } else {
-        // A heritage, background or class feature — read by the walk only while the character has it.
-        if (k !== build.heritageId && k !== build.backgroundId && !ownedClassFeatures(true).has(k)) return false;
-        granter = k;
-      }
-      const spec = granter ? FEAT_PICK_GRANTS[granter] : undefined;
-      return !!spec && index < (spec.picks ?? 1) && pickableFeats(spec, build, content).some((f) => f.id === featId);
-    });
+  const grantedAnswerKeys = (featId: string): string[] => {
+    if (!Object.values(build.pickFeatChoices ?? {}).includes(featId)) return [featId];
+    // Capped in the walk's own order (its slots, as `featPicks` lists them), so past the feat's cap the hexes
+    // taught are the lessons shown — answers saved in another order kept a dropped taking's hex (final check).
+    const order = Object.keys(build.featPicks ?? {});
+    const at = (s: string) => (order.includes(s) ? order.indexOf(s) : order.length);
+    const takes = heldPickGranters(build, content, level, featId, (k) => ownedClassFeatures(true).has(k))
+      .sort((a, b) => at(a.slot) - at(b.slot))
+      .slice(0, maxTakes(content.feats[featId]));
+    const variants = pickTakingVariants(build, featId, takes);
+    return [...new Set(takes.map((t) => grantedChoiceKey(featId, variants.get(t.slot))))];
   };
   const focusSeen = new Set<string>();
   /*
@@ -5483,9 +5691,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const resolved = applyFeatFocus(id, build.grantedFeatChoices?.[id], build.featSpellChoices?.[`granted:${id}`]);
     if (resolved) grantedChoiceById[id] = resolved;
     // …and a granted LESSON's hex and familiar spell (Basic Witchcraft → Basic Lesson), as for a slot feat —
-    // only while a held granter still picks it (`pickGrantHeld`): the builder's feat swap leaves the old
-    // slot's `pickFeatChoices` answer behind, and a removed Basic Witchcraft must take its lesson with it.
-    if (pickGrantHeld(id)) takeOwnedFeatureSpells(id, build.grantedFeatChoices?.[id], build.featSpellChoices?.[`granted:${id}:granted-spell`]);
+    // once per taking a held granter still picks, each under its own answer key (`grantedAnswerKeys`): the
+    // builder's feat swap leaves the old slot's `pickFeatChoices` answer behind, a removed Basic Witchcraft
+    // must take its lesson with it, and a second Major Lesson teaches ITS lesson's hex and familiar spell.
+    for (const key of grantedAnswerKeys(id)) takeOwnedFeatureSpells(id, build.grantedFeatChoices?.[key], build.featSpellChoices?.[`granted:${key}:granted-spell`]);
   }
   // "Choose one of N FOCUS spells" effect-choices (Additional Shadow Magic, Greater Deathly Secrets).
   // Resolved HERE (not in the later effect-choice pass) so the pick feeds the same focus pool/entry as
@@ -5499,6 +5708,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // grants the chosen sin's initial school spell); its record ships under the same slug.
     for (const o of grantOptions) focusChoiceIds.add(o.id);
     for (const rid of focusChoiceIds) {
+      if (removedFeatIds.has(rid) && content.feats[rid]) continue;
       const rec = content.feats[rid] ?? content.heritages[rid] ?? content.classFeatures[rid];
       for (const ch of rec?.effectChoices ?? []) {
         if (!effectChoiceOffered(ch, build, content, rid)) continue; // a doctrine-gated branch — see resolvePick
@@ -5542,7 +5752,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const lvl = Number(slotKey.split(':')[0]);
       if (!featId || !Number.isFinite(lvl) || lvl > level) continue;
       const rec = content.feats[featId];
-      if (!rec?.choice?.options?.length) continue;
+      if (!rec?.choice?.options?.length || removedFeatIds.has(featId)) continue;
       const value = choiceKeys(slotKey, rec.choice).map((k) => build.featChoices?.[k]).find(Boolean);
       const opt = rec.choice.options.find((o) => o.value === value);
       for (const sid of opt?.grant?.focusSpells ?? []) {
@@ -5566,7 +5776,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const lvl = Number(slotKey.split(':')[0]);
       if (!featId || !Number.isFinite(lvl) || lvl > level) continue;
       const rec = content.feats[featId];
-      if (!rec || maxTakes(rec) <= 1) continue;
+      if (!rec || maxTakes(rec) <= 1 || removedFeatIds.has(featId)) continue;
       for (const ch of rec.effectChoices ?? []) {
         if (!ch.spellFilter) continue;
         const val = build.effectChoices?.[`${slotKey}:${ch.id}`] ?? build.effectChoices?.[`${featId}:${ch.id}`];
@@ -6744,9 +6954,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Pick-a-feat grants: a feat like General Training / Basic Maneuver / Natural Ambition lets the
   // player CHOOSE a bonus feat from a filtered pool. Add the chosen feat (validated against the pool)
   // so it's granted with its own effects — then the expansion below carries any further grants.
+  /** The rows this walk pushes — the later takings of one feat get an answer key of their own below. */
+  const pickRows: FeatChoice[] = [];
+  const removedGranters = new Set(build.overrides?.removedFeatIds ?? []);
   for (const fc of [...feats]) {
     const spec = FEAT_PICK_GRANTS[fc.featId];
     if (!spec) continue;
+    // A granter removed in Overrides picks nothing (`heldPickGranters` says why).
+    if (removedGranters.has(fc.featId)) continue;
     /* A pick gated on ALREADY HAVING a feat — Engine Bay's *"if you already have that feat, you gain a
      * different 1st-level skill feat instead"*. Read against the feats the character holds, which by
      * this point includes the granted ones, so the gate is true exactly when the static grant was
@@ -6780,7 +6995,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       if (already >= maxTakes(content.feats[chosen])) continue;
       if (!pickableFeats(spec, build, content).some((f) => f.id === chosen)) continue; // ignore an illegal pick
       takenFeats.add(chosen);
-      feats.push({
+      const row: FeatChoice = {
         featId: chosen,
         level: fc.level,
         category: content.feats[chosen].category as FeatCategory,
@@ -6789,7 +7004,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         // repeatable grant with its own pick instead of collapsing them.
         ...(fc.slotKey ? { grantedBySlot: fc.slotKey } : {}),
         choice: grantedChoiceById[chosen],
-      });
+      };
+      feats.push(row);
+      pickRows.push(row);
+    }
+  }
+  /* A LATER taking of the same feat from the same granter owes its own answer (Major Lesson twice through
+   * two Advanced Witchcraft feats): `pickTakingVariants`, keyed by the granting slot. The same
+   * `<feat>#<variant>` key the EXTRA_FEAT_TAKINGS rows use (`grantedChoiceKey`), the same function the focus
+   * pass above reads its hex and familiar spell through, so the two cannot pair an answer differently. */
+  for (const featId of new Set(pickRows.map((r) => r.featId))) {
+    const rows = pickRows.filter((r) => r.featId === featId && r.grantedBySlot);
+    if (!rows.length) continue;
+    const variants = pickTakingVariants(build, featId, rows.map((r) => ({ granter: r.grantedBy!, slot: r.grantedBySlot! })));
+    for (const r of rows) {
+      const v = variants.get(r.grantedBySlot!);
+      if (!v) continue;
+      r.grantVariant = v;
+      r.choice = grantedVariantChoice(content, build, featId, v);
     }
   }
   // A HERITAGE can carry the same kind of pick (Ancient Elf: a multiclass dedication at 1st level,
@@ -7697,7 +7929,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   /** …and the record id that granted each, for a modification that names the granting record. */
   const chosenInnateRecord: Record<string, string> = {};
   const resolvedItemPassives: Record<string, ItemPassiveEffects> = {};
-  const effectWarnings: { source: string; message: string }[] = [];
+  /** `kind: 'check'` — not missing data, a pick or a pair of items to look at (Character.effectWarnings). */
+  const effectWarnings: { source: string; message: string; kind?: 'check' }[] = [];
   const effectPicks: NonNullable<Character['effectPicks']> = [];
   /** Creature traits a chosen OPTION granted, each keeping the name of the record that asked. Not
    *  merged into `chosenEffects`: the Details tab has to say which feat made you an azata. */
@@ -9195,6 +9428,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           `makes your ${hostItem.name} ${stepped} armor, and you read the ${stepped} proficiency for AC. ` +
           `You are ${now} in ${stepped} but ${had} in ${hostItem.category}, so wearing both costs you ${net} AC ` +
           `overall — far more than the +${mode.acBonus ?? 0} it grants. Take one off unless you meant this.`,
+        kind: 'check',
       });
     }
     break; // one adjusting item per suit, matching the printed exclusivity
@@ -9330,6 +9564,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           effectWarnings.push({
             source: content.feats[arch.dedicationId]?.name ?? arch.dedicationId,
             message: `${content.spells[id]?.name ?? id} is not one of the cantrips this dedication grants — choose again from the ones it names.`,
+            kind: 'check',
           });
       const srcSpells = src?.spells ?? build.spells;
       const srcKey = twoCaster ? src?.keyAbility ?? null : build.archetypeKeyAbility ?? null;
@@ -9593,6 +9828,27 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
             }
           }
         }
+        /*
+         * …and WHERE THE OTHER DEDICATION'S CANTRIPS WENT, said in words on the pool that won. Owner ruling
+         * #162 (2026-10-15, "One pool + a note"): Spellshot + Beast Gunner keeps ONE archetype pool, the beast
+         * gunner's, and the spellshot's two cantrips are cast at will as innate cantrips — *"as long as the
+         * sheet SAYS that is what is happening"*. The cantrips are the held dedication's own two answers
+         * (LEGACY_ARCHETYPE_CANTRIP_KEYS, cast at will by the loop at the top of this block, attributed to
+         * it); the builder asks them on that dedication's card. No second-pool engine.
+         */
+        for (const f of feats) {
+          if (f.featId === arch.dedicationId || !LEGACY_ARCHETYPE_CANTRIP_KEYS[f.featId]) continue;
+          const winner = content.feats[arch.dedicationId]?.name ?? arch.dedicationId;
+          const heldName = content.feats[f.featId]?.name ?? f.featId;
+          const owed = LEGACY_ARCHETYPE_CANTRIP_KEYS[f.featId].length;
+          const chosen = legacyCantripsOf(f.featId).map((id) => content.spells[id]?.name ?? id);
+          const trad = CASTER_ARCHETYPES[f.featId]?.tradition;
+          const kind = `innate ${trad ? `${trad} ` : ''}cantrips`;
+          const said = chosen.length
+            ? `${winner} holds your archetype spells, so your ${heldName} cantrips (${chosen.join(', ')}) are cast at will as ${kind} — they are listed under Innate spells.${chosen.length < owed ? ` Choose the other ${owed - chosen.length === 1 ? 'one' : owed - chosen.length} in the builder (Level ${f.level}, ${heldName}).` : ''}`
+            : `${winner} holds your archetype spells, so your ${owed} ${heldName} cantrips are cast at will as ${kind}. Choose them in the builder (Level ${f.level}, ${heldName}).`;
+          archEntry.note = archEntry.note ? `${archEntry.note} ${said}` : said;
+        }
       }
       // Slot bonuses aimed at this entry are applied BEFORE it is built (`foldArchSpellSlotBonuses`
       // above), so a spontaneous archetype's repertoire is sliced from the raised counts and the
@@ -9682,6 +9938,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           : sameSpell
             ? `${name} is already your ${answerOf} cantrip — choose another spell in the builder.`
             : `${name} is not from the tradition of your ${answerOf} cantrip — choose again in the builder.`,
+        kind: 'check',
       });
       continue;
     }

@@ -579,15 +579,38 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
     });
   }
 
+  const missingData = (character.effectWarnings ?? []).filter((w) => w.kind !== 'check');
+  const toCheck = (character.effectWarnings ?? []).filter((w) => w.kind === 'check');
+
   return (
     <div className="maincol">
-      {character.effectWarnings?.length ? (
+      {/* The red box is for MISSING DATA only (test/data-warning-is-missing-data.test.ts). A row the
+          engine marks `kind: 'check'` — a pick the rules no longer allow (Oatia Skysage's cantrip list, an
+          Adaptive Adept spell off its tradition), two items that fight over AC — is not missing anything,
+          and under "Missing data … reference content not in the current data" it read as broken data
+          (package F, 2026-10-16). Those go in the box below it. */}
+      {missingData.length ? (
         <div className="ff-warnings" role="note">
           <i className="ti ti-alert-triangle" aria-hidden="true" />
           <div>
-            <strong>Missing data</strong> — {character.effectWarnings.length} effect{character.effectWarnings.length === 1 ? '' : 's'} reference content not in the current data:
+            <strong>Missing data</strong> — {missingData.length} effect{missingData.length === 1 ? '' : 's'} reference content not in the current data:
             <ul>
-              {character.effectWarnings.map((w, i) => (
+              {missingData.map((w, i) => (
+                <li key={i}>
+                  <b>{w.source}</b>: {w.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : null}
+      {toCheck.length ? (
+        <div className="ff-warnings ff-check" role="note" data-check-notices>
+          <i className="ti ti-alert-circle" aria-hidden="true" />
+          <div>
+            <strong>Check {toCheck.length === 1 ? 'this' : 'these'}</strong> — {toCheck.length === 1 ? 'one thing on this character needs' : `${toCheck.length} things on this character need`} a look:
+            <ul>
+              {toCheck.map((w, i) => (
                 <li key={i}>
                   <b>{w.source}</b>: {w.message}
                 </li>

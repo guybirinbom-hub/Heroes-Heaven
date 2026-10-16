@@ -73,9 +73,12 @@ describe('granted-choice-picker-subclassless-class — a granted feat asks its q
     const b = host({ level: 8, featPicks: { [ded]: 'hellknight-dedication', [ot]: 'order-training' }, pickFeatChoices: { [ot]: 'devil-allies' } });
     const prompt = c().feats['devil-allies'].choice?.prompt ?? '';
     expect(prompt).not.toBe('');
-    const { text } = page(b, '1');
+    // On the page of the level Order Training granted it at — 8th — since package F (2026-10-16); it was
+    // anchored to Level 1 for a class with no subclass, far from the feat that gave it.
+    const { text } = page(b, '8');
     expect(text).toContain('Devil Allies');
     expect(text).toContain(prompt);
+    expect(page(b, '1').text, 'asked once, on its own level').not.toContain(prompt);
   });
 });
 

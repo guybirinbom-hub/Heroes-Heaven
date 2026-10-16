@@ -6454,8 +6454,11 @@ export interface Character {
    *  (like the item's own passiveEffects) only while that item is worn/invested. */
   resolvedItemPassives?: Record<string, ItemPassiveEffects>;
   /** Effects whose referenced content (a legacy spell/feat) isn't in the shipped data. Kept so the
-   *  intent is visible, with a warning surfaced on the sheet. */
-  effectWarnings?: { source: string; message: string }[];
+   *  intent is visible, with a warning surfaced on the sheet.
+   *  `kind: 'check'` marks a row that is NOT missing data — a pick the rules no longer allow (a cantrip a
+   *  dedication does not name, an Adaptive Adept spell off its tradition) or two items that fight — so the
+   *  Feats tab lists it under "Check these", never under the red "Missing data" heading. */
+  effectWarnings?: { source: string; message: string; kind?: 'check' }[];
   /** Every resolved "choose one of N" pick, so the sheet can show WHICH option the character took —
    *  including options that carry only a note (a kineticist gate junction). Keyed by the owning
    *  record so a feat/feature row can label itself. */

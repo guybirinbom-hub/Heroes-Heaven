@@ -1032,7 +1032,11 @@ describe('review findings, 2026-10-15', () => {
     const oldNote = noteOf(old, 'beast-gunner-dedication-casting');
     expect(oldNote, 'fixture: something is hidden').toMatch(/Not shown/);
     expect(oldNote).toContain(db.spells['shield']!.name);
-    expect(oldNote, 'Light is on the sheet (innate), never "not shown"').not.toContain(db.spells['light']!.name);
+    // Read off the "Not shown" sentence alone: since package F (owner ruling #162) the same note goes on to
+    // say where the spellshot's cantrips went, and names Light THERE — as cast at will, which is the point.
+    const notShown = /Not shown:[^—]*/.exec(oldNote ?? '')?.[0] ?? '';
+    expect(notShown, 'Light is on the sheet (innate), never "not shown"').not.toContain(db.spells['light']!.name);
+    expect(oldNote).toContain('(Detect Magic, Light) are cast at will as innate arcane cantrips');
 
     // A caster class (Druid) with a Cleric and a Magus Dedication: the leveled picks live in archetypeSpells,
     // which no builder control lists for the cleric pool — so no line it could never clear.

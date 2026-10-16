@@ -64,6 +64,16 @@ function featSlotLists(b: BuildState, content: ContentDatabase): FeatCategory[][
  *  `<slot>:<choice id>`, `<slot>#1`). */
 export const SLOT_KEYED = ['featPicks', 'featChoices', 'featSpellChoices', 'featLoreChoices', 'effectChoices', 'pickFeatChoices'] as const;
 const SLOT_PREFIX = /^(\d+):([a-z]+):(\d+)(?=$|[#:])/;
+/**
+ * …and the keys that carry a slot AFTER `#`: a later pick taking's answer (build.ts `pickTakingVariants`,
+ * package F 2026-10-16) — `major-lesson#10:class:4` in grantedFeatChoices, its familiar-spell pick
+ * `granted:major-lesson#10:class:4:granted-spell`, a Lore subject `advanced-witchcraft#10:class:4:major-lesson:0`.
+ * The slot there is the GRANTING feat's, so it moves with that pick: left behind, a "Move to slot" or Dual
+ * Class switched on lost the second Major Lesson's answer and its hex with nothing said (checker, same day).
+ */
+const VARIANT_KEYED = ['grantedFeatChoices', 'featSpellChoices', 'featLoreChoices'] as const;
+const VARIANT_SLOT = /#(\d+:[a-z]+:\d+)(?=$|:)/;
+const moveVariantSlot = (k: string, move: (slot: string) => string) => k.replace(VARIANT_SLOT, (_, s: string) => `#${move(s)}`);
 /** The order `levelGrants` pushes a level's slots in. A test holds every level list to it. */
 export const SLOT_ORDER: FeatCategory[] = ['ancestry', 'class', 'skill', 'general', 'bonus', 'impulse', 'archetype', 'mythic'];
 /** Where a category sits in a level's list: [class, skill, archetype, mythic] → mythic at [3]. */
@@ -170,7 +180,13 @@ export function swapSlotKeys(b: BuildState, x: string, y: string): Partial<Build
     const m = SLOT_PREFIX.exec(k)?.[0];
     return m === x ? y + k.slice(x.length) : m === y ? x + k.slice(y.length) : k;
   };
-  return Object.fromEntries(SLOT_KEYED.filter((f) => b[f]).map((f) => [f, Object.fromEntries(Object.entries(b[f]!).map(([k, v]) => [swap(k), v]))]));
+  const swapSlot = (s: string) => (s === x ? y : s === y ? x : s);
+  const maps = [...new Set<keyof BuildState>([...SLOT_KEYED, ...VARIANT_KEYED])];
+  return Object.fromEntries(
+    maps
+      .filter((f) => b[f])
+      .map((f) => [f, Object.fromEntries(Object.entries(b[f] as Record<string, unknown>).map(([k, v]) => [moveVariantSlot(swap(k), swapSlot), v]))]),
+  );
 }
 
 /**
@@ -278,15 +294,20 @@ export function rekeyFeatSlots(prev: BuildState, next: BuildState, content: Cont
   if ([...to].every(([a, b]) => a === b)) return next;
 
   const out: BuildState = { ...next };
+  const moveSlot = (s: string) => to.get(s) ?? s;
   for (const f of SLOT_KEYED) {
     const map = next[f];
     if (!map) continue;
     out[f] = Object.fromEntries(
       Object.entries(map).map(([k, v]) => {
         const m = SLOT_PREFIX.exec(k);
-        return [m ? to.get(m[0])! + k.slice(m[0].length) : k, v];
+        return [moveVariantSlot(m ? to.get(m[0])! + k.slice(m[0].length) : k, moveSlot), v];
       }),
     );
+  }
+  // A later taking's answer keyed by its granting slot after `#` (VARIANT_KEYED) moves with that slot.
+  if (next.grantedFeatChoices) {
+    out.grantedFeatChoices = Object.fromEntries(Object.entries(next.grantedFeatChoices).map(([k, v]) => [moveVariantSlot(k, moveSlot), v]));
   }
   return out;
 }
