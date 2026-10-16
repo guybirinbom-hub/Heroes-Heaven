@@ -12,6 +12,8 @@ import { useAuth, signOut } from '../data/useAuth';
 import { getDeviceInfo, setLoginSkipped } from '../data/device';
 import { setPref, usePrefs } from '../data/prefs';
 import { TRUST_LEDGER, trustCensus } from '../data/trustGate';
+import { APP_VERSION, DATA_VERSIONS } from '../version';
+import { dataStatus } from '../data/dataFreshness';
 import { CustomizationEditor } from './CustomizationEditor';
 import { useGlobalCustomization, setGlobalCustomizationField, DEFAULT_CUSTOMIZATION } from '../data/customization';
 import { PageMenu } from './PageMenu';
@@ -432,6 +434,20 @@ function AccountSection() {
   );
 }
 
+/** What the rules-data check found on this device, in words (src/data/dataFreshness.ts). A device
+ *  that kept an old copy of the rules ran new code on old data for months without anyone seeing it
+ *  (2026-10-16); this line is where the owner can see on any device that it is current. */
+function rulesDataLine(): string {
+  const core = dataStatus('core.json');
+  const desc = dataStatus('core-descriptions.json');
+  if (core === 'mismatch' || desc === 'mismatch') return 'not the rules data this version expects. Close the app completely and open it again.';
+  if (core === 'refetched' || desc === 'refetched') return 'up to date (an old saved copy was replaced).';
+  if (core === 'fresh' && desc === 'fresh') return 'up to date.';
+  if (core === 'fresh') return 'up to date (descriptions not loaded yet).';
+  if (isTauri) return 'built into the app, so always the matching version.';
+  return 'not checked in this version of the app.';
+}
+
 function AboutSection() {
   return (
     <div className="settings-section">
@@ -439,6 +455,10 @@ function AboutSection() {
       <p className="settings-desc">
         A Pathfinder Second Edition character builder and play sheet. Your characters live on this device and work fully
         offline; if you sign in, they&rsquo;re also backed up to your account and sync across your devices.
+      </p>
+      <div className="menu-label">Version</div>
+      <p className="settings-desc" data-testid="about-version">
+        App {APP_VERSION} · rules data {DATA_VERSIONS['core.json'] ?? 'unstamped'}: {rulesDataLine()}
       </p>
       <div className="menu-label">Game data</div>
       <p className="settings-desc">

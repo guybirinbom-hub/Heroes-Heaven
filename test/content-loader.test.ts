@@ -23,7 +23,10 @@ describe('loadContent', () => {
     // The split is the point — the app becomes interactive after the smaller parse — so what this
     // asserts is that EACH file is fetched once however many callers there are, not that there is
     // only one file.
-    const urls = fetchMock.mock.calls.map((c) => String(c[0]));
+    // The PATH, not the whole URL: on the web the data URL carries `?v=<data version>` so the service
+    // worker cannot serve a first visit's copy forever (test/data-file-url.test.ts).
+    const pathOf = (u: string) => u.split('?')[0];
+    const urls = fetchMock.mock.calls.map((c) => pathOf(String(c[0])));
     expect(urls.filter((u) => u.endsWith('core.json'))).toHaveLength(1);
     expect(urls.filter((u) => u.endsWith('core-descriptions.json'))).toHaveLength(1);
     expect(b).toBe(a);
@@ -39,7 +42,7 @@ describe('loadContent', () => {
     expect(c.feats['test-feat']?.name).toBe('Test Feat');
     // Still one fetch per file after a third caller — the cache holds and descriptions are not
     // re-requested either.
-    const after = fetchMock.mock.calls.map((x) => String(x[0]));
+    const after = fetchMock.mock.calls.map((x) => pathOf(String(x[0])));
     expect(after.filter((u) => u.endsWith('core.json'))).toHaveLength(1);
     expect(after.filter((u) => u.endsWith('core-descriptions.json'))).toHaveLength(1);
   });

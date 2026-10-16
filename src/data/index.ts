@@ -23,6 +23,33 @@ import {
   type HomebrewType,
 } from './storage';
 import { applyTrustGate, clearTrustGate, trustGateOn } from './trustGate';
+import { isTauri } from '../platform';
+import { DATA_VERSIONS } from '../version';
+import { fetchDataFile, pruneDataCache, type DataFile } from './dataFreshness';
+
+/**
+ * Where a rules-data file is fetched from.
+ *
+ * On the WEB the URL carries the file's own version (`?v=<sha1 of its bytes>`, vite.config.ts). The
+ * service worker caches these files CacheFirst, and CacheFirst never re-asks the network for a URL it
+ * holds: at the bare path a phone kept its first visit's rules data through every later release, so new
+ * code ran on old data (2026-10-16: Flexible Spellcaster worked on the PC and not on the owner's phone,
+ * same character). A new version is a new URL, so it downloads once and the old copy ages out.
+ * The Tauri apps run no service worker and ship the files inside the app, so they keep the plain path —
+ * their asset protocol is never asked to resolve a query string. So does a build with no stamp (the dev
+ * server, tests): no version to put in the URL, nothing to check against.
+ */
+export function dataFileUrl(file: DataFile, tauri: boolean = isTauri, versions: Readonly<Record<string, string>> = DATA_VERSIONS): string {
+  const path = `${import.meta.env.BASE_URL}${file}`;
+  const v = versions[file];
+  return tauri || !v ? path : `${path}?v=${v}`;
+}
+
+/** Load one rules-data file. On the web it is checked against this build's stamp; in the Tauri apps the
+ *  file ships inside the app, so there is nothing a cache could have kept and nothing to check. */
+function loadDataFile(file: DataFile): Promise<unknown> {
+  return fetchDataFile(file, dataFileUrl(file), undefined, isTauri ? undefined : DATA_VERSIONS[file]);
+}
 
 function merge<T>(base: Record<string, T>, over: Record<string, T>): Record<string, T> {
   return { ...base, ...over };
@@ -734,9 +761,10 @@ let descPending: Promise<void> | null = null;
 export function loadDescriptions(): Promise<void> {
   descPending ??= (async () => {
     try {
-      const res = await fetch(`${import.meta.env.BASE_URL}core-descriptions.json`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const byBucket = (await res.json()) as DescriptionsFile;
+      const byBucket = (await loadDataFile('core-descriptions.json')) as DescriptionsFile;
+      // Both files are in: drop every other copy the service worker still holds (older versions, the
+      // pre-2026-10-16 bare URLs) — 11-16 MB each on a phone. Only when both checked out as current.
+      if (!isTauri) void pruneDataCache([dataFileUrl('core.json'), dataFileUrl('core-descriptions.json')]);
       // Write into the RAW core, then rebuild. Mutating the merged database in place is not enough:
       // several layers downstream snapshot it — applyOverrides copies edited records, and the sheet
       // memoises a player-facing copy — so a mutation lands in objects nobody is reading any more and
@@ -760,9 +788,7 @@ export function loadContent(): Promise<ContentDatabase> {
   if (cached) return Promise.resolve(cached);
   pending ??= (async () => {
     try {
-      const res = await fetch(`${import.meta.env.BASE_URL}core.json`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const core = (await res.json()) as Partial<ContentDatabase>;
+      const core = (await loadDataFile('core.json')) as Partial<ContentDatabase>;
       cachedCore = core;
       cached = mergeWithSeed(core);
       // Descriptions are 61% of the data and nobody reads one until they open it, so they ship in a

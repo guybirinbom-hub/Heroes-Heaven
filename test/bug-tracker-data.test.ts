@@ -229,6 +229,8 @@ describe('an installed web app keeps the bestiary offline', () => {
     const cfg = read('vite.config.ts');
     expect(cfg).toContain("url.pathname.startsWith('/data/')");
     expect(cfg).toContain("cacheName: 'heroes-heaven-tracker-data'");
-    expect(cfg).toContain("handler: 'StaleWhileRevalidate'");
+    // NetworkFirst since 2026-10-16 (it was StaleWhileRevalidate, one open behind after every update):
+    // still cached for offline use; the freshness rule itself is test/sw-freshness.test.ts.
+    expect(cfg).toContain("handler: 'NetworkFirst'");
   });
 });

@@ -1,10 +1,36 @@
 import { readFileSync, existsSync, rmSync, readdirSync, statSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')) as { version: string };
+
+/**
+ * THE RULES DATA'S OWN VERSIONS — for each file the app fetches at runtime, the first 12 hex of the
+ * sha1 of its exact bytes.
+ *
+ * The web build's service worker caches `core.json` and `core-descriptions.json` CacheFirst (below),
+ * and CacheFirst never asks the network again once a URL is cached. The app fetched them at a FIXED
+ * URL, so a phone that opened the website once kept the rules data of that first visit for good: every
+ * release since the web version shipped (2026-07-07) ran its new code against old data on returning
+ * devices (2026-10-16: a Flexible Spellcaster cleric worked on the PC and "behaved like the archetype was
+ * missing" on the owner's phone, same character, same account). src/data/index.ts now asks for
+ * `core.json?v=<its hash>`, so new data is a new URL and a fresh download, and old copies age out of the
+ * cache by `maxEntries`; and it hashes what it received and fetches again when that is not this hash
+ * (src/data/dataFreshness.ts). A hash of the CONTENT, not the package version: data can change without
+ * a version bump. The plain sha1 of the bytes, so the browser can compute the same value. Stamped for
+ * `vite build` only: a dev server's stamps would go stale the moment `npm run data` rewrote the files
+ * under it, and every reload would then fetch twice and warn in Settings for nothing.
+ */
+const dataVersions = Object.fromEntries(
+  ['core.json', 'core-descriptions.json'].map((f) => {
+    const p = fileURLToPath(new URL(`./public/${f}`, import.meta.url));
+    return [f, existsSync(p) ? createHash('sha1').update(readFileSync(p)).digest('hex').slice(0, 12) : 'missing'];
+  }),
+);
 
 /**
  * Force a FULL RELOAD when a module React Refresh CANNOT hot-swap changes.
@@ -148,7 +174,7 @@ function stripBuildOnlyAssets(): Plugin {
 
 // Vite config tuned for Tauri 2: fixed dev port, no screen clearing so Tauri
 // logs stay visible, and src-tauri excluded from the watcher.
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     react(),
     fullReloadOnLogicChange(),
@@ -190,6 +216,12 @@ export default defineConfig({
         // BOTH files must match. Descriptions were split into `core-descriptions.json` (15 MB of the
         // old 22.5 MB core.json), and `endsWith('core.json')` does not match that name — an installed
         // PWA would have gone offline with every description blank.
+        //
+        // ⚠ FRESHNESS RULE (2026-10-16), enforced by test/sw-freshness.test.ts: a route may be
+        // CacheFirst ONLY when every URL the app requests on it carries the file's version (here
+        // `?v=<sha1>`, dataFileUrl in src/data/index.ts) — CacheFirst never asks the network again for
+        // a URL it holds, and at a fixed URL a device kept its first visit's copy through every release.
+        // Anything fetched at a fixed URL is NetworkFirst: fresh when online, the cached copy offline.
         runtimeCaching: [
           {
             urlPattern: ({ url }) => /\/core(-descriptions)?\.json$/.test(url.pathname),
@@ -204,11 +236,14 @@ export default defineConfig({
           {
             // The TRACKER's data (/data/*.json plus the per-book bestiary files). Without this an
             // installed web app at the table had the character sheet offline and an empty bestiary.
-            // StaleWhileRevalidate rather than CacheFirst: these files are rebuilt far more often
-            // than core.json and are served from cache immediately either way.
+            // NetworkFirst (it was StaleWhileRevalidate): the tracker fetches these at FIXED URLs, and
+            // StaleWhileRevalidate served the previous version's copy on the first open after every
+            // update. Online, the network answers (a cheap 304 when nothing changed); offline or on a
+            // network slower than 4 s, the cached copy does.
             urlPattern: ({ url }) => url.pathname.startsWith('/data/'),
-            handler: 'StaleWhileRevalidate',
+            handler: 'NetworkFirst',
             options: {
+              networkTimeoutSeconds: 4,
               cacheName: 'heroes-heaven-tracker-data',
               expiration: { maxEntries: 250 },
               cacheableResponse: { statuses: [0, 200] },
@@ -221,7 +256,7 @@ export default defineConfig({
   ],
   clearScreen: false,
   // The app's own version (src/version.ts) — used by the backup envelope and the update check.
-  define: { __APP_VERSION__: JSON.stringify(pkg.version) },
+  define: { __APP_VERSION__: JSON.stringify(pkg.version), __DATA_VERSIONS__: JSON.stringify(command === 'build' ? dataVersions : {}) },
   build: {
     rollupOptions: {
       output: {
@@ -240,4 +275,4 @@ export default defineConfig({
       ignored: ['**/src-tauri/**'],
     },
   },
-});
+}));
