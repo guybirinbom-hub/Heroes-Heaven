@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { content } from './_content';
 import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
-import { SpellsTab } from '../src/sheet/SpellsTab';
+import { SpellsTab, emptyBookNoteFor } from '../src/sheet/SpellsTab';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import { CASTER_ARCHETYPES, type ArchetypeBook } from '../src/rules/casterArchetypes';
 import { applyPlayState, initialPlay, setPreparedSpell, type PlayState } from '../src/rules/play';
@@ -721,7 +721,7 @@ describe('the sheet: a Fighter with Wizard Dedication prepares out of the dedica
       expect(slot?.empty).toBe('Your spellbook holds nothing this slot can take yet — add spells to it in the builder.');
       const cantrip = opening(sheet, ENTRY, 'Cantrips', 0);
       expect(cantrip?.names).toEqual([]);
-      expect(cantrip?.empty).toBe('Your spellbook holds nothing this opening can take yet — add spells to it in the builder.');
+      expect(cantrip?.empty).toBe('Your spellbook holds no cantrips yet — add some in the builder.');
       withBook('wizard-dedication', null, () => {
         const plain = opening(sheetOf(buildCharacter(build, db)), ENTRY, '1st rank', 0);
         expect(plain?.names.length, 'without a book the slot offers the arcane list').toBeGreaterThan(0);
@@ -730,6 +730,14 @@ describe('the sheet: a Fighter with Wizard Dedication prepares out of the dedica
     },
     T,
   );
+
+  // regression harness 2026-10-16: a wizard saved before 2026-10-15 has exactly its saved cantrips as
+  // its book, so a cantrip opening can offer nothing — and "your spellbook holds nothing" was false.
+  it('an empty cantrip picker over a book whose cantrips are all prepared says so, not that the book is empty', () => {
+    expect(emptyBookNoteFor('spellbook', true, 5)).toBe('Every cantrip in your spellbook is prepared already — add more cantrips to it in the builder.');
+    expect(emptyBookNoteFor('familiar', true, 0)).toBe('Your familiar holds no cantrips yet — add some in the builder.');
+    expect(emptyBookNoteFor('dirge', false, 8)).toBe('Your dirge holds nothing this slot can take yet — add spells to it in the builder.');
+  });
 });
 
 describe('the sheet: Learn a Spell for a hedge mage stops at what the keepsake can hold', () => {

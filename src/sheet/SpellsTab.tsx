@@ -767,6 +767,19 @@ function LearnSpellModal({
   );
 }
 
+/**
+ * What an EMPTY book picker says. A cantrip opening is empty for two reasons: the book holds no cantrips,
+ * or it holds some and every one is prepared already — which is every wizard, witch and magus saved
+ * before 2026-10-15 (their saved cantrips became the book). "Holds nothing" was false for the second
+ * (v0.1.43 → v0.1.44 regression harness, 2026-10-16). Pinned in test/dedication-books-ui.test.tsx.
+ */
+export function emptyBookNoteFor(bookNoun: string, forCantrip: boolean, bookCantripCount: number): string {
+  if (!forCantrip) return `Your ${bookNoun} holds nothing this slot can take yet — add spells to it in the builder.`;
+  return bookCantripCount > 0
+    ? `Every cantrip in your ${bookNoun} is prepared already — add more cantrips to it in the builder.`
+    : `Your ${bookNoun} holds no cantrips yet — add some in the builder.`;
+}
+
 /** In-play spell management. PREPARED casters: change what's prepared in each slot
  *  (from the wizard's spellbook or the whole tradition list). SPONTANEOUS casters:
  *  add/remove repertoire spells per rank and set a signature spell (one per rank). */
@@ -957,10 +970,20 @@ function ManageSpellsModal({
         : optionsFor(picking.rank, picking.restricted);
   /* A BOOK caster's picker adds only out of its book (owner's bug 2026-10-14), so a fresh wizard or magus
    * whose builder book holds nothing at this rank yet is offered nothing at all — and the list must say
-   * where the spells come from, not "Nothing matches these filters" alone (lane C3, 2026-10-15). */
+   * where the spells come from, not "Nothing matches these filters" alone (lane C3, 2026-10-15).
+   *
+   * …and a cantrip opening is empty for a SECOND reason: the book holds cantrips, but every one is
+   * prepared already — which is every wizard, witch and magus saved before 2026-10-15 (their saved
+   * cantrips became the book). "Holds nothing" was then false (regression harness, 2026-10-16). */
   const emptyBookNote =
     picking && entry.bookNoun && !picking.restricted && pickItems.length === 0
-      ? `Your ${entry.bookNoun} holds nothing this ${picking.preparedCantrip || picking.cantripTrade ? 'opening' : 'slot'} can take yet — add spells to it in the builder.`
+      ? emptyBookNoteFor(
+          entry.bookNoun,
+          !!picking.preparedCantrip || !!picking.cantripTrade,
+          // the builder's book cantrips AND the ones learned on the sheet (Learn a Spell writes spellbook[0]);
+          // not bookCantripIds(), which also counts today's openings, "not in your book" ones included
+          new Set([...(entry.bookCantrips ?? []), ...(entry.spellbook?.[0] ?? [])]).size,
+        )
       : undefined;
 
   return (

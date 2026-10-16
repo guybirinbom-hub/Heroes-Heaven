@@ -33,6 +33,10 @@ describe('loadContent', () => {
     // The fetched core is merged over the seed: fetched entries land, seed content survives.
     expect(a.feats['test-feat']?.name).toBe('Test Feat');
     expect(Object.keys(a.classes).length).toBeGreaterThan(0);
+    // The stub feat has no traits key, like 24 shipped class features: the REAL loader must give it an
+    // array, or the Feats tab crashes (every Necromancer and Runesmith, v0.1.23-v0.1.44). mutation-proof:
+    // drop ensureTraits from mergeWithSeed and this goes red.
+    expect(a.feats['test-feat']?.traits).toEqual([]);
 
     // Later callers get the cached database without another fetch. It is not necessarily the SAME
     // object as the first caller's: once descriptions land the loader re-merges, deliberately giving

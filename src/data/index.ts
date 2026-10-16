@@ -651,6 +651,9 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
   db.hiddenTwins = findHiddenTwins(db, db.duplicateIds);
   db.umbrellaIds = findUmbrellaIds(db.items as unknown as Record<string, unknown>);
   db.combinationFormIds = findCombinationFormIds(db.items as unknown as Record<string, unknown>);
+  // Every layer — seed, core, own and campaign homebrew (an imported file can lack traits too) — gets
+  // a traits array, here at the one point every load and rebuild passes through (ensureTraits below).
+  ensureTraits(db as unknown as Partial<Record<string, unknown>>);
   return db;
 }
 
@@ -780,6 +783,33 @@ export function loadDescriptions(): Promise<void> {
     }
   })();
   return descPending;
+}
+
+/** The record kinds whose type promises `traits: Trait[]` (ContentBase in src/rules/types.ts). */
+const TRAITED_BUCKETS = ['ancestries', 'heritages', 'backgrounds', 'classes', 'classFeatures', 'feats', 'spells', 'items', 'deities', 'actions', 'runesmithRune'] as const;
+
+/**
+ * Give every record of a traited kind a `traits` array, as its type promises. 24 class features (all 14
+ * of the Necromancer's and all 10 of the Runesmith's) were imported with no `traits` key on 2026-08-18,
+ * and the Feats tab spreads `entry.traits` — so for every Necromancer and Runesmith, opening the Feats tab
+ * crashed the whole sheet ("This screen ran into a problem") from v0.1.23 on. Found by the v0.1.43 →
+ * v0.1.44 regression harness (717 synthetic characters), 2026-10-16. Called at the end of mergeWithSeed,
+ * so every layer is covered; guarded by test/content-loader.test.ts (through the real loadContent) and
+ * test/traits-always-array.test.tsx. Returns how many records it fixed. Used by tests' content() too.
+ */
+export function ensureTraits(core: Partial<Record<string, unknown>>): number {
+  let fixed = 0;
+  for (const bucket of TRAITED_BUCKETS) {
+    const records = core[bucket];
+    if (!records || typeof records !== 'object') continue;
+    for (const rec of Object.values(records as Record<string, unknown>)) {
+      if (rec && typeof rec === 'object' && !Array.isArray((rec as { traits?: unknown }).traits)) {
+        (rec as { traits: string[] }).traits = [];
+        fixed++;
+      }
+    }
+  }
+  return fixed;
 }
 
 /** Fetch + parse public/core.json once, merged with the seed. Concurrent callers share the

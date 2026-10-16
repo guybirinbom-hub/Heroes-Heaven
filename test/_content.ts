@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { seedContent } from '../src/rules/seed';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import type { Character, ContentDatabase } from '../src/rules/types';
-import { findCombinationFormIds, findDuplicateIds, findHiddenTwins, findUmbrellaIds } from '../src/data';
+import { ensureTraits, findCombinationFormIds, findDuplicateIds, findHiddenTwins, findUmbrellaIds } from '../src/data';
 import { applyTrustGate } from '../src/data/trustGate';
 
 /**
@@ -42,6 +42,8 @@ export function content(opts?: { trustGate?: boolean }): ContentDatabase {
       if (v.r !== undefined) rec.descRefs = v.r;
     }
   }
+  // The same normalisation the app's loadContent applies (24 class features ship with no traits key).
+  ensureTraits(core);
   const gated = gate ? applyTrustGate(core) : core;
   const merged: Record<string, unknown> = {};
   // Union of seed + core keys, so core-only catalogs (companionSpecializations, followers, pets)
