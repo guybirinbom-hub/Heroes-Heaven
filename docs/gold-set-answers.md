@@ -1056,7 +1056,13 @@ fixes are queued in the app folder's work list (`chat-todo.md`), not built by th
   job"* — the full lane, as its own job later.
 - **#168 Enhanced Familiar plus a fixed-number familiar grant:** *"Higher number wins"* — both replace the
   same base "two", so they do not add up (Basic Witchcraft or Psychopomp Familiar + Enhanced Familiar = 4);
-  the undead and glyph limits stay as printed.
+  the undead and glyph limits stay as printed. **Built 2026-10-16 (package G):** `enhancedFamiliar: 'higher-wins'`
+  (Psychopomp Familiar, Basic Witchcraft: 4 with Enhanced Familiar, 6 with Incredible Familiar's "base of six")
+  and `'fixed'` (Undead 1, Enhanced Undead 3, Glyph 1) in src/rules/companionGrants.ts, read by
+  `familiarFeatRaise`; guard `test/familiar-higher-wins.test.tsx`. Decided under the same rule, not asked:
+  Incredible Familiar's "base of six" is the higher number too, so a grant printing three or four (Psychopomp,
+  Basic Witchcraft, Draconic, Enhanced Psychopomp, Adaptive Mask Familiar) reads 6 with it — without that,
+  taking Enhanced Psychopomp Familiar would have lowered a familiar from 6 to 4.
 - **#171 Necromancer Dedication's dirge:** *"Only if it can cast it"* — print; what the app already does.
 - **#172 Cantrip Expansion under Dual Class:** *"Only that class"* — only the class it was taken for gets
   the two cantrips; the builder asks which class when both lists carry the feat, and it may be taken a

@@ -121,8 +121,8 @@ export function categoryOfBook(book: string): SourceCategory {
  *
  *  The companion maps joined this list once the AoN re-import gave every record a real `source.book`
  *  (they previously had NO source attribution at all, being Foundry-era leftovers). They are picked
- *  from the SHEET's Companions tab rather than the builder, so see companionSourceFilter() — the
- *  Add-companion picker applies the same enabled-books set explicitly.
+ *  from the SHEET's Companions tab rather than the builder, so see `addRows` in src/sheet/CompanionsTab.tsx —
+ *  the Add-companion picker applies the same enabled-books set explicitly, through entrySourceOn.
  *
  *  2026-09-30 (desk sources-apply-to-everything, the owner: "yes the player sources should aplly to everything
  *  he has accses to"): the maps a player buys, adds or picks from that were left out join, listed in
@@ -382,15 +382,21 @@ export function sourceCatalog(content: ContentDatabase): {
   allBooks: string[];
   /** User homebrew sources (by their name, used as the "book" key) with how many entries each holds. */
   homebrew: { name: string; count: number }[];
+  /** Homebrew book names some entry carries with NO homebrew Source of its own — the item editor's typed
+   *  "Source book". entrySourceOn switches such an entry on by that name alone, so the Sources card gives
+   *  each one a row switched by name (package G, 2026-10-16: before, no row wrote the name, and the entry
+   *  could not be switched on at all). */
+  homebrewByName: string[];
 } {
   const counts: Record<string, number> = {};
   const hbCounts: Record<string, number> = {};
+  const hbByName = new Set<string>();
   // The choosable maps, then the class sub-picks and the Mythic Callings (2026-09-30), which applySources
   // filters by the same books. Each list says whether it joined the filter on 2026-09-30.
   const added = new Set<string>(SOURCE_MAPS_ADDED_2026_09_30);
-  const lists: [boolean, Iterable<{ source?: SourceInfo }>][] = [];
+  const lists: [boolean, Iterable<{ source?: SourceInfo; homebrewSourceId?: string }>][] = [];
   for (const m of CHOOSABLE_SOURCE_MAPS) {
-    const map = content[m] as Record<string, { source?: SourceInfo }> | undefined;
+    const map = content[m] as Record<string, { source?: SourceInfo; homebrewSourceId?: string }> | undefined;
     if (map) lists.push([added.has(m), Object.values(map)]);
   }
   lists.push([true, classOptionRecords(content).values()]);
@@ -412,6 +418,7 @@ export function sourceCatalog(content: ContentDatabase): {
       if (e.source?.license === 'homebrew') {
         // Homebrew gets its own section in the Sources card (keyed by the Source's name).
         if (b) hbCounts[b] = (hbCounts[b] ?? 0) + 1;
+        if (b && !e.homebrewSourceId) hbByName.add(b);
         continue;
       }
       if (b) {
@@ -465,7 +472,7 @@ export function sourceCatalog(content: ContentDatabase): {
   const homebrew = Object.entries(hbCounts)
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => a.name.localeCompare(b.name));
-  return { groups, allBooks: Object.keys(counts).sort(), homebrew };
+  return { groups, allBooks: Object.keys(counts).sort(), homebrew, homebrewByName: [...hbByName].sort() };
 }
 
 /** The Sources card rows (their labels, in card order) that hold any of these books. 2026-09-30 (desk #170,

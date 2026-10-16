@@ -66,9 +66,12 @@ describe('batch P02 gap — enhanced-familiar raises the familiar ability budget
   // batch P02: enhanced-familiar#ability-budget
   // Draconic Familiar (feat-8093), Enhanced Psychopomp Familiar (feat-3471) and Adaptive Mask Familiar
   // (feat-1104) print "four ... instead of two" themselves, and Incredible Familiar (feat-8005) "six ...
-  // instead of four": the feat's raise is already in their number. A pet is not a familiar. The
-  // fixed-number grants are an open owner question, so they keep the number that shipped.
-  it('enhanced-familiar: baked, pet and unsettled grants keep their own number with the feat', () => {
+  // instead of four": the feat's raise is already in their number. A pet is not a familiar.
+  // Owner ruling #168 (2026-10-15, enhanced-familiar#fixed-budget-grants, "Higher number wins") settled the
+  // five fixed-number grants that were 'unsettled' here: Psychopomp Familiar and Basic Witchcraft take the
+  // feat's four (never 3 + 2); the undead and glyph limits keep their printed number. Pinned in full by
+  // test/familiar-higher-wins.test.tsx.
+  it('enhanced-familiar: baked, pet and fixed-limit grants keep their own number with the feat; the higher-wins pair reads 4', () => {
     const ch = wizard(2, 'enhanced-familiar');
     const marked = Object.entries(FEAT_COMPANION_GRANTS).filter(([, g]) => g.enhancedFamiliar);
     expect(Object.fromEntries(marked.map(([s, g]) => [s, g.enhancedFamiliar]))).toEqual({
@@ -79,14 +82,14 @@ describe('batch P02 gap — enhanced-familiar raises the familiar ability budget
       pet: 'not-a-familiar',
       'friend-of-the-sea': 'not-a-familiar',
       'pirates-pet': 'not-a-familiar',
-      'psychopomp-familiar': 'unsettled',
-      'basic-witchcraft': 'unsettled',
-      'undead-familiar': 'unsettled',
-      'enhanced-undead-familiar': 'unsettled',
-      'glyph-familiar': 'unsettled',
+      'psychopomp-familiar': 'higher-wins',
+      'basic-witchcraft': 'higher-wins',
+      'undead-familiar': 'fixed',
+      'enhanced-undead-familiar': 'fixed',
+      'glyph-familiar': 'fixed',
     });
     for (const [slug, g] of marked) {
-      expect(familiarAbilityBudget(fam(slug), ch), slug).toBe(g.abilityBudget);
+      expect(familiarAbilityBudget(fam(slug), ch), slug).toBe(g.enhancedFamiliar === 'higher-wins' ? 4 : g.abilityBudget);
     }
     // And every UNMARKED familiar grant with a budget takes the +2 — the default is the printed rule.
     const plain = Object.entries(FEAT_COMPANION_GRANTS).filter(([, g]) => g.kind === 'familiar' && g.abilityBudget != null && !g.enhancedFamiliar && !g.growthLevels);

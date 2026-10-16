@@ -633,6 +633,12 @@ export function ItemEditorModal({
       ...(cleanRich(d.craft) ? { craftRequirements: cleanRich(d.craft) } : {}),
       ...(item?.descRefs ? { descRefs: item.descRefs } : {}),
       ...(basedOn ? { basedOn } : {}),
+      // An edit in place keeps the Homebrew-page Source the item belongs to. Dropping it (package G, 2026-10-16)
+      // cut the item loose on its first edit from the sheet: it left its Source, was not deleted with it and
+      // stopped reaching a campaign through a GM's shared Source.
+      ...(editingHomebrew && (item as { homebrewSourceId?: string } | undefined)?.homebrewSourceId
+        ? { homebrewSourceId: (item as { homebrewSourceId?: string }).homebrewSourceId }
+        : {}),
       // A PACK count rides along with the printed price and Bulk it explains — the two fields above are
       // the PACK's ("1 sp" and "L" for ten arrows), so dropping `packOf` on the way out would silently
       // re-read them as one arrow's, charging ten times over for a renamed quiver. The draft is the

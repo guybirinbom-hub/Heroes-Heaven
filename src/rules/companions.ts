@@ -686,21 +686,38 @@ const FAMILIAR_BASE_FEATS: { ids: string[]; label: string; add: number }[] = [
   { ids: ['enhanced-familiar'], label: 'Enhanced Familiar', add: 2 },
 ];
 
+/** The base number of familiar abilities both feats above replace ("four ... instead of two"). */
+const FAMILIAR_BASE_ABILITIES = 2;
+
 /**
  * How much the character's Enhanced Familiar / Incredible Familiar raise THIS familiar's budget, and
  * which feat does it (for the card's note). Zero for a grant whose record already prints the raised
- * number, for a pet, and for a fixed-number grant whose meeting with the feat is an open owner
- * question — see `CompanionGrant.enhancedFamiliar`.
+ * number, for a pet, and for a grant printing a limit of its own — see `CompanionGrant.enhancedFamiliar`.
  *
  * batch P02, enhanced-familiar#ability-budget: the feat had NO reader, so a wizard who took it still
  * read "of 2 chosen" on the familiar card.
+ *
+ * Owner ruling #168 (2026-10-15, enhanced-familiar#fixed-budget-grants): a grant printing its own
+ * "three ... instead of two" and the feat's "four ... instead of two" both replace the same base two,
+ * so the higher number wins — Psychopomp Familiar and Basic Witchcraft read 4 with Enhanced Familiar
+ * (6 with Incredible Familiar's "base of six"), never 3 + 2. The raise is whatever lifts the grant's own
+ * number to the feat's, and nothing when the grant's is already as high. A 'baked' grant ("four ...
+ * instead of two") is the same shape, so it follows the same rule: nothing with Enhanced Familiar (4 is
+ * 4), 6 with Incredible Familiar — otherwise taking Enhanced Psychopomp Familiar over Psychopomp Familiar
+ * would LOWER a familiar with Incredible Familiar from 6 to 4 (found by package G's checker).
  */
 export function familiarFeatRaise(cfg: CompanionConfig, character: Character): { add: number; by?: string } {
   const grant = cfg.grantSlug ? FEAT_COMPANION_GRANTS[cfg.grantSlug] : undefined;
-  if (!grant || grant.kind !== 'familiar' || grant.abilityBudget == null || grant.enhancedFamiliar) return { add: 0 };
+  if (!grant || grant.kind !== 'familiar' || grant.abilityBudget == null) return { add: 0 };
+  if (grant.enhancedFamiliar === 'not-a-familiar' || grant.enhancedFamiliar === 'fixed') return { add: 0 };
   const owned = new Set((character.feats ?? []).map((f) => f.featId));
   const hit = FAMILIAR_BASE_FEATS.find((f) => f.ids.some((id) => owned.has(id)));
-  return hit ? { add: hit.add, by: hit.label } : { add: 0 };
+  if (!hit) return { add: 0 };
+  if (grant.enhancedFamiliar === 'higher-wins' || grant.enhancedFamiliar === 'baked') {
+    const add = FAMILIAR_BASE_ABILITIES + hit.add - grant.abilityBudget;
+    return add > 0 ? { add, by: hit.label } : { add: 0 };
+  }
+  return { add: hit.add, by: hit.label };
 }
 
 /** A familiar is a Tiny minion: 5 HP per level, the master's AC/saves/Perception, plus its

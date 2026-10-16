@@ -2611,9 +2611,15 @@ export function SourcesCard({
   // A row is SWITCHED by its sources' ids (`tokens`, sources.ts sourceIdToken), so a GM renaming a
   // shared source leaves it on; a name in enabledSources (toggles from before the token) still counts.
   // `campaign` marks a row that is here only because of a campaign.
+  // `byName` marks a row that must ALSO be switched by its name: an entry carries that book with no Source
+  // of its own (the item editor's typed "Source book"), and entrySourceOn turns such an entry on by name
+  // alone. Package G, 2026-10-16: those names had no row, so the entry could never be switched on; now a
+  // typed name gets a row of its own (unless it is a printed book's key, which its own row already
+  // switches), and a Source row of the same name switches both. Not in the GM's campaign-defaults editor:
+  // only a Source can be shared with the campaign.
   const hbList = useMemo(() => {
     const byName = new Map(catalog.homebrew.map((h) => [h.name, h.count]));
-    const rows = new Map<string, { name: string; count: number; campaign?: string; tokens: string[] }>();
+    const rows = new Map<string, { name: string; count: number; campaign?: string; tokens: string[]; byName?: boolean }>();
     const add = (name: string, id: string, campaign?: string) => {
       let row = rows.get(name);
       if (!row) rows.set(name, (row = { name, count: byName.get(name) ?? 0, tokens: [], ...(campaign ? { campaign } : {}) }));
@@ -2621,9 +2627,23 @@ export function SourcesCard({
     };
     for (const src of Object.values(loadHomebrewSources())) add(src.name, src.id);
     if (!campaignDefaults) for (const src of listCampaignHbSources()) add(src.name, src.id, src.campaignName);
+    if (!campaignDefaults) {
+      const printed = new Set(catalog.allBooks);
+      // …and a book name no row carries at all: an entry whose Source is gone (a GM's shared Source after the
+      // campaign is lost) keeps that Source's name as its book, and its id token can no longer be written.
+      const orphans = catalog.homebrew.map((h) => h.name).filter((n) => !rows.has(n));
+      for (const name of new Set([...catalog.homebrewByName, ...orphans])) {
+        if (printed.has(name)) continue;
+        const row = rows.get(name);
+        if (row) row.byName = true;
+        else rows.set(name, { name, count: byName.get(name) ?? 0, tokens: [], byName: true });
+      }
+    }
     return [...rows.values()].sort((a, b) => a.name.localeCompare(b.name));
-  }, [catalog.homebrew, campaignDefaults]);
-  const hbOn = (h: (typeof hbList)[number]) => enabled.has(h.name) || h.tokens.some((t) => enabled.has(t));
+  }, [catalog.homebrew, catalog.homebrewByName, catalog.allBooks, campaignDefaults]);
+  // A `byName` row reads on only when its name is on: the name alone switches every entry behind it (a
+  // Source's entries carry its name as their book too), a token alone leaves the typed-book ones hidden.
+  const hbOn = (h: (typeof hbList)[number]) => enabled.has(h.name) || (!h.byName && h.tokens.some((t) => enabled.has(t)));
   const enabledReal = allBooks.filter((b) => enabled.has(b)).length;
   const hbOnCount = hbList.filter(hbOn).length;
   const hbAllOn = hbList.length > 0 && hbOnCount === hbList.length;
@@ -2720,8 +2740,9 @@ export function SourcesCard({
   const setCategory = (g: SourceGroup, on: boolean) => setBooks(g.entries.flatMap((e) => e.books), on);
   // Homebrew goes ON by id only (a name would also switch on whatever source takes that name later) and
   // OFF by id and name alike; what the character loses is found by name, the entries' book.
+  // On writes each row's tokens, plus the name of a `byName` row; off clears names and tokens alike.
   const setHomebrew = (rows: typeof hbList, on: boolean) =>
-    setBooks(on ? [] : rows.map((h) => h.name), on, rows.flatMap((h) => h.tokens));
+    setBooks(on ? rows.filter((h) => h.byName).map((h) => h.name) : rows.map((h) => h.name), on, rows.flatMap((h) => h.tokens));
   return (
     <SetupCard icon="ti-books" label="Sources" count={`${enabledReal}/${allBooks.length}`}>
       <div className="src-wrap">
@@ -2737,7 +2758,7 @@ export function SourcesCard({
           onToggle={() => actions.patch({ hideLegacy: !build.hideLegacy })}
         />
         <div className="src-actions">
-        <button type="button" className="src-act" onClick={() => write(new Set([...allBooks, ...hbList.flatMap((h) => h.tokens)]))}>
+        <button type="button" className="src-act" onClick={() => write(new Set([...allBooks, ...hbList.flatMap((h) => (h.byName ? [h.name, ...h.tokens] : h.tokens))]))}>
           Enable everything
         </button>
         <button type="button" className="src-act" onClick={() => actions.patch({ enabledSources: undefined })}>
@@ -2789,9 +2810,17 @@ export function SourcesCard({
             <div className="src-books">
               {hbShown.map((h) => {
                 const on = hbOn(h);
+                // Its Source is on by id but items typed with the same book name are still hidden: say "partly".
+                const part = !on && !!h.byName && h.tokens.some((t) => enabled.has(t));
                 return (
-                  <button type="button" key={h.name} className={'src-book' + (on ? ' on' : '')} onClick={() => setHomebrew([h], !on)}>
-                    <i className={'ti ' + (on ? 'ti-checkbox' : 'ti-square')} aria-hidden="true" />
+                  <button
+                    type="button"
+                    key={h.name}
+                    className={'src-book' + (on ? ' on' : part ? ' partial' : '')}
+                    title={part ? 'Partly on: items typed with this book name are still hidden' : undefined}
+                    onClick={() => setHomebrew([h], !on)}
+                  >
+                    <i className={'ti ' + (on ? 'ti-checkbox' : part ? 'ti-square-minus' : 'ti-square')} aria-hidden="true" />
                     <span className="src-book-name">
                       {h.name}
                       {h.campaign && <span className="src-bundle-n"> · from {h.campaign}</span>}

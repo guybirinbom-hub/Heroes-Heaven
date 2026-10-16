@@ -956,10 +956,14 @@ export function InventoryTab({
     const isCompanionGear = (item?.traits ?? []).includes('companion');
     const comps = character.companions ?? [];
     const wearers = comps.filter((c) => c.kind !== 'vehicle' && c.kind !== 'siege');
-    if (!isCompanionGear || wearers.length === 0) {
+    // Inside a companion's own pack (`scope`) the add lands in THAT pack, companion gear included: the player
+    // already chose who carries it by opening this pack. Package G 2026-10-16: routing it through the
+    // "who wears it" question here added it to play.companions while this pack was lent out
+    // (onCompanionInventory), and putting the pack back erased it — the coins were spent, the barding gone.
+    if (scope || !isCompanionGear || wearers.length === 0) {
       armAdded(item, init.quantity);
       onPlay((p) => (buy ? buyItem(p, itemId, item?.price, init) : addInventoryItem(p, itemId, init)));
-      if (isCompanionGear) {
+      if (isCompanionGear && !scope) {
         void chooseDialog({
           title: `${item?.name ?? 'This item'} is companion gear`,
           message: 'It goes in your pack for now. Once you have a companion, move it to that companion’s inventory — its bonuses belong to the companion, not to you.',

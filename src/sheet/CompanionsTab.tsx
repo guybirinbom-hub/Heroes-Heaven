@@ -22,15 +22,12 @@ import { classOptionOn, classOptionRecords, enabledBookSet, entrySourceOn } from
 import { confirmDialog } from './confirm';
 import {
   addCompanionCondition,
-  addCompanionItem,
   addPlayCompanion,
   applyCompanionDamage,
   applyCompanionHeal,
   buyCompanion,
-  buyCompanionItem,
   canAfford,
   onCompanionInventory,
-  packQuantity,
   removeCompanionCondition,
   removePlayCompanion,
   stepCompanionConditionValue,
@@ -45,13 +42,12 @@ import { InventoryTab } from './InventoryTab';
 import { HpControl } from './HpControl';
 import { specificFamiliars } from '../rules/specificFamiliars';
 import { officialIdOf } from '../rules/officialId';
-import { companionModKeys, featGrantedCompanions, offeredCreatures, COMPANION_MODS, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, FAMILIAR_ABILITY_CHOICES, type CreatureOffer } from '../rules/companionGrants';
+import { companionModKeys, featGrantedCompanions, offeredCreatures, upgradedGrantSlug, COMPANION_MODS, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, FAMILIAR_ABILITY_CHOICES, type CreatureOffer } from '../rules/companionGrants';
 import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
 import { CATALOG_MODES, contentGatedModes, playerModeLibrary } from '../rules/modes';
 import { FEAT_SITUATIONAL, shippedSituational } from '../rules/situationalBonuses';
-import { AddItemsModal } from './AddItemsModal';
 import { rankBySearch, searchMatches } from '../data/searchRank';
 import { PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
@@ -1630,7 +1626,21 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
 /* ============================ Main tab ============================ */
 
 export function CompanionsTab({ character, content, onPlay, onSaveMode, onDeleteMode, onCreateItem, charKey }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater; onSaveMode?: (mode: ModeDef) => void; onDeleteMode?: (id: string) => void; /** Register a user-created item — threaded to the companion's inventory, which is the real one. */ onCreateItem?: (item: Item) => void; charKey?: string }) {
-  const explicit = character.companions ?? [];
+  // grant sources = chosen feats + auto-granted class features (Witch's Familiar) + subclass choices
+  // whose id matches a grant (druid orders 'animal-order'/…, inventor 'construct-innovation', animist
+  // 'shaman') + slugified extra-choice names (wizard thesis 'Improved Familiar Attunement').
+  const grantSourceIds = new Set<string>([...character.feats.map((f) => f.featId), ...ownedFeatureIds(character, content)]);
+  if (character.subclassId) grantSourceIds.add(character.subclassId);
+  if (character.subclassId2) grantSourceIds.add(character.subclassId2);
+  for (const cc of character.classChoices ?? [])
+    grantSourceIds.add(cc.name.toLowerCase().normalize('NFKD').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
+  // A companion kept under a grant that an owned upgrade now supersedes reads as that upgrade (Witch
+  // Dedication's familiar after Basic Witchcraft) — its number, note and free abilities — and the upgrade
+  // adds no second card for it. Display only: the stored grantSlug is untouched (upgradedGrantSlug).
+  const explicit = (character.companions ?? []).map((c) => {
+    const up = c.grantSlug ? upgradedGrantSlug(c.grantSlug, grantSourceIds) : undefined;
+    return up && up !== c.grantSlug ? { ...c, grantSlug: up } : c;
+  });
   const explicitIds = new Set(explicit.map((c) => c.id));
   // The summoner's eidolon from EITHER held class (Dual Class: an X/Summoner has one too).
   const eidolonType = subclassOfHeldClass(character, 'summoner');
@@ -1642,14 +1652,6 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
   // as a synthetic, materialized-on-edit card (like the auto-eidolon); the locked abilities are seeded
   // so the grant's mechanics are present immediately. Suppressed once a real companion for that grant
   // exists (materialized), so it never double-shows.
-  // grant sources = chosen feats + auto-granted class features (Witch's Familiar) + subclass choices
-  // whose id matches a grant (druid orders 'animal-order'/…, inventor 'construct-innovation', animist
-  // 'shaman') + slugified extra-choice names (wizard thesis 'Improved Familiar Attunement').
-  const grantSourceIds = new Set<string>([...character.feats.map((f) => f.featId), ...ownedFeatureIds(character, content)]);
-  if (character.subclassId) grantSourceIds.add(character.subclassId);
-  if (character.subclassId2) grantSourceIds.add(character.subclassId2);
-  for (const cc of character.classChoices ?? [])
-    grantSourceIds.add(cc.name.toLowerCase().normalize('NFKD').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
   /* The record's own answer, for a grant whose companion is conditional on it — Familiar Master's
    * "Do you already have a familiar?" decides between a familiar and the Enhanced Familiar feat. */
   const featAnswer = new Map(character.feats.filter((f) => f.choice?.value).map((f) => [f.featId, f.choice!.value]));
@@ -1673,7 +1675,9 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
   const [condFor, setCondFor] = useState<string | null>(null);
   const [abilityFor, setAbilityFor] = useState<string | null>(null);
   const [specFor, setSpecFor] = useState<string | null>(null);
-  const [invAddFor, setInvAddFor] = useState<string | null>(null);
+  // A companion's shop is its pack's own "Add item" (CompanionInventory renders the real InventoryTab).
+  // The second AddItemsModal mount that used to sit here lost its only opener in b76d2b3 and was removed
+  // (package G, 2026-10-16); test/companion-shop.test.tsx opens the real one the way a player does.
 
   const current = companions.find((c) => c.id === selId) ?? companions[0];
   const condsOf = (id: string): ActiveCondition[] => character.companionConditions?.[id] ?? [];
@@ -1835,21 +1839,6 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
         />
       )}
       {addOpen && onPlay && <AddCompanionModal content={content} currency={character.currency} enabledSources={character.enabledSources} offers={offers} onAdd={addCompanion} onClose={() => setAddOpen(false)} />}
-      {invAddFor && onPlay && (
-        <AddItemsModal
-          content={content}
-          hideLegacy={character.hideLegacy}
-          enabledSources={character.enabledSources}
-          currency={character.currency}
-          // Ammunition is sold by the pack here too: one purchase is ten arrows for the one printed
-          // price, exactly as on the character's own Inventory tab.
-          onGive={(itemId) => onPlay((p) => addCompanionItem(p, invAddFor, itemId, { quantity: packQuantity(content.items[itemId]) }))}
-          onBuy={(itemId) => onPlay((p) => buyCompanionItem(p, invAddFor, itemId, content.items[itemId]?.price, { quantity: packQuantity(content.items[itemId]) }))}
-          // bug 2026-09-12 #7: homebrew-delete — same control as the character's own item search.
-          onSaveItem={onCreateItem}
-          onClose={() => setInvAddFor(null)}
-        />
-      )}
       {abilityFor && onPlay && (() => {
         const comp = explicit.find((c) => c.id === abilityFor);
         const chosen = comp?.abilities ?? [];

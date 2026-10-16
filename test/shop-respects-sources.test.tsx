@@ -285,9 +285,9 @@ describe('shop-respects-sources: the Add items shop offers only the character\'s
  * MUTATION LINES
  *   1. In InventoryTab.tsx delete `enabledSources={character.enabledSources}` on AddItemsModal: both tests
  *      below go red (Blade Launcher is not offered to a character with Guns & Gears on).
- *   2. The AddItemsModal mount in CompanionsTab.tsx (`invAddFor`) is unreachable: nothing has called
- *      setInvAddFor with an id since b76d2b3 moved companion gear onto CompanionInventory. It passes the
- *      books too, but no player path opens it, so no test here can.
+ *   2. CompanionsTab.tsx used to hold a second AddItemsModal mount (`invAddFor`) that no player path opened
+ *      after b76d2b3 moved companion gear onto CompanionInventory; package G (2026-10-16) removed it, so the
+ *      companion's shop is this InventoryTab mount alone (test/companion-shop.test.tsx buys through it).
  */
 describe('shop-respects-sources: the sheet opens the shop with the character\'s own books', () => {
   const REX = { id: 'c1', kind: 'animal', name: 'Rex' } as CompanionConfig;
