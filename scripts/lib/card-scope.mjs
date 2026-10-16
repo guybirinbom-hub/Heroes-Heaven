@@ -62,6 +62,7 @@ import {
   AT_LEVEL, AT_LEVEL_FAMILIES, AT_LEVEL_LEAD, AT_LEVEL_DEFERRED, levelDefenseKeys,
 } from '../../src/sheet/cardScope.ts';
 import { spellCardModel } from '../../src/sheet/spellCard.ts';
+import { featureBaseName, isSharedClassFeature } from '../../src/rules/featureText.ts';
 import {
   flatText, sharedPageCensus, computePageSlices, notOwnPageProblems, pageSliceProblems, residueWithoutSlices,
 } from './shared-page-census.mjs';
@@ -722,6 +723,49 @@ export function pageClassName(tree, classNames) {
   return m ? classNames.find((c) => m[1].startsWith(c)) : undefined;
 }
 
+/**
+ * OWN-RECORD-UNLISTED (package M, 2026-10-16) — NEVER BASELINED (baselineProblems reports every entry,
+ * whatever the baseline file says). A class lists a SHARED record — one whose page is another class's
+ * (the CLASS_MISMATCH rule below), or one with no page whose text carries addenda for several classes
+ * (featureText.ts isSharedClassFeature) — while a classFeatures record of the same base name whose page
+ * belongs to the LISTING class exists (featureText.ts featureBaseName: "Weapon Expertise (Swashbuckler)",
+ * or the id `<shared id>-<class id>`). The swashbuckler listed weapon-expertise (page class-feature-1178,
+ * "Class Thaumaturge", critSpec false) while weapon-expertise-swashbuckler (class-feature-1019, "Class
+ * Swashbuckler") was listed by no class: its card read our merged text and its crit spec rode on derive's
+ * id-suffix rule. CLASS_MISMATCH tolerates a shared record (its card cuts the class's paragraph); this does
+ * not, because the class's own printing exists and the list must name it.
+ * Entries: `classFeatures:<listed id>@<class id>→<own id>`.
+ */
+export function ownRecordUnlisted(db, trees) {
+  const classNames = Object.values(db.classes ?? {}).map((c) => c.name);
+  const cf = db.classFeatures ?? {};
+  const pageClassOf = (id) => (trees.classFeatures?.[id] ? pageClassName(trees.classFeatures[id], classNames) : undefined);
+  const byBase = new Map();
+  for (const [id, r] of Object.entries(cf)) {
+    const b = featureBaseName(r?.name);
+    if (!b) continue;
+    if (!byBase.has(b)) byBase.set(b, []);
+    byBase.get(b).push(id);
+  }
+  const out = [];
+  for (const cls of Object.values(db.classes ?? {})) {
+    for (const f of cls.features ?? []) {
+      const rec = cf[f.featureId];
+      if (!rec) continue;
+      const pc = pageClassOf(f.featureId);
+      const shared = trees.classFeatures?.[f.featureId]
+        ? !!pc && pc !== cls.name
+        : isSharedClassFeature(rec.description, db);
+      if (!shared) continue;
+      const candidates = new Set([...(byBase.get(featureBaseName(rec.name)) ?? []), ...(cf[`${f.featureId}-${cls.id}`] ? [`${f.featureId}-${cls.id}`] : [])]);
+      for (const id of candidates) {
+        if (id !== f.featureId && pageClassOf(id) === cls.name) out.push(`classFeatures:${f.featureId}@${cls.id}→${id}`);
+      }
+    }
+  }
+  return [...new Set(out)].sort();
+}
+
 /* ------------------------------------------------------------------------------------------------ */
 /* 7. STUBS, OURS-LEAK, CUT-IN-SENTENCE.                                                              */
 /* ------------------------------------------------------------------------------------------------ */
@@ -860,6 +904,9 @@ export function expectedEntries(baseline) {
   return out;
 }
 
+/** Sections the check fails on whenever they hold anything: no baseline file can list them (package M). */
+export const NEVER_BASELINED = ['OWN-RECORD-UNLISTED'];
+
 export function baselineProblems(found, baseline, file) {
   const problems = [];
   const expected = expectedEntries(baseline);
@@ -868,6 +915,10 @@ export function baselineProblems(found, baseline, file) {
     const now = new Set(found[s] ?? []);
     for (const id of now) if (!listed.has(id)) problems.push(`${s}: ${id} — a NEW offender; fix the record or the surface, never the baseline`);
     for (const id of listed) if (!now.has(id)) problems.push(`${s}: ${id} is in ${file} but is right now — remove the entry (the list only shrinks)`);
+  }
+  for (const s of NEVER_BASELINED) {
+    for (const id of found[s] ?? []) problems.push(`${s}: ${id} — the class lists the shared record while its own printing exists; list the class's own record (never baselined)`);
+    for (const id of baseline?.[s] ?? []) problems.push(`${s}: ${id} is in ${file} — this section is never baselined; remove the entry and fix the class's list`);
   }
   return problems;
 }
@@ -1419,5 +1470,7 @@ export function computeLedger(deps) {
   for (const e of pageSliceProblems(slicesFile, computedSlices)) found['S2-NOT-OWN'].push(e);
   for (const k of classMismatch) found['S2-NOT-OWN'].push(`${k}|CLASS_MISMATCH`);
   for (const s of SECTIONS) found[s] = [...new Set(found[s])].sort();
+  // Package M: beside CLASS_MISMATCH, the never-baselined shadow rule (ownRecordUnlisted).
+  found['OWN-RECORD-UNLISTED'] = ownRecordUnlisted(db, trees);
   return { found, counts, judged, rows, stubOccurrences, scopedRows, scopedJudgements };
 }

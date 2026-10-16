@@ -1,0 +1,507 @@
+{
+ "_": "scripts/ast-link-carrier-check.mjs (npm run verify). In-text links whose ref record does not carry the page they name while another record does, as they stood on 2026-10-16 after the package-M repair (scripts/repair-subpage-link-refs.mjs). Key: \"<to>|<ref>\". A pair not listed fails; more pairs than max fails; a listed pair that no longer occurs is reported, and --shrink drops it. The list only shrinks.",
+ "reasons": {
+  "same-name-variant": "the link opens the bare-named record; the page belongs to a same-named variant record (a grade, an archetype's or class's own copy, a second printing). Whether it should open the variant is per pair: for a class page linking a shared feature the bare record is the one the player has.",
+  "several-carriers": "more than one record carries the page and the link opens none of them; which one it should open is not decidable from the page id alone.",
+  "other-record": "the link opens a record of another name: either the record carrying the page is a stamping oddity (a Rounds record carrying its weapon's page, a class option carrying its innovation page) or a reprint pairing the Archives state two ways (Miracle -> Wish ritual / Manifestation)."
+ },
+ "max": 69,
+ "pairs": {
+  "ancestry-44|ancestries:kholo": {
+   "reason": "other-record",
+   "carriers": [
+    "trait:gnoll"
+   ],
+   "opens": "Kholo"
+  },
+  "class-feature-497|classFeatures:medium-armor-expertise": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "classFeatures:medium-armor-expertise-inventor"
+   ],
+   "opens": "Medium Armor Expertise"
+  },
+  "class-feature-625|classFeatures:spell-repertoire": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "classFeatures:spell-repertoire-bard"
+   ],
+   "opens": "Spell Repertoire"
+  },
+  "deity-407|deities:lissala": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "deities:lissala-the-order-of-virtue"
+   ],
+   "opens": "Lissala"
+  },
+  "equipment-1333|items:games": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:games-loaded-dice"
+   ],
+   "opens": "Games"
+  },
+  "equipment-244-244|items:marvelous-miniature": {
+   "reason": "other-record",
+   "carriers": [
+    "items:feather-token-chest-ammunition"
+   ],
+   "opens": "Marvelous Miniature"
+  },
+  "equipment-244-247|items:marvelous-miniature": {
+   "reason": "other-record",
+   "carriers": [
+    "items:feather-token-ladder-ammunition"
+   ],
+   "opens": "Marvelous Miniature"
+  },
+  "equipment-244-248|items:marvelous-miniature": {
+   "reason": "other-record",
+   "carriers": [
+    "items:feather-token-swan-boat-ammunition"
+   ],
+   "opens": "Marvelous Miniature"
+  },
+  "equipment-3126|items:martyrs-shield": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:martyrs-shield-hellbreakers"
+   ],
+   "opens": "Martyr's Shield"
+  },
+  "equipment-3482|items:dragon-pearl": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:dragon-pearl-draconic-codex"
+   ],
+   "opens": "Dragon Pearl"
+  },
+  "equipment-3568|items:moritype": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:moritype-greater"
+   ],
+   "opens": "Moritype"
+  },
+  "equipment-3720|items:heros-plate": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:heros-plate-greater"
+   ],
+   "opens": "Hero’s Plate"
+  },
+  "equipment-3724|items:feral-linguist": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:feral-linguist-greater"
+   ],
+   "opens": "Feral Linguist"
+  },
+  "equipment-3733|items:burglars-rosebud": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:burglars-rosebud-greater"
+   ],
+   "opens": "Burglar's Rosebud"
+  },
+  "equipment-3735|items:irritating-seedpod": {
+   "reason": "several-carriers",
+   "carriers": [
+    "items:irritating-seedpod-greater",
+    "items:irritating-seedpod-lesser",
+    "items:irritating-seedpod-major"
+   ],
+   "opens": "Irritating Seedpod"
+  },
+  "equipment-3737|items:gasping-lament": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:gasping-lament-greater"
+   ],
+   "opens": "Gasping Lament"
+  },
+  "equipment-3763|items:godrending-ammunition": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:godrending-ammunition-greater"
+   ],
+   "opens": "Godrending Ammunition"
+  },
+  "equipment-3769|items:bolkas-blessing": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:bolkas-blessing-greater"
+   ],
+   "opens": "Bolka's Blessing"
+  },
+  "equipment-3770|items:kolss-oath": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:kolss-oath-greater"
+   ],
+   "opens": "Kols's Oath"
+  },
+  "equipment-3771|items:trudds-strength": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:trudds-strength-greater"
+   ],
+   "opens": "Trudd's Strength"
+  },
+  "equipment-3832|items:testudo-shield": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:testudo-shield-greater"
+   ],
+   "opens": "Testudo Shield"
+  },
+  "equipment-3837|items:belkzen-deadsmasher": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:belkzen-deadsmasher-greater"
+   ],
+   "opens": "Belkzen Deadsmasher"
+  },
+  "equipment-3839|items:chainbreaker": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:chainbreaker-greater"
+   ],
+   "opens": "Chainbreaker"
+  },
+  "equipment-3859|items:talonstrike-blade": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:talonstrike-blade-greater"
+   ],
+   "opens": "Talonstrike Blade"
+  },
+  "equipment-3863|items:burrowing-bolt": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:burrowing-bolt-greater"
+   ],
+   "opens": "Burrowing Bolt"
+  },
+  "equipment-3880|items:ethereal-crescent": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:ethereal-crescent-greater"
+   ],
+   "opens": "Ethereal Crescent"
+  },
+  "equipment-3896|items:toothy-knife": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:toothy-knife-greater"
+   ],
+   "opens": "Toothy Knife"
+  },
+  "equipment-3902|items:arcane-standard": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:arcane-standard-greater"
+   ],
+   "opens": "Arcane Standard"
+  },
+  "equipment-3909|items:dawnfire-beacon": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:dawnfire-beacon-major"
+   ],
+   "opens": "Dawnfire Beacon"
+  },
+  "equipment-3910|items:flag-of-the-stronghold": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:flag-of-the-stronghold-major"
+   ],
+   "opens": "Flag of the Stronghold"
+  },
+  "equipment-3911|items:hexwise-banner": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:hexwise-banner-major"
+   ],
+   "opens": "Hexwise Banner"
+  },
+  "equipment-3912|items:knaves-standard": {
+   "reason": "several-carriers",
+   "carriers": [
+    "items:knaves-standard-greater",
+    "items:knaves-standard-major"
+   ],
+   "opens": "Knave’s Standard"
+  },
+  "equipment-3914|items:stalwarts-banner": {
+   "reason": "several-carriers",
+   "carriers": [
+    "items:stalwarts-banner-greater",
+    "items:stalwarts-banner-major"
+   ],
+   "opens": "Stalwart’s Banner"
+  },
+  "equipment-3918|items:timepiece-standard": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:timepiece-standard-major"
+   ],
+   "opens": "Timepiece Standard"
+  },
+  "equipment-3962|items:endless-quiver": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:endless-quiver-greater"
+   ],
+   "opens": "Endless Quiver"
+  },
+  "equipment-3963|items:fireproof-gloves": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:fireproof-gloves-greater"
+   ],
+   "opens": "Fireproof Gloves"
+  },
+  "equipment-3968|items:killers-belt": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:killers-belt-greater"
+   ],
+   "opens": "Killer’s Belt"
+  },
+  "equipment-3972|items:medics-armband": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:medics-armband-greater"
+   ],
+   "opens": "Medic’s Armband"
+  },
+  "equipment-3977|items:sailors-collar": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:sailors-collar-greater"
+   ],
+   "opens": "Sailor’s Collar"
+  },
+  "equipment-4010|items:anti-dragon-barding": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:anti-dragon-barding-greater"
+   ],
+   "opens": "Anti-Dragon Barding"
+  },
+  "equipment-4044|items:sihedron-ring": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:sihedron-ring-greater"
+   ],
+   "opens": "Sihedron Ring"
+  },
+  "equipment-407-487|items:aeon-stone": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:aeon-stone-gold-nodule"
+   ],
+   "opens": "Aeon Stone"
+  },
+  "feat-1942|feats:draconic-scent": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "feats:draconic-scent-dragon-disciple"
+   ],
+   "opens": "Draconic Scent"
+  },
+  "feat-1945|feats:breath-of-the-dragon": {
+   "reason": "several-carriers",
+   "carriers": [
+    "feats:breath-of-the-dragon-dragonblood",
+    "feats:breath-of-the-dragon-dragon-disciple"
+   ],
+   "opens": "Breath of the Dragon"
+  },
+  "feat-2352|feats:daywalker": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "feats:daywalker-vampire"
+   ],
+   "opens": "Daywalker"
+  },
+  "feat-2664|feats:know-it-all": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "feats:know-it-all-eldritch-researcher"
+   ],
+   "opens": "Know-It-All"
+  },
+  "feat-2679|feats:riptide": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "feats:riptide-undersea-privateer"
+   ],
+   "opens": "Riptide"
+  },
+  "feat-4188|feats:voice-of-the-elements": {
+   "reason": "other-record",
+   "carriers": [
+    "feats:voice-of-elements"
+   ],
+   "opens": "Voice of the Elements"
+  },
+  "feat-4380|feats:stone-blood": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "feats:stone-blood-stonebound"
+   ],
+   "opens": "Stone Blood"
+  },
+  "feat-4948|feats:watch-your-back": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "feats:watch-your-back-golden-legionnaire"
+   ],
+   "opens": "Watch Your Back"
+  },
+  "feat-6145|feats:even-the-odds": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "feats:even-the-odds-eagle-knight"
+   ],
+   "opens": "Even the Odds"
+  },
+  "feat-6357|feats:rallying-charge": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "feats:rallying-charge-marshal"
+   ],
+   "opens": "Rallying Charge"
+  },
+  "feat-6432|feats:many-guises": {
+   "reason": "several-carriers",
+   "carriers": [
+    "feats:many-guises-kitsune",
+    "feats:many-guises-vigilante"
+   ],
+   "opens": "Many Guises"
+  },
+  "feat-7637|feats:play-to-the-crowd": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "feats:play-to-the-crowd-dandy"
+   ],
+   "opens": "Play to the Crowd"
+  },
+  "feat-884|feats:necromantic-resistance": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "feats:necromantic-resistance-undead-slayer"
+   ],
+   "opens": "Necromantic Resistance"
+  },
+  "implement-1|implement:amulet": {
+   "reason": "several-carriers",
+   "carriers": [
+    "classFeatures:adept-benefit-amulet",
+    "classFeatures:initiate-benefit-amulet",
+    "classFeatures:paragon-benefit-amulet"
+   ],
+   "opens": "Amulet"
+  },
+  "implement-5|implement:mirror": {
+   "reason": "several-carriers",
+   "carriers": [
+    "items:mirror-implement",
+    "classFeatures:adept-benefit-mirror",
+    "classFeatures:initiate-benefit-mirror",
+    "classFeatures:paragon-benefit-mirror"
+   ],
+   "opens": "Mirror"
+  },
+  "implement-7|implement:tome": {
+   "reason": "several-carriers",
+   "carriers": [
+    "classFeatures:adept-benefit-tome",
+    "classFeatures:initiate-benefit-tome",
+    "classFeatures:paragon-benefit-tome"
+   ],
+   "opens": "Tome"
+  },
+  "innovation-1|innovation:armor": {
+   "reason": "other-record",
+   "carriers": [
+    "classFeatures:armor-innovation"
+   ],
+   "opens": "Armor"
+  },
+  "innovation-2|innovation:construct": {
+   "reason": "other-record",
+   "carriers": [
+    "classFeatures:construct-innovation"
+   ],
+   "opens": "Construct"
+  },
+  "innovation-3|innovation:weapon": {
+   "reason": "other-record",
+   "carriers": [
+    "classFeatures:weapon-innovation"
+   ],
+   "opens": "Weapon"
+  },
+  "spell-196|spells:wish": {
+   "reason": "other-record",
+   "carriers": [
+    "spells:miracle"
+   ],
+   "opens": "Wish"
+  },
+  "spell-231|spells:wish": {
+   "reason": "other-record",
+   "carriers": [
+    "spells:primal-phenomenon"
+   ],
+   "opens": "Wish"
+  },
+  "spell-8|spells:wish": {
+   "reason": "other-record",
+   "carriers": [
+    "spells:alter-reality"
+   ],
+   "opens": "Wish"
+  },
+  "weapon-191|items:flintlock-musket": {
+   "reason": "other-record",
+   "carriers": [
+    "items:rounds-flintlock-musket"
+   ],
+   "opens": "Flintlock Musket"
+  },
+  "weapon-195|items:arquebus": {
+   "reason": "other-record",
+   "carriers": [
+    "items:rounds-arquebus"
+   ],
+   "opens": "Arquebus"
+  },
+  "weapon-200|items:dragon-mouth-pistol": {
+   "reason": "other-record",
+   "carriers": [
+    "items:rounds-dragon-mouth-pistol"
+   ],
+   "opens": "Dragon-Mouth Pistol"
+  },
+  "weapon-201|items:dueling-pistol": {
+   "reason": "other-record",
+   "carriers": [
+    "items:rounds-dueling-pistol"
+   ],
+   "opens": "Dueling Pistol"
+  },
+  "weapon-270|items:chakri": {
+   "reason": "same-name-variant",
+   "carriers": [
+    "items:chakri-lost-omens"
+   ],
+   "opens": "Chakri"
+  }
+ }
+}

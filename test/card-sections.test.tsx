@@ -613,7 +613,9 @@ describe('F6c: a lead naming several classes is an addendum for exactly those cl
     }
     // batch card: #card-OWN-SECTION — the record's own section, slice or class text
     expect(missed).toEqual([]);
-    expect(rows.length).toBe(151);
+    // 150 since package M: the swashbuckler's level-5 row names its own Weapon Expertise
+    // (class-feature-1019), so weapon-expertise@swashbuckler is no longer a shared-page row.
+    expect(rows.length).toBe(150);
     expect(new Set(rows.map((r) => r.split('@')[0])).size).toBe(25);
     // A bard's Reflex Expertise is the generic paragraph, without the Guardian's addendum.
     const bard = sharedFeatureFallback('reflex-expertise', 'bard', textOf(trees.classFeatures['reflex-expertise']), db)!;

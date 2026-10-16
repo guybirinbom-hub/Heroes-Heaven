@@ -21,6 +21,7 @@ import { applyBackfill } from './lib/apply-backfill.mjs';
 import { aonFacets, backgroundFacets, packOf, fillFrequencyCounters, prerequisitesFrom, foldBookSpellings } from './lib/aon-facets.mjs';
 import { loadLivePages, liveEdition } from './lib/live-pages.mjs';
 import { loadReprintIndex, repointDoc } from './lib/reprint.mjs';
+import { isPageLink, subPageRef } from './lib/ast-link-ref.mjs';
 import { liveFirst } from './lib/ast-index.mjs';
 import { loadBaseline as loadEmbeddedBaseline, recordReader, syncOptionDescriptions } from './lib/embedded-descriptions.mjs';
 import { creationPlan, subclassLink, ancestryOf, appendSubclassOptions } from './lib/player-create.mjs';
@@ -1350,11 +1351,19 @@ let backfillCount = 0;
 //   1. exact id in idMap -> use it;
 //   2. superseded target -> follow the superseded_by chain to a live winner (handles renames);
 //   3. else if the superseded record's own slug still ships (kept orphan) -> link to that.
+// Except (package M, 2026-10-16): a class feature, sidebar or bonus line whose pointer names the reprint of the
+// PAGE it is printed on (isPageLink) is never sent to that page. It opens its own newest printing, else its own
+// record, else nothing (ref:null). Following the pointer sent the swashbuckler's "Evasion" (class-feature-25,
+// remaster_id class-56) to the Alchemist class and its "ability boost" (class-feature-1209) to the Inventor.
+// scripts/lib/ast-link-ref.mjs has the rule; scripts/ast-link-carrier-check.mjs guards it.
 function resolveTo(to) {
   const hit = idMap[to];
   if (hit) return hit.bucket + ':' + hit.slug;
+  const pageLink = (i) => isPageLink(docById.get(String(i.id)), docById.get(String(i.by)));
+  const mine = supIdInfo[to];
+  if (mine && pageLink(mine)) return subPageRef(to, mine, { idMap, reprints, live: (h) => !!(db[h.bucket] || {})[h.slug] });
   let info = supIdInfo[to], guard = 0;
-  while (info && guard++ < 8) {
+  while (info && guard++ < 8 && !pageLink(info)) {
     const win = idMap[info.by];
     if (win && (db[win.bucket] || {})[win.slug]) return win.bucket + ':' + win.slug;
     info = supIdInfo[info.by];

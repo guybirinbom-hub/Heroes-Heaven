@@ -27,6 +27,10 @@ export interface FeatEntry {
    *  per day" can draw use pips the way a feat does. 21 class features carry `limitedUses` and drew
    *  nothing, because the pip lookup only consulted `content.feats` and a feature row had no id. */
   featureId?: string;
+  /** Package M (2026-10-16): the class a CLASS-FEATURE row belongs to (FeatsTab's class loop). Under Dual
+   *  Class the card is scoped to it (scopeOfCharacter's `classId`): the second class's rows read that
+   *  class's paragraph of a shared feature, not the first class's. */
+  classId?: string;
   /** The builder CARD HEADING this pick came from ("Bloodline", "Hunter's Edge", "Kinetic Gate
    *  (elements)"). Rendered as a plain tag beside Feature/Granted. It is NOT a PF2e trait, so it must
    *  never be put in `traits`: that showed it as a trait pill AND made traitDesc() manufacture a
@@ -398,7 +402,7 @@ export function FeatDetail({ entry, onClose, character }: FeatDetailProps) {
         node={cardNode}
         mode="mine"
         chrome="popup"
-        scope={withPick(scopeOfCharacter(character), page.bucket, page.id, featPickSuffix(entry, content))}
+        scope={withPick(scopeOfCharacter(character, entry.classId), page.bucket, page.id, featPickSuffix(entry, content))}
         printed={[]}
         headerActions={headerActions}
         controls={controls}

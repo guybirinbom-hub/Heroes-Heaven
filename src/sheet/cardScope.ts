@@ -33,7 +33,7 @@
 import type { AstNode } from './astStore';
 import type { CardScope } from './cardModel';
 import type { Character } from '../rules/types';
-import { holdsSubclass } from '../rules/derive';
+import { heldClasses, holdsSubclass } from '../rules/derive';
 import LEVEL_FOLDS_JSON from '../../scripts/data/level-folds.json';
 // Read here, not through astVisibility.ts pageSliceOf: astVisibility imports canonLabel from this module.
 import PAGE_SLICES_JSON from '../data/page-slices.json';
@@ -631,13 +631,26 @@ export function withPointer(tree: AstNode, pageTree: AstNode | undefined, ptr: {
  * the inventor's innovation type. A set with nothing on the character stays ABSENT (UNKNOWN ≠ EMPTY).
  * Card step 13c: also the class picks (picks[CLASS_PICKS]) that scope a classFeatures page's choose-one
  * blocks.
+ *
+ * Package M (2026-10-16), Dual Class: `classId` names the class a row belongs to (FeatEntry.classId). For
+ * the character's SECOND class the scope is that class and its own subclass (subclassId2), so its rows'
+ * cards read that class's paragraph of a shared feature, and its pointer rows find its subclass page; a
+ * wizard/swashbuckler's swashbuckler rows used to be read as the wizard's. Any other value — the first
+ * class, a class the character does not hold, none — gives the scope it always gave.
  */
-export function scopeOfCharacter(ch: Character | null | undefined): CardScope | undefined {
+export function scopeOfCharacter(ch: Character | null | undefined, classId?: string | null): CardScope | undefined {
   if (!ch) return undefined;
   const level = Number(ch.level) || 0;
   const scope: CardScope = { level };
-  if (ch.classId) scope.classId = ch.classId;
-  if (ch.subclassId) scope.subclassId = ch.subclassId;
+  const second = heldClasses(ch)[1];
+  const forSecond = !!classId && classId !== ch.classId && second?.classId === classId;
+  if (forSecond) {
+    scope.classId = classId;
+    if (second.subclassId) scope.subclassId = second.subclassId;
+  } else {
+    if (ch.classId) scope.classId = ch.classId;
+    if (ch.subclassId) scope.subclassId = ch.subclassId;
+  }
   const rows = (ch.classChoices ?? []).filter((r) => typeof r.id === 'string' && Number(r.level ?? 0) <= level);
   if (ch.classChoices) scope.owned = rows.map((r) => r.id as string);
   const tierOf = (re: RegExp) => rows.map((r) => re.exec(r.id as string)?.[1]).filter((x): x is string => !!x);
@@ -670,6 +683,24 @@ export function scopeOfCharacter(ch: Character | null | undefined): CardScope | 
   }
   if (Object.keys(picks).length) scope.picks = picks;
   return scope;
+}
+
+/**
+ * Package M (2026-10-16): the class a link on a popup card is read for — which record a class feature link
+ * opens (featureText.ts classOwnFeatureId) and whose paragraph a shared feature it reaches shows
+ * (sharedFeatureFallback). `trail` is the card's stack from its first node up to the node the link sits on.
+ * The nearest class page on it wins (a class card, a class page opened from search or from a link), so a
+ * link inside a page reached FROM a class page keeps that class: the Wizard page → Weapon Expertise (the
+ * wizard's paragraph) → a link there is still read for the wizard, not the viewer's own class. With no class
+ * page on the trail, the character's class (`scopeClassId`, the mine card's scope); with neither, none (the
+ * page as it ships). A class page's slug is its class id.
+ */
+export function linkClassOf(trail: readonly { key?: string; slug?: string }[], scopeClassId: string | undefined): string | undefined {
+  for (let i = trail.length - 1; i >= 0; i--) {
+    const n = trail[i];
+    if (n?.key === 'classes' && n.slug) return n.slug;
+  }
+  return scopeClassId;
 }
 
 /* ------------------------------------------------------------------------------------------------ */

@@ -1,5 +1,5 @@
 {
- "coreSha": "00f770ba104c7990c344292b2b3c2ed46fda2d5abaa8b9f4f352aa6f2b1290f1",
+ "coreSha": "134e371cb182ba44573881713629008f18d50eadad417a13be2be5ed09425e1b",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -4329,7 +4329,8 @@
    "grantsClassFeatures"
   ],
   "feats/brawling-focus": [
-   "critSpec"
+   "critSpec",
+   "critSpecWeapons"
   ],
   "feats/breath-of-the-dragon-dragon-disciple": [
    "focusSpells"

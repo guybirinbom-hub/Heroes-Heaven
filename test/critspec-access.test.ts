@@ -10,7 +10,8 @@ const CONTENT = {
     cleric: { features: [] },
   },
   classFeatures: {
-    'fighter-weapon-mastery': { id: 'fighter-weapon-mastery', critSpec: true, level: 5 },
+    // Shaped like the shipped record (package M): the printed master gate is part of the grant.
+    'fighter-weapon-mastery': { id: 'fighter-weapon-mastery', critSpec: true, level: 5, critSpecWeapons: { minRank: 'master' } },
     'weapon-tricks': { id: 'weapon-tricks', critSpec: true, level: 5, critSpecWeapons: { traits: ['agile', 'finesse'] } },
     ruffian: { id: 'ruffian', critSpec: true, level: 1 },
     'fourth-doctrine-cloistered-cleric': { id: 'fourth-doctrine-cloistered-cleric', critSpec: true, level: 11 },
@@ -32,14 +33,23 @@ const anyAxe = strike({ group: 'axe', base: 'battle-axe', traits: ['dwarf'] });
 const longbow = strike({ group: 'bow', base: 'longbow', traits: [], ranged: true });
 
 describe('critical specialization access (predicate-aware)', () => {
-  it('an unconditional class grant (Weapon Mastery) applies from its level, to every weapon', () => {
+  /*
+   * package M premise: class-feature-699 "You gain access to the critical specialization effects of all
+   * weapons and unarmed attacks for which you have master proficiency."
+   *
+   * This case used to assert the OPPOSITE — "applies from its level, to every weapon", longbow and axe
+   * alike. That was the importer having dropped Foundry's rank gate, written down as the expected
+   * behaviour: a 5th-level fighter showed the effect on weapons they are only expert with.
+   */
+  it('a class grant (Weapon Mastery) applies from its level, to the weapons the fighter is MASTER with', () => {
     const l4 = char({ classId: 'fighter', level: 4 });
     expect(critSpecSources(l4, CONTENT)).toHaveLength(0);
     const l5 = char({ classId: 'fighter', level: 5 });
     const src = critSpecSources(l5, CONTENT);
     expect(src).toHaveLength(1);
-    expect(strikeShowsCritSpec(longbow, src)).toBe(true); // no weapon restriction
-    expect(strikeShowsCritSpec(anyAxe, src)).toBe(true);
+    expect(strikeShowsCritSpec({ ...longbow, rank: 'expert' }, src)).toBe(false); // expert: not covered
+    expect(strikeShowsCritSpec({ ...anyAxe, rank: 'master' }, src)).toBe(true); // master: covered
+    expect(strikeShowsCritSpec({ ...anyAxe, rank: 'legendary' }, src)).toBe(true); // "at least" — legendary too
   });
 
   it('a self:level-gated feat (Dwarven Weapon Familiarity) waits until level 5 and only its weapons', () => {

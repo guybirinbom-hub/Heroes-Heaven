@@ -145,7 +145,15 @@ for (const id of Object.keys(features)) {
   if (ownedFeatureIds(ch, db).has(id)) note([id], 'mythic:calling');
 }
 
-/** Fields whose absence actually costs the player something. */
+/**
+ * Fields whose absence actually costs the player something.
+ *
+ * `critSpec` and `armorSpec` joined in package M (2026-10-16): the swashbuckler's own Weapon Expertise
+ * (class-feature-1019) carried `critSpec: true` and was listed by no class — reachable only through the
+ * `<featureId>-<classId>` suffix rule — and this list could not have said so had that rule been
+ * missing, because a crit-spec grant was not a "mechanical field" here. `false` is the documented
+ * "grants nothing" value (classFeatures['weapon-expertise']), so `present` skips it.
+ */
 const MECHANICAL = [
   'grant', 'grants', 'effectChoices', 'choice', 'proficiencies', 'skills', 'skillChoices',
   'passiveEffects', 'situational', 'defenses', 'senses', 'resistances', 'immunities', 'weaknesses',
@@ -153,7 +161,10 @@ const MECHANICAL = [
   'grantsActions', 'grantsRituals', 'extraReaction', 'limitedUses', 'classResource', 'modes',
   'companion', 'strikes', 'speeds', 'hpPerLevel', 'classArchetype', 'weaponGroupRanks',
   'checkPenaltyRelief', 'spellSlotBonus', 'spellcastingGrant', 'featChoices', 'uses', 'modifiesGrant',
+  'critSpec', 'armorSpec',
 ];
+/** A field that is there AND says something — an empty list or a `false` flag grants nothing. */
+const present = (v) => v != null && v !== false && (!Array.isArray(v) || v.length > 0);
 /**
  * Why an unreachable record is unreachable.
  *
@@ -177,7 +188,7 @@ const classify = (id, rec) => {
    * sins, and adds the curriculum on top. Comparing the field values catches it and cannot mistake
    * two records that merely share a shape.
    */
-  const mine = MECHANICAL.filter((f) => rec[f] != null);
+  const mine = MECHANICAL.filter((f) => rec[f] != null && rec[f] !== false);
   /*
    * Compared by SHAPE, not by deep equality. The reachable twin is usually the better record — the
    * runelord subclass offers the same seven sins, and additionally grants each sin's focus spell and
@@ -192,9 +203,16 @@ const classify = (id, rec) => {
     }
     return String(v);
   };
+  /* A bare FLAG (`critSpec: true`) has one shape, so every reachable record carrying it would "match":
+   * measured with a planted orphan whose only field was `critSpec: true`, it came back
+   * `duplicate:lesser-creed` and never reached OPEN. When nothing but flags is compared, a twin must
+   * also share the name. */
+  const flagsOnly = mine.every((f) => typeof rec[f] === 'boolean');
+  const norm = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '');
   for (const other of reachable) {
     const o = features[other];
     if (!o || !mine.length) continue;
+    if (flagsOnly && norm(o.name) !== norm(rec.name)) continue;
     if (mine.every((f) => o[f] != null && shape(o[f]) === shape(rec[f]))) return `duplicate:${other}`;
   }
   // A record whose text is a section heading for options that ARE reachable (witch patron themes).
@@ -205,7 +223,7 @@ const classify = (id, rec) => {
 const orphans = [];
 for (const [id, rec] of Object.entries(features)) {
   if (reachable.has(id)) continue;
-  const fields = MECHANICAL.filter((f) => rec[f] != null && (!Array.isArray(rec[f]) || rec[f].length));
+  const fields = MECHANICAL.filter((f) => present(rec[f]));
   orphans.push({
     id,
     name: rec.name,

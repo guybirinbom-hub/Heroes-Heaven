@@ -272,6 +272,8 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       const picked = withPicks(variantId);
       entries.push({
         key: `feature:${clsId}:${f.featureId}`,
+        // Package M: the row's class, so its card (and preview) is read for THIS class under Dual Class.
+        classId: clsId,
         // Carried so a class feature printing "Frequency once per day" can draw use pips like a feat.
         // 21 class features have `limitedUses` and drew nothing, because the pip lookup only ever
         // consulted content.feats and a feature row had no id to look up with.
@@ -301,6 +303,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       const picked = withPicks(fid);
       entries.push({
         key: `feature:${clsId}:${fid}`,
+        classId: clsId,
         featureId: fid,
         name: feature.name + pickSuffix(fid),
         // The level the SUBCLASS hands it over at, not the record's own printed level — a gunslinger
@@ -538,8 +541,13 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
   // Card step 20: each row's preview = its popup's first line, recomputed when the page buckets arrive.
   const pagesArrived = useRowPageBuckets(entries);
   const previews = useMemo(() => {
-    const scope = scopeOfCharacter(character);
-    return new Map(entries.map((e) => [e.key, rowPreview(e, scope, content)]));
+    // Package M: each row's preview is read at its own card's scope — the row's class under Dual Class.
+    const scopes = new Map<string | undefined, ReturnType<typeof scopeOfCharacter>>();
+    const scopeFor = (e: FeatEntry) => {
+      if (!scopes.has(e.classId)) scopes.set(e.classId, scopeOfCharacter(character, e.classId));
+      return scopes.get(e.classId);
+    };
+    return new Map(entries.map((e) => [e.key, rowPreview(e, scopeFor(e), content)]));
     // eslint-disable-next-line react-hooks/exhaustive-deps -- pagesArrived is the trigger: the trees live in astStore's cache
   }, [entries, character, content, pagesArrived]);
   /** The archetype's suppressions the character did NOT get back from an owned record. */

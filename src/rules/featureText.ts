@@ -25,6 +25,25 @@ function leadClasses(lead: string, classNames: ReadonlySet<string>): string[] | 
   return names.length > 0 && names.every((n) => classNames.has(n)) ? names : null;
 }
 
+/** A markdown divider paragraph ("---", "***", "___"): Armor Mastery separates its class paragraphs so. */
+const isDivider = (p: string) => /^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/.test(p);
+
+/**
+ * Package M (2026-10-16): the per-class cut leaves the dividers that stood between OTHER classes'
+ * paragraphs — Armor Mastery's fighter text started with two, the barbarian's ended with two, the
+ * champion's had one each side. A divider that ends up first, last or beside another divider divides
+ * nothing and is dropped; one between two kept paragraphs stays.
+ */
+function withoutStrayDividers(paras: string[]): string[] {
+  const out: string[] = [];
+  for (const p of paras) {
+    if (isDivider(p) && (out.length === 0 || isDivider(out[out.length - 1]))) continue;
+    out.push(p);
+  }
+  while (out.length && isDivider(out[out.length - 1])) out.pop();
+  return out;
+}
+
 export function classFeatureDescription(
   desc: string | undefined,
   viewingClassId: string | null | undefined,
@@ -34,11 +53,11 @@ export function classFeatureDescription(
   const keep = viewingClassId ? content.classes[viewingClassId]?.name.toLowerCase() : undefined;
   const classNames = new Set(Object.values(content.classes).map((c) => c.name.toLowerCase()));
   const paras = desc.split(/\n{2,}/);
-  const kept = paras.filter((p) => {
+  const kept = withoutStrayDividers(paras.filter((p) => {
     const lead = p.match(/^\s*\*\*([^*]+)\*\*/);
     const named = lead ? leadClasses(lead[1], classNames) : null;
     return !named || (!!keep && named.includes(keep));
-  });
+  }));
   return kept.length === paras.length ? desc : kept.join('\n\n');
 }
 
@@ -79,6 +98,13 @@ export function pageClassName(pageText: string, classNames: string[]): string | 
  *     Specialization's page is the Thaumaturge's, Reflex Expertise's the Guardian's);
  *   - the feature has no page and its text carries addenda for two or more classes (isSharedClassFeature).
  * `pageText` is the page's text (undefined when the record has no page).
+ *
+ * Package M (2026-10-16): "this page is another class's" is decided from the page's header and the class
+ * list ALONE. The descriptions ship in a second file that loads after core.json and is not awaited
+ * (src/data/index.ts loadDescriptions), and this used to answer null whenever the text was not there
+ * yet, so for that beat — or for good, when the file failed — a swashbuckler's card drew the
+ * Thaumaturge's page. Now a page that is another class's answers '' until the text arrives: the card
+ * draws its no-page lane (empty, loading), never the other class's page.
  */
 export function sharedFeatureFallback(
   featureId: string,
@@ -86,11 +112,76 @@ export function sharedFeatureFallback(
   pageText: string | undefined,
   content: ContentDatabase,
 ): string | null {
-  const raw = content.classFeatures?.[featureId]?.description;
+  const rec = content.classFeatures?.[featureId];
   const viewer = viewingClassId ? content.classes[viewingClassId] : undefined;
-  if (!viewer || raw === undefined) return null;
-  if (pageText === undefined) return isSharedClassFeature(raw, content) ? classFeatureDescription(raw, viewingClassId, content) : null;
+  if (!viewer || !rec) return null;
+  const raw = rec.description;
+  if (pageText === undefined) {
+    return raw !== undefined && isSharedClassFeature(raw, content) ? classFeatureDescription(raw, viewingClassId, content) : null;
+  }
   const pageClass = pageClassName(pageText, Object.values(content.classes).map((c) => c.name));
   const listed = (viewer.features ?? []).some((f) => f.featureId === featureId);
-  return listed && pageClass && pageClass !== viewer.name ? classFeatureDescription(raw, viewingClassId, content) : null;
+  if (!listed || !pageClass || pageClass === viewer.name) return null;
+  return raw === undefined ? '' : classFeatureDescription(raw, viewingClassId, content);
+}
+
+/** A class feature's name without its trailing "(Class)" qualifier, lowercased: "Weapon Expertise
+ *  (Swashbuckler)" and the magus's "Weapon Expertise" share the base name of the shared record. */
+export function featureBaseName(name: string | undefined): string {
+  return String(name ?? '').replace(/\s*\([^)]*\)\s*$/, '').trim().toLowerCase();
+}
+
+/** A record that is a later step of a line — "Greater Weapon Specialization", "Greater Mysterious Resolve",
+ *  "Legendary Overdrive", "Second Doctrine" — is never a class's own printing of the line's base feature. */
+const STEP_PREFIX = /^(?:greater|major|lesser|improved|legendary|master|masterful|expert|incredible|true|double|first|second|third|fourth|fifth|final)\b/;
+
+/**
+ * Package M (2026-10-16): the record a class's link opens. A class page's advancement table links "weapon
+ * expertise" to the SHARED record (classFeatures:weapon-expertise, whose page is the Thaumaturge's) even
+ * where the class lists a record of its own for it. The link opens what the class's own Feats-tab row
+ * opens, found in two passes over the records the class lists (never when it lists the linked record):
+ *   1. the one record of the same base name: the magus's weapon-expertise-magus, the summoner's
+ *      signature-spells-summoner, the swashbuckler's weapon-expertise-swashbuckler (35 class-page links,
+ *      measured 2026-10-16). Several of that name: ambiguous, the linked record.
+ *   2. else the class-qualified records whose base name ENDS with the linked one, a later step of a line
+ *      ("Greater …", STEP_PREFIX) left out: the swashbuckler's, champion's and investigator's "weapon mastery"
+ *      opens their Martial Weapon Mastery, the psychic's "weapon specialization" its Psychic Weapon
+ *      Specialization, a heading's "Armor Expertise" the class's Light / Medium / Burnished Armor Expertise,
+ *      the oracle's "Resolve" its Mysterious Resolve. Of several, the one the class gains first, when one is
+ *      first — a class's own line starts at its first record: the swashbuckler's "Evasion" (in the "Confident
+ *      Evasion" heading) opens Confident Evasion (7th), not Assured Evasion (13th). (50 more class-page
+ *      links, measured 2026-10-16.)
+ * A class that lists the linked record itself, none of these, or no class at all: the linked record.
+ */
+export function classOwnFeatureId(featureId: string, classId: string | null | undefined, content: ContentDatabase): string {
+  const cls = classId ? content.classes[classId] : undefined;
+  const rec = content.classFeatures?.[featureId];
+  if (!cls || !rec) return featureId;
+  const firstLevel = new Map<string, number>();
+  for (const f of cls.features ?? []) firstLevel.set(f.featureId, Math.min(firstLevel.get(f.featureId) ?? Infinity, f.level ?? Infinity));
+  if (firstLevel.has(featureId)) return featureId;
+  const base = featureBaseName(rec.name);
+  if (!base) return featureId;
+  const nameOf = (id: string) => (content.classFeatures?.[id] ? featureBaseName(content.classFeatures[id].name) : '');
+  const listed = [...firstLevel.keys()].filter((id) => id !== featureId);
+  const same = listed.filter((id) => nameOf(id) === base);
+  if (same.length) return same.length === 1 ? same[0] : featureId;
+  const tail = listed.filter((id) => { const n = nameOf(id); return n.endsWith(` ${base}`) && !STEP_PREFIX.test(n); });
+  if (tail.length <= 1) return tail[0] ?? featureId;
+  const lo = Math.min(...tail.map((id) => firstLevel.get(id) ?? Infinity));
+  const first = tail.filter((id) => firstLevel.get(id) === lo);
+  return first.length === 1 ? first[0] : featureId;
+}
+
+/**
+ * Package M (2026-10-16): the Source line under a shared feature's class paragraph. The shared record's
+ * own book is whichever printing the merged text came from ("Pathfinder Dark Archive (Remastered)", the
+ * Thaumaturge's, under the swashbuckler's Player Core 2 paragraph), so it is never printed there. The
+ * viewing class's own book is — the class paragraph is that class's printing — when the class record
+ * names one; otherwise no Source line at all. No page number: the class record's page is its class page.
+ */
+export function sharedFeatureBook(viewingClassId: string | null | undefined, content: ContentDatabase): string | undefined {
+  const src = viewingClassId ? content.classes[viewingClassId]?.source : undefined;
+  const book = typeof src?.book === 'string' ? src.book.trim() : '';
+  return book && src?.license !== 'homebrew' ? book : undefined;
 }

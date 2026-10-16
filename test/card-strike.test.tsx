@@ -130,7 +130,9 @@ const txt = (el: Element | null | undefined) => norm(el?.textContent);
 /** A synthesized level-5 fighter wielding `itemId` (Fighter Weapon Mastery: the crit-spec source). */
 const wielder = (itemId: string, level = 5, cdb: ContentDatabase = db): { c: Character; s: Strike | undefined } => {
   const inventory: InventoryItem[] = [{ instanceId: 'i-w', itemId, quantity: 1, equipped: true }];
-  const c = { ...build('fighter', level), inventory } as Character;
+  // package M premise: class-feature-699 "all weapons and unarmed attacks for which you have master
+  // proficiency" — only the chosen group reaches master, so the fixture answers the group pick.
+  const c = { ...build('fighter', level, { fighterWeaponGroup: 'sword' }), inventory } as Character;
   return { c, s: deriveStrikes(c, cdb).find((x) => x.instanceId === 'i-w') };
 };
 const strikeEl = (s: Strike, c: Character, cdb: ContentDatabase = db) => <StrikeDetailModal strike={s} character={c} content={cdb} onClose={() => undefined} />;

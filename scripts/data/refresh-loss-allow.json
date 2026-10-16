@@ -2340,6 +2340,13 @@
   "why": "batch P02 running-recharge#description-header: page header (name, Source) stripped so the body opens with feat-9057's \"Preparing in every way for your next assault\"; shorter by the header; guarded by scripts/description-header-check.mjs."
  },
  {
+  "key": "classes/swashbuckler",
+  "field": "features",
+  "aon": "class-63",
+  "before": "00f770ba104c7990",
+  "why": "package M (1), 2026-10-16: class-63 (Swashbuckler, Player Core 2) lists Weapon Expertise at 5th level, and the swashbuckler's own printing is class-feature-1019 (\"You gain access to the critical specialization effects of all weapons for which you have expert proficiency\"). The row named the shared `weapon-expertise` record, which sits on class-feature-1178, the Thaumaturge's Dark Archive page with no crit spec. It now names `weapon-expertise-swashbuckler` (one whole-value overlay row in scripts/data/effect-backfill.json). One member swapped, none lost: 24 before and after."
+ },
+ {
   "key": "classes/gunslinger",
   "field": "subclass.options",
   "aon": "class-20",

@@ -2948,7 +2948,7 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   {
     const worn = findWornArmor(c, db);
     const access = armorSpecAccess(c, db);
-    if (worn && (access.categories.has(worn.armor.category) || access.items.has(worn.inv.itemId))) {
+    if (worn && armorSpecCovers(access, worn)) {
       const eff = armorSpecEffect(worn.armor.group);
       // ABP replaces the potency rune's numeric value, exactly as deriveAc does.
       const potency = abpOn(c) ? abpDefense(c.level) : ((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0);
@@ -3327,6 +3327,11 @@ export interface Strike {
   group?: string;
   /** Weapon base/item id (e.g. 'battle-axe') — for crit-spec grants that narrow by base. */
   base?: string;
+  /** The weapon's own CATEGORY ('unarmed' for an unarmed attack) — for crit-spec grants that cover
+   *  "simple and martial weapons and unarmed attacks" (critSpecWeapons.categories). The printed
+   *  category, not the proficiency it rolls at: a familiarity feat moves the second, never the first.
+   *  Absent on a Strike that is neither a weapon nor an unarmed attack (a blast, a battle form). */
+  category?: WeaponCategory;
   /** Bonus damage from Weapon Specialization (already folded into `damage`). */
   specDamage?: number;
   // --- breakdown primitives (so the strike-detail popup can explain attack & damage; populated by
@@ -3628,10 +3633,12 @@ function addClassTableFeatures(
   for (const f of cls.features) {
     if (f.level > level) continue;
     out.add(f.featureId);
-    // A CLASS-suffixed variant of a shared feature — the swashbuckler's own Weapon Expertise
-    // (which carries critSpec), each spontaneous caster's own Spell Repertoire. Only the
-    // SUBCLASS suffix was tried, and a swashbuckler's subclass is a style, so six records
-    // existed, carried mechanics, and were reachable by nothing.
+    // A CLASS-suffixed variant of a shared feature (`<featureId>-<classId>`). Only the SUBCLASS
+    // suffix was tried once, so six such records existed, carried mechanics, and were reachable by
+    // nothing. Today every shipped class table names its own record directly (the swashbuckler's
+    // 'weapon-expertise-swashbuckler' since package M; the magus's, runesmith's and necromancer's
+    // Weapon Expertise; the spontaneous casters' Spell Repertoire), so this finds nothing extra on
+    // shipped data. It stays as the safety net for a re-import that lists the shared id again.
     const byClass = `${f.featureId}-${cls.id}`;
     if (db.classFeatures[byClass]) out.add(byClass);
   }
@@ -4305,17 +4312,37 @@ export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSour
 export interface ArmorSpecAccess {
   categories: Set<ArmorCategory>;
   items: Set<string>;
+  /**
+   * Inventory INSTANCES unlocked through a designation (`armorSpec.designated`) — the inventor's armor
+   * innovation — each with the categories the suit must be in (`designatedCategories`; undefined = any).
+   * By instance, not by item id: the access belongs to the one suit the player marked, and a second
+   * suit of the same armor in the pack is not the innovation.
+   */
+  designated: Map<string, ArmorCategory[] | undefined>;
   bonus: number;
   /** What granted it, for the breakdown. */
   from: string[];
 }
 
+/** Whether `access` covers this worn suit — by category, by item id, or as the designated suit. */
+export function armorSpecCovers(access: ArmorSpecAccess, worn: { inv: InventoryItem; armor: ArmorItem }): boolean {
+  if (access.categories.has(worn.armor.category) || access.items.has(worn.inv.itemId)) return true;
+  if (!access.designated.has(worn.inv.instanceId)) return false;
+  const cats = access.designated.get(worn.inv.instanceId);
+  return !cats || cats.includes(worn.armor.category);
+}
+
 export function armorSpecAccess(c: Character, db: ContentDatabase): ArmorSpecAccess {
-  const out: ArmorSpecAccess = { categories: new Set(), items: new Set(), bonus: 0, from: [] };
+  const out: ArmorSpecAccess = { categories: new Set(), items: new Set(), designated: new Map(), bonus: 0, from: [] };
   const trained = (cat: ArmorCategory) => (c.proficiencies.defenses[cat] ?? 'untrained') !== 'untrained';
   const add = (name: string, g: DefenseGrants | undefined) => {
     const a = g?.armorSpec;
     if (!a) return;
+    /* *"If you have a medium or heavy ARMOR innovation"* (class-feature-497): the grant waits on the
+     * innovation's type, carried on the record (`armorSpec.innovationType`). The Innovation mark can be
+     * put on any item (InventoryTab offers it everywhere), so a weapon- or construct-innovation inventor
+     * who marks a suit has marked something that is not their innovation. */
+    if (a.innovationType && c.inventor?.innovationType !== a.innovationType) return;
     out.from.push(name);
     for (const cat of a.categories ?? []) out.categories.add(cat);
     for (const cat of a.ifTrained ?? []) if (trained(cat)) out.categories.add(cat);
@@ -4325,6 +4352,18 @@ export function armorSpecAccess(c: Character, db: ContentDatabase): ArmorSpecAcc
       for (const cat of ['light', 'medium', 'heavy', 'unarmored'] as ArmorCategory[]) if (trained(cat)) out.categories.add(cat);
     }
     for (const id of a.items ?? []) out.items.add(id);
+    /* *"…the critical specialization effect with your armor innovation"* — the suit the player marked,
+     * matched the way critSpecWeapons.designated matches a weapon. Nothing designated = nothing. */
+    if (a.designated) {
+      for (const inv of c.inventory ?? []) {
+        if (!(inv.designations ?? []).includes(a.designated)) continue;
+        if (db.items[inv.itemId]?.itemType !== 'armor') continue;
+        /* Two grants on one suit: either one's category list is enough, and an unnarrowed one wins. */
+        const anyAlready = out.designated.has(inv.instanceId) && out.designated.get(inv.instanceId) === undefined;
+        if (!a.designatedCategories || anyAlready) out.designated.set(inv.instanceId, undefined);
+        else out.designated.set(inv.instanceId, [...new Set([...(out.designated.get(inv.instanceId) ?? []), ...a.designatedCategories])]);
+      }
+    }
     if (a.bonus) out.bonus += a.bonus;
     // "While in Tenacious Stance, increase the value of your armor specialization effects by an amount
     // equal to the value of your armor check penalty."
@@ -4348,6 +4387,12 @@ function weaponMatches(strike: Strike, w?: DefenseGrants['critSpecWeapons'], c?:
     if (have < RANK_ORDER.indexOf(w.minRank as (typeof RANK_ORDER)[number])) return false;
   }
   if (w.melee && strike.ranged) return false;
+  /* *"Your proficiency rank for martial weapons, simple weapons, and unarmed attacks increases to
+   * expert. You gain access to the critical specialization effects of all such weapons and unarmed
+   * attacks…"* (Ranger Weapon Expertise, class-feature-722). A gate like `minRank`, not a narrowing
+   * like `groups`: the category must match AND any narrowing below must too. A Strike with no category
+   * fails closed — widening is the dangerous direction (crit spec on everything). */
+  if (w.categories?.length && !(strike.category && w.categories.includes(strike.category))) return false;
   // "Your innovation gains critical specialization." Narrows to the ONE designated item, and matches
   // nothing when nothing is designated — an unnarrowed entry returns true below, which would light up
   // crit spec on every Strike the character makes.
@@ -4993,6 +5038,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     reload: w.reload,
     group: w.group,
     base: w.id,
+    category: w.category,
     specDamage: specDamage || undefined,
     rank,
     atkAbility,
@@ -5328,6 +5374,9 @@ function deriveUnarmedStrike(
     ...(isRanged ? {} : { reaches: strikeReaches(c, db, { traits: p.traits, unarmed: true, name: p.name, damageType: p.damageType ?? '', group: p.group }) }),
     group: p.group,
     base: p.instanceId,
+    // A stance's granted WEAPON Strike (Haft Striker's simple haft) is that category; everything else
+    // derived here is an unarmed attack.
+    category: p.weaponCategory ?? 'unarmed',
     specDamage: specDamage || undefined,
     rank,
     atkAbility,

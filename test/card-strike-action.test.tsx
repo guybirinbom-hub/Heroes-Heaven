@@ -94,7 +94,9 @@ const count = (hay: string, needle: string) => hay.split(needle).length - 1;
 
 const SWORD: InventoryItem[] = [{ instanceId: 'i-sword', itemId: 'longsword', quantity: 1, equipped: true }];
 /** A synthesized fighter wielding a longsword. Fighter Weapon Mastery (level 5) is its crit-spec source. */
-const fighter = (level: number): Character => ({ ...build('fighter', level), inventory: SWORD });
+// package M premise: class-feature-699 "all weapons and unarmed attacks for which you have master
+// proficiency" — only the chosen group reaches master, so the fixture answers the group pick.
+const fighter = (level: number): Character => ({ ...build('fighter', level, { fighterWeaponGroup: 'sword' }), inventory: SWORD });
 const strikeOf = (c: Character, id: string): Strike => {
   const s = deriveStrikes(c, db).find((x) => x.instanceId === id);
   if (!s) throw new Error(`no strike ${id}`);

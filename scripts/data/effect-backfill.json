@@ -134614,7 +134614,8 @@
   "category": "classFeatures",
   "id": "weapon-expertise",
   "field": "critSpec",
-  "value": false
+  "value": false,
+  "why": "package M (9): the SHARED Weapon Expertise grants no critical specialization. Its page class-feature-1178 (Thaumaturge) prints only \"Your proficiency ranks for unarmed attacks, simple weapons, and martial weapons increase to expert\", and so does the paragraph of every class that lists it (champion, druid, exemplar, guardian, investigator, kineticist, oracle, psychic, sorcerer, thaumaturge, witch, wizard). The swashbuckler's crit spec is printed only on its own record, class-feature-1019, which carries it and which the swashbuckler now lists. Same value as the old row; this row adds the reason, and test/package-m-critspec.test.ts pins it."
  },
  {
   "category": "feats",
@@ -190940,5 +190941,224 @@
    }
   ],
   "why": "AoN feat-5067 (Basic Cleric Spellcasting, Player Core pg. 217): \"You gain the basic spellcasting benefits. You can prepare your deity's spells in your spell slots of the appropriate rank from the cleric archetype.\" The deity's spells (the deity record's `spells`, the list it grants to clerics) join the list the cleric archetype's entry prepares from, exactly as classFeatures/deity-cleric adds them to the class's cleric-casting entry; a spell is offered in a slot of its own rank or higher, so one whose rank the archetype has no slot for yet is not offered. Owner ruling desk #175, package K 2026-10-15."
+ },
+ {
+  "category": "classes",
+  "id": "swashbuckler",
+  "field": "features",
+  "value": [
+   {
+    "level": 1,
+    "featureId": "panache"
+   },
+   {
+    "level": 1,
+    "featureId": "precise-strike"
+   },
+   {
+    "level": 1,
+    "featureId": "confident-finisher"
+   },
+   {
+    "level": 7,
+    "featureId": "weapon-specialization"
+   },
+   {
+    "level": 3,
+    "featureId": "vivacious-speed"
+   },
+   {
+    "level": 5,
+    "featureId": "weapon-expertise-swashbuckler"
+   },
+   {
+    "level": 19,
+    "featureId": "eternal-confidence"
+   },
+   {
+    "level": 13,
+    "featureId": "assured-evasion"
+   },
+   {
+    "level": 15,
+    "featureId": "greater-weapon-specialization"
+   },
+   {
+    "level": 1,
+    "featureId": "swashbucklers-style"
+   },
+   {
+    "level": 17,
+    "featureId": "reinforced-ego"
+   },
+   {
+    "level": 3,
+    "featureId": "stylish-tricks"
+   },
+   {
+    "level": 11,
+    "featureId": "perception-mastery"
+   },
+   {
+    "level": 19,
+    "featureId": "light-armor-mastery"
+   },
+   {
+    "level": 1,
+    "featureId": "stylish-combatant"
+   },
+   {
+    "level": 3,
+    "featureId": "opportune-riposte"
+   },
+   {
+    "level": 9,
+    "featureId": "exemplary-finisher"
+   },
+   {
+    "level": 13,
+    "featureId": "light-armor-expertise"
+   },
+   {
+    "level": 3,
+    "featureId": "fortitude-expertise"
+   },
+   {
+    "level": 7,
+    "featureId": "confident-evasion"
+   },
+   {
+    "level": 15,
+    "featureId": "keen-flair"
+   },
+   {
+    "level": 9,
+    "featureId": "swashbuckler-expertise"
+   },
+   {
+    "level": 11,
+    "featureId": "continuous-flair"
+   },
+   {
+    "level": 13,
+    "featureId": "martial-weapon-mastery"
+   }
+  ],
+  "why": "package M (1): the swashbuckler's level-5 row is its OWN Weapon Expertise, class-feature-1019 (Player Core 2, Class Swashbuckler: \"Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to expert. You gain access to the critical specialization effects of all weapons for which you have expert proficiency.\"), printed on the swashbuckler class page class-63 at level 5. The row named the shared weapon-expertise record, whose page is class-feature-1178 (the Thaumaturge's, Dark Archive, no critical specialization), so every surface listing the class's features showed the Thaumaturge's page and the own record was reachable only through the '<featureId>-<classId>' suffix rule. Whole array re-emitted with only that entry changed; advancement.ts keeps its rows' source 'weapon-expertise' so Arcana of Iron (feat-7980) still sees the feature."
+ },
+ {
+  "category": "classFeatures",
+  "id": "fighter-weapon-mastery",
+  "field": "critSpecWeapons",
+  "value": {
+   "minRank": "master"
+  },
+  "why": "package M (7): class-feature-699 (Fighter Weapon Mastery, Player Core) prints \"You gain access to the critical specialization effects of all weapons and unarmed attacks for which you have master proficiency.\" The record carried critSpec with no narrowing, so every weapon a 5th-level fighter held showed its effect (a sword fighter's greataxe, expert, included)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "weapon-expertise-swashbuckler",
+  "field": "critSpecWeapons",
+  "value": {
+   "minRank": "expert",
+   "categories": [
+    "simple",
+    "martial",
+    "advanced"
+   ]
+  },
+  "why": "package M (7): class-feature-1019 (Weapon Expertise, Class Swashbuckler, Player Core 2) prints \"You gain access to the critical specialization effects of all weapons for which you have expert proficiency.\" WEAPONS only: Player Core's Unarmed Attacks rule (rules-2191) prints \"unarmed attacks aren't weapons, and effects and abilities that work with weapons never work with unarmed attacks unless they specifically say so\", and this sentence does not (contrast the fighter's class-feature-699, \"all weapons and unarmed attacks\"). So expert rank AND a weapon category; the Fist is out. The record carried critSpec with no narrowing, so an advanced weapon the swashbuckler is untrained in and every unarmed attack showed the effect too."
+ },
+ {
+  "category": "classFeatures",
+  "id": "military-expertise",
+  "field": "critSpecWeapons",
+  "value": {
+   "minRank": "expert",
+   "categories": [
+    "simple",
+    "martial",
+    "advanced"
+   ]
+  },
+  "why": "package M (7): class-feature-1098 (Military Expertise, Battlecry!) prints \"When you critically succeed at an attack roll with a weapon you are at least an expert with, you apply the weapon's critical specialization effect.\" A WEAPON only: Player Core's Unarmed Attacks rule (rules-2191) prints \"unarmed attacks aren't weapons, and effects and abilities that work with weapons never work with unarmed attacks unless they specifically say so\". So expert rank AND a weapon category; the Fist is out. The record carried critSpec with no narrowing."
+ },
+ {
+  "category": "classFeatures",
+  "id": "bard-weapon-expertise",
+  "field": "critSpecWeapons",
+  "value": {
+   "categories": [
+    "simple",
+    "martial",
+    "unarmed"
+   ]
+  },
+  "why": "package M (7): class-feature-638 (Bard Weapon Expertise, Player Core) prints \"Your proficiency rank for martial weapons, simple weapons, and unarmed attacks increases to expert. When you critically succeed at an attack roll using one of these weapons or an unarmed attack while one of your compositions is active, you apply the critical specialization effect for that weapon or unarmed attack.\" The record carried critSpec with no weapon narrowing, so an advanced weapon showed the effect too; the composition gate stays on critSpecRequiresModeGroup."
+ },
+ {
+  "category": "classFeatures",
+  "id": "ranger-weapon-expertise",
+  "field": "critSpecWeapons",
+  "value": {
+   "categories": [
+    "simple",
+    "martial",
+    "unarmed"
+   ]
+  },
+  "why": "package M (7): class-feature-722 (Ranger Weapon Expertise, Player Core) prints \"Your proficiency rank for martial weapons, simple weapons, and unarmed attacks increases to expert. You gain access to the critical specialization effects of all such weapons and unarmed attacks when attacking your hunted prey.\" The record carried critSpec with no weapon narrowing, so an advanced weapon showed the effect too; the hunted-prey clause stays on critSpecCondition."
+ },
+ {
+  "category": "feats",
+  "id": "aristocratic-arms",
+  "field": "critSpecWeapons",
+  "value": {
+   "traits": [
+    "disarm",
+    "parry"
+   ],
+   "minRank": "expert"
+  },
+  "why": "package M (7): feat-8973 (Aristocratic Arms) prints \"If you're at least an expert in one of the selected weapons, you get the critical specialization effect of that weapon when you get a critical hit with it.\" The import kept a weapon list but dropped the expert gate. The disarm/parry list is kept as shipped (it is the Charthagnion house row; the record has no weapon pick to narrow by), so only the missing gate is added."
+ },
+ {
+  "category": "feats",
+  "id": "crossbow-infiltrator-dedication",
+  "field": "critSpecWeapons",
+  "value": {
+   "bases": [
+    "hand-crossbow",
+    "gauntlet-bow",
+    "repeating-hand-crossbow"
+   ],
+   "minRank": "expert"
+  },
+  "why": "package M (7): feat-7913 (Crossbow Infiltrator Dedication, Battlecry!) prints \"If you're at least an expert in any of these weapons, you gain access to that weapon's critical specialization effect.\" The import kept the three weapons but dropped the expert gate, so a 2nd-level dedication (trained) showed the effect at once."
+ },
+ {
+  "category": "feats",
+  "id": "brawling-focus",
+  "field": "critSpecWeapons",
+  "value": {
+   "groups": [
+    "brawling"
+   ]
+  },
+  "why": "package M (7): feat-438 (Brawling Focus, Core Rulebook) prints \"You gain access to the critical specialization effects of unarmed strikes in the brawling group and weapons in the brawling group.\" The record carried critSpec with no narrowing, i.e. every weapon. The second sentence (\"If you have Monastic Weaponry, you also gain the critical specialization effects of all monk weapons in which you are trained\") is a second, feat-gated grant one critSpecWeapons block cannot hold and is left unmodelled."
+ },
+ {
+  "category": "classFeatures",
+  "id": "medium-armor-expertise-inventor",
+  "field": "armorSpec",
+  "value": {
+   "designated": "innovation",
+   "designatedCategories": [
+    "medium",
+    "heavy"
+   ],
+   "innovationType": "armor"
+  },
+  "why": "package M (8): class-feature-497 (Medium Armor Expertise, Class Inventor, Guns & Gears (Remastered)) prints \"If you have a medium or heavy armor innovation, you gain access to the critical specialization effect with your armor innovation.\" For armor that effect is the armor specialization effect, so the record grants it on the designated innovation suit alone, in medium or heavy, and only to an inventor whose innovation IS armor (innovationType): the Innovation mark can be put on any item, so a weapon- or construct-innovation inventor who marked a suit would otherwise get it. The record carried nothing, so an 11th-level armor-innovation inventor had no armor specialization."
  }
 ]

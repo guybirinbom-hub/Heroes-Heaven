@@ -53,6 +53,16 @@ describe('class-suffixed feature variants', () => {
     expect(ownedFeatureIds(c, db).has('weapon-expertise-swashbuckler')).toBe(true);
   });
 
+  /* package M (1): the class table named the SHARED record, whose page is the Thaumaturge's
+   * (class-feature-1178), so the Feats tab listed — and opened — another class's Weapon Expertise.
+   * The swashbuckler's own is class-feature-1019, printed on its class page class-63 at level 5. */
+  it("the swashbuckler's Feats tab lists their own Weapon Expertise, not the Thaumaturge-page one", () => {
+    const listed = namesFor('swashbuckler', 5, { subclassId: 'fencer' });
+    expect(listed).toContain('weapon-expertise-swashbuckler');
+    expect(listed).not.toContain('weapon-expertise');
+    expect(ownedFeatureIds(build('swashbuckler', 5, { subclassId: 'fencer' }), db).has('weapon-expertise')).toBe(false);
+  });
+
   it('a spontaneous caster owns their own Spell Repertoire', () => {
     expect(ownedFeatureIds(build('bard', 3, {}), db).has('spell-repertoire-bard')).toBe(true);
   });

@@ -12,11 +12,11 @@ import { unencodedNamed } from '../data/trustGate';
 import { astSlug, useAstNode } from './useAst';
 import { loadAstIndex, loadBucketAst } from './astStore';
 import { RemasteredLine, remasteredAsOf } from './RemasteredLine';
-import { isRecordRef, type CardRecord, type CardScope, type OursLine, type RecordCardProps } from './cardModel';
+import { isRecordRef, type CardRecord, type OursLine, type RecordCardProps } from './cardModel';
 import { textOf, treeHasSource, withoutItemLists } from './astVisibility';
 import type { AstNode } from './astStore';
-import { SHARED_FEATURE_FOOTER, sharedFeatureFallback } from '../rules/featureText';
-import { FUTURE_TREATMENT, LEVEL_FOLDS, pointerOf, printedSet, scopeTree, withPointer } from './cardScope';
+import { SHARED_FEATURE_FOOTER, classOwnFeatureId, sharedFeatureBook, sharedFeatureFallback } from '../rules/featureText';
+import { FUTURE_TREATMENT, LEVEL_FOLDS, linkClassOf, pointerOf, printedSet, scopeTree, withPointer } from './cardScope';
 import { DescBody } from './DescBody';
 import type { SourceInfo } from '../rules/types';
 import { browseResolvesStubs, mineResolvesStubs, useStubbedTree } from './astStubs';
@@ -159,7 +159,7 @@ function InsetRecordCard({ record, node, scope, printed, ours, footer, fallbackT
   const ptr = pointerOf(host, slug, scope);
   const ptrAt = ptr ? ptr.pageKey.indexOf(':') : -1;
   const { node: ptrPage } = useAstNode(ptr ? ptr.pageKey.slice(0, ptrAt) : undefined, ptr ? ptr.pageKey.slice(ptrAt + 1) : undefined);
-  const shared = !loading ? sharedFeatureView(root, slug, astNode, scope, content) : null;
+  const shared = !loading ? sharedFeatureView(root, slug, astNode, scope?.classId, content) : null;
   const scoped = astNode && !shared?.otherClassPage
     ? withPointer(scopeTree(withoutItemLists(astNode), scope, LEVEL_FOLDS, FUTURE_TREATMENT), ptrPage, ptr, scope, LEVEL_FOLDS, FUTURE_TREATMENT)
     : undefined;
@@ -177,9 +177,10 @@ function InsetRecordCard({ record, node, scope, printed, ours, footer, fallbackT
   const oursBox = ours && ours.length > 0 ? <OursBox lines={ours} /> : null;
   const curRec = root.key ? (content as unknown as Record<string, Record<string, { source?: SourceInfo } | undefined> | undefined> | null)?.[root.key]?.[slug] : undefined;
   const homebrew = slug.startsWith('hb-') || curRec?.source?.license === 'homebrew';
-  const sourceLine = curRec?.source?.book
-    ? <div data-ours="" className="card-foot-source"><p className="card-dim card-source"><strong>Source</strong> {curRec.source.book}{curRec.source.page ? ` pg. ${curRec.source.page}` : ''}</p></div>
-    : null;
+  // Package M: a shared feature's paragraph names its class's book, never the shared record's (sharedFeatureBook).
+  const sourceLine = shared
+    ? (shared.book ? <SourceLine book={shared.book} /> : null)
+    : curRec?.source?.book ? <SourceLine book={curRec.source.book} page={curRec.source.page} /> : null;
 
   if (page) {
     return (
@@ -198,7 +199,9 @@ function InsetRecordCard({ record, node, scope, printed, ours, footer, fallbackT
     <>
       <div className="sd-desc card-inset">
         {/* DescBody's own markdown / rich-HTML branches, no tree key (section 5): it never reaches a page. */}
-        <DescBody description={shared ? shared.text : root.description} descRefs={root.descRefs} className="card-inset-text" onExit={onExit} />
+        {shared?.pending
+          ? <div className="card-inset-text ast-loading" aria-busy="true" />
+          : <DescBody description={shared ? shared.text : root.description} descRefs={root.descRefs} className="card-inset-text" onExit={onExit} />}
         {oursBox}
         {sourceLine}
         {remastered}
@@ -265,16 +268,27 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
     }
   };
 
-  // Open a linked term: from a markdown DescRef (fallback path) …
+  /* Package M (2026-10-16): a class feature linked from a class's page (or from a mine card, for the
+     character's class) opens the record that class lists for it (featureText.ts classOwnFeatureId): the
+     magus page's "weapon expertise" opens the magus's Weapon Expertise, the swashbuckler table's "weapon
+     mastery" its Martial Weapon Mastery — not the shared record whose page is the Thaumaturge's. The class
+     is the nearest class page on the stack up to the link, else the character's (cardScope.ts
+     linkClassOf). Any other link opens what it names, as before. */
+  const trail = (upto: number) => stack.slice(0, upto + 1).map((n) => ({ key: n.key, slug: n.slug ?? astSlug(n.title) }));
+  const ownId = (bucket: string | undefined, slug: string) =>
+    bucket === 'classFeatures' && content ? classOwnFeatureId(slug, linkClassOf(trail(stack.length - 1), scope?.classId), content) : slug;
+  // Open a linked term: from an ast cross-link (resolved "bucket:slug") …
+  const openRef = (bucket: string, slug: string) => {
+    const id = ownId(bucket, slug);
+    const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[id];
+    if (rec) setStack((s) => [...s, { title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug: id }]);
+  };
+  // … or from a markdown DescRef (fallback path).
   const open = (ref: DescRef) => {
     if (!content) return;
     const n = lookupRef(content, ref);
-    if (n) setStack((s) => [...s, n]);
-  };
-  // … or from an ast cross-link (resolved "bucket:slug").
-  const openRef = (bucket: string, slug: string) => {
-    const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[slug];
-    if (rec) setStack((s) => [...s, { title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug }]);
+    if (n?.key && n.slug && ownId(n.key, n.slug) !== n.slug) openRef(n.key, n.slug);
+    else if (n) setStack((s) => [...s, n]);
   };
   /* desk #158 — the old printing says what it was remastered as, and the name opens that record here, on
      this stack, whatever its bucket. Read by bucket/slug off the content, because this popup holds a
@@ -347,18 +361,26 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
   const pageFailed = usePageLoadFailed(mine && !astLoading && !astNode, astBucket ?? cur.key, curSlug);
   const curRec = mine && cur.key ? (content as unknown as Record<string, Record<string, { source?: SourceInfo; id?: string } | undefined> | undefined> | null)?.[cur.key]?.[curSlug] : undefined;
   const homebrew = mine && (curSlug.startsWith('hb-') || curRec?.source?.license === 'homebrew');
-  // Our Source line, read off the record's fields — marked ours on BOTH lanes: it is not the page's words.
-  const sourceLine = curRec?.source?.book
-    ? <div data-ours="" className="card-foot-source"><p className="card-dim card-source"><strong>Source</strong> {curRec.source.book}{curRec.source.page ? ` pg. ${curRec.source.page}` : ''}</p></div>
-    : null;
   // desk #152: the old text is empty and there is no page — said once, in the footer (rule 4.6).
-  const emptyNote = !cur.description && fallbackText ? <p className="sd-ours sd-unprinted">{fallbackText}</p> : null;
+  const emptyNote = mine && !cur.description && fallbackText ? <p className="sd-ours sd-unprinted">{fallbackText}</p> : null;
   /* Card step 12 (section 7, "Shared class features"): a class feature the viewer's class shares whose
      page is another class's (Weapon Specialization's is the Thaumaturge's, Reflex Expertise's the
      Guardian's — featureText.ts sharedFeatureFallback, the guard's CLASS_MISMATCH rule) is drawn from our
      older text, cut to the viewer's own class paragraph, with its own footer — a page exists, just not
-     for this class. Per-class pages come with the data rebuild. Not decided while the page loads. */
-  const shared = mine && !astLoading ? sharedFeatureView(cur, curSlug, astNode, scope, content) : null;
+     for this class. Per-class pages come with the data rebuild. Not decided while the page loads.
+     Package M (2026-10-16): a page opened from a link inside the card gets it too — read for the nearest
+     class page on the stack below it (a class card, or a class page opened from search or a link, however
+     many links deep), else the character's (the mine card's scope); with neither (search, a description's
+     link) it stays the record's own page, as before. When that class's paragraph applies, the node draws
+     this no-page lane. */
+  const viewerClass = mine ? scope?.classId : stack.length > 1 ? linkClassOf(trail(stack.length - 2), scope?.classId) : undefined;
+  const shared = (mine || stack.length > 1) && !astLoading ? sharedFeatureView(cur, curSlug, astNode, viewerClass, content) : null;
+  // Our Source line, read off the record's fields — marked ours on BOTH lanes: it is not the page's words.
+  // Package M: under a shared feature's class paragraph, the class's own book (sharedFeatureBook), never the
+  // shared record's (the swashbuckler's Player Core 2 paragraph read "Dark Archive", the Thaumaturge's).
+  const sourceLine = shared
+    ? (shared.book ? <SourceLine book={shared.book} /> : null)
+    : curRec?.source?.book ? <SourceLine book={curRec.source.book} page={curRec.source.page} /> : null;
   /* Card step 10: the surface's controls that stay above the text on every mine lane (cardModel
      leadControls — Strike's Attack / Damage and its gated critical specialization). The record the
      surface opened only: a page opened from a link inside the card is a browse card (section 6). */
@@ -382,7 +404,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
      card keeps its gate; an item's own card is ItemDetail's inset). The stubs resolve AFTER the host page
      is scoped, so the folds (13a / 13c) apply to the host page only and an embedded page is drawn as it
      ships: it is another record's page, never the character's. */
-  const stubBase = mine ? mineTree : astNode;
+  const stubBase = mine ? mineTree : shared?.otherClassPage ? undefined : astNode;
   const { tree: stubbed } = useStubbedTree(stubBase, `${stubHost}:${curSlug}`, content,
     !!stubBase && (mine ? mineResolvesStubs(stubHost) : browseResolvesStubs(stubHost)));
   const browseTree = mine ? undefined : stubbed;
@@ -402,12 +424,15 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
       </div>
     );
   }
-  if (mine && !astLoading) {
+  // The no-page lane: the mine card without its page, and (package M) a linked shared feature read for a
+  // class. The surface's own parts — header actions, controls, ours box, footer — belong to the record the
+  // surface opened, so a linked node draws none of them.
+  if ((mine || shared) && !astLoading) {
     return (
       <div className="picker-overlay" onClick={exit}>
         <div ref={modalRef} className="picker info-modal card-mine" onClick={(e) => e.stopPropagation()}>
           <div className="picker-head">
-            {headerActions}
+            {mine ? headerActions : null}
             {showBack && (
               <button className="info-back" aria-label="Back to previous description"
                 onClick={(e) => { e.stopPropagation(); back(); }}>
@@ -431,12 +456,16 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
             {marker}
             {lead}
             {/* Card step 9 (section 2 rule 4.3): the surface's controls, above the text. */}
-            {bodyControls ? <div className="card-controls">{bodyControls}</div> : null}
+            {mine && bodyControls ? <div className="card-controls">{bodyControls}</div> : null}
             {/* The fallback lane is DescBody's own markdown / rich-HTML branches, untouched (section 5):
                 no tree key, so it never reaches a page. desk #152's empty note is drawn below, in the
-                footer's place (rule 4.6), with DescBody's markup, rather than as DescBody's emptyNote. */}
-            <DescBody description={shared ? shared.text : cur.description} descRefs={cur.descRefs} onExit={exit} />
-            {oursBox}
+                footer's place (rule 4.6), with DescBody's markup, rather than as DescBody's emptyNote.
+                Package M: a shared feature whose text has not arrived yet (descriptions load after
+                core.json) shows the quiet placeholder, never the other class's page. */}
+            {shared?.pending
+              ? <div className="sd-desc ast-loading" aria-busy="true" />
+              : <DescBody description={shared ? shared.text : cur.description} descRefs={cur.descRefs} onExit={exit} />}
+            {mine ? oursBox : null}
             {sourceLine}
             {remastered}
             {emptyNote}
@@ -449,7 +478,7 @@ function PopupRecordCard({ record, node, mode, scope, printed, controls: bodyCon
                   : pageFailed
                     ? <p className="sd-ours card-nopage" data-ours="" data-ours-kind="pageFailed">The Archives page could not load on this device — our text</p>
                     : <p className="sd-ours card-nopage" data-ours="" data-ours-kind="noPage">Not from the Archives — our text</p>}
-            {footer}
+            {mine ? footer : null}
           </div>
         </div>
       </div>
@@ -570,14 +599,22 @@ function nodeOfRecord(record: CardRecord | undefined, content: ContentDatabase |
   return { title: record.title, description: record.text, descRefs: record.refs };
 }
 
-/** Card step 12: the viewer's view of a shared class feature on a 'mine' card (featureText.ts
- *  sharedFeatureFallback) — null unless the record is a class feature, the scope names the viewer's class,
- *  and the fallback applies. `text` is the record's own text cut to the viewer's class paragraph. */
-function sharedFeatureView(cur: DescNode, slug: string, page: AstNode | undefined, scope: CardScope | undefined, content: ContentDatabase | null):
-  { text: string; otherClassPage: boolean } | null {
-  if (!content || cur.key !== 'classFeatures' || !scope?.classId) return null;
-  const text = sharedFeatureFallback(slug, scope.classId, page ? textOf(page) : undefined, content);
-  return text === null ? null : { text, otherClassPage: !!page };
+/** Card step 12: the viewer's view of a shared class feature (featureText.ts sharedFeatureFallback) — null
+ *  unless the record is a class feature, a viewing class is known, and the fallback applies. `text` is the
+ *  record's own text cut to the viewer's class paragraph; `pending` (package M) says that text has not
+ *  arrived yet (the descriptions load after core.json); `book` is the Source line's book: the viewing
+ *  class's own (sharedFeatureBook), never the shared record's. */
+function sharedFeatureView(cur: DescNode, slug: string, page: AstNode | undefined, viewerClass: string | undefined, content: ContentDatabase | null):
+  { text: string; otherClassPage: boolean; pending: boolean; book: string | undefined } | null {
+  if (!content || cur.key !== 'classFeatures' || !viewerClass) return null;
+  const text = sharedFeatureFallback(slug, viewerClass, page ? textOf(page) : undefined, content);
+  if (text === null) return null;
+  return { text, otherClassPage: !!page, pending: content.classFeatures?.[slug]?.description === undefined, book: sharedFeatureBook(viewerClass, content) };
+}
+
+/** Our Source line (rule 4.6), dimmed and marked ours: it is read off fields, never the page's words. */
+function SourceLine({ book, page }: { book: string; page?: number }) {
+  return <div data-ours="" className="card-foot-source"><p className="card-dim card-source"><strong>Source</strong> {book}{page ? ` pg. ${page}` : ''}</p></div>;
 }
 
 /** Section 4: one box after the body, marked `data-ours`, each line attributed to its source record. */

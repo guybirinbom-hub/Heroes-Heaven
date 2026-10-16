@@ -88,7 +88,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { gunzipSync } from 'node:zlib';
-import { SECTIONS, baselineProblems, computeLedger, expectedEntries } from './lib/card-scope.mjs';
+import { NEVER_BASELINED, SECTIONS, baselineProblems, computeLedger, expectedEntries } from './lib/card-scope.mjs';
 import { foldsOf } from '../src/sheet/cardScope.ts';
 import { ACTIVITIES } from '../src/rules/actions.ts';
 import { FEAT_SITUATIONAL } from '../src/rules/situationalBonuses.ts';
@@ -200,9 +200,12 @@ if (IS_MAIN) {
   if (argv.includes('--list')) {
     console.log(JSON.stringify(found, null, 2));
   } else if (writing) {
+    // A never-baselined section (OWN-RECORD-UNLISTED, package M) must not enter the file even as an
+    // empty key: baselineProblems reports every entry of it whatever the baseline says.
+    const kept = Object.fromEntries(Object.entries(found).filter(([s]) => !NEVER_BASELINED.includes(s)));
     const out = {
       _measured: `card-truth-check --write-baseline, ${new Date().toISOString().slice(0, 10)}; on a working tree with another lane's regen output uncommitted — re-stamp when it commits`,
-      ...found,
+      ...kept,
     };
     writeFileSync(join(ROOT, BASELINE), JSON.stringify(out, null, 1) + '\n');
     console.log(`card truth: baseline written (${SECTIONS.map((s) => `${s} ${found[s].length}`).join(', ')}) in ${Date.now() - t0} ms.`);
@@ -211,7 +214,7 @@ if (IS_MAIN) {
     const problems = baselineProblems(found, baseline, BASELINE);
     console.log(`card truth: ${Object.entries(counts).map(([s, n]) => `${s} ${n}`).join(', ')} rows judged in ${ms} ms.`);
     const expected = expectedEntries(baseline);
-    console.log(`card truth: ${SECTIONS.map((s) => `${s} ${found[s].length} (baseline ${expected[s].length})`).join(', ')}.`);
+    console.log(`card truth: ${SECTIONS.map((s) => `${s} ${found[s].length} (baseline ${expected[s].length})`).join(', ')}, ${NEVER_BASELINED.map((s) => `${s} ${(found[s] ?? []).length} (never baselined)`).join(', ')}.`);
     for (const p of problems.slice(0, 200)) console.log(`   ${p}`);
     if (problems.length > 200) console.log(`   … and ${problems.length - 200} more`);
     if (problems.length) process.exitCode = 1;

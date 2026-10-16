@@ -1569,6 +1569,26 @@ export interface DefenseGrants {
     anyProficient?: boolean;
     /** Specific armor ITEM ids — Hellknight Preferment names three armors, not a category. */
     items?: string[];
+    /**
+     * Only the DESIGNATED item — *"If you have a medium or heavy armor innovation, you gain access to the
+     * critical specialization effect with your armor innovation"* (Medium Armor Expertise, inventor,
+     * class-feature-497). The armor twin of `critSpecWeapons.designated`: the access belongs to the one
+     * suit the player marked (InventoryItem.designations), never to a category, so an armor-innovation
+     * inventor in some other suit gets nothing and a weapon-innovation inventor (whose designated item
+     * is a weapon) gets nothing at all.
+     */
+    designated?: ItemDesignation;
+    /** With `designated`: the designated suit must ALSO be one of these categories after its riders
+     *  ("a medium or heavy armor innovation"). Absent = any category. */
+    designatedCategories?: ArmorCategory[];
+    /**
+     * The whole grant applies only to an inventor whose innovation is of this TYPE (InventorBuild) —
+     * *"If you have a medium or heavy ARMOR innovation"* (class-feature-497). The Innovation mark can be
+     * put on any item, so without this a weapon- or construct-innovation inventor who marked a suit
+     * would get the armor's effect. On the record rather than in the engine, so the trust gate reaches
+     * it with the rest of the field and no designation value is compared in derive.ts.
+     */
+    innovationType?: InventorBuild['innovationType'];
     /** "your resistance from that armor specialization is 1 higher than normal". */
     bonus?: number;
     /** "While in Tenacious Stance, increase the value by your armor check penalty." */
@@ -1637,6 +1657,17 @@ export interface DefenseGrants {
      *  that strike's own attack rank, not a weapon-category rank, because the two differ the moment a
      *  familiarity feat or a rune moves one weapon. Absent = ungated, which is every other entry. */
     minRank?: ProficiencyRank;
+    /**
+     * The weapon CATEGORIES the grant covers, as a gate on top of everything else — Ranger Weapon
+     * Expertise's *"…all such weapons and unarmed attacks"* after *"Your proficiency rank for martial
+     * weapons, simple weapons, and unarmed attacks increases to expert"* (class-feature-722), and Bard
+     * Weapon Expertise's *"one of these weapons or an unarmed attack"* (class-feature-638). Tested
+     * against the Strike's own `category` (an unarmed attack is 'unarmed'), so an ADVANCED weapon stays
+     * out even when a familiarity feat lets the character use it at martial proficiency — familiarity
+     * moves the proficiency, not the weapon's category. A Strike with no category (a battle form, a
+     * blast) never matches. Absent = ungated.
+     */
+    categories?: WeaponCategory[];
   };
   /** Melee unarmed Strikes this feat/feature grants (from Foundry `Strike` rule elements). */
   grantedStrikes?: GrantedStrike[];
